@@ -2218,10 +2218,10 @@ function PANEL:Init()
 			
 			-- Called when an option is selected.
 			self.forenameRandomButton.DoClick = function()
-				if RANDOM_FORENAMES then
+				if RANDOM_FORENAMES and Clockwork.faction.stored[self.info.faction].names then
 					local random_forename = "";
 					
-					random_forename = RANDOM_FORENAMES[string.lower(Clockwork.Client.CurrentGender)][math.random(1, #RANDOM_FORENAMES[string.lower(Clockwork.Client.CurrentGender)])];
+					random_forename = table.Random(RANDOM_FORENAMES[Clockwork.faction.stored[self.info.faction].names][string.lower(Clockwork.Client.CurrentGender)]);
 					
 					self.forenameTextEntry:SetValue(random_forename);
 				end
@@ -2237,10 +2237,10 @@ function PANEL:Init()
 			
 			-- Called when an option is selected.
 			self.surnameRandomButton.DoClick = function()
-				if RANDOM_SURNAMES then
+				if RANDOM_SURNAMES and Clockwork.faction.stored[self.info.faction].names then
 					local random_surname = "";
 
-					random_surname = RANDOM_SURNAMES[math.random(1, #RANDOM_SURNAMES)];
+					random_surname = table.Random(RANDOM_SURNAMES[Clockwork.faction.stored[self.info.faction].names]);
 					
 					self.surnameTextEntry:SetValue(random_surname);
 				end

@@ -1128,7 +1128,8 @@ function GM:DrawPlayerScreenDamage(damageFraction)
 	if (damageScreenExists != true) then
 		return false;
 	end;
-	if GetConVar("devnewbars"):GetFloat() == 0 then return end
+	
+	--if GetConVar("devnewbars"):GetFloat() == 0 then return end
 	
 	surface.SetDrawColor(255, 255, 255, math.Clamp(255 * damageFraction, 0, 150))
 	surface.SetMaterial(SCREEN_DAMAGE_OVERLAY)
