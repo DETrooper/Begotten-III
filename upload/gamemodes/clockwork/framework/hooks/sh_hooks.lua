@@ -281,11 +281,11 @@ do
 			end;
 		end;
 		
-		--[[local newIdeal, newCalcSeqOverride = hook.Run("ModifyCalcMainActivity", player, velocity);
+		local newIdeal, newCalcSeqOverride = hook.Run("ModifyCalcMainActivity", player, velocity);
 		
 		if newCalcSeqOverride then
 			return newIdeal, newCalcSeqOverride;
-		end]]--
+		end
 
 		if (CLIENT) then
 			player:SetIK(false);
