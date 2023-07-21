@@ -27,7 +27,7 @@ util.AddNetworkString( "wOS.RollMod.CallRestart" )
 resource.AddFile( "sound/wos/roll/dive.wav" )
 resource.AddFile( "sound/wos/roll/land.wav" )
 
-concommand.Add("fucked", function(ply)
+concommand.Add("admin_roll", function(ply)
 	if (ply:IsAdmin()) then
 		ply:StartRolling(true)
 	end;
@@ -188,7 +188,7 @@ function meta:StartRolling(a)
 			end
 			
 			if self.SetCharacterData then
-				self:SetCharacterData("Stamina", math.Clamp(self:GetCharacterData("Stamina") - stamina_loss, 0, cwStamina:GetMaxStamina(self)));
+				self:SetCharacterData("Stamina", math.Clamp(self:GetCharacterData("Stamina") - stamina_loss, 0, cwStamina:GetMaxStaminaPlugin(self)));
 				self:SetNetVar("Stamina", self:GetCharacterData("Stamina"));
 			end
 		end

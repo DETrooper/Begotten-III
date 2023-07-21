@@ -113,7 +113,7 @@ do
 			if (IsValid(weapon)) then
 				weaponHoldType = Clockwork.animation:GetWeaponHoldType(player, weapon);
 			end;
-			
+
 			if (velLength > 0.5) then
 				player.CalcIdeal = Clockwork.animation:GetForModel(model, weaponHoldType, "walk_crouch");
 			else
@@ -234,9 +234,11 @@ do
 
 		if (IsValid(weapon)) then
 			weaponHoldType = Clockwork.animation:GetWeaponHoldType(player, weapon);
+			weaponClass = weapon:GetClass();
 		end;
 		
 		local act = Clockwork.animation:GetForModel(model, weaponHoldType, "idle") or ACT_IDLE;
+		local oldact = player.CalcIdeal;
 		local seq = -1;
 		
 		if (!self:HandlePlayerDriving(player)
@@ -250,11 +252,9 @@ do
 			elseif (velocity:Length2DSqr() > 0.25) then
 				act = Clockwork.animation:GetForModel(model, weaponHoldType, "walk");
 			end;
+		else
+			act = player.CalcIdeal;
 		end;
-		
-		if IsValid(weapon) then
-			weaponClass = weapon:GetClass();
-		end
 		
 		if (type(act) == "table") then
 			if (bIsRaised and weaponClass ~= "cw_senses" and weaponClass ~= "cw_keys" and weaponClass ~= "cw_adminasstool") then
@@ -297,44 +297,46 @@ do
 
 		player:SetPoseParameter("move_yaw", normalized);
 		
-		-- part of wOS, moved here for optimization purposes
-		if wOS then
-			local translation = wOS.AnimExtension.TranslateHoldType[weaponHoldType];
+		if !player:InVehicle() then
+			-- part of wOS, moved here for optimization purposes
+			if wOS then
+				local translation = wOS.AnimExtension.TranslateHoldType[weaponHoldType];
 
-			if translation then
-				--local ATTACK_DATA = translation:GetActData(act)
-				local ATTACK_DATA;
-				local base = translation.Translations[act]
-				
-				if base then
-					ATTACK_DATA = {}
+				if translation then
+					--local ATTACK_DATA = translation:GetActData(act)
+					local ATTACK_DATA;
+					local base = translation.Translations[act]
 					
-					if istable( base ) then
-						if base.Sequence then
-							ATTACK_DATA.Sequence = base.Sequence
-							ATTACK_DATA.Weight = base.Weight or 1
-						else
-							local key = math.Round( util.SharedRandom( "wOS.AnimExtension." .. translation:GetName() .. "[" .. act .. "]", 1, #base ) )
-							local innerbase = base[key]
-							if istable( innerbase ) then
-								ATTACK_DATA = innerbase
-							elseif isstring( innerbase ) then
-								ATTACK_DATA.Sequence = innerbase
-								ATTACK_DATA.Weight = 1
+					if base then
+						ATTACK_DATA = {}
+						
+						if istable( base ) then
+							if base.Sequence then
+								ATTACK_DATA.Sequence = base.Sequence
+								ATTACK_DATA.Weight = base.Weight or 1
+							else
+								local key = math.Round( util.SharedRandom( "wOS.AnimExtension." .. translation:GetName() .. "[" .. act .. "]", 1, #base ) )
+								local innerbase = base[key]
+								if istable( innerbase ) then
+									ATTACK_DATA = innerbase
+								elseif isstring( innerbase ) then
+									ATTACK_DATA.Sequence = innerbase
+									ATTACK_DATA.Weight = 1
+								end
 							end
+						elseif isstring( base ) then
+							ATTACK_DATA.Sequence = base
 						end
-					elseif isstring( base ) then
-						ATTACK_DATA.Sequence = base
 					end
-				end
-				
-				if ATTACK_DATA then
-					seq = player:LookupSequence(ATTACK_DATA.Sequence)
+					
+					if ATTACK_DATA then
+						seq = player:LookupSequence(ATTACK_DATA.Sequence)
+					end
 				end
 			end
 		end
 		
-		if act != player.CalcIdeal then
+		if act != oldact then
 			player:SetCycle(0)
 		end
 		
