@@ -215,11 +215,12 @@ end;
 
 -- Called when a player presses a bind at the top level.
 function cwWeaponSelect:TopLevelPlayerBindPress(player, bind, press)
-	if (CW_CONVAR_CINEMATICVIEW:GetInt() == 1) then
+	if (CW_CONVAR_CINEMATICVIEW and CW_CONVAR_CINEMATICVIEW:GetInt() == 1) then
 		if (!nextRemind or nextRemind < CurTime()) then
 			nextRemind = CurTime() + 10;
 			MsgC(colors["tomato"], "Cinematic view is currently enabled! Disable it to use weapon select!\n");
 		end;
+		
 		return;
 	end;
 	
