@@ -1,0 +1,109 @@
+SWEP.Base = "sword_swepbase"
+-- WEAPON TYPE: Claws
+
+SWEP.PrintName = "Savage Claws"
+SWEP.Category = "(Begotten) Claws"
+
+SWEP.AdminSpawnable = true
+SWEP.Spawnable = true
+SWEP.AutoSwitchTo = false
+SWEP.Slot = 0
+SWEP.Weight = 2
+SWEP.UseHands = true
+
+SWEP.HoldType = "wos-begotten_claws"
+
+SWEP.ViewModel = "models/divii/weapons/v_knife_t.mdl"
+SWEP.ViewModelFOV = 62
+SWEP.ViewModelFlip = false
+
+--Anims
+SWEP.BlockAnim = "a_claws_block"
+SWEP.CriticalAnim = "a_claws_attack_left_slash"
+SWEP.ParryAnim = "a_claws_attack_left_slash_fast"
+
+SWEP.IronSightsPos = Vector(0.36, -3.418, -1.29)
+SWEP.IronSightsAng = Vector(20.402, 0, 0)
+
+--Sounds
+SWEP.AttackSoundTable = "MetalClawsAttackSoundTable" 
+SWEP.BlockSoundTable = "MetalBlockSoundTable"
+SWEP.SoundMaterial = "Metal" -- Metal, Wooden, MetalPierce, Punch, Default
+
+/*---------------------------------------------------------
+	PrimaryAttack
+---------------------------------------------------------*/
+SWEP.AttackTable = "SavageClawsAttackTable"
+SWEP.BlockTable = "SavageClawsBlockTable"
+
+function SWEP:CriticalAnimation()
+
+	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+
+	-- Viewmodel attack animation!
+	local vm = self.Owner:GetViewModel()
+	vm:SendViewModelMatchingSequence( vm:LookupSequence( "draw" ) )
+	self.Owner:GetViewModel():SetPlaybackRate(0.75)
+	
+	self:TriggerAnim3(self.Owner, "a_claws_attack_right_slash");
+	
+	if (SERVER) then
+	timer.Simple( 0.05, function() if self:IsValid() then
+	self.Weapon:EmitSound(attacksoundtable["criticalswing"][math.random(1, #attacksoundtable["criticalswing"])])
+	end end)
+	self.Owner:ViewPunch(Angle(1,4,1))
+	end
+	
+end
+
+function SWEP:ParryAnimation()
+	self:TriggerAnim3(self.Owner, "a_claws_attack_right_slash_fast");
+	self.Weapon:SendWeaponAnim(ACT_VM_MISSCENTER)
+end
+
+function SWEP:HandlePrimaryAttack()
+
+	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+	local attacktable = GetTable(self.AttackTable)
+
+	--Attack animation
+	local attackanim = math.random( 1, 2 )
+	
+	if attackanim == 1 and self:IsValid() then
+		self:TriggerAnim(self.Owner, "a_claws_attack_left_slash");
+	elseif attackanim == 2 and self:IsValid() then
+		self:TriggerAnim(self.Owner, "a_claws_attack_right_slash");
+	end
+
+	-- Viewmodel attack animation!
+	self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
+	self.Owner:GetViewModel():SetPlaybackRate(0.75)
+	
+	self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
+	self.Owner:ViewPunch(attacktable["punchstrength"])
+
+end
+
+function SWEP:OnDeploy()
+	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+	self.Owner:ViewPunch(Angle(0,1,0))
+	self.Weapon:EmitSound(attacksoundtable["drawsound"][math.random(1, #attacksoundtable["drawsound"])])
+end
+
+/*---------------------------------------------------------
+	Bone Mods
+---------------------------------------------------------*/
+SWEP.ViewModelBoneMods = {
+	["blade01"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(-30, 0, 0), angle = Angle(0, 0, 0) },
+	["blade05"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(-30, 0, 0), angle = Angle(0, 0, 0) }
+}
+
+SWEP.VElements = {
+	["v_savage_claw1"] = { type = "Model", model = "models/demonssouls/weapons/claws.mdl", bone = "Bone03", rel = "", pos = Vector(2.596, 0.2, -0.101), angle = Angle(164.804, -85.325, -31.559), size = Vector(0.54, 0.54, 0.54), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["v_savage_claw2"] = { type = "Model", model = "models/demonssouls/weapons/claws.mdl", bone = "Bone26", rel = "", pos = Vector(2.596, -0.519, -0.35), angle = Angle(-141.43, -75.974, -17.532), size = Vector(0.54, 0.54, 0.54), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElements = {
+	["w_savage_claw2"] = { type = "Model", model = "models/demonssouls/weapons/claws.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.635, 1.557, 0.2), angle = Angle(-99.351, -85.325, 15.194), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["w_savage_claw1"] = { type = "Model", model = "models/demonssouls/weapons/claws.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.9, 1.2, 0.1), angle = Angle(-73.637, -97.014, -8.183), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}

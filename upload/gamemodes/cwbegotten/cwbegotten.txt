@@ -1,0 +1,8 @@
+"cwbegotten"
+{
+	"title"			"Begotten III: Jesus Wept"
+	"author"		"The Begotten Team"
+	"category"		"rp"
+	"description"	""
+	"version"		"1"
+}
