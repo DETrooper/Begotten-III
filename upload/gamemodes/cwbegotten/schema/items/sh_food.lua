@@ -18,9 +18,7 @@ local ITEM = Clockwork.item:New();
 	function ITEM:OnUse(player, itemEntity)
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_can"));
 		
-		if !player:HasBelief("savage_animal") then
-			Schema:EasyText(player, "olivedrab", "Although long expired and slightly frothy, the beans are still perfectly palatable.");
-		end
+		Schema:EasyText(player, "olivedrab", "Although long expired and slightly frothy, the beans are still perfectly palatable.");
 
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
@@ -140,9 +138,12 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		Schema:EasyText(player, "olive", "You begrudgingly consume raw meat.");
-		player:HandleSanity(-5);
-		
+
+		if !player:HasBelief("savage_animal") then
+			Schema:EasyText(player, "olive", "You begrudgingly consume raw meat.");
+			player:HandleSanity(-5);
+		end
+			
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
@@ -200,8 +201,11 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		Schema:EasyText(player, "olive", "You begrudgingly consume raw meat.");
-		player:HandleSanity(-5);
+	
+		if !player:HasBelief("savage_animal") then
+			Schema:EasyText(player, "olive", "You begrudgingly consume raw meat.");
+			player:HandleSanity(-5);
+		end
 		
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
@@ -286,9 +290,12 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		Schema:EasyText(player, "olive", "You begrudgingly consume raw meat.");
-		player:HandleSanity(-5);
-		
+
+		if !player:HasBelief("savage_animal") then
+			Schema:EasyText(player, "olive", "You begrudgingly consume raw meat.");
+			player:HandleSanity(-5);
+		end
+	
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
@@ -541,7 +548,13 @@ local ITEM = Clockwork.item:New();
 	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		if (math.random( 1, 4 ) == 1) then
+		if player:HasBelief("favored") then
+			Schema:EasyText(player, "lawngreen", "Upon licking the candy, it suddenly morphs into a purifying stone which pulses, granting you great healing and rejuvenating your sanity!");
+			player:HandleSanity(100);
+			player:SetHealth(math.Clamp(player:Health() + 85, 0, player:GetMaxHealth()));
+			player:GiveItem(Clockwork.item:CreateInstance("purifying_stone"));
+			player:HandleXP(cwBeliefs.xpValues["food"]);
+		elseif (math.random( 1, 4 ) == 1) then
 			player:ScriptedDeath("Had their insides dissolved with acid.");
 			Schema:EasyText(player, "olive", "You begin to lick on the Kitty Candy. After a couple licks you notice a foul taste in your mouth... Fuck! This Kitty Candy is acid! The acid begins to burn your fucking tongue and throat.");
 			player:HandleSanity(-100);
@@ -574,7 +587,13 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		if (math.random( 1, 2) == 1) then
+
+		if player:HasBelief("favored") then
+			Schema:EasyText(player, "lawngreen", "You notice a glimmer of light inside the can, and are rejoiced to discover coins aplenty! Your sanity is restored! You are favored by the Gods!");
+			player:HandleSanity(100);
+			Clockwork.player:GiveCash(player, math.random(10, 100), "Blessed coins!");
+			player:HandleXP(cwBeliefs.xpValues["food"]);
+		elseif (math.random( 1, 2) == 1) then
 			--player:GiveItem(Clockwork.item:CreateInstance("empty_can"));
 			player:ScriptedDeath("Was devoured by flesh eating maggots.");
 			player:HandleSanity(-100);
@@ -613,38 +632,45 @@ local ITEM = Clockwork.item:New();
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		local playerPos = player:GetPos();
-		
-		player:ScriptedDeath("Became canned meat.");
-		Schema:EasyText(player, "maroon", "You pop open the can, and suddenly a hand springs forth from inside and grabs you! It's pulling you inside and won't let go! FUCK!");
-		
-		timer.Simple(11, function()
-			if IsValid(player) then
-				Clockwork.chatBox:AddInTargetRadius(player, "me", "is suddenly grabbed by a hand extended from the can they are holding! They are violently forced inside, screaming as their body crunches sickeningly to fit inside the can! Holy shit!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-				
-				for k, v in pairs(ents.FindInSphere(player:GetPos(), Clockwork.config:Get("talk_radius"):Get())) do
-					if v:IsPlayer() then
-						if !v:HasBelief("savage_animal") then
-							v:HandleSanity(-25);
+
+		if player:HasBelief("favored") then
+			Schema:EasyText(player, "lawngreen", "You notice a glimmer of light inside the can, and are rejoiced to discover coins aplenty! Your sanity is restored! You are favored by the Gods!");
+			player:HandleSanity(50);
+			Clockwork.player:GiveCash(player, math.random(10, 100), "Blessed coins!");
+			player:HandleXP(cwBeliefs.xpValues["food"]);
+		else
+			player:ScriptedDeath("Became canned meat.");
+			Schema:EasyText(player, "maroon", "You pop open the can, and suddenly a hand springs forth from inside and grabs you! It's pulling you inside and won't let go! FUCK!");
+			
+			timer.Simple(11, function()
+				if IsValid(player) then
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "is suddenly grabbed by a hand extended from the can they are holding! They are violently forced inside, screaming as their body crunches sickeningly to fit inside the can! Holy shit!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+					
+					for k, v in pairs(ents.FindInSphere(player:GetPos(), Clockwork.config:Get("talk_radius"):Get())) do
+						if v:IsPlayer() then
+							if !v:HasBelief("savage_animal") then
+								v:HandleSanity(-50);
+							end
 						end
 					end
 				end
-			end
-		end);
-		
-		timer.Simple(11.5, function()
-			if IsValid(player) then
-				local ragdollEntity = player:GetRagdollEntity();
-				
-				if !player:Alive() and ragdollEntity then
-					ragdollEntity:Remove();
+			end);
+			
+			timer.Simple(11.5, function()
+				if IsValid(player) then
+					local ragdollEntity = player:GetRagdollEntity();
+					
+					if !player:Alive() and ragdollEntity then
+						ragdollEntity:Remove();
+					end
+					
+					Clockwork.entity:CreateItem(nil, "canned_fresh_meat", Vector(playerPos.x, playerPos.y, playerPos.z + 64));
+					
+					Schema:EasyText(GetAdmins(), "tomato", player:Name().." was taken by a can!", nil);
 				end
-				
-				Clockwork.entity:CreateItem(nil, "canned_fresh_meat", Vector(playerPos.x, playerPos.y, playerPos.z + 64));
-				
-				Schema:EasyText(GetAdmins(), "tomato", player:Name().." was taken by a can!", nil);
-			end
-		end);
-	end;
+			end);
+		end;
+	end
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
@@ -694,22 +720,29 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		local DeathMethods = {
-		"You bite down into the slop of meat, and directly after the surge of taste, you feel a striking pain as a rusty infected nail is impaled in the roof of your fucking mouth, expertly hidden in the meat itself. You're doomed to die from infection, if you don't bleed out from your mouth first.",
-		"You sink your teeth into the yummy chunk of meat, and directly after the surge of taste, you feel a dreadful feeling as you realize a long strip of rusty, infected barbwire is cutting up your fucking mouth. There is blood everywhere, holy shit. You are doomed to die of an infection if you don't bleed out from your mouth first.",
-		"You begin to chow down on the scrumptious hunk of meat, only something is not right. You begin to feel movement in your mouth as you realize a collection of flesh eating maggots are now eating their way out of your mouth. They begin to feast on your tongue and cheeks, as they burrow in and out of you. You are doomed to die from these little fuckers. Good job.",
-		"You bite into the meat, and begin to savor its flavor before the sound of a loud crunch gets your attention. You then realize that you just bit into a fucking poisonous cockroach, and you are doomed to die of its toxins soon.",
-		"You dig into your yummy meat, only to recoil and freeze at a sudden pain in your mouth. You then realize that a rusty, infected razorblade has made its way into your mouth and has cut off your fucking tongue! You're destined to die a slow and painful death by infection, if the loss of your tongue doesnt kill you first.",
-		"You begin to chomp up the yummy meat before you begin to notice its foul fucking taste. You realize that this meat is tainted! And you are doomed to die a slow death via the toxins you have just ingested. Good job bud."
-		}
 
-		if (math.random(1, 4) == 1) then
-			player:ScriptedDeath("Bit off more than they could chew.");
-			Schema:EasyText(player, "olive", DeathMethods[math.random(1, #DeathMethods)]);
-			player:HandleSanity(-100);
-		else
-			Schema:EasyText(player, "olive", "Mmmmm. That was some good yummy meat!");
+		if player:HasBelief("favored") then
+			Schema:EasyText(player, "lawngreen", "The neat yummy meat was indeed yummy. Furthermore, your sanity is rejuvenated and you cough up a few coins!");
+			Clockwork.player:GiveCash(player, 12, "Blessed coins!");
 			player:HandleXP(cwBeliefs.xpValues["food"]);
+		else
+			local DeathMethods = {
+			"You bite down into the slop of meat, and directly after the surge of taste, you feel a striking pain as a rusty infected nail is impaled in the roof of your fucking mouth, expertly hidden in the meat itself. You're doomed to die from infection, if you don't bleed out from your mouth first.",
+			"You sink your teeth into the yummy chunk of meat, and directly after the surge of taste, you feel a dreadful feeling as you realize a long strip of rusty, infected barbwire is cutting up your fucking mouth. There is blood everywhere, holy shit. You are doomed to die of an infection if you don't bleed out from your mouth first.",
+			"You begin to chow down on the scrumptious hunk of meat, only something is not right. You begin to feel movement in your mouth as you realize a collection of flesh eating maggots are now eating their way out of your mouth. They begin to feast on your tongue and cheeks, as they burrow in and out of you. You are doomed to die from these little fuckers. Good job.",
+			"You bite into the meat, and begin to savor its flavor before the sound of a loud crunch gets your attention. You then realize that you just bit into a fucking poisonous cockroach, and you are doomed to die of its toxins soon.",
+			"You dig into your yummy meat, only to recoil and freeze at a sudden pain in your mouth. You then realize that a rusty, infected razorblade has made its way into your mouth and has cut off your fucking tongue! You're destined to die a slow and painful death by infection, if the loss of your tongue doesnt kill you first.",
+			"You begin to chomp up the yummy meat before you begin to notice its foul fucking taste. You realize that this meat is tainted! And you are doomed to die a slow death via the toxins you have just ingested. Good job bud."
+			}
+	
+			if (math.random(1, 4) == 1) then
+				player:ScriptedDeath("Bit off more than they could chew.");
+				Schema:EasyText(player, "olive", DeathMethods[math.random(1, #DeathMethods)]);
+				player:HandleSanity(-100);
+			else
+				Schema:EasyText(player, "olive", "Mmmmm. That was some good yummy meat!");
+				player:HandleXP(cwBeliefs.xpValues["food"]);
+			end;
 		end;
 	end;
 
@@ -867,7 +900,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.infectionchance = 10; 
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2500};
+	--ITEM.itemSpawnerInfo = {category = "Food", rarity = 2500};
 	ITEM.needs = {hunger = 50, thirst = 25};
 
 	-- Called when a player uses the item.

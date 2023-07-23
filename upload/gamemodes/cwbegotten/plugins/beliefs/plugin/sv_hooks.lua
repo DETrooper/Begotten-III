@@ -79,7 +79,7 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized)
 				player.poisonTicks = player.poisonTicks - 1;
 				
 				if alive then
-					player:TakeDamage(1, player.poisoner, player.poisoner);
+					player:TakeDamage(2, player.poisoner, player.poisoner);
 				end
 				
 				if player.poisonTicks == 0 then
@@ -1034,7 +1034,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					end
 				elseif attackerWeapon.Base == "begotten_firearm_base" then -- Firearm
 					if attacker:HasBelief("blessed_powder") then
-						newDamage = newDamage + (originalDamage * 0.15);
+						newDamage = newDamage + (originalDamage * 0.25);
 					end
 					
 					if entity:IsPlayer() and (attackerWeapon.isElectric or (attackerWeapon.isVoltistWeapon and attacker:HasBelief("the_storm"))) then

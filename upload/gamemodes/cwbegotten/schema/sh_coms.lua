@@ -1508,8 +1508,8 @@ local COMMAND = Clockwork.command:New("CoinslotDonate");
 									end
 								end
 							elseif player:HasBelief("hard_glazed") then
-								if cash >= 3 then
-									player:HandleXP(cash / 3);
+								if cash >= 2 then
+									player:HandleXP(cash / 2);
 								end
 							end
 						end
