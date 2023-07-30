@@ -769,6 +769,29 @@ function Schema:PlayerCanUseEntityInVehicle(player, entity, vehicle)
 	end;
 end;
 
+local voltistSounds = {"npc/scanner/combat_scan4.wav", "npc/scanner/combat_scan5.wav", "npc/scanner/combat_scan1.wav", "npc/scanner/combat_scan2.wav", "npc/scanner/combat_scan3.wav", "npc/scanner/cbot_servochatter.wav", "npc/scanner/scanner_talk1.wav", "npc/scanner/scanner_talk2.wav"};
+local voltistYellSounds = {"npc/scanner/scanner_siren2.wav", "npc/scanner/scanner_pain2.wav", "npc/stalker/go_alert2.wav"};
+
+function Schema:PlayerSayICEmitSound(player)
+	if player:GetSubfaith() == "Voltism" then
+		if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
+			if !Clockwork.player:HasFlags(player, "T") then
+				player:EmitSound(voltistSounds[math.random(1, #voltistSounds)], 90, 150);
+			end
+		end
+	end
+end
+
+function Schema:PlayerYellEmitSound(player)
+	if player:GetSubfaith() == "Voltism" then
+		if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
+			if !Clockwork.player:HasFlags(player, "T") then
+				player:EmitSound(voltistYellSounds[math.random(1, #voltistYellSounds)], 90, 150);
+			end
+		end
+	end
+end
+
 -- Called when a player presses a key.
 function Schema:KeyPress(player, key)
 	if (key == IN_USE) then

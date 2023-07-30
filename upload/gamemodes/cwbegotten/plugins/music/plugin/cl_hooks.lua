@@ -183,11 +183,11 @@ function cwMusic:Tick()
 	if (!cwMusic.AmbientMusicChangeCooldown or cwMusic.AmbientMusicChangeCooldown < curTime) then
 		cwMusic.AmbientMusicChangeCooldown = curTime + 5;
 
-		if (cwMusic.HasInitialized == nil) then
+		if (Clockwork.Client.HasInitialized == nil) then
 			return;
 		end
 		
-		if cwMusic:HasInitialized() and Clockwork.Client:Alive() then
+		if Clockwork.Client:HasInitialized() and Clockwork.Client:Alive() then
 			if (!Clockwork.menu:GetOpen()) and (!Clockwork.kernel:IsChoosingCharacter()) then
 				if self:CanPlayAmbientMusic() then
 					self:StartAmbientMusic();

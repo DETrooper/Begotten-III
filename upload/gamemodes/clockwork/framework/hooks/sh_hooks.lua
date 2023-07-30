@@ -57,6 +57,14 @@ do
 		end
 
 		player.cwAnimTable = animCache[strNewModel]
+		
+		if (SERVER) then
+			local hands = player:GetHands()
+			
+			if (IsValid(hands) and hands:IsValid()) then
+				self:PlayerSetHandsModel(player, player:GetHands())
+			end
+		end
 	end
 
 	local vectorAngle = FindMetaTable("Vector").Angle

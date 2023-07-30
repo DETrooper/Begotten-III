@@ -334,15 +334,6 @@ function GM:DatabaseConnectionFailed()
 	Clockwork.database:Error(errText)
 end
 
--- Called when a player's model has changed.
-function GM:PlayerModelChanged(player, model)
-	local hands = player:GetHands()
-
-	if (IsValid(hands) and hands:IsValid()) then
-		self:PlayerSetHandsModel(player, player:GetHands())
-	end
-end
-
 -- Called when a player's saved inventory should be added to.
 function GM:PlayerAddToSavedInventory(player, character, Callback)
 	for k, v in pairs(player:GetWeapons()) do
