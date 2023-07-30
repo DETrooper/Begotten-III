@@ -6,7 +6,7 @@
 
 ## Credits
 ### Team Members
-DETrooper - Lead Programmer/Mapper
+DETrooper - Lead Programmer/Mapper/Animator
 
 gabs - Lead Designer/Model Porting & Rigging
 
