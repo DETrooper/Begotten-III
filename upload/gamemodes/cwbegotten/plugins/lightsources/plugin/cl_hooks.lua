@@ -87,6 +87,10 @@ function cwLantern:Think()
 		local originalSize = 256;
 
 		if (currentOil < 25) then
+			if currentOil <= 0 then
+				continue;
+			end
+		
 			originalSize = math.Remap(currentOil, 0, 25, 64, originalSize);
 		end;
 		
