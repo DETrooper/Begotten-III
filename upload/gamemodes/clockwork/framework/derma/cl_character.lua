@@ -3997,8 +3997,7 @@ Clockwork.datastream:Hook("CharacterFinish", function(data)
 		Clockwork.Client:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 0.1, 1.2);
 		
 		timer.Simple(0.2, function()
-			Clockwork.character:SetPanelMainMenu();
-			Clockwork.character:SetPanelOpen(false, true);
+			Clockwork.character:SetPanelOpen(false);
 			Clockwork.character:SetFault(nil);
 		end);
 		

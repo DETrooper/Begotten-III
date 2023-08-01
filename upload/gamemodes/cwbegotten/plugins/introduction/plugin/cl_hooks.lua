@@ -1,6 +1,9 @@
 --[[
 	Begotten III: Jesus Wept
 --]]
+
+CW_CONVAR_INTROENABLED = Clockwork.kernel:CreateClientConVar("cwIntroEnabled", 1, true, true)
+
 ColorMaterial = Material("pp/colour")
 -- A function to get a text's width.
 local function GetFontWidth(font, text)
@@ -38,6 +41,27 @@ local tasbdsd = {["$pp_colour_brightness"] = -.1,["$pp_colour_contrast"] = 0.7,[
 local tabcrosstobear = {["$pp_colour_addr"] = 0, ["$pp_colour_brightness"] = 0.1, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.25, ["$pp_colour_mulr"] = 0.25, ["$pp_colour_mulg"] = 0.1, ["$pp_colour_mulb"] = 0.1}
 local blockEffects = false;
 Clockwork.datastream:Hook("MenuIntro", function(data)
+	if (CW_CONVAR_INTROENABLED:GetInt() ~= 1) then
+		if not Clockwork.quiz:GetCompleted() then
+			Clockwork.quiz.completed = true;
+		end
+		
+		if Clockwork.Client.MusicSound then
+			Clockwork.Client.MusicSound:Stop();
+		end
+		
+		if (!CW_CONVAR_MENUMUSIC or CW_CONVAR_MENUMUSIC:GetInt() == 1) then
+			Clockwork.Client.MusicSound = CreateSound(LocalPlayer(), "begotten3soundtrack/event/cross_to_bear.mp3")
+			Clockwork.Client.MusicSound:PlayEx(1, 100)
+		end
+		
+		Clockwork.Client.MusicFading = false
+		Clockwork.Client.Intros = CurTime()
+		cwIntroduction.DefaultIntro = true
+	
+		return;
+	end
+
 	Clockwork.Client.Pending = true
 	timer.Simple(0.15, function()
 		Clockwork.Client.Pending = nil
@@ -63,7 +87,7 @@ local redpent = Material("begotten/pentagram_red.png")
 
 -- Called to get whether the character menu should be created.
 function cwIntroduction:ShouldCharacterMenuBeCreated()
-	if (Clockwork.Client.Pending or (Clockwork.Client.Intros and Clockwork.Client.Intros > CurTime()) or Clockwork.Client.MenuAp and Clockwork.Client.MenuAp > CurTime()) then
+	if (CW_CONVAR_INTROENABLED:GetInt() == 1) and (Clockwork.Client.Pending or (Clockwork.Client.Intros and Clockwork.Client.Intros > CurTime()) or Clockwork.Client.MenuAp and Clockwork.Client.MenuAp > CurTime()) then
 		return false
 	end
 end
@@ -137,6 +161,32 @@ local oth = (scrH * 0.51)
 
 local intsa = {0.25,0.48,2.2,2.35,2.52,2.95,8.219,8.372,8.524}
 Clockwork.datastream:Hook("JesusWeptIntro", function(data)
+	if (CW_CONVAR_INTROENABLED:GetInt() ~= 1) then
+		if not Clockwork.quiz:GetCompleted() then
+			Clockwork.quiz.completed = true;
+		end
+		
+		if Clockwork.Client.MusicSound then
+			Clockwork.Client.MusicSound:Stop();
+		end
+		
+		if (!CW_CONVAR_MENUMUSIC or CW_CONVAR_MENUMUSIC:GetInt() == 1) then
+			Clockwork.Client.MusicSound = CreateSound(LocalPlayer(), "begotten3soundtrack/title/jesus_wept.mp3")
+			Clockwork.Client.MusicSound:PlayEx(0.4, 100)
+		end
+		
+		Clockwork.Client.MusicFading = false
+		cwIntroduction.JesusWeptIntro = CurTime()
+		Clockwork.Client.JseR = true
+		Clockwork.Client.IIIShown = true
+		Clockwork.Client.BegottenShown = true
+		Clockwork.Client.JEsusWeptShown = true
+		Clockwork.Client.LogoAppear = true
+		Clockwork.Client.MenuAp = CurTime();
+	
+		return;
+	end
+
 	Clockwork.Client.Pending = true
 	
 	timer.Simple(0.15, function()
@@ -804,3 +854,5 @@ function cwIntroduction:RenderScreenspaceEffects()
 		end
 	end;
 end
+
+Clockwork.setting:AddCheckBox("Introduction", "Enable main menu intro sequence.", "cwIntroEnabled", "Click to enable/disable the main menu introduction sequence.")
