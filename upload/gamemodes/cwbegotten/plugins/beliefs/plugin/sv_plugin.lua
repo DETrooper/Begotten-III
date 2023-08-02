@@ -269,16 +269,13 @@ function cwBeliefs:LevelUp(player)
 	end
 end
 
+--Improved algorithm, we removed the nested loop and made a return with 2 comparissons
+--and a direct access to the beliefs table values via uniqueID (the 'key' thinking of it as a hash map)
 -- A function to get if a belief actually exists.
 function cwBeliefs:BeliefIsValid(uniqueID)
-	for k, v in pairs(self.beliefTable) do
-		if v[uniqueID] or uniqueID == k.."_finisher" then
-			return true
-		end
-	end
-	
-	return false;
+    return self.beliefTable[uniqueID] or self.beliefTable[uniqueID.."_finisher"] or false
 end
+
 
 -- A function to get if a player has the requirements for a belief or not.
 function cwBeliefs:ResolveBelief(player, uniqueID, category, beliefs)
@@ -363,92 +360,104 @@ function cwBeliefs:TakeBelief(player, uniqueID, niceName, category)
 	end;
 end;
 
+
+-- Improved search of belief via ID as ID is the 'key' or index of the belief.
+-- this removes double nest and makes search faster.
 function cwBeliefs:ForceTakeBelief(player, uniqueID)
-	local beliefs = player:GetCharacterData("beliefs");
+	local beliefs = player:GetCharacterData("beliefs", {});
 	
-	if !beliefs[uniqueID] then
-		local category;
+	if not beliefs[uniqueID] then
+		local category = nil;
 
 		for k, v in pairs(self.beliefTable) do
-			for k2, v2 in pairs(v) do
-				if k2 == uniqueID then
-					category = k;
-					break;
-				end
+			if v[uniqueID] then
+				category = k;
+				break;
 			end
 		end
-		
-		beliefs[uniqueID] = true
-		player:SetCharacterData("beliefs", beliefs);
-		
-		hook.Run("BeliefTaken", player, uniqueID, category);
-	end
-end
 
+		if category then
+			beliefs[uniqueID] = true
+			player:SetCharacterData("beliefs", beliefs);
+
+			hook.Run("BeliefTaken", player, uniqueID, category);
+		end
+	end
+end;
+
+--Improved local function removeBeliefAndDependencies and small algorithm to find the category of the belief, now
+--we access the belief my uniqueID and by implementing recursivity for the removeBeliefAndDependencies function, 
+--we eliminate one level of nesting
 function cwBeliefs:ForceRemoveBelief(player, uniqueID, bRemoveDependencies)
-	local beliefs = player:GetCharacterData("beliefs");
-	local levels_to_remove = 1;
+	local beliefs = player:GetCharacterData("beliefs")
+	local levels_to_remove = 1
 	
 	if beliefs[uniqueID] then
-		local category;
+		local category
 
-		for k, v in pairs(self.beliefTable) do
-			for k2, v2 in pairs(v) do
-				if k2 == uniqueID then
-					category = k;
-					break;
+		-- Find the category of the belief
+		for categoryKey, categoryTable in pairs(self.beliefTable) do
+			if categoryTable[uniqueID] then
+				category = categoryKey
+				break
+			end
+		end
+
+		-- Function to remove a belief and its dependencies
+		local function removeBeliefAndDependencies(beliefKey)
+			if beliefs[beliefKey] then
+				beliefs[beliefKey] = false
+				levels_to_remove = levels_to_remove + 1
+
+				if self.beliefsToSubfaiths[beliefKey] then
+					player:SetSharedVar("subfaith", nil)
+					player:GetCharacter().subfaith = nil
+				end
+
+				-- Remove dependencies recursively
+				local requirements = self.beliefTable[category]
+				if requirements then
+					for requiredKey, requiredValues in pairs(requirements) do
+						if table.HasValue(requiredValues, beliefKey) then
+							removeBeliefAndDependencies(requiredKey)
+						end
+					end
 				end
 			end
 		end
-		
-		if self.beliefsToSubfaiths[uniqueID] then
-			--player:SetCharacterData("subfaith", nil);
-			player:SetSharedVar("subfaith", nil);
-			player:GetCharacter().subfaith = nil;
-		end
-		
-		beliefs[uniqueID] = false;
-		
-		if bRemoveDependencies and category then
-			local requirements = self.beliefTable[category]; 
 
-			for k, v in pairs (requirements) do
-				if (table.HasValue(v, uniqueID)) then
-					if self.beliefsToSubfaiths[k] then
-						--player:SetCharacterData("subfaith", nil);
-						player:SetSharedVar("subfaith", nil);
-						player:GetCharacter().subfaith = nil;
-					end
-				
-					beliefs[k] = false;
-					levels_to_remove = levels_to_remove + 1;
-				end;
-			end;
+		-- Remove the belief and its dependencies if required
+		if bRemoveDependencies and category then
+			removeBeliefAndDependencies(uniqueID)
 		end
-		
-		local max_poise = player:GetMaxPoise();
-		local poise = player:GetNWInt("meleeStamina");
-		local max_stamina = player:GetMaxStamina();
-		local max_stability = player:GetMaxStability();
-		local stamina = player:GetNetVar("Stamina", 100);
-		
-		player:SetMaxHealth(player:GetMaxHealth());
-		player:SetNWInt("maxStability", max_stability);
-		player:SetNWInt("maxMeleeStamina", max_poise);
-		player:SetNWInt("meleeStamina", math.min(poise, max_poise));
-		player:SetNetVar("Max_Stamina", max_stamina);
-		player:SetCharacterData("Max_Stamina", max_stamina);
-		player:SetNetVar("Stamina", math.min(stamina, max_stamina));
-		player:SetCharacterData("Stamina", math.min(stamina, max_stamina));
-		cwBeliefs:ResetBeliefSharedVars(player);
-		
+
+		-- Reset stats and save character
+		local max_poise = player:GetMaxPoise()
+		local poise = player:GetNWInt("meleeStamina")
+		local max_stamina = player:GetMaxStamina()
+		local max_stability = player:GetMaxStability()
+		local stamina = player:GetNetVar("Stamina", 100)
+
+		player:SetMaxHealth(player:GetMaxHealth())
+		player:SetNWInt("maxStability", max_stability)
+		player:SetNWInt("maxMeleeStamina", max_poise)
+		player:SetNWInt("meleeStamina", math.min(poise, max_poise))
+		player:SetNetVar("Max_Stamina", max_stamina)
+		player:SetCharacterData("Max_Stamina", max_stamina)
+		player:SetNetVar("Stamina", math.min(stamina, max_stamina))
+		player:SetCharacterData("Stamina", math.min(stamina, max_stamina))
+		cwBeliefs:ResetBeliefSharedVars(player)
+
 		hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true)
-		
-		player:SetCharacterData("beliefs", beliefs);
-		player:SetCharacterData("level", math.max(player:GetCharacterData("level", 1) - levels_to_remove, 1));
-		player:SaveCharacter();
+
+		player:SetCharacterData("beliefs", beliefs)
+		player:SetCharacterData("level", math.max(player:GetCharacterData("level", 1) - levels_to_remove, 1))
+		player:SaveCharacter()
 	end
 end
+
+
+
 
 function cwBeliefs:SetSacramentLevel(player, level)
 	local beliefs = player:GetCharacterData("beliefs");
@@ -488,16 +497,15 @@ netstream.Hook("TakeBelief", function(player, data)
 	cwBeliefs:TakeBelief(player, data[1], data[2], data[3]);
 end)
 
+--We removed a loop to access directly to the keys of the beliefTable :)
 concommand.Add("listbeliefs", function(player)
-	if (player:IsAdmin()) then
+	if player:IsAdmin() then
 		local beliefs = cwBeliefs.beliefTable;
 		
 		if beliefs then
-			for k, v in pairs (beliefs) do
-				for k2, v2 in pairs(v) do
-					print(k2);
-				end
-			end;
-		end;
-	end;
+			for beliefName, beliefData in pairs(beliefs) do
+				print(beliefName);
+			end
+		end
+	end
 end)
