@@ -385,74 +385,67 @@ function cwBeliefs:ForceTakeBelief(player, uniqueID)
 	end
 end;
 
---Improved local function removeBeliefAndDependencies and small algorithm to find the category of the belief, now
---we access the belief my uniqueID and by implementing recursivity for the removeBeliefAndDependencies function, 
---we eliminate one level of nesting
+--Removed second nest of small algorithm to find the category of the belief
 function cwBeliefs:ForceRemoveBelief(player, uniqueID, bRemoveDependencies)
-	local beliefs = player:GetCharacterData("beliefs")
-	local levels_to_remove = 1
-	
+	local beliefs = player:GetCharacterData("beliefs");
+	local levels_to_remove = 1;
+
 	if beliefs[uniqueID] then
-		local category
+		local category = nil;
 
-		-- Find the category of the belief
-		for categoryKey, categoryTable in pairs(self.beliefTable) do
-			if categoryTable[uniqueID] then
-				category = categoryKey
-				break
+		for k, v in pairs(self.beliefTable) do
+			if v[uniqueID] then
+				category = k;
+				break;
 			end
 		end
 
-		-- Function to remove a belief and its dependencies
-		local function removeBeliefAndDependencies(beliefKey)
-			if beliefs[beliefKey] then
-				beliefs[beliefKey] = false
-				levels_to_remove = levels_to_remove + 1
-
-				if self.beliefsToSubfaiths[beliefKey] then
-					player:SetSharedVar("subfaith", nil)
-					player:GetCharacter().subfaith = nil
-				end
-
-				-- Remove dependencies recursively
-				local requirements = self.beliefTable[category]
-				if requirements then
-					for requiredKey, requiredValues in pairs(requirements) do
-						if table.HasValue(requiredValues, beliefKey) then
-							removeBeliefAndDependencies(requiredKey)
-						end
-					end
-				end
-			end
+		if self.beliefsToSubfaiths[uniqueID] then
+			--player:SetCharacterData("subfaith", nil);
+			player:SetSharedVar("subfaith", nil);
+			player:GetCharacter().subfaith = nil;
 		end
 
-		-- Remove the belief and its dependencies if required
+		beliefs[uniqueID] = false;
+
 		if bRemoveDependencies and category then
-			removeBeliefAndDependencies(uniqueID)
+			local requirements = self.beliefTable[category]; 
+
+			for k, v in pairs (requirements) do
+				if (table.HasValue(v, uniqueID)) then
+					if self.beliefsToSubfaiths[k] then
+						--player:SetCharacterData("subfaith", nil);
+						player:SetSharedVar("subfaith", nil);
+						player:GetCharacter().subfaith = nil;
+					end
+
+					beliefs[k] = false;
+					levels_to_remove = levels_to_remove + 1;
+				end;
+			end;
 		end
 
-		-- Reset stats and save character
-		local max_poise = player:GetMaxPoise()
-		local poise = player:GetNWInt("meleeStamina")
-		local max_stamina = player:GetMaxStamina()
-		local max_stability = player:GetMaxStability()
-		local stamina = player:GetNetVar("Stamina", 100)
+		local max_poise = player:GetMaxPoise();
+		local poise = player:GetNWInt("meleeStamina");
+		local max_stamina = player:GetMaxStamina();
+		local max_stability = player:GetMaxStability();
+		local stamina = player:GetNetVar("Stamina", 100);
 
-		player:SetMaxHealth(player:GetMaxHealth())
-		player:SetNWInt("maxStability", max_stability)
-		player:SetNWInt("maxMeleeStamina", max_poise)
-		player:SetNWInt("meleeStamina", math.min(poise, max_poise))
-		player:SetNetVar("Max_Stamina", max_stamina)
-		player:SetCharacterData("Max_Stamina", max_stamina)
-		player:SetNetVar("Stamina", math.min(stamina, max_stamina))
-		player:SetCharacterData("Stamina", math.min(stamina, max_stamina))
-		cwBeliefs:ResetBeliefSharedVars(player)
+		player:SetMaxHealth(player:GetMaxHealth());
+		player:SetNWInt("maxStability", max_stability);
+		player:SetNWInt("maxMeleeStamina", max_poise);
+		player:SetNWInt("meleeStamina", math.min(poise, max_poise));
+		player:SetNetVar("Max_Stamina", max_stamina);
+		player:SetCharacterData("Max_Stamina", max_stamina);
+		player:SetNetVar("Stamina", math.min(stamina, max_stamina));
+		player:SetCharacterData("Stamina", math.min(stamina, max_stamina));
+		cwBeliefs:ResetBeliefSharedVars(player);
 
 		hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true)
-
-		player:SetCharacterData("beliefs", beliefs)
-		player:SetCharacterData("level", math.max(player:GetCharacterData("level", 1) - levels_to_remove, 1))
-		player:SaveCharacter()
+		
+		player:SetCharacterData("beliefs", beliefs);
+		player:SetCharacterData("level", math.max(player:GetCharacterData("level", 1) - levels_to_remove, 1));
+		player:SaveCharacter();
 	end
 end
 
