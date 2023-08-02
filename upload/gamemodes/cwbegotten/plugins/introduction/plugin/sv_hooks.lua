@@ -29,8 +29,8 @@ function cwIntroduction:PlayerDataLoaded(player)
 			else
 				Clockwork.datastream:Start(player, "MenuIntro", true);
 			end
-		else
-			netstream.Start(player, "QuizCompleted", false)
+		--else
+			--netstream.Start(player, "QuizCompleted", false)
 		end
 		
 		--Clockwork.datastream:Start(player, "JesusWeptIntro", true);

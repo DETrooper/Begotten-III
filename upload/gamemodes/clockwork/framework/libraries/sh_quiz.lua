@@ -114,11 +114,13 @@ else
 
 		netstream.Start(player, "QuizCompleted", completed)
 		
-		timer.Simple(4, function()
-			if IsValid(player) then
-				netstream.Start(player, "JesusWeptIntro", true);
-			end
-		end);
+		if completed then
+			timer.Simple(4, function()
+				if IsValid(player) then
+					netstream.Start(player, "JesusWeptIntro", false);
+				end
+			end);
+		end
 	end
 
 	-- A function to get whether a player has completed the quiz.

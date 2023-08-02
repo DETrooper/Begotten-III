@@ -40,8 +40,8 @@ local tasbds1r = {["$pp_colour_brightness"] = -.07,["$pp_colour_contrast"] = 2,[
 local tasbdsd = {["$pp_colour_brightness"] = -.1,["$pp_colour_contrast"] = 0.7,["$pp_colour_colour"] = 0,["$pp_colour_mulr"] = 3, }
 local tabcrosstobear = {["$pp_colour_addr"] = 0, ["$pp_colour_brightness"] = 0.1, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.25, ["$pp_colour_mulr"] = 0.25, ["$pp_colour_mulg"] = 0.1, ["$pp_colour_mulb"] = 0.1}
 local blockEffects = false;
-Clockwork.datastream:Hook("MenuIntro", function(data)
-	if (CW_CONVAR_INTROENABLED:GetInt() ~= 1) then
+Clockwork.datastream:Hook("MenuIntro", function(skip_enabled)
+	if (CW_CONVAR_INTROENABLED:GetInt() ~= 1) and skip_enabled then
 		if not Clockwork.quiz:GetCompleted() then
 			Clockwork.quiz.completed = true;
 		end
@@ -55,6 +55,7 @@ Clockwork.datastream:Hook("MenuIntro", function(data)
 			Clockwork.Client.MusicSound:PlayEx(1, 100)
 		end
 		
+		Clockwork.Client.Pending = nil
 		Clockwork.Client.MusicFading = false
 		Clockwork.Client.Intros = CurTime()
 		cwIntroduction.DefaultIntro = true
@@ -62,7 +63,6 @@ Clockwork.datastream:Hook("MenuIntro", function(data)
 		return;
 	end
 
-	Clockwork.Client.Pending = true
 	timer.Simple(0.15, function()
 		Clockwork.Client.Pending = nil
 NODAs = nil NODA = nil Stuat = nil CANSINTRO = nil Clockwork.Client.Intros = nil stat = nil rawa = nil times = nil timeas = nil
@@ -85,9 +85,9 @@ end)
 end)
 local redpent = Material("begotten/pentagram_red.png")
 
--- Called to get whether the character menu should be created.
-function cwIntroduction:ShouldCharacterMenuBeCreated()
-	if (CW_CONVAR_INTROENABLED:GetInt() == 1) and (Clockwork.Client.Pending or (Clockwork.Client.Intros and Clockwork.Client.Intros > CurTime()) or Clockwork.Client.MenuAp and Clockwork.Client.MenuAp > CurTime()) then
+-- Called to get whether the local player's character screen is visible.
+function cwIntroduction:GetPlayerCharacterScreenVisible(panel)
+	if (Clockwork.Client.Pending or (Clockwork.Client.Intros and Clockwork.Client.Intros > CurTime()) or Clockwork.Client.MenuAp and Clockwork.Client.MenuAp > CurTime()) then
 		return false
 	end
 end
@@ -160,8 +160,8 @@ local haflfHE = (scrH * 0.56)
 local oth = (scrH * 0.51)
 
 local intsa = {0.25,0.48,2.2,2.35,2.52,2.95,8.219,8.372,8.524}
-Clockwork.datastream:Hook("JesusWeptIntro", function(data)
-	if (CW_CONVAR_INTROENABLED:GetInt() ~= 1) then
+Clockwork.datastream:Hook("JesusWeptIntro", function(skip_enabled)
+	if (CW_CONVAR_INTROENABLED:GetInt() ~= 1) and skip_enabled then
 		if not Clockwork.quiz:GetCompleted() then
 			Clockwork.quiz.completed = true;
 		end
@@ -175,6 +175,7 @@ Clockwork.datastream:Hook("JesusWeptIntro", function(data)
 			Clockwork.Client.MusicSound:PlayEx(0.4, 100)
 		end
 		
+		Clockwork.Client.Pending = nil;
 		Clockwork.Client.MusicFading = false
 		cwIntroduction.JesusWeptIntro = CurTime()
 		Clockwork.Client.JseR = true

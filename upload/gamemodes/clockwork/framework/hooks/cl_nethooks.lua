@@ -167,10 +167,9 @@ netstream.Hook("DataStreamed", function(data)
 end)
 
 netstream.Hook("QuizCompleted", function(data)
-	Clockwork.Client.Pending = true;
-	
 	if (!data) then
 		if (!Clockwork.quiz:GetCompleted()) then
+			Clockwork.Client.Pending = true;
 			gui.EnableScreenClicker(true)
 
 			Clockwork.quiz.panel = vgui.Create("cwQuiz")

@@ -500,11 +500,11 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 
 								player.cwIsCreatingChar = nil
 
-								local characters = player:GetCharacters()
+								--[[local characters = player:GetCharacters()
 
 								if (table.Count(characters) == 1) then
 									self:UseCharacter(player, characterID)
-								end
+								end]]--
 							end
 						)
 					end

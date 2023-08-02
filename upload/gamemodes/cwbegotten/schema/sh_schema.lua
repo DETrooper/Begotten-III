@@ -87,9 +87,6 @@ if (SERVER) then
 	end);
 end;
 
-function Schema:SetupMove(player, moveData)
-end;
-
 for k, v in pairs (Clockwork.command:GetAll()) do
 	if (Schema.eventDisabledCommands[string.lower(v.name)]) then
 		Clockwork.command:SetHidden(v.name, true);
@@ -100,6 +97,17 @@ end;
 function Schema:GetPlayerNameColor(player, color, playerTeam)
 	return false;
 end;
+
+function Schema:InitPostEntity()
+	-- Make toolgun silent/effectless.
+	local toolgun = weapons.GetStored("gmod_tool");
+
+	if toolgun then
+		function toolgun:DoShootEffect()
+			-- do nothing
+		end
+	end
+end
 
 Clockwork.kernel:IncludePrefixed("cl_zones.lua");
 Clockwork.kernel:IncludePrefixed("cl_schema.lua");
