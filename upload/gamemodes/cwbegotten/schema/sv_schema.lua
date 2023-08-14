@@ -2055,19 +2055,23 @@ end;
 function Schema:ScriptedDeath(player, deathcause)
 	local stingers = {"begotten/score5.mp3", "begotten/score6.mp3"};
 	
+	player.scriptedDying = true;
 	player:Freeze(true);
 	player:SetCharacterData("permakilled", true); -- In case the player tries to d/c to avoid their fate.
 	Clockwork.datastream:Start(player, "FadeAllMusic");
 	
 	timer.Simple(3, function()
-		if IsValid(player) then
+		if IsValid(player) and player.scriptedDying then
 			Clockwork.datastream:Start(player, "Stunned", 2);
 			Clockwork.player:PlaySound(player, stingers[math.random(1, #stingers)]);
 			
 			timer.Simple(8, function()
-				if IsValid(player) then
+				if IsValid(player) and player.scriptedDying then
 					player:Kill();
 					player:Freeze(false);
+					
+					-- it should become false when the player dies but let's just make sure anyway
+					player.scriptedDying = false;
 					
 					if deathcause then
 						player:DeathCauseOverride(deathcause);

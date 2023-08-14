@@ -875,6 +875,10 @@ function Schema:PlayerCanSwitchCharacter(player, character)
 	if player.teleporting then
 		return false, "You cannot switch to this character while in the process of teleporting!";
 	end
+	
+	if player.scriptedDying then
+		return false, "You cannot switch to this character while your current character is dying!";
+	end
 end;
 
 -- Called when a player's death info should be adjusted.
@@ -1840,6 +1844,10 @@ function Schema:PlayerDeath(player, inflictor, attacker, damageInfo)
 	
 	if player.banners then
 		player.banners = {};
+	end
+	
+	if player.scriptedDying then
+		player.scriptedDying = false;
 	end
 	
 	-- Gore sacrifice shit.
