@@ -486,6 +486,8 @@ function Clockwork.character:SetPanelOpen(open, bReset)
 			panel:ReturnToMainMenu();
 			panel:SetVisible(self:IsPanelOpen());
 		end;
+		
+		hook.Run("CharacterPanelClosed");
 	elseif (panel) then
 		panel:SetVisible(true);
 		panel.createTime = SysTime();

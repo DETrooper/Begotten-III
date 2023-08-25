@@ -516,6 +516,10 @@ function cwMapScene:ShouldDrawCharacterBackground()
 	if (self.curStored) then return false end
 end
 
+function cwMapScene:CharacterPanelClosed()
+	Clockwork.Client.MapscenePosition = nil;
+end
+
 -- Called when the view should be calculated.
 function cwMapScene:CalcView(player, origin, angles, fov)
 	if (Clockwork.kernel:IsChoosingCharacter()) then

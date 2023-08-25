@@ -2103,8 +2103,8 @@ function GM:PlayerSetModel(player)
 end
 
 -- Called to check if a player does have door access.
-function Clockwork:PlayerDoesHaveDoorAccess(player, door, access, isAccurate)
-	if (cwEntity:GetOwner(door) != player) then
+function GM:PlayerDoesHaveDoorAccess(player, door, access, isAccurate)
+	if (Clockwork.entity:GetOwner(door) != player) then
 		local key = player:GetCharacterKey();
 		
 		if (door.accessList and door.accessList[key]) then

@@ -54,7 +54,7 @@ function cwBeliefs:AddEntityOutlines(outlines)
 		
 		for k, v in pairs(_player.GetAll()) do
 			if v ~= Clockwork.Client and v:HasInitialized() and v:Alive() then
-				if hasAssassin and v:Health() < v:GetMaxHealth() / 4 or v:GetRagdollState() == RAGDOLL_FALLENOVER then
+				if hasAssassin and (v:Health() < v:GetMaxHealth() / 4 or v:GetRagdollState() == RAGDOLL_FALLENOVER) then
 					if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= assassinDist) then
 						self:DrawPlayerOutline(v, outlines, Color(180, 0, 0, 255));
 						

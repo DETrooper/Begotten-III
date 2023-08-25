@@ -1544,8 +1544,14 @@ function Schema:SpawnBegottenEntities()
 		coinslotBase:PhysicsInit(SOLID_VPHYSICS);
 		coinslotBase:SetSolid(SOLID_VPHYSICS);
 		coinslotBase:Spawn();
-		coinslotBase:GetPhysicsObject():Wake();
-		coinslotBase:GetPhysicsObject():EnableMotion(false);
+		
+		local physObject = coinslotBase:GetPhysicsObject();
+		
+		if IsValid(physObject) then
+			coinslotBase:GetPhysicsObject():Wake();
+			coinslotBase:GetPhysicsObject():EnableMotion(false);
+		end
+		
 		coinslotEnt:SetPos(Vector(8.9375, 13292.5, -1031.28125));
 		coinslotEnt:SetAngles(Angle(0, 180, 0));
 		coinslotEnt:Spawn();

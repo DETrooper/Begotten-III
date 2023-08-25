@@ -60,34 +60,30 @@ function playerMeta:SensesOn(bRightClick)
 		end
 		
 		self:SetNWBool("senses", true);
-		self.sensesOn = true
+		self.sensesOn = true;
 	end
 end;
 
 -- A function to handle a player's senses.
 function playerMeta:SensesOff()
-	local senses = self:GetWeapon("cw_senses");
-
-	if (IsValid(senses) and  self:Alive() and !self:IsRagdolled()) then
-		if self:GetNWBool("hasThermal") or self:GetNWBool("hasNV") then
-			if self:GetNWBool("hasThermal") then
-				self:SetNWBool("hasThermal", false);
-			end
-			
-			if self:GetNWBool("hasNV") then
-				self:SetNWBool("hasNV", false);
-			end
-			
-			if !self.cwObserverMode then
-				self:EmitSound("items/nvg_off.wav");
-			end
-		else
-			Clockwork.datastream:Start(self, "Stunned", 1.5);
-			Clockwork.datastream:Start(self, "PlaySound", "begotten/ambient/hits/disappear.mp3");
+	if self:GetNWBool("hasThermal") or self:GetNWBool("hasNV") then
+		if self:GetNWBool("hasThermal") then
+			self:SetNWBool("hasThermal", false);
 		end
 		
-		self:SetNWBool("senses", false);
-		self.sensesOn = nil
-		self:SetDSP(0);
-	end;
+		if self:GetNWBool("hasNV") then
+			self:SetNWBool("hasNV", false);
+		end
+		
+		if !self.cwObserverMode and self:Alive() then
+			self:EmitSound("items/nvg_off.wav");
+		end
+	elseif self:Alive() then
+		Clockwork.datastream:Start(self, "Stunned", 1.5);
+		Clockwork.datastream:Start(self, "PlaySound", "begotten/ambient/hits/disappear.mp3");
+	end
+	
+	self:SetNWBool("senses", false);
+	self.sensesOn = nil;
+	self:SetDSP(0);
 end;
