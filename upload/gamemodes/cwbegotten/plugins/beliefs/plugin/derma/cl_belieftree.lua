@@ -1130,7 +1130,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 			parent = self.brutality,
 			uniqueID = "savage",
 			niceName = "Savage",
-			description = "Unlocks the 'Cannibalism' mechanic. Meat from corpses can be harvested for sustenance.",
+			description = "Unlocks the 'Cannibalism' mechanic. Meat from corpses can be harvested for sustenance. Gain sanity from consuming cooked human meat.",
 			x = column[3],
 			y = row[1],
 			width = 48,

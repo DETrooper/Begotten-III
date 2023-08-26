@@ -1621,6 +1621,12 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 				return false;
 			end
 			
+			if player:GetNWBool("Parried") == true then
+				Schema:EasyText(player, "peru", "You are too discombobulated to helljaunt right now!");
+				
+				return false;
+			end
+			
 			if not player.opponent and not player:IsRagdolled() and player:GetSharedVar("tied") == 0 then
 				local lastZone = player:GetCharacterData("LastZone");
 				

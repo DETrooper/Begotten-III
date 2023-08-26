@@ -44,23 +44,29 @@ function COMMAND:OnRun(player, arguments)
 			player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
 			Schema:EasyText(player, "olivedrab", "You drink from the pure waters of the Gore Forest, quenching your thirst.");
 		else
-			if player.drownedKingActive then
+			if cwRituals and player.drownedKingActive then
 				player:HandleNeed("thirst", -25);
 				player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
 				Schema:EasyText(player, "olivedrab", "You drink from the Begotten waters, but the protection of the Drowned King keeps you safe.");
 			else
-				if cwMedicalSystem then
-					if cwBeliefs and player:HasBelief("sanitary") then
-						player:HandleDiseaseChance("water", 33);
-					else
-						player:HandleDiseaseChance("water", 80);
+				if cwBeliefs and player:HasBelief("savage_animal") then
+					player:HandleNeed("thirst", -25);
+					player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
+					Schema:EasyText(player, "olivedrab", "You drink from the yummy Begotten waters.");
+				else
+					if cwMedicalSystem then
+						if cwBeliefs and player:HasBelief("sanitary") then
+							player:HandleDiseaseChance("water", 33);
+						else
+							player:HandleDiseaseChance("water", 80);
+						end
 					end
+				
+					player:HandleSanity(-10);
+					player:HandleNeed("thirst", -25);
+					player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
+					Schema:EasyText(player, "olive", "You drink from the Begotten waters. Who knows what foulness you have just consumed? You feel your sanity drain.");
 				end
-			
-				player:HandleSanity(-10);
-				player:HandleNeed("thirst", -25);
-				player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
-				Schema:EasyText(player, "olive", "You drink from the Begotten waters. Who knows what foulness you have just consumed? You feel your sanity drain.");
 			end
 		end
 	else

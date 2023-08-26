@@ -356,9 +356,9 @@ local ITEM = Clockwork.item:New();
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You engorge yourself on the fresh meat of another. You question your sanity.");
 			player:HandleSanity(-20);
-			
-			player:HandleXP(cwBeliefs.xpValues["food"]);
 		end
+		
+		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
 	-- Called when a player drops the item.
@@ -393,9 +393,9 @@ local ITEM = Clockwork.item:New();
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You eat the fucked meat and to your suprise, the meat is fucked! You spit out the worms and rot and are left with a sinking feeling of regret.");
 			player:HandleSanity(-25);
-			
-			player:HandleXP(cwBeliefs.xpValues["food"]);
 		end
+		
+		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
 	-- Called when a player drops the item.
@@ -488,7 +488,14 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		Schema:EasyText(player, "olivedrab", "You enjoy the savory taste of your fellow man.");
+		if player:HasBelief("cannibal") then
+			Schema:EasyText(player, "olivedrab", "You enjoy the savory taste of your fellow man.");
+			player:HandleSanity(10);
+		else
+			Schema:EasyText(player, "olivedrab", "This meat is prepared almost well enough to forget where it came from.");
+			player:HandleSanity(-2);
+		end
+		
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end
 
@@ -521,9 +528,9 @@ local ITEM = Clockwork.item:New();
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You feel fucking disgusted that you just ate something so foul. As a result you begin feel emotionally and mentally unstable.");
 			player:HandleSanity(-25);
-			
-			player:HandleXP(cwBeliefs.xpValues["food"]);
 		end
+		
+		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
 	-- Called when a player drops the item.
@@ -878,9 +885,9 @@ local ITEM = Clockwork.item:New();
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "The contents of the can have left you emotionally scarred and mentally deranged.");
 			player:HandleSanity(-95);
-			
-			player:HandleXP(cwBeliefs.xpValues["food"]);
 		end
+		
+		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
 	-- Called when a player drops the item.
@@ -968,9 +975,9 @@ local ITEM = Clockwork.item:New();
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "The contents of the can were so awful that you feel physically abused - throatfucked with an aftertaste that will never go away.. You no longer crave, only starve.");
 			player:HandleSanity(-15);
-			
-			player:HandleXP(cwBeliefs.xpValues["food"]);
 		end
+		
+		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
 	-- Called when a player drops the item.
