@@ -2807,7 +2807,8 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 				end
 				
 				if IsValid(ragdollTable.entity) then
-					ragdollTable.entity:SetNWEntity("Player", NULL);
+					-- Mark it worldspawn instead of nil so we know it used to be a player ragdoll.
+					ragdollTable.entity:SetNWEntity("Player", game.GetWorld());
 				end
 
 				if (state != RAGDOLL_RESET) then

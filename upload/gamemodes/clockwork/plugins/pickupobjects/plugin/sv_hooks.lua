@@ -183,11 +183,10 @@ function cwPickupObjects:KeyPress(player, key)
 										ragdollPlayer.BeingPickedUp = true;
 										ragdollPlayer.PickedUpBy = player;
 										
-										if Clockwork.player:GetAction(ragdollPlayer) == "unragdoll" then
+										if Clockwork.player:GetAction(ragdollPlayer) == "unragdoll" and ragdollPlayer:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT then
 											hook.Run("PlayerCancelGetUp", ragdollPlayer);
+											Clockwork.player:SetUnragdollTime(ragdollPlayer, nil);
 										end
-										
-										Clockwork.player:SetUnragdollTime(ragdollPlayer, nil);
 										
 										player:SetNWBool("PickingUpRagdoll", true);
 										Clockwork.chatBox:AddInTargetRadius(player, "me", "starts picking up the body before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);

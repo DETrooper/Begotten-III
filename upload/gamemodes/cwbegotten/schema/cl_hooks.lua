@@ -332,6 +332,12 @@ function Schema:PlayerCanZoom()
 	return false;
 end
 
+local animalModels = {
+	"models/animals/deer1.mdl",
+	"models/animals/goat.mdl",
+	"models/animals/bear.mdl",
+};
+
 -- Called when an entity's menu options are needed.
 function Schema:GetEntityMenuOptions(entity, options)
 	if Clockwork.Client:Alive() then
@@ -351,20 +357,20 @@ function Schema:GetEntityMenuOptions(entity, options)
 			if (!player or (player and (!player:Alive() or player:GetMoveType() ~= MOVETYPE_OBSERVER))) then
 				local model = entity:GetModel();
 				
-				if model == "models/animals/goat.mdl" or model == "models/animals/deer1.mdl" then
-					local activeWeapon = Clockwork.Client:GetActiveWeapon();
+				if table.HasValue(animalModels, entity:GetModel()) then
+					--local activeWeapon = Clockwork.Client:GetActiveWeapon();
 					
-					if IsValid(activeWeapon) and string.find(activeWeapon:GetClass(), "begotten_dagger") then
+					--if IsValid(activeWeapon) and string.find(activeWeapon:GetClass(), "begotten_dagger") then
 						options["Mutilate"] = "cwCorpseMutilate";
 						options["Skin"] = "cwCorpseSkin";
-					else
-						if !self.skinNotificationTimer or self.skinNotificationTimer < curTime then
-							Clockwork.chatBox:Add(nil, "icon16/error.png", Color(200, 175, 200, 255), "You must have a dagger equipped in order to skin or mutilate this animal!");
+					--else
+						--if !self.skinNotificationTimer or self.skinNotificationTimer < curTime then
+							--Clockwork.chatBox:Add(nil, "icon16/error.png", Color(200, 175, 200, 255), "You must have a dagger equipped in order to skin or mutilate this animal!");
 							
-							self.skinNotificationTimer = curTime + 0.5;
-						end
-					end
-				else
+							--self.skinNotificationTimer = curTime + 0.5;
+						--end
+					--end
+				elseif entity:GetNWEntity("Player"):IsPlayer() or entity:GetNWEntity("Player") == game.GetWorld() then
 					options["Pillage"] = "cw_corpseLoot";
 				end
 			end;

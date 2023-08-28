@@ -29,7 +29,8 @@ function cwGore:Think()
 				"models/gibs/antlion_gib_small_2.mdl",
 				"models/gibs/antlion_gib_small_1.mdl",
 				"models/props_junk/watermelon01_chunk02b.mdl",
-				"models/props_junk/watermelon01_chunk02c.mdl"
+				"models/props_junk/watermelon01_chunk02c.mdl",
+				"models/gibs/hgibs.mdl",
 			};
 			
 			if (table.HasValue(removeTable, v:GetModel())) then

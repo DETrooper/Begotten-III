@@ -8,22 +8,30 @@ local bannerDist = (1024 * 1024);
 local markedDist = (384 * 384);
 local overlay;
 
+local animalModels = {
+	"models/animals/deer1.mdl",
+	"models/animals/goat.mdl",
+	"models/animals/bear.mdl",
+};
+
 function cwBeliefs:GetEntityMenuOptions(entity, options)
 	if (entity:GetClass() == "prop_ragdoll") then
 		local player = Clockwork.entity:GetPlayer(entity);
 
 		if (!player or !player:Alive()) then
-			if (self:HasBelief("savage")) then
-				options["Mutilate"] = "cwCorpseMutilate";
-			end;
-			
-			if (self:HasBelief("heart_eater")) then
-				options["Eat Heart"] = "cwEatHeart";
-			end;
-			
-			if (self:HasBelief("primeval")) then
-				options["Harvest Bones"] = "cwHarvestBones";
-			end;
+			if entity:GetNWEntity("Player"):IsPlayer() or entity:GetNWEntity("Player") == game.GetWorld() or table.HasValue(animalModels, entity:GetModel()) then
+				if (self:HasBelief("savage")) then
+					options["Mutilate"] = "cwCorpseMutilate";
+				end;
+				
+				if (self:HasBelief("heart_eater")) then
+					options["Eat Heart"] = "cwEatHeart";
+				end;
+				
+				if (self:HasBelief("primeval")) then
+					options["Harvest Bones"] = "cwHarvestBones";
+				end;
+			end
 		end;
 	end;
 end;

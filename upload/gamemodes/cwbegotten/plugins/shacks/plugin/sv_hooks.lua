@@ -271,28 +271,30 @@ function cwShacks:GetPropertyInfo(player, shack)
 			if shack.owner then
 				local queryObj = Clockwork.database:Select(charactersTable)
 					queryObj:Callback(function(result)
-						for k, v in pairs(result) do
-							if v._Name and v._LastPlayed then
-								if shack.stash then
-									for k2, v2 in pairs(shack.stash) do
-										if v2 then
-											for k3, v3 in pairs(v2) do
-												items = items + 1;
+						if (Clockwork.database:IsResult(result)) then
+							for k, v in pairs(result) do
+								if v._Name and v._LastPlayed then
+									if shack.stash then
+										for k2, v2 in pairs(shack.stash) do
+											if v2 then
+												for k3, v3 in pairs(v2) do
+													items = items + 1;
+												end
 											end
 										end
 									end
+									
+									local timeLastPlayed = tostring(os.time() - tonumber(v._LastPlayed));
+									
+									if player:IsAdmin() then
+										Schema:EasyText(player, "cornflowerblue", "Property Owner: "..v._Name.." ("..v._SteamName..")");
+										Schema:EasyText(player, "cornflowerblue", "(ADMIN DEBUG) Door Ent: "..tostring(shack.doorEnt).."   # of Stash Items: "..tostring(items).."   Time Last Played: "..timeLastPlayed.." seconds ago");
+									else
+										Schema:EasyText(player, "cornflowerblue", "Property Owner: "..v._Name);
+									end
+									
+									break;
 								end
-								
-								local timeLastPlayed = tostring(os.time() - tonumber(v._LastPlayed));
-								
-								if player:IsAdmin() then
-									Schema:EasyText(player, "cornflowerblue", "Property Owner: "..v._Name.." ("..v._SteamName..")");
-									Schema:EasyText(player, "cornflowerblue", "(ADMIN DEBUG) Door Ent: "..tostring(shack.doorEnt).."   # of Stash Items: "..tostring(items).."   Time Last Played: "..timeLastPlayed.." seconds ago");
-								else
-									Schema:EasyText(player, "cornflowerblue", "Property Owner: "..v._Name);
-								end
-								
-								break;
 							end
 						end
 					end);
@@ -455,44 +457,46 @@ function cwShacks:LoadShackData()
 			
 			local queryObj = Clockwork.database:Select(charactersTable)
 				queryObj:Callback(function(result)
-					local ownerFound = false;
-				
-					for k2, v2 in pairs(result) do
-						--if v2._LastPlayed then
-							local permakilled = false;
-							
-							if v2._Data then
-								local data = Clockwork.player:ConvertDataString(player, v2._Data)
-								
-								if data then
-									permakilled = data["permakilled"];
-								end
-							end
-							
-							if --[[tonumber(v2._LastPlayed) + cwShacks.expireTime > os.time() and]] permakilled ~= true then
-								cwShacks.shacks[k].owner = v.owner;
-								
-								if v.stash then
-									cwShacks.shacks[k].stash = Clockwork.inventory:ToLoadable(v.stash);
-								end
-
-								cwShacks.shacks[k].stashCash = v.stashCash;
-								
-								ownerFound = true;
-								break;
-							end
-						--end
-					end
+					if (Clockwork.database:IsResult(result)) then
+						local ownerFound = false;
 					
-					if !ownerFound then
-						print("No owner found for shack "..k.."!");
-						cwShacks.shacks[k].owner = nil;
-						cwShacks.shacks[k].stash = nil;
-						cwShacks.shacks[k].stashCash = nil;
-					else
-						print("Owner found for shack "..k.."!");
-					end
-				end);
+						for k2, v2 in pairs(result) do
+							--if v2._LastPlayed then
+								local permakilled = false;
+								
+								if v2._Data then
+									local data = Clockwork.player:ConvertDataString(player, v2._Data)
+									
+									if data then
+										permakilled = data["permakilled"];
+									end
+								end
+								
+								if --[[tonumber(v2._LastPlayed) + cwShacks.expireTime > os.time() and]] permakilled ~= true then
+									cwShacks.shacks[k].owner = v.owner;
+									
+									if v.stash then
+										cwShacks.shacks[k].stash = Clockwork.inventory:ToLoadable(v.stash);
+									end
+
+									cwShacks.shacks[k].stashCash = v.stashCash;
+									
+									ownerFound = true;
+									break;
+								end
+							--end
+						end
+						
+						if !ownerFound then
+							print("No owner found for shack "..k.."!");
+							cwShacks.shacks[k].owner = nil;
+							cwShacks.shacks[k].stash = nil;
+							cwShacks.shacks[k].stashCash = nil;
+						else
+							print("Owner found for shack "..k.."!");
+						end
+					end);
+				end
 				
 				queryObj:Where("_Key", v.owner)
 			queryObj:Execute()

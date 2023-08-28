@@ -102,11 +102,19 @@ function cwRecipes.recipes:Register(recipe)
 								item:SetCondition(condition, true);
 							end
 							
+							if item.category == "Shot" then
+								item:SetData("Rounds", 0)
+							end
+							
 							player:GiveItem(item, true);
 						end
 					else
 						for i = 1, math.abs(v.amount) do
 							local item = Clockwork.item:CreateInstance(k);
+							
+							if item.category == "Shot" then
+								item:SetData("Rounds", 0)
+							end
 							
 							player:GiveItem(item, true);
 						end
