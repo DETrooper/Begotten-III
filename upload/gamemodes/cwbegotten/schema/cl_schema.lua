@@ -111,6 +111,135 @@ function Schema:TriggerCrows()
 	end
 end
 
+local material = Material("models/humans/male/group01/male_cheaple_sheet");
+
+game.AddParticles("particles/burning_fx.pcf");
+PrecacheParticleSystem("env_fire_large");
+
+-- For the 'Followed' trait.
+function Schema:CheapleFollows(position_override)
+	local target = LocalPlayer();
+	
+	statichitman = ClientsideModel("models/humans/group01/male_cheaple.mdl");
+	
+	if !IsValid(statichitman) then
+		return;
+	end
+	
+	if position_override then
+		statichitman:SetPos(position_override);
+	else
+		local pos = target:GetPos();
+		local angles = target:EyeAngles();
+		local forward = angles:Forward();
+		local position = pos - (Vector(forward.x, forward.y, 0) * 2048);
+		
+		statichitman:SetPos(position);
+	end
+	
+	statichitman:ResetSequence("walk_all");
+	
+	statichitman:EmitSound("ambient/creatures/town_zombie_call1.wav", 100);
+	
+	timer.Simple(2, function()
+		if IsValid(statichitman) then
+			statichitman:EmitSound("npc/zombie_poison/pz_breathe_loop1.wav", 75, 75);
+		end
+	end);
+end;
+
+function Schema:CheapleCaught()
+	self:ClearCheaple();
+	self.caughtByCheaple = true;
+	
+	Clockwork.menu:SetOpen(false);
+	Clockwork.character:SetPanelOpen(false);
+	
+	if (IsValid(Clockwork.Client.cwBeliefPanel)) then
+		Clockwork.Client.cwBeliefPanel:Close()
+		Clockwork.Client.cwBeliefPanel:Remove()
+		Clockwork.Client.cwBeliefPanel = nil;
+	end
+	
+	if (IsValid(Clockwork.Client.cwCraftingMenu)) then
+		Clockwork.Client.cwCraftingMenu:Close()
+		Clockwork.Client.cwCraftingMenu:Remove()
+		Clockwork.Client.cwCraftingMenu = nil;
+	end
+	
+	if (IsValid(Clockwork.Client.cwRitualsMenu)) then
+		Clockwork.Client.cwRitualsMenu:Close()
+		Clockwork.Client.cwRitualsMenu:Remove()
+		Clockwork.Client.cwRitualsMenu = nil;
+	end
+	
+	if cwMusic then
+		cwMusic:StopAmbientMusic();
+		cwMusic:StopBattleMusic();
+	end
+	
+	surface.PlaySound("new/echoes-1.wav");
+	
+	hook.Add("RenderScreenspaceEffects", "RenderScreenspaceEffectsCheaple", function()
+		surface.SetDrawColor(255, 255, 255, 255);
+		surface.SetMaterial(material);
+		surface.DrawTexturedRect(-ScrW(), -ScrH(), ScrW() * 2, ScrH() * 2);
+	end);
+	
+	netstream.Start("CheapleCaught");
+end
+
+function Schema:CheapleCutscene()
+	hook.Remove("RenderScreenspaceEffects", "RenderScreenspaceEffectsCheaple");
+
+	if Clockwork.Client:Alive() then
+		Schema.cheapleLight = true;
+	
+		timer.Simple(2, function()
+			local cheaple = ClientsideModel("models/humans/group01/male_cheaple.mdl");
+			
+			cheaple:SetPos(Vector(168, 4992, -11075));
+			cheaple:SetAngles(Angle(0, 0, 0));
+			
+			Clockwork.Client:EmitSound("begotten/coming.wav");
+			
+			timer.Simple(3.3, function()
+				Clockwork.Client:EmitSound("begotten/score5.mp3");
+				
+				timer.Simple(1, function()
+					Schema.cheapleLight = false;
+					
+					timer.Simple(0.1, function()
+						EmitSound("physics/glass/glass_largesheet_break3.wav", Vector(260, 4995, -10915), -1, CHAN_AUTO, 0.7);
+					end);
+				end);
+
+				timer.Simple(2, function()
+					if IsValid(cheaple) then
+						cheaple:Remove();
+						cheaple = nil;
+					end
+					
+					Schema.caughtByCheaple = false;
+				end);
+			end);
+		end);
+	end
+end
+
+function Schema:ClearCheaple()
+	if IsValid(statichitman) then
+		statichitman:StopSound("npc/zombie_poison/pz_breathe_loop1.wav");
+		statichitman:StopSound("ambient/fire/fire_small1.wav");
+		statichitman:Remove();
+	end
+	
+	if Schema.HeartbeatSound then
+		Schema.HeartbeatSound:Stop();
+		Schema.HeartbeatSound = nil;
+	end
+end;
+
 -- A function to get whether a player is inside the tower of light.
 function playerMeta:InTower(bIgnoreAdmins)
 	return Schema:InTower(self, bIgnoreAdmins);

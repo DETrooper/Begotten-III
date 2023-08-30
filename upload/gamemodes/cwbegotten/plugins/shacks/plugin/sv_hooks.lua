@@ -495,8 +495,8 @@ function cwShacks:LoadShackData()
 						else
 							print("Owner found for shack "..k.."!");
 						end
-					end);
-				end
+					end
+				end);
 				
 				queryObj:Where("_Key", v.owner)
 			queryObj:Execute()

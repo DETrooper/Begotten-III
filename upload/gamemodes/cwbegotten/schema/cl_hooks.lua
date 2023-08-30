@@ -21,6 +21,8 @@ Schema.requiredMounts = {
 	["cstrike"] = "Counter-Strike: Source",
 };
 
+Schema.cheapleMessages = {"I've gotta get away from that fucking thing!", "It's getting closer!", "What does that thing want from me!?", "Why can't anyone else see it!?", "Shit, it's getting closer!", "Gotta keep moving... gotta keep moving..."};
+
 if !Schema.contentVerified then
 	Schema.contentVerified = "unverified";
 end
@@ -177,6 +179,104 @@ function Schema:SetDSP(newDSP, reset)
 		end;
 	end;
 end;
+
+function Schema:Think()
+	if Clockwork.Client:HasTrait("followed") and Clockwork.Client:Alive() and not self.caughtByCheaple then
+		if IsValid(statichitman) then
+			if Clockwork.Client.LoadingText then
+				return;
+			end
+			
+			local position = Clockwork.Client:GetPos();
+			local cheaplePosition = statichitman:GetPos();
+			local distance = cheaplePosition:DistToSqr(position);
+			local yaw = (position - cheaplePosition):Angle().yaw;
+			local forward = statichitman:GetForward();
+			local zDifference = position.z - cheaplePosition.z;
+			
+			if Clockwork.Client:HasTrait("marked") then
+				if !statichitman.flaming then
+					statichitman.flaming = true;
+					
+					statichitman:ResetSequence("run_all");
+					ParticleEffectAttach("env_fire_large", 1, statichitman, 1);
+					
+					statichitman:EmitSound("ambient/fire/fire_small1.wav");
+				end
+			end
+				
+			if statichitman.flaming then
+				statichitman:SetPos(cheaplePosition + (forward * 1.5) + Vector(0, 0, zDifference * FrameTime()));
+			else
+				statichitman:SetPos(cheaplePosition + (forward * 0.35) + Vector(0, 0, zDifference * FrameTime()));
+			end
+			
+			statichitman:SetAngles(Angle(0, yaw, 0));
+			statichitman:FrameAdvance();
+			
+			if (distance <= 512 * 512) then
+				local curTime =  CurTime();
+			
+				if Clockwork.HeartbeatSound and Clockwork.HeartbeatSound:IsPlaying() then
+					Clockwork.HeartbeatSound:Stop();
+				end 
+			
+				if not Schema.HeartbeatSound then
+					Schema.HeartbeatSound = CreateSound(Clockwork.Client, "vj_player/heartbeat.wav");
+					Schema.HeartbeatSound:Play();
+				end
+				
+				if !self.nextCheapleMessage or self.nextCheapleMessage < curTime then
+					self.nextCheapleMessage = curTime + math.random(30, 90);
+					
+					Clockwork.chatBox:Add(nil, nil, Color(255, 255, 150, 255), "***' "..self.cheapleMessages[math.random(1, #self.cheapleMessages)]);
+				end
+			else
+				if Schema.HeartbeatSound then
+					Schema.HeartbeatSound:FadeOut(3);
+					Schema.HeartbeatSound = nil;
+				end
+			end
+				
+			if !self.nextCheapleSave or self.nextCheapleSave < CurTime() then
+				self.nextCheapleSave = CurTime() + 1.5;
+				
+				netstream.Start("SaveCheaplePos", statichitman:GetPos());
+			end
+				
+			if (distance < 64 * 64) then
+				Schema:CheapleCaught();
+			end
+		end
+		
+		if Schema.caughtByCheaple and Schema.cheapleLight then
+			local dynamicLight = DynamicLight("cheapleLight");
+			
+			dynamicLight.Pos = Vector(260, 4995, -10915); 
+			dynamicLight.r = 255;
+			dynamicLight.g = 160;
+			dynamicLight.b = 160;
+			dynamicLight.Brightness = 0.5;
+			dynamicLight.Size = 1024;
+			dynamicLight.DieTime = curTime + 0.1;
+			dynamicLight.Style = 4;
+		end
+	elseif IsValid(statichitman) then
+		self:ClearCheaple();
+	elseif !Clockwork.Client:Alive() and Schema.caughtByCheaple then
+		Schema.caughtByCheaple = false;
+	end
+end
+
+Clockwork.datastream:Hook("CheaplePos", function(data)
+	if Clockwork.Client:HasTrait("followed") and Clockwork.Client:Alive() and not Schema.caughtByCheaple then
+		if IsValid(statichitman) then
+			statichitman:SetPos(data);
+		else
+			Schema:CheapleFollows(data);
+		end
+	end
+end);
 
 Clockwork.datastream:Hook("PlayerCustomSoundCheck", function(data)
 	local soundPlaying = false;
@@ -915,7 +1015,7 @@ function Schema:Tick()
 	if !self.nextFPSCheck or curTime >= self.nextFPSCheck then
 		self.nextFPSCheck = curTime + 0.05;
 		
-		RunConsoleCommand("fps_max", "300");
+		--RunConsoleCommand("fps_max", "300");
 		RunConsoleCommand("hud_draw_fixed_reticle", "0");
 		RunConsoleCommand("mat_motion_blur_enabled", "1");
 	end
@@ -1075,6 +1175,24 @@ function Schema:GetPlayerCharacterScreenVisible()
 		return false;
 	end
 end
+
+function Schema:CanShowTabMenu()
+	if self.caughtByCheaple then
+		return false;
+	end
+end
+
+function Schema:PlayerCanSeeBars(class)
+	if self.caughtByCheaple then
+		return false
+	end
+end
+
+function Schema:CanPaintChatbox()
+	if self.caughtByCheaple then
+		return false;
+	end;
+end;
 
 -- Called to get whether the character menu should be created.
 function Schema:ShouldCharacterMenuBeCreated()
@@ -2172,6 +2290,10 @@ end
 
 netstream.Hook("Archives", function(data)
 	Schema.archivesBookList = data;
+end);
+
+netstream.Hook("CheapleCutscene", function(data)
+	Schema:CheapleCutscene();
 end);
 
 netstream.Hook("GoreWarhorn", function(data)

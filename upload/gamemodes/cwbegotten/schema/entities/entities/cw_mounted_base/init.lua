@@ -30,7 +30,7 @@ function ENT:ChangeModel(model)
 		self:SetCollisionBounds(vectorMin, vectorMax);
 	end;
 
-	self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+	self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 	self:StartMotionController()
 	self:SetNWAngle("OffsetAngle", self.OffsetAngle)
 	self:SetNWVector("MuzzlePos", self.MuzzlePos)

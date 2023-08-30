@@ -60,62 +60,6 @@ function cwDayNight:Think()
 			self:ChangeCycle("day", false);
 		end
 	end
-	
-	if self.currentCycle == "night" then
-		if !self.nextMoonCheck then
-			self.nextMoonCheck = curTime + 1;
-		else
-			if (curTime >= self.nextMoonCheck) then
-				self.nextMoonCheck = curTime + 1;
-				
-				local playerCount = _player.GetCount();
-				local players = _player.GetAll();
-
-				for i = 1, playerCount do
-					local player, k = players[i], i;
-					
-					if IsValid(player) then
-						if player:HasInitialized() and not player.opponent and not player.cwObserverMode and player:Alive() then
-							local lastZone = player:GetCharacterData("LastZone");
-							
-							if lastZone == "wasteland" then
-								if player:EyeAngles().p < -55 then
-									local helmetData = player:GetCharacterData("helmet");
-									
-									if helmetData and helmetData.uniqueID and helmetData.itemID then
-										local helmetItem = Clockwork.inventory:FindItemByID(player:GetInventory(), helmetData.uniqueID, helmetData.itemID);
-									
-										if helmetItem and helmetItem.overlay and helmetItem and player:EyeAngles().p > -70 then
-											return;
-										end
-									end
-										
-									if player:GetEyeTrace().HitSky then
-										if player.moonCooldown then
-											if curTime < player.moonCooldown then
-												continue;
-											end
-										end
-										
-										player:HandleSanity(-50);
-										
-										if !player:HasBelief("lunar_repudiation") and player:GetSanity() <= 0 then
-											Schema:EasyText(player, "maroon", "The moon is everything. There is no point anymore.");
-											player:CommitSuicide();
-										end
-										
-										Clockwork.datastream:Start(player, "MoonTrigger");
-										
-										player.moonCooldown = curTime + 5;
-									end
-								end
-							end
-						end
-					end
-				end
-			end
-		end
-	end
 end;
 
 -- Called at an interval while the player is connected to the server.
@@ -133,34 +77,36 @@ function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized)
 					local lastZone = player:GetCharacterData("LastZone");
 					
 					if lastZone == "wasteland" then
-						if player:EyeAngles().p < -55 then
-							local helmetData = player:GetCharacterData("helmet");
-							
-							if helmetData and helmetData.uniqueID and helmetData.itemID then
-								local helmetItem = Clockwork.inventory:FindItemByID(player:GetInventory(), helmetData.uniqueID, helmetData.itemID);
-							
-								if helmetItem and helmetItem.overlay and helmetItem and player:EyeAngles().p > -70 then
-									return;
-								end
-							end
+						if !cwBeliefs or !player:HasBelief("lunar_repudiation") then
+							if player:EyeAngles().p < -55 then
+								local helmetData = player:GetCharacterData("helmet");
 								
-							if player:GetEyeTrace().HitSky then
-								if player.moonCooldown then
-									if curTime < player.moonCooldown then
+								if helmetData and helmetData.uniqueID and helmetData.itemID then
+									local helmetItem = Clockwork.inventory:FindItemByID(player:GetInventory(), helmetData.uniqueID, helmetData.itemID);
+								
+									if helmetItem and helmetItem.overlay and helmetItem and player:EyeAngles().p > -70 then
 										return;
 									end
 								end
-								
-								player:HandleSanity(-50);
-								
-								if !player:HasBelief("lunar_repudiation") and player:GetSanity() <= 0 then
-									Schema:EasyText(player, "maroon", "The moon is everything. There is no point anymore.");
-									player:CommitSuicide();
+									
+								if player:GetEyeTrace().HitSky then
+									if player.moonCooldown then
+										if curTime < player.moonCooldown then
+											return;
+										end
+									end
+									
+									player:HandleSanity(-50);
+									
+									if --[[!player:HasBelief("lunar_repudiation") and]] player:GetSanity() <= 0 then
+										Schema:EasyText(player, "maroon", "The moon is everything. There is no point anymore.");
+										player:CommitSuicide();
+									end
+									
+									Clockwork.datastream:Start(player, "MoonTrigger");
+									
+									player.moonCooldown = curTime + 5;
 								end
-								
-								Clockwork.datastream:Start(player, "MoonTrigger");
-								
-								player.moonCooldown = curTime + 5;
 							end
 						end
 					end

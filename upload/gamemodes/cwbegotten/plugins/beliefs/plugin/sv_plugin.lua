@@ -180,6 +180,7 @@ cwBeliefs.beliefsToSubfaiths = {
 };
 
 cwBeliefs.traitLocks = {
+	["aptitude"] = {"blind"},
 	["brutality"] = {"pacifist"},
 	["prowess"] = {"weak"},
 	["fortune"] = {"marked"},
@@ -481,6 +482,12 @@ function cwBeliefs:ResetBeliefSharedVars(player)
 		player:SetSharedVar("hasNimble", true);
 	elseif player:GetSharedVar("nimble") then
 		player:SetSharedVar("hasNimble", nil);
+	end
+	
+	if player:HasBelief("favored") then
+		player:SetSharedVar("favored", true);
+	elseif player:GetSharedVar("favored") then
+		player:SetSharedVar("favored", nil);
 	end
 end;
 

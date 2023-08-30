@@ -92,13 +92,12 @@ function COMMAND:OnRun(player, arguments)
 		if cwShacks and player:InsideOwnedShack() then
 			for k, v in pairs(cwShacks.shacks) do
 				if v.owner == player:GetCharacterKey() then
-					local rest = -60;
-					
-					if v.bedTier == 2 then
-						rest = -100;
+					if v.bedTier >= 2 then
+						player.sleepData = {hunger = 5, thirst = 10, rest = -100, sanity = 50};
+					else
+						player.sleepData = {hunger = 10, thirst = 20, rest = -60, sanity = 25};
 					end
 					
-					player.sleepData = {rest = -60, sanity = 10};
 					--player:HandleSanity(10);
 					--player:HandleNeed("sleep", rest);
 					

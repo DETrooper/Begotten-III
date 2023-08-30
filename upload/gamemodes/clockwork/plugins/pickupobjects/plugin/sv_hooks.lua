@@ -183,7 +183,11 @@ function cwPickupObjects:KeyPress(player, key)
 										ragdollPlayer.BeingPickedUp = true;
 										ragdollPlayer.PickedUpBy = player;
 										
-										if Clockwork.player:GetAction(ragdollPlayer) == "unragdoll" and ragdollPlayer:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT then
+										if Clockwork.player:GetAction(ragdollPlayer) == "unragdoll" and (ragdollPlayer:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT or ragdollPlayer.sleepData) then
+											if ragdollPlayer.sleepData then
+												ragdollPlayer.sleepData = nil;
+											end
+										
 											hook.Run("PlayerCancelGetUp", ragdollPlayer);
 											Clockwork.player:SetUnragdollTime(ragdollPlayer, nil);
 										end

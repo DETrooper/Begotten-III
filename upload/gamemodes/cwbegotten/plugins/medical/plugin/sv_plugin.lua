@@ -111,10 +111,10 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 	local action = Clockwork.player:GetAction(player);
 	
 	if (action != "heal" and action != "healing" and action != "performing_surgery") then
-		local consumeTime = 7;
+		local consumeTime = itemTable.useTime or 7;
 		
 		if player:HasBelief("dexterity") then
-			consumeTime = 4;
+			consumeTime = (itemTable.useTime * 0.67) or 4.5;
 		end
 			
 		Clockwork.player:SetAction(player, "heal", consumeTime, nil, function()

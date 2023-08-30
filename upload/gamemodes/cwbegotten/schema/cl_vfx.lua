@@ -201,6 +201,10 @@ function Schema:PlayerDrawWeaponSelect()
 	if (Clockwork.Client.LoadingText) then
 		return false;
 	end;
+	
+	if self.caughtByCheaple then
+		return false
+	end
 end;
 
 function Unduck()

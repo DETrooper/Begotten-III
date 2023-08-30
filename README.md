@@ -37,3 +37,7 @@ Begotten III utilizes some modified external addons as well, so the lua is inclu
 [VJ Base](https://steamcommunity.com/sharedfiles/filedetails/?id=131759821)
 
 [VJ Animal SNPCs](https://steamcommunity.com/sharedfiles/filedetails/?id=522764555)
+
+[Darken217's SciFi Weapons](https://steamcommunity.com/sharedfiles/filedetails/?id=420970650)
+
+I also highly recommend [this addon](https://steamcommunity.com/sharedfiles/filedetails/?id=1907060869) to improve server performance.

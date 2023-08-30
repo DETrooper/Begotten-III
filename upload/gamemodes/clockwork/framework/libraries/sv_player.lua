@@ -2714,7 +2714,7 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 			if (IsValid(ragdoll)) then
 				local headIndex = ragdoll:LookupBone("ValveBiped.Bip01_Head1")
 
-				ragdoll:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+				ragdoll:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 
 				for i = 1, ragdoll:GetPhysicsObjectCount() do
 					local physicsObject = ragdoll:GetPhysicsObjectNum(i)

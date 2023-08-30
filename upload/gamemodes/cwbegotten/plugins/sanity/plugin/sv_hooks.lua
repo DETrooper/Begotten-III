@@ -180,18 +180,30 @@ function cwSanity:PlayerThink(player, curTime, infoTable)
 		elseif (lastZone == "wasteland" and bNight) then
 			if (map == "rp_begotten_redux") or (map == "rp_scraptown") then
 				if !player:InTower() then
-					if player:HasBelief("lunar_repudiation") then
-						sanityDecay = (sanityDecay - 1.5);
-					else
-						sanityDecay = (sanityDecay - 3);
+					local decay = 3;
+					
+					if player:HasBelief("thirst_blood_moon") then
+						decay = (decay - 1.5);
 					end
+				
+					if player:HasBelief("lunar_repudiation") then
+						decay = (decay - 1.5);
+					end
+
+					sanityDecay = (sanityDecay - decay);
 				end
 			else
-				if player:HasBelief("lunar_repudiation") then
-					sanityDecay = (sanityDecay - 1.5);
-				else
-					sanityDecay = (sanityDecay - 3);
+				local decay = 3;
+				
+				if player:HasBelief("thirst_blood_moon") then
+					decay = (decay - 1.5);
 				end
+			
+				if player:HasBelief("lunar_repudiation") then
+					decay = (decay - 1.5);
+				end
+
+				sanityDecay = (sanityDecay - decay);
 			end
 		elseif (lastZone == "caves") then
 			sanityDecay = (sanityDecay - 2);

@@ -7,7 +7,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useText = "Inject";
 	ITEM.model = "models/props_c17/TrapPropeller_Lever.mdl";
 	ITEM.weight = 0.15;
-	ITEM.description = "A glass vial filled with a clear liquid that can be injected into someone...";
+	ITEM.description = "A glass vial filled with a mysterious clear liquid that can be injected into someone for a burst of energy...";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/ampoule.png"
 	ITEM.useSound = "begotten/items/meat_inject.mp3";
 	ITEM.uniqueID = "ampoule"
@@ -19,6 +19,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.canSave = true;
 	ITEM.restoresBlood = 1000;
 	ITEM.targetExperience = 50;
+	ITEM.useTime = 1;
 
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 1000};
 	ITEM.limbs = "all";
@@ -29,7 +30,8 @@ local ITEM = Clockwork.item:New("medical_base");
 		--[[local curTime = CurTime();
 		
 		player:SetCharacterData("painpills", curTime + 60);]]--
-		player:SetCharacterData("Stamina", math.Clamp(player:GetCharacterData("Stamina") + 100, 0, player:GetMaxStamina()));
+		player:HandleStamina(100);
+		player:GivePoise(player:GetMaxPoise());
 		player:HandleSanity(25);
 		Clockwork.datastream:Start(player, "Stunned", 1);
 		Clockwork.datastream:Start(player, "MorphineDream", 60);
@@ -60,7 +62,7 @@ local ITEM = Clockwork.item:New("medical_base");
 		local curTime = CurTime();
 		
 		player:GiveDisease("begotten_plague");
-		player:SetCharacterData("Stamina", math.Clamp(player:GetCharacterData("Stamina") + 40, 0, player:GetMaxStamina()));
+		player:HandleStamina(40);
 		player:HandleSanity(25);
 		Schema:EasyText(player, "olivedrab","It's been done. The plight will take hold in due time.");
 		Clockwork.datastream:Start(player, "Stunned", 1);
@@ -81,7 +83,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.applicable = true;
 
 	ITEM.curesInjuries = {"infection", "minor_infection"};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 600};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 400};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 	ITEM.targetExperience = 25;
 	
@@ -103,7 +105,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.uniqueID = "antibiotics"
 
 	ITEM.ingestible = {orally = true, anally = false};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 900};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 700};
 	
 	function ITEM:OnUsed(player, itemEntity)
 		if player:Alive() and !player:IsRagdolled() then
@@ -220,7 +222,7 @@ local ITEM = Clockwork.item:New("medical_base");
 		if player:Alive() and !player:IsRagdolled() then
 			Clockwork.player:SetMenuOpen(player, false);
 			
-			player:HandleSanity(50);
+			player:HandleSanity(100);
 			player:EmitSound(self.useSound);
 			player:TakeItem(self);
 			
@@ -270,7 +272,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.targetExperience = 15;
 
 	ITEM.curesInjuries = {"burn"};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 400};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 300};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 	
 	function ITEM:OnUsed(player, itemEntity)

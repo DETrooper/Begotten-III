@@ -65,7 +65,7 @@ function cwDayNight:Think()
 					end
 					
 					if curTime >= self.moonHallucinationTimer then
-						if util.TraceLine(util.GetPlayerTrace(Clockwork.Client, Clockwork.Client:GetUp())).HitSky then
+						if (!cwBeliefs or !cwBeliefs:HasBelief("lunar_repudiation")) and util.TraceLine(util.GetPlayerTrace(Clockwork.Client, Clockwork.Client:GetUp())).HitSky then
 							self.moonHallucination = true;
 							moonSubMat = Material("begotten/effects/moonsubliminal"..tostring(math.random(1, 6))..".png");
 							

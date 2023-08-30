@@ -82,7 +82,7 @@ function cwGore:SplatCorpse(corpse, fadeDelay, damageForce, onFire)
 				rightLegEnt:SetModel("models/skeleton/skeleton_leg_l.mdl");
 				rightLegEnt:SetSkin(2);
 				rightLegEnt:SetPos(corpse:LocalToWorld(corpse:OBBCenter() + Vector(0, 0, 20)));
-				rightLegEnt:SetCollisionGroup(COLLISION_GROUP_WEAPON);
+				rightLegEnt:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
 			rightLegEnt:Spawn();
 			
 			local rLegObject = rightLegEnt:GetPhysicsObject();
@@ -101,7 +101,7 @@ function cwGore:SplatCorpse(corpse, fadeDelay, damageForce, onFire)
 				leftLegEnt:SetModel("models/skeleton/skeleton_leg_l.mdl");
 				leftLegEnt:SetSkin(2);
 				leftLegEnt:SetPos(corpse:LocalToWorld(corpse:OBBCenter() + Vector(0, 0, 20)));
-				leftLegEnt:SetCollisionGroup(COLLISION_GROUP_WEAPON);
+				leftLegEnt:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
 			leftLegEnt:Spawn();
 			
 			local lLegObject = rightLegEnt:GetPhysicsObject();
@@ -120,7 +120,7 @@ function cwGore:SplatCorpse(corpse, fadeDelay, damageForce, onFire)
 				rightArmEnt:SetModel("models/skeleton/skeleton_arm.mdl");
 				rightArmEnt:SetSkin(2);
 				rightArmEnt:SetPos(corpse:LocalToWorld(corpse:OBBCenter() + Vector(0, 0, 30)));
-				rightArmEnt:SetCollisionGroup(COLLISION_GROUP_WEAPON);
+				rightArmEnt:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
 			rightArmEnt:Spawn();
 			
 			local rArmObject = rightArmEnt:GetPhysicsObject();
@@ -139,7 +139,7 @@ function cwGore:SplatCorpse(corpse, fadeDelay, damageForce, onFire)
 				leftArmEnt:SetModel("models/skeleton/skeleton_arm_l.mdl");
 				leftArmEnt:SetSkin(2);
 				leftArmEnt:SetPos(corpse:LocalToWorld(corpse:OBBCenter() + Vector(0, 0, 30)));
-				leftArmEnt:SetCollisionGroup(COLLISION_GROUP_WEAPON);
+				leftArmEnt:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
 			leftArmEnt:Spawn();
 			
 			local lArmObject = leftArmEnt:GetPhysicsObject();
@@ -159,7 +159,7 @@ function cwGore:SplatCorpse(corpse, fadeDelay, damageForce, onFire)
 					gibEnt:SetModel(table.Random(gibModels));
 					gibEnt:SetMaterial("models/flesh");
 					gibEnt:SetPos(corpse:GetPos() + Vector(math.random(0, 20), math.random(0, 20), math.random(0, 20)));
-					gibEnt:SetCollisionGroup(COLLISION_GROUP_WEAPON);
+					gibEnt:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
 					gibEnt:SetHealth(10000);
 				gibEnt:Spawn();
 				
@@ -245,7 +245,7 @@ function cwGore:RotCorpse(entity, delay)
 				corpse:SetPos(entity:GetPos());
 				corpse:SetAngles(entity:GetAngles());			
 				corpse:SetModel("models/undead/charple01.mdl");
-				corpse:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+				corpse:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 			corpse:Spawn();
 
 			if (IsValid(corpse)) then
@@ -316,28 +316,28 @@ function cwGore:RotCorpse(entity, delay)
 							rightLegEnt:SetModel("models/skeleton/skeleton_leg_l.mdl");
 							rightLegEnt:SetSkin(2);
 							rightLegEnt:SetPos(corpse:LocalToWorld(corpse:OBBCenter() + Vector(0, 0, 20)));
-							rightLegEnt:SetCollisionGroup(COLLISION_GROUP_WEAPON);
+							rightLegEnt:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
 						rightLegEnt:Spawn();
 
 						local leftLegEnt = ents.Create("prop_ragdoll");
 							leftLegEnt:SetModel("models/skeleton/skeleton_leg_l.mdl");
 							leftLegEnt:SetSkin(2);
 							leftLegEnt:SetPos(corpse:LocalToWorld(corpse:OBBCenter() + Vector(0, 0, 20)));
-							leftLegEnt:SetCollisionGroup(COLLISION_GROUP_WEAPON);
+							leftLegEnt:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
 						leftLegEnt:Spawn();
 
 						local rightArmEnt = ents.Create("prop_ragdoll");
 							rightArmEnt:SetModel("models/skeleton/skeleton_arm.mdl");
 							rightArmEnt:SetSkin(2);
 							rightArmEnt:SetPos(corpse:LocalToWorld(corpse:OBBCenter() + Vector(0, 0, 30)));
-							rightArmEnt:SetCollisionGroup(COLLISION_GROUP_WEAPON);
+							rightArmEnt:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
 						rightArmEnt:Spawn();
 
 						local leftArmEnt = ents.Create("prop_ragdoll");
 							leftArmEnt:SetModel("models/skeleton/skeleton_arm_l.mdl");
 							leftArmEnt:SetSkin(2);
 							leftArmEnt:SetPos(corpse:LocalToWorld(corpse:OBBCenter() + Vector(0, 0, 30)));
-							leftArmEnt:SetCollisionGroup(COLLISION_GROUP_WEAPON);
+							leftArmEnt:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
 						leftArmEnt:Spawn();
 						
 						local entList = {

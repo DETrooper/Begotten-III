@@ -11,7 +11,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.infectchance = 75;
 	ITEM.poison = 15;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 800};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 200};
 	ITEM.needs = {hunger = 10, thirst = 15};
 	
 	-- Called when a player uses the item.
@@ -40,8 +40,8 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2500};
-	ITEM.needs = {hunger = 5, thirst = 15};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500};
+	ITEM.needs = {hunger = 5, thirst = 20};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -61,7 +61,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.infectchance = 5;
 	ITEM.stackable = true;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 800};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
 	ITEM.needs = {hunger = 10, thirst = 30};
 
 	-- Called when a player uses the item.
@@ -115,7 +115,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.infectchance = 60;
 	ITEM.poison = 20;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 700};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500};
 	ITEM.needs = {thirst = 30};
 
 	-- Called when a player uses the item.
@@ -123,7 +123,7 @@ local ITEM = Clockwork.item:New();
 		--player:SetHealth( math.Clamp(player:Health() - 50, 0, 100));
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_bottle"));
 		
-		if player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm") and !player:HasBelief("favored") then
+		if player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm") then
 			Schema:EasyText(player, "maroon", "You open the bottle and pour water down your receptacle, but it begins to short-circuit your insides!");
 			Schema:DoTesla(player, true);
 			--player:TakeDamage(25);
@@ -150,7 +150,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/corpsebrew.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2500};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 900};
 	ITEM.needs = {hunger = 5, thirst = 60};
 	
 	-- Called when a player uses the item.
@@ -176,8 +176,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.infectchance = 10;
 	ITEM.dysentery = 5;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 800};
-	ITEM.needs = {hunger = 10, thirst = 30};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 400};
+	ITEM.needs = {hunger = 10, thirst = 30, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -202,7 +202,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2000};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 900};
 	ITEM.needs = {thirst = 80};
 	
 	-- Called when a player uses the item.
@@ -237,13 +237,13 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 700};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
-		player:SetCharacterData("stamina", 100);
+		player:HandleStamina(100);
 		Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Ice Cold Pop™. You feel mentally and physically reinvigorated.");
 		player:HandleSanity(35);
 		player:SetHealth(math.Clamp(player:Health() + 25, 0, player:GetMaxHealth()));
@@ -266,7 +266,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 700};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
@@ -301,13 +301,13 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1350};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 800};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
-		player:SetCharacterData("stamina", 100);
+		player:HandleStamina(100);
 		Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Orange-Flavored Ice Cold Pop™. You feel mentally and physically reinvigorated.");
 		player:HandleSanity(35);
 		player:SetHealth(math.Clamp(player:Health() + 25, 0, player:GetMaxHealth()));
@@ -331,13 +331,13 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1350};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 800};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
-		player:SetCharacterData("stamina", 100);
+		player:HandleStamina(100);
 		Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Grape-Flavored Ice Cold Pop™. You feel mentally and physically reinvigorated.");
 		player:HandleSanity(35);
 		player:SetHealth(math.Clamp(player:Health() + 25, 0, player:GetMaxHealth()));
@@ -360,13 +360,13 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1250};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 800};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
-		player:SetCharacterData("stamina", 100);
+		player:HandleStamina(100);
 
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You slurp of some of Papa Pete's® Ice Cold Crazy Pop™. You feel refreshed, though your sanity is savagely torn apart.");
@@ -394,15 +394,15 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1900};
-	ITEM.needs = {thirst = 75, sleep = 5};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
+	ITEM.needs = {thirst = 75, sleep = 10};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
-		player:SetCharacterData("stamina", 100);
-		Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Cream Pop™. It is very creamy. You feel mentally and physically reinvigorated.");
-		player:HandleSanity(55);
+		player:HandleStamina(100);
+		Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Cream Pop™. It is very creamy and delicious. You feel mentally and physically reinvigorated.");
+		player:HandleSanity(60);
 		player:SetHealth(math.Clamp(player:Health() + 50, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
@@ -423,13 +423,13 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2000};
-	ITEM.needs = {hunger = 50};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
+	ITEM.needs = {hunger = 50, thirst = 20};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
-		player:SetCharacterData("stamina", 100);
+		player:HandleStamina(100);
 		Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Meat Pop™. The meaty taste comes as a surprise, but it fills your tummy up all the same.");
 		player:HandleSanity(20);
 		player:SetHealth(math.Clamp(player:Health() + 25, 0, player:GetMaxHealth()));
@@ -458,11 +458,12 @@ local ITEM = Clockwork.item:New();
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
-		player:SetCharacterData("stamina", 100);
+		player:HandleStamina(100);
 
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Ice Cold Ice Pop™. Aside from a minor brain freeze, you feel really good!");
-			player:HandleSanity(100);
+			player:AddFreeze(25, player);
+			player:HandleSanity(50);
 			player:SetHealth(math.Clamp(player:Health() + 100, 0, player:GetMaxHealth()));
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		else
@@ -495,7 +496,7 @@ ITEM:Register();
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
-		player:SetCharacterData("stamina", 100);
+		player:HandleStamina(100);
 
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Pipin' Hot Pop™! It has a spicy aftertaste. After you're done drinking, some coins spill out the bottle!");
@@ -528,13 +529,13 @@ ITEM:Register();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1250};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
-		player:SetCharacterData("stamina", 100);
+		player:HandleStamina(100);
 
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Silly Pop™. It tastes alright, and it makes you burst into a fit of laughter afterwards! Your health and mind are greatly restored!");
@@ -566,13 +567,13 @@ ITEM:Register();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2000};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2500};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
-		player:SetCharacterData("stamina", 100);
+		player:HandleStamina(100);
 
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Plague Pop™. It didn't taste very good, but you feel your pockets grow heavier with coins! The Gods have blessed you!");
@@ -581,7 +582,7 @@ ITEM:Register();
 			player:SetHealth(math.Clamp(player:Health() + 25, 0, player:GetMaxHealth()));
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		else
-			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Plague Pop™. It tastes pretty good!");
+			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Plague Pop™. It tastes pretty good, but you can't help but notice a sore throat as you finish the bottle.");
 			player:GiveDisease("begotten_plague");
 			player:SetHealth(math.Clamp(player:Health() + 25, 0, player:GetMaxHealth()));
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -637,7 +638,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/laudanum.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2500};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 666};
 	ITEM.needs = {thirst = 20};
 
 	-- Called when a player uses the item.
@@ -660,26 +661,6 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
-ITEM:Register();
-
-local ITEM = Clockwork.item:New("alcohol_base");
-	ITEM.name = "Finechug";
-	ITEM.model = "models/kali/miscstuff/stalker/food/cossacks vodka.mdl";
-	ITEM.weight = 0.5;
-	ITEM.description = "A silver-coloured bottle, appearing extremely well preserved. Enticing white wine is kept within.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/corpsebrew.png"
-	ITEM.stackable = true;
-
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2500};
-	ITEM.needs = {hunger = 5, thirst = 60};
-	
-	-- Called when a player uses the item.
-	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_bottle"));
-		Schema:EasyText(player, "lawngreen", "This drink tastes good! You feel really good too!");
-		player:HandleSanity(40);
-		player:HandleXP(cwBeliefs.xpValues["drink"]);
-	end;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New();
@@ -727,13 +708,15 @@ local ITEM = Clockwork.item:New();
 		player:HandleSanity(100);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
 		
-		if !Schema.poisonedWinePlayers and !player:HasBelief("favored") then
-			Schema.poisonedWinePlayers = {};
-			
-			table.insert(Schema.poisonedWinePlayers, player);
-		else
-			if !table.HasValue(Schema.poisonedWinePlayers, player) then
+		if !player:HasBelief("favored") then
+			if !Schema.poisonedWinePlayers then
+				Schema.poisonedWinePlayers = {};
+				
 				table.insert(Schema.poisonedWinePlayers, player);
+			else
+				if !table.HasValue(Schema.poisonedWinePlayers, player) then
+					table.insert(Schema.poisonedWinePlayers, player);
+				end
 			end
 		end
 	end;

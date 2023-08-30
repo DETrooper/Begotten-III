@@ -6,9 +6,9 @@
 local BLIND = Clockwork.trait:New()
 	BLIND.uniqueID = "blind"
 	BLIND.name = "Blind"
-	BLIND.description = "Your character is totally blind, either from birth or due to trauma. You will be unable to see except when using 'Senses'."
+	BLIND.description = "Your character is totally blind, either from birth or due to trauma. You will be unable to see except when using 'Senses'. The 'Aptitude' belief tree will be locked and unable to be progressed."
 	BLIND.points = -10
-	BLIND.disables = {"crosseyed"}
+	BLIND.disables = {"crosseyed", "literate", "scribe"}
 	BLIND.excludedfactions = {"Children of Satan"}
 Clockwork.trait:Register(BLIND)
 
@@ -32,8 +32,8 @@ Clockwork.trait:Register(CANNIBAL)
 local CLUMSY = Clockwork.trait:New()
 	CLUMSY.uniqueID = "clumsy"
 	CLUMSY.name = "Clumsy"
-	CLUMSY.description = "Your character is clumsy, a dolt, a fucking absent minded fool."
-	CLUMSY.points = -4
+	CLUMSY.description = "Your character is clumsy, a dolt, a fucking absent minded fool. You will trip and fall over at random."
+	CLUMSY.points = -6
 	CLUMSY.excludedfactions = {"Children of Satan"}
 Clockwork.trait:Register(CLUMSY)
 
@@ -48,7 +48,7 @@ local CROSSEYED = Clockwork.trait:New()
 	CROSSEYED.uniqueID = "crosseyed"
 	CROSSEYED.name = "Cross Eyed"
 	CROSSEYED.description = "Your character is a cross eyed fuck. You look stupid and everyone can see it."
-	CROSSEYED.points = -6
+	CROSSEYED.points = -8
 	CROSSEYED.disables = {"blind"}
 	CROSSEYED.excludedfactions = {"Children of Satan"};
 Clockwork.trait:Register(CROSSEYED)
@@ -57,7 +57,7 @@ local ESCAPEE = Clockwork.trait:New()
 	ESCAPEE.uniqueID = "escapee"
 	ESCAPEE.name = "Escapee"
 	ESCAPEE.description = "Your character is an escapee from some slave camp or prison, but in your haste to escape you were not able to have your bindings removed. You will start tied up."
-	ESCAPEE.points = -3
+	ESCAPEE.points = -2
 	ESCAPEE.disables = {"logger", "miner", "pilgrim", "scavenger", "survivalist", "veteran"}
 	ESCAPEE.requiredfactions = {"Wanderer"}
 Clockwork.trait:Register(ESCAPEE)
@@ -69,6 +69,14 @@ local EXHAUSTED = Clockwork.trait:New()
 	EXHAUSTED.points = -2
 	EXHAUSTED.requiredfactions = {"Wanderer"}
 Clockwork.trait:Register(EXHAUSTED)
+
+local FOLLOWED = Clockwork.trait:New()
+	FOLLOWED.uniqueID = "followed"
+	FOLLOWED.name = "Followed"
+	FOLLOWED.description = "Long ago, your character made the blunder of ransacking an ancient tomb. Through their ignorance, they missed that it had been prophesied that those who would defile the tomb would be cursed to be hunted for all eternity..."
+	FOLLOWED.disables = {"pilgrim", "shrewd"}
+	FOLLOWED.points = -7
+Clockwork.trait:Register(FOLLOWED)
 
 local GLUTTONY = Clockwork.trait:New()
 	GLUTTONY.uniqueID = "gluttony"
@@ -91,6 +99,7 @@ local IMBECILE = Clockwork.trait:New()
 	IMBECILE.name = "Imbecile"
 	IMBECILE.description = "Your character is retarded and unable to form complete sentences. Blessed is the mind too small for doubt."
 	IMBECILE.points = -3
+	IMBECILE.disables = {"literate", "scribe"}
 	IMBECILE.excludedfactions = {"Children of Satan"}
 Clockwork.trait:Register(IMBECILE)
 
@@ -106,16 +115,24 @@ Clockwork.trait:Register(INSANE)
 local LEPER = Clockwork.trait:New()
 	LEPER.uniqueID = "leper"
 	LEPER.name = "Leper"
-	LEPER.description = "Every waking moment of your character's very existence is hell, for they have been cursed to walk the Earth with a most unholy affliction: Leprosy. Their ravaged and deformed body leaves them a societal outcast and a target for persecution."
+	LEPER.description = "Every waking moment of your character's very existence is hell, for they have been cursed to walk the Earth with a most unholy affliction: Leprosy. Their ravaged and deformed body leaves them a societal outcast and a target for persecution. Your character will suffer 50% more blood loss when bleeding and their repugnant affliction will be known to all who gaze upon them."
 	LEPER.points = -5
 	LEPER.disables = {"pilgrim"}
 Clockwork.trait:Register(LEPER)
+
+local LITERATE = Clockwork.trait:New()
+	LITERATE.uniqueID = "literate"
+	LITERATE.name = "Literate"
+	LITERATE.description = "Your character is one of the rare few who have learned to read in these uncivilized times. This trait automatically unlocks the first belief of the 'Aptitude' tree: 'Literacy'."
+	LITERATE.points = 1
+	LITERATE.disables = {"blind", "imbecile", "scribe"}
+Clockwork.trait:Register(LITERATE)
 
 local LOGGER = Clockwork.trait:New()
 	LOGGER.uniqueID = "logger"
 	LOGGER.name = "Logger"
 	LOGGER.description = "Your character is a logger, chopping trees and limbs alike. This trait grants a starting hatchet."
-	LOGGER.points = 5
+	LOGGER.points = 4
 	LOGGER.disables = {"escapee", "weak"}
 	LOGGER.requiredfactions = {"Wanderer"}
 	LOGGER.eventlocked = false;
@@ -149,7 +166,7 @@ Clockwork.trait:Register(NIMBLE)
 local PACIFIST = Clockwork.trait:New()
 	PACIFIST.uniqueID = "pacifist"
 	PACIFIST.name = "Pacifist"
-	PACIFIST.description = "Your character is a pacifist and detests the act of killing. Harming or killing other characters will negatively impact your sanity. The 'Brutality' belief tree will also be locked."
+	PACIFIST.description = "Your character is a pacifist and detests the act of killing. Harming or killing other characters will negatively impact your sanity. The 'Brutality' belief tree will also be locked and unable to be progressed."
 	PACIFIST.points = -4
 	PACIFIST.disables = {"cannibal", "insane"}
 	PACIFIST.excludedsubfactions = {"Legionary", "Clan Reaver", "Clan Gore"}
@@ -197,13 +214,22 @@ local SCAVENGER = Clockwork.trait:New()
 	SCAVENGER.disables = {"escapee"}
 Clockwork.trait:Register(SCAVENGER)
 
-local SHRWED = Clockwork.trait:New()
-	SHRWED.uniqueID = "shrewd"
-	SHRWED.name = "Shrewd"
-	SHRWED.description = "Your character is very clever, using their wits to survive otherwise inescapable situations. This trait automatically unlocks the first 3 beliefs in the middle of the 'Ingenuity' tree: 'Ingenious', 'Craftsman', and 'Mechanic'."
-	SHRWED.points = 4
-	SHRWED.excludedsubfactions = {"Clan Shagalax"}
-Clockwork.trait:Register(SHRWED)
+local SCRIBE = Clockwork.trait:New()
+	SCRIBE.uniqueID = "scribe"
+	SCRIBE.name = "Scribe"
+	SCRIBE.description = "Your character is not only one of few able to read, but also a learned scribe, a valuable quality indeed. This trait automatically unlocks the first 2 beliefs in the middle column of the 'Aptitude' tree: 'Literacy' and 'Scribe'."
+	SCRIBE.points = 3
+	SCRIBE.disables = {"blind", "literate", "imbecile"}
+Clockwork.trait:Register(SCRIBE)
+
+local SHREWD = Clockwork.trait:New()
+	SHREWD.uniqueID = "shrewd"
+	SHREWD.name = "Shrewd"
+	SHREWD.description = "Your character is very clever, using their wits to survive otherwise inescapable situations. This trait automatically unlocks the first 3 beliefs in the middle of the 'Ingenuity' tree: 'Ingenious', 'Craftsman', and 'Mechanic'."
+	SHREWD.points = 4
+	SHREWD.disables = {"followed"};
+	SHREWD.excludedsubfactions = {"Clan Shagalax"};
+Clockwork.trait:Register(SHREWD)
 
 local SURVIVALIST = Clockwork.trait:New()
 	SURVIVALIST.uniqueID = "survivalist"

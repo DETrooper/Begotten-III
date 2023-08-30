@@ -1203,7 +1203,7 @@ function GM:InitPostEntity()
 				Clockwork.entity:SetStartPosition(v, v:GetPos())
 
 				if (Clockwork.entity:SetChairAnimations(v)) then
-					v:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+					v:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 
 					local physicsObject = v:GetPhysicsObject()
 
@@ -2602,7 +2602,7 @@ function GM:PhysgunPickup(player, entity)
 			and !entity.cwLastCollideGroup) then
 				Clockwork.entity:StopCollisionGroupRestore(entity)
 				entity.cwLastCollideGroup = entity:GetCollisionGroup()
-				entity:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+				entity:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 			end
 
 			entity.cwDamageImmunity = CurTime() + 60

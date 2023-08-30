@@ -291,7 +291,7 @@ function PANEL:AddIcon(iconData)
 			return
 		elseif parent.locked == true or icon.disabled or (parent.lockedsubfactions and table.HasValue(parent.lockedsubfactions, Clockwork.Client:GetSharedVar("subfaction"))) or (icon.lockedsubfactions and table.HasValue(icon.lockedsubfactions, Clockwork.Client:GetSharedVar("subfaction"))) or (icon.lockedfactions and table.HasValue(icon.lockedfactions, Clockwork.Client:GetFaction())) or icon.locked or (parent.uniqueID == "religion" and subfaith and subfaith ~= "" and subfaith ~= "N/A" and icon.subfaith ~= subfaith) then
 			return
-		elseif parentUniqueID == "prowess" and hasLoremaster or hasJack and table.HasValue(cwBeliefs.tier4Beliefs, uniqueID) then
+		elseif (parentUniqueID == "prowess" and hasLoremaster) or (hasJack and table.HasValue(cwBeliefs.tier4Beliefs, uniqueID)) then
 			return
 		end
 		
@@ -368,7 +368,7 @@ function PANEL:AddIcon(iconData)
 			icon:SetColor(HardLocked)
 			canTake = "\nThis belief is temporarily disabled until it can be implemented!"
 			canTakeColor = selectedBad;
-		elseif parentUniqueID == "prowess" and hasLoremaster or hasJack and table.HasValue(cwBeliefs.tier4Beliefs, uniqueID) then
+		elseif (parentUniqueID == "prowess" and hasLoremaster) or hasJack and table.HasValue(cwBeliefs.tier4Beliefs, uniqueID) then
 			icon:SetColor(HardLocked)
 			canTake = "\nThis belief is locked due to a belief you took!"
 			canTakeColor = selectedBad;
@@ -926,7 +926,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 			parent = self.fortitude,
 			uniqueID = "lunar_repudiation",
 			niceName = "Lunar Repudiation",
-			description = "Grants immunity to the lethal effects of the Blood Moon and halves residual nighttime sanity loss.",
+			description = "Grants immunity to all effects of the Blood Moon and halves residual nighttime sanity loss.",
 			x = column[2],
 			y = row[3],
 			width = 48,
@@ -2172,7 +2172,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 				uniqueID = "deceitful_snake",
 				niceName = "Deceitful is the Snake",
 				subfaith = "Faith of the Sister",
-				description = "If someone deals 15 or more points of damage to you in a single blow, they will be highlighted in red and receive 40% more damage from you for 40 seconds. Also unlocks the ability to smelt Hellforged Steel (only if 'Master Blacksmith' is also unlocked).",
+				description = "If someone deals 10 or more points of damage to you in a single blow, they will be highlighted in red and receive 50% more damage from you for 40 seconds. Also unlocks the ability to smelt Hellforged Steel (only if 'Master Blacksmith' is also unlocked).",
 				quote = "\"You will scream, and then you will have no tongue. You will gurgle and then choke. From a tree you will be hung, and your flesh will be made into a cloak.\"",
 				x = column[5],
 				y = row[4],
@@ -2300,7 +2300,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 				uniqueID = "thirst_blood_moon",
 				niceName = "Thirst of the Blood Moon",
 				subfaith = "Primevalism",
-				description = "While outside in the Wasteland at night, 50% of damage dealt will be returned as health. Also provides a small chance of healing injuries or stopping bleeding if the damage dealt is above 25. Unlocks unique 'Primevalism' Rituals",
+				description = "While outside in the Wasteland at night, 50% of damage dealt will be returned as health. Also provides a small chance of healing injuries or stopping bleeding if the damage dealt is above 25. Halves residual nighttime sanity loss. Unlocks unique 'Primevalism' Rituals.",
 				quote = "\"The guardsman heard howling and could not discern if it were a man or beast. In truth, it did not matter.\"",
 				texture = "begotten/ui/belieficons/lunar_repudiation.png",
 				x = column[3],
@@ -2899,6 +2899,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 	self.aptitude.buttons = {}
 	self.aptitude.uniqueID = "aptitude"
 	self.aptitude.color = Color(107, 92, 77)
+	self.aptitude.locked = (Clockwork.Client:HasTrait("blind") == true);
 	
 	self.aptitude.arrows = vgui.Create("DImage", self.aptitude)
 	self.aptitude.arrows:SetSize(prowessWidth - 1, treeSizeH)
@@ -3087,7 +3088,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 			parent = self.aptitude,
 			uniqueID = "sanitary",
 			niceName = "Sanitary",
-			description = "Significantly reduces the chances of catching a disease or infection.",
+			description = "Significantly reduces the chances of catching a disease or infection, and entirely eliminates the risk of catching diseases from handling corpses.",
 			quote = "Insanitation of the mind is the root cause of insanity; insanitation of the body is the root cause of affliction.",
 			x = column[4],
 			y = row[2],

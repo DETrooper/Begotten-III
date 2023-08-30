@@ -1724,7 +1724,7 @@ end;
 
 function SWEP:TriggerAnim(target, anim)
 	if SERVER then
-		net.Start( "BegottenAnim" )
+		net.Start( "BegottenAnim", true )
 		net.WriteEntity( self.Owner );
 		net.WriteString( anim );
 		net.Broadcast();
@@ -1764,7 +1764,7 @@ function SWEP:TriggerAnim2(target, anim, beginorend)
 		end
 	
 		if self.Owner.gestureweightbegin and beginorend ~= self.Owner.gestureweightbegin - 1 then
-			net.Start("BegottenAnim2")
+			net.Start("BegottenAnim2", true)
 			net.WriteEntity(target);
 			net.WriteString(anim);
 			net.WriteFloat(beginorend);
@@ -1862,7 +1862,7 @@ end;
 
 function SWEP:TriggerAnim3(target, anim)
 	if SERVER then
-		net.Start( "BegottenAnim3" )
+		net.Start( "BegottenAnim3", true )
 		net.WriteEntity( self.Owner );
 		net.WriteString( anim );
 		net.Broadcast();
@@ -1893,7 +1893,7 @@ end;
 
 function SWEP:StopAllAnims(target)
 	if SERVER then
-		net.Start( "BegottenAnimStop" )
+		net.Start( "BegottenAnimStop", true )
 		net.WriteEntity(target);
 		net.Broadcast();
 	end;

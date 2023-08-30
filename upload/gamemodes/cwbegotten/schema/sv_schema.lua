@@ -3,9 +3,8 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
-concommand.Add("sexyr", function()
-	Clockwork.database:RawQuery("ALTER TABLE characters AUTO_INCREMENT = 1")
-end)
+game.AddParticles("particles/fire_01.pcf");
+PrecacheParticleSystem("env_fire_large");
 
 local map = string.lower(game.GetMap());
 
@@ -1805,6 +1804,57 @@ function Schema:UnPermaKillPlayer(player)
 	end;
 end;
 
+-- For the 'Followed' trait.
+function Schema:CheapleCaughtPlayer(player)
+	if IsValid(player) and player:Alive() then
+		local playerCount = _player.GetCount();
+		local players = _player.GetAll();
+		local listeners = {};
+		local radius = config.Get("talk_radius"):Get() * 2;
+		local playerPos = player:GetPos();
+
+		for i = 1, playerCount do
+			local v, k = players[i], i;
+			
+			if v ~= player and (playerPos:DistToSqr(v:GetPos()) <= (radius * radius)) then
+				listeners[#listeners + 1] = v;
+			end;
+		end
+	
+		Clockwork.chatBox:Add(listeners, player, "me", "suddenly blinks out of existence, as though they were never there at all!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+		
+		player:DeathCauseOverride("Had their curse catch up with them.");
+		
+		if game.GetMap() == "rp_begotten3" then
+			player:SetCharacterData("permakilled", true); -- In case the player tries to d/c to avoid their fate.
+			player:SensesOff();
+			Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);
+			Clockwork.player:SetSafePosition(player, Vector(222, 4992, -11075));
+			player:SetEyeAngles(Angle(0, 180, 0));
+			player:Freeze(true);
+			player.scriptedDying = true;
+			player.caughtByCheaple = true;
+			
+			Schema:EasyText(GetAdmins(), "tomato", player:Name().." was caught by a cheaple!", nil);
+			
+			netstream.Start(player, "CheapleCutscene");
+			
+			timer.Simple(9, function()
+				player:KillSilent();
+				player:Freeze(false);
+				player.scriptedDying = false;
+				player.caughtByCheaple = false;
+				player:SetCharacterData("CheaplePos", nil);
+				player:KillSilent();
+			end);
+		else
+			player:KillSilent();
+			
+			Schema:EasyText(GetAdmins(), "tomato", player:Name().." was caught by a cheaple!", nil);
+		end
+	end
+end
+
 -- A function to blood test a player for their faith.
 function Schema:BloodTestPlayer(player, bFalsePositives, bDetectImposters)
 	local faith = player:GetFaith();
@@ -1865,6 +1915,16 @@ netstream.Hook("ContentBypass", function(player, data)
 		Schema:EasyText(GetAdmins(), "indianred", player:Name().." has skipped content verification due to a scripting error! They will be playing with missing content!")
 	else
 		Schema:EasyText(GetAdmins(), "indianred", player:Name().." has skipped content verification! They will be playing with missing content!")
+	end
+end);
+
+netstream.Hook("CheapleCaught", function(player, data)
+	Schema:CheapleCaughtPlayer(player);
+end);
+
+netstream.Hook("SaveCheaplePos", function(player, data)
+	if data and isvector(data) then
+		player:SetCharacterData("CheaplePos", {x = data.x, y = data.y, z = data.z});
 	end
 end);
 

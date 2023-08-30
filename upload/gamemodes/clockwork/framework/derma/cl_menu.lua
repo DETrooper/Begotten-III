@@ -885,6 +885,10 @@ function PANEL:Think()
 				
 			hook.Run("ModifyStatusEffects", statusEffects);
 			
+			if Clockwork.Client:HasTrait("followed") then
+				table.insert(statusEffects, {text = "(-) Followed", color = Color(200, 40, 40)});
+			end
+			
 			if Clockwork.Client:HasTrait("imbecile") then
 				table.insert(statusEffects, {text = "(-) Imbecile", color = Color(200, 40, 40)});
 			end

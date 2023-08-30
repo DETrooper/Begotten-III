@@ -56,7 +56,7 @@ ITEM.description = "A fur cloak traditionally worn by Goreic seafaring raiders. 
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.requireFaction = {"Goreic Warrior"};
 
-ITEM.components = {breakdownType = "breakdown", items = {"hide", "bearskin", "cloth"}};
+ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)

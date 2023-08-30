@@ -2854,27 +2854,9 @@ function playerMeta:NetworkAccessories()
 end
 
 function playerMeta:NetworkTraits()
-	local traits = self:GetCharacterData("Traits");
-	
-	if self:HasTrait("marked") then
-		self:SetSharedVar("marked", true);
-	elseif self:GetSharedVar("marked") then
-		self:SetSharedVar("marked", false);
-	end
-	
-	if self:HasTrait("possessed") then
-		self:SetSharedVar("possessed", true);
-	elseif self:GetSharedVar("possessed") then
-		self:SetSharedVar("possessed", false);
-	end
-	
-	if self:HasBelief("favored") then
-		self:SetSharedVar("favored", true);
-	elseif self:GetSharedVar("favored") then
-		self:SetSharedVar("favored", false);
-	end
-	
-	netstream.Start(self, "TraitSync", traits);
+	hook.Run("SetTraitSharedVars", self);
+
+	netstream.Start(self, "TraitSync", self:GetCharacterData("Traits"));
 end
 
 -- A function to give a trait to a player.

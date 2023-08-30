@@ -91,7 +91,7 @@ function cwPickupObjects:ForcePickup(player, entity, trace)
 	and !entity.cwLastCollideGroup) then
 		Clockwork.entity:StopCollisionGroupRestore(entity);
 		entity.cwLastCollideGroup = entity:GetCollisionGroup();
-		entity:SetCollisionGroup(COLLISION_GROUP_WEAPON);
+		entity:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
 	end;
 	
 	player:EmitSound("physics/body/body_medium_impact_soft"..math.random(1, 7)..".wav");

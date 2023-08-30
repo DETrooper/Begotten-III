@@ -159,7 +159,7 @@ end
 
 -- Called when a player wants to fallover.
 function Schema:PlayerCanFallover(player)
-	if player.cwWakingUp or self.falloverDisabled then
+	if player.cwWakingUp or self.falloverDisabled or player.caughtByCheaple then
 		return false;
 	end
 end
@@ -181,6 +181,27 @@ function Schema:PlayerUnragdolled(player, state, ragdoll)
 		if (IsValid(player.CinderBlock)) then
 			player.CinderBlock:Remove()
 		end
+	end
+end
+
+-- Called when traits need to be networked.
+function Schema:SetTraitSharedVars(player)
+	if player:HasTrait("marked") then
+		player:SetSharedVar("marked", true);
+	elseif player:GetSharedVar("marked") then
+		player:SetSharedVar("marked", false);
+	end
+	
+	if player:HasTrait("possessed") then
+		player:SetSharedVar("possessed", true);
+	elseif player:GetSharedVar("possessed") then
+		player:SetSharedVar("possessed", false);
+	end
+	
+	if player:HasTrait("followed") then
+		player:SetSharedVar("followed", true);
+	elseif player:GetSharedVar("followed") then
+		player:SetSharedVar("followed", false);
 	end
 end
 
@@ -1266,7 +1287,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized)
 								end;
 								
 								player:TakeDamage(2);
-								player.lastClumsyFallen = curTime + 60;
+								player.lastClumsyFallen = curTime + math.random(30, 90);
 							else
 								player.lastClumsyFallen = curTime + 5;
 							end;
@@ -1694,6 +1715,14 @@ function Schema:PlayerCanDropItem(player, itemTable, noMessage)
 		
 		return false;
 	end;
+	
+	if (player.scriptedDying) then
+		if (!noMessage) then
+			Schema:EasyText(player, "peru", "You cannot drop items while you are dying!");
+		end
+		
+		return false;
+	end
 end;
 
 -- Called when a player attempts to use an item.
@@ -1705,6 +1734,14 @@ function Schema:PlayerCanUseItem(player, itemTable, noMessage)
 		
 		return false;
 	end;
+	
+	if (player.scriptedDying) then
+		if (!noMessage) then
+			Schema:EasyText(player, "peru", "You cannot use items while you are dying!");
+		end
+		
+		return false;
+	end
 	
 	--[[if (Clockwork.item:IsWeapon(itemTable)) then
 		return true
@@ -2083,6 +2120,20 @@ function Schema:PlayerCharacterLoaded(player)
 				end
 			end);
 		end
+	end
+	
+	if player:HasTrait("followed") then
+		timer.Simple(1, function()
+			if IsValid(player) and player:HasTrait("followed") then
+				local posTab = player:GetCharacterData("CheaplePos");
+				
+				if posTab then
+					netstream.Start(player, "CheaplePos", Vector(posTab.x, posTab.y, posTab.z));
+				else
+					netstream.Start(player, "CheaplePos");
+				end
+			end
+		end);
 	end
 	
 	player.bWasInAir = nil;

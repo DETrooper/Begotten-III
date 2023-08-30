@@ -7,7 +7,7 @@ AddCSLuaFile("shared.lua");
 -- Called when the entity initializes.
 function ENT:Initialize()
 	self:SetModel("models/items/grenadeammo.mdl");
-	self:SetCollisionGroup(COLLISION_GROUP_WEAPON);
+	self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
 	self:SetMoveType(MOVETYPE_VPHYSICS);
 	self:PhysicsInit(SOLID_VPHYSICS);
 	self:SetHealth(50);

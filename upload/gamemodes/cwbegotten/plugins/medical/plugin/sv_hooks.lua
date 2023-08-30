@@ -58,6 +58,10 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 						local bloodLossPerLimb = self.bloodLossPerLimb;
 						local health = player:Health();
 						
+						if player:HasDisease("leprosy") then
+							bloodLossPerLimb = bloodLossPerLimb * 1.5;
+						end
+						
 						if player:HasBelief("plenty_to_spill") then
 							bloodLossPerLimb = bloodLossPerLimb * 0.5;
 						end
@@ -1009,6 +1013,10 @@ end;
 
 function cwMedicalSystem:PreOpenedContainer(player, entity)
 	if entity.disease and !player.cwObserverMode then
+		if cwBeliefs and player:HasBelief("sanitary") then
+			return;
+		end
+		
 		if math.random(1, 100) <= 75 then
 			if player:GiveDisease(entity.disease) then
 				Schema:EasyText(GetAdmins(), "icon16/bug.png", "tomato", player:Name().." has been infected with "..entity.disease.." from looting a diseased corpse.");

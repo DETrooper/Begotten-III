@@ -3997,7 +3997,20 @@ Clockwork.datastream:Hook("CharacterFinish", function(data)
 		Clockwork.Client:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 0.1, 1.2);
 		
 		timer.Simple(0.2, function()
-			--Clockwork.character:SetPanelOpen(false);
+			Clockwork.Client.CurrentGender = GENDER_MALE;
+			Clockwork.Client.MenuAngles = nil;
+			Clockwork.Client.MenuVector = nil;
+			Clockwork.Client.MenuCameraMoving = false;
+			Clockwork.Client.ModelSelectionOpen = false;
+			Clockwork.Client.SelectedFaction = nil;
+			Clockwork.Client.SelectedFaith = nil;
+			Clockwork.Client.SelectedSubfaction = nil;
+			Clockwork.Client.SelectedModel = nil;
+			
+			if IsValid(Clockwork.Client.CharSelectionBanner) then
+				Clockwork.Client.CharSelectionBanner:Remove();
+			end
+			
 			Clockwork.character:GetPanel():OpenPanel("cwCharacterList", nil, function(panel)
 				Clockwork.character:RefreshPanelList();
 			end);

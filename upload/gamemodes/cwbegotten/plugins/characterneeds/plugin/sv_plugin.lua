@@ -120,22 +120,27 @@ function playerMeta:HandleNeed(need, amount)
 					Clockwork.chatBox:Add(self, nil, "itnofake", "This thirst is getting to me. I must find clean water soon.");
 				end;
 			elseif need == "sleep" then
-				if amount > 0 and cwBeliefs and self:HasBelief("enduring_bear") then
-					newAmount = currentAmount + (amount / 2);
+				if amount > 0 then
+					if self:GetRagdollState() == RAGDOLL_KNOCKEDOUT then
+						return;
+					end
+					
+					if cwBeliefs and self:HasBelief("enduring_bear") then
+						newAmount = currentAmount + (amount / 2);
+					end
 				end
 			
 				if newAmount >= 100 then
 					if cwBeliefs and self:HasBelief("yellow_and_black") then
-						player:DeathCauseOverride("Ran out of battery.");
-						player:Kill();
+						self:DeathCauseOverride("Ran out of battery.");
+						self:Kill();
 						
 						return;
 					end
-					
-					newAmount = 60;
-					player.sleeping = true;
-					Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 600);
-					Schema:EasyText(player, "olive", "You finally collapse from exhaustion.");
+
+					self.sleepData = {hunger = 15, thirst = 30, rest = -30};
+					Clockwork.player:SetRagdollState(self, RAGDOLL_KNOCKEDOUT, 300);
+					Schema:EasyText(self, "olive", "You finally collapse from exhaustion.");
 				elseif newAmount >= 90 and currentAmount <= 90 then
 					if cwBeliefs and self:HasBelief("yellow_and_black") then
 						Clockwork.chatBox:Add(self, nil, "itnofake", "My systems are starting to shut down, I NEED TECH!");

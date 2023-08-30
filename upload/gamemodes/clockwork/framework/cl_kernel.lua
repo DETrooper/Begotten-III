@@ -978,6 +978,13 @@ do
 					});
 				end
 				
+				if player:GetSharedVar("followed") then
+					table.insert(text, {
+						text = "*FOLLOWED*", 
+						color = Color(255, 0, 0, 255);
+					});
+				end
+				
 				--if player:HasTrait("marked") then
 				if player:GetSharedVar("marked") then
 					table.insert(text, {

@@ -3,6 +3,32 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
+-- Freeze code from SciFi Weapons.
+function cwMelee:DoFreezeEffect(target, attacker, duration)
+	if (target:GetNWBool("bliz_frozen")) then return end
+
+	if (target:IsNPC() or target:IsPlayer()) then
+		target:SetNWBool( "bliz_frozen", true )
+		
+		local dps = ents.Create( "dmg_freezing" )
+		dps:SetPos( target:EyePos() + Vector( 0, 0, 1024 ) )
+		dps:SetOwner( attacker )
+		dps:SetParent( target )
+		
+		target.freezeEnt = dps;
+
+		if (duration) then
+			dps.LifeTime = duration
+		end
+		
+		dps:Spawn()
+		dps:Activate()
+		return
+	end
+	
+	return
+end
+
 local playerMeta = FindMetaTable("Player");
 
 -- A function to handle a player's stability value.
@@ -51,6 +77,10 @@ function playerMeta:TakePoise(amount)
 		self:CancelGuardening();
 		self.nextStas = CurTime() + 3;
 	end
+end
+
+function playerMeta:GivePoise(amount)
+	self:SetNWInt("meleeStamina", math.Clamp(self:GetNWInt("meleeStamina", 90) + amount, 0, self:GetMaxPoise() or 90));
 end
 
 -- A function to take from a player's stability.
@@ -170,11 +200,7 @@ function playerMeta:AddFreeze(amount, attacker)
 		self:SetNWInt("freeze", math.Clamp(math.Round(freeze + amount), 0, 100));
 		
 		if self:GetNWInt("freeze") >= 100 then
-			--if attacker:GetActiveWeapon().FreezeTime then
-				--DoElementalEffect({Element = EML_ICE, Target = self, Duration = attacker:GetActiveWeapon().FreezeTime, Attacker = attacker})
-			--end
-			
-			DoElementalEffect({Element = EML_ICE, Target = self, Duration = 20, Attacker = attacker})
+			cwMelee:DoFreezeEffect(self, attacker, 20);
 		end
 		
 		hook.Run("RunModifyPlayerSpeed", self, self.cwInfoTable, true);

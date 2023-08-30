@@ -635,6 +635,9 @@ function COMMAND:OnRun(player, arguments)
 			local message = table.concat(arguments, " ", 1)
 			local faith_str = string.upper(string.gsub(faith, "Faith of the ", ""));
 			local ofaithstr = faith_str
+			local marked = player:GetSharedVar("marked");
+			local favored = player:GetSharedVar("favored");
+			local markedstr = "";
 			local subfaith = player:GetSubfaith();
 			
 			if subfaith and subfaith ~= "" and subfaith ~= "N/A" then
@@ -642,7 +645,9 @@ function COMMAND:OnRun(player, arguments)
 			end
 			
 			local ringcolor = "ivory";
-			local color = "ivory"
+			local color = "ivory";
+			local markedcolor = "red";
+			local favoredcolor = "blue";
 			local admins = {};
 			
 			if (ringcolors[ofaithstr]) then
@@ -652,6 +657,13 @@ function COMMAND:OnRun(player, arguments)
 			if (faithcolors[faith_str]) then
 				color = faithcolors[faith_str];
 			end;
+			
+			if favored then
+				markedstr = " FAVORED";
+				markedcolor = "mediumblue";
+			elseif marked then
+				markedstr = " MARKED";
+			end
 
 			for k, v in pairs (_player.GetAll()) do
 				if (Clockwork.player:IsAdmin(v)) then
@@ -660,11 +672,12 @@ function COMMAND:OnRun(player, arguments)
 			end;
 			
 			local plycol = _team.GetColor(player:Team());
+			
 			if (player:GetFaction() == FACTION_GOREIC) then
 				plycol = plycol:Lighten(100)
 			end;
 			
-			Schema:EasyText(admins, ringcolor, "[PRAYER ", color, faith_str, ringcolor, "] ", plycol, player:Name(), "ivory", ": "..message)
+			Schema:EasyText(admins, ringcolor, "[PRAYER ", color, faith_str, markedcolor, markedstr, ringcolor, "] ", plycol, player:Name(), "ivory", ": "..message)
 			Schema:EasyText(player, color, "You make a prayer: \""..message.."\"")
 			
 			Clockwork.chatBox:AddInTargetRadius(player, "me", "mumbles a short prayer to the gods.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);

@@ -30,10 +30,12 @@ end;
 -- Called just after a player spawns.
 function cwStamina:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 	if (!lightSpawn) then
-		player:SetCharacterData("Max_Stamina", player:GetMaxStamina());
-		player:SetNetVar("Max_Stamina", player:GetCharacterData("Max_Stamina"));
-		player:SetCharacterData("Stamina", player:GetMaxStamina());
-		player:SetNetVar("Stamina", player:GetCharacterData("Stamina"));
+		local max_stamina = player:GetMaxStamina();
+	
+		player:SetCharacterData("Max_Stamina", max_stamina);
+		player:SetNetVar("Max_Stamina", player:GetCharacterData(max_stamina));
+		player:SetCharacterData("Stamina", player:GetCharacterData(max_stamina));
+		player:SetNetVar("Stamina", player:GetCharacterData(max_stamina));
 	end;
 end;
 
@@ -54,7 +56,9 @@ end;]]--
 
 -- Called when a player's shared variables should be set.
 function cwStamina:OnePlayerHalfSecond(player, curTime)
-	player:SetNetVar("Stamina", math.floor(player:GetCharacterData("Stamina")));
+	local stamina = player:GetCharacterData("Stamina") or player:GetMaxStamina();
+	
+	player:SetNetVar("Stamina", math.floor(stamina));
 end;
 
 -- Called when a player's stamina should regenerate.
@@ -93,9 +97,7 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized)
 		
 		if initialized and alive then
 			if (player:GetMoveType() == MOVETYPE_NOCLIP) then
-				local max_stamina = player:GetMaxStamina();
-				
-				player:SetCharacterData("Stamina", math.Clamp(player:GetCharacterData("Stamina", max_stamina) + 1, 0, max_stamina));
+				player:HandleStamina(1);
 				
 				return;
 			end;
@@ -123,7 +125,8 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized)
 					
 					--if (!player:IsNoClipping() and player:IsOnGround()) then
 						if (hook.Run("PlayerShouldStaminaDrain", player) != false) then
-							player:SetCharacterData("Stamina", math.Clamp(player:GetCharacterData("Stamina") - decrease, 0, player:GetMaxStamina()));
+							player:HandleStamina(-1);
+							
 							return;
 						end;
 					--end;
@@ -145,7 +148,7 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized)
 				local stamina = player:GetCharacterData("Stamina", 100);
 
 				if isnumber(stamina) and stamina < max_stamina then
-					player:SetCharacterData("Stamina", math.Clamp(stamina + regeneration, 0, max_stamina));
+					player:HandleStamina(regeneration);
 				
 					--hook.Run("RunModifyPlayerSpeed", player, infoTable);
 					cwStamina:ModifyPlayerSpeed(player, infoTable, stamina, max_stamina);

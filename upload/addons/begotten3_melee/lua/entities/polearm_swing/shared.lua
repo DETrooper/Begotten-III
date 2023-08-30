@@ -28,7 +28,7 @@ function ENT:TriggerAnim4(target, anim) -- The two arguments for this function a
 			target = self.Owner; -- Redundancy check to make sure that we don't get any errors incase "target" isn't valid.
 		end;
 		
-		net.Start( "BegottenAnim4" )
+		net.Start( "BegottenAnim4", true )
 		net.WriteEntity( target ); -- Before, the argument here was just "self.Owner" which was always going to return the player holding the weapon, making them flinch instead of whatever "target" is.
 		net.WriteString( anim );
 		net.Broadcast();

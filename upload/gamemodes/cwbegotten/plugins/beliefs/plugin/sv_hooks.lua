@@ -366,13 +366,22 @@ function cwBeliefs:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 				self:ForceTakeBelief(player, "mechanic");
 			end
 			
+			if player:HasTrait("scholar") then
+				level = level + 2;
+				self:ForceTakeBelief(player, "literate");
+				self:ForceTakeBelief(player, "scholar");
+			elseif player:HasTrait("literate") then
+				level = level + 1;
+				self:ForceTakeBelief(player, "literate");
+			end
+			
 			if player:HasTrait("gunslinger") then
 				level = level + 3;
 				self:ForceTakeBelief(player, "ingenious");
 				self:ForceTakeBelief(player, "powder_and_steel");
 				
 				local inventory = player:GetInventory();
-				local random_ammos = {"grapeshot", "pop-a-shot"};
+				local random_ammos = {--[["grapeshot",]] "pop-a-shot"};
 				
 				local peppershot = Clockwork.item:CreateInstance("begotten_peppershot");
 					
@@ -406,7 +415,7 @@ function cwBeliefs:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 					random_consumables = {"cooked_deer_meat", "cooked_goat_meat", "crafted_bandage"};
 					random_melees = {"begotten_1h_goremace", "begotten_dagger_gorehuntingdagger", "begotten_spear_harpoon", "begotten_2h_great_club"};
 				else
-					random_consumables = {"skintape", "Canned Meal", "Moldy Bread", "Dirty Water", "Purified Water", "crafted_bandage"};
+					random_consumables = {"skintape", "can_of_beans", "moldy_bread", "dirtywater", "crafted_bandage"};
 					random_melees = {"begotten_1h_bat", "begotten_1h_board", "begotten_1h_brokensword", "begotten_spear_harpoon", "begotten_2h_great_club", "begotten_2h_quarterstaff", "begotten_dagger_quickshank", "begotten_1h_pipe"};
 				end
 				
@@ -450,19 +459,19 @@ function cwBeliefs:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 				local random_shield = Clockwork.item:CreateInstance(random_shields[math.random(1, #random_shields)]);
 					
 				--[[if random_armor then
-					random_armor:SetCondition(math.random(70, 90));
+					random_armor:SetCondition(math.random(40, 60));
 					
 					Clockwork.inventory:AddInstance(inventory, random_armor);
 				end]]--
 					
 				if random_melee then
-					random_melee:SetCondition(math.random(70, 90));
+					random_melee:SetCondition(math.random(40, 60));
 					
 					Clockwork.inventory:AddInstance(inventory, random_melee);
 				end
 				
 				if random_shield then
-					random_shield:SetCondition(math.random(70, 90));
+					random_shield:SetCondition(math.random(40, 60));
 					
 					Clockwork.inventory:AddInstance(inventory, random_shield);
 				end
@@ -1126,7 +1135,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 				if attacker.warCryVictims then
 					if table.HasValue(attacker.warCryVictims, entity) then
 						if entity:HasBelief("deceitful_snake") then
-							newDamage = newDamage + (originalDamage * 0.4);
+							newDamage = newDamage + (originalDamage * 0.5);
 						else
 							newDamage = newDamage + (originalDamage * 0.25);
 						end
@@ -1221,7 +1230,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	
 	if (attacker:IsPlayer()) then
 		if entity:IsPlayer() then
-			if damage >= 15 then
+			if damage >= 10 then
 				if entity:HasBelief("deceitful_snake") then
 					if !entity.warCryVictims then
 						entity.warCryVictims = {};

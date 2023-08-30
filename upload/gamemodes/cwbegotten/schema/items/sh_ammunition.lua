@@ -11,7 +11,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoType = "Grapeshot";
 	ITEM.ammoName = "Grapeshot";
 	
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 85, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 150, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -43,7 +43,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoType = "Longshot";
 	ITEM.ammoName = "Longshot";
 	
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 80, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 120, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -158,7 +158,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoType = "Scrapshot";
 	ITEM.ammoName = "Scrapshot";
 	
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 70, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 90, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");

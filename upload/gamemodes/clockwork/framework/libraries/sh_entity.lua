@@ -763,7 +763,7 @@ if (SERVER) then
 		)
 
 		entity:EmitSound("physics/wood/wood_box_impact_hard3.wav")
-		entity:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+		entity:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 		entity.cwNextBashDoor = curTime + 3
 
 		Clockwork.entity:ReturnCollisionGroup(
