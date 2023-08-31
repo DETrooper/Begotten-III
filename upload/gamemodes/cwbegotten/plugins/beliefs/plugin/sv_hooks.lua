@@ -992,6 +992,10 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					
 					if entity:IsPlayer() and (attackerWeapon.isElectric or (attackerWeapon.isVoltistWeapon and attacker:HasBelief("the_storm"))) then
 						local clothesItem = entity:GetClothesItem();
+
+						if clothesItem==nil then
+							newDamage = newDamage * 0.3;
+						end
 						
 						if clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate") then
 							if clothesItem.weightclass == "Light" then
