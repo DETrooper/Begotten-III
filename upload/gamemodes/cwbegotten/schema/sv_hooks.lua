@@ -1272,6 +1272,10 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized)
 					player:HandleNeed("sleep", -10);
 					player:HandleNeed("hunger", 2);
 					player:HandleNeed("thirst", 2);
+					
+					if cwSanity then
+						player:HandleSanity(-10);
+					end
 				end
 			end
 			
