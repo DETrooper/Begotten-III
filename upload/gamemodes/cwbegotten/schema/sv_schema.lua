@@ -154,6 +154,15 @@ Schema.GibModels = {
 	["models/props_junk/wood_pallet001a.mdl"] = {"wood_reclaimed_", 5},
 };
 
+Schema.cheapleMessages = {
+	"I can't fucking sleep... not when that thing is after me...",
+	"N-no... it's too close... I've gotta go...",
+	"If I don't keep moving I'm dead...",
+	"There's no time for this... gotta keep moving...",
+	"Come on... time to get up, before it catches me...",
+	"Where is it!? Fuck, I've gotta keep moving...",
+};
+
 Schema.hellPortalTeleports = {};
 Schema.npcSpawns = {};
 
@@ -1834,11 +1843,7 @@ function Schema:CheapleCaughtPlayer(player)
 			player:Freeze(true);
 			player.scriptedDying = true;
 			player.caughtByCheaple = true;
-			
-			Schema:EasyText(GetAdmins(), "tomato", player:Name().." was caught by a cheaple!", nil);
-			
-			netstream.Start(player, "CheapleCutscene");
-			
+
 			timer.Simple(9, function()
 				player:KillSilent();
 				player:Freeze(false);
@@ -1849,9 +1854,10 @@ function Schema:CheapleCaughtPlayer(player)
 			end);
 		else
 			player:KillSilent();
-			
-			Schema:EasyText(GetAdmins(), "tomato", player:Name().." was caught by a cheaple!", nil);
 		end
+		
+		Schema:EasyText(GetAdmins(), "tomato", player:Name().." was caught by a cheaple!", nil);
+		netstream.Start(player, "CheapleCutscene");
 	end
 end
 

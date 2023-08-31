@@ -558,9 +558,10 @@ function GM:PlayerBindPress(player, bind, bPress)
 			return true
 		end
 		
-		if (Clockwork.player:GetAction(Clockwork.Client) == "raise") then
+		-- Handling this using SetNextPrimaryFire and SetNextSecondaryFire instead.
+		--[[if (Clockwork.player:GetAction(Clockwork.Client) == "raise") then
 			return true;
-		end;
+		end;]]--
 	end
 
 	local bindText = string.lower(bind)

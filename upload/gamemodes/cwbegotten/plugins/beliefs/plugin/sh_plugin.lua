@@ -1017,7 +1017,7 @@ function COMMAND:OnRun(player, arguments)
 						condition = techItemTable:GetCondition() - 5;
 					end
 					
-					player:HandleXP(1);
+					player:HandleXP(3);
 
 					if condition <= 0 then
 						player:TakeItem(techItemTable);

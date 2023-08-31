@@ -264,7 +264,7 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 			end
 		
 			if cwBeliefs then
-				player:HandleXP(5);
+				player:HandleXP(itemTable.useXP or 5);
 			end
 
 			return true;
@@ -451,7 +451,7 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 				hook.Run("PlayerHealed", target, itemTable);
 				
 				if cwBeliefs then
-					player:HandleXP(itemTable.targetExperience or 5);
+					player:HandleXP(itemTable.useXP or 5);
 				end
 			end);
 		else
@@ -602,7 +602,7 @@ function cwMedicalSystem:PerformSurgeryOnPlayer(player, target, itemTable, hitGr
 					end
 					
 					if cwBeliefs then
-						player:HandleXP(15);
+						player:HandleXP(100);
 					end
 
 					hook.Run("PlayerHealed", target, itemTable);

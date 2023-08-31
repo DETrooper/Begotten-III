@@ -96,9 +96,9 @@ function ENT:OnTakeDamage(damageInfo)
 					local playerFaction = player:GetFaction();
 					
 					if playerFaction == "Gatekeeper" then
-						player:HandleXP(3);
+						player:HandleXP(30);
 					else
-						player:HandleXP(1);
+						player:HandleXP(10);
 					end
 				end
 				

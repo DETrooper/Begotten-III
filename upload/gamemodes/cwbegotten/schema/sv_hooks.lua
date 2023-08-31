@@ -216,6 +216,15 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 					Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 15, "Sold Slave");
 					player:EmitSound("generic_ui/coin_positive_02.wav");
 					
+					if cwBeliefs then
+						local killXP = self.xpValues["kill"];
+						
+						-- 25% of kill XP rewarded for selling a slave.
+						killXP = (killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40)) * 0.25;
+					
+						player:HandleXP(killXP);
+					end
+					
 					local playerName;
 					
 					if Clockwork.player:DoesRecognise(entity, player) then
@@ -1249,6 +1258,21 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized)
 			
 			if nextTeleport and nextTeleport > 0 then
 				player:SetCharacterData("nextTeleport", math.max(nextTeleport - 1, 0));
+			end
+			
+			if cwCharacterNeeds and player:HasTrait("followed") and player.sleepData then
+				if !player.sleepData.wakeupTime then
+					player.sleepData.wakeupTime = curTime + math.random(10, 30);
+				end
+				
+				if player.sleepData.wakeupTime <= curTime then
+					Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);
+					Clockwork.chatBox:Add(player, nil, "itnofake", Schema.cheapleMessages[math.random(1, #Schema.cheapleMessages)]);
+					
+					player:HandleNeed("sleep", -10);
+					player:HandleNeed("hunger", 2);
+					player:HandleNeed("thirst", 2);
+				end
 			end
 			
 			if (waterLevel >= 1) then

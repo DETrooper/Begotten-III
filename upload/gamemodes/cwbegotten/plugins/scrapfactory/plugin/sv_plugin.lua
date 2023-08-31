@@ -8,6 +8,7 @@ cwScrapFactory.cycleTime = 75; -- 75 seconds to turn off all the valves
 cwScrapFactory.machineSounds = {"ambient/levels/outland/ol03_bincreak01.wav", "ambient/levels/outland/ol03_bincreak02.wav", "ambient/levels/outland/ol03_bincreak03.wav", "ambient/levels/outland/ol03_bincreak04.wav", "ambient/levels/outland/ol03_bincreak05.wav"};
 cwScrapFactory.maxoverheatingvalves = 6; -- max number of valves that might need to be turned during any given process cycle.
 --cwScrapFactory.totalvalves = 8; -- max number of valves that can spawn at map start
+cwScrapFactory.rewardXP = 200;
 
 local map = game.GetMap();
 
@@ -182,15 +183,14 @@ function cwScrapFactory:CheckProcessingCycle()
 			local voltistPresent = false;
 			
 			local scanPos = cwScrapFactory.rewardPositions[1];
+			local playersPresent = {};
 			
 			for k, v in pairs(_player.GetAll()) do
-				if IsValid(v) and v:HasInitialized() and v:Alive() then
+				if IsValid(v) and v:HasInitialized() and v:Alive() and !Clockwork.player:IsNoClipping(v) then
 					local lastZone = v:GetCharacterData("LastZone");
 				
 					if lastZone == "scrapper" then
-						if cwBeliefs then
-							v:HandleXP(25);
-						end
+						table.insert(playersPresent, v);
 					
 						if v:GetSharedVar("subfaith") == "Voltism" then
 							voltistPresent = true;
@@ -206,6 +206,14 @@ function cwScrapFactory:CheckProcessingCycle()
 							end
 						end
 					end
+				end
+			end
+			
+			if cwBeliefs and #playersPresent > 0 then
+				local xpPerPlayer = math.Round(cwScrapFactory.rewardXP / #playersPresent);
+			
+				for i, v in ipairs(playersPresent) do
+					v:HandleXP(xpPerPlayer)
 				end
 			end
 			

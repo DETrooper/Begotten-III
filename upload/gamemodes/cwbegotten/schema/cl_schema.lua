@@ -192,7 +192,7 @@ end
 function Schema:CheapleCutscene()
 	hook.Remove("RenderScreenspaceEffects", "RenderScreenspaceEffectsCheaple");
 
-	if Clockwork.Client:Alive() then
+	if Clockwork.Client:Alive() and game.GetMap() == "rp_begotten3" then
 		Schema.cheapleLight = true;
 	
 		timer.Simple(2, function()

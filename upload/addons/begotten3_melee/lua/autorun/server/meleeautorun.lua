@@ -937,8 +937,45 @@ local function PlayerDisconnected(player)
 	end
 end
 
-hook.Add("PlayerDisconnected", "PlayerDisconnected", PlayerDisconnected)
+hook.Add("PlayerDisconnected", "PlayerDisconnectedMeleeAutorun", PlayerDisconnected)
+
+local function UpdateWeaponRaised(player, activeWeapon, bIsRaised, curTime)
+	if bIsRaised then
+		if (player:KeyDown(IN_ATTACK2)) and (!player:KeyDown(IN_USE)) then
+			timer.Simple(FrameTime(), function()
+				if (player:KeyDown(IN_ATTACK2)) and (!player:KeyDown(IN_USE)) then
+					if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
+						if (activeWeapon.IronSights == true) then
+							local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
+							local curTime = CurTime();
+							
+							if (loweredParryDebug < curTime) then
+								local blockTable = GetTable(activeWeapon.BlockTable);
+								
+								if (blockTable and player:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !player:GetNWBool("Parried")) then
+									player:SetNWBool("Guardening", true);
+									player.beginBlockTransition = true;
+									player.StaminaRegenDelay = 0;
+									activeWeapon.Primary.Cone = activeWeapon.IronCone;
+									activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
+								else
+									player:CancelGuardening()
+								end;
+							end;
+						else
+							player:CancelGuardening();
+						end;
+					end;
+				end
+			end);
+		end
+	else
+		player:CancelGuardening();
+	end
+end
 	
+hook.Add("UpdateWeaponRaised", "UpdateWeaponRaisedMeleeAutorun", UpdateWeaponRaised)
+
 --print("The Undergod demands.")
 
 concommand.Add("atyd", function(player)

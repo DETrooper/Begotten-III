@@ -4,13 +4,13 @@
 --]]
 
 cwBeliefs.xpValues = {
-	["copy"] = 100, -- 100 xp per book copied by those with the 'Scribe' belief.
-	["damage"] = 0.05, -- 0.05 xp per point of damage dealt (5 xp for 100 hp of damage).
-	["drink"] = 1, -- 1 xp per drink consumed.
-	["food"] = 2, -- 2 xp per food consumed.
-	["kill"] = 5, -- 5 xp per killing blow (per level).
+	["copy"] = 200, -- 200 xp per book copied by those with the 'Scribe' belief.
+	["damage"] = 0.1, -- 0.1 xp per point of damage dealt (10 xp for 100 hp of damage).
+	["drink"] = 3, -- 3 xp per drink consumed.
+	["food"] = 5, -- 5 xp per food consumed.
+	["kill"] = 10, -- 10 xp per killing blow (per level).
 	["residual"] = 1, -- 1 xp per minute survived in non-safezones.
-	["read"] = 25, -- 25 xp for every unique scripture read.
+	["read"] = 50, -- 50 xp for every unique scripture read.
 };
 
 cwBeliefs.beliefTable = {

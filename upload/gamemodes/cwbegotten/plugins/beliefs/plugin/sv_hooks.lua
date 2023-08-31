@@ -47,6 +47,10 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized)
 					residualXP = residualXP * 2;
 				end
 				
+				if playerFaction == "Gatekeeper" and player:GetPos():WithinAABox(Vector(9422, 11862, -1210), Vector(10055, 10389, -770)) then
+					residualXP = residualXP * 2;
+				end
+
 				player:HandleXP(residualXP);
 			end
 		end
@@ -1311,7 +1315,7 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 		if player:CharPlayTime() > 1800 then
 			local killXP = self.xpValues["kill"];
 			
-			killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 30);
+			killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
 			
 			if attacker:HasBelief("father") then
 				if attacker:GetCharacterData("level", 1) < player:GetCharacterData("level", 1) then

@@ -627,7 +627,10 @@ function GM:PlayerSwitchFlashlight(player, bIsOn)
 				if player:HasBelief("dexterity") then
 					actionTime = actionTime * 0.66;
 				end
-					
+
+				activeWeapon:SetNextPrimaryFire(curTime + 60);
+				activeWeapon:SetNextSecondaryFire(curTime + 60);
+				
 				Clockwork.player:SetAction(player, "raise", actionTime, 5, function()
 					player:ToggleWeaponRaised();
 					player:EmitSound(raiseSound, 70);

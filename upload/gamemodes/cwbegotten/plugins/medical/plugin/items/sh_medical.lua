@@ -18,7 +18,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.healRepetition = 5;
 	ITEM.canSave = true;
 	ITEM.restoresBlood = 1000;
-	ITEM.targetExperience = 50;
+	ITEM.useXP = 10;
 	ITEM.useTime = 1;
 
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 1000};
@@ -85,7 +85,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.curesInjuries = {"infection", "minor_infection"};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 400};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
-	ITEM.targetExperience = 25;
+	ITEM.useXP = 20;
 	
 	function ITEM:OnUsed(player, itemEntity)
 		Schema:EasyText(player, "olivedrab","You apply the antibiotic paste to your wound.");
@@ -194,7 +194,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.healRepetition = 5;
 	ITEM.stopsBleeding = true;
 	ITEM.infectionChance = 30;
-	ITEM.targetExperience = 15;
+	ITEM.useXP = 15;
 
 	ITEM.curesInjuries = {"gash"};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 95};
@@ -248,7 +248,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.healRepetition = 5;
 	ITEM.stopsBleeding = true;
 	ITEM.infectionChance = 15;
-	ITEM.targetExperience = 8;
+	ITEM.useXP = 8;
 
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 ITEM:Register();
@@ -269,7 +269,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.healDelay = 4;
 	ITEM.healRepetition = 2;
 	ITEM.infectionChance = 25;
-	ITEM.targetExperience = 15;
+	ITEM.useXP = 15;
 
 	ITEM.curesInjuries = {"burn"};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 300};
@@ -299,7 +299,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.healRepetition = 5;
 	ITEM.infectionChance = 50;
 	ITEM.stopsBleeding = true;
-	ITEM.targetExperience = 5;
+	ITEM.useXP = 5;
 	
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 50};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
@@ -323,7 +323,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.uniqueID = "splint"
 	
 	ITEM.applicable = true;
-	ITEM.targetExperience = 5;
+	ITEM.useXP = 5;
 
 	ITEM.curesInjuries = {"broken_bone"};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 125};
@@ -348,7 +348,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.healRepetition = 8;
 	ITEM.stopsBleeding = true;
 	ITEM.canSave = true;
-	ITEM.targetExperience = 80;
+	ITEM.useXP = 50;
 
 	ITEM.curesInjuries = {"burn", "gash", "gunshot_wound", "minor_infection"};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 1000};

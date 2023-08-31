@@ -72,7 +72,7 @@ local ITEM = Clockwork.item:New(nil, true)
 						if bSuccess then
 							if cwBeliefs then
 								if not table.HasValue(booksCopied, self.uniqueID) then
-									player:HandleXP(cwBeliefs.xpValues["copy"] or 50);
+									player:HandleXP(cwBeliefs.xpValues["copy"]);
 								end
 							end
 							

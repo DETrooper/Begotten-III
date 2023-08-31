@@ -44,7 +44,7 @@ end
 netstream.Hook("PlayerJump", function(player)
 	if (player:Alive() and player:GetMoveType() != MOVETYPE_NOCLIP) then
 		if not (player.cwJumpPower <= 10) then
-			player:SetCharacterData("Stamina", math.Clamp(player:GetCharacterData("Stamina") - 15, 0, cwStamina:GetMaxStaminaPlugin(player)))
+			player:SetCharacterData("Stamina", math.Clamp((player:GetCharacterData("Stamina") or player:GetMaxStamina()) - 15, 0, cwStamina:GetMaxStaminaPlugin(player)))
 			player:SetNetVar("Stamina", player:GetCharacterData("Stamina"));
 		end
 	end;

@@ -208,13 +208,13 @@ function Schema:Think()
 			if statichitman.flaming then
 				statichitman:SetPos(cheaplePosition + (forward * 1.5) + Vector(0, 0, zDifference * FrameTime()));
 			else
-				statichitman:SetPos(cheaplePosition + (forward * 0.35) + Vector(0, 0, zDifference * FrameTime()));
+				statichitman:SetPos(cheaplePosition + (forward * 0.3) + Vector(0, 0, zDifference * FrameTime()));
 			end
 			
 			statichitman:SetAngles(Angle(0, yaw, 0));
 			statichitman:FrameAdvance();
 			
-			if (distance <= 512 * 512) then
+			if (distance <= 512 * 512) and Clockwork.Client:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT then
 				local curTime =  CurTime();
 			
 				if Clockwork.HeartbeatSound and Clockwork.HeartbeatSound:IsPlaying() then
