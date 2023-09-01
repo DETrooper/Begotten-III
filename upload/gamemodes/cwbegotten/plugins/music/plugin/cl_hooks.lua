@@ -250,7 +250,7 @@ function cwMusic:StartAmbientMusic()
 		local trackType = "wasteland"
 		local zone = Clockwork.Client:GetZone();
 		
-		if zone == "wasteland" and cwMusic.currentCycle == "night" then
+		if zone == "wasteland" and Clockwork.Client.currentCycle == "night" then
 			trackType = "wastelandnight";
 		elseif zone == "tower" and game.GetMap() ~= "rp_scraptown" then
 			trackType = "tower";

@@ -1,10 +1,66 @@
 AddCSLuaFile()
-AddCSLuaFile( "base/scifi_projectile.lua" )
-include( "base/scifi_projectile.lua" )
 
+-- cryo --
+sound.Add( {
+	name = "scifi.cryo.explode",
+	channel = CHAN_STATIC,
+	volume = 1.0,
+	level = 92,
+	pitch = {95, 105},
+	sound = "weapons/misc/cryo_explo.wav"
+} )
+
+sound.Add( {
+	name = "scifi.cryo.freeze", 
+	channel = CHAN_STATIC,
+	volume = 1,
+	level = SNDLVL_GUNFIRE, --SNDLVL_85dB,
+	pitch = {95, 105},
+	sound = "elemental/freeze.wav"
+} )
+
+sound.Add( {
+	name = "scifi.bliz.freeze", 
+	channel = CHAN_STATIC,
+	volume = 1,
+	level = SNDLVL_85dB,
+	pitch = {95, 105},
+	sound = "elemental/freeze_short.wav"
+} )
+
+sound.Add( {
+	name = "scifi.bliz.breakfree",
+	channel = CHAN_STATIC,
+	volume = 1,
+	level = SNDLVL_85dB,
+	pitch = {95, 105},
+	sound = "elemental/freeze_breakfree.wav"
+} )
+
+sound.Add( {
+	name = "scifi.bliz.shatter",
+	channel = CHAN_STATIC,
+	volume = 1,
+	level = 110,
+	pitch = {95, 105},
+	sound = "elemental/freeze_shatter.wav"
+} )
+
+sound.Add( {
+	name = "scifi.bliz.hit",
+	channel = CHAN_STATIC,
+	volume = 1,
+	level = 60,
+	pitch = {95, 105},
+	sound = "effects/ice_hit.wav"
+} )
+
+ENT.Type 			= "anim"
+ENT.Base 			= "base_anim"
 ENT.PrintName 		= "ice damage proc"
 ENT.Phx 			= SOLID_NONE
 ENT.PhxMType 		= MOVETYPE_FLY
+ENT.PhxMColl		= MOVECOLLIDE_FLY_CUSTOM 						-- Just ... just accept this, ok? Alternatively:  MOVECOLLIDE_FLY_BOUNCE
 ENT.PhxCGroup 		= COLLISION_GROUP_IN_VEHICLE
 ENT.PhxSSize		= 1
 ENT.PhxSProp 		= "item"
@@ -13,9 +69,9 @@ ENT.PhxGrav			= false
 ENT.PhxDrag			= false
 ENT.PhxElastic 		= 0
 ENT.LifeTime		= 2
+ENT.KillSilentDelay = 0.005											-- Duration of the death event. This can be overriden without changing this particular value and won't be used at all, if the legacy death event is used.
 
 function ENT:Initialize()
-
 	local size = self.PhxSSize
 
 	if ( SERVER ) then
@@ -71,11 +127,9 @@ function ENT:Initialize()
 			self:EmitSound( "scifi.bliz.freeze" )
 		end
 	end
-
 end
 
 function ENT:Think()
-
 	if ( SERVER ) then
 		local target = self:GetParent()
 		
@@ -123,7 +177,6 @@ function ENT:Think()
 	end
 	
 	return true 
-	
 end
 
 function ENT:PhysicsCollide( data, phys )
@@ -135,7 +188,6 @@ function ENT:OnTakeDamage( CTakeDamageInfo )
 end
 
 function ENT:OnRemove()
-
 	if ( !SERVER ) then return end
 
 	local parent = self:GetParent()
@@ -155,5 +207,18 @@ function ENT:OnRemove()
 
 	ParticleEffectAttach( "ice_freezing_release", 1, parent, 1 )
 	parent:SetNWBool( "bliz_frozen", false )
+end
+
+function ENT:KillSilent( evForce, evDelay )
+	if ( !IsValid( self ) ) then return end
+	if ( CLIENT ) then return end
+
+	local delay = self.KillSilentDelay
+	if ( evDelay ) then	
+		delay = evDelay
+	end
 	
+--		self:StopSound( self.SoundFile )
+	self:StopParticles()
+	self:Fire( "kill", "", delay )
 end

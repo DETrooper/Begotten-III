@@ -26,6 +26,14 @@ cwSanity.backpackSayings = {
 	"Let us out of here!", "Hello? Can anyone hear me?", "Let me go!", "Hey! I know you can hear me! Let us out!", "We just want to go home, let us out!", "We want to leave! Let us go!", "Someone help us, we're being kidnapped!", "Get us out of here!",
 };
 
+cwSanity.cannibalSayings = {
+	"Mmmmm, don't I just look delectable?", "You ever had our sausages?", "Fresh meat, right here!", "Come on and chow down!", "Why don't you come over here and take a bite of me?", "Yummy meats, right here!", "I'm the best cut of meat you'll ever have!", "Dig in!",
+};
+
+cwSanity.corpseSayings = {
+	"Help me up, would you!?", "I don't feel so good...", "What's happening to me...?", "Help me!", "I can't feel my legs!", "Hey you! Give me a hand!", "Won't you stay with me a while?", "Please...", "Hello, friend!", "Why... why me...?", "Say, you wouldn't happen to know who killed me, right?",
+};
+
 cwSanity.itemSayings = {
 	["Drinks"] = {"Slurp me up mister!", "Slurp my juicies!", "Want a drink?"},
 	["Firearms"] = {"Hey, you should use me to blow your brains out.", "I just wanna shoot and kill and blow fucklets away!", "Why don't you use me to kill those friends of yours?"},

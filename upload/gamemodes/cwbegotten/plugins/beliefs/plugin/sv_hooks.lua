@@ -370,7 +370,7 @@ function cwBeliefs:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 				self:ForceTakeBelief(player, "mechanic");
 			end
 			
-			if player:HasTrait("scholar") then
+			if player:HasTrait("scribe") then
 				level = level + 2;
 				self:ForceTakeBelief(player, "literacy");
 				self:ForceTakeBelief(player, "scribe");
