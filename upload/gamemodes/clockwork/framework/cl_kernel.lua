@@ -1318,7 +1318,9 @@ function Clockwork.kernel:DrawBar(x, y, width, height, color, text, value, maxim
 
 	surface.SetDrawColor(barInfo.color.r, barInfo.color.g, barInfo.color.b, (color.a * 3))
 	surface.SetMaterial(Clockwork.scratchTexture)
-	surface.DrawTexturedRect(barInfo.x, barInfo.y, barInfo.progressWidth, barInfo.height)
+	--surface.DrawTexturedRect(barInfo.x, barInfo.y, barInfo.progressWidth, barInfo.height)
+	local percentbar = barInfo.progressWidth/(barInfo.width-2)
+	surface.DrawTexturedRectUV( barInfo.x, barInfo.y, barInfo.progressWidth, barInfo.height, 0, 0, percentbar, 1 )
 	
 	if (barInfo.text and barInfo.text != "") then
 		local barTextX = barInfo.x + (barInfo.width / 2)
