@@ -182,6 +182,7 @@ function Schema:PlayerUnragdolled(player, state, ragdoll)
 			player.CinderBlock:Remove()
 		end
 	end
+	player:SetPos(Schema:FindEmptyPosition(player:GetPos(),{player}, 100, 20, Vector(16,16,64)))
 end
 
 -- Called when traits need to be networked.
