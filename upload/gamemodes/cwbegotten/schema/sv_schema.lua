@@ -3105,3 +3105,56 @@ function Schema:SpeakerPerform(player, text)
 	
 	self:EmitSoundFromSpeakers("damnation/apocalypt/speaker"..math.random(1, 5)..".mp3", 100, math.random(80, 120))
 end;
+
+function Schema:PositionEmpty(vector,filter,area)
+	local solidTypes = {
+		[CONTENTS_SOLID] = true,
+		[CONTENTS_MOVEABLE] = true,
+		[CONTENTS_LADDER] = true,
+		[CONTENTS_PLAYERCLIP] = true,
+		[CONTENTS_MONSTERCLIP] = true,
+	}
+	if area then
+		return !util.TraceHull{
+			start = vector,
+			endpos = vector,
+			filter = filter,
+			mins = -area,
+			maxs = area
+		}.Hit
+	end
+	if solidTypes[util.PointContents(vector)] then
+		return false
+	end
+	
+	for _,v in pairs(ents.FindInSphere(vector,35)) do
+		if v:GetPhysicsObject():IsValid() and (!filter or !table.HasValue(filter,v)) then
+			return false
+		end
+	end
+	
+	return true
+end
+
+function Schema:FindEmptyPosition(pos,filter,distance,step,area)
+	if Schema:PositionEmpty(pos,filter,area) then
+		return pos
+	end
+	print("hi retard")
+	for j = step,distance,step do
+		for i = -1,1,2 do
+			local offset = j * i
+			if Schema:PositionEmpty(pos+Vector(offset,0,0),filter,area) and Schema:PositionEmpty(pos+Vector(offset,0,0),filter,area) then
+				return pos+Vector(offset,0,0)
+			end
+			if Schema:PositionEmpty(pos+Vector(0,offset,0),filter,area) and Schema:PositionEmpty(pos+Vector(0,offset,0),filter,area) then
+				return pos+Vector(0,offset,0)
+			end
+			if Schema:PositionEmpty(pos+Vector(0,0,offset),filter,area) and Schema:PositionEmpty(pos+Vector(0,0,offset),filter,area) then
+				return pos+Vector(0,0,offset)
+			end
+		end
+	end
+	
+	return pos
+end
