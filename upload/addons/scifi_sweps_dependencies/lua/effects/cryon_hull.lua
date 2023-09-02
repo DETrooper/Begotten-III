@@ -76,7 +76,7 @@ function EFFECT:Render()
 
 	iBoneCount = parent:GetBoneCount()
 	sMin, sMax = parent:GetModelBounds()
-	iBoneMax = math.min( GetConVar( "sfw_fx_maxexpensive" ):GetInt() * 4, iBoneCount )
+	iBoneMax = math.min( 32, iBoneCount )
 	
 	for bone = 0 + iBoneMax / 4, iBoneMax do
 		if ( !parent:GetBoneName( bone ) ) then continue end

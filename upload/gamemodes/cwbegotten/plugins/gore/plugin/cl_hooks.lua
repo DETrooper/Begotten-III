@@ -23,7 +23,9 @@ function cwGore:HUDPaintEntityTargetID(entity, info)
 			info.y = Clockwork.kernel:DrawInfo("A human skull.", info.x, info.y, colorTargetID, info.alpha);
 		end;
 	elseif (entity:GetClass() == "prop_ragdoll") then
-		if (entity:GetModel() == "models/skeleton/skeleton_torso2.mdl") then
+		if (entity:GetModel() == "models/undead/charple01.mdl") then
+			info.y = Clockwork.kernel:DrawInfo("A rotting body.", info.x, info.y, colorTargetID, info.alpha);
+		elseif (entity:GetModel() == "models/skeleton/skeleton_torso2.mdl") then
 			info.y = Clockwork.kernel:DrawInfo("A human ribcage.", info.x, info.y, colorTargetID, info.alpha);
 		elseif (entity:GetModel() == "models/skeleton/skeleton_leg_l.mdl" or entity:GetModel() == "models/skeleton/skeleton_leg.mdl") then
 			info.y = Clockwork.kernel:DrawInfo("A human leg bone.", info.x, info.y, colorTargetID, info.alpha);
@@ -36,6 +38,59 @@ function cwGore:HUDPaintEntityTargetID(entity, info)
 		end;
 	end;
 end;
+
+local fliesDist = (1024 * 1024);
+
+local function FliesThink(entity)
+	local withinDist = LocalPlayer():GetPos():DistToSqr(entity:GetPos()) < fliesDist;
+
+	if !entity.rottingSound and entity:WaterLevel() < 3 and withinDist then
+		entity.rottingSound = true;
+	
+		entity:EmitSound("ambient/creatures/housefly_loop_0"..tostring(math.random(1, 2))..".wav", 60, math.random(95, 105));
+	elseif entity.rottingSound and !withinDist then
+		entity:StopSound("ambient/creatures/housefly_loop_01.wav");
+		entity:StopSound("ambient/creatures/housefly_loop_02.wav");
+		
+		entity.rottingSound = false;
+	end
+end
+
+function cwGore:OnEntityCreated(entity)
+	if entity:GetModel() == "models/undead/charple01.mdl" then
+		FliesThink(entity);
+	end
+end
+
+function cwGore:EntityRemoved(entity)
+	if entity.rottingSound then
+		entity:StopSound("ambient/creatures/housefly_loop_01.wav");
+		entity:StopSound("ambient/creatures/housefly_loop_02.wav");
+	end
+end
+
+function cwGore:OnEntityWaterLevelChanged(entity, oldLevel, newLevel)
+	if entity:GetModel() == "models/undead/charple01.mdl" then
+		if newLevel == 3 and entity.rottingSound then
+			entity:StopSound("ambient/creatures/housefly_loop_01.wav");
+			entity:StopSound("ambient/creatures/housefly_loop_02.wav");
+			
+			entity.rottingSound = false;
+		end
+	end
+end
+
+function cwGore:Think()
+	local curTime = CurTime();
+
+	if !self.nextFliesCheck or self.nextFliesCheck < curTime then
+		self.nextFliesCheck = curTime + math.Rand(0.5, 1.5);
+		
+		for i, v in ipairs(ents.FindByModel("models/undead/charple01.mdl")) do
+			FliesThink(v);
+		end
+	end
+end
 
 --[[
 

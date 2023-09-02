@@ -82,11 +82,15 @@ function cwSanity:Think()
 			self.itemSpeakTimer = curTime + math.random(120, 240);
 		
 			if Clockwork.Client:Alive() and Clockwork.Client:Sanity() <= 50 and Clockwork.Client:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT and !Clockwork.player:IsNoClipping(Clockwork.Client) then
+				local corpseFound;
 				local itemFound;
 				local radioFound;
 				
 				for k, v in pairs (ents.FindInSphere(Clockwork.Client:GetPos(), 256)) do
-					if (v:GetClass() == "cw_item") then
+					if (v:GetClass() == "prop_ragdoll" and v:GetNWEntity("Player"):IsPlayer() or v:GetNWEntity("Player") == game.GetWorld() or v:GetModel() == "models/undead/charple01.mdl") then
+						corpseFound = v;
+						break;
+					elseif (v:GetClass() == "cw_item") then
 						itemFound = v;
 						break;
 					elseif (v:GetClass() == "cw_radio") then
@@ -95,7 +99,53 @@ function cwSanity:Think()
 					end
 				end
 				
-				if itemFound then
+				if corpseFound then
+					if cwBeliefs and cwBeliefs:HasBelief("savage") then
+						local cannibalSaying = self.cannibalSayings[math.random(1, #self.cannibalSayings)];
+						
+						if corpseFound:GetNWEntity("Player"):IsPlayer() then
+							local name = "The corpse";
+
+							if Clockwork.player:DoesRecognise(corpseFound:GetNWEntity("Player")) then
+								name = corpseFound:GetNWEntity("Player"):Name();
+							else
+								local unrecognisedName, usedPhysDesc = Clockwork.player:GetUnrecognisedName(corpseFound:GetNWEntity("Player"));
+								
+								if (usedPhysDesc and string.utf8len(unrecognisedName) > 24) then
+									unrecognisedName = string.utf8sub(unrecognisedName, 1, 21).."...";
+								end;
+								
+								name = "["..unrecognisedName.."]";
+							end
+							
+							Clockwork.chatBox:Add(nil, nil, Color(255, 255, 150, 255), name.." says \""..cannibalSaying.."\"");
+						else
+							Clockwork.chatBox:Add(nil, nil, Color(255, 255, 150, 255), "The corpse says \""..cannibalSaying.."\"");
+						end
+					else
+						local corpseSaying = self.corpseSayings[math.random(1, #self.corpseSayings)];
+						
+						if corpseFound:GetNWEntity("Player"):IsPlayer() then
+							local name = "The corpse";
+
+							if Clockwork.player:DoesRecognise(corpseFound:GetNWEntity("Player")) then
+								name = corpseFound:GetNWEntity("Player"):Name();
+							else
+								local unrecognisedName, usedPhysDesc = Clockwork.player:GetUnrecognisedName(corpseFound:GetNWEntity("Player"));
+								
+								if (usedPhysDesc and string.utf8len(unrecognisedName) > 24) then
+									unrecognisedName = string.utf8sub(unrecognisedName, 1, 21).."...";
+								end;
+								
+								name = "["..unrecognisedName.."]";
+							end
+						
+							Clockwork.chatBox:Add(nil, nil, Color(255, 255, 150, 255), name.." says \""..corpseSaying.."\"");
+						else
+							Clockwork.chatBox:Add(nil, nil, Color(255, 255, 150, 255), "The corpse says \""..corpseSaying.."\"");
+						end
+					end
+				elseif itemFound then
 					local itemTable = itemFound:GetItemTable();
 					
 					if itemTable and self.itemSayings[itemTable.category] then
@@ -257,12 +307,14 @@ function cwSanity:PostMainMenuRebuild(menu)
 end
 
 function cwSanity:PlayerCanShowUnrecognised(player, x, y, color, alpha, flashAlpha)
-	local sanity = Clockwork.Client:GetNetVar("sanity", 100)
-	
-	if (sanity <= 30 and sanity > 20) then
-		return "All you see is a worthless fucking piggy ready to be slaughtered.";
-	elseif (sanity <= 20) then
-		return "...";
+	if player:Alive() then
+		local sanity = Clockwork.Client:GetNetVar("sanity", 100)
+		
+		if (sanity <= 30 and sanity > 20) then
+			return "All you see is a worthless fucking piggy ready to be slaughtered.";
+		elseif (sanity <= 20) then
+			return "...";
+		end;
 	end;
 end;
 

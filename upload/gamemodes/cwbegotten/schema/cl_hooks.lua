@@ -43,7 +43,7 @@ function Schema:Initialize()
 		RunConsoleCommand("retry");
 	end
 	
-	RunConsoleCommand("fps_max", "300");
+	--RunConsoleCommand("fps_max", "300");
 	RunConsoleCommand("hud_draw_fixed_reticle", "0");
 	RunConsoleCommand("mat_hdr_level", "2");
 	RunConsoleCommand("mat_motion_blur_enabled", "1");
@@ -1019,6 +1019,8 @@ function Schema:Tick()
 		RunConsoleCommand("hud_draw_fixed_reticle", "0");
 		RunConsoleCommand("mat_motion_blur_enabled", "1");
 	end
+	
+	RunConsoleCommand("r_pixelfog", "1");
 
 	-- Something is fucked with our SWEPs that is causing clientside models to build up and tank FPS.
 	if !self.nextClientsideModelCheck or curTime >= self.nextClientsideModelCheck then
