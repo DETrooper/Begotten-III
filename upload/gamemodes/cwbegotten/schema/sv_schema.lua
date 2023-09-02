@@ -3140,7 +3140,7 @@ function Schema:FindEmptyPosition(pos,filter,distance,step,area)
 	if Schema:PositionEmpty(pos,filter,area) then
 		return pos
 	end
-	print("hi retard")
+
 	for j = step,distance,step do
 		for i = -1,1,2 do
 			local offset = j * i
