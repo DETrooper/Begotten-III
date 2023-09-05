@@ -137,6 +137,10 @@ function cwLimbs:ModifyPlayerSpeed(player, infoTable)
 	local legDamage = math.min(leftLeg, rightLeg)
 
 	if (legDamage <= 90) then
+		if cwPossession and player.possessor then
+			return;
+		end
+	
 		if legDamage > 75 then
 			return;
 		elseif legDamage <= 75 and legDamage > 50 then

@@ -830,7 +830,7 @@ function Schema:KeyPress(player, key)
 		local entity = target;
 		
 		if player.HasBelief and player:HasBelief("dexterity") then
-			untieTime = 6;
+			untieTime = 4;
 		end
 		
 		if (IsValid(target)) then

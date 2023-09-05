@@ -293,6 +293,10 @@ function cwRituals:PostDrawOpaqueRenderables()
 end;
 
 Clockwork.datastream:Hook("HotkeyMenu", function(data)
+	if cwPosession and (IsValid(Clockwork.Client.possessor) or IsValid(Clockwork.Client.victim)) then
+		return;
+	end
+	
 	local hotkeyRituals = {};
 	
 	for k, v in pairs(cwRituals.hotkeyRituals) do

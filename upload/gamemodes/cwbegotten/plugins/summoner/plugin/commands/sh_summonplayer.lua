@@ -61,12 +61,10 @@ function COMMAND:OnRun(player, arguments)
 				sound.Play("misc/summon.wav", destination, 100, 100);
 				
 				timer.Simple(0.75, function()
-					if IsValid(player) then
+					if IsValid(player) and IsValid(npc) then
 						npc.t:SpawnFunction(player, trace);
 						
-						if IsValid(npc) then
-							util.Decal("PentagramBurn", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal);
-						end
+						util.Decal("PentagramBurn", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal);
 					end
 				end);
 			else
@@ -88,14 +86,16 @@ function COMMAND:OnRun(player, arguments)
 				sound.Play("misc/summon.wav", destination, 100, 100);
 				
 				timer.Simple(0.75, function()
-					if IsValid(player) then
+					if IsValid(npc) then
+						if npc.CustomInitialize then
+							npc:CustomInitialize();
+						end
+						
 						npc:SetPos(destination + Vector(0, 0, 16));
 						npc:Spawn();
 						npc:Activate();
 						
-						if IsValid(npc) then
-							util.Decal("PentagramBurn", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal);
-						end
+						util.Decal("PentagramBurn", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal);
 					end
 				end);
 			else

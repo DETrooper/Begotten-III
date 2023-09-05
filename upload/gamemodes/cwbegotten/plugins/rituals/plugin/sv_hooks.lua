@@ -23,7 +23,7 @@ function cwRituals:PlayerCanPerformRitual(player, uniqueID)
 	local subfaction = player:GetSubfaction();
 	local subfaith = player:GetSharedVar("subfaith");
 	
-	if Clockwork.player:GetAction(player) ~= "" or player:IsRagdolled() or !player:Alive() or player.opponent or (cwDueling and cwDueling:PlayerIsInMatchmaking(player)) or player:GetNetVar("tied") != 0 then
+	if Clockwork.player:GetAction(player) ~= "" or player:IsRagdolled() or !player:Alive() or player.opponent or (cwDueling and cwDueling:PlayerIsInMatchmaking(player)) or player:GetNetVar("tied") != 0 or player.possessor then
 		Schema:EasyText(player, "peru", "Your character cannot perform a ritual at this moment!");
 		return false;
 	end

@@ -24,6 +24,9 @@ ENT.PlayerFriendly = true -- When true, this will make it friendly to rebels and
 ENT.BrokenBloodSpawnUp = 10 -- Positive Number = Up | Negative Number = Down
 -- Leave blank if you don't want any sounds to play
 ENT.SoundTbl_Idle = {"deer/idle1.wav"}
+
+ENT.XPValue = 25;
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomInitialize()
 	self:SetCollisionBounds(Vector(45, 5 , 60), Vector(-45, -5, 0))

@@ -73,6 +73,8 @@ function player.Find(name, bCaseSensitive)
 			return v
 		elseif (v:SteamID() == name) then
 			return v
+		elseif (v:Name():find(name)) then
+			return v
 		end
 	end
 end

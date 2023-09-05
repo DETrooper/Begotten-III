@@ -11,7 +11,7 @@ end;
 
 -- Called when a player switches weapons.
 function cwSenses:PlayerSwitchWeapon(player, oldWeapon, newWeapon)
-	if player.spawning then
+	--[[if player.spawning then
 		return;
 	end
 	
@@ -25,7 +25,7 @@ function cwSenses:PlayerSwitchWeapon(player, oldWeapon, newWeapon)
 		elseif (player.sensesOn) then
 			player:SensesOff()
 		end;
-	end
+	end]]--
 	
 	-- This breaks senses for primevalists, also seems to be completely redundant to me unless I'm missing something? - DETrooper
 	--[[if (IsValid(oldWeapon) and IsValid(newWeapon) and oldWeapon:GetClass() == "cw_senses" and newWeapon:GetClass() != "cw_senses") then

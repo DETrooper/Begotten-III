@@ -1035,6 +1035,10 @@ local COMMAND = Clockwork.command:New("ForceUntie");
 		local target = Clockwork.player:FindByID(arguments[1]);
 		
 		if (target) then
+			if player.possessor and player:GetNetVar("tied") != 0 then
+				Clockwork.chatBox:AddInTargetRadius(target, "me", "'s bindings suddenly drop to the ground as they are removed by some unseen force!", target:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+			end
+		
 			Schema:TiePlayer(target, false, nil);
 			Schema:EasyText(player, "cornflowerblue", "You have untied "..target:Name().."!");
 		else

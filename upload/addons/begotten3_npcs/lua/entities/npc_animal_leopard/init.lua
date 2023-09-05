@@ -45,6 +45,8 @@ ENT.SoundTbl_MeleeAttackMiss = {}
 ENT.SoundTbl_Pain = {"leopard/attack.wav"}
 ENT.SoundTbl_Death = {""}
 
+ENT.XPValue = 100;
+
 function ENT:CustomInitialize()
 	self:SetCollisionBounds(Vector(35, 5 , 50), Vector(-35, -5, 0))
 	

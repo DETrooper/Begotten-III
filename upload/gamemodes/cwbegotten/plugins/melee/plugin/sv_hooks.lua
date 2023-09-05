@@ -493,7 +493,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 	if (!player.nextBreathingCheck or player.nextBreathingCheck < curTime) then
 		player.nextBreathingCheck = curTime + 0.6;
 	
-		if (alive) then
+		if (alive) and !player.possessor then
 			local max_poise = player:GetMaxPoise();
 			local poise = player:GetNWInt("meleeStamina", max_poise);
 			
@@ -576,7 +576,7 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie)
 	Clockwork.chatBox:AddInTargetRadius(player, "me", string.gsub(randomPhrase, "^.", string.lower), player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 	player:SetCharacterData("stability", 50);
 	
-	if player.possessor then
+	if IsValid(player.possessor) then
 		pitch = 50;
 	elseif gender == "his" then
 		pitch = math.random(95, 110);
@@ -743,11 +743,13 @@ end;
 
 -- Called when a player switches their weapon. 
 function cwMelee:PlayerSwitchWeapon(player, oldWeapon, newWeapon)
-	if (oldWeapon.HolsterDelay and oldWeapon.HolsterDelay > CurTime()) then
-		return true;
-	end;
-
 	if (player:IsWeaponRaised()) then
+		if IsValid(oldWeapon) and oldWeapon.IsABegottenMelee then
+			if oldWeapon:GetNextPrimaryFire() > CurTime() then 
+				return true;
+			end
+		end
+	
 		player:SetWeaponRaised(false);
 	end;
 	
@@ -841,7 +843,7 @@ function GM:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 		local faction = (player:GetFaction())
 		local pitch = 100;
 		
-		if player.possessor then
+		if IsValid(player.possessor) then
 			pitch = 50;
 		elseif gender == "Male" then
 			pitch = math.random(95, 110);
@@ -912,7 +914,7 @@ function GM:PlayerPlayDeathSound(player, gender)
 	local faction = (player:GetFaction())
 	local pitch = 100;
 	
-	if player.possessor then
+	if IsValid(player.possessor) then
 		pitch = 50;
 	elseif gender == "Male" then
 		if math.random(1, 100) == 100 then

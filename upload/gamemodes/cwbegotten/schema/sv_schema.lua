@@ -8,7 +8,7 @@ PrecacheParticleSystem("env_fire_large");
 
 local map = string.lower(game.GetMap());
 
-Schema.maxNPCS = 4;
+Schema.maxNPCS = 8;
 
 if !Schema.towerSafeZoneEnabled then
 	Schema.towerSafeZoneEnabled = true;
@@ -2108,13 +2108,22 @@ function Schema:PlayerCommitSuicide(player)
 	}
 
 	player:Freeze(true);
-	Clockwork.chatBox:AddInTargetRadius(player, "me", table.Random(SuicideMethods), player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);	
+	
+	local suicideMethod = table.Random(SuicideMethods);
+	
+	Clockwork.chatBox:AddInTargetRadius(player, "me", suicideMethod, player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 	
 	timer.Simple(3, function()
 		if IsValid(player) then
 			player:Kill();
 			player:DeathCauseOverride("Went fucking insane and brutally killed "..selfless..".");
 			Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, player:Name().." has committed fucking suicide.");
+			
+			if string.find(suicideMethod, "exploding") then
+				if (player:GetRagdollEntity()) then
+					cwGore:SplatCorpse(player:GetRagdollEntity(), 60);
+				end;
+			end
 		end
 	end);
 end

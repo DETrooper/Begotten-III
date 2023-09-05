@@ -2,15 +2,28 @@
 	Begotten III: Jesus Wept
 --]]
 
-cwSanity.DrainEntities = {
-	["npc_stalker"] = -0.5,
-}
+-- Chatbox classes muted when totally insane. Value reflects whether or not a noise should be made. 
+cwSanity.deafClasses = {
+	["ic"] = true,
+	["whisper"] = true,
+	["yell"] = true,
+	["me"] = true,
+	["proclaim"] = true,
+	["meproclaim"] = true,
+	["radio"] = false,
+	["ravenspeak"] = false,
+	["ravenspeakclan"] = false,
+	["ravenspeakfaction"] = false,
+	["ravenspeakreply"] = false,
+	["darkwhisperglobal"] = false,
+	["darkwhisperreply"] = false,
+};
 
 local playerMeta = FindMetaTable("Player")
 
 -- A function to handle a player's sanity value.
 function playerMeta:HandleSanity(amount)
-	if (!amount or type(amount) != "number" or amount == 0 or self.opponent) then
+	if (!amount or type(amount) != "number" or amount == 0 or self.opponent or (self.possessor and IsValid(self.possessor)) or (self.victim and IsValid(self.victim))) then
 		return
 	end
 	

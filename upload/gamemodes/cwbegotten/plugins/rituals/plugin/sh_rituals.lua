@@ -1428,95 +1428,12 @@ RITUAL = cwRituals.rituals:New("summon_demon");
 			
 			timer.Simple(0.5, function()
 				if IsValid(entity) then
-					entity:SetModel("models/zombie/zombie_soldier.mdl")
+					entity:CustomInitialize();
 					entity:Spawn();
 					entity:Activate();
-
-					cwParts:HandleClothing(entity, "models/skeleton/skeleton_whole.mdl", 0, 8, true); -- torso
-					cwParts:HandleClothing(entity, "models/Zombie/Fast.mdl", 3, 0, true); -- hands
-					cwParts:HandleClothing(entity, "models/Zombie/Fast.mdl", 4, 0, true); -- legs
-					cwParts:HandleClothing(entity, "models/Gibs/Fast_Zombie_Torso.mdl", 1, 0, false); -- hands
-					cwParts:HandleClothing(entity, "models/undead/corpse1.mdl", 1, 0, false); -- hands
-					cwGear:HandleGear(entity, "models/props_swamp/chainsaw.mdl", "right hand", Vector(3, -1, 0), Angle(0, 0, 180), 0.7);
-					
-					entity:SetMaterial("effects/water_warp01");
-					entity:EmitSound("weapons/chainsaw/chainsaw_start_0"..math.random(1, 2)..".wav", 75);
 					
 					entity:AddEntityRelationship(player, D_LI, 99);
-					
-					for k, v in pairs(_player.GetAll()) do
-						if v:GetFaith() == playerFaith then
-							entity:AddEntityRelationship(v, D_LI, 99);
-						end
-					end
-					
-					hook.Add("EntityRemoved", entity, function()
-						if (entity.cwChainsawSound) then
-							entity.cwChainsawSound:Stop();
-							entity.cwChainsawSound = nil;
-						end;
-					end);
-					
-					hook.Add("Think", entity:EntIndex().."_Chainsaws", function()
-						if (!IsValid(entity)) then
-							return;
-						end;
-						
-						local curTime = CurTime();
-						
-						if (!entity.cwChainsawSound) then
-							entity.cwChainsawSound = CreateSound(entity, "weapons/chainsaw/chainsaw_idle_lp_01.wav");
-							entity.cwChainsawSound:PlayEx(0.75, math.random(85, 110));
-						end;
-						
-						if (!entity.nextsasd or curTime > entity.nextsasd) then
-							entity.nextsasd = curTime + 6;
-							
-							if (entity.cwChainsawSound) then
-								entity.cwChainsawSound:Stop();
-								entity.cwChainsawSound = nil;
-								
-								if (entity.sawasd == 1) then
-									entity.cwChainsawSound = CreateSound(entity, "weapons/chainsaw/chainsaw_high_speed_lp_01.wav");
-									entity.cwChainsawSound:PlayEx(0.75, math.random(85, 110));
-								else
-									entity.cwChainsawSound = CreateSound(entity, "weapons/chainsaw/chainsaw_idle_lp_01.wav");
-									entity.cwChainsawSound:PlayEx(0.75, math.random(85, 110));
-								end;
-							end;
-						end;
-						
-						if (!entity.sawasd) then
-							entity.sawasd = 0;
-						end;
-						
-						if (IsValid(entity:GetEnemy())) then
-							if (entity.sawasd == 0) then
-								if (entity.cwChainsawSound) then
-									entity.cwChainsawSound:Stop();
-									entity.cwChainsawSound = nil;
-								end;
-								
-								entity.cwChainsawSound = CreateSound(entity, "weapons/chainsaw/chainsaw_high_speed_lp_01.wav");
-								entity.cwChainsawSound:PlayEx(0.75, math.random(85, 110));
-								entity.sawasd = 1;
-								
-								local en = table.Random(painSounds)
-								entity:EmitSound(en, 90, 100);
-							end;
-						else
-							if (entity.sawasd == 1) then
-								if (entity.cwChainsawSound) then
-									entity.cwChainsawSound:Stop();
-									entity.cwChainsawSound = nil;
-								end;
-								
-								entity.cwChainsawSound = CreateSound(entity, "weapons/chainsaw/chainsaw_idle_lp_01.wav");
-								entity.cwChainsawSound:PlayEx(0.75, math.random(85, 110));
-								entity.sawasd = 0;
-							end;
-						end;
-					end);
+					entity.summonedFaith = playerFaith;
 					
 					for k, v in pairs(_player.GetAll()) do
 						if v:GetFaith() == playerFaith then
@@ -1525,7 +1442,7 @@ RITUAL = cwRituals.rituals:New("summon_demon");
 					end
 					
 					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
-					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as a creature of Hell suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
+					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as an unholy creature of Hell suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
 				end
 			end);
 		else
@@ -1598,6 +1515,8 @@ RITUAL = cwRituals.rituals:New("summon_familiar");
 					entity:Activate(); 
 					entity:SetMaterial("models/props_combine/portalball001_sheet")
 					entity:AddEntityRelationship(player, D_LI, 99);
+					entity.XPValue = 250;
+					entity.summonedFaith = playerFaith;
 					
 					for k, v in pairs(_player.GetAll()) do
 						if v:GetFaith() == playerFaith then

@@ -7,18 +7,52 @@ local playerMeta = FindMetaTable("Player")
 util.AddNetworkString("PossessionFreakoutAnim")
 
 -- A function to get if the player can be possessed.
-function playerMeta:CanBePossessed(bIgnoreTrait)
-	if self:Alive() and self:HasInitialized() and !self.possessor and !self.victim and !self.opponent then
-		if !bIgnoreTrait then
-			if self:HasTrait("possessed") then
-				return true;
-			end
-		else
-			return true;
+function playerMeta:CanBePossessed(possessor, bIgnoreTrait)
+	if self == possessor then
+		Schema:EasyText(possessor, "firebrick", "You cannot possess yourself!");
+	
+		return false;
+	end
+	
+	if self.possessor then 
+		Schema:EasyText(possessor, "firebrick", self:Name().." is already possessed!");
+		
+		return false;
+	end
+	
+	if self.victim then
+		Schema:EasyText(possessor, "firebrick", self:Name().." is possessing someone else!");
+		
+		return false;
+	end
+	
+	if !self:Alive() or !self:HasInitialized() or self.scriptedDying or self.dyingOfDisease then
+		Schema:EasyText(possessor, "firebrick", "You cannot possess a dead or dying character!");
+		
+		return false;
+	end
+	
+	if self.opponent then
+		Schema:EasyText(possessor, "firebrick", "You cannot possess characters that are in a duel!");
+		
+		return false;
+	end
+	
+	if !bIgnoreTrait then
+		if cwCharacterNeeds and self:GetNeed("corruption", 0) < 50 then
+			Schema:EasyText(possessor, "firebrick", self:Name().." should have at least 50% corruption in order to be possessed!");
+		
+			return false;
+		end
+
+		if !self:HasTrait("possessed") then
+			Schema:EasyText(possessor, "firebrick", self:Name().." does not have the possessed trait!");
+		
+			return false;
 		end
 	end
 	
-	return false;
+	return true;
 end
 
 -- A function to possess a player.
@@ -55,13 +89,33 @@ function playerMeta:Possess(possessor)
 		
 		Clockwork.chatBox:Add(self, nil, "itnofake", "As much as you struggle, you cannot fight off the entity that is now taking control of your body!");
 		
+		local max_poise = self:GetMaxPoise();
+		local max_stability = self:GetMaxStability();
+		local max_stamina = self:GetMaxStamina();
+		
 		self:Freeze(false);
 		self:ResetInjuries();
 		self:SetHealth(self:GetMaxHealth() or 100);
 		self:SetNeed("thirst", 0);
 		self:SetNeed("hunger", 0);
+		self:SetNeed("sleep", 0);
+		self:SetCharacterData("Stamina", max_stamina);
+		self:SetNetVar("Stamina", max_stamina);
+		self:SetCharacterData("stability", max_stability);
+		--self:SetCharacterData("meleeStamina", max_poise);
+		self:SetNWInt("meleeStamina", max_poise);
+		self:SetNWInt("freeze", 0);
 		self:SetBloodLevel(5000);
 		self:StopAllBleeding();
+		Clockwork.limb:HealBody(self, 100);
+		Clockwork.player:SetAction(self, "die", false);
+		Clockwork.player:SetAction(self, "die_bleedout", false);
+		
+		if self:IsRagdolled() then
+			Clockwork.player:SetRagdollState(self, RAGDOLL_NONE);
+			
+			Clockwork.chatBox:AddInTargetRadius(self, "me", "suddenly pulls themself up in a manner that seems to defy gravity!", self:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+		end
 		
 		Clockwork.datastream:Start(possessor, "Possessing", self);
 		Clockwork.datastream:Start(possessor, "Stunned", 5); -- Replace with damnation or custom VFX later!
@@ -74,12 +128,12 @@ end
 
 -- A function to make a player go fucking crazy!!!
 function playerMeta:PossessionFreakout()
-	local entitiesInSphere = ents.FindInSphere(self:GetPos(), 512);
+	local entitiesInSphere = ents.FindInSphere(self:GetPos(), 666);
 	
 	for k, v in pairs (entitiesInSphere) do	
 		if (IsValid(v) and v:IsPlayer()) then
-			if v:HasInitialized() then
-				if !v.cwObserverMode then
+			if v:HasInitialized() and v:Alive() then
+				if !v.cwObserverMode and Clockwork.player:CanSeeEntity(v, self) then
 					v:HandleSanity(-25);
 				end
 				

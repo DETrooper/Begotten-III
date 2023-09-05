@@ -266,20 +266,19 @@ if SERVER then
     if ent.IsDrGNextbot and (ent:IsDown() or ent:IsDead()) then return true end
 	
 	if Clockwork then
-		if ent:GetClass() == "prop_ragdoll" and Clockwork.entity:IsPlayerRagdoll(ent) then
+		if ent:GetClass() == "prop_ragdoll" and Clockwork.entity:IsPlayerRagdoll(ent) and ent:GetNWEntity("Player") ~= game.GetWorld() then
 			local ragdollPlayer = Clockwork.entity:GetPlayer(ent);
-			
-			if IsValid(ragdollPlayer) then
-				if !ragdollPlayer:Alive() or !ragdollPlayer:IsRagdolled() then
-					return true;
-				end
-			end
-		elseif ent:IsPlayer() then
-			if !ent:HasInitialized() or (ent.cwObserverMode and ent:GetCharacterData("IsObserverTarget") ~= true) then
-				return true;
-			end
-		end
-	end
+			if IsValid(ragdollPlayer) then
+				if !ragdollPlayer:Alive() or !ragdollPlayer:IsRagdolled() then
+					return true;
+				end
+			end
+		elseif ent:IsPlayer() then
+			if !ent:HasInitialized() or (ent.cwObserverMode and ent:GetCharacterData("IsObserverTarget") ~= true) then
+				return true;
+			end
+		end
+	end
 	
     if self:ShouldIgnore(ent) then return true end
     return self._DrGBaseIgnoredEntities[ent] or false

@@ -142,7 +142,7 @@ local MARKED = Clockwork.trait:New()
 	MARKED.uniqueID = "marked"
 	MARKED.name = "Marked"
 	MARKED.description = "Either by angering some dark power or delving too far into the occult, your character has become marked for death. The consequences of this may be severe, and the 'Fortune' belief tree will be locked and unable to be progressed."
-	MARKED.points = -3
+	MARKED.points = -4
 Clockwork.trait:Register(MARKED)
 
 local MINER = Clockwork.trait:New()
@@ -201,8 +201,8 @@ Clockwork.trait:Register(PLACEBO)
 local POSSESSED = Clockwork.trait:New()
 	POSSESSED.uniqueID = "possessed"
 	POSSESSED.name = "Possessed"
-	POSSESSED.description = "Your character is prone to possession by some demonic force, often speaking in tongues and unwillingly perpetrating extreme violence."
-	POSSESSED.points = -4
+	POSSESSED.description = "Your character is prone to possession by some demonic force, often speaking in tongues and unwillingly perpetrating extreme violence. Due to this malignant presence, your character will incur corruption passively."
+	POSSESSED.points = -6
 	POSSESSED.disables = {"zealous"}
 Clockwork.trait:Register(POSSESSED)
 

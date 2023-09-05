@@ -93,7 +93,7 @@ if (CLIENT) then
 		for k, v in pairs (boneTable) do
 			entity:ManipulateBoneScale(entity:LookupBone(v[1]), v[2]);
 		end;
-	end);
+	end);		self:SetMaterial("models/zombie_fast/fast_zombie_sheet");
 	end;
 end;
 
@@ -120,9 +120,9 @@ end
 
   -- Init/Think --
 
-  function ENT:CustomInitialize()
-    self:SetDefaultRelationship(D_HT)
-			self:SetMaterial("models/zombie_fast/fast_zombie_sheet");
+  function ENT:CustomInitialize()
+		self:SetDefaultRelationship(D_HT)
+		self:SetMaterial("models/zombie_fast/fast_zombie_sheet");
   end
 
   -- AI --

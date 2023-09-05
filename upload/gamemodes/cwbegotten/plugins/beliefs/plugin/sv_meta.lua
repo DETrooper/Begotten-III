@@ -109,7 +109,7 @@ function playerMeta:HasBelief(uniqueID)
 		return;
 	end;
 	
-	if self.possessor then
+	if cwPossession and IsValid(self.possessor) then
 		if uniqueID == "parrying" or uniqueID == "halfsword_sway" or uniqueID == "deflection" or uniqueID == "strength" then
 			return true;
 		end

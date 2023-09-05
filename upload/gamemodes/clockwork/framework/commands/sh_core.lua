@@ -845,7 +845,7 @@ local COMMAND = Clockwork.command:New("CharGetUp");
 			if (hook.Run("PlayerCanGetUp", player)) then
 				local get_up_time = 5;
 				
-				if player:HasBelief("dexterity") then
+				if cwBeliefs and player:HasBelief("dexterity") then
 					get_up_time = get_up_time * 0.67;
 				end
 				

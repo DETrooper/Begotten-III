@@ -164,20 +164,24 @@ function playerMeta:TakeStability(amount, cooldown)
 			end
 		end
 		
+		if cwPossession and IsValid(self.possessor) then
+			amount = math.floor(amount / 4);
+		end
+		
 		cwMelee:HandleStability(self, -math.abs(amount), cooldown);
 		self.nextStability = CurTime() + 3;
 		
 		if (self:GetCharacterData("stability", self:GetMaxStability()) <= 0 and !self:IsRagdolled() and !self:GetNWBool("bliz_frozen")) then
-			local stabilityDelay = 0.5;
-			local falloverTime = 5;
+			local stabilityDelay = 2.5;
+			local falloverTime = 3;
 
 			if armorClass then
 				if (armorClass == "Medium") then
-					stabilityDelay = 1;
-					falloverTime = 8;
+					stabilityDelay = 5;
+					falloverTime = 4;
 				elseif (armorClass == "Heavy") then
-					stabilityDelay = 1.5;
-					falloverTime = 12;
+					stabilityDelay = 7.5;
+					falloverTime = 6;
 				end;
 			end;
 
@@ -218,9 +222,11 @@ end
 -- A function to get a player's maximum poise.
 function playerMeta:GetMaxPoise()
 	local max_poise = 90;
+	
 	if self:GetCharacterData("isDemon", false) then
 		max_poise = 1000
 	end
+	
 	if cwBeliefs and self.HasBelief then
 		if self:HasBelief("fighter") then
 			max_poise = max_poise + 10;
@@ -238,8 +244,13 @@ function playerMeta:GetMaxPoise()
 			max_poise = max_poise + 10;
 		end
 	end
+	
 	if self:GetSubfaction() == "Legionary" then
 		max_poise = max_poise + 15;
+	end
+	
+	if cwPossession and IsValid(self.possessor) then
+		max_poise = max_poise * 2;
 	end
 	
 	return max_poise;

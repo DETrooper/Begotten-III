@@ -33,9 +33,7 @@ function cwStamina:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 		local max_stamina = player:GetMaxStamina();
 	
 		player:SetCharacterData("Max_Stamina", max_stamina);
-		player:SetNetVar("Max_Stamina", player:GetCharacterData(max_stamina));
-		player:SetCharacterData("Stamina", player:GetCharacterData(max_stamina));
-		player:SetNetVar("Stamina", player:GetCharacterData(max_stamina));
+		player:SetNetVar("Max_Stamina", max_stamina);
 	end;
 end;
 

@@ -95,6 +95,11 @@ end;
 
 -- Called when an NPC is killed.
 function cwZombies:OnNPCKilled(npc, attacker, inflictor, attackers)
+	-- Some addons call this hook, so to prevent multiple XP payouts I've assigned a variable to track whether or not it's already been killed.
+	if npc.killed then
+		return;
+	end
+
 	--if (attacker:IsPlayer()) then
 		--if (table.HasValue(self.zombieNPCS, npc:GetClass())) then
 			local attackers;
@@ -104,13 +109,15 @@ function cwZombies:OnNPCKilled(npc, attacker, inflictor, attackers)
 			end
 		
 			for k, v in pairs (ents.FindInSphere(npc:GetPos(), 800)) do
-				if (v:IsPlayer() and v:Alive() and Clockwork.entity:CanSeeEntity(npc, v)) then
-					if npc:IsZombie() then
+				if (v:IsPlayer() and v:Alive()) then
+					if npc:IsZombie() and Clockwork.entity:CanSeeEntity(npc, v) then
 						Clockwork.datastream:Start(v, "Stunned", 1);
 					end
 
-					if npc.attackers and table.HasValue(npc.attackers, v:EntIndex()) then
-						table.insert(attackers, v);
+					if npc.attackers and table.HasValue(npc.attackers, v:GetCharacterKey()) then
+						if !npc.summonedFaith or v:GetFaith() ~= npc.summonedFaith then
+							table.insert(attackers, v);
+						end
 					end
 				end;
 			end;
@@ -163,6 +170,9 @@ function cwZombies:OnNPCKilled(npc, attacker, inflictor, attackers)
 			end
 		--end;
 	--end;
+	
+	-- Mark it as having been killed.
+	npc.killed = true;
 end;
 
 -- Called when an entity takes damage.
@@ -208,17 +218,19 @@ function cwZombies:EntityTakeDamageAfter(entity, damageInfo)
 				entity.attackers = {};
 			end
 			
-			if !table.HasValue(entity.attackers, attacker:EntIndex()) then
-				table.insert(entity.attackers, attacker:EntIndex());
-			end
-		
-			if cwBeliefs then
-				local damagePercentage = math.min(damageAmount / entity:GetMaxHealth(), 1);
-				
-				if entity.XPValue then
-					attacker:HandleXP(math.Round(entity.XPValue * damagePercentage));
-				else
-					attacker:HandleXP(math.Round(25 * damagePercentage));
+			if !entity.summonedFaith or attacker:GetFaith() ~= entity.summonedFaith then
+				if !table.HasValue(entity.attackers, attacker:GetCharacterKey()) then
+					table.insert(entity.attackers, attacker:GetCharacterKey());
+				end
+			
+				if cwBeliefs then
+					local damagePercentage = math.min(damageAmount / entity:GetMaxHealth(), 1);
+					
+					if entity.XPValue then
+						attacker:HandleXP(math.Round(entity.XPValue * damagePercentage));
+					else
+						attacker:HandleXP(math.Round(25 * damagePercentage));
+					end
 				end
 			end
 		end

@@ -57,7 +57,20 @@ Clockwork.datastream:Hook("SanitySpeech", function(data)
 	end
 end);
 
-thunderSkeletons = {}
+if (!cwSanity.cockroaches) then
+	cwSanity.cockroaches = {};
+else
+	for k, v in pairs(cwSanity.cockroaches) do
+		if (IsValid(v)) then
+			v:Remove();
+		end;
+	end;
+
+	cwSanity.cockroaches = {};
+end;
+
+local thunderSkeletons = {}
+
 function cwSanity:ThunderSkeletons()
 	if (#thunderSkeletons > 0) then
 		for k, v in pairs(thunderSkeletons) do

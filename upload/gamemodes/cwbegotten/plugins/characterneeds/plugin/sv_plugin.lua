@@ -206,27 +206,13 @@ function playerMeta:HandleNeed(need, amount)
 										end
 										
 										local entity = ents.Create("npc_bgt_brute");
-										
-										entity:SetModel("models/zombie/zombie_soldier.mdl")
-										
-										cwParts:HandleClothing(entity, "models/Zombie/Fast.mdl", 1, 0, true);
-										cwParts:HandleClothing(entity, "models/undead/poison.mdl", 2, 0, true);
-										cwParts:HandleClothing(entity, "models/Gibs/Fast_Zombie_Torso.mdl", 3, 0, true);
-										cwParts:HandleClothing(entity, "models/Zombie/Classic_legs.mdl", 4, 0, true);
-										cwParts:HandleClothing(entity, "models/skeleton/skeleton_whole.mdl", 8, 2, false);
-										cwParts:HandleClothing(entity, "models/zombie/zombie_soldier.mdl", 3, 0, false);
-										
-										if (math.random(1, 2) == 1) then
-											cwGear:HandleGear(entity, "models/props_c17/TrapPropeller_Blade.mdl", "right hand", Vector(0, -1, 0), Angle(0, 0, 180), 0.5);
-										end;
-										
-										entity:SetMaterial("effects/water_warp01");
-										
+
 										ParticleEffect("teleport_fx",playerPos,Angle(0,0,0),entity)
 										sound.Play("misc/summon.wav",playerPos,100,100)
 										
 										--[[timer.Simple(0.75, function()
 											if IsValid(entity) then]]--
+												entity:CustomInitialize();
 												entity:SetPos(playerPos);
 												entity:Spawn();
 												entity:Activate();
@@ -268,26 +254,12 @@ function playerMeta:HandleNeed(need, amount)
 							
 							local entity = ents.Create("cw_brute");
 							
-							entity:SetModel("models/zombie/zombie_soldier.mdl")
-							
-							cwParts:HandleClothing(entity, "models/Zombie/Fast.mdl", 1, 0, true);
-							cwParts:HandleClothing(entity, "models/undead/poison.mdl", 2, 0, true);
-							cwParts:HandleClothing(entity, "models/Gibs/Fast_Zombie_Torso.mdl", 3, 0, true);
-							cwParts:HandleClothing(entity, "models/Zombie/Classic_legs.mdl", 4, 0, true);
-							cwParts:HandleClothing(entity, "models/skeleton/skeleton_whole.mdl", 8, 2, false);
-							cwParts:HandleClothing(entity, "models/zombie/zombie_soldier.mdl", 3, 0, false);
-							
-							if (math.random(1, 2) == 1) then
-								cwGear:HandleGear(entity, "models/props_c17/TrapPropeller_Blade.mdl", "right hand", Vector(0, -1, 0), Angle(0, 0, 180), 0.5);
-							end;
-							
-							entity:SetMaterial("effects/water_warp01");
-							
 							ParticleEffect("teleport_fx",playerPos,Angle(0,0,0),entity)
 							sound.Play("misc/summon.wav",playerPos,100,100)
 							
 							--[[timer.Simple(0.75, function()
 								if IsValid(entity) then]]--
+									entity:CustomInitialize();
 									entity:SetPos(playerPos);
 									entity:Spawn();
 									entity:Activate();

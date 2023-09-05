@@ -48,6 +48,36 @@ SWEP.AutoSwitchFrom = false
 function SWEP:Deploy()
 	self:SetNextPrimaryFire(CurTime() + 0.25);
 	self:SetNextSecondaryFire(CurTime() + 0.25);
+	
+	if SERVER then
+		local player = self.Owner;
+	
+		if player.spawning then
+			return;
+		end
+		
+		if !(cwBeliefs and (player:HasBelief("creature_of_the_dark") or player:HasBelief("the_black_sea"))) and !player:GetNWBool("hasThermal") and !player:GetNWBool("hasNV") then
+			local clothesItem = player:GetClothesItem();
+			
+			if !clothesItem or (clothesItem and !clothesItem.attributes) or (clothesItem and clothesItem.attributes and !table.HasValue(clothesItem.attributes, "thermal_vision")) then
+				player:SensesOn()
+			end
+		end
+	end
+end
+
+function SWEP:Holster(newWeapon)
+	if SERVER then
+		local player = self.Owner;
+		
+		if !(cwBeliefs and (player:HasBelief("creature_of_the_dark") or player:HasBelief("the_black_sea"))) and !player:GetNWBool("hasThermal") and !player:GetNWBool("hasNV") then
+			if newWeapon:GetClass() ~= "cw_senses" then
+				self.Owner:SensesOff();
+			end
+		end
+	end
+	
+	return true;
 end
 
 -- Called when the player attempts to primary fire.

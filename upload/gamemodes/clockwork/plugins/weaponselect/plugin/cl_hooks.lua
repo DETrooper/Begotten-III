@@ -322,20 +322,24 @@ function cwWeaponSelect:TopLevelPlayerBindPress(player, bind, press)
 		elseif (string.find(bind, "+attack")) then
 			if (#newWeapons > 1) then
 				if (self.displayAlpha >= 128 and IsValid(newWeapons[self.displaySlot])) then
-					if IsValid(Clockwork.Client.victim) then
-						netstream.Start("SelectWeaponVictim", newWeapons[self.displaySlot]:GetClass());
-					else
-						netstream.Start("SelectWeapon", newWeapons[self.displaySlot]:GetClass());
-					end
+					if !self.nextWeaponSelect or self.nextWeaponSelect < curTime then
+						self.nextWeaponSelect = curTime + 0.1;
 					
-					--surface.PlaySound("begotten/ui/buttonclickrelease.wav");
-					surface.PlaySound("begotten/ui/buttonrollover.wav");
+						if IsValid(Clockwork.Client.victim) then
+							netstream.Start("SelectWeaponVictim", newWeapons[self.displaySlot]:GetClass());
+						else
+							netstream.Start("SelectWeapon", newWeapons[self.displaySlot]:GetClass());
+						end
+						
+						--surface.PlaySound("begotten/ui/buttonclickrelease.wav");
+						surface.PlaySound("begotten/ui/buttonrollover.wav");
 
-					self.displayAlphaTarget = 0;
-					self.displayAlphaTime = 1024;
-					self.weaponDisplayAlphaTarget = 0;
-					
-					return true
+						self.displayAlphaTarget = 0;
+						self.displayAlphaTime = 1024;
+						self.weaponDisplayAlphaTarget = 0;
+						
+						return true
+					end
 				end;
 			end;
 		end;

@@ -68,6 +68,25 @@ local COMMAND = Clockwork.command:New("CharForceFallover")
 	end
 COMMAND:Register()
 
+local COMMAND = Clockwork.command:New("CharForceGetUp")
+	COMMAND.tip = "Force a character to get up."
+	COMMAND.text = "<string Name>"
+	COMMAND.access = "a"
+	COMMAND.arguments = 1
+	COMMAND.alias = {"ForceGetUp", "PlyForceGetUp"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local target = Clockwork.player:FindByID(arguments[1]);
+		
+		if (target) then
+			Clockwork.player:SetRagdollState(target, RAGDOLL_NONE);
+		else
+			Clockwork.player:Notify(player, arguments[1].." is not a valid player!");
+		end
+	end
+COMMAND:Register()
+
 local COMMAND = Clockwork.command:New("CharSetHealth");
 	COMMAND.tip = "Set a character's health, with an optional argument for making it their new maximum health.";
 	COMMAND.text = "<string Name> <int Amount> [bool SetMax]";

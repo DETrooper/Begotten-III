@@ -46,24 +46,49 @@ function cwMelee:KeyPress(player, key)
 								if (activeWeapon.CanSwipeAttack == true) then
 									player:SetNWBool("ThrustStance", true)
 									player:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
+									
+									if IsValid(player.possessor) then
+										player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
+									end
+									
 									player.StanceSwitchOn = curTime + 1;
 								else
 									player:SetNWBool("ThrustStance", true)
 									player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
+									
+									if IsValid(player.possessor) then
+										player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
+									end
+									
 									player.StanceSwitchOn = curTime + 1;
 								end;
 							else
 								if (activeWeapon.CanSwipeAttack == true) then
 									player:SetNWBool("ThrustStance", false)
 									player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
+									
+									if IsValid(player.possessor) then
+										player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
+									end
+									
 									player.StanceSwitchOn = curTime + 1;
 								elseif (attackTable["dmgtype"] == 128) then
 									player:SetNWBool("ThrustStance", false)
 									player:PrintMessage(HUD_PRINTTALK, "*** Switched to bludgeoning stance.")
+									
+									if IsValid(player.possessor) then
+										player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to bludgeoning stance.")
+									end
+									
 									player.StanceSwitchOn = curTime + 1;
 								else
 									player:SetNWBool("ThrustStance", false)
 									player:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
+									
+									if IsValid(player.possessor) then
+										player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
+									end
+									
 									player.StanceSwitchOn = curTime + 1;
 								end;
 							end;
@@ -122,7 +147,7 @@ function cwMelee:KeyPress(player, key)
 				local blockTable = GetTable(activeWeapon.BlockTable);
 
 				if (blockTable and blockTable["canparry"] == true) then
-					if (player.HasBelief and player:HasBelief("parrying")) then
+					if (!player.HasBelief or player:HasBelief("parrying")) then
 						activeWeapon:SecondaryAttack();
 					end;
 				end;

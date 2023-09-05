@@ -589,58 +589,60 @@ function GM:PlayerSwitchFlashlight(player, bIsOn)
 		player.DidAdminFlashlight = nil;
 		return true;
 	end;
+	
+	local activeWeapon = player:GetActiveWeapon();
+	
+	if hook.Run("PlayerCanRaiseWeapon", player, activeWeapon) ~= false then
+		if (!player.cwNextRaise or player.cwNextRaise < curTime) then
+			if (player:Alive() and !player:IsRagdolled()) then
+				if (IsValid(activeWeapon)) then
+					if (Clockwork.kernel:IsDefaultWeapon(activeWeapon)) then
+						return false;
+					elseif (activeWeapon:GetClass() == "cw_flashlight") then
+						return true;
+					end;
+					
+					local defaultTime = 1.25;
+					local ti = activeWeapon.RaiseSpeed;
+					local raised = player:IsWeaponRaised();
+					
+					if (!raised) then
+						ti = activeWeapon.LowerSpeed;
+					end;
+					if (!ti) then
+						ti = defaultTime
+					end;
+					local actionTime = ti
+					local raiseSound = "cloth.wav";
+					player.cwNextRaise = curTime + (actionTime + 0.25);
+					
+					if (activeWeapon.InstantRaise) then
+						player:ToggleWeaponRaised();
+						return;
+					end;
+					
+					if (activeWeapon.RaiseSound) then
+						raiseSound = activeWeapon.RaiseSound;
+					end;
+					
+					if player:HasBelief("dexterity") then
+						actionTime = actionTime * 0.66;
+					end
 
-	if (!player.cwNextRaise or player.cwNextRaise < curTime) then
-		if (player:Alive() and !player:IsRagdolled() and !player.possessor) then
-			local activeWeapon = player:GetActiveWeapon();
-
-			if (IsValid(activeWeapon)) then
-				if (Clockwork.kernel:IsDefaultWeapon(activeWeapon)) then
-					return false;
-				elseif (activeWeapon:GetClass() == "cw_flashlight") then
-					return true;
+					activeWeapon:SetNextPrimaryFire(curTime + 60);
+					activeWeapon:SetNextSecondaryFire(curTime + 60);
+					
+					Clockwork.player:SetAction(player, "raise", actionTime, 5, function()
+						player:ToggleWeaponRaised();
+						player:EmitSound(raiseSound, 70);
+					end);
 				end;
-				
-				local defaultTime = 1.25;
-				local ti = activeWeapon.RaiseSpeed;
-				local raised = player:IsWeaponRaised();
-				
-				if (!raised) then
-					ti = activeWeapon.LowerSpeed;
-				end;
-				if (!ti) then
-					ti = defaultTime
-				end;
-				local actionTime = ti
-				local raiseSound = "cloth.wav";
-				player.cwNextRaise = curTime + (actionTime + 0.25);
-				
-				if (activeWeapon.InstantRaise) then
-					player:ToggleWeaponRaised();
-					return;
-				end;
-				
-				if (activeWeapon.RaiseSound) then
-					raiseSound = activeWeapon.RaiseSound;
-				end;
-				
-				if player:HasBelief("dexterity") then
-					actionTime = actionTime * 0.66;
-				end
-
-				activeWeapon:SetNextPrimaryFire(curTime + 60);
-				activeWeapon:SetNextSecondaryFire(curTime + 60);
-				
-				Clockwork.player:SetAction(player, "raise", actionTime, 5, function()
-					player:ToggleWeaponRaised();
-					player:EmitSound(raiseSound, 70);
-				end);
 			end;
+		elseif (player.cwNextRaise > curTime and Clockwork.player:GetAction(player) == "raise") then
+			Clockwork.player:SetAction(player, false);
+			player.cwNextRaise = curTime + 0.5;
 		end;
-	elseif (player.cwNextRaise > curTime and Clockwork.player:GetAction(player) == "raise") then
-		Clockwork.player:SetAction(player, false);
-		player.cwNextRaise = curTime + 0.5;
-	end;
+	end
 
 	return false;
 end
@@ -3987,25 +3989,13 @@ function GM:PreCalculatePlayerDamage(player, hitGroup, damageInfo)
 	--end
 end
 
-local bad = {
-	["prop_dynamic"] = "models/lostcoast/props_junk/float01a.mdl",
-	["prop_dynamic"] = "models/lostcoast/props_junk/float03a.mdl",
-	["prop_dynamic"] = "models/ff_models/ff_maple.mdl",
-	["cw_duelstatue"] = "models/props/begotten/misc/duel_statue.mdl",
-	["cw_hellportal"] = "models/hunter/plates/plate3x5.mdl",
-	["prop_dynamic"] = "models/village/brit_village_3.mdl",
-	["prop_dynamic"] = "models/props/tools/humans/firecamp01/brazier.mdl",
-	["prop_dynamic"] = "models/begotten/misc/rockhut1.mdl",
-	["prop_dynamic"] = "models/props_c17/oildrum001.mdl",
-}
-
 -- Called when an entity takes damage.
 function GM:EntityTakeDamage(entity, damageInfo)
 	local class = entity:GetClass();
 	
 	if class == "prop_dynamic" or class == "cw_duelstatue" or class == "cw_hellportal" then
 		return true;
-	elseif class == "prop_physics" and entity:GetModel() == "models/props_c17/oildrum001.mdl" then
+	elseif entity.cwInventory then
 		return true;
 	end
 	

@@ -101,14 +101,8 @@ function Clockwork.chatBox:AddInRadius(speaker, class, text, position, radius, d
 			local distance = position:DistToSqr(v:GetPos());
 			
 			if (distance <= sqrRadius) then
-				if cwSanity and (class == "ic" or class == "yell" or class == "whisper" or class == "me" or class == "proclaim" or class == "meproclaim") then
-					if v:Sanity() <= 20 and not v:HasBelief("saintly_composure") then
-						if IsValid(speaker) then
-							Clockwork.datastream:Start(v, "SanitySpeech", speaker:GetPos());
-						end
-						
-						continue;
-					end
+				if hook.Run("CanHearClass", v, speaker, class) == false then
+					continue;
 				end
 				
 				if v:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT then
@@ -120,6 +114,10 @@ function Clockwork.chatBox:AddInRadius(speaker, class, text, position, radius, d
 					listeners[#listeners + 1] = v;
 				end
 			elseif (distance <= ((radius * radius) * 2)) and class == "yell" then
+				if hook.Run("CanHearClass", v, speaker, class) == false then
+					continue;
+				end
+			
 				outOfRangeListeners[#outOfRangeListeners + 1] = v;
 			end;
 		end;

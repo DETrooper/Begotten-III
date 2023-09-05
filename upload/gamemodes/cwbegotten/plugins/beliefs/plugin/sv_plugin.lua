@@ -9,6 +9,7 @@ cwBeliefs.xpValues = {
 	["drink"] = 3, -- 3 xp per drink consumed.
 	["food"] = 5, -- 5 xp per food consumed.
 	["kill"] = 10, -- 10 xp per killing blow (per level).
+	["mutilate"] = 2, -- 2 xp per mutiliation of a corpse. Also includes other stuff like eating hearts or harvesting bones.
 	["residual"] = 1, -- 1 xp per minute survived in non-safezones.
 	["read"] = 50, -- 50 xp for every unique scripture read.
 };

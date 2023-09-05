@@ -79,6 +79,16 @@ function cwMelee:RenderScreenspaceEffects()
 	end;
 end;
 
+function cwMelee:PlayerDrawWeaponSelect()
+	local activeWeapon = Clockwork.Client:GetActiveWeapon();
+
+	if IsValid(activeWeapon) and activeWeapon.IsABegottenMelee and activeWeapon:GetNextPrimaryFire() > CurTime() then
+		if Clockwork.player:GetWeaponRaised(LocalPlayer()) then
+			return false;
+		end
+	end
+end;
+
 --[[function cwMelee:Think()
 	if (!self.nextBreathingCheck or self.nextBreathingCheck < curTime) then
 		self.nextBreathingCheck = curTime + 0.6;

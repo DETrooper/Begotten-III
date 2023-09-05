@@ -60,7 +60,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable)
 			end
 		end;
 
-		if (!player:Alive() or player:GetMoveType() == MOVETYPE_NOCLIP or player.opponent or player:GetRagdollState() == RAGDOLL_KNOCKEDOUT or player.cwWakingUp) then
+		if (!player:Alive() or player:GetMoveType() == MOVETYPE_NOCLIP or player.opponent or player:GetRagdollState() == RAGDOLL_KNOCKEDOUT or player.cwWakingUp or (player.possessor and IsValid(player.possessor)) or (player.victim and IsValid(player.victim))) then
 			player.nextSanityDecay = curTime + sanity_interval;
 			
 			return;
@@ -317,7 +317,7 @@ function cwSanity:PlayerDeath(player, inflictor, attacker)
 			
 			local sanity = attacker:GetCharacterData("sanity", 100)
 			
-			if (attacker:HasTrait("pacifist")) then
+			if (attacker:HasTrait("pacifist")) and !attacker.possessor then
 				attacker:HandleSanity(-40);
 				Clockwork.chatBox:Add(attacker, nil, "itnofake", "You feel your sanity slipping as you take the life of another.");
 			elseif (sanity >= 70) then
@@ -370,6 +370,20 @@ function cwSanity:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 	end
 	
 	player:SetSharedVar("sanity", player:GetCharacterData("sanity", 100));
+end
+
+function cwSanity:CanHearClass(listener, speaker, class)
+	if listener:Sanity() <= 20 and (!cwBeliefs or !listener:HasBelief("saintly_composure")) then
+		for k, v in pairs(self.deafClasses) do
+			if k == class then
+				if v == true and IsValid(speaker) then
+					Clockwork.datastream:Start(listener, "SanitySpeech", speaker:GetPos());
+				end
+			
+				return false;
+			end
+		end
+	end
 end
 
 -- Called when the player's shared vars are set.

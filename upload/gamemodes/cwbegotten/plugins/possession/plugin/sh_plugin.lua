@@ -18,8 +18,7 @@ function cwPossession:StartCommand(player, ucmd)
 				player.attacking = ucmd:KeyDown(IN_ATTACK)
 				player.blocking = ucmd:KeyDown(IN_ATTACK2);
 				player.parrying = ucmd:KeyDown(IN_RELOAD)
-				player.changeStance = ucmd:KeyDown(IN_SCORE);
-				player.holster = ucmd:KeyDown(IN_WALK);
+				player.changeStance = ucmd:KeyDown(IN_ATTACK2) and ucmd:KeyDown(IN_USE);
 				player.use = ucmd:KeyDown(IN_USE);
 				player.jumping = ucmd:KeyDown(IN_JUMP)
 				player.crouching = ucmd:KeyDown(IN_DUCK)
@@ -123,23 +122,26 @@ function cwPossession:StartCommand(player, ucmd)
 					end
 				end
 				
-				if possessor.holster then
-					if !possessor.pHolsterTimer or possessor.pHolsterTimer <= curTime then
-						possessor.pHolsterTimer = curTime + 0.5;
-						
-						if Clockwork.player:GetWeaponRaised(player) == false then
-							player:SetWeaponRaised(true);
-						else
-							player:SetWeaponRaised(false);
-						end
-					end
+				if possessor.jumping and victim:IsRagdolled() then
+					if (victim:GetRagdollState() == RAGDOLL_FALLENOVER and Clockwork.player:GetAction(victim) != "unragdoll") then
+						if (hook.Run("PlayerCanGetUp", victim)) then
+							local get_up_time = 5;
+							
+							if cwBeliefs and victim:HasBelief("dexterity") then
+								get_up_time = get_up_time * 0.67;
+							end
+							
+							Clockwork.player:SetUnragdollTime(victim, get_up_time);
+							hook.Run("PlayerStartGetUp", victim);
+						end;
+					end;
 				end
 			end
 			
-			if(possessor.crouching and !ucmd:KeyDown(IN_DUCK)) then ucmd:SetButtons(ucmd:GetButtons() + IN_DUCK) end
+			if(possessor.crouching and !ucmd:KeyDown(IN_DUCK)) and !possessor.changeStance then ucmd:SetButtons(ucmd:GetButtons() + IN_DUCK) end
 			if(possessor.jumping and !ucmd:KeyDown(IN_JUMP)) then ucmd:SetButtons(ucmd:GetButtons() + IN_JUMP) end
 			if(possessor.running and !ucmd:KeyDown(IN_SPEED)) then ucmd:SetButtons(ucmd:GetButtons() + IN_SPEED) end
-			if(possessor.use and !ucmd:KeyDown(IN_USE)) then ucmd:SetButtons(ucmd:GetButtons() + IN_USE) end
+			if(possessor.use and !ucmd:KeyDown(IN_USE)) and !possessor.changeStance then ucmd:SetButtons(ucmd:GetButtons() + IN_USE) end
 			
 			possessor.viewAngles = Angle(possessor.viewAngles.p + possessor.MouseY / 30, possessor.viewAngles.y - possessor.MouseX / 30, 0)
 			possessor.viewAngles.p = math.Clamp(possessor.viewAngles.p, -89, 89)
@@ -155,25 +157,43 @@ local COMMAND = Clockwork.command:New("DemonHeal");
 	COMMAND.tip = "Use demonic powers to heal the injuries of a vessel, should only be used on possessed people and is a very public occurrence.";
 	COMMAND.text = "<string Name>";
 	COMMAND.access = "s";
-	COMMAND.arguments = 1;
+	COMMAND.optionalArguments = 1;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		local target = Clockwork.player:FindByID(arguments[1]);
+		local target = player;
+		
+		if not arguments[1] then
+			if player.victim then
+				target = player.victim;
+			end
+		else
+			target = Clockwork.player:FindByID(arguments[1]);
+		end
 		
 		if target then	
+			local max_poise = target:GetMaxPoise();
+			local max_stability = target:GetMaxStability();
+			local max_stamina = target:GetMaxStamina();
+			
 			target:ResetInjuries();
 			target:SetHealth(target:GetMaxHealth() or 100);
 			target:SetNeed("thirst", 0);
 			target:SetNeed("hunger", 0);
 			target:SetNeed("sleep", 0);
+			target:SetCharacterData("Stamina", max_stamina);
+			target:SetNetVar("Stamina", max_stamina);
+			target:SetCharacterData("stability", max_stability);
+			--target:SetCharacterData("meleeStamina", max_poise);
+			target:SetNWInt("meleeStamina", max_poise);
+			target:SetNWInt("freeze", 0);
 			target:SetBloodLevel(5000);
 			target:StopAllBleeding();
 			Clockwork.limb:HealBody(target, 100);
 			Clockwork.player:SetAction(target, "die", false);
 			Clockwork.player:SetAction(target, "die_bleedout", false);
 			
-			if target:GetRagdollState() == RAGDOLL_KNOCKEDOUT then
+			if target:IsRagdolled() then
 				Clockwork.player:SetRagdollState(target, RAGDOLL_NONE);
 			end
 			
@@ -196,10 +216,10 @@ function COMMAND:OnRun(player, arguments)
 		player.victim:EmitSound("possession/caverns_scream.wav", 160);
 		
 		for k, v in pairs(ents.FindInSphere(player.victim:GetPos(), 512)) do
-			if v:IsPlayer() then
+			if v:IsPlayer() and v:HasInitialized() and v:Alive() then
 				v:Disorient(5);
 				
-				if !v.cwObserverMode and !v.victim then
+				if !v.cwObserverMode and !v.victim and !v.possessor then
 					v:HandleSanity(-10);
 				end
 			end
@@ -407,18 +427,73 @@ end;
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("PlyMakeFreakout");
-COMMAND.tip = "Make a possessed player go fucking crazy!!! Lowers the sanity of nearby players. Lasts 30 seconds and then knocks the player unconcious, though possessing them prior will abort the latter behavior.";
-COMMAND.text = "<string Name>";
+COMMAND.tip = "Make a possessed player go fucking crazy!!! Lowers the sanity of nearby players. Lasts 30 seconds and then knocks the player unconcious, though possessing them prior will abort the latter behavior. Optional argument to ignore the trait requirement.";
+COMMAND.text = "<string Name> [bool IgnoreTrait]";
 COMMAND.access = "s";
 COMMAND.arguments = 1;
+COMMAND.optionalArguments = 1;
 COMMAND.alias = {"MakeFreakout", "CharMakeFreakout"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
 	local target = Clockwork.player:FindByID(arguments[1]);
-
+	local ignoreTrait = false;
+	
+	if arguments[2] then
+		ignoreTrait = true;
+	end
+	
 	if (target) then
-		target:PossessionFreakout();
+		if target:CanBePossessed(player, ignoreTrait) then
+			target:PossessionFreakout();
+		end
+	else
+		Schema:EasyText(player, "grey", "["..self.name.."] "..arguments[1].." is not a valid player!");
+	end;
+end;
+
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("PlySummonDemon");
+COMMAND.tip = "Make a possessed player explode and a thrall will spawn in their place.";
+COMMAND.text = "<string Name> [bool IgnoreTrait]";
+COMMAND.access = "s";
+COMMAND.arguments = 1;
+COMMAND.alias = {"SummonDemon", "CharSummonDemon"};
+
+-- Called when the command has been run.
+function COMMAND:OnRun(player, arguments)
+	local target = Clockwork.player:FindByID(arguments[1]);
+	
+	if (target) then
+		local targetPos = target:GetPos();
+		
+		Clockwork.chatBox:AddInTargetRadius(target, "me", "abruptly explodes into a shower of fire and gore as a fucking demon bursts from their very flesh!", targetPos, config.Get("talk_radius"):Get() * 2);
+		
+		target:Kill();
+		
+		if cwGore then
+			if (target:GetRagdollEntity()) then
+				cwGore:SplatCorpse(target:GetRagdollEntity(), 60);
+			end;
+		end
+		
+		local entity = ents.Create("npc_bgt_brute");
+		
+		entity:SetMaterial("effects/water_warp01");
+		
+		ParticleEffect("teleport_fx",targetPos,Angle(0,0,0),entity)
+		sound.Play("misc/summon.wav",targetPos,100,100)
+		entity:EmitSound(cwPossession.laughs[math.random(1, #cwPossession.laughs)]);
+		
+		--[[timer.Simple(0.75, function()
+			if IsValid(entity) then]]--
+				entity:CustomInitialize();
+				entity:SetPos(targetPos);
+				entity:Spawn();
+				entity:Activate();
+			--end
+		--end
 	else
 		Schema:EasyText(player, "grey", "["..self.name.."] "..arguments[1].." is not a valid player!");
 	end;
@@ -464,10 +539,8 @@ function COMMAND:OnRun(player, arguments)
 	end
 
 	if (target) then
-		if target:CanBePossessed(ignoreTrait) and target ~= player then
+		if target:CanBePossessed(player, ignoreTrait) then
 			target:Possess(player);
-		else
-			Schema:EasyText(player, "firebrick", arguments[1].." cannot currently be possessed!");
 		end
 	else
 		Schema:EasyText(player, "grey", "["..self.name.."] "..arguments[1].." is not a valid player!");

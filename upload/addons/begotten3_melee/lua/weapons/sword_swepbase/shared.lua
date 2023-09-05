@@ -316,8 +316,6 @@ function SWEP:PrimaryAttack()
 	local attacktable = GetTable(self.AttackTable);
 	local curTime = CurTime();
 	
-	self.HolsterDelay = (curTime + attacktable["striketime"])
-	
 	if (IsValid(self.SwingEntity)) then
 		self.SwingEntity:Remove()
 	end

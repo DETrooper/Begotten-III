@@ -257,7 +257,6 @@ function SWEP:PrimaryAttack()
 	if SERVER and self:IsValid() and (!self.Owner.IsRagdolled or !self.Owner:IsRagdolled()) and self.Owner:Alive() then 
 		ply:SetNWBool( "MelAttacking", true )
 		
-		self.HolsterDelay = (curTime + attacktable["striketime"])
 		self.isAttacking = true;
 			
 		self:CreateTimer(attacktable["striketime"] + 0.1, "strikeTimer"..curTime, function()

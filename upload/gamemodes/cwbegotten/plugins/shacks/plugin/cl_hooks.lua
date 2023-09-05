@@ -25,19 +25,19 @@ cwShacks.shackData = {
 		["B6"] = {name = "Shack B6", floor = 2, price = 350},
 		["B7"] = {name = "Shack B7", floor = 2, price = 350},
 		["B8"] = {name = "Shack B8", floor = 2, price = 350},
-		["B9"] = {name = "Hotel Room B1", floor = 2, price = 800},
-		["B10"] = {name = "Hotel Room B2", floor = 2, price = 800},
-		["B11"] = {name = "Hotel Room B3", floor = 2, price = 800},
-		["B12"] = {name = "Hotel Room B4", floor = 2, price = 800},
+		["B9"] = {name = "Hotel Room B1", floor = 2, price = 1000},
+		["B10"] = {name = "Hotel Room B2", floor = 2, price = 1000},
+		["B11"] = {name = "Hotel Room B3", floor = 2, price = 1000},
+		["B12"] = {name = "Hotel Room B4", floor = 2, price = 1000},
 	},
 	["floor3"] = {
-		["C2"] = {name = "Hotel Room C2", floor = 3, price = 800},
-		["C3"] = {name = "Hotel Room C3", floor = 3, price = 800},
-		["C4"] = {name = "Hotel Room C4", floor = 3, price = 800},
+		["C2"] = {name = "Hotel Room C2", floor = 3, price = 1000},
+		["C3"] = {name = "Hotel Room C3", floor = 3, price = 1000},
+		["C4"] = {name = "Hotel Room C4", floor = 3, price = 1000},
 	},
 	["floor4"] = {
 		["D1"] = {name = "Shack D1", floor = 4, price = 600},
-		["D2"] = {name = "Hotel Room D1", floor = 4, price = 800},
+		["D2"] = {name = "Hotel Room D1", floor = 4, price = 1000},
 	},
 };
 

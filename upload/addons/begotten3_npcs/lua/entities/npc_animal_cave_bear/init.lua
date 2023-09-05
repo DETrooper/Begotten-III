@@ -51,6 +51,9 @@ ENT.SoundTbl_MeleeAttack = {"physics/body/body_medium_impact_hard1.wav","physics
 ENT.SoundTbl_MeleeAttackMiss = {"bear/woosh1.wav"}
 ENT.SoundTbl_Pain = {"bear/attack1.wav"}
 ENT.SoundTbl_Death = {"bear/idle3.wav"}
+
+ENT.XPValue = 200;
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomInitialize()
 	self:SetCollisionBounds(Vector(35, 35 , 60), Vector(-35, -35, 0))

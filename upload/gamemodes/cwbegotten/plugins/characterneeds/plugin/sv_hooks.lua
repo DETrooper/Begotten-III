@@ -48,6 +48,12 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 			return;
 		end
 		
+		if cwPossession and (player.possessor and IsValid(player.possessor) or player.victim and IsValid(player.victim)) then
+			player.nextNeedCheck = curTime + 5;
+			
+			return;
+		end
+		
 		if (alive and !player.cwObserverMode and !player.opponent and !player.cwWakingUp) then
 			local playerNeeds = {};
 			
@@ -126,26 +132,15 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 				end;
 			end;
 			
-			--[[if (!player.nextCorruption or curTime >= player.nextCorruption) then
+			if (!player.nextCorruption or curTime >= player.nextCorruption) then
 				if (playerNeeds["corruption"] > -1) then
-					-- Check for sacrifical weapons.
-					local weaponData = player:GetCharacterData("weapons");
-					
-					if weaponData and #weaponData > 0 then
-						for i = 1, #weaponData do
-							if weaponData[i].uniqueID and weaponData[i].itemID then
-								local weaponItem = Clockwork.inventory:FindItemByID(player:GetInventory(), weaponData[i].uniqueID, weaponData[i].itemID);
-								
-								if weaponItem and weaponItem.isSacrifical and weaponItem:HasPlayerEquipped(player) then
-									player:HandleNeed("corruption", 1);
-								end
-							end
-						end
+					if player:HasTrait("possessed") then
+						player:HandleNeed("corruption", 1);
 					end
-				
-					player.nextCorruption = curTime + 15;
+
+					player.nextCorruption = curTime + 90;
 				end;
-			end;]]--
+			end;
 		end;
 		
 		player.nextNeedCheck = curTime + 5;

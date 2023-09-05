@@ -2,7 +2,7 @@
 	Begotten III: Jesus Wept
 --]]
 
-local laughs = {"possession/laugh_03.wav", "possession/laugh_06.wav", "possession/laugh_09.wav"};
+cwPossession.laughs = {"possession/laugh_03.wav", "possession/laugh_06.wav", "possession/laugh_09.wav"};
 
 -- Called when attempts to use a command.
 function cwPossession:PlayerCanUseCommand(player, commandTable, arguments)
@@ -28,6 +28,10 @@ function cwPossession:PlayerCanUseCommand(player, commandTable, arguments)
 			"DarkWhisperDirect",
 			"DarkWhisperFaction",
 			"DarkReply",
+			"RavenSpeak",
+			"RavenSpeakClan",
+			"RavenSpeakFaction",
+			"RavenReply",
 			"Relay",
 			"Warcry",
 			"Diagnose",
@@ -36,6 +40,7 @@ function cwPossession:PlayerCanUseCommand(player, commandTable, arguments)
 			"StorageTakeCash",
 			"StorageTakeItem",
 			"StorageClose",
+			"OpenStash",
 			"Radio",
 			"SetFreq",
 			"HellJaunt",
@@ -49,6 +54,21 @@ function cwPossession:PlayerCanUseCommand(player, commandTable, arguments)
 		end;
 	end;
 end;
+
+function cwPossession:PlayerCanRaiseWeapon(player, activeWeapon)
+	if IsValid(player.possessor) then
+		return false;
+	elseif IsValid(player.victim) then
+		local raiseSound = "cloth.wav";
+		
+		if IsValid(activeWeapon) and (activeWeapon.RaiseSound) then
+			raiseSound = activeWeapon.RaiseSound;
+		end;
+	
+		player.victim:ToggleWeaponRaised();
+		player.victim:EmitSound(raiseSound, 70);
+	end
+end
 
 -- Called when a player dies.
 function cwPossession:PlayerDeath(player, inflictor, attacker, damageInfo)
@@ -65,7 +85,7 @@ function cwPossession:PlayerDeath(player, inflictor, attacker, damageInfo)
 		player:SetSharedVar("currentlyPossessed", false);
 		player.possessor = nil;
 	elseif attacker:IsPlayer() and attacker:IsPossessed() then
-		attacker:EmitSound(laughs[math.random(1, #laughs)]);
+		attacker:EmitSound(self.laughs[math.random(1, #self.laughs)]);
 	end
 end;
 
@@ -89,6 +109,13 @@ function cwPossession:PlayerDisconnected(player)
 		Clockwork.player:SetRagdollState(player.victim, RAGDOLL_KNOCKEDOUT, 15);
 		Clockwork.chatBox:AddInTargetRadius(player.victim, "me", "is suddenly thrown to the ground by some unseen force!", player.victim:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 		player.victim:EmitSound("possession/spiritsting.wav");
+	end
+end;
+
+function cwPossession:ModifyPlayerSpeed(player, infoTable)
+	if (player.possessor) then
+		infoTable.runSpeed = infoTable.runSpeed * 1.1;
+		infoTable.walkSpeed = infoTable.walkSpeed * 1.1;
 	end
 end;
 

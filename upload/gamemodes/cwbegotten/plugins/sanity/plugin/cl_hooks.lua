@@ -2,7 +2,6 @@
 	Begotten III: Jesus Wept
 --]]
 
--- 5th is description.
 local sanityTexts = {"...", "Insane", "Losing Sanity", "Sane", "Sanity is a measure of your character's mental condition: the lower it gets the more detached from reality they will become. Witnessing or partaking in distrubing acts is detrimental to one's sanity."};
 
 -- Called when the bars are needed.
@@ -73,6 +72,7 @@ end;
 function cwSanity:Think()
 	if Clockwork.Client:HasInitialized() then
 		local curTime = CurTime()
+		local sanity = Clockwork.Client:Sanity();
 		
 		if !self.itemSpeakTimer then
 			self.itemSpeakTimer = curTime + math.random(180, 480);
@@ -81,7 +81,7 @@ function cwSanity:Think()
 		if self.itemSpeakTimer < curTime then
 			self.itemSpeakTimer = curTime + math.random(120, 240);
 		
-			if Clockwork.Client:Alive() and Clockwork.Client:Sanity() <= 50 and Clockwork.Client:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT and !Clockwork.player:IsNoClipping(Clockwork.Client) then
+			if Clockwork.Client:Alive() and sanity <= 50 and Clockwork.Client:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT and !Clockwork.player:IsNoClipping(Clockwork.Client) and !Clockwork.Client.victim then
 				local corpseFound;
 				local itemFound;
 				local radioFound;
@@ -170,6 +170,282 @@ function cwSanity:Think()
 				end
 			end
 		end
+		
+		if (sanity <= 40 and !Clockwork.Client:IsRagdolled() and !Clockwork.Client.dueling and !Clockwork.player:IsNoClipping(Clockwork.Client)) then
+			local has_saintly_composure = (cwBeliefs and cwBeliefs:HasBelief("saintly_composure"));
+			
+			if !has_saintly_composure then
+				local traceLine = nil;
+				local position = Clockwork.Client:GetPos();
+
+				if (!self.nextCockroachCheck) then
+					self.nextCockroachCheck = curTime + 5;
+				elseif (self.nextCockroachCheck < curTime) then
+					local trace = {};
+						trace.start = position;
+						trace.endpos = position + Vector(0, 0, 300);
+						trace.filter = {Clockwork.Client};
+					traceLine = util.TraceLine(trace);
+					
+					self.allowedToSee = true;
+					self.nextCockroachCheck = curTime + 1;
+				end;
+				
+				if (traceLine and (!traceLine.Hit or (traceLine.HitPos and traceLine.HitPos.z - position.z > 300))) then
+					self.allowedToSee = false;
+					
+					for k, v in pairs(self.cockroaches) do
+						if (IsValid(v)) then
+							v:Remove();
+						end;
+					end;
+					
+					self.cockroaches = {};
+				elseif (self.allowedToSee) then
+					local eyeAngles = Clockwork.Client:EyeAngles();
+					local eyePos = Clockwork.Client:EyePos();
+					local lightColor = render.GetLightColor(position);
+					local lightColorDark = ((lightColor.r * 255) + (lightColor.g * 255) + (lightColor.b * 255)) / 3;
+					local isDark = lightColorDark > 26;
+					local aimVector = eyePos + (Clockwork.Client:GetAimVector() * 20);
+
+					for k, v in pairs(self.cockroaches) do
+						if (IsValid(v)) then
+							local cockroachAngle = v:GetAngles();
+							local cockroachPos = v:GetPos();
+							
+							if ((!v.sequenceDuration or v.sequenceDuration < curTime) and v.animation) then 
+								local sequence = v.animation;
+								
+								v.sequenceDuration = curTime + v:SequenceDuration(sequence);
+								v:ResetSequence(sequence);
+							end;
+							
+							local groundPosition = cockroachPos;
+							
+							local trace = {};
+								trace.start = groundPosition + Vector(0, 0, 30);
+								trace.endpos = trace.start - Vector(0, 0, 130);
+								trace.filter = {v, Clockwork.Client};
+							local traceLine = util.TraceLine(trace);
+							
+							groundPosition = traceLine.HitPos;
+							
+							if (v.newPosition) then
+								v:SetPos(v.newPosition + (cockroachAngle:Forward() * (math.max(0.05, (math.Rand(0.01, 0.3) * math.Rand(0.3, 1.2))))));
+								groundPosition = v.newPosition;
+								v.newPosition = nil;
+							else
+								v:SetPos(groundPosition + (cockroachAngle:Forward() * ((math.Rand(0.01, 0.3) * 2.2) * math.Rand(0.5, 1.2))));
+								v.addAngles = math.random(-10, 10);
+								
+								if (!v.angle) then
+									v:SetAngles(Angle(0, cockroachAngle.yaw + v.addAngles,0));
+								end;
+							end;
+							
+							if (!v.chance) then
+								if (v.addPos) then
+									v.chance = 36;
+								else
+									v.chance = 1;
+								end;
+							end;
+							
+							if (math.random(1, 4) <= 2) then
+								if (math.random(1, (v.addPos and 3000 or 6002) - (sanity * 2)) <= v.chance) then
+									sound.Play("physics/wood/wood_strain"..math.random(2, 5)..".wav", cockroachPos, 40, math.random(140, 200));
+								end;
+
+								if (v.addAngles > 0) then
+									v.addAngles = -5;
+									v.newAngles = (v.newAngles or 0) + v.addAngles;
+								else
+									v.addAngles = 5;
+									v.newAngles = (v.newAngles or 0) + v.addAngles;
+								end;
+							end;
+							
+							local distance = cockroachPos:Distance(position);
+							
+							if (v.addPos and lightColorDark <= 10) then
+								v.speed = math.Rand(0.01, 0.3) * 2.2;
+								
+								if (lightColorDark > 30) then
+									v.speed = v.moveSpeed * 2;
+								end;
+								
+								v.addPos = v.addPos + (v:GetForward() * v.speed);
+								v:SetPos(aimVector + v.addPos);
+								
+								local newAngles = (eyePos - aimVector):Angle() + Angle(90, 0, 0);
+								
+								if ((!v.newAngles)) then
+									v.newAngles = math.random(0, 360);
+								end;
+								
+								if (!isDark) then
+									if (math.random(1, 4) <= 3) then
+										v.newAngles = v.newAngles + math.random(-20, 20);
+									end;
+								end;
+								
+								newAngles:RotateAroundAxis(newAngles:Up(), v.newAngles);
+								v:SetAngles(newAngles);
+								
+								if ((aimVector + v.addPos):Distance(aimVector) > 60 and !isDark) then
+									v:SetPos(aimVector);
+									v.addPos = VectorRand() * math.random(1, 30);
+									v.isScreenRoach = true;
+								end;
+							else
+								if ((((distance >= 100 or math.abs(cockroachPos.z - position.z) > 4) and eyeAngles.pitch < -1) or distance > 500)) then
+									if (distance > 200) then
+										v.newPosition = position;
+									else
+										v.speed = v.moveSpeed * 2;
+									end;
+									
+									v:SetAngles(Angle(0, ((position + v:GetRight() * 100) - cockroachPos):Angle().yaw + math.random(-20, 20), 0));
+								else
+									v.speed = v.moveSpeed * math.Rand(0.5, 1);
+									
+									if (isDark) then
+										v.speed = v.moveSpeed * 5;
+									end;
+								end;
+							end;
+							
+							if (isDark) then
+								v.speed = v.moveSpeed * 5;
+							end;
+							
+							if (lightColorDark > 26) then
+								v.speed = 2;
+							else
+								if (v.isScreenRoach) then
+									v:SetColor(Color(0, 0, 0, 0));
+									v.isScreenRoach = false;
+									
+									timer.Simple(math.Rand(0.3, 2), function()
+										if (IsValid(v)) then
+											v:SetColor(Color(0, 0, 0, 255));
+										end;
+									end);
+								end;
+							end;
+						end;
+					end;
+					
+					local cockroachNumber = math.min(80, -(sanity - 40) * 2) + 1;
+					
+					if ((#self.cockroaches < cockroachNumber and Clockwork.Client:EyeAngles().p < 0)) then
+						if #self.cockroaches <= 0 then
+							if ((!Clockwork.Client.nextInfection or curTime > Clockwork.Client.nextInfection)) then
+								Clockwork.Client.nextInfection = curTime + 10;
+								
+								Clockwork.Client:EmitSound("begotten/l4d2/infection"..math.random(1, 3)..".mp3", 500);
+							end;
+						end
+					
+						for i = 1, math.Clamp(cockroachNumber - #self.cockroaches, 0, 10) do
+							local cockroach = ClientsideModel("models/antlion_grub.mdl", RENDERGROUP_BOTH);
+							local color = math.Rand(1.5, 2) * 100;
+							local modelScale = math.Rand(0.1, 0.2) + (math.Rand(0.05, 0.1) * (100 / (-sanity + 100))) / 2;
+							
+							cockroach:SetMaterial("models/headcrab_classic/headcrabsheet");
+							cockroach:SetRenderMode(RENDERMODE_TRANSALPHA);
+							cockroach:SetColor(Color(color, color, color, 255))
+							cockroach:SetModelScale(cockroach:GetModelScale() * modelScale);
+							cockroach:SetAngles(Angle(0, math.random(0, 360), 0));
+							cockroach.addAngles = 1;
+							cockroach.moveSpeed = 5;
+							
+							local randomChance = math.random(1, 12);
+
+							if (randomChance == 1) then
+								cockroach.addPos = VectorRand() * math.random(1, 40) 
+								cockroach.speed = 0.05
+								cockroach.moveSpeed = 0.05
+								
+								local newAngles = (eyePos - aimVector):Angle() + Angle(90, 0, 0);
+								
+								if (cockroach.newAngles) then
+									cockroach.newAngles = math.random(0, 360);
+									newAngles:RotateAroundAxis(newAngles:Up(), cockroach.newAngles);
+								end;
+								
+								cockroach:SetAngles(newAngles);
+								
+								timer.Simple(math.Rand(0.1, 2), function()
+									if (IsValid(cockroach)) then
+										cockroach:SetColor(Color(20, 14, 12, 255));
+									end;
+								end);
+								
+								modelScale = math.Rand(0.25, 0.9);
+								
+								cockroach:DrawShadow(false);
+								cockroach:SetColor(Color(0, 0, 0, 255));
+								cockroach:SetMaterial("models/debug/debugwhite");
+								cockroach:SetModelScale(modelScale * 0.15, 1);
+							end;
+							
+							local trace = {};
+								trace.start = position + (Vector(math.random(-150, 150) ,math.random(-150, 150), 0) * math.Rand(0.5, 1));
+								trace.endpos = (trace.start - Vector(0, 0, 100));
+								trace.filter = {cockroach, Clockwork.Client};
+								trace.mask = MASK_SOLID;
+							local traceLine = util.TraceLine(trace);
+							
+							cockroach:SetPos(traceLine.HitPos - Vector(0, 0, 1));
+							self.cockroaches[#self.cockroaches + 1] = cockroach;
+						end;
+					else
+						for k, v in pairs(self.cockroaches) do
+							if (IsValid(v)) then
+								local cockroachPosition = v:GetPos();
+								local distance = cockroachPosition:Distance(position);
+								
+								if (IsValid(v) and k > cockroachNumber and !v.shouldRemove) then
+									v.shouldRemove = true;
+									v.moveSpeed = 5;
+									v.angle = v:GetAngles();
+								elseif (IsValid(v) and v.shouldRemove and distance > 100) then
+									v:Remove();
+									
+									self.cockroaches[k] = nil;
+								end;
+							end;
+						end;
+					end;
+				end;
+			else
+				if (#self.cockroaches > 0) then
+					for k, v in pairs(self.cockroaches) do
+						if (IsValid(v)) then
+							v:Remove();
+						end;
+					end;
+				end;
+			end;
+		else
+			if (#self.cockroaches > 0) then
+				for k, v in pairs(self.cockroaches) do
+					if (IsValid(v)) then
+						v:Remove();
+					end;
+				end;
+			end;
+		end;
+		
+		if (!Clockwork.Client:Alive() and #self.cockroaches > 0) then
+			for k, v in pairs(self.cockroaches) do
+				if (IsValid(v)) then
+					v:Remove();
+				end;
+			end;
+		end;
 	end
 end
 
@@ -187,24 +463,26 @@ function cwSanity:RenderScreenspaceEffects()
 		end
 		
 		for k, v in pairs(self.insanitySkeletons) do 
-			if (!IsValid(Entity(k)) or Entity(k):GetMoveType() != MOVETYPE_WALK or self.insanitySkeletons[k]:GetParent() ~= Entity(k)) then
-				if (IsValid(self.insanitySkeletons[k])) then
-					self.insanitySkeletons[k]:Remove();
+			local entity = Entity(k);
+			
+			if (!IsValid(entity) or entity:GetMoveType() != MOVETYPE_WALK or !IsValid(v) or v:GetParent() ~= entity) then
+				if (IsValid(v)) then
+					v:Remove();
 				end;
 				
 				self.insanitySkeletons[k] = nil
 			elseif (sanity > 20) and !has_saintly_composure then
-				if (IsValid(self.insanitySkeletons[k])) then
-					self.insanitySkeletons[k]:Remove();
+				if (IsValid(v)) then
+					v:Remove();
 				end;
 				
 				self.insanitySkeletons[k] = nil;
-				Entity(k):SetRenderMode(RENDERMODE_TRANSALPHA);
-				Entity(k):SetColor(Color(255, 255, 255, 255));
+				entity:SetRenderMode(RENDERMODE_TRANSALPHA);
+				entity:SetColor(Color(255, 255, 255, 255));
 			end;
 		end;
 
-		if (sanity <= 20) and !has_saintly_composure then 
+		if (sanity <= 20) and !has_saintly_composure and !Clockwork.Client.victim then 
 			local shouldPlay = false
 
 			for k, v in pairs(player.GetAll()) do
