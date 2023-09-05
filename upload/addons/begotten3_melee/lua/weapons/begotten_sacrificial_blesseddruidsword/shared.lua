@@ -28,7 +28,7 @@ SWEP.IronSightsAng = Vector(-2.814, 8.442, -48.543)
 -- Sacrificial Effects
 SWEP.DrawEffect = "fire_small_03"
 SWEP.AmbientEffect = "env_embers_small"
-SWEP.IgniteTime = 5
+SWEP.IgniteTime = 3
 SWEP.FreezeTime = nil
 
 --Sounds

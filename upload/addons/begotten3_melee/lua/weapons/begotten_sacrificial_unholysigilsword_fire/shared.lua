@@ -36,7 +36,7 @@ SWEP.PrimarySwingAnim = "a_heavy_2h_attack_slash_0"
 -- Sacrificial Effects
 SWEP.DrawEffect = "fire_small_03"
 SWEP.AmbientEffect = "env_embers_small"
-SWEP.IgniteTime = 7
+SWEP.IgniteTime = 6
 SWEP.FreezeTime = nil
 
 --Sounds
