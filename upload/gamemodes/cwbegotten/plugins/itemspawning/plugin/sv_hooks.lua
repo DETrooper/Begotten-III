@@ -164,13 +164,6 @@ function cwItemSpawner:Think()
 							
 							numContainers = numContainers + 1;
 							
-							local containerTable = {
-								container = container,
-								lifeTime = curTime + self.ContainerLifetime
-							};
-							
-							table.insert(self.Containers, containerTable);
-							
 							local lockChance = math.random(1, 100);
 							
 							if lockChance <= 5 then
@@ -223,6 +216,16 @@ function cwItemSpawner:Think()
 									container.cwCash = math.random(50, 100);
 								end
 							end
+							
+							container.lootCategory = containerCategory;
+							container.lootContainer = true;
+							
+							local containerTable = {
+								container = container,
+								lifeTime = curTime + self.ContainerLifetime
+							};
+							
+							table.insert(self.Containers, containerTable);
 						end
 					end
 				end
@@ -349,6 +352,92 @@ function cwItemSpawner:PlayerUseUnknownItemFunction(player, itemTable, itemFunct
 		end;
 	end;
 end;
+
+-- Called right before a container is opened.
+function cwItemSpawner:PreOpenContainer(player, container)
+	if container.lootContainer and !container.looted then
+		local chance = 0;
+		
+		if player:HasTrait("scavenger") then
+			chance = chance + 5;
+		end
+		
+		if cwBeliefs then
+			if player:HasBelief("fortunate") then
+				chance = chance + 10;
+			end
+			
+			if player:HasBelief("fortune_finisher") then
+				if math.random(1, 100) == 1 then
+					local randomItem = self:SelectItem(nil, true);
+					
+					if randomItem then
+						local itemInstance = item.CreateInstance(randomItem);
+						
+						-- If it is a magazine, make it full of ammo. If it is a normal ammo, spawn a bunch of duplicates.
+						if itemInstance.category == "Shot" then
+							if itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
+								itemInstance:SetAmmoMagazine(itemInstance.ammoMagazineSize);
+							else
+								Clockwork.inventory:AddInstance(supercrate.cwInventory, itemInstance, math.random(4, 10));
+							end
+						elseif itemInstance.name == "Colt" then
+							for j = 1, 2 do
+								local magazineItemInstance = item.CreateInstance("old_world_magazine");
+								
+								if magazineItemInstance and magazineItemInstance.ammoMagazineSize and magazineItemInstance.SetAmmoMagazine then
+									magazineItemInstance:SetAmmoMagazine(magazineItemInstance.ammoMagazineSize);
+								
+									Clockwork.inventory:AddInstance(supercrate.cwInventory, magazineItemInstance);
+								end
+							end
+						elseif itemInstance.name == "Springer" then
+							for j = 1, math.random(5, 10) do
+								local ammoItemInstance = item.CreateInstance("old_world_longshot");
+								
+								if ammoItemInstance then
+									Clockwork.inventory:AddInstance(supercrate.cwInventory, ammoItemInstance);
+								end
+							end
+						end
+						
+						-- Fortune finisher items will have perfect condition.
+						Clockwork.inventory:AddInstance(supercrate.cwInventory, itemInstance, 1);
+						
+						Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..randomItem.name.." added to their loot container from the fortune finisher belief!");
+					end
+				end
+			end
+		end
+		
+		if math.random(1, 100) <= chance then
+			local randomItem = self:SelectItem(container.lootCategory, false, true);
+			
+			if randomItem then
+				local itemInstance = item.CreateInstance(randomItem);
+				
+				if itemInstance then
+					local category = itemInstance.category;
+					
+					if category == "Helms" or category == "Armor" or category == "Melee" or category == "Crafting Materials" then
+						-- 75% chance for these items to spawn with less than 100% condition.
+						if math.random(1, 4) ~= 1 then
+							itemInstance:TakeCondition(math.random(0, 75));
+						end
+					elseif itemInstance.category == "Shot" and itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
+						itemInstance:SetAmmoMagazine(math.random(1, itemInstance.ammoMagazineSize));
+					end
+					
+					Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
+					
+					Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..randomItem.name.." added to their loot container from the fortunate belief and/or scavenger trait!");
+				end
+			end
+		end
+		
+		container.looted = true;
+	end
+end
 	
 -- A function to break an item and give it's parts to the player.
 function cwItemSpawner:Breakdown(player, itemTable, toolItem)

@@ -449,7 +449,7 @@ function cwItemSpawner:SelectItem(location, bIsSupercrate, bIsContainer)
 				rarity = rarity / 2;
 			end
 			
-			if !bIsContainer and valid then
+			if !bIsContainer and !bIsSupercrate and valid then
 				if itemTable.itemSpawnerInfo.onGround == false then
 					valid = false;
 				end
@@ -637,7 +637,7 @@ function cwItemSpawner:SetupContainers()
 	local numContainers = #self.Containers;
 	local curTime = CurTime();
 	
-	for k, v in pairs(self.ContainerLocations) do
+	for k, v in RandomPairs(self.ContainerLocations) do
 		if k == "supermarket" then
 			if math.random(1, 4) < 4 then
 				continue;
@@ -663,14 +663,7 @@ function cwItemSpawner:SetupContainers()
 							physicsObject:EnableMotion(false);
 						end;
 						
-						numContainers = numContainers + 1;
-						
-						local containerTable = {
-							container = container,
-							lifeTime = curTime + self.ContainerLifetime
-						};
-						
-						table.insert(self.Containers, containerTable);
+						numContainers = numContainers + 1
 						
 						local lockChance = math.random(1, 100);
 						
@@ -695,7 +688,7 @@ function cwItemSpawner:SetupContainers()
 						local itemIncrease = (container.cwLockTier or 0) * 2
 						
 						for i = 1, math.random(3 + itemIncrease, 6 + itemIncrease) do
-							local randomItem = self:SelectItem(containerCategory, false, true);
+							local randomItem = self:SelectItem(k, false, true);
 							
 							if randomItem then
 								local itemInstance = item.CreateInstance(randomItem);
@@ -724,6 +717,16 @@ function cwItemSpawner:SetupContainers()
 								container.cwCash = math.random(50, 100);
 							end
 						end
+						
+						container.lootCategory = k;
+						container.lootContainer = true;
+						
+						local containerTable = {
+							container = container,
+							lifeTime = curTime + self.ContainerLifetime
+						};
+						
+						table.insert(self.Containers, containerTable);
 					end
 				else
 					return;
@@ -785,7 +788,6 @@ function cwItemSpawner:SpawnSupercrate()
 							itemInstance:SetAmmoMagazine(itemInstance.ammoMagazineSize);
 						else
 							Clockwork.inventory:AddInstance(supercrate.cwInventory, itemInstance, math.random(4, 10));
-							continue;
 						end
 					elseif itemInstance.name == "Colt" then
 						for j = 1, 2 do
@@ -813,6 +815,7 @@ function cwItemSpawner:SpawnSupercrate()
 			end
 			
 			supercrate.cwCash = math.random(500, 1000);
+			supercrate.lootContainer = true;
 			
 			self.SuperCrate = supercrateTable;
 		end

@@ -150,14 +150,8 @@ function cwZombies:GiveAwayPosition(entity, radius)
 	end;
 end
 
-local map = game.GetMap() == "rp_begotten3";
-
 -- A function to spawn a Begotten thrall.
 function cwZombies:SpawnThrall(name, spawnPos, angles)
-	if (!map) then
-		return;
-	end;
-	
 	local entity;
 	
 	if name == "npc_bgt_another" or string.lower(name) == "another" then
@@ -184,8 +178,8 @@ function cwZombies:SpawnThrall(name, spawnPos, angles)
 		entity:SetAngles(angles);
 		entity:Spawn();
 		entity:Activate();
-	elseif name == "npc_bgt_ed" or string.lower(name) == "eddie" then
-		entity = ents.Create("npc_bgt_ed");
+	elseif name == "npc_bgt_eddie" or string.lower(name) == "eddie" then
+		entity = ents.Create("npc_bgt_eddie");
 		
 		entity:CustomInitialize();
 		entity:SetPos(spawnPos)

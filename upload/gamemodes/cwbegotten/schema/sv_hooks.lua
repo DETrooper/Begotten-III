@@ -269,9 +269,6 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 				end
 			});
 		end;
-		
-		player.JustOpenedContainer = true;
-		hook.Run("PreOpenedContainer", player, entity)
 	elseif (class == "cw_belongings" and (arguments == "cw_belongingsOpen" or arguments == "cwBelongingsOpen")) then
 		if player:GetMoveType() == MOVETYPE_WALK then
 			player:EmitSound("physics/cardboard/cardboard_box_break3.wav");
@@ -313,9 +310,6 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 				return false;
 			end
 		});
-		
-		player.JustOpenedContainer = true;
-		hook.Run("PreOpenedContainer", player, entity)
 	elseif (class == "cw_radio") then
 		if (option == "Set Frequency" and type(arguments) == "string") then
 			if !entity:IsStatic() or (entity:IsStatic() and player:IsAdmin()) then
@@ -389,11 +383,6 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 		
 			entity:Remove();
 		end
-	end;
-	
-	if (arguments == "cwContainerOpen") then
-		player.JustOpenedContainer = true;
-		hook.Run("PreOpenedContainer", player, entity)
 	end;
 	
 	if (class == "prop_physics" and arguments == "cw_breakdown") then
@@ -1127,18 +1116,15 @@ function Schema:Think()
 					local thrallNPCs;
 					
 					if cwDayNight and cwDayNight.currentCycle == "night" then
-						--thrallNPCs = {"cw_suitor", "cw_shambler"};
-						thrallNPCs = {"npc_bgt_suitor", "npc_bgt_eddie"};
+						thrallNPCs = {"npc_bgt_another", "npc_bgt_chaser", "npc_bgt_guardian", "npc_bgt_otis"};
 					else
-						--thrallNPCs = {"cw_another", "cw_brute", "cw_grunt", "cw_ed"};
 						thrallNPCs = {"npc_bgt_another", "npc_bgt_brute", "npc_bgt_grunt", "npc_bgt_eddie"};
 					end
 					
 					local npcName = thrallNPCs[math.random(1, #thrallNPCs)];
 					
 					if math.random(1, 40) == 1 then
-						--npcName = "cw_otis";
-						npcName = "npc_bgt_otis";
+						npcName = "npc_bgt_suitor";
 					end
 					
 					ParticleEffect("teleport_fx", spawnPos, Angle(0,0,0), nil);
@@ -1416,8 +1402,8 @@ function Schema:PreOpenedContainer(player, entity)
 			self:OpenSound(entity, player);
 		end
 		
-		if (hook.Run("CanOpenContainer", player, entity, containerWeight, true) or player.JustOpenedContainer) then
-			player.JustOpenedContainer = nil;
+		--if (hook.Run("CanOpenContainer", player, entity, containerWeight, true) or player.JustOpenedContainer) then
+			--player.JustOpenedContainer = nil;
 			
 			-- maybe remake this so it saves which containers have been checked by the same player or in the last 10 minutes or something.
 			--[[if (math.random(1, 10) == 1 and player:Health() >= 50) then
@@ -1452,11 +1438,11 @@ function Schema:PreOpenedContainer(player, entity)
 				end;
 			end;
 			--]]
-		end;
+		--end;
 	end;
 end;
 
--- A function to get if a player can open a container.
+-- A function to get if a player can open a container (legacy from Cash's plugin).
 function Schema:CanOpenContainer(player, entity, weight, noCall)
 	if (noCall) then
 		return false;

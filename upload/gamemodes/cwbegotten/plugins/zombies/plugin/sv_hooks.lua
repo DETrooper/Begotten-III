@@ -93,6 +93,57 @@ function cwZombies:EntityFireBullets(entity, dataTable)
 	end;
 end;
 
+-- A function to get if a player can open a container.
+function cwZombies:PlayerCanOpenContainer(player, container)
+	if player:HasTrait("marked") and not player:IsNoClipping() and container.lootContainer and !container.looted and string.find(container:GetModel(), "closet") then
+		if math.random(1, 20) == 1 then
+			local thrall = cwZombies:SpawnThrall(table.Random({"npc_bgt_brute", "npc_bgt_eddie"}), container:GetPos(), Angle(0, -player:GetAngles().y, 0));
+			
+			if IsValid(thrall) then
+				container:SetCollisionGroup(COLLISION_GROUP_WEAPON);
+
+				Clockwork.chatBox:AddInRadius(nil, "itnofake", "A thrall suddenly bursts out of the fucking closet!", container:GetPos(), config.Get("talk_radius"):Get() * 2);
+				
+				local entitiesInSphere = ents.FindInSphere(container:GetPos(), 512);
+				
+				for k, v in pairs (entitiesInSphere) do	
+					if (IsValid(v) and v:IsPlayer()) then
+						if v:HasInitialized() and v:Alive() then
+							if Clockwork.player:CanSeeEntity(v, container) then
+								Clockwork.datastream:Start(v, "PlaySound", "begotten/score5.mp3");
+							end
+						end
+					end
+				end
+			
+				local physObj = container:GetPhysicsObject();
+				
+				if (IsValid(physObj)) then
+					local material = physObj:GetMaterial();
+					
+					if (string.find(material, "wood")) then
+						container:EmitSound("physics/wood/wood_crate_break"..math.random(1, 5)..".wav", 70);
+					elseif (string.find(material, "metal")) then
+						container:EmitSound("physics/metal/metal_box_break"..math.random(1, 2)..".wav", 70);
+					end;
+				end;
+				
+				if cwPossession then
+					timer.Simple(2, function()
+						if IsValid(container) then
+							container:EmitSound(cwPossession.laughs[math.random(1, #cwPossession.laughs)]);
+						end
+					end);
+				end
+				
+				table.insert(Schema.spawnedNPCS, thrall:EntIndex());
+			
+				return false;
+			end
+		end
+	end
+end
+
 -- Called when an NPC is killed.
 function cwZombies:OnNPCKilled(npc, attacker, inflictor, attackers)
 	-- Some addons call this hook, so to prevent multiple XP payouts I've assigned a variable to track whether or not it's already been killed.

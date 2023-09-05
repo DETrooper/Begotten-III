@@ -233,6 +233,8 @@ function cwStorage:OpenContainer(player, entity, weight)
 	if hook.Run("PlayerCanOpenContainer", player, entity) == false then
 		return false;
 	end
+	
+	hook.Run("PreOpenedContainer", player, entity);
 
 	if (entity.cwMessage) then
 		netstream.Start(player, "StorageMessage", {

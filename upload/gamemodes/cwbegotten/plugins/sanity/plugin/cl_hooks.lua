@@ -493,31 +493,38 @@ function cwSanity:RenderScreenspaceEffects()
 					local moveType = v:GetMoveType();
 					
 					if moveType == MOVETYPE_WALK and distance < (750 * 750) then
-						if (!IsValid(self.insanitySkeletons[playerIndex]) and v:GetColor().a > 0) then
-							self.insanitySkeletons[playerIndex] = ClientsideModel("models/skeleton/skeleton_whole.mdl", RENDERGROUP_OPAQUE);
-							self.insanitySkeletons[playerIndex]:SetParent(v);
+						if (!IsValid(self.insanitySkeletons[playerIndex])) then
+							local skeletonEnt = ClientsideModel("models/skeleton/skeleton_whole.mdl", RENDERGROUP_OPAQUE)
+							
+							skeletonEnt:SetParent(v);
+							skeletonEnt:SetRenderMode(RENDERMODE_TRANSALPHA);
+							skeletonEnt:SetColor(Color(255, 255, 255, 0));
+							skeletonEnt:AddEffects(EF_BONEMERGE);
+							skeletonEnt:SetSkin(2);
 							
 							v:SetRenderMode(RENDERMODE_TRANSALPHA);
 							v:SetColor(Color(255, 255, 255, 255));
 							
-							self.insanitySkeletons[playerIndex]:SetRenderMode(RENDERMODE_TRANSALPHA);
-							self.insanitySkeletons[playerIndex]:SetColor(Color(255, 255, 255, 0));
+							if v:GetColor().a > 0 then
+								local repetition = 0;
+								
+								timer.Create(playerIndex.."_skeletonDecay", 0.01, 255, function()
+									if (IsValid(self.insanitySkeletons[playerIndex]) and IsValid(v)) then
+										repetition = repetition + 1;
+										
+										v:SetRenderMode(RENDERMODE_TRANSALPHA);
+										v:SetColor(Color(255, 255, 255, 255 - math.Clamp(repetition, 0, 255)));
+										self.insanitySkeletons[playerIndex]:SetColor(Color(255, 255, 255, 0 + repetition));
+									end;
+								end);
+							else
+								v:SetRenderMode(RENDERMODE_TRANSALPHA);
+								v:SetColor(Color(255, 255, 255, 0));
+								skeletonEnt:SetColor(Color(255, 255, 255, 255));
+							end
 							
-							local repetition = 0;
-							
-							timer.Create(playerIndex.."_skeletonDecay", 0.01, 255, function()
-								if (IsValid(self.insanitySkeletons[playerIndex]) and IsValid(v)) then
-									repetition = repetition + 1;
-									
-									v:SetRenderMode(RENDERMODE_TRANSALPHA);
-									v:SetColor(Color(255, 255, 255, 255 - math.Clamp(repetition, 0, 255)));
-									self.insanitySkeletons[playerIndex]:SetColor(Color(255, 255, 255, 0 + repetition));
-								end;
-							end);
-							
-							self.insanitySkeletons[playerIndex]:AddEffects(EF_BONEMERGE);
-							self.insanitySkeletons[playerIndex]:SetSkin(2);
-							
+							self.insanitySkeletons[playerIndex] = skeletonEnt;
+								
 							--shouldPlay = true;
 						end
 						
