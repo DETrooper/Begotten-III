@@ -574,7 +574,7 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie)
 	
 	randomPhrase = string.gsub(randomPhrase, "#HIS", gender);
 	Clockwork.chatBox:AddInTargetRadius(player, "me", string.gsub(randomPhrase, "^.", string.lower), player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-	player:SetCharacterData("stability", 50);
+	player:SetCharacterData("stability", 80);
 	
 	if IsValid(player.possessor) then
 		pitch = 50;

@@ -26,7 +26,7 @@ SWEP.ParryAnim = "a_sword_shield_parry"
 SWEP.IronSightsPos = Vector(5.76, -7.639, 3.2)
 SWEP.IronSightsAng = Vector(3.517, -15.478, -2.814)
 
-SWEP.IgniteTime = 5
+SWEP.IgniteTime = 3
 
 --Sounds
 SWEP.AttackSoundTable = "SmallMetalAttackSoundTable"

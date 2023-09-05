@@ -580,7 +580,7 @@ AttackTables.HaralderWarAxeAttackTable = {
 };
 
 AttackTables.ClubAttackTable = {
-	["primarydamage"] = 25,
+	["primarydamage"] = 20,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -616,7 +616,7 @@ AttackTables.HeavyBattleAxeAttackTable = {
 };
 
 AttackTables.WarClubAttackTable = {
-	["primarydamage"] = 40,
+	["primarydamage"] = 35,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1084,7 +1084,7 @@ AttackTables.ScrapBladeAttackTable = {
 };
 
 AttackTables.BellHammerAttackTable = {
-	["primarydamage"] = 55,
+	["primarydamage"] = 50,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1120,7 +1120,7 @@ AttackTables.GoreCleaverAttackTable = {
 };
 
 AttackTables.GoreClubAttackTable = {
-	["primarydamage"] = 30,
+	["primarydamage"] = 25,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1138,7 +1138,7 @@ AttackTables.GoreClubAttackTable = {
 };
 
 AttackTables.GrocklingStoneMaulAttackTable = {
-	["primarydamage"] = 45,
+	["primarydamage"] = 40,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1156,7 +1156,7 @@ AttackTables.GrocklingStoneMaulAttackTable = {
 };
 
 AttackTables.GrocklingSacredStoneMaulAttackTable = {
-	["primarydamage"] = 50,
+	["primarydamage"] = 45,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1300,7 +1300,7 @@ AttackTables.ElegantEpeeAttackTable = {
 };
 
 AttackTables.FlangedMaceAttackTable = {
-	["primarydamage"] = 30,
+	["primarydamage"] = 25,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = true,
@@ -1534,7 +1534,7 @@ AttackTables.GoreAxeandFalchionAttackTable = {
 };
 
 AttackTables.IronKnucklesAttackTable = {
-	["primarydamage"] = 11,
+	["primarydamage"] = 10,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1570,7 +1570,7 @@ AttackTables.SpikedKnucklesAttackTable = {
 };
 
 AttackTables.CaestusAttackTable = {
-	["primarydamage"] = 15,
+	["primarydamage"] = 12,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1606,7 +1606,7 @@ AttackTables.ShortswordAttackTable = {
 };
 
 AttackTables.BatAttackTable = {
-	["primarydamage"] = 11,
+	["primarydamage"] = 9,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1714,7 +1714,7 @@ AttackTables.BladedBoardAttackTable = {
 };
 
 AttackTables.PipeAttackTable = {
-	["primarydamage"] = 8,
+	["primarydamage"] = 6,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1732,7 +1732,7 @@ AttackTables.PipeAttackTable = {
 };
 
 AttackTables.PipeMaceAttackTable = {
-	["primarydamage"] = 10,
+	["primarydamage"] = 9,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1804,7 +1804,7 @@ AttackTables.AdminTwistedMacheteAttackTable = {
 };
 
 AttackTables.ScraphammerAttackTable = {
-	["primarydamage"] = 30,
+	["primarydamage"] = 25,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1822,7 +1822,7 @@ AttackTables.ScraphammerAttackTable = {
 };
 
 AttackTables.VolthammerAttackTable = {
-	["primarydamage"] = 45,
+	["primarydamage"] = 40,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1840,7 +1840,7 @@ AttackTables.VolthammerAttackTable = {
 };
 
 AttackTables.SledgeAttackTable = {
-	["primarydamage"] = 25,
+	["primarydamage"] = 20,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1920,7 +1920,7 @@ AttackTables.TrainingSpearAttackTable = {
 	["altattackpoisedamagemodifier"] = nil,
 	["armorpiercing"] = 0,
 	["altarmorpiercing"] = nil,
-	["poisedamage"] = 5,
+	["poisedamage"] = 15,
 	["stabilitydamage"] = 20,
 	["takeammo"] = 3,
 	["delay"] = 0.9,
@@ -1956,7 +1956,7 @@ AttackTables.TrainingSwordAttackTable = {
 	["altattackpoisedamagemodifier"] = 0.3,
 	["armorpiercing"] = 0,
 	["altarmorpiercing"] = 0,
-	["poisedamage"] = 15,
+	["poisedamage"] = 20,
 	["stabilitydamage"] = 10,
 	["takeammo"] = 3,
 	["delay"] = 1,
@@ -2254,7 +2254,7 @@ AttackTables.ShardAttackTable = {
 };
 
 AttackTables.SatanicMaceAttackTable = {
-	["primarydamage"] = 35,
+	["primarydamage"] = 30,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -2362,7 +2362,7 @@ AttackTables.SatanicLongswordAttackTable = {
 };
 
 AttackTables.GlazicBannerAttackTable = {
-	["primarydamage"] = 20,
+	["primarydamage"] = 15,
 	["dmgtype"] = 128,
 	["attacktype"] = "polearm_swing",
 	["canaltattack"] = true,
@@ -2398,7 +2398,7 @@ AttackTables.DreadaxeAttackTable = {
 };
 
 AttackTables.WarpedSwordAttackTable = {
-	["primarydamage"] = 55,
+	["primarydamage"] = 60,
 	["dmgtype"] = 4,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = true,
@@ -2434,7 +2434,7 @@ AttackTables.TwistedClubAttackTable = {
 };
 
 AttackTables.VoltsledgeAttackTable = {
-	["primarydamage"] = 35,
+	["primarydamage"] = 30,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -2578,7 +2578,7 @@ AttackTables.MaximusWrathAttackTable = {
 };
 
 AttackTables.VoltprodAttackTable = {
-	["primarydamage"] = 35,
+	["primarydamage"] = 20,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -2596,7 +2596,7 @@ AttackTables.VoltprodAttackTable = {
 };
 
 AttackTables.TireIronAttackTable = {
-	["primarydamage"] = 7,
+	["primarydamage"] = 5,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,

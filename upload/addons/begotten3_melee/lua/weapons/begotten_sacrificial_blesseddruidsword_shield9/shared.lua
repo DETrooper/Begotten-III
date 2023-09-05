@@ -40,7 +40,7 @@ SWEP.IronSightsAng = Vector(1.406, 0, -2.112)
 -- Sacrificial Effects
 SWEP.DrawEffect = "fire_small_03"
 SWEP.AmbientEffect = "env_embers_small"
-SWEP.IgniteTime = 5
+SWEP.IgniteTime = 3
 SWEP.FreezeTime = nil
 
 SWEP.SpecialDrawSound = "ambient/fire/ignite.wav" --For sacrifical weapons only, plays on top of regular draw sound

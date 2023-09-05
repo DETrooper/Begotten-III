@@ -3063,7 +3063,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 2},
 			["wood"] = {amount = 1},
 			["tortured_spirit"] = {amount = 1},
 		};

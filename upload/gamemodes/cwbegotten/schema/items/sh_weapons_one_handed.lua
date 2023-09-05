@@ -600,7 +600,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(2.83, 2.12, -0.71);
 	ITEM.shields = {"shield1", "shield2", "shield3", "shield4", "shield5", "shield6", "shield7", "shield8", "shield9", "shield10", "shield11", "shield12", "shield13", "shield14"};
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}};
 	ITEM.requireFaith = {"Faith of the Dark"};
 ITEM:Register();
 

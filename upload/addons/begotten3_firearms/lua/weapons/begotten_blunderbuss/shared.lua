@@ -38,7 +38,7 @@ SWEP.ShowWorldModel			= false
 SWEP.Spawnable				= true
 SWEP.AdminSpawnable			= true
 
-SWEP.Primary.Sound			= Sound("others/ubo_4.mp3")		-- script that calls the primary fire sound
+SWEP.Primary.Sound			= Sound("musket/musket4.wav")		-- script that calls the primary fire sound
 SWEP.Primary.RPM				= 30		-- This is in Rounds Per Minute
 SWEP.Primary.ClipSize			= 1			-- Size of a clip
 SWEP.Primary.DefaultClip		= 0	-- Default number of bullets in a clip
@@ -77,7 +77,7 @@ SWEP.ViewModelBoneMods = {
 
 SWEP.AmmoTypes = {
 	["Grapeshot"] = function(SWEP)
-		SWEP.Primary.Sound = Sound("others/ubo_4.mp3");
+		SWEP.Primary.Sound = Sound("musket/musket4.wav");
 		SWEP.Primary.NumShots = 24;
 		SWEP.Primary.Damage = 10;
 		SWEP.Primary.Spread = .2;
