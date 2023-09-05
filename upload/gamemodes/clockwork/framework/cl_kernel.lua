@@ -924,6 +924,22 @@ do
 					end;
 				end;
 				
+				if cwCharacterNeeds then
+					local corruption = math.Round(player:GetSharedVar("corruption") or 0);
+					
+					if (corruption > 0) then
+						table.insert(text, {
+							text = "Corruption: ["..corruption.."]",
+							color = self:GetValueColor(corruption), 
+							bar = {
+								value = corruption,
+								max = 100
+							}, 
+							barColor = Color(100, 84, 82, 255)
+						});
+					end;
+				end
+				
 				if (player:Armor() > 0) then
 					table.insert(text, {
 						text = "Armor: ["..armor.."]",

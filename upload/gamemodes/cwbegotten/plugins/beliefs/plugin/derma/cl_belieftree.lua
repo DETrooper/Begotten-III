@@ -790,7 +790,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 			parent = self.prowess,
 			uniqueID = "unrelenting",
 			niceName = "Unrelenting",
-			description = "Great weapons and two handed weapons now deal 25% more poise damage and 10% more damage.",
+			description = "Great weapons and two handed weapons now deal 10% more damage. All melee weapons now deal 25% more poise damage.",
 			x = column[5],
 			y = row[4],
 			width = 48,

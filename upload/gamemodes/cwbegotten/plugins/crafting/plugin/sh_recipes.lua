@@ -3063,7 +3063,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 2},
 			["wood"] = {amount = 1},
 			["tortured_spirit"] = {amount = 1},
 		};
@@ -3660,6 +3660,33 @@ function cwRecipes:ClockworkInitialized()
 		};
 		RECIPE.result = {
 			["begotten_spear_trainingspear"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "physics/wood/wood_strain3.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 10;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("training_javelin");
+		RECIPE.name = "Training Javelin";
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
+		RECIPE.requirements = {
+			["wood"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["begotten_javelin_training_javelin"] = {amount = 1},
 		};
 		RECIPE.category = "Weapons"
 		RECIPE.finishSound = "physics/wood/wood_strain3.wav";

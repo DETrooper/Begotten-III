@@ -2284,7 +2284,9 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		if (damageInfo:IsFallDamage() and (Clockwork.player:HasFlags(entity, "E"))) then
 			return false;
 		elseif damageInfo:IsDamageType(DMG_BULLET) or damageInfo:IsDamageType(DMG_BUCKSHOT) then
-			if entity:GetSubfaction() == "Philimaxio" then
+			local subfaction = entity:GetSubfaction();
+		
+			if subfaction == "Philimaxio" or subfaction == "Knights of Sol" then
 				damageInfo:ScaleDamage(0.3);
 			end
 		end;
@@ -2368,7 +2370,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		end
 		
 		if (damage > 40) then
-			if (bIsPlayer or entity:IsNPC() or entity:IsNextBot() or class == "prop_ragdoll") then
+			if (bIsPlayer or entity:IsNPC() or entity:IsNextBot() or entity.isTrainingDummy or class == "prop_ragdoll") then
 				local damagePosition = damageInfo:GetDamagePosition();
 				
 				if (damageType == DMG_BULLET or damageType == DMG_BUCKSHOT or damageType == DMG_SLASH) then
@@ -2462,7 +2464,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		end
 	end
 	
-	if bIsPlayer and IsValid(attacker) and attacker:IsPlayer() then
+	if (bIsPlayer or entity.isTrainingDummy) and IsValid(attacker) and attacker:IsPlayer() then
 		local attackerWeapon = attacker:GetActiveWeapon();
 		
 		if IsValid(attackerWeapon) then
@@ -2473,7 +2475,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 					damageInfo:ScaleDamage(1.25);
 				end
 
-				if !entity:IsRagdolled() and math.abs(math.AngleDifference(entity:EyeAngles().y, (attacker:GetPos() - entity:GetPos()):Angle().y)) >= 100 then
+				if (entity.isTrainingDummy and math.abs(math.AngleDifference(entity:GetAngles().y, (attacker:GetPos() - entity:GetPos()):Angle().y)) >= 100) or (!entity:IsRagdolled() and math.abs(math.AngleDifference(entity:EyeAngles().y, (attacker:GetPos() - entity:GetPos()):Angle().y)) >= 100) then
 					if cwBeliefs and attacker:HasBelief("assassin") then
 						damageInfo:ScaleDamage(3);
 					else

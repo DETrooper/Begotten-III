@@ -32,3 +32,20 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}}; -- use "breakdown" for other type
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Training Javelin";
+	ITEM.model = "models/begotten/weapons/training_spear.mdl";
+	ITEM.weight = 1;
+	ITEM.uniqueID = "begotten_javelin_training_javelin";
+	ITEM.category = "Javelins";
+	ITEM.description = "A wooden pole that can be used for low-risk javelin throwing training.";
+	ITEM.iconoverride = "begotten/ui/itemicons/training_javelin.png"
+	ITEM.isAttachment = true;
+	ITEM.isJavelin = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(0, 279.45, 0);
+	ITEM.attachmentOffsetVector = Vector(-4.24, 3, -24.75);
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
+ITEM:Register();

@@ -77,9 +77,9 @@ SWEP.ViewModelBoneMods = {
 
 SWEP.AmmoTypes = {
 	["Volt Projectile"] = function(SWEP)
-		SWEP.Primary.Sound = Sound("railgun/relsa_shoot_1.mp3");
+		SWEP.Primary.Sound = Sound("railgun/relsa_shoot_"..math.random(1,4)..".mp3");
 		SWEP.Primary.NumShots = 1;
-		SWEP.Primary.Damage = 90;
+		SWEP.Primary.Damage = 60;
 		SWEP.Primary.Spread = .05;
 		SWEP.Primary.IronAccuracy = .05;
 		SWEP.Primary.Ammo = "pistol";

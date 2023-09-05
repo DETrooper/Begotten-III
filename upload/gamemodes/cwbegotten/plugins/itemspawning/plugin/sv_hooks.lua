@@ -363,6 +363,16 @@ function cwItemSpawner:PreOpenContainer(player, container)
 		end
 		
 		if cwBeliefs then
+			if player:HasBelief("disciple") then
+				if math.random(1, 10) == 1 then
+					if container.cwCash then
+						container.cwCash = container.cwCash + math.random(10, 50);
+					else
+						container.cwCash = math.random(10, 50);
+					end
+				end
+			end
+		
 			if player:HasBelief("fortunate") then
 				chance = chance + 10;
 			end

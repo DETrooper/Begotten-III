@@ -74,6 +74,22 @@ function ENT:OnTakeDamage(damageInfo)
 					itemName = "gold_ore";
 					
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "As you strike the rocks, you notice a faint glimmer. Are your eyes decieving you? Gold!.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+				elseif math.random(1, 600) == 1 then
+					itemName = "uncut_blood_diamond";
+					
+					Clockwork.chatBox:AddInTargetRadius(player, "it", "As you strike the rocks, a beautiful blood-red gem is unearthed from the pile. Whispers fill the caverns around you as the precious stone glimmers.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+					
+					self:EmitSound("darkwhisper/darkwhisper_long3.mp3", 500);
+					
+					Clockwork.player:NotifyAdmins("operator", player:Name().." has unearthed a Blood Diamond. Let the chaos caused by greed ensue.", nil);
+					
+					for k, v in pairs(_player.GetAll()) do
+						if v ~= player and v:GetFaith() == "Faith of the Dark" then
+							v:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_long"..math.random(1, 5)..".mp3", 80, 100)]]);
+							Schema:EasyText(v, "red", "Your mind is abruptly overcome with feelings of unrestrained desire. A Blood Diamond has been unearthed somewhere, and it must be yours...");
+							v:HandleSanity(10);
+						end
+					end
 				end
 				
 				local itemTable = item.CreateInstance(itemName)

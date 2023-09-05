@@ -688,7 +688,7 @@ function cwMedicalSystem:PlayerTakeDamage(player, attacker, inflictor, hitGroup,
 					if math.random(1, 100) <= chance then
 						player:AddInjury(self.cwHitGroupToString[hitGroup], "gunshot_wound");
 					end
-				elseif damageType == DMG_SLASH or damageType == DMG_VEHICLE or damageType == DMG_SNIPER then
+				elseif damageType == DMG_SLASH --[[or damageType == DMG_VEHICLE]] or damageType == DMG_SNIPER then
 					local chance = 0;
 					local limbHealth = Clockwork.limb:GetHealth(player, hitGroup, false)
 					

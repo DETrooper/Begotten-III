@@ -324,6 +324,21 @@ local ITEM = Clockwork.item:New();
 	
 ITEM:Register();
 
+ITEM = Clockwork.item:New();
+	ITEM.name = "Blood Diamond";
+	ITEM.category = "Crafting Materials";
+	ITEM.model = "models/props_junk/rock001a.mdl";
+	ITEM.weight = 2;
+	ITEM.uniqueID = "uncut_blood_diamond";
+	ITEM.description = "A beautiful blood-red uncut gem. Its beauty entices the deepest senses of appreciation within you.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.stackable = true;
+
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position) end;
+	
+ITEM:Register();
+
 local ITEM = Clockwork.item:New();
 	ITEM.name = "Leather";
 	ITEM.category = "Crafting Materials";

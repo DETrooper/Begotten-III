@@ -848,8 +848,8 @@ function SWEP:SecondaryAttack()
 	local ply = self.Owner
 	local max_poise = ply:GetNWInt("maxMeleeStamina");
 
-	wep:SetNextPrimaryFire( CurTime() + (attacktable["delay"]) )
-	wep:SetNextSecondaryFire( curTime + 0.5 )
+	wep:SetNextPrimaryFire(math.max(curTime + (attacktable["delay"]), curTime + 2));
+	wep:SetNextSecondaryFire(math.max(curTime + (attacktable["delay"]), curTime + 2));
  
 	--Parry anim
 	self:TriggerAnim(self.Owner, self.ParryAnim);

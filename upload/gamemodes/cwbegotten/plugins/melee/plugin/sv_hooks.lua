@@ -93,7 +93,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 			end
 		end
 		
-		if entity:IsNPC() or entity:IsNextBot() or (entity:IsPlayer() and (!entity:GetNWBool("Guardening") or (entity:GetNWBool("Guardening") and !canblock)) and (!entity:GetNWBool("Parry") == true)) then
+		if entity:IsNPC() or entity:IsNextBot() or (entity:IsPlayer() and (!entity:GetNWBool("Guardening") or (entity:GetNWBool("Guardening") and !canblock)) and (!entity:GetNWBool("Parry") == true)) or entity.isTrainingDummy then
 			local victimPosition = entity:GetPos();
 			local position = victimPosition;
 			
@@ -574,7 +574,7 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie)
 	
 	randomPhrase = string.gsub(randomPhrase, "#HIS", gender);
 	Clockwork.chatBox:AddInTargetRadius(player, "me", string.gsub(randomPhrase, "^.", string.lower), player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-	player:SetCharacterData("stability", 50);
+	player:SetCharacterData("stability", 80);
 	
 	if IsValid(player.possessor) then
 		pitch = 50;
@@ -778,7 +778,7 @@ end
 
 -- Called when an entity has taken damage (runs after belief calculations but before FuckMyLife).
 function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
-	if damageInfo and entity:IsPlayer() then
+	if damageInfo and (entity:IsPlayer() or entity.isTrainingDummy) then
 		local attacker = damageInfo:GetAttacker();
 		local damage = damageInfo:GetDamage();
 	

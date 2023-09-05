@@ -895,7 +895,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 		entity = Clockwork.entity:GetPlayer(entity);
 	end;
 
-	if entity:IsPlayer() or entity:IsNPC() or entity:IsNextBot() then
+	if entity:IsPlayer() or entity:IsNPC() or entity:IsNextBot() or entity.isTrainingDummy then
 		local originalDamage = damageInfo:GetDamage() or 0;
 		
 		if originalDamage == 0 then
@@ -1051,14 +1051,14 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						
 						if clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate") then
 							if clothesItem.weightclass == "Light" then
-								newDamage = newDamage + (originalDamage * 0.2);
+								newDamage = newDamage + (originalDamage * 0.4);
 								entity:TakeStability(5);
 							elseif clothesItem.weightclass == "Medium" then
-								newDamage = newDamage + (originalDamage * 0.35);
-								entity:TakeStability(10);
-							else
-								newDamage = newDamage + (originalDamage * 0.50);
+								newDamage = newDamage + (originalDamage * 0.6);
 								entity:TakeStability(15);
+							else
+								newDamage = newDamage + originalDamage;
+								entity:TakeStability(25);
 							end
 							
 							Schema:DoTesla(entity, false);
@@ -1145,14 +1145,14 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						
 						if clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate") then
 							if clothesItem.weightclass == "Light" then
-								newDamage = newDamage + (originalDamage * 0.2);
+								newDamage = newDamage + (originalDamage * 0.4);
 								entity:TakeStability(5);
 							elseif clothesItem.weightclass == "Medium" then
-								newDamage = newDamage + (originalDamage * 0.35);
-								entity:TakeStability(10);
-							else
-								newDamage = newDamage + (originalDamage * 0.50);
+								newDamage = newDamage + (originalDamage * 0.6);
 								entity:TakeStability(15);
+							else
+								newDamage = newDamage + originalDamage;
+								entity:TakeStability(25);
 							end
 							
 							Schema:DoTesla(entity, false);

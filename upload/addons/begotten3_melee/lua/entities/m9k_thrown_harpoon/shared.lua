@@ -71,6 +71,8 @@ if SERVER then
 				self.itemTable = item.CreateInstance("begotten_javelin_iron_javelin");
 			elseif self:GetModel() == "models/props/begotten/melee/heide_lance.mdl" then
 				self.itemTable = item.CreateInstance("begotten_javelin_pilum");
+			elseif self:GetModel() == "models/begotten/weapons/training_spear.mdl" then
+				self.itemTable = item.CreateInstance("begotten_javelin_training_javelin");
 			end
 		end
 

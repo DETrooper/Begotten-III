@@ -24,37 +24,41 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 			return;
 		end
 		
-		-- Belief gain bonuses.
-		if self:HasBelief("gifted") then
-			newAmount = newAmount + (amount * 0.25);
-		elseif self:HasBelief("talented") then
-			newAmount = newAmount + (amount * 0.15);
-		end
-		
-		if self:HasBelief("aptitude_finisher") then
-			newAmount = newAmount + (amount * 0.75);
-		end
-		
-		if subfaction == "Auxiliary" or subfaction == "Rekh-khet-sa" then
-			newAmount = newAmount + (amount * 0.25);
-		end
-		
-		if self.bgCharmData and self.HasCharmEquipped then
-			if faith == "Faith of the Light" and self:HasCharmEquipped("skull_saint") then
+		if amount > 0 then
+			-- Belief gain bonuses.
+			if self:HasBelief("gifted") then
 				newAmount = newAmount + (amount * 0.25);
-			elseif faith == "Faith of the Family" and self:HasCharmEquipped("skull_animal") then
-				newAmount = newAmount + (amount * 0.25);
-			elseif faith == "Faith of the Dark" and self:HasCharmEquipped("skull_demon") then
-				newAmount = newAmount + (amount * 0.25);
+			elseif self:HasBelief("talented") then
+				newAmount = newAmount + (amount * 0.15);
 			end
-		end
-		
-		-- Faith gain loss because of high corruption.
-		if cwCharacterNeeds then
-			local corruption = self:GetNeed("corruption");
 			
-			if corruption > 50 then
-				newAmount = math.Round(newAmount / ((corruption * 0.01) * 2));
+			if self:HasBelief("aptitude_finisher") then
+				newAmount = newAmount + (amount * 0.75);
+			end
+			
+			if subfaction == "Auxiliary" or subfaction == "Rekh-khet-sa" then
+				newAmount = newAmount + (amount * 0.25);
+			elseif subfaction == "Inquisition" then
+				newAmount = newAmount + (amount * 0.5);
+			end
+			
+			if self.bgCharmData and self.HasCharmEquipped then
+				if faith == "Faith of the Light" and self:HasCharmEquipped("skull_saint") then
+					newAmount = newAmount + (amount * 0.25);
+				elseif faith == "Faith of the Family" and self:HasCharmEquipped("skull_animal") then
+					newAmount = newAmount + (amount * 0.25);
+				elseif faith == "Faith of the Dark" and self:HasCharmEquipped("skull_demon") then
+					newAmount = newAmount + (amount * 0.25);
+				end
+			end
+			
+			-- Faith gain loss because of high corruption.
+			if cwCharacterNeeds then
+				local corruption = self:GetNeed("corruption");
+				
+				if corruption > 50 then
+					newAmount = math.Round(newAmount / ((corruption * 0.01) * 2));
+				end
 			end
 		end
 	end

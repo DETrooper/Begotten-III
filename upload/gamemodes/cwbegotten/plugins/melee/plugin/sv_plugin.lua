@@ -222,9 +222,12 @@ end
 -- A function to get a player's maximum poise.
 function playerMeta:GetMaxPoise()
 	local max_poise = 90;
+	local subfaction = self:GetSubfaction();
 	
 	if self:GetCharacterData("isDemon", false) then
 		max_poise = 1000
+		
+		return max_poise;
 	end
 	
 	if cwBeliefs and self.HasBelief then
@@ -245,8 +248,10 @@ function playerMeta:GetMaxPoise()
 		end
 	end
 	
-	if self:GetSubfaction() == "Legionary" then
+	if subfaction == "Legionary" then
 		max_poise = max_poise + 15;
+	elseif subfaction == "Knights of Sol" then
+		max_poise = max_poise + 25;
 	end
 	
 	if cwPossession and IsValid(self.possessor) then
@@ -259,15 +264,21 @@ end;
 -- A function to get a player's maximum stability.
 function playerMeta:GetMaxStability()
 	local max_stability = 100;
+	local subfaction = self:GetSubfaction();
+	
 	if self:GetCharacterData("isDemon", false) then
 		max_stability = 1000
-	end
-	local boost = self:GetNetVar("loyaltypoints", 0)
-	if boost > 0 then
-		max_stability = tonumber(max_stability + boost);
+		
+		return max_stability;
 	end
 	
-	if self:GetSubfaction() == "Philimaxio" then
+	--[[local boost = self:GetNetVar("loyaltypoints", 0)
+	
+	if boost > 0 then
+		max_stability = tonumber(max_stability + boost);
+	end]]--
+	
+	if subfaction == "Philimaxio" or subfaction == "Knights of Sol" then
 		max_stability = max_stability + 25;
 	end
 	
