@@ -166,6 +166,22 @@ function ENT:PhysicsCollide(data, physobj)
 		local shieldnumber = (GetShieldString(weaponclass))
 	
 		local shield_reduction = GetShieldReduction(shieldnumber);
+		local itemTable = item.GetByWeapon(activeWeapon);
+
+		-- Condition damage penalty
+		if itemTable then
+			local condition = itemTable:GetCondition();
+			
+			if condition and condition < 100 then
+				if damagetype == DMG_CLUB then
+					damage = damage * Lerp(condition / 100, 0.75, 1);
+				elseif damagetype == DMG_SLASH then
+					damage = damage * Lerp(condition / 100, 0.4, 1);
+				elseif damagetype == DMG_VEHICLE then
+					damage = damage * Lerp(condition / 100, 0.5, 1);
+				end
+			end
+		end
 		
 		if cwBeliefs and owner.HasBelief then
 			if owner:HasBelief("shieldwall") then

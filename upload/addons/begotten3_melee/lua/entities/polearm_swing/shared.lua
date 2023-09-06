@@ -534,16 +534,17 @@ function ENT:PhysicsCollide(data, physobj)
 	
 		local itemTable = item.GetByWeapon(activeWeapon);
 		
+		-- Condition damage penalty
 		if itemTable then
 			local condition = itemTable:GetCondition();
 			
 			if condition and condition < 100 then
 				if poletype == DMG_CLUB then
-					poledamage = poledamage * Lerp(condition / 100, 0.9, 1);
+					poledamage = poledamage * Lerp(condition / 100, 0.75, 1);
 				elseif poletype == DMG_SLASH then
-					poledamage = poledamage * Lerp(condition / 100, 0.7, 1);
+					poledamage = poledamage * Lerp(condition / 100, 0.4, 1);
 				elseif poletype == DMG_VEHICLE then
-					poledamage = poledamage * Lerp(condition / 100, 0.8, 1);
+					poledamage = poledamage * Lerp(condition / 100, 0.5, 1);
 				end
 			end
 		end
