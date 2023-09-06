@@ -88,7 +88,7 @@ function SWEP:FireJavelin()
 		if !javelin:IsValid() then return false end
 		
 		javelin:SetModel("models/begotten/weapons/training_spear.mdl");
-		javelin:SetAngles(self.Owner:GetAimVector():Angle())
+		javelin:SetAngles(self.Owner:GetAimVector():Angle() + Angle(90, 0, 0))
 		javelin:SetPos(pos)
 		javelin:SetOwner(self.Owner)
 		javelin:Spawn()
@@ -98,7 +98,11 @@ function SWEP:FireJavelin()
 		
 		local phys = javelin:GetPhysicsObject()
 		
-		phys:SetVelocity(self.Owner:GetAimVector() * 1250)
+		if self.Owner.bgCharmData and self.Owner.HasCharmEquipped and self.Owner:HasCharmEquipped("hurlers_talisman") then
+			phys:SetVelocity(self.Owner:GetAimVector() * 1600);
+		else
+			phys:SetVelocity(self.Owner:GetAimVector() * 1250);
+		end
 	end
 	
 	if SERVER and self.Owner:IsPlayer() then

@@ -1018,12 +1018,6 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						end
 					end
 					
-					if attacker:HasBelief("billman") then
-						if string.find(attackerWeapon.Category, "Polearm") or string.find(attackerWeapon.Category, "Spear") or string.find(attackerWeapon.Category, "Rapier") or string.find(attackerWeapon.Category, "Scythe") or string.find(attackerWeapon.Category, "Javelin") then
-							newDamage = newDamage + (originalDamage * 0.1);
-						end
-					end
-					
 					if damageInfo:IsDamageType(16) then
 						if entity:IsPlayer() and entity:Alive() and attacker:HasBelief("survivalist") then
 							if originalDamage > 0 then
@@ -1232,6 +1226,12 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					end
 				else
 					if entity:HasBelief("taste_of_iron") then
+						newDamage = newDamage - (originalDamage * 0.5);
+					end
+				end
+				
+				if entity.bgCharmData then
+					if entity:HasCharmEquipped("smoldering_head") then
 						newDamage = newDamage - (originalDamage * 0.5);
 					end
 				end

@@ -99,7 +99,11 @@ function SWEP:FireJavelin()
 		
 		local phys = javelin:GetPhysicsObject()
 		
-		phys:SetVelocity(self.Owner:GetAimVector() * 1250)
+		if self.Owner.bgCharmData and self.Owner.HasCharmEquipped and self.Owner:HasCharmEquipped("hurlers_talisman") then
+			phys:SetVelocity(self.Owner:GetAimVector() * 1600);
+		else
+			phys:SetVelocity(self.Owner:GetAimVector() * 1250);
+		end
 	end
 	
 	if SERVER and self.Owner:IsPlayer() then

@@ -166,15 +166,22 @@ function playerMeta:HandleNeed(need, amount)
 						return;
 					end
 				
-					if self.HasCharmEquipped and self:HasCharmEquipped("crucifix") then
-						newAmount = currentAmount + (amount * 0.75);
+					if self.HasCharmEquipped then
+						if self:HasCharmEquipped("crucifix") then
+							newAmount = currentAmount + (amount * 0.75);
+						end
 						
-						--[[if self:GetSubfaction() == "Philimaxio" then
+						if self:HasCharmEquipped("warding_talisman") then
+							newAmount = currentAmount + (amount * 0.5);
+						end
+					end
+					
+					--[[if self:GetSubfaction() == "Philimaxio" then
 							newAmount = currentAmount + (amount * 1.5);
 						end]]--
 					--[[elseif self:GetSubfaction() == "Philimaxio" then
-						newAmount = currentAmount + (amount * 2);]]--
-					end
+						newAmount = currentAmount + (amount * 2);
+					end]]--
 				end
 				
 				if newAmount >= 100 then

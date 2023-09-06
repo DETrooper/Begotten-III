@@ -2526,6 +2526,8 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 		if player:Health() > player:GetMaxHealth() * 0.95 then
 			infoTable.runSpeed = infoTable.runSpeed * 1.1;
 		end
+	elseif subfaction == "Knights of Sol" then
+		infoTable.runSpeed = infoTable.runSpeed * 0.95;
 	elseif subfaction == "Praeventor" then
 		infoTable.runSpeed = infoTable.runSpeed * 1.05;
 	end

@@ -48,6 +48,10 @@ function playerMeta:HandleSanity(amount)
 			if self:GetFaith() == "Faith of the Family" and self:HasCharmEquipped("effigy_earthing") then
 				amount = amount * 0.75;
 			end
+			
+			if self:HasCharmEquipped("warding_talisman") then
+				amount = amount * 0.5;
+			end
 		end
 		
 		if self:GetNetVar("steelWill", false) == true then

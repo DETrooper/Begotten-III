@@ -362,6 +362,10 @@ function cwItemSpawner:PreOpenContainer(player, container)
 			chance = chance + 5;
 		end
 		
+		if player.bgCharmData and player.HasCharmEquipped and player:HasCharmEquipped("thiefs_hand") then
+			chance = chance + 5;
+		end
+		
 		if cwBeliefs then
 			if player:HasBelief("disciple") then
 				if math.random(1, 10) == 1 then

@@ -332,6 +332,12 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 									armorPiercing = armorPiercing + (armorPiercing * 0.15);
 								end
 								
+								if attacker:HasBelief("billman") then
+									if string.find(activeWeapon.Category, "Polearm") or string.find(activeWeapon.Category, "Spear") or string.find(activeWeapon.Category, "Rapier") or string.find(activeWeapon.Category, "Scythe") or string.find(activeWeapon.Category, "Javelin") then
+										armorPiercing = armorPiercing + (armorPiercing * 0.2);
+									end
+								end
+								
 								--printp("AP Value: "..tostring(armorPiercing));
 								
 								local damage = damageInfo:GetDamage();
@@ -554,6 +560,12 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 							
 							if (activeWeapon.Base == "sword_swepbase" or damageInfo:IsDamageType(DMG_SNIPER)) and attacker:HasBelief("the_light") then
 								armorPiercing = armorPiercing + (armorPiercing * 0.15);
+							end
+							
+							if attacker:HasBelief("billman") then
+								if string.find(activeWeapon.Category, "Polearm") or string.find(activeWeapon.Category, "Spear") or string.find(activeWeapon.Category, "Rapier") or string.find(activeWeapon.Category, "Scythe") or string.find(activeWeapon.Category, "Javelin") then
+									armorPiercing = armorPiercing + (armorPiercing * 0.2);
+								end
 							end
 							
 							--print("AP Value: "..tostring(armorPiercing));

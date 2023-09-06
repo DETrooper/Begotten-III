@@ -647,7 +647,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 			parent = self.prowess,
 			uniqueID = "billman",
 			niceName = "Billman",
-			description = "Polearms, scythes, spears, rapiers, and javelins now deal 10% more damage and armor piercing damage.",
+			description = "Polearms, scythes, spears, rapiers, and javelins now deal 20% more damage and armor piercing damage.",
 			quote = "The honest soldier keeps his distance from the bloodthirsty fools who seek his demise.",
 			x = column[1],
 			y = row[4],
@@ -1652,7 +1652,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 			height = 48,
 			requirements = {"ingenious"},
 			requirementsNiceNames = {"Ingenious"},
-			lockedsubfactions = {"Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald", "Clan Grock"},
+			lockedsubfactions = {"Knights of Sol", "Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald", "Clan Grock"},
 		})
 		
 		self:AddIcon({
@@ -1666,7 +1666,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 			height = 48,
 			requirements = {"ingenious", "powder_and_steel"},
 			requirementsNiceNames = {"Ingenious", "Powder and Steel"},
-			lockedsubfactions = {"Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald", "Clan Grock"},
+			lockedsubfactions = {"Knights of Sol", "Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald", "Clan Grock"},
 		})
 		
 		self:AddIcon({
@@ -1680,7 +1680,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 			height = 48,
 			requirements = {"ingenious", "powder_and_steel", "pistolier"},
 			requirementsNiceNames = {"Ingenious", "Powder and Steel", "Pistolier"},
-			lockedsubfactions = {"Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald", "Clan Grock"},
+			lockedsubfactions = {"Knights of Sol", "Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald", "Clan Grock"},
 		})
 
 		-- Column C

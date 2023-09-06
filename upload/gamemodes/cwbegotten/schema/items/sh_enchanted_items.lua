@@ -82,6 +82,18 @@ local ITEM = Clockwork.item:New("enchanted_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Hurler's Talisman";
+	ITEM.model = "models/demonssouls/weapons/talisman of beasts.mdl";
+	ITEM.weight = 0.5;
+	ITEM.uniqueID = "hurlers_talisman";
+	ITEM.description = "A pointed bronze charm at the end of a chain, reminiscent of the slings of yore.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.charmEffects = "- Increases javelin throwing speed/range by 25%.";
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, onGround = false}
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Pummeler's Ring";
 	ITEM.model = "models/items/magic/ring_dexterity/ring_dexterity.mdl";
 	ITEM.weight = 0.2;
@@ -199,6 +211,18 @@ local ITEM = Clockwork.item:New("enchanted_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Smoldering Head";
+	ITEM.model = "models/gibs/gibhead.mdl";
+	ITEM.weight = 2;
+	ITEM.uniqueID = "smoldering_head";
+	ITEM.description = "The burned head of a person accused of witchcraft. You can feel it still smoldering in your hands.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.charmEffects = "- Increases burn damage resistance by 50%.";
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 900, onGround = false}
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Spine of a Soldier";
 	ITEM.model = "models/Gibs/HGIBS_spine.mdl";
 	ITEM.weight = 0.5;
@@ -207,7 +231,43 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/spine.png";
 	ITEM.charmEffects = "- Increases your inventory capacity by 25%.";
 	
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, onGround = false}
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 900, onGround = false}
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Warding Talisman";
+	ITEM.model = "models/demonssouls/weapons/talisman of god.mdl";
+	ITEM.weight = 0.5;
+	ITEM.uniqueID = "warding_talisman";
+	ITEM.description = "A talisman inscribed with holy runes, casting a powerful aura that wards off evil spirits.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.charmEffects = "- Reduces corruption gain and sanity loss by 50%.";
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 350, supercrateOnly = true}
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Warding Talisman";
+	ITEM.model = "models/demonssouls/weapons/talisman of god.mdl";
+	ITEM.weight = 0.5;
+	ITEM.uniqueID = "warding_talisman";
+	ITEM.description = "A talisman inscribed with holy runes, casting a powerful aura that wards off evil spirits.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.charmEffects = "- Reduces sanity loss by 50%.";
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, supercrateOnly = true}
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Thief's Hand";
+	ITEM.model = "models/gibs/pgib_p1.mdl";
+	ITEM.weight = 0.5;
+	ITEM.uniqueID = "thiefs_hand";
+	ITEM.description = "The severed hand of a thief, cut to punish their stealing.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.charmEffects = "- Slightly increases the chance of finding loot in containers.";
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 900, onGround = false}
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base"); -- Make sure you can't equip this unless you already have any type of Inquisitor Armor equipped (unequipping inquisitor armor should de-equip this item as well). Should require Hard-Glazed subfaith specifically to equip as well. Make it set your 3rd bodygroup to 1 if it is equipped (and make sure it persists after swapping chars). "Moderately increases parry/deflection windows" should be the same bonuses as Impossibly Skilled for Satanists.

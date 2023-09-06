@@ -327,7 +327,7 @@ ITEM:Register();
 ITEM = Clockwork.item:New();
 	ITEM.name = "Blood Diamond";
 	ITEM.category = "Crafting Materials";
-	ITEM.model = "models/props_junk/rock001a.mdl";
+	ITEM.model = "models/props_clutter/garnet_flawed.mdl";
 	ITEM.weight = 2;
 	ITEM.uniqueID = "uncut_blood_diamond";
 	ITEM.description = "A beautiful blood-red uncut gem. Its beauty entices the deepest senses of appreciation within you.";
