@@ -3205,7 +3205,7 @@ end
 -- Called when a player's character has initialized.
 function GM:PlayerCharacterInitialized(player)
 	netstream.Start(player, "InvClear", true)
-	netstream.Start(player, "AttrClear", true)
+	--netstream.Start(player, "AttrClear", true)
 
 	if (!Clockwork.class:FindByID(player:Team())) then
 		Clockwork.class:AssignToDefault(player)
@@ -3801,6 +3801,11 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 			end
 		end
 	end
+end
+
+function GM:PlayerSilentDeath(player)
+	Clockwork.player:SetAction(player, false)
+	Clockwork.player:SetDrunk(player, false)
 end
 
 -- Called when an item entity has taken damage.

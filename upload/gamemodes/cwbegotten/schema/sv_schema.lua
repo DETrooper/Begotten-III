@@ -1931,6 +1931,7 @@ function Schema:CheapleCaughtPlayer(player)
 			player:SetCharacterData("permakilled", true); -- In case the player tries to d/c to avoid their fate.
 			player:SensesOff();
 			Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);
+			Clockwork.player:SetAction(player, false);
 			Clockwork.player:SetSafePosition(player, Vector(222, 4992, -11075));
 			player:SetEyeAngles(Angle(0, 180, 0));
 			player:Freeze(true);

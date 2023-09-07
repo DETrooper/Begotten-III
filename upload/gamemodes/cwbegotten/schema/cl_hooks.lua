@@ -208,7 +208,7 @@ function Schema:Think()
 			if statichitman.flaming then
 				statichitman:SetPos(cheaplePosition + (forward * 1.5) + Vector(0, 0, zDifference * FrameTime()));
 			else
-				statichitman:SetPos(cheaplePosition + (forward * 0.3) + Vector(0, 0, zDifference * FrameTime()));
+				statichitman:SetPos(cheaplePosition + (forward * 0.325) + Vector(0, 0, zDifference * FrameTime()));
 			end
 			
 			statichitman:SetAngles(Angle(0, yaw, 0));
@@ -911,33 +911,42 @@ function Schema:PlayerAdjustColorModify(colorModify)
 	colorModify["$pp_colour_colour"] = self.colorModify.color;
 end;
 
+-- Called to get if local player can get the screen text info.
+function Schema:CanGetScreenTextInfo()
+	if Clockwork.Client.LoadingText then
+		return false;
+	end
+	
+	if self.caughtByCheaple then
+		return false;
+	end
+end
+
 -- Called to get the screen text info.
 function Schema:GetScreenTextInfo()
-	if !Clockwork.Client.LoadingText then
-		local blackFadeAlpha = Clockwork.kernel:GetBlackFadeAlpha();
-		
-		if (Clockwork.Client:GetNetVar("permaKilled")) then
-			return {
-				alpha = blackFadeAlpha,
-				title = "THIS CHARACTER IS PERMANENTLY KILLED",
-				text = "Go to the character menu to make a new one."
-			};
-		elseif (Clockwork.Client:GetSharedVar("beingChloro")) then
-			return {
-				alpha = 255 - blackFadeAlpha,
-				title = "SOMEBODY IS USING CHLOROFORM ON YOU"
-			};
-		elseif (Clockwork.Client:GetNetVar("beingTied")) then
-			return {
-				alpha = 255 - blackFadeAlpha,
-				title = "YOU ARE BEING TIED UP"
-			};
-		elseif (Clockwork.Client:GetNetVar("tied") != 0) then
-			return {
-				alpha = 255 - blackFadeAlpha,
-				title = "YOU HAVE BEEN TIED UP"
-			};
-		end;
+	local blackFadeAlpha = Clockwork.kernel:GetBlackFadeAlpha();
+	
+	if (Clockwork.Client:GetNetVar("permaKilled")) then
+		return {
+			alpha = blackFadeAlpha,
+			title = "THIS CHARACTER IS PERMANENTLY KILLED",
+			text = "Go to the character menu to make a new one."
+		};
+	elseif (Clockwork.Client:GetSharedVar("beingChloro")) then
+		return {
+			alpha = 255 - blackFadeAlpha,
+			title = "SOMEBODY IS USING CHLOROFORM ON YOU"
+		};
+	elseif (Clockwork.Client:GetNetVar("beingTied")) then
+		return {
+			alpha = 255 - blackFadeAlpha,
+			title = "YOU ARE BEING TIED UP"
+		};
+	elseif (Clockwork.Client:GetNetVar("tied") != 0) then
+		return {
+			alpha = 255 - blackFadeAlpha,
+			title = "YOU HAVE BEEN TIED UP"
+		};
 	end;
 end;
 

@@ -209,7 +209,7 @@ function Schema:CheapleCutscene()
 				timer.Simple(1, function()
 					Schema.cheapleLight = false;
 					
-					timer.Simple(0.1, function()
+					timer.Simple(0.2, function()
 						EmitSound("physics/glass/glass_largesheet_break3.wav", Vector(260, 4995, -10915), -1, CHAN_AUTO, 0.7);
 					end);
 				end);

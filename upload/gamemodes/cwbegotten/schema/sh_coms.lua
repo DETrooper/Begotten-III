@@ -1676,6 +1676,10 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
 		if player:GetFaction() == "Children of Satan" then
+			if player.caughtByCheaple then
+				return false;
+			end
+		
 			if Schema.hellJauntDisabled or (map ~= "rp_begotten3" and map ~= "rp_begotten_redux") then
 				Schema:EasyText(player, "peru", "Your connection with Hell appears to be severed and you cannot helljaunt!");
 				
@@ -1722,6 +1726,10 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 						timer.Create("summonplayer_"..tostring(player:EntIndex()), 0.75, 1, function()
 							if IsValid(player) then
 								player.teleporting = false;
+								
+								if player.caughtByCheaple then
+									return;
+								end
 								
 								if player:Alive() then
 									local target = player.cwHoldingEnt;
@@ -1841,6 +1849,10 @@ local COMMAND = Clockwork.command:New("HellTeleport");
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
 		if player:GetFaction() == "Children of Satan" then
+			if player.caughtByCheaple then
+				return false;
+			end
+		
 			if Schema.hellTeleportDisabled or !archPos or !pillarPos then
 				Schema:EasyText(player, "peru", "Your connection with Hell appears to be severed and you cannot teleport there!");
 				
@@ -1881,6 +1893,10 @@ local COMMAND = Clockwork.command:New("HellTeleport");
 												timer.Create("summonplayer_"..tostring(player:EntIndex()), 0.75, 1, function()
 													if IsValid(player) then
 														player.teleporting = false;
+														
+														if player.caughtByCheaple then
+															return;
+														end
 													
 														if player:Alive() then
 															local target = player.cwHoldingEnt;

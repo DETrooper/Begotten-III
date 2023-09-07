@@ -1881,6 +1881,13 @@ function Schema:DoPlayerDeath(player, attacker, damageInfo)
 	self:TiePlayer(player, false, true);
 end;
 
+function Schema:PlayerSilentDeath(player)
+	player.beingSearched = nil;
+	player.searching = nil;
+	
+	self:TiePlayer(player, false, true);
+end
+
 -- Called when a player dies.
 function Schema:PlayerDeath(player, inflictor, attacker, damageInfo)
 	if !player.opponent then
@@ -1893,14 +1900,6 @@ function Schema:PlayerDeath(player, inflictor, attacker, damageInfo)
 				player:RemoveBounty();
 			end
 		end
-	end
-	
-	if player.banners then
-		player.banners = {};
-	end
-	
-	if player.scriptedDying then
-		player.scriptedDying = false;
 	end
 	
 	-- Gore sacrifice shit.
@@ -1968,6 +1967,16 @@ function Schema:PlayerDeath(player, inflictor, attacker, damageInfo)
 		end		
 	end
 end;
+
+function Schema:PostPlayerDeath(player)
+	if player.banners then
+		player.banners = {};
+	end
+	
+	if player.scriptedDying then
+		player.scriptedDying = false;
+	end
+end
 
 -- Called when a player changes ranks.
 function Schema:PlayerChangedRanks(player)

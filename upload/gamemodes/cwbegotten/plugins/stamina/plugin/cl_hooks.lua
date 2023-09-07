@@ -5,6 +5,12 @@
 	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
 --]]
 
+function cwStamina:PlayerCharacterInitialized(data)
+	local stamina = Clockwork.Client:GetNWInt("Stamina", 100);
+	
+	self.stamina = stamina;
+end
+
 -- Called when the bars are needed.
 function cwStamina:GetBars(bars)
 	local max_stamina = Clockwork.Client:GetNetVar("Max_Stamina", 100);

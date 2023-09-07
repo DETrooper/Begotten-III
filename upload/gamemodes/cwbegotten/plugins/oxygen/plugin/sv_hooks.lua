@@ -5,9 +5,12 @@
 
 -- Called just after a player spawns.
 function cwOxygen:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
-	if (!firstSpawn and !lightSpawn) then
-		player:SetCharacterData("oxygen", 100);
-		player:SetSharedVar("oxygen", 100);
+	if (!lightSpawn) then
+		if !player:GetCharacterData("oxygen") then
+			player:SetCharacterData("oxygen", 100);
+		end
+		
+		player:SetSharedVar("oxygen", player:GetCharacterData("oxygen"));
 	end
 
 	player.suffocating = nil

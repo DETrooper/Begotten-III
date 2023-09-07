@@ -1050,6 +1050,14 @@ function GM:InitPostEntity()
 	hook.Run("ClockworkInitPostEntity")
 end
 
+function GM:PlayerCharacterInitialized(data)
+	local armor = math.Clamp(Clockwork.Client:Armor(), 0, Clockwork.Client:GetMaxArmor());
+	local health = math.Clamp(Clockwork.Client:Health(), 0, Clockwork.Client:GetMaxHealth());
+	
+	Clockwork.kernel.armor = armor;
+	Clockwork.kernel.health = health;
+end
+
 -- Called each frame.
 function GM:Think()
 	Clockwork.kernel:CalculateHints()
@@ -1191,7 +1199,11 @@ function GM:HUDPaintForeground()
 		end
 	end
 
-	local screenTextInfo = hook.Run("GetScreenTextInfo");
+	local screenTextInfo;
+
+	if hook.Run("GetScreenTextInfo") ~= false then
+		screenTextInfo = hook.Run("GetScreenTextInfo");
+	end
 	
 	if (screenTextInfo) then
 		local alpha = screenTextInfo.alpha or 255;
