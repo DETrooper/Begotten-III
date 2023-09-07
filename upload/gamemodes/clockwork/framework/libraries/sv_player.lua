@@ -2846,8 +2846,10 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 				end
 				
 				if (state == RAGDOLL_RESET) then
-					if (IsValid(ragdollTable.entity)) then
+					if (IsValid(ragdollTable.entity) and player:Alive()) then
 						timer.Remove("DecayCheck"..ragdollTable.entity:EntIndex())
+						
+						ragdollTable.entity:Remove();
 					end
 				end
 

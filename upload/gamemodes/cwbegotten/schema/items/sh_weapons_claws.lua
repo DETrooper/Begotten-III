@@ -13,7 +13,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(0, 4.24, 0);
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}}; -- use "breakdown" for other type
 
-	ITEM.requiredbeliefs = {"man_become_beast"};
+	ITEM.onerequiredbelief = {"man_become_beast", "witch_druid"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -31,5 +31,5 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(0.71, 2.83, -4.95);
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks"}}; -- use "breakdown" for other type
 	
-	ITEM.requiredbeliefs = {"man_become_beast"};
+	ITEM.onerequiredbelief = {"man_become_beast", "witch_druid"};
 ITEM:Register();

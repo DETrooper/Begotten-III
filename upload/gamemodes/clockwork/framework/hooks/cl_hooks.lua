@@ -1201,7 +1201,7 @@ function GM:HUDPaintForeground()
 
 	local screenTextInfo;
 
-	if hook.Run("GetScreenTextInfo") ~= false then
+	if hook.Run("CanGetScreenTextInfo") ~= false then
 		screenTextInfo = hook.Run("GetScreenTextInfo");
 	end
 	

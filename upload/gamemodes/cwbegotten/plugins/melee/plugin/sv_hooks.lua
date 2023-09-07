@@ -655,7 +655,7 @@ end;
 
 -- Called when a player attempts to switch to a character.
 function cwMelee:PlayerCanSwitchCharacter(player, character)
-	if (player:IsRagdolled()) then
+	if (player:Alive() and player:IsRagdolled()) then
 		return "You cannot switch characters while you are fallen over!";
 	end;
 end;

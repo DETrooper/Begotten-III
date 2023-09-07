@@ -164,7 +164,7 @@ if SERVER then
 
   -- Getters/setters --
 
-  function ENT:GetRelationship(ent, absolute)
+  function ENT:GetRelationship(ent, absolute)
     if not IsValid(ent) then return D_ER end
     if self == ent then return D_ER end
     local disp = self._DrGBaseRelationships[ent]
@@ -264,9 +264,8 @@ if SERVER then
     if ent:IsNPC() and NPC_STATES_IGNORED[ent:GetNPCState()] then return true end
     if (ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot()) and ent:Health() <= 0 then return true end
     if ent.IsDrGNextbot and (ent:IsDown() or ent:IsDead()) then return true end
-	
-	if Clockwork then
-		if ent:GetClass() == "prop_ragdoll" and Clockwork.entity:IsPlayerRagdoll(ent) and ent:GetNWEntity("Player") ~= game.GetWorld() then
+	if Clockwork then
+		if ent:GetClass() == "prop_ragdoll" then			if ent:GetNWEntity("Player") == game.GetWorld() then				return true;			end			
 			local ragdollPlayer = Clockwork.entity:GetPlayer(ent);
 			if IsValid(ragdollPlayer) then
 				if !ragdollPlayer:Alive() or !ragdollPlayer:IsRagdolled() then
@@ -279,7 +278,7 @@ if SERVER then
 			end
 		end
 	end
-	
+	
     if self:ShouldIgnore(ent) then return true end
     return self._DrGBaseIgnoredEntities[ent] or false
   end
