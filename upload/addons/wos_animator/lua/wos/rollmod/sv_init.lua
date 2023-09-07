@@ -193,7 +193,7 @@ function meta:StartRolling(a)
 			
 			if self.SetCharacterData then
 				self:SetCharacterData("Stamina", math.Clamp(self:GetCharacterData("Stamina") - stamina_loss, 0, cwStamina:GetMaxStaminaPlugin(self)));
-				self:SetNetVar("Stamina", self:GetCharacterData("Stamina"));
+				self:SetNWInt("Stamina", self:GetCharacterData("Stamina"));
 			end
 		end
 	end

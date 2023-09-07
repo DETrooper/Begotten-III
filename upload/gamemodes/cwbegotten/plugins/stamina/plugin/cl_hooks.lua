@@ -8,7 +8,7 @@
 -- Called when the bars are needed.
 function cwStamina:GetBars(bars)
 	local max_stamina = Clockwork.Client:GetNetVar("Max_Stamina", 100);
-	local stamina = Clockwork.Client:GetNetVar("Stamina", 100);
+	local stamina = Clockwork.Client:GetNWInt("Stamina", 100);
 	
 	if (!self.stamina) then
 		self.stamina = stamina;
@@ -22,9 +22,11 @@ function cwStamina:GetBars(bars)
 end;
 
 function cwStamina:TopLevelPlayerBindPress(player, bind, bPress)
-	if (string.find(bind, "+jump")) then
-		if player:IsOnGround() then
-			netstream.Start("PlayerJump");
-		end
-	end;
+	if hook.Run("PlayerCanJump") ~= false then
+		if (string.find(bind, "+jump")) then
+			if player:IsOnGround() then
+				netstream.Start("PlayerJump");
+			end
+		end;
+	end
 end;

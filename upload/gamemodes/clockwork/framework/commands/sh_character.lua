@@ -685,9 +685,10 @@ COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("CharUseItem");
 	COMMAND.tip = "Make a character use/equip an item.";
-	COMMAND.text = "<string Name> <string Item>";
+	COMMAND.text = "<string Name> <string Item> [int itemID]";
 	COMMAND.access = "s";
 	COMMAND.arguments = 2;
+	COMMAND.optionalArguments = 1;
 	COMMAND.alias = {"ForceEquip", "ForceUseItem", "PlyUseItem"};
 
 	-- Called when the command has been run.
@@ -700,8 +701,10 @@ local COMMAND = Clockwork.command:New("CharUseItem");
 
 			for k, v in pairs (itemList) do
 				if v.uniqueID == arguments[2] then
-					itemTable = v;
-					break;
+					if !arguments[3] or !tonumber(arguments[3]) or math.Truncate(tonumber(arguments[3])) == v.itemID then
+						itemTable = v;
+						break;
+					end
 				end
 			end
 			
@@ -731,6 +734,7 @@ local COMMAND = Clockwork.command:New("CharUnequipItem");
 	COMMAND.text = "<string Name> <string Item>";
 	COMMAND.access = "s";
 	COMMAND.arguments = 2;
+	COMMAND.optionalArguments = 1;
 	COMMAND.alias = {"ForceUnequip", "ForceUnequipItem", "PlyUnequipItem"};
 
 	-- Called when the command has been run.
@@ -743,8 +747,10 @@ local COMMAND = Clockwork.command:New("CharUnequipItem");
 
 			for k, v in pairs (itemList) do
 				if v.uniqueID == arguments[2] then
-					itemTable = v;
-					break;
+					if !arguments[3] or !tonumber(arguments[3]) or math.Truncate(tonumber(arguments[3])) == v.itemID then
+						itemTable = v;
+						break;
+					end
 				end
 			end
 			

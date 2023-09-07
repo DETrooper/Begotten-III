@@ -119,6 +119,7 @@ end;
 
 -- Called when Clockwork has loaded all of the entities.
 function Schema:ClockworkInitPostEntity()
+	self:LoadDummies();
 	self:LoadRadios();
 	self:LoadNPCs();
 	self:SpawnBegottenEntities();
@@ -144,6 +145,7 @@ end;
 
 -- Called just after data should be saved.
 function Schema:PostSaveData()
+	self:SaveDummies();
 	self:SaveRadios();
 	self:SaveNPCs();
 end;
@@ -2353,6 +2355,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 	local attacker = damageInfo:GetAttacker();
 	local damage = damageInfo:GetDamage();
 	local bIsPlayer = entity:IsPlayer();
+	local bIsPlayerRagdoll = Clockwork.entity:IsPlayerRagdoll(entity);
 
 	if IsValid(attacker) then
 		local class = attacker:GetClass();
@@ -2464,7 +2467,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		end
 	end
 	
-	if (bIsPlayer or entity.isTrainingDummy) and IsValid(attacker) and attacker:IsPlayer() then
+	if (bIsPlayer or bIsPlayerRagdoll or entity.isTrainingDummy) and IsValid(attacker) and attacker:IsPlayer() then
 		local attackerWeapon = attacker:GetActiveWeapon();
 		
 		if IsValid(attackerWeapon) then
@@ -2474,8 +2477,13 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 				if attacker:GetSubfaction() == "Kinisger" then
 					damageInfo:ScaleDamage(1.25);
 				end
+				
+				-- 2x damage for daggers vs. ragdolled players.
+				if bIsPlayerRagdoll then
+					damageInfo:ScaleDamage(2);
+				end
 
-				if (entity.isTrainingDummy and math.abs(math.AngleDifference(entity:GetAngles().y, (attacker:GetPos() - entity:GetPos()):Angle().y)) >= 100) or (!entity:IsRagdolled() and math.abs(math.AngleDifference(entity:EyeAngles().y, (attacker:GetPos() - entity:GetPos()):Angle().y)) >= 100) then
+				if (entity.isTrainingDummy and math.abs(math.AngleDifference(entity:GetAngles().y, (attacker:GetPos() - entity:GetPos()):Angle().y)) >= 100) or (bIsPlayer and (!entity:IsRagdolled() and math.abs(math.AngleDifference(entity:EyeAngles().y, (attacker:GetPos() - entity:GetPos()):Angle().y)) >= 100)) then
 					if cwBeliefs and attacker:HasBelief("assassin") then
 						damageInfo:ScaleDamage(3);
 					else
@@ -2485,6 +2493,11 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 					entity:EmitSound("meleesounds/kill1.wav.mp3");
 				end
 			end
+		end
+		
+		-- Flat 50% damage reduction vs. ragdolled players.
+		if bIsPlayerRagdoll then
+			damageInfo:ScaleDamage(0.5)
 		end
 		
 		if entity.banners then

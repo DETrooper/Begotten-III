@@ -369,11 +369,21 @@ function cwItemSpawner:PreOpenContainer(player, container)
 		if cwBeliefs then
 			if player:HasBelief("disciple") then
 				if math.random(1, 10) == 1 then
-					if container.cwCash then
-						container.cwCash = container.cwCash + math.random(10, 50);
+					local amount;
+
+					if player:HasBelief("fortunate") then
+						amount = math.random(25, 100);
 					else
-						container.cwCash = math.random(10, 50);
+						amount = math.random(10, 50);
 					end
+				
+					if container.cwCash then
+						container.cwCash = container.cwCash + amount;
+					else
+						container.cwCash = amount;
+					end
+					
+					Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had "..tostring(amount).." coin added to their loot container from the 'Disciple' belief!");
 				end
 			end
 		
@@ -418,7 +428,7 @@ function cwItemSpawner:PreOpenContainer(player, container)
 						-- Fortune finisher items will have perfect condition.
 						Clockwork.inventory:AddInstance(supercrate.cwInventory, itemInstance, 1);
 						
-						Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..randomItem.name.." added to their loot container from the fortune finisher belief!");
+						Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..randomItem.name.." added to their loot container from the 'Fortune' belief tree finisher bonus");
 					end
 				end
 			end
@@ -444,7 +454,7 @@ function cwItemSpawner:PreOpenContainer(player, container)
 					
 					Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
 					
-					Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..randomItem.name.." added to their loot container from the fortunate belief and/or scavenger trait!");
+					Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..randomItem.name.." added to their loot container from a belief, trait, or charm!");
 				end
 			end
 		end

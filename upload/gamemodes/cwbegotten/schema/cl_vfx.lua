@@ -43,7 +43,7 @@ function Schema:GetMotionBlurValues(x, y, forward, spin)
 	end;
 	
 	-- Make sure they aren't in char creation.
-	if Clockwork.Client.SelectedFaction then
+	if Clockwork.kernel:IsChoosingCharacter() then
 		return;
 	end
 

@@ -147,8 +147,14 @@ function cwMelee:KeyPress(player, key)
 				local blockTable = GetTable(activeWeapon.BlockTable);
 
 				if (blockTable and blockTable["canparry"] == true) then
-					if (!player.HasBelief or player:HasBelief("parrying")) then
-						activeWeapon:SecondaryAttack();
+					if SERVER then
+						if (!player.HasBelief or player:HasBelief("parrying")) then
+							activeWeapon:SecondaryAttack();
+						end;
+					else
+						if (!cwBeliefs.HasBelief or cwBeliefs:HasBelief("parrying")) then
+							activeWeapon:SecondaryAttack();
+						end
 					end;
 				end;
 			end;

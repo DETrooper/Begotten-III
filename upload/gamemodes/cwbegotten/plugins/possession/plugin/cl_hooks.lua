@@ -49,6 +49,35 @@ function cwPossession:GetStatusInfo(player, text)
 	end
 end
 
+function cwPossession:GetScreenTextInfo()
+	if IsValid(Clockwork.Client.victim) then
+		local blackFadeAlpha = Clockwork.kernel:GetBlackFadeAlpha();
+	
+		if (Clockwork.Client.victim:GetSharedVar("beingChloro")) then
+			return {
+				alpha = 255 - blackFadeAlpha,
+				title = "SOMEBODY IS USING CHLOROFORM ON YOUR VESSEL"
+			};
+		elseif (Clockwork.Client.victim:GetNetVar("beingTied")) then
+			return {
+				alpha = 255 - blackFadeAlpha,
+				title = "YOUR VESSEL IS BEING TIED UP"
+			};
+		elseif (Clockwork.Client.victim:GetNetVar("tied") != 0) then
+			return {
+				alpha = 255 - blackFadeAlpha,
+				title = "YOUR VESSEL HAS BEEN TIED UP"
+			};
+		end;
+	end
+end
+
+function cwPossession:PlayerCanJump()
+	if (Clockwork.Client.possessor) then
+		return false;
+	end
+end
+
 -- Called when the local player attempts to see the top bars.
 function cwPossession:PlayerCanSeeBars(class)
 	if (Clockwork.Client.victim) then
@@ -77,24 +106,30 @@ function cwPossession:HUDPaint()
 				draw.SimpleText(victim:Health(), "UseHint", 120, 65, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 				
 				draw.SimpleText("Stamina:", "UseHint", 50, 90, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
-				draw.SimpleText(victim:GetNetVar("Stamina", 100), "UseHint", 120, 90, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
+				draw.SimpleText(victim:GetNWInt("Stamina", 100), "UseHint", 120, 90, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
 				
 				draw.SimpleText("Poise:", "UseHint", 50, 115, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 				draw.SimpleText(victim:GetNWInt("meleeStamina", 100), "UseHint", 120, 115, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
 				
-				if IsValid(victim:GetActiveWeapon()) then
-					draw.SimpleText("Weapon:", "UseHint", 50, 140, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
-					draw.SimpleText(victim:GetActiveWeapon():GetPrintName(), "UseHint", 120, 140, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
+				draw.SimpleText("Stability:", "UseHint", 50, 140, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+				draw.SimpleText(victim:GetNWInt("stability", 100), "UseHint", 120, 140, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
 				
-					draw.SimpleText("Raised:", "UseHint", 50, 165, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
-					draw.SimpleText(tostring(victim:IsWeaponRaised()), "UseHint", 120, 165, victim:IsWeaponRaised() and COLOR_GREEN or COLOR_RED, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+				draw.SimpleText("Oxygen:", "UseHint", 50, 165, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+				draw.SimpleText(victim:GetSharedVar("oxygen") or 100, "UseHint", 120, 165, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
+				
+				if IsValid(victim:GetActiveWeapon()) then
+					draw.SimpleText("Weapon:", "UseHint", 50, 190, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+					draw.SimpleText(victim:GetActiveWeapon():GetPrintName(), "UseHint", 120, 190, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
+				
+					draw.SimpleText("Raised:", "UseHint", 50, 215, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+					draw.SimpleText(tostring(victim:IsWeaponRaised()), "UseHint", 120, 215, victim:IsWeaponRaised() and COLOR_GREEN or COLOR_RED, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					
-					draw.SimpleText("Stance:", "UseHint", 50, 190, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+					draw.SimpleText("Stance:", "UseHint", 50, 240, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					
 					if victim:GetNWBool("ThrustStance") == true then
-						draw.SimpleText("Thrust", "UseHint", 120, 190, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+						draw.SimpleText("Thrust", "UseHint", 120, 240, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					else
-						draw.SimpleText("Swipe", "UseHint", 120, 190, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+						draw.SimpleText("Swipe", "UseHint", 120, 240, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					end
 				end
 			end
@@ -296,15 +331,15 @@ net.Receive("PossessionFreakoutAnim", function()
 end);
 
 Clockwork.chatBox:RegisterClass("demontalk", "ic", function(info)
-	Clockwork.chatBox:Add(info.filtered, nil, Color(150, 20, 20, 255), "An overpowering voice in the back of your head speaks to you: "..info.text);
+	Clockwork.chatBox:Add(info.filtered, nil, Color(150, 20, 20, 255), "An overpowering voice in the back of your head speaks to you: \""..info.text.."\"");
 end);
 
 Clockwork.chatBox:RegisterClass("demonnicetalk", "ic", function(info)
-	Clockwork.chatBox:Add(info.filtered, nil, Color(255, 251, 219, 255), "A melodic and deep voice thunders in the back of your head: "..info.text);
+	Clockwork.chatBox:Add(info.filtered, nil, Color(255, 251, 219, 255), "A melodic and deep voice thunders in the back of your head: \""..info.text.."\"");
 end);
 
 Clockwork.chatBox:RegisterClass("demonhosttalk", "ic", function(info)
-	Clockwork.chatBox:Add(info.filtered, nil, Color(150, 20, 20, 255), "You gather all your strength and speak inside your mind to the demon "..info.text);
+	Clockwork.chatBox:Add(info.filtered, nil, Color(150, 20, 20, 255), "You gather all your strength and speak inside your mind to the demon \""..info.text.."\"");
 end);
 
 Clockwork.chatBox:RegisterClass("whispersomeone", "ic", function(info)
@@ -335,14 +370,14 @@ local dist;
 surface.CreateFont( "radial", {
 	font = "Immortal",
 	extended = false,
-	size = Clockwork.kernel:FontScreenScale(14),
+	size = Clockwork.kernel:FontScreenScale(10),
 	weight = 900,
 })
 
 surface.CreateFont( "radial_big", {
 	font = "Immortal",
 	extended = false,
-	size = Clockwork.kernel:FontScreenScale(20),
+	size = Clockwork.kernel:FontScreenScale(14),
 	weight = 900,
 })
 
@@ -391,7 +426,7 @@ function cwPossession:ScoreboardShow()
 
 	radialMenu.center:SetSize( (size), (size) )
 	radialMenu.center:SetPos( centerpos, centerpos )
-	radialMenu.center:SetText( "Demon Heal" )
+	radialMenu.center:SetText( "Heal" )
 	radialMenu.center:SetTextColor(textColor);
 	radialMenu.center:SetContentAlignment(5);
 	radialMenu.center:SetFont("radial");
@@ -401,7 +436,7 @@ function cwPossession:ScoreboardShow()
 
 	radialMenu.north:SetSize( (size), (size) )
 	radialMenu.north:SetPos( centerpos, centerpos * .25 )
-	radialMenu.north:SetText( "Demon Shriek" )
+	radialMenu.north:SetText( "Shriek" )
 	radialMenu.north:SetTextColor(textColor);
 	radialMenu.north:SetContentAlignment(5);
 	radialMenu.north:SetFont("radial");

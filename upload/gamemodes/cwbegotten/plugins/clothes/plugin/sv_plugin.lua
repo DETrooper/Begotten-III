@@ -235,9 +235,9 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 	
 	local attacker = damageInfo:GetAttacker();
 
-	if (player:IsPlayer() and attacker and (attacker:IsPlayer() or attacker:IsNPC() or attacker:IsNextBot())) then
+	if ((player:IsPlayer() or player.isTrainingDummy) and attacker and (attacker:IsPlayer() or attacker:IsNPC() or attacker:IsNextBot())) then
 		local originalDamage = damageInfo:GetDamage();
-		local helmetTable = player:GetCharacterData("helmet");
+		local helmetTable;
 		local damageType = damageInfo:GetDamageType();
 		local damageTypes = {DMG_BULLET, DMG_BUCKSHOT, DMG_CLUB, DMG_FALL, DMG_SLASH, DMG_VEHICLE, DMG_SNIPER};
 		
@@ -245,7 +245,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 			damagePosition = damageInfo:GetDamagePosition() or Vector(0, 0, 0);
 		end
 		
-		if !hitGroup then
+		if !hitGroup and player:IsPlayer() then
 			hitGroup = player:LastHitGroup();
 			
 			if IsValid(attacker) then
@@ -274,11 +274,23 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 			end;
 		end
 		
-		if (helmetTable and !table.IsEmpty(helmetTable)) then
+		local isTrainingDummy = player.isTrainingDummy;
+		
+		if !isTrainingDummy then
+			helmetTable = player:GetCharacterData("helmet");
+		end
+		
+		if (isTrainingDummy and player.helmet) or (helmetTable and !table.IsEmpty(helmetTable)) then
 			--printp(helmetTable.uniqueID);
 			--printp(helmetTable.itemID);
 			
-			local helmetItem = Clockwork.inventory:FindItemByID(player:GetInventory(), helmetTable.uniqueID, helmetTable.itemID);
+			local helmetItem;
+
+			if isTrainingDummy then
+				helmetItem = player.helmet;
+			else
+				helmetItem = Clockwork.inventory:FindItemByID(player:GetInventory(), helmetTable.uniqueID, helmetTable.itemID);
+			end
 			
 			if helmetItem then
 				--printp("Checking Helmet Item: "..helmetTable.uniqueID);
@@ -359,17 +371,19 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 								local protection = helmetItem.protection;
 								--printp("Armor condition value: "..tostring(condition));
 								
-								if player:GetSubfaction() == "Philimaxio" then
-									-- Make sure the protection does not exceed 100.
-									protection = math.min(protection + (protection * 0.15), 100);
-								end
-								
-								if player:HasBelief("fortify_the_plate") then
-									protection = math.min(protection + (protection * 0.10), 100);
-								end
-								
-								if player:HasBelief("shedskin") then
-									protection = math.min(protection + (protection * 0.15), 100);
+								if !isTrainingDummy then
+									if player:GetSubfaction() == "Philimaxio" then
+										-- Make sure the protection does not exceed 100.
+										protection = math.min(protection + (protection * 0.15), 100);
+									end
+									
+									if player:HasBelief("fortify_the_plate") then
+										protection = math.min(protection + (protection * 0.10), 100);
+									end
+									
+									if player:HasBelief("shedskin") then
+										protection = math.min(protection + (protection * 0.15), 100);
+									end
 								end
 								
 								if (condition < 90) then
@@ -391,15 +405,17 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 								if not player.opponent then
 									local conditionLoss = math.Clamp(effectiveness * 0.1, 0, 5) * (helmetTable.conditionScale or 1);
 									
-									if player:HasBelief("ingenuity_finisher") then
-										conditionLoss = 0;
-									else	
-										if player:GetSubfaction() == "Philimaxio" then
-											conditionLoss = conditionLoss / 2;
-										end
-									
-										if player:HasBelief("scour_the_rust") then
-											conditionLoss = conditionLoss / 2;
+									if !isTrainingDummy then
+										if player:HasBelief("ingenuity_finisher") then
+											conditionLoss = 0;
+										else	
+											if player:GetSubfaction() == "Philimaxio" then
+												conditionLoss = conditionLoss / 2;
+											end
+										
+											if player:HasBelief("scour_the_rust") then
+												conditionLoss = conditionLoss / 2;
+											end
 										end
 									end
 									
@@ -415,17 +431,19 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						local protection = helmetItem.protection;
 						--printp("Armor condition value: "..tostring(condition));
 						
-						if player:GetSubfaction() == "Philimaxio" then
-							-- Make sure the protection does not exceed 100.
-							protection = math.min(protection + (protection * 0.15), 100);
-						end
-						
-						if player:HasBelief("fortify_the_plate") then
-							protection = math.min(protection + (protection * 0.10), 100);
-						end
-						
-						if player:HasBelief("shedskin") then
-							protection = math.min(protection + (protection * 0.15), 100);
+						if !isTrainingDummy then
+							if player:GetSubfaction() == "Philimaxio" then
+								-- Make sure the protection does not exceed 100.
+								protection = math.min(protection + (protection * 0.15), 100);
+							end
+							
+							if player:HasBelief("fortify_the_plate") then
+								protection = math.min(protection + (protection * 0.10), 100);
+							end
+							
+							if player:HasBelief("shedskin") then
+								protection = math.min(protection + (protection * 0.15), 100);
+							end
 						end
 						
 						if (condition < 90) then
@@ -445,15 +463,17 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						if not player.opponent then
 							local conditionLoss = math.Clamp(effectiveness * 0.1, 0, 5) * (helmetTable.conditionScale or 1);
 							
-							if player:HasBelief("ingenuity_finisher") then
-								conditionLoss = 0;
-							else	
-								if player:GetSubfaction() == "Philimaxio" then
-									conditionLoss = conditionLoss / 2;
-								end
-								
-								if player:HasBelief("scour_the_rust") then
-									conditionLoss = conditionLoss / 2;
+							if !isTrainingDummy then
+								if player:HasBelief("ingenuity_finisher") then
+									conditionLoss = 0;
+								else	
+									if player:GetSubfaction() == "Philimaxio" then
+										conditionLoss = conditionLoss / 2;
+									end
+									
+									if player:HasBelief("scour_the_rust") then
+										conditionLoss = conditionLoss / 2;
+									end
 								end
 							end
 							
@@ -510,19 +530,25 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 			end;
 		end;
 		
-		local armorTable = player:GetClothesItem();
+		local armorItem;
+
+		if isTrainingDummy then
+			armorItem = player.armor;
+		else
+			armorItem = player:GetClothesItem();
+		end
 		
-		if (armorTable and !table.IsEmpty(armorTable)) then
-			--printp("Checking Armor Item: "..armorTable.uniqueID);
-			local effectiveLimbs = armorTable.effectiveLimbs or {};
+		if (armorItem and !table.IsEmpty(armorItem)) then
+			--printp("Checking Armor Item: "..armorItem.uniqueID);
+			local effectiveLimbs = armorItem.effectiveLimbs or {};
 			
 			if (effectiveLimbs[hitGroup]) then
 				--printp("Armor Item Hit!");
-				local damageTypeScales = armorTable.damageTypeScales;
-				local pierceScale = armorTable.pierceScale;
-				local bluntScale = armorTable.bluntScale;
-				local slashScale = armorTable.slashScale;
-				local condition = armorTable:GetCondition() or 100;
+				local damageTypeScales = armorItem.damageTypeScales;
+				local pierceScale = armorItem.pierceScale;
+				local bluntScale = armorItem.bluntScale;
+				local slashScale = armorItem.slashScale;
+				local condition = armorItem:GetCondition() or 100;
 				
 				if attacker:IsPlayer() then
 					local activeWeapon = attacker:GetActiveWeapon();
@@ -586,7 +612,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 								end
 							end
 							
-							local protection = armorTable.protection;
+							local protection = armorItem.protection;
 							--print("Armor condition value: "..tostring(condition));
 							
 							-- If full suit of armor, give minor debuff for head armor.
@@ -594,17 +620,19 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 								protection = math.max(0, protection - 10);
 							end
 							
-							if player:GetSubfaction() == "Philimaxio" then
-								-- Make sure the protection does not exceed 100.
-								protection = math.min(protection + (protection * 0.15), 100);
-							end
-							
-							if player:HasBelief("fortify_the_plate") then
-								protection = math.min(protection + (protection * 0.10), 100);
-							end
-							
-							if player:HasBelief("shedskin") then
-								protection = math.min(protection + (protection * 0.15), 100);
+							if !isTrainingDummy then
+								if player:GetSubfaction() == "Philimaxio" then
+									-- Make sure the protection does not exceed 100.
+									protection = math.min(protection + (protection * 0.15), 100);
+								end
+								
+								if player:HasBelief("fortify_the_plate") then
+									protection = math.min(protection + (protection * 0.10), 100);
+								end
+								
+								if player:HasBelief("shedskin") then
+									protection = math.min(protection + (protection * 0.15), 100);
+								end
 							end
 							
 							if (condition < 90) then
@@ -622,21 +650,23 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 							end
 							
 							if not player.opponent then
-								local conditionLoss = math.Clamp(effectiveness * 0.1, 0, 5) * (armorTable.conditionScale or 1);
+								local conditionLoss = math.Clamp(effectiveness * 0.1, 0, 5) * (armorItem.conditionScale or 1);
 								
-								if player:HasBelief("ingenuity_finisher") then
-									conditionLoss = 0;
-								else							
-									if player:GetSubfaction() == "Philimaxio" then
-										conditionLoss = conditionLoss / 2;
-									end
-									
-									if player:HasBelief("scour_the_rust") then
-										conditionLoss = conditionLoss / 2;
+								if !isTrainingDummy then
+									if player:HasBelief("ingenuity_finisher") then
+										conditionLoss = 0;
+									else							
+										if player:GetSubfaction() == "Philimaxio" then
+											conditionLoss = conditionLoss / 2;
+										end
+										
+										if player:HasBelief("scour_the_rust") then
+											conditionLoss = conditionLoss / 2;
+										end
 									end
 								end
 								
-								armorTable:TakeCondition(conditionLoss);
+								armorItem:TakeCondition(conditionLoss);
 							end
 							
 							--print("Setting damage to: "..tostring(math.Clamp(effectiveness, 0, damage)));
@@ -646,7 +676,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 				else
 					local armorPiercing = NPCArmorPiercingDamage[attacker:GetClass()] or 40;
 					local damage = damageInfo:GetDamage();
-					local protection = armorTable.protection;
+					local protection = armorItem.protection;
 					--printp("Armor condition value: "..tostring(condition));
 					
 					-- If full suit of armor, give minor debuff for head armor.
@@ -654,17 +684,19 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						protection = math.max(0, protection - 10);
 					end
 					
-					if player:GetSubfaction() == "Philimaxio" then
-						-- Make sure the protection does not exceed 100.
-						protection = math.min(protection + (protection * 0.15), 100);
-					end
-					
-					if player:HasBelief("fortify_the_plate") then
-						protection = math.min(protection + (protection * 0.10), 100);
-					end
-					
-					if player:HasBelief("shedskin") then
-						protection = math.min(protection + (protection * 0.15), 100);
+					if !isTrainingDummy then
+						if player:GetSubfaction() == "Philimaxio" then
+							-- Make sure the protection does not exceed 100.
+							protection = math.min(protection + (protection * 0.15), 100);
+						end
+						
+						if player:HasBelief("fortify_the_plate") then
+							protection = math.min(protection + (protection * 0.10), 100);
+						end
+						
+						if player:HasBelief("shedskin") then
+							protection = math.min(protection + (protection * 0.15), 100);
+						end
 					end
 					
 					if (condition < 90) then
@@ -681,21 +713,23 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					--printp("Attack effectiveness: "..tostring(effectiveness));
 					
 					if not player.opponent then
-						local conditionLoss = math.Clamp(effectiveness * 0.1, 0, 5) * (armorTable.conditionScale or 1);
+						local conditionLoss = math.Clamp(effectiveness * 0.1, 0, 5) * (armorItem.conditionScale or 1);
 						
-						if player:HasBelief("ingenuity_finisher") then
-							conditionLoss = 0;
-						else
-							if player:GetSubfaction() == "Philimaxio" then
-								conditionLoss = conditionLoss / 2;
-							end
-							
-							if player:HasBelief("scour_the_rust") then
-								conditionLoss = conditionLoss / 2;
+						if !isTrainingDummy then
+							if player:HasBelief("ingenuity_finisher") then
+								conditionLoss = 0;
+							else
+								if player:GetSubfaction() == "Philimaxio" then
+									conditionLoss = conditionLoss / 2;
+								end
+								
+								if player:HasBelief("scour_the_rust") then
+									conditionLoss = conditionLoss / 2;
+								end
 							end
 						end
 						
-						armorTable:TakeCondition(conditionLoss);
+						armorItem:TakeCondition(conditionLoss);
 					end
 					
 					--printp("Setting damage to: "..tostring(math.Clamp(effectiveness, 0, damage)));
@@ -715,30 +749,30 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					end;
 				end;
 				
-				if (armorTable.bluntScale and damageType == DMG_CLUB) then
-					local dmgScale = 1 - ((1 - armorTable.bluntScale) * (condition / 100));
+				if (armorItem.bluntScale and damageType == DMG_CLUB) then
+					local dmgScale = 1 - ((1 - armorItem.bluntScale) * (condition / 100));
 					
 					damageInfo:ScaleDamage(dmgScale);
 					--printp("Scaling blunt damage: "..tostring(dmgScale));
-				elseif (armorTable.slashScale and damageType == DMG_SLASH) then
-					local dmgScale = 1 - ((1 - armorTable.slashScale) * (condition / 100));
+				elseif (armorItem.slashScale and damageType == DMG_SLASH) then
+					local dmgScale = 1 - ((1 - armorItem.slashScale) * (condition / 100));
 					
 					damageInfo:ScaleDamage(dmgScale);
 					--printp("Scaling slash damage: "..tostring(dmgScale));
-				elseif (armorTable.pierceScale and (damageType == DMG_VEHICLE or damageType == DMG_SNIPER)) then
-					local dmgScale = 1 - ((1 - armorTable.pierceScale) * (condition / 100));
+				elseif (armorItem.pierceScale and (damageType == DMG_VEHICLE or damageType == DMG_SNIPER)) then
+					local dmgScale = 1 - ((1 - armorItem.pierceScale) * (condition / 100));
 				
 					damageInfo:ScaleDamage(dmgScale);
 					--printp("Scaling pierce damage: "..tostring(dmgScale));
-				elseif (armorTable.bulletScale and (damageType == DMG_BULLET or damageType == DMG_BUCKSHOT)) then
-					local dmgScale = 1 - ((1 - armorTable.bulletScale) * (condition / 100));
+				elseif (armorItem.bulletScale and (damageType == DMG_BULLET or damageType == DMG_BUCKSHOT)) then
+					local dmgScale = 1 - ((1 - armorItem.bulletScale) * (condition / 100));
 				
 					damageInfo:ScaleDamage(dmgScale);
 					--printp("Scaling pierce damage: "..tostring(dmgScale));
 				end;
 				
-				--[[if (armorTable.limbScale) then
-					local hitGroupScale = armorTable.limbScale[hitGroup];
+				--[[if (armorItem.limbScale) then
+					local hitGroupScale = armorItem.limbScale[hitGroup];
 					
 					if (hitGroupScale and isnumber(hitGroupScale)) then
 						damageInfo:ScaleDamage(hitGroupScale);

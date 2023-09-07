@@ -897,7 +897,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 							local new_stamina = math.Clamp(stamina + 90, 0, player:GetMaxStamina());
 							
 							player:SetCharacterData("Stamina", new_stamina);
-							player:SetNetVar("Stamina", new_stamina);
+							player:SetNWInt("Stamina", new_stamina);
 						end
 						
 						if cwMelee then

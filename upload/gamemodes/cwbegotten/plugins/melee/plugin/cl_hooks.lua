@@ -5,9 +5,9 @@
 
 -- Called when the bars are needed.
 function cwMelee:GetBars(bars)
-	local max_stability = Clockwork.Client:GetNWInt("maxStability", 100);
-	local stability = Clockwork.Client:GetNetVar("Stability");
-	local max_poise = Clockwork.Client:GetNWInt("maxMeleeStamina", 90);
+	local max_stability = Clockwork.Client:GetNetVar("maxStability", 100);
+	local stability = Clockwork.Client:GetNWInt("stability");
+	local max_poise = Clockwork.Client:GetNetVar("maxMeleeStamina", 90);
 	local poise = Clockwork.Client:GetNWInt("meleeStamina");
 	local freeze = Clockwork.Client:GetNWInt("freeze");
 	local frameTime = FrameTime();
@@ -130,3 +130,76 @@ end;
 		end;
 	end;
 end]]--
+
+function cwMelee:CreateDummyMenu(dummyEnt)
+	if (IsValid(menu)) then
+		menu:Remove();
+	end;
+	
+	if !IsValid(dummyEnt) then
+		return;
+	end
+	
+	local scrW = ScrW();
+	local scrH = ScrH();
+	local menu = DermaMenu();
+		
+	menu:SetMinimumWidth(150);
+	
+	local armorModel = dummyEnt:GetNWString("armorModel");
+	local helmetModel = dummyEnt:GetNWString("helmetModel")
+	
+	if armorModel and armorModel ~= "" then
+		menu:AddOption("Strip Armor", function()
+			netstream.Start("DummyStripArmor", {dummyEnt});
+		end);
+	else
+		local submenu;
+		local inv = Clockwork.inventory:GetAsItemsList(Clockwork.inventory:GetClient())
+		
+		for k, v in pairs (inv) do
+			if v.category == "Armor" then
+				if !submenu then
+					submenu = menu:AddSubMenu("Give Armor", function() end);
+				end
+			
+				submenu:AddOption(v.name, function()
+					netstream.Start("DummyGiveArmor", {dummyEnt, v.uniqueID, v.itemID});
+				end)
+			end
+		end;
+	end
+	
+	if helmetModel and helmetModel ~= "" then
+		menu:AddOption("Strip Helmet", function()
+			netstream.Start("DummyStripHelmet", {dummyEnt});
+		end);
+	else
+		local submenu;
+		local inv = Clockwork.inventory:GetAsItemsList(Clockwork.inventory:GetClient())
+		
+		for k, v in pairs (inv) do
+			if v.category == "Helms" then
+				if !submenu then
+					submenu = menu:AddSubMenu("Give Helmet", function() end);
+				end
+			
+				submenu:AddOption(v.name, function()
+					netstream.Start("DummyGiveHelmet", {dummyEnt, v.uniqueID, v.itemID});
+				end)
+			end
+		end;
+	end
+	
+	menu:AddOption("Examine", function()
+		netstream.Start("DummyExamine", {dummyEnt});
+	end);
+	
+	menu:Open();
+	
+	menu:SetPos(scrW / 2 - (menu:GetWide() / 2), scrH / 2 - (menu:GetTall() / 2));
+end
+
+netstream.Hook("OpenDummyMenu", function(dummyEnt)
+	cwMelee:CreateDummyMenu(dummyEnt);
+end);

@@ -39,14 +39,14 @@ function playerMeta:CanBePossessed(possessor, bIgnoreTrait)
 	end
 	
 	if !bIgnoreTrait then
-		if cwCharacterNeeds and self:GetNeed("corruption", 0) < 50 then
-			Schema:EasyText(possessor, "firebrick", self:Name().." should have at least 50% corruption in order to be possessed!");
+		if !self:HasTrait("possessed") then
+			Schema:EasyText(possessor, "firebrick", self:Name().." does not have the possessed trait!");
 		
 			return false;
 		end
-
-		if !self:HasTrait("possessed") then
-			Schema:EasyText(possessor, "firebrick", self:Name().." does not have the possessed trait!");
+		
+		if cwCharacterNeeds and self:GetNeed("corruption", 0) < 50 then
+			Schema:EasyText(possessor, "firebrick", self:Name().." should have at least 50% corruption in order to be possessed!");
 		
 			return false;
 		end
@@ -100,7 +100,7 @@ function playerMeta:Possess(possessor)
 		self:SetNeed("hunger", 0);
 		self:SetNeed("sleep", 0);
 		self:SetCharacterData("Stamina", max_stamina);
-		self:SetNetVar("Stamina", max_stamina);
+		self:SetNWInt("Stamina", max_stamina);
 		self:SetCharacterData("stability", max_stability);
 		--self:SetCharacterData("meleeStamina", max_poise);
 		self:SetNWInt("meleeStamina", max_poise);
@@ -115,6 +115,10 @@ function playerMeta:Possess(possessor)
 			Clockwork.player:SetRagdollState(self, RAGDOLL_NONE);
 			
 			Clockwork.chatBox:AddInTargetRadius(self, "me", "suddenly pulls themself up in a manner that seems to defy gravity!", self:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+		end
+		
+		if self:HasWeapon("cw_senses") then
+			self:StripWeapon("cw_senses");
 		end
 		
 		Clockwork.datastream:Start(possessor, "Possessing", self);
@@ -206,6 +210,10 @@ function playerMeta:Unpossess()
 	Clockwork.player:SetRagdollState(self, RAGDOLL_KNOCKEDOUT, 15);
 	Clockwork.chatBox:AddInTargetRadius(self, "me", "suddenly falls limp and drops to the ground!", self:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 	self:EmitSound("possession/spiritsting.wav");
+	
+	if cwSenses and !self:HasWeapon("cw_senses") then
+		Clockwork.player:GiveSpawnWeapon(self, "cw_senses");
+	end
 	
 	for i = 1, #cwPossession.possessedPlayers do
 		if !IsValid(cwPossession.possessedPlayers[i]) or cwPossession.possessedPlayers[i] == self then

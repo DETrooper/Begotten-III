@@ -91,9 +91,9 @@ local ITEM = item.New(nil, true);
 			local max_stamina = player:GetMaxStamina();
 			local new_stamina = math.Clamp(player:GetCharacterData("Stamina", 100), 0, max_stamina);
 
-			player:SetNetVar("Max_Stamina", max_stamina);
+			player:SetLocalVar("Max_Stamina", max_stamina);
 			player:SetCharacterData("Max_Stamina", max_stamina);
-			player:SetNetVar("Stamina", new_stamina);
+			player:SetNWInt("Stamina", new_stamina);
 			player:SetCharacterData("Stamina", new_stamina);
 		end
 	end
@@ -190,7 +190,7 @@ local ITEM = item.New(nil, true);
 			local max_stamina = player:GetMaxStamina();
 			
 			player:SetMaxHealth(player:GetMaxHealth());
-			player:SetNetVar("Max_Stamina", max_stamina);
+			player:SetLocalVar("Max_Stamina", max_stamina);
 			player:SetCharacterData("Max_Stamina", max_stamina);
 
 			return true

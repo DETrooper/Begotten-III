@@ -33,7 +33,7 @@ function cwStamina:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 		local max_stamina = player:GetMaxStamina();
 	
 		player:SetCharacterData("Max_Stamina", max_stamina);
-		player:SetNetVar("Max_Stamina", max_stamina);
+		player:SetLocalVar("Max_Stamina", max_stamina);
 	end;
 end;
 
@@ -56,7 +56,7 @@ end;]]--
 function cwStamina:OnePlayerHalfSecond(player, curTime)
 	local stamina = player:GetCharacterData("Stamina") or player:GetMaxStamina();
 	
-	player:SetNetVar("Stamina", math.floor(stamina));
+	player:SetNWInt("Stamina", math.floor(stamina));
 end;
 
 -- Called when a player's stamina should regenerate.

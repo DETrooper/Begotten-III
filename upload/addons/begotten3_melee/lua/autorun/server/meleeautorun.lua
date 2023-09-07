@@ -87,7 +87,7 @@ local function Guarding(ent, dmginfo)
 		--local attacksoundtable = GetSoundTable(wep.AttackSoundTable)
 		--local attacktable = GetTable(wep.AttackTable)
 		local attacker = dmginfo:GetAttacker()
-		local max_poise = ent:GetNWInt("maxMeleeStamina") or 90;
+		local max_poise = ent:GetNetVar("maxMeleeStamina") or 90;
 
 		if (ent:GetNWBool("Guardening") == true) then
 			local damageinflictor = dmginfo:GetAttacker();

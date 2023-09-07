@@ -498,10 +498,20 @@ function SWEP:ShootBulletInformation()
 	end
 	
 	if Clockwork and IsValid(self.Owner) then
-		local stamina = self.Owner:GetNetVar("Stamina", 100);
+		local stamina = self.Owner:GetNWInt("Stamina", 100);
 		
 		if stamina < 50 then
 			CurrentCone = CurrentCone + (CurrentCone - (CurrentCone * (0.01 * (stamina * 2))));
+		end
+		
+		local itemTable = item.GetByWeapon(self);
+		
+		if itemTable then
+			local itemCondition = itemTable:GetCondition();
+
+			if itemCondition and itemCondition < 100 then
+				CurrentCone = CurrentCone * Lerp(itemCondition / 100, 1.5, 1);
+			end
 		end
 	end
 	

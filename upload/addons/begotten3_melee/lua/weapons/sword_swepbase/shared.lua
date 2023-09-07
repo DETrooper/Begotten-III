@@ -541,7 +541,7 @@ function SWEP:PrimaryAttack()
 	end
 
 	if (SERVER) then
-		local max_poise = ply:GetNWInt("maxMeleeStamina");
+		local max_poise = ply:GetNetVar("maxMeleeStamina");
 		
 		ply:SetNWInt("meleeStamina", math.Clamp(ply:GetNWInt("meleeStamina", max_poise) - (attacktable["takeammo"]), 0, max_poise))
 	end;
@@ -846,7 +846,7 @@ function SWEP:SecondaryAttack()
 
 	local wep = self.Weapon
 	local ply = self.Owner
-	local max_poise = ply:GetNWInt("maxMeleeStamina");
+	local max_poise = ply:GetNetVar("maxMeleeStamina");
 
 	wep:SetNextPrimaryFire(math.max(curTime + (attacktable["delay"]), curTime + 2));
 	wep:SetNextSecondaryFire(math.max(curTime + (attacktable["delay"]), curTime + 2));

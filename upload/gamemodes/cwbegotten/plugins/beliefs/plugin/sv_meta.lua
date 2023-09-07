@@ -90,15 +90,18 @@ function playerMeta:ResetBeliefs()
 	local poise = self:GetNWInt("meleeStamina");
 	local max_stamina = self:GetMaxStamina();
 	local max_stability = self:GetMaxStability();
-	local stamina = self:GetNetVar("Stamina", 100);
+	local stability = self:GetNWInt("stability");
+	local stamina = self:GetNWInt("Stamina", 100);
 	
 	self:SetMaxHealth(self:GetMaxHealth());
-	self:SetNWInt("maxStability", max_stability);
-	self:SetNWInt("maxMeleeStamina", max_poise);
+	self:SetLocalVar("maxStability", max_stability);
+	self:SetLocalVar("maxMeleeStamina", max_poise);
+	self:SetNWInt("stability", math.min(stability, max_stability));
+	self:SetCharacterData("stability", self:GetNWInt("stability"));
 	self:SetNWInt("meleeStamina", math.min(poise, max_poise));
-	self:SetNetVar("Max_Stamina", max_stamina);
+	self:SetLocalVar("Max_Stamina", max_stamina);
 	self:SetCharacterData("Max_Stamina", max_stamina);
-	self:SetNetVar("Stamina", math.min(stamina, max_stamina));
+	self:SetNWInt("Stamina", math.min(stamina, max_stamina));
 	self:SetCharacterData("Stamina", math.min(stamina, max_stamina));
 	cwBeliefs:ResetBeliefSharedVars(self);
 	

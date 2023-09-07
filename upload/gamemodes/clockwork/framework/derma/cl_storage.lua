@@ -169,6 +169,14 @@ function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedS
 		"PlayerStorageRebuilt", storagePanel, categories
 	);
 	
+	local player = Clockwork.storage.entity;
+
+	if Clockwork.Client:IsAdmin() and IsValid(player) and player:IsPlayer() then
+		if player.gearEnts then
+			player.gearEnts = nil;
+		end
+	end
+	
 	local numberWang = nil;
 	local cashForm = nil;
 	local button = nil;
@@ -605,6 +613,84 @@ function PANEL:Init()
 	self.takeButton:SetText(tt)
 	self.takeButton:SetFont(f)
 	
+	if self.storageType == "Container" then
+		local player = Clockwork.storage.entity;
+	
+		if Clockwork.Client:IsAdmin() and IsValid(player) and player:IsPlayer() then
+			self.equipButton = vgui.Create("DButton", self.infoPlate)
+			
+			local equipped = false;
+			
+			if player:HasWeapon(self.itemTable.uniqueID) then
+				equipped = true;
+			end
+			
+			if !player.gearEnts then
+				player.gearEnts = ents.FindByClassAndParent("cw_gear", player);
+			end
+
+			if player.gearEnts then
+				for k, v in pairs(player.gearEnts) do
+					local itemTable = v:GetItemTable();
+
+					if itemTable.itemID == self.itemTable.itemID then
+						equipped = true;
+						
+						break;
+					end
+				end
+			end
+			
+			if equipped then
+				self.equipButton:SetText("Unequip");
+				
+				function self.equipButton.DoClick(panel)
+					if (!self.nextCanClick or CurTime() >= self.nextCanClick) then
+						if IsValid(Clockwork.storage.entity) and Clockwork.storage.entity:IsPlayer() then
+							Clockwork.kernel:RunCommand("CharUnequipItem", Clockwork.storage.entity:Name(), self.itemTable("uniqueID"), self.itemTable("itemID"));
+						end
+						
+						self.nextCanClick = CurTime() + 1;
+						
+						CloseDermaMenus();
+						Clockwork.storage.panel:Close();
+						Clockwork.storage.panel:Remove();
+						gui.EnableScreenClicker(false);
+						Clockwork.kernel:RunCommand("StorageClose");
+					end;
+				end
+			else
+				self.equipButton:SetText("Equip");
+				
+				function self.equipButton.DoClick(panel)
+					if (!self.nextCanClick or CurTime() >= self.nextCanClick) then
+						if IsValid(Clockwork.storage.entity) and Clockwork.storage.entity:IsPlayer() then
+							Clockwork.kernel:RunCommand("CharUseItem", Clockwork.storage.entity:Name(), self.itemTable("uniqueID"), self.itemTable("itemID"));
+						end
+						
+						self.nextCanClick = CurTime() + 1;
+						
+						CloseDermaMenus();
+						Clockwork.storage.panel:Close();
+						Clockwork.storage.panel:Remove();
+						gui.EnableScreenClicker(false);
+						Clockwork.kernel:RunCommand("StorageClose");
+					end;
+				end
+			end
+			
+			self.equipButton:SetFont(f);
+			
+			function self.equipButton.Think(panel)
+				self.takeButton:SetSize(self.infoPlate:GetTall() - 8, (self.infoPlate:GetTall()) - 8)
+				self.takeButton:SetPos(self.infoPlate:GetWide() - (self.takeButton:GetWide() + 4), 4);
+				
+				self.equipButton:SetSize(self.infoPlate:GetTall() - 8, (self.infoPlate:GetTall()) - 8)
+				self.equipButton:SetPos(self.infoPlate:GetWide() - ((self.equipButton:GetWide() * 2) + 4), 4);
+			end;
+		end
+	end
+	
 	--[[
 	function self.takeButton.OnMouseWheeled(panel, scrollDelta)
 		if (!self.nextCanClick or CurTime() >= self.nextCanClick) then
@@ -617,11 +703,6 @@ function PANEL:Init()
 			self.nextCanClick = CurTime() + 1;
 		end;
 	end;--]]
-
-	function self.takeButton.Think(panel)
-		self.takeButton:SetSize(self.infoPlate:GetTall() - 8, self.infoPlate:GetTall() - 8)
-		self.takeButton:SetPos(self.infoPlate:GetWide() - (self.takeButton:GetWide() + 4), 4);
-	end;
 	
 	local condition = math.Round(self.itemTable:GetCondition());
 	
@@ -635,6 +716,13 @@ function PANEL:Init()
 			
 			self.nextCanClick = CurTime() + 1;
 		end;
+	end;
+	
+	function self.takeButton.Think(panel)
+		if !self.equipButton then
+			self.takeButton:SetSize(self.infoPlate:GetTall() - 8, self.infoPlate:GetTall() - 8)
+			self.takeButton:SetPos(self.infoPlate:GetWide() - (self.takeButton:GetWide() + 4), 4);
+		end
 	end;
 	
 	self.conditionBarBg = vgui.Create("DPanel", self.infoPlate);
@@ -658,7 +746,13 @@ function PANEL:Init()
 
 	function self.conditionBarBg.Paint(paint, width, height)
 		self.conditionBarBg:SetPos(6, 6);
-		self.conditionBarBg:SetSize((self.infoPlate:GetWide()) - (self.takeButton:GetWide() + 12), self.takeButton:GetTall() - 2);
+		
+		if self.equipButton then
+			self.conditionBarBg:SetSize((self.infoPlate:GetWide()) - 100, 42);
+		else
+			self.conditionBarBg:SetSize((self.infoPlate:GetWide()) - 56, 42);
+		end
+		
 		draw.RoundedBox(4, 0, 0, width, height, Color(22, 22, 22, 150))
 		draw.RoundedBox(0, 1, 1, width - 2, height - 2, Color(11, 9, 7, 220))
 		local frameTime = FrameTime();

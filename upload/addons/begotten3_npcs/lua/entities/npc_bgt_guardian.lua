@@ -134,7 +134,7 @@ end
 
   function ENT:OnReachedPatrol()
     self:Wait(math.random(3, 7))
-  end
+  end    function ENT:ShouldIgnore(ent)	if ent:IsPlayer() and (ent.possessor or ent.victim) then		return true;	end  end
   function ENT:OnIdle()
     self:AddPatrolPos(self:RandomPos(1500))
 	local curTime = CurTime();

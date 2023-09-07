@@ -38,14 +38,14 @@ function playerMeta:HandleStamina(amount)
 	local new_stamina = math.Clamp(self:GetCharacterData("Stamina", max_stamina) + amount, 0, max_stamina);
 	
 	self:SetCharacterData("Stamina", new_stamina);
-	self:SetNetVar("Stamina", new_stamina);
+	self:SetNWInt("Stamina", new_stamina);
 end
 
 netstream.Hook("PlayerJump", function(player)
 	if (player:Alive() and player:GetMoveType() != MOVETYPE_NOCLIP) then
 		if not (player.cwJumpPower <= 10) then
 			player:SetCharacterData("Stamina", math.Clamp((player:GetCharacterData("Stamina") or player:GetMaxStamina()) - 15, 0, cwStamina:GetMaxStaminaPlugin(player)))
-			player:SetNetVar("Stamina", player:GetCharacterData("Stamina"));
+			player:SetNWInt("Stamina", player:GetCharacterData("Stamina"));
 		end
 	end;
 end);

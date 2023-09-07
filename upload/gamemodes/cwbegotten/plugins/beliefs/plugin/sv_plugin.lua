@@ -432,15 +432,15 @@ function cwBeliefs:ForceRemoveBelief(player, uniqueID, bRemoveDependencies)
 		local poise = player:GetNWInt("meleeStamina");
 		local max_stamina = player:GetMaxStamina();
 		local max_stability = player:GetMaxStability();
-		local stamina = player:GetNetVar("Stamina", 100);
+		local stamina = player:GetNWInt("Stamina", 100);
 		
 		player:SetMaxHealth(player:GetMaxHealth());
-		player:SetNWInt("maxStability", max_stability);
-		player:SetNWInt("maxMeleeStamina", max_poise);
+		player:SetLocalVar("maxStability", max_stability);
+		player:SetLocalVar("maxMeleeStamina", max_poise);
 		player:SetNWInt("meleeStamina", math.min(poise, max_poise));
-		player:SetNetVar("Max_Stamina", max_stamina);
+		player:SetLocalVar("Max_Stamina", max_stamina);
 		player:SetCharacterData("Max_Stamina", max_stamina);
-		player:SetNetVar("Stamina", math.min(stamina, max_stamina));
+		player:SetNWInt("Stamina", math.min(stamina, max_stamina));
 		player:SetCharacterData("Stamina", math.min(stamina, max_stamina));
 		cwBeliefs:ResetBeliefSharedVars(player);
 		

@@ -13,9 +13,9 @@ function cwAlyTools:SetStatMultiplier(player)
 	player:SetMaxHealth(1000);
 	player:SetNetVar("MaxHP",1000)
 	player:SetHealth(1000);
-	player:SetNWInt("maxStability", 1000);
-	player:SetNWInt("maxMeleeStamina", 1000);
-	player:SetNetVar("Max_Stamina", 1000);
+	player:SetLocalVar("maxStability", 1000);
+	player:SetLocalVar("maxMeleeStamina", 1000);
+	player:SetLocalVar("Max_Stamina", 1000);
 	player:SetCharacterData("Max_Stamina", 1000);
 	player:SetCharacterData("Stamina", 1000);
 	player:SetNWInt("meleeStamina", 1000);

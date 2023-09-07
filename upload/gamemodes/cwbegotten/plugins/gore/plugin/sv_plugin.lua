@@ -181,7 +181,11 @@ function cwGore:SplatCorpse(corpse, fadeDelay, damageForce, onFire)
 			end;
 			
 			for i = 1, 6 do
-				Clockwork.entity:CreateItem(nil, "humanmeat", corpse:GetPos() + Vector(math.random(8, -8), math.random(8, -8), 8));
+				local meatItem = Clockwork.entity:CreateItem(nil, "humanmeat", corpse:GetPos() + Vector(math.random(8, -8), math.random(8, -8), 8));
+				
+				if meatItem then
+					meatItem.noSave = true;
+				end
 			end;
 			
 			local entList = {

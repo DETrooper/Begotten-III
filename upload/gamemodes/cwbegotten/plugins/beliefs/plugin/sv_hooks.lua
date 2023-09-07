@@ -211,9 +211,9 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 	local max_stability = player:GetMaxStability();
 	local max_health = player:GetMaxHealth();
 	
-	player:SetNWInt("maxStability", max_stability);
-	player:SetNWInt("maxMeleeStamina", max_poise);
-	player:SetNetVar("Max_Stamina", max_stamina);
+	player:SetLocalVar("maxStability", max_stability);
+	player:SetLocalVar("maxMeleeStamina", max_poise);
+	player:SetLocalVar("Max_Stamina", max_stamina);
 	player:SetCharacterData("Max_Stamina", max_stamina);
 	cwBeliefs:ResetBeliefSharedVars(player);
 

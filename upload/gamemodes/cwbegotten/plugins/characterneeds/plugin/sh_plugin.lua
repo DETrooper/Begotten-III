@@ -274,7 +274,7 @@ function COMMAND:OnRun(player, arguments)
 	
 	if (target) then
 		target:SetCharacterData("Stamina", amount);
-		target:SetNetVar("Stamina", amount);
+		target:SetNWInt("Stamina", amount);
 		
 		if (player != target) then
 			Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s stamina to "..amount..".");

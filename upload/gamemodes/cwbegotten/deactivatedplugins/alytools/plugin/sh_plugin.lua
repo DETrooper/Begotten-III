@@ -239,9 +239,9 @@ function playerMeta:CalcLoyaltyScore()
 	local max_stamina = self:GetMaxStamina();
 	local max_stability = self:GetMaxStability();
 	local max_health = self:GetMaxHealth();
-	self:SetNWInt("maxStability", max_stability);
-	self:SetNWInt("maxMeleeStamina", max_poise);
-	self:SetNetVar("Max_Stamina", max_stamina);
+	self:SetLocalVar("maxStability", max_stability);
+	self:SetLocalVar("maxMeleeStamina", max_poise);
+	self:SetLocalVar("Max_Stamina", max_stamina);
 	self:SetCharacterData("Max_Stamina", max_stamina);
 	return {total=points,people=pledges}
 end

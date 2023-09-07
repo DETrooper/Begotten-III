@@ -10,8 +10,21 @@ Clockwork.kernel:IncludePrefixed("sv_hooks.lua");
 
 function cwPossession:StartCommand(player, ucmd)
 	if IsValid(player) then
-		local possessor = player.possessor;
-		local victim = player.victim;
+		local possessor;
+		local victim;
+		
+		if SERVER then
+			possessor = player.possessor;
+			victim = player.victim;
+		else
+			if player.possessor then
+				possessor = player.possessor;
+				victim = player;
+			elseif player.victim then
+				possessor = player;
+				victim = player.victim;
+			end
+		end
 		
 		if IsValid(victim) then 
 			if victim:Alive() then
@@ -65,7 +78,7 @@ function cwPossession:StartCommand(player, ucmd)
 			victim = player;
 		end
 			
-		if player == victim and IsValid(possessor) and possessor.demonMove != nil and victim:Alive() then
+		if player == victim and IsValid(possessor) and victim:Alive() then
 			ucmd:ClearButtons();
 			ucmd:ClearMovement();
 			
@@ -89,33 +102,35 @@ function cwPossession:StartCommand(player, ucmd)
 					
 					if IsValid(activeWeapon) then
 						local attacktable = GetTable(activeWeapon.AttackTable);
-						
-						if !possessor.changeStanceTimer or possessor.changeStanceTimer <= curTime then
-							possessor.changeStanceTimer = curTime + 1;
-							
-							if player:GetNWBool("ThrustStance") == false then
-								if activeWeapon.CanSwipeAttack == true then
-									player:SetNWBool( "ThrustStance", true )
-									player:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
-									possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
+
+						if (attackTable and attackTable["canaltattack"] == true) then
+							if !possessor.changeStanceTimer or possessor.changeStanceTimer <= curTime then
+								possessor.changeStanceTimer = curTime + 1;
+								
+								if player:GetNWBool("ThrustStance") == false then
+									if activeWeapon.CanSwipeAttack == true then
+										player:SetNWBool( "ThrustStance", true )
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
+										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
+									else
+										player:SetNWBool( "ThrustStance", true )
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
+										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
+									end
 								else
-									player:SetNWBool( "ThrustStance", true )
-									player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
-									possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
-								end
-							else
-								if activeWeapon.CanSwipeAttack == true then
-									player:SetNWBool( "ThrustStance", false )
-									player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
-									possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
-								elseif attacktable["dmgtype"] == 128 then
-									player:SetNWBool( "ThrustStance", false )
-									player:PrintMessage(HUD_PRINTTALK, "*** Switched to bludgeoning stance.")
-									possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to bludgeoning stance.")
-								else
-									player:SetNWBool( "ThrustStance", false )
-									player:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
-									possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
+									if activeWeapon.CanSwipeAttack == true then
+										player:SetNWBool( "ThrustStance", false )
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
+										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
+									elseif attacktable["dmgtype"] == 128 then
+										player:SetNWBool( "ThrustStance", false )
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to bludgeoning stance.")
+										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to bludgeoning stance.")
+									else
+										player:SetNWBool( "ThrustStance", false )
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
+										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
+									end
 								end
 							end
 						end
@@ -143,12 +158,17 @@ function cwPossession:StartCommand(player, ucmd)
 			if(possessor.running and !ucmd:KeyDown(IN_SPEED)) then ucmd:SetButtons(ucmd:GetButtons() + IN_SPEED) end
 			if(possessor.use and !ucmd:KeyDown(IN_USE)) and !possessor.changeStance then ucmd:SetButtons(ucmd:GetButtons() + IN_USE) end
 			
-			possessor.viewAngles = Angle(possessor.viewAngles.p + possessor.MouseY / 30, possessor.viewAngles.y - possessor.MouseX / 30, 0)
+			if CLIENT and player == victim then
+				possessor.viewAngles = possessor:EyeAngles();
+			else
+				possessor.viewAngles = Angle(possessor.viewAngles.p + possessor.MouseY / 30, possessor.viewAngles.y - possessor.MouseX / 30, 0)
+				ucmd:SetForwardMove(possessor.movementForward)
+				ucmd:SetSideMove(possessor.sidewaysMovement)
+				ucmd:SetUpMove(possessor.upMove)
+			end
+
 			possessor.viewAngles.p = math.Clamp(possessor.viewAngles.p, -89, 89)
 			ucmd:SetViewAngles(possessor.viewAngles)
-			ucmd:SetForwardMove(possessor.movementForward)
-			ucmd:SetSideMove(possessor.sidewaysMovement)
-			ucmd:SetUpMove(possessor.upMove)
 		end
 	end
 end;
@@ -171,33 +191,42 @@ local COMMAND = Clockwork.command:New("DemonHeal");
 			target = Clockwork.player:FindByID(arguments[1]);
 		end
 		
-		if target then	
-			local max_poise = target:GetMaxPoise();
-			local max_stability = target:GetMaxStability();
-			local max_stamina = target:GetMaxStamina();
+		if target then
+			local curTime = CurTime();
 			
-			target:ResetInjuries();
-			target:SetHealth(target:GetMaxHealth() or 100);
-			target:SetNeed("thirst", 0);
-			target:SetNeed("hunger", 0);
-			target:SetNeed("sleep", 0);
-			target:SetCharacterData("Stamina", max_stamina);
-			target:SetNetVar("Stamina", max_stamina);
-			target:SetCharacterData("stability", max_stability);
-			--target:SetCharacterData("meleeStamina", max_poise);
-			target:SetNWInt("meleeStamina", max_poise);
-			target:SetNWInt("freeze", 0);
-			target:SetBloodLevel(5000);
-			target:StopAllBleeding();
-			Clockwork.limb:HealBody(target, 100);
-			Clockwork.player:SetAction(target, "die", false);
-			Clockwork.player:SetAction(target, "die_bleedout", false);
-			
-			if target:IsRagdolled() then
-				Clockwork.player:SetRagdollState(target, RAGDOLL_NONE);
+			if !player.nextDemonHeal or player.nextDemonHeal < curTime then
+				player.nextDemonHeal = curTime + 10;
+				
+				local max_poise = target:GetMaxPoise();
+				local max_stability = target:GetMaxStability();
+				local max_stamina = target:GetMaxStamina();
+				
+				target:ResetInjuries();
+				target:SetHealth(target:GetMaxHealth() or 100);
+				target:SetNeed("thirst", 0);
+				target:SetNeed("hunger", 0);
+				target:SetNeed("sleep", 0);
+				target:SetCharacterData("Stamina", max_stamina);
+				target:SetNWInt("Stamina", max_stamina);
+				target:SetCharacterData("stability", max_stability);
+				target:SetNWInt("stability", max_stability);
+				--target:SetCharacterData("meleeStamina", max_poise);
+				target:SetNWInt("meleeStamina", max_poise);
+				target:SetNWInt("freeze", 0);
+				target:SetBloodLevel(5000);
+				target:StopAllBleeding();
+				Clockwork.limb:HealBody(target, 100);
+				Clockwork.player:SetAction(target, "die", false);
+				Clockwork.player:SetAction(target, "die_bleedout", false);
+				
+				if target:IsRagdolled() then
+					Clockwork.player:SetRagdollState(target, RAGDOLL_NONE);
+				end
+				
+				Clockwork.chatBox:AddInTargetRadius(target, "me", "is suddenly and miraculously healed of their wounds! Your eyes seem almost to deceive you as you watch their wounds disappear.", target:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+			else
+				Schema:EasyText(player, "peru", "You cannot use this command for another "..tostring(math.ceil(player.nextDemonHeal - curTime)).." seconds!");
 			end
-			
-			Clockwork.chatBox:AddInTargetRadius(target, "me", "is suddenly and miraculously healed of their wounds! Your eyes seem almost to deceive you as you watch their wounds disappear.", target:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 		else
 			Schema:EasyText(player, "grey", arguments[1].." is not a valid character!");
 		end
@@ -213,19 +242,29 @@ COMMAND.alias = {"Shriek"};
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
 	if player.victim then
-		player.victim:EmitSound("possession/caverns_scream.wav", 160);
-		
-		for k, v in pairs(ents.FindInSphere(player.victim:GetPos(), 512)) do
-			if v:IsPlayer() and v:HasInitialized() and v:Alive() then
-				v:Disorient(5);
-				
-				if !v.cwObserverMode and !v.victim and !v.possessor then
-					v:HandleSanity(-10);
+		local curTime = CurTime();
+	
+		if !player.nextDemonShriek or player.nextDemonShriek < curTime then
+			player.nextDemonShriek = curTime + 60;
+			
+			player.victim:EmitSound("possession/caverns_scream.wav", 160);
+			
+			for k, v in pairs(ents.FindInSphere(player.victim:GetPos(), 512)) do
+				if v:IsPlayer() and v:HasInitialized() and v:Alive() then
+					v:Disorient(5);
+					
+					if !v.cwObserverMode and !v.victim and !v.possessor then
+						v:HandleSanity(-10);
+					end
 				end
 			end
+			
+			Clockwork.chatBox:AddInTargetRadius(player.victim, "me", "lets out an unholy and blood-curdling shriek!", player.victim:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+		else
+			Schema:EasyText(player, "peru", "You cannot use this command for another "..tostring(math.ceil(player.nextDemonShriek - curTime)).." seconds!");
 		end
-		
-		Clockwork.chatBox:AddInTargetRadius(player.victim, "me", "lets out an unholy and blood-curdling shriek!", player.victim:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+	else
+		Schema:EasyText(player, "grey", "You must be possessing someone to use this command!");
 	end
 end;
 
@@ -478,20 +517,24 @@ function COMMAND:OnRun(player, arguments)
 			end;
 		end
 		
-		local entity = ents.Create("npc_bgt_brute");
+		local thrall;
+
+		if target:HasTrait("marked") then
+			thrall = ents.Create("npc_bgt_otis");
+		else
+			thrall = ents.Create("npc_bgt_brute");
+		end
 		
-		entity:SetMaterial("effects/water_warp01");
-		
-		ParticleEffect("teleport_fx",targetPos,Angle(0,0,0),entity)
+		ParticleEffect("teleport_fx",targetPos,Angle(0,0,0),thrall)
 		sound.Play("misc/summon.wav",targetPos,100,100)
-		entity:EmitSound(cwPossession.laughs[math.random(1, #cwPossession.laughs)]);
+		thrall:EmitSound(cwPossession.laughs[math.random(1, #cwPossession.laughs)]);
 		
 		--[[timer.Simple(0.75, function()
-			if IsValid(entity) then]]--
-				entity:CustomInitialize();
-				entity:SetPos(targetPos);
-				entity:Spawn();
-				entity:Activate();
+			if IsValid(thrall) then]]--
+				thrall:CustomInitialize();
+				thrall:SetPos(targetPos);
+				thrall:Spawn();
+				thrall:Activate();
 			--end
 		--end
 	else

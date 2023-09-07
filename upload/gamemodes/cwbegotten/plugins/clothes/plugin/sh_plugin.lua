@@ -22,6 +22,7 @@ COMMAND.flags = CMD_DEFAULT;
 COMMAND.access = "s";
 COMMAND.arguments = 1;
 COMMAND.optionalArguments = 1;
+COMMAND.alias = {"SetHelmetCondition", "PlySetHelmetCondition"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -69,6 +70,7 @@ COMMAND.flags = CMD_DEFAULT;
 COMMAND.access = "s";
 COMMAND.arguments = 1;
 COMMAND.optionalArguments = 1;
+COMMAND.alias = {"SetArmorCondition", "PlySetArmorCondition"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)

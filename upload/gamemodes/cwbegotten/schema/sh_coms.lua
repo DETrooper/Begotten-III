@@ -1035,7 +1035,13 @@ local COMMAND = Clockwork.command:New("ForceUntie");
 		local target = Clockwork.player:FindByID(arguments[1]);
 		
 		if (target) then
-			if player.possessor and player:GetNetVar("tied") != 0 then
+			if target:GetNetVar("tied") ~= 1 then
+				Schema:EasyText(player, "cornflowerblue", target:Name().." is not tied!");
+			
+				return;
+			end
+			
+			if target.possessor and target:GetNetVar("tied") != 0 then
 				Clockwork.chatBox:AddInTargetRadius(target, "me", "'s bindings suddenly drop to the ground as they are removed by some unseen force!", target:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 			end
 		
@@ -1204,8 +1210,9 @@ local COMMAND = Clockwork.command:New("PlyHealFull");
 		target:SetSharedVar("sanity", max_sanity);
 		target:SetCharacterData("sanity", max_sanity);
 		target:SetCharacterData("Stamina", max_stamina);
-		target:SetNetVar("Stamina", max_stamina);
+		target:SetNWInt("Stamina", max_stamina);
 		target:SetCharacterData("stability", max_stability);
+		target:SetNWInt("stability", max_stability);
 		--target:SetCharacterData("meleeStamina", max_poise);
 		target:SetNWInt("meleeStamina", max_poise);
 		target:SetNWInt("freeze", 0);
@@ -1260,8 +1267,9 @@ local COMMAND = Clockwork.command:New("PlyHealFullAll");
 					v:SetSharedVar("sanity", max_sanity);
 					v:SetCharacterData("sanity", max_sanity);
 					v:SetCharacterData("Stamina", max_stamina);
-					v:SetNetVar("Stamina", max_stamina);
+					v:SetNWInt("Stamina", max_stamina);
 					v:SetCharacterData("stability", max_stability);
+					v:SetNWInt("stability", max_stability);
 					--v:SetCharacterData("meleeStamina", max_poise);
 					v:SetNWInt("meleeStamina", max_poise);
 					v:SetNWInt("freeze", 0);
@@ -1309,6 +1317,7 @@ function COMMAND:OnRun(player, arguments)
 		end;
 
 		target:SetCharacterData("stability", amount);
+		target:SetNWInt("stability", amount);
 
 		if (player != target)	then
 			Schema:EasyText(player, "cornflowerblue", "You have set "..target:Name().."'s stability to "..amount..".");
@@ -1317,6 +1326,54 @@ function COMMAND:OnRun(player, arguments)
 		end;
 	else
 		Schema:EasyText(player, "grey", arguments[1].." is not a valid player!");
+	end;
+end;
+
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CharSetWeaponCondition");
+COMMAND.tip = "Set a character's weapon condition. Defaults to 100% condition if no argument is provided.";
+COMMAND.text = "<string Name> [number Condition]";
+COMMAND.flags = CMD_DEFAULT;
+COMMAND.access = "s";
+COMMAND.arguments = 1;
+COMMAND.optionalArguments = 1;
+COMMAND.alias = {"SetWeaponCondition", "PlySetWeaponCondition"};
+
+-- Called when the command has been run.
+function COMMAND:OnRun(player, arguments)
+	local target = Clockwork.player:FindByID(arguments[1]);
+
+	if (target) then
+		local condition = arguments[2];
+		
+		if (!condition) then
+			condition = 100;
+		else
+			condition = math.Clamp(tonumber(condition), 0, 100);
+		end;
+
+		local activeWeapon = target:GetActiveWeapon()
+		
+		if IsValid(activeWeapon) then
+			local weaponItem = item.GetByWeapon(activeWeapon);
+		
+			if (weaponItem) then
+				weaponItem:SetCondition(condition, true);
+
+				if (player != target)	then
+					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set "..target:Name().."'s weapon item condition to "..condition..".");
+				else
+					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own weapon item condition to "..condition..".");
+				end;
+			else
+				Schema:EasyText(player, "firebrick", "["..self.name.."] "..target:Name().." does not have a valid weapon equipped!");
+			end
+		else
+			Schema:EasyText(player, "firebrick", "["..self.name.."] "..target:Name().." does not have a valid weapon!");
+		end
+	else
+		Schema:EasyText(player, "grey", "["..self.name.."] "..arguments[1].." is not a valid player!");
 	end;
 end;
 

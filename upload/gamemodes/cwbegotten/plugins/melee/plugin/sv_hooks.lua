@@ -439,7 +439,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 			end;
 		end;
 		
-		player:SetNWInt("maxMeleeStamina", max_poise);
+		player:SetLocalVar("maxMeleeStamina", max_poise);
 		
 		player.nextStas = curTime + 0.5;
 	end;
@@ -691,13 +691,13 @@ function cwMelee:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 		local max_poise = player:GetMaxPoise();
 	
 		if (!firstSpawn) then
-			player:SetNetVar("Stability", max_stability);
+			player:SetNWInt("stability", max_stability);
 			player:SetCharacterData("stability", max_stability);
 			player.nextPainSound = CurTime() + 0.5
 		end
 		
-		player:SetNWInt("maxStability", max_stability);
-		player:SetNWInt("maxMeleeStamina", max_poise);
+		player:SetLocalVar("maxStability", max_stability);
+		player:SetLocalVar("maxMeleeStamina", max_poise);
 		player:SetNWInt("meleeStamina", max_poise);
 		player:SetNWInt("freeze", 0);
 	end;
@@ -709,9 +709,9 @@ function cwMelee:PostPlayerDeath(player)
 	local max_poise = player:GetMaxPoise();
 	
 	player:SetCharacterData("stability", max_stability);
-	player:SetNetVar("Stability", max_stability);
-	player:SetNWInt("maxStability", max_stability);
-	player:SetNWInt("maxMeleeStamina", max_poise);
+	player:SetNWInt("stability", max_stability);
+	player:SetLocalVar("maxStability", max_stability);
+	player:SetLocalVar("maxMeleeStamina", max_poise);
 	player:SetNWInt("meleeStamina", max_poise);
 	player:SetNWInt("freeze", 0);
 end;
@@ -719,10 +719,10 @@ end;
 -- Called every half second.
 function cwMelee:OnePlayerHalfSecond(player, curTime, infoTable)
 	local stability = player:GetCharacterData("stability", 100);
-	local stabilityNetVar = player:GetNetVar("Stability", 100);
+	local stabilityNetVar = player:GetNWInt("stability", 100);
 	
 	if (stability != stabilityNetVar) then
-		player:SetNetVar("Stability", math.Round(stability));
+		player:SetNWInt("stability", math.Round(stability));
 	end;
 end;
 
@@ -810,7 +810,7 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 		if damageInfo:IsDamageType(DMG_BULLET) or damageInfo:IsDamageType(DMG_BUCKSHOT) then
 			cwMelee:HandleStability(entity, math.Round(damageInfo:GetDamage() * 1.25), 5);
 		else
-			if damage >= 5 then
+			if damage >= 5 and entity:IsPlayer() then
 				if entity:IsRunning() then
 					damageInfo:ScaleDamage(1.3);
 					entity:TakeStability(damage * 0.75);
@@ -978,3 +978,121 @@ function GM:PlayerPlayDeathSound(player, gender)
 		end
 	end
 end
+
+netstream.Hook("DummyGiveArmor", function(player, data)
+	if IsValid(player) then
+		if data and data[1] and IsValid(data[1]) and data[1].isTrainingDummy then
+			if player:GetPos():Distance(data[1]:GetPos()) <= 96 then
+				if data[2] and data[3] then
+					local armorItem = Clockwork.inventory:FindItemByID(player:GetInventory(), data[2], data[3]);
+					
+					if armorItem then
+						data[1]:SetArmorItem(armorItem);
+						
+						player:TakeItem(armorItem);
+					else
+						Schema:EasyText(player, "peru", "This item could not be found!");
+					end
+				else
+					Schema:EasyText(player, "peru", "This item could not be found!");
+				end
+			else
+				Schema:EasyText(player, "peru", "This training dummy is too far away to be interacted with!");
+			end
+		else
+			Schema:EasyText(player, "peru", "A valid training dummy could not be found!");
+		end
+	end
+end);
+
+netstream.Hook("DummyStripArmor", function(player, data)
+	if IsValid(player) then
+		if data and data[1] and IsValid(data[1]) and data[1].isTrainingDummy then
+			if player:GetPos():Distance(data[1]:GetPos()) <= 96 then
+				local armorItem = data[1].armor;
+				
+				if armorItem then
+					if player:GiveItem(armorItem) then
+						data[1]:SetArmorItem(nil);
+					end
+				else
+					Schema:EasyText(player, "peru", "This item could not be found!");
+				end
+			else
+				Schema:EasyText(player, "peru", "This training dummy is too far away to be interacted with!");
+			end
+		else
+			Schema:EasyText(player, "peru", "A valid training dummy could not be found!");
+		end
+	end
+end);
+
+netstream.Hook("DummyGiveHelmet", function(player, data)
+	if IsValid(player) then
+		if data and data[1] and IsValid(data[1]) and data[1].isTrainingDummy then
+			if player:GetPos():Distance(data[1]:GetPos()) <= 96 then
+				if data[2] and data[3] then
+					local helmetItem = Clockwork.inventory:FindItemByID(player:GetInventory(), data[2], data[3]);
+					
+					if helmetItem then
+						data[1]:SetHelmetItem(helmetItem);
+						
+						player:TakeItem(helmetItem);
+					else
+						Schema:EasyText(player, "peru", "This item could not be found!");
+					end
+				else
+					Schema:EasyText(player, "peru", "This item could not be found!");
+				end
+			else
+				Schema:EasyText(player, "peru", "This training dummy is too far away to be interacted with!");
+			end
+		else
+			Schema:EasyText(player, "peru", "A valid training dummy could not be found!");
+		end
+	end
+end);
+
+netstream.Hook("DummyStripHelmet", function(player, data)
+	if IsValid(player) then
+		if data and data[1] and IsValid(data[1]) and data[1].isTrainingDummy then
+			if player:GetPos():Distance(data[1]:GetPos()) <= 96 then
+				local helmetItem = data[1].helmet;
+				
+				if helmetItem then
+					if player:GiveItem(helmetItem) then
+						data[1]:SetHelmetItem(nil);
+					end
+				else
+					Schema:EasyText(player, "peru", "This item could not be found!");
+				end
+			else
+				Schema:EasyText(player, "peru", "This training dummy is too far away to be interacted with!");
+			end
+		else
+			Schema:EasyText(player, "peru", "A valid training dummy could not be found!");
+		end
+	end
+end);
+
+netstream.Hook("DummyExamine", function(player, data)
+	if IsValid(player) then
+		if data and data[1] and IsValid(data[1]) and data[1].isTrainingDummy then
+			if player:GetPos():Distance(data[1]:GetPos()) <= 96 then
+				if data[1].armor and data[1].helmet then
+					Schema:EasyText(player, "slateblue", "This training dummy's "..data[1].armor.name.." is at "..data[1].armor:GetCondition().." condition, and its "..data[1].helmet.name.." is at "..data[1].helmet:GetCondition().." condition.");
+				elseif data[1].armor then
+					Schema:EasyText(player, "slateblue", "This training dummy's "..data[1].armor.name.." is at "..data[1].armor:GetCondition().." condition.");
+				elseif data[1].helmet then
+					Schema:EasyText(player, "slateblue", "This training dummy's "..data[1].helmet.name.." is at "..data[1].helmet:GetCondition().." condition.");
+				else
+					Schema:EasyText(player, "slateblue", "This training dummy is not wearing armor or a helmet.");
+				end
+			else
+				Schema:EasyText(player, "peru", "This training dummy is too far away to be interacted with!");
+			end
+		else
+			Schema:EasyText(player, "peru", "A valid training dummy could not be found!");
+		end
+	end
+end);

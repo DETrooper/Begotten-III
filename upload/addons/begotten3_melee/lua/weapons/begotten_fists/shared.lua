@@ -338,7 +338,7 @@ function SWEP:PrimaryAttack()
 	end
 
 	if (SERVER) then
-		local max_poise = ply:GetNWInt("maxMeleeStamina");
+		local max_poise = ply:GetNetVar("maxMeleeStamina");
 		
 		ply:SetNWInt("meleeStamina", math.Clamp(ply:GetNWInt("meleeStamina", max_poise) - (attacktable["takeammo"]), 0, max_poise))
 	end;

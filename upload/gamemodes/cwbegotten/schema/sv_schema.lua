@@ -1416,6 +1416,99 @@ function Schema:DoTesla(entity, bDamage)
 	util.Effect("TeslaHitBoxes", effectData);
 end;
 
+-- A function to load the training dummies.
+function Schema:LoadDummies()
+	local dummies = Clockwork.kernel:RestoreSchemaData("plugins/dummies/"..game.GetMap())
+
+	for k, v in pairs(dummies) do
+		local dummy = ents.Create("cw_trainingdummy")
+
+		dummy:SetPos(v.position)
+		dummy:SetModel(v.model)
+		dummy:SetAngles(v.angles)
+		dummy:Spawn()
+		
+		if v.armor then
+			local instance = item.CreateInstance(v.armor.uniqueID, v.armor.itemID, v.armor);
+
+			if (instance and (!instance.OnLoaded or instance:OnLoaded() != false)) then
+				dummy:SetArmorItem(instance);
+			end
+		end
+
+		if v.helmet then
+			local instance = item.CreateInstance(v.helmet.uniqueID, v.helmet.itemID, v.helmet);
+
+			if (instance and (!instance.OnLoaded or instance:OnLoaded() != false)) then
+				dummy:SetHelmetItem(instance);
+			end
+		end
+
+		Clockwork.entity:MakeSafe(dummy, true, true)
+	end
+end
+
+function Schema:SaveDummies()
+	local dummies = {}
+
+	for k, v in pairs (ents.FindByClass("cw_trainingdummy")) do
+		if (IsValid(v)) then
+			local armorTable;
+			local helmetTable;
+		
+			if v.armor and v.armor.IsInstance and v.armor:IsInstance() then
+				armorTable = {};
+			
+				local defaultData = v.armor.defaultData
+				local newData = {}
+
+				for k2, v2 in pairs(v.armor.data) do
+					if (defaultData[k2] != v2) then
+						newData[k2] = v2
+					end
+				end
+				
+				newData.uniqueID = v.armor.uniqueID;
+				newData.itemID = v.armor.itemID;
+
+				if (!v.armor.OnSaved or v.armor:OnSaved(newData) != false) then
+					armorTable = newData
+				end
+			end
+		
+			if v.helmet and v.helmet.IsInstance and v.helmet:IsInstance() then
+				helmetTable = {};
+			
+				local defaultData = v.helmet.defaultData
+				local newData = {}
+
+				for k2, v2 in pairs(v.helmet.data) do
+					if (defaultData[k2] != v2) then
+						newData[k2] = v2
+					end
+				end
+				
+				newData.uniqueID = v.helmet.uniqueID;
+				newData.itemID = v.helmet.itemID;
+
+				if (!v.helmet.OnSaved or v.helmet:OnSaved(newData) != false) then
+					helmetTable = newData
+				end
+			end
+		
+			dummies[#dummies + 1] = {
+				model = v:GetModel(),
+				angles = v:GetAngles(),
+				position = v:GetPos(),
+				armor = armorTable,
+				helmet = helmetTable,
+			};
+		end
+	end
+
+	Clockwork.kernel:SaveSchemaData("plugins/dummies/"..game.GetMap(), dummies)
+end
+
 -- A function to load the NPCs.
 function Schema:LoadNPCs()
 	local npcs = Clockwork.kernel:RestoreSchemaData("plugins/npcs/"..game.GetMap());

@@ -89,8 +89,8 @@ function cwSaveItems:SaveItems()
 			continue;
 		end;]]--
 		
-		-- If the item is spawned by the item spawner then don't save it.
-		if not v.lifeTime then
+		-- Don't save temporary items!
+		if not v.lifeTime and not v.noSave then
 			local physicsObject = v:GetPhysicsObject()
 			local itemTable = v:GetItemTable()
 			local bMoveable = false
