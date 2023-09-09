@@ -745,7 +745,7 @@ local ITEM = Clockwork.item:New();
 		--player:SetHealth( math.Clamp(player:Health() - 50, 0, 100));
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_bottle"));
 		
-		if player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm") and !player:HasBelief("favored") then
+		if player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm") then
 			Schema:EasyText(player, "maroon", "You open jug and pour piss down your receptacle, but it begins to short-circuit your insides!");
 			Schema:DoTesla(player, true);
 			--player:TakeDamage(25);

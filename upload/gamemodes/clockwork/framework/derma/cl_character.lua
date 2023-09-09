@@ -3615,7 +3615,7 @@ function PANEL:Init()
 	
 	if self.curFaction == "Goreic Warrior" then
 		self.subfactionForm:SetName("Clans");
-	elseif self.curFaction == "Gatekeepers" then
+	elseif self.curFaction == "Gatekeeper" then
 		self.subfactionForm:SetName("Troops");
 	elseif self.curFaction == "Holy Hierarchy" then
 		self.subfactionForm:SetName("Orders");

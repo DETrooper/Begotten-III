@@ -59,15 +59,15 @@ function cwRituals.rituals:Register(ritual)
 		if (SERVER) then
 			--hook.Run("ModifyRitualTable", ritual);
 			
-			function ritual:PerformRitual(player, itemIDs, bMetRequirements)
+			function ritual:PerformRitual(player, itemIDs, bMetRequirements, bIgnoreItems)
 				if !bMetRequirements then
-					local bHasFlags, bHasRequirements = hook.Run("PlayerCanPerformRitual", player, self.uniqueID);
+					local bHasFlags, bHasRequirements = hook.Run("PlayerCanPerformRitual", player, self.uniqueID, bIgnoreItems);
 				
 					if bHasFlags == false or bHasRequirements == false then
 						return;
 					end
 				
-					if !cwRituals:PlayerMeetsRitualItemRequirements(player, self, itemIDs, true) then
+					if !bIgnoreItems and !cwRituals:PlayerMeetsRitualItemRequirements(player, self, itemIDs, true) then
 						return;
 					end
 				end

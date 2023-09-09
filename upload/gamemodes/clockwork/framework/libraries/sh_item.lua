@@ -1493,7 +1493,7 @@ else
 	function item.BuildTooltip(category, itemTable, x, y, width, height, frame, bShowWeight)
 		local maximumWeight = Clockwork.inventory:CalculateWeight(Clockwork.inventory:GetClient());
 		local weight = itemTable("weight");
-		local condition = itemTable:GetCondition();
+		local condition = itemTable:GetCondition() or 100;
 		local percentage = (weight / maximumWeight);
 		local name = itemTable:GetName();
 		

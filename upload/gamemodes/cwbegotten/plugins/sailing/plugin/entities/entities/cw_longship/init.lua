@@ -55,41 +55,57 @@ function ENT:Think()
 						end
 					
 						if playerPos.z <= self:GetPos().z + offset then
-							Schema:EasyText(GetAdmins(), "icon16/water.png", "cornflowerblue", player:Name().." went overboard!");
+							local alive = player:Alive();
+							
+							if alive then
+								Schema:EasyText(GetAdmins(), "icon16/water.png", "cornflowerblue", player:Name().." went overboard!");
+							end
 							
 							if self.location == "calm" or self.location == "rough" then
 								sound.Play("ambient/water/water_splash3.wav", playerPos);
-								
-								--player:SendLua([[RunConsoleCommand("stopsound")]]);
-								player:SendLua([[Clockwork.Client:EmitSound("ambient/water/water_splash3.wav", 500, 100)]])
 								
 								local effectData = EffectData();
 								effectData:SetOrigin(playerPos);
 								effectData:SetScale(16);
 								util.Effect("watersplash", effectData, true, true);
-												
-								timer.Simple(1, function()
-									if IsValid(player) then
-										--player.canTakeFallDamage = true;
-										player:GodDisable();
+								
+								if alive then
+									--player:SendLua([[RunConsoleCommand("stopsound")]]);
+									player:SendLua([[Clockwork.Client:EmitSound("ambient/water/water_splash3.wav", 500, 100)]])
+								
+									timer.Simple(1, function()
+										if IsValid(player) then
+											--player.canTakeFallDamage = true;
+											player:GodDisable();
+										end
+									end);
+									
+									player:SetCharacterData("permakilled", true); -- In case the player tries to d/c to avoid their fate.
+									player:DeathCauseOverride("Went overboard into the sea and drowned.");
+									
+									if player:IsRagdolled() then
+										Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);
 									end
-								end);
-								
-								player:SetCharacterData("permakilled", true); -- In case the player tries to d/c to avoid their fate.
-								player:DeathCauseOverride("Went overboard into the sea and drowned.");
-								
-								if player:IsRagdolled() then
-									Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);
+									
+									--player.canTakeFallDamage = false;
+									player:Spawn();
+									player:GodEnable();
+									player:SetPos(Vector(15.167375, 4397.66115, -4967.96875)); -- Teleport to black box full of water.
+									--player:Freeze(true);
+									netstream.Start(player, "DrowningCutscene");
+								else
+									local ragdollEntity = player:GetRagdollEntity();
+									
+									if IsValid(ragdollEntity) then
+										-- Prevent belongings from spawning.
+										ragdollEntity.cwInventory = nil;
+										ragdollEntity.cwCash = nil;
+										
+										ragdollEntity:Remove();
+									end
 								end
-								
-								--player.canTakeFallDamage = false;
-								player:Spawn();
-								player:GodEnable();
-								player:SetPos(Vector(15.167375, 4397.66115, -4967.96875)); -- Teleport to black box full of water.
-								--player:Freeze(true);
-								netstream.Start(player, "DrowningCutscene");
 							elseif self.location == "styx" then
-								if player:Alive() then
+								if alive then
 									local world = GetWorldEntity();
 									local damageInfo = DamageInfo();
 									
@@ -101,26 +117,32 @@ function ENT:Think()
 									damageInfo:SetInflictor(world);
 									damageInfo:SetDamagePosition(player:GetPos());
 									player:TakeDamageInfo(damageInfo);
-									
-									timer.Simple(0.5, function()
-										if IsValid(player) and (!player:Alive()) then
-											local effectData = EffectData();
-											effectData:SetOrigin(player:GetPos());
-											effectData:SetScale(24);
-											util.Effect("burning_vehicle", effectData, true, true);
-											
-											player:EmitSound("ambient/fire/mtov_flame2.wav");
-											
-											timer.Simple(0.2, function()
-												if IsValid(player) and (!player:Alive()) then
-													if IsValid(player:GetRagdollEntity()) then
-														player:GetRagdollEntity():Remove();
-													end
-												end
-											end);
-										end
-									end);
 								end
+								
+								timer.Simple(0.5, function()
+									if IsValid(player) and (!player:Alive()) then
+										local effectData = EffectData();
+										effectData:SetOrigin(player:GetPos());
+										effectData:SetScale(24);
+										util.Effect("burning_vehicle", effectData, true, true);
+										
+										player:EmitSound("ambient/fire/mtov_flame2.wav");
+										
+										timer.Simple(0.2, function()
+											if IsValid(player) and (!player:Alive()) then
+												local ragdollEntity = player:GetRagdollEntity();
+												
+												if IsValid(ragdollEntity) then
+													-- Prevent belongings from spawning.
+													ragdollEntity.cwInventory = nil;
+													ragdollEntity.cwCash = nil;
+													
+													ragdollEntity:Remove();
+												end
+											end
+										end);
+									end
+								end);
 							end
 							
 							table.remove(self.playersOnBoard, i);

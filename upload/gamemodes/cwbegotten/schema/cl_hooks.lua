@@ -270,7 +270,7 @@ end
 
 Clockwork.datastream:Hook("CheaplePos", function(data)
 	if Clockwork.Client:HasTrait("followed") and Clockwork.Client:Alive() and not Schema.caughtByCheaple then
-		if IsValid(statichitman) then
+		if IsValid(statichitman) and data then
 			statichitman:SetPos(data);
 		else
 			Schema:CheapleFollows(data);

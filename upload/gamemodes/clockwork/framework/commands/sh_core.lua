@@ -407,6 +407,10 @@ local COMMAND = Clockwork.command:New("InvAction");
 										Clockwork.player:Notify(player, "You have melted down your "..itemTable.name.." into its component pieces.");
 										player:EmitSound("generic_ui/smelt_success_02.wav");
 										
+										if cwBeliefs then
+											player:HandleXP(cwBeliefs.xpValues["meltdown"]);
+										end
+										
 										local coal = player:FindItemByID("charcoal");
 										player:TakeItem(coal);
 										
@@ -442,7 +446,7 @@ local COMMAND = Clockwork.command:New("InvAction");
 							local conditionTaken = math.max(1, math.Round((itemTable.weight * 3)));
 							local itemCondition = breakdownItemTable:GetCondition() or 100;
 							
-							if conditionTaken <= itemCondition then
+							--if conditionTaken <= itemCondition then
 								for i = 1, #itemTable.components.items do
 									local componentItem = item.CreateInstance(itemTable.components.items[i]);
 									local condition = (componentItem:GetCondition() or 100) - math.random(15, 40);
@@ -457,6 +461,10 @@ local COMMAND = Clockwork.command:New("InvAction");
 								Clockwork.player:Notify(player, "You have broken down your "..itemTable.name.." into its component pieces.");
 								player:EmitSound("generic_ui/takeall_03.wav");
 								
+								if cwBeliefs then
+									player:HandleXP(cwBeliefs.xpValues["breakdown"]);
+								end
+								
 								breakdownItemTable:TakeCondition(conditionTaken);
 								
 								if breakdownItemTable:GetData("condition") <= 0 then
@@ -464,9 +472,9 @@ local COMMAND = Clockwork.command:New("InvAction");
 								end
 								
 								player:TakeItem(itemTable, true);
-							else
-								Clockwork.player:Notify(player, "You do not have enough workable tools left in your breakdown kit to break down this item!");
-							end
+							--else
+								--Clockwork.player:Notify(player, "You do not have enough workable tools left in your breakdown kit to break down this item!");
+							--end
 						else
 							Clockwork.player:Notify(player, "You do not have an item you can break down this item with!");
 							return false;

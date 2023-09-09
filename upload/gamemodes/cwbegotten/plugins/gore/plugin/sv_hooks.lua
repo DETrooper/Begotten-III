@@ -49,6 +49,12 @@ end;
 -- Called when a player dies.
 function cwGore:PlayerDeath(player, inflictor, attacker, damageInfo)
 	if (!damageInfo) then
+		local ragCorpse = player:GetRagdollEntity();
+		
+		if IsValid(ragCorpse) then
+			self:RotCorpse(ragCorpse, 600);
+		end
+	
 		return;
 	end;
 
@@ -58,10 +64,6 @@ function cwGore:PlayerDeath(player, inflictor, attacker, damageInfo)
 	
 	local damage = damageInfo:GetDamage()
 	local ragCorpse = player:GetRagdollEntity();
-	
-	if (player:GetSharedVar("blackOut")) then
-		player:SetSharedVar("blackOut", false);
-	end;
 	
 	if (damage > (player:GetMaxHealth() * 2)) and damageInfo:IsDamageType(DMG_CLUB) and (attacker:IsPlayer() or attacker:IsNPC() or attacker:IsNextBot()) and attacker ~= player then
 		self:SplatCorpse(ragCorpse, 60);
@@ -131,6 +133,16 @@ function cwGore:FuckMyLife(player, damageInfo)
 	end;
 end;
 
+-- Called when an entity is removed.
+function Schema:EntityRemoved(entity)
+	if (IsValid(entity) and entity:GetClass() == "prop_ragdoll") then
+		local timerID = "CorpseDecay_"..tostring(entity:EntIndex());
+		
+		if timer.Exists(timerID) then
+			timer.Remove(timerID);
+		end
+	end
+end
 --GORE
 
 --[[

@@ -4,11 +4,11 @@
 --]]
 
 -- Called to get whether a player can perform a ritual or not.
-function cwRituals:PlayerCanPerformRitual(player, uniqueID)
+function cwRituals:PlayerCanPerformRitual(player, uniqueID, bIgnoreItems)
 	local ritualTable = self.rituals.stored[uniqueID];
 	local requirements = ritualTable.requirements;
 	
-	if (table.IsEmpty(requirements)) then
+	if (table.IsEmpty(requirements)) and !bIgnoreItems then
 		return;
 	end;
 	
@@ -35,25 +35,34 @@ function cwRituals:PlayerCanPerformRitual(player, uniqueID)
 	end;
 	
 	if cwBeliefs and player.HasBelief then
+		if !subfaith or (subfaith and (subfaith == "" or subfaith == "N/A")) then
+			Schema:EasyText(player, "chocolate", "You must have a subfaith in order to perform a ritual!");
+			return false;
+		end
+		
+		
 		if requiredBeliefsSubfactionOverride then
 			for k, v in pairs(requiredBeliefsSubfactionOverride) do
 				if k == subfaction then
 					for i = 1, #v do
 						if player:HasBelief(v[i]) then
-							return true;
+							hasBeliefs = true;
+							break;
 						end
 					end
 				end
+				
+				if hasBeliefs then
+					break;
+				end
 			end
 		end
-	
-		if !subfaith or (subfaith and (subfaith == "" or subfaith == "N/A")) then
-			Schema:EasyText(player, "chocolate", "You must have a subfaith in order to perform a ritual!");
-			return false;
-		elseif onerequiredbelief then
+		
+		if !hasBeliefs and onerequiredbelief then
 			for i = 1, #onerequiredbelief do
 				if player:HasBelief(onerequiredbelief[i]) then
 					hasBeliefs = true;
+					break;
 				end
 			end
 		else
@@ -73,24 +82,26 @@ function cwRituals:PlayerCanPerformRitual(player, uniqueID)
 		end
 	end
 	
-	local counts = {};
-	
-	for i = 1, #requirements do
-		if counts[requirements[i]] then
-			counts[requirements[i]] = counts[requirements[i]] + 1;
-		else
-			counts[requirements[i]] = 1;
-		end
-	end;
-
-	for i = 1, #requirements do
-		if (!Clockwork.inventory:HasItemCountByID(inventory, requirements[i], counts[requirements[i]])) then
-			Schema:EasyText(player, "chocolate", "You do not have the items required to perform this ritual!");
-			hasRequirements = false;
-
-			break;
+	if !bIgnoreItems then
+		local counts = {};
+		
+		for i = 1, #requirements do
+			if counts[requirements[i]] then
+				counts[requirements[i]] = counts[requirements[i]] + 1;
+			else
+				counts[requirements[i]] = 1;
+			end
 		end;
-	end;
+
+		for i = 1, #requirements do
+			if (!Clockwork.inventory:HasItemCountByID(inventory, requirements[i], counts[requirements[i]])) then
+				Schema:EasyText(player, "chocolate", "You do not have the items required to perform this ritual!");
+				hasRequirements = false;
+
+				break;
+			end;
+		end;
+	end
 
 	return hasFlags, hasRequirements;
 end;
@@ -130,18 +141,18 @@ function cwRituals:PlayerFailedRitual(player, uniqueID, ritualTable, bHasRequire
 end;
 
 -- A function used to peform a ritual.
-function cwRituals:PerformRitual(player, uniqueID, itemIDs)
+function cwRituals:PerformRitual(player, uniqueID, itemIDs, bIgnoreItems)
 	local curTime = CurTime();
 	
 	if (IsValid(player) and uniqueID and isstring(uniqueID)) then
 		if (!player.cwNextRitual or player.cwNextRitual < curTime) then
 			player.cwNextRitual = curTime + 10;
 	
-			local bHasFlags, bHasRequirements = hook.Run("PlayerCanPerformRitual", player, uniqueID);
+			local bHasFlags, bHasRequirements = hook.Run("PlayerCanPerformRitual", player, uniqueID, bIgnoreItems);
 			local ritualTable = self.rituals.stored[uniqueID];
 
 			if (ritualTable and bHasFlags != false and bHasRequirements != false) then
-				if self:PlayerMeetsRitualItemRequirements(player, ritualTable, itemIDs) then
+				if bIgnoreItems or self:PlayerMeetsRitualItemRequirements(player, ritualTable, itemIDs) then
 					if (ritualTable.ritualTime) then
 						if !ritualTable.isSilent then
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins chanting a hymn.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
@@ -161,15 +172,19 @@ function cwRituals:PerformRitual(player, uniqueID, itemIDs)
 									end
 								end;
 								
-								ritualTable:PerformRitual(player, itemIDs);
+								ritualTable:PerformRitual(player, itemIDs, false, bIgnoreItems);
 								
 								if player:GetSubfaction() ~= "Rekh-khet-sa" then
 									player:HandleNeed("corruption", ritualTable.corruptionCost or 2);
 								end
 							end;
 						end);
+						
+						return true;
 					else
-						ritualTable:PerformRitual(player, itemIDs, true);
+						ritualTable:PerformRitual(player, itemIDs, true, bIgnoreItems);
+						
+						return true;
 					end;
 				end;
 				

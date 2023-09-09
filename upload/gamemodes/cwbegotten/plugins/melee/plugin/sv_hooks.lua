@@ -838,7 +838,7 @@ function cwMelee:ModifyPlayerSpeed(player, infoTable)
 end
 
 -- Called when a player's pain sound should be played.
-function GM:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
+function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 	if player:Alive() then
 		local faction = (player:GetFaction())
 		local pitch = 100;

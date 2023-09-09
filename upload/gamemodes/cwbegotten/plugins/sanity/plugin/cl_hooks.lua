@@ -87,9 +87,13 @@ function cwSanity:Think()
 				local radioFound;
 				
 				for k, v in pairs (ents.FindInSphere(Clockwork.Client:GetPos(), 256)) do
-					if (v:GetClass() == "prop_ragdoll" and v:GetNWEntity("Player"):IsPlayer() or v:GetNWEntity("Player") == game.GetWorld() or v:GetModel() == "models/undead/charple01.mdl") then
-						corpseFound = v;
-						break;
+					if (v:GetClass() == "prop_ragdoll") then
+						local nwEntity = v:GetNWEntity("Player");
+						
+						if (nwEntity:IsPlayer() and !nwEntity:Alive()) or nwEntity == game.GetWorld() or v:GetModel() == "models/undead/charple01.mdl" then
+							corpseFound = v;
+							break;
+						end
 					elseif (v:GetClass() == "cw_item") then
 						itemFound = v;
 						break;
@@ -171,7 +175,7 @@ function cwSanity:Think()
 			end
 		end
 		
-		if (sanity <= 40 and !Clockwork.Client:IsRagdolled() and !Clockwork.Client.dueling and !Clockwork.player:IsNoClipping(Clockwork.Client)) then
+		if (sanity <= 40 and Clockwork.Client:Alive() and !Clockwork.kernel:IsChoosingCharacter() and !Clockwork.Client:IsRagdolled() and !Clockwork.Client.dueling and !Clockwork.player:IsNoClipping(Clockwork.Client)) then
 			local has_saintly_composure = (cwBeliefs and cwBeliefs:HasBelief("saintly_composure"));
 			
 			if !has_saintly_composure then

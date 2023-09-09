@@ -64,3 +64,38 @@ local COMMAND = Clockwork.command:New("CharUnMark");
 		end;
 	end;
 COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CharMakeRitual");
+	COMMAND.tip = "Force a character to perform a ritual, useful for debugging.";
+	COMMAND.text = "<string Name> <string RitualID> [bool ignoreItems]";
+	COMMAND.access = "s";
+	COMMAND.arguments = 2;
+	COMMAND.optionalArguments = 1;
+	COMMAND.alias = {"ForceRitual", "PlyForceRitual", "CharForceRitual", "MakeRitual", "PlyMakeRitual", "CharMakePerformRitual", "MakePerformRitual", "PlyMakePerformRitual"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local target = Clockwork.player:FindByID(arguments[1])
+		
+		if (target) then
+			local ritualID = arguments[2];
+			local ritualTable = cwRituals.rituals.stored[ritualID];
+			
+			if ritualTable then
+				if tobool(arguments[3]) == true then
+					if !cwRituals:PerformRitual(target, ritualID, nil, true) then
+						Schema:EasyText(player, "grey", target:Name().." could not perform "..ritualTable.name.."!");
+					end
+				else
+					if !cwRituals:PerformRitual(target, ritualID, itemIDs) then
+						Schema:EasyText(player, "grey", target:Name().." could not perform "..ritualTable.name.."!");
+					end
+				end
+			else
+				Schema:EasyText(player, "grey", ritualID.." is not a valid ritual!");
+			end
+		else
+			Schema:EasyText(player, "grey", arguments[1].." is not a valid character!");
+		end;
+	end;
+COMMAND:Register();

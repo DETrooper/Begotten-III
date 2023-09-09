@@ -102,7 +102,7 @@ end
 function meta:CanRoll()
 	--if self:KeyDown( IN_WALK ) then return false end
 	
-	if self.lastRoll and self.lastRoll > curTime then
+	if self.lastRoll and self.lastRoll > CurTime() then
 		return false;
 	end	
 

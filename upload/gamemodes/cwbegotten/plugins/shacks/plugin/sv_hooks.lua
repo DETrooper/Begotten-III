@@ -540,8 +540,8 @@ function cwShacks:SaveShackData()
 	Clockwork.kernel:SaveSchemaData("plugins/shacks/"..game.GetMap(), self.shackData)
 end
 
--- Called when a player's character has initialized.
-function cwShacks:PlayerCharacterInitialized(player)
+-- Called when a player's weapons should be given.
+function cwShacks:PlayerLoadout(player)
 	if (!map) then
 		return;
 	end;

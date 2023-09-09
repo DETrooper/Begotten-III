@@ -16,17 +16,17 @@ function COMMAND:OnRun(player, arguments)
 			local model = string.lower(trace.Entity:GetModel())
 
 			if (cwStorage.containerList[model]) then
-				if (!trace.Entity.inventory) then
+				if (!trace.Entity.cwInventory) then
 					cwStorage.storage[trace.Entity] = trace.Entity
-
-					trace.Entity.inventory = {}
-					cwStorage:SaveStorage()
+					trace.Entity.cwInventory = {}
 				end
 
 				trace.Entity.cwPassword = nil;
 				trace.Entity.cwLockTier = nil;
 				trace.Entity:SetNWBool("hasPassword", false);
 				trace.Entity:SetNWBool("unlocked", true);
+				cwStorage:SaveStorage();
+
 				Schema:EasyText(player, "cornflowerblue", "This container's password has been removed.")
 			else
 				Schema:EasyText(player, "grey", "["..self.name.."] This is not a valid container!")

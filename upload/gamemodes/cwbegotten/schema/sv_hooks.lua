@@ -241,13 +241,13 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 					
 					Schema:EasyText(entity, "firebrick", "You have been sold into slavery by "..playerName.."!");
 					entity:KillSilent();
-					Schema:PermaKillPlayer(entity);
+					Schema:PermaKillPlayer(entity, nil, true);
 				end
 			end
 		end
 	elseif (class == "prop_ragdoll" and arguments == "cw_corpseLoot") then
 		if (!entity.cwInventory) then entity.cwInventory = {}; end;
-		if (!entity.cash) then entity.cash = 0; end;
+		if (!entity.cwCash) then entity.cwCash = 0; end;
 		
 		local entityPlayer = Clockwork.entity:GetPlayer(entity);
 		
@@ -261,13 +261,13 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 				weight = 8,
 				entity = entity,
 				distance = 192,
-				cash = entity.cash,
+				cash = entity.cwCash,
 				inventory = entity.cwInventory,
 				OnGiveCash = function(player, storageTable, cash)
-					entity.cash = storageTable.cash;
+					entity.cwCash = storageTable.cash;
 				end,
 				OnTakeCash = function(player, storageTable, cash)
-					entity.cash = storageTable.cash;
+					entity.cwCash = storageTable.cash;
 				end
 			});
 		end;
@@ -281,13 +281,13 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 			weight = 100,
 			entity = entity,
 			distance = 192,
-			cash = entity.cash,
+			cash = entity.cwCash,
 			inventory = entity.cwInventory,
 			OnGiveCash = function(player, storageTable, cash)
-				entity.cash = storageTable.cash;
+				entity.cwCash = storageTable.cash;
 			end,
 			OnTakeCash = function(player, storageTable, cash)
-				entity.cash = storageTable.cash;
+				entity.cwCash = storageTable.cash;
 			end,
 			OnClose = function(player, storageTable, entity)
 				if (IsValid(entity)) then
@@ -302,7 +302,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 						end
 					end
 					
-					if ((!entity.cwInventory and !entity.cash) or (invEmpty and (entity.cash == 0 or !entity.cash)) or (!entity.cwInventory and entity.cash == 0)) then
+					if ((!entity.cwInventory and !entity.cwCash) or (invEmpty and (entity.cwCash == 0 or !entity.cwCash)) or (!entity.cwInventory and entity.cwCash == 0)) then
 						entity:Explode(entity:BoundingRadius() * 2);
 						entity:Remove();
 					end;
@@ -1340,28 +1340,28 @@ function Schema:EntityRemoved(entity)
 	end;
 	
 	if (IsValid(entity) and entity:GetClass() == "prop_ragdoll") then
-		if (entity.cwInventory and entity.cash) then
-			if (!table.IsEmpty(entity.cwInventory) or entity.cash > 0) then
-				local invEmpty = true;
+		if (entity.cwInventory or entity.cwCash) then
+			local invEmpty = true;
 				
+			if (!table.IsEmpty(entity.cwInventory)) then
 				for k, v in pairs(entity.cwInventory) do
 					if v and !table.IsEmpty(v) then
 						invEmpty = false;
 						break;
 					end
 				end
+			end
+			
+			if !invEmpty or entity.cwCash > 0 then
+				local belongings = ents.Create("cw_belongings");
 				
-				if !invEmpty then
-					local belongings = ents.Create("cw_belongings");
-					
-					belongings:SetAngles(Angle(0, 0, -90));
-					belongings:SetData(entity.cwInventory, entity.cash);
-					belongings:SetPos(entity:GetPos() + Vector(0, 0, 32));
-					belongings:Spawn();
-					
-					entity.cwInventory = nil;
-					entity.cash = nil;
-				end;
+				belongings:SetAngles(Angle(0, 0, -90));
+				belongings:SetData(entity.cwInventory, entity.cwCash);
+				belongings:SetPos(entity:GetPos() + Vector(0, 0, 32));
+				belongings:Spawn();
+				
+				entity.cwInventory = nil;
+				entity.cwCash = nil;
 			end;
 		end;
 	end;
@@ -1653,7 +1653,13 @@ function Schema:PlayerCanUseDoor(player, door)
 	if map then
 		local doorName = door:GetName();
 		
-		if doorName == "toothboyblastdoor" or doorName == "toothboyblastdoor2" then
+		if table.HasValue(self.towerDoors, doorName) then
+			local faction = player:GetFaction();
+			
+			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" then
+				return false;
+			end
+		elseif doorName == "toothboyblastdoor" or doorName == "toothboyblastdoor2" then
 			if player:GetSubfaith() ~= "Voltism" then
 				if !player.cwObserverMode then
 					Schema:DoTesla(player, true);
@@ -1976,6 +1982,10 @@ function Schema:PostPlayerDeath(player)
 	if player.scriptedDying then
 		player.scriptedDying = false;
 	end
+	
+	if (player:GetSharedVar("blackOut")) then
+		player:SetSharedVar("blackOut", false);
+	end;
 end
 
 -- Called when a player changes ranks.
@@ -2033,12 +2043,28 @@ function Schema:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 			end;
 		end;
 		
-		if (!lightSpawn and firstSpawn and !player.cwWakingUp and !player.cwWoke) then
-			if not player:IsBot() then
-				self:PlayerWakeup(player);
+		if (!lightSpawn and firstSpawn) then
+			if (!player.cwWakingUp and !player.cwWoke) then
+				if not player:IsBot() then
+					self:PlayerWakeup(player);
+				end
+				
+				player.cwWoke = true;
 			end
-			
-			player.cwWoke = true;
+		
+			if player:HasTrait("followed") then
+				timer.Simple(1, function()
+					if IsValid(player) and player:Alive() and player:HasTrait("followed") then
+						local posTab = player:GetCharacterData("CheaplePos");
+						
+						if posTab then
+							netstream.Start(player, "CheaplePos", Vector(posTab.x, posTab.y, posTab.z));
+						else
+							netstream.Start(player, "CheaplePos");
+						end
+					end
+				end);
+			end
 		end
 		
 		if bounty then
@@ -2133,7 +2159,8 @@ function Schema:PlayerCharacterLoaded(player)
 				Clockwork.player:GiveFlags(player, "U");
 			end
 		end
-	elseif faction == "Gatekeepers" then
+	-- Code to grandfather in pre-rank update Gatekeeper characters to the new rank system during the original Begotten III, no longer required.
+	--[[elseif faction == "Gatekeeper" then
 		local subfaction = player:GetSubfaction();
 		
 		if !subfaction or subfaction == "N/A" or subfaction == "" then
@@ -2144,21 +2171,7 @@ function Schema:PlayerCharacterLoaded(player)
 					Clockwork.player:LoadCharacter(player, Clockwork.player:GetCharacterID(player));
 				end
 			end);
-		end
-	end
-	
-	if player:HasTrait("followed") then
-		timer.Simple(1, function()
-			if IsValid(player) and player:HasTrait("followed") then
-				local posTab = player:GetCharacterData("CheaplePos");
-				
-				if posTab then
-					netstream.Start(player, "CheaplePos", Vector(posTab.x, posTab.y, posTab.z));
-				else
-					netstream.Start(player, "CheaplePos");
-				end
-			end
-		end);
+		end]]--
 	end
 	
 	player.bWasInAir = nil;
@@ -2232,6 +2245,16 @@ end;
 
 -- Called when a player's name has changed.
 function Schema:PlayerNameChanged(player, previousName, newName) end;
+
+-- Called when a player is given a trait.
+function Schema:PlayerTraitGiven(player, traitID)
+	if traitID == "followed" then
+		netstream.Start(player, "CheaplePos");
+	end
+end;
+
+-- Called when a player's trait is taken
+function Schema:PlayerTraitTaken(player, traitID) end;
 
 -- Called when a player uses a door.
 function Schema:PlayerUseDoor(player, door) end;

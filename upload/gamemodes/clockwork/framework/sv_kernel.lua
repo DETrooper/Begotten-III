@@ -930,15 +930,14 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 					local curTime = CurTime()
 
 					if (damageInfo:IsDamageType(DMG_CRUSH)) then
-						if (entity.cwNextFallDamage
-						and curTime < entity.cwNextFallDamage) then
+						if (entity:IsBeingHeld() or (entity.cwNextFallDamage and curTime < entity.cwNextFallDamage)) then
 							damageInfo:SetDamage(0)
 							return true
 						end
 
 						amount = hook.Run("GetFallDamage", player, velocity)
 						hook.Run("OnPlayerHitGround", player, false, false, true);
-						entity.cwNextFallDamage = curTime + 1
+						entity.cwNextFallDamage = curTime + 0.5;
 						
 						damageInfo:SetDamage(amount)
 					end
@@ -2868,6 +2867,8 @@ function playerMeta:GiveTrait(uniqueID)
 		
 		self:SetCharacterData("Traits", traits);
 		self:NetworkTraits();
+		
+		hook.Run("PlayerTraitGiven", self, uniqueID);
 	end;
 end;
 
@@ -2881,6 +2882,9 @@ function playerMeta:RemoveTrait(uniqueID)
 				table.remove(traits, i);
 				self:SetCharacterData("Traits", traits);
 				self:NetworkTraits();
+				
+				hook.Run("PlayerTraitTaken", self, uniqueID);
+				
 				return;
 			end
 		end

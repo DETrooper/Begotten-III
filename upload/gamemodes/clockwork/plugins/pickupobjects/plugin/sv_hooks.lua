@@ -83,7 +83,7 @@ end
 
 -- Called when a player's ragdoll attempts to take damage.
 function cwPickupObjects:PlayerRagdollCanTakeDamage(player, ragdoll, inflictor, attacker, hitGroup, damageInfo)
-	if (ragdoll.cwNextTakeDmg and CurTime() < ragdoll.cwNextTakeDmg) then
+	--[[if (ragdoll.cwNextTakeDmg and CurTime() < ragdoll.cwNextTakeDmg) then
 		return false;
 	elseif (IsValid(ragdoll.cwHoldingGrab)) then
 		if (!damageInfo:IsExplosionDamage() and !damageInfo:IsBulletDamage()) then
@@ -91,7 +91,7 @@ function cwPickupObjects:PlayerRagdollCanTakeDamage(player, ragdoll, inflictor, 
 				return false;
 			end;
 		end;
-	end;
+	end;]]--
 end;
 
 -- Called when a player enters a vehicle.

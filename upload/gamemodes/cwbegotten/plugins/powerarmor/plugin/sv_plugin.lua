@@ -35,7 +35,7 @@ end;
 
 function cwPowerArmor:BuildUp(entity, bExplode, bGib)
 	if IsValid(entity) then
-		Clockwork.plugin:Call("DoTesla", entity, false, false);
+		Schema:DoTesla(entity, false);
 		
 		entity:EmitSound("ambient/levels/citadel/zapper_warmup4.wav");
 		
@@ -137,22 +137,10 @@ local playerMeta = FindMetaTable("Player");
 
 function playerMeta:Electrify()
 	if (!self._nextElectrify or curTime >= self._nextElectrify) then
-		Clockwork.plugin:Call("DoTesla", self, true, true);
-		
 		for k, v in pairs (ents.FindInSphere(self:GetPos(), 50)) do
-			local damageInfo = DamageInfo();
-			damageInfo:SetDamage(math.random(1, 10));
-			damageInfo:SetDamageType(DMG_SHOCK);
-			damageInfo:SetAttacker(self);
-			damageInfo:SetInflictor(self);
-			
-			timer.Create(v:EntIndex().."_elec", 2, 5, function()
-				if IsValid(v) then
-					v:TakeDamageInfo(damageInfo);
-				
-					Clockwork.plugin:Call("DoTesla", v, false, true);
-				end
-			end);
+			if v:IsPlayer() or v:IsNPC() or v:IsNextBot() then
+				Schema:DoTesla(v, true);
+			end
 		end;
 		
 		self._nextElectrify = curTime + 3;

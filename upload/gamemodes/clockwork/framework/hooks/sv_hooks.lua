@@ -757,23 +757,25 @@ function GM:PlayerUse(player, entity)
 	else
 		if (Clockwork.entity:IsDoor(entity)) then
 			if !entity:HasSpawnFlags(256) and !entity:HasSpawnFlags(8192) and !entity:HasSpawnFlags(32768) then
-				--[[if (hook.Run("PlayerCanUseDoor", player, entity)) ~= false then
+				if (hook.Run("PlayerCanUseDoor", player, entity)) ~= false then
 					if (player:GetNetVar("tied") != 0) then
 						return false;
 					end;
 
 					hook.Run("PlayerUseDoor", player, entity)
 					Clockwork.entity:OpenDoor(entity, 0, nil, nil, player:GetPos())
-				end]]--
-				
-				return false;
+					
+					return false;
+				end
 			elseif (hook.Run("PlayerCanUseDoor", player, entity)) ~= false then
 				if (player:GetNetVar("tied") != 0) then
 					return false;
 				end;
 				
-				--hook.Run("PlayerUseDoor", player, entity)
-				--Clockwork.entity:OpenDoor(entity, 0, nil, nil, player:GetPos())
+				hook.Run("PlayerUseDoor", player, entity)
+				Clockwork.entity:OpenDoor(entity, 0, nil, nil, player:GetPos())
+				
+				return false;
 			else
 				return false;
 			end
@@ -1390,14 +1392,16 @@ function GM:EntityFireBullets(entity, bulletInfo) end
 
 -- Called when a player's fall damage is needed.
 function GM:GetFallDamage(player, velocity)
-	local ragdollEntity = nil
+	--local ragdollEntity = nil
 	local position = player:GetPos()
 	local damage = math.max((velocity - 464) * 0.225225225, 0) * config.GetVal("scale_fall_damage")
 	local filter = {player}
+	
 	if (Clockwork.player:HasFlags(player, "E")) then
 		return 0
 	end
-	if (config.GetVal("wood_breaks_fall")) then
+	
+	--[[if (config.GetVal("wood_breaks_fall")) then
 		if (player:IsRagdolled()) then
 			ragdollEntity = player:GetRagdollEntity()
 			position = ragdollEntity:GetPos()
@@ -1414,6 +1418,28 @@ function GM:GetFallDamage(player, velocity)
 			if (string.find(traceLine.Entity:GetClass(), "prop_physics")) then
 				traceLine.Entity:Fire("break", "", 0)
 				damage = damage * 0.25
+			end
+		end
+	end]]--
+	
+	local holdingEnt = player:GetHoldingEntity();
+	
+	if IsValid(holdingEnt) then
+		if Clockwork.entity:IsPlayerRagdoll(holdingEnt) then
+			local ragdollPlayer = Clockwork.entity:GetPlayer(holdingEnt);
+			
+			if IsValid(ragdollPlayer) then
+				local damageInfo = DamageInfo();
+			
+				holdingEnt.cwNextFallDamage = curTime;
+				amount = hook.Run("GetFallDamage", ragdollPlayer, velocity)
+				hook.Run("OnPlayerHitGround", ragdollPlayer, false, false, true);
+				
+				damageInfo:SetDamageType(DMG_FALL);
+				damageInfo:SetDamage(amount);
+				damageInfo:SetAttacker(game.GetWorld());
+				
+				ragdollPlayer:TakeDamageInfo(damageInfo);
 			end
 		end
 	end
@@ -3753,13 +3779,13 @@ end
 function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 	local ragdoll = player:GetRagdollEntity()
 
-	if !player.opponent and (ragdoll) then
-		local inventory = player:GetInventory();
-		local copy = Clockwork.inventory:CreateDuplicate(inventory);
+	if --[[!player.opponent and]] (ragdoll) then
+		--local inventory = player:GetInventory();
+		--local copy = Clockwork.inventory:CreateDuplicate(inventory);
 
 		ragdoll.cwIsBelongings = true;
-		ragdoll.cwInventory = copy;
-		ragdoll.cash = player:GetCash();
+		--[[ragdoll.cwInventory = copy;
+		ragdoll.cwCash = player:GetCash();
 
 		for k,v in pairs(inventory) do
 			for k2,v2 in pairs(v) do
@@ -3768,7 +3794,7 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 		end
 		
 		player:SetCharacterData("Cash", 0, true);
-		player:SetSharedVar("Cash", 0);
+		player:SetSharedVar("Cash", 0);]]--
 		
 		if (IsValid(inflictor) and inflictor:GetClass() == "prop_combine_ball") then
 			if (damageInfo) then
@@ -3850,11 +3876,11 @@ function GM:PlayerLoadout(player)
 		end
 	end
 
-	if --[[(config.Get("give_keys"):Get()) or]] player:GetSharedVar("shack") then
+	--[[if (config.Get("give_keys"):Get())  then
 		if !player:HasWeapon("cw_keys") then
 			Clockwork.player:GiveSpawnWeapon(player, "cw_keys")
 		end
-	end
+	end]]--
 
 	if (weapons) then
 		for k, v in pairs(weapons) do
@@ -4149,7 +4175,7 @@ function GM:EntityTakeDamage(entity, damageInfo)
 				local bAttackerValid = IsValid(attacker);
 				
 				if !bAttackerValid or (!attacker:IsPlayer()) then
-					if (bAttackerValid and (attacker:GetClass() == "prop_ragdoll" or Clockwork.entity:IsDoor(attacker))) or damageInfo:GetDamage() < 5 then
+					if (bAttackerValid and (attacker:GetClass() == "prop_ragdoll" or Clockwork.entity:IsDoor(attacker))) then
 						return
 					end
 				end
@@ -4191,6 +4217,7 @@ function GM:EntityTakeDamage(entity, damageInfo)
 			end
 
 			damageInfo:SetDamage(0)
+			player.cwLastHitGroup = nil
 		end
 	elseif (entity:GetClass() == "prop_ragdoll") then
 		if (IsValid(inflictor) and inflictor:GetClass() == "prop_combine_ball") then

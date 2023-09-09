@@ -176,7 +176,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(183.98, 100.44, 130.28);
 	ITEM.attachmentOffsetVector = Vector(-1.41, 3, 4.24);
 	
-	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood", "wood"}};
+	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood"}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");

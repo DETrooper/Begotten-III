@@ -236,11 +236,7 @@ function cwGore:RotCorpse(entity, delay)
 	end;
 	
 	if (IsValid(entity) and entity:GetClass() == "prop_ragdoll") then
-		timer.Simple(delay, function()
-			if (!entity) then
-				return;
-			end
-			
+		timer.Create("CorpseDecay_"..tostring(entity:EntIndex()), delay, 1, function()
 			if (!IsValid(entity)) then
 				return;
 			end;
@@ -283,25 +279,11 @@ function cwGore:RotCorpse(entity, delay)
 					end;
 				end;
 				
-				--[[if (entity.inventory and entity.cash) then
-					if (table.Count(entity.inventory) > 0 or entity.cash > 0) then
-						local belongings = ents.Create("cw_belongings");
-							belongings:SetAngles(Angle(0, 0, -90));
-							belongings:SetData(entity.inventory, entity.cash);
-							belongings:SetPos(entity:GetPos() + Vector(0, 0, 32));
-						belongings:Spawn();
-						
-						entity.inventory = nil;
-						entity.cash = nil;
-					end;
-				end;]]--
-				
 				entity:Remove();
 				
-				local timeRemove = delay * 4;
-				local mathRandom = math.random(4, 8);
+				local timeRemove = delay * 2;
 
-				timer.Simple(timeRemove, function()
+				timer.Create("CorpseDecay_"..tostring(corpse:EntIndex()), timeRemove, 1, function()
 					if (IsValid(corpse)) then
 						local headEnt = ents.Create("prop_physics");
 							headEnt:SetModel("models/gibs/hgibs.mdl");

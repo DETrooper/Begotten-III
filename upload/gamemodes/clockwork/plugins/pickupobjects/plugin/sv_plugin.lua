@@ -40,7 +40,7 @@ function cwPickupObjects:ForceDropEntity(player)
 			end
 		end
 	
-		entity.cwNextTakeDmg = curTime + 1;
+		--entity.cwNextTakeDmg = curTime + 1;
 		entity.cwHoldingGrab = nil;
 		
 		if (Clockwork.config:Get("prop_kill_protection"):Get()

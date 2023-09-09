@@ -14,6 +14,39 @@ local animalModels = {
 	"models/animals/bear.mdl",
 };
 
+function cwBeliefs:PlayerCharacterInitialized(data)
+	-- Reset belief outlines on character respawn.
+	if self.highlightTargetOverride then
+		self.highlightTargetOverride = nil;
+	end
+	
+	if self.upgradedWarcryActive then
+		self.upgradedWarcryActive = nil;
+	end
+	
+	if self.trout then
+		self.trout = nil;
+	end
+	
+	if timer.Exists("tasteOfBloodTimer") then
+		timer.Remove("tasteOfBloodTimer");
+	end
+	
+	if timer.Exists("warcryTimer") then
+		timer.Remove("warcryTimer");
+	end
+	
+	for k, v in pairs(_player.GetAll()) do
+		if v.warcryTarget then
+			v.warcryTarget = false;
+		end
+		
+		if timer.Exists("deceitfulHighlightTimer_"..v:EntIndex()) then
+			timer.Remove("deceitfulHighlightTimer_"..v:EntIndex());
+		end
+	end;
+end
+
 function cwBeliefs:GetEntityMenuOptions(entity, options)
 	if (entity:GetClass() == "prop_ragdoll") then
 		local player = Clockwork.entity:GetPlayer(entity);
@@ -59,6 +92,7 @@ function cwBeliefs:AddEntityOutlines(outlines)
 		--end
 	elseif Clockwork.Client:GetSharedVar("faith") == "Faith of the Dark" then
 		local hasAssassin = self:HasBelief("assassin");
+		local isCOS = (Clockwork.Client:GetFaction() == "Children of Satan");
 		
 		for k, v in pairs(_player.GetAll()) do
 			if v ~= Clockwork.Client and v:HasInitialized() and v:Alive() then
@@ -69,12 +103,14 @@ function cwBeliefs:AddEntityOutlines(outlines)
 						return;
 					end
 				end
-			
-				if v:GetSharedVar("yellowBanner") == true then
-					if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= bannerDist) then
-						self:DrawPlayerOutline(v, outlines, Color(200, 200, 0, 255));
-						
-						return;
+
+				if isCOS then
+					if v:GetSharedVar("yellowBanner") == true then
+						if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= bannerDist) then
+							self:DrawPlayerOutline(v, outlines, Color(200, 200, 0, 255));
+							
+							return;
+						end
 					end
 				end
 				
@@ -123,7 +159,7 @@ netstream.Hook("DeceitfulHighlight", function(data)
 	end
 	
 	if timer.Exists("deceitfulHighlightTimer_"..data:EntIndex()) then
-		timer.Destroy("deceitfulHighlightTimer_"..data:EntIndex());
+		timer.Remove("deceitfulHighlightTimer_"..data:EntIndex());
 	end
 	
 	timer.Create("deceitfulHighlightTimer_"..data:EntIndex(), 30, 1, function()
@@ -132,8 +168,14 @@ netstream.Hook("DeceitfulHighlight", function(data)
 end);
 
 netstream.Hook("TasteofBloodHighlight", function(data)
+	local cwBeliefs = cwBeliefs;
+
 	if IsValid(data) and data:IsPlayer() then
 		cwBeliefs.highlightTargetOverride = data;
+	end
+	
+	if timer.Exists("tasteOfBloodTimer") then
+		timer.Remove("tasteOfBloodTimer");
 	end
 	
 	timer.Create("tasteOfBloodTimer", 180, 1, function()
@@ -142,6 +184,8 @@ netstream.Hook("TasteofBloodHighlight", function(data)
 end);
 
 netstream.Hook("UpgradedWarcry", function(data)
+	local cwBeliefs = cwBeliefs;
+	
 	cwBeliefs.upgradedWarcryActive = true;
 	
 	local faith = Clockwork.Client:GetSharedVar("faith");
@@ -156,8 +200,12 @@ netstream.Hook("UpgradedWarcry", function(data)
 		end;
 	end;
 	
-	if cwBeliefs:HasBelief("fearsome_wolf") then		
-		timer.Simple(20, function()
+	if cwBeliefs:HasBelief("fearsome_wolf") then
+		if timer.Exists("warcryTimer") then
+			timer.Remove("warcryTimer");
+		end
+		
+		timer.Create("warcryTimer", 20, 1, function()
 			cwBeliefs.upgradedWarcryActive = false;
 			
 			for k, v in pairs(_player.GetAll()) do
@@ -168,8 +216,12 @@ netstream.Hook("UpgradedWarcry", function(data)
 		if cwBeliefs:HasBelief("daring_trout") then
 			cwBeliefs.trout = true;
 		end
+		
+		if timer.Exists("warcryTimer") then
+			timer.Remove("warcryTimer");
+		end
 	
-		timer.Simple(15, function()
+		timer.Create("warcryTimer", 15, 1, function()
 			if cwBeliefs.trout then
 				cwBeliefs.trout = false;
 			end

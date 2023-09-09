@@ -17,13 +17,15 @@ function COMMAND:OnRun(player, arguments)
 			local name = table.concat(arguments, " ")
 
 			if (cwStorage.containerList[model]) then
-				if (!trace.Entity.inventory) then
+				if (!trace.Entity.cwInventory) then
 					cwStorage.storage[trace.Entity] = trace.Entity
-					trace.Entity.inventory = {}
+					trace.Entity.cwInventory = {}
 				end
 
 				trace.Entity:SetNetworkedString("Name", "")
 				cwStorage:SaveStorage()
+				
+				Schema:EasyText(player, "cornflowerblue", "This container's name has been removed.")
 			else
 				Schema:EasyText(player, "grey", "["..self.name.."] This is not a valid container!")
 			end

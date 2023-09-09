@@ -42,8 +42,7 @@ end
 function ENT:SetData(inventory, cash)
 	self:SetModel("models/begotten/misc/sack.mdl")
 	self.cwInventory = inventory
-	--self.cwCash = cash
-	self.cash = cash
+	self.cwCash = cash
 end
 
 -- A function to explode the entity.

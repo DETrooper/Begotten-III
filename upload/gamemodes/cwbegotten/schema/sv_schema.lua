@@ -1103,86 +1103,6 @@ function Schema:CloseSound(entity, player)
 	end;
 end;
 
--- A function to rot a ragdoll corpse.
-function Schema:RotCorpse(entity)
-	if (entity:GetClass() == "prop_ragdoll") then
-		local position = entity:GetPos();
-		local ragdoll = ents.Create("prop_ragdoll");
-		ragdoll:SetPos(entity:GetPos());
-		ragdoll:SetAngles(entity:GetAngles());
-		
-		if (!entity.RotLevel) then
-			entity.RotLevel = 1;
-		else
-			if (entity.RotLevel + 1 > #self.RotModels) then
-				for i = 1, 10 do
-					local gib = ents.Create("prop_physics");
-					gib:SetModel("models/props_junk/watermelon01_chunk02a.mdl");
-					gib:SetPos(position + Vector(math.random(0, 20), math.random(0, 20), math.random(0, 20)));
-					gib:Spawn();
-					
-					gib:SetHealth(10000);
-					gib:SetMaterial("models/flesh");
-					gib:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER);
-					
-					self:BloodEffect(gib, gib:GetPos());
-					
-					if (math.random(1, 4) == 4) then
-						gib:EmitSound("physics/flesh/flesh_squishy_impact_hard"..math.random(1, 4)..".wav", 70);
-					end;
-
-					local physObj = gib:GetPhysicsObject();
-					
-					if (IsValid(physObj)) then
-						physObj:SetVelocity(VectorRand() * 350);
-					end;
-					
-					timer.Simple(15, function()
-						gib:Remove();
-					end);
-				end;
-				
-				entity:Remove();
-				return;
-			end;
-			
-			entity.RotLevel = math.Clamp(entity.RotLevel + 1, 1, #self.RotModels);
-		end;
-		
-		ragdoll:SetModel(self.RotModels[entity.RotLevel]);
-		ragdoll:Spawn();
-
-		timer.Simple(FrameTime(), function()
-			if (IsValid(ragdoll) and IsValid(entity)) then
-				local headIndex = ragdoll:LookupBone("ValveBiped.Bip01_Head1");
-				local physObjCount = ragdoll:GetPhysicsObjectCount();
-				
-				for i = 1, physObjCount do
-					local physicsObject = ragdoll:GetPhysicsObjectNum(i);
-					local boneIndex = ragdoll:TranslatePhysBoneToBone(i);
-					local position, angle = entity:GetBonePosition(boneIndex);
-					
-					if (IsValid(physicsObject)) then
-						physicsObject:SetPos(position);
-						physicsObject:SetAngles(angle);
-					end;
-				end;
-				
-				for i = 1, 4 do 
-					local effectData = EffectData();
-					effectData:SetOrigin(position);
-					effectData:SetScale(20);
-					util.Effect("BloodImpact", effectData);
-				end;
-				
-				ragdoll:EmitSound("physics/flesh/flesh_squishy_impact_hard"..math.random(1, 4)..".wav", 70);
-				ragdoll.RotLevel = entity.RotLevel;
-				entity:Remove();
-			end;
-		end);
-	end;
-end;
-
 -- A function to make a prop go up in a firey explosion.
 function Schema:FireyExplosion(entity, attacker, bExplode)
 	local position = entity:GetPos();
@@ -1383,7 +1303,7 @@ function Schema:DoSpark(entity)
 end;
 
 -- A function to do a tesla effect on an entity.
-function Schema:DoTesla(entity, bDamage)
+function Schema:DoTesla(entity, bDamage, attacker)
 	local effectData = EffectData()
 	
 	if (IsValid(entity)) then
@@ -1400,8 +1320,19 @@ function Schema:DoTesla(entity, bDamage)
 			local damageInfo = DamageInfo();
 			damageInfo:SetDamage(damage);
 			damageInfo:SetDamageType(DMG_SHOCK);
-			--damageInfo:SetAttacker(entity);
-			--damageInfo:SetInflictor(entity);
+			
+			if IsValid(attacker) then
+				damageInfo:SetAttacker(attacker);
+				
+				if attacker.GetActiveWeapon then
+					local weapon = attacker:GetActiveWeapon();
+					
+					if attacker:GetActiveWeapon() then
+						damageInfo:SetInflictor(weapon);
+					end
+				end
+			end
+			
 			entity:TakeDamageInfo(damageInfo);
 		end;
 		
@@ -1807,81 +1738,80 @@ function Schema:BustDownDoor(player, door, force)
 end;
 
 -- A function to permanently kill a player.
-function Schema:PermaKillPlayer(player, ragdoll)
+function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 	if player then
 		--[[if (player:Alive()) then
 			player:Kill(); ragdoll = player:GetRagdollEntity();
 		end;]]--
 		
+		if (!player:GetCharacterData("permakilled")) then
+			player:SetCharacterData("permakilled", true);
+		end
+		
 		local inventory = player:GetInventory();
+		local copy = Clockwork.inventory:CreateDuplicate(inventory);
 		local cash = player:GetCash();
 		local info = {};
 		
-		if (!player:GetCharacterData("permakilled")) then
-			info.inventory = inventory;
-			info.cash = cash;
+		info.inventory = copy;
+		info.cash = cash;
+		
+		Clockwork.plugin:Call("PlayerAdjustPermaKillInfo", player, info);
+		
+		for k, v in pairs(info.inventory) do
+			local itemTable = Clockwork.item:FindByID(k);
 			
-			if !ragdoll then
-				ragdoll = player:GetRagdollEntity();
-			end
-			
-			if (!IsValid(ragdoll)) then
-				info.entity = ents.Create("cw_belongings");
+			if (itemTable and itemTable.allowStorage == false) then
+				info.inventory[k] = nil;
 			end;
-			
-			Clockwork.plugin:Call("PlayerAdjustPermaKillInfo", player, info);
-			
-			for k, v in pairs(info.inventory) do
-				local itemTable = Clockwork.item:FindByID(k);
-				
-				if (itemTable and itemTable.allowStorage == false) then
-					info.inventory[k] = nil;
-				end;
-			end;
-			
-			player.bgBackpackData = nil;
-			player.bgCharmData = nil;
-			player:SetCharacterData("permakilled", true);
-			player:SetCharacterData("backpacks", nil);
-			player:SetCharacterData("cash", 0, true);
-			player:SetCharacterData("charms", nil);
-			player:SetCharacterData("helmet", nil);
-			player:SetNetVar("backpacks", 0);
-			player:SetNetVar("charms", 0);
-			player:SetNetVar("helmet", 0);
-			player:SetBodygroup(0, 0);
-			player:SetBodygroup(1, 0);
-			
-			Clockwork.datastream:Start(player, "BGBackpackData", {});
-			Clockwork.datastream:Start(player, "BGCharmData", {});
-			Clockwork.datastream:Start(player, "BGClothes", {});
-			
-			if (!IsValid(ragdoll)) then
-				if (!table.IsEmpty(info.inventory) or info.cash > 0) then
-					info.entity:SetData(info.inventory, info.cash);
-					info.entity:SetPos(player:GetPos() + Vector(0, 0, 48));
-					info.entity:Spawn();
-				else
-					info.entity:Remove();
-				end;
-			else
-				ragdoll.areBelongings = true;
-				ragdoll.inventory = info.inventory;
-				ragdoll.cwCash = info.cash;
-			end;
-			
-			local invList = Clockwork.inventory:GetAsItemsList(player:GetInventory());
-			inventory = player:GetInventory();
-			
-			for k, v in pairs (invList) do
-				for i = 1, Clockwork.inventory:GetItemCountByID(inventory, v.uniqueID) do
-					player:TakeItemByID(v.uniqueID)
-				end;
-			end;
-			
-			Clockwork.player:StripGear(player);
-			Clockwork.player:SaveCharacter(player);
 		end;
+		
+		for k, v in pairs(inventory) do
+			for k2,v2 in pairs(v) do
+				player:TakeItem(v2);
+			end
+		end
+		
+		player.bgBackpackData = nil;
+		player.bgCharmData = nil;
+		player:SetCharacterData("permakilled", true);
+		player:SetCharacterData("Cash", 0, true);
+		player:SetCharacterData("backpacks", nil);
+		player:SetCharacterData("charms", nil);
+		player:SetCharacterData("helmet", nil);
+		player:SetSharedVar("Cash", 0);
+		player:SetNetVar("backpacks", 0);
+		player:SetNetVar("charms", 0);
+		player:SetNetVar("helmet", 0);
+		player:SetBodygroup(0, 0);
+		player:SetBodygroup(1, 0);
+		
+		Clockwork.datastream:Start(player, "BGBackpackData", {});
+		Clockwork.datastream:Start(player, "BGCharmData", {});
+		Clockwork.datastream:Start(player, "BGClothes", {});
+		
+		if !ragdoll then
+			ragdoll = player:GetRagdollEntity();
+		end
+		
+		if (!IsValid(ragdoll)) then
+			info.entity = ents.Create("cw_belongings");
+
+			if (!table.IsEmpty(info.inventory) or info.cash > 0) then
+				info.entity:SetData(info.inventory, info.cash);
+				info.entity:SetPos(player:GetPos() + Vector(0, 0, 48));
+				info.entity:Spawn();
+			else
+				info.entity:Remove();
+			end;
+		else
+			ragdoll.isBelongings = true;
+			ragdoll.cwInventory = info.inventory;
+			ragdoll.cwCash = info.cash;
+		end;
+		
+		Clockwork.player:StripGear(player);
+		Clockwork.player:SaveCharacter(player);
 	end
 end;
 
@@ -1939,15 +1869,16 @@ function Schema:CheapleCaughtPlayer(player)
 			player.caughtByCheaple = true;
 
 			timer.Simple(9, function()
-				player:KillSilent();
 				player:Freeze(false);
 				player.scriptedDying = false;
 				player.caughtByCheaple = false;
 				player:SetCharacterData("CheaplePos", nil);
 				player:KillSilent();
+				Schema:PermaKillPlayer(player, nil, true);
 			end);
 		else
 			player:KillSilent();
+			Schema:PermaKillPlayer(player, nil, true);
 		end
 		
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." was caught by a cheaple!", nil);

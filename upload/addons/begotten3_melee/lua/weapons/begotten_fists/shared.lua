@@ -76,6 +76,7 @@ function SWEP:PrimaryAttack()
 
 					dmg:SetDamage(10);
 					dmg:SetDamageForce(self:GetOwner():GetAimVector() * 100);
+					dmg:SetDamageType(DMG_SHOCK);
 					ent:TakeDamageInfo( dmg )
 					
 					--[[local effectdata = EffectData()
