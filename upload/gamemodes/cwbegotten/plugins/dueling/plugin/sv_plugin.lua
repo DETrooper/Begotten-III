@@ -738,7 +738,11 @@ function cwDueling:DuelCompleted(winner, loser)
 					end
 				end);
 
-				Schema:EasyText({winner, loser}, "icon16/shield_add.png", "forestgreen", winner:Name().." was the winner with "..winner:Health().." out of "..winner:GetMaxHealth().." health left!");
+				if cwBeliefs then
+					Schema:EasyText({winner, loser}, "icon16/shield_add.png", "forestgreen", winner:Name().." ("..winner:GetCharacterData("level", 1)..") was the winner with "..winner:Health().." out of "..winner:GetMaxHealth().." health left!");
+				else
+					Schema:EasyText({winner, loser}, "icon16/shield_add.png", "forestgreen", winner:Name().." was the winner with "..winner:Health().." out of "..winner:GetMaxHealth().." health left!");
+				end
 			end
 		end
 	elseif IsValid(winner) then
@@ -803,7 +807,11 @@ function cwDueling:DuelCompleted(winner, loser)
 					end
 				end);
 				
-				Schema:EasyText(winner, "icon16/shield_add.png", "forestgreen", winner:Name().." was the winner with "..winner:Health().." out of "..winner:GetMaxHealth().." health left!");
+				if cwBeliefs then
+					Schema:EasyText(winner, "icon16/shield_add.png", "forestgreen", winner:Name().." ("..winner:GetCharacterData("level", 1)..") was the winner with "..winner:Health().." out of "..winner:GetMaxHealth().." health left!");
+				else
+					Schema:EasyText(winner, "icon16/shield_add.png", "forestgreen", winner:Name().." was the winner with "..winner:Health().." out of "..winner:GetMaxHealth().." health left!");
+				end
 			end
 		end
 	elseif IsValid(loser) then

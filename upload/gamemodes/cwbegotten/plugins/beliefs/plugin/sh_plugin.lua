@@ -835,11 +835,20 @@ local COMMAND = Clockwork.command:New("Warcry");
 										-- Cooldown for getting sanity debuff.
 										if !v.lastWarCried or v.lastWarCried < curTime - 60 then
 											v.lastWarCried = curTime;
-											v:HandleSanity(sanity_debuff);
+											
+											if v:HasBelief("prudence") then
+												v:HandleSanity(math.Round(sanity_debuff / 2));
+											else
+												v:HandleSanity(sanity_debuff);
+											end
 										end
 									end
 								
-									v:Disorient(15);
+									if v:HasBelief("saintly_composure") then
+										v:Disorient(3);
+									else
+										v:Disorient(15);
+									end
 								end
 							elseif faith == "Faith of the Family" then
 								if faction == "Goreic Warrior" and vFaction == "Goreic Warrior" then
@@ -861,7 +870,12 @@ local COMMAND = Clockwork.command:New("Warcry");
 										-- Cooldown for getting sanity debuff.
 										if !v.lastWarCried or v.lastWarCried < curTime - 60 then
 											v.lastWarCried = curTime;
-											v:HandleSanity(sanity_debuff);
+											
+											if v:HasBelief("prudence") then
+												v:HandleSanity(math.Round(sanity_debuff / 2));
+											else
+												v:HandleSanity(sanity_debuff);
+											end
 										end
 										
 										if player_has_fearsome_wolf or player_has_daring_trout then
@@ -873,7 +887,11 @@ local COMMAND = Clockwork.command:New("Warcry");
 										end
 									end
 								
-									v:Disorient(3);
+									if v:HasBelief("saintly_composure") then
+										v:Disorient(1);
+									else
+										v:Disorient(3);
+									end
 								end
 							end
 							

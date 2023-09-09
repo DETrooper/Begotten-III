@@ -1324,7 +1324,15 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 			
 			if not attacker.opponent and entity:CharPlayTime() > 1800 and attacker ~= entity then
 				if !cwRituals or (cwRituals and !entity.scornificationismActive) then
-					attacker:HandleXP(damage * self.xpValues["damage"]);
+					local experience = damage * self.xpValues["damage"];
+					local entFaction = entity:GetFaction();
+					local subfaction = attacker:GetSubfaction();
+					
+					if attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary" and entFaction ~= "Gatekeeper" and entFaction ~= "Holy Hierarchy" then
+						experience = experience * 2;
+					end
+					
+					attacker:HandleXP(experience);
 				end
 			end
 		elseif entity:IsNPC() then
