@@ -67,7 +67,12 @@ local COMMAND = Clockwork.command:New("Promote")
 		
 		if (target) then
 			local faction = target:GetFaction();
-			local playerFaction = target:GetFaction();
+			local playerFaction = player:GetFaction();
+			local kinisgerOverride = target:GetSharedVar("kinisgerOverride");
+			
+			if kinisgerOverride then
+				faction = kinisgerOverride;
+			end
 		
 			if player:IsAdmin() or ((playerFaction == faction and Schema.RanksOfAuthority[playerFaction][player:GetCharacterData("rank", 1)]) or playerFaction == "Holy Hierarchy") then
 				local name = target:Name();
@@ -98,7 +103,7 @@ local COMMAND = Clockwork.command:New("Promote")
 					end
 					
 					target:SetCharacterData("rank", rank);
-					hook.Run("PlayerChangedRanks", player);
+					hook.Run("PlayerChangedRanks", target);
 					local notifyTarget = tobool(arguments[3]);
 					
 					if (target == player) then
@@ -126,7 +131,7 @@ COMMAND:Register()
 local COMMAND = Clockwork.command:New("Demote")
 	COMMAND.tip = "Demote a character if they belong to a faction with ranks."
 	COMMAND.text = "<string Character>"
-	COMMAND.access = "o"
+	--COMMAND.access = "o"
 	COMMAND.arguments = 1;
 
 	-- Called when the command has been run.
@@ -134,24 +139,35 @@ local COMMAND = Clockwork.command:New("Demote")
 		local target = Clockwork.player:FindByID(arguments[1]);
 
 		if (target) then
-			local name = target:Name();
 			local faction = target:GetFaction();
-			local ranks = Schema.Ranks;
+			local playerFaction = player:GetFaction();
+			local kinisgerOverride = target:GetSharedVar("kinisgerOverride");
 			
-			if (!ranks[faction]) then
-				Schema:EasyText(player, "darkgrey", target:Name().." does not belong to a faction with ranks!");
-				return;
-			end;
+			if kinisgerOverride then
+				faction = kinisgerOverride;
+			end
 
-			local rank = math.Clamp(target:GetCharacterData("rank", 1) - 1, 1, #ranks[faction])
-			target:SetCharacterData("rank", rank);
-			hook.Run("PlayerChangedRanks", player);
-			
-			if (target == player) then
-				name = "yourself";
-			end;
+			if player:IsAdmin() or ((playerFaction == faction and Schema.RanksOfAuthority[playerFaction][player:GetCharacterData("rank", 1)]) or playerFaction == "Holy Hierarchy") then
+				local name = target:Name();
+				local ranks = Schema.Ranks;
+				
+				if (!ranks[faction]) then
+					Schema:EasyText(player, "darkgrey", target:Name().." does not belong to a faction with ranks!");
+					return;
+				end;
 
-			Schema:EasyText(player, "cornflowerblue", "You have demoted "..name.." to the rank of \""..ranks[faction][rank].."\".");
+				local rank = math.Clamp(target:GetCharacterData("rank", 1) - 1, 1, #ranks[faction])
+				target:SetCharacterData("rank", rank);
+				hook.Run("PlayerChangedRanks", target);
+				
+				if (target == player) then
+					name = "yourself";
+				end;
+
+				Schema:EasyText(player, "cornflowerblue", "You have demoted "..name.." to the rank of \""..ranks[faction][rank].."\".");
+			else
+				Schema:EasyText(player, "grey", "You do not have permissions to change the rank of "..target:Name().."!");
+			end
 		else
 			Schema:EasyText(player, "grey", target.." is not a valid character!");
 		end;

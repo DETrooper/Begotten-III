@@ -164,7 +164,6 @@ function cwDeathCauses:PlayerDeath(player, inflictor, attacker, damageInfo)
 						attackerName = "an unknown assailant";
 					end
 					
-					-- Also handling kill tracking here because I'm a lazy fuck.
 					local attackerKills = attacker:GetKills();
 					
 					attacker:SetKills(attackerKills + 1);

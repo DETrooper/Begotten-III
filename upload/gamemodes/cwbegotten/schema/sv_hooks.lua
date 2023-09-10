@@ -211,7 +211,7 @@ end
 function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 	local class = entity:GetClass();
 
-	if entity:IsPlayer() then
+	if entity:IsPlayer() and player:GetFaction() == "Goreic Warrior" and entity:GetFaction() ~= "Goreic Warrior" then
 		if (arguments == "cw_sellSlave") and entity:GetNetVar("tied") != 0 then
 			for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
 				if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
@@ -221,8 +221,13 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 					if cwBeliefs then
 						local killXP = self.xpValues["kill"];
 						
-						-- 25% of kill XP rewarded for selling a slave.
-						killXP = (killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40)) * 0.25;
+						killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
+						
+						if player:HasBelief("sister") then
+							if player:GetCharacterData("level", 1) > player:GetCharacterData("level", 1) then
+								killXP = killXP * 2;
+							end
+						end
 					
 						player:HandleXP(killXP);
 					end
@@ -242,6 +247,9 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 					Schema:EasyText(entity, "firebrick", "You have been sold into slavery by "..playerName.."!");
 					entity:KillSilent();
 					Schema:PermaKillPlayer(entity, nil, true);
+					player:SetKills(sacrificer:GetKills() + 1);
+					
+					return;
 				end
 			end
 		end
@@ -1173,7 +1181,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized)
 	infoTable.jumpPower = infoTable.jumpPower + acrobatics;
 	infoTable.runSpeed = infoTable.runSpeed + agility;]]--
 	if initialized and alive then
-		local faction = player:GetFaction();
+		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 		local bOnGround = player:IsOnGround();
 		local moveType = player:GetMoveType();
 		local waterLevel = player:WaterLevel();
@@ -1231,7 +1239,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized)
 				
 				local collectableWages = player:GetCharacterData("collectableWages", 0);
 				
-				if collectableWages < 3 and self.towerTreasury > 0 then
+				if collectableWages < 4 and self.towerTreasury > 0 then
 					player:SetCharacterData("collectableWages", collectableWages + 1);
 				end
 				
@@ -1654,10 +1662,31 @@ function Schema:PlayerCanUseDoor(player, door)
 		local doorName = door:GetName();
 		
 		if table.HasValue(self.towerDoors, doorName) then
-			local faction = player:GetFaction();
+			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local curTime = CurTime();
 			
 			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" then
+				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
+					player.nextDoorNotify = curTime + 1;
+				
+					Schema:EasyText(player, "firebrick", "You aren't the correct faction to open this blastdoor!");
+				end
+				
 				return false;
+			end
+			
+			if faction == "Gatekeeper" then
+				local rank = Schema.Ranks[faction][player:GetCharacterData("rank") or 1];
+				
+				if not table.HasValue(Schema.RanksOfAuthority[faction], rank) then
+					if !player.nextDoorNotify or player.nextDoorNotify < curTime then
+						player.nextDoorNotify = curTime + 1;
+					
+						Schema:EasyText(player, "firebrick", "You aren't a high enough rank to open this blastdoor!");
+					end
+				
+					return false;
+				end
 			end
 		elseif doorName == "toothboyblastdoor" or doorName == "toothboyblastdoor2" then
 			if player:GetSubfaith() ~= "Voltism" then
@@ -1912,7 +1941,7 @@ function Schema:PlayerDeath(player, inflictor, attacker, damageInfo)
 	if IsValid(attacker) and attacker:IsPlayer() and attacker:Alive() and player:GetFaction() ~= "Goreic Warrior" and attacker:GetFaction() == "Goreic Warrior" then
 		if player:GetPos():WithinAABox(Vector(11622, -6836, 12500), Vector(8744, -10586, 11180)) then
 			local catalysts = {"down_catalyst", "elysian_catalyst", "up_catalyst", "trinity_catalyst", "light_catalyst", "purifying_stone", "belphegor_catalyst", "pantheistic_catalyst", "familial_catalyst", "ice_catalyst"};
-			local killXP = (cwBeliefs.xpValues["kill"] * 3) or 15;
+			local killXP = (cwBeliefs.xpValues["kill"] * 12) or 30;
 			local level = player:GetCharacterData("level", 1);
 			local numCatalysts = 0;
 			
@@ -1990,7 +2019,7 @@ end
 
 -- Called when a player changes ranks.
 function Schema:PlayerChangedRanks(player)
-	local faction = player:GetFaction();
+	local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 	
 	if (self.Ranks[faction]) then
 		if (!player:GetCharacterData("rank")) then
@@ -2106,7 +2135,7 @@ function Schema:PlayerCharacterLoaded(player)
 		player.banners = {};
 	end
 	
-	local faction = player:GetFaction();
+	local faction = player:GetCharacterData("kinisgerOverride") or player:GetFaction();
 	
 	player:OverrideName(nil)
 	
@@ -2125,6 +2154,8 @@ function Schema:PlayerCharacterLoaded(player)
 							if isubfaction.startingRank then
 								player:SetCharacterData("rank", isubfaction.startingRank);
 								subfactionRankFound = true;
+								
+								break;
 							end
 						end
 					end
@@ -2159,9 +2190,11 @@ function Schema:PlayerCharacterLoaded(player)
 				Clockwork.player:GiveFlags(player, "U");
 			end
 		end
-	-- Code to grandfather in pre-rank update Gatekeeper characters to the new rank system during the original Begotten III, no longer required.
-	--[[elseif faction == "Gatekeeper" then
-		local subfaction = player:GetSubfaction();
+	elseif faction == "Gatekeeper" then
+		player:SetLocalVar("collectedGear", player:GetCharacterData("collectedGear"));
+	
+		-- Code to grandfather in pre-rank update Gatekeeper characters to the new rank system during the original Begotten III, no longer required.
+		--[[local subfaction = player:GetSubfaction();
 		
 		if !subfaction or subfaction == "N/A" or subfaction == "" then
 			player:SetCharacterData("Subfaction", "Legionary", true);

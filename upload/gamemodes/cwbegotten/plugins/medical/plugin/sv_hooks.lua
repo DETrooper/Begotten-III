@@ -67,7 +67,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 						end
 						
 						if player.HasCharmEquipped and player:HasCharmEquipped("embalmed_heart") then
-							bloodLossPerLimb = bloodLossPerLimb * 0.75;
+							bloodLossPerLimb = bloodLossPerLimb * 0.6;
 						end
 						
 						for k, v in pairs(bleedingLimbs) do
@@ -681,8 +681,10 @@ function cwMedicalSystem:PlayerTakeDamage(player, attacker, inflictor, hitGroup,
 						chance = math.max(0, chance - 25);
 					end
 					
-					if player:HasBelief("enduring_bear") then
+					if player:HasBelief("watchful_raven") then
 						chance = math.max(0, chance - 25);
+					elseif player:HasBelief("enduring_bear") then
+						chance = math.max(0, chance - 10);
 					end
 					
 					if math.random(1, 100) <= chance then
@@ -710,12 +712,16 @@ function cwMedicalSystem:PlayerTakeDamage(player, attacker, inflictor, hitGroup,
 						end
 					end
 					
+					local originalChance = chance;
+					
 					if player:HasBelief("hide_of_steel") then
-						chance = math.max(0, chance * 0.5);
+						chance = math.max(0, chance - (originalChance * 0.5));
 					end
 					
-					if player:HasBelief("enduring_bear") then
-						chance = math.max(0, chance * 0.8);
+					if player:HasBelief("watchful_raven") then
+						chance = math.max(0, chance - (originalChance * 0.5));
+					elseif player:HasBelief("enduring_bear") then
+						chance = math.max(0, chance - (originalChance * 0.8));
 					end
 					
 					if math.random(1, 100) <= chance then

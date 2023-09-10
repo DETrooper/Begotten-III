@@ -46,7 +46,7 @@ function ENT:Use(activator, caller)
 					-- Inquisition/Knights can get salary from Coinslot the same as Gatekeepers.
 					state = "Gatekeeper";
 				end
-			elseif faction == "Gatekeeper" then
+			elseif faction == "Gatekeeper" or caller:GetSharedVar("kinisgerOverride") == "Gatekeeper" then
 				state = "Gatekeeper";
 			end
 			

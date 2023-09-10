@@ -72,7 +72,11 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized)
 				
 				if player:Crouching() and player:GetNetVar("kinisgerCloak") == true and !player.cwObserverMode then
 					if !player.wOSIsRolling or !player:wOSIsRolling() then
-						player:Cloak();
+						if !player.cloakCooldown or player.cloakCooldown <= curTime then
+							player:Cloak();
+						else
+							Schema:EasyText(self.Owner, "chocolate", "You are covered in black powder and cannot cloak for "..math.Round(player.cloakCooldown - curTime).." seconds!");
+						end
 					end
 				end
 			end
@@ -1324,19 +1328,45 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 			
 			if not attacker.opponent and entity:CharPlayTime() > 1800 and attacker ~= entity then
 				if !cwRituals or (cwRituals and !entity.scornificationismActive) then
-					local experience = damage * self.xpValues["damage"];
-					local entFaction = entity:GetFaction();
-					local subfaction = attacker:GetSubfaction();
+					local attackerFaction = attacker:GetFaction();
+					local attackerFactionTable = Clockwork.faction:FindByID(attackerFaction);
 					
-					if attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary" and entFaction ~= "Gatekeeper" and entFaction ~= "Holy Hierarchy" then
-						experience = experience * 2;
+					if attackerFactionTable then
+						local playerFaction = entity:GetFaction();
+						local kinisgerOverride = entity:GetSharedVar("kinisgerOverride");
+						
+						if kinisgerOverride and attackerFaction ~= "Children of Satan" then
+							playerFaction = kinisgerOverride;
+						end
+						
+						-- Make sure players can't get XP from damaging the same faction as them!
+						if (attackerFaction ~= playerFaction and (!attackerFactionTable.alliedfactions or !table.HasValue(attackerFactionTable.alliedfactions, playerFaction))) or attackerFaction == "Wanderer" then
+							local subfaction = attacker:GetSubfaction();
+							local damageXP = math.min(damage, entity:Health()) * self.xpValues["damage"];
+							
+							damageXP = damageXP * math.Clamp(entity:GetCharacterData("level", 1), 1, 40);
+							
+							if attacker:HasBelief("father") then
+								if attacker:GetCharacterData("level", 1) < entity:GetCharacterData("level", 1) then
+									damageXP = damageXP * 2;
+								end
+							elseif attacker:HasBelief("sister") then
+								if attacker:GetCharacterData("level", 1) > entity:GetCharacterData("level", 1) then
+									damageXP = damageXP * 2;
+								end
+							end
+							
+							if attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary"  then
+								damageXP = damageXP * 2;
+							end
+						
+							attacker:HandleXP(damageXP);
+						end
 					end
-					
-					attacker:HandleXP(experience);
 				end
 			end
 		elseif entity:IsNPC() then
-			attacker:HandleXP(damage * (self.xpValues["damage"] * 4));
+			attacker:HandleXP(math.min(damage, entity:Health()) * (self.xpValues["damage"] * 4));
 		end
 	end
 	
@@ -1377,21 +1407,36 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 		end
 		
 		if player:CharPlayTime() > 1800 then
-			local killXP = self.xpValues["kill"];
+			local attackerFaction = attacker:GetFaction();
+			local attackerFactionTable = Clockwork.faction:FindByID(attackerFaction);
 			
-			killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
-			
-			if attacker:HasBelief("father") then
-				if attacker:GetCharacterData("level", 1) < player:GetCharacterData("level", 1) then
-					killXP = killXP * 2;
+			if attackerFactionTable then
+				local playerFaction = player:GetFaction();
+				local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
+				
+				if kinisgerOverride and attackerFaction ~= "Children of Satan" then
+					playerFaction = kinisgerOverride;
 				end
-			elseif attacker:HasBelief("sister") then
-				if attacker:GetCharacterData("level", 1) > player:GetCharacterData("level", 1) then
-					killXP = killXP * 2;
+				
+				-- Make sure players can't get XP from damaging the same faction as them!
+				if (attackerFaction ~= playerFaction and (!attackerFactionTable.alliedfactions or !table.HasValue(attackerFactionTable.alliedfactions, playerFaction))) or attackerFaction == "Wanderer" then
+					local killXP = self.xpValues["kill"];
+					
+					killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
+					
+					if attacker:HasBelief("father") then
+						if attacker:GetCharacterData("level", 1) < player:GetCharacterData("level", 1) then
+							killXP = killXP * 2;
+						end
+					elseif attacker:HasBelief("sister") then
+						if attacker:GetCharacterData("level", 1) > player:GetCharacterData("level", 1) then
+							killXP = killXP * 2;
+						end
+					end
+
+					attacker:HandleXP(killXP);
 				end
 			end
-
-			attacker:HandleXP(killXP);
 		end
 	end
 	

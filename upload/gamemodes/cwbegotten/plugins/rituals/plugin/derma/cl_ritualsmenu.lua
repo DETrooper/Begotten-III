@@ -696,6 +696,8 @@ function PANEL:Init()
 		local factionTable = Clockwork.faction:FindByID(value);
 		
 		if IsValid(self.subfactionMultiChoice) then
+			self.subfactionMultiChoice:Clear();
+		
 			if factionTable.subfactions then
 				for k, v in pairs(factionTable.subfactions) do
 					self.subfactionMultiChoice:AddChoice(v.name);
@@ -703,7 +705,6 @@ function PANEL:Init()
 				
 				self.subfactionMultiChoice:ChooseOptionID(1);
 			else
-				self.subfactionMultiChoice:Clear();
 				self.selectedSubfaction = nil;
 			end
 		end;
@@ -715,7 +716,7 @@ function PANEL:Init()
 		end;
 		
 		-- Select Wanderer.
-		self.factionMultiChoice:ChooseOptionID(3);
+		self.factionMultiChoice:ChooseOptionID(2);
 	end;
 	
 	self.subfactionMultiChoice = self.nameForm:ComboBox("Subfaction");
@@ -838,6 +839,25 @@ function PANEL:Init()
 				Clockwork.character:SetFault("Your name must not be greater than 32 characters long!");
 				return false;
 			end;
+		
+			local blacklistedNames = {};
+			
+			if Schema.Ranks then
+				for k, v in pairs(Schema.Ranks) do
+					for i, v2 in ipairs(v) do
+						table.insert(blacklistedNames, string.lower(v2));
+					end
+				end
+			end
+			
+			for i = 1, #blacklistedNames do
+				local blacklistedName = blacklistedNames[i];
+			
+				if string.find(string.lower(self.fullName), blacklistedName) then
+					Clockwork.character:SetFault("Character's name must not contain any blacklisted phrases.");
+					return false;
+				end
+			end
 		end;
 		
 		if (!self.selectedModel) then

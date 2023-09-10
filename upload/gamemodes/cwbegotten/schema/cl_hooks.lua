@@ -634,24 +634,14 @@ end;
 -- Called when the target's subfaction should be drawn.
 function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 	local playerSubfaction = Clockwork.Client:GetSharedVar("subfaction");
-	local targetSubfaction = target:GetSharedVar("subfaction");
+	local targetSubfaction = target:GetSharedVar("kinisgerOverrideSubfaction") or target:GetSharedVar("subfaction");
 	local subfactionText;
 	
 	if targetSubfaction and targetSubfaction ~= "" and targetSubfaction ~= "N/A" then
-		local targetFaction = target:GetFaction();
+		local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
 		local playerFaction = Clockwork.Client:GetFaction();
-		local kinisgerOverride = target:GetSharedVar("kinisgerOverride");
-		local kinisgerOverrideSubfaction = target:GetSharedVar("kinisgerOverrideSubfaction");
 		local textColor = Color(150, 150, 150, 255);
-		
-		if kinisgerOverride then
-			targetFaction = kinisgerOverride;
-		end
-		
-		if kinisgerOverrideSubfaction then
-			targetSubfaction = kinisgerOverrideSubfaction;
-		end
-		
+
 		if playerFaction == "Goreic Warrior" and targetFaction == "Goreic Warrior" then
 			local FACTION = Clockwork.faction:FindByID(playerFaction)
 			local SUBFACTION = nil;
@@ -674,21 +664,30 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 			else
 				subfactionText = "A member of "..targetSubfaction..".";
 			end
-		elseif playerFaction == "Children of Satan" and targetFaction == "Children of Satan" then
+		elseif playerFaction == "Children of Satan" and target:GetFaction() == "Children of Satan" then
 			if target:GetModel() == "models/begotten/satanists/lordvasso/male_56.mdl" then
 				subfactionText = "The chosen of Satan, the Dreadlord himself!";
 				textColor = Color(0, 255, 0, 255);
-			elseif playerSubfaction == targetSubfaction then
+			elseif playerSubfaction == targetSubfaction or playerSubfaction == "Kinisger" and target:GetSharedVar("kinisgerOverrideSubfaction") then
 				local brother = "brother";
 				
 				if target:GetGender() == GENDER_FEMALE then
 					brother = "sister";
 				end
 				
-				subfactionText = "A "..brother.." of the "..targetSubfaction.." bloodline.";
+				if target:GetSharedVar("kinisgerOverrideSubfaction") then
+					subfactionText = "A "..brother.." of the Kinisger bloodline, masquerading as a "..targetSubfaction..".";
+				else
+					subfactionText = "A "..brother.." of the "..targetSubfaction.." bloodline.";
+				end
+				
 				textColor = Color(0, 255, 0, 255);
 			else
-				subfactionText = "A member of the "..targetSubfaction.." bloodline.";
+				if target:GetSharedVar("kinisgerOverrideSubfaction") then
+					subfactionText = "A member of the Kinisger bloodline, masquerading as a "..targetSubfaction..".";
+				else
+					subfactionText = "A member of the "..targetSubfaction.." bloodline.";
+				end
 			end
 		elseif targetFaction ~= "Children of Satan" and targetFaction ~= "Goreic Warrior" then
 			if targetSubfaction == "Ministry" then
@@ -965,6 +964,48 @@ function Schema:GetCinematicIntroInfo()
 		text = Clockwork.config:Get("intro_text_small"):Get()
 	};
 end;
+
+function Schema:ModifyStatusEffects(tab)
+	if Clockwork.Client:HasTrait("clumsy") then
+		table.insert(tab, {text = "(-) Clumsy", color = Color(200, 40, 40)});
+	end
+
+	if Clockwork.Client:HasTrait("crosseyed") then
+		table.insert(tab, {text = "(-) Cross Eyed", color = Color(200, 40, 40)});
+	end
+	
+	if Clockwork.Client:HasTrait("followed") then
+		table.insert(tab, {text = "(-) Followed", color = Color(200, 40, 40)});
+	end
+	
+	if Clockwork.Client:HasTrait("gluttony") then
+		table.insert(tab, {text = "(-) Gluttonous", color = Color(200, 40, 40)});
+	end
+
+	if Clockwork.Client:HasTrait("imbecile") then
+		table.insert(tab, {text = "(-) Imbecile", color = Color(200, 40, 40)});
+	end
+	
+	if Clockwork.Client:HasTrait("marked") then
+		table.insert(tab, {text = "(-) Marked", color = Color(200, 40, 40)});
+	end
+	
+	if Clockwork.Client:HasTrait("pacifist") then
+		table.insert(tab, {text = "(-) Pacifist", color = Color(200, 40, 40)});
+	end
+	
+	if Clockwork.Client:HasTrait("possessed") then
+		table.insert(tab, {text = "(-) Possessed", color = Color(200, 40, 40)});
+	end
+	
+	if Clockwork.Client:HasTrait("scavenger") then
+		table.insert(tab, {text = "(+) Scavenger", color = Color(0, 225, 0)});
+	end
+	
+	if Clockwork.Client:HasTrait("winded") then
+		table.insert(tab, {text = "(-) Winded", color = Color(200, 40, 40)});
+	end
+end
 
 -- Called when a text entry has gotten focus.
 function Schema:OnTextEntryGetFocus(panel)

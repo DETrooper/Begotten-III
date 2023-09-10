@@ -867,6 +867,8 @@ function PANEL:Init()
 								if isubfaction.startingRank then
 									charRank = isubfaction.startingRank;
 									subfactionRankFound = true;
+									
+									break;
 								end
 							end
 						end
@@ -2143,11 +2145,18 @@ function PANEL:Init()
 		self.availableFaiths = {};
 		self.bFaiths = false;
 	elseif factionTable.availablefaiths and #factionTable.availablefaiths == 1 then
-		self.availableFaiths = factionTable.availablefaiths;
-		self.bFaiths = false;
-		
-		Clockwork.Client.SelectedFaith = factionTable.availablefaiths[1];
-		self.info.faith = factionTable.availablefaiths[1];
+		if Clockwork.Client.SelectedSubfaction == "Clan Reaver" then
+			self.availableFaiths = {"Faith of the Family", "Faith of the Dark"};
+
+			Clockwork.Client.SelectedFaith = self.availableFaiths[1];
+			self.info.faith = self.availableFaiths[1];
+		else
+			self.availableFaiths = factionTable.availablefaiths;
+			self.bFaiths = false;
+
+			Clockwork.Client.SelectedFaith = factionTable.availablefaiths[1];
+			self.info.faith = factionTable.availablefaiths[1];
+		end
 	else
 		self.availableFaiths = factionTable.availablefaiths;
 		Clockwork.Client.SelectedFaith = factionTable.availablefaiths[1];

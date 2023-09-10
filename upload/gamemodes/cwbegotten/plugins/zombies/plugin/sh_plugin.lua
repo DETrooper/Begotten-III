@@ -16,15 +16,16 @@ function cwZombies:ClockworkAddSharedVars(globalVars, playerVars)
 end
 
 cwZombies.zombieNPCS = {
-	"npc_bgt_brute",
-	"npc_bgt_suitor",
-	"npc_bgt_grunt",
 	"npc_bgt_another",
+	"npc_bgt_brute",
 	"npc_bgt_chaser",
 	"npc_bgt_eddie",
 	"npc_bgt_giant",
+	"npc_bgt_grunt",
 	"npc_bgt_guardian",
-	"npc_bgt_otis"
+	"npc_bgt_otis",
+	"npc_bgt_shambler",
+	"npc_bgt_suitor",
 };
 
 cwZombies.terrorNPCs = cwZombies.zombieNPCS;

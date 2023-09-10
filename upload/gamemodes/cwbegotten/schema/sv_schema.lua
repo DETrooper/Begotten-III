@@ -9,6 +9,7 @@ PrecacheParticleSystem("env_fire_large");
 local map = string.lower(game.GetMap());
 
 Schema.maxNPCS = 8;
+Schema.towerTax = 0.1; -- 10% of all salesman sales go to the treasury.
 
 if !Schema.towerSafeZoneEnabled then
 	Schema.towerSafeZoneEnabled = true;
@@ -1892,7 +1893,7 @@ function Schema:BloodTestPlayer(player, bFalsePositives, bDetectImposters)
 	local subfaith = player:GetSubfaith();
 	local subfaction = player:GetSubfaction();
 	
-	if (faith ~= "Faith of the Light" and (!bDetectImposters and subfaction ~= "Kinisger")) or subfaith == "Voltism" or (bFalsePositives and math.random(1, 20) == 1) then
+	if (faith ~= "Faith of the Light" and ((!bDetectImposters and subfaction ~= "Kinisger") or bDetectImposters)) or subfaith == "Voltism" or (bFalsePositives and math.random(1, 20) == 1 and not player:HasBelief("favored")) then
 		Clockwork.chatBox:AddInTargetRadius(player, "it", "The blood test comes up red.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 		
 		player:EmitSound("ambient/alarms/klaxon1.wav");
@@ -2335,6 +2336,7 @@ function Schema:SacrificePlayer(player, sacrificer, method, bShared)
 	player.beingSacrificed = true;
 	sacrificer.sacrificing = true;
 	sacrificer:Freeze(true);
+	sacrificer:SetKills(sacrificer:GetKills() + 1);
 	Clockwork.chatBox:AddInTargetRadius(sacrificer, "me", chosenString.." as the altar before them absorbs their life force.", sacrificer:GetPos(), config.Get("talk_radius"):Get() * 2);
 	
 	local killXP;
@@ -2342,7 +2344,7 @@ function Schema:SacrificePlayer(player, sacrificer, method, bShared)
 	local faithModifier;
 	
 	if cwBeliefs then
-		killXP = cwBeliefs.xpValues["kill"] or 5;
+		killXP = (cwBeliefs.xpValues["kill"] * 4) or 10;
 		faithModifiers = {
 			["Faith of the Light"] = 4,
 			["Faith of the Family"] = 2,
@@ -2475,6 +2477,8 @@ netstream.Hook("FinishWakeup", function(player)
 	end;
 end);
 
+local coinslotSounds = {"buttons/lever1.wav", "buttons/lever4.wav"};
+
 concommand.Add("cw_CoinslotSalaryCheck", function(player, cmd, args)
 	local trace = player:GetEyeTrace();
 
@@ -2482,13 +2486,15 @@ concommand.Add("cw_CoinslotSalaryCheck", function(player, cmd, args)
 		local entity = trace.Entity;
 
 		if (entity:GetClass() == "cw_coinslot") then
-			local faction = player:GetFaction();
+			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 			
 			if (faction == "Gatekeeper" or faction == "Holy Hierarchy") then
 				local collectableWages = player:GetCharacterData("collectableWages", 0);
 				local coin = player.cwInfoTable.coinslotWages * collectableWages;
 				
-				Schema:EasyText(player, "lightslateblue", "You have "..collectableWages.." collectible salaries, for a total of "..coin.." coin.");
+				Schema:EasyText(player, "olive", "You pull the lever to check your salary. According to the Coinslot's mechanical display, you have "..collectableWages.." collectible salaries, for a total of "..coin.." coin.");
+				--Schema:EasyText(player, "lightslateblue", "You have "..collectableWages.." collectible salaries, for a total of "..coin.." coin.");
+				entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
 			end
 		end
 	end;
@@ -2501,11 +2507,18 @@ concommand.Add("cw_CoinslotSalary", function(player, cmd, args)
 		local entity = trace.Entity;
 
 		if (entity:GetClass() == "cw_coinslot") then
-			local faction = player:GetFaction();
+			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 			
 			if (faction == "Gatekeeper" or faction == "Holy Hierarchy") then
 				local collectableWages = player:GetCharacterData("collectableWages", 0);
 				local coin = player.cwInfoTable.coinslotWages * collectableWages
+				
+				if coin <= 0 then
+					Schema:EasyText(player, "olive", "You pull the lever to dispense your salary, but you have none available at present.");
+					entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
+					
+					return;
+				end
 				
 				if Schema.towerTreasury >= coin then
 					Clockwork.player:GiveCash(player, coin, "Coinslot Salary", true);
@@ -2514,8 +2527,13 @@ concommand.Add("cw_CoinslotSalary", function(player, cmd, args)
 					
 					Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name().." has collected their salary of "..coin.." coin from the coinslot. The treasury now sits at "..Schema.towerTreasury..".");
 					Schema:EasyText(player, "olivedrab", "You pull the lever to dispense your salary, gaining "..coin.." coin.");
+					entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
 					
-					entity:EmitSound("ambient/levels/labs/coinslot1.wav");
+					timer.Simple(0.5, function()
+						if IsValid(entity) then
+							entity:EmitSound("ambient/levels/labs/coinslot1.wav");
+						end
+					end);
 				else
 					Schema:EasyText(player, "olive", "Try as you might, the coinslot won't dispense your salary. How odd.");
 					Schema:EasyText(GetAdmins(), "tomato", player:Name().." has attempted to collect his salary, but the treasury is bankrupt!", nil);
@@ -2525,7 +2543,7 @@ concommand.Add("cw_CoinslotSalary", function(player, cmd, args)
 	end;
 end);
 
-local famine = true;
+local famine = false;
 
 concommand.Add("cw_CoinslotRation", function(player, cmd, args)
 	local trace = player:GetEyeTrace();
@@ -2534,15 +2552,16 @@ concommand.Add("cw_CoinslotRation", function(player, cmd, args)
 		local entity = trace.Entity;
 
 		if (entity:GetClass() == "cw_coinslot") then
-			local faction = player:GetFaction();
+			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 			
 			if (faction ~= "Goreic Warrior") then
-				local curTime = CurTime();
 				local unixTime = os.time();
 				
 				if (unixTime >= player:GetCharacterData("nextration", 0)) then
 					if (Schema.towerTreasury and Schema.towerTreasury <= 250) or famine then
 						Schema:EasyText(player, "olive", "You pull the ration lever but one is not dispensed, yet you feel as though it has been long enough. How odd.");
+						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
+						
 						return;
 					end
 				
@@ -2550,15 +2569,56 @@ concommand.Add("cw_CoinslotRation", function(player, cmd, args)
 						player:GiveItem(item.CreateInstance("gatekeeper_ration"), true);
 						player:GiveItem(item.CreateInstance("purified_water"), true);
 						Schema:EasyText(player, "olivedrab", "The machine dispenses a Gatekeeper ration and a bottle of purified water.");
+						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
 					else
 						player:GiveItem(item.CreateInstance("moldy_bread"), true);
 						player:GiveItem(item.CreateInstance("dirtywater"), true);
 						Schema:EasyText(player, "olivedrab", "The machine dispenses half of a loaf of moldy bread and a bottle of dirty water.");
+						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
 					end
 					
 					player:SetCharacterData("nextration", unixTime + 7200);
 				else
 					Schema:EasyText(player, "olive", "You pull the ration lever but one is not dispensed. You must wait for now.");
+					entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
+				end;
+			end
+		end
+	end;
+end);
+
+concommand.Add("cw_CoinslotGear", function(player, cmd, args)
+	local trace = player:GetEyeTrace();
+
+	if (trace.Entity) then
+		local entity = trace.Entity;
+
+		if (entity:GetClass() == "cw_coinslot") then
+			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			
+			if (faction == "Gatekeeper") then
+				local collectedGear = player:GetCharacterData("collectedGear", false);
+				
+				if !collectedGear then
+					if (Schema.towerTreasury and Schema.towerTreasury <= 250) then
+						Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue Gatekeeper kit, but one is not dispensed. How odd.");
+						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
+						
+						return;
+					end
+					
+					player:GiveItem(item.CreateInstance("gatekeeper_standard_issue"), true);
+					Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue Gatekeeper kit. A receptacle beneath the machine opens and a crude duffel bag dispenses.");
+					entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
+					
+					timer.Simple(0.5, function()
+						if IsValid(entity) then
+							entity:EmitSound("physics/cardboard/cardboard_box_impact_soft6.wav");
+						end
+					end);
+					
+					player:SetCharacterData("collectedGear", true);
+					player:SetLocalVar("collectedGear", true);
 				end;
 			end
 		end

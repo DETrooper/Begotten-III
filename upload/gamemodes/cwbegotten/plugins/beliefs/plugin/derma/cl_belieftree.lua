@@ -1087,7 +1087,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 			frame:AddText("Brutality", self.brutality.color, "Civ5ToolTi3");
 			frame:AddText("Brutality is a measure of your character's depravity and hatred of man, primarily affecting your character's survival ability and unlocking abilities such as cannibalism and bone harvesting. Fully upgrading Brutality will make your character far more survivable while increasing your combat ability while insane.", Color(225, 200, 200));
 			frame:AddText("\n\"There will be no exile for the laggards. They will feel my wrath. I will impale a pitchfork through their foul, satanic flesh and harvest it for the cow.\"", Color(128, 90, 90, 240));
-			frame:AddText("\nBelief Tree Completion Bonus: Killing a player instantly restores you to full Health, Stability, Stamina, and Poise.", Color(50, 255, 50));
+			frame:AddText("\nBelief Tree Completion Bonus: Killing another character instantly restores you to full Health, Stability, Stamina, and Poise.", Color(50, 255, 50));
 		end,
 		color = self.brutality.color
 	})
@@ -1878,7 +1878,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 				uniqueID = "father",
 				niceName = "Strength of the Father",
 				subfaith = "Faith of the Father",
-				description = "Selects the 'Faith of the Father' as your subfaith. Unlocks the ability to pray. Unlocks the ability to warcry. Gain double faith gain from killing foes who have a higher sacrament level than you.",
+				description = "Selects the 'Faith of the Father' as your subfaith. Unlocks the ability to pray. Unlocks the ability to warcry. Gain double faith gain from damaging and killing bears, thralls, and characters who have a higher sacrament level than you.",
 				quote = "The Father is the Patriarch, the manifestation of conflict and struggle. He makes sure his children are fit to survive at all costs. The followers of the Father may be bloodthirsty and otherwise brutish, but they possess a sense of strength and honor unmatched by all.",
 				x = column[1],
 				y = row[1],
@@ -1939,7 +1939,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 				uniqueID = "mother",
 				niceName = "Mercy of the Mother",
 				subfaith = "Faith of the Mother",
-				description = "Selects the 'Faith of the Mother' as your subfaith. Unlocks the ability to pray. Unlocks the ability to warcry. Increased faith gain from performing rituals and alchemy.",
+				description = "Selects the 'Faith of the Mother' as your subfaith. Unlocks the ability to pray. Unlocks the ability to warcry. Increased faith gain from performing rituals, healing other characters, and practitioning alchemy.",
 				quote = "The Mother is the Matriarch, the architect of nature and the cycle of life and death. From her womb came all life, and under her watch they will all one day die. The followers of the Mother are outcasts of Gore society, deformed and stunted men, and sickly slave women. Their goal is to heal the corpse world that they inhabit, and give death to the blighted ones who gnaw at its roots.",
 				x = column[2],
 				y = row[1],
@@ -1984,7 +1984,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 				uniqueID = "watchful_raven",
 				niceName = "Watchful is the Raven",
 				subfaith = "Faith of the Mother",
-				description = "Unlocks Tier III Familial Rituals. Unlocks the ability to Ravenspeak if you are a Clan Crast Goreic Warrior. Unlocks unique alchemy recipes.",
+				description = "Unlocks Tier III Familial Rituals. Unlocks the ability to Ravenspeak if you are a Clan Crast Goreic Warrior. Reduces the chance of receiving injuries by 50%. Unlocks unique alchemy recipes.",
 				x = column[2],
 				y = row[4],
 				width = 48,
@@ -2126,7 +2126,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 				uniqueID = "sister",
 				niceName = "Cunning of the Sister",
 				subfaith = "Faith of the Sister",
-				description = "Selects the 'Faith of the Sister' as your subfaith. Unlocks the ability to pray. Unlocks the ability to warcry. Gain increased faith gain from killing foes who have a lower faith level than you.",
+				description = "Selects the 'Faith of the Sister' as your subfaith. Unlocks the ability to pray. Unlocks the ability to warcry. Gain increased faith gain from damaging, killing, and selling into slavery characters who have a lower faith level than you.",
 				quote = "The Sister is the daughter of ambition, the trickster goddess of cunning and schemes. Her followers are hateful and malcontent, always seeking to usurp power wherever possible. Clan Reaver, the chosen Clan of the Sister, is said to have an impenetrable fortress deep in the Goreic Kingdoms where men are tortured and flayed to empower their goddess. The other Clans see Her followers as an ill omen, their coming being the final ruination of the world and the destruction of the Family as a whole. Many suspect that the Sister is not actually a member of the Family but a twisted proxy idol of the Dark Prince. It is unlikely that their assumptions are incorrect.",
 				x = column[5],
 				y = row[1],

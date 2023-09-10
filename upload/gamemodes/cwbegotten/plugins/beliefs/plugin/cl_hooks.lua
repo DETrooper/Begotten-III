@@ -112,6 +112,14 @@ function cwBeliefs:AddEntityOutlines(outlines)
 							return;
 						end
 					end
+					
+					if v:GetSharedVar("kinisgerOverride") then
+						if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= assassinDist) then
+							self:DrawPlayerOutline(v, outlines, Color(0, 225, 225, 255));
+							
+							return;
+						end
+					end
 				end
 				
 				if v:GetSharedVar("markedBySatanist") == true then
@@ -152,6 +160,12 @@ function cwBeliefs:DrawTargetPlayerMarked(target, alpha, x, y)
 		end
 	end
 end;
+
+function cwBeliefs:ModifyStatusEffects(tab)
+	if self:HasBelief("favored") then
+		table.insert(tab, {text = "(+) Favored", color = Color(0, 225, 0)});
+	end
+end
 
 netstream.Hook("DeceitfulHighlight", function(data)
 	if IsValid(data) and data:IsPlayer() then

@@ -13,7 +13,7 @@ function ENT:HUDPaintTargetID(x, y, alpha)
 	local colorWhite = Clockwork.option:GetColor("white")
 	
 	y = Clockwork.kernel:DrawInfo("Coinslot", x, y, colorTargetID, alpha)
-	y = Clockwork.kernel:DrawInfo("A machine with several cranks and gears, and a prominent coinslot.", x, y, colorWhite, alpha);
+	y = Clockwork.kernel:DrawInfo("An ancient machine with a multitude of cranks and gears. It has a prominent coinslot.", x, y, colorWhite, alpha);
 end;
 
 local function CreateMenu(state)
@@ -29,6 +29,13 @@ local function CreateMenu(state)
 	
 	if state ~= "Gore" then
 		menu:AddOption("Collect Ration", function() Clockwork.Client:ConCommand("cw_CoinslotRation") end);
+		
+		if state == "Gatekeeper" then
+			if !Clockwork.Client:GetLocalVar("collectedGear") then
+				menu:AddOption("Collect Gatekeeper Kit", function() Clockwork.Client:ConCommand("cw_CoinslotGear") end);
+			end
+		end
+		
 		menu:AddOption("Donate", function() 
 			Derma_StringRequest("Coinslot", "How much coin would you offer to the Coinslot?", nil, function(text)
 				Clockwork.kernel:RunCommand("CoinslotDonate", text);

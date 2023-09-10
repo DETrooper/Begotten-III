@@ -50,6 +50,7 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 	FACTION.color = Color(80, 100, 120);
 	FACTION.description = "The Gatekeepers are the front line of defence against the countless unholy horrors that threaten the Glaze. \nTheir ranks swell with conscripted power-hungry commoners and fanatical flagellants. \nThey must serve the Holy Hierarchy diligently and without question, no matter how outrageous their demands may be. \nIll-trained and poorly equipped, these soldiers are expected to lay their lives down to protect the Light. \nAnd so they shall.";
 	FACTION.availablefaiths = {"Faith of the Light"};
+	FACTION.alliedfactions = {"Holy Hierarchy"};
 	--[[FACTION.models = {
 		male = {
 			"models/begotten/gatekeepers/gatekeeperlight/male_02.mdl",
@@ -134,8 +135,11 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 	};
 	
 	Schema.RanksOfAuthority["Gatekeeper"] = {
+		[4] = "Forgemaster",
+		[6] = "Master Medicus",
 		[7] = "Emissary",
 		[8] = "Vexillifer",
+		[9] = "Squire",
 		[10] = "High Gatekeeper",
 		[11] = "Master-At-Arms",
 		[13] = "Master Scout",
@@ -199,7 +203,8 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 	FACTION.color = Color(225, 175, 0);
 	FACTION.description = "The Holy Hierarchy upholds the ancient superiority of the enlightened few. \nAmongst the dark sea of bastard blood and uncivilized rabble, they are the adjudicators and administrators to enforce Holy Light. \nStill, many are corrupt, seeking self indulgence rather than directing rights. \nAfter all, from their high seats, there are none above them to look down in judgement."
 	FACTION.availablefaiths = {"Faith of the Light"};
-	FACTION.imposters = true;
+	FACTION.alliedfactions = {"Gatekeeper"};
+	--FACTION.imposters = true;
 	FACTION.names = "glazic";
 	FACTION.subfactions = {
 		{name = "Ministry", subtitle = "The Ministry - The Privileged Few Overseers of Glazic Supremacy", description = "The Holy Hierarchy is perhaps the only surviving institution of the old world and is the only known church of the Light remaining. Many view the Holy Hierarchy as the direct continuation of the Empire of Light, including the Holy Hierarchy themselves, who push this narrative to solidify their grasp on their subjects. Any who doubt its legitimacy are executed on the spot. Lording over most of the 'civilized' peasantry that wander the wasteland, the Holy Hierarchy strictly enforces its religious codes, which are ever-changing at the whim of the Pope. At the very top of the Hierarchy lies the Pope, supreme in power. He lives in a penthouse at the top of the hotel in absolute luxury in comparison to the shanties that the rabble share. Below him lies the cardinals, who serve as the Pope's council. Lower still are the Bishops, many of whom are now in open rebellion against the new Pope, with some even claiming his title as their own. Lastly, there are the priests, who are barely above commoner status and equal in rank to those in the Knights of Sol or Inquisition. A priest's duties often involve searching ancient texts held within the grand archives for any advantage that could be offered to the Hierarchy over their rivals, or for clues to decipher the ramblings of the machine that so many wanderers speak of.", attributes = "ATTRIBUTES", models = ministerModels}, 

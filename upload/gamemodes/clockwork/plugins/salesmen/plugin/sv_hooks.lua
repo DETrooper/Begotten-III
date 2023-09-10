@@ -21,7 +21,9 @@ function cwSalesmen:PlayerCanUseSalesman(player, entity)
 	local bDisallowed = nil
 
 	if (numFactions > 0) then
-		if (!entity.cwFactions[player:GetFaction()]) then
+		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		
+		if (!entity.cwFactions[faction]) then
 			bDisallowed = true
 		end
 	end

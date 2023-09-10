@@ -179,8 +179,17 @@ function cwZombies:OnNPCKilled(npc, attacker, inflictor, attackers)
 				if npc.XPValue then
 					for i = 1, #attackers do
 						local iAttacker = attackers[i];
+						local class = npc:GetClass();
 						
 						if IsValid(iAttacker) then
+							if cwBeliefs and iAttacker:HasBelief("father") then
+								if npc:IsZombie() or string.find(class, "bear") then
+									iAttacker:HandleXP(math.Round((npc.XPValue * 2) / numAttackers));
+									
+									continue;
+								end
+							end
+						
 							iAttacker:HandleXP(math.Round(npc.XPValue / numAttackers));
 						end
 					end
@@ -189,6 +198,14 @@ function cwZombies:OnNPCKilled(npc, attacker, inflictor, attackers)
 						local iAttacker = attackers[i];
 						
 						if IsValid(iAttacker) then
+							if cwBeliefs and iAttacker:HasBelief("father") then
+								if npc:IsZombie() or string.find(class, "bear") then
+									iAttacker:HandleXP(math.Round(50 / numAttackers));
+									
+									continue;
+								end
+							end
+						
 							iAttacker:HandleXP(math.Round(25 / numAttackers));
 						end
 					end

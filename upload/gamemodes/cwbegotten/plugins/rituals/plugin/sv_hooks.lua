@@ -776,6 +776,24 @@ end
 Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 	if player.selectingNewAppearance then
 		if data and data[1] and data[2] and data[3] then
+			local blacklistedNames = {};
+			
+			if Schema.Ranks then
+				for k, v in pairs(Schema.Ranks) do
+					for i, v2 in ipairs(v) do
+						table.insert(blacklistedNames, string.lower(v2));
+					end
+				end
+			end
+			
+			for i = 1, #blacklistedNames do
+				local blacklistedName = blacklistedNames[i];
+			
+				if string.find(string.lower(data[1]), blacklistedName) then
+					return;
+				end
+			end
+			
 			local pos = player:GetPos();
 			local ang = player:EyeAngles();
 			
@@ -787,33 +805,82 @@ Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 			
 			local selectedFaction = data[4];
 			
-			if selectedFaction then
-				if selectedFaction == "Wanderer" then
-					player:SetCharacterData("kinisgerOverride", nil);
-					player:SetSharedVar("kinisgerOverride", nil);
-					player:SetCharacterData("kinisgerOverrideSubfaction", nil);
-					player:SetSharedVar("kinisgerOverrideSubfaction", nil);
-				else
-					local factionTable = Clockwork.faction:FindByID(selectedFaction);
+			if !selectedFaction or selectedFaction == "Wanderer" then
+				player:SetCharacterData("kinisgerOverride", nil);
+				player:SetSharedVar("kinisgerOverride", nil);
+				player:SetCharacterData("kinisgerOverrideSubfaction", nil);
+				player:SetSharedVar("kinisgerOverrideSubfaction", nil);
+				player:SetCharacterData("rank", nil);
+				player:OverrideName(nil);
+			else
+				local factionTable = Clockwork.faction:FindByID(selectedFaction);
+				
+				if factionTable.imposters and !factionTable.disabled then
+					player:SetCharacterData("kinisgerOverride", selectedFaction);
+					player:SetSharedVar("kinisgerOverride", selectedFaction);
 					
-					if factionTable.imposters and !factionTable.disabled then
-						player:SetCharacterData("kinisgerOverride", selectedFaction);
-						player:SetSharedVar("kinisgerOverride", selectedFaction);
+					if factionTable.subfactions then
+						local selectedSubfaction = data[5];
 						
-						if factionTable.subfactions then
-							local selectedSubfaction = data[5];
-							
-							if selectedSubfaction then
-								for k, v in pairs(factionTable.subfactions) do
-									if v.name == selectedSubfaction then
-										player:SetCharacterData("kinisgerOverrideSubfaction", selectedSubfaction);
-										player:SetSharedVar("kinisgerOverrideSubfaction", selectedSubfaction);
-										
-										break;
-									end
+						if selectedSubfaction then
+							for k, v in pairs(factionTable.subfactions) do
+								if v.name == selectedSubfaction then
+									player:SetCharacterData("kinisgerOverrideSubfaction", selectedSubfaction);
+									player:SetSharedVar("kinisgerOverrideSubfaction", selectedSubfaction);
+									
+									break;
 								end
 							end
 						end
+					end
+					
+					if Schema.Ranks then
+						player:OverrideName(nil)
+						
+						if (Schema.Ranks[selectedFaction]) then
+							if (!player:GetCharacterData("rank") or player:GetCharacterData("rank") < 1 or player:GetCharacterData("rank") > #Schema.Ranks[selectedFaction]) then
+								local factionTable = Clockwork.faction:FindByID(selectedFaction);
+								local subfaction = player:GetSubfaction();
+								local subfactionRankFound = false;
+								
+								if subfaction and subfaction ~= "" and subfaction ~= "N/A" then
+									if factionTable and factionTable.subfactions then
+										for i = 1, #factionTable.subfactions do
+											local isubfaction = factionTable.subfactions[i];
+											
+											if isubfaction.name == subfaction then
+												if isubfaction.startingRank then
+													player:SetCharacterData("rank", isubfaction.startingRank);
+													subfactionRankFound = true;
+													
+													break;
+												end
+											end
+										end
+									end
+								end
+								
+								if !subfactionRankFound then
+									player:SetCharacterData("rank", 1);
+								end
+							end;
+
+							local name = player:Name();
+							
+							for k, v in pairs (Schema.Ranks[selectedFaction]) do
+								if (string.find(name, v)) then
+									player:SetCharacterData("rank", k);
+									local newName = Schema:StripRank(name, v)
+									Clockwork.player:SetName(player, string.Trim(newName));
+								end;
+							end;
+							
+							local rank = math.Clamp(player:GetCharacterData("rank", 1), 1, #Schema.Ranks[selectedFaction]);
+							
+							if (rank and isnumber(rank) and Schema.Ranks[selectedFaction][rank]) then
+								player:OverrideName(Schema.Ranks[selectedFaction][rank].." "..player:Name());
+							end;
+						end;
 					end
 				end
 			end

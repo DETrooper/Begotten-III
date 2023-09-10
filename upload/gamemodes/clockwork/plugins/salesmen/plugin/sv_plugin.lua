@@ -60,7 +60,15 @@ netstream.Hook("Salesmenu", function(player, data)
 							Schema:EasyText(player, "olive", "You bought "..amount.." "..itemTable.name.." from "..data.entity:GetNetworkedString("Name")..".")
 						end
 
-						data.entity.cwCash = data.entity.cwCash + cost
+						if Schema.towerTax and data.entity:InTower() then
+							local tax = math.Round(cost * Schema.towerTax);
+							
+							data.entity.cwCash = data.entity.cwCash + (cost - tax);
+							
+							Schema:ModifyTowerTreasury(tax);
+						else
+							data.entity.cwCash = data.entity.cwCash + cost
+						end
 
 						netstream.Start(player, "SalesmenuRebuild", data.entity.cwCash)
 						netstream.Start(player, "PlaySound", "generic_ui/coin_negative_0"..math.random(1, 3)..".wav");
@@ -97,8 +105,18 @@ netstream.Hook("Salesmenu", function(player, data)
 							if (data.entity.cwCash != -1) then
 								data.entity.cwCash = data.entity.cwCash - cost
 							end
-
-							Clockwork.player:GiveCash(player, cost, "1 "..itemTable.name)
+							
+							if Schema.towerTax and data.entity:InTower() then
+								local tax = math.Round(cost * Schema.towerTax);
+								
+								Clockwork.player:GiveCash(player, cost, "1 "..itemTable.name)
+								Clockwork.player:GiveCash(player, -tax, "Tower of Light Tax")
+								
+								Schema:ModifyTowerTreasury(tax);
+							else
+								Clockwork.player:GiveCash(player, cost, "1 "..itemTable.name)
+							end
+							
 							Schema:EasyText(player, "olivedrab", "You sold 1 "..itemTable.name.." to "..data.entity:GetNetworkedString("Name")..".")
 							
 							netstream.Start(player, "PlaySound", "generic_ui/coin_positive_0"..math.random(1, 3)..".wav");

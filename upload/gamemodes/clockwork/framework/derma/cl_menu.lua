@@ -617,18 +617,6 @@ function PANEL:Rebuild(change)
 		
 		hook.Run("ModifyStatusEffects", statusEffects);
 		
-		if Clockwork.Client:HasTrait("imbecile") then
-			table.insert(statusEffects, {text = "(-) Imbecile", color = Color(200, 40, 40)});
-		end
-		
-		if Clockwork.Client:HasTrait("marked") then
-			table.insert(statusEffects, {text = "(-) Marked", color = Color(200, 40, 40)});
-		end
-		
-		if Clockwork.Client:HasTrait("possessed") then
-			table.insert(statusEffects, {text = "(-) Possessed", color = Color(200, 40, 40)});
-		end
-		
 		for i = 1, #statusEffects do
 			local statusEffect = statusEffects[i];
 			
@@ -884,22 +872,6 @@ function PANEL:Think()
 			local statusEffects = {};
 				
 			hook.Run("ModifyStatusEffects", statusEffects);
-			
-			if Clockwork.Client:HasTrait("followed") then
-				table.insert(statusEffects, {text = "(-) Followed", color = Color(200, 40, 40)});
-			end
-			
-			if Clockwork.Client:HasTrait("imbecile") then
-				table.insert(statusEffects, {text = "(-) Imbecile", color = Color(200, 40, 40)});
-			end
-			
-			if Clockwork.Client:HasTrait("marked") then
-				table.insert(statusEffects, {text = "(-) Marked", color = Color(200, 40, 40)});
-			end
-			
-			if Clockwork.Client:HasTrait("possessed") then
-				table.insert(statusEffects, {text = "(-) Possessed", color = Color(200, 40, 40)});
-			end
 			
 			for k, v in pairs(self.statusInfo.statusFrame.effectPanel:GetItems()) do
 				if (IsValid(v)) then

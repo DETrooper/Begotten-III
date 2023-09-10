@@ -2389,7 +2389,13 @@ function GM:HUDDrawTargetID()
 											local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
 											
 											if kinisgerOverride then
-												teamColor = _team.GetColor(kinisgerOverride) or Color(200, 200, 200, 255);
+												local classTable = Clockwork.class:GetStored()[kinisgerOverride];
+												
+												if classTable then
+													teamColor = _team.GetColor(classTable.index) or Color(200, 200, 200, 255);
+												else
+													teamColor = Color(200, 200, 200, 255);
+												end
 											else
 												teamColor = Color(200, 200, 200, 255);
 											end

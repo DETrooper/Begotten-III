@@ -773,9 +773,9 @@ function GM:PlayerUse(player, entity)
 				end;
 				
 				hook.Run("PlayerUseDoor", player, entity)
-				Clockwork.entity:OpenDoor(entity, 0, nil, nil, player:GetPos())
+				--Clockwork.entity:OpenDoor(entity, 0, nil, nil, player:GetPos())
 				
-				return false;
+				--return false;
 			else
 				return false;
 			end

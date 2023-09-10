@@ -6,10 +6,10 @@
 cwBeliefs.xpValues = {
 	["breakdown"] = 1, -- 1 xp per item broken down.
 	["copy"] = 200, -- 200 xp per book copied by those with the 'Scribe' belief.
-	["damage"] = 0.1, -- 0.1 xp per point of damage dealt (10 xp for 100 hp of damage).
+	["damage"] = 0.1, -- 0.1 xp per point of damage dealt per level.
 	["drink"] = 3, -- 3 xp per drink consumed.
 	["food"] = 5, -- 5 xp per food consumed.
-	["kill"] = 10, -- 10 xp per killing blow (per level).
+	["kill"] = 2.5, -- 2.5 xp per killing blow per level.
 	["meltdown"] = 2, -- 2 xp per item melted down.
 	["mutilate"] = 2, -- 2 xp per mutiliation of a corpse. Also includes other stuff like eating hearts or harvesting bones.
 	["residual"] = 1, -- 1 xp per minute survived in non-safezones.

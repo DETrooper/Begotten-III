@@ -133,19 +133,6 @@ function Clockwork.player:SaveGear(player)
 	--end);
 end
 
-local blacklistedNames = {
-	"disciple",
-	"acolyte",
-	"emissary",
-	"master-at-arms",
-	"vexilifier",
-	"forgemaster",
-	"high gatekeeper",
-	"squire",
-	"medicus",
-	"master medicus",
-};
-
 -- A function to create a character from data.
 function Clockwork.player:CreateCharacterFromData(player, data)
 	if (player.cwIsCreatingChar) then
@@ -323,12 +310,22 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 					)
 				end
 				
-				for i = 1, #blacklistedNames do
-					local blacklsitedName = blacklistedNames[i];
+				local blacklistedNames = {};
 				
-					if (string.find(forename, blacklsitedName) or string.find(surname, blacklsitedName)) then
+				if Schema.Ranks then
+					for k, v in pairs(Schema.Ranks) do
+						for i, v2 in ipairs(v) do
+							table.insert(blacklistedNames, string.lower(v2));
+						end
+					end
+				end
+				
+				for i = 1, #blacklistedNames do
+					local blacklistedName = blacklistedNames[i];
+				
+					if (string.find(forename, blacklistedName) or string.find(surname, blacklistedName)) then
 						if Schema.EasyText then
-							Schema:EasyText(GetAdmins(), "tomato", player:Name().." has attempted to make a character with the blacklisted phrase "..blacklsitedName.."!");
+							Schema:EasyText(GetAdmins(), "tomato", player:Name().." has attempted to make a character with the blacklisted phrase "..blacklistedName.."!");
 						end
 					
 						return self:SetCreateFault(
