@@ -3324,15 +3324,29 @@ function GM:PlayerCharacterCreated(player, character)
 	timer.Simple(5, function()
 		if IsValid(player) and character then
 			local charactersTable = config.Get("mysql_characters_table"):Get();
+			local key_found = false;
 			
 			local queryObj = Clockwork.database:Select(charactersTable)
 				queryObj:Callback(function(result)
 					for k, v in pairs(result) do
 						if v._Key then
-							character.data["Key"] = v._Key;
+							if not character.data["Key"] then
+								character.data["Key"] = v._Key;
+								
+								key_found = true;
+							end
+							
+							if player:GetCharacterData("Key") and player:GetCharacterData("Key") ~= player:GetNetVar("Key") then 
+								player:SetNetVar("Key", player:GetCharacterData("Key"));
+							end
 							
 							break;
 						end
+					end
+					
+					if not key_found then
+						-- Try again!!!!
+						self:PlayerCharacterCreated(player, character);
 					end
 				end);
 				

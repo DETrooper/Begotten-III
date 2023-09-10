@@ -138,7 +138,7 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 						player:HandleNeed("corruption", 1);
 					end
 
-					player.nextCorruption = curTime + 90;
+					player.nextCorruption = curTime + 150;
 				end;
 			end;
 		end;
