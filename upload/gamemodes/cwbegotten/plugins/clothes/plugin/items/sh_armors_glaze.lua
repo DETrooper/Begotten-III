@@ -35,7 +35,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/wanderer_mail.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 50
+ITEM.protection = 55
 ITEM.type = "chainmail";
 ITEM.weight = 4.5;
 ITEM.weightclass = "Medium";
@@ -118,8 +118,8 @@ ITEM.damageTypeScales = {
 }
 
 ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 10%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
 ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
@@ -177,9 +177,9 @@ ITEM.damageTypeScales = {
 }
 
 ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 10%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.bulletScale = 0.85; -- reduces bullet damage by 15%
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
 
@@ -236,9 +236,9 @@ ITEM.damageTypeScales = {
 }
 
 ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 10%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 
 ITEM.components = {breakdownType = "meltdown", items = {"gold_ingot", "gold_ingot", "fine_steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
 
@@ -299,8 +299,8 @@ ITEM.damageTypeScales = {
 
 ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 
 ITEM.components = {breakdownType = "meltdown", items = {"gold_ingot", "fine_steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
 
@@ -564,6 +564,7 @@ ITEM.effectiveLimbs = {
 
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
 ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
 ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
 
@@ -621,7 +622,7 @@ ITEM.damageTypeScales = {
 ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
 ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 
 ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
 
