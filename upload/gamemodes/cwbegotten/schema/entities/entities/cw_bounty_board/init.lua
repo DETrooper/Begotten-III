@@ -46,7 +46,8 @@ function ENT:Use(activator, caller)
 					--state = "Gatekeeper";
 				--end
 			elseif faction == "Gatekeeper" then
-				state = "Gatekeeper";
+				--state = "Gatekeeper";
+				state = "Hierarchy";
 			end
 		
 			Clockwork.datastream:Start(caller, "OpenBountyBoardMenu", state);

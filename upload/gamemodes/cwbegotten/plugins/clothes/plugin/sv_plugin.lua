@@ -419,7 +419,9 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 										end
 									end
 									
-									helmetItem:TakeCondition(conditionLoss);
+									if not player.ignoreConditionLoss then
+										helmetItem:TakeCondition(conditionLoss);
+									end
 								end
 								
 								damageInfo:SetDamage(math.Clamp(effectiveness * 0.7, 0, damage));
@@ -477,7 +479,9 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 								end
 							end
 							
-							helmetItem:TakeCondition(conditionLoss);
+							if not player.ignoreConditionLoss then
+								helmetItem:TakeCondition(conditionLoss);
+							end
 						end
 						
 						damageInfo:SetDamage(math.Clamp(effectiveness * 0.7, 0, damage));
@@ -666,7 +670,9 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 									end
 								end
 								
-								armorItem:TakeCondition(conditionLoss);
+								if not player.ignoreConditionLoss then
+									armorItem:TakeCondition(conditionLoss);
+								end
 							end
 							
 							--print("Setting damage to: "..tostring(math.Clamp(effectiveness, 0, damage)));
@@ -729,7 +735,9 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 							end
 						end
 						
-						armorItem:TakeCondition(conditionLoss);
+						if not player.ignoreConditionLoss then
+							armorItem:TakeCondition(conditionLoss);
+						end
 					end
 					
 					--printp("Setting damage to: "..tostring(math.Clamp(effectiveness, 0, damage)));

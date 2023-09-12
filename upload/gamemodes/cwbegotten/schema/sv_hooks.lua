@@ -19,6 +19,50 @@ function GetAdmins()
 	return admins;
 end;
 
+function Schema:ClockworkInitialized()
+	if !self.bountyData then
+		self.bountyData = Clockwork.kernel:RestoreSchemaData("bountyData") or {};
+	end
+	
+	local charactersTable = config.Get("mysql_characters_table"):Get()
+	
+	for k, v in pairs(self.bountyData) do
+		local queryObj = Clockwork.database:Select(charactersTable)
+			queryObj:Callback(function(result)
+				if (Clockwork.database:IsResult(result)) then
+					local characterFound = false;
+				
+					for k2, v2 in pairs(result) do
+						local permakilled = false;
+						
+						if v2._Data then
+							local data = Clockwork.player:ConvertDataString(player, v2._Data)
+							
+							if data then
+								permakilled = data["permakilled"];
+							end
+						end
+						
+						if permakilled ~= true then
+							characterFound = true;
+							break;
+						end
+					end
+					
+					if !characterFound then
+						print("No character found for bounty "..v._Name.."!");
+						self.bountyData[k] = nil;
+					else
+						print("Character found for bounty "..v._Name.."!");
+					end
+				end
+			end);
+				
+			queryObj:Where("_Key", k)
+		queryObj:Execute()
+	end
+end
+
 -- A function to get the number of characters a player has in each faction and return it as a table.
 function Schema:GetCharacterCountByFaction(player)
 	local stored = Clockwork.faction:GetStored();
@@ -141,6 +185,10 @@ function Schema:SaveData()
 	if self.archivesBookList then
 		Clockwork.kernel:SaveSchemaData("archivesBookList", self.archivesBookList);
 	end
+	
+	if self.bountyData then
+		Clockwork.kernel:SaveSchemaData("bountyData", self.bountyData);
+	end
 end;
 
 -- Called just after data should be saved.
@@ -211,15 +259,15 @@ end
 function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 	local class = entity:GetClass();
 
-	if entity:IsPlayer() and player:GetFaction() == "Goreic Warrior" and entity:GetFaction() ~= "Goreic Warrior" then
-		if (arguments == "cw_sellSlave") and entity:GetNetVar("tied") != 0 then
+	if entity:IsPlayer() and entity:GetNetVar("tied") != 0 then
+		if (arguments == "cw_sellSlave") and player:GetFaction() == "Goreic Warrior" and entity:GetFaction() ~= "Goreic Warrior" then
 			for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
 				if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
 					Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 15, "Sold Slave");
 					player:EmitSound("generic_ui/coin_positive_02.wav");
 					
 					if cwBeliefs then
-						local killXP = self.xpValues["kill"];
+						local killXP = cwBeliefs.xpValues["kill"];
 						
 						killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
 						
@@ -246,39 +294,258 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 					
 					Schema:EasyText(entity, "firebrick", "You have been sold into slavery by "..playerName.."!");
 					entity:KillSilent();
+					
+					if IsValid(entity:GetRagdollEntity()) then
+						entity:GetRagdollEntity():Remove();
+					end
+					
 					Schema:PermaKillPlayer(entity, nil, true);
-					player:SetKills(sacrificer:GetKills() + 1);
+					player:SetKills(player:GetKills() + 1);
+					
+					return;
+				end
+			end
+		elseif (arguments == "cw_turnInBounty") and entity:IsWanted() then
+			for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
+				if v:GetClass() == "cw_bounty_board" then
+					Clockwork.player:GiveCash(player, entity:GetBounty(), "Turned In Bounty");
+					player:EmitSound("generic_ui/coin_positive_02.wav");
+					
+					if cwBeliefs then
+						local killXP = cwBeliefs.xpValues["kill"];
+						
+						killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
+						
+						if player:GetFaction() == "Wanderer" then
+							killXP = killXP * 2;
+						end
+						
+						if player:HasBelief("father") then
+							if player:GetCharacterData("level", 1) < entity:GetCharacterData("level", 1) then
+								killXP = killXP * 2;
+							end
+						elseif player:HasBelief("sister") then
+							if player:GetCharacterData("level", 1) > entity:GetCharacterData("level", 1) then
+								killXP = killXP * 2;
+							end
+						end
+					
+						player:HandleXP(killXP);
+					end
+					
+					local playerName;
+					local playerFaction = player:GetFaction();
+					
+					if Clockwork.player:DoesRecognise(entity, player) then
+						playerName = player:Name();
+					elseif playerFaction == "Goreic Warrior" then
+						playerName = "an unknown Goreic Warrior";
+					elseif playerFaction == "Children of Satan" then
+						playerName = "an unknown Child of Satan";
+					elseif playerFaction == "Gatekeeper" then
+						playerName = "an unknown Gatekeeper";
+					elseif playerFaction == "Holy Hierarchy" then
+						local playerSubfaction = player:GetSubfaction();
+						
+						if playerSubfaction == "Inquisition" then
+							playerName = "an unknown Inquisitor";
+						elseif playerSubfaction == "Knights of Sol" then
+							playerName =  "an unknown Knight of Sol";
+						else
+							playerName =  "an unknown Glazic nobleman";
+						end
+					else
+						playerName = "an unknown assailant";
+					end
+					
+					if cwDeathCauses then
+						cwDeathCauses:DeathCauseOverride(entity, "Turned in by "..playerName..".");
+					end
+					
+					Schema:EasyText(entity, "firebrick", "You have been turned in by "..playerName.."!");
+					entity:RemoveBounty();
+					entity:KillSilent();
+					
+					if IsValid(entity:GetRagdollEntity()) then
+						entity:GetRagdollEntity():Remove();
+					end
+					
+					Schema:PermaKillPlayer(entity, nil, true);
+					player:SetKills(player:GetKills() + 1);
 					
 					return;
 				end
 			end
 		end
-	elseif (class == "prop_ragdoll" and arguments == "cw_corpseLoot") then
-		if (!entity.cwInventory) then entity.cwInventory = {}; end;
-		if (!entity.cwCash) then entity.cwCash = 0; end;
-		
-		local entityPlayer = Clockwork.entity:GetPlayer(entity);
-		
-		if (!entityPlayer or (entityPlayer and (!entityPlayer:Alive() or entityPlayer:GetMoveType() ~= MOVETYPE_OBSERVER))) then
-			if player:GetMoveType() == MOVETYPE_WALK then
-				player:EmitSound("physics/body/body_medium_impact_soft"..math.random(1, 7)..".wav");
-			end
+	elseif (class == "prop_ragdoll") then
+		if (arguments == "cw_corpseLoot") then
+			if (!entity.cwInventory) then entity.cwInventory = {}; end;
+			if (!entity.cwCash) then entity.cwCash = 0; end;
 			
-			Clockwork.storage:Open(player, {
-				name = "Corpse",
-				weight = 8,
-				entity = entity,
-				distance = 192,
-				cash = entity.cwCash,
-				inventory = entity.cwInventory,
-				OnGiveCash = function(player, storageTable, cash)
-					entity.cwCash = storageTable.cash;
-				end,
-				OnTakeCash = function(player, storageTable, cash)
-					entity.cwCash = storageTable.cash;
+			local entityPlayer = Clockwork.entity:GetPlayer(entity);
+			
+			if (!entityPlayer or (entityPlayer and (!entityPlayer:Alive() or entityPlayer:GetMoveType() ~= MOVETYPE_OBSERVER))) then
+				if player:GetMoveType() == MOVETYPE_WALK then
+					player:EmitSound("physics/body/body_medium_impact_soft"..math.random(1, 7)..".wav");
 				end
-			});
-		end;
+				
+				Clockwork.storage:Open(player, {
+					name = "Corpse",
+					weight = 8,
+					entity = entity,
+					distance = 192,
+					cash = entity.cwCash,
+					inventory = entity.cwInventory,
+					OnGiveCash = function(player, storageTable, cash)
+						entity.cwCash = storageTable.cash;
+					end,
+					OnTakeCash = function(player, storageTable, cash)
+						entity.cwCash = storageTable.cash;
+					end
+				});
+			end;
+		elseif (arguments == "cw_sellSlave") then
+			local entityPlayer = Clockwork.entity:GetPlayer(entity);
+			
+			if player:GetFaction() == "Goreic Warrior" and entityPlayer:GetFaction() ~= "Goreic Warrior" and entityPlayer:GetNetVar("tied") != 0 then
+				for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
+					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
+						Clockwork.player:GiveCash(player, entityPlayer:GetCharacterData("level", 1) * 15, "Sold Slave");
+						player:EmitSound("generic_ui/coin_positive_02.wav");
+						
+						if cwBeliefs then
+							local killXP = cwBeliefs.xpValues["kill"];
+							
+							killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
+							
+							if player:HasBelief("sister") then
+								if player:GetCharacterData("level", 1) > player:GetCharacterData("level", 1) then
+									killXP = killXP * 2;
+								end
+							end
+						
+							player:HandleXP(killXP);
+						end
+						
+						local playerName;
+						
+						if Clockwork.player:DoesRecognise(entityPlayer, player) then
+							playerName = player:Name();
+						else
+							playerName = "an unknown Goreic Warrior";
+						end
+						
+						if cwDeathCauses then
+							cwDeathCauses:DeathCauseOverride(entityPlayer, "Sold into slavery by "..playerName..".");
+						end
+						
+						Schema:EasyText(entityPlayer, "firebrick", "You have been sold into slavery by "..playerName.."!");
+						entityPlayer:KillSilent();
+						
+						if IsValid(entity) then
+							entity:Remove();
+						end
+					
+						Schema:PermaKillPlayer(entityPlayer, nil, true);
+						player:SetKills(player:GetKills() + 1);
+						
+						return;
+					end
+				end
+			end
+		elseif (arguments == "cw_turnInBounty") then
+			local entityPlayer = Clockwork.entity:GetPlayer(entity);
+			
+			if entityPlayer and entityPlayer:IsWanted() and (!entityPlayer:Alive() or entityPlayer:GetNetVar("tied") != 0) then
+				for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
+					if v:GetClass() == "cw_bounty_board" then
+						Clockwork.player:GiveCash(player, entityPlayer:GetBounty(), "Turned In Bounty");
+						player:EmitSound("generic_ui/coin_positive_02.wav");
+						
+						if entityPlayer:Alive() then
+							if cwBeliefs then
+								local killXP = cwBeliefs.xpValues["kill"];
+								
+								killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
+								
+								if player:GetFaction() == "Wanderer" then
+									killXP = killXP * 2;
+								end
+								
+								if player:HasBelief("father") then
+									if player:GetCharacterData("level", 1) < entityPlayer:GetCharacterData("level", 1) then
+										killXP = killXP * 2;
+									end
+								elseif player:HasBelief("sister") then
+									if player:GetCharacterData("level", 1) > entityPlayer:GetCharacterData("level", 1) then
+										killXP = killXP * 2;
+									end
+								end
+							
+								player:HandleXP(killXP);
+							end
+							
+							local playerName;
+							local playerFaction = player:GetFaction();
+							
+							if Clockwork.player:DoesRecognise(entityPlayer, player) then
+								playerName = player:Name();
+							elseif playerFaction == "Goreic Warrior" then
+								playerName = "an unknown Goreic Warrior";
+							elseif playerFaction == "Children of Satan" then
+								playerName = "an unknown Child of Satan";
+							elseif playerFaction == "Gatekeeper" then
+								playerName = "an unknown Gatekeeper";
+							elseif playerFaction == "Holy Hierarchy" then
+								local playerSubfaction = player:GetSubfaction();
+								
+								if playerSubfaction == "Inquisition" then
+									playerName = "an unknown Inquisitor";
+								elseif playerSubfaction == "Knights of Sol" then
+									playerName =  "an unknown Knight of Sol";
+								else
+									playerName =  "an unknown Glazic nobleman";
+								end
+							else
+								playerName = "an unknown assailant";
+							end
+							
+							if cwDeathCauses then
+								cwDeathCauses:DeathCauseOverride(entityPlayer, "Turned in by "..playerName..".");
+							end
+							
+							Schema:EasyText(entityPlayer, "firebrick", "You have been turned in by "..playerName.."!");
+							entityPlayer:KillSilent();
+						
+							Schema:PermaKillPlayer(entityPlayer, nil, true);
+							player:SetKills(player:GetKills() + 1);
+						end
+						
+						if IsValid(entity) then
+							entity:Remove();
+						end
+						
+						Schema:EasyText(GetAdmins(), "green", player:Name().." has claimed the bounty on "..entityPlayer:Name().." for "..tostring(entityPlayer:GetBounty()).." coin!");
+						
+						entityPlayer:RemoveBounty();
+						
+						return;
+					end
+				end
+			elseif !entityPlayer and entity:GetNWInt("bountyKey") then
+				local bountyData = self.bountyData[entity:GetNWInt("bountyKey")];
+				
+				if bountyData then
+					Clockwork.player:GiveCash(player, bountyData.bounty, "Turned In Bounty");
+					player:EmitSound("generic_ui/coin_positive_02.wav");
+					
+					Schema:RemoveBounty(entity:GetNWInt("bountyKey"));
+					entity:Remove();
+					
+					Schema:EasyText(GetAdmins(), "green", player:Name().." has claimed the bounty on "..bountyData.name.." for "..tostring(bountyData.bounty).." coin!");
+				end
+			end
+		end
 	elseif (class == "cw_belongings" and (arguments == "cw_belongingsOpen" or arguments == "cwBelongingsOpen")) then
 		if player:GetMoveType() == MOVETYPE_WALK then
 			player:EmitSound("physics/cardboard/cardboard_box_break3.wav");
@@ -838,6 +1105,13 @@ function Schema:KeyPress(player, key)
 			if (target and player:GetNetVar("tied") == 0) then
 				if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
 					if (target:GetNetVar("tied") != 0) then
+					
+						for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
+							if (v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler") or v:GetClass() == "cw_bounty_board" then
+								return;
+							end
+						end
+					
 						Clockwork.player:SetAction(player, "untie", untieTime);
 						
 						Clockwork.player:EntityConditionTimer(player, target, entity, untieTime, 192, function()
@@ -845,6 +1119,8 @@ function Schema:KeyPress(player, key)
 						end, function(success)
 							if (success) then
 								self:TiePlayer(target, false);
+								
+								player:GiveItem(item.CreateInstance("bindings"));
 								
 								--player:ProgressAttribute(ATB_DEXTERITY, 15, true);
 							end;
@@ -1656,11 +1932,45 @@ function Schema:PlayerCanUseCommand(player, commandTable, arguments)
 	end;
 end;
 
+local headbuttMes = {"headbutts the door like a fucking idiot!", "bashes their head into the door in an attempt to open it!", "hits their head on the door while attempting to open it!"};
+local headbuttSounds = {"physics/wood/wood_crate_impact_hard4.wav", "doors/vent_open3.wav", "physics/metal/metal_box_impact_hard1.wav"};
+
 -- Called when a player attempts to use a door.
 function Schema:PlayerCanUseDoor(player, door)
+	if player:HasTrait("imbecile") and (Clockwork.entity:GetDoorState(door) == DOOR_STATE_CLOSED) then
+		local curTime = CurTime();
+	
+		if !player.nextImbecileFallover or player.nextImbecileFallover <= curTime then
+			player.nextImbecileFallover = curTime + 5;
+			
+			if math.random(1, 6) == 1 then
+				Clockwork.chatBox:AddInTargetRadius(player, "me", table.Random(headbuttMes), player:GetPos(), config.Get("talk_radius"):Get() * 2);
+				
+				door:EmitSound(table.Random(headbuttSounds));
+				player:EmitSound("physics/body/body_medium_break4.wav");
+				
+				local damageInfo = DamageInfo();
+				damageInfo:SetDamage(15);
+				damageInfo:SetAttacker(door);
+				damageInfo:SetDamageType(DMG_CLUB);
+				damageInfo:SetDamagePosition(player:EyePos());
+				
+				player:TakeDamageInfo(damageInfo);
+				
+				if player:Alive() and not player:IsRagdolled() then
+					if cwMelee then
+						cwMelee:PlayerStabilityFallover(player, 8);
+					else
+						Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, 8);
+					end
+				end
+			end
+		end
+	end
+
 	if map then
 		local doorName = door:GetName();
-		
+
 		if table.HasValue(self.towerDoors, doorName) then
 			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
@@ -1697,7 +2007,7 @@ function Schema:PlayerCanUseDoor(player, door)
 				
 				return false;
 			end
-		elseif doorName == "castle_bigdoor1" or doorName == "castle_bigdoor2" then
+		elseif doorName == "castle_bigdoor1" or doorName == "castle_bigdoor2" or doorName == "gate_door" then
 			return false;
 		end
 	end
@@ -1908,6 +2218,10 @@ function Schema:DoPlayerDeath(player, attacker, damageInfo)
 			player:GiveItem(Clockwork.item:CreateInstance(clothes));
 			player:SetCharacterData("clothes", nil);
 		end;
+		
+		if player:GetNetVar("tied") ~= 0 then
+			player:GiveItem(item.CreateInstance("bindings"));
+		end
 	end
 	
 	player.beingSearched = nil;
@@ -1925,18 +2239,6 @@ end
 
 -- Called when a player dies.
 function Schema:PlayerDeath(player, inflictor, attacker, damageInfo)
-	if !player.opponent then
-		local bounty = player:GetCharacterData("bounty", 0);
-		
-		if bounty > 0 then
-			if IsValid(attacker) and attacker:IsPlayer() and attacker:Alive() then
-				Clockwork.player:GiveCash(attacker, bounty);
-				
-				player:RemoveBounty();
-			end
-		end
-	end
-	
 	-- Gore sacrifice shit.
 	if IsValid(attacker) and attacker:IsPlayer() and attacker:Alive() and player:GetFaction() ~= "Goreic Warrior" and attacker:GetFaction() == "Goreic Warrior" then
 		if player:GetPos():WithinAABox(Vector(11622, -6836, 12500), Vector(8744, -10586, 11180)) then
@@ -2049,7 +2351,6 @@ function Schema:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 	local curTime = CurTime();
 	
 	if (!player.nextSpawnRun or player.nextSpawnRun < curTime) then
-		local bounty = player:GetCharacterData("bounty");
 		local clothes = player:GetCharacterData("clothes");
 		
 		if (!lightSpawn) then
@@ -2094,10 +2395,6 @@ function Schema:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 					end
 				end);
 			end
-		end
-		
-		if bounty then
-			player:SetSharedVar("bounty", bounty);
 		end
 
 		Clockwork.datastream:Start(player, "GetZone");
@@ -2274,10 +2571,37 @@ function Schema:PlayerCharacterInitialized(player)
 	if self.archivesBookList then
 		netstream.Start(player, "Archives", self.archivesBookList);
 	end
+	
+	local characterKey = player:GetCharacterKey();
+	
+	if characterKey then
+		local bountyData = Schema.bountyData[characterKey];
+		
+		if !bountyData and player:GetCharacterData("bounty", 0) > 0 then
+			player:SetCharacterData("bounty", 0);
+			player:SetSharedVar("bounty", 0);
+		elseif bountyData then
+			player:SetCharacterData("bounty", bountyData.bounty)
+			player:SetSharedVar("bounty", bountyData.bounty);
+		end
+	end
 end;
 
 -- Called when a player's name has changed.
 function Schema:PlayerNameChanged(player, previousName, newName) end;
+
+-- Called when a player deletes a character.
+function Schema:PlayerDeleteCharacter(player, character)
+	local key = character.data["Key"];
+
+	if key then
+		if self.bountyData[key] then
+			self.bountyData[key] = nil;
+			
+			Clockwork.kernel:SaveSchemaData("bountyData", Schema.bountyData);
+		end
+	end
+end
 
 -- Called when a player is given a trait.
 function Schema:PlayerTraitGiven(player, traitID)
@@ -2341,6 +2665,28 @@ function Schema:PostPlayerTakeFromStorage(player, storageTable, itemTable)
 	end
 end
 
+-- Called when a player should take damage.
+function Schema:PlayerShouldTakeDamage(player, attacker, inflictor, damageInfo)
+	if (player.cwWakingUp) then
+		damageInfo:SetDamage(0);
+		damageInfo:ScaleDamage(0);
+		return true;
+	end;
+	
+	-- rubber johnny flags
+	if (player:IsPlayer() and attacker:IsPlayer()) then
+		local hasFlags = Clockwork.player:HasFlags(player, "6");
+		local attHasFlags = Clockwork.player:HasFlags(attacker, "6");
+
+		if (hasFlags and !attHasFlags) then
+			attacker:TakeDamage(damageInfo:GetDamage());
+			damageInfo:SetDamage(0);
+			damageInfo:ScaleDamage(0);
+			return true;
+		end;
+	end;
+end
+
 -- Called when an entity takes damage.
 function Schema:EntityTakeDamageNew(entity, damageInfo)
 	if (entity.GodMode) then
@@ -2358,21 +2704,6 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 			end
 		end;
 	end
-	
-	local attacker = damageInfo:GetAttacker();
-	
-	-- rubber johnny flags
-	if (entity:IsPlayer() and attacker:IsPlayer()) then
-		local hasFlags = Clockwork.player:HasFlags(entity, "6");
-		local attHasFlags = Clockwork.player:HasFlags(attacker, "6");
-
-		if (hasFlags and !attHasFlags) then
-			attacker:TakeDamage(damageInfo:GetDamage());
-			damageInfo:SetDamage(0);
-			damageInfo:ScaleDamage(0);
-			return true;
-		end;
-	end;
 	
 	if (entity:GetNWBool("BIsCinderBlock")) then
 		if (!entity.health) then
@@ -2401,12 +2732,6 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 			return true
 		end
 	end
-	
-	if (entity.cwWakingUp) then
-		damageInfo:SetDamage(0);
-		damageInfo:ScaleDamage(0);
-		return true;
-	end;
 
 	if (entity:GetClass() == "cw_item") then
 		local itemTable = entity:GetItemTable();

@@ -2288,16 +2288,6 @@ function Clockwork.player:CinematicTextAll(text, color, hangTime)
 	end
 end
 
-function Clockwork.player:FindByID(identifier)
-	local player = _player.Find(identifier);
-	
-	if (istable(player)) then
-		player = player[1];
-	end;
-	
-	return player;
-end
-
 -- A function to get if a player is protected.
 function Clockwork.player:IsProtected(identifier)
 	local steamID = nil

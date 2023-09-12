@@ -1990,40 +1990,59 @@ COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("AddBounty");
 	COMMAND.tip = "Add a bounty to a character if you are at the bounty board.";
-	COMMAND.text = "<string Name> <int Price> <string Description>";
+	COMMAND.text = "<string Name or Key> <int Price> <string Reason>";
 	COMMAND.arguments = 3;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		if player:GetFaction() == "Holy Hierarchy" or player:IsAdmin() then
+		local faction = player:GetFaction();
+		
+		if faction == "Holy Hierarchy" or faction == "Gatekeeper" or player:IsAdmin() then
+			if not player:IsAdmin() and faction == "Gatekeeper" and not Schema.RanksOfAuthority[faction][player:GetCharacterData("rank", 1)] then
+				Schema:EasyText(player, "darkgrey", "You are not important enough to do this!");
+			
+				return;
+			end
+			
 			local trace = player:GetEyeTrace();
 			
 			if (trace.Entity) and trace.Entity:GetClass() == "cw_bounty_board" then
-				local target = Clockwork.player:FindByID(arguments[1])
+				local price = tonumber(arguments[2]);
 				
-				if (target) then
-					local price = tonumber(arguments[2]);
-					
-					if price and price > 0 then
-						if Clockwork.player:CanAfford(player, price) then
-							local description = arguments[3];
-							
-							target:AddBounty(price, description);
-							Clockwork.player:GiveCash(player, -price, nil, true);
+				if price and price > 0 then
+					if Clockwork.player:CanAfford(player, price) then
+						local reason = arguments[3];
+						
+						if reason then
+							if string.len(reason) > 128 then
+								Schema:EasyText(player, "peru", "The reason for this bounty is too long! It must be a maximum of 128 characters.");
+								
+								return;
+							end
+						end
+						
+						if tonumber(arguments[1]) then
+							Schema:AddBounty(math.Truncate(tonumber(arguments[1])), price, reason, player);
 						else
-							Schema:EasyText(player, "peru", "You do not have enough coin to place this bounty!");
+							local target = Clockwork.player:FindByID(arguments[1])
+							
+							if (target) then
+								target:AddBounty(price, reason, player);
+							else
+								Schema:AddBounty(arguments[1], price, reason, player);
+							end
 						end
 					else
-						Schema:EasyText(player, "darkgrey", arguments[2].." is not a valid price!");
+						Schema:EasyText(player, "peru", "You do not have enough coin to place this bounty!");
 					end
 				else
-					Schema:EasyText(player, "grey", arguments[1].." is not a valid character!");
-				end;
+					Schema:EasyText(player, "darkgrey", arguments[2].." is not a valid price!");
+				end
 			else
 				Schema:EasyText(player, "firebrick", "You must be at the bounty board to add a bounty!");
 			end
 		else
-			Schema:EasyText(player, "darkgrey", "You are not the correct faction to do this!");
+			Schema:EasyText(player, "darkgrey", "You are not important enough to do this!");
 		end
 	end;
 COMMAND:Register();
@@ -2035,21 +2054,34 @@ local COMMAND = Clockwork.command:New("RemoveBounty");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		if player:GetFaction() == "Holy Hierarchy" or player:IsAdmin() then
+		local faction = player:GetFaction();
+		
+		if faction == "Holy Hierarchy" or faction == "Gatekeeper" or player:IsAdmin() then
+			if not player:IsAdmin() and faction == "Gatekeeper" and not Schema.RanksOfAuthority[faction][player:GetCharacterData("rank", 1)] then
+				Schema:EasyText(player, "darkgrey", "You are not important enough to do this!");
+			
+				return;
+			end
+			
 			local trace = player:GetEyeTrace();
 			
 			if (trace.Entity) and trace.Entity:GetClass() == "cw_bounty_board" then
-				-- redo this later
-				local target = Clockwork.player:FindByID(arguments[1])
-				
-				if (target) then
-					target:RemoveBounty();
+				if tonumber(arguments[1]) then
+					Schema:RemoveBounty(math.Truncate(tonumber(arguments[1])), player);
+				else
+					local target = Clockwork.player:FindByID(arguments[1])
+					
+					if (target) then
+						target:RemoveBounty(player);
+					else
+						Schema:RemoveBounty(arguments[1], player);
+					end
 				end
 			else
 				Schema:EasyText(player, "firebrick", "You must be at the bounty board to remove a bounty!");
 			end
 		else
-			Schema:EasyText(player, "darkgrey", "You are not the correct faction to do this!");
+			Schema:EasyText(player, "darkgrey", "You are not important enough to do this!");
 		end
 	end;
 COMMAND:Register();

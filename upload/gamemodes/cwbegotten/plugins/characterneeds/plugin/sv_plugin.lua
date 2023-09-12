@@ -79,11 +79,11 @@ function playerMeta:HandleNeed(need, amount)
 							self:DeathCauseOverride("Died of starvation.");
 						end]]--
 					end;
-				elseif newAmount >= 90 and currentAmount <= 90 then
+				elseif newAmount >= 90 and currentAmount < 90 then
 					Clockwork.chatBox:Add(self, nil, "itnofake", "I am starving. How long can I go on for?");
-				elseif newAmount >= 75 and currentAmount <= 75 then
+				elseif newAmount >= 75 and currentAmount < 75 then
 					Clockwork.chatBox:Add(self, nil, "itnofake", "I am very hungry.");
-				elseif newAmount >= 50 and currentAmount <= 50 then
+				elseif newAmount >= 50 and currentAmount < 50 then
 					Clockwork.chatBox:Add(self, nil, "itnofake", "I feel hungry.");
 				end;
 			elseif need == "thirst" then
@@ -112,11 +112,11 @@ function playerMeta:HandleNeed(need, amount)
 							self:DeathCauseOverride("Died of dehydration.");
 						end]]--
 					end;
-				elseif newAmount >= 90 and currentAmount <= 90 then
+				elseif newAmount >= 90 and currentAmount < 90 then
 					Clockwork.chatBox:Add(self, nil, "itnofake", "This thirst will be the death of me. I need to find water SOON!");
-				elseif newAmount >= 75 and currentAmount <= 75 then
+				elseif newAmount >= 75 and currentAmount < 75 then
 					Clockwork.chatBox:Add(self, nil, "itnofake", "My mouth is dry and I feel very parched.");
-				elseif newAmount >= 50 and currentAmount <= 50 then
+				elseif newAmount >= 50 and currentAmount < 50 then
 					Clockwork.chatBox:Add(self, nil, "itnofake", "This thirst is getting to me. I must find clean water soon.");
 				end;
 			elseif need == "sleep" then
@@ -141,19 +141,19 @@ function playerMeta:HandleNeed(need, amount)
 					self.sleepData = {hunger = 15, thirst = 30, rest = -30};
 					Clockwork.player:SetRagdollState(self, RAGDOLL_KNOCKEDOUT, 300);
 					Schema:EasyText(self, "olive", "You finally collapse from exhaustion.");
-				elseif newAmount >= 90 and currentAmount <= 90 then
+				elseif newAmount >= 90 and currentAmount < 90 then
 					if cwBeliefs and self:HasBelief("yellow_and_black") then
 						Clockwork.chatBox:Add(self, nil, "itnofake", "My systems are starting to shut down, I NEED TECH!");
 					else
 						Clockwork.chatBox:Add(self, nil, "itnofake", "I'm gonna pass out soon if I can't find somewhere to go to bed...");
 					end
-				elseif newAmount >= 75 and currentAmount <= 75 then
+				elseif newAmount >= 75 and currentAmount < 75 then
 					if cwBeliefs and self:HasBelief("yellow_and_black") then
 						Clockwork.chatBox:Add(self, nil, "itnofake", "My battery is getting very low, I must find tech and soon!");
 					else
 						Clockwork.chatBox:Add(self, nil, "itnofake", "I'm feeling very tired...");
 					end
-				elseif newAmount >= 50 and currentAmount <= 50 then
+				elseif newAmount >= 50 and currentAmount < 50 then
 					if cwBeliefs and self:HasBelief("yellow_and_black") then
 						Clockwork.chatBox:Add(self, nil, "itnofake", "My battery is at 50%, I must be mindful of it.");
 					else
@@ -285,7 +285,7 @@ function playerMeta:HandleNeed(need, amount)
 							Schema:EasyText(GetAdmins(), "icon16/bomb.png", "tomato", self:Name().." exploded from high corruption!");
 						end
 					end
-				elseif newAmount >= 90 and currentAmount <= 90 then
+				elseif newAmount >= 90 and currentAmount < 90 then
 					Clockwork.chatBox:Add(self, nil, "itnofake", "You can feel claws DIGGING INTO YOUR MIND!!! You must pray for holy salvation as soon as possible!");
 					
 					if not self:HasTrait("possessed") then
@@ -293,7 +293,7 @@ function playerMeta:HandleNeed(need, amount)
 						Clockwork.datastream:Start(self, "PlaySound", "possession/1shot_creep_01.wav");
 						self:GiveTrait("possessed");
 					end
-				elseif newAmount >= 66 and currentAmount <= 66 then
+				elseif newAmount >= 66 and currentAmount < 66 then
 					Clockwork.chatBox:Add(self, nil, "itnofake", "You cannot help but feel as though the lands are corrupting your soul.");
 				end;
 			end

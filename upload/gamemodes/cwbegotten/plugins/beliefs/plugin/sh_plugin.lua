@@ -1103,7 +1103,9 @@ function COMMAND:OnRun(player, arguments)
 					d:SetDamagePosition(player:GetPos() + Vector(0, 0, 48));
 					d:SetInflictor(activeWeapon);
 					
+					player.ignoreConditionLoss = true;
 					player:TakeDamageInfo(d);
+					player.ignoreConditionLoss = false;
 					player:HandleSanity(math.Round(d:GetDamage() / 3));
 					
 					local selfless = "himself";

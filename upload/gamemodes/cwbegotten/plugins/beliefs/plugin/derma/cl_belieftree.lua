@@ -952,7 +952,7 @@ function PANEL:Rebuild(level, experience, beliefs, points, faith)
 			parent = self.fortitude,
 			uniqueID = "warden",
 			niceName = "Warden",
-			description = "All melee weapons now have an additional 15% poise damage resistance.",
+			description = "All melee weapons and shields now have an additional 15% poise damage resistance.",
 			x = column[3],
 			y = row[2],
 			width = 48,

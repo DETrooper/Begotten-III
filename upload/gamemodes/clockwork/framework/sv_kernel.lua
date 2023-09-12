@@ -875,7 +875,7 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 	if (player) then
 		ragdoll = player:GetRagdollEntity();
 	
-		if (!hook.Run("PlayerShouldTakeDamage", player, attacker, inflictor, damageInfo) or player:IsInGodMode()) then
+		if (hook.Run("PlayerShouldTakeDamage", player, attacker, inflictor, damageInfo) == false or player:IsInGodMode()) then
 			damageInfo:SetDamage(0)
 			return true
 		end

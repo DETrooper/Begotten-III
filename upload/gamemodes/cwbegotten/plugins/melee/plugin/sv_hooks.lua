@@ -562,10 +562,10 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie)
 	
 	local gender = player:GetGender() == GENDER_MALE and "his" or "her";
 	local randomPhrases = {
-		"is knocked off #HIS feet.",
-		"loses #HIS footing and falls to the ground.",
-		"is violently knocked to the ground.",
-		"is slammed hard and falls down",
+		"is knocked off #HIS feet!",
+		"loses #HIS footing and falls to the ground!",
+		"is violently knocked to the ground!",
+		"is slammed hard and falls down!",
 	}
 	
 	local randomPhrase = randomPhrases[math.random(1, #randomPhrases)];

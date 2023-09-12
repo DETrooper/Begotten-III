@@ -291,3 +291,13 @@ function Clockwork.player:SayRadio(player, text, check, noEavesdrop, proclaim)
 		end;
 	end;
 end;
+
+function Clockwork.player:FindByID(identifier)
+	local player = _player.Find(identifier);
+	
+	if (istable(player)) then
+		player = player[1];
+	end;
+	
+	return player;
+end

@@ -194,9 +194,11 @@ function cwDisplayTyping:ChatBoxTextChanged(previousText, newText)
 		if IsValid(ent) then
 			if ent:GetClass() == "cw_radio" and (!ent:IsOff()) and (!ent:IsCrazy()) then
 				RunConsoleCommand("cwTypingStart", "r")
-			else
-				RunConsoleCommand("cwTypingStart", "n")
+				
+				return;
 			end
 		end
+		
+		RunConsoleCommand("cwTypingStart", "n")
 	end
 end

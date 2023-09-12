@@ -2210,7 +2210,7 @@ function GM:HUDDrawTargetID()
 		if (!Clockwork.Client:IsRagdolled(RAGDOLL_FALLENOVER)) then
 			local trace = Clockwork.player:GetRealTrace(Clockwork.Client)
 			local traceEntity = trace.Entity
-			local fadeDistance = 512;
+			local fadeDistance = 1024;
 			
 			local curTime = UnPredictedCurTime()
 			

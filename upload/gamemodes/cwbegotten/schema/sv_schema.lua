@@ -280,7 +280,20 @@ elseif map == "rp_scraptown" then
 	};
 end
 
-Schema.towerDoors = {"churchgate1", "churchgate2", "cubbyblastdoor", "frontblastdoor", "sidedoorblastdoor", "gatekeeperdoor", "gatekeeperdoor2"};
+Schema.towerDoors = {
+    "churchgate1",
+    "churchgate2",
+    "cubbyblastdoor",
+    "frontblastdoor",
+    "sidedoorblastdoor",
+    "gatekeeperdoor",
+    "gatekeeperdoor2",
+    "armorydoor",
+    "alchemy_lab_blastdoor",
+    "alchemy_lab_blastdoorwindw1",
+    "alchemy_lab_blastdoorwindw2",
+    "sidedoorblastdoor2",
+};
 
 local models_to_precache = {
 	--[["models/begotten/gatekeepers/districtonearmor.mdl",
@@ -1809,6 +1822,12 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 			ragdoll.isBelongings = true;
 			ragdoll.cwInventory = info.inventory;
 			ragdoll.cwCash = info.cash;
+			
+			local bounty = player:GetCharacterData("bounty", 0);
+		
+			if bounty > 0 then
+				ragdoll:SetNWInt("bountyKey", player:GetCharacterKey());
+			end
 		end;
 		
 		Clockwork.player:StripGear(player);
@@ -1996,6 +2015,22 @@ netstream.Hook("UpdateLightColor", function(player, red, green, blue)
 	player:SetNWVector("LightColor", Vector(red, green, blue));
 end);
 
+netstream.Hook("QueryBountyBoard", function(player, state)
+	if cwBeliefs and !player:HasBelief("literacy") then
+		Schema:EasyText(player, "chocolate", "You gaze upon the funny pictures on the bounty board, but as you are not literate you cannot read anything on it!");
+	else
+		local tab = {};
+
+		for k, v in pairs(Schema.bountyData) do
+			if v then
+				tab[k] = v;
+			end
+		end
+
+		netstream.Heavy(player, "OpenBountyList", tab, state);
+	end
+end);
+
 local playerMeta = FindMetaTable("Player");
 local entityMeta = FindMetaTable("Entity");
 
@@ -2004,18 +2039,274 @@ function playerMeta:GetBounty()
 end;
 
 function playerMeta:IsWanted()
-	return self:GetCharacterData("bounty") > 0;
+	return self:GetCharacterData("bounty", 0) > 0;
 end;
 
-function playerMeta:AddBounty(bounty)
+function playerMeta:AddBounty(bounty, reason, poster)
+	if IsValid(poster) and poster:IsPlayer() then
+		local faction = self:GetSharedVar("kinisgerOverride") or self:GetFaction()
+		
+		if (faction  == "Gatekeeper" or faction  == "Holy Hierarchy") and !poster:IsAdmin() then
+			Schema:EasyText(poster, "cornflowerblue", "You cannot place a bounty on "..self:Name().."!");
+			
+			return;
+		end
+	end
+	
+	if self:GetCharacterData("permakilled") or !self:Alive() then
+		if IsValid(poster) and poster:IsPlayer() then
+			Schema:EasyText(poster, "peru", self:Name().." is permakilled and cannot have a bounty placed on them!");
+		end
+		
+		return;
+	end
+	
 	self:SetCharacterData("bounty", self:GetCharacterData("bounty", 0) + bounty);
 	self:SetSharedVar("bounty", self:GetCharacterData("bounty", 0));
+	
+	local characterKey = self:GetCharacterKey();
+	local bountyData = Schema.bountyData[characterKey];
+	local tab = {};
+	
+	tab.bounty = self:GetCharacterData("bounty", 0);
+	tab.name = self:Name(true);
+	tab.model = self:GetModel();
+	tab.bodygroup1 = self:GetBodygroup(0);
+	tab.bodygroup2 = self:GetBodygroup(1);
+	tab.skin = self:GetSkin();
+	
+	local physDesc = self:GetCharacterData("PhysDesc", "Wearing dirty clothes and a small satchel");
+	
+	if string.len(physDesc) > 128 then
+		physDesc = string.Left(physDesc, 129);
+	end
+	
+	tab.physDesc = physDesc;
+	
+	if reason then
+		tab.reason = reason;
+	elseif bountyData and bountyData.reason then
+		tab.reason = bountyData.reason;
+	end
+	
+	if IsValid(poster) and poster:IsPlayer() then
+		tab.poster = poster:Name();
+		
+		Clockwork.player:GiveCash(poster, -bounty, "Placing a Bounty", true);
+	end
+
+	Schema.bountyData[characterKey] = tab;
+	Clockwork.kernel:SaveSchemaData("bountyData", Schema.bountyData);
+	
+	if IsValid(poster) and poster:IsPlayer() then
+		Schema:EasyText(poster, "cornflowerblue", "You have placed a "..tostring(tab.bounty).." coin bounty on "..tab.name.."!");
+	
+		if tab.bounty == bounty then
+			Schema:EasyText(GetAdmins(), "green", poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."!");
+			Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."!");
+		else
+			Schema:EasyText(GetAdmins(), "green", poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."! Their total bounty now stands at "..tostring(tab.bounty).." coin!");
+			Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."! Their total bounty now stands at "..tostring(tab.bounty).." coin!");
+		end
+	end
 end;
 
-function playerMeta:RemoveBounty()
-	self:SetCharacterData("bounty", 0);
-	self:SetSharedVar("bounty", 0);
+function playerMeta:RemoveBounty(remover)
+	if self:GetCharacterData("bounty", 0) > 0 then
+		self:SetCharacterData("bounty", 0);
+		self:SetSharedVar("bounty", 0);
+	end
+	
+	local characterKey = self:GetCharacterKey();
+	local bountyData = Schema.bountyData;
+	
+	if characterKey and bountyData[characterKey] then
+		bountyData = bountyData[characterKey];
+		
+		if bountyData and IsValid(remover) and remover:IsPlayer() then
+			if bountyData.bounty then
+				Clockwork.player:GiveCash(remover, bountyData.bounty, "Renouncing a Bounty", true);
+			end
+		end
+		
+		Schema.bountyData[characterKey] = nil;
+		Clockwork.kernel:SaveSchemaData("bountyData", Schema.bountyData);
+		
+		if IsValid(remover) and remover:IsPlayer() then
+			Schema:EasyText(remover, "cornflowerblue", "You have removed the bounty for "..self:Name().."!");
+			Schema:EasyText(GetAdmins(), "tomato", remover:Name().." has removed the bounty for "..self:Name().."!");
+			Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, remover:Name().." has removed the bounty for "..self:Name().."!");
+		end
+	end
+	
+	Schema:EasyText(remover, "peru", self:Name().." does not have a bounty!");
 end;
+
+function Schema:AddBounty(key, bounty, reason, poster)
+	local charactersTable = config.Get("mysql_characters_table"):Get();
+	local queryObj = Clockwork.database:Select(charactersTable)
+		queryObj:Callback(function(result)
+			if (Clockwork.database:IsResult(result)) then
+				for k, v in pairs(result) do
+					local permakilled = false;
+					local data;
+					local faction;
+					
+					if v._Data then
+						data = Clockwork.player:ConvertDataString(player, v._Data);
+						
+						if data then
+							permakilled = data["permakilled"];
+							faction = data["kinisgerOverride"];
+						end
+					end
+					
+					if not faction then
+						faction = v._Faction;
+					end
+					
+					if IsValid(poster) and poster:IsPlayer() and faction then
+						if (faction  == "Gatekeeper" or faction  == "Holy Hierarchy") and !poster:IsAdmin() then
+							Schema:EasyText(poster, "cornflowerblue", "You cannot place a bounty on "..v._Name.."!");
+							
+							return;
+						end
+					end
+					
+					if data and permakilled ~= true then
+						local bountyData = Schema.bountyData[v._Key];
+						local tab = {};
+						
+						tab.bounty = (data["bounty"] or 0) + bounty;
+						tab.name = v._Name or "Unknown Name";
+						tab.model = v._Model or "models/humans/group01/male_cheaple.mdl";
+						tab.skin = v._Skin or 0;
+						
+						local helmet = data["helmet"];
+						local bodygroup;
+						local bodygroupVal;
+
+						if helmet then
+							if helmet.uniqueID and helmet.itemID then
+								local item = Clockwork.item:FindByID(helmet.uniqueID, helmet.itemID);
+								
+								if item and item.bodyGroup and item.bodyGroupVal then
+									bodygroup = item.bodyGroup;
+									bodygroupVal = item.bodyGroupVal;
+								end
+							end
+						end
+						
+						if bodygroup then
+							if bodygroupVal == 0 then
+								tab.bodygroup1 = bodygroup;
+							else
+								tab.bodygroup2 = bodygroup;
+							end
+						end
+						
+						local physDesc = data["PhysDesc"] or "Wearing dirty clothes and a small satchel";
+						
+						if string.len(physDesc) > 128 then
+							physDesc = string.Left(physDesc, 129);
+						end
+						
+						tab.physDesc = physDesc;
+						
+						if reason then
+							tab.reason = reason;
+						elseif bountyData and bountyData.reason then
+							tab.reason = bountyData.reason;
+						end
+						
+						if IsValid(poster) and poster:IsPlayer() then
+							tab.poster = poster:Name();
+							
+							Clockwork.player:GiveCash(poster, -bounty, "Placing a Bounty", true);
+						end
+						
+						Schema.bountyData[v._Key] = tab;
+						Clockwork.kernel:SaveSchemaData("bountyData", Schema.bountyData);
+
+						if IsValid(poster) and poster:IsPlayer() then
+							Schema:EasyText(poster, "cornflowerblue", "You have placed a "..tostring(tab.bounty).." coin bounty on "..tab.name.."!");
+						
+							if tab.bounty == bounty then
+								Schema:EasyText(GetAdmins(), "green", poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."!");
+								Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."!");
+							else
+								Schema:EasyText(GetAdmins(), "green", poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."! Their total bounty now stands at "..tostring(tab.bounty).." coin!");
+								Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."! Their total bounty now stands at "..tostring(tab.bounty).." coin!");
+							end
+						end
+						
+						return;
+					else
+						if IsValid(poster) and poster:IsPlayer() then
+							Schema:EasyText(poster, "peru", v._Name.." is permakilled and cannot have a bounty placed on them!");
+						end
+						
+						return;
+					end
+				end
+			end
+			
+			if IsValid(poster) and poster:IsPlayer() then
+				Schema:EasyText(poster, "peru", "The character "..tostring(key).." could not be located!");
+			end
+		end);
+
+		if tonumber(key) then
+			queryObj:Where("_Key", tonumber(key))
+		else
+			queryObj:Where("_Name", key)
+		end
+	queryObj:Execute()
+end
+
+function Schema:RemoveBounty(key, remover)
+	local charactersTable = config.Get("mysql_characters_table"):Get();
+	local queryObj = Clockwork.database:Select(charactersTable)
+		queryObj:Callback(function(result)
+			if (Clockwork.database:IsResult(result)) then
+				for k, v in pairs(result) do
+					if Schema.bountyData[v._Key] then
+						if v._Data then
+							local data = Clockwork.player:ConvertDataString(player, v._Data)
+							
+							if data and data["bounty"] then
+								if IsValid(remover) and remover:IsPlayer() then
+									Clockwork.player:GiveCash(remover, data["bounty"], "Renouncing a Bounty", true);
+								end
+							end
+						end
+
+						Schema.bountyData[v._Key] = nil;
+						Clockwork.kernel:SaveSchemaData("bountyData", Schema.bountyData);
+						
+						if IsValid(remover) and remover:IsPlayer() then
+							Schema:EasyText(remover, "cornflowerblue", "You have removed the bounty for "..v._Name.."!");
+							Schema:EasyText(GetAdmins(), "tomato", remover:Name().." has removed the bounty for "..v._Name.."!");
+							Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, remover:Name().." has removed the bounty for "..v._Name.."!");
+						end
+						
+						return;
+					end
+				end
+			end
+			
+			if IsValid(remover) and remover:IsPlayer() then
+				Schema:EasyText(remover, "peru", "The character "..tostring(key).." could not be located or does not have a bounty!");
+			end
+		end);
+
+		if tonumber(key) then
+			queryObj:Where("_Key", tonumber(key))
+		else
+			queryObj:Where("_Name", key)
+		end
+	queryObj:Execute()
+end
 
 -- A function to get a player's light color.
 function playerMeta:GetLightColor()

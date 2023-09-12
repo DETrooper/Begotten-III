@@ -3719,7 +3719,9 @@ function GM:PrePlayerTakeDamage(player, attacker, inflictor, damageInfo) end
 
 -- Called when a player should take damage.
 function GM:PlayerShouldTakeDamage(player, attacker, inflictor, damageInfo)
-	return !Clockwork.player:IsNoClipping(player)
+	if Clockwork.player:IsNoClipping(player) then
+		return false;
+	end
 end
 
 -- Called when a player is attacked by a trace.

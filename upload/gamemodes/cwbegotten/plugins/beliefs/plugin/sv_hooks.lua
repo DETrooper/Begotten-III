@@ -1293,7 +1293,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	end
 	
 	if (attacker:IsPlayer()) then
-		if entity:IsPlayer() then
+		if entity:IsPlayer() and not entity.cwWakingUp then
 			if damage >= 10 then
 				if entity:HasBelief("deceitful_snake") then
 					if !entity.warCryVictims then

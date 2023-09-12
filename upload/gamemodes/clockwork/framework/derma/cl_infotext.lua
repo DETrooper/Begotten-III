@@ -144,11 +144,16 @@ end;
 
 -- Called when the mouse is released on the panel.
 function PANEL:OnMouseReleased(mouseCode)
-	if (self:IsButton() and self:IsDepressed()
-	and self:IsHovered()) then
-		if (self.DoClick) then
-			self:DoClick();
-		end;
+	if (self:IsButton() and self:IsDepressed() and self:IsHovered()) then
+		if mouseCode == MOUSE_LEFT then
+			if (self.DoClick) then
+				self:DoClick();
+			end;
+		elseif mouseCode == MOUSE_RIGHT then
+			if (self.DoRightClick) then
+				self:DoRightClick();
+			end;
+		end
 	end;
 	
 	self:SetDepressed(false);
