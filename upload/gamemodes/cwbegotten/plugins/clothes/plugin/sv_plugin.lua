@@ -368,6 +368,20 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 									end
 								end
 								
+								if activeWeapon.Base == "sword_swepbase" then
+									local activeWeaponItemTable = item.GetByWeapon(activeWeapon);
+									
+									if activeWeaponItemTable then
+										local activeWeaponCondition = activeWeaponItemTable:GetCondition() or 100;
+										
+										if damageType == DMG_CLUB then
+											armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.7, 1));
+										else
+											armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.5, 1));
+										end
+									end
+								end
+								
 								local protection = helmetItem.protection;
 								--printp("Armor condition value: "..tostring(condition));
 								
@@ -516,9 +530,20 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						damageInfo:ScaleDamage(dmgScale);
 						--printp("Scaling pierce damage: "..tostring(dmgScale));
 					elseif (helmetItem.bulletScale and (damageType == DMG_BULLET or damageType == DMG_BUCKSHOT)) then
-						local dmgScale = 1 - ((1 - helmetItem.bulletScale) * (condition / 100));
+						if attacker:IsPlayer() then
+							local activeWeapon = attacker:GetActiveWeapon();
+
+							if (IsValid(activeWeapon) and !activeWeapon.ignoresBulletResistance) then
+								local dmgScale = 1 - ((1 - helmetItem.bulletScale) * (condition / 100));
+						
+								damageInfo:ScaleDamage(dmgScale);
+								--printp("Scaling pierce damage: "..tostring(dmgScale));
+							end
+						else
+							local dmgScale = 1 - ((1 - helmetItem.bulletScale) * (condition / 100));
 					
-						damageInfo:ScaleDamage(dmgScale);
+							damageInfo:ScaleDamage(dmgScale);
+						end
 						--printp("Scaling pierce damage: "..tostring(dmgScale));
 					end;
 					
@@ -612,6 +637,20 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 								elseif activeWeapon:GetClass() == "begotten_fists" then
 									if attacker.HasCharmEquipped and attacker:HasCharmEquipped("ring_pugilist") then
 										armorPiercing = 100;
+									end
+								end
+							end
+							
+							if activeWeapon.Base == "sword_swepbase" then
+								local activeWeaponItemTable = item.GetByWeapon(activeWeapon);
+								
+								if activeWeaponItemTable then
+									local activeWeaponCondition = activeWeaponItemTable:GetCondition() or 100;
+									
+									if damageType == DMG_CLUB then
+										armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.7, 1));
+									else
+										armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.5, 1));
 									end
 								end
 							end
@@ -773,10 +812,21 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					damageInfo:ScaleDamage(dmgScale);
 					--printp("Scaling pierce damage: "..tostring(dmgScale));
 				elseif (armorItem.bulletScale and (damageType == DMG_BULLET or damageType == DMG_BUCKSHOT)) then
-					local dmgScale = 1 - ((1 - armorItem.bulletScale) * (condition / 100));
+					if attacker:IsPlayer() then
+						local activeWeapon = attacker:GetActiveWeapon();
+
+						if (IsValid(activeWeapon) and !activeWeapon.ignoresBulletResistance) then
+							local dmgScale = 1 - ((1 - helmetItem.bulletScale) * (condition / 100));
+					
+							damageInfo:ScaleDamage(dmgScale);
+							--printp("Scaling pierce damage: "..tostring(dmgScale));
+						end
+					else
+						local dmgScale = 1 - ((1 - armorItem.bulletScale) * (condition / 100));
 				
-					damageInfo:ScaleDamage(dmgScale);
-					--printp("Scaling pierce damage: "..tostring(dmgScale));
+						damageInfo:ScaleDamage(dmgScale);
+						--printp("Scaling pierce damage: "..tostring(dmgScale));
+					end
 				end;
 				
 				--[[if (armorItem.limbScale) then

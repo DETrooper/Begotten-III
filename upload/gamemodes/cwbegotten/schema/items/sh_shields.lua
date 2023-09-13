@@ -60,6 +60,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, 2.12, -4.95);
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
+	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 800, supercrateOnly = true};
 	ITEM.requireFaith = {"Faith of the Dark"};
 ITEM:Register();
 
@@ -143,7 +144,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, 3.54, -4.95);
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "scrap"}};
-	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 600};
+	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 600, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -176,7 +177,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	
 	ITEM.attributes = {"unbreakable"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 200, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 800, supercrateOnly = true};
 	ITEM.requiredbeliefs = {"defender"};
 	ITEM.requireFaith = {"Faith of the Light"};
 ITEM:Register();
@@ -194,6 +195,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, 0.34, 0);
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
+	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 800, supercrateOnly = true};
 	ITEM.requireFaith = {"Faith of the Dark"};
 ITEM:Register();
 
@@ -225,6 +227,6 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetAngles = Angle(273.48, 360, 90);
 	ITEM.attachmentOffsetVector = Vector(0, 1.6, 0);
 	
-	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 650};
+	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 650, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood", "wood", "wood"}};
 ITEM:Register();

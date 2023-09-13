@@ -509,15 +509,9 @@ elseif map == "rp_scraptown" then
 	};
 end
 
-Clockwork.Client.MapscenePosition = nil;
-
 -- Called when the character background should be drawn.
 function cwMapScene:ShouldDrawCharacterBackground()
 	if (self.curStored) then return false end
-end
-
-function cwMapScene:CharacterPanelClosed()
-	Clockwork.Client.MapscenePosition = nil;
 end
 
 -- Called when the view should be calculated.
@@ -533,13 +527,14 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 				return;
 			end
 			
-			Clockwork.Client.MapscenePosition = Vector(-7640, -9132, -6845);
+			Clockwork.Client.MenuVector = Vector(-7640, -9132, -6845);
+			Clockwork.Client.MenuAngles = Angle(0, 180, 0);
 		
 			return {
-				vm_origin = Vector(-7640, -9132, -6845) + Vector(0, 0, 2048),
+				vm_origin = Clockwork.Client.MenuVector + Vector(0, 0, 2048),
 				vm_angles = Angle(0, 0, 0),
-				origin = Vector(-7640, -9132, -6845),
-				angles = Angle(0, 180, 0),
+				origin = Clockwork.Client.MenuVector,
+				angles = Clockwork.Client.MenuAngles,
 				fov = 90
 			}
 		end
@@ -669,8 +664,6 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 				Clockwork.Client.MenuAngles = Angle(camAngles);
 			end
 			
-			Clockwork.Client.MapscenePosition = camVector;
-			
 			return {
 				vm_origin = Clockwork.Client.MenuVector + Vector(0, 0, 2048),
 				vm_angles = Angle(0, 0, 0),
@@ -682,8 +675,6 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 			if (IsValid(Clockwork.Client.CharSelectionModel)) then
 				Clockwork.Client.CharSelectionModel:Remove();
 			end;
-			
-			Clockwork.Client.MapscenePosition = nil;
 			
 			if self.curStored then
 				if (self.curStored.shouldSpin) then

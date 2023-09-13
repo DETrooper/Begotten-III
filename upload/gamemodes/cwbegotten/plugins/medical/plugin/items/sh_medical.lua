@@ -55,6 +55,8 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/ampoule.png"
 	ITEM.useSound = "begotten/items/meat_inject.mp3";
 	ITEM.uniqueID = "blacksyringe"
+	
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 2000, supercrateOnly = true};
 		
 	-- Called when the player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -137,6 +139,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.uniqueID = "black_remedy"
 
 	ITEM.ingestible = {orally = true, anally = false};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 1500, supercrateOnly = true};
 	
 	function ITEM:OnUsed(player, itemEntity)
 		if player:Alive() and !player:IsRagdolled() then
@@ -272,7 +275,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useXP = 15;
 
 	ITEM.curesInjuries = {"burn"};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 300};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 300, bNoSupercrate = true};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 	
 	function ITEM:OnUsed(player, itemEntity)
@@ -377,7 +380,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useOnSelf = false;
 	ITEM.isSurgeryItem = true;
 
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 600};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 600, bNoSupercrate = true};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 ITEM:Register();
 
@@ -397,7 +400,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useOnSelf = false;
 	ITEM.isSurgeryItem = true;
 
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 600};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 600, bNoSupercrate = true};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 ITEM:Register();
 
@@ -417,7 +420,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useOnSelf = false;
 	ITEM.isSurgeryItem = true;
 
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 900};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 900, bNoSupercrate = true};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 ITEM:Register();
 
@@ -502,7 +505,7 @@ local ITEM = Clockwork.item:New();
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 	
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 600};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 600, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New();
@@ -677,6 +680,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.useSound = "physics/plastic/plastic_barrel_break1.wav";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = false;
+	
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 700, supercrateOnly = true};
 	
 	if cwMedicalSystem then
 		ITEM.useText = "Apply";

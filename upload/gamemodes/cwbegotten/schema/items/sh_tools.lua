@@ -573,7 +573,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.useText = "Recharge Power Armor";
 	ITEM.useSound = "items/battery_pickup.wav";
 	
-	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 200, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 600, supercrateOnly = true};
 	
 	function ITEM:OnUse(player, itemEntity)
 		if player:IsWearingPowerArmor() then

@@ -27,7 +27,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoType = "Pop-a-Shot";
 	ITEM.ammoName = "Pop-a-Shot";
 	
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 65, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 65, onGround = false, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -94,7 +94,6 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 500, supercrateOnly = true};
 ITEM:Register();
 
-
 local ITEM = Clockwork.item:New("shot_base");
 	ITEM.name = "Old World Shot";
 	ITEM.cost = 30;
@@ -125,7 +124,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoMagazineSize = 15;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 350};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 350, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -142,7 +141,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoMagazineSize = 25;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "scrap"}};
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 550};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 550, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -158,7 +157,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoType = "Scrapshot";
 	ITEM.ammoName = "Scrapshot";
 	
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 90, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 90, onGround = false, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");

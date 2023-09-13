@@ -942,7 +942,7 @@ function Schema:AddBlackFade(time)
 end
 
 netstream.Hook("WakeupSequence", function(data)
-	if CW_CONVAR_WAKEUPSEQUENCE:GetInt() == 1 then
+	if CW_CONVAR_WAKEUPSEQUENCE:GetInt() == 1 or !Clockwork.Client:IsAdmin() then
 		Schema:RefreshWakeupSequence();
 		
 		Clockwork.Client.LoadingText = true;

@@ -215,9 +215,9 @@ if (SERVER) then
 									if (bSuccess) then
 										if (!commandTable.logless) then
 											if (table.concat(arguments, " ") != "") then
-												Clockwork.kernel:PrintLog(HOLYSHIT, player:Name(true).." has used '"..commandPrefix..commandTable.name.." "..table.concat(arguments, " ").."'.")
+												Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name(true).." has used '"..commandPrefix..commandTable.name.." "..table.concat(arguments, " ").."'.")
 											else
-												Clockwork.kernel:PrintLog(HOLYSHIT, player:Name(true).." has used '"..commandPrefix..commandTable.name.."'.")
+												Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name(true).." has used '"..commandPrefix..commandTable.name.."'.")
 											end
 										end;
 

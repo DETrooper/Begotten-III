@@ -78,7 +78,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A tall leather watchtower hat embroidered with the markings of the Second Inquisition."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 350};
+	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 350, bNoSupercrate = true};
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"leather"}};
 ITEM:Register();

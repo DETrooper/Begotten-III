@@ -151,9 +151,9 @@ function Clockwork.setting:AddSettings()
 	--Clockwork.setting:AddCheckBox("Chatbox", "Show out-of-character messages.", "cwShowOOC", "Whether or not to show you any out-of-character messages.");
 	--Clockwork.setting:AddCheckBox("Chatbox", "Show in-character messages.", "cwShowIC", "Whether or not to show you any in-character messages.");
 
-	--[[Clockwork.setting:AddCheckBox("Framework", "Whether or not to show the admin console log.", "cwShowLog", "Enable the admin console log.", function()
+	Clockwork.setting:AddCheckBox("Framework", "Whether or not to show the admin console log.", "cwShowLog", "Enable the admin console log.", function()
 		return Clockwork.player:IsAdmin(Clockwork.Client)
-	end)]]--
+	end)
 
 	--Clockwork.setting:AddCheckBox("Framework", "Enable the twelve hour clock.", "cwTwelveHourClock", "Whether or not to show a twelve hour clock.");
 	--Clockwork.setting:AddCheckBox("Framework", "Show bars at the top of the screen.", "cwTopBars", "Whether or not to show bars at the top of the screen.");

@@ -101,7 +101,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.attributes = {"grounded"};
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "wood", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 250};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 250, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -142,4 +142,5 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.attributes = {"grounded"};
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1000, supercrateOnly = true};
 ITEM:Register();

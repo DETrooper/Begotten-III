@@ -13,7 +13,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-2.83, 4.95, -10.61);
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "wood", "wood", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 300};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 300, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -68,6 +68,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(2.83, 3.4, 16.51);	
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -103,7 +104,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-1.41, 2, -16.27);
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "iron_chunks", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 425};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 425, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -177,6 +178,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-1.41, 3, 4.24);
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood"}};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");

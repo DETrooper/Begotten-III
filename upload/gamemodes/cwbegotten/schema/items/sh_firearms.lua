@@ -24,7 +24,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"scrap", "scrap", "wood", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 800};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 800, supercrateItems = {["grapeshot"] = {min = 10, max = 20}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -47,7 +47,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"weapons/m1911/handling/m1911_magrelease.wav", "weapons/m1911/handling/m1911_magout.wav", "weapons/m1911/handling/m1911_magin.wav", "weapons/m1911/handling/m1911_maghit.wav", "weapons/m1911/handling/m1911_boltback.wav", "weapons/m1911/handling/m1911_boltrelease.wav"};
 	ITEM.usesMagazine = true;
 	
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2500, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2500, supercrateOnly = true, supercrateItems = {["old_world_magazine"] = {min = 2, max = 3}, ["old_world_shot"] = {min = 7, max = 14}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -69,7 +69,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 10; -- Seconds (for one round)
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, supercrateOnly = true, supercrateItems = {["grapeshot"] = {min = 15, max = 30}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -113,7 +113,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "steel_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1000};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 900, supercrateItems = {["longshot"] = {min = 10, max = 15}, ["grapeshot"] = {min = 3, max = 5}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -135,7 +135,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"scrap", "scrap", "scrap"}};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 600};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 600, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -157,7 +157,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 10; -- Seconds (for one round)
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1500, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1500, supercrateOnly = true, supercrateItems = {["longshot"] = {min = 10, max = 20}, ["grapeshot"] = {min = 5, max = 10}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -181,7 +181,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/m1911/handling/m1911_boltback.wav", "weapons/m1911/handling/m1911_magout.wav", "weapons/m1911/handling/m1911_magin.wav", "weapons/m1911/handling/m1911_maghit.wav", "weapons/m1911/handling/m1911_boltrelease.wav"};
 	ITEM.usesMagazine = true;
 	
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1000, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1200, supercrateItems = {["scavenger_gun_large_magazine"] = {min = 2, max = 5}, ["scrapshot"] = {min = 15, max = 30}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -189,7 +189,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.model = "models/weapons/w_snip_m1903.mdl";
 	ITEM.weight = 4;
 	ITEM.uniqueID = "begotten_springer";
-	ITEM.description = "An ancient weapon, pre-dating even the Empire of Light. It is powerful enough to kill almost anyone with one shot, though ammunition is scarce. It is common for those who acquire this weapon to have hitmen hired to take it from them.";
+	ITEM.description = "An ancient high-powered rifle, pre-dating even the Empire of Light. It is powerful enough to kill almost anyone with one shot, though ammunition is scarce. It is common for those who acquire this weapon to have hitmen hired to take it from them.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/springer.png"
 	ITEM.isAttachment = true;
 	ITEM.loweredOrigin = Vector(39.50, -28.45, -20.17);
@@ -205,7 +205,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 5; -- Seconds
 	ITEM.reloadSounds = {"weapons/request day of defeat/m1903 springfield boltback 1.wav", "weapons/request day of defeat/m1903 springfield clipin.wav", "weapons/request day of defeat/m1903 springfield boltforward 2.wav"};
 	
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5000, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5000, supercrateOnly = true, supercrateItems = {["old_world_longshot"] = {min = 10, max = 20}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -213,7 +213,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.model = "models/_tails_ models/props/rust/thompson/thompson.mdl";
 	ITEM.weight = 4.5;
 	ITEM.uniqueID = "begotten_thompson";
-	ITEM.description = "An ancient automatic submachinegun pre-dating the Empire of Light. It appears to have been looted from a museum and restored to working order with spare parts.";
+	ITEM.description = "An ancient automatic submachinegun even pre-dating the Empire of Light. It appears to have been looted from an ancient museum and restored to working order with spare parts.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/thompson.png"
 	ITEM.isAttachment = true;
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
@@ -228,7 +228,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"weapons/m1911/handling/m1911_magrelease.wav", "weapons/m1911/handling/m1911_magout.wav", "weapons/m1911/handling/m1911_magin.wav", "weapons/m1911/handling/m1911_maghit.wav", "weapons/m1911/handling/m1911_boltback.wav", "weapons/m1911/handling/m1911_boltrelease.wav"};
 	ITEM.usesMagazine = true;
 	
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5000, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5000, supercrateOnly = true, supercrateItems = {["old_world_large_magazine"] = {min = 2, max = 3}, ["old_world_shot"] = {min = 20, max = 30}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");

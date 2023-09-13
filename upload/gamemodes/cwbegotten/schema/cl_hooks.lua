@@ -1539,9 +1539,25 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 			
 				if weaponStats["attack"].armorpiercing then
-					local percentage = math.min(weaponStats["attack"].armorpiercing / 100, 100);
+					local armorpiercing = weaponStats["attack"].armorpiercing;
+					local damagetype = weaponStats["attack"].dmgtype;
+					local originalAP = armorpiercing;
+					
+					if armorpiercing then
+						if damagetype == DMG_CLUB then
+							armorpiercing = math.Round(armorpiercing * Lerp(condition / 100, 0.7, 1));
+						else
+							armorpiercing = math.Round(armorpiercing * Lerp(condition / 100, 0.5, 1));
+						end
+					end
+				
+					local percentage = math.min(armorpiercing / 100, 100);
 		
-					frame:AddBar(12, {{text = tostring(weaponStats["attack"].armorpiercing), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor-Piercing Damage", Color(110, 30, 30));
+					if armorpiercing < originalAP then
+						frame:AddBar(12, {{text = tostring(armorpiercing).." / "..tostring(originalAP), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor-Piercing Damage", Color(110, 30, 30));
+					else
+						frame:AddBar(12, {{text = tostring(armorpiercing), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor-Piercing Damage", Color(110, 30, 30));
+					end
 				end
 			
 				if weaponStats["attack"].primarydamage then
@@ -1590,9 +1606,31 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					--frame:AddSpacer(4, Color(40, 40, 40, 120));
 					
 					if weaponStats["attack"].altarmorpiercing then
-						local percentage = math.min(weaponStats["attack"].altarmorpiercing / 100, 100);
+						local armorpiercing = weaponStats["attack"].altarmorpiercing;
+						local damagetype;
+						local originalAP = armorpiercing;
+						
+						if weaponTable.CanSwipeAttack then
+							damagetype = DMG_CLUB;
+						else
+							damagetype = DMG_VEHICLE;
+						end
+						
+						if armorpiercing then
+							if damagetype == DMG_CLUB then
+								armorpiercing = math.Round(armorpiercing * Lerp(condition / 100, 0.7, 1));
+							else
+								armorpiercing = math.Round(armorpiercing * Lerp(condition / 100, 0.5, 1));
+							end
+						end
+					
+						local percentage = math.min(armorpiercing / 100, 100);
 			
-						frame:AddBar(12, {{text = tostring(weaponStats["attack"].altarmorpiercing), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Armor-Piercing Damage", Color(110, 30, 30));
+						if armorpiercing < originalAP then
+							frame:AddBar(12, {{text = tostring(armorpiercing).." / "..tostring(originalAP), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Armor-Piercing Damage", Color(110, 30, 30));
+						else
+							frame:AddBar(12, {{text = tostring(armorpiercing), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Armor-Piercing Damage", Color(110, 30, 30));
+						end
 					end
 				
 					if weaponStats["attack"].primarydamage and weaponStats["attack"].altattackdamagemodifier then
@@ -2174,6 +2212,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			if weaponTable then
 				frame:AddText("Weapon Attributes: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
 
+				if !weaponTable.MisfireChance or weaponTable.MisfireChance == 0 then
+					frame:AddText("Cannot Misfire", Color(110, 30, 30));
+				end
+
 				if itemTable.usesMagazine then
 					frame:AddText("Uses Detachable Magazines", Color(110, 30, 30));
 				elseif itemTable.isRevolver then
@@ -2182,6 +2224,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddText("Has Fixed Magazine", Color(110, 30, 30));
 				else
 					frame:AddText("Has Single Shot", Color(110, 30, 30));
+				end
+				
+				if weaponTable.IgnoresBulletResistance then
+					frame:AddText("Ignores Bullet Resistance", Color(110, 30, 30));
 				end
 				
 				if itemTable.ammoTypes then

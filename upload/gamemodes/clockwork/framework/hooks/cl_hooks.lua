@@ -407,7 +407,7 @@ function GM:Initialize()
 	--CW_CONVAR_TWELVEHOURCLOCK = Clockwork.kernel:CreateClientConVar("cwTwelveHourClock", 0, true, true)
 	--CW_CONVAR_HEADBOBSCALE = Clockwork.kernel:CreateClientConVar("cwHeadbobScale", 1, true, true)
 	--CW_CONVAR_SHOWAURA = Clockwork.kernel:CreateClientConVar("cwShowCW", 1, true, true)
-	--CW_CONVAR_SHOWLOG = Clockwork.kernel:CreateClientConVar("cwShowLog", 1, true, true)
+	CW_CONVAR_SHOWLOG = Clockwork.kernel:CreateClientConVar("cwShowLog", 1, true, true)
 	--CW_CONVAR_SHOWHINTS = Clockwork.kernel:CreateClientConVar("cwShowHints", 1, true, true)
 	--CW_CONVAR_VIGNETTE = Clockwork.kernel:CreateClientConVar("cwShowVignette", 1, true, true)
 

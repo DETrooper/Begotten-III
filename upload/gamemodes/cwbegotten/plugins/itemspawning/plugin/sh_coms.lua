@@ -40,6 +40,56 @@ local COMMAND = Clockwork.command:New("RemoveItemSpawn")
 	end
 COMMAND:Register()
 
+local COMMAND = Clockwork.command:New("SpawnSupercrate")
+	COMMAND.tip = "Add an item spawn location."
+	COMMAND.text = "[bool TeleportTo]"
+	COMMAND.access = "s"
+	COMMAND.optionalArguments = 1
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		if !cwItemSpawner.SuperCrates then
+			Schema:EasyText(player, "tomato", "This map does not support supercrates!");
+			
+			return;
+		end
+		
+		if cwItemSpawner.SuperCrate then
+			local supercrate = cwItemSpawner.SuperCrate.supercrate;
+
+			if IsValid(supercrate) then
+				supercrate.cwInventory = nil;
+				supercrate.cwCash = nil;
+				supercrate:Remove();
+				
+				cwItemSpawner.SuperCrate = nil;
+				
+				Schema:EasyText(player, "lightslategrey", "You have removed the current supercrate.");
+			end
+		end
+		
+		local supercrateTab = cwItemSpawner:SpawnSupercrate();
+
+		if supercrateTab then	
+			local supercrate = supercrateTab.supercrate;
+			
+			if IsValid(supercrate) then
+				local numItems = table.Count(supercrate.cwInventory);
+				
+				Schema:EasyText(player, "cornflowerblue", "You have spawned a supercrate with "..tostring(numItems).." items and "..tostring(supercrate.cwCash).." coin!");
+		
+				if arguments and arguments[1] then
+					Clockwork.player:SetSafePosition(player, supercrate:GetPos());
+				end
+				
+				return;
+			end
+		end
+		
+		Schema:EasyText(player, "tomato", "A supecrate could not be created for some reason!")
+	end
+COMMAND:Register()
+
 local COMMAND = Clockwork.command:New("ItemSpawnerInfo")
 	COMMAND.tip = "Get some debug data about the item spawning."
 	COMMAND.access = "s"

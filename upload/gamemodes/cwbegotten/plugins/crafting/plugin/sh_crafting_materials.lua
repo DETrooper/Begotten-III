@@ -14,7 +14,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/repair_kit.png";
 	ITEM.stackable = false;
 	
-	ITEM.itemSpawnerInfo = {category = "Repair Kits", rarity = 300};
+	ITEM.itemSpawnerInfo = {category = "Repair Kits", rarity = 300, bNoSupercrate = true};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
@@ -192,7 +192,9 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "An ingot of refined, stronger steel that can be further smithed into a weapon or into a set of armor.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = true;
-		
+	
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 650, supercrateOnly = true};
+	
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 	
@@ -208,6 +210,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/fine_steel_ingot.png";
 	ITEM.stackable = true;
 	
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 800, supercrateOnly = true};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_ingot", "fine_steel_ingot"}};
 
 	-- Called when a player drops the item.
@@ -225,6 +228,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/fine_steel_ingot.png";
 	ITEM.stackable = true;
 	
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 800, supercrateOnly = true};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_ingot", "fine_steel_ingot"}};
 
 	-- Called when a player drops the item.
@@ -242,6 +246,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/fine_steel_ingot.png";
 	ITEM.stackable = true;
 	
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 800, supercrateOnly = true};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_ingot", "fine_steel_ingot"}};
 
 	-- Called when a player drops the item.
@@ -258,6 +263,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "An ingot of Gold, once considered to be of enormous value. While it may still be worth a great deal of coin if turned in to the Hierarchy, it may be more valuable for the smithing of ornate weapons and armor.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = true;
+	
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 800, supercrateOnly = true};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;

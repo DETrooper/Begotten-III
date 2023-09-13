@@ -143,7 +143,7 @@ function Schema:CheapleFollows(position_override)
 	
 	timer.Simple(2, function()
 		if IsValid(statichitman) then
-			statichitman:EmitSound("npc/zombie_poison/pz_breathe_loop1.wav", 75, 75);
+			statichitman:EmitSound("begotten/npc/follower/dimented_passages_looping.wav", 80);
 		end
 	end);
 end;
@@ -229,7 +229,7 @@ end
 
 function Schema:ClearCheaple()
 	if IsValid(statichitman) then
-		statichitman:StopSound("npc/zombie_poison/pz_breathe_loop1.wav");
+		statichitman:StopSound("begotten/npc/follower/dimented_passages_looping.wav");
 		statichitman:StopSound("ambient/fire/fire_small1.wav");
 		statichitman:Remove();
 	end

@@ -1004,20 +1004,21 @@ function Clockwork.chatBox:Add(filtered, icon, ...)
 		
 		self.historyMsgs[#self.historyMsgs + 1] = message;
 		
-		if (#self.messages == maximumLines) then
-			table.remove(self.messages, maximumLines);
-		end;
-		
 		if (message.noTime) then
 			if cwCinematicText and CW_CONVAR_SHOWCINEMATICS:GetInt() == 1 then
 				message.timeFinish = curTime;
 				message.timeFade = curTime;
 				
 				Clockwork.option:PlaySound("tick");
+				Clockwork.kernel:PrintColoredText(...);
 				
 				return;
 			end
 		end
+		
+		if (#self.messages == maximumLines) then
+			table.remove(self.messages, maximumLines);
+		end;
 		
 		table.insert(self.messages, 1, message);
 		

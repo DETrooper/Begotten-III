@@ -1007,6 +1007,10 @@ IronSight
 function SWEP:IronSight()
 	if not IsValid(self) then return end
 	if not IsValid(self.Owner) then return end
+	
+	if !Clockwork.player:GetWeaponRaised(self.Owner) then
+		return;
+	end
 
 	if !self.Owner:IsNPC() then
 		if self.ResetSights and CurTime() >= self.ResetSights then
@@ -1086,6 +1090,13 @@ function SWEP:IronSight()
 		self.BobScale   = 1.0
 	end
 end
+
+function SWEP:AdjustMouseSensitivity()
+	if self:GetIronsights() then
+		return 0.25;
+	end
+end
+
  
 /*---------------------------------------------------------
 Think

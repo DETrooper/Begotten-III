@@ -3666,7 +3666,11 @@ function GM:PlayerAdjustDeathInfo(player, info) end
 -- Called when chat box info should be adjusted.
 function GM:ChatBoxAdjustInfo(info)
 	if (info.class == "ic") then
-		Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, info.speaker:Name().." says: \""..info.text.."\"")
+		Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, info.speaker:Name().." says \""..info.text.."\"")
+	elseif (info.class == "yell") then
+		--Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, info.speaker:Name().." yells \""..info.text.."\"")
+	elseif (info.class == "me") then
+		--Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, "*** "..info.speaker:Name().." "..info.text)
 	elseif (info.class == "looc") then
 		Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, "[LOOC] "..info.speaker:Name()..": "..info.text)
 	end

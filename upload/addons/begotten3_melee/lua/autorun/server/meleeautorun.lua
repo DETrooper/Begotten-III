@@ -96,60 +96,64 @@ local function Guarding(ent, dmginfo)
 			local blockthreshold = (blocktable["blockcone"] or 135) / 2;
 			
 			if blocktable["partialbulletblock"] == true and (dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT)) and (IsValid(attacker) and (math.abs(math.AngleDifference(ent:EyeAngles().y, (attacker:GetPos() - ent:GetPos()):Angle().y)) <= blockthreshold)) then
-				--ent:TakePoise(blocktable["guardblockamount"] * 0.5, 0, max_poise)
-
-				if dmginfo:IsDamageType(DMG_BULLET) then
-					ent:TakePoise(math.Round(dmginfo:GetDamage() * 0.5));
-				elseif dmginfo:IsDamageType(DMG_BUCKSHOT) then
-					ent:TakePoise(math.Round(dmginfo:GetDamage() * 1.5));
-				end
+				local enemyWeapon = attacker:GetActiveWeapon();
 				
-				ent:EmitSound(blocksoundtable["blockmissile"][math.random(1, #blocksoundtable["blockmissile"])])
-				
-				dmginfo:ScaleDamage(0.35)
-				
-				if blocktable["specialeffect"] == false then
-					local effectdata = EffectData() 
-						effectdata:SetEntity(wep)
-						effectdata:SetScale(3)
-						effectdata:SetOrigin(ent:GetPos() + ent:GetForward() * blocktable["blockeffectforward"] + (blocktable["blockeffectpos"]),Angle(0,45,0))
-					util.Effect(blocktable["blockeffect"], effectdata) 
-				end
+				if !IsValid(enemyWeapon) or !enemyWeapon.IgnoresBulletResistance then
+					--ent:TakePoise(blocktable["guardblockamount"] * 0.5, 0, max_poise)
 
-				if (blocktable["specialeffect"] == true) then
-					local flame = blocktable["blockeffect"];
-					local bone = ent:LookupBone("ValveBiped.Bip01_R_Hand");
+					if dmginfo:IsDamageType(DMG_BULLET) then
+						ent:TakePoise(math.Round(dmginfo:GetDamage() * 0.5));
+					elseif dmginfo:IsDamageType(DMG_BUCKSHOT) then
+						ent:TakePoise(math.Round(dmginfo:GetDamage() * 1.5));
+					end
+					
+					ent:EmitSound(blocksoundtable["blockmissile"][math.random(1, #blocksoundtable["blockmissile"])])
+					
+					dmginfo:ScaleDamage(0.35)
+					
+					if blocktable["specialeffect"] == false then
+						local effectdata = EffectData() 
+							effectdata:SetEntity(wep)
+							effectdata:SetScale(3)
+							effectdata:SetOrigin(ent:GetPos() + ent:GetForward() * blocktable["blockeffectforward"] + (blocktable["blockeffectpos"]),Angle(0,45,0))
+						util.Effect(blocktable["blockeffect"], effectdata) 
+					end
 
-					if (bone) then
-						local f = ents.Create("prop_physics");
-						f:SetModel("models/hunter/blocks/cube025x025x025.mdl");
-						f:SetPos(ent:GetBonePosition(bone));
-						f:SetAngles(Angle(0, 0, 0));
-						f:Spawn();
-						f.follower = bone;
-						f:SetRenderMode(RENDERMODE_TRANSALPHA)
-						f:SetColor(Color(255, 255, 255, 0));
-						f:SetMoveType(MOVETYPE_NONE);
-						f:SetParent(ent, ent:LookupBone("ValveBiped.Bip01_R_Hand"));
-						f:DrawShadow(false)
+					if (blocktable["specialeffect"] == true) then
+						local flame = blocktable["blockeffect"];
+						local bone = ent:LookupBone("ValveBiped.Bip01_R_Hand");
 
-						local py = f:GetPhysicsObject();
+						if (bone) then
+							local f = ents.Create("prop_physics");
+							f:SetModel("models/hunter/blocks/cube025x025x025.mdl");
+							f:SetPos(ent:GetBonePosition(bone));
+							f:SetAngles(Angle(0, 0, 0));
+							f:Spawn();
+							f.follower = bone;
+							f:SetRenderMode(RENDERMODE_TRANSALPHA)
+							f:SetColor(Color(255, 255, 255, 0));
+							f:SetMoveType(MOVETYPE_NONE);
+							f:SetParent(ent, ent:LookupBone("ValveBiped.Bip01_R_Hand"));
+							f:DrawShadow(false)
 
-						if (IsValid(py)) then
-							py:EnableMotion(false);
-						end;
+							local py = f:GetPhysicsObject();
 
-						f:SetCollisionGroup(COLLISION_GROUP_WORLD);
-
-						timer.Simple(1, function()
-							if (IsValid(f)) then
-								f:Remove();
+							if (IsValid(py)) then
+								py:EnableMotion(false);
 							end;
-						end);
 
-						if IsValid(f) then
-							ParticleEffectAttach(flame, PATTACH_POINT_FOLLOW, f, f.follower)
-						end;
+							f:SetCollisionGroup(COLLISION_GROUP_WORLD);
+
+							timer.Simple(1, function()
+								if (IsValid(f)) then
+									f:Remove();
+								end;
+							end);
+
+							if IsValid(f) then
+								ParticleEffectAttach(flame, PATTACH_POINT_FOLLOW, f, f.follower)
+							end;
+						end
 					end
 				end
 			end
@@ -158,17 +162,29 @@ local function Guarding(ent, dmginfo)
 
 			if ((blocktable["blockdamagetypes"])) then
 				for _,v in ipairs((blocktable["blockdamagetypes"])) do
-					if dmginfo:IsDamageType(v) then 
-						canblock = true;
-						break;
+					if dmginfo:IsDamageType(v) then
+						if v == DMG_BULLET or v == DMG_BUCKSHOT then
+							local enemyWeapon = attacker:GetActiveWeapon();
+							
+							if !IsValid(enemyWeapon) or !enemyWeapon.IgnoresBulletResistance then
+								canblock = true;
+								break;
+							end
+						else
+							canblock = true;
+							break;
+						end
 					end
 				end
 			end;
 			
 			if not canblock and wep.HoldType == "wos-begotten_dual" then
 				if (dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_SNIPER) or dmginfo:IsDamageType(DMG_BUCKSHOT)) and cwBeliefs and ent.HasBelief and ent:HasBelief("impossibly_skilled") then
-					--dmginfo:ScaleDamage(0);
-					canblock = true;
+					local enemyWeapon = attacker:GetActiveWeapon();
+					
+					if !IsValid(enemyWeapon) or !enemyWeapon.IgnoresBulletResistance then
+						canblock = true;
+					end
 				end
 			end
 

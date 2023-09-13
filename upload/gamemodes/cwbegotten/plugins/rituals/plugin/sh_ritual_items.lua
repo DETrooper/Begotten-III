@@ -11,6 +11,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.category = "Catalysts";
 	ITEM.description = "A highly luminescent stone that has various purifying properties.";
 	ITEM.stackable = true;
+	
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 600, supercrateOnly = true};
 
 	-- Called when a player drops the item.
 	function ITEM:OnUse(player, position)
@@ -53,6 +55,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A glass orb with billowing hot fumes writhing within. Occasionally, the fumes will take the appearance of a screaming face.";
 	ITEM.stackable = true;
 	
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 400, supercrateOnly = true};
+	
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 ITEM:Register();
@@ -80,6 +84,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.category = "Catalysts";
 	ITEM.description = "A large piece of coiled rock. It appears electrically charged.";
 	ITEM.stackable = true;
+	
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 400, supercrateOnly = true};
 	
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
@@ -185,6 +191,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A glowing red crystal formation, with numerous Satanic signets inscribed within.";
 	ITEM.stackable = true;
 	
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 400, supercrateOnly = true};
+	
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 	
@@ -198,6 +206,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.category = "Catalysts";
 	ITEM.description = "A glass orb with white-hot billowing fumes writhing within. Occasionally, the fumes form the face of a majestic man.";
 	ITEM.stackable = true;
+	
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 400, supercrateOnly = true};
 	
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;

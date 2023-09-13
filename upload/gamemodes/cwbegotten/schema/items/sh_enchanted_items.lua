@@ -66,6 +66,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.description = "A mummified heart, embalmed with special care by some ancient civilization.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Reduces blood loss when bleeding by 40%.";
+	
 	ITEM.requiredFaiths = {"Faith of the Dark"};
 ITEM:Register();
 
@@ -186,6 +187,8 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases all faith gain by 25% if you are of the Faith of the Family.";
 	ITEM.requiredFaiths = {"Faith of the Family"};
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false}
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
@@ -197,6 +200,8 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases all faith gain by 25% if you are of the Faith of the Dark.";
 	ITEM.requiredFaiths = {"Faith of the Dark"};
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false}
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
@@ -208,6 +213,8 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases all faith gain by 25% if you are of the Faith of the Light.";
 	ITEM.requiredFaiths = {"Faith of the Light"};
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false}
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");

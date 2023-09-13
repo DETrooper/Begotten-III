@@ -36,4 +36,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	function ITEM:OnHolster(player, bForced)
 		self:SetData("IsWorn", false);
 	end;--]]
+	
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 250, bNoSupercrate = true};
 ITEM:Register();

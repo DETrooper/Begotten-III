@@ -184,6 +184,93 @@ function zones:RefreshCurrentZone()
 	self.recheckTable = nil;
 end
 
+function zones:RefreshZoneVFX()
+	local zoneTable = self.currentZoneTable or self.cwDefaultZone;
+	
+	if (zoneTable) then
+		if (self:FogEnabled()) then
+			local zoneFogColors = zoneTable.fogColors or {r = 255, g = 255, b = 255};
+			
+			if (!self.currentFogColors) then self.currentFogColors = {r = 255, g = 255, b = 255}; end;
+			if (!self.targetFogColors) then self.targetFogColors = {r = 255, g = 255, b = 255}; end;
+			
+			for k, v in pairs (self.targetFogColors) do
+				if (self.targetFogColors[k] != zoneFogColors[k]) then self.targetFogColors[k] = zoneFogColors[k] end;
+				
+				if (self.currentFogColors[k] != self.targetFogColors[k]) then
+					self.currentFogColors[k] = self.targetFogColors[k];
+				end;
+			end;
+			
+			if (zoneTable.fogStart and zoneTable.fogEnd) then
+				local fogStart, fogEnd = zoneTable.fogStart, zoneTable.fogEnd;
+
+				if zoneTable.hasNight and !Clockwork.Client.dueling and !Clockwork.kernel:IsChoosingCharacter() then
+					if (zoneTable.fogStartNight and zoneTable.fogEndNight) then
+						self.targetStart = Lerp(cwDayNight.nightWeight, zoneTable.fogStart, zoneTable.fogStartNight);
+						self.targetEnd = Lerp(cwDayNight.nightWeight, zoneTable.fogEnd, zoneTable.fogEndNight);
+					else
+						self.targetStart = zoneTable.fogStart;
+						self.targetEnd = zoneTable.fogEnd;
+					end
+				else
+					self.targetStart = zoneTable.fogStart;
+					self.targetEnd = zoneTable.fogEnd;
+				end
+
+				self.currentFogStart = self.targetStart;
+				self.currentFogEnd = self.targetEnd;
+			end
+		end
+		
+		if (self:ColorModEnabled()) then
+			if (zoneTable.colorModify) then
+				if (!self.currentColorModify) then
+					self.currentColorModify = {
+						["$pp_colour_brightness"] = 0,
+						["$pp_colour_contrast"] = 1,
+						["$pp_colour_colour"] = 1,
+					};
+				end;
+			
+				if (!self.targetColorModify) then
+					self.targetColorModify = {
+						["$pp_colour_brightness"] = 0,
+						["$pp_colour_contrast"] = 1,
+						["$pp_colour_colour"] = 1,
+					};
+				end
+				
+				local zoneModify = zoneTable.colorModify;
+				
+				if zoneTable.hasNight and zoneTable.colorModifyNight and cwDayNight and cwDayNight.nightWeight and !Clockwork.Client.dueling and !Clockwork.kernel:IsChoosingCharacter() then
+					local zoneModifyNight = zoneTable.colorModifyNight;
+					local newBrightness = Lerp(cwDayNight.nightWeight, zoneModify["$pp_colour_brightness"], zoneModifyNight["$pp_colour_brightness"]);
+					local newContrast = Lerp(cwDayNight.nightWeight, zoneModify["$pp_colour_contrast"], zoneModifyNight["$pp_colour_contrast"]);
+					local newColour = Lerp(cwDayNight.nightWeight, zoneModify["$pp_colour_colour"], zoneModifyNight["$pp_colour_colour"]);
+					
+					zoneModify = {["$pp_colour_brightness"] = newBrightness, ["$pp_colour_contrast"] = newContrast, ["$pp_colour_colour"] = newColour};
+				end
+				
+				for k, v in pairs (self.targetColorModify) do
+					if (self.targetColorModify[k] != zoneModify[k]) then
+						self.targetColorModify[k] = zoneModify[k];
+					end;
+				end;
+
+				for k, v in pairs (self.currentColorModify) do
+					self.currentColorModify[k] = self.targetColorModify[k];
+				end;
+			end
+		end
+	end
+end
+
+function zones:OnReloaded()
+	self:RefreshCurrentZone();
+	self:RefreshZoneVFX();
+end
+
 do
 	CW_CONVAR_ZONES = Clockwork.kernel:CreateClientConVar("cwZones", 1, true, true);
 	CW_CONVAR_ZONES_DEBUG = Clockwork.kernel:CreateClientConVar("cwZonesDebug", 0, false, true);
@@ -283,7 +370,7 @@ function zones:Think()
 
 		local client = Clockwork.Client;
 		local clientPosition = client:GetPos();
-		local mapscenePosition = Clockwork.Client.MapscenePosition;
+		local mapscenePosition = Clockwork.Client.MenuVector;
 		local zone = 0;
 
 		self.lastActiveZone = nil;
@@ -319,11 +406,11 @@ end;
 
 -- Called when the screen space effects are rendered.
 function zones:RenderScreenspaceEffects()
-	if (!self:Enabled() or Clockwork.kernel:IsScreenFadedBlack()) then
+	if (!self:Enabled()) then
 		return;
 	end;
 	
-	local mapscenePosition = Clockwork.Client.MapscenePosition;
+	local mapscenePosition = Clockwork.Client.MenuVector;
 	local defaultZone = self.cwDefaultZone;
 	local frameTime = FrameTime();
 	local zoneTable = self.currentZoneTable or defaultZone;
@@ -598,6 +685,50 @@ function zones:RenderScreenspaceEffects()
 	end;
 end;
 
+function zones:CharacterPanelClosed()
+	if (!self:Enabled()) then
+		return;
+	end;
+	
+	local client = Clockwork.Client;
+	local clientPosition = client:GetPos();
+	local zone = 0;
+
+	self.lastActiveZone = nil;
+	
+	for k, v in pairs (self.stored) do
+		local boundsTable = v.bounds;
+		
+		if (boundsTable) then
+			local position = clientPosition;
+			local bInZone = Schema:IsInBox(boundsTable.min, boundsTable.max, position);
+
+			if (bInZone) then
+				if (self.lastActiveZone) then
+					if (self.stored[self.lastActiveZone].priority > self.stored[k].priority) then
+						self:SetActiveZone(self.stored[k]); break;
+					end;
+				else
+					self:SetActiveZone(self.stored[k]);
+					self.lastActiveZone = k;
+					break;
+				end;
+			else
+				zone = zone + 1;
+				
+				if (zone == self.totalZones) then
+					self:SetActiveZone(self.cwDefaultZone);
+				end;
+			end;
+		end;
+	end;
+
+	timer.Simple(FrameTime(), function()
+		self:RefreshCurrentZone();
+		self:RefreshZoneVFX();
+	end);
+end
+
 Clockwork.datastream:Hook("OverrideFogDistance", function(data)
 	if (!zones.targetEndOverride or table.IsEmpty(zones.targetEndOverride)) then
 		zones.targetEndOverride = {};
@@ -682,7 +813,7 @@ end;
 
 -- Called when the world fog should be set up.
 function zones:SetupWorldFog()
-	if ((!Clockwork.kernel:IsChoosingCharacter() and !Clockwork.Client:GetNWBool("senses")) or Clockwork.Client.MapscenePosition) then
+	if ((!Clockwork.kernel:IsChoosingCharacter() and !Clockwork.Client:GetNWBool("senses")) or Clockwork.Client.MenuVector) then
 		if (self:Enabled() and self:FogEnabled() and self.currentFogColors) then
 			local r, g, b = self.currentFogColors.r, self.currentFogColors.g, self.currentFogColors.b;
 			local fogStart = self.currentFogStart;
@@ -1662,6 +1793,11 @@ end
 
 Clockwork.datastream:Hook("GetZone", function(data)
 	--print("GetZone called, sending the active zone "..tostring(zones.cwCurrentZone).." to the server!");
+	if data then
+		zones:RefreshCurrentZone();
+		zones:RefreshZoneVFX();
+	end
+	
 	netstream.Start("EnteredZone", zones.cwCurrentZone);
 end)
 

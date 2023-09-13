@@ -265,7 +265,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.shields = {"shield1", "shield2", "shield3", "shield4", "shield5", "shield6", "shield7", "shield8", "shield9", "shield10", "shield11", "shield12", "shield13", "shield14"};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 400, supercrateOnly = true};
+	--ITEM.itemSpawnerInfo = {category = "Melee", rarity = 400, supercrateOnly = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -431,7 +431,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.shields = {"shield1", "shield2", "shield3", "shield4", "shield5", "shield6", "shield7", "shield8", "shield9", "shield10", "shield11", "shield12", "shield13", "shield14"};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 200, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 250, supercrateOnly = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -583,6 +583,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.shields = {"shield1", "shield2", "shield3", "shield4", "shield5", "shield6", "shield7", "shield8", "shield9", "shield10", "shield11", "shield12", "shield13", "shield14"};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, supercrateOnly = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -602,6 +603,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}};
 	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1000, supercrateOnly = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -639,7 +641,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.shields = {"shield1", "shield2", "shield3", "shield4", "shield5", "shield6", "shield7", "shield8", "shield9", "shield10", "shield11", "shield12", "shield13", "shield14"};
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 900};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 900, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -735,6 +737,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1000, supercrateOnly = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");

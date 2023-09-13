@@ -244,11 +244,11 @@ function cwItemSpawner:Think()
 					end
 
 					self.SuperCrate = nil;
-					self.nextSuperCrate = curTime + self.SuperCrateCooldown;
+					self.nextSuperCrate = curTime + math.random(self.SuperCrateCooldown.min, self.SuperCrateCooldown.max);
 				end
 			elseif !IsValid(supercrate) then
 				self.SuperCrate = nil;
-				self.nextSuperCrate = curTime + self.SuperCrateCooldown;
+				self.nextSuperCrate = curTime + math.random(self.SuperCrateCooldown.min, self.SuperCrateCooldown.max);
 			end
 		end
 		
@@ -276,7 +276,7 @@ function cwItemSpawner:Think()
 		
 		if not self.nextSuperCrate then
 			-- 1 hour between supercrates.
-			self.nextSuperCrate = curTime + self.SuperCrateCooldown;
+			self.nextSuperCrate = curTime + math.random(self.SuperCrateCooldown.min, self.SuperCrateCooldown.max);
 		end
 		
 		if not self.SuperCrate and self.nextSuperCrate < curTime then

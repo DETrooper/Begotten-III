@@ -29,7 +29,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attributes = {"concealable"};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 250};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 250, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -47,5 +47,5 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attributes = {"concealable"};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 250};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 350, bNoSupercrate = true};
 ITEM:Register();

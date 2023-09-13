@@ -1439,18 +1439,20 @@ function Clockwork.kernel:PrintColoredText(...)
 	local text = {}
 
 	for k, v in ipairs({...}) do
-		if (type(v) == "Player") then
-			text[#text + 1] = Clockwork.kernel:PlayerNameColor(v);
-			text[#text + 1] = v:Name();
-		elseif (type(v) == "table") then
-			currentColor = v
-		elseif (currentColor) then
-			text[#text + 1] = currentColor
-			text[#text + 1] = v
-			currentColor = nil
-		else
-			text[#text + 1] = colorWhite
-			text[#text + 1] = v
+		if v ~= "noTime" then
+			if (type(v) == "Player") then
+				text[#text + 1] = Clockwork.kernel:PlayerNameColor(v);
+				text[#text + 1] = v:Name();
+			elseif (type(v) == "table") then
+				currentColor = v
+			elseif (currentColor) then
+				text[#text + 1] = currentColor
+				text[#text + 1] = v
+				currentColor = nil
+			else
+				text[#text + 1] = colorWhite
+				text[#text + 1] = v
+			end
 		end
 	end
 

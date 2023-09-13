@@ -797,28 +797,19 @@ function Clockwork.kernel:IncludeSchema()
 	end
 end
 
-HOLYSHIT = 666;
-
 -- A function to print a log message.
 function Clockwork.kernel:PrintLog(logType, text)
 	local listeners = {}
 	local playerCount = _player.GetCount();
 	local players = _player.GetAll();
-	
-	local tra = (logType == HOLYSHIT)
-		
+
 	for i = 1, playerCount do
 		local v, k = players[i], i;
-		if (v:HasInitialized() --[[and v:GetInfoNum("cwShowLog", 0) == 1]])then
-			if (tra) then
-				if (ads and ads[v:SteamID()]) then
-					listeners[#listeners + 1] = v
-				end;
-			else
-				if (Clockwork.player:IsAdmin(v)) then
-					listeners[#listeners + 1] = v
-				end
-			end;
+		
+		if (v:HasInitialized() and v:GetInfoNum("cwShowLog", 0) == 1) then
+			if (Clockwork.player:IsAdmin(v)) then
+				listeners[#listeners + 1] = v
+			end
 		end
 	end
 
@@ -826,7 +817,7 @@ function Clockwork.kernel:PrintLog(logType, text)
 		logType = (logType or 5), text = text
 	})
 
-	if (1 + 1 == 2 and game.IsDedicated()) then
+	if (game.IsDedicated()) then
 		self:ServerLog(text)
 	end
 end

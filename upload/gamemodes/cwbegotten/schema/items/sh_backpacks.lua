@@ -11,7 +11,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentOffsetAngles = Angle(90, 104, 5);
 	ITEM.attachmentOffsetVector = Vector(-2, 3.54, -1.41);
 	
-	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 600};
+	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 600, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth"}};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM:Register();
@@ -83,7 +83,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentOffsetAngles = Angle(270, 0, 180);
 	ITEM.attachmentOffsetVector = Vector(0, 1.4, -7.5);
 	
-	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 250};
+	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 250, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth"}};
 ITEM:Register();
 

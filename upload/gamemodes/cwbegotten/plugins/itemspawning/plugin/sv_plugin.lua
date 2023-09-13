@@ -9,7 +9,8 @@ cwItemSpawner.ItemLifetime = 1800; -- 30 Minutes.
 cwItemSpawner.MaxContainers = 50;
 cwItemSpawner.MaxGroundSpawns = 100;
 cwItemSpawner.MaxSuperCrates = 1;
-cwItemSpawner.SuperCrateCooldown = 3600; -- 1 Hour.
+cwItemSpawner.SuperCrateCooldown = {min = 5400, max = 10800}; -- 1.5-3 Hours.
+cwItemSpawner.SuperCrateNumItems = {min = 10, max = 20};
 
 cwItemSpawner.LocationsToCategories = {
 	["city"] = {"Armor", "Charms", "City Junk", "Communication", "Drinks", "Firearms", "Food", "Helms", "Junk", "Medical", "Melee", "Rituals", "Shot"},
@@ -157,7 +158,7 @@ if (game.GetMap() == "rp_begotten3") then
 			{model = "models/props/de_prodigy/ammo_can_01.mdl", pos = Vector(793.71875, 4120.9375, -2405), angles = Angle(0, -70, 0)}, -- Mines
 			{model = "models/props/de_prodigy/ammo_can_01.mdl", pos = Vector(-2303.25, 8397, -2734), angles = Angle(10.3, -169.964, -3.246)}, -- Mines
 			{model = "models/props/de_prodigy/ammo_can_01.mdl", pos = Vector(-12455.5625, -7709.34375, -1233), angles = Angle(0, -45, 0)}, -- Abandoned Chapel
-			{model = "models/props/de_prodigy/ammo_can_01.mdl", pos = Vector(-11652.8125, 1245.90625, -16695), angles = Angle(-0.214, 34.568, 0.862)}, -- Parkour Island (by Ship)
+			{model = "models/props/de_prodigy/ammo_can_01.mdl", pos = Vector(-11652.8125, 1245.90625, -1695), angles = Angle(-0.214, 34.568, 0.862)}, -- Parkour Island (by Ship)
 			{model = "models/props/de_prodigy/ammo_can_01.mdl", pos = Vector(-9946.40625, -6106.8125, -1676), angles = Angle(4.378, -160.862, -4.092)}, -- Parkour Island (by Abandoned Church)
 			{model = "models/props/de_prodigy/ammo_can_01.mdl", pos = Vector(-2724.28125, -5275.5, -2042), angles = Angle(3.746, -2.379, 2.747)}, -- Sunken Building
 			{model = "models/props/de_prodigy/ammo_can_01.mdl", pos = Vector(-13847.40625, -12274.625, -1670), angles = Angle(0.022, 179.973, -0.209)}, -- Behind the Castle
@@ -428,38 +429,39 @@ function cwItemSpawner:SelectItem(location, bIsSupercrate, bIsContainer)
 		
 		if itemTable.itemSpawnerInfo and !itemTable.isBaseItem then
 			local rarity = itemTable.itemSpawnerInfo.rarity;
-			local valid = true;
 			
-			if location and valid then
+			if location then
 				if !table.HasValue(self.LocationsToCategories[location], itemTable.itemSpawnerInfo.category) then
-					valid = false;
+					continue;
 				end
 			end
 			
-			if !bIsSupercrate and valid then
+			if !bIsSupercrate then
 				if itemTable.itemSpawnerInfo.supercrateOnly then
-					valid = false;
+					continue;
 				end
-			elseif valid then
-				-- Make sure low quality items don't appear in supercrates (exemption for ammo).
-				if rarity < 150 and itemTable.category ~= "Shot" then
-					valid = false;
+			else
+				if itemTable.itemSpawnerInfo.bNoSupercrate then
+					continue;
+				else
+					-- Make sure low quality items don't appear in supercrates (exemption for ammo).
+					if (rarity < 250 and !itemTable.itemSpawnerInfo.supercrateOnly and itemTable.category ~= "Shot") or (rarity < 500 and (itemTable.category == "Food" or itemTable.category == "Drinks")) then
+						continue;
+					end
+					
+					rarity = math.Round(rarity * 0.25);
 				end
-				
-				rarity = rarity / 2;
 			end
 			
 			if !bIsContainer and !bIsSupercrate and valid then
 				if itemTable.itemSpawnerInfo.onGround == false then
-					valid = false;
+					continue;
 				end
 			end
 			
-			if valid then
-				if math.random(1, rarity) == 1 then
-					table.insert(itemPool, itemTable);
-				end;
-			end
+			if math.random(1, rarity) == 1 then
+				table.insert(itemPool, itemTable);
+			end;
 		end
 	end;
 	
@@ -776,41 +778,41 @@ function cwItemSpawner:SpawnSupercrate()
 				supercrate.cwInventory = {};
 			end
 			
-			for i = 1, math.random(8, 10) do
+			for i = 1, math.random(self.SuperCrateNumItems.min, self.SuperCrateNumItems.max) do
 				local randomItem = self:SelectItem(nil, true);
 				
 				if randomItem then
 					local itemInstance = item.CreateInstance(randomItem);
 					
-					-- If it is a magazine, make it full of ammo. If it is a normal ammo, spawn a bunch of duplicates.
-					if itemInstance.category == "Shot" then
-						if itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
-							itemInstance:SetAmmoMagazine(itemInstance.ammoMagazineSize);
-						else
-							Clockwork.inventory:AddInstance(supercrate.cwInventory, itemInstance, math.random(4, 10));
-						end
-					elseif itemInstance.name == "Colt" then
-						for j = 1, 2 do
-							local magazineItemInstance = item.CreateInstance("old_world_magazine");
-							
-							if magazineItemInstance and magazineItemInstance.ammoMagazineSize and magazineItemInstance.SetAmmoMagazine then
-								magazineItemInstance:SetAmmoMagazine(magazineItemInstance.ammoMagazineSize);
-							
-								Clockwork.inventory:AddInstance(supercrate.cwInventory, magazineItemInstance);
+					if itemInstance then
+						-- If it is a magazine, make it full of ammo. If it is a normal ammo, spawn a bunch of duplicates.
+						if itemInstance.category == "Shot" then
+							if itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
+								itemInstance:SetAmmoMagazine(itemInstance.ammoMagazineSize);
+							else
+								Clockwork.inventory:AddInstance(supercrate.cwInventory, itemInstance, math.random(4, 10));
 							end
 						end
-					elseif itemInstance.name == "Springer" then
-						for j = 1, math.random(5, 10) do
-							local ammoItemInstance = item.CreateInstance("old_world_longshot");
-							
-							if ammoItemInstance then
-								Clockwork.inventory:AddInstance(supercrate.cwInventory, ammoItemInstance);
+						
+						if itemInstance.itemSpawnerInfo.supercrateItems then
+							for k, v in pairs(itemInstance.itemSpawnerInfo.supercrateItems) do
+								for j = 1, math.random(v.min, v.max) do
+									local subItem = item.CreateInstance(k);
+								
+									if subItem then
+										if subItem.ammoMagazineSize and subItem.SetAmmoMagazine then
+											subItem:SetAmmoMagazine(subItem.ammoMagazineSize);
+										end
+										
+										Clockwork.inventory:AddInstance(supercrate.cwInventory, subItem, 1);
+									end
+								end
 							end
 						end
+
+						-- Supercrate items will have perfect condition.
+						Clockwork.inventory:AddInstance(supercrate.cwInventory, itemInstance, 1);
 					end
-					
-					-- Supercrate items will have perfect condition.
-					Clockwork.inventory:AddInstance(supercrate.cwInventory, itemInstance, 1);
 				end
 			end
 			
@@ -818,6 +820,8 @@ function cwItemSpawner:SpawnSupercrate()
 			supercrate.lootContainer = true;
 			
 			self.SuperCrate = supercrateTable;
+			
+			return supercrateTable;
 		end
 	end
 end

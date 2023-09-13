@@ -2373,15 +2373,17 @@ function Schema:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 			end;
 		end;
 		
-		if (!lightSpawn and firstSpawn) then
-			if (!player.cwWakingUp and !player.cwWoke) then
-				if not player:IsBot() then
-					self:PlayerWakeup(player);
+		if (!lightSpawn) then
+			if firstSpawn then
+				if (!player.cwWakingUp and !player.cwWoke) then
+					if not player:IsBot() then
+						self:PlayerWakeup(player);
+					end
+					
+					player.cwWoke = true;
 				end
-				
-				player.cwWoke = true;
 			end
-		
+
 			if player:HasTrait("followed") then
 				timer.Simple(1, function()
 					if IsValid(player) and player:Alive() and player:HasTrait("followed") then
@@ -2397,7 +2399,7 @@ function Schema:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 			end
 		end
 
-		Clockwork.datastream:Start(player, "GetZone");
+		Clockwork.datastream:Start(player, "GetZone", true);
 		
 		player.nextSpawnRun = curTime + 1;
 	end;
@@ -2422,7 +2424,7 @@ function Schema:PostPlayerLightSpawn(player, weapons, ammo, special)
 end;
 
 function Schema:PlayerCharacterLoaded(player)
-	netstream.Start(player, "GetZone");
+	netstream.Start(player, "GetZone", true);
 	
 	if self.autoTieEnabled and !player:IsAdmin() then
 		player:SetNetVar("tied", 1);

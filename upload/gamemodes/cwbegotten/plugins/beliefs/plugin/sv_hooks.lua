@@ -881,7 +881,9 @@ end;
 function cwBeliefs:LockpickFinished(player, entity)
 	if IsValid(player) and IsValid(entity) then
 		if entity.cwLockTier and !entity.cwPassword then
-			if entity.cwLockTier == 1 then
+			if cwItemSpawner and cwItemSpawner.SuperCrate and entity == cwItemSpawner.SuperCrate.supercrate then
+				player:HandleXP(100);
+			elseif entity.cwLockTier == 1 then
 				player:HandleXP(5);
 			elseif entity.cwLockTier == 2 then
 				player:HandleXP(10);

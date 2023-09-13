@@ -41,7 +41,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.stackable = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500};
-	ITEM.needs = {hunger = 5, thirst = 20};
+	ITEM.needs = {hunger = 5, thirst = 45};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -82,7 +82,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/corpsebrew.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500, bNoSupercrate = true};
 	ITEM.needs = {thirst = 50};
 	
 	-- Called when a player uses the item.
@@ -115,7 +115,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.infectchance = 60;
 	ITEM.poison = 20;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500, bNoSupercrate = true};
 	ITEM.needs = {thirst = 30};
 
 	-- Called when a player uses the item.
@@ -237,7 +237,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 700};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 700, bNoSupercrate = true};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
@@ -266,7 +266,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 700};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 700, bNoSupercrate = true};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
@@ -301,7 +301,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 800};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 800, bNoSupercrate = true};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
@@ -331,7 +331,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 800};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 800, bNoSupercrate = true};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
@@ -360,7 +360,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 800};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 800, bNoSupercrate = true};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
@@ -394,7 +394,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000, bNoSupercrate = true};
 	ITEM.needs = {thirst = 75, sleep = 10};
 
 	-- Called when a player uses the item.
@@ -423,7 +423,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000, bNoSupercrate = true};
 	ITEM.needs = {hunger = 50, thirst = 20};
 
 	-- Called when a player uses the item.
@@ -452,7 +452,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000, bNoSupercrate = true};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
@@ -490,7 +490,7 @@ ITEM:Register();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000, bNoSupercrate = true};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
@@ -529,7 +529,7 @@ ITEM:Register();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000, bNoSupercrate = true};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
@@ -638,7 +638,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/laudanum.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 666};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 666, bNoSupercrate = true};
 	ITEM.needs = {thirst = 20};
 
 	-- Called when a player uses the item.

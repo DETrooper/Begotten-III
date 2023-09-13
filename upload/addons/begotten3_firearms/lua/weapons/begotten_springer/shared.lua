@@ -54,12 +54,13 @@ SWEP.Primary.IronAccuracy = .004 -- ironsight accuracy, should be the same for s
 SWEP.BoltAction	=	true;
 
 SWEP.MisfireChance = 0;
+SWEP.IgnoresBulletResistance = true;
 
 SWEP.AmmoTypes = {
 	["Old World Longshot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("gmodtower/pvpbattle/sniper/sniperfire.wav");
 		SWEP.Primary.NumShots = 1;
-		SWEP.Primary.Damage = 150;
+		SWEP.Primary.Damage = 200;
 		SWEP.Primary.Spread = .05;
 		SWEP.Primary.IronAccuracy = .05;
 		SWEP.Primary.ClipSize = 1;
