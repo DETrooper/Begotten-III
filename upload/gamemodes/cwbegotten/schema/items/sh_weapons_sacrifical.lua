@@ -12,7 +12,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(110.39, 337.13, 2.98);
 	ITEM.attachmentOffsetVector = Vector(2.12, 4.95, -0.71);
-	ITEM.shields = {"shield1", "shield2", "shield3", "shield4", "shield5", "shield6", "shield7", "shield8", "shield9", "shield10", "shield11", "shield12", "shield13", "shield14"};
+	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"fire"};
@@ -32,7 +32,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(294.63, 288.95, 0);
 	ITEM.attachmentOffsetVector = Vector(2.83, 3, 0);	
-	ITEM.shields = {"shield1", "shield2", "shield3", "shield4", "shield5", "shield6", "shield7", "shield8", "shield9", "shield10", "shield11", "shield12", "shield13", "shield14"};
+	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};

@@ -24,8 +24,8 @@ function Parry(target, dmginfo)
 				
 				wep:SetNextPrimaryFire(0)
 				
-				if (wep.BlockSoundTable) then
-					local blocksoundtable = GetSoundTable(wep.BlockSoundTable)
+				if (wep.realBlockSoundTable) then
+					local blocksoundtable = GetSoundTable(wep.realBlockSoundTable)
 					target:EmitSound(blocksoundtable["blocksound"][math.random(1, #blocksoundtable["blocksound"])])
 				end;
 
@@ -91,8 +91,8 @@ local function Guarding(ent, dmginfo)
 
 		if (ent:GetNWBool("Guardening") == true) then
 			local damageinflictor = dmginfo:GetAttacker();
-			local blocktable = GetTable(wep.BlockTable)
-			local blocksoundtable = GetSoundTable(wep.BlockSoundTable)
+			local blocktable = GetTable(wep.realBlockTable)
+			local blocksoundtable = GetSoundTable(wep.realBlockSoundTable)
 			local blockthreshold = (blocktable["blockcone"] or 135) / 2;
 			
 			if blocktable["partialbulletblock"] == true and (dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT)) and (IsValid(attacker) and (math.abs(math.AngleDifference(ent:EyeAngles().y, (attacker:GetPos() - ent:GetPos()):Angle().y)) <= blockthreshold)) then
@@ -383,8 +383,10 @@ local function Guarding(ent, dmginfo)
 						if !Clockwork.player:HasFlags(damageinflictor, "T") then
 							local activeWeapon = ent:GetActiveWeapon();
 							
-							if (IsValid(activeWeapon)) then
-								if string.find(activeWeapon:GetClass(), "_shield8") then
+							if (IsValid(activeWeapon) and activeWeapon.activeShield) then
+								local blockTable = GetTable(activeWeapon.activeShield);
+								
+								if blockTable.spiked then
 									damageinflictor:TakeDamage(5, ent);
 								end
 							end
@@ -457,7 +459,7 @@ local function Guarding(ent, dmginfo)
 								if ent:HasBelief("shieldwall") then
 									local activeWeapon = ent:GetActiveWeapon();
 									
-									if string.find(activeWeapon:GetClass(), "_shield") then
+									if activeWeapon.activeShield then
 										newEnemyPoise = newEnemyPoise * 0.85;
 									end
 								end
@@ -493,7 +495,7 @@ local function Guarding(ent, dmginfo)
 								if ent:HasBelief("shieldwall") then
 									local activeWeapon = ent:GetActiveWeapon();
 									
-									if string.find(activeWeapon:GetClass(), "_shield") then
+									if activeWeapon.activeShield then
 										newEnemyPoise = newEnemyPoise * 0.85;
 									end
 								end
@@ -653,7 +655,7 @@ local function Guarding(ent, dmginfo)
 						
 						if melsa <= blockamount and not ent:IsRagdolled() and chance == 1 then
 							if ent:GetCharacterData("stability") < 70 then
-								if not string.find(wep:GetClass(), "_shield") and not string.find(wep:GetClass(), "begotten_fists") and not string.find(wep:GetClass(), "begotten_claws") then
+								if not wep.activeShield and not string.find(wep:GetClass(), "begotten_fists") and not string.find(wep:GetClass(), "begotten_claws") then
 									local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
 									local itemTable = Clockwork.item:GetByWeapon(wep);
 									
@@ -966,7 +968,7 @@ local function UpdateWeaponRaised(player, activeWeapon, bIsRaised, curTime)
 							local curTime = CurTime();
 							
 							if (loweredParryDebug < curTime) then
-								local blockTable = GetTable(activeWeapon.BlockTable);
+								local blockTable = GetTable(activeWeapon.realBlockTable);
 								
 								if (blockTable and player:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !player:GetNWBool("Parried")) then
 									player:SetNWBool("Guardening", true);

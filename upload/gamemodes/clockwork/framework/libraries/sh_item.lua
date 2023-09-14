@@ -362,7 +362,8 @@ function CLASS_TABLE:HasPlayerEquipped(player, bIsValidWeapon, bMelee)
 						weapon = player:GetWeapon(weaponClass);
 						
 						for k, v in pairs (player:GetWeapons()) do
-							if (v:GetClass() == self.uniqueID.."_"..player.bgShieldData.uniqueID) then
+							--if (v:GetClass() == self.uniqueID.."_"..player.bgShieldData.uniqueID) then
+							if v.activeShield == player.bgShieldData.uniqueID then
 								return true;
 							end;
 						end;
@@ -421,20 +422,26 @@ end
 
 -- Called when the player unequips the item weapon.
 function CLASS_TABLE:OnPlayerUnequipped(player, extraData)
-	local weapon = player:GetWeapon(self.itemWeaponClass);
 	local slots = {"Primary", "Secondary", "Tertiary"};
 	
 	if (self.baseItem == "weapon_base" or self.baseItem == "firearm_base") then
 		local weaponID = self.uniqueID;
 		
+		weapon = player:GetWeapon(weaponID);
+		
 		if (SERVER) then
 			for i = 1, #slots do
-				if Clockwork.player:GetGear(player, slots[i]) then
-					if Clockwork.player:GetGear(player, slots[i]):GetItemTable().itemID == self.itemID then
-						if player.bgShieldData and player.bgShieldData.uniqueID and player.bgShieldData.realID then
-							if IsValid(player:GetWeapon(weaponID.."_"..player.bgShieldData.uniqueID)) then
+				local gearEnt = Clockwork.player:GetGear(player, slots[i]);
+				
+				if IsValid(gearEnt) then
+					if gearEnt:GetItemTable().itemID == self.itemID then
+						local bgShieldData = player.bgShieldData;
+					
+						if bgShieldData and bgShieldData.uniqueID and bgShieldData.realID then
+							--if IsValid(player:GetWeapon(weaponID.."_"..player.bgShieldData.uniqueID)) then
+							if IsValid(weapon) and weapon.activeShield and weapon.activeShield == bgShieldData.uniqueID then
 								if player.opponent then
-									local shieldItemTable = player:FindItemByID(player.bgShieldData.uniqueID, player.bgShieldData.realID);
+									local shieldItemTable = player:FindItemByID(bgShieldData.uniqueID, bgShieldData.realID);
 									
 									if shieldItemTable then
 										if (shieldItemTable and shieldItemTable.OnPlayerUnequipped and shieldItemTable.HasPlayerEquipped) then
@@ -446,20 +453,20 @@ function CLASS_TABLE:OnPlayerUnequipped(player, extraData)
 										end
 									end
 								else
-									Clockwork.kernel:ForceUnequipItem(player, player.bgShieldData.uniqueID, player.bgShieldData.realID);
+									Clockwork.kernel:ForceUnequipItem(player, bgShieldData.uniqueID, bgShieldData.realID);
 								end
+								
+								break;
 							end
 						end
 					end
 				end
 			end
-		elseif (CLIENT) then
+		--[[elseif (CLIENT) then
 			if Clockwork.Client.bgshieldData and Clockwork.Client.bgshieldData.uniqueID then
 				weaponID = weaponID.."_"..Clockwork.Client.bgshieldData.uniqueID;
-			end
+			end]]
 		end
-
-		weapon = player:GetWeapon(weaponID);
 	end;
 
 	if (!IsValid(weapon)) then

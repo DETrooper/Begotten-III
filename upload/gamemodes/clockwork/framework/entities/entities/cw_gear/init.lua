@@ -16,6 +16,7 @@ function ENT:Initialize()
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetNotSolid(true)
 	self:DrawShadow(false)
+	self:SetNoDraw(true); -- Default NoDraw to true for first tick.
 end
 
 -- Called when the entity's transmit state should be updated.
@@ -47,8 +48,8 @@ function ENT:GetShouldExist(player)
 				end
 			elseif player:HasWeapon(weaponClass) then
 				return true;
-			elseif (player.bgShieldData and player.bgShieldData.uniqueID and player:HasWeapon(weaponClass.."_"..player.bgShieldData.uniqueID)) then
-				return true;
+			--elseif (player.bgShieldData and player.bgShieldData.uniqueID and player:HasWeapon(weaponClass.."_"..player.bgShieldData.uniqueID)) then
+				--return true;
 			end
 		elseif (itemTable.HasPlayerEquipped) then
 			return true;
@@ -72,20 +73,26 @@ function ENT:GetIsVisible(player)
 			
 			if weapon_class == itemTable:GetWeaponClass() then
 				return false;
-			elseif player.bgShieldData and player.bgShieldData.uniqueID then
+			--[[elseif player.bgShieldData and player.bgShieldData.uniqueID then
 				if weapon_class == itemTable:GetWeaponClass().."_"..player.bgShieldData.uniqueID then
 					return false;
 				else
 					return true;
-				end
+				end]]
 			end
 		elseif (itemTable.category == "Shields") and itemTable.uniqueID then
-			local weapon_class = Clockwork.player:GetWeaponClass(player);
+			--[[local weapon_class = Clockwork.player:GetWeaponClass(player);
 			
 			if weapon_class then
 				if string.find(Clockwork.player:GetWeaponClass(player), itemTable.uniqueID) then
 					return false;
 				end
+			end]]--
+			
+			local activeWeapon = player:GetActiveWeapon();
+			
+			if IsValid(activeWeapon) and activeWeapon.activeShield then
+				return false;
 			end
 		end
 		

@@ -912,7 +912,7 @@ function cwDueling:RestoreCachedWeaponData(player)
 								weaponFound = true;
 							end
 						else
-							local weaponClass = weaponItem.uniqueID;
+							--[[local weaponClass = weaponItem.uniqueID;
 
 							if player.bgShieldData and not table.IsEmpty(player.bgShieldData) and !shield_weapon_equipped then
 								if weaponItem.shields and table.HasValue(weaponItem.shields, player.bgShieldData.uniqueID) then
@@ -922,7 +922,7 @@ function cwDueling:RestoreCachedWeaponData(player)
 								end
 							end
 							
-							player:Give(weaponClass, weaponItem);
+							player:Give(weaponClass, weaponItem);]]--
 						end
 					end
 				end

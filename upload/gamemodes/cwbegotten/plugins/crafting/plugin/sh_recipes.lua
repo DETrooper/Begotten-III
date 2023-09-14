@@ -6864,7 +6864,8 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 2},
+			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["fine_gatekeeper_helmet"] = {amount = 1},

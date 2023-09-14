@@ -166,7 +166,6 @@ function ENT:PhysicsCollide(data, physobj)
 		local trace = owner:GetEyeTrace()
 		local activeWeapon = owner:GetActiveWeapon();
 		local weaponclass = activeWeapon:GetClass()
-		local shieldnumber = (GetShieldString(weaponclass))
 		
 		-- Bellhammer special
 		if activeWeapon.IsBellHammer == true and data.HitEntity:IsValid() and !data.HitEntity:GetNWBool("Guardening") == true and data.HitEntity:GetNWBool("Parry") != true then
@@ -179,8 +178,13 @@ function ENT:PhysicsCollide(data, physobj)
 			end
 		end
 	
-		local shield_reduction = GetShieldReduction(shieldnumber);
 		local itemTable = item.GetByWeapon(activeWeapon);
+		local blockTable = GetTable(activeWeapon.activeShield);
+		local shield_reduction = 1;
+		
+		if blockTable then
+			shield_reduction = blockTable.damagereduction or 1;
+		end
 
 		-- Condition damage penalty
 		if itemTable then
@@ -258,7 +262,7 @@ function ENT:PhysicsCollide(data, physobj)
 			
 			if owner.upstagedActive and not data.HitEntity.opponent then
 				if IsValid(enemywep) then
-					if not string.find(enemywep:GetClass(), "_shield") and not string.find(enemywep:GetClass(), "begotten_fists") and not string.find(enemywep:GetClass(), "begotten_claws") then
+					if not enemywep.activeShield and not string.find(enemywep:GetClass(), "begotten_fists") and not string.find(enemywep:GetClass(), "begotten_claws") then
 						local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
 						local dropPos = data.HitEntity:GetPos() + Vector(0, 0, 35) + data.HitEntity:GetAngles():Forward() * 4
 						local itemTable = Clockwork.item:GetByWeapon(enemywep);

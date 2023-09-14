@@ -12,6 +12,7 @@ SWEP.Weight = 2
 SWEP.UseHands = true
 
 SWEP.HoldType = "wos-begotten_spear_1h"
+SWEP.HoldTypeShield = "wos-begotten_spear_1h_shield"
 
 SWEP.ViewModel = "models/weapons/cstrike/c_knife_t.mdl"
 SWEP.ViewModelFOV = 80
@@ -20,6 +21,7 @@ SWEP.ViewModelFlip = false
 --Anims
 SWEP.BlockAnim = "a_spear_block"
 SWEP.CriticalAnim = "a_spear_shield_attack"
+SWEP.CriticalAnimShield = "a_spear_shield_attack"
 SWEP.ParryAnim = "a_spear_parry"
 
 SWEP.IronSightsPos = Vector(2.119, -9.247, -2.84)
@@ -95,7 +97,6 @@ SWEP.ViewModelBoneMods = {
 
 SWEP.VElements = {
 	["v_spear_poolcue"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/poolcue.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(0.518, 0.518, -6.753), angle = Angle(-3.507, 132.078, -1.17), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} },
-	["quad"] = { type = "Quad", bone = "ValveBiped.Bip01_Spine4", rel = "", pos = Vector(9.383, -80, -50.864), angle = Angle(-52.223, -116.667, -7.778), size = 0.2, draw_func = nil}
 }
 
 SWEP.WElements = {

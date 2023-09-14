@@ -88,7 +88,6 @@ function Clockwork.player:SaveGear(player)
 	if (!player.cwGearTab) then
 		player.cwGearTab = {};
 		player:SetCharacterData("weapons", nil);
-		player:SetNetVar("weapons", 0);
 		return;
 	end
 	
@@ -128,7 +127,6 @@ function Clockwork.player:SaveGear(player)
 			end
 			
 			player:SetCharacterData("weapons", temptab);
-			player:SetNetVar("weapons", temptab);
 		end
 	--end);
 end

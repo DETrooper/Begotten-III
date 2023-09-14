@@ -25,6 +25,7 @@ SWEP.ParryAnim = "a_sword_shield_parry"
 
 SWEP.IronSightsPos = Vector(5.76, -7.639, 3.2)
 SWEP.IronSightsAng = Vector(3.517, -15.478, -2.814)
+SWEP.HasShield = true;
 
 SWEP.IgniteTime = 3
 
@@ -37,7 +38,19 @@ SWEP.SoundMaterial = "Metal" -- Metal, Wooden, MetalPierce, Punch, Default
 	PrimaryAttack
 ---------------------------------------------------------*/
 SWEP.AttackTable = "GlazicSwordAttackTable"
-SWEP.BlockTable = "Shield_Unique_SolShield"
+SWEP.BlockTable = "shieldunique2"
+
+function SWEP:InitFunc()
+	self.activeShield = "shieldunique2";
+	self.realBlockAnim = self.BlockAnim;
+	self.realBlockTable = GetTable(self.BlockTable);
+	self.realBlockSoundTable = self.BlockSoundTable;
+	self.realCriticalAnim = self.CriticalAnim;
+	self.realHoldType = self.HoldType;
+	self.realParryAnim = self.ParryAnim;
+	self.realIronSightsPos = self.IronSightsPos;
+	self.realIronSightsAng = self.IronSightsAng;
+end
 
 function SWEP:CriticalAnimation()
 

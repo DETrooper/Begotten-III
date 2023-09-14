@@ -11,7 +11,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(8.95, 4.97, 38.78);
 	ITEM.attachmentOffsetVector = Vector(2.12, 4.95, -1.41);
-	ITEM.shields = {"shield1", "shield2", "shield3", "shield4", "shield5", "shield6", "shield7", "shield8", "shield9", "shield10", "shield11", "shield12", "shield13", "shield14"};
+	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood"}}; -- use "breakdown" for other type
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 900, supercrateOnly = true};
@@ -30,7 +30,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(0, 0, 16.91);
 	ITEM.attachmentOffsetVector = Vector(3.5, 1, 1.68);
-	ITEM.shields = {"shield1", "shield2", "shield3", "shield4", "shield5", "shield6", "shield7", "shield8", "shield9", "shield10", "shield11", "shield12", "shield13", "shield14"};
+	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 500};

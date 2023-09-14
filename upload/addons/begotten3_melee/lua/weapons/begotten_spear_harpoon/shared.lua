@@ -12,6 +12,7 @@ SWEP.Weight = 2
 SWEP.UseHands = true
 
 SWEP.HoldType = "wos-begotten_spear_1h"
+SWEP.HoldTypeShield = "wos-begotten_spear_1h_shield"
 
 SWEP.ViewModel = "models/weapons/cstrike/c_knife_t.mdl"
 SWEP.ViewModelFOV = 80
@@ -20,6 +21,7 @@ SWEP.ViewModelFlip = false
 --Anims
 SWEP.BlockAnim = "a_spear_block"
 SWEP.CriticalAnim = "a_spear_shield_attack"
+SWEP.CriticalAnimShield = "a_spear_shield_attack"
 SWEP.ParryAnim = "a_spear_parry"
 
 SWEP.IronSightsPos = Vector(2.119, -9.247, -2.84)
@@ -97,7 +99,6 @@ SWEP.ViewModelBoneMods = {
 
 SWEP.VElements = {
 	["v_spear_harpoon"] = { type = "Model", model = "models/props_junk/harpoon002a.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(-0.519, 0.518, 6.752), angle = Angle(99.35, 22.208, 0), size = Vector(0.6, 0.6, 0.6), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["quad"] = { type = "Quad", bone = "ValveBiped.Bip01_Spine4", rel = "", pos = Vector(9.383, -80, -50.864), angle = Angle(-52.223, -116.667, -7.778), size = 0.2, draw_func = nil}
 }
 
 SWEP.WElements = {

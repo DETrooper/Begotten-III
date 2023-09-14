@@ -290,6 +290,16 @@ function GM:PlayerDisconnected(player)
 	end
 end
 
+function GM:PlayerSwitchWeapon(player, oldWeapon, newWeapon)
+	if player.cwGearTab then
+		for k, v in pairs(player.cwGearTab) do
+			if IsValid(v) then
+				v.nextColorCheck = nil;
+			end
+		end
+	end
+end
+
 -- Called when Clockwork has initialized.
 function GM:ClockworkInitialized()
 	if (!config.GetVal("cash_enabled")) then
@@ -3557,7 +3567,7 @@ function GM:PlayerCharacterLoaded(player)
 	local weaponFound = false;
 
 	if weaponData and #weaponData > 0 then
-		local shield_weapon_equipped = false;
+		--local shield_weapon_equipped = false;
 		
 		for i = 1, #weaponData do
 			if weaponData[i].uniqueID and weaponData[i].itemID then
@@ -3572,16 +3582,12 @@ function GM:PlayerCharacterLoaded(player)
 									weaponFound = true;
 								end
 							end)
-							
-							timer.Simple(0.5, function()
-								Clockwork.player:SaveGear(player);
-							end);
 						else
 							Clockwork.item:Use(player, weaponItem, true);
 							weaponFound = true;
 						end
 					else
-						local weaponClass = weaponItem.uniqueID;
+						--[[local weaponClass = weaponItem.uniqueID;
 
 						if player.bgShieldData and not table.IsEmpty(player.bgShieldData) and !shield_weapon_equipped then
 							if weaponItem.shields and table.HasValue(weaponItem.shields, player.bgShieldData.uniqueID) then
@@ -3591,16 +3597,21 @@ function GM:PlayerCharacterLoaded(player)
 							end
 						end
 						
-						player:Give(weaponClass, weaponItem);
+						player:Give(weaponClass, weaponItem);]]--
 					end
 				end
 			end
 		end
+		
+		timer.Simple(0.5, function()
+			if IsValid(player) then
+				Clockwork.player:SaveGear(player);
+			end
+		end);
 	end
 	
 	if not weaponFound then
 		player:SetCharacterData("weapons", nil);
-		player:SetNetVar("weapons", 0);
 	end
 	
 	if clothesItem then

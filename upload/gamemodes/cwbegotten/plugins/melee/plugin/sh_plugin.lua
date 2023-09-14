@@ -139,22 +139,24 @@ function cwMelee:KeyPress(player, key)
 		end;
 	end;
 	
-	if (key == IN_RELOAD) then
-		local activeWeapon = player:GetActiveWeapon();
-		
-		if (IsValid(activeWeapon)) then
-			if (activeWeapon.Base == "sword_swepbase") then
-				local blockTable = GetTable(activeWeapon.BlockTable);
+	if SERVER then
+		if (key == IN_RELOAD) then
+			local activeWeapon = player:GetActiveWeapon();
+			
+			if (IsValid(activeWeapon)) then
+				if (activeWeapon.Base == "sword_swepbase") then
+					local blockTable = GetTable(activeWeapon.BlockTable);
 
-				if (blockTable and blockTable["canparry"] == true) then
-					if SERVER then
-						if (!player.HasBelief or player:HasBelief("parrying")) then
-							activeWeapon:SecondaryAttack();
+					if (blockTable and blockTable["canparry"] == true) then
+						if SERVER then
+							if (!player.HasBelief or player:HasBelief("parrying")) then
+								activeWeapon:SecondaryAttack();
+							end;
+						else
+							if (!cwBeliefs.HasBelief or cwBeliefs:HasBelief("parrying")) then
+								activeWeapon:SecondaryAttack();
+							end
 						end;
-					else
-						if (!cwBeliefs.HasBelief or cwBeliefs:HasBelief("parrying")) then
-							activeWeapon:SecondaryAttack();
-						end
 					end;
 				end;
 			end;

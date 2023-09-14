@@ -164,7 +164,7 @@ Clockwork.animation.stored.femaleHuman = {
         ["run"] = {ACT_RUN, ACT_RUN_AIM_RIFLE_STIMULATED},
         ["attack"] = ACT_MELEE_ATTACK_SWING
     },
-		["wos-begotten_spear_1h"] = {
+	["wos-begotten_spear_1h"] = {
         ["idle"] = {ACT_IDLE, ACT_IDLE_ANGRY_MELEE},
         ["idle_crouch"] = {ACT_COVER_LOW, ACT_COVER_LOW},
         ["walk"] = {ACT_WALK, ACT_WALK_AIM_RIFLE},
@@ -172,7 +172,7 @@ Clockwork.animation.stored.femaleHuman = {
         ["run"] = {ACT_RUN, ACT_RUN_AIM_RIFLE_STIMULATED},
         ["attack"] = ACT_MELEE_ATTACK_SWING
     },
-	["wos-begotten_spear_shield"] = {
+	["wos-begotten_spear_1h_shield"] = {
         ["idle"] = {ACT_IDLE, ACT_IDLE_ANGRY_MELEE},
         ["idle_crouch"] = {ACT_COVER_LOW, ACT_COVER_LOW},
         ["walk"] = {ACT_WALK, ACT_WALK_AIM_RIFLE},
@@ -236,7 +236,7 @@ Clockwork.animation.stored.femaleHuman = {
         ["run"] = {ACT_RUN, ACT_RUN_AIM_RIFLE_STIMULATED},
         ["attack"] = ACT_MELEE_ATTACK_SWING
     },
-		["wos-begotten_javelin"] = {
+	["wos-begotten_javelin"] = {
         ["idle"] = {ACT_IDLE, ACT_IDLE_ANGRY_MELEE},
         ["idle_crouch"] = {ACT_COVER_LOW, ACT_COVER_LOW},
         ["walk"] = {ACT_WALK, ACT_WALK_AIM_RIFLE},
@@ -244,7 +244,7 @@ Clockwork.animation.stored.femaleHuman = {
         ["run"] = {ACT_RUN, ACT_RUN_AIM_RIFLE_STIMULATED},
         ["attack"] = ACT_MELEE_ATTACK_SWING
 	},
-		["wos-begotten_javelin_shield"] = {
+	["wos-begotten_javelin_shield"] = {
         ["idle"] = {ACT_IDLE, ACT_IDLE_ANGRY_MELEE},
         ["idle_crouch"] = {ACT_COVER_LOW, ACT_COVER_LOW},
         ["walk"] = {ACT_WALK, ACT_WALK_AIM_RIFLE},
@@ -314,7 +314,7 @@ Clockwork.animation.stored.maleHuman = {
         ["run"] = {ACT_RUN, ACT_RUN_AIM_RIFLE_STIMULATED},
         ["attack"] = ACT_MELEE_ATTACK_SWING
     },
-		["wos-begotten_spear_1h"] = {
+	["wos-begotten_spear_1h"] = {
         ["idle"] = {ACT_IDLE, ACT_IDLE_ANGRY_MELEE},
         ["idle_crouch"] = {ACT_COVER_LOW, ACT_COVER_LOW},
         ["walk"] = {ACT_WALK, ACT_WALK_AIM_RIFLE},
@@ -322,7 +322,7 @@ Clockwork.animation.stored.maleHuman = {
         ["run"] = {ACT_RUN, ACT_RUN_AIM_RIFLE_STIMULATED},
         ["attack"] = ACT_MELEE_ATTACK_SWING
     },
-	["wos-begotten_spear_shield"] = {
+	["wos-begotten_spear_1h_shield"] = {
         ["idle"] = {ACT_IDLE, ACT_IDLE_ANGRY_MELEE},
         ["idle_crouch"] = {ACT_COVER_LOW, ACT_COVER_LOW},
         ["walk"] = {ACT_WALK, ACT_WALK_AIM_RIFLE},
@@ -386,7 +386,7 @@ Clockwork.animation.stored.maleHuman = {
         ["run"] = {ACT_RUN, ACT_RUN_AIM_RIFLE_STIMULATED},
         ["attack"] = ACT_MELEE_ATTACK_SWING
     },
-		["wos-begotten_javelin"] = {
+	["wos-begotten_javelin"] = {
         ["idle"] = {ACT_IDLE, ACT_IDLE_ANGRY_MELEE},
         ["idle_crouch"] = {ACT_COVER_LOW, ACT_COVER_LOW},
         ["walk"] = {ACT_WALK, ACT_WALK_AIM_RIFLE},
@@ -394,7 +394,7 @@ Clockwork.animation.stored.maleHuman = {
         ["run"] = {ACT_RUN, ACT_RUN_AIM_RIFLE_STIMULATED},
         ["attack"] = ACT_MELEE_ATTACK_SWING
 	},
-		["wos-begotten_javelin_shield"] = {
+	["wos-begotten_javelin_shield"] = {
         ["idle"] = {ACT_IDLE, ACT_IDLE_ANGRY_MELEE},
         ["idle_crouch"] = {ACT_COVER_LOW, ACT_COVER_LOW},
         ["walk"] = {ACT_WALK, ACT_WALK_AIM_RIFLE},
@@ -509,7 +509,7 @@ function Clockwork.animation:AddMaleHumanModel(model)
 	return self:AddModel("maleHuman", model);
 end;
 
-local translateHoldTypes = {
+--[[local translateHoldTypes = {
 	["melee2"] = "melee",
 	["fist"] = "melee",
 	["knife"] = "melee",
@@ -539,24 +539,21 @@ local weaponHoldTypes = {
 	["weapon_rpg"] = "shotgun",
 	["weapon_shotgun"] = "shotgun",
 	["weapon_annabelle"] = "shotgun"
-};
+};]]--
 
 -- A function to get a weapon's hold type.
 function Clockwork.animation:GetWeaponHoldType(player, weapon)
-	local class = string.lower(weapon:GetClass());
-	local holdType = "normal";
+	--local class = string.lower(weapon:GetClass());
+	local holdType = weapon:GetHoldType() or "normal";
 	
-	if (weaponHoldTypes[class]) then
+	--[[if (weaponHoldTypes[class]) then
 		holdType = weaponHoldTypes[class];
-	elseif (weapon and weapon.HoldType) then
-		if (translateHoldTypes[weapon.HoldType]) then
-			holdType = translateHoldTypes[weapon.HoldType];
-		else
-			holdType = weapon.HoldType;
-		end;
-	end;
+	elseif (translateHoldTypes[holdType]) then
+		holdType = translateHoldTypes[holdType];
+	end;]]--
 	
-	return string.lower(holdType);
+	--return string.lower(holdType);
+	return holdType;
 end;
 
 -- A function to get an animation table.

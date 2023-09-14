@@ -12,6 +12,7 @@ SWEP.Weight = 2
 SWEP.UseHands = true
 
 SWEP.HoldType = "wos-begotten_spear_2h"
+SWEP.HoldTypeShield = "wos-begotten_spear_1h_shield"
 
 SWEP.ViewModel = "models/weapons/cstrike/c_knife_t.mdl"
 SWEP.ViewModelFOV = 80
@@ -20,6 +21,7 @@ SWEP.ViewModelFlip = false
 --Anims
 SWEP.BlockAnim = "a_spear_2h_block"
 SWEP.CriticalAnim = "a_spear_2h_attack_medium"
+SWEP.CriticalAnimShield = "a_spear_shield_attack_medium"
 SWEP.ParryAnim = "a_spear_2h_parry"
 
 SWEP.IronSightsPos = Vector(1.759, -12.664, 8.239)
@@ -63,7 +65,11 @@ function SWEP:HandlePrimaryAttack()
 	local attacktable = GetTable(self.AttackTable)
 
 	--Attack animation
-	self:TriggerAnim(self.Owner, "a_spear_2h_attack_medium");
+	if self.activeShield then
+		self:TriggerAnim(self.Owner, "a_spear_shield_attack_medium");
+	else
+		self:TriggerAnim(self.Owner, "a_spear_2h_attack_medium");
+	end
 
 	-- Viewmodel attack animation!
 	local vm = self.Owner:GetViewModel()
@@ -95,7 +101,6 @@ SWEP.ViewModelBoneMods = {
 
 SWEP.VElements = {
 	["v_spear_wingedspear"] = { type = "Model", model = "models/demonssouls/weapons/winged spear.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(3.799, -0.519, -8.832), angle = Angle(108.7, 0, -29.222), size = Vector(0.699, 0.699, 0.699), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["quad"] = { type = "Quad", bone = "ValveBiped.Bip01_Spine4", rel = "", pos = Vector(9.383, -80, -50.864), angle = Angle(-52.223, -116.667, -7.778), size = 0.2, draw_func = nil}
 }
 
 SWEP.WElements = {

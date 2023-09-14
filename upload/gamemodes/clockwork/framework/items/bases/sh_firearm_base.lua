@@ -231,16 +231,9 @@ function ITEM:OnUse(player, itemEntity)
 		end
 	end
 	
-	local shieldID = "";
 	local weaponClass = self("weaponClass");
 	
-	if player.bgShieldData then
-		if player.bgShieldData.uniqueID then
-			shieldID = "_"..player.bgShieldData.uniqueID;
-		end
-	end
-	
-	if (!player:HasWeapon(weaponClass..shieldID)) then
+	if (!player:HasWeapon(weaponClass)) then
 		if (self.OnEquip) then
 			if self:OnEquip(player) == false then
 				return false;

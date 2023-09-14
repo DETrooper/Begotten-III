@@ -233,7 +233,7 @@ if SERVER then
 						damagetype = (self.attacktable["dmgtype"])
 					else
 						if Ent:GetNWBool("Guardening") then
-							if enemywep and string.find(enemywep:GetClass(), "_shield") then
+							if enemywep and enemywep.activeShield then
 								if self.SticksInShields then
 									should_stick = true;
 									self.ConditionLoss = 100;
@@ -294,8 +294,15 @@ if SERVER then
 						end
 					end
 					
+					local blockTable = GetTable(activeWeapon.activeShield);
+					local shield_reduction = 1;
+					
+					if blockTable then
+						shield_reduction = blockTable.damagereduction or 1;
+					end
+					
 					local d = DamageInfo()
-					d:SetDamage( damage * GetShieldReduction(shieldnumber) )
+					d:SetDamage( damage * shield_reduction )
 					d:SetAttacker(self.Owner)
 					d:SetDamageType( damagetype )
 					d:SetDamagePosition(trace.HitPos)

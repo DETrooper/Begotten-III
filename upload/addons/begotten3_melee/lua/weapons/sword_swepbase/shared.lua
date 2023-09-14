@@ -158,7 +158,7 @@ function SWEP:Deploy()
 	self:SendWeaponAnim( ACT_VM_DRAW )
 	self:SetNextPrimaryFire(0)
 	self:SetNextSecondaryFire(0)
-	self:SetHoldType( self.HoldType )	
+	self:SetHoldType(self.realHoldType)
 	self.Primary.Cone = self.DefaultCone
 	--self.Weapon:SetNWInt("Reloading", CurTime() + self:SequenceDuration() )
 	self.isAttacking = false;
@@ -229,21 +229,19 @@ function SWEP:Think()
 	
 	if (player.beginBlockTransition) then
 		if (player:GetNWBool("Guardening") == true) then
-			self:TriggerAnim2(player, self.BlockAnim, 0);
+			self:TriggerAnim2(player, self.realBlockAnim, 0);
 			
 			if ((SERVER) and player:GetNWBool("CanBlock", true)) then
-				if (!self.SexyAss) then
-					self.SexyAss = GetSoundTable(self.BlockSoundTable);
-				end;
-				
-				if (self.SexyAss) then
-					player:EmitSound(self.SexyAss["guardsound"][math.random(1, #self.SexyAss["guardsound"])], 65, math.random(100, 90))
+				if (self.realBlockSoundTable) then
+					local blockSoundTable = GetSoundTable(self.realBlockSoundTable)
+					
+					player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 65, math.random(100, 90))
 				end;
 
 				player:SetNWBool("CanBlock", false);
 			end;
 		elseif (player:GetNWBool("Guardening") == false) then
-			self:TriggerAnim2(player, self.BlockAnim, 1);
+			self:TriggerAnim2(player, self.realBlockAnim, 1);
 			player:SetNWBool("CanBlock", true)
 			
 			local velocity = player:GetVelocity();
@@ -276,6 +274,20 @@ function SWEP:Think()
 end
 
 function SWEP:AdjustMouseSensitivity()
+	if self.activeShield then
+		local blockTable = GetTable(self.activeShield);
+		
+		if blockTable then
+			if blockTable.sensitivityoverride then
+				if self.Owner:GetNWBool( "Guardening" ) == true then
+					return blockTable.sensitivityoverride.guarded;
+				else
+					return blockTable.sensitivityoverride.unguarded;
+				end
+			end
+		end
+	end
+	
 	if self.Owner:GetNWBool( "Guardening" ) == true then
 		return 0.5
 	end
@@ -381,7 +393,7 @@ function SWEP:PrimaryAttack()
 										local curTime = CurTime();
 										
 										if (loweredParryDebug < curTime) then
-											local blockTable = GetTable(activeWeapon.BlockTable);
+											local blockTable = GetTable(activeWeapon.realBlockTable);
 											
 											if (blockTable and self.Owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self.Owner:GetNWBool("Parried")) then
 												self.Owner:SetNWBool("Guardening", true);
@@ -411,7 +423,7 @@ function SWEP:PrimaryAttack()
 			end
 		end)
 			
-		self:TriggerAnim(self.Owner, self.Weapon.CriticalAnim);
+		self:TriggerAnim(self.Owner, self.Weapon.realCriticalAnim);
 		self.Owner:SetNWBool("ParrySucess", false) 
 		return
 	end
@@ -515,7 +527,7 @@ function SWEP:PrimaryAttack()
 											local curTime = CurTime();
 											
 											if (loweredParryDebug < curTime) then
-												local blockTable = GetTable(activeWeapon.BlockTable);
+												local blockTable = GetTable(activeWeapon.realBlockTable);
 												
 												if (blockTable and self.Owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self.Owner:GetNWBool("Parried")) then
 													self.Owner:SetNWBool("Guardening", true);
@@ -671,7 +683,7 @@ local wep = self.Weapon
 	end
 	local FT2 = FT / 25
 	
-	local Offset	= self.IronSightsPos
+	local Offset	= self.realIronSightsPos;
 
 		
 	if ply:KeyDown(IN_SPEED) and ply:GetVelocity():Length() > 350 and ply:WaterLevel() < 1 and self.Sprint == true --[[and wep:GetNWInt("Reloading") < CurTime()]] then
@@ -682,10 +694,10 @@ local wep = self.Weapon
 		--wep:SetNWBool( "SprintShit", false )				
 	end
 	
-	if ( self.IronSightsAng ) then	
-		ModAngX = self.IronSightsAng.x
-		ModAngY = self.IronSightsAng.y 
-		ModAngZ = self.IronSightsAng.z
+	if ( self.realIronSightsAng ) then	
+		ModAngX = self.realIronSightsAng.x
+		ModAngY = self.realIronSightsAng.y 
+		ModAngZ = self.realIronSightsAng.z
 	end
 	
 
@@ -793,7 +805,7 @@ function SWEP:SecondaryAttack()
 	local ParryDelay = self:GetNextPrimaryFire()
 	local attacktable = GetTable(self.AttackTable);
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
-	local blocktable = GetTable(self.BlockTable);
+	local blocktable = GetTable(self.realBlockTable);
 	local parryWindow = blocktable["parrydifficulty"] or 0.15;
 	local curTime = CurTime();
 
@@ -801,12 +813,7 @@ function SWEP:SecondaryAttack()
 		-- Deflection
 		if blocktable["candeflect"] == true then
 			if self.Owner:GetNWBool( "CanDeflect", true ) then
-				local deflectionWindow = 0.15;
-				
-				-- Increased deflection window for bucklers.
-				if string.find(self:GetClass(), "_shield4") then
-					deflectionWindow = 0.25;
-				end
+				local deflectionWindow = blocktable["deflectionwindow"] or 0.15;
 				
 				if self.Owner.HasBelief --[[and self.Owner:HasBelief("deflection")]] then
 					self.Owner:SetNWBool( "Deflect", true )
@@ -832,7 +839,7 @@ function SWEP:SecondaryAttack()
 		end		
 	end
 
-	if ( !self.IronSightsPos ) then return end
+	if ( !self.realIronSightsPos ) then return end
 	if ( LoweredParryDebug > curTime ) then return end
 	if ( self:GetNextPrimaryFire() > curTime * 1.5 ) then return end
 	if ( self.Owner:KeyDown(IN_ATTACK2) ) then return end
@@ -852,7 +859,7 @@ function SWEP:SecondaryAttack()
 	wep:SetNextSecondaryFire(math.max(curTime + (attacktable["delay"]), curTime + 2));
  
 	--Parry anim
-	self:TriggerAnim(self.Owner, self.ParryAnim);
+	self:TriggerAnim(self.Owner, self.realParryAnim);
 
 	self.Owner:SetNWInt("meleeStamina", math.Clamp(self.Owner:GetNWInt("meleeStamina") - blocktable["parrytakestamina"], 0, max_poise));
 		
@@ -880,7 +887,7 @@ function SWEP:SecondaryAttack()
 							local curTime = CurTime();
 							
 							if (loweredParryDebug < curTime) then
-								local blockTable = GetTable(activeWeapon.BlockTable);
+								local blockTable = GetTable(activeWeapon.realBlockTable);
 								
 								if (blockTable and self.Owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self.Owner:GetNWBool("Parried")) then
 									self.Owner:SetNWBool("Guardening", true);
@@ -913,7 +920,7 @@ function SWEP:SecondaryAttack()
 							local curTime = CurTime();
 							
 							if (loweredParryDebug < curTime) then
-								local blockTable = GetTable(activeWeapon.BlockTable);
+								local blockTable = GetTable(activeWeapon.realBlockTable);
 								
 								if (blockTable and self.Owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self.Owner:GetNWBool("Parried")) then
 									self.Owner:SetNWBool("Guardening", true);
@@ -936,7 +943,7 @@ function SWEP:SecondaryAttack()
 end
 	
 function SWEP:Equip()
-	self:SetHoldType(self.HoldType)
+	self:SetHoldType(self.realHoldType)
 end	
 	
 function SWEP:OnRestore()
@@ -1096,7 +1103,7 @@ end
 
 function SWEP:ResetGestures(player)
 	if self.IronSights then
-		self:TriggerAnim2(player, self.BlockAnim, 1);
+		self:TriggerAnim2(player, self.realBlockAnim, 1);
 	end
 end
 
@@ -1123,17 +1130,167 @@ function SWEP:ShouldDropOnDie()
 	return true
 end
 
+function SWEP:GetPrintName()
+	if self.activeShield and !self.HasShield then
+		local shieldTable = GetTable(self.activeShield);
+		
+		if shieldTable and shieldTable.name then
+			return self.PrintName.." & "..shieldTable.name;
+		end
+	end
+	
+	return self.PrintName;
+end
+
+function SWEP:EquipShield(uniqueID)
+	if SERVER then
+		self:CallOnClient("EquipShield", uniqueID);
+	end
+	
+	local shieldTable = GetTable(uniqueID);
+	
+	if shieldTable then
+		self.activeShield = uniqueID;
+
+		if IsValid(self.Owner) then
+			self.Owner:CancelGuardening();
+		end
+		
+		self:Initialize();
+	end
+end
+
+function SWEP:HolsterShield()
+	if SERVER then
+		self:CallOnClient("HolsterShield"); 
+	end
+	
+	self.activeShield = nil;
+	
+	if CLIENT then
+		self:RemoveModels();
+	end
+	
+	if IsValid(self.Owner) then
+		self.Owner:CancelGuardening();
+	end
+	
+	self:Initialize();
+end
+
 function SWEP:Initialize()
+	if self.activeShield and !self.HasShield then
+		local shieldTable = GetTable(self.activeShield);
+		
+		if shieldTable then
+			self.realBlockAnim = shieldTable.blockanim;
+			self.realBlockTable = shieldTable;
+			self.realBlockSoundTable = shieldTable.blocksoundtable;
+			self.realCriticalAnim = self.CriticalAnimShield;
+			self.realHoldType = self.HoldTypeShield;
+			self.realParryAnim = "a_sword_shield_parry";
+			
+			local ironsightsTab = shieldTable.ironsights[self.ViewModel];
+			
+			if ironsightsTab then
+				self.realIronSightsPos = ironsightsTab.pos;
+				self.realIronSightsAng = ironsightsTab.ang;
+			else
+				self.realIronSightsPos = self.IronSightsPos;
+				self.realIronSightsAng = self.IronSightsAng;
+			end
+		else
+			error("Shield not found for player "..self.Owner:Name().." swep "..self:GetPrintName().." shield "..self.activeShield.."!");
+		end
+	else
+		self.realBlockAnim = self.BlockAnim;
+		self.realBlockTable = GetTable(self.BlockTable);
+		self.realBlockSoundTable = self.BlockSoundTable;
+		self.realCriticalAnim = self.CriticalAnim;
+		self.realHoldType = self.HoldType;
+		self.realParryAnim = self.ParryAnim;
+		self.realIronSightsPos = self.IronSightsPos;
+		self.realIronSightsAng = self.IronSightsAng;
+	end
+
 	self:InitFunc();
 	
-	local blocktable = GetTable(self.BlockTable);
+	local blocktable = GetTable(self.realBlockTable);
 	self.RaiseSpeed = blocktable["raisespeed"]
 	self.LowerSpeed = blocktable["raisespeed"]
 	self.InstantRaise = blocktable["instantraise"]
-	self.RaiseSound = "cloth.wav"; 
+	self.RaiseSound = "cloth.wav";
+	
+	self:SetHoldType(self.realHoldType);
 
 	if CLIENT then
-		self:SetHoldType( self.HoldType );
+		if !self.HasShield then
+			if self.activeShield then
+				local shieldTable = GetTable(self.activeShield);
+				
+				if shieldTable then
+					if shieldTable.ViewModelBoneMods then
+						if !self.ViewModelBoneMods then
+							self.ViewModelBoneMods = {};
+						end
+					
+						for k, v in pairs(shieldTable.ViewModelBoneMods) do
+							if k == self.ViewModel then
+								if !self.OriginalViewModelBoneMods then
+									self.OriginalViewModelBoneMods = table.FullCopy(self.ViewModelBoneMods);
+								end
+							
+								for k2, v2 in pairs(v) do
+									self.ViewModelBoneMods[k2] = table.FullCopy(v2);
+								end
+								
+								break;
+							end
+						end
+					end
+				
+					if self.VElements and shieldTable.VElements then
+						for k, v in pairs(shieldTable.VElements) do
+							if k == self.ViewModel then
+								for k2, v2 in pairs(v) do
+									self.VElements[k2] = table.FullCopy(v2);
+								end
+								
+								break;
+							end
+						end
+					end
+					
+					if self.WElements and shieldTable.WElements then
+						for k, v in pairs(shieldTable.WElements) do
+							self.WElements[k] = table.FullCopy(v);
+						end
+					end
+				end
+			else
+				if self.ViewModelBoneMods and self.OriginalViewModelBoneMods then
+					for k, v in pairs(self.OriginalViewModelBoneMods) do
+						self.ViewModelBoneMods = table.FullCopy(self.OriginalViewModelBoneMods);
+					end
+				end
+			
+				if self.VElements then
+					for k, v in pairs(self.VElements) do
+						if string.find(k, "shield") then
+							self.VElements[k] = nil;
+						end
+					end
+				end
+				
+				if self.WElements then
+					for k, v in pairs(self.WElements) do
+						if string.find(k, "shield") then
+							self.WElements[k] = nil;
+						end
+					end
+				end
+			end
+		end
 		
 		self.VElements = table.FullCopy( self.VElements )
 		self.WElements = table.FullCopy( self.WElements )
@@ -1144,6 +1301,30 @@ function SWEP:Initialize()
 		end
 		
 		self:CreateModels(self.WElements) // create worldmodels
+		
+		if self.VElements then
+			self.vRenderOrder = {}
+
+			for k, v in pairs( self.VElements ) do
+				if (v.type == "Model") then
+					table.insert(self.vRenderOrder, 1, k)
+				elseif (v.type == "Sprite" or v.type == "Quad") then
+					table.insert(self.vRenderOrder, k)
+				end
+			end
+		end
+		
+		if self.WElements then
+			self.wRenderOrder = {}
+
+			for k, v in pairs( self.WElements ) do
+				if (v.type == "Model") then
+					table.insert(self.wRenderOrder, 1, k)
+				elseif (v.type == "Sprite" or v.type == "Quad") then
+					table.insert(self.wRenderOrder, k)
+				end
+			end
+		end
 
 		if IsValid(self.Owner) and self.Owner:IsPlayer() then
 			local vm = self.Owner:GetViewModel()
@@ -1392,14 +1573,13 @@ if CLIENT then
 	function SWEP:DrawWorldModel()
 		self:CustomWorldDrawn()
 		
-		if (self.ShowWorldModel == nil or self.ShowWorldModel) then
+		if (self.ShowWorldModel ~= false) then
 			self:DrawModel()
 		end
 		
 		if (!self.WElements) then return end
 		
 		if (!self.wRenderOrder) then
-
 			self.wRenderOrder = {}
 
 			for k, v in pairs( self.WElements ) do
@@ -1409,7 +1589,6 @@ if CLIENT then
 					table.insert(self.wRenderOrder, k)
 				end
 			end
-
 		end
 		
 		if (IsValid(self.Owner)) then
@@ -1419,7 +1598,6 @@ if CLIENT then
 		end
 		
 		for k, name in pairs( self.wRenderOrder ) do
-		
 			local v = self.WElements[name]
 			if (!v) then self.wRenderOrder = nil break end
 			if (v.hide) then continue end
@@ -1510,10 +1688,9 @@ if CLIENT then
 	end
 
 	function SWEP:GetBoneOrientation( basetab, tab, ent, bone_override )
-		
 		local bone, pos, ang
+		
 		if (tab.rel and tab.rel != "") then
-			
 			local v = basetab[tab.rel]
 			
 			if (!v) then return end
@@ -1526,14 +1703,13 @@ if CLIENT then
 			ang:RotateAroundAxis(ang:Up(), v.angle.y)
 			ang:RotateAroundAxis(ang:Right(), v.angle.p)
 			ang:RotateAroundAxis(ang:Forward(), v.angle.r)
-				
 		else
-		
 			bone = ent:LookupBone(bone_override or tab.bone)
 
 			if (!bone) then return end
 			
 			pos, ang = Vector(0,0,0), Angle(0,0,0)
+			
 			local m = ent:GetBoneMatrix(bone)
 			if (m) then
 				pos, ang = m:GetTranslation(), m:GetAngles()
@@ -1543,7 +1719,6 @@ if CLIENT then
 				ent == self.Owner:GetViewModel() and self.ViewModelFlip) then
 				ang.r = -ang.r 
 			end
-		
 		end
 		
 		return pos, ang
@@ -1553,7 +1728,7 @@ if CLIENT then
 		if (!tab) then return end
 
 		for k, v in pairs( tab ) do
-			if (v.type == "Model" and v.model and v.model != "" and (!IsValid(v.modelEnt) or v.createdModel != v.model) and 
+			if (v.type == "Model" and v.model and v.model != "" and (!IsValid(v.modelEnt) --[[or v.createdModel != v.model]]) and 
 				string.find(v.model, ".mdl") and file.Exists (v.model, "GAME") ) then
 				
 				if IsValid(v.modelEnt) then
@@ -1567,7 +1742,7 @@ if CLIENT then
 					v.modelEnt:SetAngles(self:GetAngles())
 					v.modelEnt:SetParent(self)
 					v.modelEnt:SetNoDraw(true)
-					v.createdModel = v.model
+					--v.createdModel = v.model
 				else
 					v.modelEnt = nil
 				end

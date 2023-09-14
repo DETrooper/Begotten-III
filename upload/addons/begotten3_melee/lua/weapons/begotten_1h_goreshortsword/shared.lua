@@ -12,6 +12,7 @@ SWEP.Weight = 2
 SWEP.UseHands = true
 
 SWEP.HoldType = "wos-begotten_1h"
+SWEP.HoldTypeShield = "wos-begotten_1h_shield"
 
 SWEP.ViewModel = "models/v_onehandedbegotten.mdl"
 SWEP.ViewModelFOV = 62
@@ -20,6 +21,7 @@ SWEP.ViewModelFlip = false
 --Anims
 SWEP.BlockAnim = "a_sword_block"
 SWEP.CriticalAnim = "a_sword_attack_slash_fast_02"
+SWEP.CriticalAnimShield = "a_sword_shield_attack_slash_fast_01"
 SWEP.ParryAnim = "a_sword_parry"
 
 SWEP.IronSightsPos = Vector(-7.64, -6.433, -0.96)
@@ -66,7 +68,12 @@ function SWEP:HandlePrimaryAttack()
 	local attacktable = GetTable(self.AttackTable)
 
 	--Attack animation
-	self:TriggerAnim(self.Owner, "a_sword_attack_slash_fast_0"..math.random(1, 2));
+	if self.activeShield then
+		self:TriggerAnim(self.Owner, "a_sword_shield_attack_slash_fast_01");
+	else
+		self:TriggerAnim(self.Owner, "a_sword_attack_slash_fast_0"..math.random(1, 2));
+	end
+
 
 	-- Viewmodel attack animation!
 	local vm = self.Owner:GetViewModel()
@@ -84,7 +91,11 @@ function SWEP:HandleThrustAttack()
 	local attacktable = GetTable(self.AttackTable)
 
 	--Attack animation
-	self:TriggerAnim(self.Owner, "a_sword_attack_stab_fast_01");
+	if self.activeShield then
+		self:TriggerAnim(self.Owner, "a_sword_shield_attack_stab_fast_01");
+	else
+		self:TriggerAnim(self.Owner, "a_sword_attack_stab_fast_01");
+	end;
 
 	-- Viewmodel attack animation!
 	local vm = self.Owner:GetViewModel()

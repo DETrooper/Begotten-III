@@ -12,6 +12,7 @@ SWEP.Weight = 2
 SWEP.UseHands = true
 
 SWEP.HoldType = "wos-begotten_spear_2h"
+SWEP.HoldTypeShield = "wos-begotten_spear_1h_shield"
 
 SWEP.ViewModel = "models/weapons/cstrike/c_knife_t.mdl"
 SWEP.ViewModelFOV = 80
@@ -20,6 +21,7 @@ SWEP.ViewModelFlip = false
 --Anims
 SWEP.BlockAnim = "a_spear_2h_block"
 SWEP.CriticalAnim = "a_spear_2h_attack_medium"
+SWEP.CriticalAnimShield = "a_spear_shield_attack_medium"
 SWEP.ParryAnim = "a_spear_2h_parry"
 
 SWEP.IronSightsPos = Vector(1.759, -12.664, 8.239)
@@ -64,7 +66,11 @@ function SWEP:HandlePrimaryAttack()
 	local attacktable = GetTable(self.AttackTable)
 
 	--Attack animation
-	self:TriggerAnim(self.Owner, "a_spear_2h_attack_medium");
+	if self.activeShield then
+		self:TriggerAnim(self.Owner, "a_spear_shield_attack_medium");
+	else
+		self:TriggerAnim(self.Owner, "a_spear_2h_attack_medium");
+	end
 
 	-- Viewmodel attack animation!
 	local vm = self.Owner:GetViewModel()

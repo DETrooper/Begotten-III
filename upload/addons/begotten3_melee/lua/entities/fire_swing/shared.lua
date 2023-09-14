@@ -163,10 +163,14 @@ function ENT:PhysicsCollide(data, physobj)
 		local trace = owner:GetEyeTrace()
 		local activeWeapon = owner:GetActiveWeapon();
 		local weaponclass = activeWeapon:GetClass();
-		local shieldnumber = (GetShieldString(weaponclass))
-	
-		local shield_reduction = GetShieldReduction(shieldnumber);
+
 		local itemTable = item.GetByWeapon(activeWeapon);
+		local blockTable = GetTable(activeWeapon.activeShield);
+		local shield_reduction = 1;
+		
+		if blockTable then
+			shield_reduction = blockTable.damagereduction or 1;
+		end
 
 		-- Condition damage penalty
 		if itemTable then

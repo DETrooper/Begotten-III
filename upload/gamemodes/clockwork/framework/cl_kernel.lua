@@ -3135,7 +3135,7 @@ function playerMeta:GetCountryCode()
 end;
 
 entityMeta.ClockworkFireBullets = entityMeta.ClockworkFireBullets or entityMeta.FireBullets
-weaponMeta.OldGetPrintName = weaponMeta.OldGetPrintName or weaponMeta.GetPrintName
+--weaponMeta.OldGetPrintName = weaponMeta.OldGetPrintName or weaponMeta.GetPrintName
 playerMeta.SteamName = playerMeta.SteamName or playerMeta.Name
 
 -- A function to make a player fire bullets.
@@ -3149,7 +3149,7 @@ function entityMeta:FireBullets(bulletInfo)
 end
 
 -- A function to get a weapon's print name.
-function weaponMeta:GetPrintName()
+--[[function weaponMeta:GetPrintName()
 	local itemTable = item.GetByWeapon(self)
 
 	if (itemTable) then
@@ -3157,7 +3157,7 @@ function weaponMeta:GetPrintName()
 	else
 		return self:OldGetPrintName()
 	end
-end
+end]]--
 
 -- A function to get a player's name.
 function playerMeta:Name(bRealName)

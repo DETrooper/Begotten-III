@@ -12,7 +12,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine1";
 	ITEM.attachmentOffsetAngles = Angle(273.48, 6.96, 251.6);
 	ITEM.attachmentOffsetVector = Vector(-8.49, -12.02, -19.09);
-	ITEM.shields = {"shieldunique1"};
+	ITEM.canUseShields = true;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");

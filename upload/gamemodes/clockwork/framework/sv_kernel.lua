@@ -978,7 +978,10 @@ function Clockwork.kernel:ForceUnequipItem(player, uniqueID, itemID, arguments)
 		if (itemTable:HasPlayerEquipped(player)) then
 			itemTable:OnPlayerUnequipped(player)
 			player:RebuildInventory()
-			player:SetWeaponRaised(false)
+			
+			if itemTable.category ~= "Shields" then
+				player:SetWeaponRaised(false)
+			end
 		end
 	end
 end;

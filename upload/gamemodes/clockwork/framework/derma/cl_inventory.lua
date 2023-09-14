@@ -808,11 +808,6 @@ function PANEL:Rebuild()
 				if item then
 					if i == 1 then
 						weapon1 = {};
-						weapon1.weaponClass = item.uniqueID;
-						
-						if item.shields then
-							weapon1.shields = item.shields;
-						end
 						
 						if item.isAttachment and !item.invisibleAttachment then
 							weapon1.attachmentInfo = {};
@@ -828,11 +823,6 @@ function PANEL:Rebuild()
 						end
 					elseif i == 2 then
 						weapon2 = {};
-						weapon2.weaponClass = item.uniqueID;
-						
-						if item.shields then
-							weapon2.shields = item.shields;
-						end
 						
 						if item.isAttachment and !item.invisibleAttachment then
 							weapon2.attachmentInfo = {};
@@ -846,18 +836,8 @@ function PANEL:Rebuild()
 							weapon2.attachmentInfo.bodygroup2 = item.bodygroup2;
 							weapon2.attachmentInfo.bodygroup3 = item.bodygroup3;
 						end
-						
-						if item.category == "Shields" and weapon1 and weapon1.shields and table.HasValue(weapon1.shields, item.uniqueID) then
-							weapon1.weaponClass = weapon1.weaponClass.."_"..item.uniqueID;
-							weapon2.weaponClass = nil;
-						end
 					elseif i == 3 then
 						weapon3 = {};
-						weapon3.weaponClass = item.uniqueID;
-						
-						if item.shields then
-							weapon3.shields = item.shields;
-						end
 						
 						if item.isAttachment and !item.invisibleAttachment then
 							weapon3.attachmentInfo = {};
@@ -870,11 +850,6 @@ function PANEL:Rebuild()
 							weapon3.attachmentInfo.bodygroup1 = item.bodygroup1;
 							weapon3.attachmentInfo.bodygroup2 = item.bodygroup2;
 							weapon3.attachmentInfo.bodygroup3 = item.bodygroup3;
-						end
-						
-						if item.category == "Shields" and weapon2 and weapon2.shields and table.HasValue(weapon2.shields, item.uniqueID) then
-							weapon2.weaponClass = weapon2.weaponClass.."_"..item.uniqueID;
-							weapon3.weaponClass = nil;
 						end
 					end
 				end

@@ -188,14 +188,18 @@ function ENT:PhysicsCollide(data, physobj)
 		
 		local trace = owner:GetEyeTrace()
 		local weaponclass = activeWeapon:GetClass()
-		local shieldnumber = (GetShieldString(weaponclass))
-		
-		local shield_reduction = GetShieldReduction(shieldnumber);
-		
+
 		-- Spear Damage System (Messy)					
 		local distance = (owner:GetPos():Distance(data.HitEntity:GetPos()))	
 		local damage = (attacktable["primarydamage"])
 		local damagetype = 16
+		
+		local blockTable = GetTable(activeWeapon.activeShield);
+		local shield_reduction = 1;
+		
+		if blockTable then
+			shield_reduction = blockTable.damagereduction or 1;
+		end
 		
 		-- Blunt swipe or piercing thrust?
 		if activeWeapon.CanSwipeAttack == true then
@@ -288,8 +292,7 @@ function ENT:PhysicsCollide(data, physobj)
 		-- Spear Damage System (Messy)					
 		
 		local itemTable = item.GetByWeapon(activeWeapon);
-		local shield_reduction = GetShieldReduction(shieldnumber);
-
+		
 		-- Condition damage penalty
 		if itemTable then
 			local condition = itemTable:GetCondition();

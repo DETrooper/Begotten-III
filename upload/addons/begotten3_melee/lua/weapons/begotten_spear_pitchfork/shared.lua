@@ -12,6 +12,7 @@ SWEP.Weight = 2
 SWEP.UseHands = true
 
 SWEP.HoldType = "wos-begotten_spear_1h"
+SWEP.HoldTypeShield = "wos-begotten_spear_1h_shield"
 
 SWEP.ViewModel = "models/weapons/cstrike/c_knife_t.mdl"
 SWEP.ViewModelFOV = 80
@@ -20,6 +21,7 @@ SWEP.ViewModelFlip = false
 --Anims
 SWEP.BlockAnim = "a_spear_block"
 SWEP.CriticalAnim = "a_spear_shield_attack_medium"
+SWEP.CriticalAnimShield = "a_spear_shield_attack_medium"
 SWEP.ParryAnim = "a_spear_parry"
 
 SWEP.IronSightsPos = Vector(2.119, -9.247, -2.84)

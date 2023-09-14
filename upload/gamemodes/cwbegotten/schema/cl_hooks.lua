@@ -1325,7 +1325,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		
 		if weaponClass then
 			weaponTable = _G.weapons.Get(weaponClass);
-			category = weaponTable.Category;
+			
+			if weaponTable then
+				category = weaponTable.Category or "Melee";
+			end
 		end
 		
 		if string.find(category, "(Begotten)") then
@@ -1412,13 +1415,11 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 				end]]--
 			
-				--[[if !vrmod then
-					if weaponStats["defense"].canparry then
-						frame:AddText("Can Parry", Color(110, 30, 30));
-					end
+				--[[if weaponStats["defense"].canparry then
+					frame:AddText("Can Parry", Color(110, 30, 30));
 				end]]--
 				
-				if itemTable.shields then
+				if itemTable.canUseShields then
 					frame:AddText("Can Use Shields", Color(110, 30, 30));
 				end
 				
@@ -1440,6 +1441,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				
 				if itemTable.hasIncreasedDeflectionWindow then
 					frame:AddText("Increased deflection window (0.25s)", Color(110, 30, 30));
+				end
+
+				if weaponStats["defense"].parrydifficulty and weaponStats["defense"].parrydifficulty > 0.2 then
+					frame:AddText("Has Increased Parry Window", Color(110, 30, 30));
 				end
 				
 				if itemTable.attributes then
@@ -1686,19 +1691,17 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddBar(12, {{text = tostring(weaponStats["defense"].poiseresistance).."%", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Poise Damage Resistance", Color(110, 30, 30));
 				end
 				
-				if !vrmod then	
-					if weaponStats["defense"].canparry then
-						if weaponStats["defense"].parrytakestamina then
-							local percentage = math.min(weaponStats["defense"].parrytakestamina / 40, 40);
+				if weaponStats["defense"].canparry then
+					if weaponStats["defense"].parrytakestamina then
+						local percentage = math.min(weaponStats["defense"].parrytakestamina / 40, 40);
 
-							frame:AddBar(12, {{text = tostring(weaponStats["defense"].parrytakestamina).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Cost", Color(110, 30, 30));
-						end
-						
-						if weaponStats["defense"].parrydifficulty then
-							local percentage = 1 - math.min(weaponStats["defense"].parrydifficulty / 0.3, 0.3);
+						frame:AddBar(12, {{text = tostring(weaponStats["defense"].parrytakestamina).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Cost", Color(110, 30, 30));
+					end
+					
+					if weaponStats["defense"].parrydifficulty then
+						local percentage = 1 - math.min(weaponStats["defense"].parrydifficulty / 0.3, 0.3);
 
-							frame:AddBar(12, {{text = tostring(weaponStats["defense"].parrydifficulty).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Window", Color(110, 30, 30));
-						end
+						frame:AddBar(12, {{text = tostring(weaponStats["defense"].parrydifficulty).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Window", Color(110, 30, 30));
 					end
 				end
 			end
@@ -1844,12 +1847,30 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			frame:AddSpacer(2, Color(0, 0, 0, 0));
 		end;
 		
-		if shieldClass and string.find(shieldClass, "shield") then
-			local newName = string.upper(string.sub(shieldClass, 1, 1))..string.sub(shieldClass, 2, 6).."_"..string.sub(shieldClass, 7).."_BlockTable";
-			local shieldnumber = (GetShieldString(shieldClass));
+		if itemTable.requiredbeliefs and #itemTable.requiredbeliefs > 0 then
+			local beliefIcons = {};
 			
-			shieldStats = GetTable(newName);
-			local shield_reduction = GetShieldReduction(shieldnumber) or 0;
+			for i = 1, #itemTable.requiredbeliefs do
+				table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.requiredbeliefs[i]..".png");
+			end
+			
+			frame:AddText("Required Beliefs: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+			frame:AddIconRow(beliefIcons, 32);
+		end
+		
+		if itemTable.onerequiredbelief and #itemTable.onerequiredbelief > 0 then
+			local beliefIcons = {};
+			
+			for i = 1, #itemTable.onerequiredbelief do
+				table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.onerequiredbelief[i]..".png");
+			end
+			
+			frame:AddText("Required Beliefs (One Of The Following): ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+			frame:AddIconRow(beliefIcons, 32);
+		end
+		
+		if shieldClass then
+			shieldStats = GetTable(shieldClass);
 	
 			if shieldStats then
 				frame:AddText("Shield Attributes: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
@@ -1874,10 +1895,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 				end
 			
-				if !vrmod then
-					if shieldStats.canparry then
-						frame:AddText("Can Parry", Color(110, 30, 30));
-					end
+				if shieldStats.canparry then
+					frame:AddText("Can Parry", Color(110, 30, 30));
 				end
 				
 				if !shieldStats.candeflect then
@@ -1888,10 +1907,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddText("Has Bullet Resistance", Color(110, 30, 30));
 				end
 				
-				if !vrmod then
-					if shieldStats.parrydifficulty and shieldStats.parrydifficulty > 0.15 then
-						frame:AddText("Has Increased Parry Window", Color(110, 30, 30));
-					end
+				if shieldStats.parrydifficulty and shieldStats.parrydifficulty > 0.2 then
+					frame:AddText("Has Increased Parry Window", Color(110, 30, 30));
 				end
 				
 				if itemTable.attributes then
@@ -1944,26 +1961,24 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddBar(12, {{text = tostring(shieldStats.poiseresistance).."%", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Stamina Damage Resistance", Color(110, 30, 30));
 				end
 				
-				if !vrmod then
-					if shieldStats.canparry then
-						if shieldStats.parrytakestamina then
-							local percentage = math.min(shieldStats.parrytakestamina / 40, 40);
+				if shieldStats.canparry then
+					if shieldStats.parrytakestamina then
+						local percentage = math.min(shieldStats.parrytakestamina / 40, 40);
 
-							frame:AddBar(12, {{text = tostring(shieldStats.parrytakestamina), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Cost", Color(110, 30, 30));
-						end
-						
-						if shieldStats.parrydifficulty then
-							local percentage = 1 - math.min(shieldStats.parrydifficulty / 0.3, 0.3);
+						frame:AddBar(12, {{text = tostring(shieldStats.parrytakestamina), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Cost", Color(110, 30, 30));
+					end
+					
+					if shieldStats.parrydifficulty then
+						local percentage = 1 - math.min(shieldStats.parrydifficulty / 0.3, 0.3);
 
-							frame:AddBar(12, {{text = tostring(shieldStats.parrydifficulty).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Window", Color(110, 30, 30));
-						end
+						frame:AddBar(12, {{text = tostring(shieldStats.parrydifficulty).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Window", Color(110, 30, 30));
 					end
 				end
 				
-				if shield_reduction then
-					local percentage = math.min(1 - shield_reduction, 0.3);
+				if shieldStats.damagereduction then
+					local percentage = math.min(1 - shieldStats.damagereduction, 0.3);
 
-					frame:AddBar(12, {{text = tostring((1 - shield_reduction) * 100).."%", percentage = percentage * 333.33, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Weapon Damage Reduction (Max 30%)", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring((1 - shieldStats.damagereduction) * 100).."%", percentage = percentage * 333.33, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Weapon Damage Reduction (Max 30%)", Color(110, 30, 30));
 				end
 			end
 		end

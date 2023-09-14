@@ -164,7 +164,6 @@ function ENT:PhysicsCollide(data, physobj)
 		local trace = owner:GetEyeTrace()
 		local activeWeapon = owner:GetActiveWeapon();
 		local weaponclass = activeWeapon:GetClass();
-		local shieldnumber = (GetShieldString(weaponclass))
 							
 		-- Spear Damage System (Messy)					
 		local distance = (owner:GetPos():Distance(data.HitEntity:GetPos()))
@@ -172,7 +171,12 @@ function ENT:PhysicsCollide(data, physobj)
 		local damage = (attacktable["primarydamage"])
 		local damagetype = (attacktable["dmgtype"])
 		
-		local shield_reduction = GetShieldReduction(shieldnumber);
+		local blockTable = GetTable(activeWeapon.activeShield);
+		local shield_reduction = 1;
+		
+		if blockTable then
+			shield_reduction = blockTable.damagereduction or 1;
+		end
 		
 		if (IsValid(activeWeapon)) then
 			if string.find(activeWeapon:GetClass(), "begotten_spear_") then
@@ -251,7 +255,6 @@ function ENT:PhysicsCollide(data, physobj)
 		--print(damagetype)
 		
 		local itemTable = item.GetByWeapon(activeWeapon);
-		local shield_reduction = GetShieldReduction(shieldnumber);
 
 		-- Condition damage penalty
 		if itemTable then

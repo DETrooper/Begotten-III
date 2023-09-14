@@ -85,18 +85,10 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 	Clockwork.player:SaveGear(player);
 	
 	player.bgShieldData = {};
-	
-	for k, v in pairs(player:GetWeapons()) do
-		local itemTable = item.GetByWeapon(v)
 
-		if itemTable then
-			if itemTable.shields and table.HasValue(itemTable.shields, self.uniqueID) then
-				player:StripWeapon(itemTable.uniqueID.."_"..self.uniqueID)
-				player:Give(itemTable("weaponClass"), itemTable);
-				player:SelectWeapon(itemTable("weaponClass"));
-				
-				break;
-			end
+	for k, v in pairs(player:GetWeapons()) do
+		if v.activeShield then
+			v:HolsterShield();
 		end
 	end
 	
@@ -126,7 +118,6 @@ function ITEM:OnEquip(player)
 	for i = 1, #slots do
 		if (!Clockwork.player:GetGear(player, slots[i])) then
 			Clockwork.player:CreateGear(player, slots[i], self);
-			--player:RebuildInventory();
 			
 			return true;
 		end
@@ -163,6 +154,11 @@ function ITEM:OnUse(player, itemEntity)
 	local gearTertiary = Clockwork.player:GetGear(player, "Tertiary");
 	local suitable_melee = nil;
 	
+	if (self:HasPlayerEquipped(player)) or (IsValid(gearPrimary) and gearPrimary:GetItemTable().category == "Shields") or (IsValid(gearSecondary) and gearSecondary:GetItemTable().category == "Shields") or (IsValid(gearTertiary) and gearTertiary:GetItemTable().category == "Shields") then
+		Schema:EasyText(player, "peru", "You already have a shield equipped!")
+		return false;
+	end
+	
 	if (!IsValid(gearPrimary) and !IsValid(gearSecondary) and !IsValid(gearTertiary)) then
 		Schema:EasyText(player, "chocolate", "You must equip a suitable weapon to use with this shield!");
 		return false;
@@ -172,12 +168,8 @@ function ITEM:OnUse(player, itemEntity)
 		if IsValid(gearPrimary) then
 			local gearPrimaryItem = gearPrimary:GetItemTable();
 
-			if gearPrimaryItem then
-				if gearPrimaryItem.category == "Melee" and gearPrimaryItem.shields then
-					if table.HasValue(gearPrimaryItem.shields, self.uniqueID) then
-						suitable_melee = gearPrimaryItem.itemID;
-					end
-				end
+			if gearPrimaryItem and gearPrimaryItem.canUseShields then
+				suitable_melee = gearPrimaryItem.itemID;
 			end
 		end
 		
@@ -185,12 +177,8 @@ function ITEM:OnUse(player, itemEntity)
 			if IsValid(gearSecondary) then
 				local gearSecondaryItem = gearSecondary:GetItemTable();
 
-				if gearSecondaryItem then
-					if gearSecondaryItem.category == "Melee" and gearSecondaryItem.shields then
-						if table.HasValue(gearSecondaryItem.shields, self.uniqueID) then
-							suitable_melee = gearSecondaryItem.itemID;
-						end
-					end
+				if gearSecondaryItem and gearSecondaryItem.canUseShields then
+					suitable_melee = gearSecondaryItem.itemID;
 				end
 			end
 		end
@@ -199,12 +187,8 @@ function ITEM:OnUse(player, itemEntity)
 			if IsValid(gearTertiary) then
 				local gearTertiaryItem = gearTertiary:GetItemTable();
 					
-				if gearTertiaryItem then
-					if gearTertiaryItem.category == "Melee" and gearTertiaryItem.shields then
-						if table.HasValue(gearTertiaryItem.shields, self.uniqueID) then
-							suitable_melee = gearTertiaryItem.itemID;
-						end
-					end
+				if gearTertiaryItem and gearTertiaryItem.canUseShields then
+					suitable_melee = gearTertiaryItem.itemID;
 				end
 			end
 		end
@@ -213,11 +197,6 @@ function ITEM:OnUse(player, itemEntity)
 			Schema:EasyText(player, "chocolate", "You do not have a suitable melee weapon equipped for use with this shield!");
 			return false;
 		end
-	end
-	
-	if (self:HasPlayerEquipped(player)) or (IsValid(gearPrimary) and gearPrimary:GetItemTable().category == "Shields") or (IsValid(gearSecondary) and gearSecondary:GetItemTable().category == "Shields") or (IsValid(gearTertiary) and gearTertiary:GetItemTable().category == "Shields") then
-		Schema:EasyText(player, "peru", "You already have a shield equipped!")
-		return false;
 	end
 
 	local weaponItemFound = false;
@@ -229,7 +208,7 @@ function ITEM:OnUse(player, itemEntity)
 			if itemTable.itemID == suitable_melee then
 				weaponItemFound = true;
 				
-				if itemTable.shields and table.HasValue(itemTable.shields, self.uniqueID) then
+				if itemTable.canUseShields then
 					if (self.OnEquip) then
 						if self:OnEquip(player) == false then
 							return false;
@@ -244,11 +223,14 @@ function ITEM:OnUse(player, itemEntity)
 
 					player.bgShieldData = shieldData;
 					
-					player:StripWeapon(itemTable.uniqueID);
-					player:Give(itemTable("weaponClass").."_"..self.uniqueID, itemTable);
+					--player:StripWeapon(itemTable.uniqueID);
+					--player:Give(itemTable("weaponClass").."_"..self.uniqueID, itemTable);
+					
+					v:EquipShield(self.uniqueID);
 					
 					if not player.cwWakingUp then
-						player:SelectWeapon(itemTable("weaponClass").."_"..self.uniqueID);
+						--player:SelectWeapon(itemTable("weaponClass").."_"..self.uniqueID);
+						player:SelectWeapon(itemTable("weaponClass"));
 					end
 					
 					Clockwork.player:SaveGear(player);
@@ -267,7 +249,7 @@ function ITEM:OnUse(player, itemEntity)
 			if itemTable then
 				weaponItemFound = true;
 				
-				if itemTable.shields and table.HasValue(itemTable.shields, self.uniqueID) then
+				if itemTable.canUseShields then
 					if (self.OnEquip) then
 						if self:OnEquip(player) == false then
 							return false;
@@ -282,11 +264,12 @@ function ITEM:OnUse(player, itemEntity)
 					
 					player.bgShieldData = shieldData;
 					
-					player:StripWeapon(itemTable.uniqueID);
-					player:Give(itemTable("weaponClass").."_"..self.uniqueID, itemTable);
+					--player:StripWeapon(itemTable.uniqueID);
+					--player:Give(itemTable("weaponClass").."_"..self.uniqueID, itemTable);
 					
 					if not player.cwWakingUp then
-						player:SelectWeapon(itemTable("weaponClass").."_"..self.uniqueID);
+						--player:SelectWeapon(itemTable("weaponClass").."_"..self.uniqueID);
+						player:SelectWeapon(itemTable("weaponClass"));
 					end
 					
 					Clockwork.player:SaveGear(player);
