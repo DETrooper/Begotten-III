@@ -528,14 +528,14 @@ AttackTables.HaralderWarAxeAttackTable = {
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 40,
+	["armorpiercing"] = 45,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 35,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 8,
 	["delay"] = 1.45,
 	["striketime"] = 0.65,
-	["meleerange"] = 865,
+	["meleerange"] = 900,
 	["punchstrength"] = Angle(0,1,0),
 };
 
