@@ -60,7 +60,7 @@ SWEP.ShellTime			= .35
 
 SWEP.Primary.NumShots	= 1		//how many bullets to shoot, use with shotguns
 SWEP.Primary.Damage		= 60	//base damage, scaled by game
-SWEP.Primary.Spread		= .000001	//define from-the-hip accuracy 1 is terrible, .0001 is exact)
+SWEP.Primary.Spread		= .001	//define from-the-hip accuracy 1 is terrible, .0001 is exact)
 SWEP.Primary.IronAccuracy = .00001 // has to be the same as primary.spread
 -- Because irons don't magically give you less pellet spread!
 
