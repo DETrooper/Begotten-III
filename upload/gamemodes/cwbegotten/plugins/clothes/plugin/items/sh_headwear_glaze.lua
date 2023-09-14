@@ -242,7 +242,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "steel_chunks"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}};
 	
 ITEM:Register();
 
