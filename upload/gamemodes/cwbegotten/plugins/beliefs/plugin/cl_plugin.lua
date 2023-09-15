@@ -52,6 +52,8 @@ function cwBeliefs:OpenTree(player, level, experience, beliefs, points, faith)
 		Clockwork.Client.cwBeliefPanel:Rebuild(player, level, experience, beliefs, points, faith)
 		Clockwork.Client.cwBeliefPanel:MakePopup()
 	end
+	
+	Clockwork.Client:EmitSound("ui/pickup_secret01.wav", 70, 80);
 end
 
 function cwBeliefs:HasBelief(uniqueID)
@@ -81,10 +83,25 @@ function playerMeta:HasBelief(uniqueID)
 end
 
 netstream.Hook("BeliefSync", function(data)
-	cwBeliefs.beliefs = {};
-
-	for i = 1, #data do
-		cwBeliefs.beliefs[i] = data[i];
+	cwBeliefs.beliefs = data;
+	
+	-- Refresh da beliefs.
+	local beliefPanel = Clockwork.Client.cwBeliefPanel;
+	
+	if (IsValid(beliefPanel)) then
+		if beliefPanel:IsVisible() then
+			if IsValid(beliefPanel.panelList) then
+				local panels = beliefPanel.panelList
+				
+				for i, v in ipairs(panels) do
+					if v.buttons then
+						for k, v2 in pairs(v.buttons) do
+							icon.nextThink = 0;
+						end
+					end
+				end
+			end
+		end
 	end
 end);
 

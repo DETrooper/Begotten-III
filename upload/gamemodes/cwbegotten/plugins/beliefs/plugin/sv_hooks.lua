@@ -24,9 +24,9 @@ function cwBeliefs:PlayerRestoreCharacterData(player, data)
 		data["level"] = 1
 	end
 	
-	player:SetLocalVar("experience", experience);
-	player:SetLocalVar("points", points);
-	player:SetSharedVar("level", level);
+	player:SetLocalVar("experience", data["experience"]);
+	player:SetLocalVar("points", data["points"]);
+	player:SetSharedVar("level", data["level"]);
 end
 
 -- Called at an interval while the player is connected to the server.

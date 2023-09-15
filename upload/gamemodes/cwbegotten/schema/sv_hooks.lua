@@ -50,10 +50,10 @@ function Schema:ClockworkInitialized()
 					end
 					
 					if !characterFound then
-						print("No character found for bounty "..v._Name.."!");
+						print("No character found for bounty "..v.name.."!");
 						self.bountyData[k] = nil;
 					else
-						print("Character found for bounty "..v._Name.."!");
+						print("Character found for bounty "..v.name.."!");
 					end
 				end
 			end);

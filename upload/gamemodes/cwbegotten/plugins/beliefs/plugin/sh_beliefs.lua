@@ -67,46 +67,50 @@ function cwBeliefs.beliefTrees:Register(beliefTree)
 		else
 			tab.beliefs = {};
 		
-			for k, v in pairs(beliefTree.beliefs) do
-				local beliefTab = {};
+			for i, v in pairs(beliefTree.beliefs) do
+				tab.beliefs[i] = {};
 				
-				beliefTab.uniqueID = k;
-				beliefTab.name = v.name;
-				beliefTab.row = v.row;
+				for k2, v2 in pairs(v) do
+					local beliefTab = {};
+					
+					beliefTab.uniqueID = k2;
+					beliefTab.name = v2.name;
+					beliefTab.row = v2.row;
+					
+					if v2.requirements then
+						beliefTab.requirements = v2.requirements;
+					end
+					
+					if v2.subfaith then
+						beliefTab.subfaith = v2.subfaith;
+					end
+					
+					if v2.disabled then
+						beliefTab.disabled = true
+					end
+					
+					if v2.lockedFactions then
+						beliefTab.lockedFactions = v2.lockedFactions;
+					end
+					
+					if v2.lockedSubfactions then
+						beliefTab.lockedSubfactions = v2.lockedSubfactions;
+					end
+					
+					if v2.lockedBeliefs then
+						beliefTab.lockedBeliefs = v2.lockedBeliefs;
+					end
+					
+					if v2.lockedTraits then
+						beliefTab.lockedTraits = v2.lockedTraits;
+					end
+					
+					if v2.requiredFaiths then
+						beliefTab.requiredFaiths = v2.requiredFaiths;
+					end
 				
-				if v.requirements then
-					beliefTab.requirements = v.requirements;
+					tab.beliefs[i][k2] = beliefTab;
 				end
-				
-				if v.subfaith then
-					beliefTab.subfaith = v.subfaith;
-				end
-				
-				if v.disabled then
-					beliefTab.disabled = true
-				end
-				
-				if v.lockedFactions then
-					beliefTab.lockedFactions = v.lockedFactions;
-				end
-				
-				if v.lockedSubfactions then
-					beliefTab.lockedSubfactions = v.lockedSubfactions;
-				end
-				
-				if v.lockedBeliefs then
-					beliefTab.lockedBeliefs = v.lockedBeliefs;
-				end
-				
-				if v.lockedTraits then
-					beliefTab.lockedTraits = v.lockedTraits;
-				end
-				
-				if v.requiredFaiths then
-					beliefTab.requiredFaiths = v.requiredFaiths;
-				end
-				
-				tab.beliefs[k] = beliefTab;
 			end
 		end;
 		
@@ -248,11 +252,13 @@ end;
 -- A function to find a specific belief tree table.
 function cwBeliefs:FindBeliefTreeByID(identifier)
 	if identifier then
+		identifier = string.lower(identifier);
+		
 		if (self.beliefTrees.stored[identifier]) then
 			return self.beliefTrees.stored[identifier];
 		else
 			for k, v in pairs(self.beliefTrees.stored) do
-				if (string.lower(v.name) == string.lower(identifier)) then
+				if (string.lower(v.name) == identifier or v.uniqueID == identifier) then
 					return self.beliefTrees.stored[k];
 				end;
 			end;
@@ -263,13 +269,13 @@ end;
 -- A function to find a specific belief tree table by a child belief.
 function cwBeliefs:FindBeliefTreeByBelief(identifier)
 	if identifier then
+		identifier = string.lower(identifier);
+		
 		for k, v in pairs(self.beliefTrees.stored) do
 			for k2, v2 in pairs(v.beliefs) do
 				for k3, v3 in pairs(v2) do
-					identifier = string.lower(identifier);
-					
 					if string.lower(v3.name) == identifier or v3.uniqueID == identifier then
-						return self.beliefTrees.stored[k3];
+						return v;
 					end;
 				end
 			end;
@@ -281,6 +287,8 @@ end;
 -- A function to find a specific belief table.
 function cwBeliefs:FindBeliefByID(identifier, treeID)
 	if identifier then
+		identifier = string.lower(identifier);
+		
 		if treeID then
 			local beliefTree = self.beliefTrees.stored[beliefTree];
 			
@@ -293,7 +301,7 @@ function cwBeliefs:FindBeliefByID(identifier, treeID)
 			if (beliefTree) then
 				for k, v in pairs(beliefTree.beliefs) do
 					for k2, v2 in pairs(v) do
-						if (string.lower(v2.name) == string.lower(identifier)) then
+						if string.lower(v2.name) == identifier or v2.uniqueID == identifier then
 							return v2;
 						end;
 					end;
@@ -302,9 +310,9 @@ function cwBeliefs:FindBeliefByID(identifier, treeID)
 		end;
 
 		for k, v in pairs(self.beliefTrees.stored) do
-			for k2, v2 in pairs(v.beliefs) do
+			for i, v2 in ipairs(v.beliefs) do
 				for k3, v3 in pairs(v2) do
-					if (string.lower(v3.name) == string.lower(identifier)) then
+					if string.lower(v3.name) == identifier or v3.uniqueID == identifier then
 						return v3;
 					end;
 				end;

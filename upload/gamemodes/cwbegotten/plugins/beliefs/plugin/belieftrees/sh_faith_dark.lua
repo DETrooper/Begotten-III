@@ -96,7 +96,7 @@ local DARK = cwBeliefs.beliefTrees:New("dark")
 		},
 		[4] = {
 			["unending_dance"] = {
-				nme = "The Unending Dance",
+				name = "The Unending Dance",
 				subfaith = "Satanism",
 				description = "You will now deal more damage against characters the lower their sanity is. Starting at under 70% enemy Sanity you will deal 10% more damage which maxes at 80% damage at 10 enemy sanity.",
 				quote = "\"At first the crowd was aghast when the performing Darklander swordsman turned his twin blades against the audience. Many screamed and ran, scrambling to find an exit to the ampitheatre. Many more began to simply applaud at the art, boasting their standing ovations as dozens had their heads expertly hacked off in a dazzling display of skill and passion. The master swordsman was beset in a fit of laughter as he continued his work, the audience eagerly awaiting their fate as they cheered him on. Survivors of the tragedy recall the event with an almost nostalgic flare; emoting a sincere forlorn regret for not having joined the countless dead in the apocalyptic dance of death.\"",

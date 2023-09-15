@@ -334,7 +334,6 @@ function COMMAND:OnRun(player, arguments)
 			local faith = target:GetFaith() or "Faith of the Light"
 			
 			netstream.Start(player, "OpenLevelTreeOtherPlayer", {target, level, experience, beliefs, points, faith});
-			player:SendLua([[Clockwork.Client:EmitSound("ui/pickup_secret01.wav", 80, 80)]]);
 			
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] ".."You have opened "..target:Name().."'s belief tree!");
 		end
