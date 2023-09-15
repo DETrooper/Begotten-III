@@ -325,7 +325,7 @@ function CLASS_TABLE:OnTakeFromPlayer(player)
 			if Clockwork.player:GetGear(player, slots[i]) then
 				if Clockwork.player:GetGear(player, slots[i]):GetItemTable().itemID == self.itemID then
 					if player.bgShieldData and player.bgShieldData.uniqueID and player.bgShieldData.realID then
-						if IsValid(player:GetWeapon(weaponID.."_"..player.bgShieldData.uniqueID)) then
+						if IsValid(player:GetWeapon(weaponID)) and player:GetWeapon(weaponID):GetNWString("activeShield") == player.bgShieldData.uniqueID then
 							Clockwork.kernel:ForceUnequipItem(player, player.bgShieldData.uniqueID, player.bgShieldData.realID);
 						end
 					end

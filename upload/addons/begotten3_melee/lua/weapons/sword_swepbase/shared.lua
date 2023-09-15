@@ -141,6 +141,34 @@ local srface = surface
 local inpat = input
 
 function SWEP:Deploy()
+	if SERVER then
+		if IsValid(self.Owner) and self.Owner:IsPlayer() then
+			local shieldData = self.Owner.bgShieldData;
+			
+			if shieldData and shieldData.uniqueID and shieldData.realID then
+				local itemTable = self.Owner:FindItemByID(shieldData.uniqueID, shieldData.realID);
+				
+				if (itemTable) then
+					local slots = {"Primary", "Secondary", "Tertiary"};
+					
+					for i = 1, #slots do
+						local gear = Clockwork.player:GetGear(self.Owner, slots[i]);
+						
+						if IsValid(gear) and gear:GetItemTable().canUseShields then
+							local weapon = self.Owner:GetWeapon(gear:GetItemTable().uniqueID);
+							
+							if IsValid(weapon) then
+								weapon:EquipShield(shieldData.uniqueID);
+							end
+							
+							break;
+						end
+					end
+				end;
+			end
+		end
+	end
+
 	if self:GetClass() == "begotten_fists" or (!self.Owner.cwWakingUp and !self.Owner.LoadingText) then
 		self:OnDeploy()
 	end
