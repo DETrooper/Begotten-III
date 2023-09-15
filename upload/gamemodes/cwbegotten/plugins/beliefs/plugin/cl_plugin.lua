@@ -3,6 +3,10 @@
 	Created by cash wednesday, gabs, DETrooper and alyousha35
 --]]
 
+if !cwBeliefs.beliefs then
+	cwBeliefs.beliefs = {};
+end
+
 -- A function to draw a rounded gradient.
 function cwBeliefs:DrawTreeBackground(x, y, width, height, panel)
 	if (!panel.alpha) then
@@ -16,7 +20,7 @@ function cwBeliefs:DrawTreeBackground(x, y, width, height, panel)
 	local material = "begotten/ui/bgttex3xl.png";
 	
 	if (panel.texture) then
-		material = "begotten/ui/"..panel.texture..".png";
+		material = "begotten/ui/menu/"..panel.texture..".png";
 	end;
 
 	surface.SetDrawColor(255, 255, 255, panel.alpha);
@@ -25,26 +29,16 @@ function cwBeliefs:DrawTreeBackground(x, y, width, height, panel)
 end;
 
 -- A function to open the belief tree.
-function cwBeliefs:OpenTree(level, experience, beliefs, points, faith)
-	self.localLevelCap = cwBeliefs.sacramentLevelCap;
-
-	if self:HasBelief("loremaster") then
-		self.localLevelCap = self.localLevelCap + 10;
-	end
-	
-	if self:HasBelief("sorcerer") then
-		self.localLevelCap = self.localLevelCap + 5;
-	end
-	
-	if Clockwork.Client:GetSharedVar("subfaction") == "Rekh-khet-sa" then
-		self.localLevelCap = self.localLevelCap + 666;
+function cwBeliefs:OpenTree(player, level, experience, beliefs, points, faith)
+	if !player then
+		player = Clockwork.Client;
 	end
 
 	if (IsValid(Clockwork.Client.cwBeliefPanel)) then
 		local oldMenu = Clockwork.Client.cwBeliefPanel;
 		
 		Clockwork.Client.cwBeliefPanel = vgui.Create("cwBeliefTree")
-		Clockwork.Client.cwBeliefPanel:Rebuild(level, experience, beliefs, points, faith)
+		Clockwork.Client.cwBeliefPanel:Rebuild(player, level, experience, beliefs, points, faith)
 		Clockwork.Client.cwBeliefPanel:MakePopup()
 	
 		timer.Simple(FrameTime() * 2, function()
@@ -55,33 +49,7 @@ function cwBeliefs:OpenTree(level, experience, beliefs, points, faith)
 		end);
 	else
 		Clockwork.Client.cwBeliefPanel = vgui.Create("cwBeliefTree")
-		Clockwork.Client.cwBeliefPanel:Rebuild(level, experience, beliefs, points, faith)
-		Clockwork.Client.cwBeliefPanel:MakePopup()
-	end
-end
-
--- A function to refresh the belief tree.
-function cwBeliefs:RefreshTree(level, experience, beliefs, points, faith)
-	self.localLevelCap = cwBeliefs.sacramentLevelCap;
-
-	if self:HasBelief("loremaster") then
-		self.localLevelCap = self.localLevelCap + 10;
-	end
-	
-	if self:HasBelief("sorcerer") then
-		self.localLevelCap = self.localLevelCap + 5;
-	end
-	
-	if Clockwork.Client:GetSharedVar("subfaction") == "Rekh-khet-sa" then
-		self.localLevelCap = self.localLevelCap + 666;
-	end
-
-	if (IsValid(Clockwork.Client.cwBeliefPanel)) then
-		Clockwork.Client.cwBeliefPanel:Rebuild(level, experience, beliefs, points, faith)
-		Clockwork.Client.cwBeliefPanel:MakePopup()
-	else
-		Clockwork.Client.cwBeliefPanel = vgui.Create("cwBeliefTree")
-		Clockwork.Client.cwBeliefPanel:Rebuild(level, experience, beliefs, points, faith)
+		Clockwork.Client.cwBeliefPanel:Rebuild(player, level, experience, beliefs, points, faith)
 		Clockwork.Client.cwBeliefPanel:MakePopup()
 	end
 end
@@ -98,34 +66,31 @@ function cwBeliefs:HasBelief(uniqueID)
 	return false
 end
 
-netstream.Hook("SetLevelInfo", function(data)
-	if data and data[1] and data[2] and data[3] and data[4] then
-		cwBeliefs.level = data[1];
-		cwBeliefs.experience = data[2];
-		cwBeliefs.beliefs = data[3];
-		cwBeliefs.points = data[4];
-	end
-end);
+local playerMeta = FindMetaTable("Player");
 
-netstream.Hook("OpenLevelTree", function(data)
-	if not Clockwork.kernel:IsChoosingCharacter() then
-		if cwBeliefs.level and cwBeliefs.experience and cwBeliefs.beliefs and cwBeliefs.points then
-			cwBeliefs:OpenTree(cwBeliefs.level, cwBeliefs.experience, cwBeliefs.beliefs, cwBeliefs.points, Clockwork.Client:GetSharedVar("faith") or "Faith of the Light");
-		end
+function playerMeta:GetBeliefs()
+	if self == Clockwork.Client then
+		return cwBeliefs.beliefs;
+	end
+end
+
+function playerMeta:HasBelief(uniqueID)
+	if self == Clockwork.Client then
+		return cwBeliefs:HasBelief(uniqueID);
+	end
+end
+
+netstream.Hook("BeliefSync", function(data)
+	cwBeliefs.beliefs = {};
+
+	for i = 1, #data do
+		cwBeliefs.beliefs[i] = data[i];
 	end
 end);
 
 netstream.Hook("OpenLevelTreeOtherPlayer", function(data)
-	if data[1] and data[2] and data[3] and data[4] and data[5] then
-		cwBeliefs:OpenTree(data[1], data[2], data[3], data[4], data[5]);
-	end
-end);
-
-netstream.Hook("RefreshLevelTree", function(data)
-	if not Clockwork.kernel:IsChoosingCharacter() and IsValid(Clockwork.Client.cwBeliefPanel) and Clockwork.Client.cwBeliefPanel:IsVisible() then
-		if cwBeliefs.level and cwBeliefs.experience and cwBeliefs.beliefs and cwBeliefs.points then
-			cwBeliefs:RefreshTree(cwBeliefs.level, cwBeliefs.experience, cwBeliefs.beliefs, cwBeliefs.points, Clockwork.Client:GetSharedVar("faith") or "Faith of the Light");
-		end
+	if data[1] and data[2] and data[3] and data[4] and data[5] and data[6] then
+		cwBeliefs:OpenTree(data[1], data[2], data[3], data[4], data[5], data[6]);
 	end
 end);
 

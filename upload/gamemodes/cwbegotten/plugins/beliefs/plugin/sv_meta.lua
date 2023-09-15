@@ -68,6 +68,7 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 	local newXP = math.Round(xp + newAmount);
 	
 	self:SetCharacterData("experience", newXP);
+	self:SetLocalVar("experience", newXP);
 	
 	if newXP >= (cwBeliefs.sacramentCosts[level + 1] or 666) then
 		cwBeliefs:LevelUp(self);
@@ -80,11 +81,10 @@ end
 
 function playerMeta:ResetBeliefs()
 	self:SetCharacterData("beliefs", {});
-	self:SetCharacterData("experience", 0);
 	--self:SetCharacterData("subfaith", nil);
 	self:SetSharedVar("subfaith", nil);
-	self:SetSacramentLevel(1);
 	self:GetCharacter().subfaith = nil;
+	self:SetSacramentLevel(1);
 
 	local max_poise = self:GetMaxPoise();
 	local poise = self:GetNWInt("meleeStamina");
@@ -103,7 +103,7 @@ function playerMeta:ResetBeliefs()
 	self:SetCharacterData("Max_Stamina", max_stamina);
 	self:SetNWInt("Stamina", math.min(stamina, max_stamina));
 	self:SetCharacterData("Stamina", math.min(stamina, max_stamina));
-	cwBeliefs:ResetBeliefSharedVars(self);
+	self:NetworkBeliefs();
 	
 	hook.Run("RunModifyPlayerSpeed", self, self.cwInfoTable, true)
 	
@@ -116,10 +116,8 @@ function playerMeta:HasBelief(uniqueID)
 		return;
 	end;
 	
-	if cwPossession and IsValid(self.possessor) then
-		if uniqueID == "parrying" or uniqueID == "halfsword_sway" or uniqueID == "deflection" or uniqueID == "strength" then
-			return true;
-		end
+	if hook.Run("PlayerHasBelief", self, uniqueID) then
+		return true;
 	end
 	
 	local beliefs = self:GetCharacterData("beliefs", {});
@@ -163,4 +161,10 @@ function playerMeta:Uncloak()
 	self:SetColor(Color(255, 255, 255, 255));
 	self.cloaked = false;
 	self:SetNWBool("Cloaked", false);
+end
+
+function playerMeta:NetworkBeliefs()
+	cwBeliefs:ResetBeliefSharedVars(self);
+
+	netstream.Start(self, "BeliefSync", self:GetCharacterData("beliefs", {}));
 end

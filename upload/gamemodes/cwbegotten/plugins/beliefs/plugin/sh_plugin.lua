@@ -5,44 +5,12 @@
 
 PLUGIN:SetGlobalAlias("cwBeliefs");
 
+Clockwork.kernel:IncludePrefixed("sh_beliefs.lua");
 Clockwork.kernel:IncludePrefixed("cl_hooks.lua");
 Clockwork.kernel:IncludePrefixed("cl_plugin.lua");
 Clockwork.kernel:IncludePrefixed("sv_plugin.lua");
 Clockwork.kernel:IncludePrefixed("sv_meta.lua");
 Clockwork.kernel:IncludePrefixed("sv_hooks.lua");
-
---[[cwBeliefs.sacramentLevelCap = 30;
-cwBeliefs.sacramentCosts = {
-	[2] = 20,
-	[3] = 30,
-	[4] = 40,
-	[5] = 50,
-	[6] = 75,
-	[7] = 100,
-	[8] = 125,
-	[9] = 150,
-	[10] = 175,
-	[11] = 200,
-	[12] = 225,
-	[13] = 250,
-	[14] = 275,
-	[15] = 300,
-	[16] = 325,
-	[17] = 350,
-	[18] = 375,
-	[19] = 400,
-	[20] = 425,
-	[21] = 450,
-	[22] = 475,
-	[23] = 500,
-	[24] = 525,
-	[25] = 550,
-	[26] = 575,
-	[27] = 600,
-	[28] = 625,
-	[29] = 650,
-	[30] = 666,
-};]]--
 
 cwBeliefs.sacramentLevelCap = 40;
 cwBeliefs.sacramentCosts = {
@@ -87,27 +55,6 @@ cwBeliefs.sacramentCosts = {
 	[40] = 666,
 };
 
-cwBeliefs.tier4Beliefs = {"billman", "master_at_arms", "unrelenting", "unburdened", "savage_animal", "thief", "evasion", "marksman", "artisan", "master_blacksmith", "blood_nectar", "scientist", "loremaster", "surgeon", "plague_doctor", "prowess_finisher", "fortitude_finisher", "brutality_finisher", "litheness_finisher", "ingenuity_finisher", "aptitude_finisher"};
-
-if (SERVER) then -- remove these later
-	concommand.Add("openleveltree", function(player, cmd, args)
-		local curTime = CurTime()
-		
-		if (!player.NextOpenTree or player.NextOpenTree < curTime or args[1]) then
-			player.NextOpenTree = curTime + 1
-			
-			local level = player:GetCharacterData("level", 1)
-			local beliefs = player:GetCharacterData("beliefs", {})
-			local experience = player:GetCharacterData("experience", 0)
-			local points = player:GetCharacterData("points", 0)
-			
-			netstream.Start(player, "SetLevelInfo", {level, experience, beliefs, points});
-			netstream.Start(player, "OpenLevelTree");
-			player:SendLua([[Clockwork.Client:EmitSound("ui/pickup_secret01.wav", 80, 80)]])
-		end
-	end)
-end;
-
 local COMMAND = Clockwork.command:New("CharClearBeliefs");
 COMMAND.tip = "Reset a player's beliefs.";
 COMMAND.text = "<string Name>";
@@ -133,8 +80,6 @@ function COMMAND:OnRun(player, arguments)
 end;
 
 COMMAND:Register();
-
--- Some stupid fuck ran this lol.
 
 --[[local COMMAND = Clockwork.command:New("CharClearBeliefsAll");
 COMMAND.tip = "Reset all players' beliefs.";
@@ -202,7 +147,7 @@ function COMMAND:OnRun(player, arguments)
 	if (target) then
 		local belief = arguments[2];
 		
-		if belief and cwBeliefs:BeliefIsValid(belief) then
+		if belief and cwBeliefs:FindBeliefByID(belief) then
 			if (player != target) then
 				Schema:EasyText(player, "cornflowerblue", "You have given "..target:Name().." the '"..belief.."' belief.");
 			else
@@ -266,7 +211,7 @@ function COMMAND:OnRun(player, arguments)
 		local belief = arguments[2];
 		local bRemoveDependencies = arguments[3];
 		
-		if belief and cwBeliefs:BeliefIsValid(belief) then
+		if belief and cwBeliefs:FindBeliefByID(belief) then
 			if bRemoveDependencies then
 				if (player != target) then
 					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have removed from "..target:Name().." the '"..belief.."' belief and any dependencies.");
@@ -388,7 +333,7 @@ function COMMAND:OnRun(player, arguments)
 			local points = target:GetCharacterData("points", 0)
 			local faith = target:GetFaith() or "Faith of the Light"
 			
-			netstream.Start(player, "OpenLevelTreeOtherPlayer", {level, experience, beliefs, points, faith});
+			netstream.Start(player, "OpenLevelTreeOtherPlayer", {target, level, experience, beliefs, points, faith});
 			player:SendLua([[Clockwork.Client:EmitSound("ui/pickup_secret01.wav", 80, 80)]]);
 			
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] ".."You have opened "..target:Name().."'s belief tree!");
@@ -676,6 +621,66 @@ function COMMAND:OnRun(player, arguments)
 			if (player:GetFaction() == FACTION_GOREIC) then
 				plycol = plycol:Lighten(100)
 			end;
+			
+			-- Make it work with imbeciles!
+			if player:HasTrait("imbecile") then
+				local imbecileText = message;
+				
+				if #imbecileText > 2 then
+					local fillers = {"uh", "uhh", "uhhh", "erm", "ehh", "like"};
+					local suffixes = {".", ",", ";", "!", ":", "?"};
+					local splitText = string.Split(imbecileText, " ");
+					local tourettes = {"ASSHOLE", "FUCKING", "FUCK", "ASS", "BITCH", "CUNT", "PENIS"};
+					local vowels = {["upper"] = {"A", "E", "I", "O", "U"}, ["lower"] = {"a", "e", "i", "o", "u"}};
+					
+					for i = 1, #splitText do
+						local currentSplit = splitText[i];
+						
+						if math.random(1, 2) == 1 then
+							for j = 1, #currentSplit do
+								for k = 1, 5 do
+									local vowelShuffle = math.random(1, 5);
+									
+									currentSplit = string.gsub(currentSplit, vowels["upper"][k], vowels["upper"][vowelShuffle]);
+									currentSplit = string.gsub(currentSplit, vowels["lower"][k], vowels["lower"][vowelShuffle]);
+								end
+							end
+						elseif #currentSplit >= 2 then
+							local characterToRepeat = math.random(1, #currentSplit - 1);
+							local str = string.sub(currentSplit, characterToRepeat, characterToRepeat);
+							
+							currentSplit = string.gsub(string.SetChar(currentSplit, characterToRepeat, "#"), "#", str.."-"..string.lower(str));
+						end
+						
+						if #currentSplit >= 2 and math.random(1, 3) == 1 then
+							local suffix_found = false;
+							
+							for j = 1, #suffixes do
+								if string.EndsWith(currentSplit, suffixes[j]) then
+									suffix_found = true;
+									break;
+								end
+							end
+							
+							if not suffix_found then
+								if math.random(1, 10) == 1 then
+									currentSplit = currentSplit.."- "..tourettes[math.random(1, #tourettes)].."!";
+								else
+									currentSplit = fillers[math.random(1, #fillers)];
+								end
+							end
+						end
+						
+						if math.random(1, 6) == 1 then
+							currentSplit = string.upper(currentSplit);
+						end
+						
+						splitText[i] = currentSplit;
+					end
+					
+					message = table.concat(splitText, " ");
+				end
+			end
 			
 			Schema:EasyText(admins, ringcolor, "[PRAYER ", color, faith_str, markedcolor, markedstr, ringcolor, "] ", plycol, player:Name(), "ivory", ": "..message)
 			Schema:EasyText(player, color, "You make a prayer: \""..message.."\"")

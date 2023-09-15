@@ -87,7 +87,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 	player.bgShieldData = {};
 
 	for k, v in pairs(player:GetWeapons()) do
-		if v.activeShield then
+		if v:GetNWString("activeShield"):len() > 0 then
 			v:HolsterShield();
 		end
 	end

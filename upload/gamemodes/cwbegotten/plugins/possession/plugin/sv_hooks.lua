@@ -70,6 +70,14 @@ function cwPossession:PlayerCanRaiseWeapon(player, activeWeapon)
 	end
 end
 
+function cwPossession:PlayerHasBelief(player, uniqueID)
+	if IsValid(player.possessor) then
+		if uniqueID == "parrying" or uniqueID == "halfsword_sway" or uniqueID == "deflection" or uniqueID == "strength" then
+			return true;
+		end
+	end
+end
+
 -- Called when a player dies.
 function cwPossession:PlayerDeath(player, inflictor, attacker, damageInfo)
 	if player:IsPossessed() then

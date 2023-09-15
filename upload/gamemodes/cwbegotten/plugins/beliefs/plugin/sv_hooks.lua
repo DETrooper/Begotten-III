@@ -24,7 +24,9 @@ function cwBeliefs:PlayerRestoreCharacterData(player, data)
 		data["level"] = 1
 	end
 	
-	netstream.Start(player, "SetLevelInfo", {data["level"], data["experience"], data["beliefs"], data["points"]});
+	player:SetLocalVar("experience", experience);
+	player:SetLocalVar("points", points);
+	player:SetSharedVar("level", level);
 end
 
 -- Called at an interval while the player is connected to the server.
@@ -125,29 +127,27 @@ end
 function cwBeliefs:BeliefTaken(player, uniqueID, category)
 	local beliefs = player:GetCharacterData("beliefs");
 	local points = player:GetCharacterData("points", 0);
+	local beliefTree = self:FindBeliefTreeByID(category);
+	local beliefTable = self:FindBeliefByID(uniqueID, category);
 	
-	if category then
-		if category == "religion" then
-			local subfaith = self.beliefsToSubfaiths[uniqueID];
-			
-			if subfaith then
-				local character = player:GetCharacter();
-				
-				character.subfaith = subfaith;
-				player:SetSharedVar("subfaith", subfaith);
-				
-				player:SaveCharacter();
-			end
-		else
+	if beliefTree then
+		if beliefTree and beliefTree.hasFinisher then
 			local category_finished = true;
 			
-			for k, v in pairs(self.beliefTable[category]) do
-				if not string.find(k, "_finisher") and !player:HasBelief(k) then
-					category_finished = false;
+			for k, v in pairs(beliefTree.beliefs) do
+				for k2, v2 in pairs(v) do
+					if !beliefs[k2] then
+						category_finished = false;
+						
+						break;
+					end
+				end
+				
+				if !category_finished then
 					break;
 				end
 			end
-			
+					
 			if category_finished then
 				beliefs[category.."_finisher"] = true;
 				player:SetCharacterData("beliefs", beliefs);
@@ -155,17 +155,49 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 		end
 	end
 	
-	if uniqueID == "loremaster" then
-		for k, v in pairs(self.beliefTable["prowess"]) do
-			if beliefs[k] then
-				beliefs[k] = false;
-				points = points + 1;
+	if beliefTable then
+		if beliefTable.subfaith and beliefTable.row == 1 then
+			local character = player:GetCharacter();
+			
+			character.subfaith = beliefTable.subfaith;
+			player:SetSharedVar("subfaith", beliefTable.subfaith);
+			
+			player:SaveCharacter();
+		end
+	end
+	
+	local lockedBeliefFound = false;
+	
+	for k, v in pairs(self.beliefTrees.stored) do
+		if v.lockedBeliefs then
+			for i, v2 in ipairs(v.lockedBeliefs) do
+				if beliefs[v2] then
+					lockedBeliefFound = true;
+					beliefs[v2] = false;
+					points = points + 1;
+				end
 			end
 		end
 		
-		player:SetCharacterData("points", points);
-		player:SetCharacterData("beliefs", beliefs);
-	elseif uniqueID == "jack_of_all_trades" then
+		for k2, v2 in pairs(v.beliefs) do
+			for k3, v3 in pairs(v2) do
+				if v3.lockedBeliefs then
+					if beliefs[k3] then
+						lockedBeliefFound = true;
+						beliefs[k3] = false;
+						points = points + 1;
+					end
+				end
+			end
+		end
+		
+		if lockedBeliefFound then
+			player:SetCharacterData("points", points);
+			player:SetCharacterData("beliefs", beliefs);
+		end
+	end
+	
+	if uniqueID == "jack_of_all_trades" then
 		for i = 1, #self.tier4Beliefs do
 			local belief = self.tier4Beliefs[i];
 			
@@ -206,9 +238,6 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 	elseif uniqueID == "scribe" then
 		Clockwork.player:GiveFlags(player, "J");
 	end
-	
-	netstream.Start(player, "SetLevelInfo", {player:GetCharacterData("level", 1), player:GetCharacterData("experience", 0), player:GetCharacterData("beliefs", {}), player:GetCharacterData("points", 0)});
-	netstream.Start(player, "RefreshLevelTree");
 
 	local max_poise = player:GetMaxPoise();
 	local max_stamina = player:GetMaxStamina();
@@ -219,7 +248,7 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 	player:SetLocalVar("maxMeleeStamina", max_poise);
 	player:SetLocalVar("Max_Stamina", max_stamina);
 	player:SetCharacterData("Max_Stamina", max_stamina);
-	cwBeliefs:ResetBeliefSharedVars(player);
+	player:NetworkBeliefs();
 
 	player:SetMaxHealth(max_health);
 	
@@ -1388,7 +1417,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 end
 
 function cwBeliefs:PlayerCharacterLoaded(player)
-	cwBeliefs:ResetBeliefSharedVars(player);
+	player:NetworkBeliefs();
 end;
 
 function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)

@@ -509,7 +509,7 @@ function Clockwork.animation:AddMaleHumanModel(model)
 	return self:AddModel("maleHuman", model);
 end;
 
---[[local translateHoldTypes = {
+local translateHoldTypes = {
 	["melee2"] = "melee",
 	["fist"] = "melee",
 	["knife"] = "melee",
@@ -539,21 +539,20 @@ local weaponHoldTypes = {
 	["weapon_rpg"] = "shotgun",
 	["weapon_shotgun"] = "shotgun",
 	["weapon_annabelle"] = "shotgun"
-};]]--
+};
 
 -- A function to get a weapon's hold type.
 function Clockwork.animation:GetWeaponHoldType(player, weapon)
-	--local class = string.lower(weapon:GetClass());
+	local class = string.lower(weapon:GetClass());
 	local holdType = weapon:GetHoldType() or "normal";
 	
-	--[[if (weaponHoldTypes[class]) then
+	if (weaponHoldTypes[class]) then
 		holdType = weaponHoldTypes[class];
 	elseif (translateHoldTypes[holdType]) then
 		holdType = translateHoldTypes[holdType];
-	end;]]--
+	end;
 	
-	--return string.lower(holdType);
-	return holdType;
+	return string.lower(holdType);
 end;
 
 -- A function to get an animation table.

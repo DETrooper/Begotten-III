@@ -91,7 +91,7 @@ function ENT:GetIsVisible(player)
 			
 			local activeWeapon = player:GetActiveWeapon();
 			
-			if IsValid(activeWeapon) and activeWeapon.activeShield then
+			if IsValid(activeWeapon) and activeWeapon:GetNWString("activeShield"):len() > 0 then
 				return false;
 			end
 		end

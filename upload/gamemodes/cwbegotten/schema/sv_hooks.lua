@@ -1105,9 +1105,8 @@ function Schema:KeyPress(player, key)
 			if (target and player:GetNetVar("tied") == 0) then
 				if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
 					if (target:GetNetVar("tied") != 0) then
-					
 						for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
-							if (v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler") or v:GetClass() == "cw_bounty_board" then
+							if (v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler") or (v:GetClass() == "cw_bounty_board" and target:IsWanted()) then
 								return;
 							end
 						end

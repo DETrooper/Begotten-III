@@ -383,8 +383,8 @@ local function Guarding(ent, dmginfo)
 						if !Clockwork.player:HasFlags(damageinflictor, "T") then
 							local activeWeapon = ent:GetActiveWeapon();
 							
-							if (IsValid(activeWeapon) and activeWeapon.activeShield) then
-								local blockTable = GetTable(activeWeapon.activeShield);
+							if (IsValid(activeWeapon) and activeWeapon:GetNWString("activeShield"):len() > 0) then
+								local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
 								
 								if blockTable.spiked then
 									damageinflictor:TakeDamage(5, ent);
@@ -459,7 +459,7 @@ local function Guarding(ent, dmginfo)
 								if ent:HasBelief("shieldwall") then
 									local activeWeapon = ent:GetActiveWeapon();
 									
-									if activeWeapon.activeShield then
+									if activeWeapon:GetNWString("activeShield"):len() > 0 then
 										newEnemyPoise = newEnemyPoise * 0.85;
 									end
 								end
@@ -495,7 +495,7 @@ local function Guarding(ent, dmginfo)
 								if ent:HasBelief("shieldwall") then
 									local activeWeapon = ent:GetActiveWeapon();
 									
-									if activeWeapon.activeShield then
+									if activeWeapon:GetNWString("activeShield"):len() > 0 then
 										newEnemyPoise = newEnemyPoise * 0.85;
 									end
 								end
@@ -655,7 +655,7 @@ local function Guarding(ent, dmginfo)
 						
 						if melsa <= blockamount and not ent:IsRagdolled() and chance == 1 then
 							if ent:GetCharacterData("stability") < 70 then
-								if not wep.activeShield and not string.find(wep:GetClass(), "begotten_fists") and not string.find(wep:GetClass(), "begotten_claws") then
+								if wep:GetNWString("activeShield"):len() == 0 and not string.find(wep:GetClass(), "begotten_fists") and not string.find(wep:GetClass(), "begotten_claws") then
 									local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
 									local itemTable = Clockwork.item:GetByWeapon(wep);
 									

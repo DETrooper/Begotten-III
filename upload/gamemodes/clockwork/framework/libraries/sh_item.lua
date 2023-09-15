@@ -363,7 +363,7 @@ function CLASS_TABLE:HasPlayerEquipped(player, bIsValidWeapon, bMelee)
 						
 						for k, v in pairs (player:GetWeapons()) do
 							--if (v:GetClass() == self.uniqueID.."_"..player.bgShieldData.uniqueID) then
-							if v.activeShield == player.bgShieldData.uniqueID then
+							if v:GetNWString("activeShield"):len() > 0 and v:GetNWString("activeShield") == player.bgShieldData.uniqueID then
 								return true;
 							end;
 						end;
@@ -439,7 +439,7 @@ function CLASS_TABLE:OnPlayerUnequipped(player, extraData)
 					
 						if bgShieldData and bgShieldData.uniqueID and bgShieldData.realID then
 							--if IsValid(player:GetWeapon(weaponID.."_"..player.bgShieldData.uniqueID)) then
-							if IsValid(weapon) and weapon.activeShield and weapon.activeShield == bgShieldData.uniqueID then
+							if IsValid(weapon) and weapon:GetNWString("activeShield"):len() > 0 and weapon:GetNWString("activeShield") == bgShieldData.uniqueID then
 								if player.opponent then
 									local shieldItemTable = player:FindItemByID(bgShieldData.uniqueID, bgShieldData.realID);
 									

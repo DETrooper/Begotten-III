@@ -44,7 +44,7 @@ AccessorFunc(PANEL, "m_bDisabled", "Disabled");
 -- Called when the panel is initialized.
 function PANEL:Init()
 	self:SetTitle("");
-	self:SetSize(Clockwork.menu:GetWidth(), Clockwork.menu:GetHeight() * 0.75);
+	self:SetSize(768, 810);
 	self.font = Clockwork.fonts:GetMultiplied("nov_IntroTextSmallDETrooper", 1.5);
 	
 	Clockwork.Client.cwBountyMenu = self;

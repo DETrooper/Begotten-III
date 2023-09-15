@@ -464,7 +464,7 @@ function Schema:GetEntityMenuOptions(entity, options)
 		elseif (entity:GetClass() == "prop_ragdoll") then
 			local player = Clockwork.entity:GetPlayer(entity);
 
-			if Clockwork.Client:GetFaction() == "Goreic Warrior" and player:GetFaction() ~= "Goreic Warrior" and player:GetNetVar("tied") != 0 then
+			if player and Clockwork.Client:GetFaction() == "Goreic Warrior" and player:GetFaction() ~= "Goreic Warrior" and player:GetNetVar("tied") != 0 then
 				for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
 					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
 						options["Sell Into Slavery"] = "cw_sellSlave";
@@ -480,7 +480,9 @@ function Schema:GetEntityMenuOptions(entity, options)
 						break;
 					end
 				end
-			elseif (!player or (player and (!player:Alive() or player:GetMoveType() ~= MOVETYPE_OBSERVER))) then
+			end
+			
+			if (!player or (player and (!player:Alive() or player:GetMoveType() ~= MOVETYPE_OBSERVER))) then
 				local model = entity:GetModel();
 				
 				if table.HasValue(animalModels, entity:GetModel()) then

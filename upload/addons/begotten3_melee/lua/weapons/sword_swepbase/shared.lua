@@ -274,8 +274,8 @@ function SWEP:Think()
 end
 
 function SWEP:AdjustMouseSensitivity()
-	if self.activeShield then
-		local blockTable = GetTable(self.activeShield);
+	if self:GetNWString("activeShield"):len() > 0 then
+		local blockTable = GetTable(self:GetNWString("activeShield"));
 		
 		if blockTable then
 			if blockTable.sensitivityoverride then
@@ -1131,8 +1131,8 @@ function SWEP:ShouldDropOnDie()
 end
 
 function SWEP:GetPrintName()
-	if self.activeShield and !self.HasShield then
-		local shieldTable = GetTable(self.activeShield);
+	if self:GetNWString("activeShield"):len() > 0 and !self.HasShield then
+		local shieldTable = GetTable(self:GetNWString("activeShield"));
 		
 		if shieldTable and shieldTable.name then
 			return self.PrintName.." & "..shieldTable.name;
@@ -1150,7 +1150,7 @@ function SWEP:EquipShield(uniqueID)
 	local shieldTable = GetTable(uniqueID);
 	
 	if shieldTable then
-		self.activeShield = uniqueID;
+		self:SetNWString("activeShield", uniqueID);
 
 		if IsValid(self.Owner) then
 			self.Owner:CancelGuardening();
@@ -1165,7 +1165,7 @@ function SWEP:HolsterShield()
 		self:CallOnClient("HolsterShield"); 
 	end
 	
-	self.activeShield = nil;
+	self:SetNWString("activeShield", "");
 	
 	if CLIENT then
 		self:RemoveModels();
@@ -1179,8 +1179,8 @@ function SWEP:HolsterShield()
 end
 
 function SWEP:Initialize()
-	if self.activeShield and !self.HasShield then
-		local shieldTable = GetTable(self.activeShield);
+	if self:GetNWString("activeShield"):len() > 0 and !self.HasShield then
+		local shieldTable = GetTable(self:GetNWString("activeShield"));
 		
 		if shieldTable then
 			self.realBlockAnim = shieldTable.blockanim;
@@ -1200,7 +1200,7 @@ function SWEP:Initialize()
 				self.realIronSightsAng = self.IronSightsAng;
 			end
 		else
-			error("Shield not found for player "..self.Owner:Name().." swep "..self:GetPrintName().." shield "..self.activeShield.."!");
+			error("Shield not found for player "..self.Owner:GetName().." swep "..self:GetPrintName().." shield "..self:GetNWString("activeShield").."!");
 		end
 	else
 		self.realBlockAnim = self.BlockAnim;
@@ -1225,8 +1225,8 @@ function SWEP:Initialize()
 
 	if CLIENT then
 		if !self.HasShield then
-			if self.activeShield then
-				local shieldTable = GetTable(self.activeShield);
+			if self:GetNWString("activeShield"):len() > 0 then
+				local shieldTable = GetTable(self:GetNWString("activeShield"));
 				
 				if shieldTable then
 					if shieldTable.ViewModelBoneMods then

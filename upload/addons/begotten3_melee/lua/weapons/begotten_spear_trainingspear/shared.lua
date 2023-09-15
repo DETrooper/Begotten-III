@@ -66,7 +66,7 @@ function SWEP:HandlePrimaryAttack()
 	local attacktable = GetTable(self.AttackTable)
 
 	--Attack animation
-	if self.activeShield then
+	if self:GetNWString("activeShield"):len() > 0 then
 		self:TriggerAnim(self.Owner, "a_spear_shield_attack_medium");
 	else
 		self:TriggerAnim(self.Owner, "a_spear_2h_attack_medium");

@@ -158,19 +158,22 @@ function PANEL:Rebuild(change)
 		end;
 		self.characterMenu:FadeIn(0.5);
 
-		-- Rituals Button Placeholder
+		-- Rituals Button
 		local width, height = Clockwork.kernel:GetCachedTextSize(smallTextFont, "Rituals");
 		
 		self.ritualsmenu = vgui.Create("cwLabelButton", self);
 		self.ritualsmenu:SetFont(Clockwork.option:GetFont("menu_text_tiny"));
 		self.ritualsmenu:SetText("Rituals");
 		self.ritualsmenu:SetCallback(function(button)
-			if !Clockwork.Client.cwRitualsMenu or !IsValid(Clockwork.Client.cwRitualsMenu) then
-				Clockwork.Client.cwRitualsMenu = vgui.Create("cwRitualsMenu");
+			if cwRituals then
+				if !Clockwork.Client.cwRitualsMenu or !IsValid(Clockwork.Client.cwRitualsMenu) then
+					Clockwork.Client.cwRitualsMenu = vgui.Create("cwRitualsMenu");
+				end
+				
+				Clockwork.Client.cwRitualsMenu:Rebuild();
+				Clockwork.Client.cwRitualsMenu:MakePopup();
 			end
 			
-			Clockwork.Client.cwRitualsMenu:Rebuild();
-			Clockwork.Client.cwRitualsMenu:MakePopup();
 			Clockwork.menu:SetOpen(false);
 		end);
 		self.ritualsmenu:SizeToContents();
@@ -192,23 +195,26 @@ function PANEL:Rebuild(change)
 		end;
 		self.ritualsmenu:FadeIn(0.5);
 		
-		-- Crafting Button Placeholder
+		-- Crafting Button
 		local width, height = Clockwork.kernel:GetCachedTextSize(smallTextFont, "Crafting");
 		
 		self.craftingmenu = vgui.Create("cwLabelButton", self);
 		self.craftingmenu:SetFont(Clockwork.option:GetFont("menu_text_tiny"));
 		self.craftingmenu:SetText("Crafting");
 		self.craftingmenu:SetCallback(function(button)
-			if Clockwork.player:GetAction(Clockwork.Client) == "crafting" then
-				return;
+			if cwRecipes then
+				if Clockwork.player:GetAction(Clockwork.Client) == "crafting" then
+					return;
+				end
+				
+				if !Clockwork.Client.cwCraftingMenu or !IsValid(Clockwork.Client.cwCraftingMenu) then
+					Clockwork.Client.cwCraftingMenu = vgui.Create("cwCraftingMenu");
+				end
+				
+				Clockwork.Client.cwCraftingMenu:Rebuild();
+				Clockwork.Client.cwCraftingMenu:MakePopup();
 			end
 			
-			if !Clockwork.Client.cwCraftingMenu or !IsValid(Clockwork.Client.cwCraftingMenu) then
-				Clockwork.Client.cwCraftingMenu = vgui.Create("cwCraftingMenu");
-			end
-			
-			Clockwork.Client.cwCraftingMenu:Rebuild();
-			Clockwork.Client.cwCraftingMenu:MakePopup();
 			Clockwork.menu:SetOpen(false);
 		end);
 		self.craftingmenu:SizeToContents();
@@ -237,7 +243,10 @@ function PANEL:Rebuild(change)
 		self.beliefsmenu:SetFont(Clockwork.option:GetFont("menu_text_tiny"));
 		self.beliefsmenu:SetText("Beliefs");
 		self.beliefsmenu:SetCallback(function(button)
-			RunConsoleCommand("openleveltree");
+			if cwBeliefs then
+				cwBeliefs:OpenTree();
+			end
+			
 			Clockwork.menu:SetOpen(false);
 		end);
 		--self.beliefsmenu:SetToolTip("Click here to view the character menu.");

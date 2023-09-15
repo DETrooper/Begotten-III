@@ -171,7 +171,7 @@ function ENT:PhysicsCollide(data, physobj)
 		local damage = (attacktable["primarydamage"])
 		local damagetype = (attacktable["dmgtype"])
 		
-		local blockTable = GetTable(activeWeapon.activeShield);
+		local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
 		local shield_reduction = 1;
 		
 		if blockTable then

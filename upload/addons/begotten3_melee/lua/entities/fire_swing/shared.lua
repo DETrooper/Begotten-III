@@ -165,7 +165,7 @@ function ENT:PhysicsCollide(data, physobj)
 		local weaponclass = activeWeapon:GetClass();
 
 		local itemTable = item.GetByWeapon(activeWeapon);
-		local blockTable = GetTable(activeWeapon.activeShield);
+		local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
 		local shield_reduction = 1;
 		
 		if blockTable then

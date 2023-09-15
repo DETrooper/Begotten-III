@@ -76,7 +76,7 @@ function SWEP:HandlePrimaryAttack()
 	local attacktable = GetTable(self.AttackTable)
 
 	--Attack animation
-	if self.activeShield then
+	if self:GetNWString("activeShield"):len() > 0 then
 		self:TriggerAnim(self.Owner, "a_sword_shield_attack_slash_fast_01");
 	else
 		self:TriggerAnim(self.Owner, "a_sword_attack_slash_fast_0"..math.random(1, 2));
@@ -101,7 +101,7 @@ function SWEP:HandleThrustAttack()
 	local attacktable = GetTable(self.AttackTable)
 
 	--Attack animation
-	if self.activeShield then
+	if self:GetNWString("activeShield"):len() > 0 then
 		self:TriggerAnim(self.Owner, "a_sword_shield_attack_stab_fast_01");
 	else
 		self:TriggerAnim(self.Owner, "a_sword_attack_stab_fast_01");
