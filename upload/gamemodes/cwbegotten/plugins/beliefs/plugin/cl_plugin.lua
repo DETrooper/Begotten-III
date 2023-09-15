@@ -91,12 +91,12 @@ netstream.Hook("BeliefSync", function(data)
 	if (IsValid(beliefPanel)) then
 		if beliefPanel:IsVisible() then
 			if IsValid(beliefPanel.panelList) then
-				local panels = beliefPanel.panelList
+				local panels = beliefPanel.panelList:GetItems();
 				
 				for i, v in ipairs(panels) do
 					if v.buttons then
 						for k, v2 in pairs(v.buttons) do
-							icon.nextThink = 0;
+							v2.nextThink = 0;
 						end
 					end
 				end

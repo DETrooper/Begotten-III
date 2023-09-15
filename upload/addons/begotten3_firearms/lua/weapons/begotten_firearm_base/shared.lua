@@ -1092,7 +1092,7 @@ function SWEP:IronSight()
 end
 
 function SWEP:AdjustMouseSensitivity()
-	if self:GetIronsights() then
+	if self:GetIronsights() and !self.Owner:KeyDown(IN_SPEED) then
 		return 0.25;
 	end
 end

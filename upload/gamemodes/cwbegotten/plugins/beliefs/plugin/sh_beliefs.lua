@@ -64,6 +64,12 @@ function cwBeliefs.beliefTrees:Register(beliefTree)
 			if beliefTree.headerFontOverride then
 				tab.headerFontOverride = beliefTree.headerFontOverride;
 			end
+			
+			for k, v in pairs(tab.beliefs) do
+				for k2, v2 in pairs(v) do
+					v2.uniqueID = k2;
+				end
+			end
 		else
 			tab.beliefs = {};
 		
@@ -157,9 +163,11 @@ function cwBeliefs:GetBeliefTrees()
 end;
 
 -- A function to get all of the beliefs in a tree.
-function cwBeliefs:GetBeliefsByTree(treeID)
-	if treeID then
-		local beliefTree = self.beliefTrees.stored[beliefTree];
+function cwBeliefs:GetBeliefsByTree(beliefTree)
+	if beliefTree then
+		if isstring(beliefTree) then
+			beliefTree = self.beliefTrees.stored[beliefTree];
+		end
 		
 		if beliefTree then
 			local beliefsTab = {};
@@ -171,7 +179,7 @@ function cwBeliefs:GetBeliefsByTree(treeID)
 			end
 			
 			if beliefTree.hasFinisher then
-				beliefsTab[treeID.."_finisher"] = {uniqueID = treeID.."_finisher", isFinisher = true};
+				beliefsTab[treeID.."_finisher"] = {uniqueID = treeID.."_finisher", name = beliefTree.name.." Finisher", isFinisher = true};
 			end
 			
 			return beliefTree.beliefs;
@@ -185,7 +193,7 @@ function cwBeliefs:GetBeliefs()
 	
 	for k, v in pairs(self.beliefTrees.stored) do
 		if v.hasFinisher then
-			beliefsTab[k.."_finisher"] = {uniqueID = k.."_finisher", isFinisher = true};
+			beliefsTab[k.."_finisher"] = {uniqueID = k.."_finisher", name = v.name.." Finisher", isFinisher = true};
 		end
 	
 		for k2, v2 in pairs(v.beliefs) do
@@ -258,7 +266,7 @@ function cwBeliefs:FindBeliefTreeByID(identifier)
 			return self.beliefTrees.stored[identifier];
 		else
 			for k, v in pairs(self.beliefTrees.stored) do
-				if (string.lower(v.name) == identifier or v.uniqueID == identifier) then
+				if v.uniqueID == identifier or string.lower(v.name) == identifier then
 					return self.beliefTrees.stored[k];
 				end;
 			end;
@@ -274,7 +282,7 @@ function cwBeliefs:FindBeliefTreeByBelief(identifier)
 		for k, v in pairs(self.beliefTrees.stored) do
 			for k2, v2 in pairs(v.beliefs) do
 				for k3, v3 in pairs(v2) do
-					if string.lower(v3.name) == identifier or v3.uniqueID == identifier then
+					if v3.uniqueID == identifier or string.lower(v3.name) == identifier then
 						return v;
 					end;
 				end
@@ -292,32 +300,20 @@ function cwBeliefs:FindBeliefByID(identifier, treeID)
 		if treeID then
 			local beliefTree = self.beliefTrees.stored[beliefTree];
 			
-			if identifier == treeID.."_finisher" then
-				if beliefTree.hasFinisher then
-					return {uniqueID = treeID.."_finisher", isFinisher = true};
-				end
-			end
-			
 			if (beliefTree) then
-				for k, v in pairs(beliefTree.beliefs) do
-					for k2, v2 in pairs(v) do
-						if string.lower(v2.name) == identifier or v2.uniqueID == identifier then
-							return v2;
-						end;
-					end;
-				end;
+				for k, v in pairs(cwBeliefs:GetBeliefsByTree(beliefTree)) do
+					if v.uniqueID == identifier or string.lower(v.name) == identifier then
+						return v;
+					end
+				end
 			end;
 		end;
 
-		for k, v in pairs(self.beliefTrees.stored) do
-			for i, v2 in ipairs(v.beliefs) do
-				for k3, v3 in pairs(v2) do
-					if string.lower(v3.name) == identifier or v3.uniqueID == identifier then
-						return v3;
-					end;
-				end;
-			end;
-		end;
+		for k, v in pairs(cwBeliefs:GetBeliefs()) do
+			if v.uniqueID == identifier or string.lower(v.name) == identifier then
+				return v;
+			end
+		end
 	end;
 end;
 

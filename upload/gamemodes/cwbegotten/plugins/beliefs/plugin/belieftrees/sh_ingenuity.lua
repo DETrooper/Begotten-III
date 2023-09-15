@@ -90,7 +90,7 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 				requirements = {"ingenious", "craftsman"},
 				row = 3,
 			},
-			["master_at_arms"] = {
+			["artisan"] = {
 				name = "Artisan",
 				description = "Unlocks the crafting of masterworks. Also unlocks the ability to repair broken items.",
 				requirements = {"ingenious", "craftsman", "mechanic"},
@@ -126,7 +126,7 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 				requirements = {"ingenious"},
 				row = 2,
 			},
-			["might"] = {
+			["fortify_the_plate"] = {
 				name = "Fortify the Plate",
 				description = "Increases the protection value of all armor by 10%.",
 				iconOverride = "begotten/ui/belieficons/hauberk.png",

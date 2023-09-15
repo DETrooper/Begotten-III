@@ -1361,7 +1361,13 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local beliefIcons = {};
 			
 			for i = 1, #itemTable.requiredbeliefs do
-				table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.requiredbeliefs[i]..".png");
+				local beliefTable = cwBeliefs:FindBeliefByID(itemTable.requiredbeliefs[i]);
+				
+				if beliefTable and beliefTable.iconOverride then
+					table.insert(beliefIcons, beliefTable.iconOverride);
+				else
+					table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.requiredbeliefs[i]..".png");
+				end
 			end
 			
 			frame:AddText("Required Beliefs: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
@@ -1372,7 +1378,13 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local beliefIcons = {};
 			
 			for i = 1, #itemTable.onerequiredbelief do
-				table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.onerequiredbelief[i]..".png");
+				local beliefTable = cwBeliefs:FindBeliefByID(itemTable.onerequiredbelief[i]);
+				
+				if beliefTable and beliefTable.iconOverride then
+					table.insert(beliefIcons, beliefTable.iconOverride);
+				else
+					table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.onerequiredbelief[i]..".png");
+				end
 			end
 			
 			frame:AddText("Required Beliefs (One Of The Following): ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
@@ -1741,7 +1753,13 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local beliefIcons = {};
 			
 			for i = 1, #itemTable.requiredbeliefs do
-				table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.requiredbeliefs[i]..".png");
+				local beliefTable = cwBeliefs:FindBeliefByID(itemTable.requiredbeliefs[i]);
+				
+				if beliefTable and beliefTable.iconOverride then
+					table.insert(beliefIcons, beliefTable.iconOverride);
+				else
+					table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.requiredbeliefs[i]..".png");
+				end
 			end
 			
 			frame:AddText("Required Beliefs: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
@@ -1752,7 +1770,13 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local beliefIcons = {};
 			
 			for i = 1, #itemTable.onerequiredbelief do
-				table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.onerequiredbelief[i]..".png");
+				local beliefTable = cwBeliefs:FindBeliefByID(itemTable.onerequiredbelief[i]);
+				
+				if beliefTable and beliefTable.iconOverride then
+					table.insert(beliefIcons, beliefTable.iconOverride);
+				else
+					table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.onerequiredbelief[i]..".png");
+				end
 			end
 			
 			frame:AddText("Required Beliefs (One Of The Following): ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
@@ -1853,7 +1877,13 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local beliefIcons = {};
 			
 			for i = 1, #itemTable.requiredbeliefs do
-				table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.requiredbeliefs[i]..".png");
+				local beliefTable = cwBeliefs:FindBeliefByID(itemTable.requiredbeliefs[i]);
+				
+				if beliefTable and beliefTable.iconOverride then
+					table.insert(beliefIcons, beliefTable.iconOverride);
+				else
+					table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.requiredbeliefs[i]..".png");
+				end
 			end
 			
 			frame:AddText("Required Beliefs: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
@@ -1864,7 +1894,13 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local beliefIcons = {};
 			
 			for i = 1, #itemTable.onerequiredbelief do
-				table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.onerequiredbelief[i]..".png");
+				local beliefTable = cwBeliefs:FindBeliefByID(itemTable.onerequiredbelief[i]);
+				
+				if beliefTable and beliefTable.iconOverride then
+					table.insert(beliefIcons, beliefTable.iconOverride);
+				else
+					table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.onerequiredbelief[i]..".png");
+				end
 			end
 			
 			frame:AddText("Required Beliefs (One Of The Following): ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
@@ -2018,7 +2054,13 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local beliefIcons = {};
 			
 			for i = 1, #itemTable.requiredbeliefs do
-				table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.requiredbeliefs[i]..".png");
+				local beliefTable = cwBeliefs:FindBeliefByID(itemTable.requiredbeliefs[i]);
+				
+				if beliefTable and beliefTable.iconOverride then
+					table.insert(beliefIcons, beliefTable.iconOverride);
+				else
+					table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.requiredbeliefs[i]..".png");
+				end
 			end
 			
 			frame:AddText("Required Beliefs: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
@@ -2029,7 +2071,13 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local beliefIcons = {};
 			
 			for i = 1, #itemTable.onerequiredbelief do
-				table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.onerequiredbelief[i]..".png");
+				local beliefTable = cwBeliefs:FindBeliefByID(itemTable.onerequiredbelief[i]);
+				
+				if beliefTable and beliefTable.iconOverride then
+					table.insert(beliefIcons, beliefTable.iconOverride);
+				else
+					table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.onerequiredbelief[i]..".png");
+				end
 			end
 			
 			frame:AddText("Required Beliefs (One Of The Following): ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);

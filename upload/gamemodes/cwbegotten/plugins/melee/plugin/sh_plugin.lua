@@ -14,82 +14,84 @@ function cwMelee:KeyPress(player, key)
 	local bUse = (key == IN_USE)
 	local bAttack2 = (key == IN_ATTACK2)
 
-	if (bUse or bAttack2) then
-		local requiredKey = false;
-		
-		if (bUse) then
-			requiredKey = player:KeyDown(IN_ATTACK2)
-		elseif (bAttack2) then
-			requiredKey = player:KeyDown(IN_USE)
-		end;
-		
-		if (requiredKey) then
-			if (player:GetNWBool("MelAttacking") != false) then
-				return;
+	if SERVER then
+		if (bUse or bAttack2) then
+			local requiredKey = false;
+			
+			if (bUse) then
+				requiredKey = player:KeyDown(IN_ATTACK2)
+			elseif (bAttack2) then
+				requiredKey = player:KeyDown(IN_USE)
 			end;
 			
-			local activeWeapon = player:GetActiveWeapon();
-			
-			if (!IsValid(activeWeapon)) then
-				return;
-			end;
-			
-			if (activeWeapon.Base == "sword_swepbase") then
-				local attackTable = GetTable(activeWeapon.AttackTable);
+			if (requiredKey) then
+				if (player:GetNWBool("MelAttacking") != false) then
+					return;
+				end;
 				
-				if (attackTable and attackTable["canaltattack"] == true) then
-					local curTime = CurTime();
+				local activeWeapon = player:GetActiveWeapon();
+				
+				if (!IsValid(activeWeapon)) then
+					return;
+				end;
+				
+				if (activeWeapon.Base == "sword_swepbase") then
+					local attackTable = GetTable(activeWeapon.AttackTable);
 					
-					if (!player.StanceSwitchOn or curTime > player.StanceSwitchOn) then
-						if (player.HasBelief and player:HasBelief("halfsword_sway")) then
-							if (player:GetNWBool("ThrustStance") == false) then
-								if (activeWeapon.CanSwipeAttack == true) then
-									player:SetNWBool("ThrustStance", true)
-									player:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
-									
-									if IsValid(player.possessor) then
-										player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
-									end
-									
-									player.StanceSwitchOn = curTime + 1;
+					if (attackTable and attackTable["canaltattack"] == true) then
+						local curTime = CurTime();
+						
+						if (!player.StanceSwitchOn or curTime > player.StanceSwitchOn) then
+							if (player.HasBelief and player:HasBelief("halfsword_sway")) then
+								if (player:GetNWBool("ThrustStance") == false) then
+									if (activeWeapon.CanSwipeAttack == true) then
+										player:SetNWBool("ThrustStance", true)
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
+										
+										if IsValid(player.possessor) then
+											player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
+										end
+										
+										player.StanceSwitchOn = curTime + 1;
+									else
+										player:SetNWBool("ThrustStance", true)
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
+										
+										if IsValid(player.possessor) then
+											player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
+										end
+										
+										player.StanceSwitchOn = curTime + 1;
+									end;
 								else
-									player:SetNWBool("ThrustStance", true)
-									player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
-									
-									if IsValid(player.possessor) then
-										player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
-									end
-									
-									player.StanceSwitchOn = curTime + 1;
-								end;
-							else
-								if (activeWeapon.CanSwipeAttack == true) then
-									player:SetNWBool("ThrustStance", false)
-									player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
-									
-									if IsValid(player.possessor) then
-										player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
-									end
-									
-									player.StanceSwitchOn = curTime + 1;
-								elseif (attackTable["dmgtype"] == 128) then
-									player:SetNWBool("ThrustStance", false)
-									player:PrintMessage(HUD_PRINTTALK, "*** Switched to bludgeoning stance.")
-									
-									if IsValid(player.possessor) then
-										player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to bludgeoning stance.")
-									end
-									
-									player.StanceSwitchOn = curTime + 1;
-								else
-									player:SetNWBool("ThrustStance", false)
-									player:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
-									
-									if IsValid(player.possessor) then
-										player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
-									end
-									
-									player.StanceSwitchOn = curTime + 1;
+									if (activeWeapon.CanSwipeAttack == true) then
+										player:SetNWBool("ThrustStance", false)
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
+										
+										if IsValid(player.possessor) then
+											player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
+										end
+										
+										player.StanceSwitchOn = curTime + 1;
+									elseif (attackTable["dmgtype"] == 128) then
+										player:SetNWBool("ThrustStance", false)
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to bludgeoning stance.")
+										
+										if IsValid(player.possessor) then
+											player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to bludgeoning stance.")
+										end
+										
+										player.StanceSwitchOn = curTime + 1;
+									else
+										player:SetNWBool("ThrustStance", false)
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
+										
+										if IsValid(player.possessor) then
+											player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
+										end
+										
+										player.StanceSwitchOn = curTime + 1;
+									end;
 								end;
 							end;
 						end;
