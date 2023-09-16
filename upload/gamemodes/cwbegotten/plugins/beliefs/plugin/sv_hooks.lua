@@ -173,8 +173,17 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 			for i, v2 in ipairs(v.lockedBeliefs) do
 				if beliefs[v2] then
 					lockedBeliefFound = true;
-					beliefs[v2] = false;
-					points = points + 1;
+
+					for k2, v3 in pairs(v.beliefs) do
+						for k3, v4 in pairs(v3) do
+							if beliefs[k3] then
+								beliefs[k3] = false;
+								points = points + 1;
+							end
+						end
+					end
+					
+					break;
 				end
 			end
 		end
@@ -182,28 +191,32 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 		for k2, v2 in pairs(v.beliefs) do
 			for k3, v3 in pairs(v2) do
 				if v3.lockedBeliefs then
-					if beliefs[k3] then
-						lockedBeliefFound = true;
-						beliefs[k3] = false;
-						points = points + 1;
+					for i, v4 in ipairs(v3.lockedBeliefs) do
+						if beliefs[k3] then
+							lockedBeliefFound = true;
+							beliefs[k3] = false;
+							points = points + 1;
+						end
 					end
+					
+					break;
 				end
 			end
 		end
-		
-		if lockedBeliefFound then
-			player:SetCharacterData("points", points);
-			player:SetCharacterData("beliefs", beliefs);
-		end
+	end
+	
+	if lockedBeliefFound then
+		player:SetCharacterData("points", points);
+		player:SetCharacterData("beliefs", beliefs);
 	end
 	
 	if uniqueID == "jack_of_all_trades" then
-		for i = 1, #self.tier4Beliefs do
-			local belief = self.tier4Beliefs[i];
-			
-			if beliefs[belief] then
-				beliefs[belief] = false;
-				points = points + 1;
+		for k, v in pairs(cwBeliefs:GetBeliefs()) do
+			if (v.row and v.row >= 4) or v.isFinisher then
+				if beliefs[k] then
+					beliefs[k] = false;
+					points = points + 1;
+				end
 			end
 		end
 		

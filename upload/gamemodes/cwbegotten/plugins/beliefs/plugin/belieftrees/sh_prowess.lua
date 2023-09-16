@@ -90,7 +90,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 				row = 2,
 			},
 			["warrior"] = {
-				name = "Wrestle and Subdue",
+				name = "Warrior",
 				description = "Maximum poise is now increased by an additional 10 points.",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "wrestle_subdue"},

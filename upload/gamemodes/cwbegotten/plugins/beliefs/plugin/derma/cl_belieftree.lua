@@ -291,7 +291,7 @@ function PANEL:AddIcon(iconData)
 		if (beliefs[icon.uniqueID]) then
 			--surface.PlaySound(errorSound)
 			return
-		elseif parent.locked or icon.disabled or (parent.lockedSubfactions and table.HasValue(parent.lockedSubfactions, subfaction)) or (icon.lockedSubfactions and table.HasValue(icon.lockedSubfactions, subfaction)) or (icon.lockedFactions and table.HasValue(icon.lockedFactions, faction)) or icon.locked or (icon.subfaith and subfaith and subfaith ~= "" and subfaith ~= "N/A" and icon.subfaith ~= subfaith) then
+		elseif parent.locked or icon.disabled or (parent.lockedSubfactions and table.HasValue(parent.lockedSubfactions, subfaction)) or (icon.lockedSubfactions and table.HasValue(icon.lockedSubfactions, subfaction)) or (parent.lockedFactions and table.HasValue(parent.lockedFactions, faction)) or (icon.lockedFactions and table.HasValue(icon.lockedFactions, faction)) or icon.locked or (icon.subfaith and subfaith and subfaith ~= "" and subfaith ~= "N/A" and icon.subfaith ~= subfaith) then
 			return
 		end
 		
@@ -319,7 +319,7 @@ function PANEL:AddIcon(iconData)
 		
 		if parent.lockedBeliefs then
 			for i, v in ipairs(parent.lockedBeliefs) do
-				if table.HasValue(beliefs, v) then
+				if beliefs[v] then
 					return;
 				end
 			end
@@ -327,7 +327,7 @@ function PANEL:AddIcon(iconData)
 		
 		if icon.lockedBeliefs then
 			for i, v in ipairs(icon.lockedBeliefs) do
-				if table.HasValue(beliefs, v) then
+				if beliefs[v] then
 					return;
 				end
 			end
@@ -407,7 +407,7 @@ function PANEL:AddIcon(iconData)
 				
 				if parent.lockedBeliefs then
 					for i, v in ipairs(parent.lockedBeliefs) do
-						if table.HasValue(beliefs, v) then
+						if beliefs[v] then
 							icon:SetColor(HardLocked)
 							canTake = "\nThis belief tree is locked due to a belief you took!"
 							canTakeColor = selectedBad;
@@ -420,7 +420,7 @@ function PANEL:AddIcon(iconData)
 				
 				if icon.lockedBeliefs then
 					for i, v in ipairs(icon.lockedBeliefs) do
-						if table.HasValue(beliefs, v) then
+						if beliefs[v] then
 							icon:SetColor(HardLocked)
 							canTake = "\nThis belief is locked due to a belief you took!"
 							canTakeColor = selectedBad;

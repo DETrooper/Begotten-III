@@ -30,7 +30,7 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 		[4] = (FAMILY.size.h - 4) * 0.9,
 	};
 	
-	FAMILY.lockedFactions = {"Clan Grock"};
+	FAMILY.lockedSubfactions = {"Clan Grock"};
 	FAMILY.requiredFaiths = {"Faith of the Family"};
 	
 	-- First index is column.

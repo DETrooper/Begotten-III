@@ -34,7 +34,7 @@ local LIGHT = cwBeliefs.beliefTrees:New("light")
 		[4] = (LIGHT.size.h - 4) * 0.9,
 	};
 	
-	LIGHT.lockedFactions = {"Clan Grock"};
+	LIGHT.lockedSubfactions = {"Clan Grock"};
 	LIGHT.requiredFaiths = {"Faith of the Light"};
 	
 	-- First index is column.
