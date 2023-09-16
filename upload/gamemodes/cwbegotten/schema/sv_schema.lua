@@ -295,6 +295,12 @@ Schema.towerDoors = {
     "sidedoorblastdoor2",
 };
 
+Schema.smithyDoors = {
+    "alchemy_lab_blastdoor",
+    "alchemy_lab_blastdoorwindw1",
+    "alchemy_lab_blastdoorwindw2",
+};
+
 local models_to_precache = {
 	--[["models/begotten/gatekeepers/districtonearmor.mdl",
 	"models/begotten/gatekeepers/grandinquisitor.mdl",

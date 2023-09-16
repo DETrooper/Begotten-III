@@ -284,7 +284,7 @@ function PANEL:Rebuild()
 		self.recipeList:SetSpacing(1);
 		self.recipeList:SetDrawBackground(false);
 		self.recipeList:EnableVerticalScrollbar();
-		self.recipeList:HideScrollbar();
+		--self.recipeList:HideScrollbar();
 	else
 		self.recipeList:Clear();
 	end

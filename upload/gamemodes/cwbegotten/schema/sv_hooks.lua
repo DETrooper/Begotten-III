@@ -1969,7 +1969,7 @@ function Schema:PlayerCanUseDoor(player, door)
 
 	if map then
 		local doorName = door:GetName();
-
+		
 		if table.HasValue(self.towerDoors, doorName) then
 			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
@@ -1988,13 +1988,15 @@ function Schema:PlayerCanUseDoor(player, door)
 				local rank = Schema.Ranks[faction][player:GetCharacterData("rank") or 1];
 				
 				if not table.HasValue(Schema.RanksOfAuthority[faction], rank) then
-					if !player.nextDoorNotify or player.nextDoorNotify < curTime then
-						player.nextDoorNotify = curTime + 1;
+					if not (table.HasValue(self.smithyDoors, doorName) and rank == "Smith") then
+						if !player.nextDoorNotify or player.nextDoorNotify < curTime then
+							player.nextDoorNotify = curTime + 1;
+						
+							Schema:EasyText(player, "firebrick", "You aren't a high enough rank to open this blastdoor!");
+						end
 					
-						Schema:EasyText(player, "firebrick", "You aren't a high enough rank to open this blastdoor!");
+						return false;
 					end
-				
-					return false;
 				end
 			end
 		elseif doorName == "toothboyblastdoor" or doorName == "toothboyblastdoor2" then
