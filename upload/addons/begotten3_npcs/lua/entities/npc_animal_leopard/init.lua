@@ -45,6 +45,7 @@ ENT.SoundTbl_MeleeAttackMiss = {}
 ENT.SoundTbl_Pain = {"leopard/attack.wav"}
 ENT.SoundTbl_Death = {""}
 
+ENT.AllowPrintingInChat = false;
 ENT.XPValue = 100;
 
 function ENT:CustomInitialize()
@@ -52,17 +53,22 @@ function ENT:CustomInitialize()
 	
 end
 
-		function ENT:CreateDeathCorpse(dmginfo,hitgroup)	
-
+function ENT:CreateDeathCorpse(dmginfo,hitgroup)	
 	self.HasDeathRagdoll = true -- Disable ragdoll
 	self.HasDeathAnimation = true -- Disable death animation
 	
 	local gib = ents.Create( "prop_ragdoll" )
 	gib:SetModel( "models/animal_ragd/piratecat_leopard.mdl" )
-		gib:SetPos( self:LocalToWorld(Vector(0,0,0))) -- The Postion the model spawns
+	gib:SetPos( self:LocalToWorld(Vector(0,0,0))) -- The Postion the model spawns
 	gib:SetAngles( self:GetAngles() )
 	gib:Spawn()
-	end
+	
+	timer.Simple(600, function()
+		if IsValid(gib) then
+			gib:Remove();
+		end
+	end);
+end
 
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2015 by DrVrej, All rights reserved. ***

@@ -56,6 +56,7 @@ ENT.SoundTbl_MeleeAttackMiss = {"bear/woosh1.wav"}
 ENT.SoundTbl_Pain = {"goat/idle1.wav"}
 ENT.SoundTbl_Death = {"goat/idle1.wav"}
 
+ENT.AllowPrintingInChat = false;
 ENT.XPValue = 30;
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -64,8 +65,7 @@ function ENT:CustomInitialize()
 	--self:SetModelScale(0.7)
 end
 
-		function ENT:CreateDeathCorpse(dmginfo,hitgroup)	
-
+function ENT:CreateDeathCorpse(dmginfo,hitgroup)	
 	self.HasDeathRagdoll = true -- Disable ragdoll
 	self.HasDeathAnimation = true -- Disable death animation
 	
@@ -74,7 +74,13 @@ end
 	gib:SetPos( self:LocalToWorld(Vector(0,0,0))) -- The Postion the model spawns
 	gib:SetAngles( self:GetAngles() )
 	gib:Spawn()
-	end
+	
+	timer.Simple(600, function()
+		if IsValid(gib) then
+			gib:Remove();
+		end
+	end);
+end
 
 
 /*-----------------------------------------------

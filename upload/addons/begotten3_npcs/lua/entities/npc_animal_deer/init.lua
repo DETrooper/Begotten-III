@@ -25,6 +25,7 @@ ENT.BrokenBloodSpawnUp = 10 -- Positive Number = Up | Negative Number = Down
 -- Leave blank if you don't want any sounds to play
 ENT.SoundTbl_Idle = {"deer/idle1.wav"}
 
+ENT.AllowPrintingInChat = false;
 ENT.XPValue = 25;
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -33,7 +34,22 @@ function ENT:CustomInitialize()
 	
 end
 
+function ENT:CreateDeathCorpse(dmginfo,hitgroup)	
+	self.HasDeathRagdoll = true -- Disable ragdoll
+	self.HasDeathAnimation = true -- Disable death animation
 
+	local gib = ents.Create( "prop_ragdoll" )
+	gib:SetModel( "models/animals/deer1.mdl" )
+	gib:SetPos( self:LocalToWorld(Vector(0,0,0))) -- The Postion the model spawns
+	gib:SetAngles( self:GetAngles() )
+	gib:Spawn()
+	
+	timer.Simple(600, function()
+		if IsValid(gib) then
+			gib:Remove();
+		end
+	end);
+end
 
 
 /*-----------------------------------------------

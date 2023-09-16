@@ -52,12 +52,29 @@ ENT.SoundTbl_MeleeAttackMiss = {"bear/woosh1.wav"}
 ENT.SoundTbl_Pain = {"bear/attack1.wav"}
 ENT.SoundTbl_Death = {"bear/idle3.wav"}
 
+ENT.AllowPrintingInChat = false;
 ENT.XPValue = 150;
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomInitialize()
 	self:SetCollisionBounds(Vector(35, 35 , 60), Vector(-35, -35, 0))
+end
+
+function ENT:CreateDeathCorpse(dmginfo,hitgroup)	
+	self.HasDeathRagdoll = true -- Disable ragdoll
+	self.HasDeathAnimation = true -- Disable death animation
 	
+	local gib = ents.Create( "prop_physics" )
+	gib:SetModel( "models/animals/bear.mdl" )
+	gib:SetPos( self:LocalToWorld(Vector(0,0,0))) -- The Postion the model spawns
+	gib:SetAngles( self:GetAngles() )
+	gib:Spawn()
+	
+	timer.Simple(600, function()
+		if IsValid(gib) then
+			gib:Remove();
+		end
+	end);
 end
 
 /*-----------------------------------------------

@@ -1178,9 +1178,9 @@ function ENT:OnTakeDamage(dmginfo,hitgroup)
 					self:CustomWhenBecomingEnemyTowardsPlayer(dmginfo,hitgroup)
 					if self.FollowingPlayer == true then self:FollowPlayerReset() end
 					table.insert(self.VJ_AddCertainEntityAsEnemy,dmginfo:GetAttacker())
-					--[[if self.AllowPrintingInChat == true then
+					if self.AllowPrintingInChat == true then
 						dmginfo:GetAttacker():PrintMessage(HUD_PRINTTALK, self:GetName().." no longer likes you.")
-					end]]--
+					end
 					self:BecomeEnemyToPlayerSoundCode()
 				end
 				self.Alerted = true

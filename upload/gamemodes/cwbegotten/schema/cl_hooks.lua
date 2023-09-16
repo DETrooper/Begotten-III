@@ -524,18 +524,18 @@ function Schema:GetEntityMenuOptions(entity, options)
 			if entity:GetNWBool("BIsCinderBlock") == true then
 				options["Untie Rope"] = "cwUntieCinderBlock"
 			elseif model == "models/animals/bear.mdl" then
-				local activeWeapon = Clockwork.Client:GetActiveWeapon();
+				--local activeWeapon = Clockwork.Client:GetActiveWeapon();
 				
-				if IsValid(activeWeapon) and string.find(activeWeapon:GetClass(), "begotten_dagger") then
+				--if IsValid(activeWeapon) and string.find(activeWeapon:GetClass(), "begotten_dagger") then
 					options["Mutilate"] = "cwCorpseMutilate";
 					options["Skin"] = "cwCorpseSkin";
-				else
+				--[[else
 					if !self.skinNotificationTimer or self.skinNotificationTimer < curTime then
 						Clockwork.chatBox:Add(nil, "icon16/error.png", Color(200, 175, 200, 255), "You must have a dagger equipped in order to skin or mutilate this animal!");
 						
 						self.skinNotificationTimer = curTime + 0.5;
 					end
-				end
+				end]]--
 			end
 		elseif (entity:GetClass() == "cw_radio") then
 			if (!entity:IsCrazy()) then

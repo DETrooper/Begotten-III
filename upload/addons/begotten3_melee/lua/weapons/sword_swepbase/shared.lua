@@ -1599,6 +1599,16 @@ if CLIENT then
 
 	SWEP.wRenderOrder = nil
 	function SWEP:DrawWorldModel()
+		if self:GetNWString("activeShield"):len() > 0 then
+			if !self.activeShield or self.activeShield ~= self:GetNWString("activeShield") then
+				self.activeShield = self:GetNWString("activeShield");
+				self:EquipShield(self.activeShield);
+			end
+		elseif self.activeShield then
+			self.activeShield = nil;
+			self:HolsterShield();
+		end
+	
 		self:CustomWorldDrawn()
 		
 		if (self.ShowWorldModel ~= false) then
