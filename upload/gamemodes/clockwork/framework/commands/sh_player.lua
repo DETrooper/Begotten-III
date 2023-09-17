@@ -332,23 +332,6 @@ local COMMAND = Clockwork.command:New("UnFreezeAll");
 	end;
 COMMAND:Register();
 
-local COMMAND = Clockwork.command:New("UnPermakillAll");
-	COMMAND.tip = "Unpermakill all players on the map.";
-	COMMAND.access = "s";
-	COMMAND.alias = {"PlyUnPermakillAll", "CharUnPermakillAll"};
-
-	-- Called when the command has been run.
-	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs (_player.GetAll()) do
-			if (v:GetCharacterData("permakilled")) then
-				Schema:UnPermaKillPlayer(v, v:GetRagdollEntity());
-			end;
-		end;
-		
-		Clockwork.player:NotifyAdmins("operator", player:Name().." has unpermakilled all players.", nil);
-	end;
-COMMAND:Register();
-
 local COMMAND = Clockwork.command:New("PlyRespawn");
 	COMMAND.tip = "Respawn a player at their default spawnpoint.";
 	COMMAND.text = "<string Name> [bool Bring] [bool Freeze]";

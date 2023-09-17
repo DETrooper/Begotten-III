@@ -2116,26 +2116,32 @@ function PANEL:Init()
 		self.bSelectModel = true;
 	end;
 	
-	if (!factionTable.availablefaiths) then
+	if !Schema.faiths or table.IsEmpty(Schema.faiths.stored) then
 		self.availableFaiths = {};
 		self.bFaiths = false;
-	elseif factionTable.availablefaiths and #factionTable.availablefaiths == 1 then
-		if Clockwork.Client.SelectedSubfaction == "Clan Reaver" then
-			self.availableFaiths = {"Faith of the Family", "Faith of the Dark"};
-
-			Clockwork.Client.SelectedFaith = self.availableFaiths[1];
-			self.info.faith = self.availableFaiths[1];
-		else
+	else
+		local availableFaithsCount = #factionTable.availablefaiths;
+		
+		if factionTable.subfactionsToAvailableFaiths and factionTable.subfactionsToAvailableFaiths[Clockwork.Client.SelectedSubfaction] then
+			self.availableFaiths = factionTable.subfactionsToAvailableFaiths[Clockwork.Client.SelectedSubfaction];
+		elseif factionTable.availablefaiths then
 			self.availableFaiths = factionTable.availablefaiths;
+		else
+			self.availableFaiths = {};
+		end
+	
+		if (!self.availablefaiths) then
+			self.availableFaiths = {};
+			self.bFaiths = false;
+		elseif availableFaithsCount == 1 then
 			self.bFaiths = false;
 
-			Clockwork.Client.SelectedFaith = factionTable.availablefaiths[1];
-			self.info.faith = factionTable.availablefaiths[1];
+			Clockwork.Client.SelectedFaith = self.availablefaiths[1];
+			self.info.faith = fself.availablefaiths[1];
+		else
+			Clockwork.Client.SelectedFaith = self.availablefaiths[1];
+			self.info.faith = self.availablefaiths[1];
 		end
-	else
-		self.availableFaiths = factionTable.availablefaiths;
-		Clockwork.Client.SelectedFaith = factionTable.availablefaiths[1];
-		self.info.faith = factionTable.availablefaiths[1];
 	end
 	
 	local genderModels = Clockwork.faction.stored[self.info.faction].models[string.lower(gender)];
@@ -2718,130 +2724,51 @@ function PANEL:Init()
 		self.faithFormTitle:SizeToContents();
 		self.faithFormTitle:SetColor(Color(255, 255, 255));
 		
-		if table.HasValue(self.availableFaiths, "Faith of the Light") then
-			self.faithLightButton = vgui.Create("DImageButton", self.faithForm)
-			self.faithLightButton:SetSize(480, 150);
-			self.faithLightButton:SetImage("begotten/ui/bgtbtnfaithlight.png");
-			self.faithLightButton.faith = "Faith of the Light";
+		for k, v in SortedPairsByMemberValue(Schema.faiths:GetFaiths(), order) do
+			if table.HasValue(self.availableFaiths, v.name) then
+				local faithButton = vgui.Create("DImageButton", self.faithForm)
+				
+				faithButton:SetSize(480, 150);
+				faithButton:SetImage(v.image);
+				faithButton.faith = v.name;
 
-			timer.Simple(0.1, function()
-				if IsValid(self.faithLightButton) then
-					if self.faithLightButton.faith == Clockwork.Client.SelectedFaith then
-						self.faithLightButton.DoClick();
+				timer.Simple(0.1, function()
+					if IsValid(faithButton) then
+						if faithButton.faith == Clockwork.Client.SelectedFaith then
+							faithButton.DoClick();
+						end
 					end
-				end
-			end);
-			
-			timer.Simple(0.5, function()
-				if IsValid(self.faithLightButton) then
-					self.faithLightButton.sound = "begotten/ui/buttonclick.wav";
-				end
-			end);
-			
-			self.faithLightButton.DoClick = function()
-				if SELECTED_FAITH_ICON and IsValid(SELECTED_FAITH_ICON) then
-					SELECTED_FAITH_ICON:SetColor(Color(255, 255, 255, 255));
-				end
+				end);
 				
-				SELECTED_FAITH_ICON = self.faithLightButton;
-				
-				Clockwork.Client.SelectedFaith = self.faithLightButton.faith;
-				self.info.faith = self.faithLightButton.faith;
-				
-				self.faithLightButton:SetColor(Color(255, 150, 150, 255));
-				self.faithTitle:SetText("Faith of the Light");
-				self.faithTitle:SizeToContents();
-				self.faithTitle:SetPos(245 - (self.faithTitle:GetWide() / 2), 0);
-				self.faithDescription:SetText("The Faith of the Light, also known as the Hard-Glaze or shortened to the Glaze, is a collection of ideas and beliefs widely held by most in the territory of the now-extinct Empire of Light. The faith is said to have originated during the hundred years of hardship, until it finally sparked the Holy Hierarchy Wars that led to the ultimate creation of said government. \n\nThe vast majority of those who follow and practice the Faith of the Light have only a simplistic and vague understanding of it. Common folk, far secluded from the workings of government, often create their own interpretations that are vastly different from official text. Indeed the true understanding of the Glaze is extremely complex, often intermixing philosophical inquiries, works of abstract art, and even some advanced mathematical equations. The 'Unenlightened Fucklets', critics of Glazic ways, often claim that the reason why the Glaze is so hard to understand is so that commoners will be unable to comprehend it, and thus cannot question their lord's command.\n\nAlthough the teachings of the Glaze are spread out among many thousands of old scriptures, there supposedly exists a singular Manifesto - the original first text of Glaze. Although many artifact searches have been commissioned by various clergymen, no man alive knows the whereabouts of this holy relic. A popular saying among the Holy Hierarchy is that \"All links to the manifesto...\".");
-			
-				if self.faithLightButton.sound then
-					surface.PlaySound(self.faithLightButton.sound);
-				end
-			end;
-		end
-		
-		if table.HasValue(self.availableFaiths, "Faith of the Family") then
-			self.faithFamilyButton = vgui.Create("DImageButton", self.faithForm)
-			self.faithFamilyButton:SetSize(480, 150);
-			self.faithFamilyButton:SetImage("begotten/ui/bgtbtnfaithfamily.png");
-			self.faithFamilyButton.faith = "Faith of the Family";
-			
-			timer.Simple(0.1, function()
-				if IsValid(self.faithFamilyButton) then
-					if self.faithFamilyButton.faith == Clockwork.Client.SelectedFaith then
-						self.faithFamilyButton.DoClick();
+				timer.Simple(0.5, function()
+					if IsValid(faithButton) then
+						faithButton.sound = "begotten/ui/buttonclick.wav";
 					end
-				end
-			end);
-			
-			timer.Simple(0.5, function()
-				if IsValid(self.faithFamilyButton) then
-					self.faithFamilyButton.sound = "begotten/ui/buttonclick.wav";
-				end
-			end);
-			
-			self.faithFamilyButton.DoClick = function()
-				if SELECTED_FAITH_ICON and IsValid(SELECTED_FAITH_ICON) then
-					SELECTED_FAITH_ICON:SetColor(Color(255, 255, 255, 255));
-				end
+				end);
 				
-				SELECTED_FAITH_ICON = self.faithFamilyButton;
-				
-				Clockwork.Client.SelectedFaith = self.faithFamilyButton.faith;
-				self.info.faith = self.faithFamilyButton.faith;
-				
-				self.faithFamilyButton:SetColor(Color(255, 150, 150, 255));
-				self.faithTitle:SetText("Faith of the Family");
-				self.faithTitle:SizeToContents();
-				self.faithTitle:SetPos(245 - (self.faithTitle:GetWide() / 2), 0);
-				self.faithDescription:SetText("The Faith of the Family is a form of polytheism that is followed by the Gores and many scrapper bands. The original founders of this religion were the Blade Druids, named after their ability to forge steel weapons. It is said that these Druids planted a seed in the ground that sprouted a great and glorious tree that reached far into the sky. The Gores of this time were godless men, killing each other with bone clubs and sharp sticks as the North was too harsh a place for any progress to be made. When they came to the Great Tree, the Blade Druids taught them their ways, which included the belief of the Five Gods.\n\nAlthough these druids were soon betrayed by the savage Gores and the true names of the Five Gods forgotten, they live on as the Family: The Mother, the Father, the Old Son, the Sister, and the Young Son. Ever since the burning of the Great Tree at the hands of Lord Maximus, the remaining Gores have united with the singular purpose of avenging their tree. When the God of the Light committed suicide shortly after, his fractured power rained over the Great Tree, granting it a slither of life. Now the Gores have a glimpse of hope to keep their tree from dying through blood sacrifices, though it takes hundreds of corpses a year to simply remain alive.");
-			
-				if self.faithFamilyButton.sound then
-					surface.PlaySound(self.faithFamilyButton.sound);
-				end
-			end;
-		end
-		
-		if table.HasValue(self.availableFaiths, "Faith of the Dark") then
-			self.faithDarkButton = vgui.Create("DImageButton", self.faithForm)
-			self.faithDarkButton:SetSize(480, 150);
-			self.faithDarkButton:SetImage("begotten/ui/bgtbtnfaithdark.png");
-			self.faithDarkButton.faith = "Faith of the Dark";
-		
-			timer.Simple(0.1, function()
-				if IsValid(self.faithDarkButton) then
-					if self.faithDarkButton.faith == Clockwork.Client.SelectedFaith then
-						self.faithDarkButton.DoClick();
+				faithButton.DoClick = function()
+					if SELECTED_FAITH_ICON and IsValid(SELECTED_FAITH_ICON) then
+						SELECTED_FAITH_ICON:SetColor(Color(255, 255, 255, 255));
 					end
-				end
-			end);
-			
-			timer.Simple(0.5, function()
-				if IsValid(self.faithDarkButton) then
-					self.faithDarkButton.sound = "begotten/ui/buttonclick.wav";
-				end
-			end);
-		
-			self.faithDarkButton.DoClick = function()
-				if SELECTED_FAITH_ICON and IsValid(SELECTED_FAITH_ICON) then
-					SELECTED_FAITH_ICON:SetColor(Color(255, 255, 255, 255));
-				end
+					
+					SELECTED_FAITH_ICON = faithButton;
+					
+					Clockwork.Client.SelectedFaith = faithButton.faith;
+					self.info.faith = faithButton.faith;
+					
+					faithButton:SetColor(Color(255, 150, 150, 255));
+					self.faithTitle:SetText(v.name);
+					self.faithTitle:SizeToContents();
+					self.faithTitle:SetPos(245 - (self.faithTitle:GetWide() / 2), 0);
+					self.faithDescription:SetText(v.description);
+					
+					if faithButton.sound then
+						surface.PlaySound(faithButton.sound);
+					end
+				end;
 				
-				SELECTED_FAITH_ICON = self.faithDarkButton;
-				
-				Clockwork.Client.SelectedFaith = self.faithDarkButton.faith;
-				self.info.faith = self.faithDarkButton.faith;
-				
-				self.faithDarkButton:SetColor(Color(255, 150, 150, 255));
-				self.faithTitle:SetText("Faith of the Dark");
-				self.faithTitle:SizeToContents();
-				self.faithTitle:SetPos(245 - (self.faithTitle:GetWide() / 2), 0);
-				self.faithDescription:SetText("The Faith of the Dark is the name given to the truest belief of all. Mankind made the choice to bar themselves of pleasure for the hope of something more, a sort of justification behind their misery. They made the mistake of following the Light, something that exists only to draw men astray from their true desires. Those men pray to a god that never listens, a god that is dead in more ways than one. They believe that they should suffer a life of misery and pain for an afterlife of bliss and ignorance. The Faith of the Dark is the inverse of that belief.\n\nThe Faith of the Dark has existed in secret for thousands of years, yet there had never been a true Legion under its rule until the coming of the Undergod, when its followers had finally decided it was time to come out of hiding. There were also those who worshipped Satan unknowingly, their own gods being twisted manifestations of his presence. No one truly knows which of the Gods were real and which were merely proxies of the Dark One. Far to the East of the lands of the Empire of Light was the vast Nigerii Empire, divided into feuding states ruled by many princes. This Empire is often considered by Hierarchy sources as the first Dark Legion, for all their Gods were puppets or intermediate forms of Satan. However, with the coming of the Undergod this entire landscape was devoured, proving no match to the might of Satan's nemesis.");
-			
-				if self.faithDarkButton.sound then
-					surface.PlaySound(self.faithDarkButton.sound);
-				end
-			end;
+				self.faithForm:AddItem(faithButton);
+			end
 		end
 
 		self.faithInformation = vgui.Create("DPanel", self.faithForm)
@@ -2860,18 +2787,6 @@ function PANEL:Init()
 		self.faithDescription:SetDrawBackground(false);
 		self.faithDescription:SetMultiline(true);
 		self.faithDescription:SetText("");
-		
-		if self.faithLightButton then
-			self.faithForm:AddItem(self.faithLightButton);
-		end
-		
-		if self.faithFamilyButton then
-			self.faithForm:AddItem(self.faithFamilyButton);
-		end
-		
-		if self.faithDarkButton then
-			self.faithForm:AddItem(self.faithDarkButton);
-		end
 
 		self.faithForm:AddItem(self.faithInformation);
 	end

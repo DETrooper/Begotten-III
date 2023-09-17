@@ -84,7 +84,7 @@ function playerMeta:GivePoise(amount)
 end
 
 -- A function to take from a player's stability.
-function playerMeta:TakeStability(amount, cooldown)
+function playerMeta:TakeStability(amount, cooldown, bNoMe)
 	--printp("Taking stability - Initial Amount: "..amount);
 	
 	if (Clockwork.player:HasFlags(self, "E") or !self:Alive()) then
@@ -185,7 +185,7 @@ function playerMeta:TakeStability(amount, cooldown)
 				end;
 			end;
 
-			cwMelee:PlayerStabilityFallover(self, falloverTime);
+			cwMelee:PlayerStabilityFallover(self, falloverTime, nil, bNoMe);
 		end;
 	end
 end;

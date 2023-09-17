@@ -531,8 +531,12 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 end;
 
 -- Called when a player falls over because they ran out of stability.
-function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie)
+function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoText)
 	local curTime = CurTime();
+	
+	if !falloverTime then
+		falloverTime = 3;
+	end
 
 	Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, falloverTime);
 	player.stabilityCooldown = curTime + (falloverTime - 5);
@@ -561,19 +565,23 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie)
 	end);
 	
 	local gender = player:GetGender() == GENDER_MALE and "his" or "her";
-	local randomPhrases = {
-		"is knocked off #HIS feet!",
-		"loses #HIS footing and falls to the ground!",
-		"is violently knocked to the ground!",
-		"is slammed hard and falls down!",
-	}
 	
-	local randomPhrase = randomPhrases[math.random(1, #randomPhrases)];
-	local faction = (player:GetFaction())
-	local pitch = 100;
+	if !bNoText then
+		local randomPhrases = {
+			"is knocked off #HIS feet!",
+			"loses #HIS footing and falls to the ground!",
+			"is violently knocked to the ground!",
+			"is slammed hard and falls down!",
+		}
+		
+		local phrase = randomPhrases[math.random(1, #randomPhrases)];
+		local faction = (player:GetFaction())
+		local pitch = 100;
+		
+		phrase = string.gsub(phrase, "#HIS", gender);
+		Clockwork.chatBox:AddInTargetRadius(player, "me", string.gsub(phrase, "^.", string.lower), player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+	end
 	
-	randomPhrase = string.gsub(randomPhrase, "#HIS", gender);
-	Clockwork.chatBox:AddInTargetRadius(player, "me", string.gsub(randomPhrase, "^.", string.lower), player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 	player:SetCharacterData("stability", 80);
 	
 	if IsValid(player.possessor) then

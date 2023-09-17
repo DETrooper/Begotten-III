@@ -308,6 +308,100 @@ local COMMAND = Clockwork.command:New("CharPermaKill");
 	end;
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("CharUnPermakill");
+	COMMAND.tip = "Un-permanently kill a character. Be very sure their name is exact or you might end up unpermakilling someone else in the database.";
+	COMMAND.text = "<string Name>";
+	COMMAND.access = "o";
+	COMMAND.arguments = 1;
+	COMMAND.alias = {"PlyUnPermakill", "UnPermakill"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local target = Clockwork.player:FindByID(arguments[1])
+		
+		if (target) then
+			if (target:GetCharacterData("permakilled")) then
+				Schema:UnPermaKillPlayer(target, target:GetRagdollEntity());
+				Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." un-permanently killed "..target:SteamName().."'s character \""..target:Name().."\"!");
+				
+				return;
+			else
+				Schema:EasyText(player, "darkgrey", "This character is not permanently killed!");
+				
+				return;
+			end;
+		end;
+		
+		for i, target in ipairs(_player.GetAll()) do
+			if target.cwCharacterList then
+				for k, character in pairs(target.cwCharacterList) do
+					if character.name == arguments[1] then
+						if character.data["permakilled"] then
+							character.data["permakilled"] = false;
+
+							Clockwork.player:SaveCharacter(target);
+							
+							for k2, v in pairs(target.cwCharacterList) do
+								Clockwork.player:CharacterScreenAdd(target, v);
+							end
+							
+							Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." un-permanently killed "..target:SteamName().."'s character \""..character.name.."\"!");
+							
+							return;
+						end
+					end
+				end
+			end
+		end
+		
+		local charactersTable = config.Get("mysql_characters_table"):Get();
+		local charName = arguments[1];
+		
+		local queryObj = Clockwork.database:Select(charactersTable);
+			queryObj:Callback(function(result)
+				if (Clockwork.database:IsResult(result)) then
+					for k2, v2 in pairs(result) do
+						if v2._Data then
+							local data = Clockwork.player:ConvertDataString(nil, v2._Data);
+							
+							if data and data["permakilled"] then
+								data["permakilled"] = false;
+								
+								local queryObj = Clockwork.database:Update(charactersTable);
+									queryObj:Update("_Data", util.TableToJSON(data))
+									queryObj:Where("_Name", charName);
+								queryObj:Execute();
+								
+								Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." un-permanently killed "..tostring(v2._SteamName).."'s character '"..tostring(v2._Name).."' from the database.");
+							end
+						end
+					end
+				else
+					Schema:EasyText(player, "grey", arguments[1].." is not a valid character in the database!");
+				end;
+			end);
+			queryObj:Where("_Name", charName);
+		queryObj:Execute()
+	end;
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CharUnPermakillAll");
+	COMMAND.tip = "Unpermakill all players on the map.";
+	COMMAND.access = "s";
+	COMMAND.alias = {"PlyUnPermakillAll", "UnPermakillAll"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		for k, v in pairs (_player.GetAll()) do
+			if (v:GetCharacterData("permakilled")) then
+				Schema:UnPermaKillPlayer(v, v:GetRagdollEntity());
+			end;
+		end;
+		
+		Clockwork.player:NotifyAdmins("operator", player:Name().." has unpermakilled all players.", nil);
+	end;
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("EventLocal");
 	COMMAND.tip = "Send an event to characters around you.";
 	COMMAND.text = "<string Text>";
@@ -601,7 +695,7 @@ local COMMAND = Clockwork.command:New("Proclaim");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		local faction = player:GetFaction();
+		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 		local text = table.concat(arguments, " ");
 		
 		if (text == "") then
@@ -926,32 +1020,6 @@ local COMMAND = Clockwork.command:New("SpeakerIt");
 		if arguments[1] and player:IsAdmin() then
 			Schema:SpeakerPerform(player, table.concat(arguments, " "));
 		end
-	end;
-COMMAND:Register();
-
-local COMMAND = Clockwork.command:New("CharUnPermaKill");
-	COMMAND.tip = "Un-permanently kill a character.";
-	COMMAND.text = "<string Name>";
-	COMMAND.access = "o";
-	COMMAND.arguments = 1;
-
-	-- Called when the command has been run.
-	function COMMAND:OnRun(player, arguments)
-		local target = Clockwork.player:FindByID(arguments[1])
-		
-		if (target) then
-			if (target:GetCharacterData("permakilled")) then
-				Schema:UnPermaKillPlayer(target, target:GetRagdollEntity());
-			else
-				Schema:EasyText(player, "darkgrey", "This character is not permanently killed!");
-				
-				return;
-			end;
-
-			Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." un-permanently killed the character '"..target:Name().."'.")
-		else
-			Schema:EasyText(player, "grey", arguments[1].." is not a valid character!");
-		end;
 	end;
 COMMAND:Register();
 

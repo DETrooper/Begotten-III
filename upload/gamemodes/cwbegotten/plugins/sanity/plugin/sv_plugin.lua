@@ -17,6 +17,8 @@ cwSanity.deafClasses = {
 	["ravenspeakreply"] = false,
 	["darkwhisperglobal"] = false,
 	["darkwhisperreply"] = false,
+	["localevent"] = false,
+	["event"] = false,
 };
 
 local playerMeta = FindMetaTable("Player")

@@ -115,6 +115,7 @@ Clockwork.kernel:IncludePrefixed("cl_theme.lua");
 Clockwork.kernel:IncludePrefixed("cl_hooks.lua");
 Clockwork.kernel:IncludePrefixed("cl_vfx.lua");
 Clockwork.kernel:IncludePrefixed("sh_coms.lua");
+Clockwork.kernel:IncludePrefixed("sh_faiths.lua");
 Clockwork.kernel:IncludePrefixed("sv_schema.lua");
 Clockwork.kernel:IncludePrefixed("sv_hooks.lua");
 Clockwork.kernel:IncludePrefixed("sv_notes.lua");

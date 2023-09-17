@@ -583,7 +583,7 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 						Clockwork.Client.CharSelectionModel:SetBodygroup(camTable[Clockwork.Client.SelectedFaction].charBodygroup[1], camTable[Clockwork.Client.SelectedFaction].charBodygroup[2]);
 					end
 				end
-			elseif (Clockwork.Client.SelectedSubfaction and subfactionCamTable[Clockwork.Client.SelectedSubfaction] and subfactionCamTable[Clockwork.Client.SelectedSubfaction].charModel and Clockwork.Client.CharSelectionModel:GetModel() != subfactionCamTable[Clockwork.Client.SelectedSubfaction].charModel) or (Clockwork.Client.CharSelectionModel:GetModel() != model_path) then
+			elseif (Clockwork.Client.SelectedSubfaction and subfactionCamTable[Clockwork.Client.SelectedSubfaction] and subfactionCamTable[Clockwork.Client.SelectedSubfaction].charModel and Clockwork.Client.CharSelectionModel:GetModel() != model_path) or (Clockwork.Client.CharSelectionModel:GetModel() != model_path) then
 				Clockwork.Client.CharSelectionModel:Remove();
 				Clockwork.Client.CharSelectionModel = ClientsideModel(model_path, RENDERGROUP_OPAQUE);
 				Clockwork.Client.CharSelectionModel:SetPos(camTable[Clockwork.Client.SelectedFaction].charVector);

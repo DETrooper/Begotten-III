@@ -1082,7 +1082,7 @@ function COMMAND:OnRun(player, arguments)
 			if player:GetSharedVar("tied") == 0 and !player:IsRagdolled() then
 				local activeWeapon = player:GetActiveWeapon();
 				
-				if activeWeapon:GetClass() == "begotten_fists" or !activeWeapon.IsABegottenMelee then
+				if !IsValid(activeWeapon) or activeWeapon:GetClass() == "begotten_fists" or !activeWeapon.IsABegottenMelee then
 					Schema:EasyText(player, "firebrick", "You cannot self-flagellate with this weapon!");
 					return false;
 				end
@@ -1118,7 +1118,24 @@ function COMMAND:OnRun(player, arguments)
 						selfless = "herself";
 					end
 					
-					Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.."!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+					-- Bellhammer special
+					if activeWeapon.IsBellHammer then
+						timer.Simple(0.2, function() if player:IsValid() then
+							player:EmitSound("meleesounds/bell.mp3")
+						end end)
+						
+						local entities = ents.FindInSphere(player:GetPos(), 512);
+						
+						for i, v in ipairs(entities) do
+							if v:IsPlayer() and v:Alive() then
+								v:Disorient(5);
+							end
+						end
+						
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.." with a thunderous toll of their Bell Hammer!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+					else
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.."!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+					end
 					
 					player.nextFlagellate = curTime + (attacktable["delay"] or 1);
 				else

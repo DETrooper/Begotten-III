@@ -488,7 +488,7 @@ function cwBeliefs:GetBeliefLocked(player, uniqueID, beliefTree, beliefTable, pl
 	end
 	
 	if player:HasBelief("jack_of_all_trades") then
-		if (beliefTable.row >= 4) then
+		if (beliefTable.row >= 4 and !beliefTable.subfaith) then
 			return true;
 		elseif beliefTable.isFinisher then
 			-- Check to see if there are any tier 4 beliefs in this belief tree.

@@ -1855,7 +1855,7 @@ function Clockwork.player:UseCharacter(player, characterID)
 				local chars = 0;
 			
 				for k, v in pairs(player.cwCharacterList) do
-					if v ~= character and v.faction == character.faction and !v.data["permakilled"] and !v.data["CharBanned"] then
+					if v ~= character and v.faction == character.faction and !v.data["permakilled"] then
 						chars = chars + 1;
 					end
 				end
@@ -2099,9 +2099,7 @@ end
 
 -- A function to set whether a player's character is banned.
 function Clockwork.player:SetBanned(player, banned)
-	player:SetCharacterData("CharBanned", banned)
 	player:SaveCharacter()
-	player:SetNetVar("CharBanned", banned)
 end
 
 -- A function to set a player's name.
@@ -3160,7 +3158,6 @@ function Clockwork.player:CharacterScreenAdd(player, character)
 		name = character.name,
 		model = character.model,
 		skin = character.skin,
-		banned = character.data["CharBanned"],
 		permakilled = character.data["permakilled"],
 		kills = character.data["kills"] or 0,
 		level = character.data["level"],
@@ -3189,10 +3186,6 @@ function Clockwork.player:CharacterScreenAdd(player, character)
 		else
 			info.details = character.data["PhysDesc"]
 		end
-	end
-
-	if (character.data["CharBanned"]) then
-		info.details = "This character is banned."
 	end
 
 	hook.Run("PlayerAdjustCharacterScreenInfo", player, character, info)

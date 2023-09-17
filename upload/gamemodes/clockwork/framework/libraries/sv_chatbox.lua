@@ -16,7 +16,7 @@ function Clockwork.chatBox:Add(listeners, speaker, class, text, data)
 			listeners = {listeners};
 		end;
 	end;
-	
+
 	local info = {
 		bShouldSend = true,
 		multiplier = self.multiplier,
@@ -60,20 +60,20 @@ end;
 function Clockwork.chatBox:AddInTargetRadius(speaker, class, text, position, radius, data)
 	local listeners = {};
 	local trackers = {};
-	local playerCount = _player.GetCount();
-	local players = _player.GetAll();
-	local ass = (radius / 2)
-	local sex = (ass * ass)
-	for i = 1, playerCount do
-		local v = players[i];
-		
+	local dist = (radius / 2)
+	local distSqr = (dist * dist)
+	
+	for i, v in ipairs(_player.GetAll()) do
 		if (v:HasInitialized()) then
 			local realTrace = Clockwork.player:GetRealTrace(v);
 			
-			if ((realTrace.HitPos:DistToSqr(position) <= sex) or position:DistToSqr(v:GetPos()) <= sex) then
-				listeners[#listeners + 1] = v;
+			if ((realTrace.HitPos:DistToSqr(position) <= distSqr) or position:DistToSqr(v:GetPos()) <= distSqr) then
+				if hook.Run("CanHearClass", v, speaker, class) ~= false then
+					listeners[#listeners + 1] = v;
+				end
 			elseif v:GetNetVar("tracktarget") then
 				trk = v:GetNetVar("tracktarget")
+				
 				if trk == speaker:SteamID() then
 					listeners[#listeners + 1] = v;
 				end
@@ -92,11 +92,9 @@ end;
 function Clockwork.chatBox:AddInRadius(speaker, class, text, position, radius, data)
 	local listeners = {};
 	local outOfRangeListeners = {};
-	
-	local players = _player.GetAll();
 	local sqrRadius = (radius * radius);
-	
-	for k, v in pairs(players) do
+
+	for i, v in ipairs(_player.GetAll()) do
 		if (v:HasInitialized()) then
 			local distance = position:DistToSqr(v:GetPos());
 			
@@ -105,15 +103,13 @@ function Clockwork.chatBox:AddInRadius(speaker, class, text, position, radius, d
 					continue;
 				end
 				
-				if v:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT then
-					listeners[#listeners + 1] = v;
-				end
+				listeners[#listeners + 1] = v;
 			elseif v:GetNetVar("tracktarget") then
 				trk = v:GetNetVar("tracktarget")
 				if trk == speaker:SteamID() then
 					listeners[#listeners + 1] = v;
 				end
-			elseif (distance <= ((radius * radius) * 2)) and class == "yell" then
+			elseif (distance <= (sqrRadius * 2)) and class == "yell" then
 				if hook.Run("CanHearClass", v, speaker, class) == false then
 					continue;
 				end
@@ -127,12 +123,6 @@ function Clockwork.chatBox:AddInRadius(speaker, class, text, position, radius, d
 	
 	if #outOfRangeListeners > 0 then
 		self:Add(outOfRangeListeners, speaker, "me", "yells something but you are too far away to understand!", data);
-	end
-	
-	if (class == "ic") then
-		Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, speaker:Name().." says: \""..text.."\"")
-	elseif (class == "looc") then
-		Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, "[LOOC] "..speaker:Name()..": "..text)
 	end
 end;
 

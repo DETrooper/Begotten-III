@@ -670,98 +670,20 @@ end;
 -- Called when a chat box message has been added.
 function Schema:ChatBoxMessageAdded(info)
 	if (info.class == "ic") then
-		local eavesdroppers = {};
-		local talkRadius = Clockwork.config:Get("talk_radius"):Get();
-		local listeners = {};
-		local radiospies = {};
-		local radios = ents.FindByClass("cw_radio");
-		local data = {};
-		local jammed = false;
-		for k, v in ipairs(radios) do
-			if (!v:IsOff() and !v:IsCrazy() and info.speaker:GetPos():Distance(v:GetPos()) <= 80) then
-				if info.speaker:GetEyeTrace().Entity == v then
-					local frequency = v:GetFrequency();
-					
-					if (frequency != "") then
-						info.shouldSend = false;
-						info.listeners = {};
-						data.frequency = frequency;
-						data.position = v:GetPos();
-						data.entity = v;
-						
-						break;
-					end;
-				end
-			end;
-		end;
-		
-		local dataFreq = data.frequency;
-		
-		if (IsValid(data.entity) and dataFreq != "") then
-			local speaker = info.speaker;
-			local dataPos = data.position;
-			
-			for k, v in pairs( _player.GetAll()) do
-				if (v:HasInitialized() and v:Alive() and !v:IsRagdolled(RAGDOLL_FALLENOVER)) then
-					local plyPos = v:GetPos();
-					if (v:GetCharacterData("radioState", false) and v:HasItemByID("ecw_radio")) then
-						table.insert(radiospies, v);
-						if ((v:GetCharacterData("radioJamming", false)) and (v:GetCharacterData("frequency") == dataFreq)) then
-							info.text = "<STATIC>"
-							jammed = true
-						end
-					elseif ((v:GetCharacterData("frequency") == dataFreq and v:GetSharedVar("tied") == 0 and v:HasItemByID("handheld_radio") and v:GetCharacterData("radioState", false)) or speaker == v) then
-						local lastZone = v:GetCharacterData("LastZone");
-						
-						if lastZone == "tower" or lastZone == "wasteland" then
-							table.insert(listeners, v);
-						end
-							
-						if speaker ~= v then
-							if not v:IsNoClipping() and not v.cwWakingUp then
-								if lastZone == "tower" or lastZone == "wasteland" or lastZone == "caves" or lastZone == "scrapper" then
-									v:EmitSound("radio/radio_out"..tostring(math.random(2, 3))..".wav", 75, math.random(95, 100), 0.75, CHAN_AUTO);
-								end
-							end
-						end
-					elseif (plyPos:DistToSqr(dataPos) <= (talkRadius * talkRadius)) then
-						table.insert(eavesdroppers, v);
-					end;
-				end;
-			end;
-			
-			for k, v in ipairs(radios) do
-				local radioPosition = v:GetPos();
-				local radioFrequency = v:GetFrequency();
+		local radio = info.speaker:GetEyeTrace().Entity;
+		local stationaryRadiusSqr = (80 * 80);
+
+		if IsValid(radio) and radio:GetClass() == "cw_radio" and (!radio:IsOff() and !radio:IsCrazy() and info.speaker:GetPos():DistToSqr(radio:GetPos()) <= stationaryRadiusSqr) then
+			if info.speaker:GetEyeTrace().Entity == radio then
+				local frequency = radio:GetFrequency();
 				
-				if (!v:IsOff() and !v:IsCrazy() and radioFrequency == data.frequency) then
-					for k2, v2 in pairs( _player.GetAll()) do
-						if (v2:HasInitialized() and !table.HasValue(listeners, v2) and !table.HasValue(eavesdroppers, v2)) then
-							if (v2:GetPos():DistToSqr(radioPosition) <= (talkRadius * talkRadius)) then
-								table.insert(listeners, v2);
-							end;
-						end;
-					end;
-					
-					v:EmitSound("radio/radio_out"..tostring(math.random(2, 3))..".wav", 75, math.random(95, 100), 0.75, CHAN_AUTO);
+				if (frequency != "") then
+					info.shouldSend = false;
+					info.listeners = {};
 				end;
-			end;
-			
-			if (!table.IsEmpty(listeners)) then
-				Clockwork.chatBox:Add(listeners, info.speaker, "radio", info.text);
-			end;
-			
-			if (!table.IsEmpty(eavesdroppers)) then
-				Clockwork.chatBox:Add(eavesdroppers, info.speaker, "radio_eavesdrop", info.text);
-			end;
-			
-			if (!table.IsEmpty(radiospies)) then
-				if jammed then
-					Clockwork.chatBox:Add(radiospies, info.speaker, "radiospy",  info.text);
-				else
-					Clockwork.chatBox:Add(radiospies, info.speaker, "radiospy",  "["..info.speaker:GetCharacterData("frequency", "100.0").."]: \""..info.text.."\"");
-				end
-			end;
+				
+				Clockwork.player:SayRadio(info.speaker, info.text, frequency, true);
+			end
 		end;
 	end;
 end;
@@ -1017,35 +939,44 @@ end;
 
 -- Called when a player attempts to use the radio.
 function Schema:PlayerCanRadio(player, text, listeners, eavesdroppers)
+	local canRadio = true;
+	local fault;
+	local stationaryRadiusSqr = (80 * 80);
+	local radios = ents.FindByClass("cw_radio");
+	
+	for k, v in ipairs(radios) do
+		if (!v:IsOff() and !v:IsCrazy() and player:GetPos():DistToSqr(v:GetPos()) <= stationaryRadiusSqr) then
+			return true;
+		end
+	end
+
 	if (player:HasItemByID("handheld_radio")) or (player:HasItemByID("ecw_radio")) then
-		if player:GetCharacterData("radioState", false) ~= true then
-			Schema:EasyText(player, "peru", "Your radio is turned off!");
-			
-			return false;
+		if !player:GetCharacterData("radioState", false) then
+			fault = "Your radio is turned off!";
+			canRadio = false;
 		end
 	
-		if (!player:GetCharacterData("frequency")) then
-			Schema:EasyText(player, "peru", "You need to set the radio frequency first!");
-			
-			return false;
+		if canRadio and (!player:GetCharacterData("frequency")) then
+			fault = "You need to set the radio frequency first!";
+			canRadio = false;
 		end;
 		
 		local lastZone = player:GetCharacterData("LastZone");
 		
-		if (player:HasItemByID("ecw_radio")) then
-			return true
-		elseif lastZone ~= "wasteland" and lastZone ~= "tower" then
-			Schema:EasyText(player, "peru", "Your radio cannot get a signal here!");
-			
-			return false;
+		if canRadio then
+			if (player:HasItemByID("ecw_radio")) then
+				return true;
+			elseif lastZone ~= "wasteland" and lastZone ~= "tower" then
+				fault = "peru", "Your radio cannot get a signal here!";
+				canRadio = false;
+			end
 		end
 	else
-		Schema:EasyText(player, "chocolate", "You do not own a radio!");
-		
-		return false;
+		fault = "You do not own a radio!";
+		canRadio = false;
 	end;
 	
-	return true;
+	return canRadio, fault;
 end;
 
 -- Called when a player spawns for the first time.
@@ -1936,6 +1867,10 @@ local headbuttSounds = {"physics/wood/wood_crate_impact_hard4.wav", "doors/vent_
 
 -- Called when a player attempts to use a door.
 function Schema:PlayerCanUseDoor(player, door)
+	if player:IsAdmin() and player:IsNoClipping() then
+		return;
+	end
+
 	if player:HasTrait("imbecile") and (Clockwork.entity:GetDoorState(door) == DOOR_STATE_CLOSED) then
 		local curTime = CurTime();
 	
@@ -1967,10 +1902,12 @@ function Schema:PlayerCanUseDoor(player, door)
 		end
 	end
 
-	if map then
+	local doors = self.doors[game.GetMap()];
+	
+	if doors then
 		local doorName = door:GetName();
 		
-		if table.HasValue(self.towerDoors, doorName) then
+		if doors["tower"] and table.HasValue(doors["tower"], doorName) then
 			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
 			
@@ -1988,7 +1925,7 @@ function Schema:PlayerCanUseDoor(player, door)
 				local rank = Schema.Ranks[faction][player:GetCharacterData("rank") or 1];
 				
 				if not table.HasValue(Schema.RanksOfAuthority[faction], rank) then
-					if not (table.HasValue(self.smithyDoors, doorName) and rank == "Smith") then
+					if not (doors["forge"] and table.HasValue(doors["forge"], doorName) and rank == "Smith") then
 						if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 							player.nextDoorNotify = curTime + 1;
 						
@@ -1999,12 +1936,24 @@ function Schema:PlayerCanUseDoor(player, door)
 					end
 				end
 			end
+		elseif doors["gorewatch"] and table.HasValue(doors["gorewatch"], doorName) then
+			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local curTime = CurTime();
+			
+			if faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" then
+				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
+					player.nextDoorNotify = curTime + 1;
+				
+					Schema:EasyText(player, "firebrick", "You aren't the correct faction to open this blastdoor!");
+				end
+			
+				return false;
+			end
 		elseif doorName == "toothboyblastdoor" or doorName == "toothboyblastdoor2" then
 			if player:GetSubfaith() ~= "Voltism" then
-				if !player.cwObserverMode then
-					Schema:DoTesla(player, true);
-					player:TakeStability(player:GetMaxStability() * 3);
-				end
+				Schema:DoTesla(player, true);
+				player:TakeStability(player:GetMaxStability() * 3, nil, true);
+				Clockwork.chatBox:AddInTargetRadius(player, "me", "is sent to the ground by an arc of electricity!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 				
 				return false;
 			end
@@ -2127,6 +2076,7 @@ local imbecileClasses = {
 	"prayer",
 	"proclaim",
 	"relay",
+	"demonhosttalk",
 	"darkwhisper",
 	"darkwhisperglobal",
 	"darkwhispernondark",
@@ -2953,6 +2903,14 @@ function Schema:PlayerCanFallOverFromFallDamage(player)
 		return false;
 	end;
 end;
+
+function Schema:CanHearClass(listener, speaker, class)
+	if table.HasValue(self.icClasses, class) then
+		if listener:GetRagdollState() == RAGDOLL_KNOCKEDOUT then
+			return false;
+		end
+	end
+end
 
 -- Called when a player uses a cinderblock item.
 function Schema:CinderBlockExecution(player, target, itemTable)

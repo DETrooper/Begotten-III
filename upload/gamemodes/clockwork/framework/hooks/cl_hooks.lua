@@ -1248,19 +1248,6 @@ function GM:ItemNetworkDataUpdated(itemTable, newData)
 	end
 end
 
--- Called to get the screen text info.
-function GM:GetScreenTextInfo()
-	local blackFadeAlpha = Clockwork.kernel:GetBlackFadeAlpha()
-
-	if (Clockwork.Client:GetNetVar("CharBanned")) then
-		return {
-			alpha = blackFadeAlpha,
-			title = "THIS CHARACTER IS BANNED",
-			text = "Go to the characters menu to make a new one."
-		}
-	end
-end
-
 -- Called after the VGUI has been rendered.
 function GM:PostRenderVGUI()
 	local cinematic = Clockwork.Cinematics[1];
@@ -2826,19 +2813,12 @@ function GM:GetPlayerScoreboardOptions(player, options, menu)
 	local CharOpenBeliefTree = Clockwork.command:FindByID("CharOpenBeliefTree")
 	local plySetGroup = Clockwork.command:FindByID("PlySetGroup")
 	local plyDemote = Clockwork.command:FindByID("PlyDemote")
-	--local charBan = Clockwork.command:FindByID("CharBan")
 	local plyKick = Clockwork.command:FindByID("PlyKick")
 	local plyBan = Clockwork.command:FindByID("PlyBan")
 	local plyBring = Clockwork.command:FindByID("PlyTeleport")
 	local plyBringFreeze = Clockwork.command:FindByID("PlyTeleportFreeze")
 	local plyFreeze = Clockwork.command:FindByID("PlyFreeze")
 	local plySummon = Clockwork.command:FindByID("SummonPlayer")
-
-	--[[if (charBan and Clockwork.player:HasFlags(Clockwork.Client, charBan.access)) then
-		options["Ban Character"] = function()
-			RunConsoleCommand("cwCmd", "CharBan", player:Name())
-		end
-	end]]--
 
 	if (plyKick and Clockwork.player:HasFlags(Clockwork.Client, plyKick.access)) then
 		options["Kick Player"] = function()

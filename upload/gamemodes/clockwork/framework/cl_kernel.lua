@@ -961,17 +961,16 @@ do
 					});
 				end
 				
-				--if (cwFaith) then
+				if (Schema.faiths) then
 					local faith = player:GetSharedVar("faith");
 					
 					if faith then
 						local faithText = faith;
-						local faithColor = Color(230, 209, 87, 255);
-
-						if faith == "Faith of the Family" then
-							faithColor = Color(163, 153, 143, 255);
-						elseif faith == "Faith of the Dark" then
-							faithColor = Color(137, 0, 0, 255);
+						local faithTable = Schema.faiths.stored[faith];
+						local faithColor;
+						
+						if faithTable then
+							faithColor = faithTable.color;
 						end
 						
 						local subfaith = player:GetSharedVar("subfaith");
@@ -982,10 +981,10 @@ do
 						
 						table.insert(text, {
 							text = faithText, 
-							color = faithColor
+							color = faithColor or Color(255, 255, 255);
 						});
 					end
-				--end;
+				end;
 				
 				if player:GetSharedVar("favored") then
 					table.insert(text, {
@@ -3135,7 +3134,7 @@ function playerMeta:GetCountryCode()
 end;
 
 entityMeta.ClockworkFireBullets = entityMeta.ClockworkFireBullets or entityMeta.FireBullets
---weaponMeta.OldGetPrintName = weaponMeta.OldGetPrintName or weaponMeta.GetPrintName
+weaponMeta.OldGetPrintName = weaponMeta.OldGetPrintName or weaponMeta.GetPrintName
 playerMeta.SteamName = playerMeta.SteamName or playerMeta.Name
 
 -- A function to make a player fire bullets.
@@ -3149,15 +3148,26 @@ function entityMeta:FireBullets(bulletInfo)
 end
 
 -- A function to get a weapon's print name.
---[[function weaponMeta:GetPrintName()
+function weaponMeta:GetPrintName()
+	local name;
 	local itemTable = item.GetByWeapon(self)
 
 	if (itemTable) then
-		return itemTable:GetName()
+		name = itemTable:GetName()
 	else
-		return self:OldGetPrintName()
+		name = self:OldGetPrintName()
 	end
-end]]--
+	
+	if self:GetNWString("activeShield"):len() > 0 then
+		local shieldTable = GetTable(self:GetNWString("activeShield"));
+		
+		if shieldTable and shieldTable.name then
+			return name.." & "..shieldTable.name;
+		end
+	end
+	
+	return name;
+end
 
 -- A function to get a player's name.
 function playerMeta:Name(bRealName)

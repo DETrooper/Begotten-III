@@ -237,6 +237,7 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 	FACTION.color = Color(100, 100, 100);
 	FACTION.description = "The brutal spearfolk clansmen of the North, unmatched in their endurance and strength, have come together for the first time. \nAt the heart of their warcamp lies the Great Tree, that which has been scarred by the Holy Hierarchy and must be restored through bloodshed. \nThe Clans must put aside their differences and launch a godly raid upon the last remaining Glazic Lands, to seek vengeance and glory. \nIf their Great Tree suffers another catastrophe, their connection to the Five Gods will be forever cut and all the world will perish. \nFor that reason they must endure ever harder, for there are many more threats abroad than the shattered Hierarchy."
 	FACTION.availablefaiths = {"Faith of the Family"};
+	FACTION.subfactionsToAvailableFaiths = {["Clan Reaver"] = {"Faith of the Family", "Faith of the Dark"}};
 	FACTION.characterLimit = 1; -- # of characters of this faction a player can have.
 	FACTION.names = "goreic";
 	FACTION.subfactions = {

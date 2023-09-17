@@ -294,8 +294,12 @@ if SERVER then
 						end
 					end
 					
-					local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
+					local blockTable;
 					local shield_reduction = 1;
+					
+					if IsValid(enemywep) then
+						blockTable = GetTable(enemywep:GetNWString("activeShield"));
+					end
 					
 					if blockTable then
 						shield_reduction = blockTable.damagereduction or 1;

@@ -212,7 +212,7 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 	
 	if uniqueID == "jack_of_all_trades" then
 		for k, v in pairs(cwBeliefs:GetBeliefs()) do
-			if (v.row and v.row >= 4) or v.isFinisher then
+			if (v.row and v.row >= 4 and !v.subfaith) or v.isFinisher then
 				if beliefs[k] then
 					beliefs[k] = false;
 					points = points + 1;

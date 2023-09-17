@@ -628,9 +628,9 @@ function cwMedicalSystem:PlayerTakeDamage(player, attacker, inflictor, hitGroup,
 		end;
 		
 		if (!player.nextHealWarn or player.nextHealWarn < curTime) then
-			if (player:Health() < 40) then
+			if (player:Health() <= 50) then
 				Clockwork.hint:Send(player, "You are seriously injured...", 10, Color(175, 100, 100));
-			elseif (player:Health() < 10) then
+			elseif (player:Health() <= 15) then
 				Clockwork.hint:Send(player, "You are near death...", 10, Color(175, 100, 100));
 			end;
 			
@@ -674,7 +674,7 @@ function cwMedicalSystem:PlayerTakeDamage(player, attacker, inflictor, hitGroup,
 					player:StartBleeding(hitGroup);
 				end
 				
-				if damageType == DMG_BULLET or damageType == DMG_BUCKSHOT then
+				if (damageType == DMG_BULLET or damageType == DMG_BUCKSHOT) and damage >= 30 then
 					local chance = 50;
 					
 					if player:HasBelief("hide_of_steel") then

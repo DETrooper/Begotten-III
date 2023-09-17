@@ -296,7 +296,7 @@ function PANEL:AddIcon(iconData)
 		end
 		
 		if cwBeliefs:HasBelief("jack_of_all_trades") then
-			if icon.row >= 4 then
+			if icon.row >= 4 and !icon.subfaith then
 				return;
 			end
 		end
@@ -440,7 +440,7 @@ function PANEL:AddIcon(iconData)
 						icon:SetColor(HardLocked)
 						canTake = "\nThis belief is temporarily disabled until it can be implemented!"
 						canTakeColor = selectedBad;
-					elseif (cwBeliefs:HasBelief("jack_of_all_trades") and icon.row >= 4) then
+					elseif (cwBeliefs:HasBelief("jack_of_all_trades") and icon.row >= 4 and !icon.subfaith) then
 						icon:SetColor(HardLocked)
 						canTake = "\nThis belief is locked due to a belief you took!"
 						canTakeColor = selectedBad;
@@ -719,7 +719,7 @@ function PANEL:RebuildBeliefTrees()
 				frame:AddText(v.tooltip[1][1], v.tooltip[1][2], v.tooltip[1][3]);
 				frame:AddText(v.tooltip[2][1], v.tooltip[2][2]);
 				frame:AddText(v.tooltip[3][1], v.tooltip[3][2]);
-				frame:AddText(v.tooltip[4][1], v.tooltip[1][2]);
+				frame:AddText(v.tooltip[4][1], v.tooltip[4][2]);
 			end,
 			color = v.color;
 		})

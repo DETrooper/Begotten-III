@@ -164,6 +164,29 @@ Schema.cheapleMessages = {
 	"Where is it!? Fuck, I've gotta keep moving...",
 };
 
+Schema.icClasses = {
+	"ic",
+	"yell",
+	"me",
+	"radio",
+	"whisper",
+	"proclaim",
+	"meproclaim",
+	"relay",
+	"darkwhisper",
+	"darkwhisperglobal",
+	"darkwhispernondark",
+	"darkwhisperreply",
+	"darkwhispernoprefix",
+	"ravenspeak",
+	"ravenspeakclan",
+	"ravenspeakfaction",
+	"ravenspeakreply",
+	"speaker",
+	"localevent",
+	"event"
+};
+
 Schema.hellPortalTeleports = {};
 Schema.npcSpawns = {};
 
@@ -280,25 +303,30 @@ elseif map == "rp_scraptown" then
 	};
 end
 
-Schema.towerDoors = {
-    "churchgate1",
-    "churchgate2",
-    "cubbyblastdoor",
-    "frontblastdoor",
-    "sidedoorblastdoor",
-    "gatekeeperdoor",
-    "gatekeeperdoor2",
-    "armorydoor",
-    "alchemy_lab_blastdoor",
-    "alchemy_lab_blastdoorwindw1",
-    "alchemy_lab_blastdoorwindw2",
-    "sidedoorblastdoor2",
-};
-
-Schema.smithyDoors = {
-    "alchemy_lab_blastdoor",
-    "alchemy_lab_blastdoorwindw1",
-    "alchemy_lab_blastdoorwindw2",
+Schema.doors = {
+	["rp_begotten3"] = {
+		["forge"] = {
+			"alchemy_lab_blastdoor",
+			"alchemy_lab_blastdoorwindw1",
+			"alchemy_lab_blastdoorwindw2",
+		},
+		["gorewatch"] = {
+			"gatekeeperdoor",
+			"gatekeeperdoor2",
+		},
+		["tower"] = {
+			"churchgate1",
+			"churchgate2",
+			"cubbyblastdoor",
+			"frontblastdoor",
+			"sidedoorblastdoor",
+			"armorydoor",
+			"alchemy_lab_blastdoor",
+			"alchemy_lab_blastdoorwindw1",
+			"alchemy_lab_blastdoorwindw2",
+			"sidedoorblastdoor2",
+		},
+	};
 };
 
 local models_to_precache = {

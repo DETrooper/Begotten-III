@@ -1343,7 +1343,7 @@ end
 function GM:PlayerDeathThink(player)
 	--[[local action = Clockwork.player:GetAction(player)
 
-	if (!player:HasInitialized() or player:GetCharacterData("CharBanned")) then
+	if (!player:HasInitialized()) then
 		return true
 	end
 
@@ -1917,7 +1917,7 @@ function GM:PlayerCanDeleteCharacter(player, character) end
 
 -- Called when a player attempts to switch to a character.
 function GM:PlayerCanSwitchCharacter(player, character)
-	if (!player:Alive() and !player:IsCharacterMenuReset() and !player:GetNetVar("CharBanned")) then
+	if (!player:Alive() and !player:IsCharacterMenuReset()) then
 		return "You cannot switch characters while being dead."
 	elseif (player:GetRagdollState() == RAGDOLL_KNOCKEDOUT) then
 		return "You cannot switch characters while being unconscious."
@@ -1928,10 +1928,6 @@ end
 
 -- Called when a player attempts to use a character.
 function GM:PlayerCanUseCharacter(player, character)
-	if (character.data["CharBanned"]) then
-		return character.name.." is banned and cannot be used."
-	end
-
 	local faction = Clockwork.faction:FindByID(character.faction)
 	local playerRank, rank = player:GetFactionRank(character)
 	local factionCount = 0
@@ -3675,13 +3671,13 @@ function GM:PlayerAdjustPropCostInfo(player, entity, info) end
 function GM:PlayerAdjustDeathInfo(player, info) end
 
 -- Called when chat box info should be adjusted.
-function GM:ChatBoxAdjustInfo(info)
+function GM:ChatBoxMessageAdded(info)
 	if (info.class == "ic") then
 		Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, info.speaker:Name().." says \""..info.text.."\"")
-	elseif (info.class == "yell") then
-		--Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, info.speaker:Name().." yells \""..info.text.."\"")
+	--[[elseif (info.class == "yell") then
+		Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, info.speaker:Name().." yells \""..info.text.."\"")
 	elseif (info.class == "me") then
-		--Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, "*** "..info.speaker:Name().." "..info.text)
+		Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, "*** "..info.speaker:Name().." "..info.text)]]
 	elseif (info.class == "looc") then
 		Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, "[LOOC] "..info.speaker:Name()..": "..info.text)
 	end

@@ -1,54 +1,3 @@
-local COMMAND = Clockwork.command:New("CharUnban");
-	COMMAND.tip = "Unban a character from being used.";
-	COMMAND.text = "<string Name>";
-	COMMAND.flags = CMD_DEFAULT;
-	COMMAND.access = "a";
-	COMMAND.arguments = 1;
-
-	-- Called when the command has been run.
-	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs(_player.GetAll()) do
-			if (v:HasInitialized()) then
-				if (v:Name() == arguments[1]) then
-					Clockwork.player:NotifyAll(player:Name().." unbanned the character '"..arguments[1].."'.");
-					Clockwork.player:SetBanned(player, false);
-					
-					return;
-				else
-					for k2, v2 in pairs(v:GetCharacters()) do
-						if (v2.name == arguments[1]) then
-							Clockwork.player:NotifyAll(player:Name().." unbanned the character '"..arguments[1].."'.");
-							
-							v2.data["CharBanned"] = false;
-							
-							return;
-						end;
-					end;
-				end;
-			end;
-		end;
-		
-		local charactersTable = config.Get("mysql_characters_table"):Get();
-		local charName = arguments[1];
-		
-		local queryObj = Clockwork.database:Select(charactersTable);
-			queryObj:SetCallback(function(result)
-				if (Clockwork.database:IsResult(result)) then
-					local queryObj = Clockwork.database:Update(charactersTable);
-						queryObj:Replace("_Data", "\"CharBanned\":true", "\"CharBanned\":false");
-						queryObj:AddWhere("_Name = ?", charName);
-					queryObj:Push();
-					
-					Clockwork.player:NotifyAll(player:Name().." unbanned the character '"..arguments[1].."'.");
-				else
-					Clockwork.player:Notify(player, "This is not a valid character!");
-				end;
-			end);
-			queryObj:AddWhere("_Name = ?", charName);
-		queryObj:Pull();
-	end;
-COMMAND:Register();
-
 local COMMAND = Clockwork.command:New("CharForceFallover")
 	COMMAND.tip = "Force a character to fallover."
 	COMMAND.text = "<string Name> [number Seconds]"
@@ -316,13 +265,13 @@ local COMMAND = Clockwork.command:New("PlyUnGodAll");
 	end;
 COMMAND:Register();
 
-local COMMAND = Clockwork.command:New("CharTransfer");
+local COMMAND = Clockwork.command:New("CharTransferFaction");
 	COMMAND.tip = "Transfer a character to a faction.";
 	COMMAND.text = "<string Name> <string Faction> [string Data]";
 	COMMAND.access = "o";
 	COMMAND.arguments = 2;
 	COMMAND.optionalArguments = 1;
-	COMMAND.alias = {"Transfer", "PlyTransfer"};
+	COMMAND.alias = {"TransferFaction", "PlyTransferFaction"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -799,32 +748,6 @@ local COMMAND = Clockwork.command:New("CharGiveFlags");
 			Clockwork.player:GiveFlags(target, arguments[2]);
 			Clockwork.player:NotifyAll(player:Name().." gave "..target:Name().." '"..arguments[2].."' character flags.");
 			target:SaveCharacter();
-		else
-			Clockwork.player:Notify(player, arguments[1].." is not a valid character!");
-		end;
-	end;
-COMMAND:Register();
-
-local COMMAND = Clockwork.command:New("CharBan");
-	COMMAND.tip = "Ban a character from being used.";
-	COMMAND.text = "<string Name>";
-	COMMAND.flags = CMD_DEFAULT;
-	COMMAND.access = "a";
-	COMMAND.arguments = 1;
-
-	-- Called when the command has been run.
-	function COMMAND:OnRun(player, arguments)
-		local target = Clockwork.player:FindByID(table.concat(arguments, " "));
-		
-		if (target) then
-			if (!Clockwork.player:IsProtected(target)) then
-				Clockwork.player:SetBanned(target, true);
-				Clockwork.player:NotifyAll(player:Name().." banned the character '"..target:Name().."'.");
-				
-				target:KillSilent();
-			else
-				Clockwork.player:Notify(player, target:Name().." is protected!");
-			end;
 		else
 			Clockwork.player:Notify(player, arguments[1].." is not a valid character!");
 		end;
