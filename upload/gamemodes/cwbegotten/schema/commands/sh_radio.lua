@@ -16,7 +16,7 @@ COMMAND.alias = {"R"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
-	Clockwork.player:SayRadio(player, table.concat(arguments, " "), player:GetCharacterData("frequency"), true);
+	Clockwork.player:SayRadio(player, table.concat(arguments, " "), true);
 end;
 
 COMMAND:Register();
@@ -33,7 +33,7 @@ function COMMAND:OnRun(player, arguments)
 	local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 	
 	if (faction == "Gatekeeper" and Schema.RanksOfAuthority[faction][player:GetCharacterData("rank", 1)]) or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
-		Clockwork.player:SayRadio(player, table.concat(arguments, " "), player:GetCharacterData("frequency"), true, nil, true);
+		Clockwork.player:SayRadio(player, table.concat(arguments, " "), true, nil, true);
 	else
 		Schema:EasyText(player, "peru", "You are not important enough to do this!");
 	end

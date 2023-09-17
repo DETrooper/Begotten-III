@@ -2852,9 +2852,15 @@ function GM:EntityHandleMenuOption(player, entity, option, arguments)
 		if (itemTable.GetEntityExamineText) then
 			examineText = itemTable:GetEntityExamineText(entity)
 		end
-		
+
 		if itemEngraving and itemEngraving ~= "" then
-			examineText = examineText.." It has \'"..itemEngraving.."\' engraved into it.";
+			local itemKills = itemTable:GetData("kills");
+			
+			if itemKills and itemKills > 0 then
+				examineText = examineText.." It has \'"..itemEngraving.."\' engraved into it, alongside a tally mark of "..tostring(itemKills).." kills.";
+			else
+				examineText = examineText.." It has \'"..itemEngraving.."\' engraved into it.";
+			end
 		end
 
 		if table.HasValue(conditionTextCategories, itemTable.category) then

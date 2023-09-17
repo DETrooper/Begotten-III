@@ -35,6 +35,7 @@ local defaultWeapons = {
 
 ITEM:AddData("Ammo", {}, true);
 ITEM:AddData("engraving", "", true);
+ITEM:AddData("kills", 0, true);
 
 -- Called whent he item entity's menu options are needed.
 function ITEM:GetEntityMenuOptions(entity, options)

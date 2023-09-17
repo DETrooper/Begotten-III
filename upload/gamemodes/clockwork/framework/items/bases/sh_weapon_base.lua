@@ -37,6 +37,7 @@ local defaultWeapons = {
 ITEM:AddData("ClipOne", 0, true);
 ITEM:AddData("ClipTwo", 0, true);
 ITEM:AddData("engraving", "", true);
+ITEM:AddData("kills", 0, true);
 
 -- Called whent he item entity's menu options are needed.
 function ITEM:GetEntityMenuOptions(entity, options)

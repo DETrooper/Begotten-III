@@ -675,14 +675,12 @@ function Schema:ChatBoxMessageAdded(info)
 
 		if IsValid(radio) and radio:GetClass() == "cw_radio" and (!radio:IsOff() and !radio:IsCrazy() and info.speaker:GetPos():DistToSqr(radio:GetPos()) <= stationaryRadiusSqr) then
 			if info.speaker:GetEyeTrace().Entity == radio then
-				local frequency = radio:GetFrequency();
-				
-				if (frequency != "") then
+				if (radio:GetFrequency() != "") then
 					info.shouldSend = false;
 					info.listeners = {};
 				end;
 				
-				Clockwork.player:SayRadio(info.speaker, info.text, frequency, true);
+				Clockwork.player:SayRadio(info.speaker, info.text, true);
 			end
 		end;
 	end;
@@ -939,44 +937,43 @@ end;
 
 -- Called when a player attempts to use the radio.
 function Schema:PlayerCanRadio(player, text, listeners, eavesdroppers)
-	local canRadio = true;
 	local fault;
 	local stationaryRadiusSqr = (80 * 80);
 	local radios = ents.FindByClass("cw_radio");
 	
 	for k, v in ipairs(radios) do
 		if (!v:IsOff() and !v:IsCrazy() and player:GetPos():DistToSqr(v:GetPos()) <= stationaryRadiusSqr) then
-			return true;
+			if player:GetEyeTrace().Entity == v then
+				return nil, v:GetFrequency();
+			else
+				return;
+			end
 		end
 	end
 
 	if (player:HasItemByID("handheld_radio")) or (player:HasItemByID("ecw_radio")) then
 		if !player:GetCharacterData("radioState", false) then
 			fault = "Your radio is turned off!";
-			canRadio = false;
 		end
 	
-		if canRadio and (!player:GetCharacterData("frequency")) then
+		if !fault and (!player:GetCharacterData("frequency")) then
 			fault = "You need to set the radio frequency first!";
-			canRadio = false;
 		end;
 		
 		local lastZone = player:GetCharacterData("LastZone");
 		
-		if canRadio then
+		if !fault then
 			if (player:HasItemByID("ecw_radio")) then
-				return true;
+				return;
 			elseif lastZone ~= "wasteland" and lastZone ~= "tower" then
-				fault = "peru", "Your radio cannot get a signal here!";
-				canRadio = false;
+				fault = "Your radio cannot get a signal here!";
 			end
 		end
 	else
 		fault = "You do not own a radio!";
-		canRadio = false;
 	end;
 	
-	return canRadio, fault;
+	return fault;
 end;
 
 -- Called when a player spawns for the first time.
@@ -2190,69 +2187,83 @@ end
 
 -- Called when a player dies.
 function Schema:PlayerDeath(player, inflictor, attacker, damageInfo)
-	-- Gore sacrifice shit.
-	if IsValid(attacker) and attacker:IsPlayer() and attacker:Alive() and player:GetFaction() ~= "Goreic Warrior" and attacker:GetFaction() == "Goreic Warrior" then
-		if player:GetPos():WithinAABox(Vector(11622, -6836, 12500), Vector(8744, -10586, 11180)) then
-			local catalysts = {"down_catalyst", "elysian_catalyst", "up_catalyst", "trinity_catalyst", "light_catalyst", "purifying_stone", "belphegor_catalyst", "pantheistic_catalyst", "familial_catalyst", "ice_catalyst"};
-			local killXP = (cwBeliefs.xpValues["kill"] * 12) or 30;
-			local level = player:GetCharacterData("level", 1);
-			local numCatalysts = 0;
+	if IsValid(attacker) and attacker:IsPlayer() and attacker:Alive() and not attacker.opponent then
+		local weapon = attacker:GetActiveWeapon();
+		
+		if IsValid(weapon) then
+			local weaponItem = Clockwork.item:GetByWeapon(weapon);
 			
-			if level >= 10 and level < 20 then
-				numCatalysts = 1;
-			elseif level >= 20 and level < 30 then
-				numCatalysts = 2;
-			elseif level >= 30 then
-				numCatalysts = 3;
+			if weaponItem and weaponItem:GetData("engraving") then
+				local itemKills = weaponItem:GetData("kills") or 0;
+				
+				weaponItem:SetData("kills", itemKills + 1);
 			end
-			
-			if numCatalysts > 0 then
-				for i = 1, numCatalysts do
-					attacker:GiveItem(item.CreateInstance(catalysts[math.random(1, #catalysts)]));
+		end
+	
+		-- Gore sacrifice.
+		if player:GetFaction() ~= "Goreic Warrior" and attacker:GetFaction() == "Goreic Warrior" then
+			if player:GetPos():WithinAABox(Vector(11622, -6836, 12500), Vector(8744, -10586, 11180)) then
+				local catalysts = {"down_catalyst", "elysian_catalyst", "up_catalyst", "trinity_catalyst", "light_catalyst", "purifying_stone", "belphegor_catalyst", "pantheistic_catalyst", "familial_catalyst", "ice_catalyst"};
+				local killXP = (cwBeliefs.xpValues["kill"] * 12) or 30;
+				local level = player:GetCharacterData("level", 1);
+				local numCatalysts = 0;
+				
+				if level >= 10 and level < 20 then
+					numCatalysts = 1;
+				elseif level >= 20 and level < 30 then
+					numCatalysts = 2;
+				elseif level >= 30 then
+					numCatalysts = 3;
 				end
 				
-				Clockwork.hint:Send(attacker, "You have gained "..tostring(numCatalysts).." random catalysts.", 5, Color(100, 175, 100), true, true);
-			end
-			
-			killXP = killXP * math.Clamp(level, 1, 40);
-			
-			if attacker:GetSubfaction() == "Clan Crast" then	
-				killXP = killXP * 2;
-			
-				local valid_players = {};
-				
-				for k, v in pairs(ents.FindInSphere(attacker:GetPos(), 1024)) do
-					if v:IsPlayer() and v:GetFaction() == "Goreic Warrior" and !v.cwObserverMode then
-						table.insert(valid_players, v);
+				if numCatalysts > 0 then
+					for i = 1, numCatalysts do
+						attacker:GiveItem(item.CreateInstance(catalysts[math.random(1, #catalysts)]));
 					end
+					
+					Clockwork.hint:Send(attacker, "You have gained "..tostring(numCatalysts).." random catalysts.", 5, Color(100, 175, 100), true, true);
 				end
 				
-				if #valid_players < 2 then
-					attacker:HandleXP(killXP);
+				killXP = killXP * math.Clamp(level, 1, 40);
+				
+				if attacker:GetSubfaction() == "Clan Crast" then	
+					killXP = killXP * 2;
+				
+					local valid_players = {};
+					
+					for k, v in pairs(ents.FindInSphere(attacker:GetPos(), 1024)) do
+						if v:IsPlayer() and v:GetFaction() == "Goreic Warrior" and !v.cwObserverMode then
+							table.insert(valid_players, v);
+						end
+					end
+					
+					if #valid_players < 2 then
+						attacker:HandleXP(killXP);
+					else
+						local xpPerPlayer = math.Round(killXP / #valid_players);
+						
+						for i = 1, #valid_players do
+							valid_players[i]:HandleXP(xpPerPlayer);
+						end
+					end
+					
+					Clockwork.chatBox:AddInTargetRadius(attacker, "me", "strikes down "..player:Name().." as a sacrifice. Their blood seeps into the ground beneath the Great Tree and roots envelop their corpse. The usage of Clan Crast ritual chanting increases the fertility of the offering, thus enhancing the outcome and spreading its power to all those nearby.", attacker:GetPos(), config.Get("talk_radius"):Get() * 4);
 				else
-					local xpPerPlayer = math.Round(killXP / #valid_players);
-					
-					for i = 1, #valid_players do
-						valid_players[i]:HandleXP(xpPerPlayer);
-					end
+					attacker:HandleXP(killXP);
+					Clockwork.chatBox:AddInTargetRadius(attacker, "me", "strikes down "..player:Name().." as a sacrifice. Their blood seeps into the ground beneath the Great Tree and roots envelop their corpse.", attacker:GetPos(), config.Get("talk_radius"):Get() * 4);
 				end
 				
-				Clockwork.chatBox:AddInTargetRadius(attacker, "me", "strikes down "..player:Name().." as a sacrifice. Their blood seeps into the ground beneath the Great Tree and roots envelop their corpse. The usage of Clan Crast ritual chanting increases the fertility of the offering, thus enhancing the outcome and spreading its power to all those nearby.", attacker:GetPos(), config.Get("talk_radius"):Get() * 4);
-			else
-				attacker:HandleXP(killXP);
-				Clockwork.chatBox:AddInTargetRadius(attacker, "me", "strikes down "..player:Name().." as a sacrifice. Their blood seeps into the ground beneath the Great Tree and roots envelop their corpse.", attacker:GetPos(), config.Get("talk_radius"):Get() * 4);
-			end
-			
-			timer.Simple(1, function()
-				if IsValid(player) then
-					local ragdoll = player:GetRagdollEntity();
-					
-					if IsValid(ragdoll) then
-						ragdoll:SetMaterial("models/props_pipes/pipesystem01a_skin2");
+				timer.Simple(1, function()
+					if IsValid(player) then
+						local ragdoll = player:GetRagdollEntity();
+						
+						if IsValid(ragdoll) then
+							ragdoll:SetMaterial("models/props_pipes/pipesystem01a_skin2");
+						end
 					end
-				end
-			end);
-		end		
+				end);
+			end		
+		end
 	end
 end;
 

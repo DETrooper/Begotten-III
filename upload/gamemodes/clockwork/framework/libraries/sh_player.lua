@@ -197,105 +197,110 @@ function Clockwork.player:CanDemote(player, target)
 end
 
 -- A function to make a player say text as a radio broadcast.
-function Clockwork.player:SayRadio(player, text, frequency, check, noEavesdrop, proclaim)
+function Clockwork.player:SayRadio(player, text, check, noEavesdrop, proclaim)
 	local eavesdroppers = {};
 	local listeners = {};
 	local radiospies = {};
-	local canRadio = true;
 	local fault;
 	local info = {listeners = {}, noEavesdrop = noEavesdrop, text = text};
 
 	--Clockwork.plugin:Call("PlayerAdjustRadioInfo", player, info);
 	
 	if (check) then
-		canRadio, fault = Clockwork.plugin:Call("PlayerCanRadio", player, info.text, listeners, eavesdroppers);
+		fault, frequencyOverride = Clockwork.plugin:Call("PlayerCanRadio", player, info.text, listeners, eavesdroppers);
 	end;
 	
 	if fault then
 		Schema:EasyText(player, "peru", fault);
+		
+		return;
+	end
+
+	local frequency = player:GetCharacterData("frequency");
+
+	if frequencyOverride then
+		frequency = frequencyOverride;
 	end
 	
-	if (canRadio) then
-		local radios = ents.FindByClass("cw_radio");
-		local radius = Clockwork.config:Get("talk_radius"):Get();
-		local radiusSqr = (radius * radius);
-		local stationaryRadiusSqr = (80 * 80);
-		local jammed = false;
-		
-		for k, v in pairs( _player.GetAll()) do
-			if (v:HasInitialized()) then
-				local vFreq = v:GetCharacterData("frequency");
+	local radios = ents.FindByClass("cw_radio");
+	local radius = Clockwork.config:Get("talk_radius"):Get();
+	local radiusSqr = (radius * radius);
+	local stationaryRadiusSqr = (80 * 80);
+	local jammed = false;
+	
+	for k, v in pairs( _player.GetAll()) do
+		if (v:HasInitialized()) then
+			local vFreq = v:GetCharacterData("frequency");
+			
+			if ((v:HasItemByID("ecw_radio")) and v:GetCharacterData("radioState", false)) then
+				table.insert(radiospies, v);
 				
-				if ((v:HasItemByID("ecw_radio")) and v:GetCharacterData("radioState", false)) then
-					table.insert(radiospies, v);
-					
-					if ((v:GetCharacterData("radioJamming", false)) and (vFreq == frequency)) then
-						info.text = "<STATIC>"
-						jammed = true
-					end
-				elseif (v == player or (vFreq == frequency and v:HasItemByID("handheld_radio") and v:GetCharacterData("radioState", false))) then
-					local lastZone = v:GetCharacterData("LastZone");
-					
-					if lastZone == "tower" or lastZone == "wasteland" then
-						table.insert(listeners, v);
-					end
-					
-					if (v ~= player) then
-						if not v:IsNoClipping() and not v.cwWakingUp then
-							if lastZone == "tower" or lastZone == "wasteland" or lastZone == "caves" or lastZone == "scrapper" then
-								v:EmitSound("radio/radio_out"..tostring(math.random(2, 3))..".wav", 75, math.random(95, 100), 0.75, CHAN_AUTO);
-							end
+				if ((v:GetCharacterData("radioJamming", false)) and (vFreq == frequency)) then
+					info.text = "<STATIC>"
+					jammed = true
+				end
+			elseif (v == player or (vFreq == frequency and v:HasItemByID("handheld_radio") and v:GetCharacterData("radioState", false))) then
+				local lastZone = v:GetCharacterData("LastZone");
+				
+				if lastZone == "tower" or lastZone == "wasteland" then
+					table.insert(listeners, v);
+				end
+				
+				if (v ~= player) then
+					if not v:IsNoClipping() and not v.cwWakingUp then
+						if lastZone == "tower" or lastZone == "wasteland" or lastZone == "caves" or lastZone == "scrapper" then
+							v:EmitSound("radio/radio_out"..tostring(math.random(2, 3))..".wav", 75, math.random(95, 100), 0.75, CHAN_AUTO);
 						end
 					end
-				elseif (!info.noEavesdrop) and (v:GetShootPos():DistToSqr(player:GetShootPos()) <= radiusSqr) then
-					table.insert(eavesdroppers, v);
-				else
-					for k2, v2 in ipairs(radios) do
-						if (!v2:IsOff() and !v2:IsCrazy() and v2:GetFrequency() == frequency) then
-							if v:GetPos():DistToSqr(v2:GetPos()) <= stationaryRadiusSqr then
-								table.insert(listeners, v);
-							end
+				end
+			elseif (!info.noEavesdrop) and (v:GetShootPos():DistToSqr(player:GetShootPos()) <= radiusSqr) then
+				table.insert(eavesdroppers, v);
+			else
+				for k2, v2 in ipairs(radios) do
+					if (!v2:IsOff() and !v2:IsCrazy() and v2:GetFrequency() == frequency) then
+						if v:GetPos():DistToSqr(v2:GetPos()) <= stationaryRadiusSqr then
+							table.insert(listeners, v);
 						end
 					end
-				end;
+				end
 			end;
 		end;
-		
-		for k, v in ipairs(radios) do
-			if (!v:IsOff() and !v:IsCrazy() and v:GetFrequency() == frequency) then
-				v:EmitSound("radio/radio_out"..tostring(math.random(1, 3))..".wav", 75, math.random(95, 100), 0.75, CHAN_AUTO);
-			end
+	end;
+	
+	for k, v in ipairs(radios) do
+		if (!v:IsOff() and !v:IsCrazy() and v:GetFrequency() == frequency) then
+			v:EmitSound("radio/radio_out"..tostring(math.random(1, 3))..".wav", 75, math.random(95, 100), 0.75, CHAN_AUTO);
 		end
-		
+	end
+	
+	if proclaim then
+		Clockwork.chatBox:SetMultiplier(1.35);
+	end
+	
+	info = Clockwork.chatBox:Add(listeners, player, "radio", info.text);
+	
+	if (info and IsValid(info.speaker)) then
 		if proclaim then
 			Clockwork.chatBox:SetMultiplier(1.35);
 		end
 		
-		info = Clockwork.chatBox:Add(listeners, player, "radio", info.text);
+		Clockwork.chatBox:Add(eavesdroppers, info.speaker, "radio_eavesdrop", info.text);
 		
-		if (info and IsValid(info.speaker)) then
+		if jammed then
 			if proclaim then
 				Clockwork.chatBox:SetMultiplier(1.35);
 			end
 			
-			Clockwork.chatBox:Add(eavesdroppers, info.speaker, "radio_eavesdrop", info.text);
-			
-			if jammed then
-				if proclaim then
-					Clockwork.chatBox:SetMultiplier(1.35);
-				end
-				
-				Clockwork.chatBox:Add(radiospies, info.speaker, "radiospy",  info.text);
-			else
-				if proclaim then
-					Clockwork.chatBox:SetMultiplier(1.35);
-				end
-				
-				Clockwork.chatBox:Add(radiospies, info.speaker, "radiospy",  "["..frequency.."]: \""..info.text.."\"");
+			Clockwork.chatBox:Add(radiospies, info.speaker, "radiospy",  info.text);
+		else
+			if proclaim then
+				Clockwork.chatBox:SetMultiplier(1.35);
 			end
 			
-			Clockwork.plugin:Call("PlayerRadioUsed", player, info.text, listeners, eavesdroppers);
-		end;
+			Clockwork.chatBox:Add(radiospies, info.speaker, "radiospy",  "["..frequency.."]: \""..info.text.."\"");
+		end
+		
+		Clockwork.plugin:Call("PlayerRadioUsed", player, info.text, listeners, eavesdroppers);
 	end;
 end;
 
