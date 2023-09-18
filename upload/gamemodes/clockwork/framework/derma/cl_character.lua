@@ -2120,27 +2120,23 @@ function PANEL:Init()
 		self.availableFaiths = {};
 		self.bFaiths = false;
 	else
-		local availableFaithsCount = #factionTable.availablefaiths;
-		
 		if factionTable.subfactionsToAvailableFaiths and factionTable.subfactionsToAvailableFaiths[Clockwork.Client.SelectedSubfaction] then
 			self.availableFaiths = factionTable.subfactionsToAvailableFaiths[Clockwork.Client.SelectedSubfaction];
 		elseif factionTable.availablefaiths then
 			self.availableFaiths = factionTable.availablefaiths;
-		else
-			self.availableFaiths = {};
 		end
 	
-		if (!self.availablefaiths) then
+		if (!self.availableFaiths) then
 			self.availableFaiths = {};
 			self.bFaiths = false;
-		elseif availableFaithsCount == 1 then
+		elseif #self.availableFaiths == 1 then
 			self.bFaiths = false;
 
-			Clockwork.Client.SelectedFaith = self.availablefaiths[1];
-			self.info.faith = fself.availablefaiths[1];
+			Clockwork.Client.SelectedFaith = self.availableFaiths[1];
+			self.info.faith = self.availableFaiths[1];
 		else
-			Clockwork.Client.SelectedFaith = self.availablefaiths[1];
-			self.info.faith = self.availablefaiths[1];
+			Clockwork.Client.SelectedFaith = self.availableFaiths[1];
+			self.info.faith = self.availableFaiths[1];
 		end
 	end
 	
@@ -2724,13 +2720,15 @@ function PANEL:Init()
 		self.faithFormTitle:SizeToContents();
 		self.faithFormTitle:SetColor(Color(255, 255, 255));
 		
-		for k, v in SortedPairsByMemberValue(Schema.faiths:GetFaiths(), order) do
-			if table.HasValue(self.availableFaiths, v.name) then
+		for i, v in ipairs(self.availableFaiths) do
+			local faithTable = Schema.faiths:GetFaith(v);
+			
+			if faithTable then
 				local faithButton = vgui.Create("DImageButton", self.faithForm)
 				
 				faithButton:SetSize(480, 150);
-				faithButton:SetImage(v.image);
-				faithButton.faith = v.name;
+				faithButton:SetImage(faithTable.image);
+				faithButton.faith = faithTable.name;
 
 				timer.Simple(0.1, function()
 					if IsValid(faithButton) then
@@ -2757,16 +2755,16 @@ function PANEL:Init()
 					self.info.faith = faithButton.faith;
 					
 					faithButton:SetColor(Color(255, 150, 150, 255));
-					self.faithTitle:SetText(v.name);
+					self.faithTitle:SetText(faithTable.name);
 					self.faithTitle:SizeToContents();
 					self.faithTitle:SetPos(245 - (self.faithTitle:GetWide() / 2), 0);
-					self.faithDescription:SetText(v.description);
+					self.faithDescription:SetText(faithTable.description);
 					
 					if faithButton.sound then
 						surface.PlaySound(faithButton.sound);
 					end
 				end;
-				
+			
 				self.faithForm:AddItem(faithButton);
 			end
 		end
@@ -3070,7 +3068,8 @@ function PANEL:PerformLayout(w, h)
 	self.categoryList:SetPos(25, ScrH() / 10);
 	
 	if self.faithList then
-		self.faithList:SetSize(512, 800);
+		self.faithList:SizeToContents();
+		self.faithList:SetWide(512);
 		self.faithList:SetPos(ScrW() - 25 - self.faithList:GetWide(), ScrH() / 10);
 	end
 	
@@ -3531,7 +3530,7 @@ function PANEL:Init()
 	self.subfactionList:HideScrollbar();
 	
 	self.subfactionDescriptionList = vgui.Create("DPanelList", self.informationForm);
-	self.subfactionDescriptionList:SetSize(450, 298);
+	self.subfactionDescriptionList:SetSize(450, 300);
 	self.subfactionDescriptionList:SetPaintBackground(false);
 	self.subfactionDescriptionList:EnableVerticalScrollbar(false);
 	self.subfactionDescriptionList:EnableHorizontal(true);

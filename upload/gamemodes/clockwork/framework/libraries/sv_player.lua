@@ -392,6 +392,20 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 			player, "This faction is currently disabled!"
 		)
 	end
+	
+	if factionTable.availablefaiths and data.faith then
+		if !table.HasValue(factionTable.availablefaiths, data.faith) then
+			if data.subfaction and factionTable.subfactionsToAvailableFaiths and !factionTable.subfactionsToAvailableFaiths[data.subfaction] then
+				return self:SetCreateFault(
+					player, "This subfaction cannot take the "..data.faith.." faith!"
+				)
+			else
+				return self:SetCreateFault(
+					player, "This faction cannot take the "..data.faith.." faith!"
+				)
+			end
+		end
+	end
 
 	if (factionTable.whitelist and !self:IsWhitelisted(player, info.faction)) then
 		return self:SetCreateFault(
