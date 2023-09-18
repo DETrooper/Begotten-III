@@ -365,7 +365,7 @@ function PANEL:AddIcon(iconData)
 			local selectedGood = Color(50, 255, 50, 255);
 			local selectedNeutral = Color(200, 200, 200, 255);
 			
-			local canTake = "\nYou can take this belief!"
+			local canTake = "You can take this belief!"
 			local canTakeColor = selectedGood;
 			local canUnlock = true
 			
@@ -373,7 +373,7 @@ function PANEL:AddIcon(iconData)
 			local points = Clockwork.Client:GetNetVar("points", 0);
 			
 			if (beliefs[icon.uniqueID]) then
-				canTake = "\nYou already follow this belief!"
+				canTake = "You already follow this belief!"
 				canTakeColor = selectedNeutral;
 				icon:SetColor(Unlocked)
 			else
@@ -383,7 +383,7 @@ function PANEL:AddIcon(iconData)
 					for i, v in ipairs(parent.lockedTraits) do
 						if table.HasValue(traits, v) then
 							icon:SetColor(HardLocked)
-							canTake = "\nThis belief tree is locked due to a trait you took!"
+							canTake = "This belief tree is locked due to a trait you took!"
 							canTakeColor = selectedBad;
 							canUnlock = false;
 							
@@ -396,7 +396,7 @@ function PANEL:AddIcon(iconData)
 					for i, v in ipairs(icon.lockedTraits) do
 						if table.HasValue(traits, v) then
 							icon:SetColor(HardLocked)
-							canTake = "\nThis belief is locked due to a trait you took!"
+							canTake = "This belief is locked due to a trait you took!"
 							canTakeColor = selectedBad;
 							canUnlock = false;
 							
@@ -409,7 +409,7 @@ function PANEL:AddIcon(iconData)
 					for i, v in ipairs(parent.lockedBeliefs) do
 						if beliefs[v] then
 							icon:SetColor(HardLocked)
-							canTake = "\nThis belief tree is locked due to a belief you took!"
+							canTake = "This belief tree is locked due to a belief you took!"
 							canTakeColor = selectedBad;
 							canUnlock = false;
 							
@@ -422,7 +422,7 @@ function PANEL:AddIcon(iconData)
 					for i, v in ipairs(icon.lockedBeliefs) do
 						if beliefs[v] then
 							icon:SetColor(HardLocked)
-							canTake = "\nThis belief is locked due to a belief you took!"
+							canTake = "This belief is locked due to a belief you took!"
 							canTakeColor = selectedBad;
 							canUnlock = false;
 							
@@ -434,35 +434,35 @@ function PANEL:AddIcon(iconData)
 				if canUnlock then
 					if parent.disabled then
 						icon:SetColor(HardLocked)
-						canTake = "\nThis belief tree is temporarily disabled until it can be implemented!"
+						canTake = "This belief tree is temporarily disabled until it can be implemented!"
 						canTakeColor = selectedBad;
 					elseif icon.disabled then
 						icon:SetColor(HardLocked)
-						canTake = "\nThis belief is temporarily disabled until it can be implemented!"
+						canTake = "This belief is temporarily disabled until it can be implemented!"
 						canTakeColor = selectedBad;
 					elseif (cwBeliefs:HasBelief("jack_of_all_trades") and icon.row >= 4 and !icon.subfaith) then
 						icon:SetColor(HardLocked)
-						canTake = "\nThis belief is locked due to a belief you took!"
+						canTake = "This belief is locked due to a belief you took!"
 						canTakeColor = selectedBad;
 					elseif parent.lockedSubfactions and table.HasValue(parent.lockedSubfactions, Clockwork.Client:GetSharedVar("subfaction")) then
 						icon:SetColor(HardLocked)
-						canTake = "\nThis belief tree is locked due to the subfaction you took!"
+						canTake = "This belief tree is locked due to the subfaction you took!"
 						canTakeColor = selectedBad;
 					elseif icon.lockedSubfactions and table.HasValue(icon.lockedSubfactions, Clockwork.Client:GetSharedVar("subfaction")) then
 						icon:SetColor(HardLocked)
-						canTake = "\nThis belief is locked due to the subfaction you took!"
+						canTake = "This belief is locked due to the subfaction you took!"
 						canTakeColor = selectedBad;
 					elseif parent.lockedFactions and table.HasValue(parent.lockedFactions, Clockwork.Client:GetFaction()) then
 						icon:SetColor(HardLocked)
-						canTake = "\nThis belief tree locked due to the faction you took!"
+						canTake = "This belief tree locked due to the faction you took!"
 						canTakeColor = selectedBad;
 					elseif icon.lockedFactions and table.HasValue(icon.lockedFactions, Clockwork.Client:GetFaction()) then
 						icon:SetColor(HardLocked)
-						canTake = "\nThis belief is locked due to the faction you took!"
+						canTake = "This belief is locked due to the faction you took!"
 						canTakeColor = selectedBad;
 					elseif icon.subfaith and Clockwork.Client:GetSharedVar("subfaith") and Clockwork.Client:GetSharedVar("subfaith") ~= "" and Clockwork.Client:GetSharedVar("subfaith") ~= "N/A" and icon.subfaith ~= Clockwork.Client:GetSharedVar("subfaith") then
 						icon:SetColor(HardLocked)
-						canTake = "\nYou have already selected a subfaith!"
+						canTake = "You have already selected a subfaith!"
 						canTakeColor = selectedBad;
 					elseif (table.Count(requirements) > 0) then
 						for k, v in pairs (requirements) do
@@ -474,7 +474,7 @@ function PANEL:AddIcon(iconData)
 						
 						if (canUnlock) then
 							if (points <= 0) then
-								canTake = "\nYou do not have any epiphanies to spend on this belief!"
+								canTake = "You do not have any epiphanies to spend on this belief!"
 								canTakeColor = selectedBad;
 								icon:SetColor(Locked)
 							else
@@ -482,9 +482,9 @@ function PANEL:AddIcon(iconData)
 							end
 						else
 							if (points <= 0) then
-								canTake = "\nYou have no epiphanies and do not meet the requirements for this belief!"
+								canTake = "You have no epiphanies and do not meet the requirements for this belief!"
 							else
-								canTake = "\nYou do not meet the requirements for this belief!"
+								canTake = "You do not meet the requirements for this belief!"
 							end
 							
 							canTakeColor = selectedBad;
@@ -492,7 +492,7 @@ function PANEL:AddIcon(iconData)
 						end
 					else
 						if (points <= 0) then
-							canTake = "\nYou do not have any epiphanies to spend on this belief!"
+							canTake = "You do not have any epiphanies to spend on this belief!"
 							canTakeColor = selectedBad;
 							icon:SetColor(Locked)
 						else
@@ -503,25 +503,17 @@ function PANEL:AddIcon(iconData)
 			end
 				
 			local tooltip = function(frame)
-				frame:AddText(name, parent.color, "Civ5ToolTi3");
-				frame:AddText(description, Color(225, 200, 200));
-				
-				if requirementsNiceNames and #requirementsNiceNames > 0 then
-					local requirementString = "Requirements: ";
-					
-					for i = 1, #requirementsNiceNames do
-						requirementString = requirementString..requirementsNiceNames[i];
-						
-						if i ~= #requirementsNiceNames then
-							requirementString = requirementString..", ";
-						end
-					end
-					
-					frame:AddText(requirementString, Color(225, 200, 200));
-				end
+				frame:AddText(name, parent.color, "Civ5ToolTip4");
+				frame:AddText(description.."\n", Color(225, 200, 200));
 				
 				if quote then
-					frame:AddText("\n"..quote, Color(128, 90, 90, 240));
+					frame:AddText(quote.."\n", Color(128, 90, 90, 240));
+				end
+				
+				if requirementsNiceNames and #requirementsNiceNames > 0 then
+					local requirementString = "Requirements: "..table.concat(requirementsNiceNames, " ");
+					
+					frame:AddText(requirementString, Color(225, 200, 200));
 				end
 				
 				frame:AddText(canTake, canTakeColor);
@@ -755,6 +747,7 @@ function PANEL:RebuildBeliefTrees()
 				iconTable.uniqueID = uniqueID;
 				iconTable.name = belief.name;
 				iconTable.description = belief.description;
+				iconTable.quote = belief.quote;
 				iconTable.row = belief.row;
 				iconTable.x = columnPositions[i] - 22;
 				iconTable.y = rowPositions[belief.row] - 22;
@@ -767,7 +760,11 @@ function PANEL:RebuildBeliefTrees()
 				
 				if belief.requirements then
 					iconTable.requirements = belief.requirements;
-					iconTable.requirementsNiceNames = cwBeliefs:GetBeliefName(belief.requirements, v.uniqueID);
+					iconTable.requirementsNiceNames = {};
+					
+					for i2, v3 in ipairs(iconTable.requirements) do
+						table.insert(iconTable.requirementsNiceNames, cwBeliefs:GetBeliefName(v3, k));
+					end
 				end
 				
 				if belief.subfaith then

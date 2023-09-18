@@ -257,7 +257,7 @@ end;
 
 -- A function to get the item's current condition value.
 function CLASS_TABLE:IsBroken()
-	return self:GetData("broken")
+	return (self:GetData("condition") <= 0);
 end;
 
 -- A function to get the item's current value.
@@ -728,8 +728,6 @@ if (SERVER) then
 		
 		if (condition <= 0 and self.breakable) then
 			self:Break()
-		else
-			self:SetData("broken", false);
 		end;
 		
 		self:UpdateValue()
@@ -748,8 +746,6 @@ if (SERVER) then
 		
 		if (condition <= 0 and self.breakable) then
 			self:Break()
-		else
-			self:SetData("broken", false);
 		end;
 		
 		self:UpdateValue()
@@ -814,8 +810,6 @@ if (SERVER) then
 				itemEntity:Remove();
 			end;
 		else
-			self:SetData("broken", true);
-
 			if (!IsValid(itemEntity)) then
 				local players = _player.GetAll();
 				local holder = nil;
@@ -1133,12 +1127,6 @@ function item.CreateInstance(uniqueID, itemID, data, bNoGenerate)
 		else
 			-- force this shit to network properly
 			item.instances[itemID]:AddData("condition", item.instances[itemID]:GetData("condition"), true);
-		end
-		
-		if not item.instances[itemID]:GetData("broken") then
-			item.instances[itemID]:AddData("broken", false, true);
-		else
-			item.instances[itemID]:AddData("broken", item.instances[itemID]:GetData("broken"), true);
 		end
 		
 		if item.category == "Firearms" then

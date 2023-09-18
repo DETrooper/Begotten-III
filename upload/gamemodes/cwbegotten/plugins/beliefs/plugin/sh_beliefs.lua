@@ -217,7 +217,7 @@ function cwBeliefs:GetBeliefName(beliefs, treeID)
 	end
 
 	if treeID then
-		local beliefTree = self.beliefTrees.stored[beliefTree];
+		local beliefTree = self.beliefTrees.stored[treeID];
 		
 		if (beliefTree) then
 			for k, v in pairs(beliefTree.beliefs) do

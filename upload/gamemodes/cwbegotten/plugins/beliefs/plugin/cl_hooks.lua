@@ -65,7 +65,15 @@ function cwBeliefs:GetEntityMenuOptions(entity, options)
 					options["Harvest Bones"] = "cwHarvestBones";
 				end;
 			end
+		elseif player and player:Alive() then
+			if self:HasBelief("doctor") then
+				options["Diagnose"] = "cwDiagnose";
+			end
 		end;
+	elseif entity:IsPlayer() and entity:Alive() then
+		if self:HasBelief("doctor") then
+			options["Diagnose"] = "cwDiagnose";
+		end
 	end;
 end;
 

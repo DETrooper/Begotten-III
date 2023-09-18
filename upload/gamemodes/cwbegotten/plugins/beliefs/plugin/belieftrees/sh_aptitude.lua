@@ -10,7 +10,7 @@ local APTITUDE = cwBeliefs.beliefTrees:New("aptitude")
 	APTITUDE.size = {w = 378, h = 407};
 	APTITUDE.textures = {"aptitude", "aptitudearrows"};
 	APTITUDE.tooltip = {
-		{"Aptitude", APTITUDE.color, "Civ5ToolTi3"},
+		{"Aptitude", APTITUDE.color, "Civ5ToolTip4"},
 		{"Aptitude is a measure of your character's intellect, affecting your character's literacy, effectiveness at alchemy, and effectiveness as a healer. Upgrading this belief set will unlock new ways to learn and adapt, become a skilled doctor or alchemist, as well as unlocking the ability to read.", Color(225, 200, 200)},
 		{"\n\"Do not taint the legacy of Hard-Glaze if you cannot bear to sustain code.\"\nHer voice was no murmur, but a bold challenge to all who opposed.\n\"Was that the final testimony? Transcendence has brought me closer, resonating in a ray of almighty God's newfound hope.\"", Color(128, 90, 90, 240)},
 		{"\nBelief Tree Completion Bonus: +75% Faith gain from all sources.", Color(50, 255, 50)},

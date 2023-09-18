@@ -444,18 +444,57 @@ RITUAL = cwRituals.rituals:New("call_of_the_blood_moon");
 	RITUAL.experience = 25;
 	
 	function RITUAL:OnPerformed(player)
+		if cwDayNight then
+			if cwDayNight.currentCycle == "night" then
+				Clockwork.chatBox:Add(player, nil, "event", "You feel the Blood Moon's radiance pulsating, as though it were drawing power from something.");
+				Clockwork.datastream:Start(player, "PlaySound", "begotten/ui/sanity_touch.mp3");
+			
+				for i, v in ipairs(_player.GetAll()) do
+					if IsValid(v) and v:HasInitialized() then
+						local lastZone = v:GetCharacterData("LastZone");
+
+						if lastZone == "wasteland" or lastZone == "tower" then
+							Clockwork.chatBox:Add(v, nil, "event", "You feel the Blood Moon's radiance pulsating, as though it were drawing power from something.");
+							
+							if v ~= player then
+								Clockwork.datastream:Start(v, "PlaySound", "begotten/ambient/hits/wall_stomp5.mp3");
+							end
+							
+							v:Disorient(3);
+							
+							for i = 1, 5 do
+								timer.Simple(i * 3, function()
+									if IsValid(v) then
+										Clockwork.datastream:Start(v, "PlaySound", "begotten/ambient/hits/wall_stomp"..tostring(i)..".mp3");
+										v:Disorient(3);
+									end
+								end);
+							end
+						end
+					end
+				end
+				
+				cwDayNight:ModifyCycleTimeLeft(900);
+				return true;
+			end
+		end
 	end;
 	function RITUAL:OnFail(player)
 	end;
 	function RITUAL:StartRitual(player)
 		if cwDayNight then
 			if cwDayNight.currentCycle == "night" then
-				cwDayNight:ModifyCycleTimeLeft(900);
-				return true;
+				if cwDayNight.nextCycleTime - CurTime() <= 10 then
+					-- Add enough time to complete the ritual!
+					cwDayNight:ModifyCycleTimeLeft(10);
+				end
+			else
+				Schema:EasyText(player, "peru", "The Blood Moon must be out in order for you to perform this ritual!");
+				
+				return false;
 			end
 		end
 		
-		Schema:EasyText(player, "peru", "The Blood Moon must be out in order for you to perform this ritual!");
 		return false;
 	end;
 	function RITUAL:EndRitual(player)
@@ -870,49 +909,47 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil");
 			local target = Clockwork.player:FindByID(result)
 			
 			if IsValid(target) then
-				if target:GetFaction() == "Children of Satan" then
-					Schema:EasyText(player, "firebrick", "This character is protected by some magical aura and cannot be marked!");
-					
-					for i = 1, #RITUAL.requirements do
-						player:GiveItem(item.CreateInstance(RITUAL.requirements[i]));
-					end
-					
-					return;
-				end
-				
-				Clockwork.dermaRequest:RequestConfirmation(player, "Mark Confirmation", "Are you sure you want to mark "..target:Name().." for death?", function()
-					if IsValid(target) then
-						target:SetCharacterData("markedBySatanist", true);
-						target:SetSharedVar("markedBySatanist", true);
-						
-						Schema:EasyText(player, "maroon", target:Name().." has been marked for death.");
-						Schema:EasyText(GetAdmins(), "tomato", target:Name().." has been marked for death by "..player:Name().."!");
-						
-						for k, v in pairs (_player.GetAll()) do
-							if v:HasInitialized() then
-								if v == player or v:GetFaith() == "Faith of the Dark" then
-									Clockwork.chatBox:Add(v, nil, "darkwhispernoprefix", player:Name().." calls forth the minions of the Dark Lord, marking the one by the name of "..target:Name().." to be killed for their transgressions.");
+				if target:Alive() then
+					if target:GetFaction() ~= "Children of Satan" then
+						Clockwork.dermaRequest:RequestConfirmation(player, "Mark Confirmation", "Are you sure you want to mark "..target:Name().." for death?", function()
+							if IsValid(target) and target:Alive() and target:GetFaction() ~= "Children of Satan" then
+								target:SetCharacterData("markedBySatanist", true);
+								target:SetSharedVar("markedBySatanist", true);
+								
+								Schema:EasyText(player, "maroon", target:Name().." has been marked for death.");
+								Schema:EasyText(GetAdmins(), "tomato", target:Name().." has been marked for death by "..player:Name().."!");
+								
+								for k, v in pairs (_player.GetAll()) do
+									if v:HasInitialized() then
+										if v == player or v:GetFaith() == "Faith of the Dark" then
+											Clockwork.chatBox:Add(v, nil, "darkwhispernoprefix", player:Name().." calls forth the minions of the Dark Lord, marking the one by the name of "..target:Name().." to be killed for their transgressions.");
+										end
+									end
+								end
+								
+								if player:GetSubfaction() ~= "Rekh-khet-sa" then
+									player:HandleNeed("corruption", 30);
 								end
 							end
-						end
+						end);
 						
-						if player:GetSubfaction() ~= "Rekh-khet-sa" then
-							player:HandleNeed("corruption", 30);
-						end
+						return true;
 					else
-						for i = 1, #RITUAL.requirements do
-							player:GiveItem(item.CreateInstance(RITUAL.requirements[i]));
-						end
+						Schema:EasyText(player, "firebrick", "This character is protected by some magical aura and cannot be marked!");
 					end
-				end);
+				else
+					Schema:EasyText(player, "darkgrey", "The target character is already dead!");
+				end
 			else
 				Schema:EasyText(player, "grey", tostring(result).." is not a valid character!");
-				
-				for i = 1, #RITUAL.requirements do
-					player:GiveItem(item.CreateInstance(RITUAL.requirements[i]));
-				end
 			end
 		end)
+		
+		for i = 1, #RITUAL.requirements do
+			player:GiveItem(item.CreateInstance(RITUAL.requirements[i]));
+		end
+		
+		return false;
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -933,6 +970,46 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil_target");
 	RITUAL.isSilent = true;
 	
 	function RITUAL:OnPerformed(player)
+		local target = player:GetEyeTraceNoCursor().Entity;
+		
+		if IsValid(target) and target:IsPlayer() then
+			if target:Alive() then
+				--if target:GetFaith() ~= "Faith of the Dark" then
+				if target:GetFaction() ~= "Children of Satan" then
+					if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
+						Clockwork.dermaRequest:RequestConfirmation(player, "Mark Confirmation", "Are you sure you want to mark "..target:Name().." for death?", function()
+							if IsValid(target) and target:Alive() and target:GetFaction() ~= "Children of Satan" then
+								target:SetCharacterData("markedBySatanist", true);
+								target:SetSharedVar("markedBySatanist", true);
+								
+								Schema:EasyText(player, "maroon", target:Name().." has been marked for death.");
+								Schema:EasyText(GetAdmins(), "tomato", target:Name().." has been marked for death by "..player:Name().."!");
+								
+								if player:GetSubfaction() ~= "Rekh-khet-sa" then
+									player:HandleNeed("corruption", 30);
+								end
+							end
+						end);
+						
+						return true;
+					else
+						Schema:EasyText(player, "firebrick", "This character is too far away!");
+					end
+				else
+					Schema:EasyText(player, "firebrick", "This character is protected by some magical aura and cannot be marked!");
+				end
+			else
+				Schema:EasyText(player, "darkgrey", "The target character is already dead!");
+			end
+		else
+			Schema:EasyText(player, "firebrick", "You must look at a valid character!");
+		end
+		
+		for i = 1, #RITUAL.requirements do
+			player:GiveItem(item.CreateInstance(RITUAL.requirements[i]));
+		end
+		
+		return false;
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -961,46 +1038,6 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil_target");
 		return false;
 	end;
 	function RITUAL:EndRitual(player)
-		local target = player:GetEyeTraceNoCursor().Entity;
-		
-		if IsValid(target) and target:IsPlayer() then
-			if target:Alive() then
-				--if target:GetFaith() ~= "Faith of the Dark" then
-				if target:GetFaction() ~= "Children of Satan" then
-					if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
-						Clockwork.dermaRequest:RequestConfirmation(player, "Mark Confirmation", "Are you sure you want to mark "..target:Name().." for death?", function()
-							if IsValid(target) then
-								target:SetCharacterData("markedBySatanist", true);
-								target:SetSharedVar("markedBySatanist", true);
-								
-								Schema:EasyText(player, "maroon", target:Name().." has been marked for death.");
-								Schema:EasyText(GetAdmins(), "tomato", target:Name().." has been marked for death by "..player:Name().."!");
-								
-								if player:GetSubfaction() ~= "Rekh-khet-sa" then
-									player:HandleNeed("corruption", 30);
-								end
-							else
-								for i = 1, #RITUAL.requirements do
-									player:GiveItem(item.CreateInstance(RITUAL.requirements[i]));
-								end
-							end
-						end);
-						
-						return true;
-					else
-						Schema:EasyText(player, "firebrick", "This character is too far away!");
-					end
-				else
-					Schema:EasyText(player, "firebrick", "This character is protected by some magical aura and cannot be marked!");
-				end
-			else
-				Schema:EasyText(player, "darkgrey", "The target character is already dead!");
-			end
-		else
-			Schema:EasyText(player, "firebrick", "You must look at a valid character!");
-		end
-		
-		return false;
 	end;
 RITUAL:Register()
 

@@ -265,8 +265,8 @@ COMMAND.alias = {"SetStamina", "PlySetStamina"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
-	local target = Clockwork.player:FindByID( arguments[1] )
-	local amount = arguments[2];
+	local target = Clockwork.player:FindByID(arguments[1]);
+	local amount = tonumber(arguments[2]);
 	
 	if (!amount) then
 		amount = 100;

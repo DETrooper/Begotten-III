@@ -11,7 +11,7 @@ local DARK = cwBeliefs.beliefTrees:New("dark")
 	DARK.textures = {"dark", "faithdarkarrows"};
 	DARK.headerFontOverride = "nov_IntroTextSmallaaafaa";
 	DARK.tooltip = {
-		{"Faith of the Dark", DARK.color, "Civ5ToolTi3"},
+		{"Faith of the Dark", DARK.color, "Civ5ToolTip4"},
 		{"Each faith has a unique skill set, unlocking character abilities, rituals, and generally improving stats overall. One may also branch into subfaiths, though openly practicing these subfaiths may see your character deemed a heretic by the relevant religious authorities.", Color(225, 200, 200)},
 		{"\n\"The holy city of Glaze in Hell's domain. These are my dual swords to be crossed, indeed over her chest in resolution to a final cause. In a beating heart of shields.\"", Color(128, 90, 90, 240)},
 		{"", Color(50, 255, 50)}

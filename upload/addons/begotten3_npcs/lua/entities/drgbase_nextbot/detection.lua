@@ -75,8 +75,8 @@ if SERVER then
     if not IsValid(ent) then return false end
     if self:IsBlind() then return false end
     if ent == self then return true end
-    local eyepos = self:EyePos()
-    if eyepos:DistToSqr(ent:GetPos()) > self:GetSightRange()^2 then return false end
+    local eyepos = self:EyePos()		local sightRange = self:GetSightRange();		if ent:IsPlayer() and ent:Crouching() then		if Clockwork and cwBeliefs and ent:HasBelief("nimble") then			sightRange = math.Round(sightRange * 0.333);		end	end
+    if eyepos:DistToSqr(ent:GetPos()) > sightRange^2 then return false end
     if ent:IsPlayer() then
       if ent:DrG_IsPossessing() then return self:IsInSight(ent:DrG_GetPossessing()) end
       local luminosity = ent:FlashlightIsOn() and 1 or ent:DrG_Luminosity()

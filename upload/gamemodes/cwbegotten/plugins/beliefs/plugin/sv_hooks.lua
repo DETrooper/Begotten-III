@@ -641,7 +641,9 @@ local animalModels = {
 function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 	local class = entity:GetClass();
 	
-	if (entity:GetClass() == "prop_ragdoll" or entity:GetClass() == "prop_physics") then
+	if (arguments == "cwDiagnose") then
+		Clockwork.player:RunClockworkCommand(player, "CharDiagnose");
+	elseif (class == "prop_ragdoll" or class == "prop_physics") then
 		local entityPlayer = Clockwork.entity:GetPlayer(entity);
 		local trace = player:GetEyeTraceNoCursor();
 		

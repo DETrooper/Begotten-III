@@ -548,7 +548,7 @@ function GM:PlayerBindPress(player, bind, bPress)
 	end
 
 	if (!player:IsNoClipping() and !Clockwork.player:HasFlags(player, "B") and bind:find("+jump")) then
-		if (player:GetNWInt("Stamina", 100) < 2) then
+		if (player:GetNWInt("Stamina", 100) < 2) and !player:IsRagdolled() then
 			return true
 		end
 	end

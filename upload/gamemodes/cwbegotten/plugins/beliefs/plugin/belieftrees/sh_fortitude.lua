@@ -10,7 +10,7 @@ local FORTITUDE = cwBeliefs.beliefTrees:New("fortitude")
 	FORTITUDE.size = {w = 378, h = 407};
 	FORTITUDE.textures = {"fortitude", "fortitudearrows"};
 	FORTITUDE.tooltip = {
-		{"Fortitude", FORTITUDE.color, "Civ5ToolTi3"},
+		{"Fortitude", FORTITUDE.color, "Civ5ToolTip4"},
 		{"Fortitude is a measure of your character's mental and physical resilence, primarily affecting your character's resistance to insanity as well as improving your character's combat ability due to increased pain tolerance.", Color(225, 200, 200)},
 		{"\n\"I am the creator of all this light and now I fall to pieces without recognition. Dying without glorification is sinful nature, yet God does not reside in the light. The light resides in the dark. Souls begin through flesh. The mind ponders inside of shells that cannot withstand a lie which does nothing but misinterpret all that we have achieved.\"", Color(128, 90, 90, 240)},
 		{"\nBelief Tree Completion Bonus: +25% Poise Damage Resistance, +25% Stability Damage Resistance, Resistance to Explosion Fallover", Color(50, 255, 50)},

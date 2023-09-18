@@ -34,21 +34,25 @@ local ITEM = Clockwork.item:New(nil, true)
 	
 	-- Called when the player uses item.
 	function ITEM:OnUse(player, itemEntity)
-		if !cwBeliefs or (cwBeliefs and player:HasBelief("literacy") and (self.bookType == "Glazic" or player:HasBelief("anthropologist"))) then
-			local booksRead = player:GetCharacterData("BooksRead", {});
-			
-			if !table.HasValue(booksRead, self.uniqueID) then
-				if cwBeliefs and player:HasBelief("scribe") then
-					player:HandleXP(cwBeliefs.xpValues["read"]);
+		if !cwBeliefs or (cwBeliefs and player:HasBelief("literacy")) then
+			if (!cwBeliefs or (self.bookType == "Glazic" or player:HasBelief("anthropologist"))) then
+				local booksRead = player:GetCharacterData("BooksRead", {});
+				
+				if !table.HasValue(booksRead, self.uniqueID) then
+					if cwBeliefs and player:HasBelief("scribe") then
+						player:HandleXP(cwBeliefs.xpValues["read"]);
+					end
+					
+					table.insert(booksRead, self.uniqueID);
+					
+					player:SetCharacterData("BooksRead", booksRead);
 				end
 				
-				table.insert(booksRead, self.uniqueID);
-				
-				player:SetCharacterData("BooksRead", booksRead);
+				player:EmitSound("begotten/items/note_turn.wav")
+				Clockwork.datastream:Start(player, "OpenBook", self("uniqueID"))
+			else
+				Schema:EasyText(player, "chocolate", "You cannot decipher the glyphs in this scripture!");
 			end
-			
-			player:EmitSound("begotten/items/note_turn.wav")
-			Clockwork.datastream:Start(player, "OpenBook", self("uniqueID"))
 		else
 			Schema:EasyText(player, "chocolate", "You are not literate!");
 		end

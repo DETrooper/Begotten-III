@@ -16,6 +16,7 @@ function PLUGIN:GetEntityMenuOptions(entity, options)
 			options["Read"] = "cw_paperOption";
 		else
 			options["Write"] = "cw_paperOption";
+			options["Take"] = "cw_itemTake";
 		end;
 	end;
 end;

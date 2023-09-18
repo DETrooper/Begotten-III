@@ -10,7 +10,7 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 	INGENUITY.size = {w = 378, h = 407};
 	INGENUITY.textures = {"ingenuity", "ingenuityarrows"};
 	INGENUITY.tooltip = {
-		{"Ingenuity", INGENUITY.color, "Civ5ToolTi3"},
+		{"Ingenuity", INGENUITY.color, "Civ5ToolTip4"},
 		{"Ingenuity is a measure of your character's craftiness, primarily affecting your character's effectiveness at Crafting. Upgrading this belief set will progressively unlock more crafting options. More Crafting options may become available if this belief set is paired with aptitude.", Color(225, 200, 200)},
 		{"\n\"Bobby all proud 'an cool with that 'ol apparatus back in the truck that laid him out with sweet social status, far from junior status. It be the saddest machine but nice with molasses in the power gauge, as well as the mathematics and administrative tactics.\"", Color(128, 90, 90, 240)},
 		{"\nBelief Tree Completion Bonus: Armor and weapon condition will no longer decay.", Color(50, 255, 50)}
