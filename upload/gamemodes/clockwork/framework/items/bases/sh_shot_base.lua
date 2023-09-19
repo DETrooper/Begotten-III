@@ -235,7 +235,11 @@ local ITEM = item.New(nil, true);
 				
 				if magazineItemAmmo and magazineItemAmmo < magazineItem.ammoMagazineSize then
 					if magazineItem.SetAmmoMagazine then
-						magazineItem:SetAmmoMagazine(magazineItemAmmo + 1);
+						if SERVER then
+							magazineItem:SetAmmoMagazine(magazineItemAmmo + 1);
+							player:EmitSound("weapons/request day of defeat/m1903 springfield clipin.wav", 60, math.random(98, 102));
+						end
+						
 						return true;
 					end
 				else
@@ -262,7 +266,7 @@ local ITEM = item.New(nil, true);
 				
 				if ammoItem then
 					self:SetAmmoMagazine(itemAmmo - 1);
-					
+					player:EmitSound("weapons/m1911/handling/m1911_boltback.wav", 60, math.random(98, 102), 0.7);
 					player:GiveItem(ammoItem);
 				end
 				

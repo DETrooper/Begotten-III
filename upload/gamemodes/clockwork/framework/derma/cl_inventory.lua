@@ -588,8 +588,10 @@ function PANEL:Rebuild()
 													if occupierParent and occupierParent.itemData and occupierParent.itemTable then
 														local itemTable = occupierParent.itemTable;
 														
-														if itemTable.category == "Shot" and !parent.itemTable.ammoMagazineSize and itemTable.ammoName == parent.itemTable.ammoName then
-															Clockwork.datastream:Start("MergeAmmoMagazine", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+														if itemTable.category == "Shot" then
+															if parent.itemTable.UseOnMagazine and parent.itemTable:UseOnMagazine(Clockwork.Client, itemTable) then
+																Clockwork.datastream:Start("MergeAmmoMagazine", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+															end
 														end
 													end
 												end
@@ -769,7 +771,7 @@ function PANEL:Rebuild()
 												if occupierParent and occupierParent.itemData and occupierParent.itemTable then
 													local itemTable = occupierParent.itemTable;
 													
-													if itemTable.category == "Shot" and !parent.itemTable.ammoMagazineSize and itemTable.ammoName == parent.itemTable.ammoName then
+													if parent.itemTable.UseOnMagazine and parent.itemTable:UseOnMagazine(Clockwork.Client, itemTable) then
 														Clockwork.datastream:Start("MergeAmmoMagazine", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 													end
 												end

@@ -338,22 +338,29 @@ end);
 
 -- A function to print chatbox text without using RGB color.
 function Schema:EasyText(...)
-	local a = {...};
-	local ic = nil;
-	for k, v in pairs (a) do
-		if (istable(v)) then
-			continue
-		end;
-		if (string.find(a[k], ".png")) then
-			ic = a[k];
-			a[k] = nil
+	local args = {...};
+	local icon;
+	
+	for k, v in pairs (args) do
+		if (isentity(v) or istable(v)) then
+			args[k] = nil;
+			continue;
+		end
+
+		if isstring(v) and (string.find(v, ".png")) then
+			icon = v;
+			args[k] = nil
 			continue;
 		end;
-		if (colors[v]) then
-			a[k] = colors[v];
+		
+		if IsColor(v) then
+			args[k] = v;
+		elseif (colors[v]) then
+			args[k] = colors[v];
 		end;
 	end;
-	Clockwork.chatBox:Add(nil, ic, unpack(a));
+	
+	Clockwork.chatBox:Add(nil, icon, unpack(args));
 end;
 
 Clockwork.datastream:Hook("EasyText", function(varargs)
