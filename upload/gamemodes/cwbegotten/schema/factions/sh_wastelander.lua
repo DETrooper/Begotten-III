@@ -81,9 +81,10 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 			return false;
 		end;
 		
-		if player:GetFaith() ~= "Faith of the Light" or player:GetSubfaith() == "Voltism" then
+		-- It is the IC responsibility of Gatekeepers to bloodtest recruits.
+		--[[if player:GetFaith() ~= "Faith of the Light" or player:GetSubfaith() == "Voltism" then
 			return false;
-		end
+		end]]--
 		
 		if (!Clockwork.player:IsWhitelisted(player, faction.name)) then
 			Clockwork.player:SetWhitelisted(player, faction.name, true);
@@ -92,6 +93,10 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 	
 	if !Schema.Ranks then
 		Schema.Ranks = {};
+	end
+	
+	if !Schema.RanksToSubfaction then
+		Schema.RanksToSubfaction = {};
 	end
 	
 	if !Schema.RanksToCoin then
@@ -116,6 +121,11 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 		[11] = "Master-At-Arms",
 		[12] = "Scout",
 		[13] = "Master Scout",
+	};
+	
+	Schema.RanksToSubfaction["Gatekeeper"] = {
+		["Scout"] = "Praeventor",
+		["Master Scout"] = "Praeventor",
 	};
 	
 	Schema.RanksToCoin["Gatekeeper"] = {

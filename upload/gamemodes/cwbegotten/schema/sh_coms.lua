@@ -49,6 +49,78 @@ if (Schema.MapLocations) then
 	COMMAND:Register()
 end
 
+local COMMAND = Clockwork.command:New("Enlist")
+	COMMAND.tip = "Enlist a character into the ranks of the Gatekeepers. This will only work if you are an Emissary or higher."
+	COMMAND.flags = CMD_DEFAULT;
+	--COMMAND.access = "o"
+	COMMAND.alias = {"PlyEnlist", "CharEnlist", "Recruit", "PlyRecruit", "CharRecruit"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local target = Clockwork.entity:GetPlayer(player:GetEyeTraceNoCursor().Entity);
+		
+		if (target and target:Alive()) then
+			if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
+				local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+				local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+			
+				if player:IsAdmin() or (playerFaction == "Gatekeeper" and Schema.RanksOfAuthority[playerFaction][player:GetCharacterData("rank", 1)]) or playerFaction == "Holy Hierarchy" then
+					if targetFaction == "Gatekeeper" then
+						Schema:EasyText(player, "grey", target:Name().." is already a Gatekeeper!");
+
+						return;
+					end
+					
+					if (!Clockwork.faction:IsGenderValid("Gatekeeper", target:GetGender())) then
+						Schema:EasyText(player, "firebrick", target:Name().." is not the correct gender for the Gatekeeper faction!");
+						
+						return;
+					end;
+					
+					if player:InTower() then
+						if !Schema.towerSafeZoneEnabled then
+							Schema:EasyText(player, "firebrick", "The tower safezone must be enabled in order to run this commmand!");
+							
+							return;
+						end
+					else
+						Schema:EasyText(player, "firebrick", "You must do this inside the Tower of Light!");
+						
+						return;
+					end
+				
+					if targetFaction == "Wanderer" then
+						Clockwork.dermaRequest:RequestConfirmation(target, "Gatekeeper Enlistment", player:Name().." has invited you to enlist in the Gatekeepers!", function()
+							targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+							
+							if targetFaction == "Wanderer" and target:Alive() and Clockwork.faction:IsGenderValid("Gatekeeper", target:GetGender()) then
+								local bSuccess, fault = Clockwork.faction:GetStored()["Gatekeeper"]:OnTransferred(target, Clockwork.faction:GetStored()[targetFaction]);
+								
+								if (bSuccess != false) then
+									target:SetCharacterData("Faction", "Gatekeeper", true);
+									Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+									Clockwork.player:NotifyAll(player:Name().." has enlisted "..target:Name().." into the Gatekeepers.");
+								end;
+							end
+						end)
+						
+						Schema:EasyText(player, "green", "You have invited "..target:Name().." to enlist into the Gatekeepers!");
+						Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." has invited "..target:Name().." to join the Gatekeepers!");
+					else
+						Schema:EasyText(player, "firebrick", target:Name().." is not the right faction to be enlisted into the Gatekeepers!");
+					end
+				else
+					Schema:EasyText(player, "firebrick", "You do not have permissions to enlist "..target:Name().."!");
+				end;
+			else
+				Schema:EasyText(player, "firebrick", "This character is too far away!");
+			end;
+		else
+			Schema:EasyText(player, "firebrick", "You must look at a character!");
+		end
+	end
+COMMAND:Register()
+
 local COMMAND = Clockwork.command:New("Promote")
 	COMMAND.tip = "Promote a character if they belong to a faction with ranks. 2nd argument allows you to directly set the rank."
 	COMMAND.text = "<string Character> <string Rank> [bool NotifyTarget]"
@@ -92,8 +164,14 @@ local COMMAND = Clockwork.command:New("Promote")
 				else
 					rank = math.Clamp(target:GetCharacterData("rank", 1) + 1, 1, #ranks[faction]);
 				end;
-				
+
 				if (ranks[faction][rank]) then
+					if rank == target:GetCharacterData("rank", 1) then
+						Schema:EasyText(player, "grey", target:Name().." already holds the rank of "..ranks[faction][rank].."!");
+						
+						return false;
+					end
+				
 					if Schema.RanksOfAuthority[faction][rank] then
 						if !player:IsAdmin() and playerFaction ~= "Holy Hierarchy" then
 							Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().." to "..ranks[faction][rank].."!");
@@ -105,6 +183,13 @@ local COMMAND = Clockwork.command:New("Promote")
 					target:SetCharacterData("rank", rank);
 					hook.Run("PlayerChangedRanks", target);
 					local notifyTarget = tobool(arguments[3]);
+					
+					local subfaction = Schema.RanksToSubfaction[faction][ranks[faction][rank]];
+					
+					if subfaction then
+						target:SetCharacterData("Subfaction", subfaction, true);
+						Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+					end
 					
 					if (target == player) then
 						name = "yourself";
