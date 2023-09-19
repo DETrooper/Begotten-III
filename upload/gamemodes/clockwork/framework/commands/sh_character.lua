@@ -266,7 +266,7 @@ local COMMAND = Clockwork.command:New("PlyUnGodAll");
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("CharTransferFaction");
-	COMMAND.tip = "Transfer a character to a faction.";
+	COMMAND.tip = "Transfer a character to a faction. This will clear their subfaction so be sure to set a new one!";
 	COMMAND.text = "<string Name> <string Faction> [string Data]";
 	COMMAND.access = "o";
 	COMMAND.arguments = 2;
@@ -308,6 +308,8 @@ local COMMAND = Clockwork.command:New("CharTransferFaction");
 				
 				if (bSuccess != false) then
 					target:SetCharacterData("Faction", faction, true);
+					target:SetCharacterData("Subfaction", "", true);
+					target:SetCharacterData("rank", nil);
 					
 					Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
 					Clockwork.player:NotifyAll(player:Name().." has transferred "..name.." to the "..faction.." faction.");
@@ -337,12 +339,30 @@ local COMMAND = Clockwork.command:New("CharTransferSubfaction");
 		
 		if (target) then
 			local subfaction = arguments[2];
+			local faction = target:GetFaction();
+			local factionSubfactions = Clockwork.faction:GetStored()[faction].subfactions;
 			local name = target:Name();
 			
-			target:SetCharacterData("Subfaction", subfaction, true);
-			
-			Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
-			Clockwork.player:NotifyAll(player:Name().." has transferred "..name.." to the "..subfaction.." subfaction.");
+			if (factionSubfactions) then
+				for i, v in ipairs(factionSubfactions) do
+					if v.name == subfaction then
+						subfaction = v;
+						
+						break;
+					end
+				end
+				
+				if istable(subfaction) then
+					target:SetCharacterData("Subfaction", subfaction.name, true);
+					
+					Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+					Clockwork.player:NotifyAll(player:Name().." has transferred "..name.." to the "..subfaction.name.." subfaction.");
+				else
+					Clockwork.player:Notify(player, subfaction.." is not a valid subfaction for this faction!");
+				end
+			else
+				Clockwork.player:Notify(player, target:Name().."'s faction does not have any subfactions!");
+			end
 		else
 			Clockwork.player:Notify(player, arguments[1].." is not a valid player!");
 		end;

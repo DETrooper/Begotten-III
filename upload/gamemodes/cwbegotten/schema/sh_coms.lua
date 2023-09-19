@@ -51,8 +51,10 @@ end
 
 local COMMAND = Clockwork.command:New("Enlist")
 	COMMAND.tip = "Enlist a character into the ranks of the Gatekeepers. This will only work if you are an Emissary or higher."
+	COMMAND.text = "[string Subfaction]"
 	COMMAND.flags = CMD_DEFAULT;
 	--COMMAND.access = "o"
+	COMMAND.optionalArguments = 1;
 	COMMAND.alias = {"PlyEnlist", "CharEnlist", "Recruit", "PlyRecruit", "CharRecruit"};
 
 	-- Called when the command has been run.
@@ -88,26 +90,47 @@ local COMMAND = Clockwork.command:New("Enlist")
 						
 						return;
 					end
-				
-					if targetFaction == "Wanderer" then
-						Clockwork.dermaRequest:RequestConfirmation(target, "Gatekeeper Enlistment", player:Name().." has invited you to enlist in the Gatekeepers!", function()
-							targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+					
+					local subfaction = arguments[1] or "Legionary";
+					local factionSubfactions = Clockwork.faction:GetStored()["Gatekeeper"].subfactions;
+					
+					for i, v in ipairs(factionSubfactions) do
+						if v.name == subfaction then
+							subfaction = v;
 							
-							if targetFaction == "Wanderer" and target:Alive() and Clockwork.faction:IsGenderValid("Gatekeeper", target:GetGender()) then
-								local bSuccess, fault = Clockwork.faction:GetStored()["Gatekeeper"]:OnTransferred(target, Clockwork.faction:GetStored()[targetFaction]);
+							break;
+						end
+					end
+				
+					if istable(subfaction) then
+						if targetFaction == "Wanderer" then
+							Clockwork.dermaRequest:RequestConfirmation(target, "Gatekeeper Enlistment", player:Name().." has invited you to enlist in the Gatekeepers!", function()
+								targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
 								
-								if (bSuccess != false) then
-									target:SetCharacterData("Faction", "Gatekeeper", true);
-									Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
-									Clockwork.player:NotifyAll(player:Name().." has enlisted "..target:Name().." into the Gatekeepers.");
-								end;
-							end
-						end)
-						
-						Schema:EasyText(player, "green", "You have invited "..target:Name().." to enlist into the Gatekeepers!");
-						Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." has invited "..target:Name().." to join the Gatekeepers!");
+								if targetFaction == "Wanderer" and target:Alive() and Clockwork.faction:IsGenderValid("Gatekeeper", target:GetGender()) then
+									local bSuccess, fault = Clockwork.faction:GetStored()["Gatekeeper"]:OnTransferred(target, Clockwork.faction:GetStored()[targetFaction]);
+									
+									if (bSuccess != false) then
+										target:SetCharacterData("Faction", "Gatekeeper", true);
+										target:SetCharacterData("Subfaction", subfaction.name, true);
+										
+										if subfaction.name == "Praeventor" then
+											target:SetCharacterData("rank", 12);
+										end
+										
+										Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+										Clockwork.player:NotifyAll(player:Name().." has enlisted "..target:Name().." into the Gatekeepers.");
+									end;
+								end
+							end)
+							
+							Schema:EasyText(player, "green", "You have invited "..target:Name().." to enlist into the Gatekeepers!");
+							Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." has invited "..target:Name().." to join the Gatekeepers!");
+						else
+							Schema:EasyText(player, "firebrick", target:Name().." is not the right faction to be enlisted into the Gatekeepers!");
+						end
 					else
-						Schema:EasyText(player, "firebrick", target:Name().." is not the right faction to be enlisted into the Gatekeepers!");
+						Schema:EasyText(player, "firebrick", subfaction.." is not a valid subfaction for the Gatekeepers!");
 					end
 				else
 					Schema:EasyText(player, "firebrick", "You do not have permissions to enlist "..target:Name().."!");
