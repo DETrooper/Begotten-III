@@ -37,6 +37,14 @@ surface.CreateFont("Papyrus_Text", {
 	shadow 		= false
 });
 
+surface.CreateFont("Papyrus_Text_Small", {
+	font		= "Papyrus",
+	size		= 18,
+	weight		= 600,
+	antialiase	= true,
+	shadow 		= false
+});
+
 AccessorFunc(PANEL, "m_bPaintBackground", "PaintBackground");
 AccessorFunc(PANEL, "m_bgColor", "BackgroundColor");
 AccessorFunc(PANEL, "m_bDisabled", "Disabled");
@@ -83,7 +91,7 @@ function PANEL:Rebuild(bounties, state)
 				local bountyData = Clockwork.Client.cwBountyMenu.bounties[label.charKey];
 				
 				if bountyData then
-					Clockwork.Client.cwBountyMenu:DisplayWantedPoster(bountyData);
+					Clockwork.Client.cwBountyMenu:DisplayWantedPoster(bountyData, label.charKey);
 				end
 			end;
 			
@@ -109,7 +117,7 @@ function PANEL:Rebuild(bounties, state)
 				local bountyData = self.bounties[k];
 				
 				if bountyData then
-					self:DisplayWantedPoster(bountyData);
+					self:DisplayWantedPoster(bountyData, k);
 				end
 			end
 
@@ -153,7 +161,7 @@ local function Grayscale(entity)
     end
 end
 
-function PANEL:DisplayWantedPoster(bountyData)
+function PANEL:DisplayWantedPoster(bountyData, charKey)
 	if IsValid(self.wantedPoster) then
 		self.wantedPoster:Remove();
 	end
@@ -267,15 +275,33 @@ function PANEL:DisplayWantedPoster(bountyData)
 	physdescLabel:SetPos(0, 510);
 	physdescLabel:SetText(bountyData.physDesc or "They have no known physical description.");
 	physdescLabel:SetTextColor(Color(25, 25, 25, 255));
-	physdescLabel:SetFont("Papyrus_Text");
+	physdescLabel:SetFont("Papyrus_Text_Small");
 	physdescLabel:SetWidth(math.min(470, physdescLabel:GetContentSize()));
 	physdescLabel:SetAutoStretchVertical(true);
 	physdescLabel:SizeToContents();
 	physdescLabel:SetWrap(true);
 	physdescLabel:CenterHorizontal();
 	
+	local statusLabel = vgui.Create("DLabel", wantedPoster);
+	statusLabel:SetPos(0, 540);
+	statusLabel:SetText("CURRENT LOCATION UNKNOWN");
+	statusLabel:SetTextColor(Color(120, 25, 25, 255));
+	
+	for i, v in ipairs(_player.GetAll()) do
+		if v:GetNetVar("Key") == charKey then
+			statusLabel:SetText("ACTIVE IN THE AREA");
+			statusLabel:SetTextColor(Color(25, 120, 25, 255));
+			
+			break;
+		end
+	end
+
+	statusLabel:SetFont("Papyrus_Text");
+	statusLabel:SizeToContents();
+	statusLabel:CenterHorizontal();
+	
 	local rewardLabel = vgui.Create("DLabel", wantedPoster);
-	rewardLabel:SetPos(0, 560);
+	rewardLabel:SetPos(0, 575);
 	rewardLabel:SetText(tostring(bountyData.bounty or 0).." COIN REWARD!");
 	rewardLabel:SetTextColor(Color(25, 25, 25, 255));
 	rewardLabel:SetFont("Papyrus_Subheader");
@@ -283,7 +309,7 @@ function PANEL:DisplayWantedPoster(bountyData)
 	rewardLabel:CenterHorizontal();
 	
 	local captureLabel = vgui.Create("DLabel", wantedPoster);
-	captureLabel:SetPos(0, 600);
+	captureLabel:SetPos(0, 615);
 	captureLabel:SetText("FOR THEIR CAPTURE DEAD OR ALIVE!");
 	captureLabel:SetTextColor(Color(25, 25, 25, 255));
 	captureLabel:SetFont("Papyrus_Text");

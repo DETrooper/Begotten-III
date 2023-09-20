@@ -125,6 +125,27 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Voltspear";
+	ITEM.model = "models/begotten/weapons/voltspear.mdl";
+	ITEM.weight = 2.5;
+	ITEM.uniqueID = "begotten_spear_voltspear";
+	ITEM.category = "Melee";
+	ITEM.description = "An electrified voltprod mounted on a wooden shaft to increase its range.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/volt_spear.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.hasMinimumRange = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 0, 8.95);
+	ITEM.attachmentOffsetVector = Vector(-2.83, 3, -23.24);
+	ITEM.canUseShields = true;
+	
+	ITEM.attributes = {"grounded"};
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood", "wood", "scrap", "scrap", "scrap", "scrap", "tech", "tech"}};
+	ITEM.requiredbeliefs = {"wriggle_fucking_eel"};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Winged Spear";
 	ITEM.model = "models/demonssouls/weapons/winged spear.mdl";
 	ITEM.weight = 2.3;

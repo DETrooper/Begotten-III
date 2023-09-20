@@ -2827,11 +2827,19 @@ function GM:EntityHandleMenuOption(player, entity, option, arguments)
 					end
 		
 					if repairItemTable then
-						itemTable:GiveCondition(repairItemTable.conditionReplenishment or 50);
+						local replenishment = (repairItemTable.conditionReplenishment or 100) - ((100 - repairItemTable:GetCondition()) * (repairItemTable.conditionReplenishment / 100));
 						
-						player:TakeItem(repairItemTable, true);
+						itemTable:GiveCondition(math.min(replenishment, 100));
+						repairItemTable:TakeCondition((itemTable:GetCondition() - itemCondition) / (repairItemTable.conditionReplenishment / 100));
 						
-						Schema:EasyText(player, "olivedrab", "You have repaired your "..itemTable.name);
+						if repairItemTable:GetCondition() <= 0 then
+							player:TakeItem(repairItemTable, true);
+							
+							Schema:EasyText(player, "olivedrab", "You have repaired your "..itemTable.name.." to "..tostring(itemTable:GetCondition())..", using the last of the repair kit's parts in the process.");
+						else
+							Schema:EasyText(player, "green", "You have repaired your "..itemTable.name.." to "..tostring(itemTable:GetCondition())..".");
+							Clockwork.inventory:Rebuild(player);
+						end
 					else
 						Schema:EasyText(player, "chocolate", "You do not have an item you can repair this item with!");
 						return false;

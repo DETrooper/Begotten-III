@@ -3704,6 +3704,35 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("voltspear");
+		RECIPE.name = "Voltspear";
+		RECIPE.requiredBeliefs = {"jacobs_ladder"};
+		RECIPE.requiredBeliefsNiceNames = {"Jacob's Ladder"};
+		RECIPE.requiredSubfaiths = {"Voltism"};
+		RECIPE.requirements = {
+			["iron_spear"] = {amount = 1},
+			["tech"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["begotten_spear_voltspear"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "physics/wood/wood_strain3.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 15;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("winged_spear");
 		RECIPE.name = "Winged Spear";
@@ -3840,6 +3869,36 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("voltlongsword");
+		RECIPE.name = "Voltlongsword";
+		RECIPE.requiredBeliefs = {"jacobs_ladder"};
+		RECIPE.requiredBeliefsNiceNames = {"Jacob's Ladder"};
+		RECIPE.requiredSubfaiths = {"Voltism"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 1},
+			["scrap"] = {amount = 3},
+			["technocraft"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_1h_voltlongsword"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "beams/beamstart5.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 80;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -5063,6 +5122,35 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 50;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("voltshield");
+		RECIPE.name = "Voltshield";
+		RECIPE.requiredBeliefs = {"wire_therapy"};
+		RECIPE.requiredBeliefsNiceNames = {"Wire Therapy"};
+		RECIPE.requiredSubfaiths = {"Voltism"};
+		RECIPE.requirements = {
+			["shield1"] = {amount = 1},
+			["tech"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["shield15"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "beams/beamstart5.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 25;
 		
 		function RECIPE:OnCraft(player)
 		end;

@@ -1807,7 +1807,7 @@ ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.permanent = true; -- Cannot be unequipped.
 ITEM.overlay = "begotten/zomboverlay/voltyellow";
 
-ITEM.attributes = {"conditionless", "not_unequippable", "night_vision", "thermal_vision"};
+ITEM.attributes = {"conditionless", "electrified", "not_unequippable", "night_vision", "thermal_vision"};
 ITEM.requiredbeliefs = {"yellow_and_black", "hauberk"};
 
 -- specifies which hitgroups will be affected by blunt, slash, pierce and other damage type scaling.

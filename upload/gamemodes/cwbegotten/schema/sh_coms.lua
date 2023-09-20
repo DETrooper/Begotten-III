@@ -111,8 +111,12 @@ local COMMAND = Clockwork.command:New("Enlist")
 									local bSuccess, fault = Clockwork.faction:GetStored()["Gatekeeper"]:OnTransferred(target, Clockwork.faction:GetStored()[targetFaction]);
 									
 									if (bSuccess != false) then
-										target:SetCharacterData("Faction", "Gatekeeper", true);
-										target:SetCharacterData("Subfaction", subfaction.name, true);
+										if !target:GetSharedVar("kinisgerOverride") then
+											target:SetCharacterData("Faction", "Gatekeeper", true);
+											target:SetCharacterData("Subfaction", subfaction.name, true);
+										else
+											target:SetSharedVar("kinisgerOverride", "Gatekeeper");
+										end
 										
 										if subfaction.name == "Praeventor" then
 											target:SetCharacterData("rank", 12);
@@ -161,13 +165,8 @@ local COMMAND = Clockwork.command:New("Promote")
 		end;
 		
 		if (target) then
-			local faction = target:GetFaction();
-			local playerFaction = player:GetFaction();
-			local kinisgerOverride = target:GetSharedVar("kinisgerOverride");
-			
-			if kinisgerOverride then
-				faction = kinisgerOverride;
-			end
+			local faction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+			local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 		
 			if player:IsAdmin() or ((playerFaction == faction and Schema.RanksOfAuthority[playerFaction][player:GetCharacterData("rank", 1)]) or playerFaction == "Holy Hierarchy") then
 				local name = target:Name();
@@ -207,11 +206,13 @@ local COMMAND = Clockwork.command:New("Promote")
 					hook.Run("PlayerChangedRanks", target);
 					local notifyTarget = tobool(arguments[3]);
 					
-					local subfaction = Schema.RanksToSubfaction[faction][ranks[faction][rank]];
-					
-					if subfaction then
-						target:SetCharacterData("Subfaction", subfaction, true);
-						Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+					if !target:GetSharedVar("kinisgerOverride") then
+						local subfaction = Schema.RanksToSubfaction[faction][ranks[faction][rank]];
+						
+						if subfaction then
+							target:SetCharacterData("Subfaction", subfaction, true);
+							Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+						end
 					end
 					
 					if (target == player) then

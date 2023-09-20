@@ -229,13 +229,13 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 			return false;
 		end;
 		
-		if player:GetFaith() ~= "Faith of the Light" or player:GetSubfaith() == "Voltism" then
+		--[[if player:GetFaith() ~= "Faith of the Light" or player:GetSubfaith() == "Voltism" then
 			return false;
-		end
+		end]]--
 		
-		if (!Clockwork.player:IsWhitelisted(player, faction.name)) then
+		--[[if (!Clockwork.player:IsWhitelisted(player, faction.name)) then
 			Clockwork.player:SetWhitelisted(player, faction.name, true);
-		end;
+		end;]]--
 	end;
 FACTION_HIERARCHY = FACTION:Register();
 

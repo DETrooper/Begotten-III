@@ -150,8 +150,11 @@ local ITEM = Clockwork.item:New();
 	ITEM.business = true;
 	ITEM.description = "A collection of tools and materials that can easily be used to repair one's armor.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/repair_kit.png";
-	ITEM.conditionReplenishment = 50;
+	ITEM.conditionReplenishment = 200;
 	ITEM.stackable = false;
+	
+	ITEM.itemSpawnerInfo = {category = "Repair Kits", rarity = 900, bNoSupercrate = true};
+	
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 ITEM:Register();
@@ -166,8 +169,11 @@ local ITEM = Clockwork.item:New();
 	ITEM.business = true;
 	ITEM.description = "A collection of delicate tools and spare parts that can be used to repair firearms.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/repair_kit.png";
-	ITEM.conditionReplenishment = 50;
+	ITEM.conditionReplenishment = 200;
 	ITEM.stackable = false;
+	
+	ITEM.itemSpawnerInfo = {category = "Repair Kits", rarity = 900, bNoSupercrate = true};
+	
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 ITEM:Register();
@@ -182,8 +188,11 @@ local ITEM = Clockwork.item:New();
 	ITEM.business = true;
 	ITEM.description = "A collection of tools and materials that can easily be used to repair one's melee weapon or shield.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/repair_kit.png";
-	ITEM.conditionReplenishment = 50;
+	ITEM.conditionReplenishment = 200;
 	ITEM.stackable = false;
+	
+	ITEM.itemSpawnerInfo = {category = "Repair Kits", rarity = 700, bNoSupercrate = true};
+	
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 ITEM:Register();
@@ -326,7 +335,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.weight = 0.4;
 	ITEM.useText = "Test Blood";
 	ITEM.business = true;
-	ITEM.description = "An ancient device used to test another person's blood for corruption. This one is worn and has limited uses, and may even be unreliable.";
+	ITEM.description = "An ancient device used to test another person's blood for corruption. This one is worn by age and may even be unreliable.";
 	ITEM.stackable = false;
 	
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/blood_test_kit.png"
@@ -353,7 +362,7 @@ local ITEM = Clockwork.item:New();
 					Clockwork.player:SetAction(player, "bloodTest", testTime);
 					
 					Clockwork.player:EntityConditionTimer(player, target, trace.Entity, testTime, 192, function()
-						if (player:Alive() and !player:IsRagdolled()) then
+						if (player:Alive() and !player:IsRagdolled() and player:HasItemInstance(self)) then
 							return true;
 						end;
 					end, function(success)
@@ -441,7 +450,7 @@ local ITEM = Clockwork.item:New();
 					Clockwork.player:SetAction(player, "bloodTest", testTime);
 					
 					Clockwork.player:EntityConditionTimer(player, target, trace.Entity, testTime, 192, function()
-						if (player:Alive() and !player:IsRagdolled()) then
+						if (player:Alive() and !player:IsRagdolled() and player:HasItemInstance(self)) then
 							return true;
 						end;
 					end, function(success)
@@ -518,7 +527,7 @@ local ITEM = Clockwork.item:New();
 					Clockwork.player:SetAction(player, "bloodTest", testTime);
 					
 					Clockwork.player:EntityConditionTimer(player, target, trace.Entity, testTime, 192, function()
-						if (player:Alive() and !player:IsRagdolled()) then
+						if (player:Alive() and !player:IsRagdolled() and player:HasItemInstance(self)) then
 							return true;
 						end;
 					end, function(success)
@@ -526,6 +535,16 @@ local ITEM = Clockwork.item:New();
 							player.isTying = nil;
 							
 							Schema:BloodTestPlayer(target, false);
+							
+							if self then
+								local condition = self:GetCondition() - 10;
+							
+								if condition <= 0 then
+									player:TakeItem(self);
+								else
+									self:SetCondition(condition);
+								end
+							end
 						else
 							player.isTying = nil;
 						end;

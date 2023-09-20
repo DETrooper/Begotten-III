@@ -133,15 +133,15 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
 	ITEM.name = "Scrap Shield";
-	ITEM.model = "models/props_debris/metal_panel02a.mdl";
+	ITEM.model = "models/props_bebris/metal_panel02a.mdl";
 	ITEM.weight = 5;
 	ITEM.uniqueID = "shield1";
 	ITEM.description = "A shield made of sheet metal, decorated by various fetishes depicting the wearer's faith.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/scrap_shield.png"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scrap_shield_new.png"
 	ITEM.isAttachment = true;
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
-	ITEM.attachmentOffsetAngles = Angle(90, 265.52, 180.15);
-	ITEM.attachmentOffsetVector = Vector(0, 3.54, -4.95);
+	ITEM.attachmentOffsetAngles = Angle(90, 275, 180.15);
+	ITEM.attachmentOffsetVector = Vector(0, 8, -4.95);
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "scrap"}};
 	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 600, bNoSupercrate = true};
@@ -197,6 +197,23 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 800, supercrateOnly = true};
 	ITEM.requireFaith = {"Faith of the Dark"};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("shield_base");
+	ITEM.name = "Voltshield";
+	ITEM.model = "models/props_vebris/metal_panel02a.mdl";
+	ITEM.weight = 5.5;
+	ITEM.uniqueID = "shield15";
+	ITEM.description = "A scrap shield augmented by a salvaged car battery that feeds electricity into the shield. Any enemy who makes contact with this shield using a metal weapon shall indeed regret it.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/volt_shield.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 275, 180.15);
+	ITEM.attachmentOffsetVector = Vector(0, 9, -4.95);
+	
+	ITEM.attributes = {"electrified"};
+	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "scrap", "tech"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"wriggle_fucking_eel"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");

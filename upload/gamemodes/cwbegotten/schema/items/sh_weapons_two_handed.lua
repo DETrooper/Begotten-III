@@ -249,3 +249,20 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.requireFaith = {"Faith of the Family"};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Voltlongsword";
+	ITEM.model = "models/begotten/weapons/shishkebab.mdl";
+	ITEM.weight = 2.5;
+	ITEM.uniqueID = "begotten_2h_voltlongsword";
+	ITEM.category = "Melee";
+	ITEM.description = "A long scrap blade attached to a crude contraption with an internal battery.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/volt_longsword.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(280, 180, 10.94);
+	ITEM.attachmentOffsetVector = Vector(2.83, 3.4, 16.51);	
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "scrap", "scrap", "tech", "tech", "tech", "tech"}}; -- use "breakdown" for other type
+ITEM:Register();

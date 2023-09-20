@@ -378,16 +378,48 @@ local function Guarding(ent, dmginfo)
 					
 					-- Special Effect
 					
-					-- Deal damage to people using fists if they hit a spiked shield.
-					if ent:IsPlayer() and enemywep:IsValid() and enemywep:GetClass() == "begotten_fists" then
-						if !Clockwork.player:HasFlags(damageinflictor, "T") then
+					if damageinflictor:IsPlayer() and enemywep:IsValid() then
+						-- Deal damage to people using fists if they hit a spiked shield.
+						if enemywep:GetClass() == "begotten_fists" then
+							if !Clockwork.player:HasFlags(damageinflictor, "T") then
+								local activeWeapon = ent:GetActiveWeapon();
+								
+								if (IsValid(activeWeapon) and activeWeapon:GetNWString("activeShield"):len() > 0) then
+									local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
+									
+									if blockTable.spiked then
+										damageinflictor:TakeDamage(5, ent);
+									elseif blockTable.electrified then
+										local clothesItem = damageinflictor:GetClothesItem();
+										
+										if clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate") then
+											local shockDamageInfo = DamageInfo();
+											
+											shockDamageInfo:SetDamage(math.random(3, 5));
+											
+											Schema:DoTesla(damageinflictor, false);
+											damageinflictor:TakeDamageInfo(shockDamageInfo);
+										end
+									end
+								end
+							end
+						elseif enemywep.IsABegottenMelee and enemywep.BlockTable then
 							local activeWeapon = ent:GetActiveWeapon();
 							
 							if (IsValid(activeWeapon) and activeWeapon:GetNWString("activeShield"):len() > 0) then
 								local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
 								
-								if blockTable.spiked then
-									damageinflictor:TakeDamage(5, ent);
+								if blockTable.electrified then
+									local wepBlockTable = GetTable(enemywep.BlockTable);
+									
+									if wepBlockTable["blockeffect"] == "MetalSpark" then
+										local shockDamageInfo = DamageInfo();
+										
+										shockDamageInfo:SetDamage(math.random(3, 5));
+										
+										Schema:DoTesla(damageinflictor, false);
+										damageinflictor:TakeDamageInfo(shockDamageInfo);
+									end
 								end
 							end
 						end

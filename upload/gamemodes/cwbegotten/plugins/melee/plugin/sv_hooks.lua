@@ -31,7 +31,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 				
 				return;
 			end
-		
+
 			local entWeapon = entity:GetActiveWeapon();
 			
 			if IsValid(entWeapon) and (entWeapon.Base == "begotten_firearm_base" or entWeapon.isJavelin) then
@@ -156,6 +156,24 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 						if (armorTable.type) then
 							material = armorTable.type;
 						end;
+						
+						if attacker:IsPlayer() then
+							if (armorTable.attributes) and table.HasValue(armorTable.attributes, "electrified") then
+								if IsValid(activeWeapon) and activeWeapon.BlockTable then
+									local clothesItem = attacker:GetClothesItem();
+									local wepBlockTable = GetTable(activeWeapon.BlockTable);
+									
+									if (activeWeapon:GetClass() == "begotten_fists" and clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate")) or wepBlockTable["blockeffect"] == "MetalSpark" then
+										local shockDamageInfo = DamageInfo();
+										
+										shockDamageInfo:SetDamage(10);
+										
+										Schema:DoTesla(attacker, false);
+										attacker:TakeDamageInfo(shockDamageInfo);
+									end
+								end
+							end
+						end
 					end;
 				end;
 			end;

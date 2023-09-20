@@ -899,6 +899,24 @@ AttackTables.IronSpearAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
+AttackTables.VoltspearAttackTable = {
+	["primarydamage"] = 35,
+	["dmgtype"] = 16,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = false,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 40,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 7,
+	["stabilitydamage"] = 10,
+	["takeammo"] = 3,
+	["delay"] = 1.1,
+	["striketime"] = 0.4,
+	["meleerange"] = 1100,
+	["punchstrength"] = Angle(0,1,0),
+};
+
 AttackTables.SatanicSpearAttackTable = {
 	["primarydamage"] = 47,
 	["dmgtype"] = 16,
@@ -1423,6 +1441,24 @@ AttackTables.IronArmingSwordAttackTable = {
 
 AttackTables.LongswordAttackTable = {
 	["primarydamage"] = 70,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.75,
+	["altattackpoisedamagemodifier"] = 0.3,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = 40,
+	["poisedamage"] = 15,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 8,
+	["delay"] = 1.2,
+	["striketime"] = 0.6,
+	["meleerange"] = 900,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.VoltlongswordAttackTable = {
+	["primarydamage"] = 65,
 	["dmgtype"] = 4,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = true,
@@ -2816,6 +2852,7 @@ AddTable("SteelClawsAttackTable", AttackTables.SteelClawsAttackTable)
 AddTable("IronDaggerAttackTable", AttackTables.IronDaggerAttackTable) 
 AddTable("HarpoonAttackTable", AttackTables.HarpoonAttackTable) 
 AddTable("IronSpearAttackTable", AttackTables.IronSpearAttackTable) 
+AddTable("VoltspearAttackTable", AttackTables.VoltspearAttackTable) 
 AddTable("SatanicSpearAttackTable", AttackTables.SatanicSpearAttackTable) 
 AddTable("ScrapSpearAttackTable", AttackTables.ScrapSpearAttackTable) 
 AddTable("WingedSpearAttackTable", AttackTables.WingedSpearAttackTable) 
@@ -2846,6 +2883,7 @@ AddTable("ElegantDaggerAttackTable", AttackTables.ElegantDaggerAttackTable)
 AddTable("GoreShortswordAttackTable", AttackTables.GoreShortswordAttackTable)  
 AddTable("IronArmingSwordAttackTable", AttackTables.IronArmingSwordAttackTable)  
 AddTable("LongswordAttackTable", AttackTables.LongswordAttackTable)  
+AddTable("VoltlongswordAttackTable", AttackTables.VoltlongswordAttackTable)  
 AddTable("ExileKnightSwordAttackTable", AttackTables.ExileKnightSwordAttackTable)       
 AddTable("GlaiveAttackTable", AttackTables.GlaiveAttackTable)      
 AddTable("GoreAxeandFalchionAttackTable", AttackTables.GoreAxeandFalchionAttackTable) 
@@ -3341,6 +3379,24 @@ BlockTables.HarpoonBlockTable = {
 };
 
 BlockTables.IronSpearBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "GlassImpact",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, 0, 50)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 8,
+	["raisespeed"] = 1.25,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
+BlockTables.VoltspearBlockTable = {
 	["guardblockamount"] = 10,
 	["specialeffect"] = false,
 	["blockeffect"] = "GlassImpact",
@@ -3890,6 +3946,24 @@ BlockTables.LongswordBlockTable = {
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
 	["partialbulletblock"] = false,
 	["poiseresistance"] = 20,
+	["raisespeed"] = 1.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
+BlockTables.VoltlongswordBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 17,
 	["raisespeed"] = 1.75,
 	["instantraise"] = false,
 	["parrydifficulty"] = 0.2,
@@ -5255,6 +5329,7 @@ AddTable("SteelClawsBlockTable", BlockTables.SteelClawsBlockTable)
 AddTable("IronDaggerBlockTable", BlockTables.IronDaggerBlockTable) 
 AddTable("HarpoonBlockTable", BlockTables.HarpoonBlockTable) 
 AddTable("IronSpearBlockTable", BlockTables.IronSpearBlockTable) 
+AddTable("VoltspearBlockTable", BlockTables.VoltspearBlockTable) 
 AddTable("SatanicSpearBlockTable", BlockTables.SatanicSpearBlockTable) 
 AddTable("ScrapSpearBlockTable", BlockTables.ScrapSpearBlockTable) 
 AddTable("WingedSpearBlockTable", BlockTables.WingedSpearBlockTable) 
@@ -5285,6 +5360,7 @@ AddTable("ElegantDaggerBlockTable", BlockTables.ElegantDaggerBlockTable)
 AddTable("GoreShortswordBlockTable", BlockTables.GoreShortswordBlockTable)  
 AddTable("IronArmingSwordBlockTable", BlockTables.IronArmingSwordBlockTable)   
 AddTable("LongswordBlockTable", BlockTables.LongswordBlockTable)        
+AddTable("VoltlongswordBlockTable", BlockTables.LongswordBlockTable)        
 AddTable("ExileKnightSwordBlockTable", BlockTables.ExileKnightSwordBlockTable)  
 AddTable("GlaiveBlockTable", BlockTables.GlaiveBlockTable) 
 AddTable("GoreAxeandFalchionBlockTable", BlockTables.GoreAxeandFalchionBlockTable)   
@@ -5393,17 +5469,17 @@ BlockTables.shield1 = { -- Scrap Shield
 	},
 	["VElements"] = {
 		["models/v_onehandedbegotten.mdl"] = {
-			["shield1"] = { type = "Model", model = "models/props_debris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-7.792, -2.597, 3.635), angle = Angle(146.104, -1.17, 36.234), size = Vector(0.4, 0.4, 0.4), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+			["shield1"] = { type = "Model", model = "models/props_bebris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-7.792, -2.597, 4), angle = Angle(146.104, -1.17, -138), size = Vector(0.6, 0.6, 0.6), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
 		},
 		["models/v_begottenknife.mdl"] = {
-			["shield1"] = { type = "Model", model = "models/props_debris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.635, -4.676, 7.791), angle = Angle(-85.325, 47.922, 180), size = Vector(0.449, 0.449, 0.449), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+			["shield1"] = { type = "Model", model = "models/props_bebris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(0, -6, 10), angle = Angle(-85.325, 47.922, 0), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
-			["shield1"] = { type = "Model", model = "models/props_debris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(5.714, -16.105, 6.751), angle = Angle(26.881, -127.403, 108.699), size = Vector(0.819, 0.819, 0.819), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+			["shield1"] = { type = "Model", model = "models/props_bebris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(2, -16.105, 4), angle = Angle(26.881, -127.403, -62), size = Vector(1.4, 1.4, 1.4), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
-		["shield1"] = { type = "Model", model = "models/props_debris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-1.558, -4.677, -1.558), angle = Angle(5.843, 57.271, 94.675), size = Vector(0.67, 0.67, 0.67), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		["shield1"] = { type = "Model", model = "models/props_bebris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(9, -4.677, -1.558), angle = Angle(-5, 50, 276), size = Vector(1.2, 1.2, 1.2), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 	},
 };
 
@@ -5433,6 +5509,9 @@ BlockTables.shield2 = { -- Slaveshield
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(4.199, -5.026, 4.719), ang = Vector(0, -4.926, -13.367)},
 	},
 	["ViewModelBoneMods"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, -15, 0), angle = Angle(0, 0, 0) },
+		},
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
 		},
@@ -6033,6 +6112,52 @@ BlockTables.shield14 = { -- Clan Shield
 	},
 };
 
+BlockTables.shield15 = { -- Voltshield
+	["name"] = "Voltshield",
+	["guardblockamount"] = 5,
+	["damagereduction"] = 0.8,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 55)),
+	["blockcone"] = 220,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_SNIPER, DMG_BUCKSHOT},
+	["blockanim"] = "a_sword_shield_block_twindragon",
+	["blocksoundtable"] = "MetalShieldSoundTable",
+	["partialbulletblock"] = true,
+	["poiseresistance"] = 25,
+	["raisespeed"] = 1.8,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 25,
+	["canparry"] = true,
+	["candeflect"] = true,
+	["ironsights"] = {
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(5.44, -8, 2), ang = Vector(2.5, -8.443, -14.775)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(-1.241, -8.844, 2.2), ang = Vector(-1.5, -40.102, 4.221)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(19.639, -4.02, 3.67), ang = Vector(3.517, 0, -4)},
+	},
+	["ViewModelBoneMods"] = {
+		["models/v_begottenknife.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+	},
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["shield1"] = { type = "Model", model = "models/props_vebris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-7.792, -2.597, 4), angle = Angle(146.104, -1.17, -138), size = Vector(0.6, 0.6, 0.6), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+		},
+		["models/v_begottenknife.mdl"] = {
+			["shield1"] = { type = "Model", model = "models/props_vebris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(0, -6, 10), angle = Angle(-85.325, 47.922, 0), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["shield1"] = { type = "Model", model = "models/props_vebris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(2, -16.105, 4), angle = Angle(26.881, -127.403, -62), size = Vector(1.4, 1.4, 1.4), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+	},
+	["WElements"] = {
+		["shield1"] = { type = "Model", model = "models/props_vebris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(9, -4.677, -1.558), angle = Angle(-5, 50, 276), size = Vector(1.2, 1.2, 1.2), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	},
+};
+
 BlockTables.shieldunique1 = { -- Red Wolf Skinshield (Unique)
 	["name"] = "Red Wolf Skinshield",
 	["guardblockamount"] = 5,
@@ -6112,6 +6237,7 @@ AddTable("shield11", BlockTables.shield11)
 AddTable("shield12", BlockTables.shield12)
 AddTable("shield13", BlockTables.shield13)
 AddTable("shield14", BlockTables.shield14)
+AddTable("shield15", BlockTables.shield15)
 AddTable("shieldunique1", BlockTables.shieldunique1)
 AddTable("shieldunique2", BlockTables.shieldunique2)
 
