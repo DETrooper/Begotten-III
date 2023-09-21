@@ -275,6 +275,10 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 						local offset = self:GetPlayerOffset(longshipEnt, player, longshipAngles.y);
 						
 						if (!player.cwObserverMode) then
+							if player.cloaked and player:GetNetVar("kinisgerCloak") then
+								player.cloakedCheck = CurTime() + 10;
+							end				
+						
 							player:Freeze(true);
 		
 							timer.Simple(3, function()
@@ -336,9 +340,9 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 										if (!player.cwObserverMode) then
 											player:SetSharedVar("blackOut", true);
 											
-											if !player:IsRagdolled() then
+											--[[if !player:IsRagdolled() then
 												player:Spawn();
-											end
+											end]]--
 											
 											player:Freeze(true);
 											player:GodEnable();
