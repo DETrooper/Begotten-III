@@ -395,10 +395,12 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 	
 	if factionTable.availablefaiths and data.faith then
 		if !table.HasValue(factionTable.availablefaiths, data.faith) then
-			if data.subfaction and factionTable.subfactionsToAvailableFaiths and !factionTable.subfactionsToAvailableFaiths[data.subfaction] then
-				return self:SetCreateFault(
-					player, "This subfaction cannot take the "..data.faith.." faith!"
-				)
+			if data.subfaction and factionTable.subfactionsToAvailableFaiths then
+				if !factionTable.subfactionsToAvailableFaiths[data.subfaction] or !table.HasValue(factionTable.subfactionsToAvailableFaiths[data.subfaction], data.faith) then
+					return self:SetCreateFault(
+						player, "This subfaction cannot take the "..data.faith.." faith!"
+					)
+				end
 			else
 				return self:SetCreateFault(
 					player, "This faction cannot take the "..data.faith.." faith!"

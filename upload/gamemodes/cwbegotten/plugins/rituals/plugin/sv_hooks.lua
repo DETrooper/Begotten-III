@@ -175,7 +175,9 @@ function cwRituals:PerformRitual(player, uniqueID, itemIDs, bIgnoreItems)
 								ritualTable:PerformRitual(player, itemIDs, false, bIgnoreItems);
 								
 								if player:GetSubfaction() ~= "Rekh-khet-sa" then
-									player:HandleNeed("corruption", ritualTable.corruptionCost or 2);
+									if ritualTable.corruptionCost then
+										player:HandleNeed("corruption", ritualTable.corruptionCost);
+									end
 								end
 							end;
 						end);
@@ -775,7 +777,7 @@ end
 
 Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 	if player.selectingNewAppearance then
-		if data and data[1] and data[2] and data[3] then
+		if data and data[1] and data[2] and data[3] and data[4] and data[5] then
 			local blacklistedNames = {};
 			
 			if Schema.Ranks then
@@ -790,114 +792,166 @@ Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 				local blacklistedName = blacklistedNames[i];
 			
 				if string.find(string.lower(data[1]), blacklistedName) then
+					player.selectingNewAppearance = false;
+				
 					return;
 				end
 			end
 			
-			local pos = player:GetPos();
-			local ang = player:EyeAngles();
+			local selectedFaction = data[5];
+			local factionTable = Clockwork.faction:FindByID(selectedFaction);
+			local model_valid = false;
 			
-			Clockwork.player:SetName(player, data[1]);
-			Clockwork.player:SetDefaultModel(player)
-			player:SetCharacterData("Model", data[2], true);
-			player:SetCharacterData("PhysDesc", Clockwork.kernel:ModifyPhysDesc(data[3]));
-			player:SetCharacterData("lastAppearanceChange", os.time());
-			
-			local selectedFaction = data[4];
-			
-			if !selectedFaction or selectedFaction == "Wanderer" then
-				player:SetCharacterData("kinisgerOverride", nil);
-				player:SetSharedVar("kinisgerOverride", nil);
-				player:SetCharacterData("kinisgerOverrideSubfaction", nil);
-				player:SetSharedVar("kinisgerOverrideSubfaction", nil);
-				player:SetCharacterData("rank", nil);
-				player:OverrideName(nil);
-			else
-				local factionTable = Clockwork.faction:FindByID(selectedFaction);
-				
-				if factionTable.imposters and !factionTable.disabled then
-					player:SetCharacterData("kinisgerOverride", selectedFaction);
-					player:SetSharedVar("kinisgerOverride", selectedFaction);
-					
-					if factionTable.subfactions then
-						local selectedSubfaction = data[5];
-						
-						if selectedSubfaction then
-							for k, v in pairs(factionTable.subfactions) do
-								if v.name == selectedSubfaction then
-									player:SetCharacterData("kinisgerOverrideSubfaction", selectedSubfaction);
-									player:SetSharedVar("kinisgerOverrideSubfaction", selectedSubfaction);
-									
-									break;
-								end
-							end
+			if factionTable.models then
+				for gender, v in pairs(factionTable.models) do
+					for k2, v2 in pairs(v) do
+						if v2 == data[2] and gender == string.lower(data[3]) then
+							model_valid = true;
+							
+							break;
 						end
 					end
 					
-					if Schema.Ranks then
-						player:OverrideName(nil)
+					if model_valid then
+						break;
+					end
+				end
+			end
+			
+			if !model_valid then
+				player.selectingNewAppearance = false;
+			
+				return;
+			end
+			
+			if (!Clockwork.faction:IsGenderValid(data[5] or "Wanderer", data[3])) then
+				player.selectingNewAppearance = false;
+			
+				return;
+			end;
+			
+			Clockwork.chatBox:AddInTargetRadius(player, "me", "'s very flesh warps before your eyes, taking on the form of "..data[1]..".", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+			player:EmitSound("prototype/transform.mp3");
+			
+			timer.Simple(1, function()
+				if !IsValid(player) then
+					return;
+				end
+				
+				local clothesItem = player:GetClothesItem();
+				
+				if clothesItem then
+					clothesItem:OnPlayerUnequipped(player, nil, true);
+				end
+				
+		
+				local helmetData = player:GetCharacterData("helmet");
+
+				if helmetData and helmetData.uniqueID and helmetData.itemID then
+					local helmetItem = Clockwork.inventory:FindItemByID(player:GetInventory(), helmetData.uniqueID, helmetData.itemID)
+				
+					if helmetItem then
+						helmetItem:OnPlayerUnequipped(player, nil);
+					end
+				end
+				
+				Clockwork.player:SetName(player, data[1]);
+				Clockwork.player:SetDefaultModel(player);
+				player:SetCharacterData("Model", data[2], true);
+				player:SetCharacterData("Gender", data[3], true);
+				player:SetCharacterData("PhysDesc", Clockwork.kernel:ModifyPhysDesc(data[4]));
+				player:SetCharacterData("lastAppearanceChange", os.time());
+				
+				if selectedFaction == "Wanderer" then
+					player:SetCharacterData("kinisgerOverride", nil);
+					player:SetSharedVar("kinisgerOverride", nil);
+					player:SetCharacterData("kinisgerOverrideSubfaction", nil);
+					player:SetSharedVar("kinisgerOverrideSubfaction", nil);
+					player:SetCharacterData("rank", nil);
+					player:OverrideName(nil);
+				else
+					if factionTable.imposters and !factionTable.disabled then
+						player:SetCharacterData("kinisgerOverride", selectedFaction);
+						player:SetSharedVar("kinisgerOverride", selectedFaction);
 						
-						if (Schema.Ranks[selectedFaction]) then
-							if (!player:GetCharacterData("rank") or player:GetCharacterData("rank") < 1 or player:GetCharacterData("rank") > #Schema.Ranks[selectedFaction]) then
-								local factionTable = Clockwork.faction:FindByID(selectedFaction);
-								local subfaction = player:GetSubfaction();
-								local subfactionRankFound = false;
-								
-								if subfaction and subfaction ~= "" and subfaction ~= "N/A" then
-									if factionTable and factionTable.subfactions then
-										for i = 1, #factionTable.subfactions do
-											local isubfaction = factionTable.subfactions[i];
-											
-											if isubfaction.name == subfaction then
-												if isubfaction.startingRank then
-													player:SetCharacterData("rank", isubfaction.startingRank);
-													subfactionRankFound = true;
-													
-													break;
+						if factionTable.subfactions then
+							local selectedSubfaction = data[6];
+							
+							if selectedSubfaction then
+								for k, v in pairs(factionTable.subfactions) do
+									if v.name == selectedSubfaction then
+										player:SetCharacterData("kinisgerOverrideSubfaction", selectedSubfaction);
+										player:SetSharedVar("kinisgerOverrideSubfaction", selectedSubfaction);
+										
+										break;
+									end
+								end
+							end
+						end
+						
+						if Schema.Ranks then
+							player:OverrideName(nil)
+							
+							if (Schema.Ranks[selectedFaction]) then
+								if (!player:GetCharacterData("rank") or player:GetCharacterData("rank") < 1 or player:GetCharacterData("rank") > #Schema.Ranks[selectedFaction]) then
+									local factionTable = Clockwork.faction:FindByID(selectedFaction);
+									local subfaction = player:GetSubfaction();
+									local subfactionRankFound = false;
+									
+									if subfaction and subfaction ~= "" and subfaction ~= "N/A" then
+										if factionTable and factionTable.subfactions then
+											for i = 1, #factionTable.subfactions do
+												local isubfaction = factionTable.subfactions[i];
+												
+												if isubfaction.name == subfaction then
+													if isubfaction.startingRank then
+														player:SetCharacterData("rank", isubfaction.startingRank);
+														subfactionRankFound = true;
+														
+														break;
+													end
 												end
 											end
 										end
 									end
-								end
-								
-								if !subfactionRankFound then
-									player:SetCharacterData("rank", 1);
-								end
-							end;
+									
+									if !subfactionRankFound then
+										player:SetCharacterData("rank", 1);
+									end
+								end;
 
-							local name = player:Name();
-							
-							for k, v in pairs (Schema.Ranks[selectedFaction]) do
-								if (string.find(name, v)) then
-									player:SetCharacterData("rank", k);
-									local newName = Schema:StripRank(name, v)
-									Clockwork.player:SetName(player, string.Trim(newName));
+								local name = player:Name();
+								
+								for k, v in pairs (Schema.Ranks[selectedFaction]) do
+									if (string.find(name, v)) then
+										player:SetCharacterData("rank", k);
+										local newName = Schema:StripRank(name, v)
+										Clockwork.player:SetName(player, string.Trim(newName));
+									end;
+								end;
+								
+								local rank = math.Clamp(player:GetCharacterData("rank", 1), 1, #Schema.Ranks[selectedFaction]);
+								
+								if (rank and isnumber(rank) and Schema.Ranks[selectedFaction][rank]) then
+									player:OverrideName(Schema.Ranks[selectedFaction][rank].." "..player:Name());
 								end;
 							end;
-							
-							local rank = math.Clamp(player:GetCharacterData("rank", 1), 1, #Schema.Ranks[selectedFaction]);
-							
-							if (rank and isnumber(rank) and Schema.Ranks[selectedFaction][rank]) then
-								player:OverrideName(Schema.Ranks[selectedFaction][rank].." "..player:Name());
-							end;
-						end;
+						end
 					end
 				end
-			end
-			
-			for k, v in pairs(_player.GetAll()) do
-				if IsValid(v) and v:HasInitialized() and v:GetFaction() ~= "Children of Satan" then
-					Clockwork.player:SetRecognises(v, player, false);
+				
+				for k, v in pairs(_player.GetAll()) do
+					if IsValid(v) and v:HasInitialized() and v:GetFaction() ~= "Children of Satan" then
+						Clockwork.player:SetRecognises(v, player, false);
+					end
 				end
-			end
-			
-			player:Spawn();
-			player:SetPos(pos);
-			player:SetEyeAngles(ang);
-			
-			player:RemoveBounty();
-			player:HandleNeed("corruption", 15);
-		end
+				
+				player:RemoveBounty();
+				player:HandleNeed("corruption", 50);
+				
+				Clockwork.player:LoadCharacter(player, Clockwork.player:GetCharacterID(player));
+			end);
+		end;
 		
 		player.selectingNewAppearance = false;
 	end

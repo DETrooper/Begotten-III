@@ -1324,7 +1324,8 @@ ITEM.runSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "High Gatekeeper Reinforced Plate";
+ITEM.name = "Heavy Gatekeeper Reinforced Plate";
+ITEM.uniqueID = "high_gatekeeper_reinforced_plate";
 ITEM.model = "models/begotten/headgroup_props/highgatekeeperarmor.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/high_gatekeeper_reinforced_armor.png"
 ITEM.category = "Armor"
@@ -1336,7 +1337,7 @@ ITEM.protection = 75;
 ITEM.weight = 8.5;
 ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
-ITEM.description = "A sturdy reinforced set of iron plate armor, scarred by constant battle and war.";
+ITEM.description = "Further augmented by increased steel thickness, this plate is armored to the standard of a Knight's armor set.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/gatekeep1";
@@ -1393,7 +1394,8 @@ ITEM.walkSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "High Gatekeeper Heavy Plate";
+ITEM.name = "Heavy Gatekeeper Plate";
+ITEM.uniqueID = "high_gatekeeper_heavy_plate";
 ITEM.model = "models/begotten/headgroup_props/highgatekeeperarmor.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/high_gatekeeper_armor.png"
 ITEM.category = "Armor"
@@ -1405,7 +1407,7 @@ ITEM.protection = 70
 ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
-ITEM.description = "A sturdy set of iron plate armor, scarred by constant battle and war.";
+ITEM.description = "A sturdy set of steel plate armor, scarred by constant battle and war.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/gatekeep1";

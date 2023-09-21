@@ -6390,7 +6390,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("high_gatekeeper_reinforced_plate");
-		RECIPE.name = "High Gatekeeper Reinforced Plate";
+		RECIPE.name = "Heavy Gatekeeper Reinforced Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
@@ -6420,7 +6420,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("high_gatekeeper_heavy_plate");
-		RECIPE.name = "High Gatekeeper Heavy Plate";
+		RECIPE.name = "Heavy Gatekeeper Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};

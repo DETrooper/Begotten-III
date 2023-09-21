@@ -593,7 +593,7 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 		}
 		
 		local phrase = randomPhrases[math.random(1, #randomPhrases)];
-		local faction = (player:GetFaction())
+		local faction = (player:GetSharedVar("kinisgerOverride") or player:GetFaction())
 		local pitch = 100;
 		
 		phrase = string.gsub(phrase, "#HIS", gender);
@@ -866,7 +866,7 @@ end
 -- Called when a player's pain sound should be played.
 function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 	if player:Alive() then
-		local faction = (player:GetFaction())
+		local faction = (player:GetSharedVar("kinisgerOverride") or player:GetFaction())
 		local pitch = 100;
 		
 		if IsValid(player.possessor) then
@@ -937,7 +937,7 @@ function GM:PlayerPlayDeathSound(player, gender)
 		return;
 	end
 
-	local faction = (player:GetFaction())
+	local faction = (player:GetSharedVar("kinisgerOverride") or player:GetFaction())
 	local pitch = 100;
 	
 	if IsValid(player.possessor) then

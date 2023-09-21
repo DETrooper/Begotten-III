@@ -44,6 +44,8 @@ local ITEM = Clockwork.item:New(nil, true)
 	function ITEM:OnUse(player, itemEntity)
 		local clothesData = player.bgClothesData or {}
 		local clothesItem = player:GetClothesItem();
+		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 		
 		if cwPowerArmor and player:IsWearingPowerArmor() then
 			Schema:EasyText(player, "peru", "You cannot wear this while in power armor!");
@@ -55,12 +57,12 @@ local ITEM = Clockwork.item:New(nil, true)
 			return false;
 		end
 		
-		if (table.HasValue(self.excludeFactions, player:GetFaction())) then
+		if (table.HasValue(self.excludeFactions, faction)) then
 			Schema:EasyText(player, "peru", "You are not the correct faction to wear this!")
 			return false
 		end
 		
-		if (table.HasValue(self.excludeSubfactions, player:GetSubfaction())) then
+		if (table.HasValue(self.excludeSubfactions, subfaction)) then
 			Schema:EasyText(player, "peru", "Your subfaction cannot wear this!")
 			return false
 		end
@@ -73,7 +75,7 @@ local ITEM = Clockwork.item:New(nil, true)
 		end
 		
 		if #self.requireFaction > 0 then
-			if (!table.HasValue(self.requireFaction, player:GetFaction())) then
+			if (!table.HasValue(self.requireFaction, faction)) then
 				Schema:EasyText(player, "peru", "You are not the correct faction to wear this!")
 				return false
 			end

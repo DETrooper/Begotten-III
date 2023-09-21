@@ -15,6 +15,13 @@ local animalModels = {
 };
 
 function cwBeliefs:PlayerCharacterInitialized(data)
+	-- Hide or display Kinisger darkwhisper.
+	if Clockwork.Client:GetSharedVar("subfaction") == "Kinisger" then
+		Clockwork.command:SetHidden("DarkWhisperFactionKinisger", false);
+	else
+		Clockwork.command:SetHidden("DarkWhisperFactionKinisger", true);
+	end
+
 	-- Reset belief outlines on character respawn.
 	if self.highlightTargetOverride then
 		self.highlightTargetOverride = nil;
@@ -210,14 +217,19 @@ netstream.Hook("UpgradedWarcry", function(data)
 	
 	cwBeliefs.upgradedWarcryActive = true;
 	
+	local faction = Clockwork.Client:GetFaction();
 	local faith = Clockwork.Client:GetSharedVar("faith");
 	
 	for k, v in pairs(_player.GetAll()) do
 		if v ~= Clockwork.Client and (v:HasInitialized()) then
 			if v:GetSharedVar("faith") ~= faith then
-				if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= (800 * 800)) then
-					v.warcryTarget = true;
-				end;
+				local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+				
+				if faction == "Wanderer" or vFaction ~= faction then
+					if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= (800 * 800)) then
+						v.warcryTarget = true;
+					end;
+				end
 			end
 		end;
 	end;

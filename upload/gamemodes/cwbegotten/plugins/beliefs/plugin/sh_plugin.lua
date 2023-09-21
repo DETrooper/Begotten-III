@@ -479,7 +479,12 @@ function COMMAND:OnRun(player, arguments)
 
 				for k, v in pairs (_player.GetAll()) do
 					if v:HasInitialized() and v:Alive() and (v:GetFaction() == "Children of Satan") then
-						Clockwork.chatBox:Add(v, player, "darkwhisperglobal", message);
+						if v:GetSubfaction() == "Kinisger" and v:GetSharedVar("kinisgerOverride") then
+							Clockwork.chatBox:Add(v, player, "darkwhisperglobalkinisger", message);
+						else
+							Clockwork.chatBox:Add(v, player, "darkwhisperglobal", message);
+						end
+							
 						v:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
 					end;
 				end;
@@ -491,9 +496,18 @@ function COMMAND:OnRun(player, arguments)
 				local message = "\""..table.concat(arguments, " ", 1).."\"";
 
 				for k, v in pairs (_player.GetAll()) do
-					if v:HasInitialized() and v:Alive() and (v:GetFaction() == "Goreic Warrior") and (v:GetFaith() == "Faith of the Dark" or v:GetSubfaith() == "Faith of the Sister") then
-						Clockwork.chatBox:Add(v, player, "darkwhisperglobal", message);
-						v:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
+					if v:HasInitialized() and v:Alive() then
+						local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+						
+						if (vFaction == "Goreic Warrior") and (v:GetFaith() == "Faith of the Dark" or v:GetSubfaith() == "Faith of the Sister") then
+							if v:GetSubfaction() == "Kinisger" then
+								Clockwork.chatBox:Add(v, player, "darkwhisperglobalkinisger", message);
+							else
+								Clockwork.chatBox:Add(v, player, "darkwhisperglobal", message);
+							end
+							
+							v:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
+						end
 					end;
 				end;
 			else
@@ -504,6 +518,50 @@ function COMMAND:OnRun(player, arguments)
 		end
 	else
 		Schema:EasyText(player, "firebrick", "You are not the correct faith to do this!");
+	end
+end;
+
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("DarkWhisperFactionKinisger");
+COMMAND.tip = "Speak in tongues through the void to your pretend brethren.";
+COMMAND.text = "<string Message>";
+COMMAND.flags = CMD_DEFAULT;
+COMMAND.arguments = 1;
+COMMAND.alias = {"DWFK"};
+
+-- Called when the command has been run.
+function COMMAND:OnRun(player, arguments)
+	if player:GetSubfaction() == "Kinisger" then
+		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		
+		if faction ~= "Wanderer" then
+			if player:HasBelief("heretic") then
+				local message = "\""..table.concat(arguments, " ", 1).."\"";
+
+				for k, v in pairs (_player.GetAll()) do
+					if v:HasInitialized() and v:Alive() then
+						local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+						
+						if (vFaction == faction) and (v:GetFaith() == "Faith of the Dark" or v:GetSubfaith() == "Faith of the Sister") then
+							if v:GetSubfaction() == "Kinisger" and v:GetSharedVar("kinisgerOverride") then
+								Clockwork.chatBox:Add(v, player, "darkwhisperglobalkinisger", message)
+							else
+								Clockwork.chatBox:Add(v, player, "darkwhisperglobal", message);
+							end
+							
+							v:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
+						end
+					end;
+				end;
+			else
+				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' belief before you can darkwhisper!");
+			end
+		else
+			Schema:EasyText(player, "firebrick", "You are not the correct faction to do this!");
+		end
+	else
+		Schema:EasyText(player, "firebrick", "You are not the correct subfaction to do this!");
 	end
 end;
 
@@ -785,15 +843,32 @@ local COMMAND = Clockwork.command:New("Warcry");
 		local sanity_debuff;
 		local warcry_beliefs;
 		
-		if faith == "Faith of the Family" then
-			sanity_debuff = -10;
-			warcry_beliefs = {"father", "mother", "old_son", "young_son", "sister"};
-		elseif faith == "Faith of the Dark" then
-			sanity_debuff = -25;
-			warcry_beliefs = {"sadism"};
+		if player:GetSharedVar("kinisgerOverride") then
+			if player:GetSharedVar("kinisgerOverride") == "Goreic Warrior" then
+				if player:GetSharedVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
+					faith = "Faith of the Family";
+					sanity_debuff = -10;
+					warcry_beliefs = {};
+					player_has_belief = true;
+				else
+					sanity_debuff = -25;
+					warcry_beliefs = {"sadism"};
+				end
+			else
+				sanity_debuff = -25;
+				warcry_beliefs = {"sadism"};
+			end
 		else
-			Schema:EasyText(player, "firebrick", "You are not of the correct faith to do this!");
-			return;
+			if faith == "Faith of the Family" then
+				sanity_debuff = -10;
+				warcry_beliefs = {"father", "mother", "old_son", "young_son", "sister"};
+			elseif faith == "Faith of the Dark" then
+				sanity_debuff = -25;
+				warcry_beliefs = {"sadism"};
+			else
+				Schema:EasyText(player, "firebrick", "You are not of the correct faith to do this!");
+				return;
+			end
 		end
 		
 		for i = 1, #warcry_beliefs do
@@ -807,7 +882,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 			local curTime = CurTime();
 			
 			if (!player.lastWarCry) or player.lastWarCry < curTime then
-				local faction = player:GetFaction();
+				local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 				local radius = config.Get("talk_radius"):Get() * 2;
 				local playerPos = player:GetPos();
 				
@@ -816,9 +891,10 @@ local COMMAND = Clockwork.command:New("Warcry");
 					
 					if (isPlayer and v:GetMoveType() == MOVETYPE_WALK) then
 						local immune = false;
-						local vFaction = v:GetFaction();
+						local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
 						
 						if v:GetFaith() ~= faith then
+							-- Kinisgers can twisted warcry if disguised as a Reaver.
 							if faith == "Faith of the Dark" then
 								if faction == "Goreic Warrior" and vFaction == "Goreic Warrior" then
 									immune = true;
@@ -912,6 +988,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 					end
 				end
 
+				-- Kinisgers can FotF warcry if not disguised as a reaver.
 				if faith == "Faith of the Family" then
 					if player.bloodHowlActive then
 						if cwStamina then

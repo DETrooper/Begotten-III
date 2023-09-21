@@ -123,6 +123,10 @@ Clockwork.chatBox:RegisterClass("darkwhisperglobal", "ic", function(info)
 	Clockwork.chatBox:Add(info.filtered, nil, Color(150, 20, 20, 255), info.speaker:Name().." speaks to you and other Children with the voice of the dead, whispering "..info.text);
 end);
 
+Clockwork.chatBox:RegisterClass("darkwhisperglobalkinisger", "ic", function(info)
+	Clockwork.chatBox:Add(info.filtered, nil, Color(150, 20, 20, 255), "["..info.speaker:GetFaction().."] "..info.speaker:Name().." speaks to you and other Children with the voice of the dead, whispering "..info.text);
+end);
+
 Clockwork.chatBox:RegisterClass("darkwhisperevent", "ic", function(info)
 	Clockwork.chatBox:Add(info.filtered, nil, Color(150, 20, 20, 255), "A whispering voice pierces your mind, accompanied by shrieking: "..info.text);
 end);

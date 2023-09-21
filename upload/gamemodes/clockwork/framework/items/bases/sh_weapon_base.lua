@@ -229,7 +229,10 @@ end;
 
 -- Called when a player uses the item.
 function ITEM:OnUse(player, itemEntity)
-	if (table.HasValue(self.excludeFactions, player:GetFaction())) then
+	local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+	local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+	
+	if (table.HasValue(self.excludeFactions, faction)) then
 		Schema:EasyText(player, "peru", "You are not the correct faction for this item!")
 		return false
 	end
@@ -242,14 +245,14 @@ function ITEM:OnUse(player, itemEntity)
 	end
 	
 	if #self.requireFaction > 0 then
-		if (!table.HasValue(self.requireFaction, player:GetFaction())) then
+		if (!table.HasValue(self.requireFaction, faction)) then
 			Schema:EasyText(player, "peru", "You are not the correct faction for this item!")
 			return false
 		end
 	end
 	
 	if #self.requireSubfaction > 0 then
-		if (!table.HasValue(self.requireSubfaction, player:GetSubfaction())) then
+		if (!table.HasValue(self.requireSubfaction, subfaction)) then
 			Schema:EasyText(player, "peru", "You are not the correct subfaction for this item!")
 			return false
 		end

@@ -631,7 +631,7 @@ local ITEM = Clockwork.item:New();
 			if !player.nextWarHorn or player.nextWarHorn <= curTime then
 				player.nextWarHorn = curTime + 5;
 				
-				local faction = player:GetFaction();
+				local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 				local playerPos = player:GetPos();
 				local radius = Clockwork.config:Get("talk_radius"):Get() * 4;
 			

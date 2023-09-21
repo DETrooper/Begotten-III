@@ -260,7 +260,10 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 	local class = entity:GetClass();
 
 	if entity:IsPlayer() and entity:GetNetVar("tied") != 0 then
-		if (arguments == "cw_sellSlave") and player:GetFaction() == "Goreic Warrior" and entity:GetFaction() ~= "Goreic Warrior" then
+		local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		local entFaction = entity:GetSharedVar("kinisgerOverride") or entity:GetFaction();
+	
+		if (arguments == "cw_sellSlave") and playerFaction == "Goreic Warrior" and entFaction ~= "Goreic Warrior" then
 			for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
 				if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
 					Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 15, "Sold Slave");
@@ -316,7 +319,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 						
 						killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
 						
-						if player:GetFaction() == "Wanderer" then
+						if playerFaction == "Wanderer" then
 							killXP = killXP * 2;
 						end
 						
@@ -334,7 +337,6 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 					end
 					
 					local playerName;
-					local playerFaction = player:GetFaction();
 					
 					if Clockwork.player:DoesRecognise(entity, player) then
 						playerName = player:Name();
@@ -407,49 +409,54 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 		elseif (arguments == "cw_sellSlave") then
 			local entityPlayer = Clockwork.entity:GetPlayer(entity);
 			
-			if player:GetFaction() == "Goreic Warrior" and entityPlayer:GetFaction() ~= "Goreic Warrior" and entityPlayer:GetNetVar("tied") != 0 then
-				for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
-					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
-						Clockwork.player:GiveCash(player, entityPlayer:GetCharacterData("level", 1) * 15, "Sold Slave");
-						player:EmitSound("generic_ui/coin_positive_02.wav");
-						
-						if cwBeliefs then
-							local killXP = cwBeliefs.xpValues["kill"];
+			if entityPlayer then
+				local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+				local entFaction = entityPlayer:GetSharedVar("kinisgerOverride") or entityPlayer:GetFaction();
+			
+				if playerFaction == "Goreic Warrior" and entFaction ~= "Goreic Warrior" and entityPlayer:GetNetVar("tied") != 0 then
+					for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
+						if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
+							Clockwork.player:GiveCash(player, entityPlayer:GetCharacterData("level", 1) * 15, "Sold Slave");
+							player:EmitSound("generic_ui/coin_positive_02.wav");
 							
-							killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
-							
-							if player:HasBelief("sister") then
-								if player:GetCharacterData("level", 1) > player:GetCharacterData("level", 1) then
-									killXP = killXP * 2;
+							if cwBeliefs then
+								local killXP = cwBeliefs.xpValues["kill"];
+								
+								killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
+								
+								if player:HasBelief("sister") then
+									if player:GetCharacterData("level", 1) > player:GetCharacterData("level", 1) then
+										killXP = killXP * 2;
+									end
 								end
+							
+								player:HandleXP(killXP);
+							end
+							
+							local playerName;
+							
+							if Clockwork.player:DoesRecognise(entityPlayer, player) then
+								playerName = player:Name();
+							else
+								playerName = "an unknown Goreic Warrior";
+							end
+							
+							if cwDeathCauses then
+								cwDeathCauses:DeathCauseOverride(entityPlayer, "Sold into slavery by "..playerName..".");
+							end
+							
+							Schema:EasyText(entityPlayer, "firebrick", "You have been sold into slavery by "..playerName.."!");
+							entityPlayer:KillSilent();
+							
+							if IsValid(entity) then
+								entity:Remove();
 							end
 						
-							player:HandleXP(killXP);
+							Schema:PermaKillPlayer(entityPlayer, nil, true);
+							player:SetKills(player:GetKills() + 1);
+							
+							return;
 						end
-						
-						local playerName;
-						
-						if Clockwork.player:DoesRecognise(entityPlayer, player) then
-							playerName = player:Name();
-						else
-							playerName = "an unknown Goreic Warrior";
-						end
-						
-						if cwDeathCauses then
-							cwDeathCauses:DeathCauseOverride(entityPlayer, "Sold into slavery by "..playerName..".");
-						end
-						
-						Schema:EasyText(entityPlayer, "firebrick", "You have been sold into slavery by "..playerName.."!");
-						entityPlayer:KillSilent();
-						
-						if IsValid(entity) then
-							entity:Remove();
-						end
-					
-						Schema:PermaKillPlayer(entityPlayer, nil, true);
-						player:SetKills(player:GetKills() + 1);
-						
-						return;
 					end
 				end
 			end
@@ -486,7 +493,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 							end
 							
 							local playerName;
-							local playerFaction = player:GetFaction();
+							local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 							
 							if Clockwork.player:DoesRecognise(entityPlayer, player) then
 								playerName = player:Name();
@@ -1805,13 +1812,8 @@ function Schema:PlayerAttributeUpdated(player, attributeTable, amount) end;
 
 -- Called to check if a player does recognise another player.
 function Schema:PlayerDoesRecognisePlayer(player, target, status, isAccurate, realValue)
-	local playerFaction = player:GetFaction();
-	local targetFaction = target:GetFaction();
-	local kinisgerOverride = target:GetSharedVar("kinisgerOverride");
-	
-	if kinisgerOverride then
-		targetFaction = kinisgerOverride;
-	end
+	local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+	local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
 
 	if targetFaction == "Holy Hierarchy" then
 		return true;
@@ -1825,7 +1827,8 @@ function Schema:PlayerDoesRecognisePlayer(player, target, status, isAccurate, re
 		end
 	elseif targetFaction == "Goreic Warrior" and playerFaction == "Goreic Warrior" then
 		return true;
-	elseif target:GetFaction() == "Children of Satan" and playerFaction == "Children of Satan" then
+	-- GetFaction() checks incase they're disguised.
+	elseif target:GetFaction() == "Children of Satan" and player:GetFaction() == "Children of Satan" then
 		return true;
 	end
 end;
@@ -2446,9 +2449,15 @@ function Schema:PlayerCharacterLoaded(player)
 	end;
 	
 	if faction == "Goreic Warrior" then
-		if player:GetSubfaction() == "Clan Crast" then
+		local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+		
+		if subfaction == "Clan Crast" then
 			if !Clockwork.player:HasFlags(player, "U") then
 				Clockwork.player:GiveFlags(player, "U");
+			end
+		else
+			if Clockwork.player:HasFlags(player, "U") then
+				Clockwork.player:TakeFlags(player, "U");
 			end
 		end
 	elseif faction == "Gatekeeper" then

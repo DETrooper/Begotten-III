@@ -273,7 +273,7 @@ local WINDED = Clockwork.trait:New()
 	WINDED.uniqueID = "winded"
 	WINDED.name = "Winded"
 	WINDED.description = "Your character is a poor runner and tires easily. This trait lowers your maximum stamina by 25 points and locks the 'Outlasting' belief in the 'Fortitude' belief tree."
-	WINDED.points = -3
+	WINDED.points = -4
 	WINDED.disables = {"brawny", "nimble", "vigorous"}
 Clockwork.trait:Register(WINDED)
 

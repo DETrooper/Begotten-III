@@ -449,9 +449,12 @@ local animalModels = {
 function Schema:GetEntityMenuOptions(entity, options)
 	if Clockwork.Client:Alive() then
 		local curTime = CurTime();
+		local clientFaction = Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction();
 	
 		if entity:IsPlayer() then
-			if Clockwork.Client:GetFaction() == "Goreic Warrior" and entity:GetFaction() ~= "Goreic Warrior" and entity:GetNetVar("tied") != 0 then
+			local entFaction = entity:GetSharedVar("kinisgerOverride") or entity:GetFaction();
+			
+			if clientFaction == "Goreic Warrior" and entFaction ~= "Goreic Warrior" and entity:GetNetVar("tied") != 0 then
 				for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
 					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
 						options["Sell Into Slavery"] = "cw_sellSlave";
@@ -471,24 +474,28 @@ function Schema:GetEntityMenuOptions(entity, options)
 		elseif (entity:GetClass() == "prop_ragdoll") then
 			local player = Clockwork.entity:GetPlayer(entity);
 
-			if player and Clockwork.Client:GetFaction() == "Goreic Warrior" and player:GetFaction() ~= "Goreic Warrior" and player:GetNetVar("tied") != 0 then
-				for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
-					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
-						options["Sell Into Slavery"] = "cw_sellSlave";
-						
-						break;
+			if player then
+				local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			
+				if clientFaction == "Goreic Warrior" and playerFaction ~= "Goreic Warrior" and player:GetNetVar("tied") != 0 then
+					for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
+						if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
+							options["Sell Into Slavery"] = "cw_sellSlave";
+							
+							break;
+						end
 					end
-				end
-			elseif player and player:IsWanted() and player:GetNetVar("tied") != 0 then
-				for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
-					if v:GetClass() == "cw_bounty_board" then
-						options["Turn In"] = "cw_turnInBounty";
-						
-						break;
+				elseif player:IsWanted() and player:GetNetVar("tied") != 0 then
+					for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
+						if v:GetClass() == "cw_bounty_board" then
+							options["Turn In"] = "cw_turnInBounty";
+							
+							break;
+						end
 					end
 				end
 			end
-			
+				
 			if (!player or (player and (!player:Alive() or player:GetMoveType() ~= MOVETYPE_OBSERVER))) then
 				local model = entity:GetModel();
 				
@@ -678,13 +685,13 @@ end;
 
 -- Called when the target's subfaction should be drawn.
 function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
-	local playerSubfaction = Clockwork.Client:GetSharedVar("subfaction");
+	local playerSubfaction = Clockwork.Client:GetSharedVar("kinisgerOverrideSubfaction") or Clockwork.Client:GetSharedVar("subfaction");
 	local targetSubfaction = target:GetSharedVar("kinisgerOverrideSubfaction") or target:GetSharedVar("subfaction");
 	local subfactionText;
 	
 	if targetSubfaction and targetSubfaction ~= "" and targetSubfaction ~= "N/A" then
+		local playerFaction = Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction();
 		local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
-		local playerFaction = Clockwork.Client:GetFaction();
 		local textColor = Color(150, 150, 150, 255);
 
 		if playerFaction == "Goreic Warrior" and targetFaction == "Goreic Warrior" then
@@ -709,11 +716,12 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 			else
 				subfactionText = "A member of "..targetSubfaction..".";
 			end
-		elseif playerFaction == "Children of Satan" and target:GetFaction() == "Children of Satan" then
+		-- GetFaction() checks incase they're disguised.
+		elseif player:GetFaction() == "Children of Satan" and target:GetFaction() == "Children of Satan" then
 			if target:GetModel() == "models/begotten/satanists/lordvasso/male_56.mdl" then
 				subfactionText = "The chosen of Satan, the Dreadlord himself!";
 				textColor = Color(0, 255, 0, 255);
-			elseif playerSubfaction == targetSubfaction or playerSubfaction == "Kinisger" and target:GetSharedVar("kinisgerOverrideSubfaction") then
+			elseif Clockwork.Client:GetSharedVar("subfaction") == target:GetSharedVar("subfaction") or player:GetSharedVar("subfaction") == "Kinisger" and target:GetSharedVar("kinisgerOverrideSubfaction") then
 				local brother = "brother";
 				
 				if target:GetGender() == GENDER_FEMALE then
@@ -814,7 +822,7 @@ end
 -- Called when the target's subfaction should be drawn.
 function Schema:DrawTargetPlayerLevel(target, alpha, x, y)
 	local playerFaction = Clockwork.Client:GetFaction();
-	local targetFaction = target:GetFaction();
+	local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
 	local levelText;
 	
 	if playerFaction == "Children of Satan" and targetFaction ~= "Children of Satan" then
@@ -1073,13 +1081,8 @@ function Schema:PlayerDoesHaveFlag(player, flag) end;
 
 -- Called to check if a player does recognise another player.
 function Schema:PlayerDoesRecognisePlayer(target, status, isAccurate, realValue)
-	local playerFaction = Clockwork.Client:GetFaction();
-	local targetFaction = target:GetFaction();
-	local kinisgerOverride = target:GetSharedVar("kinisgerOverride");
-	
-	if kinisgerOverride then
-		targetFaction = kinisgerOverride;
-	end
+	local playerFaction = Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction();
+	local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
 
 	if targetFaction == "Holy Hierarchy" then
 		return true;
@@ -1097,7 +1100,8 @@ function Schema:PlayerDoesRecognisePlayer(target, status, isAccurate, realValue)
 		return true;
 	elseif targetFaction == "The Third Inquisition" and playerFaction == "The Third Inquisition" then
 		return true;
-	elseif target:GetFaction() == "Children of Satan" and playerFaction == "Children of Satan" then
+	-- GetFaction() checks incase they're disguised.
+	elseif target:GetFaction() == "Children of Satan" and Clockwork.Client:GetFaction() == "Children of Satan" then
 		return true;
 	end
 end;
@@ -2140,6 +2144,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 
 			if table.HasValue(itemTable.attributes, "lifeleech") then
 				frame:AddText("Lifeleech (Shieldless): 50% of damage dealt is returned as health", Color(110, 30, 30));
+			end
+			
+			if table.HasValue(itemTable.attributes, "mothers_blessing") then
+				frame:AddText("Mother's Blessing: Reduces corruption gain by 50%.", Color(110, 30, 30));
 			end
 			
 			if table.HasValue(itemTable.attributes, "night_vision") then

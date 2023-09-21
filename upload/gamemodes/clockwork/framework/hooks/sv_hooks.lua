@@ -1917,9 +1917,9 @@ function GM:PlayerCanDeleteCharacter(player, character) end
 
 -- Called when a player attempts to switch to a character.
 function GM:PlayerCanSwitchCharacter(player, character)
-	if (!player:Alive() and !player:IsCharacterMenuReset()) then
+	--[[if (!player:Alive() and !player:IsCharacterMenuReset()) then
 		return "You cannot switch characters while being dead."
-	elseif (player:GetRagdollState() == RAGDOLL_KNOCKEDOUT) then
+	else]]if (player:GetRagdollState() == RAGDOLL_KNOCKEDOUT) then
 		return "You cannot switch characters while being unconscious."
 	end
 

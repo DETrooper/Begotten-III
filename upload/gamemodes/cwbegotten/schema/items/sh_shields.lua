@@ -27,7 +27,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, 2.12, 5.66);
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap"}};
-	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 200};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 200, bNoSupercrate = true};
 	ITEM.requiredbeliefs = {"defender"};	
 ITEM:Register();
 
@@ -60,7 +60,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, 2.12, -4.95);
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 800, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
 	ITEM.requireFaith = {"Faith of the Dark"};
 ITEM:Register();
 
@@ -112,7 +112,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, -1.41, 0);
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 800};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 900};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -144,7 +144,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, 8, -4.95);
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "scrap"}};
-	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 600, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -160,7 +160,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, 0.71, 4.24);
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
-	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 65};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 80};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -177,7 +177,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	
 	ITEM.attributes = {"unbreakable"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 800, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
 	ITEM.requiredbeliefs = {"defender"};
 	ITEM.requireFaith = {"Faith of the Light"};
 ITEM:Register();
@@ -195,7 +195,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, 0.34, 0);
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 800, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
 	ITEM.requireFaith = {"Faith of the Dark"};
 ITEM:Register();
 
@@ -244,6 +244,6 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetAngles = Angle(273.48, 360, 90);
 	ITEM.attachmentOffsetVector = Vector(0, 1.6, 0);
 	
-	ITEM.itemSpawnerInfo = {category = "Shields", rarity = 650, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 650, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood", "wood", "wood"}};
 ITEM:Register();

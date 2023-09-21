@@ -692,6 +692,7 @@ function PANEL:Init()
 	-- Called when an option is selected.
 	self.factionMultiChoice.OnSelect = function(multiChoice, index, value, data)
 		self.selectedFaction = value;
+		self:RebuildModelList(value);
 		
 		local factionTable = Clockwork.faction:FindByID(value);
 		
@@ -708,15 +709,6 @@ function PANEL:Init()
 				self.selectedSubfaction = nil;
 			end
 		end;
-	end;
-	
-	if (self.factionMultiChoice) then
-		for k, v in pairs(factions) do
-			self.factionMultiChoice:AddChoice(v);
-		end;
-		
-		-- Select Wanderer.
-		self.factionMultiChoice:ChooseOptionID(2);
 	end;
 	
 	self.subfactionMultiChoice = self.nameForm:ComboBox("Subfaction");
@@ -746,36 +738,6 @@ function PANEL:Init()
 	
 	if (self.appearanceForm) then
 		self.categoryList:AddItem(self.appearanceForm);
-	end;
-	
-	local faction = Clockwork.Client:GetFaction();
-	local informationColor = Clockwork.option:GetColor("information");
-	local lowerGender = string.lower(Clockwork.Client:GetGender());
-	local spawnIcon = nil;
-	
-	for k, v in pairs(Clockwork.faction.stored) do
-		if (v.name == faction) then
-			if (self.modelItemsList and v.models[lowerGender]) then
-				for k2, v2 in pairs(v.models[lowerGender]) do
-					spawnIcon = vgui.Create("cwSpawnIcon", self);
-					spawnIcon:SetModel(v2);
-					
-					-- Called when the spawn icon is clicked.
-					function spawnIcon.DoRightClick(spawnIcon)
-						if (self.selectedSpawnIcon) then
-							self.selectedSpawnIcon:SetColor(nil);
-						end;
-						
-						spawnIcon:SetColor(informationColor);
-						
-						self.selectedSpawnIcon = spawnIcon;
-						self.selectedModel = v2;
-					end;
-					
-					self.modelItemsList:AddItem(spawnIcon);
-				end;
-			end;
-		end;
 	end;
 	
 	self.closeButton = vgui.Create("DButton", self)
@@ -865,6 +827,11 @@ function PANEL:Init()
 			return false;
 		end;
 		
+		if (!Clockwork.faction:IsGenderValid(self.selectedFaction, self.selectedGender)) then
+			Clockwork.character:SetFault(self.selectedGender.." is not the correct gender for the "..self.selectedFaction.." faction!");
+			return false;
+		end;
+		
 		local minimumPhysDesc = Clockwork.config:Get("minimum_physdesc"):Get();
 		
 		self.physDesc = self.physDescTextEntry:GetValue();
@@ -874,7 +841,7 @@ function PANEL:Init()
 			return false;
 		end;
 		
-		netstream.Start("AppearanceAlterationMenu", {self.fullName, self.selectedModel, self.physDesc, self.selectedFaction, self.selectedSubfaction});
+		netstream.Start("AppearanceAlterationMenu", {self.fullName, self.selectedModel, self.selectedGender, self.physDesc, self.selectedFaction, self.selectedSubfaction});
 		
 		if (IsValid(self)) then
 			self:Remove();
@@ -890,6 +857,15 @@ function PANEL:Init()
 		surface.DrawTexturedRect(0, 0, width, height)
 	end
 	
+	if (self.factionMultiChoice) then
+		for k, v in pairs(factions) do
+			self.factionMultiChoice:AddChoice(v);
+		end;
+		
+		-- Select Wanderer.
+		self.factionMultiChoice:ChooseOptionID(3);
+	end;
+	
 	Clockwork.Client.cwChangeAppearanceMenu = self;
 end;
 
@@ -901,6 +877,56 @@ end;
 function PANEL:Paint()
 
 end;
+
+function PANEL:RebuildModelList(faction)
+	if IsValid(self.modelItemsList) then
+		self.modelItemsList:Clear();
+	else
+		return;
+	end
+	
+	local informationColor = Clockwork.option:GetColor("information");
+	local lowerGender = string.lower(Clockwork.Client:GetGender());
+	
+	for k, v in pairs(Clockwork.faction.stored) do
+		if (v.name == faction) then
+			for gender, v2 in pairs(v.models) do
+				for k3, v3 in pairs(v2) do
+					if v.singleGender and gender ~= string.lower(v.singleGender) then
+						continue;
+					end
+				
+					local spawnIcon = vgui.Create("cwSpawnIcon", self);
+					spawnIcon:SetModel(v3);
+					spawnIcon.model = v3;
+					spawnIcon.gender = string.upper(gender[1])..string.sub(gender, 2, #gender);
+					
+					-- Called when the spawn icon is clicked.
+					function spawnIcon:DoClick()
+						if (Clockwork.Client.cwChangeAppearanceMenu.selectedSpawnIcon) then
+							Clockwork.Client.cwChangeAppearanceMenu.selectedSpawnIcon:SetColor(nil);
+						end;
+						
+						self:SetColor(informationColor);
+						
+						Clockwork.Client.cwChangeAppearanceMenu.selectedSpawnIcon = spawnIcon;
+						Clockwork.Client.cwChangeAppearanceMenu.selectedModel = spawnIcon.model;
+						Clockwork.Client.cwChangeAppearanceMenu.selectedGender = spawnIcon.gender;
+					end;
+					
+					-- Called when the spawn icon is clicked.
+					function spawnIcon:DoRightClick()
+						self:DoClick();
+					end;
+					
+					self.modelItemsList:AddItem(spawnIcon);
+				end;
+			end;
+			
+			break;
+		end;
+	end;
+end
 
 -- Called when the layout should be performed.
 function PANEL:PerformLayout(w, h)

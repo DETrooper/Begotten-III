@@ -104,9 +104,26 @@ function cwSanity:PlayerThink(player, curTime, infoTable)
 			local bIsPlayer = entTab.bIsPlayer;
 			
 			if (bIsPlayer and entity != player) then
-				if (!entity:Alive() or player:IsEnemy(entity) or (player:GetFaith() != "Faith of the Dark" and entity:GetFaith() == "Faith of the Dark" and entity:HasBelief("blank_stare"))) then
+				if !entity:Alive() then
 					sanityDecay = sanityDecay - 1.5;
 				end;
+				
+				if (player:GetFaith() != "Faith of the Dark" and entity:GetFaith() == "Faith of the Dark" and entity:HasBelief("blank_stare")) then
+					local entityFaction = entity:GetFaction();
+					local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+					local kinisgerOverride = entity:GetSharedVar("kinisgerOverride");
+					local factionTable = Clockwork.faction:FindByID(entityFaction);
+					local alliedFactions = {};
+					
+					if factionTable.alliedfactions then
+						alliedFactions = table.Copy(factionTable.alliedfactions);
+					end
+					
+					-- Check faction twice in case player is disguised.
+					if !kinisgerOverride and entityFaction ~= playerFaction and entityFaction ~= player:GetFaction() and !table.HasValue(alliedFactions, playerFaction) then
+						sanityDecay = sanityDecay - 1.5;
+					end
+				end
 			end;
 			
 			local class = entTab.class;
@@ -148,6 +165,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable)
 		
 		local cycle = cwDayNight.currentCycle;
 		local bNight = tobool(cycle == "night")
+		local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction()
 		
 		if (player.LightColor) then
 			local requiredLight = 15;
@@ -208,11 +226,10 @@ function cwSanity:PlayerThink(player, curTime, infoTable)
 		elseif (lastZone == "caves") then
 			sanityDecay = (sanityDecay - 2);
 		end;
-		
-		local playerFaction = player:GetFaction();
 
 		if (hellZones[lastZone]) then
-			if (playerFaction != "Children of Satan") then
+			-- GetFaction() check incase they're disguised.
+			if (player:GetFaction() != "Children of Satan") then
 				sanityDecay = sanityDecay - 5;
 			else
 				sanityDecay = sanityDecay + 5;

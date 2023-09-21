@@ -107,7 +107,7 @@ function COMMAND:OnRun(player, arguments)
 				end
 			end
 		else
-			local faction = player:GetFaction();
+			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 			local playerPos = player:GetPos();
 			
 			if faction == "Gatekeeper" or faction == "Holy Hierarchy" then
@@ -175,7 +175,8 @@ function COMMAND:OnRun(player, arguments)
 					Schema:EasyText(player, "olivedrab", "You climb into a cot and get some rest.");
 					return;
 				end
-			elseif faction == "Children of Satan" and cwCharacterNeeds.bedZones["satanists"] then
+				-- GetFaction() check incase they're disguised.
+			elseif player:GetFaction() == "Children of Satan" and cwCharacterNeeds.bedZones["satanists"] then
 				if playerPos:WithinAABox(cwCharacterNeeds.bedZones["satanists"].pos1, cwCharacterNeeds.bedZones["satanists"].pos2) then
 					player.sleepData = {hunger = 5, thirst = 10, rest = -100, sanity = 50};
 					--player:HandleSanity(50);

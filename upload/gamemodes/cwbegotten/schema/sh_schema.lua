@@ -16,7 +16,7 @@ if (game.GetMap() == "rp_begotten3") then
 		["duel_gore"] = Vector(-12067, -12392, 12062),
 		["duel_silenthill"] = Vector(8966, -12703, -6185),
 		["duel_wasteland"] = Vector(14075, -5952, -2306),
-		["gore"] = Vector(510, -8873, 11702),
+		["gore"] = Vector(510, -8873, 11710),
 		["goredocks"] = Vector(-2509, -468, 11688),
 		["gorewatch"] = Vector(9700, 11140, -1177),
 		["hell"] = Vector(-1430, -9129, -6537),

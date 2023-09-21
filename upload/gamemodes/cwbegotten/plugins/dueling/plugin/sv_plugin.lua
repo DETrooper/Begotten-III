@@ -739,7 +739,24 @@ function cwDueling:DuelCompleted(winner, loser)
 				end);
 
 				if cwBeliefs then
-					Schema:EasyText({winner, loser}, "icon16/shield_add.png", "forestgreen", winner:Name().." ("..winner:GetCharacterData("level", 1)..") was the winner with "..winner:Health().." out of "..winner:GetMaxHealth().." health left!");
+					local level = winner:GetCharacterData("level", 1);
+					local kinisgerOverride = winner:GetSharedVar("kinisgerOverride");
+					
+					if winner:GetSubfaction() == "Kinisger" and kinisgerOverride then
+						if kinisgerOverride ~= "Children of Satan" and winner:GetSharedVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
+							if level > cwBeliefs.sacramentLevelCap and winner:HasBelief("sorcerer") then
+								if winner:HasBelief("loremaster") then
+									if level > (cwBeliefs.sacramentLevelCap + 10) then
+										level = 50;
+									end
+								else
+									level = 40;
+								end
+							end
+						end
+					end
+					
+					Schema:EasyText({winner, loser}, "icon16/shield_add.png", "forestgreen", winner:Name().." ("..level..") was the winner with "..winner:Health().." out of "..winner:GetMaxHealth().." health left!");
 				else
 					Schema:EasyText({winner, loser}, "icon16/shield_add.png", "forestgreen", winner:Name().." was the winner with "..winner:Health().." out of "..winner:GetMaxHealth().." health left!");
 				end
@@ -808,7 +825,24 @@ function cwDueling:DuelCompleted(winner, loser)
 				end);
 				
 				if cwBeliefs then
-					Schema:EasyText(winner, "icon16/shield_add.png", "forestgreen", winner:Name().." ("..winner:GetCharacterData("level", 1)..") was the winner with "..winner:Health().." out of "..winner:GetMaxHealth().." health left!");
+					local level = winner:GetCharacterData("level", 1);
+					local kinisgerOverride = winner:GetSharedVar("kinisgerOverride");
+					
+					if winner:GetSubfaction() == "Kinisger" and kinisgerOverride then
+						if kinisgerOverride ~= "Children of Satan" and winner:GetSharedVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
+							if level > cwBeliefs.sacramentLevelCap and winner:HasBelief("sorcerer") then
+								if winner:HasBelief("loremaster") then
+									if level > (cwBeliefs.sacramentLevelCap + 10) then
+										level = 50;
+									end
+								else
+									level = 40;
+								end
+							end
+						end
+					end
+				
+					Schema:EasyText(winner, "icon16/shield_add.png", "forestgreen", winner:Name().." ("..level..") was the winner with "..winner:Health().." out of "..winner:GetMaxHealth().." health left!");
 				else
 					Schema:EasyText(winner, "icon16/shield_add.png", "forestgreen", winner:Name().." was the winner with "..winner:Health().." out of "..winner:GetMaxHealth().." health left!");
 				end

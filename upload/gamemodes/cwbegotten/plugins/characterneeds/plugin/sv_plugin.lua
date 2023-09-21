@@ -45,6 +45,37 @@ function playerMeta:HandleNeed(need, amount)
 			return
 		end
 		
+		if amount > 0 then
+			if need == "sleep" then
+				if cwBeliefs and self:HasBelief("enduring_bear") then
+					amount = (amount / 2);
+				end
+			elseif need == "corruption" then
+				local clothesItem = self:GetClothesItem();
+				
+				if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "mothers_blessing") then
+					amount = amount * 0.5;
+				end
+			
+				if self.HasCharmEquipped then
+					if self:HasCharmEquipped("crucifix") then
+						amount = amount * 0.75;
+					end
+					
+					if self:HasCharmEquipped("warding_talisman") then
+						amount = amount * 0.5;
+					end
+				end
+				
+				--[[if self:GetSubfaction() == "Philimaxio" then
+						amount = amounth * 1.5;
+					end]]--
+				--[[elseif self:GetSubfaction() == "Philimaxio" then
+						amount = amount * 2;
+				end]]--
+			end
+		end
+		
 		local currentAmount = self:GetCharacterData(need, 0);
 		local newAmount = currentAmount + amount;
 		
@@ -124,10 +155,6 @@ function playerMeta:HandleNeed(need, amount)
 					if self:GetRagdollState() == RAGDOLL_KNOCKEDOUT then
 						return;
 					end
-					
-					if cwBeliefs and self:HasBelief("enduring_bear") then
-						newAmount = currentAmount + (amount / 2);
-					end
 				end
 			
 				if newAmount >= 100 then
@@ -165,23 +192,6 @@ function playerMeta:HandleNeed(need, amount)
 					if self:GetSubfaction() == "Rekh-khet-sa" then
 						return;
 					end
-				
-					if self.HasCharmEquipped then
-						if self:HasCharmEquipped("crucifix") then
-							newAmount = currentAmount + (amount * 0.75);
-						end
-						
-						if self:HasCharmEquipped("warding_talisman") then
-							newAmount = currentAmount + (amount * 0.5);
-						end
-					end
-					
-					--[[if self:GetSubfaction() == "Philimaxio" then
-							newAmount = currentAmount + (amount * 1.5);
-						end]]--
-					--[[elseif self:GetSubfaction() == "Philimaxio" then
-						newAmount = currentAmount + (amount * 2);
-					end]]--
 				end
 				
 				if newAmount >= 100 then

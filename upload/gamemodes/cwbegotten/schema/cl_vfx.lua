@@ -114,8 +114,8 @@ end;
 function Schema:ShouldPlayerModifyBlur(entity)
 	if entity:IsPlayer() and entity:GetMoveType() ~= MOVETYPE_NOCLIP and entity:GetColor().a > 0 then
 		-- There's probably a better way to do this but I don't feel like networking clothes items and shit.
-		local faction = entity:GetFaction();
-		local clientFaction = Clockwork.Client:GetFaction();
+		local faction = entity:GetSharedVar("kinisgerOverride") or entity:GetFaction();
+		local clientFaction = Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction();
 		
 		if faction == "Goreic Warrior" and clientFaction ~= "Goreic Warrior" then
 			local bodygroup = entity:GetBodygroup(0);

@@ -35,7 +35,7 @@ ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 
-ITEM.attributes = {"increased_regeneration"};
+ITEM.attributes = {"mothers_blessing", "increased_regeneration"};
 ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide", "cloth", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
@@ -82,14 +82,14 @@ ITEM.description = "A bear pelt commonly worn by Gore Berzerkers, the most fears
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.attributes = {"lifeleech", "rage"};
 ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.excludeSubfactions = {"Clan Grock"};
+ITEM.excludeSubfactions = {"Clan Grock", "Clan Crast", "Clan Shagalax", "Clan Harald", "Clan Reaver"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_HEAD] = true,
 }
 
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
-ITEM.stabilityScale = 0.30; -- reduces stability damage by 60%
+ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 ITEM.slashScale = 0.95; -- reduces slash damage by 5%
 
 ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide", "bearskin", "bearskin", "cloth"}};
@@ -407,6 +407,7 @@ ITEM.type = "plate";
 ITEM.description = "Heavy armor made from hellforged black iron. Decorated with skulls and hides from man and demon alike, the Red Wolves of Clan Reaver make sure their presence is known.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Goreic Warrior"};
+ITEM.excludeSubfactions = {"Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Grock"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -617,7 +618,7 @@ ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.bulletScale = 0; -- reduces bullet damage by 100%
 
-ITEM.attributes = {"increased_regeneration", "fear"};
+ITEM.attributes = {"mothers_blessing", "increased_regeneration", "fear"};
 ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide", "cloth", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.

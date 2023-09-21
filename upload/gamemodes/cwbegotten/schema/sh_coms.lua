@@ -870,7 +870,9 @@ function COMMAND:OnRun(player, arguments)
 		local subfaction = player:GetSubfaction();
 		
 		if subfaction == "Clan Crast" then
-			if target:GetFaction() == "Goreic Warrior" then
+			local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+			
+			if targetFaction == "Goreic Warrior" then
 				if player:HasBelief("watchful_raven") then
 					local message = "\""..table.concat(arguments, " ", 2).."\"";
 
@@ -953,10 +955,15 @@ local COMMAND = Clockwork.command:New("RavenSpeakFaction");
 					netstream.Start(player, "TriggerCrows");
 
 					for k, v in pairs (_player.GetAll()) do
-						if v:HasInitialized() and v:Alive() and (v:GetFaction() == "Goreic Warrior") then
-							Clockwork.chatBox:Add(v, player, "ravenspeakfaction", message);
-							v:SendLua([[Clockwork.Client:EmitSound("crow"..math.random(3, 4)..".wav", 90, 100)]]);
-							netstream.Start(v, "TriggerCrows");
+						if v:HasInitialized() and v:Alive() then
+							local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+							local vLastZone = v:GetCharacterData("LastZone");
+							
+							if vFaction == "Goreic Warrior" and vLastZone ~= "hell" and vLastZone ~= "manor" then
+								Clockwork.chatBox:Add(v, player, "ravenspeakfaction", message);
+								v:SendLua([[Clockwork.Client:EmitSound("crow"..math.random(3, 4)..".wav", 90, 100)]]);
+								netstream.Start(v, "TriggerCrows");
+							end;
 						end;
 					end;
 				else

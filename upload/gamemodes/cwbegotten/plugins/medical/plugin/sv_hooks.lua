@@ -729,6 +729,20 @@ function cwMedicalSystem:PlayerTakeDamage(player, attacker, inflictor, hitGroup,
 					end
 				end
 			elseif damageType == DMG_BURN then
+				if cwBeliefs then
+					if player:HasBelief("hide_of_steel") and player:HasBelief("watchful_raven") then
+						return;
+					elseif player:HasBelief("hide_of_steel") or player:HasBelief("watchful_raven") then
+						if math.random(1, 2) == 1 then
+							return;
+						end
+					elseif player:HasBelief("enduring_bear") then
+						if math.random(1, 4) == 1 then
+							return;
+						end
+					end
+				end
+			
 				if IsValid(attacker) and attacker:GetClass() == "entityflame" then
 					if math.random(1, 20) == 1 then
 						player:AddInjury(self.cwHitGroupToString[hitGroup], "burn");

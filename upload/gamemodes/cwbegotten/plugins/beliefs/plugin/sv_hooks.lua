@@ -897,6 +897,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 										player:HandleXP(self.xpValues["mutilate"] * 2);
 										player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 										Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
+										entity:SetMaterial("models/flesh");
 										
 										local weaponItemTable = item.GetByWeapon(activeWeapon);
 										

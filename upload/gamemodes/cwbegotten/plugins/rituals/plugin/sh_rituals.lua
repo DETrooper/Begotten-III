@@ -849,8 +849,9 @@ RITUAL = cwRituals.rituals:New("kinisger_appearance_alteration");
 	RITUAL.requiredSubfaction = {"Kinisger"}; -- Subfaction Ritual
 	
 	RITUAL.requirements = {"down_catalyst", "down_catalyst", "ice_catalyst"};
-	--RITUAL.corruptionCost = 15; -- Corruption gets added once the UI is closed.
+	--RITUAL.corruptionCost = 50; -- Corruption gets added once the UI is closed.
 	RITUAL.ritualTime = 15;
+	RITUAL.isSilent = true;
 	
 	function RITUAL:OnPerformed(player)
 		player.selectingNewAppearance = true;
@@ -1553,11 +1554,22 @@ RITUAL = cwRituals.rituals:New("summon_familiar");
 					entity:SetMaterial("models/props_combine/portalball001_sheet")
 					entity:AddEntityRelationship(player, D_LI, 99);
 					entity.XPValue = 250;
+					
+					entity.CreateDeathCorpse = function()
+						
+					end;
+					
 					entity.summonedFaith = playerFaith;
 					
 					for k, v in pairs(_player.GetAll()) do
 						if v:GetFaith() == playerFaith then
 							entity:AddEntityRelationship(v, D_LI, 99);
+						else					
+							local faction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+							
+							if faction == "Goreic Warrior" then
+								entity:AddEntityRelationship(v, D_LI, 99);
+							end
 						end
 					end
 					
