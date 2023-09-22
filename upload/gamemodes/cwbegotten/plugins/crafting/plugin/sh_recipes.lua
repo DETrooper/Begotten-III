@@ -1307,8 +1307,8 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("lockpick");
 		RECIPE.name = "Lockpick";
-		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
+		RECIPE.requiredBeliefs = {"ingenious"};
+		RECIPE.requiredBeliefsNiceNames = {"Ingenious"};
 		RECIPE.requirements = {
 			["scrap"] = {amount = 2},
 		};
@@ -1608,8 +1608,8 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("iron_dagger");
 		RECIPE.name = "Iron Dagger";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 2},
@@ -1753,8 +1753,8 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("iron_knuckles");
 		RECIPE.name = "Iron Knuckles";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
+		RECIPE.requiredBeliefs = {"ingenious"};
+		RECIPE.requiredBeliefsNiceNames = {"Ingenious"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 2},
 		};
@@ -1781,8 +1781,8 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("spiked_knuckles");
 		RECIPE.name = "Spiked Knuckles";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
 		RECIPE.requirements = {
 			["iron_knuckles"] = {amount = 1},
 			["scrap"] = {amount = 1},
@@ -2374,8 +2374,8 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("bladed_bat");
 		RECIPE.name = "Bladed Bat";
-		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
+		RECIPE.requiredBeliefs = {"ingenious"};
+		RECIPE.requiredBeliefsNiceNames = {"Ingenious"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["begotten_1h_bat"] = {amount = 1},
@@ -2460,8 +2460,8 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("bladed_board");
 		RECIPE.name = "Bladed Board";
-		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
+		RECIPE.requiredBeliefs = {"ingenious"};
+		RECIPE.requiredBeliefsNiceNames = {"Ingenious"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["begotten_1h_board"] = {amount = 1},
