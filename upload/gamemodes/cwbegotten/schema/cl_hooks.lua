@@ -342,7 +342,8 @@ function Schema:EasyText(...)
 	local icon;
 	
 	for k, v in pairs (args) do
-		if (isentity(v) or istable(v)) then
+		-- IsColor() doesn't work in all cases.
+		if (isentity(v) or (istable(v) and (!v.r and !v.g and !v.b))) then
 			args[k] = nil;
 			continue;
 		end
@@ -353,9 +354,7 @@ function Schema:EasyText(...)
 			continue;
 		end;
 		
-		if IsColor(v) then
-			args[k] = v;
-		elseif (colors[v]) then
+		if (colors[v]) then
 			args[k] = colors[v];
 		end;
 	end;
@@ -2303,6 +2302,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				if !weaponTable.MisfireChance or weaponTable.MisfireChance == 0 then
 					frame:AddText("Cannot Misfire", Color(110, 30, 30));
 				end
+				
+				if itemTable.attributes then
+					if table.HasValue(itemTable.attributes, "sundering_shot") then
+						frame:AddText("Sundering Shot: Travelling at supersonic speeds, Old World Longshot ignores armor and shields entirely.", Color(110, 30, 30));
+					end
+				end
 
 				if itemTable.usesMagazine then
 					frame:AddText("Uses Detachable Magazines", Color(110, 30, 30));
@@ -2371,7 +2376,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				if weaponTable.Primary.NumShots > 1 then
 					local percentage = math.min(weaponTable.Primary.NumShots, 32) / 32;
 		
-					frame:AddBar(12, {{text = tostring(weaponTable.Primary.Damage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Pellet Amount", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponTable.Primary.NumShots), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Pellet Amount", Color(110, 30, 30));
 				end
 				
 				if weaponTable.Primary.RPM and weaponTable.Primary.ClipSize > 1 then

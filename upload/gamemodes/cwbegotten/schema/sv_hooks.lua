@@ -2893,6 +2893,24 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 	end
 end;
 
+function Schema:ActionStopped(player, action)
+	if action == "building" then
+		if player.ladderConstructing then
+			local ladderItem = item.CreateInstance("siege_ladder");
+			
+			if ladderItem then
+				ladderItem:SetCondition(player.ladderConstructing.condition, true);
+				
+				player:GiveItem(ladderItem);
+			end
+			
+			Schema.siegeLadderPositions[player.ladderConstructing.index].occupier = nil;
+			
+			player.ladderConstructing = nil;
+		end
+	end
+end;
+
 function Schema:ModifyPlayerSpeed(player, infoTable, action)
 	local subfaction = player:GetSubfaction();
 	

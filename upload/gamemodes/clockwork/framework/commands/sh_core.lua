@@ -375,9 +375,9 @@ local COMMAND = Clockwork.command:New("InvAction");
 								if repairItemTable:GetCondition() <= 0 then
 									player:TakeItem(repairItemTable, true);
 									
-									Schema:EasyText(player, "olivedrab", "You have repaired your "..itemTable.name.." to "..tostring(itemTable:GetCondition())..", using the last of the repair kit's parts in the process.");
+									Schema:EasyText(player, "olivedrab", "You have repaired your "..itemTable.name.." to "..tostring(math.Round(itemTable:GetCondition(), 2))..", using the last of the repair kit's parts in the process.");
 								else
-									Schema:EasyText(player, "green", "You have repaired your "..itemTable.name.." to "..tostring(itemTable:GetCondition())..".");
+									Schema:EasyText(player, "green", "You have repaired your "..itemTable.name.." to "..tostring(math.Round(itemTable:GetCondition(), 2))..".");
 									Clockwork.inventory:Rebuild(player);
 								end
 							else

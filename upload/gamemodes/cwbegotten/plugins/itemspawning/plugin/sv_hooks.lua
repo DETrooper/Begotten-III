@@ -416,7 +416,7 @@ function cwItemSpawner:PreOpenContainer(player, container)
 								end
 							end
 						elseif itemInstance.name == "Springer" then
-							for j = 1, math.random(5, 10) do
+							for j = 1, math.random(10, 15) do
 								local ammoItemInstance = item.CreateInstance("old_world_longshot");
 								
 								if ammoItemInstance then

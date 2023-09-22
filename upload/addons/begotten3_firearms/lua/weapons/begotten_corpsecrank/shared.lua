@@ -30,7 +30,7 @@ SWEP.ShowWorldModel			= false
 SWEP.Spawnable				= true
 SWEP.AdminSpawnable			= true
 
-SWEP.Primary.Sound 			= Sound("Weapon_En.Fire")				-- This is the sound of the weapon, when you shoot.
+SWEP.Primary.Sound 			= Sound("weapons/en/m3-1.wav")				-- This is the sound of the weapon, when you shoot.
 SWEP.Primary.RPM				= 45		-- This is in Rounds Per Minute
 SWEP.Primary.ClipSize			= 6			-- Size of a clip
 SWEP.Primary.DefaultClip		= 0	-- Default number of bullets in a clip
@@ -51,10 +51,10 @@ SWEP.data.ironsights			= 1
 
 SWEP.ShellTime			= 0.55 -- For shotguns, how long it takes to insert a shell.
 
-SWEP.Primary.NumShots	= 24
-SWEP.Primary.Damage		= 10
-SWEP.Primary.Spread		= 0.2				
-SWEP.Primary.IronAccuracy = 0.2
+SWEP.Primary.NumShots = 32;
+SWEP.Primary.Damage = 12;
+SWEP.Primary.Spread = .175;
+SWEP.Primary.IronAccuracy = .175;
 -- Because irons don't magically give you less pellet spread!
 
 -- Enter iron sight info and bone mod info below
@@ -65,7 +65,7 @@ SWEP.RunSightsAng = Vector(-2.599, -33.813, 0)
 
 SWEP.AmmoTypes = {
 	["Grapeshot"] = function(SWEP)
-		SWEP.Primary.Sound = Sound("others/ubo_4.mp3");
+		SWEP.Primary.Sound = Sound("weapons/en/m3-1.wav");
 		SWEP.Primary.NumShots = 32;
 		SWEP.Primary.Damage = 12;
 		SWEP.Primary.Spread = .175;

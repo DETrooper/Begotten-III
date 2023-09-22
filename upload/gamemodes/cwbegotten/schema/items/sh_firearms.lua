@@ -66,8 +66,8 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.ammoTypes = {"Grapeshot"};
 	ITEM.firearmType = "Repeating Shotgun";
 	ITEM.isRevolver = true;
-	ITEM.reloadTime = 10; -- Seconds (for one round)
-	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
+	ITEM.reloadTime = 2; -- Seconds (for one round)
+	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/bulkcannon/insertshell.wav", "weapons/bulkcannon/lock.wav"};
 	
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, supercrateOnly = true, supercrateItems = {["grapeshot"] = {min = 15, max = 30}}};
 ITEM:Register();
@@ -201,6 +201,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.ammoCapacity = 5;
 	ITEM.ammoTypes = {"Old World Longshot"};
 	ITEM.ammoTypesNice = {"Old World Longshot"};
+	ITEM.attributes = {"sundering_shot"};
 	ITEM.firearmType = "Rifle";
 	ITEM.reloadTime = 5; -- Seconds
 	ITEM.reloadSounds = {"weapons/request day of defeat/m1903 springfield boltback 1.wav", "weapons/request day of defeat/m1903 springfield clipin.wav", "weapons/request day of defeat/m1903 springfield boltforward 2.wav"};

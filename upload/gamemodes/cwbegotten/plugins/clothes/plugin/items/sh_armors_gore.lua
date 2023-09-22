@@ -66,7 +66,8 @@ end;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "Gore Beserker Armor";
+ITEM.name = "Gore Berserker Armor";
+ITEM.uniqueID = "gore_beserker_armor"; -- due to typo in the old name
 ITEM.group = "goreicwarfighters/goreberzerker";
 ITEM.model = "models/begotten/headgroup_props/berzerkerarmor.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/gore_beserker_armor.png"
@@ -78,7 +79,7 @@ ITEM.protection = 25
 ITEM.type = "leather";
 ITEM.weight = 2;
 ITEM.weightclass = "Light";
-ITEM.description = "A bear pelt commonly worn by Gore Berzerkers, the most fearsome and fearless warriors of the Gores.";
+ITEM.description = "A bear pelt commonly worn by Gore Berserkers, the most fearsome and fearless warriors of the Gores.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.attributes = {"lifeleech", "rage"};
 ITEM.requireFaction = {"Goreic Warrior"};

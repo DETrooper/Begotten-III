@@ -621,19 +621,12 @@ local ringcolors = {
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
-	local prayer_beliefs = {"father", "hard_glazed", "mother", "old_son", "primevalism", "satanism", "sister", "sol_orthodoxy", "voltism", "young_son"};
-	local player_has_belief = false;
 	local faith = player:GetFaith();
 	
-	for i = 1, #prayer_beliefs do
-		if player:HasBelief(prayer_beliefs[i]) then
-			player_has_belief = true;
-			break;
-		end
-	end
-	
 	if faith then
-		if player_has_belief then
+		local subfaith = player:GetSubfaith();
+	
+		if subfaith and subfaith ~= "" and subfaith ~= "N/A" then
 			local message = table.concat(arguments, " ", 1)
 			local faith_str = string.upper(string.gsub(faith, "Faith of the ", ""));
 			local ofaithstr = faith_str
@@ -642,9 +635,7 @@ function COMMAND:OnRun(player, arguments)
 			local markedstr = "";
 			local subfaith = player:GetSubfaith();
 			
-			if subfaith and subfaith ~= "" and subfaith ~= "N/A" then
-				faith_str = string.upper(string.gsub(player:GetSubfaith(), "Faith of the ", ""));
-			end
+			faith_str = string.upper(string.gsub(subfaith, "Faith of the ", ""));
 			
 			local ringcolor = "ivory";
 			local color = "ivory";
@@ -678,7 +669,7 @@ function COMMAND:OnRun(player, arguments)
 			if (player:GetFaction() == FACTION_GOREIC) then
 				plycol = plycol:Lighten(100)
 			end;
-			
+
 			-- Make it work with imbeciles!
 			if player:HasTrait("imbecile") then
 				local imbecileText = message;
@@ -1160,7 +1151,12 @@ function COMMAND:OnRun(player, arguments)
 				local activeWeapon = player:GetActiveWeapon();
 				
 				if !IsValid(activeWeapon) or activeWeapon:GetClass() == "begotten_fists" or !activeWeapon.IsABegottenMelee then
-					Schema:EasyText(player, "firebrick", "You cannot self-flagellate with this weapon!");
+					Schema:EasyText(player, "firebrick", "You cannot flagellate with this weapon!");
+					return false;
+				end
+				
+				if player:GetNWBool("Guardening") then
+					Schema:EasyText(player, "firebrick", "You cannot flagellate while blocking!");
 					return false;
 				end
 				
@@ -1216,10 +1212,10 @@ function COMMAND:OnRun(player, arguments)
 					
 					player.nextFlagellate = curTime + (attacktable["delay"] or 1);
 				else
-					Schema:EasyText(player, "firebrick", "You cannot self-flagellate with this weapon!");
+					Schema:EasyText(player, "firebrick", "You cannot flagellate with this weapon!");
 				end
 			else
-				Schema:EasyText(player, "firebrick", "You cannot self-flagellate right now!");
+				Schema:EasyText(player, "firebrick", "You cannot flagellate right now!");
 			end;
 		else
 			Schema:EasyText(player, "firebrick", "You lack the willpower to do this!");
@@ -1227,7 +1223,7 @@ function COMMAND:OnRun(player, arguments)
 		
 		player.nextFlagellate = curTime + 1;
 	else
-		Schema:EasyText(player, "firebrick", "You cannot self-flagellate right now!");
+		Schema:EasyText(player, "firebrick", "You cannot flagellate right now!");
 	end
 end;
 

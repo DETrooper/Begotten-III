@@ -254,18 +254,6 @@ local ITEM = Clockwork.item:New("enchanted_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
-	ITEM.name = "Warding Talisman";
-	ITEM.model = "models/demonssouls/weapons/talisman of god.mdl";
-	ITEM.weight = 0.5;
-	ITEM.uniqueID = "warding_talisman";
-	ITEM.description = "A talisman inscribed with holy runes, casting a powerful aura that wards off evil spirits.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Reduces sanity loss by 50%.";
-	
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, supercrateOnly = true}
-ITEM:Register();
-
-local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Thief's Hand";
 	ITEM.model = "models/gibs/pgib_p1.mdl";
 	ITEM.weight = 0.5;

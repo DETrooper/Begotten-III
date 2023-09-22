@@ -966,7 +966,7 @@ do
 					
 					if faith then
 						local faithText = faith;
-						local faithTable = Schema.faiths.stored[faith];
+						local faithTable = Schema.faiths:GetFaith(faith);
 						local faithColor;
 						
 						if faithTable then

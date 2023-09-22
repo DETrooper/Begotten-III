@@ -61,14 +61,14 @@ local ITEM = Clockwork.item:New();
 			
 			if not ladderPos.occupier then
 				if playerPos:WithinAABox(ladderPos.boundsA, ladderPos.boundsB) then
-					player.ladderConstructing = i;
+					player.ladderConstructing = {index = i, condition = self:GetCondition()};
 					ladderPos.occupier = "constructing";
 					
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "begins erecting a siege ladder!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 					
 					Clockwork.player:SetAction(player, "building", 30, 3, function()
 						if IsValid(player) and player.ladderConstructing then
-							local ladderPos = Schema.siegeLadderPositions[player.ladderConstructing];
+							local ladderPos = Schema.siegeLadderPositions[player.ladderConstructing.index];
 							local ladderEnt = ents.Create("cw_siege_ladder");
 							if IsValid(ladderEnt) then
 								ladderEnt:SetAngles(ladderPos.ang);
@@ -80,7 +80,7 @@ local ITEM = Clockwork.item:New();
 							end
 							
 							ladderPos.occupier = ladderEnt;
-							ladderEnt.occupyingPosition = player.ladderConstructing;
+							ladderEnt.occupyingPosition = player.ladderConstructing.index;
 							player.ladderConstructing = nil;
 						else
 							ladderPos.occupier = nil;
