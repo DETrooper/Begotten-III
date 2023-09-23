@@ -919,6 +919,22 @@ function Schema:SyncFogDistance(player, uniqueID)
 	end;
 end;
 
+function Schema:GetRankTier(faction, rank)
+	local rankTiers = Schema.RankTiers[faction];
+
+	if rankTiers then
+		if isnumber(rank) then
+			rank = Schema.Ranks[faction][rank];
+		end
+
+		for i, v in ipairs(rankTiers) do
+			if table.HasValue(v, rank) then
+				return i;
+			end
+		end
+	end
+end
+
 -- A function to strip the rank of a player's name.
 function Schema:StripRank(name, rank)
 	if (name and rank and isstring(name) and isstring(rank)) then

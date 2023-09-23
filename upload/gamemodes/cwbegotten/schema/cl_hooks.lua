@@ -716,7 +716,7 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 				subfactionText = "A member of "..targetSubfaction..".";
 			end
 		-- GetFaction() checks incase they're disguised.
-		elseif player:GetFaction() == "Children of Satan" and target:GetFaction() == "Children of Satan" then
+		elseif Clockwork.Client:GetFaction() == "Children of Satan" and target:GetFaction() == "Children of Satan" then
 			if target:GetModel() == "models/begotten/satanists/lordvasso/male_56.mdl" then
 				subfactionText = "The chosen of Satan, the Dreadlord himself!";
 				textColor = Color(0, 255, 0, 255);
