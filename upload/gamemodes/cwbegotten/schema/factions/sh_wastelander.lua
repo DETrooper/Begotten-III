@@ -95,16 +95,16 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 		Schema.Ranks = {};
 	end
 	
-	if !Schema.RankTiers then
-		Schema.RankTiers = {};
-	end
-	
 	if !Schema.RanksToSubfaction then
 		Schema.RanksToSubfaction = {};
 	end
 	
 	if !Schema.RanksToCoin then
 		Schema.RanksToCoin = {};
+	end
+	
+	if !Schema.RanksOfAuthority then
+		Schema.RanksOfAuthority = {};
 	end
 	
 	Schema.Ranks["Gatekeeper"] = {
@@ -121,14 +121,6 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 		[11] = "Master-At-Arms",
 		[12] = "Scout",
 		[13] = "Master Scout",
-	};
-	
-	Schema.RankTiers["Gatekeeper"] = {
-		[1] = {"Disciple"},
-		[2] = {"Acolyte", "Smith", "Medicus", "Scout"},
-		[3] = {"Emissary", "Forgemaster", "Master Medicus", "Master Scout", "Vexillifer", "Squire"},
-		[4] = {"High Gatekeeper"},
-		[5] = {"Master-At-Arms"},
 	};
 	
 	Schema.RanksToSubfaction["Gatekeeper"] = {
@@ -150,6 +142,17 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 		[11] = 200,
 		[12] = 50,
 		[13] = 100,
+	};
+	
+	Schema.RanksOfAuthority["Gatekeeper"] = {
+		[4] = "Forgemaster",
+		[6] = "Master Medicus",
+		[7] = "Emissary",
+		[8] = "Vexillifer",
+		[9] = "Squire",
+		[10] = "High Gatekeeper",
+		[11] = "Master-At-Arms",
+		[13] = "Master Scout",
 	};
 FACTION_GATEKEEPER = FACTION:Register();
 

@@ -354,7 +354,7 @@ function cwItemSpawner:PlayerUseUnknownItemFunction(player, itemTable, itemFunct
 end;
 
 -- Called right before a container is opened.
-function cwItemSpawner:PreOpenedContainer(player, container)
+function cwItemSpawner:PreOpenContainer(player, container)
 	if container.lootContainer and !container.looted then
 		local chance = 0;
 		

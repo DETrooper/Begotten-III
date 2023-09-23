@@ -49,23 +49,6 @@ function PLUGIN:RenderScreenspaceEffects()
 	end
 end;
 
-function PLUGIN:PostPlayerDraw(player, flags)
-	local clothes = player:GetNetVar("clothes");
-	
-	if clothes == "" then
-		
-	end
-	
-	if !IsValid(player.clothesEnt) then
-		player.clothesEnt = ClientsideModel("models/begotten/wanderers/wanderer_male.mdl", RENDERGROUP_BOTH);
-		player.clothesEnt:SetParent(player);
-		player.clothesEnt:AddEffects(EF_BONEMERGE);
-	end
-	
-	player.clothesEnt:SetColor(player:GetColor());
-	player.clothesEnt:SetNoDraw(player:GetNoDraw());
-end
-
 netstream.Hook("BGClothes", function(data)
 	Clockwork.Client.bgClothesData = data or {};
 end);
