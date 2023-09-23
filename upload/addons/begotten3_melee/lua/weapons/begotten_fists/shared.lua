@@ -21,6 +21,8 @@ SWEP.ViewModelFlip = false
 
 --Anims
 SWEP.BlockAnim = "a_fists_block"
+SWEP.CriticalAnim = "a_fists_attack1"
+SWEP.ParryAnim = "a_dual_swords_parry"
 
 SWEP.IronSightsPos = Vector(0, -5, -2)
 SWEP.IronSightsAng = Vector(20, 0, 0)
@@ -37,6 +39,30 @@ SWEP.SoundMaterial = "Punch" -- Metal, Wooden, MetalPierce, Punch, Default
 ---------------------------------------------------------*/
 SWEP.AttackTable = "FistAttackTable"
 SWEP.BlockTable = "FistBlockTable"
+
+function SWEP:CriticalAnimation()
+
+	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+	local attacktable = GetTable(self.AttackTable)
+
+	-- Viewmodel attack animation!
+	local vm = self.Owner:GetViewModel()
+	vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_uppercut" ) )
+	self.Owner:GetViewModel():SetPlaybackRate(0.4)
+	
+	if (SERVER) then
+	timer.Simple( 0.05, function() if self:IsValid() then
+	self.Weapon:EmitSound(attacksoundtable["criticalswing"][math.random(1, #attacksoundtable["criticalswing"])])
+	end end)	
+	self.Owner:ViewPunch(Angle(1,4,1))
+	end
+	
+end
+
+function SWEP:ParryAnimation()
+	local vm = self.Owner:GetViewModel()
+	vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_uppercut" ))
+end
 
 function SWEP:AttackAnimination()
 	self:PlayPunchAnimation()
@@ -440,10 +466,9 @@ end
 	SecondaryAttack
 ---------------------------------------------------------*/
 function SWEP:SecondaryAttack()
-
 	local ply = self.Owner
 	local wep = self.Weapon
-	
+
 	if ( self.SoundLightning ) then self.SoundLightning:FadeOut(1) self.SoundLightning = nil end
 
 	if (!Clockwork.player:GetWeaponRaised(ply)) then
@@ -466,23 +491,144 @@ function SWEP:SecondaryAttack()
 	else
 		local LoweredParryDebug = self:GetNextSecondaryFire()
 		local ParryDelay = self:GetNextPrimaryFire()
+		local attacktable = GetTable(self.AttackTable);
+		local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+		local blocktable = GetTable(self.BlockTable);
+		local parryWindow = blocktable["parrydifficulty"] or 0.15;
+		local curTime = CurTime();
 
 		if self.Owner:KeyDown(IN_ATTACK2) and !self.Owner:KeyDown(IN_RELOAD) and self.Owner:GetNWBool("Guardening") == true then
 			-- Deflection
-			if self.Owner:GetNWBool( "CanDeflect", true ) then
-			
-				if self.Owner.HasBelief and self.Owner:HasBelief("deflection") then
-					self.Owner:SetNWBool( "Deflect", true )
+			if blocktable["candeflect"] == true then
+				if self.Owner:GetNWBool( "CanDeflect", true ) then
+					local deflectionWindow = blocktable["deflectionwindow"] or 0.15;
+					
+					if self.Owner.HasBelief --[[and self.Owner:HasBelief("deflection")]] then
+						self.Owner:SetNWBool( "Deflect", true )
+						
+						if self.Owner:HasBelief("impossibly_skilled") then
+							deflectionWindow = deflectionWindow + 0.1;
+						end
+					end
+					
+					self.Owner:SetNWBool( "CanDeflect", false )
+					self:CreateTimer(1, "deflectionTimer"..self.Owner:EntIndex(), function()
+						if self:IsValid() and !self.Owner:IsRagdolled() and self.Owner:Alive() then
+							self.Owner:SetNWBool( "CanDeflect", true ) 
+						end 
+					end);
+					
+					self:CreateTimer(deflectionWindow, "deflectionOffTimer"..self.Owner:EntIndex(), function()
+						if self:IsValid() and !self.Owner:IsRagdolled() and self.Owner:Alive() then
+							self.Owner:SetNWBool( "Deflect", false ) 
+						end 
+					end);
 				end
+			end		
+		end
+
+		if ( !self.IronSightsPos ) then return end
+		if ( LoweredParryDebug > curTime ) then return end
+		if ( self:GetNextPrimaryFire() > curTime * 1.5 ) then return end
+		if ( self.Owner:KeyDown(IN_ATTACK2) ) then return end
+		if ( !self:CanSecondaryAttack() ) then return end
+		if ( self.Owner:GetNWBool( "Guardening") ) == true then return end
+		--if ( self.Weapon:GetNWInt("Reloading") > curTime ) then return end
+		if self.Owner:GetNWInt("meleeStamina", 100) < blocktable["parrytakestamina"] then return end
+			
+		self:ParryAnimation()
+		self.Owner:EmitSound(attacksoundtable["parryswing"][math.random(1, #attacksoundtable["parryswing"])])
+
+		local wep = self.Weapon
+		local ply = self.Owner
+		local max_poise = ply:GetNetVar("maxMeleeStamina");
+
+		wep:SetNextPrimaryFire(math.max(curTime + (attacktable["delay"]), curTime + 2));
+		wep:SetNextSecondaryFire(math.max(curTime + (attacktable["delay"]), curTime + 2));
+	 
+		--Parry anim
+		self:TriggerAnim(self.Owner, self.ParryAnim);
+
+		self.Owner:SetNWInt("meleeStamina", math.Clamp(self.Owner:GetNWInt("meleeStamina") - blocktable["parrytakestamina"], 0, max_poise));
+			
+		--Parry
+		--self.Owner.StaminaRegenDelay = 0
+		self.Owner.nextStas = curTime + 5;
+		self.Owner:SetNWBool( "Parry", true )
+		self.isAttacking = false;
+		
+		if cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("impossibly_skilled") then
+			parryWindow = parryWindow + 0.1;
+		end
+		
+		self:CreateTimer(parryWindow, "parryTimer"..self.Owner:EntIndex(), function()
+			if self:IsValid() and !self.Owner:IsRagdolled() and self.Owner:Alive() then
+				self.Owner:SetNWBool( "Parry", false )
 				
-				self.Owner:SetNWBool( "CanDeflect", false )
-				timer.Simple( 1,function() if self:IsValid() and !self.Owner:IsRagdolled() and self.Owner:Alive() then
-				self.Owner:SetNWBool( "CanDeflect", true ) end end)
-				timer.Simple( 0.15,function() if self:IsValid() and !self.Owner:IsRagdolled() and self.Owner:Alive() then
-				self.Owner:SetNWBool( "Deflect", false ) end end)
+				if (self.Owner:KeyDown(IN_ATTACK2)) then
+					if (!self.Owner:KeyDown(IN_USE)) then
+						local activeWeapon = self.Owner:GetActiveWeapon();
+
+						if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
+							if (activeWeapon.IronSights == true) then
+								local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
+								local curTime = CurTime();
+								
+								if (loweredParryDebug < curTime) then
+									local blockTable = GetTable(activeWeapon.BlockTable);
+									
+									if (blockTable and self.Owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self.Owner:GetNWBool("Parried")) then
+										self.Owner:SetNWBool("Guardening", true);
+										self.Owner.beginBlockTransition = true;
+										self.Owner.StaminaRegenDelay = 0;
+										activeWeapon.Primary.Cone = activeWeapon.IronCone;
+										activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
+									else
+										self.Owner:CancelGuardening()
+									end;
+								end;
+							else
+								self.Owner:CancelGuardening();
+							end;
+						end;
+					end
+				end
 			end
-		end			
-	end			
+		end);
+		
+		self:CreateTimer(0.5, "parryBlockTimer"..self.Owner:EntIndex(), function()
+			if self:IsValid() and !self.Owner:IsRagdolled() and self.Owner:Alive() then
+				if (self.Owner:KeyDown(IN_ATTACK2)) then
+					if (!self.Owner:KeyDown(IN_USE)) then
+						local activeWeapon = self.Owner:GetActiveWeapon();
+
+						if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
+							if (activeWeapon.IronSights == true) then
+								local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
+								local curTime = CurTime();
+								
+								if (loweredParryDebug < curTime) then
+									local blockTable = GetTable(activeWeapon.BlockTable);
+									
+									if (blockTable and self.Owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self.Owner:GetNWBool("Parried")) then
+										self.Owner:SetNWBool("Guardening", true);
+										self.Owner.beginBlockTransition = true;
+										self.Owner.StaminaRegenDelay = 0;
+										activeWeapon.Primary.Cone = activeWeapon.IronCone;
+										activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
+									else
+										self.Owner:CancelGuardening()
+									end;
+								end;
+							else
+								self.Owner:CancelGuardening();
+							end;
+						end;
+					end
+				end
+			end
+		end);
+	end
 end
 
 function SWEP:OnDrop()

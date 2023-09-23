@@ -324,7 +324,13 @@ function cwScrapFactory:PlayerUse(player, entity)
 				player.cwTurningValve = true;
 				player.cwValvePos = entity:GetPos();
 				
-				Clockwork.player:SetAction(player, "turn_scrapfactory_valve", 5, 1, function() 
+				local duration = 5;
+				
+				if player.HasCharmEquipped and player:HasCharmEquipped("wrench") then
+					duration = 1;
+				end
+				
+				Clockwork.player:SetAction(player, "turn_scrapfactory_valve", duration, 1, function() 
 					if (IsValid(entity)) then
 						if (entity.overheating == true) then
 							entity:EmitSound("buttons/lever2.wav");

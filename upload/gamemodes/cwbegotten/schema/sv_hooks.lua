@@ -1596,7 +1596,7 @@ end;
 
 -- Called when a player closes a storage entity.
 function Schema:ClosedStorage(player, entity)
-	if player:GetMoveType() == MOVETYPE_WALK then
+	if player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
 		self:CloseSound(entity, player);
 	end
 	
@@ -1618,7 +1618,7 @@ function Schema:PreOpenedContainer(player, entity)
 			return;
 		end;
 		
-		if player:GetMoveType() == MOVETYPE_WALK then
+		if player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
 			self:OpenSound(entity, player);
 		end
 		
@@ -2627,13 +2627,13 @@ function Schema:PlayerLimbTakeDamage(player, hitGroup, damage)
 end;
 
 function Schema:PostPlayerGiveToStorage(player, storageTable, itemTable)
-	if IsValid(player) and player:GetMoveType() == MOVETYPE_WALK then
+	if IsValid(player) and player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
 		player:EmitSound("generic_ui/ui_llite_0"..tostring(math.random(1, 3))..".wav");
 	end
 end
 
 function Schema:PostPlayerTakeFromStorage(player, storageTable, itemTable)
-	if IsValid(player) and player:GetMoveType() == MOVETYPE_WALK then
+	if IsValid(player) and player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
 		player:EmitSound("generic_ui/ui_llite_0"..tostring(math.random(1, 3))..".wav");
 	end
 end

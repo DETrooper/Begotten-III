@@ -338,7 +338,7 @@ local COMMAND = Clockwork.command:New("CharSearch");
 								target.beingSearched = true;
 								player.searching = target;
 								
-								if player:GetMoveType() == MOVETYPE_WALK then
+								if player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
 									Schema:OpenSound(target, player);
 									
 									for k, v in pairs(ents.FindInSphere(player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do

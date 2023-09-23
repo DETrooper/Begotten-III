@@ -543,7 +543,7 @@ function CLASS_TABLE:OnPlayerUnequipped(player, extraData)
 						end
 					end
 					
-					if player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle() then
+					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
 						local useSound = itemTable("useSound");
 						
 						if (useSound) then
@@ -1303,7 +1303,7 @@ if (SERVER) then
 				end;
 				
 				if (!bNoSound) then
-					if player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle() then
+					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
 						local useSound = itemTable("useSound");
 						
 						if (useSound) then
@@ -1366,16 +1366,18 @@ if (SERVER) then
 				end;
 				
 				if (!bNoSound) then
-					local dropSound = itemTable("dropSound");
-					
-					if (dropSound) then
-						if (type(dropSound) == "table") then
-							player:EmitSound(dropSound[math.random(1, #dropSound)]);
-						else
-							player:EmitSound(dropSound);
+					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+						local dropSound = itemTable("dropSound");
+						
+						if (dropSound) then
+							if (type(dropSound) == "table") then
+								player:EmitSound(dropSound[math.random(1, #dropSound)]);
+							else
+								player:EmitSound(dropSound);
+							end;
+						elseif (dropSound != false) then
+							player:EmitSound("generic_ui/Generic_0"..math.random(4, 5)..".wav");
 						end;
-					elseif (dropSound != false) then
-						player:EmitSound("generic_ui/Generic_0"..math.random(4, 5)..".wav");
 					end;
 				end;
 				
@@ -1396,16 +1398,18 @@ if (SERVER) then
 			player:TakeItem(itemTable);
 			
 			if (!bNoSound) then
-				local destroySound = itemTable("destroySound");
-				
-				if (destroySound) then
-					if (type(destroySound) == "table") then
-						player:EmitSound(destroySound[math.random(1, #destroySound)]);
-					else
-						player:EmitSound(destroySound);
+				if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+					local destroySound = itemTable("destroySound");
+					
+					if (destroySound) then
+						if (type(destroySound) == "table") then
+							player:EmitSound(destroySound[math.random(1, #destroySound)]);
+						else
+							player:EmitSound(destroySound);
+						end;
+					elseif (destroySound != false) then
+						player:EmitSound("generic_ui/Generic_0"..math.random(4, 5)..".wav");
 					end;
-				elseif (destroySound != false) then
-					player:EmitSound("generic_ui/Generic_0"..math.random(4, 5)..".wav");
 				end;
 			end;
 			

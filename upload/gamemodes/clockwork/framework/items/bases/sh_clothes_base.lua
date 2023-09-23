@@ -208,7 +208,7 @@ local ITEM = item.New(nil, true);
 				
 				local useSound = self.useSound;
 				
-				if player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle() then
+				if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
 					if (useSound) then
 						if (type(useSound) == "table") then
 							player:EmitSound(useSound[math.random(1, #useSound)]);
@@ -379,7 +379,7 @@ local ITEM = item.New(nil, true);
 						return false;
 					end
 				
-					if player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle() then
+					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
 						local useSound = self("useSound");
 						
 						if (useSound) then

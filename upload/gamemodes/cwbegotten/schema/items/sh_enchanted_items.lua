@@ -17,7 +17,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "boot_contortionist";
 	ITEM.description = "A leather boot that surprisingly has not yet been eaten. Judging by its inscription, it evidently used to belong to an ancient gymnast.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Reduces fall damage taken by 50%.";
+	ITEM.charmEffects = "- Grants immunity to breaking your legs.\n- Reduces fall damage taken by 50%.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 750};
 ITEM:Register();
@@ -125,7 +125,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_pugilist";
 	ITEM.description = "A ring with a mysterious aura. Putting it on your finger makes you feel significantly stronger.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Increases the damage and poise damage of your fists to four times its original values and gives them 100% armor-piercing damage.";
+	ITEM.charmEffects = "- Increases the damage and poise damage of your fists to four times its original values and gives them 100% armor-piercing damage. Also allows you to parry with your fists.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 725, onGround = false};
 ITEM:Register();
@@ -176,6 +176,18 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.charmEffects = "- Increases maximum health by 25 points.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, supercrateOnly = true};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Satchel of Denial";
+	ITEM.model = "models/props_c17/lamp001a.mdl";
+	ITEM.weight = 1;
+	ITEM.uniqueID = "satchel_denial";
+	ITEM.description = "A locked briefcase that appears to be in mint condition. It is warm to the touch.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.charmEffects = "- Upon death your body will evaporate, taking all of your loot with it save for any weapons you have equipped.";
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 800};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
@@ -275,6 +287,30 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.charmEffects = "- Slightly increases the chance of finding loot in containers.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 900, onGround = false}
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Urn of Silence";
+	ITEM.model = "models/props_c17/lamp001a.mdl";
+	ITEM.weight = 0.5;
+	ITEM.uniqueID = "urn_silence";
+	ITEM.description = "An urn carrying the ashes of a once-great assassin.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.charmEffects = "- Silences all footsteps, some inventory sounds, and the sound of looting containers (but not lockpicking).";
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Wrench";
+	ITEM.model = "models/props_c17/tools_wrench01a.mdl";
+	ITEM.weight = 0.5;
+	ITEM.uniqueID = "wrench";
+	ITEM.description = "A simple wrench, it can probably be used for something.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.charmEffects = "- Turn valves at the scrap factory 50% faster.";
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 800};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base"); -- Make sure you can't equip this unless you already have any type of Inquisitor Armor equipped (unequipping inquisitor armor should de-equip this item as well). Should require Hard-Glazed subfaith specifically to equip as well. Make it set your 3rd bodygroup to 1 if it is equipped (and make sure it persists after swapping chars). "Moderately increases parry/deflection windows" should be the same bonuses as Impossibly Skilled for Satanists.

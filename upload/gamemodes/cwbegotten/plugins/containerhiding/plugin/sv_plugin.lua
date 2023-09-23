@@ -39,7 +39,9 @@ function cwContainerHiding:AttemptHide(player, entity, bHide)
 			end;
 		end;
 		
-		Schema:OpenSound(entity, player);
+		if player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+			Schema:OpenSound(entity, player);
+		end
 		
 		--Clockwork.datastream:Start(player, "cwCustomHint", {string.Split(player:Name(), " ")[1].." Thinks...", "I should be safe in here..."});
 	else
@@ -59,7 +61,9 @@ function cwContainerHiding:AttemptHide(player, entity, bHide)
 			end;
 		end;
 		
-		Schema:CloseSound(entity, player);
+		if player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+			Schema:CloseSound(entity, player);
+		end
 	end;
 	
 	Clockwork.datastream:Start(player, "ContainerHeartbeat", bHide)

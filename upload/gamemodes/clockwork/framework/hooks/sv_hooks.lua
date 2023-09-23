@@ -3543,7 +3543,7 @@ function GM:PlayerCharacterLoaded(player)
 	
 	if not charmFound then
 		player:SetCharacterData("charms", nil);
-		player:SetNetVar("charms", 0);
+		player:SetNetVar("charms", nil);
 	end
 	
 	for k, v in pairs(accessoryData) do

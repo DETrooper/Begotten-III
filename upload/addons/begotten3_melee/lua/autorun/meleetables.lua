@@ -46,7 +46,7 @@ AttackSoundTables.PunchAttackSoundTable = {
 	["althitbody"] = {"vo/k_lab/kl_fiddlesticks.wav"},
 	["hitworld"] = {"physics/body/body_medium_impact_hard4.wav", "physics/body/body_medium_impact_hard5.wav"},
 	["criticalswing"] = {"meleesounds/swing-throw.wav.mp3"},
-	["parryswing"] = {"weapons/Medium_01.wav", "weapons/Medium_02.wav", "weapons/Medium_03.wav", "weapons/Medium_04.wav", "weapons/Medium_05.wav", "weapons/Medium_06.wav", "weapons/Medium_07.wav"},
+	["parryswing"] = {"weapons/Medium_01.wav", "weapons/Medium_02.wav", "weapons/Medium_03.wav", "weapons/Medium_04.wav", "weapons/Medium_05.wav"},
 	["drawsound"] = {"vo/k_lab/kl_fiddlesticks.wav"},
 };
 

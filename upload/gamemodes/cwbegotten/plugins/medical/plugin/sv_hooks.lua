@@ -873,42 +873,44 @@ function cwMedicalSystem:PlayerLimbFallDamageTaken(player, amount)
 	end
 
 	if amount >= 25 then
-		local injuries = self:GetInjuries(player);
-		local bone_broken;
-		local both_bones_broken = false;
-		local left_leg_chance = math.min(amount * 1.5, 100);
-		local right_leg_chance = math.min(amount * 1.5, 100);
-		
-		if !(injuries[HITGROUP_RIGHTLEG]["broken_bone"]) and math.random(1, 100) < right_leg_chance then
-			player:AddInjury(self.cwHitGroupToString[HITGROUP_RIGHTLEG], "broken_bone");
-			player:StartBleeding(HITGROUP_RIGHTLEG);
+		if !player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("boot_contortionist") then
+			local injuries = self:GetInjuries(player);
+			local bone_broken;
+			local both_bones_broken = false;
+			local left_leg_chance = math.min(amount * 1.5, 100);
+			local right_leg_chance = math.min(amount * 1.5, 100);
 			
-			if !bone_broken then
-				bone_broken = "right";
-			else
-				both_bones_broken = true;
-			end
-		end
-		
-		if !(injuries[HITGROUP_LEFTLEG]["broken_bone"]) and math.random(1, 100) < left_leg_chance then
-			player:AddInjury(self.cwHitGroupToString[HITGROUP_LEFTLEG], "broken_bone");
-			player:StartBleeding(HITGROUP_LEFTLEG);
-			
-			if !bone_broken then
-				bone_broken = "left";
-			else
-				both_bones_broken = true;
-			end
-		end
-		
-		if bone_broken then
-			if both_bones_broken then
-				Clockwork.chatBox:AddInTargetRadius(player, "me", "'s legs audibly break with a horrifying snap!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-			else
-				Clockwork.chatBox:AddInTargetRadius(player, "me", "'s "..bone_broken.." leg audibly breaks with a horrifying snap!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+			if !(injuries[HITGROUP_RIGHTLEG]["broken_bone"]) and math.random(1, 100) < right_leg_chance then
+				player:AddInjury(self.cwHitGroupToString[HITGROUP_RIGHTLEG], "broken_bone");
+				player:StartBleeding(HITGROUP_RIGHTLEG);
+				
+				if !bone_broken then
+					bone_broken = "right";
+				else
+					both_bones_broken = true;
+				end
 			end
 			
-			player:EmitSound("misc/bone_fracture.wav", 75, math.random(95, 100));
+			if !(injuries[HITGROUP_LEFTLEG]["broken_bone"]) and math.random(1, 100) < left_leg_chance then
+				player:AddInjury(self.cwHitGroupToString[HITGROUP_LEFTLEG], "broken_bone");
+				player:StartBleeding(HITGROUP_LEFTLEG);
+				
+				if !bone_broken then
+					bone_broken = "left";
+				else
+					both_bones_broken = true;
+				end
+			end
+			
+			if bone_broken then
+				if both_bones_broken then
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "'s legs audibly break with a horrifying snap!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+				else
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "'s "..bone_broken.." leg audibly breaks with a horrifying snap!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+				end
+				
+				player:EmitSound("misc/bone_fracture.wav", 75, math.random(95, 100));
+			end;
 		end;
 	end;
 end;

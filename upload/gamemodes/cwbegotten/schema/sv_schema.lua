@@ -1812,6 +1812,12 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 			player:SetCharacterData("permakilled", true);
 		end
 		
+		if player.bgCharmData and player.HasCharmEquipped and player:HasCharmEquipped("satchel_denial") then
+			bSilent = true;
+			
+			Clockwork.chatBox:AddInTargetRadius(player, "me", "'s body disintegrates before you!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+		end
+		
 		local inventory = player:GetInventory();
 		local copy = Clockwork.inventory:CreateDuplicate(inventory);
 		local cash = player:GetCash();
@@ -1845,7 +1851,7 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 		player:SetCharacterData("helmet", nil);
 		player:SetSharedVar("Cash", 0);
 		player:SetNetVar("backpacks", 0);
-		player:SetNetVar("charms", 0);
+		player:SetNetVar("charms", nil);
 		player:SetNetVar("helmet", 0);
 		player:SetBodygroup(0, 0);
 		player:SetBodygroup(1, 0);
@@ -1858,26 +1864,30 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 			ragdoll = player:GetRagdollEntity();
 		end
 		
-		if (!IsValid(ragdoll)) then
-			info.entity = ents.Create("cw_belongings");
+		if !bSilent then
+			if (!IsValid(ragdoll)) then
+				info.entity = ents.Create("cw_belongings");
 
-			if (!table.IsEmpty(info.inventory) or info.cash > 0) then
-				info.entity:SetData(info.inventory, info.cash);
-				info.entity:SetPos(player:GetPos() + Vector(0, 0, 48));
-				info.entity:Spawn();
+				if (!table.IsEmpty(info.inventory) or info.cash > 0) then
+					info.entity:SetData(info.inventory, info.cash);
+					info.entity:SetPos(player:GetPos() + Vector(0, 0, 48));
+					info.entity:Spawn();
+				else
+					info.entity:Remove();
+				end;
 			else
-				info.entity:Remove();
-			end;
-		else
-			ragdoll.isBelongings = true;
-			ragdoll.cwInventory = info.inventory;
-			ragdoll.cwCash = info.cash;
+				ragdoll.isBelongings = true;
+				ragdoll.cwInventory = info.inventory;
+				ragdoll.cwCash = info.cash;
+				
+				local bounty = player:GetCharacterData("bounty", 0);
 			
-			local bounty = player:GetCharacterData("bounty", 0);
-		
-			if bounty > 0 then
-				ragdoll:SetNWInt("bountyKey", player:GetCharacterKey());
-			end
+				if bounty > 0 then
+					ragdoll:SetNWInt("bountyKey", player:GetCharacterKey());
+				end
+			end;
+		elseif IsValid(ragdoll) then
+			ragdoll:Remove();
 		end;
 		
 		Clockwork.player:StripGear(player);
