@@ -1457,6 +1457,10 @@ function GM:GetFallDamage(player, velocity)
 	-- Increase fall damage for duels since it will only happen if you fall out of the arena.
 	if damage > 5 and player.opponent then
 		return 10000;
+	else
+		if player.bgCharmData and player.HasCharmEquipped and player:HasCharmEquipped("boot_contortionist") then
+			damage = damage * 0.5;
+		end
 	end
 
 	if (damage > 30) and !player:IsRagdolled() then

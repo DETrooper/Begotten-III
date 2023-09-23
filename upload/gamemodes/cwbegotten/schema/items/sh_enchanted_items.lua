@@ -11,6 +11,18 @@ local ITEM = Clockwork.item:New("enchanted_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Contortionist's Boot";
+	ITEM.model = "models/props_junk/Shoe001a.mdl";
+	ITEM.weight = 1;
+	ITEM.uniqueID = "boot_contortionist";
+	ITEM.description = "A leather boot that surprisingly has not yet been eaten. Judging by its inscription, it evidently used to belong to an ancient gymnast.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.charmEffects = "- Reduces fall damage taken by 50%.";
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 750};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Courier's Ring";
 	ITEM.model = "models/items/magic/ring_basic/ring_silver.mdl";
 	ITEM.weight = 0.2;
