@@ -180,6 +180,10 @@ function cwCharacterNeeds:ActionCompletedPreCallback(player, action)
 	if action == "unragdoll" and player.sleepData then
 		local sleepData = player.sleepData;
 		
+		if sleepData.health then
+			player:SetHealth(math.min(player:Health() + 25, player:GetMaxHealth()));
+		end
+		
 		if cwSanity and sleepData.sanity then
 			player:HandleSanity(sleepData.sanity);
 		end

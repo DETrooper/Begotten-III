@@ -102,8 +102,10 @@ end
 
 -- Called when a player uses the item.
 function ITEM:OnUse(player, itemEntity)
-	local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
-	local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+	local faction = player:GetFaction();
+	local subfaction = player:GetSubfaction();
+	local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
+	local kinisgerOverrideSubfaction = player:GetSharedVar("kinisgerOverrideSubfaction");
 
 	if (self:HasPlayerEquipped(player)) then
 		if !player.spawning then
@@ -121,7 +123,7 @@ function ITEM:OnUse(player, itemEntity)
 		return false
 	end
 	
-	if (table.HasValue(self.excludeFactions, faction)) then
+	if (table.HasValue(self.excludeFactions, kinisgerOverride or faction)) then
 		if !player.spawning then
 			Schema:EasyText(player, "peru", "You are not the correct faction to wear this!")
 		end
@@ -129,7 +131,7 @@ function ITEM:OnUse(player, itemEntity)
 		return false
 	end
 	
-	if (table.HasValue(self.excludeSubfactions, subfaction)) then
+	if (table.HasValue(self.excludeSubfactions, kinisgerOverrideSubfaction or subfaction)) then
 		if !player.spawning then
 			Schema:EasyText(player, "peru", "Your subfaction cannot wear this!")
 		end
@@ -148,7 +150,7 @@ function ITEM:OnUse(player, itemEntity)
 	end
 	
 	if #self.requireFaction > 0 then
-		if (!table.HasValue(self.requireFaction, faction)) then
+		if (!table.HasValue(self.requireFaction, faction) and (!kinisgerOverride or !table.HasValue(self.requireFaction, kinisgerOverride))) then
 			if !player.spawning then
 				Schema:EasyText(player, "peru", "You are not the correct faction to wear this!")
 			end
@@ -158,7 +160,7 @@ function ITEM:OnUse(player, itemEntity)
 	end
 	
 	if #self.requireSubfaction > 0 then
-		if (!table.HasValue(self.requireSubfaction, subfaction)) then
+		if (!table.HasValue(self.requireSubfaction, subfaction) and (!kinisgerOverrideSubfaction or !table.HasValue(self.requireSubfaction, kinisgerOverrideSubfaction))) then
 			if !player.spawning then
 				Schema:EasyText(player, "peru", "You are not the correct subfaction to wear this!")
 			end

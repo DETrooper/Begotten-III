@@ -3711,7 +3711,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefsNiceNames = {"Jacob's Ladder"};
 		RECIPE.requiredSubfaiths = {"Voltism"};
 		RECIPE.requirements = {
-			["iron_spear"] = {amount = 1},
+			["begotten_spear_ironspear"] = {amount = 1},
 			["tech"] = {amount = 3},
 		};
 		RECIPE.result = {

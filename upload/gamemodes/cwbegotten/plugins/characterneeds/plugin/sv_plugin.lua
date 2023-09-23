@@ -165,7 +165,7 @@ function playerMeta:HandleNeed(need, amount)
 						return;
 					end
 
-					self.sleepData = {hunger = 15, thirst = 30, rest = -30};
+					self.sleepData = {health = 10, hunger = 15, thirst = 30, rest = -30};
 					Clockwork.player:SetRagdollState(self, RAGDOLL_KNOCKEDOUT, 300);
 					Schema:EasyText(self, "olive", "You finally collapse from exhaustion.");
 				elseif newAmount >= 90 and currentAmount < 90 then
