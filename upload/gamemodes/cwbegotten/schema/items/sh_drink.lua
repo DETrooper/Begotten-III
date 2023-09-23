@@ -40,7 +40,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500, bNoSupercrate = true};
 	ITEM.needs = {hunger = 5, thirst = 45};
 
 	-- Called when a player uses the item.
@@ -61,7 +61,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.infectchance = 5;
 	ITEM.stackable = true;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300, bNoSupercrate = true};
 	ITEM.needs = {hunger = 10, thirst = 30};
 
 	-- Called when a player uses the item.
@@ -176,7 +176,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.infectchance = 10;
 	ITEM.dysentery = 5;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 400};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 400, bNoSupercrate = true};
 	ITEM.needs = {hunger = 10, thirst = 30, sleep = 5};
 
 	-- Called when a player uses the item.
