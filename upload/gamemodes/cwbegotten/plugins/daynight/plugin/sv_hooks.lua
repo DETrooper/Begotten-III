@@ -79,14 +79,10 @@ function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized)
 					if lastZone == "wasteland" then
 						if !cwBeliefs or !player:HasBelief("lunar_repudiation") then
 							if player:EyeAngles().p < -55 then
-								local helmetData = player:GetCharacterData("helmet");
+								local helmetItem = player:GetHelmetEquipped();
 								
-								if helmetData and helmetData.uniqueID and helmetData.itemID then
-									local helmetItem = Clockwork.inventory:FindItemByID(player:GetInventory(), helmetData.uniqueID, helmetData.itemID);
-								
-									if helmetItem and helmetItem.overlay and helmetItem and player:EyeAngles().p > -70 then
-										return;
-									end
+								if helmetItem and helmetItem.overlay and helmetItem and player:EyeAngles().p > -70 then
+									return;
 								end
 									
 								if player:GetEyeTrace().HitSky then

@@ -15,6 +15,22 @@ local ITEM = Clockwork.item:New("shot_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
+	ITEM.name = "Old World Grapeshot";
+	ITEM.cost = 100;
+	ITEM.model = "models/kali/weapons/metro 2033/magazines/12 gauge shotgun shell.mdl";
+	ITEM.weight = 0.2;
+	ITEM.business = true;
+	ITEM.stackable = true;
+	ITEM.description = "An ancient Grapeshot shell, pre-dating even the Empire of Light.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/grapeshot.png"
+	
+	ITEM.ammoType = "Old World Grapeshot";
+	ITEM.ammoName = "Old World Grapeshot";
+	
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 500, supercrateOnly = true};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("shot_base");
 	ITEM.name = "Pop-a-Shot";
 	ITEM.cost = 15;
 	ITEM.model = "models/bullets/w_pbullet1.mdl";

@@ -10,6 +10,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine4";
 	ITEM.attachmentOffsetAngles = Angle(90, 104, 5);
 	ITEM.attachmentOffsetVector = Vector(-2, 3.54, -1.41);
+	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
 	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 600, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth"}};
@@ -28,6 +29,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine4";
 	ITEM.attachmentOffsetAngles = Angle(90, 101, 0);
 	ITEM.attachmentOffsetVector = Vector(-2, 5, -1);
+	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
 	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 800};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth"}};
@@ -46,6 +48,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine4";
 	ITEM.attachmentOffsetAngles = Angle(90, 110, 0);
 	ITEM.attachmentOffsetVector = Vector(-2, 9, -4);
+	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
 	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1200};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth"}};
@@ -64,6 +67,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine4";
 	ITEM.attachmentOffsetAngles = Angle(90, 101, 0);
 	ITEM.attachmentOffsetVector = Vector(-2, 7.07, -2.83);
+	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
 	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1500};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth"}};
@@ -82,6 +86,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine4";
 	ITEM.attachmentOffsetAngles = Angle(270, 0, 180);
 	ITEM.attachmentOffsetVector = Vector(0, 1.4, -7.5);
+	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
 	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 250, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth"}};
@@ -99,6 +104,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine4";
 	ITEM.attachmentOffsetVector = Vector(0, -1.2, -6.36);
 	ITEM.attachmentOffsetAngles = Angle(273.48, 164.09, 268);
+	ITEM.attachmentShieldOffset = Vector(0, 5.5, 4);
 
 	ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide"}};
 ITEM:Register();

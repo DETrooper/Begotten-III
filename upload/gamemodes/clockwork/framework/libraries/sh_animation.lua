@@ -489,26 +489,6 @@ function Clockwork.animation:GetModelClass(model, alwaysReal)
 	end;
 end;
 
--- A function to add a Combine Overwatch model.
-function Clockwork.animation:AddCombineOverwatchModel(model)
-	return self:AddModel("combineOverwatch", model);
-end;
-
--- A function to add a Civil Protection model.
-function Clockwork.animation:AddCivilProtectionModel(model)
-	return self:AddModel("civilProtection", model);
-end;
-
--- A function to add a female human model.
-function Clockwork.animation:AddFemaleHumanModel(model)
-	return self:AddModel("femaleHuman", model);
-end;
-
--- A function to add a male human model.
-function Clockwork.animation:AddMaleHumanModel(model)
-	return self:AddModel("maleHuman", model);
-end;
-
 local translateHoldTypes = {
 	["melee2"] = "melee",
 	["fist"] = "melee",
@@ -569,33 +549,6 @@ function Clockwork.animation:GetTable(model)
 	end;
 end;
 
-local function ADD_CITIZEN_MODELS(prefix)
-	for k, v in pairs(file.Find("models/humans/group01/"..prefix.."_*.mdl", "GAME")) do
-		Clockwork.animation:AddModel(prefix.."Human", "models/humans/group01/"..v);
-	end;
-
-	for k, v in pairs(file.Find("models/humans/group02/"..prefix.."_*.mdl", "GAME")) do
-		Clockwork.animation:AddModel(prefix.."Human", "models/humans/group02/"..v);
-	end;
-
-	for k, v in pairs(file.Find("models/humans/group03/"..prefix.."_*.mdl", "GAME")) do
-		Clockwork.animation:AddModel(prefix.."Human", "models/humans/group03/"..v);
-	end;
-
-	for k, v in pairs(file.Find("models/humans/group03m/"..prefix.."_*.mdl", "GAME")) do
-		Clockwork.animation:AddModel(prefix.."Human", "models/humans/group03m/"..v);
-	end;
-end;
-
-Clockwork.animation:AddCombineOverwatchModel("models/combine_soldier_prisonguard.mdl");
-Clockwork.animation:AddCombineOverwatchModel("models/combine_super_soldier.mdl");
-Clockwork.animation:AddCombineOverwatchModel("models/combine_soldier.mdl");
-
-Clockwork.animation:AddCivilProtectionModel("models/police.mdl");
-
-ADD_CITIZEN_MODELS("male"); 
-ADD_CITIZEN_MODELS("female");
-
 Clockwork.animation.models = Clockwork.animation.models or {};
 
 -- A function to add a model.
@@ -605,42 +558,11 @@ function Clockwork.animation:AddModel(class, model)
 	return lowerModel;
 end;
 
--- A function to add a vortigaunt model.
-function Clockwork.animation:AddVortigauntModel(model)
-	return self:AddModel("vortigaunt", model);
-end;
-
--- A function to add a Combine Overwatch model.
-function Clockwork.animation:AddCombineOverwatchModel(model)
-	return self:AddModel("combineOverwatch", model);
-end;
-
--- A function to add a Civil Protection model.
-function Clockwork.animation:AddCivilProtectionModel(model)
-	return self:AddModel("civilProtection", model);
-end;
-
--- A function to add a female human model.
-function Clockwork.animation:AddFemaleHumanModel(model)
-	return self:AddModel("femaleHuman", model);
-end;
-
--- A function to add a male human model.
-function Clockwork.animation:AddMaleHumanModel(model)
-	return self:AddModel("maleHuman", model);
-end;
-
 local handsModels = {};
-local blackModels = {};
 
 -- A function to add viewmodel c_arms info to a model.
 function Clockwork.animation:AddHandsModel(model, hands)
 	handsModels[string.lower(model)] = hands;
-end;
-
--- A function to make a model use the black skin for hands viewmodels.
-function Clockwork.animation:AddBlackModel(model)
-	blackModels[string.lower(model)] = true;
 end;
 
 -- A function to make a model use the zombie skin for citizen hands.
@@ -676,24 +598,6 @@ function Clockwork.animation:AddCSSHands(model)
 		body = 0000000,
 		model = "models/weapons/c_arms_cstrike.mdl",
 		skin = 0
-	});
-end;
-
--- A function to make a model use the refugee viewmodel hands.
-function Clockwork.animation:AddRefugeeHands(model)
-	self:AddHandsModel(model, {
-		body = 01,
-		model = "models/weapons/c_arms_refugee.mdl",
-		skin = 0
-	});
-end;
-
--- a function to make a model use the refugee viewmodel hands with a zombie skin.
-function Clockwork.animation:AddZombieRefugeeHands(model)
-	self:AddHandsModel(model, {
-		body = 0000000,
-		model = "models/weapons/c_arms_refugee.mdl",
-		skin = 2
 	});
 end;
 
@@ -1081,18 +985,6 @@ end;
 
 -- A function to adjust the hands info with checks for if a model is set to use the black skin.
 function Clockwork.animation:AdjustHandsInfo(model, info)
-	if (info.model == "models/weapons/c_arms_citizen.mdl" or info.model == "models/weapons/c_arms_refugee.mdl") then
-		for k, v in pairs(blackModels) do
-			if (string.find(model, k)) then
-				info.skin = 1;
-
-				break;
-			elseif (info.skin == 1) then
-				info.skin = 0;
-			end;
-		end;
-	end;
-
 	hook.Run("AdjustCModelHandsInfo", model, info);
 end;
 
@@ -1103,43 +995,32 @@ function Clockwork.animation:GetHandsInfo(model)
 	return self:CheckHands(string.lower(model), animTable);
 end;
 
-/*
-Clockwork.animation:AddBlackModel("/male_01.mdl");
-Clockwork.animation:AddBlackModel("/male_03.mdl");
-Clockwork.animation:AddBlackModel("/female_03.mdl");
-*/
+Clockwork.animation:AddWandererArms("models/begotten/wanderers/wanderer");
 
-Clockwork.animation:AddRefugeeHands("/group03/");
-Clockwork.animation:AddRefugeeHands("/group03m/");
+Clockwork.animation:AddGatekeeperLightArms("models/begotten/gatekeepers/gatekeeperlight");
 
-Clockwork.animation:AddZombieRefugeeHands("/Zombie/");
+Clockwork.animation:AddGatekeeperMediumArms("models/begotten/gatekeepers/gatekeepermedium");
 
-Clockwork.animation:AddWandererArms("models/begotten/wanderers/wanderer/");
+Clockwork.animation:AddGatekeeperFineArms("models/begotten/gatekeepers/gatekeeperfine");
 
-Clockwork.animation:AddGatekeeperLightArms("models/begotten/gatekeepers/gatekeeperlight/");
+Clockwork.animation:AddLamellarArms("models/begotten/goreicwarfighters/gorelamellar");
 
-Clockwork.animation:AddGatekeeperMediumArms("models/begotten/gatekeepers/gatekeepermedium/");
-
-Clockwork.animation:AddGatekeeperFineArms("models/begotten/gatekeepers/gatekeeperfine/");
-
-Clockwork.animation:AddLamellarArms("models/begotten/goreicwarfighters/gorelamellar/");
-
-Clockwork.animation:AddGatekeeperOrnateArms("models/begotten/gatekeepers/gatekeeperornate/");
+Clockwork.animation:AddGatekeeperOrnateArms("models/begotten/gatekeepers/gatekeeperornate");
 Clockwork.animation:AddGatekeeperOrnateArms("begotten/gatekeepers/vexi.mdl");
 
-Clockwork.animation:AddMinisterArms("models/begotten/gatekeepers/minister/");
+Clockwork.animation:AddMinisterArms("models/begotten/gatekeepers/minister");
 
 Clockwork.animation:AddGatekeeperHeavyArms("models/begotten/gatekeepers/highgatekeeper01.mdl");
 Clockwork.animation:AddGatekeeperHeavyArms("models/begotten/gatekeepers/highgatekeeper02.mdl");
-Clockwork.animation:AddGatekeeperHeavyArms("models/begotten/gatekeepers/masteratarms.mdl");
+Clockwork.animation:AddGatekeeperHeavyArms("models/begotten/gatekeepers/masteratarms");
 Clockwork.animation:AddGatekeeperHeavyArms("models/begotten/satanists/emperorvarazdat.mdl");
 
-Clockwork.animation:AddInquisitorArms("models/begotten/gatekeepers/inquisitor/");
+Clockwork.animation:AddInquisitorArms("models/begotten/gatekeepers/inquisitor");
 
-Clockwork.animation:AddBlackInquisitorArms("models/begotten/gatekeepers/blackinquisitor/");
+Clockwork.animation:AddBlackInquisitorArms("models/begotten/gatekeepers/blackinquisitor");
 
 Clockwork.animation:AddWhiteInquisitorArms("models/begotten/gatekeepers/grandinquisitor.mdl");
-Clockwork.animation:AddWhiteInquisitorArms("models/begotten/gatekeepers/whiteinquisitor/");
+Clockwork.animation:AddWhiteInquisitorArms("models/begotten/gatekeepers/whiteinquisitor");
 
 Clockwork.animation:AddDistrictOneArmorArms("models/begotten/gatekeepers/districtonearmor.mdl");
 
@@ -1154,64 +1035,64 @@ Clockwork.animation:AddSpiceGuardArms("models/begotten/satanists/darklanderspice
 
 Clockwork.animation:AddWraithArmorArms("begotten/satanists/wraitharmor.mdl");
 
-Clockwork.animation:AddVassoArms("models/begotten/satanists/lordvasso/");
+Clockwork.animation:AddVassoArms("models/begotten/satanists/lordvasso");
 
-Clockwork.animation:AddWarfighterArms("models/begotten/goreicwarfighters/warfighter/");
+Clockwork.animation:AddWarfighterArms("models/begotten/goreicwarfighters/warfighter");
 
-Clockwork.animation:AddGoreChainMail1Arms("models/begotten/goreicwarfighters/haralderchainmail/");
+Clockwork.animation:AddGoreChainMail1Arms("models/begotten/goreicwarfighters/haralderchainmail");
 
-Clockwork.animation:AddGoreChainMail2Arms("models/begotten/goreicwarfighters/gorechainmail/");
+Clockwork.animation:AddGoreChainMail2Arms("models/begotten/goreicwarfighters/gorechainmail");
 
-Clockwork.animation:AddGoreHouseCarlArms("models/begotten/goreicwarfighters/gorehousecarl/");
+Clockwork.animation:AddGoreHouseCarlArms("models/begotten/goreicwarfighters/gorehousecarl");
 
-Clockwork.animation:AddGoreBladeDruidArms("models/begotten/goreicwarfighters/bladedruid/");
+Clockwork.animation:AddGoreBladeDruidArms("models/begotten/goreicwarfighters/bladedruid");
 Clockwork.animation:AddGoreBladeDruidArms("models/begotten/goreicwarfighters/elderdruid.mdl");
 
-Clockwork.animation:AddGoreTribalArms("models/begotten/goreicwarfighters/goretribal/");
-Clockwork.animation:AddGoreTribalArms("models/begotten/goreicwarfighters/goreseafarer/");
-Clockwork.animation:AddGoreTribalArms("models/begotten/goreicwarfighters/goreberzerker/");
+Clockwork.animation:AddGoreTribalArms("models/begotten/goreicwarfighters/goretribal");
+Clockwork.animation:AddGoreTribalArms("models/begotten/goreicwarfighters/goreseafarer");
+Clockwork.animation:AddGoreTribalArms("models/begotten/goreicwarfighters/goreberzerker");
 
 Clockwork.animation:AddGoreChieftanArms("models/begotten/goreicwarfighters/gorechieftan.mdl");
 
-Clockwork.animation:AddGoreScaleArms("models/begotten/goreicwarfighters/gorescale/");
+Clockwork.animation:AddGoreScaleArms("models/begotten/goreicwarfighters/gorescale");
 
 Clockwork.animation:AddBjornlingArms("models/begotten/goreicwarfighters/bjornling.mdl");
-Clockwork.animation:AddBjornlingArms("models/begotten/goreicwarfighters/reaverplate/");
+Clockwork.animation:AddBjornlingArms("models/begotten/goreicwarfighters/reaverplate");
 
 Clockwork.animation:AddVoltistArms("models/begotten/wanderers/voltist_heavy.mdl");
 Clockwork.animation:AddVoltistArms("models/begotten/wanderers/voltist_medium.mdl");
 Clockwork.animation:AddVoltistArms("models/begotten/wanderers/voltistpowerarmor.mdl");
 
-Clockwork.animation:AddElegantRobesArms("models/begotten/satanists/elegantrobes/");
+Clockwork.animation:AddElegantRobesArms("models/begotten/satanists/elegantrobes");
 
-Clockwork.animation:AddHellplateHeavyArms("models/begotten/satanists/hellplateheavy/");
+Clockwork.animation:AddHellplateHeavyArms("models/begotten/satanists/hellplateheavy");
 Clockwork.animation:AddHellplateHeavyArms("models/begotten/satanists/darklanderimmortal.mdl");
 
-Clockwork.animation:AddHellplateMediumArms("models/begotten/satanists/hellplatemedium/");
+Clockwork.animation:AddHellplateMediumArms("models/begotten/satanists/hellplatemedium");
 
-Clockwork.animation:AddKnightArms("models/begotten/gatekeepers/knight_set.mdl");
+Clockwork.animation:AddKnightArms("models/begotten/gatekeepers/knight_set");
 Clockwork.animation:AddKnightArms("models/begotten/gatekeepers/grandknight.mdl");
 Clockwork.animation:AddKnightArms("models/begotten/goreicwarfighters/goreking.mdl");
 
 Clockwork.animation:AddExileKnightArms("models/begotten/wanderers/exileknight.mdl");
 
-Clockwork.animation:AddScrapperArms("models/begotten/wanderers/scrapper/");
-Clockwork.animation:AddScrapperArms("models/begotten/wanderers/scrappergrunt/");
+Clockwork.animation:AddScrapperArms("models/begotten/wanderers/scrapper");
+Clockwork.animation:AddScrapperArms("models/begotten/wanderers/scrappergrunt");
 Clockwork.animation:AddScrapperArms("models/begotten/wanderers/scrapperking.mdl");
 
-Clockwork.animation:AddScribeArms("models/begotten/wanderers/scribe/");
+Clockwork.animation:AddScribeArms("models/begotten/wanderers/scribe");
 
-Clockwork.animation:AddMerchantArms("models/begotten/wanderers/merchant/");
+Clockwork.animation:AddMerchantArms("models/begotten/wanderers/merchant");
 
-Clockwork.animation:AddBrigandineArms("models/begotten/wanderers/brigandine/");
+Clockwork.animation:AddBrigandineArms("models/begotten/wanderers/brigandine");
 
-Clockwork.animation:AddBrigandineLightArms("models/begotten/wanderers/brigandinelight/");
+Clockwork.animation:AddBrigandineLightArms("models/begotten/wanderers/brigandinelight");
 Clockwork.animation:AddBrigandineLightArms("models/begotten/gatekeepers/renegadeacolyte.mdl");
 Clockwork.animation:AddBrigandineLightArms("models/begotten/gatekeepers/renegadedisciple.mdl");
 
-Clockwork.animation:AddLeatherArms("models/begotten/wanderers/leather/");
+Clockwork.animation:AddLeatherArms("models/begotten/wanderers/leather");
 
-Clockwork.animation:AddWandererMailArms("models/begotten/wanderers/wanderermail/");
+Clockwork.animation:AddWandererMailArms("models/begotten/wanderers/wanderermail");
 
 Clockwork.animation:AddWandererOppressorArms("models/begotten/wanderers/wandereroppressor.mdl");
 
@@ -1219,16 +1100,6 @@ Clockwork.animation:AddPlagueDocArms("models/begotten/wanderers/plaguedoc.mdl");
 
 Clockwork.animation:AddShingarArms("models/begotten/goreicwarfighters/shingar.mdl");
 
-Clockwork.animation:AddKnightJusticarArms("models/begotten/gatekeepers/knight_justicar.mdl");
+Clockwork.animation:AddKnightJusticarArms("models/begotten/gatekeepers/knight_justicar");
 
 Clockwork.animation:AddTechnoHeavyArms("models/begotten/wanderers/voltist_technoheavy.mdl");
-
-Clockwork.animation:AddVortigauntModel("models/vortigaunt.mdl");
-Clockwork.animation:AddVortigauntModel("models/vortigaunt_slave.mdl");
-Clockwork.animation:AddVortigauntModel("models/vortigaunt_doctor.mdl");
-
-Clockwork.animation:AddCombineOverwatchModel("models/combine_soldier_prisonguard.mdl");
-Clockwork.animation:AddCombineOverwatchModel("models/combine_super_soldier.mdl");
-Clockwork.animation:AddCombineOverwatchModel("models/combine_soldier.mdl");
-
-Clockwork.animation:AddCivilProtectionModel("models/police.mdl");

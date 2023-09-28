@@ -329,467 +329,6 @@ Schema.doors = {
 	};
 };
 
-local models_to_precache = {
-	--[["models/begotten/gatekeepers/districtonearmor.mdl",
-	"models/begotten/gatekeepers/grandinquisitor.mdl",
-	"models/begotten/gatekeepers/grandknight.mdl",
-	"models/begotten/gatekeepers/highgatekeeper01.mdl",
-	"models/begotten/gatekeepers/highgatekeeper02.mdl",
-	"models/begotten/gatekeepers/knight_set.mdl",
-	"models/begotten/gatekeepers/masteratarms.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/female_01.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/female_02.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/female_04.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/female_05.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/female_06.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/female_32.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/male_01.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/male_02.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/male_03.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/male_04.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/male_05.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/male_06.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/male_07.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/male_08.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/male_09.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/male_11.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/male_12.mdl",
-	"models/begotten/gatekeepers/blackinquisitor/male_16.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/female_01.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/female_02.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/female_04.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/female_05.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/female_06.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/female_32.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/male_01.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/male_02.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/male_03.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/male_04.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/male_05.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/male_06.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/male_07.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/male_08.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/male_09.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/male_11.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/male_12.mdl",
-	"models/begotten/gatekeepers/gatekeeperfine/male_16.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/female_01.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/female_02.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/female_04.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/female_05.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/female_06.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/female_32.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_01.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_02.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_03.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_04.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_05.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_06.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_07.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_08.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_09.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_11.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_12.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_16.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/female_01.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/female_02.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/female_04.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/female_05.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/female_06.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/female_32.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_01.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_02.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_03.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_04.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_05.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_06.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_07.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_08.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_09.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_11.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_12.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_16.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/female_01.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/female_02.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/female_04.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/female_05.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/female_06.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/female_32.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/male_01.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/male_02.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/male_03.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/male_04.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/male_05.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/male_06.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/male_07.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/male_08.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/male_09.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/male_11.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/male_12.mdl",
-	"models/begotten/gatekeepers/gatekeeperornate/male_16.mdl",
-	"models/begotten/gatekeepers/inquisitor/female_01.mdl",
-	"models/begotten/gatekeepers/inquisitor/female_02.mdl",
-	"models/begotten/gatekeepers/inquisitor/female_04.mdl",
-	"models/begotten/gatekeepers/inquisitor/female_05.mdl",
-	"models/begotten/gatekeepers/inquisitor/female_06.mdl",
-	"models/begotten/gatekeepers/inquisitor/female_32.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_01.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_02.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_03.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_04.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_05.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_06.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_07.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_08.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_09.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_11.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_12.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_16.mdl",
-	"models/begotten/gatekeepers/minister/female_01.mdl",
-	"models/begotten/gatekeepers/minister/female_02.mdl",
-	"models/begotten/gatekeepers/minister/female_04.mdl",
-	"models/begotten/gatekeepers/minister/female_05.mdl",
-	"models/begotten/gatekeepers/minister/female_06.mdl",
-	"models/begotten/gatekeepers/minister/female_32.mdl",
-	"models/begotten/gatekeepers/minister/male_01.mdl",
-	"models/begotten/gatekeepers/minister/male_02.mdl",
-	"models/begotten/gatekeepers/minister/male_03.mdl",
-	"models/begotten/gatekeepers/minister/male_04.mdl",
-	"models/begotten/gatekeepers/minister/male_05.mdl",
-	"models/begotten/gatekeepers/minister/male_06.mdl",
-	"models/begotten/gatekeepers/minister/male_07.mdl",
-	"models/begotten/gatekeepers/minister/male_08.mdl",
-	"models/begotten/gatekeepers/minister/male_09.mdl",
-	"models/begotten/gatekeepers/minister/male_11.mdl",
-	"models/begotten/gatekeepers/minister/male_12.mdl",
-	"models/begotten/gatekeepers/minister/male_16.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/female_01.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/female_02.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/female_04.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/female_05.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/female_06.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/female_32.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/male_01.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/male_02.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/male_03.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/male_04.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/male_05.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/male_06.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/male_07.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/male_08.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/male_09.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/male_11.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/male_12.mdl",
-	"models/begotten/gatekeepers/whiteinquisitor/male_16.mdl",
-	"models/begotten/goreicwarfighters/gorechieftan.mdl",
-	"models/begotten/goreicwarfighters/goreking.mdl",
-	"models/begotten/goreicwarfighters/bladedruid/male_90.mdl",
-	"models/begotten/goreicwarfighters/bladedruid/male_91.mdl",
-	"models/begotten/goreicwarfighters/bladedruid/male_92.mdl",
-	"models/begotten/goreicwarfighters/bladedruid/male_93.mdl",
-	"models/begotten/goreicwarfighters/bladedruid/male_94.mdl",
-	"models/begotten/goreicwarfighters/bladedruid/male_95.mdl",
-	"models/begotten/goreicwarfighters/bladedruid/male_96.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_90.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_91.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_92.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_93.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_94.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_95.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_96.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_90.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_91.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_92.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_93.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_94.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_95.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_96.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_90.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_91.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_92.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_93.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_94.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_95.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_96.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_90.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_91.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_92.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_93.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_94.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_95.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_96.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_90.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_91.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_92.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_93.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_94.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_95.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_96.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_90.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_91.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_92.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_93.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_94.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_95.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_96.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_90.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_91.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_92.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_93.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_94.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_95.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_96.mdl",
-	"models/begotten/goreicwarfighters/warfighter/male_90.mdl",
-	"models/begotten/goreicwarfighters/warfighter/male_91.mdl",
-	"models/begotten/goreicwarfighters/warfighter/male_92.mdl",
-	"models/begotten/goreicwarfighters/warfighter/male_93.mdl",
-	"models/begotten/goreicwarfighters/warfighter/male_94.mdl",
-	"models/begotten/goreicwarfighters/warfighter/male_95.mdl",
-	"models/begotten/goreicwarfighters/warfighter/male_96.mdl",
-	"models/begotten/satanists/dreadarmor.mdl",
-	"models/begotten/satanists/hellspike_armor.mdl",
-	"models/begotten/satanists/wraitharmor.mdl",
-	"models/begotten/satanists/elegantrobes/female_01.mdl",
-	"models/begotten/satanists/elegantrobes/female_02.mdl",
-	"models/begotten/satanists/elegantrobes/female_04.mdl",
-	"models/begotten/satanists/elegantrobes/female_05.mdl",
-	"models/begotten/satanists/elegantrobes/female_06.mdl",
-	"models/begotten/satanists/elegantrobes/female_32.mdl",
-	"models/begotten/satanists/elegantrobes/male_01.mdl",
-	"models/begotten/satanists/elegantrobes/male_02.mdl",
-	"models/begotten/satanists/elegantrobes/male_03.mdl",
-	"models/begotten/satanists/elegantrobes/male_04.mdl",
-	"models/begotten/satanists/elegantrobes/male_05.mdl",
-	"models/begotten/satanists/elegantrobes/male_06.mdl",
-	"models/begotten/satanists/elegantrobes/male_07.mdl",
-	"models/begotten/satanists/elegantrobes/male_08.mdl",
-	"models/begotten/satanists/elegantrobes/male_09.mdl",
-	"models/begotten/satanists/elegantrobes/male_11.mdl",
-	"models/begotten/satanists/elegantrobes/male_12.mdl",
-	"models/begotten/satanists/elegantrobes/male_13.mdl",
-	"models/begotten/satanists/elegantrobes/male_16.mdl",
-	"models/begotten/satanists/elegantrobes/male_22.mdl",
-	"models/begotten/satanists/elegantrobes/male_56.mdl",
-	"models/begotten/satanists/hellplateheavy/female_01.mdl",
-	"models/begotten/satanists/hellplateheavy/female_02.mdl",
-	"models/begotten/satanists/hellplateheavy/female_04.mdl",
-	"models/begotten/satanists/hellplateheavy/female_05.mdl",
-	"models/begotten/satanists/hellplateheavy/female_06.mdl",
-	"models/begotten/satanists/hellplateheavy/female_32.mdl",
-	"models/begotten/satanists/hellplateheavy/male_01.mdl",
-	"models/begotten/satanists/hellplateheavy/male_02.mdl",
-	"models/begotten/satanists/hellplateheavy/male_03.mdl",
-	"models/begotten/satanists/hellplateheavy/male_04.mdl",
-	"models/begotten/satanists/hellplateheavy/male_05.mdl",
-	"models/begotten/satanists/hellplateheavy/male_06.mdl",
-	"models/begotten/satanists/hellplateheavy/male_07.mdl",
-	"models/begotten/satanists/hellplateheavy/male_08.mdl",
-	"models/begotten/satanists/hellplateheavy/male_09.mdl",
-	"models/begotten/satanists/hellplateheavy/male_11.mdl",
-	"models/begotten/satanists/hellplateheavy/male_12.mdl",
-	"models/begotten/satanists/hellplateheavy/male_13.mdl",
-	"models/begotten/satanists/hellplateheavy/male_16.mdl",
-	"models/begotten/satanists/hellplateheavy/male_22.mdl",
-	"models/begotten/satanists/hellplateheavy/male_56.mdl",
-	"models/begotten/satanists/hellplatemedium/female_01.mdl",
-	"models/begotten/satanists/hellplatemedium/female_02.mdl",
-	"models/begotten/satanists/hellplatemedium/female_04.mdl",
-	"models/begotten/satanists/hellplatemedium/female_05.mdl",
-	"models/begotten/satanists/hellplatemedium/female_06.mdl",
-	"models/begotten/satanists/hellplatemedium/female_32.mdl",
-	"models/begotten/satanists/hellplatemedium/male_01.mdl",
-	"models/begotten/satanists/hellplatemedium/male_02.mdl",
-	"models/begotten/satanists/hellplatemedium/male_03.mdl",
-	"models/begotten/satanists/hellplatemedium/male_04.mdl",
-	"models/begotten/satanists/hellplatemedium/male_05.mdl",
-	"models/begotten/satanists/hellplatemedium/male_06.mdl",
-	"models/begotten/satanists/hellplatemedium/male_07.mdl",
-	"models/begotten/satanists/hellplatemedium/male_08.mdl",
-	"models/begotten/satanists/hellplatemedium/male_09.mdl",
-	"models/begotten/satanists/hellplatemedium/male_11.mdl",
-	"models/begotten/satanists/hellplatemedium/male_12.mdl",
-	"models/begotten/satanists/hellplatemedium/male_13.mdl",
-	"models/begotten/satanists/hellplatemedium/male_16.mdl",
-	"models/begotten/satanists/hellplatemedium/male_22.mdl",
-	"models/begotten/satanists/hellplatemedium/male_56.mdl",
-	"models/begotten/wanderers/exileknight.mdl",
-	"models/begotten/wanderers/plaguedoc.mdl",
-	"models/begotten/wanderers/voltist_heavy.mdl",
-	"models/begotten/wanderers/voltist_medium.mdl",
-	"models/begotten/wanderers/brigandine/female_01.mdl",
-	"models/begotten/wanderers/brigandine/female_02.mdl",
-	"models/begotten/wanderers/brigandine/female_04.mdl",
-	"models/begotten/wanderers/brigandine/female_05.mdl",
-	"models/begotten/wanderers/brigandine/female_06.mdl",
-	"models/begotten/wanderers/brigandine/female_32.mdl",
-	"models/begotten/wanderers/brigandine/male_01.mdl",
-	"models/begotten/wanderers/brigandine/male_02.mdl",
-	"models/begotten/wanderers/brigandine/male_03.mdl",
-	"models/begotten/wanderers/brigandine/male_04.mdl",
-	"models/begotten/wanderers/brigandine/male_05.mdl",
-	"models/begotten/wanderers/brigandine/male_06.mdl",
-	"models/begotten/wanderers/brigandine/male_07.mdl",
-	"models/begotten/wanderers/brigandine/male_08.mdl",
-	"models/begotten/wanderers/brigandine/male_09.mdl",
-	"models/begotten/wanderers/brigandine/male_11.mdl",
-	"models/begotten/wanderers/brigandine/male_12.mdl",
-	"models/begotten/wanderers/brigandine/male_13.mdl",
-	"models/begotten/wanderers/brigandine/male_16.mdl",
-	"models/begotten/wanderers/brigandine/male_22.mdl",
-	"models/begotten/wanderers/brigandine/male_56.mdl",
-	"models/begotten/wanderers/brigandinelight/female_01.mdl",
-	"models/begotten/wanderers/brigandinelight/female_02.mdl",
-	"models/begotten/wanderers/brigandinelight/female_04.mdl",
-	"models/begotten/wanderers/brigandinelight/female_05.mdl",
-	"models/begotten/wanderers/brigandinelight/female_06.mdl",
-	"models/begotten/wanderers/brigandinelight/female_32.mdl",
-	"models/begotten/wanderers/brigandinelight/male_01.mdl",
-	"models/begotten/wanderers/brigandinelight/male_02.mdl",
-	"models/begotten/wanderers/brigandinelight/male_03.mdl",
-	"models/begotten/wanderers/brigandinelight/male_04.mdl",
-	"models/begotten/wanderers/brigandinelight/male_05.mdl",
-	"models/begotten/wanderers/brigandinelight/male_06.mdl",
-	"models/begotten/wanderers/brigandinelight/male_07.mdl",
-	"models/begotten/wanderers/brigandinelight/male_08.mdl",
-	"models/begotten/wanderers/brigandinelight/male_09.mdl",
-	"models/begotten/wanderers/brigandinelight/male_11.mdl",
-	"models/begotten/wanderers/brigandinelight/male_12.mdl",
-	"models/begotten/wanderers/brigandinelight/male_13.mdl",
-	"models/begotten/wanderers/brigandinelight/male_16.mdl",
-	"models/begotten/wanderers/brigandinelight/male_22.mdl",
-	"models/begotten/wanderers/brigandinelight/male_56.mdl",
-	"models/begotten/wanderers/leather/female_01.mdl",
-	"models/begotten/wanderers/leather/female_02.mdl",
-	"models/begotten/wanderers/leather/female_04.mdl",
-	"models/begotten/wanderers/leather/female_05.mdl",
-	"models/begotten/wanderers/leather/female_06.mdl",
-	"models/begotten/wanderers/leather/female_32.mdl",
-	"models/begotten/wanderers/leather/male_01.mdl",
-	"models/begotten/wanderers/leather/male_02.mdl",
-	"models/begotten/wanderers/leather/male_03.mdl",
-	"models/begotten/wanderers/leather/male_04.mdl",
-	"models/begotten/wanderers/leather/male_05.mdl",
-	"models/begotten/wanderers/leather/male_06.mdl",
-	"models/begotten/wanderers/leather/male_07.mdl",
-	"models/begotten/wanderers/leather/male_08.mdl",
-	"models/begotten/wanderers/leather/male_09.mdl",
-	"models/begotten/wanderers/leather/male_11.mdl",
-	"models/begotten/wanderers/leather/male_12.mdl",
-	"models/begotten/wanderers/leather/male_13.mdl",
-	"models/begotten/wanderers/leather/male_16.mdl",
-	"models/begotten/wanderers/leather/male_22.mdl",
-	"models/begotten/wanderers/leather/male_56.mdl",
-	"models/begotten/wanderers/merchant/female_01.mdl",
-	"models/begotten/wanderers/merchant/female_02.mdl",
-	"models/begotten/wanderers/merchant/female_04.mdl",
-	"models/begotten/wanderers/merchant/female_05.mdl",
-	"models/begotten/wanderers/merchant/female_06.mdl",
-	"models/begotten/wanderers/merchant/female_32.mdl",
-	"models/begotten/wanderers/merchant/male_01.mdl",
-	"models/begotten/wanderers/merchant/male_02.mdl",
-	"models/begotten/wanderers/merchant/male_03.mdl",
-	"models/begotten/wanderers/merchant/male_04.mdl",
-	"models/begotten/wanderers/merchant/male_05.mdl",
-	"models/begotten/wanderers/merchant/male_06.mdl",
-	"models/begotten/wanderers/merchant/male_07.mdl",
-	"models/begotten/wanderers/merchant/male_08.mdl",
-	"models/begotten/wanderers/merchant/male_09.mdl",
-	"models/begotten/wanderers/merchant/male_11.mdl",
-	"models/begotten/wanderers/merchant/male_12.mdl",
-	"models/begotten/wanderers/merchant/male_13.mdl",
-	"models/begotten/wanderers/merchant/male_16.mdl",
-	"models/begotten/wanderers/merchant/male_22.mdl",
-	"models/begotten/wanderers/merchant/male_56.mdl",
-	"models/begotten/wanderers/scrapper/female_01.mdl",
-	"models/begotten/wanderers/scrapper/female_02.mdl",
-	"models/begotten/wanderers/scrapper/female_04.mdl",
-	"models/begotten/wanderers/scrapper/female_05.mdl",
-	"models/begotten/wanderers/scrapper/female_06.mdl",
-	"models/begotten/wanderers/scrapper/female_32.mdl",
-	"models/begotten/wanderers/scrapper/male_01.mdl",
-	"models/begotten/wanderers/scrapper/male_02.mdl",
-	"models/begotten/wanderers/scrapper/male_03.mdl",
-	"models/begotten/wanderers/scrapper/male_04.mdl",
-	"models/begotten/wanderers/scrapper/male_05.mdl",
-	"models/begotten/wanderers/scrapper/male_06.mdl",
-	"models/begotten/wanderers/scrapper/male_07.mdl",
-	"models/begotten/wanderers/scrapper/male_08.mdl",
-	"models/begotten/wanderers/scrapper/male_09.mdl",
-	"models/begotten/wanderers/scrapper/male_11.mdl",
-	"models/begotten/wanderers/scrapper/male_12.mdl",
-	"models/begotten/wanderers/scrapper/male_13.mdl",
-	"models/begotten/wanderers/scrapper/male_16.mdl",
-	"models/begotten/wanderers/scrapper/male_22.mdl",
-	"models/begotten/wanderers/scrapper/male_56.mdl",
-	"models/begotten/wanderers/scrappergrunt/female_01.mdl",
-	"models/begotten/wanderers/scrappergrunt/female_02.mdl",
-	"models/begotten/wanderers/scrappergrunt/female_04.mdl",
-	"models/begotten/wanderers/scrappergrunt/female_05.mdl",
-	"models/begotten/wanderers/scrappergrunt/female_06.mdl",
-	"models/begotten/wanderers/scrappergrunt/female_32.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_01.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_02.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_03.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_04.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_05.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_06.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_07.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_08.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_09.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_11.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_12.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_13.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_16.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_22.mdl",
-	"models/begotten/wanderers/scrappergrunt/male_56.mdl",
-	"models/begotten/wanderers/scribe/female_01.mdl",
-	"models/begotten/wanderers/scribe/female_02.mdl",
-	"models/begotten/wanderers/scribe/female_04.mdl",
-	"models/begotten/wanderers/scribe/female_05.mdl",
-	"models/begotten/wanderers/scribe/female_06.mdl",
-	"models/begotten/wanderers/scribe/female_32.mdl",
-	"models/begotten/wanderers/scribe/male_01.mdl",
-	"models/begotten/wanderers/scribe/male_02.mdl",
-	"models/begotten/wanderers/scribe/male_03.mdl",
-	"models/begotten/wanderers/scribe/male_04.mdl",
-	"models/begotten/wanderers/scribe/male_05.mdl",
-	"models/begotten/wanderers/scribe/male_06.mdl",
-	"models/begotten/wanderers/scribe/male_07.mdl",
-	"models/begotten/wanderers/scribe/male_08.mdl",
-	"models/begotten/wanderers/scribe/male_09.mdl",
-	"models/begotten/wanderers/scribe/male_11.mdl",
-	"models/begotten/wanderers/scribe/male_12.mdl",
-	"models/begotten/wanderers/scribe/male_13.mdl",
-	"models/begotten/wanderers/scribe/male_16.mdl",
-	"models/begotten/wanderers/scribe/male_22.mdl",
-	"models/begotten/wanderers/scribe/male_56.mdl",]]--
-	"models/begotten/wanderers/wanderer/female_01.mdl",
-	"models/begotten/wanderers/wanderer/female_02.mdl",
-	"models/begotten/wanderers/wanderer/female_04.mdl",
-	"models/begotten/wanderers/wanderer/female_05.mdl",
-	"models/begotten/wanderers/wanderer/female_06.mdl",
-	"models/begotten/wanderers/wanderer/female_32.mdl",
-	"models/begotten/wanderers/wanderer/male_01.mdl",
-	"models/begotten/wanderers/wanderer/male_02.mdl",
-	"models/begotten/wanderers/wanderer/male_03.mdl",
-	"models/begotten/wanderers/wanderer/male_04.mdl",
-	"models/begotten/wanderers/wanderer/male_05.mdl",
-	"models/begotten/wanderers/wanderer/male_06.mdl",
-	"models/begotten/wanderers/wanderer/male_07.mdl",
-	"models/begotten/wanderers/wanderer/male_08.mdl",
-	"models/begotten/wanderers/wanderer/male_09.mdl",
-	"models/begotten/wanderers/wanderer/male_11.mdl",
-	"models/begotten/wanderers/wanderer/male_12.mdl",
-	"models/begotten/wanderers/wanderer/male_13.mdl",
-	"models/begotten/wanderers/wanderer/male_16.mdl",
-	"models/begotten/wanderers/wanderer/male_22.mdl",
-	"models/begotten/wanderers/wanderer/male_56.mdl",
-};
-
---[[for i = 1, #models_to_precache do
-	util.PrecacheModel(models_to_precache[i]);
-end]]--
-
 Clockwork.config:Add("gore_charlimit", 1, true);
 Clockwork.config:Add("satanist_charlimit", 1, true);
 Clockwork.config:Add("enable_charlimit", true, true);
@@ -1729,31 +1268,6 @@ function Schema:GetHealAmount(player, scale) end;
 -- A function to get a player's dexterity time.
 function Schema:GetDexterityTime(player) end;
 
--- A function to make a player wear clothes.
-function Schema:PlayerWearClothes(player, itemTable, noMessage)
-	local clothes = player:GetCharacterData("clothes");
-	
-	if (itemTable) then
-		local model = Clockwork.class:GetAppropriateModel(player:Team(), player, true);
-		
-		if (!model) then
-			itemTable:OnChangeClothes(player, true);
-			
-			player:SetCharacterData("clothes", itemTable.index);
-			player:SetNetVar("clothes", itemTable.index);
-		end;
-	else
-		itemTable = Clockwork.item:FindByID(clothes);
-		
-		if (itemTable) then
-			itemTable:OnChangeClothes(player, false);
-			
-			player:SetCharacterData("clothes", nil);
-			player:SetNetVar("clothes", 0);
-		end;
-	end;
-end;
-
 -- A function to bust down a door.
 function Schema:BustDownDoor(player, door, force)
 	door.bustedDown = true;
@@ -1812,11 +1326,13 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 			player:SetCharacterData("permakilled", true);
 		end
 		
-		if player.bgCharmData and player.HasCharmEquipped and player:HasCharmEquipped("satchel_denial") then
+		if player.GetCharmEquipped and player:GetCharmEquipped("satchel_denial") then
 			bSilent = true;
 			
 			Clockwork.chatBox:AddInTargetRadius(player, "me", "'s body disintegrates before you!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 		end
+		
+		Clockwork.player:DropWeapons(player);
 		
 		local inventory = player:GetInventory();
 		local copy = Clockwork.inventory:CreateDuplicate(inventory);
@@ -1842,24 +1358,16 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 			end
 		end
 		
-		player.bgBackpackData = nil;
-		player.bgCharmData = nil;
 		player:SetCharacterData("permakilled", true);
 		player:SetCharacterData("Cash", 0, true);
-		player:SetCharacterData("backpacks", nil);
-		player:SetCharacterData("charms", nil);
-		player:SetCharacterData("helmet", nil);
 		player:SetSharedVar("Cash", 0);
-		player:SetNetVar("backpacks", 0);
-		player:SetNetVar("charms", nil);
-		player:SetNetVar("helmet", 0);
 		player:SetBodygroup(0, 0);
 		player:SetBodygroup(1, 0);
 		
-		Clockwork.datastream:Start(player, "BGBackpackData", {});
-		Clockwork.datastream:Start(player, "BGCharmData", {});
-		Clockwork.datastream:Start(player, "BGClothes", {});
-		
+		for k, v in pairs(player.equipmentSlots) do
+			player.equipmentSlots[k] = nil;
+		end
+
 		if !ragdoll then
 			ragdoll = player:GetRagdollEntity();
 		end
@@ -1890,7 +1398,6 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 			ragdoll:Remove();
 		end;
 		
-		Clockwork.player:StripGear(player);
 		Clockwork.player:SaveCharacter(player);
 	end
 end;
@@ -2002,7 +1509,6 @@ function Schema:TiePlayer(player, isTied, reset)
 	end;
 	
 	if (isTied) then
-		--Clockwork.player:DropWeapons(player);
 		player:UnequipWeapons();
 		Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name().." has been tied.");
 		
@@ -2377,18 +1883,6 @@ function playerMeta:GetLightColor()
 	return false;
 end;
 
-function playerMeta:HasCharmEquipped(uniqueID)
-	if self.bgCharmData then
-		for i = 1, #self.bgCharmData do
-			if self.bgCharmData[i] and self.bgCharmData[i].uniqueID == uniqueID then
-				return true;
-			end
-		end
-	end
-	
-	return false;
-end
-
 -- A function to get whether a player is inside the tower of light.
 function playerMeta:InTower(bIgnoreAdmins)
 	return Schema:InTower(self, bIgnoreAdmins);
@@ -2419,7 +1913,7 @@ end;
 
 -- A function to force the player to unequip their clothing item.
 function playerMeta:UnequipClothes()
-	local itemTable = self:GetClothesItem();
+	local itemTable = self:GetClothesEquipped();
 
 	if (itemTable and itemTable.OnPlayerUnequipped and itemTable.HasPlayerEquipped) then
 		if (itemTable:HasPlayerEquipped(self, nil)) then

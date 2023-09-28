@@ -404,11 +404,11 @@ function Schema:PlayerFootstep(player, position, foot, soundString, volume, reci
 		return true;
 	end
 
-	if (player:Crouching() and player:GetSharedVar("hasNimble")) or player:HasCharmEquipped("urn_silence") or player:GetColor().a <= 0 then
+	if (player:Crouching() and player:GetSharedVar("hasNimble")) or player:GetCharmEquipped("urn_silence") or player:GetColor().a <= 0 then
 		return true;
 	end;
 
-	local clothesItem = player:GetClothesItem();
+	local clothesItem = player:GetClothesEquipped();
 	
 	if (clothesItem) then
 		if (running) then
@@ -720,7 +720,7 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 			if target:GetModel() == "models/begotten/satanists/lordvasso/male_56.mdl" then
 				subfactionText = "The chosen of Satan, the Dreadlord himself!";
 				textColor = Color(0, 255, 0, 255);
-			elseif Clockwork.Client:GetSharedVar("subfaction") == target:GetSharedVar("subfaction") or player:GetSharedVar("subfaction") == "Kinisger" and target:GetSharedVar("kinisgerOverrideSubfaction") then
+			elseif Clockwork.Client:GetSharedVar("subfaction") == target:GetSharedVar("subfaction") or Clockwork.Client:GetSharedVar("subfaction") == "Kinisger" and target:GetSharedVar("kinisgerOverrideSubfaction") then
 				local brother = "brother";
 				
 				if target:GetGender() == GENDER_FEMALE then
@@ -2306,6 +2306,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				if itemTable.attributes then
 					if table.HasValue(itemTable.attributes, "sundering_shot") then
 						frame:AddText("Sundering Shot: Travelling at supersonic speeds, Old World Longshot ignores armor and shields entirely.", Color(110, 30, 30));
+					elseif table.HasValue(itemTable.attributes, "sundering_shot_grapeshot") then
+						frame:AddText("Sundering Shot: Travelling at supersonic speeds, Old World Grapeshot ignores armor and shields entirely.", Color(110, 30, 30));
 					end
 				end
 

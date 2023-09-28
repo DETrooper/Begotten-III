@@ -17,6 +17,7 @@ if (!Clockwork.option) then include("sh_option.lua") end
 if (!Clockwork.entity) then include("sh_entity.lua") end
 if (!item) then include("sh_item.lua") end
 if (!Clockwork.inventory) then include("sh_inventory.lua") end
+if (!Clockwork.equipment) then include("sh_equipment.lua") end
 
 library.New("player", Clockwork)
 

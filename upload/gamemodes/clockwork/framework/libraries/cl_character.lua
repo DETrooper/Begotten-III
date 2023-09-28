@@ -319,6 +319,7 @@ function Clockwork.character:RefreshPanelList()
 					panel.customData = {
 						name = v.name,
 						model = v.model,
+						gender = v.gender,
 						clothes = v.clothes,
 						helmet = v.helmet,
 						shield = v.shield,

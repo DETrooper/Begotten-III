@@ -155,20 +155,16 @@ function playerMeta:EnterPowerArmor(entity)
 	end
 
 	if IsValid(entity) then
-		local clothesItem = self:GetClothesItem();
+		local clothesItem = self:GetClothesEquipped();
 		
 		if clothesItem then
 			Clockwork.kernel:ForceUnequipItem(self, clothesItem.uniqueID, clothesItem.itemID);
 		end;
 		
-		local helmetData = self:GetCharacterData("helmet");
-
-		if helmetData and helmetData.uniqueID and helmetData.itemID then
-			local helmetItem = Clockwork.inventory:FindItemByID(self:GetInventory(), helmetData.uniqueID, helmetData.itemID)
-			
-			if helmetItem then
-				Clockwork.kernel:ForceUnequipItem(self, helmetItem.uniqueID, helmetItem.itemID);
-			end
+		local helmetItem = self:GetHelmetEquipped();
+		
+		if helmetItem then
+			Clockwork.kernel:ForceUnequipItem(self, helmetItem.uniqueID, helmetItem.itemID);
 		end
 	
 		self:SetModel(entity:GetModel());

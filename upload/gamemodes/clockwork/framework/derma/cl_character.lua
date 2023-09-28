@@ -680,6 +680,7 @@ function PANEL:Init()
 	local bodygroup = 0;
 	local bodygroupVal = 0;
 	local model = self.customData.model;
+	local headModel;
 	local faithText = self.customData.faith;
 	local subfaith = self.customData.subfaith;
 	local clothes = self.customData.clothes;
@@ -698,6 +699,38 @@ function PANEL:Init()
 				
 				if newModel then
 					model = newModel;
+				end
+			end
+		end
+	end
+	
+	if string.find(model, "models/begotten/heads") then
+		headModel = model;
+		
+		if clothes then
+			if clothes.uniqueID and clothes.itemID then
+				local item = Clockwork.item:FindByID(clothes.uniqueID, clothes.itemID);
+				
+				if item and item.group then
+					if item.genderless then
+						model = "models/begotten/"..item.group..".mdl";
+					else
+						model = "models/begotten/"..item.group.."_"..string.lower(self.customData.gender)..".mdl";
+					end
+				end
+			end
+		elseif factionTable then
+			model = factionTable.models[string.lower(self.customData.gender)].clothes;
+		
+			local subfaction = self.customData.subfaction;
+			
+			if subfaction and factionTable.subfactions then
+				for i, v in ipairs(factionTable.subfactions) do
+					if v.models and v.name == subfaction then
+						model = v.models[string.lower(self.customData.gender)].clothes;
+						
+						break;
+					end
 				end
 			end
 		end
@@ -815,10 +848,23 @@ function PANEL:Init()
 		self.characterModel.weapon3 = weapon3;
 	end
 	
-	self.characterModel:SetModelNew(model, self.customData.skin);
+	self.characterModel:SetModelNew(model);
 	
 	if IsValid(self.characterModel.modelPanel.Entity) then
-		self.characterModel.modelPanel.Entity:SetBodygroup(bodygroup, bodygroupVal);
+		if headModel then
+			self.characterModel.modelPanel.headModel = ClientsideModel(headModel, RENDERGROUP_OPAQUE);
+			
+			if IsValid(self.characterModel.modelPanel.headModel) then
+				self.characterModel.modelPanel.headModel.noDelete = true;
+				self.characterModel.modelPanel.headModel:SetParent(self.characterModel.modelPanel.Entity);
+				self.characterModel.modelPanel.headModel:AddEffects(EF_BONEMERGE);
+				self.characterModel.modelPanel.headModel:SetBodygroup(bodygroup, bodygroupVal);
+				self.characterModel.modelPanel.headModel:SetSkin(self.customData.skin or 0);
+			end
+		else
+			self.characterModel.modelPanel.Entity:SetBodygroup(bodygroup, bodygroupVal);
+			self.characterModel.modelPanel.Entity:SetSkin(self.customData.skin or 0);
+		end
 	end
 	
 	local charName = self.customData.name or "Unknown Name";
@@ -1019,6 +1065,10 @@ function PANEL:Init()
 		render.SetScissorRect( leftx, topy, rightx, bottomy, true )
 		modelPanel.Entity:DrawModel();
 		
+		if modelPanel.headModel and IsValid(modelPanel.headModel) then
+			modelPanel.headModel:DrawModel();
+		end
+		
 		if modelPanelParent.weapon1Entity and IsValid(modelPanelParent.weapon1Entity) then
 			modelPanelParent.weapon1Entity:DrawModel();
 		end
@@ -1124,6 +1174,10 @@ function PANEL:FadeOut(speed, Callback)
 					panel.modelPanel.Entity:Remove();
 				end
 				
+				if panel.modelPanel and IsValid(panel.modelPanel.headModel) then
+					panel.modelPanel.headModel:Remove();
+				end
+				
 				if IsValid(panel.weapon1Entity) then
 					panel.weapon1Entity:Remove();
 				end;
@@ -1155,6 +1209,10 @@ function PANEL:FadeOut(speed, Callback)
 		
 		if self.modelPanel and IsValid(self.modelPanel.Entity) then
 			self.modelPanel.Entity:Remove();
+		end
+		
+		if self.modelPanel and IsValid(self.modelPanel.headModel) then
+			self.modelPanel.headModel:Remove();
 		end
 		
 		if IsValid(self.weapon1Entity) then
@@ -1253,6 +1311,10 @@ end;
 function PANEL:OnRemove()
 	if self.modelPanel and IsValid(self.modelPanel.Entity) then
 		self.modelPanel.Entity:Remove();
+	end
+	
+	if self.modelPanel and IsValid(self.modelPanel.headModel) then
+		self.modelPanel.headModel:Remove();
 	end
 
 	if IsValid(self.weapon1Entity) then
@@ -1357,31 +1419,19 @@ function PANEL:SetModelNew(model, skin)
 	self.modelPanel:SetModel(model);
 	
 	if IsValid(self.modelPanel.Entity) then
-		self.modelPanel.Entity:SetSkin(skin);
-		self.modelPanel.Entity:SetRenderMode(1)
-	end
-	
-	local entity = ents.CreateClientProp("models/error.mdl");
-		if !IsValid(entity) then
-			return;
+		if skin then
+			self.modelPanel.Entity:SetSkin(skin);
 		end
 		
-		entity:SetAngles(Angle(0, 0, 0));
-		entity:SetPos(Vector(0, 0, 0));
-		entity:SetModel(model);
-		entity:Spawn();
-		entity:Activate();
-		entity:PhysicsInit(SOLID_VPHYSICS);
-	
-	--local obbCenter = entity:OBBCenter();
+		self.modelPanel.Entity:SetRenderMode(1)
+	end
+
 	local obbCenter = Vector(-6, 0, 40);
 	
 	self.modelPanel:SetFOV(42)
 	self.modelPanel:SetLookAt(obbCenter)
 	self.modelPanel:SetCamPos(obbCenter + Vector(92, 0, 0));
 	--self.modelPanel:SetAmbientLight(Color(255,255,255,50))
-	
-	entity:Remove();
 	
 	if (IsValid(self.modelPanel.Entity)) then
 		local sequence = self.modelPanel.Entity:LookupSequence("idle_angry");
@@ -1822,6 +1872,7 @@ function PANEL:Rebuild()
 					name = v.name,
 					model = v.model,
 					skin = tonumber(v.skin) or 0,
+					gender = v.gender,
 					banned = v.banned,
 					--clothes = v.clothes,
 					faction = v.faction,
@@ -2140,7 +2191,7 @@ function PANEL:Init()
 		end
 	end
 	
-	local genderModels = Clockwork.faction.stored[self.info.faction].models[string.lower(gender)];
+	local genderModels = Clockwork.faction.stored[self.info.faction].models[string.lower(gender)].heads;
 	local modelSelected = 1;
 	
 	if Clockwork.Client.SelectedSubfaction then
@@ -2150,7 +2201,9 @@ function PANEL:Init()
 			for i = 1, #factionTable.subfactions do
 				if factionTable.subfactions[i].name == Clockwork.Client.SelectedSubfaction then
 					if factionTable.subfactions[i].models then
-						genderModels = factionTable.subfactions[i].models[string.lower(gender)];
+						genderModels = factionTable.subfactions[i].models[string.lower(gender)].heads;
+						
+						break;
 					end
 				end
 			end;
@@ -2163,6 +2216,10 @@ function PANEL:Init()
 	
 		local clientsideModel = Clockwork.Client.CharSelectionModel:GetModel();
 		
+		if IsValid(Clockwork.Client.CharSelectionModel.HeadModel) then
+			clientsideModel = Clockwork.Client.CharSelectionModel.HeadModel:GetModel();
+		end
+		
 		for i = 1, #genderModels do
 			if genderModels[i] == clientsideModel then
 				modelSelected = i;
@@ -2170,7 +2227,7 @@ function PANEL:Init()
 			end
 		end
 		
-		Clockwork.Client.SelectedModel = genderModels[modelSelected];
+		Clockwork.Client.SelectedModel = "models/begotten/heads/"..genderModels[modelSelected].."_gore.mdl";
 	end
 	
 	if (genderModels and #genderModels == 1) then
@@ -2258,7 +2315,7 @@ function PANEL:Init()
 					self.info.gender = GENDER_MALE;
 
 					if (self.bSelectModel) then
-						genderModels = Clockwork.faction.stored[Clockwork.Client.SelectedFaction].models[string.lower(GENDER_MALE)];
+						genderModels = Clockwork.faction.stored[Clockwork.Client.SelectedFaction].models[string.lower(GENDER_MALE)].heads;
 						modelSelected = 1;
 						
 						if Clockwork.Client.SelectedSubfaction then						
@@ -2266,14 +2323,14 @@ function PANEL:Init()
 								for i = 1, #factionTable.subfactions do
 									if factionTable.subfactions[i].name == Clockwork.Client.SelectedSubfaction then
 										if factionTable.subfactions[i].models then
-											genderModels = factionTable.subfactions[i].models[string.lower(GENDER_MALE)];
+											genderModels = factionTable.subfactions[i].models[string.lower(GENDER_MALE)].heads;
 										end
 									end
 								end;
 							end
 						end
 						
-						Clockwork.Client.SelectedModel = genderModels[modelSelected];
+						Clockwork.Client.SelectedModel = "models/begotten/heads/"..genderModels[modelSelected].."_gore.mdl";
 					end
 					
 					self.forenameTextEntry:SetValue("");
@@ -2293,7 +2350,7 @@ function PANEL:Init()
 					self.info.gender = GENDER_FEMALE;
 
 					if (self.bSelectModel) then
-						genderModels = Clockwork.faction.stored[Clockwork.Client.SelectedFaction].models[string.lower(GENDER_FEMALE)];
+						genderModels = Clockwork.faction.stored[Clockwork.Client.SelectedFaction].models[string.lower(GENDER_FEMALE)].heads;
 						modelSelected = 1;
 						
 						if Clockwork.Client.SelectedSubfaction then				
@@ -2301,14 +2358,14 @@ function PANEL:Init()
 								for i = 1, #factionTable.subfactions do
 									if factionTable.subfactions[i].name == Clockwork.Client.SelectedSubfaction then
 										if factionTable.subfactions[i].models then
-											genderModels = factionTable.subfactions[i].models[string.lower(GENDER_FEMALE)];
+											genderModels = factionTable.subfactions[i].models[string.lower(GENDER_FEMALE)].heads;
 										end
 									end
 								end;
 							end
 						end
 						
-						Clockwork.Client.SelectedModel = genderModels[modelSelected];
+						Clockwork.Client.SelectedModel = "models/begotten/heads/"..genderModels[modelSelected].."_gore.mdl";
 					end
 					
 					self.forenameTextEntry:SetValue("");
@@ -2331,22 +2388,33 @@ function PANEL:Init()
 			self.skinButton:SetVisible(true);
 			self.skinButton:SetText("Select Skin");
 			self.skinButton.DoClick = function()
-				local skinCount = Clockwork.Client.CharSelectionModel:SkinCount() - 1;
+				if IsValid(Clockwork.Client.CharSelectionModel) then
+					local skinCount = Clockwork.Client.CharSelectionModel:SkinCount() - 1;
 				
-				if (skinCount > 0) then
-					local options = {};
+					if IsValid(Clockwork.Client.CharSelectionModel.HeadModel) then
+						skinCount = Clockwork.Client.CharSelectionModel.HeadModel:SkinCount() - 1;
+					end
+					
+					if (skinCount > 0) then
+						local options = {};
 
-					for i = 0, skinCount do
-						options[tostring(i)] = function()
-							Clockwork.Client.CharSelectionModel:SetSkin(i);
-							self.info.skin = i;
+						for i = 0, skinCount do
+							options[tostring(i)] = function()
+								if IsValid(Clockwork.Client.CharSelectionModel.HeadModel) then
+									Clockwork.Client.CharSelectionModel.HeadModel:SetSkin(i);
+								else
+									Clockwork.Client.CharSelectionModel:SetSkin(i);
+								end
+								
+								self.info.skin = i;
+							end;
 						end;
-					end;
 
-					local menuPanel = Clockwork.kernel:AddMenuFromData(nil, options, function(menuPanel, option, arguments) end);
-				else
-					local options = {["No Skins Available"] = function() end};
-					local menuPanel = Clockwork.kernel:AddMenuFromData(nil, options, function(menuPanel, option, arguments) end);
+						local menuPanel = Clockwork.kernel:AddMenuFromData(nil, options, function(menuPanel, option, arguments) end);
+					else
+						local options = {["No Skins Available"] = function() end};
+						local menuPanel = Clockwork.kernel:AddMenuFromData(nil, options, function(menuPanel, option, arguments) end);
+					end;
 				end;
 			end;
 		
@@ -2362,7 +2430,7 @@ function PANEL:Init()
 					modelSelected = modelSelected - 1;
 				end
 				
-				Clockwork.Client.SelectedModel = genderModels[modelSelected];
+				Clockwork.Client.SelectedModel = "models/begotten/heads/"..genderModels[modelSelected].."_gore.mdl";
 			end;
 			
 			self.rightModelButton = vgui.Create("DImageButton", self)
@@ -2377,7 +2445,7 @@ function PANEL:Init()
 					modelSelected = modelSelected + 1;
 				end
 				
-				Clockwork.Client.SelectedModel = genderModels[modelSelected];
+				Clockwork.Client.SelectedModel = "models/begotten/heads/"..genderModels[modelSelected].."_gore.mdl";
 			end;
 		end;
 

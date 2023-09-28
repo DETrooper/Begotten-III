@@ -51,17 +51,6 @@ function Clockwork.player:GetMaxWeight()
 			weight = weight + addInvWeight
 		end
 	end]]--
-	
-	--[[if Clockwork.Client.bgBackpackData then
-		local backpackItem = Clockwork.inventory:FindItemByID(
-			Clockwork.inventory:GetClient(),
-			Clockwork.Client.bgBackpackData.uniqueID, Clockwork.Client.bgBackpackData.itemID
-		);
-		
-		if backpackItem and backpackItem.invSpace then
-			weight = weight + backpackItem.invSpace;
-		end
-	end]]--
 
 	return weight
 end
@@ -80,77 +69,8 @@ function Clockwork.player:GetMaxSpace()
 			space = space + addInvSpace
 		end
 	end]]--
-	
-	--[[if Clockwork.Client.bgBackpackData and Clockwork.Client.bgBackpackData[1] then
-		local backpackItem = Clockwork.inventory:FindItemByID(
-			Clockwork.inventory:GetClient(),
-			Clockwork.Client.bgBackpackData[1].uniqueID, Clockwork.Client.bgBackpackData[1].itemID
-		);
-		
-		if backpackItem and backpackItem.invSpace then
-			space = space + backpackItem.invSpace;
-		end
-	end]]--
 
 	return space
-end
-
--- A function to get the local player's clothes data.
-function Clockwork.player:GetClothesData()
-	return Clockwork.ClothesData
-end
-
--- A function to get the local player's accessory data.
-function Clockwork.player:GetAccessoryData()
-	return Clockwork.AccessoryData
-end
-
--- A function to get the local player's clothes item.
-function Clockwork.player:GetClothesItem()
-	local clothesData = self:GetClothesData()
-
-	if (clothesData.itemID != nil and clothesData.uniqueID != nil) then
-		return Clockwork.inventory:FindItemByID(
-			Clockwork.inventory:GetClient(),
-			clothesData.uniqueID, clothesData.itemID
-		)
-	end
-end
-
--- A function to get whether the local player is wearing clothes.
-function Clockwork.player:IsWearingClothes()
-	return (self:GetClothesItem() != nil)
-end
-
--- A function to get whether the local player has an accessory.
-function Clockwork.player:HasAccessory(uniqueID)
-	local accessoryData = self:GetAccessoryData()
-
-	for k, v in pairs(accessoryData) do
-		if (string.lower(v) == string.lower(uniqueID)) then
-			return true
-		end
-	end
-
-	return false
-end
-
--- A function to get whether the local player is wearing an accessory.
-function Clockwork.player:IsWearingAccessory(itemTable)
-	local accessoryData = self:GetAccessoryData()
-	local itemID = itemTable.itemID
-
-	if (accessoryData[itemID]) then
-		return true
-	else
-		return false
-	end
-end
-
--- A function to get whether the local player is wearing an item.
-function Clockwork.player:IsWearingItem(itemTable)
-	local clothesItem = self:GetClothesItem()
-	return (clothesItem and clothesItem:IsTheSameAs(itemTable))
 end
 
 -- A function to get whether a player is noclipping.
@@ -694,88 +614,4 @@ function Clockwork.player:GetChatIcon(player)
 	end
 
 	return icon
-end
-
--- A function to create a player's gear.
-function Clockwork.player:CreateGear(gearClass, itemID)
-	if (!self.cwGearTab) then
-		self.cwGearTab = {}
-	end
-
-	if (self.cwGearTab[gearClass]) then
-		self.cwGearTab[gearClass] = nil;
-	end
-	
-	--self.cwGearTab[gearClass] = itemTable;
-	self.cwGearTab[gearClass] = itemID;
-end
-
--- A function to get a player's gear.
-function Clockwork.player:GetGear(gearClass)
-	if (!self.cwGearTab) then
-		self.cwGearTab = {}
-	end
-	
-	if (self.cwGearTab and self.cwGearTab[gearClass]) then
-		return self.cwGearTab[gearClass];
-	end
-end
-
--- A function to remove a player's gear.
-function Clockwork.player:RemoveGear(gearClass)
-	if (self.cwGearTab and self.cwGearTab[gearClass]) then
-		self.cwGearTab[gearClass] = nil;
-	end
-	
-	local slots = {"Primary", "Secondary", "Tertiary"};
-	
-	if not self.cwGearTab[slots[1]] then
-		if self.cwGearTab[slots[2]] then
-			self.cwGearTab[slots[1]] = self.cwGearTab[slots[2]];
-			self.cwGearTab[slots[2]] = nil;
-			
-			if self.cwGearTab[slots[3]] then
-				self.cwGearTab[slots[2]] = self.cwGearTab[slots[3]];
-				self.cwGearTab[slots[3]] = nil;
-			end
-		elseif self.cwGearTab[slots[3]] then
-			self.cwGearTab[slots[1]] = self.cwGearTab[slots[3]];
-			self.cwGearTab[slots[3]] = nil;
-		end
-	elseif not self.cwGearTab[slots[2]] then
-		if self.cwGearTab[slots[3]] then
-			self.cwGearTab[slots[2]] = self.cwGearTab[slots[3]];
-			self.cwGearTab[slots[3]] = nil;
-		end
-	end
-end
-
--- A function to strip all of a player's gear.
-function Clockwork.player:StripGear()
-	self.cwGearTab = {};
-end
-
-local clothesItems;
-local playerMeta = FindMetaTable("Player")
-
-function playerMeta:GetClothesItem()
-	local clothesString = self:GetSharedVar("clothesString");
-	
-	if !clothesItems then
-		clothesItems = {};
-	
-		for k, v in pairs(item.GetStored()) do
-			if v.category == "Armor" then
-				clothesItems[v.uniqueID] = v;
-			end
-		end
-	end
-	
-	if clothesString then
-		for k, v in pairs(clothesItems) do
-			if v.uniqueID == clothesString then
-				return v;
-			end
-		end
-	end
 end

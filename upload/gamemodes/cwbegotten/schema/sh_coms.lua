@@ -338,7 +338,7 @@ local COMMAND = Clockwork.command:New("CharSearch");
 								target.beingSearched = true;
 								player.searching = target;
 								
-								if player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+								if player:GetMoveType() == MOVETYPE_WALK and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 									Schema:OpenSound(target, player);
 									
 									for k, v in pairs(ents.FindInSphere(player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
@@ -363,26 +363,8 @@ local COMMAND = Clockwork.command:New("CharSearch");
 										end;
 									end,
 									OnTakeItem = function(player, storageTable, itemTable)
-										local target = Clockwork.entity:GetPlayer(storageTable.entity);
-										
-										if (target) then
-											if (target:GetCharacterData("clothes") == itemTable.index) then
-												if (!target:HasItemByID(itemTable.index)) then
-													target:SetCharacterData("clothes", nil);
-													
-													itemTable:OnChangeClothes(target, false);
-												end;
-											end;
-										end;
 									end,
 									OnGiveItem = function(player, storageTable, itemTable)
-										if (player:GetCharacterData("clothes") == itemTable.index) then
-											if (!player:HasItemByID(itemTable.index)) then
-												player:SetCharacterData("clothes", nil);
-												
-												itemTable:OnChangeClothes(player, false);
-											end;
-										end;
 									end
 								});
 							else

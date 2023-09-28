@@ -18,32 +18,39 @@ function Clockwork.faction:GetBuffer()
 	return self.buffer
 end
 
-FACTION_CITIZENS_FEMALE = {
-	"models/begotten/wanderers/wanderer/female_01.mdl",
-	"models/begotten/wanderers/wanderer/female_02.mdl",
-	"models/begotten/wanderers/wanderer/female_04.mdl",
-	"models/begotten/wanderers/wanderer/female_05.mdl",
-	"models/begotten/wanderers/wanderer/female_06.mdl",
-	"models/begotten/wanderers/wanderer/female_32.mdl"
-}
-
-FACTION_CITIZENS_MALE = {
-	"models/begotten/wanderers/wanderer/male_01.mdl",
-	"models/begotten/wanderers/wanderer/male_02.mdl",
-	"models/begotten/wanderers/wanderer/male_03.mdl",
-	"models/begotten/wanderers/wanderer/male_04.mdl",
-	"models/begotten/wanderers/wanderer/male_05.mdl",
-	"models/begotten/wanderers/wanderer/male_06.mdl",
-	"models/begotten/wanderers/wanderer/male_07.mdl",
-	"models/begotten/wanderers/wanderer/male_08.mdl",
-	"models/begotten/wanderers/wanderer/male_09.mdl",
-	"models/begotten/wanderers/wanderer/male_11.mdl",
-	"models/begotten/wanderers/wanderer/male_12.mdl",
-	"models/begotten/wanderers/wanderer/male_13.mdl",
-	"models/begotten/wanderers/wanderer/male_16.mdl",
-	"models/begotten/wanderers/wanderer/male_22.mdl",
-	"models/begotten/wanderers/wanderer/male_56.mdl"
-}
+DEFAULT_MODELS = {
+	female = {
+		clothes = "models/begotten/wanderers/wanderer_female.mdl",
+		heads = {
+			"female_01",
+			"female_02",
+			"female_04",
+			"female_05",
+			"female_06",
+			"female_32",
+		},
+	},
+	male = {
+		clothes = "models/begotten/wanderers/wanderer_male.mdl",
+		heads = {
+			"male_01",
+			"male_02",
+			"male_03",
+			"male_04",
+			"male_05",
+			"male_06",
+			"male_07",
+			"male_08",
+			"male_09",
+			"male_11",
+			"male_12",
+			"male_13",
+			"male_16",
+			"male_22",
+			"male_56"
+		},
+	},
+};
 
 --[[ Set the __index meta function of the class. --]]
 local CLASS_TABLE = {__index = CLASS_TABLE}
@@ -60,21 +67,33 @@ function Clockwork.faction:New(name)
 	return object
 end
 
+local head_suffixes = {"_glaze", "_gore", "_satanist", "_wanderer"};
+
 -- A function to register a new faction.
 function Clockwork.faction:Register(data, name)
 	if (data.models) then
-		data.models.female = data.models.female or FACTION_CITIZENS_FEMALE;
-		data.models.male = data.models.male or FACTION_CITIZENS_MALE;
+		data.models.female = data.models.female or DEFAULT_MODELS.female;
+		data.models.male = data.models.male or DEFAULT_MODELS.male;
 	else
 		data.models = {
-			female = FACTION_CITIZENS_FEMALE,
-			male = FACTION_CITIZENS_MALE
+			female = DEFAULT_MODELS.female,
+			male = DEFAULT_MODELS.male
 		}
 		
 		if (data.subfactions) and data.subfactions[1].models then
-			data.models.female = data.subfactions[1].models.female or FACTION_CITIZENS_FEMALE;
-			data.models.male = data.subfactions[1].models.male or FACTION_CITIZENS_MALE;
+			data.models.female = data.subfactions[1].models.female or DEFAULT_MODELS.female;
+			data.models.male = data.subfactions[1].models.male or DEFAULT_MODELS.male;
 		end
+	end
+	
+	if data.models then
+		for i, v in pairs(data.models.male.heads) do
+			for i2, v2 in pairs(head_suffixes) do
+				util.PrecacheModel("models/begotten/heads/"..v..v2..".mdl");
+			end
+		end
+		
+		util.PrecacheModel(data.models.male.clothes);
 	end
 
 	data.limit = data.limit or 128
@@ -84,7 +103,7 @@ function Clockwork.faction:Register(data, name)
 	self.buffer[data.index] = data
 	self.stored[data.name] = data
 
-	if (SERVER and !_G["cwSharedBooted"]) then
+	--[[if (SERVER and !_G["cwSharedBooted"]) then
 		if (data.models) then
 			for k, v in pairs(data.models.female) do
 				Clockwork.kernel:AddFile(v)
@@ -98,7 +117,7 @@ function Clockwork.faction:Register(data, name)
 		if (data.material) then
 			Clockwork.kernel:AddFile("materials/"..data.material..".png")
 		end
-	end
+	end]]--
 
 	return data.name
 end
@@ -135,11 +154,15 @@ function Clockwork.faction:IsModelValid(faction, gender, model)
 		local factionTable = Clockwork.faction:FindByID(faction)
 
 		if factionTable then
-			if table.HasValue(factionTable.models[string.lower(gender)], model) then
-				return true;
-			elseif factionTable.subfactions then
-				for i = 1, #factionTable.subfactions do
-					if table.HasValue(factionTable.subfactions[i].models[string.lower(gender)], model) then
+			for i, v in ipairs(factionTable.models[string.lower(gender)].heads) do
+				if string.find(model, v) then
+					return true;
+				end
+			end
+			
+			if factionTable.subfactions then
+				for i, v in ipairs(factionTable.subfactions[i].models[string.lower(gender)].heads) do
+					if string.find(model, v) then
 						return true;
 					end
 				end

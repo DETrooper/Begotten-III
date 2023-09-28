@@ -66,7 +66,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 							bloodLossPerLimb = bloodLossPerLimb * 0.5;
 						end
 						
-						if player.HasCharmEquipped and player:HasCharmEquipped("embalmed_heart") then
+						if player.GetCharmEquipped and player:GetCharmEquipped("embalmed_heart") then
 							bloodLossPerLimb = bloodLossPerLimb * 0.6;
 						end
 						
@@ -145,7 +145,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 									
 									if not hasInjury then
 										if math.random(1, 3) == 1 then
-											local clothesItem = player:GetClothesItem();
+											local clothesItem = player:GetClothesEquipped();
 											
 											if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "increased_regeneration") then
 												player:SetHealth(health + 3);
@@ -873,7 +873,7 @@ function cwMedicalSystem:PlayerLimbFallDamageTaken(player, amount)
 	end
 
 	if amount >= 25 then
-		if !player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("boot_contortionist") then
+		if !player.GetCharmEquipped or !player:GetCharmEquipped("boot_contortionist") then
 			local injuries = self:GetInjuries(player);
 			local bone_broken;
 			local both_bones_broken = false;

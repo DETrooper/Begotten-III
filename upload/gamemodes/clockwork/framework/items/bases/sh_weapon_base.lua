@@ -21,6 +21,8 @@ ITEM.breakable = true;
 ITEM.breakMessage = " shatters into pieces!";
 ITEM.repairItem = "weapon_repair_kit";
 ITEM.customFunctions = {"Engrave"};
+ITEM.slots = {"Primary", "Secondary", "Tertiary"};
+ITEM.equipmentSaveString = "weapons";
 
 local defaultWeapons = {
 	["weapon_357"] = {"357", nil, true},
@@ -126,6 +128,10 @@ function ITEM:CanHolsterWeapon(player, forceHolster, bNoMsg)
 	return true;
 end;
 
+function ITEM:HasPlayerEquipped(player)
+	return player:GetWeaponEquipped(self);
+end
+
 -- Called when the unequip should be handled.
 --[[function ITEM:OnHandleUnequip(Callback)
 	if (self.OnDrop) then
@@ -144,43 +150,71 @@ end;
 end;]]--
 
 -- Called when a player has unequipped the item.
---[[function ITEM:OnPlayerUnequipped(player, extraData)
-	local weapon = player:GetWeapon(self("weaponClass"));
-	if (!IsValid(weapon)) then return; end;
+function ITEM:OnPlayerUnequipped(player, extraData)
+	local weapon = player:GetWeapon(self.uniqueID);
 	
-	local itemTable = Clockwork.item:GetByWeapon(weapon);
-	
-	if (itemTable:IsTheSameAs(self)) then
-		local class = weapon:GetClass();
+	if weapon then
+		itemTable = item.GetByWeapon(weapon);
 		
-		if (extraData != "drop") then
-			if (Clockwork.plugin:Call("PlayerCanHolsterWeapon", player, self, weapon)) then
-				if (player:GiveItem(self)) then
-					Clockwork.plugin:Call("PlayerHolsterWeapon", player, self, weapon);
-					player:StripWeapon(class);
-					player:SelectWeapon("begotten_fists");
-				end;
-			end;
-		elseif (Clockwork.plugin:Call("PlayerCanDropWeapon", player, self, weapon)) then
-			local trace = player:GetEyeTraceNoCursor();
-			
-			if (player:GetShootPos():Distance(trace.HitPos) <= 192) then
-				local entity = Clockwork.entity:CreateItem(player, self, trace.HitPos);
-				
-				if (IsValid(entity)) then
-					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal);
-					Clockwork.plugin:Call("PlayerDropWeapon", player, self, entity, weapon);
+		if (SERVER) then
+			for k, v in pairs(player.equipmentSlots) do
+				if v and v.category == "Shields" then
+					if IsValid(weapon) and weapon:GetNWString("activeShield"):len() > 0 and weapon:GetNWString("activeShield") == v.uniqueID then
+						Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+						
+						break;
+					end
+				end
+			end
+		end
+	end
+	
+	if !itemTable then
+		itemTable = self;
+	end
 
-					player:TakeItem(self, true);
-					player:StripWeapon(class);
-					player:SelectWeapon("begotten_fists");
+	if (itemTable:IsTheSameAs(self)) then
+		if (extraData != "drop") then
+			player:SelectWeapon("begotten_fists")
+			player:StripWeapon(itemTable.weaponClass)
+
+			if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+				local useSound = itemTable("useSound");
+				
+				if (useSound) then
+					if (type(useSound) == "table") then
+						player:EmitSound(useSound[math.random(1, #useSound)]);
+					else
+						player:EmitSound(useSound);
+					end;
+				elseif (useSound != false) then
+					player:EmitSound("begotten/items/first_aid.wav");
 				end;
+			end
+
+			Clockwork.equipment:UnequipItem(player, self);
+		elseif (hook.Run("PlayerCanDropWeapon", player, self)) then
+			local trace = player:GetEyeTraceNoCursor()
+
+			if (player:GetShootPos():Distance(trace.HitPos) <= 192) then
+				local entity = Clockwork.entity:CreateItem(player, self, trace.HitPos)
+
+				if (IsValid(entity)) then		
+					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal)
+					hook.Run("PlayerDropWeapon", player, self, entity)
+
+					player:TakeItem(self, true)
+					player:SelectWeapon("begotten_fists")
+					player:StripWeapon(itemTable.weaponClass);
+
+					Clockwork.equipment:UnequipItem(player, self);
+				end
 			else
-				Schema:EasyText(player, "peru", "You cannot drop your weapon that far away!");
-			end;
-		end;
-	end;
-end;]]--
+				Schema:EasyText(player, "peru", "You cannot drop this item that far away.")
+			end
+		end
+	end
+end;
 
 -- A function to get whether the item has a secondary clip.
 function ITEM:HasSecondaryClip()
@@ -271,42 +305,7 @@ function ITEM:OnUse(player, itemEntity)
 	
 		player:Give(weaponClass, self);
 		
-		local weapon = player:GetWeapon(weaponClass);
-		
-		if (IsValid(weapon)) then
-			local weaponData = player.bgWeaponData or {}
-			local weaponDataTable = {};
-			
-			weaponDataTable.itemID = self.uniqueID.." "..self.itemID
-			weaponDataTable.uniqueID = self.uniqueID
-			weaponDataTable.realID = self.itemID
-			
-			local weaponAlreadyInTable = false;
-			
-			for i = 1, #weaponData do
-				if weaponData[i].uniqueID == weaponDataTable.uniqueID then
-					weaponAlreadyInTable = true;
-				end
-			end
-			
-			if weaponAlreadyInTable == false then
-				table.insert(weaponData, weaponDataTable);
-			end
-
-			Clockwork.datastream:Start(player, "BGWeaponData", weaponData);
-			Clockwork.player:SaveGear(player);
-			
-			player.bgWeaponData = weaponData;
-			
-			if (self.OnWeaponEquipped) then
-				self:OnWeaponEquipped(player, weapon);
-			end;
-		
-			return true;
-		else
-			--Schema:EasyText(player, "peru", "This weapon is not valid! Contact an admin.")
-			return false;
-		end;
+		return true;
 	else
 		local weapon = player:GetWeapon(weaponClass);
 		
@@ -333,17 +332,11 @@ function ITEM:OnEquip(player)
 		return false;
 	end
 
-	local slots = {"Primary", "Secondary", "Tertiary"};
-	--if (item.IsWeapon(self) and !self:IsFakeWeapon()) then
-		for i = 1, #slots do
-			if (!Clockwork.player:GetGear(player, slots[i])) then
-				Clockwork.player:CreateGear(player, slots[i], self);
-				player:RebuildInventory();
-				
-				return true;
-			end
+	for i, v in ipairs(self.slots) do
+		if !player.equipmentSlots[v] then
+			return Clockwork.equipment:EquipItem(player, self, v);
 		end
-	--end
+	end
 	
 	Schema:EasyText(player, "peru", "You do not have an open slot to equip this weapon in!")
 	return false;
@@ -424,27 +417,5 @@ end;
 
 -- Called when a player holsters the item.
 function ITEM:OnHolster(player, bForced) end;
-
-if (CLIENT) then
-	function ITEM:GetClientSideInfo()
-		if (!self:IsInstance()) then
-			return;
-		end;
-		
-		local clientSideInfo = "";
-		local clipOne = self:GetData("ClipOne");
-		local clipTwo = self:GetData("ClipTwo");
-		
-		if (clipOne > 0) then
-			clientSideInfo = Clockwork.kernel:AddMarkupLine(clientSideInfo, "Clip One: "..clipOne);
-		end;
-		
-		if (clipTwo > 0) then
-			clientSideInfo = Clockwork.kernel:AddMarkupLine(clientSideInfo, "Clip Two: "..clipTwo);
-		end;
-		
-		return (clientSideInfo != "" and clientSideInfo);
-	end;
-end;
 
 Clockwork.item:Register(ITEM);

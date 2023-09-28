@@ -228,10 +228,8 @@ end)
 Clockwork.BackgroundBlurs = Clockwork.BackgroundBlurs or {}
 Clockwork.RecognisedNames = Clockwork.RecognisedNames or {}
 Clockwork.NetworkProxies = Clockwork.NetworkProxies or {}
-Clockwork.AccessoryData = Clockwork.AccessoryData or {}
 Clockwork.InfoMenuOpen = Clockwork.InfoMenuOpen or false
 Clockwork.ColorModify = Clockwork.ColorModify or {}
-Clockwork.ClothesData = Clockwork.ClothesData or {}
 Clockwork.Cinematics = Clockwork.Cinematics or {}
 
 Clockwork.kernel.CenterHints = Clockwork.kernel.CenterHints or {}

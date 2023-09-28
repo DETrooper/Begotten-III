@@ -42,12 +42,12 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 				newAmount = newAmount + (amount * 0.5);
 			end
 			
-			if self.bgCharmData and self.HasCharmEquipped then
-				if faith == "Faith of the Light" and self:HasCharmEquipped("skull_saint") then
+			if self.GetCharmEquipped then
+				if faith == "Faith of the Light" and self:GetCharmEquipped("skull_saint") then
 					newAmount = newAmount + (amount * 0.25);
-				elseif faith == "Faith of the Family" and self:HasCharmEquipped("skull_animal") then
+				elseif faith == "Faith of the Family" and self:GetCharmEquipped("skull_animal") then
 					newAmount = newAmount + (amount * 0.25);
-				elseif faith == "Faith of the Dark" and self:HasCharmEquipped("skull_demon") then
+				elseif faith == "Faith of the Dark" and self:GetCharmEquipped("skull_demon") then
 					newAmount = newAmount + (amount * 0.25);
 				end
 			end

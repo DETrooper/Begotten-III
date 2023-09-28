@@ -137,13 +137,51 @@ function PANEL:Rebuild()
 	end
 	
 	local coin = Clockwork.player:GetCash() or 0;
+	local cycle;
 	local playerModel = Clockwork.Client:GetModel();
 	local playerSkin = Clockwork.Client:GetSkin();
 	local playerBodygroups = {Clockwork.Client:GetBodygroup(0), Clockwork.Client:GetBodygroup(1)};
+	local headModel;
 	local weapons = {};
 	local weapon1;
 	local weapon2;
 	local weapon3;
+	
+	if IsValid(self.characterModel) then
+		if IsValid(self.characterModel.modelPanel.Entity) then
+			cycle = self.characterModel.modelPanel.Entity:GetCycle();
+		end
+	end
+	
+	if string.find(playerModel, "models/begotten/heads") then
+		headModel = playerModel;
+		
+		local clothesItem = Clockwork.Client:GetClothesEquipped();
+		local factionTable = Clockwork.faction:FindByID(Clockwork.Client:GetFaction());
+		local gender = string.lower(Clockwork.Client:GetGender());
+
+		if clothesItem and clothesItem.group then
+			if clothesItem.genderless then
+				playerModel = "models/begotten/"..clothesItem.group..".mdl";
+			else
+				playerModel = "models/begotten/"..clothesItem.group.."_"..string.lower(gender)..".mdl";
+			end
+		elseif factionTable then
+			playerModel = factionTable.models[gender].clothes;
+		
+			local subfaction = Clockwork.Client:GetSharedVar("subfaction");
+			
+			if subfaction and factionTable.subfactions then
+				for i, v in ipairs(factionTable.subfactions) do
+					if v.models and v.name == subfaction then
+						playerModel = v.models[gender].clothes;
+						
+						break;
+					end
+				end
+			end
+		end
+	end
 	
 	self.coin:SetText(tostring(coin));
 	self.coin:SizeToContents();
@@ -299,30 +337,13 @@ function PANEL:Rebuild()
 				end
 				
 				if v2.category == "Throwables" or v2.category == "Weapons" or v2.category == "Melee" or v2.category == "Shields" or v2.category == "Firearms" or v2.category == "Javelins" or v2.category == "Lights" then
-					local slot_found = false;
-					
-					for i = 1, #slots do
-						local slot = slots[i];
+					for i, slot in ipairs(slots) do
+						local slottedItem = Clockwork.Client.equipmentSlots[slot];
 						
-						if Clockwork.player:GetGear(slot) then
-							if Clockwork.player:GetGear(slot) == v2.itemID then
-								equipmentPos = self.categoryLocations[slot];
-								self.categoryLocations[slot].occupier = equipmentIcon;
-								weapons[i] = v2;
-								slot_found = true;
-							end
-						end
-					end
-					
-					if not slot_found then
-						for i = 1, #slots do
-							local slot = slots[i];
-
-							if not self.categoryLocations[slot].occupier then
-								equipmentPos = self.categoryLocations[slot];
-								self.categoryLocations[slot].occupier = equipmentIcon;
-								weapons[i] = v2;
-							end
+						if slottedItem and slottedItem.itemID == v2.itemID then
+							equipmentPos = self.categoryLocations[slot];
+							self.categoryLocations[slot].occupier = equipmentIcon;
+							weapons[i] = v2;
 						end
 					end
 				elseif v2.category == "Charms" then	
@@ -875,13 +896,29 @@ function PANEL:Rebuild()
 		self.characterModel.weapon3 = weapon3;
 	end
 	
-	self.characterModel:SetModelNew(Clockwork.Client:GetModel(), Clockwork.Client:GetSkin());
+	self.characterModel:SetModelNew(playerModel);
 	
 	if IsValid(self.characterModel) then
 		if IsValid(self.characterModel.modelPanel.Entity) then
-			self.characterModel.modelPanel.Entity:SetBodygroup(0, playerBodygroups[1]);
-			self.characterModel.modelPanel.Entity:SetBodygroup(1, playerBodygroups[2]);
+			if headModel then
+				self.characterModel.modelPanel.headModel = ClientsideModel(headModel, RENDERGROUP_OPAQUE);
+				
+				if IsValid(self.characterModel.modelPanel.headModel) then
+					self.characterModel.modelPanel.headModel.noDelete = true;
+					self.characterModel.modelPanel.headModel:SetParent(self.characterModel.modelPanel.Entity);
+					self.characterModel.modelPanel.headModel:AddEffects(EF_BONEMERGE);
+					self.characterModel.modelPanel.headModel:SetBodygroup(0, playerBodygroups[1]);
+					self.characterModel.modelPanel.headModel:SetBodygroup(1, playerBodygroups[2]);
+					self.characterModel.modelPanel.headModel:SetSkin(Clockwork.Client:GetSkin() or 0);
+				end
+			else
+				self.characterModel.modelPanel.Entity:SetBodygroup(0, playerBodygroups[1]);
+				self.characterModel.modelPanel.Entity:SetBodygroup(1, playerBodygroups[2]);
+				self.characterModel.modelPanel.Entity:SetSkin(Clockwork.Client:GetSkin() or 0);
+			end
+			
 			self.characterModel.modelPanel.Entity:ResetSequence(self.characterModel.modelPanel.Entity:LookupSequence("idle_angry"));
+			self.characterModel.modelPanel.Entity:SetCycle(cycle or 0);
 		end
 
 		self.characterModel:SetVisible(true);
@@ -948,13 +985,14 @@ end;
 
 -- Called each frame.
 function PANEL:Think()
-	for k, v in pairs(Clockwork.Client:GetWeapons()) do
+	--[[for k, v in pairs(Clockwork.Client:GetWeapons()) do
 		local weaponItem = Clockwork.item:GetByWeapon(v);
+		
 		if (weaponItem and !v.cwIsWeaponItem) then
 			Clockwork.inventory:Rebuild();
 			v.cwIsWeaponItem = true;
 		end;
-	end;
+	end;]]--
 	
 	self:InvalidateLayout(true);
 end;

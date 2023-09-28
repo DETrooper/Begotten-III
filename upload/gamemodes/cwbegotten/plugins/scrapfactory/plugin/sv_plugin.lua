@@ -326,7 +326,7 @@ function cwScrapFactory:PlayerUse(player, entity)
 				
 				local duration = 5;
 				
-				if player.HasCharmEquipped and player:HasCharmEquipped("wrench") then
+				if player.GetCharmEquipped and player:GetCharmEquipped("wrench") then
 					duration = 1;
 				end
 				

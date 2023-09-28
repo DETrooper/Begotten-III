@@ -101,8 +101,8 @@ function playerMeta:TakeStability(amount, cooldown, bNoMe)
 			return;
 		end
 		
-		if self.bgCharmData and self.HasCharmEquipped then
-			if self:GetFaith() == "Faith of the Family" and self:HasCharmEquipped("effigy_earthing") then
+		if self.GetCharmEquipped then
+			if self:GetFaith() == "Faith of the Family" and self:GetCharmEquipped("effigy_earthing") then
 				amount = math.floor(amount * 0.75);
 				--printp("Earthing Effigy Reduction: "..amount);
 			end
@@ -113,7 +113,7 @@ function playerMeta:TakeStability(amount, cooldown, bNoMe)
 		end
 	
 		local armorClass;
-		local armorTable = self:GetClothesItem();
+		local armorTable = self:GetClothesEquipped();
 		
 		if armorTable then
 			armorClass = armorTable.weightclass;
@@ -296,7 +296,7 @@ function playerMeta:GetMaxStability()
 end;
 
 function playerMeta:GetArmorClass()
-	local armorTable = self:GetClothesItem();
+	local armorTable = self:GetClothesEquipped();
 	
 	if armorTable then
 		if (armorTable.weightclass) then

@@ -123,8 +123,11 @@ function PLUGIN:ModelWeaponRaised(player, model)
 end
 
 function PLUGIN:PlayerSwitchWeapon(player, oldWeapon, newWeapon)
--- do jack shit
---printp("jack")
+	local action = Clockwork.player:GetAction(player);
+	
+	if action == "raise" then
+		Clockwork.player:SetAction(player, nil);
+	end
 end
 
 function PLUGIN:PlayerSetupDataTables(player)

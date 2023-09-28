@@ -255,20 +255,6 @@ function playerMeta:IsWanted()
 	return self:GetSharedVar("bounty", 0) > 0;
 end;
 
-function playerMeta:HasCharmEquipped(uniqueID)
-	local charmData = self:GetNetVar("charms", {});
-	
-	if charmData then
-		for i, v in pairs(charmData) do
-			if v.uniqueID == uniqueID then
-				return true;
-			end
-		end
-	end
-	
-	return false;
-end
-
 Clockwork.datastream:Hook("ObjectPhysDesc", function(data)
 	local entity = data;
 	

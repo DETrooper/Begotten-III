@@ -14,79 +14,45 @@ ITEM.requireFaction = {};
 ITEM.requireSubfaction = {};
 ITEM.requireFaith = {};
 ITEM.excludeSubfactions = {};
-
--- Called to get whether a player has the item equipped.
-function ITEM:HasPlayerEquipped(player, bIsValidWeapon)
-	local backpackData = player.bgBackpackData or {}
-
-	if (CLIENT) then
-		backpackData = Clockwork.Client.bgBackpackData or {}
-	end
-
-	if (backpackData[1] and (backpackData[1].itemID == self.uniqueID.." "..self.itemID or backpackData[1].itemID == self.itemID)) then
-		return true
-	end
-
-	return false
-end
+ITEM.slots = {"Backpacks"};
+ITEM.equipmentSaveString = "backpack";
 
 -- Called when a player has unequipped the item.
 function ITEM:OnPlayerUnequipped(player, extraData)
-	local backpackData = player.bgBackpackData or {}
-	local useSound = self.useSound;
-
-	if (CLIENT) then
-		backpackData = Clockwork.Client.bgBackpackData or {}
-	end
-
-	if (backpackData[1] and (backpackData[1].itemID == self.uniqueID.." "..self.itemID or backpackData[1].itemID == self.itemID)) then
-		backpackData[1] = nil;
-	end
-
-	player.bgBackpackData = backpackData;
-	Clockwork.datastream:Start(player, "BGBackpackData", backpackData);
-
-	local temptab = {};
-
-	if backpackData[1] then
-		temptab[1] = {["uniqueID"] = backpackData[1].uniqueID, ["itemID"] = backpackData[1].itemID};
-	end
-	
-	if table.IsEmpty(temptab) then
-		player:SetCharacterData("backpacks", nil);
-		player:SetNetVar("backpacks", 0);
-	else
-		player:SetCharacterData("backpacks", temptab);
-		player:SetNetVar("backpacks", temptab);
-	end
-	
-	local maxWeight = player:GetMaxWeight();
+	if Clockwork.equipment:UnequipItem(player, self) then
+		local maxWeight = player:GetMaxWeight();
+		local useSound = self.useSound;
+			
+		player.cwInfoTable.inventoryWeight = maxWeight;
+		player.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
+		player.maxWeight = maxWeight;
 		
-	player.cwInfoTable.inventoryWeight = maxWeight;
-	player.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
-	player.maxWeight = maxWeight;
-	
-	player:SetNetVar("InvWeight", math.ceil(player.cwInfoTable.inventoryWeight))
-	
-	if player.cwInfoTable.inventorySpace then
-		player:SetNetVar("InvSpace", math.ceil(player.cwInfoTable.inventorySpace))
-	end
-	
-	if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
-		if (useSound) then
-			if (type(useSound) == "table") then
-				player:EmitSound(useSound[math.random(1, #useSound)]);
-			else
-				player:EmitSound(useSound);
+		player:SetNetVar("InvWeight", math.ceil(player.cwInfoTable.inventoryWeight))
+		
+		if player.cwInfoTable.inventorySpace then
+			player:SetNetVar("InvSpace", math.ceil(player.cwInfoTable.inventorySpace))
+		end
+		
+		if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+			if (useSound) then
+				if (type(useSound) == "table") then
+					player:EmitSound(useSound[math.random(1, #useSound)]);
+				else
+					player:EmitSound(useSound);
+				end;
+			elseif (useSound != false) then
+				player:EmitSound("begotten/items/first_aid.wav");
 			end;
-		elseif (useSound != false) then
-			player:EmitSound("begotten/items/first_aid.wav");
-		end;
+		end
+		
+		return true;
 	end
 	
-	if (Clockwork.player:GetGear(player, "Backpack")) then
-		Clockwork.player:RemoveGear(player, "Backpack");
-	end
+	return false;
+end
+
+function ITEM:HasPlayerEquipped(player)
+	return player:GetBackpackEquipped(self);
 end
 
 -- Called when a player drops the item.
@@ -170,55 +136,14 @@ function ITEM:OnUse(player, itemEntity)
 	end
 
 	if (player:Alive()) then
-		local backpackData = player.bgBackpackData or {}
-		local empty_slot_found = false;
+		local backpack = player:GetBackpackEquipped();
 		
-		if (CLIENT) then
-			backpackData = Clockwork.Client.bgBackpackData or {}
-		end
-		
-		for i = 1, #backpackData do
-			if backpackData[i] then
-				if backpackData[i].uniqueID == self.uniqueID then
-					if !player.spawning then
-						Schema:EasyText(player, "peru", "You already have a backpack of this type equipped!")
-					end
-					
-					return false
-				end
-			end
-		end
-		
-		if (!backpackData[1]) then
-			backpackData[1] = {};
-			backpackData[1].uniqueID = self.uniqueID;
-			backpackData[1].itemID = self.itemID;
-			empty_slot_found = true;
-		end
-		
-		if not empty_slot_found then
+		if backpack and backpack.uniqueID == self.uniqueID then
 			if !player.spawning then
-				Schema:EasyText(player, "peru", "You do not have an open slot to equip this backpack in!")
+				Schema:EasyText(player, "peru", "You already have a backpack of this type equipped!")
 			end
 			
-			return false;
-		end
-		
-		player.bgBackpackData = backpackData;
-		Clockwork.datastream:Start(player, "BGBackpackData", backpackData);
-
-		local temptab = {};
-		
-		if backpackData[1] then
-			temptab[1] = {["uniqueID"] = backpackData[1].uniqueID, ["itemID"] = backpackData[1].itemID};
-		end
-	
-		if table.IsEmpty(temptab) then
-			player:SetCharacterData("backpacks", nil);
-			player:SetNetVar("backpacks", 0);
-		else
-			player:SetCharacterData("backpacks", temptab);
-			player:SetNetVar("backpacks", temptab);
+			return false
 		end
 		
 		local maxWeight = player:GetMaxWeight();
@@ -233,9 +158,7 @@ function ITEM:OnUse(player, itemEntity)
 			player:SetNetVar("InvSpace", math.ceil(player.cwInfoTable.inventorySpace))
 		end
 		
-		if (!Clockwork.player:GetGear(player, "Backpack")) then
-			Clockwork.player:CreateGear(player, "Backpack", self);
-		end
+		Clockwork.equipment:EquipItem(player, self, "Backpacks")
 
 		return true
 	else
@@ -252,20 +175,4 @@ function ITEM:OnInstantiated()
 	--printp("FUCKED")
 end;
 
-if (CLIENT) then
-	function ITEM:GetClientSideInfo()
-		if (!self:IsInstance()) then return end
-
-		if (Clockwork.player:IsWearingItem(self)) then
-			return "Is wearing? Yes."
-		else
-			return "Is wearing? No."
-		end
-	end
-end
-
 ITEM:Register();
-
-Clockwork.datastream:Hook("BGBackpackData", function(data)
-	Clockwork.Client.bgBackpackData = data;
-end);

@@ -180,7 +180,7 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Satchel of Denial";
-	ITEM.model = "models/props_c17/lamp001a.mdl";
+	ITEM.model = "models/props_c17/briefcase001a.mdl";
 	ITEM.weight = 1;
 	ITEM.uniqueID = "satchel_denial";
 	ITEM.description = "A locked briefcase that appears to be in mint condition. It is warm to the touch.";

@@ -199,7 +199,7 @@ function Schema:PostSaveData()
 end;
 
 -- Called when a player attempts to drop a weapon.
-function GM:PlayerCanDropWeapon(player, itemTable, weapon, bNoMsg)
+function Schema:PlayerCanDropWeapon(player, itemTable, weapon, bNoMsg)
 	if (itemTable.isUnique) then
 		return false;
 	else
@@ -743,29 +743,6 @@ function Schema:PlayerAdjustDropWeaponInfo(player, info)
 	if (Clockwork.player:GetWeaponClass(player) == info.itemTable.weaponClass) then
 		info.position = player:GetShootPos();
 		info.angles = player:GetAimVector():Angle();
-	else
-		local gearTable = {
-			Clockwork.player:GetGear(player, "Primary"),
-			Clockwork.player:GetGear(player, "Secondary"),
-			Clockwork.player:GetGear(player, "Tertiary")
-		};
-		
-		for k, v in pairs(gearTable) do
-			if (IsValid(v)) then
-				local gearItemTable = v:GetItemTable();
-				
-				if (gearItemTable and gearItemTable.weaponClass == info.itemTable.weaponClass) then
-					local position, angles = v:GetRealPosition();
-					
-					if (position and angles) then
-						info.position = position;
-						info.angles = angles;
-						
-						break;
-					end;
-				end;
-			end;
-		end;
 	end;
 end;
 
@@ -786,17 +763,7 @@ function Schema:GetPlayerDefaultInventory(player, character, inventory)
 end;
 
 -- Called when a player's inventory item has been updated.
-function Schema:PlayerInventoryItemUpdated(player, itemTable, amount, force)
-	local clothes = player:GetCharacterData("clothes");
-	
-	if (clothes == itemTable.index) then
-		if (!player:HasItemByID(itemTable.uniqueID)) then
-			itemTable:OnChangeClothes(player, false);
-			
-			player:SetCharacterData("clothes", nil);
-		end;
-	end;
-end;
+function Schema:PlayerInventoryItemUpdated(player, itemTable, amount, force) end;
 
 -- Called when a player switches their flashlight on or off.
 function Schema:PlayerSwitchFlashlight(player, on)
@@ -894,7 +861,7 @@ function Schema:PlayerFootstep(player, position, foot, soundString, volume, reci
 			return true;
 		end;
 		
-		local clothesItem = player:GetClothesItem();
+		local clothesItem = player:GetClothesEquipped();
 		
 		if (clothesItem) then
 			if (running) then
@@ -1162,15 +1129,6 @@ function Schema:CanTool(player, trace, tool) end;
 -- Called when a player's shared variables should be set.
 function Schema:OnePlayerSecond(player, curTime, infoTable)
 	--player:SetNetVar("customClass", player:GetCharacterData("customclass", ""));
-	player:SetNetVar("clothes", player:GetCharacterData("clothes", 0));
-
-	--[[if (player:Alive() and !player:IsRagdolled() and player:GetVelocity():Length() > 0) then
-		local inventoryWeight = player:GetInventoryWeight();
-		
-		if (inventoryWeight >= player:GetMaxWeight() / 4) then
-			player:ProgressAttribute(ATB_STRENGTH, inventoryWeight / 400, true);
-		end;
-	end;]]--
 end;
 
 -- Called when an entity is created.
@@ -1596,7 +1554,7 @@ end;
 
 -- Called when a player closes a storage entity.
 function Schema:ClosedStorage(player, entity)
-	if player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+	if player:GetMoveType() == MOVETYPE_WALK and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 		self:CloseSound(entity, player);
 	end
 	
@@ -1618,7 +1576,7 @@ function Schema:PreOpenedContainer(player, entity)
 			return;
 		end;
 		
-		if player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+		if player:GetMoveType() == MOVETYPE_WALK and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 			self:OpenSound(entity, player);
 		end
 		
@@ -2163,13 +2121,6 @@ function Schema:PlayerDestroyGenerator(player, entity, generator) end;
 -- Called just before a player dies.
 function Schema:DoPlayerDeath(player, attacker, damageInfo)
 	if !player.opponent then
-		local clothes = player:GetCharacterData("clothes");
-		
-		if (clothes) then
-			player:GiveItem(Clockwork.item:CreateInstance(clothes));
-			player:SetCharacterData("clothes", nil);
-		end;
-		
 		if player:GetNetVar("tied") ~= 0 then
 			player:GiveItem(item.CreateInstance("bindings"));
 		end
@@ -2185,7 +2136,9 @@ function Schema:PlayerSilentDeath(player)
 	player.beingSearched = nil;
 	player.searching = nil;
 	
-	self:TiePlayer(player, false, true);
+	if (player:GetNetVar("tied") != 0) then
+		self:TiePlayer(player, false, true);
+	end
 end
 
 -- Called when a player dies.
@@ -2316,8 +2269,6 @@ function Schema:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 	local curTime = CurTime();
 	
 	if (!player.nextSpawnRun or player.nextSpawnRun < curTime) then
-		local clothes = player:GetCharacterData("clothes");
-		
 		if (!lightSpawn) then
 			Clockwork.datastream:Start(player, "ClearEffects", true);
 			player.beingSearched = nil;
@@ -2326,16 +2277,6 @@ function Schema:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 
 		if (player:GetNetVar("tied") != 0) then
 			self:TiePlayer(player, true);
-		end;
-		
-		if (clothes) then
-			local itemTable = Clockwork.item:FindByID(clothes);
-			
-			if (itemTable and player:HasItemByID(itemTable.uniqueID)) then
-				self:PlayerWearClothes(player, itemTable);
-			else
-				player:SetCharacterData("clothes", nil);
-			end;
 		end;
 		
 		if (!lightSpawn) then
@@ -2376,17 +2317,7 @@ function Schema:PlayerChangedZones(player, uniqueID)
 end;
 
 -- Called when a player spawns lightly.
-function Schema:PostPlayerLightSpawn(player, weapons, ammo, special)
-	local clothes = player:GetCharacterData("clothes");
-	
-	if (clothes) then
-		local itemTable = Clockwork.item:FindByID(clothes);
-		
-		if (itemTable) then
-			itemTable:OnChangeClothes(player, true);
-		end;
-	end;
-end;
+function Schema:PostPlayerLightSpawn(player, weapons, ammo, special) end;
 
 function Schema:PlayerCharacterLoaded(player)
 	netstream.Start(player, "GetZone", true);
@@ -2627,13 +2558,13 @@ function Schema:PlayerLimbTakeDamage(player, hitGroup, damage)
 end;
 
 function Schema:PostPlayerGiveToStorage(player, storageTable, itemTable)
-	if IsValid(player) and player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+	if IsValid(player) and player:GetMoveType() == MOVETYPE_WALK and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 		player:EmitSound("generic_ui/ui_llite_0"..tostring(math.random(1, 3))..".wav");
 	end
 end
 
 function Schema:PostPlayerTakeFromStorage(player, storageTable, itemTable)
-	if IsValid(player) and player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+	if IsValid(player) and player:GetMoveType() == MOVETYPE_WALK and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 		player:EmitSound("generic_ui/ui_llite_0"..tostring(math.random(1, 3))..".wav");
 	end
 end

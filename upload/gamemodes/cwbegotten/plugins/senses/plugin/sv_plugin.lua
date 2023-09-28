@@ -26,7 +26,7 @@ function playerMeta:SensesOn(bRightClick)
 	local senses = self:GetWeapon("cw_senses");
 
 	if (IsValid(senses) and self:Alive() and !self:IsRagdolled()) then
-		local clothesItem = self:GetClothesItem();
+		local clothesItem = self:GetClothesEquipped();
 		local nightVision = bRightClick and clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "night_vision");
 		local thermalVision = !bRightClick and clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "thermal_vision");
 		

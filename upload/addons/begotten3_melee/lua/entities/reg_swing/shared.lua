@@ -226,7 +226,7 @@ function ENT:PhysicsCollide(data, physobj)
 			else
 				-- For non-spears
 				if data.HitEntity:IsPlayer() and !data.HitEntity:GetNWBool("Guardening") and !data.HitEntity:GetNWBool("Parry") and !data.HitEntity:GetNWBool("Deflect") and !data.HitEntity.iFrames then
-					if owner.bgCharmData and owner.HasCharmEquipped and owner:HasCharmEquipped("ring_pugilist") and activeWeapon:GetClass() == "begotten_fists" then
+					if owner.GetCharmEquipped and owner:GetCharmEquipped("ring_pugilist") and activeWeapon:GetClass() == "begotten_fists" then
 						data.HitEntity:TakeStability(25);
 					else
 						data.HitEntity:TakeStability((attacktable["stabilitydamage"] * shield_reduction));

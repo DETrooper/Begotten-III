@@ -313,9 +313,6 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 	player1.opponent = player2;
 	player2.opponent = player1;
 	
-	player1.cachedWeaponData = table.Copy(player1:GetCharacterData("weapons", {}));
-	player2.cachedWeaponData = table.Copy(player2:GetCharacterData("weapons", {}));
-	
 	Schema:EasyText({player1, player2}, "icon16/shield_go.png", "forestgreen", "Duel Found!");
 	
 	player1:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.2);
@@ -455,7 +452,6 @@ function cwDueling:DuelAborted(player1, player2)
 							player1:SetEyeAngles(player1.cachedAngles);
 							
 							Clockwork.limb:RestoreLimbsFromCache(player1);
-							cwDueling:RestoreCachedWeaponData(player1);
 							
 							timer.Simple(0.1, function()
 								if IsValid(player1) then
@@ -489,7 +485,6 @@ function cwDueling:DuelAborted(player1, player2)
 							player2:SetEyeAngles(player2.cachedAngles);
 							
 							Clockwork.limb:RestoreLimbsFromCache(player2);
-							cwDueling:RestoreCachedWeaponData(player2);
 							
 							timer.Simple(0.1, function()
 								if IsValid(player2) then
@@ -550,7 +545,6 @@ function cwDueling:DuelAborted(player1, player2)
 							player1:SetEyeAngles(player1.cachedAngles);
 							
 							Clockwork.limb:RestoreLimbsFromCache(player1);
-							cwDueling:RestoreCachedWeaponData(player1);
 							
 							timer.Simple(0.1, function()
 								if IsValid(player1) then
@@ -611,7 +605,6 @@ function cwDueling:DuelAborted(player1, player2)
 							player2:SetEyeAngles(player2.cachedAngles);
 							
 							Clockwork.limb:RestoreLimbsFromCache(player2);
-							cwDueling:RestoreCachedWeaponData(player2);
 							
 							timer.Simple(0.1, function()
 								if IsValid(player2) then
@@ -679,7 +672,6 @@ function cwDueling:DuelCompleted(winner, loser)
 							winner:SetEyeAngles(winner.cachedAngles);
 							
 							Clockwork.limb:RestoreLimbsFromCache(winner);
-							cwDueling:RestoreCachedWeaponData(winner);
 							
 							timer.Simple(0.1, function()
 								if IsValid(winner) then
@@ -713,7 +705,6 @@ function cwDueling:DuelCompleted(winner, loser)
 							loser:SetEyeAngles(loser.cachedAngles);
 							
 							Clockwork.limb:RestoreLimbsFromCache(loser);
-							cwDueling:RestoreCachedWeaponData(loser);
 							
 							timer.Simple(0.1, function()
 								if IsValid(loser) then
@@ -799,7 +790,6 @@ function cwDueling:DuelCompleted(winner, loser)
 							winner:SetEyeAngles(winner.cachedAngles);
 							
 							Clockwork.limb:RestoreLimbsFromCache(winner);
-							--cwDueling:RestoreCachedWeaponData(winner);
 							
 							timer.Simple(0.1, function()
 								if IsValid(winner) then
@@ -882,7 +872,6 @@ function cwDueling:DuelCompleted(winner, loser)
 							loser:SetEyeAngles(loser.cachedAngles);
 							
 							Clockwork.limb:RestoreLimbsFromCache(loser);
-							cwDueling:RestoreCachedWeaponData(loser);
 							
 							timer.Simple(0.1, function()
 								if IsValid(loser) then
@@ -912,62 +901,3 @@ function cwDueling:DuelCompleted(winner, loser)
 		end
 	end
 end
-
-function cwDueling:RestoreCachedWeaponData(player)
-	player:UnequipWeapons();
-
-	if player.cachedWeaponData then
-		player:UnequipWeapons();
-
-		local weaponData = player.cachedWeaponData;
-		
-		if #weaponData > 0 then
-			local shield_weapon_equipped = false;
-			
-			for i = 1, #weaponData do
-				if weaponData[i].uniqueID and weaponData[i].itemID then
-					local weaponItem = Clockwork.inventory:FindItemByID(player:GetInventory(), weaponData[i].uniqueID, weaponData[i].itemID);
-					
-					if weaponItem then
-						if not weaponItem:HasPlayerEquipped(player) then
-							if i > 1 then
-								timer.Simple(0.1 * (i - 1), function()
-									if IsValid(player) then
-										Clockwork.item:Use(player, weaponItem, true);
-										weaponFound = true;
-									end
-								end)
-								
-								timer.Simple(0.5, function()
-									Clockwork.player:SaveGear(player);
-								end);
-							else
-								Clockwork.item:Use(player, weaponItem, true);
-								weaponFound = true;
-							end
-						else
-							--[[local weaponClass = weaponItem.uniqueID;
-
-							if player.bgShieldData and not table.IsEmpty(player.bgShieldData) and !shield_weapon_equipped then
-								if weaponItem.shields and table.HasValue(weaponItem.shields, player.bgShieldData.uniqueID) then
-									shield_weapon_equipped = true;
-									weaponClass = weaponClass.."_"..player.bgShieldData.uniqueID;
-									weaponFound = true;
-								end
-							end
-							
-							player:Give(weaponClass, weaponItem);]]--
-						end
-					end
-				end
-			end
-		end
-	end
-end
-
---[[
-	other thoughts: maybe check for death by trigger_hurt in playerdeath, why idk but it might be useful to determine how a player died in the arena. maybe we could have a global ooc thing stating who won a duel, might be a reason in itself for some cocky players to try the system out.
-	definitely not a fan of using so many loops to find stuff. we can definitely use global variables in a lot of these cases. using PlayerDisconnected is going to be vital, as it's one of two ways many players will attempt to escape a duel they're losing
-	maybe players who attempt to switch characters mid fight should be pked and have their characters deleted for being a pussy. changing characters is a very deliberate action that requires at least 3 button presses, so it's safe to say anyone who is dueling and also attempts to switch characters is meaning to do so maliciously
-	PlayerCanSwitchCharacter is going to need tons of checks to make sure that the player is actually still fighting, however. my fear in doing something so drastic in that hook is that something will just fail to reset and then the character will try to switch after the duel is complete and end up losing their character. this ins't a reason to not do the PK idea for sore losers, but more a reason to make sure whatever methods we use to get the status of a player's duel are robust and reliable 100% of the time.
---]]

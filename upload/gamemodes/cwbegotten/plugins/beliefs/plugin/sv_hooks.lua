@@ -963,7 +963,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 				chance = chance + 10;
 			end
 			
-			if entity.bgCharmData and entity.HasCharmEquipped and entity:HasCharmEquipped("ring_distorted") then
+			if entity.GetCharmEquipped and entity:GetCharmEquipped("ring_distorted") then
 				chance = chance + 5;
 			end
 			
@@ -993,19 +993,19 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			
 			if attackerWeapon then
 				if attackerWeapon.Base == "sword_swepbase" then -- Melee
-					if attacker.bgCharmData then
+					if attacker:GetCharmEquipped() then
 						if attackerWeapon:GetClass() == "begotten_fists" then
 							if IsValid(damageInfo:GetInflictor()) and damageInfo:GetInflictor().isJavelin then
 								-- nothing
 							else
-								if attacker:HasCharmEquipped("ring_pugilist") then
+								if attacker:GetCharmEquipped("ring_pugilist") then
 									-- AP handled in clothes sv_plugin
 									newDamage = newDamage + (originalDamage * 3);
 								end
 							end
 						end
 						
-						if attacker:HasCharmEquipped("ring_fire") then
+						if attacker:GetCharmEquipped("ring_fire") then
 							if math.random(1, 100 / 5) == 1 then
 								if originalDamage > 0 and !entity.poisonTicks then
 									local ignition_time = 3;
@@ -1092,7 +1092,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					end
 					
 					if entity:IsPlayer() and (attackerWeapon.isElectric or (attackerWeapon.isVoltistWeapon and attacker:HasBelief("the_storm"))) then
-						local clothesItem = entity:GetClothesItem();
+						local clothesItem = entity:GetClothesEquipped();
 						
 						if clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate") then
 							if clothesItem.weightclass == "Light" then
@@ -1122,33 +1122,27 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 									
 									if entity:Health() - newDamage < 10 then
 										if not entity.opponent then
-											if entity.bgCharmData then
-												for i = 1, #entity.bgCharmData do
-													if entity.bgCharmData[i] and entity.bgCharmData[i].uniqueID == "ring_distorted" then
-														local itemTable = item.FindInstance(entity.bgCharmData[i].itemID)
-														
-														if itemTable then
-															itemTable:OnPlayerUnequipped(entity);
-															entity:TakeItem(itemTable, true);
-															entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
-															
-															for k, v in pairs(ents.FindInSphere(entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
-																if v:IsPlayer() then
-																	Clockwork.chatBox:Add(v, attacker, "me", "efficiently strikes out at a pressure point of "..Clockwork.player:FormatRecognisedText(v, "%s", entity)..", but their dagger is deflected at the last moment by an invisible force!");
-																end
-															end
-															
-															Clockwork.player:Notify(entity, "Your Distorted Ring shatters and releases a tremendous amount of energy, giving you one last chance at life!");
-															
-															if cwMedicalSystem then
-																entity.nextBleedPoint = CurTime() + 180;
-															end
-															
-															damageInfo:SetDamage(entity:Health() - 10);
-															return;
-														end
+											local itemTable = entity:GetCharmEquipped("ring_distorted");
+											
+											if itemTable then
+												itemTable:OnPlayerUnequipped(entity);
+												entity:TakeItem(itemTable, true);
+												entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
+												
+												for k, v in pairs(ents.FindInSphere(entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
+													if v:IsPlayer() then
+														Clockwork.chatBox:Add(v, attacker, "me", "efficiently strikes out at a pressure point of "..Clockwork.player:FormatRecognisedText(v, "%s", entity)..", but their dagger is deflected at the last moment by an invisible force!");
 													end
 												end
+												
+												Clockwork.player:Notify(entity, "Your Distorted Ring shatters and releases a tremendous amount of energy, giving you one last chance at life!");
+												
+												if cwMedicalSystem then
+													entity.nextBleedPoint = CurTime() + 180;
+												end
+												
+												damageInfo:SetDamage(entity:Health() - 10);
+												return;
 											end
 										end
 									end
@@ -1186,7 +1180,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					end
 					
 					if entity:IsPlayer() and (attackerWeapon.isElectric or (attackerWeapon.isVoltistWeapon and attacker:HasBelief("the_storm"))) then
-						local clothesItem = entity:GetClothesItem();
+						local clothesItem = entity:GetClothesEquipped();
 						
 						if clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate") then
 							if clothesItem.weightclass == "Light" then
@@ -1281,21 +1275,17 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					end
 				end
 				
-				if entity.bgCharmData then
-					if entity:HasCharmEquipped("smoldering_head") then
-						newDamage = newDamage - (originalDamage * 0.5);
-					end
+				if entity:GetCharmEquipped("smoldering_head") then
+					newDamage = newDamage - (originalDamage * 0.5);
 				end
 			end
 		
-			if entity.bgCharmData then
-				if entity:HasCharmEquipped("ring_protection_gold") then
-					newDamage = newDamage - (originalDamage * 0.15);
-				elseif entity:HasCharmEquipped("ring_protection_silver") then
-					newDamage = newDamage - (originalDamage * 0.10);
-				elseif entity:HasCharmEquipped("ring_protection_bronze") then
-					newDamage = newDamage - (originalDamage * 0.05);
-				end
+			if entity:GetCharmEquipped("ring_protection_gold") then
+				newDamage = newDamage - (originalDamage * 0.15);
+			elseif entity:GetCharmEquipped("ring_protection_silver") then
+				newDamage = newDamage - (originalDamage * 0.10);
+			elseif entity:GetCharmEquipped("ring_protection_bronze") then
+				newDamage = newDamage - (originalDamage * 0.05);
 			end
 		end
 		
@@ -1312,28 +1302,22 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	
 	if entity:Health() - damage < 10 then
 		if not entity.opponent then
-			if entity.bgCharmData then
-				for i = 1, #entity.bgCharmData do
-					if entity.bgCharmData[i] and entity.bgCharmData[i].uniqueID == "ring_distorted" then
-						if !cwRituals or (cwRituals and !entity.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then	
-							local itemTable = item.FindInstance(entity.bgCharmData[i].itemID)
-							
-							if itemTable then
-								itemTable:OnPlayerUnequipped(entity);
-								entity:TakeItem(itemTable, true);
-								entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
-								
-								Clockwork.player:Notify(entity, "Your Distorted Ring shatters and releases a tremendous amount of energy, giving you one last chance at life!");
-								
-								if cwMedicalSystem then
-									entity.nextBleedPoint = CurTime() + 180;
-								end
-								
-								damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
-								return;
-							end
-						end
+			local itemTable = entity:GetCharmEquipped("ring_distorted");
+			
+			if itemTable then
+				if !cwRituals or (cwRituals and !entity.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then	
+					itemTable:OnPlayerUnequipped(entity);
+					entity:TakeItem(itemTable, true);
+					entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
+					
+					Clockwork.player:Notify(entity, "Your Distorted Ring shatters and releases a tremendous amount of energy, giving you one last chance at life!");
+					
+					if cwMedicalSystem then
+						entity.nextBleedPoint = CurTime() + 180;
 					end
+					
+					damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
+					return;
 				end
 			end
 		end
@@ -1502,20 +1486,14 @@ function cwBeliefs:GetMaxStamina(player, max_stamina)
 	if player:GetCharacterData("isDemon", false) then
 		new_stamina = 1000
 	else
-		local charmData = player:GetCharacterData("charms");
-		
 		if player:HasTrait("winded") then
 			new_stamina = new_stamina - 25;
 		elseif player:HasBelief("outlasting") then
 			new_stamina = new_stamina + 25;
 		end
 		
-		if charmData then
-			for i = 1, #charmData do
-				if charmData[i] and charmData[i].uniqueID == "ring_courier" then
-					new_stamina = new_stamina + 25;
-				end
-			end
+		if player:GetCharmEquipped("ring_courier") then
+			new_stamina = new_stamina + 25;
 		end
 	end
 	
@@ -1534,7 +1512,7 @@ function cwBeliefs:PlayerAdjustMaxWeight(player, weight)
 		new_weight = new_weight + (weight * 0.5);
 	end
 	
-	if player.HasCharmEquipped and player:HasCharmEquipped("spine_soldier") then
+	if player.GetCharmEquipped and player:GetCharmEquipped("spine_soldier") then
 		new_weight = new_weight + (weight * 0.25);
 	end
 	
@@ -1584,7 +1562,7 @@ function cwBeliefs:LockpickingStarted(player, container)
 end
 
 function cwBeliefs:ModifyPlayerSpeed(player, infoTable)
-	local clothesItem = player:GetClothesItem();
+	local clothesItem = player:GetClothesEquipped();
 	local curTime = CurTime();
 	
 	-- If poisioned give movement debuffs.

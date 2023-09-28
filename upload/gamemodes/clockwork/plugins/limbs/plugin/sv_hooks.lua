@@ -83,12 +83,12 @@ function cwLimbs:CalculatePlayerDamage(player, hitGroup, damageInfo)
 		end
 		
 		if player:HasBelief("iron_bones") then
-			if player.bgCharmData and player.HasCharmEquipped and player:HasCharmEquipped("effigy_human") then
+			if player.GetCharmEquipped and player:GetCharmEquipped("effigy_human") then
 				damage = damage * 0.25;
 			else
 				damage = damage * 0.75;
 			end
-		elseif player.bgCharmData and player.HasCharmEquipped and player:HasCharmEquipped("effigy_human") then
+		elseif player.GetCharmEquipped and player:GetCharmEquipped("effigy_human") then
 			damage = damage * 0.5;
 		end
 		

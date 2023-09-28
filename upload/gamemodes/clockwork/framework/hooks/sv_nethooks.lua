@@ -379,6 +379,7 @@ netstream.Hook("UnequipItem", function(player, data)
 			return;
 		end
 	end
+	
 	local itemTable = player:FindItemByID(uniqueID, itemID)
 
 	if (!itemTable) then
@@ -388,8 +389,8 @@ netstream.Hook("UnequipItem", function(player, data)
 	if (itemTable and itemTable.OnPlayerUnequipped and itemTable.HasPlayerEquipped) then
 		if (itemTable:HasPlayerEquipped(player, arguments)) then
 			itemTable:OnPlayerUnequipped(player, arguments)
+			--player:SetWeaponRaised(false)
 			
-			player:SetWeaponRaised(false)
 			player:RebuildInventory()
 		end
 	end

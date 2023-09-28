@@ -13,6 +13,8 @@ ITEM.breakable = true;
 ITEM.breakMessage = " shatters into pieces!";
 ITEM.repairItem = "weapon_repair_kit";
 ITEM.customFunctions = {"Engrave"};
+ITEM.slots = {"Primary", "Secondary", "Tertiary"};
+ITEM.equipmentSaveString = "weapons";
 
 ITEM:AddData("engraving", "", true);
 
@@ -79,33 +81,18 @@ end;
 
 -- Called when a player has unequipped the item.
 function ITEM:OnPlayerUnequipped(player, extraData)
-	local shieldData = player.bgShieldData or {}
-
-	Clockwork.datastream:Start(player, "BGShieldData", nil);
-	Clockwork.player:SaveGear(player);
-	
-	player.bgShieldData = {};
-
 	for k, v in pairs(player:GetWeapons()) do
 		if v:GetNWString("activeShield"):len() > 0 then
 			v:HolsterShield();
 		end
 	end
 	
-	local gearPrimary = Clockwork.player:GetGear(player, "Primary");
-	local gearSecondary = Clockwork.player:GetGear(player, "Secondary");
-	local gearTertiary = Clockwork.player:GetGear(player, "Tertiary");
-	
-	if IsValid(gearPrimary) and gearPrimary:GetItemTable().uniqueID == self.uniqueID then
-		Clockwork.player:RemoveGear(player, "Primary");
-	elseif IsValid(gearSecondary) and gearSecondary:GetItemTable().uniqueID == self.uniqueID then
-		Clockwork.player:RemoveGear(player, "Secondary");
-	elseif IsValid(gearTertiary) and gearTertiary:GetItemTable().uniqueID == self.uniqueID then
-		Clockwork.player:RemoveGear(player, "Tertiary");
-	end
-
-	return true
+	return Clockwork.equipment:UnequipItem(player, self);
 end;
+
+function ITEM:HasPlayerEquipped(player)
+	return player:GetShieldEquipped(self);
+end
 
 function ITEM:OnEquip(player)
 	if self:IsBroken() then
@@ -113,13 +100,9 @@ function ITEM:OnEquip(player)
 		return false;
 	end
 
-	local slots = {"Primary", "Secondary", "Tertiary"};
-	
-	for i = 1, #slots do
-		if (!Clockwork.player:GetGear(player, slots[i])) then
-			Clockwork.player:CreateGear(player, slots[i], self);
-			
-			return true;
+	for i, v in ipairs(self.slots) do
+		if !player.equipmentSlots[v] then
+			return Clockwork.equipment:EquipItem(player, self, v);
 		end
 	end
 	
@@ -153,61 +136,32 @@ function ITEM:OnUse(player, itemEntity)
 		end
 	end
 	
-	local shieldData = player.bgShieldData or {}
-	local gearPrimary = Clockwork.player:GetGear(player, "Primary");
-	local gearSecondary = Clockwork.player:GetGear(player, "Secondary");
-	local gearTertiary = Clockwork.player:GetGear(player, "Tertiary");
-	local suitable_melee = nil;
-	
-	if (self:HasPlayerEquipped(player)) or (IsValid(gearPrimary) and gearPrimary:GetItemTable().category == "Shields") or (IsValid(gearSecondary) and gearSecondary:GetItemTable().category == "Shields") or (IsValid(gearTertiary) and gearTertiary:GetItemTable().category == "Shields") then
+	if (self:HasPlayerEquipped(player)) then
 		Schema:EasyText(player, "peru", "You already have a shield equipped!")
 		return false;
 	end
 	
-	if (!IsValid(gearPrimary) and !IsValid(gearSecondary) and !IsValid(gearTertiary)) then
-		Schema:EasyText(player, "chocolate", "You must equip a suitable weapon to use with this shield!");
+	-- The first found suitable weapon will be the one considered the weapon that will be given a shield.
+	for i, v in ipairs(self.slots) do
+		local meleeItem = player.equipmentSlots[v];
+		
+		if meleeItem and meleeItem.canUseShields then
+			suitable_melee = meleeItem.itemID;
+			
+			break;
+		end
+	end
+
+	if not suitable_melee then
+		Schema:EasyText(player, "chocolate", "You do not have a suitable melee weapon equipped for use with this shield!");
+		
 		return false;
-	else
-		-- The first found suitable weapon will be the one considered the weapon that will be given a shield.
-		
-		if IsValid(gearPrimary) then
-			local gearPrimaryItem = gearPrimary:GetItemTable();
-
-			if gearPrimaryItem and gearPrimaryItem.canUseShields then
-				suitable_melee = gearPrimaryItem.itemID;
-			end
-		end
-		
-		if not suitable_melee then
-			if IsValid(gearSecondary) then
-				local gearSecondaryItem = gearSecondary:GetItemTable();
-
-				if gearSecondaryItem and gearSecondaryItem.canUseShields then
-					suitable_melee = gearSecondaryItem.itemID;
-				end
-			end
-		end
-		
-		if not suitable_melee then
-			if IsValid(gearTertiary) then
-				local gearTertiaryItem = gearTertiary:GetItemTable();
-					
-				if gearTertiaryItem and gearTertiaryItem.canUseShields then
-					suitable_melee = gearTertiaryItem.itemID;
-				end
-			end
-		end
-		
-		if not suitable_melee then
-			Schema:EasyText(player, "chocolate", "You do not have a suitable melee weapon equipped for use with this shield!");
-			return false;
-		end
 	end
 
 	local weaponItemFound = false;
 	
 	for k, v in pairs(player:GetWeapons()) do
-		local itemTable = item.GetByWeapon(v)
+		local itemTable = item.GetByWeapon(v);
 
 		if itemTable then
 			if itemTable.itemID == suitable_melee then
@@ -219,27 +173,13 @@ function ITEM:OnUse(player, itemEntity)
 							return false;
 						end
 					end;
-				
-					shieldData.itemID = self.uniqueID.." "..self.itemID
-					shieldData.uniqueID = self.uniqueID
-					shieldData.realID = self.itemID
-					
-					Clockwork.datastream:Start(player, "BGShieldData", shieldData)
-
-					player.bgShieldData = shieldData;
-					
-					--player:StripWeapon(itemTable.uniqueID);
-					--player:Give(itemTable("weaponClass").."_"..self.uniqueID, itemTable);
 					
 					v:EquipShield(self.uniqueID);
 					
 					if not player.cwWakingUp then
-						--player:SelectWeapon(itemTable("weaponClass").."_"..self.uniqueID);
 						player:SelectWeapon(itemTable("weaponClass"));
 					end
-					
-					Clockwork.player:SaveGear(player);
-					
+
 					return true;
 				end
 			end
@@ -247,48 +187,7 @@ function ITEM:OnUse(player, itemEntity)
 	end
 	
 	if not weaponItemFound then
-		-- Search again for any suitable weapon.
-		for k, v in pairs(player:GetWeapons()) do
-			local itemTable = item.GetByWeapon(v)
-
-			if itemTable then
-				weaponItemFound = true;
-				
-				if itemTable.canUseShields then
-					if (self.OnEquip) then
-						if self:OnEquip(player) == false then
-							return false;
-						end
-					end;
-					
-					shieldData.itemID = self.uniqueID.." "..self.itemID
-					shieldData.uniqueID = self.uniqueID
-					shieldData.realID = self.itemID
-					
-					Clockwork.datastream:Start(player, "BGShieldData", shieldData)
-					
-					player.bgShieldData = shieldData;
-					
-					--player:StripWeapon(itemTable.uniqueID);
-					--player:Give(itemTable("weaponClass").."_"..self.uniqueID, itemTable);
-					
-					if not player.cwWakingUp then
-						--player:SelectWeapon(itemTable("weaponClass").."_"..self.uniqueID);
-						player:SelectWeapon(itemTable("weaponClass"));
-					end
-					
-					Clockwork.player:SaveGear(player);
-					
-					return true;
-				end
-			end
-		end
-	
-		if not weaponItemFound then
-			Schema:EasyText(player, "peru", "Your currently equipped weapons cannot be used with this shield!");
-		else
-			Schema:EasyText(player, "chocolate", "You must equip a suitable weapon to use with this shield!");
-		end
+		Schema:EasyText(player, "peru", "Your currently equipped weapons cannot be used with this shield!");
 	else
 		Schema:EasyText(player, "chocolate", "You must equip a suitable weapon to use with this shield!");
 	end
@@ -301,82 +200,7 @@ function ITEM:OnRepair(player, itemEntity)
 	return true;
 end
 
--- Called when a player drops the item.
-function ITEM:OnDrop(player, position)
-	local shieldData = player.bgShieldData or {}
-
-	if (self:HasPlayerEquipped(player)) then
-		Clockwork.datastream:Start(player, "BGShieldData", nil);
-		Clockwork.player:SaveGear(player);
-
-		player.bgShieldData = {};
-	end
-	
-	return true
-end;
-
--- Called when a player attempts to sell the item to salesman.
-function ITEM:CanSell(player)
-	local shieldData = player.bgShieldData or {}
-
-	if (self:HasPlayerEquipped(player)) then
-		Clockwork.datastream:Start(player, "BGShieldData", nil);
-		Clockwork.player:SaveGear(player);
-
-		player.bgShieldData = {};
-	end
-
-	return true
-end
-
--- Called when a player attempts to give the item to storage.
-function ITEM:CanGiveStorage(player, storageTable)
-	local shieldData = player.bgShieldData or {}
-
-	if (self:HasPlayerEquipped(player)) then
-		Clockwork.datastream:Start(player, "BGShieldData", nil);
-		Clockwork.player:SaveGear(player);
-
-		player.bgShieldData = {};
-	end
-
-	return true
-end
-
 -- Called when a player holsters the item.
 function ITEM:OnHolster(player, bForced) end
-
--- Called to get whether a player has the item equipped.
-function ITEM:HasPlayerEquipped(player, bIsValidWeapon)
-	--[[local shieldData = player.bgShieldData or {}
-
-	if (CLIENT) then
-		shieldData = Clockwork.Client.bgshieldData or {}
-	end
-
-	if (shieldData and shieldData.uniqueID == self.uniqueID) then
-		return true
-	end]]--
-	
-	local slots = {"Primary", "Secondary", "Tertiary"};
-	
-	if (CLIENT) then
-		for i = 1, #slots do
-			if Clockwork.player:GetGear(slots[i]) == self.itemID then
-				return true;
-			end
-		end
-	else
-		for i = 1, #slots do
-			if Clockwork.player:GetGear(player, slots[i]) then
-				if Clockwork.player:GetGear(player, slots[i]):GetItemTable().itemID == self.itemID then
-					return true;
-				end
-			end
-		end
-	end
-
-	return false
-end
 
 Clockwork.item:Register(ITEM);

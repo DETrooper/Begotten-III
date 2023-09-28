@@ -54,7 +54,7 @@ ITEM.category = "Armor"
 ITEM.weight = 2;
 ITEM.description = "A fur cloak traditionally worn by Goreic seafaring raiders. It has no protective value.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.requireFaction = {"Goreic Warrior"};
+ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
 
 ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide", "cloth"}};
 
@@ -116,7 +116,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A crude set of chainmail over leather and fur garb, it provides adequate protection from enemy weapons and the elements.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior"};
+ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
 ITEM.excludeSubfactions = {"Clan Grock"};
 
 ITEM.effectiveLimbs = {
@@ -309,7 +309,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "Leather armor commonly worn by warriors of Clan Gore. It provides a reasonable degree of protection while not compromising mobility.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.requireFaction = {"Goreic Warrior"};
+ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -348,7 +348,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A sleeveless chainmail set over leather garb, stylized in Clan Haralder's fashion. The patchwork leather smells of the sea.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior"};
+ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
 ITEM.excludeSubfactions = {"Clan Grock"};
 
 ITEM.effectiveLimbs = {
@@ -522,23 +522,20 @@ ITEM.model = "models/begotten/headgroups_props/gorescalearmor.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/chosenarmor.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
-ITEM.hasHelmet = true;
 ITEM.hitParticle = "MetalSpark";
 ITEM.protection = 80;
 ITEM.weight = 9;
 ITEM.weightclass = "Heavy";
 ITEM.type = "chainmail";
-ITEM.description = "Fine steel scale armor and helm decorated with brass Familial sigils. It is armor that boasts the approval of both the Gods and the King.";
+ITEM.description = "Shagalaxian steel scale armor decorated with brass Familial sigils. It is armor that boasts the approval of both the Gods and the King.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Goreic Warrior"};
 ITEM.excludeSubfactions = {"Clan Grock", "Clan Reaver"};
-ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 
 ITEM.requiredbeliefs = {"hauberk"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
-	[HITGROUP_HEAD] = true,
 	[HITGROUP_CHEST] = true,
 	[HITGROUP_STOMACH] = true,
 	[HITGROUP_LEFTARM] = true,

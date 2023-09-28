@@ -51,18 +51,18 @@ function playerMeta:HandleNeed(need, amount)
 					amount = (amount / 2);
 				end
 			elseif need == "corruption" then
-				local clothesItem = self:GetClothesItem();
+				local clothesItem = self:GetClothesEquipped();
 				
 				if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "mothers_blessing") then
 					amount = amount * 0.5;
 				end
 			
-				if self.HasCharmEquipped then
-					if self:HasCharmEquipped("crucifix") then
+				if self.GetCharmEquipped then
+					if self:GetCharmEquipped("crucifix") then
 						amount = amount * 0.75;
 					end
 					
-					if self:HasCharmEquipped("warding_talisman") then
+					if self:GetCharmEquipped("warding_talisman") then
 						amount = amount * 0.5;
 					end
 				end

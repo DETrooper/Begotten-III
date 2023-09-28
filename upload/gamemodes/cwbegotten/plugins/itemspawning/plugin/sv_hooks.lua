@@ -362,7 +362,7 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 			chance = chance + 5;
 		end
 		
-		if player.bgCharmData and player.HasCharmEquipped and player:HasCharmEquipped("thiefs_hand") then
+		if player.GetCharmEquipped and player:GetCharmEquipped("thiefs_hand") then
 			chance = chance + 5;
 		end
 		

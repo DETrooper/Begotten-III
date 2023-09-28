@@ -14,6 +14,8 @@ ITEM.breakable = true;
 ITEM.breakMessage = " breaks into pieces!";
 ITEM.repairItem = "firearm_repair_kit";
 ITEM.customFunctions = {"Engrave"};
+ITEM.slots = {"Primary", "Secondary", "Tertiary"};
+ITEM.equipmentSaveString = "weapons";
 
 -- Firearm specific shit.
 ITEM.usesMagazine = false;
@@ -87,6 +89,10 @@ function ITEM:Engrave(player, text, engravingItemTable)
 	end;
 end;
 
+function ITEM:HasPlayerEquipped(player)
+	return player:GetWeaponEquipped(self);
+end
+
 if (SERVER) then
 	function ITEM:OnCustomFunction(player, name)
 		if (name == "Engrave") then
@@ -151,43 +157,114 @@ end;
 end;]]--
 
 -- Called when a player has unequipped the item.
---[[function ITEM:OnPlayerUnequipped(player, extraData)
-	local weapon = player:GetWeapon(self("weaponClass"));
-	if (!IsValid(weapon)) then return; end;
+function ITEM:OnPlayerUnequipped(player, extraData)
+	local weapon = player:GetWeapon(self.uniqueID);
 	
-	local itemTable = Clockwork.item:GetByWeapon(weapon);
-	
-	if (itemTable:IsTheSameAs(self)) then
-		local class = weapon:GetClass();
+	if weapon then
+		itemTable = item.GetByWeapon(weapon);
 		
-		if (extraData != "drop") then
-			if (Clockwork.plugin:Call("PlayerCanHolsterWeapon", player, self, weapon)) then
-				if (player:GiveItem(self)) then
-					Clockwork.plugin:Call("PlayerHolsterWeapon", player, self, weapon);
-					player:StripWeapon(class);
-					player:SelectWeapon("begotten_fists");
-				end;
-			end;
-		elseif (Clockwork.plugin:Call("PlayerCanDropWeapon", player, self, weapon)) then
-			local trace = player:GetEyeTraceNoCursor();
-			
-			if (player:GetShootPos():Distance(trace.HitPos) <= 192) then
-				local entity = Clockwork.entity:CreateItem(player, self, trace.HitPos);
-				
-				if (IsValid(entity)) then
-					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal);
-					Clockwork.plugin:Call("PlayerDropWeapon", player, self, entity, weapon);
+		if (SERVER) then
+			for k, v in pairs(player.equipmentSlots) do
+				if v and v.category == "Shields" then
+					if IsValid(weapon) and weapon:GetNWString("activeShield"):len() > 0 and weapon:GetNWString("activeShield") == v.uniqueID then
+						Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+						
+						break;
+					end
+				end
+			end
+		end
+	end
+	
+	if !itemTable then
+		itemTable = self;
+	end
 
-					player:TakeItem(self, true);
-					player:StripWeapon(class);
-					player:SelectWeapon("begotten_fists");
+	if (itemTable:IsTheSameAs(self)) then
+		if (extraData == "unload") then
+			local ammo = itemTable:GetData("Ammo");
+			
+			if ammo and #ammo > 0 then
+				if #ammo == 1 then
+					if itemTable.usesMagazine and !string.find(ammo[1], "Magazine") then
+						local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
+						local magazineItem = item.CreateInstance(ammoItemID);
+						
+						if magazineItem and magazineItem.SetAmmoMagazine then
+							magazineItem:SetAmmoMagazine(1);
+							
+							player:GiveItem(magazineItem);
+						end
+					else
+						local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
+						
+						player:GiveItem(item.CreateInstance(ammoItemID));
+					end
+				elseif itemTable.usesMagazine then
+					local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
+					local magazineItem = item.CreateInstance(ammoItemID);
+					
+					if magazineItem and magazineItem.SetAmmoMagazine then
+						magazineItem:SetAmmoMagazine(#ammo);
+						
+						player:GiveItem(magazineItem);
+					end
+				else
+					for i = 1, #ammo do
+						local round = ammo[i];
+						
+						if round then
+							local roundItemID = string.gsub(string.lower(round), " ", "_");
+							local roundItemInstance = item.CreateInstance(roundItemID);
+							
+							player:GiveItem(roundItemInstance);
+						end
+					end
+				end
+				
+				itemTable:SetData("Ammo", {});
+			end
+		elseif (extraData != "drop") then
+			player:SelectWeapon("begotten_fists")
+			player:StripWeapon(itemTable.weaponClass)
+
+			if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+				local useSound = itemTable("useSound");
+				
+				if (useSound) then
+					if (type(useSound) == "table") then
+						player:EmitSound(useSound[math.random(1, #useSound)]);
+					else
+						player:EmitSound(useSound);
+					end;
+				elseif (useSound != false) then
+					player:EmitSound("begotten/items/first_aid.wav");
 				end;
+			end
+
+			Clockwork.equipment:UnequipItem(player, self);
+		elseif (hook.Run("PlayerCanDropWeapon", player, self)) then
+			local trace = player:GetEyeTraceNoCursor()
+
+			if (player:GetShootPos():Distance(trace.HitPos) <= 192) then
+				local entity = Clockwork.entity:CreateItem(player, self, trace.HitPos)
+
+				if (IsValid(entity)) then		
+					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal)
+					hook.Run("PlayerDropWeapon", player, self, entity)
+
+					player:TakeItem(self, true)
+					player:SelectWeapon("begotten_fists")
+					player:StripWeapon(itemTable.weaponClass);
+					
+					Clockwork.equipment:UnequipItem(player, self);
+				end
 			else
-				Schema:EasyText(player, "peru", "You cannot drop your weapon that far away!");
-			end;
-		end;
-	end;
-end;]]--
+				Schema:EasyText(player, "peru", "You cannot drop this item that far away.")
+			end
+		end
+	end
+end;
 
 -- Called when the item is given to a player as a weapon.
 --[[function ITEM:OnWeaponGiven(player, weapon)
@@ -248,38 +325,7 @@ function ITEM:OnUse(player, itemEntity)
 	
 		player:Give(weaponClass, self);
 		
-		local weapon = player:GetWeapon(weaponClass);
-		
-		if (IsValid(weapon)) then
-			local weaponData = player.bgWeaponData or {}
-			local weaponDataTable = {};
-			
-			weaponDataTable.itemID = self.uniqueID.." "..self.itemID
-			weaponDataTable.uniqueID = self.uniqueID
-			weaponDataTable.realID = self.itemID
-			
-			local weaponAlreadyInTable = false;
-			
-			for i = 1, #weaponData do
-				if weaponData[i].uniqueID == weaponDataTable.uniqueID then
-					weaponAlreadyInTable = true;
-				end
-			end
-			
-			if weaponAlreadyInTable == false then
-				table.insert(weaponData, weaponDataTable);
-			end
-
-			Clockwork.datastream:Start(player, "BGWeaponData", weaponData);
-			Clockwork.player:SaveGear(player);
-			
-			player.bgWeaponData = weaponData;
-		
-			return true;
-		else
-			Schema:EasyText(player, "red", "This weapon is not valid! Contact an admin.")
-			return false;
-		end;
+		return true;
 	else
 		local weapon = player:GetWeapon(weaponClass);
 		
@@ -306,19 +352,13 @@ function ITEM:OnEquip(player)
 		return false;
 	end
 
-	local slots = {"Primary", "Secondary", "Tertiary"};
-	--if (item.IsWeapon(self) and !self:IsFakeWeapon()) then
-		for i = 1, #slots do
-			if (!Clockwork.player:GetGear(player, slots[i])) then
-				Clockwork.player:CreateGear(player, slots[i], self);
-				player:RebuildInventory();
-				
-				return true;
-			end
+	for i, v in ipairs(self.slots) do
+		if !player.equipmentSlots[v] then
+			return Clockwork.equipment:EquipItem(player, self, v);
 		end
-	--end
+	end
 	
-	Schema:EasyText(player, "peru", "You do not have an open slot to equip this weapon in!")
+	Schema:EasyText(player, "peru", "You do not have an open slot to equip this shield in!")
 	return false;
 end
 
@@ -397,26 +437,5 @@ end;
 
 -- Called when a player holsters the item.
 function ITEM:OnHolster(player, bForced) end;
-
-if (CLIENT) then
-	function ITEM:GetClientSideInfo()
-		if (!self:IsInstance()) then
-			return;
-		end;
-		
-		local clientSideInfo = "";
-		local ammo = self:GetData("Ammo");
-		
-		if ammo then
-			if not table.IsEmpty(ammo) then
-				if self.ammoCapacity == 1 then
-					clientSideInfo = Clockwork.kernel:AddMarkupLine(clientSideInfo, "Ammo: "..1);
-				end
-			end
-		end;
-		
-		return (clientSideInfo != "" and clientSideInfo);
-	end;
-end;
 
 Clockwork.item:Register(ITEM);

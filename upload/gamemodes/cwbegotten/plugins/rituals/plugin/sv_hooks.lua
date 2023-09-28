@@ -838,21 +838,16 @@ Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 					return;
 				end
 				
-				local clothesItem = player:GetClothesItem();
+				local clothesItem = player:GetClothesEquipped();
 				
 				if clothesItem then
 					clothesItem:OnPlayerUnequipped(player, nil, true);
 				end
 				
-		
-				local helmetData = player:GetCharacterData("helmet");
-
-				if helmetData and helmetData.uniqueID and helmetData.itemID then
-					local helmetItem = Clockwork.inventory:FindItemByID(player:GetInventory(), helmetData.uniqueID, helmetData.itemID)
-				
-					if helmetItem then
-						helmetItem:OnPlayerUnequipped(player, nil);
-					end
+				local helmetItem = player:GetHelmetEquipped();
+			
+				if helmetItem then
+					helmetItem:OnPlayerUnequipped(player, nil);
 				end
 				
 				Clockwork.player:SetName(player, data[1]);

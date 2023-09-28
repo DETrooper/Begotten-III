@@ -1,19 +1,14 @@
 --[[
-	© 2016 TeslaCloud Studios.
-	Private code for Global Cooldown community.
-	Stealing Lua cache is not nice lol.
-	get a life kiddos.
+	Begotten III: Jesus Wept
+	By: DETrooper, cash wednesday, gabs, alyousha35
+
+	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
 --]]
 
 local PLUGIN = PLUGIN;
 
 Clockwork.kernel:IncludePrefixed("cl_hooks.lua")
 Clockwork.kernel:IncludePrefixed("sv_plugin.lua")
-
--- Called when the Clockwork shared variables are added.
-function PLUGIN:ClockworkAddSharedVars(globalVars, playerVars)
-	--playerVars:Number("powerarmor");
-end;
 
 local COMMAND = Clockwork.command:New("CharSetHelmetCondition");
 COMMAND.tip = "Set a character's helmet condition. Defaults to 100% condition if no argument is provided.";
@@ -37,24 +32,18 @@ function COMMAND:OnRun(player, arguments)
 			condition = math.Clamp(tonumber(condition), 0, 100);
 		end;
 
-		local helmetTable = target:GetCharacterData("helmet");
-		
-		if (helmetTable and !table.IsEmpty(helmetTable)) then
-			local helmetItem = Clockwork.inventory:FindItemByID(target:GetInventory(), helmetTable.uniqueID, helmetTable.itemID);
-		
-			if (helmetItem) then
-				helmetItem:SetCondition(condition, true);
+		local helmetItem = target:GetHelmetItem();
+	
+		if (helmetItem) then
+			helmetItem:SetCondition(condition, true);
 
-				if (player != target)	then
-					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set "..target:Name().."'s helmet item condition to "..condition..".");
-				else
-					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own helmet item condition to "..condition..".");
-				end;
+			if (player != target)	then
+				Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set "..target:Name().."'s helmet item condition to "..condition..".");
 			else
-				Schema:EasyText(player, "firebrick", "["..self.name.."] "..target:Name().." does not have a valid helmet equipped!");
-			end
+				Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own helmet item condition to "..condition..".");
+			end;
 		else
-			Schema:EasyText(player, "firebrick", "["..self.name.."] "..target:Name().." does not have a helmet equipped!");
+			Schema:EasyText(player, "firebrick", "["..self.name.."] "..target:Name().." does not have a valid helmet equipped!");
 		end
 	else
 		Schema:EasyText(player, "grey", "["..self.name.."] "..arguments[1].." is not a valid player!");
@@ -85,7 +74,7 @@ function COMMAND:OnRun(player, arguments)
 			condition = math.Clamp(tonumber(condition), 0, 100);
 		end;
 	
-		local armorTable = target:GetClothesItem();
+		local armorTable = target:GetClothesEquipped();
 		
 		if (armorTable) then
 			local armorItem = Clockwork.inventory:FindItemByID(target:GetInventory(), armorTable.uniqueID, armorTable.itemID);

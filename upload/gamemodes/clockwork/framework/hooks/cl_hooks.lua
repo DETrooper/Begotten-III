@@ -5,115 +5,6 @@
 	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
 --]]
 
-local models_to_precache = {
-	"models/begotten/gatekeepers/districtonearmor.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_02.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_04.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_05.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_06.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_07.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_08.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_09.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_11.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_12.mdl",
-	"models/begotten/gatekeepers/gatekeeperlight/male_16.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_02.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_04.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_05.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_06.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_07.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_08.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_09.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_11.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_12.mdl",
-	"models/begotten/gatekeepers/gatekeepermedium/male_16.mdl",
-	"models/begotten/gatekeepers/highgatekeeper01.mdl",
-	"models/begotten/gatekeepers/highgatekeeper02.mdl",
-	"models/begotten/goreicwarfighters/bjornling.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_90.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_91.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_92.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_93.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_94.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_95.mdl",
-	"models/begotten/goreicwarfighters/goreberzerker/male_96.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_90.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_91.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_92.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_93.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_94.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_95.mdl",
-	"models/begotten/goreicwarfighters/gorechainmail/male_96.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_90.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_91.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_92.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_93.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_94.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_95.mdl",
-	"models/begotten/goreicwarfighters/gorehousecarl/male_96.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_90.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_91.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_92.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_93.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_94.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_95.mdl",
-	"models/begotten/goreicwarfighters/goreseafarer/male_96.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_90.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_91.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_92.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_93.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_94.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_95.mdl",
-	"models/begotten/goreicwarfighters/goretribal/male_96.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_90.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_91.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_92.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_93.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_94.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_95.mdl",
-	"models/begotten/goreicwarfighters/haralderchainmail/male_96.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_90.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_91.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_92.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_93.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_94.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_95.mdl",
-	"models/begotten/goreicwarfighters/reaverplate/male_96.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_02.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_04.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_05.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_06.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_07.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_08.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_09.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_11.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_12.mdl",
-	"models/begotten/gatekeepers/inquisitor/male_16.mdl",
-	"models/begotten/satanists/dreadarmor.mdl",
-	"models/begotten/satanists/hellspike_armor.mdl",
-	"models/begotten/wanderers/wanderer/female_01.mdl",
-	"models/begotten/wanderers/wanderer/female_02.mdl",
-	"models/begotten/wanderers/wanderer/female_04.mdl",
-	"models/begotten/wanderers/wanderer/female_05.mdl",
-	"models/begotten/wanderers/wanderer/female_06.mdl",
-	"models/begotten/wanderers/wanderer/female_32.mdl",
-	"models/begotten/wanderers/wanderer/male_01.mdl",
-	"models/begotten/wanderers/wanderer/male_02.mdl",
-	"models/begotten/wanderers/wanderer/male_03.mdl",
-	"models/begotten/wanderers/wanderer/male_04.mdl",
-	"models/begotten/wanderers/wanderer/male_05.mdl",
-	"models/begotten/wanderers/wanderer/male_06.mdl",
-	"models/begotten/wanderers/wanderer/male_07.mdl",
-	"models/begotten/wanderers/wanderer/male_08.mdl",
-	"models/begotten/wanderers/wanderer/male_09.mdl",
-	"models/begotten/wanderers/wanderer/male_11.mdl",
-	"models/begotten/wanderers/wanderer/male_12.mdl",
-	"models/begotten/wanderers/wanderer/male_13.mdl",
-	"models/begotten/wanderers/wanderer/male_16.mdl",
-	"models/begotten/wanderers/wanderer/male_22.mdl",
-	"models/begotten/wanderers/wanderer/male_56.mdl",
-};
-
 function GM:OnUndo(name, customText)
 	if (!customText) then
 		customText = "UNDONE "..name;
@@ -378,21 +269,6 @@ function GM:LocalPlayerCreated()
 			Clockwork.inventory:Rebuild();
 		end;
 	end);
-
-	Clockwork.kernel:RegisterNetworkProxy(Clockwork.Client, "Clothes", function(entity, name, oldValue, newValue)
-		if (oldValue != newValue) then
-			if (newValue != "") then
-				local clothesData = string.Explode(" ", newValue)
-				Clockwork.ClothesData.uniqueID = clothesData[1]
-				Clockwork.ClothesData.itemID = tonumber(clothesData[2])
-			else
-				Clockwork.ClothesData.uniqueID = nil
-				Clockwork.ClothesData.itemID = nil
-			end
-
-			Clockwork.inventory:Rebuild()
-		end
-	end)
 
 	timer.Simple(1, function()
 		netstream.Start("LocalPlayerCreated", true)
@@ -2330,7 +2206,7 @@ function GM:HUDDrawTargetID()
 									local newY
 									
 									if playerFaction == "Gatekeeper" and clientFaction ~= "Gatekeeper" and clientFaction ~= "Holy Hierarchy" then
-										local clothesItem = player:GetClothesItem();
+										local clothesItem = player:GetClothesEquipped();
 										
 										if !clothesItem or (clothesItem.faction and clothesItem.faction ~= playerFaction) then
 											teamColor = Color(200, 200, 200, 255);
@@ -2366,7 +2242,7 @@ function GM:HUDDrawTargetID()
 									local teamColor = _team.GetColor(player:Team())
 									
 									if playerFaction == "Gatekeeper" and clientFaction ~= "Gatekeeper" and clientFaction ~= "Holy Hierarchy" then
-										local clothesItem = player:GetClothesItem();
+										local clothesItem = player:GetClothesEquipped();
 										
 										if !clothesItem or (clothesItem.faction and clothesItem.faction ~= playerFaction) then
 											teamColor = Color(200, 200, 200, 255);
@@ -3392,20 +3268,6 @@ function GM:HUDDrawScoreBoard()
 	if (bDrawPendingScreenBlack) then
 		Clockwork.kernel:DrawTexturedGradientBox(0, 0, 0, scrW, scrH, Color(0, 0, 0, 255));
 	end;
-	
-	if (!Clockwork.Client.ModelsPrecached) then
-		--[[for i = 1, #models_to_precache do
-			local model = ClientsideModel(models_to_precache[i], RENDERGROUP_OPAQUE);
-			
-			model:SetPos(Clockwork.Client:GetPos());
-			
-			timer.Simple(20, function()
-				model:Remove();
-			end);
-		end]]--
-		
-		Clockwork.Client.ModelsPrecached = true;
-	end
 
 	hook.Run("PostDrawBackgroundBlurs");
 end;

@@ -697,37 +697,12 @@ local COMMAND = Clockwork.command:New("DropWeapon");
 						local entity = Clockwork.entity:CreateItem(player, itemTable, trace.HitPos);
 						
 						if (IsValid(entity)) then
-							local slots = {"Primary", "Secondary", "Tertiary"};
-							
 							Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal);
 							Clockwork.kernel:ForceUnequipItem(player, itemTable.uniqueID, itemTable.itemID);
 							
 							player:TakeItem(itemTable, true);
 							player:StripWeapon(class);
 							player:SelectWeapon("begotten_fists");
-								
-							for i = 1, #slots do
-								local gear = Clockwork.player:GetGear(player, slots[i]);
-								
-								if IsValid(gear) and gear:GetItemTable().uniqueID == self.uniqueID then
-									Clockwork.player:RemoveGear(player, slots[i]);
-									break;
-								end
-							end
-							
-							local weaponData = player.bgWeaponData or {}
-
-							for i = 1, #weaponData do
-								if weaponData[i].uniqueID == self.uniqueID then
-									table.remove(weaponData, i);
-									break;
-								end
-							end
-
-							Clockwork.datastream:Start(player, "BGWeaponData", weaponData);
-							Clockwork.player:SaveGear(player);
-							
-							player.bgWeaponData = weaponData;
 							
 							hook.Run("PlayerDropWeapon", player, itemTable, entity, weapon);
 						end;
@@ -751,36 +726,29 @@ local COMMAND = Clockwork.command:New("DropShield");
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
 		if not player.opponent then
-			local shieldData = player.bgShieldData;
-			
-			if shieldData and shieldData.uniqueID and shieldData.realID then
-				local itemTable = player:FindItemByID(shieldData.uniqueID, shieldData.realID);
-				
-				if (!itemTable) then
-					Clockwork.player:Notify(player, "This is not a valid shield!");
-					return;
-				end;
-				
-				local trace = player:GetEyeTraceNoCursor();
-				
-				if (player:GetShootPos():Distance(trace.HitPos) <= 192) then
-					local entity = Clockwork.entity:CreateItem(player, itemTable, trace.HitPos);
+			for k, v in pairs(player.equipmentSlots) do
+				if v and v.category == "Shields" then
+					local trace = player:GetEyeTraceNoCursor();
 					
-					if (IsValid(entity)) then
-						if (itemTable:HasPlayerEquipped(player)) then
-							Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal);
-							Clockwork.kernel:ForceUnequipItem(player, itemTable.uniqueID, itemTable.itemID);
-							player:TakeItem(itemTable, true);
+					if (player:GetShootPos():Distance(trace.HitPos) <= 192) then
+						local entity = Clockwork.entity:CreateItem(player, v, trace.HitPos);
+						
+						if (IsValid(entity)) then
+							if (v:HasPlayerEquipped(player)) then
+								Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal);
+								Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+								player:TakeItem(v, true);
 
-							player.bgShieldData = {};
-						end
+								return;
+							end
+						end;
+					else
+						Clockwork.player:Notify(player, "You cannot drop your shield that far away!");
 					end;
-				else
-					Clockwork.player:Notify(player, "You cannot drop your shield that far away!");
-				end;
-			else
-				Clockwork.player:Notify(player, "This is not a valid shield!");
+				end
 			end;
+			
+			Clockwork.player:Notify(player, "This is not a valid shield!");
 		else
 			Clockwork.player:Notify(player, "You cannot perform this action while in a duel!");
 		end

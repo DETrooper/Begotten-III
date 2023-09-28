@@ -1,9 +1,11 @@
 --[[
-	© 2016 TeslaCloud Studios.
-	Private code for Global Cooldown community.
-	Stealing Lua cache is not nice lol.
-	get a life kiddos.
+	Begotten III: Jesus Wept
+	By: DETrooper, cash wednesday, gabs, alyousha35
+
+	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
 --]]
+
+local head_suffixes = {"_glaze", "_gore", "_satanist", "_wanderer"};
 
 local ITEM = Clockwork.item:New(nil, true)
 	ITEM.name = "Bodygroup Base"
@@ -19,31 +21,80 @@ local ITEM = Clockwork.item:New(nil, true)
 	ITEM.excludeSubfactions = {};
 	ITEM.bodyGroup = -1
 	ITEM.bodyGroupVal = -1
-	ITEM.requiredBG = {-1, -1}
-	ITEM.isCombine = false
 	ITEM.repairItem = "armor_repair_kit";
+	ITEM.slots = {"Helms"};
+	ITEM.equipmentSaveString = "helmet";
 
 	function ITEM:SetBodygroup(player, bg, val)
-		if (bg <= player:GetNumBodyGroups()) then
+		if val ~= 0 and self.headSuffix then
+			local model = player:GetModel();
+			
+			if model then
+				for i, v in ipairs(head_suffixes) do
+					if v ~= self.headSuffix then
+						model = string.gsub(model, v, self.headSuffix);
+					end
+				end
+				
+				player:SetCharacterData("Model", model, true);
+				player:SetModel(model);
+			end
+			
 			player:SetBodygroup(bg, val)
-
-			return true
+			
+			if player:Alive() then
+				local ragdollEntity = player:GetRagdollEntity();
+				
+				if IsValid(ragdollEntity) then
+					ragdollEntity:SetModel(model);
+					ragdollEntity:SetBodygroup(bg, val)
+				end
+			end
 		else
-			Schema:EasyText(player, "peru", "You cannot wear this!")
+			if (bg <= player:GetNumBodyGroups()) then
+				player:SetBodygroup(bg, val)
 
-			return false
+				return true
+			else
+				Schema:EasyText(player, "peru", "You cannot wear this!")
+
+				return false
+			end
 		end
 	end
 
 	function ITEM:ResetBodygroup(player, bg)
 		player:SetBodygroup(bg, 0)
+		
+		if self.headReplacement then
+			player:SetModel(player:GetDefaultModel());
+			
+			if player:Alive() then
+				if IsValid(ragdollEntity) then
+					ragdollEntity:SetModel(player:GetDefaultModel());
+					ragdollEntity:SetBodygroup(bg, 0)
+				end
+			end
+		end
+		
 		return true
 	end
+	
+	function ITEM:OnWear(player)
+		if self.headReplacement then
+			player:SetModel(self.headReplacement);
+		else
+			self:SetBodygroup(player, self.bodyGroup, self.bodyGroupVal)
+		end
 
+		if self.concealsFace == true then
+			player:SetSharedVar("faceConcealed", true);
+		end
+	end
+	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		local clothesData = player.bgClothesData or {}
-		local clothesItem = player:GetClothesItem();
+		local clothesItem = player:GetClothesEquipped();
 		local faction = player:GetFaction();
 		local subfaction = player:GetSubfaction();
 		local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
@@ -89,18 +140,14 @@ local ITEM = Clockwork.item:New(nil, true)
 				return false
 			end
 		end
-		
-		if (self.requiredBG[1] != -1) then
-			local bgData = clothesData[self.requiredBG[1]]
-			if (!bgData) then
-				Schema:EasyText(player, "peru", "You cannot wear this!")
-				return false
-			end
-		end
 
-		if (self.bodyGroup != -1) then
+		if (self.bodyGroup != -1) or self.headReplacement then
 			if (player:Alive() and !player:IsRagdolled()) then
-				player:SetBodygroupClothes(self)
+				self:OnWear(player);
+				Clockwork.equipment:EquipItem(player, self, "Helms");
+				
+				hook.Run("PlayerUseItem", player, self, itemEntity);
+				
 				return true
 			end
 		else
@@ -115,79 +162,12 @@ local ITEM = Clockwork.item:New(nil, true)
 		return true;
 	end
 
-	-- Called when a player drops the item.
-	function ITEM:OnDrop(player, position)
-		if (self:HasPlayerEquipped(player) and self.bodyGroup != -1) then
-			player:SetBodygroupClothes(self, true)
-		end
-
-		return true
-	end
-
-	-- Called when a player attempts to sell the item to salesman.
-	function ITEM:CanSell(player)
-		if (self:HasPlayerEquipped(player) and self.bodyGroup != -1) then
-			player:SetBodygroupClothes(self, true)
-		end
-
-		return true
-	end
-
-	-- Called when a player attempts to give the item to storage.
-	function ITEM:CanGiveStorage(player, storageTable)
-		if (self:HasPlayerEquipped(player) and self.bodyGroup != -1) then
-			player:SetBodygroupClothes(self, true)
-		end
-
-		return true
-	end
-
-	-- Called when a player changes clothes.
-	function ITEM:OnChangeClothes(player, bIsWearing)
-		if (bIsWearing) then
-			self:SetBodygroup(player, self.bodyGroup, self.bodyGroupVal)
-		else
-			self:ResetBodygroup(player, self.bodyGroup)
-		end
-		
-		if self.concealsFace == true then
-			if bIsWearing then
-				player:SetSharedVar("faceConcealed", true);
-			else
-				player:SetSharedVar("faceConcealed", false);
-			end
-		end
-
-		if (self.OnChangedClothes) then
-			self:OnChangedClothes(player, bIsWearing)
-		end
-	end
-
-	-- Called to get whether a player has the item equipped.
-	function ITEM:HasPlayerEquipped(player, bIsValidWeapon)
-		local clothesData = player.bgClothesData or {}
-
-		if (CLIENT) then
-			clothesData = Clockwork.Client.bgClothesData or {}
-		end
-
-		local bg = self.bodyGroup
-
-		if (clothesData[bg] and clothesData[bg].val != nil and clothesData[bg].itemID == self.uniqueID.." "..self.itemID) then
-			return true
-		end
-
-		return false
-	end
-
 	-- Called when a player has unequipped the item.
 	function ITEM:OnPlayerUnequipped(player, extraData)
-		if self:HasPlayerEquipped(player) then
-			player:SetBodygroupClothes(self, true)
-			
+		if Clockwork.equipment:UnequipItem(player, self) then
 			local useSound = self.useSound;
 			
-			if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+			if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 				if (useSound) then
 					if (type(useSound) == "table") then
 						player:EmitSound(useSound[math.random(1, #useSound)]);
@@ -202,18 +182,27 @@ local ITEM = Clockwork.item:New(nil, true)
 			if self.concealsFace == true then
 				player:SetSharedVar("faceConcealed", false);
 			end
+			
+			self:ResetBodygroup(player, self.bodyGroup);
+			
+			return true;
 		end
+		
+		return false;
+	end
+	
+	function ITEM:HasPlayerEquipped(player)
+		return player:GetHelmetEquipped(self);
 	end
 	
 	-- Called when a player has unequipped the item.
 	function ITEM:OnTakeFromPlayer(player)
-		if (player:IsWearingItem(self)) then
-			player:SetBodygroupClothes(self, true)
-			
+		if (player:GetClothesEquipped() == self) then
 			if self.concealsFace == true then
 				player:SetSharedVar("faceConcealed", false);
 			end
+			
+			self:ResetBodygroup(player, self.bodyGroup);
 		end
 	end
-	
 ITEM:Register();

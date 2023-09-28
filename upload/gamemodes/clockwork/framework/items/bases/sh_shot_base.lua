@@ -43,9 +43,6 @@ local ITEM = item.New(nil, true);
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		if self.ammoType then
-			local valid_weapon;
-			local weaponData = player.bgWeaponData or {};
-			
 			if itemEntity and itemEntity.beingUsed then
 				Schema:EasyText(player, "peru", "This item is already being used!");
 				return false;
@@ -57,14 +54,10 @@ local ITEM = item.New(nil, true);
 				return false;
 			end
 
-			for i = 1, #weaponData do
-				if not valid_weapon and weaponData[i].uniqueID and weaponData[i].realID then
-					local weaponItem = Clockwork.inventory:FindItemByID(player:GetInventory(), weaponData[i].uniqueID, weaponData[i].realID);
-
-					if weaponItem and self:CanUseOnItem(player, weaponItem, false) then
-						self:UseOnItem(player, weaponItem, true, itemEntity);
-						return false; -- Gets taken by the UseOnItem function after a delay.
-					end
+			for i, v in ipairs(player:GetWeaponsEquipped()) do
+				if v and self:CanUseOnItem(player, v, false) then
+					self:UseOnItem(player, v, true, itemEntity);
+					return false; -- Gets taken by the UseOnItem function after a delay.
 				end
 			end
 		end

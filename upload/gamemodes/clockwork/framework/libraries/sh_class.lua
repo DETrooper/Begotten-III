@@ -216,7 +216,7 @@ if (SERVER) then
 		local weapons = Clockwork.player:GetWeapons(player)
 		local oldClass = self:FindByID(player:Team())
 		local newClass = self:FindByID(name)
-		local ammo = Clockwork.player:GetAmmo(player, !player.cwFirstSpawn)
+		--local ammo = Clockwork.player:GetAmmo(player, !player.cwFirstSpawn)
 
 		if (newClass) then
 			player:SetTeam(newClass.index)

@@ -98,7 +98,7 @@ function SWEP:FireJavelin()
 		
 		local phys = javelin:GetPhysicsObject()
 		
-		if self.Owner.bgCharmData and self.Owner.HasCharmEquipped and self.Owner:HasCharmEquipped("hurlers_talisman") then
+		if self.Owner.GetCharmEquipped and self.Owner:GetCharmEquipped("hurlers_talisman") then
 			phys:SetVelocity(self.Owner:GetAimVector() * 1600);
 		else
 			phys:SetVelocity(self.Owner:GetAimVector() * 1250);

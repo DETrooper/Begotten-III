@@ -954,10 +954,6 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 end
 
 function Clockwork.kernel:ForceUnequipItem(player, uniqueID, itemID, arguments)
-	if (!player:Alive() or player:IsRagdolled()) then
-		return
-	end
-	
 	if cwDueling then
 		if player.opponent then
 			Schema:EasyText(player, "peru", "You cannot unequip items while in a duel!");
@@ -967,7 +963,7 @@ function Clockwork.kernel:ForceUnequipItem(player, uniqueID, itemID, arguments)
 			return;
 		end
 	end
-		
+
 	local itemTable = player:FindItemByID(uniqueID, itemID)
 	
 	if (!itemTable) then
@@ -975,13 +971,8 @@ function Clockwork.kernel:ForceUnequipItem(player, uniqueID, itemID, arguments)
 	end
 
 	if (itemTable and itemTable.OnPlayerUnequipped and itemTable.HasPlayerEquipped) then
-		if (itemTable:HasPlayerEquipped(player)) then
-			itemTable:OnPlayerUnequipped(player)
-			player:RebuildInventory()
-			
-			if itemTable.category ~= "Shields" then
-				player:SetWeaponRaised(false)
-			end
+		if (itemTable:HasPlayerEquipped(player, arguments)) then
+			itemTable:OnPlayerUnequipped(player, arguments)
 		end
 	end
 end;
@@ -1565,10 +1556,10 @@ function playerMeta:GetGender() return self:QueryCharacter("Gender") end
 function playerMeta:GetInventory() return self:QueryCharacter("Inventory") end
 
 -- A function to get a player's attributes.
-function playerMeta:GetAttributes() return self:QueryCharacter("Attributes") end
+--function playerMeta:GetAttributes() return self:QueryCharacter("Attributes") end
 
 -- A function to get a player's saved ammo.
-function playerMeta:GetSavedAmmo() return self:QueryCharacter("Ammo") end
+--function playerMeta:GetSavedAmmo() return self:QueryCharacter("Ammo") end
 
 -- A function to get a player's default model.
 function playerMeta:GetDefaultModel() return self:QueryCharacter("Model") end
@@ -1648,7 +1639,6 @@ end
 -- A function to get a player's maximum health.
 function playerMeta:GetMaxHealth(health)
 	local maxHealth = self:GetNetVar("MaxHP") or 100
-	local charmData = self:GetCharacterData("charms");
 	local factionName = self:GetFaction();
 	local FACTION = Clockwork.faction:FindByID(factionName)
 	local subfaction = self:GetSubfaction();
@@ -1723,12 +1713,8 @@ function playerMeta:GetMaxHealth(health)
 		end
 	end
 
-	if charmData then
-		for i = 1, #charmData do
-			if charmData[i] and charmData[i].uniqueID == "ring_vitality" then
-				maxHealth = maxHealth + 25;
-			end
-		end
+	if self:GetCharmEquipped("ring_vitality") then
+		maxHealth = maxHealth + 25;
 	end
 	
 	if self.maxHealthBoost then
@@ -1918,8 +1904,8 @@ end
 
 -- A function to get the maximum weight a player can carry.
 function playerMeta:GetMaxWeight()
-	local backpackItem = self:GetBackpackItem();
-	local clothesItem = self:GetClothesItem();
+	local backpackItem = self:GetBackpackEquipped();
+	local clothesItem = self:GetClothesEquipped();
 	local itemsList = Clockwork.inventory:GetAsItemsList(self:GetInventory())
 	--local weight = self:GetNetVar("InvWeight") or 8
 	local weight = config.GetVal("default_inv_weight") or 20;
@@ -1948,7 +1934,7 @@ end
 
 -- A function to get the maximum space a player can carry.
 function playerMeta:GetMaxSpace()
-	local backpackItem = self:GetBackpackItem();
+	local backpackItem = self:GetBackpackEquipped();
 	local itemsList = Clockwork.inventory:GetAsItemsList(self:GetInventory())
 	local space = self:GetNetVar("InvSpace") or 10
 
@@ -2292,134 +2278,6 @@ end
 -- A function to get when a player last played.
 function playerMeta:LastPlayed()
 	return self.cwLastPlayed or os.time()
-end
-
--- A function to get a player's clothes data.
-function playerMeta:GetClothesData()
-	local clothesData = self:GetCharacterData("Clothes")
-
-	if (type(clothesData) != "table") then
-		clothesData = {}
-	end
-
-	return clothesData
-end
-
--- A function to get a player's accessory data.
-function playerMeta:GetAccessoryData()
-	local accessoryData = self:GetCharacterData("Accessories")
-
-	if (type(accessoryData) != "table") then
-		accessoryData = {}
-	end
-
-	return accessoryData
-end
-
--- A function to remove a player's clothes.
-function playerMeta:RemoveClothes(bRemoveItem)
-	self:SetClothesData(nil)
-	
-	-- jank shit for clientside footsteps
-	self:SetSharedVar("clothesString", nil);
-
-	if (bRemoveItem) then
-		local clothesItem = self:GetClothesItem()
-
-		if (clothesItem) then
-			self:TakeItem(clothesItem)
-			
-			hook.Run("RunModifyPlayerSpeed", self, self.cwInfoTable, true)
-			
-			return clothesItem
-		end
-	end
-end
-
--- A function to get the player's backpack item.
-function playerMeta:GetBackpackItem()
-	local backpackData = self:GetCharacterData("backpacks", {});
-
-	if (type(backpackData) == "table") and backpackData[1] then
-		if (backpackData[1].itemID != nil and backpackData[1].uniqueID != nil) then
-			return self:FindItemByID(
-				backpackData[1].uniqueID, backpackData[1].itemID
-			)
-		end
-	end
-end
-
--- A function to get the player's clothes item.
-function playerMeta:GetClothesItem()
-	local clothesData = self:GetClothesData()
-
-	if (type(clothesData) == "table") then
-		if (clothesData.itemID != nil and clothesData.uniqueID != nil) then
-			return self:FindItemByID(
-				clothesData.uniqueID, clothesData.itemID
-			)
-		end
-	end
-end
-
--- A function to get whether a player is wearing clothes.
-function playerMeta:IsWearingClothes()
-	return (self:GetClothesItem() != nil)
-end
-
--- A function to get whether a player is wearing an item.
-function playerMeta:IsWearingItem(itemTable)
-	local clothesItem = self:GetClothesItem()
-	return (clothesItem and clothesItem:IsTheSameAs(itemTable))
-end
-
--- A function to network the player's clothes data.
-function playerMeta:NetworkClothesData()
-	local clothesData = self:GetClothesData()
-
-	if (clothesData.uniqueID and clothesData.itemID) then
-		self:SetNetVar("Clothes", clothesData.uniqueID.." "..clothesData.itemID)
-	else
-		self:SetNetVar("Clothes", "")
-	end
-end
-
--- A function to set a player's clothes data.
-function playerMeta:SetClothesData(itemTable)
-	local clothesItem = self:GetClothesItem()
-
-	if (itemTable) then
-		local model = Clockwork.class:GetAppropriateModel(self:Team(), self, true)
-
-		if (!model) then
-			if (clothesItem and itemTable != clothesItem) then
-				clothesItem:OnChangeClothes(self, false)
-			end
-
-			if itemTable.OnChangeClothes then
-				itemTable:OnChangeClothes(self, true)
-			end
-
-			local clothesData = self:GetClothesData()
-				clothesData.itemID = itemTable.itemID
-				clothesData.uniqueID = itemTable.uniqueID
-			self:NetworkClothesData()
-		end
-	else
-		local clothesData = self:GetClothesData()
-			clothesData.itemID = nil
-			clothesData.uniqueID = nil
-		self:NetworkClothesData()
-
-		if (clothesItem) then
-			clothesItem:OnChangeClothes(self, false)
-		end
-	end
-	
-	--[[self:SetWalkSpeed(config.GetVal("walk_speed"));
-	self:SetCrouchedWalkSpeed(config.GetVal("crouched_speed"));
-	self:SetJumpPower(config.GetVal("jump_power"));
-	self:SetRunSpeed(config.GetVal("run_speed"));]]--
 end
 
 -- A function to get the entity a player is holding.
@@ -2828,7 +2686,6 @@ concommand.Add("cwDeathCode", function(player, command, arguments)
 	end
 end)
 
---[[ Accessories --]]
 local playerMeta = FindMetaTable("Player")
 
 -- A function to get a player's lending account Steam ID.
@@ -2839,12 +2696,6 @@ function playerMeta:GetLender()
 		return "";
 	end;
 end;
-
-function playerMeta:NetworkAccessories()
-	local accessoryData = self:GetAccessoryData()
-
-	netstream.Start(self, "AllAccessories", accessoryData)
-end
 
 function playerMeta:NetworkTraits()
 	hook.Run("SetTraitSharedVars", self);
@@ -2898,63 +2749,6 @@ end;
 function playerMeta:GetTraits()
 	return self:GetCharacterData("Traits");
 end;
-
-function playerMeta:RemoveAccessory(itemTable)
-	if (!self:IsWearingAccessory(itemTable)) then return end
-
-	local accessoryData = self:GetAccessoryData()
-	local uniqueID = itemTable.uniqueID
-	local itemID = itemTable.itemID
-
-	accessoryData[itemID] = nil
-		netstream.Start(
-		self, "RemoveAccessory", {itemID = itemID}
-	)
-
-	if (itemTable.OnWearAccessory) then
-		itemTable:OnWearAccessory(self, false)
-	end
-end
-
-function playerMeta:HasAccessory(uniqueID)
-	local accessoryData = self:GetAccessoryData()
-
-	for k, v in pairs(accessoryData) do
-		if (string.lower(v) == string.lower(uniqueID)) then
-			return true
-		end
-	end
-
-	return false
-end
-
-function playerMeta:IsWearingAccessory(itemTable)
-	local accessoryData = self:GetAccessoryData()
-	local itemID = itemTable.itemID
-
-	if (accessoryData[itemID]) then
-		return true
-	else
-		return false
-	end
-end
-
-function playerMeta:WearAccessory(itemTable)
-	if (self:IsWearingAccessory(itemTable)) then return end
-
-	local accessoryData = self:GetAccessoryData()
-	local uniqueID = itemTable.uniqueID
-	local itemID = itemTable.itemID
-
-	accessoryData[itemID] = itemTable.uniqueID
-	netstream.Start(
-		self, "AddAccessory", {itemID = itemID, uniqueID = uniqueID}
-	)
-
-	if (itemTable.OnWearAccessory) then
-		itemTable:OnWearAccessory(self, true)
-	end
-end
 
 -- A function to set a player's character data.
 function playerMeta:SetCharacterData(key, value, bFromBase)

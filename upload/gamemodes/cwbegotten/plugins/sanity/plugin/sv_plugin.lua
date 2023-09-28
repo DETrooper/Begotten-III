@@ -46,12 +46,12 @@ function playerMeta:HandleSanity(amount)
 			amount = amount * 0.75;
 		end
 		
-		if self.bgCharmData and self.HasCharmEquipped then
-			if self:GetFaith() == "Faith of the Family" and self:HasCharmEquipped("effigy_earthing") then
+		if self.GetCharmEquipped then
+			if self:GetFaith() == "Faith of the Family" and self:GetCharmEquipped("effigy_earthing") then
 				amount = amount * 0.75;
 			end
 			
-			if self:HasCharmEquipped("warding_talisman") then
+			if self:GetCharmEquipped("warding_talisman") then
 				amount = amount * 0.5;
 			end
 		end

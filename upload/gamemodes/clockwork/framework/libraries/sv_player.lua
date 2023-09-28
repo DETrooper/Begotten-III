@@ -73,64 +73,6 @@ function Clockwork.player:InventoryAction(player, itemTable, action)
 	return self:RunClockworkCommand(player, "InvAction", action, itemTable.uniqueID, tostring(itemTable.itemID))
 end
 
--- A function to get a player's gear.
-function Clockwork.player:GetGear(player, gearClass)
-	if (!player.cwGearTab) then
-		player.cwGearTab = {};
-	end
-	
-	if (player.cwGearTab and IsValid(player.cwGearTab[gearClass])) then
-		return player.cwGearTab[gearClass]
-	end
-end
-
-function Clockwork.player:SaveGear(player)
-	if (!player.cwGearTab) then
-		player.cwGearTab = {};
-		player:SetCharacterData("weapons", nil);
-		return;
-	end
-	
-	local temptab = {};
-	local gearPrimary = Clockwork.player:GetGear(player, "Primary");
-	local gearSecondary = Clockwork.player:GetGear(player, "Secondary");
-	local gearTertiary = Clockwork.player:GetGear(player, "Tertiary");
-	local gear_items_found = 0;
-	
-	--timer.Simple(1, function()
-		if IsValid(player) then
-			if IsValid(gearPrimary) then
-				local gearPrimaryItem = gearPrimary:GetItemTable();
-				
-				if gearPrimaryItem then
-					gear_items_found = gear_items_found + 1;
-					temptab[gear_items_found] = {["uniqueID"] = gearPrimaryItem.uniqueID, ["itemID"] = gearPrimaryItem.itemID};
-				end
-			end
-			
-			if IsValid(gearSecondary) then
-				local gearSecondaryItem = gearSecondary:GetItemTable();
-				
-				if gearSecondaryItem then
-					gear_items_found = gear_items_found + 1;
-					temptab[gear_items_found] = {["uniqueID"] = gearSecondaryItem.uniqueID, ["itemID"] = gearSecondaryItem.itemID};
-				end
-			end
-			
-			if IsValid(gearTertiary) then
-				local gearTertiaryItem = gearTertiary:GetItemTable();
-				
-				if gearTertiaryItem then
-					gear_items_found = gear_items_found + 1;
-					temptab[gear_items_found] = {["uniqueID"] = gearTertiaryItem.uniqueID, ["itemID"] = gearTertiaryItem.itemID};
-				end
-			end
-			
-			player:SetCharacterData("weapons", temptab);
-		end
-	--end);
-end
-
 -- A function to create a character from data.
 function Clockwork.player:CreateCharacterFromData(player, data)
 	if (player.cwIsCreatingChar) then
@@ -571,99 +513,6 @@ function Clockwork.player:StopSound(player, uniqueID, iFadeOut)
 		netstream.Start(player, "StopSound", {
 			uniqueID = uniqueID, fadeOut = (iFadeOut or 0)
 		})
-	end
-end
-
--- A function to remove a player's gear.
-function Clockwork.player:RemoveGear(player, gearClass)
-	if (player.cwGearTab and IsValid(player.cwGearTab[gearClass])) then
-		player.cwGearTab[gearClass]:Remove()
-		player.cwGearTab[gearClass] = nil
-		
-		local slots = {"Primary", "Secondary", "Tertiary"};
-		
-		if not player.cwGearTab[slots[1]] then
-			if player.cwGearTab[slots[2]] then
-				player.cwGearTab[slots[1]] = player.cwGearTab[slots[2]];
-				player.cwGearTab[slots[2]] = nil;
-				
-				if player.cwGearTab[slots[3]] then
-					player.cwGearTab[slots[2]] = player.cwGearTab[slots[3]];
-					player.cwGearTab[slots[3]] = nil;
-				end
-			elseif player.cwGearTab[slots[3]] then
-				player.cwGearTab[slots[1]] = player.cwGearTab[slots[3]];
-				player.cwGearTab[slots[3]] = nil;
-			end
-		elseif not player.cwGearTab[slots[2]] then
-			if player.cwGearTab[slots[3]] then
-				player.cwGearTab[slots[2]] = player.cwGearTab[slots[3]];
-				player.cwGearTab[slots[3]] = nil;
-			end
-		end
-		
-		--[[printp("Primary: "..tostring(player.cwGearTab["Primary"]));
-		printp("Secondary: "..tostring(player.cwGearTab["Secondary"]));
-		printp("Tertiary: "..tostring(player.cwGearTab["Tertiary"]));]]--
-		
-		netstream.Start(player, "RemoveGear", gearClass);
-	end
-end
-
--- A function to strip all of a player's gear.
-function Clockwork.player:StripGear(player)
-	if (!player.cwGearTab) then return end
-
-	for k, v in pairs(player.cwGearTab) do
-		if (IsValid(v)) then v:Remove() end
-	end
-
-	netstream.Start(player, "StripGear");
-	
-	player.cwGearTab = {}
-end
-
--- A function to create a player's gear.
-function Clockwork.player:CreateGear(player, gearClass, itemTable, bMustHave)
-	if (!player.cwGearTab) then
-		player.cwGearTab = {}
-	end
-
-	if (IsValid(player.cwGearTab[gearClass])) then
-		player.cwGearTab[gearClass]:Remove()
-	end
-	
-	if (itemTable.isAttachment) then
-		local position = player:GetPos()
-		local angles = player:GetAngles()
-		local model = itemTable.attachmentModel or itemTable.model
-
-		player.cwGearTab[gearClass] = ents.Create("cw_gear")
-		player.cwGearTab[gearClass]:SetParent(player)
-		player.cwGearTab[gearClass]:SetAngles(angles)
-		player.cwGearTab[gearClass]:SetModel(model)
-		player.cwGearTab[gearClass]:SetPos(position)
-		player.cwGearTab[gearClass]:Spawn()
-
-		if (itemTable.attachmentMaterial) then
-			player.cwGearTab[gearClass]:SetMaterial(itemTable.attachmentMaterial)
-		end
-
-		if (itemTable.attachmentColor) then
-			player.cwGearTab[gearClass]:SetColor(
-				Clockwork.kernel:UnpackColor(itemTable.attachmentColor)
-			)
-		else
-			player.cwGearTab[gearClass]:SetColor(Color(255, 255, 255, 255))
-		end
-
-		if (IsValid(player.cwGearTab[gearClass])) then
-			player.cwGearTab[gearClass]:SetOwner(player)
-			player.cwGearTab[gearClass]:SetMustHave(bMustHave)
-			player.cwGearTab[gearClass]:SetItemTable(gearClass, itemTable)
-		end
-		
-		netstream.Start(player, "CreateGear", {gearClass, itemTable.itemID});
 	end
 end
 
@@ -1221,13 +1070,13 @@ function Clockwork.player:EntityConditionTimer(player, target, entity, delay, di
 end
 
 -- A function to get a player's spawn ammo.
-function Clockwork.player:GetSpawnAmmo(player, ammo)
+--[[function Clockwork.player:GetSpawnAmmo(player, ammo)
 	if (ammo) then
 		return player.cwSpawnAmmo[ammo]
 	else
 		return player.cwSpawnAmmo
 	end
-end
+end]]--
 
 -- A function to get a player's spawn weapon.
 function Clockwork.player:GetSpawnWeapon(player, weapon)
@@ -1237,7 +1086,7 @@ function Clockwork.player:GetSpawnWeapon(player, weapon)
 end
 
 -- A function to take spawn ammo from a player.
-function Clockwork.player:TakeSpawnAmmo(player, ammo, amount)
+--[[function Clockwork.player:TakeSpawnAmmo(player, ammo, amount)
 	if (player.cwSpawnAmmo[ammo]) then
 		if (player.cwSpawnAmmo[ammo] < amount) then
 			amount = player.cwSpawnAmmo[ammo]
@@ -1249,10 +1098,10 @@ function Clockwork.player:TakeSpawnAmmo(player, ammo, amount)
 
 		player:RemoveAmmo(amount, ammo)
 	end
-end
+end]]--
 
 -- A function to give the player spawn ammo.
-function Clockwork.player:GiveSpawnAmmo(player, ammo, amount)
+--[[function Clockwork.player:GiveSpawnAmmo(player, ammo, amount)
 	if (player.cwSpawnAmmo[ammo]) then
 		player.cwSpawnAmmo[ammo] = player.cwSpawnAmmo[ammo] + amount
 	else
@@ -1260,7 +1109,7 @@ function Clockwork.player:GiveSpawnAmmo(player, ammo, amount)
 	end
 
 	player:GiveAmmo(amount, ammo)
-end
+end]]--
 
 -- A function to take a player's spawn weapon.
 function Clockwork.player:TakeSpawnWeapon(player, class)
@@ -2424,21 +2273,21 @@ function Clockwork.player:SetWeapons(player, weapons, bForceReturn)
 end
 
 -- A function to give ammo to a player from a table.
-function Clockwork.player:GiveAmmo(player, ammo)
+--[[function Clockwork.player:GiveAmmo(player, ammo)
 	for k, v in pairs(ammo) do
 		player:GiveAmmo(v, k)
 	end
-end
+end]]--
 
 -- A function to set a player's ammo list from a table.
-function Clockwork.player:SetAmmo(player, ammo)
+--[[function Clockwork.player:SetAmmo(player, ammo)
 	for k, v in pairs(ammo) do
 		player:SetAmmo(v, k)
 	end
-end
+end]]--
 
 -- A function to get a player's ammo list as a table.
-function Clockwork.player:GetAmmo(player, bDoStrip)
+--[[function Clockwork.player:GetAmmo(player, bDoStrip)
 	local spawnAmmo = self:GetSpawnAmmo(player)
 	local ammoTypes = {}
 	local ammo = {}
@@ -2472,7 +2321,7 @@ function Clockwork.player:GetAmmo(player, bDoStrip)
 	end
 
 	return ammo
-end
+end]]--
 
 -- A function to get a player's weapons list as a table.
 function Clockwork.player:GetWeapons(player, bDoKeep)
@@ -2684,17 +2533,53 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 		elseif (hook.Run("PlayerCanRagdoll", player, state, delay, decay)) then
 			local velocity = player:GetVelocity() + (player:GetAimVector() * 128)
 			local ragdoll = ents.Create("prop_ragdoll")
+			local model = player:GetModel();
 			local bodygroups = player:GetBodyGroups()
 
 			ragdoll:SetMaterial(player:GetMaterial())
 			ragdoll:SetAngles(player:GetAngles())
 			ragdoll:SetColor(player:GetColor())
-			ragdoll:SetModel(player:GetModel())
+			ragdoll:SetModel(model)
 			ragdoll:SetSkin(player:GetSkin())
 			ragdoll:SetPos(player:GetPos())
 			ragdoll:SetBodygroup(0, player:GetBodygroup(0));
 			ragdoll:SetBodygroup(1, player:GetBodygroup(1));
 			ragdoll:Spawn()
+
+			if string.find(model, "models/begotten/heads") then
+				local clothesItem = player:GetClothesEquipped();
+
+				if clothesItem and clothesItem.group then
+					if clothesItem.genderless then
+						model = "models/begotten/"..clothesItem.group..".mdl";
+					else
+						model = "models/begotten/"..clothesItem.group.."_"..string.lower(player:GetGender())..".mdl";
+					end
+				else
+					local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+					local factionTable = Clockwork.faction:FindByID(faction);
+					
+					if factionTable then
+						local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+						
+						if subfaction and factionTable.subfactions then
+							for k, v in pairs(factionTable.subfactions) do
+								if k == subfaction and v.models then
+									model = v.models[string.lower(player:GetGender())].clothes;
+								
+									break;
+								end
+							end
+						end
+						
+						if string.find(model, "models/begotten/heads") then
+							model = factionTable.models[string.lower(player:GetGender())].clothes;
+						end
+					end
+				end
+				
+				ragdoll:SetNWString("clothes", model);
+			end
 
 			player.cwRagdollTab = {}
 			player.cwRagdollTab.eyeAngles = player:EyeAngles()
@@ -2884,170 +2769,51 @@ end
 
 -- A function to make a player drop their weapons.
 function Clockwork.player:DropWeapons(player)
-	if not player.opponent then -- Make sure player isn't in a duel.
-		local ragdollEntity = player:GetRagdollEntity();
+	local ragdollEntity = player:GetRagdollEntity();
 
-		if (player:IsRagdolled()) then
-			local ragdollWeapons = player:GetRagdollWeapons()
-
-			for k, v in pairs(ragdollWeapons) do
-				local itemTable = v.weaponData["itemTable"]
-
-				if (itemTable and hook.Run("PlayerCanDropWeapon", player, itemTable, NULL, true)) then
-					local pos = player:GetPos();
-					
-					if IsValid(ragdollEntity) then
-						pos = ragdollEntity:GetPos();
-					end
+	if (player:IsRagdolled()) then
+		for i, v in ipairs(player:GetWeaponsEquipped()) do
+			if (v and hook.Run("PlayerCanDropWeapon", player, v, NULL, true)) then
+				local pos = player:GetPos();
 				
-					local info = {
-						itemTable = itemTable,
-						position = pos + Vector(0, 0, math.random(1, 48)),
-						angles = Angle(0, 0, 0)
-					}
-
+				if IsValid(ragdollEntity) then
+					pos = ragdollEntity:GetPos();
+				end
+				
+				local info = {
+					itemTable = v,
+					position = pos + Vector(0, 0, math.random(1, 48)),
+					angles = Angle(0, 0, 0)
+				};
+				
+				local entity = Clockwork.entity:CreateItem(player, info.itemTable, info.position, info.angles);
+				
+				if (IsValid(entity)) then
 					player:TakeItem(info.itemTable, true)
-					ragdollWeapons[k] = nil
-
-					if (hook.Run("PlayerAdjustDropWeaponInfo", player, info)) then
-						local entity = Clockwork.entity:CreateItem(player, info.itemTable, info.position, info.angles)
-
-						if (IsValid(entity)) then
-							hook.Run("PlayerDropWeapon", player, info.itemTable, entity, NULL)
-						end
-					end
 				end
 			end
-			
-			local weaponData = player:GetCharacterData("weapons");
-			
-			if weaponData and istable(weaponData) then 
-				for i = 1, #weaponData do
-					if weaponData[i].uniqueID and weaponData[i].itemID then
-						local weaponItem = Clockwork.inventory:FindItemByID(player:GetInventory(), weaponData[i].uniqueID, weaponData[i].itemID);
-						
-						if (weaponItem and hook.Run("PlayerCanDropWeapon", player, weaponItem, NULL, true)) then
-							local pos = player:GetPos();
-							
-							if IsValid(ragdollEntity) then
-								pos = ragdollEntity:GetPos();
-							end
-							
-							local info = {
-								itemTable = weaponItem,
-								position = pos + Vector(0, 0, math.random(1, 48)),
-								angles = Angle(0, 0, 0)
-							};
-							
-							local entity = Clockwork.entity:CreateItem(player, info.itemTable, info.position, info.angles);
-							
-							if (IsValid(entity)) then
-								player:TakeItem(info.itemTable, true)
-							end
-						end
-					end
-				end
-			end
-			
-			--[[local shieldData = player:GetCharacterData("shield");
-			
-			if shieldData and shieldData.uniqueID and shieldData.itemID then
-				local shieldItem = Clockwork.inventory:FindItemByID(player:GetInventory(), shieldData.uniqueID, shieldData.itemID);
+		end
+	else
+		for i, v in ipairs(player:GetWeaponsEquipped()) do
+			if (v and hook.Run("PlayerCanDropWeapon", player, v, NULL, true)) then
+				local pos = player:GetPos();
 				
-				if (shieldItem and hook.Run("PlayerCanDropWeapon", player, shieldItem, NULL, true)) then
-					local info = {
-						itemTable = shieldItem,
-						position = ragdollEntity:GetPos() + Vector(0, 0, math.random(1, 48)),
-						angles = Angle(0, 0, 0)
-					};
-					
-					local entity = Clockwork.entity:CreateItem(player, info.itemTable, info.position, info.angles);
-					
-					if (IsValid(entity)) then
-						player:TakeItem(info.itemTable, true)
-					end
+				if IsValid(ragdollEntity) then
+					pos = ragdollEntity:GetPos();
 				end
-			end]]--
-		else
-			for k, v in pairs(player:GetWeapons()) do
-				local itemTable = item.GetByWeapon(v)
-
-				if (itemTable and hook.Run("PlayerCanDropWeapon", player, itemTable, v, true)) then
-					local pos = player:GetPos();
-					
-					if IsValid(ragdollEntity) then
-						pos = ragdollEntity:GetPos();
-					end
-		
-					local info = {
-						itemTable = itemTable,
-						position = pos + Vector(0, 0, math.random(1, 48)),
-						angles = Angle(0, 0, 0)
-					}
-
-					if (hook.Run("PlayerAdjustDropWeaponInfo", player, info)) then
-						local entity = Clockwork.entity:CreateItem(
-							player, info.itemTable, info.position, info.angles
-						)
-
-						if (IsValid(entity)) then
-							hook.Run("PlayerDropWeapon", player, info.itemTable, entity, v)
-							player:StripWeapon(v:GetClass())
-							player:TakeItem(info.itemTable, true)
-						end
-					end
-				end
-			end
 			
-			local weaponData = player:GetCharacterData("weapons");
-			
-			if weaponData and istable(weaponData) then 
-				for i = 1, #weaponData do
-					if weaponData[i].uniqueID and weaponData[i].itemID then
-						local weaponItem = Clockwork.inventory:FindItemByID(player:GetInventory(), weaponData[i].uniqueID, weaponData[i].itemID);
-						
-						if (weaponItem and hook.Run("PlayerCanDropWeapon", player, weaponItem, NULL, true)) then
-							local pos = player:GetPos();
-							
-							if IsValid(ragdollEntity) then
-								pos = ragdollEntity:GetPos();
-							end
-						
-							local info = {
-								itemTable = weaponItem,
-								position = pos + Vector(0, 0, math.random(1, 48)),
-								angles = Angle(0, 0, 0)
-							};
-							
-							local entity = Clockwork.entity:CreateItem(player, info.itemTable, info.position, info.angles);
-							
-							if (IsValid(entity)) then
-								player:TakeItem(info.itemTable, true)
-							end
-						end
-					end
-				end
-			end
-			
-			--[[local shieldData = player:GetCharacterData("shield");
-			
-			if shieldData and shieldData.uniqueID and shieldData.itemID then
-				local shieldItem = Clockwork.inventory:FindItemByID(player:GetInventory(), shieldData.uniqueID, shieldData.itemID);
+				local info = {
+					itemTable = v,
+					position = pos + Vector(0, 0, math.random(1, 48)),
+					angles = Angle(0, 0, 0)
+				};
 				
-				if (shieldItem and hook.Run("PlayerCanDropWeapon", player, shieldItem, NULL, true)) then
-					local info = {
-						itemTable = shieldItem,
-						position = player:GetPos() + Vector(0, 0, math.random(1, 48)),
-						angles = Angle(0, 0, 0)
-					};
-					
-					local entity = Clockwork.entity:CreateItem(player, info.itemTable, info.position, info.angles);
-					
-					if (IsValid(entity)) then
-						player:TakeItem(info.itemTable, true)
-					end
+				local entity = Clockwork.entity:CreateItem(player, info.itemTable, info.position, info.angles);
+				
+				if (IsValid(entity)) then
+					player:TakeItem(info.itemTable, true)
 				end
-			end]]--
+			end
 		end
 	end
 end
@@ -3071,11 +2837,11 @@ function Clockwork.player:LightSpawn(player, weapons, ammo, bForceReturn)
 	local color = player:GetColor()	
 	local skin = player:GetSkin()
 
-	if (ammo) then
+	--[[if (ammo) then
 		if (type(ammo) != "table") then
 			ammo = self:GetAmmo(player, true)
 		end
-	end
+	end]]--
 
 	if (weapons) then
 		if (type(weapons) != "table") then
@@ -3088,6 +2854,16 @@ function Clockwork.player:LightSpawn(player, weapons, ammo, bForceReturn)
 	end
 
 	player.cwSpawnCallback = function(player, gamemodeHook)
+		player:SetPos(position)
+		player:SetSkin(skin)
+		player:SetModel(model)
+		player:SetColor(color)
+		player:SetArmor(armor)
+		player:SetHealth(health)
+		player:SetMaterial(material)
+		player:SetMoveType(moveType)
+		player:SetEyeAngles(angles)
+		
 		if (weapons) then
 			hook.Run("PlayerLoadout", player)
 
@@ -3098,19 +2874,9 @@ function Clockwork.player:LightSpawn(player, weapons, ammo, bForceReturn)
 			end
 		end
 
-		if (ammo) then
+		--[[if (ammo) then
 			self:GiveAmmo(player, ammo)
-		end
-
-		player:SetPos(position)
-		player:SetSkin(skin)
-		player:SetModel(model)
-		player:SetColor(color)
-		player:SetArmor(armor)
-		player:SetHealth(health)
-		player:SetMaterial(material)
-		player:SetMoveType(moveType)
-		player:SetEyeAngles(angles)
+		end]]--
 
 		if (gamemodeHook) then
 			special = special or false
@@ -3174,6 +2940,7 @@ function Clockwork.player:CharacterScreenAdd(player, character)
 		name = character.name,
 		model = character.model,
 		skin = character.skin,
+		gender = character.gender,
 		permakilled = character.data["permakilled"],
 		kills = character.data["kills"] or 0,
 		level = character.data["level"],
@@ -3183,7 +2950,7 @@ function Clockwork.player:CharacterScreenAdd(player, character)
 		location = character.data["LastZone"] or "unknown",
 		faith = character.faith,
 		subfaith = character.subfaith,
-		clothes = character.data["Clothes"],
+		clothes = character.data["clothes"],
 		helmet = character.data["helmet"],
 		shield = character.data["shield"],
 		weapons = character.data["weapons"],
@@ -3353,7 +3120,7 @@ function Clockwork.player:SetBasicSharedVars(player)
 end
 
 -- A function to get the character's ammo as a string.
-function Clockwork.player:GetCharacterAmmoString(player, character, bRawTable)
+--[[function Clockwork.player:GetCharacterAmmoString(player, character, bRawTable)
 	local ammo = table.Copy(character.ammo)
 
 	for k, v in pairs(self:GetAmmo(player)) do
@@ -3367,7 +3134,7 @@ function Clockwork.player:GetCharacterAmmoString(player, character, bRawTable)
 	else
 		return ammo
 	end
-end
+end]]--
 
 -- A function to get the character's data as a string.
 function Clockwork.player:GetCharacterDataString(player, character, bRawTable)
@@ -3577,7 +3344,7 @@ end
 -- A function to update a player's character.
 function Clockwork.player:UpdateCharacter(player)
 	player.cwCharacter.inventory = self:GetCharacterInventoryString(player, player.cwCharacter, true)
-	player.cwCharacter.ammo = self:GetCharacterAmmoString(player, player.cwCharacter, true)
+	--player.cwCharacter.ammo = self:GetCharacterAmmoString(player, player.cwCharacter, true)
 	player.cwCharacter.data = self:GetCharacterDataString(player, player.cwCharacter, true)
 end
 
@@ -3605,8 +3372,8 @@ function Clockwork.player:SaveCharacter(player, bCreate, character, Callback)
 					queryObj:Insert(tableKey, util.TableToJSON(character.traits))
 				elseif (k == "inventory") then
 					queryObj:Insert(tableKey, util.TableToJSON(Clockwork.inventory:ToSaveable(character.inventory)))
-				elseif (k == "ammo") then
-					queryObj:Insert(tableKey, util.TableToJSON(character.ammo))
+				--[[elseif (k == "ammo") then
+					queryObj:Insert(tableKey, util.TableToJSON(character.ammo))]]--
 				elseif (k == "data") then
 					queryObj:Insert(tableKey, util.TableToJSON(v))
 				else
@@ -3666,11 +3433,11 @@ function Clockwork.player:SaveCharacter(player, bCreate, character, Callback)
 
 			if (currentCharacter == character) then
 				queryObj:Update("_Inventory", self:GetCharacterInventoryString(player, character))
-				queryObj:Update("_Ammo", self:GetCharacterAmmoString(player, character))
+				---queryObj:Update("_Ammo", self:GetCharacterAmmoString(player, character))
 				queryObj:Update("_Data", self:GetCharacterDataString(player, character))
 			else
 				queryObj:Update("_Inventory", util.TableToJSON(Clockwork.inventory:ToSaveable(character.inventory)))
-				queryObj:Update("_Ammo", util.TableToJSON(character.ammo))
+				--queryObj:Update("_Ammo", util.TableToJSON(character.ammo))
 				queryObj:Update("_Data", util.TableToJSON(character.data))
 			end
 		queryObj:Execute()

@@ -321,13 +321,11 @@ function CLASS_TABLE:OnTakeFromPlayer(player)
 		local slots = {"Primary", "Secondary", "Tertiary"};
 		local weaponID = self.uniqueID;
 		
-		for i = 1, #slots do
-			if Clockwork.player:GetGear(player, slots[i]) then
-				if Clockwork.player:GetGear(player, slots[i]):GetItemTable().itemID == self.itemID then
-					if player.bgShieldData and player.bgShieldData.uniqueID and player.bgShieldData.realID then
-						if IsValid(player:GetWeapon(weaponID)) and player:GetWeapon(weaponID):GetNWString("activeShield") == player.bgShieldData.uniqueID then
-							Clockwork.kernel:ForceUnequipItem(player, player.bgShieldData.uniqueID, player.bgShieldData.realID);
-						end
+		if IsValid(player:GetWeapon(weaponID)) then
+			for k, v in pairs(player.equipmentSlots) do
+				if v and v.category == "Shields" then
+					if player:GetWeapon(weaponID):GetNWString("activeShield") == v.uniqueID then
+						Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
 					end
 				end
 			end
@@ -337,285 +335,12 @@ end
 
 -- Called to get whether a player has the item equipped.
 function CLASS_TABLE:HasPlayerEquipped(player, bIsValidWeapon, bMelee)
-	if !player:IsRagdolled() and !player.opponent then
-		local weaponClass = self.itemWeaponClass;
-		
-		if (self.baseItem == "weapon_base" or self.baseItem == "firearm_base") then
-			weaponClass = self.uniqueID;
-		end;
-
-		if (SERVER) then
-			local weapon = player:GetWeapon(weaponClass)
-			local itemTable = item.GetByWeapon(weapon)
-			local slots = {"Primary", "Secondary", "Tertiary"};
-
-			if (itemTable) then
-				if (itemTable.uniqueID == self.uniqueID and itemTable.itemID == self.itemID) then
-					return true
-				end
-			elseif player.bgShieldData and player.bgShieldData.uniqueID then
-				for i = 1, #slots do
-					local gear = Clockwork.player:GetGear(player, slots[i]);
-					
-					if IsValid(gear) and gear:GetItemTable().itemID == self.itemID then
-						weaponClass = self.uniqueID.."_"..player.bgShieldData.uniqueID;
-						weapon = player:GetWeapon(weaponClass);
-						
-						for k, v in pairs (player:GetWeapons()) do
-							--if (v:GetClass() == self.uniqueID.."_"..player.bgShieldData.uniqueID) then
-							if v:GetNWString("activeShield"):len() > 0 and v:GetNWString("activeShield") == player.bgShieldData.uniqueID then
-								return true;
-							end;
-						end;
-					end
-				end
-			end
-			
-			if self.category == "Weapons" or self.category == "Melee" or self.category == "Shields" or self.category == "Firearms" or self.category == "Javelins" then
-				for i = 1, #slots do
-					local gear = Clockwork.player:GetGear(player, slots[i]);
-					
-					if IsValid(gear) and gear:GetItemTable().uniqueID == self.uniqueID then
-						return true;
-					end
-				end
-			end
-		end
-
-		if (CLIENT and bIsValidWeapon) then
-			local shieldEquipped = false;
-			
-			if Clockwork.Client.bgshieldData and Clockwork.Client.bgshieldData.uniqueID then
-				shieldEquipped = true;
-			end
-			
-			for k, v in pairs (Clockwork.Client:GetWeapons()) do
-				if (v:GetClass() == weaponClass) then
-					return true;
-				elseif shieldEquipped == true then
-					if (v:GetClass() == self.uniqueID.."_"..Clockwork.Client.bgshieldData.uniqueID) then
-						return true;
-					end;
-				end;
-			end;
-			
-			return false;
-		end
-
-		return false
-	else
-		local weaponData = player.bgWeaponData or {}
-
-		if (CLIENT) then
-			weaponData = Clockwork.Client.bgWeaponData or {}
-		end
-
-		for i = 1, 3 do
-			if (weaponData[i] and (weaponData[i].itemID == self.uniqueID.." "..self.itemID or weaponData[i].itemID == self.itemID)) then
-				return true
-			end
-		end
-
-		return false
-	end
+	return Clockwork.equipment:GetItemEquipped(player, self);
 end
 
 -- Called when the player unequips the item weapon.
 function CLASS_TABLE:OnPlayerUnequipped(player, extraData)
-	local slots = {"Primary", "Secondary", "Tertiary"};
-	
-	if (self.baseItem == "weapon_base" or self.baseItem == "firearm_base") then
-		local weaponID = self.uniqueID;
-		
-		weapon = player:GetWeapon(weaponID);
-		
-		if (SERVER) then
-			for i = 1, #slots do
-				local gearEnt = Clockwork.player:GetGear(player, slots[i]);
-				
-				if IsValid(gearEnt) then
-					if gearEnt:GetItemTable().itemID == self.itemID then
-						local bgShieldData = player.bgShieldData;
-					
-						if bgShieldData and bgShieldData.uniqueID and bgShieldData.realID then
-							--if IsValid(player:GetWeapon(weaponID.."_"..player.bgShieldData.uniqueID)) then
-							if IsValid(weapon) and weapon:GetNWString("activeShield"):len() > 0 and weapon:GetNWString("activeShield") == bgShieldData.uniqueID then
-								if player.opponent then
-									local shieldItemTable = player:FindItemByID(bgShieldData.uniqueID, bgShieldData.realID);
-									
-									if shieldItemTable then
-										if (shieldItemTable and shieldItemTable.OnPlayerUnequipped and shieldItemTable.HasPlayerEquipped) then
-											if (shieldItemTable:HasPlayerEquipped(player)) then
-												shieldItemTable:OnPlayerUnequipped(player)
-												player:RebuildInventory()
-												player:SetWeaponRaised(false)
-											end
-										end
-									end
-								else
-									Clockwork.kernel:ForceUnequipItem(player, bgShieldData.uniqueID, bgShieldData.realID);
-								end
-								
-								break;
-							end
-						end
-					end
-				end
-			end
-		--[[elseif (CLIENT) then
-			if Clockwork.Client.bgshieldData and Clockwork.Client.bgshieldData.uniqueID then
-				weaponID = weaponID.."_"..Clockwork.Client.bgshieldData.uniqueID;
-			end]]
-		end
-	end;
-
-	if (!IsValid(weapon)) then
-		return 
-	end
-
-	local itemTable = item.GetByWeapon(weapon)
-	
-	if !itemTable then
-		itemTable = self;
-	end
-
-	if (itemTable:IsTheSameAs(self)) then
-		local class = weapon:GetClass()
-		
-		if (extraData == "unload") then
-			local ammo = itemTable:GetData("Ammo");
-			
-			if ammo and #ammo > 0 then
-				if #ammo == 1 then
-					if itemTable.usesMagazine and !string.find(ammo[1], "Magazine") then
-						local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
-						local magazineItem = item.CreateInstance(ammoItemID);
-						
-						if magazineItem and magazineItem.SetAmmoMagazine then
-							magazineItem:SetAmmoMagazine(1);
-							
-							player:GiveItem(magazineItem);
-						end
-					else
-						local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
-						
-						player:GiveItem(item.CreateInstance(ammoItemID));
-					end
-				elseif itemTable.usesMagazine then
-					local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
-					local magazineItem = item.CreateInstance(ammoItemID);
-					
-					if magazineItem and magazineItem.SetAmmoMagazine then
-						magazineItem:SetAmmoMagazine(#ammo);
-						
-						player:GiveItem(magazineItem);
-					end
-				else
-					for i = 1, #ammo do
-						local round = ammo[i];
-						
-						if round then
-							local roundItemID = string.gsub(string.lower(round), " ", "_");
-							local roundItemInstance = item.CreateInstance(roundItemID);
-							
-							player:GiveItem(roundItemInstance);
-						end
-					end
-				end
-				
-				itemTable:SetData("Ammo", {});
-			end
-		elseif (extraData != "drop") then
-			if (hook.Run("PlayerCanHolsterWeapon", player, self, weapon)) then
-				local giveItem, err = player:GiveItem(self);
-				
-				if (giveItem) then
-					hook.Run("PlayerHolsterWeapon", player, self, weapon)
-					player:SelectWeapon("begotten_fists")
-					player:StripWeapon(class)
-					
-					for i = 1, #slots do
-						local gear = Clockwork.player:GetGear(player, slots[i]);
-						
-						if IsValid(gear) and gear:GetItemTable().uniqueID == self.uniqueID then
-							Clockwork.player:RemoveGear(player, slots[i]);
-							break;
-						end
-					end
-					
-					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
-						local useSound = itemTable("useSound");
-						
-						if (useSound) then
-							if (type(useSound) == "table") then
-								player:EmitSound(useSound[math.random(1, #useSound)]);
-							else
-								player:EmitSound(useSound);
-							end;
-						elseif (useSound != false) then
-							player:EmitSound("begotten/items/first_aid.wav");
-						end;
-					end
-						
-					local weaponData = player.bgWeaponData or {}
-					
-					for i = 1, #weaponData do
-						if weaponData[i].uniqueID == self.uniqueID then
-							table.remove(weaponData, i);
-							break;
-						end
-					end
-
-					Clockwork.datastream:Start(player, "BGWeaponData", weaponData);
-					Clockwork.player:SaveGear(player);
-					
-					player.bgWeaponData = weaponData;
-				elseif (err) then
-					Schema:EasyText(player, "peru", err)
-				end
-			end
-		elseif (hook.Run("PlayerCanDropWeapon", player, self, weapon)) then
-			local trace = player:GetEyeTraceNoCursor()
-
-			if (player:GetShootPos():Distance(trace.HitPos) <= 192) then
-				local entity = Clockwork.entity:CreateItem(player, self, trace.HitPos)
-
-				if (IsValid(entity)) then		
-					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal)
-					hook.Run("PlayerDropWeapon", player, self, entity, weapon)
-
-					player:TakeItem(self, true)
-					player:SelectWeapon("begotten_fists")
-					player:StripWeapon(class);
-					
-					for i = 1, #slots do
-						local gear = Clockwork.player:GetGear(player, slots[i]);
-						
-						if IsValid(gear) and gear:GetItemTable().uniqueID == self.uniqueID then
-							Clockwork.player:RemoveGear(player, slots[i]);
-							break;
-						end
-					end
-					
-					local weaponData = player.bgWeaponData or {}
-
-					for i = 1, #weaponData do
-						if weaponData[i].uniqueID == self.uniqueID then
-							table.remove(weaponData, i);
-							break;
-						end
-					end
-
-					Clockwork.datastream:Start(player, "BGWeaponData", weaponData);
-					Clockwork.player:SaveGear(player);
-					
-					player.bgWeaponData = weaponData;
-				end
-			else
-				Schema:EasyText(player, "peru", "You cannot drop this item that far away.")
-			end
-		end
-	end
+	Clockwork.equipment:UnequipItem(player, self);
 end;
 
 -- A function to handle unequipping.
@@ -1018,27 +743,24 @@ function item.Register(itemTable)
 	
 	if (itemTable.model) then
 		util.PrecacheModel(itemTable.model);
-		
-		if (SERVER) then
-			Clockwork.kernel:AddFile(itemTable.model);
-		end;
 	end;
 	
 	if (itemTable.attachmentModel) then
 		util.PrecacheModel(itemTable.attachmentModel);
-		
-		if (SERVER) then
-			Clockwork.kernel:AddFile(itemTable.attachmentModel);
-		end;
 	end;
 	
 	if (itemTable.replacement) then
 		util.PrecacheModel(itemTable.replacement);
-		
-		if (SERVER) then
-			Clockwork.kernel:AddFile(itemTable.replacement);
-		end;
 	end;
+	
+	if (itemTable.group) then
+		if itemTable.genderless then
+			util.PrecacheModel("models/begotten/"..itemTable.group..".mdl");
+		else
+			util.PrecacheModel("models/begotten/"..itemTable.group.."_female.mdl");
+			util.PrecacheModel("models/begotten/"..itemTable.group.."_male.mdl");
+		end
+	end
 end;
 
 -- A function to create a copy of an item instance.
@@ -1285,9 +1007,9 @@ if (SERVER) then
 		local itemEntity = player:GetItemEntity();
 		
 		if (player:HasItemInstance(itemTable)) then
-			if (itemTable.HasPlayerEquipped and itemTable:HasPlayerEquipped(player)) then
+			--[[if (itemTable.HasPlayerEquipped and itemTable:HasPlayerEquipped(player)) then
 				Clockwork.kernel:ForceUnequipItem(player, itemTable.uniqueID, itemTable.itemID)
-			end;
+			end;]]--
 			
 			if (itemTable.OnUse) then
 				if (itemEntity and itemEntity.cwItemTable == itemTable) then
@@ -1303,7 +1025,7 @@ if (SERVER) then
 				end;
 				
 				if (!bNoSound) then
-					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 						local useSound = itemTable("useSound");
 						
 						if (useSound) then
@@ -1366,7 +1088,7 @@ if (SERVER) then
 				end;
 				
 				if (!bNoSound) then
-					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 						local dropSound = itemTable("dropSound");
 						
 						if (dropSound) then
@@ -1398,7 +1120,7 @@ if (SERVER) then
 			player:TakeItem(itemTable);
 			
 			if (!bNoSound) then
-				if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+				if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 					local destroySound = itemTable("destroySound");
 					
 					if (destroySound) then
@@ -1518,10 +1240,6 @@ else
 		item.CreateInstance(
 			data.index, data.itemID, data.data
 		);
-	end);
-	
-	netstream.Hook("BGWeaponData", function(data)
-		Clockwork.Client.bgWeaponData = data;
 	end);
 end;
 

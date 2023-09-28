@@ -102,33 +102,6 @@ function GM:OnePlayerSecond(player, curTime, infoTable)
 	player:SetNetVar("Cash", player:GetCash())
 	player:SetNetVar("CustomColor", player:GetCharacterData("CustomColor"));
 
-	-- This shit is redundant as hell lol.
-	
-	--local clothesItem = player:GetClothesItem();
-	
-	--[[if (clothesItem) then
-		player:NetworkClothesData()
-	else
-		player:RemoveClothes()
-	end]]--
-
-	-- Health regen handled separately.
-	--[[if (config.GetVal("health_regeneration_enabled") and hook.Run("PlayerShouldHealthRegenerate", player)) then
-		hook.Run("PlayerHealthRegenerate", player, health, maxHealth)
-	end]]--
-
-	--[[if (color.r == 255 and color.g == 0 and color.b == 0 and color.a == 0) then
-		player:SetColor(Color(255, 255, 255, 255))
-	end]]--
-
-	--[[for k, v in pairs(player:GetWeapons()) do
-		local ammoType = v:GetPrimaryAmmoType()
-
-		if (ammoType == "grenade" and player:GetAmmoCount(ammoType) == 0) then
-			player:StripWeapon(v:GetClass())
-		end
-	end]]--
-
 	if (player.cwDrunkTab) then
 		for k, v in pairs(player.cwDrunkTab) do
 			if (curTime >= v) then
@@ -285,16 +258,6 @@ function GM:PlayerDisconnected(player)
 		for k, v in pairs (_player.GetAll()) do
 			if v:IsAdmin() then
 				Clockwork.chatBox:Add(v, nil, "disconnect", player:SteamName().." has disconnected from the server.");
-			end
-		end
-	end
-end
-
-function GM:PlayerSwitchWeapon(player, oldWeapon, newWeapon)
-	if player.cwGearTab then
-		for k, v in pairs(player.cwGearTab) do
-			if IsValid(v) then
-				v.nextColorCheck = nil;
 			end
 		end
 	end
@@ -553,15 +516,7 @@ function GM:PlayerCanTakeFromStorage(player, storageTable, itemTable)
 end
 
 -- Called when a player has given an item to storage.
-function GM:PlayerGiveToStorage(player, storageTable, itemTable)
-	if (player:IsWearingItem(itemTable)) then
-		player:RemoveClothes()
-	end
-
-	if (player:IsWearingAccessory(itemTable)) then
-		player:RemoveAccessory(itemTable)
-	end
-end
+function GM:PlayerGiveToStorage(player, storageTable, itemTable) end
 
 -- Called when a player is given an item.
 function GM:PlayerItemGiven(player, itemTable, bForce)
@@ -571,14 +526,6 @@ end
 -- Called when a player has an item taken.
 function GM:PlayerItemTaken(player, itemTable)
 	Clockwork.storage:SyncItem(player, itemTable)
-
-	if (player:IsWearingItem(itemTable)) then
-		player:RemoveClothes()
-	end
-
-	if (player:IsWearingAccessory(itemTable)) then
-		player:RemoveAccessory(itemTable)
-	end
 end
 
 -- Called when a player's cash has been updated.
@@ -943,7 +890,6 @@ function GM:PlayerSpawn(player)
 			--Clockwork.attributes:ClearBoosts(player)
 
 			self:PlayerSetModel(player)
-			self:PlayerLoadout(player)
 
 			if (player:FlashlightIsOn()) then
 				player:Flashlight(false)
@@ -979,7 +925,7 @@ function GM:PlayerSpawn(player)
 				--player:SetArmor(rank.maxArmor or player:GetMaxArmor())
 			end
 
-			if (istable(FACTION.respawnInv)) then
+			--[[if (istable(FACTION.respawnInv)) then
 				local inventory = player:GetInventory()
 				local itemQuantity
 
@@ -992,7 +938,7 @@ function GM:PlayerSpawn(player)
 						end
 					end
 				end
-			end
+			end]]--
 
 			if (prevRelation) then
 				for k, v in pairs(ents.GetAll()) do
@@ -1036,14 +982,15 @@ function GM:PlayerSpawn(player)
 			end
 
 			if (player.cwFirstSpawn) then
-				local ammo = player:GetSavedAmmo()
+				--[[local ammo = player:GetSavedAmmo()
 
 				for k, v in pairs(ammo) do
 					if (!string.find(k, "p_") and !string.find(k, "s_")) then
 						player:GiveAmmo(v, k) ammo[k] = nil
 					end
-				end
+				end]]--
 			else
+				Clockwork.player:LightSpawn(player, true);
 				player:UnLock()
 			end
 		end
@@ -1062,33 +1009,6 @@ function GM:PlayerSpawn(player)
 		end;
 		
 		Clockwork.player:SetRecognises(player, player, RECOGNISE_TOTAL)
-		
-		local clothesItem = player:GetClothesItem()
-
-		if (clothesItem) then
-			player:SetClothesData(clothesItem)
-		end
-		
-		local helmetData = player:GetCharacterData("helmet");
-
-		if helmetData and helmetData.uniqueID and helmetData.itemID then
-			local helmetItem = Clockwork.inventory:FindItemByID(player:GetInventory(), helmetData.uniqueID, helmetData.itemID)
-			
-			if helmetItem then
-				if !player.bgClothesData or (player.bgClothesData and player.bgClothesData[helmetItem.bodyGroup].uniqueID ~= helmetItem.uniqueID) then
-					Clockwork.item:Use(player, helmetItem, true);
-				end
-			else
-				player:SetCharacterData("helmet", nil);
-				player:SetNetVar("helmet", 0);
-				player:SetBodygroup(0, 0);
-				player:SetBodygroup(1, 0);
-			end
-		else
-			player:SetNetVar("helmet", 0);
-			player:SetBodygroup(0, 0);
-			player:SetBodygroup(1, 0);
-		end
 		
 		Clockwork.datastream:Start(player, "RadioState", player:GetCharacterData("radioState", false) or false);
 		
@@ -1111,7 +1031,41 @@ end
 
 -- Choose the model for hands according to their player model.
 function GM:PlayerSetHandsModel(player, entity)
-	local model = player:GetModel()
+	local model = player:GetModel();
+	
+	if string.find(model, "models/begotten/heads") then
+		local clothesItem = player:GetClothesEquipped();
+
+		if clothesItem and clothesItem.group then
+			if clothesItem.genderless then
+				model = "models/begotten/"..clothesItem.group..".mdl";
+			else
+				model = "models/begotten/"..clothesItem.group.."_"..string.lower(player:GetGender())..".mdl";
+			end
+		else
+			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local factionTable = Clockwork.faction:FindByID(faction);
+			
+			if factionTable then
+				local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+				
+				if subfaction and factionTable.subfactions then
+					for k, v in pairs(factionTable.subfactions) do
+						if k == subfaction and v.models then
+							model = v.models[string.lower(player:GetGender())].clothes;
+						
+							break;
+						end
+					end
+				end
+				
+				if string.find(model, "models/begotten/heads") then
+					model = factionTable.models[string.lower(player:GetGender())].clothes;
+				end
+			end
+		end
+	end
+		
 	local simpleModel = player_manager.TranslateToPlayerModelName(model)
 	local info = Clockwork.animation:GetHandsInfo(model) or player_manager.TranslatePlayerHands(simpleModel)
 
@@ -1372,17 +1326,6 @@ end
 -- Called when a player has been given a weapon.
 function GM:PlayerGivenWeapon(player, class, itemTable)
 	Clockwork.inventory:Rebuild(player)
-
-	--[[if (item.IsWeapon(itemTable) and !itemTable:IsFakeWeapon()) then
-		if itemTable.slot then
-			for i = 1, #itemTable.slot do
-				if table.HasValue(WEAPON_SLOTS, itemTable.slot[i]) then
-					Clockwork.player:CreateGear(player, itemTable.slot[i], itemTable);
-					break;
-				end
-			end
-		end;
-	end]]--
 end
 
 -- Called when a player attempts to create a character.
@@ -1458,7 +1401,7 @@ function GM:GetFallDamage(player, velocity)
 	if damage > 5 and player.opponent then
 		return 10000;
 	else
-		if player.bgCharmData and player.HasCharmEquipped and player:HasCharmEquipped("boot_contortionist") then
+		if player.GetCharmEquipped and player:GetCharmEquipped("boot_contortionist") then
 			damage = damage * 0.5;
 		end
 	end
@@ -1503,8 +1446,10 @@ function GM:PlayerDataStreamInfoSent(player)
 			if (faction) then
 				local genders = {GENDER_MALE, GENDER_FEMALE}
 				local gender = faction.singleGender or genders[math.random(1, #genders)]
-				local models = faction.models[string.lower(gender)]
+				local models = faction.models[string.lower(gender)].heads
 				local model = models[math.random(1, #models)]
+
+				model = "models/begotten/heads/"..model.."_gore.mdl";
 
 				Clockwork.player:LoadCharacter(player, 1, {
 					faction = faction.name,
@@ -1604,12 +1549,8 @@ function GM:PlayerRestoreCharacterData(player, data)
 		data["PhysDesc"] = Clockwork.kernel:ModifyPhysDesc(data["PhysDesc"])
 	end
 
-	if (!data["Clothes"]) then
-		data["Clothes"] = {}
-	end
-
-	if (!data["Accessories"]) then
-		data["Accessories"] = {}
+	if (!data["Equipment"]) then
+		data["Equipment"] = {}
 	end
 
 	if (!data["Traits"]) then
@@ -3309,7 +3250,6 @@ function GM:PlayerCharacterInitialized(player)
 
 	timer.Simple(FrameTime() * 0.5, function()
 		Clockwork.inventory:SendUpdateAll(player)
-		player:NetworkAccessories()
 	end)
 
 	netstream.Start(player, "CharacterInit", player:GetCharacterKey())
@@ -3318,10 +3258,6 @@ function GM:PlayerCharacterInitialized(player)
 	local spawnRank = Clockwork.faction:GetDefaultRank(playerFaction) or Clockwork.faction:GetLowestRank(playerFaction)
 
 	player:SetFactionRank(player:GetFactionRank() or spawnRank)
-
-	--[[if (string.find(player:Name(), "SCN")) then
-		player:SetFactionRank("SCN")
-	end]]--
 
 	local rankName, rankTable = player:GetFactionRank()
 
@@ -3403,7 +3339,7 @@ function GM:PlayerCharacterLoaded(player)
 	player.cwLightSpawn = false
 	player.cwChangeClass = false
 	player.cwInfoTable = player.cwInfoTable or {}
-	player.cwSpawnAmmo = player.cwSpawnAmmo or {}
+	--player.cwSpawnAmmo = player.cwSpawnAmmo or {}
 	player.cwJumpPower = config.Get("jump_power"):Get()
 	player.cwWalkSpeed = config.Get("walk_speed"):Get()
 	player.cwRunSpeed = config.Get("run_speed"):Get()
@@ -3422,9 +3358,6 @@ function GM:PlayerCharacterLoaded(player)
 	Clockwork.player:ReturnProperty(player)
 	Clockwork.player:SetInitialized(player, true)
 
-	player.bgBackpackData = nil;
-	player.bgCharmData = nil;
-	player.bgShieldData = nil;
 	player.cwFirstSpawn = false
 	
 	player:SetNetVar("Faction", player:GetFaction());
@@ -3454,16 +3387,6 @@ function GM:PlayerCharacterLoaded(player)
 		CHARACTER = nil
 	end
 
-	local itemsList = Clockwork.inventory:GetAsItemsList(
-		player:GetInventory()
-	)
-
-	for k, v in pairs(itemsList) do
-		if (v.OnRestorePlayerGear) then
-			v:OnRestorePlayerGear(player)
-		end
-	end
-
 	if (playerFlags) then
 		Clockwork.player:GiveFlags(player, playerFlags)
 	end
@@ -3474,164 +3397,6 @@ function GM:PlayerCharacterLoaded(player)
 		local class = Clockwork.class:FindByID(className)
 
 		Clockwork.class:Set(player, class.index, nil, true)
-	end
-	
-	--if (player.cwFirstSpawn) then
-		Clockwork.player:StripGear(player);
-	--end
-	
-	local accessoryData = player:GetAccessoryData()
-	local clothesItem = player:GetClothesItem()
-
-	--[[if (clothesItem) then
-		player:SetClothesData(clothesItem)
-	end]]--
-	
-	local backpackData = player:GetCharacterData("backpacks")
-	local backpackFound = false;
-	
-	if (backpackData) then
-		for i = 1, #backpackData do
-			if backpackData[i] and backpackData[i].uniqueID and backpackData[i].itemID then
-				local backpackItem = Clockwork.inventory:FindItemByID(player:GetInventory(), backpackData[i].uniqueID, backpackData[i].itemID);
-				
-				if backpackItem then
-					if not backpackItem:HasPlayerEquipped(player) then
-						Clockwork.item:Use(player, backpackItem, true);
-						backpackFound = true;
-					else
-						backpackFound = true;
-					end
-				else
-					backpackData[i] = nil;
-				end
-			end
-		end
-		
-		player:SetCharacterData("backpacks", backpackData);
-	end
-	
-	if not backpackFound then
-		player:SetCharacterData("backpacks", nil);
-		player:SetNetVar("backpacks", 0);
-	end
-	
-	local charmData = player:GetCharacterData("charms");
-	local charmFound = false;
-	
-	if (charmData) then
-		for i = 1, #charmData do
-			if charmData[i] and charmData[i].uniqueID and charmData[i].itemID then
-				local charmItem = Clockwork.inventory:FindItemByID(player:GetInventory(), charmData[i].uniqueID, charmData[i].itemID);
-				
-				if charmItem then
-					if not charmItem:HasPlayerEquipped(player) then
-						Clockwork.item:Use(player, charmItem, true);
-						charmFound = true;
-					else
-						charmFound = true;
-					end
-				else
-					charmData[i] = nil;
-				end
-			end
-		end
-		
-		player:SetCharacterData("charms", charmData);
-		player:SetNetVar("charms", charmData);
-	end
-	
-	if not charmFound then
-		player:SetCharacterData("charms", nil);
-		player:SetNetVar("charms", nil);
-	end
-	
-	for k, v in pairs(accessoryData) do
-		local itemTable = player:FindItemByID(v, k)
-
-		if (itemTable) then
-			itemTable:OnWearAccessory(player, true)
-		else
-			accessoryData[k] = nil
-		end
-	end
-
-	--[[local helmetData = player:GetCharacterData("helmet");
-
-	if helmetData and helmetData.uniqueID and helmetData.itemID then
-		local helmetItem = Clockwork.inventory:FindItemByID(player:GetInventory(), helmetData.uniqueID, helmetData.itemID)
-		
-		if helmetItem then
-			if !player.bgClothesData or (player.bgClothesData and player.bgClothesData[helmetItem.bodyGroup].uniqueID ~= helmetItem.uniqueID) then
-				Clockwork.item:Use(player, helmetItem, true);
-			end
-		else
-			player:SetCharacterData("helmet", nil);
-			player:SetNetVar("helmet", 0);
-			player:SetBodygroup(0, 0);
-			player:SetBodygroup(1, 0);
-		end
-	else
-		player:SetNetVar("helmet", 0);
-		player:SetBodygroup(0, 0);
-		player:SetBodygroup(1, 0);
-	end]]--
-	
-	local weaponData = player:GetCharacterData("weapons");
-	local weaponFound = false;
-
-	if weaponData and #weaponData > 0 then
-		--local shield_weapon_equipped = false;
-		
-		for i = 1, #weaponData do
-			if weaponData[i].uniqueID and weaponData[i].itemID then
-				local weaponItem = Clockwork.inventory:FindItemByID(player:GetInventory(), weaponData[i].uniqueID, weaponData[i].itemID);
-				
-				if weaponItem then
-					if not weaponItem:HasPlayerEquipped(player) then
-						if i > 1 then
-							timer.Simple(0.1 * (i - 1), function()
-								if IsValid(player) then
-									Clockwork.item:Use(player, weaponItem, true);
-									weaponFound = true;
-								end
-							end)
-						else
-							Clockwork.item:Use(player, weaponItem, true);
-							weaponFound = true;
-						end
-					else
-						--[[local weaponClass = weaponItem.uniqueID;
-
-						if player.bgShieldData and not table.IsEmpty(player.bgShieldData) and !shield_weapon_equipped then
-							if weaponItem.shields and table.HasValue(weaponItem.shields, player.bgShieldData.uniqueID) then
-								shield_weapon_equipped = true;
-								weaponClass = weaponClass.."_"..player.bgShieldData.uniqueID;
-								weaponFound = true;
-							end
-						end
-						
-						player:Give(weaponClass, weaponItem);]]--
-					end
-				end
-			end
-		end
-		
-		timer.Simple(0.5, function()
-			if IsValid(player) then
-				Clockwork.player:SaveGear(player);
-			end
-		end);
-	end
-	
-	if not weaponFound then
-		player:SetCharacterData("weapons", nil);
-	end
-	
-	if clothesItem then
-		player:SetSharedVar("clothesString", clothesItem.uniqueID);
-	else
-		player:SetSharedVar("clothesString", nil);
 	end
 end
 
@@ -3671,7 +3436,26 @@ function GM:PlayerAdjustNextPunchInfo(player, info) end
 function GM:PlayerUseUnknownItemFunction(player, itemTable, itemFunction) end
 
 -- Called when a player's character table should be adjusted.
-function GM:PlayerAdjustCharacterTable(player, character) end
+function GM:PlayerAdjustCharacterTable(player, character)
+	-- Compatibility for new heads system.
+	local model = character[Clockwork.kernel:SetCamelCase("Model", true)];
+
+	if !string.find(model, "models/begotten/heads") then
+		local _, findEnd = string.find(model, "male_");
+		
+		if findEnd then
+			character[Clockwork.kernel:SetCamelCase("Model", true)] = "models/begotten/heads/male"..string.sub(model, findEnd, findEnd + 2).."_gore.mdl";
+			return;
+		end
+			
+		_, findEnd = string.find(model, "female_");
+
+		if findEnd then
+			character[Clockwork.kernel:SetCamelCase("Model", true)] = "models/begotten/heads/female"..string.sub(model, findEnd, findEnd + 2).."_gore.mdl";
+			return;
+		end
+	end
+end
 
 -- Called when a player's character screen info should be adjusted.
 function GM:PlayerAdjustCharacterScreenInfo(player, character, info)
@@ -3761,7 +3545,6 @@ end
 
 -- Called just before a player dies.
 function GM:DoPlayerDeath(player, attacker, damageInfo)
-	Clockwork.player:DropWeapons(player, attacker)
 	Clockwork.player:SetAction(player, false)
 	Clockwork.player:SetDrunk(player, false)
 
@@ -3799,9 +3582,9 @@ function GM:DoPlayerDeath(player, attacker, damageInfo)
 	
 	-- Check if player is in a duel.
 	if not player.opponent then
-		player:SetCharacterData("Ammo", {}, true)
+		--player:SetCharacterData("Ammo", {}, true)
 		player:StripWeapons()
-		player.cwSpawnAmmo = {}
+		--player.cwSpawnAmmo = {}
 		player:StripAmmo()
 	end
 
@@ -3889,11 +3672,11 @@ function GM:ItemEntityDestroyed(itemEntity, itemTable) end
 
 -- Called when a player's weapons should be given.
 function GM:PlayerLoadout(player)
-	local weapons = Clockwork.class:Query(player:Team(), "weapons")
-	local ammo = Clockwork.class:Query(player:Team(), "ammo")
+	--local weapons = Clockwork.class:Query(player:Team(), "weapons")
+	--local ammo = Clockwork.class:Query(player:Team(), "ammo")
 
 	player.cwSpawnWeps = {}
-	player.cwSpawnAmmo = {}
+	--player.cwSpawnAmmo = {}
 
 	if (Clockwork.player:HasFlags(player, "t")) then
 		if !player:HasWeapon("gmod_tool") then
@@ -3927,7 +3710,7 @@ function GM:PlayerLoadout(player)
 		end
 	end]]--
 
-	if (weapons) then
+	--[[if (weapons) then
 		for k, v in pairs(weapons) do
 			if (!player:HasItemByID(v)) then
 				local itemTable = item.CreateInstance(v)
@@ -3945,7 +3728,7 @@ function GM:PlayerLoadout(player)
 		for k, v in pairs(ammo) do
 			Clockwork.player:GiveSpawnAmmo(player, k, v)
 		end
-	end
+	end]]--
 
 	hook.Run("PlayerGiveWeapons", player)
 

@@ -19,99 +19,11 @@ local ITEM = item.New(nil, true);
 	ITEM.requireFaith = {};
 	ITEM.excludeSubfactions = {};
 	ITEM.repairItem = "armor_repair_kit";
-	
-	-- A function to get the model name.
-	function ITEM:GetModelName(player, group, modelOverride)
-		local modelName = nil
-
-		if (!player) then
-			player = Clockwork.Client
-		end
-
-		local defaultModelName = Clockwork.player:GetDefaultModel(player);
-		
-		if modelOverride then
-			defaultModelName = modelOverride;
-		end
-		
-		-- rofl this shit is awful - DETrooper
-		--[[if (group) then
-			modelName = string.gsub(string.lower(Clockwork.player:GetDefaultModel(player)), "^.-/.-/", "")
-		else
-			modelName = string.gsub(string.lower(Clockwork.player:GetDefaultModel(player)), "^.-/.-/.-/", "")
-		end]]--
-
-		if (!string.find(defaultModelName, "male") and !string.find(defaultModelName, "female")) then
-			if (group) then
-				group = "group05/"
-			else
-				group = ""
-			end
-
-			if (SERVER) then
-				if (player:GetGender() == GENDER_FEMALE) then
-					return group.."female_04.mdl"
-				else
-					return group.."male_05.mdl"
-				end
-			elseif (player:GetGender() == GENDER_FEMALE) then
-				return group.."female_04.mdl"
-			else
-				return group.."male_05.mdl"
-			end
-		else
-			-- much better
-			local male_find = string.find(defaultModelName, "/male_");
-			local female_find = string.find(defaultModelName, "/female_");
-			
-			if male_find then
-				modelName = string.sub(defaultModelName, male_find + 1, string.len(defaultModelName));
-			elseif female_find then
-				modelName = string.sub(defaultModelName, female_find + 1, string.len(defaultModelName));
-			end
-				
-			return modelName
-		end
-	end
+	ITEM.slots = {"Armor"};
+	ITEM.equipmentSaveString = "clothes";
 
 	-- Called when the item's client side model is needed.
 	function ITEM:GetClientSideModel(modelName, genderOverride)
-		local newModelName = "";
-		local gender = "";
-	
-		if !modelName then
-			newModelName = self:GetModelName();
-		else
-			if (!string.find(modelName, "male") and !string.find(modelName, "female")) then
-				if (group) then
-					group = "group05/"
-				else
-					group = ""
-				end
-				
-				if genderOverride then
-					gender = genderOverride;
-				elseif IsValid(player) then
-					if (player:GetGender() == GENDER_FEMALE) then
-						newModelName = group.."female_04.mdl";
-					else
-						newModelName = group.."male_05.mdl";
-					end
-				else
-					newModelName = group.."male_05.mdl";
-				end
-			else
-				local male_find = string.find(modelName, "/male_");
-				local female_find = string.find(modelName, "/female_");
-				
-				if male_find then
-					newModelName = string.sub(modelName, male_find + 1, string.len(modelName));
-				elseif female_find then
-					newModelName = string.sub(modelName, female_find + 1, string.len(modelName));
-				end
-			end
-		end
-		
 		local replacement = nil
 
 		if (self.GetReplacement) then
@@ -122,30 +34,34 @@ local ITEM = item.New(nil, true);
 			return replacement
 		elseif (self.replacement) then
 			return self.replacement
-		elseif (self.group) then
-			return "models/begotten/"..self.group.."/"..newModelName;
 		end
 	end
+	
+	function ITEM:OnWear(player)
+		local replacement = nil
 
-	-- Called when a player changes clothes.
-	function ITEM:OnChangeClothes(player, bIsWearing)
-		if (bIsWearing) then
-			local replacement = nil
+		if (self.GetReplacement) then
+			replacement = self:GetReplacement(player)
+		end
 
-			if (self.GetReplacement) then
-				replacement = self:GetReplacement(player)
+		if (isstring(replacement)) then
+			player:SetModel(replacement)
+		elseif (self.replacement) then
+			player:SetModel(self.replacement)
+		elseif (self.group) and player:IsRagdolled() then
+			local ragdollEntity = player:GetRagdollEntity();
+			
+			if IsValid(ragdollEntity) and player:Alive() then
+				local model;
+				
+				if self.genderless then
+					model = "models/begotten/"..self.group..".mdl";
+				else
+					model = "models/begotten/"..self.group.."_"..string.lower(player:GetGender())..".mdl";
+				end
+				
+				ragdollEntity:SetNWString("clothes", model);
 			end
-
-			if (isstring(replacement)) then
-				player:SetModel(replacement)
-			elseif (self.replacement) then
-				player:SetModel(self.replacement)
-			elseif (self.group) then
-				player:SetModel("models/begotten/"..self.group.."/"..self:GetModelName(player))
-			end
-		else
-			Clockwork.player:SetDefaultModel(player)
-			Clockwork.player:SetDefaultSkin(player)
 		end
 		
 		if self.concealsFace == true then
@@ -155,24 +71,11 @@ local ITEM = item.New(nil, true);
 				player:SetSharedVar("faceConcealed", false);
 			end
 		end
-
-		if (self.OnChangedClothes) then
-			self:OnChangedClothes(player, bIsWearing)
-		end
-	end
-
-	-- Called to get whether a player has the item equipped.
-	function ITEM:HasPlayerEquipped(player, bIsValidWeapon)
-		if (CLIENT) then
-			return Clockwork.player:IsWearingItem(self)
-		else
-			return player:IsWearingItem(self)
-		end
 	end
 
 	-- Called when a player has unequipped the item.
 	function ITEM:OnPlayerUnequipped(player, extraData, bSkipProgressBar)
-		if self:HasPlayerEquipped(player) then
+		if Clockwork.equipment:UnequipItem(player, self, nil, !bSkipProgressBar) then
 			local action = Clockwork.player:GetAction(player);
 			
 			if action == "putting_on_armor" or action == "taking_off_armor" then
@@ -204,11 +107,9 @@ local ITEM = item.New(nil, true);
 					end
 				end);
 			else
-				player:RemoveClothes()
-				
 				local useSound = self.useSound;
 				
-				if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+				if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 					if (useSound) then
 						if (type(useSound) == "table") then
 							player:EmitSound(useSound[math.random(1, #useSound)]);
@@ -223,15 +124,34 @@ local ITEM = item.New(nil, true);
 				if self.concealsFace == true then
 					player:SetSharedVar("faceConcealed", false);
 				end
+				
+				if (self.group) and player:IsRagdolled() then
+					local ragdollEntity = player:GetRagdollEntity();
+					
+					if IsValid(ragdollEntity) and player:Alive() then
+						ragdollEntity:SetNWString("clothes", nil);
+					end
+				end
+				
+				Clockwork.player:SetDefaultModel(player);
+				Clockwork.player:SetDefaultSkin(player);
+				hook.Run("PlayerSetHandsModel", player, player:GetHands());
+				player:RebuildInventory();
 			end
+			
+			return true;
 		end
+		
+		return false;
+	end
+	
+	function ITEM:HasPlayerEquipped(player)
+		return player:GetClothesEquipped(self);
 	end
 	
 	-- Called when a player has unequipped the item.
 	function ITEM:OnTakeFromPlayer(player)
-		if (player:IsWearingItem(self)) then
-			player:SetBodygroupClothes(self, true)
-			
+		if (player:GetClothesEquipped() == self) then
 			if self.concealsFace == true then
 				player:SetSharedVar("faceConcealed", false);
 			end
@@ -240,7 +160,7 @@ local ITEM = item.New(nil, true);
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position)
-		if (player:IsWearingItem(self)) then
+		if (player:GetClothesEquipped() == self) then
 			Schema:EasyText(player, "peru", "You cannot drop an item you're currently wearing.")
 			return false
 		end
@@ -308,16 +228,16 @@ local ITEM = item.New(nil, true);
 		end
 		
 		if self.hasHelmet then
-			local helmetData = player:GetCharacterData("helmet");
+			local helmetItem = self:GetHelmetEquipped();
 			
-			if helmetData and helmetData.uniqueID and helmetData.itemID then
+			if helmetItem then
 				Schema:EasyText(player, "peru", "You cannot wear this, as this set of armor has a helmet and you already have a helmet equipped!")
 				return false
 			end
 		end
 
 		if (player:Alive() and !player:IsRagdolled()) then
-			local clothesItem = player:GetClothesItem();
+			local clothesItem = player:GetClothesEquipped();
 			
 			if clothesItem then
 				if clothesItem.attributes and table.HasValue(clothesItem.attributes, "not_unequippable") then
@@ -379,7 +299,7 @@ local ITEM = item.New(nil, true);
 						return false;
 					end
 				
-					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 						local useSound = self("useSound");
 						
 						if (useSound) then
@@ -393,12 +313,11 @@ local ITEM = item.New(nil, true);
 						end;
 					end;
 					
-					player:SetClothesData(self);
+					self:OnWear(player);
+					Clockwork.equipment:EquipItem(player, self, "Armor");
 					
-					-- jank shit for clientside footsteps
-					player:SetSharedVar("clothesString", self.uniqueID);
-				
 					hook.Run("PlayerUseItem", player, self, itemEntity);
+					hook.Run("PlayerSetHandsModel", player, player:GetHands());
 					
 					return true;
 				end
@@ -417,18 +336,5 @@ local ITEM = item.New(nil, true);
 	
 	function ITEM:OnInstantiated()
 		-- why is this here?
-		--printp("FUCKED")
 	end;
-
-	if (CLIENT) then
-		function ITEM:GetClientSideInfo()
-			if (!self:IsInstance()) then return end
-
-			if (Clockwork.player:IsWearingItem(self)) then
-				return "Is wearing? Yes."
-			else
-				return "Is wearing? No."
-			end
-		end
-	end
 ITEM:Register();

@@ -143,28 +143,20 @@ local inpat = input
 function SWEP:Deploy()
 	if SERVER then
 		if IsValid(self.Owner) and self.Owner:IsPlayer() then
-			local shieldData = self.Owner.bgShieldData;
+			local shieldItem = self.Owner:GetShieldEquipped();
 			
-			if shieldData and shieldData.uniqueID and shieldData.realID then
-				local itemTable = self.Owner:FindItemByID(shieldData.uniqueID, shieldData.realID);
-				
-				if (itemTable) then
-					local slots = {"Primary", "Secondary", "Tertiary"};
-					
-					for i = 1, #slots do
-						local gear = Clockwork.player:GetGear(self.Owner, slots[i]);
+			if (shieldItem) then
+				for i, v in ipairs(shieldItem.slots) do
+					if v and v.canUseShields then
+						local weapon = self.Owner:GetWeapon(v.uniqueID);
 						
-						if IsValid(gear) and gear:GetItemTable().canUseShields then
-							local weapon = self.Owner:GetWeapon(gear:GetItemTable().uniqueID);
-							
-							if IsValid(weapon) then
-								weapon:EquipShield(shieldData.uniqueID);
-							end
-							
-							break;
+						if IsValid(weapon) then
+							weapon:EquipShield(shieldItem.uniqueID);
 						end
+						
+						break;
 					end
-				end;
+				end
 			end
 		end
 	end

@@ -32,7 +32,6 @@ function cwPossession:PlayerCanUseCommand(player, commandTable, arguments)
 			"RavenSpeakClan",
 			"RavenSpeakFaction",
 			"RavenReply",
-			"Relay",
 			"Warcry",
 			"Diagnose",
 			"StorageGiveCash",

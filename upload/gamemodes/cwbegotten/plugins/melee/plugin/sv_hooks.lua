@@ -143,7 +143,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 			local damage = damageInfo:GetDamage();
 
 			if (entity:IsPlayer()) then
-				local armorTable = entity:GetClothesItem();
+				local armorTable = entity:GetClothesEquipped();
 
 				if (armorTable) then
 					local hitGroup = Clockwork.kernel:GetRagdollHitGroup(entity, damageInfo:GetDamagePosition());
@@ -160,7 +160,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 						if attacker:IsPlayer() then
 							if (armorTable.attributes) and table.HasValue(armorTable.attributes, "electrified") then
 								if IsValid(activeWeapon) and activeWeapon.BlockTable then
-									local clothesItem = attacker:GetClothesItem();
+									local clothesItem = attacker:GetClothesEquipped();
 									local wepBlockTable = GetTable(activeWeapon.BlockTable);
 									
 									if (activeWeapon:GetClass() == "begotten_fists" and clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate")) or wepBlockTable["blockeffect"] == "MetalSpark" then
@@ -212,14 +212,14 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 						position = victimPosition + Vector(0, 0, 70);
 					end
 				
-					local helmetTable = entity:GetCharacterData("helmet");
+					local helmetItem = entity:GetHelmetEquipped();
 
-					if (!helmetTable or table.IsEmpty(helmetTable)) then
-						local armorTable = entity:GetClothesItem();
+					if (!helmetItem) then
+						local clothesItem = entity:GetClothesEquipped();
 						
-						if armorTable and armorTable.effectiveLimbs and armorTable.effectiveLimbs[hitGroup] then
-							if (armorTable.type) then
-								local material = armorTable.type;
+						if clothesItem and clothesItem.effectiveLimbs and clothesItem.effectiveLimbs[hitGroup] then
+							if (clothesItem.type) then
+								local material = clothesItem.type;
 								
 								if (material) then
 									material = string.lower(material);
@@ -248,8 +248,8 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 								end;
 								
 								playlowdamage = false;
-							elseif armorTable and armorTable.hitParticle then
-								effectName = armorTable.hitParticle;
+							elseif clothesItem and clothesItem.hitParticle then
+								effectName = clothesItem.hitParticle;
 								playlowdamage = true;
 							end
 						else
@@ -265,43 +265,39 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 								armorSound = althitbody
 							end
 						end
-					elseif (helmetTable and !table.IsEmpty(helmetTable)) then
-						local helmetItem = Clockwork.inventory:FindItemByID(entity:GetInventory(), helmetTable.uniqueID, helmetTable.itemID);
+					elseif (helmetItem) then
+						local headMat = helmetItem.type;
 						
-						if (helmetItem) then 
-							local headMat = helmetItem.type;
+						if (headMat) then
+							headMat = string.lower(headMat);
+						
+							if (headMat == "cloth") then
+								armorSound = "armor/cloth_damage_0"..math.random(1,7)..".wav";
+							elseif (headMat == "chainmail") then
+								armorSound = "armor/chainmail_damage_0"..math.random(1,7)..".wav";
+							elseif (headMat == "leather") then
+								armorSound = "armor/leather_damage_0"..math.random(1,9)..".wav";
+							elseif (headMat == "plate") then
+								armorSound = "armor/plate_damage_0"..math.random(1,7)..".wav";
+							end;
+						else
+							armorSound = hitbody
+						end
+						
+						if (damage > 15) then
+							effectName = "bloodsplat";
 							
-							if (headMat) then
-								headMat = string.lower(headMat);
-							
-								if (headMat == "cloth") then
-									armorSound = "armor/cloth_damage_0"..math.random(1,7)..".wav";
-								elseif (headMat == "chainmail") then
-									armorSound = "armor/chainmail_damage_0"..math.random(1,7)..".wav";
-								elseif (headMat == "leather") then
-									armorSound = "armor/leather_damage_0"..math.random(1,9)..".wav";
-								elseif (headMat == "plate") then
-									armorSound = "armor/plate_damage_0"..math.random(1,7)..".wav";
-								end;
+							if didthrust and attacker:GetNWBool("Riposting") != true then
+								armorSound = althitbody;
 							else
-								armorSound = hitbody
-							end
+								armorSound = hitbody;
+							end;
 							
-							if (damage > 15) then
-								effectName = "bloodsplat";
-								
-								if didthrust and attacker:GetNWBool("Riposting") != true then
-									armorSound = althitbody;
-								else
-									armorSound = hitbody;
-								end;
-								
-								playlowdamage = false;
-							elseif helmetItem.hitParticle then
-								effectName = helmetItem.hitParticle;
-								playlowdamage = true;
-							end
-						end;
+							playlowdamage = false;
+						elseif helmetItem.hitParticle then
+							effectName = helmetItem.hitParticle;
+							playlowdamage = true;
+						end
 					end;
 				end;
 			end;

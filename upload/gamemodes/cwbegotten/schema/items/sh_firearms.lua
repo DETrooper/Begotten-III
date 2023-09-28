@@ -210,6 +210,28 @@ local ITEM = Clockwork.item:New("firearm_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
+	ITEM.name = "Sweeper";
+	ITEM.model = "models/weapons/w_nik_trenchy.mdl";
+	ITEM.weight = 3.6;
+	ITEM.uniqueID = "begotten_sweeper";
+	ITEM.description = "An old machine of war, operated by pump and fed by Old World Grapeshot. It has seen much use over the years.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/sweeper.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(2, 2.84, 0);
+	ITEM.attachmentOffsetVector = Vector(-4, 3.54, -6.36);
+	
+	ITEM.ammoCapacity = 6;
+	ITEM.ammoTypes = {"Old World Grapeshot"};
+	ITEM.attributes = {"sundering_shot_grapeshot"};
+	ITEM.firearmType = "Repeating Shotgun";
+	ITEM.reloadTime = 1; -- Seconds (for one round)
+	ITEM.reloadSounds = {"weapons/nikm1987trench/shotgun_shell_00.wav"};
+	
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5000, supercrateOnly = true, supercrateItems = {["old_world_grapeshot"] = {min = 10, max = 20}}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.name = "Thompson";
 	ITEM.model = "models/_tails_ models/props/rust/thompson/thompson.mdl";
 	ITEM.weight = 4.5;

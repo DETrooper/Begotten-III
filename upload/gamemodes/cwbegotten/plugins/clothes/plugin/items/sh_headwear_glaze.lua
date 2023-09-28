@@ -6,7 +6,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.uniqueID = "gatekeeper_helmet"
 	ITEM.category = "Helms"
 	ITEM.bodyGroup = 1
-	ITEM.bodyGroupVal = 6
+	ITEM.bodyGroupVal = 4
+	ITEM.headSuffix = "_glaze";
 	ITEM.description = "An iron helmet mass-produced in an ancient era, now commonly used by the Holy Order of the Gatekeepers."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
@@ -29,7 +30,6 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
-	
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
@@ -40,7 +40,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.uniqueID = "hood"
 	ITEM.category = "Helms"
 	ITEM.bodyGroup = 1
-	ITEM.bodyGroupVal = 4
+	ITEM.bodyGroupVal = 1
+	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "A ragged hood commonly worn by those who inhabit the Wasteland to protect themselves from the elements."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
@@ -57,7 +58,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.uniqueID = "hood_mask"
 	ITEM.category = "Helms"
 	ITEM.bodyGroup = 1
-	ITEM.bodyGroupVal = 5
+	ITEM.bodyGroupVal = 2
+	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "A ragged hood and bandana commonly worn by those who inhabit the Wasteland to protect themselves from the elements."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
@@ -75,6 +77,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.category = "Helms"
 	ITEM.bodyGroup = 1
 	ITEM.bodyGroupVal = 1
+	ITEM.headSuffix = "_glaze";
 	ITEM.description = "A tall leather watchtower hat embroidered with the markings of the Second Inquisition."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
@@ -92,6 +95,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.category = "Helms"
 	ITEM.bodyGroup = 1
 	ITEM.bodyGroupVal = 2
+	ITEM.headSuffix = "_glaze";
 	ITEM.description = "A slouch hat used by some members of the Holy Order of the Glaze's Inquisitors."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
@@ -108,6 +112,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.category = "Helms"
 	ITEM.bodyGroup = 1
 	ITEM.bodyGroupVal = 3
+	ITEM.headSuffix = "_glaze";
 	ITEM.description = "An ornate watchtower hat used by distinguished members of the Holy Order of the Glaze's Inquisitors."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
@@ -123,7 +128,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.uniqueID = "scrap_helmet"
 	ITEM.category = "Helms"
 	ITEM.bodyGroup = 1
-	ITEM.bodyGroupVal = 12
+	ITEM.bodyGroupVal = 6
+	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "A makeshift helmet made of various scrap found from the Wasteland."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
@@ -156,7 +162,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.uniqueID = "wanderer_cap"
 	ITEM.category = "Helms"
 	ITEM.bodyGroup = 1
-	ITEM.bodyGroupVal = 9
+	ITEM.bodyGroupVal = 3
+	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "A leather hood used in past times as a coif by Knights of Sol, but now more commonly used by Wanderers."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
@@ -188,7 +195,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.uniqueID = "mail_coif"
 	ITEM.category = "Helms"
 	ITEM.bodyGroup = 1
-	ITEM.bodyGroupVal = 10
+	ITEM.bodyGroupVal = 4
+	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "A chainmail coif that provides some protection to the sides of the face."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
@@ -221,7 +229,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.uniqueID = "plate_helmet_mail_coif"
 	ITEM.category = "Helms"
 	ITEM.bodyGroup = 1
-	ITEM.bodyGroupVal = 11
+	ITEM.bodyGroupVal = 5
+	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "An iron helmet atop a mail coif. It provides good protection except for the face."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
@@ -254,7 +263,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.uniqueID = "fine_gatekeeper_helmet"
 	ITEM.category = "Helms"
 	ITEM.bodyGroup = 1
-	ITEM.bodyGroupVal = 13
+	ITEM.bodyGroupVal = 5
+	ITEM.headSuffix = "_glaze";
 	ITEM.description = "A more robust variant of the Gatekeeper Helmet made with fine steel."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
@@ -278,4 +288,68 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
 	
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Knight Helmet"
+	ITEM.model = "models/begotten/headgroups_props/knight_helmet.mdl"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/knight_plate_helmet.png"
+	ITEM.weight = 1.5
+	ITEM.uniqueID = "knight_helmet"
+	ITEM.category = "Helms"
+	ITEM.headReplacement = "models/begotten/heads/knight_helmet.mdl";
+	ITEM.description = "A Gothic helmet for use with the rest of a Knight's armor."
+	ITEM.requireFaction = {"Holy Hierarchy"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+
+	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 75
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
+	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+	ITEM.slashScale = 0.65; -- reduces slash damage by 35%
+	ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
+	ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Knight Justicar Helmet"
+	ITEM.model = "models/begotten/headgroups_props/knight_justicar_helmet.mdl"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/justicar_plate_helmet.png"
+	ITEM.weight = 1.5
+	ITEM.uniqueID = "knight_justicar_helmet"
+	ITEM.category = "Helms"
+	ITEM.headReplacement = "models/begotten/heads/knight_justicar_helmet.mdl";
+	ITEM.description = "Elite blackened steel adorned with the colors of a noble household."
+	ITEM.requireFaction = {"Holy Hierarchy"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+
+	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 80
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
+	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+	ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
+	ITEM.stabilityScale = 0.35; -- reduces stability damage by 65%
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
 ITEM:Register();

@@ -107,11 +107,51 @@ end
 
 -- A function to create the legs.
 function cwAnimatedLegs:CreateLegs()
-	self.LegsEntity = ClientsideModel(Clockwork.Client:GetModel(), RENDER_GROUP_OPAQUE_ENTITY)
+	local model = Clockwork.Client:GetModel();
+	
+	if string.find(model, "models/begotten/heads") then
+		local clothesItem = Clockwork.Client:GetClothesEquipped();
+		
+		if clothesItem and clothesItem.group then
+			if clothesItem.genderless then
+				model = "models/begotten/"..clothesItem.group..".mdl";
+			else
+				model = "models/begotten/"..clothesItem.group.."_"..string.lower(Clockwork.Client:GetGender())..".mdl"
+			end
+		else
+			local faction = Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction();
+			local factionTable = Clockwork.faction:FindByID(faction);
+			
+			if factionTable then
+				local subfaction = Clockwork.Client:GetSharedVar("kinisgerOverrideSubfaction") or Clockwork.Client:GetSharedVar("subfaction");
+				
+				if subfaction and factionTable.subfactions then
+					for k, v in pairs(factionTable.subfactions) do
+						if k == subfaction and v.models then
+							model = v.models[string.lower(Clockwork.Client:GetGender())].clothes;
+						
+							break;
+						end
+					end
+				end
+				
+				if string.find(model, "models/begotten/heads") then
+					model = factionTable.models[string.lower(Clockwork.Client:GetGender())].clothes;
+				end
+			end
+		end
+		
+		self.LegsEntity = ClientsideModel(model, RENDER_GROUP_OPAQUE_ENTITY)
+		self.LegsEntity:SetMaterial(Clockwork.Client:GetMaterial())
+	else
+		self.LegsEntity = ClientsideModel(model, RENDER_GROUP_OPAQUE_ENTITY)
+		self.LegsEntity:SetSkin(Clockwork.Client:GetSkin())
+		self.LegsEntity:SetMaterial(Clockwork.Client:GetMaterial())
+	end
+	
 	self.LegsEntity:SetNoDraw(true)
-	self.LegsEntity:SetSkin(Clockwork.Client:GetSkin())
-	self.LegsEntity:SetMaterial(Clockwork.Client:GetMaterial())
 	self.LegsEntity.LastTick = 0
+	self.LegsEntity.noDelete = true;
 end
 
 -- A function to get when a weapon is changed.
@@ -159,21 +199,58 @@ function cwAnimatedLegs:LegsThink(maxSeqGroundSpeed)
 	local curTime = CurTime()
 
 	if (IsValid(self.LegsEntity)) then
+		local model = Clockwork.Client:GetModel();
+		
+		if string.find(model, "models/begotten/heads") then
+			local clothesItem = Clockwork.Client:GetClothesEquipped();
+			
+			if clothesItem and clothesItem.group then
+				if clothesItem.genderless then
+					model = "models/begotten/"..clothesItem.group..".mdl";
+				else
+					model = "models/begotten/"..clothesItem.group.."_"..string.lower(Clockwork.Client:GetGender())..".mdl"
+				end
+			else
+				local faction = Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction();
+				local factionTable = Clockwork.faction:FindByID(faction);
+				
+				if factionTable then
+					local subfaction = Clockwork.Client:GetSharedVar("kinisgerOverrideSubfaction") or Clockwork.Client:GetSharedVar("subfaction");
+					
+					if subfaction and factionTable.subfactions then
+						for k, v in pairs(factionTable.subfactions) do
+							if k == subfaction and v.models then
+								model = v.models[string.lower(Clockwork.Client:GetGender())].clothes;
+							
+								break;
+							end
+						end
+					end
+					
+					if string.find(model, "models/begotten/heads") then
+						model = factionTable.models[string.lower(Clockwork.Client:GetGender())].clothes;
+					end
+				end
+			end
+		end
+		
+		if model ~= self.LegsEntity:GetModel() then
+			self.LegsEntity:Remove();
+			self.LegsEntity = nil;
+			
+			self:CreateLegs();
+			self:WeaponChanged(Clockwork.Client:GetActiveWeapon());
+			
+			return;
+		end
+		
 		if (Clockwork.Client:GetActiveWeapon() != self.OldWeapon) then
 			self.OldWeapon = Clockwork.Client:GetActiveWeapon()
 			self:WeaponChanged(self.OldWeapon)
 		end
-
-		if (self.LegsEntity:GetModel() != Clockwork.Client:GetModel()) then
-			self.LegsEntity:SetModel(Clockwork.Client:GetModel())
-			
-			if self.Sequence then
-				self.LegsEntity:ResetSequence(self.Sequence);
-			end
-		end
-
+		
 		self.LegsEntity:SetMaterial(Clockwork.Client:GetMaterial())
-		self.LegsEntity:SetSkin(Clockwork.Client:GetSkin())
+		--self.LegsEntity:SetSkin(Clockwork.Client:GetSkin())
 		self.Velocity = Clockwork.Client:GetVelocity():Length2D()
 		self.PlaybackRate = 1
 

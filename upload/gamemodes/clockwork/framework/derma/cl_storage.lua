@@ -619,29 +619,7 @@ function PANEL:Init()
 		if Clockwork.Client:IsAdmin() and IsValid(player) and player:IsPlayer() then
 			self.equipButton = vgui.Create("DButton", self.infoPlate)
 			
-			local equipped = false;
-			
-			if player:HasWeapon(self.itemTable.uniqueID) then
-				equipped = true;
-			end
-			
-			if !player.gearEnts then
-				player.gearEnts = ents.FindByClassAndParent("cw_gear", player);
-			end
-
-			if player.gearEnts then
-				for k, v in pairs(player.gearEnts) do
-					local itemTable = v:GetItemTable();
-
-					if itemTable.itemID == self.itemTable.itemID then
-						equipped = true;
-						
-						break;
-					end
-				end
-			end
-			
-			if equipped then
+			if player:GetItemEquipped(self.itemTable) then
 				self.equipButton:SetText("Unequip");
 				
 				function self.equipButton.DoClick(panel)

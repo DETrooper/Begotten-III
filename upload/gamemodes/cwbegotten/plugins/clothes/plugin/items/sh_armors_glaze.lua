@@ -1007,12 +1007,11 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
 ITEM.name = "Knight Plate";
+ITEM.group = "gatekeepers/knight_set"
 ITEM.model = "models/begotten/headgroup_props/knightarmor.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/knight_plate.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
-ITEM.concealsFace = true;
-ITEM.hasHelmet = true;
 ITEM.hitParticle = "MetalSpark";
 ITEM.protection = 85;
 ITEM.weight = 9;
@@ -1021,14 +1020,13 @@ ITEM.type = "plate";
 ITEM.description = "A set of Gothic steel plate armor, used by the Knights of Sol. It has been blessed with catalytic energy and thus cannot be worn by the unworthy.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Holy Hierarchy"};
-ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 ITEM.faction = "Holy Hierarchy";
+ITEM.genderless = true;
 
 ITEM.requiredbeliefs = {"hauberk"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
-	[HITGROUP_HEAD] = true,
 	[HITGROUP_CHEST] = true,
 	[HITGROUP_STOMACH] = true,
 	[HITGROUP_LEFTARM] = true,
@@ -1048,15 +1046,11 @@ ITEM.slashScale = 0.65; -- reduces slash damage by 35%
 ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
 ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 
-ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "leather", "steel_chunks", "cloth"}};
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "leather", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
-	--if (player:GetGender() == GENDER_FEMALE) then
-		return "models/begotten/gatekeepers/knight_set.mdl";
-	--else
-		--return "models/begotten/gatekeepers/highgatekeeper02.mdl";
-	--end;
+
 end;
 
 ITEM.runSound = {
@@ -1077,12 +1071,11 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
 ITEM.name = "Knight Justicar Plate";
+ITEM.group = "gatekeepers/knight_justicar"
 ITEM.model = "models/begotten/headgroups_props/justicararmor.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/knight_justicar_plate.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
-ITEM.concealsFace = true;
-ITEM.hasHelmet = true;
 ITEM.hitParticle = "MetalSpark";
 ITEM.protection = 90;
 ITEM.weight = 9;
@@ -1093,12 +1086,12 @@ ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Holy Hierarchy"};
 ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 ITEM.faction = "Holy Hierarchy";
+ITEM.genderless = true;
 
 ITEM.requiredbeliefs = {"hauberk"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
-	[HITGROUP_HEAD] = true,
 	[HITGROUP_CHEST] = true,
 	[HITGROUP_STOMACH] = true,
 	[HITGROUP_LEFTARM] = true,
@@ -1114,8 +1107,7 @@ ITEM.damageTypeScales = {
 
 ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
 ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.slashScale = 0.65; -- reduces slash damage by 35%
 ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
 ITEM.stabilityScale = 0.35; -- reduces stability damage by 65%
 
@@ -1123,11 +1115,7 @@ ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fi
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
-	--if (player:GetGender() == GENDER_FEMALE) then
-		return "models/begotten/gatekeepers/knight_justicar.mdl";
-	--else
-		--return "models/begotten/gatekeepers/highgatekeeper02.mdl";
-	--end;
+
 end;
 
 ITEM.runSound = {
@@ -1600,11 +1588,9 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 	end
 
 	if self:HasPlayerEquipped(player) then
-		player:RemoveClothes()
-		
 		local useSound = self.useSound;
 		
-		if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+		if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 			if (useSound) then
 				if (type(useSound) == "table") then
 					player:EmitSound(useSound[math.random(1, #useSound)]);
@@ -1624,14 +1610,12 @@ end
 
 -- Called when a player has unequipped the item.
 function ITEM:OnTakeFromPlayer(player)
-	if (player:IsWearingItem(self)) then
+	if (player:GetClothesEquipped() == self) then
 		if player:Alive() and player:GetSubfaith() == "Voltism" then
 			Schema:EasyText(player, "peru", "This armor is grafted into this character's skin and fused with their flesh, and cannot be unequipped!");
 			return false;
 		end
-		
-		player:SetBodygroupClothes(self, true)
-		
+
 		if self.concealsFace == true then
 			player:SetSharedVar("faceConcealed", false);
 		end
@@ -1640,7 +1624,7 @@ end
 
 -- Called when a player drops the item.
 function ITEM:OnDrop(player, position)
-	if (player:IsWearingItem(self)) then
+	if (player:GetClothesEquipped() == self) then
 		if player:Alive() and player:GetSubfaith() == "Voltism" then
 			Schema:EasyText(player, "peru", "This armor is grafted into this character's skin and fused with their flesh, and cannot be unequipped!");
 			return false;
@@ -1724,11 +1708,9 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 	end
 
 	if self:HasPlayerEquipped(player) then
-		player:RemoveClothes()
-		
 		local useSound = self.useSound;
 		
-		if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+		if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 			if (useSound) then
 				if (type(useSound) == "table") then
 					player:EmitSound(useSound[math.random(1, #useSound)]);
@@ -1748,14 +1730,12 @@ end
 
 -- Called when a player has unequipped the item.
 function ITEM:OnTakeFromPlayer(player)
-	if (player:IsWearingItem(self)) then
+	if (player:GetClothesEquipped() == self) then
 		if player:Alive() and player:GetSubfaith() == "Voltism" then
 			Schema:EasyText(player, "peru", "This armor is grafted into this character's skin and fused with their flesh, and cannot be unequipped!");
 			return false;
 		end
-		
-		player:SetBodygroupClothes(self, true)
-		
+
 		if self.concealsFace == true then
 			player:SetSharedVar("faceConcealed", false);
 		end
@@ -1764,7 +1744,7 @@ end
 
 -- Called when a player drops the item.
 function ITEM:OnDrop(player, position)
-	if (player:IsWearingItem(self)) then
+	if (player:GetClothesEquipped() == self) then
 		if player:Alive() and player:GetSubfaith() == "Voltism" then
 			Schema:EasyText(player, "peru", "This armor is grafted into this character's skin and fused with their flesh, and cannot be unequipped!");
 			return false;
@@ -1854,11 +1834,9 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 	end
 
 	if self:HasPlayerEquipped(player) then
-		player:RemoveClothes()
-		
 		local useSound = self.useSound;
 		
-		if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+		if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 			if (useSound) then
 				if (type(useSound) == "table") then
 					player:EmitSound(useSound[math.random(1, #useSound)]);
@@ -1878,13 +1856,11 @@ end
 
 -- Called when a player has unequipped the item.
 function ITEM:OnTakeFromPlayer(player)
-	if (player:IsWearingItem(self)) then
+	if (player:GetClothesEquipped() == self) then
 		if player:Alive() and player:GetSubfaith() == "Voltism" then
 			Schema:EasyText(player, "peru", "This armor is grafted into this character's skin and fused with their flesh, and cannot be unequipped!");
 			return false;
 		end
-		
-		player:SetBodygroupClothes(self, true)
 		
 		if self.concealsFace == true then
 			player:SetSharedVar("faceConcealed", false);
@@ -1894,7 +1870,7 @@ end
 
 -- Called when a player drops the item.
 function ITEM:OnDrop(player, position)
-	if (player:IsWearingItem(self)) then
+	if (player:GetClothesEquipped() == self) then
 		if player:Alive() and player:GetSubfaith() == "Voltism" then
 			Schema:EasyText(player, "peru", "This armor is grafted into this character's skin and fused with their flesh, and cannot be unequipped!");
 			return false;
@@ -1917,6 +1893,61 @@ ITEM.walkSound = {
 	"mvm/giant_scout/giant_scout_step_02.wav",
 	"mvm/giant_scout/giant_scout_step_03.wav",
 	"mvm/giant_scout/giant_scout_step_04.wav",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Master-at-Arms Gatekeeper Plate";
+ITEM.group = "gatekeepers/masteratarms";
+ITEM.model = "models/items/magic/armors/player_armors/player_armor_plate_magic.mdl"
+ITEM.iconoverride = "materials/begotten/ui/itemicons/masteratarms_gatekeeper_plate.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 0.75
+ITEM.hitParticle = "MetalSpark";
+ITEM.protection = 95
+ITEM.type = "chainmail";
+ITEM.weight = 6;
+ITEM.weightclass = "Medium";
+ITEM.description = "A unique set of Gatekeeper plate made of the finest materials, designed specifically to protect the Master-at-Arms.";
+ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+ITEM.requireFaction = {"Gatekeeper"};
+ITEM.faction = "Gatekeeper";
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.bluntScale = 0.5; -- reduces blunt damage by 50%
+ITEM.pierceScale = 0.5; -- reduces pierce damage by 50%
+ITEM.slashScale = 0.5; -- reduces slash damage by 50%
+ITEM.bulletScale = 0.5; -- reduces bullet damage by 50%
+
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-hauberk-1.wav.mp3",
+	"armormovement/body-hauberk-2.wav.mp3",
+	"armormovement/body-hauberk-3.wav.mp3",
+	"armormovement/body-hauberk-4.wav.mp3",
+	"armormovement/body-hauberk-5.wav.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/body-hauberk-b4.wav.mp3",
+	"armormovement/body-hauberk-b5.wav.mp3",
 };
 
 ITEM:Register();

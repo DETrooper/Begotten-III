@@ -5714,6 +5714,36 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("gore_king's_chosen_helmet");
+		RECIPE.name = "Gore King's Chosen Helmet";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["shagalaxian_steel_ingot"] = {amount = 2},
+			["leather"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["gore_kings_chosen_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 100;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("grockling_rattleshirt_armor");
 		RECIPE.name = "Grockling Rattleshirt Armor";
@@ -6339,6 +6369,7 @@ function cwRecipes:ClockworkInitialized()
 		};
 		RECIPE.result = {
 			["knight_plate"] = {amount = 1},
+			["knight_helmet"] = {amount = 1},
 		};
 		RECIPE.category = "Armor"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
@@ -6371,6 +6402,7 @@ function cwRecipes:ClockworkInitialized()
 		};
 		RECIPE.result = {
 			["knight_justicar_plate"] = {amount = 1},
+			["knight_justicar_helmet"] = {amount = 1},
 		};
 		RECIPE.category = "Armor"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";

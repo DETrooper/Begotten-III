@@ -88,7 +88,7 @@ function ENT:Think()
 									end
 									
 									--player.canTakeFallDamage = false;
-									player:Spawn();
+									Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);
 									player:GodEnable();
 									player:SetPos(Vector(15.167375, 4397.66115, -4967.96875)); -- Teleport to black box full of water.
 									--player:Freeze(true);

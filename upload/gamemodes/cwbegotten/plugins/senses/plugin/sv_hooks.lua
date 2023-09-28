@@ -17,7 +17,7 @@ function cwSenses:PlayerSwitchWeapon(player, oldWeapon, newWeapon)
 	
 	if !(cwBeliefs and (player:HasBelief("creature_of_the_dark") or player:HasBelief("the_black_sea"))) and !player:GetNWBool("hasThermal") and !player:GetNWBool("hasNV") then
 		if IsValid(newWeapon) and (newWeapon:GetClass() == "cw_senses") then
-			local clothesItem = player:GetClothesItem();
+			local clothesItem = player:GetClothesEquipped();
 			
 			if !clothesItem or (clothesItem and !clothesItem.attributes) or (clothesItem and clothesItem.attributes and !table.HasValue(clothesItem.attributes, "thermal_vision")) then
 				player:SensesOn()

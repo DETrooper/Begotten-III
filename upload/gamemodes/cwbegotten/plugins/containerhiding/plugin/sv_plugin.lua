@@ -39,7 +39,7 @@ function cwContainerHiding:AttemptHide(player, entity, bHide)
 			end;
 		end;
 		
-		if player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+		if player:GetMoveType() == MOVETYPE_WALK and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 			Schema:OpenSound(entity, player);
 		end
 		
@@ -61,7 +61,7 @@ function cwContainerHiding:AttemptHide(player, entity, bHide)
 			end;
 		end;
 		
-		if player:GetMoveType() == MOVETYPE_WALK and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+		if player:GetMoveType() == MOVETYPE_WALK and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 			Schema:CloseSound(entity, player);
 		end
 	end;

@@ -14,8 +14,8 @@ if map == "rp_begotten3" then
 			closeCamVector = Vector(-15000, 12599.680664, -1185),
 			charVector = Vector(-15050.21875, 12597, -1235),
 			charAngles = Angle(0, 0, 0),
-			charModel = "models/begotten/wanderers/wanderer/male_04.mdl",
-			charBodygroup = {1, 5},
+			charModel = {clothes = "models/begotten/wanderers/wanderer_male.mdl", head = "models/begotten/heads/male_04_wanderer.mdl"},
+			charBodygroup = {1, 2},
 			zone = "wasteland"
 		},
 		["The Third Inquisition"] = {
@@ -24,8 +24,8 @@ if map == "rp_begotten3" then
 			closeCamVector = Vector(-15000, 12599.680664, -1185),
 			charVector = Vector(-15050.21875, 12597, -1235),
 			charAngles = Angle(0, 0, 0),
-			charModel = "models/begotten/wanderers/wanderer/male_04.mdl",
-			charBodygroup = {1, 5},
+			charModel = {clothes = "models/begotten/wanderers/wanderer_male.mdl", head = "models/begotten/heads/male_04_wanderer.mdl"},
+			charBodygroup = {1, 2},
 			zone = "wasteland"
 		},
 		["Gatekeeper"] = {
@@ -34,8 +34,8 @@ if map == "rp_begotten3" then
 			closeCamVector = Vector(808, 12221.802734, -1035),
 			charVector = Vector(858.125, 12222, -1080.75),
 			charAngles = Angle(0, 180, 0),
-			charModel = "models/begotten/gatekeepers/gatekeepermedium/male_02.mdl",
-			charBodygroup = {1, 6},
+			charModel = {clothes = "models/begotten/gatekeepers/gatekeepermedium_male.mdl", head = "models/begotten/heads/male_02_glaze.mdl"},
+			charBodygroup = {1, 4},
 			zone = "tower"
 		},
 		["Holy Hierarchy"] = {
@@ -44,7 +44,7 @@ if map == "rp_begotten3" then
 			closeCamVector = Vector(2101.481935, 13703, 350),
 			charVector = Vector(2100.625, 13748.0625, 298.28125),
 			charAngles = Angle(0, -90, 0),
-			charModel = "models/begotten/gatekeepers/gatekeeperlight/male_07.mdl",
+			charModel = {clothes = "models/begotten/gatekeepers/minister_male.mdl", head = "models/begotten/heads/male_11_wanderer.mdl"},
 			zone = "tower"
 		},
 		["Goreic Warrior"] = {
@@ -57,8 +57,8 @@ if map == "rp_begotten3" then
 			closeCamVector = Vector(-4800, -11917.5, 12040),
 			charVector = Vector(-4754.8125, -11932.0625, 11989),
 			charAngles = Angle(0, 158, 0),
-			charModel = "models/begotten/goreicwarfighters/warfighter/male_91.mdl",
-			charBodygroup = {0, 4},
+			charModel = {clothes = "models/begotten/goreicwarfighters/warfighter_male.mdl", head = "models/begotten/heads/male_91_gore.mdl"},
+			charBodygroup = {1, 4},
 			charLight = Vector(-4826, -11908, 12040),
 			zone = "gore"
 		},
@@ -90,8 +90,8 @@ if map == "rp_begotten3" then
 			camAngles = Angle(0, -90, 0),
 		},
 		["Kinisger"] = {
-			charModel = "models/begotten/satanists/elegantrobes/male_07.mdl",
-			charBodygroup = {1, 7},
+			charModel = {clothes = "models/begotten/satanists/elegantrobes_male.mdl", head = "models/begotten/heads/male_07_satanist.mdl"},
+			charBodygroup = {1, 1},
 			camVector = Vector(-7390, -10185, -6996),
 			camAngles = Angle(0, -90, 0),
 		},
@@ -144,36 +144,35 @@ if map == "rp_begotten3" then
 			camAngles = Angle(-0.87, 1.681, 0),
 		},
 		["Legionary"] = {
-			charModel = "models/begotten/gatekeepers/gatekeepermedium/male_02.mdl",
-			charBodygroup = {1, 6},
+			charModel = {clothes = "models/begotten/gatekeepers/gatekeepermedium_male.mdl", head = "models/begotten/heads/male_02_glaze.mdl"},
+			charBodygroup = {1, 4},
 			camVector = Vector(804, 12202, -1033),
 			camAngles = Angle(0, 0, 0),
 		},
 		["Auxiliary"] = {
-			charModel = "models/begotten/gatekeepers/gatekeeperlight/male_04.mdl",
-			charBodygroup = {1, 0},
+			charModel = {clothes = "models/begotten/gatekeepers/gatekeeperlight_male.mdl", head = "models/begotten/heads/male_04_glaze.mdl"},
 			camVector = Vector(804, 12202, -1033),
 			camAngles = Angle(0, 0, 0),
 		},
 		["Praeventor"] = {
-			charModel = "models/begotten/wanderers/brigandine/male_04.mdl",
-			charBodygroup = {1, 5},
+			charModel = {clothes = "models/begotten/wanderers/brigandine_male.mdl", head = "models/begotten/heads/male_04_wanderer.mdl"},
+			charBodygroup = {1, 2},
 			camVector = Vector(804, 12202, -1033),
 			camAngles = Angle(0, 0, 0),
 		},
 		["Ministry"] = {
-			charModel = "models/begotten/gatekeepers/minister/male_11.mdl",
+			charModel = {clothes = "models/begotten/gatekeepers/minister_male.mdl", head = "models/begotten/heads/male_11_wanderer.mdl"},
 			camVector = Vector(2120, 13695, 350),
 			camAngles = Angle(2.5, 90, 0),
 		},
 		["Inquisition"] = {
-			charModel = "models/begotten/gatekeepers/inquisitor/male_07.mdl",
+			charModel = {clothes = "models/begotten/gatekeepers/inquisitor_male.mdl", head = "models/begotten/heads/male_07_glaze.mdl"},
 			charBodygroup = {1, 1},
 			camVector = Vector(2120, 13695, 350),
 			camAngles = Angle(2.5, 90, 0),
 		},
 		["Knights of Sol"] = {
-			charModel = "models/begotten/gatekeepers/knight_set.mdl",
+			charModel = {clothes = "models/begotten/gatekeepers/knight_set.mdl", head = "models/begotten/heads/male_09_glaze.mdl"},
 			camVector = Vector(2120, 13695, 350),
 			camAngles = Angle(2.5, 90, 0),
 		},
@@ -229,7 +228,7 @@ elseif map == "rp_begotten_redux" then
 			charVector = Vector(-4754.8125, -11932.0625, 11989),
 			charAngles = Angle(0, 158, 0),
 			charModel = "models/begotten/goreicwarfighters/warfighter/male_91.mdl",
-			charBodygroup = {0, 4},
+			charBodygroup = {1, 4},
 			charLight = Vector(-4826, -11908, 12040),
 			zone = "gore"
 		},
@@ -395,7 +394,7 @@ elseif map == "rp_scraptown" then
 			charVector = Vector(-4754.8125, -11932.0625, 11989),
 			charAngles = Angle(0, 158, 0),
 			charModel = "models/begotten/goreicwarfighters/warfighter/male_91.mdl",
-			charBodygroup = {0, 4},
+			charBodygroup = {1, 4},
 			charLight = Vector(-4826, -11908, 12040),
 			zone = "gore"
 		},
@@ -540,23 +539,47 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 		end
 	
 		local addAngles = Angle(0, 0, 0)
+		local faction = Clockwork.Client.SelectedFaction;
+		local subfaction = Clockwork.Client.SelectedSubfaction;
 
-		if Clockwork.Client.SelectedFaction then
+		if faction then
 			local model_path = "";
+			local head_path;
 			
 			if Clockwork.Client.ModelSelectionOpen and Clockwork.Client.SelectedModel then
-				model_path = Clockwork.Client.SelectedModel;
-			elseif Clockwork.Client.SelectedSubfaction and subfactionCamTable[Clockwork.Client.SelectedSubfaction] and subfactionCamTable[Clockwork.Client.SelectedSubfaction].charModel then
-				model_path = subfactionCamTable[Clockwork.Client.SelectedSubfaction].charModel;
+				local charModel = camTable[faction].charModel;
+				
+				if istable(charModel) then
+					model_path = charModel.clothes;
+					head_path = Clockwork.Client.SelectedModel;
+				else
+					model_path = charModel;
+				end
+			elseif subfaction and subfactionCamTable[subfaction] and subfactionCamTable[subfaction].charModel then
+				local charModel = subfactionCamTable[subfaction].charModel;
+
+				if istable(charModel) then
+					model_path = charModel.clothes;
+					head_path = charModel.head;
+				else
+					model_path = charModel;
+				end
 			else
-				model_path = camTable[Clockwork.Client.SelectedFaction].charModel;
+				local charModel = camTable[faction].charModel;
+				
+				if istable(charModel) then
+					model_path = charModel.clothes;
+					head_path = charModel.head;
+				else
+					model_path = charModel;
+				end
 			end
 			
-			if camTable[Clockwork.Client.SelectedFaction].charLight and not IsValid(Clockwork.Client.CreationDynamicLight) then
+			if camTable[faction].charLight and not IsValid(Clockwork.Client.CreationDynamicLight) then
 				local dynamicLight = DynamicLight("CharCreationDynamicLight");
 
 				if (dynamicLight) then
-					dynamicLight.pos = camTable[Clockwork.Client.SelectedFaction].charLight;
+					dynamicLight.pos = camTable[faction].charLight;
 					dynamicLight.r = 200;
 					dynamicLight.g = 200;
 					dynamicLight.b = 200;
@@ -570,53 +593,103 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 			end
 			
 			if (!IsValid(Clockwork.Client.CharSelectionModel)) then
-				Clockwork.Client.CharSelectionModel = ClientsideModel(model_path, RENDERGROUP_OPAQUE);
-				Clockwork.Client.CharSelectionModel:SetPos(camTable[Clockwork.Client.SelectedFaction].charVector);
-				Clockwork.Client.CharSelectionModel:SetAngles(camTable[Clockwork.Client.SelectedFaction].charAngles);
-				Clockwork.Client.CharSelectionModel:ResetSequence(Clockwork.Client.CharSelectionModel:LookupSequence("idle_subtle"));
-				Clockwork.Client.CharSelectionModel:SetEyeTarget(camTable[Clockwork.Client.SelectedFaction].camVector);
+				local modelEnt = ClientsideModel(model_path, RENDERGROUP_OPAQUE);
+				
+				modelEnt:SetPos(camTable[faction].charVector);
+				modelEnt:SetAngles(camTable[faction].charAngles);
+				modelEnt:ResetSequence(modelEnt:LookupSequence("idle_subtle"));
+				
+				if head_path then
+					modelEnt.HeadModel = ClientsideModel(head_path, RENDERGROUP_OPAQUE);
+				
+					modelEnt.HeadModel:SetParent(modelEnt);
+					modelEnt.HeadModel:AddEffects(EF_BONEMERGE);
+					modelEnt.HeadModel:SetEyeTarget(camTable[faction].camVector);
+				else
+					modelEnt:SetEyeTarget(camTable[faction].camVector);
+				end
 				
 				if (!Clockwork.Client.ModelSelectionOpen) then
-					if Clockwork.Client.SelectedSubfaction and subfactionCamTable[Clockwork.Client.SelectedSubfaction] and subfactionCamTable[Clockwork.Client.SelectedSubfaction].charBodygroup then
-						Clockwork.Client.CharSelectionModel:SetBodygroup(subfactionCamTable[Clockwork.Client.SelectedSubfaction].charBodygroup[1], subfactionCamTable[Clockwork.Client.SelectedSubfaction].charBodygroup[2]);
-					elseif camTable[Clockwork.Client.SelectedFaction].charBodygroup then
-						Clockwork.Client.CharSelectionModel:SetBodygroup(camTable[Clockwork.Client.SelectedFaction].charBodygroup[1], camTable[Clockwork.Client.SelectedFaction].charBodygroup[2]);
+					if subfaction and subfactionCamTable[subfaction] and subfactionCamTable[subfaction].charBodygroup then
+						if modelEnt.HeadModel then
+							modelEnt.HeadModel:SetBodygroup(subfactionCamTable[subfaction].charBodygroup[1], subfactionCamTable[subfaction].charBodygroup[2]);
+						else
+							modelEnt:SetBodygroup(subfactionCamTable[subfaction].charBodygroup[1], subfactionCamTable[subfaction].charBodygroup[2]);
+						end
+					elseif camTable[faction].charBodygroup then
+						if modelEnt.HeadModel then
+							modelEnt.HeadModel:SetBodygroup(camTable[faction].charBodygroup[1], camTable[faction].charBodygroup[2]);
+						else
+							modelEnt:SetBodygroup(camTable[faction].charBodygroup[1], camTable[faction].charBodygroup[2]);
+						end
 					end
 				end
-			elseif (Clockwork.Client.SelectedSubfaction and subfactionCamTable[Clockwork.Client.SelectedSubfaction] and subfactionCamTable[Clockwork.Client.SelectedSubfaction].charModel and Clockwork.Client.CharSelectionModel:GetModel() != model_path) or (Clockwork.Client.CharSelectionModel:GetModel() != model_path) then
+				
+				Clockwork.Client.CharSelectionModel = modelEnt;
+			elseif (subfaction and subfactionCamTable[subfaction] and subfactionCamTable[subfaction].charModel and (Clockwork.Client.CharSelectionModel:GetModel() != model_path or (head_path and (!IsValid(Clockwork.Client.CharSelectionModel.HeadModel) or Clockwork.Client.CharSelectionModel.HeadModel:GetModel() != head_path)))) or (Clockwork.Client.CharSelectionModel:GetModel() != model_path or (head_path and (!IsValid(Clockwork.Client.CharSelectionModel.HeadModel) or Clockwork.Client.CharSelectionModel.HeadModel:GetModel() != head_path))) then
+				if IsValid(Clockwork.Client.CharSelectionModel.HeadModel) then
+					Clockwork.Client.CharSelectionModel.HeadModel:Remove();
+				end
+				
 				Clockwork.Client.CharSelectionModel:Remove();
-				Clockwork.Client.CharSelectionModel = ClientsideModel(model_path, RENDERGROUP_OPAQUE);
-				Clockwork.Client.CharSelectionModel:SetPos(camTable[Clockwork.Client.SelectedFaction].charVector);
-				Clockwork.Client.CharSelectionModel:SetAngles(camTable[Clockwork.Client.SelectedFaction].charAngles);
-				Clockwork.Client.CharSelectionModel:ResetSequence(Clockwork.Client.CharSelectionModel:LookupSequence("idle_subtle"));
-				Clockwork.Client.CharSelectionModel:SetEyeTarget(camTable[Clockwork.Client.SelectedFaction].camVector);
+				
+				local modelEnt = ClientsideModel(model_path, RENDERGROUP_OPAQUE);
+				
+				modelEnt:SetPos(camTable[faction].charVector);
+				modelEnt:SetAngles(camTable[faction].charAngles);
+				modelEnt:ResetSequence(modelEnt:LookupSequence("idle_subtle"));
+				
+				if head_path then
+					modelEnt.HeadModel = ClientsideModel(head_path, RENDERGROUP_OPAQUE);
+				
+					modelEnt.HeadModel:SetParent(modelEnt);
+					modelEnt.HeadModel:AddEffects(EF_BONEMERGE);
+				else
+					modelEnt:SetEyeTarget(camTable[faction].camVector);
+				end
 				
 				if (!Clockwork.Client.ModelSelectionOpen) then
-					if Clockwork.Client.SelectedSubfaction and subfactionCamTable[Clockwork.Client.SelectedSubfaction] and subfactionCamTable[Clockwork.Client.SelectedSubfaction].charBodygroup then
-						Clockwork.Client.CharSelectionModel:SetBodygroup(subfactionCamTable[Clockwork.Client.SelectedSubfaction].charBodygroup[1], subfactionCamTable[Clockwork.Client.SelectedSubfaction].charBodygroup[2]);
-					elseif camTable[Clockwork.Client.SelectedFaction].charBodygroup then
-						Clockwork.Client.CharSelectionModel:SetBodygroup(camTable[Clockwork.Client.SelectedFaction].charBodygroup[1], camTable[Clockwork.Client.SelectedFaction].charBodygroup[2]);
+					if subfaction and subfactionCamTable[subfaction] and subfactionCamTable[subfaction].charBodygroup then
+						if modelEnt.HeadModel then
+							modelEnt.HeadModel:SetBodygroup(subfactionCamTable[subfaction].charBodygroup[1], subfactionCamTable[subfaction].charBodygroup[2]);
+						else
+							modelEnt:SetBodygroup(subfactionCamTable[subfaction].charBodygroup[1], subfactionCamTable[subfaction].charBodygroup[2]);
+						end
+					elseif camTable[faction].charBodygroup then
+						if modelEnt.HeadModel then
+							modelEnt.HeadModel:SetBodygroup(camTable[faction].charBodygroup[1], camTable[faction].charBodygroup[2]);
+						else
+							modelEnt:SetBodygroup(camTable[faction].charBodygroup[1], camTable[faction].charBodygroup[2]);
+						end
 					end
 				end
+				
+				Clockwork.Client.CharSelectionModel = modelEnt;
 			end;
 			
-			if camTable[Clockwork.Client.SelectedFaction].bannerModel and (!Clockwork.Client.SelectedSubfaction) then
+			if camTable[faction].bannerModel and (!subfaction) then
 				if (!IsValid(Clockwork.Client.CharSelectionBanner)) then
-					Clockwork.Client.CharSelectionBanner = ClientsideModel(camTable[Clockwork.Client.SelectedFaction].bannerModel, RENDERGROUP_OPAQUE);
-					Clockwork.Client.CharSelectionBanner:SetPos(camTable[Clockwork.Client.SelectedFaction].bannerVector);
-					Clockwork.Client.CharSelectionBanner:SetAngles(camTable[Clockwork.Client.SelectedFaction].bannerAngles);
-					Clockwork.Client.CharSelectionBanner:SetSkin(camTable[Clockwork.Client.SelectedFaction].bannerSkin);
-				elseif Clockwork.Client.CharSelectionBanner:GetSkin() ~= camTable[Clockwork.Client.SelectedFaction].bannerSkin then
-					Clockwork.Client.CharSelectionBanner:SetSkin(camTable[Clockwork.Client.SelectedFaction].bannerSkin);
+					local bannerEnt = ClientsideModel(camTable[faction].bannerModel, RENDERGROUP_OPAQUE);
+					
+					bannerEnt:SetPos(camTable[faction].bannerVector);
+					bannerEnt:SetAngles(camTable[faction].bannerAngles);
+					bannerEnt:SetSkin(camTable[faction].bannerSkin);
+					
+					Clockwork.Client.CharSelectionBanner = bannerEnt;
+				elseif Clockwork.Client.CharSelectionBanner:GetSkin() ~= camTable[faction].bannerSkin then
+					Clockwork.Client.CharSelectionBanner:SetSkin(camTable[faction].bannerSkin);
 				end
-			elseif subfactionCamTable[Clockwork.Client.SelectedSubfaction] and subfactionCamTable[Clockwork.Client.SelectedSubfaction].bannerModel then
+			elseif subfactionCamTable[subfaction] and subfactionCamTable[subfaction].bannerModel then
 				if (!IsValid(Clockwork.Client.CharSelectionBanner)) then
-					Clockwork.Client.CharSelectionBanner = ClientsideModel(subfactionCamTable[Clockwork.Client.SelectedSubfaction].bannerModel, RENDERGROUP_OPAQUE);
-					Clockwork.Client.CharSelectionBanner:SetPos(subfactionCamTable[Clockwork.Client.SelectedSubfaction].bannerVector);
-					Clockwork.Client.CharSelectionBanner:SetAngles(subfactionCamTable[Clockwork.Client.SelectedSubfaction].bannerAngles);
-					Clockwork.Client.CharSelectionBanner:SetSkin(subfactionCamTable[Clockwork.Client.SelectedSubfaction].bannerSkin);
-				elseif Clockwork.Client.CharSelectionBanner:GetSkin() ~= subfactionCamTable[Clockwork.Client.SelectedSubfaction].bannerSkin then
-					Clockwork.Client.CharSelectionBanner:SetSkin(subfactionCamTable[Clockwork.Client.SelectedSubfaction].bannerSkin);
+					local bannerEnt = ClientsideModel(subfactionCamTable[subfaction].bannerModel, RENDERGROUP_OPAQUE);
+					
+					bannerEnt:SetPos(subfactionCamTable[subfaction].bannerVector);
+					bannerEnt:SetAngles(subfactionCamTable[subfaction].bannerAngles);
+					bannerEnt:SetSkin(subfactionCamTable[subfaction].bannerSkin);
+					
+					Clockwork.Client.CharSelectionBanner = bannerEnt;
+				elseif Clockwork.Client.CharSelectionBanner:GetSkin() ~= subfactionCamTable[subfaction].bannerSkin then
+					Clockwork.Client.CharSelectionBanner:SetSkin(subfactionCamTable[subfaction].bannerSkin);
 				end
 			end
 
@@ -633,19 +706,19 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 			end;
 
 			if Clockwork.Client.ModelSelectionOpen then
-				camAngles = camTable[Clockwork.Client.SelectedFaction].camAngles;
-				camVector = camTable[Clockwork.Client.SelectedFaction].closeCamVector;
-			elseif Clockwork.Client.SelectedSubfaction then
-				if subfactionCamTable[Clockwork.Client.SelectedSubfaction] and subfactionCamTable[Clockwork.Client.SelectedSubfaction].camVector and subfactionCamTable[Clockwork.Client.SelectedSubfaction].camAngles then
-					camAngles = subfactionCamTable[Clockwork.Client.SelectedSubfaction].camAngles;
-					camVector = subfactionCamTable[Clockwork.Client.SelectedSubfaction].camVector;
+				camAngles = camTable[faction].camAngles;
+				camVector = camTable[faction].closeCamVector;
+			elseif subfaction then
+				if subfactionCamTable[subfaction] and subfactionCamTable[subfaction].camVector and subfactionCamTable[subfaction].camAngles then
+					camAngles = subfactionCamTable[subfaction].camAngles;
+					camVector = subfactionCamTable[subfaction].camVector;
 				else
-					camAngles = camTable[Clockwork.Client.SelectedFaction].camAngles;
-					camVector = camTable[Clockwork.Client.SelectedFaction].closeCamVector;
+					camAngles = camTable[faction].camAngles;
+					camVector = camTable[faction].closeCamVector;
 				end
 			else
-				camAngles = camTable[Clockwork.Client.SelectedFaction].camAngles;
-				camVector = camTable[Clockwork.Client.SelectedFaction].camVector;
+				camAngles = camTable[faction].camAngles;
+				camVector = camTable[faction].camVector;
 			end
 			
 			if (!Clockwork.Client.MenuVector) then Clockwork.Client.MenuVector = Vector(camVector); end;
@@ -673,6 +746,10 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 			}
 		else
 			if (IsValid(Clockwork.Client.CharSelectionModel)) then
+				if IsValid(Clockwork.Client.CharSelectionModel.HeadModel) then
+					Clockwork.Client.CharSelectionModel.HeadModel:Remove();
+				end
+				
 				Clockwork.Client.CharSelectionModel:Remove();
 			end;
 			

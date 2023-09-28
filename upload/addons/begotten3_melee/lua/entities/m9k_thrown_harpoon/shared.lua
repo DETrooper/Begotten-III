@@ -239,17 +239,14 @@ if SERVER then
 									self.ConditionLoss = 100;
 								end
 								
-								local shieldData = Ent.bgShieldData;
-								
-								if shieldData and shieldData.uniqueID and shieldData.realID then
-									local itemTable = Ent:FindItemByID(shieldData.uniqueID, shieldData.realID);
-									
-									if (itemTable) and !Ent.opponent then
-										if self.SticksInShields then
-											itemTable:TakeCondition(self.ConditionLoss or 50);
-										else
-											itemTable:TakeCondition(self.ConditionLoss or 34);
-										end
+								local shieldItem = Ent:GetShieldEquipped();
+
+								if (shieldItem) and !Ent.opponent then
+									if self.SticksInShields then
+										-- Never finished this implementation.
+										shieldItem:TakeCondition(self.ConditionLoss or 50);
+									else
+										shieldItem:TakeCondition(self.ConditionLoss or 34);
 									end
 								end
 							end

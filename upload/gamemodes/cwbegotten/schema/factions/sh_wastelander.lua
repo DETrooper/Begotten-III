@@ -51,20 +51,6 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 	FACTION.description = "The Gatekeepers are the front line of defence against the countless unholy horrors that threaten the Glaze. \nTheir ranks swell with conscripted power-hungry commoners and fanatical flagellants. \nThey must serve the Holy Hierarchy diligently and without question, no matter how outrageous their demands may be. \nIll-trained and poorly equipped, these soldiers are expected to lay their lives down to protect the Light. \nAnd so they shall.";
 	FACTION.availablefaiths = {"Faith of the Light"};
 	FACTION.alliedfactions = {"Holy Hierarchy"};
-	--[[FACTION.models = {
-		male = {
-			"models/begotten/gatekeepers/gatekeeperlight/male_02.mdl",
-			"models/begotten/gatekeepers/gatekeeperlight/male_04.mdl",
-			"models/begotten/gatekeepers/gatekeeperlight/male_05.mdl",
-			"models/begotten/gatekeepers/gatekeeperlight/male_06.mdl",
-			"models/begotten/gatekeepers/gatekeeperlight/male_07.mdl",
-			"models/begotten/gatekeepers/gatekeeperlight/male_08.mdl",
-			"models/begotten/gatekeepers/gatekeeperlight/male_09.mdl",
-			"models/begotten/gatekeepers/gatekeeperlight/male_11.mdl",
-			"models/begotten/gatekeepers/gatekeeperlight/male_12.mdl",
-			"models/begotten/gatekeepers/gatekeeperlight/male_16.mdl",
-		}
-	};]]--
 	FACTION.singleGender = GENDER_MALE;
 	FACTION.characterLimit = 1; -- # of characters of this faction a player can have.
 	FACTION.imposters = true;
@@ -156,51 +142,25 @@ FACTION_GATEKEEPER = FACTION:Register();
 local FACTION = Clockwork.faction:New("Holy Hierarchy");
 	local ministerModels = {
 		male = {
-			"models/begotten/gatekeepers/minister/male_01.mdl",
-			"models/begotten/gatekeepers/minister/male_02.mdl",
-			"models/begotten/gatekeepers/minister/male_03.mdl",
-			"models/begotten/gatekeepers/minister/male_04.mdl",
-			"models/begotten/gatekeepers/minister/male_05.mdl",
-			"models/begotten/gatekeepers/minister/male_06.mdl",
-			"models/begotten/gatekeepers/minister/male_07.mdl",
-			"models/begotten/gatekeepers/minister/male_08.mdl",
-			"models/begotten/gatekeepers/minister/male_09.mdl",
-			"models/begotten/gatekeepers/minister/male_11.mdl",
-			"models/begotten/gatekeepers/minister/male_12.mdl",
-			"models/begotten/gatekeepers/minister/male_16.mdl",
-		}
-	};
-	
-	local inquisitionModels = {
-		male = {
-			"models/begotten/gatekeepers/inquisitor/male_02.mdl",
-			"models/begotten/gatekeepers/inquisitor/male_04.mdl",
-			"models/begotten/gatekeepers/inquisitor/male_05.mdl",
-			"models/begotten/gatekeepers/inquisitor/male_06.mdl",
-			"models/begotten/gatekeepers/inquisitor/male_07.mdl",
-			"models/begotten/gatekeepers/inquisitor/male_08.mdl",
-			"models/begotten/gatekeepers/inquisitor/male_09.mdl",
-			"models/begotten/gatekeepers/inquisitor/male_11.mdl",
-			"models/begotten/gatekeepers/inquisitor/male_12.mdl",
-			"models/begotten/gatekeepers/inquisitor/male_16.mdl",
-		}
-	};
-	
-	local knightModels = {
-		male = {
-			"models/begotten/gatekeepers/minister/male_01.mdl",
-			"models/begotten/gatekeepers/minister/male_02.mdl",
-			"models/begotten/gatekeepers/minister/male_03.mdl",
-			"models/begotten/gatekeepers/minister/male_04.mdl",
-			"models/begotten/gatekeepers/minister/male_05.mdl",
-			"models/begotten/gatekeepers/minister/male_06.mdl",
-			"models/begotten/gatekeepers/minister/male_07.mdl",
-			"models/begotten/gatekeepers/minister/male_08.mdl",
-			"models/begotten/gatekeepers/minister/male_09.mdl",
-			"models/begotten/gatekeepers/minister/male_11.mdl",
-			"models/begotten/gatekeepers/minister/male_12.mdl",
-			"models/begotten/gatekeepers/minister/male_16.mdl",
-		}
+			clothes = "models/begotten/gatekeepers/minister_male.mdl",
+			heads = {
+				"male_01",
+				"male_02",
+				"male_03",
+				"male_04",
+				"male_05",
+				"male_06",
+				"male_07",
+				"male_08",
+				"male_09",
+				"male_11",
+				"male_12",
+				"male_13",
+				"male_16",
+				"male_22",
+				"male_56"
+			},
+		},
 	};
 
 	FACTION.disabled = false; -- For events.
@@ -215,8 +175,8 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 	FACTION.names = "glazic";
 	FACTION.subfactions = {
 		{name = "Ministry", subtitle = "The Ministry - The Privileged Few Overseers of Glazic Supremacy", description = "The Holy Hierarchy is perhaps the only surviving institution of the old world and is the only known church of the Light remaining. Many view the Holy Hierarchy as the direct continuation of the Empire of Light, including the Holy Hierarchy themselves, who push this narrative to solidify their grasp on their subjects. Any who doubt its legitimacy are executed on the spot. Lording over most of the 'civilized' peasantry that wander the wasteland, the Holy Hierarchy strictly enforces its religious codes, which are ever-changing at the whim of the Pope. At the very top of the Hierarchy lies the Pope, supreme in power. He lives in a penthouse at the top of the hotel in absolute luxury in comparison to the shanties that the rabble share. Below him lies the cardinals, who serve as the Pope's council. Lower still are the Bishops, many of whom are now in open rebellion against the new Pope, with some even claiming his title as their own. Lastly, there are the priests, who are barely above commoner status and equal in rank to those in the Knights of Sol or Inquisition. A priest's duties often involve searching ancient texts held within the grand archives for any advantage that could be offered to the Hierarchy over their rivals, or for clues to decipher the ramblings of the machine that so many wanderers speak of.", attributes = "ATTRIBUTES", models = ministerModels}, 
-		{name = "Inquisition", subtitle = "The Second Inquisition - Hunters, Judges, and Executioners", description = "The Holy Order of the Glaze's Inquisitors is an ancient institution, founded by Lord Maximus during his campaigns against the Black Hats and born of a need to destroy infilitrators and weed out heresy. Although disbanded after their task was completed, it would not be long before the Inquisition was re-instated, as enemies of the Glaze only grew in both numbers and ferocity. The coming of the Undergod and subsequent displacement of the Dark Lord from Hell only strengthened the need for the Inquisition, as unknown powers were now openly unleashed upon mankind. The Inquisition is the most important line of defense for the Holy Hierarchy, as they root out the hidden enemies of the Glaze and uphold religious doctrine. Inquisitors strictly abide by their 'Book of Law', which details their methodology and the rules by which all followers of the Glaze must adhere to. The inquisition also holds the unique ability to hold any member of Glazic society accountable to the 'Book of Law', including members of the Holy Hierarchy. Accusations of heresy are not taken lightly however, and being proved wrong after accusing someone in power may have disastrous consequences for the accuser.", attributes = {{Color(0, 225, 0), "(+) Pious: +50% increased faith gain"}, {Color(0, 225, 0), "(+) Starts with +50 maximum health"}}, --[[models = inquisitionModels]]}, 
-		{name = "Knights of Sol", subtitle = "The Knights of Sol - The Most Devoted Order of the Glaze", description = "Only a few years ago Skylight fell to Earth in a blazing inferno, the last promise of a future for mankind careening into the ground alongside it. From its innumerable enlightened inhabitants only seventeen emerged: the Glorious Seventeen. Donning glorious white armor and wielding sword glowing bright, the Glorious Seventeen slaughtered every demon that fell upon them. Thousands fell by their blade before the demons retreated into the darkness, and it seemed that humanity would live for at least another day. Although the Glorious Seventeen no longer walk this Earth, their legacy lives on in the newly founded Holy Order of the Knights of Sol. These Knights of Sol consist of the very best of the Holy Hierarchy, unmatched in prowess and seen by many of the faithful as guardian angels incarnate. Knights are given the absolute best equipment available in the royal armories. Despite this, Knights are never seen with muskets or any other sort of firearm, believing them too cowardly for someone of such noble stature. Knights of Sol are also known to keep squires in their service, often recruited from the ranks of the Gatekeepers.", attributes = {{Color(0, 225, 0), "(+) Bullet damage is reduced by 70%"}, {Color(0, 225, 0), "(+) Bulwark +25 poise and +25 stability"}, {Color(0, 225, 0), "(+) Starts with +100 maximum health"}, {Color(225, 0, 0), "(-) Burdened: Run speed is decreased by 5%"}}, models = knightModels}
+		{name = "Inquisition", subtitle = "The Second Inquisition - Hunters, Judges, and Executioners", description = "The Holy Order of the Glaze's Inquisitors is an ancient institution, founded by Lord Maximus during his campaigns against the Black Hats and born of a need to destroy infilitrators and weed out heresy. Although disbanded after their task was completed, it would not be long before the Inquisition was re-instated, as enemies of the Glaze only grew in both numbers and ferocity. The coming of the Undergod and subsequent displacement of the Dark Lord from Hell only strengthened the need for the Inquisition, as unknown powers were now openly unleashed upon mankind. The Inquisition is the most important line of defense for the Holy Hierarchy, as they root out the hidden enemies of the Glaze and uphold religious doctrine. Inquisitors strictly abide by their 'Book of Law', which details their methodology and the rules by which all followers of the Glaze must adhere to. The inquisition also holds the unique ability to hold any member of Glazic society accountable to the 'Book of Law', including members of the Holy Hierarchy. Accusations of heresy are not taken lightly however, and being proved wrong after accusing someone in power may have disastrous consequences for the accuser.", attributes = {{Color(0, 225, 0), "(+) Pious: +50% increased faith gain"}, {Color(0, 225, 0), "(+) Starts with +50 maximum health"}}}, 
+		{name = "Knights of Sol", subtitle = "The Knights of Sol - The Most Devoted Order of the Glaze", description = "Only a few years ago Skylight fell to Earth in a blazing inferno, the last promise of a future for mankind careening into the ground alongside it. From its innumerable enlightened inhabitants only seventeen emerged: the Glorious Seventeen. Donning glorious white armor and wielding sword glowing bright, the Glorious Seventeen slaughtered every demon that fell upon them. Thousands fell by their blade before the demons retreated into the darkness, and it seemed that humanity would live for at least another day. Although the Glorious Seventeen no longer walk this Earth, their legacy lives on in the newly founded Holy Order of the Knights of Sol. These Knights of Sol consist of the very best of the Holy Hierarchy, unmatched in prowess and seen by many of the faithful as guardian angels incarnate. Knights are given the absolute best equipment available in the royal armories. Despite this, Knights are never seen with muskets or any other sort of firearm, believing them too cowardly for someone of such noble stature. Knights of Sol are also known to keep squires in their service, often recruited from the ranks of the Gatekeepers.", attributes = {{Color(0, 225, 0), "(+) Bullet damage is reduced by 70%"}, {Color(0, 225, 0), "(+) Bulwark +25 poise and +25 stability"}, {Color(0, 225, 0), "(+) Starts with +100 maximum health"}, {Color(225, 0, 0), "(-) Burdened: Run speed is decreased by 5%"}}, models = ministerModels}
 	};
 	FACTION.singleGender = GENDER_MALE;
 	
@@ -258,14 +218,17 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 	};
 	FACTION.models = {
 		male = {
-			"models/begotten/goreicwarfighters/goretribal/male_90.mdl",
-			"models/begotten/goreicwarfighters/goretribal/male_91.mdl",
-			"models/begotten/goreicwarfighters/goretribal/male_92.mdl",
-			"models/begotten/goreicwarfighters/goretribal/male_93.mdl",
-			"models/begotten/goreicwarfighters/goretribal/male_94.mdl",
-			"models/begotten/goreicwarfighters/goretribal/male_95.mdl",
-			"models/begotten/goreicwarfighters/goretribal/male_96.mdl",
-		}
+			clothes = "models/begotten/goreicwarfighters/goretribal_male.mdl",
+			heads = {
+				"male_90",
+				"male_91",
+				"male_92",
+				"male_93",
+				"male_94",
+				"male_95",
+				"male_96"
+			},
+		},
 	};
 	FACTION.singleGender = GENDER_MALE;
 FACTION_GOREIC = FACTION:Register();

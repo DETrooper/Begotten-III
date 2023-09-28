@@ -205,7 +205,7 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 				end
 			end
 			
-			if itemTable.useSound and (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.bgCharmData or !player.HasCharmEquipped or !player:HasCharmEquipped("urn_silence")) then
+			if itemTable.useSound and (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 				player:EmitSound(itemTable.useSound);
 			end
 
@@ -373,7 +373,7 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 					end
 				end
 				
-				if itemTable.useSound and (target:GetMoveType() == MOVETYPE_WALK or target:IsRagdolled() or target:InVehicle()) and (!target.bgCharmData or !target.HasCharmEquipped or !target:HasCharmEquipped("urn_silence")) then
+				if itemTable.useSound and (target:GetMoveType() == MOVETYPE_WALK or target:IsRagdolled() or target:InVehicle()) and (!target.GetCharmEquipped or !target:GetCharmEquipped("urn_silence")) then
 					target:EmitSound(itemTable.useSound);
 				end
 				
@@ -576,7 +576,7 @@ function cwMedicalSystem:PerformSurgeryOnPlayer(player, target, itemTable, hitGr
 				end
 				
 				if target:IsRagdolled() then		
-					--[[if itemTable.useSound and (target:GetMoveType() == MOVETYPE_WALK or target:IsRagdolled() or target:InVehicle()) and (!target.bgCharmData or !target.HasCharmEquipped or !target:HasCharmEquipped("urn_silence")) then
+					--[[if itemTable.useSound and (target:GetMoveType() == MOVETYPE_WALK or target:IsRagdolled() or target:InVehicle()) and (!target.GetCharmEquipped or !target:GetCharmEquipped("urn_silence")) then
 						target:EmitSound(itemTable.useSound);
 					end]]--
 					
@@ -1261,7 +1261,7 @@ function playerMeta:HandleDiseaseChance(category, chance)
 end
 
 function playerMeta:InfectOtherPlayer(otherPlayer, diseases, chance)
-	local clothesItem = otherPlayer:GetClothesItem();
+	local clothesItem = otherPlayer:GetClothesEquipped();
 	
 	if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "disease_resistance") then
 		return;

@@ -359,22 +359,6 @@ netstream.Hook("CinematicText", function(data)
 	end
 end)
 
-netstream.Hook("AddAccessory", function(data)
-	Clockwork.AccessoryData[data.itemID] = data.uniqueID
-end)
-
-netstream.Hook("RemoveAccessory", function(data)
-	Clockwork.AccessoryData[data.itemID] = nil
-end)
-
-netstream.Hook("AllAccessories", function(data)
-	Clockwork.AccessoryData = {}
-
-	for k, v in pairs(data) do
-		Clockwork.AccessoryData[k] = v
-	end
-end)
-
 netstream.Hook("Notification", function(data)
 	local text = data.text
 	local class = data.class
@@ -416,31 +400,3 @@ netstream.Hook("PrintTableWithColor", function(data)
 		end;
 	end;
 end);
-
-netstream.Hook("BGClothes", function(data)
-	Clockwork.Client.bgClothesData = data or {};
-end);
-
-netstream.Hook("BGShieldData", function(data)
-	if data then
-		Clockwork.Client.bgshieldData = data;
-	else
-		Clockwork.Client.bgshieldData = {};
-	end
-end);
-
-netstream.Hook("CreateGear", function(data)
-	if data[1] and data[2] then
-		Clockwork.player:CreateGear(data[1], data[2]);
-	end
-end)
-
-netstream.Hook("RemoveGear", function(gearClass)
-	if gearClass then
-		Clockwork.player:RemoveGear(gearClass);
-	end
-end)
-
-netstream.Hook("StripGear", function(data)
-	Clockwork.player:StripGear();
-end)

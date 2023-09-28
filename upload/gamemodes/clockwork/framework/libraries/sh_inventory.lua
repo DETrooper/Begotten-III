@@ -488,8 +488,6 @@ else
 	function Clockwork.inventory:Rebuild(player)
 		Clockwork.kernel:OnNextFrame("RebuildInv"..player:UniqueID(), function()
 			if (IsValid(player)) then
-				--player:SetWalkSpeed(config.GetVal("walk_speed"));
-				--player:SetRunSpeed(config.GetVal("run_speed"));
 				netstream.Start(player, "InvRebuild")
 			end
 		end)

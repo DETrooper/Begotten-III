@@ -302,22 +302,15 @@ local function Guarding(ent, dmginfo)
 					
 					if not ent.opponent then
 						if wep then
+							local shieldItemTable = ent:GetShieldEquipped();
 							local weaponItemTable = item.GetByWeapon(wep);
 							local shieldEquipped = false;
 							
-							if ent.bgShieldData and ent.bgShieldData.uniqueID and ent.bgShieldData.realID then
-								if IsValid(ent:GetWeapon(wep:GetClass())) and string.find(wep:GetClass(), ent.bgShieldData.uniqueID) then
-									local shieldItem = Clockwork.inventory:FindItemByID(ent:GetInventory(), ent.bgShieldData.uniqueID, ent.bgShieldData.itemID);
-									
-									--printp(shieldItem:GetCondition());
-									
-									shieldEquipped = true;
-									
-									if cwBeliefs and not ent:HasBelief("ingenuity_finisher") then
-										shieldItem:TakeCondition(math.max(dmginfo:GetDamage() / 50, 1));
-									end
-									
-									--printp(shieldItem:GetCondition());
+							if shieldItemTable and wep:GetNWString("activeShield") == shieldItemTable.uniqueID then
+								shieldEquipped = true;
+								
+								if cwBeliefs and not ent:HasBelief("ingenuity_finisher") then
+									shieldItem:TakeCondition(math.max(dmginfo:GetDamage() / 50, 1));
 								end
 							end
 							
@@ -394,7 +387,7 @@ local function Guarding(ent, dmginfo)
 									if blockTable.spiked then
 										damageinflictor:TakeDamage(5, ent);
 									elseif blockTable.electrified then
-										local clothesItem = damageinflictor:GetClothesItem();
+										local clothesItem = damageinflictor:GetClothesEquipped();
 										
 										if clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate") then
 											local shockDamageInfo = DamageInfo();
@@ -454,12 +447,12 @@ local function Guarding(ent, dmginfo)
 							end
 						end
 						
-						if damageinflictor.bgCharmData and damageinflictor.HasCharmEquipped then
-							if damageinflictor:HasCharmEquipped("ring_pummeler") then
+						if damageinflictor.GetCharmEquipped then
+							if damageinflictor:GetCharmEquipped("ring_pummeler") then
 								poiseDamageModifier = poiseDamageModifier + 0.15;
 							end
 							
-							if damageinflictor:HasCharmEquipped("ring_pugilist") and enemywep:GetClass() == "begotten_fists" then
+							if damageinflictor:GetCharmEquipped("ring_pugilist") and enemywep:GetClass() == "begotten_fists" then
 								if IsValid(dmginfo:GetInflictor()) and dmginfo:GetInflictor().isJavelin then
 									-- nothing
 								else
@@ -915,7 +908,7 @@ local function Guarding(ent, dmginfo)
 				
 				-- If a beserker or a member of House Varazdat, gain HP back via lifeleech.
 				if string.find(damageinflictor:GetModel(), "goreberzerker") then
-					if IsValid(enemywep) and enemywep.IsABegottenMelee and not string.find(enemywep:GetClass(), "shield") then
+					if IsValid(enemywep) and enemywep.IsABegottenMelee and enemywep:GetNWString("activeShield"):len() <= 0 then
 						damageinflictor:SetHealth(math.Clamp(math.ceil(damageinflictor:Health() + (dmginfo:GetDamage() / 2)), 0, damageinflictor:GetMaxHealth()));
 						
 						damageinflictor:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
@@ -928,7 +921,7 @@ local function Guarding(ent, dmginfo)
 					end
 				elseif damageinflictor:GetSubfaction() == "Varazdat" then
 					if IsValid(enemywep) and enemywep.IsABegottenMelee then
-						local clothesItem = damageinflictor:GetClothesItem();
+						local clothesItem = damageinflictor:GetClothesEquipped();
 						local modifier = 2;
 						
 						if clothesItem then
