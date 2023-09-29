@@ -758,7 +758,7 @@ function PANEL:Init()
 					if i == 1 then
 						weapon1 = {};
 						
-						if item.isAttachment and !item.invisibleAttachment then
+						if item.isAttachment then
 							weapon1.attachmentInfo = {};
 							weapon1.attachmentInfo.attachmentModel = item.model;
 							weapon1.attachmentInfo.attachmentBone = item.attachmentBone;
@@ -773,7 +773,7 @@ function PANEL:Init()
 					elseif i == 2 then
 						weapon2 = {};
 
-						if item.isAttachment and !item.invisibleAttachment then
+						if item.isAttachment then
 							weapon2.attachmentInfo = {};
 							weapon2.attachmentInfo.attachmentModel = item.model;
 							weapon2.attachmentInfo.attachmentBone = item.attachmentBone;
@@ -788,7 +788,7 @@ function PANEL:Init()
 					elseif i == 3 then
 						weapon3 = {};
 						
-						if item.isAttachment and !item.invisibleAttachment then
+						if item.isAttachment then
 							weapon3.attachmentInfo = {};
 							weapon3.attachmentInfo.attachmentModel = item.model;
 							weapon3.attachmentInfo.attachmentBone = item.attachmentBone;

@@ -41,7 +41,11 @@ function Clockwork.equipment:GetItemEquipped(player, itemTable, category)
 	end
 	
 	if isstring(itemTable) then
-		itemTable = Clockwork.item:FindByID(itemTable);
+		if SERVER then
+			itemTable = Clockwork.inventory:FindItemByID(player:GetInventory(), itemTable);
+		else
+			itemTable = Clockwork.inventory:FindItemByID(Clockwork.inventory.client, itemTable);
+		end
 	end
 	
 	if !itemTable then

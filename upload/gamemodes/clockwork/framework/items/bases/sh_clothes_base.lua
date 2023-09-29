@@ -228,7 +228,7 @@ local ITEM = item.New(nil, true);
 		end
 		
 		if self.hasHelmet then
-			local helmetItem = self:GetHelmetEquipped();
+			local helmetItem = player:GetHelmetEquipped();
 			
 			if helmetItem then
 				Schema:EasyText(player, "peru", "You cannot wear this, as this set of armor has a helmet and you already have a helmet equipped!")

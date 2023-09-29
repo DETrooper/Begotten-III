@@ -203,4 +203,6 @@ end
 -- Called when a player holsters the item.
 function ITEM:OnHolster(player, bForced) end
 
+function ITEM:OnDrop(player, position) end
+
 Clockwork.item:Register(ITEM);

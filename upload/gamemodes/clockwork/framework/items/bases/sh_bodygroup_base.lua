@@ -205,4 +205,12 @@ local ITEM = Clockwork.item:New(nil, true)
 			self:ResetBodygroup(player, self.bodyGroup);
 		end
 	end
+	
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position)
+		if (player:GetHelmetEquipped() == self) then
+			Schema:EasyText(player, "peru", "You cannot drop an item you're currently wearing.")
+			return false
+		end
+	end
 ITEM:Register();

@@ -82,21 +82,27 @@ function PLUGIN:PostPlayerDraw(player, flags)
 			end
 		else
 			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
-			local factionTable = Clockwork.faction:FindByID(faction);
-			local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSharedVar("subfaction");
 			
-			if subfaction and factionTable.subfactions then
-				for k, v in pairs(factionTable.subfactions) do
-					if k == subfaction and v.models then
-						model = v.models[string.lower(player:GetGender())].clothes;
+			if faction then
+				local factionTable = Clockwork.faction:FindByID(faction);
+				
+				if factionTable then
+					local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSharedVar("subfaction");
 					
-						break;
+					if subfaction and factionTable.subfactions then
+						for k, v in pairs(factionTable.subfactions) do
+							if k == subfaction and v.models then
+								model = v.models[string.lower(player:GetGender())].clothes;
+							
+								break;
+							end
+						end
+					end
+					
+					if !model then
+						model = factionTable.models[string.lower(player:GetGender())].clothes;
 					end
 				end
-			end
-			
-			if !model then
-				model = factionTable.models[string.lower(player:GetGender())].clothes;
 			end
 		end
 		
@@ -106,7 +112,11 @@ function PLUGIN:PostPlayerDraw(player, flags)
 		end
 		
 		if !IsValid(player.clothesEnt) then
-			player.clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
+			if model then
+				player.clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
+			else
+				return;
+			end
 		end
 		
 		if player.clothesEnt:GetParent() ~= player then

@@ -96,8 +96,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.description = "A rusty shiv, constructed of thrown together scrap found in the wasteland.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/quickshank.png"
 	ITEM.meleeWeapon = true;
-	ITEM.isAttachment = true;
-	ITEM.invisibleAttachment = true;
 	
 	ITEM.attributes = {"concealable"};
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap"}};
@@ -173,11 +171,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.description = "A blackhat assassin's tool of murder. It has likely claimed many lives, from serfs to Emperors. A twisted magic prevents anyone not of the correct bloodline from wielding this dagger.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/kinisger_dagger.png"
 	ITEM.meleeWeapon = true;
-	ITEM.isAttachment = true;
-	ITEM.invisibleAttachment = true;
-	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
-	ITEM.attachmentOffsetAngles = Angle(252.95, 2.98, 0.95);
-	ITEM.attachmentOffsetVector = Vector(-3.54, 2, 1.41);
 	
 	ITEM.attributes = {"concealable"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};

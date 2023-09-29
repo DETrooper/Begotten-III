@@ -832,7 +832,7 @@ function PANEL:Rebuild()
 					if i == 1 then
 						weapon1 = {};
 						
-						if item.isAttachment and !item.invisibleAttachment then
+						if item.isAttachment then
 							weapon1.attachmentInfo = {};
 							weapon1.attachmentInfo.attachmentModel = item.model;
 							weapon1.attachmentInfo.attachmentBone = item.attachmentBone;
@@ -847,7 +847,7 @@ function PANEL:Rebuild()
 					elseif i == 2 then
 						weapon2 = {};
 						
-						if item.isAttachment and !item.invisibleAttachment then
+						if item.isAttachment then
 							weapon2.attachmentInfo = {};
 							weapon2.attachmentInfo.attachmentModel = item.model;
 							weapon2.attachmentInfo.attachmentBone = item.attachmentBone;
@@ -862,7 +862,7 @@ function PANEL:Rebuild()
 					elseif i == 3 then
 						weapon3 = {};
 						
-						if item.isAttachment and !item.invisibleAttachment then
+						if item.isAttachment then
 							weapon3.attachmentInfo = {};
 							weapon3.attachmentInfo.attachmentModel = item.model;
 							weapon3.attachmentInfo.attachmentBone = item.attachmentBone;
@@ -915,6 +915,10 @@ function PANEL:Rebuild()
 				self.characterModel.modelPanel.Entity:SetBodygroup(0, playerBodygroups[1]);
 				self.characterModel.modelPanel.Entity:SetBodygroup(1, playerBodygroups[2]);
 				self.characterModel.modelPanel.Entity:SetSkin(Clockwork.Client:GetSkin() or 0);
+				
+				if IsValid(self.characterModel.modelPanel.headModel) then
+					self.characterModel.modelPanel.headModel:Remove();
+				end
 			end
 			
 			self.characterModel.modelPanel.Entity:ResetSequence(self.characterModel.modelPanel.Entity:LookupSequence("idle_angry"));

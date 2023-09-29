@@ -24,8 +24,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.description = "An iron pair of knuckles. An excellent advantage to any fistfight.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/iron_knuckles.png"
 	ITEM.meleeWeapon = true;
-	ITEM.isAttachment = true;
-	ITEM.invisibleAttachment = true;
 	ITEM.attributes = {"concealable"};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
@@ -42,8 +40,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.description = "An iron pair of knuckles that has been fitted with spiked prongs. A single punch could take a man's eyes.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/spiked_knuckles.png"
 	ITEM.meleeWeapon = true;
-	ITEM.isAttachment = true;
-	ITEM.invisibleAttachment = true;
 	ITEM.attributes = {"concealable"};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
