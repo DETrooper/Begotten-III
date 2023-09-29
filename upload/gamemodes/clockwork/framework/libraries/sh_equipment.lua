@@ -519,6 +519,24 @@ else
 			end
 		end
 	end);
+	
+	hook.Add("EntityRemoved", "EntityRemovedEquipment", function(entity)
+		if Clockwork.entity:IsPlayerRagdoll(entity) then
+			entity = entity:GetNWEntity("Player");
+		end
+	
+		if entity:IsPlayer() then
+			if entity.equipmentSlotModels then
+				for itemID, equipmentModel in pairs(entity.equipmentSlotModels) do
+					if IsValid(equipmentModel) then
+						equipmentModel:Remove();
+					end
+				end
+				
+				entity.equipmentSlotModels = nil;
+			end
+		end
+	end);
 
 	netstream.Hook("UpdateEquipment", function(data)
 		local player = data[1];

@@ -30,3 +30,39 @@ function ENT:Think()
 	self:FrameAdvance(FrameTime())
 	self:NextThink(CurTime())
 end
+
+function ENT:Draw()
+	self:DrawModel()
+
+	local head = self:GetNWString("head");
+	
+	if head and head:len() > 0 then
+		if !IsValid(self.headEntity) then
+			local headEntity = ClientsideModel(head, RENDERGROUP_BOTH);
+			
+			if IsValid(headEntity) then
+				headEntity:SetParent(self);
+				headEntity:AddEffects(EF_BONEMERGE);
+				headEntity:SetColor(self:GetColor());
+				headEntity:SetNoDraw(self:GetNoDraw());
+			
+				self.headEntity = headEntity;
+			end
+		elseif self.headEntity:GetModel() ~= head then
+			if IsValid(self.headEntity) then
+				self.headEntity:Remove();
+				self.headEntity = nil;
+			end
+		end
+	elseif IsValid(self.headEntity) then
+		self.headEntity:Remove();
+		self.headEntity = nil;
+	end
+end
+
+function ENT:OnRemove()
+	if IsValid(self.headEntity) then
+		self.headEntity:Remove();
+		self.headEntity = nil;
+	end
+end

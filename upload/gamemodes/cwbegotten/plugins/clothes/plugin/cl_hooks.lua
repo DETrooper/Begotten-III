@@ -46,8 +46,8 @@ function PLUGIN:Tick()
 				if IsValid(v.clothesEnt) then
 					v.clothesEnt:SetParent(v);
 					v.clothesEnt:AddEffects(EF_BONEMERGE);
-					v:SetColor(v:GetColor());
-					v:SetNoDraw(v:GetNoDraw());
+					v.clothesEnt:SetColor(v:GetColor());
+					v.clothesEnt:SetNoDraw(v:GetNoDraw());
 				end
 			else
 				if v.clothesEnt:GetModel() ~= v:GetNWString("clothes") then
@@ -60,8 +60,8 @@ function PLUGIN:Tick()
 					v.clothesEnt:AddEffects(EF_BONEMERGE);
 				end
 				
-				v:SetColor(v:GetColor());
-				v:SetNoDraw(v:GetNoDraw());
+				v.clothesEnt:SetColor(v:GetColor());
+				v.clothesEnt:SetNoDraw(v:GetNoDraw());
 			end
 		end
 	end

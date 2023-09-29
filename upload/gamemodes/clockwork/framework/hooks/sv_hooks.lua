@@ -880,7 +880,7 @@ function GM:PlayerSpawn(player)
 			local relation = FACTION.entRelationship
 			local playerRank, rank = player:GetFactionRank()
 			local maxHealth = player:GetMaxHealth();
-			--local maxArmor = 100;
+			--local maxArmor = player:GetMaxArmor();
 
 			Clockwork.player:SetWeaponRaised(player, false)
 			Clockwork.player:SetRagdollState(player, RAGDOLL_RESET)
@@ -918,12 +918,12 @@ function GM:PlayerSpawn(player)
 			player:SetHealth(maxHealth)
 			--player:SetArmor(maxArmor)
 
-			if (rank) then
-				player:SetMaxHealth(rank.maxHealth or player:GetMaxHealth())
-				--player:SetMaxArmor(rank.maxArmor or player:GetMaxArmor())
-				player:SetHealth(rank.maxHealth or player:GetMaxHealth())
-				--player:SetArmor(rank.maxArmor or player:GetMaxArmor())
-			end
+			--if (rank) then
+				--player:SetMaxHealth(rank.maxHealth or maxHealth))
+				--player:SetMaxArmor(rank.maxArmor or maxArmor)
+				--player:SetHealth(rank.maxHealth or maxHealth)
+				--player:SetArmor(rank.maxArmor or maxArmor)
+			--end
 
 			--[[if (istable(FACTION.respawnInv)) then
 				local inventory = player:GetInventory()
@@ -999,14 +999,8 @@ function GM:PlayerSpawn(player)
 			player.cwSpawnCallback(player, true)
 			player.cwSpawnCallback = nil
 		end
-		
-		local curTime = CurTime();
-		
-		if (!player.nextPostPlayerSpawn or player.nextPostPlayerSpawn < curTime) then
-			player.nextPostPlayerSpawn = curTime + 1;
-			
-			hook.Run("PostPlayerSpawn", player, player.cwLightSpawn, player.cwChangeClass, player.cwFirstSpawn)
-		end;
+
+		hook.Run("PostPlayerSpawn", player, player.cwLightSpawn, player.cwChangeClass, player.cwFirstSpawn)
 		
 		Clockwork.player:SetRecognises(player, player, RECOGNISE_TOTAL)
 		
@@ -3254,7 +3248,7 @@ function GM:PlayerCharacterInitialized(player)
 
 	netstream.Start(player, "CharacterInit", player:GetCharacterKey())
 
-	local playerFaction = player:GetFaction()
+	--[[local playerFaction = player:GetFaction()
 	local spawnRank = Clockwork.faction:GetDefaultRank(playerFaction) or Clockwork.faction:GetLowestRank(playerFaction)
 
 	player:SetFactionRank(player:GetFactionRank() or spawnRank)
@@ -3270,7 +3264,7 @@ function GM:PlayerCharacterInitialized(player)
 		if (rankTable.model) then
 			player:SetModel(rankTable.model)
 		end
-	end
+	end]]--
 end
 
 -- Called when a player has used their death code.
@@ -3398,6 +3392,8 @@ function GM:PlayerCharacterLoaded(player)
 
 		Clockwork.class:Set(player, class.index, nil, true)
 	end
+	
+	hook.Run("PostPlayerCharacterInitialized", player);
 end
 
 -- Called when a player's property should be restored.
@@ -3488,34 +3484,26 @@ end
 -- Called when a player should gain a frag.
 function GM:PlayerCanGainFrag(player, victim) return true end
 
+function GM:PostPlayerCharacterInitialized(player)
+	local maxHealth = player:GetMaxHealth();
+	local health = player:GetCharacterData("Health")
+	local armor = player:GetCharacterData("Armor")
+
+	player:SetMaxHealth(maxHealth);
+	
+	if (health and health > 1) then
+		player:SetHealth(health)
+	else
+		player:SetHealth(maxHealth);
+	end
+
+	if (armor and armor > 1) then
+		player:SetArmor(armor)
+	end
+end
+
 -- Called just after a player spawns.
 function GM:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
-	if (firstSpawn) then
-		--local attrBoosts = player:GetCharacterData("AttrBoosts")
-		local health = player:GetCharacterData("Health")
-		local armor = player:GetCharacterData("Armor")
-
-		if (health and health > 1) then
-			player:SetHealth(health)
-		end
-
-		if (armor and armor > 1) then
-			player:SetArmor(armor)
-		end
-
-		--[[if (attrBoosts) then
-			for k, v in pairs(attrBoosts) do
-				for k2, v2 in pairs(v) do
-					Clockwork.attributes:Boost(player, k2, k, v2.amount, v2.duration)
-				end
-			end
-		end]]--
-	else
-		--player:SetCharacterData("AttrBoosts", nil)
-		player:SetCharacterData("Health", nil)
-		player:SetCharacterData("Armor", nil)
-	end
-	
 	local activeWeapon = player:GetActiveWeapon();
 	
 	if IsValid(activeWeapon) and activeWeapon:GetClass() == "begotten_fists" then

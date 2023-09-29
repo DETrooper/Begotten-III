@@ -328,6 +328,8 @@ function Clockwork.character:RefreshPanelList()
 						banned = v.banned,
 						faction = v.faction,
 						subfaction = v.subfaction,
+						kinisgerOverride = v.kinisgerOverride,
+						kinisgerOverrideSubfaction = v.kinisgerOverrideSubfaction,
 						faith = v.faith,
 						subfaith = v.subfaith,
 						level = v.level or 1,

@@ -891,14 +891,16 @@ function PANEL:RebuildModelList(faction)
 	for k, v in pairs(Clockwork.faction.stored) do
 		if (v.name == faction) then
 			for gender, v2 in pairs(v.models) do
-				for k3, v3 in pairs(v2) do
+				for k3, v3 in pairs(v2.heads) do
 					if v.singleGender and gender ~= string.lower(v.singleGender) then
 						continue;
 					end
+					
+					local modelPath = "models/begotten/heads/"..v3.."_wanderer.mdl";
 				
 					local spawnIcon = vgui.Create("cwSpawnIcon", self);
-					spawnIcon:SetModel(v3);
-					spawnIcon.model = v3;
+					spawnIcon:SetModel(modelPath);
+					spawnIcon.model = modelPath;
 					spawnIcon.gender = string.upper(gender[1])..string.sub(gender, 2, #gender);
 					
 					-- Called when the spawn icon is clicked.

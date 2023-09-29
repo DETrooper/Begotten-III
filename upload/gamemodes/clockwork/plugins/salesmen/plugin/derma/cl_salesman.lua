@@ -27,6 +27,7 @@ function PANEL:Init()
 			classes = Clockwork.salesman.classes,
 			stock = Clockwork.salesman.stock,
 			model = Clockwork.salesman.model,
+			head = Clockwork.salesman.head,
 			sells = Clockwork.salesman.sells,
 			cash = Clockwork.salesman.cash,
 			text = Clockwork.salesman.text,
@@ -42,6 +43,7 @@ function PANEL:Init()
 		Clockwork.salesman.buyRate = nil
 		Clockwork.salesman.stock = nil
 		Clockwork.salesman.model = nil
+		Clockwork.salesman.head = nil
 		Clockwork.salesman.sells = nil
 		Clockwork.salesman.buys = nil
 		Clockwork.salesman.items = nil
@@ -94,6 +96,7 @@ function PANEL:Init()
 	self.buyRate = self.settingsForm:NumSlider("Buy Rate", nil, 1, 100, 0);
 	self.stock = self.settingsForm:NumSlider("Default Stock", nil, -1, 100, 0);
 	self.model = self.settingsForm:TextEntry("The model of the salesman.");
+	self.head = self.settingsForm:TextEntry("The head model of the salesman.");
 	self.cash = self.settingsForm:NumSlider("Starting Cash", nil, -1, 1000000, 0);
 	
 	self.buyRate:SetToolTip("Percentage of price to keep when selling.");
@@ -108,6 +111,7 @@ function PANEL:Init()
 	self.buyRate:SetValue(Clockwork.salesman.buyRate)
 	self.stock:SetValue(Clockwork.salesman.stock)
 	self.model:SetValue(Clockwork.salesman.model)
+	self.head:SetValue(Clockwork.salesman.head)
 	self.cash:SetValue(Clockwork.salesman.cash)
 
 	self.responsesForm = vgui.Create("cwForm")
@@ -344,6 +348,7 @@ function PANEL:Think()
 	Clockwork.salesman.buyRate = self.buyRate:GetValue()
 	Clockwork.salesman.stock = self.stock:GetValue()
 	Clockwork.salesman.model = self.model:GetValue()
+	Clockwork.salesman.head = self.head:GetValue()
 	Clockwork.salesman.cash = self.cash:GetValue()
 
 	local priceScale = self.priceScale:GetValue()

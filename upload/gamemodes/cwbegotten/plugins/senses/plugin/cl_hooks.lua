@@ -16,65 +16,59 @@ function cwSenses:RenderScreenspaceEffects()
 			local hasNV = Clockwork.Client:GetNWBool("hasNV");
 			
 			if (hasThermal) then
-				local modulation = {1, 1, 1};
+				local modulation = {1, 0, 0};
 				local voltismModulation = {0, 1, 1};
-				
-				if (hasThermal) then
-					modulation = {1, 0, 0};
-					
-					local colorModify = {};
-						colorModify["$pp_colour_brightness"] = 0;
-						colorModify["$pp_colour_contrast"] = 1;
-						colorModify["$pp_colour_colour"] = 0.1;
-						colorModify["$pp_colour_addr"] = 0;
-						colorModify["$pp_colour_addg"] = 0.1;
-						colorModify["$pp_colour_addb"] = 0.1;
-						colorModify["$pp_colour_mulr"] = 15;
-						colorModify["$pp_colour_mulg"] = 0;
-						colorModify["$pp_colour_mulb"] = 5;
-					DrawColorModify(colorModify);
-				end;
-				
+
+				local colorModify = {};
+					colorModify["$pp_colour_brightness"] = 0;
+					colorModify["$pp_colour_contrast"] = 1;
+					colorModify["$pp_colour_colour"] = 0.1;
+					colorModify["$pp_colour_addr"] = 0;
+					colorModify["$pp_colour_addg"] = 0.1;
+					colorModify["$pp_colour_addb"] = 0.1;
+					colorModify["$pp_colour_mulr"] = 15;
+					colorModify["$pp_colour_mulg"] = 0;
+					colorModify["$pp_colour_mulb"] = 5;
+				DrawColorModify(colorModify);
+			
 				cam.Start3D(EyePos(), EyeAngles());
 				
-				local playerCount = _player.GetCount();
 				local players = _player.GetAll();
 
-				for i = 1, playerCount do
-					local v, k = players[i], i;
-					if (v:Alive() and !v:IsRagdolled() and v:GetMoveType() == MOVETYPE_WALK) then
-						if (v:HasInitialized() and hasThermal) then
-							--v.cwForceDrawAlways = true;
+				for i, v in ipairs(players) do
+					if (v:Alive() and v:HasInitialized() and !v:IsNoClipping()) then
+						local ragdollEntity = v:GetRagdollEntity();
+						
+						render.SuppressEngineLighting(true);
+						
+						if v:GetSharedVar("subfaith") == "Voltism" then
+							render.SetColorModulation(unpack(voltismModulation));
+						else
+							render.SetColorModulation(unpack(modulation));
+						end
+						
+						self.heatwaveMaterial:SetFloat("$refractamount", -0.0007);
+						
+						render.MaterialOverride(self.shinyMaterial);
+						
+						if IsValid(ragdollEntity) then
+							ragdollEntity:DrawModel();
 							
-							render.SuppressEngineLighting(true);
-							
-							if v:GetSharedVar("subfaith") == "Voltism" then
-								render.SetColorModulation(unpack(voltismModulation));
-							else
-								render.SetColorModulation(unpack(modulation));
+							if IsValid(ragdollEntity.clothesEnt) then
+								ragdollEntity.clothesEnt:DrawModel();
 							end
+						else
+							v:DrawModel();
 							
-							self.heatwaveMaterial:SetFloat("$refractamount", -0.0007);
-							
-							if (!hasThermal) then
-								local fSpeedAdd = math.max((0.07 / 512) * (v:GetVelocity():Length() - 150), 0.07);
-								
-								if (v:GetVelocity():Length() > 1) then
-									self.heatwaveMaterial:SetFloat("$refractamount", -0.007 + (0.07 - fSpeedAdd));
-								end;
-								
-								v:DrawModel();
-							else
-								render.MaterialOverride(self.shinyMaterial);
-									v:DrawModel();
-								render.MaterialOverride(false);
-							end;
-							
-							render.SetColorModulation(1, 1, 1);
-							render.SuppressEngineLighting(false);
-							
-							--v.cwForceDrawAlways = nil;
-						end;
+							if IsValid(v.clothesEnt) then
+								v.clothesEnt:DrawModel();
+							end
+						end
+						
+						render.MaterialOverride(false);
+						
+						render.SetColorModulation(1, 1, 1);
+						render.SuppressEngineLighting(false);
 					end;
 				end;
 			

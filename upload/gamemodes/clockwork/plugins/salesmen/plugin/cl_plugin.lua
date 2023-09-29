@@ -63,7 +63,8 @@ netstream.Hook("SalesmanAdd", function(data)
 		Clockwork.salesman.classes = {}
 		Clockwork.salesman.stock = -1
 		Clockwork.salesman.sells = {}
-		Clockwork.salesman.model = "models/humans/group01/male_0"..math.random(1, 9)..".mdl"
+		Clockwork.salesman.model = "models/begotten/wanderers/wanderer_male.mdl"
+		Clockwork.salesman.head = "models/begotten/heads/male_0"..tostring(math.random(1, 9)).."_gore.mdl"
 		Clockwork.salesman.items = {}
 		Clockwork.salesman.cash = -1
 		Clockwork.salesman.text = {
@@ -109,6 +110,7 @@ netstream.Hook("SalesmanEdit", function(data)
 		Clockwork.salesman.stock = -1
 		Clockwork.salesman.sells = data.sellTab
 		Clockwork.salesman.model = data.model
+		Clockwork.salesman.head = data.head
 		Clockwork.salesman.items = {}
 		Clockwork.salesman.cash = data.cash
 		Clockwork.salesman.text = data.textTab

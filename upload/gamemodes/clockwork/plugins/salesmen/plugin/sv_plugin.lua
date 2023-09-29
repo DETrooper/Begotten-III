@@ -143,6 +143,7 @@ netstream.Hook("SalesmanAdd", function(player, data)
 			["buyRate"] = "number",
 			["classes"] = "table",
 			["model"] = "string",
+			["head"] = "string",
 			["sells"] = "table",
 			["stock"] = "number",
 			["text"] = "table",
@@ -197,6 +198,10 @@ netstream.Hook("SalesmanAdd", function(player, data)
 		salesman:SetModel(data.model)
 		salesman:Spawn()
 		salesman.cwStock = {}
+		
+		if data.head then
+			salesman:SetNWString("head", data.head);
+		end
 
 		if (data.stock != -1) then
 			for k, v in pairs(data.sells) do
@@ -241,6 +246,10 @@ function cwSalesmen:LoadSalesmen()
 		salesman:SetAngles(v.angles)
 		salesman:Spawn()
 
+		if v.head then
+			salesman:SetNWString("head", v.head);
+		end
+
 		salesman.cwCash = v.cash
 		salesman.cwStock = v.stock
 		salesman.cwClasses = v.classes
@@ -268,6 +277,7 @@ function cwSalesmen:GetTableFromEntity(entity)
 		cash = entity.cwCash,
 		stock = entity.cwStock,
 		model = entity:GetModel(),
+		head = entity:GetNWString("head"),
 		angles = entity:GetAngles(),
 		buyRate = entity.cwBuyRate,
 		factions = entity.cwFactions,

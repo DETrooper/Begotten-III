@@ -719,17 +719,25 @@ function PANEL:Init()
 					end
 				end
 			end
-		elseif factionTable then
-			model = factionTable.models[string.lower(self.customData.gender)].clothes;
-		
-			local subfaction = self.customData.subfaction;
+		else
+			local factionTableOverride = factionTable;
 			
-			if subfaction and factionTable.subfactions then
-				for i, v in ipairs(factionTable.subfactions) do
-					if v.models and v.name == subfaction then
-						model = v.models[string.lower(self.customData.gender)].clothes;
-						
-						break;
+			if self.customData.kinisgerOverride then
+				factionTableOverride = Clockwork.faction:FindByID(self.customData.kinisgerOverride);
+			end
+			
+			if factionTableOverride then
+				model = factionTableOverride.models[string.lower(self.customData.gender)].clothes;
+			
+				local subfaction = self.customData.kinisgerOverrideSubfaction or self.customData.subfaction;
+				
+				if subfaction and factionTableOverride.subfactions then
+					for i, v in ipairs(factionTableOverride.subfactions) do
+						if v.models and v.name == subfaction then
+							model = v.models[string.lower(self.customData.gender)].clothes;
+							
+							break;
+						end
 					end
 				end
 			end
@@ -1877,6 +1885,8 @@ function PANEL:Rebuild()
 					--clothes = v.clothes,
 					faction = v.faction,
 					subfaction = subfaction_override,
+					kinisgerOverride = v.kinisgerOverride,
+					kinisgerOverrideSubfaction = v.kinisgerOverrideSubfaction,
 					rank = v.rank,
 					faith = v.faith,
 					kills = v.kills,

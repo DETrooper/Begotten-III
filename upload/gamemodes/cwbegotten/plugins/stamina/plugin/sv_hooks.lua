@@ -28,13 +28,11 @@ function cwStamina:PlayerRestoreCharacterData(player, data)
 end;
 
 -- Called just after a player spawns.
-function cwStamina:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
-	if (!lightSpawn) then
-		local max_stamina = player:GetMaxStamina();
-	
-		player:SetCharacterData("Max_Stamina", max_stamina);
-		player:SetLocalVar("Max_Stamina", max_stamina);
-	end;
+function cwStamina:PostPlayerCharacterInitialized(player)
+	local max_stamina = player:GetMaxStamina();
+
+	player:SetCharacterData("Max_Stamina", max_stamina);
+	player:SetLocalVar("Max_Stamina", max_stamina);
 end;
 
 -- Called when a player attempts to throw a punch.

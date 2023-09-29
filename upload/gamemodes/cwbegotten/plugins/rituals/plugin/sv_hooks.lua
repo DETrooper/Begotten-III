@@ -804,8 +804,10 @@ Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 			
 			if factionTable.models then
 				for gender, v in pairs(factionTable.models) do
-					for k2, v2 in pairs(v) do
-						if v2 == data[2] and gender == string.lower(data[3]) then
+					for k2, v2 in pairs(v.heads) do
+						local modelPath = "models/begotten/heads/"..v2.."_wanderer.mdl";
+						
+						if modelPath == data[2] and gender == string.lower(data[3]) then
 							model_valid = true;
 							
 							break;

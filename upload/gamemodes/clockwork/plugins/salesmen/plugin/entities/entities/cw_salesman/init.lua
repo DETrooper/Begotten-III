@@ -116,3 +116,10 @@ function ENT:Use(activator, caller)
 		end
 	end
 end
+
+-- Called when the entity is removed.
+function ENT:OnRemove()
+	if (IsValid(self.cwChatBubble)) then
+		self.cwChatBubble:Remove()
+	end
+end

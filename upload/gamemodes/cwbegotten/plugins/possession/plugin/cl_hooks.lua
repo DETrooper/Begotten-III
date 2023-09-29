@@ -172,8 +172,20 @@ end
 function cwPossession:DrawPlayerOutline(player, outlines, color)
 	if (player:GetMoveType() == MOVETYPE_WALK) then
 		outlines:Add(player, color, 2, true);
+		
+		if IsValid(player.clothesEnt) then
+			outlines:Add(player.clothesEnt, color, 2, true);
+		end
 	elseif player:IsRagdolled() then
-		outlines:Add(player:GetRagdollEntity(), color, 2, true);
+		local ragdollEntity = player:GetRagdollEntity();
+		
+		if IsValid(ragdollEntity) then
+			outlines:Add(ragdollEntity, color, 2, true);
+			
+			if IsValid(ragdollEntity.clothesEnt) then
+				outlines:Add(ragdollEntity.clothesEnt, color, 2, true);
+			end
+		end
 	end;
 end;
 

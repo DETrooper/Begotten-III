@@ -2947,6 +2947,8 @@ function Clockwork.player:CharacterScreenAdd(player, character)
 		timesurvived = character.data["charPlayTime"] or 0,
 		faction = character.faction,
 		subfaction = character.subfaction,
+		kinisgerOverride = character.data["kinisgerOverride"],
+		kinisgerOverrideSubfaction = character.data["kinisgerOverrideSubfaction"],
 		location = character.data["LastZone"] or "unknown",
 		faith = character.faith,
 		subfaith = character.subfaith,
