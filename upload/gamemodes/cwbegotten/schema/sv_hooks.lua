@@ -168,6 +168,13 @@ function Schema:ClockworkInitPostEntity()
 	self:LoadNPCs();
 	self:SpawnBegottenEntities();
 	
+	-- Breaks some stuff.
+	for k, v in pairs (ents.FindByClass("func_monitor")) do
+		if IsValid(v) then
+			v:Remove();
+		end
+	end;
+	
 	if (!map) then
 		return;
 	end;
