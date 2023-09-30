@@ -116,7 +116,7 @@ function cwBeliefs:TakeBelief(player, uniqueID, niceName, category)
 end;
 
 function cwBeliefs:ForceTakeBelief(player, uniqueID)
-	local beliefs = player:GetCharacterData("beliefs");
+	local beliefs = player:GetCharacterData("beliefs", {});
 	
 	if !beliefs[uniqueID] then
 		local beliefTree = self:FindBeliefTreeByBelief(uniqueID);

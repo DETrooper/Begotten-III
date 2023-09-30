@@ -423,6 +423,14 @@ function cwRituals:PlayerCharacterLoaded(player)
 		end
 	end
 	
+	if player:GetNetVar("princeOfThieves") == true then
+		player:SetNetVar("princeOfThieves", false)
+		
+		if timer.Exists("PrinceOfThievesTimer_"..entIndex) then
+			timer.Remove("PrinceOfThievesTimer_"..entIndex);
+		end
+	end
+	
 	if player.ritualOfShadow then
 		player.ritualOfShadow = nil;
 		

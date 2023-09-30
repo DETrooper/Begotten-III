@@ -704,7 +704,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("hail_prince_thieves");
 	RITUAL.name = "(T1) Hail Be to the Prince of Thieves";
-	RITUAL.description = "From the slums of the Darklands to the chaste fields of the County Districts, thieves all pray to the same prince. Performing this ritual makes lockpicking significantly easier and increases the rarity of loot from locked containers for the next 30 minutes.";
+	RITUAL.description = "From the slums of the Darklands to the chaste fields of the County Districts, thieves all pray to the same prince. Performing this ritual makes lockpicking significantly easier and increases the chance of finding loot from locked containers by 10% for the next 30 minutes.";
 	RITUAL.onerequiredbelief = {"soothsayer", "witch", "witch_druid"}; -- Tier I Faith of the Dark Ritual
 	
 	RITUAL.requirements = {"down_catalyst", "ice_catalyst", "ice_catalyst"};
@@ -715,7 +715,7 @@ RITUAL = cwRituals.rituals:New("hail_prince_thieves");
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("princeOfThieves", true);
 		
-		timer.Simple(1800, function()
+		timer.Create("PrinceOfThievesTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("princeOfThieves", false) then
 					player:SetNetVar("princeOfThieves", false);

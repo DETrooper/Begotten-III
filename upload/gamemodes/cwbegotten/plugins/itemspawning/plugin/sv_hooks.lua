@@ -366,6 +366,14 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 			chance = chance + 5;
 		end
 		
+		if cwRituals then
+			if player:GetNetVar("princeOfThieves", false) then
+				if container.cwLockTier and container.cwLockTier >= 1 then
+					chance = chance + 10;
+				end
+			end
+		end
+		
 		if cwBeliefs then
 			if player:HasBelief("disciple") then
 				if math.random(1, 10) == 1 then

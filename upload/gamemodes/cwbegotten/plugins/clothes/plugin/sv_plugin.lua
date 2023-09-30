@@ -749,7 +749,7 @@ function PLUGIN:ModifyPlayerSpeed(player, infoTable)
 			infoTable.jumpPower = infoTable.jumpPower * 0.9;
 		elseif clothesItem.weightclass == "Light" then
 			if clothesItem.name == "Gore Berserker Armor" then
-				if not player:HasShieldEquipped() then
+				if not player:GetShieldEquipped() then
 					infoTable.runSpeed = infoTable.runSpeed * 1.10;
 					infoTable.walkSpeed = infoTable.walkSpeed * 1.10;
 				end
