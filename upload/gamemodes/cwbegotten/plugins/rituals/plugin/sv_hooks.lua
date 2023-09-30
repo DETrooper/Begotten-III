@@ -898,32 +898,30 @@ Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 							player:OverrideName(nil)
 							
 							if (Schema.Ranks[selectedFaction]) then
-								if (!player:GetCharacterData("rank") or player:GetCharacterData("rank") < 1 or player:GetCharacterData("rank") > #Schema.Ranks[selectedFaction]) then
-									local factionTable = Clockwork.faction:FindByID(selectedFaction);
-									local subfaction = player:GetSubfaction();
-									local subfactionRankFound = false;
-									
-									if subfaction and subfaction ~= "" and subfaction ~= "N/A" then
-										if factionTable and factionTable.subfactions then
-											for i = 1, #factionTable.subfactions do
-												local isubfaction = factionTable.subfactions[i];
-												
-												if isubfaction.name == subfaction then
-													if isubfaction.startingRank then
-														player:SetCharacterData("rank", isubfaction.startingRank);
-														subfactionRankFound = true;
-														
-														break;
-													end
+								local factionTable = Clockwork.faction:FindByID(selectedFaction);
+								local subfaction = player:GetSubfaction();
+								local subfactionRankFound = false;
+								
+								if subfaction and subfaction ~= "" and subfaction ~= "N/A" then
+									if factionTable and factionTable.subfactions then
+										for i = 1, #factionTable.subfactions do
+											local isubfaction = factionTable.subfactions[i];
+											
+											if isubfaction.name == subfaction then
+												if isubfaction.startingRank then
+													player:SetCharacterData("rank", isubfaction.startingRank);
+													subfactionRankFound = true;
+													
+													break;
 												end
 											end
 										end
 									end
-									
-									if !subfactionRankFound then
-										player:SetCharacterData("rank", 1);
-									end
-								end;
+								end
+								
+								if !subfactionRankFound then
+									player:SetCharacterData("rank", 1);
+								end
 
 								local name = player:Name();
 								

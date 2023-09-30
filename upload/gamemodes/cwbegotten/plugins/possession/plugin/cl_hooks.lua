@@ -170,7 +170,9 @@ function cwPossession:AddEntityOutlines(outlines)
 end
 
 function cwPossession:DrawPlayerOutline(player, outlines, color)
-	if (player:GetMoveType() == MOVETYPE_WALK) then
+	local moveType = player:GetMoveType();
+	
+	if (moveType == MOVETYPE_WALK or moveType == MOVETYPE_LADDER) then
 		outlines:Add(player, color, 2, true);
 		
 		if IsValid(player.clothesEnt) then
@@ -189,46 +191,47 @@ function cwPossession:DrawPlayerOutline(player, outlines, color)
 	end;
 end;
 
--- Called when the screenspace effects are rendered.
-function cwPossession:PostDrawOpaqueRenderables()
-	local entitiesInSphere = ents.FindInSphere(Clockwork.Client:GetPos(), 512);
-	
-	for k, v in pairs (entitiesInSphere) do	
-		if (IsValid(v) and v:IsPlayer() and (v:GetMoveType() == MOVETYPE_WALK or v:IsRagdolled())) then
-			if v:GetSharedVar("currentlyPossessed") or v:GetSharedVar("possessionFreakout") then
-				if v ~= Clockwork.Client and !Clockwork.Client.victim then
-					local headBone = v:LookupBone("ValveBiped.Bip01_Head1");
+function cwPossession:PostPlayerDraw(player)
+	if player:GetSharedVar("currentlyPossessed") or player:GetSharedVar("possessionFreakout") then
+		if player:Alive() and !player:IsNoClipping() then
+			if player ~= Clockwork.Client and !Clockwork.Client.victim then
+				local ragdollEntity = player:GetRagdollEntity();
+				
+				if IsValid(ragdollEntity) then
+					player = ragdollEntity;
+				end
+				
+				local headBone = player:LookupBone("ValveBiped.Bip01_Head1");
+				
+				if (headBone) then
+					local bonePosition, boneAngles = player:GetBonePosition(headBone);
+					local eyes = player:LookupAttachment("eyes");
+					local eyesAttachment = player:GetAttachment(eyes);
 					
-					if (headBone) then
-						local bonePosition, boneAngles = v:GetBonePosition(headBone);
-						local eyes = v:LookupAttachment("eyes");
-						local eyesAttachment = v:GetAttachment(eyes);
+					if (bonePosition and eyesAttachment) then
+						local glowColor = Color(255, 50, 50, 255);
+						local eyePos = EyePos();
+						local forward = eyesAttachment.Ang:Forward();
+						local right = eyesAttachment.Ang:Right();
+						local position = eyesAttachment.Pos
+						local difference = (eyePos - position);
+						local differenceAngle = difference:Angle();
+						local differenceForward = differenceAngle:Forward();
+						local firstEye = position + (forward * 0.6) + (right * -1.25) + (differenceForward * 1);
+						local secondEye = position + (forward * 0.6) + (right * 1.25) + (differenceForward * 1);
 						
-						if (bonePosition and eyesAttachment) then
-							local glowColor = Color(255, 50, 50, 255);
-							local eyePos = EyePos();
-							local forward = eyesAttachment.Ang:Forward();
-							local right = eyesAttachment.Ang:Right();
-							local position = eyesAttachment.Pos
-							local difference = (eyePos - position);
-							local differenceAngle = difference:Angle();
-							local differenceForward = differenceAngle:Forward();
-							local firstEye = position + (forward * 0.6) + (right * -1.25) + (differenceForward * 1);
-							local secondEye = position + (forward * 0.6) + (right * 1.25) + (differenceForward * 1);
-							
-							render.SetMaterial(glowMaterial);
-							render.DrawSprite(firstEye, 2, 1.8, glowColor);
-							render.DrawSprite(secondEye, 2, 1.8, glowColor);
-						end;
+						render.SetMaterial(glowMaterial);
+						render.DrawSprite(firstEye, 2, 1.8, glowColor);
+						render.DrawSprite(secondEye, 2, 1.8, glowColor);
 					end;
 				end;
 				
 				if cwMusic then
 					cwMusic:FadeOutAmbientMusic(2, 1);
 				end
-			end;
-		end; 
-	end;
+			end
+		end
+	end
 end;
 
 function cwPossession:RenderScreenspaceEffects()

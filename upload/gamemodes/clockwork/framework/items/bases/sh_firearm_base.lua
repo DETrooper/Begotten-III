@@ -228,7 +228,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 			player:SelectWeapon("begotten_fists")
 			player:StripWeapon(itemTable.weaponClass)
 
-			if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+			if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 				local useSound = itemTable("useSound");
 				
 				if (useSound) then

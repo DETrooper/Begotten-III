@@ -3846,7 +3846,7 @@ function GM:EntityTakeDamage(entity, damageInfo)
 		return true;
 	end
 	
-	if (entity:IsPlayer() and damageInfo:IsExplosionDamage() and !entity:IsRagdolled() and entity:GetMoveType() == MOVETYPE_WALK) then
+	if (entity:IsPlayer() and damageInfo:IsExplosionDamage() and !entity:IsRagdolled() and !entity:IsNoClipping()) then
 		if !Clockwork.player:HasFlags(entity, "E") and !Clockwork.player:HasFlags(entity, "K") then
 			if !cwBeliefs or (cwBeliefs and !entity:HasBelief("fortitude_finisher")) then
 				local data = {}

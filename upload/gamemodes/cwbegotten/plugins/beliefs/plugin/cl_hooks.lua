@@ -150,7 +150,9 @@ function cwBeliefs:AddEntityOutlines(outlines)
 end
 
 function cwBeliefs:DrawPlayerOutline(player, outlines, color)
-	if (player:GetMoveType() == MOVETYPE_WALK) then
+	local moveType = player:GetMoveType();
+	
+	if (moveType == MOVETYPE_WALK or moveType == MOVETYPE_LADDER) then
 		outlines:Add(player, color, 2, true);
 		
 		if IsValid(player.clothesEnt) then

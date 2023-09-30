@@ -433,7 +433,8 @@ else
 				player.equipmentSlotModels = {};
 			end
 			
-			local shouldBeVisible = player:Alive() and ((player:GetMoveType() == MOVETYPE_WALK and player:GetColor().a > 0) or player:IsRagdolled() or player:InVehicle());
+			local activeWeapon = player:GetActiveWeapon();
+			local shouldBeVisible = player:Alive() and (!player:IsNoClipping() and player:GetColor().a > 0);
 
 			for slot, itemTable in pairs(player.equipmentSlots) do
 				if itemTable and itemTable.isAttachment then
@@ -485,8 +486,6 @@ else
 					end
 					
 					if attachmentVisible then
-						local activeWeapon = player:GetActiveWeapon();
-						
 						if IsValid(activeWeapon) then
 							if activeWeapon:GetClass() == itemTable.weaponClass or activeWeapon:GetNWString("activeShield") == itemTable.uniqueID then
 								attachmentVisible = false;

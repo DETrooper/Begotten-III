@@ -75,6 +75,10 @@ local ITEM = item.New(nil, true);
 
 	-- Called when a player has unequipped the item.
 	function ITEM:OnPlayerUnequipped(player, extraData, bSkipProgressBar)
+		if !player:Alive() then
+			bSkipProgressBar = true;
+		end
+	
 		if Clockwork.equipment:UnequipItem(player, self, nil, !bSkipProgressBar) then
 			local action = Clockwork.player:GetAction(player);
 			
@@ -109,7 +113,7 @@ local ITEM = item.New(nil, true);
 			else
 				local useSound = self.useSound;
 				
-				if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+				if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 					if (useSound) then
 						if (type(useSound) == "table") then
 							player:EmitSound(useSound[math.random(1, #useSound)]);
@@ -299,7 +303,7 @@ local ITEM = item.New(nil, true);
 						return false;
 					end
 				
-					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+					if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 						local useSound = self("useSound");
 						
 						if (useSound) then

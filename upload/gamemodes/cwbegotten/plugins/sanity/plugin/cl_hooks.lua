@@ -31,7 +31,7 @@ function cwSanity:PostDrawOpaqueRenderables()
 			for k, v in pairs (ents.FindInSphere(position, 512)) do
 				local moveType = v:GetMoveType();
 				
-				if (IsValid(v) and v:IsPlayer() and moveType == MOVETYPE_WALK and v != Clockwork.Client) then
+				if (v:IsPlayer() and (moveType == MOVETYPE_WALK or moveType == MOVETYPE_LADDER) and v != Clockwork.Client) then
 					local model = v:GetModel();
 					
 					if (string.find(model, "humans")) then
@@ -469,7 +469,7 @@ function cwSanity:RenderScreenspaceEffects()
 		for k, v in pairs(self.insanitySkeletons) do 
 			local entity = Entity(k);
 			
-			if (!IsValid(entity) or entity:GetMoveType() != MOVETYPE_WALK or !IsValid(v) or v:GetParent() ~= entity) then
+			if (!IsValid(entity) or (entity:GetMoveType() != MOVETYPE_WALK and entity:GetMoveType() != MOVETYPE_LADDER) or !IsValid(v) or v:GetParent() ~= entity) then
 				if (IsValid(v)) then
 					v:Remove();
 				end;
@@ -496,7 +496,7 @@ function cwSanity:RenderScreenspaceEffects()
 					local distance = playerPosition:DistToSqr(position);
 					local moveType = v:GetMoveType();
 					
-					if moveType == MOVETYPE_WALK and distance < (750 * 750) then
+					if (moveType == MOVETYPE_WALK or moveType == MOVETYPE_LADDER) and distance < (750 * 750) then
 						if (!IsValid(self.insanitySkeletons[playerIndex])) then
 							local skeletonEnt = ClientsideModel("models/skeleton/skeleton_whole.mdl", RENDERGROUP_OPAQUE)
 							

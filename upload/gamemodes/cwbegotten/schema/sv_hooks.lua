@@ -394,7 +394,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 			local entityPlayer = Clockwork.entity:GetPlayer(entity);
 			
 			if (!entityPlayer or (entityPlayer and (!entityPlayer:Alive() or entityPlayer:GetMoveType() ~= MOVETYPE_OBSERVER))) then
-				if player:GetMoveType() == MOVETYPE_WALK then
+				if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 					player:EmitSound("physics/body/body_medium_impact_soft"..math.random(1, 7)..".wav");
 				end
 				
@@ -561,7 +561,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 			end
 		end
 	elseif (class == "cw_belongings" and (arguments == "cw_belongingsOpen" or arguments == "cwBelongingsOpen")) then
-		if player:GetMoveType() == MOVETYPE_WALK then
+		if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 			player:EmitSound("physics/cardboard/cardboard_box_break3.wav");
 		end
 		
@@ -1561,7 +1561,7 @@ end;
 
 -- Called when a player closes a storage entity.
 function Schema:ClosedStorage(player, entity)
-	if player:GetMoveType() == MOVETYPE_WALK and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+	if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 		self:CloseSound(entity, player);
 	end
 	
@@ -1583,7 +1583,7 @@ function Schema:PreOpenedContainer(player, entity)
 			return;
 		end;
 		
-		if player:GetMoveType() == MOVETYPE_WALK and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+		if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 			self:OpenSound(entity, player);
 		end
 		
@@ -2565,13 +2565,13 @@ function Schema:PlayerLimbTakeDamage(player, hitGroup, damage)
 end;
 
 function Schema:PostPlayerGiveToStorage(player, storageTable, itemTable)
-	if IsValid(player) and player:GetMoveType() == MOVETYPE_WALK and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+	if IsValid(player) and !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 		player:EmitSound("generic_ui/ui_llite_0"..tostring(math.random(1, 3))..".wav");
 	end
 end
 
 function Schema:PostPlayerTakeFromStorage(player, storageTable, itemTable)
-	if IsValid(player) and player:GetMoveType() == MOVETYPE_WALK and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+	if IsValid(player) and !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 		player:EmitSound("generic_ui/ui_llite_0"..tostring(math.random(1, 3))..".wav");
 	end
 end

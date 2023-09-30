@@ -93,7 +93,9 @@ function cwSanity:ThunderSkeletons()
 	Clockwork.Client:EmitSound("begotten/slender.wav");
 	--
 	for k, v in pairs (ents.FindInSphere(position, 750)) do
-		if (v:IsPlayer() and v:Alive() and v:GetMoveType() == MOVETYPE_WALK and Clockwork.entity:CanSeePlayer(Clockwork.Client, v, 0.5)) then
+		local moveType = v:GetMoveType();
+		
+		if (v:IsPlayer() and v:Alive() and (moveType == MOVETYPE_WALK or moveType == MOVETYPE_LADDER) and Clockwork.entity:CanSeePlayer(Clockwork.Client, v, 0.5)) then
 			local entIndex = v:EntIndex();
 			local dynamicLight = DynamicLight(entIndex.."_light");
 			local playerPosition = v:GetPos();

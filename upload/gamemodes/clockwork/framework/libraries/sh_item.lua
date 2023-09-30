@@ -1025,7 +1025,7 @@ if (SERVER) then
 				end;
 				
 				if (!bNoSound) then
-					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+					if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 						local useSound = itemTable("useSound");
 						
 						if (useSound) then
@@ -1088,7 +1088,7 @@ if (SERVER) then
 				end;
 				
 				if (!bNoSound) then
-					if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+					if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 						local dropSound = itemTable("dropSound");
 						
 						if (dropSound) then
@@ -1120,7 +1120,7 @@ if (SERVER) then
 			player:TakeItem(itemTable);
 			
 			if (!bNoSound) then
-				if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+				if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 					local destroySound = itemTable("destroySound");
 					
 					if (destroySound) then

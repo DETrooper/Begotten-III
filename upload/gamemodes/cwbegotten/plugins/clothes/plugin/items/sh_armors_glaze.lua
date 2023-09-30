@@ -1590,7 +1590,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 	if self:HasPlayerEquipped(player) then
 		local useSound = self.useSound;
 		
-		if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+		if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 			if (useSound) then
 				if (type(useSound) == "table") then
 					player:EmitSound(useSound[math.random(1, #useSound)]);
@@ -1710,7 +1710,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 	if self:HasPlayerEquipped(player) then
 		local useSound = self.useSound;
 		
-		if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+		if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 			if (useSound) then
 				if (type(useSound) == "table") then
 					player:EmitSound(useSound[math.random(1, #useSound)]);
@@ -1836,7 +1836,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 	if self:HasPlayerEquipped(player) then
 		local useSound = self.useSound;
 		
-		if (player:GetMoveType() == MOVETYPE_WALK or player:IsRagdolled() or player:InVehicle()) and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+		if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 			if (useSound) then
 				if (type(useSound) == "table") then
 					player:EmitSound(useSound[math.random(1, #useSound)]);

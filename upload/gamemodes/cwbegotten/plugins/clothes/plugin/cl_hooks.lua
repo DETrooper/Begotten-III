@@ -41,95 +41,103 @@ function PLUGIN:Tick()
 	for k, v in pairs(ents.FindByClass("prop_ragdoll")) do
 		if v:GetNWString("clothes") then
 			if !IsValid(v.clothesEnt) then
-				v.clothesEnt = ClientsideModel(v:GetNWString("clothes"), RENDERGROUP_BOTH);
+				local clothesEnt = ClientsideModel(v:GetNWString("clothes"), RENDERGROUP_BOTH);
 				
-				if IsValid(v.clothesEnt) then
-					v.clothesEnt:SetParent(v);
-					v.clothesEnt:AddEffects(EF_BONEMERGE);
-					v.clothesEnt:SetColor(v:GetColor());
-					v.clothesEnt:SetNoDraw(v:GetNoDraw());
+				if IsValid(clothesEnt) then
+					clothesEnt:SetParent(v);
+					clothesEnt:AddEffects(EF_BONEMERGE);
+					clothesEnt:SetColor(v:GetColor());
+					clothesEnt:SetNoDraw(v:GetNoDraw());
+					
+					v.clothesEnt = clothesEnt;
 				end
 			else
-				if v.clothesEnt:GetModel() ~= v:GetNWString("clothes") then
-					v.clothesEnt:Remove();
+				local clothesEnt = v.clothesEnt;
+				
+				if clothesEnt:GetModel() ~= v:GetNWString("clothes") then
+					clothesEnt:Remove();
 					v.clothesEnt = ClientsideModel(v:GetNWString("clothes"), RENDERGROUP_BOTH);
 				end
 			
-				if v.clothesEnt:GetParent() ~= v then
-					v.clothesEnt:SetParent(v);
-					v.clothesEnt:AddEffects(EF_BONEMERGE);
+				if clothesEnt:GetParent() ~= v then
+					clothesEnt:SetParent(v);
+					clothesEnt:AddEffects(EF_BONEMERGE);
 				end
 				
-				v.clothesEnt:SetColor(v:GetColor());
-				v.clothesEnt:SetNoDraw(v:GetNoDraw());
+				clothesEnt:SetColor(v:GetColor());
+				clothesEnt:SetNoDraw(v:GetNoDraw());
+				clothesEnt:SetPos(v:GetPos());
 			end
 		end
 	end
 end
 
 function PLUGIN:PostPlayerDraw(player, flags)
-	local shouldBeVisible = player:Alive() and ((player:GetMoveType() == MOVETYPE_WALK and player:GetColor().a > 0) or player:InVehicle());
+	if string.sub(player:GetModel(), 1, 21) == "models/begotten/heads" then
+		local moveType = player:GetMoveType();
+		local shouldBeVisible = player:Alive() and ((moveType == MOVETYPE_WALK or moveType == MOVETYPE_LADDER or player:InVehicle()) and player:GetColor().a > 0);
+		
+		if shouldBeVisible then
+			local clothes = player:GetClothesEquipped();
+			local model;
 
-	if shouldBeVisible and string.find(player:GetModel(), "models/begotten/heads") then
-		local clothes = player:GetClothesEquipped();
-		local model;
-
-		if clothes and clothes.group then
-			if clothes.genderless then
-				model = "models/begotten/"..clothes.group..".mdl";
+			if clothes and clothes.group then
+				if clothes.genderless then
+					model = "models/begotten/"..clothes.group..".mdl";
+				else
+					model = "models/begotten/"..clothes.group.."_"..string.lower(player:GetGender())..".mdl"
+				end
 			else
-				model = "models/begotten/"..clothes.group.."_"..string.lower(player:GetGender())..".mdl"
-			end
-		else
-			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
-			
-			if faction then
-				local factionTable = Clockwork.faction:FindByID(faction);
+				local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 				
-				if factionTable then
-					local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSharedVar("subfaction");
+				if faction then
+					local factionTable = Clockwork.faction:FindByID(faction);
 					
-					if subfaction and factionTable.subfactions then
-						for k, v in pairs(factionTable.subfactions) do
-							if k == subfaction and v.models then
-								model = v.models[string.lower(player:GetGender())].clothes;
-							
-								break;
+					if factionTable then
+						local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSharedVar("subfaction");
+						
+						if subfaction and factionTable.subfactions then
+							for k, v in pairs(factionTable.subfactions) do
+								if k == subfaction and v.models then
+									model = v.models[string.lower(player:GetGender())].clothes;
+								
+									break;
+								end
 							end
 						end
-					end
-					
-					if !model then
-						model = factionTable.models[string.lower(player:GetGender())].clothes;
+						
+						if !model then
+							model = factionTable.models[string.lower(player:GetGender())].clothes;
+						end
 					end
 				end
 			end
-		end
-		
-		if IsValid(player.clothesEnt) and player.clothesEnt:GetModel() ~= model then
-			player.clothesEnt:Remove();
-			player.clothesEnt = nil;
-		end
-		
-		if !IsValid(player.clothesEnt) then
-			if model then
-				player.clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
-			else
-				return;
+			
+			if IsValid(player.clothesEnt) and player.clothesEnt:GetModel() ~= model then
+				player.clothesEnt:Remove();
+				player.clothesEnt = nil;
 			end
-		end
-		
-		if player.clothesEnt:GetParent() ~= player then
-			player.clothesEnt:SetParent(player);
-			player.clothesEnt:AddEffects(EF_BONEMERGE);
-		end
-		
-		local clothesEnt = player.clothesEnt;
+			
+			if !IsValid(player.clothesEnt) then
+				if model then
+					player.clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
+				else
+					return;
+				end
+			end
+			
+			if player.clothesEnt:GetParent() ~= player then
+				player.clothesEnt:SetParent(player);
+				player.clothesEnt:AddEffects(EF_BONEMERGE);
+			end
+			
+			local clothesEnt = player.clothesEnt;
 
-		clothesEnt:SetColor(player:GetColor());
-		clothesEnt:SetNoDraw(player:GetNoDraw());
+			clothesEnt:SetColor(player:GetColor());
+			clothesEnt:SetNoDraw(player:GetNoDraw());
 
-		player.clothesDrawnThisTick = true;
+			player.clothesDrawnThisTick = true;
+		end
 	end
 end
 

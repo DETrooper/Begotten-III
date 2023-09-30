@@ -668,7 +668,7 @@ function Schema:CloseSound(entity, player)
 	if entity:GetClass() == "prop_ragdoll" then
 		player:EmitSound("physics/body/body_medium_impact_soft"..math.random(1, 7)..".wav");
 		return;
-	elseif entity:IsPlayer() and player:GetMoveType() == MOVETYPE_WALK then
+	elseif entity:IsPlayer() and !player:IsNoClipping() then
 		entity:EmitSound("physics/body/body_medium_impact_soft4.wav");
 		return;
 	elseif entity:GetClass() == "cw_belongings" then

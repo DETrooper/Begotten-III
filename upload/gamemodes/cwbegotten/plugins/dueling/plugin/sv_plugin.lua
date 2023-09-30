@@ -321,6 +321,12 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 	Clockwork.datastream:Start(player1, "FadeAmbientMusic");
 	Clockwork.datastream:Start(player2, "FadeAmbientMusic");
 	
+	-- Save positions.
+	if cwSpawnSaver then
+		cwSpawnSaver:PrePlayerCharacterUnloaded(player1);
+		cwSpawnSaver:PrePlayerCharacterUnloaded(player2);
+	end
+	
 	timer.Simple(5, function()
 		if IsValid(player1) and player1:Alive() and IsValid(player2) and player2:Alive() then
 			Clockwork.datastream:Start(player1, "SetPlayerDueling", true);

@@ -248,7 +248,7 @@ function cwRituals:PostDrawOpaqueRenderables()
 	end
 	
 	for k, v in pairs(self.storedPlayers) do
-		if IsValid(v) and v:GetMoveType() == MOVETYPE_WALK then
+		if IsValid(v) and (v:GetMoveType() == MOVETYPE_WALK or v:GetMoveType() == MOVETYPE_LADDER) then
 			if v:GetSharedVar("soulscorchActive", false) == true then
 				local clientPosition = LocalPlayer():GetPos();
 				local entityPosition = v:GetPos();
