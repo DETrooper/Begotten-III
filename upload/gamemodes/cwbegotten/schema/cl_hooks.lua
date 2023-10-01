@@ -403,7 +403,7 @@ function Schema:PlayerFootstep(player, position, foot, soundString, volume, reci
 		
 		return true;
 	end
-
+	
 	if (player:Crouching() and player:GetSharedVar("hasNimble")) or player:GetCharmEquipped("urn_silence") or player:GetColor().a <= 0 then
 		return true;
 	end;

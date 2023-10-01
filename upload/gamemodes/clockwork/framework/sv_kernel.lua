@@ -1128,7 +1128,7 @@ function playerMeta:Give(class, itemTable, bForceReturn)
 		ragdollWeapons[#ragdollWeapons + 1] = {
 			weaponData = {
 				class = class,
-				itemTable = itemTable
+				itemTable = itemTable,
 			},
 			canHolster = bCanHolster,
 			teamIndex = iTeamIndex,
@@ -1155,6 +1155,8 @@ function playerMeta:Give(class, itemTable, bForceReturn)
 				itemTable:OnWeaponGiven(self, weapon)
 			end
 		end
+		
+		return weapon;
 	end
 
 	hook.Run("PlayerGivenWeapon", self, class, itemTable)

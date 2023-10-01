@@ -2264,9 +2264,15 @@ function Clockwork.player:SetWeapons(player, weapons, bForceReturn)
 	for k, v in pairs(weapons) do
 		if (!player:HasWeapon(v.weaponData["class"])) then
 			if (!v.teamIndex or player:Team() == v.teamIndex) then
-				player:Give(
-					v.weaponData["class"], v.weaponData["itemTable"], bForceReturn
-				)
+				local weapon = player:Give(v.weaponData["class"], v.weaponData["itemTable"], bForceReturn);
+				
+				if IsValid(weapon) then
+					local activeShield = v.weaponData["shield"];
+					
+					if activeShield and activeShield:len() > 0 then
+						weapon:EquipShield(activeShield);
+					end
+				end
 			end
 		end
 	end
@@ -2339,7 +2345,8 @@ function Clockwork.player:GetWeapons(player, bDoKeep)
 		weapons[#weapons + 1] = {
 			weaponData = {
 				itemTable = itemTable,
-				class = class
+				class = class,
+				shield = v:GetNWString("activeShield"),
 			},
 			teamIndex = teamIndex
 		}

@@ -278,6 +278,43 @@ local ITEM = Clockwork.item:New("enchanted_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Thermal Implant";
+	ITEM.model = "models/gibs/shield_scanner_gib1.mdl";
+	ITEM.weight = 0.5;
+	ITEM.uniqueID = "thermal_implant";
+	ITEM.description = "An elegant piece of technology crudely inserted into the occipital lobe, granting technologically enhanced sight.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/thermal_implant.png";
+	ITEM.charmEffects = "- Allows the use of thermal and night vision via your Senses.";
+	ITEM.requiredSubfaiths = {"Voltism"};
+	ITEM.permanent = true;
+	
+	function ITEM:OnPlayerUnequipped(player, extraData)
+		if player:GetSubfaith() == "Voltism" and extraData != "force_unequip" then
+			Schema:EasyText(player, "peru", "This implant is fused into your occipital lobe and cannot be unequipped!");
+			return false;
+		end
+		
+		if Clockwork.equipment:UnequipItem(player, self) then
+			local useSound = self.useSound;
+			
+			if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+				if (useSound) then
+					if (type(useSound) == "table") then
+						player:EmitSound(useSound[math.random(1, #useSound)]);
+					else
+						player:EmitSound(useSound);
+					end;
+				elseif (useSound != false) then
+					player:EmitSound("begotten/items/first_aid.wav");
+				end;
+			end
+		end
+	end
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"tech", "tech"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Thief's Hand";
 	ITEM.model = "models/gibs/pgib_p1.mdl";
 	ITEM.weight = 0.5;
@@ -308,7 +345,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "wrench";
 	ITEM.description = "A simple wrench, it can probably be used for something.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Turn valves at the scrap factory 50% faster.";
+	ITEM.charmEffects = "- Turn valves at the scrap factory 80% faster.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 800};
 ITEM:Register();

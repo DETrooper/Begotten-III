@@ -174,8 +174,13 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 	end
 
 	if (itemTable:IsTheSameAs(self)) then
+		local activeWeapon = player:GetActiveWeapon();
+	
 		if (extraData != "drop") then
-			player:SelectWeapon("begotten_fists")
+			if IsValid(activeWeapon) and activeWeapon:GetClass() == itemTable.weaponClass then
+				player:SelectWeapon("begotten_fists")
+			end
+			
 			player:StripWeapon(itemTable.weaponClass)
 
 			if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
@@ -204,7 +209,11 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 					hook.Run("PlayerDropWeapon", player, self, entity)
 
 					player:TakeItem(self, true)
-					player:SelectWeapon("begotten_fists")
+					
+					if IsValid(activeWeapon) and activeWeapon:GetClass() == itemTable.weaponClass then
+						player:SelectWeapon("begotten_fists")
+					end
+					
 					player:StripWeapon(itemTable.weaponClass);
 
 					Clockwork.equipment:UnequipItem(player, self);

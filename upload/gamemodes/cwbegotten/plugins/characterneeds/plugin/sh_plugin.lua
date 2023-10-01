@@ -33,7 +33,7 @@ function COMMAND:OnRun(player, arguments)
 			return;
 		end
 		
-		if thirst <= 5 then
+		if thirst <= 10 then
 			Schema:EasyText(player, "chocolate", "You aren't thirsty enough to drink from here.");
 			
 			return;
@@ -68,6 +68,10 @@ function COMMAND:OnRun(player, arguments)
 					Schema:EasyText(player, "olive", "You drink from the Begotten waters. Who knows what foulness you have just consumed? You feel your sanity drain.");
 				end
 			end
+		end
+		
+		if cwBeliefs then
+			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		end
 	else
 		Schema:EasyText(player, "firebrick", "You must be near a source of water to drink!");

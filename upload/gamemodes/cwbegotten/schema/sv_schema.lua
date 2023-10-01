@@ -1637,6 +1637,10 @@ function playerMeta:AddBounty(bounty, reason, poster)
 	tab.bounty = self:GetCharacterData("bounty", 0);
 	tab.name = self:Name(true);
 	tab.model = self:GetModel();
+	tab.gender = self:GetGender();
+	tab.faction = self:GetSharedVar("kinisgerOverride") or self:GetFaction();
+	tab.subfaction = self:GetSharedVar("kinisgerOverrideSubfaction") or self:GetSubfaction();
+	tab.clothes = self:GetCharacterData("clothes");
 	tab.bodygroup1 = self:GetBodygroup(0);
 	tab.bodygroup2 = self:GetBodygroup(1);
 	tab.skin = self:GetSkin();
@@ -1703,6 +1707,8 @@ function playerMeta:RemoveBounty(remover)
 			Schema:EasyText(GetAdmins(), "tomato", remover:Name().." has removed the bounty for "..self:Name().."!");
 			Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, remover:Name().." has removed the bounty for "..self:Name().."!");
 		end
+		
+		return;
 	end
 	
 	Schema:EasyText(remover, "peru", self:Name().." does not have a bounty!");
@@ -1745,7 +1751,11 @@ function Schema:AddBounty(key, bounty, reason, poster)
 						
 						tab.bounty = (data["bounty"] or 0) + bounty;
 						tab.name = v._Name or "Unknown Name";
+						tab.gender = v._Gender or GENDER_MALE;
+						tab.faction = data["kinisgerOverride"] or v._Faction;
+						tab.subfaction = data["kinisgerOverrideSubfaction"] or v._Subfaction;
 						tab.model = v._Model or "models/humans/group01/male_cheaple.mdl";
+						tab.clothes = data["clothes"];
 						tab.skin = v._Skin or 0;
 						
 						local helmet = data["helmet"];

@@ -61,10 +61,12 @@ hook.Add("SetupMove", "Multi Jump", function(ply, mv)
 	
 	local curTime = CurTime();
 	
-	if !player.jumpSoundPlayed or player.jumpSoundPlayed < curTime then
-		ply:EmitSound("begotten/ambient/corpse/body_drop2.wav", 60, math.random(85, 105));
+	if !ply.jumpSoundPlayed or ply.jumpSoundPlayed < curTime then
+		if (!ply.GetCharmEquipped or !ply:GetCharmEquipped("urn_silence")) then
+			ply:EmitSound("begotten/ambient/corpse/body_drop2.wav", 60, math.random(85, 105));
 		
-		player.jumpSoundPlayed = curTime + 0.25;
+			ply.jumpSoundPlayed = curTime + 0.25;
+		end
 	end
 	
 	if ply.bloodWingsActive then

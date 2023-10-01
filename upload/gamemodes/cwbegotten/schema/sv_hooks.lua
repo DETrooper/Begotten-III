@@ -814,16 +814,9 @@ end;
 -- Called when a player's footstep sound should be played.
 function Schema:PlayerFootstep(player, position, foot, soundString, volume, recipientFilter)
 	-- Moving all of this shit to the client, but the code needs to remain for the wakeup sequence as footsteps can only be forced serverside.
-	
-	local running = nil;
-	
-	if (player:IsRunning()) then
-		running = true;
-	end;
-	
 	if !player.cwWakingUp then
 		if cwPowerArmor and player.wearingPowerArmor then
-			if running then
+			if player:IsRunning() then
 				util.ScreenShake(player:GetPos(), 2, 1, 0.5, 750)
 			else
 				util.ScreenShake(player:GetPos(), 1, 1, 0.5, 750)
@@ -832,6 +825,12 @@ function Schema:PlayerFootstep(player, position, foot, soundString, volume, reci
 			return true;
 		end
 	else
+		local running = false;
+	
+		if (player:IsRunning()) then
+			running = true;
+		end;
+	
 		if cwPowerArmor and player.wearingPowerArmor then
 			if running then
 				local runSounds = {
@@ -864,7 +863,7 @@ function Schema:PlayerFootstep(player, position, foot, soundString, volume, reci
 			return true;
 		end
 		
-		if (player:Crouching() and player:HasBelief("nimble")) or player.cloaked then
+		if (player:Crouching() and player:HasBelief("nimble")) or player:GetCharmEquipped("urn_silence") or player.cloaked then
 			return true;
 		end;
 		
@@ -2019,10 +2018,45 @@ function Schema:PlayerCanUseItem(player, itemTable, noMessage)
 		return false;
 	end
 	
+	if itemTable.uniqueID == "thermal_implant" then
+		local clothesItem = player:GetClothesEquipped();
+		
+		if clothesItem and clothesItem.permanent and player:GetSubfaith() == "Voltism" then
+			if (!noMessage) then
+				Schema:EasyText(player, "peru", "You cannot use a thermal implant while using an exoskeleton!");
+			end
+			
+			return false;
+		end
+	end
+	
 	--[[if (Clockwork.item:IsWeapon(itemTable)) then
 		return true
 	end;]]--
 end;
+
+-- Called when a player uses an item.
+function Schema:PlayerUseItem(player, itemTable, itemEntity)
+	if itemTable.permanent then
+		if player:GetSubfaith() == "Voltism" then
+			if itemTable.category == "Armor" then
+				if !player:GetCharacterData("VoltistNameChanged") then
+					Clockwork.dermaRequest:RequestString(player, "Ascension Name Change", "What do you want to change your name to?", player:GetName(), function(result)
+						Clockwork.player:SetName(player, result);
+						player:SetCharacterData("VoltistNameChanged", true);
+						player:SaveCharacter();
+					end)
+				end
+				
+				local thermalsItem = player:GetCharmEquipped("thermal_implant");
+				
+				if thermalsItem then
+					thermalsItem:OnPlayerUnequipped(player, "force_unequip");
+				end
+			end
+		end
+	end
+end
 
 -- Called when a player attempts to earn generator cash.
 function Schema:PlayerCanEarnGeneratorCash(player, info, cash) end;

@@ -244,8 +244,23 @@ function PANEL:DisplayWantedPoster(bountyData, charKey)
 		
 		render.SetScissorRect( leftx, topy, rightx, bottomy, true )
 			modelPanel.Entity:DrawModel();
+			
+			if modelPanel.Entity.clothesEnt and IsValid(modelPanel.Entity.clothesEnt) then
+				modelPanel.Entity.clothesEnt:DrawModel();
+			end
+			
 			--Grayscale(modelPanel.Entity);
 		render.SetScissorRect( 0, 0, 0, 0, false )
+	end
+	
+	function modelPanel.OnRemove(modelPanel)
+		if IsValid(modelPanel.Entity.clothesEnt) then
+			modelPanel.Entity.clothesEnt:Remove();
+		end
+	
+		if (IsValid(modelPanel.Entity)) then
+			modelPanel.Entity:Remove();
+		end
 	end
 
 	local modelEnt = modelPanel:GetEntity();
@@ -269,6 +284,55 @@ function PANEL:DisplayWantedPoster(bountyData, charKey)
 		
 		modelPanel:SetLookAt(headpos);
 		modelPanel:SetCamPos(headpos-Vector(-18, 0, 0));
+
+		if string.find(bountyData.model, "models/begotten/heads") then
+			local clothes = item.FindByID(bountyData.clothes);
+			local clothesModel;
+			
+			if clothes and clothes.group then
+				if clothes.genderless then
+					clothesModel = "models/begotten/"..clothes.group..".mdl";
+				else
+					clothesModel = "models/begotten/"..clothes.group.."_"..string.lower(bountyData.gender or GENDER_MALE)..".mdl"
+				end
+			else
+				local faction = bountyData.faction;
+				
+				if faction then
+					local factionTable = Clockwork.faction:FindByID(faction);
+					
+					if factionTable then
+						local subfaction = bountyData.subfaction;
+						
+						if subfaction and factionTable.subfactions then
+							for k, v in pairs(factionTable.subfactions) do
+								if k == subfaction and v.models then
+									clothesModel = v.models[string.lower(bountyData.gender or GENDER_MALE)].clothes;
+								
+									break;
+								end
+							end
+						end
+						
+						if !clothesModel then
+							clothesModel = factionTable.models[string.lower(bountyData.gender or GENDER_MALE)].clothes;
+						end
+					end
+				end
+			end
+			
+			if clothesModel then
+				local clothesEnt = ClientsideModel(clothesModel, RENDERGROUP_OPAQUE);
+				
+				if IsValid(clothesEnt) then
+					clothesEnt.noDelete = true;
+					clothesEnt:SetParent(modelEnt);
+					clothesEnt:AddEffects(EF_BONEMERGE);
+					
+					modelEnt.clothesEnt = clothesEnt;
+				end
+			end
+		end
 	end
 	
 	local physdescLabel = vgui.Create("DLabel", wantedPoster);

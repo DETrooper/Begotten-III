@@ -901,7 +901,13 @@ function PANEL:Rebuild()
 	if IsValid(self.characterModel) then
 		if IsValid(self.characterModel.modelPanel.Entity) then
 			if headModel then
-				self.characterModel.modelPanel.headModel = ClientsideModel(headModel, RENDERGROUP_OPAQUE);
+				if IsValid(self.characterModel.modelPanel.headModel) and self.characterModel.modelPanel.headModel:GetModel() ~= headModel then
+					self.characterModel.modelPanel.headModel:Remove();
+				end
+				
+				if !IsValid(self.characterModel.modelPanel.headModel) then
+					self.characterModel.modelPanel.headModel = ClientsideModel(headModel, RENDERGROUP_OPAQUE);
+				end
 				
 				if IsValid(self.characterModel.modelPanel.headModel) then
 					self.characterModel.modelPanel.headModel.noDelete = true;

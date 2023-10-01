@@ -46,30 +46,36 @@ function Parry(target, dmginfo)
 					end
 				end
 				
-				if (wep.AttackTable) then
-					local index = target:EntIndex();
-					local attacktable = GetTable(wep.AttackTable)
+				local index = target:EntIndex();
+				
+				if (!target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false)) then
+					if (timer.Exists(index.."_ParrySuccessTimer")) then 
+						timer.Destroy(index.."_ParrySuccessTimer")
+					end
 					
-					if (!target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false)) then
-						if (timer.Exists(index.."_ParrySuccessTimer")) then 
-							timer.Destroy(index.."_ParrySuccessTimer")
+					target:SetNWBool("ParrySucess", true)
+					
+					local delay = 2;
+					
+					if wep.AttackTable then
+						local attackTable = GetTable(wep.AttackTable);
+						
+						if attackTable then
+							delay = (attackTable["delay"] + 1);
+						end
+					end
+					
+					timer.Create(index.."_ParrySuccessTimer", delay, 1, function()
+						if (target:IsValid() --[[and target:Alive() and !target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false) and (target:GetNWBool("ParrySucess", false) == true)]]) then
+							target:SetNWBool("ParrySucess", false) 
 						end
 						
-						target:SetNWBool("ParrySucess", true)
-						local delay = (attacktable["delay"] + 1)
-						
-						timer.Create(index.."_ParrySuccessTimer", delay, 1, function()
-							if (target:IsValid() --[[and target:Alive() and !target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false) and (target:GetNWBool("ParrySucess", false) == true)]]) then
-								target:SetNWBool("ParrySucess", false) 
-							end
+						if attacker:IsValid() then
+							attacker:SetNWBool("Parried", false);
 							
-							if attacker:IsValid() then
-								attacker:SetNWBool("Parried", false);
-								
-								hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);
-							end
-						end)
-					end
+							hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);
+						end
+					end)
 				end
 			end
 		end
@@ -310,7 +316,7 @@ local function Guarding(ent, dmginfo)
 								shieldEquipped = true;
 								
 								if cwBeliefs and not ent:HasBelief("ingenuity_finisher") then
-									shieldItem:TakeCondition(math.max(dmginfo:GetDamage() / 50, 1));
+									shieldItemTable:TakeCondition(math.max(dmginfo:GetDamage() / 50, 1));
 								end
 							end
 							

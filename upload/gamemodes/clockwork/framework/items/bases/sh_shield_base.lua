@@ -175,10 +175,6 @@ function ITEM:OnUse(player, itemEntity)
 					end;
 					
 					v:EquipShield(self.uniqueID);
-					
-					if not player.cwWakingUp then
-						player:SelectWeapon(itemTable("weaponClass"));
-					end
 
 					return true;
 				end

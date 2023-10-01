@@ -7403,7 +7403,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("volt_projectile");
-		RECIPE.name = "(2x) Volt Projectile";
+		RECIPE.name = "Volt Projectile";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"wire_therapy"};
 		RECIPE.requiredBeliefsNiceNames = {"Wire Therapy"};
@@ -7412,7 +7412,7 @@ function cwRecipes:ClockworkInitialized()
 			["scrap"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["volt_projectile"] = {amount = 2},
+			["volt_projectile"] = {amount = 1},
 		};
 		RECIPE.category = "Munitions"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
@@ -7420,6 +7420,35 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 10;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("thermal_implant");
+		RECIPE.name = "Thermal Implant";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"the_paradox_riddle_equation"};
+		RECIPE.requiredBeliefsNiceNames = {"The Paradox Riddle Equation"};
+		RECIPE.requiredSubfaiths = {"Voltism"};
+		RECIPE.requirements = {
+			["tech"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["thermal_implant"] = {amount = 1},
+		};
+		RECIPE.category = "Other"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 40;
 		
 		function RECIPE:OnCraft(player)
 		end;

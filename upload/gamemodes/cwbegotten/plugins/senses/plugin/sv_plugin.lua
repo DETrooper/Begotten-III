@@ -30,6 +30,14 @@ function playerMeta:SensesOn(bRightClick)
 		local nightVision = bRightClick and clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "night_vision");
 		local thermalVision = !bRightClick and clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "thermal_vision");
 		
+		if self:GetCharmEquipped("thermal_implant") then
+			if bRightClick then
+				nightVision = true;
+			else
+				thermalVision = true;
+			end
+		end
+		
 		if (nightVision or thermalVision) then
 			if (nightVision) then
 				if self:GetNWBool("hasThermal") then

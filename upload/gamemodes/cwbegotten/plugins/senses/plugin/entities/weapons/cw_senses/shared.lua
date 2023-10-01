@@ -59,7 +59,7 @@ function SWEP:Deploy()
 		if !(cwBeliefs and (player:HasBelief("creature_of_the_dark") or player:HasBelief("the_black_sea"))) and !player:GetNWBool("hasThermal") and !player:GetNWBool("hasNV") then
 			local clothesItem = player:GetClothesEquipped();
 			
-			if !clothesItem or (clothesItem and !clothesItem.attributes) or (clothesItem and clothesItem.attributes and !table.HasValue(clothesItem.attributes, "thermal_vision")) then
+			if (!clothesItem or (clothesItem and !clothesItem.attributes) or (clothesItem and clothesItem.attributes and !table.HasValue(clothesItem.attributes, "thermal_vision"))) and !player:GetCharmEquipped("thermal_implant") then
 				player:SensesOn()
 			end
 		end
@@ -70,9 +70,13 @@ function SWEP:Holster(newWeapon)
 	if SERVER then
 		local player = self.Owner;
 		
-		if !(cwBeliefs and (player:HasBelief("creature_of_the_dark") or player:HasBelief("the_black_sea"))) and !player:GetNWBool("hasThermal") and !player:GetNWBool("hasNV") then
-			if newWeapon:GetClass() ~= "cw_senses" then
-				self.Owner:SensesOff();
+		if newWeapon:GetClass() ~= "cw_senses" then
+			if !(cwBeliefs and (player:HasBelief("creature_of_the_dark") or player:HasBelief("the_black_sea"))) and !player:GetNWBool("hasThermal") and !player:GetNWBool("hasNV") then
+				local clothesItem = player:GetClothesEquipped();
+			
+				if (!clothesItem or (clothesItem and !clothesItem.attributes) or (clothesItem and clothesItem.attributes and !table.HasValue(clothesItem.attributes, "thermal_vision"))) and !player:GetCharmEquipped("thermal_implant") then
+					self.Owner:SensesOff();
+				end
 			end
 		end
 	end
@@ -89,7 +93,7 @@ function SWEP:PrimaryAttack()
 			clothesItem = self.Owner:GetClothesEquipped();
 		end
 				
-		if (cwBeliefs and self.Owner.HasBelief and (self.Owner:HasBelief("creature_of_the_dark") or self.Owner:HasBelief("the_black_sea"))) or (clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "thermal_vision")) then
+		if (cwBeliefs and self.Owner.HasBelief and (self.Owner:HasBelief("creature_of_the_dark") or self.Owner:HasBelief("the_black_sea"))) or (clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "thermal_vision")) or self.Owner:GetCharmEquipped("thermal_implant") then
 			if !self.Owner.sensesOn then
 				self.Owner:SensesOn();
 			else
@@ -112,7 +116,7 @@ function SWEP:SecondaryAttack()
 			clothesItem = self.Owner:GetClothesEquipped();
 		end
 		
-		if (clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "night_vision")) then
+		if (clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "night_vision")) or self.Owner:GetCharmEquipped("thermal_implant") then
 			if !self.Owner.sensesOn then
 				self.Owner:SensesOn(true);
 			else

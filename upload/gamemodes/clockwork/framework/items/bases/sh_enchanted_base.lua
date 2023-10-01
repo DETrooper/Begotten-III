@@ -83,6 +83,14 @@ local ITEM = item.New(nil, true);
 			
 			return false
 		end
+		
+		if self.requiredSubfaiths and not (table.HasValue(self.requiredSubfaiths, player:GetSubfaith())) then
+			if !player.spawning then
+				Schema:EasyText(player, "chocolate", "You are not of the correct subfaith to wear this!")
+			end
+			
+			return false
+		end
 
 		if (player:Alive()) then
 			for i, v in ipairs(self.slots) do
