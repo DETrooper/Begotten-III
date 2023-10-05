@@ -39,6 +39,7 @@ SWEP.BlockTable = "HalberdBlockTable"
 -- For polearms only
 SWEP.ShortPolearm = false
 SWEP.CanSwipeAttack = false
+SWEP.MultiHit = 3;
 
 function SWEP:CriticalAnimation()
 

@@ -36,7 +36,7 @@ ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 
 ITEM.attributes = {"mothers_blessing", "increased_regeneration"};
-ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide", "cloth", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "breakdown", items = {"hide", "cloth", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -56,7 +56,7 @@ ITEM.description = "A fur cloak traditionally worn by Goreic seafaring raiders. 
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.requireFaction = {"Goreic Warrior"};
 
-ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide", "cloth"}};
+ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -93,7 +93,7 @@ ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
 ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 ITEM.slashScale = 0.95; -- reduces slash damage by 5%
 
-ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide", "bearskin", "bearskin", "cloth"}};
+ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide", "bearskin", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)

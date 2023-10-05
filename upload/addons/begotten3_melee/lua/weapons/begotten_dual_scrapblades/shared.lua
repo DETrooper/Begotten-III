@@ -32,6 +32,7 @@ SWEP.AttackSoundTable = "DualSwordsAttackSoundTable"
 SWEP.BlockSoundTable = "MetalBlockSoundTable"
 SWEP.SoundMaterial = "Metal" -- Metal, Wooden, MetalPierce, Punch, Default
 
+SWEP.MultiHit = 2;
 /*---------------------------------------------------------
 	PrimaryAttack
 ---------------------------------------------------------*/

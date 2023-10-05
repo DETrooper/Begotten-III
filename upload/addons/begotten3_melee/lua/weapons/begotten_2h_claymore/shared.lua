@@ -32,6 +32,7 @@ SWEP.PrimaryIdleDelay = 0.85
 SWEP.AltPlaybackRate = 0.65
 SWEP.AltIdleDelay = 0.75
 SWEP.PrimarySwingAnim = "a_heavy_2h_attack_slash_0"
+SWEP.MultiHit = 3;
 
 --Sounds
 SWEP.AttackSoundTable = "HeavyMetalAttackSoundTable" 
