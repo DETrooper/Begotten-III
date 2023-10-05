@@ -226,7 +226,7 @@ function SWEP:PrimaryAttack()
 							local pos = owner:GetShootPos();
 							local aimVector = owner:GetAimVector();
 							local meleeArc = (attacktable["meleearc"]) or 25;
-							local meleeRange = (attacktable["meleerange"] / 10);
+							local meleeRange = (attacktable["meleerange"] / 9);
 							local hitsAllowed = self.MultiHit or 1;
 							local hitEntities = {};
 							
@@ -381,7 +381,7 @@ function SWEP:PrimaryAttack()
 								local pos = owner:GetShootPos();
 								local aimVector = owner:GetAimVector();
 								local meleeArc = (attacktable["meleearc"]) or 25;
-								local meleeRange = (attacktable["meleerange"] / 10);
+								local meleeRange = (attacktable["meleerange"] / 9);
 								local hitsAllowed = self.MultiHit or 1;
 								local hitEntities = {};
 								

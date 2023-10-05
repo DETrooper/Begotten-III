@@ -192,7 +192,7 @@ function SWEP:Hitscan()
 	
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
-		endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (attacktable["meleerange"]) / 10),
+		endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (attacktable["meleerange"]) / 9),
 		filter = self.Owner,
 		mask = MASK_SHOT_HULL
 	} )
@@ -207,7 +207,7 @@ function SWEP:Hitscan()
 		bullet.Tracer = 0
 		bullet.Force  = 2
 		bullet.Hullsize = 0
-		bullet.Distance = (attacktable["meleerange"] / 10)
+		bullet.Distance = (attacktable["meleerange"] / 9)
 		bullet.Damage = 0;
 	
 		bullet.Callback = function(attacker, tr, dmginfo)
@@ -399,7 +399,7 @@ function SWEP:PrimaryAttack()
 							local pos = owner:GetShootPos();
 							local aimVector = owner:GetAimVector();
 							local meleeArc = (attacktable["meleearc"]) or 25;
-							local meleeRange = (attacktable["meleerange"] / 10);
+							local meleeRange = (attacktable["meleerange"] / 9);
 							local hitsAllowed = self.MultiHit or 1;
 							local hitEntities = {};
 							

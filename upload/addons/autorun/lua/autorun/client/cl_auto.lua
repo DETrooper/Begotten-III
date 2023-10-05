@@ -41,7 +41,7 @@ concommand.Add("testarc", function()
 		local pos = LocalPlayer():GetShootPos();
 		local aimVector = LocalPlayer():GetAimVector();
 		local meleeArc = GetTable(LocalPlayer():GetActiveWeapon().AttackTable).meleearc;
-		local meleeRange = GetTable(LocalPlayer():GetActiveWeapon().AttackTable).meleerange / 10;
+		local meleeRange = GetTable(LocalPlayer():GetActiveWeapon().AttackTable).meleerange / 9;
 
 		debugoverlay.Line(pos, pos + (aimVector * meleeRange), 5);
 		
