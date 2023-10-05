@@ -371,7 +371,7 @@ if SERVER then
 		hook.Run("PlayerSetHandsModel", player, player:GetHands());
 		
 		for i, v in ipairs(_player.GetAll()) do
-			Clockwork.equipment:NetworkEquipmentToPlayer(v, player);
+			Clockwork.equipment:NetworkEquipmentToPlayer(player, v);
 		end
 	end);
 else
@@ -428,17 +428,16 @@ else
 	end);
 
 	hook.Add("PostPlayerDraw", "PostPlayerDrawEquipment", function(player)
-		if IsValid(player) then
+		if IsValid(player) and player:Alive() and (!player:IsNoClipping() and player:GetColor().a > 0) then
 			if !player.equipmentSlotModels then
 				player.equipmentSlotModels = {};
 			end
 			
 			local activeWeapon = player:GetActiveWeapon();
-			local shouldBeVisible = player:Alive() and (!player:IsNoClipping() and player:GetColor().a > 0);
 
 			for slot, itemTable in pairs(player.equipmentSlots) do
 				if itemTable and itemTable.isAttachment then
-					local attachmentVisible = shouldBeVisible;
+					local attachmentVisible = true;
 					local equipmentModel = player.equipmentSlotModels[itemTable.itemID];
 				
 					if !IsValid(equipmentModel) then

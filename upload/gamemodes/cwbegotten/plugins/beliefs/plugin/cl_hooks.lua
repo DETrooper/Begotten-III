@@ -99,18 +99,20 @@ function cwBeliefs:AddEntityOutlines(outlines)
 				end;
 			end;
 		else]]
-			for k, v in pairs(_player.GetAll()) do
-				if v.warcryTarget and v:GetColor().a > 0 then
+			for i, v in ipairs(_player.GetAll()) do
+				if v.warcryTarget and v:Alive() and v:GetColor().a > 0 then
 					self:DrawPlayerOutline(v, outlines, Color(180, 0, 0, 255));
 				end
 			end;
 		--end
-	elseif Clockwork.Client:GetSharedVar("faith") == "Faith of the Dark" then
+	end
+	
+	if Clockwork.Client:GetSharedVar("faith") == "Faith of the Dark" then
 		local hasAssassin = self:HasBelief("assassin");
 		local isCOS = (Clockwork.Client:GetFaction() == "Children of Satan");
 		
-		for k, v in pairs(_player.GetAll()) do
-			if v ~= Clockwork.Client and v:HasInitialized() and v:Alive() then
+		for i, v in ipairs(_player.GetAll()) do
+			if v ~= Clockwork.Client and v:HasInitialized() and v:Alive() and v:GetColor().a > 0 then
 				if hasAssassin and (v:Health() < v:GetMaxHealth() / 4 or v:GetRagdollState() == RAGDOLL_FALLENOVER) then
 					if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= assassinDist) then
 						self:DrawPlayerOutline(v, outlines, Color(180, 0, 0, 255));
@@ -123,16 +125,10 @@ function cwBeliefs:AddEntityOutlines(outlines)
 					if v:GetSharedVar("yellowBanner") == true then
 						if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= bannerDist) then
 							self:DrawPlayerOutline(v, outlines, Color(200, 200, 0, 255));
-							
-							return;
 						end
-					end
-					
-					if v:GetSharedVar("kinisgerOverride") then
+					elseif v:GetSharedVar("kinisgerOverride") then
 						if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= assassinDist) then
 							self:DrawPlayerOutline(v, outlines, Color(0, 225, 225, 255));
-							
-							return;
 						end
 					end
 				end
@@ -140,8 +136,6 @@ function cwBeliefs:AddEntityOutlines(outlines)
 				if v:GetSharedVar("markedBySatanist") == true then
 					if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= markedDist) then
 						self:DrawPlayerOutline(v, outlines, Color(150, 0, 150, 255));
-						
-						return;
 					end
 				end
 			end;

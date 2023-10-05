@@ -2042,6 +2042,32 @@ function Schema:PlayerUseItem(player, itemTable, itemEntity)
 			if itemTable.category == "Armor" then
 				if !player:GetCharacterData("VoltistNameChanged") then
 					Clockwork.dermaRequest:RequestString(player, "Ascension Name Change", "What do you want to change your name to?", player:GetName(), function(result)
+						if result:len() < 6 then
+							Schema:EasyText(player, "peru", "This name is too short!");
+							
+							return;
+						end
+					
+						local blacklistedNames = {};
+						
+						if Schema.Ranks then
+							for k, v in pairs(Schema.Ranks) do
+								for i, v2 in ipairs(v) do
+									table.insert(blacklistedNames, string.lower(v2));
+								end
+							end
+						end
+						
+						for i = 1, #blacklistedNames do
+							local blacklistedName = blacklistedNames[i];
+						
+							if string.find(string.lower(result), blacklistedName) then
+								Schema:EasyText(player, "peru", "This name contains a blacklisted string!");
+							
+								return;
+							end
+						end
+						
 						Clockwork.player:SetName(player, result);
 						player:SetCharacterData("VoltistNameChanged", true);
 						player:SaveCharacter();
@@ -2092,7 +2118,19 @@ local imbecileClasses = {
 function Schema:ChatBoxAdjustInfo(info)
 	if (IsValid(info.speaker) and info.speaker:HasInitialized()) then
 		if table.HasValue(imbecileClasses, info.class) then
-			if info.speaker:HasTrait("imbecile") then
+			if(info.speaker:WaterLevel() >= 3) then
+                local newText = "";
+
+                local sounds = {"BL", "BLU", "BLR", "BLH", "MRH", "MPHL"};
+
+                for i = 1, #string.Split(info.text, " ") do
+                    for j = 1, math.random(1, 10) do
+                        newText = newText..table.Random(sounds);
+                    end
+                end
+
+                info.text = newText;
+            elseif info.speaker:HasTrait("imbecile") then
 				local imbecileText = info.text;
 				
 				if #imbecileText > 2 then

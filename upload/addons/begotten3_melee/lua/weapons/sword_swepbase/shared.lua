@@ -192,14 +192,14 @@ function SWEP:Hitscan()
 	
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
-		endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (attacktable["meleerange"]) * 0.109),
+		endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (attacktable["meleerange"]) / 10),
 		filter = self.Owner,
 		mask = MASK_SHOT_HULL
 	} )
 	
 	if ( tr.Hit ) and !tr.Entity:IsPlayer() and !tr.Entity:IsNPC() then
-
-		bullet = {}
+		local bullet = {};
+		
 		bullet.Num    = 1
 		bullet.Src    = self.Owner:GetShootPos()
 		bullet.Dir    = self.Owner:GetAimVector()
@@ -207,21 +207,21 @@ function SWEP:Hitscan()
 		bullet.Tracer = 0
 		bullet.Force  = 2
 		bullet.Hullsize = 0
-		bullet.Distance = (attacktable["meleerange"] * 0.109)
+		bullet.Distance = (attacktable["meleerange"] / 10)
 		bullet.Damage = 0;
 	
 		bullet.Callback = function(attacker, tr, dmginfo)
 			dmginfo:SetDamageType(DMG_CRUSH)
 		end
 		
-		self.Owner:FireBullets(bullet, 2)
+		self.Owner:FireBullets(bullet, 2);
 		
 		if string.find(tr.Entity:GetClass(), "prop_ragdoll") then
 			local data = self.Owner:GetEyeTrace();
 			local effect = EffectData();
 				effect:SetOrigin(data.HitPos);
 				effect:SetScale(16);
-			util.Effect("BloodImpact", effect);
+			util.Effect("BloodImpact", effect, true, true);
 			
 			--if not Clockwork.entity:GetPlayer(tr.Entity) or not Clockwork.entity:GetPlayer(tr.Entity):Alive() then
 				if self.Owner:GetNWBool("ThrustStance") != true then
@@ -343,22 +343,41 @@ function SWEP:CanPrimaryAttack()
 end
 
 function SWEP:PrimaryAttack()
-	local wep = self.Weapon
-	local ply = self.Owner
+	local wep = self.Weapon;
+	local owner = self.Owner;
 	local attacktable = GetTable(self.AttackTable);
-	local curTime = CurTime();
 	
-	if (IsValid(self.SwingEntity)) then
-		self.SwingEntity:Remove()
+	if (!self:CanPrimaryAttack()) then 
+		return true;
 	end
+	
+	if owner:GetNWBool("Guardening") == true then 
+		return true;
+	end
+	
+	if !attacktable then
+		return true;
+	end
+	
+	local curTime = CurTime();
+	local stance = "reg_swing";
 
+	if owner:GetNWBool("ThrustStance") == true then
+		stance = "thrust_swing";
+	else
+		stance = (attacktable["attacktype"]);
+	end
+	
+	if CLIENT then
+		hook.Run("PlayerAttacks", owner);
+	end
+	
 	-- Critical Attack
-	-- OPTIMIZE NOTE: need to go through this again, my code probably some sloppy wacky shit being done
-	if self.Owner:GetNWBool("ParrySucess") == true then
+	if owner:GetNWBool("ParrySucess") == true then
 		if SERVER then  
 			self:CriticalAnimation() 
 			
-			if cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("flamboyance") then
+			if cwBeliefs and owner.HasBelief and owner:HasBelief("flamboyance") then
 				self.Weapon:SetNextPrimaryFire(curTime + ((attacktable["delay"]) * 0.9))
 			else
 				self.Weapon:SetNextPrimaryFire(curTime + (attacktable["delay"]))
@@ -367,45 +386,94 @@ function SWEP:PrimaryAttack()
 			self.Weapon:SetNextSecondaryFire(curTime + (attacktable["delay"]) * 0.1)
 			self.isAttacking = true;
 			
-			self:CreateTimer(attacktable["striketime"] + 0.1, "strikeTimer"..self.Owner:EntIndex(), function()
-				if IsValid(self) and IsValid(self.Owner) then
+			self:CreateTimer(attacktable["striketime"] + 0.1, "strikeTimer"..owner:EntIndex(), function()
+				if IsValid(self) and IsValid(owner) then
 					if self.isAttacking then -- This can be set to false elsewhere and will abort the attack.
-						if self.Owner:IsPlayer() and !self.Owner:IsRagdolled() and self.Owner:Alive() then
+						self.isAttacking = false;
+						owner:SetNWBool( "MelAttacking", false )
+						
+						if owner:IsPlayer() and !owner:IsRagdolled() and owner:Alive() then
 							self:Hitscan(); -- For bullet holes.
+							owner:LagCompensation(true);
+						
+							local pos = owner:GetShootPos();
+							local aimVector = owner:GetAimVector();
+							local meleeArc = (attacktable["meleearc"]) or 25;
+							local meleeRange = (attacktable["meleerange"] / 10);
+							local hitsAllowed = self.MultiHit or 1;
+							local hitEntities = {};
 							
-							local pos = self.Owner:GetShootPos()
-							local ang = self.Owner:GetAimVector():Angle()
-							pos = pos + ang:Forward() + ang:Up()
+							local tr = util.TraceLine({
+								start = pos,
+								endpos = pos + (aimVector * meleeRange),
+								mask = MASK_SOLID,
+								filter = owner
+							})
 							
-							local add = 0
-							local vel = self.Owner:GetVelocity():Length();
-							if (vel > 0) then
-								add = (vel / 10);
-							end;
-							local cum = self.Owner:GetEyeTrace().Entity;
-							local tardist = 0;
-							if (IsValid(cum) and cum:IsPlayer() or cum:IsNPC()) then
-								tardist = math.abs((self.Owner:GetPos() - cum:GetPos()):Length()) -- autism
-							end;
-							if (add > tardist) then
-								add = (tardist / 2)
-							end;
-							local sex = self.Owner:GetForward() * add;
+							if tr.Hit then
+								if IsValid(tr.Entity) then
+									if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
+										table.insert(hitEntities, tr.Entity);
+										
+										if tr.Entity:GetNWBool("Parried") then
+											self:HandleHit(tr.Entity, tr.HitPos, "parry_swing");
+										else
+											self:HandleHit(tr.Entity, tr.HitPos, stance);
+										end
+									end
+								end
+							end
 								
-							local ent = ents.Create("parry_swing")
-							ent:SetAngles(self.Owner:GetAimVector():Angle())
-							ent:SetOwner(self.Weapon:GetOwner())
-							ent:SetPos(pos+sex)
-							ent:Spawn()
-							ent:Activate()
-							ent:GetPhysicsObject():ApplyForceCenter(self.Owner:GetAimVector() * 5)
-							self.SwingEntity = ent;
+							if IsValid(self) and owner:HasWeapon(self:GetClass()) then
+								if !tr.Hit or #hitEntities < hitsAllowed then
+									for i = 1, meleeArc - 1 do
+										local newAimVector = Vector(aimVector);
+									
+										if (i % 2 == 0) then
+											-- If even go left.
+											newAimVector:Rotate(Angle(0, math.Round(i / 2), 0));
+										else
+											-- If odd go right.
+											newAimVector:Rotate(Angle(0, -math.Round(i / 2), 0));
+										end
+											
+										debugoverlay.Line(pos, pos + (newAimVector * meleeRange));
+
+										local tr2 = util.TraceLine({
+											start = pos,
+											endpos = pos + (newAimVector * meleeRange),
+											mask = MASK_SOLID,
+											filter = owner
+										})
+										
+										if tr2.Hit then
+											if IsValid(tr2.Entity) and !table.HasValue(hitEntities, tr2.Entity) then
+												if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
+													table.insert(hitEntities, tr2.Entity);
+													
+													if tr2.Entity:GetNWBool("Parried") then
+														self:HandleHit(tr2.Entity, tr2.HitPos, "parry_swing", #hitEntities);
+													else
+														self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities);
+													end
+												end
+											end
+										
+											if #hitEntities >= hitsAllowed or !IsValid(self) or !owner:HasWeapon(self:GetClass()) then
+												break;
+											end
+										end
+									end
+								end
+							end
+							
+							owner:LagCompensation(false);
 							self.isAttacking = false;
 						end
 						
-						if (self.Owner:KeyDown(IN_ATTACK2)) then
-							if (!self.Owner:KeyDown(IN_USE)) then
-								local activeWeapon = self.Owner:GetActiveWeapon();
+						if (owner:KeyDown(IN_ATTACK2)) then
+							if (!owner:KeyDown(IN_USE)) then
+								local activeWeapon = owner:GetActiveWeapon();
 
 								if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
 									if (activeWeapon.IronSights == true) then
@@ -415,18 +483,18 @@ function SWEP:PrimaryAttack()
 										if (loweredParryDebug < curTime) then
 											local blockTable = GetTable(activeWeapon.realBlockTable);
 											
-											if (blockTable and self.Owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self.Owner:GetNWBool("Parried")) then
-												self.Owner:SetNWBool("Guardening", true);
-												self.Owner.beginBlockTransition = true;
-												self.Owner.StaminaRegenDelay = 0;
+											if (blockTable and owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !owner:GetNWBool("Parried")) then
+												owner:SetNWBool("Guardening", true);
+												owner.beginBlockTransition = true;
+												owner.StaminaRegenDelay = 0;
 												activeWeapon.Primary.Cone = activeWeapon.IronCone;
 												activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
 											else
-												self.Owner:CancelGuardening()
+												owner:CancelGuardening()
 											end;
 										end;
 									else
-										self.Owner:CancelGuardening();
+										owner:CancelGuardening();
 									end;
 								end;
 							end
@@ -436,44 +504,27 @@ function SWEP:PrimaryAttack()
 			end)
 		end
 		
-		self.Owner:SetNWBool("Riposting", true) 
-		self:CreateTimer(attacktable["striketime"] + 0.1, "riposteTimer"..self.Owner:EntIndex(), function() 
-			if IsValid(self) and self.Owner:IsValid() and self.Owner:Alive() and !self.Owner:IsRagdolled() then
-				self.Owner:SetNWBool("Riposting", false)
+		owner:SetNWBool("Riposting", true) 
+		self:CreateTimer(attacktable["striketime"] + 0.1, "riposteTimer"..owner:EntIndex(), function() 
+			if IsValid(self) and owner:IsValid() and owner:Alive() and !owner:IsRagdolled() then
+				owner:SetNWBool("Riposting", false)
 			end
 		end)
 			
-		self:TriggerAnim(self.Owner, self.Weapon.realCriticalAnim);
-		self.Owner:SetNWBool("ParrySucess", false) 
-		return
-	end
-	
-	if ( !self:CanPrimaryAttack() ) then 
-		return
-	end
-	
-	if self.Owner:GetNWBool("ThrustStance") == true then
-		self.Owner.stance = "thrust_swing"
-	else
-		self.Owner.stance = (attacktable["attacktype"])
-	end
-	
-	if self.Owner:GetNWBool("Guardening") == true then 
-		return true 
+		self:TriggerAnim(owner, self.Weapon.realCriticalAnim);
+		owner:SetNWBool("ParrySucess", false);
+		
+		return;
 	end
 
-	--self.Owner.StaminaRegenDelay = 0
-	self.Owner.nextStas = curTime + 5;
+	--owner.StaminaRegenDelay = 0
+	owner.nextStas = curTime + 5;
 
 	wep:SetNextPrimaryFire( curTime + (attacktable["delay"]) )
 	wep:SetNextSecondaryFire( curTime + (attacktable["delay"]) * 0.1 )
 	
-	if CLIENT then
-		hook.Run("PlayerAttacks", self.Owner);
-	end
-	
 	-- GLITCHED
-	if self.HandleThrustAttack and self.Owner:GetNWBool("ThrustStance") == true and !self.Owner:GetNWBool("Riposting") then
+	if self.HandleThrustAttack and owner:GetNWBool("ThrustStance") == true and !owner:GetNWBool("Riposting") then
 		self:HandleThrustAttack()
 	else
 		self:HandlePrimaryAttack()
@@ -482,64 +533,99 @@ function SWEP:PrimaryAttack()
 	local rnda = self.Primary.Recoil * 1
 	local rndb = self.Primary.Recoil * math.random(-1, 1)
 	
-	if SERVER and self:IsValid() and (!self.Owner.IsRagdolled or !self.Owner:IsRagdolled()) and self.Owner:Alive() then 
-		ply:SetNWBool( "MelAttacking", true )
+	if SERVER and self:IsValid() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then 
+		owner:SetNWBool( "MelAttacking", true )
 		
 		self.HolsterDelay = (curTime + attacktable["striketime"])
 		self.isAttacking = true;
 			
-		self:CreateTimer(attacktable["striketime"] + 0.1, "strikeTimer"..self.Owner:EntIndex(), function()
-			if IsValid(self) and IsValid(self.Owner) then
+		self:CreateTimer(attacktable["striketime"] + 0.1, "strikeTimer"..owner:EntIndex(), function()
+			if IsValid(self) and IsValid(owner) then
 				if self.isAttacking then -- This can be set to false elsewhere and will abort the attack.
-					if self.Owner:IsPlayer() and (!self.Owner.IsRagdolled or !self.Owner:IsRagdolled()) and self.Owner:Alive() then
-						if self.Category == "(Begotten) Javelin" then
-							ply:SetNWBool( "MelAttacking", false )
-							self.isAttacking = false;
-						else
-							if !self.Owner:GetNWBool("ParrySucess", false) and !self.Owner:GetNWBool("Guardening", false) then
+					self.isAttacking = false;
+					owner:SetNWBool( "MelAttacking", false )
+				
+					if owner:IsPlayer() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then
+						if self.Category ~= "(Begotten) Javelin" then
+							if !owner:GetNWBool("ParrySucess", false) and !owner:GetNWBool("Guardening", false) then
 								self:Hitscan(); -- For bullet holes.
+								owner:LagCompensation(true);
+							
+								local pos = owner:GetShootPos();
+								local aimVector = owner:GetAimVector();
+								local meleeArc = (attacktable["meleearc"]) or 25;
+								local meleeRange = (attacktable["meleerange"] / 10);
+								local hitsAllowed = self.MultiHit or 1;
+								local hitEntities = {};
 								
-								local pos = self.Owner:GetShootPos()
-								local ang = self.Owner:GetAimVector():Angle()
-								pos = pos + ang:Forward() + ang:Up()
-					
-								local add = 0
-								local vel = self.Owner:GetVelocity():Length();
+								if stance == "thrust_swing" then
+									meleeArc = (attacktable["altmeleearc"]) or 25;
 								
-								if (vel > 0) then
-									add = (vel / 10);
-								end;
+									if self.CanSwipeAttack then
+										meleeRange = meleeRange * 0.8
+									else
+										meleeRange = meleeRange * 1.2
+									end
+								end
+
+								local tr = util.TraceLine({
+									start = pos,
+									endpos = pos + (aimVector * meleeRange),
+									mask = MASK_SOLID,
+									filter = owner
+								})
 								
-								local cum = self.Owner:GetEyeTrace().Entity;
-								local tardist = 0;
-								
-								if (IsValid(cum) and cum:IsPlayer() or cum:IsNPC()) then
-									tardist = math.abs((self.Owner:GetPos() - cum:GetPos()):Length()) -- autism
-								end;
-								
-								if (add > tardist) then
-									add = (tardist / 2)
-								end;
-								
-								if !self.Owner:GetNWBool("Parry") then 
-									local sex = self.Owner:GetForward() * add;
-									local ent = ents.Create(self.Owner.stance)
-									ent:SetAngles(self.Owner:GetAimVector():Angle())
-									ent:SetOwner(self.Weapon:GetOwner())
-									ent:SetPos(pos + sex)
-									ent:Spawn()
-									ent:Activate()
-									ent:GetPhysicsObject():ApplyForceCenter(self.Owner:GetAimVector() * 5)
-									ply:SetNWBool( "MelAttacking", false )
-									self.Owner.Cum = ent;
-									self.SwingEntity = ent;
-									self.isAttacking = false;
+								if tr.Hit then
+									if IsValid(tr.Entity) then
+										if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
+											table.insert(hitEntities, tr.Entity);
+											
+											self:HandleHit(tr.Entity, tr.HitPos, stance);
+										end
+									end
+								end
+									
+								if !tr.Hit or #hitEntities < hitsAllowed then
+									for i = 1, meleeArc - 1 do
+										local newAimVector = Vector(aimVector);
+									
+										if (i % 2 == 0) then
+											-- If even go left.
+											newAimVector:Rotate(Angle(0, math.Round(i / 2), 0));
+										else
+											-- If odd go right.
+											newAimVector:Rotate(Angle(0, -math.Round(i / 2), 0));
+										end
+
+										local tr2 = util.TraceLine({
+											start = pos,
+											endpos = pos + (newAimVector * meleeRange),
+											mask = MASK_SOLID,
+											filter = owner
+										})
+										
+										if tr2.Hit then
+											if IsValid(tr2.Entity) and !table.HasValue(hitEntities, tr2.Entity) then
+												if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
+													table.insert(hitEntities, tr2.Entity);
+													
+													self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities);
+												end
+											end
+										
+											if #hitEntities >= hitsAllowed then
+												break;
+											end
+										end
+									end
 								end
 							end
 							
-							if (self.Owner:KeyDown(IN_ATTACK2)) then
-								if (!self.Owner:KeyDown(IN_USE)) then
-									local activeWeapon = self.Owner:GetActiveWeapon();
+							owner:LagCompensation(false);
+							
+							if (owner:KeyDown(IN_ATTACK2)) then
+								if (!owner:KeyDown(IN_USE)) then
+									local activeWeapon = owner:GetActiveWeapon();
 
 									if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
 										if (activeWeapon.IronSights == true) then
@@ -549,18 +635,18 @@ function SWEP:PrimaryAttack()
 											if (loweredParryDebug < curTime) then
 												local blockTable = GetTable(activeWeapon.realBlockTable);
 												
-												if (blockTable and self.Owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self.Owner:GetNWBool("Parried")) then
-													self.Owner:SetNWBool("Guardening", true);
-													self.Owner.beginBlockTransition = true;
-													self.Owner.StaminaRegenDelay = 0;
+												if (blockTable and owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !owner:GetNWBool("Parried")) then
+													owner:SetNWBool("Guardening", true);
+													owner.beginBlockTransition = true;
+													owner.StaminaRegenDelay = 0;
 													activeWeapon.Primary.Cone = activeWeapon.IronCone;
 													activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
 												else
-													self.Owner:CancelGuardening()
+													owner:CancelGuardening()
 												end;
 											end;
 										else
-											self.Owner:CancelGuardening();
+											owner:CancelGuardening();
 										end;
 									end;
 								end
@@ -573,11 +659,936 @@ function SWEP:PrimaryAttack()
 	end
 
 	if (SERVER) then
-		local max_poise = ply:GetNetVar("maxMeleeStamina");
+		local max_poise = owner:GetNetVar("maxMeleeStamina");
 		
-		ply:SetNWInt("meleeStamina", math.Clamp(ply:GetNWInt("meleeStamina", max_poise) - (attacktable["takeammo"]), 0, max_poise))
+		owner:SetNWInt("meleeStamina", math.Clamp(owner:GetNWInt("meleeStamina", max_poise) - (attacktable["takeammo"]), 0, max_poise))
 	end;
 end
+
+--if (SERVER) then
+	function SWEP:HandleHit(hit, src, swingType, hitIndex)
+		local distance;
+		local attacktable = GetTable(self.AttackTable);
+		local attacksoundtable = GetSoundTable(self.AttackSoundTable);
+		local blockTable = GetTable(self:GetNWString("activeShield"));
+		local hit_reduction = 1;
+		local shield_reduction = 1;
+		local owner = self.Owner;
+		local enemywep;
+		
+		if (hit:IsWorld()) then
+			for k, v in pairs (ents.FindInSphere(src, 32)) do
+				if (v:GetClass() == "prop_ragdoll") and Clockwork.entity:IsPlayerRagdoll(v) then
+					hit = Clockwork.entity:GetPlayer(v);
+					break;
+				end;
+			end;
+		end;
+
+		if hit:IsValid() and hit:IsPlayer() then
+			enemywep = hit:GetActiveWeapon()
+		end
+		
+		if blockTable then
+			shield_reduction = blockTable.damagereduction or 1;
+		end
+		
+		if cwBeliefs and owner.HasBelief then
+			if owner:HasBelief("shieldwall") then
+				shield_reduction = 1 - ((1 - shield_reduction) * 0.6);
+			end
+		end
+		
+		if hitIndex then
+			if !cwBeliefs or !owner.HasBelief or !owner:HasBelief("unrelenting") then
+				hit_reduction = (1 / hitIndex);
+			end
+		end
+		
+		local damage = (attacktable["primarydamage"])
+		local damagetype = (attacktable["dmgtype"])
+
+		if swingType == "parry_swing" then
+			if (IsValid(hit) and owner:IsValid() and !owner:IsRagdolled() and owner:Alive()) then
+				local d = DamageInfo()
+				
+				if cwBeliefs and owner.HasBelief and owner:HasBelief("repulsive_ripsote") then
+					d:SetDamage(damage * shield_reduction * 4 * hit_reduction);
+				else
+					d:SetDamage(damage * shield_reduction * 3 * hit_reduction);
+				end
+				
+				d:SetAttacker( owner )
+				d:SetDamageType( damagetype )
+				d:SetDamagePosition(src)
+			
+				if (hit:IsPlayer()) then
+					d:SetDamageForce(owner:GetForward() * 5000);
+					
+					if (hit:IsRagdolled()) then
+						if string.find(self:GetClass(), "begotten_dagger_") or string.find(self:GetClass(), "begotten_dualdagger_") then -- Daggers deal more damage against fallen opponents
+							d:SetDamage(d:GetDamage() * 4)
+						end
+					end
+				end
+				
+				hit:TakeDamageInfo(d)
+
+				if (hit:IsNPC() or hit:IsNextBot()) then
+					local trace = owner:GetEyeTrace();
+					
+					-- Fire attack type
+					if (hit:IsValid()) and attacktable["attacktype"] == "fire_swing" then
+						hit:Ignite(activeWeapon.IgniteTime * 3)
+					end
+					
+					-- Ice attack type
+					if (hit:IsValid()) and attacktable["attacktype"] == "ice_swing" then
+						DoElementalEffect( { Element = EML_ICE, Target = hit, Duration = activeWeapon.FreezeTime * 3, Attacker = self.Owner } )
+					end
+				end
+
+				if hit:IsPlayer() and !hit:IsRagdolled() and hit:GetNWBool("Deflect") != true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+					self:TriggerAnim4(hit, "a_shared_hit_0"..math.random(1, 3));
+					
+					if owner.upstagedActive and not hit.opponent then
+						if IsValid(enemywep) then
+							if enemywep:GetNWString("activeShield"):len() == 0 and not string.find(enemywep:GetClass(), "begotten_fists") and not string.find(enemywep:GetClass(), "begotten_claws") then
+								local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
+								local dropPos = hit:GetPos() + Vector(0, 0, 35) + hit:GetAngles():Forward() * 4
+								local itemTable = Clockwork.item:GetByWeapon(enemywep);
+								
+								if itemTable then
+									local itemEnt = Clockwork.entity:CreateItem(hit, itemTable, dropPos);
+									
+									if (IsValid(itemEnt)) then
+										Clockwork.chatBox:AddInTargetRadius(hit, "me", "'s "..itemTable.name..dropMessages[math.random(1, #dropMessages)], hit:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+										hit:TakeItem(itemTable, true)
+										hit:SelectWeapon("begotten_fists")
+										hit:StripWeapon(enemywep:GetClass())
+									end
+								end
+							end
+						end
+					end
+				end
+				 
+				if hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit.iFrames then
+					hit:TakeStability((attacktable["stabilitydamage"] * 3) * shield_reduction * hit_reduction)		
+
+					-- Fire attack type
+					if (hit:IsValid()) and attacktable["attacktype"] == "fire_swing" then
+						hit:Ignite(activeWeapon.IgniteTime)
+					end
+					
+					-- Ice attack type
+					if (hit:IsValid()) and attacktable["attacktype"] == "ice_swing" then
+						DoElementalEffect( { Element = EML_ICE, Target = hit, Duration = activeWeapon.FreezeTime, Attacker = self.Owner } )
+					end
+				end
+			end
+		elseif swingType == "thrust_swing" then
+			if !owner:GetNWBool("ThrustStance") then
+				owner:SetNWBool("ThrustStance", true);
+			end
+		
+			if (hit:IsWorld()) then
+				for k, v in pairs (ents.FindInSphere(src, 32)) do
+					if (v:GetClass() == "prop_ragdoll") and Clockwork.entity:IsPlayerRagdoll(v) then
+						hit = Clockwork.entity:GetPlayer(v);
+						break;
+					end;
+				end;
+			end;
+
+			if hit:IsValid() and hit:IsPlayer() then
+				enemywep = hit:GetActiveWeapon()
+			end
+
+			if owner:IsValid() and !owner:IsRagdolled() and owner:Alive() then
+				-- Spear Damage System (Messy)					
+				local distance = (owner:GetPos():Distance(hit:GetPos()));
+				
+				damagetype = 16;
+				
+				-- Blunt swipe or piercing thrust?
+				if self.CanSwipeAttack == true then
+					damagetype = 128
+					
+					if hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect")) and !hit.iFrames then
+							-- KNOCKBACK
+							local knockback = owner:GetAngles():Forward() * 550;
+							knockback.z = 0
+							
+							timer.Simple(0.1, function()
+								if IsValid(hit) then
+									hit:SetVelocity(knockback);
+								end
+							end);
+							
+							if hit:IsPlayer() then
+								hit:TakeStability((attacktable["stabilitydamage"]) * shield_reduction * hit_reduction);
+							end
+						end
+					end
+				else
+					if (IsValid(self)) then
+						if string.find(self:GetClass(), "begotten_polearm_") then
+							local max_dist = 75;
+							
+							if distance >= 0 and distance <= max_dist and hit:IsValid() then
+								if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect")) and !hit.iFrames then
+									damage = (attacktable["primarydamage"]) * 0.05
+									damagetype = 128
+									
+									-- KNOCKBACK
+									local knockback = owner:GetAngles():Forward() * 700;
+									knockback.z = 0
+									
+									-- timers are shit but whatever
+									timer.Simple(0.1, function()
+										if IsValid(hit) then
+											hit:SetVelocity(knockback);
+										end
+									end);
+									
+									if hit:IsPlayer() then
+										hit:TakeStability(5)
+									end
+								end
+							elseif distance > max_dist and hit:IsValid() then
+								if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+									damage = (attacktable["primarydamage"])
+									damagetype = 16
+									
+									--[[if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect") and !hit.iFrames then
+										hit:TakeStability((attacktable["stabilitydamage"]))		
+									end]]--
+								end
+							end
+						else
+							-- Non-polearm thrust
+							--[[if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect") and !hit.iFrames then
+								hit:TakeStability((attacktable["stabilitydamage"]))			
+							end]]--
+							
+							--[[if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect")) and !hit.iFrames then
+								hit:EmitSound(attacksoundtable["althitbody"][math.random(1, #attacksoundtable["althitbody"])])
+							end]]--
+							
+							if attacktable["altdamagetype"] == 16 then
+								if hit:IsValid() then
+									if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+										-- counter damage
+										local targetVelocity = hit:GetVelocity();
+										
+										if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
+											local entEyeAngles = hit:EyeAngles();
+											
+											if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
+												damage = damage + (damage * 0.5);
+											end
+										end
+									end
+								end
+							end
+						end
+					end
+				end
+				
+				-- Spear Damage System (Messy)					
+				local itemTable = item.GetByWeapon(self);
+				
+				if itemTable then
+					local condition = itemTable:GetCondition();
+					
+					if condition and condition < 100 then
+						if damagetype == DMG_CLUB then
+							damage = damage * Lerp(condition / 100, 0.75, 1);
+						elseif damagetype == DMG_SLASH then
+							damage = damage * Lerp(condition / 100, 0.4, 1);
+						elseif damagetype == DMG_VEHICLE then
+							damage = damage * Lerp(condition / 100, 0.5, 1);
+						end
+					end
+				end
+				
+				if (IsValid(hit) and owner:IsValid() and !owner:IsRagdolled() and owner:Alive()) then
+					local d = DamageInfo()
+					d:SetDamage( damage * shield_reduction * (attacktable["altattackdamagemodifier"] or 1) * hit_reduction)
+					d:SetAttacker( owner )
+					d:SetDamageType( damagetype )
+					d:SetDamagePosition(src)
+				
+					if (hit:IsPlayer()) then
+						d:SetDamageForce(owner:GetForward() * 5000);
+						
+						if (hit:IsRagdolled()) then
+							if string.find(self:GetClass(), "begotten_dagger_") or string.find(self:GetClass(), "begotten_dualdagger_") then -- Daggers deal more damage against fallen opponents
+								d:SetDamage(d:GetDamage() * 4)
+							end
+						end
+					end
+					
+					hit:TakeDamageInfo(d)
+					
+					if (hit:IsNPC() or hit:IsNextBot()) then
+						-- Fire attack type
+						if (attacktable["attacktype"]) == "fire_swing" then
+							hit:Ignite(self.IgniteTime)
+						end
+						
+						-- Ice attack type
+						if (attacktable["attacktype"]) == "ice_swing" then
+							DoElementalEffect( { Element = EML_ICE, Target = hit, Duration = self.FreezeTime, Attacker = owner } )
+						end
+					else
+						if hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and !hit:GetNWBool("Parry") == true and !hit.iFrames then
+							-- Fire attack type
+							if (attacktable["attacktype"]) == "fire_swing" then
+								hit:Ignite(self.IgniteTime)
+							end
+							
+							-- Ice attack type
+							if (attacktable["attacktype"]) == "ice_swing" then
+								hit:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1) * 0.85, owner);
+							end
+							
+							if self.CanSwipeAttack == true then
+								hit:TakeStability(15)		
+							end
+						end
+					end
+
+					if hit:IsPlayer() and !hit:IsRagdolled() and hit:GetNWBool("Deflect") != true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+						self:TriggerAnim4(hit, "a_shared_hit_0"..math.random(1, 3)); 
+					end
+				end
+			end
+		elseif swingType == "polearm_swing" then
+			if owner:GetNWBool("ThrustStance") then
+				owner:SetNWBool("ThrustStance", false);
+			end
+		
+			if (hit:IsWorld()) then
+				for k, v in pairs (ents.FindInSphere(src, 32)) do
+					if (v:GetClass() == "prop_ragdoll") and Clockwork.entity:IsPlayerRagdoll(v) then
+						hit = Clockwork.entity:GetPlayer(v);
+						break;
+					end;
+				end;
+			end;
+
+			if (!hit.nexthit or CurTime() > hit.nexthit) then 
+				hit.nexthit = CurTime() + 1
+			end
+
+			if hit:IsValid() and hit:IsPlayer() then
+				enemywep = hit:GetActiveWeapon()
+			end
+
+			if !owner:IsRagdolled() and owner:Alive() then
+				-- Polearm Damage System
+				local distance = owner:GetPos():Distance(hit:GetPos());
+				local poledamage = (attacktable["primarydamage"])
+				local poletype = (attacktable["dmgtype"])
+				
+				if self.ShortPolearm != true then
+					if distance >= 0 and distance <= 35 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 0"
+							poledamage = (attacktable["primarydamage"]) * 0.01
+							poletype = 128
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability(5)
+								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
+								
+								-- KNOCKBACK
+								local knockback = owner:GetAngles():Forward() * 750;
+								knockback.z = 0
+								
+								timer.Simple(0.1, function()
+									if IsValid(hit) then
+										hit:SetVelocity(knockback);
+									end
+								end);
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
+							end
+						end
+					
+					elseif distance > 35 and distance <= 55 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 1"
+							poledamage = (attacktable["primarydamage"]) * 0.05
+							poletype = 128
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability(10)
+								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
+								
+								-- KNOCKBACK
+								local knockback = owner:GetAngles():Forward() * 700;
+								knockback.z = 0
+								
+								timer.Simple(0.1, function()
+									if IsValid(hit) then
+										hit:SetVelocity(knockback);
+									end
+								end);
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
+							end
+						end
+					
+					elseif distance > 55 and distance <= 65 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 2"
+							poledamage = (attacktable["primarydamage"]) * 0.08
+							poletype = 128
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability(15)
+								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
+								
+								-- KNOCKBACK
+								local knockback = owner:GetAngles():Forward() * 650;
+								knockback.z = 0
+								
+								timer.Simple(0.1, function()
+									if IsValid(hit) then
+										hit:SetVelocity(knockback);
+									end
+								end);
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
+							end
+						end
+					
+					elseif distance > 65 and distance <= 75 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 3"
+							poledamage = (attacktable["primarydamage"]) * 0.1
+							poletype = 128
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability(20)
+								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
+								
+								-- KNOCKBACK
+								local knockback = owner:GetAngles():Forward() * 600;
+								knockback.z = 0
+								
+								timer.Simple(0.1, function()
+									if IsValid(hit) then
+										hit:SetVelocity(knockback);
+									end
+								end);
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
+							end
+						end
+					
+					elseif distance > 75 and distance <= 85 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 4"
+							poledamage = (attacktable["primarydamage"]) * 0.7
+							
+							-- counter damage
+							local targetVelocity = hit:GetVelocity();
+							
+							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
+								local entEyeAngles = hit:EyeAngles();
+							
+								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
+									poledamage = poledamage + (poledamage * 0.6);
+								end
+							end
+							
+							poletype = (attacktable["dmgtype"])
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability((attacktable["stabilitydamage"] * 0.7))			
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+						end
+					
+					elseif distance > 85 and distance <= 95 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 5"
+							poledamage = (attacktable["primarydamage"]) * 0.8
+							
+							-- counter damage
+							local targetVelocity = hit:GetVelocity();
+							
+							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
+								local entEyeAngles = hit:EyeAngles();
+							
+								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
+									poledamage = poledamage + (poledamage * 0.5);
+								end
+							end
+							
+							poletype = (attacktable["dmgtype"])
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability((attacktable["stabilitydamage"] * 0.8))			
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+						end
+					
+					elseif distance > 95 and distance <= 105 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 6"
+							poledamage = (attacktable["primarydamage"]) * 1
+							
+							-- counter damage
+							local targetVelocity = hit:GetVelocity();
+							
+							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
+								local entEyeAngles = hit:EyeAngles();
+							
+								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
+									poledamage = poledamage + (poledamage * 0.5);
+								end
+							end
+							
+							poletype = (attacktable["dmgtype"])
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability((attacktable["stabilitydamage"] * 1))			
+								hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+						end
+					
+					elseif distance > 105 and distance <= 115 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 7"
+							poledamage = (attacktable["primarydamage"]) * 1.1
+							
+							-- counter damage
+							local targetVelocity = hit:GetVelocity();
+							
+							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
+								local entEyeAngles = hit:EyeAngles();
+							
+								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
+									poledamage = poledamage + (poledamage * 0.5);
+								end
+							end
+							
+							poletype = (attacktable["dmgtype"])
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability((attacktable["stabilitydamage"] * 1.1))			
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+						end
+					
+					elseif distance > 115 and distance <= 125 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 8"
+							poledamage = (attacktable["primarydamage"]) * 1.3
+							
+							-- counter damage
+							local targetVelocity = hit:GetVelocity();
+							
+							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
+								local entEyeAngles = hit:EyeAngles();
+							
+								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
+									poledamage = poledamage + (poledamage * 0.6);
+								end
+							end
+							
+							poletype = (attacktable["dmgtype"])
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability((attacktable["stabilitydamage"] * 1.3))			
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+						end
+					
+					elseif distance > 125 and distance <= 135 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 9"
+							poledamage = (attacktable["primarydamage"]) * 1.6
+							
+							-- counter damage
+							local targetVelocity = hit:GetVelocity();
+							
+							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
+								local entEyeAngles = hit:EyeAngles();
+								
+								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
+									poledamage = poledamage + (poledamage * 0.6);
+								end
+							end
+							
+							poletype = (attacktable["dmgtype"])
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability((attacktable["stabilitydamage"] * 1.6))			
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+						end
+					
+					elseif distance > 135 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 10"
+							poledamage = (attacktable["primarydamage"]) * 1.7
+							
+							-- counter damage
+							local targetVelocity = hit:GetVelocity();
+							
+							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
+								local entEyeAngles = hit:EyeAngles();
+							
+								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
+									poledamage = poledamage + (poledamage * 0.6);
+								end
+							end
+							
+							poletype = (attacktable["dmgtype"])
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability((attacktable["stabilitydamage"] * 1.7))			
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+						end
+					end
+				else
+					if distance >= 0 and distance <= 70 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 1 (Small Polearm)"
+							poledamage = (attacktable["primarydamage"]) * 0.1
+							poletype = 128
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability(15)
+
+								-- KNOCKBACK
+								local knockback = owner:GetAngles():Forward() * 650;
+								knockback.z = 0
+								
+								timer.Simple(0.1, function()
+									if IsValid(hit) then
+										hit:SetVelocity(knockback);
+									end
+								end);
+								
+								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+						end
+						
+					elseif distance > 70 and distance <= 85 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 2 (Small Polearm)"
+							poledamage = (attacktable["primarydamage"]) * 1
+							
+							-- counter damage
+							local targetVelocity = hit:GetVelocity();
+							
+							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
+								local entEyeAngles = hit:EyeAngles();
+							
+								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
+									poledamage = poledamage + (poledamage * 0.5);
+								end
+							end
+							
+							poletype = (attacktable["dmgtype"])
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability((attacktable["stabilitydamage"] * 1))			
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+						end
+						
+					elseif distance > 85 and hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+							--print "Tier 3 (Small Polearm)"
+							poledamage = (attacktable["primarydamage"]) * 1.5
+							
+							-- counter damage
+							local targetVelocity = hit:GetVelocity();
+							
+							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
+								local entEyeAngles = hit:EyeAngles();
+							
+								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
+									poledamage = poledamage + (poledamage * 0.5);
+								end
+							end
+							
+							poletype = (attacktable["dmgtype"])
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+								hit:TakeStability((attacktable["stabilitydamage"] * 1.5))			
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+							end
+						end
+					end
+				end
+				
+				-- Polearm Damage System
+			
+				local itemTable = item.GetByWeapon(self);
+				
+				if itemTable then
+					local condition = itemTable:GetCondition();
+					
+					if condition and condition < 100 then
+						if poletype == DMG_CLUB then
+							poledamage = poledamage * Lerp(condition / 100, 0.75, 1);
+						elseif poletype == DMG_SLASH then
+							poledamage = poledamage * Lerp(condition / 100, 0.4, 1);
+						elseif poletype == DMG_VEHICLE then
+							poledamage = poledamage * Lerp(condition / 100, 0.5, 1);
+						end
+					end
+				end
+			
+				if (IsValid(hit) and owner:IsValid() and !owner:IsRagdolled() and owner:Alive()) then
+					local d = DamageInfo()
+					d:SetDamage( poledamage * shield_reduction * hit_reduction)
+					d:SetAttacker( owner )
+					d:SetDamageType( damagetype )
+					d:SetDamagePosition(src)
+				
+					if (hit:IsPlayer()) then
+						d:SetDamageForce(owner:GetForward() * 5000);
+						
+						if (hit:IsRagdolled()) then
+							if string.find(self:GetClass(), "begotten_dagger_") or string.find(self:GetClass(), "begotten_dualdagger_") then -- Daggers deal more damage against fallen opponents
+								d:SetDamage(d:GetDamage() * 4)
+							end
+						end
+					end
+					
+					hit:TakeDamageInfo(d)
+
+					if (hit:IsNPC() or hit:IsNextBot()) then
+						-- Fire attack type
+						if (attacktable["attacktype"]) == "fire_swing" then
+							hit:Ignite(self.IgniteTime)
+						end
+						
+						-- Ice attack type
+						if (attacktable["attacktype"]) == "ice_swing" then
+							DoElementalEffect( { Element = EML_ICE, Target = hit, Duration = self.FreezeTime, Attacker = owner } )
+						end
+					else
+						if hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and !hit:GetNWBool("Parry") == true and !hit.iFrames then
+							-- Fire attack type
+							if (attacktable["attacktype"]) == "fire_swing" then
+								hit:Ignite(self.IgniteTime)
+							end
+							
+							-- Ice attack type
+							if (attacktable["attacktype"]) == "ice_swing" then
+								hit:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1) * 0.85, owner);
+							end
+							
+							if self.CanSwipeAttack == true then
+								hit:TakeStability(15)		
+							end
+						end
+					end
+
+					if hit:IsPlayer() and !hit:IsRagdolled() and hit:GetNWBool("Deflect") != true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+						self:TriggerAnim4(hit, "a_shared_hit_0"..math.random(1, 3)); 
+					end
+				end
+			end
+		else -- reg_swing and others
+			if owner:GetNWBool("ThrustStance") then
+				owner:SetNWBool("ThrustStance", false);
+			end
+		
+			if (hit:IsWorld()) then
+				for k, v in pairs (ents.FindInSphere(src, 32)) do
+					if (v:GetClass() == "prop_ragdoll") and Clockwork.entity:IsPlayerRagdoll(v) then
+						hit = Clockwork.entity:GetPlayer(v);
+						break;
+					end;
+				end;
+			end;
+
+			if hit:IsValid() and hit:IsPlayer() then
+				enemywep = hit:GetActiveWeapon()
+			end
+
+			if !owner:IsRagdolled() and owner:Alive() then				
+				-- Spear Damage System (Messy)					
+				local distance = (owner:GetPos():Distance(hit:GetPos()))
+
+				if (IsValid(self)) then
+					if string.find(self:GetClass(), "begotten_spear_") then
+						if distance >= 0 and distance <= 64 and hit:IsValid() then
+							damage = (attacktable["primarydamage"]) * 0.05
+							damagetype = 128
+							
+							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect")) and !hit.iFrames then
+								--print "Spear Shaft Hit"
+								
+								-- KNOCKBACK
+								local knockback = owner:GetAngles():Forward() * 650;
+								knockback.z = 0
+
+								timer.Simple(0.1, function()
+									if IsValid(hit) then
+										hit:SetVelocity(knockback);
+									end
+								end);
+								
+								if hit:IsPlayer() then
+									hit:TakeStability(15)
+								end
+							end
+					
+						elseif distance >= 65 and hit:IsValid() then
+							damage = (attacktable["primarydamage"])
+							damagetype = (attacktable["dmgtype"])
+							
+							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect")) and !hit.iFrames then
+								-- counter damage
+								local targetVelocity = hit:GetVelocity();
+								
+								if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
+									local entEyeAngles = hit:EyeAngles();
+								
+									if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
+										damage = damage + (damage * 0.6);
+									end
+								end
+								
+								if hit:IsPlayer() then
+									hit:TakeStability((attacktable["stabilitydamage"] * shield_reduction * hit_reduction));
+								end
+							end
+						end
+					else
+						-- For non-spears
+						if hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect") and !hit.iFrames then
+							if owner.GetCharmEquipped and owner:GetCharmEquipped("ring_pugilist") and self:GetClass() == "begotten_fists" then
+								hit:TakeStability(25);
+							else
+								hit:TakeStability((attacktable["stabilitydamage"] * shield_reduction * hit_reduction));
+							end
+						end
+						
+						-- Bellhammer special
+						if self.IsBellHammer == true and ((hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect"))) and !hit.iFrames then
+							owner:Disorient(1)
+							
+							timer.Simple(0.2, function() 
+								if hit:IsValid() and (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+									hit:EmitSound("meleesounds/bell.mp3")
+								end 
+							end);
+							
+							if hit:IsPlayer() then
+								hit:Disorient(5);
+							end
+						end
+					end
+				end
+
+				-- Spear Damage System (Messy)					
+				local itemTable = item.GetByWeapon(self);
+
+				if itemTable then
+					local condition = itemTable:GetCondition();
+					
+					if condition and condition < 100 then
+						if damagetype == DMG_CLUB then
+							damage = damage * Lerp(condition / 100, 0.75, 1);
+						elseif damagetype == DMG_SLASH then
+							damage = damage * Lerp(condition / 100, 0.4, 1);
+						elseif damagetype == DMG_VEHICLE then
+							damage = damage * Lerp(condition / 100, 0.5, 1);
+						end
+					end
+				end
+			
+				if (IsValid(hit) and owner:IsValid() and !owner:IsRagdolled() and owner:Alive()) then
+					local d = DamageInfo()
+					d:SetDamage( damage * shield_reduction * hit_reduction)
+					d:SetAttacker( owner )
+					d:SetDamageType( damagetype )
+					d:SetDamagePosition(src)
+				
+					if (hit:IsPlayer()) then
+						d:SetDamageForce(owner:GetForward() * 5000);
+						
+						if (hit:IsRagdolled()) then
+							if string.find(self:GetClass(), "begotten_dagger_") or string.find(self:GetClass(), "begotten_dualdagger_") then -- Daggers deal more damage against fallen opponents
+								d:SetDamage(d:GetDamage() * 4)
+							end
+						end
+					end
+					
+					hit:TakeDamageInfo(d)
+
+					if (hit:IsNPC() or hit:IsNextBot()) then
+						-- Fire attack type
+						if (attacktable["attacktype"]) == "fire_swing" then
+							hit:Ignite(self.IgniteTime)
+						end
+						
+						-- Ice attack type
+						if (attacktable["attacktype"]) == "ice_swing" then
+							DoElementalEffect( { Element = EML_ICE, Target = hit, Duration = self.FreezeTime, Attacker = owner } )
+						end
+					else
+						if hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and !hit:GetNWBool("Parry") == true and !hit.iFrames then
+							-- Fire attack type
+							if (attacktable["attacktype"]) == "fire_swing" then
+								hit:Ignite(self.IgniteTime)
+							end
+							
+							-- Ice attack type
+							if (attacktable["attacktype"]) == "ice_swing" then
+								hit:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1) * 0.85, owner);
+							end
+							
+							if self.CanSwipeAttack == true then
+								hit:TakeStability(15)		
+							end
+						end
+					end
+
+					if hit:IsPlayer() and !hit:IsRagdolled() and hit:GetNWBool("Deflect") != true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+						self:TriggerAnim4(hit, "a_shared_hit_0"..math.random(1, 3)); 
+					end
+				end
+			end
+		end
+	end
+--end
 
 local nxt = 0
 local ftmul = 0
@@ -2067,6 +3078,35 @@ function SWEP:TriggerAnim3(target, anim)
 	if SERVER then
 		net.Start( "BegottenAnim3", true )
 		net.WriteEntity( self.Owner );
+		net.WriteString( anim );
+		net.Broadcast();
+	end;
+end;
+
+--For flinching
+
+if SERVER then
+	util.AddNetworkString( "BegottenAnim4" )
+end;
+
+if CLIENT then
+	net.Receive( "BegottenAnim4", function()
+		 local target = net.ReadEntity()
+		 if target:IsValid() and target:Alive() then
+		 local anim = net.ReadString()
+		 local lookup = target:LookupSequence(anim)
+		 target:AddVCDSequenceToGestureSlot( GESTURE_SLOT_FLINCH, lookup, 0, 1 );
+	end end )
+end;
+
+function SWEP:TriggerAnim4(target, anim) -- The two arguments for this function are "target" and "anim". Target is the entity we want to call the animation on, and anim being the animation itself.
+	if SERVER then
+		if (!target or !IsValid(target)) then
+			target = self.Owner; -- Redundancy check to make sure that we don't get any errors incase "target" isn't valid.
+		end;
+		
+		net.Start( "BegottenAnim4", true )
+		net.WriteEntity( target ); -- Before, the argument here was just "self.Owner" which was always going to return the player holding the weapon, making them flinch instead of whatever "target" is.
 		net.WriteString( anim );
 		net.Broadcast();
 	end;

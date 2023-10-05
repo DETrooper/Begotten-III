@@ -1637,10 +1637,26 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 	end;
 	
 	-- A function to add a bar with multiple stages.
-	function frame:AddBar(height, barTable, title, titleColor)
+	function frame:AddBar(height, barTable, title, titleColor, bHalf)
 		local height = math.max(height, 12);
 		local oX, oY = 4, 0;
 		local yOffset = 4;
+		local newWidth = frameWidth;
+		
+		if bHalf then
+			if !self.barList then
+				self.barList = vgui.Create("DPanelList", self);
+				self.barList:SetWide(frameWidth);
+				self.barList:SetSpacing(4);
+				self.barList:EnableHorizontal(true);
+				self.barList:SetAutoSize(true);
+				self.barList.m_bBackground = false;
+				
+				self.panelList:AddItem(self.barList);
+			end
+		
+			newWidth = (frameWidth / 2) - 10;
+		end
 
 		if (title) then
 			height = height + 18;
@@ -1649,7 +1665,7 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 		end;
 		
 		local barBox = vgui.Create("DPanelList", self);
-		barBox:SetWide(frameWidth);
+		barBox:SetWide(newWidth);
 		barBox:SetPadding(0);
 		barBox:SetSpacing(0);
 
@@ -1665,13 +1681,15 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 		end;
 		
 		local barBackground = vgui.Create("DPanelList", self);
-		barBackground:SetSize(frameWidth, height);
+		barBackground:SetSize(newWidth, height);
 		barBackground:SetPadding(0);
 		barBackground:SetSpacing(0);
-		barBackground:EnableHorizontal(true)
+		barBackground:EnableHorizontal(false)
 		
 		-- Called when the panel is painted.
 		function barBackground:Paint(width, panelHeight)
+			width = newWidth; -- for some reason the width isn't correct
+		
 			if (title) then
 				--surface.SetMaterial(Material("begotten/ui/formtop3.png"))
 				--surface.SetDrawColor(255, 255, 255, 255);
@@ -1794,7 +1812,11 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 			end;
 		end;
 
-		self.panelList:AddItem(barBox);
+		if bHalf then
+			self.barList:AddItem(barBox);
+		else
+			self.panelList:AddItem(barBox);
+		end
 	end;
 
 	-- A function to add a row of square icons.

@@ -36,6 +36,7 @@ SWEP.PrimarySwingAnim = "a_heavy_2h_attack_slash_0"
 -- For polearms only
 SWEP.ShortPolearm = false
 SWEP.CanSwipeAttack = false
+SWEP.MultiHit = 3;
 
 --Sounds
 SWEP.AttackSoundTable = "HeavyMetalAttackSoundTable" 

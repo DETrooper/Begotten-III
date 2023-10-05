@@ -465,6 +465,7 @@ local COMMAND = Clockwork.command:New("PlyRespawnStayAll");
 	COMMAND.tip = "Respawn all dead players at the position where they died. You may specify individual names to exempt from the mass-respawn.";
 	COMMAND.text = "<vararg Ignore>";
 	COMMAND.access = "s";
+	COMMAND.optionalArgument = 1;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -472,7 +473,7 @@ local COMMAND = Clockwork.command:New("PlyRespawnStayAll");
 		local arguments = arguments[1];
 		local exempt = {};
 		
-		for k, v in pairs (string.Split(arguments, " ")) do
+		for k, v in pairs(string.Split(arguments, " ")) do
 			local target = Clockwork.player:FindByID(v);
 			
 			if (target) then
@@ -480,7 +481,7 @@ local COMMAND = Clockwork.command:New("PlyRespawnStayAll");
 			end;
 		end;
 		
-		for k, v in pairs (_player.GetAll()) do
+		for i, v in ipairs(_player.GetAll()) do
 			if (exempt[v] or v:Alive() or !v.cwDeathPosition) then
 				continue;
 			end;

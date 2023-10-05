@@ -35,3 +35,28 @@ hook.Add( "PreGamemodeLoaded", "Reloaded_DVScrollBar_Control", function()
 
 	derma.DefineControl( "DVScrollBar", "Smooth Scrollbar", dermaCtrs, "Panel" )
 end )
+
+concommand.Add("testarc", function()
+	if LocalPlayer():IsAdmin() then
+		local pos = LocalPlayer():GetShootPos();
+		local aimVector = LocalPlayer():GetAimVector();
+		local meleeArc = GetTable(LocalPlayer():GetActiveWeapon().AttackTable).meleearc;
+		local meleeRange = GetTable(LocalPlayer():GetActiveWeapon().AttackTable).meleerange / 10;
+
+		debugoverlay.Line(pos, pos + (aimVector * meleeRange), 5);
+		
+		for i = 1, meleeArc - 1 do
+			local newAimVector = Vector(aimVector);
+		
+			if (i % 2 == 0) then
+				-- If even go left.
+				newAimVector:Rotate(Angle(0, math.Round(i / 2), 0));
+			else
+				-- If odd go right.
+				newAimVector:Rotate(Angle(0, -math.Round(i / 2), 0));
+			end
+			
+			debugoverlay.Line(pos, pos + (newAimVector * meleeRange), 5);
+		end
+	end
+end);

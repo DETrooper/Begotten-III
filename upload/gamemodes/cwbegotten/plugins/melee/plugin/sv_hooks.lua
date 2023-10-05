@@ -14,7 +14,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 		if entity:IsPlayer() and (!entity:Alive() or entity.iFrames) or damageInfo:IsDamageType(DMG_CRUSH) then
 			return;
 		end
-
+		
 		local canblock = false;
 		
 		if entity:IsPlayer() then
@@ -27,7 +27,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 					effectData:SetEntity(entity);
 					effectData:SetAttachment(5);
 					effectData:SetScale(16);
-				util.Effect("MetalSpark", effectData);
+				util.Effect("MetalSpark", effectData, true, true);
 				
 				return;
 			end
@@ -308,7 +308,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 					effectData:SetEntity(entity);
 					effectData:SetAttachment(5);
 					effectData:SetScale(16);
-				util.Effect(effectName, effectData);
+				util.Effect(effectName, effectData, true, true);
 			end
 			
 			local distance = attacker:GetPos():Distance(entity:GetPos())
@@ -755,12 +755,6 @@ function cwMelee:PlayerDisconnected(player)
 		player.BreathingSoundsa:Stop();
 		player.BreathingSoundsa = nil;
 	end;
-
-	local activeweapon = player:GetActiveWeapon();
-	
-	if (activeweapon:IsValid() and (IsValid(activeweapon.SwingEntity))) then
-		activeweapon.SwingEntity:Remove();
-	end;
 end;
 
 -- Called when a player switches their weapon. 
@@ -774,22 +768,7 @@ function cwMelee:PlayerSwitchWeapon(player, oldWeapon, newWeapon)
 	
 		player:SetWeaponRaised(false);
 	end;
-	
-	local activeweapon = player:GetActiveWeapon();
-
-	if (activeweapon:IsValid() and (IsValid(activeweapon.SwingEntity))) then
-		activeweapon.SwingEntity:Remove();
-	end;
 end;
-
--- Called when a player has been ragdolled.
-function cwMelee:PlayerCanRagdoll(player, state, delay, decay)
-	local activeweapon = player:GetActiveWeapon()
-
-	if (activeweapon:IsValid() and (IsValid(activeweapon.SwingEntity))) then
-		activeweapon.SwingEntity:Remove()
-	end
-end
 
 -- Called when a player wants to fallover.
 function cwMelee:PlayerCanFallover(player)

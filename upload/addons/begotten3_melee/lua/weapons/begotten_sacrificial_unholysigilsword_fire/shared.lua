@@ -38,6 +38,7 @@ SWEP.DrawEffect = "fire_small_03"
 SWEP.AmbientEffect = "env_embers_small"
 SWEP.IgniteTime = 6
 SWEP.FreezeTime = nil
+SWEP.MultiHit = 2;
 
 --Sounds
 SWEP.AttackSoundTable = "HeavyMetalAttackSoundTable"

@@ -54,7 +54,7 @@ ITEM.category = "Armor"
 ITEM.weight = 2;
 ITEM.description = "A fur cloak traditionally worn by Goreic seafaring raiders. It has no protective value.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
+ITEM.requireFaction = {"Goreic Warrior"};
 
 ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide", "cloth"}};
 
@@ -309,7 +309,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "Leather armor commonly worn by warriors of Clan Gore. It provides a reasonable degree of protection while not compromising mobility.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
+ITEM.requireFaction = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -469,7 +469,7 @@ ITEM.weight = 6.5;
 ITEM.weightclass = "Medium";
 ITEM.description = "Steel plates arranged in a fishscale pattern upon a gambeson coat. It provides fine protection while not being too much of a hindrance to mobility.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior"};
+ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
 ITEM.excludeSubfactions = {"Clan Grock"};
 
 ITEM.effectiveLimbs = {

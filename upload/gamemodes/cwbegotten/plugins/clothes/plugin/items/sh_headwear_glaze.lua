@@ -33,6 +33,40 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Old Soldier Helm"
+	ITEM.model = "models/begotten/headgroups_props/morion.mdl"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/old_soldier_helm.png"
+	ITEM.weight = 1.5
+	ITEM.uniqueID = "old_soldier_helm"
+	ITEM.category = "Helms"
+	ITEM.bodyGroup = 1
+	ITEM.bodyGroupVal = 8
+	ITEM.headSuffix = "_wanderer";
+	ITEM.description = "A rusty iron helmet that was famous in its time as the symbol of Lord Maximus' conquests, and perhaps even in times before that. Its sloping surfaces provide excellent protection by deflecting blows."
+	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+
+	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 55
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
+	ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
+	ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+	ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
+	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 600};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.name = "Hood"
 	ITEM.model = "models/begotten/headgroup_props/headgroup_wanderer_hood.mdl"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/hood.png"
@@ -252,7 +286,39 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Spangenhelm"
+	ITEM.model = "models/begotten/headgroups_props/spangenhelm.mdl"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/spangenhelm.png"
+	ITEM.weight = 2
+	ITEM.uniqueID = "spangenhelm"
+	ITEM.category = "Helms"
+	ITEM.bodyGroup = 1
+	ITEM.bodyGroupVal = 7
+	ITEM.headSuffix = "_wanderer";
+	ITEM.description = "A reinforced steel helmet with a nose guard, noted for its ease of production relative to its effectiveness."
+	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+
+	ITEM.conditionScale = 0.75 -- item degrades 0.5x faster with damage related condition loss
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 60
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
+	ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
+	ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+	ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "leather"}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")

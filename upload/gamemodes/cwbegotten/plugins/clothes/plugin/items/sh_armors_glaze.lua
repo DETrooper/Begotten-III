@@ -537,6 +537,58 @@ ITEM.runSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Old Soldier Cuirass";
+ITEM.group = "wanderers/oldsoldier";
+ITEM.model = "models/begottenprelude/items/oldsoldier.mdl"
+ITEM.iconoverride = "materials/begotten/ui/itemicons/old_soldier_cuirass.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 1
+ITEM.hitParticle = "MetalSpark";
+ITEM.protection = 40
+ITEM.type = "metal";
+ITEM.weight = 2.5;
+ITEM.weightclass = "Light";
+ITEM.description = "The weathered uniform of a soldier that served in the Empire of Light's field armies, perhaps even in Lord Maximus' famous campaigns. It is protected by a cuirass and knee plates, but has no arm protection.";
+ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+ITEM.excludeFactions = {"Goreic Warrior"};
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+
+ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
+ITEM.itemSpawnerInfo = {category = "Armor", rarity = 800};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-lobe-1.wav.mp3",
+	"armormovement/body-lobe-2.wav.mp3",
+	"armormovement/body-lobe-3.wav.mp3",
+	"armormovement/body-lobe-4.wav.mp3",
+	"armormovement/body-lobe-5.wav.mp3",
+};
+
+--[[ITEM.walkSound = {
+	"armormovement/body-lobe-b1.wav.mp3",
+	"armormovement/body-lobe-b2.wav.mp3",
+};]]--
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
 ITEM.name = "Light Brigandine Armor";
 ITEM.group = "wanderers/brigandinelight";
 ITEM.model = "models/begotten/headgroup_props/brigandinelight.mdl"

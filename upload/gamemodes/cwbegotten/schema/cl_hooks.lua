@@ -1459,6 +1459,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddText("Short Polearm: Up to +50% increased damage the further away the target is.", Color(110, 30, 30));
 				end
 				
+				if weaponTable.MultiHit then
+					frame:AddText("Multi-Hit: Can hit up to "..tostring(weaponTable.MultiHit).." targets in a single swing.", Color(110, 30, 30));
+				end
+				
 				if itemTable.hasMinimumRange then
 					frame:AddText("Has Minimum Effective Range", Color(110, 30, 30));
 				end
@@ -1555,7 +1559,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				if weaponStats["attack"].takeammo then
 					local percentage = math.min(weaponStats["attack"].takeammo / 100, 100);
 		
-					frame:AddBar(12, {{text = tostring(weaponStats["attack"].takeammo).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Attack Cost", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponStats["attack"].takeammo).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Attack Cost", Color(110, 30, 30), true);
 				end
 			
 				if weaponStats["attack"].delay and weaponStats["attack"].striketime then
@@ -1564,7 +1568,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					local attack_speed = weaponStats["attack"].delay + weaponStats["attack"].striketime;
 					local percentage = 1 - ((attack_speed - min_value) / (max_value - min_value));
 
-					frame:AddBar(12, {{text = tostring(weaponStats["attack"].delay + weaponStats["attack"].striketime).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Attack Speed", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponStats["attack"].delay + weaponStats["attack"].striketime).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Attack Speed", Color(110, 30, 30), true);
 				end
 			
 				if weaponStats["attack"].armorpiercing then
@@ -1583,9 +1587,9 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					local percentage = math.min(armorpiercing / 100, 100);
 		
 					if armorpiercing < originalAP then
-						frame:AddBar(12, {{text = tostring(armorpiercing).." / "..tostring(originalAP), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor-Piercing Damage", Color(110, 30, 30));
+						frame:AddBar(12, {{text = tostring(armorpiercing).." / "..tostring(originalAP), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor-Piercing Damage", Color(110, 30, 30), true);
 					else
-						frame:AddBar(12, {{text = tostring(armorpiercing), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor-Piercing Damage", Color(110, 30, 30));
+						frame:AddBar(12, {{text = tostring(armorpiercing), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor-Piercing Damage", Color(110, 30, 30), true);
 					end
 				end
 			
@@ -1607,28 +1611,34 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					local percentage = math.min(damage / 100, 100);
 		
 					if damage < originalDamage then
-						frame:AddBar(12, {{text = tostring(damage).." / "..tostring(originalDamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Primary Damage", Color(110, 30, 30));
+						frame:AddBar(12, {{text = tostring(damage).." / "..tostring(originalDamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Primary Damage", Color(110, 30, 30), true);
 					else
-						frame:AddBar(12, {{text = tostring(damage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Primary Damage", Color(110, 30, 30));
+						frame:AddBar(12, {{text = tostring(damage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Primary Damage", Color(110, 30, 30), true);
 					end
 				end
 				
 				if weaponStats["attack"].stabilitydamage then
 					local percentage = math.min(weaponStats["attack"].stabilitydamage / 100, 100);
 		
-					frame:AddBar(12, {{text = tostring(weaponStats["attack"].stabilitydamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponStats["attack"].stabilitydamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage", Color(110, 30, 30), true);
 				end
 				
 				if weaponStats["attack"].poisedamage then
 					local percentage = math.min(weaponStats["attack"].poisedamage / 100, 100);
 		
-					frame:AddBar(12, {{text = tostring(weaponStats["attack"].poisedamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Poise Damage", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponStats["attack"].poisedamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Poise Damage", Color(110, 30, 30), true);
+				end
+				
+				if weaponStats["attack"].meleearc then
+					local percentage = math.min(weaponStats["attack"].meleearc / 60, 60);
+		
+					frame:AddBar(12, {{text = tostring(weaponStats["attack"].meleearc).."°", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Weapon Arc", Color(110, 30, 30), true);
 				end
 
 				if weaponStats["attack"].meleerange then
 					local percentage = math.min((weaponStats["attack"].meleerange - 425) / (1500 - 425), (1500 - 425));
 		
-					frame:AddBar(12, {{text = tostring(weaponStats["attack"].meleerange), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Weapon Range", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponStats["attack"].meleerange), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Weapon Range", Color(110, 30, 30), true);
 				end
 				
 				if weaponStats["attack"].canaltattack then
@@ -1656,9 +1666,9 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						local percentage = math.min(armorpiercing / 100, 100);
 			
 						if armorpiercing < originalAP then
-							frame:AddBar(12, {{text = tostring(armorpiercing).." / "..tostring(originalAP), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Armor-Piercing Damage", Color(110, 30, 30));
+							frame:AddBar(12, {{text = tostring(armorpiercing).." / "..tostring(originalAP), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Armor-Piercing Damage", Color(110, 30, 30), true);
 						else
-							frame:AddBar(12, {{text = tostring(armorpiercing), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Armor-Piercing Damage", Color(110, 30, 30));
+							frame:AddBar(12, {{text = tostring(armorpiercing), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Armor-Piercing Damage", Color(110, 30, 30), true);
 						end
 					end
 				
@@ -1684,48 +1694,68 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						local percentage = math.min((damage / 100) * weaponStats["attack"].altattackdamagemodifier, 100);
 			
 						if damage < originalDamage then
-							frame:AddBar(12, {{text = tostring(math.Round(damage * weaponStats["attack"].altattackdamagemodifier)).." / "..tostring(math.Round(originalDamage * weaponStats["attack"].altattackdamagemodifier)), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Damage", Color(110, 30, 30));
+							frame:AddBar(12, {{text = tostring(math.Round(damage * weaponStats["attack"].altattackdamagemodifier)).." / "..tostring(math.Round(originalDamage * weaponStats["attack"].altattackdamagemodifier)), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Damage", Color(110, 30, 30), true);
 						else
-							frame:AddBar(12, {{text = tostring(math.Round(damage * weaponStats["attack"].altattackdamagemodifier)), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Damage", Color(110, 30, 30));
+							frame:AddBar(12, {{text = tostring(math.Round(damage * weaponStats["attack"].altattackdamagemodifier)), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Damage", Color(110, 30, 30), true);
 						end
 					end
 					
 					if weaponStats["attack"].poisedamage and weaponStats["attack"].altattackpoisedamagemodifier then
 						local percentage = math.min((weaponStats["attack"].poisedamage / 100) * weaponStats["attack"].altattackpoisedamagemodifier, 100);
 			
-						frame:AddBar(12, {{text = tostring(weaponStats["attack"].poisedamage * weaponStats["attack"].altattackpoisedamagemodifier), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Poise Damage", Color(110, 30, 30));
+						frame:AddBar(12, {{text = tostring(weaponStats["attack"].poisedamage * weaponStats["attack"].altattackpoisedamagemodifier), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Poise Damage", Color(110, 30, 30), true);
+					end
+					
+					if weaponStats["attack"].altmeleearc then
+						local percentage = math.min(weaponStats["attack"].altmeleearc / 60, 60);
+			
+						frame:AddBar(12, {{text = tostring(weaponStats["attack"].altmeleearc).."°", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Weapon Arc", Color(110, 30, 30), true);
+					end
+
+					if weaponStats["attack"].meleerange then
+						local newRange = weaponStats["attack"].meleerange;
+						
+						if weaponTable.CanSwipeAttack then
+							newRange = math.Round(newRange * 0.8);
+						else
+							newRange = math.Round(newRange * 1.2);
+						end
+						
+						local percentage = math.min((newRange - 425) / (1500 - 425), (1500 - 425));
+			
+						frame:AddBar(12, {{text = tostring(newRange), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Weapon Range", Color(110, 30, 30), true);
 					end
 				end
 				
 				--[[if weaponStats["defense"].blockcone then
 					local percentage = math.min(weaponStats["defense"].blockcone / 270, 270);
 
-					frame:AddBar(12, {{text = tostring(weaponStats["defense"].blockcone).."°", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", noDisplay = true}}, "Block Cone", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponStats["defense"].blockcone).."°", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", noDisplay = true}}, "Block Cone", Color(110, 30, 30), true);
 				end]]--
 				
 				--[[if weaponStats["defense"].guardblockamount then
 					local percentage = math.min(weaponStats["defense"].guardblockamount / 100, 100);
 
-					frame:AddBar(12, {{text = tostring(weaponStats["defense"].guardblockamount), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Poise Cost (Minimum)", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponStats["defense"].guardblockamount), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Poise Cost (Minimum)", Color(110, 30, 30), true);
 				end]]--
 				
 				if weaponStats["defense"].poiseresistance then
 					local percentage = math.min(weaponStats["defense"].poiseresistance / 50, 50);
 
-					frame:AddBar(12, {{text = tostring(weaponStats["defense"].poiseresistance).."%", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Poise Damage Resistance", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponStats["defense"].poiseresistance).."%", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Poise Damage Resistance", Color(110, 30, 30), true);
 				end
 				
 				if weaponStats["defense"].canparry then
 					if weaponStats["defense"].parrytakestamina then
 						local percentage = math.min(weaponStats["defense"].parrytakestamina / 40, 40);
 
-						frame:AddBar(12, {{text = tostring(weaponStats["defense"].parrytakestamina).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Cost", Color(110, 30, 30));
+						frame:AddBar(12, {{text = tostring(weaponStats["defense"].parrytakestamina).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Cost", Color(110, 30, 30), true);
 					end
 					
 					if weaponStats["defense"].parrydifficulty then
 						local percentage = 1 - math.min(weaponStats["defense"].parrydifficulty / 0.3, 0.3);
 
-						frame:AddBar(12, {{text = tostring(weaponStats["defense"].parrydifficulty).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Window", Color(110, 30, 30));
+						frame:AddBar(12, {{text = tostring(weaponStats["defense"].parrydifficulty).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Window", Color(110, 30, 30), true);
 					end
 				end
 			end
@@ -1840,31 +1870,31 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				if weaponStats["attack"].takeammo then
 					local percentage = math.min(weaponStats["attack"].takeammo / 100, 100);
 		
-					frame:AddBar(12, {{text = tostring(weaponStats["attack"].takeammo).." Poise", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Attack Cost", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponStats["attack"].takeammo).." Poise", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Attack Cost", Color(110, 30, 30), true);
 				end
 			
 				if weaponStats["attack"].armorpiercing then
 					local percentage = math.min(weaponStats["attack"].armorpiercing / 100, 100);
 		
-					frame:AddBar(12, {{text = tostring(weaponStats["attack"].armorpiercing), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor-Piercing Damage", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponStats["attack"].armorpiercing), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor-Piercing Damage", Color(110, 30, 30), true);
 				end
 			
 				if weaponStats["attack"].primarydamage then
 					local percentage = math.min(weaponStats["attack"].primarydamage / 100, 100);
 		
-					frame:AddBar(12, {{text = tostring(weaponStats["attack"].primarydamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Primary Damage", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponStats["attack"].primarydamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Primary Damage", Color(110, 30, 30), true);
 				end
 				
 				if weaponStats["attack"].stabilitydamage then
 					local percentage = math.min(weaponStats["attack"].stabilitydamage / 100, 100);
 		
-					frame:AddBar(12, {{text = tostring(weaponStats["attack"].stabilitydamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponStats["attack"].stabilitydamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage", Color(110, 30, 30), true);
 				end
 				
 				if weaponStats["attack"].poisedamage then
 					local percentage = math.min(weaponStats["attack"].poisedamage / 100, 100);
 		
-					frame:AddBar(12, {{text = tostring(weaponStats["attack"].poisedamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Poise Damage", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponStats["attack"].poisedamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Poise Damage", Color(110, 30, 30), true);
 				end
 			end
 		end
@@ -1998,39 +2028,39 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				if shieldStats.blockcone then
 					local percentage = math.min(shieldStats.blockcone / 270, 270);
 
-					frame:AddBar(12, {{text = tostring(shieldStats.blockcone).."°", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Cone", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(shieldStats.blockcone).."°", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Cone", Color(110, 30, 30), true);
 				end
 				
 				if shieldStats.guardblockamount then
 					local percentage = math.min(shieldStats.guardblockamount / 100, 100);
 
-					frame:AddBar(12, {{text = tostring(shieldStats.guardblockamount).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Stamina Cost (Minimum)", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(shieldStats.guardblockamount).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Stamina Cost (Minimum)", Color(110, 30, 30), true);
 				end
 				
 				if shieldStats.poiseresistance then
 					local percentage = math.min(shieldStats.poiseresistance / 100, 100);
 
-					frame:AddBar(12, {{text = tostring(shieldStats.poiseresistance).."%", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Stamina Damage Resistance", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(shieldStats.poiseresistance).."%", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Stamina Damage Resistance", Color(110, 30, 30), true);
 				end
 				
 				if shieldStats.canparry then
 					if shieldStats.parrytakestamina then
 						local percentage = math.min(shieldStats.parrytakestamina / 40, 40);
 
-						frame:AddBar(12, {{text = tostring(shieldStats.parrytakestamina), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Cost", Color(110, 30, 30));
+						frame:AddBar(12, {{text = tostring(shieldStats.parrytakestamina), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Cost", Color(110, 30, 30), true);
 					end
 					
 					if shieldStats.parrydifficulty then
 						local percentage = 1 - math.min(shieldStats.parrydifficulty / 0.3, 0.3);
 
-						frame:AddBar(12, {{text = tostring(shieldStats.parrydifficulty).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Window", Color(110, 30, 30));
+						frame:AddBar(12, {{text = tostring(shieldStats.parrydifficulty).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Window", Color(110, 30, 30), true);
 					end
 				end
 				
 				if shieldStats.damagereduction then
 					local percentage = math.min(1 - shieldStats.damagereduction, 0.3);
 
-					frame:AddBar(12, {{text = tostring((1 - shieldStats.damagereduction) * 100).."%", percentage = percentage * 333.33, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Weapon Damage Reduction (Max 30%)", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring((1 - shieldStats.damagereduction) * 100).."%", percentage = percentage * 333.33, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Weapon Damage Reduction (Max 30%)", Color(110, 30, 30), true);
 				end
 			end
 		end
@@ -2207,46 +2237,46 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local percentage = math.min(protection, 100);
 
 			if protection < originalProtection then
-				frame:AddBar(12, {{text = tostring(protection).."% / "..originalProtection.."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor Effectiveness", Color(110, 30, 30));
+				frame:AddBar(12, {{text = tostring(protection).."% / "..originalProtection.."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor Effectiveness", Color(110, 30, 30), true);
 			else
-				frame:AddBar(12, {{text = tostring(protection).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor Effectiveness", Color(110, 30, 30));
+				frame:AddBar(12, {{text = tostring(protection).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor Effectiveness", Color(110, 30, 30), true);
 			end
 		end
 		
 		if itemTable.bluntScale then
 			local percentage = (1 - itemTable.bluntScale) * 100;
 
-			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Blunt Damage Resistance", Color(110, 30, 30));
+			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Blunt Damage Resistance", Color(110, 30, 30), true);
 		end
 		
 		if itemTable.bulletScale then
 			local percentage = (1 - itemTable.bulletScale) * 100;
 
-			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Bullet Damage Resistance", Color(110, 30, 30));
+			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Bullet Damage Resistance", Color(110, 30, 30), true);
 		end
 		
 		--[[if itemTable.damageTypeScales and itemTable.damageTypeScales[DMG_FALL] then
 			local percentage = -itemTable.damageTypeScales[DMG_FALL];
 
-			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Fall Damage Resistance", Color(110, 30, 30));
+			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Fall Damage Resistance", Color(110, 30, 30), true);
 		end]]--
 		
 		if itemTable.pierceScale then
 			local percentage = (1 - itemTable.pierceScale) * 100;
 
-			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Pierce Damage Resistance", Color(110, 30, 30));
+			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Pierce Damage Resistance", Color(110, 30, 30), true);
 		end
 		
 		if itemTable.slashScale then
 			local percentage = (1 - itemTable.slashScale) * 100;
 
-			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Slash Damage Resistance", Color(110, 30, 30));
+			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Slash Damage Resistance", Color(110, 30, 30), true);
 		end
 		
 		if itemTable.stabilityScale then
 			local percentage = (1 - itemTable.stabilityScale) * 100;
 
-			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage Resistance", Color(110, 30, 30));
+			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage Resistance", Color(110, 30, 30), true);
 		else
 			local armorClass = itemTable.weightclass;
 			
@@ -2263,7 +2293,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				
 				percentage = percentage * 100;
 				
-				frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage Resistance", Color(110, 30, 30));
+				frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage Resistance", Color(110, 30, 30), true);
 			end
 		end
 		
@@ -2352,9 +2382,9 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					local percentage = 1 - math.min(accuracy * 2, 1);
 		
 					if accuracy > originalAccuracy then
-						frame:AddBar(12, {{text = tostring(accuracy).." / "..tostring(originalAccuracy), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Accuracy (Aiming)", Color(110, 30, 30));
+						frame:AddBar(12, {{text = tostring(accuracy).." / "..tostring(originalAccuracy), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Accuracy (Aiming)", Color(110, 30, 30), true);
 					else
-						frame:AddBar(12, {{text = tostring(accuracy), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Accuracy (Aiming)", Color(110, 30, 30));
+						frame:AddBar(12, {{text = tostring(accuracy), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Accuracy (Aiming)", Color(110, 30, 30), true);
 					end
 				end
 				
@@ -2369,34 +2399,34 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					local percentage = 1 - math.min(accuracy * 2, 1);
 		
 					if accuracy > originalAccuracy then
-						frame:AddBar(12, {{text = tostring(accuracy).." / "..tostring(originalAccuracy), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Accuracy (Moving)", Color(110, 30, 30));
+						frame:AddBar(12, {{text = tostring(accuracy).." / "..tostring(originalAccuracy), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Accuracy (Moving)", Color(110, 30, 30), true);
 					else
-						frame:AddBar(12, {{text = tostring(accuracy), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Accuracy (Moving)", Color(110, 30, 30));
+						frame:AddBar(12, {{text = tostring(accuracy), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Accuracy (Moving)", Color(110, 30, 30), true);
 					end
 				end
 				
 				if weaponTable.Primary.NumShots > 1 then
 					local percentage = math.min(weaponTable.Primary.NumShots, 32) / 32;
 		
-					frame:AddBar(12, {{text = tostring(weaponTable.Primary.NumShots), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Pellet Amount", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponTable.Primary.NumShots), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Pellet Amount", Color(110, 30, 30), true);
 				end
 				
 				if weaponTable.Primary.RPM and weaponTable.Primary.ClipSize > 1 then
 					local percentage = math.min(weaponTable.Primary.RPM, 650) / 650;
 		
-					frame:AddBar(12, {{text = tostring(weaponTable.Primary.RPM), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Rate of Fire", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponTable.Primary.RPM), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Rate of Fire", Color(110, 30, 30), true);
 				end
 				
 				if itemTable.reloadTime then
 					local percentage = math.min(itemTable.reloadTime, 10);
 		
-					frame:AddBar(12, {{text = tostring(itemTable.reloadTime).."s", percentage = percentage * 10, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Reload Time", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(itemTable.reloadTime).."s", percentage = percentage * 10, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Reload Time", Color(110, 30, 30), true);
 				end
 				
 				if weaponTable.Primary.Damage then
 					local percentage = math.min(weaponTable.Primary.Damage / 80, 80);
 		
-					frame:AddBar(12, {{text = tostring(weaponTable.Primary.Damage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Shot Damage", Color(110, 30, 30));
+					frame:AddBar(12, {{text = tostring(weaponTable.Primary.Damage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Shot Damage", Color(110, 30, 30), true);
 				end
 				
 				if weaponAmmo then
@@ -2540,14 +2570,14 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				local healAmount = itemTable.healAmount * itemTable.healRepetition;
 				local percentage = math.min(healAmount / 100, 100);
 
-				frame:AddBar(12, {{text = healAmount.." Health", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Heal Amount", Color(110, 30, 30));
+				frame:AddBar(12, {{text = healAmount.." Health", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Heal Amount", Color(110, 30, 30), true);
 			end
 			
 			if itemTable.restoresBlood then	
 				local healAmount = itemTable.restoresBlood;
 				local percentage = math.min(healAmount / 2500, 2500);
 
-				frame:AddBar(12, {{text = healAmount.." Blood", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Restores Blood", Color(110, 30, 30));
+				frame:AddBar(12, {{text = healAmount.." Blood", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Restores Blood", Color(110, 30, 30), true);
 			end
 		end
 		

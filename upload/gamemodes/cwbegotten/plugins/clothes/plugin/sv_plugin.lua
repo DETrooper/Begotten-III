@@ -89,13 +89,11 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 			hitGroup = player:LastHitGroup();
 			
 			if IsValid(attacker) then
-				local activeWeapon = attacker:GetActiveWeapon();
+				--local activeWeapon = attacker:GetActiveWeapon();
 				
-				if IsValid(activeWeapon) and activeWeapon.Base == "sword_swepbase" then
-				--if hitGroup == 0 then
+				--if IsValid(activeWeapon) and activeWeapon.Base == "sword_swepbase" then
 					hitGroup = Clockwork.kernel:GetRagdollHitGroup(player, damagePosition);
 				--end
-				end
 			end
 		end
 		
@@ -108,7 +106,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 		
 		if (hitGroup == 0) then
 			if attacker:IsNPC() or attacker:IsNextBot() then
-				hitGroup = 2; -- Chest.
+				hitGroup = math.random(1, 7);
 			else
 				return 
 			end;

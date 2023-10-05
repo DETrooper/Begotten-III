@@ -38,6 +38,7 @@ SWEP.AmbientEffect = "striderbuster_smoke"
 SWEP.IgniteTime = nil
 SWEP.FreezeTime = 10
 SWEP.FreezeDamage = 65;
+SWEP.MultiHit = 2;
 
 --Sounds
 SWEP.AttackSoundTable = "HeavyMetalAttackSoundTable"
