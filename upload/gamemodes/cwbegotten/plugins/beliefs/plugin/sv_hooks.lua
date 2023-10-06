@@ -923,7 +923,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			end
 			
 			if attacker:HasBelief("thirst_blood_moon") then
-				if (entity:IsPlayer() and entity:Alive() or !entity:IsPlayer()) then
+				if (entity:IsPlayer() and entity:Alive()) then
 					local lastZone = attacker:GetCharacterData("LastZone");
 					
 					if cwDayNight and cwDayNight.currentCycle == "night" and lastZone == "wasteland" then

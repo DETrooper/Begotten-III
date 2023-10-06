@@ -33,7 +33,7 @@ local playerMeta = FindMetaTable("Player");
 
 -- A function to handle a player's stability value.
 function cwMelee:HandleStability(player, amount, cooldown)
-	if (!amount or !IsValid(player)) then
+	if (!amount or !IsValid(player) or !player:IsPlayer()) then
 		return;
 	end;
 

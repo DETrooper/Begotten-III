@@ -414,7 +414,7 @@ function SWEP:PrimaryAttack()
 								if IsValid(tr.Entity) then
 									if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
 										table.insert(hitEntities, tr.Entity);
-										
+									
 										if tr.Entity:GetNWBool("Parried") then
 											self:HandleHit(tr.Entity, tr.HitPos, "parry_swing");
 										else
@@ -579,9 +579,11 @@ function SWEP:PrimaryAttack()
 									if IsValid(tr.Entity) then
 										if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
 											table.insert(hitEntities, tr.Entity);
-											
-											self:HandleHit(tr.Entity, tr.HitPos, stance);
+										else
+											hitsAllowed = 0;
 										end
+											
+										self:HandleHit(tr.Entity, tr.HitPos, stance);
 									end
 								end
 									

@@ -136,7 +136,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["unrelenting"] = {
 				name = "Unrelenting",
-				description = "Great weapons and two handed weapons now deal 10% more damage. All melee weapons now deal 25% more poise damage.",
+				description = "Great weapons and two handed weapons now deal 10% more damage. All melee weapons now deal 25% more poise damage. Removes the damage penalty for hitting multiple targets with a single swing.",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "strength", "might"},
 				row = 4,

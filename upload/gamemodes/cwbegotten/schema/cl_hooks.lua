@@ -1727,17 +1727,17 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 				end
 				
-				--[[if weaponStats["defense"].blockcone then
+				if weaponStats["defense"].blockcone then
 					local percentage = math.min(weaponStats["defense"].blockcone / 270, 270);
 
 					frame:AddBar(12, {{text = tostring(weaponStats["defense"].blockcone).."°", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", noDisplay = true}}, "Block Cone", Color(110, 30, 30), true);
-				end]]--
+				end
 				
-				--[[if weaponStats["defense"].guardblockamount then
+				if weaponStats["defense"].guardblockamount then
 					local percentage = math.min(weaponStats["defense"].guardblockamount / 100, 100);
 
-					frame:AddBar(12, {{text = tostring(weaponStats["defense"].guardblockamount), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Poise Cost (Minimum)", Color(110, 30, 30), true);
-				end]]--
+					frame:AddBar(12, {{text = tostring(weaponStats["defense"].guardblockamount).." Poise", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Poise Cost (Minimum)", Color(110, 30, 30), true);
+				end
 				
 				if weaponStats["defense"].poiseresistance then
 					local percentage = math.min(weaponStats["defense"].poiseresistance / 50, 50);
@@ -1749,7 +1749,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					if weaponStats["defense"].parrytakestamina then
 						local percentage = math.min(weaponStats["defense"].parrytakestamina / 40, 40);
 
-						frame:AddBar(12, {{text = tostring(weaponStats["defense"].parrytakestamina).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Cost", Color(110, 30, 30), true);
+						frame:AddBar(12, {{text = tostring(weaponStats["defense"].parrytakestamina).." Poise", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Cost", Color(110, 30, 30), true);
 					end
 					
 					if weaponStats["defense"].parrydifficulty then
@@ -2034,7 +2034,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				if shieldStats.guardblockamount then
 					local percentage = math.min(shieldStats.guardblockamount / 100, 100);
 
-					frame:AddBar(12, {{text = tostring(shieldStats.guardblockamount).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Stamina Cost (Minimum)", Color(110, 30, 30), true);
+					frame:AddBar(12, {{text = tostring(shieldStats.guardblockamount).." Poise", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Stamina Cost (Minimum)", Color(110, 30, 30), true);
 				end
 				
 				if shieldStats.poiseresistance then
@@ -2047,7 +2047,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					if shieldStats.parrytakestamina then
 						local percentage = math.min(shieldStats.parrytakestamina / 40, 40);
 
-						frame:AddBar(12, {{text = tostring(shieldStats.parrytakestamina), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Cost", Color(110, 30, 30), true);
+						frame:AddBar(12, {{text = tostring(shieldStats.parrytakestamina).." Poise", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Cost", Color(110, 30, 30), true);
 					end
 					
 					if shieldStats.parrydifficulty then

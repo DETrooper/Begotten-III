@@ -454,9 +454,8 @@ RITUAL = cwRituals.rituals:New("call_of_the_blood_moon");
 						local lastZone = v:GetCharacterData("LastZone");
 
 						if lastZone == "wasteland" or lastZone == "tower" then
-							Clockwork.chatBox:Add(v, nil, "event", "You feel the Blood Moon's radiance pulsating, as though it were drawing power from something.");
-							
 							if v ~= player then
+								Clockwork.chatBox:Add(v, nil, "event", "You feel the Blood Moon's radiance pulsating, as though it were drawing power from something.");
 								Clockwork.datastream:Start(v, "PlaySound", "begotten/ambient/hits/wall_stomp5.mp3");
 							end
 							
@@ -488,6 +487,8 @@ RITUAL = cwRituals.rituals:New("call_of_the_blood_moon");
 					-- Add enough time to complete the ritual!
 					cwDayNight:ModifyCycleTimeLeft(10);
 				end
+				
+				return true;
 			else
 				Schema:EasyText(player, "peru", "The Blood Moon must be out in order for you to perform this ritual!");
 				
