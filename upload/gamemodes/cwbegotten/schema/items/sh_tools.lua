@@ -458,6 +458,16 @@ local ITEM = Clockwork.item:New();
 							player.isTying = nil;
 							
 							Schema:BloodTestPlayer(target, false, true);
+							
+							if self then
+								local condition = self:GetCondition() - 10;
+							
+								if condition <= 0 then
+									player:TakeItem(self);
+								else
+									self:SetCondition(condition);
+								end
+							end
 						else
 							player.isTying = nil;
 						end;
