@@ -914,6 +914,14 @@ function Clockwork.animation:AddWandererOppressorArms(model)
 	});
 end;
 
+function Clockwork.animation:AddOldSoldierArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begottenprelude/arms/oldsoldier.mdl",
+		skin = 0
+	});
+end;
+
 function Clockwork.animation:AddShingarArms(model)
 	self:AddHandsModel(model, {
 		body = 0000000,
@@ -1095,6 +1103,8 @@ Clockwork.animation:AddLeatherArms("models/begotten/wanderers/leather");
 Clockwork.animation:AddWandererMailArms("models/begotten/wanderers/wanderermail");
 
 Clockwork.animation:AddWandererOppressorArms("models/begotten/wanderers/wandereroppressor.mdl");
+
+Clockwork.animation:AddOldSoldierArms("models/begotten/wanderers/oldsoldier");
 
 Clockwork.animation:AddPlagueDocArms("models/begotten/wanderers/plaguedoc.mdl");
 

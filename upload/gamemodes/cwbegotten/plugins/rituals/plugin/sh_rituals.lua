@@ -12,11 +12,14 @@ local RITUAL = cwRituals.rituals:New("purifying_stone_rite");
 	RITUAL.result = {
 		["purifying_stone"] = {amount = 1},
 	};
-	--RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
+	RITUAL.corruptionCost = -10; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 15; -- XP gained from performing the ritual.
+	RITUAL.experience = 50; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
+		if cwSanity then
+			player:HandleSanity(20);
+		end
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -35,7 +38,7 @@ RITUAL = cwRituals.rituals:New("yellow_banner_of_quelling");
 
 	--RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 25; -- XP gained from performing the ritual.
+	RITUAL.experience = 75; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 		player:SetSharedVar("yellowBanner", true);
@@ -69,7 +72,7 @@ RITUAL = cwRituals.rituals:New("xolotl_catalyst");
 	};
 	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 15; -- XP gained from performing the ritual.
+	RITUAL.experience = 50; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -92,7 +95,7 @@ RITUAL = cwRituals.rituals:New("holy_spirit_rite");
 	};
 	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 15; -- XP gained from performing the ritual.
+	RITUAL.experience = 50; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -115,7 +118,7 @@ RITUAL = cwRituals.rituals:New("tortured_spirit_rite");
 	};
 	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 15; -- XP gained from performing the ritual.
+	RITUAL.experience = 50; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -138,7 +141,7 @@ RITUAL = cwRituals.rituals:New("pentagram_catalyst_rite");
 	};
 	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 15; -- XP gained from performing the ritual.
+	RITUAL.experience = 50; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -161,7 +164,7 @@ RITUAL = cwRituals.rituals:New("judgement_sigil_rite");
 	};
 	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 25; -- XP gained from performing the ritual.
+	RITUAL.experience = 75; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -184,7 +187,7 @@ RITUAL = cwRituals.rituals:New("judgement_sigil_vengeful");
 	};
 	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 25; -- XP gained from performing the ritual.
+	RITUAL.experience = 75; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -208,7 +211,7 @@ RITUAL = cwRituals.rituals:New("unholy_sigil_stone_rite");
 	};
 	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 25; -- XP gained from performing the ritual.
+	RITUAL.experience = 75; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -231,7 +234,7 @@ RITUAL = cwRituals.rituals:New("fire_sigil_stone_rite");
 	};
 	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 25; -- XP gained from performing the ritual.
+	RITUAL.experience = 75; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -254,7 +257,7 @@ RITUAL = cwRituals.rituals:New("ice_sigil_stone_rite");
 	};
 	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 25; -- XP gained from performing the ritual.
+	RITUAL.experience = 75; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -277,7 +280,7 @@ RITUAL = cwRituals.rituals:New("glazic_sigil_stone_rite");
 	};
 	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 25; -- XP gained from performing the ritual.
+	RITUAL.experience = 75; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -297,7 +300,7 @@ RITUAL = cwRituals.rituals:New("a_feast_of_ash_and_twig");
 	RITUAL.requirements = {"up_catalyst", "up_catalyst", "trinity_catalyst"};
 	RITUAL.corruptionCost = 5;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 5;
+	RITUAL.experience = 25;
 	
 	function RITUAL:OnPerformed(player)
 		player:HandleNeed("hunger", -80);
@@ -320,7 +323,7 @@ RITUAL = cwRituals.rituals:New("aura_of_the_mother");
 	RITUAL.requirements = {"familial_catalyst", "pantheistic_catalyst", "purifying_stone"};
 	RITUAL.corruptionCost = 20;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 25;
+	RITUAL.experience = 75;
 	
 	function RITUAL:OnPerformed(player)
 		player:SetSharedVar("auraMotherActive", true);
@@ -352,15 +355,26 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("blessing_of_coin");
 	RITUAL.name = "(T1) Blessing of Coin";
-	RITUAL.description = "Is it truly a favor from the Glaze, or a statistical illusion? It surely won't stop you from offering alms for a bountiful harvest. Performing this ritual slightly increases the quality of scavenged items for 25 minutes.";
+	RITUAL.description = "Is it truly a favor from the Glaze, or a statistical illusion? It surely won't stop you from offering alms for a bountiful harvest. Performing this ritual increases the amount of coin found in containers for 40 minutes.";
 	RITUAL.onerequiredbelief = {"repentant", "disciple"}; -- Tier I Faith of the Light Ritual
 	
 	RITUAL.requirements = {"trinity_catalyst", "up_catalyst", "light_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 5;
+	RITUAL.experience = 25;
 	
 	function RITUAL:OnPerformed(player)
+		player:SetNetVar("blessingOfCoin", true);
+		
+		timer.Create("BlessingOfCoinTimer_"..player:EntIndex(), 2400, 1, function()
+			if IsValid(player) then
+				if player:GetNetVar("blessingOfCoin", false) then
+					player:SetNetVar("blessingOfCoin", false);
+					
+					Clockwork.hint:Send(player, "The 'Blessing of Coin' ritual has worn off...", 10, Color(175, 100, 100), true, true);
+				end
+			end
+		end);
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -378,7 +392,7 @@ RITUAL = cwRituals.rituals:New("bloodhowl");
 	RITUAL.requirements = {"down_catalyst", "familial_catalyst", "pantheistic_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 10;
+	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
 		player.bloodHowlActive = true;
@@ -410,7 +424,7 @@ RITUAL = cwRituals.rituals:New("bloodwings");
 	RITUAL.requirements = {"belphegor_catalyst", "up_catalyst", "up_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 15;
+	RITUAL.experience = 50;
 
 	function RITUAL:OnPerformed(player)
 		player.bloodWingsActive = true;
@@ -441,7 +455,7 @@ RITUAL = cwRituals.rituals:New("call_of_the_blood_moon");
 	RITUAL.requirements = {"tortured_spirit", "down_catalyst", "pentagram_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 25;
+	RITUAL.experience = 100;
 	
 	function RITUAL:OnPerformed(player)
 		if cwDayNight then
@@ -510,7 +524,7 @@ RITUAL = cwRituals.rituals:New("call_to_darkness");
 	RITUAL.requirements = {"down_catalyst", "down_catalyst", "pentagram_catalyst"};
 	RITUAL.corruptionCost = 40;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 15;
+	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Call to Darkness' ritual, meaning that an admin should probably possess them!");
@@ -531,7 +545,7 @@ RITUAL = cwRituals.rituals:New("cherished_by_evil");
 	RITUAL.requirements = {"ice_catalyst", "purifying_stone", "elysian_catalyst"};
 	RITUAL.corruptionCost = -50;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 5;
+	RITUAL.experience = 25;
 	
 	function RITUAL:OnPerformed(player)
 		player:HandleSanity(100);
@@ -552,7 +566,7 @@ RITUAL = cwRituals.rituals:New("cloak_of_always_burning");
 	RITUAL.requirements = {"belphegor_catalyst", "ice_catalyst", "familial_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 10;
+	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
 		player.cloakBurningActive = true;
@@ -583,7 +597,7 @@ RITUAL = cwRituals.rituals:New("cries_of_the_drowned_king");
 	RITUAL.requirements = {"down_catalyst", "down_catalyst", "down_catalyst"};
 	--RITUAL.corruptionCost = 5; -- Corruption gets added once the UI is closed.
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 5;
+	RITUAL.experience = 25;
 	
 	function RITUAL:OnPerformed(player)
 		player.drownedKingActive = true;
@@ -614,7 +628,7 @@ RITUAL = cwRituals.rituals:New("demon_hunter");
 	RITUAL.requirements = {"light_catalyst", "elysian_catalyst", "pantheistic_catalyst"};
 	--RITUAL.corruptionCost = 5; -- Corruption gets added once the UI is closed.
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 5;
+	RITUAL.experience = 25;
 	
 	function RITUAL:OnPerformed(player)
 		player.demonHunterActive = true;
@@ -649,7 +663,7 @@ RITUAL = cwRituals.rituals:New("empowered_blood");
 	RITUAL.requirements = {"pentagram_catalyst", "belphegor_catalyst", "elysian_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 5;
+	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
 		player.maxHealthBoost = 50;
@@ -688,7 +702,7 @@ RITUAL = cwRituals.rituals:New("familial_seed");
 	RITUAL.requirements = {"familial_catalyst", "familial_catalyst", "familial_catalyst"};
 	--RITUAL.corruptionCost = 5; -- Corruption gets added once the UI is closed.
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 5;
+	RITUAL.experience = 25;
 	
 	function RITUAL:OnPerformed(player)
 		player.selectingRegrowthLimb = true;
@@ -711,7 +725,7 @@ RITUAL = cwRituals.rituals:New("hail_prince_thieves");
 	RITUAL.requirements = {"down_catalyst", "ice_catalyst", "ice_catalyst"};
 	RITUAL.corruptionCost = 5;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 10;
+	RITUAL.experience = 30;
 	
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("princeOfThieves", true);
@@ -736,13 +750,13 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("hear_me");
 	RITUAL.name = "(T1) Hear Me";
-	RITUAL.description = "You aren't anything at all until you've made yourself known. Performing this ritual grants you 250 faith (experience).";
+	RITUAL.description = "You aren't anything at all until you've made yourself known. Performing this ritual grants you 300 faith (experience).";
 	RITUAL.onerequiredbelief = {"soothsayer", "witch", "witch_druid"}; -- Tier I Faith of the Dark Ritual
 	
 	RITUAL.requirements = {"belphegor_catalyst", "belphegor_catalyst", "belphegor_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 250;
+	RITUAL.experience = 300;
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -762,7 +776,7 @@ RITUAL = cwRituals.rituals:New("hellgorge");
 	RITUAL.requirements = {"up_catalyst", "down_catalyst", "belphegor_catalyst"};
 	RITUAL.corruptionCost = -15;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 5;
+	RITUAL.experience = 25;
 	
 	function RITUAL:OnPerformed(player)
 		player:SetNeed("thirst", 0);
@@ -787,7 +801,7 @@ RITUAL = cwRituals.rituals:New("holy_powderkeg");
 	RITUAL.requirements = {"holy_spirit", "light_catalyst", "trinity_catalyst"};
 	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 5; -- XP gained from performing the ritual.
+	RITUAL.experience = 50; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 		player.holyPowderkegActive = true;
@@ -1051,7 +1065,7 @@ RITUAL = cwRituals.rituals:New("noble_stature");
 	RITUAL.requirements = {"purifying_stone", "holy_spirit", "light_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 5;
+	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
 		player.nobleStatureActive = true;
@@ -1076,13 +1090,13 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("payment_of_light");
 	RITUAL.name = "(T1) Payment of Light";
-	RITUAL.description = "Pick up the shattered remains of God and offer them back to the Glaze of Sol. Performing this ritual grants you 250 faith (experience).";
+	RITUAL.description = "Pick up the shattered remains of God and offer them back to the Glaze of Sol. Performing this ritual grants you 300 faith (experience).";
 	RITUAL.onerequiredbelief = {"repentant", "disciple"}; -- Tier I Faith of the Light Ritual
 	
 	RITUAL.requirements = {"light_catalyst", "light_catalyst", "light_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 250;
+	RITUAL.experience = 300;
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -1102,7 +1116,7 @@ RITUAL = cwRituals.rituals:New("perseverance");
 	RITUAL.requirements = {"light_catalyst", "elysian_catalyst", "down_catalyst"};
 	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
-	RITUAL.experience = 5; -- XP gained from performing the ritual.
+	RITUAL.experience = 25; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 		player.perseveranceActive = true;
@@ -1133,7 +1147,7 @@ RITUAL = cwRituals.rituals:New("regrowth");
 	RITUAL.requirements = {"purifying_stone", "familial_catalyst", "up_catalyst"};
 	RITUAL.corruptionCost = 0;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 20;
+	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
 		local max_poise = player:GetMaxPoise();
@@ -1181,7 +1195,7 @@ RITUAL = cwRituals.rituals:New("regrowth_target");
 	RITUAL.requirements = {"familial_catalyst", "up_catalyst", "purifying_stone"};
 	RITUAL.corruptionCost = 0;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 20;
+	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -1264,7 +1278,7 @@ RITUAL = cwRituals.rituals:New("rooting");
 	RITUAL.requirements = {"pantheistic_catalyst", "familial_catalyst", "familial_catalyst"};
 	RITUAL.corruptionCost = -45;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 5;
+	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
 	end;
@@ -1284,7 +1298,7 @@ RITUAL = cwRituals.rituals:New("scornificationism");
 	RITUAL.requirements = {"purifying_stone", "light_catalyst", "elysian_catalyst"};
 	RITUAL.corruptionCost = 15;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 20;
+	RITUAL.experience = 100;
 	
 	function RITUAL:OnPerformed(player)
 		player.scornificationismActive = true;
@@ -1315,7 +1329,7 @@ RITUAL = cwRituals.rituals:New("sprouting");
 	RITUAL.requirements = {"pantheistic_catalyst", "pantheistic_catalyst", "pantheistic_catalyst"};
 	RITUAL.corruptionCost = 20;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 10;
+	RITUAL.experience = 25;
 	
 	function RITUAL:OnPerformed(player)
 		player:ResetInjuries();
@@ -1340,7 +1354,7 @@ RITUAL = cwRituals.rituals:New("soulscorch");
 	RITUAL.requirements = {"light_catalyst", "holy_spirit", "light_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 20;
+	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
 		player.soulscorchActive = true;
@@ -1383,7 +1397,7 @@ RITUAL = cwRituals.rituals:New("steel_will");
 	RITUAL.requirements = {"xolotl_catalyst", "holy_spirit", "light_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 15;
+	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("steelWill", true);
@@ -1418,7 +1432,7 @@ RITUAL = cwRituals.rituals:New("summon_demon");
 	RITUAL.requirements = {"belphegor_catalyst", "tortured_spirit", "pentagram_catalyst"};
 	RITUAL.corruptionCost = 25;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 10;
+	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning a demon near their position!");
@@ -1500,7 +1514,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar");
 	RITUAL.requirements = {"xolotl_catalyst", "familial_catalyst", "xolotl_catalyst"};
 	RITUAL.corruptionCost = 15;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 10;
+	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a familiar near their position!");
@@ -1594,7 +1608,7 @@ RITUAL = cwRituals.rituals:New("triumph_of_the_bark");
 	RITUAL.requirements = {"up_catalyst", "pantheistic_catalyst", "pantheistic_catalyst"};
 	RITUAL.corruptionCost = 20;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 10;
+	RITUAL.experience = 30;
 	
 	function RITUAL:OnPerformed(player)
 		local diseases = player:GetCharacterData("diseases", {});
@@ -1626,7 +1640,7 @@ RITUAL = cwRituals.rituals:New("upstaged");
 	RITUAL.requirements = {"up_catalyst", "belphegor_catalyst", "belphegor_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 10;
+	RITUAL.experience = 30;
 	
 	function RITUAL:OnPerformed(player)
 		player.upstagedActive = true;

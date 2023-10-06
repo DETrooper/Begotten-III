@@ -335,7 +335,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Silences all footsteps, some inventory sounds, and the sound of looting containers (but not lockpicking).";
 	
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, supercrateOnly = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");

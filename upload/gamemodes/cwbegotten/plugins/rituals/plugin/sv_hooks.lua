@@ -345,6 +345,14 @@ function cwRituals:PlayerCharacterLoaded(player)
 		
 		player:SetSharedVar("auraMotherActive", false);
 	end
+	
+	if player:GetNetVar("blessingOfCoin") == true then
+		player:SetNetVar("blessingOfCoin", false)
+		
+		if timer.Exists("BlessingOfCoinTimer_"..entIndex) then
+			timer.Remove("BlessingOfCoinTimer_"..entIndex);
+		end
+	end
 
 	if player.bloodHowlActive then
 		player.bloodHowlActive = nil;
@@ -624,6 +632,12 @@ function cwRituals:PlayerDeath(player)
 			player:SetSharedVar("auraMotherActive", false);
 		end
 		
+		if timer.Exists("BlessingOfCoinTimer_"..entIndex) then
+			timer.Remove("BlessingOfCoinTimer_"..entIndex);
+			
+			player:SetSharedVar("blessingOfCoin", false);
+		end
+		
 		if player.bloodHowlActive then
 			player.bloodHowlActive = nil;
 			
@@ -694,6 +708,14 @@ function cwRituals:PlayerDeath(player)
 		
 			if timer.Exists("PerseveranceTimer_"..entIndex) then
 				timer.Remove("PerseveranceTimer_"..entIndex);
+			end
+		end
+		
+		if player:GetNetVar("princeOfThieves") == true then
+			player:SetNetVar("princeOfThieves", false)
+			
+			if timer.Exists("PrinceOfThievesTimer_"..entIndex) then
+				timer.Remove("PrinceOfThievesTimer_"..entIndex);
 			end
 		end
 		

@@ -87,7 +87,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.curesInjuries = {"infection", "minor_infection"};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 400};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
-	ITEM.useXP = 20;
+	ITEM.useXP = 25;
 	
 	function ITEM:OnUsed(player, itemEntity)
 		Schema:EasyText(player, "olivedrab","You apply the antibiotic paste to your wound.");
@@ -108,6 +108,7 @@ local ITEM = Clockwork.item:New("medical_base");
 
 	ITEM.ingestible = {orally = true, anally = false};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 700};
+	ITEM.useXP = 50;
 	
 	function ITEM:OnUsed(player, itemEntity)
 		if player:Alive() and !player:IsRagdolled() then
@@ -119,6 +120,10 @@ local ITEM = Clockwork.item:New("medical_base");
 			end
 			
 			Clockwork.player:SetMenuOpen(player, false);
+			
+			if cwBeliefs then
+				player:HandleXP(self.useXP);
+			end
 			
 			player:HandleSanity(10);
 			player:EmitSound(self.useSound);
@@ -140,6 +145,7 @@ local ITEM = Clockwork.item:New("medical_base");
 
 	ITEM.ingestible = {orally = true, anally = false};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 1500, supercrateOnly = true};
+	ITEM.useXP = 100;
 	
 	function ITEM:OnUsed(player, itemEntity)
 		if player:Alive() and !player:IsRagdolled() then
@@ -150,6 +156,10 @@ local ITEM = Clockwork.item:New("medical_base");
 			end
 			
 			Clockwork.player:SetMenuOpen(player, false);
+			
+			if cwBeliefs then
+				player:HandleXP(self.useXP);
+			end
 			
 			player:HandleSanity(100);
 			player:EmitSound(self.useSound);
@@ -220,10 +230,15 @@ local ITEM = Clockwork.item:New("medical_base");
 	
 	ITEM.ingestible = {orally = true, anally = false};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 175};
+	ITEM.useXP = 25;
 	
 	function ITEM:OnUsed(player, itemEntity)
 		if player:Alive() and !player:IsRagdolled() then
 			Clockwork.player:SetMenuOpen(player, false);
+			
+			if cwBeliefs then
+				player:HandleXP(self.useXP);
+			end
 			
 			player:HandleSanity(100);
 			player:EmitSound(self.useSound);

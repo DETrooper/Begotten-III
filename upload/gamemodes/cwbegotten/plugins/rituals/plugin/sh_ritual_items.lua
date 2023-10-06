@@ -19,6 +19,11 @@ local ITEM = Clockwork.item:New();
 		if (player:Alive() and !player:IsRagdolled()) then
 			Clockwork.datastream:Start(player, "Stunned", 7);
 			Clockwork.datastream:Start(player, "PlaySound", "begotten/ui/sanity_gain.mp3");
+			
+			if cwSanity then
+				player:HandleSanity(20);
+			end
+			
 			player:HandleNeed("corruption", -30);
 			Clockwork.chatBox:Add(player, nil, "itnofake", "You crush the purfying stone in your hand and can immediately feel the corruption leaving your body.");
 		else

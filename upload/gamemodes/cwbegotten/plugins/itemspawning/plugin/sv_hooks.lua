@@ -372,6 +372,22 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 					chance = chance + 10;
 				end
 			end
+			
+			if player:GetNetVar("blessingOfCoin", false) then
+				if math.random(1, 2) == 1 then
+					local amount;
+
+					amount = math.random(25, 150);
+				
+					if container.cwCash then
+						container.cwCash = container.cwCash + amount;
+					else
+						container.cwCash = amount;
+					end
+					
+					Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had "..tostring(amount).." coin added to their loot container from the 'Blessing of Coin' ritual!");
+				end
+			end
 		end
 		
 		if cwBeliefs then
@@ -413,22 +429,20 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 							else
 								Clockwork.inventory:AddInstance(supercrate.cwInventory, itemInstance, math.random(4, 10));
 							end
-						elseif itemInstance.name == "Colt" then
-							for j = 1, 2 do
-								local magazineItemInstance = item.CreateInstance("old_world_magazine");
+						end
+						
+						if itemInstance.itemSpawnerInfo.supercrateItems then
+							for k, v in pairs(itemInstance.itemSpawnerInfo.supercrateItems) do
+								for j = 1, math.random(v.min, v.max) do
+									local subItem = item.CreateInstance(k);
 								
-								if magazineItemInstance and magazineItemInstance.ammoMagazineSize and magazineItemInstance.SetAmmoMagazine then
-									magazineItemInstance:SetAmmoMagazine(magazineItemInstance.ammoMagazineSize);
-								
-									Clockwork.inventory:AddInstance(supercrate.cwInventory, magazineItemInstance);
-								end
-							end
-						elseif itemInstance.name == "Springer" then
-							for j = 1, math.random(10, 15) do
-								local ammoItemInstance = item.CreateInstance("old_world_longshot");
-								
-								if ammoItemInstance then
-									Clockwork.inventory:AddInstance(supercrate.cwInventory, ammoItemInstance);
+									if subItem then
+										if subItem.ammoMagazineSize and subItem.SetAmmoMagazine then
+											subItem:SetAmmoMagazine(subItem.ammoMagazineSize);
+										end
+										
+										Clockwork.inventory:AddInstance(supercrate.cwInventory, subItem, 1);
+									end
 								end
 							end
 						end

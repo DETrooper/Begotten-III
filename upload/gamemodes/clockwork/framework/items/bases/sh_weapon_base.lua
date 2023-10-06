@@ -87,6 +87,8 @@ if (SERVER) then
 		if (name == "Engrave") then
 			if self:GetData("engraving") != "" then
 				Schema:EasyText(player, "peru", "This weapon has already been engraved!");
+			elseif cwBeliefs and !player:HasBelief("literacy") then
+				Schema:EasyText(player, "chocolate", "You are not literate!");
 			else
 				local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
 				local engravingItemTable;
