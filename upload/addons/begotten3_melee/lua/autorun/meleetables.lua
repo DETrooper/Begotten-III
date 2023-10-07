@@ -656,7 +656,7 @@ AttackTables.SkylightSwordAttackTable = {
 	["takeammo"] = 6,
 	["delay"] = 1.5,
 	["striketime"] = 0.6,
-	["meleearc"] = 45,
+	["meleearc"] = 55,
 	["meleerange"] = 975,
 	["punchstrength"] = Angle(0,1,0),
 };
@@ -795,7 +795,7 @@ AttackTables.HalberdAttackTable = {
 	["takeammo"] = 6,
 	["delay"] = 1.45,
 	["striketime"] = 0.55,
-	["meleearc"] = 45,
+	["meleearc"] = 50,
 	["meleerange"] = 1250,
 	["punchstrength"] = Angle(1,3,1),
 };
@@ -1124,7 +1124,7 @@ AttackTables.BellHammerAttackTable = {
 	["takeammo"] = 12,
 	["delay"] = 2.5,
 	["striketime"] = 0.9,
-	["meleearc"] = 45,
+	["meleearc"] = 50,
 	["meleerange"] = 1100,
 	["punchstrength"] = Angle(0,8,0),
 };
@@ -1143,7 +1143,7 @@ AttackTables.GoreCleaverAttackTable = {
 	["takeammo"] = 8,
 	["delay"] = 1.6,
 	["striketime"] = 0.65,
-	["meleearc"] = 45,
+	["meleearc"] = 50,
 	["meleerange"] = 1100,
 	["punchstrength"] = Angle(0,1,0),
 };
@@ -1297,7 +1297,7 @@ AttackTables.PolehammerAttackTable = {
 	["takeammo"] = 6,
 	["delay"] = 1.55,
 	["striketime"] = 0.55,
-	["meleearc"] = 45,
+	["meleearc"] = 50,
 	["meleerange"] = 1280,
 	["punchstrength"] = Angle(1,3,1),
 };
@@ -2185,7 +2185,7 @@ AttackTables.DemonSlayerAxeAttackTable = {
 	["takeammo"] = 10,
 	["delay"] = 2.3,
 	["striketime"] = 0.9,
-	["meleearc"] = 45,
+	["meleearc"] = 55,
 	["meleerange"] = 1100,
 	["punchstrength"] = Angle(0,7,0),
 };
@@ -2538,7 +2538,7 @@ AttackTables.DreadaxeAttackTable = {
 	["takeammo"] = 10,
 	["delay"] = 2.2,
 	["striketime"] = 0.9,
-	["meleearc"] = 45,
+	["meleearc"] = 55,
 	["meleerange"] = 1100,
 	["punchstrength"] = Angle(0,7,0),
 };
@@ -2695,7 +2695,7 @@ AttackTables.SkyfallenSwordAttackTable = {
 	["takeammo"] = 6,
 	["delay"] = 1.5,
 	["striketime"] = 0.65,
-	["meleearc"] = 45,
+	["meleearc"] = 50,
 	["meleerange"] = 950,
 	["punchstrength"] = Angle(0,1,0),
 };
@@ -2714,7 +2714,7 @@ AttackTables.FrozenFatherlandAxeAttackTable = {
 	["takeammo"] = 8,
 	["delay"] = 1.55,
 	["striketime"] = 0.65,
-	["meleearc"] = 45,
+	["meleearc"] = 50,
 	["meleerange"] = 900,
 	["punchstrength"] = Angle(0,1,0),
 };
@@ -2733,7 +2733,7 @@ AttackTables.MaximusWrathAttackTable = {
 	["takeammo"] = 6,
 	["delay"] = 1.4,
 	["striketime"] = 0.65,
-	["meleearc"] = 45,
+	["meleearc"] = 55,
 	["meleerange"] = 900,
 	["punchstrength"] = Angle(0,1,0),
 };
