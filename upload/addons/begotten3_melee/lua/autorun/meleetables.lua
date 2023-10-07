@@ -2519,7 +2519,7 @@ AttackTables.GlazicBannerAttackTable = {
 	["takeammo"] = 8,
 	["delay"] = 1.7,
 	["striketime"] = 0.65,
-	["meleearc"] = 45,
+	["meleearc"] = 60,
 	["meleerange"] = 1680,
 	["punchstrength"] = Angle(1,3,1),
 };
