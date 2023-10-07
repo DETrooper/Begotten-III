@@ -299,7 +299,7 @@ function playerMeta:GetWeaponsEquipped()
 end
 
 if SERVER then
-	hook.Add("PlayerInitialSpawn", "PlayerInitialSpawnEquipment", function(player)
+	hook.Add("PlayerDataStreamInfoSent", "PlayerDataStreamInfoSentEquipment", function(player)
 		Clockwork.equipment:SyncEquipment(player);
 	end)
 

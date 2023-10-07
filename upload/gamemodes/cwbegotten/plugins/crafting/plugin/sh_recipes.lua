@@ -3413,6 +3413,37 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("glazic_banner");
+		RECIPE.name = "Glazic Banner";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+		RECIPE.requiredFactions = {"Gatekeeper"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 2},
+			["cloth"] = {amount = 6},
+			["holy_spirit"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_polearm_glazicbanner"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 50;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("elegant_epee");
 		RECIPE.name = "Elegant Epee";

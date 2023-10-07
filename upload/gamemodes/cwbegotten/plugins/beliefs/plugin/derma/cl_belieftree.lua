@@ -511,7 +511,7 @@ function PANEL:AddIcon(iconData)
 				end
 				
 				if requirementsNiceNames and #requirementsNiceNames > 0 then
-					local requirementString = "Requirements: "..table.concat(requirementsNiceNames, " ");
+					local requirementString = "Requirements: "..table.concat(requirementsNiceNames, ", ");
 					
 					frame:AddText(requirementString, Color(225, 200, 200));
 				end
