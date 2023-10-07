@@ -7,40 +7,42 @@ local ITEM = Clockwork.item:New();
 	ITEM.category = "Other";
 	ITEM.description = "A duffel bag containing equipment standard to that of the Gatekeeper Order.";
 	ITEM.weight = 5;
-	ITEM.randomWeapons = {"begotten_1h_pipemace", "begotten_1h_scrapblade", "begotten_spear_scrapspear"};
+	ITEM.randomWeapons = {"begotten_1h_brokensword", "begotten_1h_pipemace", "begotten_1h_spikedbat", "begotten_1h_spikedboard", "begotten_spear_pitchfork"};
 
 -- Called when a player uses the item.
 function ITEM:OnUse(player, itemEntity)
 	local subfaction = player:GetSubfaction();
 
-	Clockwork.player:GiveCash(player, 100, "Gatekeeper Allowance");
+	Clockwork.player:GiveCash(player, 200, "Gatekeeper Allowance");
 	player:GiveItem(Clockwork.item:CreateInstance("gatekeeper_ration"), true);
-	player:GiveItem(Clockwork.item:CreateInstance("gatekeeper_ration"), true);
+	--player:GiveItem(Clockwork.item:CreateInstance("gatekeeper_ration"), true);
 	player:GiveItem(Clockwork.item:CreateInstance("purified_water"), true);
-	player:GiveItem(Clockwork.item:CreateInstance("purified_water"), true);
+	--player:GiveItem(Clockwork.item:CreateInstance("purified_water"), true);
 	
 	if subfaction == "Auxiliary" then
-		player:GiveItem(Clockwork.item:CreateInstance("antibiotic_paste"), true);
+		--player:GiveItem(Clockwork.item:CreateInstance("antibiotic_paste"), true);
 		player:GiveItem(Clockwork.item:CreateInstance("begotten_1h_pipemace"), true);
+		player:GiveItem(Clockwork.item:CreateInstance("crafted_bandage"), true);
+		player:GiveItem(Clockwork.item:CreateInstance("crafted_bandage"), true);
 		player:GiveItem(Clockwork.item:CreateInstance("gauze"), true);
-		player:GiveItem(Clockwork.item:CreateInstance("gauze"), true);
-		player:GiveItem(Clockwork.item:CreateInstance("gauze"), true);
-		player:GiveItem(Clockwork.item:CreateInstance("gatekeeper_gambeson"), true);
-		player:GiveItem(Clockwork.item:CreateInstance("handheld_radio"), true);
-		player:GiveItem(Clockwork.item:CreateInstance("laudanum"), true);
-		player:GiveItem(Clockwork.item:CreateInstance("splint"), true);
+		player:GiveItem(Clockwork.item:CreateInstance("auxiliary_gambeson"), true);
+		--player:GiveItem(Clockwork.item:CreateInstance("handheld_radio"), true);
+		--player:GiveItem(Clockwork.item:CreateInstance("laudanum"), true);
+		--player:GiveItem(Clockwork.item:CreateInstance("splint"), true);
 	elseif subfaction == "Praeventor" then
 		player:GiveItem(Clockwork.item:CreateInstance("backpack_small"), true);
 		player:GiveItem(Clockwork.item:CreateInstance("begotten_spear_scrapspear"), true);
 		player:GiveItem(Clockwork.item:CreateInstance("handheld_radio"), true);
-		player:GiveItem(Clockwork.item:CreateInstance("hood_mask"), true);
-		player:GiveItem(Clockwork.item:CreateInstance("light_brigandine_armor"), true);
+		player:GiveItem(Clockwork.item:CreateInstance("wanderer_cap"), true);
+		player:GiveItem(Clockwork.item:CreateInstance("praeventor_gambeson"), true);
 		player:GiveItem(Clockwork.item:CreateInstance("shield5"), true);
+		player:GiveItem(Clockwork.item:CreateInstance("lockpick"), true);
 	else
-		player:GiveItem(Clockwork.item:CreateInstance("begotten_1h_pipemace"), true);
+		player:GiveItem(Clockwork.item:CreateInstance(self.randomWeapons[math.random(1, #self.randomWeapons)]), true);
 		player:GiveItem(Clockwork.item:CreateInstance("begotten_javelin_pilum"), true);
 		player:GiveItem(Clockwork.item:CreateInstance("gatekeeper_gambeson"), true);
 		player:GiveItem(Clockwork.item:CreateInstance("shield5"), true);
+		player:GiveItem(Clockwork.item:CreateInstance("bindings"), true);
 	end
 	
 	--player:GiveItem(Clockwork.item:CreateInstance("begotten_1h_glazicus"), true);

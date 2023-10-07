@@ -69,9 +69,9 @@ function SWEP:HandlePrimaryAttack()
 
 	--Attack animation
 	if self:GetNWString("activeShield"):len() > 0 then
-		self:TriggerAnim(self.Owner, "a_sword_attack_chop_fast_01");
-	else
 		self:TriggerAnim(self.Owner, "a_sword_shield_attack_chop_fast_01");
+	else
+		self:TriggerAnim(self.Owner, "a_sword_attack_chop_fast_01");
 	end
 
 	-- Viewmodel attack animation!

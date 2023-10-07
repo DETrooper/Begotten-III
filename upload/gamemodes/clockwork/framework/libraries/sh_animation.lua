@@ -618,6 +618,22 @@ function Clockwork.animation:AddGatekeeperLightArms(model)
 	});
 end;
 
+function Clockwork.animation:AddGatekeeperLightArms_Black(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_gatekeeperlightarms_black.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddGatekeeperLightArms_Brown(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_gatekeeperlightarms_brown.mdl",
+		skin = 0
+	});
+end;
+
 function Clockwork.animation:AddGatekeeperMediumArms(model)
 	self:AddHandsModel(model, {
 		body = 0000000,
@@ -1006,6 +1022,8 @@ end;
 Clockwork.animation:AddWandererArms("models/begotten/wanderers/wanderer");
 
 Clockwork.animation:AddGatekeeperLightArms("models/begotten/gatekeepers/gatekeeperlight");
+Clockwork.animation:AddGatekeeperLightArms_Black("models/begotten/gatekeepers/gatekeeperlight_black");
+Clockwork.animation:AddGatekeeperLightArms_Brown("models/begotten/gatekeepers/gatekeeperlight_brown");
 
 Clockwork.animation:AddGatekeeperMediumArms("models/begotten/gatekeepers/gatekeepermedium");
 

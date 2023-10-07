@@ -326,10 +326,63 @@ ITEM.walkSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Auxiliary Gambeson";
+ITEM.group = "gatekeepers/gatekeeperlight_black";
+ITEM.model = "models/begotten/headgroup_props/gatekeeperlightarmor_black.mdl"
+ITEM.iconoverride = "materials/begotten/ui/itemicons/auxiliary_gambeson.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 1.1
+ITEM.hitParticle = "GlassImpact";
+ITEM.protection = 30
+ITEM.type = "leather";
+ITEM.weight = 2;
+ITEM.weightclass = "Light";
+ITEM.description = "A studded leather gambeson with cloth sleeves dyed black, to distinguish Auxiliaries from the standard combat troops of the Gatekeepers.";
+ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.faction = "Gatekeeper";
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+
+ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-lobe-1.wav.mp3",
+	"armormovement/body-lobe-2.wav.mp3",
+	"armormovement/body-lobe-3.wav.mp3",
+	"armormovement/body-lobe-4.wav.mp3",
+	"armormovement/body-lobe-5.wav.mp3",
+};
+
+--[[ITEM.walkSound = {
+	"armormovement/body-lobe-b1.wav.mp3",
+	"armormovement/body-lobe-b2.wav.mp3",
+};]]--
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
 ITEM.name = "Gatekeeper Gambeson";
 ITEM.group = "gatekeepers/gatekeeperlight";
 ITEM.model = "models/begotten/headgroup_props/gatekeeperlightarmor.mdl"
-ITEM.iconoverride = "materials/begotten/ui/itemicons/gatekeeper_gambeson.png"
+ITEM.iconoverride = "materials/begotten/ui/itemicons/gatekeeper_gambeson_new.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 1.1
 ITEM.hitParticle = "GlassImpact";
@@ -357,6 +410,59 @@ ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
 ITEM.slashScale = 0.95; -- reduces slash damage by 5%
 
 ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-lobe-1.wav.mp3",
+	"armormovement/body-lobe-2.wav.mp3",
+	"armormovement/body-lobe-3.wav.mp3",
+	"armormovement/body-lobe-4.wav.mp3",
+	"armormovement/body-lobe-5.wav.mp3",
+};
+
+--[[ITEM.walkSound = {
+	"armormovement/body-lobe-b1.wav.mp3",
+	"armormovement/body-lobe-b2.wav.mp3",
+};]]--
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Praeventor Gambeson";
+ITEM.group = "gatekeepers/gatekeeperlight_brown";
+ITEM.model = "models/begotten/headgroup_props/gatekeeperlightarmor_brown.mdl"
+ITEM.iconoverride = "materials/begotten/ui/itemicons/praeventor_gambeson.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 1.1
+ITEM.hitParticle = "GlassImpact";
+ITEM.protection = 35
+ITEM.type = "leather";
+ITEM.weight = 2;
+ITEM.weightclass = "Light";
+ITEM.description = "A studded leather gambeson with cloth sleeves dyed brown, to help Praeventors blend in better in the Wasteland.";
+ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.faction = "Gatekeeper";
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+
+ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "leather", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
