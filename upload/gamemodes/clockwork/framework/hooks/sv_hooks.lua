@@ -586,6 +586,7 @@ function GM:PlayerSwitchFlashlight(player, bIsOn)
 						actionTime = actionTime * 0.66;
 					end
 
+					activeWeapon.nextFire = activeWeapon:GetNextPrimaryFire();
 					activeWeapon:SetNextPrimaryFire(curTime + 60);
 					activeWeapon:SetNextSecondaryFire(curTime + 60);
 					
@@ -596,8 +597,11 @@ function GM:PlayerSwitchFlashlight(player, bIsOn)
 				end;
 			end;
 		elseif (player.cwNextRaise > curTime and Clockwork.player:GetAction(player) == "raise") then
+			activeWeapon:SetNextPrimaryFire(activeWeapon.nextFire or curTime);
+			activeWeapon:SetNextSecondaryFire(activeWeapon.nextFire or curTime);
+		
 			Clockwork.player:SetAction(player, false);
-			player.cwNextRaise = curTime + 0.5;
+			player.cwNextRaise = curTime + 0.1;
 		end;
 	end
 

@@ -26,8 +26,7 @@ function cwPossession:Tick()
 				if Clockwork.Client.PossessedSound then
 					Clockwork.Client.PossessedSound:Stop();
 				end
-			
-				--Clockwork.Client:DrawViewModel(true); -- shit doesn't work
+
 				Clockwork.Client.victim = nil;
 			end
 		end
@@ -275,8 +274,6 @@ end
 Clockwork.datastream:Hook("Possessing", function(data)
 	if IsValid(data) then
 		Clockwork.Client.victim = data;
-		
-		--Clockwork.Client:DrawViewModel(false); -- shit doesn't work
 		Clockwork.Client:EmitSound("possession/st_decent.wav");
 		
 		timer.Simple(3.5, function()

@@ -903,6 +903,7 @@ function PANEL:Rebuild()
 			if headModel then
 				if IsValid(self.characterModel.modelPanel.headModel) and self.characterModel.modelPanel.headModel:GetModel() ~= headModel then
 					self.characterModel.modelPanel.headModel:Remove();
+					self.characterModel.modelPanel.headModel = nil;
 				end
 				
 				if !IsValid(self.characterModel.modelPanel.headModel) then

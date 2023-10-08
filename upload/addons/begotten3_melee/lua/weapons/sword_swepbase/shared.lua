@@ -339,6 +339,10 @@ function SWEP:CanPrimaryAttack()
 		end
 	end
 	
+	if Clockwork and Clockwork.player:GetAction(self.Owner) == "raise" then
+		return false;
+	end
+	
 	return self.Owner:GetNWInt("meleeStamina") >= (attacktable["takeammo"])
 end
 

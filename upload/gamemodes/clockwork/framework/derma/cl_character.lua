@@ -2230,9 +2230,10 @@ function PANEL:Init()
 			clientsideModel = Clockwork.Client.CharSelectionModel.HeadModel:GetModel();
 		end
 		
-		for i = 1, #genderModels do
-			if genderModels[i] == clientsideModel then
+		for i, v in ipairs(genderModels) do
+			if string.find(clientsideModel, v) then
 				modelSelected = i;
+				
 				break;
 			end
 		end
@@ -2326,7 +2327,7 @@ function PANEL:Init()
 
 					if (self.bSelectModel) then
 						genderModels = Clockwork.faction.stored[Clockwork.Client.SelectedFaction].models[string.lower(GENDER_MALE)].heads;
-						modelSelected = 1;
+						modelSelected = math.random(1, #genderModels);
 						
 						if Clockwork.Client.SelectedSubfaction then						
 							if factionTable.subfactions then
@@ -2361,7 +2362,7 @@ function PANEL:Init()
 
 					if (self.bSelectModel) then
 						genderModels = Clockwork.faction.stored[Clockwork.Client.SelectedFaction].models[string.lower(GENDER_FEMALE)].heads;
-						modelSelected = 1;
+						modelSelected = math.random(1, #genderModels);
 						
 						if Clockwork.Client.SelectedSubfaction then				
 							if factionTable.subfactions then

@@ -41,7 +41,7 @@ function Parry(target, dmginfo)
 						attackerWeapon:SetNextSecondaryFire(curTime + 3)
 					end
 					
-					if wep:GetClass() == "begotten_fists" then
+					if attackerWeapon:GetClass() == "begotten_fists" then
 						Clockwork.chatBox:AddInTargetRadius(target, "me", " parries "..attacker:Name().." with their bare hands!", ent:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 					end
 				end

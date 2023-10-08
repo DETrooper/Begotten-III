@@ -633,7 +633,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						local activeWeapon = attacker:GetActiveWeapon();
 
 						if (IsValid(activeWeapon) and !activeWeapon.IgnoresBulletResistance) then
-							local dmgScale = 1 - ((1 - helmetItem.bulletScale) * (condition / 100));
+							local dmgScale = 1 - ((1 - armorItem.bulletScale) * (condition / 100));
 					
 							damageInfo:ScaleDamage(dmgScale);
 							--printp("Scaling pierce damage: "..tostring(dmgScale));

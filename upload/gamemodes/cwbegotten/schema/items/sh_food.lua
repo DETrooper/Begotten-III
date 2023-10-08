@@ -600,7 +600,7 @@ local ITEM = Clockwork.item:New();
 			player:HandleSanity(100);
 			Clockwork.player:GiveCash(player, math.random(10, 100), "Blessed coins!");
 			player:HandleXP(cwBeliefs.xpValues["food"]);
-		elseif (math.random( 1, 2) == 1) then
+		elseif !player:HasBelief("savage_animal") and (math.random(1, 2) == 1) then
 			--player:GiveItem(Clockwork.item:CreateInstance("empty_can"));
 			player:ScriptedDeath("Was devoured by flesh eating maggots.");
 			player:HandleSanity(-100);

@@ -259,6 +259,12 @@ end
 
 function GM:PreDrawHalos() end
 
+function GM:PreDrawPlayerHands(ent, viewModel, player, weapon)
+	if Clockwork.kernel:IsChoosingCharacter() then
+		return true;
+	end
+end
+
 --[[
 	@codebase Client
 	@details Called when the local player has been created.

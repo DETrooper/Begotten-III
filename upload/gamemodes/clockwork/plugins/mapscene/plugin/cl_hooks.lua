@@ -69,6 +69,7 @@ if map == "rp_begotten3" then
 			charVector = Vector(-7368.25, -10245, -7044.90625),
 			charAngles = Angle(0, 90, 0),
 			charModel = "models/begotten/satanists/dreadarmor.mdl",
+			charModelOverride = {clothes = "models/begotten/wanderers/wanderer_male.mdl", head = "models/begotten/heads/male_13_wanderer.mdl"},
 			zone = "hell"
 		},
 	};
@@ -150,7 +151,7 @@ if map == "rp_begotten3" then
 			camAngles = Angle(0, 0, 0),
 		},
 		["Auxiliary"] = {
-			charModel = {clothes = "models/begotten/gatekeepers/gatekeeperlight_male.mdl", head = "models/begotten/heads/male_04_glaze.mdl"},
+			charModel = {clothes = "models/begotten/gatekeepers/gatekeeperlight_black_male.mdl", head = "models/begotten/heads/male_04_glaze.mdl"},
 			camVector = Vector(804, 12202, -1033),
 			camAngles = Angle(0, 0, 0),
 		},
@@ -547,7 +548,7 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 			local head_path;
 			
 			if Clockwork.Client.ModelSelectionOpen and Clockwork.Client.SelectedModel then
-				local charModel = camTable[faction].charModel;
+				local charModel = camTable[faction].charModelOverride or camTable[faction].charModel;
 				
 				if istable(charModel) then
 					model_path = charModel.clothes;
