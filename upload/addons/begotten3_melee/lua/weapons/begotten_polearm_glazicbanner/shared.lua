@@ -22,7 +22,7 @@ SWEP.BlockAnim = "a_heavy_2h_block"
 SWEP.CriticalAnim = "a_heavy_2h_attack_slash_02"
 SWEP.ParryAnim = "a_heavy_2h_parry"
 
-SWEP.PrimarySwingAnim = "a_heavy_2h_attack_slash_0"
+SWEP.PrimarySwingAnim = "a_heavy_2h_attack_slash_01"
 
 SWEP.IronSightsPos = Vector(3.64, -8.04, -6.56)
 SWEP.IronSightsAng = Vector(10, 0.703, 50)
@@ -71,7 +71,7 @@ function SWEP:HandlePrimaryAttack()
 	local attacktable = GetTable(self.AttackTable)
 
 	--Attack animation
-	self:TriggerAnim(self.Owner, self.PrimarySwingAnim..math.random(1,2));
+	self:TriggerAnim(self.Owner, self.PrimarySwingAnim);
 	
 	-- Viewmodel attack animation!
 	local vm = self.Owner:GetViewModel()

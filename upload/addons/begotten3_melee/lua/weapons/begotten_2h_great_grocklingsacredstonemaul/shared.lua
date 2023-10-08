@@ -30,7 +30,7 @@ SWEP.PrimaryPlaybackRate = 0.65
 SWEP.PrimaryIdleDelay = 1.5
 SWEP.AltPlaybackRate = nil
 SWEP.AltIdleDelay = nil
-SWEP.PrimarySwingAnim = "a_heavy_great_attack_slash_slow_0"
+SWEP.PrimarySwingAnim = "a_heavy_great_attack_slash_slow_01"
 
 --Sounds
 SWEP.AttackSoundTable = "HeavyStoneAttackSoundTable"
@@ -78,7 +78,7 @@ function SWEP:HandlePrimaryAttack()
 	local attacktable = GetTable(self.AttackTable)
 
 	--Attack animation
-	self:TriggerAnim(self.Owner, self.PrimarySwingAnim..math.random(1,2));
+	self:TriggerAnim(self.Owner, self.PrimarySwingAnim);
 
 	-- Viewmodel attack animation!
 	self.Weapon:EmitSound(self.WindUpSound)
