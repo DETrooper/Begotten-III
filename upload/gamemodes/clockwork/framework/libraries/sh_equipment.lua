@@ -241,6 +241,10 @@ if SERVER then
 				v.equipmentSlots = {};
 			end;
 		
+			if v == player then
+				continue;
+			end
+		
 			local equipmentSlots = {};
 			
 			for k2, v2 in pairs(v.equipmentSlots) do

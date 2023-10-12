@@ -649,7 +649,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			
 			if chance > 0 then
 				if math.random(1, math.Round(100 / chance)) == 1 then
-					if !entity:GetNWBool("Parry") != true and !entity.iFrames then
+					if !entity.iFrames then
 						if IsValid(attacker) and attacker:IsPlayer() then
 							for k, v in pairs(ents.FindInSphere(entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
 								if v:IsPlayer() then
