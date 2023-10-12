@@ -6721,6 +6721,66 @@ function cwRecipes:ClockworkInitialized()
 		end;
 	RECIPE:Register()
 
+	RECIPE = cwRecipes.recipes:New("orthodox_monk_robes");
+		RECIPE.name = "Orthodox Monk Robes";
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["cloth"] = {amount = 4},
+			["leather"] = {amount = 2},
+			["judgemental_sigil_stone"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["orthodox_monk_robes"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 80;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("orthodox_monk_mail");
+		RECIPE.name = "Orthodox Monk Mail";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["orthodox_monk_robes"] = {amount = 1},
+			["iron_ingot"] = {amount = 5},
+		};
+		RECIPE.result = {
+			["orthodox_monk_mail"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 55;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
 	RECIPE = cwRecipes.recipes:New("brigandine_armor");
 		RECIPE.name = "Brigandine Armor";
 		RECIPE.requiredBeliefs = {"craftsman"};
@@ -6885,6 +6945,69 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 35;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("orthodox_helm_of_atonement");
+		RECIPE.name = "Orthodox Helm of Atonement";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+		RECIPE.requiredFaiths = {"Faith of the Light"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 5},
+			["steel_ingot"] = {amount = 2},
+			["leather"] = {amount = 1},
+			["judgemental_sigil_stone"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["orthodox_helm_of_atonement"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 80;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("orthodox_helm_of_repentance");
+		RECIPE.name = "Orthodox Helm of Repentance";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+		RECIPE.requiredFaiths = {"Faith of the Light"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 5},
+			["steel_ingot"] = {amount = 3},
+			["judgemental_sigil_stone"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["orthodox_helm_of_repentance"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 80;
 		
 		function RECIPE:OnCraft(player)
 		end;

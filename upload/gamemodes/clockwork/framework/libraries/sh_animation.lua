@@ -986,6 +986,22 @@ function Clockwork.animation:AddGoreScaleArms(model)
 	});
 end;
 
+function Clockwork.animation:AddMonkRobeArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_monkrobes.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddMonkMailArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_monkmail.mdl",
+		skin = 0
+	});
+end;
+
 -- A function to check for stored hands info by model.
 function Clockwork.animation:CheckHands(model, animTable)
 	local info = animTable.hands or {
@@ -1119,6 +1135,9 @@ Clockwork.animation:AddBrigandineLightArms("models/begotten/gatekeepers/renegade
 Clockwork.animation:AddLeatherArms("models/begotten/wanderers/leather");
 
 Clockwork.animation:AddWandererMailArms("models/begotten/wanderers/wanderermail");
+
+Clockwork.animation:AddMonkRobeArms("models/begotten/wanderers/monkrobes");
+Clockwork.animation:AddMonkMailArms("models/begotten/wanderers/monkmail");
 
 Clockwork.animation:AddWandererOppressorArms("models/begotten/wanderers/wandereroppressor.mdl");
 

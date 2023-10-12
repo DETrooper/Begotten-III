@@ -643,6 +643,126 @@ ITEM.runSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Orthodox Monk Robes";
+ITEM.group = "wanderers/monkrobes";
+ITEM.model = "models/begotten/headgroups_props/monkrobes.mdl"
+ITEM.iconoverride = "materials/begotten/ui/itemicons/monkrobes.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 1
+ITEM.hitParticle = "GlassImpact";
+ITEM.protection = 25
+ITEM.type = "leather";
+ITEM.weight = 2;
+ITEM.weightclass = "Light";
+ITEM.description = "Brown robes with a leather overcoat for minimal protection. The robes of a devout order of peasant flagellants. It appears to be protected by a judgemental aura that brings great unease to sinners.";
+ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+ITEM.excludeFactions = {"Goreic Warrior"};
+
+ITEM.requiredbeliefs = {"sol_orthodoxy"};
+
+ITEM.attributes = {"solblessed"};
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+
+ITEM.components = {breakdownType = "breakdown", items = {"leather", "leather", "cloth", "cloth", "cloth", "cloth"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-lobe-1.wav.mp3",
+	"armormovement/body-lobe-2.wav.mp3",
+	"armormovement/body-lobe-3.wav.mp3",
+	"armormovement/body-lobe-4.wav.mp3",
+	"armormovement/body-lobe-5.wav.mp3",
+};
+
+--[[ITEM.walkSound = {
+	"armormovement/body-lobe-b1.wav.mp3",
+	"armormovement/body-lobe-b2.wav.mp3",
+};]]--
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Orthodox Monk Mail";
+ITEM.group = "wanderers/monkmail";
+ITEM.model = "models/begotten/headgroups_props/monkmail.mdl"
+ITEM.iconoverride = "materials/begotten/ui/itemicons/monkmail.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 0.75
+ITEM.hitParticle = "MetalSpark";
+ITEM.protection = 55
+ITEM.type = "chainmail";
+ITEM.weight = 4;
+ITEM.weightclass = "Medium";
+ITEM.description = "Chainmail robes with a boiled leather overcoat. Crafted for an order of battle monks who seek human extinction. It appears to be protected by a judgemental aura that brings great unease to sinners.";
+ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+ITEM.excludeFactions = {"Goreic Warrior"};
+
+ITEM.requiredbeliefs = {"sol_orthodoxy"};
+
+ITEM.attributes = {"solblessed"};
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.10, -- increases fall damage by 10%
+}
+
+ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
+ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
+ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
+
+ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "cloth", "leather", "leather"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-hauberk-1.wav.mp3",
+	"armormovement/body-hauberk-2.wav.mp3",
+	"armormovement/body-hauberk-3.wav.mp3",
+	"armormovement/body-hauberk-4.wav.mp3",
+	"armormovement/body-hauberk-5.wav.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/body-hauberk-b4.wav.mp3",
+	"armormovement/body-hauberk-b5.wav.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
 ITEM.name = "Old Soldier Cuirass";
 ITEM.group = "wanderers/oldsoldier";
 ITEM.model = "models/begottenprelude/items/oldsoldier.mdl"

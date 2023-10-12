@@ -1515,6 +1515,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					if table.HasValue(itemTable.attributes, "bell") then
 						frame:AddText("For Whom the Bell Tolls: Disorients any characters nearby with each holy strike.", Color(110, 30, 30));
 					end
+
+					if table.HasValue(itemTable.attributes, "solblessed") then
+						frame:AddText("Blessed by Hatred: Equipping will grant the Hatred bar, which will fill upon inflicting or taking damage. 100% Hatred will prevent death from from another player but will reduce Hatred to 25%.", Color(110, 30, 30));
+					end
 				end
 			
 				if weaponStats["attack"].dmgtype then
@@ -2193,6 +2197,18 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			
 			if table.HasValue(itemTable.attributes, "thermal_vision") then
 				frame:AddText("Thermal Vision: Thermal vision replaces Senses while this armor is equipped.", Color(110, 30, 30));
+			end
+
+			if table.HasValue(itemTable.attributes, "solblessed") then
+				frame:AddText("Blessed in Hatred: Equipping will grant the Hatred bar, which will fill upon inflicting or taking damage. 100% Hatred will prevent death from from another player but will reduce Hatred to 25%.", Color(110, 30, 30));
+			end
+
+			if table.HasValue(itemTable.attributes, "deathknell") then
+				frame:AddText("Deathknell: Taking damage to the head will disorient both you and the attacker.", Color(110, 30, 30));
+			end
+
+			if table.HasValue(itemTable.attributes, "bloodtoll") then
+				frame:AddText("Blood Toll: Taking damage to the head will guarantee a bleed injury.", Color(110, 30, 30));
 			end
 		end
 		
