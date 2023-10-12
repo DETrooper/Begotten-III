@@ -401,19 +401,27 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 										local target = player.cwHoldingEnt;
 										
 										if IsValid(target) then
-											target:GetPhysicsObject():EnableMotion(false);
+											local destinationRaised = playerNewPos + Vector(0, 0, 32);
 										
-											timer.Simple(0.1, function()
-												if IsValid(target) then
-													target:GetPhysicsObject():EnableMotion(true);
+											if IsValid(player.cwHoldingGrab) then
+												player.cwHoldingGrab:SetComputePosition(destinationRaised);
+											end
+										
+											if target:GetClass() == "prop_ragdoll" then
+												local targetPos = target:GetPos();
+												
+												for i = 0, target:GetPhysicsObjectCount() - 1 do
+													local phys = target:GetPhysicsObjectNum(i);
+													local newPos = target:GetPos();
 													
-													if target:GetClass() == "prop_ragdoll" and !Clockwork.entity:IsPlayerRagdoll(target) then
-														target:GetPhysicsObject():SetPos(playerNewPos + Vector(0, 0, 16), true);
-													else
-														target:SetPos(playerNewPos + Vector(0, 0, 16));
-													end
+													newPos:Sub(targetPos);
+													newPos:Add(destinationRaised);
+													phys:Wake()
+													phys:SetPos(newPos)
 												end
-											end);
+											else
+												target:SetPos(destinationRaised);
+											end
 										end
 										
 										if location == "calm" or location == "rough" or location == "styx" then

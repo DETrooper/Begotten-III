@@ -1930,27 +1930,35 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 								
 								if player:Alive() then
 									local target = player.cwHoldingEnt;
-									
-									if IsValid(target) then
-										target:GetPhysicsObject():EnableMotion(false);
-									
-										timer.Simple(0.1, function()
-											if IsValid(target) then
-												target:GetPhysicsObject():EnableMotion(true);
-												
-												if target:GetClass() == "prop_ragdoll" then
-													target:GetPhysicsObject():SetPos(destination + Vector(0, 0, 16), true);
-												else
-													target:SetPos(destination + Vector(0, 0, 16));
-												end
-											end
-										end);
-									end
 								
 									Clockwork.player:SetSafePosition(player, destination);
 									player:SetEyeAngles(angles);
 									util.Decal("PentagramBurn", destination, destination + Vector(0, 0, -256));
 									util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));
+
+									if IsValid(target) then
+										local destinationRaised = destination + Vector(0, 0, 32);
+									
+										if IsValid(player.cwHoldingGrab) then
+											player.cwHoldingGrab:SetComputePosition(destinationRaised);
+										end
+									
+										if target:GetClass() == "prop_ragdoll" then
+											local targetPos = target:GetPos();
+											
+											for i = 0, target:GetPhysicsObjectCount() - 1 do
+												local phys = target:GetPhysicsObjectNum(i);
+												local newPos = target:GetPos();
+												
+												newPos:Sub(targetPos);
+												newPos:Add(destinationRaised);
+												phys:Wake()
+												phys:SetPos(newPos)
+											end
+										else
+											target:SetPos(destinationRaised);
+										end
+									end
 								end
 							end
 						end);
@@ -2008,27 +2016,35 @@ local COMMAND = Clockwork.command:New("HellJauntAdmin");
 				
 				if player:Alive() then
 					local target = player.cwHoldingEnt;
-					
-					if IsValid(target) then
-						target:GetPhysicsObject():EnableMotion(false);
-					
-						timer.Simple(0.1, function()
-							if IsValid(target) then
-								target:GetPhysicsObject():EnableMotion(true);
-								
-								if target:GetClass() == "prop_ragdoll" then
-									target:GetPhysicsObject():SetPos(destination + Vector(0, 0, 16), true);
-								else
-									target:SetPos(destination + Vector(0, 0, 16));
-								end
-							end
-						end);
-					end
-				
+
 					Clockwork.player:SetSafePosition(player, destination);
 					player:SetEyeAngles(angles);
 					util.Decal("PentagramBurn", destination, destination + Vector(0, 0, -256));
 					util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));
+					
+					if IsValid(target) then
+						local destinationRaised = destination + Vector(0, 0, 32);
+					
+						if IsValid(player.cwHoldingGrab) then
+							player.cwHoldingGrab:SetComputePosition(destinationRaised);
+						end
+					
+						if target:GetClass() == "prop_ragdoll" then
+							local targetPos = target:GetPos();
+							
+							for i = 0, target:GetPhysicsObjectCount() - 1 do
+								local phys = target:GetPhysicsObjectNum(i);
+								local newPos = target:GetPos();
+								
+								newPos:Sub(targetPos);
+								newPos:Add(destinationRaised);
+								phys:Wake()
+								phys:SetPos(newPos)
+							end
+						else
+							target:SetPos(destinationRaised);
+						end
+					end
 					
 					--player:SetCharacterData("nextTeleport", 600);
 				end

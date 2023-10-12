@@ -656,6 +656,12 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 									Clockwork.chatBox:Add(v, attacker, "me", "'s blow against "..Clockwork.player:FormatRecognisedText(v, "%s", entity).." is deflected at the last moment by an invisible force!");
 								end
 							end
+						else
+							for k, v in pairs(ents.FindInSphere(entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
+								if v:IsPlayer() then
+									Clockwork.chatBox:Add(v, entity, "me", "'s damage is deflected at the last moment by an invisible force!");
+								end
+							end
 						end
 
 						entity:EmitSound("meleesounds/comboattack3.wav.mp3");
@@ -686,7 +692,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						end
 						
 						if attacker:GetCharmEquipped("ring_fire") then
-							if math.random(1, 100 / 5) == 1 then
+							if math.random(1, 20) == 1 then
 								if originalDamage > 0 and !entity.poisonTicks then
 									local ignition_time = 3;
 									
@@ -808,6 +814,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 												itemTable:OnPlayerUnequipped(entity);
 												entity:TakeItem(itemTable, true);
 												entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
+												entity:Extinguish();
 												
 												for k, v in pairs(ents.FindInSphere(entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
 													if v:IsPlayer() then
@@ -819,6 +826,10 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 												
 												if cwMedicalSystem then
 													entity.nextBleedPoint = CurTime() + 180;
+												end
+												
+												if entity.poisonTicks then
+													entity.poisonTicks = nil;
 												end
 												
 												damageInfo:SetDamage(entity:Health() - 10);
@@ -980,29 +991,6 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	local attacker = damageInfo:GetAttacker();
 	local damage = damageInfo:GetDamage() or 0;
 	
-	if entity:Health() - damage < 10 then
-		if not entity.opponent then
-			local itemTable = entity:GetCharmEquipped("ring_distorted");
-			
-			if itemTable then
-				if !cwRituals or (cwRituals and !entity.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then	
-					itemTable:OnPlayerUnequipped(entity);
-					entity:TakeItem(itemTable, true);
-					entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
-					
-					Clockwork.player:Notify(entity, "Your Distorted Ring shatters and releases a tremendous amount of energy, giving you one last chance at life!");
-					
-					if cwMedicalSystem then
-						entity.nextBleedPoint = CurTime() + 180;
-					end
-					
-					damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
-					return;
-				end
-			end
-		end
-	end
-	
 	if (attacker:IsPlayer()) then
 		if entity:IsPlayer() and not entity.cwWakingUp then
 			if damage >= 10 then
@@ -1092,6 +1080,34 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	if entity:IsPlayer() and not entity.opponent and damage >= 10 then
 		if entity:HasBelief("prison_of_flesh") then
 			entity:HandleNeed("corruption", -(damage / 2));
+		end
+	end
+	
+	if entity:Health() - damage < 10 then
+		if not entity.opponent then
+			local itemTable = entity:GetCharmEquipped("ring_distorted");
+			
+			if itemTable then
+				if !cwRituals or (cwRituals and !entity.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then	
+					itemTable:OnPlayerUnequipped(entity);
+					entity:TakeItem(itemTable, true);
+					entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
+					entity:Extinguish();
+					
+					Clockwork.player:Notify(entity, "Your Distorted Ring shatters and releases a tremendous amount of energy, giving you one last chance at life!");
+					
+					if cwMedicalSystem then
+						entity.nextBleedPoint = CurTime() + 180;
+					end
+					
+					if entity.poisonTicks then
+						entity.poisonTicks = nil;
+					end
+					
+					damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
+					return;
+				end
+			end
 		end
 	end
 end
