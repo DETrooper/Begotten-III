@@ -71,6 +71,16 @@ local ITEM = item.New(nil, true);
 				player:SetSharedVar("faceConcealed", false);
 			end
 		end
+		
+		if self.attributes and table.HasValue(self.attributes, "solblessed") then
+			if !player:GetCharacterData("Hatred") then
+				player:SetCharacterData("Hatred", 0);
+				player:SetLocalVar("Hatred", 0);
+			end
+		elseif player:GetCharacterData("Hatred") then
+			player:SetCharacterData("Hatred", nil);
+			player:SetLocalVar("Hatred", nil);
+		end
 	end
 
 	-- Called when a player has unequipped the item.
@@ -137,10 +147,20 @@ local ITEM = item.New(nil, true);
 					end
 				end
 				
-				Clockwork.player:SetDefaultModel(player);
+				local helmetItem = player:GetHelmetEquipped();
+				
+				if !helmetItem or !helmetItem.headReplacement then
+					Clockwork.player:SetDefaultModel(player);
+				end
+				
 				Clockwork.player:SetDefaultSkin(player);
 				hook.Run("PlayerSetHandsModel", player, player:GetHands());
 				player:RebuildInventory();
+				
+				if player:GetCharacterData("Hatred") then
+					player:SetCharacterData("Hatred", nil);
+					player:SetLocalVar("Hatred", nil);
+				end
 			end
 			
 			return true;

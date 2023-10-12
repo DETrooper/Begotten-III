@@ -15,9 +15,27 @@ function PLUGIN:PlayerThink(player, curTime)
 	player.hitThisTick = false;
 end
 
+-- Called when a player's character data should be saved.
+function PLUGIN:PlayerSaveCharacterData(player, data)
+	if (data["Hatred"]) then
+		data["Hatred"] = math.Round(data["Hatred"]);
+	end;
+end;
+
+-- Called just after a player spawns.
+function PLUGIN:PostPlayerCharacterInitialized(player)
+	local hatred = player:GetCharacterData("Hatred");
+	
+	if hatred then
+		player:SetLocalVar("Hatred", hatred);
+	elseif player:GetNetVar("Hatred") then
+		player:SetLocalVar("Hatred", nil);
+	end
+end;
+
 -- Called to get whether a player can give an item to storage.
 function PLUGIN:PlayerCanGiveToStorage(player, storageTable, itemTable)
-	if itemTable.category == "Armor" and itemTable.attributes and table.HasValue(itemTable.attributes, "not_unequippable") then
+	if itemTable.attributes and table.HasValue(itemTable.attributes, "not_unequippable") then
 		if itemTable:HasPlayerEquipped(player) then
 			return false;
 		end
@@ -26,7 +44,7 @@ end
 
 -- Called to get whether a player can take an item from storage.
 function PLUGIN:PlayerCanTakeFromStorage(player, storageTable, itemTable)
-	if itemTable.category == "Armor" and itemTable.attributes and table.HasValue(itemTable.attributes, "not_unequippable") then
+	if itemTable.attributes and table.HasValue(itemTable.attributes, "not_unequippable") then
 		if IsValid(storageTable.entity) and storageTable.entity:IsPlayer() then
 			if itemTable:HasPlayerEquipped(storageTable.entity) then
 				return false;
@@ -52,6 +70,11 @@ function PLUGIN:DoPlayerDeath(player, attacker, damageInfo)
 				helmetItem:TakeCondition(math.random(20, 40));
 			end
 		end;
+		
+		if player:GetCharacterData("Hatred") then
+			player:SetCharacterData("Hatred", nil);
+			player:SetLocalVar("Hatred", nil);
+		end
 	end;
 end;
 
@@ -133,6 +156,19 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 				local bluntScale = helmetItem.bluntScale;
 				local slashScale = helmetItem.slashScale;
 				local condition = helmetItem:GetCondition() or 100;
+				
+				if helmetItem.attributes and table.HasValue(helmetItem.attributes, "deathknell") then
+					if damageType ~= DMG_BURN and damageType ~= DMG_SHOCK then
+						-- Bellhammer radius disorient
+						for k, v in pairs(ents.FindInSphere(player:GetPos(), 200)) do
+							if v:IsPlayer() then
+								v:Disorient(1)
+							end
+						end
+						
+						player:EmitSound("meleesounds/bell.mp3");
+					end
+				end
 				
 				if attacker:IsPlayer() then
 					local activeWeapon = attacker:GetActiveWeapon();
@@ -682,10 +718,6 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 			end;
 		end
 	end;
-	
-	--if (player:IsPlayer()) then
-		--hook.Run("FuckMyLife", player, damageInfo)
-	--end;
 end
 
 --[[

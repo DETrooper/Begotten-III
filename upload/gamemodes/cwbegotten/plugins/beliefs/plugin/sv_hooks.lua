@@ -1083,14 +1083,80 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 		end
 	end
 	
-	if entity:Health() - damage < 10 then
-		if not entity.opponent then
+	local attacker = damageInfo:GetAttacker();
+	local damage = damageInfo:GetDamage();
+	
+	if damage > 0 then
+		if IsValid(attacker) and attacker:IsPlayer() and not attacker.cwWakingUp then
+			local clothesItem = attacker:GetClothesEquipped();
+			
+			if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
+				local hatred = math.min(attacker:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 2))), 100);
+				
+				if !attacker.opponent then
+					attacker:SetCharacterData("Hatred", hatred);
+				end
+				
+				attacker:SetLocalVar("Hatred", hatred);
+			end
+		end
+		
+		if entity:IsPlayer() and not entity.cwWakingUp then
+			local clothesItem = entity:GetClothesEquipped();
+			
+			if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
+				local hatred = math.min(entity:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 2))), 100);
+				
+				if !entity.opponent then
+					entity:SetCharacterData("Hatred", hatred);
+				end
+				
+				entity:SetLocalVar("Hatred", hatred);
+			end
+		end
+	end
+
+	if entity:Alive() then
+		if entity:Health() - damage < 10 then
+			local hatred = entity:GetNetVar("Hatred");
+			
+			if hatred and hatred >= 100 then
+				if !cwRituals or (cwRituals and !entity.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then
+					if !entity.opponent then
+						entity:SetCharacterData("Hatred", 0);
+					end
+					
+					entity:SetLocalVar("Hatred", 0);
+					entity:Extinguish();
+
+					Clockwork.chatBox:AddInTargetRadius(entity, "me", "'s hatred is so strong that they simply refuse to die yet!", entity:GetPos(), config.Get("talk_radius"):Get() * 2);
+					
+					if cwMedicalSystem then
+						entity.nextBleedPoint = CurTime() + 180;
+					end
+					
+					if entity.poisonTicks then
+						entity.poisonTicks = nil;
+					end
+					
+					damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
+					return;
+				end
+			end
+		end
+		
+		if entity:Health() - damage < 10 then
 			local itemTable = entity:GetCharmEquipped("ring_distorted");
 			
-			if itemTable then
-				if !cwRituals or (cwRituals and !entity.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then	
-					itemTable:OnPlayerUnequipped(entity);
-					entity:TakeItem(itemTable, true);
+			if itemTable and !entity.distortedRingFired then
+				if !cwRituals or (cwRituals and !entity.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then
+					if !entity.opponent then
+						itemTable:OnPlayerUnequipped(entity);
+						entity:TakeItem(itemTable, true);
+					else
+						entity.distortedRingFired = true;
+					end
+					
 					entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
 					entity:Extinguish();
 					

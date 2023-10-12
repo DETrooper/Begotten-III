@@ -95,6 +95,7 @@ local ITEM = Clockwork.item:New(nil, true)
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		local clothesItem = player:GetClothesEquipped();
+		local helmetItem = player:GetHelmetEquipped();
 		local faction = player:GetFaction();
 		local subfaction = player:GetSubfaction();
 		local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
@@ -138,6 +139,15 @@ local ITEM = Clockwork.item:New(nil, true)
 			if clothesItem.hasHelmet then
 				Schema:EasyText(player, "peru", "You cannot wear this helmet, as your equipped armor already has one!")
 				return false
+			end
+		end
+		
+		if helmetItem then
+			if helmetItem.attributes and table.HasValue(helmetItem.attributes, "not_unequippable") then
+				if !self.attributes or !table.HasValue(self.attributes, "not_unequippable") then
+					Schema:EasyText(player, "peru", "You cannot wear this, as your current helmet is grafted into your skin and fused with your flesh, and cannot be unequipped!");
+					return false;
+				end
 			end
 		end
 

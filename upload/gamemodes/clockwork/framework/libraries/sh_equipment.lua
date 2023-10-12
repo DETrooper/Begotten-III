@@ -299,8 +299,12 @@ function playerMeta:GetWeaponsEquipped()
 end
 
 if SERVER then
-	hook.Add("PlayerDataStreamInfoSent", "PlayerDataStreamInfoSentEquipment", function(player)
-		Clockwork.equipment:SyncEquipment(player);
+	hook.Add("PlayerCharacterLoaded", "PlayerCharacterLoadedEquipment", function(player)
+		if !player.equipmentSynced then
+			Clockwork.equipment:SyncEquipment(player);
+			
+			player.equipmentSynced = true;
+		end
 	end)
 
 	hook.Add("PlayerGiveWeapons", "PlayerGiveWeaponsEquipment", function(player)
@@ -499,9 +503,9 @@ else
 					end
 				end
 			end
+			
+			player.equipmentDrawnThisTick = true;
 		end
-		
-		player.equipmentDrawnThisTick = true;
 	end);
 	
 	hook.Add("Think", "ThinkEquipment", function()

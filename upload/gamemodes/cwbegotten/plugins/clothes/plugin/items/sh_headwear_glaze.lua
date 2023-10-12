@@ -33,20 +33,19 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
-	ITEM.name = "Orthodox Helm of Atonement"
+	ITEM.name = "Helm of Atonement"
 	ITEM.model = "models/begotten/headgroups_props/sol_bellhelm.mdl"
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/sol_bellhelm.png"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/helm_of_atonement.png"
 	ITEM.weight = 4
-	ITEM.uniqueID = "orthodox_helm_of_atonement"
+	ITEM.uniqueID = "helm_of_atonement"
 	ITEM.category = "Helms"
-	ITEM.headSuffix = "_wanderer";
+	ITEM.headReplacement = "models/begotten/heads/sol_bellhelm.mdl";
 	ITEM.description = "A holy iron bell to be permanently fitted around a flagellant's head. Once a technique of torture and humiliation; the bell would be repeatedly struck, deafening and disorienting the victim. Now the Orthodoxy wears this helm willingly, striking fear into the hearts of the sane."
-	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/skullhelm";
 	
 	ITEM.attributes = {"conditionless", "not_unequippable", "deathknell"};
-	ITEM.requiredbeliefs = {"sol_orthodoxy"};
+	ITEM.requiredbeliefs = {"repentant"};
 
 	ITEM.conditionScale = 0
 
@@ -65,23 +64,28 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
+	
+	-- Called when a player has unequipped the item.
+	function ITEM:OnPlayerUnequipped(player, extraData)
+		Schema:EasyText(player, "peru", "This helmet is grafted into your skin and fused with your flesh, and cannot be unequipped!");
+		return false;
+	end
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
-	ITEM.name = "Orthodox Helm of Repentance"
+	ITEM.name = "Helm of Repentance"
 	ITEM.model = "models/begotten/headgroups_props/sol_ironcladhelm.mdl"
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/sol_ironcladhelm.png"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/helm_of_repentance.png"
 	ITEM.weight = 4
-	ITEM.uniqueID = "orthodox_helm_of_repentance"
+	ITEM.uniqueID = "helm_of_repentance"
 	ITEM.category = "Helms"
-	ITEM.headSuffix = "_wanderer";
+	ITEM.headReplacement = "models/begotten/heads/sol_ironcladhelm.mdl";
 	ITEM.description = "An ironclad torture device that is bolted into the flayed faces of the accused. Inside the helm are various bloodied screws that can be further tightened to increase agony. It is now used by the flagellants of the Orthodoxy, who wear this torturous instrument to ensure their continued suffering."
-	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/skullhelm";
 	
 	ITEM.attributes = {"conditionless", "not_unequippable", "bloodtoll"};
-	ITEM.requiredbeliefs = {"sol_orthodoxy"};
+	ITEM.requiredbeliefs = {"repentant"};
 
 	ITEM.conditionScale = 0
 
@@ -100,6 +104,12 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
+	
+	-- Called when a player has unequipped the item.
+	function ITEM:OnPlayerUnequipped(player, extraData)
+		Schema:EasyText(player, "peru", "This helmet is grafted into your skin and fused with your flesh, and cannot be unequipped!");
+		return false;
+	end
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")

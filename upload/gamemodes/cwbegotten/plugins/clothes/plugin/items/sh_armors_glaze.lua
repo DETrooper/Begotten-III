@@ -643,10 +643,10 @@ ITEM.runSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "Orthodox Monk Robes";
+ITEM.name = "Orthodoxist Monk Robes";
 ITEM.group = "wanderers/monkrobes";
 ITEM.model = "models/begotten/headgroups_props/monkrobes.mdl"
-ITEM.iconoverride = "materials/begotten/ui/itemicons/monkrobes.png"
+ITEM.iconoverride = "materials/begotten/ui/itemicons/monk_robes.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 1
 ITEM.hitParticle = "GlassImpact";
@@ -656,9 +656,8 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "Brown robes with a leather overcoat for minimal protection. The robes of a devout order of peasant flagellants. It appears to be protected by a judgemental aura that brings great unease to sinners.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
 
-ITEM.requiredbeliefs = {"sol_orthodoxy"};
+ITEM.requiredbeliefs = {"repentant"};
 
 ITEM.attributes = {"solblessed"};
 
@@ -700,10 +699,10 @@ ITEM.runSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "Orthodox Monk Mail";
+ITEM.name = "Orthodoxist Battle Monk Robes";
 ITEM.group = "wanderers/monkmail";
 ITEM.model = "models/begotten/headgroups_props/monkmail.mdl"
-ITEM.iconoverride = "materials/begotten/ui/itemicons/monkmail.png"
+ITEM.iconoverride = "materials/begotten/ui/itemicons/battle_monk_robes.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
@@ -713,9 +712,8 @@ ITEM.weight = 4;
 ITEM.weightclass = "Medium";
 ITEM.description = "Chainmail robes with a boiled leather overcoat. Crafted for an order of battle monks who seek human extinction. It appears to be protected by a judgemental aura that brings great unease to sinners.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
 
-ITEM.requiredbeliefs = {"sol_orthodoxy"};
+ITEM.requiredbeliefs = {"repentant"};
 
 ITEM.attributes = {"solblessed"};
 

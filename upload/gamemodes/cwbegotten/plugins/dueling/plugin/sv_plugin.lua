@@ -340,12 +340,20 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 			player1:SetPos(DUELING_ARENAS[random_arena].spawnPosition1);
 			player1:SetEyeAngles(DUELING_ARENAS[random_arena].spawnAngles1);
 			player1:SetHealth(player1:GetMaxHealth());
+			
+			if player1:GetLocalVar("Hatred") then
+				player1:SetLocalVar("Hatred", 0);
+			end
 
 			player2:Spawn();	
 			player2:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 5, 0);
 			player2:SetPos(DUELING_ARENAS[random_arena].spawnPosition2);
 			player2:SetEyeAngles(DUELING_ARENAS[random_arena].spawnAngles2);
 			player2:SetHealth(player2:GetMaxHealth());
+			
+			if player2:GetLocalVar("Hatred") then
+				player2:SetLocalVar("Hatred", 0);
+			end
 			
 			player1.duelStatue = nil;
 			player2.duelStatue = nil;
@@ -476,6 +484,14 @@ function cwDueling:DuelAborted(player1, player2)
 							player1.dayVampireCheck = curTime + 10;
 						end
 						
+						if player1.distortedRingFired then
+							player1.distortedRingFired = nil;
+						end
+						
+						if player1:GetCharacterData("Hatred") then
+							player1:SetLocalVar("Hatred", player1:GetCharacterData("Hatred"));
+						end
+						
 						player1.opponent = nil;
 						
 						Clockwork.datastream:Start(player1, "SetPlayerDueling", false);
@@ -507,6 +523,14 @@ function cwDueling:DuelAborted(player1, player2)
 
 						if cwDayNight and player2:GetSubfaction() == "Rekh-khet-sa" then
 							player2.dayVampireCheck = curTime + 10;
+						end
+						
+						if player2.distortedRingFired then
+							player2.distortedRingFired = nil;
+						end
+						
+						if player2:GetCharacterData("Hatred") then
+							player2:SetLocalVar("Hatred", player2:GetCharacterData("Hatred"));
 						end
 						
 						player2.opponent = nil;
@@ -569,6 +593,14 @@ function cwDueling:DuelAborted(player1, player2)
 							player1.dayVampireCheck = curTime + 10;
 						end
 						
+						if player1.distortedRingFired then
+							player1.distortedRingFired = nil;
+						end
+						
+						if player1:GetCharacterData("Hatred") then
+							player1:SetLocalVar("Hatred", player1:GetCharacterData("Hatred"));
+						end
+						
 						player1.opponent = nil;
 						
 						Clockwork.datastream:Start(player1, "SetPlayerDueling", false);
@@ -627,6 +659,14 @@ function cwDueling:DuelAborted(player1, player2)
 						
 						if cwDayNight and player2:GetSubfaction() == "Rekh-khet-sa" then
 							player2.dayVampireCheck = curTime + 10;
+						end
+						
+						if player2.distortedRingFired then
+							player2.distortedRingFired = nil;
+						end
+						
+						if player2:GetCharacterData("Hatred") then
+							player2:SetLocalVar("Hatred", player2:GetCharacterData("Hatred"));
 						end
 						
 						player2.opponent = nil;
@@ -696,6 +736,14 @@ function cwDueling:DuelCompleted(winner, loser)
 							winner.dayVampireCheck = curTime + 10;
 						end
 						
+						if winner.distortedRingFired then
+							winner.distortedRingFired = nil;
+						end
+						
+						if winner:GetCharacterData("Hatred") then
+							winner:SetLocalVar("Hatred", winner:GetCharacterData("Hatred"));
+						end
+						
 						winner.opponent = nil;
 						
 						Clockwork.datastream:Start(winner, "SetPlayerDueling", false);
@@ -727,6 +775,14 @@ function cwDueling:DuelCompleted(winner, loser)
 						
 						if cwDayNight and loser:GetSubfaction() == "Rekh-khet-sa" then
 							loser.dayVampireCheck = curTime + 10;
+						end
+						
+						if loser.distortedRingFired then
+							loser.distortedRingFired = nil;
+						end
+						
+						if loser:GetCharacterData("Hatred") then
+							loser:SetLocalVar("Hatred", loser:GetCharacterData("Hatred"));
 						end
 						
 						loser.opponent = nil;
@@ -814,6 +870,14 @@ function cwDueling:DuelCompleted(winner, loser)
 							winner.dayVampireCheck = curTime + 10;
 						end
 						
+						if winner.distortedRingFired then
+							winner.distortedRingFired = nil;
+						end
+						
+						if winner:GetCharacterData("Hatred") then
+							winner:SetLocalVar("Hatred", winner:GetCharacterData("Hatred"));
+						end
+						
 						winner.opponent = nil;
 						
 						Clockwork.datastream:Start(winner, "SetPlayerDueling", false);
@@ -894,6 +958,14 @@ function cwDueling:DuelCompleted(winner, loser)
 						
 						if cwDayNight and loser:GetSubfaction() == "Rekh-khet-sa" then
 							loser.dayVampireCheck = curTime + 10;
+						end
+						
+						if loser.distortedRingFired then
+							loser.distortedRingFired = nil;
+						end
+						
+						if loser:GetCharacterData("Hatred") then
+							loser:SetLocalVar("Hatred", loser:GetCharacterData("Hatred"));
 						end
 						
 						loser.opponent = nil;

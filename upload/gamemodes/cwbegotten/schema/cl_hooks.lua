@@ -2200,7 +2200,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			end
 
 			if table.HasValue(itemTable.attributes, "solblessed") then
-				frame:AddText("Blessed in Hatred: Equipping will grant the Hatred bar, which will fill upon inflicting or taking damage. 100% Hatred will prevent death from from another player but will reduce Hatred to 25%.", Color(110, 30, 30));
+				frame:AddText("Blessed in Hatred: Equipping will grant the 'Hatred' bar, which will fill upon inflicting or taking damage. 100% 'Hatred' will prevent death from from another player but will reduce 'Hatred' to 0%.", Color(110, 30, 30));
 			end
 
 			if table.HasValue(itemTable.attributes, "deathknell") then
@@ -2208,7 +2208,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			end
 
 			if table.HasValue(itemTable.attributes, "bloodtoll") then
-				frame:AddText("Blood Toll: Taking damage to the head will guarantee a bleed injury.", Color(110, 30, 30));
+				frame:AddText("Blood Toll: Taking any damage to the head will always result in a bleed injury.", Color(110, 30, 30));
 			end
 		end
 		

@@ -164,3 +164,20 @@ function PLUGIN:EntityRemoved(entity, bFullUpdate)
 		entity.clothesEnt = nil;
 	end
 end
+
+-- Called when the bars are needed.
+function PLUGIN:GetBars(bars)
+	local hatred = Clockwork.Client:GetNetVar("Hatred", 0);
+	
+	if (!self.hatred) then
+		self.hatred = hatred;
+	else
+		self.hatred = math.Approach(self.hatred, hatred, 1);
+	end;
+	
+	local clothesItem = Clockwork.Client:GetClothesEquipped();
+	
+	if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
+		bars:Add("HATRED", Color(255, 69, 0, 255), "HATRED", self.hatred, 100, self.hatred == 100);
+	end;
+end;

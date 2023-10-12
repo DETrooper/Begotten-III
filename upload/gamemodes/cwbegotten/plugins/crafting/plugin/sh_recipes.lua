@@ -6721,18 +6721,18 @@ function cwRecipes:ClockworkInitialized()
 		end;
 	RECIPE:Register()
 
-	RECIPE = cwRecipes.recipes:New("orthodox_monk_robes");
-		RECIPE.name = "Orthodox Monk Robes";
+	RECIPE = cwRecipes.recipes:New("orthodoxist_monk_robes");
+		RECIPE.name = "Orthodoxist Monk Robes";
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requiredSubfaiths = {"Sol Orthodoxy", "Hard-Glazed"};
 		RECIPE.requirements = {
 			["cloth"] = {amount = 4},
 			["leather"] = {amount = 2},
 			["judgemental_sigil_stone"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["orthodox_monk_robes"] = {amount = 1},
+			["orthodoxist_monk_robes"] = {amount = 1},
 		};
 		RECIPE.category = "Armor"
 		RECIPE.finishSound = "begotten/items/first_aid.wav";
@@ -6751,18 +6751,18 @@ function cwRecipes:ClockworkInitialized()
 		end;
 	RECIPE:Register()
 	
-	RECIPE = cwRecipes.recipes:New("orthodox_monk_mail");
-		RECIPE.name = "Orthodox Monk Mail";
+	RECIPE = cwRecipes.recipes:New("orthodoxist_battle_monk_robes");
+		RECIPE.name = "Orthodoxist Battle Monk Robes";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requiredSubfaiths = {"Sol Orthodoxy", "Hard-Glazed"};
 		RECIPE.requirements = {
-			["orthodox_monk_robes"] = {amount = 1},
+			["orthodoxist_monk_robes"] = {amount = 1},
 			["iron_ingot"] = {amount = 5},
 		};
 		RECIPE.result = {
-			["orthodox_monk_mail"] = {amount = 1},
+			["orthodoxist_battle_monk_robes"] = {amount = 1},
 		};
 		RECIPE.category = "Armor"
 		RECIPE.finishSound = "begotten/items/first_aid.wav";
@@ -6956,12 +6956,12 @@ function cwRecipes:ClockworkInitialized()
 		end;
 	RECIPE:Register()
 
-	RECIPE = cwRecipes.recipes:New("orthodox_helm_of_atonement");
-		RECIPE.name = "Orthodox Helm of Atonement";
+	RECIPE = cwRecipes.recipes:New("helm_of_atonement");
+		RECIPE.name = "Helm of Atonement";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
-		RECIPE.requiredFaiths = {"Faith of the Light"};
+		RECIPE.requiredSubfaiths = {"Sol Orthodoxy", "Hard-Glazed"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 5},
 			["steel_ingot"] = {amount = 2},
@@ -6969,7 +6969,7 @@ function cwRecipes:ClockworkInitialized()
 			["judgemental_sigil_stone"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["orthodox_helm_of_atonement"] = {amount = 1},
+			["helm_of_atonement"] = {amount = 1},
 		};
 		RECIPE.category = "Armor"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
@@ -6988,19 +6988,19 @@ function cwRecipes:ClockworkInitialized()
 		end;
 	RECIPE:Register()
 	
-	RECIPE = cwRecipes.recipes:New("orthodox_helm_of_repentance");
-		RECIPE.name = "Orthodox Helm of Repentance";
+	RECIPE = cwRecipes.recipes:New("helm_of_repentance");
+		RECIPE.name = "Helm of Repentance";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
-		RECIPE.requiredFaiths = {"Faith of the Light"};
+		RECIPE.requiredSubfaiths = {"Sol Orthodoxy", "Hard-Glazed"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 5},
 			["steel_ingot"] = {amount = 3},
 			["judgemental_sigil_stone"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["orthodox_helm_of_repentance"] = {amount = 1},
+			["helm_of_repentance"] = {amount = 1},
 		};
 		RECIPE.category = "Armor"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";

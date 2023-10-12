@@ -2845,7 +2845,7 @@ function GM:EntityHandleMenuOption(player, entity, option, arguments)
 			
 			if ammo and #ammo > 0 then
 				if #ammo == 1 then
-					if itemTable.usesMagazine and !string.find(ammo[1], "Magazine") then
+					if itemTable.usesMagazine and string.find(ammo[1], "Magazine") then
 						local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
 						local magazineItem = item.CreateInstance(ammoItemID, nil, nil, true);
 						

@@ -640,6 +640,8 @@ function cwMedicalSystem:PlayerTakeDamage(player, attacker, inflictor, hitGroup,
 		--local damageType = damageInfo:GetDamageType();
 		local damageType;
 		local damageTypes = {DMG_FALL, DMG_BULLET, DMG_BUCKSHOT, DMG_BURN, DMG_SLASH, DMG_VEHICLE, DMG_SNIPER};
+		local damage = damageInfo:GetDamage();
+		local helmetItem = player:GetHelmetEquipped();
 		
 		for i = 1, #damageTypes do
 			if damageInfo:IsDamageType(damageTypes[i]) then
@@ -648,15 +650,16 @@ function cwMedicalSystem:PlayerTakeDamage(player, attacker, inflictor, hitGroup,
 			end
 		end
 		
-		if damageType then
-			local damage = damageInfo:GetDamage();
-			local damageThreshold = self.bleedDamageThresholds[damageType];
-			
+		local bloodToll = (hitGroup == HITGROUP_HEAD and damage > 0 and helmetItem and helmetItem.attributes and table.HasValue(helmetItem.attributes, "bloodtoll"));
+		
+		if damageType or bloodToll then
+			local damageThreshold = self.bleedDamageThresholds[damageType] or 1;
+
 			if hitGroup == HITGROUP_GENERIC then
 				hitGroup = HITGROUP_CHEST;
 			end
 			
-			if damageThreshold and damage >= damageThreshold then
+			if (damageThreshold and damage >= damageThreshold) then
 				player:ModifyBloodLevel(-(damage + (100 - (damageThreshold * 2))));
 
 				if damageType == DMG_FALL then
@@ -672,6 +675,10 @@ function cwMedicalSystem:PlayerTakeDamage(player, attacker, inflictor, hitGroup,
 					end
 				else
 					player:StartBleeding(hitGroup);
+					
+					if bloodToll then
+						player:EmitSound("ambient/machines/slicer"..math.random(1, 4)..".wav");
+					end
 				end
 				
 				if (damageType == DMG_BULLET or damageType == DMG_BUCKSHOT) and damage >= 30 then
