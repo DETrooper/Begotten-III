@@ -44,6 +44,40 @@ if (SERVER) then
 end
 
 local ITEM = Clockwork.item:New();
+	ITEM.name = "Bear Trap";
+	ITEM.uniqueID = "bear_trap";
+	ITEM.model = "models/begotten/beartrap/beartrapopen.mdl";
+	ITEM.weight = 10;
+	ITEM.category = "Tools";
+	ITEM.description = "A metal pressure-activated trap with jagged teeth, designed to capture the strongest of prey, be they animal or man.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/bear_trap.png";
+	ITEM.useText = "Deploy";
+	
+	function ITEM:OnUse(player, itemEntity)
+		if Schema.towerSafeZoneEnabled and player:InTower() then
+			Schema:EasyText(player, "chocolate", "You cannot deploy a bear trap inside a safezone!");
+			
+			return false;
+		end
+
+		local trapEnt = ents.Create("cw_bear_trap");
+		
+		if IsValid(trapEnt) then
+			trapEnt:SetAngles(player:GetAngles());
+			trapEnt:SetPos(player:GetPos());
+			trapEnt.condition = self:GetCondition() or 100;
+			trapEnt.owner = player;
+			trapEnt:Spawn();
+		end
+	end
+	
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position) end;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"scrap", "scrap", "scrap", "iron_chunks"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New();
 	ITEM.name = "Siege Ladder";
 	ITEM.uniqueID = "siege_ladder";
 	ITEM.model = "models/begotten/misc/siegeladder_compact.mdl";

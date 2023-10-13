@@ -580,6 +580,13 @@ function Schema:GetEntityMenuOptions(entity, options)
 			if entity:GetNWEntity("owner") == Clockwork.Client then
 				options["Tear Down"] = "cwTearDownSiegeLadder";
 			end
+		elseif (entity:GetClass() == "cw_bear_trap") then
+			if entity:GetNWString("state") == "trap" then
+				options["Reset"] = "cwResetBearTrap";
+			else
+				options["Set"] = "cwSetBearTrap";
+				options["Take"] = "cwTakeBearTrap";
+			end
 		end;
 	end;
 end;

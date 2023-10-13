@@ -674,6 +674,34 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 		
 			entity:Remove();
 		end
+	elseif (class == "cw_bear_trap") then
+		if arguments == "cwTakeBearTrap" then
+			if entity:GetNWString("state") ~= "trap" then
+				local trapItem = item.CreateInstance("bear_trap");
+				
+				if trapItem then
+					if entity.condition then
+						trapItem:SetCondition(entity.condition, true);
+					end
+					
+					player:GiveItem(trapItem);
+				end
+				
+				entity:Remove();
+			end
+		elseif arguments == "cwSetBearTrap" then
+			if entity:GetNWString("state") ~= "trap" then
+				if !entity.condition or entity.condition > 0 then
+					entity:SetTrap();
+				else
+					Schema:EasyText(player, "peru", "This bear trap has sustained too much damage and cannot be reset!");
+				end
+			end
+		elseif arguments == "cwResetBearTrap" then
+			if entity:GetNWString("state") ~= "safe" then
+				entity:SetSafe();
+			end
+		end
 	end;
 	
 	if (class == "prop_physics" and arguments == "cw_breakdown") then
