@@ -450,7 +450,7 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 						-- Fortune finisher items will have perfect condition.
 						Clockwork.inventory:AddInstance(supercrate.cwInventory, itemInstance, 1);
 						
-						Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..randomItem.name.." added to their loot container from the 'Fortune' belief tree finisher bonus");
+						Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..itemInstance.name.." added to their loot container from the 'Fortune' belief tree finisher bonus");
 					end
 				end
 			end
@@ -476,7 +476,7 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 					
 					Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
 					
-					Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..randomItem.name.." added to their loot container from a belief, trait, or charm!");
+					Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..itemInstance.name.." added to their loot container from a belief, trait, or charm!");
 				end
 			end
 		end
