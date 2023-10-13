@@ -3095,6 +3095,7 @@ function Clockwork.player:LoadCharacter(player, characterID, tMergeCreate, Callb
 
 			if (self:SetBasicSharedVars(player)) then
 				hook.Run("PlayerCharacterLoaded", player)
+				hook.Run("PostPlayerCharacterLoaded", player)
 				player:SaveCharacter()
 			end
 		end

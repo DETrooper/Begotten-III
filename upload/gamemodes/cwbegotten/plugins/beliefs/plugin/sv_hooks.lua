@@ -1178,7 +1178,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	end
 end
 
-function cwBeliefs:PlayerCharacterLoaded(player)
+function cwBeliefs:PostPlayerCharacterLoaded(player)
 	local playerBeliefsSetup = player:GetCharacterData("beliefsSetup");
 	local playerLevel = player:GetCharacterData("level", 1);
 	

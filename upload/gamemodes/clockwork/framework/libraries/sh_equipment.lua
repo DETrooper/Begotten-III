@@ -26,6 +26,10 @@ local function GetItemFromData(player, data, index)
 end
 
 function Clockwork.equipment:GetItemEquipped(player, itemTable, category)
+	if !player.equipmentSlots then
+		return false;
+	end
+
 	if !itemTable then
 		if category then
 			for k, v in pairs(player.equipmentSlots) do
