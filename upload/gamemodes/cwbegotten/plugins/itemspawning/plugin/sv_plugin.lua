@@ -6,14 +6,14 @@
 cwItemSpawner.Categories = {"city", "industrial", "mines", "rituals", "supermarket"};
 cwItemSpawner.ContainerLifetime = 1200; -- 20 Minutes.
 cwItemSpawner.ItemLifetime = 1800; -- 30 Minutes.
-cwItemSpawner.MaxContainers = 50;
+cwItemSpawner.MaxContainers = 80;
 cwItemSpawner.MaxGroundSpawns = 100;
 cwItemSpawner.MaxSuperCrates = 1;
 cwItemSpawner.SuperCrateCooldown = {min = 5400, max = 10800}; -- 1.5-3 Hours.
 cwItemSpawner.SuperCrateNumItems = {min = 10, max = 20};
 
 cwItemSpawner.LocationsToCategories = {
-	["city"] = {"Armor", "Charms", "City Junk", "Communication", "Drinks", "Firearms", "Food", "Helms", "Junk", "Medical", "Melee", "Rituals", "Shot"},
+	["city"] = {"Armor", "Charms", "City Junk", "Communication", "Drinks", "Firearms", "Food", "Helms", "Junk", "Medical", "Melee", "Shot"},
 	["industrial"] = {"Communication", "Crafting Materials", "Industrial Junk", "Junk", "Medical", "Repair Kits"},
 	["mines"] =  {"Crafting Materials", "Industrial Junk", "Mine Rituals", "Rituals"},
 	["rituals"] = {"Rituals"},
@@ -79,6 +79,19 @@ if (game.GetMap() == "rp_begotten3") then
 				{model = "models/props_wasteland/controlroom_filecabinet002a.mdl", pos = Vector(467.1875, -679.125, -1889.75), angles = Angle(-77.596, 66.561, 38.013)},
 				{model = "models/props_wasteland/controlroom_filecabinet002a.mdl", pos = Vector(209.34375, -1462.1875, -1893.625), angles = Angle(-85.995, 116.785, 61.337)},
 				{model = "models/props_junk/TrashDumpster01a.mdl", pos = Vector(3058.8125, -5104.4375, -2034.75), angles = Angle(4.197, 93.19,2 -0.066)},
+				{model = "models/props_junk/TrashDumpster01a.mdl", pos = Vector(-2859.9375, -7535.75, -1383.21875), angles = Angle(0, 0, 0)},
+				{model = "models/props_wasteland/controlroom_storagecloset001b.mdl", pos = Vector(32.125, -5940.5625, -1755.65625), angles = Angle(0, 0, 0)},
+				{model = "models/props_wasteland/controlroom_storagecloset001b.mdl", pos = Vector(656.4375, 213.4375, -1638.625), angles = Angle(0, 180, 0)},
+				{model = "models/props_wasteland/controlroom_filecabinet001a.mdl", pos = Vector(40.03125, 1291, -1668.5625), angles = Angle(0, -90, 0)},
+				{model = "models/props_wasteland/controlroom_filecabinet001a.mdl", pos = Vector(-773.875, 144.6875, -1668.46875), angles = Angle(0, -35, 0)},
+				{model = "models/props_wasteland/controlroom_filecabinet002a.mdl", pos = Vector(104, -775.71875, -1670.71875), angles = Angle(0, -85, -90)},
+				{model = "models/props_junk/wood_crate002a.mdl", pos = Vector(-5155.6875, -14016.6875, -743.65625), angles = Angle(0, 22, 0)},
+				{model = "models/props_junk/TrashDumpster01a.mdl", pos = Vector(-5221.4375, -13839.53125, -755.6875), angles = Angle(0.231, 179.110, 1.027)},
+				{model = "models/props_junk/TrashDumpster01a.mdl", pos = Vector(8753.5625, -1009.28125, -1159.40625), angles = Angle(-0.033, 0.027, -0.016)},
+				{model = "models/props_wasteland/controlroom_storagecloset001b.mdl", pos = Vector(1713.96875, -5499.8125, -1889.125), angles = Angle(0, 180, 0)},
+				{model = "models/props_junk/TrashDumpster01a.mdl", pos = Vector(-4448.75, -7527.96875, -1377.09375), angles = Angle(1.939, -179.264, 0.615)},
+				{model = "models/props_wasteland/controlroom_storagecloset001b.mdl", pos = Vector(-3229.03125, 1868.09375, -1514.28125), angles = Angle(0, 180, 0)},
+				{model = "models/props_junk/TrashDumpster01a.mdl", pos = Vector(-1440.78125, -5718.25, -1968.03125), angles = Angle(-0.319, 99.086, -2.027)},
 			},
 			["industrial"] = {
 				{model = "models/props_c17/oildrum001.mdl", pos = Vector(6010.84375, 8679.8125, -1452.6875), angles = Angle(1.417, -151.414, 12.508)},
@@ -125,6 +138,23 @@ if (game.GetMap() == "rp_begotten3") then
 				{model = "models/props/de_nuke/crate_extrasmall.mdl", pos = Vector(8318.71875, -4105.625, -818.40625), angles = Angle(0, -35, 0)},
 				{model = "models/props/de_nuke/crate_extrasmall.mdl", pos = Vector(7162.3125, -1331.65625, -643.84375), angles = Angle(0, 0, 0)},
 				{model = "models/props_c17/oildrum001.mdl", pos = Vector(-11140.46875, 5174.9375, -1703.9375), angles = Angle(-5.724, 67.176, 2.291)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(-5309.9375, 9404.59375, -1884.1875), angles = Angle(-1.445, -151.688, 0.533)},
+				{model = "models/props_junk/TrashDumpster01a.mdl", pos = Vector(6637.53125, -12012.09375, -658.03125), angles = Angle(7.311, 93.032, 4.9)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(7436.53125, -12584.59375, -667.40625), angles = Angle(-2.763, 148.337, 9.937)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(6210.34375, -12944.4375, -550.5), angles = Angle(11.86, 42.94, 4.79)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(6541.5625, -12127.375, -649.25), angles = Angle(0.912, -32.173, -10.261)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(9357.71875, -9159.75, -1209.4375), angles = Angle(15.732, -31.47, 6.971)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(10299.3125, -7943.9375, -1212.25), angles = Angle(9.805, 115.983, -1.945)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(9297.78125, -7893.75, -1209.84375), angles = Angle(-0.016, -167.86, 0)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(10598.59375, -2710.25, -1179.1875), angles = Angle(1.560, -106.567, 7.262)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(8796.03125, -2472.5, -1183.25), angles = Angle(16.979, 5.79, 8.536)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(6991.9375, -6192.40625, -1326.03125), angles = Angle(-9.179, -18.88, 4.263)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(-11182.90625, 3835.375, -1455.4375), angles = Angle(0.022, 96.696, 0.115)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(-11217.90625, 3264.09375, -1459.3125), angles = Angle(-0.335, -176.314, -0.088)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(9014.3125, 2860.875, -1271.25), angles = Angle(-43.094, 128.282, -100.805)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(9115.71875, 3063.25, -1260.28125), angles = Angle(24.741, 59.282, -87.33)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(6024.4375, -8278.28125, -873.46875), angles = Angle(5.603, 96.218, -4.092)},
+				{model = "models/props_c17/oildrum001.mdl", pos = Vector(-5328.09375, -9510.46875, -1655.09375), angles = Angle(-3.554, -58.409, -3.373)},
 			},
 			["supermarket"] = {
 				{model = "models/props_wasteland/controlroom_storagecloset001b.mdl", pos = Vector(-3501.34375, -2328, -1839.125), angles = Angle(0, -90, 0)},
@@ -146,6 +176,8 @@ if (game.GetMap() == "rp_begotten3") then
 				{model = "models/props_c17/FurnitureFridge001a.mdl", pos = Vector(-2925.84375, -1176.125, -1845.8125), angles = Angle(0, 90, 0)},
 				{model = "models/props_c17/FurnitureFridge001a.mdl", pos = Vector(-2925.84375, -1407.84375, -1845.8125), angles = Angle(0, -90, 0)},
 				{model = "models/props_wasteland/controlroom_storagecloset001b.mdl", pos = Vector(-3215.8125, -2532, -1839.15625), angles = Angle(0, 90, 0)},
+				{model = "models/props_junk/wood_crate002a.mdl", pos = Vector(-3583.3125, -2508.21875, -1862.53125), angles = Angle(-0.055, 30.817, -0.022)},
+				{model = "models/props_junk/wood_crate002a.mdl", pos = Vector(-3454.03125, -2528.5, -1862.53125), angles = Angle(0, 90, 0)},
 			}
 		};
 	end

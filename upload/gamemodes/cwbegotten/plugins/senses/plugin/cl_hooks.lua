@@ -135,7 +135,7 @@ function cwSenses:RenderScreenspaceEffects()
 
 				if (dynamicLight) then
 					if creature_of_the_dark or the_black_sea then
-						dynamicLight.brightness = 1;
+						dynamicLight.brightness = 0;
 						dynamicLight.Size = 2048;
 					else
 						dynamicLight.brightness = 2.5;

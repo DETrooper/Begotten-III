@@ -84,6 +84,8 @@ function cwBeliefs:GetEntityMenuOptions(entity, options)
 	end;
 end;
 
+local bearTrapDist = (256 * 256);
+
 function cwBeliefs:AddEntityOutlines(outlines)
 	if self.highlightTargetOverride then
 		if IsValid(self.highlightTargetOverride) then
@@ -140,6 +142,22 @@ function cwBeliefs:AddEntityOutlines(outlines)
 				end
 			end;
 		end;
+	end
+	
+	if cwSenses and self:HasBelief("the_black_sea") then
+		if Clockwork.Client:GetNWBool("senses") then
+			local playerPos = Clockwork.Client:GetPos();
+			
+			for i, v in ipairs(ents.FindByClass("cw_bear_trap")) do
+				if v:GetNWString("state") == "trap" then
+					if playerPos:DistToSqr(v:GetPos()) < bearTrapDist then
+						if Clockwork.player:CanSeeEntity(Clockwork.Client, v) then
+							outlines:Add(v, Color(200, 0, 0, 255), 2, true);
+						end
+					end
+				end
+			end
+		end
 	end
 end
 

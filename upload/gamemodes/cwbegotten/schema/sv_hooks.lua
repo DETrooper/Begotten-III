@@ -690,16 +690,20 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 				entity:Remove();
 			end
 		elseif arguments == "cwSetBearTrap" then
-			if entity:GetNWString("state") ~= "trap" then
-				if !entity.condition or entity.condition > 0 then
-					entity:SetTrap();
-				else
-					Schema:EasyText(player, "peru", "This bear trap has sustained too much damage and cannot be reset!");
+			if !cwBeliefs or player:HasBelief("ingenious") then
+				if entity:GetNWString("state") ~= "trap" then
+					if !entity.condition or entity.condition > 0 then
+						entity:SetTrap();
+					else
+						Schema:EasyText(player, "peru", "This bear trap has sustained too much damage and cannot be reset!");
+					end
 				end
 			end
 		elseif arguments == "cwResetBearTrap" then
-			if entity:GetNWString("state") ~= "safe" then
-				entity:SetSafe();
+			if !cwBeliefs or player:HasBelief("ingenious") then
+				if entity:GetNWString("state") ~= "safe" then
+					entity:SetSafe();
+				end
 			end
 		end
 	end;

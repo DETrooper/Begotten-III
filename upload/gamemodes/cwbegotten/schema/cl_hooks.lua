@@ -582,9 +582,14 @@ function Schema:GetEntityMenuOptions(entity, options)
 			end
 		elseif (entity:GetClass() == "cw_bear_trap") then
 			if entity:GetNWString("state") == "trap" then
-				options["Reset"] = "cwResetBearTrap";
+				if !cwBeliefs or Clockwork.Client:HasBelief("ingenious") then
+					options["Reset"] = "cwResetBearTrap";
+				end
 			else
-				options["Set"] = "cwSetBearTrap";
+				if !cwBeliefs or Clockwork.Client:HasBelief("ingenious") then
+					options["Set"] = "cwSetBearTrap";
+				end
+				
 				options["Take"] = "cwTakeBearTrap";
 			end
 		end;
@@ -2634,6 +2639,49 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		if (bShowWeight) then
 			frame:AddBar(20, {{text = weight.."kg", percentage = percentage * 100, color = Color(96, 96, 128), font = "DermaDefault", leftTextAlign = false, noDisplay = true}}, "Weight", Color(170, 170, 180));
 		end;
+		
+		return true;
+	else
+		frame:AddText(name.." - "..category, Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
+		frame:AddText(itemTable("description"), Color(180, 170, 170), "nov_IntroTextSmallDETrooper", 0.8);
+		
+		if (bShowWeight) then
+			frame:AddBar(20, {{text = weight.."kg", percentage = percentage * 100, color = Color(96, 96, 128), font = "DermaDefault", leftTextAlign = false, noDisplay = true}}, "Weight", Color(170, 170, 180));
+		end;
+	
+		if itemTable.requiredbeliefs and #itemTable.requiredbeliefs > 0 then
+			local beliefIcons = {};
+			
+			for i = 1, #itemTable.requiredbeliefs do
+				local beliefTable = cwBeliefs:FindBeliefByID(itemTable.requiredbeliefs[i]);
+				
+				if beliefTable and beliefTable.iconOverride then
+					table.insert(beliefIcons, beliefTable.iconOverride);
+				else
+					table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.requiredbeliefs[i]..".png");
+				end
+			end
+			
+			frame:AddText("Required Beliefs: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+			frame:AddIconRow(beliefIcons, 32);
+		end
+		
+		if itemTable.onerequiredbelief and #itemTable.onerequiredbelief > 0 then
+			local beliefIcons = {};
+			
+			for i = 1, #itemTable.onerequiredbelief do
+				local beliefTable = cwBeliefs:FindBeliefByID(itemTable.onerequiredbelief[i]);
+				
+				if beliefTable and beliefTable.iconOverride then
+					table.insert(beliefIcons, beliefTable.iconOverride);
+				else
+					table.insert(beliefIcons, "begotten/ui/belieficons/"..itemTable.onerequiredbelief[i]..".png");
+				end
+			end
+			
+			frame:AddText("Required Beliefs (One Of The Following): ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+			frame:AddIconRow(beliefIcons, 32);
+		end
 		
 		return true;
 	end

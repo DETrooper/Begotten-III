@@ -64,26 +64,75 @@ end
 
 function ENT:Touch(entity)
 	if self:GetNWString("state") == "trap" then
-		if entity:IsPlayer() or entity:IsNPC() or entity:IsNextBot() then
+		if entity:IsPlayer() or entity:IsNPC() or entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(entity) then
 			local damageInfo = DamageInfo();
 			
 			damageInfo:SetDamageType(DMG_SLASH);
 			damageInfo:SetDamage(60);
 			damageInfo:SetAttacker(self.owner or self);
 			damageInfo:SetInflictor(self);
-			damageInfo:SetDamagePosition(entity:GetPos());
+			
+			if Clockwork.entity:IsPlayerRagdoll(entity) then
+				entity = Clockwork.entity:GetPlayer(entity);
+			end
 			
 			if string.find(entity:GetClass(), "npc_animal") then
 				damageInfo:SetDamage(1000);
 			elseif entity:IsPlayer() then
 				Clockwork.chatBox:AddInTargetRadius(entity, "me", "steps on a bear trap, triggering it!", entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+				
+				if math.random(1, 2) == 1 then
+					-- Left leg.
+					local LFoot = entity:LookupBone("ValveBiped.Bip01_L_Foot");
+					
+					if LFoot then
+						damageInfo:SetDamagePosition(entity:GetBonePosition(LFoot));
+					else
+						damageInfo:SetDamagePosition(entity:GetPos());
+					end
+					
+					if cwMedicalSystem then
+						local injuries = cwMedicalSystem:GetInjuries(entity);
+						
+						if !(injuries[HITGROUP_LEFTLEG]["broken_bone"]) then
+							entity:AddInjury(cwMedicalSystem.cwHitGroupToString[HITGROUP_LEFTLEG], "broken_bone");
+							entity:StartBleeding(HITGROUP_LEFTLEG);
+						end
+						
+						Clockwork.chatBox:AddInTargetRadius(entity, "me", "'s left leg audibly breaks with a horrifying snap!", entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+							
+						entity:EmitSound("misc/bone_fracture.wav", 75, math.random(95, 100));
+					end
+				else
+					-- Right leg.
+					local RFoot = entity:LookupBone("ValveBiped.Bip01_R_Foot");
+					
+					if RFoot then
+						damageInfo:SetDamagePosition(entity:GetBonePosition(RFoot));
+					else
+						damageInfo:SetDamagePosition(entity:GetPos());
+					end
+					
+					if cwMedicalSystem then
+						local injuries = cwMedicalSystem:GetInjuries(entity);
+						
+						if !(injuries[HITGROUP_RIGHTLEG]["broken_bone"]) then
+							entity:AddInjury(cwMedicalSystem.cwHitGroupToString[HITGROUP_RIGHTLEG], "broken_bone");
+							entity:StartBleeding(HITGROUP_RIGHTLEG);
+						end
+						
+						Clockwork.chatBox:AddInTargetRadius(entity, "me", "'s right leg audibly breaks with a horrifying snap!", entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+							
+						entity:EmitSound("misc/bone_fracture.wav", 75, math.random(95, 100));
+					end
+				end
 			
 				if cwMelee then
 					entity:TakeStability(100);
 				end
 				
-				if cwMedicalSystem then
-					cwMedicalSystem:PlayerLimbFallDamageTaken(entity, 60);
+				if entity.iFrames then
+					entity.iFrames = false;
 				end
 			end
 			

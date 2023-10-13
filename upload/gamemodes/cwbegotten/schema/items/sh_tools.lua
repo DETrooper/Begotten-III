@@ -52,6 +52,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A metal pressure-activated trap with jagged teeth, designed to capture the strongest of prey, be they animal or man.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/bear_trap.png";
 	ITEM.useText = "Deploy";
+	ITEM.requiredbeliefs = {"ingenious"};
 	
 	function ITEM:OnUse(player, itemEntity)
 		if Schema.towerSafeZoneEnabled and player:InTower() then

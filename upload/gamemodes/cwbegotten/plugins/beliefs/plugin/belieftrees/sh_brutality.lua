@@ -54,8 +54,8 @@ local BRUTALITY = cwBeliefs.beliefTrees:New("brutality")
 				row = 1,
 			},
 			["savage_animal"] = {
-				name = "Savage",
-				description = "Eating uncooked or spoiled food or drinking dirty water no longer has any negative effects.",
+				name = "Savage Animal",
+				description = "Eating uncooked or spoiled food or drinking dirty water no longer has any negative effects. Also removes sanity loss for eating hearts.",
 				quote = "\"Fear the one who will rip out your heart, eat your flesh, and wear your bones. For they are the predator, and we the prey!\"",
 				requirements = {"savage", "primeval", "headtaker", "heart_eater", "bestial"},
 				row = 4,

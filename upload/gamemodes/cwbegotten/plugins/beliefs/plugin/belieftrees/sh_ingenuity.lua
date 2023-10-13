@@ -75,7 +75,7 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 		[3] = {
 			["ingenious"] = {
 				name = "Ingenious",
-				description = "Unlocks the 'Crafting' mechanic.",
+				description = "Unlocks the 'Crafting' mechanic and the ability to interact with traps.",
 				row = 1,
 			},
 			["craftsman"] = {
