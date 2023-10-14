@@ -2776,50 +2776,28 @@ end
 
 -- A function to make a player drop their weapons.
 function Clockwork.player:DropWeapons(player)
+	local pos = player:GetPos();
 	local ragdollEntity = player:GetRagdollEntity();
+	local shieldItem = player:GetShieldEquipped();
+	
+	if IsValid(ragdollEntity) then
+		pos = ragdollEntity:GetPos();
+	end
 
-	if (player:IsRagdolled()) then
-		for i, v in ipairs(player:GetWeaponsEquipped()) do
-			if (v and hook.Run("PlayerCanDropWeapon", player, v, NULL, true)) then
-				local pos = player:GetPos();
-				
-				if IsValid(ragdollEntity) then
-					pos = ragdollEntity:GetPos();
-				end
-				
-				local info = {
-					itemTable = v,
-					position = pos + Vector(0, 0, math.random(1, 48)),
-					angles = Angle(0, 0, 0)
-				};
-				
-				local entity = Clockwork.entity:CreateItem(player, info.itemTable, info.position, info.angles);
-				
-				if (IsValid(entity)) then
-					player:TakeItem(info.itemTable, true)
-				end
-			end
+	if shieldItem and hook.Run("PlayerCanDropWeapon", player, shieldItem, NULL, true) then
+		local entity = Clockwork.entity:CreateItem(player, shieldItem, pos + Vector(0, 0, math.random(1, 48)), Angle(0, 0, 0));
+
+		if (IsValid(entity)) then
+			player:TakeItem(shieldItem, true);
 		end
-	else
-		for i, v in ipairs(player:GetWeaponsEquipped()) do
-			if (v and hook.Run("PlayerCanDropWeapon", player, v, NULL, true)) then
-				local pos = player:GetPos();
-				
-				if IsValid(ragdollEntity) then
-					pos = ragdollEntity:GetPos();
-				end
-			
-				local info = {
-					itemTable = v,
-					position = pos + Vector(0, 0, math.random(1, 48)),
-					angles = Angle(0, 0, 0)
-				};
-				
-				local entity = Clockwork.entity:CreateItem(player, info.itemTable, info.position, info.angles);
-				
-				if (IsValid(entity)) then
-					player:TakeItem(info.itemTable, true)
-				end
+	end
+
+	for i, v in ipairs(player:GetWeaponsEquipped()) do
+		if (v and hook.Run("PlayerCanDropWeapon", player, v, NULL, true)) then
+			local entity = Clockwork.entity:CreateItem(player, v, pos + Vector(0, 0, math.random(1, 48)), Angle(0, 0, 0));
+
+			if (IsValid(entity)) then
+				player:TakeItem(v, true);
 			end
 		end
 	end

@@ -800,11 +800,47 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						newDamage = newDamage + (newDamage * 0.25);
 					end
 					
+					if attacker.decapitationBuff then
+						newDamage = newDamage + (newDamage * 0.2);
+					end
+					
 					if entity:IsPlayer() and entity:Alive() and attacker:HasBelief("assassin") then
 						if not entity.assassinated then
 							if string.find(attackerWeapon.Category, "Dagger") or string.find(attackerWeapon.Category, "Dual Daggers") then
 								if entity:Alive() and entity:Health() < entity:GetMaxHealth() / 4 or entity:GetRagdollState() == RAGDOLL_FALLENOVER and originalDamage > 0 then
 									newDamage = 666;
+									
+									if entity:Health() - damage < 10 then
+										local hatred = entity:GetNetVar("Hatred");
+										
+										if hatred and hatred >= 100 then
+											if !cwRituals or (cwRituals and !entity.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then
+												if !entity.opponent then
+													entity:SetCharacterData("Hatred", 0);
+												end
+												
+												entity:SetLocalVar("Hatred", 0);
+												entity:Extinguish();
+
+												for k, v in pairs(ents.FindInSphere(entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
+													if v:IsPlayer() then
+														Clockwork.chatBox:Add(v, attacker, "me", "efficiently strikes out at a pressure point of "..Clockwork.player:FormatRecognisedText(v, "%s", entity)..", but their hatred is so strong that they simply refuse to die!");
+													end
+												end
+												
+												if cwMedicalSystem then
+													entity.nextBleedPoint = CurTime() + 180;
+												end
+												
+												if entity.poisonTicks then
+													entity.poisonTicks = nil;
+												end
+												
+												damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
+												return;
+											end
+										end
+									end
 									
 									if entity:Health() - newDamage < 10 then
 										if not entity.opponent then
@@ -832,7 +868,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 													entity.poisonTicks = nil;
 												end
 												
-												damageInfo:SetDamage(entity:Health() - 10);
+												damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
 												return;
 											end
 										end
@@ -1178,6 +1214,152 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	end
 end
 
+local decapitationStrings = {
+	"violently decapitates",
+	"beheads",
+	"takes the head of",
+	"chops off the head of",
+};
+
+local decapitationSuffixes = {
+	"sending their head flying off in an arc",
+	"sending their head up in the air",
+	"leaving nothing but a bloody stump",
+};
+
+function cwBeliefs:DoPlayerDeathPreDeathSound(player, attacker, damageInfo)
+	if IsValid(attacker) and attacker:IsPlayer() and attacker:HasBelief("headtaker") then
+		local ragdollEntity = player:GetRagdollEntity();
+		
+		if (IsValid(ragdollEntity) and Clockwork.kernel:GetRagdollHitGroup(ragdollEntity, damageInfo:GetDamagePosition()) == HITGROUP_HEAD)
+		or Clockwork.kernel:GetRagdollHitGroup(player, damageInfo:GetDamagePosition()) == HITGROUP_HEAD then
+			if damageInfo:GetDamage() >= 30 and damageInfo:GetDamageType() == DMG_SLASH then
+				local defaultModel = player:GetDefaultModel();
+				
+				if string.find(defaultModel, "models/begotten/heads") then
+					local head_suffixes = {"_glaze", "_gore", "_satanist", "_wanderer"};
+					local headModel = defaultModel;
+					
+					for i, v in ipairs(head_suffixes) do
+						headModel = string.gsub(headModel, v, "_decapitated");
+					end
+
+					local headEnt = ents.Create("prop_physics");
+					
+					if IsValid(ragdollEntity) then
+						local headBone = ragdollEntity:LookupBone("ValveBiped.Bip01_Head1");
+						local headBonePos, headBoneAng;
+						
+						if (headBone) then
+							headBonePos, headBoneAng = ragdollEntity:GetBonePosition(headBone);
+						end
+						
+						if headBonePos and headBoneAng then
+							headEnt:SetPos(headBonePos + Vector(0, 0, 8));
+							headEnt:SetAngles(headBoneAng);
+						else
+							headEnt:SetPos(player:EyePos());
+							headEnt:SetAngles(player:EyeAngles());
+						end
+					else
+						headEnt:SetPos(player:EyePos());
+						headEnt:SetAngles(player:EyeAngles());
+					end
+					
+					headEnt:SetModel(headModel);
+					headEnt:SetSkin(player:GetSkin());
+					headEnt:SetCollisionGroup(COLLISION_GROUP_DEBRIS);
+					headEnt:Spawn();
+
+					local physicsObject = headEnt:GetPhysicsObject();
+					
+					if IsValid(physicsObject) then
+						physicsObject:SetVelocity(player:GetVelocity() + (player:GetUp() * 250));
+						physicsObject:SetAngleVelocity(VectorRand() * 66);
+					end
+					
+					local helmetItem = player:GetHelmetEquipped();
+					
+					if helmetItem then
+						if hook.Run("PlayerCanDropWeapon", player, helmetItem, NULL, true) then
+							if !helmetItem.attributes or !table.HasValue(helmetItem.attributes, "not_unequippable") then
+								helmetItem:TakeCondition(math.random(20, 40));
+							end
+						
+							local entity = Clockwork.entity:CreateItem(player, helmetItem, headEnt:GetPos() + Vector(0, 0, 16), headEnt:GetAngles());
+
+							if (IsValid(entity)) then
+								local helmetPhysObject = entity:GetPhysicsObject();
+								
+								if IsValid(helmetPhysObject) then
+									helmetPhysObject:SetVelocity(physicsObject:GetVelocity());
+									helmetPhysObject:SetAngleVelocity(physicsObject:GetAngleVelocity());
+								end
+							
+								player:TakeItem(helmetItem, true);
+							end
+						end
+					end
+					
+					Clockwork.entity:Decay(headEnt, 600);
+					
+					local gender = player:GetGender();
+					
+					if gender == GENDER_FEMALE then
+						player:SetModel("models/begotten/heads/female_gorecap.mdl");
+						
+						if IsValid(ragdollEntity) then
+							ragdollEntity:SetModel("models/begotten/heads/female_gorecap.mdl");
+						end
+					else
+						player:SetModel("models/begotten/heads/male_gorecap.mdl");
+						
+						if IsValid(ragdollEntity) then
+							ragdollEntity:SetModel("models/begotten/heads/male_gorecap.mdl");
+						end
+					end
+					
+					for k, v in pairs(ents.FindInSphere(attacker:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
+						if v:IsPlayer() then
+							Clockwork.chatBox:Add(v, attacker, "me", decapitationStrings[math.random(1, #decapitationStrings)].." "..Clockwork.player:FormatRecognisedText(v, "%s", player)..", "..decapitationSuffixes[math.random(1, #decapitationSuffixes)].."!");
+						end
+					end
+					
+					player:EmitSound("nhzombie_headexplode.wav");
+					headEnt:EmitSound("nhzombie_headexplode_jet.wav");
+					
+					timer.Simple(FrameTime(), function()
+						if IsValid(headEnt) then
+							--ParticleEffect("blood_advisor_pierce_spray", headEnt:GetPos(), -headEnt:GetUp():Angle(), headEnt);
+							ParticleEffectAttach("blood_advisor_pierce_spray", PATTACH_POINT_FOLLOW, headEnt, 0);
+						end
+					end);
+					
+					attacker.decapitationBuff = true;
+					
+					local entIndex = attacker:EntIndex();
+					
+					if timer.Exists("DecapitationBuffTimer_"..entIndex) then
+						timer.Remove("DecapitationBuffTimer_"..entIndex);
+					end
+					
+					timer.Create("DecapitationBuffTimer_"..entIndex, 20, 1, function()
+						if IsValid(attacker) then
+							if attacker.decapitationBuff then
+								attacker.decapitationBuff = false;
+								
+								Clockwork.hint:Send(attacker, "The decapitation melee damage buff has worn off...", 10, Color(175, 100, 100), true, true);
+							end
+						end
+					end);
+					
+					return false;
+				end
+			end
+		end
+	end
+end
+
 function cwBeliefs:PostPlayerCharacterLoaded(player)
 	local playerBeliefsSetup = player:GetCharacterData("beliefsSetup");
 	local playerLevel = player:GetCharacterData("level", 1);
@@ -1250,6 +1432,13 @@ function cwBeliefs:PostPlayerCharacterLoaded(player)
 			
 			Clockwork.inventory:AddInstance(inventory, item.CreateInstance("lockpick"));
 			Clockwork.inventory:AddInstance(inventory, item.CreateInstance("lockpick"));
+		end
+		
+		if (player:HasTrait("favored")) then
+			level = level + 3;
+			self:ForceTakeBelief(player, "fortunate");
+			self:ForceTakeBelief(player, "lucky");
+			self:ForceTakeBelief(player, "favored");
 		end
 		
 		if (player:HasTrait("nimble")) then
@@ -1496,6 +1685,20 @@ function cwBeliefs:PostPlayerCharacterLoaded(player)
 		
 		player:SetCharacterData("beliefsSetup", true);
 	end
+	
+	if player.poisonTicks then
+		player.poisonTicks = nil;
+	end
+	
+	if player.decapitationBuff then
+		local entIndex = player:EntIndex();
+		
+		player.decapitationBuff = false;
+		
+		if timer.Exists("DecapitationBuffTimer_"..entIndex) then
+			timer.Remove("DecapitationBuffTimer_"..entIndex);
+		end
+	end
 
 	player:NetworkBeliefs();
 end;
@@ -1557,6 +1760,16 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 	
 	if player.poisonTicks then
 		player.poisonTicks = nil;
+	end
+	
+	if player.decapitationBuff then
+		local entIndex = player:EntIndex();
+		
+		player.decapitationBuff = false;
+		
+		if timer.Exists("DecapitationBuffTimer_"..entIndex) then
+			timer.Remove("DecapitationBuffTimer_"..entIndex);
+		end
 	end
 end
 

@@ -143,7 +143,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 600};
+	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 800};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")

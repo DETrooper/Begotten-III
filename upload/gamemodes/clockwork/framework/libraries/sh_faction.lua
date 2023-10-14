@@ -67,7 +67,7 @@ function Clockwork.faction:New(name)
 	return object
 end
 
-local head_suffixes = {"_glaze", "_gore", "_satanist", "_wanderer"};
+local head_suffixes = {"_glaze", "_gore", "_satanist", "_wanderer", "_decapitated"};
 
 -- A function to register a new faction.
 function Clockwork.faction:Register(data, name)

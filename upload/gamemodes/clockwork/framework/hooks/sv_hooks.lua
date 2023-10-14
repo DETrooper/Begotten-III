@@ -3540,15 +3540,6 @@ function GM:DoPlayerDeath(player, attacker, damageInfo)
 	Clockwork.player:SetAction(player, false)
 	Clockwork.player:SetDrunk(player, false)
 
-	local deathSound = hook.Run("PlayerPlayDeathSound", player, player:GetGender())
-	local decayTime = config.Get("body_decay_time"):Get()
-
-	if (decayTime > 0) then
-		Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, nil, decayTime, Clockwork.kernel:ConvertForce(damageInfo:GetDamageForce() * 32))
-	else
-		Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, nil, 600, Clockwork.kernel:ConvertForce(damageInfo:GetDamageForce() * 32))
-	end
-
 	if (hook.Run("PlayerCanDeathClearRecognisedNames", player, attacker, damageInfo)) then
 		Clockwork.player:ClearRecognisedNames(player)
 	end
@@ -3556,15 +3547,27 @@ function GM:DoPlayerDeath(player, attacker, damageInfo)
 	if (hook.Run("PlayerCanDeathClearName", player, attacker, damageInfo)) then
 		Clockwork.player:ClearName(player)
 	end
+	
+	if hook.Run("DoPlayerDeathPreDeathSound", player, attacker, damageInfo) ~= false then
+		local deathSound = hook.Run("PlayerPlayDeathSound", player, player:GetGender())
 
-	if (deathSound) and !player.drowned then
-		player:EmitSound("physics/flesh/flesh_impact_hard"..math.random(1, 5)..".wav", 150)
+		if (deathSound) and !player.drowned then
+			player:EmitSound("physics/flesh/flesh_impact_hard"..math.random(1, 5)..".wav", 150)
 
-		timer.Simple(FrameTime() * 25, function()
-			if (IsValid(player)) then
-				player:EmitSound(deathSound)
-			end
-		end)
+			timer.Simple(FrameTime() * 25, function()
+				if (IsValid(player)) then
+					player:EmitSound(deathSound)
+				end
+			end)
+		end
+	end
+	
+	local decayTime = config.Get("body_decay_time"):Get()
+
+	if (decayTime > 0) then
+		Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, nil, decayTime, Clockwork.kernel:ConvertForce(damageInfo:GetDamageForce() * 32))
+	else
+		Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, nil, 600, Clockwork.kernel:ConvertForce(damageInfo:GetDamageForce() * 32))
 	end
 
 	player:SetForcedAnimation(false)

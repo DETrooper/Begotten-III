@@ -70,12 +70,21 @@ local EXHAUSTED = Clockwork.trait:New()
 	EXHAUSTED.requiredfactions = {"Wanderer"}
 Clockwork.trait:Register(EXHAUSTED)
 
+local FAVORED = Clockwork.trait:New()
+	FAVORED.uniqueID = "favored"
+	FAVORED.name = "Favored"
+	FAVORED.description = "By virtue or good fortune, your character has clearly been blessed with the favor of some divine power. This trait automatically unlocks the 3 beliefs on the left column of the 'Fortune' tree: 'Fortunate', 'Lucky', and 'Favored'."
+	FAVORED.points = 4
+	FAVORED.disables = {"marked", "possessed"}
+Clockwork.trait:Register(FAVORED)
+
 local FOLLOWED = Clockwork.trait:New()
 	FOLLOWED.uniqueID = "followed"
 	FOLLOWED.name = "Followed"
 	FOLLOWED.description = "Long ago, your character made the blunder of ransacking an ancient tomb. Through their ignorance, they missed that it had been prophesied that those who would defile the tomb would be cursed to be hunted for all eternity..."
 	FOLLOWED.disables = {"pilgrim", "shrewd"}
 	FOLLOWED.points = -7
+	FOLLOWED.excludedfactions = {"Gatekeeper"};
 Clockwork.trait:Register(FOLLOWED)
 
 local GLUTTONY = Clockwork.trait:New()
@@ -143,6 +152,7 @@ local MARKED = Clockwork.trait:New()
 	MARKED.name = "Marked"
 	MARKED.description = "Either by angering some dark power or delving too far into the occult, your character has become marked for death. The consequences of this may be severe, and the 'Fortune' belief tree will be locked and unable to be progressed."
 	MARKED.points = -4
+	MARKED.disables = {"favored"}
 Clockwork.trait:Register(MARKED)
 
 local MINER = Clockwork.trait:New()
@@ -201,9 +211,9 @@ Clockwork.trait:Register(PLACEBO)
 local POSSESSED = Clockwork.trait:New()
 	POSSESSED.uniqueID = "possessed"
 	POSSESSED.name = "Possessed"
-	POSSESSED.description = "Your character is prone to possession by some demonic force, often speaking in tongues and unwillingly perpetrating extreme violence. Due to this malignant presence, your character will incur corruption passively."
+	POSSESSED.description = "Your character is prone to possession by some demonic force, often speaking in tongues and unwillingly perpetrating extreme violence. Due to this malignant presence, your character will incur corruption passively up to 50%, at which point they will be able to be possessed."
 	POSSESSED.points = -6
-	POSSESSED.disables = {"zealous"}
+	POSSESSED.disables = {"favored", "zealous"}
 Clockwork.trait:Register(POSSESSED)
 
 local SCAVENGER = Clockwork.trait:New()

@@ -41,7 +41,7 @@ local BRUTALITY = cwBeliefs.beliefTrees:New("brutality")
 			},
 			["headtaker"] = {
 				name = "Headtaker",
-				description = "Deal 15% more limb damage with all damage types.",
+				description = "Deal 25% more limb damage with all damage types. Unlocks the ability to decapitate characters via killing blows to the head with a slash weapon that exceed 30 damage. Decapitating characters will grant 20% increased melee damage for 30 seconds.",
 				iconOverride = "begotten/ui/belieficons/brutality.png",
 				requirements = {"savage", "primeval"},
 				row = 3,

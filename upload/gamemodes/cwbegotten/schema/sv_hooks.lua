@@ -1332,7 +1332,7 @@ function Schema:Think()
 					local thrallNPCs;
 					
 					if cwDayNight and cwDayNight.currentCycle == "night" then
-						thrallNPCs = {"npc_bgt_another", "npc_bgt_chaser", "npc_bgt_guardian", "npc_bgt_otis"};
+						thrallNPCs = {"npc_bgt_another", "npc_bgt_guardian", "npc_bgt_otis"};
 					else
 						thrallNPCs = {"npc_bgt_another", "npc_bgt_brute", "npc_bgt_grunt", "npc_bgt_eddie"};
 					end

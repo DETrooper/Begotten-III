@@ -3,6 +3,11 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
+game.AddParticles("particles/blood_impact.pcf");
+PrecacheParticleSystem("blood_advisor_pierce_spray");
+util.PrecacheSound("nhzombie_headexplode.wav")
+util.PrecacheSound("nhzombie_headexplode_jet.wav")
+
 PLUGIN:SetGlobalAlias("cwBeliefs");
 
 Clockwork.kernel:IncludePrefixed("sh_beliefs.lua");

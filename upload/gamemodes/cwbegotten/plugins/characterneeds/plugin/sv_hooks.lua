@@ -64,57 +64,60 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 			end
 		
 			if (!player.nextHunger or curTime >= player.nextHunger) then
+				local next_hunger = 200;
+				
+				if player:HasTrait("gluttony") then
+					next_hunger = next_hunger * 0.35;
+				end
+				
+				if player:HasBelief("asceticism") then
+					next_hunger = next_hunger * 1.35;
+				end
+				
+				player.nextHunger = curTime + next_hunger;
+				
 				if (playerNeeds["hunger"] > -1) then
-					local next_hunger = 200;
-					
-					if player:HasTrait("gluttony") then
-						next_hunger = next_hunger * 0.35;
-					end
-					
-					if player:HasBelief("asceticism") then
-						next_hunger = next_hunger * 1.35;
-					end
-					
 					player:HandleNeed("hunger", 1);
-					player.nextHunger = curTime + next_hunger;
 				end;
 			end;
 			
 			if (!player.nextThirst or curTime >= player.nextThirst) then
+				local next_thirst = 100;
+				
+				if player:HasTrait("gluttony") then
+					next_thirst = next_thirst * 0.35;
+				end
+			
+				if player:HasBelief("asceticism") then
+					next_thirst = next_thirst * 1.35;
+				end
+				
+				player.nextThirst = curTime + next_thirst;
+			
 				if (playerNeeds["thirst"] > -1) then
-					local next_thirst = 100;
-					
-					if player:HasTrait("gluttony") then
-						next_thirst = next_thirst * 0.35;
-					end
-				
-					if player:HasBelief("asceticism") then
-						next_thirst = next_thirst * 1.35;
-					end
-				
 					player:HandleNeed("thirst", 1);
-					player.nextThirst = curTime + next_thirst;
-				end;
+				end
 			end;
 			
 			if (!player.nextSleep or curTime >= player.nextSleep) then
-				-- Make sure player isn't already sleeping.
-				if player:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT then
-					if (playerNeeds["sleep"] > -1) then
-						local next_sleep = 400;
-						
-						if cwBeliefs and player:HasBelief("yellow_and_black") then
-							if player:HasTrait("gluttony") then
-								next_sleep = next_sleep * 0.35;
-							end
-						
-							if player:HasBelief("asceticism") then
-								next_sleep = next_sleep * 1.35;
-							end
-						end
+				local next_sleep = 400;
+				
+				if cwBeliefs and player:HasBelief("yellow_and_black") then
+					if player:HasTrait("gluttony") then
+						next_sleep = next_sleep * 0.35;
+					end
+				
+					if player:HasBelief("asceticism") then
+						next_sleep = next_sleep * 1.35;
+					end
+				end
+				
+				player.nextSleep = curTime + next_sleep;
 
+				if (playerNeeds["sleep"] > -1) then
+					-- Make sure player isn't already sleeping.
+					if player:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT then
 						player:HandleNeed("sleep", 1);
-						player.nextSleep = curTime + next_sleep;
 						
 						if playerNeeds["sleep"] >= 60 then
 							if player:HasBelief("yellow_and_black") then
@@ -128,22 +131,22 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 								Clockwork.chatBox:Add(player, nil, "itnofake", "Some of my systems are beginning to power down, I need to recharge!");
 							end
 						end
-					end;
-				end;
+					end
+				end
 			end;
 			
 			if (!player.nextCorruption or curTime >= player.nextCorruption) then
-				if (playerNeeds["corruption"] > -1) then
+				if (playerNeeds["corruption"] > -1) and (playerNeeds["corruption"] < 50) then
 					if player:HasTrait("possessed") then
 						player:HandleNeed("corruption", 1);
 					end
-
-					player.nextCorruption = curTime + 150;
 				end;
+				
+				player.nextCorruption = curTime + 150;
 			end;
 		end;
 		
-		player.nextNeedCheck = curTime + 5;
+		player.nextNeedCheck = curTime + math.random(1, 10);
 	end;
 end;
 

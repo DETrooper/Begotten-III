@@ -78,7 +78,7 @@ function cwLimbs:CalculatePlayerDamage(player, hitGroup, damageInfo)
 		
 		if IsValid(attacker) and attacker:IsPlayer() then
 			if attacker:HasBelief("headtaker") then
-				damage = damage * 1.15;
+				damage = damage * 1.25;
 			end
 		end
 		

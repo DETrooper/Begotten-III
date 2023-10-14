@@ -1178,7 +1178,7 @@ function cwRecipes:ClockworkInitialized()
 			["bear_trap"] = {amount = 1},
 		};
 		RECIPE.category = "Other"
-		RECIPE.finishSound = "physics/wood/wood_strain3.wav";
+		RECIPE.finishSound = "generic_ui/refine_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"

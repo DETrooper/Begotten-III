@@ -790,7 +790,7 @@ ITEM.slashScale = 0.90; -- reduces slash damage by 10%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
 ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
-ITEM.itemSpawnerInfo = {category = "Armor", rarity = 800};
+ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1000};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
