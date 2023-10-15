@@ -7,6 +7,8 @@ game.AddParticles("particles/blood_impact.pcf");
 PrecacheParticleSystem("blood_advisor_pierce_spray");
 util.PrecacheSound("nhzombie_headexplode.wav")
 util.PrecacheSound("nhzombie_headexplode_jet.wav")
+util.PrecacheModel("models/begotten/heads/female_gorecap.mdl");
+util.PrecacheModel("models/begotten/heads/male_gorecap.mdl");
 
 PLUGIN:SetGlobalAlias("cwBeliefs");
 
@@ -362,7 +364,7 @@ function COMMAND:OnRun(player, arguments)
 	
 	if (target) then
 		if player:GetFaith() == "Faith of the Dark" then
-			if player:HasBelief("heretic") or player:GetSubfaction() == "Rekh-khet-sa" then
+			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
 				local message = "\""..table.concat(arguments, " ", 2).."\"";
 
 				if (target:GetFaith() == "Faith of the Dark" or target:GetSubfaith() == "Faith of the Sister") then
@@ -407,7 +409,7 @@ function COMMAND:OnRun(player, arguments)
 	
 	if (target) then
 		if player:GetFaith() == "Faith of the Dark" then
-			if player:HasBelief("heretic") or player:GetSubfaction() == "Rekh-khet-sa" then
+			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
 				local message = "\""..table.concat(arguments, " ", 1).."\"";
 
 				if (target:GetFaith() == "Faith of the Dark" or target:GetSubfaith() == "Faith of the Sister") then
@@ -479,7 +481,7 @@ function COMMAND:OnRun(player, arguments)
 	
 	if faith == "Faith of the Dark" then
 		if faction == "Children of Satan" then
-			if player:HasBelief("heretic") or player:GetSubfaction() == "Rekh-khet-sa" then
+			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
 				local message = "\""..table.concat(arguments, " ", 1).."\"";
 
 				for k, v in pairs (_player.GetAll()) do

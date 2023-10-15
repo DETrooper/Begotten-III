@@ -67,7 +67,7 @@ function ENT:Touch(entity)
 		if entity:IsPlayer() or entity:IsNPC() or entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(entity) then
 			local damageInfo = DamageInfo();
 			
-			damageInfo:SetDamageType(DMG_SLASH);
+			damageInfo:SetDamageType(DMG_VEHICLE);
 			damageInfo:SetDamage(60);
 			damageInfo:SetAttacker(self.owner or self);
 			damageInfo:SetInflictor(self);

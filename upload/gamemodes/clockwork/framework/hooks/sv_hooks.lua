@@ -3976,7 +3976,15 @@ function GM:EntityTakeDamage(entity, damageInfo)
 
 					if IsValid(attacker) then
 						if (attacker:IsPlayer()) then
-							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..Clockwork.player:GetWeaponClass(attacker, "an unknown weapon")..", leaving them at "..player:Health().." health"..armor)
+							local inflictor = damageInfo:GetInflictor();
+							
+							if IsValid(inflictor) then	
+								inflictor = inflictor:GetClass();
+							else
+								inflictor = Clockwork.player:GetWeaponClass(attacker, "an unknown weapon");
+							end
+							
+							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..inflictor..", leaving them at "..player:Health().." health"..armor)
 						else
 							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:GetClass()..", leaving them at "..player:Health().." health"..armor)
 						end
@@ -4029,7 +4037,15 @@ function GM:EntityTakeDamage(entity, damageInfo)
 
 					if IsValid(attacker) then
 						if (attacker:IsPlayer()) then
-							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..Clockwork.player:GetWeaponClass(attacker, "an unknown weapon")..", leaving them at "..player:Health().." health"..armor)
+							local inflictor = damageInfo:GetInflictor();
+							
+							if IsValid(inflictor) then
+								inflictor = inflictor:GetClass();
+							else
+								inflictor = Clockwork.player:GetWeaponClass(attacker, "an unknown weapon");
+							end
+							
+							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..inflictor..", leaving them at "..player:Health().." health"..armor)
 						else
 							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:GetClass()..", leaving them at "..player:Health().." health"..armor)
 						end

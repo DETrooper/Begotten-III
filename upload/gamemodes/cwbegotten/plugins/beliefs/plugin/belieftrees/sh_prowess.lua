@@ -39,7 +39,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			["halfsword_sway"] = {
 				name = "Halfsword and Sway",
 				description = "Unlocks the ability to change weapon stance for all weapons.",
-				quote = "\"Pick up that spear, boy! You'll be fighting in the Lord's army now.\"",
+				quote = "\"Don't you hack at that plate with your sword like some fucker joe! Stab at the joints and gaps you unenlightened fucklets!\"",
 				requirements = {"fighter"},
 				row = 2,
 			},

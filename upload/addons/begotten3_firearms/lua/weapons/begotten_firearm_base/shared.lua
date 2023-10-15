@@ -565,7 +565,9 @@ function SWEP:ShootBullet(damage, recoil, num_bullets, aimcone)
 				bullet.TracerName = TracerName
 				bullet.Force    = damage * 0.25                                 -- Amount of force to give to phys objects
 				bullet.Damage   = damage
-				bullet.Callback = function(attacker, tracedata, dmginfo)	   
+				bullet.Callback = function(attacker, tracedata, dmginfo)
+										dmginfo:SetInflictor(self);
+										
 										return self:RicochetCallback(0, attacker, tracedata, dmginfo)
 								  end
 								  

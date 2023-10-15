@@ -79,10 +79,6 @@ function PLUGIN:DoPlayerDeath(player, attacker, damageInfo)
 end;
 
 function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
-	if (player:GetClass() == "prop_dynamic") then
-		return
-	end;
-	
 	if damageInfo:IsDamageType(DMG_BLAST) then
 		return;
 	end
@@ -171,135 +167,129 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 				end
 				
 				if attacker:IsPlayer() then
-					local activeWeapon = attacker:GetActiveWeapon();
-
-					if (IsValid(activeWeapon)) then
-						local attackTable;
-						local inflictor = damageInfo:GetInflictor()
+					local attackTable;
+					local inflictor = damageInfo:GetInflictor()
+					
+					if IsValid(inflictor) and inflictor.AttackTable then
+						attackTable = GetTable(inflictor.AttackTable);
+					end
+					
+					--printp("Attack table found for weapon!");
+					if attackTable then
+						local armorPiercing = 0;
 						
-						if IsValid(inflictor) and inflictor.isJavelin then
-							attackTable = GetTable(inflictor.attacktable);
+						if attacker:GetNWBool("ThrustStance") and (!IsValid(inflictor) or (IsValid(inflictor) and !inflictor.isJavelin)) then
+							--printp("Thrust stance");
+							armorPiercing = attackTable["altarmorpiercing"] or 0;
 						else
-							attackTable = GetTable(activeWeapon.AttackTable);
+							--printp("Not thrust stance");
+							armorPiercing = attackTable["armorpiercing"] or 0;
 						end
 						
-						--printp("Attack table found for weapon!");
-						if attackTable then
-							local armorPiercing = 0;
-							
-							if attacker:GetNWBool("ThrustStance") and (!IsValid(inflictor) or (IsValid(inflictor) and !inflictor.isJavelin)) then
-								--printp("Thrust stance");
-								armorPiercing = attackTable["altarmorpiercing"] or 0;
-							else
-								--printp("Not thrust stance");
-								armorPiercing = attackTable["armorpiercing"] or 0;
+						if attacker:GetCharmEquipped("ring_penetration") then
+							armorPiercing = armorPiercing + 15;
+						end
+						
+						if (inflictor.Base == "sword_swepbase" or damageInfo:IsDamageType(DMG_SNIPER)) and attacker:HasBelief("the_light") then
+							armorPiercing = armorPiercing + (armorPiercing * 0.15);
+						end
+						
+						if attacker:HasBelief("billman") then
+							if string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier") or string.find(inflictor.Category, "Scythe") or string.find(inflictor.Category, "Javelin") then
+								armorPiercing = armorPiercing + (armorPiercing * 0.2);
 							end
-							
-							if attacker:GetCharmEquipped("ring_penetration") then
-								armorPiercing = armorPiercing + 15;
-							end
-							
-							if (activeWeapon.Base == "sword_swepbase" or damageInfo:IsDamageType(DMG_SNIPER)) and attacker:HasBelief("the_light") then
-								armorPiercing = armorPiercing + (armorPiercing * 0.15);
-							end
-							
-							if attacker:HasBelief("billman") then
-								if string.find(activeWeapon.Category, "Polearm") or string.find(activeWeapon.Category, "Spear") or string.find(activeWeapon.Category, "Rapier") or string.find(activeWeapon.Category, "Scythe") or string.find(activeWeapon.Category, "Javelin") then
-									armorPiercing = armorPiercing + (armorPiercing * 0.2);
-								end
-							end
-							
-							--printp("AP Value: "..tostring(armorPiercing));
-							
-							local damage = damageInfo:GetDamage();
-							--printp("Damage: "..tostring(damage));
-							
-							if IsValid(damageInfo:GetInflictor()) and damageInfo:GetInflictor().isJavelin then
-								-- nothing
-							else
-								if string.find(activeWeapon:GetClass(), "begotten_dagger_") then
+						end
+						
+						--printp("AP Value: "..tostring(armorPiercing));
+						
+						local damage = damageInfo:GetDamage();
+						--printp("Damage: "..tostring(damage));
+						
+						if IsValid(damageInfo:GetInflictor()) and damageInfo:GetInflictor().isJavelin then
+							-- nothing
+						else
+							if string.find(inflictor:GetClass(), "begotten_dagger_") then
+								armorPiercing = 100;
+								--printp("Weapon is dagger, increasing AP value to 100.");
+							elseif inflictor:GetClass() == "begotten_fists" then
+								if (attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist")) or (attacker:IsPlayer() and Clockwork.player:HasFlags(attacker, "T")) then
 									armorPiercing = 100;
-									--printp("Weapon is dagger, increasing AP value to 100.");
-								elseif activeWeapon:GetClass() == "begotten_fists" then
-									if (attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist")) or (attacker:IsPlayer() and Clockwork.player:HasFlags(attacker, "T")) then
-										armorPiercing = 100;
-									end
 								end
 							end
+						end
+						
+						if inflictor.Base == "sword_swepbase" then
+							local activeWeaponItemTable = item.GetByWeapon(inflictor);
 							
-							if activeWeapon.Base == "sword_swepbase" then
-								local activeWeaponItemTable = item.GetByWeapon(activeWeapon);
+							if activeWeaponItemTable then
+								local activeWeaponCondition = activeWeaponItemTable:GetCondition() or 100;
 								
-								if activeWeaponItemTable then
-									local activeWeaponCondition = activeWeaponItemTable:GetCondition() or 100;
-									
-									if damageType == DMG_CLUB then
-										armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.7, 1));
-									else
-										armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.5, 1));
-									end
+								if damageType == DMG_CLUB then
+									armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.7, 1));
+								else
+									armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.5, 1));
 								end
 							end
+						end
+						
+						local protection = helmetItem.protection;
+						--printp("Armor condition value: "..tostring(condition));
+						
+						if !isTrainingDummy then
+							if player:GetSubfaction() == "Philimaxio" then
+								-- Make sure the protection does not exceed 100.
+								protection = math.min(protection + (protection * 0.15), 100);
+							end
 							
-							local protection = helmetItem.protection;
-							--printp("Armor condition value: "..tostring(condition));
+							if player:HasBelief("fortify_the_plate") then
+								protection = math.min(protection + (protection * 0.10), 100);
+							end
+							
+							if player:HasBelief("shedskin") then
+								protection = math.min(protection + (protection * 0.15), 100);
+							end
+						end
+						
+						if (condition < 90) then
+							--printp("Reducing protection due to condition (ORIGINAL: "..tostring(protection)..")");
+							protection = protection * (condition / 100);
+						end;
+						
+						--printp("Armor protection value: "..tostring(protection));
+						--local effectiveness = damage * (armorPiercing / protection);
+						local effectiveness = (damage / protection) * armorPiercing;
+						
+						if damageType == DMG_BULLET or damageType == DMG_BUCKSHOT then
+							effectiveness = 125;
+						end
+						
+						--printp("Attack effectiveness: "..tostring(effectiveness));
+						--printp("Setting damage to: "..tostring(math.Clamp(effectiveness, 0, damage)));
+						
+						if not player.opponent then
+							local conditionLoss = math.Clamp(effectiveness * 0.1, 0, 5) * (helmetItem.conditionScale or 1);
 							
 							if !isTrainingDummy then
-								if player:GetSubfaction() == "Philimaxio" then
-									-- Make sure the protection does not exceed 100.
-									protection = math.min(protection + (protection * 0.15), 100);
-								end
+								if player:HasBelief("ingenuity_finisher") then
+									conditionLoss = 0;
+								else	
+									if player:GetSubfaction() == "Philimaxio" then
+										conditionLoss = conditionLoss / 2;
+									end
 								
-								if player:HasBelief("fortify_the_plate") then
-									protection = math.min(protection + (protection * 0.10), 100);
-								end
-								
-								if player:HasBelief("shedskin") then
-									protection = math.min(protection + (protection * 0.15), 100);
-								end
-							end
-							
-							if (condition < 90) then
-								--printp("Reducing protection due to condition (ORIGINAL: "..tostring(protection)..")");
-								protection = protection * (condition / 100);
-							end;
-							
-							--printp("Armor protection value: "..tostring(protection));
-							--local effectiveness = damage * (armorPiercing / protection);
-							local effectiveness = (damage / protection) * armorPiercing;
-							
-							if damageType == DMG_BULLET or damageType == DMG_BUCKSHOT then
-								effectiveness = 125;
-							end
-							
-							--printp("Attack effectiveness: "..tostring(effectiveness));
-							--printp("Setting damage to: "..tostring(math.Clamp(effectiveness, 0, damage)));
-							
-							if not player.opponent then
-								local conditionLoss = math.Clamp(effectiveness * 0.1, 0, 5) * (helmetItem.conditionScale or 1);
-								
-								if !isTrainingDummy then
-									if player:HasBelief("ingenuity_finisher") then
-										conditionLoss = 0;
-									else	
-										if player:GetSubfaction() == "Philimaxio" then
-											conditionLoss = conditionLoss / 2;
-										end
-									
-										if player:HasBelief("scour_the_rust") then
-											conditionLoss = conditionLoss / 2;
-										end
+									if player:HasBelief("scour_the_rust") then
+										conditionLoss = conditionLoss / 2;
 									end
 								end
-								
-								if not player.ignoreConditionLoss then
-									helmetItem:TakeCondition(conditionLoss);
-								end
 							end
 							
-							damageInfo:SetDamage(math.Clamp(effectiveness * 0.7, 0, damage));
+							if not player.ignoreConditionLoss then
+								helmetItem:TakeCondition(conditionLoss);
+							end
 						end
-					end;
+						
+						damageInfo:SetDamage(math.Clamp(effectiveness * 0.7, 0, damage));
+					end
 				else
 					local armorPiercing = NPCArmorPiercingDamage[attacker:GetClass()] or 40;
 					local damage = damageInfo:GetDamage();
@@ -438,139 +428,133 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 				local condition = armorItem:GetCondition() or 100;
 				
 				if attacker:IsPlayer() then
-					local activeWeapon = attacker:GetActiveWeapon();
+					local attackTable;
+					local inflictor = damageInfo:GetInflictor()
 					
-					if (IsValid(activeWeapon)) then
-						local attackTable;
-						local inflictor = damageInfo:GetInflictor()
+					if IsValid(inflictor) and inflictor.AttackTable then
+						attackTable = GetTable(inflictor.AttackTable);
+					end
+							
+					--printp("Attack table found for weapon!");
+					if attackTable then
+						local armorPiercing = 0;
+						
+						if attacker:GetNWBool("ThrustStance") and (!IsValid(inflictor) or (IsValid(inflictor) and !inflictor.isJavelin)) then
+							armorPiercing = attackTable["altarmorpiercing"] or 0;
+							--printp("Thrust stance.");
+						else
+							armorPiercing = attackTable["armorpiercing"] or 0;
+							--printp("Not thrust stance.");
+						end
+						
+						if attacker:GetCharmEquipped("ring_penetration") then
+							armorPiercing = armorPiercing + 15;
+						end
+						
+						if (inflictor.Base == "sword_swepbase" or damageInfo:IsDamageType(DMG_SNIPER)) and attacker:HasBelief("the_light") then
+							armorPiercing = armorPiercing + (armorPiercing * 0.15);
+						end
+						
+						if attacker:HasBelief("billman") then
+							if string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier") or string.find(inflictor.Category, "Scythe") or string.find(inflictor.Category, "Javelin") then
+								armorPiercing = armorPiercing + (armorPiercing * 0.2);
+							end
+						end
+						
+						--print("AP Value: "..tostring(armorPiercing));
+						
+						local damage = damageInfo:GetDamage();
+						--print("Damage: "..tostring(damage));
 						
 						if IsValid(inflictor) and inflictor.isJavelin then
-							attackTable = GetTable(inflictor.attacktable);
+							-- nothing
 						else
-							attackTable = GetTable(activeWeapon.AttackTable);
-						end
-							
-						--printp("Attack table found for weapon!");
-						if attackTable then
-							local armorPiercing = 0;
-							
-							if attacker:GetNWBool("ThrustStance") and (!IsValid(inflictor) or (IsValid(inflictor) and !inflictor.isJavelin)) then
-								armorPiercing = attackTable["altarmorpiercing"] or 0;
-								--printp("Thrust stance.");
-							else
-								armorPiercing = attackTable["armorpiercing"] or 0;
-								--printp("Not thrust stance.");
-							end
-							
-							if attacker:GetCharmEquipped("ring_penetration") then
-								armorPiercing = armorPiercing + 15;
-							end
-							
-							if (activeWeapon.Base == "sword_swepbase" or damageInfo:IsDamageType(DMG_SNIPER)) and attacker:HasBelief("the_light") then
-								armorPiercing = armorPiercing + (armorPiercing * 0.15);
-							end
-							
-							if attacker:HasBelief("billman") then
-								if string.find(activeWeapon.Category, "Polearm") or string.find(activeWeapon.Category, "Spear") or string.find(activeWeapon.Category, "Rapier") or string.find(activeWeapon.Category, "Scythe") or string.find(activeWeapon.Category, "Javelin") then
-									armorPiercing = armorPiercing + (armorPiercing * 0.2);
-								end
-							end
-							
-							--print("AP Value: "..tostring(armorPiercing));
-							
-							local damage = damageInfo:GetDamage();
-							--print("Damage: "..tostring(damage));
-							
-							if IsValid(inflictor) and inflictor.isJavelin then
-								-- nothing
-							else
-								if string.find(activeWeapon:GetClass(), "begotten_dagger_") then
+							if string.find(inflictor:GetClass(), "begotten_dagger_") then
+								armorPiercing = 100;
+								--print("Weapon is dagger, increasing AP value to 100.");
+							elseif inflictor:GetClass() == "begotten_fists" then
+								if attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist") then
 									armorPiercing = 100;
-									--print("Weapon is dagger, increasing AP value to 100.");
-								elseif activeWeapon:GetClass() == "begotten_fists" then
-									if attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist") then
-										armorPiercing = 100;
-									end
 								end
 							end
+						end
+						
+						if inflictor.Base == "sword_swepbase" then
+							local activeWeaponItemTable = item.GetByWeapon(inflictor);
 							
-							if activeWeapon.Base == "sword_swepbase" then
-								local activeWeaponItemTable = item.GetByWeapon(activeWeapon);
+							if activeWeaponItemTable then
+								local activeWeaponCondition = activeWeaponItemTable:GetCondition() or 100;
 								
-								if activeWeaponItemTable then
-									local activeWeaponCondition = activeWeaponItemTable:GetCondition() or 100;
-									
-									if damageType == DMG_CLUB then
-										armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.7, 1));
-									else
-										armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.5, 1));
-									end
+								if damageType == DMG_CLUB then
+									armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.7, 1));
+								else
+									armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.5, 1));
 								end
 							end
-							
-							local protection = armorItem.protection;
-							--print("Armor condition value: "..tostring(condition));
-							
-							-- If full suit of armor, give minor debuff for head armor.
-							if hitGroup == HITGROUP_HEAD then
-								protection = math.max(0, protection - 10);
+						end
+						
+						local protection = armorItem.protection;
+						--print("Armor condition value: "..tostring(condition));
+						
+						-- If full suit of armor, give minor debuff for head armor.
+						if hitGroup == HITGROUP_HEAD then
+							protection = math.max(0, protection - 10);
+						end
+						
+						if !isTrainingDummy then
+							if player:GetSubfaction() == "Philimaxio" then
+								-- Make sure the protection does not exceed 100.
+								protection = math.min(protection + (protection * 0.15), 100);
 							end
+							
+							if player:HasBelief("fortify_the_plate") then
+								protection = math.min(protection + (protection * 0.10), 100);
+							end
+							
+							if player:HasBelief("shedskin") then
+								protection = math.min(protection + (protection * 0.15), 100);
+							end
+						end
+						
+						if (condition < 90) then
+							--print("Reducing protection due to condition (ORIGINAL: "..tostring(protection)..")");
+							protection = protection * (condition / 100);
+						end;
+						
+						--print("Armor protection value: "..tostring(protection));
+						--local effectiveness = damage * (armorPiercing / protection);
+						local effectiveness = (damage / protection) * armorPiercing;
+						--print("Attack effectiveness: "..tostring(effectiveness));
+						
+						if damageType == DMG_BULLET or damageType == DMG_BUCKSHOT then
+							effectiveness = 125;
+						end
+						
+						if not player.opponent then
+							local conditionLoss = math.Clamp(effectiveness * 0.1, 0, 5) * (armorItem.conditionScale or 1);
 							
 							if !isTrainingDummy then
-								if player:GetSubfaction() == "Philimaxio" then
-									-- Make sure the protection does not exceed 100.
-									protection = math.min(protection + (protection * 0.15), 100);
-								end
-								
-								if player:HasBelief("fortify_the_plate") then
-									protection = math.min(protection + (protection * 0.10), 100);
-								end
-								
-								if player:HasBelief("shedskin") then
-									protection = math.min(protection + (protection * 0.15), 100);
-								end
-							end
-							
-							if (condition < 90) then
-								--print("Reducing protection due to condition (ORIGINAL: "..tostring(protection)..")");
-								protection = protection * (condition / 100);
-							end;
-							
-							--print("Armor protection value: "..tostring(protection));
-							--local effectiveness = damage * (armorPiercing / protection);
-							local effectiveness = (damage / protection) * armorPiercing;
-							--print("Attack effectiveness: "..tostring(effectiveness));
-							
-							if damageType == DMG_BULLET or damageType == DMG_BUCKSHOT then
-								effectiveness = 125;
-							end
-							
-							if not player.opponent then
-								local conditionLoss = math.Clamp(effectiveness * 0.1, 0, 5) * (armorItem.conditionScale or 1);
-								
-								if !isTrainingDummy then
-									if player:HasBelief("ingenuity_finisher") then
-										conditionLoss = 0;
-									else							
-										if player:GetSubfaction() == "Philimaxio" then
-											conditionLoss = conditionLoss / 2;
-										end
-										
-										if player:HasBelief("scour_the_rust") then
-											conditionLoss = conditionLoss / 2;
-										end
+								if player:HasBelief("ingenuity_finisher") then
+									conditionLoss = 0;
+								else							
+									if player:GetSubfaction() == "Philimaxio" then
+										conditionLoss = conditionLoss / 2;
+									end
+									
+									if player:HasBelief("scour_the_rust") then
+										conditionLoss = conditionLoss / 2;
 									end
 								end
-								
-								if not player.ignoreConditionLoss then
-									armorItem:TakeCondition(conditionLoss);
-								end
 							end
 							
-							--print("Setting damage to: "..tostring(math.Clamp(effectiveness, 0, damage)));
-							damageInfo:SetDamage(math.Clamp(effectiveness * 0.7, 0, damage));
-						end;
-					end
+							if not player.ignoreConditionLoss then
+								armorItem:TakeCondition(conditionLoss);
+							end
+						end
+						
+						--print("Setting damage to: "..tostring(math.Clamp(effectiveness, 0, damage)));
+						damageInfo:SetDamage(math.Clamp(effectiveness * 0.7, 0, damage));
+					end;
 				else
 					local armorPiercing = NPCArmorPiercingDamage[attacker:GetClass()] or 40;
 					local damage = damageInfo:GetDamage();

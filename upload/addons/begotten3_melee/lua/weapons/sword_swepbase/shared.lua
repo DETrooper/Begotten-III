@@ -727,6 +727,7 @@ end
 				d:SetAttacker( owner )
 				d:SetDamageType( damagetype )
 				d:SetDamagePosition(src)
+				d:SetInflictor(self);
 			
 				if (hit:IsPlayer()) then
 					d:SetDamageForce(owner:GetForward() * 5000);
@@ -926,6 +927,7 @@ end
 					d:SetAttacker( owner )
 					d:SetDamageType( damagetype )
 					d:SetDamagePosition(src)
+					d:SetInflictor(self);
 				
 					if (hit:IsPlayer()) then
 						d:SetDamageForce(owner:GetForward() * 5000);
@@ -1383,6 +1385,7 @@ end
 					d:SetAttacker( owner )
 					d:SetDamageType( damagetype )
 					d:SetDamagePosition(src)
+					d:SetInflictor(self);
 				
 					if (hit:IsPlayer()) then
 						d:SetDamageForce(owner:GetForward() * 5000);
@@ -1546,6 +1549,7 @@ end
 					d:SetAttacker( owner )
 					d:SetDamageType( damagetype )
 					d:SetDamagePosition(src)
+					d:SetInflictor(self);
 				
 					if (hit:IsPlayer()) then
 						d:SetDamageForce(owner:GetForward() * 5000);

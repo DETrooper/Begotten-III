@@ -109,7 +109,7 @@ end;
 -- Called once the player finishes performing a ritual.
 function cwRituals:PlayerFinishedRitual(player, ritualTable)
 	if ritualTable.experience then
-		if cwBeliefs and player.HasBelief and player:HasBelief("young_son") then
+		if cwBeliefs and player.HasBelief and (player:HasBelief("mother") or player:HasBelief("satanism")) then
 			player:HandleXP(ritualTable.experience * 2);
 		else
 			player:HandleXP(ritualTable.experience);
@@ -574,34 +574,28 @@ function cwRituals:PlayerDeath(player)
 				Clockwork.chatBox:AddInTargetRadius(player, "me", "explodes in a holy purifying fireball!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 				
 				if IsValid(ragCorpse) then
-					for k, v in ipairs(ents.FindInSphere(player:GetPos(), 196)) do
-						local player;
+					for i, v in ipairs(ents.FindInSphere(player:GetPos(), 196)) do
+						local vPlayer;
 						
-						if v:IsPlayer() == true then
-							player = v;
+						if v:IsPlayer() then
+							vPlayer = v;
 						elseif Clockwork.entity:IsPlayerRagdoll(v) then
-							player = Clockwork.entity:GetPlayer(v);
+							vPlayer = Clockwork.entity:GetPlayer(v);
 						end
 						
-						if player then
-							local subfaith = player:GetSubfaith();
+						if vPlayer then
+							local subfaith = vPlayer:GetSubfaith();
 							
 							if subfaith ~= "Hard-Glazed" and subfaith ~= "Sol Orthodoxy" then
 								local damageInfo = DamageInfo();
 					
-								damageInfo:SetDamagePosition(player:GetPos() + Vector(0, 0, math.random(12, 64)));
+								damageInfo:SetDamagePosition(vPlayer:GetPos() + Vector(0, 0, math.random(12, 64)));
 								damageInfo:SetDamageForce(VectorRand() * 5);
 								damageInfo:SetDamageType(DMG_BLAST);
 								damageInfo:SetDamage(250);
 								damageInfo:SetAttacker(player);
 
-								player:TakeDamageInfo(damageInfo);
-
-								--[[target:Kill();
-								
-								if (target:GetRagdollEntity()) then
-									cwGore:SplatCorpse(target:GetRagdollEntity(), 60););
-								end;]]--
+								vPlayer:TakeDamageInfo(damageInfo);
 							end
 						end;
 					end;

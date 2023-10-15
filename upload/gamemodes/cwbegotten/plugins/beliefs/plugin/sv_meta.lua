@@ -42,6 +42,21 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 				newAmount = newAmount + (amount * 0.5);
 			end
 			
+			if self:HasBelief("sol_orthodoxy") then
+				if cwCharacterNeeds then
+					local hunger = self:GetNeed("hunger");
+					local thirst = self:GetNeed("thirst");
+					
+					if hunger >= 40 or thirst >= 40 then
+						if hunger >= 40 and thirst >= 40 then
+							newAmount = newAmount + (amount * 0.3);
+						else
+							newAmount = newAmount + (amount * 0.15);
+						end
+					end
+				end
+			end
+			
 			if self.GetCharmEquipped then
 				if faith == "Faith of the Light" and self:GetCharmEquipped("skull_saint") then
 					newAmount = newAmount + (amount * 0.25);

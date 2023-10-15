@@ -346,7 +346,7 @@ function PANEL:Rebuild()
 		warning:SizeToContents();
 	else
 		-- Todo later: sort recipes based on tier/quality?
-		for k, v in SortedPairs(availableRituals) do
+		for k, v in SortedPairsByMemberValue(availableRituals, "name") do
 			if v.category == category then
 				self:AddRitual(v);
 			end

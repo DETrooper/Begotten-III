@@ -634,9 +634,8 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 		end
 		
 		local newDamage = originalDamage;
-		local unblockable_weapons = {"begotten_fists", "begotten_fists_ironknuckles", "begotten_fists_spikedknuckles"};
 		
-		if entity:IsPlayer() then
+		if entity:IsPlayer() and entity:Alive() then
 			local chance = 0;
 			
 			if entity:HasBelief("lucky") then
@@ -675,7 +674,11 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 		local attacker = damageInfo:GetAttacker();
 		
 		if (attacker:IsPlayer()) then
-			local attackerWeapon = attacker:GetActiveWeapon();
+			local attackerWeapon = damageInfo:GetInflictor();
+			
+			if !attackerWeapon then
+				attackerWeapon = attacker:GetActiveWeapon();
+			end
 			
 			if attackerWeapon then
 				if attackerWeapon.Base == "sword_swepbase" then -- Melee

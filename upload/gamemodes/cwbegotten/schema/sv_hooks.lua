@@ -2900,9 +2900,13 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 			end
 		end
 		
-		-- Flat 50% damage reduction vs. ragdolled players.
+		-- Flat 50% damage reduction vs. ragdolled players for melees to encourage the use of daggers or wrestle and subdue.
 		if bIsPlayerRagdoll then
-			damageInfo:ScaleDamage(0.5)
+			local attackerWeapon = attacker:GetActiveWeapon();
+			
+			if IsValid(attackerWeapon) and attackerWeapon.IsABegottenMelee then
+				damageInfo:ScaleDamage(0.5);
+			end
 		end
 		
 		if entity.banners then

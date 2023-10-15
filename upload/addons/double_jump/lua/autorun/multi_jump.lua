@@ -1,8 +1,8 @@
 game.AddParticles("particles/advisor.pcf");
-game.AddParticles("particles/grub_blood.pcf");
+game.AddParticles("particles/blood_impact.pcf");
 
 PrecacheParticleSystem("advisor_plat_break");
-PrecacheParticleSystem("GrubBlood");
+PrecacheParticleSystem("blood_advisor_puncture");
 
 --[[local function GetMoveVector(mv)
 	local ang = mv:GetAngles()
@@ -72,7 +72,12 @@ hook.Add("SetupMove", "Multi Jump", function(ply, mv)
 	if ply.bloodWingsActive then
 		ply:ModifyBloodLevel(-15);
 
-		ParticleEffect("GrubSquashBlood2", ply:GetPos() + Vector(0, 0, 10), ply:GetAngles());
+		--ParticleEffect("blood_advisor_puncture", ply:GetPos() + Vector(0, 0, 24), ply:GetAngles());
+		
+		local effectData = EffectData()
+		effectData:SetOrigin(ply:GetPos() + Vector(0, 0, 24));
+		
+		util.Effect("BloodImpact", effectData, nil, true);
 	else
 		if ply.HandleNeed then
 			ply:HandleNeed("sleep", 2);
