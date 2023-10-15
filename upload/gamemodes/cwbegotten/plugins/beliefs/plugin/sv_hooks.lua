@@ -810,35 +810,33 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 								if entity:Alive() and entity:Health() < entity:GetMaxHealth() / 4 or entity:GetRagdollState() == RAGDOLL_FALLENOVER and originalDamage > 0 then
 									newDamage = 666;
 									
-									if entity:Health() - damage < 10 then
+									if entity:Health() - newDamage < 10 then
 										local hatred = entity:GetNetVar("Hatred");
 										
 										if hatred and hatred >= 100 then
-											if !cwRituals or (cwRituals and !entity.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then
-												if !entity.opponent then
-													entity:SetCharacterData("Hatred", 0);
-												end
-												
-												entity:SetLocalVar("Hatred", 0);
-												entity:Extinguish();
-
-												for k, v in pairs(ents.FindInSphere(entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
-													if v:IsPlayer() then
-														Clockwork.chatBox:Add(v, attacker, "me", "efficiently strikes out at a pressure point of "..Clockwork.player:FormatRecognisedText(v, "%s", entity)..", but their hatred is so strong that they simply refuse to die!");
-													end
-												end
-												
-												if cwMedicalSystem then
-													entity.nextBleedPoint = CurTime() + 180;
-												end
-												
-												if entity.poisonTicks then
-													entity.poisonTicks = nil;
-												end
-												
-												damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
-												return;
+											if !entity.opponent then
+												entity:SetCharacterData("Hatred", 0);
 											end
+											
+											entity:SetLocalVar("Hatred", 0);
+											entity:Extinguish();
+
+											for k, v in pairs(ents.FindInSphere(entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
+												if v:IsPlayer() then
+													Clockwork.chatBox:Add(v, attacker, "me", "efficiently strikes out at a pressure point of "..Clockwork.player:FormatRecognisedText(v, "%s", entity)..", but their hatred is so strong that they simply refuse to die!");
+												end
+											end
+											
+											if cwMedicalSystem then
+												entity.nextBleedPoint = CurTime() + 180;
+											end
+											
+											if entity.poisonTicks then
+												entity.poisonTicks = nil;
+											end
+											
+											damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
+											return;
 										end
 									end
 									
@@ -1278,25 +1276,27 @@ function cwBeliefs:DoPlayerDeathPreDeathSound(player, attacker, damageInfo)
 						physicsObject:SetAngleVelocity(VectorRand() * 66);
 					end
 					
-					local helmetItem = player:GetHelmetEquipped();
-					
-					if helmetItem then
-						if hook.Run("PlayerCanDropWeapon", player, helmetItem, NULL, true) then
-							if !helmetItem.attributes or !table.HasValue(helmetItem.attributes, "not_unequippable") then
-								helmetItem:TakeCondition(math.random(20, 40));
-							end
+					if !player.opponent then
+						local helmetItem = player:GetHelmetEquipped();
 						
-							local entity = Clockwork.entity:CreateItem(player, helmetItem, headEnt:GetPos() + Vector(0, 0, 16), headEnt:GetAngles());
-
-							if (IsValid(entity)) then
-								local helmetPhysObject = entity:GetPhysicsObject();
-								
-								if IsValid(helmetPhysObject) then
-									helmetPhysObject:SetVelocity(physicsObject:GetVelocity());
-									helmetPhysObject:SetAngleVelocity(physicsObject:GetAngleVelocity());
+						if helmetItem then
+							if hook.Run("PlayerCanDropWeapon", player, helmetItem, NULL, true) then
+								if !helmetItem.attributes or !table.HasValue(helmetItem.attributes, "not_unequippable") then
+									helmetItem:TakeCondition(math.random(20, 40));
 								end
 							
-								player:TakeItem(helmetItem, true);
+								local entity = Clockwork.entity:CreateItem(player, helmetItem, headEnt:GetPos() + Vector(0, 0, 16), headEnt:GetAngles());
+
+								if (IsValid(entity)) then
+									local helmetPhysObject = entity:GetPhysicsObject();
+									
+									if IsValid(helmetPhysObject) then
+										helmetPhysObject:SetVelocity(physicsObject:GetVelocity());
+										helmetPhysObject:SetAngleVelocity(physicsObject:GetAngleVelocity());
+									end
+								
+									player:TakeItem(helmetItem, true);
+								end
 							end
 						end
 					end
