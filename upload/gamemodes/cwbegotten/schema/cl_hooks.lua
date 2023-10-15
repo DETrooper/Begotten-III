@@ -1509,7 +1509,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 					
 					if table.HasValue(itemTable.attributes, "grounded") then
-						frame:AddText("Grounded: Damage while running is decreased by 60%.", Color(110, 30, 30));
+						frame:AddText("Grounded: Cannot attack while sprinting.", Color(110, 30, 30));
 					end
 					
 					if table.HasValue(itemTable.attributes, "fire") then

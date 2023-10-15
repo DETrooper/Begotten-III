@@ -343,6 +343,16 @@ function SWEP:CanPrimaryAttack()
 		return false;
 	end
 	
+	if self.Owner:IsRunning() and !self.Owner:HasBelief("manifesto") then
+		local weaponClass = self:GetClass();
+		
+		if string.find(weaponClass, "begotten_spear") or string.find(weaponClass, "begotten_scythe") or string.find(weaponClass, "begotten_polearm") then
+			if weaponClass ~= "begotten_polearm_quarterstaff" then
+				return false;
+			end
+		end
+	end
+	
 	return self.Owner:GetNWInt("meleeStamina") >= (attacktable["takeammo"])
 end
 

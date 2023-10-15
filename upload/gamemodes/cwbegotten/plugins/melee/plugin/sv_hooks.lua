@@ -799,7 +799,7 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 				if IsValid(attackerWeapon) then
 					local weaponClass = attackerWeapon:GetClass();
 					
-					if string.find(weaponClass, "begotten_spear") or string.find(weaponClass, "begotten_polearm") then
+					if string.find(weaponClass, "begotten_spear") or string.find(weaponClass, "begotten_scythe") or string.find(weaponClass, "begotten_polearm") then
 						if weaponClass ~= "begotten_polearm_quarterstaff" then
 							damageInfo:ScaleDamage(0.4);
 						end
