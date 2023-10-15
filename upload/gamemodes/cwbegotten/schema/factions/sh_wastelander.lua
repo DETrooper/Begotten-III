@@ -107,11 +107,12 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 		[11] = "Master-At-Arms",
 		[12] = "Scout",
 		[13] = "Master Scout",
+		[14] = "Acolyte-Evocatus",
 	};
 	
 	Schema.RankTiers["Gatekeeper"] = {
 		[1] = {"Disciple"},
-		[2] = {"Acolyte", "Smith", "Medicus", "Scout"},
+		[2] = {"Acolyte", "Acolyte-Evocatus", "Smith", "Medicus", "Scout"},
 		[3] = {"Emissary", "Forgemaster", "Master Medicus", "Master Scout", "Vexillifer", "Squire"},
 		[4] = {"High Gatekeeper"},
 		[5] = {"Master-At-Arms"},
@@ -136,6 +137,7 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 		[11] = 200,
 		[12] = 50,
 		[13] = 100,
+		[14] = 50,
 	};
 FACTION_GATEKEEPER = FACTION:Register();
 
