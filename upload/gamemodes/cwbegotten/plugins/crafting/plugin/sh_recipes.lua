@@ -2937,11 +2937,12 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("war_hammer");
 		RECIPE.name = "War Hammer";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
 			["wood"] = {amount = 2},
 			["leather"] = {amount = 1},
 		};
