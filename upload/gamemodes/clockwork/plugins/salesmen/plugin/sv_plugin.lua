@@ -31,6 +31,10 @@ netstream.Hook("Salesmenu", function(player, data)
 				if (data.entity.cwPriceScale) then
 					cost = cost * data.entity.cwPriceScale
 				end
+				
+				if cwBeliefs and player:HasBelief("fortune_finisher") then
+					cost = math.max(1, math.Round(cost * 0.9));
+				end
 
 				if (data.entity.cwBuyInShipments) then
 					amount = itemTable.batch

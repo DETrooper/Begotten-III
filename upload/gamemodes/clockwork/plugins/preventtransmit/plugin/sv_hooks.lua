@@ -1,14 +1,14 @@
 function cwTransmit:RecursiveSetPreventTransmit(ent, ply, stopTransmitting)
-    if ent != ply and IsValid(ent) and IsValid(ply) then
-        ent:SetPreventTransmit(ply, stopTransmitting)
+    if ent == ply or !IsValid(ent) or !IsValid(ply) then return; end
 
-        local tab = ent:GetChildren()
+    ent:SetPreventTransmit(ply, stopTransmitting);
 
-        for i = 1, #tab do
-            if IsValid(tab[i]) then
-                RecursiveSetPreventTransmit(tab[i], ply, stopTransmitting);
-            end
-        end
+    local tab = ent:GetChildren();
+
+    for i = 1, #tab do
+        if !IsValid(tab[i]) then continue; end
+
+        self:RecursiveSetPreventTransmit(tab[ i ], ply, stopTransmitting);
     end
 end
 
@@ -16,11 +16,11 @@ function cwTransmit:DisableNetworking(client, disable)
     local plys = 0
 
     for _, v in ipairs(player.GetAll()) do
-        if v:IsAdmin() or v == client or !IsValid(v) then continue end
+        if v:IsAdmin() or v == client or !IsValid(v) then continue; end
 
-        RecursiveSetPreventTransmit(client, v, disable)
+        self:RecursiveSetPreventTransmit(client, v, disable);
 
-        plys = plys + 1
+        plys = plys + 1;
     end
 end
 
@@ -33,10 +33,10 @@ function cwTransmit:PreMakePlayerExitObserverMode(player)
 end
 
 function cwTransmit:PlayerInitialSpawn(player)
-    if (player:IsAdmin()) then return; end
+    if(player:IsAdmin()) then return; end
 
     for _, v in ipairs(_player.GetAll()) do
-        if (!v:IsAdmin() or v:GetMoveType() != MOVETYPE_NOCLIP) then continue; end
+        if(!v:IsAdmin() or v:GetMoveType() != MOVETYPE_NOCLIP) then continue; end
 
         self:RecursiveSetPreventTransmit(v, player, true);
     end

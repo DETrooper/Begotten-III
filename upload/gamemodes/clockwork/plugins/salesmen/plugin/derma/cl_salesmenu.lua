@@ -344,6 +344,8 @@ function PANEL:Think()
 					self.spawnIcon.conditionBar.fill:SetColor(Color(1 * (100 - condition), 1 * condition, 0, 225));
 				end
 			end
+		elseif cwBeliefs and cwBeliefs:HasBelief("fortune_finisher") then
+			overrideCash = math.max(1, math.Round(overrideCash * 0.9));
 		end
 		
 		if overrideCash and (type(overrideCash) == "number") and overrideCash > 0 then

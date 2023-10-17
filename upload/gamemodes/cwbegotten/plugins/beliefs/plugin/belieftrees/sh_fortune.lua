@@ -13,7 +13,7 @@ local FORTUNE = cwBeliefs.beliefTrees:New("fortune")
 		{"Fortune", FORTUNE.color, "Civ5ToolTip4"},
 		{"Fortune is a measure of your character's luck. Neglecting this belief tree for others may contribute to your character's demise, while upgrading it may improve your character's chances of escaping perilous situations as well improving as your character's scavenging ability.", Color(225, 200, 200)},
 		{"\n\"Practice the coin in your only hand. Your other fell off in rot...\"", Color(128, 90, 90, 240)},
-		{"\nBelief Tree Completion Bonus: Increases the chance of finding exceedingly rare items.", Color(50, 255, 50)}
+		{"\nBelief Tree Completion Bonus: Increases the chance of finding exceedingly rare items. Reduces the cost of all items from salesmen by 10%.", Color(50, 255, 50)}
 	};
 	FORTUNE.columnPositions = {
 		[1] = (FORTUNE.size.w - 4) * 0.3,
