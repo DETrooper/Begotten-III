@@ -180,7 +180,7 @@ function cwLantern:GetBars(bars)
 		if (activeClass == "cw_lantern") then
 			local oil = Clockwork.Client:GetSharedVar("oil", 0);
 			
-			if (oil < 50) then
+			--if (oil < 50) then
 				local oilColor = oil / 100;
 				local color = Color(255 * oilColor, 200 * oilColor, 50 * oilColor);
 				local oilText = self:GetOilText();
@@ -194,7 +194,7 @@ function cwLantern:GetBars(bars)
 					
 					bars:Add("OIL", color, oilText, self.oil, 100, self.oil < 10);
 				end;
-			end;
+			--end;
 		end;
 	end;
 end;

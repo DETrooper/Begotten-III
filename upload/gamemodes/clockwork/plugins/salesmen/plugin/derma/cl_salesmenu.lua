@@ -322,6 +322,28 @@ function PANEL:Think()
 		
 		if self.typeName == "Buys" then
 			overrideCash = Clockwork.salesmenu.buys[self.itemTable.uniqueID];
+			
+			local condition = self.itemTable:GetCondition();
+			
+			if condition and condition < 100 then
+				overrideCash = math.max(1, math.Round(overrideCash * Lerp(condition / 100, 0.15, 1)));
+			
+				if condition <= 0 then
+					self.spawnIcon.brokenOverlay = vgui.Create("DImage", self.spawnIcon);
+					self.spawnIcon.brokenOverlay:SetImage("begotten/ui/itemicons/broken_item1.png");
+					self.spawnIcon.brokenOverlay:SetSize(64, 64);
+				else
+					self.spawnIcon.conditionBar = vgui.Create("DImage", self.spawnIcon);
+					self.spawnIcon.conditionBar:SetImage("begotten/ui/conditionframe.png");
+					self.spawnIcon.conditionBar:SetPos(4, 56);
+					self.spawnIcon.conditionBar:SetSize(56, 6);
+					self.spawnIcon.conditionBar.fill = vgui.Create("DShape", self.spawnIcon.conditionBar);
+					self.spawnIcon.conditionBar.fill:SetType("Rect");
+					self.spawnIcon.conditionBar.fill:SetPos(2, 2);
+					self.spawnIcon.conditionBar.fill:SetSize(52 * (condition / 100), 2);
+					self.spawnIcon.conditionBar.fill:SetColor(Color(1 * (100 - condition), 1 * condition, 0, 225));
+				end
+			end
 		end
 		
 		if overrideCash and (type(overrideCash) == "number") and overrideCash > 0 then
@@ -347,7 +369,12 @@ function PANEL:Think()
 			end
 			
 			self.spawnIcon.cost:SizeToContents();
-			self.spawnIcon.cost:SetPos(4, 46);
+			
+			if self.spawnIcon.conditionBar then
+				self.spawnIcon.cost:SetPos(4, 38);
+			else
+				self.spawnIcon.cost:SetPos(4, 46);
+			end
 		elseif self.spawnIcon and self.spawnIcon.cost then
 			self.spawnIcon.cost:Remove();
 		end

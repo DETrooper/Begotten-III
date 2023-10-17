@@ -4,6 +4,8 @@
 
 -- A function to make a player exit observer mode.
 function cwObserverMode:MakePlayerExitObserverMode(player)
+	hook.Run("PreMakePlayerExitObserverMode", player);
+
 	player.cwObserverReset = true
 	player:DrawWorldModel(true)
 	player:DrawShadow(true)
@@ -30,6 +32,8 @@ end
 
 -- A function to make a player enter observer mode.
 function cwObserverMode:MakePlayerEnterObserverMode(player)
+	hook.Run("PreMakePlayerEnterObserverMode", player);
+
 	player.cwObserverMoveType = player:GetMoveType()
 	player.cwObserverPos = player:GetPos()
 	player.cwObserverAng = player:EyeAngles()

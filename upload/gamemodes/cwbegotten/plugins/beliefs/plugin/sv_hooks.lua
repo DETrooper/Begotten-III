@@ -639,7 +639,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			local chance = 0;
 			
 			if entity:HasBelief("lucky") then
-				chance = chance + 10;
+				chance = chance + 5;
 			end
 			
 			if entity.GetCharmEquipped and entity:GetCharmEquipped("ring_distorted") then

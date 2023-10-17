@@ -18,24 +18,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(337.13, 76.57, 355.26);
 	ITEM.attachmentOffsetVector = Vector(-4.95, 3.54, 12.73);
 	ITEM.lantern = true;
-	--ITEM.customFunctions = {"Wear On Hip"};
-	--ITEM:AddData("IsWorn", false, true);
 
-	--[[if (SERVER) then
-		function ITEM:OnCustomFunction(player, name)
-			if (name == "Wear On Hip") then
-				if (self:GetData("IsWorn", false) == true) then
-					return;
-				end;
-				
-				self:SetData("IsWorn", true);
-			end;
-		end;
-	end;--]]
-	--[[
-	function ITEM:OnHolster(player, bForced)
-		self:SetData("IsWorn", false);
-	end;--]]
+	ITEM:AddData("oil", 0, true);
 	
-	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 250, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Industrial Junk", rarity = 500, bNoSupercrate = true};
 ITEM:Register();

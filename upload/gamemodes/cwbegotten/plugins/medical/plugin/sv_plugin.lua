@@ -104,7 +104,7 @@ end;
 
 -- Called when a player uses a medical item.
 function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
-	if (!IsValid(player) or !itemTable or !player:Alive()) then
+	if (!IsValid(player) or !itemTable or !player:HasItemInstance(itemTable) or !player:Alive()) then
 		return;
 	end;
 
@@ -266,6 +266,8 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 			if cwBeliefs then
 				player:HandleXP(itemTable.useXP or 5);
 			end
+			
+			player:TakeItem(itemTable);
 
 			return true;
 		end);
@@ -278,7 +280,7 @@ end;
 
 -- Called when a player attempts to heal a target.
 function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
-	if (!IsValid(player) or !IsValid(target) or !itemTable or !player:Alive() or !target:Alive()) then
+	if (!IsValid(player) or !IsValid(target) or !itemTable or !player:HasItemInstance(itemTable) or !player:Alive() or !target:Alive()) then
 		return;
 	end;
 	
@@ -459,6 +461,8 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 					
 					player:HandleXP(healXP);
 				end
+				
+				player:TakeItem(itemTable);
 			end);
 		else
 			Schema:EasyText(player, "peru","This player is already healing!");

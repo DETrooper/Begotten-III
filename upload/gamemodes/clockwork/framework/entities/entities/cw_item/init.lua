@@ -47,6 +47,8 @@ function ENT:SetItemTable(itemTable)
 			itemTable:OnCreated(self);
 		end;
 		
+		self:SetHealth(math.max(1, math.Round((itemTable:GetCondition() or 100) / 4)));
+		
 		self.cwItemTable = itemTable;
 		
 		Clockwork.item:RemoveItemEntity(self);
@@ -89,6 +91,10 @@ function ENT:OnTakeDamage(damageInfo)
 		
 		--if (damage > 0) then
 			self:SetHealth(math.max(self:Health() - damage, 0));
+			
+			if !itemTable.attributes or !table.HasValue(itemTable.attributes, "conditionless") then
+				itemTable:TakeCondition(damageInfo:GetDamage() * 4);
+			end
 			
 			if (self:Health() <= 0) then
 				if (itemTable.OnEntityDestroyed) then

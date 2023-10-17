@@ -62,8 +62,6 @@ local ITEM = Clockwork.item:New(nil, true)
 				
 				cwMedicalSystem:PlayerUseMedical(player, self, hitGroup);
 				--Clockwork.plugin:Call("PlayerUseMedical", player, self, hitGroup);
-				
-				player:TakeItem(self);
 			end;
 		end;
 	end;
@@ -91,8 +89,6 @@ local ITEM = Clockwork.item:New(nil, true)
 				if !self.isSurgeryItem then
 					cwMedicalSystem:HealPlayer(player, target, self, hitGroup);
 					--Clockwork.plugin:Call("HealPlayer", player, target, self, hitGroup);
-					
-					player:TakeItem(self);
 				else
 					cwMedicalSystem:PerformSurgeryOnPlayer(player, target, self, hitGroup);
 				end

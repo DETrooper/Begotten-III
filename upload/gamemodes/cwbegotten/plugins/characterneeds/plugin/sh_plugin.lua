@@ -93,9 +93,9 @@ function COMMAND:OnRun(player, arguments)
 	end
 
 	if (player:GetNeed("sleep") >= 40) then
-		if cwShacks and player:InsideOwnedShack() then
+		if cwShacks then
 			for k, v in pairs(cwShacks.shacks) do
-				if v.owner == player:GetCharacterKey() then
+				if player:GetPos():WithinAABox(v.pos1, v.pos2) then
 					if v.bedTier >= 2 then
 						player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
 					else
@@ -106,122 +106,102 @@ function COMMAND:OnRun(player, arguments)
 					--player:HandleNeed("sleep", rest);
 					
 					Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 300);
-					Schema:EasyText(player, "olivedrab", "You climb into your bed and get some rest.");
-					break;
-				end
-			end
-		else
-			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
-			local playerPos = player:GetPos();
-			
-			if faction == "Gatekeeper" or faction == "Holy Hierarchy" then
-				--print(cwCharacterNeeds.bedZones["gatekeeper"].pos1);
-				--print(cwCharacterNeeds.bedZones["gatekeeper"].pos2);
-				--print(playerPos);
-				--print(playerPos:WithinAABox(cwCharacterNeeds.bedZones["gatekeeper"].pos2, cwCharacterNeeds.bedZones["gatekeeper"].pos1));
-			
-				if cwCharacterNeeds.bedZones["gatekeeper"] and playerPos:WithinAABox(cwCharacterNeeds.bedZones["gatekeeper"].pos2, cwCharacterNeeds.bedZones["gatekeeper"].pos1) then
-					player.sleepData = {health = 25, hunger = 10, thirst = 20, rest = -60, sanity = 25};
-					--player:HandleSanity(25);
-					--player:HandleNeed("hunger", 10);
-					--player:HandleNeed("thirst", 20);
-					--player:HandleNeed("sleep", -60);
 					
-					Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 150);
-					Schema:EasyText(player, "olivedrab", "You climb into a cot and get some rest.");
-					return;
-				elseif faction == "Holy Hierarchy" then
-					if player:GetSubfaction() == "Minister" and cwCharacterNeeds.bedZones["ministers"] then
-						if playerPos:WithinAABox(cwCharacterNeeds.bedZones["ministers"].pos1, cwCharacterNeeds.bedZones["ministers"].pos2) then
-							player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
-							--player:HandleSanity(50);
-							--player:HandleNeed("hunger", 5);
-							--player:HandleNeed("thirst", 10);
-							--player:HandleNeed("sleep", -100);
-							
-					Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
-							Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
-							return;
-						end
+					if v.owner == player:GetCharacterKey() then
+						Schema:EasyText(player, "olivedrab", "You climb into your bed and get some rest.");
+					else
+						Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
 					end
 					
-					if cwCharacterNeeds.bedZones["hierarchy"] and playerPos:WithinAABox(cwCharacterNeeds.bedZones["hierarchy"].pos1, cwCharacterNeeds.bedZones["hierarchy"].pos2) then
+					return;
+				end
+			end
+		end
+		
+		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		local playerPos = player:GetPos();
+		
+		if faction == "Gatekeeper" or faction == "Holy Hierarchy" then
+			--print(cwCharacterNeeds.bedZones["gatekeeper"].pos1);
+			--print(cwCharacterNeeds.bedZones["gatekeeper"].pos2);
+			--print(playerPos);
+			--print(playerPos:WithinAABox(cwCharacterNeeds.bedZones["gatekeeper"].pos2, cwCharacterNeeds.bedZones["gatekeeper"].pos1));
+		
+			if cwCharacterNeeds.bedZones["gatekeeper"] and playerPos:WithinAABox(cwCharacterNeeds.bedZones["gatekeeper"].pos2, cwCharacterNeeds.bedZones["gatekeeper"].pos1) then
+				player.sleepData = {health = 25, hunger = 10, thirst = 20, rest = -60, sanity = 25};
+				--player:HandleSanity(25);
+				--player:HandleNeed("hunger", 10);
+				--player:HandleNeed("thirst", 20);
+				--player:HandleNeed("sleep", -60);
+				
+				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 150);
+				Schema:EasyText(player, "olivedrab", "You climb into a cot and get some rest.");
+				return;
+			elseif faction == "Holy Hierarchy" then
+				if player:GetSubfaction() == "Minister" and cwCharacterNeeds.bedZones["ministers"] then
+					if playerPos:WithinAABox(cwCharacterNeeds.bedZones["ministers"].pos1, cwCharacterNeeds.bedZones["ministers"].pos2) then
 						player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
 						--player:HandleSanity(50);
 						--player:HandleNeed("hunger", 5);
 						--player:HandleNeed("thirst", 10);
 						--player:HandleNeed("sleep", -100);
 						
-					Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
+				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
 						Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
 						return;
 					end
 				end
-			elseif faction == "Goreic Warrior" and cwCharacterNeeds.bedZones["gores"] then
-				if playerPos:WithinAABox(cwCharacterNeeds.bedZones["gores"].pos1, cwCharacterNeeds.bedZones["gores"].pos2) then
-					player.sleepData = {health = 25, hunger = 10, thirst = 20, rest = -60, sanity = 25};
-					--player:HandleSanity(25);
-					--player:HandleNeed("hunger", 10);
-					--player:HandleNeed("thirst", 20);
-					--player:HandleNeed("sleep", -60);
-					
-					Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 150);
-					Schema:EasyText(player, "olivedrab", "You climb into a cot and get some rest.");
-					return;
-				elseif playerPos:WithinAABox(cwCharacterNeeds.bedZones["gorehut"].pos1, cwCharacterNeeds.bedZones["gorehut"].pos2) then
-					player.sleepData = {health = 25, hunger = 10, thirst = 20, rest = -60, sanity = 25};
-					--player:HandleSanity(25);
-					--player:HandleNeed("hunger", 10);
-					--player:HandleNeed("thirst", 20);
-					--player:HandleNeed("sleep", -60);
-					
-					Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 150);
-					Schema:EasyText(player, "olivedrab", "You climb into a cot and get some rest.");
-					return;
-				end
-				-- GetFaction() check incase they're disguised.
-			elseif player:GetFaction() == "Children of Satan" and cwCharacterNeeds.bedZones["satanists"] then
-				if playerPos:WithinAABox(cwCharacterNeeds.bedZones["satanists"].pos1, cwCharacterNeeds.bedZones["satanists"].pos2) then
+				
+				if cwCharacterNeeds.bedZones["hierarchy"] and playerPos:WithinAABox(cwCharacterNeeds.bedZones["hierarchy"].pos1, cwCharacterNeeds.bedZones["hierarchy"].pos2) then
 					player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
 					--player:HandleSanity(50);
 					--player:HandleNeed("hunger", 5);
 					--player:HandleNeed("thirst", 10);
 					--player:HandleNeed("sleep", -100);
 					
-					Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
+				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
 					Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
 					return;
 				end
-			elseif faction == "Smog City Pirate" then
-				if cwCharacterNeeds.bedZones["scrapper1"] then
-					if playerPos:WithinAABox(cwCharacterNeeds.bedZones["scrapper1"].pos1, cwCharacterNeeds.bedZones["scrapper1"].pos2) then
-						player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
-						--player:HandleSanity(50);
-						--player:HandleNeed("hunger", 5);
-						--player:HandleNeed("thirst", 10);
-						--player:HandleNeed("sleep", -100);
-						
-						Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
-						Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
-						return;
-					end
-				end
-			
-				if cwCharacterNeeds.bedZones["scrapper2"] then
-					if playerPos:WithinAABox(cwCharacterNeeds.bedZones["scrapper2"].pos1, cwCharacterNeeds.bedZones["scrapper2"].pos2) then
-						player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
-						--player:HandleSanity(50);
-						--player:HandleNeed("hunger", 5);
-						--player:HandleNeed("thirst", 10);
-						--player:HandleNeed("sleep", -100);
-						
-						Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
-						Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
-						return;
-					end
-				end
-			elseif (faction == "The Third Inquisition" or game.GetMap() == "rp_scraptown") and cwCharacterNeeds.bedZones["third_inquisition"] then
-				if playerPos:WithinAABox(cwCharacterNeeds.bedZones["third_inquisition"].pos1, cwCharacterNeeds.bedZones["third_inquisition"].pos2) then
+			end
+		elseif faction == "Goreic Warrior" and cwCharacterNeeds.bedZones["gores"] then
+			if playerPos:WithinAABox(cwCharacterNeeds.bedZones["gores"].pos1, cwCharacterNeeds.bedZones["gores"].pos2) then
+				player.sleepData = {health = 25, hunger = 10, thirst = 20, rest = -60, sanity = 25};
+				--player:HandleSanity(25);
+				--player:HandleNeed("hunger", 10);
+				--player:HandleNeed("thirst", 20);
+				--player:HandleNeed("sleep", -60);
+				
+				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 150);
+				Schema:EasyText(player, "olivedrab", "You climb into a cot and get some rest.");
+				return;
+			elseif playerPos:WithinAABox(cwCharacterNeeds.bedZones["gorehut"].pos1, cwCharacterNeeds.bedZones["gorehut"].pos2) then
+				player.sleepData = {health = 25, hunger = 10, thirst = 20, rest = -60, sanity = 25};
+				--player:HandleSanity(25);
+				--player:HandleNeed("hunger", 10);
+				--player:HandleNeed("thirst", 20);
+				--player:HandleNeed("sleep", -60);
+				
+				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 150);
+				Schema:EasyText(player, "olivedrab", "You climb into a cot and get some rest.");
+				return;
+			end
+			-- GetFaction() check incase they're disguised.
+		elseif player:GetFaction() == "Children of Satan" and cwCharacterNeeds.bedZones["satanists"] then
+			if playerPos:WithinAABox(cwCharacterNeeds.bedZones["satanists"].pos1, cwCharacterNeeds.bedZones["satanists"].pos2) then
+				player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
+				--player:HandleSanity(50);
+				--player:HandleNeed("hunger", 5);
+				--player:HandleNeed("thirst", 10);
+				--player:HandleNeed("sleep", -100);
+				
+				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
+				Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
+				return;
+			end
+		elseif faction == "Smog City Pirate" then
+			if cwCharacterNeeds.bedZones["scrapper1"] then
+				if playerPos:WithinAABox(cwCharacterNeeds.bedZones["scrapper1"].pos1, cwCharacterNeeds.bedZones["scrapper1"].pos2) then
 					player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
 					--player:HandleSanity(50);
 					--player:HandleNeed("hunger", 5);
@@ -234,26 +214,52 @@ function COMMAND:OnRun(player, arguments)
 				end
 			end
 		
-			if cwCharacterNeeds.bedZones["castle"] and playerPos:WithinAABox(cwCharacterNeeds.bedZones["castle"].pos2, cwCharacterNeeds.bedZones["castle"].pos1) then
-				player.sleepData = {health = 25, hunger = 10, thirst = 20, rest = -60, sanity = 25};
-				--player:HandleSanity(25);
-				--player:HandleNeed("hunger", 10);
-				--player:HandleNeed("thirst", 20);
-				--player:HandleNeed("sleep", -60);
+			if cwCharacterNeeds.bedZones["scrapper2"] then
+				if playerPos:WithinAABox(cwCharacterNeeds.bedZones["scrapper2"].pos1, cwCharacterNeeds.bedZones["scrapper2"].pos2) then
+					player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
+					--player:HandleSanity(50);
+					--player:HandleNeed("hunger", 5);
+					--player:HandleNeed("thirst", 10);
+					--player:HandleNeed("sleep", -100);
+					
+					Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
+					Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
+					return;
+				end
+			end
+		elseif (faction == "The Third Inquisition" or game.GetMap() == "rp_scraptown") and cwCharacterNeeds.bedZones["third_inquisition"] then
+			if playerPos:WithinAABox(cwCharacterNeeds.bedZones["third_inquisition"].pos1, cwCharacterNeeds.bedZones["third_inquisition"].pos2) then
+				player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
+				--player:HandleSanity(50);
+				--player:HandleNeed("hunger", 5);
+				--player:HandleNeed("thirst", 10);
+				--player:HandleNeed("sleep", -100);
 				
-				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 150);
-				Schema:EasyText(player, "olivedrab", "You climb into a cot and get some rest.");
+				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
+				Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
 				return;
 			end
-			
-			player.sleepData = {health = 10, hunger = 15, thirst = 30, rest = -30};
-			--player:HandleNeed("hunger", 15);
-			--player:HandleNeed("thirst", 30);
-			--player:HandleNeed("sleep", -30);
-			
-			Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 300);
-			Schema:EasyText(player, "olivedrab", "You clamber onto the ground and attempt to get some rest.");
 		end
+	
+		if cwCharacterNeeds.bedZones["castle"] and playerPos:WithinAABox(cwCharacterNeeds.bedZones["castle"].pos2, cwCharacterNeeds.bedZones["castle"].pos1) then
+			player.sleepData = {health = 25, hunger = 10, thirst = 20, rest = -60, sanity = 25};
+			--player:HandleSanity(25);
+			--player:HandleNeed("hunger", 10);
+			--player:HandleNeed("thirst", 20);
+			--player:HandleNeed("sleep", -60);
+			
+			Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 150);
+			Schema:EasyText(player, "olivedrab", "You climb into a cot and get some rest.");
+			return;
+		end
+		
+		player.sleepData = {health = 10, hunger = 15, thirst = 30, rest = -30};
+		--player:HandleNeed("hunger", 15);
+		--player:HandleNeed("thirst", 30);
+		--player:HandleNeed("sleep", -30);
+		
+		Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 300);
+		Schema:EasyText(player, "olivedrab", "You clamber onto the ground and attempt to get some rest.");
 	else
 		Schema:EasyText(player, "firebrick", "You are not tired enough to sleep!");
 	end;

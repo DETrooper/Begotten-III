@@ -575,8 +575,6 @@ local ITEM = Clockwork.item:New();
 						
 						cwMedicalSystem:PlayerUseMedical(player, self, hitGroup);
 						--Clockwork.plugin:Call("PlayerUseMedical", player, self, hitGroup);
-						
-						player:TakeItem(self);
 					end;
 				else
 					local d = DamageInfo()
@@ -617,8 +615,6 @@ local ITEM = Clockwork.item:New();
 						if !self.isSurgeryItem then
 							cwMedicalSystem:HealPlayer(player, target, self, hitGroup);
 							--Clockwork.plugin:Call("HealPlayer", player, target, self, hitGroup);
-							
-							player:TakeItem(self);
 						else
 							cwMedicalSystem:PerformSurgeryOnPlayer(player, target, self, hitGroup);
 						end
@@ -737,8 +733,6 @@ local ITEM = Clockwork.item:New();
 						
 						cwMedicalSystem:PlayerUseMedical(player, self, hitGroup);
 						--Clockwork.plugin:Call("PlayerUseMedical", player, self, hitGroup);
-						
-						player:TakeItem(self);
 					end;
 				else
 					local d = DamageInfo()
@@ -777,8 +771,6 @@ local ITEM = Clockwork.item:New();
 						if !self.isSurgeryItem then
 							cwMedicalSystem:HealPlayer(player, target, self, hitGroup);
 							--Clockwork.plugin:Call("HealPlayer", player, target, self, hitGroup);
-							
-							player:TakeItem(self);
 						else
 							cwMedicalSystem:PerformSurgeryOnPlayer(player, target, self, hitGroup);
 						end

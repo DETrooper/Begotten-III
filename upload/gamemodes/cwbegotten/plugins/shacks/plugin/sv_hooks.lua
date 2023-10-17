@@ -5,10 +5,11 @@
 
 local playerMeta = FindMetaTable("Player");
 
-cwShacks.expireTime = 604800; -- 1 week in seconds.
+cwShacks.expireTime = 1209600; -- 2 weeks in seconds.
 
 local charactersTable = config.Get("mysql_characters_table"):Get()
 local map = game.GetMap() == "rp_begotten3";
+
 -- Called when Clockwork has loaded all of the entities.
 function cwShacks:ClockworkInitPostEntity()
 	if (!map) then
@@ -17,21 +18,6 @@ function cwShacks:ClockworkInitPostEntity()
 	
 	self:LoadShackData()
 end
-
--- Called when a player's shared variables should be set.
---[[function cwShacks:OnePlayerSecond(player, curTime)
-	if self.shacks then
-		player:SetSharedVar("shack", player:GetOwnedShack());
-	else
-		self:LoadShackData();
-		
-		timer.Simple(5, function()
-			if IsValid(player) then
-				player:SetSharedVar("shack", player:GetOwnedShack());
-			end
-		end);
-	end
-end;]]--
 
 -- A function for when a player purchases (or attempts to purchase) a shack!
 function cwShacks:ShackPurchased(player, shack)
@@ -63,14 +49,14 @@ function cwShacks:ShackPurchased(player, shack)
 					v.stash = {};
 					v.stashCash = 0;
 					
-					Clockwork.player:GiveCash(player, -price, nil, true);
+					Clockwork.player:GiveCash(player, -price, "Bought Property");
 					Clockwork.player:GiveDoor(player, v.doorEnt);
 					Schema:ModifyTowerTreasury(price);
 					
 					player:SetSharedVar("shack", shack);
 					Clockwork.player:GiveSpawnWeapon(player, "cw_keys");
 					
-					self:NetworkShackData();
+					self:NetworkShackData(_player.GetAll());
 					self:SaveShackData();
 					
 					Schema:EasyText(player, "olivedrab", "You have bought a property. It will be in your ownership until you expire or if your character has inactive for longer than one week. You may use /OpenStash to access your property's inventory, and the positive effects of /Sleep will be boosted depending on the quality of your property. You will now also spawn with 'Keys' to unlock and lock your property.");
@@ -80,7 +66,7 @@ function cwShacks:ShackPurchased(player, shack)
 				else
 					local amount = price - player:GetCash();
 					
-					Schema:EasyText(player, "chocolate", "You need another "..Clockwork.kernel:FormatCash(price, nil, true).." to purchase this property!");
+					Schema:EasyText(player, "chocolate", "You need another "..Clockwork.kernel:FormatCash(amount, nil, true).." to purchase this property!");
 					
 					return;
 				end
@@ -95,6 +81,47 @@ function cwShacks:ShackPurchased(player, shack)
 	Schema:EasyText(player, "grey", "The property "..shack.." could not be found!");
 end
 
+-- A function for when a player is added as a co-owner to a shack!
+function cwShacks:ShackCoownerAdded(player, shack)
+	for k, v in pairs(self.shacks) do
+		if k == shack then
+			Clockwork.player:GiveDoorAccess(player, v.doorEnt, DOOR_ACCESS_BASIC);
+			Clockwork.player:GiveSpawnWeapon(player, "cw_keys");
+			
+			v.coowners = {};
+			v.coowners[player:GetCharacterKey()] = player:Name();
+			
+			self:NetworkShackData(_player.GetAll());
+			self:SaveShackData();
+		
+			return;
+		end
+	end
+end
+
+-- A function for when a player is added as a co-owner to a shack!
+function cwShacks:ShackCoownerRemoved(coownerKey, shack)
+	for k, v in pairs(self.shacks) do
+		if k == shack then
+			for i, v2 in ipairs(_player.GetAll()) do
+				if v2:GetCharacterKey() == coownerKey then
+					Clockwork.player:TakeDoorAccess(v2, v.doorEnt);
+					Clockwork.player:TakeSpawnWeapon(v2, "cw_keys");
+					
+					break;
+				end
+			end
+			
+			v.coowners[coownerKey] = nil;
+			
+			self:NetworkShackData(_player.GetAll());
+			self:SaveShackData();
+		
+			return;
+		end
+	end
+end
+
 -- A function to sell shacks.
 function cwShacks:ShackSold(player, shack)
 	local characterKey = player:GetCharacterKey();
@@ -107,30 +134,48 @@ function cwShacks:ShackSold(player, shack)
 
 	for k, v in pairs(self.shacks) do
 		if k == shack then
-			local price = v.cost / 2;
-			
-			if Schema.towerTreasury >= price then
-				v.owner = nil;
-				v.stash = nil;
-				v.stashCash = nil;
+			if v.owner == characterKey then
+				local price = v.cost / 2;
 				
-				Clockwork.entity:ClearProperty(v.doorEnt);
-				Clockwork.player:GiveCash(player, (price), nil, true);
-				Schema:ModifyTowerTreasury(-price);
-				
-				player:SetSharedVar("shack", nil);
-				
-				if player:GetFaction() ~= "Holy Hierarchy" then
-					Clockwork.player:TakeSpawnWeapon(player, "cw_keys");
+				if Schema.towerTreasury >= price then
+					v.owner = nil;
+					v.stash = nil;
+					v.stashCash = nil;
+					
+					Clockwork.entity:ClearProperty(v.doorEnt);
+					Clockwork.player:GiveCash(player, price, "Sold Property");
+					Schema:ModifyTowerTreasury(-price);
+					
+					player:SetSharedVar("shack", nil);
+					
+					if player:GetFaction() ~= "Holy Hierarchy" then
+						Clockwork.player:TakeSpawnWeapon(player, "cw_keys");
+					end
+					
+					if v.coowners then
+						for _, v2 in ipairs(_player.GetAll()) do
+							if v2:HasInitialized() and v2:GetFaction() ~= "Holy Hierarchy" then
+								local characterKey = v2:GetCharacterKey();
+								
+								for k2, v3 in pairs(v.coowners) do
+									if k2 == characterKey then
+										Clockwork.player:TakeSpawnWeapon(v2, "cw_keys");
+									end
+								end
+							end
+						end
+						
+						v.coowners = nil;
+					end
+					
+					self:NetworkShackData(_player.GetAll());
+					self:SaveShackData();
+					
+					Schema:EasyText(player, "olivedrab", "You have sold your property for "..Clockwork.kernel:FormatCash(price, nil, true).."!");
+					Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name().." has sold the property '"..k.."' for "..price.." coin! The treasury now sits at "..Schema.towerTreasury..".");
+				else
+					Schema:EasyText(player, "olivedrab", "This property cannot be sold as there is not enough money in the Tower treasury to refund you!");
 				end
-				
-				self:NetworkShackData();
-				self:SaveShackData();
-				
-				Schema:EasyText(player, "olivedrab", "You have sold your property for "..Clockwork.kernel:FormatCash(price, nil, true).."!");
-				Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name().." has sold the property '"..k.."' for "..price.." coin! The treasury now sits at "..Schema.towerTreasury..".");
-			else
-				Schema:EasyText(player, "olivedrab", "This property cannot be sold as there is not enough money in the Tower treasury to refund you!");
 			end
 		end
 	end
@@ -151,9 +196,25 @@ function cwShacks:ShackForeclosed(player, shack)
 				end
 			end
 			
+			if v.coowners then
+				for _, v2 in ipairs(_player.GetAll()) do
+					if v2:HasInitialized() and v2:GetFaction() ~= "Holy Hierarchy" then
+						local characterKey = v2:GetCharacterKey();
+						
+						for k2, v3 in pairs(v.coowners) do
+							if k2 == characterKey then
+								Clockwork.player:TakeSpawnWeapon(v2, "cw_keys");
+							end
+						end
+					end
+				end
+				
+				v.coowners = nil;
+			end
+			
 			Clockwork.entity:ClearProperty(v.doorEnt);
 			
-			self:NetworkShackData();
+			self:NetworkShackData(_player.GetAll());
 			self:SaveShackData();
 			return;
 		end
@@ -177,7 +238,7 @@ function cwShacks:ShackStashOpen(player)
 	for k, v in pairs(self.shacks) do
 		if playerPos:WithinAABox(v.pos1, v.pos2) then
 			if v.owner then
-				if k == player:GetSharedVar("shack") or player:IsAdmin() then
+				if k == player:GetSharedVar("shack") or player:IsAdmin() or v.coowners[characterKey] then
 					if IsValid(v.stashEnt) then
 						v.stashEnt:Remove();
 					end
@@ -284,13 +345,28 @@ function cwShacks:GetPropertyInfo(player, shack)
 										end
 									end
 									
+									local coowners = {};
+									
+									for k, v in pairs(shack.coowners) do
+										table.insert(coowners, v);
+									end
+									
 									local timeLastPlayed = tostring(os.time() - tonumber(v._LastPlayed));
 									
 									if player:IsAdmin() then
 										Schema:EasyText(player, "cornflowerblue", "Property Owner: "..v._Name.." ("..v._SteamName..")");
+										
+										if #coowners > 0 then
+											Schema:EasyText(player, "cornflowerblue", "Property Co-Owners: "..table.concat(coowners, ", "));
+										end
+										
 										Schema:EasyText(player, "cornflowerblue", "(ADMIN DEBUG) Door Ent: "..tostring(shack.doorEnt).."   # of Stash Items: "..tostring(items).."   Time Last Played: "..timeLastPlayed.." seconds ago");
 									else
 										Schema:EasyText(player, "cornflowerblue", "Property Owner: "..v._Name);
+										
+										if #coowners > 0 then
+											Schema:EasyText(player, "cornflowerblue", "Property Co-Owners: "..table.concat(coowners, ", "));
+										end
 									end
 									
 									break;
@@ -374,16 +450,17 @@ function playerMeta:ForecloseShack(shack)
 	cwShacks:ShackForeclosed(self, shack)
 end
 
-function cwShacks:NetworkShackData()
+function cwShacks:NetworkShackData(player)
 	local shackInfo = {};
 	
 	for k, v in pairs(self.shacks) do
-		shackInfo[k] = v.owner;
+		shackInfo[k] = {};
+		
+		shackInfo[k].owner = v.owner;
+		shackInfo[k].coowners = v.coowners;
 	end
 
-	for k, v in pairs (_player.GetAll()) do
-		Clockwork.datastream:Start(v, "ShackInfo", shackInfo);
-	end
+	Clockwork.datastream:Start(player, "ShackInfo", shackInfo);
 end
 
 -- A function to load the shack owners.
@@ -394,31 +471,31 @@ function cwShacks:LoadShackData()
 
 	if !self.shacks then
 		self.shacks = {
-			["A1"] = {pos1 = Vector(37.013779, 12976.841797, -1081), pos2 = Vector(163.824875, 12702.644531, -955.25061), doorPos = Vector(36, 12810, -1026), cost = 500, bedTier = 1, stashSize = 40, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["A2"] = {pos1 = Vector(154.158813, 12434.868164, -976.109253), pos2 = Vector(26.265575, 12692.110352, -1081), doorPos = Vector(25, 12465, -1026.125000), cost = 500, bedTier = 1, stashSize = 40, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["A3"] = {pos1 = Vector(-83.262093, 12162.241211, -1081), pos2 = Vector(-356.620117, 12036.083008, -955.413757), doorPos = Vector(-206, 12164, -1026), cost = 500, bedTier = 1, stashSize = 40, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["A4"] = {pos1 = Vector(-804.436707, 13005.667969, -1081), pos2 = Vector(-673.679993, 12748.556641, -965.855469), doorPos = Vector(-673, 12930, -1026), cost = 500, bedTier = 1, stashSize = 40, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["M1"] = {pos1 = Vector(-843.680786, 12746, -1081), pos2 = Vector(-1117.449219, 12619.226563, -967.197266), doorPos = Vector(-950, 12618, -1022.750000), cost = 700, bedTier = 1, stashSize = 60, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["M2"] = {pos1 = Vector(-2004.016113, 12314.244141, -1081), pos2 = Vector(-1874.978638, 12571.260742, -954.95282), doorPos = Vector(-1875, 12495, -1022.750000), cost = 700, bedTier = 1, stashSize = 60, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["M3"] = {pos1 = Vector(-2004.178711, 12574.166992, -970.9812), pos2 = Vector(-1874.538696, 12831.419922, -1081), doorPos = Vector(-1874, 12801, -1022.875000), cost = 700, bedTier = 1, stashSize = 60, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["M4"] = {pos1 = Vector(-1978.712036, 12960.448242, -1081), pos2 = Vector(-1705.644653, 12836.264648, -952.438416), doorPos = Vector(-1811, 12834.593750, -1022.750000), cost = 700, bedTier = 1, stashSize = 60, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["B1"] = {pos1 = Vector(-876.418213, 12045.673828, -700), pos2 = Vector(-620.080261, 12175.291992, -571.366943), doorPos = Vector(-801, 12176, -643), cost = 350, bedTier = 1, stashSize = 40, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["B2"] = {pos1 = Vector(-569.935791, 12454.107422, -700), pos2 = Vector(-442.82843, 12727.579102, -589.316345), doorPos = Vector(-571, 12560, -643), cost = 350, bedTier = 1, stashSize = 40, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["B3"] = {pos1 = Vector(-397.652679, 12766.617188, -700), pos2 = Vector(-142.196655, 12895.430664, -574.654602), doorPos = Vector(-322, 12896, -643), cost = 350, bedTier = 1, stashSize = 40, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["B4"] = {pos1 = Vector(-285.686066, 13175.671875, -700), pos2 = Vector(-12.448647, 13301.737305, -573.351257), doorPos = Vector(-118, 13175, -643.125000), cost = 350, bedTier = 1, stashSize = 40, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["B5"] = {pos1 = Vector(38.330040, 13160.685547, -700), pos2 = Vector(295.445129, 13290.114258, -592.246033), doorPos = Vector(266, 13161, -643.125000), cost = 350, bedTier = 1, stashSize = 40, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["B6"] = {pos1 = Vector(164.536499, 12892.866211, -700), pos2 = Vector(437.507385, 12766.875977, -588.996704), doorPos = Vector(270, 12894, -643.187500), cost = 350, bedTier = 1, stashSize = 40, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["B7"] = {pos1 = Vector(365.298126, 13161.915039, -700), pos2 = Vector(622.124023, 13290.522461, -593.267456), doorPos = Vector(546, 13161, -643), cost = 350, bedTier = 1, stashSize = 40, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["B8"] = {pos1 = Vector(586.674683, 12731.111328, -700), pos2 = Vector(456.973694, 12474.118164, -592.470886), doorPos = Vector(587, 12656, -643), cost = 350, bedTier = 1, stashSize = 40, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["B9"] = {pos1 = Vector(1206.690674, 12500, -700), pos2 = Vector(1469.100464, 12002, -576), doorPos = Vector(1426, 12505,-643), cost = 1000, bedTier = 2, stashSize = 100, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["B10"] = {pos1 = Vector(1206.690674, 12500, -700), pos2 = Vector(950.859558, 12002, -576), doorPos = Vector(1034, 12505, -643), cost = 1000, bedTier = 2, stashSize = 100, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["B11"] = {pos1 = Vector(-1192.268555, 12500, -700), pos2 = Vector(-933, 12002, -576), doorPos = Vector(-972.96875, 12505, -643), cost = 1000, bedTier = 2, stashSize = 100, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["B12"] = {pos1 = Vector(-1192.268555, 12500, -700), pos2 = Vector(-1453, 12002, -576), doorPos = Vector(-1365, 12505, -643), cost = 1000, bedTier = 2, stashSize = 100, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["C2"] = {pos1 = Vector(-1192.268555, 12500, -505), pos2 = Vector(-1453, 12002, -372), doorPos = Vector(-1365, 12505, -451), cost = 1000, bedTier = 2, stashSize = 100, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["C3"] = {pos1 = Vector(-1710.958252, 12500, -505), pos2 = Vector(-1453, 12002, -372), doorPos = Vector(-1491, 12505, -451), cost = 1000, bedTier = 2, stashSize = 100, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["C4"] = {pos1 = Vector(-1710.958252, 12500, -505), pos2 = Vector(-1966, 12002, -372), doorPos = Vector(-1883, 12505, -451), cost = 1000, bedTier = 2, stashSize = 100, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["D1"] = {pos1 = Vector(-886.894104, 12380.319336, -313), pos2 = Vector(-643.248352, 12032.481445, -201.112366), doorPos = Vector(-656, 12213, -258.718750), cost = 600, bedTier = 1, stashSize = 60, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
-			["D2"] = {pos1 = Vector(-1192.268555, 12500, -315), pos2 = Vector(-933, 12002, -185), doorPos = Vector(-972.968750, 12505, -259), cost = 1000, bedTier = 2, stashSize = 100, doorEnt = nil, owner = nil, stash = nil, stashCash = nil},
+			["A1"] = {pos1 = Vector(37.013779, 12976.841797, -1081), pos2 = Vector(163.824875, 12702.644531, -955.25061), doorPos = Vector(36, 12810, -1026), cost = 500, bedTier = 1, stashSize = 40},
+			["A2"] = {pos1 = Vector(154.158813, 12434.868164, -976.109253), pos2 = Vector(26.265575, 12692.110352, -1081), doorPos = Vector(25, 12465, -1026.125000), cost = 500, bedTier = 1, stashSize = 40},
+			["A3"] = {pos1 = Vector(-83.262093, 12162.241211, -1081), pos2 = Vector(-356.620117, 12036.083008, -955.413757), doorPos = Vector(-206, 12164, -1026), cost = 500, bedTier = 1, stashSize = 40},
+			["A4"] = {pos1 = Vector(-804.436707, 13005.667969, -1081), pos2 = Vector(-673.679993, 12748.556641, -965.855469), doorPos = Vector(-673, 12930, -1026), cost = 500, bedTier = 1, stashSize = 40},
+			["M1"] = {pos1 = Vector(-843.680786, 12746, -1081), pos2 = Vector(-1117.449219, 12619.226563, -967.197266), doorPos = Vector(-950, 12618, -1022.750000), cost = 700, bedTier = 1, stashSize = 60},
+			["M2"] = {pos1 = Vector(-2004.016113, 12314.244141, -1081), pos2 = Vector(-1874.978638, 12571.260742, -954.95282), doorPos = Vector(-1875, 12495, -1022.750000), cost = 700, bedTier = 1, stashSize = 60},
+			["M3"] = {pos1 = Vector(-2004.178711, 12574.166992, -970.9812), pos2 = Vector(-1874.538696, 12831.419922, -1081), doorPos = Vector(-1874, 12801, -1022.875000), cost = 700, bedTier = 1, stashSize = 60},
+			["M4"] = {pos1 = Vector(-1978.712036, 12960.448242, -1081), pos2 = Vector(-1705.644653, 12836.264648, -952.438416), doorPos = Vector(-1811, 12834.593750, -1022.750000), cost = 700, bedTier = 1, stashSize = 60},
+			["B1"] = {pos1 = Vector(-876.418213, 12045.673828, -700), pos2 = Vector(-620.080261, 12175.291992, -571.366943), doorPos = Vector(-801, 12176, -643), cost = 350, bedTier = 1, stashSize = 40},
+			["B2"] = {pos1 = Vector(-569.935791, 12454.107422, -700), pos2 = Vector(-442.82843, 12727.579102, -589.316345), doorPos = Vector(-571, 12560, -643), cost = 350, bedTier = 1, stashSize = 40},
+			["B3"] = {pos1 = Vector(-397.652679, 12766.617188, -700), pos2 = Vector(-142.196655, 12895.430664, -574.654602), doorPos = Vector(-322, 12896, -643), cost = 350, bedTier = 1, stashSize = 40},
+			["B4"] = {pos1 = Vector(-285.686066, 13175.671875, -700), pos2 = Vector(-12.448647, 13301.737305, -573.351257), doorPos = Vector(-118, 13175, -643.125000), cost = 350, bedTier = 1, stashSize = 40},
+			["B5"] = {pos1 = Vector(38.330040, 13160.685547, -700), pos2 = Vector(295.445129, 13290.114258, -592.246033), doorPos = Vector(266, 13161, -643.125000), cost = 350, bedTier = 1, stashSize = 40},
+			["B6"] = {pos1 = Vector(164.536499, 12892.866211, -700), pos2 = Vector(437.507385, 12766.875977, -588.996704), doorPos = Vector(270, 12894, -643.187500), cost = 350, bedTier = 1, stashSize = 40},
+			["B7"] = {pos1 = Vector(365.298126, 13161.915039, -700), pos2 = Vector(622.124023, 13290.522461, -593.267456), doorPos = Vector(546, 13161, -643), cost = 350, bedTier = 1, stashSize = 40},
+			["B8"] = {pos1 = Vector(586.674683, 12731.111328, -700), pos2 = Vector(456.973694, 12474.118164, -592.470886), doorPos = Vector(587, 12656, -643), cost = 350, bedTier = 1, stashSize = 40},
+			["B9"] = {pos1 = Vector(1206.690674, 12500, -700), pos2 = Vector(1469.100464, 12002, -576), doorPos = Vector(1426, 12505,-643), cost = 1000, bedTier = 2, stashSize = 100},
+			["B10"] = {pos1 = Vector(1206.690674, 12500, -700), pos2 = Vector(950.859558, 12002, -576), doorPos = Vector(1034, 12505, -643), cost = 1000, bedTier = 2, stashSize = 100},
+			["B11"] = {pos1 = Vector(-1192.268555, 12500, -700), pos2 = Vector(-933, 12002, -576), doorPos = Vector(-972.96875, 12505, -643), cost = 1000, bedTier = 2, stashSize = 100},
+			["B12"] = {pos1 = Vector(-1192.268555, 12500, -700), pos2 = Vector(-1453, 12002, -576), doorPos = Vector(-1365, 12505, -643), cost = 1000, bedTier = 2, stashSize = 100},
+			["C2"] = {pos1 = Vector(-1192.268555, 12500, -505), pos2 = Vector(-1453, 12002, -372), doorPos = Vector(-1365, 12505, -451), cost = 1000, bedTier = 2, stashSize = 100},
+			["C3"] = {pos1 = Vector(-1710.958252, 12500, -505), pos2 = Vector(-1453, 12002, -372), doorPos = Vector(-1491, 12505, -451), cost = 1000, bedTier = 2, stashSize = 100},
+			["C4"] = {pos1 = Vector(-1710.958252, 12500, -505), pos2 = Vector(-1966, 12002, -372), doorPos = Vector(-1883, 12505, -451), cost = 1000, bedTier = 2, stashSize = 100},
+			["D1"] = {pos1 = Vector(-886.894104, 12380.319336, -313), pos2 = Vector(-643.248352, 12032.481445, -201.112366), doorPos = Vector(-656, 12213, -258.718750), cost = 600, bedTier = 1, stashSize = 60},
+			["D2"] = {pos1 = Vector(-1192.268555, 12500, -315), pos2 = Vector(-933, 12002, -185), doorPos = Vector(-972.968750, 12505, -259), cost = 1000, bedTier = 2, stashSize = 100},
 		};
 
 		for k, v in pairs(Clockwork.entity:GetDoorEntities()) do
@@ -451,6 +528,7 @@ function cwShacks:LoadShackData()
 				
 				continue;
 			else
+				if v.coowners == "" then v.coowners = nil end;
 				if v.stash == "" then v.stash = nil end;
 				if v.stashCash == "" then v.stashCash = nil end;
 			end
@@ -461,19 +539,49 @@ function cwShacks:LoadShackData()
 						local ownerFound = false;
 					
 						for k2, v2 in pairs(result) do
-							--if v2._LastPlayed then
+							if v2._Key == v.owner and v2._LastPlayed then
 								local permakilled = false;
 								
 								if v2._Data then
-									local data = Clockwork.player:ConvertDataString(player, v2._Data)
+									local data = Clockwork.player:ConvertDataString(nil, v2._Data);
 									
 									if data then
 										permakilled = data["permakilled"];
 									end
 								end
 								
-								if --[[tonumber(v2._LastPlayed) + cwShacks.expireTime > os.time() and]] permakilled ~= true then
+								if tonumber(v2._LastPlayed) + cwShacks.expireTime > os.time() and permakilled ~= true then
 									cwShacks.shacks[k].owner = v.owner;
+									
+									if v.coowners then
+										local coowners = {};
+									
+										for _, v3 in ipairs(v.coowners) do
+											for k4, v4 in pairs(result) do
+												if v4._Key == v3 and v4._LastPlayed then
+													local permakilled2 = false;
+													
+													if v4._Data then
+														local data = Clockwork.player:ConvertDataString(nil, v4._Data);
+														
+														if data then
+															permakilled2 = data["permakilled"];
+														end
+													end
+													
+													if tonumber(v4._LastPlayed) + cwShacks.expireTime > os.time() and permakilled2 ~= true then
+														coowners[v4._Key] = v4._Name;
+														
+														break;
+													end
+												end
+											end
+										end
+									
+										cwShacks.shacks[k].coowners = coowners;
+									else
+										cwShacks.shacks[k].coowners = {};
+									end
 									
 									if v.stash then
 										cwShacks.shacks[k].stash = Clockwork.inventory:ToLoadable(v.stash);
@@ -484,7 +592,7 @@ function cwShacks:LoadShackData()
 									ownerFound = true;
 									break;
 								end
-							--end
+							end
 						end
 						
 						if !ownerFound then
@@ -525,10 +633,14 @@ function cwShacks:SaveShackData()
 
 	for k, v in pairs(self.shacks) do
 		if !self.shackData[k] then
-			self.shackData[k] = {owner = nil, stash = nil, stashCash = nil};
+			self.shackData[k] = {};
 		end
 		
 		self.shackData[k].owner = v.owner;
+		
+		if v.coowners then
+			self.shackData[k].coowners = table.GetKeys(v.coowners);
+		end
 		
 		if v.stash then
 			self.shackData[k].stash = Clockwork.inventory:ToSaveable(v.stash);
@@ -549,34 +661,42 @@ function cwShacks:PlayerLoadout(player)
 	local characterKey = player:GetCharacterKey();
 	local faction = player:GetFaction();
 	local ownedShackFound = false;
-	local shackInfo = {};
 
 	if faction == "Holy Hierarchy" then
 		Clockwork.player:GiveSpawnWeapon(player, "cw_keys");
 	end
 	
 	for k, v in pairs(self.shacks) do
-		shackInfo[k] = v.owner;
-		
-		if characterKey and characterKey == v.owner then
-			Clockwork.player:GiveDoor(player, v.doorEnt);
-			
-			player:SetSharedVar("shack", k);
-			
-			Clockwork.player:GiveSpawnWeapon(player, "cw_keys");
-			
-			ownedShackFound = true;
-			break;
+		if characterKey then
+			if characterKey == v.owner then
+				Clockwork.player:GiveDoor(player, v.doorEnt);
+				
+				player:SetSharedVar("shack", k);
+				
+				Clockwork.player:GiveSpawnWeapon(player, "cw_keys");
+				
+				ownedShackFound = true;
+				break;
+			elseif v.coowners and v.coowners[characterKey] then
+				Clockwork.player:GiveDoorAccess(player, v.doorEnt, DOOR_ACCESS_BASIC);
+				
+				Clockwork.player:GiveSpawnWeapon(player, "cw_keys");
+				
+				ownedShackFound = true;
+				break;
+			end
 		end
 	end
 
 	if !ownedShackFound then
-		player:SetSharedVar("shack", nil);
+		if player:GetSharedVar("shack") then
+			player:SetSharedVar("shack", nil);
+		end
 		
 		if faction ~= "Holy Hierarchy" then
 			Clockwork.player:TakeSpawnWeapon(player, "cw_keys");
 		end
 	end
 	
-	Clockwork.datastream:Start(player, "ShackInfo", shackInfo);
+	self:NetworkShackData(player);
 end;

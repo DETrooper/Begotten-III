@@ -2131,9 +2131,9 @@ end
 
 -- Called when a player attempts to use a door.
 function GM:PlayerCanUseDoor(player, door)
-	if (Clockwork.entity:GetOwner(door) and !Clockwork.player:HasDoorAccess(player, door)) then
+	--[[if (Clockwork.entity:GetOwner(door) and !Clockwork.player:HasDoorAccess(player, door)) then
 		return false
-	end
+	end]]--
 
 	if (Clockwork.entity:IsDoorFalse(door)) then
 		return false

@@ -50,7 +50,7 @@ local function CreateMenu(state)
 				local marketMenu = subMenu:AddSubMenu("Market Area");
 				
 				for k, v in SortedPairsByMemberValue(cwShacks.shackData["market"], "name") do
-					if not cwShacks.shacks[k] then
+					if not cwShacks.shacks[k].owner then
 						marketMenu:AddOption("("..tostring(v.price)..") "..v.name, function() Clockwork.kernel:RunCommand("CoinslotPurchase", k) end);
 					else
 						marketMenu:AddOption("(SOLD) "..v.name, function() end);
@@ -60,7 +60,7 @@ local function CreateMenu(state)
 				local groundFloorMenu = subMenu:AddSubMenu("Ground Floor");
 				
 				for k, v in SortedPairsByMemberValue(cwShacks.shackData["floor1"], "name") do
-					if not cwShacks.shacks[k] then
+					if not cwShacks.shacks[k].owner then
 						groundFloorMenu:AddOption("("..tostring(v.price)..") "..v.name, function() Clockwork.kernel:RunCommand("CoinslotPurchase", k) end);
 					else
 						groundFloorMenu:AddOption("(SOLD) "..v.name, function() end);
@@ -70,7 +70,7 @@ local function CreateMenu(state)
 				local secondFloorMenu = subMenu:AddSubMenu("Second Floor");
 				
 				for k, v in SortedPairsByMemberValue(cwShacks.shackData["floor2"], "name") do
-					if not cwShacks.shacks[k] then
+					if not cwShacks.shacks[k].owner then
 						secondFloorMenu:AddOption("("..tostring(v.price)..") "..v.name, function() Clockwork.kernel:RunCommand("CoinslotPurchase", k) end);
 					else
 						secondFloorMenu:AddOption("(SOLD) "..v.name, function() end);
@@ -80,7 +80,7 @@ local function CreateMenu(state)
 				local thirdFloorMenu = subMenu:AddSubMenu("Third Floor");
 				
 				for k, v in SortedPairsByMemberValue(cwShacks.shackData["floor3"], "name") do
-					if not cwShacks.shacks[k] then
+					if not cwShacks.shacks[k].owner then
 						thirdFloorMenu:AddOption("("..tostring(v.price)..") "..v.name, function() Clockwork.kernel:RunCommand("CoinslotPurchase", k) end);
 					else
 						thirdFloorMenu:AddOption("(SOLD) "..v.name, function() end);
@@ -90,19 +90,36 @@ local function CreateMenu(state)
 				local fourthFloorMenu = subMenu:AddSubMenu("Fourth Floor");
 				
 				for k, v in SortedPairsByMemberValue(cwShacks.shackData["floor4"], "name") do
-					if not cwShacks.shacks[k] then
+					if not cwShacks.shacks[k].owner then
 						fourthFloorMenu:AddOption("("..tostring(v.price)..") "..v.name, function() Clockwork.kernel:RunCommand("CoinslotPurchase", k) end);
 					else
 						fourthFloorMenu:AddOption("(SOLD) "..v.name, function() end);
 					end
 				end
 			else
-				subMenu = menu:AddSubMenu("Sell Property");
+				local subMenu = menu:AddSubMenu("Sell Property");
 				
 				for k, v in pairs(cwShacks.shackData) do
 					for k2, v2 in pairs(v) do
 						if k2 == playerShack then
 							subMenu:AddOption("("..tostring(v2.price / 2)..") "..v2.name, function() Clockwork.kernel:RunCommand("CoinslotSell", k2) end);
+							
+							local ownerData = cwShacks.shacks[k2];
+							
+							if ownerData then
+								if !ownerData.coowners or (table.Count(ownerData.coowners) < cwShacks.maxCoowners) then
+									menu:AddOption("Add Co-Owner", function() Clockwork.kernel:RunCommand("CoinslotAddCoowner") end);
+								end
+
+								if ownerData.coowners and table.Count(ownerData.coowners) > 0 then
+									local removeMenu = menu:AddSubMenu("Remove Co-Owner");
+									
+									for k3, v3 in pairs(ownerData.coowners) do
+										removeMenu:AddOption(v3, function() Clockwork.kernel:RunCommand("CoinslotRemoveCoowner", k3) end);
+									end
+								end
+							end
+						
 							break;
 						end
 					end

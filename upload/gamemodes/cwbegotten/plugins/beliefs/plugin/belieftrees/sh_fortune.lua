@@ -41,7 +41,7 @@ local FORTUNE = cwBeliefs.beliefTrees:New("fortune")
 			},
 			["lucky"] = {
 				name = "Lucky",
-				description = "10% chance of completely avoiding damage when taking damage from any source.",
+				description = "5% chance of completely avoiding damage when taking damage from any source.",
 				requirements = {"fortunate"},
 				row = 2,
 			},

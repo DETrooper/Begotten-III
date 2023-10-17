@@ -8,10 +8,14 @@ PLUGIN:SetGlobalAlias("cwShacks");
 Clockwork.kernel:IncludePrefixed("cl_hooks.lua");
 Clockwork.kernel:IncludePrefixed("sv_hooks.lua");
 
+cwShacks.maxCoowners = 10;
+
 -- Called when the Clockwork shared variables are added.
 function cwShacks:ClockworkAddSharedVars(globalVars, playerVars)
 	playerVars:Number("shack");
 end;
+
+local coinslotSounds = {"buttons/lever1.wav", "buttons/lever4.wav"};
 
 local COMMAND = Clockwork.command:New("CoinslotPurchase");
 	COMMAND.tip = "Purchase property from the Coinslot.";
@@ -34,6 +38,15 @@ local COMMAND = Clockwork.command:New("CoinslotPurchase");
 				
 				if cwShacks then
 					cwShacks:ShackPurchased(player, arguments[1]);
+					
+					entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
+					
+					timer.Simple(0.5, function()
+						if IsValid(entity) then
+							entity:EmitSound("ambient/levels/labs/coinslot1.wav");
+						end
+					end);
+					
 					return;
 				end
 			end;
@@ -59,7 +72,138 @@ local COMMAND = Clockwork.command:New("CoinslotSell");
 			if (entity:GetClass() == "cw_coinslot") then
 				if cwShacks then
 					cwShacks:ShackSold(player, arguments[1]);
+					
+					entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
+					
+					timer.Simple(0.5, function()
+						if IsValid(entity) then
+							entity:EmitSound("ambient/levels/labs/coinslot1.wav");
+						end
+					end);
+					
 					return;
+				end
+			end;
+		end;
+		
+		Schema:EasyText(player, "peru", "You must be looking at the Coinslot to sell property!");
+	end;
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CoinslotAddCoowner");
+	COMMAND.tip = "Add a character as a co-owner to your property for a 100 coin fee.";
+	COMMAND.flags = CMD_DEFAULT;
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local trace = player:GetEyeTrace();
+
+		if (trace.Entity) then
+			local entity = trace.Entity;
+
+			if (entity:GetClass() == "cw_coinslot") then
+				if cwShacks then
+					local shack = player:GetOwnedShack();
+					
+					if shack then
+						Clockwork.dermaRequest:RequestString(player, "Add Co-Owner (100 Coin Charge)", "Who would you like to add as a co-owner for this property?", "", function(result)
+							local target = Clockwork.player:FindByID(result);
+							
+							if target and target:Alive() and target ~= player then
+								local characterKey = target:GetCharacterKey();
+								local faction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+								local targetShack = target:GetOwnedShack();
+								
+								if faction == "Holy Hierarchy" or faction == "Goreic Warrior" then
+									Schema:EasyText(player, "peru", "You do not have enough coin to add a co-owner!");
+								
+									return;
+								end;
+								
+								if targetShack then
+									Schema:EasyText(player, "peru", target:Name().." is already an owner of another property!");
+								
+									return;
+								end
+								
+								for k, v in pairs(cwShacks.shacks) do
+									if v.coowners then
+										for k2, v2 in pairs(v.coowners) do
+											if k2 == characterKey then
+												Schema:EasyText(player, "peru", target:Name().." is already a co-owner of another property!");
+											
+												return;
+											end;
+										end
+									end
+								end
+								
+								if Clockwork.player:CanAfford(player, 100) then
+									Clockwork.player:GiveCash(player, -100, "Added Co-Owner");
+									Schema:ModifyTowerTreasury(100);
+
+									cwShacks:ShackCoownerAdded(target, shack);
+									
+									Schema:EasyText(player, "olivedrab", "You have added "..target:Name().." as a co-owner to your property.");
+									Schema:EasyText(target, "olivedrab", "You have been added as a co-owner to a property ("..shack..") by: "..player:Name()..".");
+									
+									entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
+									
+									timer.Simple(0.5, function()
+										if IsValid(entity) then
+											entity:EmitSound("ambient/levels/labs/coinslot1.wav");
+										end
+									end);
+									
+								else
+									Schema:EasyText(player, "peru", "You do not have enough coin to add a co-owner!");
+								end
+							else
+								Schema:EasyText(player, "peru", result.." is not a valid character!");
+							end
+						end);
+						
+						return;
+					else
+						Schema:EasyText(player, "peru", "You do not own any property!");
+					end
+				end
+			end;
+		end;
+		
+		Schema:EasyText(player, "peru", "You must be looking at the Coinslot to sell property!");
+	end;
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CoinslotRemoveCoowner");
+	COMMAND.tip = "Remove a co-owner from your property.";
+	COMMAND.text = "<string Character>";
+	COMMAND.flags = CMD_DEFAULT;
+	COMMAND.arguments = 1;
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local trace = player:GetEyeTrace();
+
+		if (trace.Entity) then
+			local entity = trace.Entity;
+
+			if (entity:GetClass() == "cw_coinslot") then
+				if cwShacks then
+					local shack = player:GetOwnedShack();
+					
+					if shack then
+						cwShacks:ShackCoownerRemoved(tonumber(arguments[1]), shack);
+						
+						Schema:EasyText(player, "olivedrab", "You have removed "..target:Name().." as a co-owner from your property.");
+						Schema:EasyText(target, "olivedrab", "You have been removed as a co-owner from a property ("..shack..") by: "..player:Name()..".");
+						
+						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
+						
+						return;
+					else
+						Schema:EasyText(player, "peru", "You do not own any property!");
+					end
 				end
 			end;
 		end;
@@ -113,7 +257,7 @@ local COMMAND = Clockwork.command:New("ClearProperty");
 			
 			Clockwork.entity:ClearProperty(shack.doorEnt);
 			
-			cwShacks:NetworkShackData();
+			cwShacks:NetworkShackData(_player.GetAll());
 			cwShacks:SaveShackData();
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have cleared this property.");
 		else

@@ -2747,15 +2747,6 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 			return true
 		end
 	end
-
-	if (entity:GetClass() == "cw_item") then
-		local itemTable = entity:GetItemTable();
-		local decayOnDamage = itemTable.decayOnDamage;
-		
-		if (decayOnDamage) then
-			itemTable:TakeCondition(damageInfo:GetDamage());
-		end;
-	end;
 	
 	local attacker = damageInfo:GetAttacker();
 	local damage = damageInfo:GetDamage();

@@ -584,9 +584,10 @@ function cwRituals:PlayerDeath(player)
 						end
 						
 						if vPlayer then
+							local faith = vPlayer:GetFaith();
 							local subfaith = vPlayer:GetSubfaith();
 							
-							if subfaith ~= "Hard-Glazed" and subfaith ~= "Sol Orthodoxy" then
+							if faith ~= "Faith of the Light" or (faith == "Faith of the Light" and subfaith and subfaith ~= "N/A" and (subfaith ~= "Hard-Glazed" and subfaith ~= "Sol Orthodoxy")) then
 								local damageInfo = DamageInfo();
 					
 								damageInfo:SetDamagePosition(vPlayer:GetPos() + Vector(0, 0, math.random(12, 64)));
@@ -882,6 +883,27 @@ Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 				player:SetCharacterData("Gender", data[3], true);
 				player:SetCharacterData("PhysDesc", Clockwork.kernel:ModifyPhysDesc(data[4]));
 				player:SetCharacterData("lastAppearanceChange", os.time());
+				
+				if cwShacks then
+					local characterKey = player:GetCharacterKey();
+					local shack = player:GetOwnedShack();
+					
+					if shack then
+						cwShacks:ShackForeclosed(player, shack);
+					end
+					
+					for k, v in pairs(cwShacks.shacks) do
+						if v.coowners then
+							for k2, v2 in pairs(v.coowners) do
+								if k2 == characterKey then
+									cwShacks:ShackCoownerRemoved(characterKey, k);
+								
+									break;
+								end
+							end
+						end
+					end
+				end
 				
 				if selectedFaction == "Wanderer" then
 					player:SetCharacterData("kinisgerOverride", nil);

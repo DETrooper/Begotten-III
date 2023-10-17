@@ -91,6 +91,7 @@ netstream.Hook("Salesmenu", function(player, data)
 
 				if (itemTable) then
 					local cost = itemTable.cost
+					local condition = itemTable:GetCondition();
 
 					if (type(data.entity.cwBuyTab[itemUniqueID]) == "number") then
 						cost = data.entity.cwBuyTab[itemUniqueID]
@@ -98,6 +99,10 @@ netstream.Hook("Salesmenu", function(player, data)
 
 					if (data.entity.cwBuyRate) then
 						cost = cost * (data.entity.cwBuyRate / 100)
+					end
+					
+					if condition and condition < 100 then
+						cost = math.max(1, math.Round(cost * Lerp(condition / 100, 0.15, 1)));
 					end
 
 					if (data.entity.cwCash == -1 or data.entity.cwCash >= cost) then

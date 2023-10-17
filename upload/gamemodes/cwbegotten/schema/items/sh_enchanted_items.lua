@@ -53,7 +53,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_distorted";
 	ITEM.description = "A ring with a mysterious aura. Putting it on your finger makes you feel luckier.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Has a 5% chance of completely avoiding damage when taking damage from any source.\n- Will prevent your death when taking lethal damage from another player but will shatter beyond repair and become useless when this occurs. Note that this effect is not enabled in duels.\n- Stackable with the 'Lucky' belief.";
+	ITEM.charmEffects = "- Has a 5% chance of completely avoiding damage when taking damage from any source, stackable with the 'Lucky' belief.\n- Will prevent your death when taking lethal damage from another player but will shatter beyond repair and become useless when this occurs.";
 
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 900, onGround = false};
 ITEM:Register();

@@ -85,6 +85,30 @@ hook.Add("PreEntityTakeDamage", "Parrying", Parry)
 	
 local function Guarding(ent, dmginfo)
 	if (!ent:IsPlayer()) then
+		if ent:IsNPC() or ent:IsNextBot() then
+			local attacker = dmginfo:GetAttacker()
+			
+			if IsValid(attacker) and attacker:IsPlayer() then
+				if not attacker.opponent then
+					local enemywep = attacker:GetActiveWeapon();
+					
+					if enemywep then
+						local weaponItemTable = item.GetByWeapon(enemywep);
+						
+						if weaponItemTable then
+							if cwBeliefs and not attacker:HasBelief("ingenuity_finisher") then
+								if attacker:HasBelief("scour_the_rust") then
+									weaponItemTable:TakeCondition(math.min(dmginfo:GetDamage() / 200, 100));
+								else
+									weaponItemTable:TakeCondition(math.min(dmginfo:GetDamage() / 100, 100));
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+		
 		return;
 	end;
 	
@@ -100,7 +124,6 @@ local function Guarding(ent, dmginfo)
 		local max_poise = ent:GetNetVar("maxMeleeStamina") or 90;
 
 		if (ent:GetNWBool("Guardening") == true) then
-			local damageinflictor = dmginfo:GetAttacker();
 			local blocktable = GetTable(wep.realBlockTable)
 			local blocksoundtable = GetSoundTable(wep.realBlockSoundTable)
 			local blockthreshold = (blocktable["blockcone"] or 135) / 2;
@@ -199,7 +222,7 @@ local function Guarding(ent, dmginfo)
 			end
 
 			if canblock then
-				local enemywep = damageinflictor:GetActiveWeapon()
+				local enemywep = attacker:GetActiveWeapon()
 				local enemyattacktable = {}
 				local PoiseTotal = 0;
 				
@@ -215,17 +238,17 @@ local function Guarding(ent, dmginfo)
 					dmginfo:ScaleDamage(0);
 				end
 
-				if (IsValid(damageinflictor) and (math.abs(math.AngleDifference(ent:EyeAngles().y, (damageinflictor:GetPos() - ent:GetPos()):Angle().y)) <= blockthreshold)) then
+				if (IsValid(attacker) and (math.abs(math.AngleDifference(ent:EyeAngles().y, (attacker:GetPos() - ent:GetPos()):Angle().y)) <= blockthreshold)) then
 					if enemywep.IsABegottenMelee == true then
 						if ent:GetNWBool("Deflect") == true then
-							damageinflictor:ViewPunch(Angle(-10,7,6))
+							attacker:ViewPunch(Angle(-10,7,6))
 						else
-							damageinflictor:ViewPunch(Angle(-3,1,0))
+							attacker:ViewPunch(Angle(-3,1,0))
 						end
 					end
 
 					---- Block Sound
-					if !damageinflictor:IsPlayer() and !ent:GetNWBool("Deflect", true) then
+					if !attacker:IsPlayer() and !ent:GetNWBool("Deflect", true) then
 						if dmginfo:IsDamageType(128) then
 							ent:EmitSound(blocksoundtable["blockwood"][math.random(1, #blocksoundtable["blockwood"])])
 							--print "BLOCK NPC CRUSH"
@@ -240,7 +263,7 @@ local function Guarding(ent, dmginfo)
 							--print "BLOCK NPC BULLET"
 						end
 					else
-						if !ent:GetNWBool("Deflect", true) and damageinflictor:IsPlayer() and !dmginfo:IsDamageType(1073741824) then
+						if !ent:GetNWBool("Deflect", true) and attacker:IsPlayer() and !dmginfo:IsDamageType(1073741824) then
 							if enemywep.IsABegottenMelee == true and (!dmginfo:GetInflictor() or (dmginfo:GetInflictor() and !dmginfo:GetInflictor().isJavelin)) then
 								if enemywep.SoundMaterial == "Metal" then
 									ent:EmitSound(blocksoundtable["blockmetal"][math.random(1, #blocksoundtable["blockmetal"])])
@@ -260,7 +283,7 @@ local function Guarding(ent, dmginfo)
 									ent:EmitSound("meleesounds/bell.mp3")
 									end end)
 									ent:Disorient(2)
-									damageinflictor:Disorient(1)
+									attacker:Disorient(1)
 									--print "bell"
 								elseif enemywep.SoundMaterial == "Default" then
 									ent:EmitSound(blocksoundtable["blocksound"][math.random(1, #blocksoundtable["blocksound"])])
@@ -292,13 +315,17 @@ local function Guarding(ent, dmginfo)
 								--print "blockjavelin"
 							else
 							
-							if not damageinflictor.opponent then
+							if not attacker.opponent then
 								if enemywep then
 									local weaponItemTable = item.GetByWeapon(enemywep);
 									
 									if weaponItemTable then
-										if cwBeliefs and not damageinflictor:HasBelief("ingenuity_finisher") then
-											weaponItemTable:TakeCondition(0.5);
+										if cwBeliefs and not attacker:HasBelief("ingenuity_finisher") then
+											if attacker:HasBelief("scour_the_rust") then
+												weaponItemTable:TakeCondition(0.25);
+											else
+												weaponItemTable:TakeCondition(0.5);
+											end
 										end
 									end
 								end
@@ -316,13 +343,21 @@ local function Guarding(ent, dmginfo)
 								shieldEquipped = true;
 								
 								if cwBeliefs and not ent:HasBelief("ingenuity_finisher") then
-									shieldItemTable:TakeCondition(math.max(dmginfo:GetDamage() / 50, 1));
+									if ent:HasBelief("scour_the_rust") then
+										shieldItemTable:TakeCondition(math.max(dmginfo:GetDamage() / 100, 1));
+									else
+										shieldItemTable:TakeCondition(math.max(dmginfo:GetDamage() / 50, 1));
+									end
 								end
 							end
 							
 							if weaponItemTable and not shieldEquipped then
 								if cwBeliefs and not ent:HasBelief("ingenuity_finisher") then
-									weaponItemTable:TakeCondition(math.max(dmginfo:GetDamage() / 50, 1));
+									if ent:HasBelief("scour_the_rust") then
+										weaponItemTable:TakeCondition(math.max(dmginfo:GetDamage() / 100, 1));
+									else
+										weaponItemTable:TakeCondition(math.max(dmginfo:GetDamage() / 50, 1));
+									end
 								end
 							end
 						end
@@ -381,27 +416,27 @@ local function Guarding(ent, dmginfo)
 					
 					-- Special Effect
 					
-					if damageinflictor:IsPlayer() and enemywep:IsValid() then
+					if attacker:IsPlayer() and enemywep:IsValid() then
 						-- Deal damage to people using fists if they hit a spiked shield.
 						if enemywep:GetClass() == "begotten_fists" then
-							if !Clockwork.player:HasFlags(damageinflictor, "T") then
+							if !Clockwork.player:HasFlags(attacker, "T") then
 								local activeWeapon = ent:GetActiveWeapon();
 								
 								if (IsValid(activeWeapon) and activeWeapon:GetNWString("activeShield"):len() > 0) then
 									local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
 									
 									if blockTable.spiked then
-										damageinflictor:TakeDamage(5, ent);
+										attacker:TakeDamage(5, ent);
 									elseif blockTable.electrified then
-										local clothesItem = damageinflictor:GetClothesEquipped();
+										local clothesItem = attacker:GetClothesEquipped();
 										
 										if clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate") then
 											local shockDamageInfo = DamageInfo();
 											
 											shockDamageInfo:SetDamage(math.random(3, 5));
 											
-											Schema:DoTesla(damageinflictor, false);
-											damageinflictor:TakeDamageInfo(shockDamageInfo);
+											Schema:DoTesla(attacker, false);
+											attacker:TakeDamageInfo(shockDamageInfo);
 										end
 									end
 								end
@@ -420,8 +455,8 @@ local function Guarding(ent, dmginfo)
 										
 										shockDamageInfo:SetDamage(math.random(3, 5));
 										
-										Schema:DoTesla(damageinflictor, false);
-										damageinflictor:TakeDamageInfo(shockDamageInfo);
+										Schema:DoTesla(attacker, false);
+										attacker:TakeDamageInfo(shockDamageInfo);
 									end
 								end
 							end
@@ -431,34 +466,34 @@ local function Guarding(ent, dmginfo)
 					-- Poise system
 					
 					--[[(For NPC Poise Damage WIP)
-					if damageinflictor:IsValid() and (damageinflictor:IsNPC() or damageinflictor:IsNextBot()) and ent:IsValid() and ent:Alive() then
-							--print (damageinflictor:GetClass())
+					if attacker:IsValid() and (attacker:IsNPC() or attacker:IsNextBot()) and ent:IsValid() and ent:Alive() then
+							--print (attacker:GetClass())
 					end
 					--]]
 						
-					if !ent:GetNWBool("Deflect", true) and ent:IsValid() and ent:Alive() and damageinflictor:IsValid() then
+					if !ent:GetNWBool("Deflect", true) and ent:IsValid() and ent:Alive() and attacker:IsValid() then
 						local poiseDamageModifier = 1;
 						
-						if damageinflictor.HasBelief then
-							if damageinflictor:HasBelief("unrelenting") then
+						if attacker.HasBelief then
+							if attacker:HasBelief("unrelenting") then
 								poiseDamageModifier = poiseDamageModifier + 0.25;
 							end
 
-							if damageinflictor:HasBelief("fearsome_wolf") then
-								if damageinflictor.warCryVictims then
-									if table.HasValue(damageinflictor.warCryVictims, ent) then
+							if attacker:HasBelief("fearsome_wolf") then
+								if attacker.warCryVictims then
+									if table.HasValue(attacker.warCryVictims, ent) then
 										poiseDamageModifier = poiseDamageModifier + 0.15;
 									end
 								end
 							end
 						end
 						
-						if damageinflictor.GetCharmEquipped then
-							if damageinflictor:GetCharmEquipped("ring_pummeler") then
+						if attacker.GetCharmEquipped then
+							if attacker:GetCharmEquipped("ring_pummeler") then
 								poiseDamageModifier = poiseDamageModifier + 0.15;
 							end
 							
-							if damageinflictor:GetCharmEquipped("ring_pugilist") and enemywep:GetClass() == "begotten_fists" then
+							if attacker:GetCharmEquipped("ring_pugilist") and enemywep:GetClass() == "begotten_fists" then
 								if IsValid(dmginfo:GetInflictor()) and dmginfo:GetInflictor().isJavelin then
 									-- nothing
 								else
@@ -467,21 +502,21 @@ local function Guarding(ent, dmginfo)
 							end
 						end
 						
-						--print("PRE MODIFIER POISE DAMAGE: "..damageinflictor.enemypoise);
+						--print("PRE MODIFIER POISE DAMAGE: "..attacker.enemypoise);
 					
-						if damageinflictor:IsPlayer() and enemyattacktable["poisedamage"] then
-							if damageinflictor:GetNWBool("Riposting") == true then
-								damageinflictor.enemypoise = (((enemyattacktable["poisedamage"]) * 3) * poiseDamageModifier)
-							elseif damageinflictor:GetNWBool("ThrustStance") == true then
-								damageinflictor.enemypoise = (((enemyattacktable["poisedamage"]) * (enemyattacktable["altattackpoisedamagemodifier"])) * poiseDamageModifier)
+						if attacker:IsPlayer() and enemyattacktable["poisedamage"] then
+							if attacker:GetNWBool("Riposting") == true then
+								attacker.enemypoise = (((enemyattacktable["poisedamage"]) * 3) * poiseDamageModifier)
+							elseif attacker:GetNWBool("ThrustStance") == true then
+								attacker.enemypoise = (((enemyattacktable["poisedamage"]) * (enemyattacktable["altattackpoisedamagemodifier"])) * poiseDamageModifier)
 							else
-								damageinflictor.enemypoise = ((enemyattacktable["poisedamage"]) * poiseDamageModifier)
+								attacker.enemypoise = ((enemyattacktable["poisedamage"]) * poiseDamageModifier)
 							end
 							
-							--print("POST MODIFIER POISE DAMAGE: "..damageinflictor.enemypoise);
+							--print("POST MODIFIER POISE DAMAGE: "..attacker.enemypoise);
 							
 							if ent.HasBelief then
-								local newEnemyPoise = damageinflictor.enemypoise;
+								local newEnemyPoise = attacker.enemypoise;
 								
 								if ent:HasBelief("warden") then
 									newEnemyPoise = newEnemyPoise * 0.85;
@@ -501,23 +536,23 @@ local function Guarding(ent, dmginfo)
 								
 								PoiseTotal = math.min(blocktable["poiseresistance"] - newEnemyPoise, 0);
 							else
-								PoiseTotal = math.min(blocktable["poiseresistance"] - damageinflictor.enemypoise, 0);
+								PoiseTotal = math.min(blocktable["poiseresistance"] - attacker.enemypoise, 0);
 							end
-						elseif damageinflictor:IsNPC() or damageinflictor:IsNextBot() then
-							if damageinflictor.Damage then
-								damageinflictor.enemypoise = (damageinflictor.Damage * 2) or 20;
-							elseif damageinflictor:GetClass() == "npc_animal_bear" then
-								damageinflictor.enemypoise = 55;
-							elseif damageinflictor:GetClass() == "npc_animal_cave_bear" then
-								damageinflictor.enemypoise = 70;
+						elseif attacker:IsNPC() or attacker:IsNextBot() then
+							if attacker.Damage then
+								attacker.enemypoise = (attacker.Damage * 2) or 20;
+							elseif attacker:GetClass() == "npc_animal_bear" then
+								attacker.enemypoise = 55;
+							elseif attacker:GetClass() == "npc_animal_cave_bear" then
+								attacker.enemypoise = 70;
 							else
-								damageinflictor.enemypoise = 20;
+								attacker.enemypoise = 20;
 							end
 							
-							--print("POST MODIFIER POISE DAMAGE: "..damageinflictor.enemypoise);
+							--print("POST MODIFIER POISE DAMAGE: "..attacker.enemypoise);
 							
 							if ent.HasBelief then
-								local newEnemyPoise = damageinflictor.enemypoise;
+								local newEnemyPoise = attacker.enemypoise;
 								
 								if ent:HasBelief("warden") then
 									newEnemyPoise = newEnemyPoise * 0.85;
@@ -537,7 +572,7 @@ local function Guarding(ent, dmginfo)
 								
 								PoiseTotal = math.min(blocktable["poiseresistance"] - newEnemyPoise, 0);
 							else
-								PoiseTotal = math.min(blocktable["poiseresistance"] - damageinflictor.enemypoise, 0);
+								PoiseTotal = math.min(blocktable["poiseresistance"] - attacker.enemypoise, 0);
 							end
 						end
 						
@@ -552,7 +587,7 @@ local function Guarding(ent, dmginfo)
 							ent:ViewPunch(Angle(1,0,0))
 							ent:TakePoise(PoiseTotal);
 							if enemyattacktable["attacktype"] == "ice_swing" then
-								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), damageinflictor);
+								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 						elseif PoiseTotal < -5 and PoiseTotal >= -10 then
 							--print "Tier 2" 
@@ -562,7 +597,7 @@ local function Guarding(ent, dmginfo)
 							ent:TakePoise(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
-								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), damageinflictor);
+								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 						elseif PoiseTotal < -10 and PoiseTotal >= -15 then
 							--print "Tier 3" 
@@ -572,7 +607,7 @@ local function Guarding(ent, dmginfo)
 							ent:TakePoise(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
-								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), damageinflictor);
+								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 						elseif PoiseTotal < -15 and PoiseTotal >= -20 then
 							--print "Tier 4"
@@ -582,7 +617,7 @@ local function Guarding(ent, dmginfo)
 							ent:TakePoise(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
-								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), damageinflictor);
+								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
 								ent:Ignite(enemywep.IgniteTime * 0.05)
@@ -595,7 +630,7 @@ local function Guarding(ent, dmginfo)
 							ent:TakePoise(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
-								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), damageinflictor);
+								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
 								ent:Ignite(enemywep.IgniteTime * 0.1)
@@ -608,7 +643,7 @@ local function Guarding(ent, dmginfo)
 							ent:TakePoise(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
-								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), damageinflictor);
+								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
 								ent:Ignite(enemywep.IgniteTime * 0.15)
@@ -621,7 +656,7 @@ local function Guarding(ent, dmginfo)
 							ent:TakePoise(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
-								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), damageinflictor);
+								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
 								ent:Ignite(enemywep.IgniteTime * 0.2)
@@ -634,7 +669,7 @@ local function Guarding(ent, dmginfo)
 							ent:TakePoise(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
-								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), damageinflictor);
+								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
 								ent:Ignite(enemywep.IgniteTime * 0.25)
@@ -647,7 +682,7 @@ local function Guarding(ent, dmginfo)
 							ent:TakePoise(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
-								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), damageinflictor);
+								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
 								ent:Ignite(enemywep.IgniteTime * 0.3)
@@ -660,7 +695,7 @@ local function Guarding(ent, dmginfo)
 							ent:TakePoise(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
-								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), damageinflictor);
+								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
 								ent:Ignite(enemywep.IgniteTime * 0.35)
@@ -719,8 +754,8 @@ local function Guarding(ent, dmginfo)
 					end
 				
 					-- Deflection
-					if ent:GetNWBool("Deflect", true) and (IsValid(damageinflictor) and (dmginfo:IsDamageType(4) or dmginfo:IsDamageType(128) or dmginfo:IsDamageType(16) or (dmginfo:IsDamageType(DMG_SNIPER) and cwBeliefs and ent:HasBelief("impossibly_skilled")))) then
-						if !damageinflictor:IsPlayer() then
+					if ent:GetNWBool("Deflect", true) and (IsValid(attacker) and (dmginfo:IsDamageType(4) or dmginfo:IsDamageType(128) or dmginfo:IsDamageType(16) or (dmginfo:IsDamageType(DMG_SNIPER) and cwBeliefs and ent:HasBelief("impossibly_skilled")))) then
+						if !attacker:IsPlayer() then
 							if dmginfo:IsDamageType(128) then
 								ent:EmitSound(blocksoundtable["deflectwood"][math.random(1, #blocksoundtable["deflectwood"])])
 								--print "DEFLECT CRUSH"
@@ -735,7 +770,7 @@ local function Guarding(ent, dmginfo)
 								--print "DEFLECT JAVELIN"
 							end
 						else
-							if damageinflictor:IsPlayer() then
+							if attacker:IsPlayer() then
 								if enemywep.IsABegottenMelee == true and (!dmginfo:GetInflictor() or (dmginfo:GetInflictor() and !dmginfo:GetInflictor().isJavelin)) then
 									if enemywep.SoundMaterial == "Metal" then
 										ent:EmitSound(blocksoundtable["deflectmetal"][math.random(1, #blocksoundtable["deflectmetal"])])
@@ -768,13 +803,17 @@ local function Guarding(ent, dmginfo)
 								end
 							end
 							
-							if not damageinflictor.opponent then
+							if not attacker.opponent then
 								if enemywep then
 									local weaponItemTable = item.GetByWeapon(enemywep);
 									
 									if weaponItemTable then
-										if cwBeliefs and not damageinflictor:HasBelief("ingenuity_finisher") then
-											weaponItemTable:TakeCondition(0.5);
+										if cwBeliefs and not attacker:HasBelief("ingenuity_finisher") then
+											if attacker:HasBelief("scour_the_rust") then
+												weaponItemTable:TakeCondition(0.25);
+											else
+												weaponItemTable:TakeCondition(0.5);
+											end
 										end
 									end
 								end
@@ -802,7 +841,7 @@ local function Guarding(ent, dmginfo)
 						dmginfo:ScaleDamage(0) 
 						
 						-- Deflection "mini stun" effect
-						if damageinflictor:IsPlayer() then
+						if attacker:IsPlayer() then
 							enemywep:SetNextPrimaryFire(CurTime() + (enemyattacktable["delay"]) + 1);
 							if ent.HasBelief then
 								if ent:HasBelief("deflection") then
@@ -811,15 +850,15 @@ local function Guarding(ent, dmginfo)
 									enemywep:SetNextPrimaryFire(CurTime() + (enemyattacktable["delay"]) + 3);
 								end
 							end
-							--netstream.Start(damageinflictor, "Stunned", (enemyattacktable["delay"]));
-							netstream.Start(damageinflictor, "MotionBlurStunned", (enemyattacktable["delay"]));
+							--netstream.Start(attacker, "Stunned", (enemyattacktable["delay"]));
+							netstream.Start(attacker, "MotionBlurStunned", (enemyattacktable["delay"]));
 						end
 					end
 			
 					dmginfo:SetDamagePosition(vector_origin)
 				else				
 					-- For being hit while blocking but outside of your blockcone (ex: hit in the back while blocking)
-					if (ent:IsPlayer() and damageinflictor:IsPlayer()) then
+					if (ent:IsPlayer() and attacker:IsPlayer()) then
 						local attacker = dmginfo:GetAttacker();
 						local trace = attacker:GetEyeTrace();
 						local pos = ent:GetPos() + Vector(0,0, 50);
@@ -838,7 +877,7 @@ local function Guarding(ent, dmginfo)
 								ent:EmitSound(enemyattacksoundtable["althitbody"][math.random(1, #enemyattacksoundtable["althitbody"])])
 								-- For sacrificial attacks (thrust)
 								if enemyattacktable["attacktype"] == "ice_swing" then
-									ent:AddFreeze((enemyattacktable["primarydamage"] * 1.5) * (ent:WaterLevel() + 1), damageinflictor);
+									ent:AddFreeze((enemyattacktable["primarydamage"] * 1.5) * (ent:WaterLevel() + 1), attacker);
 								end
 								if enemyattacktable["attacktype"] == "fire_swing" then
 									ent:Ignite(enemywep.IgniteTime)
@@ -848,7 +887,7 @@ local function Guarding(ent, dmginfo)
 								ent:EmitSound(enemyattacksoundtable["hitbody"][math.random(1, #enemyattacksoundtable["hitbody"])])
 								-- For sacrificial attacks (regular)
 								if enemyattacktable["attacktype"] == "ice_swing" then
-									ent:AddFreeze((enemyattacktable["primarydamage"] * 1.5) * (ent:WaterLevel() + 1), damageinflictor);
+									ent:AddFreeze((enemyattacktable["primarydamage"] * 1.5) * (ent:WaterLevel() + 1), attacker);
 								end
 								if enemyattacktable["attacktype"] == "fire_swing" then
 									ent:Ignite(enemywep.IgniteTime)
@@ -886,7 +925,11 @@ local function Guarding(ent, dmginfo)
 								
 								if weaponItemTable then
 									if cwBeliefs and not attacker:HasBelief("ingenuity_finisher") then
-										weaponItemTable:TakeCondition(math.min(dmginfo:GetDamage() / 100, 100));
+										if attacker:HasBelief("scour_the_rust") then
+											weaponItemTable:TakeCondition(math.min(dmginfo:GetDamage() / 200, 100));
+										else
+											weaponItemTable:TakeCondition(math.min(dmginfo:GetDamage() / 100, 100));
+										end
 									end
 								end
 							end
@@ -895,39 +938,37 @@ local function Guarding(ent, dmginfo)
 				end
 			end
 		elseif !ent.iFrames then
-			local damageinflictor = dmginfo:GetAttacker();
-			
 			-- Deal damage to people using fists if they hit spiked armor.
-			if damageinflictor:IsPlayer() then
-				local enemywep = damageinflictor:GetActiveWeapon();
+			if attacker:IsPlayer() then
+				local enemywep = attacker:GetActiveWeapon();
 				
 				if ent:IsPlayer() then
 					-- Deal damage to people using fists if they hit spiked armor.
 					if enemywep:IsValid() and enemywep:GetClass() == "begotten_fists" then
-						if !Clockwork.player:HasFlags(damageinflictor, "T") then
+						if !Clockwork.player:HasFlags(attacker, "T") then
 							if ent:GetModel() == "models/begotten/satanists/hellspike_armor.mdl" then
-								damageinflictor:TakeDamage(5, ent);
+								attacker:TakeDamage(5, ent);
 							end
 						end
 					end
 				end
 				
 				-- If a beserker or a member of House Varazdat, gain HP back via lifeleech.
-				if string.find(damageinflictor:GetModel(), "goreberzerker") then
+				if string.find(attacker:GetModel(), "goreberzerker") then
 					if IsValid(enemywep) and enemywep.IsABegottenMelee and enemywep:GetNWString("activeShield"):len() <= 0 then
-						damageinflictor:SetHealth(math.Clamp(math.ceil(damageinflictor:Health() + (dmginfo:GetDamage() / 2)), 0, damageinflictor:GetMaxHealth()));
+						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
 						
-						damageinflictor:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
+						attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
 						
 						timer.Simple(0.2, function()
-							if IsValid(damageinflictor) then
-								damageinflictor:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
+							if IsValid(attacker) then
+								attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
 							end
 						end);
 					end
-				elseif damageinflictor:GetSubfaction() == "Varazdat" then
+				elseif attacker:GetSubfaction() == "Varazdat" then
 					if IsValid(enemywep) and enemywep.IsABegottenMelee then
-						local clothesItem = damageinflictor:GetClothesEquipped();
+						local clothesItem = attacker:GetClothesEquipped();
 						local modifier = 2;
 						
 						if clothesItem then
@@ -938,41 +979,45 @@ local function Guarding(ent, dmginfo)
 							end
 						end
 						
-						damageinflictor:SetHealth(math.Clamp(math.ceil(damageinflictor:Health() + (dmginfo:GetDamage() / modifier)), 0, damageinflictor:GetMaxHealth()));
+						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / modifier)), 0, attacker:GetMaxHealth()));
 						
-						damageinflictor:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
+						attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
 						
 						timer.Simple(0.2, function()
-							if IsValid(damageinflictor) then
-								damageinflictor:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
+							if IsValid(attacker) then
+								attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
 							end
 						end);
 					end
 				end
 				
-				if cwBeliefs and damageinflictor.HasBelief and damageinflictor:HasBelief("thirst_blood_moon") and !damageinflictor.opponent then
-					if cwDayNight and cwDayNight.currentCycle == "night" and damageinflictor:GetCharacterData("LastZone") == "wasteland" then
-						damageinflictor:SetHealth(math.Clamp(math.ceil(damageinflictor:Health() + (dmginfo:GetDamage() / 2)), 0, damageinflictor:GetMaxHealth()));
+				if cwBeliefs and attacker.HasBelief and attacker:HasBelief("thirst_blood_moon") and !attacker.opponent then
+					if cwDayNight and cwDayNight.currentCycle == "night" and attacker:GetCharacterData("LastZone") == "wasteland" then
+						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
 						
-						damageinflictor:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
+						attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
 						
 						timer.Simple(0.2, function()
-							if IsValid(damageinflictor) then
-								damageinflictor:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
+							if IsValid(attacker) then
+								attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
 							end
 						end);
 					end
 				end
 				
-				if not damageinflictor.opponent then
-					local enemywep = damageinflictor:GetActiveWeapon();
+				if not attacker.opponent then
+					local enemywep = attacker:GetActiveWeapon();
 					
 					if enemywep then
 						local weaponItemTable = item.GetByWeapon(enemywep);
 						
 						if weaponItemTable then
-							if cwBeliefs and not damageinflictor:HasBelief("ingenuity_finisher") then
-								weaponItemTable:TakeCondition(math.min(dmginfo:GetDamage() / 100, 100));
+							if cwBeliefs and not attacker:HasBelief("ingenuity_finisher") then
+								if attacker:HasBelief("scour_the_rust") then
+									weaponItemTable:TakeCondition(math.min(dmginfo:GetDamage() / 200, 100));
+								else
+									weaponItemTable:TakeCondition(math.min(dmginfo:GetDamage() / 100, 100));
+								end
 							end
 						end
 					end
