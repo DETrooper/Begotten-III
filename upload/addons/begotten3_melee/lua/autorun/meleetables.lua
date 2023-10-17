@@ -1303,7 +1303,7 @@ AttackTables.PolehammerAttackTable = {
 };
 
 AttackTables.IronRapierAttackTable = {
-	["primarydamage"] = 20,
+	["primarydamage"] = 25,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = nil,
@@ -1322,18 +1322,18 @@ AttackTables.IronRapierAttackTable = {
 };
 
 AttackTables.ElegantEpeeAttackTable = {
-	["primarydamage"] = 25,
+	["primarydamage"] = 30,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = nil,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 65,
+	["armorpiercing"] = 75,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 0,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 3,
-	["delay"] = 0.75,
+	["delay"] = 0.7,
 	["striketime"] = 0.3,
 	["meleearc"] = 15,
 	["meleerange"] = 740,
@@ -2396,8 +2396,8 @@ AttackTables.SatanicMaceAttackTable = {
 	["altattackpoisedamagemodifier"] = nil,
 	["armorpiercing"] = 65,
 	["altarmorpiercing"] = nil,
-	["poisedamage"] = 40,
-	["stabilitydamage"] = 45,
+	["poisedamage"] = 45,
+	["stabilitydamage"] = 50,
 	["takeammo"] = 5,
 	["delay"] = 1.25,
 	["striketime"] = 0.4,
@@ -2654,7 +2654,7 @@ AttackTables.LucerneAttackTable = {
 	["poisedamage"] = 40,
 	["stabilitydamage"] = 45,
 	["takeammo"] = 4,
-	["delay"] = 1.3,
+	["delay"] = 1.25,
 	["striketime"] = 0.55,
 	["meleearc"] = 45,
 	["meleerange"] = 970,
@@ -2970,13 +2970,13 @@ AttackTables.EveningStarAttackTable = {
 };
 
 AttackTables.WarHammerAttackTable = {
-	["primarydamage"] = 40,
+	["primarydamage"] = 35,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 80,
+	["armorpiercing"] = 75,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 35,
 	["stabilitydamage"] = 35,
