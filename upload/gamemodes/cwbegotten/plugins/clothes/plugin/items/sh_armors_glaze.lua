@@ -674,7 +674,6 @@ ITEM.effectiveLimbs = {
 
 ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
 ITEM.slashScale = 0.95; -- reduces slash damage by 5%
-ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 
 ITEM.components = {breakdownType = "breakdown", items = {"leather", "leather", "cloth", "cloth", "cloth", "cloth"}};
 
@@ -706,7 +705,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/battle_monk_robes.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 55
+ITEM.protection = 50
 ITEM.type = "chainmail";
 ITEM.weight = 4;
 ITEM.weightclass = "Medium";
@@ -736,7 +735,6 @@ ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
 ITEM.slashScale = 0.75; -- reduces slash damage by 25%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
-ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
 
 ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "cloth", "leather", "leather"}};
 
