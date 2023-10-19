@@ -876,10 +876,8 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 		return true;
 	end
 	
-	if player or entity:IsPlayer() then
-		if hook.Run("EntityTakeDamageArmor", entity, damageInfo) == true then
-			return true;
-		end
+	if hook.Run("EntityTakeDamageArmor", entity, damageInfo) == true then
+		return true;
 	end
 	
 	if hook.Run("EntityTakeDamageNew", entity, damageInfo) == true then

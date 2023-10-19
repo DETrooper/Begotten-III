@@ -62,9 +62,17 @@ function ENT:OnTakeDamage(damageInfo)
 				local weaponItemTable = item.GetByWeapon(activeWeapon);
 				
 				if weaponItemTable then
-					if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-						weaponItemTable:TakeCondition(0.5);
+					if cwBeliefs then
+						if !player:HasBelief("ingenuity_finisher") then
+							if player:HasBelief("scour_the_rust") then
+								weaponItemTable:TakeCondition(0.25);
+							else
+								weaponItemTable:TakeCondition(0.5);
+							end
+						end
 					end
+				else
+					weaponItemTable:TakeCondition(0.5);
 				end
 			end
 		end

@@ -93,9 +93,9 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 	end;
 	
 	local attacker = damageInfo:GetAttacker();
+	local originalDamage = damageInfo:GetDamage();
 
 	if ((player:IsPlayer() or player.isTrainingDummy) and attacker and (attacker:IsPlayer() or attacker:IsNPC() or attacker:IsNextBot())) then
-		local originalDamage = damageInfo:GetDamage();
 		local helmetItem;
 		local damageType = damageInfo:GetDamageType();
 		local damageTypes = {DMG_BULLET, DMG_BUCKSHOT, DMG_CLUB, DMG_FALL, DMG_SLASH, DMG_VEHICLE, DMG_SNIPER};

@@ -44,10 +44,7 @@ if SERVER then
     end
     if self.RagdollOnDeath then
       return self:BecomeRagdoll(dmg)
-    else 
-		cwZombies:OnNPCKilled(self, attacker, inflictor, attackers);
-		
-		sound.Play("possession/spiritsting.wav", self:GetPos(), 75, 100, 1);
+    else 
 		self:Remove();
 		end
   end

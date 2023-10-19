@@ -24,7 +24,7 @@ function cwZombies:EntityRemoved(entity)
 	if (table.HasValue(self.zombieNPCS, entity:GetClass())) then
 		for k, v in pairs (ents.FindInSphere(entity:GetPos(), 750)) do
 			if (IsValid(entity) and IsValid(v) and v:IsPlayer() and v:Alive() and v:HasInitialized()) then
-				if (Clockwork.entity:CanSeeNPC(entity, v)) then
+				if (Clockwork.entity:CanSeeNPC(entity, v)) and !entity.killed then
 					Clockwork.datastream:Start(v, "Stunned", 2);
 				end;
 			end;
@@ -161,9 +161,9 @@ function cwZombies:OnNPCKilled(npc, attacker, inflictor, attackers)
 		
 			for k, v in pairs (ents.FindInSphere(npc:GetPos(), 800)) do
 				if (v:IsPlayer() and v:Alive()) then
-					if npc:IsZombie() and Clockwork.entity:CanSeeEntity(npc, v) then
+					--[[if npc:IsZombie() and Clockwork.entity:CanSeeEntity(npc, v) then
 						Clockwork.datastream:Start(v, "Stunned", 1);
-					end
+					end]]--
 
 					if npc.attackers and table.HasValue(npc.attackers, v:GetCharacterKey()) then
 						if !npc.summonedFaith or v:GetFaith() ~= npc.summonedFaith then

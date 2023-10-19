@@ -473,8 +473,8 @@ if SERVER then
     return self:LeaveFactions(self:GetFactions())
   end
 
-  function ENT:IsInFaction(faction)
-    return self._DrGBaseFactions[string.upper(faction)] or false
+  function ENT:IsInFaction(faction)	if self._DrGBaseFactions then
+		return self._DrGBaseFactions[string.upper(faction)] or false	end		return false;
   end
   function ENT:GetFactions()
     local factions = {}

@@ -61,7 +61,7 @@ SWEP.ShellTime			= .35
 SWEP.Primary.NumShots	= 1		//how many bullets to shoot, use with shotguns
 SWEP.Primary.Damage		= 60	//base damage, scaled by game
 SWEP.Primary.Spread		= .001	//define from-the-hip accuracy 1 is terrible, .0001 is exact)
-SWEP.Primary.IronAccuracy = .00001 // has to be the same as primary.spread
+SWEP.Primary.IronAccuracy = .001 // has to be the same as primary.spread
 -- Because irons don't magically give you less pellet spread!
 
 -- Enter iron sight info and bone mod info below
@@ -100,7 +100,7 @@ SWEP.AmmoTypes = {
 						SWEP.Primary.IronAccuracy = .01;
 					else
 						SWEP.Primary.Spread = .05;
-						SWEP.Primary.IronAccuracy = .02;
+						SWEP.Primary.IronAccuracy = .015;
 					end
 				end
 			end
@@ -134,8 +134,10 @@ function SWEP:PrimaryAttack()
 				local effect = EffectData();
 				local Forward = self.Owner:GetForward()
 				local Right = self.Owner:GetRight()
+
+				local origin = self.Owner:GetShootPos() + (Forward * 65) + (Right * 5);
 				
-				effect:SetOrigin(self.Owner:GetShootPos() + (Forward * 65) + (Right * 5));
+				effect:SetOrigin(origin);
 				effect:SetNormal( self.Owner:GetAimVector());
 				util.Effect( "StunstickImpact", effect );
 
@@ -151,6 +153,12 @@ function SWEP:PrimaryAttack()
 				
 				if SERVER then
 					self.Owner.cloakCooldown = CurTime() + 30;
+
+					net.Start("cwRailgunBeam");
+						net.WriteVector(origin);
+						net.WriteVector(self.Owner:GetEyeTraceNoCursor().HitPos);
+					net.Broadcast();
+
 				end
 			end
 		end

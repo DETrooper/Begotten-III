@@ -6,7 +6,7 @@ ENT.PrintName = "Guardian"
 ENT.Category = "Begotten DRG"
 ENT.Models = {"models/AntLion.mdl"}
 ENT.BloodColor = BLOOD_COLOR_RED
-ENT.RagdollOnDeath = false;
+ENT.RagdollOnDeath = true;
 
 local clawSounds = {"begotten/npc/brute/attack_claw_hit01.mp3", "begotten/npc/brute/attack_claw_hit02.mp3", "begotten/npc/brute/attack_claw_hit03.mp3"};
 local painSounds = {"npc/zombie_poison/pz_warn1.wav", "npc/zombie_poison/pz_warn2.wav"};
@@ -135,19 +135,12 @@ end
   function ENT:OnReachedPatrol()
     self:Wait(math.random(3, 7))
   end    function ENT:ShouldIgnore(ent)	if ent:IsPlayer() and (ent.possessor or ent.victim) then		return true;	end  end
-  function ENT:OnIdle()
-    self:AddPatrolPos(self:RandomPos(1500))
-	local curTime = CurTime();
-	if (!self.nextId or self.nextId < curTime) then
-		self.nextId = curTime + 10
-		--self:EmitSound(, 100, self.pitch)
-	end;
-  end
+  function ENT:WhilePatrolling()	self:OnIdle()  end    function ENT:OnIdle()	local curTime = CurTime();		if (!self.nextId or self.nextId < curTime) then		self.nextId = curTime + 10		self:EmitSound("npc/ichthyosaur/water_growl5.wav", 100, self.pitch)		self:AddPatrolPos(self:RandomPos(1500))	end;  end
 
   -- Damage --
 
   function ENT:OnDeath(dmg, delay, hitgroup)
-  end
+  end  	function ENT:OnRagdoll(dmg)		local ragdoll = self;		if IsValid(ragdoll) then			self:SetMaterial("models/zombie_fast/fast_zombie_sheet");			ParticleEffectAttach("doom_dissolve", PATTACH_POINT_FOLLOW, ragdoll, 0);						timer.Simple(1.6, function() 				if IsValid(ragdoll) then					ParticleEffectAttach("doom_dissolve_flameburst", PATTACH_POINT_FOLLOW, ragdoll, 0);					ragdoll:Fire("fadeandremove", 1);					ragdoll:EmitSound("begotten/npc/burn.wav");										if cwRituals and cwItemSpawner then						local randomItem = cwItemSpawner:SelectItem("rituals");												if randomItem then							local itemInstance = item.CreateInstance(randomItem);														if itemInstance then								local entity = Clockwork.entity:CreateItem(nil, randomItem, ragdoll:GetPos() + Vector(0, 0, 16));																entity.lifeTime = CurTime() + cwItemSpawner.ItemLifetime;							end						end					end				end;			end)						return true;		end	end
   function ENT:Makeup()
 
   end;
@@ -166,12 +159,7 @@ end
 			
 			self.lastStuck = nil
 		end;
-  end
-  
-
-   function ENT:OnRagdoll(ragdoll,dmg)
-			self:SetMaterial("models/zombie_fast/fast_zombie_sheet");
-   end;
+  end
 
   -- Animations/Sounds --
 

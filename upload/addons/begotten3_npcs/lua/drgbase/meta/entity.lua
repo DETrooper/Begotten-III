@@ -191,7 +191,7 @@ if SERVER then
       ragdoll:SetSkin(self:GetSkin())
       ragdoll:SetColor(self:GetColor())
       ragdoll:SetModelScale(self:GetModelScale())
-      ragdoll:SetBloodColor(self:GetBloodColor())
+      ragdoll:SetBloodColor(self:GetBloodColor())	  	  ragdoll:SetCollisionGroup(COLLISION_GROUP_DEBRIS);
       for i = 1, #self:GetBodyGroups() do
         ragdoll:SetBodygroup(i-1, self:GetBodygroup(i-1))
       end

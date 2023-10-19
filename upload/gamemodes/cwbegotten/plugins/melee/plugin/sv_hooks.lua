@@ -14,7 +14,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 		if entity:IsPlayer() and (!entity:Alive() or entity.iFrames) or damageInfo:IsDamageType(DMG_CRUSH) then
 			return;
 		end
-		
+
 		local canblock = false;
 		
 		if entity:IsPlayer() then
