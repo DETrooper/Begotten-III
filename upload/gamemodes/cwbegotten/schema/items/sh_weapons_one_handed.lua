@@ -150,7 +150,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(2.83, 3.54, 0);
 	ITEM.canUseShields = true;
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"scrap", "scrap"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 50};
 ITEM:Register();
 
