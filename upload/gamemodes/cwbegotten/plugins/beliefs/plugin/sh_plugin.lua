@@ -1098,7 +1098,11 @@ function COMMAND:OnRun(player, arguments)
 					--player:TakeDamage(8);
 					player:HandleSanity(10);
 					
+					player.flagellating = true;
+					player.ignoreConditionLoss = true;
 					Schema:DoTesla(player, true);
+					player.flagellating = false;
+					player.ignoreConditionLoss = false;
 					
 					if player:HasBelief("wriggle_fucking_eel") then
 						player:StopAllBleeding();
@@ -1187,8 +1191,10 @@ function COMMAND:OnRun(player, arguments)
 					d:SetDamagePosition(player:GetPos() + Vector(0, 0, 48));
 					d:SetInflictor(activeWeapon);
 					
+					player.flagellating = true;
 					player.ignoreConditionLoss = true;
 					player:TakeDamageInfo(d);
+					player.flagellating = false;
 					player.ignoreConditionLoss = false;
 					player:HandleSanity(math.Round(d:GetDamage() / 3));
 					

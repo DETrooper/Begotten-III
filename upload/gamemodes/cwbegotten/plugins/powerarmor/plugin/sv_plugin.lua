@@ -158,13 +158,13 @@ function playerMeta:EnterPowerArmor(entity)
 		local clothesItem = self:GetClothesEquipped();
 		
 		if clothesItem then
-			Clockwork.kernel:ForceUnequipItem(self, clothesItem.uniqueID, clothesItem.itemID);
+			clothesItem:OnPlayerUnequipped(self, nil, true);
 		end;
 		
 		local helmetItem = self:GetHelmetEquipped();
 		
 		if helmetItem then
-			Clockwork.kernel:ForceUnequipItem(self, helmetItem.uniqueID, helmetItem.itemID);
+			helmetItem:OnPlayerUnequipped(self);
 		end
 	
 		self:SetModel(entity:GetModel());

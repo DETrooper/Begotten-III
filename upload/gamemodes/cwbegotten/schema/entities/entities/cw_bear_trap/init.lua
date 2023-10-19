@@ -91,7 +91,7 @@ function ENT:Touch(entity)
 						damageInfo:SetDamagePosition(entity:GetPos());
 					end
 					
-					if cwMedicalSystem then
+					if cwMedicalSystem and (!cwPowerArmor or !entity:IsWearingPowerArmor()) then
 						local injuries = cwMedicalSystem:GetInjuries(entity);
 						
 						if !(injuries[HITGROUP_LEFTLEG]["broken_bone"]) then
@@ -113,7 +113,7 @@ function ENT:Touch(entity)
 						damageInfo:SetDamagePosition(entity:GetPos());
 					end
 					
-					if cwMedicalSystem then
+					if cwMedicalSystem and (!cwPowerArmor or !entity:IsWearingPowerArmor()) then
 						local injuries = cwMedicalSystem:GetInjuries(entity);
 						
 						if !(injuries[HITGROUP_RIGHTLEG]["broken_bone"]) then

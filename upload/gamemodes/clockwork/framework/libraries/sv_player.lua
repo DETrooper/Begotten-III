@@ -2681,7 +2681,7 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 			end
 
 			Clockwork.entity:SetPlayer(ragdoll, player)
-			self:DoRagdollDecayCheck(player, ragdoll)
+			--self:DoRagdollDecayCheck(player, ragdoll)
 
 			hook.Run("PlayerRagdolled", player, state, player.cwRagdollTab)
 		end

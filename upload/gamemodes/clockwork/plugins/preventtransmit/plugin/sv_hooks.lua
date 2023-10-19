@@ -16,7 +16,7 @@ function cwTransmit:DisableNetworking(client, disable)
     local plys = 0
 
     for _, v in ipairs(player.GetAll()) do
-        if v:IsAdmin() or v == client or !IsValid(v) then continue; end
+        if (disable and v:IsAdmin()) or v == client or !IsValid(v) then continue; end
 
         self:RecursiveSetPreventTransmit(client, v, disable);
 
@@ -32,7 +32,7 @@ function cwTransmit:PreMakePlayerExitObserverMode(player)
     self:DisableNetworking(player, false);
 end
 
-function cwTransmit:PlayerInitialSpawn(player)
+function cwTransmit:PlayerCharacterLoaded(player)
     if(player:IsAdmin()) then return; end
 
     for _, v in ipairs(_player.GetAll()) do
@@ -40,4 +40,7 @@ function cwTransmit:PlayerInitialSpawn(player)
 
         self:RecursiveSetPreventTransmit(v, player, true);
     end
+end
+
+function cwTransmit:PlayerInitialSpawn(player)
 end

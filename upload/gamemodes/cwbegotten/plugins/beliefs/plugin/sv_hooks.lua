@@ -635,7 +635,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 		
 		local newDamage = originalDamage;
 		
-		if entity:IsPlayer() and entity:Alive() then
+		if entity:IsPlayer() and entity:Alive() and !entity.flagellating then
 			local chance = 0;
 			
 			if entity:HasBelief("lucky") then
