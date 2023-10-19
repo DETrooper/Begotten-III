@@ -24,7 +24,7 @@ local ITEM = Clockwork.item:New(nil, true)
 					local background = self.background or "https://i.imgur.com/ofkBgu0.png";
 					local text = string.gsub(string.gsub(self.bookInformation[i], "\n", "<br>"), "\t", string.rep("&nbsp", 4));
 					
-					self.bookInformation[i] = "<html><style>#example {padding-top:96px; padding-left:80px; padding-right:96px; padding-bottom:48px; overflow: hidden; background-image: url('"..background.."'); background-repeat: no-repeat; background-size: 100% 740px;}</style><font face='Papyrus' size='3'><div id='example'>"..text.."</div></font></html>"
+					self.bookInformation[i] = "<html><style>#example {padding-top:48px; padding-left:60px; padding-right:60px; padding-bottom:0px; height: 736px; overflow: visible; background-image: url('"..background.."'); background-repeat: no-repeat; background-size: 100% 790px;}</style><font face='Papyrus' size='3'><div id='example'>"..text.."</div></font></html>"
 				end
 			end
 			
@@ -39,13 +39,14 @@ local ITEM = Clockwork.item:New(nil, true)
 				local booksRead = player:GetCharacterData("BooksRead", {});
 				
 				if !table.HasValue(booksRead, self.uniqueID) then
-					if cwBeliefs and player:HasBelief("scribe") then
+					--if cwBeliefs and player:HasBelief("scribe") then
 						player:HandleXP(cwBeliefs.xpValues["read"]);
-					end
+					--end
 					
 					table.insert(booksRead, self.uniqueID);
 					
 					player:SetCharacterData("BooksRead", booksRead);
+					Clockwork.datastream:Start(player, "UpdateBooksRead", booksRead);
 				end
 				
 				player:EmitSound("begotten/items/note_turn.wav")
@@ -62,28 +63,35 @@ local ITEM = Clockwork.item:New(nil, true)
 	
 	function ITEM:OnCustomFunction(player, name)
 		if (name == "Copy") then
-			--if player:GetCharacterData("LastZone") == "tower" then
-				local booksCopied = player:GetCharacterData("BooksCopied", {});
+			local booksCopied = player:GetCharacterData("BooksCopied", {});
+			
+			if player:HasItemByID("quill") and player:HasItemByID("paper") then
+				if !cwBeliefs or (cwBeliefs and player:HasBelief("scribe")) then
+					if !table.HasValue(player:GetCharacterData("BooksRead", {}), self.uniqueID) then
+						Schema:EasyText(player, "chocolate", "You must have read this scripture before attempting to copy it!");
+						
+						return false;
+					end
 				
-				--[[if table.HasValue(booksCopied, self.uniqueID) then
-					Schema:EasyText(player, "peru", "You have already copied this scripture!");
-					return false;
-				else]]if player:HasItemByID("quill") and player:HasItemByID("paper") then
-					if !cwBeliefs or (cwBeliefs and player:HasBelief("scribe")) then
+					if (!cwBeliefs or (self.bookType == "Glazic" or player:HasBelief("anthropologist"))) then
 						local itemTable = item.CreateInstance(self.uniqueID);
 						local bSuccess, fault = player:GiveItem(itemTable, true);
 						
 						if bSuccess then
-							if cwBeliefs then
-								if not table.HasValue(booksCopied, self.uniqueID) then
+							if table.HasValue(booksCopied, self.uniqueID) then
+								if cwBeliefs then
+									player:HandleXP(math.Round(cwBeliefs.xpValues["copy"] / 2));
+								end
+							else
+								table.insert(booksCopied, self.uniqueID);
+								
+								player:SetCharacterData("BooksCopied", booksCopied);
+								Clockwork.datastream:Start(player, "UpdateBooksCopied", booksCopied);
+							
+								if cwBeliefs then
 									player:HandleXP(cwBeliefs.xpValues["copy"]);
 								end
 							end
-							
-							table.insert(booksCopied, self.uniqueID);
-							
-							player:SetCharacterData("BooksCopied", booksCopied);
-							Clockwork.datastream:Start(player, "UpdateBooksCopied", booksCopied);
 							
 							player:TakeItemByID("paper");
 							
@@ -108,21 +116,20 @@ local ITEM = Clockwork.item:New(nil, true)
 								end
 							end
 						else
-							--Schema:EasyText(player, "firebrick", "Something went horribly wrong! Please contact an admin using /adminhelp.");
-							return false;
+							Schema:EasyText(player, "chocolate", "You cannot decipher the glyphs in this scripture!");
 						end
 					else
-						Schema:EasyText(player, "chocolate", "You do not have the required belief to do this!");
+						--Schema:EasyText(player, "firebrick", "Something went horribly wrong! Please contact an admin using /adminhelp.");
 						return false;
 					end
 				else
-					Schema:EasyText(player, "chocolate", "You need paper and a quill to copy scriptures!");
+					Schema:EasyText(player, "chocolate", "You do not have the required belief to do this!");
 					return false;
 				end
-			--[[else
-				Schema:EasyText(player, "peru", "You should get somewhere safer before attempting to copy this scripture!");
+			else
+				Schema:EasyText(player, "chocolate", "You need paper and a quill to copy scriptures!");
 				return false;
-			end;]]--
+			end
 		end;
 	end;
 	
@@ -155,23 +162,249 @@ local ITEM = Clockwork.item:New();
 
 	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 200, onGround = false};
 
-	-- Called when a player drops the item.
-	function ITEM:OnDrop(player, position) end;
+-- Called when a player drops the item.
+function ITEM:OnDrop(player, position) end;
+
 ITEM:Register();
 
--- Replace these with your own, the old books have been removed due to their obscene contents.
 local ITEM = Clockwork.item:New("book_base")
-	ITEM.name = "Test Book"
+	ITEM.name = "Booby Blagoona: A Bibliography"
 	ITEM.model = "models/props_monastery/book_small.mdl"
 	ITEM.weight = 0.6;
-	ITEM.uniqueID = "book_test"
-	ITEM.description = "A leatherbound book."
+	ITEM.uniqueID = "book_bbab"
+	ITEM.description = "A leatherbound book titled after a controversial Glazic figure."
 	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
-	ITEM.bookInformation = {Book_Test_Page1}
+	ITEM.bookInformation = {Book_Booby_Page1, Book_Booby_Page2, Book_Booby_Page3, Book_Booby_Page4}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
+
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 600, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Boxer Harvus Krammy: A Bibliography"
+	ITEM.model = "models/props_monastery/book_small.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_bhkab"
+	ITEM.description = "A leatherbound book titled after an esteemed Glazic philosopher."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Boxer_Page1, Book_Boxer_Page2, Book_Boxer_Page3, Book_Boxer_Page4, Book_Boxer_Page5}
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
 	
 	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 600, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The County Districts"
+	ITEM.model = "models/props_monastery/book_small.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_tcd"
+	ITEM.description = "A leatherbound book detailing the histories of the poor outlying districts."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_County_Page1, Book_County_Page2, Book_County_Page3}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 550, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Gay King Summit"
+	ITEM.model = "models/props_monastery/book_large.mdl"
+	ITEM.weight = 1.4;
+	ITEM.uniqueID = "book_gks"
+	ITEM.description = "An epic detailing the rise and fall of the Northern threat."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Gay_Page1, Book_Gay_Page2, Book_Gay_Page3, Book_Gay_Page4, Book_Gay_Page5, Book_Gay_Page6, Book_Gay_Page7, Book_Gay_Page8, Book_Gay_Page9, Book_Gay_Page10, Book_Gay_Page11, Book_Gay_Page12, Book_Gay_Page13, Book_Gay_Page14, Book_Gay_Page15, Book_Gay_Page16, Book_Gay_Page17, Book_Gay_Page18, Book_Gay_Page19, Book_Gay_Page20, Book_Gay_Page21, Book_Gay_Page22, Book_Gay_Page23, Book_Gay_Page24, Book_Gay_Page25, Book_Gay_Page26, Book_Gay_Page27, Book_Gay_Page28}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_large.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 700, onGround = false};
+	
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Spooning"
+	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_s"
+	ITEM.description = "A scroll of paper dictating the practice of spooning."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Spooning}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 450, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The Ride of Tears"
+	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_rot"
+	ITEM.description = "A scroll of paper dictating the use of the Ride of Tears."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Tears}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 650, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Quotes of Glazic Renewal"
+	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_qogr"
+	ITEM.description = "A scroll of paper displaying quotes of brilliance."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Quotes1, Book_Quotes2}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 650, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The Perpetual Urges"
+	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_tpu"
+	ITEM.description = "A scroll of paper regarding the Fourth Erotica Ban."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Urges1}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 650, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The Glaze"
+	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_g"
+	ITEM.description = "A scroll of paper regarding the essence of creation and the source of all Light."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Glaze1}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 650, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Death Ships"
+	ITEM.model = "models/props_monastery/book_small.mdl"
+	ITEM.weight = 1;
+	ITEM.uniqueID = "book_ds"
+	ITEM.description = "A leatherbound book devoted to the topic of the Glazic Navy."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Deathships_Page1, Book_Deathships_Page2, Book_Deathships_Page3, Book_Deathships_Page4, Book_Deathships_Page5}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 650, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The Assault on Farmstead 8"
+	ITEM.model = "models/props_monastery/book_small.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_assault"
+	ITEM.description = "A leatherbound book recalling the events of a terrible tragedy."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Assault_Page1, Book_Assault_Page2, Book_Assault_Page3, Book_Assault_Page4, Book_Assault_Page5}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 550, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Karmine Willtan: A Bibliography"
+	ITEM.model = "models/props_monastery/book_small.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_karmine"
+	ITEM.description = "A leatherbound book titled after a man of faith."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Karmine_Page1, Book_Karmine_Page2, Book_Karmine_Page3}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 550, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Lord Maximus: A Bibliography"
+	ITEM.model = "models/props_monastery/book_large.mdl"
+	ITEM.weight = 1.4;
+	ITEM.uniqueID = "book_lord"
+	ITEM.description = "A leatherbound epic titled after the greatest of the Glazic figures."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Maximus_Page1, Book_Maximus_Page2, Book_Maximus_Page3, Book_Maximus_Page4, Book_Maximus_Page5, Book_Maximus_Page6, Book_Maximus_Page7, Book_Maximus_Page8, Book_Maximus_Page9, Book_Maximus_Page10, Book_Maximus_Page11}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_large.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 700, onGround = false};
+	
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Fucker Joe: A Bibliography"
+	ITEM.model = "models/props_monastery/book_small.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_fuckerjoe"
+	ITEM.description = "A leatherbound book titled after an infamous serial killer and necrophiliac."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Fucker_Page1, Book_Fucker_Page2, Book_Fucker_Page3, Book_Fucker_Page4}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 550, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Alamos Eulogy"
+	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_alamos"
+	ITEM.description = "A Darklander scroll depicting the eulogy of a fallen follower."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Alamos_Page1}
+	ITEM.bookType = "Darklander"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 2000, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Order of the Golden Phallus"
+	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_phallus"
+	ITEM.description = "A scroll from the Far East. It bears foreign words written in red text."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Phallus_Page1, Book_Phallus_Page2}
+	ITEM.bookType = "Darklander"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
+
 ITEM:Register()
 
 Clockwork.item:Initialize(); -- This fixes shit for autorefresh I guess?
@@ -179,8 +412,10 @@ Clockwork.item:Initialize(); -- This fixes shit for autorefresh I guess?
 if (SERVER) then
 	function cwScriptures:PlayerCharacterLoaded(player)
 		local booksCopied = player:GetCharacterData("BooksCopied", {});
+		local booksRead = player:GetCharacterData("BooksRead", {});
 		
-		Clockwork.datastream:Start(player, "UpdateBooksCopied", booksCopied)
+		Clockwork.datastream:Start(player, "UpdateBooksCopied", booksCopied);
+		Clockwork.datastream:Start(player, "UpdateBooksRead", booksRead);
 	end
 end
 
@@ -199,7 +434,7 @@ if (CLIENT) then
 		self:ShowCloseButton(false)
 
 		self:SetSize(749, 870)
-		self:SetPos(960 - (self:GetWide() / 2), 540 - (self:GetTall() / 2) )
+		self:SetPos((scrW / 2) - (self:GetWide() / 2), (scrH / 2) - (self:GetTall() / 2) )
 		
 		local loadingText = vgui.Create("DLabel", self)
 		loadingText:SetText("Loading...")
@@ -354,9 +589,15 @@ if (CLIENT) then
 		end
 	end)
 	
+	Clockwork.datastream:Hook("UpdateBooksRead", function(data)
+		if data then
+			cwScriptures.booksRead = data;
+		end
+	end)
+	
 	Clockwork.datastream:Hook("UpdateBooksCopied", function(data)
 		if data then
-			Clockwork.Client.booksCopied = data;
+			cwScriptures.booksCopied = data;
 		end
 	end)
 end

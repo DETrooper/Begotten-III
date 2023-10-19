@@ -1871,7 +1871,7 @@ function Clockwork.kernel:HandleItemSpawnIconClick(itemTable, spawnIcon, Callbac
 					end
 				end
 			elseif v == "Copy" then
-				if Clockwork.inventory:HasItemByID(Clockwork.inventory:GetClient(), "quill") and Clockwork.inventory:HasItemByID(Clockwork.inventory:GetClient(), "paper") --[[and Clockwork.Client.booksCopied and !table.HasValue(Clockwork.Client.booksCopied, itemTable.uniqueID)]] then
+				if Clockwork.inventory:HasItemByID(Clockwork.inventory:GetClient(), "quill") and Clockwork.inventory:HasItemByID(Clockwork.inventory:GetClient(), "paper") then
 					if !cwBeliefs or (cwBeliefs and cwBeliefs:HasBelief("scribe")) then
 						itemFunctions[#itemFunctions + 1] = v;
 					end

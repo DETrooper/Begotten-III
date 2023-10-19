@@ -2641,6 +2641,27 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		end;
 		
 		return true;
+	elseif category == "Scripture" and cwScriptures then
+		frame:AddText(name.." - "..category, Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
+		frame:AddText(itemTable("description"), Color(180, 170, 170), "nov_IntroTextSmallDETrooper", 0.8);
+		
+		if (bShowWeight) then
+			frame:AddBar(20, {{text = weight.."kg", percentage = percentage * 100, color = Color(96, 96, 128), font = "DermaDefault", leftTextAlign = false, noDisplay = true}}, "Weight", Color(170, 170, 180));
+		end;
+		
+		if cwScriptures.booksRead then
+			if table.HasValue(cwScriptures.booksRead, itemTable.uniqueID) then
+				frame:AddText("Already read!", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1);
+			end
+		end
+		
+		if cwScriptures.booksCopied then
+			if table.HasValue(cwScriptures.booksCopied, itemTable.uniqueID) then
+				frame:AddText("Already copied!", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1);
+			end
+		end
+		
+		return true;
 	else
 		frame:AddText(name.." - "..category, Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
 		frame:AddText(itemTable("description"), Color(180, 170, 170), "nov_IntroTextSmallDETrooper", 0.8);

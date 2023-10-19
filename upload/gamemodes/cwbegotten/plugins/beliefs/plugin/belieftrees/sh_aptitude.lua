@@ -76,18 +76,18 @@ local APTITUDE = cwBeliefs.beliefTrees:New("aptitude")
 		[3] = {
 			["literacy"] = {
 				name = "Literacy",
-				description = "Unlocks the ability to read.",
+				description = "Unlocks the ability to read. Gain a moderate amount of faith for each unique scripture read.",
 				row = 1,
 			},
 			["scribe"] = {
 				name = "Scribe",
-				description = "Unlocks the ability to copy scriptures. Gain faith for each unique scripture read and even more faith for every scripture copied.",
+				description = "Unlocks the ability to copy scriptures. Gain an abundance of faith for every unique scripture copied (halved for subsequent copies).",
 				requirements = {"literacy"},
 				row = 2,
 			},
 			["anthropologist"] = {
 				name = "Anthropologist",
-				description = "Unlocks the ability to read Runic and Darklander texts.",
+				description = "Unlocks the ability to read and copy Runic and Darklander texts.",
 				requirements = {"literacy", "scribe"},
 				row = 3,
 			},
