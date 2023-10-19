@@ -1575,7 +1575,7 @@ AttackTables.ExileKnightSwordAttackTable = {
 };
 
 AttackTables.GlaiveAttackTable = {
-	["primarydamage"] = 85,
+	["primarydamage"] = 80,
 	["dmgtype"] = 4,
 	["attacktype"] = "polearm_swing",
 	["canaltattack"] = false,
@@ -1589,7 +1589,7 @@ AttackTables.GlaiveAttackTable = {
 	["delay"] = 1.55,
 	["striketime"] = 0.6,
 	["meleearc"] = 60,
-	["meleerange"] = 1250,
+	["meleerange"] = 1350,
 	["punchstrength"] = Angle(0,1,0),
 };
 
