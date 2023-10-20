@@ -1518,11 +1518,12 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("savage_claws");
 		RECIPE.name = "Savage Claws";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 2},
+			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_claws_savageclaws"] = {amount = 1},
@@ -1547,11 +1548,12 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("steel_claws");
 		RECIPE.name = "Steel Claws";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["shagalaxian_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_claws_steelclaws"] = {amount = 1},
