@@ -2960,7 +2960,9 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 	elseif subfaction == "Knights of Sol" then
 		infoTable.runSpeed = infoTable.runSpeed * 0.95;
 	elseif subfaction == "Praeventor" then
-		infoTable.runSpeed = infoTable.runSpeed * 1.05;
+		if player:GetSubfaith() ~= "Sol Orthodoxy" then
+			infoTable.runSpeed = infoTable.runSpeed * 1.05;
+		end
 	end
 
 	if (Clockwork.player:HasFlags(player, "E")) then

@@ -116,6 +116,12 @@ local function Guarding(ent, dmginfo)
 		return;
 	end;
 	
+	local inflictor = dmginfo:GetInflictor();
+	
+	if IsValid(inflictor) and inflictor.unblockable then
+		return;
+	end
+	
 	if ent:Alive() then
 		local wep = ent:GetActiveWeapon()
 		--local attacksoundtable = GetSoundTable(wep.AttackSoundTable)

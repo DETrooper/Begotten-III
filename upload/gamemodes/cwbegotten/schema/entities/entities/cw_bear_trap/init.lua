@@ -18,6 +18,7 @@ function ENT:Initialize()
 	self:PhysicsInit(SOLID_VPHYSICS);
 	self:SetUseType(SIMPLE_USE);
 	self:SetSolid(SOLID_VPHYSICS);
+	self.unblockable = true;
 
 	local physicsObject = self:GetPhysicsObject();
 	

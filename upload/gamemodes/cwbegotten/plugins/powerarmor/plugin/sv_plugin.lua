@@ -180,7 +180,7 @@ function playerMeta:EnterPowerArmor(entity)
 		entity:Remove();
 	end
 	
-	hook.Run("RunModifyPlayerSpeed", self, self.cwInfoTable)
+	hook.Run("RunModifyPlayerSpeed", self, self.cwInfoTable, true)
 end
 
 function playerMeta:ExitPowerArmor()
@@ -217,7 +217,7 @@ function playerMeta:ExitPowerArmor()
 		return false;
 	end
 	
-	hook.Run("RunModifyPlayerSpeed", self, self.cwInfoTable)
+	hook.Run("RunModifyPlayerSpeed", self, self.cwInfoTable, true)
 end
 
 concommand.Add("cw_EnterPowerArmor", function(player, cmd, args)

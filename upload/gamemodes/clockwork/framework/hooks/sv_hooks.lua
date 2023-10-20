@@ -1021,7 +1021,7 @@ function GM:PlayerSpawn(player)
 
 		player:NetworkTraits();
 		
-		hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable);
+		hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
 	else
 		player:KillSilent()
 	end

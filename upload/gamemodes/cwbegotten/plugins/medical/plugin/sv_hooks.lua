@@ -851,7 +851,7 @@ function cwMedicalSystem:PlayerGivenInjury(player, uniqueID)
 		self.cwInjuryTable[uniqueID]:OnRecieve(player);
 	end;
 	
-	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable)
+	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true)
 end;
 
 -- Called when an injury is taken from a player.
@@ -860,17 +860,17 @@ function cwMedicalSystem:PlayerInjuryTaken(player, uniqueID)
 		self.cwInjuryTable[uniqueID]:OnTake(player);
 	end;
 	
-	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable)
+	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true)
 end;
 
 -- Called when a player's limb is healed.
 function cwMedicalSystem:PlayerLimbHealed(player, hitGroup, amount)
-	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable)
+	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true)
 end;
 
 -- Called when a player's limb is damaged.
 function cwMedicalSystem:PlayerLimbDamaged(player, hitGroup, amount)
-	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable)
+	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true)
 end;
 
 -- Called when a player's limb is damaged.

@@ -117,7 +117,7 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized)
 					
 					local decrease = 1;
 					
-					hook.Run("RunModifyPlayerSpeed", player, infoTable);
+					hook.Run("RunModifyPlayerSpeed", player, infoTable, true);
 					
 					--if (!player:IsNoClipping() and player:IsOnGround()) then
 						if (hook.Run("PlayerShouldStaminaDrain", player) != false) then

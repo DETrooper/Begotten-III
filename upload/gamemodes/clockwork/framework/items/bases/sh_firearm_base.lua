@@ -158,6 +158,13 @@ end;
 	end;
 end;]]--
 
+-- Called when an item is taken from a player.
+function ITEM:OnTakeFromPlayer(player)
+	if Clockwork.player:GetAction(player) == "reloading" then
+		Clockwork.player:SetAction(player, nil);
+	end
+end
+
 -- Called when a player has unequipped the item.
 function ITEM:OnPlayerUnequipped(player, extraData)
 	local weapon = player:GetWeapon(self.uniqueID);
@@ -177,7 +184,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 			end
 		end
 	end
-	
+
 	if !itemTable then
 		itemTable = self;
 	end

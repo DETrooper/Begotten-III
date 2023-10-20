@@ -118,12 +118,12 @@ end
 
 -- Called when a player's limb damage is bIsHealed.
 function cwLimbs:PlayerLimbDamageHealed(player, hitGroup, amount)
-	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable);
+	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
 end
 
 -- Called when a player's limb takes damage.
 function cwLimbs:PlayerLimbTakeDamage(player, hitGroup, damage)
-	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable);
+	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
 end
 
 -- Called when a player's limb damage is reset.
