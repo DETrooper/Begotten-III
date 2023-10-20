@@ -291,7 +291,7 @@ function COMMAND:OnRun(player, arguments)
 		Clockwork.chatBox:SetMultiplier(1.25);
 		Clockwork.chatBox:Add(player, nil, "demontalk", message);
 		
-		Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have demontalked \""..message.."\" to "..target:Name()..".");
+		Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have demontalked "..message.." to "..target:Name()..".");
 	else
 		Schema:EasyText(player, "grey", "["..self.name.."] "..arguments[1].." is not a valid player!");
 	end;
@@ -320,7 +320,7 @@ function COMMAND:OnRun(player, arguments)
 		Clockwork.chatBox:SetMultiplier(1.25);
 		Clockwork.chatBox:Add(player, nil, "demonnicetalk", message);
 		
-		Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have demonnicetalked \""..message.."\" to "..target:Name()..".");
+		Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have demonnicetalked "..message.." to "..target:Name()..".");
 	else
 		Schema:EasyText(player, "grey", "["..self.name.."] "..arguments[1].." is not a valid player!");
 	end;
@@ -341,11 +341,11 @@ function COMMAND:OnRun(player, arguments)
 	if (target) then
 		local message = table.concat(arguments, " ", 2);
 
-		if target ~= player then
+		--if target ~= player then
 			Clockwork.chatBox:Add(target, nil, "whispersomeone", message);
-		end
+		--end
 		
-		Clockwork.chatBox:Add(player, nil, "whispersomeone", "[TO "..string.upper(target:Name())..":"..message);
+		--Clockwork.chatBox:Add(player, nil, "whispersomeone", "[TO "..string.upper(target:Name())..":"..message);
 		Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have demonwhispered \""..message.."\" to "..target:Name()..".");
 	else
 		Schema:EasyText(player, "grey", "["..self.name.."] "..arguments[1].." is not a valid player!");

@@ -434,6 +434,8 @@ local function Guarding(ent, dmginfo)
 											local shockDamageInfo = DamageInfo();
 											
 											shockDamageInfo:SetDamage(math.random(3, 5));
+											shockDamageInfo:SetAttacker(ent);
+											shockDamageInfo:SetDamageType(DMG_SHOCK);
 											
 											Schema:DoTesla(attacker, false);
 											attacker:TakeDamageInfo(shockDamageInfo);
@@ -446,7 +448,7 @@ local function Guarding(ent, dmginfo)
 							
 							if (IsValid(activeWeapon) and activeWeapon:GetNWString("activeShield"):len() > 0) then
 								local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
-								
+
 								if blockTable.electrified then
 									local wepBlockTable = GetTable(enemywep.BlockTable);
 									
@@ -454,6 +456,8 @@ local function Guarding(ent, dmginfo)
 										local shockDamageInfo = DamageInfo();
 										
 										shockDamageInfo:SetDamage(math.random(3, 5));
+										shockDamageInfo:SetAttacker(ent);
+										shockDamageInfo:SetDamageType(DMG_SHOCK);
 										
 										Schema:DoTesla(attacker, false);
 										attacker:TakeDamageInfo(shockDamageInfo);

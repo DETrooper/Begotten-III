@@ -6315,6 +6315,7 @@ BlockTables.shield15 = { -- Voltshield
 	["parrytakestamina"] = 25,
 	["canparry"] = true,
 	["candeflect"] = true,
+	["electrified"] = true,
 	["ironsights"] = {
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(5.44, -8, 2), ang = Vector(2.5, -8.443, -14.775)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(-1.241, -8.844, 2.2), ang = Vector(-1.5, -40.102, 4.221)},

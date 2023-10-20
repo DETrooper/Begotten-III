@@ -64,21 +64,25 @@ end
 
 function ENT:Touch(entity)
 	if self:GetNWString("state") == "trap" then
+		local damageInfo = DamageInfo();
+		
+		damageInfo:SetDamageType(DMG_VEHICLE);
+		damageInfo:SetDamage(60);
+		damageInfo:SetAttacker(self.owner or self);
+		damageInfo:SetInflictor(self);
+	
 		if entity:IsPlayer() or entity:IsNPC() or entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(entity) then
-			local damageInfo = DamageInfo();
-			
-			damageInfo:SetDamageType(DMG_VEHICLE);
-			damageInfo:SetDamage(60);
-			damageInfo:SetAttacker(self.owner or self);
-			damageInfo:SetInflictor(self);
-			
 			if Clockwork.entity:IsPlayerRagdoll(entity) then
 				entity = Clockwork.entity:GetPlayer(entity);
 			end
 			
-			if string.find(entity:GetClass(), "npc_animal") then
-				damageInfo:SetDamage(1000);
-			elseif entity:IsPlayer() then
+			if entity:IsNPC() or entity:IsNextBot() then
+				if string.find(entity:GetClass(), "npc_animal") then
+					damageInfo:SetDamage(1000);
+				end
+				
+				self.condition = math.max(0, self.condition - 20);
+			elseif entity:IsPlayer() and entity:Alive() then
 				Clockwork.chatBox:AddInTargetRadius(entity, "me", "steps on a bear trap, triggering it!", entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 				
 				if math.random(1, 2) == 1 then
@@ -135,18 +139,12 @@ function ENT:Touch(entity)
 					entity.iFrames = false;
 				end
 			end
-			
-			entity:TakeDamageInfo(damageInfo);
-			
+
 			self.condition = math.max(0, self.condition - 20);
-			self:SetSafe();
-		else
-			local class = entity:GetClass();
-			
-			if class == "prop_physics" or class == "cw_item" or class == "cw_belongings" or class == "prop_ragdoll" then
-				self:SetSafe();
-			end
 		end
+		
+		entity:TakeDamageInfo(damageInfo);
+		self:SetSafe();
 	end
 end;
 

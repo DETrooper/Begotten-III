@@ -343,15 +343,15 @@ net.Receive("PossessionFreakoutAnim", function()
 end);
 
 Clockwork.chatBox:RegisterClass("demontalk", "ic", function(info)
-	Clockwork.chatBox:Add(info.filtered, nil, Color(150, 20, 20, 255), "An overpowering voice in the back of your head speaks to you: \""..info.text.."\"");
+	Clockwork.chatBox:Add(info.filtered, nil, Color(150, 20, 20, 255), "An overpowering voice in the back of your head speaks to you "..info.text);
 end);
 
 Clockwork.chatBox:RegisterClass("demonnicetalk", "ic", function(info)
-	Clockwork.chatBox:Add(info.filtered, nil, Color(255, 251, 219, 255), "A melodic and deep voice thunders in the back of your head: \""..info.text.."\"");
+	Clockwork.chatBox:Add(info.filtered, nil, Color(255, 251, 219, 255), "A melodic and deep voice thunders in the back of your head "..info.text);
 end);
 
 Clockwork.chatBox:RegisterClass("demonhosttalk", "ic", function(info)
-	Clockwork.chatBox:Add(info.filtered, nil, Color(150, 20, 20, 255), "You gather all your strength and speak inside your mind to the demon \""..info.text.."\"");
+	Clockwork.chatBox:Add(info.filtered, nil, Color(150, 20, 20, 255), "You gather all your strength and speak inside your mind to the demon "..info.text);
 end);
 
 Clockwork.chatBox:RegisterClass("whispersomeone", "ic", function(info)
