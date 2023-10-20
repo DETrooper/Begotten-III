@@ -2208,7 +2208,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			end
 
 			if table.HasValue(itemTable.attributes, "solblessed") then
-				frame:AddText("Blessed in Hatred: Equipping will grant the 'Hatred' bar, which will fill upon inflicting or taking damage. 100% 'Hatred' will prevent death from damage but will reduce 'Hatred' to 0%.", Color(110, 30, 30));
+				--frame:AddText("Blessed in Hatred: Equipping will grant the 'Hatred' bar, which will fill upon inflicting or taking damage. 100% 'Hatred' will prevent death from damage but will reduce 'Hatred' to 0%.", Color(110, 30, 30));
+				frame:AddText("Blessed in Hatred: Equipping will grant the 'Hatred' bar, which will fill upon taking damage. 100% 'Hatred' will prevent death from damage but will reduce 'Hatred' to 0%.", Color(110, 30, 30));
 			end
 
 			if table.HasValue(itemTable.attributes, "deathknell") then

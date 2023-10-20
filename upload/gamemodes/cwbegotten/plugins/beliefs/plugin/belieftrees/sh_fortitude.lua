@@ -62,7 +62,7 @@ local FORTITUDE = cwBeliefs.beliefTrees:New("fortitude")
 			},
 			["lunar_repudiation"] = {
 				name = "Lunar Repudiation",
-				description = "Grants immunity to all effects of the Blood Moon and halves residual nighttime sanity loss.",
+				description = "Grants immunity to all effects of the Blood Moon and halves residual nighttime sanity loss. Significantly reduces the effects of fear from thralls and enemy armors.",
 				requirements = {"prudence", "saintly_composure"},
 				row = 3,
 			},

@@ -1124,7 +1124,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	local damage = damageInfo:GetDamage();
 	
 	if damage > 0 then
-		if IsValid(attacker) and attacker:IsPlayer() and not attacker.cwWakingUp then
+		--[[if IsValid(attacker) and attacker:IsPlayer() and not attacker.cwWakingUp then
 			local clothesItem = attacker:GetClothesEquipped();
 			
 			if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
@@ -1136,7 +1136,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 				
 				attacker:SetLocalVar("Hatred", hatred);
 			end
-		end
+		end]]--
 		
 		if entity:IsPlayer() and not entity.cwWakingUp then
 			local clothesItem = entity:GetClothesEquipped();

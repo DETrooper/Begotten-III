@@ -78,10 +78,16 @@ function Schema:GetMotionBlurValues(x, y, forward, spin)
 					local distance = hullTrace.Entity:GetPos():Distance(Clockwork.Client:GetPos());
 					
 					if (distance < 512 and IsValid(hullTrace.Entity)) and Clockwork.Client:GetNetVar("steelWill", false) ~= true then
+						local blur = 128;
+						
+						if cwBeliefs and cwBeliefs:HasBelief("lunar_repudiation") then
+							blur = 12;
+						end
+						
 						if (hook.Run("ShouldEntityModifyBlur", hullTrace.Entity)) then
-							self.blurAdd = math.Approach(self.blurAdd, 128 / distance, frameTime / 3);
+							self.blurAdd = math.Approach(self.blurAdd, blur / distance, frameTime / 3);
 						elseif (hook.Run("ShouldPlayerModifyBlur", hullTrace.Entity)) then
-							self.blurAdd = math.Approach(self.blurAdd, 128 / distance, frameTime / 3);
+							self.blurAdd = math.Approach(self.blurAdd, blur / distance, frameTime / 3);
 						else
 							self.blurAdd = math.Approach(self.blurAdd, 0, frameTime / 3);
 						end;
@@ -118,9 +124,9 @@ function Schema:ShouldPlayerModifyBlur(entity)
 		local clientFaction = Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction();
 		
 		if faction == "Goreic Warrior" and clientFaction ~= "Goreic Warrior" then
-			local bodygroup = entity:GetBodygroup(0);
+			local bodygroup = entity:GetBodygroup(1);
 			
-			if entity:GetModel() == "models/begotten/goreicwarfighters/gorechieftan.mdl" or (bodygroup == 8 or bodygroup == 9) then
+			if entity:GetModel() == "models/begotten/goreicwarfighters/gorechieftan.mdl" or bodygroup == 10 or bodygroup == 11 then
 				return true;
 			end
 		elseif faction == "Children of Satan" and clientFaction ~= "Children of Satan" then
