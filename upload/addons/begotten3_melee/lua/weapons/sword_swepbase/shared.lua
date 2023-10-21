@@ -761,7 +761,7 @@ end
 					
 					-- Ice attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "ice_swing" then
-						DoElementalEffect( { Element = EML_ICE, Target = hit, Duration = activeWeapon.FreezeTime * 3, Attacker = self.Owner } )
+						data.HitEntity:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1), owner);
 					end
 				end
 
@@ -800,7 +800,7 @@ end
 					
 					-- Ice attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "ice_swing" then
-						DoElementalEffect( { Element = EML_ICE, Target = hit, Duration = activeWeapon.FreezeTime, Attacker = self.Owner } )
+						data.HitEntity:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1), owner);
 					end
 				end
 			end
@@ -959,7 +959,7 @@ end
 						
 						-- Ice attack type
 						if (attacktable["attacktype"]) == "ice_swing" then
-							DoElementalEffect( { Element = EML_ICE, Target = hit, Duration = self.FreezeTime, Attacker = owner } )
+							data.HitEntity:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1), owner);
 						end
 					else
 						if hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and !hit:GetNWBool("Parry") == true and !hit.iFrames then
@@ -1417,7 +1417,7 @@ end
 						
 						-- Ice attack type
 						if (attacktable["attacktype"]) == "ice_swing" then
-							DoElementalEffect( { Element = EML_ICE, Target = hit, Duration = self.FreezeTime, Attacker = owner } )
+							data.HitEntity:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1), owner);
 						end
 					else
 						if hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and !hit:GetNWBool("Parry") == true and !hit.iFrames then
@@ -1581,7 +1581,7 @@ end
 						
 						-- Ice attack type
 						if (attacktable["attacktype"]) == "ice_swing" then
-							DoElementalEffect( { Element = EML_ICE, Target = hit, Duration = self.FreezeTime, Attacker = owner } )
+							data.HitEntity:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1), owner);
 						end
 					else
 						if hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and !hit:GetNWBool("Parry") == true and !hit.iFrames then
