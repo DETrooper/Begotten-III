@@ -639,7 +639,7 @@ function cwMedicalSystem:PlayerTakeDamage(player, attacker, inflictor, hitGroup,
 		
 		--local damageType = damageInfo:GetDamageType();
 		local damageType;
-		local damageTypes = {DMG_FALL, DMG_BULLET, DMG_BUCKSHOT, DMG_BURN, DMG_SLASH, DMG_VEHICLE, DMG_SNIPER};
+		local damageTypes = {DMG_FALL, DMG_BULLET, DMG_BUCKSHOT, DMG_SLASH, DMG_VEHICLE, DMG_SNIPER};
 		local damage = damageInfo:GetDamage();
 		local helmetItem = player:GetHelmetEquipped();
 		
