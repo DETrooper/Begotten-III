@@ -4194,6 +4194,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["unholy_sigil_stone"] = {amount = 1},
 			["hellforged_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_1h_shard"] = {amount = 1},

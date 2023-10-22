@@ -755,7 +755,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(1.41, 4.24, -1.41);
 	ITEM.canUseShields = true;
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "down_catalyst"}}; -- use "breakdown" for other type
 	ITEM.requireFaith = {"Faith of the Dark"};
 ITEM:Register();
 

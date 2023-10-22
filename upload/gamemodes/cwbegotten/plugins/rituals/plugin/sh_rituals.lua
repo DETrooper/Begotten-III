@@ -34,7 +34,7 @@ RITUAL = cwRituals.rituals:New("yellow_banner_of_quelling");
 	RITUAL.description = "The children flee when they spot the invisible banner. Let the Satanic filth cower when they realize they are now chained to these mortal lands that they have blighted for so long. Performing this ritual prevents helljaunting in a large radius around you for 40 minutes. Be warned that the Children of Satan will be made aware of your presence!";
 	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "flagellant", "acolyte"}; -- Tier II Light/Family Shared Ritual
 	
-	RITUAL.requirements = {"purifying_stone", "up_catalyst", "down_catalyst"};
+	RITUAL.requirements = {"purifying_stone", "xolotl_catalyst", "xolotl_catalyst"};
 
 	--RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
@@ -1062,7 +1062,7 @@ RITUAL = cwRituals.rituals:New("noble_stature");
 	RITUAL.description = "To show fright to a beast's snarl only invites its fangs. You will stand firm and tall, resolute in the face of savagery. Performing this ritual causes you to take 50% less damage and stability damage while standing completely still. This ritual lasts for 15 minutes.";
 	RITUAL.onerequiredbelief = {"flagellant", "acolyte"}; -- Tier II Faith of the Light Ritual
 	
-	RITUAL.requirements = {"purifying_stone", "holy_spirit", "light_catalyst"};
+	RITUAL.requirements = {"ice_catalyst", "down_catalyst", "light_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 50;
