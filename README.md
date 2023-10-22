@@ -2,6 +2,8 @@
 
 <i>A post-apocalyptic roleplay gamemode for Garry's Mod based on a heavily modified Clockwork framework, run officially from April 2021 to September 2021. This version contains minor improvements and bugfixes since that date, which were intended to be incorporated into Begotten III VR and Begotten IV, but is otherwise mostly the same gamemode as during the server finale.</i>
 
+Begotten III is licenced under [Creative Commons Attribution-NonCommercial 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/deed.en), so you may not use it for commercial purposes.
+
 [Clockwork](https://github.com/CloudSixteen/Clockwork) was developed by Cloud Sixteen, but the Begotten III framework also uses code from Alex Grist, Mr. Meow, and zigbomb.
 
 ## Credits
