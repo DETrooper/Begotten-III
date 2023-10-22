@@ -883,17 +883,17 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("ritual_of_shadow");
 	RITUAL.name = "(Unique) Ritual of Shadow";
-	RITUAL.description = "Although members of House Rekh-khet-sa cannot normally traverse the surface during daytime, there exists a ritual that can temporarily cloak them in darkness and shield them from light. Performing this ritual will prevent you from taking damage during daytime in the Wasteland for the next 30 minutes.";
+	RITUAL.description = "Although members of House Rekh-khet-sa cannot normally traverse the surface during daytime, there exists a ritual that can temporarily cloak them in darkness and shield them from light. Performing this ritual will prevent you from taking damage during daytime in the Wasteland for the next 40 minutes.";
 	RITUAL.requiredSubfaction = {"Rekh-khet-sa"}; -- Subfaction Ritual
 	
-	RITUAL.requirements = {"light_catalyst", "down_catalyst", "tortured_spirit"};
+	RITUAL.requirements = {"light_catalyst", "down_catalyst", "ice_catalyst"};
 	RITUAL.corruptionCost = 25;
 	RITUAL.ritualTime = 30;
 	
 	function RITUAL:OnPerformed(player)
 		player.ritualOfShadow = true;
 		
-		timer.Create("RitualOfShadowTimer_"..player:EntIndex(), 1800, 1, function()
+		timer.Create("RitualOfShadowTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player.ritualOfShadow then
 					player.ritualOfShadow = nil;
