@@ -124,10 +124,14 @@ function Schema:ShouldPlayerModifyBlur(entity)
 		local clientFaction = Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction();
 		
 		if faction == "Goreic Warrior" and clientFaction ~= "Goreic Warrior" then
-			local bodygroup = entity:GetBodygroup(1);
-			
-			if entity:GetModel() == "models/begotten/goreicwarfighters/gorechieftan.mdl" or bodygroup == 10 or bodygroup == 11 then
+			if entity:GetModel() == "models/begotten/goreicwarfighters/gorechieftan.mdl" then
 				return true;
+			else
+				local helmet = entity:GetHelmetEquipped();
+				
+				if helmet and helmet.attributes then
+					return table.HasValue(helmet.attributes, "fear");
+				end
 			end
 		elseif faction == "Children of Satan" and clientFaction ~= "Children of Satan" then
 			if entity:GetModel() == "models/begotten/satanists/wraitharmor.mdl" then

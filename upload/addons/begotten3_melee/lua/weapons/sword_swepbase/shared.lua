@@ -756,7 +756,7 @@ end
 					
 					-- Fire attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "fire_swing" then
-						hit:Ignite(activeWeapon.IgniteTime * 3)
+						hit:Ignite(self.IgniteTime * 3)
 					end
 					
 					-- Ice attack type
@@ -795,7 +795,7 @@ end
 
 					-- Fire attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "fire_swing" then
-						hit:Ignite(activeWeapon.IgniteTime)
+						hit:Ignite(self.IgniteTime)
 					end
 					
 					-- Ice attack type

@@ -178,7 +178,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-1.41, 3, 4.24);
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -197,6 +197,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1000, supercrateOnly = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -265,4 +266,5 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(2.83, 3.4, 16.51);	
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "scrap", "scrap", "tech", "tech", "tech", "tech"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"wriggle_fucking_eel"};
 ITEM:Register();

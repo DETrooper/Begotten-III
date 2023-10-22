@@ -6,7 +6,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "An ancient piece of technology from a bygone era that allows communication over vast distances.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/handheld_radio.png"
 	ITEM.customFunctions = {"Frequency", "Turn On", "Turn Off"};
-	ITEM.itemSpawnerInfo = {category = "Communication", rarity = 300};
+	ITEM.itemSpawnerInfo = {category = "Communication", rarity = 300, bNoSupercrate = true};
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"tech", "tech"}};
 

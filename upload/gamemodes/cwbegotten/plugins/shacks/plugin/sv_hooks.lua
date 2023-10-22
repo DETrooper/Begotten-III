@@ -239,9 +239,9 @@ function cwShacks:ShackStashOpen(player)
 		if playerPos:WithinAABox(v.pos1, v.pos2) then
 			if v.owner then
 				if k == player:GetSharedVar("shack") or player:IsAdmin() or v.coowners[characterKey] then
-					if IsValid(v.stashEnt) then
+					--[[if IsValid(v.stashEnt) then
 						v.stashEnt:Remove();
-					end
+					end]]--
 				
 					if !IsValid(v.stashEnt) then
 						local stashEnt = ents.Create("prop_physics");
@@ -282,9 +282,19 @@ function cwShacks:ShackStashOpen(player)
 									v.stash = entity.cwInventory;
 									v.stashCash = entity.cwCash;
 								
-									if IsValid(entity) then
-										entity:Remove();
-									end
+									timer.Simple(0.5, function()
+										if IsValid(entity) then
+											for i, v in ipairs(_player.GetAll()) do
+												if v.cwStorageTab then
+													if v.cwStorageTab.entity == entity then
+														return;
+													end
+												end
+											end
+											
+											entity:Remove();
+										end
+									end);
 								end,
 								OnGiveCash = function(player, storageTable, cash)
 									storageTable.entity.cwCash = storageTable.cash

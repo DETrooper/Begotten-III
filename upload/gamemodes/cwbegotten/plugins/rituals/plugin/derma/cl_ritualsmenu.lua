@@ -896,7 +896,7 @@ function PANEL:RebuildModelList(faction)
 						continue;
 					end
 					
-					local modelPath = "models/begotten/heads/"..v3.."_wanderer.mdl";
+					local modelPath = "models/begotten/heads/"..v3.."_gore.mdl";
 				
 					local spawnIcon = vgui.Create("cwSpawnIcon", self);
 					spawnIcon:SetModel(modelPath);
