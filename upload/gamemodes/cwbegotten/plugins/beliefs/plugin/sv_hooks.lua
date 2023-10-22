@@ -937,6 +937,12 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					end
 				end
 				
+				if attacker:GetCharmEquipped("holy_sigils") then
+					if entity:GetFaith() ~= attacker:GetFaith() then
+						newDamage = newDamage + (originalDamage * 0.15);
+					end
+				end
+				
 				if attacker:HasBelief("taste_of_blood") then
 					if attacker.tasteOfBloodVictim then
 						if timer.Exists("tasteOfBloodTimer") then

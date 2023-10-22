@@ -101,6 +101,11 @@ function ITEM:OnEquip(player)
 		Schema:EasyText(player, "olive", "This shield is broken and cannot be used!");
 		return false;
 	end
+	
+	if player:GetShieldEquipped() then
+		Schema:EasyText(player, "olive", "You cannot equip more than one shield!");
+		return false;
+	end
 
 	for i, v in ipairs(self.slots) do
 		if !player.equipmentSlots[v] then

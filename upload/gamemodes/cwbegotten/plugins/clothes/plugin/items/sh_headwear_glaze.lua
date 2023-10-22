@@ -471,7 +471,7 @@ ITEM:Register();
 local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.name = "Knight Justicar Helmet"
 	ITEM.model = "models/begotten/headgroups_props/knight_justicar_helmet.mdl"
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/knight_justicar_plate_helmet.png.png"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/knight_justicar_plate_helmet.png"
 	ITEM.weight = 1.5
 	ITEM.uniqueID = "knight_justicar_helmet"
 	ITEM.category = "Helms"

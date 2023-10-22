@@ -65,6 +65,10 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 				elseif faith == "Faith of the Dark" and self:GetCharmEquipped("skull_demon") then
 					newAmount = newAmount + (amount * 0.25);
 				end
+				
+				if self:GetCharmEquipped("holy_sigils") then
+					newAmount = newAmount + (amount * 0.15);
+				end
 			end
 			
 			-- Faith gain loss because of high corruption.

@@ -62,7 +62,7 @@ function playerMeta:HandleNeed(need, amount)
 						amount = amount * 0.75;
 					end
 					
-					if self:GetCharmEquipped("warding_talisman") then
+					if self:GetCharmEquipped("warding_talisman") or self:GetCharmEquipped("holy_sigils") then
 						amount = amount * 0.5;
 					end
 				end

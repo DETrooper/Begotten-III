@@ -1872,6 +1872,10 @@ function SWEP:SecondaryAttack()
 					if self.Owner:HasBelief("impossibly_skilled") then
 						deflectionWindow = deflectionWindow + 0.1;
 					end
+					
+					if self.Owner:GetCharmEquipped("holy_sigils") then
+						deflectionWindow = deflectionWindow + 0.1;
+					end
 				end
 				
 				self.Owner:SetNWBool( "CanDeflect", false )
@@ -1921,6 +1925,10 @@ function SWEP:SecondaryAttack()
 	self.isAttacking = false;
 	
 	if cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("impossibly_skilled") then
+		parryWindow = parryWindow + 0.1;
+	end
+	
+	if self.Owner:HasCharmEquipped("holy_sigils") then
 		parryWindow = parryWindow + 0.1;
 	end
 	

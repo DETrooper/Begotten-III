@@ -1424,6 +1424,7 @@ ITEM.description = "A sturdy brown leather cloak with padding and satchels over 
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.faction = "Holy Hierarchy";
+ITEM.bodygroupCharms = {["holy_sigils"] = {1, 1}};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -1483,6 +1484,7 @@ ITEM.description = "A sturdy black leather cloak with padding and satchels over 
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.faction = "Holy Hierarchy";
+ITEM.bodygroupCharms = {["holy_sigils"] = {1, 1}};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -1542,6 +1544,7 @@ ITEM.description = "A sturdy white leather cloak with padding and satchels over 
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.faction = "Holy Hierarchy";
+ITEM.bodygroupCharms = {["holy_sigils"] = {1, 1}};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,

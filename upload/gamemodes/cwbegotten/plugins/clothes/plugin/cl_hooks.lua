@@ -74,8 +74,7 @@ end
 
 function PLUGIN:PostPlayerDraw(player, flags)
 	if string.sub(player:GetModel(), 1, 21) == "models/begotten/heads" then
-		local moveType = player:GetMoveType();
-		local shouldBeVisible = player:Alive() and ((moveType == MOVETYPE_WALK or moveType == MOVETYPE_LADDER or player:InVehicle()) and player:GetColor().a > 0);
+		local shouldBeVisible = player:Alive() and ((player:GetMoveType() ~= MOVETYPE_OBSERVER) and player:GetColor().a > 0);
 		
 		if shouldBeVisible then
 			local clothes = player:GetClothesEquipped();
@@ -123,6 +122,16 @@ function PLUGIN:PostPlayerDraw(player, flags)
 					player.clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
 				else
 					return;
+				end
+			end
+			
+			if clothes and clothes.bodygroupCharms then
+				for k, v in pairs(clothes.bodygroupCharms) do
+					if player:GetCharmEquipped(k) then
+						if player.clothesEnt:GetBodygroup(v[1]) ~= v[2] then
+							player.clothesEnt:SetBodygroup(v[1], v[2]);
+						end
+					end
 				end
 			end
 			

@@ -209,10 +209,10 @@ if SERVER then
 
   -- Misc --
 
-  util.AddNetworkString("DrGBasePlayerLuminosity")
+ --[[ util.AddNetworkString("DrGBasePlayerLuminosity")
   net.Receive("DrGBasePlayerLuminosity", function(len, ply)
     ply._DrGBaseLuminosity = net.ReadFloat()
-  end)
+  end)]]--
   function plyMETA:DrG_Luminosity()
     return self._DrGBaseLuminosity or 1
   end
@@ -266,15 +266,14 @@ else
 
   -- Misc --
 
-  local LAST_LUX_UPDATE = 0
+  --[[local LAST_LUX_UPDATE = 0
   hook.Add("Think", "DrGBasePlayerLuminosity", function()
-    --print(LocalPlayer():DrG_Luminosity())
     if CurTime() <= LAST_LUX_UPDATE + 0.1 then return end
     LAST_LUX_UPDATE = CurTime()
     net.Start("DrGBasePlayerLuminosity")
     net.WriteFloat(LocalPlayer():DrG_Luminosity())
     net.SendToServer()
-  end)
+  end)]]--
   function plyMETA:DrG_Luminosity()
     local ply = LocalPlayer()
     return math.min(render.GetLightColor(ply:EyePos()):Length()*(1/0.7), 1)

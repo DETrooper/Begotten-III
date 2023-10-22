@@ -71,38 +71,38 @@ do
 	local normalizeAngle = math.NormalizeAngle
 	
 	-- Called when the player's jumping animation should be handled.
-	function GM:HandlePlayerJumping(player, velocity)
+	function GM:HandlePlayerJumping(player, velocity, plyTable)
 		if (player:GetMoveType() == MOVETYPE_NOCLIP) then
-			player.m_bJumping = false;
+			plyTable.m_bJumping = false;
 			return;
 		end;
 		
 		local curTime = CurTime();
 
-		if (!player.m_bJumping && !player:OnGround() && player:WaterLevel() <= 0) then
-			if (!player.m_fGroundTime) then
-				player.m_fGroundTime = curTime;
-			elseif (curTime - player.m_fGroundTime) > 0 then
-				player.m_bJumping = true;
-				player.m_bFirstJumpFrame = false;
-				player.m_flJumpStartTime = 0;
+		if (!plyTable.m_bJumping && !player:OnGround() && player:WaterLevel() <= 0) then
+			if (!plyTable.m_fGroundTime) then
+				plyTable.m_fGroundTime = curTime;
+			elseif (curTime - plyTable.m_fGroundTime) > 0 then
+				plyTable.m_bJumping = true;
+				plyTable.m_bFirstJumpFrame = false;
+				plyTable.m_flJumpStartTime = 0;
 			end;
 		end;
 		
-		if (player.m_bJumping) then
-			if (player.m_bFirstJumpFrame) then
-				player.m_bFirstJumpFrame = false;
+		if (plyTable.m_bJumping) then
+			if (plyTable.m_bFirstJumpFrame) then
+				plyTable.m_bFirstJumpFrame = false;
 				player:AnimRestartMainSequence();
 			end;
 			
-			if (player:WaterLevel() >= 2 ) ||	((curTime - player.m_flJumpStartTime) > 0.2 && player:OnGround()) then
-				player.m_bJumping = false;
-				player.m_fGroundTime = nil;
+			if (player:WaterLevel() >= 2 ) ||	((curTime - plyTable.m_flJumpStartTime) > 0.2 && player:OnGround()) then
+				plyTable.m_bJumping = false;
+				plyTable.m_fGroundTime = nil;
 				player:AnimRestartMainSequence();
 			end;
 			
-			if (player.m_bJumping) then
-				player.CalcIdeal = Clockwork.animation:GetForModel(player:GetModel(), "normal", "glide");
+			if (plyTable.m_bJumping) then
+				plyTable.CalcIdeal = Clockwork.animation:GetForModel(player:GetModel(), "normal", "glide");
 				return true;
 			end;
 		end;
@@ -111,7 +111,7 @@ do
 	end;
 
 	-- Called when the player's ducking animation should be handled.
-	function GM:HandlePlayerDucking(player, velocity)
+	function GM:HandlePlayerDucking(player, velocity, plyTable)
 		if (player:Crouching()) then
 			local model = player:GetModel();
 			local weapon = player:GetActiveWeapon();
@@ -123,9 +123,9 @@ do
 			end;
 
 			if (velLength > 0.5) then
-				player.CalcIdeal = Clockwork.animation:GetForModel(model, weaponHoldType, "walk_crouch");
+				plyTable.CalcIdeal = Clockwork.animation:GetForModel(model, weaponHoldType, "walk_crouch");
 			else
-				player.CalcIdeal = Clockwork.animation:GetForModel(model, weaponHoldType, "idle_crouch");
+				plyTable.CalcIdeal = Clockwork.animation:GetForModel(model, weaponHoldType, "idle_crouch");
 			end;
 
 			return true;
@@ -135,19 +135,19 @@ do
 	end;
 
 	-- Called when the player's swimming animation should be handled.
-	function GM:HandlePlayerSwimming(player, velocity)
+	function GM:HandlePlayerSwimming(player, velocity, plyTable)
 		if (player:WaterLevel() >= 2) then
-			if (player.m_bFirstSwimFrame) then
+			if (plyTable.m_bFirstSwimFrame) then
 				player:AnimRestartMainSequence();
-				player.m_bFirstSwimFrame = false;
+				plyTable.m_bFirstSwimFrame = false;
 			end;
 			
-			player.m_bInSwim = true;
+			plyTable.m_bInSwim = true;
 		else
-			player.m_bInSwim = false;
+			plyTable.m_bInSwim = false;
 			
-			if (!player.m_bFirstSwimFrame) then
-				player.m_bFirstSwimFrame = true;
+			if (!plyTable.m_bFirstSwimFrame) then
+				plyTable.m_bFirstSwimFrame = true;
 			end;
 		end;
 		
@@ -155,9 +155,9 @@ do
 	end;
 
 	-- Called when the player's driving animation should be handled.
-	function GM:HandlePlayerDriving(player)
+	function GM:HandlePlayerDriving(player, plyTable)
 		if (player:InVehicle()) then
-			player.CalcIdeal = Clockwork.animation:GetForModel(player:GetModel(), "normal", "idle_crouch")[1];
+			plyTable.CalcIdeal = Clockwork.animation:GetForModel(player:GetModel(), "normal", "idle_crouch")[1];
 			return true;
 		end;
 		
@@ -229,6 +229,7 @@ do
 	-- Called when the main activity should be calculated.
 	function GM:CalcMainActivity(player, velocity)
 		local model = player:GetModel();
+		local plyTable = player:GetTable();
 		
 		--if (string.find(model, "/player/")) then
 			--return self.BaseClass:CalcMainActivity(player, velocity);
@@ -246,22 +247,22 @@ do
 		end;
 		
 		local act = Clockwork.animation:GetForModel(model, weaponHoldType, "idle") or ACT_IDLE;
-		local oldact = player.CalcIdeal;
+		local oldact = plyTable.CalcIdeal;
 		local seq = -1;
 		
-		if (!self:HandlePlayerDriving(player)
-		and !self:HandlePlayerJumping(player, velocity)
-		and !self:HandlePlayerDucking(player, velocity)
-		and !self:HandlePlayerSwimming(player, velocity)
-		and !self:HandlePlayerNoClipping(player, velocity)
-		and !self:HandlePlayerVaulting(player, velocity)) then
+		if (!self:HandlePlayerDriving(player, plyTable)
+		and !self:HandlePlayerJumping(player, velocity, plyTable)
+		and !self:HandlePlayerDucking(player, velocity, plyTable)
+		and !self:HandlePlayerSwimming(player, velocity, plyTable)
+		and !self:HandlePlayerNoClipping(player, velocity, plyTable)
+		and !self:HandlePlayerVaulting(player, velocity, plyTable)) then
 			if (player:IsRunning()) then
 				act = Clockwork.animation:GetForModel(model, weaponHoldType, "run");
 			elseif (velocity:Length2DSqr() > 0.25) then
 				act = Clockwork.animation:GetForModel(model, weaponHoldType, "walk");
 			end;
 		else
-			act = player.CalcIdeal;
+			act = plyTable.CalcIdeal;
 		end;
 		
 		if (type(act) == "table") then
@@ -348,8 +349,8 @@ do
 			player:SetCycle(0)
 		end
 		
-		player.CalcIdeal = act;
-		player.CalcSeqOverride = seq;
+		plyTable.CalcIdeal = act;
+		plyTable.CalcSeqOverride = seq;
 		
 		return act, seq;
 	end;

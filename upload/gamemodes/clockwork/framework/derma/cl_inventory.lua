@@ -138,6 +138,7 @@ function PANEL:Rebuild()
 	
 	local coin = Clockwork.player:GetCash() or 0;
 	local cycle;
+	local clothesItem = Clockwork.Client:GetClothesEquipped();
 	local playerModel = Clockwork.Client:GetModel();
 	local playerSkin = Clockwork.Client:GetSkin();
 	local playerBodygroups = {Clockwork.Client:GetBodygroup(0), Clockwork.Client:GetBodygroup(1)};
@@ -156,7 +157,6 @@ function PANEL:Rebuild()
 	if string.find(playerModel, "models/begotten/heads") then
 		headModel = playerModel;
 		
-		local clothesItem = Clockwork.Client:GetClothesEquipped();
 		local factionTable = Clockwork.faction:FindByID(Clockwork.Client:GetFaction());
 		local gender = string.lower(Clockwork.Client:GetGender());
 
@@ -925,6 +925,16 @@ function PANEL:Rebuild()
 				
 				if IsValid(self.characterModel.modelPanel.headModel) then
 					self.characterModel.modelPanel.headModel:Remove();
+				end
+			end
+			
+			if clothes and clothes.bodygroupCharms then
+				for k, v in pairs(clothes.bodygroupCharms) do
+					if Clockwork.Client:GetCharmEquipped(k) then
+						if self.characterModel.modelPanel.Entity:GetBodygroup(v[1]) ~= v[2] then
+							self.characterModel.modelPanel.Entity:SetBodygroup(v[1], v[2]);
+						end
+					end
 				end
 			end
 			

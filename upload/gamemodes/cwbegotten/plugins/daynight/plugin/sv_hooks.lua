@@ -108,7 +108,7 @@ function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized)
 					end
 				end
 			end
-		else
+		elseif self.currentCycle == "day" then
 			if !player.dayVampireCheck or player.dayVampireCheck < curTime then
 				player.dayVampireCheck = curTime + 5;
 				
@@ -126,6 +126,7 @@ function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized)
 								d:SetDamagePosition(player:GetPos() + Vector(0, 0, 48));
 								
 								player:TakeDamageInfo(d);
+								player:EmitSound("player/pl_burnpain"..math.random(1, 3)..".wav");
 								
 								Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken 3 damage from the sun, leaving them at "..player:Health().." health.");
 					

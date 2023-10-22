@@ -13,7 +13,7 @@ function ENT:HUDPaintTargetID(x, y, alpha)
 	local colorWhite = Clockwork.option:GetColor("white")
 	
 	y = Clockwork.kernel:DrawInfo("District One Armor", x, y, colorTargetID, alpha)
-	y = Clockwork.kernel:DrawInfo("An impossible relic from a more englightened time, a full suit of power armor.", x, y, colorWhite, alpha);
+	y = Clockwork.kernel:DrawInfo("An impossible relic from a more enlightened time, a full suit of power armor.", x, y, colorWhite, alpha);
 end;
 
 local function CreateMenu(state)

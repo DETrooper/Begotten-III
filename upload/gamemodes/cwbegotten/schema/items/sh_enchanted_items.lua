@@ -350,13 +350,80 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 800};
 ITEM:Register();
 
-local ITEM = Clockwork.item:New("enchanted_base"); -- Make sure you can't equip this unless you already have any type of Inquisitor Armor equipped (unequipping inquisitor armor should de-equip this item as well). Should require Hard-Glazed subfaith specifically to equip as well. Make it set your 3rd bodygroup to 1 if it is equipped (and make sure it persists after swapping chars). "Moderately increases parry/deflection windows" should be the same bonuses as Impossibly Skilled for Satanists.
+local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Holy Sigils";
 	ITEM.model = "models/begotten/misc/holysigils.mdl";
 	ITEM.weight = 0.2;
 	ITEM.uniqueID = "holy_sigils";
 	ITEM.description = "A decorated iron buckle with two scraps of scroll cloth torn from the Holy Book of Law, sealed and stamped by the Holy Hierarchy. Wearing these sigils of holy judgement grants supreme authority and righteous conviction to the Inquisitor who deserves it.";
-	--ITEM.iconoverride = "materials/begotten/ui/itemicons/spine.png";
 	ITEM.charmEffects = "- Requires Inquisitor Armor to be worn.\n- Increases faith gain by 15%.\n- Decreases sanity loss by 50%.\n- Decreases corruption gain by 50%.\n- Increases damage against all non-Hard-Glazed characters by 15%.\n- Moderately increases parry and deflection windows for all melee weapons.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/holy_sigils.png";
+	ITEM.requiredSubfaiths = {"Hard-Glazed"};
+	
+	-- Called when a player uses the item.
+	function ITEM:OnUse(player, itemEntity)
+		if (self:HasPlayerEquipped(player)) then
+			if !player.spawning then
+				Schema:EasyText(player, "peru", "You already have a charm of this type equipped!")
+			end
+			
+			return false
+		end
+		
+		if self.requiredSubfaiths and not (table.HasValue(self.requiredSubfaiths, player:GetSubfaith())) then
+			if !player.spawning then
+				Schema:EasyText(player, "chocolate", "You are not of the correct subfaith to wear this!")
+			end
+			
+			return false
+		end
+
+		if (player:Alive()) then
+			local clothesItem = player:GetClothesEquipped();
+			
+			if !clothesItem or !clothesItem.bodygroupCharms or !clothesItem.bodygroupCharms[self.uniqueID] then
+				Schema:EasyText(player, "peru", "This charm cannot be worn without inquisitor armor!")
+				
+				return false;
+			end
+		
+			for i, v in ipairs(self.slots) do
+				if !player.equipmentSlots[v] then
+					Clockwork.equipment:EquipItem(player, self, v);
+
+					return true
+				end
+			end
+	
+			if !player.spawning then
+				Schema:EasyText(player, "peru", "You do not have an open slot to equip this charm in!")
+			end
+			
+			return false;
+		else
+			if !player.spawning then
+				Schema:EasyText(player, "peru", "You cannot do this action at this moment.")
+			end
+		end
+
+		return false
+	end
+	
+	function ITEM:OnPlayerUnequipped(player, extraData)
+		if Clockwork.equipment:UnequipItem(player, self) then
+			local useSound = self.useSound;
+			
+			if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+				if (useSound) then
+					if (type(useSound) == "table") then
+						player:EmitSound(useSound[math.random(1, #useSound)]);
+					else
+						player:EmitSound(useSound);
+					end;
+				elseif (useSound != false) then
+					player:EmitSound("begotten/items/first_aid.wav");
+				end;
+			end
+		end
+	end
 ITEM:Register();
