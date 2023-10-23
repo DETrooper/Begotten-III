@@ -278,3 +278,51 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"tech", "tech", "scrap", "scrap", "scrap", "scrap", "wood"}};
 	ITEM.requiredbeliefs = {"wriggle_fucking_eel"};
 ITEM:Register();
+
+ITEM = Clockwork.item:New("firearm_base");
+	ITEM.name = "Jezail";
+	ITEM.model = "models/sw_battlefront/weapons/jezail_short.mdl";
+	ITEM.weight = 2
+	ITEM.uniqueID = "begotten_jezail_short";
+	ITEM.description = "A Darklander musket. It is fitted with a scope for more accurate fire. A blood red engraving burns the hand of anyone who does not follow the darkness.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/jezail_short.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(0, 343.09, 90);
+	ITEM.attachmentOffsetVector = Vector(3.54, 3.54, -9.9);
+	--ITEM.loweredOrigin = Vector(-1.41, -6.031, -0.801);
+	--ITEM.loweredAngles = Angle(-19.698, 42.915, -51.357);
+	
+	ITEM.ammoCapacity = 1;
+	ITEM.ammoTypes = {"Longshot", "Pop-a-Shot"};
+	ITEM.firearmType = "Long Gun";
+	ITEM.reloadTime = 8; -- Seconds
+	ITEM.reloadSounds = {"oneuse_deploy.ogg"};
+	ITEM.requireFaith = {"Faith of the Dark"};
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"wood", "steel_chunks", "steel_chunks"}};
+ITEM:Register();
+
+ITEM = Clockwork.item:New("firearm_base");
+	ITEM.name = "Jezail Rifle";
+	ITEM.model = "models/sw_battlefront/weapons/jazail_long.mdl";
+	ITEM.weight = 6
+	ITEM.uniqueID = "begotten_jezail_long";
+	ITEM.description = "A Darklander rifle, infamously used by the Nigerii Janissaries. It is fitted with a scope for more accurate fire. Its barrel been elongated and rifled, making it excellent for sharpshooting. A blood red engraving burns the hand of anyone who does not follow the darkness.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/jazail_long.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(0, 343.09, 90);
+	ITEM.attachmentOffsetVector = Vector(3.54, 3.54, -9.9);
+	--ITEM.loweredOrigin = Vector(-1.41, -6.031, -0.801);
+	--ITEM.loweredAngles = Angle(-19.698, 42.915, -51.357);
+	
+	ITEM.ammoCapacity = 1;
+	ITEM.ammoTypes = {"Longshot"};
+	ITEM.firearmType = "Long Gun";
+	ITEM.reloadTime = 10; -- Seconds
+	ITEM.reloadSounds = {"oneuse_deploy.ogg", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
+	ITEM.requireFaith = {"Faith of the Dark"};
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"wood", "steel_chunks", "steel_chunks", "steel_chunks"}};
+ITEM:Register();

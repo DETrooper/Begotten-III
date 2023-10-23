@@ -35,7 +35,7 @@ local BRUTALITY = cwBeliefs.beliefTrees:New("brutality")
 		[1] = {
 			["primeval"] = {
 				name = "Primeval",
-				description = "Unlocks the 'Harvesting' mechanic, allowing you to harvest bones from corpses for use in crafting.",
+				description = "Unlocks the 'Harvesting' mechanic, allowing you to harvest bones from corpses for use in crafting. Unlocks the ability to craft skin-based healing items.",
 				requirements = {"savage"},
 				row = 2,
 			},

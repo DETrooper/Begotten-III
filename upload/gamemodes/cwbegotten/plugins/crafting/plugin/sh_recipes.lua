@@ -1047,8 +1047,8 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("skintape");
 		RECIPE.name = "Skintape";
-		RECIPE.requiredBeliefs = {"ingenious"};
-		RECIPE.requiredBeliefsNiceNames = {"Ingenious"};
+		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.requiredBeliefsNiceNames = {"Primeval"};
 		RECIPE.requirements = {
 			["humanmeat"] = {amount = 2},
 		};
@@ -1061,6 +1061,34 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
 		RECIPE.experience = 3;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("skingauze");
+		RECIPE.name = "(2x) Skingauze";
+		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.requiredBeliefsNiceNames = {"Primeval"};
+		RECIPE.requirements = {
+			["humanmeat"] = {amount = 4},
+			["human_bone"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["skingauze"] = {amount = 1},
+		};
+		RECIPE.category = "Medical"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 12
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 8;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -5437,6 +5465,67 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("jezail");
+	RECIPE.name = "Jezail";
+	RECIPE.requiresSmithy = true;
+	RECIPE.requiredBeliefs = {"artisan"};
+	RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+	RECIPE.requiredFaiths = {"Faith of the Dark"};
+	RECIPE.requirements = {
+		["fine_steel_ingot"] = {amount = 3},
+		["wood"] = {amount = 2},
+		["unholy_sigil_stone"] = {amount = 1},
+	};
+	RECIPE.result = {
+		["begotten_jezail_short"] = {amount = 1},
+	};
+	RECIPE.category = "Munitions"
+	RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+	RECIPE.failSound = "buttons/button2.wav"
+	RECIPE.craftTime = 8
+	RECIPE.craftVerb = "smithing"
+	RECIPE.experience = 80;
+	
+	function RECIPE:OnCraft(player)
+	end;
+	function RECIPE:OnFail(player)
+	end;
+	function RECIPE:StartCraft(player)
+	end;
+	function RECIPE:EndCraft(player)
+	end;
+RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("jezail_rifle");
+	RECIPE.name = "Jezail Rifle";
+	RECIPE.requiresSmithy = true;
+	RECIPE.requiredBeliefs = {"artisan"};
+	RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+	RECIPE.requiredFaiths = {"Faith of the Dark"};
+	RECIPE.requirements = {
+		["begotten_jezail_short"] = {amount = 1},
+		["fine_steel_ingot"] = {amount = 2},
+	};
+	RECIPE.result = {
+		["begotten_jezail_long"] = {amount = 1},
+	};
+	RECIPE.category = "Munitions"
+	RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+	RECIPE.failSound = "buttons/button2.wav"
+	RECIPE.craftTime = 8
+	RECIPE.craftVerb = "smithing"
+	RECIPE.experience = 100;
+	
+	function RECIPE:OnCraft(player)
+	end;
+	function RECIPE:OnFail(player)
+	end;
+	function RECIPE:StartCraft(player)
+	end;
+	function RECIPE:EndCraft(player)
+	end;
+RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("scavenger_gun_magazine");
 		RECIPE.name = "Scavenger Gun Magazine";

@@ -215,6 +215,36 @@ local ITEM = Clockwork.item:New("medical_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
+	ITEM.name = "Skingauze";
+	ITEM.cost = 8;
+	ITEM.model = "models/mosi/fnv/props/gore/gorehead01.mdl";
+	ITEM.weight = 0.4;
+	ITEM.useText = "Apply";
+	ITEM.useSound = "bandaging_1.wav";
+	ITEM.description = "A roll of thick skin wrapped around a human spine. It can be used to treat gashes, but at what cost?";
+	ITEM.iconoverride = "begotten/ui/itemicons/skingauze.png"
+	ITEM.uniqueID = "skingauze"
+	
+	ITEM.applicable = true;
+	ITEM.healAmount = 4;
+	ITEM.healDelay = 2;
+	ITEM.healRepetition = 5;
+	ITEM.stopsBleeding = true;
+	ITEM.infectionChance = 50;
+	ITEM.useXP = 15;
+
+	ITEM.curesInjuries = {"gash"};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 100};
+	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
+
+	-- Called when a player uses the item.
+	function ITEM:OnUsed(player, itemEntity)
+		Schema:EasyText(player, "olive","The damp skin of another is wrapped around your wounds. There is something deeply disturbing about this act, which troubles your sanity.");
+		player:HandleSanity(-10);
+	end;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Laudanum";
 	ITEM.model = "models/props_junk/glassjug01.mdl";
 	ITEM.weight = 0.3;
@@ -302,13 +332,13 @@ ITEM:Register();
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Skintape";
 	ITEM.cost = 15;
-	ITEM.model = "models/props_wasteland/prison_toiletchunk01f.mdl";
+	ITEM.model = "models/cofprops/skintape.mdl";
 	ITEM.weight = 0.2;
 	ITEM.access = "v";
 	ITEM.useText = "Mend";
 	ITEM.useSound = "begotten/items/skintape.ogg";
 	ITEM.description = "A packet of skin that can be used to replace dead flesh and patch up bleeding wounds.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/skintape.png"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/skintape2.png"
 	ITEM.uniqueID = "skintape";
 	
 	ITEM.applicable = true;
