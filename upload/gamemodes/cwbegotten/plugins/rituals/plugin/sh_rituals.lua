@@ -30,20 +30,20 @@ local RITUAL = cwRituals.rituals:New("purifying_stone_rite");
 RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("yellow_banner_of_quelling");
-	RITUAL.name = "(T2) Yellow Banner of Quelling";
-	RITUAL.description = "The children flee when they spot the invisible banner. Let the Satanic filth cower when they realize they are now chained to these mortal lands that they have blighted for so long. Performing this ritual prevents helljaunting in a large radius around you for 40 minutes. Be warned that the Children of Satan will be made aware of your presence!";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "flagellant", "acolyte"}; -- Tier II Light/Family Shared Ritual
+	RITUAL.name = "(T3) Yellow Banner of Quelling";
+	RITUAL.description = "The children flee when they spot the invisible banner. Let the Satanic filth cower when they realize they are now chained to these mortal lands that they have blighted for so long. Performing this ritual prevents helljaunting in a large radius around you for 30 minutes. Be warned that the Children of Satan will be made aware of your presence!";
+	RITUAL.onerequiredbelief = {"watchful_raven", "emissary", "extinctionist"}; -- Tier III Family/Light Ritual
 	
-	RITUAL.requirements = {"purifying_stone", "xolotl_catalyst", "xolotl_catalyst"};
+	RITUAL.requirements = {"purifying_stone", "xolotl_catalyst", "down_catalyst"};
 
-	--RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
+	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
 	RITUAL.experience = 75; -- XP gained from performing the ritual.
 	
 	function RITUAL:OnPerformed(player)
 		player:SetSharedVar("yellowBanner", true);
 		
-		timer.Create("YellowBannerTimer_"..player:EntIndex(), 2400, 1, function()
+		timer.Create("YellowBannerTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player:GetSharedVar("yellowBanner", false) then
 					player:GetSharedVar("yellowBanner", false);
