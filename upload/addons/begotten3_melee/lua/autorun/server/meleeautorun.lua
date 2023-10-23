@@ -964,19 +964,7 @@ local function Guarding(ent, dmginfo)
 				end
 				
 				-- If a beserker or a member of House Varazdat, gain HP back via lifeleech.
-				if string.find(attacker:GetModel(), "goreberzerker") then
-					if IsValid(enemywep) and enemywep.IsABegottenMelee and enemywep:GetNWString("activeShield"):len() <= 0 then
-						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
-						
-						attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
-						
-						timer.Simple(0.2, function()
-							if IsValid(attacker) then
-								attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
-							end
-						end);
-					end
-				elseif attacker:GetSubfaction() == "Varazdat" then
+				if attacker:GetSubfaction() == "Varazdat" then
 					if IsValid(enemywep) and enemywep.IsABegottenMelee then
 						local clothesItem = attacker:GetClothesEquipped();
 						local modifier = 2;
@@ -998,6 +986,22 @@ local function Guarding(ent, dmginfo)
 								attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
 							end
 						end);
+					end
+				else
+					if IsValid(enemywep) and enemywep.IsABegottenMelee and enemywep:GetNWString("activeShield"):len() <= 0 then
+						local clothesItem = attacker:GetClothesEquipped();
+						
+						if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "lifeleech") then
+							attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
+							
+							attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
+							
+							timer.Simple(0.2, function()
+								if IsValid(attacker) then
+									attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
+								end
+							end);
+						end
 					end
 				end
 				

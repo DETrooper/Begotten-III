@@ -70,7 +70,7 @@ function SWEP:Holster(newWeapon)
 	if SERVER then
 		local player = self.Owner;
 		
-		if newWeapon:GetClass() ~= "cw_senses" then
+		if !IsValid(newWeapon) or newWeapon:GetClass() ~= "cw_senses" then
 			if !(cwBeliefs and (player:HasBelief("creature_of_the_dark") or player:HasBelief("the_black_sea"))) and !player:GetNWBool("hasThermal") and !player:GetNWBool("hasNV") then
 				local clothesItem = player:GetClothesEquipped();
 			

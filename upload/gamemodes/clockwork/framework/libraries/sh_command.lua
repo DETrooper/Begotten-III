@@ -259,7 +259,7 @@ if (SERVER) then
 			hiddenCommands[#hiddenCommands + 1] = Clockwork.kernel:GetShortCRC(k)
 		end
 
-		netstream.Start(player, "HiddenCommands", hiddenCommands)
+		netstream.Heavy(player, "HiddenCommands", hiddenCommands);
 	end)
 else
 	function Clockwork.command:AddHelp(commandTable)

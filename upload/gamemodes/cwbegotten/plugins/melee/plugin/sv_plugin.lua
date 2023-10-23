@@ -53,14 +53,14 @@ function playerMeta:TakePoise(amount)
 	local newAmount = amount;
 	local leftArm = Clockwork.limb:GetHealth(self, HITGROUP_LEFTARM, false)
 	local rightArm = Clockwork.limb:GetHealth(self, HITGROUP_RIGHTARM, false)
-	local armDamage = math.min(leftArm, rightArm)
+	local armHealth = math.min(leftArm, rightArm)
 	
-	if (armDamage <= 90) then
-		if armDamage <= 75 and armDamage > 50 then
+	if (armHealth <= 75) then
+		if armHealth > 50 then
 			newAmount = math.floor(newAmount * 1.2);
-		elseif armDamage <= 50 and armDamage > 25 then
+		elseif armHealth <= 50 and armHealth > 25 then
 			newAmount = math.floor(newAmount * 1.5);
-		elseif armDamage <= 25 and armDamage > 10 then
+		elseif armHealth <= 25 and armHealth > 10 then
 			newAmount = math.floor(newAmount * 2);
 		else
 			newAmount = math.floor(newAmount * 3);

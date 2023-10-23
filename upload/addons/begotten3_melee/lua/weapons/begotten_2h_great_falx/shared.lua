@@ -166,7 +166,7 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_gorefalx"] = { type = "Model", model = "models/begotten/goreweapons/falx2.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-2.597, -5.901, 1), angle = Angle(-92, 90, 0), size = Vector(0.91, 0.91, 0.91), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["v_gorefalx"] = { type = "Model", model = "models/begotten/goreweapons/falx2.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-4, -4, 2), angle = Angle(90, 198, 90), size = Vector(0.91, 0.91, 0.91), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
 }
 
 SWEP.WElements = {

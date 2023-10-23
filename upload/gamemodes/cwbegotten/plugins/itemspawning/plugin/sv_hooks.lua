@@ -334,7 +334,7 @@ end;
 -- Called just after a player spawns.
 function cwItemSpawner:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 	if (player:IsAdmin() or player:IsUserGroup("operator")) then
-		Clockwork.datastream:Start(player, "ItemSpawnESPInfo", {self.SpawnLocations});
+		netstream.Heavy(player, "ItemSpawnESPInfo", {self.SpawnLocations});
 	end;
 end;
 
