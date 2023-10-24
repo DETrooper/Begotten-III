@@ -1928,7 +1928,7 @@ function SWEP:SecondaryAttack()
 		parryWindow = parryWindow + 0.1;
 	end
 	
-	if self.Owner:HasCharmEquipped("holy_sigils") then
+	if self.Owner:GetCharmEquipped("holy_sigils") then
 		parryWindow = parryWindow + 0.1;
 	end
 	

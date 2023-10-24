@@ -113,7 +113,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 			--local armorSound = "vo/k_lab/kl_fiddlesticks.wav";
 			local armorSound = "physics/body/body_medium_break2.wav";
 			local effectName = "bleedingsplat";
-			local material;
+			local material = entity.ArmorMaterial;
 			
 			local hitbody = "physics/body/body_medium_break2.wav";
 			local althitbody = "physics/body/body_medium_break4.wav";
@@ -201,6 +201,10 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 					armorSound = hitbody;
 				end;
 			elseif material == "chainmail" or material == "plate" or material == "leather" then
+				if entity:IsNextBot() then
+					effectName = "MetalSpark";
+				end
+				
 				playlowdamage = true;
 			end;
 			
@@ -371,7 +375,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 				end;
 			else -- Non-spear
 				entity:EmitSound(armorSound)
-				
+
 				if playlowdamage then
 					entity:EmitSound("armor/generic_lowdamage_0"..math.random(1,6)..".wav");
 				end

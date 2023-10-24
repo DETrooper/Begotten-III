@@ -18,6 +18,7 @@ cwStorage.containerList = {
 	["models/props_junk/wood_crate001a_damagedmax.mdl"] = {8, "Wooden Crate"},
 	["models/props_junk/wood_crate001a_damaged.mdl"] = {8, "Wooden Crate"},
 	["models/props_interiors/furniture_desk01a.mdl"] = {4, "Desk"},
+	["models/props_c17/cashregister01a.mdl"] = {4, "Cash Register"},
 	["models/props_c17/furnituredresser001a.mdl"] = {10, "Dresser"},
 	["models/props_c17/furnituredrawer001a.mdl"] = {8, "Drawer"},
 	["models/props_c17/furnituredrawer002a.mdl"] = {4, "Drawer"},

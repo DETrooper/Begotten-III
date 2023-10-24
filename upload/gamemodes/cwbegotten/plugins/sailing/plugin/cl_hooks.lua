@@ -13,15 +13,11 @@ function cwSailing:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunctions)
 			end;
 			
 			menuPanel:AddOption("Dock", function()
-				Clockwork.kernel:RunCommand(
-					"InvAction", "dock", itemTable.uniqueID, itemTable.itemID
-				);
+				Clockwork.player:InventoryAction("dock", itemTable.uniqueID, itemTable.itemID);
 			end);
 
 			menuPanel:AddOption("Undock", function()
-				Clockwork.kernel:RunCommand(
-					"InvAction", "undock", itemTable.uniqueID, itemTable.itemID
-				);
+				Clockwork.player:InventoryAction("undock", itemTable.uniqueID, itemTable.itemID);
 			end);
 		end
 	end

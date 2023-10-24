@@ -448,11 +448,11 @@ function GM:PlayerBindPress(player, bind, bPress)
 
 	local bindText = string.lower(bind)
 
-	if (config.GetVal("block_inv_binds")) then
+	--[[if (config.GetVal("block_inv_binds")) then
 		if (bindText:find(config.Get("command_prefix"):Get().."invaction") or bindText:find("cwcmd invaction")) then
 			return true
 		end
-	end
+	end]]--
 
 	if (config.GetVal("block_cash_binds")) then
 		if (bindText:find("cash") or bindText:find("cwcmd cash") or

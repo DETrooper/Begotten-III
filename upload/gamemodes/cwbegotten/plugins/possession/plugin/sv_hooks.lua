@@ -16,7 +16,6 @@ function cwPossession:PlayerCanUseCommand(player, commandTable, arguments)
 			"CharPhysDesc",
 			"CharGetUp",
 			"CharCancelGetUp",
-			"InvAction",
 			"Unequip",
 			"Sleep",
 			"Drink",

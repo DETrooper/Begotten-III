@@ -835,7 +835,7 @@ function Schema:ShowSpare1(player)
 		return;
 	end;
 
-	Clockwork.player:RunClockworkCommand(player, "InvAction", "use", itemTable("uniqueID"), tostring(itemTable("itemID")));
+	Clockwork.player:InventoryAction(player, "use", itemTable.uniqueID, itemTable.itemID);
 end;
 
 -- Called when a player presses F4.
@@ -1308,11 +1308,13 @@ function Schema:Think()
 			if self.spawnedNPCS and self.maxNPCS and #self.spawnedNPCS < self.maxNPCS then
 				if math.random(1, 6) == 1 then
 					local goreNPCs = {"npc_animal_bear", "npc_animal_deer", "npc_animal_goat"};
-					local npcName = goreNPCs[math.random(1, #goreNPCs)];
+					local npcName;
 					local spawnPos = self.npcSpawns["gore"][math.random(1, #self.npcSpawns["gore"])];
 					
 					if math.random(1, 20) == 1 then
 						npcName = "npc_animal_cave_bear";
+					else
+						npcName = goreNPCs[math.random(1, #goreNPCs)];
 					end
 					
 					if npcName and spawnPos then
@@ -1332,16 +1334,16 @@ function Schema:Think()
 					local thrallNPCs;
 					
 					if cwDayNight and cwDayNight.currentCycle == "night" then
-						thrallNPCs = {"npc_bgt_another", "npc_bgt_guardian", "npc_bgt_otis"};
+						thrallNPCs = {"npc_bgt_another", "npc_bgt_guardian", "npc_bgt_otis", "npc_bgt_pursuer", "npc_bgt_shambler"};
 					else
-						thrallNPCs = {"npc_bgt_another", "npc_bgt_brute", "npc_bgt_grunt", "npc_bgt_eddie"};
+						thrallNPCs = {"npc_bgt_another", "npc_bgt_brute", "npc_bgt_eddie", "npc_bgt_grunt"};
+					end
+
+					if math.random(1, 33) == 1 then
+						thrallNPCs = {"npc_bgt_coinsucker", "npc_bgt_ironclad", "npc_bgt_suitor"};
 					end
 					
 					local npcName = thrallNPCs[math.random(1, #thrallNPCs)];
-					
-					if math.random(1, 40) == 1 then
-						npcName = "npc_bgt_suitor";
-					end
 					
 					ParticleEffect("teleport_fx", spawnPos, Angle(0,0,0), nil);
 					sound.Play("misc/summon.wav", spawnPos, 100, 100);

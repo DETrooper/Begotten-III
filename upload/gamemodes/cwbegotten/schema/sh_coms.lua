@@ -1191,7 +1191,7 @@ local COMMAND = Clockwork.command:New("InvZipTie");
 				return;
 			end;
 
-			Clockwork.player:RunClockworkCommand(player, "InvAction", "use", itemTable("uniqueID"), tostring(itemTable("itemID")));
+			Clockwork.player:InventoryAction(player, "use", itemTable.uniqueID, itemTable.itemID);
 		else
 			Schema:EasyText(player, "peru", "You must wait another "..-math.ceil(curTime - player.nextZipTie).." seconds before attempting to tie someone again!");
 		end

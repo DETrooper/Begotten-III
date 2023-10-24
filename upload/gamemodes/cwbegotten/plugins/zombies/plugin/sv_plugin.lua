@@ -156,77 +156,37 @@ function cwZombies:SpawnThrall(name, spawnPos, angles)
 	
 	if name == "npc_bgt_another" or string.lower(name) == "another" then
 		entity = ents.Create("npc_bgt_another");
-		
-		entity:CustomInitialize();
-		entity:SetPos(spawnPos)
-		entity:SetAngles(angles);
-		entity:Spawn();
-		entity:Activate();
 	elseif name == "npc_bgt_brute" or string.lower(name) == "brute" then
 		entity = ents.Create("npc_bgt_brute");
-		
-		entity:CustomInitialize();
-		entity:SetPos(spawnPos)
-		entity:SetAngles(angles);
-		entity:Spawn();
-		entity:Activate();
 	elseif name == "npc_bgt_chaser" or string.lower(name) == "chaser" then
 		entity = ents.Create("npc_bgt_chaser");
-		
-		entity:CustomInitialize();
-		entity:SetPos(spawnPos)
-		entity:SetAngles(angles);
-		entity:Spawn();
-		entity:Activate();
+	elseif name == "npc_bgt_coinsucker" or string.lower(name) == "coinsucker" then
+		entity = ents.Create("npc_bgt_coinsucker");
 	elseif name == "npc_bgt_eddie" or string.lower(name) == "eddie" then
 		entity = ents.Create("npc_bgt_eddie");
-		
-		entity:CustomInitialize();
-		entity:SetPos(spawnPos)
-		entity:SetAngles(angles);
-		entity:Spawn();
-		entity:Activate();
 	elseif name == "npc_bgt_grunt" or string.lower(name) == "grunt" then
 		entity = ents.Create("npc_bgt_grunt");
-		
-		entity:CustomInitialize();
-		entity:SetPos(spawnPos)
-		entity:SetAngles(angles);
-		entity:Spawn();
-		entity:Activate();
 	elseif name == "npc_bgt_guardian" or string.lower(name) == "guardian" then
 		entity = ents.Create("npc_bgt_guardian");
-		
-		entity:CustomInitialize();
-		entity:SetPos(spawnPos)
-		entity:SetAngles(angles);
-		entity:Spawn();
-		entity:Activate();
+	elseif name == "npc_bgt_ironclad" or string.lower(name) == "ironclad" then
+		entity = ents.Create("npc_bgt_ironclad");
 	elseif name == "npc_bgt_otis" or string.lower(name) == "otis" then
 		entity = ents.Create("npc_bgt_otis");
-		
-		entity:CustomInitialize();
-		entity:SetPos(spawnPos)
-		entity:SetAngles(angles);
-		entity:Spawn();
-		entity:Activate();
+	elseif name == "npc_bgt_pursuer" or string.lower(name) == "pursuer" then
+		entity = ents.Create("npc_bgt_pursuer");
 	elseif name == "npc_bgt_shambler" or string.lower(name) == "shambler" then
 		entity = ents.Create("npc_bgt_shambler");
-		
-		entity:CustomInitialize();
-		entity:SetPos(spawnPos)
-		entity:SetAngles(angles);
-		entity:Spawn();
-		entity:Activate();
 	elseif name == "npc_bgt_suitor" or string.lower(name) == "suitor" then
 		entity = ents.Create("npc_bgt_suitor");
-		
+	end
+	
+	if IsValid(entity) then
 		entity:CustomInitialize();
 		entity:SetPos(spawnPos)
 		entity:SetAngles(angles);
 		entity:Spawn();
 		entity:Activate();
 	end
-	
+		
 	return entity;
 end

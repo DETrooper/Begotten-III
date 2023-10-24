@@ -2706,7 +2706,7 @@ function GM:EntityHandleMenuOption(player, entity, option, arguments)
 					itemTable = player:GiveItem(itemTable, true)
 
 					if itemTable then
-						if (!Clockwork.player:InventoryAction(player, itemTable, "use")) then
+						if (Clockwork.player:InventoryAction(player, itemTable, "use")) == false then
 							player:TakeItem(itemTable, true)
 							bDidPickupItem = false
 						else

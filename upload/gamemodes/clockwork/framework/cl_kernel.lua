@@ -1957,60 +1957,44 @@ function Clockwork.kernel:HandleItemSpawnIconClick(itemTable, spawnIcon, Callbac
 				if (itemTable) then
 					if (itemTable.OnHandleUse) then
 						itemTable:OnHandleUse(function()
-							self:RunCommand(
-								"InvAction", "use", itemTable.uniqueID, itemTable.itemID
-							)
+							Clockwork.inventory:InvAction("use", itemTable.uniqueID, itemTable.itemID);
 						end)
 					else
-						self:RunCommand(
-							"InvAction", "use", itemTable.uniqueID, itemTable.itemID
-						)
+						Clockwork.inventory:InvAction("use", itemTable.uniqueID, itemTable.itemID);
 					end
 				end
 			end)
 		elseif (v == "Examine") then
 			itemMenu:AddOption(v, function()
 				if (itemTable) then
-					self:RunCommand(
-						"InvAction", "examine", itemTable.uniqueID, itemTable.itemID
-					)
+					Clockwork.inventory:InvAction("examine", itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 		elseif ((!repairName and v == "Repair") or (repairName and v == repairName)) then
 			itemMenu:AddOption(v, function()
 				if (itemTable) then
-					self:RunCommand(
-						"InvAction", "repair", itemTable.uniqueID, itemTable.itemID
-					)
+					Clockwork.inventory:InvAction("repair", itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 		elseif ((v == "Break Down") or (v == "Melt Down")) then
 			itemMenu:AddOption(v, function()
 				if (itemTable) then
-					self:RunCommand(
-						"InvAction", "breakdown", itemTable.uniqueID, itemTable.itemID
-					)
+					Clockwork.inventory:InvAction("breakdown", itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 		elseif ((!dropText and v == "Drop") or (dropText and v == dropText)) then
 			itemMenu:AddOption(v, function()
 				if (itemTable) then
-					self:RunCommand(
-						"InvAction", "drop", itemTable.uniqueID, itemTable.itemID
-					)
+					Clockwork.inventory:InvAction("drop", itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 		elseif (!istable(v) and string.find(v, "Unload")) then
 			itemMenu:AddOption(v, function()
 				if (itemTable) then
 					if itemTable.ammoMagazineSize then
-						self:RunCommand(
-							"InvAction", "magazineAmmo", itemTable.uniqueID, itemTable.itemID
-						)
+						Clockwork.inventory:InvAction("magazineAmmo", itemTable.uniqueID, itemTable.itemID);
 					else
-						self:RunCommand(
-							"InvAction", "ammo", itemTable.uniqueID, itemTable.itemID
-						)
+						Clockwork.inventory:InvAction("ammo", itemTable.uniqueID, itemTable.itemID);
 					end
 				end
 			end)
@@ -2019,21 +2003,11 @@ function Clockwork.kernel:HandleItemSpawnIconClick(itemTable, spawnIcon, Callbac
 
 			subMenu:AddOption("Yes", function()
 				if (itemTable) then
-					self:RunCommand(
-						"InvAction", "destroy", itemTable.uniqueID, itemTable.itemID
-					)
+					Clockwork.inventory:InvAction("destroy", itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 
 			subMenu:AddOption("No", function() end)
-		elseif ((!equipText and v == "Equip Melee") or (equipText and v == equipText)) then
-			itemMenu:AddOption(v, function()
-				if (itemTable and itemTable:CanEquip(Clockwork.Client)) then
-					self:RunCommand(
-						"InvAction", "equipmelee", itemTable.uniqueID, itemTable.itemID
-					)
-				end
-			end)
 		elseif (type(v) == "table") then
 			itemMenu:AddOption(v.title, function()
 				local defaultAction = true
@@ -2048,9 +2022,7 @@ function Clockwork.kernel:HandleItemSpawnIconClick(itemTable, spawnIcon, Callbac
 				end
 
 				if (defaultAction) then
-					self:RunCommand(
-						"InvAction", v.name, itemTable.uniqueID, itemTable.itemID
-					)
+					Clockwork.inventory:InvAction(v.name, itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 		else
@@ -2060,9 +2032,7 @@ function Clockwork.kernel:HandleItemSpawnIconClick(itemTable, spawnIcon, Callbac
 
 			itemMenu:AddOption(v, function()
 				if (itemTable) then
-					self:RunCommand(
-						"InvAction", v, itemTable.uniqueID, itemTable.itemID
-					)
+					Clockwork.inventory:InvAction(v, itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 		end
@@ -2086,9 +2056,8 @@ function Clockwork.kernel:HandleItemSpawnIconRightClick(itemTable, spawnIcon)
 				end
 			end
 
-			self:RunCommand(
-				"InvAction", string.lower(functionName), itemTable.uniqueID, itemTable.itemID
-			)
+			Clockwork.inventory:InvAction(string.lower(functionName), itemTable.uniqueID, itemTable.itemID);
+			
 			return
 		end
 	end
@@ -2096,10 +2065,10 @@ function Clockwork.kernel:HandleItemSpawnIconRightClick(itemTable, spawnIcon)
 	if (itemTable.OnUse) then
 		if (itemTable.OnHandleUse) then
 			itemTable:OnHandleUse(function()
-				self:RunCommand("InvAction", "use", itemTable.uniqueID, itemTable.itemID)
+				Clockwork.inventory:InvAction("use", itemTable.uniqueID, itemTable.itemID);
 			end)
 		else
-			self:RunCommand("InvAction", "use", itemTable.uniqueID, itemTable.itemID)
+			Clockwork.inventory:InvAction("use", itemTable.uniqueID, itemTable.itemID);
 		end
 	end
 end

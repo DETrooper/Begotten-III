@@ -467,7 +467,7 @@ if SERVER then
           end
         end
       elseif self:IsInRange(enemy, self.AvoidEnemyRange) and visible and
-      not self:IsInRange(enemy, self.MeleeAttackRange) then
+      not self:IsInRange(enemy, self.ReachEnemyRange) then
         if self:OnAvoidEnemy(enemy) ~= true then
           self:FollowPath(self:GetPos():DrG_Away(enemy:GetPos()))
         end
@@ -489,8 +489,8 @@ if SERVER then
     local weapon = self:GetWeapon()
     if self.BehaviourType == AI_BEHAV_HUMAN and self:HasWeapon() then
       if weapon.DrGBase_Melee or string.find(weapon:GetHoldType(), "melee") then
-        if self:IsInRange(ent, self.MeleeAttackRange) then
-          if self:OnMeleeAttack(ent, weapon) ~= true  and self.IsDrGNextbotHuman then
+        if self:IsInRange(ent, self.ReachEnemyRange) then
+          if self:OnMeleeAttack(ent, weapon) ~= true and self.IsDrGNextbotHuman then
             self:FaceTowards(ent)
             -- todo: melee code
           end
@@ -520,9 +520,9 @@ if SERVER then
           end
         end
       end
-    elseif self:IsInRange(ent, self.MeleeAttackRange) and
+    elseif self:IsInRange(ent, self.ReachEnemyRange) and !ent.cwObserverMode and
     self:OnMeleeAttack(ent, weapon) ~= false then
-    elseif self:IsInRange(ent, self.RangeAttackRange) then
+    elseif self:IsInRange(ent, self.RangeAttackRange) and !ent.cwObserverMode then
       self:OnRangeAttack(ent, weapon)
     end
   end

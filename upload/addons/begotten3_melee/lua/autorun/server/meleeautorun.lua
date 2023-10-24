@@ -20,6 +20,10 @@ function Parry(target, dmginfo)
 					attacker:CancelGuardening();
 				end
 				
+				if attacker.OnParried then
+					attacker:OnParried();
+				end
+				
 				hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);
 				
 				wep:SetNextPrimaryFire(0)

@@ -84,8 +84,8 @@ if SERVER then
       if luminosity < min or luminosity > max then return false end
     end
     local angle = (eyepos + self:EyeAngles():Forward()):DrG_Degrees(ent:WorldSpaceCenter(), eyepos)
-    if angle > self:GetSightFOV()/2 then return false end
-    return self:Visible(ent)
+    if angle > self:GetSightFOV()/2 then return false end	if Clockwork then		return Clockwork.entity:CanSeePlayer(self, ent);	else
+		return self:Visible(ent)	end
   end
 
   net.DrG_DefineCallback("DrGBaseIsInSight", function(nextbot, ent)

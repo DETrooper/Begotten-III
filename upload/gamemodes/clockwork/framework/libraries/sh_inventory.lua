@@ -454,6 +454,10 @@ if (CLIENT) then
 
 		Clockwork.inventory:Rebuild()
 	end)
+	
+	function Clockwork.inventory:InvAction(action, uniqueID, itemID, toolUniqueID, toolItemID)
+		netstream.Start("InvAction", {action, uniqueID, itemID, toolUniqueID, toolItemID});
+	end
 else
 	function Clockwork.inventory:SendUpdateByInstance(player, itemTable)
 		if (itemTable) then
@@ -492,4 +496,306 @@ else
 			end
 		end)
 	end
+	
+	function Clockwork.inventory:InvAction(player, itemAction, uniqueID, itemID, toolUniqueID, toolItemID)
+		if !player:Alive() or player:IsRagdolled() then
+			Clockwork.player:Notify(player, "You cannot use items right now!");
+			
+			return false;
+		end
+	
+		local itemTable = player:FindItemByID(uniqueID, tonumber(itemID));
+		
+		itemAction = string.lower(itemAction);
+		
+		if (itemTable) then
+			local customFunctions = itemTable.customFunctions;
+			
+			if (customFunctions) then
+				for k, v in pairs(customFunctions) do
+					if (string.lower(v) == itemAction) then
+						if (itemTable.OnCustomFunction) then
+							itemTable:OnCustomFunction(player, v);
+							return;
+						end;
+					end;
+				end;
+			end;
+
+			if (itemAction == "repair") then
+				local itemCondition = itemTable:GetCondition();
+				
+				if itemCondition <= 0 then
+					if !cwBeliefs or !player:HasBelief("artisan") then
+						Clockwork.player:Notify(player, "You cannot repair broken items!");
+						return false;
+					end
+				end
+
+				if itemCondition < 100 then
+					if itemTable.repairItem then
+						local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
+						local repairItemTable;
+
+						for k, v in pairs (itemList) do
+							if v.uniqueID == itemTable.repairItem then
+								repairItemTable = v;
+								break;
+							end
+						end
+			
+						if (repairItemTable) then
+							if repairItemTable then
+								local replenishment = (repairItemTable.conditionReplenishment or 100) - ((100 - repairItemTable:GetCondition()) * (repairItemTable.conditionReplenishment / 100));
+								
+								itemTable:GiveCondition(math.min(replenishment, 100));
+								repairItemTable:TakeCondition((itemTable:GetCondition() - itemCondition) / (repairItemTable.conditionReplenishment / 100));
+								
+								if repairItemTable:GetCondition() <= 0 then
+									player:TakeItem(repairItemTable, true);
+									
+									Schema:EasyText(player, "olivedrab", "You have repaired your "..itemTable.name.." to "..tostring(math.Round(itemTable:GetCondition(), 2))..", using the last of the repair kit's parts in the process.");
+								else
+									Schema:EasyText(player, "green", "You have repaired your "..itemTable.name.." to "..tostring(math.Round(itemTable:GetCondition(), 2))..".");
+									Clockwork.inventory:Rebuild(player);
+								end
+							else
+								Clockwork.player:Notify(player, "You do not have an item you can repair this item with!");
+								return false;
+							end
+						end
+					end
+				else
+					Clockwork.player:Notify(player, "This item is already in perfect condition and cannot be repaired.");
+					return false;
+				end
+			elseif (itemAction == "breakdown") then
+				if (itemTable.components) then
+					if itemTable.components.breakdownType == "meltdown" then
+						if (player:HasItemByID("charcoal")) then
+							if !cwBeliefs or (cwBeliefs and player:HasBelief("smith")) then
+								local smithy_found = false;
+								
+								for i = 1, #cwRecipes.smithyLocations do
+									if player:GetPos():DistToSqr(cwRecipes.smithyLocations[i]) < (256 * 256) then
+										local itemCondition = itemTable:GetCondition();
+										
+										for j = 1, #itemTable.components.items do
+											local componentItem = item.CreateInstance(itemTable.components.items[j]);
+											local condition = itemCondition - math.random(15, 40);
+											
+											if condition > 0 then
+												componentItem:SetCondition(condition, true);
+												
+												player:GiveItem(componentItem);
+											end
+										end
+										
+										Clockwork.player:Notify(player, "You have melted down your "..itemTable.name.." into its component pieces.");
+										player:EmitSound("generic_ui/smelt_success_02.wav");
+										
+										if cwBeliefs then
+											player:HandleXP(cwBeliefs.xpValues["meltdown"]);
+										end
+										
+										local coal = player:FindItemByID("charcoal");
+										player:TakeItem(coal);
+										
+										player:TakeItem(itemTable, true);
+										smithy_found = true;
+										break;
+									end
+								end
+								
+								if not smithy_found then
+									Clockwork.player:Notify(player, "You must be standing near a smithy to melt down this item!");
+									return false;
+								end
+							else
+								Clockwork.player:Notify(player, "You must have the 'Smith' belief to melt down this item!");
+								return false;
+							end
+						else
+							Clockwork.player:Notify(player, "You need charcoal to melt down this item!");
+						end
+					elseif itemTable.components.breakdownType == "breakdown" then
+						local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
+						local breakdownItemTable;
+
+						for k, v in pairs (itemList) do
+							if v.uniqueID == "breakdown_kit" then
+								breakdownItemTable = v;
+								break;
+							end
+						end
+						
+						if breakdownItemTable then
+							local conditionTaken = math.max(1, math.Round((itemTable.weight * 3)));
+							local itemCondition = breakdownItemTable:GetCondition() or 100;
+							
+							--if conditionTaken <= itemCondition then
+								for i = 1, #itemTable.components.items do
+									local componentItem = item.CreateInstance(itemTable.components.items[i]);
+									local condition = (componentItem:GetCondition() or 100) - math.random(15, 40);
+									
+									if condition > 0 then
+										componentItem:SetCondition(condition, true);
+										
+										player:GiveItem(componentItem);
+									end
+								end
+							
+								Clockwork.player:Notify(player, "You have broken down your "..itemTable.name.." into its component pieces.");
+								player:EmitSound("generic_ui/takeall_03.wav");
+								
+								if cwBeliefs then
+									player:HandleXP(cwBeliefs.xpValues["breakdown"]);
+								end
+								
+								breakdownItemTable:TakeCondition(conditionTaken);
+								
+								if breakdownItemTable:GetData("condition") <= 0 then
+									player:TakeItem(breakdownItemTable, true);
+								end
+								
+								player:TakeItem(itemTable, true);
+							--else
+								--Clockwork.player:Notify(player, "You do not have enough workable tools left in your breakdown kit to break down this item!");
+							--end
+						else
+							Clockwork.player:Notify(player, "You do not have an item you can break down this item with!");
+							return false;
+						end
+					end
+				end
+			elseif (itemAction == "destroy") then
+				if (hook.Run("PlayerCanDestroyItem", player, itemTable)) then
+					item.Destroy(player, itemTable);
+				end;
+			elseif (itemAction == "drop") then
+				local position = player:GetEyeTraceNoCursor().HitPos;
+				
+				if (player:GetShootPos():Distance(position) <= 192) then
+					if (hook.Run("PlayerCanDropItem", player, itemTable, position)) then
+						item.Drop(player, itemTable, position);
+					end;
+				else
+					Clockwork.player:Notify(player, "You cannot drop the item that far away!");
+				end;
+			elseif (itemAction == "use") then
+				if (player:InVehicle() and itemTable.useInVehicle == false) then
+					Clockwork.player:Notify(player, "You cannot use this item in a vehicle!");
+					
+					return;
+				end;
+
+				if (hook.Run("PlayerCanUseItem", player, itemTable)) then
+					return item.Use(player, itemTable);
+				end;
+			elseif (itemAction == "examine") then
+				local itemCondition = itemTable:GetCondition();
+				local examineText = itemTable.description
+				local itemEngraving = itemTable:GetData("engraving");
+				local conditionTextCategories = {"Armor", "Firearms", "Helms", "Melee", "Shields", "Javelins"};
+
+				if (itemTable.GetEntityExamineText) then
+					examineText = itemTable:GetEntityExamineText(entity)
+				end
+				
+				if itemEngraving and itemEngraving ~= "" then
+					local itemKills = itemTable:GetData("kills");
+					
+					if itemKills and itemKills > 0 then
+						examineText = examineText.." It has \'"..itemEngraving.."\' engraved into it, alongside a tally mark of "..tostring(itemKills).." kills.";
+					else
+						examineText = examineText.." It has \'"..itemEngraving.."\' engraved into it.";
+					end
+				end
+				
+				if table.HasValue(conditionTextCategories, itemTable.category) then
+					if itemCondition >= 90 then
+						examineText = examineText.." It appears to be in immaculate condition.";
+					elseif itemCondition < 90 and itemCondition >= 60 then
+						examineText = examineText.." It appears to be in a somewhat battered condition.";
+					elseif itemCondition < 60 and itemCondition >= 30 then
+						examineText = examineText.." It appears to be in very poor condition.";
+					elseif itemCondition < 30 and itemCondition > 0 then
+						examineText = examineText.." It appears to be on the verge of breaking.";
+					elseif itemCondition <= 0 then
+						if itemTable:IsBroken() then
+							examineText = examineText.." It is completely destroyed and only worth its weight in scrap now.";
+						else
+							examineText = examineText.." It is broken yet still usable to some degree.";
+						end
+					end
+				elseif itemTable.category == "Shot" and itemTable.ammoMagazineSize then
+					local rounds = itemTable:GetAmmoMagazine();
+					
+					examineText = examineText.." The magazine has "..tostring(rounds).." "..itemTable.ammoName.." rounds loaded.";
+				end
+
+				Clockwork.player:Notify(player, examineText);
+			elseif (itemAction == "ammo") then
+				if (item.IsWeapon(itemTable)) then
+					local ammo = itemTable:GetData("Ammo");
+					
+					if ammo and #ammo > 0 then
+						if #ammo == 1 then
+							if itemTable.usesMagazine and string.find(ammo[1], "Magazine") then
+								local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
+								local magazineItem = item.CreateInstance(ammoItemID);
+								
+								if magazineItem and magazineItem.SetAmmoMagazine then
+									magazineItem:SetAmmoMagazine(1);
+									
+									player:GiveItem(magazineItem);
+								end
+							else
+								local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
+								
+								player:GiveItem(item.CreateInstance(ammoItemID));
+							end
+						elseif itemTable.usesMagazine then
+							local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
+							
+							local magazineItem = item.CreateInstance(ammoItemID);
+							
+							if magazineItem and magazineItem.SetAmmoMagazine then
+								magazineItem:SetAmmoMagazine(#ammo);
+								
+								player:GiveItem(magazineItem);
+							end
+						else
+							for i = 1, #ammo do
+								local round = ammo[i];
+								
+								if round then
+									local roundItemID = string.gsub(string.lower(round), " ", "_");
+									local roundItemInstance = item.CreateInstance(roundItemID);
+									
+									player:GiveItem(roundItemInstance);
+								end
+							end
+						end
+
+						itemTable:SetData("Ammo", {});
+					end
+				end
+			elseif (itemAction == "magazineammo") then
+				if (itemTable.category == "Shot" and itemTable.ammoMagazineSize) then
+					if itemTable.TakeFromMagazine then
+						itemTable:TakeFromMagazine(player);
+					end
+				end
+			else
+				hook.Run("PlayerUseUnknownItemFunction", player, itemTable, itemAction, toolUniqueID, toolItemID);
+			end;
+		else
+			Clockwork.player:Notify(player, "You do not own this item!");
+		end;
+	end
+	
+	netstream.Hook("InvAction", function(player, data)
+		Clockwork.inventory:InvAction(player, data[1], data[2], data[3], data[4], data[5]);
+	end)
 end

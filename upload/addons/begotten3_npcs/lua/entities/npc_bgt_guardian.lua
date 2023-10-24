@@ -26,8 +26,8 @@ ENT.SpawnHealth = 300
 ENT.SpotDuration = 20
 -- AI --
 ENT.RangeAttackRange = 0
-ENT.MeleeAttackRange = 50
-ENT.ReachEnemyRange = 30
+ENT.MeleeAttackRange = 55
+ENT.ReachEnemyRange = 40
 ENT.AvoidEnemyRange = 0
 ENT.HearingCoefficient = 0.5
 ENT.SightFOV = 300
@@ -116,7 +116,7 @@ function ENT:OnLost()
 		self:EmitSound(table.Random(alertedSounds), 100, self.pitch)
 	end;
 end
-
+function ENT:OnParried()	self.nextMeleeAttack = CurTime() + 2;end
 
   -- Init/Think --
 
@@ -127,9 +127,9 @@ end
 
   -- AI --
 
-  function ENT:OnMeleeAttack(enemy)
-    self:EmitSound(table.Random(tauntSounds), 100, self.pitch)
-    self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)
+  function ENT:OnMeleeAttack(enemy)	if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
+		self:EmitSound(table.Random(tauntSounds), 100, self.pitch)
+		self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)	end
   end
 
   function ENT:OnReachedPatrol()
@@ -140,7 +140,7 @@ end
   -- Damage --
 
   function ENT:OnDeath(dmg, delay, hitgroup)
-  end  	function ENT:OnRagdoll(dmg)		local ragdoll = self;		if IsValid(ragdoll) then			self:SetMaterial("models/zombie_fast/fast_zombie_sheet");			ParticleEffectAttach("doom_dissolve", PATTACH_POINT_FOLLOW, ragdoll, 0);						timer.Simple(1.6, function() 				if IsValid(ragdoll) then					ParticleEffectAttach("doom_dissolve_flameburst", PATTACH_POINT_FOLLOW, ragdoll, 0);					ragdoll:Fire("fadeandremove", 1);					ragdoll:EmitSound("begotten/npc/burn.wav");										if cwRituals and cwItemSpawner then						local randomItem;						local spawnable = cwItemSpawner:GetSpawnableItems(true);						local lootPool = {};												for _, itemTable in ipairs(spawnable) do							if itemTable.category == "Catalysts" then								if itemTable.itemSpawnerInfo and !itemTable.itemSpawnerInfo.supercrateOnly then									table.insert(lootPool, itemTable);								end							end						end												randomItem = lootPool[math.random(1, #lootPool)];												if randomItem then							local itemInstance = item.CreateInstance(randomItem.uniqueID);														if itemInstance then								local entity = Clockwork.entity:CreateItem(nil, itemInstance, ragdoll:GetPos() + Vector(0, 0, 16));																entity.lifeTime = CurTime() + cwItemSpawner.ItemLifetime;							end						end					end				end;			end)						return true;		end	end
+  end  	function ENT:OnRagdoll(dmg)		local ragdoll = self;		if IsValid(ragdoll) then			self:SetMaterial("models/zombie_fast/fast_zombie_sheet");			ParticleEffectAttach("doom_dissolve", PATTACH_POINT_FOLLOW, ragdoll, 0);						timer.Simple(1.6, function() 				if IsValid(ragdoll) then					ParticleEffectAttach("doom_dissolve_flameburst", PATTACH_POINT_FOLLOW, ragdoll, 0);					ragdoll:Fire("fadeandremove", 1);					ragdoll:EmitSound("begotten/npc/burn.wav");										if cwRituals and cwItemSpawner then						local randomItem;						local spawnable = cwItemSpawner:GetSpawnableItems(true);						local lootPool = {};												for _, itemTable in ipairs(spawnable) do							if itemTable.category == "Catalysts" then								if itemTable.itemSpawnerInfo and !itemTable.itemSpawnerInfo.supercrateOnly then									table.insert(lootPool, itemTable);								end							end						end												randomItem = lootPool[math.random(1, #lootPool)];												if randomItem then							local itemInstance = item.CreateInstance(randomItem.uniqueID);														if itemInstance then								local entity = Clockwork.entity:CreateItem(nil, itemInstance, ragdoll:GetPos() + Vector(0, 0, 16));																entity.lifeTime = CurTime() + cwItemSpawner.ItemLifetime;																table.insert(cwItemSpawner.ItemsSpawned, entity);							end						end					end				end;			end)						return true;		end	end
   function ENT:Makeup()
 
   end;

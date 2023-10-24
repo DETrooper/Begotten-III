@@ -78,6 +78,10 @@ Schema.StorageSounds = {
 		["openfunction"] = function(player, entity) end,
 		["closefunction"] = function(player, entity) end,
 	},
+	["models/props_c17/cashregister01a.mdl"] = {
+		["open"] = "doors/handle_pushbar_locked1.wav",
+		["close"] = "doors/door1_stop.wav"
+	},
 	["models/props_c17/furniturefridge001a.mdl"] = {
 		["open"] = "doors/handle_pushbar_locked1.wav",
 		["close"] = "doors/door1_stop.wav"

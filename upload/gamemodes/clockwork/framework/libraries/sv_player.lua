@@ -70,7 +70,7 @@ end
 
 -- A function to run an inventory action for a player.
 function Clockwork.player:InventoryAction(player, itemTable, action)
-	return self:RunClockworkCommand(player, "InvAction", action, itemTable.uniqueID, tostring(itemTable.itemID))
+	return Clockwork.inventory:InvAction(player, action, itemTable.uniqueID, itemTable.itemID);
 end
 
 -- A function to create a character from data.

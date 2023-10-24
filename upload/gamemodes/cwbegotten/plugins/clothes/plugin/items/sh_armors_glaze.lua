@@ -2177,7 +2177,7 @@ ITEM:Register();
 local ITEM = Clockwork.item:New("clothes_base");
 ITEM.name = "Master-at-Arms Gatekeeper Plate";
 ITEM.group = "gatekeepers/masteratarms";
-ITEM.model = "models/items/magic/armors/player_armors/player_armor_plate_magic.mdl"
+ITEM.model = "models/begotten/headgroups_props/masteratarmsplate.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/masteratarms_gatekeeper_plate.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
