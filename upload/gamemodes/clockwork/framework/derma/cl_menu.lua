@@ -84,7 +84,7 @@ function PANEL:Rebuild(change)
 					local parent = panel:GetParent();
 
 					if parent and parent.itemData and parent.itemTable then
-						Clockwork.inventory:InvAction("drop", parent.itemTable.uniqueID, parent.itemTable.itemID);
+						Clockwork.inventory:InventoryAction("drop", parent.itemTable.uniqueID, parent.itemTable.itemID);
 					end
 				end
 			end

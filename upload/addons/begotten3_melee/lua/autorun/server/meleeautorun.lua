@@ -4,7 +4,7 @@ function Parry(target, dmginfo)
 
 		if (target:IsValid() and target:Alive() and (target:GetNWBool("Parry", false) == true) and IsValid(wep)) then
 			local damageType = dmginfo:GetDamageType();
-			local checkTypes = {[4] = true, [16] = true, [128] = true, [DMG_SNIPER] = true};
+			local checkTypes = {[4] = true, [16] = true, [128] = true};
 
 			if (checkTypes[damageType]) then
 				local attacker = dmginfo:GetAttacker()
@@ -222,7 +222,7 @@ local function Guarding(ent, dmginfo)
 			end;
 			
 			if not canblock and wep.HoldType == "wos-begotten_dual" then
-				if (dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_SNIPER) or dmginfo:IsDamageType(DMG_BUCKSHOT)) and cwBeliefs and ent.HasBelief and ent:HasBelief("impossibly_skilled") then
+				if (dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) or (IsValid(inflictor) and inflictor.isJavelin)) and cwBeliefs and ent.HasBelief and ent:HasBelief("impossibly_skilled") then
 					local enemyWeapon = attacker:GetActiveWeapon();
 					
 					if !IsValid(enemyWeapon) or !enemyWeapon.IgnoresBulletResistance then
@@ -265,7 +265,7 @@ local function Guarding(ent, dmginfo)
 						elseif dmginfo:IsDamageType(4) then
 							ent:EmitSound(blocksoundtable["blockmetal"][math.random(1, #blocksoundtable["blockmetal"])])
 							--print "BLOCK NPC SLASH"
-						elseif dmginfo:IsDamageType(16) or dmginfo:IsDamageType(DMG_SNIPER) then
+						elseif dmginfo:IsDamageType(16) then
 							ent:EmitSound(blocksoundtable["blockmetalpierce"][math.random(1, #blocksoundtable["blockmetalpierce"])])
 							--print "BLOCK NPC PIERCE"
 						elseif dmginfo:IsDamageType(2) or dmginfo:IsDamageType(1073741824) or dmginfo:IsDamageType(536870912) then
@@ -305,7 +305,7 @@ local function Guarding(ent, dmginfo)
 							elseif dmginfo:IsDamageType(4) then
 								ent:EmitSound(blocksoundtable["blockmetal"][math.random(1, #blocksoundtable["blockmetal"])])
 								--print "blockmetal"
-							elseif dmginfo:IsDamageType(16) or dmginfo:IsDamageType(DMG_SNIPER) then
+							elseif dmginfo:IsDamageType(16) then
 								ent:EmitSound(blocksoundtable["blockmetalpierce"][math.random(1, #blocksoundtable["blockmetalpierce"])])
 								--print "blockmetalpierce"
 							elseif dmginfo:IsDamageType(2) or dmginfo:IsDamageType(1073741824) or dmginfo:IsDamageType(536870912) then
@@ -768,7 +768,7 @@ local function Guarding(ent, dmginfo)
 					end
 				
 					-- Deflection
-					if ent:GetNWBool("Deflect", true) and (IsValid(attacker) and (dmginfo:IsDamageType(4) or dmginfo:IsDamageType(128) or dmginfo:IsDamageType(16) or (dmginfo:IsDamageType(DMG_SNIPER) and cwBeliefs and ent:HasBelief("impossibly_skilled")))) then
+					if ent:GetNWBool("Deflect", true) and (IsValid(attacker) and (dmginfo:IsDamageType(4) or dmginfo:IsDamageType(128) or dmginfo:IsDamageType(16) or (cwBeliefs and ent:HasBelief("impossibly_skilled") and IsValid(inflictor) and inflictor.isJavelin))) then
 						if !attacker:IsPlayer() then
 							if dmginfo:IsDamageType(128) then
 								ent:EmitSound(blocksoundtable["deflectwood"][math.random(1, #blocksoundtable["deflectwood"])])
@@ -776,7 +776,7 @@ local function Guarding(ent, dmginfo)
 							elseif dmginfo:IsDamageType(4) then
 								ent:EmitSound(blocksoundtable["deflectmetal"][math.random(1, #blocksoundtable["deflectmetal"])])
 								--print "DEFLECT SLASH"
-							elseif dmginfo:IsDamageType(16) or dmginfo:IsDamageType(DMG_SNIPER) then
+							elseif dmginfo:IsDamageType(16) then
 								ent:EmitSound(blocksoundtable["deflectmetalpierce"][math.random(1, #blocksoundtable["deflectmetalpierce"])])
 								--print "DEFLECT PIERCE"
 							elseif dmginfo:IsDamageType(1073741824) then
@@ -811,7 +811,7 @@ local function Guarding(ent, dmginfo)
 								elseif dmginfo:IsDamageType(4) then
 									ent:EmitSound(blocksoundtable["deflectmetal"][math.random(1, #blocksoundtable["deflectmetal"])])
 									--print "deflect metal 2"
-								elseif dmginfo:IsDamageType(16) or dmginfo:IsDamageType(DMG_SNIPER) then
+								elseif dmginfo:IsDamageType(16) then
 									ent:EmitSound(blocksoundtable["deflectmetalpierce"][math.random(1, #blocksoundtable["deflectmetalpierce"])])
 									--print "deflect metalpierce 2"
 								end
@@ -880,7 +880,7 @@ local function Guarding(ent, dmginfo)
 						if enemywep.IsABegottenMelee == true then
 							local attackSoundTable = enemywep.AttackSoundTable;
 							
-							if dmginfo:IsDamageType(DMG_SNIPER) then
+							if IsValid(inflictor) and inflictor.isJavelin then
 								attackSoundTable = "MetalSpearAttackSoundTable";
 							end
 							

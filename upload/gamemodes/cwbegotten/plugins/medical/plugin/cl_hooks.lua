@@ -270,12 +270,12 @@ function cwMedicalSystem:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunction
 			if itemTable.limbs == "all" then
 				if itemTable.useOnSelf then
 					menuPanel:AddOption(string.gsub("Apply", "^.", string.upper), function()
-						Clockwork.player:InventoryAction("apply_all", itemTable.uniqueID, itemTable.itemID);
+						Clockwork.inventory:InventoryAction("apply_all", itemTable.uniqueID, itemTable.itemID);
 					end);
 				end;
 				
 				menuPanel:AddOption(string.gsub("Give", "^.", string.upper), function()
-					Clockwork.player:InventoryAction("give_all", itemTable.uniqueID, itemTable.itemID);
+					Clockwork.inventory:InventoryAction("give_all", itemTable.uniqueID, itemTable.itemID);
 				end);
 			else
 				local methods = itemTable.limbs;
@@ -288,7 +288,7 @@ function cwMedicalSystem:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunction
 							local hitGroupString = hitgroupToString[k];
 							
 							subMenu:AddOption(string.gsub(hitGroupString, "^.", string.upper), function()
-								Clockwork.player:InventoryAction(string.gsub("apply_"..hitGroupString, " ", "_"), itemTable.uniqueID, itemTable.itemID);
+								Clockwork.inventory:InventoryAction(string.gsub("apply_"..hitGroupString, " ", "_"), itemTable.uniqueID, itemTable.itemID);
 							end);
 						end;
 					else
@@ -296,7 +296,7 @@ function cwMedicalSystem:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunction
 							local hitGroupString = hitgroupToString[methods[i]];
 							
 							subMenu:AddOption(string.gsub(hitGroupString, "^.", string.upper), function()
-								Clockwork.player:InventoryAction(string.gsub("apply_"..hitGroupString, " ", "_"), itemTable.uniqueID, itemTable.itemID);
+								Clockwork.inventory:InventoryAction(string.gsub("apply_"..hitGroupString, " ", "_"), itemTable.uniqueID, itemTable.itemID);
 							end);
 						end;
 					end;
@@ -309,7 +309,7 @@ function cwMedicalSystem:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunction
 						local hitGroupString = hitgroupToString[methods[i]];
 						
 						subMenu:AddOption(string.gsub(hitGroupString, "^.", string.upper), function()
-							Clockwork.player:InventoryAction(string.gsub("give_"..hitGroupString, " ", "_"), itemTable.uniqueID, itemTable.itemID);
+							Clockwork.inventory:InventoryAction(string.gsub("give_"..hitGroupString, " ", "_"), itemTable.uniqueID, itemTable.itemID);
 						end);
 					end;
 				else
@@ -319,7 +319,7 @@ function cwMedicalSystem:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunction
 						local hitGroupString = hitgroupToString[methods[i]];
 						
 						subMenu:AddOption(string.gsub(hitGroupString, "^.", string.upper), function()
-							Clockwork.player:InventoryAction(string.gsub("give_"..hitGroupString, " ", "_"), itemTable.uniqueID, itemTable.itemID);
+							Clockwork.inventory:InventoryAction(string.gsub("give_"..hitGroupString, " ", "_"), itemTable.uniqueID, itemTable.itemID);
 						end);
 					end;
 				end;
@@ -335,7 +335,7 @@ function cwMedicalSystem:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunction
 				for k, v in pairs (methods) do
 					if v ~= false then
 						subMenu:AddOption(string.gsub(k, "^.", string.upper), function()
-							Clockwork.player:InventoryAction("ingest_"..k, itemTable.uniqueID, itemTable.itemID);
+							Clockwork.inventory:InventoryAction("ingest_"..k, itemTable.uniqueID, itemTable.itemID);
 						end);
 					end
 				end;
@@ -343,7 +343,7 @@ function cwMedicalSystem:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunction
 				for k, v in pairs (methods) do
 					if v ~= false then
 						menuPanel:AddOption(string.gsub(k, "^.", string.upper), function()
-							Clockwork.player:InventoryAction("ingest_"..k, itemTable.uniqueID, itemTable.itemID);
+							Clockwork.inventory:InventoryAction("ingest_"..k, itemTable.uniqueID, itemTable.itemID);
 						end);
 					end;
 				end;

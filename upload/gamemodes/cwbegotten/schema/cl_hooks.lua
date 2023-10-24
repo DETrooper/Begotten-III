@@ -1913,7 +1913,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		
 		return true;
 	elseif (category == "Shields") then
-		local damageTypes = {[2] = "Bullet", [4] = "Slash", [16] = "Pierce", [128] = "Blunt", [DMG_BUCKSHOT] = "Grapeshot", [DMG_SNIPER] = "Javelin"};
+		local damageTypes = {[2] = "Bullet", [4] = "Slash", [16] = "Pierce", [128] = "Blunt", [DMG_BUCKSHOT] = "Grapeshot"};
 		local shieldClass = itemTable.uniqueID;
 		local shieldStats = nil;
 

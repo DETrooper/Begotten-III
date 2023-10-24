@@ -455,7 +455,7 @@ if (CLIENT) then
 		Clockwork.inventory:Rebuild()
 	end)
 	
-	function Clockwork.inventory:InvAction(action, uniqueID, itemID, toolUniqueID, toolItemID)
+	function Clockwork.inventory:InventoryAction(action, uniqueID, itemID, toolUniqueID, toolItemID)
 		netstream.Start("InvAction", {action, uniqueID, itemID, toolUniqueID, toolItemID});
 	end
 else
@@ -497,7 +497,7 @@ else
 		end)
 	end
 	
-	function Clockwork.inventory:InvAction(player, itemAction, uniqueID, itemID, toolUniqueID, toolItemID)
+	function Clockwork.inventory:InventoryAction(player, itemAction, uniqueID, itemID, toolUniqueID, toolItemID)
 		if !player:Alive() or player:IsRagdolled() then
 			Clockwork.player:Notify(player, "You cannot use items right now!");
 			
@@ -796,6 +796,6 @@ else
 	end
 	
 	netstream.Hook("InvAction", function(player, data)
-		Clockwork.inventory:InvAction(player, data[1], data[2], data[3], data[4], data[5]);
+		Clockwork.inventory:InventoryAction(player, data[1], data[2], data[3], data[4], data[5]);
 	end)
 end

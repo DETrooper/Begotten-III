@@ -1957,44 +1957,44 @@ function Clockwork.kernel:HandleItemSpawnIconClick(itemTable, spawnIcon, Callbac
 				if (itemTable) then
 					if (itemTable.OnHandleUse) then
 						itemTable:OnHandleUse(function()
-							Clockwork.inventory:InvAction("use", itemTable.uniqueID, itemTable.itemID);
+							Clockwork.inventory:InventoryAction("use", itemTable.uniqueID, itemTable.itemID);
 						end)
 					else
-						Clockwork.inventory:InvAction("use", itemTable.uniqueID, itemTable.itemID);
+						Clockwork.inventory:InventoryAction("use", itemTable.uniqueID, itemTable.itemID);
 					end
 				end
 			end)
 		elseif (v == "Examine") then
 			itemMenu:AddOption(v, function()
 				if (itemTable) then
-					Clockwork.inventory:InvAction("examine", itemTable.uniqueID, itemTable.itemID);
+					Clockwork.inventory:InventoryAction("examine", itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 		elseif ((!repairName and v == "Repair") or (repairName and v == repairName)) then
 			itemMenu:AddOption(v, function()
 				if (itemTable) then
-					Clockwork.inventory:InvAction("repair", itemTable.uniqueID, itemTable.itemID);
+					Clockwork.inventory:InventoryAction("repair", itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 		elseif ((v == "Break Down") or (v == "Melt Down")) then
 			itemMenu:AddOption(v, function()
 				if (itemTable) then
-					Clockwork.inventory:InvAction("breakdown", itemTable.uniqueID, itemTable.itemID);
+					Clockwork.inventory:InventoryAction("breakdown", itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 		elseif ((!dropText and v == "Drop") or (dropText and v == dropText)) then
 			itemMenu:AddOption(v, function()
 				if (itemTable) then
-					Clockwork.inventory:InvAction("drop", itemTable.uniqueID, itemTable.itemID);
+					Clockwork.inventory:InventoryAction("drop", itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 		elseif (!istable(v) and string.find(v, "Unload")) then
 			itemMenu:AddOption(v, function()
 				if (itemTable) then
 					if itemTable.ammoMagazineSize then
-						Clockwork.inventory:InvAction("magazineAmmo", itemTable.uniqueID, itemTable.itemID);
+						Clockwork.inventory:InventoryAction("magazineAmmo", itemTable.uniqueID, itemTable.itemID);
 					else
-						Clockwork.inventory:InvAction("ammo", itemTable.uniqueID, itemTable.itemID);
+						Clockwork.inventory:InventoryAction("ammo", itemTable.uniqueID, itemTable.itemID);
 					end
 				end
 			end)
@@ -2003,7 +2003,7 @@ function Clockwork.kernel:HandleItemSpawnIconClick(itemTable, spawnIcon, Callbac
 
 			subMenu:AddOption("Yes", function()
 				if (itemTable) then
-					Clockwork.inventory:InvAction("destroy", itemTable.uniqueID, itemTable.itemID);
+					Clockwork.inventory:InventoryAction("destroy", itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 
@@ -2022,7 +2022,7 @@ function Clockwork.kernel:HandleItemSpawnIconClick(itemTable, spawnIcon, Callbac
 				end
 
 				if (defaultAction) then
-					Clockwork.inventory:InvAction(v.name, itemTable.uniqueID, itemTable.itemID);
+					Clockwork.inventory:InventoryAction(v.name, itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 		else
@@ -2032,7 +2032,7 @@ function Clockwork.kernel:HandleItemSpawnIconClick(itemTable, spawnIcon, Callbac
 
 			itemMenu:AddOption(v, function()
 				if (itemTable) then
-					Clockwork.inventory:InvAction(v, itemTable.uniqueID, itemTable.itemID);
+					Clockwork.inventory:InventoryAction(v, itemTable.uniqueID, itemTable.itemID);
 				end
 			end)
 		end
@@ -2056,7 +2056,7 @@ function Clockwork.kernel:HandleItemSpawnIconRightClick(itemTable, spawnIcon)
 				end
 			end
 
-			Clockwork.inventory:InvAction(string.lower(functionName), itemTable.uniqueID, itemTable.itemID);
+			Clockwork.inventory:InventoryAction(string.lower(functionName), itemTable.uniqueID, itemTable.itemID);
 			
 			return
 		end
@@ -2065,10 +2065,10 @@ function Clockwork.kernel:HandleItemSpawnIconRightClick(itemTable, spawnIcon)
 	if (itemTable.OnUse) then
 		if (itemTable.OnHandleUse) then
 			itemTable:OnHandleUse(function()
-				Clockwork.inventory:InvAction("use", itemTable.uniqueID, itemTable.itemID);
+				Clockwork.inventory:InventoryAction("use", itemTable.uniqueID, itemTable.itemID);
 			end)
 		else
-			Clockwork.inventory:InvAction("use", itemTable.uniqueID, itemTable.itemID);
+			Clockwork.inventory:InventoryAction("use", itemTable.uniqueID, itemTable.itemID);
 		end
 	end
 end

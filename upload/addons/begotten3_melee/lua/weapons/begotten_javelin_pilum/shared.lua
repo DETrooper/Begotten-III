@@ -93,6 +93,7 @@ function SWEP:FireJavelin()
 		javelin:SetPos(pos)
 		javelin:SetOwner(self.Owner)
 		javelin:Spawn()
+		javelin.AttackTable = self.AttackTable;
 		javelin.Owner = self.Owner
 		javelin:Activate()
 		eyes = self.Owner:EyeAngles()

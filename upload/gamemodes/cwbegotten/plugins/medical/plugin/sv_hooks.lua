@@ -9,7 +9,6 @@ cwMedicalSystem.bleedDamageThresholds = {
 	[DMG_FALL] = 50, -- fall
 	[DMG_SLASH] = 10, -- slash
 	[DMG_VEHICLE] = 5, -- stab
-	[DMG_SNIPER] = 5,
 };
 
 -- Called when a player's character has loaded.
@@ -639,7 +638,7 @@ function cwMedicalSystem:PlayerTakeDamage(player, attacker, inflictor, hitGroup,
 		
 		--local damageType = damageInfo:GetDamageType();
 		local damageType;
-		local damageTypes = {DMG_FALL, DMG_BULLET, DMG_BUCKSHOT, DMG_BURN, DMG_SLASH, DMG_VEHICLE, DMG_SNIPER};
+		local damageTypes = {DMG_FALL, DMG_BULLET, DMG_BUCKSHOT, DMG_BURN, DMG_SLASH, DMG_VEHICLE};
 		local damage = damageInfo:GetDamage();
 		local helmetItem = player:GetHelmetEquipped();
 		
@@ -697,7 +696,7 @@ function cwMedicalSystem:PlayerTakeDamage(player, attacker, inflictor, hitGroup,
 					if math.random(1, 100) <= chance then
 						player:AddInjury(self.cwHitGroupToString[hitGroup], "gunshot_wound");
 					end
-				elseif damageType == DMG_SLASH --[[or damageType == DMG_VEHICLE]] or damageType == DMG_SNIPER then
+				elseif damageType == DMG_SLASH --[[or damageType == DMG_VEHICLE]] then
 					local chance = 0;
 					local limbHealth = Clockwork.limb:GetHealth(player, hitGroup, false)
 					

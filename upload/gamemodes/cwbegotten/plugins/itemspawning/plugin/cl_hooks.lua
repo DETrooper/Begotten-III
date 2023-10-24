@@ -26,7 +26,7 @@ function cwItemSpawner:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunctions)
 	if (itemTable.breakdownItems) then
 		if (!itemTable.breakdownTools) then
 			menuPanel:AddOption("Breakdown", function()
-				Clockwork.player:InventoryAction("breakdown", itemTable.uniqueID, itemTable.itemID, toolItem.uniqueID, toolItem.itemID);
+				Clockwork.inventory:InventoryAction("breakdown", itemTable.uniqueID, itemTable.itemID, toolItem.uniqueID, toolItem.itemID);
 			end);
 		else
 			local subMenu = nil;
@@ -41,7 +41,7 @@ function cwItemSpawner:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunctions)
 					end;
 					
 					local optionPanel = subMenu:AddOption(toolItem.name, function()
-						Clockwork.player:InventoryAction("breakdown", itemTable.uniqueID, itemTable.itemID, toolItem.uniqueID, toolItem.itemID);
+						Clockwork.inventory:InventoryAction("breakdown", itemTable.uniqueID, itemTable.itemID, toolItem.uniqueID, toolItem.itemID);
 					end);
 					
 					Clockwork.kernel:CreateDermaToolTip(optionPanel);

@@ -98,7 +98,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 	if ((player:IsPlayer() or player.isTrainingDummy or (player:IsNextBot() and player.Armor)) and attacker and (attacker:IsPlayer() or attacker:IsNPC() or attacker:IsNextBot())) then
 		local helmetItem;
 		local damageType = damageInfo:GetDamageType();
-		local damageTypes = {DMG_BULLET, DMG_BUCKSHOT, DMG_CLUB, DMG_FALL, DMG_SLASH, DMG_VEHICLE, DMG_SNIPER};
+		local damageTypes = {DMG_BULLET, DMG_BUCKSHOT, DMG_CLUB, DMG_FALL, DMG_SLASH, DMG_VEHICLE};
 		
 		if !damagePosition then
 			damagePosition = damageInfo:GetDamagePosition() or Vector(0, 0, 0);
@@ -153,12 +153,12 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						armorPiercing = armorPiercing + 15;
 					end
 					
-					if (inflictor.Base == "sword_swepbase" or damageInfo:IsDamageType(DMG_SNIPER)) and attacker:HasBelief("the_light") then
+					if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("the_light") then
 						armorPiercing = armorPiercing + (armorPiercing * 0.2);
 					end
 					
 					if attacker:HasBelief("billman") then
-						if string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier") or string.find(inflictor.Category, "Scythe") or string.find(inflictor.Category, "Javelin") then
+						if (inflictor.Category and (string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier") or string.find(inflictor.Category, "Scythe"))) or inflictor.isJavelin then
 							armorPiercing = armorPiercing + (armorPiercing * 0.2);
 						end
 					end
@@ -260,12 +260,12 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 								armorPiercing = armorPiercing + 15;
 							end
 							
-							if (inflictor.Base == "sword_swepbase" or damageInfo:IsDamageType(DMG_SNIPER)) and attacker:HasBelief("the_light") then
+							if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("the_light") then
 								armorPiercing = armorPiercing + (armorPiercing * 0.2);
 							end
 							
 							if attacker:HasBelief("billman") then
-								if string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier") or string.find(inflictor.Category, "Scythe") or string.find(inflictor.Category, "Javelin") then
+								if (inflictor.Category and (string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier") or string.find(inflictor.Category, "Scythe"))) or inflictor.isJavelin then
 									armorPiercing = armorPiercing + (armorPiercing * 0.2);
 								end
 							end
@@ -443,7 +443,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						
 						damageInfo:ScaleDamage(dmgScale);
 						--printp("Scaling slash damage: "..tostring(dmgScale));
-					elseif (helmetItem.pierceScale and (damageType == DMG_VEHICLE or damageType == DMG_SNIPER)) then
+					elseif (helmetItem.pierceScale and (damageType == DMG_VEHICLE)) then
 						local dmgScale = 1 - ((1 - helmetItem.pierceScale) * (condition / 100));
 					
 						damageInfo:ScaleDamage(dmgScale);
@@ -500,7 +500,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					if attacker:IsPlayer() then
 						local attackTable;
 						local inflictor = damageInfo:GetInflictor()
-						
+
 						if IsValid(inflictor) and inflictor.AttackTable then
 							attackTable = GetTable(inflictor.AttackTable);
 						end
@@ -521,12 +521,12 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 								armorPiercing = armorPiercing + 15;
 							end
 							
-							if (inflictor.Base == "sword_swepbase" or damageInfo:IsDamageType(DMG_SNIPER)) and attacker:HasBelief("the_light") then
+							if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("the_light") then
 								armorPiercing = armorPiercing + (armorPiercing * 0.2);
 							end
 							
 							if attacker:HasBelief("billman") then
-								if string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier") or string.find(inflictor.Category, "Scythe") or string.find(inflictor.Category, "Javelin") then
+								if (inflictor.Category and (string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier") or string.find(inflictor.Category, "Scythe"))) or inflictor.isJavelin then
 									armorPiercing = armorPiercing + (armorPiercing * 0.2);
 								end
 							end
@@ -713,7 +713,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						
 						damageInfo:ScaleDamage(dmgScale);
 						--printp("Scaling slash damage: "..tostring(dmgScale));
-					elseif (armorItem.pierceScale and (damageType == DMG_VEHICLE or damageType == DMG_SNIPER)) then
+					elseif (armorItem.pierceScale and (damageType == DMG_VEHICLE)) then
 						local dmgScale = 1 - ((1 - armorItem.pierceScale) * (condition / 100));
 					
 						damageInfo:ScaleDamage(dmgScale);
