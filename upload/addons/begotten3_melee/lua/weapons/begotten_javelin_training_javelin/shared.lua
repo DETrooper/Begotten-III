@@ -30,7 +30,7 @@ SWEP.AttackSoundTable = "BluntMetalSpearAttackSoundTable"
 
 SWEP.AttackTable = "TrainingJavelinAttackTable"
 
-SWEP.Primary.Round = ("m9k_thrown_harpoon");
+SWEP.Primary.Round = ("begotten_javelin_training_javelin_thrown");
 
 SWEP.ConditionLoss = 2;
 SWEP.isJavelin = true;

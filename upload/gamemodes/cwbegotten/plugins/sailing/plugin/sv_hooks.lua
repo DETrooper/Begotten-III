@@ -7,9 +7,9 @@ function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 		local damageType = damageInfo:GetDamageType();
 		local damageAmount = damageInfo:GetDamage();
 		
-		if damageType == 4 then -- SLASH
-			if damageAmount > 50 then
-				local damageDealt = math.floor(damageAmount/50);
+		if damageAmount > 30 then
+			if damageType == 4 then -- SLASH
+				local damageDealt = math.floor(damageAmount / 30);
 				
 				if entity.health then
 					entity:SetHP(entity.health - damageDealt);
@@ -18,10 +18,8 @@ function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 				end
 				
 				self:EmitSound(self.creaksounds[math.random(1, #self.creaksounds)]);
-			end
-		elseif damageType == 128 then -- BLUNT
-			if damageAmount > 50 then
-				local damageDealt = math.floor(damageAmount/16);
+			elseif damageType == 128 then -- BLUNT
+				local damageDealt = math.floor(damageAmount / 16);
 				
 				if entity.health then
 					entity:SetHP(entity.health - damageDealt);

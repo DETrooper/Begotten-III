@@ -53,7 +53,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["billman"] = {
 				name = "Billman",
-				description = "Polearms, scythes, spears, rapiers, and javelins now deal 20% more damage and armor piercing damage.",
+				description = "Polearms, scythes, spears, rapiers, and javelins now deal 20% more armor piercing damage.",
 				quote = "The honest soldier keeps his distance from the bloodthirsty fools who seek his demise.",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "halfsword_sway", "blademaster"},
@@ -136,7 +136,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["unrelenting"] = {
 				name = "Unrelenting",
-				description = "Great weapons and two handed weapons now deal 10% more damage. All melee weapons now deal 25% more poise damage. Removes the damage penalty for hitting multiple targets with a single swing.",
+				description = "Great weapons, scythes, and two handed weapons now deal 10% more damage. All melee weapons now deal 25% more poise damage. Removes the damage penalty for hitting multiple targets with a single swing.",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "strength", "might"},
 				row = 4,

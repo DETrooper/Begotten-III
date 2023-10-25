@@ -162,18 +162,14 @@ local COMMAND = Clockwork.command:New("CharGiveTrait");
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
 		local target = Clockwork.player:FindByID(arguments[1]);
-		local traitID = arguments[2];
+		local traitID = string.lower(arguments[2]);
 		
 		if (target and target:HasInitialized()) then
-			if traitID then
-				if Clockwork.trait:FindByID(traitID) then
-					target:GiveTrait(traitID);
-					Clockwork.player:NotifyAdmins("operator", target:Name().." has been given the '"..traitID.."' trait by "..player:Name().."!", nil);
-				else
-					Clockwork.player:Notify(player, traitID.." is not a valid trait!");
-				end
+			if Clockwork.trait:FindByID(traitID) then
+				target:GiveTrait(traitID);
+				Clockwork.player:NotifyAdmins("operator", target:Name().." has been given the '"..traitID.."' trait by "..player:Name().."!", nil);
 			else
-				Clockwork.player:Notify(player, "You must specify a valid trait!");
+				Clockwork.player:Notify(player, traitID.." is not a valid trait!");
 			end
 		else
 			Clockwork.player:Notify(player, arguments[1].." is not a valid player!");
@@ -191,18 +187,14 @@ local COMMAND = Clockwork.command:New("CharTakeTrait");
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
 		local target = Clockwork.player:FindByID(arguments[1]);
-		local traitID = arguments[2];
+		local traitID = string.lower(arguments[2]);
 		
 		if (target and target:HasInitialized()) then
-			if traitID then
-				if Clockwork.trait:FindByID(traitID) then
-					target:RemoveTrait(traitID);
-					Clockwork.player:NotifyAdmins("operator", player:Name().." has taken the '"..traitID.."' trait from "..target:Name().."!", nil);
-				else
-					Clockwork.player:Notify(player, traitID.." is not a valid trait!");
-				end
+			if Clockwork.trait:FindByID(traitID) then
+				target:RemoveTrait(traitID);
+				Clockwork.player:NotifyAdmins("operator", player:Name().." has taken the '"..traitID.."' trait from "..target:Name().."!", nil);
 			else
-				Clockwork.player:Notify(player, "You must specify a valid trait!");
+				Clockwork.player:Notify(player, traitID.." is not a valid trait!");
 			end
 		else
 			Clockwork.player:Notify(player, arguments[1].." is not a valid player!");

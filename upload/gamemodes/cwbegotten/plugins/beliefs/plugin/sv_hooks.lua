@@ -753,7 +753,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					if attacker:HasBelief("blademaster") then
 						local attackTable = GetTable(attackerWeapon.AttackTable);
 						
-						if (string.find(attackerWeapon.Category, "One Handed") and attackTable.dmgtype == 4) or string.find(attackerWeapon.Category, "Two Handed") or string.find(attackerWeapon.Category, "Claws") or string.find(attackerWeapon.Category, "Dual Daggers") then
+						if (string.find(attackerWeapon.Category, "One Handed") and attackTable.dmgtype == 4) or string.find(attackerWeapon.Category, "Two Handed") or string.find(attackerWeapon.Category, "Claws") or string.find(attackerWeapon.Category, "Dual") then
 							newDamage = newDamage + (originalDamage * 0.2);
 						end
 					end
@@ -769,7 +769,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					end
 					
 					if attacker:HasBelief("unrelenting") then
-						if string.find(attackerWeapon.Category, "Two Handed") or string.find(attackerWeapon.Category, "Great Weapon") then
+						if string.find(attackerWeapon.Category, "Two Handed") or string.find(attackerWeapon.Category, "Great Weapon") or string.find(attackerWeapon.Category, "Scythe") then
 							newDamage = newDamage + (originalDamage * 0.10);
 						end
 					end

@@ -1517,11 +1517,11 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 				
 					if table.HasValue(itemTable.attributes, "lifeleech") then
-						frame:AddText("Lifeleech (Shieldless): 50% of damage dealt is returned as health", Color(110, 30, 30));
+						frame:AddText("Lifeleech (Shieldless): 50% of damage dealt is returned as health.", Color(110, 30, 30));
 					end
 				
 					if table.HasValue(itemTable.attributes, "rage") then
-						frame:AddText("Rage (Shieldless): Movement speed is increased by 10%", Color(110, 30, 30));
+						frame:AddText("Rage (Shieldless): Movement speed is increased by 10%.", Color(110, 30, 30));
 					end
 					
 					if table.HasValue(itemTable.attributes, "bell") then
@@ -1847,6 +1847,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			if weaponStats["attack"] and weaponStats["defense"] then
 				frame:AddText("Weapon Attributes: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
 				
+				frame:AddText("Easily Repairable: Costs less melee repair kit condition to repair.", Color(110, 30, 30));
+				
 				if !weaponStats["defense"].candeflect then
 					frame:AddText("Cannot Deflect", Color(110, 30, 30));
 				end
@@ -1865,11 +1867,19 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 				
 					if table.HasValue(itemTable.attributes, "lifeleech") then
-						frame:AddText("Lifeleech (Shieldless): 50% of damage dealt is returned as health", Color(110, 30, 30));
+						frame:AddText("Lifeleech (Shieldless): 50% of damage dealt is returned as health.", Color(110, 30, 30));
 					end
 				
 					if table.HasValue(itemTable.attributes, "rage") then
-						frame:AddText("Rage (Shieldless): Movement speed is increased by 10%", Color(110, 30, 30));
+						frame:AddText("Rage (Shieldless): Movement speed is increased by 10%.", Color(110, 30, 30));
+					end
+					
+					if table.HasValue(itemTable.attributes, "malleable") then
+						frame:AddText("Malleable: Breaks on contact irrespective of any beliefs to prevent it from being picked up and thrown back.", Color(110, 30, 30));
+					end
+					
+					if table.HasValue(itemTable.attributes, "shieldbreaker") then
+						frame:AddText("Shieldbreaker: Deals extra condition damage to shields.", Color(110, 30, 30));
 					end
 				end
 			

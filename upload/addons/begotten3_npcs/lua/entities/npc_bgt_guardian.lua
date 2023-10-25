@@ -26,8 +26,8 @@ ENT.SpawnHealth = 300
 ENT.SpotDuration = 20
 -- AI --
 ENT.RangeAttackRange = 0
-ENT.MeleeAttackRange = 55
-ENT.ReachEnemyRange = 40
+ENT.MeleeAttackRange = 80
+ENT.ReachEnemyRange = 50
 ENT.AvoidEnemyRange = 0
 ENT.HearingCoefficient = 0.5
 ENT.SightFOV = 300
@@ -49,7 +49,7 @@ ENT.ClimbLedgesMaxHeight = 10000
 ENT.ClimbLadders = true
 ENT.ClimbSpeed = 150
 ENT.ClimbUpAnimation = "run_all_grenade"--ACT_ZOMBIE_CLIMB_UP --pull_grenade
-ENT.ClimbOffset = Vector(-14, 0, 0)
+ENT.ClimbOffset = Vector(-14, 0, 0)ENT.ArmorPiercing = 100;
 ENT.Damage = 30;
 
 -- Detection --

@@ -23,6 +23,7 @@ ENT.MeleeAttackDamageDistance = 235 -- How far the damage goes
 
 ENT.TimeUntilMeleeAttackDamage = 1.5 -- This counted in seconds | This calculates the time until it hits something
 ENT.NextAnyAttackTime_Melee = 0.3 -- How much time until it can use a attack again? | Counted in Seconds
+ENT.ArmorPiercing = 100;
 ENT.MeleeAttackDamage = 80
 ENT.MeleeAttackDamageType = DMG_SLASH -- Type of Damage
 ENT.HasDeathAnimation = true -- Does it play an animation when it dies?

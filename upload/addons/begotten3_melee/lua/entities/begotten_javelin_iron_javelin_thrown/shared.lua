@@ -1,5 +1,5 @@
 ENT.Type 			= "anim"
-ENT.PrintName		= ""
+ENT.PrintName		= "Iron Javelin"
 ENT.Author			= ""
 ENT.Contact			= ""
 ENT.Purpose			= ""
@@ -67,13 +67,7 @@ if SERVER then
 				end
 			end
 		else
-			if self:GetModel() == "models/demonssouls/weapons/cut javelin.mdl" then
-				self.itemTable = item.CreateInstance("begotten_javelin_iron_javelin");
-			elseif self:GetModel() == "models/props/begotten/melee/heide_lance.mdl" then
-				self.itemTable = item.CreateInstance("begotten_javelin_pilum");
-			elseif self:GetModel() == "models/begotten/weapons/training_spear.mdl" then
-				self.itemTable = item.CreateInstance("begotten_javelin_training_javelin");
-			end
+			self.itemTable = item.CreateInstance("begotten_javelin_iron_javelin");
 		end
 
 		if (phys:IsValid()) then

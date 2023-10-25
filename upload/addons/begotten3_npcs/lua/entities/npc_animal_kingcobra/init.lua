@@ -24,6 +24,7 @@ ENT.MeleeAttackDamageDistance = 150 -- How far the damage goes
 
 ENT.TimeUntilMeleeAttackDamage = 1.4 -- This counted in seconds | This calculates the time until it hits something
 ENT.NextAnyAttackTime_Melee = 0.4 -- How much time until it can use a attack again? | Counted in Seconds
+ENT.ArmorPiercing = 0;
 ENT.MeleeAttackDamage = 30
 ENT.ImmuneDamagesTable = {DMG_POISON} 
 ENT.MeleeAttackDamageType = DMG_SLASH -- Type of Damage

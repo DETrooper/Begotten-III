@@ -546,10 +546,11 @@ else
 			
 						if (repairItemTable) then
 							if repairItemTable then
-								local replenishment = (repairItemTable.conditionReplenishment or 100) - ((100 - repairItemTable:GetCondition()) * (repairItemTable.conditionReplenishment / 100));
+								local conditionReplenishment = repairItemTable.conditionReplenishment or 100;
+								local replenishment = (conditionReplenishment) - (((100 - repairItemTable:GetCondition()) * (itemTable.repairCostModifier or 1)) * (conditionReplenishment / 100));
 								
 								itemTable:GiveCondition(math.min(replenishment, 100));
-								repairItemTable:TakeCondition((itemTable:GetCondition() - itemCondition) / (repairItemTable.conditionReplenishment / 100));
+								repairItemTable:TakeCondition((itemTable:GetCondition() - itemCondition) * (itemTable.repairCostModifier or 1) / (conditionReplenishment / 100));
 								
 								if repairItemTable:GetCondition() <= 0 then
 									player:TakeItem(repairItemTable, true);
@@ -560,7 +561,7 @@ else
 									Clockwork.inventory:Rebuild(player);
 								end
 							else
-								Clockwork.player:Notify(player, "You do not have an item you can repair this item with!");
+								Schema:EasyText(player, "chocolate", "You do not have an item you can repair this item with!");
 								return false;
 							end
 						end

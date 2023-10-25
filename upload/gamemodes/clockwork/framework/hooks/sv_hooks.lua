@@ -2770,10 +2770,11 @@ function GM:EntityHandleMenuOption(player, entity, option, arguments)
 					end
 		
 					if repairItemTable then
-						local replenishment = (repairItemTable.conditionReplenishment or 100) - ((100 - repairItemTable:GetCondition()) * (repairItemTable.conditionReplenishment / 100));
+						local conditionReplenishment = repairItemTable.conditionReplenishment or 100;
+						local replenishment = (conditionReplenishment) - (((100 - repairItemTable:GetCondition()) * (itemTable.repairCostModifier or 1)) * (conditionReplenishment / 100));
 						
 						itemTable:GiveCondition(math.min(replenishment, 100));
-						repairItemTable:TakeCondition((itemTable:GetCondition() - itemCondition) / (repairItemTable.conditionReplenishment / 100));
+						repairItemTable:TakeCondition((itemTable:GetCondition() - itemCondition) * (itemTable.repairCostModifier or 1) / (conditionReplenishment / 100));
 						
 						if repairItemTable:GetCondition() <= 0 then
 							player:TakeItem(repairItemTable, true);
@@ -3632,14 +3633,23 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 
 	if IsValid(attacker) then
 		if (attacker:IsPlayer() and damageInfo) then
-			if (IsValid(attacker:GetActiveWeapon())) then
-				local weapon = attacker:GetActiveWeapon()
-				local itemTable = item.GetByWeapon(weapon)
+			local weapon = attacker:GetActiveWeapon();
+			
+			if IsValid(inflictor) and (inflictor:IsWeapon() or inflictor.isJavelin) then
+				local itemTable = item.GetByWeapon(inflictor)
 
-				if (IsValid(weapon) and itemTable) then
+				if itemTable then
 					Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..itemTable.name..", killing them!")
 				else
-					Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..Clockwork.player:GetWeaponClass(attacker)..", killing them!")
+					Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..inflictor.PrintName or inflictor:GetClass()..", killing them!")
+				end
+			elseif IsValid(weapon) then
+				local itemTable = item.GetByWeapon(weapon)
+
+				if itemTable then
+					Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..itemTable.name..", killing them!")
+				else
+					Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..weapon.PrintName or weapon:GetClass()..", killing them!")
 				end
 			else
 				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name()..", killing them!")
@@ -3978,10 +3988,16 @@ function GM:EntityTakeDamage(entity, damageInfo)
 						if (attacker:IsPlayer()) then
 							local inflictor = damageInfo:GetInflictor();
 							
-							if IsValid(inflictor) then	
-								inflictor = inflictor:GetClass();
+							if IsValid(inflictor) and (inflictor:IsWeapon() or inflictor.isJavelin) then	
+								inflictor = inflictor.PrintName or inflictor:GetClass();
 							else
-								inflictor = Clockwork.player:GetWeaponClass(attacker, "an unknown weapon");
+								local activeWeapon = attacker:GetActiveWeapon();
+								
+								if IsValid(activeWeapon) then
+									inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
+								else
+									inflictor = "an unknown weapon";
+								end
 							end
 							
 							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..inflictor..", leaving them at "..player:Health().." health"..armor)
@@ -4039,10 +4055,16 @@ function GM:EntityTakeDamage(entity, damageInfo)
 						if (attacker:IsPlayer()) then
 							local inflictor = damageInfo:GetInflictor();
 							
-							if IsValid(inflictor) then
-								inflictor = inflictor:GetClass();
+							if IsValid(inflictor) and (inflictor:IsWeapon() or inflictor.isJavelin) then	
+								inflictor = inflictor.PrintName or inflictor:GetClass();
 							else
-								inflictor = Clockwork.player:GetWeaponClass(attacker, "an unknown weapon");
+								local activeWeapon = attacker:GetActiveWeapon();
+								
+								if IsValid(activeWeapon) then
+									inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
+								else
+									inflictor = "an unknown weapon";
+								end
 							end
 							
 							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..inflictor..", leaving them at "..player:Health().." health"..armor)

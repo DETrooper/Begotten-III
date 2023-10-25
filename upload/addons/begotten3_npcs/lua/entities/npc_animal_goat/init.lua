@@ -33,6 +33,7 @@ ENT.FootStepTimeWalk = 1 -- Next foot step sound when it is walking
 
 ENT.TimeUntilMeleeAttackDamage = 1.05 -- This counted in seconds | This calculates the time until it hits something
 ENT.NextAnyAttackTime_Melee = 1.6 -- How much time until it can use a attack again? | Counted in Seconds
+ENT.ArmorPiercing = 5;
 ENT.MeleeAttackDamage = 15
 ENT.MeleeAttackDamageType = DMG_CLUB -- Type of Damage
 ENT.HasDeathAnimation = false -- plays an animation when it dies
