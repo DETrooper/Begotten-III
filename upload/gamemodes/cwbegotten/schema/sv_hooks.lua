@@ -2720,6 +2720,14 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 				damageInfo:ScaleDamage(0.3);
 			end
 		end;
+	elseif (entity:IsNPC() or entity:IsNextBot()) then
+		if string.find(entity:GetClass(), "npc_animal") then
+			local attacker = damageInfo:GetAttacker();
+			
+			if attacker:IsPlayer() and attacker:GetSubfaction() == "Clan Gore" then
+				damageInfo:ScaleDamage(1.5);
+			end
+		end
 	end
 	
 	if (entity:GetNWBool("BIsCinderBlock")) then

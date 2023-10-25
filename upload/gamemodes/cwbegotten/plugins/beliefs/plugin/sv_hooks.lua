@@ -1464,6 +1464,13 @@ function cwBeliefs:PostPlayerCharacterLoaded(player)
 			self:ForceTakeBelief(player, "might");
 		end;
 		
+		if player:HasTrait("duelist") then
+			level = level + 3;
+			self:ForceTakeBelief(player, "fighter");
+			self:ForceTakeBelief(player, "parrying");
+			self:ForceTakeBelief(player, "deflection");
+		end
+		
 		if player:HasTrait("vigorous") then
 			level = level + 3;
 			self:ForceTakeBelief(player, "believers_perseverance");

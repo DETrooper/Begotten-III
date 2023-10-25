@@ -89,6 +89,20 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 		end
 	end
 	
+	if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+		local useSound = itemTable("useSound");
+		
+		if (useSound) then
+			if (type(useSound) == "table") then
+				player:EmitSound(useSound[math.random(1, #useSound)]);
+			else
+				player:EmitSound(useSound);
+			end;
+		elseif (useSound != false) then
+			player:EmitSound("begotten/items/first_aid.wav");
+		end;
+	end
+	
 	return Clockwork.equipment:UnequipItem(player, self);
 end;
 

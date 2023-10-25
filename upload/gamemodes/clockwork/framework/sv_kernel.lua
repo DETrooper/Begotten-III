@@ -972,7 +972,7 @@ function Clockwork.kernel:ForceUnequipItem(player, uniqueID, itemID, arguments)
 
 	if (itemTable and itemTable.OnPlayerUnequipped and itemTable.HasPlayerEquipped) then
 		if (itemTable:HasPlayerEquipped(player, arguments)) then
-			itemTable:OnPlayerUnequipped(player, arguments)
+			itemTable:OnPlayerUnequipped(player, arguments, true);
 		end
 	end
 end;

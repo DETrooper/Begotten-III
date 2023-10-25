@@ -18,7 +18,17 @@ local BRAWNY = Clockwork.trait:New()
 	BRAWNY.description = "Your character is strong in their physique, allowing them to wield great weapons of war. This trait automatically unlocks the first 3 beliefs on the right side of the 'Prowess' tree: 'Fighter', 'Strength', and 'Might'."
 	BRAWNY.points = 4
 	BRAWNY.disables = {"weak", "winded"}
+	BRAWNY.excludedsubfactions = {"Auxiliary", "Clan Crast"};
 Clockwork.trait:Register(BRAWNY)
+
+local DUELIST = Clockwork.trait:New()
+	DUELIST.uniqueID = "duelist"
+	DUELIST.name = "Duelist"
+	DUELIST.description = "Your character is renowned for their skill in fighting, able to deflect blows with ease. This trait automatically unlocks the following 3 beliefs in the 'Prowess' tree: 'Fighter', 'Deflection', and 'Parrying'."
+	DUELIST.points = 4
+	DUELIST.disables = {"clumsy", "weak"}
+	DUELIST.excludedsubfactions = {"Auxiliary", "Clan Crast"};
+Clockwork.trait:Register(DUELIST)
 
 local CANNIBAL = Clockwork.trait:New()
 	CANNIBAL.uniqueID = "cannibal"
@@ -32,9 +42,10 @@ Clockwork.trait:Register(CANNIBAL)
 local CLUMSY = Clockwork.trait:New()
 	CLUMSY.uniqueID = "clumsy"
 	CLUMSY.name = "Clumsy"
-	CLUMSY.description = "Your character is clumsy, a dolt, a fucking absent minded fool. You will trip and fall over at random."
+	CLUMSY.description = "Your character is clumsy, a dolt, a fucking absent minded fool. While running, you will trip and fall over at random."
 	CLUMSY.points = -6
 	CLUMSY.excludedfactions = {"Children of Satan"}
+	CLUMSY.disables = {"duelist"}
 Clockwork.trait:Register(CLUMSY)
 
 local CRIMINAL = Clockwork.trait:New()
@@ -127,6 +138,7 @@ local LEPER = Clockwork.trait:New()
 	LEPER.description = "Every waking moment of your character's very existence is hell, for they have been cursed to walk the Earth with a most unholy affliction: Leprosy. Their ravaged and deformed body leaves them a societal outcast and a target for persecution. Your character will suffer 50% more blood loss when bleeding and their repugnant affliction will be known to all who gaze upon them."
 	LEPER.points = -5
 	LEPER.disables = {"pilgrim"}
+	LEPER.excludedfactions = {"Gatekeeper", "Holy Hierarchy"};
 Clockwork.trait:Register(LEPER)
 
 local LITERATE = Clockwork.trait:New()
@@ -276,7 +288,7 @@ local WEAK = Clockwork.trait:New()
 	WEAK.name = "Weak"
 	WEAK.description = "Your character has a flimsy physique, and is unable to tolerate much pain. The 'Prowess' belief tree will be locked and unable to be progressed."
 	WEAK.points = -5
-	WEAK.disables = {"brawny", "miner", "logger", "vigorous"}
+	WEAK.disables = {"brawny", "duelist", "miner", "logger", "vigorous"}
 Clockwork.trait:Register(WEAK)
 
 local WINDED = Clockwork.trait:New()
