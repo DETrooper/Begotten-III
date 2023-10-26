@@ -201,6 +201,10 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 			local armorItem;
 			local isTrainingDummy = player.isTrainingDummy;
 			
+			if !player:IsPlayer() and !isTrainingDummy then
+				return;
+			end
+			
 			if hitGroup == HITGROUP_HEAD then
 				if isTrainingDummy then
 					armorItem = player.helmet;

@@ -933,7 +933,8 @@ local COMMAND = Clockwork.command:New("RavenSpeakClan");
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("RavenSpeakFaction");
-	COMMAND.tip = "Speak through your familiar, a Raven, to all members of the Goreic Warriors. You must be near the Great Tree in order to do this.";
+	COMMAND.tip = "Speak through your familiar, a Raven, to all members of the Goreic Warriors.";
+	--COMMAND.tip = "Speak through your familiar, a Raven, to all members of the Goreic Warriors. You must be near the Great Tree in order to do this.";
 	COMMAND.text = "<string Message>";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.arguments = 1;
@@ -945,7 +946,7 @@ local COMMAND = Clockwork.command:New("RavenSpeakFaction");
 		
 		if subfaction == "Clan Crast" then
 			if player:HasBelief("watchful_raven") then
-				if player:GetPos():WithinAABox(Vector(11622, -6836, 12500), Vector(8744, -10586, 11180)) then
+				--if player:GetPos():WithinAABox(Vector(11622, -6836, 12500), Vector(8744, -10586, 11180)) then
 					local message = "\""..table.concat(arguments, " ", 1).."\"";
 					
 					player:SendLua([[Clockwork.Client:EmitSound("npc/crow/die"..math.random(1, 2)..".wav", 70, 100)]]);
@@ -963,9 +964,9 @@ local COMMAND = Clockwork.command:New("RavenSpeakFaction");
 							end;
 						end;
 					end;
-				else
-					Schema:EasyText(player, "firebrick", "You must be near the Great Tree to send more ravens!");
-				end
+				--else
+					--Schema:EasyText(player, "firebrick", "You must be near the Great Tree to send more ravens!");
+				--end
 			else
 				Schema:EasyText(player, "firebrick", "You must have the 'Watchful is the Raven' belief to do this!");
 			end
