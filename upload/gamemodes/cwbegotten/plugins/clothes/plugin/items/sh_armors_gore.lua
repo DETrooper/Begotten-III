@@ -169,7 +169,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/gore_housecarl_armor.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 70;
+ITEM.protection = 75;
 ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.type = "chainmail";
@@ -195,9 +195,9 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.25, -- increases fall damage by 25%
 }
 
-ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
+ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.slashScale = 0.65; -- reduces slash damage by 35%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 35%
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "steel_chunks", "leather", "leather", "leather", "cloth"}};
@@ -523,7 +523,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/chosenarmor.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 80;
+ITEM.protection = 85;
 ITEM.weight = 9;
 ITEM.weightclass = "Heavy";
 ITEM.type = "chainmail";
