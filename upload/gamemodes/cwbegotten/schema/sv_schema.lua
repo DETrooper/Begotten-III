@@ -1489,7 +1489,7 @@ function Schema:BloodTestPlayer(player, bFalsePositives, bDetectImposters)
 		player:EmitSound("ambient/alarms/klaxon1.wav");
 		
 		return;
-	elseif cwCharacterNeeds and player:GetNeed("corruption", 0) >= 50 then
+	elseif cwCharacterNeeds and player:GetNeed("corruption", 0) >= 50 and subfaction ~= "Kinisger" then
 		Clockwork.chatBox:AddInTargetRadius(player, "it", "The blood test comes up red.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 		
 		player:EmitSound("ambient/alarms/klaxon1.wav");
