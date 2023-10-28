@@ -1219,7 +1219,7 @@ ITEM.conditionScale = 0.75
 ITEM.concealsFace = true;
 ITEM.hasHelmet = true;
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 75;
+ITEM.protection = 80;
 ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
@@ -1248,7 +1248,7 @@ ITEM.damageTypeScales = {
 
 ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
 ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.slashScale = 0.65; -- reduces slash damage by 35%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 
 ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "leather", "cloth", "cloth"}};
