@@ -32,7 +32,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("yellow_banner_of_quelling");
 	RITUAL.name = "(T3) Yellow Banner of Quelling";
 	RITUAL.description = "The children flee when they spot the invisible banner. Let the Satanic filth cower when they realize they are now chained to these mortal lands that they have blighted for so long. Performing this ritual prevents helljaunting in a large radius around you for 30 minutes. Be warned that the Children of Satan will be made aware of your presence!";
-	RITUAL.onerequiredbelief = {"watchful_raven", "emissary", "extinctionist"}; -- Tier III Family/Light Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "flagellant", "acolyte"}; -- Tier II Light/Family Ritual
 	
 	RITUAL.requirements = {"purifying_stone", "xolotl_catalyst", "down_catalyst"};
 
