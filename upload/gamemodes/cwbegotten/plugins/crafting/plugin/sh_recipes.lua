@@ -1871,7 +1871,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 3},
+			["steel_ingot"] = {amount = 4},
 			["fine_steel_ingot"] = {amount = 1},
 			["wood"] = {amount = 1},
 		};
