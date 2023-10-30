@@ -6611,7 +6611,7 @@ RECIPE:Register()
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 4},
 			["iron_ingot"] = {amount = 3},
-			["cloth"] = {amount = 2},
+			["leather"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["high_gatekeeper_heavy_plate"] = {amount = 1},
@@ -7023,9 +7023,9 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["scrap"] = {amount = 5},
-			["leather"] = {amount = 2},
-			["steel_ingot"] = {amount = 2},
+			["scrap"] = {amount = 2},
+			["leather"] = {amount = 4},
+			["steel_ingot"] = {amount = 3},
 		};
 		RECIPE.result = {
 			["wanderer_oppressor_armor"] = {amount = 1},
