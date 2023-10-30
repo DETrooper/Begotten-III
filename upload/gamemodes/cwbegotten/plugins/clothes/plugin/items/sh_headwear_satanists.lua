@@ -65,7 +65,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 1
 	ITEM.description = "A Gothic plate helmet belonging to the one and only Lord Vasso."
 	ITEM.requireFaith = {"Faith of the Dark"};
-	ITEM.requireFaction = {"Children of Satan"};
+	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 
 	ITEM.conditionScale = 0 -- item degrades 1.5x faster with damage related condition loss
@@ -96,7 +96,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 3
 	ITEM.headSuffix = "_satanist";
 	ITEM.description = "Once the dignified helmet of the White Sentinels and the sigil of House Philimaxio, this helmet has since been reforged in hellfire many times, only barely resembling its original form. Its existence is a disgrace to the Gatekeeper Order and an outright mockery of the Light."
-	ITEM.requireFaction = {"Children of Satan"};
+	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 
@@ -116,6 +117,6 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks"}};
 	
 ITEM:Register();

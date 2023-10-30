@@ -7379,9 +7379,9 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
-			["hellforged_steel_ingot"] = {amount = 3},
-			["steel_ingot"] = {amount = 3},
-			["cloth"] = {amount = 3},
+			["hellforged_steel_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 5},
+			["leather"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["dread_armor"] = {amount = 1},
@@ -7410,8 +7410,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
-			["hellforged_steel_ingot"] = {amount = 5},
-			["steel_ingot"] = {amount = 2},
+			["hellforged_steel_ingot"] = {amount = 4},
+			["fine_steel_ingot"] = {amount = 2},
 			["pentagram_catalyst"] = {amount = 2},
 		};
 		RECIPE.result = {
@@ -7470,8 +7470,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
-			["hellforged_steel_ingot"] = {amount = 3},
-			["steel_ingot"] = {amount = 2},
+			["hellforged_steel_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 3},
 			["leather"] = {amount = 1},
 			["hellplate_armor"] = {amount = 1},
 		};
@@ -7564,8 +7564,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
-			["hellforged_steel_ingot"] = {amount = 5},
-			["human_bone"] = {amount = 4},
+			["hellforged_steel_ingot"] = {amount = 6},
+			["human_bone"] = {amount = 3},
 		};
 		RECIPE.result = {
 			["wraith_armor"] = {amount = 1},
@@ -7625,7 +7625,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
-			["hellforged_steel_ingot"] = {amount = 2},
+			["hellforged_steel_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["hellplate_helmet"] = {amount = 1},
