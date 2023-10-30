@@ -1550,8 +1550,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 1},
-			["steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_claws_savageclaws"] = {amount = 1},
@@ -1581,7 +1580,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["shagalaxian_steel_ingot"] = {amount = 1},
-			["steel_ingot"] = {amount = 1},
+			["iron_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_claws_steelclaws"] = {amount = 1},
@@ -5751,7 +5750,7 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 4},
-			["leather"] = {amount = 3},
+			["leather"] = {amount = 2},
 			["cloth"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -5783,7 +5782,7 @@ RECIPE:Register()
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
 			["steel_ingot"] = {amount = 4},
-			["leather"] = {amount = 3},
+			["leather"] = {amount = 4},
 		};
 		RECIPE.result = {
 			["gore_lamellar"] = {amount = 1},
@@ -5935,7 +5934,7 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 4},
-			["leather"] = {amount = 3},
+			["leather"] = {amount = 2},
 			["cloth"] = {amount = 1},
 		};
 		RECIPE.result = {
