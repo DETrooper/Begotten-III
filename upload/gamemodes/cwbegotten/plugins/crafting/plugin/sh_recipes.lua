@@ -5578,7 +5578,7 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 4},
-			["leather"] = {amount = 3},
+			["leather"] = {amount = 2},
 			["cloth"] = {amount = 1},
 		};
 		RECIPE.result = {

@@ -65,7 +65,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 1
 	ITEM.description = "A Gothic plate helmet belonging to the one and only Lord Vasso."
 	ITEM.requireFaith = {"Faith of the Dark"};
-	ITEM.requireFaction = {"Children of Satan"};
+	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 
 	ITEM.conditionScale = 0 -- item degrades 1.5x faster with damage related condition loss
