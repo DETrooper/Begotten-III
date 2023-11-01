@@ -127,7 +127,7 @@ function cwBeliefs:AddEntityOutlines(outlines)
 					end
 				end
 
-				if isCOS then
+				if isCOS or self:HasBelief("embrace_the_darkness") then
 					if v:GetSharedVar("yellowBanner") == true then
 						if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= bannerDist) then
 							self:DrawPlayerOutline(v, outlines, Color(200, 200, 0, 255));

@@ -1326,7 +1326,7 @@ if CLIENT then
 			   
 				if (!self.WElements) then return end
 			   
-				if (!self.wRenderOrder) then
+				if (!self.wRenderOrder) or table.IsEmpty(self.wRenderOrder) then
  
 						self.wRenderOrder = {}
  
