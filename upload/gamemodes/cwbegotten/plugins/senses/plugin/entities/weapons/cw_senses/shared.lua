@@ -134,7 +134,22 @@ function SWEP:SecondaryAttack()
 						local curTime = CurTime();
 
 						if !self.Owner.cloakCooldown or self.Owner.cloakCooldown <= curTime then
-							self.Owner:Cloak();
+							local playerPos = self.Owner:GetPos();
+							local blockedCloak;
+							
+							for i, v in ipairs(_player.GetAll()) do
+								if v:GetSharedVar("yellowBanner") then
+									if (v:GetPos():Distance(playerPos) <= config.Get("talk_radius"):Get()) then
+										blockedCloak = true;
+									
+										break;
+									end
+								end
+							end
+						
+							if !blockedCloak then
+								self.Owner:Cloak();
+							end
 						else
 							Schema:EasyText(self.Owner, "chocolate", "You are covered in black powder and cannot cloak for "..math.Round(self.Owner.cloakCooldown - curTime).." seconds!");
 						end

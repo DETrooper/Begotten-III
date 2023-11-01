@@ -89,7 +89,22 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized)
 				if player:Crouching() and player:GetNetVar("kinisgerCloak") == true and !player.cwObserverMode then
 					if !player.wOSIsRolling or !player:wOSIsRolling() then
 						if !player.cloakCooldown or player.cloakCooldown <= curTime then
-							player:Cloak();
+							local playerPos = player:GetPos();
+							local blockedCloak;
+							
+							for i, v in ipairs(_player.GetAll()) do
+								if v:GetSharedVar("yellowBanner") then
+									if (v:GetPos():Distance(playerPos) <= config.Get("talk_radius"):Get()) then
+										blockedCloak = true;
+									
+										break;
+									end
+								end
+							end
+						
+							if !blockedCloak then
+								player:Cloak();
+							end
 						else
 							Schema:EasyText(self.Owner, "chocolate", "You are covered in black powder and cannot cloak for "..math.Round(player.cloakCooldown - curTime).." seconds!");
 						end

@@ -17,6 +17,7 @@ cwMusic.AmbientMusicTable = {
 		{track = "begotten3soundtrack/ambiencetower/ac-them.mp3", length = 306},
 		{track = "begotten3soundtrack/ambiencetower/ac-thevoid.mp3", length = 276, volume = 0.5},
 		{track = "begotten3soundtrack/ambiencetower/ct-wecannotescapethepast.mp3", length = 276, volume = 0.5},
+		{track = "begotten3soundtrack/ambiencetower/clb-conduct-edited.mp3", length = 242},
 		{track = "begotten3soundtrack/ambiencetower/clb-disembodied.mp3", length = 281},
 		{track = "begotten3soundtrack/ambiencetower/clb-eachnight.mp3", length = 411},
 		{track = "begotten3soundtrack/ambiencetower/mo-apostolikon.mp3", length = 585},

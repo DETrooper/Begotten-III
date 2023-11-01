@@ -90,27 +90,30 @@ function cwSaveItems:SaveItems()
 		end;]]--
 		
 		-- Don't save temporary items!
-		if not v.lifeTime and not v.noSave and not v:IsBroken() then
-			local physicsObject = v:GetPhysicsObject()
+		if not v.lifeTime and not v.noSave then
 			local itemTable = v:GetItemTable()
-			local bMoveable = false
+			
+			if itemTable then
+				if !itemTable:IsBroken() then
+					local physicsObject = v:GetPhysicsObject()
+					local bMoveable = false
 
-			if (IsValid(physicsObject)) then
-				bMoveable = physicsObject:IsMoveable()
-			end
-
-			if (itemTable) then
-				items[#items + 1] = {
-					key = Clockwork.entity:QueryProperty(v, "key"),
-					item = itemTable.uniqueID,
-					data = itemTable.data,
-					itemID = itemTable.itemID,
-					angles = v:GetAngles(),
-					uniqueID = Clockwork.entity:QueryProperty(v, "uniqueID"),
-					position = v:GetPos(),
-					isMoveable = bMoveable,
-					IsTrapItem = v.IsTrapItem
-				}
+					if (IsValid(physicsObject)) then
+						bMoveable = physicsObject:IsMoveable()
+					end
+					
+					items[#items + 1] = {
+						key = Clockwork.entity:QueryProperty(v, "key"),
+						item = itemTable.uniqueID,
+						data = itemTable.data,
+						itemID = itemTable.itemID,
+						angles = v:GetAngles(),
+						uniqueID = Clockwork.entity:QueryProperty(v, "uniqueID"),
+						position = v:GetPos(),
+						isMoveable = bMoveable,
+						IsTrapItem = v.IsTrapItem
+					}
+				end
 			end
 		end
 	end
