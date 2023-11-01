@@ -686,9 +686,7 @@ function PANEL:Init()
 	local clothes = self.customData.clothes;
 	local helmet = self.customData.helmet;
 	local weapons = self.customData.weapons;
-	local weapon1;
-	local weapon2;
-	local weapon3;
+	local attachments = {};
 	
 	if clothes then
 		if clothes.uniqueID and clothes.itemID then
@@ -754,7 +752,7 @@ function PANEL:Init()
 			end
 		end
 	end
-	
+
 	if weapons and not table.IsEmpty(weapons) then
 		for i = 1, #weapons do
 			local weapon = weapons[i];
@@ -762,53 +760,36 @@ function PANEL:Init()
 			if weapon and weapon.uniqueID and weapon.itemID then
 				local item = Clockwork.item:FindByID(weapon.uniqueID, weapon.itemID);
 				
-				if item then
-					if i == 1 then
-						weapon1 = {};
+				if item and item.isAttachment then
+					local attachment = {};
+					local attachmentBone = item.attachmentBone;
+					local offsetAngle = item.attachmentOffsetAngles;
+					local offsetVector = item.attachmentOffsetVector;
+					
+					if item.slots and i > #item.slots then
+						-- Offhand
+						if string.find(attachmentBone, "_L_") then
+							attachmentBone = string.gsub(attachmentBone, "_L_", "_R_");
+						else
+							attachmentBone = string.gsub(attachmentBone, "_R_", "_L_");
+						end
 						
-						if item.isAttachment then
-							weapon1.attachmentInfo = {};
-							weapon1.attachmentInfo.attachmentModel = item.model;
-							weapon1.attachmentInfo.attachmentBone = item.attachmentBone;
-							weapon1.attachmentInfo.attachmentOffsetAngles = item.attachmentOffsetAngles;
-							weapon1.attachmentInfo.attachmentOffsetVector = item.attachmentOffsetVector;
-							weapon1.attachmentInfo.attachmentSkin = item.attachmentSkin;
-							weapon1.attachmentInfo.bodygroup0 = item.bodygroup0;
-							weapon1.attachmentInfo.bodygroup1 = item.bodygroup1;
-							weapon1.attachmentInfo.bodygroup2 = item.bodygroup2;
-							weapon1.attachmentInfo.bodygroup3 = item.bodygroup3;
-						end
-					elseif i == 2 then
-						weapon2 = {};
-
-						if item.isAttachment then
-							weapon2.attachmentInfo = {};
-							weapon2.attachmentInfo.attachmentModel = item.model;
-							weapon2.attachmentInfo.attachmentBone = item.attachmentBone;
-							weapon2.attachmentInfo.attachmentOffsetAngles = item.attachmentOffsetAngles;
-							weapon2.attachmentInfo.attachmentOffsetVector = item.attachmentOffsetVector;
-							weapon2.attachmentInfo.attachmentSkin = item.attachmentSkin;
-							weapon2.attachmentInfo.bodygroup0 = item.bodygroup0;
-							weapon2.attachmentInfo.bodygroup1 = item.bodygroup1;
-							weapon2.attachmentInfo.bodygroup2 = item.bodygroup2;
-							weapon2.attachmentInfo.bodygroup3 = item.bodygroup3;
-						end
-					elseif i == 3 then
-						weapon3 = {};
-						
-						if item.isAttachment then
-							weapon3.attachmentInfo = {};
-							weapon3.attachmentInfo.attachmentModel = item.model;
-							weapon3.attachmentInfo.attachmentBone = item.attachmentBone;
-							weapon3.attachmentInfo.attachmentOffsetAngles = item.attachmentOffsetAngles;
-							weapon3.attachmentInfo.attachmentOffsetVector = item.attachmentOffsetVector;
-							weapon3.attachmentInfo.attachmentSkin = item.attachmentSkin;
-							weapon3.attachmentInfo.bodygroup0 = item.bodygroup0;
-							weapon3.attachmentInfo.bodygroup1 = item.bodygroup1;
-							weapon3.attachmentInfo.bodygroup2 = item.bodygroup2;
-							weapon3.attachmentInfo.bodygroup3 = item.bodygroup3;
-						end
+						offsetVector = Vector(-offsetVector.x, offsetVector.y, offsetVector.z);
+						offsetAngle = Angle(-offsetAngle.pitch, offsetAngle.yaw, offsetAngle.roll);
 					end
+				
+					attachment.attachmentInfo = {};
+					attachment.attachmentInfo.attachmentModel = item.model;
+					attachment.attachmentInfo.attachmentBone = attachmentBone;
+					attachment.attachmentInfo.attachmentOffsetAngles = offsetAngle;
+					attachment.attachmentInfo.attachmentOffsetVector = offsetVector;
+					attachment.attachmentInfo.attachmentSkin = item.attachmentSkin;
+					attachment.attachmentInfo.bodygroup0 = item.bodygroup0;
+					attachment.attachmentInfo.bodygroup1 = item.bodygroup1;
+					attachment.attachmentInfo.bodygroup2 = item.bodygroup2;
+					attachment.attachmentInfo.bodygroup3 = item.bodygroup3;
+					
+					table.insert(attachments, attachment);
 				end
 			end
 		end
@@ -843,19 +824,8 @@ function PANEL:Init()
 	self.characterModel = vgui.Create("cwCharacterModel", self);
 	self.characterModel:SetPos(4, 70);
 	self.characterModel:SetSize(366, 526);
-	
-	if weapon1 then
-		self.characterModel.weapon1 = weapon1;
-	end
-	
-	if weapon2 then
-		self.characterModel.weapon2 = weapon2;
-	end
-	
-	if weapon3 then
-		self.characterModel.weapon3 = weapon3;
-	end
-	
+
+	self.characterModel.attachments = attachments;
 	self.characterModel:SetModelNew(model);
 	
 	if IsValid(self.characterModel.modelPanel.Entity) then
@@ -1077,16 +1047,12 @@ function PANEL:Init()
 			modelPanel.headModel:DrawModel();
 		end
 		
-		if modelPanelParent.weapon1Entity and IsValid(modelPanelParent.weapon1Entity) then
-			modelPanelParent.weapon1Entity:DrawModel();
-		end
-		
-		if modelPanelParent.weapon2Entity and IsValid(modelPanelParent.weapon2Entity) then
-			modelPanelParent.weapon2Entity:DrawModel();
-		end
-		
-		if modelPanelParent.weapon3Entity and IsValid(modelPanelParent.weapon3Entity) then
-			modelPanelParent.weapon3Entity:DrawModel();
+		if modelPanelParent.attachmentEntities then
+			for i, v in ipairs(modelPanelParent.attachmentEntities) do 
+				if IsValid(v) then
+					v:DrawModel();
+				end
+			end
 		end
 		
 		render.SetScissorRect( 0, 0, 0, 0, false )
@@ -1097,72 +1063,32 @@ function PANEL:Init()
 		local modelPanelParent = modelPanel:GetParent();
 		
 		modelPanel:RunAnimation();
-		
-		if modelPanelParent.weapon1 and modelPanelParent.weapon1Entity and IsValid(modelPanelParent.weapon1Entity) then
-			local attachmentInfo = modelPanelParent.weapon1.attachmentInfo;
-			
-			if attachmentInfo then
-				local bone = modelPanel.Entity:LookupBone(attachmentInfo.attachmentBone);
-				
-				if bone then
-					local position, angles = modelPanel.Entity:GetBonePosition(bone);
-					
-					local x = angles:Up() * attachmentInfo.attachmentOffsetVector.x
-					local y = angles:Right() * attachmentInfo.attachmentOffsetVector.y
-					local z = angles:Forward() * attachmentInfo.attachmentOffsetVector.z
 
-					angles:RotateAroundAxis(angles:Forward(), attachmentInfo.attachmentOffsetAngles.p)
-					angles:RotateAroundAxis(angles:Right(), attachmentInfo.attachmentOffsetAngles.y)
-					angles:RotateAroundAxis(angles:Up(), attachmentInfo.attachmentOffsetAngles.r)
-					
-					modelPanelParent.weapon1Entity:SetPos(position + x + y + z);
-					modelPanelParent.weapon1Entity:SetAngles(angles);
-				end
-			end
-		end
-		
-		if modelPanelParent.weapon2 and modelPanelParent.weapon2Entity and IsValid(modelPanelParent.weapon2Entity) then
-			local attachmentInfo = modelPanelParent.weapon2.attachmentInfo;
-			
-			if attachmentInfo then
-				local bone = modelPanel.Entity:LookupBone(attachmentInfo.attachmentBone);
+		if modelPanelParent.attachments then
+			for i, v in ipairs(modelPanelParent.attachments) do 
+				local attachmentInfo = v.attachmentInfo;
 				
-				if bone then
-					local position, angles = modelPanel.Entity:GetBonePosition(bone);
+				if attachmentInfo then
+					local bone = modelPanel.Entity:LookupBone(attachmentInfo.attachmentBone);
 					
-					local x = angles:Up() * attachmentInfo.attachmentOffsetVector.x
-					local y = angles:Right() * attachmentInfo.attachmentOffsetVector.y
-					local z = angles:Forward() * attachmentInfo.attachmentOffsetVector.z
+					if bone then
+						local position, angles = modelPanel.Entity:GetBonePosition(bone);
+						
+						local x = angles:Up() * attachmentInfo.attachmentOffsetVector.x
+						local y = angles:Right() * attachmentInfo.attachmentOffsetVector.y
+						local z = angles:Forward() * attachmentInfo.attachmentOffsetVector.z
 
-					angles:RotateAroundAxis(angles:Forward(), attachmentInfo.attachmentOffsetAngles.p)
-					angles:RotateAroundAxis(angles:Right(), attachmentInfo.attachmentOffsetAngles.y)
-					angles:RotateAroundAxis(angles:Up(), attachmentInfo.attachmentOffsetAngles.r)
-					
-					modelPanelParent.weapon2Entity:SetPos(position + x + y + z);
-					modelPanelParent.weapon2Entity:SetAngles(angles);
-				end
-			end
-		end
-		
-		if modelPanelParent.weapon3 and modelPanelParent.weapon3Entity and IsValid(modelPanelParent.weapon3Entity) then
-			local attachmentInfo = modelPanelParent.weapon3.attachmentInfo;
-			
-			if attachmentInfo then
-				local bone = modelPanel.Entity:LookupBone(attachmentInfo.attachmentBone);
-				
-				if bone then
-					local position, angles = modelPanel.Entity:GetBonePosition(bone);
-					
-					local x = angles:Up() * attachmentInfo.attachmentOffsetVector.x
-					local y = angles:Right() * attachmentInfo.attachmentOffsetVector.y
-					local z = angles:Forward() * attachmentInfo.attachmentOffsetVector.z
-
-					angles:RotateAroundAxis(angles:Forward(), attachmentInfo.attachmentOffsetAngles.p)
-					angles:RotateAroundAxis(angles:Right(), attachmentInfo.attachmentOffsetAngles.y)
-					angles:RotateAroundAxis(angles:Up(), attachmentInfo.attachmentOffsetAngles.r)
-					
-					modelPanelParent.weapon3Entity:SetPos(position + x + y + z);
-					modelPanelParent.weapon3Entity:SetAngles(angles);
+						angles:RotateAroundAxis(angles:Forward(), attachmentInfo.attachmentOffsetAngles.p)
+						angles:RotateAroundAxis(angles:Right(), attachmentInfo.attachmentOffsetAngles.y)
+						angles:RotateAroundAxis(angles:Up(), attachmentInfo.attachmentOffsetAngles.r)
+						
+						local attachmentEnt = modelPanelParent.attachmentEntities[i];
+						
+						if IsValid(attachmentEnt) then
+							attachmentEnt:SetPos(position + x + y + z);
+							attachmentEnt:SetAngles(angles);
+						end
+					end
 				end
 			end
 		end
@@ -1186,17 +1112,13 @@ function PANEL:FadeOut(speed, Callback)
 					panel.modelPanel.headModel:Remove();
 				end
 				
-				if IsValid(panel.weapon1Entity) then
-					panel.weapon1Entity:Remove();
-				end;
-				
-				if IsValid(panel.weapon2Entity) then
-					panel.weapon2Entity:Remove();
-				end;
-
-				if IsValid(panel.weapon3Entity) then
-					panel.weapon3Entity:Remove();
-				end;
+				if self.attachmentEntities then
+					for i, v in ipairs(panel.attachmentEntities) do
+						if IsValid(v) then
+							v:Remove();
+						end;
+					end
+				end
 			end;
 			
 			if (animation.Finished and Callback) then
@@ -1223,17 +1145,13 @@ function PANEL:FadeOut(speed, Callback)
 			self.modelPanel.headModel:Remove();
 		end
 		
-		if IsValid(self.weapon1Entity) then
-			self.weapon1Entity:Remove();
-		end;
-		
-		if IsValid(self.weapon2Entity) then
-			self.weapon2Entity:Remove();
-		end;
-
-		if IsValid(self.weapon3Entity) then
-			self.weapon3Entity:Remove();
-		end;
+		if self.attachmentEntities then
+			for i, v in ipairs(self.attachmentEntities) do
+				if IsValid(v) then
+					v:Remove();
+				end;
+			end;
+		end
 		
 		if (Callback) then
 			Callback();
@@ -1325,16 +1243,10 @@ function PANEL:OnRemove()
 		self.modelPanel.headModel:Remove();
 	end
 
-	if IsValid(self.weapon1Entity) then
-		self.weapon1Entity:Remove();
-	end;
-	
-	if IsValid(self.weapon2Entity) then
-		self.weapon2Entity:Remove();
-	end;
-
-	if IsValid(self.weapon3Entity) then
-		self.weapon3Entity:Remove();
+	for i, v in ipairs(self.attachmentEntities) do
+		if IsValid(v) then
+			v:Remove();
+		end;
 	end;
 end
 
@@ -1448,158 +1360,51 @@ function PANEL:SetModelNew(model, skin)
 		self.modelPanel.Entity:SetCycle(math.Rand(0, 1)); -- Desynchronize animations so all the chars don't sway the same way.
 		self.modelPanel.Entity.noDelete = true;
 		
-		if IsValid(self.weapon1Entity) then
-			self.weapon1Entity:Remove();
-		end;
-		
-		if IsValid(self.weapon2Entity) then
-			self.weapon2Entity:Remove();
-		end;
-
-		if IsValid(self.weapon3Entity) then
-			self.weapon3Entity:Remove();
-		end;
-		
-		if self.weapon1 and self.weapon1.attachmentInfo then
-			local attachmentInfo = self.weapon1.attachmentInfo;
-			
-			if attachmentInfo then
-				self.weapon1Entity = ClientsideModel(attachmentInfo.attachmentModel, RENDER_GROUP_OPAQUE_ENTITY);
-				
-				if IsValid(self.weapon1Entity) then
-					self.weapon1Entity:SetParent(self.modelPanel.Entity);
-					self.weapon1Entity:AddEffects(EF_BONEMERGE);
-					self.weapon1Entity:SetNoDraw(true);
-					self.weapon1Entity.noDelete = true;
-					
-					if attachmentInfo.attachmentSkin then
-						self.weapon1Entity:SetSkin(attachmentInfo.attachmentSkin);
-					end
-					
-					if attachmentInfo.bodygroup0 then
-						self.weapon1Entity:SetBodygroup(0, attachmentInfo.bodygroup0 - 1);
-					end
-					
-					if attachmentInfo.bodygroup1 then
-						self.weapon1Entity:SetBodygroup(0, attachmentInfo.bodygroup1 - 1);
-					end
-					
-					if attachmentInfo.bodygroup2 then
-						self.weapon1Entity:SetBodygroup(1, attachmentInfo.bodygroup2 - 1);
-					end
-					
-					if attachmentInfo.bodygroup3 then
-						self.weapon1Entity:SetBodygroup(2, attachmentInfo.bodygroup3 - 1);
-					end
-					
-					--[[local position, angles = self.modelPanel.Entity:GetBonePosition(self.modelPanel.Entity:LookupBone(attachmentInfo.attachmentBone));
-					
-					local x = angles:Up() * attachmentInfo.attachmentOffsetVector.x
-					local y = angles:Right() * attachmentInfo.attachmentOffsetVector.y
-					local z = angles:Forward() * attachmentInfo.attachmentOffsetVector.z
-
-					angles:RotateAroundAxis(angles:Forward(), attachmentInfo.attachmentOffsetAngles.p)
-					angles:RotateAroundAxis(angles:Right(), attachmentInfo.attachmentOffsetAngles.y)
-					angles:RotateAroundAxis(angles:Up(), attachmentInfo.attachmentOffsetAngles.r)
-					
-					self.weapon1Entity:SetPos(position + x + y + z);
-					self.weapon1Entity:SetAngles(angles);]]--
-				end
-			end
+		if !self.attachmentEntities then
+			self.attachmentEntities = {};
 		end
 		
-		if self.weapon2 then
-			local attachmentInfo = self.weapon2.attachmentInfo;
+		for i, v in ipairs(self.attachmentEntities) do
+			if IsValid(v) then
+				v:Remove();
+			end;
+		end;
 			
-			if attachmentInfo then
-				self.weapon2Entity = ClientsideModel(attachmentInfo.attachmentModel, RENDER_GROUP_OPAQUE_ENTITY);
+		if self.attachments then
+			for i, v in ipairs(self.attachments) do
+				local attachmentInfo = v.attachmentInfo;
 				
-				if IsValid(self.weapon2Entity) then
-					self.weapon2Entity:SetParent(self.modelPanel.Entity);
-					self.weapon2Entity:AddEffects(EF_BONEMERGE);
-					self.weapon2Entity:SetNoDraw(true);
-					self.weapon2Entity.noDelete = true;
+				if attachmentInfo then
+					local attachmentEntity = ClientsideModel(attachmentInfo.attachmentModel, RENDER_GROUP_OPAQUE_ENTITY);
 					
-					if attachmentInfo.attachmentSkin then
-						self.weapon2Entity:SetSkin(attachmentInfo.attachmentSkin);
+					if IsValid(attachmentEntity) then
+						attachmentEntity:SetParent(self.modelPanel.Entity);
+						attachmentEntity:AddEffects(EF_BONEMERGE);
+						attachmentEntity:SetNoDraw(true);
+						attachmentEntity.noDelete = true;
+						
+						if attachmentInfo.attachmentSkin then
+							attachmentEntity:SetSkin(attachmentInfo.attachmentSkin);
+						end
+						
+						if attachmentInfo.bodygroup0 then
+							attachmentEntity:SetBodygroup(0, attachmentInfo.bodygroup0 - 1);
+						end
+						
+						if attachmentInfo.bodygroup1 then
+							attachmentEntity:SetBodygroup(0, attachmentInfo.bodygroup1 - 1);
+						end
+						
+						if attachmentInfo.bodygroup2 then
+							attachmentEntity:SetBodygroup(1, attachmentInfo.bodygroup2 - 1);
+						end
+						
+						if attachmentInfo.bodygroup3 then
+							attachmentEntity:SetBodygroup(2, attachmentInfo.bodygroup3 - 1);
+						end
+						
+						self.attachmentEntities[i] = attachmentEntity;
 					end
-					
-					if attachmentInfo.bodygroup0 then
-						self.weapon2Entity:SetBodygroup(0, attachmentInfo.bodygroup0 - 1);
-					end
-					
-					if attachmentInfo.bodygroup1 then
-						self.weapon2Entity:SetBodygroup(0, attachmentInfo.bodygroup1 - 1);
-					end
-					
-					if attachmentInfo.bodygroup2 then
-						self.weapon2Entity:SetBodygroup(1, attachmentInfo.bodygroup2 - 1);
-					end
-					
-					if attachmentInfo.bodygroup3 then
-						self.weapon2Entity:SetBodygroup(2, attachmentInfo.bodygroup3 - 1);
-					end
-					
-					--[[local position, angles = self.modelPanel.Entity:GetBonePosition(self.modelPanel.Entity:LookupBone(attachmentInfo.attachmentBone));
-					
-					local x = angles:Up() * attachmentInfo.attachmentOffsetVector.x
-					local y = angles:Right() * attachmentInfo.attachmentOffsetVector.y
-					local z = angles:Forward() * attachmentInfo.attachmentOffsetVector.z
-
-					angles:RotateAroundAxis(angles:Forward(), attachmentInfo.attachmentOffsetAngles.p)
-					angles:RotateAroundAxis(angles:Right(), attachmentInfo.attachmentOffsetAngles.y)
-					angles:RotateAroundAxis(angles:Up(), attachmentInfo.attachmentOffsetAngles.r)
-					
-					self.weapon2Entity:SetPos(position + x + y + z);
-					self.weapon2Entity:SetAngles(angles);]]--
-				end
-			end
-		end
-		
-		if self.weapon3 then
-			local attachmentInfo = self.weapon3.attachmentInfo;
-			
-			if attachmentInfo then
-				self.weapon3Entity = ClientsideModel(attachmentInfo.attachmentModel, RENDER_GROUP_OPAQUE_ENTITY);
-				
-				if IsValid(self.weapon3Entity) then
-					self.weapon3Entity:SetParent(self.modelPanel.Entity);
-					self.weapon3Entity:AddEffects(EF_BONEMERGE);
-					self.weapon3Entity:SetNoDraw(true);
-					self.weapon3Entity.noDelete = true;
-					
-					if attachmentInfo.attachmentSkin then
-						self.weapon3Entity:SetSkin(attachmentInfo.attachmentSkin);
-					end
-					
-					if attachmentInfo.bodygroup0 then
-						self.weapon3Entity:SetBodygroup(0, attachmentInfo.bodygroup0 - 1);
-					end
-					
-					if attachmentInfo.bodygroup1 then
-						self.weapon3Entity:SetBodygroup(0, attachmentInfo.bodygroup1 - 1);
-					end
-					
-					if attachmentInfo.bodygroup2 then
-						self.weapon3Entity:SetBodygroup(1, attachmentInfo.bodygroup2 - 1);
-					end
-					
-					if attachmentInfo.bodygroup3 then
-						self.weapon3Entity:SetBodygroup(2, attachmentInfo.bodygroup3 - 1);
-					end
-					
-					--[[local position, angles = self.modelPanel.Entity:GetBonePosition(self.modelPanel.Entity:LookupBone(attachmentInfo.attachmentBone));
-					
-					local x = angles:Up() * attachmentInfo.attachmentOffsetVector.x
-					local y = angles:Right() * attachmentInfo.attachmentOffsetVector.y
-					local z = angles:Forward() * attachmentInfo.attachmentOffsetVector.z
-
-					angles:RotateAroundAxis(angles:Forward(), attachmentInfo.attachmentOffsetAngles.p)
-					angles:RotateAroundAxis(angles:Right(), attachmentInfo.attachmentOffsetAngles.y)
-					angles:RotateAroundAxis(angles:Up(), attachmentInfo.attachmentOffsetAngles.r)
-					
-					self.weapon3Entity:SetPos(position + x + y + z);
-					self.weapon3Entity:SetAngles(angles);]]--
 				end
 			end
 		end

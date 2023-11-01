@@ -128,10 +128,12 @@ if SERVER then
 		if isstring(itemTable) then
 			for k, v in pairs(player.equipmentSlots) do
 				if v and v.uniqueID == itemTable then
-					itemTable = v;
-					slot = k;
-					
-					break;
+					if !slot or slot == k then
+						itemTable = v;
+						slot = k;
+						
+						break;
+					end
 				end
 			end
 
@@ -141,6 +143,8 @@ if SERVER then
 		end
 		
 		if !slot then
+			local canUseOffhand = itemTable.canUseOffhand;
+			
 			for i, v in ipairs(itemTable.slots) do
 				local equipmentSlot = player.equipmentSlots[v];
 				
@@ -148,6 +152,16 @@ if SERVER then
 					slot = v;
 					
 					break;
+				end
+				
+				if canUseOffhand then
+					equipmentSlot = player.equipmentSlots[v.."Offhand"];
+					
+					if equipmentSlot and equipmentSlot.itemID == itemTable.itemID then
+						slot = v.."Offhand";
+						
+						break;
+					end
 				end
 			end
 			
@@ -163,30 +177,52 @@ if SERVER then
 		end
 		
 		player.equipmentSlots[slot] = nil;
+		
+		local players = _player.GetAll();
 					
 		-- Rearrange the slots.
 		if slot ~= itemTable.slots[#itemTable.slots] then
 			for i, v in ipairs(itemTable.slots) do
 				if i > 1 and player.equipmentSlots[v] then
-					if !player.equipmentSlots[itemTable.slots[i - 1]] then
-						player.equipmentSlots[itemTable.slots[i - 1]] = table.Copy(player.equipmentSlots[v]);
+					local emptySlot = itemTable.slots[i - 1];
+					
+					if !player.equipmentSlots[emptySlot] then
+						player.equipmentSlots[emptySlot] = table.Copy(player.equipmentSlots[v]);
+						
+						if player.equipmentSlots[v.."Offhand"] then
+							player.equipmentSlots[emptySlot.."Offhand"] = table.Copy(player.equipmentSlots[v.."Offhand"]);
+							player.equipmentSlots[v.."Offhand"] = nil;
+						end
 						
 						player.equipmentSlots[v] = nil;
 					end
 				end
 			end
+		end
+		
+		-- Network the slots.
+		for i, v in ipairs(itemTable.slots) do
+			local itemTable = player.equipmentSlots[v];
 			
-			for i, v in ipairs(itemTable.slots) do
-				local itemTable = player.equipmentSlots[v];
+			if itemTable then
+				netstream.Start(players, "UpdateEquipment", {player, v, itemTable.itemID});
 				
-				if itemTable then
-					netstream.Start(_player.GetAll(), "UpdateEquipment", {player, v, itemTable.itemID});
-				else
-					netstream.Start(_player.GetAll(), "UpdateEquipment", {player, v});
+				if v == "Primary" or v == "Secondary" or v == "Tertiary" then
+					local offhandItemTable = player.equipmentSlots[v.."Offhand"];
+					
+					if offhandItemTable then
+						netstream.Start(players, "UpdateEquipment", {player, v.."Offhand", offhandItemTable.itemID});
+					else
+						netstream.Start(players, "UpdateEquipment", {player, v.."Offhand"});
+					end
+				end
+			else
+				netstream.Start(players, "UpdateEquipment", {player, v});
+				
+				if v == "Primary" or v == "Secondary" or v == "Tertiary" then
+					netstream.Start(players, "UpdateEquipment", {player, v.."Offhand"});
 				end
 			end
-		else
-			netstream.Start(_player.GetAll(), "UpdateEquipment", {player, slot});
 		end
 		
 		if itemTable.equipmentSaveString then
@@ -210,6 +246,17 @@ if SERVER then
 						dataTab.itemID = equipmentItemTable.itemID;
 						
 						equipmentData[i] = dataTab;
+					end
+					
+					local offhandItemTable = player.equipmentSlots[v.."Offhand"];
+
+					if offhandItemTable then
+						local dataTab = {};
+						
+						dataTab.uniqueID = offhandItemTable.uniqueID;
+						dataTab.itemID = offhandItemTable.itemID;
+						
+						equipmentData[i + #itemTable.slots] = dataTab;
 					end
 				end
 				
@@ -306,6 +353,33 @@ function playerMeta:GetWeaponsEquipped()
 	return weaponsTab;
 end
 
+local weaponMeta = FindMetaTable("Weapon")
+
+function weaponMeta:GetShield()
+	local shield = self:GetNWString("activeShield");
+	
+	if shield and shield:len() > 0 then
+		local shieldTable = GetTable(shield);
+		
+		if shieldTable then
+			return shieldTable;
+		end
+	end
+end
+
+
+function weaponMeta:GetOffhand()
+	local offhand = self:GetNWString("activeOffhand");
+	
+	if offhand and offhand:len() > 0 then
+		local offhandWeapon = weapons.GetStored(offhand);
+		
+		if offhandWeapon then
+			return offhandWeapon;
+		end
+	end
+end
+
 if SERVER then
 	hook.Add("PlayerCharacterLoaded", "PlayerCharacterLoadedEquipment", function(player)
 		if !player.equipmentSynced then
@@ -316,30 +390,47 @@ if SERVER then
 	end)
 
 	hook.Add("PlayerGiveWeapons", "PlayerGiveWeaponsEquipment", function(player)
+		local charmData = player:GetCharacterData("charms");
+		local weaponData = player:GetCharacterData("weapons");
+	
 		player.equipmentSlots = {
 			["Helms"] = GetItemFromData(player, player:GetCharacterData("helmet")),
 			["Armor"] = GetItemFromData(player, player:GetCharacterData("clothes")),
 			["Backpacks"] = GetItemFromData(player, player:GetCharacterData("backpack")),
-			["Charm1"] = GetItemFromData(player, player:GetCharacterData("charms"), 1),
-			["Charm2"] = GetItemFromData(player, player:GetCharacterData("charms"), 2),
-			["Primary"] = GetItemFromData(player, player:GetCharacterData("weapons"), 1),
-			["Secondary"] = GetItemFromData(player, player:GetCharacterData("weapons"), 2),
-			["Tertiary"] = GetItemFromData(player, player:GetCharacterData("weapons"), 3),
+			["Charm1"] = GetItemFromData(player, charmData, 1),
+			["Charm2"] = GetItemFromData(player, charmData, 2),
+			["Primary"] = GetItemFromData(player, weaponData, 1),
+			["PrimaryOffhand"] = GetItemFromData(player, weaponData, 4),
+			["Secondary"] = GetItemFromData(player, weaponData, 2),
+			["SecondaryOffhand"] = GetItemFromData(player, weaponData, 5),
+			["Tertiary"] = GetItemFromData(player, weaponData, 3),
+			["TertiaryOffhand"] = GetItemFromData(player, weaponData, 6),
 		};
 		
-		local primary = player.equipmentSlots["Primary"]
+		local primary = player.equipmentSlots["Primary"];
+		local primaryOffhand = player.equipmentSlots["PrimaryOffhand"];
 		local secondary = player.equipmentSlots["Secondary"];
+		local secondaryOffhand = player.equipmentSlots["SecondaryOffhand"];
 		local tertiary = player.equipmentSlots["Tertiary"];
+		local tertiaryOffhand = player.equipmentSlots["TertiaryOffhand"];
 
 		if primary and primary.weaponClass then
-			player:Give(primary.weaponClass, primary);
+			local weapon = player:Give(primary.weaponClass, primary);
+			
+			if weapon and primaryOffhand and primaryOffhand.weaponClass then
+				weapon:EquipOffhand(primaryOffhand.weaponClass);
+			end
 		end
 		
 		if secondary then 
 			if secondary.weaponClass then
-				player:Give(secondary.weaponClass, secondary);
+				local weapon = player:Give(secondary.weaponClass, secondary);
+				
+				if weapon and secondaryOffhand and secondaryOffhand.weaponClass then
+					weapon:EquipOffhand(secondaryOffhand.weaponClass);
+				end
 			elseif secondary.category == "Shields" then
-				if primary and primary.canUseShields then
+				if primary and primary.canUseShields and !primaryOffhand then
 					local weapon = player:GetWeapon(primary.weaponClass);
 					
 					if IsValid(weapon) then
@@ -351,15 +442,19 @@ if SERVER then
 		
 		if tertiary then 
 			if tertiary.weaponClass then
-				player:Give(tertiary.weaponClass, tertiary);
+				local weapon = player:Give(tertiary.weaponClass, tertiary);
+				
+				if weapon and tertiaryOffhand and tertiaryOffhand.weaponClass then
+					weapon:EquipOffhand(tertiaryOffhand.weaponClass);
+				end
 			elseif tertiary.category == "Shields" then
-				if primary and primary.canUseShields then
+				if primary and primary.canUseShields and !primaryOffhand then
 					local weapon = player:GetWeapon(primary.weaponClass);
 					
 					if IsValid(weapon) then
 						weapon:EquipShield(tertiary.uniqueID);
 					end
-				elseif secondary and secondary.canUseShields then
+				elseif secondary and secondary.canUseShields and !secondaryOffhand then
 					local weapon = player:GetWeapon(secondary.weaponClass);
 					
 					if IsValid(weapon) then
@@ -388,10 +483,23 @@ if SERVER then
 	end);
 else
 	-- A function to get the entity's real position.
-	local function GetRealPosition(entity, player, itemTable)
+	local function GetRealPosition(entity, player, itemTable, bOffhand)
+		local attachmentBone = itemTable.attachmentBone; 
 		local offsetVector = itemTable.attachmentOffsetVector or Vector(0, 0, 0);
 		local offsetAngle = itemTable.attachmentOffsetAngles or Angle(0, 0, 0);
-		local bone = player:LookupBone(itemTable.attachmentBone);
+		
+		if bOffhand then
+			if string.find(attachmentBone, "_L_") then
+				attachmentBone = string.gsub(attachmentBone, "_L_", "_R_");
+			else
+				attachmentBone = string.gsub(attachmentBone, "_R_", "_L_");
+			end
+			
+			offsetVector = Vector(-offsetVector.x, offsetVector.y, offsetVector.z);
+			offsetAngle = Angle(-offsetAngle.pitch, offsetAngle.yaw, offsetAngle.roll);
+		end
+		
+		local bone = player:LookupBone(attachmentBone);
 		
 		if (offsetVector and offsetAngle and bone) then
 			if itemTable.category == "Shields" then
@@ -489,7 +597,7 @@ else
 						player.equipmentSlotModels[itemTable.itemID] = equipmentModel;
 					end
 					
-					local position, angles = GetRealPosition(equipmentModel, player, itemTable);
+					local position, angles = GetRealPosition(equipmentModel, player, itemTable, string.find(slot, "Offhand"));
 
 					if (position and angles) then
 						equipmentModel:SetPos(position);
@@ -498,7 +606,7 @@ else
 					
 					if attachmentVisible then
 						if IsValid(activeWeapon) then
-							if activeWeapon:GetClass() == itemTable.weaponClass or activeWeapon:GetNWString("activeShield") == itemTable.uniqueID then
+							if activeWeapon:GetClass() == itemTable.weaponClass or activeWeapon:GetNWString("activeShield") == itemTable.uniqueID or activeWeapon:GetNWString("activeOffhand") == itemTable.uniqueID then
 								attachmentVisible = false;
 							end
 						end

@@ -136,10 +136,10 @@ ITEM.damageTypeScales = {
 
 ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
-ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "hide", "hide", "leather", "cloth"}};
+ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "cloth", "cloth", "leather", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -258,7 +258,7 @@ ITEM.bluntScale = 0.60; -- reduces blunt damage by 40%
 ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
 ITEM.slashScale = 0.95; -- reduces slash damage by 5%
 
-ITEM.components = {breakdownType = "meltdown", items = {"human_bone", "human_bone", "human_bone", "human_bone", "human_bone", "human_bone", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "breakdown", items = {"human_bone", "human_bone", "human_bone", "human_bone", "human_bone", "human_bone", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -367,11 +367,11 @@ ITEM.damageTypeScales = {
 }
 
 ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.75; -- reduces slash damage by 25%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
-ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "leather", "cloth", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)

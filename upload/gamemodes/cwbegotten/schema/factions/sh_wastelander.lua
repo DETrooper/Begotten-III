@@ -53,7 +53,7 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 	FACTION.alliedfactions = {"Holy Hierarchy"};
 	FACTION.singleGender = GENDER_MALE;
 	FACTION.characterLimit = 1; -- # of characters of this faction a player can have.
-	FACTION.imposters = true;
+	--FACTION.imposters = true; -- Kinisgers should get enlisted through /enlist on Wanderer disguises.
 	FACTION.names = "glazic";
 	FACTION.subfactions = {
 		{name = "Legionary", subtitle = "Legionaries - Soldiers of the Church", description = "The Holy Order of the Gatekeepers has defended the Holy Hierarchy from unholy threats since time immemorial. They have seen many changes over the years and vary considerably in strength, equipment, and number from county district to county district, but nonetheless share a singular goal: to protect the Holy Hierarchy at all costs. Legionaries represent the rank and file of this Holy Order and know only the Glaze. These men are a mix of professional soldiers, conscripted wasteland filth, and religious zealots. They serve as frontline troops and guardsmen in service of the Holy Hierarchy, often taking considerable risks to advance their ministers' goals or to defend them.", attributes = {{Color(0, 225, 0), "(+) Constant Drilling: Starts with +15 maximum poise"}, {Color(0, 225, 0), "(+) Nourishing Rations: Starts with +25 maximum health"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 6"}, {Color(0, 225, 0), "(+) Strength in Numbers: +100% faith gain from dealing damage"}, {Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}}},
@@ -64,7 +64,9 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 	-- Called when a player is transferred to the faction.
 	function FACTION:OnTransferred(player, faction, name)
 		if (faction.name != "Wanderer" and faction.name != "Holy Hierarchy") then
-			return false;
+			if player:GetSubfaction() ~= "Kinisger" then
+				return false;
+			end
 		end;
 		
 		-- It is the IC responsibility of Gatekeepers to bloodtest recruits.

@@ -66,6 +66,20 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized)
 				
 				if !player:Crouching() or !player:GetActiveWeapon():GetClass() == "cw_senses" or (!player:GetNetVar("kinisgerCloak") and not table.HasValue(valid_zones, lastZone)) then
 					player:Uncloak();
+				else
+					local playerPos = player:GetPos();
+					
+					for i, v in ipairs(_player.GetAll()) do
+						if v:GetSharedVar("yellowBanner") then
+							if (v:GetPos():Distance(playerPos) <= config.Get("talk_radius"):Get()) then
+								Schema:EasyText(player, "peru", "There is one with a yellow banner raised, dispelling your dark magic! Vanquish them or distance yourself!");
+								Schema:EasyText(v, "peru", "You feel your yellow banner pulsate with energy as the dark magic of "..player:Name().." is foiled and they are uncloaked for all to see!");
+								player:Uncloak();
+							
+								break;
+							end
+						end
+					end
 				end
 			end
 		elseif player:GetSubfaction() == "Kinisger" then
@@ -85,11 +99,19 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized)
 		end
 		
 		if (!player.poisonCheck or player.poisonCheck < curTime) then
-			if player.poisonTicks and player.poisonTicks > 0 and IsValid(player.poisoner) then
+			if player.poisonTicks and player.poisonTicks > 0 then
 				player.poisonTicks = player.poisonTicks - 1;
 				
 				if alive then
-					player:TakeDamage(2, player.poisoner, player.poisoner);
+					local damageInfo = DamageInfo();
+					
+					damageInfo:SetDamage(2);
+					damageInfo:SetDamageType(DMG_POISON);
+					damageInfo:SetDamagePosition(player:GetPos() + Vector(0, 0, 32));
+					damageInfo:SetAttacker(player.poisoner or player);
+					damageInfo:SetInflictor(player.poisoner or player);
+					
+					player:TakeDamageInfo(damageInfo);
 				end
 				
 				if player.poisonTicks == 0 then
@@ -330,8 +352,13 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 		if (arguments == "cwCorpseMutilate") then
 			if (!entityPlayer or !entityPlayer:Alive()) then
 				local activeWeapon = player:GetActiveWeapon();
+				local offhandWeapon;
 				
-				if IsValid(activeWeapon) and activeWeapon.Category and (string.find(activeWeapon.Category, "Dagger") or string.find(activeWeapon.Category, "Dual Daggers")) then
+				if IsValid(activeWeapon) then
+					offhandWeapon = activeWeapon:GetOffhand();
+				end
+				
+				if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
 					if (!entity.mutilated or entity.mutilated < 3) then
 						local model = entity:GetModel();
 						
@@ -341,8 +368,13 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 							Clockwork.player:SetAction(player, "mutilating", 10, 5, function()
 								if IsValid(player) and IsValid(entity) then
 									local activeWeapon = player:GetActiveWeapon();
-								
-									if IsValid(activeWeapon) and string.find(activeWeapon.Category, "Dagger") or string.find(activeWeapon.Category, "Dual Daggers") then
+									local offhandWeapon;
+									
+									if IsValid(activeWeapon) then
+										offhandWeapon = activeWeapon:GetOffhand();
+									end
+									
+									if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -372,8 +404,13 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 							Clockwork.player:SetAction(player, "mutilating", 10, 5, function()
 								if IsValid(player) and IsValid(entity) then
 									local activeWeapon = player:GetActiveWeapon();
-								
-									if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or string.find(activeWeapon.Category, "Dual Daggers") then
+									local offhandWeapon;
+									
+									if IsValid(activeWeapon) then
+										offhandWeapon = activeWeapon:GetOffhand();
+									end
+									
+									if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -403,8 +440,13 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 							Clockwork.player:SetAction(player, "mutilating", 10, 5, function()
 								if IsValid(player) and IsValid(entity) then
 									local activeWeapon = player:GetActiveWeapon();
-								
-									if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or string.find(activeWeapon.Category, "Dual Daggers") then
+									local offhandWeapon;
+									
+									if IsValid(activeWeapon) then
+										offhandWeapon = activeWeapon:GetOffhand();
+									end
+									
+									if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -434,8 +476,13 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 							Clockwork.player:SetAction(player, "mutilating", 10, 5, function()
 								if IsValid(player) and IsValid(entity) then
 									local activeWeapon = player:GetActiveWeapon();
-								
-									if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or string.find(activeWeapon.Category, "Dual Daggers") then
+									local offhandWeapon;
+									
+									if IsValid(activeWeapon) then
+										offhandWeapon = activeWeapon:GetOffhand();
+									end
+									
+									if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -506,8 +553,13 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 				
 				if entity:GetNWEntity("Player"):IsPlayer() or entity:GetNWEntity("Player") == game.GetWorld() or table.HasValue(animalModels, model) then
 					local activeWeapon = player:GetActiveWeapon();
+					local offhandWeapon;
 					
-					if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or string.find(activeWeapon.Category, "Dual Daggers") then
+					if IsValid(activeWeapon) then
+						offhandWeapon = activeWeapon:GetOffhand();
+					end
+					
+					if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
 						if (!entity.bones or entity.bones < 5) then
 							entity.bones = (entity.bones or 0) + 1;
 							
@@ -547,8 +599,13 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 		elseif (arguments == "cwCorpseSkin") then
 			if table.HasValue(animalModels, entity:GetModel()) then
 				local activeWeapon = player:GetActiveWeapon();
+				local offhandWeapon;
 				
-				if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or string.find(activeWeapon.Category, "Dual Daggers") then
+				if IsValid(activeWeapon) then
+					offhandWeapon = activeWeapon:GetOffhand();
+				end
+				
+				if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
 					if (!entity.skinned or entity.skinned < 1) then					
 						local model = entity:GetModel();
 						local uniqueID = "hide"
@@ -566,8 +623,13 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 						Clockwork.player:SetAction(player, "skinning", 10, 5, function()
 							if IsValid(player) and IsValid(entity) then
 								local activeWeapon = player:GetActiveWeapon();
-							
-								if IsValid(activeWeapon) and string.find(activeWeapon.Category, "Dagger") or string.find(activeWeapon.Category, "Dual Daggers") then
+								local offhandWeapon;
+								
+								if IsValid(activeWeapon) then
+									offhandWeapon = activeWeapon:GetOffhand();
+								end
+								
+								if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
 									if (!entity.skinned or entity.skinned < 1) then
 										entity.skinned = (entity.skinned or 0) + 1;
 										
@@ -699,11 +761,6 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 								if originalDamage > 0 and !entity.poisonTicks then
 									local ignition_time = 3;
 									
-									-- This shit breaks it I think?
-									--[[if attackerWeapon.IgniteTime then
-										ignition_time = ignition_time + attackerWeapon.IgniteTime;
-									end]]--
-									
 									entity:Ignite(ignition_time);
 									
 									-- Failsafe to ensure the fire goes out.
@@ -728,7 +785,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						local maxHealth = attacker:GetMaxHealth();
 						local lowerBound = maxHealth * 0.1;
 						local modifier = math.Clamp(-(((health - lowerBound) / (maxHealth - lowerBound)) - 1), 0, 1);
-						local bonus = 0.60 * modifier;
+						local bonus = 0.40 * modifier;
 						
 						newDamage = newDamage + (originalDamage * bonus);
 					end
@@ -753,7 +810,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					if attacker:HasBelief("blademaster") then
 						local attackTable = GetTable(attackerWeapon.AttackTable);
 						
-						if (string.find(attackerWeapon.Category, "One Handed") and attackTable.dmgtype == 4) or string.find(attackerWeapon.Category, "Two Handed") or string.find(attackerWeapon.Category, "Claws") or string.find(attackerWeapon.Category, "Dual") then
+						if (string.find(attackerWeapon.Category, "One Handed") and attackTable.dmgtype == 4) or string.find(attackerWeapon.Category, "Claws") then
 							newDamage = newDamage + (originalDamage * 0.2);
 						end
 					end
@@ -809,7 +866,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					
 					if entity:IsPlayer() and entity:Alive() and attacker:HasBelief("assassin") then
 						if not entity.assassinated then
-							if string.find(attackerWeapon.Category, "Dagger") or string.find(attackerWeapon.Category, "Dual Daggers") then
+							if string.find(attackerWeapon.Category, "Dagger") then
 								if entity:Alive() and entity:Health() < entity:GetMaxHealth() / 4 or entity:GetRagdollState() == RAGDOLL_FALLENOVER and originalDamage > 0 then
 									newDamage = 666;
 									
@@ -1134,7 +1191,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 			local clothesItem = attacker:GetClothesEquipped();
 			
 			if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
-				local hatred = math.min(attacker:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 2))), 100);
+				local hatred = math.min(attacker:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 3))), 100);
 				
 				if !attacker.opponent then
 					attacker:SetCharacterData("Hatred", hatred);
@@ -1148,7 +1205,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 			local clothesItem = entity:GetClothesEquipped();
 			
 			if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
-				local hatred = math.min(entity:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 2))), 100);
+				local hatred = math.min(entity:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 3))), 100);
 				
 				if !entity.opponent then
 					entity:SetCharacterData("Hatred", hatred);
@@ -1896,7 +1953,7 @@ function cwBeliefs:ModifyPlayerSpeed(player, infoTable)
 			local maxHealth = player:GetMaxHealth();
 			local lowerBound = maxHealth * 0.25;
 			local modifier = math.Clamp(-(((health - lowerBound) / (maxHealth - lowerBound)) - 1), 0, 1);
-			local bonus = 0.20 * modifier;
+			local bonus = 0.15 * modifier;
 			
 			--[[
 			if cash >= 100 and cash < 250 then

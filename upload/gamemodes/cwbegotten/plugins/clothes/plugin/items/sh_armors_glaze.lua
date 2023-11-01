@@ -1104,7 +1104,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A series of pieced-together scrap plates that form a crude yet effective set of armor.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax", "Clan Crast", "Clan Grock"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -1163,7 +1163,7 @@ ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.description = "A series of pieced-together scrap plates that form a crude yet effective set of armor.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax", "Clan Crast", "Clan Grock"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -1598,7 +1598,7 @@ ITEM.concealsFace = true;
 ITEM.conditionScale = 0.75
 ITEM.hasHelmet = true;
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 75;
+ITEM.protection = 80;
 ITEM.weight = 8.5;
 ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
@@ -1668,7 +1668,7 @@ ITEM.concealsFace = true;
 ITEM.conditionScale = 0.75
 ITEM.hasHelmet = true;
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 70
+ITEM.protection = 75;
 ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
@@ -1743,7 +1743,7 @@ ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.description = "The armor of a wasteland tyrant. It is fitted with crude steel plates and held together by scrap.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax", "Clan Crast", "Clan Grock"};
 ITEM.overlay = "begotten/zomboverlay/skullhelm";
 
 ITEM.requiredbeliefs = {"hauberk"};
@@ -1770,7 +1770,7 @@ ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 
-ITEM.components = {breakdownType = "breakdown", items = {"leather", "leather", "scrap", "scrap", "scrap", "steel_chunks", "steel_chunks"}};
+ITEM.components = {breakdownType = "breakdown", items = {"leather", "leather", "scrap", "scrap", "steel_chunks", "steel_chunks"}};
 ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1000, supercrateOnly = true};
 
 -- Called when a replacement is needed for a player.
@@ -2225,6 +2225,70 @@ ITEM.runSound = {
 ITEM.walkSound = {
 	"armormovement/body-hauberk-b4.wav.mp3",
 	"armormovement/body-hauberk-b5.wav.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Twisted Fuck Armor";
+ITEM.group = "wanderers/wandererbone";
+ITEM.model = "models/begotten/headgroups_props/wandererbone.mdl"
+ITEM.iconoverride = "materials/begotten/ui/itemicons/twisted_fuck_armor.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 1.5;
+ITEM.hitParticle = "GlassImpact";
+ITEM.protection = 25;
+ITEM.weight = 2.5;
+ITEM.weightclass = "Light";
+ITEM.type = "leather";
+ITEM.description = "Created from the bones of countless victims, this armor signifies the depraved mentality of its wearer. The armor rattles as it moves, giving it a particularly terrifying presence. This armor is uniquely suited against blunt attacks.";
+ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+ITEM.attributes = {"fear"};
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.bluntScale = 0.60; -- reduces blunt damage by 40%
+ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+
+ITEM.components = {breakdownType = "breakdown", items = {"human_bone", "human_bone", "human_bone", "human_bone", "human_bone", "cloth", "cloth"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/rattle1.mp3",
+	"armormovement/rattle2.mp3",
+	"armormovement/rattle3.mp3",
+	"armormovement/rattle4.mp3",
+	"armormovement/rattle5.mp3",
+	"armormovement/rattle6.mp3",
+	"armormovement/rattle7.mp3",
+	"armormovement/rattle8.mp3",
+	"armormovement/rattle9.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/rattle1.mp3",
+	"armormovement/rattle2.mp3",
+	"armormovement/rattle3.mp3",
+	"armormovement/rattle4.mp3",
+	"armormovement/rattle5.mp3",
+	"armormovement/rattle6.mp3",
+	"armormovement/rattle7.mp3",
+	"armormovement/rattle8.mp3",
+	"armormovement/rattle9.mp3",
 };
 
 ITEM:Register();

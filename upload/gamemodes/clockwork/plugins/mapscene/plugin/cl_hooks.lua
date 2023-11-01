@@ -577,7 +577,7 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 			end
 			
 			if camTable[faction].charLight and not IsValid(Clockwork.Client.CreationDynamicLight) then
-				local dynamicLight = DynamicLight("CharCreationDynamicLight");
+				local dynamicLight = DynamicLight(1);
 
 				if (dynamicLight) then
 					dynamicLight.pos = camTable[faction].charLight;

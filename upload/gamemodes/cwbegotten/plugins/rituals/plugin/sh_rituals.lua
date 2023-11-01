@@ -30,9 +30,9 @@ local RITUAL = cwRituals.rituals:New("purifying_stone_rite");
 RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("yellow_banner_of_quelling");
-	RITUAL.name = "(T3) Yellow Banner of Quelling";
-	RITUAL.description = "The children flee when they spot the invisible banner. Let the Satanic filth cower when they realize they are now chained to these mortal lands that they have blighted for so long. Performing this ritual prevents helljaunting in a large radius around you for 30 minutes. Be warned that the Children of Satan will be made aware of your presence!";
-	RITUAL.onerequiredbelief = {"watchful_raven", "emissary", "extinctionist"}; -- Tier III Family/Light Ritual
+	RITUAL.name = "(T2) Yellow Banner of Quelling";
+	RITUAL.description = "The children flee when they spot the invisible banner. Let the Satanic filth cower when they realize they are now chained to these mortal lands that they have blighted for so long. Performing this ritual prevents helljaunting in a large radius around you for 30 minutes. It will also uncloak any cloaked characters in a smaller radius around you. Be warned that the Children of Satan will be made aware of your presence!";
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "flagellant", "acolyte"}; -- Tier II Light/Family Ritual
 	
 	RITUAL.requirements = {"purifying_stone", "xolotl_catalyst", "down_catalyst"};
 
@@ -1348,7 +1348,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("soulscorch");
 	RITUAL.name = "(Unique) Soulscorch";
-	RITUAL.description = "Become a catalyst of mankind's extinction. When you are struck down, the Light will smite them thusly! Performing this ritual will cause you to radiate light for 5 minutes, and upon your death you will deal 200 points of damage to anyone not of the Faith of the Light (excluding Voltists) within talking distance. Note that this can not be used in safezones.";
+	RITUAL.description = "Become a catalyst of mankind's extinction. When you are struck down, the Light will smite them thusly! Performing this ritual will cause you to radiate light for 5 minutes, and upon your death you will deal an amount of damage corresponding to your sacrament level to anyone not of the Faith of the Light excluding Voltists (or half if they are) within talking distance. Note that this can not be used in safezones.";
 	RITUAL.onerequiredbelief = {"extinctionist"}; -- Unique Sol Orthodoxy Ritual
 	
 	RITUAL.requirements = {"light_catalyst", "holy_spirit", "light_catalyst"};
@@ -1472,7 +1472,8 @@ RITUAL = cwRituals.rituals:New("summon_demon");
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
 			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
 
-			local entity = ents.Create("npc_bgt_otis");
+			--local entity = ents.Create("npc_bgt_otis");
+			local entity = ents.Create("npc_bgt_eddie");
 			local playerFaith = player:GetFaith();
 			
 			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)

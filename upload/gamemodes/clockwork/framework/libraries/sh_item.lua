@@ -348,10 +348,53 @@ function CLASS_TABLE:OnHandleUnequip(Callback)
 	if (self.equippable) then
 		local menu = DermaMenu()
 			menu:SetMinimumWidth(100)
-			menu:AddOption("Unequip", function()
-				Callback("holster")
-			end)
 			
+			local slot;
+			local unequipMenu;
+			
+			for k, v in pairs(Clockwork.Client.equipmentSlots) do
+				if v:IsTheSameAs(self) and (string.find(k, "Offhand") or Clockwork.Client.equipmentSlots[k.."Offhand"]) then
+					slot = string.gsub(k, "Offhand", "");
+					
+					local mainSlot = Clockwork.Client.equipmentSlots[slot];
+					local offhandSlot = Clockwork.Client.equipmentSlots[slot.."Offhand"];
+					
+					unequipMenu = menu:AddSubMenu("Unequip", function()
+						if offhandSlot then
+							Clockwork.datastream:Start("UnequipItem", {offhandSlot("uniqueID"), offhandSlot("itemID")});
+						end
+					
+						if mainSlot then
+							Clockwork.datastream:Start("UnequipItem", {mainSlot("uniqueID"), mainSlot("itemID")});
+						end
+					end)
+					
+					--[[if mainSlot then
+						unequipMenu:AddOption(mainSlot.name, function()
+							if mainSlot then
+								Clockwork.datastream:Start("UnequipItem", {mainSlot("uniqueID"), mainSlot("itemID")});
+							end
+						end)
+					end]]--
+					
+					if offhandSlot then
+						unequipMenu:AddOption(offhandSlot.name.." (Offhand)", function()
+							if offhandSlot then
+								Clockwork.datastream:Start("UnequipItem", {offhandSlot("uniqueID"), offhandSlot("itemID")});
+							end
+						end)
+					end
+					
+					break;
+				end
+			end
+			
+			if !unequipMenu then
+				unequipMenu = menu:AddOption("Unequip", function()
+					Callback("holster")
+				end)
+			end
+
 			if self.category == "Firearms" then
 				local ammo = self:GetData("Ammo");
 				
@@ -1003,7 +1046,7 @@ if (SERVER) then
 	item.entities = {};
 	
 	-- A function to use an item for a player.
-	function item.Use(player, itemTable, bNoSound)	
+	function item.Use(player, itemTable, bNoSound, interactItemTable)	
 		local itemEntity = player:GetItemEntity();
 		
 		if (player:HasItemInstance(itemTable)) then
@@ -1016,7 +1059,7 @@ if (SERVER) then
 					player:SetItemEntity(nil);
 				end;
 				
-				local onUse = itemTable:OnUse(player, itemEntity);
+				local onUse = itemTable:OnUse(player, itemEntity, interactItemTable);
 				
 				if (onUse == nil) then
 					player:TakeItem(itemTable);
@@ -1040,7 +1083,7 @@ if (SERVER) then
 					end;
 				end;
 				
-				hook.Run("PlayerUseItem", player, itemTable, itemEntity);
+				hook.Run("PlayerUseItem", player, itemTable, itemEntity, interactItemTable);
 				
 				return true;
 			end;

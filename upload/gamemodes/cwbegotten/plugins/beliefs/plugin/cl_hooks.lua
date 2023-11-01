@@ -84,6 +84,10 @@ function cwBeliefs:GetEntityMenuOptions(entity, options)
 	end;
 end;
 
+function cwBeliefs:CanPlayerDualWield()
+	return self:HasBelief({"man_become_beast", "murder_artform", "repentant", "witch_druid"}, true);
+end
+
 local bearTrapDist = (256 * 256);
 
 function cwBeliefs:AddEntityOutlines(outlines)

@@ -40,9 +40,24 @@ function cwMelee:KeyPress(player, key)
 					
 					if (attackTable and attackTable["canaltattack"] == true) then
 						local curTime = CurTime();
+						local canThrust = true;
 						
 						if (!player.StanceSwitchOn or curTime > player.StanceSwitchOn) then
 							if (player.HasBelief and player:HasBelief("halfsword_sway")) then
+								local activeOffhand = activeWeapon:GetNWString("activeOffhand");
+								
+								if activeOffhand:len() > 0 then
+									local offhandWeapon = weapons.GetStored(activeOffhand);
+									
+									if offhandWeapon then
+										local offhandAttackTable = GetTable(offhandWeapon.AttackTable);
+										
+										if offhandAttackTable and !offhandAttackTable["canaltattack"] then
+											canThrust = false;
+										end
+									end
+								end
+							
 								if (player:GetNWBool("ThrustStance") == false) then
 									if (activeWeapon.CanSwipeAttack == true) then
 										player:SetNWBool("ThrustStance", true)
@@ -53,7 +68,7 @@ function cwMelee:KeyPress(player, key)
 										end
 										
 										player.StanceSwitchOn = curTime + 1;
-									else
+									elseif canThrust then
 										player:SetNWBool("ThrustStance", true)
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
 										
@@ -64,7 +79,7 @@ function cwMelee:KeyPress(player, key)
 										player.StanceSwitchOn = curTime + 1;
 									end;
 								else
-									if (activeWeapon.CanSwipeAttack == true) then
+									if (activeWeapon.CanSwipeAttack == true) and canThrust then
 										player:SetNWBool("ThrustStance", false)
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
 										

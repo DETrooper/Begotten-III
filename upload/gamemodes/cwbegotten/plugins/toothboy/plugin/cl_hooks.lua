@@ -143,7 +143,7 @@ function cwToothBoy:RenderScreenspaceEffects()
 		}
 		
 		if self.Static > curTime + 0.15 then
-			local dynamicLight = DynamicLight(Clockwork.Client:EntIndex() + 1);
+			local dynamicLight = DynamicLight(Clockwork.Client:EntIndex());
 
 			if (dynamicLight) then
 				dynamicLight.brightness = 1;

@@ -420,14 +420,78 @@ function GetTable(uniqueID)
 	if (istable(uniqueID)) then
 		return uniqueID;
 	end;
+	
 	if (uniqueID) then
 		return tabs[uniqueID]
 	end;
 	
-	--printp("Invalid GetTable uniqueID: "..tostring(uniqueID));
+	--print("Invalid GetTable uniqueID: "..tostring(uniqueID));
 	
 	return {};
 end;
+
+function GetDualTable(uniqueID, offhandID)
+	local mergedTable = {};
+	local offhandTable;
+	local weaponTable;
+
+	if (istable(uniqueID)) then
+		weaponTable = uniqueID;
+	elseif (uniqueID) then
+		weaponTable = tabs[uniqueID];
+	end
+	
+	if weaponTable then
+		local mergedTable = {};
+		local offhandTable;
+
+		if (istable(offhandID)) then
+			offhandTable = offhandID;
+		elseif offhandID then
+			offhandTable = tabs[offhandID];
+		end
+		
+		if offhandTable then
+			mergedTable = table.FullCopy(weaponTable);
+		
+			if (isstring(uniqueID) and string.find(string.lower(uniqueID), "blocktable")) or uniqueID.poiseresistance then
+				mergedTable["guardblockamount"] = math.max(mergedTable["guardblockamount"], offhandTable["guardblockamount"]);
+				mergedTable["blockcone"] = math.max(mergedTable["blockcone"], offhandTable["blockcone"]);
+				mergedTable["poiseresistance"] = math.min(math.max(mergedTable["poiseresistance"], offhandTable["poiseresistance"]) + 1, 100);
+				mergedTable["parrydifficulty"] = math.min(math.max(mergedTable["parrydifficulty"], offhandTable["parrydifficulty"]) * 0.85, 100);
+				mergedTable["parrytakestamina"] = math.Round(math.max(mergedTable["parrytakestamina"], offhandTable["parrytakestamina"]) * 0.67);
+				
+				for i, v in ipairs(offhandTable["blockdamagetypes"]) do
+					if !table.HasValue(mergedTable, v) then
+						table.insert(mergedTable, v);
+					end
+				end
+				
+				if offhandTable["canparry"] then
+					mergedTable["canparry"] = true;
+				end
+				
+				if offhandTable["candeflect"] then
+					mergedTable["candeflect"] = true;
+				end
+
+				if offhandTable["partialbulletblock"] then
+					mergedTable["partialbulletblock"] = true;
+				end
+			else
+				mergedTable["delay"] = math.max(mergedTable["delay"], offhandTable["delay"]) * 0.98;
+			end
+			
+			return mergedTable;
+		end
+		
+		--print("Invalid GetDualTable offhandID: "..tostring(uniqueID));
+	end
+	
+	--print("Invalid GetDualTable uniqueID: "..tostring(uniqueID));
+	
+	return mergedTable;
+end
 
 local AttackTables = {};
 

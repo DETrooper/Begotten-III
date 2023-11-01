@@ -56,13 +56,29 @@ function cwBeliefs:OpenTree(player, level, experience, beliefs, points, faith)
 	Clockwork.Client:EmitSound("ui/pickup_secret01.wav", 70, 80);
 end
 
-function cwBeliefs:HasBelief(uniqueID)
+function cwBeliefs:HasBelief(uniqueID, bHasAny)
 	if (!uniqueID) then
 		return
 	end;
 	
-	if (self.beliefs[uniqueID]) then
-		return true
+	if istable(uniqueID) then
+		if bHasAny then
+			for i, v in ipairs(uniqueID) do
+				if self.beliefs[v] then
+					return true;
+				end
+			end
+		else
+			for i, v in ipairs(uniqueID) do
+				if !self.beliefs[v] then
+					return false;
+				end
+			end
+		end
+	else
+		if (self.beliefs[uniqueID]) then
+			return true
+		end
 	end
 	
 	return false
@@ -76,9 +92,9 @@ function playerMeta:GetBeliefs()
 	end
 end
 
-function playerMeta:HasBelief(uniqueID)
+function playerMeta:HasBelief(uniqueID, bHasAny)
 	if self == Clockwork.Client then
-		return cwBeliefs:HasBelief(uniqueID);
+		return cwBeliefs:HasBelief(uniqueID, bHasAny);
 	end
 end
 

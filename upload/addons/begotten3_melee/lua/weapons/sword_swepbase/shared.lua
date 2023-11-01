@@ -143,26 +143,46 @@ local inpat = input
 function SWEP:Deploy()
 	if SERVER then
 		if IsValid(self.Owner) and self.Owner:IsPlayer() then
-			local shieldItem = self.Owner:GetShieldEquipped();
+			local weaponItem = Clockwork.item:GetByWeapon(self);
 			
-			if (shieldItem) then
-				for i, v in ipairs(shieldItem.slots) do
-					if v and v.canUseShields then
-						local weapon = self.Owner:GetWeapon(v.uniqueID);
-						
-						if IsValid(weapon) then
-							weapon:EquipShield(shieldItem.uniqueID);
+			if weaponItem then
+				if weaponItem.canUseShields then
+					local shieldItem = self.Owner:GetShieldEquipped();
+					
+					if (shieldItem) then
+						for i, v in ipairs(shieldItem.slots) do
+							if v then
+								local slot = self.Owner.equipmentSlots[v];
+								
+								if slot and slot.weaponClass == self:GetClass() then
+									self:EquipShield(shieldItem.uniqueID);
+									
+									break;
+								end
+							end
 						end
-						
-						break;
+					end
+				end
+				
+				if self:GetNWString("activeShield"):len() <= 0 and weaponItem.canUseOffhand then
+					for i, v in ipairs(weaponItem.slots) do
+						if v then
+							local slot = self.Owner.equipmentSlots[v];
+
+							if slot and slot.weaponClass == self:GetClass() then
+								local offhandSlot = self.Owner.equipmentSlots[v.."Offhand"];
+								
+								if offhandSlot and offhandSlot.weaponClass then
+									self:EquipOffhand(offhandSlot.weaponClass);
+								end
+
+								break;
+							end
+						end
 					end
 				end
 			end
 		end
-	end
-
-	if self:GetClass() == "begotten_fists" or (!self.Owner.cwWakingUp and !self.Owner.LoadingText) then
-		self:OnDeploy()
 	end
 	
 	self.Owner.gestureweightbegin = 2;
@@ -182,6 +202,25 @@ function SWEP:Deploy()
 	self.Primary.Cone = self.DefaultCone
 	--self.Weapon:SetNWInt("Reloading", CurTime() + self:SequenceDuration() )
 	self.isAttacking = false;
+	
+	if self:GetClass() == "begotten_fists" or (!self.Owner.cwWakingUp and !self.Owner.LoadingText) then
+		if self:GetNWString("activeShield"):len() <= 0 then
+			local offhandWeapon = weapons.GetStored(self:GetNWString("activeOffhand"));
+			
+			if offhandWeapon then
+				local attacksoundtable = GetSoundTable(self.AttackSoundTable);
+				local attacksoundtableOffhand = GetSoundTable(offhandWeapon.AttackSoundTable);
+				
+				self.Owner:ViewPunch(Angle(0,1,0));
+				self.Weapon:EmitSound(attacksoundtable["drawsound"][math.random(1, #attacksoundtable["drawsound"])]);
+				self.Weapon:EmitSound(attacksoundtableOffhand["drawsound"][math.random(1, #attacksoundtableOffhand["drawsound"])]);
+				
+				return true;
+			end
+		end
+
+		self:OnDeploy();
+	end
 	
 	return true
 end
@@ -359,7 +398,6 @@ end
 function SWEP:PrimaryAttack()
 	local wep = self.Weapon;
 	local owner = self.Owner;
-	local attacktable = GetTable(self.AttackTable);
 	
 	if (!self:CanPrimaryAttack()) then 
 		return true;
@@ -369,13 +407,33 @@ function SWEP:PrimaryAttack()
 		return true;
 	end
 	
+	local attacktable = GetTable(self.AttackTable);
+	local offhandAttackTable;
+	local offhandWeapon;
+	
 	if !attacktable then
 		return true;
 	end
 	
 	local curTime = CurTime();
+	local delay = attacktable["delay"];
 	local stance = "reg_swing";
-
+	local strikeTime = attacktable["striketime"];
+	
+	if self:GetNWString("activeOffhand"):len() > 0 then
+		offhandWeapon = weapons.GetStored(self:GetNWString("activeOffhand"));
+		
+		if offhandWeapon then
+			offhandAttackTable = GetTable(offhandWeapon.AttackTable);
+			delay = math.max(attacktable["delay"], offhandAttackTable["delay"]) * 0.95;
+			strikeTime = math.max(strikeTime, offhandAttackTable["striketime"]);
+		end
+	end
+	
+	if cwBeliefs and owner.HasBelief and owner:HasBelief("flamboyance") then
+		delay = delay * 0.9;
+	end
+	
 	if owner:GetNWBool("ThrustStance") == true then
 		stance = "thrust_swing";
 	else
@@ -389,22 +447,19 @@ function SWEP:PrimaryAttack()
 	-- Critical Attack
 	if owner:GetNWBool("ParrySucess") == true then
 		if SERVER then  
-			self:CriticalAnimation() 
+			self:CriticalAnimation()
 			
-			if cwBeliefs and owner.HasBelief and owner:HasBelief("flamboyance") then
-				self.Weapon:SetNextPrimaryFire(curTime + ((attacktable["delay"]) * 0.9))
-			else
-				self.Weapon:SetNextPrimaryFire(curTime + (attacktable["delay"]))
-			end
-			
-			self.Weapon:SetNextSecondaryFire(curTime + (attacktable["delay"]) * 0.1)
+			self.Weapon:SetNextPrimaryFire(curTime + delay);
+			self.Weapon:SetNextSecondaryFire(curTime + (delay * 0.1));
 			self.isAttacking = true;
 			
 			self:CreateTimer(attacktable["striketime"] + 0.1, "strikeTimer"..owner:EntIndex(), function()
 				if IsValid(self) and IsValid(owner) then
 					if self.isAttacking then -- This can be set to false elsewhere and will abort the attack.
-						self.isAttacking = false;
-						owner:SetNWBool( "MelAttacking", false )
+						if offhandAttackTable["striketime"] < attacktable["striketime"] then
+							self.isAttacking = false;
+							owner:SetNWBool( "MelAttacking", false )
+						end
 						
 						if owner:IsPlayer() and !owner:IsRagdolled() and owner:Alive() then
 							self:Hitscan(); -- For bullet holes.
@@ -450,8 +505,6 @@ function SWEP:PrimaryAttack()
 											-- If odd go right.
 											newAimVector:Rotate(Angle(0, -math.Round(i / 2), 0));
 										end
-											
-										debugoverlay.Line(pos, pos + (newAimVector * meleeRange));
 
 										local tr2 = util.TraceLine({
 											start = pos,
@@ -482,7 +535,6 @@ function SWEP:PrimaryAttack()
 							end
 							
 							owner:LagCompensation(false);
-							self.isAttacking = false;
 						end
 						
 						if (owner:KeyDown(IN_ATTACK2)) then
@@ -495,7 +547,148 @@ function SWEP:PrimaryAttack()
 										local curTime = CurTime();
 										
 										if (loweredParryDebug < curTime) then
-											local blockTable = GetTable(activeWeapon.realBlockTable);
+											local blockTable;
+
+											if activeWeapon:GetNWString("activeOffhand"):len() > 0 then
+												local offhandTable = weapons.GetStored(activeWeapon:GetNWString("activeOffhand"));
+												
+												if offhandTable then
+													blockTable = GetDualTable(activeWeapon.realBlockTable, offhandTable.BlockTable);
+												else
+													blockTable = GetTable(activeWeapon.realBlockTable);
+												end
+											else
+												blockTable = GetTable(activeWeapon.realBlockTable);
+											end
+											
+											if (blockTable and owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !owner:GetNWBool("Parried")) then
+												owner:SetNWBool("Guardening", true);
+												owner.beginBlockTransition = true;
+												owner.StaminaRegenDelay = 0;
+												activeWeapon.Primary.Cone = activeWeapon.IronCone;
+												activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
+											else
+												owner:CancelGuardening()
+											end;
+										end;
+									else
+										owner:CancelGuardening();
+									end;
+								end;
+							end
+						end
+					end
+				end
+			end)
+		end
+		
+		if offhandAttackTable then
+			self:CreateTimer(offhandAttackTable["striketime"] + 0.1, "offhandStrikeTimer"..owner:EntIndex(), function()
+				if IsValid(self) and IsValid(owner) then
+					if self.isAttacking then -- This can be set to false elsewhere and will abort the attack.
+						if offhandAttackTable["striketime"] >= attacktable["striketime"] then
+							self.isAttacking = false;
+							owner:SetNWBool( "MelAttacking", false )
+						end
+						
+						if owner:IsPlayer() and !owner:IsRagdolled() and owner:Alive() then
+							owner:LagCompensation(true);
+						
+							local pos = owner:GetShootPos();
+							local aimVector = owner:GetAimVector();
+							local meleeArc = (offhandAttackTable["meleearc"]) or 25;
+							local meleeRange = (offhandAttackTable["meleerange"] / 9);
+							local hitsAllowed = offhandWeapon.MultiHit or 1;
+							local hitEntities = {};
+							
+							local tr = util.TraceLine({
+								start = pos,
+								endpos = pos + (aimVector * meleeRange),
+								mask = MASK_SOLID,
+								filter = owner
+							})
+							
+							if tr.Hit then
+								if IsValid(tr.Entity) then
+									if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
+										table.insert(hitEntities, tr.Entity);
+									
+										if tr.Entity:GetNWBool("Parried") then
+											self:HandleHit(tr.Entity, tr.HitPos, "parry_swing", nil, offhandWeapon, offhandAttackTable);
+										else
+											self:HandleHit(tr.Entity, tr.HitPos, stance, nil, offhandWeapon, offhandAttackTable);
+										end
+									end
+								end
+							end
+								
+							if IsValid(self) and owner:HasWeapon(self:GetClass()) then
+								if !tr.Hit or #hitEntities < hitsAllowed then
+									for i = 1, meleeArc - 1 do
+										local newAimVector = Vector(aimVector);
+									
+										if (i % 2 == 0) then
+											-- If even go left.
+											newAimVector:Rotate(Angle(0, math.Round(i / 2), 0));
+										else
+											-- If odd go right.
+											newAimVector:Rotate(Angle(0, -math.Round(i / 2), 0));
+										end
+
+										local tr2 = util.TraceLine({
+											start = pos,
+											endpos = pos + (newAimVector * meleeRange),
+											mask = MASK_SOLID,
+											filter = owner
+										})
+										
+										if tr2.Hit then
+											if IsValid(tr2.Entity) and !table.HasValue(hitEntities, tr2.Entity) then
+												if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
+													table.insert(hitEntities, tr2.Entity);
+													
+													if tr2.Entity:GetNWBool("Parried") then
+														self:HandleHit(tr2.Entity, tr2.HitPos, "parry_swing", #hitEntities, offhandWeapon, offhandAttackTable);
+													else
+														self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities, offhandWeapon, offhandAttackTable);
+													end
+												end
+											end
+										
+											if #hitEntities >= hitsAllowed or !IsValid(self) or !owner:HasWeapon(self:GetClass()) then
+												break;
+											end
+										end
+									end
+								end
+							end
+							
+							owner:LagCompensation(false);
+						end
+						
+						if (owner:KeyDown(IN_ATTACK2)) then
+							if (!owner:KeyDown(IN_USE)) then
+								local activeWeapon = owner:GetActiveWeapon();
+
+								if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
+									if (activeWeapon.IronSights == true) then
+										local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
+										local curTime = CurTime();
+										
+										if (loweredParryDebug < curTime) then
+											local blockTable;
+
+											if activeWeapon:GetNWString("activeOffhand"):len() > 0 then
+												local offhandTable = weapons.GetStored(activeWeapon:GetNWString("activeOffhand"));
+												
+												if offhandTable then
+													blockTable = GetDualTable(activeWeapon.realBlockTable, offhandTable.BlockTable);
+												else
+													blockTable = GetTable(activeWeapon.realBlockTable);
+												end
+											else
+												blockTable = GetTable(activeWeapon.realBlockTable);
+											end
 											
 											if (blockTable and owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !owner:GetNWBool("Parried")) then
 												owner:SetNWBool("Guardening", true);
@@ -519,7 +712,7 @@ function SWEP:PrimaryAttack()
 		end
 		
 		owner:SetNWBool("Riposting", true) 
-		self:CreateTimer(attacktable["striketime"] + 0.1, "riposteTimer"..owner:EntIndex(), function() 
+		self:CreateTimer(strikeTime + 0.1, "riposteTimer"..owner:EntIndex(), function() 
 			if IsValid(self) and owner:IsValid() and owner:Alive() and !owner:IsRagdolled() then
 				owner:SetNWBool("Riposting", false)
 			end
@@ -534,14 +727,62 @@ function SWEP:PrimaryAttack()
 	--owner.StaminaRegenDelay = 0
 	owner.nextStas = curTime + 5;
 
-	wep:SetNextPrimaryFire( curTime + (attacktable["delay"]) )
-	wep:SetNextSecondaryFire( curTime + (attacktable["delay"]) * 0.1 )
+	wep:SetNextPrimaryFire(curTime + delay);
+	wep:SetNextSecondaryFire(curTime + (delay * 0.1));
 	
-	-- GLITCHED
-	if self.HandleThrustAttack and owner:GetNWBool("ThrustStance") == true and !owner:GetNWBool("Riposting") then
-		self:HandleThrustAttack()
+	local thrustOverride = false;
+	
+	if offhandAttackTable then
+		local attacksoundtable = GetSoundTable(self.AttackSoundTable);
+		local attacksoundtableOffhand = GetSoundTable(offhandWeapon.AttackSoundTable);
+		local vm = self.Owner:GetViewModel();
+		
+		thrustOverride = (!attacktable.canaltattack and attacktable.dmgtype == DMG_VEHICLE) or (!offhandAttackTable.canaltattack and offhandAttackTable.dmgtype == DMG_VEHICLE);
+		
+		if (owner:GetNWBool("ThrustStance") == true and !owner:GetNWBool("Riposting")) or thrustOverride then
+			--Attack animation
+			self:TriggerAnim(self.Owner, "a_dual_swords_stab");
+
+			-- Viewmodel attack animation!
+			vm:SendViewModelMatchingSequence(vm:LookupSequence("powermissup"));
+			self.Owner:GetViewModel():SetPlaybackRate(Lerp(strikeTime + 0.1, 0.6, 0.4));
+			
+			if !attacktable.canaltattack and attacktable.dmgtype == DMG_VEHICLE then
+				self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])]);
+			else
+				self.Weapon:EmitSound(attacksoundtable["altsound"][math.random(1, #attacksoundtable["altsound"])]);
+			end
+			
+			if !offhandAttackTable.canaltattack and offhandAttackTable.dmgtype == DMG_VEHICLE then
+				self.Weapon:EmitSound(attacksoundtableOffhand["primarysound"][math.random(1, #attacksoundtableOffhand["primarysound"])]);
+			else
+				self.Weapon:EmitSound(attacksoundtableOffhand["altsound"][math.random(1, #attacksoundtableOffhand["altsound"])]);
+			end
+			
+			self.Owner:ViewPunch(attacktable["punchstrength"] + Angle(1, 1, 1));
+		else
+			--Attack animation
+			self:TriggerAnim(self.Owner, "a_dual_swords_slash_0"..tostring(math.random(1, 2)));
+
+			-- Viewmodel attack animation!
+			if math.random(1, 2) == 1 then
+				vm:SendViewModelMatchingSequence( vm:LookupSequence( "powermissleft1" ) )
+			else
+				vm:SendViewModelMatchingSequence( vm:LookupSequence( "powermissR1" ) )
+			end
+			
+			self.Owner:GetViewModel():SetPlaybackRate(Lerp(strikeTime + 0.1, 0.5, 0.3));
+			
+			self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])]);
+			self.Weapon:EmitSound(attacksoundtableOffhand["primarysound"][math.random(1, #attacksoundtableOffhand["primarysound"])]);
+			self.Owner:ViewPunch(attacktable["punchstrength"] + Angle(1, 1, 1));
+		end
 	else
-		self:HandlePrimaryAttack()
+		if self.HandleThrustAttack and owner:GetNWBool("ThrustStance") == true and !owner:GetNWBool("Riposting") then
+			self:HandleThrustAttack()
+		else
+			self:HandlePrimaryAttack()
+		end
 	end
 
 	local rnda = self.Primary.Recoil * 1
@@ -550,10 +791,10 @@ function SWEP:PrimaryAttack()
 	if SERVER and self:IsValid() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then 
 		owner:SetNWBool( "MelAttacking", true )
 		
-		self.HolsterDelay = (curTime + attacktable["striketime"])
+		self.HolsterDelay = (curTime + strikeTime)
 		self.isAttacking = true;
 			
-		self:CreateTimer(attacktable["striketime"] + 0.1, "strikeTimer"..owner:EntIndex(), function()
+		self:CreateTimer(strikeTime + 0.1, "strikeTimer"..owner:EntIndex(), function()
 			if IsValid(self) and IsValid(owner) then
 				if self.isAttacking then -- This can be set to false elsewhere and will abort the attack.
 					self.isAttacking = false;
@@ -567,18 +808,20 @@ function SWEP:PrimaryAttack()
 							
 								local pos = owner:GetShootPos();
 								local aimVector = owner:GetAimVector();
-								local meleeArc = (attacktable["meleearc"]) or 25;
-								local meleeRange = (attacktable["meleerange"] / 10);
+								local meleeArc = attacktable["meleearc"] or 25;
+								local meleeRange = attacktable["meleerange"] / 10;
 								local hitsAllowed = self.MultiHit or 1;
 								local hitEntities = {};
 								
-								if stance == "thrust_swing" then
-									meleeArc = (attacktable["altmeleearc"]) or 25;
+								if stance == "thrust_swing" or thrustOverride then
+									meleeArc = attacktable["altmeleearc"] or attacktable["meleearc"] or 25;
 								
-									if self.CanSwipeAttack then
-										meleeRange = meleeRange * 0.8
-									else
-										meleeRange = meleeRange * 1.2
+									if attacktable.canaltattack then
+										if self.CanSwipeAttack then
+											meleeRange = meleeRange * 0.8
+										else
+											meleeRange = meleeRange * 1.2
+										end
 									end
 								end
 
@@ -635,9 +878,82 @@ function SWEP:PrimaryAttack()
 										end
 									end
 								end
-							end
 							
-							owner:LagCompensation(false);
+								if offhandAttackTable then
+									meleeArc = offhandAttackTable["meleearc"] or 25;
+									meleeRange = offhandAttackTable["meleerange"] / 10;
+									hitsAllowed = offhandWeapon.MultiHit or 1;
+									table.Empty(hitEntities);
+									
+									if stance == "thrust_swing" or thrustOverride then
+										meleeArc = offhandAttackTable["altmeleearc"] or offhandAttackTable["meleearc"] or 25;
+									
+										if offhandAttackTable.canaltattack then
+											if offhandWeapon.CanSwipeAttack then
+												meleeRange = meleeRange * 0.8
+											else
+												meleeRange = meleeRange * 1.2
+											end
+										end
+									end
+
+									local tr = util.TraceLine({
+										start = pos,
+										endpos = pos + (aimVector * meleeRange),
+										mask = MASK_SOLID,
+										filter = owner
+									})
+									
+									if tr.Hit then
+										if IsValid(tr.Entity) then
+											if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
+												table.insert(hitEntities, tr.Entity);
+											else
+												hitsAllowed = 0;
+											end
+												
+											self:HandleHit(tr.Entity, tr.HitPos, stance, nil, offhandWeapon, offhandAttackTable);
+										end
+									end
+										
+									if !tr.Hit or #hitEntities < hitsAllowed then
+										for i = 1, meleeArc - 1 do
+											local newAimVector = Vector(aimVector);
+										
+											if (i % 2 == 0) then
+												-- If even go left.
+												newAimVector:Rotate(Angle(0, math.Round(i / 2), 0));
+											else
+												-- If odd go right.
+												newAimVector:Rotate(Angle(0, -math.Round(i / 2), 0));
+											end
+
+											local tr2 = util.TraceLine({
+												start = pos,
+												endpos = pos + (newAimVector * meleeRange),
+												mask = MASK_SOLID,
+												filter = owner
+											})
+											
+											if tr2.Hit then
+												if IsValid(tr2.Entity) and !table.HasValue(hitEntities, tr2.Entity) then
+													if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
+														table.insert(hitEntities, tr2.Entity);
+														
+														self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities, offhandWeapon, offhandAttackTable);
+													end
+												end
+											
+												if #hitEntities >= hitsAllowed then
+													break;
+												end
+											end
+										end
+									end
+								end
+								
+								owner:LagCompensation(false);
+							end
 							
 							if (owner:KeyDown(IN_ATTACK2)) then
 								if (!owner:KeyDown(IN_USE)) then
@@ -649,7 +965,19 @@ function SWEP:PrimaryAttack()
 											local curTime = CurTime();
 											
 											if (loweredParryDebug < curTime) then
-												local blockTable = GetTable(activeWeapon.realBlockTable);
+												local blockTable;
+												
+												if activeWeapon:GetNWString("activeOffhand"):len() > 0 then
+													local offhandTable = weapons.GetStored(activeWeapon:GetNWString("activeOffhand"));
+													
+													if offhandTable then
+														blockTable = GetDualTable(activeWeapon.realBlockTable, offhandTable.BlockTable);
+													else
+														blockTable = GetTable(activeWeapon.realBlockTable);
+													end
+												else
+													blockTable = GetTable(activeWeapon.realBlockTable);
+												end
 												
 												if (blockTable and owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !owner:GetNWBool("Parried")) then
 													owner:SetNWBool("Guardening", true);
@@ -676,21 +1004,40 @@ function SWEP:PrimaryAttack()
 
 	if (SERVER) then
 		local max_poise = owner:GetNetVar("maxMeleeStamina");
+		local takeAmmo = attacktable["takeammo"];
 		
-		owner:SetNWInt("meleeStamina", math.Clamp(owner:GetNWInt("meleeStamina", max_poise) - (attacktable["takeammo"]), 0, max_poise))
+		if offhandAttackTable then
+			takeAmmo = math.max(takeAmmo, offhandAttackTable["takeammo"]);
+		end
+		
+		owner:SetNWInt("meleeStamina", math.Clamp(owner:GetNWInt("meleeStamina", max_poise) - takeAmmo, 0, max_poise));
 	end;
 end
 
 --if (SERVER) then
-	function SWEP:HandleHit(hit, src, swingType, hitIndex)
+	function SWEP:HandleHit(hit, src, swingType, hitIndex, offhandWeapon, offhandAttackTable)
 		local distance;
-		local attacktable = GetTable(self.AttackTable);
+		local attacktable = GetTable(offhandAttackTable or self.AttackTable);
 		local attacksoundtable = GetSoundTable(self.AttackSoundTable);
 		local blockTable = GetTable(self:GetNWString("activeShield"));
 		local hit_reduction = 1;
 		local shield_reduction = 1;
 		local owner = self.Owner;
+		local weaponClass = self:GetClass();
+		local bTake;
 		local enemywep;
+		local weapon = self;
+		
+		if offhandWeapon then
+			attacksoundtable = GetSoundTable(offhandWeapon.AttackSoundTable);
+			weaponClass = self:GetNWString("activeOffhand");
+			
+			if !self.Owner:HasWeapon(weaponClass) then
+				weapon = self.Owner:Give(weaponClass) or self;
+				
+				bTake = true;
+			end
+		end
 		
 		if (hit:IsWorld()) then
 			for k, v in pairs (ents.FindInSphere(src, 32)) do
@@ -723,6 +1070,10 @@ end
 		
 		local damage = (attacktable["primarydamage"])
 		local damagetype = (attacktable["dmgtype"])
+		
+		if self:GetNWString("activeOffhand"):len() > 0 then
+			damage = damage * 0.6;
+		end
 
 		if swingType == "parry_swing" then
 			if (IsValid(hit) and owner:IsValid() and !owner:IsRagdolled() and owner:Alive()) then
@@ -737,13 +1088,13 @@ end
 				d:SetAttacker( owner )
 				d:SetDamageType( damagetype )
 				d:SetDamagePosition(src)
-				d:SetInflictor(self);
+				d:SetInflictor(weapon);
 			
 				if (hit:IsPlayer()) then
 					d:SetDamageForce(owner:GetForward() * 5000);
 					
 					if (hit:IsRagdolled()) then
-						if string.find(self:GetClass(), "begotten_dagger_") or string.find(self:GetClass(), "begotten_dualdagger_") then -- Daggers deal more damage against fallen opponents
+						if string.find(weaponClass, "begotten_dagger_") then -- Daggers deal more damage against fallen opponents
 							d:SetDamage(d:GetDamage() * 4)
 						end
 					end
@@ -756,12 +1107,20 @@ end
 					
 					-- Fire attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "fire_swing" then
-						hit:Ignite(self.IgniteTime * 3)
+						if offhandWeapon then
+							hit:Ignite(weapon.IgniteTime * 2);
+						else
+							hit:Ignite(weapon.IgniteTime * 3);
+						end
 					end
 					
 					-- Ice attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "ice_swing" then
-						data.HitEntity:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1), owner);
+						if offhandWeapon then
+							data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+						else
+							data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+						end
 					end
 				end
 
@@ -795,12 +1154,20 @@ end
 
 					-- Fire attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "fire_swing" then
-						hit:Ignite(self.IgniteTime)
+						if offhandWeapon then
+							hit:Ignite(weapon.IgniteTime * 2);
+						else
+							hit:Ignite(weapon.IgniteTime * 3);
+						end
 					end
 					
 					-- Ice attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "ice_swing" then
-						data.HitEntity:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1), owner);
+						if offhandWeapon then
+							data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+						else
+							data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+						end
 					end
 				end
 			end
@@ -829,7 +1196,7 @@ end
 				damagetype = 16;
 				
 				-- Blunt swipe or piercing thrust?
-				if self.CanSwipeAttack == true then
+				if weapon.CanSwipeAttack == true then
 					damagetype = 128
 					
 					if hit:IsValid() then
@@ -851,7 +1218,7 @@ end
 					end
 				else
 					if (IsValid(self)) then
-						if string.find(self:GetClass(), "begotten_polearm_") then
+						if string.find(weaponClass, "begotten_polearm_") then
 							local max_dist = 75;
 							
 							if distance >= 0 and distance <= max_dist and hit:IsValid() then
@@ -914,8 +1281,22 @@ end
 					end
 				end
 				
-				-- Spear Damage System (Messy)					
+				-- Condition damage modifier
 				local itemTable = item.GetByWeapon(self);
+				
+				if offhandWeapon then
+					for k, v in pairs(self.Owner.equipmentSlots) do
+						if v:IsTheSameAs(itemTable) then
+							local offhandItem = self.Owner.equipmentSlots[k.."Offhand"];
+							
+							if offhandItem then
+								itemTable = offhandItem;
+							end
+						
+							break;
+						end
+					end
+				end
 				
 				if itemTable then
 					local condition = itemTable:GetCondition();
@@ -931,19 +1312,20 @@ end
 					end
 				end
 				
+				-- Spear Damage System (Messy)	
 				if (IsValid(hit) and owner:IsValid() and !owner:IsRagdolled() and owner:Alive()) then
 					local d = DamageInfo()
 					d:SetDamage( damage * shield_reduction * (attacktable["altattackdamagemodifier"] or 1) * hit_reduction)
 					d:SetAttacker( owner )
 					d:SetDamageType( damagetype )
 					d:SetDamagePosition(src)
-					d:SetInflictor(self);
+					d:SetInflictor(weapon);
 				
 					if (hit:IsPlayer()) then
 						d:SetDamageForce(owner:GetForward() * 5000);
 						
 						if (hit:IsRagdolled()) then
-							if string.find(self:GetClass(), "begotten_dagger_") or string.find(self:GetClass(), "begotten_dualdagger_") then -- Daggers deal more damage against fallen opponents
+							if string.find(weaponClass, "begotten_dagger_") then -- Daggers deal more damage against fallen opponents
 								d:SetDamage(d:GetDamage() * 4)
 							end
 						end
@@ -953,27 +1335,43 @@ end
 					
 					if (hit:IsNPC() or hit:IsNextBot()) then
 						-- Fire attack type
-						if (attacktable["attacktype"]) == "fire_swing" then
-							hit:Ignite(self.IgniteTime)
+						if attacktable["attacktype"] == "fire_swing" then
+							if offhandWeapon then
+								hit:Ignite(weapon.IgniteTime * 2);
+							else
+								hit:Ignite(weapon.IgniteTime * 3);
+							end
 						end
 						
 						-- Ice attack type
-						if (attacktable["attacktype"]) == "ice_swing" then
-							data.HitEntity:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1), owner);
+						if attacktable["attacktype"] == "ice_swing" then
+							if offhandWeapon then
+								data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+							else
+								data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+							end
 						end
 					else
 						if hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and !hit:GetNWBool("Parry") == true and !hit.iFrames then
 							-- Fire attack type
-							if (attacktable["attacktype"]) == "fire_swing" then
-								hit:Ignite(self.IgniteTime)
+							if attacktable["attacktype"] == "fire_swing" then
+								if offhandWeapon then
+									hit:Ignite(weapon.IgniteTime * 2);
+								else
+									hit:Ignite(weapon.IgniteTime * 3);
+								end
 							end
 							
 							-- Ice attack type
-							if (attacktable["attacktype"]) == "ice_swing" then
-								hit:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1) * 0.85, owner);
+							if attacktable["attacktype"] == "ice_swing" then
+								if offhandWeapon then
+									data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+								else
+									data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+								end
 							end
 							
-							if self.CanSwipeAttack == true then
+							if weapon.CanSwipeAttack == true then
 								hit:TakeStability(15)		
 							end
 						end
@@ -1012,7 +1410,7 @@ end
 				local poledamage = (attacktable["primarydamage"])
 				local poletype = (attacktable["dmgtype"])
 				
-				if self.ShortPolearm != true then
+				if weapon.ShortPolearm != true then
 					if distance >= 0 and distance <= 35 and hit:IsValid() then
 						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
 							--print "Tier 0"
@@ -1371,9 +1769,22 @@ end
 					end
 				end
 				
-				-- Polearm Damage System
-			
+				-- Condition damage modifier
 				local itemTable = item.GetByWeapon(self);
+				
+				if offhandWeapon then
+					for k, v in pairs(self.Owner.equipmentSlots) do
+						if v:IsTheSameAs(itemTable) then
+							local offhandItem = self.Owner.equipmentSlots[k.."Offhand"];
+							
+							if offhandItem then
+								itemTable = offhandItem;
+							end
+						
+							break;
+						end
+					end
+				end
 				
 				if itemTable then
 					local condition = itemTable:GetCondition();
@@ -1389,19 +1800,20 @@ end
 					end
 				end
 			
+				-- Polearm Damage System
 				if (IsValid(hit) and owner:IsValid() and !owner:IsRagdolled() and owner:Alive()) then
 					local d = DamageInfo()
 					d:SetDamage( poledamage * shield_reduction * hit_reduction)
 					d:SetAttacker( owner )
 					d:SetDamageType( damagetype )
 					d:SetDamagePosition(src)
-					d:SetInflictor(self);
+					d:SetInflictor(weapon);
 				
 					if (hit:IsPlayer()) then
 						d:SetDamageForce(owner:GetForward() * 5000);
 						
 						if (hit:IsRagdolled()) then
-							if string.find(self:GetClass(), "begotten_dagger_") or string.find(self:GetClass(), "begotten_dualdagger_") then -- Daggers deal more damage against fallen opponents
+							if string.find(weaponClass, "begotten_dagger_") then -- Daggers deal more damage against fallen opponents
 								d:SetDamage(d:GetDamage() * 4)
 							end
 						end
@@ -1411,27 +1823,43 @@ end
 
 					if (hit:IsNPC() or hit:IsNextBot()) then
 						-- Fire attack type
-						if (attacktable["attacktype"]) == "fire_swing" then
-							hit:Ignite(self.IgniteTime)
+						if attacktable["attacktype"] == "fire_swing" then
+							if offhandWeapon then
+								hit:Ignite(weapon.IgniteTime * 2);
+							else
+								hit:Ignite(weapon.IgniteTime * 3);
+							end
 						end
 						
 						-- Ice attack type
-						if (attacktable["attacktype"]) == "ice_swing" then
-							data.HitEntity:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1), owner);
+						if attacktable["attacktype"] == "ice_swing" then
+							if offhandWeapon then
+								data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+							else
+								data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+							end
 						end
 					else
 						if hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and !hit:GetNWBool("Parry") == true and !hit.iFrames then
 							-- Fire attack type
-							if (attacktable["attacktype"]) == "fire_swing" then
-								hit:Ignite(self.IgniteTime)
+							if attacktable["attacktype"] == "fire_swing" then
+								if offhandWeapon then
+									hit:Ignite(weapon.IgniteTime * 2);
+								else
+									hit:Ignite(weapon.IgniteTime * 3);
+								end
 							end
 							
 							-- Ice attack type
-							if (attacktable["attacktype"]) == "ice_swing" then
-								hit:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1) * 0.85, owner);
+							if attacktable["attacktype"] == "ice_swing" then
+								if offhandWeapon then
+									data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+								else
+									data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+								end
 							end
 							
-							if self.CanSwipeAttack == true then
+							if weapon.CanSwipeAttack == true then
 								hit:TakeStability(15)		
 							end
 						end
@@ -1465,7 +1893,7 @@ end
 				local distance = (owner:GetPos():Distance(hit:GetPos()))
 
 				if (IsValid(self)) then
-					if string.find(self:GetClass(), "begotten_spear_") then
+					if string.find(weaponClass, "begotten_spear_") then
 						if distance >= 0 and distance <= 64 and hit:IsValid() then
 							damage = (attacktable["primarydamage"]) * 0.05
 							damagetype = 128
@@ -1512,7 +1940,7 @@ end
 					else
 						-- For non-spears
 						if hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect") and !hit.iFrames then
-							if owner.GetCharmEquipped and owner:GetCharmEquipped("ring_pugilist") and self:GetClass() == "begotten_fists" then
+							if owner.GetCharmEquipped and owner:GetCharmEquipped("ring_pugilist") and weaponClass == "begotten_fists" then
 								hit:TakeStability(25);
 							else
 								hit:TakeStability((attacktable["stabilitydamage"] * shield_reduction * hit_reduction));
@@ -1520,7 +1948,7 @@ end
 						end
 						
 						-- Bellhammer special
-						if self.IsBellHammer == true and ((hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect"))) and !hit.iFrames then
+						if weapon.IsBellHammer == true and ((hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect"))) and !hit.iFrames then
 							owner:Disorient(1)
 							
 							timer.Simple(0.2, function() 
@@ -1536,8 +1964,22 @@ end
 					end
 				end
 
-				-- Spear Damage System (Messy)					
+				-- Condition damage modifier
 				local itemTable = item.GetByWeapon(self);
+				
+				if offhandWeapon then
+					for k, v in pairs(self.Owner.equipmentSlots) do
+						if v:IsTheSameAs(itemTable) then
+							local offhandItem = self.Owner.equipmentSlots[k.."Offhand"];
+							
+							if offhandItem then
+								itemTable = offhandItem;
+							end
+						
+							break;
+						end
+					end
+				end
 
 				if itemTable then
 					local condition = itemTable:GetCondition();
@@ -1553,19 +1995,20 @@ end
 					end
 				end
 			
+				-- Spear Damage System (Messy)
 				if (IsValid(hit) and owner:IsValid() and !owner:IsRagdolled() and owner:Alive()) then
 					local d = DamageInfo()
 					d:SetDamage( damage * shield_reduction * hit_reduction)
 					d:SetAttacker( owner )
 					d:SetDamageType( damagetype )
 					d:SetDamagePosition(src)
-					d:SetInflictor(self);
+					d:SetInflictor(weapon);
 				
 					if (hit:IsPlayer()) then
 						d:SetDamageForce(owner:GetForward() * 5000);
 						
 						if (hit:IsRagdolled()) then
-							if string.find(self:GetClass(), "begotten_dagger_") or string.find(self:GetClass(), "begotten_dualdagger_") then -- Daggers deal more damage against fallen opponents
+							if string.find(weaponClass, "begotten_dagger_") then -- Daggers deal more damage against fallen opponents
 								d:SetDamage(d:GetDamage() * 4)
 							end
 						end
@@ -1575,27 +2018,43 @@ end
 
 					if (hit:IsNPC() or hit:IsNextBot()) then
 						-- Fire attack type
-						if (attacktable["attacktype"]) == "fire_swing" then
-							hit:Ignite(self.IgniteTime)
+						if attacktable["attacktype"] == "fire_swing" then
+							if offhandWeapon then
+								hit:Ignite(weapon.IgniteTime * 2);
+							else
+								hit:Ignite(weapon.IgniteTime * 3);
+							end
 						end
 						
 						-- Ice attack type
-						if (attacktable["attacktype"]) == "ice_swing" then
-							data.HitEntity:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1), owner);
+						if attacktable["attacktype"] == "ice_swing" then
+							if offhandWeapon then
+								data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+							else
+								data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+							end
 						end
 					else
 						if hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and !hit:GetNWBool("Parry") == true and !hit.iFrames then
 							-- Fire attack type
-							if (attacktable["attacktype"]) == "fire_swing" then
-								hit:Ignite(self.IgniteTime)
+							if attacktable["attacktype"] == "fire_swing" then
+								if offhandWeapon then
+									hit:Ignite(weapon.IgniteTime * 2);
+								else
+									hit:Ignite(weapon.IgniteTime * 3);
+								end
 							end
 							
 							-- Ice attack type
-							if (attacktable["attacktype"]) == "ice_swing" then
-								hit:AddFreeze(self.FreezeDamage * (hit:WaterLevel() + 1) * 0.85, owner);
+							if attacktable["attacktype"] == "ice_swing" then
+								if offhandWeapon then
+									data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+								else
+									data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+								end
 							end
 							
-							if self.CanSwipeAttack == true then
+							if weapon.CanSwipeAttack == true then
 								hit:TakeStability(15)		
 							end
 						end
@@ -1606,6 +2065,14 @@ end
 					end
 				end
 			end
+		end
+		
+		if bTake then
+			timer.Simple(FrameTime(), function()
+				if IsValid(self.Owner) then
+					self.Owner:StripWeapon(weaponClass);
+				end
+			end);
 		end
 	end
 --end
@@ -1856,7 +2323,20 @@ function SWEP:SecondaryAttack()
 	local ParryDelay = self:GetNextPrimaryFire()
 	local attacktable = GetTable(self.AttackTable);
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
-	local blocktable = GetTable(self.realBlockTable);
+	local blocktable;
+
+	if self:GetNWString("activeOffhand"):len() > 0 then
+		local offhandTable = weapons.GetStored(self:GetNWString("activeOffhand"));
+		
+		if offhandTable then
+			blocktable = GetDualTable(self.realBlockTable, offhandTable.BlockTable);
+		else
+			blocktable = GetTable(self.realBlockTable);
+		end
+	else
+		blocktable = GetTable(self.realBlockTable);
+	end
+	
 	local parryWindow = blocktable["parrydifficulty"] or 0.15;
 	local curTime = CurTime();
 
@@ -1946,7 +2426,19 @@ function SWEP:SecondaryAttack()
 							local curTime = CurTime();
 							
 							if (loweredParryDebug < curTime) then
-								local blockTable = GetTable(activeWeapon.realBlockTable);
+								local blockTable;
+
+								if activeWeapon:GetNWString("activeOffhand"):len() > 0 then
+									local offhandTable = weapons.GetStored(activeWeapon:GetNWString("activeOffhand"));
+									
+									if offhandTable then
+										blockTable = GetDualTable(activeWeapon.realBlockTable, offhandTable.BlockTable);
+									else
+										blockTable = GetTable(activeWeapon.realBlockTable);
+									end
+								else
+									blockTable = GetTable(activeWeapon.realBlockTable);
+								end
 								
 								if (blockTable and self.Owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self.Owner:GetNWBool("Parried")) then
 									self.Owner:SetNWBool("Guardening", true);
@@ -1979,7 +2471,19 @@ function SWEP:SecondaryAttack()
 							local curTime = CurTime();
 							
 							if (loweredParryDebug < curTime) then
-								local blockTable = GetTable(activeWeapon.realBlockTable);
+								local blockTable;
+
+								if activeWeapon:GetNWString("activeOffhand"):len() > 0 then
+									local offhandTable = weapons.GetStored(activeWeapon:GetNWString("activeOffhand"));
+									
+									if offhandTable then
+										blockTable = GetDualTable(activeWeapon.realBlockTable, offhandTable.BlockTable);
+									else
+										blockTable = GetTable(activeWeapon.realBlockTable);
+									end
+								else
+									blockTable = GetTable(activeWeapon.realBlockTable);
+								end
 								
 								if (blockTable and self.Owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self.Owner:GetNWBool("Parried")) then
 									self.Owner:SetNWBool("Guardening", true);
@@ -2196,12 +2700,74 @@ function SWEP:GetPrintName()
 		if shieldTable and shieldTable.name then
 			return self.PrintName.." & "..shieldTable.name;
 		end
+	elseif self:GetNWString("activeOffhand"):len() > 0 then
+		local weaponTable = weapons.GetStored(self:GetNWString("activeOffhand"));
+
+		if weaponTable and weaponTable.PrintName then
+			if weaponTable.PrintName == self.PrintName then
+				if self.DualNameOverride then
+					return self.DualNameOverride;
+				else
+					return "Dual "..self.PrintName.."s";
+				end
+			else
+				local tab = {self.PrintName, weaponTable.PrintName};
+			
+				table.sort(tab);
+			
+				return tab[1].." & "..tab[2];
+			end
+		end
 	end
 	
 	return self.PrintName;
 end
 
+function SWEP:EquipOffhand(weaponClass)
+	if self:GetNWString("activeShield"):len() > 0 then
+		return;
+	end
+
+	if SERVER then
+		self:CallOnClient("EquipOffhand", weaponClass);
+	end
+	
+	local weaponTable = weapons.GetStored(weaponClass);
+	
+	if weaponTable then
+		self:SetNWString("activeOffhand", weaponClass);
+
+		if IsValid(self.Owner) then
+			self.Owner:CancelGuardening();
+		end
+		
+		self:Initialize();
+	end
+end
+
+function SWEP:HolsterOffhand()
+	if SERVER then
+		self:CallOnClient("HolsterOffhand"); 
+	end
+
+	self:SetNWString("activeOffhand", "");
+	
+	if CLIENT then
+		self:RemoveModels();
+	end
+
+	if IsValid(self.Owner) then
+		self.Owner:CancelGuardening();
+	end
+	
+	self:Initialize();
+end
+
 function SWEP:EquipShield(uniqueID)
+	if self:GetNWString("activeOffhand"):len() > 0 then
+		return;
+	end
+
 	if SERVER then
 		self:CallOnClient("EquipShield", uniqueID);
 	end
@@ -2242,12 +2808,18 @@ function SWEP:Initialize()
 		local shieldTable = GetTable(self:GetNWString("activeShield"));
 		
 		if shieldTable then
+			local weaponTable = weapons.GetStored(self:GetClass());
+			
 			self.realBlockAnim = shieldTable.blockanim;
 			self.realBlockTable = shieldTable;
+			self.realBlockTableOffhand = nil;
 			self.realBlockSoundTable = shieldTable.blocksoundtable;
 			self.realCriticalAnim = self.CriticalAnimShield;
 			self.realHoldType = self.HoldTypeShield;
 			self.realParryAnim = "a_sword_shield_parry";
+			self.ViewModel = weaponTable.ViewModel;
+			self.ViewModelFOV = weaponTable.ViewModelFOV;
+			self.ViewModelBoneMods = weaponTable.ViewModelBoneMods;
 			
 			local ironsightsTab = shieldTable.ironsights[self.ViewModel];
 			
@@ -2261,28 +2833,78 @@ function SWEP:Initialize()
 		else
 			error("Shield not found for player "..self.Owner:GetName().." swep "..self:GetPrintName().." shield "..self:GetNWString("activeShield").."!");
 		end
+	elseif self:GetNWString("activeOffhand"):len() > 0 then
+		local weaponTable = weapons.GetStored(self:GetNWString("activeOffhand"));
+		
+		if weaponTable then
+			self.realBlockAnim = "a_dual_swords_block";
+			self.realBlockTable = GetTable(self.BlockTable);
+			self.realBlockTableOffhand = GetTable(weaponTable.BlockTable or self.BlockTable);
+			self.realBlockSoundTable = self.BlockSoundTable;
+			self.realCriticalAnim = "a_dual_swords_slash_01";
+			self.realHoldType = "wos-begotten_dual";
+			self.realParryAnim = "a_dual_swords_parry";
+			self.realIronSightsPos = Vector(7.76, -4.824, -1.321);
+			self.realIronSightsAng = Vector(0, 28.843, 8.442);
+			self.ViewModel = "models/c_begotten_duals.mdl";
+			self.ViewModelFOV = 70;
+			self.ViewModelBoneMods = {};
+			self.MultiHit = 2;
+		else
+			error("Weapon for dual-wielding not found for player "..self.Owner:GetName().." swep "..self:GetPrintName().." left weapon "..self:GetNWString("activeOffhand").."!");
+		end
 	else
+		local weaponTable = weapons.GetStored(self:GetClass());
+		
 		self.realBlockAnim = self.BlockAnim;
 		self.realBlockTable = GetTable(self.BlockTable);
+		self.realBlockTableOffhand = nil;
 		self.realBlockSoundTable = self.BlockSoundTable;
 		self.realCriticalAnim = self.CriticalAnim;
 		self.realHoldType = self.HoldType;
 		self.realParryAnim = self.ParryAnim;
 		self.realIronSightsPos = self.IronSightsPos;
 		self.realIronSightsAng = self.IronSightsAng;
+		self.ViewModel = weaponTable.ViewModel;
+		self.ViewModelFOV = weaponTable.ViewModelFOV;
+		self.ViewModelBoneMods = weaponTable.ViewModelBoneMods;
+		self.MultiHit = weaponTable.MultiHit;
 	end
 
 	self:InitFunc();
 	
-	local blocktable = GetTable(self.realBlockTable);
-	self.RaiseSpeed = blocktable["raisespeed"]
-	self.LowerSpeed = blocktable["raisespeed"]
-	self.InstantRaise = blocktable["instantraise"]
+	if IsValid(self.Owner) and self.Owner:IsPlayer() then
+		local vm = self.Owner:GetViewModel();
+		
+		if IsValid(vm) then
+			vm:SetModel(self.ViewModel);
+		end
+	end
+	
+	local blocktable = self.realBlockTable;
+	local blocktableOffhand = self.realBlockTableOffhand;
+	
+	if blocktableOffhand then
+		self.RaiseSpeed = math.max(blocktable["raisespeed"], blocktableOffhand["raisespeed"]) * 1.666;
+		self.LowerSpeed =  math.max(blocktable["raisespeed"], blocktableOffhand["raisespeed"]) * 1.666;
+		self.InstantRaise = false;
+	else
+		self.RaiseSpeed = blocktable["raisespeed"];
+		self.LowerSpeed = blocktable["raisespeed"];
+		self.InstantRaise = blocktable["instantraise"];
+	end
+	
 	self.RaiseSound = "cloth.wav";
 	
 	self:SetHoldType(self.realHoldType);
 
 	if CLIENT then
+		local weaponTable = weapons.GetStored(self:GetClass());
+		
+		self.VElements = table.FullCopy(weaponTable.VElements);
+		self.WElements = table.FullCopy(weaponTable.WElements);
+		self.ViewModelBoneMods = table.FullCopy(self.ViewModelBoneMods);
+	
 		if !self.HasShield then
 			if self:GetNWString("activeShield"):len() > 0 then
 				local shieldTable = GetTable(self:GetNWString("activeShield"));
@@ -2351,9 +2973,83 @@ function SWEP:Initialize()
 			end
 		end
 		
-		self.VElements = table.FullCopy( self.VElements )
-		self.WElements = table.FullCopy( self.WElements )
-		self.ViewModelBoneMods = table.FullCopy( self.ViewModelBoneMods )
+		if self:GetNWString("activeOffhand"):len() > 0 then
+			local offhandTable = weapons.GetStored(self:GetNWString("activeOffhand"));
+			
+			if offhandTable then
+				--local angleOverride = self.ViewModelDualRotation or Angle(0, 0, 0);
+				--local offhandAngleOverride = offhandTable.ViewModelDualRotation or Angle(0, 0, 0);
+				--local positionOverride = self.ViewModelDualPosition or Vector(0, 0, 0);
+				--local offhandPositionOverride = offhandTable.ViewModelDualPosition or Vector(0, 0, 0);
+				
+				if self.VElements and offhandTable.VElements then
+					for k, v in pairs(self.VElements) do
+						if v.bone == "ValveBiped.Bip01_L_Hand" then
+							--v.angle = v.angle + Angle(90, 90, 90) + angleOverride;
+							--v.bone = "Dummy16";
+							--v.pos = v.pos + Vector(-3.5, -12.5, 0) + positionOverride;
+							v.angle = v.angle + Angle(180, 180, 0);
+							v.pos = Vector(v.pos.x, v.pos.y, -v.pos.z);
+						elseif v.bone == "ValveBiped.Bip01_R_Hand" then
+							--v.angle = v.angle + Angle(90, 90, 90) + angleOverride;
+							--v.angle = v.angle + Angle(20, 0, 0)
+							--v.bone = "Dummy01";
+							v.pos = v.pos + Vector(-1, -1, 0);
+						end
+					end
+				
+					for k, v in pairs(offhandTable.VElements) do
+						if v.bone == "ValveBiped.Bip01_L_Hand" then
+							self.VElements[k.."_right"] = table.FullCopy(v);
+							--self.VElements[k.."_right"].angle = v.angle + Angle(90, 90, 90) + offhandAngleOverride;
+							--self.VElements[k.."_right"].bone = "Dummy01";
+							self.VElements[k.."_right"].angle = v.angle;
+							self.VElements[k.."_right"].bone = "ValveBiped.Bip01_R_Hand";
+							self.VElements[k.."_right"].pos = v.pos + Vector(-1, -1, 0);
+							--self.VElements[k.."_right"].pos = v.pos + Vector(-3.5, -9, -1.5) + offhandPositionOverride;
+						elseif v.bone == "ValveBiped.Bip01_R_Hand" then
+							self.VElements[k.."_left"] = table.FullCopy(v);
+							--self.VElements[k.."_left"].angle = v.angle + Angle(90, 90, 90) + offhandAngleOverride;
+							--self.VElements[k.."_left"].bone = "Dummy16";
+							self.VElements[k.."_left"].angle = v.angle + Angle(180, 180, 0);
+							self.VElements[k.."_left"].bone = "ValveBiped.Bip01_L_Hand";
+							self.VElements[k.."_left"].pos = Vector(v.pos.x, v.pos.y, -v.pos.z);
+							--self.VElements[k.."_left"].pos = v.pos + Vector(-3.5, -9, -1.5) + offhandPositionOverride;
+						end
+					end
+				end
+				
+				if self.WElements and offhandTable.WElements then
+					for k, v in pairs(self.WElements) do
+						if v.bone == "ValveBiped.Bip01_L_Hand" then
+							v.angle = v.angle + Angle(180, 180, 0);
+							v.pos = Vector(v.pos.x, v.pos.y, -v.pos.z);
+						elseif v.bone == "ValveBiped.Bip01_R_Hand" then
+							v.angle = v.angle + Angle(20, 0, 0);
+							v.pos = v.pos + Vector(0, 0, -2);
+						end
+					end
+				
+					for k, v in pairs(offhandTable.WElements) do
+						if v.bone == "ValveBiped.Bip01_L_Hand" then
+							self.WElements[k.."_right"] = table.FullCopy(v);
+							self.WElements[k.."_right"].angle = v.angle + Angle(20, 0, 0);
+							self.WElements[k.."_right"].bone = "ValveBiped.Bip01_R_Hand";
+							self.WElements[k.."_right"].pos = v.pos + Vector(0, 0, -2);
+						elseif v.bone == "ValveBiped.Bip01_R_Hand" then
+							self.WElements[k.."_left"] = table.FullCopy(v);
+							self.WElements[k.."_left"].angle = v.angle + Angle(175, 180, 0);
+							self.WElements[k.."_left"].bone = "ValveBiped.Bip01_L_Hand";
+							self.WElements[k.."_left"].pos = Vector(v.pos.x, v.pos.y, -v.pos.z);
+						end
+					end
+				end
+			end
+		end
+		
+		--self.VElements = table.FullCopy( self.VElements )
+		--self.WElements = table.FullCopy( self.WElements )
+		--self.ViewModelBoneMods = table.FullCopy( self.ViewModelBoneMods )
 
 		if LocalPlayer() == self.Owner then
 			self:CreateModels(self.VElements) // create viewmodels
@@ -2386,9 +3082,10 @@ function SWEP:Initialize()
 		end
 
 		if IsValid(self.Owner) and self.Owner:IsPlayer() then
-			local vm = self.Owner:GetViewModel()
+			local vm = self.Owner:GetViewModel();
 			
 			if IsValid(vm) then
+				vm:SetModel(self.ViewModel);
 				self:ResetBonePositions(vm);
 			end
 		end
@@ -2500,11 +3197,8 @@ if CLIENT then
 		if !IsValid(vm) then return end
 		
 		if (!self.VElements) then return end
-		
-		self:UpdateBonePositions(vm)
 
 		if (!self.vRenderOrder) then
-
 			self.vRenderOrder = {}
 
 			for k, v in pairs( self.VElements ) do
@@ -2639,6 +3333,16 @@ if CLIENT then
 			self.activeShield = nil;
 			self:HolsterShield();
 		end
+		
+		if self:GetNWString("activeOffhand"):len() > 0 then
+			if !self.activeOffhand or self.activeOffhand ~= self:GetNWString("activeOffhand") then
+				self.activeOffhand = self:GetNWString("activeOffhand");
+				self:EquipOffhand(self.activeOffhand);
+			end
+		elseif self.activeOffhand then
+			self.activeOffhand = nil;
+			self:HolsterOffhand();
+		end
 	
 		self:CustomWorldDrawn()
 		
@@ -2648,7 +3352,7 @@ if CLIENT then
 		
 		if (!self.WElements) then return end
 		
-		if (!self.wRenderOrder) then
+		if (!self.wRenderOrder) or table.IsEmpty(self.wRenderOrder) then
 			self.wRenderOrder = {}
 
 			for k, v in pairs( self.WElements ) do
@@ -2784,9 +3488,10 @@ if CLIENT then
 				pos, ang = m:GetTranslation(), m:GetAngles()
 			end
 			
-			if (IsValid(self.Owner) and self.Owner:IsPlayer() and 
-				ent == self.Owner:GetViewModel() and self.ViewModelFlip) then
-				ang.r = -ang.r 
+			if (IsValid(self.Owner) and self.Owner:IsPlayer() and ent == self.Owner:GetViewModel()) then
+				if self.ViewModelFlip then
+					ang.r = -ang.r 
+				end
 			end
 		end
 		

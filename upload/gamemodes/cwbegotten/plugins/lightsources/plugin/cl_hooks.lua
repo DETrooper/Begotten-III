@@ -95,7 +95,7 @@ function cwLantern:Think()
 		end;
 		
 		local entIndex = k:EntIndex();
-		local dynamicLight = DynamicLight("lantern_"..entIndex);
+		local dynamicLight = DynamicLight(entIndex);
 		local bonePositon = k:GetBonePosition(handIndex);
 		
 		if (dynamicLight) then
@@ -146,7 +146,7 @@ function cwLantern:Think()
 							end;
 
 							local entIndex = v:EntIndex();
-							local dynamicLight = DynamicLight("lantern_"..entIndex);
+							local dynamicLight = DynamicLight(entIndex);
 							local bonePositon = v:GetBonePosition(handIndex);
 							
 							if (dynamicLight) then

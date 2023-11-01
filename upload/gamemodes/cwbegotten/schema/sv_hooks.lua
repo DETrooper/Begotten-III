@@ -2879,7 +2879,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		if IsValid(attackerWeapon) then
 			local weaponClass = attackerWeapon:GetClass();
 			
-			if string.find(weaponClass, "begotten_dagger_") or string.find(weaponClass, "begotten_dualdagger_") then
+			if string.find(weaponClass, "begotten_dagger_") then
 				if attacker:GetSubfaction() == "Kinisger" then
 					damageInfo:ScaleDamage(1.25);
 				end

@@ -103,19 +103,20 @@ local COMMAND = Clockwork.command:New("Enlist")
 					end
 				
 					if istable(subfaction) then
-						if targetFaction == "Wanderer" then
+						if targetFaction == "Wanderer" or (targetFaction == "Children of Satan" and target:GetSubfaction() == "Kinisger") then
 							Clockwork.dermaRequest:RequestConfirmation(target, "Gatekeeper Enlistment", player:Name().." has invited you to enlist in the Gatekeepers!", function()
 								targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
 								
-								if targetFaction == "Wanderer" and target:Alive() and Clockwork.faction:IsGenderValid("Gatekeeper", target:GetGender()) then
+								if (targetFaction == "Wanderer" or (targetFaction == "Children of Satan" and target:GetSubfaction() == "Kinisger")) and target:Alive() and Clockwork.faction:IsGenderValid("Gatekeeper", target:GetGender()) then
 									local bSuccess, fault = Clockwork.faction:GetStored()["Gatekeeper"]:OnTransferred(target, Clockwork.faction:GetStored()[targetFaction]);
 									
 									if (bSuccess != false) then
-										if !target:GetSharedVar("kinisgerOverride") then
+										if target:GetFaction() ~= "Children of Satan" then
 											target:SetCharacterData("Faction", "Gatekeeper", true);
 											target:SetCharacterData("Subfaction", subfaction.name, true);
 										else
 											target:SetSharedVar("kinisgerOverride", "Gatekeeper");
+											target:SetSharedVar("kinisgerOverrideSubfaction", subfaction.name);
 										end
 										
 										if subfaction.name == "Praeventor" then
@@ -1558,6 +1559,18 @@ function COMMAND:OnRun(player, arguments)
 		
 			if (weaponItem) then
 				weaponItem:SetCondition(condition, true);
+				
+				for k, v in pairs(player.equipmentSlots) do
+					if v:IsTheSameAs(weaponItem) then
+						local offhandItem = player.equipmentSlots[k.."Offhand"];
+						
+						if offhandItem then
+							offhandItem:SetCondition(condition, true);
+						end
+					
+						break;
+					end
+				end
 
 				if (player != target)	then
 					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set "..target:Name().."'s weapon item condition to "..condition..".");

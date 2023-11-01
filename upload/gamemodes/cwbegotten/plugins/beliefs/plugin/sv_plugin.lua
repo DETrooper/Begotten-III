@@ -34,6 +34,11 @@ cwBeliefs.beliefNotifications = {
 	--["deflection"] = "You can now deflect when blocking with melee weapons by performing timed blocks!",
 	["wrestle_subdue"] = "You can now hold down enemies who have been knocked over by switching to your Hands and using Right Click!",
 	["young_son"] = "You can now pray to the Gods by typing '/pray' in the chatbox. You can also now warcry by typing '/warcry' in chat, which will temporarily disorient and lower the sanity of nearby enemy players.",
+	-- Dual wield beliefs.
+	["man_become_beast"] = "You can now dual-wield weapons by combining them in the inventory tab. Only one-handed weapons and daggers can be dual-wielded. You will only be able to thrust attack if both weapons are capable of alternate attacks.",
+	["murder_artform"] = "You can now dual-wield weapons by combining them in the inventory tab. Only one-handed weapons and daggers can be dual-wielded. You will only be able to thrust attack if both weapons are capable of alternate attacks.",
+	["repentant"] = "You can now dual-wield weapons by combining them in the inventory tab. Only one-handed weapons and daggers can be dual-wielded. You will only be able to thrust attack if both weapons are capable of alternate attacks.",
+	["witch_druid"] = "You can now dual-wield weapons by combining them in the inventory tab. Only one-handed weapons and daggers can be dual-wielded. You will only be able to thrust attack if both weapons are capable of alternate attacks.",
 };
 
 cwBeliefs.residualXPZones = {"wasteland", "caves", "gore", "sea_styx", "sea_rough", "sea_calm", "toothboy", "scrapper"};

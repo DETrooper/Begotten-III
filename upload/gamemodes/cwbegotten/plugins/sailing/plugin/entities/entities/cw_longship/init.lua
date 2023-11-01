@@ -238,7 +238,7 @@ function ENT:Use(activator, caller)
 			end
 		end
 		
-		if caller:GetFaction() == "Goreic Warrior" then
+		if caller:GetFaction() == "Goreic Warrior" or caller:IsAdmin() then
 			if (IsValid(self.owner) and caller ~= self.owner) or self.ignited == true then
 				Clockwork.datastream:Start(caller, "OpenLongshipMenu", false, self.ignited, self.repairable, false, false, false);
 			elseif self.destination then

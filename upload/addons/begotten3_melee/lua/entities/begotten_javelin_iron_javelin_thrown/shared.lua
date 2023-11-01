@@ -92,9 +92,9 @@ if SERVER then
 		Sound("physics/metal/metal_grenade_impact_hard3.wav")};
 
 		self.FleshHit = { 
-		Sound("physics/flesh/flesh_impact_bullet1.wav"),
-		Sound("physics/flesh/flesh_impact_bullet2.wav"),
-		Sound("physics/flesh/flesh_impact_bullet3.wav")}
+		Sound("meleesounds/damage1.wav.mp3"),
+		Sound("meleesounds/damage2.wav.mp3"),
+		Sound("meleesounds/damage3.wav.mp3")}
 
 		self:GetPhysicsObject():SetMass(2)	
 
@@ -414,7 +414,7 @@ if SERVER then
 				
 					if !Ent:GetNWBool("Parry") then
 						javelin:StopSound("weapons/throw_swing_03.wav");
-						javelin:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
+						javelin:EmitSound(javelin.Hit[math.random(1, #javelin.Hit)])
 					end
 				
 					return;
@@ -445,7 +445,7 @@ if SERVER then
 								entity:Spawn();
 								entity:SetAngles(self:GetAngles());
 								self:StopSound("weapons/throw_swing_03.wav");
-								entity:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
+								entity:EmitSound(self.FleshHit[math.random(1, #self.FleshHit)], 90)
 								Clockwork.entity:Decay(entity, 300);
 								entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
 								

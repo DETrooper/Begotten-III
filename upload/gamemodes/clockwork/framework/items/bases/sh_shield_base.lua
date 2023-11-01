@@ -90,7 +90,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 	end
 	
 	if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
-		local useSound = itemTable("useSound");
+		local useSound = self("useSound");
 		
 		if (useSound) then
 			if (type(useSound) == "table") then
@@ -167,9 +167,12 @@ function ITEM:OnUse(player, itemEntity)
 		local meleeItem = player.equipmentSlots[v];
 		
 		if meleeItem and meleeItem.canUseShields then
-			suitable_melee = meleeItem.itemID;
-			
-			break;
+			-- Check to make sure the weapon isn't being dual-wielded.
+			if !player.equipmentSlots[v.."Offhand"] then
+				suitable_melee = meleeItem.itemID;
+				
+				break;
+			end
 		end
 	end
 

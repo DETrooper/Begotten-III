@@ -171,11 +171,17 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 	--printp("ent bb2: "..tostring(longshipEntBoundingBox["upper"]));
 	
 	if IsValid(longshipEnt.owner) then
-		local ownerPos = longshipEnt.owner:GetPos();
+		--local ownerPos = longshipEnt.owner:GetPos();
 		--printp("owner pos: "..tostring(ownerPos));
 		--printp("owner is on board: "..tostring(ownerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"])));
+		local tr = util.TraceLine({
+			start = longshipEnt.owner:GetPos(),
+			endpos = longshipEnt.owner:GetPos() - Vector(0, 0, 64),
+			filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end
+		});
 				
-		if ownerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
+		--if ownerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
+		if tr.Entity then
 			longshipEnt.destination = destination;
 			
 			local sail_time = 30;
@@ -191,9 +197,15 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 			timer.Create("SailTimer_"..tostring(longshipEnt:EntIndex()), sail_time, 1, function()
 				if IsValid(longshipEnt) then
 					if IsValid(longshipEnt.owner) and longshipEnt.owner then
-						local ownerPos = longshipEnt.owner:GetPos();
+						--local ownerPos = longshipEnt.owner:GetPos();
+						local tr = util.TraceLine({
+							start = longshipEnt.owner:GetPos(),
+							endpos = longshipEnt.owner:GetPos() - Vector(0, 0, 64),
+							filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end
+						});
 						
-						if ownerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
+						--if ownerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
+						if tr.Entity then
 							cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, sea_zone);
 							
 							return;
@@ -268,9 +280,15 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 				local player = players[j];
 				
 				if IsValid(player) then
-					local playerPos = player:GetPos();
+					--local playerPos = player:GetPos();
+					local tr = util.TraceLine({
+						start = player:GetPos(),
+						endpos = player:GetPos() - Vector(0, 0, 64),
+						filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end
+					});
 					
-					if playerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
+					--if playerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
+					if tr.Entity then
 						local longshipEntPos = longshipEnt:GetPos();
 						local offset = self:GetPlayerOffset(longshipEnt, player, longshipAngles.y);
 						
@@ -279,11 +297,11 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 								player.cloakedCheck = CurTime() + 10;
 							end				
 						
+							player:GodEnable(); -- Stops fall damage and damage from falling into lava for example as there is a delay between the ship being teleported and the players being teleported. Also prevents them from being popped during transition.
 							player:Freeze(true);
 		
 							timer.Simple(3, function()
 								if IsValid(player) then
-									player:GodEnable(); -- Stops fall damage and damage from falling into lava for example as there is a delay between the ship being teleported and the players being teleported.
 									player.disableMovement = true;
 								end
 							end);
@@ -488,9 +506,15 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 			local player = players[i];
 			
 			if IsValid(player) then
-				local playerPos = player:GetPos();
+				--local playerPos = player:GetPos();
+				local tr = util.TraceLine({
+					start = player:GetPos(),
+					endpos = player:GetPos() - Vector(0, 0, 64),
+					filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end
+				});
 				
-				if playerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
+				--if playerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
+				if tr.Entity then
 					local longshipEntPos = longshipEnt:GetPos();
 					
 					if (!player.cwObserverMode) then
@@ -828,7 +852,7 @@ concommand.Add("cw_MoveShipGoreForest", function(player, cmd, args)
 		if (entity:GetClass() == "cw_longship") then
 			if !entity.destination then
 				if !entity.ignited then
-					if player:GetFaction() == "Goreic Warrior" then
+					if player:GetFaction() == "Goreic Warrior" or player:IsAdmin() then
 						if IsValid(entity.owner) then
 							if entity.owner == player then
 								cwSailing:BeginSailing(entity, "docks");
@@ -854,7 +878,7 @@ concommand.Add("cw_MoveShipWasteland", function(player, cmd, args)
 		if (entity:GetClass() == "cw_longship") then
 			if !entity.destination then
 				if !entity.ignited then
-					if player:GetFaction() == "Goreic Warrior" then
+					if player:GetFaction() == "Goreic Warrior" or player:IsAdmin() then
 						if IsValid(entity.owner) then
 							if entity.owner == player then
 								cwSailing:BeginSailing(entity, "wasteland");
@@ -881,7 +905,7 @@ concommand.Add("cw_MoveShipPillars", function(player, cmd, args)
 			if entity.enchantment then
 				if !entity.destination then
 					if !entity.ignited then
-						if player:GetFaction() == "Goreic Warrior" then
+						if player:GetFaction() == "Goreic Warrior" or player:IsAdmin() then
 							if IsValid(entity.owner) then
 								if entity.owner == player then
 									cwSailing:BeginSailing(entity, "pillars");
@@ -932,26 +956,28 @@ concommand.Add("cw_MoveShipHell", function(player, cmd, args)
 end);
 
 concommand.Add("cw_CargoHold", function(player, cmd, args)
-	local trace = player:GetEyeTrace();
+	if player:IsAdmin() or player:GetFaction() == "Goreic Warrior" then
+		local trace = player:GetEyeTrace();
 
-	if (trace.Entity) then
-		local entity = trace.Entity;
+		if (trace.Entity) then
+			local entity = trace.Entity;
 
-		if (entity:GetClass() == "cw_longship") then
-			if (!entity.cwInventory) then
-				entity.cwInventory = {};
-			end;
+			if (entity:GetClass() == "cw_longship") then
+				if (!entity.cwInventory) then
+					entity.cwInventory = {};
+				end;
 
-			player:EmitSound("physics/body/body_medium_impact_soft"..math.random(1, 7)..".wav");
-			
-			Clockwork.storage:Open(player, {
-				name = "Cargo Hold",
-				weight = 40,
-				entity = entity,
-				distance = entity:OBBMaxs():Length(),
-				inventory = entity.cwInventory,
-			});
-		end
+				player:EmitSound("physics/body/body_medium_impact_soft"..math.random(1, 7)..".wav");
+				
+				Clockwork.storage:Open(player, {
+					name = "Cargo Hold",
+					weight = 40,
+					entity = entity,
+					distance = entity:OBBMaxs():Length(),
+					inventory = entity.cwInventory,
+				});
+			end
+		end;
 	end;
 end);
 

@@ -455,8 +455,8 @@ if (CLIENT) then
 		Clockwork.inventory:Rebuild()
 	end)
 	
-	function Clockwork.inventory:InventoryAction(action, uniqueID, itemID, toolUniqueID, toolItemID)
-		netstream.Start("InvAction", {action, uniqueID, itemID, toolUniqueID, toolItemID});
+	function Clockwork.inventory:InventoryAction(action, uniqueID, itemID, interactUniqueID, interactItemID)
+		netstream.Start("InvAction", {action, uniqueID, itemID, interactUniqueID, interactItemID});
 	end
 else
 	function Clockwork.inventory:SendUpdateByInstance(player, itemTable)
@@ -497,7 +497,7 @@ else
 		end)
 	end
 	
-	function Clockwork.inventory:InventoryAction(player, itemAction, uniqueID, itemID, toolUniqueID, toolItemID)
+	function Clockwork.inventory:InventoryAction(player, itemAction, uniqueID, itemID, interactUniqueID, interactItemID)
 		if !player:Alive() or player:IsRagdolled() then
 			Clockwork.player:Notify(player, "You cannot use items right now!");
 			
@@ -505,6 +505,11 @@ else
 		end
 	
 		local itemTable = player:FindItemByID(uniqueID, tonumber(itemID));
+		local interactItemTable;
+		
+		if interactUniqueID and interactItemID then
+			interactItemTable = player:FindItemByID(interactUniqueID, tonumber(interactItemID));
+		end
 		
 		itemAction = string.lower(itemAction);
 		
@@ -691,7 +696,7 @@ else
 				end;
 
 				if (hook.Run("PlayerCanUseItem", player, itemTable)) then
-					return item.Use(player, itemTable);
+					return item.Use(player, itemTable, nil, interactItemTable);
 				end;
 			elseif (itemAction == "examine") then
 				local itemCondition = itemTable:GetCondition();
@@ -789,7 +794,7 @@ else
 					end
 				end
 			else
-				hook.Run("PlayerUseUnknownItemFunction", player, itemTable, itemAction, toolUniqueID, toolItemID);
+				hook.Run("PlayerUseUnknownItemFunction", player, itemTable, itemAction, interactUniqueID, interactItemID);
 			end;
 		else
 			Clockwork.player:Notify(player, "You do not own this item!");

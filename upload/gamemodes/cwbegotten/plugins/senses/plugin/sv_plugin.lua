@@ -60,14 +60,21 @@ function playerMeta:SensesOn(bRightClick)
 					self:HandleNeed("sleep", 1);
 				end
 			end
+			
+			self:SetNWBool("senses", true);
 		else
-			Clockwork.datastream:Start(self, "Stunned", 1.5);
+			Clockwork.datastream:Start(self, "BlackStunned", 1);
 			--Clockwork.datastream:Start(self, "PlaySound", table.Random({"ambient/machines/teleport1.wav", "ambient/machines/teleport3.wav", "ambient/machines/teleport4.wav"}));
-			Clockwork.datastream:Start(self, "PlaySound", "begotten/ambient/req/whoosh_02.wav");
-			self:SetDSP(114);
+			
+			timer.Simple(1, function()
+				if IsValid(self) then
+					Clockwork.datastream:Start(self, "PlaySound", "begotten/ambient/req/whoosh_02.wav");
+					self:SetNWBool("senses", true);
+					self:SetDSP(114);
+				end
+			end);
 		end
 		
-		self:SetNWBool("senses", true);
 		self.sensesOn = true;
 	end
 end;
@@ -86,12 +93,20 @@ function playerMeta:SensesOff()
 		if !self.cwObserverMode and self:Alive() then
 			self:EmitSound("items/nvg_off.wav");
 		end
+		
+		self:SetNWBool("senses", false);
+		self:SetDSP(0);
 	elseif self:Alive() then
-		Clockwork.datastream:Start(self, "Stunned", 1.5);
-		Clockwork.datastream:Start(self, "PlaySound", "begotten/ambient/hits/disappear.mp3");
+		Clockwork.datastream:Start(self, "BlackStunned", 1);
+		
+		timer.Simple(1, function()
+			if IsValid(self) then
+				Clockwork.datastream:Start(self, "PlaySound", "begotten/ambient/hits/disappear.mp3");
+				self:SetNWBool("senses", false);
+				self:SetDSP(0);
+			end
+		end);
 	end
 	
-	self:SetNWBool("senses", false);
 	self.sensesOn = nil;
-	self:SetDSP(0);
 end;

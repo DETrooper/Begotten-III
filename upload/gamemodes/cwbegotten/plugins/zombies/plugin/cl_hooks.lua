@@ -379,7 +379,7 @@ end;
 			local distance = entityPosition:Distance(clientPosition);
 			
 			if (distance < 500) then
-				local dynamicLight = DynamicLight(entity:EntIndex().."_light");
+				local dynamicLight = DynamicLight(entity:EntIndex());
 				
 				if (dynamicLight) then
 					local foward = entity:GetForward();

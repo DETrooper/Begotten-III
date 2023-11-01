@@ -570,6 +570,11 @@ function cwRituals:PlayerDeath(player)
 				Clockwork.chatBox:AddInTargetRadius(player, "me", "'s holy light sizzles out.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 			else
 				local ragCorpse = player:GetRagdollEntity();
+				local damage = 200;
+				
+				if cwBeliefs then
+					damage = Lerp(math.min(player:GetCharacterData("level", 1), cwBeliefs.sacramentLevelCap) / (cwBeliefs.sacramentLevelCap), 60, 200);
+				end
 				
 				Clockwork.chatBox:AddInTargetRadius(player, "me", "explodes in a holy purifying fireball!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 				
@@ -586,18 +591,20 @@ function cwRituals:PlayerDeath(player)
 						if vPlayer then
 							local faith = vPlayer:GetFaith();
 							local subfaith = vPlayer:GetSubfaith();
+							local damageInfo = DamageInfo();
+				
+							damageInfo:SetDamagePosition(vPlayer:GetPos() + Vector(0, 0, math.random(12, 64)));
+							damageInfo:SetDamageForce(VectorRand() * 5);
+							damageInfo:SetDamageType(DMG_BLAST);
+							damageInfo:SetAttacker(player);
 							
-							if faith ~= "Faith of the Light" or (faith == "Faith of the Light" and subfaith and subfaith ~= "N/A" and (subfaith ~= "Hard-Glazed" and subfaith ~= "Sol Orthodoxy")) then
-								local damageInfo = DamageInfo();
-					
-								damageInfo:SetDamagePosition(vPlayer:GetPos() + Vector(0, 0, math.random(12, 64)));
-								damageInfo:SetDamageForce(VectorRand() * 5);
-								damageInfo:SetDamageType(DMG_BLAST);
-								damageInfo:SetDamage(250);
-								damageInfo:SetAttacker(player);
-
-								vPlayer:TakeDamageInfo(damageInfo);
+							if faith ~= "Faith of the Light" or (faith == "Faith of the Light" and subfaith == "Voltism") then
+								damageInfo:SetDamage(damage);
+							else
+								damageInfo:SetDamage(damage / 2);
 							end
+							
+							vPlayer:TakeDamageInfo(damageInfo);
 						end;
 					end;
 					
@@ -606,7 +613,7 @@ function cwRituals:PlayerDeath(player)
 					local explosion = ents.Create("env_explosion");
 					
 					explosion:SetPos(player:GetPos());
-					explosion:SetKeyValue("iMagnitude", "100");
+					explosion:SetKeyValue("iMagnitude", "0");
 					explosion:Spawn();
 					explosion:Activate();
 					explosion:Fire("Explode", "", 0);

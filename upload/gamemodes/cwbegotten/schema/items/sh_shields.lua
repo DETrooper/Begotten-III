@@ -141,7 +141,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.isAttachment = true;
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 275, 180.15);
-	ITEM.attachmentOffsetVector = Vector(0, 8, -4.95);
+	ITEM.attachmentOffsetVector = Vector(0, 3, -1);
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "scrap"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, bNoSupercrate = true};

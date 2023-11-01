@@ -124,7 +124,7 @@ function cwAnomalous:StartTVHallucination(location)
 				self.tvTable:SetAngles(location.tvtable.angles);
 				self.tvTable:SetPos(location.tvtable.pos);
 				
-				self.tvDynamicLight = DynamicLight("tvLight");
+				self.tvDynamicLight = DynamicLight(1);
 			
 				if (self.tvDynamicLight) then
 					self.tvDynamicLight.Pos = self.tvScreen:GetPos() + (self.tvMonitor:GetForward() * 10);

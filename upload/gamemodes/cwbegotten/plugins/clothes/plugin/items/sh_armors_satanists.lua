@@ -13,7 +13,8 @@ ITEM.weightclass = "Medium";
 ITEM.type = "plate";
 ITEM.description = "Cast in the most pure Hellforged steel and adorned with fine silk from the east, this armor set clearly once belonged to a member of the Spice Guard. These Darklander warriors protect trade routes and escort merchants.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Children of Satan"};
+ITEM.requireFaith = {"Faith of the Dark"};
+ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/helmeyes";
 
 ITEM.effectiveLimbs = {
@@ -79,7 +80,8 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "A set of heavy armor forged in the fires of Hell, befitting only the most loyal followers of Satan. Its Hellforged steel composition offers supreme protection against all forms of damage.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Children of Satan"};
+ITEM.requireFaith = {"Faith of the Dark"};
+ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/helmeyes";
 
 ITEM.requiredbeliefs = {"hauberk"};
@@ -146,7 +148,8 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "Elegant robes that befit only the ornate followers of Satan. It is expertly designed with exotic fabrics that display supremacy and wealth as well as offering unmatched protection with no expense of grace or mobility.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.requireFaction = {"Children of Satan"};
+ITEM.requireFaith = {"Faith of the Dark"};
+ITEM.excludeFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -199,7 +202,8 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "Once the dignified armor of the White Sentinels and the sigil of House Philimaxio, this armor has since been reforged in hellfire many times, only barely resembling its original form. Its existence is a disgrace to the Gatekeeper Order and an outright mockery of the Light. This particular set has been reinforced with additional plates, making it highly protective at the cost of mobility and grace.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Children of Satan"};
+ITEM.requireFaith = {"Faith of the Dark"};
+ITEM.excludeFactions = {"Goreic Warrior"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -224,7 +228,7 @@ ITEM.pierceScale = 0.75; -- reduces pierce damage by 25%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 
-ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "iron_chunks", "iron_chunks", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -261,7 +265,8 @@ ITEM.weightclass = "Medium";
 ITEM.type = "plate";
 ITEM.description = "Once the dignified armor of the White Sentinels and the sigil of House Philimaxio, this armor has since been reforged in hellfire many times, only barely resembling its original form. Its existence is a disgrace to the Gatekeeper Order and an outright mockery of the Light.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Children of Satan"};
+ITEM.requireFaith = {"Faith of the Dark"};
+ITEM.excludeFactions = {"Goreic Warrior"};
 
 -- specifies which hitgroups will be affected by blunt, slash, pierce and other damage type scaling.
 ITEM.effectiveLimbs = {
@@ -284,7 +289,7 @@ ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
 ITEM.slashScale = 0.75; -- reduces slash damage by 25%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
-ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "iron_chunks", "iron_chunks", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -322,7 +327,8 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "A set of metal plate armor adorned with spikes, its design originally hailing from the Darklands. These eastern types of armor were once prized possessions in the collections of Glazic nobles, but they are now synonymous with the followers of the Dark Lord.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Children of Satan"};
+ITEM.requireFaith = {"Faith of the Dark"};
+ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/helmeyes";
 
 ITEM.requiredbeliefs = {"hauberk"};
@@ -391,7 +397,8 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "Hellforged Steel armor said to contain the bones of many sacrifices within. It is shaped in the manner of a skeleton and is sure to terrify foes.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Children of Satan"};
+ITEM.requireFaith = {"Faith of the Dark"};
+ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/skullhelm";
 
 ITEM.attributes = {"fear"};

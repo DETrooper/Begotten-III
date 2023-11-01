@@ -1953,17 +1953,59 @@ function Clockwork.kernel:HandleItemSpawnIconClick(itemTable, spawnIcon, Callbac
 		local repairName = "Repair";
 
 		if ((!useText and v == "Use") or (useText and v == useText)) then
-			itemMenu:AddOption(v, function()
-				if (itemTable) then
-					if (itemTable.OnHandleUse) then
-						itemTable:OnHandleUse(function()
-							Clockwork.inventory:InventoryAction("use", itemTable.uniqueID, itemTable.itemID);
-						end)
-					else
-						Clockwork.inventory:InventoryAction("use", itemTable.uniqueID, itemTable.itemID);
+			local subMenu;
+		
+			if itemTable and itemTable.canUseOffhand then
+				if hook.Run("CanPlayerDualWield") ~= false then
+					local equipmentSlots = Clockwork.Client.equipmentSlots;
+
+					for i, slot in pairs(itemTable.slots) do
+						local slotItem = equipmentSlots[slot];
+
+						if slotItem and slotItem.canUseOffhand then
+							if !equipmentSlots[slot.."Offhand"] then
+								if !subMenu then
+									subMenu = itemMenu:AddSubMenu("Equip", function()
+										if (itemTable) then
+											if (itemTable.OnHandleUse) then
+												itemTable:OnHandleUse(function()
+													Clockwork.inventory:InventoryAction("use", itemTable.uniqueID, itemTable.itemID);
+												end)
+											else
+												Clockwork.inventory:InventoryAction("use", itemTable.uniqueID, itemTable.itemID);
+											end
+										end
+									end);
+								end
+								
+								subMenu:AddOption(slotItem.name, function()
+									if (itemTable.OnHandleUse) then
+										itemTable:OnHandleUse(function()
+											Clockwork.inventory:InventoryAction("use", itemTable.uniqueID, itemTable.itemID, slotItem.uniqueID, slotItem.itemID);
+										end)
+									else
+										Clockwork.inventory:InventoryAction("use", itemTable.uniqueID, itemTable.itemID, slotItem.uniqueID, slotItem.itemID);
+									end
+								end)
+							end
+						end
 					end
 				end
-			end)
+			end
+			
+			if !subMenu then
+				itemMenu:AddOption(v, function()
+					if (itemTable) then
+						if (itemTable.OnHandleUse) then
+							itemTable:OnHandleUse(function()
+								Clockwork.inventory:InventoryAction("use", itemTable.uniqueID, itemTable.itemID);
+							end)
+						else
+							Clockwork.inventory:InventoryAction("use", itemTable.uniqueID, itemTable.itemID);
+						end
+					end
+				end)
+			end
 		elseif (v == "Examine") then
 			itemMenu:AddOption(v, function()
 				if (itemTable) then
@@ -3117,7 +3159,7 @@ end
 -- A function to get a weapon's print name.
 function weaponMeta:GetPrintName()
 	local name;
-	local itemTable = item.GetByWeapon(self)
+	local itemTable = item.GetByWeapon(self);
 
 	if (itemTable) then
 		name = itemTable:GetName()
@@ -3130,6 +3172,24 @@ function weaponMeta:GetPrintName()
 		
 		if shieldTable and shieldTable.name then
 			return name.." & "..shieldTable.name;
+		end
+	elseif self:GetNWString("activeOffhand"):len() > 0 then
+		local weaponTable = weapons.GetStored(self:GetNWString("activeOffhand"));
+
+		if weaponTable and weaponTable.PrintName then
+			if weaponTable.PrintName == self.PrintName then
+				if self.DualNameOverride then
+					return self.DualNameOverride;
+				else
+					return "Dual "..self.PrintName.."s";
+				end
+			else
+				local tab = {self.PrintName, weaponTable.PrintName};
+			
+				table.sort(tab);
+			
+				return tab[1].." & "..tab[2];
+			end
 		end
 	end
 	

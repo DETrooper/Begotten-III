@@ -130,7 +130,7 @@ function playerMeta:ResetBeliefs()
 end
 
 -- A function to get if a player has a belief or not.
-function playerMeta:HasBelief(uniqueID)
+function playerMeta:HasBelief(uniqueID, bHasAny)
 	if (!uniqueID) then
 		return;
 	end;
@@ -141,8 +141,24 @@ function playerMeta:HasBelief(uniqueID)
 	
 	local beliefs = self:GetCharacterData("beliefs", {});
 	
-	if (beliefs[uniqueID]) then
-		return true;
+	if istable(uniqueID) then
+		if bHasAny then
+			for i, v in ipairs(uniqueID) do
+				if beliefs[v] then
+					return true;
+				end
+			end
+		else
+			for i, v in ipairs(uniqueID) do
+				if !beliefs[v] then
+					return false;
+				end
+			end
+		end
+	else
+		if (beliefs[uniqueID]) then
+			return true
+		end
 	end
 	
 	return false;

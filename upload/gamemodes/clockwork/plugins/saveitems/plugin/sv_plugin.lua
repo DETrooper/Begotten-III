@@ -90,7 +90,7 @@ function cwSaveItems:SaveItems()
 		end;]]--
 		
 		-- Don't save temporary items!
-		if not v.lifeTime and not v.noSave then
+		if not v.lifeTime and not v.noSave and not v:IsBroken() then
 			local physicsObject = v:GetPhysicsObject()
 			local itemTable = v:GetItemTable()
 			local bMoveable = false

@@ -11,6 +11,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(0, 355.03, 0);
 	ITEM.attachmentOffsetVector = Vector(-3.54, 0.71, 1.41);
+	ITEM.canUseOffhand = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, supercrateOnly = true};
@@ -29,6 +30,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(353.04, 86.52, 14.21);
 	ITEM.attachmentOffsetVector = Vector(-3.54, 1.41, -2.12);
+	ITEM.canUseOffhand = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
 ITEM:Register();
@@ -46,6 +48,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(0, 355.03, 0);
 	ITEM.attachmentOffsetVector = Vector(-3.54, 0.71, 1.41);
+	ITEM.canUseOffhand = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 750};
@@ -64,6 +67,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(335.14, 355.03, 0);
 	ITEM.attachmentOffsetVector = Vector(-2.83, 1.69, -3.71);
+	ITEM.canUseOffhand = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 900, supercrateOnly = true};
@@ -82,6 +86,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(329.17, 355.03, 4.97);
 	ITEM.attachmentOffsetVector = Vector(-2.83, 2.12, -3.54);
+	ITEM.canUseOffhand = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 250, supercrateOnly = true};
@@ -96,6 +101,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.description = "A rusty shiv, constructed of thrown together scrap found in the wasteland.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/quickshank.png"
 	ITEM.meleeWeapon = true;
+	ITEM.canUseOffhand = true;
 	
 	ITEM.attributes = {"concealable"};
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap"}};
@@ -115,6 +121,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(252.95, 2.98, 0.95);
 	ITEM.attachmentOffsetVector = Vector(-3.54, 2, 1.41);
+	ITEM.canUseOffhand = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
 	ITEM.requireFaith = {"Faith of the Dark"};
@@ -135,6 +142,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(252.95, 2.98, 0.95);
 	ITEM.attachmentOffsetVector = Vector(-3.54, 2, 1.41);
+	ITEM.canUseOffhand = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
 	ITEM.requireFaith = {"Faith of the Dark"};
@@ -155,6 +163,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(249.16, 2.84, 2.84);
 	ITEM.attachmentOffsetVector = Vector(-3.54, 2.12, 1.41);
+	ITEM.canUseOffhand = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
 	ITEM.requireFaith = {"Faith of the Dark"};
@@ -171,6 +180,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.description = "A blackhat assassin's tool of murder. It has likely claimed many lives, from serfs to Emperors. A twisted magic prevents anyone not of the correct bloodline from wielding this dagger.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/kinisger_dagger.png"
 	ITEM.meleeWeapon = true;
+	ITEM.canUseOffhand = true;
 	
 	ITEM.attributes = {"concealable"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};

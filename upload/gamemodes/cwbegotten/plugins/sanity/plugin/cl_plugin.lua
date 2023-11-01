@@ -97,7 +97,7 @@ function cwSanity:ThunderSkeletons()
 		
 		if (v:IsPlayer() and v:Alive() and (moveType == MOVETYPE_WALK or moveType == MOVETYPE_LADDER) and Clockwork.entity:CanSeePlayer(Clockwork.Client, v, 0.5)) then
 			local entIndex = v:EntIndex();
-			local dynamicLight = DynamicLight(entIndex.."_light");
+			local dynamicLight = DynamicLight(entIndex);
 			local playerPosition = v:GetPos();
 			
 			if (dynamicLight) then

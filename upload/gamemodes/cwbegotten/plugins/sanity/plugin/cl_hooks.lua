@@ -692,7 +692,7 @@ function cwSanity:SpookyScarySkeletons()
 				SKELES[i]:SetPoseParameter("head_pitch", -10)
 				SKELES[i]:SetPoseParameter("head_roll", -SKELES[i].heady)
 				SKELES[i]:SetColor(Color(255, 255, 255, Clockwork.Client.SkelesColor))
-				local dyna = DynamicLight("SKELE"..i);
+				local dyna = DynamicLight(i);
 				if (dyna) then
 					dyna.pos = SKELES[i]:GetPos() + Vector(0, 0, 64)
 					dyna.r = 100

@@ -245,7 +245,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 6
 	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "A makeshift helmet made of various scrap found from the Wasteland."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax", "Clan Crast", "Clan Grock"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 	

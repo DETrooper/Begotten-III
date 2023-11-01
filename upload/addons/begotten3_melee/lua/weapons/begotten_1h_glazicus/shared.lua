@@ -3,6 +3,7 @@ SWEP.Base = "sword_swepbase"
 
 SWEP.PrintName = "Glazicus"
 SWEP.Category = "(Begotten) One Handed"
+SWEP.DualNameOverride = "Dual Glazicii";
 
 SWEP.AdminSpawnable = true
 SWEP.Spawnable = true

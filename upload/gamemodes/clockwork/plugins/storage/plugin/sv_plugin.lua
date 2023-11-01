@@ -16,6 +16,7 @@ netstream.Hook("ContainerPassword", function(player, data)
 
 			if (entity.cwPassword == password) then
 				cwStorage:OpenContainer(player, entity, containerWeight)
+				Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." has opened the passworded container "..entity:GetNetworkedString("Name").." by using a password.");
 			else
 				Schema:EasyText(player, "peru", "The password you entered was incorrect!")
 			end
@@ -394,6 +395,10 @@ function cwStorage:FinishLockpick(player, entity)
 		Schema:EasyText(player, "olivedrab", "You successfully lockpick the container.");
 		cwStorage:OpenContainer(player, entity, containerWeight);
 		
+		if entity.cwPassword then
+			Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has opened the passworded container "..entity:GetNetworkedString("Name").." by lockpicking it!");
+		end
+		
 		if entity.cwLockType == "none" then
 			entity:SetNWBool("unlocked", true);
 		end
@@ -695,6 +700,7 @@ Clockwork.datastream:Hook("ContainerPassword", function(player, data)
 			
 			if (entity.cwPassword == password) then
 				cwStorage:OpenContainer(player, entity, containerWeight);
+				Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." has opened the passworded container "..entity:GetNetworkedString("Name").." by using a password.");
 			else
 				Schema:EasyText(player, "peru", "You have entered an incorrect password!");
 			end;

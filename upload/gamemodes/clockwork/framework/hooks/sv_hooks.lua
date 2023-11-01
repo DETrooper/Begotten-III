@@ -3636,21 +3636,27 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 			local weapon = attacker:GetActiveWeapon();
 			
 			if IsValid(inflictor) and (inflictor:IsWeapon() or inflictor.isJavelin) then
-				local itemTable = item.GetByWeapon(inflictor)
-
-				if itemTable then
-					Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..itemTable.name..", killing them!")
-				else
-					Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..inflictor.PrintName or inflictor:GetClass()..", killing them!")
+				if inflictor.GetPrintName then
+					inflictor = inflictor:GetPrintName();
 				end
+				
+				if !inflictor or !isstring(inflictor) then
+					inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
+				end
+
+				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..inflictor..", killing them!")
 			elseif IsValid(weapon) then
-				local itemTable = item.GetByWeapon(weapon)
-
-				if itemTable then
-					Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..itemTable.name..", killing them!")
-				else
-					Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..weapon.PrintName or weapon:GetClass()..", killing them!")
+				local inflictor;
+			
+				if inflictor.GetPrintName then
+					inflictor = inflictor:GetPrintName();
 				end
+				
+				if !inflictor then
+					inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
+				end
+				
+				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..inflictor..", killing them!")
 			else
 				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name()..", killing them!")
 			end
@@ -3994,7 +4000,13 @@ function GM:EntityTakeDamage(entity, damageInfo)
 								local activeWeapon = attacker:GetActiveWeapon();
 								
 								if IsValid(activeWeapon) then
-									inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
+									if inflictor.GetPrintName then
+										inflictor = inflictor:GetPrintName();
+									end
+									
+									if !inflictor or !isstring(inflictor) then
+										inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
+									end
 								else
 									inflictor = "an unknown weapon";
 								end
@@ -4061,7 +4073,13 @@ function GM:EntityTakeDamage(entity, damageInfo)
 								local activeWeapon = attacker:GetActiveWeapon();
 								
 								if IsValid(activeWeapon) then
-									inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
+									if inflictor.GetPrintName then
+										inflictor = inflictor:GetPrintName();
+									end
+									
+									if !inflictor or !isstring(inflictor) then
+										inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
+									end
 								else
 									inflictor = "an unknown weapon";
 								end

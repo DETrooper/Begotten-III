@@ -166,47 +166,6 @@ function Schema:PlayerSetDefaultColorModify(colorModify)
 	colorModify["$pp_colour_colour"] = 1;
 end;
 
--- Called when the foreground HUD should be painted.
-function Schema:HUDPaintForeground()
-	local frameTime = FrameTime();
-	local curTime = CurTime();
-	local scrW = ScrW();
-	local scrH = ScrH();
-	
-	if (Clockwork.Client:Alive()) then
-		if (self.cwBlackFade) then
-			if (!self.cwBlackAlpha) then
-				self.cwBlackAlpha = 1
-			end
-			
-			if (curTime < self.cwBlackFade and self.cwBlackAlpha != 255) then
-				self.cwBlackAlpha = math.Approach(self.cwBlackAlpha, 255, frameTime * 128)
-			elseif (curTime >= self.cwBlackFade) then
-				self.cwBlackAlpha = math.Approach(self.cwBlackAlpha, 1, frameTime * 128)
-			end
-
-			draw.RoundedBox(0, 0, 0, scrW, scrH, Color(0, 0, 0, self.cwBlackAlpha))
-			
-			if (self.cwBlackAlpha == 1) then
-				self.cwBlackAlpha = nil
-				self.cwBlackFade = nil
-			end
-		end
-
-		if (self.stunEffects) then
-			for k, v in pairs(self.stunEffects) do
-				local alpha = math.Clamp((255 / v[2]) * (v[1] - curTime), 0, 255);
-				
-				if (alpha != 0) then
-					draw.RoundedBox(0, 0, 0, scrW, scrH, Color(255, 255, 255, alpha));
-				else
-					table.remove(self.stunEffects, k);
-				end;
-			end;
-		end;
-	end;
-end;
-
 function Schema:PlayerDrawWeaponSelect()
 	if (Clockwork.Client.LoadingText) then
 		return false;
@@ -525,26 +484,50 @@ end
 
 -- Called when the foreground HUD is painted.
 function Schema:HUDPaintForeground()
+	local frameTime = FrameTime();
+	local curTime = CurTime();
+	local scrW = ScrW();
+	local scrH = ScrH();
+	
 	if (Clockwork.Client:IsAdmin() and CW_CONVAR_CINEMATICVIEW:GetInt() == 1 and CW_CONVAR_CINEMATICVIEWOBS:GetInt() != 1) then
-	if (!Clockwork.player:IsNoClipping(Clockwork.Client)) then
-		if (SEEING and SEEING > 0) then
-			local hitpos = Clockwork.Client:GetEyeTraceNoCursor().HitPos;
-			if (hitpos:Distance(Clockwork.Client:GetPos()) < 2048) then
-				local to = hitpos:ToScreen();
-				if (!gSEX) then
-					gSEX = 0;
+		if (!Clockwork.player:IsNoClipping(Clockwork.Client)) then
+			if (SEEING and SEEING > 0) then
+				local hitpos = Clockwork.Client:GetEyeTraceNoCursor().HitPos;
+				if (hitpos:Distance(Clockwork.Client:GetPos()) < 2048) then
+					local to = hitpos:ToScreen();
+					
+					if (!self.cinematicAlpha) then
+						self.cinematicAlpha = 0;
+					end;
+					
+					self.cinematicAlpha = math.Approach(self.cinematicAlpha, SEEING, FrameTime() * 32);
+					draw.RoundedBox(0, to.x - 2, to.y - 2, 4, 4, Color(0, 0, 0, self.cinematicAlpha))
+					draw.RoundedBox(0, to.x - 1, to.y - 1, 2, 2, Color(170, 0, 0, self.cinematicAlpha))
 				end;
-				gSEX = math.Approach(gSEX, SEEING, FrameTime() * 32);
-				draw.RoundedBox(0, to.x - 2, to.y - 2, 4, 4, Color(0, 0, 0, gSEX))
-				draw.RoundedBox(0, to.x - 1, to.y - 1, 2, 2, Color(170, 0, 0, gSEX))
 			end;
 		end;
 	end;
-	end;
-
-	local curTime = CurTime();
 	
 	if (Clockwork.Client:Alive()) then
+		if (self.cwBlackFade) then
+			if (!self.cwBlackAlpha) then
+				self.cwBlackAlpha = 1
+			end
+			
+			if (curTime < self.cwBlackFade and self.cwBlackAlpha != 255) then
+				self.cwBlackAlpha = math.Approach(self.cwBlackAlpha, 255, frameTime * 128)
+			elseif (curTime >= self.cwBlackFade) then
+				self.cwBlackAlpha = math.Approach(self.cwBlackAlpha, 1, frameTime * 128)
+			end
+
+			draw.RoundedBox(0, 0, 0, scrW, scrH, Color(0, 0, 0, self.cwBlackAlpha))
+			
+			if (self.cwBlackAlpha == 1) then
+				self.cwBlackAlpha = nil
+				self.cwBlackFade = nil
+			end
+		end
+	
 		if (Schema.stunEffects) then
 			for k, v in pairs(Schema.stunEffects) do
 				local alpha = math.Clamp( ( 255 / v[2] ) * (v[1] - curTime), 0, 255 );
@@ -1007,6 +990,10 @@ end;
 
 Clockwork.datastream:Hook("Stunned", function(data)
 	Schema:AddStunEffect(data);
+end);
+
+Clockwork.datastream:Hook("BlackStunned", function(data)
+	Schema:AddBlackFade(data);
 end);
 
 Clockwork.datastream:Hook("MotionBlurStunned", function(data)

@@ -863,7 +863,13 @@ function PANEL:Init()
 		end;
 		
 		-- Select Wanderer.
-		self.factionMultiChoice:ChooseOptionID(3);
+		for i, v in ipairs(self.factionMultiChoice.Choices) do
+			if v == "Wanderer" then
+				self.factionMultiChoice:ChooseOptionID(i);
+				
+				break;
+			end
+		end
 	end;
 	
 	Clockwork.Client.cwChangeAppearanceMenu = self;

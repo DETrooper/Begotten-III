@@ -31,6 +31,7 @@ function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destinat
 	local scrW = ScrW();
 	local scrH = ScrH();
 	local menu = DermaMenu();
+	local isAdmin = Clockwork.Client:IsAdmin();
 	local zone = Clockwork.Client:GetZone();
 		
 	menu:SetMinimumWidth(150);
@@ -43,23 +44,23 @@ function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destinat
 		end
 	end]]--
 	
-	if cargoholdopenable == true then
+	if isAdmin or cargoholdopenable then
 		menu:AddOption("Cargo Hold", function() Clockwork.Client:ConCommand("cw_CargoHold") end);
 	end
 	
 	menu:AddOption("Examine", function() Clockwork.Client:ConCommand("cw_CheckShipStatus") end);
 	
-	if ignited == true then
+	if ignited then
 		menu:AddOption("Extinguish", function() Clockwork.Client:ConCommand("cw_ExtinguishShip") end);
 	end
 	
 	--if (FACTION_GOREIC) then
-		if repairable == true then
+		if repairable then
 			menu:AddOption("Repair", function() Clockwork.Client:ConCommand("cw_RepairShip") end);
 		end
 	--end
 	
-	if sailable == true then
+	if sailable or (isAdmin and !destination) then
 		local submenu = menu:AddSubMenu("Sail", function() end);
 			
 		if zone ~= "gore" then
@@ -76,7 +77,7 @@ function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destinat
 		end
 	end
 	
-	if Clockwork.Client:IsAdmin() then
+	if isAdmin then
 		menu:AddOption("(ADMIN) Toggle Hell Enchantment", function() Clockwork.Client:ConCommand("cw_ShipToggleEnchantment") end);
 	
 		if zone == "sea_calm" or zone == "sea_rough" or zone == "sea_styx" then

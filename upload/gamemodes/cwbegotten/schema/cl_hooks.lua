@@ -250,7 +250,7 @@ function Schema:Think()
 		end
 		
 		if Schema.caughtByCheaple and Schema.cheapleLight then
-			local dynamicLight = DynamicLight("cheapleLight");
+			local dynamicLight = DynamicLight(Clockwork.Client:EntIndex());
 			
 			dynamicLight.Pos = Vector(260, 4995, -10915); 
 			dynamicLight.r = 255;
@@ -1359,10 +1359,6 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			category = string.sub(category, 12)
 		end
 		
-		if category == "Dual" then
-			category = "Dual Weapon";
-		end
-		
 		if category == "Fisted" then
 			category = "Fisted Weapon";
 		end
@@ -1541,7 +1537,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					if weaponClass ~= "begotten_polearm_quarterstaff" then
 						frame:AddText("Has Counter Damage: Bonus against running enemies when attacked from the front.", Color(110, 30, 30));
 					end
-				elseif string.find(weaponClass, "begotten_dagger") or string.find(weaponClass, "begotten_dualdagger") then
+				elseif string.find(weaponClass, "begotten_dagger") then
 					frame:AddText("Has Backstab: Deal double damage to enemies' backs.", Color(110, 30, 30));
 					frame:AddText("Has Coup de Grace: Deal double damage and 100% AP damage to knocked over enemies.", Color(110, 30, 30));
 				end

@@ -11,6 +11,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(8.95, 4.97, 38.78);
 	ITEM.attachmentOffsetVector = Vector(2.12, 4.95, -1.41);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood"}}; -- use "breakdown" for other type
@@ -30,6 +31,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(0, 0, 16.91);
 	ITEM.attachmentOffsetVector = Vector(3.5, 1, 1.68);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}}; -- use "breakdown" for other type

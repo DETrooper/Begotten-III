@@ -12,6 +12,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(100.44, 80.55, 90);
 	ITEM.attachmentOffsetVector = Vector(4.24, -1.41, 31.12);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
@@ -34,6 +35,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(100.44, 80.55, 90);
 	ITEM.attachmentOffsetVector = Vector(4.24, -1.41, 31.12);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "wood"}};
@@ -55,6 +57,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(100.44, 80.55, 90);
 	ITEM.attachmentOffsetVector = Vector(4.24, -1.41, 31.12);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "wood", "wood"}};
@@ -73,6 +76,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(20.88, 0, 180);
 	ITEM.attachmentOffsetVector = Vector(3.54, 1.41, 26.87);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
@@ -91,6 +95,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(291.38, 269.5, 156.13);
 	ITEM.attachmentOffsetVector = Vector(1.41, 2.83, -27.58);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
@@ -111,6 +116,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(291.38, 269.5, 156.13);
 	ITEM.attachmentOffsetVector = Vector(1.41, 2.83, -27.58);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "wood"}};
@@ -130,6 +136,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(291.38, 269.5, 156.13);
 	ITEM.attachmentOffsetVector = Vector(1.41, 2.83, -27.58);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "wood", "wood"}};
@@ -148,6 +155,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(14.92, 0, 20.88);
 	ITEM.attachmentOffsetVector = Vector(2.83, 3.54, 0);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
@@ -168,6 +176,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(279.47, 285.16, 264.32);
 	ITEM.attachmentOffsetVector = Vector(2.83, 3.54, -6.36);
 	ITEM.bodygroup1 = 5;
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "scrap", "scrap", "tech"}};
@@ -188,6 +197,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0, 4.97, 189.94);
 	ITEM.attachmentOffsetVector = Vector(3.54, 2.12, 4.95);
 	ITEM.bodygroup1 = 5;
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"scrap", "scrap", "scrap", "scrap", "tech", "tech"}};
@@ -206,7 +216,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.isAttachment = true;
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(294.63, 288.95, 0);
-	ITEM.attachmentOffsetVector = Vector(2.83, 3, 0);	
+	ITEM.attachmentOffsetVector = Vector(2.83, 3, 0);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
@@ -225,6 +236,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(98.45, 252.95, 18.9);
 	ITEM.attachmentOffsetVector = Vector(3.54, 3.54, 0);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}}; -- use "breakdown" for other type
@@ -243,6 +255,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(0, 180, 349.06);
 	ITEM.attachmentOffsetVector = Vector(3.71, -3.54, 27.58);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}}; -- use "breakdown" for other type
@@ -262,6 +275,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(14.92, 0, 20.88);
 	ITEM.attachmentOffsetVector = Vector(2.83, 3.54, 0);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
@@ -281,6 +295,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(285.41, 225.75, 0);
 	ITEM.attachmentOffsetVector = Vector(3, 1.41, 2.12);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
@@ -300,6 +315,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(94.48, 68.62, 180);
 	ITEM.attachmentOffsetVector = Vector(3.54, -2, 22.63);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}}; -- use "breakdown" for other type
@@ -318,6 +334,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(98.45, 252.95, 18.9);
 	ITEM.attachmentOffsetVector = Vector(3.54, 3.54, 0);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}}; -- use "breakdown" for other type
@@ -336,6 +353,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(98.45, 80.55, 6.96);
 	ITEM.attachmentOffsetVector = Vector(3.54, -0.71, 21.22);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"stone", "wood"}}; -- use "breakdown" for other type
@@ -354,6 +372,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(92.49, 255.58, 6.96);
 	ITEM.attachmentOffsetVector = Vector(3.54, 1.41, 4.24);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "cloth"}}; -- use "breakdown" for other type
@@ -372,6 +391,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(98.45, 252.95, 18.9);
 	ITEM.attachmentOffsetVector = Vector(3.54, 3.54, 0);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
@@ -390,6 +410,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(14.92, 360, 22.87);
 	ITEM.attachmentOffsetVector = Vector(2.12, 5.66, -3.54);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "wood"}}; -- use "breakdown" for other type
@@ -409,6 +430,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(110.39, 150.63, 0);
 	ITEM.attachmentOffsetVector = Vector(3, 2.12, 4);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
@@ -428,6 +450,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(14.92, 0, 20.88);
 	ITEM.attachmentOffsetVector = Vector(2.83, 3.54, 0);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
@@ -447,6 +470,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(289.39, 291.38, 273.48);
 	ITEM.attachmentOffsetVector = Vector(2, 6.36, -4.24);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
@@ -466,6 +490,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(0, 180, 349.06);
 	ITEM.attachmentOffsetVector = Vector(3.71, -3.54, 27.58);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "wood"}}; -- use "breakdown" for other type
@@ -486,6 +511,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(100.44, 80.55, 90);
 	ITEM.attachmentOffsetVector = Vector(3.71, 0.34, 13.81);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap"}};
@@ -506,6 +532,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(100.44, 80.55, 90);
 	ITEM.attachmentOffsetVector = Vector(3.71, 0.34, 13.81);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap"}};
@@ -524,6 +551,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(100.44, 80.55, 90);
 	ITEM.attachmentOffsetVector = Vector(3.71, 0.34, 13.81);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap"}};
@@ -544,6 +572,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(100.44, 80.55, 90);
 	ITEM.attachmentOffsetVector = Vector(3.71, 0.34, 13.81);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "scrap"}};
@@ -562,6 +591,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetVector = Vector(4.4, 0.71, 22.63);
 	ITEM.attachmentOffsetAngles = Angle(303.31, 98.45, 16.91);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood", "wood"}};
@@ -579,7 +609,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.isAttachment = true;
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(187.96, 360, 335.14);
-	ITEM.attachmentOffsetVector = Vector(2.83, 2.12, -0.71);	
+	ITEM.attachmentOffsetVector = Vector(2.83, 2.12, -0.71);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}};
@@ -599,6 +630,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(283.43, 30.83, 84.53);
 	ITEM.attachmentOffsetVector = Vector(2.83, 2.12, -0.71);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}};
@@ -619,6 +651,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(187.96, 360, 166.08);
 	ITEM.attachmentOffsetVector = Vector(3.54, -0.71, 13.44);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"wrought_iron_ingot", "wood", "wood"}};
@@ -638,6 +671,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(360, 269.5, 24.86);
 	ITEM.attachmentOffsetVector = Vector(2.83, 2.83, 0.71);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap"}};
@@ -657,6 +691,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(215.05, 88.11, 31.26);
 	ITEM.attachmentOffsetVector = Vector(2.83, 2.83, 3.54);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks"}};
@@ -676,6 +711,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(283.26, 287.4, 84.53);
 	ITEM.attachmentOffsetVector = Vector(2.83, 3.54, -4.24);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
@@ -695,6 +731,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(289.39, 291.38, 273.48);
 	ITEM.attachmentOffsetVector = Vector(2, 6.36, -4.24);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
@@ -714,6 +751,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(118.34, 66.63, 360);
 	ITEM.attachmentOffsetVector = Vector(5, -2, 13.44);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
@@ -733,6 +771,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(277.46, 287.4, 360);
 	ITEM.attachmentOffsetVector = Vector(3.54, 2.12, 0.71);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
@@ -753,6 +792,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(269.5, 28.84, 347.07);
 	ITEM.attachmentOffsetVector = Vector(1.41, 4.24, -1.41);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "down_catalyst"}}; -- use "breakdown" for other type
@@ -772,6 +812,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(287.4, 102.43, 187.96);
 	ITEM.attachmentOffsetVector = Vector(3.54, 0, 12.02);
+	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood", "leather"}}; -- use "breakdown" for other type

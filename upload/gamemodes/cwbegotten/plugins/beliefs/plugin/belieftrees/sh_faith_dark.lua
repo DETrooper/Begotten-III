@@ -118,7 +118,7 @@ local DARK = cwBeliefs.beliefTrees:New("dark")
 			["murder_artform"] = {
 				name = "Murder as an Artform",
 				subfaith = "Satanism",
-				description = "Unlocks the ability to equip Satanic sacrificial weapons. Also unlocks the ability to equip dual-wielded weapons.",
+				description = "Unlocks the ability to equip Satanic sacrificial weapons. Also unlocks the ability to dual-wield one-handed weapons.",
 				requirements = {"satanism"},
 				row = 2,
 			},

@@ -45,7 +45,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["blademaster"] = {
 				name = "Blademaster",
-				description = "All one handed slashing weapons, dual-wielded weapons, and claws now deal 20% more damage.",
+				description = "All one handed slashing weapons and claws now deal 20% more damage.",
 				iconOverride = "begotten/ui/belieficons/swordsman.png",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "halfsword_sway"},

@@ -153,76 +153,98 @@ end;]]--
 
 -- Called when a player has unequipped the item.
 function ITEM:OnPlayerUnequipped(player, extraData)
-	local weapon = player:GetWeapon(self.uniqueID);
-	
+	local isOffhand = false;
+	local activeWeapon = player:GetActiveWeapon();
+	local weapon = player:GetWeapon(self.weaponClass);
+
 	if weapon then
-		itemTable = item.GetByWeapon(weapon);
-		
 		if (SERVER) then
 			for k, v in pairs(player.equipmentSlots) do
-				if v and v.category == "Shields" then
-					if IsValid(weapon) and weapon:GetNWString("activeShield"):len() > 0 and weapon:GetNWString("activeShield") == v.uniqueID then
-						Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+				if v then
+					if v.category == "Shields" then
+						if IsValid(weapon) and weapon:GetNWString("activeShield"):len() > 0 and weapon:GetNWString("activeShield") == v.uniqueID then
+							Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+							
+							break;
+						end
+					elseif string.find(k, "Offhand") then
+						local mainSlot = string.gsub(k, "Offhand", "");
 						
-						break;
+						if player.equipmentSlots[mainSlot] then
+							if player.equipmentSlots[mainSlot].itemID == self.itemID then
+								if IsValid(weapon) and weapon:GetNWString("activeOffhand"):len() > 0 and weapon:GetNWString("activeOffhand") == v.uniqueID then
+									Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+								
+									break;
+								end
+							elseif player.equipmentSlots[k].itemID == self.itemID then
+								weapon = player:GetWeapon(player.equipmentSlots[mainSlot].weaponClass);
+								
+								if weapon then
+									if IsValid(weapon) and weapon:GetNWString("activeOffhand"):len() > 0 then
+										weapon:HolsterOffhand();
+									end
+								end
+								
+								isOffhand = true;
+								
+								break;
+							end
+						end
 					end
 				end
 			end
 		end
 	end
 	
-	if !itemTable then
-		itemTable = self;
-	end
-
-	if (itemTable:IsTheSameAs(self)) then
-		local activeWeapon = player:GetActiveWeapon();
-	
-		if (extraData != "drop") then
-			if IsValid(activeWeapon) and activeWeapon:GetClass() == itemTable.weaponClass then
+	if (extraData != "drop") then
+		if !isOffhand then
+			if IsValid(activeWeapon) and activeWeapon:GetClass() == self.weaponClass then
 				player:SelectWeapon("begotten_fists")
 			end
 			
-			player:StripWeapon(itemTable.weaponClass)
+			player:StripWeapon(self.weaponClass)
+		end
 
-			if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
-				local useSound = itemTable("useSound");
-				
-				if (useSound) then
-					if (type(useSound) == "table") then
-						player:EmitSound(useSound[math.random(1, #useSound)]);
-					else
-						player:EmitSound(useSound);
-					end;
-				elseif (useSound != false) then
-					player:EmitSound("begotten/items/first_aid.wav");
+		if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+			local useSound = self("useSound");
+			
+			if (useSound) then
+				if (type(useSound) == "table") then
+					player:EmitSound(useSound[math.random(1, #useSound)]);
+				else
+					player:EmitSound(useSound);
 				end;
-			end
+			elseif (useSound != false) then
+				player:EmitSound("begotten/items/first_aid.wav");
+			end;
+		end
+		
+		Clockwork.equipment:UnequipItem(player, self);
+	elseif (hook.Run("PlayerCanDropWeapon", player, self)) then
+		local trace = player:GetEyeTraceNoCursor()
 
-			Clockwork.equipment:UnequipItem(player, self);
-		elseif (hook.Run("PlayerCanDropWeapon", player, self)) then
-			local trace = player:GetEyeTraceNoCursor()
+		if (player:GetShootPos():Distance(trace.HitPos) <= 192) then
+			local entity = Clockwork.entity:CreateItem(player, self, trace.HitPos)
 
-			if (player:GetShootPos():Distance(trace.HitPos) <= 192) then
-				local entity = Clockwork.entity:CreateItem(player, self, trace.HitPos)
+			if (IsValid(entity)) then		
+				Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal)
+				hook.Run("PlayerDropWeapon", player, self, entity)
 
-				if (IsValid(entity)) then		
-					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal)
-					hook.Run("PlayerDropWeapon", player, self, entity)
-
-					player:TakeItem(self, true)
-					
-					if IsValid(activeWeapon) and activeWeapon:GetClass() == itemTable.weaponClass then
+				player:TakeItem(self, true)
+				
+				if !isOffhand then
+					if IsValid(activeWeapon) and activeWeapon:GetClass() == self.weaponClass then
 						player:SelectWeapon("begotten_fists")
 					end
 					
-					player:StripWeapon(itemTable.weaponClass);
-
-					Clockwork.equipment:UnequipItem(player, self);
+					player:StripWeapon(self.weaponClass);
 				end
-			else
-				Schema:EasyText(player, "peru", "You cannot drop this item that far away.")
+
+				Clockwork.equipment:UnequipItem(player, self);
 			end
+		else
+			Schema:EasyText(player, "peru", "You cannot drop this item that far away.")
 		end
 	end
 end;
@@ -273,7 +295,7 @@ function ITEM:OnWeaponGiven(player, weapon)
 end;
 
 -- Called when a player uses the item.
-function ITEM:OnUse(player, itemEntity)
+function ITEM:OnUse(player, itemEntity, interactItemTable)
 	local faction = player:GetFaction();
 	local subfaction = player:GetSubfaction();
 	local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
@@ -307,14 +329,22 @@ function ITEM:OnUse(player, itemEntity)
 	
 	local weaponClass = self("weaponClass");
 	
-	if (!player:HasWeapon(weaponClass)) then
+	if (!player:HasWeapon(weaponClass)) or interactItemTable then
 		if (self.OnEquip) then
-			if self:OnEquip(player) == false then
+			if self:OnEquip(player, interactItemTable) == false then
 				return false;
 			end
 		end;
 	
-		player:Give(weaponClass, self);
+		if interactItemTable then
+			local activeWeapon = player:GetActiveWeapon();
+			
+			if activeWeapon:GetClass() == interactItemTable.weaponClass then
+				activeWeapon:EquipOffhand(self.weaponClass);
+			end
+		else
+			player:Give(weaponClass, self);
+		end
 		
 		return true;
 	else
@@ -337,20 +367,83 @@ function ITEM:OnRepair(player, itemEntity)
 	return true;
 end
 
-function ITEM:OnEquip(player)
+function ITEM:OnEquip(player, interactItemTable)
 	if self:IsBroken() then
 		Schema:EasyText(player, "peru", "This weapon is broken and cannot be used!");
 		return false;
 	end
 
-	for i, v in ipairs(self.slots) do
-		if !player.equipmentSlots[v] then
-			return Clockwork.equipment:EquipItem(player, self, v);
+	if interactItemTable then
+		local slot;
+		local offhandSlot;
+		
+		for k, v in pairs(player.equipmentSlots) do
+			if v and (v:IsTheSameAs(interactItemTable)) then
+				slot = k;
+				offhandSlot = k.."Offhand";
+				
+				break;
+			end
 		end
+		
+		if slot then
+			if !player.equipmentSlots[slot] then
+				Schema:EasyText(player, "peru", "You cannot equip an offhand weapon in a slot with no weapon!")
+				return false;
+			end
+			
+			local shieldItem = player:GetShieldEquipped();
+			
+			if shieldItem then
+				for i, v in ipairs(self.slots) do
+					if i < #self.slots then
+						local equipmentSlot = player.equipmentSlots[v];
+						
+						if equipmentSlot and equipmentSlot:IsTheSameAs(interactItemTable) then
+							if player.equipmentSlots[self.slots[i +1]]:IsTheSameAs(shieldItem) then
+								Schema:EasyText(player, "peru", "You cannot equip an offhand weapon with a weapon that is using a shield!")
+								return false;
+							end
+						end
+					end
+				end
+			end
+			
+			local weaponClass = interactItemTable("weaponClass");
+			local weaponTable = weapons.GetStored(weaponClass);
+			local attackTable = GetTable(weaponTable.AttackTable);
+			local offhandWeaponClass = self("weaponClass");
+			local offhandWeaponTable = weapons.GetStored(offhandWeaponClass);
+			local offhandAttackTable = GetTable(offhandWeaponTable.AttackTable);
+			
+			if !attackTable.canaltattack and attackTable.dmgtype == DMG_VEHICLE and !offhandAttackTable.canaltattack and offhandAttackTable.dmgtype ~= DMG_VEHICLE then
+				Schema:EasyText(player, "peru", "You cannot equip a slash-only weapon with a thrust-only weapon!");
+				return false;
+			elseif !attackTable.canaltattack and attackTable.dmgtype ~= DMG_VEHICLE and !offhandAttackTable.canaltattack and offhandAttackTable.dmgtype == DMG_VEHICLE then
+				Schema:EasyText(player, "peru", "You cannot equip a thrust-only weapon with a slash-only weapon!");
+				return false;
+			end
+			
+			if !player.equipmentSlots[offhandSlot] then
+				return Clockwork.equipment:EquipItem(player, self, offhandSlot);
+			end
+			
+			Schema:EasyText(player, "peru", "You cannot equip another weapon in that slot!")
+			return false;
+		end
+		
+		Schema:EasyText(player, "peru", "A valid slot could not be found for this weapon!")
+		return false;
+	else
+		for i, slot in ipairs(self.slots) do
+			if !player.equipmentSlots[slot] then
+				return Clockwork.equipment:EquipItem(player, self, slot);
+			end
+		end
+		
+		Schema:EasyText(player, "peru", "You do not have an open slot to equip this weapon in!")
+		return false;
 	end
-	
-	Schema:EasyText(player, "peru", "You do not have an open slot to equip this weapon in!")
-	return false;
 end
 
 -- Called when a player drops the item.
