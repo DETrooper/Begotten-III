@@ -1124,7 +1124,7 @@ function Schema:PlayerCanSwitchCharacter(player, character)
 		return false, "You cannot switch to this character while your current character is dying!";
 	end
 	
-	if Schema.fuckerJoeActive then
+	if Schema.fuckerJoeActive and !player:IsAdmin() then
 		return false, "You cannot switch to this character while Fucker Joe is on the loose!";
 	end
 end;
