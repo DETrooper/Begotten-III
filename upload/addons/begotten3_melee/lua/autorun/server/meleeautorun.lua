@@ -601,6 +601,12 @@ local function Guarding(ent, dmginfo)
 							end
 						end
 						
+						if enemywep:GetNWString("activeOffhand"):len() > 0 then
+							if !IsValid(dmginfo:GetInflictor()) or !dmginfo:GetInflictor().isJavelin then
+								poiseDamageModifier = poiseDamageModifier * 0.6;
+							end
+						end
+						
 						--print("PRE MODIFIER POISE DAMAGE: "..attacker.enemypoise);
 					
 						if attacker:IsPlayer() and enemyattacktable["poisedamage"] then
@@ -1002,7 +1008,16 @@ local function Guarding(ent, dmginfo)
 									ent:Ignite(enemywep.IgniteTime)
 								end
 							else
-								ent:TakeStability(enemyattacktable["stabilitydamage"])		
+								local stabilityDamage = enemyattacktable["stabilitydamage"];
+								
+								if enemywep:GetNWString("activeOffhand"):len() > 0 then
+									if !IsValid(inflictor) or !inflictor.isJavelin then
+										stabilityDamage = stabilityDamage * 0.6;
+									end
+								end
+								
+								ent:TakeStability(stabilityDamage)		
+								
 								ent:EmitSound(enemyattacksoundtable["hitbody"][math.random(1, #enemyattacksoundtable["hitbody"])])
 								-- For sacrificial attacks (regular)
 								if enemyattacktable["attacktype"] == "ice_swing" then
@@ -1171,9 +1186,9 @@ local function Guarding(ent, dmginfo)
 											
 											if offhandItemTable then
 												if cwBeliefs and attacker:HasBelief("scour_the_rust") then
-													offhandItemTable:TakeCondition(0.25);
+													offhandItemTable:TakeCondition(math.min(dmginfo:GetDamage() / 200, 100));
 												else
-													offhandItemTable:TakeCondition(0.5);
+													offhandItemTable:TakeCondition(math.min(dmginfo:GetDamage() / 100, 100));
 												end
 											end
 										

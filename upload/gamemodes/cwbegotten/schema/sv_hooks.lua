@@ -1123,6 +1123,10 @@ function Schema:PlayerCanSwitchCharacter(player, character)
 	if player.scriptedDying then
 		return false, "You cannot switch to this character while your current character is dying!";
 	end
+	
+	if Schema.fuckerJoeActive then
+		return false, "You cannot switch to this character while Fucker Joe is on the loose!";
+	end
 end;
 
 -- Called when a player's death info should be adjusted.

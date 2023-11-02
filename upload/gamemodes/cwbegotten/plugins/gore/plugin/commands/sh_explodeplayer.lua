@@ -2,7 +2,7 @@ local COMMAND = Clockwork.command:New("ExplodePlayer");
 	COMMAND.tip = "Gib a player to bits.";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.access = "s";
-	COMMAND.alias = {"EP"};
+	COMMAND.alias = {"EP", "ExplodeCharacter", "PlyExplode", "CharExplode", "PlyGib", "CharGib"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

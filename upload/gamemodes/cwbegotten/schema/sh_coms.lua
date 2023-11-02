@@ -767,7 +767,7 @@ local COMMAND = Clockwork.command:New("CallCongregation");
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("FuckerJoeAlarm");
-	COMMAND.tip = "Sound the Fucker Joe alarm. Fucker Joe is coming!!!!";
+	COMMAND.tip = "Sound the Fucker Joe alarm. Fucker Joe is coming!!!! This disables charswapping for alive non-admins for 10 minutes.";
 	COMMAND.access = "s";
 
 	-- Called when the command has been run.
@@ -792,6 +792,12 @@ local COMMAND = Clockwork.command:New("FuckerJoeAlarm");
 				end
 			end
 		end
+		
+		Schema.fuckerJoeActive = true;
+		
+		timer.Create("FuckerJoeAlarm", 600, 1, function()
+			Schema.fuckerJoeActive = nil;
+		end);
 	end;
 COMMAND:Register();
 

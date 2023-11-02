@@ -104,10 +104,19 @@ if SERVER then
 		if itemTable.equipmentSaveString then
 			if #itemTable.slots > 1 then
 				local equipmentData = player:GetCharacterData(itemTable.equipmentSaveString, {});
+				local isOffhand = string.find(slot, "Offhand");
+				
+				if isOffhand then
+					slot = string.gsub(slot, "Offhand", "");
+				end
 				
 				for i, v in ipairs(itemTable.slots) do
 					if v == slot then
-						equipmentData[i] = GetDataFromItem(itemTable);
+						if isOffhand then
+							equipmentData[i + 3] = GetDataFromItem(itemTable);
+						else
+							equipmentData[i] = GetDataFromItem(itemTable);
+						end
 					
 						break;
 					end
@@ -407,12 +416,13 @@ if SERVER then
 			["TertiaryOffhand"] = GetItemFromData(player, weaponData, 6),
 		};
 		
-		local primary = player.equipmentSlots["Primary"];
-		local primaryOffhand = player.equipmentSlots["PrimaryOffhand"];
-		local secondary = player.equipmentSlots["Secondary"];
-		local secondaryOffhand = player.equipmentSlots["SecondaryOffhand"];
-		local tertiary = player.equipmentSlots["Tertiary"];
-		local tertiaryOffhand = player.equipmentSlots["TertiaryOffhand"];
+		local equipmentSlots = player.equipmentSlots;
+		local primary = equipmentSlots["Primary"];
+		local primaryOffhand = equipmentSlots["PrimaryOffhand"];
+		local secondary = equipmentSlots["Secondary"];
+		local secondaryOffhand = equipmentSlots["SecondaryOffhand"];
+		local tertiary = equipmentSlots["Tertiary"];
+		local tertiaryOffhand = equipmentSlots["TertiaryOffhand"];
 
 		if primary and primary.weaponClass then
 			local weapon = player:Give(primary.weaponClass, primary);
@@ -464,8 +474,8 @@ if SERVER then
 			end
 		end
 		
-		local armorItem = player.equipmentSlots["Armor"];
-		local helmetItem = player.equipmentSlots["Helms"];
+		local armorItem = equipmentSlots["Armor"];
+		local helmetItem = equipmentSlots["Helms"];
 
 		if armorItem then
 			armorItem:OnWear(player);

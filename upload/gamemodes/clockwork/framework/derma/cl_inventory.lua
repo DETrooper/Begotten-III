@@ -135,6 +135,7 @@ function PANEL:Rebuild()
 	
 	local coin = Clockwork.player:GetCash() or 0;
 	local cycle;
+	local clientInventory = Clockwork.inventory:GetClient();
 	local clothesItem = Clockwork.Client:GetClothesEquipped();
 	local playerModel = Clockwork.Client:GetModel();
 	local playerSkin = Clockwork.Client:GetSkin();
@@ -228,7 +229,7 @@ function PANEL:Rebuild()
 		end;
 	end;
 	
-	for k, v in pairs(Clockwork.inventory:GetClient()) do
+	for k, v in pairs(clientInventory) do
 		for k2, v2 in pairs(v) do
 			local itemCategory = v2("category");
 			
@@ -835,47 +836,43 @@ function PANEL:Rebuild()
 	local attachments = {};
 
 	if weapons and not table.IsEmpty(weapons) then
-		for i = 1, #weapons do
+		for i = 1, 6 do
 			local weapon = weapons[i];
-			
-			if weapon and weapon.uniqueID and weapon.itemID then
-				local item = Clockwork.item:FindByID(weapon.uniqueID, weapon.itemID);
+
+			if weapon and weapon.isAttachment then
+				local attachment = {};
+				local attachmentBone = weapon.attachmentBone;
+				local offsetAngle = weapon.attachmentOffsetAngles;
+				local offsetVector = weapon.attachmentOffsetVector;
 				
-				if item and item.isAttachment then
-					local attachment = {};
-					local attachmentBone = item.attachmentBone;
-					local offsetAngle = item.attachmentOffsetAngles;
-					local offsetVector = item.attachmentOffsetVector;
-					
-					if item.slots and i > #item.slots then
-						-- Offhand
-						if string.find(attachmentBone, "_L_") then
-							attachmentBone = string.gsub(attachmentBone, "_L_", "_R_");
-						else
-							attachmentBone = string.gsub(attachmentBone, "_R_", "_L_");
-						end
-						
-						offsetVector = Vector(-offsetVector.x, offsetVector.y, offsetVector.z);
-						offsetAngle = Angle(-offsetAngle.pitch, offsetAngle.yaw, offsetAngle.roll);
+				if weapon.slots and i > #weapon.slots then
+					-- Offhand
+					if string.find(attachmentBone, "_L_") then
+						attachmentBone = string.gsub(attachmentBone, "_L_", "_R_");
+					else
+						attachmentBone = string.gsub(attachmentBone, "_R_", "_L_");
 					end
-				
-					attachment.attachmentInfo = {};
-					attachment.attachmentInfo.attachmentModel = item.model;
-					attachment.attachmentInfo.attachmentBone = attachmentBone;
-					attachment.attachmentInfo.attachmentOffsetAngles = offsetAngle;
-					attachment.attachmentInfo.attachmentOffsetVector = offsetVector;
-					attachment.attachmentInfo.attachmentSkin = item.attachmentSkin;
-					attachment.attachmentInfo.bodygroup0 = item.bodygroup0;
-					attachment.attachmentInfo.bodygroup1 = item.bodygroup1;
-					attachment.attachmentInfo.bodygroup2 = item.bodygroup2;
-					attachment.attachmentInfo.bodygroup3 = item.bodygroup3;
 					
-					table.insert(attachments, attachment);
+					offsetVector = Vector(-offsetVector.x, offsetVector.y, offsetVector.z);
+					offsetAngle = Angle(-offsetAngle.pitch, offsetAngle.yaw, offsetAngle.roll);
 				end
+			
+				attachment.attachmentInfo = {};
+				attachment.attachmentInfo.attachmentModel = weapon.model;
+				attachment.attachmentInfo.attachmentBone = attachmentBone;
+				attachment.attachmentInfo.attachmentOffsetAngles = offsetAngle;
+				attachment.attachmentInfo.attachmentOffsetVector = offsetVector;
+				attachment.attachmentInfo.attachmentSkin = weapon.attachmentSkin;
+				attachment.attachmentInfo.bodygroup0 = weapon.bodygroup0;
+				attachment.attachmentInfo.bodygroup1 = weapon.bodygroup1;
+				attachment.attachmentInfo.bodygroup2 = weapon.bodygroup2;
+				attachment.attachmentInfo.bodygroup3 = weapon.bodygroup3;
+				
+				table.insert(attachments, attachment);
 			end
 		end
 	end
-
+	
 	self.characterModel.attachments = attachments;
 	self.characterModel:SetModelNew(playerModel);
 	

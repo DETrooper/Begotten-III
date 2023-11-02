@@ -19,7 +19,7 @@ function ENT:Initialize()
 	self:SetHealth(50)
 	self:SetSolid(SOLID_VPHYSICS)
 	
-	timer.Create("BelongingsTimer_"..self:EntIndex(), 300, 0, function()
+	timer.Create("BelongingsTimer_"..self:EntIndex(), 300, 1, function()
 		if IsValid(self) then
 			self:Remove();
 		end

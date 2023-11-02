@@ -754,9 +754,9 @@ function PANEL:Init()
 	end
 
 	if weapons and not table.IsEmpty(weapons) then
-		for i = 1, #weapons do
+		for i = 1, 6 do
 			local weapon = weapons[i];
-			
+
 			if weapon and weapon.uniqueID and weapon.itemID then
 				local item = Clockwork.item:FindByID(weapon.uniqueID, weapon.itemID);
 				

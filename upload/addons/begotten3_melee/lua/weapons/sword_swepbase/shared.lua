@@ -1070,9 +1070,11 @@ end
 		
 		local damage = (attacktable["primarydamage"])
 		local damagetype = (attacktable["dmgtype"])
+		local stabilitydamage = (attacktable["stabilitydamage"]);
 		
 		if self:GetNWString("activeOffhand"):len() > 0 then
 			damage = damage * 0.6;
+			stabilitydamage = stabilitydamage * 0.6;
 		end
 
 		if swingType == "parry_swing" then
@@ -1150,7 +1152,7 @@ end
 				end
 				 
 				if hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit.iFrames then
-					hit:TakeStability((attacktable["stabilitydamage"] * 3) * shield_reduction * hit_reduction)		
+					hit:TakeStability((stabilitydamage * 3) * shield_reduction * hit_reduction)		
 
 					-- Fire attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "fire_swing" then
@@ -1212,7 +1214,7 @@ end
 							end);
 							
 							if hit:IsPlayer() then
-								hit:TakeStability((attacktable["stabilitydamage"]) * shield_reduction * hit_reduction);
+								hit:TakeStability((stabilitydamage) * shield_reduction * hit_reduction);
 							end
 						end
 					end
@@ -1247,14 +1249,14 @@ end
 									damagetype = 16
 									
 									--[[if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect") and !hit.iFrames then
-										hit:TakeStability((attacktable["stabilitydamage"]))		
+										hit:TakeStability((stabilitydamage))		
 									end]]--
 								end
 							end
 						else
 							-- Non-polearm thrust
 							--[[if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect") and !hit.iFrames then
-								hit:TakeStability((attacktable["stabilitydamage"]))			
+								hit:TakeStability((stabilitydamage))			
 							end]]--
 							
 							--[[if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect")) and !hit.iFrames then
@@ -1525,7 +1527,7 @@ end
 							
 							poletype = (attacktable["dmgtype"])
 							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
-								hit:TakeStability((attacktable["stabilitydamage"] * 0.7))			
+								hit:TakeStability((stabilitydamage * 0.7))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
 							if (hit:IsNPC() or hit:IsNextBot()) then
@@ -1551,7 +1553,7 @@ end
 							
 							poletype = (attacktable["dmgtype"])
 							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
-								hit:TakeStability((attacktable["stabilitydamage"] * 0.8))			
+								hit:TakeStability((stabilitydamage * 0.8))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
 							if (hit:IsNPC() or hit:IsNextBot()) then
@@ -1577,7 +1579,7 @@ end
 							
 							poletype = (attacktable["dmgtype"])
 							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
-								hit:TakeStability((attacktable["stabilitydamage"] * 1))			
+								hit:TakeStability((stabilitydamage * 1))			
 								hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
 							if (hit:IsNPC() or hit:IsNextBot()) then
@@ -1603,7 +1605,7 @@ end
 							
 							poletype = (attacktable["dmgtype"])
 							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
-								hit:TakeStability((attacktable["stabilitydamage"] * 1.1))			
+								hit:TakeStability((stabilitydamage * 1.1))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
 							if (hit:IsNPC() or hit:IsNextBot()) then
@@ -1629,7 +1631,7 @@ end
 							
 							poletype = (attacktable["dmgtype"])
 							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
-								hit:TakeStability((attacktable["stabilitydamage"] * 1.3))			
+								hit:TakeStability((stabilitydamage * 1.3))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
 							if (hit:IsNPC() or hit:IsNextBot()) then
@@ -1655,7 +1657,7 @@ end
 							
 							poletype = (attacktable["dmgtype"])
 							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
-								hit:TakeStability((attacktable["stabilitydamage"] * 1.6))			
+								hit:TakeStability((stabilitydamage * 1.6))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
 							if (hit:IsNPC() or hit:IsNextBot()) then
@@ -1681,7 +1683,7 @@ end
 							
 							poletype = (attacktable["dmgtype"])
 							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
-								hit:TakeStability((attacktable["stabilitydamage"] * 1.7))			
+								hit:TakeStability((stabilitydamage * 1.7))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
 							if (hit:IsNPC() or hit:IsNextBot()) then
@@ -1733,7 +1735,7 @@ end
 							
 							poletype = (attacktable["dmgtype"])
 							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
-								hit:TakeStability((attacktable["stabilitydamage"] * 1))			
+								hit:TakeStability((stabilitydamage * 1))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
 							if (hit:IsNPC() or hit:IsNextBot()) then
@@ -1759,7 +1761,7 @@ end
 							
 							poletype = (attacktable["dmgtype"])
 							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
-								hit:TakeStability((attacktable["stabilitydamage"] * 1.5))			
+								hit:TakeStability((stabilitydamage * 1.5))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
 							if (hit:IsNPC() or hit:IsNextBot()) then
@@ -1933,7 +1935,7 @@ end
 								end
 								
 								if hit:IsPlayer() then
-									hit:TakeStability((attacktable["stabilitydamage"] * shield_reduction * hit_reduction));
+									hit:TakeStability((stabilitydamage * shield_reduction * hit_reduction));
 								end
 							end
 						end
@@ -1943,7 +1945,7 @@ end
 							if owner.GetCharmEquipped and owner:GetCharmEquipped("ring_pugilist") and weaponClass == "begotten_fists" then
 								hit:TakeStability(25);
 							else
-								hit:TakeStability((attacktable["stabilitydamage"] * shield_reduction * hit_reduction));
+								hit:TakeStability((stabilitydamage * shield_reduction * hit_reduction));
 							end
 						end
 						
