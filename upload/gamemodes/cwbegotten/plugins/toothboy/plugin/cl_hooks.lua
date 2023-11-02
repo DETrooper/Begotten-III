@@ -225,7 +225,7 @@ function cwToothBoy:PlayerOnHit(entity)
 			self.Static = toothboyTime
 			
 			for i = 1, math.random(1, 3) do
-				Clockwork.Client:EmitSound("begotten/tb/tb_"..math.random(1, 39)..".mp3", 500, math.random(35, 50))
+				Clockwork.Client:EmitSound("begotten/tb/tb_"..math.random(1, 40)..".mp3", 500, math.random(35, 50))
 			end
 			
 			Clockwork.Client:EmitSound("begotten/slender.wav", 60, 60)

@@ -159,29 +159,19 @@ local y_yaw = 0
 local rands = 2
 local grain = Material("begotten/effects/grain_overlay");
 
-
-
-function Scaresae()
-
-	LocalPlayer():EmitSound("begotten/npc/sle/scare"..math.random(1, 2)..".mp3")
-	timer.Simple(0, function()
+function cwSanity:Scaresae()
+	LocalPlayer():EmitSound("begotten/npc/sle/scare"..math.random(1, 2)..".mp3");
+	
+	timer.Simple(FrameTime(), function()
 		LocalPlayer().Scares = CurTime() + 4;
 		LocalPlayer().ScareTime = LocalPlayer().Scares - CurTime();
 		LocalPlayer().Rangers1 = 50;
 		LocalPlayer().Rangers2 = 25;
-		LocalPlayer():EmitSound("begotten/slender.wav", 30);
-	Schema:SanityZoom(0.2)
-	Schema:AddStunEffect(0.1);
-	CRAZYBOB = 100;
-		timer.Simple(0.5, function()
-			LocalPlayer():EmitSound("begotten/slender.wav", 60);
-		end);
+		Schema:SanityZoom(0.2)
+		Schema:AddStunEffect(0.1);
+		CRAZYBOB = 100;
 	end);
 end;
-
-concommand.Add("scarma", function()
-	Scaresae()
-end);
 
 hook.Add("RenderScreenspaceEffects", "Scaresa", function()
 	local curTime = CurTime();

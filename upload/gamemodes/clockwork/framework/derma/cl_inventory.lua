@@ -150,10 +150,14 @@ function PANEL:Rebuild()
 	end
 	
 	if string.find(playerModel, "models/begotten/heads") then
-		headModel = playerModel;
-		
 		local factionTable = Clockwork.faction:FindByID(Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction());
 		local gender = string.lower(Clockwork.Client:GetGender());
+	
+		if cwSanity and Clockwork.Client:Sanity() <= 20 then
+			headModel = "models/begotten/heads/"..string.lower(gender).."_gorecap.mdl";
+		else
+			headModel = playerModel;
+		end
 
 		if clothesItem and clothesItem.group then
 			if clothesItem.genderless then

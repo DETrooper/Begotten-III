@@ -190,7 +190,7 @@ function cwMusic:Tick()
 		
 		if Clockwork.Client:HasInitialized() and Clockwork.Client:Alive() then
 			if (!Clockwork.menu:GetOpen()) and (!Clockwork.kernel:IsChoosingCharacter()) then
-				if self:CanPlayAmbientMusic() then
+				if hook.Run("CanPlayAmbientMusic") ~= false then
 					self:StartAmbientMusic();
 				else
 					if (!cwMusic.MusicEndTime or cwMusic.MusicEndTime < curTime) then
@@ -235,7 +235,7 @@ function cwMusic:Tick()
 end
 
 function cwMusic:StartAmbientMusic()
-	if (!self:CanPlayAmbientMusic()) then
+	if hook.Run("CanPlayAmbientMusic") == false then
 		return
 	end
 	
@@ -345,10 +345,6 @@ function cwMusic:CanPlayAmbientMusic()
 	if Clockwork.Client.LoadingText then
 		return false;
 	end
-	
-	if Clockwork.Client.dueling then
-		return false;
-	end
 
 	--if (Clockwork.Client:IsAdmin()) then
 		if (CW_CONVAR_AMBIENTMUSIC and CW_CONVAR_AMBIENTMUSIC:GetInt() != 1) then
@@ -374,8 +370,6 @@ function cwMusic:CanPlayAmbientMusic()
 		-- No ambient music in these areas.
 		return false
 	end
-	
-	return true
 end
 
 function cwMusic:FadeOutAmbientMusic(seconds, delay)
@@ -449,7 +443,7 @@ function cwMusic:AddBattleMusicTime(timeToAdd)
 end
 
 function cwMusic:StartBattleMusic(limit)
-	if (!self:CanPlayBattleMusic()) then
+	if hook.Run("CanPlayBattleMusic") == false then
 		return
 	end
 	
@@ -588,8 +582,6 @@ function cwMusic:CanPlayBattleMusic()
 			return false
 		end
 	end
-	
-	return true
 end
 
 function cwMusic:FadeOutBattleMusic(seconds, delay)

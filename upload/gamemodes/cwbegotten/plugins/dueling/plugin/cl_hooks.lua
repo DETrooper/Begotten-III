@@ -19,3 +19,9 @@ function cwDueling:CanOpenEntityMenu()
 		return false;
 	end
 end
+
+function cwDueling:CanPlayAmbientMusic()
+	if Clockwork.Client.dueling then
+		return false;
+	end
+end

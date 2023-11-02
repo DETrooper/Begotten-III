@@ -2,6 +2,9 @@
 	Begotten III: Jesus Wept
 --]]
 
+local hallucinationModels = {"models/undead/charple01.mdl", "models/skeleton/skeleton_whole.mdl"};
+local medSanitySounds = {"begotten/ambient/atmosphere/apocalypse/hits/hit_1.wav", "begotten/ambient/atmosphere/apocalypse/hits/hit_2.wav", "begotten/ambient/atmosphere/apocalypse/hits/hit_3.wav", "begotten/ambient/atmosphere/apocalypse/hits/hit_4.wav", "damnation/apocalypt/metal4.mp3", "damnation/apocalypt/metal10.mp3", "damnation/apocalypt/metal11.mp3", "damnation/apocalypt/metal12.mp3", "damnation/apocalypt/metal17.mp3", "damnation/apocalypt/metal18.mp3", "damnation/apocalypt/metal19.mp3", "damnation/apocalypt/strange3.mp3", "damnation/apocalypt/woosh2.mp3", "begotten/ui/spine_tingeling.mp3"};
+local lowSanitySounds = {"damnation/apocalypt/ambience_echos.mp3", "begotten2/doom_moan.wav", "damnation/apocalypt/ambience_horn.mp3", "damnation/apocalypt/ambience_lonely.mp3", "damnation/apocalypt/ambience_ladder1.mp3", "damnation/apocalypt/ambience_metal4.mp3", "damnation/apocalypt/ambience_open.mp3", "damnation/apocalypt/ambience_door.mp3", "damnation/apocalypt/ambience_exhale.mp3", "damnation/apocalypt/ambience_silence.mp3", "damnation/apocalypt/whisper2.mp3", "damnation/apocalypt/whisper3.mp3"};
 local sanityTexts = {"...", "Insane", "Losing Sanity", "Sane", "Sanity is a measure of your character's mental condition: the lower it gets the more detached from reality they will become. Witnessing or partaking in distrubing acts is detrimental to one's sanity."};
 
 -- Called when the bars are needed.
@@ -21,13 +24,29 @@ local sanityTexts = {"...", "Insane", "Losing Sanity", "Sane", "Sanity is a meas
 	end
 end]]--
 
+function cwSanity:CanPlayAmbientMusic()
+	local sanity = Clockwork.Client:Sanity() or 100;
+	
+	if sanity <= 20 then
+		return false;
+	end
+end
+
+function cwSanity:CanPlayBattleMusic()
+	local sanity = Clockwork.Client:Sanity() or 100;
+	
+	if sanity <= 20 then
+		return false;
+	end
+end
+
 -- Called when the opaque renderables are drawn.
 function cwSanity:PostDrawOpaqueRenderables()
 	if (Clockwork.Client:HasInitialized() and Clockwork.Client:Alive()) then
 		local sanity = Clockwork.Client:Sanity() or 100;
 		local position = Clockwork.Client:GetPos();
 		
-		if (sanity < 20) then
+		if (sanity <= 20) then
 			for k, v in pairs (ents.FindInSphere(position, 512)) do
 				local moveType = v:GetMoveType();
 				
@@ -73,6 +92,72 @@ function cwSanity:Think()
 	if Clockwork.Client:HasInitialized() then
 		local curTime = CurTime()
 		local sanity = Clockwork.Client:Sanity();
+		
+		if sanity <= 20 and Clockwork.Client:Alive() and !Clockwork.kernel:IsChoosingCharacter() and Clockwork.Client:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT then
+			if !self.sanityAmbience then
+				self.sanityAmbience = CreateSound(Clockwork.Client, "begotten2/tone_alley.wav");
+				self.sanityAmbience:Play();
+				
+				if cwMusic then
+					if cwMusic.AmbientMusic then
+						cwMusic:FadeOutAmbientMusic(4, 1);
+					end
+					
+					if cwMusic.BattleMusic then
+						cwMusic:FadeOutBattleMusic(4, 1);
+					end
+				end
+			end
+			
+			if Clockwork.Client:GetMoveType() ~= MOVETYPE_NOCLIP then
+				if !self.nextSanityHallucination then
+					self.nextSanityHallucination = curTime + math.random(300, 1500);
+				end
+
+				if self.nextSanityHallucination <= curTime then
+					local player = Clockwork.Client;
+					local hallucinationModel = ClientsideModel(table.Random(hallucinationModels), RENDERGROUP_OPAQUE);
+					
+					hallucinationModel:SetSequence(hallucinationModel:LookupSequence("idle"));
+					hallucinationModel:SetPos(player:GetPos() + (player:GetForward() * 32) + Vector(0, 0, 2));
+					hallucinationModel:SetAngles(player:GetAngles() + Angle(0, 180, 0));
+					hallucinationModel:SetParent(player);
+					hallucinationModel:Spawn();
+					
+					player:EmitSound("begotten/slender.wav");
+
+					timer.Simple(0.1, function()
+						if IsValid(hallucinationModel) then
+							hallucinationModel:Remove();
+						end
+					end);
+					
+					self.nextSanityHallucination = curTime + math.random(300, 1500);
+				end
+			end
+		else
+			if self.nextSanityHallucination then
+				self.nextSanityHallucination = nil;
+			end
+		
+			if self.sanityAmbience and self.sanityAmbience ~= "fading" then
+				if Clockwork.kernel:IsChoosingCharacter() then
+					self.sanityAmbience:Stop();
+					self.sanityAmbience = nil;
+				else
+					self.sanityAmbience:FadeOut(4);
+					self.sanityAmbience = "fading";
+					
+					timer.Simple(4, function()
+						self.sanityAmbience = nil;
+					end);
+				end
+				
+				for i, v in ipairs(lowSanitySounds) do
+					Clockwork.Client:StopSound(v);
+				end
+			end
+		end
 		
 		if !self.itemSpeakTimer then
 			self.itemSpeakTimer = curTime + math.random(180, 480);
@@ -175,10 +260,24 @@ function cwSanity:Think()
 			end
 		end
 		
-		if (sanity <= 40 and Clockwork.Client:Alive() and !Clockwork.kernel:IsChoosingCharacter() and !Clockwork.Client:IsRagdolled() and !Clockwork.Client.dueling and !Clockwork.player:IsNoClipping(Clockwork.Client)) then
+		if (sanity <= 40 and Clockwork.Client:Alive() and !Clockwork.kernel:IsChoosingCharacter() and Clockwork.Client:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT and !Clockwork.Client.dueling and !Clockwork.player:IsNoClipping(Clockwork.Client)) then
 			local has_saintly_composure = (cwBeliefs and cwBeliefs:HasBelief("saintly_composure"));
 			
 			if !has_saintly_composure then
+				if (sanity <= 20) then 
+					if !self.nextSanitySound or self.nextSanitySound < curTime then
+						self.nextSanitySound = curTime + math.random(40, 60);
+					
+						Clockwork.Client:EmitSound(table.Random(lowSanitySounds), 60);
+					end
+				else
+					if !self.nextSanitySound or self.nextSanitySound < curTime then
+						self.nextSanitySound = curTime + math.random(20, 60);
+					
+						Clockwork.Client:EmitSound(table.Random(medSanitySounds), 60, math.random(75, 100));
+					end
+				end
+				
 				local traceLine = nil;
 				local position = Clockwork.Client:GetPos();
 
@@ -714,3 +813,21 @@ function cwSanity:SpookyScarySkeletons()
 		end);
 	end;
 end;
+
+netstream.Hook("ScarePlayer", function()
+	if cwMusic then
+		if cwMusic.AmbientMusic then
+			cwMusic:StopAmbientMusic();
+		end
+		
+		if cwMusic.BattleMusic then
+			cwMusic:StopBattleMusic();
+		end
+	end
+
+	cwSanity:Scaresae();
+end)
+
+netstream.Hook("SpookyScarySkeletons", function()
+	cwSanity:SpookyScarySkeletons();
+end);

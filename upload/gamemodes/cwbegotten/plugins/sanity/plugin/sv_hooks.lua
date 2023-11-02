@@ -228,8 +228,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable)
 		end;
 
 		if (hellZones[lastZone]) then
-			-- GetFaction() check incase they're disguised.
-			if (player:GetFaction() != "Children of Satan") then
+			if (player:GetFaith() ~= "Faith of the Dark") then
 				sanityDecay = sanityDecay - 5;
 			else
 				sanityDecay = sanityDecay + 5;

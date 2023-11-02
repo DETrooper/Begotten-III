@@ -62,6 +62,43 @@ end;
 
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("PlyScare");
+COMMAND.tip = "Scare a player and reduce their sanity by 10. Leave argument blank to scare the player you are looking at.";
+COMMAND.text = "<string Name>";
+COMMAND.flags = CMD_DEFAULT;
+COMMAND.access = "s";
+COMMAND.optionalArguments = 1;
+COMMAND.alias = {"ScarePlayer", "CharScare", "Scare", "Jumpscare"};
+
+-- Called when the command has been run.
+function COMMAND:OnRun(player, arguments)
+	local target = Clockwork.player:FindByID(arguments[1]);
+	
+	if !target then
+		local ent = player:GetEyeTraceNoCursor().Entity;
+		
+		if ent:IsPlayer() then
+			target = ent;
+		end
+	end
+
+	if (target) then
+		target:HandleSanity(-10);
+
+		if (player != target) then
+			netstream.Start({player, target}, "ScarePlayer");
+		
+			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have scared "..target:Name().."!");
+		else
+			netstream.Start(player, "ScarePlayer");
+			
+			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have scared yourself!");
+		end;
+	end;
+end;
+
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("ToggleHellSanityLoss");
 COMMAND.tip = "Toggle Hell's residual sanity loss.";
 COMMAND.flags = CMD_DEFAULT;
