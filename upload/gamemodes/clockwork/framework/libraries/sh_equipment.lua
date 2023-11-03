@@ -427,7 +427,7 @@ if SERVER then
 		if primary and primary.weaponClass then
 			local weapon = player:Give(primary.weaponClass, primary);
 			
-			if weapon and primaryOffhand and primaryOffhand.weaponClass then
+			if IsValid(weapon) and weapon.EquipOffhand and primaryOffhand and primaryOffhand.weaponClass then
 				weapon:EquipOffhand(primaryOffhand.weaponClass);
 			end
 		end
@@ -436,14 +436,14 @@ if SERVER then
 			if secondary.weaponClass then
 				local weapon = player:Give(secondary.weaponClass, secondary);
 				
-				if weapon and secondaryOffhand and secondaryOffhand.weaponClass then
+				if IsValid(weapon) and weapon.EquipOffhand and secondaryOffhand and secondaryOffhand.weaponClass then
 					weapon:EquipOffhand(secondaryOffhand.weaponClass);
 				end
 			elseif secondary.category == "Shields" then
 				if primary and primary.canUseShields and !primaryOffhand then
 					local weapon = player:GetWeapon(primary.weaponClass);
 					
-					if IsValid(weapon) then
+					if IsValid(weapon) and weapon.EquipShield then
 						weapon:EquipShield(secondary.uniqueID);
 					end
 				end
@@ -454,20 +454,20 @@ if SERVER then
 			if tertiary.weaponClass then
 				local weapon = player:Give(tertiary.weaponClass, tertiary);
 				
-				if weapon and tertiaryOffhand and tertiaryOffhand.weaponClass then
+				if IsValid(weapon) and weapon.EquipOffhand and tertiaryOffhand and tertiaryOffhand.weaponClass then
 					weapon:EquipOffhand(tertiaryOffhand.weaponClass);
 				end
 			elseif tertiary.category == "Shields" then
 				if primary and primary.canUseShields and !primaryOffhand then
 					local weapon = player:GetWeapon(primary.weaponClass);
 					
-					if IsValid(weapon) then
+					if IsValid(weapon) and weapon.EquipShield then
 						weapon:EquipShield(tertiary.uniqueID);
 					end
 				elseif secondary and secondary.canUseShields and !secondaryOffhand then
 					local weapon = player:GetWeapon(secondary.weaponClass);
 					
-					if IsValid(weapon) then
+					if IsValid(weapon) and weapon.EquipShield then
 						weapon:EquipShield(tertiary.uniqueID);
 					end
 				end
@@ -477,11 +477,11 @@ if SERVER then
 		local armorItem = equipmentSlots["Armor"];
 		local helmetItem = equipmentSlots["Helms"];
 
-		if armorItem then
+		if armorItem and armorItem.OnWear then
 			armorItem:OnWear(player);
 		end
 		
-		if helmetItem then
+		if helmetItem and helmetItem.OnWear then
 			helmetItem:OnWear(player);
 		end
 		

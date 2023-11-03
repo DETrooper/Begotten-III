@@ -1119,9 +1119,9 @@ end
 					-- Ice attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "ice_swing" then
 						if offhandWeapon then
-							data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+							hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 						else
-							data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+							hit:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
 						end
 					end
 				end
@@ -1166,9 +1166,9 @@ end
 					-- Ice attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "ice_swing" then
 						if offhandWeapon then
-							data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+							hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 						else
-							data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+							hit:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
 						end
 					end
 				end
@@ -1348,9 +1348,9 @@ end
 						-- Ice attack type
 						if attacktable["attacktype"] == "ice_swing" then
 							if offhandWeapon then
-								data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+								hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 							else
-								data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+								hit:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
 							end
 						end
 					else
@@ -1367,9 +1367,9 @@ end
 							-- Ice attack type
 							if attacktable["attacktype"] == "ice_swing" then
 								if offhandWeapon then
-									data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+									hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 								else
-									data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+									hit:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
 								end
 							end
 							
@@ -1836,9 +1836,9 @@ end
 						-- Ice attack type
 						if attacktable["attacktype"] == "ice_swing" then
 							if offhandWeapon then
-								data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+								hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 							else
-								data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+								hit:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
 							end
 						end
 					else
@@ -1855,9 +1855,9 @@ end
 							-- Ice attack type
 							if attacktable["attacktype"] == "ice_swing" then
 								if offhandWeapon then
-									data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+									hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 								else
-									data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+									hit:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
 								end
 							end
 							
@@ -2031,9 +2031,9 @@ end
 						-- Ice attack type
 						if attacktable["attacktype"] == "ice_swing" then
 							if offhandWeapon then
-								data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+								hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 							else
-								data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+								hit:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
 							end
 						end
 					else
@@ -2050,9 +2050,9 @@ end
 							-- Ice attack type
 							if attacktable["attacktype"] == "ice_swing" then
 								if offhandWeapon then
-									data.HitEntity:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
+									hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 								else
-									data.HitEntity:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
+									hit:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
 								end
 							end
 							

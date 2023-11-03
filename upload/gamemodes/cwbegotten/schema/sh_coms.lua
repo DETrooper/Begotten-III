@@ -951,8 +951,8 @@ local COMMAND = Clockwork.command:New("RavenSpeakFaction");
 	function COMMAND:OnRun(player, arguments)
 		local subfaction = player:GetSubfaction();
 		
-		if subfaction == "Clan Crast" then
-			if player:HasBelief("watchful_raven") then
+		if subfaction == "Clan Crast" or player:IsAdmin() then
+			if player:HasBelief("watchful_raven") or player:IsAdmin() then
 				--if player:GetPos():WithinAABox(Vector(11622, -6836, 12500), Vector(8744, -10586, 11180)) then
 					local message = "\""..table.concat(arguments, " ", 1).."\"";
 					

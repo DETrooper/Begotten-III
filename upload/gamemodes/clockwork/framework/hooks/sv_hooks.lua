@@ -1650,6 +1650,9 @@ function GM:OneSecond()
 		hook.Run("PostSaveData")
 
 		Clockwork.NextSaveData = sysTime + config.Get("save_data_interval"):Get()
+	else
+		-- This is too important not to save every second, otherwise items can spawn with the item IDs of existing items and that's no good!
+		Clockwork.kernel:SaveSchemaData("itemIndex", {ITEM_INDEX});
 	end
 
 	if (!Clockwork.NextCheckEmpty) then
@@ -3640,8 +3643,12 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 					inflictor = inflictor:GetPrintName();
 				end
 				
-				if !inflictor or !isstring(inflictor) then
-					inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
+				if (!inflictor or !isstring(inflictor) then
+					if IsValid(weapon) then
+						inflictor = weapon.PrintName or weapon:GetClass();
+					else
+						inflictor = "an unknown weapon";
+					end
 				end
 
 				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..inflictor..", killing them!")
@@ -3653,7 +3660,7 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 				end
 				
 				if !inflictor then
-					inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
+					inflictor = weapon.PrintName or weapon:GetClass();
 				end
 				
 				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..inflictor..", killing them!")
