@@ -177,11 +177,12 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 		local tr = util.TraceLine({
 			start = longshipEnt.owner:GetPos(),
 			endpos = longshipEnt.owner:GetPos() - Vector(0, 0, 64),
-			filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end
+			filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end,
+			collisiongroup = COLLISION_GROUP_NONE,
 		});
 				
 		--if ownerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
-		if tr.Entity then
+		if IsValid(tr.Entity) then
 			longshipEnt.destination = destination;
 			
 			local sail_time = 30;
@@ -201,11 +202,12 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 						local tr = util.TraceLine({
 							start = longshipEnt.owner:GetPos(),
 							endpos = longshipEnt.owner:GetPos() - Vector(0, 0, 64),
-							filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end
+							filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end,
+							collisiongroup = COLLISION_GROUP_NONE,
 						});
 						
 						--if ownerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
-						if tr.Entity then
+						if IsValid(tr.Entity) then
 							cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, sea_zone);
 							
 							return;
@@ -284,11 +286,12 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 					local tr = util.TraceLine({
 						start = player:GetPos(),
 						endpos = player:GetPos() - Vector(0, 0, 64),
-						filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end
+						filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end,
+						collisiongroup = COLLISION_GROUP_NONE,
 					});
 					
 					--if playerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
-					if tr.Entity then
+					if IsValid(tr.Entity) then
 						local longshipEntPos = longshipEnt:GetPos();
 						local offset = self:GetPlayerOffset(longshipEnt, player, longshipAngles.y);
 						
@@ -510,11 +513,12 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 				local tr = util.TraceLine({
 					start = player:GetPos(),
 					endpos = player:GetPos() - Vector(0, 0, 64),
-					filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end
+					filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end,
+					collisiongroup = COLLISION_GROUP_NONE,
 				});
 				
 				--if playerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
-				if tr.Entity then
+				if IsValid(tr.Entity) then
 					local longshipEntPos = longshipEnt:GetPos();
 					
 					if (!player.cwObserverMode) then

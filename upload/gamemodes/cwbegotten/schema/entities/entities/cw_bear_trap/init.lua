@@ -18,6 +18,7 @@ function ENT:Initialize()
 	self:PhysicsInit(SOLID_VPHYSICS);
 	self:SetUseType(SIMPLE_USE);
 	self:SetSolid(SOLID_VPHYSICS);
+	self.ArmorPiercing = 80;
 	self.unblockable = true;
 
 	local physicsObject = self:GetPhysicsObject();
@@ -136,7 +137,7 @@ function ENT:Touch(entity)
 					end
 				
 					if cwMelee then
-						entity:TakeStability(100);
+						entity:TakeStability(150);
 					end
 					
 					if entity.iFrames then

@@ -117,6 +117,10 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 				break;
 			end
 		end
+
+		if !table.HasValue(damageTypes, damageType) then
+			return;
+		end
 		
 		if (hitGroup == 0) then
 			if attacker:IsNPC() or attacker:IsNextBot() then
@@ -234,26 +238,24 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					local armorPiercing = 0;
 					local condition = armorItem:GetCondition() or 100;
 					local damage = damageInfo:GetDamage();
+					local inflictor = damageInfo:GetInflictor();
 					--print("Damage: "..tostring(damage));
 					
 					if armorItem.attributes and table.HasValue(armorItem.attributes, "deathknell") then
-						if damageType ~= DMG_BURN and damageType ~= DMG_SHOCK then
-							-- Bellhammer radius disorient
-							for k, v in pairs(ents.FindInSphere(player:GetPos(), 200)) do
-								if v:IsPlayer() then
-									v:Disorient(1)
-								end
+						-- Bellhammer radius disorient
+						for k, v in pairs(ents.FindInSphere(player:GetPos(), 200)) do
+							if v:IsPlayer() then
+								v:Disorient(1)
 							end
-							
-							player:EmitSound("meleesounds/bell.mp3");
 						end
+						
+						player:EmitSound("meleesounds/bell.mp3");
 					end
 					
-					if attacker:IsPlayer() then
+					if attacker:IsPlayer() and IsValid(inflictor) and (inflictor.isJavelin or inflictor:IsWeapon()) then
 						local attackTable;
-						local inflictor = damageInfo:GetInflictor()
 
-						if IsValid(inflictor) and inflictor.AttackTable then
+						if inflictor.AttackTable then
 							attackTable = GetTable(inflictor.AttackTable);
 						end
 								
@@ -311,7 +313,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 							end
 						end;
 					else
-						armorPiercing = attacker.ArmorPiercing or 40;
+						armorPiercing = inflictor.ArmorPiercing or attacker.ArmorPiercing or 40;
 					end;
 					
 					--print("Armor piercing: "..tostring(armorPiercing));
