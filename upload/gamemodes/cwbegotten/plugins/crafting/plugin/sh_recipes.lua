@@ -1081,7 +1081,7 @@ function cwRecipes:ClockworkInitialized()
 			["human_bone"] = {amount = 2},
 		};
 		RECIPE.result = {
-			["skingauze"] = {amount = 1},
+			["skingauze"] = {amount = 2},
 		};
 		RECIPE.category = "Medical"
 		RECIPE.finishSound = "begotten/items/first_aid.wav";
