@@ -3643,7 +3643,7 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 					inflictor = inflictor:GetPrintName();
 				end
 				
-				if (!inflictor or !isstring(inflictor) then
+				if (!inflictor or !isstring(inflictor)) then
 					if IsValid(weapon) then
 						inflictor = weapon.PrintName or weapon:GetClass();
 					else
