@@ -1887,7 +1887,7 @@ local COMMAND = Clockwork.command:New("ArchivesTake");
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("HellJaunt");
-	COMMAND.tip = "Return to Hell using dark magic if you are a Child of Satan, although this act will leave you temporarily vulnerable to the influence of demons and will thus incur extreme corruption. Anyone held in your hands will also be teleported.";
+	COMMAND.tip = "Return to Hell using dark magic if you are a Child of Satan, although this act will leave you temporarily vulnerable to the influence of demons and will thus incur extreme corruption. Anyone held in your hands will also be teleported. You cannot helljaunt while overencumbered.";
 	COMMAND.flags = CMD_DEFAULT;
 
 	-- Called when the command has been run.
@@ -1899,6 +1899,12 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 		
 			if Schema.hellJauntDisabled or (map ~= "rp_begotten3" and map ~= "rp_begotten_redux") then
 				Schema:EasyText(player, "peru", "Your connection with Hell appears to be severed and you cannot helljaunt!");
+				
+				return false;
+			end
+			
+			if player.OverEncumbered then
+				Schema:EasyText(player, "peru", "You cannot helljaunt while overencumbered!");
 				
 				return false;
 			end
