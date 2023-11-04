@@ -115,7 +115,9 @@ local COMMAND = Clockwork.command:New("Enlist")
 											target:SetCharacterData("Faction", "Gatekeeper", true);
 											target:SetCharacterData("Subfaction", subfaction.name, true);
 										else
+											target:SetCharacterData("kinisgerOverride", "Gatekeeper");
 											target:SetSharedVar("kinisgerOverride", "Gatekeeper");
+											target:SetCharacterData("kinisgerOverrideSubfaction", subfaction.name);
 											target:SetSharedVar("kinisgerOverrideSubfaction", subfaction.name);
 										end
 										
@@ -211,13 +213,17 @@ local COMMAND = Clockwork.command:New("Promote")
 					hook.Run("PlayerChangedRanks", target);
 					local notifyTarget = tobool(arguments[3]);
 					
-					if !target:GetSharedVar("kinisgerOverride") then
-						local subfaction = Schema.RanksToSubfaction[faction][ranks[faction][rank]];
-						
-						if subfaction then
+					local subfaction = Schema.RanksToSubfaction[faction][ranks[faction][rank]];
+					
+					if subfaction then
+						if target:GetSharedVar("kinisgerOverride") then
+							target:SetCharacterData("kinisgerOverrideSubfaction", subfaction);
+							target:SetSharedVar("kinisgerOverrideSubfaction", subfaction);
+						else
 							target:SetCharacterData("Subfaction", subfaction, true);
-							Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
 						end
+						
+						Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
 					end
 					
 					if (target == player) then
