@@ -1923,6 +1923,15 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 										Schema:EasyText(player, "peru", "There is one with a yellow banner raised, chaining you to this mortal plane! Vanquish them or distance yourself greatly!");
 										Schema:EasyText(v, "peru", "You feel your yellow banner pulsate with energy as the helljaunt of "..player:Name().." is foiled!");
 										
+										local damageInfo = DamageInfo();
+										
+										damageInfo:SetDamageType(DMG_BURN);
+										damageInfo:SetInflictor(v);
+										damageInfo:SetAttacker(v);
+										damageInfo:SetDamage(3);
+										
+										player:TakeDamageInfo(damageInfo);
+										
 										return;
 									end
 								end

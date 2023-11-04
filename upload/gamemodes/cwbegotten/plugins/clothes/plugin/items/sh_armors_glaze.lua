@@ -1104,7 +1104,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A series of pieced-together scrap plates that form a crude yet effective set of armor.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax", "Clan Crast", "Clan Grock"};
+ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -1163,7 +1163,7 @@ ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.description = "A series of pieced-together scrap plates that form a crude yet effective set of armor.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax", "Clan Crast", "Clan Grock"};
+ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -1743,7 +1743,7 @@ ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.description = "The armor of a wasteland tyrant. It is fitted with crude steel plates and held together by scrap.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax", "Clan Crast", "Clan Grock"};
+ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 ITEM.overlay = "begotten/zomboverlay/skullhelm";
 
 ITEM.requiredbeliefs = {"hauberk"};
