@@ -354,7 +354,9 @@ ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "thegoldenphallus";
 	ITEM.description = "A phallic object cast in pure gold. It is engraved with the markings of a long dead Darklander Emperor. By tradition, his perverted exploits continue on eternal.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.stackable = true;
+	ITEM.stackable = false;
+
+	ITEM.components = {breakdownType = "meltdown", items = {"gold_ingot", "gold_ingot"}};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
