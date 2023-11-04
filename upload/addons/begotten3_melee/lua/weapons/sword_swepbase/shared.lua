@@ -456,7 +456,7 @@ function SWEP:PrimaryAttack()
 			self:CreateTimer(attacktable["striketime"] + 0.1, "strikeTimer"..owner:EntIndex(), function()
 				if IsValid(self) and IsValid(owner) then
 					if self.isAttacking then -- This can be set to false elsewhere and will abort the attack.
-						if offhandAttackTable["striketime"] < attacktable["striketime"] then
+						if !offhandAttackTable or (offhandAttackTable["striketime"] < attacktable["striketime"]) then
 							self.isAttacking = false;
 							owner:SetNWBool( "MelAttacking", false )
 						end
