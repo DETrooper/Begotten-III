@@ -1117,7 +1117,7 @@ end
 					end
 					
 					-- Ice attack type
-					if (hit:IsValid()) and attacktable["attacktype"] == "ice_swing" then
+					if (hit:IsValid()) and attacktable["attacktype"] == "ice_swing" and hit.AddFreeze then
 						if offhandWeapon then
 							hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 						else
@@ -1164,7 +1164,7 @@ end
 					end
 					
 					-- Ice attack type
-					if (hit:IsValid()) and attacktable["attacktype"] == "ice_swing" then
+					if (hit:IsValid()) and attacktable["attacktype"] == "ice_swing" and hit.AddFreeze then
 						if offhandWeapon then
 							hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 						else
@@ -1346,7 +1346,7 @@ end
 						end
 						
 						-- Ice attack type
-						if attacktable["attacktype"] == "ice_swing" then
+						if attacktable["attacktype"] == "ice_swing" and hit.AddFreeze then
 							if offhandWeapon then
 								hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 							else
@@ -1365,7 +1365,7 @@ end
 							end
 							
 							-- Ice attack type
-							if attacktable["attacktype"] == "ice_swing" then
+							if attacktable["attacktype"] == "ice_swing" and hit.AddFreeze then
 								if offhandWeapon then
 									hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 								else
@@ -1834,7 +1834,7 @@ end
 						end
 						
 						-- Ice attack type
-						if attacktable["attacktype"] == "ice_swing" then
+						if attacktable["attacktype"] == "ice_swing" and hit.AddFreeze then
 							if offhandWeapon then
 								hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 							else
@@ -1853,7 +1853,7 @@ end
 							end
 							
 							-- Ice attack type
-							if attacktable["attacktype"] == "ice_swing" then
+							if attacktable["attacktype"] == "ice_swing" and hit.AddFreeze then
 								if offhandWeapon then
 									hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 								else
@@ -2029,7 +2029,7 @@ end
 						end
 						
 						-- Ice attack type
-						if attacktable["attacktype"] == "ice_swing" then
+						if attacktable["attacktype"] == "ice_swing" and hit.AddFreeze then
 							if offhandWeapon then
 								hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 							else
@@ -2048,7 +2048,7 @@ end
 							end
 							
 							-- Ice attack type
-							if attacktable["attacktype"] == "ice_swing" then
+							if attacktable["attacktype"] == "ice_swing" and hit.AddFreeze then
 								if offhandWeapon then
 									hit:AddFreeze((weapon.FreezeDamage * 0.6) * (hit:WaterLevel() + 1), owner);
 								else

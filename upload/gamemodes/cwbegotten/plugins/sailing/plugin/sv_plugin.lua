@@ -182,7 +182,7 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 		});
 				
 		--if ownerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
-		if IsValid(tr.Entity) then
+		if IsValid(tr.Entity) and tr.Entity == longshipEnt then
 			longshipEnt.destination = destination;
 			
 			local sail_time = 30;
@@ -207,7 +207,7 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 						});
 						
 						--if ownerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
-						if IsValid(tr.Entity) then
+						if IsValid(tr.Entity) and tr.Entity == longshipEnt then
 							cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, sea_zone);
 							
 							return;
@@ -291,7 +291,7 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 					});
 					
 					--if playerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
-					if IsValid(tr.Entity) then
+					if IsValid(tr.Entity) and tr.Entity == longshipEnt then
 						local longshipEntPos = longshipEnt:GetPos();
 						local offset = self:GetPlayerOffset(longshipEnt, player, longshipAngles.y);
 						
@@ -518,7 +518,7 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 				});
 				
 				--if playerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
-				if IsValid(tr.Entity) then
+				if IsValid(tr.Entity) and tr.Entity == longshipEnt then
 					local longshipEntPos = longshipEnt:GetPos();
 					
 					if (!player.cwObserverMode) then

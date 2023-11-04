@@ -3655,8 +3655,8 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 			elseif IsValid(weapon) then
 				local inflictor;
 			
-				if inflictor.GetPrintName then
-					inflictor = inflictor:GetPrintName();
+				if weapon.GetPrintName then
+					inflictor = weapon:GetPrintName();
 				end
 				
 				if !inflictor then
