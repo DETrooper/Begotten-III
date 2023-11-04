@@ -1873,10 +1873,41 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 4},
 			["fine_steel_ingot"] = {amount = 1},
-			["wood"] = {amount = 1},
+			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_2h_claymore"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 75;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("steel_longsword");
+		RECIPE.name = "Steel Longsword";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 3},
+			["fine_steel_ingot"] = {amount = 1},
+			["wood"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["begotten_2h_exileknightsword"] = {amount = 1},
 		};
 		RECIPE.category = "Weapons"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";

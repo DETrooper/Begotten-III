@@ -17,13 +17,13 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
-	ITEM.name = "Exile Knight Sword";
+	ITEM.name = "Steel Longsword";
 	ITEM.model = "models/begotten/weapons/templarsword.mdl";
 	ITEM.skin = 2;
 	ITEM.weight = 2.5;
 	ITEM.uniqueID = "begotten_2h_exileknightsword";
 	ITEM.category = "Melee";
-	ITEM.description = "A darkened fine steel longsword used by knights exiled from the Holy Hierarchy who now wander the wasteland.";
+	ITEM.description = "A darkened fine steel longsword of Glazic design. Once infamously used by exiled Knights of the Holy Hierarchy.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/exile_knight_sword.png"
 	ITEM.meleeWeapon = true;
 	ITEM.isAttachment = true;
@@ -31,7 +31,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(172.04, 74.59, 261.55);
 	ITEM.attachmentOffsetVector = Vector(8.49, 1.9, 26.87);
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "steel_chunks", "wood"}}; -- use "breakdown" for other type
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
 ITEM:Register();
 
