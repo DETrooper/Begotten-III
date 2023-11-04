@@ -2333,7 +2333,7 @@ AttackTables.ReaverBattleAxeAttackTable = {
 };
 
 AttackTables.GoreSeaxAttackTable = {
-	["primarydamage"] = 35,
+	["primarydamage"] = 40,
 	["dmgtype"] = 4,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = true,
@@ -2341,7 +2341,7 @@ AttackTables.GoreSeaxAttackTable = {
 	["altattackpoisedamagemodifier"] = 0.3,
 	["altmeleearc"] = 15,
 	["armorpiercing"] = 20,
-	["altarmorpiercing"] = 40,
+	["altarmorpiercing"] = 45,
 	["poisedamage"] = 10,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 3,
