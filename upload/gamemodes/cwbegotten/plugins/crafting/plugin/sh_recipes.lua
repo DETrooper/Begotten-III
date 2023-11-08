@@ -5510,6 +5510,36 @@ RECIPE:Register()
 	-- ARMOR
 	--
 	--
+	
+	RECIPE = cwRecipes.recipes:New("armored_blade_druid_robes");
+		RECIPE.name = "Armored Blade Druid Robes";
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["blade_druid_robes"] = {amount = 1},
+			["iron_ingot"] = {amount = 4},
+			["leather"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["armored_blade_druid_robes"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("blade_druid_robes");
 		RECIPE.name = "Blade Druid Robes";
@@ -6670,6 +6700,38 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("wanderer_crude_plate");
+		RECIPE.name = "Wanderer Crude Plate";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 3},
+			["iron_ingot"] = {amount = 2},
+			["leather"] = {amount = 1},
+			["cloth"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["wanderer_crude_plate"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 70;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("padded_coat");
 		RECIPE.name = "Padded Coat";
@@ -6962,6 +7024,34 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("wanderer_crude_plate_helm");
+		RECIPE.name = "Wanderer Crude Plate Helm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["wanderer_crude_plate_helm"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 40;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("helm_of_atonement");
 		RECIPE.name = "Helm of Atonement";
@@ -7072,6 +7162,35 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
 		RECIPE.experience = 8;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("skintape_mask");
+		RECIPE.name = "Skintape Mask";
+		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.requiredBeliefsNiceNames = {"Primeval"};
+		RECIPE.requirements = {
+			["skingauze"] = {amount = 2},
+			["skintape"] = {amount = 2},
+			["cloth"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["skintape_mask"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 20;
 		
 		function RECIPE:OnCraft(player)
 		end;

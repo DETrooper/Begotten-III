@@ -245,17 +245,21 @@ function cwScrapFactory:CheckProcessingCycle()
 				local position = cwScrapFactory.rewardPositions[i];
 				local resource = "scrap";
 				
-				if math.random(1, 100) >= 75 then
-					if math.random(1, 50) == 1 then
-						resource = bestResources[math.random(1, #bestResources)];
-					elseif math.random(1, 15) == 1 then
-						resource = greatResources[math.random(1, #greatResources)];
-					elseif math.random(1, 5) == 1 then
-						resource = goodResources[math.random(1, #goodResources)];
-					elseif math.random(1, 3) == 1 then
-						resource = decentResources[math.random(1, #decentResources)];
-					else
-						resource = shitResources[math.random(1, #shitResources)];
+				if i == 1 and voltistPresent then
+					resource = "tech";
+				else
+					if math.random(1, 100) >= 75 then
+						if math.random(1, 50) == 1 then
+							resource = bestResources[math.random(1, #bestResources)];
+						elseif math.random(1, 15) == 1 then
+							resource = greatResources[math.random(1, #greatResources)];
+						elseif math.random(1, 5) == 1 then
+							resource = goodResources[math.random(1, #goodResources)];
+						elseif math.random(1, 3) == 1 then
+							resource = decentResources[math.random(1, #decentResources)];
+						else
+							resource = shitResources[math.random(1, #shitResources)];
+						end
 					end
 				end
 				

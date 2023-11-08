@@ -116,7 +116,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.name = "Old Soldier Helm"
 	ITEM.model = "models/begotten/headgroups_props/morion.mdl"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/old_soldier_helm.png"
-	ITEM.weight = 1.5
+	ITEM.weight = 1
 	ITEM.uniqueID = "old_soldier_helm"
 	ITEM.category = "Helms"
 	ITEM.bodyGroup = 1
@@ -142,8 +142,40 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 800};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Wanderer Crude Plate Helm"
+	ITEM.model = "models/begotten/headgroups_props/crudeplate_helmet.mdl"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/crude_plate_helm.png"
+	ITEM.weight = 1.5
+	ITEM.category = "Helms"
+	ITEM.headReplacement = "models/begotten/heads/crudeplate_helmet.mdl";
+	ITEM.description = "A crudely constructed steel helmet, its design obviously inspired by older Empire of Light designs."
+	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+
+	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 65
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
+	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+	ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks"}};
+	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 4000};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
@@ -180,6 +212,29 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 75};
 		
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Skintape Mask"
+	ITEM.model = "models/begotten/headgroups_props/skintape_helmet.mdl"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/skintape_mask.png"
+	ITEM.weight = 0.5
+	ITEM.uniqueID = "skintape_mask"
+	ITEM.category = "Helms"
+	ITEM.headReplacement = "models/begotten/heads/skintape_helmet.mdl";
+	ITEM.description = "The horrifying creation of a twisted mind, this mask is made from the face of a cannibalized victim. Although it has very little protective value, it is sure to strike fear into the hearts of the wearer's future meals."
+	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+	
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 10;
+	ITEM.hitParticle = "GlassImpact";
+	ITEM.type = "leather";
+		
+	ITEM.attributes = {"fear"};
+	ITEM.components = {breakdownType = "breakdown", items = {"skingauze", "skintape", "skintape", "cloth"}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")

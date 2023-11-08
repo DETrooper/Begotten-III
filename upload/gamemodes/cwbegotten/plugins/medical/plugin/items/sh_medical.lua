@@ -686,9 +686,9 @@ local ITEM = Clockwork.item:New();
 					local condition = self:GetCondition() or 100;
 					local malus = condition / 100;
 					
-					player:HandleNeed("sleep", -30 * malus);
-					player:HandleNeed("corruption", -25 * malus);
-					player:HandleXP(50 * malus);
+					player:HandleNeed("sleep", -50 * malus);
+					player:HandleNeed("corruption", -40 * malus);
+					player:HandleXP(80 * malus);
 					player:TakeItem(self);
 					player:EmitSound("physics/plastic/plastic_barrel_break1.wav");
 				else
@@ -842,9 +842,9 @@ local ITEM = Clockwork.item:New();
 					local condition = self:GetCondition() or 100;
 					local malus = condition / 100;
 					
-					player:HandleNeed("sleep", -100 * malus);
-					player:HandleNeed("corruption", -100 * malus);
-					player:HandleXP(250 * malus);
+					player:HandleNeed("sleep", -200 * malus);
+					player:HandleNeed("corruption", -200 * malus);
+					player:HandleXP(500 * malus);
 					player:TakeItem(self);
 					player:EmitSound("physics/plastic/plastic_barrel_break1.wav");
 				else

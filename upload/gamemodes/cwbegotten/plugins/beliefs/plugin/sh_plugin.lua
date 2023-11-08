@@ -809,7 +809,7 @@ function COMMAND:OnRun(player, arguments)
 	local subfaith = player:GetSubfaith();
 	
 	if subfaith == "Voltism" then
-		if player:HasBelief("the_storm") then
+		if player:HasBelief("wire_therapy") then
 			local message = "\""..table.concat(arguments, " ", 1).."\"";
 
 			for k, v in pairs (_player.GetAll()) do
@@ -819,7 +819,7 @@ function COMMAND:OnRun(player, arguments)
 				end;
 			end;
 		else
-			Schema:EasyText(player, "chocolate", "You must have the 'The Storm' belief before you can relay!");
+			Schema:EasyText(player, "chocolate", "You must have the 'Wire Therapy' belief before you can relay!");
 		end
 	else
 		Schema:EasyText(player, "firebrick", "You are not the correct faith to do this!");
