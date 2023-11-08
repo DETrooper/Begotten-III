@@ -590,7 +590,7 @@ ITEM.type = "chainmail";
 ITEM.description = "Shagalaxian steel scale armor decorated with brass Familial sigils. It is armor that boasts the approval of both the Gods and the King.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.excludeSubfactions = {"Clan Grock", "Clan Reaver"};
+ITEM.excludeSubfactions = {"Clan Grock"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 

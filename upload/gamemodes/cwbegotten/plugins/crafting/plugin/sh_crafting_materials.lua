@@ -372,6 +372,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A patch of leather that can be used in the crafting of clothing or shields.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = true;
+
+	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth"}};
 	
 	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 65};
 

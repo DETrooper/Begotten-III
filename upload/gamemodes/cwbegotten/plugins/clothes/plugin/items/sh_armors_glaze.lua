@@ -118,10 +118,10 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
+ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 
 ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "iron_chunks", "iron_chunks", "leather", "cloth", "cloth"}};
 ITEM.itemSpawnerInfo = {category = "Armor", rarity = 5000};
