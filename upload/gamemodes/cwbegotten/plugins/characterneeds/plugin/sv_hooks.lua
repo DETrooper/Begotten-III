@@ -36,7 +36,7 @@ end;
 -- Called at an interval while a player is connected.
 function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initialized)
 	local curTime = CurTime();
-	local plyTable = player:GetTable();
+	local plyTab = player:GetTable();
 	
 	if !plyTab.nextNeedCheck or curTime >= plyTab.nextNeedCheck then
 		--[[if (game.GetMap() != "rp_begotten3") then
