@@ -36,25 +36,26 @@ end;
 -- Called at an interval while a player is connected.
 function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initialized)
 	local curTime = CurTime();
+	local plyTable = player:GetTable();
 	
-	if !player.nextNeedCheck or curTime >= player.nextNeedCheck then
+	if !plyTab.nextNeedCheck or curTime >= plyTab.nextNeedCheck then
 		--[[if (game.GetMap() != "rp_begotten3") then
 			return;
 		end;]]--
 		
-		if player.cwWakingUp then
-			player.nextNeedCheck = curTime + 5;
+		if plyTab.cwWakingUp then
+			plyTab.nextNeedCheck = curTime + 5;
 			
 			return;
 		end
 		
-		if cwPossession and (player.possessor and IsValid(player.possessor) or player.victim and IsValid(player.victim)) then
-			player.nextNeedCheck = curTime + 5;
+		if cwPossession and (plyTab.possessor and IsValid(plyTab.possessor) or plyTab.victim and IsValid(plyTab.victim)) then
+			plyTab.nextNeedCheck = curTime + 5;
 			
 			return;
 		end
 		
-		if (alive and !player.cwObserverMode and !player.opponent and !player.cwWakingUp) then
+		if (alive and !plyTab.cwObserverMode and !plyTab.opponent and !plyTab.cwWakingUp) then
 			local playerNeeds = {};
 			
 			for i = 1, #self.Needs do
@@ -63,7 +64,7 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 				playerNeeds[need] = player:GetNeed(need);
 			end
 		
-			if (!player.nextHunger or curTime >= player.nextHunger) then
+			if (!plyTab.nextHunger or curTime >= plyTab.nextHunger) then
 				local next_hunger = 200;
 				
 				if player:HasTrait("gluttony") then
@@ -74,14 +75,14 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 					next_hunger = next_hunger * 1.35;
 				end
 				
-				player.nextHunger = curTime + next_hunger;
+				plyTab.nextHunger = curTime + next_hunger;
 				
 				if (playerNeeds["hunger"] > -1) then
 					player:HandleNeed("hunger", 1);
 				end;
 			end;
 			
-			if (!player.nextThirst or curTime >= player.nextThirst) then
+			if (!plyTab.nextThirst or curTime >= plyTab.nextThirst) then
 				local next_thirst = 100;
 				
 				if player:HasTrait("gluttony") then
@@ -92,14 +93,14 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 					next_thirst = next_thirst * 1.35;
 				end
 				
-				player.nextThirst = curTime + next_thirst;
+				plyTab.nextThirst = curTime + next_thirst;
 			
 				if (playerNeeds["thirst"] > -1) then
 					player:HandleNeed("thirst", 1);
 				end
 			end;
 			
-			if (!player.nextSleep or curTime >= player.nextSleep) then
+			if (!plyTab.nextSleep or curTime >= plyTab.nextSleep) then
 				local next_sleep = 400;
 				
 				if cwBeliefs and player:HasBelief("yellow_and_black") then
@@ -112,7 +113,7 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 					end
 				end
 				
-				player.nextSleep = curTime + next_sleep;
+				plyTab.nextSleep = curTime + next_sleep;
 
 				if (playerNeeds["sleep"] > -1) then
 					-- Make sure player isn't already sleeping.
@@ -135,18 +136,18 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 				end
 			end;
 			
-			if (!player.nextCorruption or curTime >= player.nextCorruption) then
+			if (!plyTab.nextCorruption or curTime >= plyTab.nextCorruption) then
 				if (playerNeeds["corruption"] > -1) and (playerNeeds["corruption"] < 50) then
 					if player:HasTrait("possessed") then
 						player:HandleNeed("corruption", 1);
 					end
 				end;
 				
-				player.nextCorruption = curTime + 150;
+				plyTab.nextCorruption = curTime + 150;
 			end;
 		end;
 		
-		player.nextNeedCheck = curTime + math.random(1, 10);
+		plyTab.nextNeedCheck = curTime + math.random(1, 10);
 	end;
 end;
 

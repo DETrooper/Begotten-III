@@ -545,10 +545,12 @@ else
 	
 	hook.Add("Tick", "TickEquipment", function()
 		for _, player in pairs(_player.GetAll()) do
-			player.equipmentDrawnThisTick = false;
+			local plyTab = player:GetTable();
 			
-			if !player.equipmentSlots then
-				player.equipmentSlots = {};
+			plyTab.equipmentDrawnThisTick = false;
+			
+			if !plyTab.equipmentSlots then
+				plyTab.equipmentSlots = {};
 			end
 			
 			if player:IsRagdolled() then
@@ -558,17 +560,18 @@ else
 	end);
 
 	hook.Add("PostPlayerDraw", "PostPlayerDrawEquipment", function(player)
-		if IsValid(player) and player:Alive() and (!player:IsNoClipping() and player:GetColor().a > 0) then
-			if !player.equipmentSlotModels then
-				player.equipmentSlotModels = {};
-			end
-			
+		if player:Alive() and player:GetMoveType() ~= MOVETYPE_OBSERVER and player:GetColor().a > 0 then
 			local activeWeapon = player:GetActiveWeapon();
+			local plyTab = player:GetTable();
+			
+			if !plyTab.equipmentSlotModels then
+				plyTab.equipmentSlotModels = {};
+			end
 
-			for slot, itemTable in pairs(player.equipmentSlots) do
+			for slot, itemTable in pairs(plyTab.equipmentSlots) do
 				if itemTable and itemTable.isAttachment then
 					local attachmentVisible = true;
-					local equipmentModel = player.equipmentSlotModels[itemTable.itemID];
+					local equipmentModel = plyTab.equipmentSlotModels[itemTable.itemID];
 				
 					if !IsValid(equipmentModel) then
 						equipmentModel = ClientsideModel(itemTable.model, RENDERGROUP_BOTH);
@@ -604,7 +607,7 @@ else
 						entityMatrix:Scale(modelScale);
 						equipmentModel:EnableMatrix("RenderMultiply", entityMatrix);
 						
-						player.equipmentSlotModels[itemTable.itemID] = equipmentModel;
+						plyTab.equipmentSlotModels[itemTable.itemID] = equipmentModel;
 					end
 					
 					local position, angles = GetRealPosition(equipmentModel, player, itemTable, string.find(slot, "Offhand"));
@@ -630,20 +633,22 @@ else
 				end
 			end
 			
-			player.equipmentDrawnThisTick = true;
+			plyTab.equipmentDrawnThisTick = true;
 		end
 	end);
 	
 	hook.Add("Think", "ThinkEquipment", function()
 		for _, player in pairs(_player.GetAll()) do
-			if player.equipmentSlotModels and !player.equipmentDrawnThisTick then
-				for itemID, equipmentModel in pairs(player.equipmentSlotModels) do
+			local plyTab = player:GetTable();
+		
+			if plyTab.equipmentSlotModels and !plyTab.equipmentDrawnThisTick then
+				for itemID, equipmentModel in pairs(plyTab.equipmentSlotModels) do
 					if IsValid(equipmentModel) then
 						equipmentModel:Remove();
 					end
 				end
 				
-				player.equipmentSlotModels = nil;
+				plyTab.equipmentSlotModels = nil;
 			end
 		end
 	end);
@@ -675,19 +680,21 @@ else
 			return;
 		end
 		
-		if player.equipmentSlotModels and player.equipmentSlots[slot] then
-			for k, v in pairs(player.equipmentSlotModels) do
-				if k == player.equipmentSlots[slot].itemID then
+		local plyTab = player:GetTable();
+		
+		if plyTab.equipmentSlotModels and plyTab.equipmentSlots[slot] then
+			for k, v in pairs(plyTab.equipmentSlotModels) do
+				if k == plyTab.equipmentSlots[slot].itemID then
 					v:Remove();
 					
-					player.equipmentSlotModels[k] = nil;
+					plyTab.equipmentSlotModels[k] = nil;
 					
 					break;
 				end
 			end
 		end
 		
-		player.equipmentSlots[slot] = itemTable;
+		plyTab.equipmentSlots[slot] = itemTable;
 	end);
 	
 	netstream.Hook("SyncEquipment", function(data)
@@ -697,14 +704,16 @@ else
 		if !IsValid(player) then
 			return;
 		end
+		
+		local plyTab = player:GetTable();
 
-		if player.equipmentSlotModels then
-			for slot, itemTable in pairs(player.equipmentSlots) do
-				for k, v in pairs(player.equipmentSlotModels) do
+		if plyTab.equipmentSlotModels then
+			for slot, itemTable in pairs(plyTab.equipmentSlots) do
+				for k, v in pairs(plyTab.equipmentSlotModels) do
 					if k == itemTable.itemID then
 						v:Remove();
 						
-						player.equipmentSlotModels[k] = nil;
+						plyTab.equipmentSlotModels[k] = nil;
 						
 						break;
 					end
@@ -716,6 +725,6 @@ else
 			equipmentSlots[k] = item.FindInstance(v);
 		end
 		
-		player.equipmentSlots = equipmentSlots;
+		plyTab.equipmentSlots = equipmentSlots;
 	end);
 end

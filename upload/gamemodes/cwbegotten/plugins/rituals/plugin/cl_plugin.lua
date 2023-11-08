@@ -227,29 +227,27 @@ function cwRituals:PostDrawOpaqueRenderables()
 		self.nextVFXCheck = curTime + math.random(0.5, 1);
 	
 		self.storedPlayers = {};
-	
-		local entitiesInSphere = ents.FindInSphere(Clockwork.Client:GetPos(), 1024);
 		
-		for k, v in pairs (entitiesInSphere) do
-			if IsValid(v) then
-				local player;
-				
-				if v:IsPlayer() == true then
-					player = v;
-				elseif Clockwork.entity:IsPlayerRagdoll(v) then
-					player = Clockwork.entity:GetPlayer(v);
-				end
-				
-				if player and player ~= Clockwork.Client then
+		for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 1024)) do
+			local player;
+			
+			if v:IsPlayer() then
+				player = v;
+			elseif Clockwork.entity:IsPlayerRagdoll(v) then
+				player = Clockwork.entity:GetPlayer(v);
+			end
+			
+			if player and player ~= Clockwork.Client then
+				if player:GetSharedVar("soulscorchActive") or player:GetSharedVar("auraMotherActive") then
 					table.insert(self.storedPlayers, player);
 				end
-			end;
+			end
 		end;
 	end
 	
 	for k, v in pairs(self.storedPlayers) do
 		if IsValid(v) and (v:GetMoveType() == MOVETYPE_WALK or v:GetMoveType() == MOVETYPE_LADDER) then
-			if v:GetSharedVar("soulscorchActive", false) == true then
+			if v:GetSharedVar("soulscorchActive") then
 				local clientPosition = LocalPlayer():GetPos();
 				local entityPosition = v:GetPos();
 				local headBone = v:LookupBone("ValveBiped.Bip01_Head1");
@@ -267,26 +265,24 @@ function cwRituals:PostDrawOpaqueRenderables()
 						render.DrawSprite(position, 32, 32, glowColor);
 					end;
 				end;
-			elseif v:GetSharedVar("auraMotherActive", false) == true then
-				if !v.auraParticles then 
-					local clientPosition = LocalPlayer():GetPos();
-					local entityPosition = v:GetPos();
-					local headBone = v:LookupBone("ValveBiped.Bip01_Head1");
+			elseif v:GetSharedVar("auraMotherActive") then
+				local clientPosition = LocalPlayer():GetPos();
+				local entityPosition = v:GetPos();
+				local headBone = v:LookupBone("ValveBiped.Bip01_Head1");
+				
+				if (headBone) then
+					local bonePosition, boneAngles = v:GetBonePosition(headBone);
+					local eyes = v:LookupAttachment("eyes");
+					local eyesAttachment = v:GetAttachment(eyes);
 					
-					if (headBone) then
-						local bonePosition, boneAngles = v:GetBonePosition(headBone);
-						local eyes = v:LookupAttachment("eyes");
-						local eyesAttachment = v:GetAttachment(eyes);
+					if (bonePosition and eyesAttachment) then
+						local glowColor = Color(0, 255, 0, 255);
+						local position = eyesAttachment.Pos + Vector(0, 0, 4);
 						
-						if (bonePosition and eyesAttachment) then
-							local glowColor = Color(0, 255, 0, 255);
-							local position = eyesAttachment.Pos + Vector(0, 0, 4);
-							
-							render.SetMaterial(glowMaterial);
-							render.DrawSprite(position, 32, 32, glowColor);
-						end;
+						render.SetMaterial(glowMaterial);
+						render.DrawSprite(position, 32, 32, glowColor);
 					end;
-				end
+				end;
 			end
 		end;
 	end

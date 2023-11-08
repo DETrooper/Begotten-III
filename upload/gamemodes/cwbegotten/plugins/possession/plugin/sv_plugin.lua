@@ -197,7 +197,9 @@ function playerMeta:Unpossess()
 		
 		cwObserverMode:MakePlayerEnterObserverMode(self.possessor);
 		
-		Schema:EasyText(GetAdmins(), "tomato", self.possessor:Name().." has stopped possessing '"..self.possessor.victim:Name().."'.");
+		if IsValid(self.possessor.victim) then
+			Schema:EasyText(GetAdmins(), "tomato", self.possessor:Name().." has stopped possessing '"..self.possessor.victim:Name().."'.");
+		end
 		
 		self.possessor.victim = nil;
 	end

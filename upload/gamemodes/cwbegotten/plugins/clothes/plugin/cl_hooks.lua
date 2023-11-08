@@ -74,9 +74,10 @@ end
 
 function PLUGIN:PostPlayerDraw(player, flags)
 	if string.sub(player:GetModel(), 1, 21) == "models/begotten/heads" then
-		local shouldBeVisible = player:Alive() and ((player:GetMoveType() ~= MOVETYPE_OBSERVER) and player:GetColor().a > 0);
+		local shouldBeVisible = player:Alive() and player:GetMoveType() ~= MOVETYPE_OBSERVER and player:GetColor().a > 0;
 		
 		if shouldBeVisible then
+			local plyTab = player:GetTable();
 			local clothes = player:GetClothesEquipped();
 			local model;
 
@@ -112,54 +113,55 @@ function PLUGIN:PostPlayerDraw(player, flags)
 				end
 			end
 			
-			if IsValid(player.clothesEnt) and player.clothesEnt:GetModel() ~= model then
-				player.clothesEnt:Remove();
-				player.clothesEnt = nil;
+			if IsValid(plyTab.clothesEnt) and plyTab.clothesEnt:GetModel() ~= model then
+				plyTab.clothesEnt:Remove();
+				plyTab.clothesEnt = nil;
 			end
 			
-			if !IsValid(player.clothesEnt) then
+			if !IsValid(plyTab.clothesEnt) then
 				if model then
-					player.clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
+					plyTab.clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
 				else
 					return;
 				end
 			end
 			
+			local clothesEnt = plyTab.clothesEnt;
+			
 			if clothes and clothes.bodygroupCharms then
 				for k, v in pairs(clothes.bodygroupCharms) do
 					if player:GetCharmEquipped(k) then
-						if player.clothesEnt:GetBodygroup(v[1]) ~= v[2] then
-							player.clothesEnt:SetBodygroup(v[1], v[2]);
+						if clothesEnt:GetBodygroup(v[1]) ~= v[2] then
+							clothesEnt:SetBodygroup(v[1], v[2]);
 						end
 					end
 				end
 			end
 			
-			if player.clothesEnt:GetParent() ~= player then
-				player.clothesEnt:SetParent(player);
-				player.clothesEnt:AddEffects(EF_BONEMERGE);
+			if clothesEnt:GetParent() ~= player then
+				clothesEnt:SetParent(player);
+				clothesEnt:AddEffects(EF_BONEMERGE);
 			end
-			
-			local clothesEnt = player.clothesEnt;
 
 			clothesEnt:SetColor(player:GetColor());
 			clothesEnt:SetNoDraw(player:GetNoDraw());
 
-			player.clothesDrawnThisTick = true;
+			plyTab.clothesDrawnThisTick = true;
 		end
 	end
 end
 
 function PLUGIN:Think()
 	for _, player in pairs(_player.GetAll()) do
-		local clothesEnt = player.clothesEnt;
+		local plyTab = player:GetTable();
+		local clothesEnt = plyTab.clothesEnt;
 		
-		if clothesEnt and !player.clothesDrawnThisTick then
+		if clothesEnt and !plyTab.clothesDrawnThisTick then
 			if IsValid(clothesEnt) then
 				clothesEnt:Remove();
 			end
 			
-			player.clothesEnt = nil;
+			plyTab.clothesEnt = nil;
 		end
 	end
 end

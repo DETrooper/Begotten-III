@@ -285,8 +285,9 @@ end
 
 function SWEP:Think()
 	local player = self.Owner;
+	local plyTab = player:GetTable();
 	
-	if (player.beginBlockTransition) then
+	if (plyTab.beginBlockTransition) then
 		if (player:GetNWBool("Guardening") == true) then
 			self:TriggerAnim2(player, self.realBlockAnim, 0);
 			
@@ -321,7 +322,7 @@ function SWEP:Think()
 			end;
 		end;
 		
-		player.beginBlockTransition = false;
+		plyTab.beginBlockTransition = false;
 	end;
 	
 	for k, v in next, self.Timers do
@@ -3483,11 +3484,13 @@ if CLIENT then
 
 			if (!bone) then return end
 			
-			pos, ang = Vector(0,0,0), Angle(0,0,0)
-			
 			local m = ent:GetBoneMatrix(bone)
+			
 			if (m) then
 				pos, ang = m:GetTranslation(), m:GetAngles()
+			else
+				pos = ent:GetPos();
+				ang = Angle(0, 0, 0);
 			end
 			
 			if (IsValid(self.Owner) and self.Owner:IsPlayer() and ent == self.Owner:GetViewModel()) then
@@ -3736,56 +3739,53 @@ end
 
 if CLIENT then
 	hook.Add("Think", "Blockthink", function()
-		local plys = player.GetAll();
-		
-		for i = 1, _player.GetCount() do
-			local player = plys[i];
-			
+		for i, player in ipairs(_player.GetAll()) do
 			if player:IsValid() and player:Alive() then
+				local plyTab = player:GetTable();
 				local setWeight = false;
 			
-				if !player.gestureweightbegin then
-					player.gestureweightbegin = 0;
+				if !plyTab.gestureweightbegin then
+					plyTab.gestureweightbegin = 0;
 				end
 				
-				if !player.gestureweightblock then
-					player.gestureweightblock = 0;
+				if !plyTab.gestureweightblock then
+					plyTab.gestureweightblock = 0;
 				end
 			
-				if player.gestureweightbegin == 1 then
-					player.gestureweightbegin = 0;
-					player.gestureweightprogress = 1;
+				if plyTab.gestureweightbegin == 1 then
+					plyTab.gestureweightbegin = 0;
+					plyTab.gestureweightprogress = 1;
 					
 					setWeight = true;
-				elseif player.gestureweightbegin == 2 then
-					player.gestureweightbegin = 0;
-					player.gestureweightprogress = 2;
+				elseif plyTab.gestureweightbegin == 2 then
+					plyTab.gestureweightbegin = 0;
+					plyTab.gestureweightprogress = 2;
 					
 					setWeight = true;
 				end
 				
-				if player.gestureweightprogress == 1 then
-					player.gestureweightblock = math.Clamp(player.gestureweightblock + (FrameTime() * 10), 0, 1);
+				if plyTab.gestureweightprogress == 1 then
+					plyTab.gestureweightblock = math.Clamp(plyTab.gestureweightblock + (FrameTime() * 10), 0, 1);
 					
 					setWeight = true;
-				elseif player.gestureweightprogress == 2 then
-					player.gestureweightblock = math.Clamp(player.gestureweightblock + ((FrameTime() * 10) * -1), 0, 1);
+				elseif plyTab.gestureweightprogress == 2 then
+					plyTab.gestureweightblock = math.Clamp(plyTab.gestureweightblock + ((FrameTime() * 10) * -1), 0, 1);
 
 					setWeight = true;
 				end
 					
-				if player.gestureweightblock == 0 or player.gestureweightblock == 1 then
-					player.gestureweightprogress = 0;
+				if plyTab.gestureweightblock == 0 or plyTab.gestureweightblock == 1 then
+					plyTab.gestureweightprogress = 0;
 				end;
 
-				if player.gestureweightlookup and player.gestureweightblock > 0 then
-					player:AddVCDSequenceToGestureSlot(GESTURE_SLOT_VCD, player.gestureweightlookup, 0, 1);
+				if plyTab.gestureweightlookup and plyTab.gestureweightblock > 0 then
+					player:AddVCDSequenceToGestureSlot(GESTURE_SLOT_VCD, plyTab.gestureweightlookup, 0, 1);
 				end
 					
-				--print("gestureweightbegin: "..player.gestureweightbegin.." gestureweightprogress: "..player.gestureweightprogress.." gestureweightblock: "..player.gestureweightblock);
+				--print("gestureweightbegin: "..plyTab.gestureweightbegin.." gestureweightprogress: "..plyTab.gestureweightprogress.." gestureweightblock: "..plyTab.gestureweightblock);
 				
 				if setWeight then
-					player:AnimSetGestureWeight(GESTURE_SLOT_VCD, player.gestureweightblock);
+					player:AnimSetGestureWeight(GESTURE_SLOT_VCD, plyTab.gestureweightblock);
 				end
 				-- OPTIMIZE NOTE: there has to be a better way to do this...maybe not.
 			end

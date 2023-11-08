@@ -1464,11 +1464,14 @@ if CLIENT then
 						bone = ent:LookupBone(bone_override or tab.bone)
  
 						if (!bone) then return end
-					   
-						pos, ang = Vector(0,0,0), Angle(0,0,0)
+						
 						local m = ent:GetBoneMatrix(bone)
+						
 						if (m) then
-								pos, ang = m:GetTranslation(), m:GetAngles()
+							pos, ang = m:GetTranslation(), m:GetAngles()
+						else
+							pos = ent:GetPos();
+							ang = Angle(0, 0, 0);
 						end
 					   
 						if (IsValid(self.Owner) and self.Owner:IsPlayer() and

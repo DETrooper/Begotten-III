@@ -15,7 +15,6 @@ local bmovetypes = {
 
 -- Called to draw the text over each player's head if needed.
 function cwDisplayTyping:PostDrawTranslucentRenderables()
-	--if (1 + 1 == 2) then return end;
 	if (!Clockwork.Client or !Clockwork.Client:HasInitialized()) then return end
 
 	local realEyeAngles = Clockwork.Client:EyeAngles()
@@ -23,29 +22,30 @@ function cwDisplayTyping:PostDrawTranslucentRenderables()
 	local colorWhite = Clockwork.option:GetColor("white")
 	local large3D2DFont = Clockwork.option:GetFont("large_3d_2d")
 
-	for k, player in ipairs(playerGetAll()) do
+	for k, player in ipairs(_player.GetAll()) do
 		local eyeAngles = Angle(realEyeAngles)
 		local mt = player:GetMoveType();
+		
 		if (player:HasInitialized() and player:Alive() and !bmovetypes[mt]) then
 			local typing = player:GetNetVar("Typing") or 0
 
 			if (typing != 0) and !player:IsEffectActive(EF_NODRAW) and player:GetColor().a > 0 then		
-				local plyPos = player:GetPos()
-				local fadeDistance = 192
+				local plyPos = player:GetPos();
+				local fadeDistance;
 
 				if (typing == TYPING_YELL or typing == TYPING_PERFORM) then
-					fadeDistance = config.Get("talk_radius"):Get() * 2
+					fadeDistance = config.Get("talk_radius"):Get() * 2;
 				elseif (typing == TYPING_WHISPER) then
-					fadeDistance = config.Get("talk_radius"):Get() / 3
+					fadeDistance = config.Get("talk_radius"):Get() / 3;
 
 					if (fadeDistance > 80) then
-						fadeDistance = 80
+						fadeDistance = 80;
 					end
 				else
-					fadeDistance = config.Get("talk_radius"):Get()
+					fadeDistance = config.Get("talk_radius"):Get();
 				end
 
-				if (plyPos and clientPos and plyPos:Distance(clientPos) <= fadeDistance) then
+				if (plyPos:DistToSqr(clientPos) <= (fadeDistance * fadeDistance)) then
 					local color = player:GetColor()	
 					local curTime = UnPredictedCurTime()
 
@@ -53,10 +53,6 @@ function cwDisplayTyping:PostDrawTranslucentRenderables()
 						local alpha = Clockwork.kernel:CalculateAlphaFromDistance(fadeDistance, Clockwork.Client, player)
 						local position = hook.Run("GetPlayerTypingDisplayPosition", player)
 						local headBone = "ValveBiped.Bip01_Head1"
-
-						if (string.find(player:GetModel(), "vortigaunt")) then
-							headBone = "ValveBiped.Head"
-						end
 
 						if (!position) then
 							local bonePosition = nil

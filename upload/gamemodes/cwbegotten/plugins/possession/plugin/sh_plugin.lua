@@ -583,6 +583,10 @@ function COMMAND:OnRun(player, arguments)
 
 	if (target) then
 		if target:CanBePossessed(player, ignoreTrait) then
+			if IsValid(player.victim) then
+				player.victim:Unpossess();
+			end
+			
 			target:Possess(player);
 		end
 	else
