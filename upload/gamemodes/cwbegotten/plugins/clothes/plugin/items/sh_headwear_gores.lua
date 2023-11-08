@@ -376,7 +376,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaction = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
-	ITEM.excludeSubfactions = {"Clan Grock", "Clan Reaver", "Clan Crast"};
+	ITEM.excludeSubfactions = {"Clan Grock"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
 
@@ -410,7 +410,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaction = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
-	ITEM.excludeSubfactions = {"Clan Grock", "Clan Reaver"};
+	ITEM.excludeSubfactions = {"Clan Grock"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
 
