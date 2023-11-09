@@ -1750,7 +1750,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				if weaponStats["defense"].poiseresistance then
 					local percentage = math.min(weaponStats["defense"].poiseresistance / 50, 50);
 
-					frame:AddBar(12, {{text = tostring(weaponStats["defense"].poiseresistance).."%", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Poise Damage Resistance", Color(110, 30, 30), true);
+					frame:AddBar(12, {{text = tostring(weaponStats["defense"].poiseresistance).." Poise", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Poise Damage Resistance", Color(110, 30, 30), true);
 				end
 				
 				if weaponStats["defense"].canparry then
@@ -2058,7 +2058,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				if shieldStats.poiseresistance then
 					local percentage = math.min(shieldStats.poiseresistance / 100, 100);
 
-					frame:AddBar(12, {{text = tostring(shieldStats.poiseresistance).."%", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Poise Damage Resistance", Color(110, 30, 30), true);
+					frame:AddBar(12, {{text = tostring(shieldStats.poiseresistance).." Poise", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Block Poise Damage Resistance", Color(110, 30, 30), true);
 				end
 				
 				if shieldStats.canparry then

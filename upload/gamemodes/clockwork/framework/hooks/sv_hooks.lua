@@ -1650,9 +1650,11 @@ function GM:OneSecond()
 		hook.Run("PostSaveData")
 
 		Clockwork.NextSaveData = sysTime + config.Get("save_data_interval"):Get()
-	else
-		-- This is too important not to save every second, otherwise items can spawn with the item IDs of existing items and that's no good!
+	elseif (!Clockwork.NextSaveItemIDs or sysTime >= Clockwork.NextSaveItemIDs) then
+		-- This is too important not to save every few seconds, otherwise items can spawn with the item IDs of existing items and that's no good!
 		Clockwork.kernel:SaveSchemaData("itemIndex", {ITEM_INDEX});
+		
+		Clockwork.NextSaveData = sysTime + 5;
 	end
 
 	if (!Clockwork.NextCheckEmpty) then

@@ -362,7 +362,12 @@ function cwRecipes:Craft(player, uniqueID, itemIDs)
 								
 								player:SetNWString("cwRecipesVerb", nil);
 								player:SetNWString("cwRecipesName", nil);
-								player:HandleNeed("sleep", math.random(1, 2));
+								
+								if cwCharacterNeeds then
+									player:HandleNeed("hunger", 0.5);
+									player:HandleNeed("thirst", 1);
+									player:HandleNeed("sleep", 0.5);
+								end
 								
 								if (recipeTable.EndCraft) then
 									recipeTable:EndCraft(player);
