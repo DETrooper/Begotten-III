@@ -1654,7 +1654,7 @@ function GM:OneSecond()
 		-- This is too important not to save every few seconds, otherwise items can spawn with the item IDs of existing items and that's no good!
 		Clockwork.kernel:SaveSchemaData("itemIndex", {ITEM_INDEX});
 		
-		Clockwork.NextSaveData = sysTime + 5;
+		Clockwork.NextSaveItemIDs = sysTime + 5;
 	end
 
 	if (!Clockwork.NextCheckEmpty) then
