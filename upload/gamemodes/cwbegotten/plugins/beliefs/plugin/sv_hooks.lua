@@ -1193,8 +1193,17 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	end
 	
 	if entity:IsPlayer() and not entity.opponent and damage >= 10 then
-		if entity:HasBelief("prison_of_flesh") then
-			entity:HandleNeed("corruption", -(damage / 2));
+		if cwCharacterNeeds then
+			if entity:HasBelief("prison_of_flesh") then
+				if entity:HasTrait("possessed") then
+					local corruption = entity:GetNeed("corruption");
+					local reduction = math.max(-(damage / 2), -(math.max(corruption, 50) - 50));
+
+					entity:HandleNeed("corruption", reduction);
+				else
+					entity:HandleNeed("corruption", -(damage / 2));
+				end
+			end
 		end
 	end
 	

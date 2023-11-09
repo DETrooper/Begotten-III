@@ -1196,7 +1196,10 @@ function COMMAND:OnRun(player, arguments)
 					player:TakeDamageInfo(d);
 					player.flagellating = false;
 					player.ignoreConditionLoss = false;
-					player:HandleSanity(math.Round(d:GetDamage() / 3));
+					
+					if cwSanity then
+						player:HandleSanity(math.Round(d:GetDamage() / 3));
+					end
 					
 					local selfless = "himself";
 					

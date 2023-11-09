@@ -27,17 +27,19 @@ local ITEM = Clockwork.item:New(nil, true)
 
 	function ITEM:SetBodygroup(player, bg, val)
 		if val ~= 0 and self.headSuffix then
-			local model = player:GetModel();
+			local model = player:GetDefaultModel();
 			
-			if model then
+			if model and string.find(model, "models/begotten/heads") then
 				for i, v in ipairs(head_suffixes) do
 					if v ~= self.headSuffix then
 						model = string.gsub(model, v, self.headSuffix);
 					end
 				end
 				
-				player:SetCharacterData("Model", model, true);
-				player:SetModel(model);
+				if model ~= player:GetDefaultModel() then
+					player:SetCharacterData("Model", model, true);
+					player:SetModel(model);
+				end
 			end
 			
 			player:SetBodygroup(bg, val)
@@ -83,6 +85,7 @@ local ITEM = Clockwork.item:New(nil, true)
 	function ITEM:OnWear(player)
 		if self.headReplacement then
 			player:SetModel(self.headReplacement);
+			player:SetBodygroup(0, 0);
 		else
 			self:SetBodygroup(player, self.bodyGroup, self.bodyGroupVal)
 		end

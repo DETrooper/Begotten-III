@@ -2326,7 +2326,7 @@ function Schema:PlayerDeath(player, inflictor, attacker, damageInfo)
 					Clockwork.chatBox:AddInTargetRadius(attacker, "me", "strikes down "..player:Name().." as a sacrifice. Their blood seeps into the ground beneath the Great Tree and roots envelop their corpse.", attacker:GetPos(), config.Get("talk_radius"):Get() * 4);
 				end
 				
-				timer.Simple(1, function()
+				--[[[timer.Simple(1, function()
 					if IsValid(player) then
 						local ragdoll = player:GetRagdollEntity();
 						
@@ -2334,7 +2334,7 @@ function Schema:PlayerDeath(player, inflictor, attacker, damageInfo)
 							ragdoll:SetMaterial("models/props_pipes/pipesystem01a_skin2");
 						end
 					end
-				end);
+				end);]]--
 			end		
 		end
 	end
