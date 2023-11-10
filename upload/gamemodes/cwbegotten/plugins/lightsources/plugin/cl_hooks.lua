@@ -84,14 +84,14 @@ function cwLantern:Think()
 			continue;
 		end;
 
-		local originalSize = 256;
+		local originalSize = 666;
 
 		if (currentOil < 25) then
 			if currentOil <= 0 then
 				continue;
 			end
 		
-			originalSize = math.Remap(currentOil, 0, 25, 64, originalSize);
+			originalSize = Lerp(currentOil, originalSize / 2, originalSize);
 		end;
 		
 		local entIndex = k:EntIndex();
@@ -103,7 +103,7 @@ function cwLantern:Think()
 			dynamicLight.r = 255;
 			dynamicLight.g = 200;
 			dynamicLight.b = 115;
-			dynamicLight.Brightness = 0.08;
+			dynamicLight.Brightness = 1;
 			dynamicLight.Size = originalSize;
 			dynamicLight.DieTime = curTime + 0.1;
 			dynamicLight.Style = 6;

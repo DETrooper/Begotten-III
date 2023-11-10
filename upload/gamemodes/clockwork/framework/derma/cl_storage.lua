@@ -49,7 +49,7 @@ function PANEL:Init()
 		if (IsValid(self.VBar)) then
 			--self.VBar:SetScroll(self.cachedScroll or 0);
 			self.VBar.Scroll = math.Clamp(self.cachedScroll or 0, 0, self.VBar.CanvasSize);
-			self:HideScrollbar();
+			--self:HideScrollbar();
 		end;
 	end
 	
@@ -64,7 +64,7 @@ function PANEL:Init()
 		if (IsValid(self.VBar)) then
 			--self.VBar:SetScroll(self.cachedScroll or 0);
 			self.VBar.Scroll = math.Clamp(self.cachedScroll or 0, 0, self.VBar.CanvasSize);
-			self:HideScrollbar();
+			--self:HideScrollbar();
 		end;
 	end
 	
@@ -106,6 +106,19 @@ end;
 local grad = Material("begotten/ui/collapsible3-full.png")
 -- A function to rebuild a panel.
 function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedSpace, space, cash, inventory, scroll)
+	-- Cache which item stacks are expanded so they can be restored.
+	self.expandCache = {};
+	
+	if IsValid(storagePanel.itemList) then
+		for i, v in ipairs(storagePanel.itemList:GetItems()) do
+			if IsValid(v.sublist) then
+				if v.sublist:GetExpanded() then
+					table.insert(self.expandCache, v.itemTable.uniqueID);
+				end
+			end
+		end
+	end
+
 	storagePanel:Clear(true);
 		storagePanel.cash = cash;
 		storagePanel.weight = weight;
@@ -120,6 +133,7 @@ function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedS
 	local usedWeight = (cash * Clockwork.config:Get("cash_weight"):Get());
 	local usedSpace = (cash * Clockwork.config:Get("cash_space"):Get());
 	local itemsList = {};
+	local expandFont = Clockwork.fonts:GetMultiplied("nov_IntroTextSmallDETrooper", 0.6);
 	
 	if (Clockwork.storage:GetNoCashWeight()) then
 		usedWeight = 0;
@@ -210,6 +224,7 @@ function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedS
 		cashForm:SetName("Coinage");
 		cashForm:AddItem(numberWang);
 		cashForm:AddItem(button);
+		cashForm.Header:SetEnabled(false);
 	end;
 	
 	if (storagePanel.usedWeight > 0) then
@@ -217,6 +232,7 @@ function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedS
 			informationForm:SetPadding(4);
 			informationForm:SetName("Weight");
 			informationForm:AddItem(vgui.Create("cwStorageWeight", storagePanel));
+			informationForm.Header:SetEnabled(false);
 		storagePanel:AddItem(informationForm);
 	end;
 
@@ -225,6 +241,7 @@ function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedS
 			informationForm:SetPadding(4);
 			informationForm:SetName("Space");
 			informationForm:AddItem(vgui.Create("cwStorageSpace", storagePanel));
+			informationForm.Header:SetEnabled(false);
 		storagePanel:AddItem(informationForm);
 	end;
 	
@@ -240,17 +257,18 @@ function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedS
 		storageType = Clockwork.storage:GetName()
 	end;
 	
-	self.inventoryForm = vgui.Create("DForm", self);
-	self.inventoryForm:SetName(storageType);
-	self.inventoryForm:SetSpacing(4);
+	storagePanel.inventoryForm = vgui.Create("DForm", self);
+	storagePanel.inventoryForm:SetName(storageType);
+	storagePanel.inventoryForm:SetSpacing(4);
+	storagePanel.inventoryForm.Header:SetEnabled(false);
 
-	self.itemList = vgui.Create("DPanelList", self);
-	self.itemList:SizeToContents();
-	self.itemList:EnableHorizontal(false);
-	self.itemList:SetAutoSize(true);
-	self.itemList:SetPadding(4);
-	self.itemList:SetSpacing(4);
-	self.itemList:SetPaintBackground(false);
+	storagePanel.itemList = vgui.Create("DPanelList", self);
+	storagePanel.itemList:SizeToContents();
+	storagePanel.itemList:EnableHorizontal(false);
+	storagePanel.itemList:SetAutoSize(true);
+	storagePanel.itemList:SetPadding(4);
+	storagePanel.itemList:SetSpacing(4);
+	storagePanel.itemList:SetPaintBackground(false);
 		
 	--for k, v in pairs(categories) do
 		--[[table.sort(v.itemsList, function(a, b)
@@ -268,7 +286,6 @@ function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedS
 					};
 					
 					storagePanel.itemData.amount = Clockwork.inventory:GetItemCountByID(storagePanel.inventory, storagePanel.itemData.itemTable("uniqueID"));
-					items[v2("uniqueID")] = true;
 					
 					local inventoryIcon = vgui.Create("cwStorageItem", storagePanel);
 					
@@ -290,7 +307,104 @@ function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedS
 						end
 					end
 					
-					self.itemList:AddItem(inventoryIcon);
+					if storagePanel.itemData.amount > 1 then
+						local expandButton = vgui.Create("DButton", inventoryIcon);
+
+						expandButton:SetPos(3, 47);
+						expandButton:SetSize(13, 13);
+						expandButton:SetText("");
+						
+						function expandButton:DoClick()
+							local parent = self:GetParent();
+							
+							if parent.sublist then
+								if parent.sublist:GetExpanded() then
+									parent.sublist:DoExpansion(false);
+								else
+									parent.sublist:DoExpansion(true);
+								end
+							end
+						end
+						
+						function expandButton:PaintOver(w, h)
+							local parent = self:GetParent();
+							
+							if parent.sublist then
+								surface.SetFont(expandFont);
+								surface.SetTextColor(200, 200, 200);
+							
+								if parent.sublist:GetExpanded() then
+									surface.SetTextPos(4, -2);
+									surface.DrawText("-");
+								else
+									surface.SetTextPos(3, -2);
+									surface.DrawText("+");
+								end
+							end
+						end
+						
+						inventoryIcon.expandButton = expandButton;
+					end
+					
+					items[v2("uniqueID")] = inventoryIcon;
+					
+					storagePanel.itemList:AddItem(inventoryIcon);
+				else
+					local parent = items[v2("uniqueID")];
+					
+					if IsValid(parent) then
+						storagePanel.itemData = {
+							itemTable = v2,
+							storageType = storagePanel.storageType
+						};
+					
+						storagePanel.itemData.amount = 1;
+					
+						if !IsValid(parent.sublist) then
+							local sublist = vgui.Create("DCollapsibleCategory");
+							
+							sublist:SetSize(storagePanel.itemList:GetWide(), 0);
+							sublist:SetHeaderHeight(0);
+							sublist.Header:SetVisible(false);
+							
+							if table.HasValue(self.expandCache, v2.uniqueID) then
+								sublist:SetExpanded(true);
+							else
+								sublist:SetExpanded(false);
+							end
+							
+							local categoryList = vgui.Create("DPanelList", sublist);
+								categoryList:EnableHorizontal(false);
+								categoryList:SetAutoSize(true);
+							sublist:SetContents(categoryList);
+							sublist.categoryList = categoryList;
+							
+							storagePanel.itemList:AddItem(sublist);
+							parent.sublist = sublist;
+						end
+						
+						local inventoryIcon = vgui.Create("cwStorageItem", storagePanel);
+						
+						if storagePanel.itemData.condition and storagePanel.itemData.condition < 100 then
+							if storagePanel.itemData.condition <= 0 then
+								inventoryIcon.spawnIcon.brokenOverlay = vgui.Create("DImage", inventoryIcon.spawnIcon);
+								inventoryIcon.spawnIcon.brokenOverlay:SetImage("begotten/ui/itemicons/broken_item1.png");
+								inventoryIcon.spawnIcon.brokenOverlay:SetSize(64, 64);
+							else
+								inventoryIcon.spawnIcon.conditionBar = vgui.Create("DImage", inventoryIcon.spawnIcon);
+								inventoryIcon.spawnIcon.conditionBar:SetImage("begotten/ui/conditionframe.png");
+								inventoryIcon.spawnIcon.conditionBar:SetPos(4, 56);
+								inventoryIcon.spawnIcon.conditionBar:SetSize(56, 6);
+								inventoryIcon.spawnIcon.conditionBar.fill = vgui.Create("DShape", inventoryIcon.spawnIcon.conditionBar);
+								inventoryIcon.spawnIcon.conditionBar.fill:SetType("Rect");
+								inventoryIcon.spawnIcon.conditionBar.fill:SetPos(2, 2);
+								inventoryIcon.spawnIcon.conditionBar.fill:SetSize(52 * (storagePanel.itemData.condition / 100), 2);
+								inventoryIcon.spawnIcon.conditionBar.fill:SetColor(Color(1 * (100 - storagePanel.itemData.condition), 1 * storagePanel.itemData.condition, 0, 225));
+							end
+						end
+						
+						parent.sublist.categoryList:AddItem(inventoryIcon);
+					end
 				end;
 			else
 				storagePanel.itemData = {
@@ -321,15 +435,15 @@ function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedS
 					end
 				end
 				
-				self.itemList:AddItem(inventoryIcon);
+				storagePanel.itemList:AddItem(inventoryIcon);
 			end;
 		end;
 	--end;
 	
-	self.inventoryForm:AddItem(self.itemList);
-	storagePanel:AddItem(self.inventoryForm);
+	storagePanel.inventoryForm:AddItem(storagePanel.itemList);
+	storagePanel:AddItem(storagePanel.inventoryForm);
 	local fo = self.cumfont
-	local fgugta = self.inventoryForm;
+	local fgugta = storagePanel.inventoryForm;
 	storagePanel.scrollza = false
 	
 	function storagePanel:Paint(w,h)
@@ -604,14 +718,16 @@ function PANEL:Init()
 		Clockwork.kernel:DrawWithTexture(necropolisframe, 4, 0, 0, width, height, Color(0, 0, 0), 255);
 	end;
 	
-	local f = Clockwork.fonts:GetMultiplied("nov_IntroTextSmallDETrooper", 0.8);
-	self.takeButton = vgui.Create("DButton", self.infoPlate)
-	local tt = "Take"
+	local takeFont = Clockwork.fonts:GetMultiplied("nov_IntroTextSmallDETrooper", 0.8);
+	local takeText = "Take"
+	
 	if (self.storageType == "Inventory") then
-		tt = "Give";
+		takeText = "Give";
 	end;
-	self.takeButton:SetText(tt)
-	self.takeButton:SetFont(f)
+	
+	self.takeButton = vgui.Create("DButton", self.infoPlate)
+	self.takeButton:SetText(takeText)
+	self.takeButton:SetFont(takeFont)
 	
 	if self.storageType == "Container" then
 		local player = Clockwork.storage.entity;
@@ -657,7 +773,7 @@ function PANEL:Init()
 				end
 			end
 			
-			self.equipButton:SetFont(f);
+			self.equipButton:SetFont(takeFont);
 			
 			function self.equipButton.Think(panel)
 				self.takeButton:SetSize(self.infoPlate:GetTall() - 8, (self.infoPlate:GetTall()) - 8)
@@ -692,9 +808,165 @@ function PANEL:Init()
 				Clockwork.kernel:RunCommand("StorageTakeItem", self.itemTable("uniqueID"), self.itemTable("itemID"));
 			end;
 			
-			self.nextCanClick = CurTime() + 1;
+			self.nextCanClick = CurTime() + 0.2;
 		end;
 	end;
+	
+	function self.takeButton.DoRightClick(panel)
+		if (!self.nextCanClick or CurTime() >= self.nextCanClick) then
+			local amount = self.itemData.amount;
+
+			if self.itemData.amount > 1 then
+				local menu = DermaMenu();
+				
+				menu:SetMinimumWidth(60);
+				
+				if (self.storageType == "Inventory") then
+					menu:AddOption("Give All", function()
+						Clockwork.kernel:RunCommand("StorageGiveItems", self.itemTable("uniqueID"), tostring(amount));
+					end);
+				
+					local amountMenu = menu:AddSubMenu("Give Amount...", function()
+						Derma_StringRequest(self.itemTable("name"), "How many items of this type do you want to give?", nil, function(amount)
+							Clockwork.kernel:RunCommand("StorageGiveItems", self.itemTable("uniqueID"), amount);
+						end);
+					end);
+					
+					local customMenu = amountMenu:AddSubMenu("Custom Amount", function()
+						Derma_StringRequest(self.itemTable("name"), "How many items of this type do you want to give?", nil, function(amount)
+							Clockwork.kernel:RunCommand("StorageGiveItems", self.itemTable("uniqueID"), amount);
+						end);
+					end);
+					
+					if amount >= 2 then
+						amountMenu:AddOption("2", function()
+							Clockwork.kernel:RunCommand("StorageGiveItems", self.itemTable("uniqueID"), "2");
+						end);
+					end
+					
+					if amount >= 5 then
+						amountMenu:AddOption("5", function()
+							Clockwork.kernel:RunCommand("StorageGiveItems", self.itemTable("uniqueID"), "5");
+						end);
+					end
+					
+					if amount >= 10 then
+						amountMenu:AddOption("10", function()
+							Clockwork.kernel:RunCommand("StorageGiveItems", self.itemTable("uniqueID"), "10");
+						end);
+					end
+					
+					if amount >= 25 then
+						amountMenu:AddOption("25", function()
+							Clockwork.kernel:RunCommand("StorageGiveItems", self.itemTable("uniqueID"), "25");
+						end);
+					end
+					
+					if amount >= 50 then
+						amountMenu:AddOption("50", function()
+							Clockwork.kernel:RunCommand("StorageGiveItems", self.itemTable("uniqueID"), "50");
+						end);
+					end
+					
+					if amount >= 100 then
+						amountMenu:AddOption("100", function()
+							Clockwork.kernel:RunCommand("StorageGiveItems", self.itemTable("uniqueID"), "100");
+						end);
+					end
+					
+					customMenu:AddOption("By Best Condition", function()
+						Derma_StringRequest(self.itemTable("name").." (Best Condition)", "How many items of this type do you want to give?", nil, function(amount)
+							Clockwork.kernel:RunCommand("StorageGiveItems", self.itemTable("uniqueID"), amount, "bestCondition");
+						end);
+					end);
+					
+					customMenu:AddOption("By Worst Condition", function()
+						Derma_StringRequest(self.itemTable("name").." (Worst Condition)", "How many items of this type do you want to give?", nil, function(amount)
+							Clockwork.kernel:RunCommand("StorageGiveItems", self.itemTable("uniqueID"), amount, "worstCondition");
+						end);
+					end);
+				else
+					menu:AddOption("Take All", function()
+						Clockwork.kernel:RunCommand("StorageTakeItems", self.itemTable("uniqueID"), tostring(amount));
+					end);
+				
+					local amountMenu = menu:AddSubMenu("Take Amount...", function()
+						Derma_StringRequest(self.itemTable("name"), "How many items of this type do you want to take?", nil, function(amount)
+							Clockwork.kernel:RunCommand("StorageTakeItems", self.itemTable("uniqueID"), amount);
+						end);
+					end);
+					
+					local customMenu = amountMenu:AddSubMenu("Custom Amount", function()
+						Derma_StringRequest(self.itemTable("name"), "How many items of this type do you want to take?", nil, function(amount)
+							Clockwork.kernel:RunCommand("StorageTakeItems", self.itemTable("uniqueID"), amount);
+						end);
+					end);
+					
+					if amount >= 2 then
+						amountMenu:AddOption("2", function()
+							Clockwork.kernel:RunCommand("StorageTakeItems", self.itemTable("uniqueID"), "2");
+						end);
+					end
+					
+					if amount >= 5 then
+						amountMenu:AddOption("5", function()
+							Clockwork.kernel:RunCommand("StorageTakeItems", self.itemTable("uniqueID"), "5");
+						end);
+					end
+					
+					if amount >= 10 then
+						amountMenu:AddOption("10", function()
+							Clockwork.kernel:RunCommand("StorageTakeItems", self.itemTable("uniqueID"), "10");
+						end);
+					end
+					
+					if amount >= 25 then
+						amountMenu:AddOption("25", function()
+							Clockwork.kernel:RunCommand("StorageTakeItems", self.itemTable("uniqueID"), "25");
+						end);
+					end
+					
+					if amount >= 50 then
+						amountMenu:AddOption("50", function()
+							Clockwork.kernel:RunCommand("StorageTakeItems", self.itemTable("uniqueID"), "50");
+						end);
+					end
+					
+					if amount >= 100 then
+						amountMenu:AddOption("100", function()
+							Clockwork.kernel:RunCommand("StorageTakeItems", self.itemTable("uniqueID"), "100");
+						end);
+					end
+					
+					customMenu:AddOption("By Best Condition", function()
+						Derma_StringRequest(self.itemTable("name").." (Best Condition)", "How many items of this type do you want to take?", nil, function(amount)
+							Clockwork.kernel:RunCommand("StorageTakeItems", self.itemTable("uniqueID"), amount, "bestCondition");
+						end);
+					end);
+					
+					customMenu:AddOption("By Worst Condition", function()
+						Derma_StringRequest(self.itemTable("name").." (Worst Condition)", "How many items of this type do you want to take?", nil, function(amount)
+							Clockwork.kernel:RunCommand("StorageTakeItems", self.itemTable("uniqueID"), amount, "worstCondition");
+						end);
+					end);
+				end
+				
+				menu:Open()
+				
+				function menu:Think()
+					self:MoveToFront()
+				end;
+			else
+				if (self.storageType == "Inventory") then
+					Clockwork.kernel:RunCommand("StorageGiveItem", self.itemTable("uniqueID"), self.itemTable("itemID"));
+				else
+					Clockwork.kernel:RunCommand("StorageTakeItem", self.itemTable("uniqueID"), self.itemTable("itemID"));
+				end;
+			end
+			
+			self.nextCanClick = CurTime() + 0.2;
+		end;
+	end
 	
 	function self.takeButton.Think(panel)
 		if !self.equipButton then
@@ -831,28 +1103,24 @@ function PANEL:Think()
 	local weight = self.itemTable("weight");
 	local description = self.itemTable("description");
 	local amount = self.itemData.amount or 0;
+	local spawnIcon = self.spawnIcon;
 	
-	if self.spawnIcon.isSpawnIcon then
-		self.spawnIcon:SetColor(color);
+	if (spawnIcon.isSpawnIcon) then
+		spawnIcon:SetColor(color);
 	end
-	
+
 	if (self.itemTable.stackable) then
 		if (amount > 1) then
-			if self.spawnIcon then
-				if !IsValid(self.spawnIcon.amount) then
-					self.spawnIcon.amount = vgui.Create("DLabel", self.spawnIcon);
+			if spawnIcon then
+				if !IsValid(spawnIcon.amount) then
+					spawnIcon.amount = vgui.Create("DLabel", spawnIcon);
 				end
 				
-				self.spawnIcon.amount:SetText(amount);
-				self.spawnIcon.amount:SetFont("Decay_FormText");
-				self.spawnIcon.amount:SetTextColor(Color(160, 145, 145));
-				self.spawnIcon.amount:SizeToContents();
-				
-				if amount < 10 then
-					self.spawnIcon.amount:SetPos(52, 46);
-				else
-					self.spawnIcon.amount:SetPos(46, 46);
-				end
+				spawnIcon.amount:SetText(amount);
+				spawnIcon.amount:SetFont("Decay_FormText");
+				spawnIcon.amount:SetTextColor(Color(160, 145, 145));
+				spawnIcon.amount:SizeToContents();
+				spawnIcon.amount:SetPos(64 - spawnIcon.amount:GetWide(), 46);
 			end
 			
 			--[[local plural = self.itemTable("plural");
@@ -869,19 +1137,20 @@ function PANEL:Think()
 			weight = weight * amount;
 		elseif (amount == 1) then
 			name = amount.." "..name]]--
-		elseif self.spawnIcon and self.spawnIcon.amount then
-			self.spawnIcon.amount:Remove();
+		elseif spawnIcon and spawnIcon.amount then
+			spawnIcon.amount:Remove();
 		end;
 	end;
-	
+
 	local model, skin = Clockwork.item:GetIconInfo(self.itemTable);
 	
 	if (model != self.cachedInfo.model or skin != self.cachedInfo.skin) then
-		self.spawnIcon:SetModel(model, skin);
+		spawnIcon:SetModel(model, skin);
 		self.cachedInfo.model = model
 		self.cachedInfo.skin = skin;
 	end;
 end;
+
 local statuscontainer = Material("begotten/ui/statuscontainer.png");
 function PANEL:Paint(width, height)
 	draw.RoundedBox(4, 0, 0, width, height, Color(0, 0, 0, 150))
@@ -1098,9 +1367,17 @@ end);
 
 Clockwork.datastream:Hook("StorageTake", function(data)
 	if (Clockwork.storage:IsStorageOpen()) then
-		Clockwork.inventory:RemoveUniqueID(
-			Clockwork.storage.inventory, data.uniqueID, data.itemID
-		);
+		if data.itemList then
+			for k, v in pairs(data.itemList) do
+				Clockwork.inventory:RemoveUniqueID(
+					Clockwork.storage.inventory, v.uniqueID, v.itemID
+				);
+			end;
+		else
+			Clockwork.inventory:RemoveUniqueID(
+				Clockwork.storage.inventory, data.uniqueID, data.itemID
+			);
+		end
 		
 		Clockwork.storage:GetPanel():Rebuild();
 	end;

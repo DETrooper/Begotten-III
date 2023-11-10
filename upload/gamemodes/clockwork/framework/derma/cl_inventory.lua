@@ -1063,28 +1063,24 @@ function PANEL:Think()
 	local weight = self.itemTable("weight");
 	local description = self.itemTable("description");
 	local amount = self.itemData.amount or 0;
+	local spawnIcon = self.spawnIcon;
 	
-	if (self.spawnIcon.isSpawnIcon) then
-		self.spawnIcon:SetColor(color);
+	if (spawnIcon.isSpawnIcon) then
+		spawnIcon:SetColor(color);
 	end
 
 	if (self.itemTable.stackable) then
 		if (amount > 1) then
-			if self.spawnIcon then
-				if !IsValid(self.spawnIcon.amount) then
-					self.spawnIcon.amount = vgui.Create("DLabel", self.spawnIcon);
+			if spawnIcon then
+				if !IsValid(spawnIcon.amount) then
+					spawnIcon.amount = vgui.Create("DLabel", spawnIcon);
 				end
 				
-				self.spawnIcon.amount:SetText(amount);
-				self.spawnIcon.amount:SetFont("Decay_FormText");
-				self.spawnIcon.amount:SetTextColor(Color(160, 145, 145));
-				self.spawnIcon.amount:SizeToContents();
-				
-				if amount < 10 then
-					self.spawnIcon.amount:SetPos(52, 46);
-				else
-					self.spawnIcon.amount:SetPos(46, 46);
-				end
+				spawnIcon.amount:SetText(amount);
+				spawnIcon.amount:SetFont("Decay_FormText");
+				spawnIcon.amount:SetTextColor(Color(160, 145, 145));
+				spawnIcon.amount:SizeToContents();
+				spawnIcon.amount:SetPos(64 - spawnIcon.amount:GetWide(), 46);
 			end
 			
 			--[[local plural = self.itemTable("plural");
@@ -1101,8 +1097,8 @@ function PANEL:Think()
 			weight = weight * amount;
 		elseif (amount == 1) then
 			name = amount.." "..name]]--
-		elseif self.spawnIcon and self.spawnIcon.amount then
-			self.spawnIcon.amount:Remove();
+		elseif spawnIcon and spawnIcon.amount then
+			spawnIcon.amount:Remove();
 		end;
 	end;
 	
@@ -1118,7 +1114,7 @@ function PANEL:Think()
 	local model, skin = Clockwork.item:GetIconInfo(self.itemTable);
 	
 	if (model != self.cachedInfo.model or skin != self.cachedInfo.skin) then
-		self.spawnIcon:SetModel(model, skin);
+		spawnIcon:SetModel(model, skin);
 		self.cachedInfo.model = model
 		self.cachedInfo.skin = skin;
 	end;

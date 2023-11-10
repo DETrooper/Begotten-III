@@ -308,7 +308,7 @@ end;
 
 
 -- A function to give an item to a player's storage.
-function Clockwork.storage:GiveTo(player, itemTable)
+function Clockwork.storage:GiveTo(player, itemTable, bMultiple)
 	local storageTable = player:GetStorageTable()
 	if (!storageTable) then return false end
 
@@ -344,42 +344,44 @@ function Clockwork.storage:GiveTo(player, itemTable)
 	hook.Run("PlayerGiveToStorage", player, storageTable, itemTable)
 	Clockwork.inventory:AddInstance(inventory, itemTable)
 
-	local definition = item.GetDefinition(itemTable, true)
-		definition.index = nil
-	local players = {}
-		
-	for k, v in pairs(_player.GetAll()) do
-		if (v:HasInitialized() and self:Query(v, "inventory") == inventory) then
-			players[#players + 1] = v
+	if !bMultiple then
+		local definition = item.GetDefinition(itemTable, true)
+			definition.index = nil
+		local players = {}
+			
+		for k, v in pairs(_player.GetAll()) do
+			if (v:HasInitialized() and self:Query(v, "inventory") == inventory) then
+				players[#players + 1] = v
+			end
 		end
+
+		netstream.Start(
+			players, "StorageGive", { index = itemTable.index, itemList = {definition}}
+		)
+
+		player:TakeItem(itemTable)
+
+		if (storageTable.OnGiveItem and storageTable.OnGiveItem(player, storageTable, itemTable)) then
+			self:Close(player)
+		end
+
+		if (itemTable.OnStorageGive and itemTable:OnStorageGive(player, storageTable)) then
+			self:Close(player)
+		end
+
+		if (storageTable.entity and storageTable.entity:IsPlayer()) then
+			self:UpdateWeight(player, storageTable.entity:GetMaxWeight())
+			self:UpdateSpace(player, storageTable.entity:GetMaxSpace())
+		end
+
+		hook.Run("PostPlayerGiveToStorage", player, storageTable, itemTable)
 	end
-
-	netstream.Start(
-		players, "StorageGive", { index = itemTable.index, itemList = {definition}}
-	)
-
-	player:TakeItem(itemTable)
-
-	if (storageTable.OnGiveItem and storageTable.OnGiveItem(player, storageTable, itemTable)) then
-		self:Close(player)
-	end
-
-	if (itemTable.OnStorageGive and itemTable:OnStorageGive(player, storageTable)) then
-		self:Close(player)
-	end
-
-	if (storageTable.entity and storageTable.entity:IsPlayer()) then
-		self:UpdateWeight(player, storageTable.entity:GetMaxWeight())
-		self:UpdateSpace(player, storageTable.entity:GetMaxSpace())
-	end
-
-	hook.Run("PostPlayerGiveToStorage", player, storageTable, itemTable)
 
 	return true
 end
 
 -- A function to take an item from a player's storage.
-function Clockwork.storage:TakeFrom(player, itemTable)
+function Clockwork.storage:TakeFrom(player, itemTable, bMultiple)
 	local storageTable = player:GetStorageTable()
 	if (!storageTable) then return false end
 
@@ -405,36 +407,38 @@ function Clockwork.storage:TakeFrom(player, itemTable)
 	if (bSuccess) then
 		hook.Run("PlayerTakeFromStorage", player, storageTable, itemTable)
 
-		if (!storageTable.entity or !storageTable.entity:IsPlayer()) then
-			Clockwork.inventory:RemoveInstance(inventory, itemTable)
-		else
-			storageTable.entity:TakeItem(itemTable)
-		end
-			
-		for k, v in pairs(_player.GetAll()) do
-			if (v:HasInitialized() and self:Query(v, "inventory") == inventory) then
-				players[#players + 1] = v
+		if !bMultiple then
+			if (!storageTable.entity or !storageTable.entity:IsPlayer()) then
+				Clockwork.inventory:RemoveInstance(inventory, itemTable)
+			else
+				storageTable.entity:TakeItem(itemTable)
 			end
+				
+			for k, v in pairs(_player.GetAll()) do
+				if (v:HasInitialized() and self:Query(v, "inventory") == inventory) then
+					players[#players + 1] = v
+				end
+			end
+
+			netstream.Start(
+				players, "StorageTake", item.GetSignature(itemTable)
+			)
+
+			if (storageTable.OnTakeItem and storageTable.OnTakeItem(player, storageTable, itemTable)) then
+				self:Close(player)
+			end
+
+			if (itemTable.OnStorageTake and itemTable:OnStorageTake(player, itemTable)) then
+				self:Close(player)
+			end
+
+			if (storageTable.entity and storageTable.entity:IsPlayer()) then
+				self:UpdateWeight(player, storageTable.entity:GetMaxWeight())
+				self:UpdateSpace(player, storageTable.entity:GetMaxSpace())
+			end
+
+			hook.Run("PostPlayerTakeFromStorage", player, storageTable, itemTable)
 		end
-
-		netstream.Start(
-			players, "StorageTake", item.GetSignature(itemTable)
-		)
-
-		if (storageTable.OnTakeItem and storageTable.OnTakeItem(player, storageTable, itemTable)) then
-			self:Close(player)
-		end
-
-		if (itemTable.OnStorageTake and itemTable:OnStorageTake(player, itemTable)) then
-			self:Close(player)
-		end
-
-		if (storageTable.entity and storageTable.entity:IsPlayer()) then
-			self:UpdateWeight(player, storageTable.entity:GetMaxWeight())
-			self:UpdateSpace(player, storageTable.entity:GetMaxSpace())
-		end
-
-		hook.Run("PostPlayerTakeFromStorage", player, storageTable, itemTable)
 
 		return true
 	else

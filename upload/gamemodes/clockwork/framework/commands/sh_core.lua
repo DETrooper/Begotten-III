@@ -27,6 +27,122 @@ local COMMAND = Clockwork.command:New("StorageTakeItem");
 	end;
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("StorageTakeItems");
+	COMMAND.tip = "Take multiple items from storage. Not specifying an amount will take all items matching the specified uniqueID.";
+	COMMAND.text = "<string UniqueID> [number Amount] [string Sort]";
+	COMMAND.flags = CMD_DEFAULT;
+	COMMAND.arguments = 1;
+	COMMAND.optionalArguments = 2;
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local storageTable = player:GetStorageTable();
+		local uniqueID = arguments[1];
+		local amount = tonumber(arguments[2]);
+		local sortString = arguments[3];
+		
+		if (storageTable and IsValid(storageTable.entity)) then
+			local target = storageTable.entity;
+			
+			if (storageTable.isOneSided) then
+				Clockwork.player:Notify(player, "You cannot give items to this container!");
+				return;
+			end;
+			
+			local items = Clockwork.inventory:GetItemsByID(storageTable.inventory, uniqueID);
+			
+			if !items or table.IsEmpty(items) then
+				Clockwork.player:Notify(player, "The storage does not contain any items of this type!");
+				return;
+			end
+			
+			local sequentialItems = {};
+			
+			for k, v in pairs(items) do
+				table.insert(sequentialItems, v);
+			end
+			
+			items = nil;
+			
+			if sortString == "bestCondition" then
+				table.sort(sequentialItems, function(a, b) return a:GetCondition() > b:GetCondition() end);
+			elseif sortString == "worstCondition" then
+				table.sort(sequentialItems, function(a, b) return a:GetCondition() < b:GetCondition() end);
+			end
+			
+			local successfulItems = {};
+			
+			for i = 1, math.min(amount or #sequentialItems, 250) do
+				local itemTable = sequentialItems[i];
+				local success = Clockwork.storage:TakeFrom(player, itemTable, true);
+
+				if !success then
+					if i == 1 then
+						return;
+					else
+						break;
+					end
+				end
+				
+				table.insert(successfulItems, itemTable);
+			end
+			
+			local players = {}
+			local inventory = Clockwork.storage:Query(player, "inventory");
+				
+			for k, v in pairs(_player.GetAll()) do
+				if (v:HasInitialized() and Clockwork.storage:Query(v, "inventory") == inventory) then
+					players[#players + 1] = v
+				end
+			end
+			
+			local signatures = {};
+			local itemTable = sequentialItems[1];
+			
+			for i, v in ipairs(successfulItems) do
+				local signature = item.GetSignature(v);
+					
+				table.insert(signatures, signature);
+			end
+			
+			if (!target or !target:IsPlayer()) then
+				for i, v in ipairs(successfulItems) do
+					Clockwork.inventory:RemoveInstance(inventory, v);
+				end
+			else
+				target:TakeItems(successfulItems);
+			end
+				
+			for k, v in pairs(_player.GetAll()) do
+				if (v:HasInitialized() and Clockwork.storage:Query(v, "inventory") == inventory) then
+					players[#players + 1] = v
+				end
+			end
+			
+			netstream.Start(
+				players, "StorageTake", {itemList = signatures}
+			)
+
+			if (storageTable.OnTakeItem and storageTable.OnTakeItem(player, storageTable, itemTable)) then
+				Clockwork.storage:Close(player)
+			end
+
+			if (itemTable.OnStorageTake and itemTable:OnStorageTake(player, itemTable)) then
+				Clockwork.storage:Close(player)
+			end
+
+			if (target:IsPlayer()) then
+				Clockwork.storage:UpdateWeight(player, target:GetMaxWeight())
+				Clockwork.storage:UpdateSpace(player, target:GetMaxSpace())
+			end
+
+			hook.Run("PostPlayerTakeFromStorage", player, storageTable, itemTable)
+		else
+			Clockwork.player:Notify(player, "You do not have storage open!");
+		end;
+	end;
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("Unequip");
 	COMMAND.tip = "Unequip a weapon.";
 	COMMAND.flags = CMD_DEFAULT;
@@ -117,6 +233,112 @@ local COMMAND = Clockwork.command:New("StorageGiveItem");
 			end;
 			
 			Clockwork.storage:GiveTo(player, itemTable);
+		else
+			Clockwork.player:Notify(player, "You do not have storage open!");
+		end;
+	end;
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("StorageGiveItems");
+	COMMAND.tip = "Give multiple items to storage. Not specifying an amount will give all items matching the specified uniqueID.";
+	COMMAND.text = "<string UniqueID> [number Amount] [string Sort]";
+	COMMAND.flags = CMD_DEFAULT;
+	COMMAND.arguments = 1;
+	COMMAND.optionalArguments = 2;
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local storageTable = player:GetStorageTable();
+		local uniqueID = arguments[1];
+		local amount = tonumber(arguments[2]);
+		local sortString = arguments[3];
+		
+		if (storageTable and IsValid(storageTable.entity)) then
+			local target = storageTable.entity;
+			
+			if (storageTable.isOneSided) then
+				Clockwork.player:Notify(player, "You cannot give items to this container!");
+				return;
+			end;
+			
+			local items = player:GetItemsByID(uniqueID);
+			
+			if !items or table.IsEmpty(items) then
+				Clockwork.player:Notify(player, "You do not have any items of this type!");
+				return;
+			end
+			
+			local sequentialItems = {};
+			
+			for k, v in pairs(items) do
+				table.insert(sequentialItems, v);
+			end
+			
+			items = nil;
+			
+			if sortString == "bestCondition" then
+				table.sort(sequentialItems, function(a, b) return a:GetCondition() > b:GetCondition() end);
+			elseif sortString == "worstCondition" then
+				table.sort(sequentialItems, function(a, b) return a:GetCondition() < b:GetCondition() end);
+			end
+			
+			local successfulItems = {};
+			
+			for i = 1, math.min(amount or #sequentialItems, 250) do
+				local itemTable = sequentialItems[i];
+				local success = Clockwork.storage:GiveTo(player, itemTable, true);
+				
+				if !success then
+					if i == 1 then
+						return;
+					else
+						break;
+					end
+				end
+				
+				table.insert(successfulItems, itemTable);
+			end
+			
+			local players = {}
+			local inventory = Clockwork.storage:Query(player, "inventory");
+				
+			for k, v in pairs(_player.GetAll()) do
+				if (v:HasInitialized() and Clockwork.storage:Query(v, "inventory") == inventory) then
+					players[#players + 1] = v
+				end
+			end
+			
+			local definitions = {};
+			local itemTable = sequentialItems[1];
+			
+			for i, v in ipairs(successfulItems) do
+				local definition = item.GetDefinition(v, true)
+				
+				definition.index = nil
+					
+				table.insert(definitions, definition);
+			end
+			
+			netstream.Start(
+				players, "StorageGive", {index = itemTable.index, itemList = definitions}
+			)
+			
+			player:TakeItems(successfulItems);
+			
+			if (storageTable.OnGiveItem and storageTable.OnGiveItem(player, storageTable, itemTable)) then
+				Clockwork.storage:Close(player)
+			end
+
+			if (itemTable.OnStorageGive and itemTable:OnStorageGive(player, storageTable)) then
+				Clockwork.storage:Close(player)
+			end
+
+			if (target:IsPlayer()) then
+				Clockwork.storage:UpdateWeight(player, target:GetMaxWeight())
+				Clockwork.storage:UpdateSpace(player, target:GetMaxSpace())
+			end
+
+			hook.Run("PostPlayerGiveToStorage", player, storageTable, itemTable)
 		else
 			Clockwork.player:Notify(player, "You do not have storage open!");
 		end;

@@ -8,11 +8,13 @@
 function ScaleToWideScreen(size)
 	return math.min(math.max( ScreenScale(size / 2.62467192), math.min(size, 14) ), size);
 end;
+
 local gradma = Material("begotten/ui/generic_bg_gradient.png")
+
 local SKIN = {
 	DermaVersion = 1,
 	PrintName = "Begotten",
-	Author = "cash wednesday"
+	Author = "cash wednesday & DETrooper"
 }
 
 -- A function to draw a generic background.
@@ -98,7 +100,8 @@ function SKIN:PaintButton(panel)
 	local w, h = panel:GetSize();
 
 	if (panel.m_bBackground) then
-		local color = Color(60, 60, 60, 255);
+		local color = Color(40, 40, 40, 255);
+		
 		if (panel:GetDisabled()) then
 			color = Color(30, 30, 30, 255);
 		elseif (panel.Depressed) then
@@ -112,7 +115,7 @@ function SKIN:PaintButton(panel)
 		self:DrawGenericBackground(2, 2, w - 4, h - 4, color);
 		self:DrawGenericBackground(3, h * 0.5, w - 6, h - h * 0.5 - 2, Color(0, 0, 0, 40));
 		
-		panel:SetFGColor(255, 255, 255, 255)
+		panel:SetFGColor(200, 200, 200, 255)
 	end;
 end;
 
@@ -125,12 +128,21 @@ function SKIN:PaintPanel(panel)
 	end;
 end;
 
--- Called when a scroll bar grip is painted.
-function SKIN:PaintScrollBarGrip(panel)
-	local w, h = panel:GetSize();
-	local color = Color(50, 50, 50);
+function SKIN:PaintHScrollBar(panel, w, h)
+	--self.tex.Scroller.TrackH( 0, 0, w, h )
+	self:DrawGenericBackground(0, 0, w, h, Color(25, 20, 20));
+end
 
-	if (panel.Depressed) then
+function SKIN:PaintVScrollBar(panel, w, h)
+	--self.tex.Scroller.TrackV( 0, 0, w, h )
+	self:DrawGenericBackground(0, 0, w, h, Color(20, 20, 20));
+end
+
+-- Called when a scroll bar grip is painted.
+function SKIN:PaintScrollBarGrip(panel, w, h)
+	local color = Color(20, 20, 20);
+
+	if (panel.Depressed and panel.Hovered) then
 		color = Color(70, 0, 0, 255);
 	elseif (panel.Hovered) then
 		color = Color(70, 20, 20, 255);
