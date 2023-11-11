@@ -89,28 +89,30 @@ function cwBeliefs:CanPlayerDualWield()
 end
 
 local bearTrapDist = (256 * 256);
+local warcryColor = Color(180, 0, 0, 255);
+local troutColor = Color(120, 120, 120, 255);
 
 function cwBeliefs:AddEntityOutlines(outlines)
 	if self.highlightTargetOverride then
 		if IsValid(self.highlightTargetOverride) then
-			self:DrawPlayerOutline(self.highlightTargetOverride, outlines, Color(180, 0, 0, 255));
+			self:DrawPlayerOutline(self.highlightTargetOverride, outlines, warcryColor);
 		end
 	end
 
 	if self.upgradedWarcryActive then
-		--[[if self.trout then
+		if self.trout then
 			for k, v in pairs(_player.GetAll()) do
-				if v.warcryTarget then
-					self:DrawPlayerOutline(v, outlines, Color(120, 120, 120, 255));
+				if v.warcryTarget and v:Alive() and v:GetColor().a > 0 then
+					self:DrawPlayerOutline(v, outlines, troutColor);
 				end;
 			end;
-		else]]
+		else
 			for i, v in ipairs(_player.GetAll()) do
 				if v.warcryTarget and v:Alive() and v:GetColor().a > 0 then
-					self:DrawPlayerOutline(v, outlines, Color(180, 0, 0, 255));
+					self:DrawPlayerOutline(v, outlines, warcryColor);
 				end
 			end;
-		--end
+		end
 	end
 	
 	if Clockwork.Client:GetSharedVar("faith") == "Faith of the Dark" then
@@ -121,7 +123,7 @@ function cwBeliefs:AddEntityOutlines(outlines)
 			if v ~= Clockwork.Client and v:HasInitialized() and v:Alive() and v:GetColor().a > 0 then
 				if hasAssassin and (v:Health() < v:GetMaxHealth() / 4 or v:GetRagdollState() == RAGDOLL_FALLENOVER) then
 					if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= assassinDist) then
-						self:DrawPlayerOutline(v, outlines, Color(180, 0, 0, 255));
+						self:DrawPlayerOutline(v, outlines, warcryColor);
 						
 						return;
 					end

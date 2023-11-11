@@ -136,9 +136,9 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 		[8] = 50,
 		[9] = 50,
 		[10] = 100,
-		[11] = 200,
-		[12] = 50,
-		[13] = 100,
+		[11] = 200, 
+		[12] = 35,
+		[13] = 50,
 		[14] = 50,
 	};
 FACTION_GATEKEEPER = FACTION:Register();
