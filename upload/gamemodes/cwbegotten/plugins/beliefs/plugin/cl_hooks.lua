@@ -98,19 +98,19 @@ function cwBeliefs:AddEntityOutlines(outlines)
 	end
 
 	if self.upgradedWarcryActive then
-		--[[if self.trout then
+		if self.trout then
 			for k, v in pairs(_player.GetAll()) do
-				if v.warcryTarget then
-					self:DrawPlayerOutline(v, outlines, Color(120, 120, 120, 255));
+				if v.warcryTarget and v:Alive() and v:GetColor().a > 0 then
+					self:DrawPlayerOutline(v, outlines, Color(150, 150, 150, 255));
 				end;
 			end;
-		else]]
+		else
 			for i, v in ipairs(_player.GetAll()) do
 				if v.warcryTarget and v:Alive() and v:GetColor().a > 0 then
 					self:DrawPlayerOutline(v, outlines, Color(180, 0, 0, 255));
 				end
 			end;
-		--end
+		end
 	end
 	
 	if Clockwork.Client:GetSharedVar("faith") == "Faith of the Dark" then
