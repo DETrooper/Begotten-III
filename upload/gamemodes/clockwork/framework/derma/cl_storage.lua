@@ -45,6 +45,11 @@ function PANEL:Init()
  	self.containerPanel:SetSpacing(4);
  	self.containerPanel:SizeToContents();
 	
+	-- Probably expensive but this fixes expanding item lists when a scrollbar isn't present.
+	function self.containerPanel:Think()
+		self:InvalidateLayout();
+	end
+	
 	function self.containerPanel:OnScrollbarAppear()
 		if (IsValid(self.VBar)) then
 			--self.VBar:SetScroll(self.cachedScroll or 0);
@@ -59,6 +64,11 @@ function PANEL:Init()
 	self.inventoryPanel:SetPadding(4);
 	self.inventoryPanel:SetSpacing(4);
 	self.inventoryPanel:SizeToContents();
+	
+	-- Probably expensive but this fixes expanding item lists when a scrollbar isn't present.
+	function self.inventoryPanel:Think()
+		self:InvalidateLayout();
+	end
 	
 	function self.inventoryPanel:OnScrollbarAppear()
 		if (IsValid(self.VBar)) then

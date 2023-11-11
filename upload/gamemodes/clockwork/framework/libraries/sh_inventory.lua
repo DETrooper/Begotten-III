@@ -394,6 +394,23 @@ if (CLIENT) then
 		Clockwork.inventory:Rebuild()
 		hook.Run("PlayerItemGiven", itemTable)
 	end)
+	
+	netstream.Hook("InvGiveItems", function(data)
+		for k, v in pairs(data) do
+			local itemTable = item.CreateInstance(
+				v.index, v.itemID, v.data
+			)
+
+			if (itemTable) then
+				Clockwork.inventory:AddInstance(
+					Clockwork.inventory.client, itemTable
+				)
+			end
+		end
+
+		Clockwork.inventory:Rebuild()
+		hook.Run("PlayerItemGiven")
+	end)
 
 	netstream.Hook("InvNetwork", function(data)
 		local itemTable = item.FindInstance(data.itemID)
@@ -440,6 +457,24 @@ if (CLIENT) then
 			hook.Run("PlayerItemTaken", itemTable)
 		end
 	end)
+	
+	netstream.Hook("InvTakeItems", function(data)
+		for k, v in pairs(data) do
+			local itemTable = Clockwork.inventory:FindItemByID(
+				Clockwork.inventory.client, v.uniqueID, v.itemID
+			)
+
+			if (itemTable) then
+				Clockwork.inventory:RemoveInstance(
+					Clockwork.inventory.client, itemTable
+				)
+			end
+		end
+		
+		hook.Run("PlayerItemTaken");
+		Clockwork.inventory:Rebuild();
+	end)
+
 
 	netstream.Hook("InvUpdate", function(data)
 		for k, v in pairs(data) do

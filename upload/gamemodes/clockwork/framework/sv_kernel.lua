@@ -2097,16 +2097,6 @@ function playerMeta:GiveItem(itemTable, bForce)
 	local inventory = self:GetInventory()
 
 	if ((self:CanHoldWeight(itemTable.weight) and self:CanHoldSpace(itemTable.space)) or bForce) then
-		if itemTable.uniqueID == "begotten_1h_morning_star" then -- DECOY FOR MINGES
-			self:SetPos(Vector(-12377.726563, 8237.457031, 7023.03125));
-			self:SetAngles(Angle(0, -90, 0));
-			self:Freeze(true);
-			
-			Clockwork.datastream:Start(self, "Stunned", 5);
-			Schema:EasyText(GetAdmins(), "tomato", self:Name().." has picked up a decoy item "..itemTable.name.." and just got sent to meet the HL2RP hitman!", nil);
-			return false;
-		end
-		
 		if (itemTable.OnGiveToPlayer) then
 			itemTable:OnGiveToPlayer(self)
 		end

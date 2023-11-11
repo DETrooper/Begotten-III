@@ -402,12 +402,12 @@ function Clockwork.storage:TakeFrom(player, itemTable, bMultiple)
 	bCanTakeStorage = !storageTable.CanTakeItem or storageTable.CanTakeItem(player, storageTable, itemTable)
 	if (bCanTakeStorage == false) then return false end
 
-	local bSuccess, fault = player:GiveItem(itemTable)
+	if !bMultiple then
+		local bSuccess, fault = player:GiveItem(itemTable)
 
-	if (bSuccess) then
-		hook.Run("PlayerTakeFromStorage", player, storageTable, itemTable)
-
-		if !bMultiple then
+		if (bSuccess) then	
+			hook.Run("PlayerTakeFromStorage", player, storageTable, itemTable)
+		
 			if (!storageTable.entity or !storageTable.entity:IsPlayer()) then
 				Clockwork.inventory:RemoveInstance(inventory, itemTable)
 			else
@@ -438,11 +438,13 @@ function Clockwork.storage:TakeFrom(player, itemTable, bMultiple)
 			end
 
 			hook.Run("PostPlayerTakeFromStorage", player, storageTable, itemTable)
+			
+			return true
+		else
+			Schema:EasyText(player, "peru", fault)
 		end
-
-		return true
 	else
-		Schema:EasyText(player, "peru", fault)
+		return true
 	end
 end
 

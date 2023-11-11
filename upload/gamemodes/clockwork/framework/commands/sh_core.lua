@@ -71,18 +71,41 @@ local COMMAND = Clockwork.command:New("StorageTakeItems");
 			end
 			
 			local successfulItems = {};
+			local playerInventory = player:GetInventory();
 			
 			for i = 1, math.min(amount or #sequentialItems, 250) do
 				local itemTable = sequentialItems[i];
 				local success = Clockwork.storage:TakeFrom(player, itemTable, true);
+				local fault;
+				
+				if success then
+					if (player:CanHoldWeight(itemTable.weight) and player:CanHoldSpace(itemTable.space)) then
+						if (itemTable.OnGiveToPlayer) then
+							itemTable:OnGiveToPlayer(player)
+						end
 
+						Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name().." has gained a "..itemTable.name.." "..itemTable.itemID..".")
+
+						Clockwork.inventory:AddInstance(playerInventory, itemTable);
+					else
+						success = false;
+						fault = "You can only carry up to four times your non-overencumbered carrying capacity!";
+					end
+				end
+				
 				if !success then
+					if fault then
+						Schema:EasyText(player, "peru", fault);
+					end
+					
 					if i == 1 then
 						return;
 					else
 						break;
 					end
 				end
+				
+				hook.Run("PlayerTakeFromStorage", player, storageTable, itemTable)
 				
 				table.insert(successfulItems, itemTable);
 			end
@@ -96,21 +119,49 @@ local COMMAND = Clockwork.command:New("StorageTakeItems");
 				end
 			end
 			
+			local definitions = {};
 			local signatures = {};
 			local itemTable = sequentialItems[1];
 			
 			for i, v in ipairs(successfulItems) do
+				local definition = item.GetDefinition(v, true)
 				local signature = item.GetSignature(v);
+				
+				-- idk why this is needed when InvGive doesnt need it but whatever
+				definition.index = v.uniqueID;
 					
+				table.insert(definitions, definition);
 				table.insert(signatures, signature);
 			end
+			
+			netstream.Start(player, "InvGiveItems", definitions);
+			
+			Clockwork.inventory:Rebuild(player);
 			
 			if (!target or !target:IsPlayer()) then
 				for i, v in ipairs(successfulItems) do
 					Clockwork.inventory:RemoveInstance(inventory, v);
 				end
 			else
-				target:TakeItems(successfulItems);
+				local targetInventory = target:GetInventory()
+			
+				for i, v in ipairs(successfulItems) do
+					if (v.OnTakeFromPlayer) then
+						v:OnTakeFromPlayer(target)
+					end
+					
+					Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, target:Name().." has lost a "..v.name.." "..v.itemID..".")
+
+					--hook.Run("PlayerItemTaken", target, v);
+					
+					Clockwork.kernel:ForceUnequipItem(target, v.uniqueID, v.itemID);
+					Clockwork.inventory:RemoveInstance(targetInventory, v);
+					--netstream.Start(target, "InvTake", {v.index, v.itemID});
+				end
+				
+				netstream.Start(target, "InvTakeItems", signatures);
+				
+				Clockwork.inventory:Rebuild(target);
 			end
 				
 			for k, v in pairs(_player.GetAll()) do
@@ -309,21 +360,41 @@ local COMMAND = Clockwork.command:New("StorageGiveItems");
 			end
 			
 			local definitions = {};
+			local signatures = {};
 			local itemTable = sequentialItems[1];
 			
 			for i, v in ipairs(successfulItems) do
 				local definition = item.GetDefinition(v, true)
+				local signature = item.GetSignature(v);
 				
 				definition.index = nil
 					
 				table.insert(definitions, definition);
+				table.insert(signatures, signature);
 			end
 			
 			netstream.Start(
 				players, "StorageGive", {index = itemTable.index, itemList = definitions}
 			)
 			
-			player:TakeItems(successfulItems);
+			local playerInventory = player:GetInventory();
+			
+			for i, v in ipairs(successfulItems) do
+				if (v.OnTakeFromPlayer) then
+					v:OnTakeFromPlayer(player)
+				end
+				
+				Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name().." has lost a "..v.name.." "..v.itemID..".")
+
+				--hook.Run("PlayerItemTaken", player, v);
+				
+				Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+				Clockwork.inventory:RemoveInstance(playerInventory, v);
+			end
+
+			netstream.Start(player, "InvTakeItems", signatures);
+			
+			Clockwork.inventory:Rebuild(player);
 			
 			if (storageTable.OnGiveItem and storageTable.OnGiveItem(player, storageTable, itemTable)) then
 				Clockwork.storage:Close(player)
