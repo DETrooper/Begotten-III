@@ -625,7 +625,7 @@ function PANEL:Think()
 		spawnIcon:SetColor(color);
 	end
 
-	if (self.itemTable.stackable) then
+	--if (self.itemTable.stackable) then
 		if (amount > 1) then
 			if spawnIcon then
 				if !IsValid(spawnIcon.amount) then
@@ -656,7 +656,7 @@ function PANEL:Think()
 		elseif spawnIcon and spawnIcon.amount then
 			spawnIcon.amount:Remove();
 		end;
-	end;
+	--end;
 
 	local model, skin = Clockwork.item:GetIconInfo(self.itemTable);
 	
