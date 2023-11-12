@@ -288,7 +288,7 @@ function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedS
 		local items = {};
 		
 		for k2, v2 in SortedPairsByMemberValue(itemsList, "name") do
-			if v2.stackable then
+			--if v2.stackable then
 				if (!items[v2("uniqueID")]) then
 					storagePanel.itemData = {
 						itemTable = v2,
@@ -416,7 +416,7 @@ function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedS
 						parent.sublist.categoryList:AddItem(inventoryIcon);
 					end
 				end;
-			else
+			--[[else
 				storagePanel.itemData = {
 					itemTable = v2,
 					storageType = storagePanel.storageType
@@ -446,7 +446,7 @@ function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedS
 				end
 				
 				storagePanel.itemList:AddItem(inventoryIcon);
-			end;
+			end;]]--
 		end;
 	--end;
 	
@@ -1119,7 +1119,7 @@ function PANEL:Think()
 		spawnIcon:SetColor(color);
 	end
 
-	if (self.itemTable.stackable) then
+	--if (self.itemTable.stackable) then
 		if (amount > 1) then
 			if spawnIcon then
 				if !IsValid(spawnIcon.amount) then
@@ -1150,7 +1150,7 @@ function PANEL:Think()
 		elseif spawnIcon and spawnIcon.amount then
 			spawnIcon.amount:Remove();
 		end;
-	end;
+	--end;
 
 	local model, skin = Clockwork.item:GetIconInfo(self.itemTable);
 	
