@@ -784,6 +784,23 @@ function item.Register(itemTable)
 	item.stored[itemTable.uniqueID] = itemTable;
 	item.buffer[itemTable.index] = itemTable;
 	
+	-- Precache item materials and models.
+	if itemTable.iconoverride then
+		Material(itemTable.iconoverride);
+	end
+	
+	if itemTable.hasHelmet then
+		local helmetImage;
+		
+		if itemTable.helmetIconOverride then
+			helmetImage = itemTable.helmetIconOverride;
+		else
+			helmetImage = string.gsub(itemTable.iconoverride, ".png", "").."_helmet.png";
+		end
+		
+		Material(helmetImage);
+	end
+	
 	if (itemTable.model) then
 		util.PrecacheModel(itemTable.model);
 	end;
@@ -915,6 +932,22 @@ function item.CreateInstance(uniqueID, itemID, data, bNoGenerate)
 		return item.instances[itemID];
 	end;
 end;
+
+function item.RemoveInstance(itemID, bInstant)
+	if istable(itemID) then
+		itemID = itemTable.itemID;
+	end
+	
+	if itemID then
+		if bInstant then
+			item.instances[itemID] = nil;
+		else
+			timer.Simple(FrameTime(), function()
+				item.instances[itemID] = nil;
+			end);
+		end
+	end
+end
 
 -- this is shit lol
 

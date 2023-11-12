@@ -73,6 +73,12 @@ function ENT:OnRemove()
 
 	if (!Clockwork.kernel:IsShuttingDown()) then
 		--Clockwork.entity:DropItemsAndCash(self.cwInventory, self.cwCash, self:GetPos(), self)
+		for k, v in pairs(self.cwInventory) do
+			for k2, v2 in pairs(v) do
+				item.RemoveInstance(v2.itemID, true);
+			end
+		end
+		
 		self.cwInventory = nil
 		self.cwCash = nil
 	end

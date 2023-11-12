@@ -57,9 +57,9 @@ function Clockwork.storage:Close(player, bServer)
 		OnClose(player, storageTable, entity)
 	end
 
-	if (!bServer) then
+	--if (!bServer) then
 		netstream.Start(player, "StorageClose", true)
-	end
+	--end
 
 	player.cwStorageTab = nil
 end

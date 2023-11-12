@@ -60,8 +60,12 @@ end;
 function ENT:OnRemove()
 	local itemTable = self.cwItemTable;
 	
-	if (itemTable and itemTable.OnEntityRemoved) then
-		itemTable:OnEntityRemoved(self);
+	if (itemTable) then
+		if itemTable.OnEntityRemoved then
+			itemTable:OnEntityRemoved(self);
+		end
+		
+		item.RemoveInstance(itemTable.itemID);
 	end;
 end;
 

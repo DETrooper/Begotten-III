@@ -9,6 +9,7 @@ CW_CONVAR_SHOWBLUR = Clockwork.kernel:CreateClientConVar("cwShowBlur", 1, true, 
 CW_CONVAR_SHOWCALCVIEW = Clockwork.kernel:CreateClientConVar("cwShowCalcView", 1, true, true);
 CW_CONVAR_CINEMATICVIEW = Clockwork.kernel:CreateClientConVar("cwCinematicView", 0, true, true);
 CW_CONVAR_CINEMATICVIEWOBS = Clockwork.kernel:CreateClientConVar("cwCinematicViewObs", 0, true, true);
+CW_CONVAR_OBSERVERLAMP = Clockwork.kernel:CreateClientConVar("cwObserverLamp", 0, true, true);
 
 Schema.blackBlur = Material("begotten/effects/blackblur.png");
 Schema.filmGrainOverlay = Material("begotten/effects/grain_overlay");
@@ -869,6 +870,23 @@ function Schema:RenderScreenspaceEffects()
 			Clockwork.Client.cwInDark = false;
 		end;
 	end;
+	
+	if (CW_CONVAR_OBSERVERLAMP:GetInt() == 1) then
+		if (Clockwork.Client:IsAdmin() and Clockwork.Client:GetMoveType() == MOVETYPE_NOCLIP) then
+			local dynamicLight = DynamicLight(Clockwork.Client:EntIndex());
+			
+			if (dynamicLight) then
+				dynamicLight.Pos = Clockwork.Client:GetPos() + Vector(0, 0, 64);
+				dynamicLight.r = 200;
+				dynamicLight.g = 200;
+				dynamicLight.b = 200;
+				dynamicLight.Brightness = 1;
+				dynamicLight.Size = 1024;
+				dynamicLight.DieTime = curTime + 0.1;
+				dynamicLight.Style = 0;
+			end;
+		end;
+	end;
 end;
 
 -- A function to perform a vertigo zoom effect.
@@ -1015,6 +1033,7 @@ Clockwork.setting:AddCheckBox("Screen effects", "Enable cinematic film grain.", 
 Clockwork.setting:AddCheckBox("Screen effects", "Enable Calcview hook.", "cwShowCalcView", "Click to enable/disable the Calcview hook.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
 Clockwork.setting:AddCheckBox("Screen effects", "Enable cinematic camera.", "cwCinematicView", "Click to enable/disable cinematic camera smoothing.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
 Clockwork.setting:AddCheckBox("Screen effects", "Cinematic camera only in observer.", "cwCinematicViewObs", "Enables the cinematic camera only when you are in observer.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
+Clockwork.setting:AddCheckBox("Admin ESP", "Enable observer lamp light.", "cwObserverLamp", "Toggle the observer lamp light.", function() return Clockwork.player:IsAdmin(Clockwork.Client); end);
 
 --
 Clockwork.setting:AddCheckBox("Wakeup sequence", "Enable the wakeup sequence.", "cwWakeupSequence", "Click to enable/disable the wakeup sequence.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);

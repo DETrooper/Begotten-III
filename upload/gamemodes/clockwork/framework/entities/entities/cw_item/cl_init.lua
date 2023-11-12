@@ -109,3 +109,12 @@ function ENT:Draw()
 		end
 	end
 end
+
+-- Called when the entity is removed.
+function ENT:OnRemove()
+	local itemTable = self:GetItemTable();
+	
+	if (itemTable) then
+		item.RemoveInstance(itemTable.itemID);
+	end;
+end;

@@ -3327,6 +3327,12 @@ function GM:PlayerCharacterUnloaded(player)
 	Clockwork.player:SetRagdollState(player, RAGDOLL_RESET)
 	Clockwork.storage:Close(player, true)
 	player:SetTeam(TEAM_UNASSIGNED)
+	
+	local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
+
+	for k, v in pairs(itemList) do
+		item.RemoveInstance(v.itemID, true);
+	end
 end
 
 -- Called when a player's character has loaded.

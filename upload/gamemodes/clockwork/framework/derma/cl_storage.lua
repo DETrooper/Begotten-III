@@ -1366,13 +1366,21 @@ Clockwork.datastream:Hook("StorageClose", function(data)
 		Clockwork.storage:GetPanel():Remove();
 		
 		gui.EnableScreenClicker(false);
+	end
 		
-		Clockwork.storage.inventory = nil;
-		Clockwork.storage.weight = nil;
-		Clockwork.storage.space = nil;
-		Clockwork.storage.entity = nil;
-		Clockwork.storage.name = nil;
-	end;
+	if Clockwork.storage.inventory then
+		for k, v in pairs(Clockwork.storage.inventory) do
+			for k2, v2 in pairs(v) do
+				item.RemoveInstance(k2, true);
+			end
+		end
+	end
+	
+	Clockwork.storage.inventory = nil;
+	Clockwork.storage.weight = nil;
+	Clockwork.storage.space = nil;
+	Clockwork.storage.entity = nil;
+	Clockwork.storage.name = nil;
 end);
 
 Clockwork.datastream:Hook("StorageTake", function(data)
@@ -1382,11 +1390,15 @@ Clockwork.datastream:Hook("StorageTake", function(data)
 				Clockwork.inventory:RemoveUniqueID(
 					Clockwork.storage.inventory, v.uniqueID, v.itemID
 				);
+				
+				item.RemoveInstance(v.itemID, true);
 			end;
 		else
 			Clockwork.inventory:RemoveUniqueID(
 				Clockwork.storage.inventory, data.uniqueID, data.itemID
 			);
+			
+			item.RemoveInstance(data.itemID, true);
 		end
 		
 		Clockwork.storage:GetPanel():Rebuild();
