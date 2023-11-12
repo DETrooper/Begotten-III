@@ -161,8 +161,6 @@ local COMMAND = Clockwork.command:New("RemoveItemSpawnerStorage");
 				local container = containerTable.container;
 				
 				if IsValid(container) then
-					container.cwInventory = nil;
-					container.cwCash = nil;
 					container:Remove();
 				end
 			end

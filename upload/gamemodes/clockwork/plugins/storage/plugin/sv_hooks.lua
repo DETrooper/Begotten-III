@@ -94,18 +94,21 @@ function cwStorage:EntityRemoved(entity)
 	if (IsValid(entity) and !entity.cwIsBelongings) then
 		if (hook.Run("ContainerCanDropItems", entity) != false) then 
 			--Clockwork.entity:DropItemsAndCash(entity.cwInventory, entity.cwCash, entity:GetPos(), entity)
-			
-			if entity.cwInventory then
-				for k, v in pairs(entity.cwInventory) do
-					for k2, v2 in pairs(v) do
-						item.RemoveInstance(v2.itemID, true);
-					end
+		end
+		
+		if entity.cwInventory then
+			for k, v in pairs(entity.cwInventory) do
+				for k2, v2 in pairs(v) do
+					item.RemoveInstance(v2.itemID, true);
 				end
 			end
 			
 			entity.cwInventory = nil
+		end
+		
+		if entity.cwCash then
 			entity.cwCash = nil
-		end;
+		end
 		
 		local player = entity.LockpickingPlayer;
 
