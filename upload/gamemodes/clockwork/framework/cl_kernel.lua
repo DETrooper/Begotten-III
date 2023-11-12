@@ -1034,7 +1034,7 @@ do
 				end
 
 				if (weapon and IsValid(weapon)) then			
-					local raised = Clockwork.player:GetWeaponRaised(player) or player:GetSharedVar("senses") == true;
+					local raised = Clockwork.player:GetWeaponRaised(player) or player:GetNWBool("senses") == true;
 					local color = colorWhite;
 
 					if (raised == true) then

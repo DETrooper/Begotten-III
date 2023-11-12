@@ -248,7 +248,7 @@ function Clockwork.player:SayRadio(player, text, check, noEavesdrop, proclaim)
 				end
 				
 				if (v ~= player) then
-					if not v:IsNoClipping() and not v.cwWakingUp then
+					if not v:IsNoClipping() and not v.cwWakingUp and not v.victim then
 						if lastZone == "tower" or lastZone == "wasteland" or lastZone == "caves" or lastZone == "scrapper" then
 							v:EmitSound("radio/radio_out"..tostring(math.random(2, 3))..".wav", 75, math.random(95, 100), 0.75, CHAN_AUTO);
 						end

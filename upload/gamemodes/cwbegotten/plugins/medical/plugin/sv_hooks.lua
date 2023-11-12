@@ -34,6 +34,17 @@ function cwMedicalSystem:PlayerOpenedMenu(player)
 	end;
 end;
 
+-- Called when a player presses a key.
+function cwMedicalSystem:KeyPress(player, key)
+	if (key == IN_ATTACK) then
+		local action = Clockwork.player:GetAction(player);
+		
+		if (action == "heal" or action == "healing" or action == "performing_surgery" or action == "chloroform") then
+			Clockwork.player:SetAction(player, nil);
+		end
+	end;
+end;
+
 -- Called at an interval while a player is connected.
 function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 	if (player:HasInitialized() and player:Alive()) then

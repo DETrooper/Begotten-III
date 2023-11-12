@@ -96,8 +96,6 @@ local COMMAND = Clockwork.command:New("EnableMusic");
 	end;
 COMMAND:Register();
 
---ezrs "lightslategray" "Angle Grinder has " "red" "disabled" "lightslategray" " the dynamic music system!"
-
 local COMMAND = Clockwork.command:New("StopMusic");
 	COMMAND.tip = "Stop all dynamic music currently playing for players (does not disable the system, use /DisableMusic for that).";
 	COMMAND.access = "a";

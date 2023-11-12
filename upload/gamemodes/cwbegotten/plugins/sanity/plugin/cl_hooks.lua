@@ -661,18 +661,20 @@ function cwSanity:RenderScreenspaceEffects()
 		end;
 		
 		if (sanity <= 50) then
-			if (!self.contrastAdd) then
-				self.contrastAdd = 0;
-			end;
+			if !Clockwork.Client:GetNWBool("senses") then
+				if (!self.contrastAdd) then
+					self.contrastAdd = 0;
+				end;
 
-			local sanityModify = {};
-				sanityModify["$pp_colour_brightness"] = 0 + (self.contrastAdd * 0.1);
-				sanityModify["$pp_colour_contrast"] = 1 + self.contrastAdd;
-				sanityModify["$pp_colour_addg"] = (0 - self.contrastAdd);
-				sanityModify["$pp_colour_addb"] = (0 - self.contrastAdd);
-			DrawColorModify(sanityModify);
-			
-			self.contrastAdd = math.Approach(self.contrastAdd, math.Remap(sanity, 0, 50, 0.1, 0), frameTime * 0.25);
+				local sanityModify = {};
+					sanityModify["$pp_colour_brightness"] = 0 + (self.contrastAdd * 0.1);
+					sanityModify["$pp_colour_contrast"] = 1 + self.contrastAdd;
+					sanityModify["$pp_colour_addg"] = (0 - self.contrastAdd);
+					sanityModify["$pp_colour_addb"] = (0 - self.contrastAdd);
+				DrawColorModify(sanityModify);
+				
+				self.contrastAdd = math.Approach(self.contrastAdd, math.Remap(sanity, 0, 50, 0.1, 0), frameTime * 0.25);
+			end
 		end;
 	end;
 end;

@@ -146,13 +146,13 @@ function cwMedicalSystem:GetPostProgressBarInfo()
 		local action, percentage = Clockwork.player:GetAction(Clockwork.Client, true);
 		
 		if (action == "heal") then
-			return {text = "You are healing yourself.", percentage = percentage, flash = percentage > 75};
+			return {text = "You are healing yourself. Click to cancel.", percentage = percentage, flash = percentage > 75};
 		elseif (action == "healing") then
-			return {text = "You are healing somebody.", percentage = percentage, flash = percentage > 75};
+			return {text = "You are healing somebody. Click to cancel.", percentage = percentage, flash = percentage > 75};
 		elseif (action == "performing_surgery") then
-			return {text = "You are performing an operation on somebody.", percentage = percentage, flash = percentage > 75};
+			return {text = "You are performing an operation on somebody. Click to cancel.", percentage = percentage, flash = percentage > 75};
 		elseif (action == "chloroform") then
-			return {text = "You are using chloroform on somebody.", percentage = percentage, flash = percentage > 75};
+			return {text = "You are using chloroform on somebody. Click to cancel.", percentage = percentage, flash = percentage > 75};
 		elseif (action == "die") then
 			return {text = "You are slowly dying.", percentage = percentage, flash = percentage > 75};
 		elseif (action == "die_bleedout") then

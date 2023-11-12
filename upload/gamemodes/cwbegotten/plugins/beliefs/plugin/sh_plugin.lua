@@ -123,9 +123,9 @@ function COMMAND:OnRun(player, arguments)
 		
 		if xp and tonumber(xp) then
 			if (player != target) then
-				Schema:EasyText(player, "cornflowerblue", "You have given "..target:Name().." "..xp.." experience.");
+				Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has given "..target:Name().." "..xp.." experience.");
 			else
-				Schema:EasyText(player, "cornflowerblue", "You have given yourself "..xp.." experience.");
+				Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has given themself "..xp.." experience.");
 			end;
 			
 			target:HandleXP(tonumber(xp), true);
@@ -156,9 +156,9 @@ function COMMAND:OnRun(player, arguments)
 		
 		if belief and cwBeliefs:FindBeliefByID(belief) then
 			if (player != target) then
-				Schema:EasyText(player, "cornflowerblue", "You have given "..target:Name().." the '"..belief.."' belief.");
+				Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has given "..target:Name().." the '"..belief.."' belief.");
 			else
-				Schema:EasyText(player, "cornflowerblue", "You have given yourself the '"..belief.."' belief.");
+				Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has given themself the '"..belief.."' belief.");
 			end;
 			
 			cwBeliefs:ForceTakeBelief(target, belief);
@@ -264,9 +264,9 @@ function COMMAND:OnRun(player, arguments)
 			
 			if level > 0 then
 				if (player != target) then
-					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set "..target:Name().."'s sacrament level to "..tostring(level)..".");
+					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s sacrament level to "..tostring(level)..".");
 				else
-					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own sacrament level to "..tostring(level)..".");
+					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] "..player:Name().." has set their own sacrament level to "..tostring(level)..".");
 				end;
 			
 				cwBeliefs:SetSacramentLevel(target, level);
