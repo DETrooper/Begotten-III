@@ -110,7 +110,7 @@ netstream.Hook("Salesmenu", function(player, data)
 					end
 
 					if (data.entity.cwCash == -1 or data.entity.cwCash >= cost) then
-						if (player:TakeItem(itemTable)) then
+						if (player:TakeItem(itemTable, true)) then
 							if (data.entity.cwCash != -1) then
 								data.entity.cwCash = data.entity.cwCash - cost
 							end

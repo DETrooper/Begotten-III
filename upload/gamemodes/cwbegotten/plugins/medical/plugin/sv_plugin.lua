@@ -267,7 +267,7 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 				player:HandleXP(itemTable.useXP or 5);
 			end
 			
-			player:TakeItem(itemTable);
+			player:TakeItem(itemTable, true);
 
 			return true;
 		end);
@@ -462,7 +462,7 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 					player:HandleXP(healXP);
 				end
 				
-				player:TakeItem(itemTable);
+				player:TakeItem(itemTable, true);
 			end);
 		else
 			Schema:EasyText(player, "peru","This player is already healing!");

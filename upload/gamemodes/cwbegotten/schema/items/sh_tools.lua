@@ -307,7 +307,7 @@ local ITEM = Clockwork.item:New();
 										
 										Schema:TiePlayer(target, true, nil);
 										
-										player:TakeItem(self);
+										player:TakeItem(self, true);
 									else
 										player.isTying = nil;
 									end;
@@ -410,7 +410,7 @@ local ITEM = Clockwork.item:New();
 								local condition = self:GetCondition() - 20;
 							
 								if condition <= 0 then
-									player:TakeItem(self);
+									player:TakeItem(self, true);
 								else
 									self:SetCondition(condition);
 								end
@@ -498,7 +498,7 @@ local ITEM = Clockwork.item:New();
 								local condition = self:GetCondition() - 10;
 							
 								if condition <= 0 then
-									player:TakeItem(self);
+									player:TakeItem(self, true);
 								else
 									self:SetCondition(condition);
 								end
@@ -585,7 +585,7 @@ local ITEM = Clockwork.item:New();
 								local condition = self:GetCondition() - 10;
 							
 								if condition <= 0 then
-									player:TakeItem(self);
+									player:TakeItem(self, true);
 								else
 									self:SetCondition(condition);
 								end

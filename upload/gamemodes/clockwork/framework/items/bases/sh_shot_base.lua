@@ -141,7 +141,7 @@ local ITEM = item.New(nil, true);
 					if IsValid(itemEntity) then
 						itemEntity:Remove();
 					else
-						player:TakeItem(self);
+						player:TakeItem(self, true);
 					end
 				end
 			end);

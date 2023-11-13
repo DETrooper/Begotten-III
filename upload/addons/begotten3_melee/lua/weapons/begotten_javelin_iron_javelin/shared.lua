@@ -129,7 +129,7 @@ function SWEP:FireJavelin()
 					self.Owner:StripWeapon("begotten_javelin_iron_javelin");
 				end
 			else
-				self.Owner:TakeItem(itemTable, true);
+				self.Owner:TakeItem(itemTable);
 			end
 		end
 	end

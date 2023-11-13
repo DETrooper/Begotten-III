@@ -689,7 +689,7 @@ local COMMAND = Clockwork.command:New("DropWeapon");
 							Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal);
 							Clockwork.kernel:ForceUnequipItem(player, itemTable.uniqueID, itemTable.itemID);
 							
-							player:TakeItem(itemTable, true);
+							player:TakeItem(itemTable);
 							player:StripWeapon(class);
 							player:SelectWeapon("begotten_fists");
 							
@@ -726,7 +726,7 @@ local COMMAND = Clockwork.command:New("DropShield");
 							if (v:HasPlayerEquipped(player)) then
 								Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal);
 								Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
-								player:TakeItem(v, true);
+								player:TakeItem(v);
 
 								return;
 							end

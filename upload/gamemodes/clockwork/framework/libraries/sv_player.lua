@@ -2788,7 +2788,7 @@ function Clockwork.player:DropWeapons(player)
 		local entity = Clockwork.entity:CreateItem(player, shieldItem, pos + Vector(0, 0, math.random(1, 48)), Angle(0, 0, 0));
 
 		if (IsValid(entity)) then
-			player:TakeItem(shieldItem, true);
+			player:TakeItem(shieldItem);
 		end
 	end
 
@@ -2797,7 +2797,7 @@ function Clockwork.player:DropWeapons(player)
 			local entity = Clockwork.entity:CreateItem(player, v, pos + Vector(0, 0, math.random(1, 48)), Angle(0, 0, 0));
 
 			if (IsValid(entity)) then
-				player:TakeItem(v, true);
+				player:TakeItem(v);
 			end
 		end
 	end

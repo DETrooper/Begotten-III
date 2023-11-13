@@ -262,7 +262,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal)
 					hook.Run("PlayerDropWeapon", player, self, entity)
 
-					player:TakeItem(self, true)
+					player:TakeItem(self)
 					player:SelectWeapon("begotten_fists")
 					player:StripWeapon(itemTable.weaponClass);
 					

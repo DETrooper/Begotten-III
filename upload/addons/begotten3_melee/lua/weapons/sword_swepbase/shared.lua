@@ -1142,7 +1142,7 @@ end
 									
 									if (IsValid(itemEnt)) then
 										Clockwork.chatBox:AddInTargetRadius(hit, "me", "'s "..itemTable.name..dropMessages[math.random(1, #dropMessages)], hit:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-										hit:TakeItem(itemTable, true)
+										hit:TakeItem(itemTable)
 										hit:SelectWeapon("begotten_fists")
 										hit:StripWeapon(enemywep:GetClass())
 									end

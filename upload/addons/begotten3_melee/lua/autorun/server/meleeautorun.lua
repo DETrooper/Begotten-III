@@ -848,7 +848,7 @@ local function Guarding(ent, dmginfo)
 										
 										if (IsValid(itemEnt)) then
 											Clockwork.chatBox:AddInTargetRadius(ent, "me", "'s "..itemTable.name..dropMessages[math.random(1, #dropMessages)], ent:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-											ent:TakeItem(itemTable, true)
+											ent:TakeItem(itemTable)
 											--ent:SelectWeapon("begotten_fists")
 											ent:StripWeapon(wep:GetClass())
 										end

@@ -65,7 +65,9 @@ function ENT:OnRemove()
 			itemTable:OnEntityRemoved(self);
 		end
 		
-		item.RemoveInstance(itemTable.itemID);
+		if !self.bRetainInstance then
+			item.RemoveInstance(itemTable.itemID);
+		end
 	end;
 end;
 

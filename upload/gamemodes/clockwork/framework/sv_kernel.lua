@@ -2067,7 +2067,7 @@ function playerMeta:TakeItemByID(uniqueID, itemID)
 	local itemTable = self:GetItemInstance(uniqueID, itemID)
 
 	if (itemTable) then
-		return self:TakeItem(itemTable)
+		return self:TakeItem(itemTable, true)
 	else
 		return false
 	end
@@ -2116,7 +2116,7 @@ function playerMeta:GiveItem(itemTable, bForce)
 end
 
 -- A function to take an item from a player.
-function playerMeta:TakeItem(itemTable)
+function playerMeta:TakeItem(itemTable, bRemoveInstance)
 	if (!itemTable or !itemTable:IsInstance()) then
 		debug.Trace()
 		return false
@@ -2135,7 +2135,10 @@ function playerMeta:TakeItem(itemTable)
 	Clockwork.kernel:ForceUnequipItem(self, itemTable.uniqueID, itemTable.itemID);
 	Clockwork.inventory:RemoveInstance(inventory, itemTable);
 	netstream.Start(self, "InvTake", {itemTable.index, itemTable.itemID});
-	item.RemoveInstance(itemTable.itemID);
+	
+	if bRemoveInstance then
+		item.RemoveInstance(itemTable.itemID);
+	end
 	
 	Clockwork.inventory:Rebuild(self);
 
@@ -2150,9 +2153,9 @@ function playerMeta:GiveItems(itemTables)
 end
 
 -- An easy function to take a table of items from a player.
-function playerMeta:TakeItems(itemTables)
+function playerMeta:TakeItems(itemTables, bRemoveInstances)
 	for _, itemTable in pairs(itemTables) do
-		self:TakeItem(itemTable)
+		self:TakeItem(itemTable, bRemoveInstances)
 	end
 end
 

@@ -127,7 +127,7 @@ local ITEM = Clockwork.item:New("medical_base");
 			
 			player:HandleSanity(10);
 			player:EmitSound(self.useSound);
-			player:TakeItem(self);
+			player:TakeItem(self, true);
 		end
 	end;
 ITEM:Register();
@@ -163,7 +163,7 @@ local ITEM = Clockwork.item:New("medical_base");
 			
 			player:HandleSanity(100);
 			player:EmitSound(self.useSound);
-			player:TakeItem(self);
+			player:TakeItem(self, true);
 		end
 	end;
 ITEM:Register();
@@ -272,7 +272,7 @@ local ITEM = Clockwork.item:New("medical_base");
 			
 			player:HandleSanity(100);
 			player:EmitSound(self.useSound);
-			player:TakeItem(self);
+			player:TakeItem(self, true);
 			
 			Clockwork.datastream:Start(player, "Stunned", 3);
 		end
@@ -512,7 +512,7 @@ local ITEM = Clockwork.item:New();
 								
 								Clockwork.player:SetRagdollState(target, RAGDOLL_KNOCKEDOUT, 240);
 								
-								player:TakeItem(self);
+								player:TakeItem(self, true);
 							else
 								player.isChloroforming = nil;
 							end;
@@ -614,7 +614,7 @@ local ITEM = Clockwork.item:New();
 					
 					player:TakeDamageInfo(d);
 					
-					player:TakeItem(self);
+					player:TakeItem(self, true);
 					
 					Schema:EasyText(player, "olive", "You stab yourself with the circuitry!");
 				end
@@ -689,7 +689,7 @@ local ITEM = Clockwork.item:New();
 					player:HandleNeed("sleep", -50 * malus);
 					player:HandleNeed("corruption", -40 * malus);
 					player:HandleXP(80 * malus);
-					player:TakeItem(self);
+					player:TakeItem(self, true);
 					player:EmitSound("physics/plastic/plastic_barrel_break1.wav");
 				else
 					local d = DamageInfo()
@@ -698,7 +698,7 @@ local ITEM = Clockwork.item:New();
 					d:SetDamagePosition(player:GetPos() + Vector(0, 0, 64));
 					
 					player:TakeDamageInfo(d);
-					player:TakeItem(self);
+					player:TakeItem(self, true);
 					
 					Schema:EasyText(player, "olive", "You shove the circuitry in your mouth and fuck up your teeth!");
 				end
@@ -845,7 +845,7 @@ local ITEM = Clockwork.item:New();
 					player:HandleNeed("sleep", -200 * malus);
 					player:HandleNeed("corruption", -200 * malus);
 					player:HandleXP(500 * malus);
-					player:TakeItem(self);
+					player:TakeItem(self, true);
 					player:EmitSound("physics/plastic/plastic_barrel_break1.wav");
 				else
 					local d = DamageInfo()
@@ -854,7 +854,7 @@ local ITEM = Clockwork.item:New();
 					d:SetDamagePosition(player:GetPos() + Vector(0, 0, 64));
 					
 					player:TakeDamageInfo(d);
-					player:TakeItem(self);
+					player:TakeItem(self, true);
 					
 					Schema:EasyText(player, "olive", "You shove the circuitry in your mouth and fuck up your teeth!");
 				end

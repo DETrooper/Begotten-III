@@ -642,8 +642,22 @@ else
 											player:HandleXP(cwBeliefs.xpValues["meltdown"]);
 										end
 										
-										local coal = player:FindItemByID("charcoal");
-										player:TakeItem(coal);
+										local inventory = player:GetInventory();
+										local coal;
+										
+										for k, v in pairs(inventory) do
+											if k == "charcoal" then
+												for k2, v2 in pairs(v) do
+													if !coal or v2:GetCondition() < coal:GetCondition() then
+														coal = v2;
+													end
+												end
+											end
+										end
+										
+										if coal then
+											player:TakeItem(coal, true);
+										end
 										
 										player:TakeItem(itemTable, true);
 										smithy_found = true;

@@ -2738,6 +2738,7 @@ function GM:EntityHandleMenuOption(player, entity, option, arguments)
 
 				if (bDidPickupItem) then
 					if (!itemTable.OnPickup or itemTable:OnPickup(player, bQuickUse, entity) != false) then
+						entity.bRetainInstance = true;
 						entity:Remove()
 					end
 				end

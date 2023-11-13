@@ -231,7 +231,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 				Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal)
 				hook.Run("PlayerDropWeapon", player, self, entity)
 
-				player:TakeItem(self, true)
+				player:TakeItem(self)
 				
 				if !isOffhand then
 					if IsValid(activeWeapon) and activeWeapon:GetClass() == self.weaponClass then

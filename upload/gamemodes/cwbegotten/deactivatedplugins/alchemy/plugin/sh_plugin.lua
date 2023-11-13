@@ -1238,7 +1238,7 @@ function cwAlchemy:TriggerChemReaction(target, class, item, power, contents, fla
 		util.Effect( effecttype, effectdata )
 		util.BlastDamage( target, target, targetpos, power, power )
 		if target:IsPlayer() then
-			target:TakeItem(item)
+			target:TakeItem(item, true)
 		else
 			target:Remove()
 		end

@@ -1385,7 +1385,7 @@ function cwBeliefs:DoPlayerDeathPreDeathSound(player, attacker, damageInfo)
 										helmetPhysObject:SetAngleVelocity(physicsObject:GetAngleVelocity());
 									end
 								
-									player:TakeItem(helmetItem, true);
+									player:TakeItem(helmetItem);
 								end
 							end
 						end

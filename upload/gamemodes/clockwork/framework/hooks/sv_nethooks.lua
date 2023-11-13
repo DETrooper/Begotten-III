@@ -418,7 +418,7 @@ netstream.Hook("UseAmmo", function(player, data)
 			--if (firearmItemTable:HasPlayerEquipped(player)) then
 				if ammoItemTable:CanUseOnItem(player, firearmItemTable, true) then
 					ammoItemTable:UseOnItem(player, firearmItemTable, true);
-					--player:TakeItem(ammoItemTable);
+					--player:TakeItem(ammoItemTable, true);
 				end
 			--end
 		end
@@ -464,7 +464,7 @@ netstream.Hook("MergeRepair", function(player, data)
 					
 					repaireeItemTable:SetCondition(math.min(repaireeCondition + repairerCondition, 100));
 					
-					player:TakeItem(repairerItemTable);
+					player:TakeItem(repairerItemTable, true);
 					
 					Schema:EasyText(player, "cornflowerblue", "You have repaired a "..(repaireeItemTable.name or "item").." with another item of its type.");
 				else
@@ -495,7 +495,7 @@ netstream.Hook("MergeAmmoMagazine", function(player, data)
 
 		if (ammoItemTable and magazineItemTable and ammoItemTable.UseOnMagazine) then
 			if ammoItemTable:UseOnMagazine(player, magazineItemTable) then
-				player:TakeItem(ammoItemTable);
+				player:TakeItem(ammoItemTable, true);
 			end
 		end
 	end

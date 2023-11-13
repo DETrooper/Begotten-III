@@ -20,7 +20,7 @@ function cwBarricades:AddPlankToDoor(player, door)
 				end;
 				
 				player:Freeze(true);
-				player:TakeItem(boardItem);
+				player:TakeItem(boardItem, true);
 				
 				timer.Simple(1, function()
 					if (IsValid(player) and IsValid(door)) then

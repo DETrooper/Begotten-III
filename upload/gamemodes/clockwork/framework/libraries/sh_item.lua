@@ -571,7 +571,7 @@ if (SERVER) then
 						Clockwork.chatBox:AddInTargetRadius(holder, "me", "'s "..self.name..self.breakMessage, holder:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 					end;
 					
-					holder:TakeItem(self);
+					holder:TakeItem(self, true);
 				end;
 			else
 				itemEntity:Explode()
@@ -1095,7 +1095,7 @@ if (SERVER) then
 				local onUse = itemTable:OnUse(player, itemEntity, interactItemTable);
 				
 				if (onUse == nil) then
-					player:TakeItem(itemTable);
+					player:TakeItem(itemTable, true);
 				elseif (onUse == false) then
 					return false;
 				end;
@@ -1193,7 +1193,7 @@ if (SERVER) then
 				return false;
 			end;
 			
-			player:TakeItem(itemTable);
+			player:TakeItem(itemTable, true);
 			
 			if (!bNoSound) then
 				if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
