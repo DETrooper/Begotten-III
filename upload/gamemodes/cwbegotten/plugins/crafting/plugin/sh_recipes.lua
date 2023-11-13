@@ -1929,12 +1929,11 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("gore_cleaver");
 		RECIPE.name = "Gore Cleaver";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 1},
-			["steel_ingot"] = {amount = 1},
+			["iron_ingot"] = {amount = 3},
 			["wood"] = {amount = 3},
 		};
 		RECIPE.result = {
@@ -1945,7 +1944,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 60;
+		RECIPE.experience = 40;
 		
 		function RECIPE:OnCraft(player)
 		end;

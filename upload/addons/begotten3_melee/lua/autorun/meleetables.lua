@@ -600,7 +600,7 @@ AttackTables.HaralderWarAxeAttackTable = {
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 35,
 	["stabilitydamage"] = 0,
-	["takeammo"] = 8,
+	["takeammo"] = 7,
 	["delay"] = 1.45,
 	["striketime"] = 0.65,
 	["meleearc"] = 45,
@@ -1200,7 +1200,7 @@ AttackTables.GoreCleaverAttackTable = {
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 20,
+	["armorpiercing"] = 25,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 25,
 	["stabilitydamage"] = 0,
@@ -1276,9 +1276,9 @@ AttackTables.GoreWarAxeAttackTable = {
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 30,
+	["armorpiercing"] = 32,
 	["altarmorpiercing"] = nil,
-	["poisedamage"] = 32,
+	["poisedamage"] = 35,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 8,
 	["delay"] = 1.55,
@@ -1655,25 +1655,6 @@ AttackTables.GlaiveAttackTable = {
 	["meleearc"] = 60,
 	["meleerange"] = 1350,
 	["punchstrength"] = Angle(0,1,0),
-};
-
-AttackTables.GoreAxeandFalchionAttackTable = {
-	["primarydamage"] = 50,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = false,
-	["altattackdamagemodifier"] = nil,
-	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 40,
-	["altarmorpiercing"] = nil,
-	["poisedamage"] = 25,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 5,
-	["delay"] = 0.95,
-	["striketime"] = 0.35,
-	["meleearc"] = 35,
-	["meleerange"] = 750,
-	["punchstrength"] = Angle(1,2,1),
 };
 
 AttackTables.IronKnucklesAttackTable = {
@@ -2470,45 +2451,6 @@ AttackTables.SatanicMaceAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
-AttackTables.DualAxesAttackTable = {
-	["primarydamage"] = 55,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = false,
-	["altattackdamagemodifier"] = nil,
-	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 35,
-	["altarmorpiercing"] = nil,
-	["poisedamage"] = 30,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 5,
-	["delay"] = 1,
-	["striketime"] = 0.35,
-	["meleearc"] = 35,
-	["meleerange"] = 725,
-	["punchstrength"] = Angle(1,2,1),
-};
-
-AttackTables.DualScimitarsAttackTable = {
-	["primarydamage"] = 50,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = true,
-	["altattackdamagemodifier"] = 0.7,
-	["altattackpoisedamagemodifier"] = 0.5,
-	["altmeleearc"] = 15,
-	["armorpiercing"] = 15,
-	["altarmorpiercing"] = 35,
-	["poisedamage"] = 25,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 5,
-	["delay"] = 0.93,
-	["striketime"] = 0.35,
-	["meleearc"] = 35,
-	["meleerange"] = 750,
-	["punchstrength"] = Angle(1,2,1),
-};
-
 AttackTables.SatanicSwordAttackTable = {
 	["primarydamage"] = 45,
 	["dmgtype"] = 4,
@@ -2975,26 +2917,6 @@ AttackTables.Ancestraldagger_Kinisger_AttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
-AttackTables.DualKinisgerDaggersAttackTable = {
-	["primarydamage"] = 35,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = true,
-	["altattackdamagemodifier"] = 0.85,
-	["altattackpoisedamagemodifier"] = 0.5,
-	["altmeleearc"] = 15,
-	["armorpiercing"] = 30,
-	["altarmorpiercing"] = 65,
-	["poisedamage"] = 10,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 3,
-	["delay"] = 0.7,
-	["striketime"] = 0.35,
-	["meleearc"] = 35,
-	["meleerange"] = 535,
-	["punchstrength"] = Angle(1,2,1),
-};
-
 AttackTables.DarklanderBardicheAttackTable = {
 	["primarydamage"] = 55,
 	["dmgtype"] = 4,
@@ -3002,9 +2924,9 @@ AttackTables.DarklanderBardicheAttackTable = {
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 45,
+	["armorpiercing"] = 50,
 	["altarmorpiercing"] = nil,
-	["poisedamage"] = 40,
+	["poisedamage"] = 45,
 	["stabilitydamage"] = 15,
 	["takeammo"] = 8,
 	["delay"] = 1.5,
@@ -3052,26 +2974,6 @@ AttackTables.WarHammerAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
-AttackTables.DualScrapBladesAttackTable = {
-	["primarydamage"] = 45,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = true,
-	["altattackdamagemodifier"] = 0.7,
-	["altattackpoisedamagemodifier"] = 0.5,
-	["altmeleearc"] = 15,
-	["armorpiercing"] = 15,
-	["altarmorpiercing"] = 30,
-	["poisedamage"] = 25,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 5,
-	["delay"] = 0.95,
-	["striketime"] = 0.35,
-	["meleearc"] = 35,
-	["meleerange"] = 725,
-	["punchstrength"] = Angle(1,2,1),
-};
-
 AddTable("DefaultAttackTable", AttackTables.DefaultAttackTable) 
 AddTable("FistAttackTable", AttackTables.FistAttackTable) 
 AddTable("IronJavelinAttackTable", AttackTables.IronJavelinAttackTable)
@@ -3103,7 +3005,6 @@ AddTable("VoltspearAttackTable", AttackTables.VoltspearAttackTable)
 AddTable("SatanicSpearAttackTable", AttackTables.SatanicSpearAttackTable) 
 AddTable("ScrapSpearAttackTable", AttackTables.ScrapSpearAttackTable) 
 AddTable("WingedSpearAttackTable", AttackTables.WingedSpearAttackTable) 
-AddTable("DualShardsAttackTable", AttackTables.DualShardsAttackTable) 
 AddTable("WarScytheAttackTable", AttackTables.WarScytheAttackTable) 
 AddTable("GlazicusAttackTable", AttackTables.GlazicusAttackTable)
 AddTable("BlackclawAttackTable", AttackTables.BlackclawAttackTable)  
@@ -3133,7 +3034,6 @@ AddTable("LongswordAttackTable", AttackTables.LongswordAttackTable)
 AddTable("VoltlongswordAttackTable", AttackTables.VoltlongswordAttackTable)  
 AddTable("ExileKnightSwordAttackTable", AttackTables.ExileKnightSwordAttackTable)       
 AddTable("GlaiveAttackTable", AttackTables.GlaiveAttackTable)      
-AddTable("GoreAxeandFalchionAttackTable", AttackTables.GoreAxeandFalchionAttackTable) 
 AddTable("IronKnucklesAttackTable", AttackTables.IronKnucklesAttackTable)  
 AddTable("SpikedKnucklesAttackTable", AttackTables.SpikedKnucklesAttackTable)       
 AddTable("CaestusAttackTable", AttackTables.CaestusAttackTable)
@@ -3175,8 +3075,6 @@ AddTable("BlessedDruidSwordAttackTable", AttackTables.BlessedDruidSwordAttackTab
 AddTable("GoreMaceAttackTable", AttackTables.GoreMaceAttackTable)
 AddTable("ShardAttackTable", AttackTables.ShardAttackTable)
 AddTable("SatanicMaceAttackTable", AttackTables.SatanicMaceAttackTable)
-AddTable("DualAxesAttackTable", AttackTables.DualAxesAttackTable)
-AddTable("DualScimitarsAttackTable", AttackTables.DualScimitarsAttackTable)
 AddTable("SatanicSwordAttackTable", AttackTables.SatanicSwordAttackTable)
 AddTable("SatanicMaulAttackTable", AttackTables.SatanicMaulAttackTable)
 AddTable("SatanicLongswordAttackTable", AttackTables.SatanicLongswordAttackTable)
@@ -3201,11 +3099,9 @@ AddTable("Ancestraldagger_Rekh_AttackTable", AttackTables.Ancestraldagger_Rekh_A
 AddTable("Ancestraldagger_Varazdat_AttackTable", AttackTables.Ancestraldagger_Varazdat_AttackTable)
 AddTable("Ancestraldagger_Philimaxio_AttackTable", AttackTables.Ancestraldagger_Philimaxio_AttackTable)
 AddTable("Ancestraldagger_Kinisger_AttackTable", AttackTables.Ancestraldagger_Kinisger_AttackTable)
-AddTable("DualKinisgerDaggersAttackTable", AttackTables.DualKinisgerDaggersAttackTable)
 AddTable("DarklanderBardicheAttackTable", AttackTables.DarklanderBardicheAttackTable)
 AddTable("EveningStarAttackTable", AttackTables.EveningStarAttackTable)
 AddTable("WarHammerAttackTable", AttackTables.WarHammerAttackTable)
-AddTable("DualScrapBladesAttackTable", AttackTables.DualScrapBladesAttackTable)
 
 -- Block Stat Tables
 
@@ -3711,24 +3607,6 @@ BlockTables.WingedSpearBlockTable = {
 	["instantraise"] = false,
 	["parrydifficulty"] = 0.2,
 	["parrytakestamina"] = 15,
-	["canparry"] = true,
-	["candeflect"] = true,
-};
-
-BlockTables.DualShardsBlockTable = {
-	["guardblockamount"] = 10,
-	["specialeffect"] = false,
-	["blockeffect"] = "MetalSpark",
-	["blockeffectforward"] = 15,
-	["blockeffectpos"] = (Vector(0, 0, 55)),
-	["blockcone"] = 180,
-	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
-	["partialbulletblock"] = false,
-	["poiseresistance"] = 15,
-	["raisespeed"] = 1.25,
-	["instantraise"] = false,
-	["parrydifficulty"] = 0.25,
-	["parrytakestamina"] = 10,
 	["canparry"] = true,
 	["candeflect"] = true,
 };
@@ -4251,24 +4129,6 @@ BlockTables.GlaiveBlockTable = {
 	["instantraise"] = false,
 	["parrydifficulty"] = 0.2,
 	["parrytakestamina"] = 15,
-	["canparry"] = true,
-	["candeflect"] = true,
-};
-
-BlockTables.GoreAxeandFalchionBlockTable = {
-	["guardblockamount"] = 10,
-	["specialeffect"] = false,
-	["blockeffect"] = "MetalSpark",
-	["blockeffectforward"] = 15,
-	["blockeffectpos"] = (Vector(0, 0, 55)),
-	["blockcone"] = 180,
-	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
-	["partialbulletblock"] = false,
-	["poiseresistance"] = 15,
-	["raisespeed"] = 1.25,
-	["instantraise"] = false,
-	["parrydifficulty"] = 0.2,
-	["parrytakestamina"] = 10,
 	["canparry"] = true,
 	["candeflect"] = true,
 };
@@ -4993,42 +4853,6 @@ BlockTables.SatanicMaceBlockTable = {
 	["candeflect"] = true,
 };
 
-BlockTables.DualAxesBlockTable = {
-	["guardblockamount"] = 10,
-	["specialeffect"] = false,
-	["blockeffect"] = "GlassImpact",
-	["blockeffectforward"] = 15,
-	["blockeffectpos"] = (Vector(0, 0, 55)),
-	["blockcone"] = 180,
-	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
-	["partialbulletblock"] = false,
-	["poiseresistance"] = 15,
-	["raisespeed"] = 1.25,
-	["instantraise"] = false,
-	["parrydifficulty"] = 0.2,
-	["parrytakestamina"] = 10,
-	["canparry"] = true,
-	["candeflect"] = true,
-};
-
-BlockTables.DualScimitarsBlockTable = {
-	["guardblockamount"] = 10,
-	["specialeffect"] = false,
-	["blockeffect"] = "MetalSpark",
-	["blockeffectforward"] = 15,
-	["blockeffectpos"] = (Vector(0, 0, 55)),
-	["blockcone"] = 180,
-	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
-	["partialbulletblock"] = false,
-	["poiseresistance"] = 16,
-	["raisespeed"] = 1.25,
-	["instantraise"] = false,
-	["parrydifficulty"] = 0.17,
-	["parrytakestamina"] = 10,
-	["canparry"] = true,
-	["candeflect"] = true,
-};
-
 BlockTables.SatanicSwordBlockTable = {
 	["guardblockamount"] = 10,
 	["specialeffect"] = false,
@@ -5461,24 +5285,6 @@ BlockTables.Ancestraldagger_Kinisger_BlockTable = {
 	["candeflect"] = true,
 };
 
-BlockTables.DualKinisgerDaggersBlockTable = {
-	["guardblockamount"] = 10,
-	["specialeffect"] = false,
-	["blockeffect"] = "MetalSpark",
-	["blockeffectforward"] = 15,
-	["blockeffectpos"] = (Vector(0, 0, 55)),
-	["blockcone"] = 180,
-	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
-	["partialbulletblock"] = false,
-	["poiseresistance"] = 5,
-	["raisespeed"] = 1.25,
-	["instantraise"] = true,
-	["parrydifficulty"] = 0.25,
-	["parrytakestamina"] = 5,
-	["canparry"] = true,
-	["candeflect"] = true,
-};
-
 BlockTables.DarklanderBardicheBlockTable = {
 	["guardblockamount"] = 10,
 	["specialeffect"] = false,
@@ -5533,24 +5339,6 @@ BlockTables.WarHammerBlockTable = {
 	["candeflect"] = true,
 };
 
-BlockTables.DualScrapBladesBlockTable = {
-	["guardblockamount"] = 10,
-	["specialeffect"] = false,
-	["blockeffect"] = "MetalSpark",
-	["blockeffectforward"] = 15,
-	["blockeffectpos"] = (Vector(0, 0, 55)),
-	["blockcone"] = 180,
-	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
-	["partialbulletblock"] = false,
-	["poiseresistance"] = 15,
-	["raisespeed"] = 1.25,
-	["instantraise"] = false,
-	["parrydifficulty"] = 0.17,
-	["parrytakestamina"] = 12,
-	["canparry"] = true,
-	["candeflect"] = true,
-};
-
 AddTable("DefaultBlockTable", BlockTables.DefaultBlockTable) 
 AddTable("AdminTwistedMacheteBlockTable", BlockTables.AdminTwistedMacheteBlockTable)
 AddTable("FistBlockTable", BlockTables.FistBlockTable) 
@@ -5580,7 +5368,6 @@ AddTable("VoltspearBlockTable", BlockTables.VoltspearBlockTable)
 AddTable("SatanicSpearBlockTable", BlockTables.SatanicSpearBlockTable) 
 AddTable("ScrapSpearBlockTable", BlockTables.ScrapSpearBlockTable) 
 AddTable("WingedSpearBlockTable", BlockTables.WingedSpearBlockTable) 
-AddTable("DualShardsBlockTable", BlockTables.DualShardsBlockTable)
 AddTable("WarScytheBlockTable", BlockTables.WarScytheBlockTable)  
 AddTable("GlazicusBlockTable", BlockTables.GlazicusBlockTable)  
 AddTable("BlackclawBlockTable", BlockTables.BlackclawBlockTable)  
@@ -5610,7 +5397,6 @@ AddTable("LongswordBlockTable", BlockTables.LongswordBlockTable)
 AddTable("VoltlongswordBlockTable", BlockTables.LongswordBlockTable)        
 AddTable("ExileKnightSwordBlockTable", BlockTables.ExileKnightSwordBlockTable)  
 AddTable("GlaiveBlockTable", BlockTables.GlaiveBlockTable) 
-AddTable("GoreAxeandFalchionBlockTable", BlockTables.GoreAxeandFalchionBlockTable)   
 AddTable("IronKnucklesBlockTable", BlockTables.IronKnucklesBlockTable)
 AddTable("SpikedKnucklesBlockTable", BlockTables.SpikedKnucklesBlockTable)    
 AddTable("CaestusBlockTable", BlockTables.CaestusBlockTable)  
@@ -5650,8 +5436,6 @@ AddTable("BlessedDruidSwordBlockTable", BlockTables.BlessedDruidSwordBlockTable)
 AddTable("GoreMaceBlockTable", BlockTables.GoreMaceBlockTable)
 AddTable("ShardBlockTable", BlockTables.ShardBlockTable)
 AddTable("SatanicMaceBlockTable", BlockTables.SatanicMaceBlockTable)
-AddTable("DualAxesBlockTable", BlockTables.DualAxesBlockTable)
-AddTable("DualScimitarsBlockTable", BlockTables.DualScimitarsBlockTable)
 AddTable("SatanicSwordBlockTable", BlockTables.SatanicSwordBlockTable)
 AddTable("SatanicMaulBlockTable", BlockTables.SatanicMaulBlockTable)
 AddTable("SatanicLongswordBlockTable", BlockTables.SatanicLongswordBlockTable)
@@ -5676,11 +5460,9 @@ AddTable("Ancestraldagger_Rekh_BlockTable", BlockTables.Ancestraldagger_Rekh_Blo
 AddTable("Ancestraldagger_Varazdat_BlockTable", BlockTables.Ancestraldagger_Varazdat_BlockTable)
 AddTable("Ancestraldagger_Philimaxio_BlockTable", BlockTables.Ancestraldagger_Philimaxio_BlockTable)
 AddTable("Ancestraldagger_Kinisger_BlockTable", BlockTables.Ancestraldagger_Kinisger_BlockTable)
-AddTable("DualKinisgerDaggersBlockTable", BlockTables.DualKinisgerDaggersBlockTable)
 AddTable("DarklanderBardicheBlockTable", BlockTables.DarklanderBardicheBlockTable)
 AddTable("EveningStarBlockTable", BlockTables.EveningStarBlockTable)
 AddTable("WarHammerBlockTable", BlockTables.WarHammerBlockTable)
-AddTable("DualScrapBladesBlockTable", BlockTables.DualScrapBladesBlockTable)
 
 -- Shield Stat Tables
 
