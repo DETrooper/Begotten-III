@@ -1512,7 +1512,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar");
 	RITUAL.description = "Summon a creature of the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
-	RITUAL.requirements = {"xolotl_catalyst", "familial_catalyst", "xolotl_catalyst"};
+	RITUAL.requirements = {"xolotl_catalyst", "familial_catalyst", "familial_catalyst"};
 	RITUAL.corruptionCost = 15;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 50;
