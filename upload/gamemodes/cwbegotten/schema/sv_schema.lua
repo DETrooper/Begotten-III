@@ -2459,25 +2459,34 @@ concommand.Add("cw_CoinslotGear", function(player, cmd, args)
 				local collectedGear = player:GetCharacterData("collectedGear", false);
 				
 				if !collectedGear then
-					if (Schema.towerTreasury and Schema.towerTreasury <= 250) then
-						Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue Gatekeeper kit, but one is not dispensed. How odd.");
+					local unixTime = os.time();
+					
+					if (unixTime >= player:GetData("nextGear", 0)) then
+						if (Schema.towerTreasury and Schema.towerTreasury <= 250) then
+							Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue Gatekeeper kit, but one is not dispensed. How odd.");
+							entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
+							
+							return;
+						end
+						
+						Schema:ModifyTowerTreasury(-200);
+						player:GiveItem(item.CreateInstance("gatekeeper_standard_issue"), true);
+						Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue Gatekeeper kit. A receptacle beneath the machine opens and a crude duffel bag dispenses.");
 						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
 						
-						return;
+						timer.Simple(0.5, function()
+							if IsValid(entity) then
+								entity:EmitSound("physics/cardboard/cardboard_box_impact_soft6.wav");
+							end
+						end);
+						
+						player:SetData("nextGear", unixTime + 3600);
+						player:SetCharacterData("collectedGear", true);
+						player:SetLocalVar("collectedGear", true);
+					else
+						Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue Gatekeeper kit, but one is not dispensed. You must wait for now.");
+						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
 					end
-					
-					player:GiveItem(item.CreateInstance("gatekeeper_standard_issue"), true);
-					Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue Gatekeeper kit. A receptacle beneath the machine opens and a crude duffel bag dispenses.");
-					entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
-					
-					timer.Simple(0.5, function()
-						if IsValid(entity) then
-							entity:EmitSound("physics/cardboard/cardboard_box_impact_soft6.wav");
-						end
-					end);
-					
-					player:SetCharacterData("collectedGear", true);
-					player:SetLocalVar("collectedGear", true);
 				end;
 			end
 		end
