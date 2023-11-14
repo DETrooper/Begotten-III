@@ -1609,8 +1609,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["gold_ingot"] = {amount = 1},
-			["steel_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_elegantdagger"] = {amount = 1},
@@ -3540,8 +3539,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["maximilian_steel_ingot"] = {amount = 1},
-			["gold_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 3},
 			["wood"] = {amount = 1},
 		};
 		RECIPE.result = {
