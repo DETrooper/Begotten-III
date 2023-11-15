@@ -265,7 +265,24 @@ function SWEP:AdjustFireBegotten()
 				local ammoType = ammo[1];
 				
 				if self.AmmoTypes[ammoType] then
-					if !self.noJam then
+					local forceJam = false;
+				
+					if cwRituals then
+						local players = _player.GetAll();
+						local ownerPos = self.Owner:GetPos();
+						
+						for i, v in ipairs(players) do
+							if v:GetSharedVar("powderheelActive") then
+								if v:GetPos():Distance(ownerPos) <= config.Get("talk_radius"):Get() then
+									forceJam = true;
+									
+									break;
+								end
+							end
+						end
+					end
+				
+					if !self.noJam or forceJam then
 						local hasPistolier = false;
 					
 						if SERVER then
@@ -286,7 +303,7 @@ function SWEP:AdjustFireBegotten()
 						end
 					
 						--if math.random(1, 100) <= misfireChance then
-						if util.SharedRandom("misfire_"..self.Owner:EntIndex(), 1, 100) <= misfireChance then -- acceptable risk of people being able to hack this on the client
+						if forceJam or util.SharedRandom("misfire_"..self.Owner:EntIndex(), 1, 100) <= misfireChance then -- acceptable risk of people being able to hack this on the client
 							self:TakeAmmoBegotten(1); -- This should really only ever be 1 unless for some reason we have burst-fire guns or some shit, especially since we have different ammo types.
 							
 							-- 10% chance on misfire for the gun to fucking explode.
@@ -314,7 +331,11 @@ function SWEP:AdjustFireBegotten()
 								if SERVER then
 									self.Owner:EmitSound("vj_weapons/dryfire_revolver.wav");
 									
-									Clockwork.chatBox:Add(self.Owner, nil, "it", "Your firearm was loaded with a dud round and misfires!")
+									if forceJam then
+										Clockwork.chatBox:Add(self.Owner, nil, "it", "Some magical force prevents your firearm from firing, jamming it in the process!")
+									else
+										Clockwork.chatBox:Add(self.Owner, nil, "it", "Your firearm was loaded with a dud round and misfires!")
+									end
 								end
 								
 								self:SetNextPrimaryFire(CurTime() + 2);

@@ -2978,6 +2978,16 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 			infoTable.runSpeed = infoTable.runSpeed * 1.05;
 		end
 	end
+	
+	local shieldItem = player:GetShieldEquipped();
+	
+	if shieldItem and shieldItem.requiredbeliefs and table.HasValue(shieldItem.requiredbeliefs, "defender") then
+		local activeWeapon = player:GetActiveWeapon();
+		
+		if IsValid(activeWeapon) and activeWeapon:GetNWString("activeShield"):len() > 0 and activeWeapon:GetNWString("activeShield") == shieldItem.uniqueID then
+			infoTable.runSpeed = infoTable.runSpeed * 0.95;
+		end
+	end
 
 	if (Clockwork.player:HasFlags(player, "E")) then
 		infoTable.runSpeed = infoTable.walkSpeed * 3;

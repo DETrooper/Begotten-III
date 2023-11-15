@@ -384,12 +384,10 @@ function SWEP:CanPrimaryAttack()
 	end
 	
 	if self.Owner:IsRunning() and !self.Owner:HasBelief("manifesto") then
-		local weaponClass = self:GetClass();
+		local weaponItemTable = item.GetByWeapon(self);
 		
-		if string.find(weaponClass, "begotten_spear") or string.find(weaponClass, "begotten_scythe") or string.find(weaponClass, "begotten_polearm") then
-			if weaponClass ~= "begotten_polearm_quarterstaff" then
-				return false;
-			end
+		if weaponItemTable and weaponItemTable.attributes and table.HasValue(weaponItemTable.attributes, "grounded") then
+			return false;
 		end
 	end
 	

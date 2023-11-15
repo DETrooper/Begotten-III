@@ -1505,7 +1505,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 					
 					if table.HasValue(itemTable.attributes, "grounded") then
-						frame:AddText("Grounded: Cannot attack while sprinting.", Color(110, 30, 30));
+						frame:AddText("Grounded: Cannot attack while sprinting, but hitting enemies will discombobulate them, stopping them from sprinting for the next 3 seconds.", Color(110, 30, 30));
 					end
 					
 					if table.HasValue(itemTable.attributes, "fire") then
@@ -1922,8 +1922,16 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		local damageTypes = {[2] = "Bullet", [4] = "Slash", [16] = "Pierce", [128] = "Blunt", [DMG_BUCKSHOT] = "Grapeshot"};
 		local shieldClass = itemTable.uniqueID;
 		local shieldStats = nil;
+		
+		category = "Shield";
+		
+		if itemTable.requiredbeliefs then
+			if table.HasValue(itemTable.requiredbeliefs, "defender") then
+				category = "Great Shield";
+			end
+		end
 
-		frame:AddText(name.." - Shield", Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
+		frame:AddText(name.." - "..category, Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
 		frame:AddText(itemTable("description"), Color(180, 170, 170), "nov_IntroTextSmallDETrooper", 0.8);
 		
 		if (bShowWeight) then
@@ -2014,6 +2022,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					
 					if table.HasValue(itemTable.attributes, "electrified") then
 						frame:AddText("Electrified: Deals shock damage to characters who hit your shield with metal weapons or their fists if wearing metallic armor.", Color(110, 30, 30));
+					end
+					
+					if category == "Great Shield" then
+						frame:AddText("Great Shield: Reduces sprint speed by 5% when held.", Color(110, 30, 30));
 					end
 				
 					if table.HasValue(itemTable.attributes, "unbreakable") then
@@ -2231,7 +2243,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			if itemTable.weightclass == "Medium" then
 				frame:AddText("Sprint Speed Reduction: 15%", Color(110, 30, 30));
 			elseif itemTable.weightclass == "Heavy" then
-				frame:AddText("Sprint Speed Reduction: 30%", Color(110, 30, 30));
+				frame:AddText("Sprint Speed Reduction: 25%", Color(110, 30, 30));
 			end
 		--end
 		

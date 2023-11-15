@@ -478,7 +478,7 @@ function PLUGIN:ModifyPlayerSpeed(player, infoTable)
 			if player:HasBelief("unburdened") then
 				infoTable.runSpeed = infoTable.runSpeed * 0.85;
 			else
-				infoTable.runSpeed = infoTable.runSpeed * 0.7;
+				infoTable.runSpeed = infoTable.runSpeed * 0.75;
 			end
 			
 			infoTable.jumpPower = infoTable.jumpPower * 0.75;

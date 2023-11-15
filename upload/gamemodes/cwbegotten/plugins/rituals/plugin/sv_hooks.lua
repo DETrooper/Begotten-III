@@ -277,12 +277,57 @@ function cwRituals:PlayerMeetsRitualItemRequirements(player, ritualTable, itemID
 	return true;
 end
 
+function cwRituals:PlayerThink(player, curTime, infoTable)
+	if player:GetSharedVar("enlightenmentActive") and !player.opponent then
+		if !player.nextEnlightenmentTick or player.nextEnlightenmentTick > curTime then
+			player.nextEnlightenmentTick = curTime + 5;
+		
+			for k, v in pairs(ents.FindInSphere(player:GetPos(), 666)) do
+				if v:IsPlayer() and v:Alive() then
+					if v:GetFaith() == "Faith of the Light" and v:GetSubfaith() ~= "Voltism" then
+						if cwSanity then
+							v:HandleSanity(2);
+						end
+					elseif v:GetSubfaction() == "Rekh-khet-sa" and !v.ritualOfShadow and !v.cwObserverMode and !v.cwWakingUp then
+						local d = DamageInfo()
+						d:SetDamage(3);
+						d:SetDamageType(DMG_BURN);
+						d:SetDamagePosition(v:GetPos() + Vector(0, 0, 48));
+						d:SetAttacker(player);
+						d:SetInflictor(player);
+						
+						v:TakeDamageInfo(d);
+						v:EmitSound("player/pl_burnpain"..math.random(1, 3)..".wav");
+						
+						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, v:Name().." has taken 3 damage from "..player:Name().."'s 'Enlightenment' ritual, leaving them at "..v:Health().." health.");
+			
+						Clockwork.datastream:Start(v, "Stunned", 3);
+					end
+				end
+			end
+		end
+	end
+end
+
 -- Called when an item entity has taken damage (before armor damage is calculated).
 function cwRituals:PreEntityTakeDamage(entity, damageInfo)
 	if !entity.opponent then
 		if entity.nobleStatureActive then
 			if entity:GetVelocity():Length() == 0 then
 				damageInfo:ScaleDamage(0.5);
+			end
+		end
+		
+		if damageInfo:IsDamageType(DMG_BULLET) or damageInfo:IsDamageType(DMG_BUCKSHOT) then
+			local players = _player.GetAll();
+			local entPos = entity:GetPos();
+			
+			for i, v in ipairs(players) do
+				if v:GetSharedVar("powderheelActive") and v:GetPos():Distance(entPos) <= config.Get("talk_radius"):Get() then
+					damageInfo:ScaleDamage(0.3);
+					
+					break;
+				end
 			end
 		end
 	end
@@ -497,6 +542,22 @@ function cwRituals:PlayerCharacterLoaded(player)
 		
 		if timer.Exists("YellowBannerTimer_"..entIndex) then
 			timer.Remove("YellowBannerTimer_"..entIndex);
+		end
+	end
+	
+	if player:GetSharedVar("powderheelActive") then
+		player:SetSharedVar("powderheelActive", false);
+		
+		if timer.Exists("PowderheelTimer_"..entIndex) then
+			timer.Remove("PowderheelTimer_"..entIndex);
+		end
+	end
+	
+	if player:GetSharedVar("enlightenmentActive") then
+		player:SetSharedVar("enlightenmentActive", false);
+		
+		if timer.Exists("EnlightenmentTimer_"..entIndex) then
+			timer.Remove("EnlightenmentTimer_"..entIndex);
 		end
 	end
 	
@@ -762,6 +823,22 @@ function cwRituals:PlayerDeath(player)
 			
 			if timer.Exists("YellowBannerTimer_"..entIndex) then
 				timer.Remove("YellowBannerTimer_"..entIndex);
+			end
+		end
+		
+		if player:GetSharedVar("powderheelActive") then
+			player:SetSharedVar("powderheelActive", false);
+			
+			if timer.Exists("PowderheelTimer_"..entIndex) then
+				timer.Remove("PowderheelTimer_"..entIndex);
+			end
+		end
+		
+		if player:GetSharedVar("enlightenmentActive") then
+			player:SetSharedVar("enlightenmentActive", false);
+			
+			if timer.Exists("EnlightenmentTimer_"..entIndex) then
+				timer.Remove("EnlightenmentTimer_"..entIndex);
 			end
 		end
 	end

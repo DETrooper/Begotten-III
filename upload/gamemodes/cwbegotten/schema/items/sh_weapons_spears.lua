@@ -14,7 +14,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(0, 3, 0);
 	ITEM.canUseShields = true;
 	
-	ITEM.attributes = {"grounded"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 200};
 ITEM:Register();
@@ -35,7 +34,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-2.83, 3, -23.24);
 	ITEM.canUseShields = true;
 	
-	ITEM.attributes = {"grounded"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600};
 ITEM:Register();
@@ -56,7 +54,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-4.24, 3, -24.75);
 	ITEM.canUseShields = true;
 	
-	ITEM.attributes = {"grounded"};
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 125};
 ITEM:Register();
@@ -77,7 +74,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(0, 3, -17.85);
 	ITEM.canUseShields = true;
 	
-	ITEM.attributes = {"grounded"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.requireFaith = {"Faith of the Dark"};
 ITEM:Register();
@@ -99,7 +95,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-4.24, 3, -24.75);
 	ITEM.canUseShields = true;
 	
-	ITEM.attributes = {"grounded"};
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "wood", "wood"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 250, bNoSupercrate = true};
 ITEM:Register();
@@ -120,7 +115,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-4.24, 3, -24.75);
 	ITEM.canUseShields = true;
 	
-	ITEM.attributes = {"grounded"};
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
 ITEM:Register();
 
@@ -140,7 +134,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-2.83, 3, -23.24);
 	ITEM.canUseShields = true;
 	
-	ITEM.attributes = {"grounded"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood", "wood", "scrap", "scrap", "scrap", "scrap", "tech", "tech"}};
 	ITEM.requiredbeliefs = {"wriggle_fucking_eel"};
 ITEM:Register();
@@ -161,7 +154,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-2.12, 3, -18.39);
 	ITEM.canUseShields = true;
 	
-	ITEM.attributes = {"grounded"};
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1000, supercrateOnly = true};
 ITEM:Register();

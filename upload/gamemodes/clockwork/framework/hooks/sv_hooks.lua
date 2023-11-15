@@ -346,7 +346,7 @@ function GM:PlayerGetLockInfo(player, entity)
 end
 
 do
-	local meleeWeapons = {
+	--[[local meleeWeapons = {
 		["weapon_hl2axe"] = 10,
 		["weapon_hl2bottle"] = 5,
 		["weapon_hl2brokenbottle"] = 5,
@@ -357,7 +357,7 @@ do
 		["weapon_hl2pipe"] = 10,
 		["weapon_hl2pot"] = 10,
 		["weapon_hl2shovel"] = 15,
-	}
+	}]]--
 
 	-- Called when a player attempts to fire a weapon.
 	function GM:PlayerCanFireWeapon(player, bIsRaised, weapon, bIsSecondary)
@@ -365,11 +365,11 @@ do
 		local curTime = CurTime()
 		local weaponClass = weapon:GetClass()
 
-		if (meleeWeapons[weaponClass]) then
+		--[[if (meleeWeapons[weaponClass]) then
 			if (player:GetCharacterData("Stamina") < meleeWeapons[weaponClass]) then
 				return false
 			end
-		end
+		end]]
 
 		if (player:IsRunning() and config.GetVal("sprint_lowers_weapon")) then
 			return false
@@ -395,6 +395,13 @@ function GM:PlayerCanUseLoweredWeapon(player, weapon, secondary)
 		return weapon.NeverRaised or (weapon.Primary and weapon.Primary.NeverRaised)
 	end
 end
+
+-- Called when a player switches their weapon. 
+function GM:PlayerSwitchWeapon(player, oldWeapon, newWeapon)
+	timer.Simple(FrameTime(), function()
+		hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
+	end);
+end;
 
 -- Called when a player has been given flags.
 function GM:PlayerFlagsGiven(player, flags)
@@ -3639,6 +3646,10 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 				Clockwork.entity:Disintegrate(ragdoll, 3);
 			end
 		end
+	end
+	
+	if player:IsOnFire() then
+		player:ClockworkExtinguish();
 	end
 	
 	Clockwork.kernel:CalculateSpawnTime(player, inflictor, attacker, damageInfo);

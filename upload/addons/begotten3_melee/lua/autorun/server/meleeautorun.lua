@@ -24,7 +24,13 @@ function Parry(target, dmginfo)
 					attacker:OnParried();
 				end
 				
-				hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);
+				if attacker:IsPlayer() then
+					-- Kill their acceleration and make them slower.
+					player.accelerationFinished = false;
+					player.startAcceleration = nil;
+				
+					hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);
+				end
 				
 				wep:SetNextPrimaryFire(0)
 				
@@ -86,10 +92,12 @@ function Parry(target, dmginfo)
 							target:SetNWBool("ParrySucess", false) 
 						end
 						
-						if attacker:IsValid() then
+						if IsValid(attacker) then
 							attacker:SetNWBool("Parried", false);
 							
-							hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);
+							if attacker:IsPlayer() then
+								hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);
+							end
 						end
 					end)
 				end

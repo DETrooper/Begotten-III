@@ -1084,6 +1084,10 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 				if entity:GetCharmEquipped("smoldering_head") then
 					newDamage = newDamage - (originalDamage * 0.5);
 				end
+				
+				if entity:HasBelief("extinctionist") then
+					newDamage = newDamage * 0.5;
+				end
 			end
 		
 			if entity:GetCharmEquipped("ring_protection_gold") then
@@ -1108,6 +1112,16 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	
 	if (attacker:IsPlayer()) then
 		if entity:IsPlayer() and not entity.cwWakingUp then
+			if damage > 0 then
+				if attacker:IsOnFire() and attacker:HasBelief("extinctionist") then
+					local inflictor = damageInfo:GetInflictor();
+					
+					if IsValid(inflictor) and inflictor.IsABegottenMelee then
+						entity:Ignite(4);
+					end
+				end
+			end
+		
 			if damage >= 10 then
 				if entity:HasBelief("deceitful_snake") then
 					if !entity.warCryVictims then

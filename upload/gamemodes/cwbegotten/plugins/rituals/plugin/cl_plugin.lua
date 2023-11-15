@@ -222,6 +222,7 @@ end;
 
 function cwRituals:PostDrawOpaqueRenderables()
 	local curTime = CurTime();
+	local clientPosition = LocalPlayer():GetPos();
 
 	if !self.nextVFXCheck or self.nextVFXCheck < curTime then
 		self.nextVFXCheck = curTime + math.random(0.5, 1);
@@ -237,21 +238,26 @@ function cwRituals:PostDrawOpaqueRenderables()
 				player = Clockwork.entity:GetPlayer(v);
 			end
 			
-			if player and player ~= Clockwork.Client then
-				if player:GetSharedVar("soulscorchActive") or player:GetSharedVar("auraMotherActive") then
-					table.insert(self.storedPlayers, player);
+			if player then
+				if player ~= Clockwork.Client then
+					if player:GetSharedVar("soulscorchActive") or player:GetSharedVar("auraMotherActive") then
+						table.insert(self.storedPlayers, player);
+					end
+				else
+					if player:GetSharedVar("enlightenmentActive") or player:GetSharedVar("powderheelActive") then
+						table.insert(self.storedPlayers, player);
+					end
 				end
 			end
 		end;
 	end
 	
 	for k, v in pairs(self.storedPlayers) do
-		if IsValid(v) and (v:GetMoveType() == MOVETYPE_WALK or v:GetMoveType() == MOVETYPE_LADDER) then
+		if IsValid(v) and v:Alive() and ((v:GetMoveType() == MOVETYPE_WALK or v:GetMoveType() == MOVETYPE_LADDER) or v:IsRagdolled()) then
+			local entityPosition = v:GetPos();
+			local headBone = v:LookupBone("ValveBiped.Bip01_Head1");
+		
 			if v:GetSharedVar("soulscorchActive") then
-				local clientPosition = LocalPlayer():GetPos();
-				local entityPosition = v:GetPos();
-				local headBone = v:LookupBone("ValveBiped.Bip01_Head1");
-				
 				if (headBone) then
 					local bonePosition, boneAngles = v:GetBonePosition(headBone);
 					local eyes = v:LookupAttachment("eyes");
@@ -266,10 +272,6 @@ function cwRituals:PostDrawOpaqueRenderables()
 					end;
 				end;
 			elseif v:GetSharedVar("auraMotherActive") then
-				local clientPosition = LocalPlayer():GetPos();
-				local entityPosition = v:GetPos();
-				local headBone = v:LookupBone("ValveBiped.Bip01_Head1");
-				
 				if (headBone) then
 					local bonePosition, boneAngles = v:GetBonePosition(headBone);
 					local eyes = v:LookupAttachment("eyes");
@@ -283,6 +285,23 @@ function cwRituals:PostDrawOpaqueRenderables()
 						render.DrawSprite(position, 32, 32, glowColor);
 					end;
 				end;
+			elseif v:GetSharedVar("enlightenmentActive") then
+				local dynamicLight = DynamicLight(v:EntIndex());
+				
+				if (dynamicLight) then
+					dynamicLight.Pos = v:GetPos() + Vector(0, 0, 90);
+					dynamicLight.r = 255;
+					dynamicLight.g = 255;
+					dynamicLight.b = 224;
+					dynamicLight.Brightness = 1;
+					dynamicLight.Size = 2048;
+					dynamicLight.DieTime = curTime + 0.1;
+					dynamicLight.Style = 0;
+				end;
+			elseif v:GetSharedVar("powderheelActive") then
+				render.SetColorMaterial();
+				render.DrawSphere(entityPosition + Vector(0, 0, 40), config.Get("talk_radius"):Get(), 32, 32, Color(0, 200, 0, 50));
+				render.DrawSphere(entityPosition + Vector(0, 0, 40), -config.Get("talk_radius"):Get(), 32, 32, Color(0, 200, 0, 50));
 			end
 		end;
 	end

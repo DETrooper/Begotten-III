@@ -31,7 +31,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("yellow_banner_of_quelling");
 	RITUAL.name = "(T2) Yellow Banner of Quelling";
-	RITUAL.description = "The children flee when they spot the invisible banner. Let the Satanic filth cower when they realize they are now chained to these mortal lands that they have blighted for so long. Performing this ritual prevents helljaunting in a large radius around you for 30 minutes. It will also uncloak any cloaked characters in a smaller radius around you. Be warned that the Children of Satan will be made aware of your presence!";
+	RITUAL.description = "The children flee when they spot the invisible banner. Let the Satanic filth cower when they realize they are now chained to these mortal lands that they have blighted for so long. Performing this ritual prevents helljaunting in a large radius and cloaking in a smaller radius around you for 30 minutes. Be warned that the Children of Satan will be made aware of your presence!";
 	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "flagellant", "acolyte"}; -- Tier II Light/Family Ritual
 	
 	RITUAL.requirements = {"purifying_stone", "xolotl_catalyst", "down_catalyst"};
@@ -328,7 +328,7 @@ RITUAL = cwRituals.rituals:New("aura_of_the_mother");
 	function RITUAL:OnPerformed(player)
 		player:SetSharedVar("auraMotherActive", true);
 	
-		timer.Create("auraMotherTimer_"..player:EntIndex(), 5, 600, function() 
+		timer.Create("auraMotherTimer_"..player:EntIndex(), 5, 120, function() 
 			if IsValid(player) then
 				for k, v in pairs (ents.FindInSphere(player:GetPos(), config.Get("talk_radius"):Get())) do
 					if (v:IsPlayer() and v:GetFaith() == "Faith of the Family") then
@@ -1270,6 +1270,37 @@ RITUAL = cwRituals.rituals:New("regrowth_target");
 	end;
 RITUAL:Register()
 
+RITUAL = cwRituals.rituals:New("aura_of_powderheel");
+	RITUAL.name = "(T3) Aura of Powderheel";
+	RITUAL.description = "Call upon the power of the Great Tree in times of battle against its enemies to protect you from their non-traditional weaponry. Performing this ritual generates a spherical forcefield for 15 minutes, which reduces bullet damage to everyone around you within talking distance by 70%. Attempting to fire while inside the sphere will guarantee a misfire.";
+	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
+	
+	RITUAL.requirements = {"pantheistic_catalyst", "xolotl_catalyst", "xolotl_catalyst"};
+	RITUAL.corruptionCost = 15; -- Corruption incurred from performing rituals.
+	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
+	RITUAL.experience = 75; -- XP gained from performing the ritual.
+	
+	function RITUAL:OnPerformed(player)
+		player:SetSharedVar("powderheelActive", true);
+		
+		timer.Create("PowderheelTimer_"..player:EntIndex(), 900, 1, function()
+			if IsValid(player) then
+				if player:GetSharedVar("powderheelActive") then
+					player:SetSharedVar("powderheelActive", false);
+					
+					Clockwork.hint:Send(player, "The 'Aura of Powderheel' ritual has worn off...", 10, Color(175, 100, 100), true, true);
+				end
+			end
+		end);
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+	end;
+	function RITUAL:EndRitual(player)
+	end;
+RITUAL:Register()
+
 RITUAL = cwRituals.rituals:New("rooting");
 	RITUAL.name = "(T1) Rooting";
 	RITUAL.description = "When the incessant demonic chanting drives you angry, consider banishing them back to the hells that birthed them. Performing this ritual will remove 45 points of corruption.";
@@ -1414,6 +1445,39 @@ RITUAL = cwRituals.rituals:New("steel_will");
 		end);
 		
 		Clockwork.chatBox:Add(player, nil, "itnofake", "You feel like your mind is a stalwart fortress!");
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+	end;
+	function RITUAL:EndRitual(player)
+	end;
+RITUAL:Register()
+
+RITUAL = cwRituals.rituals:New("enlightenment");
+	RITUAL.name = "(T3) Enlightenment";
+	RITUAL.description = "You have reached the pinnacle of Glazic understanding. Performing this ritual illuminates a large area around you for 15 minutes with holy light. It will raise the sanity of all Hard-Glazed characters in its light and also burn any Rekh-khet-sa heretics that approach.";
+	RITUAL.onerequiredbelief = {"emissary", "extinctionist"}; -- Tier III Faith of the Light Ritual
+	
+	RITUAL.requirements = {"holy_spirit", "light_catalyst", "light_catalyst"};
+	RITUAL.corruptionCost = 10;
+	RITUAL.ritualTime = 10;
+	RITUAL.experience = 50;
+	
+	function RITUAL:OnPerformed(player)
+		player:SetSharedVar("enlightenmentActive", true);
+		
+		timer.Create("EnlightenmentTimer_"..player:EntIndex(), 900, 1, function()
+			if IsValid(player) then
+				if player:GetSharedVar("enlightenmentActive", false) then
+					player:SetSharedVar("enlightenmentActive", false);
+					
+					Clockwork.hint:Send(player, "The 'Enlightenment' ritual has worn off...", 10, Color(175, 100, 100), true, true);
+				end
+			end
+		end);
+		
+		Clockwork.chatBox:Add(player, nil, "itnofake", "You can feel a warm holy light exuding from every orifice in your body!");
 	end;
 	function RITUAL:OnFail(player)
 	end;

@@ -1161,7 +1161,43 @@ function COMMAND:OnRun(player, arguments)
 			if player:GetSharedVar("tied") == 0 and !player:IsRagdolled() then
 				local activeWeapon = player:GetActiveWeapon();
 				
-				if !IsValid(activeWeapon) or activeWeapon:GetClass() == "begotten_fists" or !activeWeapon.IsABegottenMelee then
+				if IsValid(activeWeapon) then
+					if activeWeapon:GetClass() == "cw_lantern" and player:HasBelief("extinctionist") then
+						local weaponItemTable = item.GetByWeapon(activeWeapon);
+						
+						if weaponItemTable then
+							local currentOil = weaponItemTable:GetData("oil");
+							local selfless = "himself";
+							
+							if (player:GetGender() == GENDER_FEMALE) then
+								selfless = "herself";
+							end
+							
+							if currentOil >= 1 then
+								local damageInfo = DamageInfo();
+								
+								player:TakeDamage(math.Rand(5,10));
+								player:Ignite(15);
+								weaponItemTable:SetData("oil", math.Clamp(currentOil - math.random(10, 25), 0, 100));
+								player:SetSharedVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
+								player:EmitSound("ambient/fire/gascan_ignite1.wav");
+								
+								Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.." with a lit lantern, dousing themselves with burning oil and bursting into flames!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+								
+								return true;
+							else
+								player:TakeDamage(math.Rand(5,10));
+								
+								Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.."!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+								
+								return true;
+							end
+						end
+					elseif activeWeapon:GetClass() == "begotten_fists" or !activeWeapon.IsABegottenMelee then
+						Schema:EasyText(player, "firebrick", "You cannot flagellate with this weapon!");
+						return false;
+					end
+				else
 					Schema:EasyText(player, "firebrick", "You cannot flagellate with this weapon!");
 					return false;
 				end

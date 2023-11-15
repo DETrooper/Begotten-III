@@ -801,12 +801,18 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 				local attackerWeapon = attacker:GetActiveWeapon();
 			
 				if IsValid(attackerWeapon) then
-					local weaponClass = attackerWeapon:GetClass();
+					local weaponItemTable = item.GetByWeapon(attackerWeapon);
 					
-					if string.find(weaponClass, "begotten_spear") or string.find(weaponClass, "begotten_scythe") or string.find(weaponClass, "begotten_polearm") then
-						if weaponClass ~= "begotten_polearm_quarterstaff" then
-							damageInfo:ScaleDamage(0.4);
-						end
+					if weaponItemTable and weaponItemTable.attributes and table.HasValue(weaponItemTable.attributes, "grounded") then
+						damageInfo:ScaleDamage(0.4);
+						
+						entity:SetNetVar("runningDisabled", true);
+						
+						timer.Create("GroundedSprintTimer_"..tostring(entity:EntIndex()), 3, 1, function()
+							if IsValid(entity) then
+								entity:SetNetVar("runningDisabled", nil);
+							end
+						end);
 					end
 				end
 			end
