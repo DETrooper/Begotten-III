@@ -1992,7 +1992,7 @@ end
 
 -- Called when a player attempts to drop a weapon.
 function GM:PlayerCanDropWeapon(player, itemTable, weapon, bNoMsg)
-	if (Clockwork.player:GetSpawnWeapon(player, itemTable:GetWeaponClass())) then
+	if itemTable.GetWeaponClass and (Clockwork.player:GetSpawnWeapon(player, itemTable:GetWeaponClass())) then
 		if (!bNoMsg) then
 			Schema:EasyText(player, "peru", "You cannot drop this weapon!")
 		end

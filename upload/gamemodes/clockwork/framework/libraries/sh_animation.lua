@@ -906,6 +906,14 @@ function Clockwork.animation:AddPlagueDocArms(model)
 	});
 end;
 
+function Clockwork.animation:AddCrudePlateArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_crudeplate.mdl",
+		skin = 0
+	});
+end;
+
 function Clockwork.animation:AddWandererMailArms(model)
 	self:AddHandsModel(model, {
 		body = 0000000,
@@ -1095,6 +1103,7 @@ Clockwork.animation:AddGoreChainMail2Arms("models/begotten/goreicwarfighters/gor
 
 Clockwork.animation:AddGoreHouseCarlArms("models/begotten/goreicwarfighters/gorehousecarl");
 
+Clockwork.animation:AddGoreBladeDruidArms("models/begotten/goreicwarfighters/armoredbladedruid");
 Clockwork.animation:AddGoreBladeDruidArms("models/begotten/goreicwarfighters/bladedruid");
 Clockwork.animation:AddGoreBladeDruidArms("models/begotten/goreicwarfighters/elderdruid.mdl");
 
@@ -1141,6 +1150,8 @@ Clockwork.animation:AddBrigandineLightArms("models/begotten/gatekeepers/renegade
 Clockwork.animation:AddBrigandineLightArms("models/begotten/gatekeepers/renegadedisciple.mdl");
 
 Clockwork.animation:AddLeatherArms("models/begotten/wanderers/leather");
+
+Clockwork.animation:AddCrudePlateArms("models/begotten/wanderers/crudeplate");
 
 Clockwork.animation:AddWandererMailArms("models/begotten/wanderers/wanderermail");
 

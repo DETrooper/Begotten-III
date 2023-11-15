@@ -83,27 +83,52 @@ end;
 
 -- Called when a player has unequipped the item.
 function ITEM:OnPlayerUnequipped(player, extraData)
-	for k, v in pairs(player:GetWeapons()) do
-		if v:GetNWString("activeShield"):len() > 0 then
-			v:HolsterShield();
-		end
-	end
-	
-	if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
-		local useSound = self("useSound");
-		
-		if (useSound) then
-			if (type(useSound) == "table") then
-				player:EmitSound(useSound[math.random(1, #useSound)]);
-			else
-				player:EmitSound(useSound);
+	if (extraData != "drop") then
+		if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+			local useSound = self("useSound");
+			
+			if (useSound) then
+				if (type(useSound) == "table") then
+					player:EmitSound(useSound[math.random(1, #useSound)]);
+				else
+					player:EmitSound(useSound);
+				end;
+			elseif (useSound != false) then
+				player:EmitSound("begotten/items/first_aid.wav");
 			end;
-		elseif (useSound != false) then
-			player:EmitSound("begotten/items/first_aid.wav");
+		end
+		
+		for k, v in pairs(player:GetWeapons()) do
+			if v:GetNWString("activeShield"):len() > 0 then
+				v:HolsterShield();
+			end
+		end
+		
+		return Clockwork.equipment:UnequipItem(player, self);
+	elseif (hook.Run("PlayerCanDropWeapon", player, self)) then
+		local trace = player:GetEyeTraceNoCursor()
+
+		if (player:GetShootPos():Distance(trace.HitPos) <= 192) then
+			local entity = Clockwork.entity:CreateItem(player, self, trace.HitPos);
+			
+			if (IsValid(entity)) then
+				if (self:HasPlayerEquipped(player)) then
+					for k, v in pairs(player:GetWeapons()) do
+						if v:GetNWString("activeShield"):len() > 0 then
+							v:HolsterShield();
+						end
+					end
+				
+					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal);
+					player:TakeItem(self);
+					
+					return Clockwork.equipment:UnequipItem(player, self);
+				end
+			end;
+		else
+			Schema:EasyText(player, "peru", "You cannot drop your shield that far away!");
 		end;
 	end
-	
-	return Clockwork.equipment:UnequipItem(player, self);
 end;
 
 function ITEM:HasPlayerEquipped(player)

@@ -696,14 +696,14 @@ local COMMAND = Clockwork.command:New("DropWeapon");
 							hook.Run("PlayerDropWeapon", player, itemTable, entity, weapon);
 						end;
 					else
-						Clockwork.player:Notify(player, "You cannot drop your weapon that far away!");
+						Schema:EasyText(player, "peru", "You cannot drop your weapon that far away!");
 					end;
 				end;
 			else
-				Clockwork.player:Notify(player, "This is not a valid weapon!");
+				Schema:EasyText(player, "peru", "This is not a valid weapon!");
 			end;
 		else
-			Clockwork.player:Notify(player, "You cannot perform this action while in a duel!");
+			Schema:EasyText(player, "peru", "You cannot perform this action while in a duel!");
 		end;
 	end;
 COMMAND:Register();
@@ -717,29 +717,31 @@ local COMMAND = Clockwork.command:New("DropShield");
 		if not player.opponent then
 			for k, v in pairs(player.equipmentSlots) do
 				if v and v.category == "Shields" then
-					local trace = player:GetEyeTraceNoCursor();
-					
-					if (player:GetShootPos():Distance(trace.HitPos) <= 192) then
-						local entity = Clockwork.entity:CreateItem(player, v, trace.HitPos);
+					if (hook.Run("PlayerCanDropWeapon", player, v)) then
+						local trace = player:GetEyeTraceNoCursor();
 						
-						if (IsValid(entity)) then
-							if (v:HasPlayerEquipped(player)) then
-								Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal);
-								Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
-								player:TakeItem(v);
+						if (player:GetShootPos():Distance(trace.HitPos) <= 192) then
+							local entity = Clockwork.entity:CreateItem(player, v, trace.HitPos);
+							
+							if (IsValid(entity)) then
+								if (v:HasPlayerEquipped(player)) then
+									Clockwork.entity:MakeFlushToGround(entity, trace.HitPos, trace.HitNormal);
+									Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+									player:TakeItem(v);
 
-								return;
-							end
+									return;
+								end
+							end;
+						else
+							Schema:EasyText(player, "peru", "You cannot drop your shield that far away!");
 						end;
-					else
-						Clockwork.player:Notify(player, "You cannot drop your shield that far away!");
-					end;
+					end
 				end
 			end;
 			
-			Clockwork.player:Notify(player, "This is not a valid shield!");
+			Schema:EasyText(player, "peru", "This is not a valid shield!");
 		else
-			Clockwork.player:Notify(player, "You cannot perform this action while in a duel!");
+			Schema:EasyText(player, "peru", "You cannot perform this action while in a duel!");
 		end
 	end;
 COMMAND:Register();

@@ -455,7 +455,10 @@ if (CLIENT) then
 
 			Clockwork.inventory:Rebuild()
 			hook.Run("PlayerItemTaken", itemTable)
-			item.RemoveInstance(itemTable.itemID)
+			
+			if data[3] then
+				item.RemoveInstance(itemTable.itemID)
+			end
 		end
 	end)
 	

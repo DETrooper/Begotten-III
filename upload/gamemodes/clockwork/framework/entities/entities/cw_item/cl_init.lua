@@ -115,6 +115,12 @@ function ENT:OnRemove()
 	local itemTable = self:GetItemTable();
 	
 	if (itemTable) then
-		item.RemoveInstance(itemTable.itemID);
+		timer.Simple(0, function()
+			if !IsValid(self) then
+				if !Clockwork.inventory:HasItemInstance(Clockwork.inventory.client, itemTable) then
+					item.RemoveInstance(itemTable.itemID, true);
+				end
+			end
+		end);
 	end;
 end;

@@ -52,7 +52,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 						local itemEntity = Clockwork.entity:CreateItem(entity, itemTable, dropPos);
 						
 						if (IsValid(itemEntity)) then
-							entity:TakeItem(itemTable, true);
+							entity:TakeItem(itemTable);
 							entity:SelectWeapon("begotten_fists");
 							entity:StripWeapon(entWeapon:GetClass());
 							

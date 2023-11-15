@@ -935,7 +935,7 @@ end;
 
 function item.RemoveInstance(itemID, bInstant)
 	if istable(itemID) then
-		itemID = itemTable.itemID;
+		itemID = itemID.itemID;
 	end
 	
 	if itemID then

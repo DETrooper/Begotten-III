@@ -2135,7 +2135,7 @@ function playerMeta:TakeItem(itemTable, bRemoveInstance)
 	
 	Clockwork.kernel:ForceUnequipItem(self, itemTable.uniqueID, itemTable.itemID);
 	Clockwork.inventory:RemoveInstance(inventory, itemTable);
-	netstream.Start(self, "InvTake", {itemTable.index, itemTable.itemID});
+	netstream.Start(self, "InvTake", {itemTable.index, itemTable.itemID, bRemoveInstance});
 	
 	if bRemoveInstance then
 		item.RemoveInstance(itemTable.itemID);
