@@ -189,6 +189,10 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 			--local sail_time = 5; -- for testing
 			local sea_zone = self:DetermineSeaZone(longshipEnt, destination);
 			
+			if longshipEnt.owner:GetSubfaction() == "Clan Harald" then
+				sail_time = 10;
+			end
+			
 			--printp("selected sea zone: "..sea_zone);
 			Schema:EasyText(longshipEnt.owner, "icon16/anchor.png", "cornflowerblue", "Setting sail in "..tostring(sail_time).." seconds!");
 			Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", longshipEnt.owner:Name().."'s longship is setting sail to destination "..destination.."!");
@@ -229,6 +233,8 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 		
 		local sail_time = 30;
 		local sea_zone = self:DetermineSeaZone(longshipEnt, destination);
+		
+		Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", "A longship with no owner is setting sail to destination "..destination.."!");
 		
 		timer.Create("SailTimer_"..tostring(longshipEnt:EntIndex()), sail_time, 1, function()
 			if IsValid(longshipEnt) then

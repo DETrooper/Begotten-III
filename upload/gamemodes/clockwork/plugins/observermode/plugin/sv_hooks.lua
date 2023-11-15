@@ -113,7 +113,7 @@ function cwObserverMode:PlayerUseItem(player, itemTable, itemEntity)
 	end;
 end;
 
-function cwObserverMode:PlayerDropItem(player, itemTable, position, entity) 
+function cwObserverMode:PlayerCanDropItem(player, itemTable, position) 
 	if player:GetMoveType() == MOVETYPE_NOCLIP and !player:IsAdmin() then
 		Schema:EasyText(player, "darkgrey", "["..self.name.."] You cannot drop items while in spectator mode!");
 		

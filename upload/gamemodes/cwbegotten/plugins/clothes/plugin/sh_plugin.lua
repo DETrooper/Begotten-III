@@ -32,7 +32,7 @@ function COMMAND:OnRun(player, arguments)
 			condition = math.Clamp(tonumber(condition), 0, 100);
 		end;
 
-		local helmetItem = target:GetHelmetItem();
+		local helmetItem = target:GetHelmetEquipped();
 	
 		if (helmetItem) then
 			helmetItem:SetCondition(condition, true);
@@ -74,24 +74,18 @@ function COMMAND:OnRun(player, arguments)
 			condition = math.Clamp(tonumber(condition), 0, 100);
 		end;
 	
-		local armorTable = target:GetClothesEquipped();
+		local armorItem = target:GetClothesEquipped();
 		
-		if (armorTable) then
-			local armorItem = Clockwork.inventory:FindItemByID(target:GetInventory(), armorTable.uniqueID, armorTable.itemID);
-		
-			if (armorItem and armorItem:IsInstance()) then
-				armorItem:SetCondition(condition, true);
+		if armorItem then
+			armorItem:SetCondition(condition, true);
 
-				if (player != target)	then
-					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set "..target:Name().."'s armor item condition to "..condition..".");
-				else
-					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own armor item condition to "..condition..".");
-				end;
+			if (player != target)	then
+				Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set "..target:Name().."'s armor item condition to "..condition..".");
 			else
-				Schema:EasyText(player, "firebrick", "["..self.name.."] "..target:Name().." does not have a valid armor equipped!");
-			end
+				Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own armor item condition to "..condition..".");
+			end;
 		else
-			Schema:EasyText(player, "firebrick", "["..self.name.."] "..target:Name().." does not have a armor equipped!");
+			Schema:EasyText(player, "firebrick", "["..self.name.."] "..target:Name().." does not have a valid armor equipped!");
 		end
 	else
 		Schema:EasyText(player, "grey", "["..self.name.."] "..arguments[1].." is not a valid player!");

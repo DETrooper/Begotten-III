@@ -320,12 +320,19 @@ function CLASS_TABLE:OnTakeFromPlayer(player)
 	if (self.baseItem == "weapon_base" or self.baseItem == "firearm_base") then
 		local slots = {"Primary", "Secondary", "Tertiary"};
 		local weaponID = self.uniqueID;
+		local weapon = player:GetWeapon(weaponID);
 		
-		if IsValid(player:GetWeapon(weaponID)) then
+		if IsValid(weapon) then
 			for k, v in pairs(player.equipmentSlots) do
 				if v and v.category == "Shields" then
-					if player:GetWeapon(weaponID):GetNWString("activeShield") == v.uniqueID then
-						Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+					if weapon:GetNWString("activeShield") == v.uniqueID then
+						local weaponItemTable = item.GetByWeapon(weapon);
+						
+						if weaponItemTable and weaponItemTable:IsTheSameAs(self) then
+							Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+						end
+						
+						break;
 					end
 				end
 			end

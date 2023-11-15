@@ -178,7 +178,11 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 					if v then
 						if v.category == "Shields" then
 							if IsValid(weapon) and weapon:GetNWString("activeShield"):len() > 0 and weapon:GetNWString("activeShield") == v.uniqueID then
-								Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+								local weaponItemTable = item.GetByWeapon(weapon);
+								
+								if weaponItemTable and weaponItemTable:IsTheSameAs(self) then
+									Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+								end
 								
 								break;
 							end
@@ -231,7 +235,11 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 						if v then
 							if v.category == "Shields" then
 								if IsValid(weapon) and weapon:GetNWString("activeShield"):len() > 0 and weapon:GetNWString("activeShield") == v.uniqueID then
-									Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+									local weaponItemTable = item.GetByWeapon(weapon);
+									
+									if weaponItemTable and weaponItemTable:IsTheSameAs(self) then
+										Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+									end
 									
 									break;
 								end

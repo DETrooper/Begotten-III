@@ -271,7 +271,9 @@ function cwRituals:PostDrawOpaqueRenderables()
 						render.DrawSprite(position, 32, 32, glowColor);
 					end;
 				end;
-			elseif v:GetSharedVar("auraMotherActive") then
+			end
+			
+			if v:GetSharedVar("auraMotherActive") then
 				if (headBone) then
 					local bonePosition, boneAngles = v:GetBonePosition(headBone);
 					local eyes = v:LookupAttachment("eyes");
@@ -285,7 +287,9 @@ function cwRituals:PostDrawOpaqueRenderables()
 						render.DrawSprite(position, 32, 32, glowColor);
 					end;
 				end;
-			elseif v:GetSharedVar("enlightenmentActive") then
+			end
+			
+			if v:GetSharedVar("enlightenmentActive") then
 				local dynamicLight = DynamicLight(v:EntIndex());
 				
 				if (dynamicLight) then
@@ -298,7 +302,9 @@ function cwRituals:PostDrawOpaqueRenderables()
 					dynamicLight.DieTime = curTime + 0.1;
 					dynamicLight.Style = 0;
 				end;
-			elseif v:GetSharedVar("powderheelActive") then
+			end
+			
+			if v:GetSharedVar("powderheelActive") then
 				render.SetColorMaterial();
 				render.DrawSphere(entityPosition + Vector(0, 0, 40), config.Get("talk_radius"):Get(), 32, 32, Color(0, 200, 0, 50));
 				render.DrawSphere(entityPosition + Vector(0, 0, 40), -config.Get("talk_radius"):Get(), 32, 32, Color(0, 200, 0, 50));

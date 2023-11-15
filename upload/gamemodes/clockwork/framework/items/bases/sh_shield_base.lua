@@ -162,6 +162,7 @@ function ITEM:OnUse(player, itemEntity)
 	local subfaction = player:GetSubfaction();
 	local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
 	local kinisgerOverrideSubfaction = player:GetSharedVar("kinisgerOverrideSubfaction");
+	local suitable_melee;
 
 	if (table.HasValue(self.excludeFactions, kinisgerOverride or faction)) then
 		Schema:EasyText(player, "chocolate", "You are not the correct faction for this item!")
