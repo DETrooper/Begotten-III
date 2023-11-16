@@ -2081,7 +2081,9 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["shagalaxian_steel_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
+			["leather"] = {amount = 1},
 			["wood"] = {amount = 3},
 		};
 		RECIPE.result = {
@@ -2092,7 +2094,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 100;
+		RECIPE.experience = 85;
 		
 		function RECIPE:OnCraft(player)
 		end;
