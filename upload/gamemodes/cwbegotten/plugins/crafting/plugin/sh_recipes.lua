@@ -2082,7 +2082,6 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
-			["steel_ingot"] = {amount = 1},
 			["leather"] = {amount = 1},
 			["wood"] = {amount = 3},
 		};
