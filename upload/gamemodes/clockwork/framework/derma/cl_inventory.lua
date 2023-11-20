@@ -138,7 +138,6 @@ function PANEL:Rebuild()
 	local clientInventory = Clockwork.inventory:GetClient();
 	local clothesItem = Clockwork.Client:GetClothesEquipped();
 	local playerModel = Clockwork.Client:GetModel();
-	local playerSkin = Clockwork.Client:GetSkin();
 	local playerBodygroups = {Clockwork.Client:GetBodygroup(0), Clockwork.Client:GetBodygroup(1)};
 	local headModel;
 	local weapons = {};

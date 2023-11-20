@@ -459,7 +459,7 @@ function GetDualTable(uniqueID, offhandID)
 				mergedTable["blockcone"] = math.max(mergedTable["blockcone"], offhandTable["blockcone"]);
 				mergedTable["poiseresistance"] = math.min(math.max(mergedTable["poiseresistance"], offhandTable["poiseresistance"]) + 1, 100);
 				mergedTable["parrydifficulty"] = math.min(math.max(mergedTable["parrydifficulty"], offhandTable["parrydifficulty"]) * 0.85, 100);
-				mergedTable["parrytakestamina"] = math.Round(math.max(mergedTable["parrytakestamina"], offhandTable["parrytakestamina"]) * 0.67);
+				mergedTable["parrytakestamina"] = math.min(mergedTable["parrytakestamina"], offhandTable["parrytakestamina"]);
 				
 				for i, v in ipairs(offhandTable["blockdamagetypes"]) do
 					if !table.HasValue(mergedTable, v) then
@@ -6188,6 +6188,196 @@ BlockTables.shield15 = { -- Voltshield
 	},
 };
 
+BlockTables.shield16 = { -- Steel Tower Shield
+	["name"] = "Steel Tower Shield",
+	["guardblockamount"] = 5,
+	["damagereduction"] = 0.8,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 50)),
+	["blockcone"] = 220,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
+	["blockanim"] = "a_sword_shield_block_drakekeeper",
+	["blocksoundtable"] = "MetalShieldSoundTable",
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 35,
+	["raisespeed"] = 1.7,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 30,
+	["canparry"] = true,
+	["candeflect"] = true,
+	["ironsights"] = {
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(6.639, -9.046, -0.08), ang = Vector(7.5, -2, -7)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(6, -8.04, 2.68), ang = Vector(0, -9.146, -6.332)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.559, -6.031, 1.279), ang = Vector(0, -27.438, -5.628)},
+	},
+	["ViewModelBoneMods"] = {
+		["models/v_begottenknife.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+	},
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["shield18"] = { type = "Model", model = "models/props/begotten/melee/pate_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-6, 2.5, 0), angle = Angle(-32, -120, 60), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+		},
+		["models/v_begottenknife.mdl"] = {
+			["shield18"] = { type = "Model", model = "models/props/begotten/melee/pate_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-2, -6, 10), angle = Angle(0, -135, 40), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["shield18"] = { type = "Model", model = "models/props/begotten/melee/pate_shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(14.5, 6, 3.5), angle = Angle(200, -30, 90), size = Vector(0.75, 0.75, 0.75), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+	},
+	["WElements"] = {
+		["shield16"] = { type = "Model", model = "models/props/begotten/melee/pate_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, 1.557, 0.518), angle = Angle(-6.156, -33.896, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	},
+};
+
+BlockTables.shield17 = { -- Leather Shield
+	["name"] = "Leather Shield",
+	["guardblockamount"] = 5,
+	["damagereduction"] = 0.9,
+	["specialeffect"] = false,
+	["blockeffect"] = "GlassImpact",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 50)),
+	["blockcone"] = 220,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BUCKSHOT},
+	["blockanim"] = "a_sword_shield_block_pursuer",
+	["blocksoundtable"] = "WoodenShieldSoundTable",
+	["partialbulletblock"] = true,
+	["poiseresistance"] = 25,
+	["raisespeed"] = 1.3,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+	["ironsights"] = {
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(11.96, -7.035, 5.4), ang = Vector(-3.518, 1.406, 0.703)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(8.96, -7.639, 2.279), ang = Vector(-4.222, -1.407, -4.926)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(2.68, -9.849, 3.17), ang = Vector(5.627, -2.112, -15.478)},
+	},
+	["ViewModelBoneMods"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, -15, 0), angle = Angle(0, 0, 0) },
+		},
+		["models/v_begottenknife.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+	},
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["shield17"] = { type = "Model", model = "models/props/begotten/melee/large_leather_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-1.558, -14.027, 2.596), angle = Angle(-146.105, 71.299, -106.364), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+		},
+		["models/v_begottenknife.mdl"] = {
+			["shield17"] = { type = "Model", model = "models/props/begotten/melee/large_leather_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(4.675, -7.792, 4.675), angle = Angle(178.83, 42, -139.092), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["shield17"] = { type = "Model", model = "models/props/begotten/melee/large_leather_shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(18.181, 0, -0.519), angle = Angle(-15, 160, -60), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+	},
+	["WElements"] = {
+		["shield17"] = { type = "Model", model = "models/props/begotten/melee/large_leather_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2, 2, 0), angle = Angle(0, 143.9, -100), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	},
+};
+
+BlockTables.shield18 = { -- Steel Gatekeeper Shield
+	["name"] = "Steel Gatekeeper Shield",
+	["guardblockamount"] = 3,
+	["damagereduction"] = 0.75,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 50)),
+	["blockcone"] = 220,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
+	["blockanim"] = "a_sword_shield_block_drakekeeper",
+	["blocksoundtable"] = "MetalShieldSoundTable",
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 70,
+	["raisespeed"] = 1.9,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 50,
+	["canparry"] = false,
+	["candeflect"] = false,
+	["ironsights"] = {
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(6.639, -9.046, -0.08), ang = Vector(7.5, -2, -7)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(6, -8.04, 2.68), ang = Vector(0, -9.146, -6.332)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.559, -6.031, 1.279), ang = Vector(0, -27.438, -5.628)},
+	},
+	["ViewModelBoneMods"] = {
+		["models/v_begottenknife.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+	},
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["shield18"] = { type = "Model", model = "models/props/begotten/melee/tower_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-12, 5, 0), angle = Angle(-32, -120, 60), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+		},
+		["models/v_begottenknife.mdl"] = {
+			["shield18"] = { type = "Model", model = "models/props/begotten/melee/tower_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-9, 3.635, 7), angle = Angle(176.494, -136.754, -216.235), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["shield18"] = { type = "Model", model = "models/props/begotten/melee/tower_shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(12, 8, 3.5), angle = Angle(200, -30, 90), size = Vector(0.75, 0.75, 0.75), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+	},
+	["WElements"] = {
+		["shield18"] = { type = "Model", model = "models/props/begotten/melee/tower_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, 1.557, 0.518), angle = Angle(-5.844, -33.896, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	},
+};
+
+BlockTables.shield19 = { -- Rusted Kite Shield
+	["name"] = "Rusted Kite Shield",
+	["guardblockamount"] = 5,
+	["damagereduction"] = 0.8,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 35,
+	["blockeffectpos"] = (Vector(-5, -10, 45)),
+	["blockcone"] = 220,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
+	["blockanim"] = "a_sword_shield_block_pursuer",
+	["blocksoundtable"] = "MetalShieldSoundTable",
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 25,
+	["raisespeed"] = 1.1,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.25,
+	["parrytakestamina"] = 5,
+	["canparry"] = true,
+	["candeflect"] = true,
+	["ironsights"] = {
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(9.159, -9.849, 7.88), ang = Vector(-6.332, -3.518, -8.443)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(3.24, -7.437, 3.079), ang = Vector(-3, -15, -3.901)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.519, -8.844, 3.16), ang = Vector(4.925, -1.407, -11.256)},
+	},
+	["ViewModelBoneMods"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, -15, 0), angle = Angle(0, 0, 0) },
+		},
+		["models/v_begottenknife.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+	},
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["shield19"] = { type = "Model", model = "models/props/begotten/melee/red_rust_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(0, -11, -2), angle = Angle(-135, 90, -115), size = Vector(1.2, 1.2, 1.2), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+		},
+		["models/v_begottenknife.mdl"] = {
+			["shield19"] = { type = "Model", model = "models/props/begotten/melee/red_rust_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(4.675, -7.792, 8.831), angle = Angle(-160, 60, -145), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["shield19"] = { type = "Model", model = "models/props/begotten/melee/red_rust_shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(13, 5, 4), angle = Angle(-15, 160, -60), size = Vector(1.2, 1.2, 1.2), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+	},
+	["WElements"] = {
+		["shield19"] = { type = "Model", model = "models/props/begotten/melee/red_rust_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, 1.557, 0.518), angle = Angle(-0.676, -35.364, 90), size = Vector(1.2, 1.2, 1.2), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	},
+};
+
 BlockTables.shieldunique1 = { -- Red Wolf Skinshield (Unique)
 	["name"] = "Red Wolf Skinshield",
 	["guardblockamount"] = 5,
@@ -6268,6 +6458,10 @@ AddTable("shield12", BlockTables.shield12)
 AddTable("shield13", BlockTables.shield13)
 AddTable("shield14", BlockTables.shield14)
 AddTable("shield15", BlockTables.shield15)
+AddTable("shield16", BlockTables.shield16)
+AddTable("shield17", BlockTables.shield17)
+AddTable("shield18", BlockTables.shield18)
+AddTable("shield19", BlockTables.shield19)
 AddTable("shieldunique1", BlockTables.shieldunique1)
 AddTable("shieldunique2", BlockTables.shieldunique2)
 

@@ -273,6 +273,40 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Inquisitorial Hat (Black)"
+	ITEM.model = "models/begotten/headgroups_props/headgroup_emp_witch_hunter_hat_02_black.mdl"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/inquisitor_hat_2_black.png"
+	ITEM.weight = 0.5
+	ITEM.uniqueID = "inquisitor_hat_2_black"
+	ITEM.category = "Helms"
+	ITEM.bodyGroup = 1
+	ITEM.bodyGroupVal = 6
+	ITEM.headSuffix = "_glaze";
+	ITEM.description = "A slouch hat used by some members of the Holy Order of the Glaze's Inquisitors."
+	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+		
+	ITEM.components = {breakdownType = "breakdown", items = {"leather"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Inquisitorial Hat (White)"
+	ITEM.model = "models/begotten/headgroups_props/headgroup_emp_witch_hunter_hat_02_white.mdl"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/inquisitor_hat_2_white.png"
+	ITEM.weight = 0.5
+	ITEM.uniqueID = "inquisitor_hat_2_white"
+	ITEM.category = "Helms"
+	ITEM.bodyGroup = 1
+	ITEM.bodyGroupVal = 8
+	ITEM.headSuffix = "_glaze";
+	ITEM.description = "A slouch hat used by some members of the Holy Order of the Glaze's Inquisitors."
+	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+		
+	ITEM.components = {breakdownType = "breakdown", items = {"leather"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.name = "Exquisite County District Hat"
 	ITEM.model = "models/begotten/headgroup_props/headgroup_emp_witch_hunter_hat_03.mdl"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/inquisitor_hat_3.png"
@@ -281,6 +315,40 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.category = "Helms"
 	ITEM.bodyGroup = 1
 	ITEM.bodyGroupVal = 3
+	ITEM.headSuffix = "_glaze";
+	ITEM.description = "An ornate watchtower hat used by distinguished members of the Holy Order of the Glaze's Inquisitors."
+	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+		
+	ITEM.components = {breakdownType = "breakdown", items = {"leather"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Exquisite County District Hat (Black)"
+	ITEM.model = "models/begotten/headgroups_props/headgroup_emp_witch_hunter_hat_03_black.mdl"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/inquisitor_hat_3_black.png"
+	ITEM.weight = 0.5
+	ITEM.uniqueID = "inquisitor_hat_3_black"
+	ITEM.category = "Helms"
+	ITEM.bodyGroup = 1
+	ITEM.bodyGroupVal = 7
+	ITEM.headSuffix = "_glaze";
+	ITEM.description = "An ornate watchtower hat used by distinguished members of the Holy Order of the Glaze's Inquisitors."
+	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+		
+	ITEM.components = {breakdownType = "breakdown", items = {"leather"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Exquisite County District Hat (White)"
+	ITEM.model = "models/begotten/headgroups_props/headgroup_emp_witch_hunter_hat_03_white.mdl"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/inquisitor_hat_3_white.png"
+	ITEM.weight = 0.5
+	ITEM.uniqueID = "inquisitor_hat_3_white"
+	ITEM.category = "Helms"
+	ITEM.bodyGroup = 1
+	ITEM.bodyGroupVal = 9
 	ITEM.headSuffix = "_glaze";
 	ITEM.description = "An ornate watchtower hat used by distinguished members of the Holy Order of the Glaze's Inquisitors."
 	ITEM.excludeFactions = {"Goreic Warrior"};

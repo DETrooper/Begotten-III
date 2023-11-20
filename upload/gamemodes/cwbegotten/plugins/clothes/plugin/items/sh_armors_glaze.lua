@@ -1907,7 +1907,7 @@ ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
 ITEM.slashScale = 0.75; -- reduces slash damage by 25%
 ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 
-ITEM.components = {breakdownType = "meltdown", items = {"scrap", "scrap", "scrap", "scrap", "scrap", "scrap", "scrap"}};
+ITEM.components = {breakdownType = "meltdown", items = {"tech", "tech", "tech", "tech", "scrap", "scrap", "scrap", "scrap", "scrap"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)

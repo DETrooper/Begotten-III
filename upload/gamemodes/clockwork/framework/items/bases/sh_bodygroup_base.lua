@@ -38,6 +38,9 @@ local ITEM = Clockwork.item:New(nil, true)
 				
 				if model ~= player:GetDefaultModel() then
 					player:SetCharacterData("Model", model, true);
+				end
+				
+				if model ~= player:GetModel() then
 					player:SetModel(model);
 				end
 			end
@@ -86,6 +89,7 @@ local ITEM = Clockwork.item:New(nil, true)
 		if self.headReplacement then
 			player:SetModel(self.headReplacement);
 			player:SetBodygroup(0, 0);
+			player:SetBodygroup(1, 0);
 		else
 			self:SetBodygroup(player, self.bodyGroup, self.bodyGroupVal)
 		end
