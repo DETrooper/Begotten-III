@@ -7,6 +7,14 @@
 
 library.New("equipment", Clockwork);
 
+if CLIENT then
+	for i, v in ipairs(_player.GetAll()) do
+		if !v.equipmentSlots then
+			v.equipmentSlots = {};
+		end
+	end
+end
+
 local function GetDataFromItem(itemTable)
 	if itemTable then
 		return {["uniqueID"] = itemTable.uniqueID, ["itemID"] = itemTable.itemID};

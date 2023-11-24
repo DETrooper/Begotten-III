@@ -26,10 +26,19 @@ function Parry(target, dmginfo)
 				
 				if attacker:IsPlayer() then
 					-- Kill their acceleration and make them slower.
-					player.accelerationFinished = false;
-					player.startAcceleration = nil;
+					--[[attacker.accelerationFinished = false;
+					attacker.startAcceleration = nil;
+					attacker.cwTargetRunSpeed = attacker:GetRunSpeed();
 				
-					hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);
+					hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);]]--
+					
+					attacker:SetNetVar("runningDisabled", true);
+					
+					timer.Create("GroundedSprintTimer_"..tostring(attacker:EntIndex()), 3, 1, function()
+						if IsValid(attacker) then
+							attacker:SetNetVar("runningDisabled", nil);
+						end
+					end);
 				end
 				
 				wep:SetNextPrimaryFire(0)
@@ -172,6 +181,7 @@ local function Guarding(ent, dmginfo)
 		--local attacktable = GetTable(wep.AttackTable)
 		local attacker = dmginfo:GetAttacker()
 		local max_poise = ent:GetNetVar("maxMeleeStamina") or 90;
+		local conditionDamage = dmginfo:GetDamage();
 
 		if (ent:GetNWBool("Guardening") == true) then
 			local blocktable;
@@ -427,9 +437,17 @@ local function Guarding(ent, dmginfo)
 								
 								if !cwBeliefs or not ent:HasBelief("ingenuity_finisher") then
 									if cwBeliefs and ent:HasBelief("scour_the_rust") then
-										shieldItemTable:TakeCondition(math.max(dmginfo:GetDamage() / 100, 1));
+										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
+											shieldItemTable:TakeCondition(math.max((conditionDamage * (shieldItemTable.bulletConditionScale or 0.5)) / 2, 1));
+										else
+											shieldItemTable:TakeCondition(math.max(conditionDamage / 100, 1));
+										end
 									else
-										shieldItemTable:TakeCondition(math.max(dmginfo:GetDamage() / 50, 1));
+										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
+											shieldItemTable:TakeCondition(math.max((conditionDamage * (shieldItemTable.bulletConditionScale or 0.5)), 1));
+										else
+											shieldItemTable:TakeCondition(math.max(conditionDamage / 50, 1));
+										end
 									end
 								end
 							end
@@ -437,9 +455,17 @@ local function Guarding(ent, dmginfo)
 							if weaponItemTable and not shieldEquipped then
 								if !cwBeliefs or not ent:HasBelief("ingenuity_finisher") then
 									if cwBeliefs and ent:HasBelief("scour_the_rust") then
-										weaponItemTable:TakeCondition(math.max(dmginfo:GetDamage() / 100, 1));
+										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
+											weaponItemTable:TakeCondition(math.max((conditionDamage * (weaponItemTable.bulletConditionScale or 0.5)) / 2, 1));
+										else
+											weaponItemTable:TakeCondition(math.max(conditionDamage / 100, 1));
+										end
 									else
-										weaponItemTable:TakeCondition(math.max(dmginfo:GetDamage() / 50, 1));
+										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
+											weaponItemTable:TakeCondition(math.max((conditionDamage * (weaponItemTable.bulletConditionScale or 0.5)), 1));
+										else
+											weaponItemTable:TakeCondition(math.max(conditionDamage / 50, 1));
+										end
 									end
 									
 									local offhand = wep:GetNWString("activeOffhand");
@@ -451,9 +477,17 @@ local function Guarding(ent, dmginfo)
 												
 												if offhandItemTable then
 													if cwBeliefs and ent:HasBelief("scour_the_rust") then
-														offhandItemTable:TakeCondition(math.max(dmginfo:GetDamage() / 100, 1));
+														if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
+															offhandItemTable:TakeCondition(math.max((conditionDamage * (offhandItemTable.bulletConditionScale or 0.5)) / 2, 1));
+														else
+															offhandItemTable:TakeCondition(math.max(conditionDamage / 100, 1));
+														end
 													else
-														offhandItemTable:TakeCondition(math.max(dmginfo:GetDamage() / 50, 1));
+														if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
+															offhandItemTable:TakeCondition(math.max((conditionDamage * (offhandItemTable.bulletConditionScale or 0.5)), 1));
+														else
+															offhandItemTable:TakeCondition(math.max(conditionDamage / 50, 1));
+														end
 													end
 												end
 											
@@ -975,16 +1009,27 @@ local function Guarding(ent, dmginfo)
 						
 						-- Deflection "mini stun" effect
 						if attacker:IsPlayer() then
-							enemywep:SetNextPrimaryFire(CurTime() + (enemyattacktable["delay"]) + 1);
+							attacker:SetNWBool("Deflected", true);
+							
+							local delay = enemyattacktable["delay"];
+							
 							if ent.HasBelief then
-								if ent:HasBelief("deflection") then
-									enemywep:SetNextPrimaryFire(CurTime() + (enemyattacktable["delay"]) + 2);
+								if ent:HasBelief("sidestep") then
+									delay = enemyattacktable["delay"] + 2;
 								elseif ent:HasBelief("deflection") then
-									enemywep:SetNextPrimaryFire(CurTime() + (enemyattacktable["delay"]) + 3);
+									delay = enemyattacktable["delay"] + 1;
 								end
 							end
+							
+							enemywep:SetNextPrimaryFire(CurTime() + delay);
 							--netstream.Start(attacker, "Stunned", (enemyattacktable["delay"]));
 							netstream.Start(attacker, "MotionBlurStunned", (enemyattacktable["delay"]));
+							
+							timer.Simple(delay, function()
+								if IsValid(attacker) then
+									attacker:SetNWBool("Deflected", false);
+								end
+							end);
 						end
 					end
 			

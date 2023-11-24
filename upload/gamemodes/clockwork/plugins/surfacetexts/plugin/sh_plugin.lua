@@ -14,4 +14,6 @@ Clockwork.kernel:IncludePrefixed("sv_plugin.lua");
 Clockwork.kernel:IncludePrefixed("sv_hooks.lua");
 Clockwork.kernel:IncludePrefixed("cl_hooks.lua");
 
-cwSurfaceTexts.storedList = {};
+if !cwSurfaceTexts.storedList then
+	cwSurfaceTexts.storedList = {};
+end

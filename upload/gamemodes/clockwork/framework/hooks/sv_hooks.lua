@@ -3367,6 +3367,12 @@ function GM:PlayerCharacterLoaded(player)
 	end
 
 	hook.Run("PlayerRestoreCharacterData", player, player:QueryCharacter("Data"))
+	
+	local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
+
+	for k, v in pairs(itemList) do
+		item.CreateInstance(v.uniqueID, v.itemID);
+	end
 
 	Clockwork.player:SetCharacterMenuState(player, CHARACTER_MENU_CLOSE)
 

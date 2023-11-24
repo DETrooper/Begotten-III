@@ -392,9 +392,11 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 end
 
 function cwDueling:PlayerIsDueling(player)
-	for k, v in pairs(DUELING_ARENAS) do
-		if v.duelingPlayer1 == player or v.duelingPlayer2 == player then
-			return true;
+	if DUELING_ARENAS then
+		for k, v in pairs(DUELING_ARENAS) do
+			if v.duelingPlayer1 == player or v.duelingPlayer2 == player then
+				return true;
+			end
 		end
 	end
 	
@@ -402,11 +404,13 @@ function cwDueling:PlayerIsDueling(player)
 end
 
 function cwDueling:PlayersAreDueling(player1, player2)
-	for k, v in pairs(DUELING_ARENAS) do
-		if v.duelingPlayer1 == player1 and v.duelingPlayer2 == player2 then
-			return true;
-		elseif v.duelingPlayer2 == player1 and v.duelingPlayer1 == player2 then
-			return true;
+	if DUELING_ARENAS then
+		for k, v in pairs(DUELING_ARENAS) do
+			if v.duelingPlayer1 == player1 and v.duelingPlayer2 == player2 then
+				return true;
+			elseif v.duelingPlayer2 == player1 and v.duelingPlayer1 == player2 then
+				return true;
+			end
 		end
 	end
 	

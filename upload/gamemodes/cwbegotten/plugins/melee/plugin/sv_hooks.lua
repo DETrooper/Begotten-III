@@ -797,22 +797,30 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 		end
 		
 		if IsValid(attacker) then
-			if attacker:IsPlayer() and attacker:IsRunning() then
-				local attackerWeapon = attacker:GetActiveWeapon();
+			if attacker:IsPlayer() then
+				local attackerWeapon = damageInfo:GetInflictor();
+				
+				if !IsValid(attackerWeapon) or !attackerWeapon:IsWeapon() then
+					attackerWeapon = attacker:GetActiveWeapon();
+				end
 			
 				if IsValid(attackerWeapon) then
 					local weaponItemTable = item.GetByWeapon(attackerWeapon);
 					
 					if weaponItemTable and weaponItemTable.attributes and table.HasValue(weaponItemTable.attributes, "grounded") then
-						damageInfo:ScaleDamage(0.4);
+						if attacker:IsRunning() then
+							damageInfo:ScaleDamage(0.4);
+						end
 						
-						entity:SetNetVar("runningDisabled", true);
-						
-						timer.Create("GroundedSprintTimer_"..tostring(entity:EntIndex()), 3, 1, function()
-							if IsValid(entity) then
-								entity:SetNetVar("runningDisabled", nil);
-							end
-						end);
+						if entity:IsPlayer() and (!attacker:GetNWBool("Parried") and !attacker:GetNWBool("Deflected")) then
+							entity:SetNetVar("runningDisabled", true);
+							
+							timer.Create("GroundedSprintTimer_"..tostring(entity:EntIndex()), 3, 1, function()
+								if IsValid(entity) then
+									entity:SetNetVar("runningDisabled", nil);
+								end
+							end);
+						end
 					end
 				end
 			end
