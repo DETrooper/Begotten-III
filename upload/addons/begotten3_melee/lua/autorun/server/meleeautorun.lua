@@ -295,11 +295,16 @@ local function Guarding(ent, dmginfo)
 			end
 
 			if canblock then
-				local enemywep = attacker:GetActiveWeapon()
+				local enemywep;
+				
+				if attacker:IsPlayer() or attacker:IsNPC() then
+					enemywep = attacker:GetActiveWeapon()
+				end
+				
 				local enemyattacktable = {}
 				local PoiseTotal = 0;
 				
-				if (enemywep.AttackTable) then
+				if enemywep and (enemywep.AttackTable) then
 					enemyattacktable = GetTable(enemywep.AttackTable)
 				end;
 				
@@ -312,7 +317,7 @@ local function Guarding(ent, dmginfo)
 				end
 
 				if (IsValid(attacker) and (math.abs(math.AngleDifference(ent:EyeAngles().y, (attacker:GetPos() - ent:GetPos()):Angle().y)) <= blockthreshold)) then
-					if enemywep.IsABegottenMelee == true then
+					if enemywep and enemywep.IsABegottenMelee == true then
 						if ent:GetNWBool("Deflect") == true then
 							attacker:ViewPunch(Angle(-10,7,6))
 						else
