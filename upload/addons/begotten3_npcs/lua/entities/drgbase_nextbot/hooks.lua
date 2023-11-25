@@ -163,7 +163,7 @@ if SERVER then
     end
   end
 
-  hook.Add("EntityTakeDamage", "DrGBaseNextbotDealtDamage", function(ent, dmg)
+  hook.Add("EntityTakeDamage", "DrGBaseNextbotDealtDamage", function(ent, attacker, inflictor, hitGroup, dmg)
     local attacker = dmg:GetAttacker()
     if IsValid(attacker) and attacker.IsDrGNextbot then
       if attacker == ent then return true end

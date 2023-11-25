@@ -220,7 +220,7 @@ if SERVER then
     if ent.IsDrGProjectile then return ent.Gravgun or false end
   end)
 
-  hook.Add("EntityTakeDamage", "DrGBaseProjectilePhysicsDamage", function(ent, dmg)
+  hook.Add("EntityTakeDamage", "DrGBaseProjectilePhysicsDamage", function(ent, attacker, inflictor, hitGroup, dmg)
     local inflictor = dmg:GetInflictor()
     if IsValid(inflictor) and inflictor.IsDrGProjectile then
       return inflictor:OnDealtDamage(ent, dmg)
