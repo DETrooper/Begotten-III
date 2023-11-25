@@ -267,7 +267,9 @@ end;
 function cwSanity:PlayerOnHit(player, entity) end
 
 -- Called when an entity takes damage.
-function cwSanity:EntityTakeDamageNew(entity, attacker, inflictor, hitGroup, damageInfo)
+function cwSanity:EntityTakeDamageNew(entity, damageInfo)
+	local attacker = damageInfo:GetAttacker()
+
 	if (entity:IsPlayer() and attacker:IsPlayer()) then
 		local sanity = attacker:GetCharacterData("sanity")
 		local damage = damageInfo:GetDamage()

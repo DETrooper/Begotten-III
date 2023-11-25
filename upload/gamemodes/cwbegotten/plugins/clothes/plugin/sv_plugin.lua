@@ -74,7 +74,7 @@ function PLUGIN:DoPlayerDeath(player, attacker, damageInfo)
 	end;
 end;
 
-function PLUGIN:EntityTakeDamageArmor(entity, attacker, inflictor, hitGroup, damageInfo)
+function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 	if damageInfo:IsDamageType(DMG_BLAST) then
 		return;
 	end

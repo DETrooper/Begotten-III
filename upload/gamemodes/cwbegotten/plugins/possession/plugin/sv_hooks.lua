@@ -126,7 +126,7 @@ function cwPossession:ModifyPlayerSpeed(player, infoTable)
 end;
 
 -- Possessed players take 1/4th the damage.
-function cwPossession:EntityTakeDamageNew(entity, attacker, inflictor, hitGroup, damageInfo)
+function cwPossession:EntityTakeDamageNew(entity, damageInfo)
 	if entity:IsPlayer() then
 		if entity:IsPossessed() then
 			damageInfo:SetDamage(damageInfo:GetDamage() / 4);

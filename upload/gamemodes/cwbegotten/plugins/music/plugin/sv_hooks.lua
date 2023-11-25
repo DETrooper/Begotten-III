@@ -2,7 +2,7 @@ cwMusic.enabled = true;
 
 local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_redux" or game.GetMap() == "rp_scraptown";
 
-function cwMusic:EntityTakeDamageNew(entity, attacker, inflictor, hitGroup, damageInfo)
+function cwMusic:EntityTakeDamageNew(entity, damageInfo)
 	if (!map) then
 		return;
 	end;

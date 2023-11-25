@@ -79,7 +79,7 @@ end)]]--
 	  if ply:DrG_IsPossessing() then return false end
 	end)
 
-	hook.Add("EntityTakeDamage", "DrGBaseNextbotProtectPossessingPlayer", function(ent, attacker, inflictor, hitGroup, dmg)
+	hook.Add("EntityTakeDamage", "DrGBaseNextbotProtectPossessingPlayer", function(ent, dmg)
 		if ent:IsPlayer() and ent:DrG_IsPossessing() then return true end
 	end)
 

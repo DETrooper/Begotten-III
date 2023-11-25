@@ -244,7 +244,7 @@ function cwZombies:OnNPCKilled(npc, attacker, inflictor, attackers)
 end;
 
 -- Called when an entity takes damage.
-function cwZombies:EntityTakeDamageAfter(entity, attacker, inflictor, hitGroup, damageInfo)
+function cwZombies:EntityTakeDamageAfter(entity, damageInfo)
 	-- 1.5x damage bonus for firearms to NPCs.
 	if (entity:IsNPC() or entity:IsNextBot()) then
 		local attacker = damageInfo:GetAttacker();

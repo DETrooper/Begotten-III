@@ -2709,7 +2709,7 @@ function Schema:PlayerShouldTakeDamage(player, attacker, inflictor, damageInfo)
 end
 
 -- Called when an entity takes damage.
-function Schema:EntityTakeDamageNew(entity, attacker, inflictor, hitGroup, damageInfo)
+function Schema:EntityTakeDamageNew(entity, damageInfo)
 	if (entity.GodMode) then
 		return true;
 	end;
@@ -2726,6 +2726,8 @@ function Schema:EntityTakeDamageNew(entity, attacker, inflictor, hitGroup, damag
 		end;
 	elseif (entity:IsNPC() or entity:IsNextBot()) then
 		if string.find(entity:GetClass(), "npc_animal") then
+			local attacker = damageInfo:GetAttacker();
+			
 			if attacker:IsPlayer() and attacker:GetSubfaction() == "Clan Gore" then
 				damageInfo:ScaleDamage(1.5);
 			end

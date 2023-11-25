@@ -58,7 +58,7 @@ hook.Add( "OnPlayerHitGround", "wOS.RollMod.PlayLandNoise", function( ply, inWat
 	ply.wOS.Landed = true
 end )
 
-hook.Add( "PreEntityTakeDamage", "wOS.RollMod.DodgeHook", function( ent, attacker, inflictor, hitGroup, dmginfo )
+hook.Add( "PreEntityTakeDamage", "wOS.RollMod.DodgeHook", function( ent, dmginfo )
 	if IsValid(ent) then
 		if !ent:IsPlayer() or !ent:Alive() --[[or !ent:wOSIsRolling()]] then return end
 		if not ent.iFrames then return end

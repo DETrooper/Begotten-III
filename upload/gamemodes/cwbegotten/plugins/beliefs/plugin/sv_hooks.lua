@@ -697,7 +697,7 @@ function cwBeliefs:LockpickFinished(player, entity)
 end
 
 -- Called when an entity has taken damage.
-function cwBeliefs:EntityTakeDamageNew(entity, attacker, inflictor, hitGroup, damageInfo)
+function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 	-- I'm also putting the code for charm effects in here because I'm lazy.
 	if (Clockwork.entity:IsPlayerRagdoll(entity)) then
 		entity = Clockwork.entity:GetPlayer(entity);
@@ -1106,7 +1106,8 @@ function cwBeliefs:EntityTakeDamageNew(entity, attacker, inflictor, hitGroup, da
 end;
 
 -- Called after all armor and melee effects have been created.
-function cwBeliefs:FuckMyLife(entity, attacker, inflictor, lastHitGroup, damageInfo)
+function cwBeliefs:FuckMyLife(entity, damageInfo)
+	local attacker = damageInfo:GetAttacker();
 	local damage = damageInfo:GetDamage() or 0;
 	
 	if (attacker:IsPlayer()) then
