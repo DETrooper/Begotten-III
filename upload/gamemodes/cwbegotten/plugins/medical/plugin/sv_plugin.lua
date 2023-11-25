@@ -806,42 +806,6 @@ function cwMedicalSystem:PlayerUseUnknownItemFunction(player, itemTable, itemFun
 	end;
 end;
 
--- Called after all armor and melee effects have been created.
-function cwMedicalSystem:FuckMyLife(player, damageInfo)
-	if player:IsPlayer() then
-		local attacker = damageInfo:GetAttacker();
-		local hitGroup = player:LastHitGroup();
-		
-		if (IsValid(attacker) and attacker:IsPlayer()) then
-			local activeWeapon = attacker:GetActiveWeapon();
-			
-			if (IsValid(activeWeapon) and activeWeapon.Base == "sword_swepbase") then
-				hitGroup = Clockwork.kernel:GetRagdollHitGroup(player, damageInfo:GetDamagePosition());
-			end
-		end
-		
-		if (hitGroup and isnumber(hitGroup)) then
-			hitGroup = self.cwHitGroupToString[hitGroup];
-		end;
-
-		if (self:IsLimbDisabled(player, hitGroup)) then
-			return;
-		end;
-		
-		local limbs = self:GetLimbs(player);
-		
-		if limbs and limbs[hitGroup] then
-			local damage = damageInfo:GetDamage() or 0;
-			local maxHealth = player:GetMaxHealth() or 100;
-			local health = math.max(player:Health() or 100, maxHealth);
-			
-			limbs[hitGroup] = math.Clamp(limbs[hitGroup] + damage, 0, health);
-		end
-		
-		hook.Run("PlayerLimbDamageTaken", player, hitGroup, damage, damageInfo);
-	end
-end;
-
 -- Called when a player's limb is damaged from EntityTakeDamage.
 function cwMedicalSystem:PlayerLimbDamageTaken(player, hitGroup, damage, damageInfo)
 end;

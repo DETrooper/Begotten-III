@@ -872,19 +872,19 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 		end
 	end
 	
-	if hook.Run("PreEntityTakeDamage", entity, attacker, inflictor, hitGroup, damageInfo) == true then
+	if hook.Run("PreEntityTakeDamage", entity, damageInfo) == true then
 		return true;
 	end
 	
-	if hook.Run("EntityTakeDamageArmor", entity, attacker, inflictor, hitGroup, damageInfo) == true then
+	if hook.Run("EntityTakeDamageArmor", entity, damageInfo) == true then
 		return true;
 	end
 	
-	if hook.Run("EntityTakeDamageNew", entity, attacker, inflictor, hitGroup, damageInfo) == true then
+	if hook.Run("EntityTakeDamageNew", entity, damageInfo) == true then
 		return true;
 	end
 	
-	if hook.Run("EntityTakeDamageAfter", entity, attacker, inflictor, hitGroup, damageInfo) == true then
+	if hook.Run("EntityTakeDamageAfter", entity, damageInfo) == true then
 		return true;
 	end
 	
@@ -944,7 +944,7 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 			end
 		end
 	
-		if hook.Run("FuckMyLife", player, attacker, inflictor, hitGroup, damageInfo) == true then
+		if hook.Run("FuckMyLife", player, damageInfo) == true then
 			return true;
 		end
 		

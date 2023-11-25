@@ -594,7 +594,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 end;
 
 -- Called after all armor and melee effects have been created.
-function cwMedicalSystem:FuckMyLife(player, attacker, inflictor, hitGroup, damageInfo)
+function cwMedicalSystem:FuckMyLife(player, damageInfo)
 	local action = Clockwork.player:GetAction(player);
 	local curTime = CurTime();
 	
@@ -602,6 +602,37 @@ function cwMedicalSystem:FuckMyLife(player, attacker, inflictor, hitGroup, damag
 		damageInfo:ScaleDamage(0.75);
 	end;]]--
 	
+	local attacker = damageInfo:GetAttacker();
+	local hitGroup = player:LastHitGroup();
+	
+	if (IsValid(attacker) and attacker:IsPlayer()) then
+		local activeWeapon = attacker:GetActiveWeapon();
+		
+		if (IsValid(activeWeapon) and activeWeapon.Base == "sword_swepbase") then
+			hitGroup = Clockwork.kernel:GetRagdollHitGroup(player, damageInfo:GetDamagePosition());
+		end
+	end
+	
+	if (hitGroup and isnumber(hitGroup)) then
+		hitGroup = self.cwHitGroupToString[hitGroup];
+	end;
+
+	if (self:IsLimbDisabled(player, hitGroup)) then
+		return;
+	end;
+	
+	local limbs = self:GetLimbs(player);
+	
+	if limbs and limbs[hitGroup] then
+		local damage = damageInfo:GetDamage() or 0;
+		local maxHealth = player:GetMaxHealth() or 100;
+		local health = math.max(player:Health() or 100, maxHealth);
+		
+		limbs[hitGroup] = math.Clamp(limbs[hitGroup] + damage, 0, health);
+	end
+	
+	hook.Run("PlayerLimbDamageTaken", player, hitGroup, damage, damageInfo);
+
 	-- Make sure this doesn't happen in a duel.
 	if !player.opponent then
 		if (player:Health() < 10) and !player.scornificationismActive then
