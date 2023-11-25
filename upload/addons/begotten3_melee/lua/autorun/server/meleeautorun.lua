@@ -648,7 +648,7 @@ local function Guarding(ent, dmginfo)
 							end
 						end
 						
-						if enemywep:GetNWString("activeOffhand"):len() > 0 then
+						if enemywep and enemywep:GetNWString("activeOffhand"):len() > 0 then
 							if !IsValid(dmginfo:GetInflictor()) or !dmginfo:GetInflictor().isJavelin then
 								poiseDamageModifier = poiseDamageModifier * 0.6;
 							end
@@ -1026,7 +1026,10 @@ local function Guarding(ent, dmginfo)
 								end
 							end
 							
-							enemywep:SetNextPrimaryFire(CurTime() + delay);
+							if enemywep then
+								enemywep:SetNextPrimaryFire(CurTime() + delay);
+							end
+							
 							--netstream.Start(attacker, "Stunned", (enemyattacktable["delay"]));
 							netstream.Start(attacker, "MotionBlurStunned", (enemyattacktable["delay"]));
 							
