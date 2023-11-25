@@ -782,7 +782,7 @@ function cwMelee:PlayerCanFallover(player)
 end
 
 -- Called when an entity has taken damage (runs after belief calculations but before FuckMyLife).
-function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
+function cwMelee:EntityTakeDamageAfter(entity, attacker, inflictor, hitGroup, damageInfo)
 	if damageInfo and (entity:IsPlayer() or entity.isTrainingDummy) then
 		local attacker = damageInfo:GetAttacker();
 		local damage = damageInfo:GetDamage();

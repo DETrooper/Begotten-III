@@ -199,7 +199,7 @@ function cwPowerArmor:PlayerRagdolled(player, state, ragdoll)
 end;
 
 -- Called when a player takes damage.
-function cwPowerArmor:EntityTakeDamageArmor(player, damageInfo)
+function cwPowerArmor:EntityTakeDamageArmor(entity, attacker, inflictor, hitGroup, damageInfo)
 	local bIsPlayer = player:IsPlayer() and player:HasInitialized();
 	
 	if (bIsPlayer) then

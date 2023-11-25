@@ -310,7 +310,7 @@ function cwRituals:PlayerThink(player, curTime, infoTable)
 end
 
 -- Called when an item entity has taken damage (before armor damage is calculated).
-function cwRituals:PreEntityTakeDamage(entity, damageInfo)
+function cwRituals:PreEntityTakeDamage(entity, attacker, inflictor, hitGroup, damageInfo)
 	if !entity.opponent then
 		if entity.nobleStatureActive then
 			if entity:GetVelocity():Length() == 0 then
@@ -564,7 +564,7 @@ function cwRituals:PlayerCharacterLoaded(player)
 	netstream.Start(player, "LoadRitualBinds", player:GetCharacterData("BoundRituals", {}));
 end;
 
-function cwRituals:FuckMyLife(entity, damageInfo)
+function cwRituals:FuckMyLife(entity, attacker, inflictor, hitGroup, damageInfo)
 	if !entity.opponent then
 		if !entity:IsPlayer() then
 			if entity:GetClass() == "prop_ragdoll" and Clockwork.entity:GetPlayer(entity) then

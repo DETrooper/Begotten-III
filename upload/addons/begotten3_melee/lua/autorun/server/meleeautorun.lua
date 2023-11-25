@@ -1,4 +1,4 @@
-function Parry(target, dmginfo)
+function Parry(target, attacker, inflictor, hitGroup, dmginfo)
 	if (target:IsPlayer()) then
 		local wep = target:GetActiveWeapon()
 
@@ -7,8 +7,6 @@ function Parry(target, dmginfo)
 			local checkTypes = {[4] = true, [16] = true, [128] = true};
 
 			if (checkTypes[damageType]) then
-				local attacker = dmginfo:GetAttacker()
-				
 				target:SetNWBool("ParrySucess", true)
 				attacker:SetNWBool("Parried", true)
 				netstream.Start(target, "Parried", 0.2)
@@ -116,11 +114,9 @@ function Parry(target, dmginfo)
 end	
 hook.Add("PreEntityTakeDamage", "Parrying", Parry)
 	
-local function Guarding(ent, dmginfo)
+local function Guarding(ent, attacker, inflictor, hitGroup, dmginfo)
 	if (!ent:IsPlayer()) then
 		if ent:IsNPC() or ent:IsNextBot() then
-			local attacker = dmginfo:GetAttacker()
-			
 			if IsValid(attacker) and attacker:IsPlayer() then
 				if not attacker.opponent then
 					local enemywep = attacker:GetActiveWeapon();
@@ -168,8 +164,6 @@ local function Guarding(ent, dmginfo)
 	if dmginfo:IsDamageType(DMG_DROWNRECOVER) then
 		return;
 	end;
-	
-	local inflictor = dmginfo:GetInflictor();
 	
 	if IsValid(inflictor) and inflictor.unblockable then
 		return;

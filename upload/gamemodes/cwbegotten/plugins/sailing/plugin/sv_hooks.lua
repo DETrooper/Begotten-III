@@ -2,7 +2,7 @@
 	Begotten III: Jesus Wept
 --]]
 
-function cwSailing:EntityTakeDamageNew(entity, damageInfo)
+function cwSailing:EntityTakeDamageNew(entity, attacker, inflictor, hitGroup, damageInfo)
 	if (entity:GetClass() == "cw_longship") then
 		local damageType = damageInfo:GetDamageType();
 		local damageAmount = damageInfo:GetDamage();

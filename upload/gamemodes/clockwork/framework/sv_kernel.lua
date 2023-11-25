@@ -944,7 +944,7 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 			end
 		end
 	
-		if hook.Run("FuckMyLife", player, attacker, inflictor, hitGroup, damageInfo) == true then
+		if hook.Run("FuckMyLife", player, attacker, inflictor, lastHitGroup, damageInfo) == true then
 			return true;
 		end
 		
