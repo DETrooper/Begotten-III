@@ -3963,11 +3963,11 @@ function GM:EntityTakeDamage(entity, damageInfo)
 	if (entity:IsPlayer() and entity:InVehicle() and !IsValid(entity:GetVehicle():GetParent())) then
 		entity.cwLastHitGroup = Clockwork.kernel:GetRagdollHitBone(entity, damageInfo:GetDamagePosition(), HITGROUP_GEAR)
 
-		if (damageInfo:IsBulletDamage()) then
+		--[[if (damageInfo:IsBulletDamage()) then
 			if ((attacker:IsPlayer() or attacker:IsNPC() or attacker:IsNextBot()) and attacker != player) then
 				damageInfo:ScaleDamage(10000)
 			end
-		end
+		end]]--
 	end
 	
 	local isPlayerRagdoll = Clockwork.entity:IsPlayerRagdoll(entity);
