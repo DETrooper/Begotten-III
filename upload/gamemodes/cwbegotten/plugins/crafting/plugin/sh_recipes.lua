@@ -5056,9 +5056,11 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 4},
-			["wood"] = {amount = 4},
+			["steel_ingot"] = {amount = 5},
+			["leather"] = {amount = 1},
+			["wood"] = {amount = 3},
 		};
 		RECIPE.result = {
 			["shield16"] = {amount = 1},
@@ -5230,7 +5232,8 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
 		RECIPE.requirements = {
 			["shield5"] = {amount = 1},
-			["leather"] = {amount = 4},
+			["wood"] = {amount = 1},
+			["leather"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["shield17"] = {amount = 1},
