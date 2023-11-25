@@ -593,8 +593,8 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 	end;
 end;
 
--- Called when a player takes damage.
-function cwMedicalSystem:PlayerTakeDamage(player, attacker, inflictor, hitGroup, damageInfo)
+-- Called after all armor and melee effects have been created.
+function cwMedicalSystem:FuckMyLife(player, attacker, inflictor, hitGroup, damageInfo)
 	local action = Clockwork.player:GetAction(player);
 	local curTime = CurTime();
 	

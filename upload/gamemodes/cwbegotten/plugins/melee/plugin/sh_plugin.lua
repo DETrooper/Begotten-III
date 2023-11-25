@@ -162,7 +162,7 @@ function cwMelee:KeyPress(player, key)
 			
 			if (IsValid(activeWeapon)) then
 				if (activeWeapon.Base == "sword_swepbase") then
-					local blockTable = GetTable(activeWeapon.BlockTable);
+					local blockTable = GetTable(activeWeapon.realBlockTable);
 
 					if (blockTable and blockTable["canparry"] == true) or (activeWeapon:GetClass() == "begotten_fists" and player.GetCharmEquipped and player:GetCharmEquipped("ring_pugilist")) then
 						if (!player.HasBelief or player:HasBelief("parrying")) then
