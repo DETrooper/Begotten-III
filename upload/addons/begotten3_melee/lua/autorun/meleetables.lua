@@ -6301,7 +6301,7 @@ BlockTables.shield18 = { -- Steel Gatekeeper Shield
 	["instantraise"] = false,
 	["parrydifficulty"] = 0.2,
 	["parrytakestamina"] = 50,
-	["canparry"] = false,
+	["canparry"] = true,
 	["candeflect"] = false,
 	["ironsights"] = {
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(6.639, -9.046, -0.08), ang = Vector(7.5, -2, -7)},
