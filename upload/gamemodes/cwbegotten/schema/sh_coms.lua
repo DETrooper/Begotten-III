@@ -1754,6 +1754,49 @@ local COMMAND = Clockwork.command:New("CoinslotCollect");
 	end;
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("CoinslotTax");
+	COMMAND.tip = "Set the Tower of Light's tax rate.";
+	COMMAND.text = "<number Coin>";
+	COMMAND.flags = CMD_DEFAULT;
+	COMMAND.arguments = 1;
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local faction = player:GetFaction();
+		
+		if --[[(faction == "Holy Hierarchy" and player:GetSubfaction() == "Minister") or ]]player:IsAdmin() then
+			local trace = player:GetEyeTrace();
+
+			if (trace.Entity) then
+				local entity = trace.Entity;
+
+				if (entity:GetClass() == "cw_coinslot") then
+					if arguments[1] and tonumber(arguments[1]) then
+						local taxRate = math.floor(tonumber(arguments[1]));
+						
+						if taxRate > 0 and taxRate < 100 then
+							Schema.towerTax = (taxRate / 100);
+							
+							Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name().." has set the tax rate in the Tower of Light to "..tostring(taxRate).."%.");
+							Schema:EasyText(GetAdmins(), "gold", player:Name().." has set the tax rate in the Tower of Light to "..tostring(taxRate).."%.");
+							
+							return;
+						else
+							Schema:EasyText(player, "firebrick", "This is an invalid tax rate!");
+							return;
+						end
+					end
+				end;
+			end;
+		else
+			Schema:EasyText(player, "peru", "You must be of noble stature to set the tax rate!");
+			return;
+		end
+		
+		Schema:EasyText(player, "peru", "You must be looking at the Coinslot to set the tax rate!");
+	end;
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("CoinslotDonate");
 	COMMAND.tip = "Offer your coin to the Coinslot.";
 	COMMAND.text = "<number Coin>";

@@ -153,6 +153,11 @@ local function CreateMenu(state)
 				Clockwork.kernel:RunCommand("CoinslotCollect", text);
 			end) 
 		end);
+		subMenu:AddOption("Set Tax", function() 
+			Derma_StringRequest("Coinslot", "What tax rate would you like to set for the Tower? (1-99)", nil, function(text)
+				Clockwork.kernel:RunCommand("CoinslotTax", text);
+			end) 
+		end);
 	end
 	
 	menu:Open();

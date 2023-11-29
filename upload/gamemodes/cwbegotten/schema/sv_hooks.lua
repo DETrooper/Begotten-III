@@ -179,12 +179,17 @@ function Schema:ClockworkInitPostEntity()
 		return;
 	end;
 	
+	self.towerTax = Clockwork.kernel:RestoreSchemaData("towerTax")[1] or 0;
 	self.towerTreasury = Clockwork.kernel:RestoreSchemaData("treasury")[1] or 0;
 	self.archivesBookList = Clockwork.kernel:RestoreSchemaData("archivesBookList") or {};
 end;
 
 -- Called when data should be saved.
 function Schema:SaveData() 
+	if self.towerTax then
+		Clockwork.kernel:SaveSchemaData("towerTax", {self.towerTax});
+	end
+
 	if self.towerTreasury then
 		Clockwork.kernel:SaveSchemaData("treasury", {self.towerTreasury});
 	end

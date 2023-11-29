@@ -9,7 +9,10 @@ PrecacheParticleSystem("env_fire_large");
 local map = string.lower(game.GetMap());
 
 Schema.maxNPCS = 8;
-Schema.towerTax = 0.1; -- 10% of all salesman sales go to the treasury.
+
+if !Schema.towerTax then
+	Schema.towerTax = 0.1;
+end
 
 if !Schema.towerSafeZoneEnabled then
 	Schema.towerSafeZoneEnabled = true;
