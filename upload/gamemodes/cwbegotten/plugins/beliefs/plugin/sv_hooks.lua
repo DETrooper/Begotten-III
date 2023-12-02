@@ -1932,8 +1932,10 @@ function cwBeliefs:PlayerCanUseItem(player, itemTable, noMessage)
 			local belief = itemTable.requiredbeliefs[i];
 			
 			if !player:HasBelief(belief) then
-				Clockwork.player:Notify(player, "You cannot equip this item as you lack the belief required to do so!");
-				return false;
+				if !itemTable.kinisgerOverride or itemTable.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+					Clockwork.player:Notify(player, "You cannot equip this item as you lack the belief required to do so!");
+					return false;
+				end
 			end;
 		end;
 	end;
@@ -1952,8 +1954,10 @@ function cwBeliefs:PlayerCanUseItem(player, itemTable, noMessage)
 		end;
 		
 		if not has_needed_belief then
-			Clockwork.player:Notify(player, "You cannot equip this item as you lack one of the beliefs required to do so!");
-			return false;
+			if !itemTable.kinisgerOverride or itemTable.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+				Clockwork.player:Notify(player, "You cannot equip this item as you lack one of the beliefs required to do so!");
+				return false;
+			end
 		end
 	end
 end;

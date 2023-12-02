@@ -68,6 +68,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.charmEffects = "- Reduces sanity loss by 25%.\n- Reduces stability loss by 25%.";
 	
 	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
@@ -80,6 +81,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.charmEffects = "- Reduces blood loss when bleeding by 40%.";
 	
 	ITEM.requiredFaiths = {"Faith of the Dark"};
+	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
@@ -92,6 +94,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.charmEffects = "- Reduces all limb damage by 50%.";
 	
 	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
@@ -211,6 +214,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases all faith gain by 25% if you are of the Faith of the Family.";
 	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.kinisgerOverride = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false}
 ITEM:Register();
@@ -224,6 +228,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases all faith gain by 25% if you are of the Faith of the Dark.";
 	ITEM.requiredFaiths = {"Faith of the Dark"};
+	ITEM.kinisgerOverride = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false}
 ITEM:Register();
@@ -237,6 +242,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases all faith gain by 25% if you are of the Faith of the Light.";
 	ITEM.requiredFaiths = {"Faith of the Light"};
+	ITEM.kinisgerOverride = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false}
 ITEM:Register();
@@ -358,6 +364,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.description = "A decorated iron buckle with two scraps of scroll cloth torn from the Holy Book of Law, sealed and stamped by the Holy Hierarchy. Wearing these sigils of holy judgement grants supreme authority and righteous conviction to the Inquisitor who deserves it.";
 	ITEM.charmEffects = "- Requires Inquisitor Armor to be worn.\n- Increases faith gain by 15%.\n- Decreases sanity loss by 50%.\n- Decreases corruption gain by 50%.\n- Increases damage against all non-Hard-Glazed characters by 15%.\n- Moderately increases parry and deflection windows for all melee weapons.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/holy_sigils.png";
+	ITEM.kinisgerOverride = true;
 	ITEM.requiredSubfaiths = {"Hard-Glazed"};
 	
 	-- Called when a player uses the item.

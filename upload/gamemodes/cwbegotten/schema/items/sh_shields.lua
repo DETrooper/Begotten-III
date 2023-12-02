@@ -137,6 +137,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks"}};
 	ITEM.requiredbeliefs = {"manifesto"};
+	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");

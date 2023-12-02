@@ -77,19 +77,23 @@ local ITEM = item.New(nil, true);
 		end
 	
 		if self.requiredFaiths and not (table.HasValue(self.requiredFaiths, player:GetFaith())) then
-			if !player.spawning then
-				Schema:EasyText(player, "chocolate", "You are not of the correct faith to wear this!")
+			if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+				if !player.spawning then
+					Schema:EasyText(player, "chocolate", "You are not of the correct faith to wear this!")
+				end
+				
+				return false
 			end
-			
-			return false
 		end
 		
 		if self.requiredSubfaiths and not (table.HasValue(self.requiredSubfaiths, player:GetSubfaith())) then
-			if !player.spawning then
-				Schema:EasyText(player, "chocolate", "You are not of the correct subfaith to wear this!")
+			if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+				if !player.spawning then
+					Schema:EasyText(player, "chocolate", "You are not of the correct subfaith to wear this!")
+				end
+				
+				return false
 			end
-			
-			return false
 		end
 
 		if (player:Alive()) then

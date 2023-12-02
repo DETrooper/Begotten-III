@@ -1157,7 +1157,7 @@ function COMMAND:OnRun(player, arguments)
 	local curTime = CurTime();
 	
 	if !player.nextFlagellate or player.nextFlagellate < curTime then
-		if player:HasBelief("flagellant") then
+		if player:HasBelief("flagellant") or player:GetSubfaction() == "Kinisger" then
 			if player:GetSharedVar("tied") == 0 and !player:IsRagdolled() then
 				local activeWeapon = player:GetActiveWeapon();
 				

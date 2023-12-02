@@ -881,6 +881,31 @@ RITUAL = cwRituals.rituals:New("kinisger_appearance_alteration");
 	end;
 RITUAL:Register()
 
+RITUAL = cwRituals.rituals:New("apostle_of_many_faces");
+	RITUAL.name = "(Unique) Apostle of Many Faces";
+	RITUAL.description = "A true blackhat's test of faith; to bear the effigies of pagan and pious faiths that oppose your own. To play the role of a foreign acolyte so well that you fool even the Gods is a mark of a master blackhat! Performing this ritual permanently allows you to equip or use all non-Voltist faith-locked equipment.";
+	RITUAL.requiredSubfaction = {"Kinisger"}; -- Subfaction Ritual
+	
+	RITUAL.requirements = {"xolotl_catalyst", "xolotl_catalyst", "xolotl_catalyst"};
+	RITUAL.corruptionCost = 50;
+	RITUAL.ritualTime = 15;
+	
+	function RITUAL:OnPerformed(player)
+		player:SetCharacterData("apostle_of_many_faces", true);
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		if player:GetCharacterData("apostle_of_many_faces") then
+			Schema:EasyText(player, "firebrick", "You have already performed this ritual!");
+		
+			return false;
+		end
+	end;
+	function RITUAL:EndRitual(player)
+	end;
+RITUAL:Register()
+
 RITUAL = cwRituals.rituals:New("ritual_of_shadow");
 	RITUAL.name = "(Unique) Ritual of Shadow";
 	RITUAL.description = "Although members of House Rekh-khet-sa cannot normally traverse the surface during daytime, there exists a ritual that can temporarily cloak them in darkness and shield them from light. Performing this ritual will prevent you from taking damage during daytime in the Wasteland for the next 40 minutes.";

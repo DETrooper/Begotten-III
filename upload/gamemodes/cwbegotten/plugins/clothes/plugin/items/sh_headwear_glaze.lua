@@ -46,6 +46,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	
 	ITEM.attributes = {"conditionless", "not_unequippable", "deathknell"};
 	ITEM.requiredbeliefs = {"repentant"};
+	ITEM.kinisgerOverride = true;
 
 	ITEM.conditionScale = 0
 
@@ -86,6 +87,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	
 	ITEM.attributes = {"conditionless", "not_unequippable", "bloodtoll"};
 	ITEM.requiredbeliefs = {"repentant"};
+	ITEM.kinisgerOverride = true;
 
 	ITEM.conditionScale = 0
 

@@ -3336,11 +3336,11 @@ function GM:PlayerCharacterUnloaded(player)
 	Clockwork.storage:Close(player, true)
 	player:SetTeam(TEAM_UNASSIGNED)
 	
-	local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
+	--[[local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
 
 	for k, v in pairs(itemList) do
-		item.RemoveInstance(v.itemID, true);
-	end
+		item.RemoveInstance(v.itemID);
+	end]]--
 end
 
 -- Called when a player's character has loaded.
@@ -3368,11 +3368,11 @@ function GM:PlayerCharacterLoaded(player)
 
 	hook.Run("PlayerRestoreCharacterData", player, player:QueryCharacter("Data"))
 	
-	local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
+	--[[local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
 
 	for k, v in pairs(itemList) do
 		item.CreateInstance(v.uniqueID, v.itemID);
-	end
+	end]]--
 
 	Clockwork.player:SetCharacterMenuState(player, CHARACTER_MENU_CLOSE)
 

@@ -718,6 +718,7 @@ ITEM.weightclass = "Light";
 ITEM.description = "Brown robes with a leather overcoat for minimal protection. The robes of a devout order of peasant flagellants. It appears to be protected by a judgemental aura that brings great unease to sinners.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 
+ITEM.kinisgerOverride = true;
 ITEM.requiredbeliefs = {"repentant"};
 
 ITEM.attributes = {"solblessed"};
@@ -773,6 +774,7 @@ ITEM.weightclass = "Medium";
 ITEM.description = "Chainmail robes with a boiled leather overcoat. Crafted for an order of battle monks who seek human extinction. It appears to be protected by a judgemental aura that brings great unease to sinners.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 
+ITEM.kinisgerOverride = true;
 ITEM.requiredbeliefs = {"repentant"};
 
 ITEM.attributes = {"solblessed"};

@@ -80,14 +80,6 @@ function ITEM:OnUse(player, itemEntity)
 		
 		return false
 	end
-
-	if self.requiredFaiths and not (table.HasValue(self.requiredFaiths, player:GetFaith())) then
-		if !player.spawning then
-			Schema:EasyText(player, "peru", "You are not of the correct faith to wear this!")
-		end
-		
-		return false
-	end
 	
 	if (table.HasValue(self.excludeFactions, kinisgerOverride or faction)) then
 		if !player.spawning then
