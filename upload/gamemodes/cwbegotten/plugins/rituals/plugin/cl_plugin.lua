@@ -239,12 +239,16 @@ function cwRituals:PostDrawOpaqueRenderables()
 			end
 			
 			if player then
+				if player:GetSharedVar("powderheelActive") then
+					table.insert(self.storedPlayers, player);
+				end
+				
 				if player ~= Clockwork.Client then
 					if player:GetSharedVar("soulscorchActive") or player:GetSharedVar("auraMotherActive") then
 						table.insert(self.storedPlayers, player);
 					end
 				else
-					if player:GetSharedVar("enlightenmentActive") or player:GetSharedVar("powderheelActive") then
+					if player:GetSharedVar("enlightenmentActive") then
 						table.insert(self.storedPlayers, player);
 					end
 				end
