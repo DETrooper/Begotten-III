@@ -29,7 +29,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.bulletConditionScale = 0.25;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 200, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1100, bNoSupercrate = true};
 	ITEM.requiredbeliefs = {"defender"};	
 ITEM:Register();
 
