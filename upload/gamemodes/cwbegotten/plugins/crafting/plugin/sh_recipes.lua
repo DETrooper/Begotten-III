@@ -7118,7 +7118,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["wanderer_crude_plate_helm"] = {amount = 1},

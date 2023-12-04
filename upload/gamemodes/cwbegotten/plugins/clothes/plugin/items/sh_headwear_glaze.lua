@@ -166,7 +166,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 		[HITGROUP_HEAD] = true,
 	}
 
-	ITEM.protection = 65
+	ITEM.protection = 60
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
@@ -176,7 +176,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 4000};
 ITEM:Register();
 
