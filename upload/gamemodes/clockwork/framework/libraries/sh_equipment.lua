@@ -553,13 +553,7 @@ else
 	
 	hook.Add("Tick", "TickEquipment", function()
 		for _, player in pairs(_player.GetAll()) do
-			local plyTab = player:GetTable();
-			
-			plyTab.equipmentDrawnThisTick = false;
-			
-			if !plyTab.equipmentSlots then
-				plyTab.equipmentSlots = {};
-			end
+			player.equipmentDrawnThisTick = false;
 			
 			if player:IsRagdolled() then
 				hook.Run("PostPlayerDraw", player);
@@ -571,6 +565,10 @@ else
 		if player:Alive() and player:GetMoveType() ~= MOVETYPE_OBSERVER and player:GetColor().a > 0 then
 			local activeWeapon = player:GetActiveWeapon();
 			local plyTab = player:GetTable();
+			
+			if !plyTab.equipmentSlots then
+				plyTab.equipmentSlots = {};
+			end
 			
 			if !plyTab.equipmentSlotModels then
 				plyTab.equipmentSlotModels = {};

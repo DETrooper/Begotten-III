@@ -134,9 +134,13 @@ function cwBeliefs:AddEntityOutlines(outlines)
 						if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= bannerDist) then
 							self:DrawPlayerOutline(v, outlines, Color(200, 200, 0, 255));
 						end
-					elseif v:GetSharedVar("kinisgerOverride") then
-						if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= assassinDist) then
-							self:DrawPlayerOutline(v, outlines, Color(0, 225, 225, 255));
+					end
+					
+					if isCOS then
+						if v:GetSharedVar("kinisgerOverride") then
+							if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= assassinDist) then
+								self:DrawPlayerOutline(v, outlines, Color(0, 225, 225, 255));
+							end
 						end
 					end
 				end

@@ -280,7 +280,14 @@ function PANEL:DisplayWantedPoster(bountyData, charKey)
 			modelEnt:SetBodygroup(1, bountyData.bodygroup2);
 		end
 		
-		local headpos = modelEnt:GetBonePosition(modelEnt:LookupBone("ValveBiped.Bip01_Head1"));
+		local headbone = modelEnt:LookupBone("ValveBiped.Bip01_Head1");
+		local headpos;
+
+		if headbone then
+			headpos = modelEnt:GetBonePosition(headbone);
+		else
+			headpos = Vector(0, 0, 56);
+		end
 		
 		modelPanel:SetLookAt(headpos);
 		modelPanel:SetCamPos(headpos-Vector(-18, 0, 0));
