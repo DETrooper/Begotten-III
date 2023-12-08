@@ -2015,6 +2015,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddText("Has Increased Parry Window", Color(110, 30, 30));
 				end
 				
+				if category == "Great Shield" then
+					frame:AddText("Great Shield: Reduces sprint speed by 5% when held.", Color(110, 30, 30));
+				end
+				
 				if itemTable.attributes then
 					if table.HasValue(itemTable.attributes, "conditionless") then
 						frame:AddText("Conditionless: This item will not take condition damage.", Color(110, 30, 30));
@@ -2023,11 +2027,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					if table.HasValue(itemTable.attributes, "electrified") then
 						frame:AddText("Electrified: Deals shock damage to characters who hit your shield with metal weapons or their fists if wearing metallic armor.", Color(110, 30, 30));
 					end
-					
-					if category == "Great Shield" then
-						frame:AddText("Great Shield: Reduces sprint speed by 5% when held.", Color(110, 30, 30));
-					end
-				
+
 					if table.HasValue(itemTable.attributes, "unbreakable") then
 						frame:AddText("Perfect Poise Damage Resistance: You are immune to poise damage while blocking, and will only suffer minimum block cost.", Color(110, 30, 30));
 					end

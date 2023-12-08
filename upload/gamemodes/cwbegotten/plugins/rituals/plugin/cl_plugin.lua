@@ -259,13 +259,15 @@ function cwRituals:PostDrawOpaqueRenderables()
 	for k, v in pairs(self.storedPlayers) do
 		if IsValid(v) and v:Alive() and ((v:GetMoveType() == MOVETYPE_WALK or v:GetMoveType() == MOVETYPE_LADDER) or v:IsRagdolled()) then
 			local entityPosition = v:GetPos();
-			local headBone = v:LookupBone("ValveBiped.Bip01_Head1");
+			local vEnt = v:GetRagdollEntity() or v;
 		
 			if v:GetSharedVar("soulscorchActive") then
+				local headBone = vEnt:LookupBone("ValveBiped.Bip01_Head1");
+				
 				if (headBone) then
-					local bonePosition, boneAngles = v:GetBonePosition(headBone);
-					local eyes = v:LookupAttachment("eyes");
-					local eyesAttachment = v:GetAttachment(eyes);
+					local bonePosition, boneAngles = vEnt:GetBonePosition(headBone);
+					local eyes = vEnt:LookupAttachment("eyes");
+					local eyesAttachment = vEnt:GetAttachment(eyes);
 					
 					if (bonePosition and eyesAttachment) then
 						local glowColor = Color(255, 215, 0, 255);
@@ -278,10 +280,12 @@ function cwRituals:PostDrawOpaqueRenderables()
 			end
 			
 			if v:GetSharedVar("auraMotherActive") then
+				local headBone = vEnt:LookupBone("ValveBiped.Bip01_Head1");
+				
 				if (headBone) then
-					local bonePosition, boneAngles = v:GetBonePosition(headBone);
-					local eyes = v:LookupAttachment("eyes");
-					local eyesAttachment = v:GetAttachment(eyes);
+					local bonePosition, boneAngles = vEnt:GetBonePosition(headBone);
+					local eyes = vEnt:LookupAttachment("eyes");
+					local eyesAttachment = vEnt:GetAttachment(eyes);
 					
 					if (bonePosition and eyesAttachment) then
 						local glowColor = Color(0, 255, 0, 255);
@@ -297,7 +301,7 @@ function cwRituals:PostDrawOpaqueRenderables()
 				local dynamicLight = DynamicLight(v:EntIndex());
 				
 				if (dynamicLight) then
-					dynamicLight.Pos = v:GetPos() + Vector(0, 0, 90);
+					dynamicLight.Pos = entityPosition + Vector(0, 0, 90);
 					dynamicLight.r = 255;
 					dynamicLight.g = 255;
 					dynamicLight.b = 224;

@@ -164,14 +164,14 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					
 					local damage = damageInfo:GetDamage();
 					
-					if IsValid(inflictor) and inflictor.isJavelin then
-						-- nothing
-					else
-						if string.find(inflictor:GetClass(), "begotten_dagger_") then
-							armorPiercing = 100;
-						elseif inflictor:GetClass() == "begotten_fists" then
-							if attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist") then
+					if IsValid(inflictor) then
+						if !inflictor.isJavelin then
+							if string.find(inflictor:GetClass(), "begotten_dagger_") then
 								armorPiercing = 100;
+							elseif inflictor:GetClass() == "begotten_fists" then
+								if attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist") then
+									armorPiercing = 100;
+								end
 							end
 						end
 					end
@@ -285,15 +285,15 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 							
 							--print("AP Value: "..tostring(armorPiercing));
 							
-							if IsValid(inflictor) and inflictor.isJavelin then
-								-- nothing
-							else
-								if string.find(inflictor:GetClass(), "begotten_dagger_") then
-									armorPiercing = 100;
-									--print("Weapon is dagger, increasing AP value to 100.");
-								elseif inflictor:GetClass() == "begotten_fists" then
-									if attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist") then
+							if IsValid(inflictor) then
+								if !inflictor.isJavelin then
+									if string.find(inflictor:GetClass(), "begotten_dagger_") then
 										armorPiercing = 100;
+										--print("Weapon is dagger, increasing AP value to 100.");
+									elseif inflictor:GetClass() == "begotten_fists" then
+										if attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist") then
+											armorPiercing = 100;
+										end
 									end
 								end
 							end
