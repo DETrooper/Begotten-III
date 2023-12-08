@@ -700,6 +700,10 @@ else
 			end
 		end
 		
+		if !plyTab.equipmentSlots then
+			plyTab.equipmentSlots = {};
+		end
+		
 		plyTab.equipmentSlots[slot] = itemTable;
 	end);
 	
