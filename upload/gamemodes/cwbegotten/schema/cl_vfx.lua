@@ -768,7 +768,8 @@ function Schema:RenderScreenspaceEffects()
 				DrawColorModify(modify);
 				
 				if (!self.flashEffect[3]) then
-					DrawMotionBlur(1 - (incrementer * timeLeft), incrementer * timeLeft, self.flashEffect[2]);
+					--DrawMotionBlur(1 - (incrementer * timeLeft), incrementer * timeLeft, self.flashEffect[2]);
+					DrawMotionBlur(1 - (incrementer * timeLeft), incrementer * timeLeft, FrameTime());
 				end;
 			end;
 		end;
@@ -778,7 +779,8 @@ function Schema:RenderScreenspaceEffects()
 			local incrementer = 1 / self.motionBlurStunEffect[2];
 		
 			if (timeLeft > 0) then
-				DrawMotionBlur(1 - (incrementer * timeLeft), incrementer * timeLeft, self.motionBlurStunEffect[2]);
+				--DrawMotionBlur(1 - (incrementer * timeLeft), incrementer * timeLeft, self.motionBlurStunEffect[2]);
+				DrawMotionBlur(1 - (incrementer * timeLeft), incrementer * timeLeft, FrameTime());
 			end;
 		end
 

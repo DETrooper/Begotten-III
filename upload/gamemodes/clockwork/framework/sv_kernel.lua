@@ -853,10 +853,6 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 	local inflictor = damageInfo:GetInflictor()
 	local attacker = damageInfo:GetAttacker()
 	local amount = damageInfo:GetDamage()
-
-	if (amount != damageInfo:GetDamage()) then
-		amount = damageInfo:GetDamage()
-	end
 	
 	local isPlayerRagdoll = Clockwork.entity:IsPlayerRagdoll(entity);
 	local player = Clockwork.entity:GetPlayer(entity);
@@ -935,7 +931,7 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 				end
 			end
 		end
-	
+
 		if !lastHitGroup then
 			if isPlayerRagdoll then
 				lastHitGroup = Clockwork.kernel:GetRagdollHitGroup(entity, damageInfo:GetDamagePosition())
@@ -950,6 +946,7 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 		
 		hook.Run("PreCalculatePlayerDamage", player, lastHitGroup, damageInfo);
 		hook.Run("CalculatePlayerDamage", player, lastHitGroup, damageInfo);
+		hook.Run("PostCalculatePlayerDamage", player, lastHitGroup, damageInfo);
 	end
 end
 

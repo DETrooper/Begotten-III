@@ -69,7 +69,7 @@ local ITEM = Clockwork.item:New(nil, true)
 	end
 
 	function ITEM:ResetBodygroup(player, bg)
-		player:SetBodygroup(bg, 0)
+		player:SetBodygroup(bg or 0, 0)
 		
 		if self.headReplacement then
 			player:SetModel(player:GetDefaultModel());
@@ -77,7 +77,7 @@ local ITEM = Clockwork.item:New(nil, true)
 			if player:Alive() then
 				if IsValid(ragdollEntity) then
 					ragdollEntity:SetModel(player:GetDefaultModel());
-					ragdollEntity:SetBodygroup(bg, 0)
+					ragdollEntity:SetBodygroup(bg or 0, 0)
 				end
 			end
 		end
@@ -87,9 +87,9 @@ local ITEM = Clockwork.item:New(nil, true)
 	
 	function ITEM:OnWear(player)
 		if self.headReplacement then
-			player:SetModel(self.headReplacement);
 			player:SetBodygroup(0, 0);
 			player:SetBodygroup(1, 0);
+			player:SetModel(self.headReplacement);
 		else
 			self:SetBodygroup(player, self.bodyGroup, self.bodyGroupVal)
 		end

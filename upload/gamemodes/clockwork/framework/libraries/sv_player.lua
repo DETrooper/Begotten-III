@@ -2538,10 +2538,12 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 				hook.Run("PlayerRagdolled", player, state, player.cwRagdollTab)
 			end
 		elseif (hook.Run("PlayerCanRagdoll", player, state, delay, decay)) then
-			local velocity = player:GetVelocity() + (player:GetAimVector() * 128)
+			local velocity = player:GetVelocity() + (player:GetAimVector() * 128);
 			local ragdoll = ents.Create("prop_ragdoll")
 			local model = player:GetModel();
 			local bodygroups = player:GetBodyGroups()
+			
+			velocity = Vector(velocity.x, velocity.y, 0);
 
 			ragdoll:SetMaterial(player:GetMaterial())
 			ragdoll:SetAngles(player:GetAngles())

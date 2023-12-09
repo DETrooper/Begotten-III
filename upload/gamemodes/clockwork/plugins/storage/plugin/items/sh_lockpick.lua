@@ -8,7 +8,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A rusty lockpick, it looks like it will barely hold.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png"
 	
-	ITEM.itemSpawnerInfo = {category = "Junk", rarity = 350};
+	ITEM.itemSpawnerInfo = {category = "Junk", rarity = 350, onGround = false};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;

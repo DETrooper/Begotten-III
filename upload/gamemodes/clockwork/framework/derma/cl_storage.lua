@@ -1427,22 +1427,28 @@ Clockwork.datastream:Hook("StorageClose", function(data)
 	Clockwork.storage.name = nil;
 end);
 
-Clockwork.datastream:Hook("StorageTake", function(data)
+Clockwork.datastream:Hook("StorageTake", function(data, bRemoveInstance)
 	if (Clockwork.storage:IsStorageOpen()) then
+		local inventory = Clockwork.inventory:GetClient();
+	
 		if data.itemList then
 			for k, v in pairs(data.itemList) do
 				Clockwork.inventory:RemoveUniqueID(
 					Clockwork.storage.inventory, v.uniqueID, v.itemID
 				);
 				
-				item.RemoveInstance(v.itemID);
+				if !Clockwork.inventory:HasItemInstance(inventory, item.FindInstance(v.itemID)) then
+					item.RemoveInstance(v.itemID);
+				end
 			end;
 		else
 			Clockwork.inventory:RemoveUniqueID(
 				Clockwork.storage.inventory, data.uniqueID, data.itemID
 			);
 			
-			item.RemoveInstance(data.itemID);
+			if !Clockwork.inventory:HasItemInstance(inventory, item.FindInstance(data.itemID)) then
+				item.RemoveInstance(data.itemID);
+			end
 		end
 		
 		Clockwork.storage:GetPanel():Rebuild();

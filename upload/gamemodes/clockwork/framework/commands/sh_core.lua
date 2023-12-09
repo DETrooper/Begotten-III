@@ -880,10 +880,6 @@ local COMMAND = Clockwork.command:New("CharFallOver");
 				
 				if (!player:IsRagdolled()) then
 					Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, seconds);
-					if (IsValid(player.Cum)) then
-						player.Cum:Remove()
-						player.Cum = nil
-					end;
 				end;
 			else
 				Clockwork.player:Notify(player, "You cannot do this action at the moment!");

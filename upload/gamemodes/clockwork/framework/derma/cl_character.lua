@@ -746,9 +746,13 @@ function PANEL:Init()
 		if helmet.uniqueID and helmet.itemID then
 			local item = Clockwork.item:FindByID(helmet.uniqueID, helmet.itemID);
 			
-			if item and item.bodyGroup and item.bodyGroupVal then
-				bodygroup = item.bodyGroup;
-				bodygroupVal = item.bodyGroupVal;
+			if item then
+				if item.headReplacement then
+					headModel = item.headReplacement;
+				elseif item.bodyGroup and item.bodyGroupVal then
+					bodygroup = item.bodyGroup;
+					bodygroupVal = item.bodyGroupVal;
+				end
 			end
 		end
 	end

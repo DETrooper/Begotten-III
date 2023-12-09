@@ -19,18 +19,29 @@ function cwSalesmen:PlayerCanUseSalesman(player, entity)
 	local flags = entity.cwFlags or ""
 	local realFlags = flags:Replace("-", "")
 	local bDisallowed = nil
+	local bOverride = nil
 
 	if (numFactions > 0) then
 		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 		
+		if player:GetFaction() == "Children of Satan" then
+			if entity.cwFactions["Children of Satan"] then
+				bOverride = true
+			end
+		end
+		
 		if (!entity.cwFactions[faction]) then
-			bDisallowed = true
+			if !bOverride then
+				bDisallowed = true
+			end
 		end
 	end
 
 	if (numClasses > 0) then
 		if (!entity.cwClasses[_team.GetName(player:Team())]) then
-			bDisallowed = true
+			if !bOverride then
+				bDisallowed = true
+			end
 		end
 	end
 

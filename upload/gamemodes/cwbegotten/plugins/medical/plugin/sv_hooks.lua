@@ -593,8 +593,8 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 	end;
 end;
 
--- Called after all armor and melee effects have been created.
-function cwMedicalSystem:FuckMyLife(player, damageInfo)
+-- Called after limb damage is calculated.
+function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 	local action = Clockwork.player:GetAction(player);
 	local curTime = CurTime();
 	
@@ -603,7 +603,7 @@ function cwMedicalSystem:FuckMyLife(player, damageInfo)
 	end;]]--
 	
 	local attacker = damageInfo:GetAttacker();
-	local hitGroup = player:LastHitGroup();
+	local damage = damageInfo:GetDamage() or 0;
 	
 	if (IsValid(attacker) and attacker:IsPlayer()) then
 		local activeWeapon = attacker:GetActiveWeapon();
@@ -624,7 +624,6 @@ function cwMedicalSystem:FuckMyLife(player, damageInfo)
 	local limbs = self:GetLimbs(player);
 	
 	if limbs and limbs[hitGroup] then
-		local damage = damageInfo:GetDamage() or 0;
 		local maxHealth = player:GetMaxHealth() or 100;
 		local health = math.max(player:Health() or 100, maxHealth);
 		
@@ -635,7 +634,7 @@ function cwMedicalSystem:FuckMyLife(player, damageInfo)
 
 	-- Make sure this doesn't happen in a duel.
 	if !player.opponent then
-		if (player:Health() < 10) and !player.scornificationismActive then
+		if ((player:Health() - damage) < 10) and !player.scornificationismActive then
 			if (action != "die") and (action != "die_bleedout") then
 				--[[player:ConCommand("+duck");
 				player:SetCrouchedWalkSpeed(0.1);]]--
