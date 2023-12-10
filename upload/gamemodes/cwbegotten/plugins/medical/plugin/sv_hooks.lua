@@ -634,7 +634,7 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 
 	-- Make sure this doesn't happen in a duel.
 	if !player.opponent then
-		if ((player:Health() - damage) < 10) and !player.scornificationismActive then
+		if (player:Health() < 10) and !player.scornificationismActive then
 			if (action != "die") and (action != "die_bleedout") then
 				--[[player:ConCommand("+duck");
 				player:SetCrouchedWalkSpeed(0.1);]]--
