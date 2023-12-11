@@ -480,16 +480,16 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 		end;
 
 		local armorClass = player:GetArmorClass();
-		local stabilityDelay = 2.5;
-		local falloverTime = 3;
+		local stabilityDelay = 4;
+		local falloverTime = 4;
 		
 		--printp(armorClass);
 
 		if (armorClass == "Medium") then
 			stabilityDelay = 5;
-			falloverTime = 4;
+			falloverTime = 5;
 		elseif (armorClass == "Heavy") then
-			stabilityDelay = 7.5;
+			stabilityDelay = 6;
 			falloverTime = 6;
 		end;
 		

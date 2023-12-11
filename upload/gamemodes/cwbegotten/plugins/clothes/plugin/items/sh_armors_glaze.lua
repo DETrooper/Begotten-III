@@ -2245,7 +2245,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/masteratarms_gatekeeper_pla
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 95
+ITEM.protection = 80
 ITEM.type = "chainmail";
 ITEM.weight = 6;
 ITEM.weightclass = "Medium";
@@ -2265,10 +2265,10 @@ ITEM.effectiveLimbs = {
 	[HITGROUP_GEAR] = true
 }
 
-ITEM.bluntScale = 0.5; -- reduces blunt damage by 50%
-ITEM.pierceScale = 0.5; -- reduces pierce damage by 50%
-ITEM.slashScale = 0.5; -- reduces slash damage by 50%
-ITEM.bulletScale = 0.5; -- reduces bullet damage by 50%
+ITEM.bluntScale = 0.7; -- reduces blunt damage by 30%
+ITEM.pierceScale = 0.65; -- reduces pierce damage by 35%
+ITEM.slashScale = 0.55; -- reduces slash damage by 45%
+ITEM.bulletScale = 0.3; -- reduces bullet damage by 70%
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
 
