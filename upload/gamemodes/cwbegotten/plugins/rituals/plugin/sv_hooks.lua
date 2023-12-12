@@ -364,25 +364,19 @@ function cwRituals:PlayerCharacterLoaded(player)
 		end
 	end
 	
-	if subfaction == "Kinisger" then
-		local kinisgerOverride = player:GetCharacterData("kinisgerOverride");
-		local kinisgerOverrideSubfaction = player:GetCharacterData("kinisgerOverrideSubfaction");
-		
-		if kinisgerOverride then
-			player:SetSharedVar("kinisgerOverride", kinisgerOverride);
-		end
-		
-		if kinisgerOverrideSubfaction then
-			player:SetSharedVar("kinisgerOverrideSubfaction", kinisgerOverrideSubfaction);
-		end
-	else
-		if player:GetSharedVar("kinisgerOverride") then
-			player:SetSharedVar("kinisgerOverride", nil);
-		end
-		
-		if player:GetSharedVar("kinisgerOverrideSubfaction") then
-			player:SetSharedVar("kinisgerOverrideSubfaction", nil);
-		end
+	local kinisgerOverride = player:GetCharacterData("kinisgerOverride");
+	local kinisgerOverrideSubfaction = player:GetCharacterData("kinisgerOverrideSubfaction");
+	
+	if kinisgerOverride then
+		player:SetSharedVar("kinisgerOverride", kinisgerOverride);
+	elseif player:GetSharedVar("kinisgerOverride") then
+		player:SetSharedVar("kinisgerOverride", nil);
+	end
+	
+	if kinisgerOverrideSubfaction then
+		player:SetSharedVar("kinisgerOverrideSubfaction", kinisgerOverrideSubfaction);
+	elseif player:GetSharedVar("kinisgerOverrideSubfaction") then
+		player:SetSharedVar("kinisgerOverrideSubfaction", nil);
 	end
 	
 	if timer.Exists("auraMotherTimer_"..entIndex) then

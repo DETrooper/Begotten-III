@@ -8,6 +8,7 @@ function Parry(target, dmginfo)
 
 			if (checkTypes[damageType]) then
 				local attacker = dmginfo:GetAttacker()
+				local blocktable = GetTable(wep.realBlockTable);
 				
 				target:SetNWBool("ParrySucess", true)
 				attacker:SetNWBool("Parried", true)
@@ -45,23 +46,39 @@ function Parry(target, dmginfo)
 				
 				if (wep.realBlockSoundTable) then
 					local blocksoundtable = GetSoundTable(wep.realBlockSoundTable)
+					
 					target:EmitSound(blocksoundtable["blocksound"][math.random(1, #blocksoundtable["blocksound"])])
 				end;
+				
+				-- Refund half the poise cost of parrying upon a successful parry.
+				local max_poise = target:GetNetVar("maxMeleeStamina");
+				
+				target:SetNWInt("meleeStamina", math.Clamp(target:GetNWInt("meleeStamina") + math.Round(blocktable["parrytakestamina"] / 2), 0, max_poise));
 
 				if (IsValid(attacker) and attacker:IsPlayer()) then
-					local attackerWeapon = attacker:GetActiveWeapon()
-					local curTime = CurTime();
+					local attackerWeapon = attacker:GetActiveWeapon();
 					
-					if cwBeliefs and attacker.HasBelief and attacker:HasBelief("encore") then
-						attackerWeapon:SetNextPrimaryFire(curTime + 1.5)
-						attackerWeapon:SetNextSecondaryFire(curTime + 1.5)
-					else
-						attackerWeapon:SetNextPrimaryFire(curTime + 3)
-						attackerWeapon:SetNextSecondaryFire(curTime + 3)
-					end
+					if IsValid(attackerWeapon) then
+						local curTime = CurTime();
 					
-					if attackerWeapon:GetClass() == "begotten_fists" then
-						Clockwork.chatBox:AddInTargetRadius(target, "me", " parries "..attacker:Name().." with their bare hands!", target:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+						if cwBeliefs and attacker.HasBelief and attacker:HasBelief("encore") then
+							attackerWeapon:SetNextPrimaryFire(curTime + 1.5)
+							attackerWeapon:SetNextSecondaryFire(curTime + 1.5)
+						else
+							attackerWeapon:SetNextPrimaryFire(curTime + 3)
+							attackerWeapon:SetNextSecondaryFire(curTime + 3)
+						end
+						
+						-- Make sure offhand swing is aborted if deflected.
+						if attackerWeapon.Timers then
+							if attackerWeapon.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] then
+								attackerWeapon.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] = nil;
+							end
+						end
+						
+						if attackerWeapon:GetClass() == "begotten_fists" then
+							Clockwork.chatBox:AddInTargetRadius(target, "me", " parries "..attacker:Name().." with their bare hands!", target:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+						end
 					end
 				end
 				
@@ -994,19 +1011,23 @@ local function Guarding(ent, dmginfo)
 						
 						ent:SetNWBool("Deflect", false)
 						
-						local max_stability = ent:GetMaxStability();
-						
 						if ent.HasBelief then
+							local max_stability = ent:GetMaxStability();
+							local deflectionPoisePayback = 10;
+						
 							if ent:HasBelief("sidestep") then
-								ent:SetNWInt("meleeStamina", math.Clamp(ent:GetNWInt("meleeStamina", max_poise) + 35, 0, max_poise));
-								ent:SetCharacterData("stability", math.Clamp(ent:GetCharacterData("stability", max_stability) + 35, 0, max_stability));
+								deflectionPoisePayback = 35;
 							elseif ent:HasBelief("deflection") then
-								ent:SetNWInt("meleeStamina", math.Clamp(ent:GetNWInt("meleeStamina", max_poise) + 25, 0, max_poise));
-								ent:SetCharacterData("stability", math.Clamp(ent:GetCharacterData("stability", max_stability) + 25, 0, max_stability));
-							else 
-								ent:SetNWInt("meleeStamina", math.Clamp(ent:GetNWInt("meleeStamina", max_poise) + 10, 0, max_poise));
-								ent:SetCharacterData("stability", math.Clamp(ent:GetCharacterData("stability", max_stability) + 10, 0, max_stability));
+								deflectionPoisePayback = 25;
 							end
+							
+							if IsValid(inflictor) and inflictor:GetNWString("activeOffhand") then
+								deflectionPoisePayback = math.Round(deflectionPoisePayback * 1.5);
+							end
+							
+							ent:SetNWInt("meleeStamina", math.Clamp(ent:GetNWInt("meleeStamina", max_poise) + deflectionPoisePayback, 0, max_poise));
+							ent:SetCharacterData("stability", math.Clamp(ent:GetCharacterData("stability", max_stability) + deflectionPoisePayback, 0, max_stability));
+							ent:SetNWInt("stability", ent:GetCharacterData("stability", max_stability));
 						end
 						
 						Clockwork.datastream:Start(ent, "Parried", 0.2)
@@ -1028,6 +1049,13 @@ local function Guarding(ent, dmginfo)
 							
 							if enemywep then
 								enemywep:SetNextPrimaryFire(CurTime() + delay);
+								
+								-- Make sure offhand swing is aborted if deflected.
+								if enemywep.Timers then
+									if enemywep.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] then
+										enemywep.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] = nil;
+									end
+								end
 							end
 							
 							--netstream.Start(attacker, "Stunned", (enemyattacktable["delay"]));

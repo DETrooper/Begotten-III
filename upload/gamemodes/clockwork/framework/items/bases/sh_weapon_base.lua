@@ -447,11 +447,15 @@ function ITEM:OnEquip(player, interactItemTable)
 					if i < #self.slots then
 						local equipmentSlot = player.equipmentSlots[v];
 						
-						if equipmentSlot and equipmentSlot:IsTheSameAs(interactItemTable) then
-							if player.equipmentSlots[self.slots[i +1]]:IsTheSameAs(shieldItem) then
-								Schema:EasyText(player, "peru", "You cannot equip an offhand weapon with a weapon that is using a shield!")
-								return false;
+						if equipmentSlot.canUseShields then
+							if equipmentSlot and equipmentSlot:IsTheSameAs(interactItemTable) then
+								--if player.equipmentSlots[self.slots[i +1]]:IsTheSameAs(shieldItem) then
+									Schema:EasyText(player, "peru", "You cannot equip an offhand weapon with a weapon that is using a shield!")
+									return false;
+								--end
 							end
+							
+							break;
 						end
 					end
 				end

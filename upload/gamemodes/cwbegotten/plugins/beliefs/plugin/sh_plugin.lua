@@ -352,7 +352,7 @@ end;
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("DarkWhisper");
-COMMAND.tip = "Speak in tongues through the void to a target. If the target of this message is not of the Faith of the Dark then the message will be anonymous and will also drain your target's sanity, though it will result in a moderate amount of corruption for yourself.";
+COMMAND.tip = "Speak in tongues through the void to a target. If the target of this message is not of the Faith of the Dark or the Faith of the Sister then the message will be anonymous and will also drain your target's sanity, though it will result in a moderate amount of corruption for yourself.";
 COMMAND.text = "<string Name> <string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 2;
@@ -365,6 +365,7 @@ function COMMAND:OnRun(player, arguments)
 	if (target) then
 		if player:GetFaith() == "Faith of the Dark" then
 			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
+				local curTime = CurTime();
 				local message = "\""..table.concat(arguments, " ", 2).."\"";
 
 				if (target:GetFaith() == "Faith of the Dark" or target:GetSubfaith() == "Faith of the Sister") then
@@ -372,7 +373,7 @@ function COMMAND:OnRun(player, arguments)
 					target:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
 					Clockwork.chatBox:Add(player, player, "darkwhisper", message);
 					Clockwork.chatBox:Add(target, player, "darkwhisper", message);
-				else
+				elseif !player.nextDarkWhisper or player.nextDarkWhisper <= curTime then
 					player:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
 					target:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
 					Clockwork.chatBox:Add(player, nil, "darkwhispernondark", message);
@@ -380,6 +381,10 @@ function COMMAND:OnRun(player, arguments)
 					player:HandleNeed("corruption", 10);
 					target:HandleSanity(-5);
 					target:Disorient(5);
+					
+					player.nextDarkWhisper = curTime + 15;
+				else
+					Schema:EasyText(player, "chocolate", "You must wait another "..-math.ceil(curTime - player.nextDarkWhisper).." seconds before darkwhispering this character again!");
 				end;
 				
 				target.lastDarkWhisperer = player;
@@ -397,7 +402,7 @@ end;
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("DarkWhisperDirect");
-COMMAND.tip = "Speak in tongues through the void to the character you are looking at. If the target of this message is not of the Faith of the Dark then the message will be anonymous and will also drain your target's sanity, though it will result in a moderate amount of corruption for yourself.";
+COMMAND.tip = "Speak in tongues through the void to the character you are looking at. If the target of this message is not of the Faith of the Dark or the Faith of the Sister then the message will be anonymous and will also drain your target's sanity, though it will result in a moderate amount of corruption for yourself.";
 COMMAND.text = "<string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
@@ -410,6 +415,7 @@ function COMMAND:OnRun(player, arguments)
 	if (target) then
 		if player:GetFaith() == "Faith of the Dark" then
 			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
+				local curTime = CurTime();
 				local message = "\""..table.concat(arguments, " ", 1).."\"";
 
 				if (target:GetFaith() == "Faith of the Dark" or target:GetSubfaith() == "Faith of the Sister") then
@@ -417,7 +423,7 @@ function COMMAND:OnRun(player, arguments)
 					target:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
 					Clockwork.chatBox:Add(player, player, "darkwhisper", message);
 					Clockwork.chatBox:Add(target, player, "darkwhisper", message);
-				else
+				elseif !player.nextDarkWhisper or player.nextDarkWhisper <= curTime then
 					player:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
 					target:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
 					Clockwork.chatBox:Add(player, nil, "darkwhispernondark", message);
@@ -425,6 +431,10 @@ function COMMAND:OnRun(player, arguments)
 					player:HandleNeed("corruption", 10);
 					target:HandleSanity(-5);
 					target:Disorient(5);
+					
+					player.nextDarkWhisper = curTime + 15;
+				else
+					Schema:EasyText(player, "chocolate", "You must wait another "..-math.ceil(curTime - player.nextDarkWhisper).." seconds before darkwhispering this character again!");
 				end;
 				
 				target.lastDarkWhisperer = player;

@@ -161,7 +161,7 @@ local COMMAND = Clockwork.command:New("SpectatorModeOn");
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("SpectatorModeOff");
-	COMMAND.tip = "Turn spectator mode on.";
+	COMMAND.tip = "Turn spectator mode off.";
 	COMMAND.access = "s";
 
 	-- Called when the command has been run.

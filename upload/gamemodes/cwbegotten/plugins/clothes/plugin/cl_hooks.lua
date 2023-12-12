@@ -40,33 +40,40 @@ function PLUGIN:Tick()
 	
 	for k, v in pairs(ents.FindByClass("prop_ragdoll")) do
 		if v:GetNWString("clothes") then
-			if !IsValid(v.clothesEnt) then
-				local clothesEnt = ClientsideModel(v:GetNWString("clothes"), RENDERGROUP_BOTH);
+			if string.sub(v:GetModel(), 1, 21) == "models/begotten/heads" then
+				if !IsValid(v.clothesEnt) then
+					local clothesEnt = ClientsideModel(v:GetNWString("clothes"), RENDERGROUP_BOTH);
+					
+					if IsValid(clothesEnt) then
+						clothesEnt:SetParent(v);
+						clothesEnt:AddEffects(EF_BONEMERGE);
+						clothesEnt:SetColor(v:GetColor());
+						clothesEnt:SetNoDraw(v:GetNoDraw());
+						
+						v.clothesEnt = clothesEnt;
+					end
+				else
+					local clothesEnt = v.clothesEnt;
+					
+					if clothesEnt:GetModel() ~= v:GetNWString("clothes") then
+						clothesEnt:Remove();
+						v.clothesEnt = ClientsideModel(v:GetNWString("clothes"), RENDERGROUP_BOTH);
+					end
 				
-				if IsValid(clothesEnt) then
-					clothesEnt:SetParent(v);
-					clothesEnt:AddEffects(EF_BONEMERGE);
+					if clothesEnt:GetParent() ~= v then
+						clothesEnt:SetParent(v);
+						clothesEnt:AddEffects(EF_BONEMERGE);
+					end
+					
 					clothesEnt:SetColor(v:GetColor());
 					clothesEnt:SetNoDraw(v:GetNoDraw());
-					
-					v.clothesEnt = clothesEnt;
+					clothesEnt:SetPos(v:GetPos());
 				end
 			else
-				local clothesEnt = v.clothesEnt;
-				
-				if clothesEnt:GetModel() ~= v:GetNWString("clothes") then
-					clothesEnt:Remove();
-					v.clothesEnt = ClientsideModel(v:GetNWString("clothes"), RENDERGROUP_BOTH);
+				if IsValid(v.clothesEnt) then
+					v.clothesEnt:Remove();
+					v.clothesEnt = nil;
 				end
-			
-				if clothesEnt:GetParent() ~= v then
-					clothesEnt:SetParent(v);
-					clothesEnt:AddEffects(EF_BONEMERGE);
-				end
-				
-				clothesEnt:SetColor(v:GetColor());
-				clothesEnt:SetNoDraw(v:GetNoDraw());
-				clothesEnt:SetPos(v:GetPos());
 			end
 		end
 	end

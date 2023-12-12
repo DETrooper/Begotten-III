@@ -154,8 +154,10 @@ function SWEP:Deploy()
 							if v then
 								local slot = self.Owner.equipmentSlots[v];
 								
-								if slot and slot.weaponClass == self:GetClass() then
-									self:EquipShield(shieldItem.uniqueID);
+								if slot then
+									if slot.weaponClass == self:GetClass() then
+										self:EquipShield(shieldItem.uniqueID);
+									end
 									
 									break;
 								end
@@ -590,7 +592,7 @@ function SWEP:PrimaryAttack()
 							owner:SetNWBool( "MelAttacking", false )
 						end
 						
-						if owner:IsPlayer() and !owner:IsRagdolled() and owner:Alive() and !owner:GetNWBool("Deflected") then
+						if owner:IsPlayer() and !owner:IsRagdolled() and owner:Alive() then
 							owner:LagCompensation(true);
 						
 							local pos = owner:GetShootPos();
@@ -799,7 +801,7 @@ function SWEP:PrimaryAttack()
 					self.isAttacking = false;
 					owner:SetNWBool( "MelAttacking", false )
 				
-					if owner:IsPlayer() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() and !owner:GetNWBool("Deflected") then
+					if owner:IsPlayer() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then
 						if self.Category ~= "(Begotten) Javelin" then
 							if !owner:GetNWBool("ParrySucess", false) and !owner:GetNWBool("Guardening", false) then
 								self:Hitscan(); -- For bullet holes.
