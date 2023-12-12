@@ -460,6 +460,17 @@ function SWEP:PrimaryAttack()
 						if !offhandAttackTable or (offhandAttackTable["striketime"] < attacktable["striketime"]) then
 							self.isAttacking = false;
 							owner:SetNWBool( "MelAttacking", false )
+							
+							if IsValid(owner.parryTarget) and owner.parryTarget:IsPlayer() then
+								local parryTargetWeapon = owner.parryTarget:GetActiveWeapon();
+								
+								if IsValid(parryTargetWeapon) and owner.parryTarget:IsWeaponRaised() then
+									parryTargetWeapon:SetNextPrimaryFire(0);
+									parryTargetWeapon:SetNextSecondaryFire(0);
+								end
+								
+								owner.parryTarget.nextStas = math.min(owner.parryTarget.nextStas, curTime + 0.5);
+							end
 						end
 						
 						if owner:IsPlayer() and !owner:IsRagdolled() and owner:Alive() then
@@ -485,7 +496,7 @@ function SWEP:PrimaryAttack()
 									if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
 										table.insert(hitEntities, tr.Entity);
 									
-										if tr.Entity:GetNWBool("Parried") then
+										if tr.Entity:GetNWBool("Parried") and tr.Entity == owner.parryTarget then
 											self:HandleHit(tr.Entity, tr.HitPos, "parry_swing");
 										else
 											self:HandleHit(tr.Entity, tr.HitPos, stance);
@@ -519,7 +530,7 @@ function SWEP:PrimaryAttack()
 												if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
 													table.insert(hitEntities, tr2.Entity);
 													
-													if tr2.Entity:GetNWBool("Parried") then
+													if tr2.Entity:GetNWBool("Parried") and tr.Entity == owner.parryTarget then
 														self:HandleHit(tr2.Entity, tr2.HitPos, "parry_swing", #hitEntities);
 													else
 														self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities);

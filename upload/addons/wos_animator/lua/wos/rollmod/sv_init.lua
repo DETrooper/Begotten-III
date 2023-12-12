@@ -251,11 +251,6 @@ function meta:StartRolling(a)
 	if IsValid(activeWeapon) and activeWeapon.IsABegottenMelee then
 		activeWeapon.isAttacking = false;
 		
-		if IsValid(activeWeapon.SwingEntity) then
-			activeWeapon.SwingEntity:Remove();
-			activeWeapon.SwingEntity = nil;
-		end
-		
 		if activeWeapon.AttackSoundTable and activeWeapon.Weapon then
 			local attacksoundtable = GetSoundTable(activeWeapon.AttackSoundTable)
 			
@@ -323,11 +318,17 @@ function meta:StartRolling(a)
 		if not IsValid( self ) then return end
 		if not self:Alive() then return end
 		
+		local curTime = CurTime();
+		
+		if self.nextStas then
+			self.nextStas = math.min(self.nextStas, curTime + 0.5);
+		end
+		
 		if weaponRaised then
 			self:SetWeaponRaised(true);
 			
 			if IsValid(self:GetActiveWeapon()) then
-				self:GetActiveWeapon():SetNextSecondaryFire(CurTime() + 1);
+				self:GetActiveWeapon():SetNextSecondaryFire(curTime + 1);
 				
 				timer.Simple(1.05, function()
 					if IsValid(self) and IsValid(self:GetActiveWeapon()) then

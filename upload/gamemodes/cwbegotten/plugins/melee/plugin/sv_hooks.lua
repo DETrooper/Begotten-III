@@ -390,6 +390,8 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 		return;
 	end
 	
+	local plyTable = player:GetTable();
+	
 	--[[local inAttack2 = player:KeyDown(IN_ATTACK2);
 	local gardening = player:GetNWBool("Guardening", false);
 	
@@ -397,8 +399,8 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 		player:CancelGuardening();
 	end;]]--
 	
-	--[[if (!player.nextBlockCheck or curTime > player.nextBlockCheck) then
-		player.nextBlockCheck = curTime + 1;
+	--[[if (!plyTable.nextBlockCheck or curTime > plyTable.nextBlockCheck) then
+		plyTable.nextBlockCheck = curTime + 1;
 
 		if (gardening == true) then
 			local activeWeapon = player:GetActiveWeapon()
@@ -406,22 +408,22 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 			if (IsValid(activeWeapon)) then
 				if (activeWeapon.IronSights == false) then
 					player:SetNWBool("Guardening", false)
-					player.beginBlockTransition = true;
+					plyTable.beginBlockTransition = true;
 				end
 			end;
 		end;
 	end;]]--
 
-	if (!player.nextStas or player.nextStas < curTime) then
+	if (!plyTable.nextStas or plyTable.nextStas < curTime) then
 		local activeWeapon = player:GetActiveWeapon();
 		local max_poise = player:GetMaxPoise();
 		local poise = player:GetNWInt("meleeStamina", max_poise);
 		local gainedPoise = 5;
 		
-		if player.banners then
+		if plyTable.banners then
 			local playerFaction = player:GetFaction();
 			
-			for k, v in pairs(player.banners) do
+			for k, v in pairs(plyTable.banners) do
 				if v == "glazic" then
 					if playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" then
 						gainedPoise = 7;
@@ -434,22 +436,22 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 		
 		if IsValid(activeWeapon) and activeWeapon.Base == "sword_swepbase" then
 			if (poise != max_poise) then
-				if (!Clockwork.player:GetWeaponRaised(player) or (poise < max_poise) and --[[player.StaminaRegenDelay >= 135 and]] player:GetNWBool( "Guardening" ) == false) then
+				if (!Clockwork.player:GetWeaponRaised(player) or (poise < max_poise) and --[[plyTable.StaminaRegenDelay >= 135 and]] player:GetNWBool( "Guardening" ) == false) then
 					--local curTime = CurTime();
 					
-					--if (!player.nextRegens or player.nextRegens < curTime) then
-						--player.nextRegens = curTime + (activeWeapon.RegenDelay or 0.1);
+					--if (!plyTable.nextRegens or plyTable.nextRegens < curTime) then
+						--plyTable.nextRegens = curTime + (activeWeapon.RegenDelay or 0.1);
 						player:SetNWInt("meleeStamina", math.Clamp(poise + gainedPoise, 0, max_poise))
 					--end;
 				end
 			end;
 		
 			--[[if player:GetNWBool( "Guardening" ) == false then
-				player.StaminaRegenDelay = player.StaminaRegenDelay + 1
+				plyTable.StaminaRegenDelay = plyTable.StaminaRegenDelay + 1
 			end
 		
-			if player.StaminaRegenDelay > 135 then 
-				player.StaminaRegenDelay = 135
+			if plyTable.StaminaRegenDelay > 135 then 
+				plyTable.StaminaRegenDelay = 135
 			end]]--
 		else
 			if poise != max_poise then
@@ -459,10 +461,10 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 		
 		player:SetLocalVar("maxMeleeStamina", max_poise);
 		
-		player.nextStas = curTime + 0.5;
+		plyTable.nextStas = curTime + 0.5;
 	end;
 	
-	if (!player.nextStability or player.nextStability < curTime) then
+	if (!plyTable.nextStability or plyTable.nextStability < curTime) then
 		local max_stability = player:GetMaxStability();
 		local stability = player:GetCharacterData("stability", max_stability);
 
@@ -474,8 +476,8 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 			end
 		end
 		
-		if (stability >= max_stability or (player.stabilityCooldown and player.stabilityCooldown > curTime)) then
-			player.nextStability = curTime + 1;
+		if (stability >= max_stability or (plyTable.stabilityCooldown and plyTable.stabilityCooldown > curTime)) then
+			plyTable.nextStability = curTime + 1;
 			return;
 		end;
 
@@ -501,26 +503,26 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 		end;
 		
 		player:SetCharacterData("stability", math.Clamp(stability + 5, 0, max_stability));
-		player.nextStability = curTime + stabilityDelay;
+		plyTable.nextStability = curTime + stabilityDelay;
 	end;
 	
 	-- this needs to be made clientside
 	
 	local playedBreathing = false;
 
-	if (!player.nextBreathingCheck or player.nextBreathingCheck < curTime) then
-		player.nextBreathingCheck = curTime + 0.6;
+	if (!plyTable.nextBreathingCheck or plyTable.nextBreathingCheck < curTime) then
+		plyTable.nextBreathingCheck = curTime + 0.6;
 	
-		if (alive) and !player.possessor then
+		if (alive) and !plyTable.possessor then
 			local max_poise = player:GetMaxPoise();
 			local poise = player:GetNWInt("meleeStamina", max_poise);
 			
 			if (poise < max_poise * 0.8) then
-				if (!player.BreathingSoundsa) then
-					player.BreathingSoundsa = CreateSound(player, "breathing1.wav");
+				if (!plyTable.BreathingSoundsa) then
+					plyTable.BreathingSoundsa = CreateSound(player, "breathing1.wav");
 				end
 				
-				if (!player.nextBreathing or curTime >= player.nextBreathing) then
+				if (!plyTable.nextBreathing or curTime >= plyTable.nextBreathing) then
 					local gender = player:GetGender();
 					local pitch = 90;
 					
@@ -528,22 +530,22 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 						pitch = 125;
 					end;
 					
-					player.nextBreathing = curTime + (0.50 + ((1.25 / max_poise) * poise));
-					player.BreathingSoundsa:PlayEx(0.15 - ((0.15 / max_poise) * poise), pitch);
+					plyTable.nextBreathing = curTime + (0.50 + ((1.25 / max_poise) * poise));
+					plyTable.BreathingSoundsa:PlayEx(0.15 - ((0.15 / max_poise) * poise), pitch);
 				end;
 				
 				playedBreathing = true;
 			end;
 		else
-			if player.BreathingSoundsa then
-				player.BreathingSoundsa:Stop();
-				player.BreathingSoundsa = nil;
+			if plyTable.BreathingSoundsa then
+				plyTable.BreathingSoundsa:Stop();
+				plyTable.BreathingSoundsa = nil;
 			end
 		end;
 		
-		if (!playedBreathing and player.BreathingSoundsa) then
-			player.BreathingSoundsa:FadeOut(2);
-			player.BreathingSoundsa = nil;
+		if (!playedBreathing and plyTable.BreathingSoundsa) then
+			plyTable.BreathingSoundsa:FadeOut(2);
+			plyTable.BreathingSoundsa = nil;
 		end;
 	end;
 end;

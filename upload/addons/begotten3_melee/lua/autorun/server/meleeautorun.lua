@@ -9,9 +9,11 @@ function Parry(target, dmginfo)
 			if (checkTypes[damageType]) then
 				local attacker = dmginfo:GetAttacker()
 				local blocktable = GetTable(wep.realBlockTable);
+				local curTime = CurTime();
 				
 				target:SetNWBool("ParrySucess", true)
 				attacker:SetNWBool("Parried", true)
+				target.parryTarget = attacker;
 				netstream.Start(target, "Parried", 0.2)
 				netstream.Start(attacker, "Stunned", 3);
 				dmginfo:SetDamage(0)
@@ -42,7 +44,7 @@ function Parry(target, dmginfo)
 					end);
 				end
 				
-				wep:SetNextPrimaryFire(0)
+				wep:SetNextPrimaryFire(curTime + 0.5);
 				
 				if (wep.realBlockSoundTable) then
 					local blocksoundtable = GetSoundTable(wep.realBlockSoundTable)
@@ -54,13 +56,14 @@ function Parry(target, dmginfo)
 				local max_poise = target:GetNetVar("maxMeleeStamina");
 				
 				target:SetNWInt("meleeStamina", math.Clamp(target:GetNWInt("meleeStamina") + math.Round(blocktable["parrytakestamina"] / 2), 0, max_poise));
+				
+				-- Poise should start regenerating upon successful parry after 0.5 seconds.
+				target.nextStas = math.min(target.nextStas, curTime + 0.5);
 
 				if (IsValid(attacker) and attacker:IsPlayer()) then
 					local attackerWeapon = attacker:GetActiveWeapon();
 					
 					if IsValid(attackerWeapon) then
-						local curTime = CurTime();
-					
 						if cwBeliefs and attacker.HasBelief and attacker:HasBelief("encore") then
 							attackerWeapon:SetNextPrimaryFire(curTime + 1.5)
 							attackerWeapon:SetNextSecondaryFire(curTime + 1.5)
@@ -91,7 +94,7 @@ function Parry(target, dmginfo)
 					
 					target:SetNWBool("ParrySucess", true)
 					
-					local delay = 2;
+					local delay = 2.5;
 					
 					if wep.AttackTable then
 						local attackTable;
@@ -109,9 +112,12 @@ function Parry(target, dmginfo)
 						end
 						
 						if attackTable then
-							delay = (attackTable["delay"] + 1);
+							delay = (attackTable["delay"] + 1.5);
 						end
 					end
+					
+					-- Make it so they can't regenerate poise while parried.
+					attacker.nextStas = curTime + delay;
 					
 					timer.Create(index.."_ParrySuccessTimer", delay, 1, function()
 						if (target:IsValid() --[[and target:Alive() and !target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false) and (target:GetNWBool("ParrySucess", false) == true)]]) then
