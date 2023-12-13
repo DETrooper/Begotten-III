@@ -54,14 +54,14 @@ end
 
 hook.Add( "ModifyPlayerPlaybackRate", "wOS.RollMod.SlowDownAnim", function(ply)
 	if ply:wOSIsRolling() then
-		local roll_speed = ply:GetNW2Float("wOS.RollSpeed", 0.9);
+		local roll_speed = math.Round(ply:GetNW2Float("wOS.RollSpeed", 0.9), 2);
 		
 		if roll_speed == 0.9 then
-			player.cwPlaybackRate = 1;
+			ply.cwPlaybackRate = 1;
 		elseif roll_speed == 1.1 then
-			player.cwPlaybackRate = 0.8;
+			ply.cwPlaybackRate = 0.8;
 		elseif roll_speed == 1.25 then
-			player.cwPlaybackRate = 0.6;
+			ply.cwPlaybackRate = 0.6;
 		end
 		
 		return true
@@ -110,7 +110,7 @@ hook.Add("Move", "wOS.RollMod.MoveDir", function( ply, mv )
 	
 	local vel = mv:GetVelocity()
 	local roll_dir = ply:GetRollDir();
-	local roll_speed = ply:GetNW2Float("wOS.RollSpeed", 0.9);
+	local roll_speed = math.Round(ply:GetNW2Float("wOS.RollSpeed", 0.9), 2);
 	
 	if roll_speed == 0.9 then
 		roll_speed = 1;
