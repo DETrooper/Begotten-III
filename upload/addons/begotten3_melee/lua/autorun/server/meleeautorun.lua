@@ -74,9 +74,15 @@ function Parry(target, dmginfo)
 						
 						-- Make sure offhand swing is aborted if deflected.
 						if attackerWeapon.Timers then
+							if attackerWeapon.Timers["strikeTimer"..tostring(attacker:EntIndex())] then
+								attackerWeapon.Timers["strikeTimer"..tostring(attacker:EntIndex())] = nil;
+							end
+						
 							if attackerWeapon.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] then
 								attackerWeapon.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] = nil;
 							end
+							
+							attackerWeapon.isAttacking = false;
 						end
 						
 						if attackerWeapon:GetClass() == "begotten_fists" then
@@ -116,12 +122,15 @@ function Parry(target, dmginfo)
 						end
 					end
 					
-					-- Make it so they can't regenerate poise while parried.
-					attacker.nextStas = curTime + delay;
+					if (IsValid(attacker) and attacker:IsPlayer()) then
+						-- Make it so they can't regenerate poise while parried.
+						attacker.nextStas = curTime + delay + 1.5;
+					end
 					
 					timer.Create(index.."_ParrySuccessTimer", delay, 1, function()
 						if (target:IsValid() --[[and target:Alive() and !target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false) and (target:GetNWBool("ParrySucess", false) == true)]]) then
 							target:SetNWBool("ParrySucess", false) 
+							target.parryTarget = nil;
 						end
 						
 						if IsValid(attacker) then
@@ -1058,10 +1067,16 @@ local function Guarding(ent, dmginfo)
 								
 								-- Make sure offhand swing is aborted if deflected.
 								if enemywep.Timers then
+									if enemywep.Timers["strikeTimer"..tostring(attacker:EntIndex())] then
+										enemywep.Timers["strikeTimer"..tostring(attacker:EntIndex())] = nil;
+									end
+								
 									if enemywep.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] then
 										enemywep.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] = nil;
 									end
 								end
+								
+								enemywep.isAttacking = false;
 							end
 							
 							--netstream.Start(attacker, "Stunned", (enemyattacktable["delay"]));
