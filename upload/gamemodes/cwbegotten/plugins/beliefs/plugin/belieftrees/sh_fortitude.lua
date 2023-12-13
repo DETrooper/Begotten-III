@@ -68,28 +68,28 @@ local FORTITUDE = cwBeliefs.beliefTrees:New("fortitude")
 			},
 		},
 		[3] = {
+			["hauberk"] = {
+				name = "Hauberk",
+				description = "Unlocks the ability to wear heavy armor.",
+				row = 1,
+			},
 			["defender"] = {
 				name = "Defender",
 				description = "Unlocks the ability to equip great shields.",
 				quote = "The savages trembled before the advancing wall of steel.",
-				row = 1,
+				requirements = {"hauberk"},
+				row = 2,
 			},
 			["warden"] = {
 				name = "Warden",
 				description = "All melee weapons and shields now have an additional 15% poise damage resistance.",
-				requirements = {"defender"},
-				row = 2,
-			},
-			["hauberk"] = {
-				name = "Hauberk",
-				description = "Unlocks the ability to wear heavy armor.",
-				requirements = {"defender", "warden"},
+				requirements = {"hauberk", "defender"},
 				row = 3,
 			},
 			["unburdened"] = {
 				name = "Unburdened",
 				description = "Significantly reduces the movement penalty for medium and heavy armor, including rolling.",
-				requirements = {"defender", "warden", "hauberk"},
+				requirements = {"hauberk", "defender", "warden"},
 				row = 4,
 			},
 		},

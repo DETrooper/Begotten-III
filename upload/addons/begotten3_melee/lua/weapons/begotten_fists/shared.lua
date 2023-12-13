@@ -342,6 +342,8 @@ function SWEP:PrimaryAttack()
 		self:TriggerAnim(owner, self.Weapon.realCriticalAnim);
 		owner:SetNWBool("ParrySucess", false);
 		
+		owner.nextStas = curTime + 5;
+		
 		return;
 	end
 

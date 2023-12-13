@@ -44,7 +44,7 @@ function Parry(target, dmginfo)
 					end);
 				end
 				
-				wep:SetNextPrimaryFire(curTime + 0.5);
+				wep:SetNextPrimaryFire(curTime + 0.7);
 				
 				if (wep.realBlockSoundTable) then
 					local blocksoundtable = GetSoundTable(wep.realBlockSoundTable)
@@ -1025,6 +1025,8 @@ local function Guarding(ent, dmginfo)
 						end
 						
 						ent:SetNWBool("Deflect", false)
+						
+						wep:SetNextPrimaryFire(0);
 						
 						if ent.HasBelief then
 							local max_stability = ent:GetMaxStability();

@@ -1229,7 +1229,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 			local clothesItem = attacker:GetClothesEquipped();
 			
 			if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
-				local hatred = math.min(attacker:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 3))), 100);
+				local hatred = math.min(attacker:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 2))), 100);
 				
 				if !attacker.opponent then
 					attacker:SetCharacterData("Hatred", hatred);
@@ -1243,7 +1243,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 			local clothesItem = entity:GetClothesEquipped();
 			
 			if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
-				local hatred = math.min(entity:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 3))), 100);
+				local hatred = math.min(entity:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 2))), 100);
 				
 				if !entity.opponent then
 					entity:SetCharacterData("Hatred", hatred);

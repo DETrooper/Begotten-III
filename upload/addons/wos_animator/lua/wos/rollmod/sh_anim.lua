@@ -52,16 +52,16 @@ function wOS.RollMod:ResetAnimation( ply )
 	end
 end
 
-hook.Add( "UpdateAnimation", "wOS.RollMod.SlowDownAnim", function(ply, velocity, maxSeqGroundSpeed)
+hook.Add( "ModifyPlayerPlaybackRate", "wOS.RollMod.SlowDownAnim", function(ply)
 	if ply:wOSIsRolling() then
-		local roll_speed = ply:GetNW2Float("wOS.RollSpeed", 0.75);
+		local roll_speed = ply:GetNW2Float("wOS.RollSpeed", 0.9);
 		
-		if roll_speed == 0.75 then
-			ply:SetPlaybackRate(0.8);
-		elseif roll_speed == 1 then
-			ply:SetPlaybackRate(0.7);
+		if roll_speed == 0.9 then
+			player.cwPlaybackRate = 1;
+		elseif roll_speed == 1.1 then
+			player.cwPlaybackRate = 0.8;
 		elseif roll_speed == 1.25 then
-			ply:SetPlaybackRate(0.6);
+			player.cwPlaybackRate = 0.6;
 		end
 		
 		return true
@@ -110,11 +110,11 @@ hook.Add("Move", "wOS.RollMod.MoveDir", function( ply, mv )
 	
 	local vel = mv:GetVelocity()
 	local roll_dir = ply:GetRollDir();
-	local roll_speed = ply:GetNW2Float("wOS.RollSpeed", 0.75);
+	local roll_speed = ply:GetNW2Float("wOS.RollSpeed", 0.9);
 	
-	if roll_speed == 0.75 then
+	if roll_speed == 0.9 then
 		roll_speed = 1;
-	elseif roll_speed == 1 then
+	elseif roll_speed == 1.1 then
 		roll_speed = 0.9
 	elseif roll_speed == 1.25 then
 		roll_speed = 0.75
@@ -136,5 +136,3 @@ hook.Add("Move", "wOS.RollMod.MoveDir", function( ply, mv )
 	
 	mv:SetVelocity(Vector(vel.x, vel.y, math.min(vel.z, 30)));
 end);
-
-

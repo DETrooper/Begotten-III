@@ -169,7 +169,7 @@ function meta:StartRolling(a)
 	hook.Call( "wOS.RollMod.OnRoll", nil, self )
 	
 	local roll_sound = hook.Run("GetRollSound", self);
-	local time = hook.Run("GetRollTime", self) or 0.75;
+	local time = hook.Run("GetRollTime", self) or 0.9;
 	local weaponRaised = self:IsWeaponRaised();
 	
 	if (Clockwork and Clockwork.player and Clockwork.player.HasFlags and Clockwork.player:HasFlags(self, "4")) then
@@ -303,12 +303,16 @@ function meta:StartRolling(a)
 	end
 	
 	self.wOS.LastRoll = 0
+	
+	self.lastRoll = CurTime() + 1; -- Delay before next roll
+	
+	--timer.Create("iFramesStartTimer_"..self:EntIndex(), time * 0.15, 1, function()
+		--if not IsValid( self ) then return end
+		
+		self.iFrames = true;
+	--end);
 
-	self.iFrames = true;
-	
-	self.lastRoll = CurTime() + 2; -- Delay before next roll
-	
-	timer.Create("iFramesTimer_"..self:EntIndex(), 2 - time, 1, function()
+	timer.Create("iFramesEndTimer_"..self:EntIndex(), 1.5 - time, 1, function()
 		if not IsValid( self ) then return end
 		
 		self.iFrames = false;
@@ -328,7 +332,7 @@ function meta:StartRolling(a)
 			self:SetWeaponRaised(true);
 			
 			if IsValid(self:GetActiveWeapon()) then
-				self:GetActiveWeapon():SetNextSecondaryFire(curTime + 1);
+				--self:GetActiveWeapon():SetNextSecondaryFire(curTime + 1);
 				
 				timer.Simple(1.05, function()
 					if IsValid(self) and IsValid(self:GetActiveWeapon()) then

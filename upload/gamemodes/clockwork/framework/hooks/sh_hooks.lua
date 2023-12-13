@@ -174,6 +174,9 @@ do
 		end
 
 		player.cwPlaybackRate = math.Clamp(rate, 0, 1.5);
+		
+		hook.Run("ModifyPlayerPlaybackRate", player);
+		
 		player:SetPlaybackRate(player.cwPlaybackRate);
 
 		if (player:InVehicle() and CLIENT) then
