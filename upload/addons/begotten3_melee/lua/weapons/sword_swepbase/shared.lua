@@ -3117,23 +3117,25 @@ end
 function SWEP:Holster()
 	local player = self.OwnerOverride or self.Owner;
 	
-	timer.Remove(player:EntIndex().."IdleAnimation");
+	if IsValid(player) then
+		timer.Remove(player:EntIndex().."IdleAnimation");
 
-	self:StopAllAnims(player);
-	
-	player:SetNWBool("ThrustStance", false);
-	player:SetNWBool("Parry", false);
-	player:SetNWBool("ParrySucess", false);
-	player:SetNWBool("Riposting", false);
-
-	if CLIENT and IsValid(player) and player:IsPlayer() then
-		local vm = player:GetViewModel()
+		self:StopAllAnims(player);
 		
-		if IsValid(vm) then
-			self:ResetBonePositions(vm)
-			vm:SetSubMaterial( 0, "" )
-			vm:SetSubMaterial( 1, "" )
-			vm:SetSubMaterial( 2, "" )
+		player:SetNWBool("ThrustStance", false);
+		player:SetNWBool("Parry", false);
+		player:SetNWBool("ParrySucess", false);
+		player:SetNWBool("Riposting", false);
+
+		if CLIENT and player:IsPlayer() then
+			local vm = player:GetViewModel()
+			
+			if IsValid(vm) then
+				self:ResetBonePositions(vm)
+				vm:SetSubMaterial( 0, "" )
+				vm:SetSubMaterial( 1, "" )
+				vm:SetSubMaterial( 2, "" )
+			end
 		end
 	end
 	
