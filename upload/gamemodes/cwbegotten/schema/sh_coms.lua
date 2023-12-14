@@ -1437,6 +1437,8 @@ local COMMAND = Clockwork.command:New("PlyHealFull");
 			Clockwork.player:SetRagdollState(target, RAGDOLL_NONE);
 		end
 		
+		hook.Run("PlayerHealedFull", target);
+		
 		Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has fully healed "..name..".");
 	end;
 COMMAND:Register();
@@ -1489,6 +1491,8 @@ local COMMAND = Clockwork.command:New("PlyHealFullAll");
 					Clockwork.limb:HealBody(v, 100);
 					Clockwork.player:SetAction(v, "die", false);
 					Clockwork.player:SetAction(v, "die_bleedout", false);
+					
+					hook.Run("PlayerHealedFull", v);
 					
 					if v:GetRagdollState() == RAGDOLL_KNOCKEDOUT then
 						Clockwork.player:SetRagdollState(v, RAGDOLL_NONE);

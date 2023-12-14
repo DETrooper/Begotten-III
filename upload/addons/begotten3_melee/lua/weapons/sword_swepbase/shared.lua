@@ -2914,7 +2914,7 @@ function SWEP:Initialize()
 	
 	self.RaiseSound = "cloth.wav";
 	
-	self:SetHoldType(self.realHoldType);
+	self:SetHoldType(self.realHoldType or self.HoldType);
 
 	if CLIENT then
 		local weaponTable = weapons.GetStored(self:GetClass());

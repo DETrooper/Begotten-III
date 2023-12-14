@@ -599,6 +599,8 @@ function PANEL:Rebuild(change)
 			cwCharacterNeeds:BuildNeedTooltip("corruption", x, y, frame:GetWide(), frame:GetTall(), frame);
 		end);
 		
+		x, y = hook.Run("AddStatusIcons", self.statusInfo.iconFrame);
+		
 		self.statusInfo.statusFrame = vgui.Create("DPanel", self.statusInfo);
 		self.statusInfo.statusFrame:SetSize(200, 274);
 		self.statusInfo.statusFrame:SetPaintBackground(false);
