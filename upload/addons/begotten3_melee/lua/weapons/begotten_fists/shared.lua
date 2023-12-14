@@ -505,7 +505,9 @@ function SWEP:HandlePrimaryAttack()
 	self:TriggerAnim(self.Owner, "a_fists_attack"..math.random(1, 2));
 
 	-- Viewmodel attack animation!
-	self:PlayPunchAnimation();
+	if (SERVER) then
+		self:PlayPunchAnimation();
+	end
 
 	timer.Simple( 0.09, function() if self:IsValid() then
 	self:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])]) end end)
@@ -519,9 +521,9 @@ function SWEP:OnDeploy()
 end
 
 function SWEP:PlayPunchAnimation()
-	if (SERVER) then
+	--[[if (SERVER) then
 		self.Weapon:CallOnClient("PlayPunchAnimation", "");
-	end;
+	end;]]--
 
  	if (self.left == nil) then self.left = true; else self.left = !self.left; end;
 
