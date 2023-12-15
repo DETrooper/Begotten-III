@@ -19,7 +19,6 @@ local ITEM = Clockwork.item:New(nil, true)
 	ITEM.description = "Medical Base"
 	ITEM.model = "models/Items/HealthKit.mdl";
 	ITEM.category = "Medical"
-	ITEM.business = true;
 	ITEM.weight = 1;
 	ITEM.customFunctions = {"Give"};
 	

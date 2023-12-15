@@ -551,7 +551,7 @@ local COMMAND = Clockwork.command:New("OrderShipment");
 			return false;
 		end;
 		
-		if (!hook.Run("PlayerCanOrderShipment", player, itemTable)) then
+		if (hook.Run("PlayerCanOrderShipment", player, itemTable) == false) then
 			return false;
 		end;
 		

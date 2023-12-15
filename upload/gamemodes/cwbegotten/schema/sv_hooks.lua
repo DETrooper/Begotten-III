@@ -219,6 +219,13 @@ function Schema:PlayerCanDropWeapon(player, itemTable, weapon, bNoMsg)
 	end
 end
 
+-- Called when a player attempts to order an item shipment.
+function Schema:PlayerCanOrderShipment(player, itemTable)
+	if !player:IsAdmin() then
+		return false;
+	end
+end
+
 -- Called when a player wants to fallover.
 function Schema:PlayerCanFallover(player)
 	if player.cwWakingUp or self.falloverDisabled or player.caughtByCheaple then

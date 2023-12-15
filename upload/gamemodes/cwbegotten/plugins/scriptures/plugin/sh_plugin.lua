@@ -155,7 +155,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.model = "models/begotten/misc/quill.mdl";
 	ITEM.weight = 0.1;
 	ITEM.category = "Tools";
-	ITEM.business = true;
 	ITEM.stackable = true;
 	ITEM.description = "A small quill that can be used for writing by those who are sufficiently learned.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/quill.png"

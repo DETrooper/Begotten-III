@@ -12,7 +12,6 @@ ITEM.cost = 50;
 ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl";
 ITEM.weight = 0.25;
 ITEM.category = "Tools";
-ITEM.business = true;
 ITEM.stackable = true;
 ITEM.description = "A blank piece of paper, likely procured by the Hierarchy. It can be used to write on.";
 ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";

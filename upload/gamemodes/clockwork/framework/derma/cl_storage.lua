@@ -812,6 +812,10 @@ function PANEL:Init()
 	
 	function self.takeButton.DoClick(panel)
 		if (!self.nextCanClick or CurTime() >= self.nextCanClick) then
+			if !self.itemTable then
+				return;
+			end
+		
 			if (self.storageType == "Inventory") then
 				Clockwork.kernel:RunCommand("StorageGiveItem", self.itemTable("uniqueID"), self.itemTable("itemID"));
 			else
@@ -824,6 +828,10 @@ function PANEL:Init()
 	
 	function self.takeButton.DoRightClick(panel)
 		if (!self.nextCanClick or CurTime() >= self.nextCanClick) then
+			if !self.itemTable then
+				return;
+			end
+		
 			local amount = self.itemData.amount;
 
 			if self.itemData.amount > 1 then

@@ -831,8 +831,6 @@ function GM:PlayerCanOrderShipment(player, itemTable)
 	if (player.cwNextOrderTime and curTime < player.cwNextOrderTime) then
 		return false
 	end
-
-	return true
 end
 
 -- Called when a player attempts to get up.

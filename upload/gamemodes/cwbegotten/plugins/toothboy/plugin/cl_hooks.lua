@@ -110,10 +110,11 @@ function cwToothBoy:RenderScreenspaceEffects()
 		self.NextHit = curTime + 1
 		
 		if (Clockwork.Client:Alive()) then
-			local trace = Clockwork.Client:GetEyeTrace()
-			local entity = trace.Entity
+			local entity = Clockwork.Client:GetEyeTrace().Entity;
 
-			hook.Run("PlayerOnHit", entity)
+			if IsValid(entity) then
+				hook.Run("PlayerOnHit", entity)
+			end
 		end
 	end
 

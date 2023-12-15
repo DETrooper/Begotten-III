@@ -8,6 +8,7 @@ ITEM.category = "Shields";
 ITEM.useInVehicle = false;
 ITEM.excludeFactions = {};
 ITEM.requireFaction = {};
+ITEM.requireSubfaction = {};
 ITEM.requireFaith = {};
 ITEM.breakable = true;
 ITEM.breakMessage = " shatters into pieces!";
@@ -179,6 +180,14 @@ function ITEM:OnUse(player, itemEntity)
 	if #self.requireFaction > 0 then
 		if (!table.HasValue(self.requireFaction, faction) and (!kinisgerOverride or !table.HasValue(self.requireFaction, kinisgerOverride))) then
 			Schema:EasyText(player, "chocolate", "You are not the correct faction for this item!")
+			return false
+		end
+	end
+	
+	if #self.requireSubfaction > 0 then
+		if (!table.HasValue(self.requireSubfaction, subfaction) and (!kinisgerOverrideSubfaction or !table.HasValue(self.requireSubfaction, kinisgerOverrideSubfaction))) then
+			Schema:EasyText(player, "peru", "You are not the correct subfaction to wear this!")
+			
 			return false
 		end
 	end

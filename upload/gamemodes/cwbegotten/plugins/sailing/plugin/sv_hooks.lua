@@ -17,7 +17,7 @@ function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 					entity.health = 500 - damageDealt;
 				end
 				
-				self:EmitSound(self.creaksounds[math.random(1, #self.creaksounds)]);
+				entity:EmitSound(entity.creaksounds[math.random(1, #entity.creaksounds)]);
 			elseif damageType == 128 then -- BLUNT
 				local damageDealt = math.floor(damageAmount / 16);
 				
@@ -27,7 +27,7 @@ function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 					entity.health = 500 - damageDealt;
 				end
 				
-				self:EmitSound(self.creaksounds[math.random(1, #self.creaksounds)]);
+				entity:EmitSound(entity.creaksounds[math.random(1, #entity.creaksounds)]);
 			end
 		end
 	end
