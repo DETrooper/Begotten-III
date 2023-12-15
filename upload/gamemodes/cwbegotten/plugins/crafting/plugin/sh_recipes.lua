@@ -4848,7 +4848,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
-		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1};
 			["wood"] = {amount = 4},

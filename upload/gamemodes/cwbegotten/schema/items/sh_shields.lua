@@ -38,7 +38,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.model = "models/begotten/weapons/goreroundshield.mdl";
 	ITEM.weight = 2;
 	ITEM.uniqueID = "shield14";
-	ITEM.description = "A sturdy shield made from abnormally strong wood from the Gore Forest. It is decorated in Goreic clan sigils.";
+	ITEM.description = "A sturdy shield made from abnormally strong wood from the Gore Forest. It is decorated and protected by Goreic clan sigils.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/clan_shield.png"
 	ITEM.isAttachment = true;
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
@@ -47,7 +47,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.bulletConditionScale = 0.3;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood", "wood", "wood"}};
-	ITEM.requireFaction = {"Goreic Warrior"};
+	ITEM.requireFaith = {"Faith of the Family"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
