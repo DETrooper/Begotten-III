@@ -744,14 +744,26 @@ concommand.Add("cw_CheckShipStatus", function(player, cmd, args)
 			if entity.health then
 				local health = entity.health;
 				
-				if health >= 500 then
-					status_string = status_string.."The longship looks to be in immaculate condition.";
-				elseif health < 500 and health >= 400 then
-					status_string = status_string.."The longship looks to be slightly damaged.";
-				elseif health < 400 and health >= 250 then
-					status_string = status_string.."The longship looks to be moderately damaged, though still safe to sail.";
+				if entity:GetSkin() == 1 then
+					if health >= 1000 then
+						status_string = status_string.."The longship looks to be in immaculate condition.";
+					elseif health < 1000 and health >= 600 then
+						status_string = status_string.."The longship looks to be slightly damaged.";
+					elseif health < 600 and health >= 250 then
+						status_string = status_string.."The longship looks to be moderately damaged, though still safe to sail.";
+					else
+						status_string = status_string.."The longship looks to be severely damaged. It is probably unsafe to sail in.";
+					end
 				else
-					status_string = status_string.."The longship looks to be severely damaged. It is probably unsafe to sail in.";
+					if health >= 500 then
+						status_string = status_string.."The longship looks to be in immaculate condition.";
+					elseif health < 500 and health >= 400 then
+						status_string = status_string.."The longship looks to be slightly damaged.";
+					elseif health < 400 and health >= 250 then
+						status_string = status_string.."The longship looks to be moderately damaged, though still safe to sail.";
+					else
+						status_string = status_string.."The longship looks to be severely damaged. It is probably unsafe to sail in.";
+					end
 				end
 			end
 			
