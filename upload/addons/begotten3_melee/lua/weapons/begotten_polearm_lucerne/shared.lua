@@ -69,7 +69,7 @@ function SWEP:HandlePrimaryAttack()
 
 	--Attack animation
 	if IsValid(self) then
-		self:TriggerAnim(self.Owner, "a_spear_2h_halberd_attack1");
+		self:TriggerAnim(self.Owner, "a_spear_2h_halberd_medium_attack1");
 	end
 	
 	-- Viewmodel attack animation!
@@ -88,7 +88,7 @@ function SWEP:HandleThrustAttack()
 	local attacktable = GetTable(self.AttackTable)
 
 	--Attack animation
-	self:TriggerAnim(self.Owner, "a_spear_2h_attack_slow");
+	self:TriggerAnim(self.Owner, "a_spear_2h_attack_medium");
 
 	-- Viewmodel attack animation!
 	self.Weapon:SendWeaponAnim( ACT_VM_SECONDARYATTACK )
