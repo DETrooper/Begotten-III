@@ -494,8 +494,8 @@ function PLUGIN:ModifyPlayerSpeed(player, infoTable)
 		
 		if clothesItem.attributes and table.HasValue(clothesItem.attributes, "rage") then
 			if not player:GetShieldEquipped() then
-				infoTable.runSpeed = infoTable.runSpeed * 1.10;
-				infoTable.walkSpeed = infoTable.walkSpeed * 1.10;
+				infoTable.runSpeed = infoTable.runSpeed * 1.07;
+				infoTable.walkSpeed = infoTable.walkSpeed * 1.07;
 			end
 		end
 	end

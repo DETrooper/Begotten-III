@@ -1517,7 +1517,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 				
 					if table.HasValue(itemTable.attributes, "rage") then
-						frame:AddText("Rage (Shieldless): Movement speed is increased by 10%.", Color(110, 30, 30));
+						frame:AddText("Rage (Shieldless): Movement speed is increased by 7%.", Color(110, 30, 30));
 					end
 					
 					if table.HasValue(itemTable.attributes, "bell") then
@@ -1867,7 +1867,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 				
 					if table.HasValue(itemTable.attributes, "rage") then
-						frame:AddText("Rage (Shieldless): Movement speed is increased by 10%.", Color(110, 30, 30));
+						frame:AddText("Rage (Shieldless): Movement speed is increased by 7%.", Color(110, 30, 30));
 					end
 					
 					if table.HasValue(itemTable.attributes, "malleable") then
@@ -2218,7 +2218,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			end
 
 			if table.HasValue(itemTable.attributes, "rage") then
-				frame:AddText("Rage (Shieldless): Movement speed is increased by 10%", Color(110, 30, 30));
+				frame:AddText("Rage (Shieldless): Movement speed is increased by 7%", Color(110, 30, 30));
 			end
 			
 			if table.HasValue(itemTable.attributes, "thermal_vision") then
