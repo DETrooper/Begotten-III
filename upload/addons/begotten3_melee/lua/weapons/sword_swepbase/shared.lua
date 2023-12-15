@@ -770,7 +770,7 @@ function SWEP:PrimaryAttack()
 
 			-- Viewmodel attack animation!
 			vm:SendViewModelMatchingSequence(vm:LookupSequence("powermissup"));
-			self.Owner:GetViewModel():SetPlaybackRate(Lerp(strikeTime + 0.1, 0.6, 0.4));
+			self.Owner:GetViewModel():SetPlaybackRate(Lerp(strikeTime + 0.1, 0.5, 0.3));
 			
 			if !attacktable.canaltattack and attacktable.dmgtype == DMG_VEHICLE then
 				self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])]);
@@ -807,7 +807,7 @@ function SWEP:PrimaryAttack()
 				vm:SendViewModelMatchingSequence( vm:LookupSequence( "powermissR1" ) )
 			end
 			
-			self.Owner:GetViewModel():SetPlaybackRate(Lerp(strikeTime + 0.1, 0.5, 0.3));
+			self.Owner:GetViewModel():SetPlaybackRate(Lerp(strikeTime + 0.1, 0.45, 0.2));
 			
 			self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])]);
 			self.Weapon:EmitSound(attacksoundtableOffhand["primarysound"][math.random(1, #attacksoundtableOffhand["primarysound"])]);
