@@ -755,7 +755,18 @@ function SWEP:PrimaryAttack()
 		
 		if (owner:GetNWBool("ThrustStance") == true and !owner:GetNWBool("Riposting")) or thrustOverride then
 			--Attack animation
-			self:TriggerAnim(self.Owner, "a_dual_swords_stab");
+			local anim_suffix = "_medium";
+			local speed = delay + strikeTime;
+			
+			if speed <= 0.8 then
+				anim_suffix = "_faster";
+			elseif speed <= 1 then
+				anim_suffix = "_fast";
+			elseif strikeTime >= 1.3 then
+				anim_suffix = "_slow";
+			end
+			
+			self:TriggerAnim(self.Owner, "a_dual_swords_stab"..anim_suffix);
 
 			-- Viewmodel attack animation!
 			vm:SendViewModelMatchingSequence(vm:LookupSequence("powermissup"));
@@ -776,7 +787,18 @@ function SWEP:PrimaryAttack()
 			self.Owner:ViewPunch(attacktable["punchstrength"] + Angle(1, 1, 1));
 		else
 			--Attack animation
-			self:TriggerAnim(self.Owner, "a_dual_swords_slash_0"..tostring(math.random(1, 2)));
+			local anim_suffix = "_medium";
+			local speed = delay + strikeTime;
+			
+			if speed <= 0.8 then
+				anim_suffix = "_faster";
+			elseif speed <= 1 then
+				anim_suffix = "_fast";
+			elseif strikeTime >= 1.3 then
+				anim_suffix = "_slow";
+			end
+			
+			self:TriggerAnim(self.Owner, "a_dual_swords_slash"..anim_suffix.."_0"..tostring(math.random(1, 2)));
 
 			-- Viewmodel attack animation!
 			if math.random(1, 2) == 1 then
