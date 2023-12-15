@@ -3265,11 +3265,12 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("poleaxe");
 		RECIPE.name = "Poleaxe";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
+			["iron_ingot"] = {amount = 1},
 			["wood"] = {amount = 3},
 		};
 		RECIPE.result = {
@@ -3280,7 +3281,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 50;
+		RECIPE.experience = 75;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -3299,7 +3300,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 3},
 			["wood"] = {amount = 2},
 			["leather"] = {amount = 1},
 		};

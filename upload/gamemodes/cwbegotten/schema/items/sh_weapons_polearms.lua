@@ -15,7 +15,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-7.78, 3, -45.97);
 	
 	ITEM.attributes = {"grounded"};
-	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood", "wood"}}; -- use "breakdown" for other type
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood", "wood", "wood"}}; -- use "breakdown" for other type
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -35,7 +35,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-0.34, -21.89, -21.22);
 	
 	ITEM.attributes = {"grounded"};
-	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood", "wood"}}; -- use "breakdown" for other type
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -55,7 +55,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(4.24, -47.58, -21.22);
 	
 	ITEM.attributes = {"grounded"};
-	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood", "leather"}}; -- use "breakdown" for other type
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "wood", "wood", "leather"}}; -- use "breakdown" for other type
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
