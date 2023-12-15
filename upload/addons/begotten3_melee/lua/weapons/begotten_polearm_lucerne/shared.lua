@@ -69,7 +69,7 @@ function SWEP:HandlePrimaryAttack()
 
 	--Attack animation
 	if IsValid(self) then
-		self:TriggerAnim(self.Owner, "a_spear_2h_halberd_medium_attack1");
+		self:TriggerAnim(self.Owner, "a_spear_2h_halberd_attack1_fast");
 	end
 	
 	-- Viewmodel attack animation!
