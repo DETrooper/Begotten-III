@@ -331,3 +331,23 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood", "wood", "wood"}};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("shield_base");
+	ITEM.name = "Red Wolf Shield";
+	ITEM.model = "models/begotten/weapons/uniquegoreshield.mdl";
+	ITEM.weight = 9;
+	ITEM.uniqueID = "shieldunique1";
+	ITEM.description = "An unholy wall of black steel forged in the fires of hell. It is adorned with the dried flesh of flayed victims. A shield meant for the Red Wolves, a twisted warrior lodge of Clan Reaver.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/red_wolf_shield.png"
+	ITEM.isAttachment = true;
+	ITEM.isUnique = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 360, 0);
+	ITEM.attachmentOffsetVector = Vector(0, 4.24, -4.95);
+
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
+	ITEM.attributes = {"unbreakable"};
+	ITEM.requiredbeliefs = {"defender"};
+	ITEM.requireFaction = {"Goreic Warrior"};
+	ITEM.requireSubfaction = {"Clan Reaver"};
+ITEM:Register();

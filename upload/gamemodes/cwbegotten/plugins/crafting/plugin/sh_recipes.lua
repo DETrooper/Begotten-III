@@ -5199,6 +5199,38 @@ function cwRecipes:ClockworkInitialized()
 		end;
 	RECIPE:Register()
 
+	RECIPE = cwRecipes.recipes:New("red_wolf_shield");
+		RECIPE.name = "Red Wolf Shield";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
+		RECIPE.requirements = {
+			["hellforged_steel_ingot"] = {amount = 3},
+			["iron_ingot"] = {amount = 4},
+			["unholy_sigil_stone"] = {amount = 1},
+			["down_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["shieldunique1"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 225;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
 	RECIPE = cwRecipes.recipes:New("wooden_shield");
 		RECIPE.name = "Wooden Shield";
 		RECIPE.requiredBeliefs = {"craftsman"};

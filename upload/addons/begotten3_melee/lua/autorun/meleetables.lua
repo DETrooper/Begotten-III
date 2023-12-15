@@ -6386,7 +6386,7 @@ BlockTables.shield19 = { -- Rusted Kite Shield
 
 BlockTables.shieldunique1 = { -- Red Wolf Skinshield (Unique)
 	["name"] = "Red Wolf Skinshield",
-	["guardblockamount"] = 5,
+	["guardblockamount"] = 4,
 	["damagereduction"] = 0.8,
 	["specialeffect"] = false,
 	["blockeffect"] = "MetalSpark",
@@ -6397,13 +6397,13 @@ BlockTables.shieldunique1 = { -- Red Wolf Skinshield (Unique)
 	["blockanim"] = "a_sword_shield_block_pursuer",
 	["blocksoundtable"] = "MetalShieldSoundTable",
 	["partialbulletblock"] = false,
-	["poiseresistance"] = 50,
-	["raisespeed"] = 2,
+	["poiseresistance"] = 999,
+	["raisespeed"] = 2.2,
 	["instantraise"] = false,
 	["parrydifficulty"] = 0.2,
-	["parrytakestamina"] = 15,
+	["parrytakestamina"] = 50,
 	["canparry"] = true,
-	["candeflect"] = true,
+	["candeflect"] = false,
 	["ironsights"] = {
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(4.519, -1.206, 1.72), ang = Vector(-4.926, -23.921, 0)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(4.519, -1.206, 1.72), ang = Vector(-4.926, -23.921, 0)},
