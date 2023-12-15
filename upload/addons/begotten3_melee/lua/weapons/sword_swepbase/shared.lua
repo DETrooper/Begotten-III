@@ -759,10 +759,10 @@ function SWEP:PrimaryAttack()
 			local speed = delay + strikeTime;
 			
 			if speed <= 0.8 then
-				anim_suffix = "_faster";
-			elseif speed <= 1 then
+				anim_suffix = "_veryfast";
+			elseif speed <= 0.9 then
 				anim_suffix = "_fast";
-			elseif strikeTime >= 1.3 then
+			elseif speed >= 1.2 then
 				anim_suffix = "_slow";
 			end
 			
@@ -791,10 +791,10 @@ function SWEP:PrimaryAttack()
 			local speed = delay + strikeTime;
 			
 			if speed <= 0.8 then
-				anim_suffix = "_faster";
-			elseif speed <= 1 then
+				anim_suffix = "_veryfast";
+			elseif speed <= 0.9 then
 				anim_suffix = "_fast";
-			elseif strikeTime >= 1.3 then
+			elseif speed >= 1.2 then
 				anim_suffix = "_slow";
 			end
 			
