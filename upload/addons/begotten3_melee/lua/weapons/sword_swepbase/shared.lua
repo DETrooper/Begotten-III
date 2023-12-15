@@ -2881,7 +2881,7 @@ function SWEP:Initialize()
 			self.realBlockTable = GetTable(self.BlockTable);
 			self.realBlockTableOffhand = GetTable(weaponTable.BlockTable or self.BlockTable);
 			self.realBlockSoundTable = self.BlockSoundTable;
-			self.realCriticalAnim = "a_dual_swords_slash_01";
+			self.realCriticalAnim = "a_dual_swords_slash_medium_01";
 			self.realHoldType = "wos-begotten_dual";
 			self.realParryAnim = "a_dual_swords_parry";
 			self.realIronSightsPos = Vector(7.76, -4.824, -1.321);
