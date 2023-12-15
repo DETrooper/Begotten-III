@@ -2,8 +2,11 @@
 	Begotten III: Jesus Wept
 --]]
 
+local longshipXP = 1000;
+
 function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 	if (entity:GetClass() == "cw_longship") then
+		local attacker = damageInfo:GetAttacker();
 		local damageType = damageInfo:GetDamageType();
 		local damageAmount = damageInfo:GetDamage();
 		
@@ -17,7 +20,15 @@ function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 					entity.health = 500 - damageDealt;
 				end
 				
-				entity:EmitSound(entity.creaksounds[math.random(1, #entity.creaksounds)]);
+				if IsValid(attacker) and attacker:IsPlayer() then
+					if attacker:GetFaction() ~= "Goreic Warrior" then
+						local damagePercentage = math.min(damageAmount / 500, 1);
+							
+						attacker:HandleXP(math.Round(longshipXP * damagePercentage)); 
+					end
+				end
+				
+				self:EmitSound(self.creaksounds[math.random(1, #self.creaksounds)]);
 			elseif damageType == 128 then -- BLUNT
 				local damageDealt = math.floor(damageAmount / 16);
 				
@@ -27,11 +38,20 @@ function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 					entity.health = 500 - damageDealt;
 				end
 				
-				entity:EmitSound(entity.creaksounds[math.random(1, #entity.creaksounds)]);
+				if IsValid(attacker) and attacker:IsPlayer() then
+					if attacker:GetFaction() ~= "Goreic Warrior" then
+						local damagePercentage = math.min(damageAmount / 500, 1);
+							
+						attacker:HandleXP(math.Round(longshipXP * damagePercentage)); 
+					end
+				end
+				
+				self:EmitSound(self.creaksounds[math.random(1, #self.creaksounds)]);
 			end
 		end
 	end
 end
+
 
 -- Called when a player uses an unknown item function.
 function cwSailing:PlayerUseUnknownItemFunction(player, itemTable, itemFunction)

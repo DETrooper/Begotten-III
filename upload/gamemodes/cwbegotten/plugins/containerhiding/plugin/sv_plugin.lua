@@ -7,6 +7,12 @@
 
 -- Called when the player attempts to hide in a container.
 function cwContainerHiding:AttemptHide(player, entity, bHide)
+	if player:GetPos():Distance(entity:GetPos()) > 128 then
+		Schema:EasyText(player, "peru", "You are too far to hide in this container.");
+	
+		return;
+	end
+
 	if (IsValid(entity.occupier) and entity.occupier:GetCharacterData("hidden") == true and entity.occupier != player) then
 		self:OpenedStorage(entity.occupier, entity);
 		--Schema:EasyText(player, "peru", "This container is currently occupied by another.");
@@ -103,10 +109,10 @@ function cwContainerHiding:OpenedStorage(player, entity)
 	end;
 end;
 
-concommand.Add("HideInEntity", function(player)
+--[[concommand.Add("HideInEntity", function(player)
 	local ent = player:GetEyeTrace().Entity;
 	
 	if (ent:GetClass() == "prop_physics") then
 		cwContainerHiding:AttemptHide(player, ent, true);
 	end;
-end);
+end);]]--
