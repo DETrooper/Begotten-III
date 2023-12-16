@@ -200,11 +200,10 @@ RITUAL = cwRituals.rituals:New("judgement_sigil_vengeful");
 RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("unholy_sigil_stone_rite");
-	RITUAL.name = "(T3) Unholy Sigil Stone Rite";
+	RITUAL.name = "(T2) Unholy Sigil Stone Rite";
 	RITUAL.description = "You laugh in the face of all that is good and righteous. Performing this ritual summons an Unholy Sigil Stone item.";
-	RITUAL.onerequiredbelief = {"sorcerer"}; -- Tier III Faith of the Dark Ritual
-	RITUAL.requiredBeliefsSubfactionOverride = {["Rekh-khet-sa"] = {"embrace_the_darkness"}}; -- Tier III Faith of the Dark Ritual
-	
+	RITUAL.onerequiredbelief = {"soothsayer", "heretic", "shedskin"}; -- Tier II Faith of the Dark Ritual
+
 	RITUAL.requirements = {"down_catalyst", "belphegor_catalyst", "pentagram_catalyst"};
 	RITUAL.result = {
 		["unholy_sigil_stone"] = {amount = 1},
