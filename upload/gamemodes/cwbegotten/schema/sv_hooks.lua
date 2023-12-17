@@ -1456,7 +1456,11 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized)
 		infoTable.coinslotWages = wages;
 		
 		if infoTable.coinslotWages > 0 then
-			if !infoTable.nextCoinslotWages or infoTable.nextCoinslotWages < curTime then
+			if !infoTable.nextCoinslotWages then
+				infoTable.nextCoinslotWages = curTime + 1800;
+			end
+			
+			if infoTable.nextCoinslotWages < curTime then
 				if !self.towerTreasury then
 					self.towerTreasury = Clockwork.kernel:RestoreSchemaData("treasury")[1] or 0;
 				end
