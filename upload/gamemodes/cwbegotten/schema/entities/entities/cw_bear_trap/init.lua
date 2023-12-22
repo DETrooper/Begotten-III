@@ -79,7 +79,7 @@ function ENT:Touch(entity)
 			end
 			
 			if entity:IsNPC() or entity:IsNextBot() then
-				if string.find(entity:GetClass(), "npc_animal") then
+				if string.find(entity:GetClass(), "npc_drg_animals") then
 					damageInfo:SetDamage(1000);
 				end
 				

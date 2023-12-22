@@ -1643,7 +1643,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar");
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
 			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
 
-			local entity = ents.Create("npc_animal_cave_bear");
+			local entity = ents.Create("npc_drg_animals_cave_bear");
 			local playerFaith = player:GetFaith();
 			
 			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
@@ -1659,7 +1659,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar");
 					entity:AddEntityRelationship(player, D_LI, 99);
 					entity.XPValue = 250;
 					
-					entity.CreateDeathCorpse = function()
+					entity.OnDeath = function()
 						
 					end;
 					

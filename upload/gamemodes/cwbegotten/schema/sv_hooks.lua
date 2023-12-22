@@ -1323,12 +1323,12 @@ function Schema:Think()
 		if self.npcSpawnsEnabled ~= false then
 			if self.spawnedNPCS and self.maxNPCS and #self.spawnedNPCS < self.maxNPCS then
 				if math.random(1, 6) == 1 then
-					local goreNPCs = {"npc_animal_bear", "npc_animal_deer", "npc_animal_goat"};
+					local goreNPCs = {"npc_drg_animals_bear", "npc_drg_animals_deer", "npc_drg_animals_goat"};
 					local npcName;
 					local spawnPos = self.npcSpawns["gore"][math.random(1, #self.npcSpawns["gore"])];
 					
 					if math.random(1, 20) == 1 then
-						npcName = "npc_animal_cave_bear";
+						npcName = "npc_drg_animals_cave_bear";
 					else
 						npcName = goreNPCs[math.random(1, #goreNPCs)];
 					end
@@ -2741,7 +2741,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 			end
 		end;
 	elseif (entity:IsNPC() or entity:IsNextBot()) then
-		if string.find(entity:GetClass(), "npc_animal") then
+		if string.find(entity:GetClass(), "npc_drg_animals_") then
 			local attacker = damageInfo:GetAttacker();
 			
 			if attacker:IsPlayer() and attacker:GetSubfaction() == "Clan Gore" then
