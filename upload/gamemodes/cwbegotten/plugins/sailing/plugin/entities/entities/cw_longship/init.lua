@@ -216,6 +216,23 @@ function ENT:SetHP(newhp)
 			self:Remove();
 		end
 	else
+		if self.playersOnBoard and #self.playersOnBoard > 0 then
+			for i = 1, #self.playersOnBoard do
+				local player = self.playersOnBoard[i];
+				
+				if IsValid(player) then
+					player:KillSilent();
+					Schema:PermaKillPlayer(player, nil, true);
+					
+					if self.location == "styx" then
+						player:DeathCauseOverride("Went overboard into lava and burnt to a crisp.");
+					else
+						player:DeathCauseOverride("Went overboard into the sea and drowned.");
+					end
+				end
+			end
+		end
+	
 		self:EmitSound("physics/wood/wood_crate_break5.wav");
 		self:Remove();
 	end
