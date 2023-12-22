@@ -13,7 +13,7 @@ local BRUTALITY = cwBeliefs.beliefTrees:New("brutality")
 		{"Brutality", BRUTALITY.color, "Civ5ToolTip4"},
 		{"Brutality is a measure of your character's depravity and hatred of man, primarily affecting your character's survival ability and unlocking abilities such as cannibalism and bone harvesting. Fully upgrading Brutality will make your character far more survivable while increasing your combat ability while insane.", Color(225, 200, 200)},
 		{"\n\"There will be no exile for the laggards. They will feel my wrath. I will impale a pitchfork through their foul, satanic flesh and harvest it for the cow.\"", Color(128, 90, 90, 240)},
-		{"\nBelief Tree Completion Bonus: Killing another character instantly restores you to full Health, Stability, Stamina, and Poise.", Color(50, 255, 50)}
+		{"\nBelief Tree Completion Bonus: Killing another character instantly restores you to full Health, Stability, and Stamina.", Color(50, 255, 50)}
 	};
 	BRUTALITY.columnPositions = {
 		[1] = (BRUTALITY.size.w - 4) * 0.3,

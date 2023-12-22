@@ -18,11 +18,11 @@ function cwOxygen:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 end;
 
 -- Called at an interval while a player is connected.
-function cwOxygen:PlayerThink(player, curTime, infoTable)
-	if (!player.nextOxygenDecay or player.nextOxygenDecay < curTime) then
-		if (!player:Alive() or player:GetMoveType() == MOVETYPE_NOCLIP or player.victim) then
-			player.nextOxygenDecay = curTime + 5
-			player.suffocating = nil
+function cwOxygen:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
+	if (!plyTab.nextOxygenDecay or plyTab.nextOxygenDecay < curTime) then
+		if (!player:Alive() or player:GetMoveType() == MOVETYPE_NOCLIP or plyTab.victim) then
+			plyTab.nextOxygenDecay = curTime + 5
+			plyTab.suffocating = nil
 			
 			return
 		end
@@ -36,7 +36,7 @@ function cwOxygen:PlayerThink(player, curTime, infoTable)
 			if cwBeliefs and player.HasBelief and player:HasBelief("the_black_sea") then
 				decayTime = 0.5
 				change = -1
-			elseif player.drownedKingActive then
+			elseif plyTab.drownedKingActive then
 				decayTime = 0.5
 				change = 0;
 			else
@@ -55,22 +55,22 @@ function cwOxygen:PlayerThink(player, curTime, infoTable)
 			player:SetSharedVar("oxygen", newOxygen);
 		end
 		
-		if (!player.suffocating) then
+		if (!plyTab.suffocating) then
 			if (oxygen <= 0) then
-				player.suffocating = curTime
+				plyTab.suffocating = curTime
 				decayTime = 0.5
 			else
-				player.suffocating = nil
+				plyTab.suffocating = nil
 			end
 		else
 			if (oxygen > 0) then
-				player.suffocating = nil
+				plyTab.suffocating = nil
 			elseif (waterLevel >= 3) then
 				decayTime = 1
 				
-				if (!player.drowned and (curTime - player.suffocating) > 10) then
+				if (!plyTab.drowned and (curTime - plyTab.suffocating) > 10) then
 					Clockwork.datastream:Start(player, "Drown", true)
-					player.drowned = true
+					plyTab.drowned = true
 					
 					timer.Simple(2, function()
 						if IsValid(player) then
@@ -81,14 +81,14 @@ function cwOxygen:PlayerThink(player, curTime, infoTable)
 					end)
 				end
 				
-				if (!player.drowned) then
+				if (!plyTab.drowned) then
 					player:EmitSound("begotten/misc/npc_human_drowning_0"..math.random(1, 3)..".wav", 75, 100)
 					Clockwork.datastream:Start(player, "Drown")
 				end
 			end
 		end
 		
-		player.nextOxygenDecay = curTime + decayTime
+		plyTab.nextOxygenDecay = curTime + decayTime
 	end
 end;
 

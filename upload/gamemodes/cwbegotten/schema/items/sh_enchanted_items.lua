@@ -17,7 +17,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "boot_contortionist";
 	ITEM.description = "A leather boot that surprisingly has not yet been eaten. Judging by its inscription, it evidently used to belong to an ancient gymnast.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Grants immunity to breaking your legs.\n- Reduces fall damage taken by 50%.";
+	ITEM.charmEffects = "- Grants immunity to breaking your legs.\n- Reduces fall damage taken by 50%.\n- Reduces stamina consumption from combat rolling by 50%.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 750};
 ITEM:Register();
@@ -29,7 +29,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_courier";
 	ITEM.description = "A silver ring that once belonged to a courier that ran between the county districts. Putting it on your finger makes you feel as though you have more stamina.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/ring_protection_silver.png";
-	ITEM.charmEffects = "- Increases stamina by 25 points.";
+	ITEM.charmEffects = "- Reduces stamina drain when sprinting by 25%.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, supercrateOnly = true};
 ITEM:Register();
@@ -116,7 +116,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_pummeler";
 	ITEM.description = "A ring with a mysterious aura. Putting it on your finger makes your strikes feel weightier.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Increases poise damage of all melee weapons by 15%.";
+	ITEM.charmEffects = "- Increases stamina damage of all melee weapons by 15%.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 725, onGround = false};
 ITEM:Register();
@@ -128,7 +128,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_pugilist";
 	ITEM.description = "A ring with a mysterious aura. Putting it on your finger makes you feel significantly stronger.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Increases the damage and poise damage of your fists to four times its original values and gives them 100% armor-piercing damage. Also allows you to parry with your fists.";
+	ITEM.charmEffects = "- Increases the damage and stamina damage of your fists to four times its original values and gives them 100% armor-piercing damage. Also allows you to parry with your fists.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 725, onGround = false};
 ITEM:Register();

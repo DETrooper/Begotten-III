@@ -5,7 +5,7 @@
 cwMedicalSystem.bleedDamageThresholds = {
 	[DMG_BULLET] = 5, -- bullets
 	[DMG_BUCKSHOT] = 5, -- buckshot
-	--[DMG_CLUB] = 30, -- blunt
+	[DMG_CLUB] = 20, -- blunt
 	[DMG_FALL] = 50, -- fall
 	[DMG_SLASH] = 10, -- slash
 	[DMG_VEHICLE] = 5, -- stab
@@ -46,10 +46,10 @@ function cwMedicalSystem:KeyPress(player, key)
 end;
 
 -- Called at an interval while a player is connected.
-function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
-	if (player:HasInitialized() and player:Alive()) then
-		if (!player.nextNetwork or curTime > player.nextNetwork) then
-			player.nextNetwork = curTime + 5;
+function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
+	if (alive and initialized) then
+		if (!plyTab.nextNetwork or curTime > plyTab.nextNetwork) then
+			plyTab.nextNetwork = curTime + 5;
 			self:NetworkInjuries(player);
 			self:NetworkLimbs(player);
 		end;
@@ -57,13 +57,14 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 		if (Clockwork.player:HasFlags(player, "E")) then
 			player:SetCharacterData("diseases", {});
 			player:SetCharacterData("BloodLevel", self.maxBloodLevel);
-		elseif (!player.opponent and !player.cwObserverMode) then
-			if (!player.nextBleedPoint or curTime >= player.nextBleedPoint) then
-				if !cwRituals or (cwRituals and !player.scornificationismActive) then
+		elseif (!plyTab.opponent and !plyTab.cwObserverMode) then
+			if (!plyTab.nextBleedPoint or curTime >= plyTab.nextBleedPoint) then
+				if !cwRituals or (cwRituals and !plyTab.scornificationismActive) then
 					local bleedingLimbs = player:GetCharacterData("BleedingLimbs", {});
 					local bloodLevel = player:GetCharacterData("BloodLevel", self.maxBloodLevel);
+					local injuries = self:GetInjuries(player);
 					
-					if player.bleeding then
+					if plyTab.bleeding then
 						local bloodLoss = 0;
 						local bloodLossPerLimb = self.bloodLossPerLimb;
 						local health = player:Health();
@@ -87,9 +88,19 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 							end
 						end
 
+						for k, v in pairs(injuries) do
+							for k2, v2 in pairs(v) do
+								local injuryTable = self.cwInjuryTable[k2];
+								
+								if injuryTable.causesBleeding then
+									bloodLoss = bloodLoss + bloodLossPerLimb * 0.5;
+								end
+							end
+						end
+						
 						if bloodLoss == 0 then
 							-- Seems player stopped bleeding but this wasn't caught?
-							player.bleeding = false;
+							plyTab.bleeding = false;
 						else
 							self:DoBleedEffect(player);
 							
@@ -128,7 +139,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 											end;
 										end);
 									end
-								elseif not player.scornificationismActive then
+								elseif not plyTab.scornificationismActive then
 									player:DeathCauseOverride("Bled out in a puddle of their own blood.");
 									player:TakeDamage(1, player, player);
 								end
@@ -208,11 +219,11 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 						end
 					end
 					
-					if (!player.nextBleedOut or curTime > player.nextBleedOut) then
+					if (!plyTab.nextBleedOut or curTime > plyTab.nextBleedOut) then
 						if bloodLevel <= self.lethalBloodLoss then
 							local action = Clockwork.player:GetAction(player);
 							
-							player.nextBleedOut = curTime + 60;
+							plyTab.nextBleedOut = curTime + 60;
 							--Clockwork.hint:Send(player, "You are bleeding to death...", 10, Color(175, 100, 100));
 							
 							if (action != "die") and (action != "die_bleedout") then
@@ -251,10 +262,10 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 					end;
 				end;
 				
-				player.nextBleedPoint = curTime + math.random(10, 15);
+				plyTab.nextBleedPoint = curTime + math.random(10, 15);
 			end;
 			
-			if (!player.nextCritConditionCheck or curTime > player.nextCritConditionCheck) then
+			if (!plyTab.nextCritConditionCheck or curTime > plyTab.nextCritConditionCheck) then
 				local action = Clockwork.player:GetAction(player);
 				
 				if (action == "die") then
@@ -264,15 +275,15 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 						Clockwork.player:SetAction(player, "unragdoll", 180, 1, function() end);
 					end
 				
-					--[[if (!player.nextBleedOutDuck or curTime > player.nextBleedOutDuck) then
-						player.nextBleedOutDuck = curTime + 0.5;
+					--[[if (!plyTab.nextBleedOutDuck or curTime > plyTab.nextBleedOutDuck) then
+						plyTab.nextBleedOutDuck = curTime + 0.5;
 						
 						if (!player:Crouching()) then
 							player:ConCommand("+duck");
 							player:SetCrouchedWalkSpeed(0.1);
 							
-							if (player.crouchFix) then
-								player.crouchFix = nil;
+							if (plyTab.crouchFix) then
+								plyTab.crouchFix = nil;
 							end;
 						end;
 					end;]]--
@@ -285,15 +296,15 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 						Clockwork.player:SetAction(player, "unragdoll", 180, 1, function() end);
 					end
 				--[[else
-					if (!player.crouchFix) then
-						player.crouchFix = true;
+					if (!plyTab.crouchFix) then
+						plyTab.crouchFix = true;
 					end;]]--
 				end;
 				
-				player.nextCritConditionCheck = curTime + 1;
+				plyTab.nextCritConditionCheck = curTime + 1;
 			end;
 			
-			if (!player.nextDiseaseCheck or curTime > player.nextDiseaseCheck) then
+			if (!plyTab.nextDiseaseCheck or curTime > plyTab.nextDiseaseCheck) then
 				local diseases = player:GetCharacterData("diseases", {});
 				local diseaseNetworkStrings = {};
 				local contagious_diseases = {};
@@ -331,7 +342,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 												if disease.stage > #stages then
 													if diseaseTable.deathChance then
 														if math.random(1, 100) <= diseaseTable.deathChance then
-															player.dyingOfDisease = true;
+															plyTab.dyingOfDisease = true;
 															
 															-- Todo: make a reverse wakeup sequence where you collapse and die.
 															Clockwork.chatBox:Add(player, nil, "itnofake", "No... this can't be the end...");
@@ -340,7 +351,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 															
 															timer.Simple(5, function()
 																if IsValid(player) then
-																	player.dyingOfDisease = false;
+																	plyTab.dyingOfDisease = false;
 																	player:DeathCauseOverride("Died from complications of the "..diseaseTable.name..".");
 																	player:Kill();
 																	
@@ -352,7 +363,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 														end
 													end
 													
-													if !player.dyingOfDisease then
+													if !plyTab.dyingOfDisease then
 														Clockwork.chatBox:Add(player, nil, "itnofake", "You start to feel better, as though your disease has finally passed.");
 														
 														if diseaseTable.OnTake then
@@ -383,7 +394,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 				player:SetSharedVar("diseases", diseaseNetworkStrings);
 				player:SetSharedVar("symptoms", player:GetSymptoms());
 				
-				if not player.dyingOfDisease and player:Alive() and not player:IsRagdolled() then
+				if not plyTab.dyingOfDisease and not player:IsRagdolled() then
 					-- Make the character do something related to their symptom.
 					local symptoms = player:GetSharedVar("symptoms", {});
 					local valid_symptoms = {};
@@ -399,7 +410,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 					if not table.IsEmpty(valid_symptoms) then
 						local random_symptom = valid_symptoms[math.random(1, #valid_symptoms)];
 						
-						if random_symptom == "Vomiting" and not player.iFrames then
+						if random_symptom == "Vomiting" and not plyTab.iFrames then
 							local playerPos = player:GetPos();
 							local boneIndex = player:LookupBone("ValveBiped.Bip01_Head1");
 							local headPos, boneAng = player:GetBonePosition(boneIndex);
@@ -438,7 +449,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 							end;
 							
 							Clockwork.chatBox:AddInTargetRadius(player, "me", strings[math.random(1, #strings)], player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-						elseif random_symptom == "Vomiting Blood" and not player.iFrames then
+						elseif random_symptom == "Vomiting Blood" and not plyTab.iFrames then
 							local playerPos = player:GetPos();
 							local boneIndex = player:LookupBone("ValveBiped.Bip01_Head1");
 							local headPos, boneAng = player:GetBonePosition(boneIndex);
@@ -502,7 +513,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 							end
 							
 							timer.Simple(math.random(2, 5), function()
-								if IsValid(player) and player:Alive() and not player:IsRagdolled() and not player.iFrames and not player.opponent then
+								if IsValid(player) and player:Alive() and not player:IsRagdolled() and not plyTab.iFrames and not plyTab.opponent then
 									local gender = "his"
 
 									if (player:GetGender() == GENDER_FEMALE) then
@@ -517,18 +528,18 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 					end
 				end
 				
-				player.nextDiseaseCheck = curTime + math.random(60, 180);
+				plyTab.nextDiseaseCheck = curTime + math.random(60, 180);
 			end
 		end;
 		
-		if player.playerPerformingSurgery then
-			if IsValid(player.playerPerformingSurgery) then
-				local action = Clockwork.player:GetAction(player.playerPerformingSurgery);
+		if plyTab.playerPerformingSurgery then
+			if IsValid(plyTab.playerPerformingSurgery) then
+				local action = Clockwork.player:GetAction(plyTab.playerPerformingSurgery);
 				
 				if action == "performing_surgery" then
 					local messupChance;
 					
-					if !player.nextSurgeryCheck or player.nextSurgeryCheck < curTime then
+					if !plyTab.nextSurgeryCheck or plyTab.nextSurgeryCheck < curTime then
 						if player:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT then
 							messupChance = (messupChance or 0) + 30;
 						end
@@ -546,9 +557,9 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 								for k, v in pairs(injuries) do
 									for k2, v2 in pairs(v) do
 										if v2 == true then
-											if k == player.limbUnderSurgery then
+											if k == plyTab.limbUnderSurgery then
 												local injury = self.cwInjuryTable[k2];
-												local surgeryInfo = injury.surgeryInfo[player.surgeryStage];
+												local surgeryInfo = injury.surgeryInfo[plyTab.surgeryStage];
 												
 												if surgeryInfo then
 													local messupsTab = surgeryInfo.messups;
@@ -560,7 +571,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 															messupText = string.gsub(messupText, "NAME", player:Name());
 															messupText = string.gsub(messupText, "LIMB", self.cwHitGroupToString[k]);
 															
-															Clockwork.chatBox:AddInTargetRadius(player.playerPerformingSurgery, "me", messupText, player.playerPerformingSurgery:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+															Clockwork.chatBox:AddInTargetRadius(plyTab.playerPerformingSurgery, "me", messupText, plyTab.playerPerformingSurgery:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 														end
 														
 														if messupsTab.causesBleeding then
@@ -571,7 +582,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 															player:TakeDamage(messupsTab.damage);
 														end
 														
-														Clockwork.player:SetAction(player.playerPerformingSurgery, "performing_surgery", false);
+														Clockwork.player:SetAction(plyTab.playerPerformingSurgery, "performing_surgery", false);
 													end
 												end
 											
@@ -583,10 +594,10 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable)
 							end
 						end
 							
-						player.nextSurgeryCheck = curTime + 0.5;
+						plyTab.nextSurgeryCheck = curTime + 0.5;
 					end
 				else
-					player.playerPerformingSurgery = nil;
+					plyTab.playerPerformingSurgery = nil;
 				end
 			end
 		end
@@ -679,7 +690,7 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 		
 		--local damageType = damageInfo:GetDamageType();
 		local damageType;
-		local damageTypes = {DMG_FALL, DMG_BULLET, DMG_BUCKSHOT, DMG_BURN, DMG_SLASH, DMG_VEHICLE};
+		local damageTypes = {DMG_FALL, DMG_BULLET, DMG_BUCKSHOT, DMG_BURN, DMG_CLUB, DMG_SLASH, DMG_VEHICLE};
 		local damage = damageInfo:GetDamage();
 		local helmetItem = player:GetHelmetEquipped();
 		
@@ -693,31 +704,33 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 		local bloodToll = (hitGroup == HITGROUP_HEAD and damage > 0 and helmetItem and helmetItem.attributes and table.HasValue(helmetItem.attributes, "bloodtoll"));
 		
 		if damageType or bloodToll then
-			local damageThreshold = self.bleedDamageThresholds[damageType] or 1;
+			local damageThreshold = self.bleedDamageThresholds[damageType] or 10;
 
 			if hitGroup == HITGROUP_GENERIC then
-				hitGroup = HITGROUP_CHEST;
+				hitGroup = math.random(1, 7);
 			end
 			
 			if (damageThreshold and damage >= damageThreshold) and damageType ~= DMG_BURN then
-				player:ModifyBloodLevel(-(damage + (100 - (damageThreshold * 2))));
+				if damageType ~= DMG_CLUB then
+					player:ModifyBloodLevel(-(damage + (100 - (damageThreshold * 2))));
 
-				if damageType == DMG_FALL then
-					local rand = math.random(1, 3);
-					
-					if rand == 1 then
-						player:StartBleeding(HITGROUP_LEFTLEG);
-					elseif rand == 2 then
-						player:StartBleeding(HITGROUP_RIGHTLEG);
+					if damageType == DMG_FALL then
+						local rand = math.random(1, 3);
+						
+						if rand == 1 then
+							player:StartBleeding(HITGROUP_LEFTLEG);
+						elseif rand == 2 then
+							player:StartBleeding(HITGROUP_RIGHTLEG);
+						else
+							player:StartBleeding(HITGROUP_LEFTLEG);
+							player:StartBleeding(HITGROUP_RIGHTLEG);
+						end
 					else
-						player:StartBleeding(HITGROUP_LEFTLEG);
-						player:StartBleeding(HITGROUP_RIGHTLEG);
-					end
-				else
-					player:StartBleeding(hitGroup);
-					
-					if bloodToll then
-						player:EmitSound("ambient/machines/slicer"..math.random(1, 4)..".wav");
+						player:StartBleeding(hitGroup);
+						
+						if bloodToll then
+							player:EmitSound("ambient/machines/slicer"..math.random(1, 4)..".wav");
+						end
 					end
 				end
 				
@@ -736,8 +749,9 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 					
 					if math.random(1, 100) <= chance then
 						player:AddInjury(self.cwHitGroupToString[hitGroup], "gunshot_wound");
+						player:StartBleeding(hitGroup);
 					end
-				elseif damageType == DMG_SLASH --[[or damageType == DMG_VEHICLE]] then
+				elseif (damageType == DMG_CLUB and hitGroup < 8 and hitGroup > 3) or damageType == DMG_SLASH --[[or damageType == DMG_VEHICLE]] then
 					local chance = 0;
 					local limbHealth = Clockwork.limb:GetHealth(player, hitGroup, false)
 					
@@ -772,7 +786,23 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 					end
 					
 					if math.random(1, 100) <= chance then
-						player:AddInjury(self.cwHitGroupToString[hitGroup], "gash");
+						local injuries = self:GetInjuries(player);
+					
+						if damageType == DMG_CLUB then
+							if !(injuries[hitGroup]["broken_bone"]) then
+								player:AddInjury(self.cwHitGroupToString[hitGroup], "broken_bone");
+								player:StartBleeding(hitGroup);
+								
+								Clockwork.chatBox:AddInTargetRadius(player, "me", "'s "..self.cwHitGroupToString[hitGroup].." audibly breaks with a horrifying snap!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+
+								player:EmitSound("misc/bone_fracture.wav", 75, math.random(95, 100));
+							end;
+						else
+							if !(injuries[hitGroup]["gash"]) then
+								player:AddInjury(self.cwHitGroupToString[hitGroup], "gash");
+								player:StartBleeding(hitGroup);
+							end
+						end
 					end
 				end
 			elseif damageType == DMG_BURN then
@@ -1009,6 +1039,21 @@ function cwMedicalSystem:PostPlayerSpawn(player, lightSpawn, changeClass, firstS
 			if v == true then
 				bleeding = true;
 				break;
+			end
+		end
+		
+		if !bleeding then
+			local injuries = self:GetInjuries(player);
+			
+			for k, v in pairs(injuries) do
+				for k2, v2 in pairs(v) do
+					local injuryTable = self.cwInjuryTable[k2];
+					
+					if injuryTable.causesBleeding then
+						bleeding = true;
+						break;
+					end
+				end
 			end
 		end
 		

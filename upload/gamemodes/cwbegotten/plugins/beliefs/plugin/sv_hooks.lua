@@ -30,15 +30,15 @@ function cwBeliefs:PlayerRestoreCharacterData(player, data)
 end
 
 -- Called at an interval while the player is connected to the server.
-function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized)
-	if initialized then
-		if (!player.residualXPCheck or player.residualXPCheck < curTime) then
-			player.residualXPCheck = curTime + 60;
+function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
+	if initialized and alive then
+		if (!plyTab.residualXPCheck or plyTab.residualXPCheck < curTime) then
+			plyTab.residualXPCheck = curTime + 60;
 			
 			local lastZone = player:GetCharacterData("LastZone");
 			local playerFaction = player:GetFaction();
 			
-			if not player.opponent and (table.HasValue(self.residualXPZones, lastZone) or (lastZone == "tower" and ((playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy") or residualXPInSafezone == true))) then
+			if not plyTab.opponent and (table.HasValue(self.residualXPZones, lastZone) or (lastZone == "tower" and ((playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy") or residualXPInSafezone == true))) then
 				local residualXP = self.xpValues["residual"] or 5;
 				
 				if playerFaction == "Goreic Warrior" and (lastZone == "wasteland" or lastZone == "tower" or lastZone == "caves" or lastZone == "scrapper") then
@@ -57,9 +57,9 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized)
 			end
 		end
 		
-		if player.cloaked then
-			if (!player.cloakedCheck or player.cloakedCheck < curTime) then
-				player.cloakedCheck = curTime + 0.5;
+		if plyTab.cloaked then
+			if (!plyTab.cloakedCheck or plyTab.cloakedCheck < curTime) then
+				plyTab.cloakedCheck = curTime + 0.5;
 				
 				local lastZone = player:GetCharacterData("LastZone");
 				local valid_zones = {"scrapper", "caves", "wasteland"};
@@ -83,12 +83,12 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized)
 				end
 			end
 		elseif player:GetSubfaction() == "Kinisger" then
-			if (!player.cloakedCheck or player.cloakedCheck < curTime) then
-				player.cloakedCheck = curTime + 0.5;
+			if (!plyTab.cloakedCheck or plyTab.cloakedCheck < curTime) then
+				plyTab.cloakedCheck = curTime + 0.5;
 				
-				if player:Crouching() and player:GetNetVar("kinisgerCloak") == true and !player.cwObserverMode then
+				if player:Crouching() and player:GetNetVar("kinisgerCloak") == true and !plyTab.cwObserverMode then
 					if !player.wOSIsRolling or !player:wOSIsRolling() then
-						if !player.cloakCooldown or player.cloakCooldown <= curTime then
+						if !plyTab.cloakCooldown or plyTab.cloakCooldown <= curTime then
 							local playerPos = player:GetPos();
 							local blockedCloak;
 							
@@ -106,16 +106,16 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized)
 								player:Cloak();
 							end
 						else
-							Schema:EasyText(self.Owner, "chocolate", "You are covered in black powder and cannot cloak for "..math.Round(player.cloakCooldown - curTime).." seconds!");
+							Schema:EasyText(self.Owner, "chocolate", "You are covered in black powder and cannot cloak for "..math.Round(plyTab.cloakCooldown - curTime).." seconds!");
 						end
 					end
 				end
 			end
 		end
 		
-		if (!player.poisonCheck or player.poisonCheck < curTime) then
-			if player.poisonTicks and player.poisonTicks > 0 then
-				player.poisonTicks = player.poisonTicks - 1;
+		if (!plyTab.poisonCheck or plyTab.poisonCheck < curTime) then
+			if plyTab.poisonTicks and plyTab.poisonTicks > 0 then
+				plyTab.poisonTicks = plyTab.poisonTicks - 1;
 				
 				if alive then
 					local damageInfo = DamageInfo();
@@ -123,24 +123,24 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized)
 					damageInfo:SetDamage(2);
 					damageInfo:SetDamageType(DMG_POISON);
 					damageInfo:SetDamagePosition(player:GetPos() + Vector(0, 0, 32));
-					damageInfo:SetAttacker(player.poisoner or player);
-					damageInfo:SetInflictor(player.poisoner or player);
+					damageInfo:SetAttacker(plyTab.poisoner or player);
+					damageInfo:SetInflictor(plyTab.poisoner or player);
 					
 					player:TakeDamageInfo(damageInfo);
 				end
 				
-				if player.poisonTicks == 0 then
-					player.poisonTicks = nil;
-					player.poisoninflictor = nil;
-					player.poisoner = nil;
+				if plyTab.poisonTicks == 0 then
+					plyTab.poisonTicks = nil;
+					plyTab.poisoninflictor = nil;
+					plyTab.poisoner = nil;
 				end
 			end
 			
-			player.poisonCheck = curTime + 0.5;
+			plyTab.poisonCheck = curTime + 0.5;
 		end
 		
-		if (!player.regenCheck or player.regenCheck < curTime) and alive then
-			player.regenCheck = curTime + 5;
+		if (!plyTab.regenCheck or plyTab.regenCheck < curTime) then
+			plyTab.regenCheck = curTime + 5;
 			
 			if player:GetFaith() == "Faith of the Family" then
 				if player:HasBelief("gift_great_tree") then
@@ -289,13 +289,13 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 		Clockwork.player:GiveFlags(player, "J");
 	end
 
-	local max_poise = player:GetMaxPoise();
+	--local max_poise = player:GetMaxPoise();
 	local max_stamina = player:GetMaxStamina();
 	local max_stability = player:GetMaxStability();
 	local max_health = player:GetMaxHealth();
 	
 	player:SetLocalVar("maxStability", max_stability);
-	player:SetLocalVar("maxMeleeStamina", max_poise);
+	--player:SetLocalVar("maxMeleeStamina", max_poise);
 	player:SetLocalVar("Max_Stamina", max_stamina);
 	player:SetCharacterData("Max_Stamina", max_stamina);
 	player:NetworkBeliefs();
@@ -1464,6 +1464,18 @@ function cwBeliefs:DoPlayerDeathPreDeathSound(player, attacker, damageInfo)
 	end
 end
 
+function cwBeliefs:PlayerEnteredDuel(player)
+	if player.decapitationBuff then
+		player.decapitationBuff = false;
+	end
+end
+
+function cwBeliefs:PlayerExitedDuel(player)
+	if player.decapitationBuff then
+		player.decapitationBuff = false;
+	end
+end
+
 function cwBeliefs:PostPlayerCharacterLoaded(player)
 	local playerBeliefsSetup = player:GetCharacterData("beliefsSetup");
 	local playerLevel = player:GetCharacterData("level", 1);
@@ -1747,7 +1759,7 @@ function cwBeliefs:PostPlayerCharacterLoaded(player)
 			
 			for i = 1, 7 do
 				if math.random(1, 4) == 1 or (i == 7 and !wound_applied) then
-					if (i == 6 or i == 7) and math.random(1, 4) == 1 then
+					if (i < 8 and i > 3) and math.random(1, 6) == 1 then
 						player:AddInjury(i, "broken_bone")
 					elseif math.random(1, 4) == 1 then
 						player:AddInjury(i, "burn");
@@ -1819,7 +1831,7 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 		if attacker:HasBelief("brutality_finisher") then
 			attacker:SetHealth(attacker:GetMaxHealth());
 			attacker:SetCharacterData("Stamina", attacker:GetMaxStamina());
-			attacker:SetNWInt("meleeStamina", attacker:GetMaxPoise());
+			--attacker:SetNWInt("meleeStamina", attacker:GetMaxPoise());
 			attacker:SetNWInt("stability", attacker:GetMaxStability());
 			
 			attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
@@ -1892,16 +1904,26 @@ function cwBeliefs:GetMaxStamina(player, max_stamina)
 	else
 		if player:HasTrait("winded") then
 			new_stamina = new_stamina - 25;
-		elseif player:HasBelief("outlasting") then
-			new_stamina = new_stamina + 25;
+		--[[elseif player:HasBelief("outlasting") then
+			new_stamina = new_stamina + 25;]]--
 		end
 		
-		if player:GetCharmEquipped("ring_courier") then
+		--[[if player:GetCharmEquipped("ring_courier") then
 			new_stamina = new_stamina + 25;
-		end
+		end]]--
 	end
 	
 	return new_stamina;
+end
+
+function cwBeliefs:ModifyStaminaDrain(player, drainTab)
+	if player:GetCharmEquipped("ring_courier") then
+		drainTab.decrease = drainTab.decrease * 0.75;
+	end
+	
+	if player:HasBelief("outlasting") then
+		drainTab.decrease = drainTab.decrease * 0.75;
+	end
 end
 
 -- A function to get the maximum weight a player can carry.

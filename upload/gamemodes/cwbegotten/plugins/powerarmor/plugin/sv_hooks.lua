@@ -24,31 +24,31 @@ local jumpServoSounds = {
 };
 
 -- Called at an interval while a player is connected.
-function cwPowerArmor:PlayerThink(player, curTime, infoTable, alive, initialized)
+function cwPowerArmor:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	if (alive and initialized) then
-		if (!player.nextWearingPowerArmor or player.nextWearingPowerArmor < curTime) then
-			player.nextWearingPowerArmor = curTime + 2.5;
-			player.wearingPowerArmor = player:IsWearingPowerArmor();
+		if (!plyTab.nextWearingPowerArmor or plyTab.nextWearingPowerArmor < curTime) then
+			plyTab.nextWearingPowerArmor = curTime + 2.5;
+			plyTab.wearingPowerArmor = player:IsWearingPowerArmor();
 		end;
 
-		if (!player.cwObserverMode) then
-			if (player.wearingPowerArmor) then
-				if (!player.nextServo or player.nextServo < curTime) then
+		if (!plyTab.cwObserverMode) then
+			if (plyTab.wearingPowerArmor) then
+				if (!plyTab.nextServo or plyTab.nextServo < curTime) then
 					player:EmitSound(servoSounds[math.random(1, #servoSounds)]);
-					player.nextServo = curTime + math.random(5, 15);
+					plyTab.nextServo = curTime + math.random(5, 15);
 				end;
 				
-				if (!player.nextChargeDepleted) then
-					player.nextChargeDepleted = curTime + 120;
-				elseif (player.nextChargeDepleted < curTime) then
+				if (!plyTab.nextChargeDepleted) then
+					plyTab.nextChargeDepleted = curTime + 120;
+				elseif (plyTab.nextChargeDepleted < curTime) then
 					local currentCharge = player:GetCharacterData("battery", 0);
 						player:SetCharacterData("battery", math.Clamp(currentCharge - 1, 0, 100));
 						player:SetSharedVar("battery", math.Round(player:GetCharacterData("battery", 0), 0));
-					player.nextChargeDepleted = curTime + 120;
+					plyTab.nextChargeDepleted = curTime + 120;
 				end
 
-				if (!player.nextFireCheck or player.nextFireCheck < curTime) then
-					player.nextFireCheck = curTime + 0.5;
+				if (!plyTab.nextFireCheck or plyTab.nextFireCheck < curTime) then
+					plyTab.nextFireCheck = curTime + 0.5;
 					
 					if (player:IsOnFire()) then
 						player:Extinguish();

@@ -1402,7 +1402,7 @@ local COMMAND = Clockwork.command:New("PlyHealFull");
 			name = "themself";
 		end;
 		
-		local max_poise = target:GetMaxPoise();
+		--local max_poise = target:GetMaxPoise();
 		local max_sanity = 100;
 		local max_stability = target:GetMaxStability();
 		local max_stamina = target:GetMaxStamina();
@@ -1425,7 +1425,7 @@ local COMMAND = Clockwork.command:New("PlyHealFull");
 		target:SetCharacterData("stability", max_stability);
 		target:SetNWInt("stability", max_stability);
 		--target:SetCharacterData("meleeStamina", max_poise);
-		target:SetNWInt("meleeStamina", max_poise);
+		--target:SetNWInt("meleeStamina", max_poise);
 		target:SetNWInt("freeze", 0);
 		target:SetBloodLevel(5000);
 		target:StopAllBleeding();
@@ -1461,7 +1461,7 @@ local COMMAND = Clockwork.command:New("PlyHealFullAll");
 		for k, v in pairs (_player.GetAll()) do
 			if IsValid(v) and v:HasInitialized() and v:Alive() then
 				if !v.opponent or (v.opponent and affect_duelists) then
-					local max_poise = v:GetMaxPoise();
+					--local max_poise = v:GetMaxPoise();
 					local max_sanity = 100;
 					local max_stability = v:GetMaxStability();
 					local max_stamina = v:GetMaxStamina();
@@ -1484,7 +1484,7 @@ local COMMAND = Clockwork.command:New("PlyHealFullAll");
 					v:SetCharacterData("stability", max_stability);
 					v:SetNWInt("stability", max_stability);
 					--v:SetCharacterData("meleeStamina", max_poise);
-					v:SetNWInt("meleeStamina", max_poise);
+					--v:SetNWInt("meleeStamina", max_poise);
 					v:SetNWInt("freeze", 0);
 					v:SetBloodLevel(5000);
 					v:StopAllBleeding();

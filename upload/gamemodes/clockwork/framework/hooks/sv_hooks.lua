@@ -1722,6 +1722,7 @@ do
 				if (initialized) then
 					local alive = v:Alive();
 					local infoTable = v.cwInfoTable
+					local plyTab = v:GetTable();
 
 					infoTable.inventoryWeight = defaultInvWeight
 					infoTable.inventorySpace = defaultInvSpace
@@ -1732,14 +1733,14 @@ do
 					infoTable.isJumping = v:IsJumping()
 					infoTable.runSpeed = v.cwRunSpeed
 
-					hook.Run("PlayerThink", v, curTime, infoTable, alive, initialized)
+					hook.Run("PlayerThink", v, curTime, infoTable, alive, initialized, plyTab)
 
 					if (curTime >= cwNextSecond) then
-						hook.Run("OnePlayerSecond", v, curTime, infoTable, alive, initialized)
+						hook.Run("OnePlayerSecond", v, curTime, infoTable, alive, initialized, plyTab)
 					end
 					
 					if (curTime >= cwNextHalfSecond) then
-						hook.Run("OnePlayerHalfSecond", v, curTime, infoTable, alive, initialized)
+						hook.Run("OnePlayerHalfSecond", v, curTime, infoTable, alive, initialized, plyTab)
 					end
 				end
 			end

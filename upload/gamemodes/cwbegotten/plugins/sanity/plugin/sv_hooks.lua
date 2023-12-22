@@ -29,11 +29,15 @@ local hellZones = {
 }
 
 -- Called at an interval while the player is connected to the server.
-function cwSanity:PlayerThink(player, curTime, infoTable)
-	if (!player.nextSanityDecay or player.nextSanityDecay <= curTime) then
+function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
+	if !initialized then
+		return;
+	end
+
+	if (!plyTab.nextSanityDecay or plyTab.nextSanityDecay <= curTime) then
 		if (Clockwork.player:HasFlags(player, "E")) then
 			player:HandleSanity(100);
-			player.nextSanityDecay = curTime + sanity_interval;
+			plyTab.nextSanityDecay = curTime + sanity_interval;
 			
 			return;
 		end
@@ -43,7 +47,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable)
 		if (map != "rp_begotten3") then
 			if (map == "rp_begotten_redux") or (map == "rp_scraptown") then
 				if player:InTower() then
-					player.nextSanityDecay = curTime + sanity_interval;
+					plyTab.nextSanityDecay = curTime + sanity_interval;
 					
 					local lastZone = player:GetCharacterData("LastZone");
 					
@@ -54,14 +58,14 @@ function cwSanity:PlayerThink(player, curTime, infoTable)
 					end
 				end
 			else
-				player.nextSanityDecay = curTime + 1000
+				plyTab.nextSanityDecay = curTime + 1000
 				
 				return;
 			end
 		end;
 
-		if (!player:Alive() or player:GetMoveType() == MOVETYPE_NOCLIP or player.opponent or player:GetRagdollState() == RAGDOLL_KNOCKEDOUT or player.cwWakingUp or (player.possessor and IsValid(player.possessor)) or (player.victim and IsValid(player.victim))) then
-			player.nextSanityDecay = curTime + sanity_interval;
+		if (!alive or player:GetMoveType() == MOVETYPE_NOCLIP or plyTab.opponent or player:GetRagdollState() == RAGDOLL_KNOCKEDOUT or plyTab.cwWakingUp or (plyTab.possessor and IsValid(plyTab.possessor)) or (plyTab.victim and IsValid(plyTab.victim))) then
+			plyTab.nextSanityDecay = curTime + sanity_interval;
 			
 			return;
 		end;
@@ -69,13 +73,13 @@ function cwSanity:PlayerThink(player, curTime, infoTable)
 		local lastZone = player:GetCharacterData("LastZone");
 		
 		if !lastZone or string.find(lastZone, "sea") then
-			player.nextSanityDecay = curTime + sanity_interval;
+			plyTab.nextSanityDecay = curTime + sanity_interval;
 		
 			return;
 		end
 		
 		if (lastZone == "hell" and self.hellZoneSanityDisabled) then
-			player.nextSanityDecay = curTime + sanity_interval;
+			plyTab.nextSanityDecay = curTime + sanity_interval;
 			
 			return;
 		end;
@@ -83,7 +87,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable)
 		local subfaction = player:GetSubfaction();
 		
 		if (subfaction == "Rekh-khet-sa") then
-			player.nextSanityDecay = curTime + sanity_interval;
+			plyTab.nextSanityDecay = curTime + sanity_interval;
 			
 			return;
 		end;
@@ -167,9 +171,9 @@ function cwSanity:PlayerThink(player, curTime, infoTable)
 		local bNight = tobool(cycle == "night")
 		local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction()
 		
-		if (player.LightColor) then
+		if (plyTab.LightColor) then
 			local requiredLight = 15;
-			local lightColor = player.LightColor
+			local lightColor = plyTab.LightColor
 			local r, g, b = lightColor.r, lightColor.g, lightColor.b
 
 			if (r > requiredLight or g > requiredLight or b > requiredLight) then
@@ -235,8 +239,8 @@ function cwSanity:PlayerThink(player, curTime, infoTable)
 			end;
 		end;
 
-		if player.banners then
-			for k, v in pairs(player.banners) do
+		if plyTab.banners then
+			for k, v in pairs(plyTab.banners) do
 				if v == "glazic" then
 					if playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" then
 						sanityDecay = sanityDecay + 2;
@@ -252,16 +256,12 @@ function cwSanity:PlayerThink(player, curTime, infoTable)
 		player:HandleSanity(sanityDecay)
 
 		if (player:HasBelief("prudence")) then
-			player.nextSanityDecay = curTime + (sanity_interval * 1.25);
+			plyTab.nextSanityDecay = curTime + (sanity_interval * 1.25);
 		else
-			player.nextSanityDecay = curTime + sanity_interval;
+			plyTab.nextSanityDecay = curTime + sanity_interval;
 		end;
 	end
 end
-
-for k, v in pairs (_player.GetAll()) do
-	v.nextSanityDecay = nil
-end;
 
 -- Called when the player looks at an entity.
 function cwSanity:PlayerOnHit(player, entity) end

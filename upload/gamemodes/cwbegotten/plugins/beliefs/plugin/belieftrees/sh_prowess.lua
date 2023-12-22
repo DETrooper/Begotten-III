@@ -78,7 +78,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 		[3] = {
 			["fighter"] = {
 				name = "Fighter",
-				description = "Maximum poise is now increased by 10 points.",
+				description = "Maximum stamina is now increased by 10 points.",
 				quote = "\"Pick up that spear, boy! You'll be fighting in the Lord's army now.\"",
 				row = 1,
 			},
@@ -91,14 +91,14 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["warrior"] = {
 				name = "Warrior",
-				description = "Maximum poise is now increased by an additional 10 points.",
+				description = "Maximum stamina is now increased by an additional 10 points.",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "wrestle_subdue"},
 				row = 3,
 			},
 			["master_at_arms"] = {
 				name = "Master at Arms",
-				description = "Maximum poise is now increased by an additional 15 points.",
+				description = "Maximum stamina is now increased by an additional 15 points.",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "wrestle_subdue", "warrior"},
 				row = 4,
@@ -107,13 +107,13 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 		[4] = {
 			["deflection"] = {
 				name = "Deflection",
-				description = "Successful deflections (perfect blocks) now restore +15 additional points of poise and stability, as well as prevent enemy attacks for 1 second.",
+				description = "Successful deflections (perfect blocks) now restore +15 additional points of stamina and stability, as well as prevent enemy attacks for 1 second.",
 				requirements = {"fighter"},
 				row = 2,
 			},
 			["sidestep"] = {
 				name = "Sidestep",
-				description = "Successful deflections now restore +10 more points of poise and stability and prevents enemy attacks for an additional second.",
+				description = "Successful deflections now restore +10 more points of stamina and stability and prevents enemy attacks for an additional second.",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "deflection"},
 				row = 3,
@@ -136,7 +136,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["unrelenting"] = {
 				name = "Unrelenting",
-				description = "Great weapons, scythes, and two handed weapons now deal 10% more damage. All melee weapons now deal 25% more poise damage. Removes the damage penalty for hitting multiple targets with a single swing.",
+				description = "Great weapons, scythes, and two handed weapons now deal 10% more damage. All melee weapons now deal 25% more stamina damage. Removes the damage penalty for hitting multiple targets with a single swing.",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "strength", "might"},
 				row = 4,

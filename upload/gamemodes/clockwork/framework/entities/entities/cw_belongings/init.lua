@@ -39,10 +39,14 @@ function ENT:UpdateTransmitState()
 end
 
 -- A function to set the data of the entity.
-function ENT:SetData(inventory, cash)
+function ENT:SetData(inventory, cash, name)
 	self:SetModel("models/begotten/misc/sack.mdl")
 	self.cwInventory = inventory
 	self.cwCash = cash
+	
+	if name then
+		self:SetNWString("name", name);
+	end
 end
 
 -- A function to explode the entity.

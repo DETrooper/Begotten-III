@@ -63,17 +63,17 @@ function cwDayNight:Think()
 end;
 
 -- Called at an interval while the player is connected to the server.
-function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized)
+function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	if (!map) then
 		return;
 	end;
 	
 	if initialized and alive then
 		if self.currentCycle == "night" then
-			if !player.nextMoonCheck or player.nextMoonCheck < curTime then
-				player.nextMoonCheck = curTime + 1;
+			if !plyTab.nextMoonCheck or plyTab.nextMoonCheck < curTime then
+				plyTab.nextMoonCheck = curTime + 1;
 
-				if not player.opponent and not player.cwObserverMode then
+				if not plyTab.opponent and not plyTab.cwObserverMode then
 					local lastZone = player:GetCharacterData("LastZone");
 					
 					if lastZone == "wasteland" then
@@ -86,8 +86,8 @@ function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized)
 								end
 									
 								if player:GetEyeTrace().HitSky then
-									if player.moonCooldown then
-										if curTime < player.moonCooldown then
+									if plyTab.moonCooldown then
+										if curTime < plyTab.moonCooldown then
 											return;
 										end
 									end
@@ -101,7 +101,7 @@ function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized)
 									
 									Clockwork.datastream:Start(player, "MoonTrigger");
 									
-									player.moonCooldown = curTime + 5;
+									plyTab.moonCooldown = curTime + 5;
 								end
 							end
 						end
@@ -109,11 +109,11 @@ function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized)
 				end
 			end
 		elseif self.currentCycle == "day" then
-			if !player.dayVampireCheck or player.dayVampireCheck < curTime then
-				player.dayVampireCheck = curTime + 5;
+			if !plyTab.dayVampireCheck or plyTab.dayVampireCheck < curTime then
+				plyTab.dayVampireCheck = curTime + 5;
 				
 				if player:GetSubfaction() == "Rekh-khet-sa" then
-					if !player.opponent and !player.cwObserverMode and !player.ritualOfShadow and !player.cwWakingUp then
+					if !plyTab.opponent and !plyTab.cwObserverMode and !plyTab.ritualOfShadow and !plyTab.cwWakingUp then
 						local lastZone = player:GetCharacterData("LastZone");
 						
 						if lastZone == "wasteland" then
@@ -137,6 +137,12 @@ function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized)
 				end
 			end
 		end
+	end
+end
+
+function cwDayNight:PlayerExitedDuel(player)
+	if player:GetSubfaction() == "Rekh-khet-sa" then
+		player.dayVampireCheck = CurTime() + 10;
 	end
 end
 

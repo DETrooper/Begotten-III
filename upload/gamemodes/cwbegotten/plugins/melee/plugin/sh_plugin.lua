@@ -140,7 +140,6 @@ function cwMelee:KeyPress(player, key)
 						if (blockTable and player:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"]) then
 							player:SetNWBool("Guardening", true);
 							player.beginBlockTransition = true;
-							player.StaminaRegenDelay = 0;
 							activeWeapon.Primary.Cone = activeWeapon.IronCone;
 							activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
 						else

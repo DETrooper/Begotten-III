@@ -277,10 +277,10 @@ function cwRituals:PlayerMeetsRitualItemRequirements(player, ritualTable, itemID
 	return true;
 end
 
-function cwRituals:PlayerThink(player, curTime, infoTable)
-	if player:GetSharedVar("enlightenmentActive") and !player.opponent then
-		if !player.nextEnlightenmentTick or player.nextEnlightenmentTick > curTime then
-			player.nextEnlightenmentTick = curTime + 5;
+function cwRituals:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
+	if player:GetSharedVar("enlightenmentActive") and !plyTab.opponent then
+		if !plyTab.nextEnlightenmentTick or plyTab.nextEnlightenmentTick > curTime then
+			plyTab.nextEnlightenmentTick = curTime + 5;
 		
 			for k, v in pairs(ents.FindInSphere(player:GetPos(), 666)) do
 				if v:IsPlayer() and v:Alive() then

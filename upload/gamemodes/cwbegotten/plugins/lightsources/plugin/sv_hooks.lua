@@ -3,7 +3,7 @@
 --]]
 
 -- Called at an interval while a player is connected.
-function cwLantern:PlayerThink(player, curTime, infoTable)
+function cwLantern:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	local activeWeapon = player:GetActiveWeapon();
 
 	if (IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern") then
@@ -16,21 +16,21 @@ function cwLantern:PlayerThink(player, curTime, infoTable)
 				local bWeaponRaised = Clockwork.player:GetWeaponRaised(player);
 
 				if (bWeaponRaised) then
-					if (!player.lanternSound) then
+					if (!plyTab.lanternSound) then
 						player:EmitSound("lantern/lantern_on.wav", 60, math.random(95, 105));
-						player.lanternSound = true;
+						plyTab.lanternSound = true;
 					end;
 					
-					if (!player.nextOilDrop or curTime > player.nextOilDrop) then
+					if (!plyTab.nextOilDrop or curTime > plyTab.nextOilDrop) then
 						weaponItemTable:SetData("oil", math.Clamp(currentOil - 1, 0, 100));
 						player:SetSharedVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
 
-						player.nextOilDrop = curTime + 30;
+						plyTab.nextOilDrop = curTime + 30;
 					end;
 				else
-					if (player.lanternSound) then
+					if (plyTab.lanternSound) then
 						player:EmitSound("lantern/lantern_off.wav", 60, math.random(95, 105));
-						player.lanternSound = false;
+						plyTab.lanternSound = false;
 					end;
 				end;
 				

@@ -68,7 +68,7 @@ function cwStamina:PlayerShouldStaminaDrain(player)
 end;
 
 -- Called at an interval while a player is connected.
-function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized)
+function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	--[[if (!self.regenScale or !self.regenScaleCooldown or self.regenScaleCooldown < curTime) then
 		self.regenScaleCooldown = curTime + 1;
 		self.regenScale = Clockwork.config:Get("stam_regen_scale"):Get();
@@ -79,19 +79,19 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized)
 		self.drainScale = Clockwork.config:Get("stam_drain_scale"):Get();
 	end;]]--
 	
-	if (!player.nextStamina or curTime > player.nextStamina) then
-		player.nextStamina = curTime + 0.4;
-		
-		if (Clockwork.player:HasFlags(player, "4")) then
-			player:SetCharacterData("Stamina", player:GetMaxStamina());
-			player:SetNWInt("meleeStamina", player:GetMaxPoise());
-			player:SetCharacterData("stability", player:GetMaxStability());
-			player:SetHealth(player:GetMaxHealth());
-			
-			return;
-		end;
-		
+	if (!plyTab.nextStamina or curTime > plyTab.nextStamina) then
+		plyTab.nextStamina = curTime + 0.5;
+
 		if initialized and alive then
+			if (Clockwork.player:HasFlags(player, "4")) then
+				player:SetCharacterData("Stamina", player:GetMaxStamina());
+				--player:SetNWInt("meleeStamina", player:GetMaxPoise());
+				player:SetCharacterData("stability", player:GetMaxStability());
+				player:SetHealth(player:GetMaxHealth());
+				
+				return;
+			end;
+		
 			if (player:GetMoveType() == MOVETYPE_NOCLIP) then
 				player:HandleStamina(1);
 				
@@ -104,51 +104,61 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized)
 				end
 			end;
 			
-			--local regenScale = self.regenScale;
-			--local drainScale = self.drainScale;
-			--local attribute = 0.25;
+			if player:GetNWBool("Guardening") then
+				return;
+			end
+			
 			local regeneration = 0;
 			
 			if (!Clockwork.player:HasFlags(player, "E")) then
 				if (infoTable.isRunning) then
-					--[[local maxHealth = player:GetMaxHealth();
-					local healthScale = (drainScale * (math.Clamp(player:Health(), maxHealth * 0.1, maxHealth) / maxHealth));
-					local decrease = (drainScale + (drainScale - healthScale)) - ((drainScale * 0.5) * attribute);]]--
-					
-					local decrease = 1;
-					
-					hook.Run("RunModifyPlayerSpeed", player, infoTable, true);
-					
-					--if (!player:IsNoClipping() and player:IsOnGround()) then
-						if (hook.Run("PlayerShouldStaminaDrain", player) != false) then
-							player:HandleStamina(-1);
-							
-							return;
-						end;
-					--end;
-				--[[elseif (player:GetVelocity():Length() <= 0) then
-					regeneration = (regenScale + attribute) * 1.5;]]--
+					local drainTab = {decrease = -2};
+
+					if (hook.Run("PlayerShouldStaminaDrain", player) != false) then
+						hook.Run("ModifyStaminaDrain", player, drainTab);
+						
+						player:HandleStamina(drainTab.decrease);
+						
+						return;
+					else
+						hook.Run("RunModifyPlayerSpeed", player, infoTable, true);
+					end;
 				else
-					regeneration = 1;
+					regeneration = 3;
 				end;
 			else
-				regeneration = 100;
+				player:HandleStamina(100);
+				
+				return;
 			end
 			
-			if player.perseveranceActive then
+			if regeneration > 0 and (plyTab.blockStaminaRegen and curTime <= plyTab.blockStaminaRegen) then
+				return;
+			end
+
+			if plyTab.banners then
+				local playerFaction = player:GetFaction();
+				
+				for k, v in pairs(plyTab.banners) do
+					if v == "glazic" then
+						if playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" then
+							regeneration = 7;
+
+							break;
+						end
+					end
+				end
+			end
+			
+			if plyTab.perseveranceActive then
 				regeneration = regeneration * 2;
 			end;
 		
 			if (regeneration > 0 and hook.Run("PlayerShouldStaminaRegenerate", player) != false) then
 				local max_stamina = player:GetMaxStamina();
 				local stamina = player:GetCharacterData("Stamina", 100);
-
-				if isnumber(stamina) and stamina < max_stamina then
-					player:HandleStamina(regeneration);
 				
-					--hook.Run("RunModifyPlayerSpeed", player, infoTable);
-					cwStamina:ModifyPlayerSpeed(player, infoTable, stamina, max_stamina);
-				end
+				player:HandleStamina(regeneration);
 			end;
 		end;
 	end;

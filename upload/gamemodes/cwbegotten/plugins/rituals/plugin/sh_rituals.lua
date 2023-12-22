@@ -385,7 +385,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("bloodhowl");
 	RITUAL.name = "(T2) Bloodhowl";
-	RITUAL.description = "The thrill of battle empowers you! Performing this ritual will make your war cries restore 90 points of both stamina and poise for 40 minutes.";
+	RITUAL.description = "The thrill of battle empowers you! Performing this ritual will make your war cries restore 90 points of stamina for 40 minutes.";
 	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"down_catalyst", "familial_catalyst", "pantheistic_catalyst"};
@@ -1174,7 +1174,7 @@ RITUAL = cwRituals.rituals:New("regrowth");
 	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
-		local max_poise = player:GetMaxPoise();
+		--local max_poise = player:GetMaxPoise();
 		local max_stability = player:GetMaxStability();
 		local max_stamina = player:GetMaxStamina();
 	
@@ -1191,7 +1191,7 @@ RITUAL = cwRituals.rituals:New("regrowth");
 		player:SetNWInt("Stamina", max_stamina);
 		player:SetCharacterData("stability", max_stability);
 		--player:SetCharacterData("meleeStamina", max_poise);
-		player:SetNWInt("meleeStamina", max_poise);
+		--player:SetNWInt("meleeStamina", max_poise);
 		player:SetNWInt("freeze", 0);
 		player:SetBloodLevel(5000);
 		player:StopAllBleeding();
@@ -1250,7 +1250,7 @@ RITUAL = cwRituals.rituals:New("regrowth_target");
 		if IsValid(target) and target:IsPlayer() then
 			if target:Alive() then
 				if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
-					local max_poise = target:GetMaxPoise();
+					--local max_poise = target:GetMaxPoise();
 					local max_stability = target:GetMaxStability();
 					local max_stamina = target:GetMaxStamina();
 
@@ -1267,7 +1267,7 @@ RITUAL = cwRituals.rituals:New("regrowth_target");
 					target:SetNWInt("Stamina", max_stamina);
 					target:SetCharacterData("stability", max_stability);
 					--target:SetCharacterData("meleeStamina", max_poise);
-					target:SetNWInt("meleeStamina", max_poise);
+					--target:SetNWInt("meleeStamina", max_poise);
 					target:SetNWInt("freeze", 0);
 					target:SetBloodLevel(5000);
 					target:StopAllBleeding();

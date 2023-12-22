@@ -131,7 +131,6 @@ function SWEP:Deploy()
 	end
 
 	self.Owner.gestureweightbegin = 1;
-	self.Owner.StaminaRegenDelay = 1
 	self.Owner:SetNWBool("CanBlock", true)
 	self.Owner:SetNWBool("CanDeflect", true)
 	self.Owner:SetNWBool("ThrustStance", false)

@@ -53,12 +53,16 @@ function Parry(target, dmginfo)
 				end;
 				
 				-- Refund half the poise cost of parrying upon a successful parry.
-				local max_poise = target:GetNetVar("maxMeleeStamina");
+				--[[local max_poise = target:GetNetVar("maxMeleeStamina");
 				
-				target:SetNWInt("meleeStamina", math.Clamp(target:GetNWInt("meleeStamina") + math.Round(blocktable["parrytakestamina"] / 2), 0, max_poise));
+				target:SetNWInt("meleeStamina", math.Clamp(target:GetNWInt("meleeStamina") + math.Round(blocktable["parrytakestamina"] / 2), 0, max_poise));]]--
+				
+				local max_stamina = target:GetMaxStamina();
+				
+				target:SetStamina(target:GetNWInt("Stamina") + math.Round(blocktable["parrytakestamina"] / 2));
 				
 				-- Poise should start regenerating upon successful parry after 0.5 seconds.
-				target.nextStas = math.min(target.nextStas, curTime + 0.5);
+				target.blockStaminaRegen = math.min(target.blockStaminaRegen or 0, curTime + 0.5);
 
 				if (IsValid(attacker) and attacker:IsPlayer()) then
 					local attackerWeapon = attacker:GetActiveWeapon();
@@ -124,7 +128,7 @@ function Parry(target, dmginfo)
 					
 					if (IsValid(attacker) and attacker:IsPlayer()) then
 						-- Make it so they can't regenerate poise while parried.
-						attacker.nextStas = curTime + delay + 1.5;
+						attacker.blockStaminaRegen = curTime + delay + 1.5;
 					end
 					
 					timer.Create(index.."_ParrySuccessTimer", delay, 1, function()
@@ -212,7 +216,8 @@ local function Guarding(ent, dmginfo)
 		--local attacksoundtable = GetSoundTable(wep.AttackSoundTable)
 		--local attacktable = GetTable(wep.AttackTable)
 		local attacker = dmginfo:GetAttacker()
-		local max_poise = ent:GetNetVar("maxMeleeStamina") or 90;
+		--local max_poise = ent:GetNetVar("maxMeleeStamina") or 90;
+		local max_stamina = ent:GetMaxStamina();
 		local conditionDamage = dmginfo:GetDamage();
 
 		if (ent:GetNWBool("Guardening") == true) then
@@ -240,9 +245,11 @@ local function Guarding(ent, dmginfo)
 					--ent:TakePoise(blocktable["guardblockamount"] * 0.5, 0, max_poise)
 
 					if dmginfo:IsDamageType(DMG_BULLET) then
-						ent:TakePoise(math.Round(dmginfo:GetDamage() * 0.5));
+						--ent:TakePoise(math.Round(dmginfo:GetDamage() * 0.5));
+						ent:TakeStamina(math.Round(dmginfo:GetDamage() * 0.5));
 					elseif dmginfo:IsDamageType(DMG_BUCKSHOT) then
-						ent:TakePoise(math.Round(dmginfo:GetDamage() * 1.5));
+						--ent:TakePoise(math.Round(dmginfo:GetDamage() * 1.5));
+						ent:TakeStamina(math.Round(dmginfo:GetDamage() * 0.5));
 					end
 					
 					ent:EmitSound(blocksoundtable["blockmissile"][math.random(1, #blocksoundtable["blockmissile"])])
@@ -769,7 +776,8 @@ local function Guarding(ent, dmginfo)
 							--print "Tier 1" 
 							dmginfo:ScaleDamage(0)
 							ent:ViewPunch(Angle(1,0,0))
-							ent:TakePoise(PoiseTotal);
+							--ent:TakePoise(PoiseTotal);
+							ent:TakeStamina(PoiseTotal);
 							if enemyattacktable["attacktype"] == "ice_swing" then
 								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
@@ -778,7 +786,8 @@ local function Guarding(ent, dmginfo)
 							dmginfo:ScaleDamage(0)
 							ent:ViewPunch(Angle(3,0,0))
 							ent:EmitSound("physics/body/body_medium_impact_hard"..math.random(2,6)..".wav")
-							ent:TakePoise(PoiseTotal);
+							--ent:TakePoise(PoiseTotal);
+							ent:TakeStamina(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
 								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
@@ -788,7 +797,8 @@ local function Guarding(ent, dmginfo)
 							dmginfo:ScaleDamage(0)
 							ent:ViewPunch(Angle(5,0,0))
 							ent:EmitSound("physics/body/body_medium_impact_hard"..math.random(2,6)..".wav")
-							ent:TakePoise(PoiseTotal);
+							--ent:TakePoise(PoiseTotal);
+							ent:TakeStamina(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
 								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
@@ -798,91 +808,112 @@ local function Guarding(ent, dmginfo)
 							dmginfo:ScaleDamage(0.05)
 							ent:ViewPunch(Angle(7,0,0))
 							ent:EmitSound("physics/body/body_medium_impact_hard"..math.random(2,6)..".wav")
-							ent:TakePoise(PoiseTotal);
+							--ent:TakePoise(PoiseTotal);
+							ent:TakeStamina(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
 								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
-								ent:Ignite(enemywep.IgniteTime * 0.05)
+								if !ent.wOSIsRolling or !ent:wOSIsRolling() then
+									ent:Ignite(enemywep.IgniteTime * 0.05)
+								end
 							end
 						elseif PoiseTotal < -20 and PoiseTotal >= -25 then
 							--print "Tier 5" 
 							dmginfo:ScaleDamage(0.1)
 							ent:ViewPunch(Angle(9,1,1))
 							ent:EmitSound("physics/body/body_medium_impact_hard"..math.random(2,6)..".wav")
-							ent:TakePoise(PoiseTotal);
+							--ent:TakePoise(PoiseTotal);
+							ent:TakeStamina(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
 								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
-								ent:Ignite(enemywep.IgniteTime * 0.1)
+								if !ent.wOSIsRolling or !ent:wOSIsRolling() then
+									ent:Ignite(enemywep.IgniteTime * 0.1)
+								end
 							end
 						elseif PoiseTotal < -25 and PoiseTotal >= -30 then
 							--print "Tier 6" 
 							dmginfo:ScaleDamage(0.15)
 							ent:ViewPunch(Angle(12,3,2))
 							ent:EmitSound("physics/body/body_medium_impact_hard"..math.random(2,6)..".wav")
-							ent:TakePoise(PoiseTotal);
+							--ent:TakePoise(PoiseTotal);
+							ent:TakeStamina(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
 								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
-								ent:Ignite(enemywep.IgniteTime * 0.15)
+								if !ent.wOSIsRolling or !ent:wOSIsRolling() then
+									ent:Ignite(enemywep.IgniteTime * 0.15)
+								end
 							end
 						elseif PoiseTotal < -30 and PoiseTotal >= -35 then
 							--print "Tier 7" 
 							dmginfo:ScaleDamage(0.2)
 							ent:ViewPunch(Angle(14,8,6))
 							ent:EmitSound("physics/body/body_medium_impact_hard"..math.random(2,6)..".wav")
-							ent:TakePoise(PoiseTotal);
+							--ent:TakePoise(PoiseTotal);
+							ent:TakeStamina(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
 								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
-								ent:Ignite(enemywep.IgniteTime * 0.2)
+								if !ent.wOSIsRolling or !ent:wOSIsRolling() then
+									ent:Ignite(enemywep.IgniteTime * 0.2)
+								end
 							end
 						elseif PoiseTotal < -35 and PoiseTotal >= -40 then
 							--print "Tier 8" 
 							dmginfo:ScaleDamage(0.25)
 							ent:ViewPunch(Angle(25,10,9))
 							ent:EmitSound("physics/body/body_medium_impact_hard"..math.random(2,6)..".wav")
-							ent:TakePoise(PoiseTotal);
+							--ent:TakePoise(PoiseTotal);
+							ent:TakeStamina(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
 								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
-								ent:Ignite(enemywep.IgniteTime * 0.25)
+								if !ent.wOSIsRolling or !ent:wOSIsRolling() then
+									ent:Ignite(enemywep.IgniteTime * 0.25)
+								end
 							end
 						elseif PoiseTotal < -40 and PoiseTotal >= -45 then
 							--print "Tier 9"
 							dmginfo:ScaleDamage(0.3)
 							ent:ViewPunch(Angle(35,12,10))
 							ent:EmitSound("physics/body/body_medium_impact_hard"..math.random(2,6)..".wav")
-							ent:TakePoise(PoiseTotal);
+							--ent:TakePoise(PoiseTotal);
+							ent:TakeStamina(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
 								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
-								ent:Ignite(enemywep.IgniteTime * 0.3)
+								if !ent.wOSIsRolling or !ent:wOSIsRolling() then
+									ent:Ignite(enemywep.IgniteTime * 0.3)
+								end
 							end
 						elseif PoiseTotal < -45 then
 							--print "Tier 10" 
 							dmginfo:ScaleDamage(0.35)
 							ent:ViewPunch(Angle(50,15,25))
 							ent:EmitSound("physics/body/body_medium_impact_hard"..math.random(2,6)..".wav")
-							ent:TakePoise(PoiseTotal);
+							--ent:TakePoise(PoiseTotal);
+							ent:TakeStamina(PoiseTotal);
 							ent:TakeStability(PoiseTotal)
 							if enemyattacktable["attacktype"] == "ice_swing" then
 								ent:AddFreeze((PoiseTotal * -1) * (ent:WaterLevel() + 1), attacker);
 							end
 							if enemyattacktable["attacktype"] == "fire_swing" then
-								ent:Ignite(enemywep.IgniteTime * 0.35)
+								if !ent.wOSIsRolling or !ent:wOSIsRolling() then
+									ent:Ignite(enemywep.IgniteTime * 0.35)
+								end
 							end
 						end
 					elseif !ent:GetNWBool("Deflect", true) then
@@ -891,8 +922,22 @@ local function Guarding(ent, dmginfo)
 					-- Poise system
 			
 					if !ent:GetNWBool("Deflect", true) then
-						local melsta = ent:GetNWInt("meleeStamina");
-						local blockamount = (blocktable["guardblockamount"])
+						--local melsta = ent:GetNWInt("meleeStamina", 90);
+						local melsta = ent:GetNWInt("Stamina", 100);
+						local blockamount = (blocktable["guardblockamount"]);
+						
+						if cwMedicalSystem then
+							local injuries = cwMedicalSystem:GetInjuries(ent);
+							
+							if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+								blockamount = blockamount + (blocktable["guardblockamount"] * 2);
+							end
+							
+							if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+								blockamount = blockamount + (blocktable["guardblockamount"] * 2);
+							end
+						end
+						
 						local melsa = melsta - blockamount;
 						local chance = math.random(1, 2);
 						--local chance = 1; -- for testing
@@ -904,7 +949,8 @@ local function Guarding(ent, dmginfo)
 						--ent:SetNWInt("meleeStamina", math.Clamp(melsa, 0, max_poise))
 
 						if !dmginfo:IsDamageType(DMG_BULLET) and !dmginfo:IsDamageType(DMG_BUCKSHOT) then
-							ent:TakePoise(blockamount);
+							--ent:TakePoise(blockamount);
+							ent:TakeStamina(blockamount);
 						end
 						
 						if melsa <= blockamount and not ent:IsRagdolled() and chance == 1 then
@@ -1042,7 +1088,8 @@ local function Guarding(ent, dmginfo)
 								deflectionPoisePayback = math.Round(deflectionPoisePayback * 1.5);
 							end
 							
-							ent:SetNWInt("meleeStamina", math.Clamp(ent:GetNWInt("meleeStamina", max_poise) + deflectionPoisePayback, 0, max_poise));
+							--ent:SetNWInt("meleeStamina", math.Clamp(ent:GetNWInt("meleeStamina", max_poise) + deflectionPoisePayback, 0, max_poise));
+							ent:HandleStamina(deflectionPoisePayback);
 							ent:SetCharacterData("stability", math.Clamp(ent:GetCharacterData("stability", max_stability) + deflectionPoisePayback, 0, max_stability));
 							ent:SetNWInt("stability", ent:GetCharacterData("stability", max_stability));
 						end
@@ -1117,7 +1164,9 @@ local function Guarding(ent, dmginfo)
 									ent:AddFreeze((enemyattacktable["primarydamage"] * 1.5) * (ent:WaterLevel() + 1), attacker);
 								end
 								if enemyattacktable["attacktype"] == "fire_swing" then
-									ent:Ignite(enemywep.IgniteTime)
+									if !ent.wOSIsRolling or !ent:wOSIsRolling() then
+										ent:Ignite(enemywep.IgniteTime)
+									end
 								end
 							else
 								local stabilityDamage = enemyattacktable["stabilitydamage"];
@@ -1136,7 +1185,9 @@ local function Guarding(ent, dmginfo)
 									ent:AddFreeze((enemyattacktable["primarydamage"] * 1.5) * (ent:WaterLevel() + 1), attacker);
 								end
 								if enemyattacktable["attacktype"] == "fire_swing" then
-									ent:Ignite(enemywep.IgniteTime)
+									if !ent.wOSIsRolling or !ent:wOSIsRolling() then
+										ent:Ignite(enemywep.IgniteTime)
+									end
 								end
 							end
 							
@@ -1338,24 +1389,38 @@ local function UpdateWeaponRaised(player, activeWeapon, bIsRaised, curTime)
 							local curTime = CurTime();
 							
 							if (loweredParryDebug < curTime) then
-								local blocktable;
+								local blockTable;
 								
 								if activeWeapon:GetNWString("activeOffhand"):len() > 0 then
 									local offhandTable = weapons.GetStored(activeWeapon:GetNWString("activeOffhand"));
 												
 									if offhandTable then
-										blocktable = GetDualTable(activeWeapon.realBlockTable, offhandTable.BlockTable);
+										blockTable = GetDualTable(activeWeapon.realBlockTable, offhandTable.BlockTable);
 									else
-										blocktable = GetTable(activeWeapon.realBlockTable);
+										blockTable = GetTable(activeWeapon.realBlockTable);
 									end
 								else
-									blocktable = GetTable(activeWeapon.realBlockTable);
+									blockTable = GetTable(activeWeapon.realBlockTable);
 								end
 								
-								if (blockTable and player:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !player:GetNWBool("Parried")) then
+								local guardblockamount = blockTable["guardblockamount"];
+								
+								if cwMedicalSystem then
+									local injuries = cwMedicalSystem:GetInjuries(player);
+									
+									if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+										guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+									end
+									
+									if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+										guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+									end
+								end
+								
+								--if (blockTable and player:GetNWInt("meleeStamina", 100) >= guardblockamount and !player:GetNWBool("Parried")) then
+								if (blockTable and player:GetNWInt("Stamina", 100) >= guardblockamount and !player:GetNWBool("Parried")) then
 									player:SetNWBool("Guardening", true);
 									player.beginBlockTransition = true;
-									player.StaminaRegenDelay = 0;
 									activeWeapon.Primary.Cone = activeWeapon.IronCone;
 									activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
 								else

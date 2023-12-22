@@ -323,10 +323,12 @@ function VJSPAWN_NPC( player, NPCClassName, WeaponName, tr )
 	if (CLIENT) then return end
 	//if ( !NPCClassName ) then return end
 	-- Give the gamemode an opportunity to deny spawning
-	print(player)
+	if Clockwork and Schema.EasyText then
+		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has attempted to spawn an NPC using VJ base!!!");
+	end
 	//print(NPCClassName)
 	//print(WeaponName)
-	//if ( !gamemode.Call( "PlayerSpawnNPC", player, NPCClassName, WeaponName ) ) then return end
+	if ( !gamemode.Call( "PlayerSpawnNPC", player, NPCClassName, WeaponName ) ) then return end
 	if ( !tr ) then
 		local vStart = player:GetShootPos()
 		local vForward = player:GetAimVector()

@@ -117,12 +117,12 @@ function cwContainerHiding:EntityHandleMenuOption(player, entity, option, argume
 end;
 
 -- Called at an interval while the player is connected to the server.
-function cwContainerHiding:PlayerThink(player, curTime, infoTable)
-	if (!player.containerSound) then
-		player.containerSound = curTime + math.random(8, 16); 
-	elseif (curTime > player.containerSound) then
-		if (player.hideEntity) then
-			local entity = player.hideEntity;
+function cwContainerHiding:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
+	if (!plyTab.containerSound) then
+		plyTab.containerSound = curTime + math.random(8, 16); 
+	elseif (curTime > plyTab.containerSound) then
+		if (plyTab.hideEntity) then
+			local entity = plyTab.hideEntity;
 			local physObj = entity:GetPhysicsObject();
 			
 			if (IsValid(physObj)) then
@@ -136,7 +136,7 @@ function cwContainerHiding:PlayerThink(player, curTime, infoTable)
 			end;
 		end;
 		
-		player.containerSound = nil;
+		plyTab.containerSound = nil;
 	end;
 end;
 

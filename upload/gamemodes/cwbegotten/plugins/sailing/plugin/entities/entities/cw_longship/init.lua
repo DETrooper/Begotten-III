@@ -157,7 +157,7 @@ function ENT:Think()
 	if (!self.damageCooldown or self.damageCooldown < curTime) then
 		self.damageCooldown = curTime + 1;
 	
-		if self.ignited then
+		if self:IsOnFire() then
 			if self.health then
 				if self.health > 0 then
 					self:SetHP(self.health - 2);
@@ -185,6 +185,14 @@ end
 
 function ENT:SetHP(newhp)
 	self.health = newhp;
+	
+	if self.itemID then
+		local itemTable = item.FindInstance(self.itemID);
+		
+		if itemTable then
+			itemTable:SetData("health", newhp);
+		end
+	end
 
 	if newhp > 0 then
 		if newhp == 500 then
@@ -227,8 +235,8 @@ function ENT:Use(activator, caller)
 		end
 		
 		if self.health then
-			if self.health < 500 then
-				if self.ignited == false then
+			if (entity:GetSkin() == 1 and self.health < 1000) or self.health < 500 then
+				if !self:IsOnFire() then
 					self.repairable = true;
 				else
 					self.repairable = false;
@@ -238,18 +246,46 @@ function ENT:Use(activator, caller)
 			end
 		end
 		
-		if caller:GetFaction() == "Goreic Warrior" or caller:IsAdmin() then
-			if (IsValid(self.owner) and caller ~= self.owner) or self.ignited == true then
-				Clockwork.datastream:Start(caller, "OpenLongshipMenu", false, self.ignited, self.repairable, false, false, false);
+		if caller:GetFaction() == "Goreic Warrior" or (caller:IsAdmin() and caller.cwObserverMode) then
+			if (IsValid(self.owner) and caller ~= self.owner) or self:IsOnFire() then
+				Clockwork.datastream:Start(caller, "OpenLongshipMenu", false, self:IsOnFire(), self.repairable, false, false, false);
 			elseif self.destination then
-				Clockwork.datastream:Start(caller, "OpenLongshipMenu", false, self.ignited, self.repairable, false, true, true);
+				Clockwork.datastream:Start(caller, "OpenLongshipMenu", false, self:IsOnFire(), self.repairable, false, true, true);
 			else
-				Clockwork.datastream:Start(caller, "OpenLongshipMenu", true, self.ignited, self.repairable, true, false, true);
+				Clockwork.datastream:Start(caller, "OpenLongshipMenu", true, self:IsOnFire(), self.repairable, true, false, true);
 			end
+		elseif caller:GetFaction() ~= "Goreic Warrior" then
+			local activeWeapon = caller:GetActiveWeapon();
+			
+			if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
+				local oil = caller:GetSharedVar("oil", 0);
+			
+				if oil >= 25 then
+					Clockwork.datastream:Start(caller, "OpenLongshipMenu", true, self:IsOnFire(), false, false, false, false);
+					
+					return;
+				end
+			end
+			
+			Clockwork.datastream:Start(caller, "OpenLongshipMenu", false, self:IsOnFire(), false, false, false, false);
 		end
 	end;
 end;
 
 function ENT:OnRemove()
+	local belongingsEnt = ents.Create("cw_belongings");
+
+	if (!table.IsEmpty(self.cwInventory) or self.cwCash > 0) then
+		belongingsEnt:SetData(self.cwInventory, self.cwCash, "Longship Cargo");
+		belongingsEnt:SetPos(self:GetPos() + Vector(0, 0, 128));
+		belongingsEnt:Spawn();
+		
+		timer.Create("BelongingsTimer_"..belongingsEnt:EntIndex(), 1200, 1, function()
+			if IsValid(self) then
+				self:Remove();
+			end
+		end);
+	end
+
 	cwSailing:RemoveLongship(self);
 end;

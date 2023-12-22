@@ -177,16 +177,16 @@ function cwBeliefs:ForceRemoveBelief(player, uniqueID, bRemoveDependencies)
 		
 		beliefs[uniqueID] = false;
 		
-		local max_poise = player:GetMaxPoise();
-		local poise = player:GetNWInt("meleeStamina");
+		--local max_poise = player:GetMaxPoise();
+		--local poise = player:GetNWInt("meleeStamina");
 		local max_stamina = player:GetMaxStamina();
 		local max_stability = player:GetMaxStability();
 		local stamina = player:GetNWInt("Stamina", 100);
 		
 		player:SetMaxHealth(player:GetMaxHealth());
 		player:SetLocalVar("maxStability", max_stability);
-		player:SetLocalVar("maxMeleeStamina", max_poise);
-		player:SetNWInt("meleeStamina", math.min(poise, max_poise));
+		--player:SetLocalVar("maxMeleeStamina", max_poise);
+		--player:SetNWInt("meleeStamina", math.min(poise, max_poise));
 		player:SetLocalVar("Max_Stamina", max_stamina);
 		player:SetCharacterData("Max_Stamina", max_stamina);
 		player:SetNWInt("Stamina", math.min(stamina, max_stamina));

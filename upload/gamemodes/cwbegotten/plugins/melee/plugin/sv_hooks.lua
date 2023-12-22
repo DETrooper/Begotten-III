@@ -385,12 +385,10 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 end;
 
 -- Called at an interval while a player is connected.
-function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
+function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	if !initialized then
 		return;
 	end
-	
-	local plyTable = player:GetTable();
 	
 	--[[local inAttack2 = player:KeyDown(IN_ATTACK2);
 	local gardening = player:GetNWBool("Guardening", false);
@@ -399,8 +397,8 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 		player:CancelGuardening();
 	end;]]--
 	
-	--[[if (!plyTable.nextBlockCheck or curTime > plyTable.nextBlockCheck) then
-		plyTable.nextBlockCheck = curTime + 1;
+	--[[if (!plyTab.nextBlockCheck or curTime > plyTab.nextBlockCheck) then
+		plyTab.nextBlockCheck = curTime + 1;
 
 		if (gardening == true) then
 			local activeWeapon = player:GetActiveWeapon()
@@ -408,22 +406,22 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 			if (IsValid(activeWeapon)) then
 				if (activeWeapon.IronSights == false) then
 					player:SetNWBool("Guardening", false)
-					plyTable.beginBlockTransition = true;
+					plyTab.beginBlockTransition = true;
 				end
 			end;
 		end;
 	end;]]--
 
-	if (!plyTable.nextStas or plyTable.nextStas < curTime) then
+	--[[if (!plyTab.nextStas or plyTab.nextStas < curTime) then
 		local activeWeapon = player:GetActiveWeapon();
 		local max_poise = player:GetMaxPoise();
 		local poise = player:GetNWInt("meleeStamina", max_poise);
 		local gainedPoise = 5;
 		
-		if plyTable.banners then
+		if plyTab.banners then
 			local playerFaction = player:GetFaction();
 			
-			for k, v in pairs(plyTable.banners) do
+			for k, v in pairs(plyTab.banners) do
 				if v == "glazic" then
 					if playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" then
 						gainedPoise = 7;
@@ -436,23 +434,10 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 		
 		if IsValid(activeWeapon) and activeWeapon.Base == "sword_swepbase" then
 			if (poise != max_poise) then
-				if (!Clockwork.player:GetWeaponRaised(player) or (poise < max_poise) and --[[plyTable.StaminaRegenDelay >= 135 and]] player:GetNWBool( "Guardening" ) == false) then
-					--local curTime = CurTime();
-					
-					--if (!plyTable.nextRegens or plyTable.nextRegens < curTime) then
-						--plyTable.nextRegens = curTime + (activeWeapon.RegenDelay or 0.1);
-						player:SetNWInt("meleeStamina", math.Clamp(poise + gainedPoise, 0, max_poise))
-					--end;
+				if !Clockwork.player:GetWeaponRaised(player) or (poise < max_poise) and !player:GetNWBool("Guardening") then
+					player:SetNWInt("meleeStamina", math.Clamp(poise + gainedPoise, 0, max_poise))
 				end
 			end;
-		
-			--[[if player:GetNWBool( "Guardening" ) == false then
-				plyTable.StaminaRegenDelay = plyTable.StaminaRegenDelay + 1
-			end
-		
-			if plyTable.StaminaRegenDelay > 135 then 
-				plyTable.StaminaRegenDelay = 135
-			end]]--
 		else
 			if poise != max_poise then
 				player:SetNWInt("meleeStamina", math.Clamp(poise + gainedPoise, 0, max_poise));
@@ -461,10 +446,10 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 		
 		player:SetLocalVar("maxMeleeStamina", max_poise);
 		
-		plyTable.nextStas = curTime + 0.5;
-	end;
+		plyTab.nextStas = curTime + 0.5;
+	end;]]--
 	
-	if (!plyTable.nextStability or plyTable.nextStability < curTime) then
+	if (!plyTab.nextStability or plyTab.nextStability < curTime) then
 		local max_stability = player:GetMaxStability();
 		local stability = player:GetCharacterData("stability", max_stability);
 
@@ -476,8 +461,8 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 			end
 		end
 		
-		if (stability >= max_stability or (plyTable.stabilityCooldown and plyTable.stabilityCooldown > curTime)) then
-			plyTable.nextStability = curTime + 1;
+		if (stability >= max_stability or (plyTab.stabilityCooldown and plyTab.stabilityCooldown > curTime)) then
+			plyTab.nextStability = curTime + 1;
 			return;
 		end;
 
@@ -503,26 +488,29 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 		end;
 		
 		player:SetCharacterData("stability", math.Clamp(stability + 5, 0, max_stability));
-		plyTable.nextStability = curTime + stabilityDelay;
+		plyTab.nextStability = curTime + stabilityDelay;
 	end;
 	
 	-- this needs to be made clientside
 	
 	local playedBreathing = false;
 
-	if (!plyTable.nextBreathingCheck or plyTable.nextBreathingCheck < curTime) then
-		plyTable.nextBreathingCheck = curTime + 0.6;
+	if (!plyTab.nextBreathingCheck or plyTab.nextBreathingCheck < curTime) then
+		plyTab.nextBreathingCheck = curTime + 0.6;
 	
-		if (alive) and !plyTable.possessor then
-			local max_poise = player:GetMaxPoise();
-			local poise = player:GetNWInt("meleeStamina", max_poise);
+		if (alive) and !plyTab.possessor then
+			--local max_poise = player:GetMaxPoise();
+			--local poise = player:GetNWInt("meleeStamina", max_poise);
+			local max_stamina = player:GetMaxStamina();
+			local stamina = player:GetNWInt("Stamina", max_stamina);
 			
-			if (poise < max_poise * 0.8) then
-				if (!plyTable.BreathingSoundsa) then
-					plyTable.BreathingSoundsa = CreateSound(player, "breathing1.wav");
+			--if (poise < max_poise * 0.8) then
+			if (stamina < max_stamina * 0.8) then
+				if (!plyTab.BreathingSoundsa) then
+					plyTab.BreathingSoundsa = CreateSound(player, "breathing1.wav");
 				end
 				
-				if (!plyTable.nextBreathing or curTime >= plyTable.nextBreathing) then
+				if (!plyTab.nextBreathing or curTime >= plyTab.nextBreathing) then
 					local gender = player:GetGender();
 					local pitch = 90;
 					
@@ -530,22 +518,24 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized)
 						pitch = 125;
 					end;
 					
-					plyTable.nextBreathing = curTime + (0.50 + ((1.25 / max_poise) * poise));
-					plyTable.BreathingSoundsa:PlayEx(0.15 - ((0.15 / max_poise) * poise), pitch);
+					--plyTab.nextBreathing = curTime + (0.50 + ((1.25 / max_poise) * poise));
+					--plyTab.BreathingSoundsa:PlayEx(0.15 - ((0.15 / max_poise) * poise), pitch);
+					plyTab.nextBreathing = curTime + (0.50 + ((1.25 / max_stamina) * stamina));
+					plyTab.BreathingSoundsa:PlayEx(0.15 - ((0.15 / max_stamina) * stamina), pitch);
 				end;
 				
 				playedBreathing = true;
 			end;
 		else
-			if plyTable.BreathingSoundsa then
-				plyTable.BreathingSoundsa:Stop();
-				plyTable.BreathingSoundsa = nil;
+			if plyTab.BreathingSoundsa then
+				plyTab.BreathingSoundsa:Stop();
+				plyTab.BreathingSoundsa = nil;
 			end
 		end;
 		
-		if (!playedBreathing and plyTable.BreathingSoundsa) then
-			plyTable.BreathingSoundsa:FadeOut(2);
-			plyTable.BreathingSoundsa = nil;
+		if (!playedBreathing and plyTab.BreathingSoundsa) then
+			plyTab.BreathingSoundsa:FadeOut(2);
+			plyTab.BreathingSoundsa = nil;
 		end;
 	end;
 end;
@@ -707,16 +697,16 @@ function cwMelee:PlayerRestoreCharacterData(player, data)
 		data["maxMeleeStamina"] = player:GetMaxPoise();
 	end;]]--
 	
-	if (!data["meleeStamina"]) then
+	--[[if (!data["meleeStamina"]) then
 		data["meleeStamina"] = player:GetMaxPoise();
-	end;
+	end;]]--
 end;
 
 -- Called just after the player spawns in.
 function cwMelee:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 	if (!lightSpawn) then
 		local max_stability = player:GetMaxStability();
-		local max_poise = player:GetMaxPoise();
+		--local max_poise = player:GetMaxPoise();
 	
 		if (!firstSpawn) then
 			player:SetNWInt("stability", max_stability);
@@ -725,8 +715,8 @@ function cwMelee:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 		end
 		
 		player:SetLocalVar("maxStability", max_stability);
-		player:SetLocalVar("maxMeleeStamina", max_poise);
-		player:SetNWInt("meleeStamina", max_poise);
+		--player:SetLocalVar("maxMeleeStamina", max_poise);
+		--player:SetNWInt("meleeStamina", max_poise);
 		player:SetNWInt("freeze", 0);
 	end;
 end;
@@ -734,13 +724,13 @@ end;
 -- Called just after the player dies.
 function cwMelee:PostPlayerDeath(player)
 	local max_stability = player:GetMaxStability();
-	local max_poise = player:GetMaxPoise();
+	--local max_poise = player:GetMaxPoise();
 	
 	player:SetCharacterData("stability", max_stability);
 	player:SetNWInt("stability", max_stability);
 	player:SetLocalVar("maxStability", max_stability);
-	player:SetLocalVar("maxMeleeStamina", max_poise);
-	player:SetNWInt("meleeStamina", max_poise);
+	--player:SetLocalVar("maxMeleeStamina", max_poise);
+	--player:SetNWInt("meleeStamina", max_poise);
 	player:SetNWInt("freeze", 0);
 end;
 

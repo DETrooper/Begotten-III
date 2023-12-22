@@ -105,8 +105,8 @@ function playerMeta:ResetBeliefs()
 	self:GetCharacter().subfaith = nil;
 	self:SetSacramentLevel(1);
 
-	local max_poise = self:GetMaxPoise();
-	local poise = self:GetNWInt("meleeStamina");
+	--local max_poise = self:GetMaxPoise();
+	--local poise = self:GetNWInt("meleeStamina");
 	local max_stamina = self:GetMaxStamina();
 	local max_stability = self:GetMaxStability();
 	local stability = self:GetNWInt("stability");
@@ -114,10 +114,10 @@ function playerMeta:ResetBeliefs()
 	
 	self:SetMaxHealth(self:GetMaxHealth());
 	self:SetLocalVar("maxStability", max_stability);
-	self:SetLocalVar("maxMeleeStamina", max_poise);
+	--self:SetLocalVar("maxMeleeStamina", max_poise);
 	self:SetNWInt("stability", math.min(stability, max_stability));
 	self:SetCharacterData("stability", self:GetNWInt("stability"));
-	self:SetNWInt("meleeStamina", math.min(poise, max_poise));
+	--self:SetNWInt("meleeStamina", math.min(poise, max_poise));
 	self:SetLocalVar("Max_Stamina", max_stamina);
 	self:SetCharacterData("Max_Stamina", max_stamina);
 	self:SetNWInt("Stamina", math.min(stamina, max_stamina));

@@ -31,7 +31,7 @@ local ITEM = Clockwork.item:New("medical_base");
 		
 		player:SetCharacterData("painpills", curTime + 60);]]--
 		player:HandleStamina(100);
-		player:GivePoise(player:GetMaxPoise());
+		--player:GivePoise(player:GetMaxPoise());
 		player:HandleSanity(25);
 		Clockwork.datastream:Start(player, "Stunned", 1);
 		Clockwork.datastream:Start(player, "MorphineDream", 60);
@@ -375,7 +375,7 @@ local ITEM = Clockwork.item:New("medical_base");
 
 	ITEM.curesInjuries = {"broken_bone"};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 125};
-	ITEM.limbs = {HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
+	ITEM.limbs = {HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");

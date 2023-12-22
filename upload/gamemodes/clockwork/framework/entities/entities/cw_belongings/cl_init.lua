@@ -11,8 +11,13 @@ include("shared.lua")
 function ENT:HUDPaintTargetID(x, y, alpha)
 	local colorTargetID = Clockwork.option:GetColor("target_id")
 	local colorWhite = Clockwork.option:GetColor("white")
+	local name = self:GetNWString("name");
+	
+	if !name or name:len() == 0 then
+		name = "Belongings";
+	end
 
-	y = Clockwork.kernel:DrawInfo("Belongings", x, y, colorTargetID, alpha)
+	y = Clockwork.kernel:DrawInfo(name, x, y, colorTargetID, alpha)
 	y = Clockwork.kernel:DrawInfo("There might be something inside.", x, y, colorWhite, alpha)
 end
 

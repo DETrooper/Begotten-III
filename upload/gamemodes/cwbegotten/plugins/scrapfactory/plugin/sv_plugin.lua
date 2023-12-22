@@ -352,23 +352,23 @@ function cwScrapFactory:PlayerUse(player, entity)
 	end;
 end;
 
-function cwScrapFactory:PlayerThink(player, curTime, infoTable)
-	if (player.cwTurningValve) then
+function cwScrapFactory:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
+	if (plyTab.cwTurningValve) then
 		if (!player:KeyDown(IN_USE)) then
 			Clockwork.player:SetAction(player, nil);
-			player.cwTurningValve = nil;
-			player.cwValvePos = nil;
+			plyTab.cwTurningValve = nil;
+			plyTab.cwValvePos = nil;
 		end;
 		
-		if (player.cwValvePos) then
-			local valvePosition = player.cwValvePos;
+		if (plyTab.cwValvePos) then
+			local valvePosition = plyTab.cwValvePos;
 			local position = player:GetPos();
 			local distance = position:Distance(valvePosition)
 
 			if (distance > 128 or !player:Alive()) then
 				Clockwork.player:SetAction(player, nil);
-				player.cwTurningValve = nil;
-				player.cwValvePos = nil;
+				plyTab.cwTurningValve = nil;
+				plyTab.cwValvePos = nil;
 			end;
 		end;
 	end;

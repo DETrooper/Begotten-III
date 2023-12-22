@@ -6,27 +6,27 @@
 --]]
 
 -- Called at an interval while a player is connected.
-function cwEncumberment:PlayerThink(player, curTime, infoTable, alive, initialized)
+function cwEncumberment:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	if (alive and initialized) then
-		if (!player.nextEncumberedCheck or player.nextEncumberedCheck < curTime) then
-			player.nextEncumberedCheck = curTime + 0.5;
+		if (!plyTab.nextEncumberedCheck or plyTab.nextEncumberedCheck < curTime) then
+			plyTab.nextEncumberedCheck = curTime + 0.5;
 			
-			if (!player.inventoryWeight or !player.maxWeight) then
-				player.nextEncumberedCheck = curTime + 2
+			if (!plyTab.inventoryWeight or !plyTab.maxWeight) then
+				plyTab.nextEncumberedCheck = curTime + 2
 				return;
 			end;
 			
-			if (player.inventoryWeight > player.maxWeight) then
-				if (!player.OverEncumbered) then
-					player.OverEncumbered = true;
+			if (plyTab.inventoryWeight > plyTab.maxWeight) then
+				if (!plyTab.OverEncumbered) then
+					plyTab.OverEncumbered = true;
 					Schema:EasyText(player, "maroon", "You are now overencumbered and your movement speed has decreased!");
 				end;
 				
 				if (cwStamina) then
-					if (!player:IsRagdolled() and player.cwObserverMode != true and player:IsRunning()) then
+					if (!player:IsRagdolled() and plyTab.cwObserverMode != true and player:IsRunning()) then
 						local stamina = player:GetCharacterData("Stamina");
 						
-						if ((player.inventoryWeight > player.maxWeight * 2) and stamina <= 40) then
+						if ((plyTab.inventoryWeight > plyTab.maxWeight * 2) and stamina <= 40) then
 							player:SetCharacterData("Stamina", math.Clamp(stamina + 5, 0, player:GetMaxStamina()));
 								Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, math.random(7, 10));
 							player:EmitSound("physics/body/body_medium_break"..math.random(2, 3)..".wav", 60);
@@ -36,8 +36,8 @@ function cwEncumberment:PlayerThink(player, curTime, infoTable, alive, initializ
 				
 				hook.Run("RunModifyPlayerSpeed", player, infoTable);
 			else
-				if (player.OverEncumbered) then
-					player.OverEncumbered = false;
+				if (plyTab.OverEncumbered) then
+					plyTab.OverEncumbered = false;
 					Schema:EasyText(player, "lawngreen", "You are no longer overencumbered.");
 					
 					hook.Run("RunModifyPlayerSpeed", player, infoTable, true);

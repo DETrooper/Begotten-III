@@ -187,6 +187,10 @@ function meta:StartRolling(a)
 				stamina_loss = 40;
 			end
 			
+			if self.GetCharmEquipped and self:GetCharmEquipped("boot_contortionist") then
+				stamina_loss = stamina_loss * 0.5;
+			end
+			
 			if stamina < stamina_loss then
 				return false;
 			end
@@ -311,6 +315,8 @@ function meta:StartRolling(a)
 		
 		self.iFrames = true;
 	--end);
+	
+	self.blockStaminaRegen = math.max(self.blockStaminaRegen or 0, CurTime() + 1.5);
 
 	timer.Create("iFramesEndTimer_"..self:EntIndex(), 1.5 - time, 1, function()
 		if not IsValid( self ) then return end
@@ -323,11 +329,7 @@ function meta:StartRolling(a)
 		if not self:Alive() then return end
 		
 		local curTime = CurTime();
-		
-		if self.nextStas then
-			self.nextStas = math.min(self.nextStas, curTime + 0.5);
-		end
-		
+
 		if weaponRaised then
 			self:SetWeaponRaised(true);
 			

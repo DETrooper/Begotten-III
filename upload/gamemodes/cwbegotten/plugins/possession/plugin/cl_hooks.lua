@@ -107,28 +107,28 @@ function cwPossession:HUDPaint()
 				draw.SimpleText("Stamina:", "UseHint", 50, 90, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 				draw.SimpleText(victim:GetNWInt("Stamina", 100), "UseHint", 120, 90, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
 				
-				draw.SimpleText("Poise:", "UseHint", 50, 115, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
-				draw.SimpleText(victim:GetNWInt("meleeStamina", 100), "UseHint", 120, 115, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
+				--draw.SimpleText("Poise:", "UseHint", 50, 115, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+				--draw.SimpleText(victim:GetNWInt("meleeStamina", 100), "UseHint", 120, 115, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
 				
-				draw.SimpleText("Stability:", "UseHint", 50, 140, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
-				draw.SimpleText(victim:GetNWInt("stability", 100), "UseHint", 120, 140, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
+				draw.SimpleText("Stability:", "UseHint", 50, 115, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+				draw.SimpleText(victim:GetNWInt("stability", 100), "UseHint", 120, 115, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
 				
-				draw.SimpleText("Oxygen:", "UseHint", 50, 165, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
-				draw.SimpleText(victim:GetSharedVar("oxygen") or 100, "UseHint", 120, 165, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
+				draw.SimpleText("Oxygen:", "UseHint", 50, 140, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+				draw.SimpleText(victim:GetSharedVar("oxygen") or 100, "UseHint", 120, 140, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
 				
 				if IsValid(victim:GetActiveWeapon()) then
-					draw.SimpleText("Weapon:", "UseHint", 50, 190, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
-					draw.SimpleText(victim:GetActiveWeapon():GetPrintName(), "UseHint", 120, 190, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
+					draw.SimpleText("Weapon:", "UseHint", 50, 165, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+					draw.SimpleText(victim:GetActiveWeapon():GetPrintName(), "UseHint", 120, 165, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
 				
-					draw.SimpleText("Raised:", "UseHint", 50, 215, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
-					draw.SimpleText(tostring(victim:IsWeaponRaised()), "UseHint", 120, 215, victim:IsWeaponRaised() and COLOR_GREEN or COLOR_RED, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+					draw.SimpleText("Raised:", "UseHint", 50, 190, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+					draw.SimpleText(tostring(victim:IsWeaponRaised()), "UseHint", 120, 190, victim:IsWeaponRaised() and COLOR_GREEN or COLOR_RED, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					
-					draw.SimpleText("Stance:", "UseHint", 50, 240, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+					draw.SimpleText("Stance:", "UseHint", 50, 215, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					
 					if victim:GetNWBool("ThrustStance") == true then
-						draw.SimpleText("Thrust", "UseHint", 120, 240, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+						draw.SimpleText("Thrust", "UseHint", 120, 215, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					else
-						draw.SimpleText("Swipe", "UseHint", 120, 240, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+						draw.SimpleText("Swipe", "UseHint", 120, 215, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					end
 				end
 			end

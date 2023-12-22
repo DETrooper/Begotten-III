@@ -525,23 +525,23 @@ function PLUGIN:GetRollTime(player)
 	if (clothesItem) then
 		if clothesItem.weightclass == "Heavy" then
 			if player:HasBelief("unburdened") then
-				return 1.1;
+				return 1;
 			end
 			
-			return 1.25;
+			return 1.1;
 		elseif clothesItem.weightclass == "Medium" then
 			if player:HasBelief("unburdened") then
 				return 0.9;
 			end
 			
-			return 1.1;
+			return 1;
 		end
 	end
 	
 	local model = player:GetModel();
 	
 	if (model == "models/begotten/gatekeepers/districtonearmor.mdl" or model == "models/begotten/wanderers/scrapperking.mdl") then
-		return 1.25;
+		return 1.1;
 	end
 	
 	return 0.9;

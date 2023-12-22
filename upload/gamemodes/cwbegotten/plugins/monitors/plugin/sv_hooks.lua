@@ -1,8 +1,8 @@
 cas.peak = math.Round(game.MaxPlayers() * 0.8);
 
-function cas:PlayerThink(player, curTime, infoTable, alive, initialized)
-	if (!player.nextAFKTimer or player.nextAFKTimer < curTime) then
-		player.nextAFKTimer = curTime + 5;
+function cas:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
+	if (!plyTab.nextAFKTimer or plyTab.nextAFKTimer < curTime) then
+		plyTab.nextAFKTimer = curTime + 5;
 		
 		if self.afkKickerEnabled ~= false then
 			local playerCount = _player.GetCount();
@@ -16,27 +16,27 @@ function cas:PlayerThink(player, curTime, infoTable, alive, initialized)
 			end;
 			
 			if (!initialized) then
-				if (!player.lastNotInitialized) then
-					player.lastNotInitialized = curTime + 360; -- give them 6 minutes
-				elseif (player.lastNotInitialized < curTime) then
+				if (!plyTab.lastNotInitialized) then
+					plyTab.lastNotInitialized = curTime + 360; -- give them 6 minutes
+				elseif (plyTab.lastNotInitialized < curTime) then
 					Clockwork.kernel:PrintLog(LOGTYPE_MINOR, "Kicking "..player:Name().." for being AFK in the character menu.");
 					player:Kick("You were kicked for being AFK for more than 6 minutes in the character menu.");
 				end;
 			else
-				if (player.lastNotInitialized) then
-					player.lastNotInitialized = nil;
+				if (plyTab.lastNotInitialized) then
+					plyTab.lastNotInitialized = nil;
 				end;
 				
 				local eyeAngles = player:EyeAngles();
 
-				if (!player.lastAngles) then
-					player.lastAngles = eyeAngles.pitch;
+				if (!plyTab.lastAngles) then
+					plyTab.lastAngles = eyeAngles.pitch;
 				end;
 				
-				if (player.lastAngles != eyeAngles.pitch) then
-					player.lastAFK = curTime + 900;
-					player.lastAngles = eyeAngles.pitch;
-				elseif (player.lastAFK and player.lastAFK <= curTime) then
+				if (plyTab.lastAngles != eyeAngles.pitch) then
+					plyTab.lastAFK = curTime + 900;
+					plyTab.lastAngles = eyeAngles.pitch;
+				elseif (plyTab.lastAFK and plyTab.lastAFK <= curTime) then
 					Clockwork.kernel:PrintLog(LOGTYPE_MINOR, "Kicking "..player:Name().." for being AFK.");
 					player:Kick("You were kicked for being afk for more than 15 minutes.")
 				end;

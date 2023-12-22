@@ -74,6 +74,7 @@ local INJURY = {};
 	INJURY.name = "Gash";
 	INJURY.description = "You have a severe gash in this limb! It cannot be treated with normal bandages.";
 	INJURY.symptom = " is torn open and bleeding severely.";
+	INJURY.causesBleeding = true;
 	INJURY.OnReceive = function(player)
 		--printp(player:Name().." has a gash!"); 
 	end;
@@ -87,6 +88,7 @@ local INJURY = {};
 	INJURY.name = "Gunshot Wound";
 	INJURY.description = "You have a bullet lodged inside this limb!";
 	INJURY.symptom = " has a bullet hole in it with blood gushing out!";
+	INJURY.causesBleeding = true;
 	INJURY.OnReceive = function(player)
 		--printp(player:Name().." has a gunshot wound!"); 
 	end;

@@ -1049,7 +1049,7 @@ end;
 
 -- A function to get the player's injury tables.
 function cwMedicalSystem:GetInjuries(player)
-	local injuries = player:GetCharacterData("Injuries",  {});
+	local injuries = player:GetCharacterData("Injuries");
 	
 	if (!injuries or !istable(injuries) or table.IsEmpty(injuries)) then
 		self:SetupPlayer(player, true);

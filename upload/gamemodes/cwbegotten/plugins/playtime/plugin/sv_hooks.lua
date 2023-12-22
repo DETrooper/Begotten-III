@@ -26,8 +26,8 @@ local playerMeta = FindMetaTable("Player")
 	--Clockwork.kernel:CallTimerThink( CurTime() );
 end]]--
 
-function PLUGIN:PlayerThink(player, curTime, infoTable)
-	if !player.nextPlayTime or player.nextPlayTime < curTime then
+function PLUGIN:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
+	if !plyTab.nextPlayTime or plyTab.nextPlayTime < curTime then
 		local playTime = player:GetData("playTime", 0);
 	
 		if (playTime) then
@@ -42,13 +42,13 @@ function PLUGIN:PlayerThink(player, curTime, infoTable)
 			if (!charPlayTime) then
 				player:SetCharacterData("charPlayTime", 0)
 			else
-				if (player:Alive()) then
+				if alive then
 					player:SetCharacterData("charPlayTime", charPlayTime + 5);
 				end;
 			end
 		end
 		
-		player.nextPlayTime = curTime + 5;
+		plyTab.nextPlayTime = curTime + 5;
 	end
 end
 

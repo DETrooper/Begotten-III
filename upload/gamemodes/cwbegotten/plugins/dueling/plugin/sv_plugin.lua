@@ -364,6 +364,9 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 				Clockwork.datastream:Start(player2, "StartBattleMusicNoLimit");
 			end);
 			
+			hook.Run("PlayerEnteredDuel", player1);
+			hook.Run("PlayerEnteredDuel", player2);
+			
 			timer.Create("DuelTimer_"..random_arena, DUELING_ARENAS[random_arena].timeLimit, 1, function()
 				if IsValid(player1) and IsValid(player2) then
 					self:DuelAborted(player1, player2);
@@ -483,10 +486,6 @@ function cwDueling:DuelAborted(player1, player2)
 							player1:SetHealth(player1.cachedHP);
 							player1:SetNWInt("freeze", 0);
 						end
-
-						if cwDayNight and player1:GetSubfaction() == "Rekh-khet-sa" then
-							player1.dayVampireCheck = curTime + 10;
-						end
 						
 						if player1.distortedRingFired then
 							player1.distortedRingFired = nil;
@@ -499,6 +498,8 @@ function cwDueling:DuelAborted(player1, player2)
 						player1.opponent = nil;
 						
 						Clockwork.datastream:Start(player1, "SetPlayerDueling", false);
+						
+						hook.Run("PlayerExitedDuel", player1);
 					end
 					
 					if IsValid(player2) then
@@ -525,10 +526,6 @@ function cwDueling:DuelAborted(player1, player2)
 							player2:SetNWInt("freeze", 0);
 						end
 
-						if cwDayNight and player2:GetSubfaction() == "Rekh-khet-sa" then
-							player2.dayVampireCheck = curTime + 10;
-						end
-						
 						if player2.distortedRingFired then
 							player2.distortedRingFired = nil;
 						end
@@ -540,6 +537,8 @@ function cwDueling:DuelAborted(player1, player2)
 						player2.opponent = nil;
 						
 						Clockwork.datastream:Start(player2, "SetPlayerDueling", false);
+						
+						hook.Run("PlayerExitedDuel", player2);
 					end
 				end);
 
@@ -593,10 +592,6 @@ function cwDueling:DuelAborted(player1, player2)
 							player1:SetNWInt("freeze", 0);
 						end
 						
-						if cwDayNight and player1:GetSubfaction() == "Rekh-khet-sa" then
-							player1.dayVampireCheck = curTime + 10;
-						end
-						
 						if player1.distortedRingFired then
 							player1.distortedRingFired = nil;
 						end
@@ -608,6 +603,8 @@ function cwDueling:DuelAborted(player1, player2)
 						player1.opponent = nil;
 						
 						Clockwork.datastream:Start(player1, "SetPlayerDueling", false);
+						
+						hook.Run("PlayerExitedDuel", player1);
 					end
 				end);
 				
@@ -661,10 +658,6 @@ function cwDueling:DuelAborted(player1, player2)
 							player2:SetNWInt("freeze", 0);
 						end
 						
-						if cwDayNight and player2:GetSubfaction() == "Rekh-khet-sa" then
-							player2.dayVampireCheck = curTime + 10;
-						end
-						
 						if player2.distortedRingFired then
 							player2.distortedRingFired = nil;
 						end
@@ -676,6 +669,8 @@ function cwDueling:DuelAborted(player1, player2)
 						player2.opponent = nil;
 						
 						Clockwork.datastream:Start(player2, "SetPlayerDueling", false);
+						
+						hook.Run("PlayerExitedDuel", player2);
 					end
 				end);
 
@@ -736,10 +731,6 @@ function cwDueling:DuelCompleted(winner, loser)
 							winner:SetNWInt("freeze", 0);
 						end
 						
-						if cwDayNight and winner:GetSubfaction() == "Rekh-khet-sa" then
-							winner.dayVampireCheck = curTime + 10;
-						end
-						
 						if winner.distortedRingFired then
 							winner.distortedRingFired = nil;
 						end
@@ -751,6 +742,8 @@ function cwDueling:DuelCompleted(winner, loser)
 						winner.opponent = nil;
 						
 						Clockwork.datastream:Start(winner, "SetPlayerDueling", false);
+						
+						hook.Run("PlayerExitedDuel", winner);
 					end
 					
 					if IsValid(loser) then
@@ -777,10 +770,6 @@ function cwDueling:DuelCompleted(winner, loser)
 							loser:SetNWInt("freeze", 0);
 						end
 						
-						if cwDayNight and loser:GetSubfaction() == "Rekh-khet-sa" then
-							loser.dayVampireCheck = curTime + 10;
-						end
-						
 						if loser.distortedRingFired then
 							loser.distortedRingFired = nil;
 						end
@@ -792,6 +781,8 @@ function cwDueling:DuelCompleted(winner, loser)
 						loser.opponent = nil;
 						
 						Clockwork.datastream:Start(loser, "SetPlayerDueling", false);
+						
+						hook.Run("PlayerExitedDuel", loser);
 					end
 				end);
 
@@ -870,10 +861,6 @@ function cwDueling:DuelCompleted(winner, loser)
 							winner:SetNWInt("freeze", 0);
 						end
 						
-						if cwDayNight and winner:GetSubfaction() == "Rekh-khet-sa" then
-							winner.dayVampireCheck = curTime + 10;
-						end
-						
 						if winner.distortedRingFired then
 							winner.distortedRingFired = nil;
 						end
@@ -885,6 +872,8 @@ function cwDueling:DuelCompleted(winner, loser)
 						winner.opponent = nil;
 						
 						Clockwork.datastream:Start(winner, "SetPlayerDueling", false);
+						
+						hook.Run("PlayerExitedDuel", winner);
 					end
 				end);
 				
@@ -960,10 +949,6 @@ function cwDueling:DuelCompleted(winner, loser)
 							loser:SetNWInt("freeze", 0);
 						end
 						
-						if cwDayNight and loser:GetSubfaction() == "Rekh-khet-sa" then
-							loser.dayVampireCheck = curTime + 10;
-						end
-						
 						if loser.distortedRingFired then
 							loser.distortedRingFired = nil;
 						end
@@ -975,6 +960,8 @@ function cwDueling:DuelCompleted(winner, loser)
 						loser.opponent = nil;
 						
 						Clockwork.datastream:Start(loser, "SetPlayerDueling", false);
+						
+						hook.Run("PlayerExitedDuel", loser);
 					end
 				end);
 

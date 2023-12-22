@@ -9,8 +9,8 @@ function cwObserverMode:PlayerNoClip(player)
 end
 
 -- Called at an interval while a player is connected.
-function cwObserverMode:PlayerThink(player, curTime, infoTable)
-	if player.cwObserverMode then
+function cwObserverMode:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
+	if plyTab.cwObserverMode then
 		if (!player:InVehicle() and player:GetMoveType() == MOVETYPE_NOCLIP) then
 			local color = player:GetColor()
 				player:SetRenderMode(RENDERMODE_TRANSALPHA);
@@ -20,7 +20,7 @@ function cwObserverMode:PlayerThink(player, curTime, infoTable)
 				player:SetNotSolid(true)
 			player:SetColor(Color(color.r, color.g, color.b, 0))
 		else
-			if (!player.cwObserverReset) then
+			if (!plyTab.cwObserverReset) then
 				cwObserverMode:MakePlayerExitObserverMode(player)
 			end
 		end

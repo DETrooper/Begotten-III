@@ -298,7 +298,7 @@ function Clockwork.player:SayRadio(player, text, check, noEavesdrop, proclaim)
 				Clockwork.chatBox:SetMultiplier(1.35);
 			end
 			
-			Clockwork.chatBox:Add(radiospies, info.speaker, "radiospy",  "["..frequency.."]: \""..info.text.."\"");
+			Clockwork.chatBox:Add(radiospies, info.speaker, "radiospy",  "["..(frequency or "INVALID").."]: \""..info.text.."\"");
 		end
 		
 		Clockwork.plugin:Call("PlayerRadioUsed", player, info.text, listeners, eavesdroppers);

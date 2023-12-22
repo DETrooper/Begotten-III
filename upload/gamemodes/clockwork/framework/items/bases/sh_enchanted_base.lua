@@ -39,14 +39,14 @@ local ITEM = item.New(nil, true);
 				
 				player:SetMaxHealth(player:GetMaxHealth());
 				player:SetHealth(math.Clamp(player:Health(), 1, max_health));
-			elseif self.uniqueID == "ring_courier" then
+			--[[elseif self.uniqueID == "ring_courier" then
 				local max_stamina = player:GetMaxStamina();
 				local new_stamina = math.Clamp(player:GetCharacterData("Stamina", 100), 0, max_stamina);
 
 				player:SetLocalVar("Max_Stamina", max_stamina);
 				player:SetCharacterData("Max_Stamina", max_stamina);
 				player:SetNWInt("Stamina", new_stamina);
-				player:SetCharacterData("Stamina", new_stamina);
+				player:SetCharacterData("Stamina", new_stamina);]]--
 			end
 		end
 	end

@@ -19,9 +19,23 @@ function cwSailing:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunctions)
 			menuPanel:AddOption("Undock", function()
 				Clockwork.inventory:InventoryAction("undock", itemTable.uniqueID, itemTable.itemID);
 			end);
+			
+			menuPanel:AddOption("Rename", function()
+				Clockwork.inventory:InventoryAction("rename", itemTable.uniqueID, itemTable.itemID);
+			end);
 		end
 	end
 end;
+
+function cwSailing:SubModifyItemMarkupTooltip(category, maximumWeight, weight, condition, percentage, name, itemTable, x, y, width, height, frame, bShowWeight)
+	if category == "Naval" then
+		local health = itemTable:GetData("health");
+		
+		if health then
+			frame:AddText("Longship Health: "..tostring(health), Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
+		end
+	end
+end
 
 function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destination, cargoholdopenable)
 	if (IsValid(menu)) then
@@ -36,13 +50,21 @@ function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destinat
 		
 	menu:SetMinimumWidth(150);
 	
-	--[[if ignitable then
+	if ignitable then
 		if ignited == false and destination == false then
-			--if (!FACTION_GOREIC) then
-				menu:AddOption("Burn", function() Clockwork.Client:ConCommand("cw_BurnShip") end);
-			--end
+			if Clockwork.Client:GetFaction() ~= "Goreic Warrior" then
+				local activeWeapon = Clockwork.Client:GetActiveWeapon();
+				
+				if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
+					local oil = Clockwork.Client:GetSharedVar("oil", 0);
+				
+					if oil >= 25 then
+						menu:AddOption("Burn", function() Clockwork.Client:ConCommand("cw_BurnShip") end);
+					end
+				end
+			end
 		end
-	end]]--
+	end
 	
 	if isAdmin or cargoholdopenable then
 		menu:AddOption("Cargo Hold", function() Clockwork.Client:ConCommand("cw_CargoHold") end);
@@ -54,11 +76,9 @@ function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destinat
 		menu:AddOption("Extinguish", function() Clockwork.Client:ConCommand("cw_ExtinguishShip") end);
 	end
 	
-	--if (FACTION_GOREIC) then
-		if repairable then
-			menu:AddOption("Repair", function() Clockwork.Client:ConCommand("cw_RepairShip") end);
-		end
-	--end
+	if repairable then
+		menu:AddOption("Repair", function() Clockwork.Client:ConCommand("cw_RepairShip") end);
+	end
 	
 	if sailable or (isAdmin and !destination) then
 		local submenu = menu:AddSubMenu("Sail", function() end);

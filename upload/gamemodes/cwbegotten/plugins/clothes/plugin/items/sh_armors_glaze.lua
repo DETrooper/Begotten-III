@@ -1421,7 +1421,7 @@ ITEM.type = "plate";
 ITEM.description = "Elite blackened steel adorned with the colors of a noble household. It has been blessed with catalytic energy and thus cannot be worn by the unworthy.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Holy Hierarchy"};
-ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+--ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 ITEM.faction = "Holy Hierarchy";
 ITEM.genderless = true;
 

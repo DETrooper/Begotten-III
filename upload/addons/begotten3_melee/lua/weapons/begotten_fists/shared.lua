@@ -311,14 +311,36 @@ function SWEP:PrimaryAttack()
 										if (loweredParryDebug < curTime) then
 											local blockTable = GetTable(activeWeapon.realBlockTable);
 											
-											if (blockTable and owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !owner:GetNWBool("Parried")) then
-												owner:SetNWBool("Guardening", true);
-												owner.beginBlockTransition = true;
-												owner.StaminaRegenDelay = 0;
-												activeWeapon.Primary.Cone = activeWeapon.IronCone;
-												activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
-											else
-												owner:CancelGuardening()
+											if blockTable then
+												local guardblockamount = blockTable["guardblockamount"];
+												
+												if cwMedicalSystem then
+													local injuries = {};
+													
+													if SERVER then
+														injuries = cwMedicalSystem:GetInjuries(owner);
+													else
+														injuries = Clockwork.Client.cwInjuries;
+													end
+													
+													if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+														guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+													end
+													
+													if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+														guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+													end
+												end
+												
+												--if (owner:GetNWInt("meleeStamina", 100) >= guardblockamount and !owner:GetNWBool("Parried")) then
+												if (owner:GetNWInt("Stamina", 100) >= guardblockamount and !owner:GetNWBool("Parried")) then
+													owner:SetNWBool("Guardening", true);
+													owner.beginBlockTransition = true;
+													activeWeapon.Primary.Cone = activeWeapon.IronCone;
+													activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
+												else
+													owner:CancelGuardening()
+												end;
 											end;
 										end;
 									else
@@ -342,13 +364,12 @@ function SWEP:PrimaryAttack()
 		self:TriggerAnim(owner, self.Weapon.realCriticalAnim);
 		owner:SetNWBool("ParrySucess", false);
 		
-		owner.nextStas = curTime + 5;
+		owner.blockStaminaRegen = curTime + 5;
 		
 		return;
 	end
 
-	--owner.StaminaRegenDelay = 0
-	owner.nextStas = curTime + 5;
+	owner.blockStaminaRegen = curTime + 5;
 
 	wep:SetNextPrimaryFire( curTime + (attacktable["delay"]) )
 	wep:SetNextSecondaryFire( curTime + (attacktable["delay"]) * 0.1 )
@@ -467,14 +488,36 @@ function SWEP:PrimaryAttack()
 											if (loweredParryDebug < curTime) then
 												local blockTable = GetTable(activeWeapon.realBlockTable);
 												
-												if (blockTable and owner:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !owner:GetNWBool("Parried")) then
-													owner:SetNWBool("Guardening", true);
-													owner.beginBlockTransition = true;
-													owner.StaminaRegenDelay = 0;
-													activeWeapon.Primary.Cone = activeWeapon.IronCone;
-													activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
-												else
-													owner:CancelGuardening()
+												if blockTable then
+													local guardblockamount = blockTable["guardblockamount"];
+													
+													if cwMedicalSystem then
+														local injuries = {};
+														
+														if SERVER then
+															injuries = cwMedicalSystem:GetInjuries(owner);
+														else
+															injuries = Clockwork.Client.cwInjuries;
+														end
+														
+														if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+														end
+														
+														if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+														end
+													end
+													
+													--if (blockTable and owner:GetNWInt("meleeStamina", 100) >= guardblockamount and !owner:GetNWBool("Parried")) then
+													if (blockTable and owner:GetNWInt("Stamina", 100) >= guardblockamount and !owner:GetNWBool("Parried")) then
+														owner:SetNWBool("Guardening", true);
+														owner.beginBlockTransition = true;
+														activeWeapon.Primary.Cone = activeWeapon.IronCone;
+														activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
+													else
+														owner:CancelGuardening()
+													end;
 												end;
 											end;
 										else
@@ -491,9 +534,29 @@ function SWEP:PrimaryAttack()
 	end
 
 	if (SERVER) then
-		local max_poise = owner:GetNetVar("maxMeleeStamina");
+		--local max_poise = owner:GetNetVar("maxMeleeStamina");
+		local attackCost = attacktable["takeammo"];
 		
-		owner:SetNWInt("meleeStamina", math.Clamp(owner:GetNWInt("meleeStamina", max_poise) - (attacktable["takeammo"]), 0, max_poise))
+		if cwMedicalSystem then
+			local injuries = {};
+			
+			if SERVER then
+				injuries = cwMedicalSystem:GetInjuries(owner);
+			else
+				injuries = Clockwork.Client.cwInjuries;
+			end
+			
+			if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+				attackCost = attackCost + (attacktable["takeammo"] * 2);
+			end
+			
+			if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+				attackCost = attackCost + (attacktable["takeammo"] * 2);
+			end
+		end
+		
+		--owner:SetNWInt("meleeStamina", math.Clamp(owner:GetNWInt("meleeStamina", max_poise) - (attackCost), 0, max_poise))
+		owner:HandleStamina(-attackCost);
 	end;
 end
 
@@ -663,14 +726,34 @@ function SWEP:SecondaryAttack()
 		if ( !self:CanSecondaryAttack() ) then return end
 		if ( ply:GetNWBool( "Guardening") ) == true then return end
 		--if ( self.Weapon:GetNWInt("Reloading") > curTime ) then return end
-		if ply:GetNWInt("meleeStamina", 100) < blocktable["parrytakestamina"] then return end
+		local parry_cost = blocktable["parrytakestamina"];
+		
+		if cwMedicalSystem then
+			local injuries = {};
+			
+			if SERVER then
+				injuries = cwMedicalSystem:GetInjuries(ply);
+			else
+				injuries = Clockwork.Client.cwInjuries;
+			end
+			
+			if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+				parry_cost = parry_cost + (blocktable["parrytakestamina"] * 2);
+			end
+			
+			if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+				parry_cost = parry_cost + (blocktable["parrytakestamina"] * 2);
+			end
+		end
+		
+		--if ply:GetNWInt("meleeStamina", 100) < parry_cost then return end
+		if ply:GetNWInt("Stamina", 100) < parry_cost then return end
 			
 		self:ParryAnimation()
 		ply:EmitSound(attacksoundtable["parryswing"][math.random(1, #attacksoundtable["parryswing"])])
 
 		local wep = self.Weapon
-		local ply = ply
-		local max_poise = ply:GetNetVar("maxMeleeStamina");
+		--local max_poise = ply:GetNetVar("maxMeleeStamina");
 
 		wep:SetNextPrimaryFire(math.max(curTime + (attacktable["delay"]), curTime + 2));
 		wep:SetNextSecondaryFire(math.max(curTime + (attacktable["delay"]), curTime + 2));
@@ -678,11 +761,11 @@ function SWEP:SecondaryAttack()
 		--Parry anim
 		self:TriggerAnim(ply, self.ParryAnim);
 
-		ply:SetNWInt("meleeStamina", math.Clamp(ply:GetNWInt("meleeStamina") - blocktable["parrytakestamina"], 0, max_poise));
+		--ply:SetNWInt("meleeStamina", math.Clamp(ply:GetNWInt("meleeStamina") - parry_cost, 0, max_poise));
+		ply:HandleStamina(-parry_cost);
 			
 		--Parry
-		--ply.StaminaRegenDelay = 0
-		ply.nextStas = curTime + 5;
+		ply.blockStaminaRegen = curTime + 5;
 		ply:SetNWBool( "Parry", true )
 		self.isAttacking = false;
 		
@@ -706,14 +789,36 @@ function SWEP:SecondaryAttack()
 								if (loweredParryDebug < curTime) then
 									local blockTable = GetTable(activeWeapon.BlockTable);
 									
-									if (blockTable and ply:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !ply:GetNWBool("Parried")) then
-										ply:SetNWBool("Guardening", true);
-										ply.beginBlockTransition = true;
-										ply.StaminaRegenDelay = 0;
-										activeWeapon.Primary.Cone = activeWeapon.IronCone;
-										activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
-									else
-										ply:CancelGuardening()
+									if blockTable then
+										local guardblockamount = blockTable["guardblockamount"];
+										
+										if cwMedicalSystem then
+											local injuries = {};
+											
+											if SERVER then
+												injuries = cwMedicalSystem:GetInjuries(ply);
+											else
+												injuries = Clockwork.Client.cwInjuries;
+											end
+											
+											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+											end
+											
+											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+											end
+										end
+										
+										--if (ply:GetNWInt("meleeStamina", 100) >= guardblockamount and !ply:GetNWBool("Parried")) then
+										if (ply:GetNWInt("Stamina", 100) >= guardblockamount and !ply:GetNWBool("Parried")) then
+											ply:SetNWBool("Guardening", true);
+											ply.beginBlockTransition = true;
+											activeWeapon.Primary.Cone = activeWeapon.IronCone;
+											activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
+										else
+											ply:CancelGuardening()
+										end;
 									end;
 								end;
 							else
@@ -739,14 +844,36 @@ function SWEP:SecondaryAttack()
 								if (loweredParryDebug < curTime) then
 									local blockTable = GetTable(activeWeapon.BlockTable);
 									
-									if (blockTable and ply:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !ply:GetNWBool("Parried")) then
-										ply:SetNWBool("Guardening", true);
-										ply.beginBlockTransition = true;
-										ply.StaminaRegenDelay = 0;
-										activeWeapon.Primary.Cone = activeWeapon.IronCone;
-										activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
-									else
-										ply:CancelGuardening()
+									if blockTable then
+										local guardblockamount = blockTable["guardblockamount"];
+										
+										if cwMedicalSystem then
+											local injuries = {};
+											
+											if SERVER then
+												injuries = cwMedicalSystem:GetInjuries(ply);
+											else
+												injuries = Clockwork.Client.cwInjuries;
+											end
+											
+											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+											end
+											
+											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+											end
+										end
+													
+										--if (ply:GetNWInt("meleeStamina", 100) >= guardblockamount and !ply:GetNWBool("Parried")) then
+										if (ply:GetNWInt("meleeStamina", 100) >= guardblockamount and !ply:GetNWBool("Parried")) then
+											ply:SetNWBool("Guardening", true);
+											ply.beginBlockTransition = true;
+											activeWeapon.Primary.Cone = activeWeapon.IronCone;
+											activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
+										else
+											ply:CancelGuardening()
+										end;
 									end;
 								end;
 							else

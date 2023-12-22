@@ -1007,11 +1007,11 @@ local COMMAND = Clockwork.command:New("Warcry");
 							player:SetNWInt("Stamina", new_stamina);
 						end
 						
-						if cwMelee then
+						--[[if cwMelee then
 							local poise = player:GetNWInt("meleeStamina", 90);
 							
 							player:SetNWInt("meleeStamina", math.Clamp(poise + 90, 0, player:GetMaxPoise() or 90));
-						end
+						end]]--
 					end
 					
 					if player:GetGender() == GENDER_MALE then

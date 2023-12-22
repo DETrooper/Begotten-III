@@ -1380,7 +1380,7 @@ function Schema:Think()
 end;
 
 -- Called at an interval while a player is connected.
-function Schema:PlayerThink(player, curTime, infoTable, alive, initialized)
+function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	--[[if (player:Alive() and !player:IsRagdolled()) then
 		if (!player:InVehicle() and player:GetMoveType() == MOVETYPE_WALK) then
 			if (player:IsInWorld()) then
@@ -1411,39 +1411,39 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized)
 		local waterLevel = player:WaterLevel();
 		
 		if (moveType == MOVETYPE_NOCLIP) then
-			if (player.bOnGround) then
-				player.bOnGround = nil;
+			if (plyTab.bOnGround) then
+				plyTab.bOnGround = nil;
 			end;
 			
-			if (player.bWasInAir) then
-				player.bWasInAir = nil;
+			if (plyTab.bWasInAir) then
+				plyTab.bWasInAir = nil;
 			end;
 		end;	
 		
 		if (bOnGround) then
-			if (!player.bOnGround) then
-				player.bOnGround = true;
+			if (!plyTab.bOnGround) then
+				plyTab.bOnGround = true;
 			end;
 			
-			if (player.bWasInAir) then
+			if (plyTab.bWasInAir) then
 				if (waterLevel >= 1 and waterLevel < 3) then
-					hook.Run("HitGroundWater", player, player.bWasInAir);
+					hook.Run("HitGroundWater", player, plyTab.bWasInAir);
 				end;
 				
-				player.bWasInAir = nil;
+				plyTab.bWasInAir = nil;
 			end;
 		else
-			if (player.bWasInAir) then
+			if (plyTab.bWasInAir) then
 				if (waterLevel >= 1 and waterLevel < 3) then
-					hook.Run("HitGroundWater", player, player.bWasInAir);
+					hook.Run("HitGroundWater", player, plyTab.bWasInAir);
 					
-					player.bWasInAir = nil;
+					plyTab.bWasInAir = nil;
 				end;
 			end;
 		
-			if (player.bOnGround) then
-				player.bWasInAir = player:GetPos().z;
-				player.bOnGround = nil;
+			if (plyTab.bOnGround) then
+				plyTab.bWasInAir = player:GetPos().z;
+				plyTab.bOnGround = nil;
 			end;
 		end;
 		
@@ -1475,8 +1475,8 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized)
 			end
 		end;
 		
-		if (!player.nextOneSecond or player.nextOneSecond < curTime) then
-			player.nextOneSecond = curTime + 1;
+		if (!plyTab.nextOneSecond or plyTab.nextOneSecond < curTime) then
+			plyTab.nextOneSecond = curTime + 1;
 			
 			local nextTeleport = player:GetCharacterData("nextTeleport");
 			
@@ -1484,12 +1484,12 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized)
 				player:SetCharacterData("nextTeleport", math.max(nextTeleport - 1, 0));
 			end
 			
-			if cwCharacterNeeds and player:HasTrait("followed") and player.sleepData then
-				if !player.sleepData.wakeupTime then
-					player.sleepData.wakeupTime = curTime + math.random(10, 30);
+			if cwCharacterNeeds and player:HasTrait("followed") and plyTab.sleepData then
+				if !plyTab.sleepData.wakeupTime then
+					plyTab.sleepData.wakeupTime = curTime + math.random(10, 30);
 				end
 				
-				if player.sleepData.wakeupTime <= curTime then
+				if plyTab.sleepData.wakeupTime <= curTime then
 					Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);
 					Clockwork.chatBox:Add(player, nil, "itnofake", Schema.cheapleMessages[math.random(1, #Schema.cheapleMessages)]);
 					
@@ -1506,7 +1506,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized)
 			if (waterLevel >= 1) then
 				if player:GetSubfaith() == "Voltism" and !Clockwork.player:HasFlags(player, "T") then
 					if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
-						if player:Alive() and !player.cwObserverMode then
+						if player:Alive() and !plyTab.cwObserverMode then
 							if waterLevel == 1 then
 								Schema:DoTesla(player, true);
 							else
@@ -1522,7 +1522,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized)
 			if (player:GetMoveType() != MOVETYPE_NOCLIP) then
 				if (player:IsRunning()) then
 					if (player:HasTrait("clumsy")) then
-						if (!player.lastClumsyFallen or player.lastClumsyFallen < curTime) then
+						if (!plyTab.lastClumsyFallen or plyTab.lastClumsyFallen < curTime) then
 							if (math.random(1, 4) == 4) then
 								Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, math.random(4, 7));
 								Clockwork.chatBox:AddInTargetRadius(player, "me", "trips and falls like a fucking idiot!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
@@ -1539,9 +1539,9 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized)
 								end;
 								
 								player:TakeDamage(2);
-								player.lastClumsyFallen = curTime + math.random(30, 90);
+								plyTab.lastClumsyFallen = curTime + math.random(30, 90);
 							else
-								player.lastClumsyFallen = curTime + 5;
+								plyTab.lastClumsyFallen = curTime + 5;
 							end;
 						end;
 					end;

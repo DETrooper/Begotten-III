@@ -45,7 +45,8 @@ function cwMelee:HandleStability(player, amount, cooldown)
 	player:SetCharacterData("stability", math.Clamp(player:GetCharacterData("stability", player:GetMaxStability()) + amount, 0, player:GetMaxStability()));
 end;
 
-function playerMeta:TakePoise(amount)
+--function playerMeta:TakePoise(amount)
+function playerMeta:TakeStamina(amount)
 	if (Clockwork.player:HasFlags(self, "E")) then
 		return;
 	end
@@ -54,6 +55,7 @@ function playerMeta:TakePoise(amount)
 	local leftArm = Clockwork.limb:GetHealth(self, HITGROUP_LEFTARM, false)
 	local rightArm = Clockwork.limb:GetHealth(self, HITGROUP_RIGHTARM, false)
 	local armHealth = math.min(leftArm, rightArm)
+	local max_stamina = self:GetMaxStamina() or 100;
 	
 	if (armHealth <= 75) then
 		if armHealth > 50 then
@@ -71,16 +73,21 @@ function playerMeta:TakePoise(amount)
 		newAmount = 0 - newAmount;
 	end
 
-	self:SetNWInt("meleeStamina", math.Clamp(self:GetNWInt("meleeStamina", 90) + newAmount, 0, self:GetMaxPoise() or 90));
+	--self:SetNWInt("meleeStamina", math.Clamp(self:GetNWInt("meleeStamina", 90) + newAmount, 0, self:GetMaxPoise() or 90));
+	self:HandleStamina(math.Clamp(self:GetNWInt("Stamina", max_stamina) + newAmount, 0, max_stamina));
 	
-	if self:GetNWInt("meleeStamina", 90) <= 0 and self:GetNWBool("Guardening", false) == true then
+	--[[if self:GetNWInt("meleeStamina", 90) <= 0 and self:GetNWBool("Guardening", false) == true then
 		self:CancelGuardening();
 		self.nextStas = CurTime() + 3;
-	end
+	end]]--
 end
 
-function playerMeta:GivePoise(amount)
-	self:SetNWInt("meleeStamina", math.Clamp(self:GetNWInt("meleeStamina", 90) + amount, 0, self:GetMaxPoise() or 90));
+--function playerMeta:GivePoise(amount)
+function playerMeta:GiveStamina(amount)
+	local max_stamina = self:GetMaxStamina() or 100;
+	
+	--self:SetNWInt("meleeStamina", math.Clamp(self:GetNWInt("meleeStamina", 90) + amount, 0, self:GetMaxPoise() or 90));
+	self:HandleStamina(math.Clamp(self:GetNWInt("Stamina", max_stamina) + amount, 0, max_stamina));
 end
 
 -- A function to take from a player's stability.
@@ -220,7 +227,7 @@ function playerMeta:TakeFreeze(amount)
 end
 
 -- A function to get a player's maximum poise.
-function playerMeta:GetMaxPoise()
+--[[function playerMeta:GetMaxPoise()
 	local max_poise = 90;
 	local subfaction = self:GetSubfaction();
 	
@@ -259,7 +266,7 @@ function playerMeta:GetMaxPoise()
 	end
 	
 	return max_poise;
-end;
+end;]]--
 
 -- A function to get a player's maximum stability.
 function playerMeta:GetMaxStability()

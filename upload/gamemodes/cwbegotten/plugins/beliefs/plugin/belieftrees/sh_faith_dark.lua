@@ -183,7 +183,7 @@ local DARK = cwBeliefs.beliefTrees:New("dark")
 			["encore"] = {
 				name = "Encore",
 				subfaith = "Satanism",
-				description = "The attack and block delay of being parried is now reduced by 50%, allowing you to recover far sooner. You also now have 50% less of a chance to be disarmed following a high poise attack.",
+				description = "The attack and block delay of being parried is now reduced by 50%, allowing you to recover far sooner. You also now have 50% less of a chance to be disarmed following a high stamina damage attack.",
 				requirements = {"satanism", "blank_stare"},
 				row = 3,
 			},

@@ -197,7 +197,7 @@ local COMMAND = Clockwork.command:New("DemonHeal");
 			if !player.nextDemonHeal or player.nextDemonHeal < curTime then
 				player.nextDemonHeal = curTime + 10;
 				
-				local max_poise = target:GetMaxPoise();
+				--local max_poise = target:GetMaxPoise();
 				local max_stability = target:GetMaxStability();
 				local max_stamina = target:GetMaxStamina();
 				
@@ -211,7 +211,7 @@ local COMMAND = Clockwork.command:New("DemonHeal");
 				target:SetCharacterData("stability", max_stability);
 				target:SetNWInt("stability", max_stability);
 				--target:SetCharacterData("meleeStamina", max_poise);
-				target:SetNWInt("meleeStamina", max_poise);
+				--target:SetNWInt("meleeStamina", max_poise);
 				target:SetNWInt("freeze", 0);
 				target:SetBloodLevel(5000);
 				target:StopAllBleeding();

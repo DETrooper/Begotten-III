@@ -89,7 +89,7 @@ function playerMeta:Possess(possessor)
 		
 		Clockwork.chatBox:Add(self, nil, "itnofake", "As much as you struggle, you cannot fight off the entity that is now taking control of your body!");
 		
-		local max_poise = self:GetMaxPoise();
+		--local max_poise = self:GetMaxPoise();
 		local max_stability = self:GetMaxStability();
 		local max_stamina = self:GetMaxStamina();
 		
@@ -103,7 +103,7 @@ function playerMeta:Possess(possessor)
 		self:SetNWInt("Stamina", max_stamina);
 		self:SetCharacterData("stability", max_stability);
 		--self:SetCharacterData("meleeStamina", max_poise);
-		self:SetNWInt("meleeStamina", max_poise);
+		--self:SetNWInt("meleeStamina", max_poise);
 		self:SetNWInt("freeze", 0);
 		self:SetBloodLevel(5000);
 		self:StopAllBleeding();
