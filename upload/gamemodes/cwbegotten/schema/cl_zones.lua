@@ -204,18 +204,24 @@ function zones:RefreshZoneVFX()
 			
 			if (zoneTable.fogStart and zoneTable.fogEnd) then
 				local fogStart, fogEnd = zoneTable.fogStart, zoneTable.fogEnd;
-
-				if zoneTable.hasNight and !Clockwork.Client.dueling and !Clockwork.kernel:IsChoosingCharacter() then
-					if (zoneTable.fogStartNight and zoneTable.fogEndNight) then
-						self.targetStart = Lerp(cwDayNight.nightWeight, zoneTable.fogStart, zoneTable.fogStartNight);
-						self.targetEnd = Lerp(cwDayNight.nightWeight, zoneTable.fogEnd, zoneTable.fogEndNight);
-					else
-						self.targetStart = zoneTable.fogStart;
-						self.targetEnd = zoneTable.fogEnd;
-					end
+				local overrideStart, overrideEnd = hook.Run("OverrideZoneFogDistance", zoneTable, fogStart, fogEnd);
+				
+				if overrideStart and overrideEnd then
+					self.targetStart = overrideStart;
+					self.targetEnd = overrideEnd;
 				else
-					self.targetStart = zoneTable.fogStart;
-					self.targetEnd = zoneTable.fogEnd;
+					if zoneTable.hasNight and !Clockwork.Client.dueling and !Clockwork.kernel:IsChoosingCharacter() then
+						if (zoneTable.fogStartNight and zoneTable.fogEndNight) then
+							self.targetStart = Lerp(cwDayNight.nightWeight, fogStart, zoneTable.fogStartNight);
+							self.targetEnd = Lerp(cwDayNight.nightWeight, fogEnd, zoneTable.fogEndNight);
+						else
+							self.targetStart = fogStart;
+							self.targetEnd = fogEnd;
+						end
+					else
+						self.targetStart = fogStart;
+						self.targetEnd = fogEnd;
+					end
 				end
 
 				self.currentFogStart = self.targetStart;
@@ -558,14 +564,28 @@ function zones:RenderScreenspaceEffects()
 				if (!fogDistanceUpdated) then
 					if (self.currentFogStart and self.currentFogEnd) then
 						local fogStart, fogEnd = zoneTable.fogStart, zoneTable.fogEnd;
+						local overrideStart, overrideEnd = hook.Run("OverrideZoneFogDistance", zoneTable, fogStart, fogEnd);
 						local interval = zoneTable.distanceInterval or 128;
 						local frameTime = frameTime * interval;
 						
-						if (!self.targetStart or !self.targetEnd) then
-							if zoneTable.hasNight and !Clockwork.Client.dueling and !Clockwork.kernel:IsChoosingCharacter() then
-								if (zoneTable.fogStartNight and zoneTable.fogEndNight) then
-									self.targetStart = Lerp(cwDayNight.nightWeight, zoneTable.fogStart, zoneTable.fogStartNight);
-									self.targetEnd = Lerp(cwDayNight.nightWeight, zoneTable.fogEnd, zoneTable.fogEndNight);
+						if overrideStart and overrideEnd then
+							self.targetStart = overrideStart;
+							self.targetEnd = overrideEnd;
+						else
+							if (!self.targetStart or !self.targetEnd) then
+								if zoneTable.hasNight and !Clockwork.Client.dueling and !Clockwork.kernel:IsChoosingCharacter() then
+									if (zoneTable.fogStartNight and zoneTable.fogEndNight) then
+										self.targetStart = Lerp(cwDayNight.nightWeight, zoneTable.fogStart, zoneTable.fogStartNight);
+										self.targetEnd = Lerp(cwDayNight.nightWeight, zoneTable.fogEnd, zoneTable.fogEndNight);
+									else
+										if (zoneTable.fogStart and zoneTable.fogEnd) then
+											self.targetStart = zoneTable.fogStart;
+											self.targetEnd = zoneTable.fogEnd;
+										else
+											self.targetStart = defaultZone.fogStart;
+											self.targetEnd = defaultZone.fogEnd;
+										end;
+									end;
 								else
 									if (zoneTable.fogStart and zoneTable.fogEnd) then
 										self.targetStart = zoneTable.fogStart;
@@ -574,30 +594,22 @@ function zones:RenderScreenspaceEffects()
 										self.targetStart = defaultZone.fogStart;
 										self.targetEnd = defaultZone.fogEnd;
 									end;
-								end;
-							else
-								if (zoneTable.fogStart and zoneTable.fogEnd) then
-									self.targetStart = zoneTable.fogStart;
-									self.targetEnd = zoneTable.fogEnd;
-								else
-									self.targetStart = defaultZone.fogStart;
-									self.targetEnd = defaultZone.fogEnd;
-								end;
-							end
-						elseif (zoneTable.fogStart != self.targetStart or zoneTable.fogEnd != self.targetEnd) then
-							if zoneTable.hasNight and !Clockwork.Client.dueling and !Clockwork.kernel:IsChoosingCharacter() then
-								if (zoneTable.fogStartNight and zoneTable.fogEndNight) then
-									self.targetStart = Lerp(cwDayNight.nightWeight, zoneTable.fogStart, zoneTable.fogStartNight);
-									self.targetEnd = Lerp(cwDayNight.nightWeight, zoneTable.fogEnd, zoneTable.fogEndNight);
+								end
+							elseif (zoneTable.fogStart != self.targetStart or zoneTable.fogEnd != self.targetEnd) then
+								if zoneTable.hasNight and !Clockwork.Client.dueling and !Clockwork.kernel:IsChoosingCharacter() then
+									if (zoneTable.fogStartNight and zoneTable.fogEndNight) then
+										self.targetStart = Lerp(cwDayNight.nightWeight, zoneTable.fogStart, zoneTable.fogStartNight);
+										self.targetEnd = Lerp(cwDayNight.nightWeight, zoneTable.fogEnd, zoneTable.fogEndNight);
+									else
+										self.targetStart = zoneTable.fogStart;
+										self.targetEnd = zoneTable.fogEnd;
+									end
 								else
 									self.targetStart = zoneTable.fogStart;
 									self.targetEnd = zoneTable.fogEnd;
 								end
-							else
-								self.targetStart = zoneTable.fogStart;
-								self.targetEnd = zoneTable.fogEnd;
-							end
-						end;
+							end;
+						end
 						
 						if (mapscenePosition != nil) then
 							frameTime = 999999;
