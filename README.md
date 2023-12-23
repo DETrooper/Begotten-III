@@ -34,11 +34,9 @@ Begotten III utilizes some modified external addons as well, so the lua is inclu
 
 [DRGBase](https://steamcommunity.com/sharedfiles/filedetails/?id=1560118657)
 
+[DRG Animal Kingdom](https://steamcommunity.com/sharedfiles/filedetails/?id=3047891625)
+
 [Smooth Scrolling](https://steamcommunity.com/sharedfiles/filedetails/?id=2556148920)
-
-[VJ Base](https://steamcommunity.com/sharedfiles/filedetails/?id=131759821)
-
-[VJ Animal SNPCs](https://steamcommunity.com/sharedfiles/filedetails/?id=522764555)
 
 [Darken217's SciFi Weapons](https://steamcommunity.com/sharedfiles/filedetails/?id=420970650)
 
