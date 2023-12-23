@@ -57,7 +57,7 @@ function COMMAND:OnRun(player, arguments)
 			local destination = trace.HitPos;
 			local spawnDelay = math.Rand(1, 2);
 			
-			sound.Play("begotten/npc/tele2_fadeout2.ogg", destination, 100, math.random(95, 105));
+			sound.Play("begotten/npc/tele2_fadeout2.ogg", destination, 80, math.random(95, 105));
 			
 			timer.Simple(spawnDelay, function()
 				ParticleEffect("teleport_fx", destination, Angle(0,0,0));

@@ -505,7 +505,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 			local stamina = player:GetNWInt("Stamina", max_stamina);
 			
 			--if (poise < max_poise * 0.8) then
-			if (stamina < max_stamina * 0.8) then
+			if (stamina < max_stamina * 0.6) then
 				if (!plyTab.BreathingSoundsa) then
 					plyTab.BreathingSoundsa = CreateSound(player, "breathing1.wav");
 				end
