@@ -631,9 +631,8 @@ local function Guarding(ent, dmginfo)
 								local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
 
 								if blockTable.electrified then
-									local wepBlockTable = GetTable(enemywep.BlockTable);
 									
-									if wepBlockTable["blockeffect"] == "MetalSpark" then
+									if enemywep.SoundMaterial == "Metal" or enemywep.SoundMaterial == "MetalPierce" then
 										local shockDamageInfo = DamageInfo();
 										
 										shockDamageInfo:SetDamage(math.random(3, 5));

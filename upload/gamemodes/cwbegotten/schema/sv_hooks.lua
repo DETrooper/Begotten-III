@@ -2981,14 +2981,12 @@ end;
 function Schema:ModifyPlayerSpeed(player, infoTable, action)
 	local subfaction = player:GetSubfaction();
 	
-	if subfaction == "Philimaxio" then
+	if subfaction == "Philimaxio" or subfaction == "Knights of Sol" then
 		infoTable.runSpeed = infoTable.runSpeed * 0.85;
 	elseif subfaction == "Varazdat" then
 		if player:Health() > player:GetMaxHealth() * 0.95 then
 			infoTable.runSpeed = infoTable.runSpeed * 1.1;
 		end
-	elseif subfaction == "Knights of Sol" then
-		infoTable.runSpeed = infoTable.runSpeed * 0.95;
 	elseif subfaction == "Praeventor" then
 		if player:GetSubfaith() ~= "Sol Orthodoxy" then
 			infoTable.runSpeed = infoTable.runSpeed * 1.05;
