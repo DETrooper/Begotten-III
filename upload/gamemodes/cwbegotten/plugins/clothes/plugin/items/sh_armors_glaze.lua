@@ -1907,7 +1907,7 @@ ITEM.damageTypeScales = {
 ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
 ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
+ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 
 ITEM.components = {breakdownType = "meltdown", items = {"tech", "tech", "tech", "tech", "scrap", "scrap", "scrap", "scrap", "scrap"}};
 
@@ -2152,7 +2152,7 @@ ITEM.damageTypeScales = {
 ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
 ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-ITEM.bulletScale = 0.45; -- reduces bullet damage by 55%
+ITEM.bulletScale = 0.3; -- reduces bullet damage by 70%
 ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 
 ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "technocraft", "tech", "tech", "tech"}};
