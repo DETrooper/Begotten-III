@@ -162,7 +162,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 								if IsValid(activeWeapon) and activeWeapon.BlockTable then
 									local clothesItem = attacker:GetClothesEquipped();
 									
-									if (activeWeapon:GetClass() == "begotten_fists" and clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate")) or (activeWeapon.SoundMaterial == "Metal" or enemywep.SoundMaterial == "MetalPierce") then
+									if (activeWeapon:GetClass() == "begotten_fists" and clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate")) or (activeWeapon.SoundMaterial == "Metal" or activeWeapon.SoundMaterial == "MetalPierce") then
 										local shockDamageInfo = DamageInfo();
 										
 										shockDamageInfo:SetDamage(10);
