@@ -153,7 +153,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					end
 					
 					if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("the_light") then
-						armorPiercing = armorPiercing + (armorPiercing * 0.2);
+						armorPiercing = armorPiercing + (armorPiercing * 0.15);
 					end
 					
 					if attacker:HasBelief("billman") then
@@ -274,7 +274,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 							end
 							
 							if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("the_light") then
-								armorPiercing = armorPiercing + (armorPiercing * 0.2);
+								armorPiercing = armorPiercing + (armorPiercing * 0.15);
 							end
 							
 							if attacker:HasBelief("billman") then

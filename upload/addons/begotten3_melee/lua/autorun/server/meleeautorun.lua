@@ -631,9 +631,8 @@ local function Guarding(ent, dmginfo)
 								local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
 
 								if blockTable.electrified then
-									local wepBlockTable = GetTable(enemywep.BlockTable);
 									
-									if wepBlockTable["blockeffect"] == "MetalSpark" then
+									if enemywep.SoundMaterial == "Metal" or enemywep.SoundMaterial == "MetalPierce" then
 										local shockDamageInfo = DamageInfo();
 										
 										shockDamageInfo:SetDamage(math.random(3, 5));
@@ -1273,18 +1272,8 @@ local function Guarding(ent, dmginfo)
 				-- If a beserker or a member of House Varazdat, gain HP back via lifeleech.
 				if attacker:GetSubfaction() == "Varazdat" then
 					if IsValid(enemywep) and enemywep.IsABegottenMelee then
-						local clothesItem = attacker:GetClothesEquipped();
-						local modifier = 2;
 						
-						if clothesItem then
-							if clothesItem.weightclass == "Medium" then
-								modifier = 3;
-							elseif clothesItem.weightclass == "Heavy" then
-								modifier = 4;
-							end
-						end
-						
-						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / modifier)), 0, attacker:GetMaxHealth()));
+						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
 						
 						attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
 						
