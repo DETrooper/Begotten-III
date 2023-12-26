@@ -111,7 +111,7 @@ function ENT:OnTakeDamage(damageInfo)
 				if cwBeliefs and player.HandleXP then
 					local playerFaction = player:GetFaction();
 					
-					if playerFaction == "Gatekeeper" then
+					if playerFaction == "Gatekeeper" or playerFaction == "Goreic Warrior" then
 						player:HandleXP(30);
 					else
 						player:HandleXP(10);
