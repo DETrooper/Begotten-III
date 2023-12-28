@@ -1314,7 +1314,10 @@ function Schema:ShouldCharacterMenuBeCreated()
 				local addon = requiredWorkshopAddons[i];
 			
 				if !steamworks.IsSubscribed(addon) or !steamworks.ShouldMountAddon(addon) then
-					vgui.Create("cwContentNotification").missingWorkshop = true;
+					local contentPanel = vgui.Create("cwContentNotification");
+					
+					contentPanel.missingWorkshop = true;
+					contentPanel:Rebuild();
 					
 					Schema.contentVerified = "missing";
 					
@@ -1324,7 +1327,9 @@ function Schema:ShouldCharacterMenuBeCreated()
 			
 			for k, v in pairs(Schema.requiredMounts) do
 				if !IsMounted(k) then
-					vgui.Create("cwContentNotification");
+					local contentPanel = vgui.Create("cwContentNotification");
+					
+					contentPanel:Rebuild();
 					
 					Schema.contentVerified = "missing";
 					

@@ -137,7 +137,8 @@ function cwMelee:KeyPress(player, key)
 					if (loweredParryDebug < curTime) then
 						local blockTable = GetTable(activeWeapon.BlockTable);
 						
-						if (blockTable and player:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"]) then
+						--if (blockTable and player:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"]) then
+						if (blockTable and player:GetNWInt("Stamina", 100) >= blockTable["guardblockamount"]) then
 							player:SetNWBool("Guardening", true);
 							player.beginBlockTransition = true;
 							activeWeapon.Primary.Cone = activeWeapon.IronCone;
