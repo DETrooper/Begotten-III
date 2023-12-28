@@ -279,7 +279,44 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
-	--ITEM.itemSpawnerInfo = {category = "Melee", rarity = 400, supercrateOnly = true};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Spatha";
+	ITEM.model = "models/begotten/weapons/spatha.mdl";
+	ITEM.weight = 1.3;
+	ITEM.uniqueID = "begotten_1h_spatha";
+	ITEM.category = "Melee";
+	ITEM.description = "A steel sword from the Glazic Legions. Forged for the purpose of civilizing savages.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/spatha.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(14.92, 0, 20.88);
+	ITEM.attachmentOffsetVector = Vector(2.83, 3.54, 0);
+	ITEM.canUseOffhand = true;
+	ITEM.canUseShields = true;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Ornate Glazicus";
+	ITEM.model = "models/begotten/weapons/ornateglazicus.mdl";
+	ITEM.weight = 1;
+	ITEM.uniqueID = "begotten_1h_ornateglazicus";
+	ITEM.category = "Melee";
+	ITEM.description = "A finely crafted steel Glazicus with decorative inlays. Glorious to behold.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/ornateglazicus.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(14.92, 0, 20.88);
+	ITEM.attachmentOffsetVector = Vector(2.83, 3.54, 0);
+	ITEM.canUseOffhand = true;
+	ITEM.canUseShields = true;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");

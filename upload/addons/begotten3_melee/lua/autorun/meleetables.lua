@@ -670,6 +670,26 @@ AttackTables.GlazicusAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
+AttackTables.OrnateGlazicusAttackTable = {
+	["primarydamage"] = 40,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.85,
+	["altattackpoisedamagemodifier"] = 0.3,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 30,
+	["altarmorpiercing"] = 55,
+	["poisedamage"] = 12,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 3,
+	["delay"] = 0.7,
+	["striketime"] = 0.3,
+	["meleearc"] = 35,
+	["meleerange"] = 675,
+	["punchstrength"] = Angle(0,1,0),
+};
+
 AttackTables.DruidSwordAttackTable = {
 	["primarydamage"] = 25,
 	["dmgtype"] = 4,
@@ -1646,7 +1666,7 @@ AttackTables.FlangedMaceAttackTable = {
 	["delay"] = 1.1,
 	["striketime"] = 0.4,
 	["meleearc"] = 35,
-	["meleerange"] = 675,
+	["meleerange"] = 650,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1665,7 +1685,7 @@ AttackTables.MorningStarAttackTable = {
 	["delay"] = 1.2,
 	["striketime"] = 0.4,
 	["meleearc"] = 35,
-	["meleerange"] = 675,
+	["meleerange"] = 650,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -2474,7 +2494,7 @@ AttackTables.GoreMaceAttackTable = {
 	["delay"] = 1.3,
 	["striketime"] = 0.4,
 	["meleearc"] = 35,
-	["meleerange"] = 675,
+	["meleerange"] = 630,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -2513,7 +2533,7 @@ AttackTables.SatanicMaceAttackTable = {
 	["delay"] = 1.25,
 	["striketime"] = 0.4,
 	["meleearc"] = 35,
-	["meleerange"] = 675,
+	["meleerange"] = 635,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -2650,7 +2670,7 @@ AttackTables.TwistedClubAttackTable = {
 	["delay"] = 1.05,
 	["striketime"] = 0.4,
 	["meleearc"] = 35,
-	["meleerange"] = 675,
+	["meleerange"] = 635,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -2785,7 +2805,7 @@ AttackTables.VoltprodAttackTable = {
 	["delay"] = 1.1,
 	["striketime"] = 0.4,
 	["meleearc"] = 35,
-	["meleerange"] = 675,
+	["meleerange"] = 635,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -2844,6 +2864,26 @@ AttackTables.SteelArmingSwordAttackTable = {
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
 	["meleerange"] = 750,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.SpathaAttackTable = {
+	["primarydamage"] = 50,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.8,
+	["altattackpoisedamagemodifier"] = 0.4,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 30,
+	["altarmorpiercing"] = 40,
+	["poisedamage"] = 18,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 6,
+	["delay"] = 0.95,
+	["striketime"] = 0.35,
+	["meleearc"] = 35,
+	["meleerange"] = 770,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -2976,7 +3016,7 @@ AttackTables.WarHammerAttackTable = {
 	["delay"] = 1,
 	["striketime"] = 0.4,
 	["meleearc"] = 35,
-	["meleerange"] = 675,
+	["meleerange"] = 635,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -3013,6 +3053,7 @@ AddTable("ScrapSpearAttackTable", AttackTables.ScrapSpearAttackTable)
 AddTable("WingedSpearAttackTable", AttackTables.WingedSpearAttackTable) 
 AddTable("WarScytheAttackTable", AttackTables.WarScytheAttackTable) 
 AddTable("GlazicusAttackTable", AttackTables.GlazicusAttackTable)
+AddTable("OrnateGlazicusAttackTable", AttackTables.OrnateGlazicusAttackTable)
 AddTable("BlackclawAttackTable", AttackTables.BlackclawAttackTable)  
 AddTable("ScrapBladeAttackTable", AttackTables.ScrapBladeAttackTable)  
 AddTable("BellHammerAttackTable", AttackTables.BellHammerAttackTable)  
@@ -3100,6 +3141,7 @@ AddTable("VoltprodAttackTable", AttackTables.VoltprodAttackTable)
 AddTable("TireIronAttackTable", AttackTables.TireIronAttackTable)
 AddTable("ScrapAxeAttackTable", AttackTables.ScrapAxeAttackTable)
 AddTable("SteelArmingSwordAttackTable", AttackTables.SteelArmingSwordAttackTable)
+AddTable("SpathaAttackTable", AttackTables.SpathaSwordAttackTable)
 AddTable("SatanicShortswordAttackTable", AttackTables.SatanicShortswordAttackTable)
 AddTable("Ancestraldagger_Rekh_AttackTable", AttackTables.Ancestraldagger_Rekh_AttackTable)
 AddTable("Ancestraldagger_Varazdat_AttackTable", AttackTables.Ancestraldagger_Varazdat_AttackTable)
@@ -3649,6 +3691,24 @@ BlockTables.GlazicusBlockTable = {
 	["instantraise"] = false,
 	["parrydifficulty"] = 0.2,
 	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
+BlockTables.OrnateGlazicusBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 15,
+	["blockeffectpos"] = (Vector(0, 0, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 12,
+	["raisespeed"] = 0.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.25,
+	["parrytakestamina"] = 10,
 	["canparry"] = true,
 	["candeflect"] = true,
 };
@@ -5201,6 +5261,24 @@ BlockTables.SteelArmingSwordBlockTable = {
 	["candeflect"] = true,
 };
 
+BlockTables.SpathaBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 15,
+	["blockeffectpos"] = (Vector(0, 0, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 20,
+	["raisespeed"] = 0.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
 BlockTables.SatanicShortswordBlockTable = {
 	["guardblockamount"] = 10,
 	["specialeffect"] = false,
@@ -5376,6 +5454,7 @@ AddTable("ScrapSpearBlockTable", BlockTables.ScrapSpearBlockTable)
 AddTable("WingedSpearBlockTable", BlockTables.WingedSpearBlockTable) 
 AddTable("WarScytheBlockTable", BlockTables.WarScytheBlockTable)  
 AddTable("GlazicusBlockTable", BlockTables.GlazicusBlockTable)  
+AddTable("OrnateGlazicusBlockTable", BlockTables.OrnateGlazicusBlockTable)  
 AddTable("BlackclawBlockTable", BlockTables.BlackclawBlockTable)  
 AddTable("ScrapBladeBlockTable", BlockTables.ScrapBladeBlockTable)  
 AddTable("BellHammerBlockTable", BlockTables.BellHammerBlockTable)  
@@ -5461,6 +5540,7 @@ AddTable("VoltprodBlockTable", BlockTables.VoltprodBlockTable)
 AddTable("TireIronBlockTable", BlockTables.TireIronBlockTable)
 AddTable("ScrapAxeBlockTable", BlockTables.ScrapAxeBlockTable)
 AddTable("SteelArmingSwordBlockTable", BlockTables.SteelArmingSwordBlockTable)
+AddTable("SpathaBlockTable", BlockTables.SpathaBlockTable)
 AddTable("SatanicShortswordBlockTable", BlockTables.SatanicShortswordBlockTable)
 AddTable("Ancestraldagger_Rekh_BlockTable", BlockTables.Ancestraldagger_Rekh_BlockTable)
 AddTable("Ancestraldagger_Varazdat_BlockTable", BlockTables.Ancestraldagger_Varazdat_BlockTable)

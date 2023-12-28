@@ -2633,6 +2633,35 @@ function cwRecipes:ClockworkInitialized()
 		end;
 	RECIPE:Register()
 
+	RECIPE = cwRecipes.recipes:New("ornateglazicus");
+	RECIPE.name = "Ornate Glazicus";
+	RECIPE.requiresSmithy = true;
+	RECIPE.requiredBeliefs = {"artisan"};
+	RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+	RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+	RECIPE.requirements = {
+		["fine_steel_ingot"] = {amount = 3},
+	};
+	RECIPE.result = {
+		["begotten_1h_ornateglazicus"] = {amount = 1},
+	};
+	RECIPE.category = "Weapons"
+	RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+	RECIPE.failSound = "buttons/button2.wav"
+	RECIPE.craftTime = 8
+	RECIPE.craftVerb = "smithing"
+	RECIPE.experience = 75;
+	
+	function RECIPE:OnCraft(player)
+	end;
+	function RECIPE:OnFail(player)
+	end;
+	function RECIPE:StartCraft(player)
+	end;
+	function RECIPE:EndCraft(player)
+	end;
+RECIPE:Register()
+
 	RECIPE = cwRecipes.recipes:New("gore_battle_axe");
 		RECIPE.name = "Gore Battle Axe";
 		RECIPE.requiresSmithy = true;
@@ -2942,6 +2971,37 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 3},
 			["leather"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_1h_steelarmingsword"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("steel_arming_sword");
+		RECIPE.name = "Spatha";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 3},
+			["iron_ingot"] = {amount = 1},
+			["wood"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_1h_steelarmingsword"] = {amount = 1},
@@ -3978,6 +4038,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 3},
+			["steel_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_2h_inquisitorsword"] = {amount = 1},
