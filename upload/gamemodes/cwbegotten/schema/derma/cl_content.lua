@@ -150,9 +150,9 @@ end
 function PANEL:Paint(w, h)
 	draw.RoundedBox(0, 0, 0, w, h, colBlack);
 	
-	local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(bigTextFont, "You are missing part of or all of the Begotten III VR content!");
+	local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(bigTextFont, "You are missing part of or all of the Begotten III content!");
 	
-	draw.SimpleText("You are missing part of or all of the Begotten III VR content!", bigTextFont, (w * 0.5) - (newsizew / 2), h * 0.4, colRed);
+	draw.SimpleText("You are missing part of or all of the Begotten III content!", bigTextFont, (w * 0.5) - (newsizew / 2), h * 0.4, colRed);
 	
 	if self.missingMounts ~= "" then
 		if self.missingWorkshop then
