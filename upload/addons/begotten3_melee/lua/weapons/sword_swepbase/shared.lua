@@ -1225,7 +1225,7 @@ end
 			if (IsValid(hit) and owner:IsValid() and !owner:IsRagdolled() and owner:Alive()) then
 				local d = DamageInfo()
 				
-				if cwBeliefs and owner.HasBelief and owner:HasBelief("repulsive_ripsote") then
+				if cwBeliefs and owner.HasBelief and owner:HasBelief("repulsive_riposte") then
 					d:SetDamage(damage * shield_reduction * 4 * hit_reduction);
 				else
 					d:SetDamage(damage * shield_reduction * 3 * hit_reduction);

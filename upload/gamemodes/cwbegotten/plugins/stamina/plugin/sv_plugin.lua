@@ -18,7 +18,7 @@ function cwStamina:GetMaxStaminaPlugin(player)
 	if player:GetCharacterData("isDemon", false) then
 		return 1000;
 	else
-		local max_stamina = hook.Run("GetMaxStamina", player, 100);
+		local max_stamina = hook.Run("GetMaxStamina", player, 90);
 		local subfaction = player:GetSubfaction();
 		
 		if player:GetCharacterData("isDemon", false) then

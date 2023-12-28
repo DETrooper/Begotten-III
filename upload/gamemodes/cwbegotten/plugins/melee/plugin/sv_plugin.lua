@@ -74,7 +74,7 @@ function playerMeta:TakeStamina(amount)
 	end
 
 	--self:SetNWInt("meleeStamina", math.Clamp(self:GetNWInt("meleeStamina", 90) + newAmount, 0, self:GetMaxPoise() or 90));
-	self:HandleStamina(math.Clamp(self:GetNWInt("Stamina", max_stamina) + newAmount, 0, max_stamina));
+	self:HandleStamina(newAmount);
 	
 	--[[if self:GetNWInt("meleeStamina", 90) <= 0 and self:GetNWBool("Guardening", false) == true then
 		self:CancelGuardening();
