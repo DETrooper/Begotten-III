@@ -2992,7 +2992,7 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 
-	RECIPE = cwRecipes.recipes:New("steel_arming_sword");
+	RECIPE = cwRecipes.recipes:New("spatha");
 		RECIPE.name = "Spatha";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
