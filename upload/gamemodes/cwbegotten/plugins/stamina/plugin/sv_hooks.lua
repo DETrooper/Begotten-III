@@ -104,10 +104,6 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				end
 			end;
 			
-			if player:GetNWBool("Guardening") then
-				return;
-			end
-			
 			local regeneration = 0;
 			
 			if (!Clockwork.player:HasFlags(player, "E")) then
@@ -132,7 +128,7 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				return;
 			end
 			
-			if regeneration > 0 and (plyTab.blockStaminaRegen and curTime <= plyTab.blockStaminaRegen) then
+			if regeneration > 0 and (player:GetNWBool("Guardening") or (plyTab.blockStaminaRegen and curTime <= plyTab.blockStaminaRegen)) then
 				return;
 			end
 
