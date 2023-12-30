@@ -287,7 +287,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.weight = 1.3;
 	ITEM.uniqueID = "begotten_1h_spatha";
 	ITEM.category = "Melee";
-	ITEM.description = "A steel sword from the Glazic Legions. Forged for the purpose of civilizing savages.";
+	ITEM.description = "An iron straight sword from the Glazic Legions. Forged for the purpose of civilizing savages.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/spatha.png"
 	ITEM.meleeWeapon = true;
 	ITEM.isAttachment = true;
@@ -297,7 +297,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");

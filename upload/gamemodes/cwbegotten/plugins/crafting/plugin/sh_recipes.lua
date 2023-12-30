@@ -2995,16 +2995,15 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("spatha");
 		RECIPE.name = "Spatha";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 3},
-			["iron_ingot"] = {amount = 1},
+			["iron_ingot"] = {amount = 4},
 			["wood"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["begotten_1h_steelarmingsword"] = {amount = 1},
+			["begotten_1h_spatha"] = {amount = 1},
 		};
 		RECIPE.category = "Weapons"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
