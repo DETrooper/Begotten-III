@@ -171,3 +171,7 @@ function cwStamina:ModifyPlayerSpeed(player, infoTable, action, stamina, max_sta
 		infoTable.runSpeed = math.Clamp(newRunSpeed - (diffRunSpeed - ((diffRunSpeed / (max_stamina or player:GetMaxStamina())) * (stamina or player:GetCharacterData("Stamina", 100)))), infoTable.walkSpeed, maxRunSpeed);
 	end
 end
+
+function cwStamina:PlayerExitedDuel(player)
+	player:SetStamina(player:GetMaxStamina());
+end
