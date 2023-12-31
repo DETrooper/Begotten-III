@@ -173,7 +173,7 @@ function meta:StartRolling(a)
 	local weaponRaised = self:IsWeaponRaised();
 	
 	if (Clockwork and Clockwork.player and Clockwork.player.HasFlags and Clockwork.player:HasFlags(self, "4")) then
-		time = 1
+		time = 0.9
 	end;
 	
 	if Clockwork then
@@ -205,6 +205,8 @@ function meta:StartRolling(a)
 	self:Extinguish(); -- If on fire, put it out!
 	
 	self:SetNW2Float("wOS.RollSpeed", time);
+	
+	time = 0.9;
 	
 	if self:KeyDown( IN_BACK ) then
 		--if Clockwork and self:GetFaction() == "Children of Satan" then
@@ -318,15 +320,17 @@ function meta:StartRolling(a)
 	
 	self.blockStaminaRegen = math.max(self.blockStaminaRegen or 0, CurTime() + 1.5);
 
-	timer.Create("iFramesEndTimer_"..self:EntIndex(), 1.5 - time, 1, function()
+	--[[timer.Create("iFramesEndTimer_"..self:EntIndex(), 1.5 - time, 1, function()
 		if not IsValid( self ) then return end
 		
 		self.iFrames = false;
-	end);
+	end);]]--
 
 	timer.Create("RollRaiseTimer_"..self:EntIndex(), time * 0.8, 1, function()
 		if not IsValid( self ) then return end
 		if not self:Alive() then return end
+		
+		self.iFrames = false;
 		
 		local curTime = CurTime();
 
@@ -336,7 +340,7 @@ function meta:StartRolling(a)
 			if IsValid(self:GetActiveWeapon()) then
 				--self:GetActiveWeapon():SetNextSecondaryFire(curTime + 1);
 				
-				timer.Simple(1.05, function()
+				--timer.Simple(1.05, function()
 					if IsValid(self) and IsValid(self:GetActiveWeapon()) then
 						if self:KeyDown(IN_ATTACK2) and !self:KeyDown(IN_USE) then
 							local activeWeapon = self:GetActiveWeapon();
@@ -349,10 +353,10 @@ function meta:StartRolling(a)
 									if (loweredParryDebug < curTime) then
 										local blockTable = GetTable(activeWeapon.BlockTable);
 										
-										if (blockTable and self:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self:GetNWBool("Parried")) then
+										--if (blockTable and self:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self:GetNWBool("Parried")) then
+										if (blockTable and self:GetNWInt("Stamina", 100) >= blockTable["guardblockamount"] and !self:GetNWBool("Parried")) then
 											self:SetNWBool("Guardening", true);
 											self.beginBlockTransition = true;
-											self.StaminaRegenDelay = 0;
 											activeWeapon.Primary.Cone = activeWeapon.IronCone;
 											activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
 										else
@@ -365,7 +369,7 @@ function meta:StartRolling(a)
 							end
 						end
 					end
-				end);
+				--end);
 			end
 		end
 	end);

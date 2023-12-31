@@ -52,7 +52,7 @@ function wOS.RollMod:ResetAnimation( ply )
 	end
 end
 
-hook.Add( "ModifyPlayerPlaybackRate", "wOS.RollMod.SlowDownAnim", function(ply)
+--[[hook.Add( "ModifyPlayerPlaybackRate", "wOS.RollMod.SlowDownAnim", function(ply)
 	if ply:wOSIsRolling() then
 		local roll_speed = math.Round(ply:GetNW2Float("wOS.RollSpeed", 0.9), 2);
 		
@@ -66,7 +66,7 @@ hook.Add( "ModifyPlayerPlaybackRate", "wOS.RollMod.SlowDownAnim", function(ply)
 		
 		return true
 	end
-end )
+end )]]--
 
 hook.Add( "ModifyCalcMainActivity", "wOS.RollMod.Animations", function( ply, velocity )
 	if !IsValid( ply ) or !ply:wOSIsRolling() then return end
@@ -112,13 +112,15 @@ hook.Add("Move", "wOS.RollMod.MoveDir", function( ply, mv )
 	local roll_dir = ply:GetRollDir();
 	local roll_speed = math.Round(ply:GetNW2Float("wOS.RollSpeed", 0.9), 2);
 	
-	if roll_speed == 0.9 then
+	--[[if roll_speed == 0.9 then
 		roll_speed = 1;
 	elseif roll_speed == 1.1 then
 		roll_speed = 0.9
 	elseif roll_speed == 1.25 then
 		roll_speed = 0.75
-	end
+	end]]--
+	
+	roll_speed = 1;
 	
 	if (Clockwork and Clockwork.player and Clockwork.player.HasFlags and Clockwork.player:HasFlags(ply, "4")) then
 		roll_speed = 2.5
