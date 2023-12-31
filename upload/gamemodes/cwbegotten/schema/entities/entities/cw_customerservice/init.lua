@@ -1,5 +1,5 @@
 --[[
-	© 2012 CloudSixteen.com do not share, re-distribute or modify
+	? 2012 CloudSixteen.com do not share, re-distribute or modify
 	without permission of its author (kurozael@gmail.com).
 --]]
 
@@ -30,80 +30,68 @@ function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS;
 end;
 
+local sounds = {
+	"vo/breencast/br_instinct01.wav",
+	"vo/breencast/br_instinct02.wav",
+	"vo/breencast/br_instinct03.wav",
+	"vo/breencast/br_instinct04.wav",
+	"vo/breencast/br_instinct05.wav",
+	"vo/breencast/br_instinct06.wav",
+	"vo/breencast/br_instinct07.wav",
+	"vo/breencast/br_instinct08.wav",
+	"vo/breencast/br_instinct09.wav",
+	"vo/breencast/br_instinct10.wav",
+	"vo/breencast/br_instinct11.wav",
+	"vo/breencast/br_instinct12.wav",
+	"vo/breencast/br_instinct13.wav",
+	"vo/breencast/br_instinct14.wav",
+	"vo/breencast/br_instinct15.wav",
+	"vo/breencast/br_instinct16.wav",
+	"vo/breencast/br_instinct17.wav",
+	"vo/breencast/br_instinct18.wav",
+	"vo/breencast/br_instinct19.wav",
+	"vo/breencast/br_instinct20.wav",
+	"vo/breencast/br_instinct21.wav",
+	"vo/breencast/br_instinct22.wav",
+	"vo/breencast/br_instinct23.wav",
+	"vo/breencast/br_instinct24.wav",
+	"vo/breencast/br_instinct25.wav",
+
+};
+
+local differences = {
+	[sounds[22]] = 0.4,
+	[sounds[20]] = 0.4,
+	[sounds[17]] = 0.4,
+	[sounds[16]] = 0.15,
+	[sounds[25]] = 0.4,
+	[sounds[23]] = 0.1,
+	[sounds[4]] = 0.05,
+	[sounds[18]] = 0.1,
+	[sounds[9]] = 0.1,
+	[sounds[24]] = 0.15,
+	[sounds[12]] = 0.3,
+	[sounds[1]] = 0.2,
+	[sounds[10]] = 0.1,
+
+};
+
 function ENT:Use(activator, caller)
 	if (!self._nextUse or CurTime() > self._nextUse) then
-		local sounds = {
-			"vo/breencast/br_instinct01.wav",
-			"vo/breencast/br_instinct02.wav",
-			"vo/breencast/br_instinct03.wav",
-			"vo/breencast/br_instinct04.wav",
-			"vo/breencast/br_instinct05.wav",
-			"vo/breencast/br_instinct06.wav",
-			"vo/breencast/br_instinct07.wav",
-			"vo/breencast/br_instinct08.wav",
-			"vo/breencast/br_instinct09.wav",
-			"vo/breencast/br_instinct10.wav",
-			"vo/breencast/br_instinct11.wav",
-			"vo/breencast/br_instinct12.wav",
-			"vo/breencast/br_instinct13.wav",
-			"vo/breencast/br_instinct14.wav",
-			"vo/breencast/br_instinct15.wav",
-			"vo/breencast/br_instinct16.wav",
-			"vo/breencast/br_instinct17.wav",
-			"vo/breencast/br_instinct18.wav",
-			"vo/breencast/br_instinct19.wav",
-			"vo/breencast/br_instinct20.wav",
-			"vo/breencast/br_instinct21.wav",
-			"vo/breencast/br_instinct22.wav",
-			"vo/breencast/br_instinct23.wav",
-			"vo/breencast/br_instinct24.wav",
-			"vo/breencast/br_instinct25.wav"
-		};
-		
 		local durations = {15, 12, 18, 10, 10, 8, 7, 7, 3, 9, 3, 4, 17, 4, 5, 4, 5, 3, 8, 5, 4, 4, 4, 12, 6};
 		
 		if (IsValid(caller)) then
-			self:EmitSound("buttons/lightswitch2.wav", 55, 135);
+			self:EmitSound("buttons/lightswitch2.wav", 70, 135);
 			
 			local randomChance = math.random(1, 25);
 			local sound = sounds[randomChance];
-			local soundDuration = durations[table.KeyFromValue(sounds, sound)];
-			local difference = 0.1;
-
-			if (sound == sounds[22]) then
-				difference = 0.4;
-			elseif (sound == sounds[20]) then
-				difference = 0.4;
-			elseif (sound == sounds[17]) then
-				difference = 0.4;
-			elseif (sound == sounds[16]) then
-				difference = 0.15;
-			elseif (sound == sounds[25]) then
-				difference = 0.4;
-			elseif (sound == sounds[23]) then
-				difference = 0.1;
-			elseif (sound == sounds[4]) then
-				difference = 0.05;
-			elseif (sound == sounds[18]) then
-				difference = 0.1;
-			elseif (sound == sounds[9]) then
-				difference = 0.15;
-			elseif (sound == sounds[24]) then
-				difference = 0.15;
-			elseif (sound == sounds[9]) then
-				difference = 0.1;
-			elseif (sound == sounds[12]) then
-				difference = 0.3;
-			elseif (sound == sounds[1]) then
-				difference = 0.2;
-			elseif (sound == sounds[10]) then
-				difference = 0.1;
-			end;
+			local soundDuration = durations[randomChance];
+			local difference = differences[sounds[22]] and differences[sounds[22]] or 0.1;
 			
-			self:EmitSound(sound, 60, 225, 1);
+			self:EmitSound(sound, 75, 225, 1);
 			
 			timer.Simple((soundDuration / 2.25) + difference, function()
-				self:EmitSound("hl1/fvox/bell.wav", 65, 200, 1);
+				self:EmitSound("hl1/fvox/bell.wav", 75, 200, 1);
 			end);
 		end;
 		
