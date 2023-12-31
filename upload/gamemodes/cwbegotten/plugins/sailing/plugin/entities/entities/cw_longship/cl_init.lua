@@ -16,6 +16,4 @@ function ENT:HUDPaintTargetID(x, y, alpha)
 	else
 		y = Clockwork.kernel:DrawInfo("A large and formidable Goreic warship. The name '"..name.."' is chiselled onto its side in Goreic script.", x, y, Clockwork.option:GetColor("white"), alpha);
 	end
-	
-	y = Clockwork.kernel:DrawInfo("A large and formidable Goreic warship.", x, y, Clockwork.option:GetColor("white"), alpha);
 end;

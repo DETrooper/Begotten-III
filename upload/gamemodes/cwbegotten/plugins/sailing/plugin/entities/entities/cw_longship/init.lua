@@ -252,7 +252,7 @@ function ENT:Use(activator, caller)
 		end
 		
 		if self.health then
-			if (entity:GetSkin() == 1 and self.health < 1000) or self.health < 500 then
+			if (self:GetSkin() == 1 and self.health < 1000) or self.health < 500 then
 				if !self:IsOnFire() then
 					self.repairable = true;
 				else
@@ -292,7 +292,7 @@ end;
 function ENT:OnRemove()
 	local belongingsEnt = ents.Create("cw_belongings");
 
-	if (!table.IsEmpty(self.cwInventory) or self.cwCash > 0) then
+	if (self.cwInventory and !table.IsEmpty(self.cwInventory) or self.cwCash and self.cwCash > 0) then
 		belongingsEnt:SetData(self.cwInventory, self.cwCash, "Longship Cargo");
 		belongingsEnt:SetPos(self:GetPos() + Vector(0, 0, 128));
 		belongingsEnt:Spawn();
