@@ -4,74 +4,82 @@
 	By: DETrooper
 --]]
 
-SHIP_DESTINATIONS = {
-	["docks"] = {name = "the Gore Forest"},
-	["hell"] = {name = "Hell"},
-	["pillars"] = {name = "the Pillars of Creation"},
-	["wasteland"] = {name = "the Wasteland"},
-};
+local map = game.GetMap();
 
-if not SHIP_LOCATIONS then
-	SHIP_LOCATIONS = {
-		["docks"] = {
-			{occupied = false, pos = Vector(-3103.90625, 385.65625, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(-2734.59375, 366.75, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(-2449.3125, 526.375, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(-2075.25, 489.28125, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
-		},
-		["calm"] = {
-			{occupied = false, pos = Vector(1876.71875, 10203.3125, -6371.375)},
-			{occupied = false, pos = Vector(790.40625, 11458, -6360)},
-			{occupied = false, pos = Vector(640, 8000, -6350)},
-			{occupied = false, pos = Vector(-808.40625, 6717.125, -6345.21875)},
-			{occupied = false, pos = Vector(-2537.46875, 7600.9375, -6348.8125)},
-			{occupied = false, pos = Vector(-1691.71875, 9417.625, -6330.75)},
-			{occupied = false, pos = Vector(-2067.9375, 11629.28125, -6340)},
-			{occupied = false, pos = Vector(2746.5625, 7385.03125, -6334)},
-		},
-		["hell"] = {
-			{occupied = false, pos = Vector(-6427.40625, -9967.3125, -7286.4375), angles = Angle(0, 180, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(-6001.875, -9808.0625, -7282.75), angles = Angle(0, 180, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(-7776.6875, -8341, -7273), angles = Angle(0, 0, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(-8087.8125, -8427.71875, -7274.59375), angles = Angle(0, 0, 0), bodygroup = 1},
-		},
-		["pillars"] = {
-			{occupied = false, pos = Vector(-10496.59375, 252.625, -1753.875), angles = Angle(0, 90, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(-11942.6875, -908.5, -1760.875), angles = Angle(0, 45, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(-12148.46875, -2820.53125, -1746.59375), angles = Angle(0, 90, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(-11161.21875, -3833.46875, -1755.84375), angles = Angle(0, 135, 0), bodygroup = 1},
-		},
-		["rough"] = {
-			{occupied = false, pos = Vector(9275.28125, 8330.0625, -6338.9375)},
-			{occupied = false, pos = Vector(6780.6875, 10250.71875, -6334.1875)},
-			{occupied = false, pos = Vector(6564.09375, 13210.03125, -6372.9375)},
-			{occupied = false, pos = Vector(12241.09375, 13060.8125, -6325.8125)},
-			{occupied = false, pos = Vector(11180.84375, 9724.34375, -6359.21875)},
-			{occupied = false, pos = Vector(12100.0625, 6700.15625, -6345.15625)},
-			{occupied = false, pos = Vector(6785.84375, 7462.71875, -6370.03125)},
-			{occupied = false, pos = Vector(9380.34375, 5756.28125, -6350.15625)},
-		},
-		["styx"] = {
-			{occupied = false, pos = Vector(-7068.96875, 11547.34375, -6354.25), angles = Angle(0, 0, 0)},
-			{occupied = false, pos = Vector(-6981.4375, 9059.625, -6353.1875), angles = Angle(0, 0, 0)},
-			{occupied = false, pos = Vector(-7200.84375, 6400.71875, -6318.6875), angles = Angle(0, 0, 0)},
-			{occupied = false, pos = Vector(-10678.65625, 6590.59375, -6353.59375), angles = Angle(0, 0, 0)},
-			{occupied = false, pos = Vector(-12773.3125, 7341.09375, -6345.40625), angles = Angle(0, 0, 0)},
-			{occupied = false, pos = Vector(-13250.3125, 13000.5, -6350.40625), angles = Angle(0, 0, 0)},
-			{occupied = false, pos = Vector(-11920.90625, 10846.6875, -6364.40625), angles = Angle(0, 0, 0)},
-			{occupied = false, pos = Vector(-9430.5, 11500, -6365.90625), angles = Angle(0, 0, 0)},
-		},
-		["wasteland"] = {
-			{occupied = false, pos = Vector(13921.59375, 6783.96875, -1913.40625), angles = Angle(0, 315, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(13556.78125, 7011.25, -1918.03125), angles = Angle(0, 315, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(12609.5625, 7953.28125, -1925.0625), angles = Angle(0, 315, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(13014.09375, 8767.59375, -1913.1875), angles = Angle(0, 270, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(13358.46875, 9641.65625, -1925.15625), angles = Angle(0, 315, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(13709.8125, 10730.25, -1921), angles = Angle(0, 225, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(13000.125, 10841.0625, -1923.03125), angles = Angle(0, 225, 0), bodygroup = 1},
-			{occupied = false, pos = Vector(12022.3125, 10821.21875, -1927.6875), angles = Angle(0, 270, 0), bodygroup = 1},
-		},
-	};
+if !SHIP_DESTINATIONS then
+	if map == "rp_begotten3" then
+		SHIP_DESTINATIONS = {
+			["docks"] = {name = "the Gore Forest"},
+			["hell"] = {name = "Hell"},
+			["pillars"] = {name = "the Pillars of Creation"},
+			["wasteland"] = {name = "the Wasteland"},
+		};
+	end
+end
+
+if !SHIP_LOCATIONS then
+	if map == "rp_begotten3" then
+		SHIP_LOCATIONS = {
+			["docks"] = {
+				{occupied = false, pos = Vector(-3103.90625, 385.65625, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-2734.59375, 366.75, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-2449.3125, 526.375, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-2075.25, 489.28125, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
+			},
+			["calm"] = {
+				{occupied = false, pos = Vector(1876.71875, 10203.3125, -6371.375)},
+				{occupied = false, pos = Vector(790.40625, 11458, -6360)},
+				{occupied = false, pos = Vector(640, 8000, -6350)},
+				{occupied = false, pos = Vector(-808.40625, 6717.125, -6345.21875)},
+				{occupied = false, pos = Vector(-2537.46875, 7600.9375, -6348.8125)},
+				{occupied = false, pos = Vector(-1691.71875, 9417.625, -6330.75)},
+				{occupied = false, pos = Vector(-2067.9375, 11629.28125, -6340)},
+				{occupied = false, pos = Vector(2746.5625, 7385.03125, -6334)},
+			},
+			["hell"] = {
+				{occupied = false, pos = Vector(-6427.40625, -9967.3125, -7286.4375), angles = Angle(0, 180, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-6001.875, -9808.0625, -7282.75), angles = Angle(0, 180, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-7776.6875, -8341, -7273), angles = Angle(0, 0, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-8087.8125, -8427.71875, -7274.59375), angles = Angle(0, 0, 0), bodygroup = 1},
+			},
+			["pillars"] = {
+				{occupied = false, pos = Vector(-10496.59375, 252.625, -1753.875), angles = Angle(0, 90, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-11942.6875, -908.5, -1760.875), angles = Angle(0, 45, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-12148.46875, -2820.53125, -1746.59375), angles = Angle(0, 90, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-11161.21875, -3833.46875, -1755.84375), angles = Angle(0, 135, 0), bodygroup = 1},
+			},
+			["rough"] = {
+				{occupied = false, pos = Vector(9275.28125, 8330.0625, -6338.9375)},
+				{occupied = false, pos = Vector(6780.6875, 10250.71875, -6334.1875)},
+				{occupied = false, pos = Vector(6564.09375, 13210.03125, -6372.9375)},
+				{occupied = false, pos = Vector(12241.09375, 13060.8125, -6325.8125)},
+				{occupied = false, pos = Vector(11180.84375, 9724.34375, -6359.21875)},
+				{occupied = false, pos = Vector(12100.0625, 6700.15625, -6345.15625)},
+				{occupied = false, pos = Vector(6785.84375, 7462.71875, -6370.03125)},
+				{occupied = false, pos = Vector(9380.34375, 5756.28125, -6350.15625)},
+			},
+			["styx"] = {
+				{occupied = false, pos = Vector(-7068.96875, 11547.34375, -6354.25), angles = Angle(0, 0, 0)},
+				{occupied = false, pos = Vector(-6981.4375, 9059.625, -6353.1875), angles = Angle(0, 0, 0)},
+				{occupied = false, pos = Vector(-7200.84375, 6400.71875, -6318.6875), angles = Angle(0, 0, 0)},
+				{occupied = false, pos = Vector(-10678.65625, 6590.59375, -6353.59375), angles = Angle(0, 0, 0)},
+				{occupied = false, pos = Vector(-12773.3125, 7341.09375, -6345.40625), angles = Angle(0, 0, 0)},
+				{occupied = false, pos = Vector(-13250.3125, 13000.5, -6350.40625), angles = Angle(0, 0, 0)},
+				{occupied = false, pos = Vector(-11920.90625, 10846.6875, -6364.40625), angles = Angle(0, 0, 0)},
+				{occupied = false, pos = Vector(-9430.5, 11500, -6365.90625), angles = Angle(0, 0, 0)},
+			},
+			["wasteland"] = {
+				{occupied = false, pos = Vector(13921.59375, 6783.96875, -1913.40625), angles = Angle(0, 315, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(13556.78125, 7011.25, -1918.03125), angles = Angle(0, 315, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(12609.5625, 7953.28125, -1925.0625), angles = Angle(0, 315, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(13014.09375, 8767.59375, -1913.1875), angles = Angle(0, 270, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(13358.46875, 9641.65625, -1925.15625), angles = Angle(0, 315, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(13709.8125, 10730.25, -1921), angles = Angle(0, 225, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(13000.125, 10841.0625, -1923.03125), angles = Angle(0, 225, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(12022.3125, 10821.21875, -1927.6875), angles = Angle(0, 270, 0), bodygroup = 1},
+			},
+		};
+	end
 end
 
 if not cwSailing.longships then

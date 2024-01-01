@@ -2085,6 +2085,9 @@ end
 function playerMeta:GiveItem(itemTable, bForce)
 	if (isstring(itemTable)) then
 		itemTable = item.CreateInstance(itemTable)
+	-- There's some weird things happening with item instances that necessitate this for now.
+	elseif itemTable.uniqueID and itemTable.itemID then
+		itemTable = item.CreateInstance(itemTable.uniqueID, itemTable.itemID);
 	end
 
 	if (!itemTable or !itemTable:IsInstance()) then

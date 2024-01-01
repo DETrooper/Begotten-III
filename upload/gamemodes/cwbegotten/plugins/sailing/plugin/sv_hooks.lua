@@ -55,7 +55,7 @@ end
 
 -- Called when a player uses an unknown item function.
 function cwSailing:PlayerUseUnknownItemFunction(player, itemTable, itemFunction)
-	if (game.GetMap() != "rp_begotten3") then
+	if !SHIP_LOCATIONS then
 		return;
 	end;
 	
