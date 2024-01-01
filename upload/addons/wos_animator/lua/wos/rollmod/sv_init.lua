@@ -311,6 +311,7 @@ function meta:StartRolling(a)
 	self.wOS.LastRoll = 0
 	
 	self.lastRoll = CurTime() + 1; -- Delay before next roll
+	self.nextDeflect = CurTime() + 1.5;
 	
 	--timer.Create("iFramesStartTimer_"..self:EntIndex(), time * 0.15, 1, function()
 		--if not IsValid( self ) then return end
@@ -330,7 +331,13 @@ function meta:StartRolling(a)
 		if not IsValid( self ) then return end
 		if not self:Alive() then return end
 		
-		self.iFrames = false;
+		timer.Simple(0.25, function()
+			if IsValid(self) then
+				if !self:wOSIsRolling() then
+					self.iFrames = false;
+				end
+			end
+		end);
 		
 		local curTime = CurTime();
 
