@@ -410,6 +410,8 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 					player:EmitSound("physics/body/body_medium_impact_soft"..math.random(1, 7)..".wav");
 				end
 				
+				hook.Run("PreOpenedContainer", player, entity);
+				
 				Clockwork.storage:Open(player, {
 					name = "Corpse",
 					weight = 8,
