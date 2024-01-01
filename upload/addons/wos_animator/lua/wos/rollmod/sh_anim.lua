@@ -52,9 +52,9 @@ function wOS.RollMod:ResetAnimation( ply )
 	end
 end
 
---[[hook.Add( "ModifyPlayerPlaybackRate", "wOS.RollMod.SlowDownAnim", function(ply)
+hook.Add( "ModifyPlayerPlaybackRate", "wOS.RollMod.SlowDownAnim", function(ply)
 	if ply:wOSIsRolling() then
-		local roll_speed = math.Round(ply:GetNW2Float("wOS.RollSpeed", 0.9), 2);
+		--[[local roll_speed = math.Round(ply:GetNW2Float("wOS.RollSpeed", 0.9), 2);
 		
 		if roll_speed == 0.9 then
 			ply.cwPlaybackRate = 1;
@@ -62,11 +62,13 @@ end
 			ply.cwPlaybackRate = 0.8;
 		elseif roll_speed == 1.25 then
 			ply.cwPlaybackRate = 0.6;
-		end
+		end]]--
+		
+		ply.cwPlaybackRate = 0.8;
 		
 		return true
 	end
-end )]]--
+end )
 
 hook.Add( "ModifyCalcMainActivity", "wOS.RollMod.Animations", function( ply, velocity )
 	if !IsValid( ply ) or !ply:wOSIsRolling() then return end
