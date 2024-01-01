@@ -10,38 +10,44 @@ function Parry(target, dmginfo)
 				local attacker = dmginfo:GetAttacker()
 				local blocktable = GetTable(wep.realBlockTable);
 				local curTime = CurTime();
+				local isJavelin = IsValid(dmginfo:GetInflictor()) and dmginfo:GetInflictor().isJavelin;
 				
-				target:SetNWBool("ParrySucess", true)
-				attacker:SetNWBool("Parried", true)
-				target.parryTarget = attacker;
-				netstream.Start(target, "Parried", 0.2)
-				netstream.Start(attacker, "Stunned", 3);
+				if !isJavelin then
+					target:SetNWBool("ParrySucess", true)
+					attacker:SetNWBool("Parried", true)
+					target.parryTarget = attacker;
+					netstream.Start(target, "Parried", 0.2)
+					if(attacker:IsPlayer()) then netstream.Start(attacker, "Stunned", (attacker:HasBelief("encore") and 0.5 or 1)); end
+				end
+				
 				dmginfo:SetDamage(0)
 				target:EmitSound("meleesounds/DS2Parry.mp3")
 				
-				if attacker.CancelGuardening then
-					attacker:CancelGuardening();
-				end
-				
-				if attacker.OnParried then
-					attacker:OnParried();
-				end
-				
-				if attacker:IsPlayer() then
-					-- Kill their acceleration and make them slower.
-					--[[attacker.accelerationFinished = false;
-					attacker.startAcceleration = nil;
-					attacker.cwTargetRunSpeed = attacker:GetRunSpeed();
-				
-					hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);]]--
+				if !isJavelin then
+					if attacker.CancelGuardening then
+						attacker:CancelGuardening();
+					end
 					
-					attacker:SetNetVar("runningDisabled", true);
+					if attacker.OnParried then
+						attacker:OnParried();
+					end
 					
-					timer.Create("GroundedSprintTimer_"..tostring(attacker:EntIndex()), 3, 1, function()
-						if IsValid(attacker) then
-							attacker:SetNetVar("runningDisabled", nil);
-						end
-					end);
+					if attacker:IsPlayer() then
+						-- Kill their acceleration and make them slower.
+						--[[attacker.accelerationFinished = false;
+						attacker.startAcceleration = nil;
+						attacker.cwTargetRunSpeed = attacker:GetRunSpeed();
+					
+						hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);]]--
+						
+						attacker:SetNetVar("runningDisabled", true);
+						
+						timer.Create("GroundedSprintTimer_"..tostring(attacker:EntIndex()), 3, 1, function()
+							if IsValid(attacker) then
+								attacker:SetNetVar("runningDisabled", nil);
+							end
+						end);
+					end
 				end
 				
 				wep:SetNextPrimaryFire(curTime + 0.7);
@@ -64,87 +70,91 @@ function Parry(target, dmginfo)
 				-- Poise should start regenerating upon successful parry after 0.5 seconds.
 				target.blockStaminaRegen = math.min(target.blockStaminaRegen or 0, curTime + 0.5);
 
-				if (IsValid(attacker) and attacker:IsPlayer()) then
-					local attackerWeapon = attacker:GetActiveWeapon();
-					
-					if IsValid(attackerWeapon) then
-						if cwBeliefs and attacker.HasBelief and attacker:HasBelief("encore") then
-							attackerWeapon:SetNextPrimaryFire(curTime + 1.5)
-							attackerWeapon:SetNextSecondaryFire(curTime + 1.5)
-						else
-							attackerWeapon:SetNextPrimaryFire(curTime + 3)
-							attackerWeapon:SetNextSecondaryFire(curTime + 3)
-						end
+				if !isJavelin then
+					if (IsValid(attacker) and attacker:IsPlayer()) then
+						local attackerWeapon = attacker:GetActiveWeapon();
 						
-						-- Make sure offhand swing is aborted if deflected.
-						if attackerWeapon.Timers then
-							if attackerWeapon.Timers["strikeTimer"..tostring(attacker:EntIndex())] then
-								attackerWeapon.Timers["strikeTimer"..tostring(attacker:EntIndex())] = nil;
-							end
-						
-							if attackerWeapon.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] then
-								attackerWeapon.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] = nil;
+						if IsValid(attackerWeapon) then
+							if cwBeliefs and attacker.HasBelief and attacker:HasBelief("encore") then
+								attackerWeapon:SetNextPrimaryFire(curTime + 1.5)
+								attackerWeapon:SetNextSecondaryFire(curTime + 1.5)
+							else
+								attackerWeapon:SetNextPrimaryFire(curTime + 3)
+								attackerWeapon:SetNextSecondaryFire(curTime + 3)
 							end
 							
-							attackerWeapon.isAttacking = false;
-						end
-						
-						if attackerWeapon:GetClass() == "begotten_fists" then
-							Clockwork.chatBox:AddInTargetRadius(target, "me", " parries "..attacker:Name().." with their bare hands!", target:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+							-- Make sure offhand swing is aborted if deflected.
+							if attackerWeapon.Timers then
+								if attackerWeapon.Timers["strikeTimer"..tostring(attacker:EntIndex())] then
+									attackerWeapon.Timers["strikeTimer"..tostring(attacker:EntIndex())] = nil;
+								end
+							
+								if attackerWeapon.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] then
+									attackerWeapon.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] = nil;
+								end
+								
+								attackerWeapon.isAttacking = false;
+							end
+							
+							if wep:GetClass() == "begotten_fists" then
+								Clockwork.chatBox:AddInTargetRadius(target, "me", " parries "..attacker:Name().." with their bare hands!", target:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+							end
 						end
 					end
 				end
 				
-				local index = target:EntIndex();
-				
-				if (!target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false)) then
-					if (timer.Exists(index.."_ParrySuccessTimer")) then 
-						timer.Destroy(index.."_ParrySuccessTimer")
-					end
+				if !isJavelin then
+					local index = target:EntIndex();
 					
-					target:SetNWBool("ParrySucess", true)
-					
-					local delay = 2.5;
-					
-					if wep.AttackTable then
-						local attackTable;
+					if (!target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false)) then
+						if (timer.Exists(index.."_ParrySuccessTimer")) then 
+							timer.Destroy(index.."_ParrySuccessTimer")
+						end
 						
-						if wep:GetNWString("activeOffhand"):len() > 0 then
-							local offhandTable = weapons.GetStored(wep:GetNWString("activeOffhand"));
+						target:SetNWBool("ParrySucess", true)
+						
+						local delay = 2.5;
+						
+						if wep.AttackTable then
+							local attackTable;
 							
-							if offhandTable then
-								attackTable = GetDualTable(wep.AttackTable, offhandTable.AttackTable);
+							if wep:GetNWString("activeOffhand"):len() > 0 then
+								local offhandTable = weapons.GetStored(wep:GetNWString("activeOffhand"));
+								
+								if offhandTable then
+									attackTable = GetDualTable(wep.AttackTable, offhandTable.AttackTable);
+								else
+									attackTable = GetTable(wep.AttackTable);
+								end
 							else
 								attackTable = GetTable(wep.AttackTable);
 							end
-						else
-							attackTable = GetTable(wep.AttackTable);
-						end
-						
-						if attackTable then
-							delay = (attackTable["delay"] + 1.5);
-						end
-					end
-					
-					if (IsValid(attacker) and attacker:IsPlayer()) then
-						-- Make it so they can't regenerate poise while parried.
-						attacker.blockStaminaRegen = curTime + delay + 1.5;
-					end
-					
-					timer.Create(index.."_ParrySuccessTimer", delay, 1, function()
-						if (target:IsValid() --[[and target:Alive() and !target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false) and (target:GetNWBool("ParrySucess", false) == true)]]) then
-							target:SetNWBool("ParrySucess", false) 
-							target.parryTarget = nil;
-						end
-						
-						if IsValid(attacker) then
-							attacker:SetNWBool("Parried", false);
 							
-							if attacker:IsPlayer() then
-								hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);
+							if attackTable then
+								delay = (attackTable["delay"] + 1.5);
 							end
 						end
-					end)
+						
+						if (IsValid(attacker) and attacker:IsPlayer()) then
+							-- Make it so they can't regenerate poise while parried.
+							attacker.blockStaminaRegen = curTime + delay + 1.5;
+						end
+						
+						timer.Create(index.."_ParrySuccessTimer", delay, 1, function()
+							if (target:IsValid() --[[and target:Alive() and !target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false) and (target:GetNWBool("ParrySucess", false) == true)]]) then
+								target:SetNWBool("ParrySucess", false) 
+								target.parryTarget = nil;
+							end
+							
+							if IsValid(attacker) then
+								attacker:SetNWBool("Parried", false);
+								
+								if attacker:IsPlayer() then
+									hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);
+								end
+							end
+						end)
+					end
 				end
 			end
 		end

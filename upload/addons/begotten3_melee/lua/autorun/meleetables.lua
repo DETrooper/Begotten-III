@@ -535,7 +535,7 @@ AttackTables.FistAttackTable = {
 
 AttackTables.IronJavelinAttackTable = {
 	["primarydamage"] = 100,
-	["dmgtype"] = 1073741824,
+	["dmgtype"] = DMG_VEHICLE,
 	["armorpiercing"] = 50,
 	["poisedamage"] = 50,
 	["stabilitydamage"] = 60,
@@ -547,7 +547,7 @@ AttackTables.IronJavelinAttackTable = {
 
 AttackTables.PilumAttackTable = {
 	["primarydamage"] = 70,
-	["dmgtype"] = 1073741824,
+	["dmgtype"] = DMG_VEHICLE,
 	["armorpiercing"] = 80,
 	["poisedamage"] = 125,
 	["stabilitydamage"] = 75,
