@@ -37,7 +37,7 @@ ENT.Factions = {"FACTION_DEER","FACTION_FORESTHERBIVORES"}
 ENT.IdleAnimation = "idle"
 ENT.RunAnimation = "run"
 ENT.WalkAnimation = "walk"
-ENT.RunSpeed = 200
+ENT.RunSpeed = 400
 ENT.WalkSpeed = 50
 ENT.JumpAnimation = "idle"
 

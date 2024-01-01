@@ -1331,6 +1331,8 @@ function Schema:Think()
 					
 					if math.random(1, 20) == 1 then
 						npcName = "npc_drg_animals_cave_bear";
+					elseif math.random(1, 10) == 1 then
+						npcName = "npc_drg_animals_snowleopard";
 					else
 						npcName = goreNPCs[math.random(1, #goreNPCs)];
 					end

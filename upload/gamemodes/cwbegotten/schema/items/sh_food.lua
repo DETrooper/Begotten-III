@@ -183,6 +183,69 @@ local ITEM = Clockwork.item:New();
 ITEM:Register();
 
 local ITEM = Clockwork.item:New();
+	ITEM.name = "Raw Leopard Meat";
+	ITEM.model = "models/gibs/humans/mgib_07.mdl";
+	ITEM.weight = 0.35;
+	ITEM.plural = "Raw Leopard Meat";
+	ITEM.useText = "Force Down Your Throat";
+	ITEM.useSound = "npc/barnacle/barnacle_crunch3.wav";
+	ITEM.category = "Food";
+	ITEM.description = "Raw meat harvested from a leopard.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/human_meat.png"
+	ITEM.stackable = true;
+	ITEM.uniqueID = "leopard_meat"
+	ITEM.infectchance = 30;
+	ITEM.poison = 5;
+	
+	ITEM.needs = {hunger = 25, thirst = 5};
+
+	-- Called when a player uses the item.
+	function ITEM:OnUse(player, itemEntity)
+
+		if !player:HasBelief("savage_animal") then
+			Schema:EasyText(player, "olive", "You begrudgingly consume raw meat.");
+			player:HandleSanity(-5);
+		end
+			
+		player:HandleXP(cwBeliefs.xpValues["food"]);
+	end;
+
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position) end;
+
+	-- Called when the item entity has spawned.
+	--[[function ITEM:OnEntitySpawned(entity)
+		entity:SetMaterial("models/flesh");
+	end;]]--
+ITEM:Register();
+
+local ITEM = Clockwork.item:New();
+	ITEM.name = "Cooked Leopard Meat";
+	ITEM.model = "models/items/provisions/ham_dry/ham_dry.mdl";
+	ITEM.weight = 0.35;
+	ITEM.plural = "Cooked Leopard Meat";
+	ITEM.useText = "Eat";
+	ITEM.useSound = "npc/barnacle/barnacle_crunch3.wav";
+	ITEM.category = "Food";
+	ITEM.description = "Cooked leopard meat, very nutritious.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/cooked_meat.png"
+	ITEM.stackable = true;
+	ITEM.uniqueID = "cooked_leopard_meat"
+	
+	ITEM.needs = {hunger = 50, thirst = 5};
+
+	-- Called when a player uses the item.
+	function ITEM:OnUse(player, itemEntity)
+		player:HandleSanity(5);
+		
+		player:HandleXP(cwBeliefs.xpValues["food"]);
+	end;
+
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position) end;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New();
 	ITEM.name = "Raw Deer Meat";
 	ITEM.model = "models/gibs/humans/mgib_07.mdl";
 	ITEM.weight = 0.35;
