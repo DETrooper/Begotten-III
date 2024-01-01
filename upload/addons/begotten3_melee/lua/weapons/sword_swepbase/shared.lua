@@ -2493,7 +2493,8 @@ function SWEP:SecondaryAttack()
 			if ply:GetNWBool( "CanDeflect", true ) then
 				local deflectionWindow = blocktable["deflectionwindow"] or 0.15;
 				
-				if ply.HasBelief --[[and ply:HasBelief("deflection")]] then
+				--if ply.HasBelief and ply:HasBelief("deflection") then
+				if (!ply.nextDeflect or curTime > ply.nextDeflect) then
 					ply:SetNWBool( "Deflect", true )
 					
 					if ply:HasBelief("impossibly_skilled") then
