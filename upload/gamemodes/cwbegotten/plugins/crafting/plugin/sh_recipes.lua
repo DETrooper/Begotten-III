@@ -613,6 +613,34 @@ function cwRecipes:ClockworkInitialized()
 		end;
 	RECIPE:Register()
 
+	RECIPE = cwRecipes.recipes:New("cooked_leopard_meat");
+		RECIPE.name = "Cooked Leopard Meat";
+		RECIPE.requiresHeatSource = true;
+		RECIPE.requiredBeliefs = {"cookist"};
+		RECIPE.requiredBeliefsNiceNames = {"Cookist"};
+		RECIPE.requirements = {
+			["leopard_meat"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["cooked_leopard_meat"] = {amount = 1},
+		};
+		RECIPE.category = "Cooking"
+		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "cooking"
+		RECIPE.experience = 25;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
 	RECIPE = cwRecipes.recipes:New("cooked_deer_meat");
 		RECIPE.name = "Cooked Deer Meat";
 		RECIPE.requiresHeatSource = true;

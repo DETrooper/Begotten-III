@@ -8,12 +8,12 @@ ENT.Models = {"models/animals/bear.mdl"}
 ENT.RagdollOnDeath = false
 ENT.CollisionBounds = Vector(18, 18, 65)
 ENT.BloodColor = BLOOD_COLOR_RED
-ENT.Frightening = true
+ENT.Frightening = false
 ENT.SightRange = 800
 
 -- Sounds --
 ENT.OnDamageSounds = {"bear/attack1.wav"}
-ENT.OnIdleSounds = {"bear/idle1.wav", "bear/idle2.wav"}
+--ENT.OnIdleSounds = {"bear/idle1.wav", "bear/idle2.wav"}
 
 -- Stats --
 ENT.ArmorPiercing = 100;
@@ -26,7 +26,7 @@ ENT.HealthRegen = 1
 
 -- AI --
 ENT.RangeAttackRange = 0
-ENT.MeleeAttackRange = 80
+ENT.MeleeAttackRange = 120
 ENT.ReachEnemyRange = 80
 ENT.AvoidEnemyRange = 0
 
@@ -44,6 +44,15 @@ ENT.Flinching = false
 
 ENT.Acceleration = 300
 ENT.Deceleration = 300
+
+-- Climbing --
+ENT.ClimbLedges = true
+ENT.ClimbProps = true
+ENT.ClimbLedgesMaxHeight = 300
+ENT.ClimbLadders = true
+ENT.ClimbSpeed = 90
+ENT.ClimbUpAnimation = "walk"
+ENT.ClimbOffset = Vector(-14, 0, 0)
 
 -- Possession --
 ENT.PossessionEnabled = true
@@ -97,6 +106,7 @@ end
 
  -- Afraid --
 
+ --[[
 function ENT:OnTakeDamage(dmg)
 if math.random(1,2) == 1 and self.Flinching == false and (dmg:GetDamage() > 100 or dmg:IsDamageType(DMG_BLAST) or dmg:IsDamageType(DMG_SLASH) or dmg:IsDamageType(DMG_BULLET) or dmg:IsDamageType(DMG_CRUSH)) then
 self.Flinching = true
@@ -116,6 +126,7 @@ self.Flinching = false
 end)
 end
 end
+ --]]
 
   -- Init/Think --
 
@@ -165,7 +176,7 @@ end
   function ENT:Attack1()
       self:Attack({
         damage = 60,
-        range = 90,
+        range = 120,
         delay = 0.6,
         type = DMG_SLASH,
         viewpunch = Angle(20, math.random(-10, 10), 0),

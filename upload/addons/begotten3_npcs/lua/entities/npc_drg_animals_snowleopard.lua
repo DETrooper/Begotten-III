@@ -4,8 +4,8 @@ ENT.Base = "drgbase_nextbot" -- DO NOT TOUCH (obviously)
 -- Misc --
 ENT.PrintName = "Snow Leopard"
 ENT.Category = "Begotten DRG"
-ENT.Models = {"models/animalia/snowleopard.mdl"}
-ENT.RagdollOnDeath = true
+ENT.Models = {"models/animal_ragd/piratecat_leopard.mdl"}
+ENT.RagdollOnDeath = false
 ENT.CollisionBounds = Vector(15, 15, 40)
 ENT.BloodColor = BLOOD_COLOR_RED
 ENT.Frightening = true
@@ -13,11 +13,11 @@ ENT.SightRange = 1000
 
 -- Sounds --
 ENT.OnDamageSounds = {"leopard/attack.wav"}
-ENT.OnIdleSounds = {"leopard/idle1.wav"}
+--ENT.OnIdleSounds = {"leopard/idle1.wav"}
 
 -- Stats --
-ENT.ArmorPiercing = 75;
-ENT.SpawnHealth = 150;
+ENT.ArmorPiercing = 55;
+ENT.SpawnHealth = 275;
 ENT.XPValue = 100;
 
 -- Regen --
@@ -37,13 +37,22 @@ ENT.Factions = {"FACTION_SNOWLEOPARD"}
 ENT.IdleAnimation = "idle"
 ENT.RunAnimation = "run"
 ENT.WalkAnimation = "walk"
-ENT.RunSpeed = 610
+ENT.RunSpeed = 700
 ENT.WalkSpeed = 20
 ENT.JumpAnimation = "leap"
 ENT.Flinching = false
 
 ENT.Acceleration = 300
 ENT.Deceleration = 300
+
+-- Climbing --
+ENT.ClimbLedges = true
+ENT.ClimbProps = true
+ENT.ClimbLedgesMaxHeight = 300
+ENT.ClimbLadders = true
+ENT.ClimbSpeed = 90
+ENT.ClimbUpAnimation = "walk"
+ENT.ClimbOffset = Vector(-14, 0, 0)
 
 -- Possession --
 ENT.PossessionEnabled = true
@@ -88,12 +97,26 @@ end
 
 if SERVER then
 
+function ENT:OnDeath(dmg, delay, hitgroup)	
+  local gib = ents.Create( "prop_ragdoll" )
+  gib:SetModel( "models/animal_ragd/piratecat_leopard.mdl" )
+  gib:SetPos( self:LocalToWorld(Vector(0,0,0))) -- The Postion the model spawns
+  gib:SetAngles( self:GetAngles() )
+  gib:Spawn()
+  
+  timer.Simple(600, function()
+    if IsValid(gib) then
+      gib:Remove();
+    end
+  end);
+end  
+
  -- Leap --
 
 function ENT:OnRangeAttack()
 if not self:GetCooldown("Leap") then return end
 if self:GetCooldown("Leap") == 0 then
-self:SetCooldown("Leap", 10)
+self:SetCooldown("Leap", 8)
 self:SetVelocity(self:GetUp()*100)
 self:SetVelocity(self:GetForward()*600)
 self:Jump(100)
@@ -173,9 +196,9 @@ end
 
   function ENT:Attack1()
       self:Attack({
-        damage = 25,
-        range = 70,
-        delay = 0.8,
+        damage = 45,
+        range = 150,
+	      delay = 0.7,
         type = DMG_SLASH,
         viewpunch = Angle(20, math.random(-10, 10), 0),
       }, function(self, hit)
