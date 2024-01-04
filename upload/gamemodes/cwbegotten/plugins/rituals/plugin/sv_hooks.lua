@@ -962,7 +962,7 @@ Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 				player:SetCharacterData("PhysDesc", Clockwork.kernel:ModifyPhysDesc(data[4]));
 				player:SetCharacterData("lastAppearanceChange", os.time());
 				
-				if cwShacks then
+				if cwShacks and cwShacks.shacks then
 					local characterKey = player:GetCharacterKey();
 					local shack = player:GetOwnedShack();
 					
