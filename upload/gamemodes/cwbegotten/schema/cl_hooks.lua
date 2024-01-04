@@ -2022,7 +2022,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if category == "Great Shield" then
-					frame:AddText("Great Shield: Reduces sprint speed by 5% when held.", Color(110, 30, 30));
+					frame:AddText("Great Shield: Reduces sprint speed by 10% when held.", Color(110, 30, 30));
 				end
 				
 				if itemTable.attributes then

@@ -3003,7 +3003,7 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 		local activeWeapon = player:GetActiveWeapon();
 		
 		if IsValid(activeWeapon) and activeWeapon:GetNWString("activeShield"):len() > 0 and activeWeapon:GetNWString("activeShield") == shieldItem.uniqueID then
-			infoTable.runSpeed = infoTable.runSpeed * 0.95;
+			infoTable.runSpeed = infoTable.runSpeed * 0.9;
 		end
 	end
 
