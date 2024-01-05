@@ -104,8 +104,8 @@ function PLUGIN:PostPlayerDraw(player, flags)
 						local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSharedVar("subfaction");
 						
 						if subfaction and factionTable.subfactions then
-							for k, v in pairs(factionTable.subfactions) do
-								if k == subfaction and v.models then
+							for i, v in ipairs(factionTable.subfactions) do
+								if v.name == subfaction and v.models then
 									model = v.models[string.lower(player:GetGender())].clothes;
 								
 									break;

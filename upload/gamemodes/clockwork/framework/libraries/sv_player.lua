@@ -2572,8 +2572,8 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 						local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 						
 						if subfaction and factionTable.subfactions then
-							for k, v in pairs(factionTable.subfactions) do
-								if k == subfaction and v.models then
+							for i, v in ipairs(factionTable.subfactions) do
+								if v.name == subfaction and v.models then
 									model = v.models[string.lower(player:GetGender())].clothes;
 								
 									break;

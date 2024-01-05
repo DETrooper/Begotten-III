@@ -80,9 +80,24 @@ function Clockwork.faction:Register(data, name)
 			male = DEFAULT_MODELS.male
 		}
 		
-		if (data.subfactions) and data.subfactions[1].models then
-			data.models.female = data.subfactions[1].models.female or DEFAULT_MODELS.female;
-			data.models.male = data.subfactions[1].models.male or DEFAULT_MODELS.male;
+		if (data.subfactions) then
+			local found = false;
+
+			for i, v in ipairs(data.subfactions) do
+				if v.default and v.models then
+					data.models.female = v.models.female or DEFAULT_MODELS.female;
+					data.models.male = v.models.male or DEFAULT_MODELS.male;
+
+					found = true;
+
+					break;
+				end
+			end
+
+			if !found and data.subfactions[1].models then
+				data.models.female = data.subfactions[1].models.female or DEFAULT_MODELS.female;
+				data.models.male = data.subfactions[1].models.male or DEFAULT_MODELS.male;
+			end
 		end
 	end
 	

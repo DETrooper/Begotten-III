@@ -729,12 +729,22 @@ function PANEL:Init()
 			
 				local subfaction = self.customData.kinisgerOverrideSubfaction or self.customData.subfaction;
 				
-				if subfaction and factionTableOverride.subfactions then
-					for i, v in ipairs(factionTableOverride.subfactions) do
-						if v.models and v.name == subfaction then
-							model = v.models[string.lower(self.customData.gender)].clothes;
-							
-							break;
+				if factionTableOverride.subfactions then
+					if subfaction then
+						for i, v in ipairs(factionTableOverride.subfactions) do
+							if v.models and v.name == subfaction then
+								model = v.models[string.lower(self.customData.gender)].clothes;
+
+								break;
+							end
+						end
+					else
+						for i, v in ipairs(factionTableOverride.subfactions) do
+							if v.models and v.default then
+								model = v.models[string.lower(self.customData.gender)].clothes;
+
+								break;
+							end
 						end
 					end
 				end

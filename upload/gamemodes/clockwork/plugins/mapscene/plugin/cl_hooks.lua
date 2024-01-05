@@ -552,6 +552,21 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 				
 				if istable(charModel) then
 					model_path = charModel.clothes;
+					
+					if subfaction then
+						local factionTable = Clockwork.faction:FindByID(faction);
+						
+						if factionTable and factionTable.subfactions then
+							for i, v in ipairs(factionTable.subfactions) do
+								if v.name == subfaction and v.models then
+									model_path = v.models[string.lower(player:GetGender())].clothes;
+								
+									break;
+								end
+							end
+						end
+					end
+					
 					head_path = Clockwork.Client.SelectedModel;
 				else
 					model_path = charModel;
