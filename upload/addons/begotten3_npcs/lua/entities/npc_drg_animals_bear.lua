@@ -145,17 +145,23 @@ end
 
   -- AI --
 
+  function ENT:OnParried()
+    self.nextMeleeAttack = CurTime() + 2;
+  end
+  
   function ENT:OnMeleeAttack(enemy)
-			  local att = math.random(2)	
-  if att == 1 then
-   self:Attack1()	
-   self:PlaySequenceAndMove("attack1", 1, self.FaceEnemy)
-end
-  if att == 2 then
-   self:Attack1()	
-   self:PlaySequenceAndMove("attack2", 1, self.FaceEnemy)
-end
-end
+    if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
+      local att = math.random(2)	
+      if att == 1 then
+      self:Attack1()	
+      self:PlaySequenceAndMove("attack1", 1, self.FaceEnemy)
+      end
+      if att == 2 then
+      self:Attack1()	
+      self:PlaySequenceAndMove("attack2", 1, self.FaceEnemy)
+      end
+    end
+  end
 end
 
  -- Patrol --

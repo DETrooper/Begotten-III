@@ -172,11 +172,17 @@ end
 
   -- AI --
 
+  function ENT:OnParried()
+    self.nextMeleeAttack = CurTime() + 2;
+  end
+
   function ENT:OnMeleeAttack(enemy)
+    if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
 			  local att = math.random(1)	
   if att == 1 then
    self:Attack1()	
    self:PlaySequenceAndMove("attack1", 1, self.FaceEnemy)
+end
 end
 end
 end
@@ -198,7 +204,7 @@ end
       self:Attack({
         damage = 45,
         range = 150,
-	      delay = 0.7,
+	      delay = 0.8,
         type = DMG_SLASH,
         viewpunch = Angle(20, math.random(-10, 10), 0),
       }, function(self, hit)

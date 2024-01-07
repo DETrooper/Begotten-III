@@ -104,10 +104,16 @@ end
 
   -- AI --
 
+  function ENT:OnParried()
+    self.nextMeleeAttack = CurTime() + 2;
+  end
+
   function ENT:OnMeleeAttack(enemy)
+    if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
 			  local att = math.random(1)	
   if att == 1 then
    self:Hit1()
+end
 end
 end
 
