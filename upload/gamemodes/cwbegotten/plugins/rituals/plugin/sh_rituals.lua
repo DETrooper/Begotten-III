@@ -1436,9 +1436,9 @@ RITUAL = cwRituals.rituals:New("summon_demon");
 	end;
 RITUAL:Register()
 
-RITUAL = cwRituals.rituals:New("summon_familiar");
-	RITUAL.name = "(T3) Summon Familiar";
-	RITUAL.description = "Summon a creature of the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. Incurs 15 corruption.";
+RITUAL = cwRituals.rituals:New("summon_familiar_bear");
+	RITUAL.name = "(T3) Summon Familiar (Bear)";
+	RITUAL.description = "Summon a spirit bear from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. Incurs 15 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
 	RITUAL.requirements = {"xolotl_catalyst", "familial_catalyst", "familial_catalyst"};
@@ -1447,7 +1447,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar");
 	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a familiar near their position!");
+		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit bear near their position!");
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -1484,7 +1484,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar");
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
 			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
 
-			local entity = ents.Create("npc_drg_animals_cave_bear");
+			local entity = ents.Create("npc_drg_animals_bear_spirit");
 			local playerFaith = player:GetFaith();
 			
 			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
@@ -1494,15 +1494,101 @@ RITUAL = cwRituals.rituals:New("summon_familiar");
 			timer.Simple(0.5, function()
 				if IsValid(entity) then
 					entity:Spawn();
-					entity:SetHealth(600);
+					entity:SetHealth(700);
 					entity:Activate(); 
 					entity:SetMaterial("models/props_combine/portalball001_sheet")
 					entity:AddEntityRelationship(player, D_LI, 99);
 					entity.XPValue = 250;
 					
-					entity.OnDeath = function()
-						
-					end;
+					entity.summonedFaith = playerFaith;
+					
+					for k, v in pairs(_player.GetAll()) do
+						if v:GetFaith() == playerFaith then
+							entity:AddEntityRelationship(v, D_LI, 99);
+						else					
+							local faction = v:GetFaction();
+							
+							if faction == "Goreic Warrior" then
+								entity:AddEntityRelationship(v, D_LI, 99);
+							end
+						end
+					end
+					
+					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as a creature of the Gore Forest suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
+				end
+			end);
+		else
+			Schema:EasyText(player, "firebrick", "You cannot summon that far away!");
+			
+			return false;
+		end;
+	end;
+RITUAL:Register()
+
+RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
+	RITUAL.name = "(T3) Summon Familiar (Leopard)";
+	RITUAL.description = "Summon a spirit leopard from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. Incurs 15 corruption.";
+	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
+	
+	RITUAL.requirements = {"xolotl_catalyst", "familial_catalyst", "xolotl_catalyst"};
+	RITUAL.corruptionCost = 15;
+	RITUAL.ritualTime = 10;
+	RITUAL.experience = 50;
+	
+	function RITUAL:OnPerformed(player)
+		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit leopard near their position!");
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		local lastZone = player:GetCharacterData("LastZone");
+		
+		if lastZone == "theater" or lastZone == "tower" then
+			if Schema.towerSafeZoneEnabled then
+				Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+				return false;
+			end
+		end
+		
+		local trace = player:GetEyeTraceNoCursor();
+		
+		if (trace.HitPos:Distance(player:GetShootPos()) > 192) then
+			Schema:EasyText(player, "firebrick", "You cannot summon that far away!");
+			
+			return false;
+		end;
+	end;
+	function RITUAL:EndRitual(player)
+		local lastZone = player:GetCharacterData("LastZone");
+		
+		if lastZone == "theater" or lastZone == "tower" then
+			if Schema.towerSafeZoneEnabled then
+				Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+				return false;
+			end
+		end
+		
+		local trace = player:GetEyeTraceNoCursor();
+		
+		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
+			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
+
+			local entity = ents.Create("npc_drg_animals_snowleopard_spirit");
+			local playerFaith = player:GetFaith();
+			
+			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
+			sound.Play("misc/summon.wav",trace.HitPos, 100, 100)
+			--entity:SetPos(trace.HitPos);
+			
+			timer.Simple(0.5, function()
+				if IsValid(entity) then
+					entity:Spawn();
+					entity:SetHealth(475);
+					entity:Activate(); 
+					entity:SetMaterial("models/props_combine/portalball001_sheet")
+					entity:AddEntityRelationship(player, D_LI, 99);
+					entity.XPValue = 250;
 					
 					entity.summonedFaith = playerFaith;
 					
