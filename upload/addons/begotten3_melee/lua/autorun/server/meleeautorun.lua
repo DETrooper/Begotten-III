@@ -367,7 +367,7 @@ local function Guarding(ent, dmginfo)
 
 				if (IsValid(attacker) and (math.abs(math.AngleDifference(ent:EyeAngles().y, (attacker:GetPos() - ent:GetPos()):Angle().y)) <= blockthreshold)) then
 					if enemywep and enemywep.IsABegottenMelee == true then
-						if ent:GetNWBool("Deflect") == true then
+						if ent:GetNWBool("Deflect") then
 							attacker:ViewPunch(Angle(-10,7,6))
 						else
 							attacker:ViewPunch(Angle(-3,1,0))
@@ -375,7 +375,7 @@ local function Guarding(ent, dmginfo)
 					end
 
 					---- Block Sound
-					if !attacker:IsPlayer() and !ent:GetNWBool("Deflect", true) then
+					if !attacker:IsPlayer() and !ent:GetNWBool("Deflect") then
 						if dmginfo:IsDamageType(128) then
 							ent:EmitSound(blocksoundtable["blockwood"][math.random(1, #blocksoundtable["blockwood"])])
 							--print "BLOCK NPC CRUSH"
@@ -390,7 +390,7 @@ local function Guarding(ent, dmginfo)
 							--print "BLOCK NPC BULLET"
 						end
 					else
-						if !ent:GetNWBool("Deflect", true) and attacker:IsPlayer() and !dmginfo:IsDamageType(1073741824) then
+						if !ent:GetNWBool("Deflect") and attacker:IsPlayer() and !dmginfo:IsDamageType(1073741824) then
 							if enemywep.IsABegottenMelee == true and (!dmginfo:GetInflictor() or (dmginfo:GetInflictor() and !dmginfo:GetInflictor().isJavelin)) then
 								if enemywep.SoundMaterial == "Metal" then
 									ent:EmitSound(blocksoundtable["blockmetal"][math.random(1, #blocksoundtable["blockmetal"])])
@@ -665,7 +665,7 @@ local function Guarding(ent, dmginfo)
 					end
 					--]]
 						
-					if !ent:GetNWBool("Deflect", true) and ent:IsValid() and ent:Alive() and attacker:IsValid() then
+					if !ent:GetNWBool("Deflect") and ent:IsValid() and ent:Alive() and attacker:IsValid() then
 						local poiseDamageModifier = 1;
 						
 						if attacker.HasBelief then
@@ -925,12 +925,12 @@ local function Guarding(ent, dmginfo)
 								end
 							end
 						end
-					elseif !ent:GetNWBool("Deflect", true) then
+					elseif !ent:GetNWBool("Deflect") then
 						dmginfo:ScaleDamage(0)
 					end
 					-- Poise system
 			
-					if !ent:GetNWBool("Deflect", true) then
+					if !ent:GetNWBool("Deflect") then
 						--local melsta = ent:GetNWInt("meleeStamina", 90);
 						local melsta = ent:GetNWInt("Stamina", 100);
 						local blockamount = (blocktable["guardblockamount"]);
@@ -993,7 +993,7 @@ local function Guarding(ent, dmginfo)
 					end
 				
 					-- Deflection
-					if ent:GetNWBool("Deflect", true) and (!ent.nextDeflect or CurTime() > ent.nextDeflect) and (IsValid(attacker) and (dmginfo:IsDamageType(4) or dmginfo:IsDamageType(128) or dmginfo:IsDamageType(16) or (cwBeliefs and ent:HasBelief("impossibly_skilled") and IsValid(inflictor) and inflictor.isJavelin))) then
+					if ent:GetNWBool("Deflect") and (!ent.nextDeflect or CurTime() > ent.nextDeflect) and (IsValid(attacker) and (dmginfo:IsDamageType(4) or dmginfo:IsDamageType(128) or dmginfo:IsDamageType(16) or (cwBeliefs and ent:HasBelief("impossibly_skilled") and IsValid(inflictor) and inflictor.isJavelin))) then
 						if !attacker:IsPlayer() then
 							if dmginfo:IsDamageType(128) then
 								ent:EmitSound(blocksoundtable["deflectwood"][math.random(1, #blocksoundtable["deflectwood"])])
