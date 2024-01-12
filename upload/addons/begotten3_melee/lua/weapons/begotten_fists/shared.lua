@@ -662,6 +662,8 @@ function SWEP:SecondaryAttack()
 	local wep = self.Weapon
 
 	if ( self.SoundLightning ) then self.SoundLightning:FadeOut(1) self.SoundLightning = nil end
+	
+	ply:SetNWBool("MelAttacking", false)
 
 	if (!Clockwork.player:GetWeaponRaised(ply)) then
 		if (SERVER) then
@@ -830,7 +832,7 @@ function SWEP:SecondaryAttack()
 			end
 		end);
 		
-		self:CreateTimer(0.5, "parryBlockTimer"..ply:EntIndex(), function()
+		self:CreateTimer(math.max((attacktable["delay"]), 2), "parryBlockTimer"..ply:EntIndex(), function()
 			if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
 				if (ply:KeyDown(IN_ATTACK2)) then
 					if (!ply:KeyDown(IN_USE)) then

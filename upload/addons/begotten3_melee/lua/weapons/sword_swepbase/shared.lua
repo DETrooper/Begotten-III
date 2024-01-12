@@ -2484,6 +2484,8 @@ function SWEP:SecondaryAttack()
 		blocktable = GetTable(self.realBlockTable);
 	end
 	
+	ply:SetNWBool("MelAttacking", false)
+	
 	local parryWindow = blocktable["parrydifficulty"] or 0.15;
 	local curTime = CurTime();
 
@@ -2580,6 +2582,10 @@ function SWEP:SecondaryAttack()
 		parryWindow = parryWindow + 0.1;
 	end
 	
+	if self:GetClass() == "begotten_fists" and ply:GetCharmEquipped("ring_pugilist") then
+		parryWindow = parryWindow + 0.1;
+	end
+	
 	self:CreateTimer(parryWindow, "parryTimer"..ply:EntIndex(), function()
 		if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
 			ply:SetNWBool( "Parry", false )
@@ -2649,7 +2655,7 @@ function SWEP:SecondaryAttack()
 		end
 	end);
 	
-	self:CreateTimer(0.5, "parryBlockTimer"..ply:EntIndex(), function()
+	self:CreateTimer(math.max((attacktable["delay"]), 2), "parryBlockTimer"..ply:EntIndex(), function()
 		if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
 			if (ply:KeyDown(IN_ATTACK2)) then
 				if (!ply:KeyDown(IN_USE)) then

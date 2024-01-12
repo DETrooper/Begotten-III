@@ -57,7 +57,7 @@ if SERVER then
 		
 		if IsValid(self.Owner) and self.Owner:GetActiveWeapon().Category == "(Begotten) Javelin" then
 			if !self.deflected then
-				self.attacktable = GetTable(self.Owner:GetActiveWeapon().AttackTable);
+				self.AttackTable = GetTable(self.Owner:GetActiveWeapon().AttackTable);
 				self.itemTable = item.GetByWeapon(self.Owner:GetActiveWeapon());
 				self.SticksInShields = self.Owner:GetActiveWeapon().SticksInShields;
 				
@@ -217,14 +217,14 @@ if SERVER then
 					enemywep = Ent:GetActiveWeapon()
 				end
 				
-				local damage = (self.attacktable["primarydamage"])
-				local damagetype = (self.attacktable["dmgtype"])
+				local damage = (self.AttackTable["primarydamage"])
+				local damagetype = (self.AttackTable["dmgtype"])
 				local trace = self.Owner:GetEyeTrace()
 				
 				if Ent:IsNPC() or Ent:IsNextBot() or (Ent:IsPlayer() and !Ent:GetNWBool("Parry") and !Ent:GetNWBool("Deflect")) and !Ent.iFrames then
 					if Ent:IsPlayer() and !Ent:GetNWBool("Guardening") then
-						damage = (self.attacktable["primarydamage"])
-						damagetype = (self.attacktable["dmgtype"])
+						damage = (self.AttackTable["primarydamage"])
+						damagetype = (self.AttackTable["dmgtype"])
 					else
 						if Ent:GetNWBool("Guardening") then
 							if enemywep and enemywep:GetNWString("activeShield"):len() > 0 then
@@ -243,8 +243,8 @@ if SERVER then
 					
 					local hitEntPos = Ent:GetPos();
 					local distance = hitEntPos:DistToSqr(self.cachedStartPos);
-					local poiseDamage = self.attacktable["poisedamage"];
-					local stabilityDamage = self.attacktable["stabilitydamage"];
+					local poiseDamage = self.AttackTable["poisedamage"];
+					local stabilityDamage = self.AttackTable["stabilitydamage"];
 
 					if distance < 200 * 200 then
 						--print("tier 1");
@@ -348,7 +348,7 @@ if SERVER then
 					javelin:SetPos(self:GetPos())
 					javelin:SetOwner(Ent)
 					
-					javelin.attacktable = self.attacktable;
+					javelin.AttackTable = self.AttackTable;
 					javelin.itemTable = self.itemTable;
 					javelin.SticksInShields =  self.SticksInShields;
 					javelin.itemTable = self.itemTable;
