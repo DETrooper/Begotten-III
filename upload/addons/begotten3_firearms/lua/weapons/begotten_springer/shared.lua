@@ -48,7 +48,7 @@ SWEP.data.ironsights			= 1
 SWEP.ScopeScale 			= 0.7
 
 SWEP.Primary.NumShots	= 1		--how many bullets to shoot per trigger pull
-SWEP.Primary.Damage		= 200	--base damage per bullet
+SWEP.Primary.Damage		= 85	--base damage per bullet
 SWEP.Primary.Spread		= .02	--define from-the-hip accuracy 1 is terrible, .0001 is exact)
 SWEP.Primary.IronAccuracy = .004 -- ironsight accuracy, should be the same for shotguns
 SWEP.BoltAction	=	true;
@@ -60,7 +60,7 @@ SWEP.AmmoTypes = {
 	["Old World Longshot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("gmodtower/pvpbattle/sniper/sniperfire.wav");
 		SWEP.Primary.NumShots = 1;
-		SWEP.Primary.Damage = 200;
+		SWEP.Primary.Damage = 85;
 		SWEP.Primary.Spread = .05;
 		SWEP.Primary.IronAccuracy = .05;
 		SWEP.Primary.ClipSize = 1;

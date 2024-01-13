@@ -49,7 +49,7 @@ SWEP.data.ironsights			= 1
 SWEP.ShellTime			= 0.55 -- For shotguns, how long it takes to insert a shell.
 
 SWEP.Primary.NumShots = 32;
-SWEP.Primary.Damage = 20;
+SWEP.Primary.Damage = 8;
 SWEP.Primary.Spread = .175;
 SWEP.Primary.IronAccuracy = .175;
 -- Because irons don't magically give you less pellet spread!
@@ -68,7 +68,7 @@ SWEP.AmmoTypes = {
 	["Old World Grapeshot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("weapons/nikm1987trench/trigger.wav");
 		SWEP.Primary.NumShots = 32;
-		SWEP.Primary.Damage = 20;
+		SWEP.Primary.Damage = 8;
 		SWEP.Primary.Spread = .175;
 		SWEP.Primary.IronAccuracy = .175;
 		SWEP.Primary.Ammo = "buckshot";

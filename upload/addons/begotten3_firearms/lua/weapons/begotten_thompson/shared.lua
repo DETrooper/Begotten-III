@@ -48,7 +48,7 @@ SWEP.data 				= {}				--The starting firemode
 SWEP.data.ironsights			= 1
 
 SWEP.Primary.NumShots	= 1		-- How many bullets to shoot per trigger pull
-SWEP.Primary.Damage		= 80	-- Base damage per bullet
+SWEP.Primary.Damage		= 30	-- Base damage per bullet
 SWEP.Primary.Spread		= .02	-- Define from-the-hip accuracy 1 is terrible, .0001 is exact)
 SWEP.Primary.IronAccuracy = .01 -- Ironsight accuracy, should be the same for shotguns
 
@@ -67,7 +67,7 @@ SWEP.AmmoTypes = {
 	["Old World Shot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("weapons/thompson_01.wav");
 		SWEP.Primary.NumShots = 1;
-		SWEP.Primary.Damage = 80;
+		SWEP.Primary.Damage = 30;
 		SWEP.Primary.Spread = .02;
 		SWEP.Primary.IronAccuracy = .01;
 		SWEP.Primary.ClipSize = 1;
