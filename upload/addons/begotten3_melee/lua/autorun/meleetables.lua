@@ -683,10 +683,10 @@ AttackTables.OrnateGlazicusAttackTable = {
 	["poisedamage"] = 12,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 3,
-	["delay"] = 0.65,
+	["delay"] = 0.7,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 660,
+	["meleerange"] = 665,
 	["punchstrength"] = Angle(0,1,0),
 };
 
