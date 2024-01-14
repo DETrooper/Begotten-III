@@ -2697,7 +2697,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 2},
 			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
@@ -2727,7 +2727,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 2},
 			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
