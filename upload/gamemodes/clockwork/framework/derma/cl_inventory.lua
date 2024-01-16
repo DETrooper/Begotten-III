@@ -844,20 +844,15 @@ function PANEL:Rebuild()
 
 			if weapon and weapon.isAttachment then
 				local attachment = {};
-				local attachmentBone = weapon.attachmentBone;
-				local offsetAngle = weapon.attachmentOffsetAngles;
-				local offsetVector = weapon.attachmentOffsetVector;
+				local attachmentBone = weapon.attachmentBone; 
+				local offsetVector = weapon.attachmentOffsetVector or Vector(0, 0, 0);
+				local offsetAngle = weapon.attachmentOffsetAngles or Angle(0, 0, 0);
 				
+				-- Is offhand?
 				if weapon.slots and i > #weapon.slots then
-					-- Offhand
-					if string.find(attachmentBone, "_L_") then
-						attachmentBone = string.gsub(attachmentBone, "_L_", "_R_");
-					else
-						attachmentBone = string.gsub(attachmentBone, "_R_", "_L_");
-					end
-					
-					offsetVector = Vector(-offsetVector.x, offsetVector.y, offsetVector.z);
-					offsetAngle = Angle(-offsetAngle.pitch, offsetAngle.yaw, offsetAngle.roll);
+					attachmentBone = weapon.attachmentBoneOffhand or attachmentBone;
+					offsetVector = weapon.attachmentOffsetVectorOffhand or offsetVector;
+					offsetAngle = weapon.attachmentOffsetAnglesOffhand or offsetAngle;
 				end
 			
 				attachment.attachmentInfo = {};

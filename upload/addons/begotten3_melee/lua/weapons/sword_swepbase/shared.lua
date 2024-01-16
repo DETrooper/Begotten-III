@@ -3195,79 +3195,20 @@ function SWEP:Initialize()
 			local offhandTable = weapons.GetStored(self:GetNWString("activeOffhand"));
 			
 			if offhandTable then
-				--local angleOverride = self.ViewModelDualRotation or Angle(0, 0, 0);
-				--local offhandAngleOverride = offhandTable.ViewModelDualRotation or Angle(0, 0, 0);
-				--local positionOverride = self.ViewModelDualPosition or Vector(0, 0, 0);
-				--local offhandPositionOverride = offhandTable.ViewModelDualPosition or Vector(0, 0, 0);
+				self.VElements = {};
+				self.WElements = {};
 				
-				if self.VElements and offhandTable.VElements then
-					for k, v in pairs(self.VElements) do
-						if v.bone == "ValveBiped.Bip01_L_Hand" then
-							--v.angle = v.angle + Angle(90, 90, 90) + angleOverride;
-							--v.bone = "Dummy16";
-							--v.pos = v.pos + Vector(-3.5, -12.5, 0) + positionOverride;
-							v.angle = v.angle + Angle(180, 180, 0);
-							v.pos = Vector(v.pos.x, v.pos.y, -v.pos.z);
-						elseif v.bone == "ValveBiped.Bip01_R_Hand" then
-							--v.angle = v.angle + Angle(90, 90, 90) + angleOverride;
-							--v.angle = v.angle + Angle(20, 0, 0)
-							--v.bone = "Dummy01";
-							v.pos = v.pos + Vector(-1, -1, 0);
-						end
-					end
-				
-					for k, v in pairs(offhandTable.VElements) do
-						if v.bone == "ValveBiped.Bip01_L_Hand" then
-							self.VElements[k.."_right"] = table.FullCopy(v);
-							--self.VElements[k.."_right"].angle = v.angle + Angle(90, 90, 90) + offhandAngleOverride;
-							--self.VElements[k.."_right"].bone = "Dummy01";
-							self.VElements[k.."_right"].angle = v.angle;
-							self.VElements[k.."_right"].bone = "ValveBiped.Bip01_R_Hand";
-							self.VElements[k.."_right"].pos = v.pos + Vector(-1, -1, 0);
-							--self.VElements[k.."_right"].pos = v.pos + Vector(-3.5, -9, -1.5) + offhandPositionOverride;
-						elseif v.bone == "ValveBiped.Bip01_R_Hand" then
-							self.VElements[k.."_left"] = table.FullCopy(v);
-							--self.VElements[k.."_left"].angle = v.angle + Angle(90, 90, 90) + offhandAngleOverride;
-							--self.VElements[k.."_left"].bone = "Dummy16";
-							self.VElements[k.."_left"].angle = v.angle + Angle(180, 180, 0);
-							self.VElements[k.."_left"].bone = "ValveBiped.Bip01_L_Hand";
-							self.VElements[k.."_left"].pos = Vector(v.pos.x, v.pos.y, -v.pos.z);
-							--self.VElements[k.."_left"].pos = v.pos + Vector(-3.5, -9, -1.5) + offhandPositionOverride;
-						end
-					end
+				if self.VElements and self.VElementsDual and offhandTable.VElements and offhandTable.VElementsDual then
+					self.VElements["w_left"] = table.FullCopy(self.VElementsDual["v_left"]);
+					self.VElements["w_right"] = table.FullCopy(offhandTable.VElementsDual["v_right"]);
 				end
 				
-				if self.WElements and offhandTable.WElements then
-					for k, v in pairs(self.WElements) do
-						if v.bone == "ValveBiped.Bip01_L_Hand" then
-							v.angle = v.angle + Angle(180, 180, 0);
-							v.pos = Vector(v.pos.x, v.pos.y, -v.pos.z);
-						elseif v.bone == "ValveBiped.Bip01_R_Hand" then
-							v.angle = v.angle + Angle(20, 0, 0);
-							v.pos = v.pos + Vector(0, 0, -2);
-						end
-					end
-				
-					for k, v in pairs(offhandTable.WElements) do
-						if v.bone == "ValveBiped.Bip01_L_Hand" then
-							self.WElements[k.."_right"] = table.FullCopy(v);
-							self.WElements[k.."_right"].angle = v.angle + Angle(20, 0, 0);
-							self.WElements[k.."_right"].bone = "ValveBiped.Bip01_R_Hand";
-							self.WElements[k.."_right"].pos = v.pos + Vector(0, 0, -2);
-						elseif v.bone == "ValveBiped.Bip01_R_Hand" then
-							self.WElements[k.."_left"] = table.FullCopy(v);
-							self.WElements[k.."_left"].angle = v.angle + Angle(175, 180, 0);
-							self.WElements[k.."_left"].bone = "ValveBiped.Bip01_L_Hand";
-							self.WElements[k.."_left"].pos = Vector(v.pos.x, v.pos.y, -v.pos.z);
-						end
-					end
+				if self.WElements and self.WElementsDual and offhandTable.WElements and offhandTable.WElementsDual then
+					self.WElements["w_left"] = table.FullCopy(self.WElementsDual["w_left"]);
+					self.WElements["w_right"] = table.FullCopy(offhandTable.WElementsDual["w_right"]);
 				end
 			end
 		end
-		
-		--self.VElements = table.FullCopy( self.VElements )
-		--self.WElements = table.FullCopy( self.WElements )
-		--self.ViewModelBoneMods = table.FullCopy( self.ViewModelBoneMods )
 
 		if LocalPlayer() == self.Owner then
 			self:CreateModels(self.VElements) // create viewmodels

@@ -776,20 +776,15 @@ function PANEL:Init()
 				
 				if item and item.isAttachment then
 					local attachment = {};
-					local attachmentBone = item.attachmentBone;
-					local offsetAngle = item.attachmentOffsetAngles;
-					local offsetVector = item.attachmentOffsetVector;
+					local attachmentBone = item.attachmentBone; 
+					local offsetVector = item.attachmentOffsetVector or Vector(0, 0, 0);
+					local offsetAngle = item.attachmentOffsetAngles or Angle(0, 0, 0);
 					
+					-- Is offhand?
 					if item.slots and i > #item.slots then
-						-- Offhand
-						if string.find(attachmentBone, "_L_") then
-							attachmentBone = string.gsub(attachmentBone, "_L_", "_R_");
-						else
-							attachmentBone = string.gsub(attachmentBone, "_R_", "_L_");
-						end
-						
-						offsetVector = Vector(-offsetVector.x, offsetVector.y, offsetVector.z);
-						offsetAngle = Angle(-offsetAngle.pitch, offsetAngle.yaw, offsetAngle.roll);
+						attachmentBone = item.attachmentBoneOffhand or attachmentBone;
+						offsetVector = item.attachmentOffsetVectorOffhand or offsetVector;
+						offsetAngle = item.attachmentOffsetAnglesOffhand or offsetAngle;
 					end
 				
 					attachment.attachmentInfo = {};

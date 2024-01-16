@@ -129,6 +129,16 @@ SWEP.VElements = {
 	["v_scimitar"] = { type = "Model", model = "models/demonssouls/weapons/scimitar.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.4, 1.5, -0.301), angle = Angle(-78.312, 0, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
+SWEP.VElementsDual = {
+	["v_left"] = { type = "Model", model = "models/demonssouls/weapons/scimitar.mdl", bone = "Dummy16", rel = "", pos = Vector(0, -9, -0.201), angle = Angle(1.169, 80.649, -180), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["v_right"] = { type = "Model", model = "models/demonssouls/weapons/scimitar.mdl", bone = "Dummy01", rel = "", pos = Vector(0.25, -12, 0.5), angle = Angle(3.506, 73.636, -169.482), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}
+
 SWEP.WElements = {
 	["w_scimitar"] = { type = "Model", model = "models/demonssouls/weapons/scimitar.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.799, 1.2, 0), angle = Angle(-97.014, -94.676, 10), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElementsDual = {
+	["w_left"] = { type = "Model", model = "models/demonssouls/weapons/scimitar.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, 0), angle = Angle(-70, 90, -176.495), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/demonssouls/weapons/scimitar.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.9, 0.899, -0.5), angle = Angle(105, 90, -180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }

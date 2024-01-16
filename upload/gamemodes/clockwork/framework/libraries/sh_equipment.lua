@@ -507,14 +507,9 @@ else
 		local offsetAngle = itemTable.attachmentOffsetAngles or Angle(0, 0, 0);
 		
 		if bOffhand then
-			if string.find(attachmentBone, "_L_") then
-				attachmentBone = string.gsub(attachmentBone, "_L_", "_R_");
-			else
-				attachmentBone = string.gsub(attachmentBone, "_R_", "_L_");
-			end
-			
-			offsetVector = Vector(-offsetVector.x, offsetVector.y, offsetVector.z);
-			offsetAngle = Angle(-offsetAngle.pitch, offsetAngle.yaw, offsetAngle.roll);
+			attachmentBone = itemTable.attachmentBoneOffhand or attachmentBone;
+			offsetVector = itemTable.attachmentOffsetVectorOffhand or offsetVector;
+			offsetAngle = itemTable.attachmentOffsetAnglesOffhand or offsetAngle;
 		end
 		
 		local bone = player:LookupBone(attachmentBone);

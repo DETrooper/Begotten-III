@@ -352,6 +352,9 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(94.48, 68.62, 180);
 	ITEM.attachmentOffsetVector = Vector(3.54, -2, 22.63);
+	ITEM.attachmentBoneOffhand = "ValveBiped.Bip01_R_Thigh";
+	ITEM.attachmentOffsetAnglesOffhand = Angle(94.48, 68.62, 180);
+	ITEM.attachmentOffsetVectorOffhand = Vector(-3.54, -2, 22.63);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
@@ -647,6 +650,9 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(187.96, 360, 335.14);
 	ITEM.attachmentOffsetVector = Vector(2.83, 2.12, -0.71);
+	ITEM.attachmentBoneOffhand = "ValveBiped.Bip01_R_Thigh";
+	ITEM.attachmentOffsetAnglesOffhand = Angle(172.04, 0, 335.14);
+	ITEM.attachmentOffsetVectorOffhand = Vector(-2.83, 2.12, -0.71);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
@@ -708,6 +714,9 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(360, 269.5, 24.86);
 	ITEM.attachmentOffsetVector = Vector(2.83, 2.83, 0.71);
+	ITEM.attachmentBoneOffhand = "ValveBiped.Bip01_R_Thigh";
+	ITEM.attachmentOffsetAnglesOffhand = Angle(360, 269.5, -24.86);
+	ITEM.attachmentOffsetVectorOffhand = Vector(-2.83, 2.83, 0.71);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
@@ -829,6 +838,9 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(269.5, 28.84, 347.07);
 	ITEM.attachmentOffsetVector = Vector(1.41, 4.24, -1.41);
+	ITEM.attachmentBoneOffhand = "ValveBiped.Bip01_R_Thigh";
+	ITEM.attachmentOffsetAnglesOffhand = Angle(269.5, 28.84, 12.93);
+	ITEM.attachmentOffsetVectorOffhand = Vector(-1.41, 4.24, -1.41);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
