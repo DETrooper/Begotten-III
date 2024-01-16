@@ -815,6 +815,19 @@ function Schema:GetPlayerDefaultInventory(player, character, inventory)
 	end;
 end;
 
+-- Called when a player has had an item unequipped.
+function Schema:PlayerUnequippedItem(player, itemTable)
+	if itemTable.bodygroupCharms then
+		if player.equipmentSlots then
+			for k, v in pairs(player.equipmentSlots) do
+				if v and v.OnBodygroupItemUnequipped then
+					v:OnBodygroupItemUnequipped(player, itemTable);
+				end
+			end
+		end
+	end
+end
+
 -- Called when a player's inventory item has been updated.
 function Schema:PlayerInventoryItemUpdated(player, itemTable, amount, force) end;
 

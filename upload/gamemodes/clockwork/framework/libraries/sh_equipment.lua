@@ -242,6 +242,8 @@ if SERVER then
 			end
 		end
 		
+		hook.Run("PlayerUnequippedItem", player, itemTable);
+
 		if itemTable.equipmentSaveString then
 			if #itemTable.slots > 1 then
 				--local equipmentData = player:GetCharacterData(itemTable.equipmentSaveString, {});

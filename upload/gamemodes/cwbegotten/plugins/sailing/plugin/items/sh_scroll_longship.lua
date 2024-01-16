@@ -71,6 +71,8 @@ local ITEM = Clockwork.item:New();
 				end
 			end);
 		end
+		
+		player:EmitSound("begotten/items/note_turn.wav");
 
 		return false; -- Prevent this item from being used, it should be permanent.
 	end

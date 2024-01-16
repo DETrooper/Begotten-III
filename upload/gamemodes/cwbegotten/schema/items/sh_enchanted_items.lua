@@ -416,6 +416,12 @@ local ITEM = Clockwork.item:New("enchanted_base");
 		return false
 	end
 	
+	function ITEM:OnBodygroupItemUnequipped(player, itemTable)
+		if itemTable.bodygroupCharms[self.uniqueID] then
+			Clockwork.kernel:ForceUnequipItem(player, self.uniqueID, self.itemID);
+		end
+	end
+	
 	function ITEM:OnPlayerUnequipped(player, extraData)
 		if Clockwork.equipment:UnequipItem(player, self) then
 			local useSound = self.useSound;

@@ -186,9 +186,9 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 	
 	-- Called when a player is transferred to the faction.
 	function FACTION:OnTransferred(player, faction, name)
-		if (faction.name != "Wanderer" and faction.name != "Gatekeeper") then
-			return false;
-		end;
+		--if (faction.name != "Wanderer" and faction.name != "Gatekeeper") then
+			--return false;
+		--end;
 		
 		--[[if player:GetFaith() ~= "Faith of the Light" or player:GetSubfaith() == "Voltism" then
 			return false;

@@ -2103,6 +2103,8 @@ function GM:HUDDrawTargetID()
 			local traceEntity = trace.Entity
 			local fadeDistance = 1024;
 			
+			fadeDistance = hook.Run("ModifyTargetIDDistance", fadeDistance) or fadeDistance; 
+			
 			local curTime = UnPredictedCurTime()
 			
 			if (!self.TargetEntities) then
@@ -2520,11 +2522,11 @@ function GM:GetProgressBarInfo()
 			elseif (action == "ritualing") then
 				return {text = "You are performing a ritual. Click to cancel.", percentage = percentage, flash = percentage < 0}
 			elseif (action == "burn_longship") then
-				return {text = "You are setting the longship alight.", percentage = percentage, flash = percentage < 10};
+				return {text = "You are setting the longship alight. Click to cancel.", percentage = percentage, flash = percentage < 10};
 			elseif (action == "extinguish_longship") then
-				return {text = "You are trying to put out the flames.", percentage = percentage, flash = percentage < 10};
+				return {text = "You are trying to put out the flames. Click to cancel.", percentage = percentage, flash = percentage < 10};
 			elseif (action == "repair_longship") then
-				return {text = "You are making repairs to the longship.", percentage = percentage, flash = percentage < 10};
+				return {text = "You are making repairs to the longship. Click to cancel.", percentage = percentage, flash = percentage < 10};
 			elseif (action == "turn_scrapfactory_valve") then
 				return {text = "You are turning the valve.", percentage = percentage, flash = percentage < 10};
 			elseif (action == "hell_teleporting") then

@@ -2923,9 +2923,10 @@ end
 
 -- A function to add a character to the character screen.
 function Clockwork.player:CharacterScreenAdd(player, character)
+	-- todo: make a hook that makes this cleaner instead of doing everything here
 	local info = {
 		name = character.name,
-		model = character.model,
+		model = character.data["powerArmor"] or character.model,
 		skin = character.skin,
 		gender = character.gender,
 		permakilled = character.data["permakilled"],

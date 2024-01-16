@@ -366,6 +366,10 @@ local ITEM = item.New(nil, true);
 						end;
 					end;
 					
+					if clothesItem and clothesItem ~= self then
+						Clockwork.equipment:UnequipItem(player, clothesItem);
+					end
+					
 					self:OnWear(player);
 					Clockwork.equipment:EquipItem(player, self, "Armor");
 					

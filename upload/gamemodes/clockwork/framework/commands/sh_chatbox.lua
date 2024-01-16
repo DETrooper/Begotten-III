@@ -299,3 +299,26 @@ function COMMAND:OnRun(player, arguments)
 end;
 
 COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("AdminReply");
+COMMAND.tip = "Send a message to a player as an adminhelp reply.";
+COMMAND.text = "<string Name> <string Message>";
+COMMAND.flags = CMD_DEFAULT;
+COMMAND.access = "s";
+COMMAND.arguments = 2;
+
+-- Called when the command has been run.
+function COMMAND:OnRun(player, arguments)
+	local target = Clockwork.player:FindByID(arguments[1]);
+
+	if (target) then
+		local message = string.upper("\""..table.concat(arguments, " ", 2).."\"");
+		
+		Clockwork.player:Notify(target, "[ADMINHELP RESPONSE] "..message);
+		Clockwork.player:Notify(GetAdmins(), "[ADMINHELP RESPONSE] "..player:Name().." to "..target:Name()..": "..message);
+	else
+		Schema:EasyText(player, "grey", "["..self.name.."] "..arguments[1].." is not a valid player!");
+	end;
+end;
+
+COMMAND:Register();

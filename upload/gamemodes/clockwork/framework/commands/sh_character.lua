@@ -263,7 +263,7 @@ local COMMAND = Clockwork.command:New("CharTransferFaction");
 	COMMAND.access = "o";
 	COMMAND.arguments = 2;
 	COMMAND.optionalArguments = 1;
-	COMMAND.alias = {"TransferFaction", "PlyTransferFaction"};
+	COMMAND.alias = {"TransferFaction", "PlyTransferFaction", "SetFaction", "CharSetFaction", "PlySetFaction"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -323,7 +323,7 @@ local COMMAND = Clockwork.command:New("CharTransferSubfaction");
 	COMMAND.access = "o";
 	COMMAND.arguments = 2;
 	COMMAND.optionalArguments = 1;
-	COMMAND.alias = {"TransferSubfaction", "PlyTransferSubfaction"};
+	COMMAND.alias = {"TransferSubfaction", "PlyTransferSubfaction", "SetSubfaction", "CharSetSubfaction", "PlySetSubfaction"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

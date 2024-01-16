@@ -136,6 +136,8 @@ function cwSailing:SpawnLongship(owner, location, itemTable)
 					longshipEnt:SetSkin(1);
 				end
 				
+				longshipEnt:EmitSound("ambient/water/wave"..math.random(1, 6)..".wav");
+				
 				longshipEnt.destination = nil;
 				longshipEnt.health = longshipHealth;
 				longshipEnt.location = location;
@@ -217,6 +219,9 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 			Schema:EasyText(longshipEnt.owner, "icon16/anchor.png", "cornflowerblue", "Setting sail in "..tostring(sail_time).." seconds!");
 			Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", longshipEnt.owner:Name().."'s longship is setting sail to destination "..destination.."!");
 			
+			longshipEnt:EmitSound("ambient/machines/thumper_dust.wav");
+			Clockwork.chatBox:AddInTargetRadius(longshipEnt.owner, "me", "prepares to set sail for "..tostring(SHIP_DESTINATIONS[destination].name)..".", longshipEnt.owner:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+			
 			longshipEnt:SetBodygroup(0, 0);
 			
 			timer.Create("SailTimer_"..tostring(longshipEnt:EntIndex()), sail_time, 1, function()
@@ -250,6 +255,7 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 		end
 	else
 		longshipEnt.destination = destination;
+		longshipEnt:EmitSound("ambient/machines/thumper_dust.wav");
 		
 		local sail_time = 30;
 		local sea_zone = self:DetermineSeaZone(longshipEnt, destination);

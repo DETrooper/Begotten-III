@@ -116,7 +116,7 @@ local COMMAND = Clockwork.command:New("CharTransferFaith");
 	COMMAND.text = "<string Name> <string Faith>";
 	COMMAND.access = "o";
 	COMMAND.arguments = 2;
-	COMMAND.alias = {"TransferFaith", "PlyTransferFaith"};
+	COMMAND.alias = {"TransferFaith", "PlyTransferFaith", "SetFaith", "CharSetFaith", "PlySetFaith"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

@@ -49,6 +49,15 @@ if (Schema.MapLocations) then
 	COMMAND:Register()
 end
 
+local COMMAND = Clockwork.command:New("Discord");
+	COMMAND.tip = "Open a redirect to the server's Discord.";
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		player:SendLua([[gui.OpenURL(config.Get("discord_url"):Get())]]);
+	end;
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("Enlist")
 	COMMAND.tip = "Enlist a character into the ranks of the Gatekeepers. This will only work if you are an Emissary or higher."
 	COMMAND.text = "[string Subfaction]"

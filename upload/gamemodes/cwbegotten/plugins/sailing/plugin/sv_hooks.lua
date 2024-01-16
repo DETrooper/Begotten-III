@@ -66,6 +66,24 @@ function cwSailing:PlayerUseUnknownItemFunction(player, itemTable, itemFunction)
 	end;
 end;
 
+-- Called when a player presses a key.
+function cwSailing:KeyPress(player, key)
+	if (key == IN_ATTACK) then
+		local action = Clockwork.player:GetAction(player);
+		
+		if (action == "burn_longship" or action == "extinguish_longship" or action == "repair_longship") then
+			Clockwork.player:SetAction(player, nil);
+		end
+	end;
+end;
+
+function cwSailing:ModifyPlayerSpeed(player, infoTable, action)
+	if (action == "burn_longship" or action == "extinguish_longship" or action == "repair_longship") then
+		infoTable.runSpeed = infoTable.walkSpeed * 0.1;
+		infoTable.walkSpeed = infoTable.walkSpeed * 0.1;
+	end
+end
+
 function cwSailing:SetupMove(player, moveData)
 	if (player.disableMovement) then
 		moveData:SetVelocity(Vector(0, 0, 0));

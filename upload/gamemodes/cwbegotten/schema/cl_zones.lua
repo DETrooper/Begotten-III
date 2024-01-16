@@ -799,6 +799,16 @@ function zones:PostDrawTranslucentRenderables(bDrawDepth, bDrawSkybox)
 	end
 end
 
+function zones:ModifyTargetIDDistance(fadeDistance)
+	local fogEnd = self.currentFogEnd;
+	
+	if fogEnd then
+		if fadeDistance > fogEnd then
+			return fogEnd;
+		end
+	end
+end
+
 -- Called just after the date & time is drawn.
 function zones:PostDrawDateTime(info)
 	if (!self:Enabled() or !self:DebugEnabled()) then

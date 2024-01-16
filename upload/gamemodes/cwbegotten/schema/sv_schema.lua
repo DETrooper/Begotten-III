@@ -339,6 +339,7 @@ Schema.doors = {
 Clockwork.config:Add("gore_charlimit", 1, true);
 Clockwork.config:Add("satanist_charlimit", 1, true);
 Clockwork.config:Add("enable_charlimit", true, true);
+Clockwork.config:Add("discord_url", "https://discord.com/invite/zJnWjcW", true);
 
 Clockwork.config:Add("intro_text_small", "fuck you", true);
 Clockwork.config:Add("intro_text_big", "fuck you", true);

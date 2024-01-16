@@ -1131,7 +1131,9 @@ function Schema:Tick()
 		RunConsoleCommand("mat_motion_blur_enabled", "1");
 	end
 	
+	RunConsoleCommand("r_3dsky", "1");
 	RunConsoleCommand("r_pixelfog", "1");
+	RunConsoleCommand("mat_monitorgamma_tv_enabled", "0");
 
 	-- Something is fucked with our SWEPs that is causing clientside models to build up and tank FPS.
 	if !self.nextClientsideModelCheck or curTime >= self.nextClientsideModelCheck then

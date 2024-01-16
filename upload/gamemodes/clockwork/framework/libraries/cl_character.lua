@@ -316,6 +316,7 @@ function Clockwork.character:RefreshPanelList()
 		for i = 1, #factions do
 			for k, v in pairs(factions[i].characters) do
 				if !v.permakilled then
+					-- todo: make a hook that makes this cleaner instead of doing everything here
 					panel.customData = {
 						name = v.name,
 						model = v.model,

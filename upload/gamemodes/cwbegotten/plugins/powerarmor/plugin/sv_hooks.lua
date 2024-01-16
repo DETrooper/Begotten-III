@@ -72,23 +72,44 @@ function cwPowerArmor:KeyRelease(player, key)
 	end;
 end;
 
-function cwPowerArmor:PostPlayerSpawn(player)
-	player.wearingPowerArmor = false;
-	
+function cwPowerArmor:PostPlayerSpawn(player)	
 	if (player:HasInitialized()) then
-		player:SetSharedVar("battery", math.Round(player:GetCharacterData("battery", 0), 0));
+		local powerArmor = player:GetCharacterData("powerArmor");
+
+		if powerArmor then
+			local clothesItem = player:GetClothesEquipped();
+			
+			if clothesItem then
+				clothesItem:OnPlayerUnequipped(player, nil, true);
+			end;
+			
+			local helmetItem = player:GetHelmetEquipped();
+			
+			if helmetItem then
+				helmetItem:OnPlayerUnequipped(player);
+			end
+		
+			player.wearingPowerArmor = true;
+			player:SetModel(powerArmor);
+			player.nextChargeDepleted = CurTime() + 120;
+			player:SetSharedVar("battery", math.Round(player:GetCharacterData("battery", 0), 0));
+		elseif player.wearingPowerArmor then
+			player.wearingPowerArmor = false;
+		end
 	end
 end
 
 function cwPowerArmor:PostPlayerDeath(player)
 	if not player.opponent then
-		local ragCorpse = player:GetRagdollEntity();
-
 		if (player.wearingPowerArmor) then
+			local ragCorpse = player:GetRagdollEntity();
+			
 			Clockwork.plugin:Call("BuildUp", ragCorpse, true);
 			
+			player.wearingPowerArmor = false;
 			player:SetCharacterData("battery", 0);
 			player:SetSharedVar("battery", 0);
+			player:SetCharacterData("powerArmor", nil);
 		end;
 	end;
 end;
