@@ -2,7 +2,7 @@
 	Begotten III: Jesus Wept
 --]]
 
-local longshipXP = 1000;
+local longshipXP = 300;
 
 function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 	if (entity:GetClass() == "cw_longship") then
