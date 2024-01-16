@@ -4558,8 +4558,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.requiredFaiths = {"Faith of the Family"};
 		RECIPE.requirements = {
-			["shagalaxian_steel_ingot"] = {amount = 3},
-			["iron_ingot"] = {amount = 5},
+			["shagalaxian_steel_ingot"] = {amount = 4},
 			["vengeful_sigil_stone"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -4570,7 +4569,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 125;
+		RECIPE.experience = 130;
 		
 		function RECIPE:OnCraft(player)
 		end;
