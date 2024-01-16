@@ -1,6 +1,10 @@
 <p align="center"><img src="images/BegottenIIILogo.png"/></p>
 
-<i>A post-apocalyptic roleplay gamemode for Garry's Mod based on a heavily modified Clockwork framework, run officially from April 2021 to September 2021. This version contains minor improvements and bugfixes since that date, which were intended to be incorporated into Begotten III VR and Begotten IV, but is otherwise mostly the same gamemode as during the server finale.</i>
+<i>A post-apocalyptic roleplay gamemode for Garry's Mod based on a heavily modified Clockwork framework, run officially from April 2021 to September 2021. Although starting as mostly the same gamemode as during the server finale, this version of Begotten III has received numerous updates and improvements.</i>
+
+<b>Recommended Players: 60-80</b>
+
+<b>Recommended Tickrate: 22-33</b>
 
 Begotten III is licenced under [Creative Commons Attribution-NonCommercial 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/deed.en), so you may not use it for commercial purposes.
 
