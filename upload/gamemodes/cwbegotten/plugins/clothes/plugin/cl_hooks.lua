@@ -81,9 +81,7 @@ end
 
 function PLUGIN:PostPlayerDraw(player, flags)
 	if string.sub(player:GetModel(), 1, 21) == "models/begotten/heads" then
-		local shouldBeVisible = player:Alive() and player:GetMoveType() ~= MOVETYPE_OBSERVER and player:GetColor().a > 0;
-		
-		if shouldBeVisible then
+		if player:Alive() and player:GetMoveType() ~= MOVETYPE_OBSERVER and player:GetColor().a > 0 then
 			local plyTab = player:GetTable();
 			local clothes = player:GetClothesEquipped();
 			local model;

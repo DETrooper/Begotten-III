@@ -7,9 +7,6 @@
 
 DEFINE_BASECLASS("gamemode_base")
 
-entsGetAllThisPlayerTick = {};
-playerGetAllThisPlayerTick = {};
-
 --[[
 	@codebase Server
 	@details Called when the server has initialized.
@@ -1689,58 +1686,31 @@ do
 		local curTime = CurTime()
 
 		if (curTime >= cwNextThink) then
-			local players = _player.GetAll();
-
-			entsGetAllThisPlayerTick = {};
-			playerGetAllThisPlayerTick = {};
-			
-			local allEnts = ents.GetAll();
-			local badMovetypes = {
-				[MOVETYPE_NOCLIP] = true,
-				[MOVETYPE_OBSERVER] = true,
-			}
-			
-			for i = 1, #allEnts do
-				local entity = allEnts[i];
-				local class = entity:GetClass();
-				local isPlayer = tobool(class == "Player");
-					
-				entsGetAllThisPlayerTick[i] = {entity = entity, class = class, bIsPlayer = bIsPlayer, position = entity:GetPos(), bIsNPC = (entity:IsNPC() or entity:IsNextBot())}
-			end;
-			
-			for i = 1, _player.GetCount() do
-				local v = players[i];
-				local position = v:GetPos();
-				local alive = v:Alive();
-					
-				playerGetAllThisPlayerTick[i] = {player = v, alive = alive, position = position};
-			end;
-
-			for k, v in pairs(players) do
-				local initialized = v:HasInitialized();
+			for i, player in ipairs(_player.GetAll()) do
+				local initialized = player:HasInitialized();
 
 				if (initialized) then
-					local alive = v:Alive();
-					local infoTable = v.cwInfoTable
-					local plyTab = v:GetTable();
+					local alive = player:Alive();
+					local plyTab = player:GetTable();
+					local infoTable = plyTab.cwInfoTable;
 
 					infoTable.inventoryWeight = defaultInvWeight
 					infoTable.inventorySpace = defaultInvSpace
-					infoTable.crouchedSpeed = v.cwCrouchedSpeed
-					infoTable.jumpPower = v.cwJumpPower
-					infoTable.walkSpeed = v.cwWalkSpeed
-					infoTable.isRunning = v:IsRunning()
-					infoTable.isJumping = v:IsJumping()
-					infoTable.runSpeed = v.cwRunSpeed
+					infoTable.crouchedSpeed = plyTab.cwCrouchedSpeed
+					infoTable.jumpPower = plyTab.cwJumpPower
+					infoTable.walkSpeed = plyTab.cwWalkSpeed
+					infoTable.isRunning = player:IsRunning()
+					infoTable.isJumping = player:IsJumping()
+					infoTable.runSpeed = plyTab.cwRunSpeed
 
-					hook.Run("PlayerThink", v, curTime, infoTable, alive, initialized, plyTab)
+					hook.Run("PlayerThink", player, curTime, infoTable, alive, initialized, plyTab)
 
 					if (curTime >= cwNextSecond) then
-						hook.Run("OnePlayerSecond", v, curTime, infoTable, alive, initialized, plyTab)
+						hook.Run("OnePlayerSecond", player, curTime, infoTable, alive, initialized, plyTab)
 					end
 					
 					if (curTime >= cwNextHalfSecond) then
-						hook.Run("OnePlayerHalfSecond", v, curTime, infoTable, alive, initialized, plyTab)
+						hook.Run("OnePlayerHalfSecond", player, curTime, infoTable, alive, initialized, plyTab)
 					end
 				end
 			end

@@ -4,13 +4,15 @@
 
 netstream.Hook("SalesmanDone", function(player, data)
 	if (IsValid(data) and data:GetClass() == "cw_salesman") then
-		data:TalkToPlayer(player, data.cwTextTab.doneBusiness, "Thanks for doing business, see you soon!")
+		if (player:GetPos():Distance(data:GetPos()) < 256) then
+			data:TalkToPlayer(player, data.cwTextTab.doneBusiness, "Thanks for doing business, see you soon!")
+		end
 	end
 end)
 
 netstream.Hook("Salesmenu", function(player, data)
-	if (data.entity:GetClass() == "cw_salesman") then
-		if (player:GetPos():Distance(data.entity:GetPos()) < 196) then
+	if IsValid(data.entity) and (data.entity:GetClass() == "cw_salesman") then
+		if (player:GetPos():Distance(data.entity:GetPos()) < 196) and !player:IsRagdolled() and player:GetNetVar("tied") == 0 then
 			local itemTable = item.FindByID(data.uniqueID)
 			local itemUniqueID = itemTable.uniqueID
 

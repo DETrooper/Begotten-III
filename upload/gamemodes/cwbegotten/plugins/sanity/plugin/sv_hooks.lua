@@ -2,13 +2,9 @@
 	Begotten III: Jesus Wept
 --]]
 
-local requiredDistance = (256 * 256);
+local requiredDistance = 256;
 local sanity_interval = 60;
 local map = game.GetMap();
-
-cwSanity.DrainEntities = {
-	--["cw_example"] = 1;
-}
 
 local sanitySafezones = {
 	["gore"] = true,
@@ -17,9 +13,11 @@ local sanitySafezones = {
 }
 
 local sanitySubSafezones = {
-	["wasteland"] = {
-		{pos1 = Vector(-13813, -13472, -1546), pos2 = Vector(-13048, -12315, -1133)}, -- Castle 
-		{pos1 = Vector(11278, -11108, -835), pos2 = Vector(14556, -13878, -1798)}, -- Caves
+	["rp_begotten3"] = {
+		["wasteland"] = {
+			{pos1 = Vector(-13813, -13472, -1546), pos2 = Vector(-13048, -12315, -1133)}, -- Castle 
+			{pos1 = Vector(11278, -11108, -835), pos2 = Vector(14556, -13878, -1798)}, -- Caves
+		},
 	},
 };
 
@@ -72,40 +70,16 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 		
 		local lastZone = player:GetCharacterData("LastZone");
 		
-		if !lastZone or string.find(lastZone, "sea") then
+		if !lastZone or string.find(lastZone, "sea") or (lastZone == "hell" and self.hellZoneSanityDisabled) or (player:GetSubfaction() == "Rekh-khet-sa") then
 			plyTab.nextSanityDecay = curTime + sanity_interval;
 		
 			return;
 		end
-		
-		if (lastZone == "hell" and self.hellZoneSanityDisabled) then
-			plyTab.nextSanityDecay = curTime + sanity_interval;
-			
-			return;
-		end;
-		
-		local subfaction = player:GetSubfaction();
-		
-		if (subfaction == "Rekh-khet-sa") then
-			plyTab.nextSanityDecay = curTime + sanity_interval;
-			
-			return;
-		end;
 
 		local playerPos = player:GetPos();
-		local drainEntities = self.DrainEntities;
 
-		for i = 1, #entsGetAllThisPlayerTick do
-			local entTab = entsGetAllThisPlayerTick[i];
-			local entity = entTab.entity;
-			local position = entTab.position;
-			local distToSqr = position:DistToSqr(playerPos);
-
-			if (distToSqr > requiredDistance) then
-				continue
-			end;
-			
-			local bIsPlayer = entTab.bIsPlayer;
+		for i, entity in ipairs(ents.FindInSphere(playerPos, requiredDistance)) do
+			local bIsPlayer = entity:IsPlayer();
 			
 			if (bIsPlayer and entity != player) then
 				if !entity:Alive() then
@@ -117,42 +91,32 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 					local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 					local kinisgerOverride = entity:GetSharedVar("kinisgerOverride");
 					local factionTable = Clockwork.faction:FindByID(entityFaction);
-					local alliedFactions = {};
 					
-					if factionTable.alliedfactions then
-						alliedFactions = table.Copy(factionTable.alliedfactions);
-					end
-					
-					-- Check faction twice in case player is disguised.
-					if !kinisgerOverride and entityFaction ~= playerFaction and entityFaction ~= player:GetFaction() and !table.HasValue(alliedFactions, playerFaction) then
-						sanityDecay = sanityDecay - 1.5;
+					if factionTable then
+						local alliedFactions = factionTable.alliedfactions or {};
+
+						-- Check faction twice in case player is disguised.
+						if !kinisgerOverride and entityFaction ~= playerFaction and entityFaction ~= player:GetFaction() and !table.HasValue(alliedFactions, playerFaction) then
+							sanityDecay = sanityDecay - 1.5;
+						end
 					end
 				end
 			end;
 			
-			local class = entTab.class;
+			local class = entity:GetClass();
 			local bRagdoll = (class == "prop_ragdoll");
-			local bIsNPC = entTab.bIsNPC;
-			local toothboy = entity == toothBoy;
 
-			if (drainEntities[class] or bRagdoll or bIsNPC or toothboy) then
-				local entity = entTab.entity;
-				local isOnFire = entity:IsOnFire();
-				
-				if (!entity or !IsValid(entity) or entity:IsWorld()) then
-					continue;
-				end;
-				
-				if (drainEntities[class]) then
-					sanityDecay = sanityDecay + drainEntities[class]; -- sanity loss for any other classes
-				elseif (bRagdoll) then
+			if (bRagdoll) then
+				if (bRagdoll) then
+					local isOnFire = entity:IsOnFire();
+					
 					if (isOnFire) then
-						sanityDecay = sanityDecay - 1; -- sanity loss from burning players and corpses
+						sanityDecay = sanityDecay - 1; -- sanity loss from burning corpses
 					end;
-				elseif (toothboy) then
-					sanityDecay = sanityDecay - 1; -- sanity loss from toothboy
 				end;
 			elseif (!bIsPlayer and !bRagdoll) then
+				local isOnFire = entity:IsOnFire();
+			
 				if (isOnFire or class == "env_fire") then
 					sanityDecay = sanityDecay + 2; -- sanity gain from fires etc
 				end;
@@ -187,11 +151,11 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 			end
 		end
 		
-		if sanitySubSafezones[lastZone] then
-			for i = 1, #sanitySubSafezones[lastZone] do
-				local subSafezoneTab = sanitySubSafezones[lastZone][i];
-				
-				if playerPos:WithinAABox(subSafezoneTab.pos2, subSafezoneTab.pos1) then
+		local subSafezones = sanitySubSafezones[map];
+		
+		if subSafezones and subSafezones[lastZone] then
+			for i, v in ipairs(subSafezones[lastZone]) do
+				if playerPos:WithinAABox(v.pos2, v.pos1) then
 					sanityDecay = sanityDecay + 3.5;
 
 					break;

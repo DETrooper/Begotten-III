@@ -197,6 +197,27 @@ function PANEL:Think()
 
 	self:SetSize(scrW * 0.5, scrH * 0.75)
 	self:SetPos((scrW / 2) - (self:GetWide() / 2), (scrH / 2) - (self:GetTall() / 2))
+	
+	if !IsValid(Clockwork.salesmenu.entity) or Clockwork.Client:GetPos():Distance(Clockwork.salesmenu.entity:GetPos()) >= 196 or Clockwork.Client:IsRagdolled() or Clockwork.Client:GetNetVar("tied") != 0 then
+		CloseDermaMenus()
+		self:Close() self:Remove()
+
+		netstream.Start("SalesmanDone", Clockwork.salesmenu.entity)
+			Clockwork.salesmenu.buyInShipments = nil
+			Clockwork.salesmenu.priceScale = nil
+			Clockwork.salesmenu.factions = nil
+			Clockwork.salesmenu.buyRate = nil
+			Clockwork.salesmenu.classes = nil
+			Clockwork.salesmenu.entity = nil
+			Clockwork.salesmenu.stock = nil
+			Clockwork.salesmenu.sells = nil
+			Clockwork.salesmenu.cash = nil
+			Clockwork.salesmenu.text = nil
+			Clockwork.salesmenu.buys = nil
+			Clockwork.salesmenu.name = nil
+			Clockwork.salesmenu.flags = nil
+		gui.EnableScreenClicker(false)
+	end
 end
 
 -- Called when the layout should be performed.

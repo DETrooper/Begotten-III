@@ -503,7 +503,7 @@ if SERVER then
 	end);
 else
 	-- A function to get the entity's real position.
-	local function GetRealPosition(entity, player, itemTable, bOffhand)
+	local function GetRealPosition(entity, player, ragdollEntity, itemTable, bOffhand)
 		local attachmentBone = itemTable.attachmentBone; 
 		local offsetVector = itemTable.attachmentOffsetVector or Vector(0, 0, 0);
 		local offsetAngle = itemTable.attachmentOffsetAngles or Angle(0, 0, 0);
@@ -530,7 +530,6 @@ else
 			end
 		
 			local position, angles = player:GetBonePosition(bone)
-			local ragdollEntity = player:GetRagdollEntity()
 
 			if IsValid(ragdollEntity) then
 				position, angles = ragdollEntity:GetBonePosition(bone)
@@ -561,7 +560,10 @@ else
 	hook.Add("PostPlayerDraw", "PostPlayerDrawEquipment", function(player)
 		if player:Alive() and player:GetMoveType() ~= MOVETYPE_OBSERVER and player:GetColor().a > 0 then
 			local activeWeapon = player:GetActiveWeapon();
+			local activeOffhand;
+			local activeShield;
 			local plyTab = player:GetTable();
+			local ragdollEntity = player:GetRagdollEntity();
 			
 			if !plyTab.equipmentSlots then
 				plyTab.equipmentSlots = {};
@@ -570,20 +572,26 @@ else
 			if !plyTab.equipmentSlotModels then
 				plyTab.equipmentSlotModels = {};
 			end
+			
+			if IsValid(activeWeapon) then
+				activeOffhand = activeWeapon:GetNWString("activeOffhand");
+				activeShield = activeWeapon:GetNWString("activeShield");
+			end
 
 			for slot, itemTable in pairs(plyTab.equipmentSlots) do
 				if itemTable and itemTable.isAttachment then
-					local attachmentVisible = true;
 					local equipmentModel = plyTab.equipmentSlotModels[itemTable.itemID];
+					
+					if activeWeapon:GetClass() == itemTable.weaponClass or activeShield == itemTable.uniqueID or activeOffhand == itemTable.uniqueID then if IsValid(equipmentModel) then equipmentModel:Remove() end continue end;
 				
 					if !IsValid(equipmentModel) then
 						equipmentModel = ClientsideModel(itemTable.model, RENDERGROUP_BOTH);
 						
-						local modelScale = itemTable.attachmentModelScale or Vector(1, 1, 1);
+						--[[local modelScale = itemTable.attachmentModelScale or Vector(1, 1, 1);
 
 						if (itemTable.GetAttachmentModelScale) then
 							modelScale = itemTable:GetAttachmentModelScale(player, equipmentModel) or modelScale;
-						end
+						end]]--
 						
 						if itemTable.attachmentSkin then
 							equipmentModel:SetSkin(itemTable.attachmentSkin);
@@ -605,33 +613,19 @@ else
 							equipmentModel:SetBodygroup(2, itemTable.bodygroup3 - 1);
 						end
 
-						local entityMatrix = Matrix();
+						--[[local entityMatrix = Matrix();
 						
 						entityMatrix:Scale(modelScale);
-						equipmentModel:EnableMatrix("RenderMultiply", entityMatrix);
+						equipmentModel:EnableMatrix("RenderMultiply", entityMatrix);]]--
 						
 						plyTab.equipmentSlotModels[itemTable.itemID] = equipmentModel;
 					end
 					
-					local position, angles = GetRealPosition(equipmentModel, player, itemTable, string.find(slot, "Offhand"));
+					local position, angles = GetRealPosition(equipmentModel, player, ragdollEntity, itemTable, string.find(slot, "Offhand"));
 
 					if (position and angles) then
 						equipmentModel:SetPos(position);
 						equipmentModel:SetAngles(angles);
-					end
-					
-					if attachmentVisible then
-						if IsValid(activeWeapon) then
-							if activeWeapon:GetClass() == itemTable.weaponClass or activeWeapon:GetNWString("activeShield") == itemTable.uniqueID or activeWeapon:GetNWString("activeOffhand") == itemTable.uniqueID then
-								attachmentVisible = false;
-							end
-						end
-					end
-					
-					if !attachmentVisible then
-						equipmentModel:SetNoDraw(true);
-					elseif equipmentModel:GetNoDraw() then
-						equipmentModel:SetNoDraw(false);
 					end
 				end
 			end
