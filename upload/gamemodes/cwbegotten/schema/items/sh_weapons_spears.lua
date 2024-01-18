@@ -39,6 +39,26 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Iron Short Spear";
+	ITEM.model = "models/witcher2soldiers/tw2_shortspear.mdl";
+	ITEM.weight = 1.3;
+	ITEM.uniqueID = "begotten_spear_ironshortspear";
+	ITEM.category = "Melee";
+	ITEM.description = "An iron spear with a shorter shaft for faster and more personal killing.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/iron_shortspear.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.hasMinimumRange = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 0, 279.45);
+	ITEM.attachmentOffsetVector = Vector(-7.78, 3, -45.97);
+	ITEM.canUseShields = true;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood", "wood"}}; -- use "breakdown" for other type
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Pitchfork";
 	ITEM.model = "models/begotten/weapons/serfpitchfork.mdl";
 	ITEM.weight = 1.5;

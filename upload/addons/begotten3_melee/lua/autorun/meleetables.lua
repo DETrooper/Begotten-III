@@ -949,24 +949,24 @@ AttackTables.PikeAttackTable = {
 	["delay"] = 1.3,
 	["striketime"] = 0.55,
 	["meleearc"] = 15,
-	["meleerange"] = 1500,
+	["meleerange"] = 1900,
 	["punchstrength"] = Angle(1,3,1),
 };
 
 AttackTables.WarSpearAttackTable = {
-	["primarydamage"] = 48,
+	["primarydamage"] = 50,
 	["dmgtype"] = 16,
 	["attacktype"] = "polearm_swing",
 	["canaltattack"] = true,
 	["altattackdamagemodifier"] = 0.3,
 	["altattackpoisedamagemodifier"] = 2.5,
 	["altmeleearc"] = 45,
-	["armorpiercing"] = 40,
+	["armorpiercing"] = 45,
 	["altarmorpiercing"] = 60,
-	["poisedamage"] = 10,
+	["poisedamage"] = 15,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 4,
-	["delay"] = 1.4,
+	["delay"] = 1.25,
 	["striketime"] = 0.55,
 	["meleearc"] = 15,
 	["meleerange"] = 1500,
@@ -1305,7 +1305,7 @@ AttackTables.HarpoonAttackTable = {
 };
 
 AttackTables.IronSpearAttackTable = {
-	["primarydamage"] = 40,
+	["primarydamage"] = 45,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1323,8 +1323,27 @@ AttackTables.IronSpearAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
+AttackTables.IronShortSpearAttackTable = {
+	["primarydamage"] = 40,
+	["dmgtype"] = 16,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = false,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 40,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 5,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 3,
+	["delay"] = 0.8,
+	["striketime"] = 0.35,
+	["meleearc"] = 15,
+	["meleerange"] = 920,
+	["punchstrength"] = Angle(0,1,0),
+};
+
 AttackTables.VoltspearAttackTable = {
-	["primarydamage"] = 35,
+	["primarydamage"] = 42,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1343,7 +1362,7 @@ AttackTables.VoltspearAttackTable = {
 };
 
 AttackTables.SatanicSpearAttackTable = {
-	["primarydamage"] = 47,
+	["primarydamage"] = 52,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1362,7 +1381,7 @@ AttackTables.SatanicSpearAttackTable = {
 };
 
 AttackTables.ScrapSpearAttackTable = {
-	["primarydamage"] = 30,
+	["primarydamage"] = 32,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1381,7 +1400,7 @@ AttackTables.ScrapSpearAttackTable = {
 };
 
 AttackTables.WingedSpearAttackTable = {
-	["primarydamage"] = 45,
+	["primarydamage"] = 50,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -3047,6 +3066,7 @@ AddTable("SteelClawsAttackTable", AttackTables.SteelClawsAttackTable)
 AddTable("IronDaggerAttackTable", AttackTables.IronDaggerAttackTable) 
 AddTable("HarpoonAttackTable", AttackTables.HarpoonAttackTable) 
 AddTable("IronSpearAttackTable", AttackTables.IronSpearAttackTable) 
+AddTable("IronShortSpearAttackTable", AttackTables.IronShortSpearAttackTable) 
 AddTable("VoltspearAttackTable", AttackTables.VoltspearAttackTable) 
 AddTable("SatanicSpearAttackTable", AttackTables.SatanicSpearAttackTable) 
 AddTable("ScrapSpearAttackTable", AttackTables.ScrapSpearAttackTable) 
@@ -3636,6 +3656,24 @@ BlockTables.ScrapSpearBlockTable = {
 	["raisespeed"] = 1.25,
 	["instantraise"] = false,
 	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
+BlockTables.IronShortSpearBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "GlassImpact",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, 0, 50)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 5,
+	["raisespeed"] = 1.25,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.25,
 	["parrytakestamina"] = 15,
 	["canparry"] = true,
 	["candeflect"] = true,
@@ -5451,6 +5489,7 @@ AddTable("IronSpearBlockTable", BlockTables.IronSpearBlockTable)
 AddTable("VoltspearBlockTable", BlockTables.VoltspearBlockTable) 
 AddTable("SatanicSpearBlockTable", BlockTables.SatanicSpearBlockTable) 
 AddTable("ScrapSpearBlockTable", BlockTables.ScrapSpearBlockTable) 
+AddTable("IronShortSpearBlockTable", BlockTables.IronShortSpearBlockTable) 
 AddTable("WingedSpearBlockTable", BlockTables.WingedSpearBlockTable) 
 AddTable("WarScytheBlockTable", BlockTables.WarScytheBlockTable)  
 AddTable("GlazicusBlockTable", BlockTables.GlazicusBlockTable)  
