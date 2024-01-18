@@ -143,7 +143,7 @@ end
 
   function ENT:Hit2()
       self:Attack({
-        damage = 10,
+        damage = 14,
         range = 60,
         delay = 0,
         type = DMG_SLASH,

@@ -16,7 +16,7 @@ ENT.OnDamageSounds = {"bear/attack1.wav"}
 --ENT.OnIdleSounds = {"bear/idle1.wav", "bear/idle2.wav"}
 
 -- Stats --
-ENT.ArmorPiercing = 100;
+ENT.ArmorPiercing = 80;
 ENT.SpawnHealth = 700;
 ENT.StaminaDamage = 75;
 ENT.XPValue = 250;

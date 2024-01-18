@@ -1531,7 +1531,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 	RITUAL.description = "Summon a spirit leopard from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. Incurs 15 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
-	RITUAL.requirements = {"xolotl_catalyst", "familial_catalyst", "xolotl_catalyst"};
+	RITUAL.requirements = {"xolotl_catalyst", "familial_catalyst", "pantheistic_catalyst"};
 	RITUAL.corruptionCost = 15;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 50;
