@@ -16,8 +16,9 @@ ENT.OnDamageSounds = {"bear/attack1.wav"}
 --ENT.OnIdleSounds = {"bear/idle1.wav", "bear/idle2.wav"}
 
 -- Stats --
-ENT.ArmorPiercing = 100;
+ENT.ArmorPiercing = 80;
 ENT.SpawnHealth = 400;
+ENT.StaminaDamage = 55;
 ENT.XPValue = 150;
 
 -- Regen --
@@ -179,8 +180,8 @@ end
 
   function ENT:Attack1()
       self:Attack({
-        damage = 30,
-        range = 120,
+        damage = 50,
+        range = 225,
         delay = 0.6,
         type = DMG_SLASH,
         viewpunch = Angle(20, math.random(-10, 10), 0),

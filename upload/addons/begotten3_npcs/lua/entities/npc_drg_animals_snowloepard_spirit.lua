@@ -7,7 +7,7 @@ ENT.Category = "Begotten DRG"
 ENT.Models = {"models/animal_ragd/piratecat_leopard.mdl"}
 ENT.RagdollOnDeath = false
 ENT.CollisionBounds = Vector(15, 15, 40)
-ENT.BloodColor = BLOOD_COLOR_RED
+ENT.BloodColor = DONT_BLEED
 ENT.Frightening = false
 ENT.SightRange = 1000
 
@@ -18,6 +18,7 @@ ENT.OnDamageSounds = {"leopard/attack.wav"}
 -- Stats --
 ENT.ArmorPiercing = 75;
 ENT.SpawnHealth = 425;
+ENT.StaminaDamage = 60;
 ENT.XPValue = 250;
 
 -- Regen --

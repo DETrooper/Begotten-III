@@ -739,12 +739,10 @@ local function Guarding(ent, dmginfo)
 								PoiseTotal = math.min(blocktable["poiseresistance"] - attacker.enemypoise, 0);
 							end
 						elseif attacker:IsNPC() or attacker:IsNextBot() then
-							if attacker.Damage then
+							if attacker.StaminaDamage then
+								attacker.enemypoise = attacker.StaminaDamage;
+							elseif attacker.Damage then
 								attacker.enemypoise = (attacker.Damage * 2) or 20;
-							elseif attacker:GetClass() == "npc_animal_bear" then
-								attacker.enemypoise = 55;
-							elseif attacker:GetClass() == "npc_animal_cave_bear" then
-								attacker.enemypoise = 70;
 							else
 								attacker.enemypoise = 20;
 							end

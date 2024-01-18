@@ -18,6 +18,7 @@ ENT.OnIdleSounds = {"snake/idle1.wav"}
 -- Stats --
 ENT.ArmorPiercing = 50;
 ENT.SpawnHealth = 40
+ENT.StaminaDamage = 30;
 ENT.XPValue = 50;
 
 -- Regen --

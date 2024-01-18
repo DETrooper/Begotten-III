@@ -7,7 +7,7 @@ ENT.Category = "Begotten DRG"
 ENT.Models = {"models/animals/bear.mdl"}
 ENT.RagdollOnDeath = false
 ENT.CollisionBounds = Vector(18, 18, 65)
-ENT.BloodColor = BLOOD_COLOR_RED
+ENT.BloodColor = DONT_BLEED
 ENT.Frightening = false
 ENT.SightRange = 800
 
@@ -18,6 +18,7 @@ ENT.OnDamageSounds = {"bear/attack1.wav"}
 -- Stats --
 ENT.ArmorPiercing = 100;
 ENT.SpawnHealth = 700;
+ENT.StaminaDamage = 75;
 ENT.XPValue = 250;
 
 -- Regen --
@@ -219,8 +220,8 @@ end
 
   function ENT:Attack1()
       self:Attack({
-        damage = 70,
-        range = 120,
+        damage = 80,
+        range = 225,
         delay = 0.6,
         type = DMG_SLASH,
         viewpunch = Angle(20, math.random(-10, 10), 0),
