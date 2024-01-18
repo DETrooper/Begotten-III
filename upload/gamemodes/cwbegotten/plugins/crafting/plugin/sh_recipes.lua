@@ -3481,7 +3481,7 @@ RECIPE:Register()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 2},
-			["wood"] = {amount = 4},
+			["wood"] = {amount = 7},
 		};
 		RECIPE.result = {
 			["begotten_polearm_pike"] = {amount = 1},
