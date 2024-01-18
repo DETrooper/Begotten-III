@@ -3798,25 +3798,34 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 
-	local ITEM = Clockwork.item:New("weapon_base");
-	ITEM.name = "Iron Short Spear";
-	ITEM.model = "models/witcher2soldiers/tw2_shortspear.mdl";
-	ITEM.weight = 1.3;
-	ITEM.uniqueID = "begotten_spear_ironshortspear";
-	ITEM.category = "Melee";
-	ITEM.description = "An iron spear with a shorter shaft for faster and more personal killing.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/iron_shortspear.png"
-	ITEM.meleeWeapon = true;
-	ITEM.isAttachment = true;
-	ITEM.hasMinimumRange = true;
-	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
-	ITEM.attachmentOffsetAngles = Angle(90, 0, 279.45);
-	ITEM.attachmentOffsetVector = Vector(-7.78, 3, -45.97);
-	ITEM.canUseShields = true;
-	
-	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800};
-ITEM:Register();
+	RECIPE = cwRecipes.recipes:New("iron_spear_short");
+		RECIPE.name = "Iron Short Spear";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 1},
+			["wood"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["begotten_spear_ironshortspear"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 20;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("satanic_spear");
 		RECIPE.name = "Satanic Spear";
