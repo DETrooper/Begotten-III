@@ -363,7 +363,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 						playerName = "an unknown Goreic Warrior";
 					elseif playerFaction == "Children of Satan" then
 						playerName = "an unknown Child of Satan";
-					elseif playerFaction == "Gatekeeper" then
+					elseif playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" then
 						playerName = "an unknown Gatekeeper";
 					elseif playerFaction == "Holy Hierarchy" then
 						local playerSubfaction = player:GetSubfaction();
@@ -522,7 +522,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 								playerName = "an unknown Goreic Warrior";
 							elseif playerFaction == "Children of Satan" then
 								playerName = "an unknown Child of Satan";
-							elseif playerFaction == "Gatekeeper" then
+							elseif playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" then
 								playerName = "an unknown Gatekeeper";
 							elseif playerFaction == "Holy Hierarchy" then
 								local playerSubfaction = player:GetSubfaction();
@@ -776,6 +776,56 @@ function Schema:PlayerRadioUsed(player, text, listeners, eavesdroppers)
 	if (!table.IsEmpty(newEavesdroppers)) then
 		Clockwork.chatBox:Add(newEavesdroppers, player, "radio_eavesdrop", text);
 	end;
+end;
+
+-- Called when a player's character screen info should be adjusted.
+function Schema:PlayerAdjustCharacterScreenInfo(player, character, info)
+	if (character.data["permakilled"]) then
+		info.details = "This character is permanently killed.";
+	end;
+
+	if (character.data["customclass"]) then
+		info.customClass = character.data["customclass"];
+	end;
+	
+	if (character.data["rank"]) then
+		info.rank = character.data["rank"];
+	end
+	
+	if (character.data["rankOverride"]) then
+		info.rankOverride = character.data["rankOverride"];
+	end
+	
+	if character.data["kills"] then
+		info.kills = character.data["kills"];
+	end
+	
+	if character.data["kinisgerOverride"] then
+		info.kinisgerOverride = character.data["kinisgerOverride"];
+		info.kinisgerOverrideSubfaction = character.data["kinisgerOverrideSubfaction"];
+	end
+	
+	info.location = character.data["LastZone"] or "unknown";
+	info.faith = character.faith;
+	info.subfaith = character.subfaith;
+	
+	if character.data["clothes"] then
+		info.clothes = character.data["clothes"];
+	end
+	
+	if character.data["helmet"] then
+		info.helmet = character.data["helmet"];
+	end
+	
+	if character.data["shield"] then
+		info.shield = character.data["shield"];
+	end
+
+	info.necropolisData = character.data["necropolisData"];
+	
+	if character.subfaction == "Clan Grock" then
+		info.subfaith = "The Old Ways";
+	end
 end;
 
 -- Called when a player's radio info should be adjusted.
@@ -1175,21 +1225,6 @@ function Schema:PlayerCanUseCharacter(player, character)
 	if (character.data["permakilled"]) then
 		return character.name.." is permanently killed and cannot be used!";
 	end;
-end;
-
--- Called when a player's character screen info should be adjusted.
-function Schema:PlayerAdjustCharacterScreenInfo(player, character, info)
-	if (character.data["permakilled"]) then
-		info.details = "This character is permanently killed.";
-	end;
-
-	if (character.data["customclass"]) then
-		info.customClass = character.data["customclass"];
-	end;
-	
-	if (character.data["rank"]) then
-		info.rank = character.data["rank"];
-	end
 end;
 
 -- Called when a player attempts to use a tool.
@@ -1852,12 +1887,8 @@ function Schema:PlayerDoesRecognisePlayer(player, target, status, isAccurate, re
 
 	if targetFaction == "Holy Hierarchy" then
 		return true;
-	elseif targetFaction == "Gatekeeper" then
-		if playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" then
-			return true;
-		end
-	elseif targetFaction == "Pope Adyssa's Gatekeepers" then
-		if playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Holy Hierarchy" then
+	elseif targetFaction == "Gatekeeper" or targetFaction == "Pope Adyssa's Gatekeepers" then
+		if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Holy Hierarchy" then
 			return true;
 		end
 	elseif targetFaction == "Goreic Warrior" and playerFaction == "Goreic Warrior" then
@@ -1946,7 +1977,7 @@ function Schema:PlayerCanUseDoor(player, door)
 			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
 			
-			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" then
+			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Pope Adyssa's Gatekeepers" then
 				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 					player.nextDoorNotify = curTime + 1;
 				
@@ -1956,7 +1987,7 @@ function Schema:PlayerCanUseDoor(player, door)
 				return false;
 			end
 			
-			if faction == "Gatekeeper" then
+			if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
 				local rank = Schema.Ranks[faction][player:GetCharacterData("rank") or 1];
 				
 				if self:GetRankTier(faction, rank) < 3 then
@@ -1975,7 +2006,7 @@ function Schema:PlayerCanUseDoor(player, door)
 			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
 			
-			if faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" then
+			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Pope Adyssa's Gatekeepers" then
 				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 					player.nextDoorNotify = curTime + 1;
 				
@@ -2399,18 +2430,23 @@ function Schema:PlayerChangedRanks(player)
 		player:OverrideName(nil)
 		local name = player:Name();
 
-		for k, v in pairs (self.Ranks[faction]) do
-			if (string.find(name, v)) then
-				local newName = self:StripRank(name, v)
-				Clockwork.player:SetName(player, string.Trim(newName));
-			end;
-		end;
+		local factionTable = Clockwork.faction:FindByID(faction);
 		
-		local rank = math.Clamp(player:GetCharacterData("rank", 1), 1, #self.Ranks[faction]);
+		if factionTable and factionTable.GetName then
+			player:OverrideName(factionTable:GetName(player));
+		else
+			local rankOverride = player:GetCharacterData("rankOverride");
+			
+			if rankOverride then
+				player:OverrideName(rankOverride.." "..player:Name());
+			else
+				local rank = math.Clamp(player:GetCharacterData("rank", 1), 1, #self.Ranks[faction]);
 
-		if (rank and isnumber(rank) and self.Ranks[faction][rank]) then
-			player:OverrideName(self.Ranks[faction][rank].." "..player:Name());
-		end;
+				if (rank and isnumber(rank) and self.Ranks[faction][rank]) then
+					player:OverrideName(self.Ranks[faction][rank].." "..player:Name());
+				end;
+			end;
+		end
 	end;
 end;
 
@@ -2513,20 +2549,23 @@ function Schema:PlayerCharacterLoaded(player)
 		end;
 
 		local name = player:Name();
+		local factionTable = Clockwork.faction:FindByID(faction);
 		
-		for k, v in pairs (self.Ranks[faction]) do
-			if (string.find(name, v)) then
-				player:SetCharacterData("rank", k);
-				local newName = self:StripRank(name, v)
-				Clockwork.player:SetName(player, string.Trim(newName));
+		if factionTable and factionTable.GetName then
+			player:OverrideName(factionTable:GetName(player));
+		else
+			local rankOverride = player:GetCharacterData("rankOverride");
+			
+			if rankOverride then
+				player:OverrideName(rankOverride.." "..player:Name());
+			else
+				local rank = math.Clamp(player:GetCharacterData("rank", 1), 1, #self.Ranks[faction]);
+
+				if (rank and isnumber(rank) and self.Ranks[faction][rank]) then
+					player:OverrideName(self.Ranks[faction][rank].." "..player:Name());
+				end;
 			end;
-		end;
-		
-		local rank = math.Clamp(player:GetCharacterData("rank", 1), 1, #self.Ranks[faction]);
-		
-		if (rank and isnumber(rank) and self.Ranks[faction][rank]) then
-			player:OverrideName(self.Ranks[faction][rank].." "..player:Name());
-		end;
+		end
 	end;
 	
 	if faction == "Goreic Warrior" then
@@ -2642,7 +2681,11 @@ function Schema:PlayerCharacterInitialized(player)
 end;
 
 -- Called when a player's name has changed.
-function Schema:PlayerNameChanged(player, previousName, newName) end;
+function Schema:PlayerNameChanged(player, previousName, newName)
+	if Schema.Ranks and player:GetCharacterData("rank") then
+		hook.Run("PlayerChangedRanks", player);
+	end
+end;
 
 -- Called when a player deletes a character.
 function Schema:PlayerDeleteCharacter(player, character)
@@ -2898,7 +2941,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 				if IsValid(damageInfo:GetAttacker()) and damageInfo:GetAttacker():IsPlayer() then
 					local faction = damageInfo:GetAttacker():GetFaction();
 				
-					if faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" and !damageInfo:GetAttacker():IsAdmin() then
+					if faction ~= "Gatekeeper" and faction ~= "Pope Adyssa's Gatekeepers" and faction ~= "Holy Hierarchy" and !damageInfo:GetAttacker():IsAdmin() then
 						damageInfo:SetDamage(0);
 						return true;
 					end
@@ -2952,7 +2995,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 				if v == "glazic" then
 					local faction = entity:GetFaction();
 					
-					if faction == "Gatekeeper" or faction == "Holy Hierarchy" then
+					if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy" then
 						damageInfo:ScaleDamage(0.75);
 
 						break;
@@ -2966,7 +3009,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 				if v == "glazic" then
 					local faction = attacker:GetFaction();
 					
-					if faction == "Gatekeeper" or faction == "Holy Hierarchy" then
+					if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy" then
 						damageInfo:ScaleDamage(1.15);
 
 						break;

@@ -605,13 +605,7 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 		if player:GetSubfaith() == "Voltism" and cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
 			player:EmitSound(voltistSounds["pain"][math.random(1, #voltistSounds["pain"])], 90, 150);
 		else
-			if (faction == "Wanderer") then
-				if (gender == "his") then
-					player:EmitSound("voice/man3/man3_stun0"..math.random(1, 4)..".wav", 90, pitch)
-				else
-					player:EmitSound("voice/female2/female2_stun0"..math.random(1, 4)..".wav", 90, pitch)
-				end
-			elseif (faction == "Gatekeeper") then
+			if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers") then
 				if (gender == "his") then
 					player:EmitSound("voice/man2/man2_stun0"..math.random(1, 4)..".wav", 90, pitch)
 				else
@@ -646,6 +640,12 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 					player:EmitSound("voice/man4/man4_stun0"..math.random(1, 4)..".wav", 90, pitch)
 				else
 					player:EmitSound("voice/female1/female1_stun0"..math.random(1, 4)..".wav", 90, pitch)
+				end
+			else
+				if (gender == "his") then
+					player:EmitSound("voice/man3/man3_stun0"..math.random(1, 4)..".wav", 90, pitch)
+				else
+					player:EmitSound("voice/female2/female2_stun0"..math.random(1, 4)..".wav", 90, pitch)
 				end
 			end
 		end
@@ -869,15 +869,7 @@ function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 					return;
 				end
 			
-				if faction == "Wanderer" then
-					if gender == "Male" then
-						player:EmitSound("voice/man3/man3_pain0"..math.random(1, 6)..".wav", 90, pitch)
-						player.nextPainSound = CurTime()+0.5
-					else
-						player:EmitSound("voice/female2/female2_pain0"..math.random(1, 6)..".wav", 90, pitch)
-						player.nextPainSound = CurTime()+0.5
-					end
-				elseif faction == "Gatekeeper" then
+				if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
 					if gender == "Male" then
 						player:EmitSound("voice/man2/man2_pain0"..math.random(1, 6)..".wav", 90, pitch)
 						player.nextPainSound = CurTime()+0.5
@@ -907,6 +899,14 @@ function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 						player.nextPainSound = CurTime()+0.5
 					else
 						player:EmitSound("voice/female1/female1_pain0"..math.random(1, 6)..".wav", 90, pitch)
+						player.nextPainSound = CurTime()+0.5
+					end
+				else
+					if gender == "Male" then
+						player:EmitSound("voice/man3/man3_pain0"..math.random(1, 6)..".wav", 90, pitch)
+						player.nextPainSound = CurTime()+0.5
+					else
+						player:EmitSound("voice/female2/female2_pain0"..math.random(1, 6)..".wav", 90, pitch)
 						player.nextPainSound = CurTime()+0.5
 					end
 				end
@@ -942,14 +942,8 @@ function GM:PlayerPlayDeathSound(player, gender)
 			player:EmitSound(voltistSounds["death"][math.random(1, #voltistSounds["death"])], 90, 150);
 			return;
 		end
-	
-		if faction == "Wanderer" then
-			if gender == "Male" then
-				player:EmitSound("voice/man3/man3_death0"..math.random(1, 9)..".wav", 90, pitch)
-			else
-				player:EmitSound("voice/female2/female2_death0"..math.random(1, 9)..".wav", 90, pitch)
-			end
-		elseif faction == "Gatekeeper" then
+
+		if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
 			if gender == "Male" then
 				player:EmitSound("voice/man2/man2_death0"..math.random(1, 9)..".wav", 90, pitch)
 			else
@@ -984,6 +978,12 @@ function GM:PlayerPlayDeathSound(player, gender)
 				player:EmitSound("voice/man4/man4_death0"..math.random(1, 9)..".wav", 90, pitch)
 			else
 				player:EmitSound("voice/female1/female1_death0"..math.random(1, 9)..".wav", 90, pitch)
+			end
+		else
+			if gender == "Male" then
+				player:EmitSound("voice/man3/man3_death0"..math.random(1, 9)..".wav", 90, pitch)
+			else
+				player:EmitSound("voice/female2/female2_death0"..math.random(1, 9)..".wav", 90, pitch)
 			end
 		end
 	end

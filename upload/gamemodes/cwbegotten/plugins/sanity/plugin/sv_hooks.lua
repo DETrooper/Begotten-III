@@ -206,7 +206,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 		if plyTab.banners then
 			for k, v in pairs(plyTab.banners) do
 				if v == "glazic" then
-					if playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" then
+					if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Holy Hierarchy" then
 						sanityDecay = sanityDecay + 2;
 					
 						break;

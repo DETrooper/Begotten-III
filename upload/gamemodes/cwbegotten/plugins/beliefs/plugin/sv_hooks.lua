@@ -29,6 +29,11 @@ function cwBeliefs:PlayerRestoreCharacterData(player, data)
 	player:SetSharedVar("level", data["level"]);
 end
 
+-- Called when a player's character screen info should be adjusted.
+function cwBeliefs:PlayerAdjustCharacterScreenInfo(player, character, info)
+	info.level = character.data["level"];
+end
+
 -- Called at an interval while the player is connected to the server.
 function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	if initialized and alive then
@@ -45,11 +50,11 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 					residualXP = residualXP * 2;
 				end
 				
-				if (cwDayNight and cwDayNight.currentCycle == "night" and player:HasBelief("primevalism") and lastZone == "wasteland") or player:HasBelief("old_son") or (lastZone != "tower" and (playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy")) then
+				if (cwDayNight and cwDayNight.currentCycle == "night" and player:HasBelief("primevalism") and lastZone == "wasteland") or player:HasBelief("old_son") or (lastZone != "tower" and (playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Holy Hierarchy")) then
 					residualXP = residualXP * 2;
 				end
 				
-				if playerFaction == "Gatekeeper" and player:GetPos():WithinAABox(Vector(9422, 11862, -1210), Vector(10055, 10389, -770)) then
+				if playerFaction == "Gatekeeper" and game.GetMap() == "rp_begotten3" and player:GetPos():WithinAABox(Vector(9422, 11862, -1210), Vector(10055, 10389, -770)) then
 					residualXP = residualXP * 2;
 				end
 
@@ -1227,7 +1232,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 								end
 							end
 							
-							if attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary"  then
+							if attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary" then
 								damageXP = damageXP * 2;
 							end
 						

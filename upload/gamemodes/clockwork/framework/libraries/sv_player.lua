@@ -377,7 +377,7 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 
 		if (characterID) then
 			if (factionTable.GetName) then
-				info.name = factionTable:GetName(player, info, data)
+				info.name = factionTable:GetName(player, true)
 			elseif (!factionTable.useFullName) then
 				info.name = data.forename.." "..data.surname
 			else
@@ -2929,29 +2929,12 @@ function Clockwork.player:CharacterScreenAdd(player, character)
 		model = character.data["powerArmor"] or character.model,
 		skin = character.skin,
 		gender = character.gender,
-		permakilled = character.data["permakilled"],
-		kills = character.data["kills"] or 0,
-		level = character.data["level"],
-		timesurvived = character.data["charPlayTime"] or 0,
 		faction = character.faction,
 		subfaction = character.subfaction,
-		kinisgerOverride = character.data["kinisgerOverride"],
-		kinisgerOverrideSubfaction = character.data["kinisgerOverrideSubfaction"],
-		location = character.data["LastZone"] or "unknown",
-		faith = character.faith,
-		subfaith = character.subfaith,
-		clothes = character.data["clothes"],
-		helmet = character.data["helmet"],
-		shield = character.data["shield"],
+		permakilled = character.data["permakilled"],
 		weapons = character.data["weapons"],
-		deathcause = character.data["deathcause"] or "Died under mysterious circumstances.",
-		necropolisData = character.data["necropolisData"];
 		characterID = character.characterID
 	}
-	
-	if character.subfaction == "Clan Grock" then
-		info.subfaith = "The Old Ways";
-	end
 
 	if (character.data["PhysDesc"]) then
 		if (string.utf8len(character.data["PhysDesc"]) > 64) then

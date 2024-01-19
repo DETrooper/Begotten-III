@@ -53,6 +53,7 @@ local CRIMINAL = Clockwork.trait:New()
 	CRIMINAL.name = "Criminal"
 	CRIMINAL.description = "Your character is a common criminal, skilled in the art of lockpicking. This trait automatically unlocks the first 3 beliefs on the left side of the 'Litheness' tree: 'Nimble', 'Sly Fidget', and 'Safecracker', and also grants two starting lockpicks."
 	CRIMINAL.points = 4
+	CRIMINAL.excludedfactions = {"Holy Hierarchy"};
 Clockwork.trait:Register(CRIMINAL)
 
 local CROSSEYED = Clockwork.trait:New()
@@ -95,7 +96,7 @@ local FOLLOWED = Clockwork.trait:New()
 	FOLLOWED.description = "Long ago, your character made the blunder of ransacking an ancient tomb. Through their ignorance, they missed that it had been prophesied that those who would defile the tomb would be cursed to be hunted for all eternity..."
 	FOLLOWED.disables = {"pilgrim", "shrewd"}
 	FOLLOWED.points = -7
-	FOLLOWED.excludedfactions = {"Gatekeeper"};
+	FOLLOWED.excludedfactions = {"Gatekeeper", "Pope Adyssa's Gatekeepers"};
 Clockwork.trait:Register(FOLLOWED)
 
 local GLUTTONY = Clockwork.trait:New()
@@ -110,7 +111,7 @@ local GUNSLINGER = Clockwork.trait:New()
 	GUNSLINGER.name = "Gunslinger"
 	GUNSLINGER.description = "What are people to your character other than moving targets? Your character will start with a Peppershot and a random assortment of ammunition, as well as two beliefs from the 'Ingenuity' tree: 'Ingenious' and 'Powder and Steel'."
 	GUNSLINGER.points = 7
-	GUNSLINGER.excludedfactions = {"Children of Satan", "Gatekeeper", "Holy Hierarchy"}
+	GUNSLINGER.excludedfactions = {"Children of Satan", "Gatekeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
 	GUNSLINGER.excludedsubfactions = {"Clan Crast", "Clan Grock", "Clan Harald", "Clan Reaver", "Clan Gore"};
 Clockwork.trait:Register(GUNSLINGER)
 
@@ -138,7 +139,7 @@ local LEPER = Clockwork.trait:New()
 	LEPER.description = "Every waking moment of your character's very existence is hell, for they have been cursed to walk the Earth with a most unholy affliction: Leprosy. Their ravaged and deformed body leaves them a societal outcast and a target for persecution. Your character will suffer 50% more blood loss when bleeding and their repugnant affliction will be known to all who gaze upon them."
 	LEPER.points = -5
 	LEPER.disables = {"pilgrim"}
-	LEPER.excludedfactions = {"Gatekeeper", "Holy Hierarchy"};
+	LEPER.excludedfactions = {"Gatekeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"};
 Clockwork.trait:Register(LEPER)
 
 local LITERATE = Clockwork.trait:New()
@@ -147,6 +148,7 @@ local LITERATE = Clockwork.trait:New()
 	LITERATE.description = "Your character is one of the rare few who have learned to read in these uncivilized times. This trait automatically unlocks the first belief of the 'Aptitude' tree: 'Literacy'."
 	LITERATE.points = 1
 	LITERATE.disables = {"blind", "imbecile", "scribe"}
+	LITERATE.excludedfactions = {"Pope Adyssa's Gatekeepers"}
 Clockwork.trait:Register(LITERATE)
 
 local LOGGER = Clockwork.trait:New()
@@ -192,7 +194,7 @@ local PACIFIST = Clockwork.trait:New()
 	PACIFIST.points = -4
 	PACIFIST.disables = {"cannibal", "insane"}
 	PACIFIST.excludedsubfactions = {"Legionary", "Clan Reaver", "Clan Gore"}
-	PACIFIST.excludedfactions = {"Children of Satan"}
+	PACIFIST.excludedfactions = {"Children of Satan", "Pope Adyssa's Gatekeepers"}
 Clockwork.trait:Register(PACIFIST)
 
 local PILGRIM = Clockwork.trait:New()
@@ -260,7 +262,7 @@ local SURVIVALIST = Clockwork.trait:New()
 	SURVIVALIST.points = 10
 	SURVIVALIST.eventlocked = false;
 	SURVIVALIST.disables = {"escapee"}
-	SURVIVALIST.excludedfactions = {"Children of Satan", "Gatekeeper", "Holy Hierarchy"}
+	SURVIVALIST.excludedfactions = {"Children of Satan", "Gatekeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
 	SURVIVALIST.excludedsubfactions = {"Clan Crast", "Clan Grock"};
 Clockwork.trait:Register(SURVIVALIST)
 
@@ -271,7 +273,7 @@ local VETERAN = Clockwork.trait:New()
 	VETERAN.points = 16
 	VETERAN.eventlocked = false;
 	VETERAN.disables = {"escapee"}
-	VETERAN.excludedfactions = {"Children of Satan", "Gatekeeper", "Holy Hierarchy"}
+	VETERAN.excludedfactions = {"Children of Satan", "Gatekeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
 	VETERAN.excludedsubfactions = {"Clan Crast", "Clan Grock"};
 Clockwork.trait:Register(VETERAN)
 

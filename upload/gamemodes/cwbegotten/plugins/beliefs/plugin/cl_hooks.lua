@@ -55,6 +55,11 @@ function cwBeliefs:PlayerCharacterInitialized(data)
 	end;
 end
 
+-- Called when a player's character screen info should be adjusted.
+function cwBeliefs:PlayerAdjustCharacterScreenInfo(character, info)
+	info.level = character.level or 1;
+end
+
 function cwBeliefs:GetEntityMenuOptions(entity, options)
 	if (entity:GetClass() == "prop_ragdoll") then
 		local player = Clockwork.entity:GetPlayer(entity);

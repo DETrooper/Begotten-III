@@ -271,3 +271,10 @@ function cwPowerArmor:ModifyPlayerSpeed(player, infoTable)
 		end
 	end
 end;
+
+-- Called when a player's character screen info should be adjusted.
+function cwPowerArmor:PlayerAdjustCharacterScreenInfo(player, character, info)
+	if character.data["powerArmor"] then
+		info.model = character.data["powerArmor"];
+	end
+end

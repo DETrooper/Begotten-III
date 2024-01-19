@@ -58,7 +58,7 @@ Clockwork.player.GetSharedVar = Clockwork.player.GetNetVar
 Clockwork.player.SetSharedVar = Clockwork.player.SetNetVar
 
 function player.Find(name, bCaseSensitive)
-	if (name == nil) then return end
+	if !name then return end
 	if (!isstring(name)) then return (IsValid(name) and name) or nil end
 
 	local players = _player.GetAll();
@@ -66,16 +66,17 @@ function player.Find(name, bCaseSensitive)
 	for k, v in pairs(players) do
 		if (!v:HasInitialized()) then continue end
 
-		local plyName = v:Name(true)
+		--local plyName = v:Name(true)
+		local plyName = v:Name()
 
-		if (!bCaseSensitive and plyName:utf8lower():find(name:utf8lower())) then
+		if (!bCaseSensitive and string.find(string.lower(plyName), string.lower(name), 1, true)) then
 			return v
-		elseif (plyName:find(name)) then
+		elseif string.find(plyName, name, 1, true) then
 			return v
 		elseif (v:SteamID() == name) then
 			return v
-		elseif (v:Name():find(name)) then
-			return v
+		--elseif (v:Name():find(name)) then
+			--return v
 		end
 	end
 end

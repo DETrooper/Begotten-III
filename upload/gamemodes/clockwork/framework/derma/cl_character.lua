@@ -860,9 +860,9 @@ function PANEL:Init()
 	if ranks then
 		if (ranks[factionTable.name]) then
 			local charRank = self.customData.charTable.rank;
+			local factionTable = Clockwork.faction:FindByID(self.customData.faction);
 			
 			if !charRank then
-				local factionTable = Clockwork.faction:FindByID(self.customData.faction);
 				local subfaction = self.customData.subfaction;
 				local subfactionRankFound = false;
 				
@@ -888,10 +888,17 @@ function PANEL:Init()
 				end
 			end
 			
-			local rankText = ranks[factionTable.name][charRank];
-			
-			if rankText then
-				charName = rankText.." "..charName;
+			if factionTable and factionTable.GetNameCharCreation then
+				charName = factionTable:GetNameCharCreation(charName, charRank, self.customData.charTable.rankOverride);
+			else
+				local rankOverride = self.customData.charTable.rankOverride;
+				local rankText = ranks[factionTable.name][charRank];
+				
+				if rankOverride then
+					charName = rankOverride.." "..charName;
+				elseif rankText then
+					charName = rankText.." "..charName;
+				end;
 			end
 		end
 	end
@@ -1525,7 +1532,7 @@ function PANEL:Init()
 	end
 	
 	self.killsLabel = vgui.Create("DLabel", self);
-	self.killsLabel:SetText("Kills: "..self.customData.kills);
+	self.killsLabel:SetText("Kills: "..self.customData.kills or 0);
 	self.killsLabel:SetTextColor(Color(160, 145, 145));
 	self.killsLabel:SetFont("Decay_FormText");
 	self.killsLabel:SetPos(348, 80);
@@ -1696,23 +1703,15 @@ function PANEL:Rebuild()
 					skin = tonumber(v.skin) or 0,
 					gender = v.gender,
 					banned = v.banned,
-					--clothes = v.clothes,
 					faction = v.faction,
 					subfaction = subfaction_override,
-					kinisgerOverride = v.kinisgerOverride,
-					kinisgerOverrideSubfaction = v.kinisgerOverrideSubfaction,
-					rank = v.rank,
-					faith = v.faith,
-					kills = v.kills,
-					level = v.level or 1,
-					location = v.location,
-					timesurvived = v.timesurvived,
-					deathcause = v.deathcause,
 					details = v.details,
 					characterID = v.characterID,
 					characterTable = v,
 					charTable = v,
 				};
+				
+				hook.Run("PlayerAdjustCharacterScreenInfo", v, self.customData);
 
 				v.panel = vgui.Create("cwNecropolisPanel", self);
 				

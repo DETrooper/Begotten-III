@@ -983,6 +983,8 @@ Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 					end
 				end
 				
+				player:SetCharacterData("rankOverride", nil);
+				
 				if selectedFaction == "Wanderer" then
 					player:SetCharacterData("kinisgerOverride", nil);
 					player:SetSharedVar("kinisgerOverride", nil);
@@ -1040,15 +1042,6 @@ Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 								end
 
 								local name = player:Name();
-								
-								for k, v in pairs (Schema.Ranks[selectedFaction]) do
-									if (string.find(name, v)) then
-										player:SetCharacterData("rank", k);
-										local newName = Schema:StripRank(name, v)
-										Clockwork.player:SetName(player, string.Trim(newName));
-									end;
-								end;
-								
 								local rank = math.Clamp(player:GetCharacterData("rank", 1), 1, #Schema.Ranks[selectedFaction]);
 								
 								if (rank and isnumber(rank) and Schema.Ranks[selectedFaction][rank]) then

@@ -597,6 +597,21 @@ function Schema:GetEntityMenuOptions(entity, options)
 	end;
 end;
 
+-- Called when a player's character screen info should be adjusted.
+function Schema:PlayerAdjustCharacterScreenInfo(character, info)
+	info.clothes = character.clothes;
+	info.helmet = character.helmet;
+	info.shield = character.shield;
+	info.kills = character.kills or 0;
+	info.kinisgerOverride = character.kinisgerOverride;
+	info.kinisgerOverrideSubfaction = character.kinisgerOverrideSubfaction;
+	info.rank = character.rank;
+	info.rankOverride = character.rankOverride;
+	info.faith = character.faith;
+	info.subfaith = character.subfaith;
+	info.location = character.location;
+end
+
 -- Called when the post progress bar info is needed.
 function Schema:GetPostProgressBarInfo()
 	if (Clockwork.Client:Alive()) then

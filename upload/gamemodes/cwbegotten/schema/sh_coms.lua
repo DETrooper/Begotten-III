@@ -72,17 +72,24 @@ local COMMAND = Clockwork.command:New("Enlist")
 		
 		if (target and target:Alive()) then
 			if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
+				local enlistFaction;
 				local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 				local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
 			
-				if player:IsAdmin() or (playerFaction == "Gatekeeper" and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or playerFaction == "Holy Hierarchy" then
-					if targetFaction == "Gatekeeper" then
-						Schema:EasyText(player, "grey", target:Name().." is already a Gatekeeper!");
+				if player:IsAdmin() or ((playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers") and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or playerFaction == "Holy Hierarchy" then
+					if playerFaction == "Holy Hierarchy" then
+						enlistFaction = "Gatekeeper"
+					else
+						enlistFaction = playerFaction;
+					end
+				
+					if targetFaction == enlistFaction then
+						Schema:EasyText(player, "grey", target:Name().." is already a "..enlistFaction.."!");
 
 						return;
 					end
 					
-					if (!Clockwork.faction:IsGenderValid("Gatekeeper", target:GetGender())) then
+					if !Clockwork.faction:IsGenderValid(enlistFaction, target:GetGender()) then
 						Schema:EasyText(player, "firebrick", target:Name().." is not the correct gender for the Gatekeeper faction!");
 						
 						return;
@@ -100,53 +107,70 @@ local COMMAND = Clockwork.command:New("Enlist")
 						return;
 					end
 					
-					local subfaction = arguments[1] or "Legionary";
-					local factionSubfactions = Clockwork.faction:GetStored()["Gatekeeper"].subfactions;
+					local subfaction;
+					local enlistFactionTable =  Clockwork.faction:GetStored()[enlistFaction];
+					local factionSubfactions = enlistFactionTable.subfactions;
 					
-					for i, v in ipairs(factionSubfactions) do
-						if v.name == subfaction then
-							subfaction = v;
-							
-							break;
+					if enlistFactionTable then
+						subfaction = arguments[1];
+					
+						for i, v in ipairs(factionSubfactions) do
+							if i == 1 and !subfaction then
+								subfaction = v.name;
+								
+								break;
+							end
+						
+							if v.name == subfaction then
+								subfaction = v;
+								
+								break;
+							end
 						end
 					end
 				
-					if istable(subfaction) then
+					if !subfaction or istable(subfaction) then
 						if targetFaction == "Wanderer" or (targetFaction == "Children of Satan" and target:GetSubfaction() == "Kinisger") then
-							Clockwork.dermaRequest:RequestConfirmation(target, "Gatekeeper Enlistment", player:Name().." has invited you to enlist in the Gatekeepers!", function()
+							Clockwork.dermaRequest:RequestConfirmation(target, enlistFaction.." Enlistment", player:Name().." has invited you to enlist into the "..enlistFaction.." faction!", function()
 								targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
 								
-								if (targetFaction == "Wanderer" or (targetFaction == "Children of Satan" and target:GetSubfaction() == "Kinisger")) and target:Alive() and Clockwork.faction:IsGenderValid("Gatekeeper", target:GetGender()) then
-									local bSuccess, fault = Clockwork.faction:GetStored()["Gatekeeper"]:OnTransferred(target, Clockwork.faction:GetStored()[targetFaction]);
+								if (targetFaction == "Wanderer" or (targetFaction == "Children of Satan" and target:GetSubfaction() == "Kinisger")) and target:Alive() and Clockwork.faction:IsGenderValid(enlistFaction, target:GetGender()) then
+									local bSuccess, fault = Clockwork.faction:GetStored()[enlistFaction]:OnTransferred(target, Clockwork.faction:GetStored()[targetFaction]);
 									
 									if (bSuccess != false) then
 										if target:GetFaction() ~= "Children of Satan" then
-											target:SetCharacterData("Faction", "Gatekeeper", true);
-											target:SetCharacterData("Subfaction", subfaction.name, true);
+											target:SetCharacterData("Faction", enlistFaction, true);
+											
+											if subfaction then
+												target:SetCharacterData("Subfaction", subfaction.name, true);
+											end
 										else
-											target:SetCharacterData("kinisgerOverride", "Gatekeeper");
-											target:SetSharedVar("kinisgerOverride", "Gatekeeper");
-											target:SetCharacterData("kinisgerOverrideSubfaction", subfaction.name);
-											target:SetSharedVar("kinisgerOverrideSubfaction", subfaction.name);
+											target:SetCharacterData("kinisgerOverride", enlistFaction);
+											target:SetSharedVar("kinisgerOverride", enlistFaction);
+											
+											if subfaction then
+												target:SetCharacterData("kinisgerOverrideSubfaction", subfaction.name);
+												target:SetSharedVar("kinisgerOverrideSubfaction", subfaction.name);
+											end
 										end
 										
-										if subfaction.name == "Praeventor" then
+										if subfaction and subfaction.name == "Praeventor" then
 											target:SetCharacterData("rank", 12);
 										end
 										
 										Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
-										Clockwork.player:NotifyAll(player:Name().." has enlisted "..target:Name().." into the Gatekeepers.");
+										Clockwork.player:NotifyAll(player:Name().." has enlisted "..target:Name().." into the "..enlistFaction.." faction!");
 									end;
 								end
 							end)
 							
-							Schema:EasyText(player, "green", "You have invited "..target:Name().." to enlist into the Gatekeepers!");
-							Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." has invited "..target:Name().." to join the Gatekeepers!");
+							Schema:EasyText(player, "green", "You have invited "..target:Name().." to enlist into your faction!");
+							Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." has invited "..target:Name().." to join the "..enlistFaction.." faction!");
 						else
-							Schema:EasyText(player, "firebrick", target:Name().." is not the right faction to be enlisted into the Gatekeepers!");
+							Schema:EasyText(player, "firebrick", target:Name().." is not the right faction to be enlisted into this faction!");
 						end
 					else
-						Schema:EasyText(player, "firebrick", subfaction.." is not a valid subfaction for the Gatekeepers!");
+						Schema:EasyText(player, "firebrick", subfaction.." is not a valid subfaction for this faction!");
 					end
 				else
 					Schema:EasyText(player, "firebrick", "You do not have permissions to enlist "..target:Name().."!");
@@ -157,6 +181,71 @@ local COMMAND = Clockwork.command:New("Enlist")
 		else
 			Schema:EasyText(player, "firebrick", "You must look at a character!");
 		end
+	end
+COMMAND:Register()
+
+local COMMAND = Clockwork.command:New("SetCustomRank")
+	COMMAND.tip = "Set a character's custom rank. The rank index should correspond to what their actual rank would be (i.e. 2 for Acolyte)."
+	COMMAND.text = "<string Character> <string Rank> <number RankIndex> [bool NotifyTarget]"
+	COMMAND.access = "o"
+	COMMAND.arguments = 3;
+	COMMAND.optionalArguments = 1;
+	COMMAND.alias = {"CharSetCustomRank", "PlySetCustomRank", "PromoteCustom", "SetRankOverride", "SetRankCustom"};
+	
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local target = Clockwork.player:FindByID(arguments[1]);
+		local rankOverride = arguments[2];
+		local rank = string.lower(tostring(arguments[3]));
+		
+		if (target) then
+			local faction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+			local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		
+			if player:IsAdmin() or ((playerFaction == faction and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or playerFaction == "Holy Hierarchy") then
+				local name = target:Name();
+				local ranks = Schema.Ranks;
+
+				if (!ranks[faction]) then
+					Schema:EasyText(player, "darkgrey", target:Name().." does not belong to a faction with ranks!");
+					return;
+				end;
+				
+				if (rank != nil) then
+						for k, v in pairs (ranks[faction]) do
+							if (string.lower(v) == tostring(rank) or k == tonumber(rank)) then
+								rank = k;
+							end;
+						end;
+				else
+					rank = math.Clamp(target:GetCharacterData("rank", 1) + 1, 1, #ranks[faction]);
+				end;
+
+				if (ranks[faction][rank]) then
+					target:SetCharacterData("rank", rank);
+					target:SetCharacterData("rankOverride", rankOverride);
+					hook.Run("PlayerChangedRanks", target);
+					local notifyTarget = tobool(arguments[3]);
+					
+					if (target == player) then
+						name = "yourself";
+						notifyTarget = false;
+					end;
+					
+					if (notifyTarget) then
+						Schema:EasyText(target, "olivedrab", "You have been promoted to the rank of \""..rankOverride.."\".")
+					end;
+					
+					Schema:EasyText(player, "cornflowerblue", "You have promoted "..name.." to the rank of \""..rankOverride.."\".");
+				else
+					Schema:EasyText(player, "darkgrey", "The rank index specified is not valid!");
+				end;
+			else
+				Schema:EasyText(player, "grey", "You do not have permissions to change the rank of "..target:Name().."!");
+			end;
+		else
+			Schema:EasyText(player, "grey", arguments[1].." is not a valid character!");
+		end;
 	end
 COMMAND:Register()
 
@@ -220,20 +309,23 @@ local COMMAND = Clockwork.command:New("Promote")
 					
 					target:SetCharacterData("rank", rank);
 					hook.Run("PlayerChangedRanks", target);
-					local notifyTarget = tobool(arguments[3]);
 					
-					local subfaction = Schema.RanksToSubfaction[faction][ranks[faction][rank]];
-					
-					if subfaction then
-						if target:GetSharedVar("kinisgerOverride") then
-							target:SetCharacterData("kinisgerOverrideSubfaction", subfaction);
-							target:SetSharedVar("kinisgerOverrideSubfaction", subfaction);
-						else
-							target:SetCharacterData("Subfaction", subfaction, true);
-						end
+					if Schema.RanksToSubfaction and Schema.RanksToSubfaction[faction] then
+						local subfaction = Schema.RanksToSubfaction[faction][ranks[faction][rank]];
 						
-						Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+						if subfaction then
+							if target:GetSharedVar("kinisgerOverride") then
+								target:SetCharacterData("kinisgerOverrideSubfaction", subfaction);
+								target:SetSharedVar("kinisgerOverrideSubfaction", subfaction);
+							else
+								target:SetCharacterData("Subfaction", subfaction, true);
+							end
+							
+							Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+						end
 					end
+					
+					local notifyTarget = tobool(arguments[3]);
 					
 					if (target == player) then
 						name = "yourself";

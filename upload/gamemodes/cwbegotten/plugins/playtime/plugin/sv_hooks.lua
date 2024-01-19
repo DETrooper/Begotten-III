@@ -1,30 +1,10 @@
 local PLUGIN = PLUGIN;
 local playerMeta = FindMetaTable("Player")
 
---PLUGIN.secondTime = CurTime()
---[[function PLUGIN:Think()
-	if (CurTime() > self.secondTime) then
-		self.secondTime = CurTime() + 1
-		for k, v in pairs(player.GetAll()) do
-			if (!v:GetData("playTime")) then
-				v:SetData("playTime", 0)
-			else
-				v:SetData("playTime", v:GetData("playTime") + 1)
-			end
-			if v:GetCharacter() then
-				if (!v:GetCharacterData("charPlayTime")) then
-					v:SetCharacterData("charPlayTime", 0)
-				else
-					if (v:Alive()) then
-						v:SetCharacterData("charPlayTime", v:GetCharacterData("charPlayTime") + 1)
-					end;
-				end
-			end
-		end
-	end
-	
-	--Clockwork.kernel:CallTimerThink( CurTime() );
-end]]--
+-- Called when a player's character screen info should be adjusted.
+function PLUGIN:PlayerAdjustCharacterScreenInfo(player, character, info)
+	info.timesurvived = character.data["charPlayTime"] or 0;
+end
 
 function PLUGIN:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	if !plyTab.nextPlayTime or plyTab.nextPlayTime < curTime then

@@ -321,26 +321,18 @@ function Clockwork.character:RefreshPanelList()
 						name = v.name,
 						model = v.model,
 						gender = v.gender,
-						clothes = v.clothes,
-						helmet = v.helmet,
-						shield = v.shield,
 						weapons = v.weapons,
 						skin = tonumber(v.skin) or 0,
 						banned = v.banned,
 						faction = v.faction,
 						subfaction = v.subfaction,
-						kinisgerOverride = v.kinisgerOverride,
-						kinisgerOverrideSubfaction = v.kinisgerOverrideSubfaction,
-						faith = v.faith,
-						subfaith = v.subfaith,
-						level = v.level or 1,
-						location = v.location,
-						timesurvived = v.timesurvived,
 						details = v.details,
 						characterID = v.characterID,
 						characterTable = v,
 						charTable = v,
 					};
+					
+					hook.Run("PlayerAdjustCharacterScreenInfo", v, panel.customData);
 
 					v.panel = vgui.Create("cwCharacterPanel", panel);
 					

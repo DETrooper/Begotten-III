@@ -1052,7 +1052,7 @@ end
 
 -- A function to get a player's name.
 function playerMeta:Name(bRealName)
-	return (!bRealName and self:GetNetVar("NameOverride", nil)) or self:QueryCharacter("Name", self:SteamName())
+	return (!bRealName and self:GetNetVar("NameOverride")) or self:QueryCharacter("Name", self:SteamName())
 end
 
 -- A function to make a player fire bullets.

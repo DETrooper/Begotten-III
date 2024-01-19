@@ -3198,7 +3198,7 @@ end
 
 -- A function to get a player's name.
 function playerMeta:Name(bRealName)
-	local name = (!bRealName and self:GetNetVar("NameOverride", nil)) or self:GetDTString(STRING_NAME)
+	local name = (!bRealName and self:GetNetVar("NameOverride")) or self:GetDTString(STRING_NAME)
 
 	if (!name or name == "") then
 		return self:SteamName()

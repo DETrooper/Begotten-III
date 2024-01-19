@@ -148,7 +148,7 @@ function cwDeathCauses:PlayerDeath(player, inflictor, attacker, damageInfo)
 						attackerName = "an unknown Goreic Warrior";
 					elseif attackerFaction == "Children of Satan" then
 						attackerName = "an unknown Child of Satan";
-					elseif attackerFaction == "Gatekeeper" then
+					elseif attackerFaction == "Gatekeeper" or attackerFaction == "Pope Adyssa's Gatekeepers" then
 						attackerName = "an unknown Gatekeeper";
 					elseif attackerFaction == "Holy Hierarchy" then
 						local attackerSubfaction = attacker:GetSubfaction();
@@ -359,5 +359,12 @@ function cwDeathCauses:PlayerDeath(player, inflictor, attacker, damageInfo)
 				end
 			end
 		end
+	end
+end
+
+-- Called when a player's character screen info should be adjusted.
+function cwDeathCauses:PlayerAdjustCharacterScreenInfo(player, character, info)
+	if character.data["deathcause"] then
+		info.deathcause = character.data["deathcause"];
 	end
 end

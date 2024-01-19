@@ -69,7 +69,7 @@ local ITEM = Clockwork.item:New();
 
 -- Called when a player uses the item.
 function ITEM:OnUse(player, itemEntity)
-	Clockwork.player:GiveCash(player, 100, "Gatekeeper Allowance");
+	Clockwork.player:GiveCash(player, 200, "Gatekeeper Allowance");
 	player:GiveItem(Clockwork.item:CreateInstance("moldy_bread"), true);
 	player:GiveItem(Clockwork.item:CreateInstance("moldy_bread"), true);
 	player:GiveItem(Clockwork.item:CreateInstance("dirtywater"), true);

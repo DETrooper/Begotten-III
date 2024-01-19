@@ -480,6 +480,8 @@ function Schema:GetRankTier(faction, rank)
 			end
 		end
 	end
+	
+	return 1;
 end
 
 -- A function to strip the rank of a player's name.
@@ -2351,7 +2353,7 @@ concommand.Add("cw_CoinslotSalaryCheck", function(player, cmd, args)
 		if (entity:GetClass() == "cw_coinslot") then
 			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 			
-			if (faction == "Gatekeeper" or faction == "Holy Hierarchy") then
+			if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
 				local collectableWages = player:GetCharacterData("collectableWages", 0);
 				local coin = player.cwInfoTable.coinslotWages * collectableWages;
 				
@@ -2372,7 +2374,7 @@ concommand.Add("cw_CoinslotSalary", function(player, cmd, args)
 		if (entity:GetClass() == "cw_coinslot") then
 			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 			
-			if (faction == "Gatekeeper" or faction == "Holy Hierarchy") then
+			if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
 				local collectableWages = player:GetCharacterData("collectableWages", 0);
 				local coin = player.cwInfoTable.coinslotWages * collectableWages
 				
@@ -2428,7 +2430,7 @@ concommand.Add("cw_CoinslotRation", function(player, cmd, args)
 						return;
 					end
 				
-					if faction == "Gatekeeper" or faction == "Holy Hierarchy" then
+					if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
 						player:GiveItem(item.CreateInstance("gatekeeper_ration"), true);
 						player:GiveItem(item.CreateInstance("purified_water"), true);
 						Schema:EasyText(player, "olivedrab", "The machine dispenses a Gatekeeper ration and a bottle of purified water.");
@@ -2459,7 +2461,7 @@ concommand.Add("cw_CoinslotGear", function(player, cmd, args)
 		if (entity:GetClass() == "cw_coinslot") then
 			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 			
-			if (faction == "Gatekeeper") then
+			if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers") then
 				local collectedGear = player:GetCharacterData("collectedGear", false);
 				
 				if !collectedGear then
@@ -2474,7 +2476,13 @@ concommand.Add("cw_CoinslotGear", function(player, cmd, args)
 						end
 						
 						Schema:ModifyTowerTreasury(-200);
-						player:GiveItem(item.CreateInstance("gatekeeper_standard_issue"), true);
+						
+						if faction == "Pope Adyssa's Gatekeepers" then
+							player:GiveItem(item.CreateInstance("renegade_gatekeeper_standard_issue"), true);
+						else
+							player:GiveItem(item.CreateInstance("gatekeeper_standard_issue"), true);
+						end
+						
 						Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue Gatekeeper kit. A receptacle beneath the machine opens and a crude duffel bag dispenses.");
 						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
 						

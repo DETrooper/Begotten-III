@@ -27,7 +27,7 @@ function cwStamina:GetMaxStaminaPlugin(player)
 		
 		--[[if subfaction == "Praeventor" then
 			max_stamina = max_stamina + 25;
-		else]]if subfaction == "Legionary" then
+		else]]if subfaction == "Legionary" or player:GetFaction() == "Pope Adyssa's Gatekeepers" then
 			max_stamina = max_stamina + 15;
 		elseif subfaction == "Knights of Sol" then
 			max_stamina = max_stamina + 25;
