@@ -560,6 +560,7 @@ else
 	hook.Add("PostPlayerDraw", "PostPlayerDrawEquipment", function(player)
 		if player:Alive() and player:GetMoveType() ~= MOVETYPE_OBSERVER and player:GetColor().a > 0 then
 			local activeWeapon = player:GetActiveWeapon();
+			local activeWeaponClass;
 			local activeOffhand;
 			local activeShield;
 			local plyTab = player:GetTable();
@@ -574,6 +575,7 @@ else
 			end
 			
 			if IsValid(activeWeapon) then
+				activeWeaponClass = activeWeapon:GetClass();
 				activeOffhand = activeWeapon:GetNWString("activeOffhand");
 				activeShield = activeWeapon:GetNWString("activeShield");
 			end
@@ -582,7 +584,7 @@ else
 				if itemTable and itemTable.isAttachment then
 					local equipmentModel = plyTab.equipmentSlotModels[itemTable.itemID];
 					
-					if activeWeapon:GetClass() == itemTable.weaponClass or activeShield == itemTable.uniqueID or activeOffhand == itemTable.uniqueID then if IsValid(equipmentModel) then equipmentModel:Remove() end continue end;
+					if activeWeaponClass == itemTable.weaponClass or activeShield == itemTable.uniqueID or activeOffhand == itemTable.uniqueID then if IsValid(equipmentModel) then equipmentModel:Remove() end continue end;
 				
 					if !IsValid(equipmentModel) then
 						equipmentModel = ClientsideModel(itemTable.model, RENDERGROUP_BOTH);
