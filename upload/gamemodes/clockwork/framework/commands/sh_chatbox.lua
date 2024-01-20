@@ -312,7 +312,7 @@ function COMMAND:OnRun(player, arguments)
 	local target = Clockwork.player:FindByID(arguments[1]);
 
 	if (target) then
-		local message = string.upper("\""..table.concat(arguments, " ", 2).."\"");
+		local message = "\""..table.concat(arguments, " ", 2).."\"";
 		
 		Clockwork.player:Notify(target, "[ADMINHELP RESPONSE] "..message);
 		Clockwork.player:Notify(GetAdmins(), "[ADMINHELP RESPONSE] "..player:Name().." to "..target:Name()..": "..message);
