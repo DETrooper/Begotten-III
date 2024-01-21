@@ -12,8 +12,13 @@ function cwObserverMode:MakePlayerExitObserverMode(player)
 	player:SetNoDraw(false)
 	player:SetNotSolid(false)
 	player:SetNoTarget(false)
-	player:SetMoveType(player.cwObserverMoveType or MOVETYPE_WALK)
 	player:SetRenderMode(RENDERMODE_TRANSALPHA);
+	
+	if !player:Alive() then
+		player:SetMoveType(player.cwObserverMoveType or MOVETYPE_WALK)
+	else
+		player:SetMoveType(MOVETYPE_OBSERVER)
+	end
 	
 	timer.Simple(FrameTime() * 0.5, function()
 		if (IsValid(player)) then

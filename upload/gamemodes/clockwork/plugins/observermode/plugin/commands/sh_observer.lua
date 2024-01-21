@@ -99,7 +99,7 @@ local COMMAND = Clockwork.command:New("MakeUnSpectateAll");
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
 		for k, v in pairs (_player.GetAll()) do
-			if not v:IsAdmin() then
+			if not v:IsAdmin() and v.cwObserverMode then
 				cwObserverMode:MakePlayerExitObserverMode(v);
 				Schema:EasyText(v, "cornflowerblue", "You have exited spectator mode!");
 			end
@@ -112,6 +112,25 @@ local COMMAND = Clockwork.command:New("MakeUnSpectateAll");
 		end
 		
 		Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has made all non-admins exit spectator mode.", nil);
+	end;
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("PlyTeleportSpectators");
+	COMMAND.tip = "Teleport all spectating player to your target location.";
+	COMMAND.access = "s";
+	COMMAND.alias = {"PlyBringSpectators", "CharTeleportSpectators", "CharBringSpectators"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local hitPos = player:GetEyeTraceNoCursor().HitPos;
+		
+		for k, v in pairs (_player.GetAll()) do
+			if not v:IsAdmin() and v.cwObserverMode then
+				Clockwork.player:SetSafePosition(v, hitPos);
+			end
+		end
+		
+		Clockwork.player:NotifyAll(player:Name().." has teleported all spectators to their target location.");
 	end;
 COMMAND:Register();
 
