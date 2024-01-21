@@ -2522,11 +2522,11 @@ function Schema:PlayerCharacterLoaded(player)
 	if subfaction == "Clan Grock" then
 		player:SetModelScale(1.12, FrameTime());
 		player:SetViewOffset(Vector(0, 0, 72))
-		player:SetViewOffsetDucked(Vector(0, 0, 72))
+		player:SetViewOffsetDucked(Vector(0, 0, 32))
 	else
 		player:SetModelScale(1, FrameTime());
 		player:SetViewOffset(Vector(0, 0, 64));
-		player:SetViewOffsetDucked(Vector(0, 0, 64));
+		player:SetViewOffsetDucked(Vector(0, 0, 28));
 	end
 	
 	player:OverrideName(nil)
