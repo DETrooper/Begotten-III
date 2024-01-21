@@ -183,7 +183,7 @@ end
   function ENT:Attack1()
       self:Attack({
         damage = 80,
-        range = 225,
+        range = 160,
         delay = 0.6,
         type = DMG_SLASH,
         viewpunch = Angle(20, math.random(-10, 10), 0),

@@ -211,16 +211,7 @@ function SWEP:OnHolster()
 	end
 end
 
-function SWEP:OnRemove()
-	if (SERVER) then
-		if IsValid(self.OwnerOverride) and IsValid(self.OwnerOverride.particleprop) then
-			self.OwnerOverride.particleprop:Remove();
-		end
-	end
-end
-
 function SWEP:Hitscan()
-
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
 	local attacktable = GetTable(self.AttackTable)
 

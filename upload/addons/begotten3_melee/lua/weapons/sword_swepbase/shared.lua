@@ -3280,6 +3280,10 @@ function SWEP:Holster()
 		end
 	end
 	
+	if self.OnHolster then
+		self:OnHolster();
+	end
+	
 	return true;
 end
 

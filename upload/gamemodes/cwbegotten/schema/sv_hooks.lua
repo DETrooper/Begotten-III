@@ -2517,13 +2517,23 @@ function Schema:PlayerCharacterLoaded(player)
 	end
 	
 	local faction = player:GetCharacterData("kinisgerOverride") or player:GetFaction();
+	local subfaction = player:GetCharacterData("kinisgerOverrideSubfaction") or player:GetSubfaction();
+	
+	if subfaction == "Clan Grock" then
+		player:SetModelScale(1.12, FrameTime());
+		player:SetViewOffset(Vector(0, 0, 72))
+		player:SetViewOffsetDucked(Vector(0, 0, 72))
+	else
+		player:SetModelScale(1, FrameTime());
+		player:SetViewOffset(Vector(0, 0, 64));
+		player:SetViewOffsetDucked(Vector(0, 0, 64));
+	end
 	
 	player:OverrideName(nil)
 	
 	if (self.Ranks[faction]) then
 		if (!player:GetCharacterData("rank") or player:GetCharacterData("rank") < 1 or player:GetCharacterData("rank") > #self.Ranks[faction]) then
 			local factionTable = Clockwork.faction:FindByID(faction);
-			local subfaction = player:GetSubfaction();
 			local subfactionRankFound = false;
 			
 			if subfaction and subfaction ~= "" and subfaction ~= "N/A" then
