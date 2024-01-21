@@ -14,7 +14,7 @@ function cwObserverMode:MakePlayerExitObserverMode(player)
 	player:SetNoTarget(false)
 	player:SetRenderMode(RENDERMODE_TRANSALPHA);
 	
-	if !player:Alive() then
+	if player:Alive() then
 		player:SetMoveType(player.cwObserverMoveType or MOVETYPE_WALK)
 	else
 		player:SetMoveType(MOVETYPE_OBSERVER)
