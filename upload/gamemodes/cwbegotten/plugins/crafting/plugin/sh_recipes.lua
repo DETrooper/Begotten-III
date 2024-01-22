@@ -3687,8 +3687,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 3},
-			["wood"] = {amount = 3},
+			["steel_ingot"] = {amount = 2},
+			["wood"] = {amount = 4},
 		};
 		RECIPE.result = {
 			["begotten_scythe_glaive"] = {amount = 1},
@@ -3698,7 +3698,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 35;
+		RECIPE.experience = 45;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -3717,8 +3717,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 1},
-			["wood"] = {amount = 3},
+			["iron_ingot"] = {amount = 2},
+			["wood"] = {amount = 4},
 		};
 		RECIPE.result = {
 			["begotten_scythe_warscythe"] = {amount = 1},
