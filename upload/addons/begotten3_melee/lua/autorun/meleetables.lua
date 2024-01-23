@@ -934,18 +934,18 @@ AttackTables.HalberdAttackTable = {
 };
 
 AttackTables.PikeAttackTable = {
-	["primarydamage"] = 45,
+	["primarydamage"] = 40,
 	["dmgtype"] = 16,
 	["attacktype"] = "polearm_swing",
 	["canaltattack"] = true,
 	["altattackdamagemodifier"] = 0.3,
-	["altattackpoisedamagemodifier"] = 2.5,
+	["altattackpoisedamagemodifier"] = 3,
 	["altmeleearc"] = 45,
 	["armorpiercing"] = 40,
 	["altarmorpiercing"] = 60,
-	["poisedamage"] = 15,
+	["poisedamage"] = 10,
 	["stabilitydamage"] = 0,
-	["takeammo"] = 4,
+	["takeammo"] = 5,
 	["delay"] = 1.3,
 	["striketime"] = 0.55,
 	["meleearc"] = 15,
@@ -954,7 +954,7 @@ AttackTables.PikeAttackTable = {
 };
 
 AttackTables.WarSpearAttackTable = {
-	["primarydamage"] = 50,
+	["primarydamage"] = 45,
 	["dmgtype"] = 16,
 	["attacktype"] = "polearm_swing",
 	["canaltattack"] = true,
@@ -965,7 +965,7 @@ AttackTables.WarSpearAttackTable = {
 	["altarmorpiercing"] = 60,
 	["poisedamage"] = 15,
 	["stabilitydamage"] = 0,
-	["takeammo"] = 4,
+	["takeammo"] = 5,
 	["delay"] = 1.25,
 	["striketime"] = 0.55,
 	["meleearc"] = 15,
