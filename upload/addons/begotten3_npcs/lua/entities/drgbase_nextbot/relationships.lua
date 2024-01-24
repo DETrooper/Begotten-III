@@ -166,7 +166,7 @@ if SERVER then
 
   function ENT:GetRelationship(ent, absolute)
     if not IsValid(ent) then return D_ER end
-    if self == ent then return D_ER end
+    if self == ent then return D_ER end		if Clockwork then		if ent:GetClass() == "prop_ragdoll" then			local ragdollPlayer = Clockwork.entity:GetPlayer(ent);						if ent:GetNWEntity("Player") == game.GetWorld() then				return D_ER;			end						local ragdollPlayer = Clockwork.entity:GetPlayer(ent);			if IsValid(ragdollPlayer) then				if ragdollPlayer:IsRagdolled() then					ent = ragdollPlayer;				end			end		end	end
     local disp = self._DrGBaseRelationships[ent]
     if not absolute and self:IsIgnored(ent) then
       return D_NU
@@ -255,7 +255,7 @@ if SERVER then
     [NPC_STATE_PLAYDEAD] = true,
     [NPC_STATE_DEAD] = true
   }
-  function ENT:IsIgnored(ent)
+  function ENT:IsIgnored(ent)	if Clockwork then		if ent:GetClass() == "prop_ragdoll" then			local ragdollPlayer = Clockwork.entity:GetPlayer(ent);						if ent:GetNWEntity("Player") == game.GetWorld() then				return true;			end						local ragdollPlayer = Clockwork.entity:GetPlayer(ent);			if IsValid(ragdollPlayer) then				if ragdollPlayer:IsRagdolled() then					ent = ragdollPlayer;				end			end		end	end
     if ent:IsPlayer() and not ent:Alive() then return true end
     if ent:IsPlayer() and GetConVar("ai_ignoreplayers"):GetBool() then return true end
     --if ent:IsFlagSet(FL_NOTARGET) then return true end
@@ -265,14 +265,7 @@ if SERVER then
     if (ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot()) and ent:Health() <= 0 then return true end
     if ent.IsDrGNextbot and (ent:IsDown() or ent:IsDead()) then return true end
 	if Clockwork then
-		if ent:GetClass() == "prop_ragdoll" then			if ent:GetNWEntity("Player") == game.GetWorld() then				return true;			end			
-			local ragdollPlayer = Clockwork.entity:GetPlayer(ent);
-			if IsValid(ragdollPlayer) then
-				if !ragdollPlayer:Alive() or !ragdollPlayer:IsRagdolled() then
-					return true;
-				end
-			end
-		elseif ent:IsPlayer() then
+		if ent:IsPlayer() then
 			if !ent:HasInitialized() or (ent.cwObserverMode and ent:GetCharacterData("IsObserverTarget") ~= true) then
 				return true;
 			end

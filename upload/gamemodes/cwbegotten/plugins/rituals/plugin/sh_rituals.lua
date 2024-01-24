@@ -1424,6 +1424,12 @@ RITUAL = cwRituals.rituals:New("summon_demon");
 						end
 					end
 					
+					if !cwRituals.summonedNPCs then
+						cwRituals.summonedNPCs = {};
+						
+						table.insert(cwRituals.summonedNPCs, entity);
+					end
+					
 					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as an unholy creature of Hell suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
 				end
@@ -1506,12 +1512,18 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 						if v:GetFaith() == playerFaith then
 							entity:AddEntityRelationship(v, D_LI, 99);
 						else					
-							local faction = v:GetFaction();
+							local faction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
 							
 							if faction == "Goreic Warrior" then
 								entity:AddEntityRelationship(v, D_LI, 99);
 							end
 						end
+					end
+					
+					if !cwRituals.summonedNPCs then
+						cwRituals.summonedNPCs = {};
+						
+						table.insert(cwRituals.summonedNPCs, entity);
 					end
 					
 					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
@@ -1596,12 +1608,18 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 						if v:GetFaith() == playerFaith then
 							entity:AddEntityRelationship(v, D_LI, 99);
 						else					
-							local faction = v:GetFaction();
+							local faction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
 							
 							if faction == "Goreic Warrior" then
 								entity:AddEntityRelationship(v, D_LI, 99);
 							end
 						end
+					end
+					
+					if !cwRituals.summonedNPCs then
+						cwRituals.summonedNPCs = {};
+						
+						table.insert(cwRituals.summonedNPCs, entity);
 					end
 					
 					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);

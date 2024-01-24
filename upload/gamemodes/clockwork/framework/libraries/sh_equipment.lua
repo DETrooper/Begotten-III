@@ -652,7 +652,9 @@ else
 		end
 	end);
 	
-	hook.Add("EntityRemoved", "EntityRemovedEquipment", function(entity)
+	hook.Add("EntityRemoved", "EntityRemovedEquipment", function(entity, bFullUpdate)
+		if bFullUpdate then return end;
+	
 		if Clockwork.entity:IsPlayerRagdoll(entity) then
 			entity = entity:GetNWEntity("Player");
 		end

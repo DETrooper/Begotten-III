@@ -283,13 +283,9 @@ function SWEP:AdjustFireBegotten()
 					end
 				
 					if !self.noJam or forceJam then
-						local hasPistolier = false;
-					
-						if SERVER then
-							hasPistolier = cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("pistolier");
-						elseif CLIENT then
-							hasPistolier = cwBeliefs and cwBeliefs.HasBelief and cwBeliefs:HasBelief("pistolier");
-						end
+						local hasPistolier = cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("pistolier");
+						local hasFavored = self.Owner:GetSharedVar("favored");
+						local hasMarked = self.Owner:GetSharedVar("marked");
 						
 						local misfireChance = self.MisfireChance;
 						local itemCondition = itemTable:GetCondition();
@@ -301,13 +297,21 @@ function SWEP:AdjustFireBegotten()
 						if hasPistolier then
 							misfireChance = math.Round(misfireChance / 5);
 						end
+						
+						if hasFavored then
+							misfireChance = math.Round(misfireChance / 2);
+						end
+						
+						if hasMarked then
+							misfireChance = math.Round(misfireChance * 1.5);
+						end
 					
 						--if math.random(1, 100) <= misfireChance then
 						if forceJam or util.SharedRandom("misfire_"..self.Owner:EntIndex(), 1, 100) <= misfireChance then -- acceptable risk of people being able to hack this on the client
 							self:TakeAmmoBegotten(1); -- This should really only ever be 1 unless for some reason we have burst-fire guns or some shit, especially since we have different ammo types.
 							
 							-- 10% chance on misfire for the gun to fucking explode.
-							if math.random(1, 100) <= 10 then
+							if !hasPistolier and !forceJam and ((!hasMarked and math.random(1, 100) <= 10) or (hasMarked and math.random(1, 100) <= 20)) then
 								if SERVER then
 									local position = self.Owner:GetPos();
 									

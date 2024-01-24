@@ -88,7 +88,7 @@ end;
 function cwObserverMode:PlayerCanUseCommand(player, commandTable, arguments)
 	local lowername = string.lower(commandTable.name);
 	
-	if (lowername != "adminhelp" or lowername != "pm") then
+	if (lowername != "spectate" and lowername != "adminhelp" and lowername != "pm") then
 		if player:GetMoveType() == MOVETYPE_NOCLIP and !player:IsAdmin() then
 			Schema:EasyText(player, "darkgrey", "["..self.name.."] You cannot use commands while in spectator mode!");
 			

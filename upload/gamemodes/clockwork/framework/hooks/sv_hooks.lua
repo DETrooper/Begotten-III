@@ -946,7 +946,7 @@ function GM:PlayerSpawn(player)
 				end
 			end]]--
 
-			if (prevRelation) then
+			--[[if (prevRelation) then
 				for k, v in pairs(ents.GetAll()) do
 					if (v:IsNPC() or v:IsNextBot()) then
 						prevRelation[player:SteamID()] = prevRelation[player:SteamID()] or {}
@@ -985,7 +985,7 @@ function GM:PlayerSpawn(player)
 						end
 					end
 				end
-			end
+			end]]--
 
 			if (player.cwFirstSpawn) then
 				--[[local ammo = player:GetSavedAmmo()

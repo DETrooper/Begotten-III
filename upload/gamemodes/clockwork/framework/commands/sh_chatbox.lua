@@ -303,7 +303,7 @@ COMMAND:Register();
 local COMMAND = Clockwork.command:New("AdminReply");
 COMMAND.tip = "Send a message to a player as an adminhelp reply.";
 COMMAND.text = "<string Name> <string Message>";
-COMMAND.flags = CMD_DEFAULT;
+--COMMAND.flags = CMD_DEFAULT;
 COMMAND.access = "s";
 COMMAND.arguments = 2;
 

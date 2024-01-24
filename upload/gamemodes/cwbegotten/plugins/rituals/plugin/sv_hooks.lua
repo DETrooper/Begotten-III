@@ -364,6 +364,26 @@ function cwRituals:PlayerCharacterLoaded(player)
 		end
 	end
 	
+	if self.summonedNPCs then
+		for i, v in ipairs(self.summonedNPCs) do
+			if IsValid(v) and v.summonedFaith then
+				if player:GetFaith() == v.summonedFaith then
+					v:AddEntityRelationship(player, D_LI, 99);
+				elseif v.summonedFaith == "Faith of the Family" then
+					local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+					
+					if faction == "Goreic Warrior" then
+						v:AddEntityRelationship(player, D_LI, 99);
+					else
+						v:AddEntityRelationship(player,  D_HT, 99);
+					end
+				else
+					v:AddEntityRelationship(player,  D_HT, 99);
+				end
+			end
+		end
+	end
+	
 	local kinisgerOverride = player:GetCharacterData("kinisgerOverride");
 	local kinisgerOverrideSubfaction = player:GetCharacterData("kinisgerOverrideSubfaction");
 	
@@ -557,6 +577,20 @@ function cwRituals:PlayerCharacterLoaded(player)
 	
 	netstream.Start(player, "LoadRitualBinds", player:GetCharacterData("BoundRituals", {}));
 end;
+
+function cwRituals:EntityRemoved(entity)
+	if entity:IsNPC() or entity:IsNextBot() then
+		if self.summonedNPCs then
+			for i, v in ipairs(self.summonedNPCs) do
+				if v == entity then
+					table.remove(self.summonedNPCs, i);
+					
+					break;
+				end
+			end
+		end
+	end
+end
 
 function cwRituals:FuckMyLife(entity, damageInfo)
 	if !entity.opponent then

@@ -1084,11 +1084,14 @@ local function Guarding(ent, dmginfo)
 						if ent.HasBelief then
 							local max_stability = ent:GetMaxStability();
 							local deflectionPoisePayback = 10;
+							local deflectionStabilityPayback = 10;
 						
 							if ent:HasBelief("sidestep") then
 								deflectionPoisePayback = 35;
+								deflectionStabilityPayback = 20;
 							elseif ent:HasBelief("deflection") then
 								deflectionPoisePayback = 25;
+								deflectionStabilityPayback = 15;
 							end
 							
 							if IsValid(inflictor) and inflictor:GetNWString("activeOffhand") then
@@ -1097,7 +1100,7 @@ local function Guarding(ent, dmginfo)
 							
 							--ent:SetNWInt("meleeStamina", math.Clamp(ent:GetNWInt("meleeStamina", max_poise) + deflectionPoisePayback, 0, max_poise));
 							ent:HandleStamina(deflectionPoisePayback);
-							ent:SetCharacterData("stability", math.Clamp(ent:GetCharacterData("stability", max_stability) + deflectionPoisePayback, 0, max_stability));
+							ent:SetCharacterData("stability", math.Clamp(ent:GetCharacterData("stability", max_stability) + deflectionStabilityPayback, 0, max_stability));
 							ent:SetNWInt("stability", ent:GetCharacterData("stability", max_stability));
 						end
 						

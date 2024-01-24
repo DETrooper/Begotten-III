@@ -848,7 +848,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						local maxHealth = attacker:GetMaxHealth();
 						local lowerBound = maxHealth * 0.1;
 						local modifier = math.Clamp(-(((health - lowerBound) / (maxHealth - lowerBound)) - 1), 0, 1);
-						local bonus = 0.40 * modifier;
+						local bonus = 0.5 * modifier;
 						
 						newDamage = newDamage + (originalDamage * bonus);
 					end
@@ -2065,7 +2065,7 @@ function cwBeliefs:ModifyPlayerSpeed(player, infoTable)
 			local maxHealth = player:GetMaxHealth();
 			local lowerBound = maxHealth * 0.25;
 			local modifier = math.Clamp(-(((health - lowerBound) / (maxHealth - lowerBound)) - 1), 0, 1);
-			local bonus = 0.15 * modifier;
+			local bonus = 0.2 * modifier;
 			
 			--[[
 			if cash >= 100 and cash < 250 then
