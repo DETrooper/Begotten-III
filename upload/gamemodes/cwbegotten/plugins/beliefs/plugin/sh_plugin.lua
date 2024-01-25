@@ -367,8 +367,13 @@ function COMMAND:OnRun(player, arguments)
 			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
 				local curTime = CurTime();
 				local message = "\""..table.concat(arguments, " ", 2).."\"";
+				local targetFaith = target:GetFaith();
+				
+				if target:GetSharedVar("kinisgerOverride") == "Goreic Warrior" and target:GetSharedVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
+					targetFaith = "Faith of the Family";
+				end
 
-				if (target:GetFaith() == "Faith of the Dark" or target:GetSubfaith() == "Faith of the Sister") then
+				if (targetFaith == "Faith of the Dark" or target:GetSubfaith() == "Faith of the Sister") then
 					player:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
 					target:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
 					Clockwork.chatBox:Add(player, player, "darkwhisper", message);
@@ -417,8 +422,13 @@ function COMMAND:OnRun(player, arguments)
 			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
 				local curTime = CurTime();
 				local message = "\""..table.concat(arguments, " ", 1).."\"";
+				local targetFaith = target:GetFaith();
+				
+				if target:GetSharedVar("kinisgerOverride") == "Goreic Warrior" and target:GetSharedVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
+					targetFaith = "Faith of the Family";
+				end
 
-				if (target:GetFaith() == "Faith of the Dark" or target:GetSubfaith() == "Faith of the Sister") then
+				if (targetFaith == "Faith of the Dark" or target:GetSubfaith() == "Faith of the Sister") then
 					player:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
 					target:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
 					Clockwork.chatBox:Add(player, player, "darkwhisper", message);

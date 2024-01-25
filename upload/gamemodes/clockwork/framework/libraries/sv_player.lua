@@ -953,45 +953,51 @@ end
 -- A function to set whether a player is whitelisted for a faction.
 function Clockwork.player:SetWhitelisted(player, faction, isWhitelisted)
 	local whitelisted = player:GetData("Whitelisted", {})
+	local newTab = {}; -- Janky fix since sometimes players get randomly de-whitelisted by it being a key-value pair table.
 
-	if (isWhitelisted) then
-		if (!self:IsWhitelisted(player, faction)) then
-			whitelisted[table.Count(whitelisted) + 1] = faction
+	for k, v in pairs(whitelisted) do
+		if !table.HasValue(newTab, v) then
+			table.insert(newTab, v);
+		end
+	end
+	
+	if isWhitelisted then
+		if !table.HasValue(newTab, faction) then
+			table.insert(newTab, faction);
 		end
 	else
-		for k, v in pairs(whitelisted) do
-			if (v == faction) then
-				whitelisted[k] = nil
-			end
-		end
+		table.RemoveByValue(newTab, faction);
 	end
 
 	netstream.Start(
 		player, "SetWhitelisted", {faction, isWhitelisted}
 	)
-	player:SetData("Whitelisted", whitelisted)
+	player:SetData("Whitelisted", newTab)
 end
 
 -- A function to set whether a player is whitelisted for a subfaction.
 function Clockwork.player:SetWhitelistedSubfaction(player, subfaction, isWhitelisted)
 	local whitelisted = player:GetData("WhitelistedSubfactions", {})
+	local newTab = {}; -- Janky fix since sometimes players get randomly de-whitelisted by it being a key-value pair table.
 
-	if (isWhitelisted) then
-		if (!self:IsWhitelisted(player, subfaction)) then
-			whitelisted[table.Count(whitelisted) + 1] = subfaction
+	for k, v in pairs(whitelisted) do
+		if !table.HasValue(newTab, v) then
+			table.insert(newTab, v);
+		end
+	end
+	
+	if isWhitelisted then
+		if !table.HasValue(newTab, subfaction) then
+			table.insert(newTab, subfaction);
 		end
 	else
-		for k, v in pairs(whitelisted) do
-			if (v == subfaction) then
-				whitelisted[k] = nil
-			end
-		end
+		table.RemoveByValue(newTab, subfaction);
 	end
 
 	netstream.Start(
 		player, "SetWhitelistedSubfaction", {subfaction, isWhitelisted}
 	)
-	player:SetData("WhitelistedSubfactions", whitelisted)
+	player:SetData("WhitelistedSubfactions", newTab)
 end
 
 -- A function to create a Condition timer.
