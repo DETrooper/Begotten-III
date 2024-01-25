@@ -3105,7 +3105,7 @@ function SWEP:Initialize()
 	if blocktableOffhand then
 		self.RaiseSpeed = math.max(blocktable["raisespeed"], blocktableOffhand["raisespeed"]) * 1.666;
 		self.LowerSpeed =  math.max(blocktable["raisespeed"], blocktableOffhand["raisespeed"]) * 1.666;
-		self.InstantRaise = false;
+		self.InstantRaise = (blocktable["instantraise"] and blocktableOffhand["instantraise"]);
 	else
 		self.RaiseSpeed = blocktable["raisespeed"];
 		self.LowerSpeed = blocktable["raisespeed"];
