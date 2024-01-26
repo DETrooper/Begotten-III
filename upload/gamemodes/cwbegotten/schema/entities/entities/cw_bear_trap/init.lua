@@ -20,6 +20,10 @@ function ENT:Initialize()
 	self:SetSolid(SOLID_VPHYSICS);
 	self.ArmorPiercing = 80;
 	self.unblockable = true;
+	
+	if !self.condition then
+		self.condition = 100;
+	end
 
 	local physicsObject = self:GetPhysicsObject();
 	

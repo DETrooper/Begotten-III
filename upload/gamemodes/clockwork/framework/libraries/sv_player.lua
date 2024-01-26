@@ -2765,7 +2765,7 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 						if (hook.Run("PlayerCanRagdollDecay", player, ragdollTable.entity, decay)) then
 							Clockwork.entity:Decay(ragdollTable.entity, decay)
 						end
-					else
+					elseif IsValid(ragdollTable.entity) then
 						ragdollTable.entity:Remove()
 					end
 				end
