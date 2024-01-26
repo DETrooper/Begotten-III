@@ -48,19 +48,27 @@ local ITEM = item.New(nil, true);
 			player:SetModel(replacement)
 		elseif (self.replacement) then
 			player:SetModel(self.replacement)
-		elseif (self.group) and player:IsRagdolled() then
-			local ragdollEntity = player:GetRagdollEntity();
+		elseif (self.group) then
+			local helmetItem = player:GetHelmetEquipped();
 			
-			if IsValid(ragdollEntity) and player:Alive() then
-				local model;
+			if !helmetItem or !helmetItem.headReplacement then
+				Clockwork.player:SetDefaultModel(player);
+			end
+		
+			if player:IsRagdolled() then
+				local ragdollEntity = player:GetRagdollEntity();
 				
-				if self.genderless then
-					model = "models/begotten/"..self.group..".mdl";
-				else
-					model = "models/begotten/"..self.group.."_"..string.lower(player:GetGender())..".mdl";
+				if IsValid(ragdollEntity) and player:Alive() then
+					local model;
+					
+					if self.genderless then
+						model = "models/begotten/"..self.group..".mdl";
+					else
+						model = "models/begotten/"..self.group.."_"..string.lower(player:GetGender())..".mdl";
+					end
+					
+					ragdollEntity:SetNWString("clothes", model);
 				end
-				
-				ragdollEntity:SetNWString("clothes", model);
 			end
 		end
 		
@@ -151,14 +159,6 @@ local ITEM = item.New(nil, true);
 					player:SetSharedVar("faceConcealed", false);
 				end
 				
-				if (self.group) and player:IsRagdolled() then
-					local ragdollEntity = player:GetRagdollEntity();
-					
-					if IsValid(ragdollEntity) and player:Alive() then
-						ragdollEntity:SetNWString("clothes", nil);
-					end
-				end
-				
 				if extraData == "drop" then
 					local trace = player:GetEyeTraceNoCursor()
 
@@ -185,6 +185,41 @@ local ITEM = item.New(nil, true);
 				Clockwork.player:SetDefaultSkin(player);
 				hook.Run("PlayerSetHandsModel", player, player:GetHands());
 				player:RebuildInventory();
+				
+				if player:IsRagdolled() then
+					local ragdollEntity = player:GetRagdollEntity();
+					
+					if IsValid(ragdollEntity) and player:Alive() then
+						if !helmetItem or !helmetItem.headReplacement then
+							ragdollEntity:SetModel(Clockwork.player:GetDefaultModel(player));
+							ragdollEntity:SetSkin(Clockwork.player:GetDefaultSkin(player));
+						end
+
+						local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+						local factionTable = Clockwork.faction:FindByID(faction);
+						local model = player:GetModel();
+						
+						if factionTable then
+							local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+							
+							if subfaction and factionTable.subfactions then
+								for i, v in ipairs(factionTable.subfactions) do
+									if v.name == subfaction and v.models then
+										model = v.models[string.lower(player:GetGender())].clothes;
+									
+										break;
+									end
+								end
+							end
+							
+							if string.find(model, "models/begotten/heads") then
+								model = factionTable.models[string.lower(player:GetGender())].clothes;
+							end
+						end
+
+						ragdollEntity:SetNWString("clothes", model);
+					end
+				end
 				
 				if player:GetCharacterData("Hatred") then
 					player:SetCharacterData("Hatred", nil);

@@ -170,7 +170,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, 2, 0);
 	ITEM.bulletConditionScale = 0.25;
 	
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1500};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2500};
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "leather"}};
 ITEM:Register();
 

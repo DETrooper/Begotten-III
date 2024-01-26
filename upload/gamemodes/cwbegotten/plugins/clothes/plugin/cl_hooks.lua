@@ -39,41 +39,46 @@ function PLUGIN:Tick()
 	end
 	
 	for k, v in pairs(ents.FindByClass("prop_ragdoll")) do
-		if v:GetNWString("clothes") then
-			if string.sub(v:GetModel(), 1, 21) == "models/begotten/heads" then
-				if !IsValid(v.clothesEnt) then
-					local clothesEnt = ClientsideModel(v:GetNWString("clothes"), RENDERGROUP_BOTH);
-					
-					if IsValid(clothesEnt) then
-						clothesEnt:SetParent(v);
-						clothesEnt:AddEffects(EF_BONEMERGE);
-						clothesEnt:SetColor(v:GetColor());
-						clothesEnt:SetNoDraw(v:GetNoDraw());
-						
-						v.clothesEnt = clothesEnt;
-					end
-				else
-					local clothesEnt = v.clothesEnt;
-					
-					if clothesEnt:GetModel() ~= v:GetNWString("clothes") then
-						clothesEnt:Remove();
-						v.clothesEnt = ClientsideModel(v:GetNWString("clothes"), RENDERGROUP_BOTH);
-					end
+		local model = v:GetNWString("clothes");
+		
+		if string.sub(v:GetModel(), 1, 21) == "models/begotten/heads" then
+			if IsValid(v.clothesEnt) and v.clothesEnt:GetModel() ~= model then
+				v.clothesEnt:Remove();
+				v.clothesEnt = nil;
+			end
+		
+			if !IsValid(v.clothesEnt) then
+				local clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
 				
-					if clothesEnt:GetParent() ~= v then
-						clothesEnt:SetParent(v);
-						clothesEnt:AddEffects(EF_BONEMERGE);
-					end
-					
+				if IsValid(clothesEnt) then
+					clothesEnt:SetParent(v);
+					clothesEnt:AddEffects(EF_BONEMERGE);
 					clothesEnt:SetColor(v:GetColor());
 					clothesEnt:SetNoDraw(v:GetNoDraw());
-					clothesEnt:SetPos(v:GetPos());
+					
+					v.clothesEnt = clothesEnt;
 				end
 			else
-				if IsValid(v.clothesEnt) then
-					v.clothesEnt:Remove();
-					v.clothesEnt = nil;
+				local clothesEnt = v.clothesEnt;
+				
+				if clothesEnt:GetModel() ~= v:GetNWString("clothes") then
+					clothesEnt:Remove();
+					v.clothesEnt = ClientsideModel(v:GetNWString("clothes"), RENDERGROUP_BOTH);
 				end
+			
+				if clothesEnt:GetParent() ~= v then
+					clothesEnt:SetParent(v);
+					clothesEnt:AddEffects(EF_BONEMERGE);
+				end
+				
+				clothesEnt:SetColor(v:GetColor());
+				clothesEnt:SetNoDraw(v:GetNoDraw());
+				clothesEnt:SetPos(v:GetPos());
+			end
+		else
+			if IsValid(v.clothesEnt) then
+				v.clothesEnt:Remove();
+				v.clothesEnt = nil;
 			end
 		end
 	end

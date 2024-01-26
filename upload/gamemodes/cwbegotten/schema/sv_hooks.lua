@@ -912,7 +912,7 @@ function Schema:ShowSpare1(player)
 		return;
 	end;
 
-	Clockwork.player:InventoryAction(player, "use", itemTable.uniqueID, itemTable.itemID);
+	Clockwork.player:InventoryAction(player, itemTable, "use");
 end;
 
 -- Called when a player presses F4.

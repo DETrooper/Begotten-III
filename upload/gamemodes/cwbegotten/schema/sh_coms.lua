@@ -1289,27 +1289,22 @@ local COMMAND = Clockwork.command:New("CharTakeCustomClass");
 	end;
 COMMAND:Register();
 
-local COMMAND = Clockwork.command:New("InvZipTie");
-	COMMAND.tip = "Use a zip tie from your inventory.";
+local COMMAND = Clockwork.command:New("InvTie");
+	COMMAND.tip = "Use bindings from your inventory to restrain a character that is looking away from you.";
 	COMMAND.flags = CMD_DEFAULT;
+	COMMAND.alias = {"InvZipTie", "InvBind", "InvRestrain"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		local curTime = CurTime();
+		local itemTable = player:FindItemByID("bindings");
 		
-		if !player.nextZipTie or player.nextZipTie < curTime then
-			local itemTable = player:FindItemByID("bindings");
+		if (!itemTable) then
+			Schema:EasyText(player, "chocolate", "You have nothing to tie with!");
 			
-			if (!itemTable) then
-				Schema:EasyText(player, "chocolate", "You have nothing to tie with!");
-				
-				return;
-			end;
+			return;
+		end;
 
-			Clockwork.player:InventoryAction(player, "use", itemTable.uniqueID, itemTable.itemID);
-		else
-			Schema:EasyText(player, "peru", "You must wait another "..-math.ceil(curTime - player.nextZipTie).." seconds before attempting to tie someone again!");
-		end
+		Clockwork.player:InventoryAction(player, itemTable, "use");
 	end;
 COMMAND:Register();
 

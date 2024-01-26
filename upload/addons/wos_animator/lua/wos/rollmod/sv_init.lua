@@ -179,14 +179,14 @@ function meta:StartRolling(a)
 	if Clockwork then
 		if self.GetCharacterData then
 			local stamina = self:GetCharacterData("Stamina");
-			local stamina_loss = 10;
+			local stamina_loss = 15;
 			
 			if time == 1 then
-				stamina_loss = 15;
-			elseif time == 1.25 then
 				stamina_loss = 20;
+			elseif time == 1.1 then
+				stamina_loss = 25;
 			end
-			
+
 			if self.GetCharmEquipped and self:GetCharmEquipped("boot_contortionist") then
 				stamina_loss = stamina_loss * 0.5;
 			end

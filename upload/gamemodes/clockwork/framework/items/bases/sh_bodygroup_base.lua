@@ -71,13 +71,24 @@ local ITEM = Clockwork.item:New(nil, true)
 	function ITEM:ResetBodygroup(player, bg)
 		player:SetBodygroup(bg or 0, 0)
 		
+		if player:Alive() then
+			local ragdollEntity = player:GetRagdollEntity();
+			
+			if IsValid(ragdollEntity) then
+				ragdollEntity:SetBodygroup(bg or 0, 0)
+			end
+		end
+		
 		if self.headReplacement then
-			player:SetModel(player:GetDefaultModel());
+			local model = player:GetDefaultModel();
+			
+			player:SetModel(model);
 			
 			if player:Alive() then
+				local ragdollEntity = player:GetRagdollEntity();
+				
 				if IsValid(ragdollEntity) then
-					ragdollEntity:SetModel(player:GetDefaultModel());
-					ragdollEntity:SetBodygroup(bg or 0, 0)
+					ragdollEntity:SetModel(model);
 				end
 			end
 		end
@@ -90,6 +101,16 @@ local ITEM = Clockwork.item:New(nil, true)
 			player:SetBodygroup(0, 0);
 			player:SetBodygroup(1, 0);
 			player:SetModel(self.headReplacement);
+			
+			if player:Alive() then
+				local ragdollEntity = player:GetRagdollEntity();
+				
+				if IsValid(ragdollEntity) then
+					ragdollEntity:SetBodygroup(0, 0)
+					ragdollEntity:SetBodygroup(1, 0)
+					ragdollEntity:SetModel(self.headReplacement);
+				end
+			end
 		else
 			self:SetBodygroup(player, self.bodyGroup, self.bodyGroupVal)
 		end
