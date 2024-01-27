@@ -302,6 +302,7 @@ local COMMAND = Clockwork.command:New("CharTransferFaction");
 					target:SetCharacterData("Faction", faction, true);
 					target:SetCharacterData("Subfaction", "", true);
 					target:SetCharacterData("rank", nil);
+					target:SetCharacterData("rankOverride", nil);
 					
 					Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
 					Clockwork.player:NotifyAll(player:Name().." has transferred "..name.." to the "..faction.." faction.");
