@@ -3038,7 +3038,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 60;
+		RECIPE.experience = 30;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -3207,7 +3207,7 @@ RECIPE:Register()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 3},
 			["wood"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -3218,7 +3218,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 20;
+		RECIPE.experience = 25;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -3233,14 +3233,14 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("warpedsword");
 		RECIPE.name = "Warped Sword";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 2},
 			["wood"] = {amount = 1},
-			["tortured_spirit"] = {amount = 1},
+			["belphegor_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_1h_warpedsword"] = {amount = 1},

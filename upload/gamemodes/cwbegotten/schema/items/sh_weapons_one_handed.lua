@@ -646,7 +646,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.weight = 0.9;
 	ITEM.uniqueID = "begotten_1h_scimitar";
 	ITEM.category = "Melee";
-	ITEM.description = "A curved steel sword inspired by designs from the far eastern Darklands brought back by campaigning soldiers under Lord Maximus. This type of sword excels at cutting.";
+	ITEM.description = "A curved iron sword inspired by designs from the far eastern Darklands brought back by campaigning soldiers under Lord Maximus. This type of sword excels at cutting.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/scimitar.png"
 	ITEM.meleeWeapon = true;
 	ITEM.isAttachment = true;
@@ -659,7 +659,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "wood"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, supercrateOnly = true};
 ITEM:Register();
 
