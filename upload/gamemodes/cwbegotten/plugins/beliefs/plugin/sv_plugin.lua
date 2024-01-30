@@ -101,7 +101,12 @@ function cwBeliefs:TakeBelief(player, uniqueID, niceName, category)
 	local points = player:GetCharacterData("points", 0)
 	
 	if (points <= 0) then
-		Schema:EasyText(player, "chocolate", "You do not have enough faith to follow this belief!")
+		Schema:EasyText(player, "peru", "You do not have enough faith to follow this belief!")
+		return false
+	end;
+
+	if (player:GetNetVar("tied") != 0) then
+		Schema:EasyText(player, "peru", "You cannot follow beliefs when you are tied!");
 		return false
 	end;
 	
