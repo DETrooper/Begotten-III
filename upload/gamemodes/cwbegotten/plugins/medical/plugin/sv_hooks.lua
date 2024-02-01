@@ -623,22 +623,23 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 			hitGroup = Clockwork.kernel:GetRagdollHitGroup(player, damageInfo:GetDamagePosition());
 		end
 	end
-	
-	if (hitGroup and isnumber(hitGroup)) then
-		hitGroup = self.cwHitGroupToString[hitGroup];
-	end;
 
 	if (self:IsLimbDisabled(player, hitGroup)) then
 		return;
 	end;
 	
 	local limbs = self:GetLimbs(player);
+	local hitGroupStr = hitGroup;
 	
-	if limbs and limbs[hitGroup] then
+	if (hitGroupStr and isnumber(hitGroupStr)) then
+		hitGroupStr = self.cwHitGroupToString[hitGroupStr];
+	end;
+	
+	if limbs and limbs[hitGroupStr] then
 		local maxHealth = player:GetMaxHealth() or 100;
 		local health = math.max(player:Health() or 100, maxHealth);
 		
-		limbs[hitGroup] = math.Clamp(limbs[hitGroup] + damage, 0, health);
+		limbs[hitGroupStr] = math.Clamp(limbs[hitGroupStr] + damage, 0, health);
 	end
 	
 	hook.Run("PlayerLimbDamageTaken", player, hitGroup, damage, damageInfo);

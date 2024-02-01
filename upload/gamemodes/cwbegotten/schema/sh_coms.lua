@@ -569,6 +569,7 @@ local COMMAND = Clockwork.command:New("CharUnPermakill");
 		end
 		
 		local charactersTable = config.Get("mysql_characters_table"):Get();
+		local schemaFolder = Clockwork.kernel:GetSchemaFolder()
 		local charName = arguments[1];
 		
 		local queryObj = Clockwork.database:Select(charactersTable);
@@ -594,6 +595,8 @@ local COMMAND = Clockwork.command:New("CharUnPermakill");
 					Schema:EasyText(player, "grey", arguments[1].." is not a valid character in the database!");
 				end;
 			end);
+			
+			queryObj:Where("_Schema", schemaFolder)
 			queryObj:Where("_Name", charName);
 		queryObj:Execute()
 	end;

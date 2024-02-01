@@ -3265,6 +3265,7 @@ function GM:PlayerCharacterCreated(player, character)
 	timer.Simple(5, function()
 		if IsValid(player) and character then
 			local charactersTable = config.Get("mysql_characters_table"):Get();
+			local schemaFolder = Clockwork.kernel:GetSchemaFolder()
 			local key_found = false;
 			
 			local queryObj = Clockwork.database:Select(charactersTable)
@@ -3291,6 +3292,7 @@ function GM:PlayerCharacterCreated(player, character)
 					end
 				end);
 				
+				queryObj:Where("_Schema", schemaFolder)
 				queryObj:Where("_Name", character.name)
 			queryObj:Execute()
 		end

@@ -1726,6 +1726,7 @@ end;
 
 function Schema:AddBounty(key, bounty, reason, poster)
 	local charactersTable = config.Get("mysql_characters_table"):Get();
+	local schemaFolder = Clockwork.kernel:GetSchemaFolder()
 	local queryObj = Clockwork.database:Select(charactersTable)
 		queryObj:Callback(function(result)
 			if (Clockwork.database:IsResult(result)) then
@@ -1841,6 +1842,8 @@ function Schema:AddBounty(key, bounty, reason, poster)
 				Schema:EasyText(poster, "peru", "The character "..tostring(key).." could not be located!");
 			end
 		end);
+		
+		queryObj:Where("_Schema", schemaFolder)
 
 		if tonumber(key) then
 			queryObj:Where("_Key", tonumber(key))
@@ -1852,6 +1855,7 @@ end
 
 function Schema:RemoveBounty(key, remover)
 	local charactersTable = config.Get("mysql_characters_table"):Get();
+	local schemaFolder = Clockwork.kernel:GetSchemaFolder()
 	local queryObj = Clockwork.database:Select(charactersTable)
 		queryObj:Callback(function(result)
 			if (Clockwork.database:IsResult(result)) then
@@ -1885,6 +1889,8 @@ function Schema:RemoveBounty(key, remover)
 				Schema:EasyText(remover, "peru", "The character "..tostring(key).." could not be located or does not have a bounty!");
 			end
 		end);
+		
+		queryObj:Where("_Schema", schemaFolder)
 
 		if tonumber(key) then
 			queryObj:Where("_Key", tonumber(key))

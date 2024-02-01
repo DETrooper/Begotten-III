@@ -337,6 +337,7 @@ function cwShacks:GetPropertyInfo(player, shack)
 		
 		if shack then
 			local charactersTable = config.Get("mysql_characters_table"):Get();
+			local schemaFolder = Clockwork.kernel:GetSchemaFolder()
 			local items = 0;
 			
 			if shack.owner then
@@ -385,6 +386,7 @@ function cwShacks:GetPropertyInfo(player, shack)
 						end
 					end);
 					
+					queryObj:Where("_Schema", schemaFolder)
 					queryObj:Where("_Key", shack.owner)
 				queryObj:Execute()
 			else
@@ -529,6 +531,7 @@ function cwShacks:LoadShackData()
 		self.shackData = Clockwork.kernel:RestoreSchemaData("plugins/shacks/"..game.GetMap()) or {};
 		
 		local charactersTable = config.Get("mysql_characters_table"):Get()
+		local schemaFolder = Clockwork.kernel:GetSchemaFolder()
 		
 		for k, v in pairs(self.shackData) do
 			if v.owner == "" then v.owner = nil end;
@@ -616,6 +619,7 @@ function cwShacks:LoadShackData()
 					end
 				end);
 				
+				queryObj:Where("_Schema", schemaFolder)
 				queryObj:Where("_Key", v.owner)
 			queryObj:Execute()
 		end

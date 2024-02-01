@@ -25,6 +25,7 @@ function Schema:ClockworkInitialized()
 	end
 	
 	local charactersTable = config.Get("mysql_characters_table"):Get()
+	local schemaFolder = Clockwork.kernel:GetSchemaFolder()
 	
 	for k, v in pairs(self.bountyData) do
 		local queryObj = Clockwork.database:Select(charactersTable)
@@ -57,7 +58,8 @@ function Schema:ClockworkInitialized()
 					end
 				end
 			end);
-				
+
+			queryObj:Where("_Schema", schemaFolder)
 			queryObj:Where("_Key", k)
 		queryObj:Execute()
 	end
