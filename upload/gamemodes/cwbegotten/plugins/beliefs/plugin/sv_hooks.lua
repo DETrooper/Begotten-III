@@ -1157,9 +1157,10 @@ end;
 function cwBeliefs:FuckMyLife(entity, damageInfo)
 	local attacker = damageInfo:GetAttacker();
 	local damage = damageInfo:GetDamage() or 0;
+	local entTab = entity:GetTable();
 	
 	if (attacker:IsPlayer()) then
-		if entity:IsPlayer() and not entity.cwWakingUp then
+		if entity:IsPlayer() and not entTab.cwWakingUp then
 			if damage > 0 then
 				if attacker:IsOnFire() and attacker:HasBelief("extinctionist") then
 					local inflictor = damageInfo:GetInflictor();
@@ -1172,12 +1173,12 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 		
 			if damage >= 10 then
 				if entity:HasBelief("deceitful_snake") then
-					if !entity.warCryVictims then
-						entity.warCryVictims = {};
+					if !entTab.warCryVictims then
+						entTab.warCryVictims = {};
 					end
 					
-					if not table.HasValue(entity.warCryVictims, attacker) then
-						table.insert(entity.warCryVictims, attacker);
+					if not table.HasValue(entTab.warCryVictims, attacker) then
+						table.insert(entTab.warCryVictims, attacker);
 					end
 				
 					netstream.Start(entity, "DeceitfulHighlight", attacker);
@@ -1188,13 +1189,13 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 					
 					timer.Create("deceitfulSnakeTimer_"..attacker:EntIndex()..entity:EntIndex(), 40.5, 1, function()
 						if IsValid(entity) then
-							if entity.warCryVictims then
-								if table.HasValue(entity.warCryVictims, attacker) then
-									table.RemoveByValue(entity.warCryVictims, attacker);
+							if entTab.warCryVictims then
+								if table.HasValue(entTab.warCryVictims, attacker) then
+									table.RemoveByValue(entTab.warCryVictims, attacker);
 								end
 								
-								if table.IsEmpty(entity.warCryVictims) then
-									entity.warCryVictims = nil;
+								if table.IsEmpty(entTab.warCryVictims) then
+									entTab.warCryVictims = nil;
 								end
 							end
 						end
@@ -1203,7 +1204,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 			end
 			
 			if not attacker.opponent and entity:CharPlayTime() > 1800 and attacker ~= entity then
-				if !cwRituals or (cwRituals and !entity.scornificationismActive) then
+				if !cwRituals or (cwRituals and !entTab.scornificationismActive) then
 					local attackerFaction = attacker:GetFaction();
 					local attackerFactionTable = Clockwork.faction:FindByID(attackerFaction);
 					
@@ -1247,14 +1248,14 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	end
 	
 	if damage > 1 and damage < entity:Health() then
-		if entity:IsPlayer() and !entity.opponent and entity:GetSubfaith() == "Sol Orthodoxy" then
-			if !cwRituals or (cwRituals and !entity.scornificationismActive) then
+		if entity:IsPlayer() and !entTab.opponent and entity:GetSubfaith() == "Sol Orthodoxy" then
+			if !cwRituals or (cwRituals and !entTab.scornificationismActive) then
 				entity:HandleXP(damage / 2);
 			end
 		end
 	end
 	
-	if entity:IsPlayer() and not entity.opponent and damage >= 10 then
+	if entity:IsPlayer() and not entTab.opponent and damage >= 10 then
 		if cwCharacterNeeds then
 			if entity:HasBelief("prison_of_flesh") then
 				if entity:HasTrait("possessed") then
@@ -1287,13 +1288,13 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 			end
 		end]]--
 		
-		if entity:IsPlayer() and not entity.cwWakingUp then
+		if entity:IsPlayer() and not entTab.cwWakingUp then
 			local clothesItem = entity:GetClothesEquipped();
 			
 			if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
 				local hatred = math.min(entity:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 2))), 100);
 				
-				if !entity.opponent then
+				if !entTab.opponent then
 					entity:SetCharacterData("Hatred", hatred);
 				end
 				
@@ -1307,8 +1308,8 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 			local hatred = entity:GetNetVar("Hatred");
 			
 			if hatred and hatred >= 100 then
-				if !cwRituals or (cwRituals and !entity.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then
-					if !entity.opponent then
+				if !cwRituals or (cwRituals and !entTab.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then
+					if !entTab.opponent then
 						entity:SetCharacterData("Hatred", 0);
 					end
 					
@@ -1318,11 +1319,11 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 					Clockwork.chatBox:AddInTargetRadius(entity, "me", "'s hatred is so strong that they simply refuse to die yet!", entity:GetPos(), config.Get("talk_radius"):Get() * 2);
 					
 					if cwMedicalSystem then
-						entity.nextBleedPoint = CurTime() + 180;
+						entTab.nextBleedPoint = CurTime() + 180;
 					end
 					
-					if entity.poisonTicks then
-						entity.poisonTicks = nil;
+					if entTab.poisonTicks then
+						entTab.poisonTicks = nil;
 					end
 					
 					damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
@@ -1334,13 +1335,13 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 		if entity:Health() - damage < 10 then
 			local itemTable = entity:GetCharmEquipped("ring_distorted");
 			
-			if itemTable and !entity.distortedRingFired then
-				if !cwRituals or (cwRituals and !entity.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then
-					if !entity.opponent then
+			if itemTable and !entTab.distortedRingFired then
+				if !cwRituals or (cwRituals and !entTab.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then
+					if !entTab.opponent then
 						itemTable:OnPlayerUnequipped(entity);
 						entity:TakeItem(itemTable, true);
 					else
-						entity.distortedRingFired = true;
+						entTab.distortedRingFired = true;
 					end
 					
 					entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
@@ -1349,17 +1350,48 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 					Clockwork.player:Notify(entity, "Your Distorted Ring shatters and releases a tremendous amount of energy, giving you one last chance at life!");
 					
 					if cwMedicalSystem then
-						entity.nextBleedPoint = CurTime() + 180;
+						entTab.nextBleedPoint = CurTime() + 180;
 					end
 					
-					if entity.poisonTicks then
-						entity.poisonTicks = nil;
+					if entTab.poisonTicks then
+						entTab.poisonTicks = nil;
 					end
 					
 					damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
 					return;
 				end
 			end
+			
+			if !entTab.scornificationismActive and entity:HasBelief("fortitude_finisher") then
+				if (action != "die") and (action != "die_bleedout") then
+					--[[entity:ConCommand("+duck");
+					entity:SetCrouchedWalkSpeed(0.1);]]--
+					
+					Clockwork.player:SetRagdollState(entity, RAGDOLL_KNOCKEDOUT, nil, nil);
+
+					-- Character already has believer's perseverance if they have the fortitude finisher.
+					Clockwork.player:SetAction(entity, "die", 240, 1, function()
+						if (IsValid(entity) and entity:Alive()) then
+							local bloodLevel = entity:GetCharacterData("BloodLevel", self.maxBloodLevel);
+							
+							--if (bloodLevel <= self.lethalBloodLoss) then
+								entity:DeathCauseOverride("Bled out in a puddle of their own blood.");
+								entity:Kill();
+								--entity:TakeDamage(99999, entity, entity);
+								--entity:SetCrouchedWalkSpeed(1);
+							--[[else
+								Clockwork.player:SetAction(entity, "unragdoll", 180, 1, function() end);
+								Clockwork.player:SetRagdollState(entity, RAGDOLL_KNOCKEDOUT, nil, 180);
+								--entity:ConCommand("-duck");
+								--entity:SetCrouchedWalkSpeed(1);
+							end;]]--
+						end;
+					end);
+					
+					damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
+					return;
+				end;
+			end;
 		end
 	end
 end

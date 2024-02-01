@@ -1533,7 +1533,7 @@ local COMMAND = Clockwork.command:New("PlyHealFull");
 		Clockwork.player:SetAction(target, "die_bleedout", false);
 		
 		if target:GetRagdollState() == RAGDOLL_KNOCKEDOUT then
-			Clockwork.player:SetRagdollState(target, RAGDOLL_NONE);
+			Clockwork.player:SetRagdollState(target, RAGDOLL_FALLENOVER);
 		end
 		
 		hook.Run("PlayerHealedFull", target);
@@ -1594,7 +1594,7 @@ local COMMAND = Clockwork.command:New("PlyHealFullAll");
 					hook.Run("PlayerHealedFull", v);
 					
 					if v:GetRagdollState() == RAGDOLL_KNOCKEDOUT then
-						Clockwork.player:SetRagdollState(v, RAGDOLL_NONE);
+						Clockwork.player:SetRagdollState(v, RAGDOLL_FALLENOVER);
 					end
 				end;
 			end;

@@ -115,7 +115,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 									if player:Health() < 10 and action != "die" and action != "die_bleedout" then
 										local dieTime = 60;
 										
-										if player:HasBelief("believers_perseverance") then
+										if cwBeliefs and player:HasBelief("believers_perseverance") then
 											dieTime = 240;
 										end
 										
@@ -232,7 +232,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 
 								local dieTime = 60;
 								
-								if player:HasBelief("believers_perseverance") then
+								if cwBeliefs and player:HasBelief("believers_perseverance") then
 									dieTime = 240;
 								end
 								
@@ -608,6 +608,7 @@ end;
 function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 	local action = Clockwork.player:GetAction(player);
 	local curTime = CurTime();
+	local plyTab = player:GetTable();
 	
 	--[[if (player:GetCharacterData("painpills") and player:GetCharacterData("sanity") > 50) then
 		damageInfo:ScaleDamage(0.75);
@@ -645,8 +646,8 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 	hook.Run("PlayerLimbDamageTaken", player, hitGroup, damage, damageInfo);
 
 	-- Make sure this doesn't happen in a duel.
-	if !player.opponent then
-		if (player:Health() < 10) and !player.scornificationismActive then
+	if !plyTab.opponent then
+		if (player:Health() < 10) and !plyTab.scornificationismActive then
 			if (action != "die") and (action != "die_bleedout") then
 				--[[player:ConCommand("+duck");
 				player:SetCrouchedWalkSpeed(0.1);]]--
@@ -655,7 +656,7 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 				
 				local dieTime = 60;
 				
-				if player:HasBelief("believers_perseverance") then
+				if cwBeliefs and player:HasBelief("believers_perseverance") then
 					dieTime = 240;
 				end
 				
@@ -679,14 +680,14 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 			end;
 		end;
 		
-		if (!player.nextHealWarn or player.nextHealWarn < curTime) then
+		if (!plyTab.nextHealWarn or plyTab.nextHealWarn < curTime) then
 			if (player:Health() <= 50) then
 				Clockwork.hint:Send(player, "You are seriously injured...", 10, Color(175, 100, 100));
 			elseif (player:Health() <= 15) then
 				Clockwork.hint:Send(player, "You are near death...", 10, Color(175, 100, 100));
 			end;
 			
-			player.nextHealWarn = curTime + 45;
+			plyTab.nextHealWarn = curTime + 45;
 		end;
 		
 		--local damageType = damageInfo:GetDamageType();
