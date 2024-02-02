@@ -1362,7 +1362,9 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 				end
 			end
 			
-			if !entTab.scornificationismActive and entity:HasBelief("fortitude_finisher") then
+			if !entTab.scornificationismActive and !entTab.opponent and entity:HasBelief("fortitude_finisher") then
+				local action = Clockwork.player:GetAction(entity);
+			
 				if (action != "die") and (action != "die_bleedout") then
 					--[[entity:ConCommand("+duck");
 					entity:SetCrouchedWalkSpeed(0.1);]]--
