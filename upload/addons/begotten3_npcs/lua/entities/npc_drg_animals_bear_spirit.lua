@@ -23,7 +23,7 @@ ENT.XPValue = 250;
 
 -- Regen --
 
-ENT.HealthRegen = 1
+ENT.HealthRegen = 0
 
 -- AI --
 ENT.RangeAttackRange = 0

@@ -1352,19 +1352,19 @@ RITUAL = cwRituals.rituals:New("enlightenment");
 	end;
 RITUAL:Register()
 
-RITUAL = cwRituals.rituals:New("summon_demon");
-	RITUAL.name = "(T3) Summon Demon";
-	RITUAL.description = "Summon a Begotten Thrall that has become the host of a hell demon. It will be hostile towards anyone not of the Faith of the Dark.";
+RITUAL = cwRituals.rituals:New("summon_eddie");
+	RITUAL.name = "(T3) Summon Demon (Eddie)";
+	RITUAL.description = "Summon a Begotten Thrall that has become the host of a hell demon. It will be hostile towards anyone not of the Faith of the Dark. 10 second cast time. Incurs 15 corruption.";
 	RITUAL.onerequiredbelief = {"sorcerer"}; -- Tier III Faith of the Dark Ritual
 	RITUAL.requiredBeliefsSubfactionOverride = {["Rekh-khet-sa"] = {"embrace_the_darkness"}}; -- Tier III Faith of the Dark Ritual
 	
-	RITUAL.requirements = {"belphegor_catalyst", "tortured_spirit", "pentagram_catalyst"};
-	RITUAL.corruptionCost = 25;
+	RITUAL.requirements = {"belphegor_catalyst", "tortured_spirit", "down_catalyst"};
+	RITUAL.corruptionCost = 15;
 	RITUAL.ritualTime = 10;
-	RITUAL.experience = 50;
+	RITUAL.experience = 35;
 	
 	function RITUAL:OnPerformed(player)
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning a demon near their position!");
+		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning an Otis near their position!");
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -1376,6 +1376,11 @@ RITUAL = cwRituals.rituals:New("summon_demon");
 				Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
 				return false;
 			end
+		end
+
+		if lastZone == "gore_tree" or lastZone == "gore_hallway" or lastZone == "gore" or lastZone == "sea_rough" or lastZone == "sea_calm" or lastZone == "sea_styx" or lastZone == "gore_soil" then
+			Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+			return false;
 		end
 		
 		local trace = player:GetEyeTraceNoCursor();
@@ -1389,6 +1394,11 @@ RITUAL = cwRituals.rituals:New("summon_demon");
 	function RITUAL:EndRitual(player)
 		local lastZone = player:GetCharacterData("LastZone");
 		
+		if lastZone == "gore_tree" or lastZone == "gore_hallway" or lastZone == "gore" or lastZone == "sea_rough" or lastZone == "sea_calm" or lastZone == "sea_styx" or lastZone == "gore_soil" then
+			Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+			return false;
+		end
+
 		if lastZone == "theater" or lastZone == "tower" then
 			if Schema.towerSafeZoneEnabled then
 				Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
@@ -1401,7 +1411,6 @@ RITUAL = cwRituals.rituals:New("summon_demon");
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
 			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
 
-			--local entity = ents.Create("npc_bgt_otis");
 			local entity = ents.Create("npc_bgt_eddie");
 			local playerFaith = player:GetFaith();
 			
@@ -1414,6 +1423,10 @@ RITUAL = cwRituals.rituals:New("summon_demon");
 					entity:CustomInitialize();
 					entity:Spawn();
 					entity:Activate();
+					entity:SetHealth(525);
+
+					entity:SetColor(Color(255,0,0));
+					entity:SetMaterial("models/effects/splode_sheet");
 					
 					entity:AddEntityRelationship(player, D_LI, 99);
 					entity.summonedFaith = playerFaith;
@@ -1442,13 +1455,231 @@ RITUAL = cwRituals.rituals:New("summon_demon");
 	end;
 RITUAL:Register()
 
+RITUAL = cwRituals.rituals:New("summon_otis");
+	RITUAL.name = "(T3) Summon Demon (Otis)";
+	RITUAL.description = "Summon a strong chainsaw-wielding Begotten Thrall that has become the host of a hell demon. It will be hostile towards anyone not of the Faith of the Dark. 15 second cast time. Incurs 25 corruption.";
+	RITUAL.onerequiredbelief = {"sorcerer"}; -- Tier III Faith of the Dark Ritual
+	RITUAL.requiredBeliefsSubfactionOverride = {["Rekh-khet-sa"] = {"embrace_the_darkness"}}; -- Tier III Faith of the Dark Ritual
+	
+	RITUAL.requirements = {"belphegor_catalyst", "tortured_spirit", "pentagram_catalyst"};
+	RITUAL.corruptionCost = 25;
+	RITUAL.ritualTime = 15;
+	RITUAL.experience = 50;
+	
+	function RITUAL:OnPerformed(player)
+		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning an Otis near their position!");
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		local lastZone = player:GetCharacterData("LastZone");
+		
+		if lastZone == "theater" or lastZone == "tower" then
+			if Schema.towerSafeZoneEnabled then
+				Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+				return false;
+			end
+		end
+
+		if lastZone == "gore_tree" or lastZone == "gore_hallway" or lastZone == "gore" or lastZone == "sea_rough" or lastZone == "sea_calm" or lastZone == "sea_styx" or lastZone == "gore_soil" then
+			Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+			return false;
+		end
+		
+		local trace = player:GetEyeTraceNoCursor();
+		
+		if (trace.HitPos:Distance(player:GetShootPos()) > 192) then
+			Schema:EasyText(player, "firebrick", "You cannot summon that far away!");
+			
+			return false;
+		end;
+	end;
+	function RITUAL:EndRitual(player)
+		local lastZone = player:GetCharacterData("LastZone");
+		
+		if lastZone == "gore_tree" or lastZone == "gore_hallway" or lastZone == "gore" or lastZone == "sea_rough" or lastZone == "sea_calm" or lastZone == "sea_styx" or lastZone == "gore_soil" then
+			Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+			return false;
+		end
+
+		if lastZone == "theater" or lastZone == "tower" then
+			if Schema.towerSafeZoneEnabled then
+				Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+				return false;
+			end
+		end
+		
+		local trace = player:GetEyeTraceNoCursor();
+		
+		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
+			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
+
+			local entity = ents.Create("npc_bgt_otis");
+			local playerFaith = player:GetFaith();
+			
+			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
+			sound.Play("misc/summon.wav",trace.HitPos, 100, 100)
+			--entity:SetPos(trace.HitPos);
+			
+			timer.Simple(0.5, function()
+				if IsValid(entity) then
+					entity:CustomInitialize();
+					entity:Spawn();
+					entity:Activate();
+					entity:SetHealth(400);
+
+					entity:SetColor(Color(255,0,0));
+					entity:SetMaterial("models/effects/splode_sheet");
+					
+					entity:AddEntityRelationship(player, D_LI, 99);
+					entity.summonedFaith = playerFaith;
+					
+					for k, v in pairs(_player.GetAll()) do
+						if v:GetFaith() == playerFaith then
+							entity:AddEntityRelationship(v, D_LI, 99);
+						end
+					end
+					
+					if !cwRituals.summonedNPCs then
+						cwRituals.summonedNPCs = {};
+						
+						table.insert(cwRituals.summonedNPCs, entity);
+					end
+					
+					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as an unholy creature of Hell suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
+				end
+			end);
+		else
+			Schema:EasyText(player, "firebrick", "You cannot summon that far away!");
+			
+			return false;
+		end;
+	end;
+
+RITUAL = cwRituals.rituals:New("summon_sprinter");
+	RITUAL.name = "(T3) Summon Demon (Sprinters)";
+	RITUAL.description = "Summon two Begotten Sprinters that have been possessed by loyal demons. They will be hostile towards anyone not of the Faith of the Dark. May their patron deity save your enemies. 15 second cast time. Incurs 25 corruption.";
+	RITUAL.onerequiredbelief = {"sorcerer"}; -- Tier III Faith of the Dark Ritual
+	RITUAL.requiredBeliefsSubfactionOverride = {["Rekh-khet-sa"] = {"embrace_the_darkness"}}; -- Tier III Faith of the Dark Ritual
+	
+	RITUAL.requirements = {"tortured_spirit", "tortured_spirit", "pentagram_catalyst"};
+	RITUAL.corruptionCost = 25;
+	RITUAL.ritualTime = 15;
+	RITUAL.experience = 50;
+	
+	function RITUAL:OnPerformed(player)
+		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Sprinter' ritual, spawning 2 sprinters near their position! God save their enemies.");
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		local lastZone = player:GetCharacterData("LastZone");
+		
+		if lastZone == "gore_tree" or lastZone == "gore_hallway" or lastZone == "gore" or lastZone == "sea_rough" or lastZone == "sea_calm" or lastZone == "sea_styx" or lastZone == "gore_soil" then
+			Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+			return false;
+		end
+
+		if lastZone == "theater" or lastZone == "tower" then
+			if Schema.towerSafeZoneEnabled then
+				Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+				return false;
+			end
+		end
+		
+		local trace = player:GetEyeTraceNoCursor();
+		
+		if (trace.HitPos:Distance(player:GetShootPos()) > 192) then
+			Schema:EasyText(player, "firebrick", "You cannot summon that far away!");
+			
+			return false;
+		end;
+	end;
+	function RITUAL:EndRitual(player)
+		local lastZone = player:GetCharacterData("LastZone");
+
+
+		if lastZone == "gore_tree" or lastZone == "gore_hallway" or lastZone == "gore" or lastZone == "sea_rough" or lastZone == "sea_calm" or lastZone == "sea_styx" or lastZone == "gore_soil" then
+			Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+			return false;
+		end
+		
+		
+		if lastZone == "theater" or lastZone == "tower" then
+			if Schema.towerSafeZoneEnabled then
+				Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+				return false;
+			end
+		end
+		
+		local trace = player:GetEyeTraceNoCursor();
+		
+		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
+			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
+
+			local positions = {
+				["1"] = trace.HitPos + (player:GetRight() * 25),
+				["2"] = trace.HitPos - (player:GetRight() * 25),
+
+			};
+
+			local playerFaith = player:GetFaith();
+
+			for _, v in pairs(positions) do
+				ParticleEffect("teleport_fx", v, Angle(0,0,0), nil)
+				sound.Play("misc/summon.wav", v, 100, 100)
+
+			end
+			
+			timer.Simple(0.5, function()
+				for _, v in pairs(positions) do
+					local entity = ents.Create("npc_bgt_another");
+
+					if !IsValid(entity) then continue; end
+
+					entity:CustomInitialize();
+					entity:Spawn();
+					entity:Activate();
+					entity:SetModel("models/begotten/thralls/another_sprinter.mdl");
+					entity:SetHealth(250);
+					
+					entity:SetColor(Color(255,0,0));
+					entity:SetMaterial("models/effects/splode_sheet");
+
+					entity:AddEntityRelationship(player, D_LI, 99);
+					entity.summonedFaith = playerFaith;
+					entity.RunAnimation = ACT_RUN;
+					entity.Summoned = true;
+
+					for k, v in pairs(_player.GetAll()) do
+						if v:GetFaith() == playerFaith then
+							entity:AddEntityRelationship(v, D_LI, 99);
+						end
+					end
+
+					Clockwork.entity:MakeFlushToGround(entity, v + Vector(0, 0, 64), trace.HitNormal);
+
+				end
+					
+				Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as two unholy Sprinters of Hell summon into this plane! Oh fuck!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
+
+			end);
+		else
+			Schema:EasyText(player, "firebrick", "You cannot summon that far away!");
+			
+			return false;
+		end;
+	end;
+RITUAL:Register()
+
 RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 	RITUAL.name = "(T3) Summon Familiar (Bear)";
-	RITUAL.description = "Summon a spirit bear from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. Incurs 15 corruption.";
+	RITUAL.description = "Summon a spirit bear from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. 15 second cast time. Incurs 25 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
 	RITUAL.requirements = {"xolotl_catalyst", "familial_catalyst", "xolotl_catalyst"};
-	RITUAL.corruptionCost = 15;
+	RITUAL.corruptionCost = 25;
 	RITUAL.ritualTime = 15;
 	RITUAL.experience = 50;
 	
@@ -1540,11 +1771,11 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 	RITUAL.name = "(T3) Summon Familiar (Leopard)";
-	RITUAL.description = "Summon a spirit leopard from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. Incurs 15 corruption.";
+	RITUAL.description = "Summon a spirit leopard from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. 10 second cast time. Incurs 20 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
-	RITUAL.requirements = {"xolotl_catalyst", "pantheistic_catalyst", "xolotl_catalyst"};
-	RITUAL.corruptionCost = 15;
+	RITUAL.requirements = {"xolotl_catalyst", "pantheistic_catalyst", "purifying_stone"};
+	RITUAL.corruptionCost = 20;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 50;
 	
