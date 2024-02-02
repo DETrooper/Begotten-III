@@ -1364,7 +1364,7 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 	RITUAL.experience = 35;
 	
 	function RITUAL:OnPerformed(player)
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning an Otis near their position!");
+		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning an Eddie near their position!");
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -1461,7 +1461,7 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 	RITUAL.onerequiredbelief = {"sorcerer"}; -- Tier III Faith of the Dark Ritual
 	RITUAL.requiredBeliefsSubfactionOverride = {["Rekh-khet-sa"] = {"embrace_the_darkness"}}; -- Tier III Faith of the Dark Ritual
 	
-	RITUAL.requirements = {"belphegor_catalyst", "tortured_spirit", "pentagram_catalyst"};
+	RITUAL.requirements = {"pentagram_catalyst", "tortured_spirit", "pentagram_catalyst"};
 	RITUAL.corruptionCost = 25;
 	RITUAL.ritualTime = 15;
 	RITUAL.experience = 50;
@@ -1642,7 +1642,7 @@ RITUAL = cwRituals.rituals:New("summon_sprinter");
 					entity:Spawn();
 					entity:Activate();
 					entity:SetModel("models/begotten/thralls/another_sprinter.mdl");
-					entity:SetHealth(250);
+					entity:SetHealth(275);
 					
 					entity:SetColor(Color(255,0,0));
 					entity:SetMaterial("models/effects/splode_sheet");
