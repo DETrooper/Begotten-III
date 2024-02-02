@@ -931,7 +931,11 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 				end
 			end
 		end
-
+	
+		if hook.Run("FuckMyLife", player, damageInfo) == true then
+			return true;
+		end
+		
 		if !lastHitGroup then
 			if isPlayerRagdoll then
 				lastHitGroup = Clockwork.kernel:GetRagdollHitGroup(entity, damageInfo:GetDamagePosition())
@@ -939,9 +943,9 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 				lastHitGroup = player:LastHitGroup()
 			end
 		end
-	
-		if hook.Run("FuckMyLife", player, damageInfo) == true then
-			return true;
+		
+		if lastHitGroup == HITGROUP_GENERIC then
+			lastHitGroup = math.random(1, 7);
 		end
 		
 		hook.Run("PreCalculatePlayerDamage", player, lastHitGroup, damageInfo);

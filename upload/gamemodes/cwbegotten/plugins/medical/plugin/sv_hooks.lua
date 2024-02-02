@@ -754,12 +754,10 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 						player:StartBleeding(hitGroup);
 					end
 				elseif (damageType == DMG_CLUB and hitGroup < 8 and hitGroup > 3) or damageType == DMG_SLASH --[[or damageType == DMG_VEHICLE]] then
-					local chance = 0;
+					local chance = 15;
 					local limbHealth = Clockwork.limb:GetHealth(player, hitGroup, false)
-					
+
 					if (limbHealth <= 90) then
-						chance = 15;
-						
 						if limbHealth <= 75 and limbHealth > 50 then
 							chance = 25;
 						elseif limbHealth <= 50 and limbHealth > 25 then

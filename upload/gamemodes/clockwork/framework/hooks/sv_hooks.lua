@@ -3316,25 +3316,27 @@ end
 
 -- Called when a player's character has loaded.
 function GM:PlayerCharacterLoaded(player)
+	local plyTab = player:GetTable();
+	
 	player:SetNetVar("InvWeight", config.Get("default_inv_weight"):Get())
 	player:SetNetVar("InvSpace", config.Get("default_inv_space"):Get())
-	player.cwCharLoadedTime = CurTime()
-	player.cwCrouchedSpeed = config.Get("crouched_speed"):Get()
-	player.cwInitialized = true
-	--player.cwAttrBoosts = player.cwAttrBoosts or {}
-	player.cwRagdollTab = player.cwRagdollTab or {}
-	player.cwSpawnWeps = player.cwSpawnWeps or {}
-	player.cwFirstSpawn = true
-	player.cwLightSpawn = false
-	player.cwChangeClass = false
-	player.cwInfoTable = player.cwInfoTable or {}
-	--player.cwSpawnAmmo = player.cwSpawnAmmo or {}
-	player.cwJumpPower = config.Get("jump_power"):Get()
-	player.cwWalkSpeed = config.Get("walk_speed"):Get()
-	player.cwRunSpeed = config.Get("run_speed"):Get()
+	plyTab.cwCharLoadedTime = CurTime()
+	plyTab.cwCrouchedSpeed = config.Get("crouched_speed"):Get()
+	plyTab.cwInitialized = true
+	--plyTab.cwAttrBoosts = plyTab.cwAttrBoosts or {}
+	plyTab.cwRagdollTab = plyTab.cwRagdollTab or {}
+	plyTab.cwSpawnWeps = plyTab.cwSpawnWeps or {}
+	plyTab.cwFirstSpawn = true
+	plyTab.cwLightSpawn = false
+	plyTab.cwChangeClass = false
+	plyTab.cwInfoTable = plyTab.cwInfoTable or {}
+	--plyTab.cwSpawnAmmo = plyTab.cwSpawnAmmo or {}
+	plyTab.cwJumpPower = config.Get("jump_power"):Get()
+	plyTab.cwWalkSpeed = config.Get("walk_speed"):Get()
+	plyTab.cwRunSpeed = config.Get("run_speed"):Get()
 	
-	if player.maxHealthBoost then
-		player.maxHealthBoost = nil;
+	if plyTab.maxHealthBoost then
+		plyTab.maxHealthBoost = nil;
 	end
 
 	hook.Run("PlayerRestoreCharacterData", player, player:QueryCharacter("Data"))
@@ -3353,7 +3355,7 @@ function GM:PlayerCharacterLoaded(player)
 	Clockwork.player:ReturnProperty(player)
 	Clockwork.player:SetInitialized(player, true)
 
-	player.cwFirstSpawn = false
+	plyTab.cwFirstSpawn = false
 	
 	player:SetNetVar("Faction", player:GetFaction());
 
