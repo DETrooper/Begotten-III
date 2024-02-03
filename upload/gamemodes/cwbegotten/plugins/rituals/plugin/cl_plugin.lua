@@ -222,10 +222,9 @@ end;
 
 function cwRituals:PostDrawOpaqueRenderables()
 	local curTime = CurTime();
-	local clientPosition = LocalPlayer():GetPos();
 
 	if !self.nextVFXCheck or self.nextVFXCheck < curTime then
-		self.nextVFXCheck = curTime + math.random(0.5, 1);
+		self.nextVFXCheck = curTime + math.Rand(0.5, 1);
 	
 		self.storedPlayers = {};
 		

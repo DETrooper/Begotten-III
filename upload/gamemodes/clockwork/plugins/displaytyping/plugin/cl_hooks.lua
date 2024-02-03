@@ -17,13 +17,28 @@ local bmovetypes = {
 function cwDisplayTyping:PostDrawTranslucentRenderables()
 	if (!Clockwork.Client or !Clockwork.Client:HasInitialized()) then return end
 
+	local curTime = CurTime();
+
+	if !self.nextVFXCheck or self.nextVFXCheck < curTime then
+		self.nextVFXCheck = curTime + math.Rand(0.5, 1);
+	
+		self.storedPlayers = {};
+		
+		for i, player in ipairs(_player.GetAll()) do
+			if ((player:GetNetVar("Typing") or 0) != 0) then
+				table.insert(self.storedPlayers, player);
+			end
+		end
+	end
+
 	local realEyeAngles = Clockwork.Client:EyeAngles()
 	local clientPos = Clockwork.Client:GetPos()
 	local colorWhite = Clockwork.option:GetColor("white")
 	local large3D2DFont = Clockwork.option:GetFont("large_3d_2d")
 
-	for k, player in ipairs(_player.GetAll()) do
-		local eyeAngles = Angle(realEyeAngles)
+	for i, player in ipairs(self.storedPlayers) do
+		if !IsValid(player) then continue end;
+	
 		local mt = player:GetMoveType();
 		
 		if (player:HasInitialized() and player:Alive() and !bmovetypes[mt]) then
@@ -93,6 +108,7 @@ function cwDisplayTyping:PostDrawTranslucentRenderables()
 
 						if (position) then
 							local drawText = ""
+							local eyeAngles = Angle(realEyeAngles)
 
 							position = position + eyeAngles:Up()
 							eyeAngles:RotateAroundAxis(eyeAngles:Forward(), 90)

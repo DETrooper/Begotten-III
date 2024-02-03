@@ -529,10 +529,15 @@ else
 				end
 			end
 		
-			local position, angles = player:GetBonePosition(bone)
+			-- Old code for determining position without followbone.
+			--local position, angles = player:GetBonePosition(bone)
+			local position = player:GetPos();
+			local angles = player:GetAngles();
 
-			if IsValid(ragdollEntity) then
-				position, angles = ragdollEntity:GetBonePosition(bone)
+			if ragdollEntity then
+				--position, angles = ragdollEntity:GetBonePosition(bone)
+				position = ragdollEntity:GetPos();
+				angles = ragdollEntity:GetAngles();
 			end
 
 			local x = angles:Up() * offsetVector.x
@@ -543,7 +548,7 @@ else
 			angles:RotateAroundAxis(angles:Right(), offsetAngle.y)
 			angles:RotateAroundAxis(angles:Up(), offsetAngle.r)
 
-			return position + x + y + z, angles
+			return position + x + y + z, angles, bone;
 		end
 	end
 	
@@ -551,89 +556,116 @@ else
 		for _, player in pairs(_player.GetAll()) do
 			player.equipmentDrawnThisTick = false;
 			
-			if player:IsRagdolled() then
-				hook.Run("PostPlayerDraw", player);
+			local ragdollEntity = player:GetRagdollEntity();
+			
+			if (ragdollEntity) then
+				local ragdollState = player:GetDTInt(INT_RAGDOLLSTATE);
+				
+				if ragdollState != 0 and ragdollState != RAGDOLL_NONE then
+					hook.Run("PostPlayerDraw", player, 0, ragdollEntity);
+				end
 			end
 		end
 	end);
 
-	hook.Add("PostPlayerDraw", "PostPlayerDrawEquipment", function(player)
-		if player:Alive() and player:GetMoveType() ~= MOVETYPE_OBSERVER and player:GetColor().a > 0 then
-			local activeWeapon = player:GetActiveWeapon();
-			local activeWeaponClass;
-			local activeOffhand;
-			local activeShield;
-			local plyTab = player:GetTable();
-			local ragdollEntity = player:GetRagdollEntity();
-			
-			if !plyTab.equipmentSlots then
-				plyTab.equipmentSlots = {};
-			end
-			
-			if !plyTab.equipmentSlotModels then
-				plyTab.equipmentSlotModels = {};
-			end
-			
-			if IsValid(activeWeapon) then
-				activeWeaponClass = activeWeapon:GetClass();
-				activeOffhand = activeWeapon:GetNWString("activeOffhand");
-				activeShield = activeWeapon:GetNWString("activeShield");
-			end
+	hook.Add("PostPlayerDraw", "PostPlayerDrawEquipment", function(player, flags, ragdollEntity)
+		if !player:Alive() or (player:GetMoveType() == MOVETYPE_OBSERVER and !ragdollEntity) or player:GetColor().a == 0 then return end
+	
+		local activeWeapon = player:GetActiveWeapon();
+		local activeWeaponClass;
+		local activeOffhand;
+		local activeShield;
+		local plyTab = player:GetTable();
+		
+		if !plyTab.equipmentSlots then
+			plyTab.equipmentSlots = {};
+		end
+		
+		if !plyTab.equipmentSlotModels then
+			plyTab.equipmentSlotModels = {};
+		end
+		
+		if IsValid(activeWeapon) then
+			activeWeaponClass = activeWeapon:GetClass();
+			activeOffhand = activeWeapon:GetNWString("activeOffhand");
+			activeShield = activeWeapon:GetNWString("activeShield");
+		end
 
-			for slot, itemTable in pairs(plyTab.equipmentSlots) do
-				if itemTable and itemTable.isAttachment then
-					local equipmentModel = plyTab.equipmentSlotModels[itemTable.itemID];
-					
-					if activeWeaponClass == itemTable.weaponClass or activeShield == itemTable.uniqueID or activeOffhand == itemTable.uniqueID then if IsValid(equipmentModel) then equipmentModel:Remove() end continue end;
+		for slot, itemTable in pairs(plyTab.equipmentSlots) do
+			if itemTable and itemTable.isAttachment then
+				local equipmentModel = plyTab.equipmentSlotModels[itemTable.itemID];
+
+				if !ragdollEntity and (activeWeaponClass == itemTable.weaponClass or activeShield == itemTable.uniqueID or activeOffhand == itemTable.uniqueID) then if IsValid(equipmentModel) then equipmentModel:Remove() end continue end;
 				
-					if !IsValid(equipmentModel) then
-						equipmentModel = ClientsideModel(itemTable.model, RENDERGROUP_BOTH);
-						
-						--[[local modelScale = itemTable.attachmentModelScale or Vector(1, 1, 1);
+				if IsValid(equipmentModel) then
+					local parent = equipmentModel:GetParent();
+					
+					if (parent == player and ragdollEntity) or !IsValid(parent) then
+						equipmentModel:Remove();
+					end
+				end
 
-						if (itemTable.GetAttachmentModelScale) then
-							modelScale = itemTable:GetAttachmentModelScale(player, equipmentModel) or modelScale;
-						end]]--
-						
-						if itemTable.attachmentSkin then
-							equipmentModel:SetSkin(itemTable.attachmentSkin);
-						end
-						
-						if itemTable.bodygroup0 then
-							equipmentModel:SetBodygroup(0, itemTable.bodygroup0 - 1);
-						end
-						
-						if itemTable.bodygroup1 then
-							equipmentModel:SetBodygroup(0, itemTable.bodygroup1 - 1);
-						end
-						
-						if itemTable.bodygroup2 then
-							equipmentModel:SetBodygroup(1, itemTable.bodygroup2 - 1);
-						end
-						
-						if itemTable.bodygroup3 then
-							equipmentModel:SetBodygroup(2, itemTable.bodygroup3 - 1);
-						end
+				if !IsValid(equipmentModel) then
+					equipmentModel = ClientsideModel(itemTable.model, RENDERGROUP_BOTH);
+					
+					local modelScale = itemTable.attachmentModelScale;
 
-						--[[local entityMatrix = Matrix();
-						
-						entityMatrix:Scale(modelScale);
-						equipmentModel:EnableMatrix("RenderMultiply", entityMatrix);]]--
-						
-						plyTab.equipmentSlotModels[itemTable.itemID] = equipmentModel;
+					if (itemTable.GetAttachmentModelScale) then
+						modelScale = itemTable:GetAttachmentModelScale(player, equipmentModel) or modelScale;
 					end
 					
-					local position, angles = GetRealPosition(equipmentModel, player, ragdollEntity, itemTable, string.find(slot, "Offhand"));
-
-					if (position and angles) then
+					if itemTable.attachmentSkin then
+						equipmentModel:SetSkin(itemTable.attachmentSkin);
+					end
+					
+					if itemTable.bodygroup0 then
+						equipmentModel:SetBodygroup(0, itemTable.bodygroup0 - 1);
+					end
+					
+					if itemTable.bodygroup1 then
+						equipmentModel:SetBodygroup(0, itemTable.bodygroup1 - 1);
+					end
+					
+					if itemTable.bodygroup2 then
+						equipmentModel:SetBodygroup(1, itemTable.bodygroup2 - 1);
+					end
+					
+					if itemTable.bodygroup3 then
+						equipmentModel:SetBodygroup(2, itemTable.bodygroup3 - 1);
+					end
+					
+					if modelScale then
+						local entityMatrix = Matrix();
+						
+						entityMatrix:Scale(modelScale);
+						equipmentModel:EnableMatrix("RenderMultiply", entityMatrix);
+					end
+					
+					plyTab.equipmentSlotModels[itemTable.itemID] = equipmentModel;
+					
+					local position, angles, bone = GetRealPosition(equipmentModel, player, ragdollEntity, itemTable, string.find(slot, "Offhand"));
+					
+					if position and angles then
 						equipmentModel:SetPos(position);
 						equipmentModel:SetAngles(angles);
 					end
+					
+					if bone then
+						equipmentModel:FollowBone(ragdollEntity or player, bone); 
+					end
 				end
+				
+				-- Old code to manually setpos equipment every frame. Was very laggy.
+				--[[local position, angles = GetRealPosition(equipmentModel, player, ragdollEntity, itemTable, string.find(slot, "Offhand"));
+
+				if (position and angles) then
+					equipmentModel:SetPos(position);
+					equipmentModel:SetAngles(angles);
+				end]]--
 			end
-			
-			plyTab.equipmentDrawnThisTick = true;
 		end
+		
+		plyTab.equipmentDrawnThisTick = true;
 	end);
 	
 	hook.Add("Think", "ThinkEquipment", function()

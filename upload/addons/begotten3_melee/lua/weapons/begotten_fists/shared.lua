@@ -901,6 +901,7 @@ function SWEP:OnDrop()
 	self:Remove();
 end;
 
-/*---------------------------------------------------------
-	Bone Mods
----------------------------------------------------------*/
+if CLIENT then
+	function SWEP:ViewModelDrawn(vm) end
+	function SWEP:DrawWorldModel() end
+end
