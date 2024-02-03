@@ -234,7 +234,7 @@ function Clockwork.player:SayRadio(player, text, check, noEavesdrop, proclaim)
 		if (v:HasInitialized()) then
 			local vFreq = v:GetCharacterData("frequency");
 			
-			if ((v:HasItemByID("ecw_radio")) and v:GetCharacterData("radioState", false)) then
+			if ((v:HasItemByID("ecw_radio")) and v:GetCharacterData("radioState", false)) or Clockwork.player:HasFlags(v, "L") then
 				table.insert(radiospies, v);
 				
 				if ((v:GetCharacterData("radioJamming", false)) and (vFreq == frequency)) then

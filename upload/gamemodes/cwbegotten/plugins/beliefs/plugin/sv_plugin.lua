@@ -268,3 +268,5 @@ concommand.Add("listbeliefs", function(player)
 		end;
 	end;
 end)
+
+config.Add("max_sac_level", 40, true)

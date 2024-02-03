@@ -19,7 +19,7 @@ Clockwork.kernel:IncludePrefixed("sv_plugin.lua");
 Clockwork.kernel:IncludePrefixed("sv_meta.lua");
 Clockwork.kernel:IncludePrefixed("sv_hooks.lua");
 
-cwBeliefs.sacramentLevelCap = 40;
+cwBeliefs.sacramentLevelCap = cwBeliefs.sacramentLevelCap or 40;
 cwBeliefs.sacramentCosts = {
 	[2] = 10,
 	[3] = 20,
@@ -61,6 +61,20 @@ cwBeliefs.sacramentCosts = {
 	[39] = 660,
 	[40] = 666,
 };
+
+-- Called when Clockwork config has initialized.
+function cwBeliefs:ClockworkConfigInitialized(key, value)
+	if key == "max_sac_level" and isnumber(value) then
+		self.sacramentLevelCap = math.floor(value);
+	end
+end
+
+-- Called when Clockwork config has changed.
+function cwBeliefs:ClockworkConfigChanged(key, data, previousValue, newValue)
+	if key == "max_sac_level" and isnumber(newValue) then
+		self.sacramentLevelCap = math.floor(newValue);
+	end
+end
 
 local COMMAND = Clockwork.command:New("CharClearBeliefs");
 COMMAND.tip = "Reset a player's beliefs.";
@@ -505,7 +519,7 @@ function COMMAND:OnRun(player, arguments)
 				local message = "\""..table.concat(arguments, " ", 1).."\"";
 
 				for k, v in pairs (_player.GetAll()) do
-					if v:HasInitialized() and v:Alive() and (v:GetFaction() == "Children of Satan") then
+					if v:HasInitialized() and v:Alive() and ((v:GetFaction() == "Children of Satan") or Clockwork.player:HasFlags(v, "L")) then
 						if v:GetSubfaction() == "Kinisger" and v:GetSharedVar("kinisgerOverride") then
 							Clockwork.chatBox:Add(v, player, "darkwhisperglobalkinisger", message);
 						else
@@ -526,7 +540,7 @@ function COMMAND:OnRun(player, arguments)
 					if v:HasInitialized() and v:Alive() then
 						local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
 						
-						if (vFaction == "Goreic Warrior") and (v:GetFaith() == "Faith of the Dark" or v:GetSubfaith() == "Faith of the Sister") then
+						if ((vFaction == "Goreic Warrior") and (v:GetFaith() == "Faith of the Dark" or v:GetSubfaith() == "Faith of the Sister")) or Clockwork.player:HasFlags(v, "L") then
 							if v:GetSubfaction() == "Kinisger" then
 								Clockwork.chatBox:Add(v, player, "darkwhisperglobalkinisger", message);
 							else
@@ -833,7 +847,7 @@ function COMMAND:OnRun(player, arguments)
 			local message = "\""..table.concat(arguments, " ", 1).."\"";
 
 			for k, v in pairs (_player.GetAll()) do
-				if v:HasInitialized() and v:Alive() and (v:GetSubfaith() == "Voltism") then
+				if v:HasInitialized() and v:Alive() and ((v:GetSubfaith() == "Voltism") or Clockwork.player:HasFlags(v, "L")) then
 					Clockwork.chatBox:Add(v, player, "relay", message);
 					v:SendLua([[Clockwork.Client:EmitSound("buttons/combine_button"..math.random(2, 3)..".wav", 90, 150)]]);
 				end;

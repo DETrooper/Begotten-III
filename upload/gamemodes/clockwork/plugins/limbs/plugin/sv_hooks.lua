@@ -60,6 +60,8 @@ end
 
 -- A function to calculate player damage.
 function cwLimbs:CalculatePlayerDamage(player, hitGroup, damageInfo)
+	if Clockwork.player:HasFlags(player, "I") then return end;
+
 	if --[[not player.opponent and ]](damageInfo) then
 		--local bulletDamage, clubDamage, slashDamage = damageInfo:IsBulletDamage(), damageInfo:IsDamageType(DMG_CLUB), damageInfo:IsDamageType(DMG_SLASH)
 		--local bDamageIsValid = bulletDamage or clubDamage or slashDamage

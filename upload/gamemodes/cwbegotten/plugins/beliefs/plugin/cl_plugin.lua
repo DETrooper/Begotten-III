@@ -162,3 +162,5 @@ end);
 Clockwork.chatBox:RegisterClass("relay", "ic", function(info)
 	Clockwork.chatBox:Add(info.filtered, nil, Color(125, 249, 255, 255), info.speaker:Name().." speaks to your mind through electrical signals, "..info.text, info.font);
 end);
+
+config.AddToSystem("Maximum Sacrament Level", "max_sac_level", "The maximum level that a character can level up to via the Beliefs system.", 30, 80);
