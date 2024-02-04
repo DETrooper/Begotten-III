@@ -99,11 +99,11 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_savage_claw1"] = { type = "Model", model = "models/demonssouls/weapons/claws.mdl", bone = "Bone03", rel = "", pos = Vector(2.596, 0.2, -0.101), angle = Angle(164.804, -85.325, -31.559), size = Vector(0.54, 0.54, 0.54), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["v_savage_claw2"] = { type = "Model", model = "models/demonssouls/weapons/claws.mdl", bone = "Bone26", rel = "", pos = Vector(2.596, -0.519, -0.35), angle = Angle(-141.43, -75.974, -17.532), size = Vector(0.54, 0.54, 0.54), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_savage_claw1"] = { type = "Model", model = "models/demonssouls/weapons/claws.mdl", bone = "Bone03", rel = "", pos = Vector(2.596, 0.2, -0.101), angle = Angle(164.804, -85.325, -31.559), size = Vector(0.54, 0.54, 0.54), material = "", skin = 0, bodygroup = {} },
+	["v_savage_claw2"] = { type = "Model", model = "models/demonssouls/weapons/claws.mdl", bone = "Bone26", rel = "", pos = Vector(2.596, -0.519, -0.35), angle = Angle(-141.43, -75.974, -17.532), size = Vector(0.54, 0.54, 0.54), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_savage_claw2"] = { type = "Model", model = "models/demonssouls/weapons/claws.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.635, 1.557, 0.2), angle = Angle(-99.351, -85.325, 15.194), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["w_savage_claw1"] = { type = "Model", model = "models/demonssouls/weapons/claws.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.9, 1.2, 0.1), angle = Angle(-73.637, -97.014, -8.183), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_savage_claw2"] = { type = "Model", model = "models/demonssouls/weapons/claws.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.635, 1.557, 0.2), angle = Angle(-99.351, -85.325, 15.194), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["w_savage_claw1"] = { type = "Model", model = "models/demonssouls/weapons/claws.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.9, 1.2, 0.1), angle = Angle(-73.637, -97.014, -8.183), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

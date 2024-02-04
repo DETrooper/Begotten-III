@@ -365,9 +365,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_frozenfatherlandaxe"] = { type = "Model", model = "models/begotten/weapons/gore_ice_axe.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.901, -5.715, 1), angle = Angle(-73.637, 0, 0), size = Vector(0.91, 0.91, 0.91), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["v_frozenfatherlandaxe"] = { type = "Model", model = "models/begotten/weapons/gore_ice_axe.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.901, -5.715, 1), angle = Angle(-73.637, 0, 0), size = Vector(0.91, 0.91, 0.91), material = "", skin = 0, bodygroup = {[0] = 3} }
 }
 
 SWEP.WElements = {
-	["w_frozenfatherlandaxe"] = { type = "Model", model = "models/begotten/weapons/gore_ice_axe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(5.8, -0.35, 23.377), angle = Angle(3.506, -87.663, 85.324), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["w_frozenfatherlandaxe"] = { type = "Model", model = "models/begotten/weapons/gore_ice_axe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(5.8, -0.35, 23.377), angle = Angle(3.506, -87.663, 85.324), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 3} }
 }

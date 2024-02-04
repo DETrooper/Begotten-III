@@ -165,9 +165,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_gorefalx"] = { type = "Model", model = "models/begotten/goreweapons/falx2.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-4, -4, 2), angle = Angle(90, 198, 90), size = Vector(0.91, 0.91, 0.91), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["v_gorefalx"] = { type = "Model", model = "models/begotten/goreweapons/falx2.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-4, -4, 2), angle = Angle(90, 198, 90), size = Vector(0.91, 0.91, 0.91), material = "", skin = 0, bodygroup = {[0] = 3} }
 }
 
 SWEP.WElements = {
-	["w_gorefalx"] = { type = "Model", model = "models/begotten/goreweapons/falx2.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(4.949, -0.5, 17.142), angle = Angle(-5.844, 106.363, 3.506), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["w_gorefalx"] = { type = "Model", model = "models/begotten/goreweapons/falx2.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(4.949, -0.5, 17.142), angle = Angle(-5.844, 106.363, 3.506), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {[0] = 3} }
 }

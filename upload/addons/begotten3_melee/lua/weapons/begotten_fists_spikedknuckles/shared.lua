@@ -148,11 +148,11 @@ end;
 	Bone Mods
 ---------------------------------------------------------*/
 SWEP.VElements = {
-	["v_ironknuckle_left"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/knuckles.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2, 0.389, 0), angle = Angle(0, -106.364, -92.338), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 1} },
-	["v_ironknuckle_right"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/knuckles.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2, 0.5, -0.201), angle = Angle(0, -106.364, -92.338), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 1} }
+	["v_ironknuckle_left"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/knuckles.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2, 0.389, 0), angle = Angle(0, -106.364, -92.338), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 1} },
+	["v_ironknuckle_right"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/knuckles.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2, 0.5, -0.201), angle = Angle(0, -106.364, -92.338), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 1} }
 }
 
 SWEP.WElements = {
-	["w_ironknuckles_right"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/knuckles.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.099, 0.85, 0.15), angle = Angle(-15.195, 97.013, 85.324), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 1} },
-	["w_ironknuckles_left"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/knuckles.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2, 0.649, 0.6), angle = Angle(1.169, 90, 111.039), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 1} }
+	["w_ironknuckles_right"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/knuckles.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.099, 0.85, 0.15), angle = Angle(-15.195, 97.013, 85.324), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 1} },
+	["w_ironknuckles_left"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/knuckles.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2, 0.649, 0.6), angle = Angle(1.169, 90, 111.039), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 1} }
 }

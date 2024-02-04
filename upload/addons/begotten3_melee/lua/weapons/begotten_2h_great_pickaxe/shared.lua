@@ -174,9 +174,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_pickaxe"] = { type = "Model", model = "models/begotten/weapons/serfpickaxe.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.29, -9.87, 1.2), angle = Angle(0, 0, -90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["v_pickaxe"] = { type = "Model", model = "models/begotten/weapons/serfpickaxe.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.29, -9.87, 1.2), angle = Angle(0, 0, -90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 3} }
 }
 
 SWEP.WElements = {
-	["w_pickaxe"] = { type = "Model", model = "models/begotten/weapons/serfpickaxe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(5, -1.5, 25.454), angle = Angle(-4.5, 10.519, -5.901), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["w_pickaxe"] = { type = "Model", model = "models/begotten/weapons/serfpickaxe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(5, -1.5, 25.454), angle = Angle(-4.5, 10.519, -5.901), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 3} }
 }

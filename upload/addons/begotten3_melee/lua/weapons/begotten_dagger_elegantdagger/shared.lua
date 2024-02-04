@@ -88,9 +88,9 @@ end
 ---------------------------------------------------------*/
 
 SWEP.VElements = {
-	["v_elegantdagger"] = { type = "Model", model = "models/demonssouls/weapons/geri's geristiletto.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, -7.591), angle = Angle(-87.663, 8.182, 118.052), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_elegantdagger"] = { type = "Model", model = "models/demonssouls/weapons/geri's geristiletto.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, -7.591), angle = Angle(-87.663, 8.182, 118.052), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_elegantdagger"] = { type = "Model", model = "models/demonssouls/weapons/geri's geristiletto.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.1, -8.2), angle = Angle(-90, 90, 36.234), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_elegantdagger"] = { type = "Model", model = "models/demonssouls/weapons/geri's geristiletto.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.1, -8.2), angle = Angle(-90, 90, 36.234), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

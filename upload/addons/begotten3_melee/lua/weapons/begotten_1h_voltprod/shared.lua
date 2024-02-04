@@ -106,9 +106,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_voltprod"] = { type = "Model", model = "models/newvegasprops/voltprod.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(6, 1.399, -12), angle = Angle(104.026, -8.183, -180), size = Vector(1.2, 1.2, 1.2), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 4} }
+	["v_voltprod"] = { type = "Model", model = "models/newvegasprops/voltprod.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(6, 1.399, -12), angle = Angle(104.026, -8.183, -180), size = Vector(1.2, 1.2, 1.2), material = "", skin = 0, bodygroup = {[0] = 4} }
 }
 
 SWEP.WElements = {
-	["w_voltprod"] = { type = "Model", model = "models/newvegasprops/voltprod.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.59, -0.5, -12.988), angle = Angle(99.35, 59.61, 71.299), size = Vector(1.2, 1.2, 1.2), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 4} }
+	["w_voltprod"] = { type = "Model", model = "models/newvegasprops/voltprod.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.59, -0.5, -12.988), angle = Angle(99.35, 59.61, 71.299), size = Vector(1.2, 1.2, 1.2), material = "", skin = 0, bodygroup = {[0] = 4} }
 }

@@ -140,9 +140,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_gorewaraxe"] = { type = "Model", model = "models/begotten/weapons/2h_axe1.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0.59, -0.7, -7), angle = Angle(10.519, 85, 1.5), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_gorewaraxe"] = { type = "Model", model = "models/begotten/weapons/2h_axe1.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0.59, -0.7, -7), angle = Angle(10.519, 85, 1.5), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_gorewaraxe"] = { type = "Model", model = "models/begotten/weapons/2h_axe1.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.5, 0.8, 5.714), angle = Angle(171.817, 3.5, -176.495), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_gorewaraxe"] = { type = "Model", model = "models/begotten/weapons/2h_axe1.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.5, 0.8, 5.714), angle = Angle(171.817, 3.5, -176.495), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

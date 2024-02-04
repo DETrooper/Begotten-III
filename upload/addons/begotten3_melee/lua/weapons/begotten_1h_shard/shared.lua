@@ -126,19 +126,19 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_shard"] = { type = "Model", model = "models/items/weapons/sword_souldrinker/sword_souldrinker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.99, 1.299, -0.53), angle = Angle(-78.312, -24.546, 150.779), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_shard"] = { type = "Model", model = "models/items/weapons/sword_souldrinker/sword_souldrinker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.99, 1.299, -0.53), angle = Angle(-78.312, -24.546, 150.779), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.VElementsDual = {
-	["v_left"] = { type = "Model", model = "models/items/weapons/sword_souldrinker/sword_souldrinker.mdl", bone = "Dummy16", rel = "", pos = Vector(0, -9, -0.201), angle = Angle(1.169, 80.649, -87.663), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["v_right"] = { type = "Model", model = "models/items/weapons/sword_souldrinker/sword_souldrinker.mdl", bone = "Dummy01", rel = "", pos = Vector(0.25, -12, 0.5), angle = Angle(3.506, 73.636, -73.637), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_left"] = { type = "Model", model = "models/items/weapons/sword_souldrinker/sword_souldrinker.mdl", bone = "Dummy16", rel = "", pos = Vector(0, -9, -0.201), angle = Angle(1.169, 80.649, -87.663), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} },
+	["v_right"] = { type = "Model", model = "models/items/weapons/sword_souldrinker/sword_souldrinker.mdl", bone = "Dummy01", rel = "", pos = Vector(0.25, -12, 0.5), angle = Angle(3.506, 73.636, -73.637), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 };
 
 SWEP.WElements = {
-	["w_shard"] = { type = "Model", model = "models/items/weapons/sword_souldrinker/sword_souldrinker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.9, 1.35, 0), angle = Angle(-80.65, 68.96, -87.663), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_shard"] = { type = "Model", model = "models/items/weapons/sword_souldrinker/sword_souldrinker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.9, 1.35, 0), angle = Angle(-80.65, 68.96, -87.663), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElementsDual = {
-	["w_left"] = { type = "Model", model = "models/items/weapons/sword_souldrinker/sword_souldrinker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, 0), angle = Angle(-70, 90, -90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["w_right"] = { type = "Model", model = "models/items/weapons/sword_souldrinker/sword_souldrinker.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, 0.899, -0.5), angle = Angle(105, 90, -90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_left"] = { type = "Model", model = "models/items/weapons/sword_souldrinker/sword_souldrinker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, 0), angle = Angle(-70, 90, -90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/items/weapons/sword_souldrinker/sword_souldrinker.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, 0.899, -0.5), angle = Angle(105, 90, -90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

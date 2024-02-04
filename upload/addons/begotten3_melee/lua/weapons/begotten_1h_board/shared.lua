@@ -104,9 +104,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_board"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/board.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.099, -0.201, 11.947), angle = Angle(8.182, -75.974, 180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_board"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/board.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.099, -0.201, 11.947), angle = Angle(8.182, -75.974, 180), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_board"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/board.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 2.299, 11.947), angle = Angle(-174.157, 73.636, 1.169), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_board"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/board.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 2.299, 11.947), angle = Angle(-174.157, 73.636, 1.169), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

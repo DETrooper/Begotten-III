@@ -104,9 +104,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_twistedclub"] = { type = "Model", model = "models/props/begotten/melee/barbed_club.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(6.5, 1.25, -15.065), angle = Angle(104.026, 0, 5.843), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_twistedclub"] = { type = "Model", model = "models/props/begotten/melee/barbed_club.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(6.5, 1.25, -15.065), angle = Angle(104.026, 0, 5.843), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_twistedclub"] = { type = "Model", model = "models/props/begotten/melee/barbed_club.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.25, -0.801, -15.065), angle = Angle(99.35, 52.597, -71.3), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_twistedclub"] = { type = "Model", model = "models/props/begotten/melee/barbed_club.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.25, -0.801, -15.065), angle = Angle(99.35, 52.597, -71.3), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

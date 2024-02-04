@@ -104,9 +104,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_battleaxe"] = { type = "Model", model = "models/demonssouls/weapons/battle axe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.7, 0.518), angle = Angle(-80.65, -5.844, 78.311), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_battleaxe"] = { type = "Model", model = "models/demonssouls/weapons/battle axe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.7, 0.518), angle = Angle(-80.65, -5.844, 78.311), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_battleaxe"] = { type = "Model", model = "models/demonssouls/weapons/battle axe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.299, 1.557, -0.519), angle = Angle(-82.987, 64.286, 3.506), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_battleaxe"] = { type = "Model", model = "models/demonssouls/weapons/battle axe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.299, 1.557, -0.519), angle = Angle(-82.987, 64.286, 3.506), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

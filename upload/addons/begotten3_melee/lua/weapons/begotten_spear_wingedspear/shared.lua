@@ -100,9 +100,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_spear_wingedspear"] = { type = "Model", model = "models/demonssouls/weapons/winged spear.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(3.799, -0.519, -8.832), angle = Angle(108.7, 0, -29.222), size = Vector(0.699, 0.699, 0.699), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["v_spear_wingedspear"] = { type = "Model", model = "models/demonssouls/weapons/winged spear.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(3.799, -0.519, -8.832), angle = Angle(108.7, 0, -29.222), size = Vector(0.699, 0.699, 0.699), material = "", skin = 0, bodygroup = {} },
 }
 
 SWEP.WElements = {
-	["w_spear_wingedspear"] = { type = "Model", model = "models/demonssouls/weapons/winged spear.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, 1.557), angle = Angle(-78.312, 57.272, 31.558), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_spear_wingedspear"] = { type = "Model", model = "models/demonssouls/weapons/winged spear.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, 1.557), angle = Angle(-78.312, 57.272, 31.558), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }

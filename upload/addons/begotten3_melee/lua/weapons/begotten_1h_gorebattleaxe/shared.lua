@@ -104,19 +104,19 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_gorebattleaxe"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.99, 1.389, -0.801), angle = Angle(-11.9, -167.144, -169.482), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_gorebattleaxe"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.99, 1.389, -0.801), angle = Angle(-11.9, -167.144, -169.482), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.VElementsDual = {
-	["v_left"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "Dummy16", rel = "", pos = Vector(-0.59, -6, 0.5), angle = Angle(15.194, 157.792, 99.35), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["v_right"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "Dummy01", rel = "", pos = Vector(0.5, -11, 0.449), angle = Angle(-180, -22.209, -93), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_left"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "Dummy16", rel = "", pos = Vector(-0.59, -6, 0.5), angle = Angle(15.194, 157.792, 99.35), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["v_right"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "Dummy01", rel = "", pos = Vector(0.5, -11, 0.449), angle = Angle(-180, -22.209, -93), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_gorebattleaxe"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.5, 1.25, 0.899), angle = Angle(-162.469, -19.871, -10.52), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_gorebattleaxe"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.5, 1.25, 0.899), angle = Angle(-162.469, -19.871, -10.52), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElementsDual = {
-	["w_left"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 2.579, 5.714), angle = Angle(-164.805, 0, -12.858), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["w_right"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3, 0.589, -2.597), angle = Angle(10.519, 174.156, -10.52), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_left"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 2.579, 5.714), angle = Angle(-164.805, 0, -12.858), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3, 0.589, -2.597), angle = Angle(10.519, 174.156, -10.52), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

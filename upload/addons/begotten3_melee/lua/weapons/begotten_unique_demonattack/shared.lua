@@ -99,6 +99,6 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_steel_claw2"] = { type = "Model", model = "models/props/begotten/melee/claws.mdl", bone = "Bone26", rel = "", pos = Vector(1.557, -0.301, -0.401), angle = Angle(-22.209, 97.013, -3.507), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["v_steel_claw1"] = { type = "Model", model = "models/props/begotten/melee/claws.mdl", bone = "Bone03", rel = "", pos = Vector(1.557, 0.3, -0.519), angle = Angle(180, -97.014, 169.481), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_steel_claw2"] = { type = "Model", model = "models/props/begotten/melee/claws.mdl", bone = "Bone26", rel = "", pos = Vector(1.557, -0.301, -0.401), angle = Angle(-22.209, 97.013, -3.507), size = Vector(0.5, 0.5, 0.5), material = "", skin = 0, bodygroup = {} },
+	["v_steel_claw1"] = { type = "Model", model = "models/props/begotten/melee/claws.mdl", bone = "Bone03", rel = "", pos = Vector(1.557, 0.3, -0.519), angle = Angle(180, -97.014, 169.481), size = Vector(0.5, 0.5, 0.5), material = "", skin = 0, bodygroup = {} }
 }

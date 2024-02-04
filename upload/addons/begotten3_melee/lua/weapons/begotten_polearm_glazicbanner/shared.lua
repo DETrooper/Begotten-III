@@ -253,9 +253,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_glazicbanner"] = { type = "Model", model = "models/begotten/misc/gatekeeper_banner.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(3.9, 0.2, -17.143), angle = Angle(1.169, -61.949, 10.519), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_glazicbanner"] = { type = "Model", model = "models/begotten/misc/gatekeeper_banner.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(3.9, 0.2, -17.143), angle = Angle(1.169, -61.949, 10.519), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_glazicbanner"] = { type = "Model", model = "models/begotten/misc/gatekeeper_banner.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(6.3, 1.5, -57.662), angle = Angle(180, -122.727, -2.5), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_glazicbanner"] = { type = "Model", model = "models/begotten/misc/gatekeeper_banner.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(6.3, 1.5, -57.662), angle = Angle(180, -122.727, -2.5), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

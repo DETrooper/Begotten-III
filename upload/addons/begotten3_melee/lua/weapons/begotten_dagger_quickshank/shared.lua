@@ -88,9 +88,9 @@ end
 ---------------------------------------------------------*/
 
 SWEP.VElements = {
-	["v_quickshank"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/switchblade.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.5, 0.518), angle = Angle(1.169, 75.973, 176.494), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_quickshank"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/switchblade.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.5, 0.518), angle = Angle(1.169, 75.973, 176.494), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_quickshank"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/switchblade.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.9, 1.5, 0.518), angle = Angle(-171.818, 59.61, 5.843), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_quickshank"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/switchblade.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.9, 1.5, 0.518), angle = Angle(-171.818, 59.61, 5.843), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

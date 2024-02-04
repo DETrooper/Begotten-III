@@ -102,9 +102,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_quarterstaff"] = { type = "Model", model = "models/begotten/weapons/quarterstaff.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(-0, -0, 2), angle = Angle(12, 0, 0), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_quarterstaff"] = { type = "Model", model = "models/begotten/weapons/quarterstaff.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(-0, -0, 2), angle = Angle(12, 0, 0), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_quarterstaff"] = { type = "Model", model = "models/begotten/weapons/quarterstaff.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(6.5, -4, -30.65), angle = Angle(0, -36.235, 11.899), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_quarterstaff"] = { type = "Model", model = "models/begotten/weapons/quarterstaff.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(6.5, -4, -30.65), angle = Angle(0, -36.235, 11.899), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

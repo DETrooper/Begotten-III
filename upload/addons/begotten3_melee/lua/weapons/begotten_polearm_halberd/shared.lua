@@ -120,9 +120,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_halberd"] = { type = "Model", model = "models/demonssouls/weapons/halberd.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(1, -0.519, -0.519), angle = Angle(108.7, 0, -129.741), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_halberd"] = { type = "Model", model = "models/demonssouls/weapons/halberd.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(1, -0.519, -0.519), angle = Angle(108.7, 0, -129.741), size = Vector(0.8, 0.8, 0.8), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_halberd"] = { type = "Model", model = "models/demonssouls/weapons/halberd.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.099, -0.201, -10.91), angle = Angle(-78.312, 65, -180), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_halberd"] = { type = "Model", model = "models/demonssouls/weapons/halberd.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.099, -0.201, -10.91), angle = Angle(-78.312, 65, -180), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }

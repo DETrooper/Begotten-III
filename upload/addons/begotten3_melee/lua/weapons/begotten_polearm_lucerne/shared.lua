@@ -119,9 +119,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_lucerne"] = { type = "Model", model = "models/bec_de_corbin.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(-42.5, 13.5, -7.792), angle = Angle(-5.844, 106.363, 80.649), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_lucerne"] = { type = "Model", model = "models/bec_de_corbin.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(-42.5, 13.5, -7.792), angle = Angle(-5.844, 106.363, 80.649), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_lucerne"] = { type = "Model", model = "models/bec_de_corbin.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.95, -50, 0.518), angle = Angle(-5.844, -180, -99.351), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_lucerne"] = { type = "Model", model = "models/bec_de_corbin.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.95, -50, 0.518), angle = Angle(-5.844, -180, -99.351), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

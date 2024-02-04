@@ -127,9 +127,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_glazicus"] = { type = "Model", model = "models/begotten/weapons/ornateglazicus.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.4, 1.7, 1.2), angle = Angle(-90, 0, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_glazicus"] = { type = "Model", model = "models/begotten/weapons/ornateglazicus.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.4, 1.7, 1.2), angle = Angle(-90, 0, 90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_glazicus"] = { type = "Model", model = "models/begotten/weapons/ornateglazicus.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.68, 1.2, 0.899), angle = Angle(-80, 90, 10), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_glazicus"] = { type = "Model", model = "models/begotten/weapons/ornateglazicus.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.68, 1.2, 0.899), angle = Angle(-80, 90, 10), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

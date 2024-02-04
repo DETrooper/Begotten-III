@@ -166,9 +166,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_haralderwaraxe"] = { type = "Model", model = "models/witcher2soldiers/tw2_bigaxe.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.901, 21.298, 1), angle = Angle(0, 0, 0), size = Vector(0.91, 0.91, 0.91), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["v_haralderwaraxe"] = { type = "Model", model = "models/witcher2soldiers/tw2_bigaxe.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.901, 21.298, 1), angle = Angle(0, 0, 0), size = Vector(0.91, 0.91, 0.91), material = "", skin = 0, bodygroup = {[0] = 3} }
 }
 
 SWEP.WElements = {
-	["w_haralderwaraxe"] = { type = "Model", model = "models/witcher2soldiers/tw2_bigaxe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.4, 1.799, -3.636), angle = Angle(2, -180, 96.3), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_haralderwaraxe"] = { type = "Model", model = "models/witcher2soldiers/tw2_bigaxe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.4, 1.799, -3.636), angle = Angle(2, -180, 96.3), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

@@ -171,9 +171,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_dreadaxe"] = { type = "Model", model = "models/props/begotten/melee/black_knight_greataxe.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.636, 1.5, 1), angle = Angle(106.363, -3.507, -176.495), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["v_dreadaxe"] = { type = "Model", model = "models/props/begotten/melee/black_knight_greataxe.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.636, 1.5, 1), angle = Angle(106.363, -3.507, -176.495), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 3} }
 }
 
 SWEP.WElements = {
-	["w_dreadaxe"] = { type = "Model", model = "models/props/begotten/melee/black_knight_greataxe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.589, 1, 1.557), angle = Angle(-5.844, 82.986, -87.663), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["w_dreadaxe"] = { type = "Model", model = "models/props/begotten/melee/black_knight_greataxe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.589, 1, 1.557), angle = Angle(-5.844, 82.986, -87.663), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 3} }
 }

@@ -126,9 +126,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_brokensword"] = { type = "Model", model = "models/demonssouls/weapons/broken sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.099, 1.5, 2.596), angle = Angle(-78.312, 0, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_brokensword"] = { type = "Model", model = "models/demonssouls/weapons/broken sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.099, 1.5, 2.596), angle = Angle(-78.312, 0, 90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
  
 SWEP.WElements = {
-	["w_brokensword"] = { type = "Model", model = "models/demonssouls/weapons/broken sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.5, 1.899), angle = Angle(-97.014, -94.676, 10), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_brokensword"] = { type = "Model", model = "models/demonssouls/weapons/broken sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.5, 1.899), angle = Angle(-97.014, -94.676, 10), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

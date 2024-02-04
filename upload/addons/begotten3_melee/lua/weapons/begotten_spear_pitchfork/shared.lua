@@ -98,9 +98,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_pitchfork"] = { type = "Model", model = "models/begotten/weapons/serfpitchfork.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(1.2, -0.5, -4.676), angle = Angle(12, 0, 0), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_pitchfork"] = { type = "Model", model = "models/begotten/weapons/serfpitchfork.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(1.2, -0.5, -4.676), angle = Angle(12, 0, 0), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_pitchfork"] = { type = "Model", model = "models/begotten/weapons/serfpitchfork.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.59, 2.596), angle = Angle(8.182, 17.531, -174.157), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_pitchfork"] = { type = "Model", model = "models/begotten/weapons/serfpitchfork.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.59, 2.596), angle = Angle(8.182, 17.531, -174.157), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

@@ -211,9 +211,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_bellhammer"] = { type = "Model", model = "models/props/begotten/melee/sacred_chime_hammer.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0.791, -0.59, -10), angle = Angle(97.013, 122.726, -19.871), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_bellhammer"] = { type = "Model", model = "models/props/begotten/melee/sacred_chime_hammer.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0.791, -0.59, -10), angle = Angle(97.013, 122.726, -19.871), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_bellhammer"] = { type = "Model", model = "models/props/begotten/melee/sacred_chime_hammer.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.65, 1.389, 0.589), angle = Angle(82.986, 52.597, 162.468), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_bellhammer"] = { type = "Model", model = "models/props/begotten/melee/sacred_chime_hammer.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.65, 1.389, 0.589), angle = Angle(82.986, 52.597, 162.468), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

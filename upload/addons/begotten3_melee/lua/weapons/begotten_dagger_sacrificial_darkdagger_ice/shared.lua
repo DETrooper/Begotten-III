@@ -197,9 +197,9 @@ end
 ---------------------------------------------------------*/
 
 SWEP.VElements = {
-	["v_darkicedagger"] = { type = "Model", model = "models/items/weapons/dg_ash_hammer/daggers_ash_hammer_on.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.589, 1.69, -0.519), angle = Angle(-73.637, 5.843, 33.895), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_darkicedagger"] = { type = "Model", model = "models/items/weapons/dg_ash_hammer/daggers_ash_hammer_on.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.589, 1.69, -0.519), angle = Angle(-73.637, 5.843, 33.895), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_darkicedagger"] = { type = "Model", model = "models/items/weapons/dg_ash_hammer/daggers_ash_hammer_on.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.1, -0.519), angle = Angle(-80.65, 54.935, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_darkicedagger"] = { type = "Model", model = "models/items/weapons/dg_ash_hammer/daggers_ash_hammer_on.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.1, -0.519), angle = Angle(-80.65, 54.935, 90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

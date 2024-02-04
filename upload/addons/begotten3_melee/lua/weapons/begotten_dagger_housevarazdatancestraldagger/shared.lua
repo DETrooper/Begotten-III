@@ -88,9 +88,9 @@ end
 ---------------------------------------------------------*/
 
 SWEP.VElements = {
-	["v_ancestralvarazdat"] = { type = "Model", model = "models/items/weapons/daggers_shadow/daggers_shadow.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.589, 1.299, 0.518), angle = Angle(-82.987, 8.182, 43.247), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_ancestralvarazdat"] = { type = "Model", model = "models/items/weapons/daggers_shadow/daggers_shadow.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.589, 1.299, 0.518), angle = Angle(-82.987, 8.182, 43.247), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_ancestralvarazdat"] = { type = "Model", model = "models/items/weapons/daggers_shadow/daggers_shadow.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1, 0.518), angle = Angle(-90, 90, 106.363), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_ancestralvarazdat"] = { type = "Model", model = "models/items/weapons/daggers_shadow/daggers_shadow.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1, 0.518), angle = Angle(-90, 90, 106.363), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

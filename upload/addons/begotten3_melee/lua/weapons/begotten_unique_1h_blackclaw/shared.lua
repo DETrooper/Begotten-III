@@ -126,9 +126,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_blackclaw"] = { type = "Model", model = "models/begotten/weapons/uniquegoresword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.635, 1.5, -35.845), angle = Angle(0, 0, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_blackclaw"] = { type = "Model", model = "models/begotten/weapons/uniquegoresword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.635, 1.5, -35.845), angle = Angle(0, 0, 90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_blackclaw"] = { type = "Model", model = "models/begotten/weapons/uniquegoresword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, -4.676, -35.845), angle = Angle(0, 0, 100), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_blackclaw"] = { type = "Model", model = "models/begotten/weapons/uniquegoresword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, -4.676, -35.845), angle = Angle(0, 0, 100), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

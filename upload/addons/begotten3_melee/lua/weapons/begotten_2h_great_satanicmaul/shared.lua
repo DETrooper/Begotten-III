@@ -168,9 +168,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_satanicmaul"] = { type = "Model", model = "models/skyrim/daedric/warhammer/w_daedricwarhammer.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-5.591, 9.5, 2.299), angle = Angle(-1.17, -10.52, -94.676), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_satanicmaul"] = { type = "Model", model = "models/skyrim/daedric/warhammer/w_daedricwarhammer.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-5.591, 9.5, 2.299), angle = Angle(-1.17, -10.52, -94.676), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_satanicmaul"] = { type = "Model", model = "models/skyrim/daedric/warhammer/w_daedricwarhammer.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(5.9, -1, 10.899), angle = Angle(-8.183, -164.805, 3.506), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_satanicmaul"] = { type = "Model", model = "models/skyrim/daedric/warhammer/w_daedricwarhammer.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(5.9, -1, 10.899), angle = Angle(-8.183, -164.805, 3.506), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

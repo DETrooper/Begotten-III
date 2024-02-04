@@ -139,9 +139,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_club"] = { type = "Model", model = "models/demonssouls/weapons/club.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0.19, -0.03, -1), angle = Angle(98.9, 122.726, -101.689), size = Vector(0.879, 0.879, 0.879), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_club"] = { type = "Model", model = "models/demonssouls/weapons/club.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0.19, -0.03, -1), angle = Angle(98.9, 122.726, -101.689), size = Vector(0.879, 0.879, 0.879), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_club"] = { type = "Model", model = "models/demonssouls/weapons/club.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, 1.557, 1.557), angle = Angle(85.324, 85.324, -22.209), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_club"] = { type = "Model", model = "models/demonssouls/weapons/club.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, 1.557, 1.557), angle = Angle(85.324, 85.324, -22.209), size = Vector(1.1, 1.1, 1.1), material = "", skin = 0, bodygroup = {} }
 }

@@ -96,9 +96,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_spear_poolcue"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/poolcue.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(0.518, 0.518, -6.753), angle = Angle(-3.507, 132.078, -1.17), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} },
+	["v_spear_poolcue"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/poolcue.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(0.518, 0.518, -6.753), angle = Angle(-3.507, 132.078, -1.17), size = Vector(0.8, 0.8, 0.8), material = "", skin = 0, bodygroup = {[0] = 3} },
 }
 
 SWEP.WElements = {
-	["w_spear_poolcue"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/poolcue.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.899, 3, 10), angle = Angle(-178.831, -24.546, -10.52), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["w_spear_poolcue"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/poolcue.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.899, 3, 10), angle = Angle(-178.831, -24.546, -10.52), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 3} }
 }

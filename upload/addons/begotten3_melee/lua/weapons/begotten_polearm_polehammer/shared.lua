@@ -119,9 +119,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_polehammer"] = { type = "Model", model = "models/demonssouls/weapons/mirdan hammer.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(-2, -0.519, 7.791), angle = Angle(108.7, 10.519, -143.767), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_polehammer"] = { type = "Model", model = "models/demonssouls/weapons/mirdan hammer.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(-2, -0.519, 7.791), angle = Angle(108.7, 10.519, -143.767), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_polehammer"] = { type = "Model", model = "models/demonssouls/weapons/mirdan hammer.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.9, -2.5, -20.261), angle = Angle(-78.312, 57.272, 143), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_polehammer"] = { type = "Model", model = "models/demonssouls/weapons/mirdan hammer.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.9, -2.5, -20.261), angle = Angle(-78.312, 57.272, 143), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

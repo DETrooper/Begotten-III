@@ -157,9 +157,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_skyfallensword"] = { type = "Model", model = "models/bloodborne/weapons/skyfeller.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0, -0, 8.831), angle = Angle(176.494, 68.96, -1.17), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_skyfallensword"] = { type = "Model", model = "models/bloodborne/weapons/skyfeller.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0, -0, 8.831), angle = Angle(176.494, 68.96, -1.17), size = Vector(1.1, 1.1, 1.1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_skyfallensword"] = { type = "Model", model = "models/bloodborne/weapons/skyfeller.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.5, 1.299, -3.636), angle = Angle(0, 52.597, -1.17), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["w_skyfallensword"] = { type = "Model", model = "models/bloodborne/weapons/skyfeller.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.5, 1.299, -3.636), angle = Angle(0, 52.597, -1.17), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 3} }
 }

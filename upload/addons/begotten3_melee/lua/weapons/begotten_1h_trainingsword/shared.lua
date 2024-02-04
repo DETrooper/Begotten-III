@@ -126,9 +126,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_trainingsword"] = { type = "Model", model = "models/begotten/weapons/training_1h.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.599, 1.58, -0.201), angle = Angle(-8.183, 104.026, 167.143), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_trainingsword"] = { type = "Model", model = "models/begotten/weapons/training_1h.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.599, 1.58, -0.201), angle = Angle(-8.183, 104.026, 167.143), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_trainingsword"] = { type = "Model", model = "models/begotten/weapons/training_1h.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.95, 1.6, -0), angle = Angle(-169.482, 73.636, 1.169), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_trainingsword"] = { type = "Model", model = "models/begotten/weapons/training_1h.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.95, 1.6, -0), angle = Angle(-169.482, 73.636, 1.169), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

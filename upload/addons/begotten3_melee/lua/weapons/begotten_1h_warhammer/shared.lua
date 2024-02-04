@@ -104,9 +104,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_warhammer"] = { type = "Model", model = "models/begotten/weapons/warhammer.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.9, 1.799, -3.5), angle = Angle(10.519, 12.857, 174.156), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_warhammer"] = { type = "Model", model = "models/begotten/weapons/warhammer.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.9, 1.799, -3.5), angle = Angle(10.519, 12.857, 174.156), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_warhammer"] = { type = "Model", model = "models/begotten/weapons/warhammer.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.7, 0.689, -5.715), angle = Angle(1.169, -19.871, -171.818), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_warhammer"] = { type = "Model", model = "models/begotten/weapons/warhammer.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.7, 0.689, -5.715), angle = Angle(1.169, -19.871, -171.818), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

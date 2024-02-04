@@ -126,9 +126,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_shortsword"] = { type = "Model", model = "models/demonssouls/weapons/short sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.99, 1.5, 0.949), angle = Angle(-80.65, -8.183, 71.299), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_shortsword"] = { type = "Model", model = "models/demonssouls/weapons/short sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.99, 1.5, 0.949), angle = Angle(-80.65, -8.183, 71.299), size = Vector(1.1, 1.1, 1.1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_shortsword"] = { type = "Model", model = "models/demonssouls/weapons/short sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.5, 0.5), angle = Angle(-80.65, 66.623, -15.195), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_shortsword"] = { type = "Model", model = "models/demonssouls/weapons/short sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.5, 0.5), angle = Angle(-80.65, 66.623, -15.195), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

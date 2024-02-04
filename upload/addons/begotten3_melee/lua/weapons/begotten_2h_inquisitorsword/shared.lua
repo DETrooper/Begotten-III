@@ -155,9 +155,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_inquisitorsword"] = { type = "Model", model = "models/demonssouls/weapons/blueblood sword.mdl", bone = "RW_Weapon", rel = "", pos = Vector(2.299, 0, 19.221), angle = Angle(82.986, 0, 57.272), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_inquisitorsword"] = { type = "Model", model = "models/demonssouls/weapons/blueblood sword.mdl", bone = "RW_Weapon", rel = "", pos = Vector(2.299, 0, 19.221), angle = Angle(82.986, 0, 57.272), size = Vector(1.1, 1.1, 1.1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_inquisitorsword"] = { type = "Model", model = "models/demonssouls/weapons/blueblood sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.5, 1.789, -12.988), angle = Angle(-92.338, 90, 40), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_inquisitorsword"] = { type = "Model", model = "models/demonssouls/weapons/blueblood sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.5, 1.789, -12.988), angle = Angle(-92.338, 90, 40), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

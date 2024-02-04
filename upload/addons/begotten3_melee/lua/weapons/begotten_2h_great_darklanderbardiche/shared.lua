@@ -166,9 +166,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_bardiche"] = { type = "Model", model = "models/demonssouls/weapons/crescent axe.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.491, 10.909, 1.399), angle = Angle(0, 90, -13), size = Vector(0.91, 0.91, 0.91), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["v_bardiche"] = { type = "Model", model = "models/demonssouls/weapons/crescent axe.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.491, 10.909, 1.399), angle = Angle(0, 90, -13), size = Vector(0.91, 0.91, 0.91), material = "", skin = 0, bodygroup = {[0] = 3} }
 }
 
 SWEP.WElements = {
-	["w_bardiche"] = { type = "Model", model = "models/demonssouls/weapons/crescent axe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.2, 0.55, 4.675), angle = Angle(97.013, -155.456, 71.299), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["w_bardiche"] = { type = "Model", model = "models/demonssouls/weapons/crescent axe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.2, 0.55, 4.675), angle = Angle(97.013, -155.456, 71.299), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {[0] = 3} }
 }

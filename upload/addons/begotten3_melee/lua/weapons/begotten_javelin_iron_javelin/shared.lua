@@ -162,9 +162,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_javelin"] = { type = "Model", model = "models/demonssouls/weapons/cut javelin.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(4.675, -0.519, -16.105), angle = Angle(105, 0, 82.986), size = Vector(0.75, 0.75, 0.75), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_javelin"] = { type = "Model", model = "models/demonssouls/weapons/cut javelin.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(4.675, -0.519, -16.105), angle = Angle(105, 0, 82.986), size = Vector(0.75, 0.75, 0.75), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_javelin"] = { type = "Model", model = "models/demonssouls/weapons/cut javelin.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.9, -0.5, -20), angle = Angle(97.013, 40.909, 54.935), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_javelin"] = { type = "Model", model = "models/demonssouls/weapons/cut javelin.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.9, -0.5, -20), angle = Angle(97.013, 40.909, 54.935), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

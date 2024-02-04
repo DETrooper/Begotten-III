@@ -155,9 +155,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_skylightsword"] = { type = "Model", model = "models/doom/weapons/templar_sword.mdl", bone = "RW_Weapon", rel = "", pos = Vector(0.5, 0, 8), angle = Angle(82.986, 0, -26.883), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_skylightsword"] = { type = "Model", model = "models/doom/weapons/templar_sword.mdl", bone = "RW_Weapon", rel = "", pos = Vector(0.5, 0, 8), angle = Angle(82.986, 0, -26.883), size = Vector(1.1, 1.1, 1.1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_skylightsword"] = { type = "Model", model = "models/doom/weapons/templar_sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.5, 1.557, -3), angle = Angle(-92.338, 90, -57.273), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_skylightsword"] = { type = "Model", model = "models/doom/weapons/templar_sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.5, 1.557, -3), angle = Angle(-92.338, 90, -57.273), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

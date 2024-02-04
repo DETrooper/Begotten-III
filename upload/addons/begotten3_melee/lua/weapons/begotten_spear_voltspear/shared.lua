@@ -104,9 +104,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_spear_voltspear"] = { type = "Model", model = "models/begotten/weapons/voltspear.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(6.752, -0.519, -17.143), angle = Angle(108.7, 0, -29.222), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["v_spear_voltspear"] = { type = "Model", model = "models/begotten/weapons/voltspear.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(6.752, -0.519, -17.143), angle = Angle(108.7, 0, -29.222), size = Vector(0.8, 0.8, 0.8), material = "", skin = 0, bodygroup = {} },
 }
 
 SWEP.WElements = {
-	["w_spear_voltspear"] = { type = "Model", model = "models/begotten/weapons/voltspear.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, 1.557), angle = Angle(-78.312, 54.935, -1.17), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_spear_voltspear"] = { type = "Model", model = "models/begotten/weapons/voltspear.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, 1.557), angle = Angle(-78.312, 54.935, -1.17), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }

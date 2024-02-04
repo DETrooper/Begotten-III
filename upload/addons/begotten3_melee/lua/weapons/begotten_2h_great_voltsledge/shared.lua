@@ -174,9 +174,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_voltsledge"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/sledgehammer.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.636, 9.8, 1.69), angle = Angle(90, -92.338, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 2} }
+	["v_voltsledge"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/sledgehammer.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.636, 9.8, 1.69), angle = Angle(90, -92.338, 0), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 2} }
 }
 
 SWEP.WElements = {
-	["w_voltsledge"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/sledgehammer.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.589, 1, 1.557), angle = Angle(-3, 100, 3.506), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 2} }
+	["w_voltsledge"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/sledgehammer.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.589, 1, 1.557), angle = Angle(-3, 100, 3.506), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 2} }
 }

@@ -162,9 +162,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_pilum"] = { type = "Model", model = "models/props/begotten/melee/heide_lance.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(2.4, 0.15, -6.753), angle = Angle(105, 0, 82.986), size = Vector(0.75, 0.75, 0.75), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_pilum"] = { type = "Model", model = "models/props/begotten/melee/heide_lance.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(2.4, 0.15, -6.753), angle = Angle(105, 0, 82.986), size = Vector(0.75, 0.75, 0.75), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_pilum"] = { type = "Model", model = "models/props/begotten/melee/heide_lance.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.89, 0.2, -10.91), angle = Angle(97.013, 40.909, 54.935), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_pilum"] = { type = "Model", model = "models/props/begotten/melee/heide_lance.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.89, 0.2, -10.91), angle = Angle(97.013, 40.909, 54.935), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

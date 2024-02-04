@@ -120,9 +120,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_gatekeeperpoleaxe"] = { type = "Model", model = "models/witcher2soldiers/tw2_halberd.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(4.5, -3.5, -25), angle = Angle(-5.2, 160.13, 80.649), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_gatekeeperpoleaxe"] = { type = "Model", model = "models/witcher2soldiers/tw2_halberd.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(4.5, -3.5, -25), angle = Angle(-5.2, 160.13, 80.649), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_gatekeeperpoleaxe"] = { type = "Model", model = "models/witcher2soldiers/tw2_halberd.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(0, 4.9, 20), angle = Angle(-3.6, 162.468, -101.689), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_gatekeeperpoleaxe"] = { type = "Model", model = "models/witcher2soldiers/tw2_halberd.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(0, 4.9, 20), angle = Angle(-3.6, 162.468, -101.689), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

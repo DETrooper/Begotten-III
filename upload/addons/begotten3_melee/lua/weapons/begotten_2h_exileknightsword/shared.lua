@@ -155,9 +155,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_exileknightsword"] = { type = "Model", model = "models/begotten/weapons/templarsword.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0.359, 0.5, -8.2), angle = Angle(-3.507, 61.948, 1.169), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_exileknightsword"] = { type = "Model", model = "models/begotten/weapons/templarsword.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0.359, 0.5, -8.2), angle = Angle(-3.507, 61.948, 1.169), size = Vector(1.1, 1.1, 1.1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_exileknightsword"] = { type = "Model", model = "models/begotten/weapons/templarsword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.635, 0.699, 10.909), angle = Angle(-3.507, 61.948, -180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_exileknightsword"] = { type = "Model", model = "models/begotten/weapons/templarsword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.635, 0.699, 10.909), angle = Angle(-3.507, 61.948, -180), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

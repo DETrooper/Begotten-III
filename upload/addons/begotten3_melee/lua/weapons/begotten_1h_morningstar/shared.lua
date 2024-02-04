@@ -105,9 +105,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_morningstar"] = { type = "Model", model = "models/demonssouls/weapons/morning star.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.99, 1.5, 1.557), angle = Angle(-101.689, -167.144, -129.741), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_morningstar"] = { type = "Model", model = "models/demonssouls/weapons/morning star.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.99, 1.5, 1.557), angle = Angle(-101.689, -167.144, -129.741), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_morningstar"] = { type = "Model", model = "models/demonssouls/weapons/morning star.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.95, 1.6, 1), angle = Angle(-78.312, 52.597, -10.52), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_morningstar"] = { type = "Model", model = "models/demonssouls/weapons/morning star.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.95, 1.6, 1), angle = Angle(-78.312, 52.597, -10.52), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

@@ -145,9 +145,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_warscythe"] = { type = "Model", model = "models/props/begotten/melee/scythe.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-2.201, -0.601, -19.5), angle = Angle(-97.014, -20, 73.636), size = Vector(0.949, 0.949, 0.949), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_warscythe"] = { type = "Model", model = "models/props/begotten/melee/scythe.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-2.201, -0.601, -19.5), angle = Angle(-97.014, -20, 73.636), size = Vector(0.949, 0.949, 0.949), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_warscythe"] = { type = "Model", model = "models/props/begotten/melee/scythe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2.589, 19), angle = Angle(94.675, 132.078, 22.208), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_warscythe"] = { type = "Model", model = "models/props/begotten/melee/scythe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 2.589, 19), angle = Angle(94.675, 132.078, 22.208), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

@@ -126,9 +126,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_satanicshortsword"] = { type = "Model", model = "models/aoc_weapon/w_shortsword_evil.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.199, 1.45, -6.401), angle = Angle(108.7, -5.844, 17.531), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_satanicshortsword"] = { type = "Model", model = "models/aoc_weapon/w_shortsword_evil.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.199, 1.45, -6.401), angle = Angle(108.7, -5.844, 17.531), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_satanicshortsword"] = { type = "Model", model = "models/aoc_weapon/w_shortsword_evil.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.4, 1.2, -6.753), angle = Angle(80.649, -113.377, -90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_satanicshortsword"] = { type = "Model", model = "models/aoc_weapon/w_shortsword_evil.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.4, 1.2, -6.753), angle = Angle(80.649, -113.377, -90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

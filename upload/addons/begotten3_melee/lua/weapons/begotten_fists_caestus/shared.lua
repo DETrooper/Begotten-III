@@ -192,11 +192,11 @@ end;
 	Bone Mods
 ---------------------------------------------------------*/
 SWEP.VElements = {
-	["v_caestus_left"] = { type = "Model", model = "models/props/begotten/melee/caestus.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2, 1.2, 0.2), angle = Angle(-78.312, -15.195, -94.676), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["v_caestus_right"] = { type = "Model", model = "models/props/begotten/melee/caestus.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.5, 0.689, 0), angle = Angle(-92.338, -3.507, -92.338), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_caestus_left"] = { type = "Model", model = "models/props/begotten/melee/caestus.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2, 1.2, 0.2), angle = Angle(-78.312, -15.195, -94.676), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["v_caestus_right"] = { type = "Model", model = "models/props/begotten/melee/caestus.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.5, 0.689, 0), angle = Angle(-92.338, -3.507, -92.338), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_caestus_right"] = { type = "Model", model = "models/props/begotten/melee/caestus.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.099, 0.889, 0.15), angle = Angle(-99.351, 90, -5.844), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["w_caestus_left"] = { type = "Model", model = "models/props/begotten/melee/caestus.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2, 1, 0.1), angle = Angle(-90, 26.882, -90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_caestus_right"] = { type = "Model", model = "models/props/begotten/melee/caestus.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.099, 0.889, 0.15), angle = Angle(-99.351, 90, -5.844), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["w_caestus_left"] = { type = "Model", model = "models/props/begotten/melee/caestus.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2, 1, 0.1), angle = Angle(-90, 26.882, -90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

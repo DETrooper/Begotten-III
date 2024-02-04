@@ -167,9 +167,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_eveningstar"] = { type = "Model", model = "models/begotten/weapons/eveningstar.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.59, -3.636, 1.5), angle = Angle(0, 0, -90), size = Vector(0.949, 0.949, 0.949), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["v_eveningstar"] = { type = "Model", model = "models/begotten/weapons/eveningstar.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.59, -3.636, 1.5), angle = Angle(0, 0, -90), size = Vector(0.949, 0.949, 0.949), material = "", skin = 0, bodygroup = {[0] = 3} }
 }
 
 SWEP.WElements = {
-	["w_eveningstar"] = { type = "Model", model = "models/begotten/weapons/eveningstar.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(4, 0, 17.142), angle = Angle(-3, 100, 3.506), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["w_eveningstar"] = { type = "Model", model = "models/begotten/weapons/eveningstar.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(4, 0, 17.142), angle = Angle(-3, 100, 3.506), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 3} }
 }

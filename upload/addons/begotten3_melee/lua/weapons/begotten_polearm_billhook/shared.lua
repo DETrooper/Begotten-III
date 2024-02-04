@@ -119,9 +119,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_billhook"] = { type = "Model", model = "models/bill_guisarme.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(-21.591, 4.675, -1.558), angle = Angle(-5.844, 101.688, 80.649), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_billhook"] = { type = "Model", model = "models/bill_guisarme.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(-21.591, 4.675, -1.558), angle = Angle(-5.844, 101.688, 80.649), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_billhook"] = { type = "Model", model = "models/bill_guisarme.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-0.519, -23.951, -2.597), angle = Angle(-7, -171.818, -97.014), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_billhook"] = { type = "Model", model = "models/bill_guisarme.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-0.519, -23.951, -2.597), angle = Angle(-7, -171.818, -97.014), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

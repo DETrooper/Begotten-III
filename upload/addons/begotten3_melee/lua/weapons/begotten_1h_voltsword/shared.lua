@@ -128,9 +128,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_voltsword"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/chineeseofficersword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.579, 1.1, 4), angle = Angle(5.599, -80.65, -174.157), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 4} }
+	["v_voltsword"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/chineeseofficersword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.579, 1.1, 4), angle = Angle(5.599, -80.65, -174.157), size = Vector(1.1, 1.1, 1.1), material = "", skin = 0, bodygroup = {[0] = 4} }
 }
 
 SWEP.WElements = {
-	["w_voltsword"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/chineeseofficersword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.5, 2, 3.635), angle = Angle(-10.52, -113.377, -180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 4} }
+	["w_voltsword"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/chineeseofficersword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.5, 2, 3.635), angle = Angle(-10.52, -113.377, -180), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 4} }
 }

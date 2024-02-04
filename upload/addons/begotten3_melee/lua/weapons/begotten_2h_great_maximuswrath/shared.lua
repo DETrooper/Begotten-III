@@ -226,9 +226,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_maximuswrath"] = { type = "Model", model = "models/begotten/weapons/maximus_wrath.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.3, -14.027, 1.557), angle = Angle(101.688, 0, 0), size = Vector(0.91, 0.91, 0.91), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["v_maximuswrath"] = { type = "Model", model = "models/begotten/weapons/maximus_wrath.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.3, -14.027, 1.557), angle = Angle(101.688, 0, 0), size = Vector(0.91, 0.91, 0.91), material = "", skin = 0, bodygroup = {[0] = 3} }
 }
 
 SWEP.WElements = {
-	["w_maximuswrath"] = { type = "Model", model = "models/begotten/weapons/maximus_wrath.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.9, -1, 37.922), angle = Angle(-3.507, 85.324, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["w_maximuswrath"] = { type = "Model", model = "models/begotten/weapons/maximus_wrath.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.9, -1, 37.922), angle = Angle(-3.507, 85.324, 90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 3} }
 }

@@ -119,9 +119,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_warspear"] = { type = "Model", model = "models/witcher2soldiers/tw2_spear.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(4.8, -4, -30), angle = Angle(-5.2, 160.13, 80.649), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_warspear"] = { type = "Model", model = "models/witcher2soldiers/tw2_spear.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(4.8, -4, -30), angle = Angle(-5.2, 160.13, 80.649), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_warspear"] = { type = "Model", model = "models/witcher2soldiers/tw2_spear.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(0, 4.9, 20), angle = Angle(-2.5, 158, -101.689), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_warspear"] = { type = "Model", model = "models/witcher2soldiers/tw2_spear.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(0, 4.9, 20), angle = Angle(-2.5, 158, -101.689), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

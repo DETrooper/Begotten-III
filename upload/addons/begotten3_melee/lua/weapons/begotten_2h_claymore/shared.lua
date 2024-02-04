@@ -155,9 +155,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_claymore"] = { type = "Model", model = "models/demonssouls/weapons/claymore.mdl", bone = "RW_Weapon", rel = "", pos = Vector(0.1, 0.518, 2.596), angle = Angle(82.986, 0, 57.272), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_claymore"] = { type = "Model", model = "models/demonssouls/weapons/claymore.mdl", bone = "RW_Weapon", rel = "", pos = Vector(0.1, 0.518, 2.596), angle = Angle(82.986, 0, 57.272), size = Vector(1.1, 1.1, 1.1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_claymore"] = { type = "Model", model = "models/demonssouls/weapons/claymore.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.099, 1.299, 2.596), angle = Angle(-92.338, 90, 36.234), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_claymore"] = { type = "Model", model = "models/demonssouls/weapons/claymore.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.099, 1.299, 2.596), angle = Angle(-92.338, 90, 36.234), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

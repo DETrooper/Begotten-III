@@ -96,9 +96,9 @@ end
 ---------------------------------------------------------*/
 
 SWEP.VElements = {
-	["v_tireiron"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/tireiron.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.099, 1.2, 1.557), angle = Angle(8.182, -75.974, -171.818), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_tireiron"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/tireiron.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.099, 1.2, 1.557), angle = Angle(8.182, -75.974, -171.818), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_tireiron"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/tireiron.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.59, 0.518), angle = Angle(-171.818, 68.96, 1.169), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 2, bodygroup = {} }
+	["w_tireiron"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/tireiron.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.59, 0.518), angle = Angle(-171.818, 68.96, 1.169), size = Vector(1, 1, 1), material = "", skin = 2, bodygroup = {} }
 }

@@ -126,9 +126,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_steelarmingsword"] = { type = "Model", model = "models/aoc_weapon/sword_01_static.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(5.3, 1.5, -6.29), angle = Angle(106.363, -5.844, 17.531), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_steelarmingsword"] = { type = "Model", model = "models/aoc_weapon/sword_01_static.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(5.3, 1.5, -6.29), angle = Angle(106.363, -5.844, 17.531), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_steelarmingsword"] = { type = "Model", model = "models/aoc_weapon/sword_01_static.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.99, 0.5, -6.753), angle = Angle(80.649, -115.714, -90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_steelarmingsword"] = { type = "Model", model = "models/aoc_weapon/sword_01_static.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.99, 0.5, -6.753), angle = Angle(80.649, -115.714, -90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

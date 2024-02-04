@@ -168,9 +168,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_scraphammer"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/rockethammer.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.901, 5, 0), angle = Angle(73.636, -92.338, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0 }
+	["v_scraphammer"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/rockethammer.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.901, 5, 0), angle = Angle(73.636, -92.338, 0), size = Vector(1, 1, 1), material = "", skin = 0 }
 }
 
 SWEP.WElements = {
-	["w_scraphammer"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/rockethammer.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.589, 1, 1.557), angle = Angle(-3, 100, 3.506), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0 }
+	["w_scraphammer"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/rockethammer.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.589, 1, 1.557), angle = Angle(-3, 100, 3.506), size = Vector(1, 1, 1), material = "", skin = 0 }
 }

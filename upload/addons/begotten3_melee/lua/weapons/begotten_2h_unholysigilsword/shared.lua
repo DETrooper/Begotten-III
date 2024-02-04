@@ -155,9 +155,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_unholysigilsword"]= { type = "Model", model = "models/props/begotten/melee/smelter_sword.mdl", bone = "RW_Weapon", rel = "", pos = Vector(0.85, 0.518, 46.234), angle = Angle(0, -118.053, -92), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 2, bodygroup = {} }
+	["v_unholysigilsword"]= { type = "Model", model = "models/props/begotten/melee/smelter_sword.mdl", bone = "RW_Weapon", rel = "", pos = Vector(0.85, 0.518, 46.234), angle = Angle(0, -118.053, -92), size = Vector(0.8, 0.8, 0.8), material = "", skin = 2, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_unholysigilsword"] = { type = "Model", model = "models/props/begotten/melee/smelter_sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.3, -0.69, -45), angle = Angle(3, 57.272, 89.3), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 2, bodygroup = {} }
+	["w_unholysigilsword"] = { type = "Model", model = "models/props/begotten/melee/smelter_sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.3, -0.69, -45), angle = Angle(3, 57.272, 89.3), size = Vector(0.899, 0.899, 0.899), material = "", skin = 2, bodygroup = {} }
 }

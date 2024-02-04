@@ -88,9 +88,9 @@ end
 ---------------------------------------------------------*/
 
 SWEP.VElements = {
-	["v_knightsbane"] = { type = "Model", model = "models/demonssouls/weapons/mail breaker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, 0.518), angle = Angle(-87.663, 8.182, 120.389), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_knightsbane"] = { type = "Model", model = "models/demonssouls/weapons/mail breaker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, 0.518), angle = Angle(-87.663, 8.182, 120.389), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_knightsbane"] = { type = "Model", model = "models/demonssouls/weapons/mail breaker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.1, 0), angle = Angle(-90, 90, 36.234), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_knightsbane"] = { type = "Model", model = "models/demonssouls/weapons/mail breaker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.1, 0), angle = Angle(-90, 90, 36.234), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

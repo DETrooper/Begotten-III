@@ -95,9 +95,9 @@ end
 ---------------------------------------------------------*/
 
 SWEP.VElements = {
-	["v_pipe"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/leadpipe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.099, 1.2, 1.889), angle = Angle(8.182, -75.974, 180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_pipe"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/leadpipe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.099, 1.2, 1.889), angle = Angle(8.182, -75.974, 180), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_pipe"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/leadpipe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.59, 2.9), angle = Angle(-174.157, 73.636, 1.169), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_pipe"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/leadpipe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.59, 2.9), angle = Angle(-174.157, 73.636, 1.169), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

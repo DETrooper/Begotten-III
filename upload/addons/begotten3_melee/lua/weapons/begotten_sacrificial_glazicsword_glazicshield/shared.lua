@@ -208,11 +208,11 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_solshield"] = { type = "Model", model = "models/demonssouls/shields/rune shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-1.558, -14.027, 4.675), angle = Angle(-146.105, 71.299, -106.364), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["v_glazicsword"] = { type = "Model", model = "models/demonssouls/weapons/rune sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.6, 0), angle = Angle(-80.65, 0, 85.324), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_solshield"] = { type = "Model", model = "models/demonssouls/shields/rune shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-1.558, -14.027, 4.675), angle = Angle(-146.105, 71.299, -106.364), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["v_glazicsword"] = { type = "Model", model = "models/demonssouls/weapons/rune sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.6, 0), angle = Angle(-80.65, 0, 85.324), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_solshield"] = { type = "Model", model = "models/demonssouls/weapons/rune sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.799, 1.2, 0), angle = Angle(-80, 90, 10), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["w_glazicsword"] = { type = "Model", model = "models/demonssouls/shields/rune shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(1.899, 1.899, 0), angle = Angle(-99.351, -106.364, 43.247), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_solshield"] = { type = "Model", model = "models/demonssouls/weapons/rune sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.799, 1.2, 0), angle = Angle(-80, 90, 10), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["w_glazicsword"] = { type = "Model", model = "models/demonssouls/shields/rune shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(1.899, 1.899, 0), angle = Angle(-99.351, -106.364, 43.247), size = Vector(1.1, 1.1, 1.1), material = "", skin = 0, bodygroup = {} }
 }

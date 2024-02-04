@@ -157,9 +157,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_voltlongsword"] = { type = "Model", model = "models/begotten/weapons/shishkebab.mdl", bone = "RW_Weapon", rel = "", pos = Vector(0, 0.5, 1.557), angle = Angle(82.986, 0, 57.272), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_voltlongsword"] = { type = "Model", model = "models/begotten/weapons/shishkebab.mdl", bone = "RW_Weapon", rel = "", pos = Vector(0, 0.5, 1.557), angle = Angle(82.986, 0, 57.272), size = Vector(1.1, 1.1, 1.1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_voltlongsword"] = { type = "Model", model = "models/begotten/weapons/shishkebab.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.5, 1, 2.596), angle = Angle(-97.014, 73.636, -162.469), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_voltlongsword"] = { type = "Model", model = "models/begotten/weapons/shishkebab.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.5, 1, 2.596), angle = Angle(-97.014, 73.636, -162.469), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

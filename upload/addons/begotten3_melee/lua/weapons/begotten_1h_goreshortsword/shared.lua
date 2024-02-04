@@ -127,9 +127,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_goreshortsword"] = { type = "Model", model = "models/begotten/weapons/sword2.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.99, 1.299, -0), angle = Angle(-11.9, -164.805, -174.157), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_goreshortsword"] = { type = "Model", model = "models/begotten/weapons/sword2.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.99, 1.299, -0), angle = Angle(-11.9, -164.805, -174.157), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_goreshortsword"] = { type = "Model", model = "models/begotten/weapons/sword2.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.5, 1.25, -0.519), angle = Angle(-180, -15.195, -10.52), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_goreshortsword"] = { type = "Model", model = "models/begotten/weapons/sword2.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.5, 1.25, -0.519), angle = Angle(-180, -15.195, -10.52), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

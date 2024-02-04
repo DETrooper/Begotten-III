@@ -144,9 +144,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_demonslayeraxe"] = { type = "Model", model = "models/props/begotten/melee/drakekeeper_great_axe.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0.59, -0.101, -2), angle = Angle(-3.507, 0, -81), size = Vector(0.879, 0.879, 0.879), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_demonslayeraxe"] = { type = "Model", model = "models/props/begotten/melee/drakekeeper_great_axe.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0.59, -0.101, -2), angle = Angle(-3.507, 0, -81), size = Vector(0.879, 0.879, 0.879), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_demonslayeraxe"] = { type = "Model", model = "models/props/begotten/melee/drakekeeper_great_axe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.099, 1.299, 2.596), angle = Angle(-5, 80.649, -85.325), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_demonslayeraxe"] = { type = "Model", model = "models/props/begotten/melee/drakekeeper_great_axe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.099, 1.299, 2.596), angle = Angle(-5, 80.649, -85.325), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

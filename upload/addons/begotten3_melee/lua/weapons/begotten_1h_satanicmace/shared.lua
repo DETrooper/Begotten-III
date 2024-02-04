@@ -104,9 +104,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_satanicmace"] = { type = "Model", model = "models/skyrim/daedric/mace/w_daedricmace.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.5, 2, -3.1), angle = Angle(17.531, 24.545, 171.817), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_satanicmace"] = { type = "Model", model = "models/skyrim/daedric/mace/w_daedricmace.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.5, 2, -3.1), angle = Angle(17.531, 24.545, 171.817), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_satanicmace"] = { type = "Model", model = "models/skyrim/daedric/mace/w_daedricmace.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(5.199, 2, -4.676), angle = Angle(171.817, -22.209, -10.52), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_satanicmace"] = { type = "Model", model = "models/skyrim/daedric/mace/w_daedricmace.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(5.199, 2, -4.676), angle = Angle(171.817, -22.209, -10.52), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

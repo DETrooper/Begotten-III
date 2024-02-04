@@ -155,9 +155,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_sataniclongsword"] = { type = "Model", model = "models/skyrim/draugr/greatsword/w_draugrgreatsword.mdl", bone = "RW_Weapon", rel = "", pos = Vector(2, 0.349, 2.5), angle = Angle(-5.844, 155.455, -1.17), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_sataniclongsword"] = { type = "Model", model = "models/skyrim/draugr/greatsword/w_draugrgreatsword.mdl", bone = "RW_Weapon", rel = "", pos = Vector(2, 0.349, 2.5), angle = Angle(-5.844, 155.455, -1.17), size = Vector(1.1, 1.1, 1.1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_sataniclongsword"] = { type = "Model", model = "models/skyrim/draugr/greatsword/w_draugrgreatsword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2, -0.69, 1.557), angle = Angle(15.194, -29.222, 176.494), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 3} }
+	["w_sataniclongsword"] = { type = "Model", model = "models/skyrim/draugr/greatsword/w_draugrgreatsword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2, -0.69, 1.557), angle = Angle(15.194, -29.222, 176.494), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {[0] = 3} }
 }

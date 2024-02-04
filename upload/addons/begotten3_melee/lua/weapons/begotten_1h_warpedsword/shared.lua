@@ -117,9 +117,9 @@ end
 ---------------------------------------------------------*/
 
 SWEP.VElements = {
-	["v_warpedsword"] = { type = "Model", model = "models/props/begotten/melee/warped_sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.25, 1.59, 1.557), angle = Angle(-1.17, -82.987, 92.337), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_warpedsword"] = { type = "Model", model = "models/props/begotten/melee/warped_sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.25, 1.59, 1.557), angle = Angle(-1.17, -82.987, 92.337), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_warpedsword"] = { type = "Model", model = "models/props/begotten/melee/warped_sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.2, 0), angle = Angle(-5.844, -115.714, 87.662), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_warpedsword"] = { type = "Model", model = "models/props/begotten/melee/warped_sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.2, 0), angle = Angle(-5.844, -115.714, 87.662), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

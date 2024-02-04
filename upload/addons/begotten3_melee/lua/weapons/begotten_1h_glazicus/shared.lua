@@ -127,19 +127,19 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_glazicus"] = { type = "Model", model = "models/demonssouls/weapons/broad sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.4, 1.7, 1.2), angle = Angle(-90, 0, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_glazicus"] = { type = "Model", model = "models/demonssouls/weapons/broad sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.4, 1.7, 1.2), angle = Angle(-90, 0, 90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.VElementsDual = {
-	["v_left"] = { type = "Model", model = "models/demonssouls/weapons/broad sword.mdl", bone = "Dummy16", rel = "", pos = Vector(0, -7.661, -0.202), angle = Angle(1.169, 80.649, -180), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["v_right"] = { type = "Model", model = "models/demonssouls/weapons/broad sword.mdl", bone = "Dummy01", rel = "", pos = Vector(0.25, -10.384, 0.34), angle = Angle(3.506, 73.636, -169.482), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_left"] = { type = "Model", model = "models/demonssouls/weapons/broad sword.mdl", bone = "Dummy16", rel = "", pos = Vector(0, -7.661, -0.202), angle = Angle(1.169, 80.649, -180), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} },
+	["v_right"] = { type = "Model", model = "models/demonssouls/weapons/broad sword.mdl", bone = "Dummy01", rel = "", pos = Vector(0.25, -10.384, 0.34), angle = Angle(3.506, 73.636, -169.482), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_glazicus"] = { type = "Model", model = "models/demonssouls/weapons/broad sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.68, 1.2, 0.899), angle = Angle(-80, 90, 10), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_glazicus"] = { type = "Model", model = "models/demonssouls/weapons/broad sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.68, 1.2, 0.899), angle = Angle(-80, 90, 10), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElementsDual = {
-	["w_left"] = { type = "Model", model = "models/demonssouls/weapons/broad sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.595, 1.557, 0.977), angle = Angle(70, -87.695, -180), size = Vector(-1, -1, -1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["w_right"] = { type = "Model", model = "models/demonssouls/weapons/broad sword.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.595, 1.557, 0.977), angle = Angle(-70, 90, -176.495), size = Vector(-1, -1, -1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_left"] = { type = "Model", model = "models/demonssouls/weapons/broad sword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.595, 1.557, 0.977), angle = Angle(70, -87.695, -180), size = Vector(-1, -1, -1), material = "", skin = 0, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/demonssouls/weapons/broad sword.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.595, 1.557, 0.977), angle = Angle(-70, 90, -176.495), size = Vector(-1, -1, -1), material = "", skin = 0, bodygroup = {} }
 }

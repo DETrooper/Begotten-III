@@ -88,9 +88,9 @@ end
 ---------------------------------------------------------*/
 
 SWEP.VElements = {
-	["v_ancestralrekh"] = { type = "Model", model = "models/items/weapons/daggers_kryss/daggers_kryss.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.589, 1.299, 0.518), angle = Angle(-85.325, 8.182, 29.221), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_ancestralrekh"] = { type = "Model", model = "models/items/weapons/daggers_kryss/daggers_kryss.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.589, 1.299, 0.518), angle = Angle(-85.325, 8.182, 29.221), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_ancestralrekh"] = { type = "Model", model = "models/items/weapons/daggers_kryss/daggers_kryss.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.299, 1, 0.518), angle = Angle(-90, 90, 106.363), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_ancestralrekh"] = { type = "Model", model = "models/items/weapons/daggers_kryss/daggers_kryss.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.299, 1, 0.518), angle = Angle(-90, 90, 106.363), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

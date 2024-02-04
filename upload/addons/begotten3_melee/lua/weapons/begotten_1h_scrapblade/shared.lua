@@ -117,19 +117,19 @@ end
 ---------------------------------------------------------*/
 
 SWEP.VElements = {
-	["v_shishkebab"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/shishkebab.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.635, 2.596, 1.557), angle = Angle(-3.507, -87.663, -180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_shishkebab"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/shishkebab.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.635, 2.596, 1.557), angle = Angle(-3.507, -87.663, -180), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.VElementsDual = {
-	["v_left"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/shishkebab.mdl", bone = "Dummy16", rel = "", pos = Vector(-1.201, -6.753, -1), angle = Angle(-111.04, -36.235, -104.027), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["v_right"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/shishkebab.mdl", bone = "Dummy01", rel = "", pos = Vector(-0.5, -9, 0.2), angle = Angle(-90, 80.649, 12.857), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_left"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/shishkebab.mdl", bone = "Dummy16", rel = "", pos = Vector(-1.201, -6.753, -1), angle = Angle(-111.04, -36.235, -104.027), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} },
+	["v_right"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/shishkebab.mdl", bone = "Dummy01", rel = "", pos = Vector(-0.5, -9, 0.2), angle = Angle(-90, 80.649, 12.857), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_shishkebab"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/shishkebab.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, 4.675), angle = Angle(180, 71.299, 8.182), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_shishkebab"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/shishkebab.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, 4.675), angle = Angle(180, 71.299, 8.182), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElementsDual = {
-	["w_left"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/shishkebab.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.2, 0.2, -3.636), angle = Angle(8.182, 80.649, 10.519), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["w_right"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/shishkebab.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.589, 3.2, 2.596), angle = Angle(-22.209, -104.027, -180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_left"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/shishkebab.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.2, 0.2, -3.636), angle = Angle(8.182, 80.649, 10.519), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/shishkebab.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.589, 3.2, 2.596), angle = Angle(-22.209, -104.027, -180), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

@@ -119,9 +119,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_pike"] = { type = "Model", model = "models/props/begotten/melee/pike.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(6.8, -1.4, -17.143), angle = Angle(-71.3, 5.843, 108.7), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_pike"] = { type = "Model", model = "models/props/begotten/melee/pike.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(6.8, -1.4, -17.143), angle = Angle(-71.3, 5.843, 108.7), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_pike"] = { type = "Model", model = "models/props/begotten/melee/pike.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.4, -0.9, -14), angle = Angle(101.688, 57.272, -26.883), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_pike"] = { type = "Model", model = "models/props/begotten/melee/pike.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.4, -0.9, -14), angle = Angle(101.688, 57.272, -26.883), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

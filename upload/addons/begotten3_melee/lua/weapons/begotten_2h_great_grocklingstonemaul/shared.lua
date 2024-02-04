@@ -139,9 +139,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_grocklingstonemaul"] = { type = "Model", model = "models/begotten/weapons/2h_mace2.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0.851, -0.76, -7), angle = Angle(10.519, 85, 1.5), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_grocklingstonemaul"] = { type = "Model", model = "models/begotten/weapons/2h_mace2.mdl", bone = "RW_Weapon", rel = "", pos = Vector(-0.851, -0.76, -7), angle = Angle(10.519, 85, 1.5), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_grocklingstonemaul"] = { type = "Model", model = "models/begotten/weapons/2h_mace2.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.635, 1, 5.714), angle = Angle(174.156, 3.5, -176.495), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_grocklingstonemaul"] = { type = "Model", model = "models/begotten/weapons/2h_mace2.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.635, 1, 5.714), angle = Angle(174.156, 3.5, -176.495), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
