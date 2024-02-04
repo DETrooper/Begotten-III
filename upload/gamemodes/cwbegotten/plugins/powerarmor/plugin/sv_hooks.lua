@@ -104,7 +104,9 @@ function cwPowerArmor:PostPlayerDeath(player)
 		if (player.wearingPowerArmor) then
 			local ragCorpse = player:GetRagdollEntity();
 			
-			Clockwork.plugin:Call("BuildUp", ragCorpse, true);
+			if IsValid(ragCorpse) then
+				Clockwork.plugin:Call("BuildUp", ragCorpse, true);
+			end
 			
 			player.wearingPowerArmor = false;
 			player:SetCharacterData("battery", 0);

@@ -744,6 +744,13 @@ function cwBeliefs:LockpickFinished(player, entity)
 	end
 end
 
+-- Called when a player should take damage.
+function cwBeliefs:PlayerShouldTakeDamage(player, attacker, inflictor, damageInfo)
+	if (player.distortedRingFired) then
+		return false;
+	end;
+end
+
 -- Called when an entity has taken damage.
 function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 	-- I'm also putting the code for charm effects in here because I'm lazy.
@@ -1340,9 +1347,15 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 					if !entTab.opponent then
 						itemTable:OnPlayerUnequipped(entity);
 						entity:TakeItem(itemTable, true);
-					else
-						entTab.distortedRingFired = true;
 					end
+					
+					entTab.distortedRingFired = true;
+					
+					timer.Simple(0.5, function()
+						if IsValid(entity) then
+							entity.distortedRingFired = nil;
+						end
+					end);
 					
 					entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
 					entity:Extinguish();

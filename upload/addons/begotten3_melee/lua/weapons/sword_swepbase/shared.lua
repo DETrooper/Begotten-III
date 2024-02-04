@@ -979,74 +979,72 @@ function SWEP:PrimaryAttack()
 								end
 							
 								if offhandAttackTable then
-									if self.isAttacking then -- This can be set to false elsewhere and will abort the attack.
-										meleeArc = offhandAttackTable["meleearc"] or 25;
-										meleeRange = offhandAttackTable["meleerange"] / 10;
-										hitsAllowed = offhandWeapon.MultiHit or 1;
-										table.Empty(hitEntities);
-										
-										if stance == "thrust_swing" or thrustOverride then
-											meleeArc = offhandAttackTable["altmeleearc"] or offhandAttackTable["meleearc"] or 25;
-										
-											if offhandAttackTable.canaltattack then
-												if offhandWeapon.CanSwipeAttack then
-													meleeRange = meleeRange * 0.8
-												else
-													meleeRange = meleeRange * 1.2
-												end
+									meleeArc = offhandAttackTable["meleearc"] or 25;
+									meleeRange = offhandAttackTable["meleerange"] / 10;
+									hitsAllowed = offhandWeapon.MultiHit or 1;
+									table.Empty(hitEntities);
+									
+									if stance == "thrust_swing" or thrustOverride then
+										meleeArc = offhandAttackTable["altmeleearc"] or offhandAttackTable["meleearc"] or 25;
+									
+										if offhandAttackTable.canaltattack then
+											if offhandWeapon.CanSwipeAttack then
+												meleeRange = meleeRange * 0.8
+											else
+												meleeRange = meleeRange * 1.2
 											end
 										end
+									end
 
-										local tr = util.TraceLine({
-											start = pos,
-											endpos = pos + (aimVector * meleeRange),
-											mask = MASK_SOLID,
-											filter = owner
-										})
-										
-										if tr.Hit then
-											if IsValid(tr.Entity) then
-												if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
-													table.insert(hitEntities, tr.Entity);
-												else
-													hitsAllowed = 0;
-												end
-													
-												self:HandleHit(tr.Entity, tr.HitPos, stance, nil, offhandWeapon, offhandAttackTable);
+									local tr = util.TraceLine({
+										start = pos,
+										endpos = pos + (aimVector * meleeRange),
+										mask = MASK_SOLID,
+										filter = owner
+									})
+									
+									if tr.Hit then
+										if IsValid(tr.Entity) then
+											if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
+												table.insert(hitEntities, tr.Entity);
+											else
+												hitsAllowed = 0;
 											end
-										end
-											
-										if !tr.Hit or #hitEntities < hitsAllowed then
-											for i = 1, meleeArc - 1 do
-												local newAimVector = Vector(aimVector);
-											
-												if (i % 2 == 0) then
-													-- If even go left.
-													newAimVector:Rotate(Angle(0, math.Round(i / 2), 0));
-												else
-													-- If odd go right.
-													newAimVector:Rotate(Angle(0, -math.Round(i / 2), 0));
-												end
 
-												local tr2 = util.TraceLine({
-													start = pos,
-													endpos = pos + (newAimVector * meleeRange),
-													mask = MASK_SOLID,
-													filter = owner
-												})
-												
-												if tr2.Hit then
-													if IsValid(tr2.Entity) and !table.HasValue(hitEntities, tr2.Entity) then
-														if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
-															table.insert(hitEntities, tr2.Entity);
-															
-															self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities, offhandWeapon, offhandAttackTable);
-														end
+											self:HandleHit(tr.Entity, tr.HitPos, stance, nil, offhandWeapon, offhandAttackTable);
+										end
+									end
+										
+									if !tr.Hit or #hitEntities < hitsAllowed then
+										for i = 1, meleeArc - 1 do
+											local newAimVector = Vector(aimVector);
+										
+											if (i % 2 == 0) then
+												-- If even go left.
+												newAimVector:Rotate(Angle(0, math.Round(i / 2), 0));
+											else
+												-- If odd go right.
+												newAimVector:Rotate(Angle(0, -math.Round(i / 2), 0));
+											end
+
+											local tr2 = util.TraceLine({
+												start = pos,
+												endpos = pos + (newAimVector * meleeRange),
+												mask = MASK_SOLID,
+												filter = owner
+											})
+											
+											if tr2.Hit then
+												if IsValid(tr2.Entity) and !table.HasValue(hitEntities, tr2.Entity) then
+													if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
+														table.insert(hitEntities, tr2.Entity);
+														
+														self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities, offhandWeapon, offhandAttackTable);
 													end
-												
-													if #hitEntities >= hitsAllowed then
-														break;
-													end
+												end
+											
+												if #hitEntities >= hitsAllowed then
+													break;
 												end
 											end
 										end

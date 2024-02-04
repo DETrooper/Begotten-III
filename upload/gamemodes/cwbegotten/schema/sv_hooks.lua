@@ -2777,9 +2777,7 @@ end
 -- Called when a player should take damage.
 function Schema:PlayerShouldTakeDamage(player, attacker, inflictor, damageInfo)
 	if (player.cwWakingUp) then
-		damageInfo:SetDamage(0);
-		damageInfo:ScaleDamage(0);
-		return true;
+		return false;
 	end;
 	
 	-- rubber johnny flags
@@ -2789,9 +2787,7 @@ function Schema:PlayerShouldTakeDamage(player, attacker, inflictor, damageInfo)
 
 		if (hasFlags and !attHasFlags) then
 			attacker:TakeDamage(damageInfo:GetDamage());
-			damageInfo:SetDamage(0);
-			damageInfo:ScaleDamage(0);
-			return true;
+			return false;
 		end;
 	end;
 end
