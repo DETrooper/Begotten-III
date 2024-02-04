@@ -606,6 +606,8 @@ end;
 
 -- Called after limb damage is calculated.
 function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
+	if Clockwork.player:HasFlags(player, "I") then return end;
+	
 	local action = Clockwork.player:GetAction(player);
 	local curTime = CurTime();
 	local plyTab = player:GetTable();
