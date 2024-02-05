@@ -1233,48 +1233,48 @@ end
 if CLIENT then
 		SWEP.vRenderOrder = nil
 		function SWEP:ViewModelDrawn(vm)
-			local wepTab = self:GetTable()
 			local vm = self.Owner:GetViewModel()
 			self:UpdateBonePositions(vm)
 			
 			if !IsValid(vm) then return end
 			
-			if (!wepTab.VElements) then return end
+			if (!self.VElements) then return end
 
-			if (!wepTab.vRenderOrder) then
-				wepTab.vRenderOrder = {}
+			if (!self.vRenderOrder) then
+				self.vRenderOrder = {}
 
-				for k, v in pairs(wepTab.VElements) do
+				for k, v in pairs( self.VElements ) do
 					if (v.type == "Model") then
-						table.insert(wepTab.vRenderOrder, 1, k)
+						table.insert(self.vRenderOrder, 1, k)
 					elseif (v.type == "Sprite" or v.type == "Quad") then
-						table.insert(wepTab.vRenderOrder, k)
+						table.insert(self.vRenderOrder, k)
 					end
 				end
 			end
 
-			for k, name in ipairs(wepTab.vRenderOrder) do
-				local v = wepTab.VElements[name]
+			for k, name in ipairs( self.vRenderOrder ) do
+				local v = self.VElements[name]
+				if (!v) then self.vRenderOrder = nil break end
 				
-				if (!v) then wepTab.vRenderOrder = nil break end
+				if (!v.bone) then continue end
 				
-				--[[local pos, ang = self:GetBoneOrientation(wepTab.VElements, v, vm)
+				local pos, ang = self:GetBoneOrientation( self.VElements, v, vm )
 				
-				if (!pos) then continue end]]--
+				if (!pos) then continue end
 				
 				if (v.type == "Model") then
 					local model = v.modelEnt
-						
-					if !IsValid(model) or model:GetParent() ~= vm then
-						self:CreateModels(wepTab.VElements);
+					
+					if !IsValid(model) then
+						self:CreateModels(self.VElements);
 						
 						return;
 					end
 
-					--[[ang:RotateAroundAxis(ang:Up(), v.angle.y)
+					model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z )
+					ang:RotateAroundAxis(ang:Up(), v.angle.y)
 					ang:RotateAroundAxis(ang:Right(), v.angle.p)
 					ang:RotateAroundAxis(ang:Forward(), v.angle.r)
-					model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z )
 
 					model:SetAngles(ang)
 					local matrix = Matrix()
@@ -1297,7 +1297,7 @@ if CLIENT then
 								model:SetBodygroup(k, v)
 							end
 						end
-					end]]--
+					end
 					
 					if (v.surpresslightning) then
 						rndr.SuppressEngineLighting(true)
@@ -1320,12 +1320,12 @@ if CLIENT then
 					end
 				elseif (v.type == "Sprite" and sprite) then
 					local sprite = v.spriteMaterial
-					local pos, ang = self:GetBoneOrientation(wepTab.VElements, v, vm)
 					local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
 					rndr.SetMaterial(sprite)
 					rndr.DrawSprite(drawpos, v.size.x, v.size.y, v.color)
+					
 				elseif (v.type == "Quad" and v.draw_func) then
-					local pos, ang = self:GetBoneOrientation(wepTab.VElements, v, vm)
+					
 					local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
 					ang:RotateAroundAxis(ang:Up(), v.angle.y)
 					ang:RotateAroundAxis(ang:Right(), v.angle.p)
@@ -1481,7 +1481,7 @@ if CLIENT then
 
 				if (!bone) then return end
 				
-				if tab.type ~= "Model" then
+				if basetab == self.VElements then
 					local m = ent:GetBoneMatrix(bone)
 					
 					if (m) then
@@ -1543,7 +1543,7 @@ if CLIENT then
 							modelEnt:SetAngles(ang)
 							
 							if tab == self.VElements then
-								modelEnt:FollowBone(self.Owner:GetViewModel(), bone);
+								--modelEnt:FollowBone(self.Owner:GetViewModel(), bone);
 							else
 								modelEnt:FollowBone(self.Owner, bone);
 							end
