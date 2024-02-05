@@ -968,15 +968,28 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 											damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
 											return;
 										end
-									end
 									
-									if entity:Health() - newDamage < 10 then
-										if not entity.opponent then
-											local itemTable = entity:GetCharmEquipped("ring_distorted");
-											
-											if itemTable then
-												itemTable:OnPlayerUnequipped(entity);
-												entity:TakeItem(itemTable, true);
+										local itemTable = entity:GetCharmEquipped("ring_distorted");
+										
+										if itemTable and !entTab.distortedRingFiredDuel then
+											if !cwRituals or (cwRituals and !entTab.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then
+												if !entTab.opponent then
+													itemTable:OnPlayerUnequipped(entity);
+													entity:TakeItem(itemTable, true);
+												end
+												
+												entTab.distortedRingFired = true;
+												
+												if entTab.opponent then
+													entTab.distortedRingFiredDuel = true;
+												else
+													timer.Simple(0.5, function()
+														if IsValid(entity) then
+															entity.distortedRingFired = nil;
+														end
+													end);
+												end
+												
 												entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
 												entity:Extinguish();
 												
@@ -989,11 +1002,11 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 												Clockwork.player:Notify(entity, "Your Distorted Ring shatters and releases a tremendous amount of energy, giving you one last chance at life!");
 												
 												if cwMedicalSystem then
-													entity.nextBleedPoint = CurTime() + 180;
+													entTab.nextBleedPoint = CurTime() + 180;
 												end
 												
-												if entity.poisonTicks then
-													entity.poisonTicks = nil;
+												if entTab.poisonTicks then
+													entTab.poisonTicks = nil;
 												end
 												
 												damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
@@ -1001,6 +1014,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 											end
 										end
 									end
+
 
 									entity:EmitSound("meleesounds/kill"..math.random(1, 2)..".wav.mp3");
 									
@@ -1342,7 +1356,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 		if entity:Health() - damage < 10 then
 			local itemTable = entity:GetCharmEquipped("ring_distorted");
 			
-			if itemTable and !entTab.distortedRingFired then
+			if itemTable and !entTab.distortedRingFiredDuel then
 				if !cwRituals or (cwRituals and !entTab.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then
 					if !entTab.opponent then
 						itemTable:OnPlayerUnequipped(entity);
@@ -1351,11 +1365,15 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 					
 					entTab.distortedRingFired = true;
 					
-					timer.Simple(0.5, function()
-						if IsValid(entity) then
-							entity.distortedRingFired = nil;
-						end
-					end);
+					if entTab.opponent then
+						entTab.distortedRingFiredDuel = true;
+					else
+						timer.Simple(0.5, function()
+							if IsValid(entity) then
+								entity.distortedRingFired = nil;
+							end
+						end);
+					end
 					
 					entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
 					entity:Extinguish();
@@ -1568,6 +1586,10 @@ end
 function cwBeliefs:PlayerExitedDuel(player)
 	if player.decapitationBuff then
 		player.decapitationBuff = false;
+	end
+	
+	if player.distortedRingFiredDuel then
+		player.distortedRingFiredDuel = false;
 	end
 end
 
