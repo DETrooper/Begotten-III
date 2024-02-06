@@ -160,7 +160,7 @@ end
 end;]]--
 
 -- Called to get whether a player can craft a recipe or not.
-function cwRecipes:PlayerCanCraft(player, uniqueID)
+function cwRecipes:PlayerCanCraft(player, uniqueID, craftAmount)
 	local recipeTable = self.recipes.stored[uniqueID];
 	local requirements = recipeTable.requirements;
 	
@@ -287,10 +287,22 @@ function cwRecipes:PlayerCanCraft(player, uniqueID)
 	
 	local successRate = 100;
 
-	for k, v in pairs (requirements) do
-		if (!Clockwork.inventory:HasItemCountByID(inventory, k, v.amount)) then
-			hasRequirements = false;
+	for k, v in pairs(requirements) do
+		local amount = v.amount;
 
+		amount = amount * craftAmount;
+		
+		if (!Clockwork.inventory:HasItemCountByID(inventory, k, amount)) then
+			if v.substitute ~= nil then
+				if (!Clockwork.inventory:HasItemCountByID(inventory, v.substitute, amount)) then
+					hasRequirements = false;
+					break;
+				else
+					break;
+				end
+			end
+
+			hasRequirements = false;
 			break;
 		end;
 	end;
@@ -299,16 +311,20 @@ function cwRecipes:PlayerCanCraft(player, uniqueID)
 end;
 
 -- Called once the player finishes crafting an item.
-function cwRecipes:PlayerFinishedCrafting(player, recipeTable)
+function cwRecipes:PlayerFinishedCrafting(player, recipeTable, craftAmount)
 	if recipeTable.experience then
 		if cwBeliefs and player.HasBelief and player:HasBelief("young_son") then
-			player:HandleXP(recipeTable.experience * 2);
+			player:HandleXP((recipeTable.experience * craftAmount) * 2);
 		else
-			player:HandleXP(recipeTable.experience);
+			player:HandleXP(recipeTable.experience * craftAmount);
 		end
 	end
 	
-	Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." ("..player:SteamID()..") has crafted a "..recipeTable.name..".");
+	if craftAmount > 1 then
+		Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." ("..player:SteamID()..") has crafted "..recipeTable.name.." (x"..tostring(craftAmount)..")"..".");
+	else
+		Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." ("..player:SteamID()..") has crafted a "..recipeTable.name..".");
+	end
 end;
 
 -- Called when a player fails to craft a recipe.
@@ -329,21 +345,21 @@ function cwRecipes:PlayerFailedRecipe(player, uniqueID, recipeTable, bHasRequire
 end;
 
 -- A function used to craft a recipe.
-function cwRecipes:Craft(player, uniqueID, itemIDs)
+function cwRecipes:Craft(player, uniqueID, itemIDs, craftAmount)
 	local curTime = CurTime();
 	
 	if (IsValid(player) and uniqueID and isstring(uniqueID)) then
 		if (!player.cwNextCraft or player.cwNextCraft < curTime) then
 			player.cwNextCraft = curTime + 10;
 
-			local bHasFlags, bHasRequirements = hook.Run("PlayerCanCraft", player, uniqueID);
+			local bHasFlags, bHasRequirements = hook.Run("PlayerCanCraft", player, uniqueID, craftAmount);
 			local recipeTable = self.recipes.stored[uniqueID];
 
 			if (recipeTable and bHasFlags != false and bHasRequirements != false) then
-				if self:PlayerMeetsCraftingItemRequirements(player, recipeTable, itemIDs) then
+				if self:PlayerMeetsCraftingItemRequirements(player, recipeTable, itemIDs, false, craftAmount) then
 					if (recipeTable.craftTime) then
 						local craftVerb = recipeTable.craftVerb or "";
-						local craftName = recipeTable.name;
+						local craftName = recipeTable.name..(craftAmount > 1 and " ("..craftAmount.."x)" or "");
 						
 						if (craftVerb != "") then
 							player:SetNWString("cwRecipesVerb", craftVerb);
@@ -358,15 +374,15 @@ function cwRecipes:Craft(player, uniqueID, itemIDs)
 						
 						Clockwork.player:SetAction(player, "crafting", recipeTable.craftTime, 5, function()
 							if (IsValid(player)) then
-								recipeTable:Craft(player, itemIDs);
+								recipeTable:Craft(player, itemIDs, false, craftAmount);
 								
 								player:SetNWString("cwRecipesVerb", nil);
 								player:SetNWString("cwRecipesName", nil);
 								
 								if cwCharacterNeeds then
-									player:HandleNeed("hunger", 0.5);
-									player:HandleNeed("thirst", 1);
-									player:HandleNeed("sleep", 0.5);
+									player:HandleNeed("hunger", 0.5 * craftAmount);
+									player:HandleNeed("thirst", 1 * craftAmount);
+									player:HandleNeed("sleep", 0.5 * craftAmount);
 								end
 								
 								if (recipeTable.EndCraft) then
@@ -375,7 +391,7 @@ function cwRecipes:Craft(player, uniqueID, itemIDs)
 							end;
 						end);
 					else
-						recipeTable:Craft(player, itemIDs, true);
+						recipeTable:Craft(player, itemIDs, true, craftAmount);
 					end;
 				end;
 				
@@ -388,11 +404,11 @@ function cwRecipes:Craft(player, uniqueID, itemIDs)
 		else
 			player:Notify("You must wait another "..-math.ceil(curTime - player.cwNextCraft).." seconds before attempting to craft again!");
 		end;
-	end;
+	end
 end;
 
 -- This function is expensive as FUCK. You can make a better one if you want cash.
-function cwRecipes:PlayerMeetsCraftingItemRequirements(player, recipeTable, itemIDs, bTake)
+function cwRecipes:PlayerMeetsCraftingItemRequirements(player, recipeTable, itemIDs, bTake, craftAmount)
 	if !itemIDs or table.IsEmpty(itemIDs) then
 		Schema:EasyText(player, "lightslategrey", "You have no items selected to craft!");
 		return false;
@@ -434,21 +450,25 @@ function cwRecipes:PlayerMeetsCraftingItemRequirements(player, recipeTable, item
 	
 	local temptab = table.Copy(slottedItems);
 
-	for k, v in pairs(requirements) do
-		for i = 1, v.amount do
-			local goods_found = false;
-			
-			for j = 1, #temptab do
-				if temptab[j].uniqueID == k then
-					table.remove(temptab, j);
-					goods_found = true;
-					break;
+	for i = 1, craftAmount do
+		for k, v in pairs(requirements) do
+			local amount = v.amount or 1;
+
+			for i = 1, amount do
+				local goods_found = false;
+
+				for j = 1, #temptab do
+					if temptab[j].uniqueID == k or temptab[j].uniqueID == v.substitute then
+						table.remove(temptab, j);
+						goods_found = true;
+						break;
+					end
 				end
-			end
-				
-			if not goods_found then
-				Schema:EasyText(player, "lightslategrey", "The items inputted for crafting do not match the selected recipe's requirements!");
-				return false;
+
+				if not goods_found then
+					Schema:EasyText(player, "lightslategrey", "The items inputted for crafting do not match the selected recipe's requirements!");
+					return false;
+				end
 			end
 		end
 	end
@@ -726,51 +746,6 @@ function cwRecipes:InitPostEntity()
 	end
 end
 
---[[netstream.Hook("CrafftfNew", function(player, uniqueID, data)
-	local items = pon.decode(data);
-	local fail = nil;
-	
-	local recipe = cwRecipes:FindByID(uniqueID)
-	local required = recipe.requirements;
-	local inventory = player:GetInventory();
-	
-	for k, v in pairs (items) do
-		if (!player:FindItemByID(v, k)) then
-			fail = 1;
-			break;
-		end;
-		
-		local itemTable = player:FindItemByID(v, k);
-		local itemCount = Clockwork.inventory:GetItemCountByID(inventory, v);
-		local itemCondition = itemTable:GetCondition();
-		
-		if (!required[v]) then
-			fail = 2;
-			break;
-		else
-			local amount = required[v].amount;
-			local condition = required[v].condition;
-			
-			if (amount > itemCount) then
-				fail = 3;
-				break;
-			end;
-			
-			if (condition and itemCondition and condition > itemCondition) then
-				fail = 4;
-				break;
-			end;
-		end;
-	end;
-
-	if (fail != nil) then
-		printp("you cannot craft this fucktard "..fail)
-		return;
-	else
-		printp("you got it")
-	end;
-end);]]--
-
-netstream.Hook("Craft", function(player, uniqueID, itemIDs)
-	cwRecipes:Craft(player, uniqueID, itemIDs);
+netstream.Hook("Craft", function(player, uniqueID, itemIDs, craftAmount)
+	cwRecipes:Craft(player, uniqueID, itemIDs, craftAmount);
 end);

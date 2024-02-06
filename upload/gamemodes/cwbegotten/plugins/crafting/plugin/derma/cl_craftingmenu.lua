@@ -80,7 +80,7 @@ function PANEL:Rebuild()
 	self.smithy_found = false;
 	
 	for k, v in pairs (ents.FindInSphere(Clockwork.Client:GetPos(), 128)) do
-		if (v:GetClass() == "env_fire") or (v:GetClass() == "army_fireplace") then
+		if (v:GetClass() == "env_fire") then
 			self.fire_found = true;
 			break;
 		end;

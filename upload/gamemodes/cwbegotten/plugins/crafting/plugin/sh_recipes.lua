@@ -85,34 +85,6 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
-	
-	RECIPE = cwRecipes.recipes:New("charcoal5");
-		RECIPE.name = "(5x) Charcoal";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"ingenious"};
-		RECIPE.requiredBeliefsNiceNames = {"Ingenious"};
-		RECIPE.requirements = {
-			["wood"] = {amount = 5},
-		};
-		RECIPE.result = {
-			["charcoal"] = {amount = 5},
-		};
-		RECIPE.category = "Other"
-		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 20
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 20;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
 	 
 	RECIPE = cwRecipes.recipes:New("leathercloth");
 		RECIPE.name = "Leather";

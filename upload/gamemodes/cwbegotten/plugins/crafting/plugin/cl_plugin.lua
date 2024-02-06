@@ -5,12 +5,10 @@
 
 -- A function to build the default crafting tooltip.
 function cwRecipes:BuildCraftingTooltip(frame, recipeTable)
-	--[[frame:AddText("pingas")
-	printp(frame)
-	printp(recipeTable)]]--
+
 end;
 
-function cwRecipes:AttemptCraft(uniqueID)
+function cwRecipes:AttemptCraft(uniqueID, amount)
 	local curTime = CurTime();
 	
 	if !self.nextCraftAttempt or self.nextCraftAttempt < curTime then
@@ -23,8 +21,8 @@ function cwRecipes:AttemptCraft(uniqueID)
 			local recipeTable = self.recipes.stored[uniqueID];
 			
 			if recipeTable then
-				if self:PlayerMeetsCraftingItemRequirements(recipeTable) then
-					netstream.Start("Craft", recipeTable.uniqueID, self.slottedItems);
+				if self:PlayerMeetsCraftingItemRequirements(recipeTable, amount) then
+					netstream.Start("Craft", recipeTable.uniqueID, self.slottedItems, amount);
 					
 					if (IsValid(Clockwork.Client.cwCraftingMenu)) then
 						Clockwork.Client.cwCraftingMenu:Close()
@@ -166,7 +164,7 @@ function cwRecipes:PlayerCanCraft(uniqueID)
 	return hasFlags;
 end;
 
-function cwRecipes:PlayerMeetsCraftingItemRequirements(recipeTable)
+function cwRecipes:PlayerMeetsCraftingItemRequirements(recipeTable, craftAmount)
 	if !cwRecipes.slottedItems or table.IsEmpty(cwRecipes.slottedItems) then
 		Clockwork.chatBox:Add(nil, "icon16/error.png", Color(200, 175, 200, 255), "You have no items selected to craft!");
 		return false;
@@ -200,23 +198,28 @@ function cwRecipes:PlayerMeetsCraftingItemRequirements(recipeTable)
 	
 	local temptab = table.Copy(slottedItems);
 
-	for k, v in pairs(requirements) do
-		for i = 1, v.amount do
-			local goods_found = false;
-			
-			for j = 1, #temptab do
-				if temptab[j].uniqueID == k then
-					table.remove(temptab, j);
-					goods_found = true;
-					break;
+	for i = 1, craftAmount do
+		for k, v in pairs(requirements) do
+			local amount = v.amount;
+
+			for i = 1, amount do
+				local goods_found = false;
+
+				for j = 1, #temptab do
+					if temptab[j].uniqueID == k or temptab[j].uniqueID == v.substitute then
+						table.remove(temptab, j);
+						goods_found = true;
+						break;
+					end
+				end
+
+				if not goods_found then
+					Clockwork.chatBox:Add(nil, "icon16/error.png", Color(200, 175, 200, 255), "The items inputted for crafting do not match the selected recipe's requirements!");
+					return false;
 				end
 			end
-				
-			if not goods_found then
-				Clockwork.chatBox:Add(nil, "icon16/error.png", Color(200, 175, 200, 255), "The items inputted for crafting do not match the selected recipe's requirements!");
-				return false;
-			end
 		end
+
 	end
 	
 	if #temptab > 0 then

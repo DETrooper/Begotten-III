@@ -64,19 +64,19 @@ function cwRecipes.recipes:Register(recipe)
 		if (SERVER) then
 			--hook.Run("ModifyRecipeTable", recipe);
 			
-			function recipe:Craft(player, itemIDs, bMetRequirements)
+			function recipe:Craft(player, itemIDs, bMetRequirements, craftAmount)
 				if (!self.result or !self.requirements) then
 					return;
 				end;
 				
 				if !bMetRequirements then
-					local bHasFlags, bHasRequirements = hook.Run("PlayerCanCraft", player, self.uniqueID);
+					local bHasFlags, bHasRequirements = hook.Run("PlayerCanCraft", player, self.uniqueID, craftAmount);
 				
 					if bHasFlags == false or bHasRequirements == false then
 						return;
 					end
 					
-					if !cwRecipes:PlayerMeetsCraftingItemRequirements(player, self, itemIDs, true) then
+					if !cwRecipes:PlayerMeetsCraftingItemRequirements(player, self, itemIDs, true, craftAmount) then
 						return;
 					end
 				end
@@ -94,29 +94,33 @@ function cwRecipes.recipes:Register(recipe)
 				for k, v in pairs (self.result) do
 					if conditionAverage < 100 then				
 						for i = 1, math.abs(v.amount) do
-							local item = Clockwork.item:CreateInstance(k);
-							
-							if !item.attributes or (item.attributes and !table.HasValue(item.attributes, "conditionless")) then
-								local condition = math.Clamp(math.random(conditionAverage - 10, conditionAverage), 0, 100);
-							
-								item:SetCondition(condition, true);
+							for i = 1, craftAmount do
+								local item = Clockwork.item:CreateInstance(k);
+
+								if !item.attributes or (item.attributes and !table.HasValue(item.attributes, "conditionless")) then
+									local condition = math.Clamp(math.random(conditionAverage - 10, conditionAverage), 0, 100);
+
+									item:SetCondition(condition, true);
+								end
+
+								if item.category == "Shot" then
+									item:SetData("Rounds", 0);
+								end
+
+								player:GiveItem(item, true);
 							end
-							
-							if item.category == "Shot" then
-								item:SetData("Rounds", 0)
-							end
-							
-							player:GiveItem(item, true);
 						end
 					else
 						for i = 1, math.abs(v.amount) do
-							local item = Clockwork.item:CreateInstance(k);
-							
-							if item.category == "Shot" then
-								item:SetData("Rounds", 0)
+							for i = 1, craftAmount do
+								local item = Clockwork.item:CreateInstance(k);
+
+								if item.category == "Shot" then
+									item:SetData("Rounds", 0);
+								end
+								
+								player:GiveItem(item, true);
 							end
-							
-							player:GiveItem(item, true);
 						end
 					end
 					
@@ -131,7 +135,7 @@ function cwRecipes.recipes:Register(recipe)
 					self:OnCraft(player);
 				end;
 				
-				hook.Run("PlayerFinishedCrafting", player, self);
+				hook.Run("PlayerFinishedCrafting", player, self, craftAmount);
 			end;
 		end;
 		
