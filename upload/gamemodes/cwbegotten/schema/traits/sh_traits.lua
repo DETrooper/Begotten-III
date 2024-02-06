@@ -110,6 +110,7 @@ local GUNSLINGER = Clockwork.trait:New()
 	GUNSLINGER.uniqueID = "gunslinger"
 	GUNSLINGER.name = "Gunslinger"
 	GUNSLINGER.description = "What are people to your character other than moving targets? Your character will start with a Peppershot and a random assortment of ammunition, as well as two beliefs from the 'Ingenuity' tree: 'Ingenious' and 'Powder and Steel'."
+	GUNSLINGER.disables = {"pilgrim"}
 	GUNSLINGER.points = 7
 	GUNSLINGER.excludedfactions = {"Children of Satan", "Gatekeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
 	GUNSLINGER.excludedsubfactions = {"Clan Crast", "Clan Grock", "Clan Harald", "Clan Reaver", "Clan Gore"};
