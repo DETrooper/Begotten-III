@@ -17,7 +17,7 @@ local ITEM = Clockwork.item:New()
 	function ITEM:OnUse(player, itemEntity)
 		local trace = player:GetEyeTrace()
 		
-		if (IsValid(trace.Entity) and (trace.Entity:GetClass() == "prop_ragdoll" or trace.Entity:IsPlayer())) then
+		if (IsValid(trace.Entity) and (trace.Entity:GetClass() == "prop_ragdoll"--[[ or trace.Entity:IsPlayer()]])) then
 			return Schema:CinderBlockExecution(player, trace.Entity, self)
 		else
 			Schema:EasyText(player, "peru", "You must look at somebody to tie this!")
