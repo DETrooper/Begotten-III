@@ -1817,7 +1817,7 @@ end
 function GM:PlayerCanHearPlayersVoice(listener, speaker)
 	if (!config.GetVal("voice_enabled")) then
 		return false
-	elseif (speaker:GetData("VoiceBan")) then
+	elseif (speaker:GetData("VoiceBan") or speaker:IsMuted()) then
 		return false
 	elseif (!Clockwork.player:HasFlags(speaker, "x")) then
 		return false
@@ -2266,7 +2266,7 @@ function GM:ClockworkInitPostEntity() end
 
 -- Called when a player attempts to say something in-character.
 function GM:PlayerCanSayIC(player, text)
-	if ((!player:Alive() or player:IsRagdolled(RAGDOLL_FALLENOVER)) and !Clockwork.player:GetDeathCode(player, true)) then
+	if ((!player:Alive() or player:IsRagdolled(RAGDOLL_FALLENOVER)) and !Clockwork.player:GetDeathCode(player, true)) or player:IsMuted() then
 		Schema:EasyText(player, "peru", "You cannot do this action at the moment!")
 
 		return false
@@ -2276,10 +2276,30 @@ function GM:PlayerCanSayIC(player, text)
 end
 
 -- Called when a player attempts to say something out-of-character.
-function GM:PlayerCanSayOOC(player, text) return player:IsAdmin() end
+function GM:PlayerCanSayOOC(player, text)
+	if (!config.GetVal("global_ooc_enabled")) then
+		if player:IsAdmin() then 
+			return true;
+		end;
+		
+		return false;
+	end
+	
+	if player:IsMuted() then
+		return false;
+	end;
+	
+	return true;
+end
 
 -- Called when a player attempts to say something locally out-of-character.
-function GM:PlayerCanSayLOOC(player, text) return true end
+function GM:PlayerCanSayLOOC(player, text) 
+	if player:IsMuted() then
+		return false;
+	end;
+
+	return true;
+end
 
 -- Called when attempts to use a command.
 function GM:PlayerCanUseCommand(player, commandTable, arguments)

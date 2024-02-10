@@ -243,6 +243,86 @@ local COMMAND = Clockwork.command:New("PlyGiveFlags");
 	end;
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("PlyMute");
+	COMMAND.tip = "Mute a player.";
+	COMMAND.text = "<string Name>";
+	COMMAND.access = "o";
+	COMMAND.arguments = 1;
+	COMMAND.alias = {"CharMute", "Mute", "Gag", "PlyGag", "CharGag"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local target = Clockwork.player:FindByID(arguments[1])
+		
+		if (target) then
+			local name = target:Name();
+			
+			target:SetMuted(true);
+			
+			Clockwork.player:NotifyAdmins("operator", player:Name().." has muted "..name..".");
+		else
+			Clockwork.player:Notify(player, arguments[1].." is not a valid character!");
+		end;
+	end;
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("PlyUnmute");
+	COMMAND.tip = "Unmute a player.";
+	COMMAND.text = "<string Name>";
+	COMMAND.access = "o";
+	COMMAND.arguments = 1;
+	COMMAND.alias = {"CharUnmute", "Unmute", "Ungag", "PlyUngag", "CharUngag"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local target = Clockwork.player:FindByID(arguments[1])
+		
+		if (target) then
+			local name = target:Name();
+			
+			target:SetMuted(false);
+			
+			Clockwork.player:NotifyAdmins("operator", player:Name().." has unmuted "..name..".");
+		else
+			Clockwork.player:Notify(player, arguments[1].." is not a valid character!");
+		end;
+	end;
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("PlyMuteAll");
+	COMMAND.tip = "Mute a player.";
+	COMMAND.access = "s";
+	COMMAND.alias = {"CharMuteAll", "MuteAll", "GagAll", "PlyGagAll", "CharGagAll"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		for k, v in pairs (_player.GetAll()) do
+			if (!Clockwork.player:IsAdmin(v)) then
+				v:SetMuted(true);
+			end;
+		end;
+		
+		Clockwork.player:NotifyAdmins("operator", player:Name().." has muted all players.");
+	end;
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("PlyUnmuteAll");
+	COMMAND.tip = "Unmute a player.";
+	COMMAND.access = "s";
+	COMMAND.alias = {"CharUnmuteAll", "UnmuteAll", "UngagAll", "PlyUngagAll", "CharUngagAll"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		for k, v in pairs (_player.GetAll()) do
+			if (!Clockwork.player:IsAdmin(v)) then
+				v:SetMuted(false);
+			end;
+		end;
+		
+		Clockwork.player:NotifyAdmins("operator", player:Name().." has unmuted all players.");
+	end;
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("PlyFreeze");
 	COMMAND.tip = "Toggle freeze a player.";
 	COMMAND.text = "<string Name> [bool Freeze 0-1] [bool Force 0-1]";

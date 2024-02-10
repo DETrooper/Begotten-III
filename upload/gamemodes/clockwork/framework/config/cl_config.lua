@@ -63,6 +63,7 @@ config.AddToSystem("Player Spray Enabled", "disable_sprays", "Whether players ca
 config.AddToSystem("Hint Interval", "hint_interval", "The time that a hint is displayed to each player (seconds).", 0, 7200);
 config.AddToSystem("Out-Of-Character Chat Interval", "ooc_interval", "The time that a player has to wait to speak out-of-character again (seconds).\nSet to 0 for never.", 0, 7200);
 config.AddToSystem("Local-Out-Of-Character Chat Interval", "looc_interval", "The time that a player has to wait to speak local-out-of-character again (seconds).\nSet to 0 for never.", 0, 7200);
+config.AddToSystem("Global Out-Of-Character Chat Enabled", "global_ooc_enabled", "Whether or not global OOC chat is enabled.");
 config.AddToSystem("Minute Time", "minute_time", "The time that it takes for a minute to pass (seconds).", 0, 7200);
 config.AddToSystem("Door Unlock Interval", "unlock_time", "The time that a player has to wait to unlock a door (seconds).", 0, 7200);
 config.AddToSystem("Voice Chat Enabled.", "voice_enabled", "Whether or not voice chat is enabled.");

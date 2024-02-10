@@ -8,6 +8,7 @@ local COMMAND = Clockwork.command:New("W");
 	COMMAND.text = "<string Text>";
 	COMMAND.flags = bit.bor(CMD_DEFAULT, CMD_DEATHCODE);
 	COMMAND.arguments = 1;
+	COMMAND.alias = {"Whisper"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -20,14 +21,16 @@ local COMMAND = Clockwork.command:New("W");
 			return;
 		end;
 		
-		Clockwork.chatBox:SetMultiplier(0.75);
-		
-		if player.victim and IsValid(player.victim) then
-			Clockwork.chatBox:AddInRadius(player.victim, "whisper", text, player.victim:GetPos(), talkRadius);
-		elseif player.possessor and IsValid(player.possessor) then
-			Clockwork.chatBox:Add({player, player.possessor}, player, "demonhosttalk", text);
-		else
-			Clockwork.chatBox:AddInRadius(player, "whisper", text, player:GetPos(), talkRadius);
+		if hook.Run("PlayerCanSayIC", player, text) then		
+			Clockwork.chatBox:SetMultiplier(0.75);
+			
+			if player.victim and IsValid(player.victim) then
+				Clockwork.chatBox:AddInRadius(player.victim, "whisper", text, player.victim:GetPos(), talkRadius);
+			elseif player.possessor and IsValid(player.possessor) then
+				Clockwork.chatBox:Add({player, player.possessor}, player, "demonhosttalk", text);
+			else
+				Clockwork.chatBox:AddInRadius(player, "whisper", text, player:GetPos(), talkRadius);
+			end
 		end
 	end;
 COMMAND:Register();
@@ -37,6 +40,7 @@ local COMMAND = Clockwork.command:New("Y");
 	COMMAND.text = "<string Text>";
 	COMMAND.flags = bit.bor(CMD_DEFAULT, CMD_DEATHCODE);
 	COMMAND.arguments = 1;
+	COMMAND.alias = {"Yell", "Shout"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -48,25 +52,27 @@ local COMMAND = Clockwork.command:New("Y");
 			return;
 		end;
 		
-		Clockwork.chatBox:SetMultiplier(1.25);
-		
-		if player.victim and IsValid(player.victim) then
-			Clockwork.chatBox:AddInRadius(player.victim, "yell", text, player.victim:GetPos(), config.Get("talk_radius"):Get() * 2.5);
+		if hook.Run("PlayerCanSayIC", player, text) then
+			Clockwork.chatBox:SetMultiplier(1.25);
 			
-			hook.Run("PlayerYellEmitSound", player.victim);
-			
-			if cwZombies then
-				cwZombies:GiveAwayPosition(player.victim, 900);
-			end
-		elseif player.possessor and IsValid(player.possessor) then
-			Clockwork.chatBox:Add({player, player.possessor}, player, "demonhosttalk", text);
-		else
-			Clockwork.chatBox:AddInRadius(player, "yell", text, player:GetPos(), config.Get("talk_radius"):Get() * 2.5);
-			
-			hook.Run("PlayerYellEmitSound", player);
-			
-			if cwZombies then
-				cwZombies:GiveAwayPosition(player, 900);
+			if player.victim and IsValid(player.victim) then
+				Clockwork.chatBox:AddInRadius(player.victim, "yell", text, player.victim:GetPos(), config.Get("talk_radius"):Get() * 2.5);
+				
+				hook.Run("PlayerYellEmitSound", player.victim);
+				
+				if cwZombies then
+					cwZombies:GiveAwayPosition(player.victim, 900);
+				end
+			elseif player.possessor and IsValid(player.possessor) then
+				Clockwork.chatBox:Add({player, player.possessor}, player, "demonhosttalk", text);
+			else
+				Clockwork.chatBox:AddInRadius(player, "yell", text, player:GetPos(), config.Get("talk_radius"):Get() * 2.5);
+				
+				hook.Run("PlayerYellEmitSound", player);
+				
+				if cwZombies then
+					cwZombies:GiveAwayPosition(player, 900);
+				end
 			end
 		end
 	end;
@@ -189,6 +195,7 @@ local COMMAND = Clockwork.command:New("Me");
 	COMMAND.text = "<string Text>";
 	COMMAND.flags = bit.bor(CMD_DEFAULT, CMD_DEATHCODE);
 	COMMAND.arguments = 1;
+	COMMAND.alias = {"Perform"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -200,14 +207,16 @@ local COMMAND = Clockwork.command:New("Me");
 			return;
 		end;
 
-		if player.victim and IsValid(player.victim) then
-			Clockwork.chatBox:AddInTargetRadius(player.victim, "me", string.gsub(text, "^.", string.lower), player.victim:GetPos(), config.Get("talk_radius"):Get() * 2);
-		elseif player.possessor and IsValid(player.possessor) then
-			Clockwork.player:Notify(player, "You cannot perform this action!");
-			
-			return;
-		else
-			Clockwork.chatBox:AddInTargetRadius(player, "me", string.gsub(text, "^.", string.lower), player:GetPos(), config.Get("talk_radius"):Get() * 2);
+		if hook.Run("PlayerCanSayIC", player, text) then 
+			if player.victim and IsValid(player.victim) then
+				Clockwork.chatBox:AddInTargetRadius(player.victim, "me", string.gsub(text, "^.", string.lower), player.victim:GetPos(), config.Get("talk_radius"):Get() * 2);
+			elseif player.possessor and IsValid(player.possessor) then
+				Clockwork.player:Notify(player, "You cannot perform this action!");
+				
+				return;
+			else
+				Clockwork.chatBox:AddInTargetRadius(player, "me", string.gsub(text, "^.", string.lower), player:GetPos(), config.Get("talk_radius"):Get() * 2);
+			end
 		end
 	end;
 COMMAND:Register();
@@ -234,9 +243,9 @@ local COMMAND = Clockwork.command:New("It");
 			return;
 		end
 		
-		player:SetCharacterData("Test", "CHANGED");
-
-		Clockwork.chatBox:AddInTargetRadius(player, "it", text, player:GetPos(), config.Get("talk_radius"):Get() * 2);
+		if hook.Run("PlayerCanSayIC", player, text) then 
+			Clockwork.chatBox:AddInTargetRadius(player, "it", text, player:GetPos(), config.Get("talk_radius"):Get() * 2);
+		end
 	end;
 COMMAND:Register();
 

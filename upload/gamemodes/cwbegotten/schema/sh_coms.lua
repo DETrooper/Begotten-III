@@ -926,45 +926,47 @@ local COMMAND = Clockwork.command:New("Proclaim");
 			
 			return;
 		end;
-	
-		if (faction == "Gatekeeper" and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
-			Clockwork.chatBox:SetMultiplier(1.35);
-			
-			if player.victim and IsValid(player.victim) then
-				Clockwork.chatBox:AddInRadius(player.victim, "proclaim", text, player.victim:GetPos(), config.Get("talk_radius"):Get() * 4);
+		
+		if hook.Run("PlayerCanSayIC", player, text) then 
+			if (faction == "Gatekeeper" and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
+				Clockwork.chatBox:SetMultiplier(1.35);
 				
-				if player.victim:GetSubfaith() == "Voltism" then
-					if cwBeliefs and (player.victim:HasBelief("the_storm") or player.victim:HasBelief("the_paradox_riddle_equation")) then
-						if !Clockwork.player:HasFlags(player.victim, "T") then
-							player.victim:EmitSound(voltistSounds[math.random(1, #voltistSounds)], 90, 150);
+				if player.victim and IsValid(player.victim) then
+					Clockwork.chatBox:AddInRadius(player.victim, "proclaim", text, player.victim:GetPos(), config.Get("talk_radius"):Get() * 4);
+					
+					if player.victim:GetSubfaith() == "Voltism" then
+						if cwBeliefs and (player.victim:HasBelief("the_storm") or player.victim:HasBelief("the_paradox_riddle_equation")) then
+							if !Clockwork.player:HasFlags(player.victim, "T") then
+								player.victim:EmitSound(voltistSounds[math.random(1, #voltistSounds)], 90, 150);
+							end
 						end
+					end
+					
+					if cwZombies then
+						cwZombies:GiveAwayPosition(player.victim, 900);
+					end
+				elseif player.possessor and IsValid(player.possessor) then
+					-- do nothing lol
+				else
+					Clockwork.chatBox:AddInRadius(player, "proclaim", text, player:GetPos(), config.Get("talk_radius"):Get() * 4);
+					
+					if player:GetSubfaith() == "Voltism" then
+						if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
+							if !Clockwork.player:HasFlags(player, "T") then
+								player:EmitSound(voltistSounds[math.random(1, #voltistSounds)], 90, 150);
+							end
+						end
+					end
+					
+					if cwZombies then
+						cwZombies:GiveAwayPosition(player, 900);
 					end
 				end
 				
-				if cwZombies then
-					cwZombies:GiveAwayPosition(player.victim, 900);
-				end
-			elseif player.possessor and IsValid(player.possessor) then
-				-- do nothing lol
+				--Clockwork.chatBox:AddInRadius(player, "proclaim", arguments[1], player:GetPos(), config.Get("talk_radius"):Get() * 4);
 			else
-				Clockwork.chatBox:AddInRadius(player, "proclaim", text, player:GetPos(), config.Get("talk_radius"):Get() * 4);
-				
-				if player:GetSubfaith() == "Voltism" then
-					if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
-						if !Clockwork.player:HasFlags(player, "T") then
-							player:EmitSound(voltistSounds[math.random(1, #voltistSounds)], 90, 150);
-						end
-					end
-				end
-				
-				if cwZombies then
-					cwZombies:GiveAwayPosition(player, 900);
-				end
+				Schema:EasyText(player, "peru", "You are not important enough to do this!");
 			end
-			
-			--Clockwork.chatBox:AddInRadius(player, "proclaim", arguments[1], player:GetPos(), config.Get("talk_radius"):Get() * 4);
-		else
-			Schema:EasyText(player, "peru", "You are not important enough to do this!");
 		end
 	end;
 COMMAND:Register();
@@ -1222,20 +1224,22 @@ local COMMAND = Clockwork.command:New("ProclaimMe");
 			return;
 		end;
 	
-		if (faction == "Gatekeeper" and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
-			Clockwork.chatBox:SetMultiplier(1.35);
-			
-			if player.victim and IsValid(player.victim) then
-				Clockwork.chatBox:AddInRadius(player.victim, "meproclaim", text, player.victim:GetPos(), config.Get("talk_radius"):Get() * 4);
-			elseif player.possessor and IsValid(player.possessor) then
-				-- do nothing lol
+		if hook.Run("PlayerCanSayIC", player, text) then 
+			if (faction == "Gatekeeper" and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
+				Clockwork.chatBox:SetMultiplier(1.35);
+				
+				if player.victim and IsValid(player.victim) then
+					Clockwork.chatBox:AddInRadius(player.victim, "meproclaim", text, player.victim:GetPos(), config.Get("talk_radius"):Get() * 4);
+				elseif player.possessor and IsValid(player.possessor) then
+					-- do nothing lol
+				else
+					Clockwork.chatBox:AddInRadius(player, "meproclaim", text, player:GetPos(), config.Get("talk_radius"):Get() * 4);
+				end
+				
+				--Clockwork.chatBox:AddInRadius(player, "meproclaim", text, player:GetPos(), config.Get("talk_radius"):Get() * 4);
 			else
-				Clockwork.chatBox:AddInRadius(player, "meproclaim", text, player:GetPos(), config.Get("talk_radius"):Get() * 4);
+				Schema:EasyText(player, "peru", "You are not important enough to do this!");
 			end
-			
-			--Clockwork.chatBox:AddInRadius(player, "meproclaim", text, player:GetPos(), config.Get("talk_radius"):Get() * 4);
-		else
-			Schema:EasyText(player, "peru", "You are not important enough to do this!");
 		end
 	end;
 COMMAND:Register();

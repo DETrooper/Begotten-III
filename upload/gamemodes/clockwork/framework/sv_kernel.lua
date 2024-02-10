@@ -2314,6 +2314,16 @@ function playerMeta:GetPlayerFlags()
 	return Clockwork.player:GetPlayerFlags(self)
 end
 
+-- Set a player to be muted.
+function playerMeta:SetMuted(bMuted)
+	self.muted = bMuted;
+end
+
+-- Check if a player is muted.
+function playerMeta:IsMuted()
+	return self.muted;
+end
+
 playerMeta.GetName = playerMeta.Name
 playerMeta.Nick = playerMeta.Name
 
