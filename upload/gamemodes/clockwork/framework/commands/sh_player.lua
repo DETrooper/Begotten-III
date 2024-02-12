@@ -1213,7 +1213,6 @@ properties.Add("freeze", {
 	end,
 });
 
--- Properties
 properties.Add("kick", {
 	MenuLabel = "Kick",
 	Order = 70,
@@ -1245,6 +1244,37 @@ properties.Add("kick", {
 					Clockwork.kernel:RunCommand("PlyKick", ent:Name(), reason)
 				end
 			end)
+		end
+	end,
+});
+
+properties.Add("search", {
+	MenuLabel = "Search",
+	Order = 80,
+	MenuIcon = "icon16/zoom.png",
+	Filter = function(self, ent, ply)
+		if !IsValid(ent) or !IsValid(ply) or !ply:IsAdmin() then return false end
+		if !ent:IsPlayer() then
+			if Clockwork.entity:IsPlayerRagdoll(ent) then
+				ent = Clockwork.entity:GetPlayer(ent);
+			else
+				return false;
+			end
+		end
+
+		return true
+	end,
+	Action = function(self, ent)
+		if IsValid(ent) then
+			if !ent:IsPlayer() then
+				if Clockwork.entity:IsPlayerRagdoll(ent) then
+					ent = Clockwork.entity:GetPlayer(ent);
+				else
+					return false;
+				end
+			end
+			
+			Clockwork.kernel:RunCommand("PlySearch", ent:Name())
 		end
 	end,
 });
