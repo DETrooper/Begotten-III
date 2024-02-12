@@ -48,47 +48,6 @@ end
 
 --[[
 	@codebase Client
-	@details Called to determine if a player can use property.
-	@param Player The player that is trying to use property.
-	@param
-	@param Entity The entity that is being used.
-	@returns Bool Whether or not the player can use property.
---]]
-function GM:CanProperty(player, property, entity)
-	if (!IsValid(entity)) then
-		return false
-	end
-
-	local bIsAdmin = Clockwork.player:IsAdmin(player)
-
-	if (!player:Alive() or player:IsRagdolled() or !bIsAdmin) then
-		return false
-	end
-
-	return self.BaseClass:CanProperty(player, property, entity)
-end
-
---[[
-	@codebase Client
-	@details Called to determine if a player can drive.
-	@param Player The player trying to drive.
-	@param Entity The entity that the player is trying to drive.
-	@return Bool Whether or not the player can drive the entity.
---]]
-function GM:CanDrive(player, entity)
-	if (!IsValid(entity)) then
-		return false
-	end
-
-	if (!player:Alive() or player:IsRagdolled() or !Clockwork.player:IsAdmin(player)) then
-		return false
-	end
-
-	return self.BaseClass:CanDrive(player, entity)
-end
-
---[[
-	@codebase Client
 	@details Called when the directory is rebuilt.
 	@param <DPanel> The directory panel.
 --]]

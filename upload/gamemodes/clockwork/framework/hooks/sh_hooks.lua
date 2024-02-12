@@ -414,7 +414,37 @@ do
 	function GM:MouthMoveAnimation(player)
 		return;
 	end
+	
+	-- Called when a player attempts to use the property menu.
+	function GM:CanProperty(player, property, entity)
+		if !IsValid(entity) then return false end;
+		local bIsAdmin = Clockwork.player:IsAdmin(player)
 
+		if (!player:Alive() or player:IsRagdolled() or !bIsAdmin) then
+			return false
+		end
+		
+		if property == "gravity" or property == "skin" or property == "collision" or property == "bodygroups" then
+			if Clockwork.entity:IsPlayerRagdoll(entity) then
+				return false
+			end
+		end
+
+		return self.BaseClass:CanProperty(player, property, entity)
+	end
+
+	-- Called when a player attempts to use drive.
+	function GM:CanDrive(player, entity)
+		if !IsValid(entity) then return false end;
+		local bIsAdmin = Clockwork.player:IsAdmin(player)
+
+		if (!player:Alive() or player:IsRagdolled() or !bIsAdmin) then
+			return false
+		end
+
+		return self.BaseClass:CanDrive(player, entity)
+	end
+	
 	-- Called when the gamemode has been reloaded by AutoRefresh.
 	function GM:OnReloaded()
 		Clockwork.Reloaded = true

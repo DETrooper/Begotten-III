@@ -6,7 +6,7 @@
 --]]
 
 -- A function to print text to the center of the screen.
-function cwCenterText:PrintTextCenter(text, delay, color, class)
+function cwCenterText:PrintTextCenter(text, delay, color, class, heightOverride)
 	local scrW = ScrW();
 	local wrappedTable = {""};
 	
@@ -14,19 +14,19 @@ function cwCenterText:PrintTextCenter(text, delay, color, class)
 		self.centerTexts = {};
 	end;
 	
-	if (class and type(class) == "string") then
-		if (class == "introduction") then
-			fadeTime = 128;
-		elseif (class == "exposition") then
-			fadeTime = 96;
-		else
-			fadeTime = 64;
-		end;
+	local fadeTime;
+	
+	if (class == "introduction") then
+		fadeTime = 128;
+	elseif (class == "exposition") then
+		fadeTime = 96;
+	else
+		fadeTime = 64;
 	end;
 
-	text = "\""..text.."\""
+	--text = "\""..text.."\""
 	
-	Clockwork.kernel:WrapTextSpaced(text, "AHintHeader", scrW * 0.4, wrappedTable);
+	Clockwork.kernel:WrapTextSpaced(text, "AHintHeader", heightOverride or scrW * 0.4, wrappedTable);
 
 	if (!delay) then
 		delay = 5;

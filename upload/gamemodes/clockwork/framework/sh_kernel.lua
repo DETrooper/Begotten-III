@@ -1720,3 +1720,35 @@ end)
 timer.Create("LazyTick", 0.125, 0, function()
 	hook.Run("LazyTick")
 end)
+
+-- Properties
+properties.Add("copy_name_to_clipboard", {
+	MenuLabel = "Copy name to clipboard",
+	Order = 1,
+	MenuIcon = "icon16/disk.png",
+	Filter = function(self, ent, ply)
+		if !IsValid(ent) or !IsValid(ply) or !ply:IsAdmin() then return false end
+		if !ent:IsPlayer() then
+			if Clockwork.entity:IsPlayerRagdoll(ent) then
+				ent = Clockwork.entity:GetPlayer(ent);
+			else
+				return false;
+			end
+		end
+
+		return true;
+	end,
+	Action = function(self, ent)
+		if IsValid(ent) then
+			if !ent:IsPlayer() then
+				if Clockwork.entity:IsPlayerRagdoll(ent) then
+					ent = Clockwork.entity:GetPlayer(ent);
+				else
+					return false;
+				end
+			end
+		
+			SetClipboardText(ent:Name());
+		end
+	end,
+});

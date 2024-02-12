@@ -1155,3 +1155,96 @@ local COMMAND = Clockwork.command:New("PlyWhitelistSubfaction");
 		end;
 	end;
 COMMAND:Register();
+
+-- Properties
+properties.Add("ban", {
+	MenuLabel = "Ban",
+	Order = 50,
+	MenuIcon = "icon16/cancel.png",
+	Filter = function(self, ent, ply)
+		if !IsValid(ent) or !IsValid(ply) or !ply:IsAdmin() then return false end
+		if !ent:IsPlayer() then
+			if Clockwork.entity:IsPlayerRagdoll(ent) then
+				ent = Clockwork.entity:GetPlayer(ent);
+			else
+				return false;
+			end
+		end
+
+		return true
+	end,
+	Action = function(self, ent)
+		if IsValid(ent) then
+			if !ent:IsPlayer() then
+				if Clockwork.entity:IsPlayerRagdoll(ent) then
+					ent = Clockwork.entity:GetPlayer(ent);
+				else
+					return false;
+				end
+			end
+		
+			Derma_StringRequest(ent:Name(), "How many minutes would you like to ban them for?", nil, function(minutes)
+				if IsValid(ent) then
+					Derma_StringRequest(ent:Name(), "What is your reason for banning them?", nil, function(reason)
+						if IsValid(ent) then
+							Clockwork.kernel:RunCommand("PlyBan", ent:Name(), minutes, reason)
+						end
+					end)
+				end
+			end)
+		end
+	end,
+});
+
+properties.Add("freeze", {
+	MenuLabel = "Freeze",
+	Order = 60,
+	MenuIcon = "icon16/weather_snow.png",
+	Filter = function(self, ent, ply)
+		if !IsValid(ent) or !IsValid(ply) or !ply:IsAdmin() then return false end
+		if !ent:IsPlayer() then return false end
+
+		return true
+	end,
+	Action = function(self, ent)
+		if IsValid(ent) then
+			Clockwork.kernel:RunCommand("PlyFreeze", ent:Name())
+		end
+	end,
+});
+
+-- Properties
+properties.Add("kick", {
+	MenuLabel = "Kick",
+	Order = 70,
+	MenuIcon = "icon16/disconnect.png",
+	Filter = function(self, ent, ply)
+		if !IsValid(ent) or !IsValid(ply) or !ply:IsAdmin() then return false end
+		if !ent:IsPlayer() then
+			if Clockwork.entity:IsPlayerRagdoll(ent) then
+				ent = Clockwork.entity:GetPlayer(ent);
+			else
+				return false;
+			end
+		end
+
+		return true
+	end,
+	Action = function(self, ent)
+		if IsValid(ent) then
+			if !ent:IsPlayer() then
+				if Clockwork.entity:IsPlayerRagdoll(ent) then
+					ent = Clockwork.entity:GetPlayer(ent);
+				else
+					return false;
+				end
+			end
+		
+			Derma_StringRequest(ent:Name(), "What is your reason for kicking them?", nil, function(reason)
+				if IsValid(ent) then
+					Clockwork.kernel:RunCommand("PlyKick", ent:Name(), reason)
+				end
+			end)
+		end
+	end,
+});

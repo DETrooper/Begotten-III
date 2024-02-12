@@ -2,6 +2,15 @@ timer.Create("LoadSH", 1, 0, function()
 if (Clockwork) then
 timer.Destroy("LoadSH")
 
+properties.Remove = function(name)
+	name = name:lower()
+	
+	properties.List[name] = nil;
+end
+
+-- Remove drive so admins don't accidentally possess props or items.
+properties.Remove("drive");
+
 if SERVER then
 	concommand.Add("botfill", function(player, command, arguments)
 		if player:IsAdmin() then

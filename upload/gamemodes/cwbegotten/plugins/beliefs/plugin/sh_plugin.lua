@@ -1340,3 +1340,70 @@ function COMMAND:OnRun(player, arguments)
 end;
 
 COMMAND:Register();
+
+-- Properties
+properties.Add("add_faith", {
+	MenuLabel = "Add Faith (XP)",
+	Order = 10,
+	MenuIcon = "icon16/award_star_add.png",
+	Filter = function(self, ent, ply)
+		if !IsValid(ent) or !IsValid(ply) or !ply:IsAdmin() then return false end
+		if !ent:IsPlayer() then
+			if Clockwork.entity:IsPlayerRagdoll(ent) then
+				ent = Clockwork.entity:GetPlayer(ent);
+			else
+				return false;
+			end
+		end
+
+		return ent:Alive();
+	end,
+	Action = function(self, ent)
+		if IsValid(ent) then
+			if !ent:IsPlayer() then
+				if Clockwork.entity:IsPlayerRagdoll(ent) then
+					ent = Clockwork.entity:GetPlayer(ent);
+				else
+					return false;
+				end
+			end
+		
+			Derma_StringRequest(ent:Name(), "How much faith (xp) would you like to add?", nil, function(xp)
+				if IsValid(ent) then
+					Clockwork.kernel:RunCommand("CharAddExperience", ent:Name(), xp)
+				end
+			end)
+		end
+	end,
+});
+
+properties.Add("open_belief_tree", {
+	MenuLabel = "Open Belief Tree",
+	Order = 100,
+	MenuIcon = "icon16/bell.png",
+	Filter = function(self, ent, ply)
+		if !IsValid(ent) or !IsValid(ply) or !ply:IsAdmin() then return false end
+		if !ent:IsPlayer() then
+			if Clockwork.entity:IsPlayerRagdoll(ent) then
+				ent = Clockwork.entity:GetPlayer(ent);
+			else
+				return false;
+			end
+		end
+
+		return true;
+	end,
+	Action = function(self, ent)
+		if IsValid(ent) then
+			if !ent:IsPlayer() then
+				if Clockwork.entity:IsPlayerRagdoll(ent) then
+					ent = Clockwork.entity:GetPlayer(ent);
+				else
+					return false;
+				end
+			end
+		
+			Clockwork.kernel:RunCommand("CharOpenBeliefTree", ent:Name())
+		end
+	end,
+});

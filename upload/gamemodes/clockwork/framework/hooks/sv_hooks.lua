@@ -3161,17 +3161,6 @@ function GM:CanTool(player, trace, tool)
 	end
 end
 
--- Called when a player attempts to use the property menu.
-function GM:CanProperty(player, property, entity)
-	local bIsAdmin = Clockwork.player:IsAdmin(player)
-
-	if (!player:Alive() or player:IsRagdolled() or !bIsAdmin) then
-		return false
-	end
-
-	return self.BaseClass:CanProperty(player, property, entity)
-end
-
 -- Called when a player attempts to use drive.
 function GM:CanDrive(player, entity)
 	local bIsAdmin = Clockwork.player:IsAdmin(player)

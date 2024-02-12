@@ -500,3 +500,66 @@ local COMMAND = Clockwork.command:New("ChangePitchRadius");
 		end;
 	end;
 COMMAND:Register();
+
+-- Properties
+properties.Add("heal", {
+	MenuLabel = "Heal",
+	Order = 200,
+	MenuIcon = "icon16/heart.png",
+	Filter = function(self, ent, ply)
+		if !IsValid(ent) or !IsValid(ply) or !ply:IsAdmin() then return false end
+		if !ent:IsPlayer() then
+			if Clockwork.entity:IsPlayerRagdoll(ent) then
+				ent = Clockwork.entity:GetPlayer(ent);
+			else
+				return false;
+			end
+		end
+
+		return ent:Alive();
+	end,
+	Action = function(self, ent)
+		if IsValid(ent) then
+			if !ent:IsPlayer() then
+				if Clockwork.entity:IsPlayerRagdoll(ent) then
+					ent = Clockwork.entity:GetPlayer(ent);
+				else
+					return false;
+				end
+			end
+			
+			Clockwork.kernel:RunCommand("PlyHealFull", ent:Name())
+		end
+	end,
+});
+
+properties.Add("unpk", {
+	MenuLabel = "Unpermakill",
+	Order = 666,
+	MenuIcon = "icon16/add.png",
+	Filter = function(self, ent, ply)
+		if !IsValid(ent) or !IsValid(ply) or !ply:IsAdmin() then return false end
+		if !ent:IsPlayer() then
+			if Clockwork.entity:IsPlayerRagdoll(ent) then
+				ent = Clockwork.entity:GetPlayer(ent);
+			else
+				return false;
+			end
+		end
+
+		return !ent:Alive();
+	end,
+	Action = function(self, ent)
+		if IsValid(ent) then
+			if !ent:IsPlayer() then
+				if Clockwork.entity:IsPlayerRagdoll(ent) then
+					ent = Clockwork.entity:GetPlayer(ent);
+				else
+					return false;
+				end
+			end
+			
+			Clockwork.kernel:RunCommand("CharUnPermakill", ent:Name())
+		end
+	end,
+});
