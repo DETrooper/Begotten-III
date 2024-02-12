@@ -1,7 +1,4 @@
---[[
-	© CloudSixteen.com do not share, re-distribute or modify
-	without permission of its author (kurozael@gmail.com).
---]]
+--[[	Begotten III: Jesus Wept	By: DETrooper, cash wednesday, gabs, alyousha35	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb--]]
 ENT.Type = "anim";
 ENT.Base = "base_gmodentity";
 ENT.Author = "DETrooper";

@@ -1713,6 +1713,7 @@ function Clockwork.player:UseCharacter(player, characterID)
 		if (fault == nil or fault == true) then
 			local players = #Clockwork.faction:GetPlayers(character.faction)
 			local limit = Clockwork.faction:GetLimit(factionTable.name)
+			local ratio = factionTable.ratio;
 
 			if (isCharacterMenuReset and character.faction == currentCharacter.faction) then
 				players = players - 1
@@ -1720,6 +1721,7 @@ function Clockwork.player:UseCharacter(player, characterID)
 
 			if (hook.Run("PlayerCanBypassFactionLimit", player, character)) then
 				limit = nil
+				ratio = nil
 			end
 			
 			if factionTable.characterLimit and !player:IsAdmin() then
@@ -1738,6 +1740,8 @@ function Clockwork.player:UseCharacter(player, characterID)
 
 			if (limit and players == limit) then
 				return false, "The "..character.faction.." faction is full ("..limit.."/"..limit..")!"
+			elseif Clockwork.ratioEnabled and (ratio and players > math.max(1, math.floor(ratio * _player.GetCount()))) then
+				return false, "The "..character.faction.." faction is full!"
 			else
 				if (currentCharacter) then
 					local fault = hook.Run("PlayerCanSwitchCharacter", player, character)

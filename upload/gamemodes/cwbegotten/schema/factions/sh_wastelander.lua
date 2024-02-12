@@ -1,6 +1,8 @@
 --[[
-	© 2013 CloudSixteen.com do not share, re-distribute or modify
-	without permission of its author (kurozael@gmail.com).
+	Begotten III: Jesus Wept
+	By: DETrooper, cash wednesday, gabs, alyousha35
+
+	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
 --]]
 
 -- Names for random name selection.
@@ -53,6 +55,7 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 	FACTION.alliedfactions = {"Holy Hierarchy"};
 	FACTION.singleGender = GENDER_MALE;
 	FACTION.characterLimit = 1; -- # of characters of this faction a player can have.
+	FACTION.ratio = 0.4; -- 0.4 slots per player (12 at 30 players).
 	--FACTION.imposters = true; -- Kinisgers should get enlisted through /enlist on Wanderer disguises.
 	FACTION.names = "glazic";
 	FACTION.subfactions = {
@@ -175,6 +178,7 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 	FACTION.description = "The Holy Hierarchy upholds the ancient superiority of the enlightened few. \nAmongst the dark sea of bastard blood and uncivilized rabble, they are the adjudicators and administrators to enforce Holy Light. \nStill, many are corrupt, seeking self indulgence rather than directing rights. \nAfter all, from their high seats, there are none above them to look down in judgement."
 	FACTION.availablefaiths = {"Faith of the Light"};
 	FACTION.alliedfactions = {"Gatekeeper"};
+	FACTION.ratio = 0.1; -- 0.2 slots per player (3 at 30 players).
 	--FACTION.imposters = true;
 	FACTION.names = "glazic";
 	FACTION.subfactions = {
@@ -210,6 +214,7 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 	FACTION.availablefaiths = {"Faith of the Family"};
 	FACTION.subfactionsToAvailableFaiths = {["Clan Reaver"] = {"Faith of the Family", "Faith of the Dark"}};
 	FACTION.characterLimit = 1; -- # of characters of this faction a player can have.
+	FACTION.ratio = 0.3; -- 0.3 slots per player (9 at 30 players).
 	FACTION.imposters = true;
 	FACTION.names = "goreic";
 	FACTION.subfactions = {
@@ -246,6 +251,7 @@ local FACTION = Clockwork.faction:New("Children of Satan");
 	FACTION.description = "Those selected to join the Children of Satan are exceptional individuals, be they particularly twisted and cunning, or perhaps born with the blood of ancient royalty. \nFor this reason the Children are few in number compared to the other powers, but they make up for this with their unmatched skill and grace. \nThe average Child of Satan is centuries old, obsessed with higher forbidden knowledge and glorious works of art and passion, yet they still have very much to learn. \nFearing what becomes of their corrupted souls if they are to meet an unforseen fate before reaching Demonhood, a Child of Satan will rarely risk their life for a prize not satisfactory. \nThey are the unseen puppet masters; the Glaze and the Gore must be kept in the balance, for Satan desires more subjects in his war against the Undergod, and extinction will only result in His victory.";
 	FACTION.availablefaiths = {"Faith of the Dark"};
 	FACTION.characterLimit = 1; -- # of characters of this faction a player can have.
+	FACTION.ratio = 0.3; -- 0.3 slots per player (9 at 30 players).
 	FACTION.names = "glazic";
 	FACTION.subfactions = {
 		{name = "Varazdat", subtitle = "House Varazdat - Master Swordsmen and Drinkers of Blood", description = "The Eastern Nigerii Empire is aptly known as the Land of a Thousand Princes for its infamous lust-crazed Emperors. Several of these Emperors held tremendous orgies in their palace grounds that led to many bastard children. Due to unclear laws of succession, this led to an unending stretch of wars hosted in the Far East for a throne soaked in blood. Among the thousands of claimants to the throne was the Varazdat child, one who had very little royal blood in him, but all the ambition in the world. While the other pretenders were propped up by wealthy spice merchants and noblemen, Varazdat was a gutter rat who began his climb by pickpocketing and throat slicing. He kidnapped other claimants and prepared their bodies into fine feasts, their tender meat spiced and roasted to perfection. For each would-be Prince he killed and cannibalized, he absorbed their power and birthright. At the end of his road he was positively bloated, his belly full of royalty, and his claim to the throne backed by millions of mercenaries. The Varazdat reign did not last very long, as most go, but it opened the way for future Emperors to seek powers from the Dark. Today those who share the blood of House Varazdat are feared as particularly ruthless schemers, and child-eaters.", attributes = {{Color(0, 225, 0), "(+) Bloodlust: +10% sprint speed when above 95% health"}, {Color(0, 225, 0), "(+) Lifeleech: 50% damage dealt returned as health."}, {Color(0, 225, 0), "(+) Eastern Warriors: Starts with +25 maximum health and +15 maximum stamina"}, {Color(0, 225, 0), "(+) Starts with the 'Savage' and 'Heart Eater' beliefs unlocked"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 5"}, {Color(225, 0, 0), "(-) Can only gain sustenance from feeding on human flesh"}, {Color(225, 0, 0), "(-) Crazed Cannibals: Sanity loss is increased by 50%"}}},
@@ -285,6 +291,7 @@ local FACTION = Clockwork.faction:New("Pope Adyssa's Gatekeepers");
 	FACTION.availablefaiths = {"Faith of the Light"};
 	FACTION.singleGender = GENDER_MALE;
 	FACTION.characterLimit = 1; -- # of characters of this faction a player can have.
+	FACTION.ratio = 0.3; -- 0.3 slots per player (9 at 30 players).
 	--FACTION.imposters = true;
 	
 	if !Schema.Ranks then

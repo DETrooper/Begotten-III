@@ -169,7 +169,7 @@ function Clockwork.player:GetMaximumCharacters()
 		return 100;
 	else
 		local whitelisted = Clockwork.character:GetWhitelisted()
-		local maximum = config.Get("additional_characters"):Get(2)
+		local maximum = config.Get("additional_characters"):Get()
 
 		for k, v in pairs(Clockwork.faction:GetStored()) do
 			if (!v.whitelist or table.HasValue(whitelisted, v.name)) then

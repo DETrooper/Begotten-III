@@ -20,6 +20,7 @@ config.AddToSystem("Saved Recognised Names", "save_recognised_names", "Whether o
 config.AddToSystem("Save Attribute Boosts", "save_attribute_boosts", "Whether or not attribute boosts are saved.");
 config.AddToSystem("Ragdoll Damage Immunity Time", "ragdoll_immunity_time", "The time that a player's ragdoll is immune from damage (seconds).");
 config.AddToSystem("Additional Character Count", "additional_characters", "The additional amount of characters that each player can have.");
+config.AddToSystem("Faction Ratio System Enabled", "faction_ratio_enabled", "Whether or not the faction ratio system is enabled.");
 config.AddToSystem("Class Changing Interval", "change_class_interval", "The time that a player has to wait to change class again (seconds).", 0, 7200);
 config.AddToSystem("Sprinting Lowers Weapon", "sprint_lowers_weapon", "Whether or not sprinting lowers a player's weapon.");
 config.AddToSystem("Weapon Raising System Enabled", "raised_weapon_system", "Whether or not the raised weapon system is enabled.");

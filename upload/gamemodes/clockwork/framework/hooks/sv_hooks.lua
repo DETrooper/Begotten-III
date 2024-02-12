@@ -847,7 +847,11 @@ function GM:PlayerCanPunchKnockout(player, target, trace)
 end
 
 -- Called when a player attempts to bypass the faction limit.
-function GM:PlayerCanBypassFactionLimit(player, character) return false end
+function GM:PlayerCanBypassFactionLimit(player, character)
+	if player:IsAdmin() then return true end;
+
+	return false 
+end
 
 -- Called when a player attempts to bypass the class limit.
 function GM:PlayerCanBypassClassLimit(player, class) return false end
