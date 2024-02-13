@@ -3579,7 +3579,7 @@ end
 -- Called when a player starts using voice.
 function GM:PlayerStartVoice(player)
 	if (config.Get("local_voice"):Get()) then
-		if (player:IsRagdolled(RAGDOLL_FALLENOVER) or !player:Alive() or !Clockwork.player:HasFlags(player, "x")) then
+		if (player:GetRagdollState() == RAGDOLL_KNOCKEDOUT or !player:Alive()) then
 			return
 		end
 	end
