@@ -1830,7 +1830,7 @@ function GM:PlayerCanHearPlayersVoice(listener, speaker)
 			return false
 		elseif (speaker:IsRagdolled(RAGDOLL_KNOCKEDOUT) or !speaker:Alive()) then
 			return false
-		elseif (listener:GetPos():Distance(speaker:GetPos()) > config.Get("talk_radius"):Get()) then
+		elseif (listener:GetPos():Distance(speaker:GetPos()) > (config.Get("talk_radius"):Get() * 2)) then
 			return false
 		end
 	end
