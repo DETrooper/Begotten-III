@@ -464,7 +464,7 @@ local COMMAND = Clockwork.command:New("ToggleFactionRatio");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		if Clockwork.ratioEnabled then
+		if Clockwork.config:Get("faction_ratio_enabled"):Get() then
 			Clockwork.config:Get("faction_ratio_enabled"):Set(false);
 			Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has disabled the faction ratio system.");
 		else

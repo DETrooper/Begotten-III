@@ -1740,7 +1740,7 @@ function Clockwork.player:UseCharacter(player, characterID)
 
 			if (limit and players == limit) then
 				return false, "The "..character.faction.." faction is full ("..limit.."/"..limit..")!"
-			elseif Clockwork.ratioEnabled and (ratio and players > math.max(1, math.floor(ratio * _player.GetCount()))) then
+			elseif Clockwork.config:Get("faction_ratio_enabled"):Get() and (ratio and players > math.max(1, math.floor(ratio * _player.GetCount()))) then
 				return false, "The "..character.faction.." faction is full!"
 			else
 				if (currentCharacter) then
