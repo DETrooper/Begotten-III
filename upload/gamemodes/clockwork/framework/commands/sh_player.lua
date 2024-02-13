@@ -1030,7 +1030,7 @@ local COMMAND = Clockwork.command:New("PlyUnwhitelistSubfaction");
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("PlyVoiceBan");
-	COMMAND.tip = "Ban a player from the server.";
+	COMMAND.tip = "Ban a player from using voice on the server.";
 	COMMAND.text = "<string Name|SteamID|IPAddress>";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.access = "o";
@@ -1051,7 +1051,7 @@ local COMMAND = Clockwork.command:New("PlyVoiceBan");
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("PlyVoiceUnban");
-	COMMAND.tip = "Ban a player from the server.";
+	COMMAND.tip = "Unban a player from using voice on the server.";
 	COMMAND.text = "<string Name|SteamID|IPAddress>";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.access = "o";

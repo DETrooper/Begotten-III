@@ -53,6 +53,12 @@ function cwPossession:PlayerCanUseCommand(player, commandTable, arguments)
 	end;
 end;
 
+function cwPossession:PlayerCanSpeak(speaker)
+	if IsValid(speaker.possessor) then
+		return false;
+	end
+end
+
 function cwPossession:PlayerCanRaiseWeapon(player, activeWeapon)
 	if IsValid(player.possessor) then
 		return false;

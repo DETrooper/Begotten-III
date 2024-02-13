@@ -2298,8 +2298,11 @@ function Schema:ChatBoxAdjustInfo(info)
 	end;
 end;
 
--- Called when a player destroys generator.
-function Schema:PlayerDestroyGenerator(player, entity, generator) end;
+function Schema:PlayerCanSpeak(speaker)
+	if speaker:HasTrait("imbecile") then
+		return false;
+	end
+end
 
 -- Called just before a player dies.
 function Schema:DoPlayerDeath(player, attacker, damageInfo)

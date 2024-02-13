@@ -1824,14 +1824,19 @@ function GM:PlayerCanHearPlayersVoice(listener, speaker)
 	elseif (speaker:GetData("VoiceBan") or speaker:IsMuted()) then
 		return false
 	end
+	
+	if hook.Run("PlayerCanSpeak", speaker) == false then
+		return false;
+	end
 
 	if (config.Get("local_voice"):Get()) then
-		if (listener:IsRagdolled(RAGDOLL_KNOCKEDOUT) or !listener:Alive()) then
+		if (listener:IsRagdolled(RAGDOLL_KNOCKEDOUT) or (!listener:Alive() and !listener.cwObserverMode)) then
 			return false
 		elseif (speaker:IsRagdolled(RAGDOLL_KNOCKEDOUT) or !speaker:Alive()) then
 			return false
-		elseif (listener:GetPos():Distance(speaker:GetPos()) > (config.Get("talk_radius"):Get() * 2)) then
-			return false
+		-- Extremely unoptimized.
+		--[[elseif (listener:GetPos():Distance(speaker:GetPos()) > (config.Get("talk_radius"):Get() * 2)) then
+			return false]]--
 		end
 	end
 

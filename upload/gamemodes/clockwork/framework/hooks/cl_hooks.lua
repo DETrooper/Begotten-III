@@ -3577,7 +3577,7 @@ function GM:DrawPlayerCrosshair(x, y, color)
 end
 
 -- Called when a player starts using voice.
-function GM:PlayerStartVoice(player)
+--[[function GM:PlayerStartVoice(player)
 	if (config.Get("local_voice"):Get()) then
 		if (player:GetRagdollState() == RAGDOLL_KNOCKEDOUT or !player:Alive()) then
 			return
@@ -3587,7 +3587,7 @@ function GM:PlayerStartVoice(player)
 	if (self.BaseClass and self.BaseClass.PlayerStartVoice) then
 		self.BaseClass:PlayerStartVoice(player)
 	end
-end
+end]]--
 
 -- Called to check if a player does have an flag.
 function GM:PlayerDoesHaveFlag(player, flag)
