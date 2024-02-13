@@ -1823,8 +1823,6 @@ function GM:PlayerCanHearPlayersVoice(listener, speaker)
 		return false
 	elseif (speaker:GetData("VoiceBan") or speaker:IsMuted()) then
 		return false
-	elseif (!Clockwork.player:HasFlags(speaker, "x")) then
-		return false
 	end
 
 	if (config.Get("local_voice"):Get()) then
