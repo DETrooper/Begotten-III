@@ -67,7 +67,9 @@ SWEP.WElements = {
 	["w_lantern"] = { type = "Model", model = "models/weapons/w_lantern.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1, 2.9, 13), angle = Angle(5.843, -15.195, -171.818), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
-function SWEP:Deploy() end;
+function SWEP:Deploy()
+	self.Owner:SetSharedVar("lanternOnHip", false);
+end;
 
 function SWEP:Initialize()
 	self:SetHoldType(self.HoldType);

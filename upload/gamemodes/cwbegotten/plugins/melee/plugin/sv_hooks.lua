@@ -754,6 +754,8 @@ end;
 
 -- Called when a player switches their weapon. 
 function cwMelee:PlayerSwitchWeapon(player, oldWeapon, newWeapon)
+	hook.Run("PrePlayerLowerWeapon", player, oldWeapon, newWeapon);
+
 	if (player:IsWeaponRaised()) then
 		if IsValid(oldWeapon) and oldWeapon.IsABegottenMelee then
 			if oldWeapon:GetNextPrimaryFire() > CurTime() then 

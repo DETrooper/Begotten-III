@@ -8,10 +8,15 @@
 
 Begotten III is licenced under [Creative Commons Attribution-NonCommercial 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/deed.en), so you may not use it for commercial purposes.
 
-[Clockwork](https://github.com/CloudSixteen/Clockwork) was developed by Cloud Sixteen, but the Begotten III framework also uses code from Alex Grist, Mr. Meow, and zigbomb.
+## Content
+
+<b>[Begotten III Addon Collection](https://steamcommunity.com/workshop/filedetails/?id=2443075973)</b>
 
 ## Credits
-### Team Members
+
+[Clockwork](https://github.com/CloudSixteen/Clockwork) was developed by Cloud Sixteen, but the Begotten III framework also uses code from Alex Grist, Mr. Meow, and zigbomb.
+
+### Original Team Members
 DETrooper - Lead Programmer/Mapper/Animator
 
 gabs - Lead Designer/Model Porting & Rigging
@@ -22,8 +27,15 @@ alyousha35 - Programmer
 
 Minor code contributions by venty.
 
-### Server Content
-[Begotten III Addon Collection](https://steamcommunity.com/workshop/filedetails/?id=2443075973)
+### Post-Release Contributors
+
+filterfeeder - Models & Animations
+
+dave - Programming
+
+ObamasGrandpa - Exploit Reporting
+
+Various other people in the discord who report bugs.
 
 ### External Addons
 Begotten III utilizes some modified external addons as well, so the lua is included in the addons folder of this release. The originals can be found below for credit purposes.
