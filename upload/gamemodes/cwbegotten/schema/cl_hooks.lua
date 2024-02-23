@@ -1366,6 +1366,8 @@ end
 function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, condition, percentage, name, itemTable, x, y, width, height, frame, bShowWeight)
 	if (category == "Melee") then
 		local damageTypes = {[2] = "Bullet", [4] = "Slash", [16] = "Pierce", [128] = "Blunt"};
+		local meleeMax = GetTable("meleemax");
+		local meleeMin = GetTable("meleemin");
 		local weaponClass = itemTable.uniqueID;
 		local weaponStats = {["attack"] = nil, ["defense"] = nil};
 		local weaponTable;
@@ -1592,15 +1594,31 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		
 					frame:AddBar(12, {{text = tostring(weaponStats["attack"].takeammo).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Attack Cost", Color(110, 30, 30), true);
 				end
+				
+				if weaponStats["attack"].delay then
+					local max_value = meleeMax.delay;
+					local min_value = meleeMin.delay;
+					local percentage = 1 - ((weaponStats["attack"].delay - min_value) / (max_value - min_value));
+				
+					frame:AddBar(12, {{text = tostring(weaponStats["attack"].delay).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Attack Delay", Color(110, 30, 30), true);
+				end
+				
+				if weaponStats["attack"].striketime then
+					local max_value = meleeMax.striketime;
+					local min_value = meleeMin.striketime;
+					local percentage = 1 - ((weaponStats["attack"].striketime - min_value) / (max_value - min_value));
+				
+					frame:AddBar(12, {{text = tostring(weaponStats["attack"].striketime).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Swing Speed", Color(110, 30, 30), true);
+				end
 			
-				if weaponStats["attack"].delay and weaponStats["attack"].striketime then
+				--[[if weaponStats["attack"].delay and weaponStats["attack"].striketime then
 					local min_value = 0.75;
 					local max_value = 3.5;
 					local attack_speed = weaponStats["attack"].delay + weaponStats["attack"].striketime;
 					local percentage = 1 - ((attack_speed - min_value) / (max_value - min_value));
 
 					frame:AddBar(12, {{text = tostring(weaponStats["attack"].delay + weaponStats["attack"].striketime).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Attack Speed", Color(110, 30, 30), true);
-				end
+				end]]--
 			
 				if weaponStats["attack"].armorpiercing then
 					local armorpiercing = weaponStats["attack"].armorpiercing;
@@ -1784,7 +1802,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 					
 					if weaponStats["defense"].parrydifficulty then
-						local percentage = 1 - math.min(weaponStats["defense"].parrydifficulty / 0.3, 0.3);
+						local percentage = math.Clamp(weaponStats["defense"].parrydifficulty / 0.3, 0, 1);
 
 						frame:AddBar(12, {{text = tostring(weaponStats["defense"].parrydifficulty).."s", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Parry Window", Color(110, 30, 30), true);
 					end

@@ -1107,6 +1107,7 @@ AttackTables.SamuraiSwordAttackTable = {
 	["meleearc"] = 60,
 	["meleerange"] = 5000,
 	["punchstrength"] = Angle(0,0,0),
+	["isadminweapon"] = true,
 };
 
 AttackTables.SkylightSwordAttackTable = {
@@ -1127,6 +1128,7 @@ AttackTables.SkylightSwordAttackTable = {
 	["meleearc"] = 55,
 	["meleerange"] = 975,
 	["punchstrength"] = Angle(0,1,0),
+	["isadminweapon"] = true,
 };
 
 AttackTables.UnholySigilSwordAttackTable = {
@@ -2789,6 +2791,7 @@ AttackTables.SkyfallenSwordAttackTable = {
 	["meleearc"] = 50,
 	["meleerange"] = 950,
 	["punchstrength"] = Angle(0,1,0),
+	["isadminweapon"] = true,
 };
 
 AttackTables.FrozenFatherlandAxeAttackTable = {
@@ -2827,6 +2830,7 @@ AttackTables.MaximusWrathAttackTable = {
 	["meleearc"] = 55,
 	["meleerange"] = 900,
 	["punchstrength"] = Angle(0,1,0),
+	["isadminweapon"] = true,
 };
 
 AttackTables.VoltprodAttackTable = {
@@ -3355,6 +3359,7 @@ BlockTables.SamuraiSwordBlockTable = {
 	["parrytakestamina"] = 0,
 	["canparry"] = true,
 	["candeflect"] = true,
+	["isadminweapon"] = true,
 };
 
 BlockTables.SkylightSwordBlockTable = {
@@ -3373,6 +3378,7 @@ BlockTables.SkylightSwordBlockTable = {
 	["parrytakestamina"] = 10,
 	["canparry"] = true,
 	["candeflect"] = true,
+	["isadminweapon"] = true,
 };
 
 BlockTables.UnholySigilSwordBlockTable = {
@@ -5209,6 +5215,7 @@ BlockTables.SkyfallenSwordBlockTable = {
 	["parrytakestamina"] = 10,
 	["canparry"] = true,
 	["candeflect"] = true,
+	["isadminweapon"] = true,
 };
 
 BlockTables.FrozenFatherlandAxeBlockTable = {
@@ -5245,6 +5252,7 @@ BlockTables.MaximusWrathBlockTable = {
 	["parrytakestamina"] = 5,
 	["canparry"] = true,
 	["candeflect"] = true,
+	["isadminweapon"] = true,
 };
 
 BlockTables.VoltprodBlockTable = {
@@ -6609,5 +6617,66 @@ AddTable("shield18", BlockTables.shield18)
 AddTable("shield19", BlockTables.shield19)
 AddTable("shieldunique1", BlockTables.shieldunique1)
 AddTable("shieldunique2", BlockTables.shieldunique2)
+
+-- Dummy tables for use with tooltips that have the min/max values.
+local meleemax = {};
+local meleemin = {};
+
+for k, v in pairs(AttackTables) do
+	if v.isadminweapon then continue end;
+
+	for k2, v2 in pairs(v) do
+		if isnumber(v2) then
+			if !meleemax[k2] then
+				meleemax[k2] = v2;
+			end
+			
+			if !meleemin[k2] then
+				meleemin[k2] = v2;
+			end
+		
+			if v2 > meleemax[k2] then
+				meleemax[k2] = v2;
+			end
+			
+			if v2 < meleemin[k2] then
+				meleemin[k2] = v2;
+			end
+		end
+	end
+end
+
+AddTable("meleemax", meleemax)
+AddTable("meleemin", meleemin)
+
+local shieldmax = {};
+local shieldmin = {};
+
+for k, v in pairs(BlockTables) do
+	if v.isadminweapon then continue end;
+	
+	for k2, v2 in pairs(v) do
+		if isnumber(v2) then
+			if !shieldmax[k2] then
+				shieldmax[k2] = v2;
+			end
+			
+			if !shieldmin[k2] then
+				shieldmin[k2] = v2;
+			end
+		
+			if v2 > shieldmax[k2] then
+				shieldmax[k2] = v2;
+			end
+			
+			if v2 < shieldmin[k2] then
+				shieldmin[k2] = v2;
+			end
+		end
+	end
+end
+
+AddTable("shieldmax", shieldmax)
+AddTable("shieldmin", shieldmin)
 
 print "Melee Tables Loaded"
