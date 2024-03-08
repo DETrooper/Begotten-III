@@ -485,7 +485,7 @@ function cwItemSpawner:SelectItem(location, bIsSupercrate, bIsContainer)
 				end
 			end
 			
-			if !bIsContainer and !bIsSupercrate and valid then
+			if !bIsContainer and !bIsSupercrate then
 				if itemTable.itemSpawnerInfo.onGround == false then
 					continue;
 				end
