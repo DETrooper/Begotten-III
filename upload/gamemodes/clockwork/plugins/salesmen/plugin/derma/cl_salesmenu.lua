@@ -384,7 +384,7 @@ function PANEL:Think()
 					self.spawnIcon.cost:SetTextColor(Color(0, 200, 0));
 				end
 			elseif self.typeName == "Buys" then
-				if overrideCash > Clockwork.salesmenu:GetCash() then
+				if (Clockwork.salesmenu:GetCash() ~= -1) and overrideCash > Clockwork.salesmenu:GetCash() then
 					self.spawnIcon.cost:SetTextColor(Color(200, 0, 0));
 				else
 					self.spawnIcon.cost:SetTextColor(Color(0, 200, 0));

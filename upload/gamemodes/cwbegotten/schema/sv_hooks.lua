@@ -691,7 +691,26 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 			entity:Remove();
 		end
 	elseif (class == "cw_bear_trap") then
-		if arguments == "cwTakeBearTrap" then
+		if arguments == "cwItemExamine" then
+			local examineText = "A deployed bear trap.";
+			local itemCondition = entity.condition;
+			
+			if itemCondition then
+				if itemCondition >= 90 then
+					examineText = examineText.." It appears to be in immaculate condition.";
+				elseif itemCondition < 90 and itemCondition >= 60 then
+					examineText = examineText.." It appears to be in a somewhat battered condition.";
+				elseif itemCondition < 60 and itemCondition >= 30 then
+					examineText = examineText.." It appears to be in very poor condition.";
+				elseif itemCondition < 30 and itemCondition > 0 then
+					examineText = examineText.." It appears to be on the verge of breaking.";
+				elseif itemCondition <= 0 then
+					examineText = examineText.." It is completely destroyed and only worth its weight in scrap now.";
+				end
+			end
+			
+			Schema:EasyText(player, "skyblue", examineText);
+		elseif arguments == "cwTakeBearTrap" then
 			if entity:GetNWString("state") ~= "trap" then
 				local trapItem = item.CreateInstance("bear_trap");
 				

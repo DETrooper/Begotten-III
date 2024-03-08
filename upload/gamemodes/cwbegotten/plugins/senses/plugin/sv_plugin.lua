@@ -96,17 +96,22 @@ function playerMeta:SensesOff()
 		
 		self:SetNWBool("senses", false);
 		self:SetDSP(0);
-	elseif self:Alive() then
-		Clockwork.datastream:Start(self, "BlackStunned", 1);
-		
-		timer.Simple(1, function()
-			if IsValid(self) then
-				Clockwork.datastream:Start(self, "PlaySound", "begotten/ambient/hits/disappear.mp3");
-				self:SetNWBool("senses", false);
-				self:SetDSP(0);
-			end
-		end);
+	elseif self:GetNWBool("senses") then
+		if self:Alive() then
+			Clockwork.datastream:Start(self, "BlackStunned", 1);
+			
+			timer.Simple(1, function()
+				if IsValid(self) then
+					Clockwork.datastream:Start(self, "PlaySound", "begotten/ambient/hits/disappear.mp3");
+					self:SetNWBool("senses", false);
+					self:SetDSP(0);
+				end
+			end);
+		else
+			self:SetNWBool("senses", false);
+			self:SetDSP(0);
+		end
 	end
-	
+		
 	self.sensesOn = nil;
 end;

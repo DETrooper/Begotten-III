@@ -582,6 +582,8 @@ function Schema:GetEntityMenuOptions(entity, options)
 				options["Tear Down"] = "cwTearDownSiegeLadder";
 			end
 		elseif (entity:GetClass() == "cw_bear_trap") then
+			options["Examine"] = "cwItemExamine";
+		
 			if entity:GetNWString("state") == "trap" then
 				if !cwBeliefs or Clockwork.Client:HasBelief("ingenious") then
 					options["Reset"] = "cwResetBearTrap";

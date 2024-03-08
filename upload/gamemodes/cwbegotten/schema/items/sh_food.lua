@@ -661,7 +661,7 @@ local ITEM = Clockwork.item:New();
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You notice a glimmer of light inside the can, and are rejoiced to discover coins aplenty! Your sanity is restored! You are favored by the Gods!");
 			player:HandleSanity(100);
-			Clockwork.player:GiveCash(player, math.random(10, 100), "Blessed coins!");
+			Clockwork.player:GiveCash(player, math.random(10, 30), "Blessed coins!");
 			player:HandleXP(cwBeliefs.xpValues["food"]);
 		elseif !player:HasBelief("savage_animal") and (math.random(1, 2) == 1) then
 			--player:GiveItem(Clockwork.item:CreateInstance("empty_can"));
@@ -706,7 +706,7 @@ local ITEM = Clockwork.item:New();
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You notice a glimmer of light inside the can, and are rejoiced to discover coins aplenty! Your sanity is restored! You are favored by the Gods!");
 			player:HandleSanity(50);
-			Clockwork.player:GiveCash(player, math.random(10, 100), "Blessed coins!");
+			Clockwork.player:GiveCash(player, math.random(10, 30), "Blessed coins!");
 			player:HandleXP(cwBeliefs.xpValues["food"]);
 		else
 			player:ScriptedDeath("Became canned meat.");

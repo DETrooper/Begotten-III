@@ -1292,7 +1292,7 @@ end
 
 -- A function to get whether a player is running.
 function playerMeta:IsRunning()
-	if (self:Alive() and !self:IsRagdolled() and !self:InVehicle() and !self:Crouching() and self:KeyDown(IN_SPEED)) then
+	if (self:Alive() and !self:IsRagdolled() and !self:InVehicle() and !self:Crouching() and self:KeyDown(IN_SPEED) and self:WaterLevel() < 2) then
 		if (self:GetVelocity():Length() >= self:GetWalkSpeed() or bNoWalkSpeed) then
 			if !self:GetNetVar("runningDisabled") then
 				return true;

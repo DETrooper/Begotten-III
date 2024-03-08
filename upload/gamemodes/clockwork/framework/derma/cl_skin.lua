@@ -240,6 +240,14 @@ function SKIN:PaintNumSlider( panel, w, h )
 	PaintNotches( 8, h / 2 - 1, w - 16, 1, panel.m_iNotches )
 end
 
+function DCheckBox:OnChange(val)
+	DEFINE_BASECLASS("DCheckBox");
+
+	surface.PlaySound("begotten/ui/buttonclick.wav");
+
+	BaseClass.OnChange(self, val);
+end
+
 function SKIN:PaintCheckBox( panel, w, h )
 	--draw.RoundedBox(4, 0, 0, w, h, Color(21,21,21,200))
 
@@ -254,15 +262,6 @@ function SKIN:PaintCheckBox( panel, w, h )
 		draw.RoundedBox(2, 2.5, 2.5, w - 6, h - 6, Color(175 + panel.flashlerp,panel.flashlerp,panel.flashlerp,100))
 	else 
 		panel.flashlerp = 255
-	end
-
-	panel.OnChange = function(val)
-		if val and !panel.buttonfuckyou then
-			surface.PlaySound("begotten/ui/buttonclick.wav"); --spams it cuz this game blows so here comes a waste variable
-			panel.buttonfuckyou = true
-		else
-			panel.buttonfuckyou = false
-		end
 	end
 
 	--[[surface.SetDrawColor( Color( 255, 0, 0, 150 ) )

@@ -87,12 +87,11 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "To your merry surprise (or disappointment), the contents of this corpsebrew were actually quite delicious! Furthermore, you feel extra coinage in your pockets! You are truly blessed by the Gods!");
 			player:HandleSanity(50);
 			player:SetHealth(math.Clamp(player:Health() + 50, 0, player:GetMaxHealth()));
-			Clockwork.player:GiveCash(player, math.random(10, 100), "Blessed coins!");
+			Clockwork.player:GiveCash(player, math.random(10, 50), "Blessed coins!");
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		else
 			Schema:EasyText(player, "maroon", "In some suicidal rage, you decide to chug the corpsebrew. You stop halfway, as you feel your insides melt and your throat ignite.");
@@ -275,7 +274,7 @@ local ITEM = Clockwork.item:New();
 			Schema:EasyText(player, "lawngreen", "You slurp up another classic Papa Pete's Ice Cold Pop! Once you are finished, the bottle starts gushing coins all over! You've hit the jackpot!");
 			player:HandleSanity(100);
 			player:SetHealth(math.Clamp(player:Health() + 50, 0, player:GetMaxHealth()));
-			Clockwork.player:GiveCash(player, math.random(80, 500), "You win the prize!");
+			Clockwork.player:GiveCash(player, math.random(50, 300), "You win the prize!");
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		else
 			Schema:EasyText(player, "maroon", "You slurp of some of Papa Pete's Ice Cold Pop, but as you do you feel a golden coin lodge itself in your throat! You've won the prize! But now you're about to choke to death.");
@@ -502,7 +501,7 @@ ITEM:Register();
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Pipin' Hot Pop™! It has a spicy aftertaste. After you're done drinking, some coins spill out the bottle!");
 			player:HandleSanity(25);
 			player:SetHealth(math.Clamp(player:Health() + 50, 0, player:GetMaxHealth()));
-			Clockwork.player:GiveCash(player, math.random(5, 25), "Blessed coins!");
+			Clockwork.player:GiveCash(player, math.random(25, 100), "Blessed coins!");
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		else
 			Schema:EasyText(player, "olive", "You slurp of some of Papa Pete's® Pipin' Hot Pop™. It tastes good, but you're engulfed in flames!");
@@ -576,7 +575,7 @@ ITEM:Register();
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Plague Pop™. It didn't taste very good, but you feel your pockets grow heavier with coins! The Gods have blessed you!");
 			player:HandleSanity(25);
-			Clockwork.player:GiveCash(player, math.random(5, 250), "Blessed coins!");
+			Clockwork.player:GiveCash(player, math.random(50, 250), "Blessed coins!");
 			player:SetHealth(math.Clamp(player:Health() + 25, 0, player:GetMaxHealth()));
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		else
@@ -611,7 +610,7 @@ local ITEM = Clockwork.item:New();
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "Instead of chugging the bleach like a moron, you carefully look inside the container and discover a deposit of coinage! How fortunate!");
 			player:HandleSanity(25);
-			Clockwork.player:GiveCash(player, math.random(5, 100), "Blessed coins!");
+			Clockwork.player:GiveCash(player, math.random(5, 40), "Blessed coins!");
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		else
 			player:HandleSanity(-100);

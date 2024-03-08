@@ -40,10 +40,18 @@ end;
 
 -- Called just after a player spawns.
 function cwSenses:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
-	if (firstSpawn) then
-		player:SetNWBool("hasNV", false);
-		player:SetNWBool("hasThermal", false);
+	if player:GetNWBool("senses") then
 		player:SetNWBool("senses", false);
-		player.sensesOn = nil
-	end;
+		player:SetDSP(0);
+	end
+	
+	if player:GetNWBool("hasThermal") then
+		player:SetNWBool("hasThermal", false);
+	end
+	
+	if player:GetNWBool("hasNV") then
+		player:SetNWBool("hasNV", false);
+	end
+	
+	player.sensesOn = nil;
 end;

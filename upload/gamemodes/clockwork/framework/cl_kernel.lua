@@ -3219,7 +3219,7 @@ end
 
 -- A function to get whether a player is running.
 function playerMeta:IsRunning(bNoWalkSpeed)
-	if (self:Alive() and !self:IsRagdolled() and !self:InVehicle() and !self:Crouching() and self:GetDTBool(BOOL_ISRUNNING)) then
+	if (self:Alive() and !self:IsRagdolled() and !self:InVehicle() and !self:Crouching() and self:GetDTBool(BOOL_ISRUNNING) and self:WaterLevel() < 2) then
 		if (self:GetVelocity():Length() >= self:GetWalkSpeed() or bNoWalkSpeed) then
 			if self == Clockwork.Client and !self:KeyDown(IN_SPEED) then
 				return false;
