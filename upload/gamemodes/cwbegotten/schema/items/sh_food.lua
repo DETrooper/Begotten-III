@@ -11,7 +11,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.infectionchance = 10; -- Chance to give you a disease.
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 250};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500};
 	ITEM.needs = {hunger = 30, thirst = 5};
 
 	-- Called when a player uses the item.
@@ -41,7 +41,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.infectionchance = 50; -- Chance to give you a disease.
 	ITEM.poison = 6; -- Holdover from Begotten II, maybe we can use it.
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 250};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
 	ITEM.needs = {hunger = 25, thirst = 10};
 
 	-- Called when a player uses the item.
@@ -75,7 +75,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.infectchance = 15;
 	ITEM.poison = 3;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 250};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 400};
 	ITEM.needs = {hunger = 15};
 
 	-- Called when a player uses the item.
@@ -104,7 +104,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/canned_meal.png"
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 600};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 800};
 	ITEM.needs = {hunger = 40, thirst = 10};
 
 	-- Called when a player uses the item.
@@ -483,7 +483,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "unfuckedmeat"
 	
-	ITEM.needs = {hunger = 35, thirst = 5};
+	ITEM.needs = {hunger = 40, thirst = 15};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -580,7 +580,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.infectionchance = 50;
 	ITEM.poison = 6;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 150};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 200};
 	ITEM.needs = {hunger = 15, thirst = 30};
 
 	-- Called when a player uses the item.
@@ -613,7 +613,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "kittycandy";
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 400};
 	ITEM.needs = {hunger = 25};
 	
 	-- Called when a player uses the item.
@@ -652,7 +652,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/canned_meal.png"
 	ITEM.stackable = true;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 250};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
 	ITEM.needs = {hunger = 50};
 
 	-- Called when a player uses the item.
@@ -696,7 +696,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/can.png"
 	ITEM.stackable = true;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 250};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
 	ITEM.needs = {hunger = 50};
 
 	-- Called when a player uses the item.
@@ -785,7 +785,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.infectchance = 50;
 	ITEM.poison = 10;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 200};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
 	ITEM.needs = {hunger = 25, thirst = 5};
 
 	-- Called when a player uses the item.
@@ -910,13 +910,13 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "wanderers_delight"
 	
-	ITEM.needs = {hunger = 65, thirst = 45};
+	ITEM.needs = {hunger = 70, thirst = 60};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		Schema:EasyText(player, "lawngreen", "You consume the meal. It tasted decent!");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
-		player:HandleSanity(25);
+		player:HandleSanity(80);
 	end
 
 	-- Called when a player drops the item.
