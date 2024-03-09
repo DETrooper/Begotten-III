@@ -21,7 +21,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useXP = 10;
 	ITEM.useTime = 1;
 
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 1000};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 1200};
 	ITEM.limbs = "all";
 	
 	-- Called when the player uses the item.
@@ -85,7 +85,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.applicable = true;
 
 	ITEM.curesInjuries = {"infection", "minor_infection"};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 400};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 675};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 	ITEM.useXP = 25;
 	
@@ -107,7 +107,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.uniqueID = "antibiotics"
 
 	ITEM.ingestible = {orally = true, anally = false};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 700};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 800};
 	ITEM.useXP = 50;
 	
 	function ITEM:OnUsed(player, itemEntity)
@@ -186,7 +186,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.stopsBleeding = true;
 	ITEM.infectionChance = 80;
 
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 65};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 70};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 ITEM:Register();
 
@@ -210,7 +210,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useXP = 15;
 
 	ITEM.curesInjuries = {"gash"};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 95};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 225};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 ITEM:Register();
 
@@ -234,7 +234,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useXP = 15;
 
 	ITEM.curesInjuries = {"gash"};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 100};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 300};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 
 	-- Called when a player uses the item.
@@ -259,7 +259,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.healRepetition = 5;
 	
 	ITEM.ingestible = {orally = true, anally = false};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 175};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 250};
 	ITEM.useXP = 25;
 	
 	function ITEM:OnUsed(player, itemEntity)
@@ -320,7 +320,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useXP = 15;
 
 	ITEM.curesInjuries = {"burn"};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 300, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 700, bNoSupercrate = true};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 	
 	function ITEM:OnUsed(player, itemEntity)
@@ -349,7 +349,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.stopsBleeding = true;
 	ITEM.useXP = 5;
 	
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 50};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 200};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 
 	-- Called when a player uses the item.
@@ -399,7 +399,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useXP = 50;
 
 	ITEM.curesInjuries = {"burn", "gash", "gunshot_wound", "minor_infection"};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 1000};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 3000};
 	ITEM.limbs = "all";
 	
 	-- Called when a player uses the item.
@@ -550,7 +550,7 @@ local ITEM = Clockwork.item:New();
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 	
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 600, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 1000, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New();

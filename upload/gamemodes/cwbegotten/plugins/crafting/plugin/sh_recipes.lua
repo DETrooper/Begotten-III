@@ -726,7 +726,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("kings_meal");
-		RECIPE.name = "King's Meal";
+		RECIPE.name = "(3x) King's Meal";
 		RECIPE.requiresHeatSource = true;
 		RECIPE.requiredBeliefs = {"culinarian"};
 		RECIPE.requiredBeliefsNiceNames = {"Culinarian"};
@@ -737,7 +737,7 @@ function cwRecipes:ClockworkInitialized()
 			["spice"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["kings_meal"] = {amount = 1},
+			["kings_meal"] = {amount = 3},
 		};
 		RECIPE.category = "Cooking"
 		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
@@ -757,7 +757,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("masterclass_yummy_meal");
-		RECIPE.name = "Cooked Canned Goodies";
+		RECIPE.name = "(2x) Cooked Canned Goodies";
 		RECIPE.requiresHeatSource = true;
 		RECIPE.requiredBeliefs = {"culinarian"};
 		RECIPE.requiredBeliefsNiceNames = {"Culinarian"};
@@ -766,7 +766,7 @@ function cwRecipes:ClockworkInitialized()
 			["canned_yummy_beans"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["masterclass_yummy_meal"] = {amount = 1},
+			["masterclass_yummy_meal"] = {amount = 2},
 		};
 		RECIPE.category = "Cooking"
 		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
@@ -786,7 +786,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("wanderers_delight");
-		RECIPE.name = "Wanderer's Delight";
+		RECIPE.name = "(2x) Wanderer's Delight";
 		RECIPE.requiresHeatSource = true;
 		RECIPE.requiredBeliefs = {"culinarian"};
 		RECIPE.requiredBeliefsNiceNames = {"Culinarian"};
@@ -795,7 +795,7 @@ function cwRecipes:ClockworkInitialized()
 			["punctured_can_of_soup"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["wanderers_delight"] = {amount = 1},
+			["wanderers_delight"] = {amount = 2},
 		};
 		RECIPE.category = "Cooking"
 		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
@@ -815,16 +815,16 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE:Register()
 	
 	RECIPE = cwRecipes.recipes:New("meatmeal");
-		RECIPE.name = "(2x) Meatmeal";
+		RECIPE.name = "(3x) Meatmeal";
 		RECIPE.requiresHeatSource = true;
 		RECIPE.requiredBeliefs = {"culinarian"};
 		RECIPE.requiredBeliefsNiceNames = {"Culinarian"};
 		RECIPE.requirements = {
-			["fuckedmeat"] = {amount = 4},
+			["fuckedmeat"] = {amount = 2},
 			["spice"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["meatmeal"] = {amount = 2},
+			["meatmeal"] = {amount = 3},
 		};
 		RECIPE.category = "Cooking"
 		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
@@ -969,7 +969,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"ingenious"};
 		RECIPE.requiredBeliefsNiceNames = {"Ingenious"};
 		RECIPE.requirements = {
-			["cloth"] = {amount = 1},
+			["cloth"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["crafted_bandage"] = {amount = 1},
@@ -1019,14 +1019,14 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("gauze");
-		RECIPE.name = "(2x) Gauze";
+		RECIPE.name = "Gauze";
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
 		RECIPE.requirements = {
 			["cloth"] = {amount = 3},
 		};
 		RECIPE.result = {
-			["gauze"] = {amount = 2},
+			["gauze"] = {amount = 1},
 		};
 		RECIPE.category = "Medical"
 		RECIPE.finishSound = "begotten/items/first_aid.wav";
@@ -1073,15 +1073,15 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("skingauze");
-		RECIPE.name = "(2x) Skingauze";
+		RECIPE.name = "Skingauze";
 		RECIPE.requiredBeliefs = {"primeval"};
 		RECIPE.requiredBeliefsNiceNames = {"Primeval"};
 		RECIPE.requirements = {
-			["humanmeat"] = {amount = 4},
+			["humanmeat"] = {amount = 3},
 			["human_bone"] = {amount = 2},
 		};
 		RECIPE.result = {
-			["skingauze"] = {amount = 2},
+			["skingauze"] = {amount = 1},
 		};
 		RECIPE.category = "Medical"
 		RECIPE.finishSound = "begotten/items/first_aid.wav";
