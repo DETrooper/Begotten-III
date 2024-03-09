@@ -3,11 +3,16 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
+config.Add("loot_container_lifetime", 1200); -- 20 Minutes.
+config.Add("loot_item_lifetime", 1800); -- 30 Minutes.
+config.Add("loot_player_ratio", 0.75); -- Percentage of players active for when loot spawns will be maxxed (75% is 60 out of 80).
+config.Add("loot_population_scaling_enabled", true); -- Whether the ratio system is enabled at all. If not, loot will always max out.
+config.Add("loot_min_containers", 40); -- Containers at low population.
+config.Add("loot_max_containers", 80); -- Containers at high population.
+config.Add("loot_min_ground_spawns", 50); -- Ground spawns at low population.
+config.Add("loot_max_ground_spawns", 100); -- Ground spawns at high population.
+
 cwItemSpawner.Categories = {"city", "industrial", "mines", "rituals", "supermarket"};
-cwItemSpawner.ContainerLifetime = 1200; -- 20 Minutes.
-cwItemSpawner.ItemLifetime = 1800; -- 30 Minutes.
-cwItemSpawner.MaxContainers = 80;
-cwItemSpawner.MaxGroundSpawns = 100;
 cwItemSpawner.MaxSuperCrates = 1;
 cwItemSpawner.SuperCrateCooldown = {min = 5400, max = 10800}; -- 1.5-3 Hours.
 cwItemSpawner.SuperCrateNumItems = {min = 10, max = 20};
@@ -668,8 +673,13 @@ function cwItemSpawner:SetupContainers()
 		self.Containers = {};
 	end
 	
-	local numContainers = #self.Containers;
 	local curTime = CurTime();
+	local numContainers = #self.Containers;
+	local maxContainers = config.GetVal("loot_max_containers");
+	
+	if config.GetVal("loot_population_scaling_enabled") then
+		maxContainers = Lerp(player.GetCount() / (game.MaxPlayers() * config.GetVal("loot_player_ratio")), config.GetVal("loot_min_containers"), maxContainers);
+	end
 	
 	for k, v in RandomPairs(self.ContainerLocations) do
 		if k == "supermarket" then
@@ -678,9 +688,9 @@ function cwItemSpawner:SetupContainers()
 			end
 		end
 	
-		if numContainers < self.MaxContainers then
+		if numContainers < maxContainers then
 			for i = 1, #v do
-				if numContainers < self.MaxContainers and !v[i].occupier then
+				if numContainers < maxContainers and !v[i].occupier then
 					if math.random(1, 2) == 1 then
 						local container = ents.Create("prop_physics")
 
@@ -757,7 +767,7 @@ function cwItemSpawner:SetupContainers()
 						
 						local containerTable = {
 							container = container,
-							lifeTime = curTime + self.ContainerLifetime
+							lifeTime = curTime + config.GetVal("loot_container_lifetime")
 						};
 						
 						table.insert(self.Containers, containerTable);
@@ -799,7 +809,7 @@ function cwItemSpawner:SpawnSupercrate()
 			
 			local supercrateTable = {
 				supercrate = supercrate,
-				lifeTime = CurTime() + self.ContainerLifetime
+				lifeTime = CurTime() + config.GetVal("loot_container_lifetime")
 			};
 
 			supercrate.cwLockType = "none";

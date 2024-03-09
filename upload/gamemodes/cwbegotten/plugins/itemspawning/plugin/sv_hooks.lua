@@ -123,8 +123,13 @@ function cwItemSpawner:Think()
 		
 		if self.Containers then
 			local numContainers = #self.Containers;
+			local maxContainers = config.GetVal("loot_max_containers");
+			
+			if config.GetVal("loot_population_scaling_enabled") then
+				maxContainers = Lerp(player.GetCount() / (game.MaxPlayers() * config.GetVal("loot_player_ratio")), config.GetVal("loot_min_containers"), maxContainers);
+			end
 
-			if numContainers < self.MaxContainers then
+			if numContainers < maxContainers then
 				local containerCategory = self.Categories[math.random(#self.Categories)];
 				local unoccupiedLocations = {};
 				
@@ -222,7 +227,7 @@ function cwItemSpawner:Think()
 							
 							local containerTable = {
 								container = container,
-								lifeTime = curTime + self.ContainerLifetime
+								lifeTime = curTime + config.GetVal("loot_container_lifetime")
 							};
 							
 							table.insert(self.Containers, containerTable);
@@ -300,7 +305,13 @@ function cwItemSpawner:Think()
 			end
 		end
 		
-		if #self.ItemsSpawned < self.MaxGroundSpawns then
+		local maxGroundSpawns = config.GetVal("loot_max_ground_spawns");
+		
+		if config.GetVal("loot_population_scaling_enabled") then
+			maxGroundSpawns = Lerp(player.GetCount() / (game.MaxPlayers() * config.GetVal("loot_player_ratio")), config.GetVal("loot_min_ground_spawns"), maxGroundSpawns);
+		end
+		
+		if #self.ItemsSpawned < maxGroundSpawns then
 			local itemCategory = self.Categories[math.random(#self.Categories)];
 			local randomItem = self:SelectItem(itemCategory);
 
@@ -314,7 +325,7 @@ function cwItemSpawner:Think()
 				local entity = Clockwork.entity:CreateItem(nil, randomItem, Vector(spawnPosition.position.x, spawnPosition.position.y, spawnPosition.position.z + 16));
 				local itemTable = entity:GetItemTable();
 				
-				entity.lifeTime = CurTime() + self.ItemLifetime;
+				entity.lifeTime = CurTime() + config.GetVal("loot_item_lifetime");
 				
 				if itemTable.category == "Helms" or itemTable.category == "Armor" or itemTable.category == "Melee" then
 					-- 86% chance for these items to spawn with less than 100% condition.

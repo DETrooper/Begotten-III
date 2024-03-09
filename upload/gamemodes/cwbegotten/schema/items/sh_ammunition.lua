@@ -10,7 +10,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoType = "Grapeshot";
 	ITEM.ammoName = "Grapeshot";
 	
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 150, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 200, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -55,7 +55,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoType = "Longshot";
 	ITEM.ammoName = "Longshot";
 	
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 120, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 125, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -131,7 +131,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoMagazineSize = 15;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 350, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 500, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -147,7 +147,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoMagazineSize = 25;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "scrap"}};
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 550, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 800, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -162,7 +162,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoType = "Scrapshot";
 	ITEM.ammoName = "Scrapshot";
 	
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 90, onGround = false, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 100, onGround = false, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");

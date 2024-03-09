@@ -77,10 +77,10 @@ local COMMAND = Clockwork.command:New("Enlist")
 				local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
 			
 				if player:IsAdmin() or ((playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers") and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or playerFaction == "Holy Hierarchy" then
-					if playerFaction == "Holy Hierarchy" then
-						enlistFaction = "Gatekeeper"
-					else
+					if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" then
 						enlistFaction = playerFaction;
+					else
+						enlistFaction = "Gatekeeper";
 					end
 				
 					if targetFaction == enlistFaction then
@@ -116,12 +116,10 @@ local COMMAND = Clockwork.command:New("Enlist")
 					
 						for i, v in ipairs(factionSubfactions) do
 							if i == 1 and !subfaction then
-								subfaction = v.name;
+								subfaction = v;
 								
 								break;
-							end
-						
-							if v.name == subfaction then
+							elseif v.name == subfaction then
 								subfaction = v;
 								
 								break;
@@ -164,7 +162,7 @@ local COMMAND = Clockwork.command:New("Enlist")
 								end
 							end)
 							
-							Schema:EasyText(player, "green", "You have invited "..target:Name().." to enlist into your faction!");
+							Schema:EasyText(player, "green", "You have invited "..target:Name().." to enlist into the "..enlistFaction.." faction!");
 							Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." has invited "..target:Name().." to join the "..enlistFaction.." faction!");
 						else
 							Schema:EasyText(player, "firebrick", target:Name().." is not the right faction to be enlisted into this faction!");

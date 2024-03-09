@@ -177,7 +177,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
 
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 600, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
 
 ITEM:Register()
 
@@ -192,7 +192,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 600, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
 
 ITEM:Register()
 
@@ -207,7 +207,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 550, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 800, onGround = false};
 
 ITEM:Register()
 
@@ -222,7 +222,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_large.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 700, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1200, onGround = false};
 	
 ITEM:Register()
 
@@ -237,7 +237,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 450, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 800, onGround = false};
 
 ITEM:Register()
 
@@ -252,7 +252,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 650, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1100, onGround = false};
 
 ITEM:Register()
 
@@ -267,7 +267,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 650, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1200, onGround = false};
 
 ITEM:Register()
 
@@ -282,7 +282,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 650, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
 
 ITEM:Register()
 
@@ -297,7 +297,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 650, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
 
 ITEM:Register()
 
@@ -312,7 +312,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 650, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1200, onGround = false};
 
 ITEM:Register()
 
@@ -327,7 +327,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 550, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
 
 ITEM:Register()
 
@@ -342,7 +342,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 550, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
 
 ITEM:Register()
 
@@ -357,7 +357,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_large.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 700, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1250, onGround = false};
 	
 ITEM:Register()
 
@@ -372,7 +372,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 550, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
 
 ITEM:Register()
 
@@ -387,7 +387,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Darklander"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 2000, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 3000, onGround = false};
 
 ITEM:Register()
 
@@ -402,7 +402,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Darklander"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1500, onGround = false};
 
 ITEM:Register()
 
