@@ -762,7 +762,7 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 				if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
 					local oil = player:GetSharedVar("oil", 0);
 				
-					if oil >= 25 then
+					if oil >= 75 then
 						--if !entity.destination then
 							Clockwork.player:SetAction(player, "burn_longship", 10, 1, function() 
 								if entity:IsValid() then
@@ -772,7 +772,7 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 										if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
 											local oil = player:GetSharedVar("oil", 0);
 											
-											if oil >= 25 then
+											if oil >= 75 then
 												--if !entity.destination then
 													if entity.health and entity.health > 0 then
 														entity:Ignite(600, 0);
@@ -780,7 +780,7 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 														local weaponItemTable = item.GetByWeapon(activeWeapon);
 														
 														if weaponItemTable then
-															weaponItemTable:SetData("oil", math.Clamp(oil - 25, 0, 100));
+															weaponItemTable:SetData("oil", math.Clamp(oil - 75, 0, 100));
 															player:SetSharedVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
 														end
 														

@@ -467,6 +467,12 @@ function cwItemSpawner:SelectItem(location, bIsSupercrate, bIsContainer)
 		if itemTable.itemSpawnerInfo and !itemTable.isBaseItem then
 			local rarity = itemTable.itemSpawnerInfo.rarity;
 			
+			if config.GetVal("enable_famine") then
+				if itemTable.category == "Food" or itemTable.category == "Drinks" or itemTable.category == "Alcohol" then
+					rarity = math.Round(rarity * 2.5);
+				end
+			end
+			
 			if location then
 				if !table.HasValue(self.LocationsToCategories[location], itemTable.itemSpawnerInfo.category) then
 					continue;

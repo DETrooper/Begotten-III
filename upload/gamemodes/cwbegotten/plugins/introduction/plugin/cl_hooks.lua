@@ -52,7 +52,7 @@ Clockwork.datastream:Hook("MenuIntro", function(skip_enabled)
 		
 		if (!CW_CONVAR_MENUMUSIC or CW_CONVAR_MENUMUSIC:GetInt() == 1) then
 			Clockwork.Client.MusicSound = CreateSound(LocalPlayer(), "begotten3soundtrack/event/cross_to_bear.mp3")
-			Clockwork.Client.MusicSound:PlayEx(1, 100)
+			Clockwork.Client.MusicSound:PlayEx(((CW_CONVAR_MENUMUSICVOLUME:GetInt() or 100) / 100) * 0.5, 100)
 		end
 		
 		Clockwork.Client.Pending = nil
@@ -78,7 +78,7 @@ end
 
 if !cwMusic or (cwMusic and (CW_CONVAR_MENUMUSIC and CW_CONVAR_MENUMUSIC:GetInt() == 1)) then
 	Clockwork.Client.MusicSound = CreateSound(LocalPlayer(), "begotten3soundtrack/event/cross_to_bear.mp3")
-	Clockwork.Client.MusicSound:PlayEx((CW_CONVAR_AMBIENTMUSICVOLUME:GetInt() or 100) / 100, 100);
+	Clockwork.Client.MusicSound:PlayEx(((CW_CONVAR_MENUMUSICVOLUME:GetInt() or 100) / 100) * 0.5, 100)
 end
 Clockwork.Client.MusicFading = false
 end)
@@ -105,22 +105,17 @@ function cwIntroduction:Tick()
 				Clockwork.Client.MusicSoundFadedOut = true
 			end)
 		end
-		
-		if (Clockwork.Client.MenuSound and !Clockwork.Client.MusicFading) then
-			Clockwork.Client.MusicFading = true
-			Clockwork.Client.MenuSound:FadeOut(4)
-			
-			timer.Simple(4, function()
-				Clockwork.Client.MusicFading = nil
-				Clockwork.Client.MenuSound = nil
-				Clockwork.Client.MusicSoundFadedOut = true
-			end)
-		end
-	else
+	elseif (!CW_CONVAR_MENUMUSIC or CW_CONVAR_MENUMUSIC:GetInt() == 1) then
 		if (Clockwork.Client.MusicSoundFadedOut) then
-			if (!Clockwork.Client.MenuSound) then
-				Clockwork.Client.MenuSound = CreateSound(LocalPlayer(), "begotten3soundtrack/title/jesus_wept.mp3")
-				Clockwork.Client.MenuSound:PlayEx(0.4, 100)
+			if (!Clockwork.Client.MusicSound) then
+				if math.random(1, 2) == 1 then
+					Clockwork.Client.MusicSound = CreateSound(LocalPlayer(), "begotten3soundtrack/title/jesus_wept.mp3")
+					Clockwork.Client.MusicSound:PlayEx(((CW_CONVAR_MENUMUSICVOLUME:GetInt() or 100) / 100) * 0.3, 100)
+				else
+					Clockwork.Client.MusicSound = CreateSound(LocalPlayer(), "begotten3soundtrack/event/cross_to_bear.mp3")
+					Clockwork.Client.MusicSound:PlayEx(((CW_CONVAR_MENUMUSICVOLUME:GetInt() or 100) / 100) * 0.5, 100)
+				end
+
 				Clockwork.Client.MusicFading = false
 			end
 		end
@@ -172,7 +167,7 @@ Clockwork.datastream:Hook("JesusWeptIntro", function(skip_enabled)
 		
 		if (!CW_CONVAR_MENUMUSIC or CW_CONVAR_MENUMUSIC:GetInt() == 1) then
 			Clockwork.Client.MusicSound = CreateSound(LocalPlayer(), "begotten3soundtrack/title/jesus_wept.mp3")
-			Clockwork.Client.MusicSound:PlayEx(0.4, 100)
+			Clockwork.Client.MusicSound:PlayEx(((CW_CONVAR_MENUMUSICVOLUME:GetInt() or 100) / 100) * 0.3, 100)
 		end
 		
 		Clockwork.Client.Pending = nil;
@@ -217,7 +212,7 @@ Clockwork.datastream:Hook("JesusWeptIntro", function(skip_enabled)
 		
 		if !cwMusic or (cwMusic and (CW_CONVAR_MENUMUSIC and CW_CONVAR_MENUMUSIC:GetInt() == 1)) then
 			Clockwork.Client.MusicSound = CreateSound(LocalPlayer(), "begotten3soundtrack/title/jesus_wept.mp3")
-			Clockwork.Client.MusicSound:PlayEx(((CW_CONVAR_AMBIENTMUSICVOLUME:GetInt() or 100) / 100) * 0.4, 100);
+			Clockwork.Client.MusicSound:PlayEx(((CW_CONVAR_MENUMUSICVOLUME:GetInt() or 100) / 100) * 0.3, 100);
 		end
 		
 		Clockwork.Client.MusicFading = false

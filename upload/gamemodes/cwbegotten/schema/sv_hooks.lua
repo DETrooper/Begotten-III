@@ -228,6 +228,12 @@ function Schema:PlayerCanOrderShipment(player, itemTable)
 	end
 end
 
+function Schema:PlayerCanEarnWagesCash(player, wages)
+	if player:GetSubfaction() == "Clan Reaver" then
+		return true;
+	end
+end
+
 -- Called when a player wants to fallover.
 function Schema:PlayerCanFallover(player)
 	if player.cwWakingUp or self.falloverDisabled or player.caughtByCheaple then
@@ -3067,6 +3073,13 @@ function Schema:ActionStopped(player, action)
 		end
 	end
 end;
+
+-- Called to modify a player's wages info.
+function Schema:PlayerModifyWagesInfo(player, info) 
+	if player:GetSubfaction() == "Clan Reaver" then
+		info.wages = 100;
+	end
+end
 
 function Schema:ModifyPlayerSpeed(player, infoTable, action)
 	local subfaction = player:GetSubfaction();

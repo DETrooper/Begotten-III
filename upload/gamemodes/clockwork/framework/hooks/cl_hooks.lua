@@ -2450,6 +2450,8 @@ end
 	@class Clockwork
 	@returns Table The text, flash, and percentage of the progress bar.
 --]]
+
+-- I should really improve this later to use hooks.
 function GM:GetProgressBarInfo()
 	local action, percentage = Clockwork.player:GetAction(Clockwork.Client, true)
 
@@ -2851,7 +2853,7 @@ function GM:GetPlayerScoreboardOptions(player, options, menu)
 end
 
 -- Called when information about a door is needed.
-function GM:GetDoorInfo(door, information)
+--[[function GM:GetDoorInfo(door, information)
 	local doorCost = config.Get("door_cost"):Get()
 	local owner = Clockwork.entity:GetOwner(door)
 	local text = Clockwork.entity:GetDoorText(door)
@@ -2899,7 +2901,7 @@ function GM:GetDoorInfo(door, information)
 			return "This door can be owned."
 		end
 	end
-end
+end]]--
 
 -- Called to get whether or not a post process is permitted.
 function GM:PostProcessPermitted(class)

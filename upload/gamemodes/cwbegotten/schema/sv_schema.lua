@@ -339,16 +339,13 @@ Schema.doors = {
 Clockwork.config:Add("gore_charlimit", 1, true);
 Clockwork.config:Add("satanist_charlimit", 1, true);
 Clockwork.config:Add("enable_charlimit", true, true);
+Clockwork.config:Add("enable_famine", true);
 Clockwork.config:Add("discord_url", "https://discord.com/invite/zJnWjcW", true);
 
-Clockwork.config:Add("intro_text_small", "fuck you", true);
-Clockwork.config:Add("intro_text_big", "fuck you", true);
 Clockwork.config:Get("enable_gravgun_punt"):Set(false);
 Clockwork.config:Get("default_inv_weight"):Set(20);
 Clockwork.config:Get("enable_crosshair"):Set(false);
 Clockwork.config:Get("disable_sprays"):Set(true);
-Clockwork.config:Get("prop_cost_scale"):Set(0);
-Clockwork.config:Get("door_cost"):Set(0);
 Clockwork.config:Get("stamina_drain_scale"):Set(0.15);
 
 Schema.fogDistance = {}
@@ -2414,8 +2411,6 @@ concommand.Add("cw_CoinslotSalary", function(player, cmd, args)
 	end;
 end);
 
-local famine = false;
-
 concommand.Add("cw_CoinslotRation", function(player, cmd, args)
 	local trace = player:GetEyeTrace();
 
@@ -2429,7 +2424,7 @@ concommand.Add("cw_CoinslotRation", function(player, cmd, args)
 				local unixTime = os.time();
 				
 				if (unixTime >= player:GetCharacterData("nextration", 0)) then
-					if (Schema.towerTreasury and Schema.towerTreasury <= 250) or famine then
+					if (Schema.towerTreasury and Schema.towerTreasury <= 250) or config.GetVal("enable_famine") then
 						Schema:EasyText(player, "olive", "You pull the ration lever but one is not dispensed, yet you feel as though it has been long enough. How odd.");
 						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
 						

@@ -26,7 +26,6 @@ cwMusic.AmbientMusicTable = {
 		{track = "begotten3soundtrack/ambiencetower/mo-logos.mp3", length = 354},
 		{track = "begotten3soundtrack/ambiencetower/mo-transfiguration-edited.mp3", length = 261},
 	},
-
 	["wasteland"] = { -- ambient music for the wasteland
 		{track = "begotten3soundtrack/ambiencewasteland/acclb-thegreatorderofthings.mp3", length = 289},
 		{track = "begotten3soundtrack/ambiencewasteland/co9-fragmentsofmyself.mp3", length = 458},
@@ -42,7 +41,6 @@ cwMusic.AmbientMusicTable = {
 		{track = "begotten3soundtrack/ambiencewasteland/mo-thylight.mp3", length = 570},
 		{track = "begotten3soundtrack/ambiencewasteland/ss-transference.mp3", length = 332},
 	},
-
 	["wastelandnight"] = { -- ambient music for the wasteland (night)
 		{track = "begotten3soundtrack/ambiencenight/dw-untitled3.mp3", length = 128, volume = 0.75},
 		{track = "begotten3soundtrack/ambiencenight/dw-dream.mp3", length = 317, volume = 0.75},
@@ -53,7 +51,6 @@ cwMusic.AmbientMusicTable = {
 		{track = "begotten3soundtrack/ambiencenight/ns-blackmoonpt1.mp3", length = 369},
 		{track = "begotten3soundtrack/ambiencenight/pa-frozencaveofwhispers.mp3", length = 696, volume = 0.75},
 	},
-	
 	["goericforest"] = { -- ambient music for the goeric forest
 		{track = "begotten3soundtrack/ambiencegoeric/hb_surtrsart.mp3", length = 141},
 		{track = "begotten3soundtrack/ambiencegoeric/hb-surtrbacktrack.mp3", length = 61},
@@ -66,7 +63,6 @@ cwMusic.AmbientMusicTable = {
 		{track = "begotten3soundtrack/ambiencegoeric/twa-menofthesea.mp3", length = 114, volume = 0.75},
 		{track = "begotten3soundtrack/ambiencegoeric/twa-wintersbard.mp3", length = 116, volume = 0.75},
 	},
-	
 	["insanity"] = { -- ambient music for insane players
 		{track = "begotten3soundtrack/insanity/scorntrailertheme.mp3", length = 97},
 	},
@@ -92,7 +88,6 @@ cwMusic.BattleMusicTable = {
 		{track = "begotten3soundtrack/combat/bt-warmaster.mp3", length = 190},
 		{track = "begotten3soundtrack/combat/bt-whatdwellswithin.mp3", length = 174},
 	},
-	
 	["combat_goeric"] = { -- combat music for gores
 		{track = "begotten3soundtrack/combatgoeric/hb-bridgecombatthird.mp3", length = 136},
 		{track = "begotten3soundtrack/combatgoeric/hb-combatvalravnbalcony.mp3", length = 86},
@@ -142,8 +137,6 @@ function cwMusic:ClockworkConVarChanged(name, previousValue, newValue)
 			CW_CONVAR_MENUMUSIC:SetInt(0);
 		elseif previousValue == "0" and newValue ~= "0" then
 			CW_CONVAR_MENUMUSIC:SetInt(1);
-		elseif Clockwork.MusicSound then
-			Clockwork.MusicSound:ChangeVolume(math.max(0, (tonumber(newValue) / 100) * (self.TrackVolume or 1)));
 		end
 	end
 end

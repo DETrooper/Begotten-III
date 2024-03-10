@@ -2569,7 +2569,7 @@ function Clockwork.kernel:DrawCinematic(cinematicTable, curTime)
 end;
 
 -- A function to draw the cinematic introduction.
-function Clockwork.kernel:DrawCinematicIntro(curTime)
+--[[function Clockwork.kernel:DrawCinematicIntro(curTime)
 	local cinematicInfo = hook.Run("GetCinematicIntroInfo");
 	local colorWhite = Clockwork.option:GetColor("white");
 	local colorInfo = Clockwork.option:GetColor("information");
@@ -2613,10 +2613,10 @@ function Clockwork.kernel:DrawCinematicIntro(curTime)
 			Clockwork.CinematicScreenTarget = 255;
 		end;
 	end;
-end;
+end;]]--
 
 -- A function to draw the cinematic introduction bars.
-function Clockwork.kernel:DrawCinematicIntroBars()
+--[[function Clockwork.kernel:DrawCinematicIntroBars()
 	if (config.Get("draw_intro_bars"):Get()) then
 		local maxBarLength = ScrH() / 13;
 		
@@ -2652,50 +2652,7 @@ function Clockwork.kernel:DrawCinematicIntroBars()
 		draw.RoundedBox(0, 0, 0, ScrW(), Clockwork.CinematicScreenBarLength, Color(0, 0, 0, 255));
 		draw.RoundedBox(0, 0, ScrH() - Clockwork.CinematicScreenBarLength + 1, ScrW(), maxBarLength, Color(0, 0, 0, 255));
 	end;
-end;
-
--- A function to draw the cinematic info.
-function Clockwork.kernel:DrawCinematicInfo()
-	if (!Clockwork.CinematicInfoAlpha and !Clockwork.CinematicInfoSlide) then
-		Clockwork.CinematicInfoAlpha = 255;
-		Clockwork.CinematicInfoSlide = 0;
-	end;
-	
-	Clockwork.CinematicInfoSlide = math.Approach(Clockwork.CinematicInfoSlide, 255, 1);
-	
-	if (Clockwork.CinematicScreenAlpha and Clockwork.CinematicScreenTarget) then
-		Clockwork.CinematicInfoAlpha = math.Approach(Clockwork.CinematicInfoAlpha, 0, 1);
-		
-		if (Clockwork.CinematicInfoAlpha == 0) then
-			Clockwork.CinematicInfoDrawn = true;
-		end;
-	end;
-	
-	local cinematicInfo = hook.Run("GetCinematicIntroInfo");
-	local colorWhite = Clockwork.option:GetColor("white");
-	local colorInfo = Clockwork.option:GetColor("information");
-	
-	local cinematicInfo = hook.Run("GetCinematicIntroInfo");
-	local colorWhite = Clockwork.option:GetColor("white");
-	local colorInfo = Clockwork.option:GetColor("information");
-	
-	if (cinematicInfo) then
-		if (cinematicInfo.title) then
-			local cinematicInfoTitle = string.upper(cinematicInfo.title);
-			local introTextBigFont = Clockwork.option:GetFont("intro_text_big");
-			local introTextSmallFont = Clockwork.option:GetFont("intro_text_small")
-			local textWidth, textHeight = Clockwork.kernel:GetCachedTextSize(introTextBigFont, cinematicInfoTitle);
-			
-			draw.SimpleText(cinematicInfoTitle, introTextBigFont, ScrW() / 2, ScrH() / 2, Color(colorWhite.r, colorWhite.g, colorWhite.b, alpha), 1, 1);
-		
-			if (cinematicInfo.text) then
-				draw.SimpleText(string.upper(cinematicInfo.text), introTextSmallFont, (ScrW() / 2) - (textWidth / 2), (ScrH() / 2) + (textHeight / 2), Color(colorWhite.r, colorWhite.g, colorWhite.b, alpha));
-			end;
-		elseif (cinematicInfo.text) then
-			draw.SimpleText(string.upper(cinematicInfo.text), introTextSmallFont, ScrW() / 2, (ScrH() / 2) + 40, Color(colorWhite.r, colorWhite.g, colorWhite.b, alpha), 0, 1);
-		end;
-	end;
-end;
+end;]]--
 
 -- A function to draw some door text.
 function Clockwork.kernel:DrawDoorText(entity, eyePos, eyeAngles, font, nameColor, textColor)

@@ -268,8 +268,8 @@ function GM:ClockworkInitialized()
 		Clockwork.command:SetHidden("StorageTakeCash", true)
 		Clockwork.command:SetHidden("StorageGiveCash", true)
 
-		config.Get("scale_prop_cost"):Set(0, nil, true, true)
-		config.Get("door_cost"):Set(0, nil, true, true)
+		--config.Get("scale_prop_cost"):Set(0, nil, true, true)
+		--config.Get("door_cost"):Set(0, nil, true, true)
 	end
 
 	if (config.GetVal("use_own_group_system")) then
@@ -1570,9 +1570,9 @@ end);
 
 -- Called when a player's character data should be saved.
 function GM:PlayerSaveCharacterData(player, data)
-	if (config.Get("save_attribute_boosts"):Get()) then
+	--[[if (config.Get("save_attribute_boosts"):Get()) then
 		Clockwork.kernel:SavePlayerAttributeBoosts(player, data)
-	end
+	end]]--
 
 	data["Health"] = player:Health()
 	data["Armor"] = player:Armor()
@@ -1633,7 +1633,7 @@ function GM:OneSecond()
 		Clockwork.NextHint = curTime + config.Get("hint_interval"):Get()
 	end]]--
 
-	--[[if (!Clockwork.NextWagesTime or curTime >= Clockwork.NextWagesTime) then
+	if (!Clockwork.NextWagesTime or curTime >= Clockwork.NextWagesTime) then
 		Clockwork.kernel:DistributeWagesCash()
 
 		local info = {
@@ -1643,7 +1643,7 @@ function GM:OneSecond()
 		hook.Run("ModifyWagesInterval", info)
 
 		Clockwork.NextWagesTime = curTime + info.interval
-	end]]--
+	end
 
 	--[[if (!Clockwork.NextDateTimeThink or sysTime >= Clockwork.NextDateTimeThink) then
 		Clockwork.kernel:PerformDateTimeThink()
@@ -2022,6 +2022,13 @@ function GM:PlayerRagdollCanTakeDamage(player, ragdoll, inflictor, attacker, hit
 	if (!attacker:IsPlayer() and player:GetRagdollTable().immunity) then
 		if (CurTime() <= player:GetRagdollTable().immunity) then
 			return false
+		end
+	end
+	
+	-- Stop held players from taking damage from trigger hurts.
+	if (attacker:GetClass() == "trigger_hurt") then
+		if IsValid(ragdoll.cwHoldingGrab) then
+			return false;
 		end
 	end
 
@@ -3913,17 +3920,12 @@ function GM:EntityTakeDamage(entity, damageInfo)
 		damageInfo:SetDamage(0)
 	end
 	
-	if (Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)) then
-		return;
-	end
-	
 	if (damageInfo:GetDamage() == 0) then
 		return true;
 	end
 
 	local inflictor = damageInfo:GetInflictor()
 	local attacker = damageInfo:GetAttacker()
-	local amount = damageInfo:GetDamage()
 
 	if (config.Get("prop_kill_protection"):Get()) then
 		local curTime = CurTime()
@@ -3962,6 +3964,21 @@ function GM:EntityTakeDamage(entity, damageInfo)
 	local isPlayerRagdoll = Clockwork.entity:IsPlayerRagdoll(entity);
 	local player = Clockwork.entity:GetPlayer(entity);
 	local lastHitGroup;
+	
+	if isPlayerRagdoll and !hook.Run("PlayerRagdollCanTakeDamage", player, entity, inflictor, attacker, hitGroup, damageInfo) then
+		damageInfo:SetDamage(0)
+		return false
+	end
+	
+	if (Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)) then
+		return;
+	end
+	
+	local amount = damageInfo:GetDamage();
+	
+	if (amount == 0) then
+		return true;
+	end
 
 	if (player and (entity:IsPlayer() or isPlayerRagdoll)) then
 		--if (damageInfo:IsFallDamage() or config.Get("damage_view_punch"):Get()) then
@@ -4052,68 +4069,66 @@ function GM:EntityTakeDamage(entity, damageInfo)
 
 			--self:ScaleDamageByHitGroup(player, attacker, hitGroup, damageInfo, amount)
 
-			if (hook.Run("PlayerRagdollCanTakeDamage", player, entity, inflictor, attacker, hitGroup, damageInfo) and damageInfo:GetDamage() > 0) then
-				local bAttackerValid = IsValid(attacker);
+			local bAttackerValid = IsValid(attacker);
+			
+			if !bAttackerValid or (!attacker:IsPlayer()) then
+				if (bAttackerValid and (attacker:GetClass() == "prop_ragdoll" or Clockwork.entity:IsDoor(attacker))) then
+					return;
+				end
+			end
+
+			--hook.Run("CalculatePlayerDamage", player, hitGroup, damageInfo);
+
+			if (player:Alive() and player:Health() == 1) then
+				player:SetFakingDeath(true)
+					player:GetRagdollTable().health = 0
+					player:GetRagdollTable().armor = 0
+
+					hook.Run("DoPlayerDeath", player, attacker, damageInfo)
+					hook.Run("PlayerDeath", player, inflictor, attacker, damageInfo)
+				player:SetFakingDeath(false, true)
+			elseif (player:Alive()) then
+				local bNoMsg = hook.Run("PlayerTakeDamage", player, inflictor, attacker, hitGroup, damageInfo)
+				local sound = hook.Run("PlayerPlayPainSound", player, player:GetGender(), damageInfo, hitGroup)
 				
-				if !bAttackerValid or (!attacker:IsPlayer()) then
-					if (bAttackerValid and (attacker:GetClass() == "prop_ragdoll" or Clockwork.entity:IsDoor(attacker))) then
-						return
-					end
+				if (sound and !bNoMsg) then
+					entity:EmitHitSound(sound)
 				end
 
-				--hook.Run("CalculatePlayerDamage", player, hitGroup, damageInfo);
+				local armor = "!"
 
-				if (player:Alive() and player:Health() == 1) then
-					player:SetFakingDeath(true)
-						player:GetRagdollTable().health = 0
-						player:GetRagdollTable().armor = 0
+				if (player:Armor() > 0) then
+					armor = " and "..player:Armor().." armor!"
+				end
 
-						hook.Run("DoPlayerDeath", player, attacker, damageInfo)
-						hook.Run("PlayerDeath", player, inflictor, attacker, damageInfo)
-					player:SetFakingDeath(false, true)
-				elseif (player:Alive()) then
-					local bNoMsg = hook.Run("PlayerTakeDamage", player, inflictor, attacker, hitGroup, damageInfo)
-					local sound = hook.Run("PlayerPlayPainSound", player, player:GetGender(), damageInfo, hitGroup)
-					
-					if (sound and !bNoMsg) then
-						entity:EmitHitSound(sound)
-					end
-
-					local armor = "!"
-
-					if (player:Armor() > 0) then
-						armor = " and "..player:Armor().." armor!"
-					end
-
-					if IsValid(attacker) then
-						if (attacker:IsPlayer()) then
-							local inflictor = damageInfo:GetInflictor();
-							
-							if IsValid(inflictor) and (inflictor:IsWeapon() or inflictor.isJavelin) then	
-								inflictor = inflictor.PrintName or inflictor:GetClass();
-							else
-								local activeWeapon = attacker:GetActiveWeapon();
-								
-								if IsValid(activeWeapon) then
-									if inflictor.GetPrintName then
-										inflictor = inflictor:GetPrintName();
-									end
-									
-									if !inflictor or !isstring(inflictor) then
-										inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
-									end
-								else
-									inflictor = "an unknown weapon";
-								end
-							end
-							
-							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..inflictor..", leaving them at "..player:Health().." health"..armor)
+				if IsValid(attacker) then
+					if (attacker:IsPlayer()) then
+						local inflictor = damageInfo:GetInflictor();
+						
+						if IsValid(inflictor) and (inflictor:IsWeapon() or inflictor.isJavelin) then	
+							inflictor = inflictor.PrintName or inflictor:GetClass();
 						else
-							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:GetClass()..", leaving them at "..player:Health().." health"..armor)
+							local activeWeapon = attacker:GetActiveWeapon();
+							
+							if IsValid(activeWeapon) then
+								if inflictor.GetPrintName then
+									inflictor = inflictor:GetPrintName();
+								end
+								
+								if !inflictor or !isstring(inflictor) then
+									inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
+								end
+							else
+								inflictor = "an unknown weapon";
+							end
 						end
+						
+						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..inflictor..", leaving them at "..player:Health().." health"..armor)
 					else
-						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from an unknown source, leaving them at "..player:Health().." health"..armor)
+						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:GetClass()..", leaving them at "..player:Health().." health"..armor)
 					end
+				else
+					Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from an unknown source, leaving them at "..player:Health().." health"..armor)
 				end
 			end
 
@@ -4199,13 +4214,13 @@ end
 	@param Enum The button that was pressed.
 --]]
 function GM:PlayerButtonDown(player, button)
-	if (button == KEY_B) then
+	--[[if (button == KEY_B) then
 		if (config.Get("quick_raise_enabled"):GetBoolean()) then
 			if (hook.Run("PlayerCanQuickRaise", player, player:GetActiveWeapon())) then
 				Clockwork.player:ToggleWeaponRaised(player)
 			end
 		end
-	end
+	end]]--
 
 	return self.BaseClass:PlayerButtonDown(player, button)
 end
@@ -4273,9 +4288,9 @@ end
 	@param Table The attribute table of the attribute being progressed.
 	@param Number The amount that is being progressed for editing purposes.
 --]]
-function GM:OnAttributeProgress(player, attribute, amount)
+--[[function GM:OnAttributeProgress(player, attribute, amount)
 	amount = amount * config.Get("scale_attribute_progress"):Get()
-end
+end]]--
 
 --[[
 	@codebase Server

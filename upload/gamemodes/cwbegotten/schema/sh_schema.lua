@@ -133,10 +133,8 @@ Clockwork.option:SetKey("model_cash", "models/items/jewels/purses/big_purse.mdl"
 Clockwork.option:SetKey("gradient", "h");
 
 Clockwork.config:ShareKey("discord_url");
-Clockwork.config:ShareKey("intro_text_small");
-Clockwork.config:ShareKey("intro_text_big");
-Clockwork.config:ShareKey("business_cost");
-Clockwork.config:ShareKey("permits");
+--[[Clockwork.config:ShareKey("intro_text_small");
+Clockwork.config:ShareKey("intro_text_big");]]--
 
 Clockwork.quiz:SetName("Consider These Fucking Questions Carefully");
 Clockwork.quiz:SetEnabled(true);

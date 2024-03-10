@@ -196,7 +196,7 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 		return self:SetCreateFault(player, "You did not choose any of the available traits!");
 	end;
 
-	if (attributes and type(data.attributes) == "table") then
+	--[[if (attributes and type(data.attributes) == "table") then
 		local maximumPoints = config.Get("default_attribute_points"):Get()
 		local pointsSpent = 0
 
@@ -233,7 +233,7 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 		return self:SetCreateFault(
 			player, "You have invested points into an invalid attribute."
 		)
-	end
+	end]]--
 
 	if (!factionTable.GetName) then
 		if (!factionTable.useFullName) then
@@ -1516,7 +1516,7 @@ end
 
 -- A function to take a door from a player.
 function Clockwork.player:TakeDoor(player, door, bForce, bThisDoorOnly, bChildrenOnly)
-	local doorCost = config.Get("door_cost"):Get()
+	--local doorCost = config.Get("door_cost"):Get()
 
 	if (!bThisDoorOnly) then
 		local doorParent = Clockwork.entity:GetDoorParent(door)
@@ -3442,7 +3442,8 @@ end
 
 -- A function to get a player's wages.
 function Clockwork.player:GetWages(player)
-	return player:GetNetVar("Wages")
+	--return player:GetNetVar("Wages")
+	return player.cwInfoTable.wages;
 end
 
 -- A function to set a character's flags.

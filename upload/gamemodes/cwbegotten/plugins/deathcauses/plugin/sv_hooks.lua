@@ -246,9 +246,9 @@ function cwDeathCauses:PlayerDeath(player, inflictor, attacker, damageInfo)
 			
 			if !attackerName and IsValid(attacker) then
 				if attacker:IsNPC() or attacker:IsNextBot() then
-					attackerName = " a "..attacker.PrintName or " a "..attacker:GetClass();
+					attackerName = "a "..attacker.PrintName or "a "..attacker:GetClass();
 				else
-					attackerName = " a "..attacker:GetClass();
+					attackerName = "a "..attacker:GetClass();
 				end
 			end
 		

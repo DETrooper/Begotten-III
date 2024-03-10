@@ -1039,13 +1039,13 @@ function Schema:GetPlayerCharacterScreenFaction(character)
 end;
 
 -- Called when the cinematic intro info is needed.
-function Schema:GetCinematicIntroInfo()
+--[[function Schema:GetCinematicIntroInfo()
 	return {
 		credits = "Designed and developed by "..self:GetAuthor()..".",
 		title = Clockwork.config:Get("intro_text_big"):Get(),
 		text = Clockwork.config:Get("intro_text_small"):Get()
 	};
-end;
+end;]]--
 
 function Schema:ModifyStatusEffects(tab)
 	if Clockwork.Client:HasTrait("clumsy") then

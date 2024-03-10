@@ -173,7 +173,7 @@ Clockwork.trait:Register(MARKED)
 local MINER = Clockwork.trait:New()
 	MINER.uniqueID = "miner"
 	MINER.name = "Miner"
-	MINER.description = "Your character is a miner, spending much of their time deep under the earth. This trait grants a starting pickaxe, a lantern, and a bottle of oil to help you navigate the depths."
+	MINER.description = "Your character is a miner, spending much of their time deep under the earth. This trait grants a starting pickaxe for mining ore and a lantern to help you navigate the depths."
 	MINER.points = 7
 	MINER.disables = {"escapee", "weak"}
 	MINER.requiredfactions = {"Wanderer"}

@@ -1836,12 +1836,14 @@ function cwBeliefs:PostPlayerCharacterLoaded(player)
 		if (player:HasTrait("miner")) then
 			local inventory = player:GetInventory();
 			local pickaxe = Clockwork.item:CreateInstance("begotten_2h_great_pickaxe");
+			local lantern = Clockwork.item:CreateInstance("cw_lantern");
 		
 			pickaxe:SetCondition(math.random(40, 70));
+			lantern:SetData("oil", 60);
 		
 			Clockwork.inventory:AddInstance(inventory, pickaxe);
-			Clockwork.inventory:AddInstance(inventory, Clockwork.item:CreateInstance("cw_lantern"));
-			Clockwork.inventory:AddInstance(inventory, Clockwork.item:CreateInstance("large_oil"));
+			Clockwork.inventory:AddInstance(inventory, lantern);
+			--Clockwork.inventory:AddInstance(inventory, Clockwork.item:CreateInstance("large_oil"));
 		end
 		
 		if (player:HasTrait("logger")) then

@@ -58,7 +58,7 @@ function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destinat
 				if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
 					local oil = Clockwork.Client:GetSharedVar("oil", 0);
 				
-					if oil >= 25 then
+					if oil >= 75 then
 						menu:AddOption("Burn", function() Clockwork.Client:ConCommand("cw_BurnShip") end);
 					end
 				end
