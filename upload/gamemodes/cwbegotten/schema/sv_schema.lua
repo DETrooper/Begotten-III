@@ -339,7 +339,7 @@ Schema.doors = {
 Clockwork.config:Add("gore_charlimit", 1, true);
 Clockwork.config:Add("satanist_charlimit", 1, true);
 Clockwork.config:Add("enable_charlimit", true, true);
-Clockwork.config:Add("enable_famine", true);
+Clockwork.config:Add("enable_famine", false);
 Clockwork.config:Add("discord_url", "https://discord.com/invite/zJnWjcW", true);
 
 Clockwork.config:Get("enable_gravgun_punt"):Set(false);
