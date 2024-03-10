@@ -10,7 +10,7 @@ if (CLIENT) then
 	SYSTEM.toolTip = "An easier way of editing the Clockwork config."
 	SYSTEM.doesCreateForm = false
 	
-	local textColor = Color(20, 20, 20);
+	local textColor = Color(160, 20, 20);
 
 	-- Called to get whether the local player has access to the system.
 	function SYSTEM:HasAccess()
@@ -82,7 +82,7 @@ if (CLIENT) then
 				self.editForm:Help(v):SetTextColor(textColor)
 			end
 
-			self.editForm:SetName(self.activeKey.name)
+			self.editForm:SetName(self.adminValues.name);
 
 			if (self.activeKey.value != nil) then
 				local mapEntry, mapLabel = self.editForm:TextEntry("Map")
