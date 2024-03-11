@@ -851,7 +851,7 @@ end
 
 -- Called when a player's pain sound should be played.
 function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
-	if player:Alive() then
+	if player:Alive() and !Clockwork.player:HasFlags(player, "M") and player:WaterLevel() < 3 then
 		local faction = (player:GetSharedVar("kinisgerOverride") or player:GetFaction())
 		local pitch = 100;
 		
@@ -863,54 +863,52 @@ function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 			pitch = math.random(100, 115);
 		end
 		
-		if !Clockwork.player:HasFlags(player, "M") then
-			if (!player.nextPainSound or player.nextPainSound < CurTime()) then
-				if player:GetSubfaith() == "Voltism" and cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
-					player:EmitSound(voltistSounds["pain"][math.random(1, #voltistSounds["pain"])], 90, 150);
-					player.nextPainSound = CurTime() + 0.5;
-					return;
-				end
-			
-				if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
-					if gender == "Male" then
-						player:EmitSound("voice/man2/man2_pain0"..math.random(1, 6)..".wav", 90, pitch)
-						player.nextPainSound = CurTime()+0.5
-					else
-						player:EmitSound("voice/female1/female1_pain0"..math.random(1, 6)..".wav", 90, pitch)
-						player.nextPainSound = CurTime()+0.5
-					end
-				elseif faction == "Holy Hierarchy" then
-					if gender == "Male" then
-						player:EmitSound("voice/man4/man4_pain0"..math.random(1, 6)..".wav", 90, pitch)
-						player.nextPainSound = CurTime()+0.5
-					else
-						player:EmitSound("voice/female1/female1_pain0"..math.random(1, 6)..".wav", 90, pitch)
-						player.nextPainSound = CurTime()+0.5
-					end
-				elseif faction == "Goreic Warrior" then
-					if gender == "Male" then
-						player:EmitSound("voice/man1/man1_pain0"..math.random(1, 6)..".wav", 90, pitch)
-						player.nextPainSound = CurTime()+0.5
-					else
-						player:EmitSound("voice/female2/female2_pain0"..math.random(1, 6)..".wav", 90, pitch)
-						player.nextPainSound = CurTime()+0.5
-					end
-				elseif faction == "Children of Satan" then
-					if gender == "Male" then
-						player:EmitSound("voice/man4/man4_pain0"..math.random(1, 6)..".wav", 90, pitch)
-						player.nextPainSound = CurTime()+0.5
-					else
-						player:EmitSound("voice/female1/female1_pain0"..math.random(1, 6)..".wav", 90, pitch)
-						player.nextPainSound = CurTime()+0.5
-					end
+		if (!player.nextPainSound or player.nextPainSound < CurTime()) then
+			if player:GetSubfaith() == "Voltism" and cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
+				player:EmitSound(voltistSounds["pain"][math.random(1, #voltistSounds["pain"])], 90, 150);
+				player.nextPainSound = CurTime() + 0.5;
+				return;
+			end
+		
+			if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
+				if gender == "Male" then
+					player:EmitSound("voice/man2/man2_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					player.nextPainSound = CurTime()+0.5
 				else
-					if gender == "Male" then
-						player:EmitSound("voice/man3/man3_pain0"..math.random(1, 6)..".wav", 90, pitch)
-						player.nextPainSound = CurTime()+0.5
-					else
-						player:EmitSound("voice/female2/female2_pain0"..math.random(1, 6)..".wav", 90, pitch)
-						player.nextPainSound = CurTime()+0.5
-					end
+					player:EmitSound("voice/female1/female1_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					player.nextPainSound = CurTime()+0.5
+				end
+			elseif faction == "Holy Hierarchy" then
+				if gender == "Male" then
+					player:EmitSound("voice/man4/man4_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					player.nextPainSound = CurTime()+0.5
+				else
+					player:EmitSound("voice/female1/female1_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					player.nextPainSound = CurTime()+0.5
+				end
+			elseif faction == "Goreic Warrior" then
+				if gender == "Male" then
+					player:EmitSound("voice/man1/man1_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					player.nextPainSound = CurTime()+0.5
+				else
+					player:EmitSound("voice/female2/female2_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					player.nextPainSound = CurTime()+0.5
+				end
+			elseif faction == "Children of Satan" then
+				if gender == "Male" then
+					player:EmitSound("voice/man4/man4_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					player.nextPainSound = CurTime()+0.5
+				else
+					player:EmitSound("voice/female1/female1_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					player.nextPainSound = CurTime()+0.5
+				end
+			else
+				if gender == "Male" then
+					player:EmitSound("voice/man3/man3_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					player.nextPainSound = CurTime()+0.5
+				else
+					player:EmitSound("voice/female2/female2_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					player.nextPainSound = CurTime()+0.5
 				end
 			end
 		end
@@ -919,7 +917,7 @@ end
 
 -- Called when a player's death sound should be played.
 function GM:PlayerPlayDeathSound(player, gender)
-	if player.drowned or player.suffocating then
+	if player.drowned or player.suffocating or player:WaterLevel() >= 3 then
 		return;
 	end
 

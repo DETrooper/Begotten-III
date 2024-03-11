@@ -325,7 +325,7 @@ function cwBeliefs:DayNightCycleChanged(cycle)
 			local player = players[i];
 			
 			if IsValid(player) then
-				if player.cloaked then
+				if player.cloaked and player:GetCharacterData("LastZone") ~= "caves" then
 					if !player:GetNetVar("kinisgerCloak") then
 						player:Uncloak();
 					end

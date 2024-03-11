@@ -121,7 +121,7 @@ local FORTITUDE = cwBeliefs.beliefTrees:New("fortitude")
 			},
 			["iron_bones"] = {
 				name = "Iron Bones",
-				description = "Reduces all damage to your limbs by 25%.",
+				description = "Reduces damage taken to limbs by 33%.",
 				requirements = {"hide_of_steel"},
 				row = 2,
 			},

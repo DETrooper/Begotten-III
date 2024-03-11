@@ -84,15 +84,17 @@ function cwLimbs:CalculatePlayerDamage(player, hitGroup, damageInfo)
 			end
 		end
 		
+		local newDamage = damage;
+		
 		if player:HasBelief("iron_bones") then
-			if player.GetCharmEquipped and player:GetCharmEquipped("effigy_human") then
-				damage = damage * 0.25;
-			else
-				damage = damage * 0.75;
-			end
-		elseif player.GetCharmEquipped and player:GetCharmEquipped("effigy_human") then
-			damage = damage * 0.5;
+			newDamage = newDamage - (damage * 0.3334);
 		end
+		
+		if player.GetCharmEquipped and player:GetCharmEquipped("effigy_human") then
+			newDamage = newDamage - (damage * 0.5);
+		end
+		
+		newDamage = math.max(newDamage, 0);
 		
 		if (bFallDamage) then
 			Clockwork.limb:TakeDamage(player, HITGROUP_RIGHTLEG, damage)

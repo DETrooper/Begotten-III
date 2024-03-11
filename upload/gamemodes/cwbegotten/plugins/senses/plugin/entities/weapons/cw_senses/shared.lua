@@ -126,9 +126,9 @@ function SWEP:SecondaryAttack()
 			self:SetNextSecondaryFire(CurTime() + 2);
 		elseif cwBeliefs and self.Owner.HasBelief and (self.Owner:HasBelief("embrace_the_darkness")) and !self.Owner.opponent then
 			local lastZone = self.Owner:GetCharacterData("LastZone");
-			local valid_zones = {"scrapper", "caves", "wasteland"};
+			local valid_zones = {"scrapper", "wasteland"};
 			
-			if cwDayNight and cwDayNight.currentCycle == "night" and table.HasValue(valid_zones, lastZone) then
+			if cwDayNight and (cwDayNight.currentCycle == "night" and table.HasValue(valid_zones, lastZone)) or lastZone == "caves" then
 				if self.Owner:Crouching() then
 					if !self.Owner.cloaked then
 						local curTime = CurTime();
@@ -160,7 +160,7 @@ function SWEP:SecondaryAttack()
 					Schema:EasyText(self.Owner, "chocolate", "You must be crouching in order to toggle cloaking.");
 				end
 			else
-				Schema:EasyText(self.Owner, "peru", "You must be in the wasteland and it must be nighttime in order to toggle cloaking.");
+				Schema:EasyText(self.Owner, "peru", "You must be in the wasteland and it must be nighttime (or in the mines) in order to toggle cloaking.");
 			end
 			
 			self:SetNextSecondaryFire(CurTime() + 2);

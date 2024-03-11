@@ -868,6 +868,12 @@ local COMMAND = Clockwork.command:New("Warcry");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
+		if player:WaterLevel() >= 3 then
+			Schema:EasyText(player, "firebrick", "You cannot do this while submerged!");
+		
+			return false;
+		end
+	
 		local faith = player:GetFaith();
 		local player_has_belief = false;
 		local player_has_daring_trout = player:HasBelief("daring_trout");

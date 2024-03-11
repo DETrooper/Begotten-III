@@ -1313,7 +1313,6 @@ function playerMeta:IsJumping()
 	return false
 end
 
-
 -- A function to strip a weapon from a player.
 function playerMeta:StripWeapon(weaponClass)
 	if (self:IsRagdolled()) then
@@ -2090,7 +2089,7 @@ function playerMeta:GiveItem(itemTable, bForce)
 	if (isstring(itemTable)) then
 		itemTable = item.CreateInstance(itemTable)
 	-- There's some weird things happening with item instances that necessitate this for now.
-	elseif itemTable.uniqueID and itemTable.itemID then
+	elseif itemTable.uniqueID and itemTable.itemID and !itemTable:IsInstance() then
 		itemTable = item.CreateInstance(itemTable.uniqueID, itemTable.itemID);
 	end
 
