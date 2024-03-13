@@ -1187,6 +1187,10 @@ local function Guarding(ent, dmginfo)
 									end
 								end
 								
+								if cwBeliefs and attacker:HasBelief("might") then
+									stabilityDamage = stabilityDamage * 1.15;
+								end
+								
 								ent:TakeStability(stabilityDamage)		
 								
 								ent:EmitSound(enemyattacksoundtable["hitbody"][math.random(1, #enemyattacksoundtable["hitbody"])])

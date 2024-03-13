@@ -128,7 +128,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["might"] = {
 				name = "Might",
-				description = "Increased inventory capacity by 50%. Fists and fisted weapons now deal 20% more damage.",
+				description = "Increased inventory capacity by 50%. Deal 15% more stability damage with all melee weapons. Fists and fisted weapons now deal 20% more damage.",
 				quote = "\"I smash you now!\"",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "strength"},
