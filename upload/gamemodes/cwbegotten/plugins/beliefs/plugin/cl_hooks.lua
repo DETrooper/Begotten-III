@@ -297,7 +297,7 @@ netstream.Hook("UpgradedWarcry", function(data)
 			timer.Remove("warcryTimer");
 		end
 	
-		timer.Create("warcryTimer", 15, 1, function()
+		timer.Create("warcryTimer", 10, 1, function()
 			if cwBeliefs.trout then
 				cwBeliefs.trout = false;
 			end

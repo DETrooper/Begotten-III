@@ -373,12 +373,12 @@ function cwMedicalSystem:DrawTargetPlayerSymptoms(target, alpha, x, y)
 			else
 				symptomText = "They are covered in pustules and buboes.";
 			end
-		elseif symptom == "Deformities" then
+		--[[elseif symptom == "Deformities" then
 			if symptomText then
 				symptomText = symptomText.." Their skin is deformed and discolored, and their eyes bulging.";
 			else
 				symptomText = "Their skin is deformed and discolored, and their eyes bulging.";
-			end
+			end]]
 		end
 	end
 

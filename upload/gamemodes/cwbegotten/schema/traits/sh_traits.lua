@@ -140,7 +140,8 @@ local LEPER = Clockwork.trait:New()
 	LEPER.description = "Every waking moment of your character's very existence is hell, for they have been cursed to walk the Earth with a most unholy affliction: Leprosy. Their ravaged and deformed body leaves them a societal outcast and a target for persecution. Your character will suffer 50% more blood loss when bleeding and their repugnant affliction will be known to all who gaze upon them."
 	LEPER.points = -5
 	LEPER.disables = {"pilgrim"}
-	LEPER.excludedfactions = {"Gatekeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"};
+	LEPER.disablesSkins = true;
+	LEPER.excludedfactions = {"Gatekeeper", "Goreic Warrior", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"};
 Clockwork.trait:Register(LEPER)
 
 local LITERATE = Clockwork.trait:New()

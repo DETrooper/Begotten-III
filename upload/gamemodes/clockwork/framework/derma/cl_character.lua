@@ -2219,6 +2219,19 @@ function PANEL:Init()
 						skinCount = Clockwork.Client.CharSelectionModel.HeadModel:SkinCount() - 1;
 					end
 					
+					if self.info.faction ~= "Goreic Warrior" then
+						-- Get rid of leper skin as an option.
+						skinCount = skinCount - 1;
+					end
+
+					if self.selectedTraits then
+						for k, v in pairs(self.selectedTraits) do
+							if v.disablesSkins then
+								skinCount = 0;
+							end
+						end
+					end
+					
 					if (skinCount > 0) then
 						local options = {};
 
@@ -2469,6 +2482,16 @@ function PANEL:Init()
 					table.RemoveByValue(self.info.traits, traitTable.uniqueID);
 
 					if traitButton.disableTable then
+						if traitTable.disablesSkins then
+							if IsValid(Clockwork.Client.CharSelectionModel.HeadModel) then
+								Clockwork.Client.CharSelectionModel.HeadModel:SetSkin(0);
+							else
+								Clockwork.Client.CharSelectionModel:SetSkin(0);
+							end
+							
+							self.info.skin = 0;
+						end
+					
 						for i = 1, #TRAITBUTTONS do		
 							if IsValid(TRAITBUTTONS[i]) then
 								if table.HasValue(traitButton.disableTable, TRAITBUTTONS[i].uniqueID) then
@@ -2510,6 +2533,20 @@ function PANEL:Init()
 				else
 					table.insert(self.selectedTraits, traitTable);
 					table.insert(self.info.traits, traitTable.uniqueID);
+					
+					if traitTable.disablesSkins then
+						if IsValid(Clockwork.Client.CharSelectionModel.HeadModel) then
+							local skinCount = Clockwork.Client.CharSelectionModel.HeadModel:SkinCount() - 1;
+							
+							Clockwork.Client.CharSelectionModel.HeadModel:SetSkin(skinCount);
+							self.info.skin = skinCount;
+						else
+							local skinCount = Clockwork.Client.CharSelectionModel:SkinCount() - 1;
+						
+							Clockwork.Client.CharSelectionModel:SetSkin(skinCount);
+							self.info.skin = skinCount;
+						end
+					end
 					
 					if traitButton.disableTable then
 						for i = 1, #TRAITBUTTONS do
