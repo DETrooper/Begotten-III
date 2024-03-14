@@ -145,7 +145,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 800};
+	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 1250};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
@@ -193,7 +193,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A ragged hood commonly worn by those who inhabit the Wasteland to protect themselves from the elements."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 55};
+	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 300};
 		
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth"}};
 ITEM:Register();
@@ -211,7 +211,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A ragged hood and bandana commonly worn by those who inhabit the Wasteland to protect themselves from the elements."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 75};
+	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 800};
 		
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth"}};
 ITEM:Register();

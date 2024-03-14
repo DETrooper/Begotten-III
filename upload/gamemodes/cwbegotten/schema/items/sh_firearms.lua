@@ -324,5 +324,5 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"oneuse_deploy.ogg", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	ITEM.requireFaith = {"Faith of the Dark"};
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"wood", "steel_chunks", "steel_chunks", "steel_chunks"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"wood", "fine_steel_chunks", "steel_chunks", "steel_chunks"}};
 ITEM:Register();
