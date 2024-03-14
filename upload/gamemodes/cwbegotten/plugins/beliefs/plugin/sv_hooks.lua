@@ -69,7 +69,7 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				local lastZone = player:GetCharacterData("LastZone");
 				local valid_zones = {"scrapper", "caves", "wasteland"};
 				
-				if !player:Crouching() or !player:GetActiveWeapon():GetClass() == "cw_senses" or (!player:GetNetVar("kinisgerCloak") and not table.HasValue(valid_zones, lastZone)) then
+				if !player:Crouching() or !player:GetActiveWeapon():GetClass() == "cw_senses" or (!player:GetNetVar("kinisgerCloak") and (!table.HasValue(valid_zones, lastZone) or cwDayNight and cwDayNight.currentCycle ~= "night" and lastZone ~= "caves")) then
 					player:Uncloak();
 				else
 					local playerPos = player:GetPos();

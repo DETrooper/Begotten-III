@@ -22,7 +22,7 @@ function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 				
 				if IsValid(attacker) and attacker:IsPlayer() then
 					if attacker:GetFaction() ~= "Goreic Warrior" then
-						local damagePercentage = math.min(damageAmount / 500, 1);
+						local damagePercentage = math.min(damageDealt / 500, 1);
 							
 						attacker:HandleXP(math.Round(longshipXP * damagePercentage)); 
 					end
@@ -40,7 +40,7 @@ function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 				
 				if IsValid(attacker) and attacker:IsPlayer() then
 					if attacker:GetFaction() ~= "Goreic Warrior" then
-						local damagePercentage = math.min(damageAmount / 500, 1);
+						local damagePercentage = math.min(damageDealt / 500, 1);
 							
 						attacker:HandleXP(math.Round(longshipXP * damagePercentage)); 
 					end
