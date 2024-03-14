@@ -67,7 +67,7 @@ SWEP.ReticleScale 			= 0.75
 SWEP.ShellTime			= .35
 
 SWEP.Primary.NumShots	= 1		//how many bullets to shoot, use with shotguns
-SWEP.Primary.Damage		= 75	//base damage, scaled by game
+SWEP.Primary.Damage		= 90	//base damage, scaled by game
 SWEP.Primary.Spread		= .045	//define from-the-hip accuracy 1 is terrible, .0001 is exact)
 SWEP.Primary.IronAccuracy = .02 // has to be the same as primary.spread
 -- Because irons don't magically give you less pellet spread!
@@ -94,7 +94,7 @@ SWEP.AmmoTypes = {
 	["Longshot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("v51_"..math.random(1,4)..".ogg");
 		SWEP.Primary.NumShots = 1;
-		SWEP.Primary.Damage = 75;
+		SWEP.Primary.Damage = 90;
 		SWEP.Primary.Spread = .1;
 		SWEP.Primary.IronAccuracy = .035;
 		SWEP.Primary.Ammo = "ar2";
@@ -130,9 +130,9 @@ SWEP.AmmoTypes = {
 	["Pop-a-Shot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("musket/musket1.wav");
 		SWEP.Primary.NumShots = 1;
-		SWEP.Primary.Damage = 37;
-		SWEP.Primary.Spread = .1;
-		SWEP.Primary.IronAccuracy = .05;
+		SWEP.Primary.Damage = 40;
+		SWEP.Primary.Spread = .08;
+		SWEP.Primary.IronAccuracy = .045;
 		SWEP.Primary.Ammo = "pistol";
 		
 		SWEP.Primary.KickUp				= 1		-- Maximum up recoil (rise)
@@ -154,8 +154,8 @@ SWEP.AmmoTypes = {
 						SWEP.Primary.Spread = .03;
 						SWEP.Primary.IronAccuracy = .015;
 					else
-						SWEP.Primary.Spread = .04;
-						SWEP.Primary.IronAccuracy = .02;
+						SWEP.Primary.Spread = .035;
+						SWEP.Primary.IronAccuracy = .015;
 					end
 				end
 			end

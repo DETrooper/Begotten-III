@@ -5539,7 +5539,7 @@ RECIPE:Register()
 	RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 	RECIPE.requiredFaiths = {"Faith of the Dark"};
 	RECIPE.requirements = {
-		["fine_steel_ingot"] = {amount = 3},
+		["steel_ingot"] = {amount = 3},
 		["wood"] = {amount = 2},
 		["unholy_sigil_stone"] = {amount = 1},
 	};
