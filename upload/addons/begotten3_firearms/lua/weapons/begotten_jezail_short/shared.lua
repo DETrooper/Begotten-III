@@ -152,7 +152,7 @@ SWEP.AmmoTypes = {
 				else
 					if SWEP.Owner:Crouching() then
 						SWEP.Primary.Spread = .03;
-						SWEP.Primary.IronAccuracy = .015;
+						SWEP.Primary.IronAccuracy = .01;
 					else
 						SWEP.Primary.Spread = .035;
 						SWEP.Primary.IronAccuracy = .015;
