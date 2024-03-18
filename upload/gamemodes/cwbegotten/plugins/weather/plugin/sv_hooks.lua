@@ -104,14 +104,22 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 					shouldBurn = true;
 				end
 				
-				for k, v in pairs(player.equipmentSlots) do
-					if v and v:IsInstance() then
-						if !v.attributes or !table.HasValue(v.attributes, "conditionless") then
-							v:TakeCondition(math.random(1, 3));
+				if !cwBeliefs or !player:HasBelief("ingenuity_finisher") then
+					local hasScourRust = player:HasBelief("scour_the_rust");
+				
+					for k, v in pairs(player.equipmentSlots) do
+						if v and v:IsInstance() then
+							if !v.attributes or !table.HasValue(v.attributes, "conditionless") then
+								if hasScourRust then
+									v:TakeCondition(math.random(1, 2));
+								else
+									v:TakeCondition(math.random(1, 3));
+								end
+							end
 						end
 					end
 				end
-				
+					
 				if shouldBurn then
 					local d = DamageInfo()
 					d:SetDamage(math.random(1, 3));

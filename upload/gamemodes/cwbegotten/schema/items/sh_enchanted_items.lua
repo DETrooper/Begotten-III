@@ -55,7 +55,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Has a 5% chance of completely avoiding damage when taking damage from any source, stackable with the 'Lucky' belief.\n- Will prevent your death when taking lethal damage from another player but will shatter beyond repair and become useless when this occurs.";
 
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 900, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1500, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
