@@ -79,6 +79,62 @@ local ITEM = Clockwork.item:New();
 ITEM:Register();
 
 local ITEM = Clockwork.item:New();
+	ITEM.name = "Campfire Kit";
+	ITEM.uniqueID = "campfire_kit"
+	ITEM.model = "models/mosi/fallout4/props/junk/components/wood.mdl";
+	ITEM.weight = 2;
+	ITEM.useText = "Deploy";
+	ITEM.category = "Other";
+	ITEM.useSound = "physics/wood/wood_strain3.wav";
+	ITEM.description = "A large kit that is able to deploy a campfire which will last for 15 minutes, though more wood may be added as fuel to extend its lifetime.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/wood.png"
+	ITEM.stackable = false;
+
+	-- Called when a player uses the item.
+	function ITEM:OnUse(player, itemEntity)
+		local tr = player:GetEyeTrace();
+		local position = tr.HitPos;
+		local valuewater = bit.band(util.PointContents(position), CONTENTS_WATER) == CONTENTS_WATER;
+		
+		if player:InTower() then
+			Schema:EasyText(player, "peru", "You cannot deploy this in the Tower of Light!");
+			return false;
+		end
+		
+		if tr.Entity and tr.Entity:GetClass() == "cw_longship" then
+			Schema:EasyText(player, "peru", "You cannot deploy this on a longship!");
+			return false;
+		end
+		
+		for i, v in ipairs(ents.FindByClass("cw_longship")) do
+			if v.playersOnBoard then
+				for i2, v2 in ipairs(v.playersOnBoard) do
+					if player == v2 then
+						Schema:EasyText(player, "peru", "You cannot deploy this while sailing!");
+						return false;
+					end
+				end
+			end
+		end
+		
+		if (player:GetPos():DistToSqr(position) <= 36864) and valuewater == false then
+			local ent = ents.Create("cw_fireplace")
+			ent:SetPos(position)
+			ent:Spawn()
+		elseif valuewater == true then
+			Schema:EasyText(player, "peru", "You cannot deploy this underwater!");
+			return false;
+		else
+			Schema:EasyText(player, "peru", "You cannot deploy this that far away!")
+			return false;
+		end
+	end;
+
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position) end;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New();
 	ITEM.name = "Siege Ladder";
 	ITEM.uniqueID = "siege_ladder";
 	ITEM.model = "models/begotten/misc/siegeladder_compact.mdl";

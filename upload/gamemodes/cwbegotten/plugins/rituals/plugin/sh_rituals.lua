@@ -448,11 +448,11 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("call_of_the_blood_moon");
 	RITUAL.name = "(Unique) Call of the Blood Moon";
-	RITUAL.description = "As any primevalist knows, the Blood Moon requires regular sacrifice so that it may be appeased. For those willing to kill for it, the Blood Moon's power over the wasteland can be extended by some time. Performing this ritual will extend the night cycle by fifteen minutes. Incurs 10 corruption.";
+	RITUAL.description = "As any primevalist knows, the Blood Moon requires regular sacrifice so that it may be appeased. For those willing to kill for it, the Blood Moon's power over the wasteland can be extended by some time. Performing this ritual will extend the night cycle by fifteen minutes. Incurs 75 corruption.";
 	RITUAL.onerequiredbelief = {"thirst_blood_moon"}; -- Primevalist Unique Ritual
 	
 	RITUAL.requirements = {"tortured_spirit", "down_catalyst", "pentagram_catalyst"};
-	RITUAL.corruptionCost = 10;
+	RITUAL.corruptionCost = 75;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 100;
 	
@@ -504,6 +504,47 @@ RITUAL = cwRituals.rituals:New("call_of_the_blood_moon");
 				return true;
 			else
 				Schema:EasyText(player, "peru", "The Blood Moon must be out in order for you to perform this ritual!");
+				
+				return false;
+			end
+		end
+		
+		return false;
+	end;
+	function RITUAL:EndRitual(player)
+	end;
+RITUAL:Register()
+
+RITUAL = cwRituals.rituals:New("call_of_the_blood_storm");
+	RITUAL.name = "(Unique) Call of the Blood Storm";
+	RITUAL.description = "For thousands of years the moon tribals and jungle jujus have danced around their fetish altars soaked in blood, singing for rains to cleanse them, which never came. Only those who kept dancing after their fires burnt out may feel the warm crimson droplet upon their cheek. Performing this ritual will summon a bloodstorm within a minute of being performed. Incurs 90 corruption.";
+	RITUAL.onerequiredbelief = {"thirst_blood_moon"}; -- Primevalist Unique Ritual
+	
+	RITUAL.requirements = {"tortured_spirit", "tortured_spirit", "tortured_spirit"};
+	RITUAL.corruptionCost = 90;
+	RITUAL.ritualTime = 10;
+	RITUAL.experience = 200;
+	
+	function RITUAL:OnPerformed(player)
+		if cwWeather then
+			cwWeather:SetWeather("bloodstorm");
+			
+			return true;
+		end
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		if cwWeather then
+			if cwWeather.weather ~= "bloodstorm" then
+				if cwWeather.nextWeatherTime - CurTime() <= 10 then
+					-- Add enough time to complete the ritual!
+					cwWeather.nextWeatherTime = CurTime() + 10;
+				end
+				
+				return true;
+			else
+				Schema:EasyText(player, "peru", "There is already an active blood storm!");
 				
 				return false;
 			end

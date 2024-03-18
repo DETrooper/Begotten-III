@@ -147,6 +147,8 @@ function ENT:Think()
 			end;
 		end;
 	end;]]--
+	
+	hook.Run("ItemEntityThink", self, itemTable);
 
 	self:NextThink(curTime + math.random(2, 5));
 end;

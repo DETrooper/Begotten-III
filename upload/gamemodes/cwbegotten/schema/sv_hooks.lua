@@ -1428,16 +1428,20 @@ function Schema:Think()
 					local spawnPos = self.npcSpawns["wasteland"][math.random(1, #self.npcSpawns["wasteland"])];
 					local thrallNPCs;
 					
-					if cwDayNight and cwDayNight.currentCycle == "night" then
-						thrallNPCs = {"npc_bgt_another", "npc_bgt_guardian", "npc_bgt_otis", "npc_bgt_pursuer", "npc_bgt_shambler"};
+					if cwWeather and cwWeather.weather == "bloodstorm" then
+						thrallNPCs = {"npc_bgt_chaser", "npc_bgt_guardian"};
 					else
-						thrallNPCs = {"npc_bgt_another", "npc_bgt_brute", "npc_bgt_eddie", "npc_bgt_grunt"};
+						if cwDayNight and cwDayNight.currentCycle == "night" then
+							thrallNPCs = {"npc_bgt_another", "npc_bgt_guardian", "npc_bgt_otis", "npc_bgt_pursuer", "npc_bgt_shambler"};
+						else
+							thrallNPCs = {"npc_bgt_another", "npc_bgt_brute", "npc_bgt_eddie", "npc_bgt_grunt"};
+						end
+						
+						if math.random(1, 33) == 1 then
+							thrallNPCs = {"npc_bgt_coinsucker", "npc_bgt_ironclad", "npc_bgt_suitor"};
+						end
 					end
 
-					if math.random(1, 33) == 1 then
-						thrallNPCs = {"npc_bgt_coinsucker", "npc_bgt_ironclad", "npc_bgt_suitor"};
-					end
-					
 					local npcName = thrallNPCs[math.random(1, #thrallNPCs)];
 					
 					ParticleEffect("teleport_fx", spawnPos, Angle(0,0,0), nil);
@@ -1585,7 +1589,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 			if (waterLevel >= 1) then
 				if player:GetSubfaith() == "Voltism" and !Clockwork.player:HasFlags(player, "T") then
 					if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
-						if player:Alive() and !plyTab.cwObserverMode then
+						if !plyTab.cwObserverMode then
 							if waterLevel == 1 then
 								Schema:DoTesla(player, true);
 							else

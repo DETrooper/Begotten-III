@@ -163,7 +163,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 			end
 		elseif (sanitySafezones[lastZone]) or (string.find(lastZone, "gore") and playerFaction == "Goreic Warrior") then
 			sanityDecay = sanityDecay + 3.5;
-		elseif (lastZone == "wasteland" and bNight) then
+		elseif (lastZone == "wasteland" and (bNight or cwWeather and cwWeather.weather == "bloodstorm")) then
 			if (map == "rp_begotten_redux") or (map == "rp_scraptown") then
 				if !player:InTower() then
 					local decay = 3;

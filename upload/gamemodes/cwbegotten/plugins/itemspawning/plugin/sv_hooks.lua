@@ -313,6 +313,13 @@ function cwItemSpawner:Think()
 		
 		if #self.ItemsSpawned < maxGroundSpawns then
 			local itemCategory = self.Categories[math.random(#self.Categories)];
+			
+			if cwWeather and cwWeather.weather == "bloodstorm" then
+				if math.random(1, 3) == 1 then
+					itemCategory = "rituals";
+				end
+			end
+			
 			local randomItem = self:SelectItem(itemCategory);
 
 			if (!randomItem) then

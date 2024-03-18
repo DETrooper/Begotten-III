@@ -61,6 +61,10 @@ function cwObserverMode:PlayerDeath(player)
 	end
 end;
 
+function cwObserverMode:PlayerCanBeIgnited(player)
+	if player.cwObserverMode then return false end;
+end
+
 function cwObserverMode:PlayerCanSwitchCharacter(player, character)
 	if player:GetMoveType() == MOVETYPE_NOCLIP and !player:IsAdmin() then
 		if !player.cwObserverMode then

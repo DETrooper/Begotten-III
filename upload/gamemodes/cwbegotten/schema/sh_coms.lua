@@ -1512,6 +1512,7 @@ local COMMAND = Clockwork.command:New("PlyHealFull");
 			max_sanity = 40;
 		end
 
+		target:Extinguish();
 		target:ResetInjuries();
 		target:TakeAllDiseases();
 		target:SetHealth(target:GetMaxHealth() or 100);
@@ -1571,6 +1572,7 @@ local COMMAND = Clockwork.command:New("PlyHealFullAll");
 						max_sanity = 40;
 					end
 					
+					v:Extinguish();
 					v:ResetInjuries();
 					v:TakeAllDiseases();
 					v:SetHealth(v:GetMaxHealth() or 100);

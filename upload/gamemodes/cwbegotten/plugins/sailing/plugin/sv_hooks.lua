@@ -52,7 +52,6 @@ function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 	end
 end
 
-
 -- Called when a player uses an unknown item function.
 function cwSailing:PlayerUseUnknownItemFunction(player, itemTable, itemFunction)
 	if !SHIP_LOCATIONS then

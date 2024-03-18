@@ -69,7 +69,7 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				local lastZone = player:GetCharacterData("LastZone");
 				local valid_zones = {"scrapper", "caves", "wasteland"};
 				
-				if !player:Crouching() or !player:GetActiveWeapon():GetClass() == "cw_senses" or (!player:GetNetVar("kinisgerCloak") and (!table.HasValue(valid_zones, lastZone) or cwDayNight and cwDayNight.currentCycle ~= "night" and lastZone ~= "caves")) then
+				if !player:Crouching() or !player:GetActiveWeapon():GetClass() == "cw_senses" or (!player:GetNetVar("kinisgerCloak") and (!table.HasValue(valid_zones, lastZone) or cwDayNight and cwDayNight.currentCycle ~= "night" and lastZone ~= "caves" and (!cwWeather or cwWeather.weather ~= "bloodstorm"))) then
 					player:Uncloak();
 				else
 					local playerPos = player:GetPos();
@@ -325,7 +325,7 @@ function cwBeliefs:DayNightCycleChanged(cycle)
 			local player = players[i];
 			
 			if IsValid(player) then
-				if player.cloaked and player:GetCharacterData("LastZone") ~= "caves" then
+				if player.cloaked and player:GetCharacterData("LastZone") ~= "caves" and (!cwWeather or cwWeather.weather ~= "bloodstorm") then
 					if !player:GetNetVar("kinisgerCloak") then
 						player:Uncloak();
 					end
@@ -924,6 +924,19 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 							
 							Schema:DoTesla(entity, false);
 						end
+						
+						if cwWeather and cwWeather.weather == "rainstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
+							local lastZone = entity:GetCharacterData("LastZone");
+							local zoneTable = zones:FindByID(lastZone);
+							
+							if zoneTable and zoneTable.hasWeather then
+								if cwWeather:IsOutside(entity:EyePos()) then
+									newDamage = newDamage + (originalDamage * 0.5);
+								
+									Schema:DoTesla(entity, false);
+								end
+							end
+						end
 					end
 					
 					if attacker:HasBelief("prowess_finisher") then
@@ -1064,6 +1077,19 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 							end
 							
 							Schema:DoTesla(entity, false);
+						end
+						
+						if cwWeather and cwWeather.weather == "rainstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
+							local lastZone = entity:GetCharacterData("LastZone");
+							local zoneTable = zones:FindByID(lastZone);
+							
+							if zoneTable and zoneTable.hasWeather then
+								if cwWeather:IsOutside(entity:EyePos()) then
+									newDamage = newDamage + (originalDamage * 0.5);
+								
+									Schema:DoTesla(entity, false);
+								end
+							end
 						end
 					end
 				end

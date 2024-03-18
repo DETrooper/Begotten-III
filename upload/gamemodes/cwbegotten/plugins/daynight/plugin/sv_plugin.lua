@@ -102,16 +102,18 @@ function cwDayNight:ChangeCycle(cycle, notify)
 	end
 	
 	if cycle == "nighttoday" or cycle == "night" then
-		if Schema.spawnedNPCS then
-			for i = 1, #Schema.spawnedNPCS do
-				local entity = ents.GetByIndex(Schema.spawnedNPCS[i]);
-				
-				if IsValid(entity) then
-					entity:Remove();
+		if !cwWeather or cwWeather.weather ~= "bloodstorm" then
+			if Schema.spawnedNPCS then
+				for i = 1, #Schema.spawnedNPCS do
+					local entity = ents.GetByIndex(Schema.spawnedNPCS[i]);
+					
+					if IsValid(entity) then
+						entity:Remove();
+					end
 				end
+				
+				Schema.spawnedNPCS = {};
 			end
-			
-			Schema.spawnedNPCS = {};
 		end
 	end
 	

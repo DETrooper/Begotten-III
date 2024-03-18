@@ -768,7 +768,7 @@ function Clockwork.kernel:DistributeWagesCash()
 	for k, v in ipairs(_player.GetAll()) do
 		if (v:HasInitialized() and v:Alive()) then
 			local info = {
-				wages = v:GetWages()
+				wages = v:GetWages() or 0
 			}
 
 			hook.Run("PlayerModifyWagesInfo", v, info)
@@ -1012,6 +1012,7 @@ playerMeta.ClockworkStripWeapon = playerMeta.ClockworkStripWeapon or playerMeta.
 entityMeta.ClockworkFireBullets = entityMeta.ClockworkFireBullets or entityMeta.FireBullets
 entityMeta.ClockworkFire = entityMeta.ClockworkFire or entityMeta.Fire
 playerMeta.ClockworkGodDisable = playerMeta.ClockworkGodDisable or playerMeta.GodDisable
+entityMeta.ClockworkIgnite = entityMeta.ClockworkIgnite or entityMeta.Ignite
 entityMeta.ClockworkExtinguish = entityMeta.ClockworkExtinguish or entityMeta.Extinguish
 entityMeta.ClockworkWaterLevel = entityMeta.ClockworkWaterLevel or entityMeta.WaterLevel
 playerMeta.ClockworkGodEnable = playerMeta.ClockworkGodEnable or playerMeta.GodEnable
@@ -1458,6 +1459,17 @@ function playerMeta:IsOnFire()
 	else
 		return self:ClockworkIsOnFire()
 	end
+end
+
+-- A function to ignite a player.
+function playerMeta:Ignite(length, radius)
+	if hook.Run("PlayerCanBeIgnited", self) == false then return false end;
+
+	if (self:IsRagdolled()) then
+		self:GetRagdollEntity():Ignite(length, radius);
+	end
+	
+	self:ClockworkIgnite(length, radius)
 end
 
 -- A function to extinguish a player.

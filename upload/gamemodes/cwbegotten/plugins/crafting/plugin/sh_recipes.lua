@@ -1165,6 +1165,34 @@ function cwRecipes:ClockworkInitialized()
 	-- TOOLS
 	--
 	--
+	
+	RECIPE = cwRecipes.recipes:New("campfire_kit");
+		RECIPE.name = "Campfire Kit";
+		RECIPE.requiredBeliefs = {"ingenious"};
+		RECIPE.requiredBeliefsNiceNames = {"Ingenious"};
+		RECIPE.requirements = {
+			["wood"] = {amount = 6},
+			["stone"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["campfire_kit"] = {amount = 1},
+		};
+		RECIPE.category = "Other"
+		RECIPE.finishSound = "physics/wood/wood_strain3.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 6
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 30;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("siege_ladder");
 		RECIPE.name = "Siege Ladder";

@@ -128,7 +128,7 @@ function SWEP:SecondaryAttack()
 			local lastZone = self.Owner:GetCharacterData("LastZone");
 			local valid_zones = {"scrapper", "wasteland"};
 			
-			if cwDayNight and (cwDayNight.currentCycle == "night" and table.HasValue(valid_zones, lastZone)) or lastZone == "caves" then
+			if (((cwDayNight and cwDayNight.currentCycle == "night") or (!cwWeather or cwWeather.weather == "bloodstorm")) and table.HasValue(valid_zones, lastZone)) or lastZone == "caves" then
 				if self.Owner:Crouching() then
 					if !self.Owner.cloaked then
 						local curTime = CurTime();
@@ -160,7 +160,7 @@ function SWEP:SecondaryAttack()
 					Schema:EasyText(self.Owner, "chocolate", "You must be crouching in order to toggle cloaking.");
 				end
 			else
-				Schema:EasyText(self.Owner, "peru", "You must be in the wasteland and it must be nighttime (or in the mines) in order to toggle cloaking.");
+				Schema:EasyText(self.Owner, "peru", "You must be in the wasteland or the mines and it must currently be night or blood storming (if above ground) in order to toggle cloaking.");
 			end
 			
 			self:SetNextSecondaryFire(CurTime() + 2);

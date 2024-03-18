@@ -258,7 +258,7 @@ local COMMAND = Clockwork.command:New("ClearProperty");
 			Clockwork.entity:ClearProperty(shack.doorEnt);
 			
 			cwShacks:NetworkShackData(_player.GetAll());
-			cwShacks:SaveShackData();
+			--cwShacks:SaveShackData();
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have cleared this property.");
 		else
 			Schema:EasyText(player, "grey", "A valid property could not be found!");

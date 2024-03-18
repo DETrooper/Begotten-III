@@ -245,7 +245,11 @@ function Clockwork.player:SayRadio(player, text, check, noEavesdrop, proclaim)
 				local lastZone = v:GetCharacterData("LastZone");
 				
 				if lastZone == "tower" or lastZone == "wasteland" then
-					table.insert(listeners, v);
+					if !hook.Run("PlayerRadioJammed", v, vFreq, lastZone) then
+						table.insert(listeners, v);
+					else
+						info.text = "<STATIC>"
+					end
 				end
 				
 				if (v ~= player) then

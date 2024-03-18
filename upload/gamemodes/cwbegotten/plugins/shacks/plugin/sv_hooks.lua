@@ -57,7 +57,7 @@ function cwShacks:ShackPurchased(player, shack)
 					Clockwork.player:GiveSpawnWeapon(player, "cw_keys");
 					
 					self:NetworkShackData(_player.GetAll());
-					self:SaveShackData();
+					--self:SaveShackData();
 					
 					Schema:EasyText(player, "olivedrab", "You have bought a property. It will be in your ownership until you expire or if your character has inactive for longer than one week. You may use /OpenStash to access your property's inventory, and the positive effects of /Sleep will be boosted depending on the quality of your property. You will now also spawn with 'Keys' to unlock and lock your property.");
 					Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name().." has bought the property '"..k.."' for "..price.." coin! The treasury now sits at "..Schema.towerTreasury..".");
@@ -92,7 +92,7 @@ function cwShacks:ShackCoownerAdded(player, shack)
 			v.coowners[player:GetCharacterKey()] = player:Name();
 			
 			self:NetworkShackData(_player.GetAll());
-			self:SaveShackData();
+			--self:SaveShackData();
 		
 			return;
 		end
@@ -115,7 +115,7 @@ function cwShacks:ShackCoownerRemoved(coownerKey, shack)
 			v.coowners[coownerKey] = nil;
 			
 			self:NetworkShackData(_player.GetAll());
-			self:SaveShackData();
+			--self:SaveShackData();
 		
 			return;
 		end
@@ -169,7 +169,7 @@ function cwShacks:ShackSold(player, shack)
 					end
 					
 					self:NetworkShackData(_player.GetAll());
-					self:SaveShackData();
+					--self:SaveShackData();
 					
 					Schema:EasyText(player, "olivedrab", "You have sold your property for "..Clockwork.kernel:FormatCash(price, nil, true).."!");
 					Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name().." has sold the property '"..k.."' for "..price.." coin! The treasury now sits at "..Schema.towerTreasury..".");
@@ -215,7 +215,7 @@ function cwShacks:ShackForeclosed(player, shack)
 			Clockwork.entity:ClearProperty(v.doorEnt);
 			
 			self:NetworkShackData(_player.GetAll());
-			self:SaveShackData();
+			--self:SaveShackData();
 			return;
 		end
 	end

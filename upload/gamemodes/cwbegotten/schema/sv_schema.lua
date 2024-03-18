@@ -1569,13 +1569,10 @@ end);
 netstream.Hook("EnteredZone", function(player, uniqueID)
 	--print("EnteredZone for "..player:Name()..": "..tostring(uniqueID));
 
-	if (Schema.zones[uniqueID]) then
+	if (zones:FindByID(uniqueID)) then
 		--print("Setting new zone in chardata!");
 		player:SetCharacterData("LastZone", uniqueID);
 		hook.Run("PlayerChangedZones", player, uniqueID);
-	else
-		--print("Zone not valid, setting to nil!");
-		player:SetCharacterData("LastZone", nil);
 	end;
 end);
 

@@ -16,7 +16,9 @@ COMMAND.text = "<none>";
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
-	if (player:WaterLevel() >= 1) then
+	local waterLevel = player:WaterLevel();
+
+	if (waterLevel >= 1) then
 		local lastZone = player:GetCharacterData("LastZone");
 		local thirst = player:GetNeed("thirst", 0);
 		
@@ -74,6 +76,111 @@ function COMMAND:OnRun(player, arguments)
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		end
 	else
+		if cwWeather then
+			local lastZone = player:GetCharacterData("LastZone");
+			local zoneTable = zones:FindByID(lastZone);
+			
+			if zoneTable.hasWeather then
+				local weather = cwWeather.weather;
+				
+				if weather == "acidrain" or weather == "bloodstorm" or weather == "thunderstorm" then
+					local thirst = player:GetNeed("thirst", 0);
+					
+					if !cwWeather:IsOutside(player:EyePos()) then
+						Schema:EasyText(player, "chocolate", "You must be standing in the rain to drink from it!");
+						
+						return;
+					end
+					
+					if cwBeliefs and (player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm")) then
+						Schema:EasyText(player, "maroon", "You lap water down your receptacle, but it begins to short-circuit your insides!");
+						player:TakeDamage(25);
+						
+						return;
+					end
+
+					if weather == "acidrain" then
+						if player:GetSubfaction() == "Varazdat" then
+							Schema:EasyText(player, "chocolate", "There is no blood in this rain, to drink from this would be a moot point.");
+							
+							return;
+						end;
+						
+						if thirst <= 10 then
+							Schema:EasyText(player, "chocolate", "You aren't thirsty enough to drink from the rain.");
+							
+							return;
+						end
+					
+						Schema:EasyText(player, "olive", "You clasp a small amount of polluted rain in the cup of your hand, drinking it and burning your throat in the process!");
+						player:HandleSanity(-5);
+						player:HandleNeed("thirst", -15);
+						player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
+						
+						local d = DamageInfo()
+						d:SetDamage(math.random(1, 3));
+						d:SetDamageType(DMG_BURN);
+						d:SetDamagePosition(player:GetPos() + Vector(0, 0, 48));
+						
+						player:TakeDamageInfo(d);
+						
+						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(d:GetDamage()).." damage from drinking acid rain, leaving them at "..player:Health().." health.");
+						
+						if cwBeliefs then
+							player:HandleXP(cwBeliefs.xpValues["drink"]);
+						end
+						
+						return;
+					elseif weather == "bloodstorm" then
+						if thirst <= 10 then
+							Schema:EasyText(player, "chocolate", "You aren't thirsty enough to drink from the rain.");
+							
+							return;
+						end
+					
+						if cwBeliefs and player:HasBelief("savage_animal") then
+							player:HandleNeed("thirst", -25);
+							player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
+							Schema:EasyText(player, "olive", "You clasp a small amount of yummy blood in the cup of your hand, drinking it with glee!");
+						else
+							player:HandleSanity(-20);
+							player:HandleNeed("thirst", -15);
+							player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
+							Schema:EasyText(player, "olive", "You clasp a small amount of foul smelling liquid in the cup of your hand, drinking it reluctantly. It tastes very iron-rich.");
+						end
+						
+						if cwBeliefs then
+							player:HandleXP(cwBeliefs.xpValues["drink"]);
+						end
+						
+						return;
+					elseif weather == "thunderstorm" then
+						if player:GetSubfaction() == "Varazdat" then
+							Schema:EasyText(player, "chocolate", "There is no blood in this rain, to drink from this would be a moot point.");
+							
+							return;
+						end;
+						
+						if thirst <= 10 then
+							Schema:EasyText(player, "chocolate", "You aren't thirsty enough to drink from the rain.");
+							
+							return;
+						end
+						
+						player:HandleNeed("thirst", -15);
+						player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
+						Schema:EasyText(player, "olive", "You clasp a small amount of rain in the cup of your hand, drinking it. It tastes surprisingly fresh.");
+						
+						if cwBeliefs then
+							player:HandleXP(cwBeliefs.xpValues["drink"]);
+						end
+						
+						return;
+					end
+				end
+			end
+		end
+		
 		Schema:EasyText(player, "firebrick", "You must be near a source of water to drink!");
 	end;
 end;
@@ -315,7 +422,7 @@ COMMAND.alias = {"SetCorruption", "PlySetCorruption"};
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
 	local target = Clockwork.player:FindByID( arguments[1] )
-	local amount = arguments[2];
+	local amount = tonumber(arguments[2]);
 	
 	if (!amount) then
 		amount = 100;
@@ -346,7 +453,7 @@ COMMAND.alias = {"SetHunger", "PlySetHunger"};
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
 	local target = Clockwork.player:FindByID( arguments[1] )
-	local amount = arguments[2];
+	local amount = tonumber(arguments[2]);
 	
 	if (!amount) then
 		amount = 100;
@@ -377,7 +484,7 @@ COMMAND.alias = {"SetThirst", "PlySetThirst"};
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
 	local target = Clockwork.player:FindByID( arguments[1] )
-	local amount = arguments[2];
+	local amount = tonumber(arguments[2]);
 	
 	if (!amount) then
 		amount = 100;
@@ -408,7 +515,7 @@ COMMAND.alias = {"SetSleep", "PlySetSleep", "SetFatigue", "CharSetFatigue", "Ply
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
 	local target = Clockwork.player:FindByID( arguments[1] )
-	local amount = arguments[2];
+	local amount = tonumber(arguments[2]);
 	
 	if (!amount) then
 		amount = 100;
