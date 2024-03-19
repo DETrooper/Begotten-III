@@ -197,13 +197,13 @@ function cwWeather:PlayerRadioJammed(player, frequency, lastZone)
 	end
 end
 
-function cwWeather:WeatherChanged(player, weather, oldWeather)
+function cwWeather:WeatherChanged(weather, oldWeather)
 	if weather == "bloodstorm" or oldWeather == "bloodstorm" then
 		if Schema.spawnedNPCS then
 			for i = 1, #Schema.spawnedNPCS do
 				local entity = ents.GetByIndex(Schema.spawnedNPCS[i]);
 				
-				if IsValid(entity) then
+				if IsValid(entity) and entity:IsZombie() then
 					entity:Remove();
 				end
 			end

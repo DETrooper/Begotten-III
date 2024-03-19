@@ -936,6 +936,19 @@ if CLIENT then
 
 		return r, g, b
 	end
+	
+	-- Called just after the skybox is drawn.
+	function zones:PostDrawSkyBox()
+		-- Moved from senses plugin for compatibility.
+		if !Clockwork.kernel:IsChoosingCharacter() then
+			local senses = Clockwork.Client:GetNWBool("senses");
+			
+			if (senses) then
+				render.Clear(0, 0, 0, 255);
+				return true;
+			end;
+		end;
+	end
 
 	-- Called just after the skybox is drawn.
 	function zones:PostDraw2DSkyBox()
@@ -958,9 +971,11 @@ if CLIENT then
 					return;
 				end;
 				
-				if cwDayNight and Clockwork.Client.currentCycle == "night" then
-					if zoneTable.hasNight and zoneTable.uniqueID ~= "tower" then
-						return;
+				if !Clockwork.kernel:IsChoosingCharacter() then
+					if cwDayNight and Clockwork.Client.currentCycle == "night" then
+						if zoneTable.hasNight and zoneTable.uniqueID ~= "tower" then
+							return;
+						end
 					end
 				end
 				
