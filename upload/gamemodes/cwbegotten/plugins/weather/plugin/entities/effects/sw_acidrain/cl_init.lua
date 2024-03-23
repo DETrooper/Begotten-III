@@ -7,7 +7,7 @@ function EFFECT:Init( data )
 		for i = 1, 10 do
 			local r = math.random(0, 1500);
 			local t = math.Rand(-math.pi, math.pi);
-			local pos = data:GetOrigin() + Vector(math.cos( t ) * r, math.sin( t ) * r, math.min(800, cwWeather.HeightMin or 800));
+			local pos = data:GetOrigin() + Vector(math.cos(t) * r, math.sin(t) * r, 400);
 			
 			if (cwWeather:IsOutside(pos)) then
 				local p = cwWeather.Emitter2D:Add("simpleweather/water_drop", pos);

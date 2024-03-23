@@ -13,7 +13,7 @@ end
 function cwWeather:SetWeather(weather, bSkipTransition)
 	if (!table.HasValue(table.GetKeys(self.weatherTypes), weather)) then self.nextWeatherTime = CurTime() + 5; return; end
 	
-	self.nextWeatherTime = CurTime() + math.random(300, self.weatherTypes[weather].maxDuration or 1800);
+	self.nextWeatherTime = CurTime() + math.random(self.weatherTypes[weather].minDuration or 300, self.weatherTypes[weather].maxDuration or 1800);
 	
 	local oldWeather = self.weather or "normal";
 	local weatherTable = self.weatherTypes[weather];

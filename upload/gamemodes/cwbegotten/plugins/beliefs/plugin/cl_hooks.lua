@@ -241,17 +241,17 @@ end);
 netstream.Hook("TasteofBloodHighlight", function(data)
 	local cwBeliefs = cwBeliefs;
 
-	if IsValid(data) and data:IsPlayer() then
-		cwBeliefs.highlightTargetOverride = data;
-	end
+	cwBeliefs.highlightTargetOverride = data;
 	
 	if timer.Exists("tasteOfBloodTimer") then
 		timer.Remove("tasteOfBloodTimer");
 	end
 	
-	timer.Create("tasteOfBloodTimer", 180, 1, function()
-		cwBeliefs.highlightTargetOverride = nil;
-	end);
+	if IsValid(data) and data:IsPlayer() then
+		timer.Create("tasteOfBloodTimer", 180, 1, function()
+			cwBeliefs.highlightTargetOverride = nil;
+		end);
+	end
 end);
 
 netstream.Hook("UpgradedWarcry", function(data)

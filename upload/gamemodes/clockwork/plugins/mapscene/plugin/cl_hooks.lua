@@ -543,7 +543,7 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 		local faction = Clockwork.Client.SelectedFaction;
 		local subfaction = Clockwork.Client.SelectedSubfaction;
 
-		if faction then
+		if faction and camTable[faction] then
 			local model_path = "";
 			local head_path;
 			

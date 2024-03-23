@@ -1922,6 +1922,15 @@ function cwBeliefs:PostPlayerCharacterLoaded(player)
 			player:SetHealth(math.max(player:Health() - math.random(25, 40), 1));
 		end
 		
+		-- Remove taste of blood effect.
+		for i, v in ipairs(_player.GetAll()) do
+			if v.tasteOfBloodVictim and v.tasteOfBloodVictim == player then
+				v.tasteOfBloodVictim = nil;
+				
+				netstream.Start(v, "TasteofBloodHighlight", nil);
+			end
+		end
+		
 		-- FOR MELEE TEST ONLY
 		if melee_test_enabled == true then
 			if not player:HasBelief("fighter") then

@@ -8,7 +8,7 @@ function EFFECT:Init( data )
 			for i = 1, 20 do
 				local r = math.random(0, 1200);
 				local t = math.Rand(-math.pi, math.pi);
-				local pos = data:GetOrigin() + Vector(math.cos( t ) * r, math.sin( t ) * r, math.min(400, cwWeather.HeightMin or 400));
+				local pos = data:GetOrigin() + Vector(math.cos(t) * r, math.sin(t) * r, 400);
 				
 				if (cwWeather:IsOutside(pos)) then
 					local p = cwWeather.Emitter2D:Add("simpleweather/water_drop", pos);
@@ -34,7 +34,7 @@ function EFFECT:Init( data )
 			for i = 1, 10 do
 				local r = math.random(0, 1500);
 				local t = math.Rand(-math.pi, math.pi);
-				local pos = data:GetOrigin() + Vector(math.cos( t ) * r, math.sin( t ) * r, math.min(350, cwWeather.HeightMin or 350));
+				local pos = data:GetOrigin() + Vector(math.cos(t) * r, math.sin(t) * r, 400);
 				
 				if (cwWeather:IsOutside(pos)) then
 					local p = cwWeather.Emitter2D:Add("simpleweather/water_drop", pos);
@@ -60,7 +60,7 @@ function EFFECT:Init( data )
 			for i = 1, 10 do
 				local r = math.random(0, 1500);
 				local t = math.Rand(-math.pi, math.pi);
-				local pos = data:GetOrigin() + Vector(math.cos( t ) * r, math.sin( t ) * r, math.min(350, cwWeather.HeightMin or 350));
+				local pos = data:GetOrigin() + Vector(math.cos(t) * r, math.sin(t) * r, 400);
 				
 				if (cwWeather:IsOutside(pos)) then
 					local p = cwWeather.Emitter2D:Add("simpleweather/water_drop", pos);

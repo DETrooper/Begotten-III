@@ -56,6 +56,12 @@ function cwWeather:Think()
 				
 					if outside then
 						Clockwork.Client:EmitSound(weatherTable.ambience[math.random(1, #weatherTable.ambience)] or "", 75, math.random(98, 102), 0.5);
+					else
+						if Clockwork.Client:InTower() then
+							Clockwork.Client:EmitSound(weatherTable.ambience[math.random(1, #weatherTable.ambience)] or "", 75, math.random(98, 102), 0.05);
+						else
+							Clockwork.Client:EmitSound(weatherTable.ambience[math.random(1, #weatherTable.ambience)] or "", 75, math.random(98, 102), 0.25);
+						end
 					end
 				end
 			end

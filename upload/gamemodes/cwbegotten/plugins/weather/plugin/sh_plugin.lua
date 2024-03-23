@@ -72,7 +72,8 @@ if cwWeather.systemEnabled then
 			fogEnd = 1024,
 			fogStartNight = 128,
 			fogEndNight = 1024,
-			maxDuration = 1200,
+			maxDuration = 900,
+			minDuration = 600,
 			precipitation = "sw_rain",
 			skyFix = {r = 18, g = 2, b = 2},
 			skyFixNight = {r = 11, g = 1, b = 1},
@@ -159,10 +160,10 @@ if cwWeather.systemEnabled then
 	function cwWeather:IsOutside(pos)
 		local trace = {}
 		trace.start = pos
-		trace.endpos = trace.start + Vector( 0, 0, 32768 )
+		trace.endpos = trace.start + Vector(0, 0, 32768)
 		trace.mask = MASK_SOLID
 		trace.collisiongroup = COLLISION_GROUP_WEAPON
-		local tr = util.TraceLine( trace )
+		local tr = util.TraceLine(trace)
 
 		if CLIENT then
 			self.HeightMin = (tr.HitPos - trace.start):Length();
