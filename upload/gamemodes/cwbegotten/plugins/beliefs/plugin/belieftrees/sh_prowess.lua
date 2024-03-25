@@ -13,7 +13,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 		{"Prowess", PROWESS.color, "Civ5ToolTip4"},
 		{"Prowess is a measure of your character's physical strength, primarily affecting your character's melee combat effectiveness, as well as inventory capacity.", Color(225, 200, 200)},
 		{"\n\"But then he visited the Dark Kingdom, and this was the point of no return. He felt in his wrist a tremble that manifested into a quake. His fibers were now thorns, his liquids boiled. He felt he would lose sight of the truth, and that he did...\"", Color(128, 90, 90, 240)},
-		{"\nBelief Tree Completion Bonus: +50% Inventory Capacity and +25% Melee Damage (Stacks w/ Other Buffs)", Color(50, 255, 50)}
+		{"\nBelief Tree Completion Bonus: +50% Inventory Capacity and +10% Melee Damage (Stacks w/ Other Buffs)", Color(50, 255, 50)}
 	};
 	PROWESS.columnPositions = {
 		[1] = (PROWESS.size.w - 4) * 0.1,
@@ -45,7 +45,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["blademaster"] = {
 				name = "Blademaster",
-				description = "All one handed slashing weapons and claws now deal 20% more damage.",
+				description = "All one handed slashing weapons and claws now deal 15% more damage.",
 				iconOverride = "begotten/ui/belieficons/swordsman.png",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "halfsword_sway"},
@@ -53,7 +53,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["billman"] = {
 				name = "Billman",
-				description = "Polearms, scythes, spears, rapiers, and javelins now deal 20% more armor piercing damage.",
+				description = "Polearms, spears, rapiers, and javelins now deal 20% more armor piercing damage.",
 				quote = "The honest soldier keeps his distance from the bloodthirsty fools who seek his demise.",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "halfsword_sway", "blademaster"},

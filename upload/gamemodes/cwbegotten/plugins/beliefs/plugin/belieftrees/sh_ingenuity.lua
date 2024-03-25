@@ -128,7 +128,7 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 			},
 			["fortify_the_plate"] = {
 				name = "Fortify the Plate",
-				description = "Increases the protection value of all armor by 10%.",
+				description = "Increases the protection value of all armor by 10 points.",
 				iconOverride = "begotten/ui/belieficons/hauberk.png",
 				requirements = {"ingenious", "scour_the_rust"},
 				row = 3,

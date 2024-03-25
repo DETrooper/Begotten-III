@@ -11,9 +11,14 @@ function cwWeather:ClockworkInitialized()
 end
 
 function cwWeather:SetWeather(weather, bSkipTransition)
-	if (!table.HasValue(table.GetKeys(self.weatherTypes), weather)) then self.nextWeatherTime = CurTime() + 5; return; end
+	local curTime = CurTime();
 	
-	self.nextWeatherTime = CurTime() + math.random(self.weatherTypes[weather].minDuration or 300, self.weatherTypes[weather].maxDuration or 1800);
+	if (!table.HasValue(table.GetKeys(self.weatherTypes), weather)) then self.nextWeatherTime = curTime + 5; return; end
+	
+	local minDuration = self.weatherTypes[weather].minDuration or 300;
+	local maxDuration = math.max(self.weatherTypes[weather].maxDuration or 1800, minDuration);
+	
+	self.nextWeatherTime = curTime + math.random(minDuration, maxDuration);
 	
 	local oldWeather = self.weather or "normal";
 	local weatherTable = self.weatherTypes[weather];
@@ -81,17 +86,31 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				if player:IsOnFire() then
 					player:Extinguish();
 				end
-			end
-		
-			if weather == "thunderstorm" then
-				if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
-					Schema:DoTesla(player, true);
-				end
-			elseif weather == "acidrain" then
+				
 				if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
 					Schema:DoTesla(player, true);
 				end
 				
+				local activeWeapon = player:GetActiveWeapon();
+				
+				if IsValid(activeWeapon) and activeWeapon.Base == "begotten_firearm_base" then
+					if math.random(1, 30) == 30 then
+						local itemTable = item.GetByWeapon(activeWeapon);
+						
+						if itemTable then
+							local ammo = itemTable:GetData("Ammo");
+							
+							if ammo and #ammo > 0 and !itemTable.usesMagazine then
+								itemTable:SetData("Ammo", {});
+								
+								Clockwork.player:Notify(player, "Your weapon fills with water and your powder charge is ruined!");
+							end
+						end
+					end
+				end
+			end
+		
+			if weather == "acidrain" then
 				local armorItem = player:GetClothesEquipped();
 				local helmetItem = player:GetHelmetEquipped();
 				local shouldBurn = false;
@@ -105,9 +124,11 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				end
 				
 				if !cwBeliefs or !player:HasBelief("ingenuity_finisher") then
-					local hasScourRust = player:HasBelief("scour_the_rust");
+					local hasScourRust = cwBeliefs and player:HasBelief("scour_the_rust");
 				
 					for k, v in pairs(player.equipmentSlots) do
+						if k == "Backpacks" or k == "Charm1" or k == "Charm2" then continue end;
+						
 						if v and v:IsInstance() then
 							if !v.attributes or !table.HasValue(v.attributes, "conditionless") then
 								if hasScourRust then

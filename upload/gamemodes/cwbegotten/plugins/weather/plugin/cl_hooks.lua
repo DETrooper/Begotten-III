@@ -185,7 +185,13 @@ end
 netstream.Hook("SetWeather", function(weather)
 	cwWeather.weather = weather;
 	
+	local weatherTable = cwWeather.weatherTypes[weather];
+	
 	if cwWeather.loopingAmbience then
+		if weatherTable.loopingAmbience and tostring(cwWeather.loopingAmbience) == "CSoundPatch ["..weatherTable.loopingAmbience.."]" then
+			return;
+		end
+		
 		cwWeather.loopingAmbience:FadeOut(2);
 		cwWeather.loopingAmbience = nil;
 	end

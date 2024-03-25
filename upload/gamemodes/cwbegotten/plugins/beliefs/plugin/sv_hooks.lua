@@ -846,7 +846,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					
 					if attacker:HasBelief("bestial") then
 						if attacker:Sanity() <= 40 then
-							newDamage = newDamage + (originalDamage * 0.15);
+							newDamage = newDamage + (originalDamage * 0.1);
 						end
 					end
 					
@@ -864,11 +864,11 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						if entity:IsPlayer() then
 							local sanity = entity:Sanity();
 							
-							if sanity <= 70 then
+							if sanity <= 90 then
 								if sanity <= 10 then
-									newDamage = newDamage + (originalDamage * 0.80);
+									newDamage = newDamage + (originalDamage * 0.70);
 								else
-									local modifier = 70 - (sanity + 10);
+									local modifier = 90 - (sanity + 10);
 									local bonus = 0.01 * modifier;
 									
 									newDamage = newDamage + (originalDamage * bonus);
@@ -881,7 +881,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						local attackTable = GetTable(attackerWeapon.AttackTable);
 						
 						if (string.find(attackerWeapon.Category, "One Handed") and attackTable.dmgtype == 4) or string.find(attackerWeapon.Category, "Claws") then
-							newDamage = newDamage + (originalDamage * 0.2);
+							newDamage = newDamage + (originalDamage * 0.15);
 						end
 					end
 					
@@ -940,7 +940,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					end
 					
 					if attacker:HasBelief("prowess_finisher") then
-						newDamage = newDamage + (newDamage * 0.25);
+						newDamage = newDamage + (newDamage * 0.1);
 					end
 					
 					if attacker.decapitationBuff then
@@ -1098,9 +1098,9 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			if entity:IsPlayer() then
 				if attacker:HasBelief("manifesto") then
 					if entity:GetFaith() == attacker:GetFaith() then
-						newDamage = newDamage - (originalDamage * 0.15);
+						newDamage = newDamage - (originalDamage * 0.1);
 					else
-						newDamage = newDamage + (originalDamage * 0.25);
+						newDamage = newDamage + (originalDamage * 0.2);
 					end
 				end
 				
@@ -1117,7 +1117,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						end
 					
 						if attacker.tasteOfBloodVictim == entity then
-							newDamage = newDamage + (originalDamage * 0.15);
+							newDamage = newDamage + (originalDamage * 0.10);
 						end
 					end
 					
@@ -1135,9 +1135,9 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 				if attacker.warCryVictims then
 					if table.HasValue(attacker.warCryVictims, entity) then
 						if attacker:HasBelief("deceitful_snake") then
-							newDamage = newDamage + (originalDamage * 0.5);
+							newDamage = newDamage + (originalDamage * 0.4);
 						else
-							newDamage = newDamage + (originalDamage * 0.25);
+							newDamage = newDamage + (originalDamage * 0.2);
 						end
 					end
 				end

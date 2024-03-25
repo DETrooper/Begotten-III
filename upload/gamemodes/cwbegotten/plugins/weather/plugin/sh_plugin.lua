@@ -27,7 +27,7 @@ if cwWeather.systemEnabled then
 			fogEnd = 1024,
 			fogStartNight = 128,
 			fogEndNight = 1024,
-			maxDuration = 600,
+			maxDuration = 360,
 			skyFix = {r = 25, g = 20, b = 1},
 			skyFixNight = {r = 12, g = 10, b = 0},
 			precipitation = "sw_acidrain",

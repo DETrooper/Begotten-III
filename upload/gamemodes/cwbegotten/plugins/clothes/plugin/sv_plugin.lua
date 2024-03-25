@@ -157,7 +157,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					end
 					
 					if attacker:HasBelief("billman") then
-						if (inflictor.Category and (string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier") or string.find(inflictor.Category, "Scythe"))) or inflictor.isJavelin then
+						if (inflictor.Category and (string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier"))) or inflictor.isJavelin then
 							armorPiercing = armorPiercing + (armorPiercing * 0.2);
 						end
 					end
@@ -278,7 +278,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 							end
 							
 							if attacker:HasBelief("billman") then
-								if (inflictor.Category and (string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier") or string.find(inflictor.Category, "Scythe"))) or inflictor.isJavelin then
+								if (inflictor.Category and (string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier"))) or inflictor.isJavelin then
 									armorPiercing = armorPiercing + (armorPiercing * 0.2);
 								end
 							end
@@ -331,7 +331,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						end
 						
 						if player:HasBelief("fortify_the_plate") then
-							protection = protection + (protection * 0.1);
+							protection = protection + 10;
 						end
 						
 						if player:HasBelief("shedskin") then
