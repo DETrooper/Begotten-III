@@ -80,7 +80,7 @@ function playerMeta:HandleNeed(need, amount)
 		local newAmount = currentAmount + amount;
 		
 		if newAmount > currentAmount then
-			if Clockwork.player:HasFlags(self, "I") then
+			if Clockwork.player:HasFlags(self, "N") then
 				return;
 			end
 		

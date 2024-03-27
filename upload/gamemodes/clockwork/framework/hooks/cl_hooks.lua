@@ -300,7 +300,7 @@ end
 function GM:ClockworkInitialized()
 	local logoFile = "clockwork/logo/002.png"
 
-	Clockwork.SpawnIconMaterial = Clockwork.kernel:GetMaterial("vgui/spawnmenu/hover")
+	--Clockwork.SpawnIconMaterial = Clockwork.kernel:GetMaterial("vgui/spawnmenu/hover")
 	Clockwork.DefaultGradient = surface.GetTextureID("gui/gradient_down")
 	Clockwork.GradientTexture = Clockwork.kernel:GetMaterial(Clockwork.option:GetKey("gradient")..".png")
 	Clockwork.ClockworkSplash = Clockwork.kernel:GetMaterial(logoFile)
@@ -319,15 +319,18 @@ function GM:ClockworkInitialized()
 
 	Clockwork.setting:AddSettings()
 
-	Clockwork.directory:SetCategoryTip("Clockwork", "Contains topics based on the Clockwork framework-.")
-	Clockwork.directory:SetCategoryTip("Chat Commands", "Contains a list of commands and their syntax.")
+	Clockwork.directory:SetCategoryTip("Admin", "Contains admin relevant information. Does not show to players.")
+	Clockwork.directory:SetCategoryTip("Admin Commands", "Contains a list of admin commands and their syntax.")
+	Clockwork.directory:SetCategoryTip("Flags", "Contains a list of character flags and their usage.")
+	Clockwork.directory:SetCategoryTip("Commands", "Contains a list of commands and their syntax.")
 
-	Clockwork.directory:AddCode("Clockwork", [[
+	Clockwork.directory:AddCode("Admin", [[
 		
-	]], true, "Clockwork")
+	]], true, "Admin")
 
-	Clockwork.directory:AddCategory("Plugins", "Clockwork")
-	Clockwork.directory:AddCategory("Flags", "Clockwork")
+	Clockwork.directory:AddCategory("Admin Commands", "Admin", true)
+	--Clockwork.directory:AddCategory("Plugins", "Admin", true)
+	Clockwork.directory:AddCategory("Flags", "Admin", true)
 
 	_G["ClockworkClientsideBooted"] = true
 end
@@ -681,13 +684,14 @@ function GM:MenuItemsAdd(menuItems)
 	local systemName = Clockwork.option:GetKey("name_system")
 	local settingsName = Clockwork.option:GetKey("name_settings")
 	local scoreboardName = Clockwork.option:GetKey("name_scoreboard")
-	--local directoryName = Clockwork.option:GetKey("name_directory")
+	local directoryName = Clockwork.option:GetKey("name_directory")
 	--local inventoryName = Clockwork.option:GetKey("name_inventory")
 
-	menuItems:Add("Inventory", "cwInventory", "Manage your inventory.", nil, nil)
-	menuItems:Add("Settings", "cwSettings", "Configure the way CW works for you.", nil, nil)
-	menuItems:Add("System", "cwSystem", "Customize server settings.", nil, nil)
-	menuItems:Add("Scoreboard", "cwScoreboard", "See who's playing on the server.", nil, nil)
+	menuItems:Add("Inventory", "cwInventory", "Manage your inventory.")
+	menuItems:Add("Settings", "cwSettings", "Configure the way CW works for you.")
+	menuItems:Add("System", "cwSystem", "Customize server settings.")
+	menuItems:Add("Scoreboard", "cwScoreboard", "See who's playing on the server.")
+	menuItems:Add(directoryName, "cwDirectory", Clockwork.option:GetKey("description_directory"))
 	--menuItems:Add("Crafting", "DPanel", "Craft.", nil, nil)
 	--menuItems:Add("Rituals", "DPanel", "Do some twisted shit.", nil, nil)
 	--menuItems:Add("Attributes", "cwAttributes", "See your progress on skills.", nil, nil)

@@ -268,18 +268,33 @@ else
 		local text = string.gsub(string.gsub(commandTable.text, ">", "&gt;"), "<", "&lt;")
 
 		if (!commandTable.helpID) then
-			commandTable.helpID = Clockwork.directory:AddCode("Commands", [[
-				<div class="cwTitleSeperator">
-					$command_prefix$]]..string.upper(commandTable.name)..[[
-				</div>
-				<div class="cwContentText">
-					<div class="cwCodeText">
-						<i>]]..text..[[</i>
+			if commandTable.access ~= "b" then
+				commandTable.helpID = Clockwork.directory:AddCode("Admin Commands", [[
+					<div class="cwTitleSeperator">
+						$command_prefix$]]..string.upper(commandTable.name)..[[
 					</div>
-					]]..commandTable.tip..[[
-				</div>
-				<br>
-			]], true, commandTable.name)
+					<div class="cwContentText">
+						<div class="cwCodeText">
+							<i>]]..text..[[</i>
+						</div>
+						]]..commandTable.tip..[[
+					</div>
+					<br>
+				]], true, commandTable.name, nil, true)
+			else
+				commandTable.helpID = Clockwork.directory:AddCode("Commands", [[
+					<div class="cwTitleSeperator">
+						$command_prefix$]]..string.upper(commandTable.name)..[[
+					</div>
+					<div class="cwContentText">
+						<div class="cwCodeText">
+							<i>]]..text..[[</i>
+						</div>
+						]]..commandTable.tip..[[
+					</div>
+					<br>
+				]], true, commandTable.name)
+			end
 		end
 	end
 

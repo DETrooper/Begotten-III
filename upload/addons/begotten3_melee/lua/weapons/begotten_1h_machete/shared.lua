@@ -132,3 +132,13 @@ SWEP.VElements = {
 SWEP.WElements = {
 	["w_machete"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/machete.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.5, 1.5, 4.675), angle = Angle(-174.157, 73.636, 1.169), size = Vector(1, 1, 1), material = "", skin = 2, bodygroup = {} }
 }
+
+SWEP.VElementsDual = {
+	["v_left"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/machete.mdl", bone = "Dummy16", rel = "", pos = Vector(-2.5, -3.753, -0.6), angle = Angle(-111.04, -36.235, -104.027), size = Vector(1, 1, 1), material = "", skin = 2, bodygroup = {} },
+	["v_right"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/machete.mdl", bone = "Dummy01", rel = "", pos = Vector(-1, -7, 0.7), angle = Angle(-90, 80.649, 12.857), size = Vector(1, 1, 1), material = "", skin = 2, bodygroup = {} }
+}
+
+SWEP.WElementsDual = {
+	["w_left"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/machete.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2, 0.5, -3), angle = Angle(8.182, 80.649, 10.519), size = Vector(1, 1, 1), material = "", skin = 2, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/mosi/fallout4/props/weapons/melee/machete.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.8, 3, 3), angle = Angle(-22.209, -104.027, -180), size = Vector(1, 1, 1), material = "", skin = 2, bodygroup = {} }
+}

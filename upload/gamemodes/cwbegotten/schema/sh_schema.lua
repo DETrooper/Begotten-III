@@ -5,7 +5,26 @@
 
 Schema:SetGlobalAlias("Begotten");
 
-Clockwork.flag:Add("j", "Bypass Char Limit", "Ability to bypass the 1 character limit for whitelisted factions.")
+Clockwork.flag:Add("C", "Spawn Vehicles", "Access to spawn vehicles.")
+Clockwork.flag:Add("r", "Spawn Ragdolls", "Access to spawn ragdolls.")
+Clockwork.flag:Add("c", "Spawn Chairs", "Access to spawn chairs.")
+Clockwork.flag:Add("e", "Spawn Props", "Access to spawn props.")
+Clockwork.flag:Add("p", "Physics Gun", "Access to the physics gun.")
+Clockwork.flag:Add("n", "Spawn NPCs", "Access to spawn NPCs.")
+Clockwork.flag:Add("t", "Tool Gun", "Access to the tool gun.")
+Clockwork.flag:Add("j", "Bypass Char Limit", "Ability to bypass the 1 character limit for whitelisted factions as a non-admin.")
+Clockwork.flag:Add("P", "Proclaim", "Access to use /proclaim as a non-admin.")
+Clockwork.flag:Add("T", "Mister Electric", "Shoot lightning out of your fists.")
+Clockwork.flag:Add("K", "Leofrastus Bombastus", "Shoot explosions out of your fists.")
+Clockwork.flag:Add("6", "Rubber Johnny", "Deflect the blows of your foes back onto themselves.")
+Clockwork.flag:Add("4", "Super Rolling", "Combat roll much further.")
+Clockwork.flag:Add("B", "Infinite Jumping", "Lets you jump even when out of stamina.")
+Clockwork.flag:Add("E", "Event Character", "Take no fall damage or explosive damage. Infinite stamina. Increased run speed. High jump.")
+Clockwork.flag:Add("L", "Listener", "Listen in to all radio frequencies, darkwhispers, ravenspeaks, relays, and more.")
+Clockwork.flag:Add("I", "No Limb Damage", "Take no limb damage.")
+Clockwork.flag:Add("N", "No Character Needs", "Character needs (i.e. hunger) will not affect you.")
+Clockwork.flag:Add("M", "No Pain Sounds", "No pain or death sounds from your character.")
+Clockwork.flag:Add("U", "Clan Crast Flag", "Flag for Clan Crast merchant.")
 
 if (game.GetMap() == "rp_begotten3") then
 	Schema.MapLocations = {

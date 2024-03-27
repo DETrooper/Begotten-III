@@ -137,6 +137,8 @@ function PANEL:ClearNodes()
 	self.treeNode.Items = {};
 end;
 
+local CW_REBUILDING_DIRECTORY;
+
 -- A function to rebuild the panel.
 function PANEL:Rebuild()
 	if (!CW_REBUILDING_DIRECTORY) then
@@ -155,13 +157,15 @@ function PANEL:Rebuild()
 		local nodeTable = {};
 		
 		for k, v in pairs(Clockwork.directory.stored) do
-			if (!v.parent) then
+			if (!v.parent) and (!v.adminOnly or Clockwork.Client:IsAdmin()) then
 				nodeTable[v.category] = self.treeNode:AddNode(v.category);
 				nodeTable[v.category]:SetExpanded(true, true);
 			end;
 		end;
 		
 		for k, v in pairs(Clockwork.directory.stored) do
+			if (v.adminOnly and !Clockwork.Client:IsAdmin()) then continue end;
+			
 			if (v.parent and nodeTable[v.parent]) then
 				nodeTable[v.category] = nodeTable[v.parent]:AddNode(v.category);
 			elseif (!nodeTable[v.category]) then

@@ -317,19 +317,19 @@ function plugin.Register(pluginTable)
 		
 		util.IncludeAllSubfolders(pluginTable:GetBaseDir().."/commands/");
 
-		if (CLIENT and Schema != pluginTable) then
-			pluginTable.helpID = Clockwork.directory:AddCode("Plugins", [[
-				<div class="cwTitleSeperator">
-					]]..string.upper(pluginTable:GetName())..[[
-				</div>
-				<div class="cwContentText">
-					<div class="cwCodeText">
-						developed by ]]..pluginTable:GetAuthor()..[[
-					</div>
-					]]..pluginTable:GetDescription()..[[
-				</div>
-			]], true, pluginTable:GetAuthor());
-		end
+		--if (CLIENT and Schema != pluginTable) then
+			--pluginTable.helpID = Clockwork.directory:AddCode("Plugins", [[
+				--<div class="cwTitleSeperator">
+					--]]..string.upper(pluginTable:GetName())..[[
+				--</div>
+				--<div class="cwContentText">
+					--<div class="cwCodeText">
+						--developed by ]]..pluginTable:GetAuthor()..[[
+					--</div>
+					--]]..pluginTable:GetDescription()..[[
+				--</div>
+			--]], true, pluginTable:GetAuthor());
+		--end
 	end
 
 	if (!pluginTable:IsSingleFile()) then

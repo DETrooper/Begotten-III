@@ -94,3 +94,13 @@ SWEP.VElements = {
 SWEP.WElements = {
 	["w_knightsbane"] = { type = "Model", model = "models/demonssouls/weapons/mail breaker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.1, 0), angle = Angle(-90, 90, 36.234), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
+
+SWEP.VElementsDual = {
+	["v_left"] = { type = "Model", model = "models/demonssouls/weapons/mail breaker.mdl", bone = "Dummy16", rel = "", pos = Vector(0, -8.886, -0.1), angle = Angle(0, 90, 0), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["v_right"] = { type = "Model", model = "models/demonssouls/weapons/mail breaker.mdl", bone = "Dummy01", rel = "", pos = Vector(0.5, -11.886, 0.5), angle = Angle(0, 90, 10), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElementsDual = {
+	["w_left"] = { type = "Model", model = "models/demonssouls/weapons/mail breaker.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.595, 1.157, 0.977), angle = Angle(110, 120, -176.495), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/demonssouls/weapons/mail breaker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.299, 1.557, -0.519), angle = Angle(-62.987, 64.286, 3.506), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+}

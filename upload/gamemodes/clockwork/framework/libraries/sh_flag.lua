@@ -12,20 +12,20 @@ Clockwork.flag.stored = stored
 
 -- A function to add a new flag.
 function Clockwork.flag:Add(flag, name, details)
-	--if (CLIENT and !stored[flag]) then
-		--Clockwork.directory:AddCode("Flags", [[
-			--<tr>
-				--<td class="cwTableContent"><b><font color="red">]]..flag..[[</font></b></td>
-				--<td class="cwTableContent"><i>]]..details..[[</i></td>
-			--</tr>
-		--]], nil, flag, function(htmlCode, sortData)
-			--if (Clockwork.player:HasFlags(Clockwork.Client, sortData)) then
-				--return Clockwork.kernel:Replace(Clockwork.kernel:Replace(htmlCode, [[<font color="red">]], [[<font color="green">]]), "</font>", "</font>");
-			--else
-				--return htmlCode;
-			--end;
-		--end);
-	--end
+	if (CLIENT and !stored[flag]) then
+		Clockwork.directory:AddCode("Flags", [[
+			<tr>
+				<td class="cwTableContent"><b><font color="red">]]..flag..[[</font></b></td>
+				<td class="cwTableContent"><i>]]..details..[[</i></td>
+			</tr>
+		]], nil, flag, function(htmlCode, sortData)
+			if (Clockwork.player:HasFlags(Clockwork.Client, sortData)) then
+				return Clockwork.kernel:Replace(Clockwork.kernel:Replace(htmlCode, [[<font color="red">]], [[<font color="green">]]), "</font>", "</font>");
+			else
+				return htmlCode;
+			end;
+		end, true);
+	end
 
 	stored[flag] = {
 		name = name,
@@ -73,13 +73,3 @@ function Clockwork.flag:GetFlagByName(name, default)
 
 	return default
 end
-
-Clockwork.flag:Add("C", "Spawn Vehicles", "Access to spawn vehicles.")
-Clockwork.flag:Add("r", "Spawn Ragdolls", "Access to spawn ragdolls.")
-Clockwork.flag:Add("c", "Spawn Chairs", "Access to spawn chairs.")
-Clockwork.flag:Add("e", "Spawn Props", "Access to spawn props.")
-Clockwork.flag:Add("p", "Physics Gun", "Access to the physics gun.")
-Clockwork.flag:Add("n", "Spawn NPCs", "Access to spawn NPCs.")
-Clockwork.flag:Add("t", "Tool Gun", "Access to the tool gun.")
-Clockwork.flag:Add("G", "Give Item", "Access to the give items.")
-Clockwork.flag:Add("z", "Door Access", "Access to manipulate all doors.")

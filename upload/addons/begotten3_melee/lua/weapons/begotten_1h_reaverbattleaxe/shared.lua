@@ -110,3 +110,13 @@ SWEP.VElements = {
 SWEP.WElements = {
 	["w_reaverbattleaxe"] = { type = "Model", model = "models/begotten/weapons/axe3.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.9, 2, 3.635), angle = Angle(-180, -19.871, -10.52), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
+
+SWEP.VElementsDual = {
+	["v_left"] = { type = "Model", model = "models/begotten/weapons/axe3.mdl", bone = "Dummy16", rel = "", pos = Vector(-0.59, -6, 0.5), angle = Angle(15.194, 157.792, 99.35), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["v_right"] = { type = "Model", model = "models/begotten/weapons/axe3.mdl", bone = "Dummy01", rel = "", pos = Vector(0.5, -11, 0.449), angle = Angle(-180, -22.209, -93), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElementsDual = {
+	["w_left"] = { type = "Model", model = "models/begotten/weapons/axe3.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 2.579, 5.714), angle = Angle(-164.805, 0, -12.858), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/begotten/weapons/axe3.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3, 0.589, -2.597), angle = Angle(10.519, 174.156, -10.52), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+}

@@ -33,7 +33,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 	end
 
 	if (!plyTab.nextSanityDecay or plyTab.nextSanityDecay <= curTime) then
-		if (Clockwork.player:HasFlags(player, "E")) then
+		if (Clockwork.player:HasFlags(player, "E") or Clockwork.player:HasFlags(self, "N")) then
 			player:HandleSanity(100);
 			plyTab.nextSanityDecay = curTime + sanity_interval;
 			

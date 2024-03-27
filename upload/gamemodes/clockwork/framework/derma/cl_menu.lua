@@ -348,8 +348,8 @@ function PANEL:Rebuild(change)
 				button:SizeToContents();
 				button:SetMouseInputEnabled(true);
 				button:SetPos(x, y);
-
-				local bannedMenus = {"INVENTORY", "SETTINGS"};
+				
+				local bannedMenus = {"INVENTORY", "SETTINGS", "MANIFESTO"};
 				
 				if (!table.HasValue(bannedMenus, string.upper(v.text))) then
 					y = y + button:GetTall() + 4;
@@ -367,6 +367,7 @@ function PANEL:Rebuild(change)
 				if (string.find(string.upper(v.text), "INVENTORY")) then
 					local width, height = Clockwork.kernel:GetCachedTextSize(smallTextFont, "Sack");
 					button:SetPos((((scrW - width / 2) - 256) + width / 2), ((scrH - height / 2) + imageHeight * 0.125));
+					button:SetSize(width, height);
 					button:SetText("Sack");
 					buttons[#buttons + 1] = button;
 					function button:Paint()
@@ -388,8 +389,15 @@ function PANEL:Rebuild(change)
 					end
 				elseif (string.find(string.upper(v.text), "SETTINGS")) then
 					local width, height = Clockwork.kernel:GetCachedTextSize(smallTextFont, "Settings");
-					button:SetPos(ScrW() - (width * 2), height);
+					button:SetPos(ScrW() - width - 40, height);
+					button:SetSize(width, height);
 					button:SetText("Settings");
+					buttons[#buttons + 1] = button;
+				elseif (string.find(string.upper(v.text), "MANIFESTO")) then
+					local width, height = Clockwork.kernel:GetCachedTextSize(smallTextFont, "Manifesto");
+					button:SetPos(ScrW() - width - 40, (height * 2) + 8);
+					button:SetSize(width, height);
+					button:SetText("Manifesto");
 					buttons[#buttons + 1] = button;
 				end;
 			end;

@@ -15,6 +15,10 @@ local PANEL = {};
 
 -- Called when the panel is initialized.
 function PANEL:Init()
+	self.PaintOver = function()
+	
+	end
+
 	self.Icon.PaintOver = function(icon)
 		local curTime = CurTime();
 		
@@ -48,6 +52,12 @@ function PANEL:Init()
 			self.MatOverride:SetVector("$color", Vector(1, 1, 1));
 		end;
 	end;
+	
+	timer.Simple(0, function()
+		if IsValid(self) then
+			self:SetTooltip(false)
+		end
+	end);
 end;
 
 -- A function to set the border color.

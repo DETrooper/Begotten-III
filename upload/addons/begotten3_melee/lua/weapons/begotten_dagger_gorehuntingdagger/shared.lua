@@ -94,3 +94,13 @@ SWEP.VElements = {
 SWEP.WElements = {
 	["w_gorehuntingdagger"] = { type = "Model", model = "models/demonssouls/weapons/secret dagger.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.299, -0.301), angle = Angle(-5.844, -113.377, 3.506), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
+
+SWEP.VElementsDual = {
+	["v_left"] = { type = "Model", model = "models/demonssouls/weapons/secret dagger.mdl", bone = "Dummy16", rel = "", pos = Vector(0, -8.886, -0.1), angle = Angle(-90, 60, 180), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["v_right"] = { type = "Model", model = "models/demonssouls/weapons/secret dagger.mdl", bone = "Dummy01", rel = "", pos = Vector(0.5, -11.886, 0.5), angle = Angle(-90, 80, 180), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElementsDual = {
+	["w_left"] = { type = "Model", model = "models/demonssouls/weapons/secret dagger.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3, 1.299, -0.301), angle = Angle(180.844, -100.377, 3.506), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/demonssouls/weapons/secret dagger.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.299, -0.301), angle = Angle(-5.844, -113.377, 3.506), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+}

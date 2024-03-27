@@ -120,3 +120,4 @@ SWEP.WElementsDual = {
 	["w_left"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 2.579, 5.714), angle = Angle(-164.805, 0, -12.858), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
 	["w_right"] = { type = "Model", model = "models/begotten/weapons/axe1.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3, 0.589, -2.597), angle = Angle(10.519, 174.156, -10.52), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
+

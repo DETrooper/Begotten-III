@@ -34,7 +34,7 @@ local MASTER_FORMATTING = [[
 		</style>
 	</head>
 	<body>
-		[information]
+		{information}
 	</body>
 ]]
 
@@ -44,7 +44,7 @@ local DEFAULT_FORMATTING = [[
 		<div class="cwContentTitle">
 			<img src="[icon]"/>[category]
 		</div>
-		[information]
+		{information}
 	</div>
 ]]
 
@@ -154,7 +154,7 @@ function Clockwork.directory:CategoryExists(category)
 end
 
 -- A function to add a category.
-function Clockwork.directory:AddCategory(category, parent)
+function Clockwork.directory:AddCategory(category, parent, adminOnly)
 	if (_G["ClockworkClientsideBooted"]) then return end
 
 	if (parent) then
@@ -166,6 +166,7 @@ function Clockwork.directory:AddCategory(category, parent)
 
 		self.stored[#self.stored + 1] = {
 			category = category,
+			adminOnly = adminOnly,
 			pageData = {},
 			parent = parent
 		}
@@ -276,13 +277,17 @@ function Clockwork.directory:GetPanel()
 	return self.panel
 end
 
+Clockwork.directory:SetCategorySorting("Admin Commands", function(a, b)
+	return (a.sortData or a.htmlCode) < (b.sortData or b.htmlCode)
+end)
+
 Clockwork.directory:SetCategorySorting("Commands", function(a, b)
 	return (a.sortData or a.htmlCode) < (b.sortData or b.htmlCode)
 end)
 
-Clockwork.directory:SetCategorySorting("Plugins", function(a, b)
+--[[Clockwork.directory:SetCategorySorting("Plugins", function(a, b)
 	return (a.sortData or a.htmlCode) < (b.sortData or b.htmlCode)
-end)
+end)]]--
 
 Clockwork.directory:SetCategorySorting("Flags", function(a, b)
 	local hasA = Clockwork.player:HasFlags(Clockwork.Client, a.sortData)
@@ -307,7 +312,7 @@ Clockwork.directory:SetCategoryFormatting("Flags", [[
 				<td class="cwTableHeader">Flag</td>
 				<td class="cwTableHeader">Details</td>
 			</tr>
-			[information]
+			{information}
 		</table>
 	</div>
 ]], true)

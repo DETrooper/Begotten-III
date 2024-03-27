@@ -123,3 +123,13 @@ SWEP.VElements = {
 SWEP.WElements = {
 	["w_satanicsword"] = { type = "Model", model = "models/skyrim/daedric/sword/w_daedricsword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.59, 2.25, -1.558), angle = Angle(171.817, -22.209, -10.52), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
+
+SWEP.VElementsDual = {
+	["v_left"] = { type = "Model", model = "models/skyrim/daedric/sword/w_daedricsword.mdl", bone = "Dummy16", rel = "", pos = Vector(-1.309, -6.48, -1.384), angle = Angle(180, -21.112, -98.889), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["v_right"] = { type = "Model", model = "models/skyrim/daedric/sword/w_daedricsword.mdl", bone = "Dummy01", rel = "", pos = Vector(5.309, 1.48, 3.407), angle = Angle(180, -21.112, -98.889), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElementsDual = {
+	["w_left"] = { type = "Model", model = "models/skyrim/daedric/sword/w_daedricsword.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(4.59, 0.7, 2.558), angle = Angle(180, 0, 180), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/skyrim/daedric/sword/w_daedricsword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.59, 2.25, -1.558), angle = Angle(141.817, -22.209, -10.52), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
+}

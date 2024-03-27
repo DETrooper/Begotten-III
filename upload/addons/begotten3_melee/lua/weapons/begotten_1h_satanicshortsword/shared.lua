@@ -132,3 +132,13 @@ SWEP.VElements = {
 SWEP.WElements = {
 	["w_satanicshortsword"] = { type = "Model", model = "models/aoc_weapon/w_shortsword_evil.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.4, 1.2, -6.753), angle = Angle(80.649, -113.377, -90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
+
+SWEP.VElementsDual = {
+	["v_left"] = { type = "Model", model = "models/aoc_weapon/w_shortsword_evil.mdl", bone = "Dummy16", rel = "", pos = Vector(0, -15.886, 0.5), angle = Angle(0, -90, 90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["v_right"] = { type = "Model", model = "models/aoc_weapon/w_shortsword_evil.mdl", bone = "Dummy01", rel = "", pos = Vector(-0.2, -18.886, 1), angle = Angle(0, -90, 90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElementsDual = {
+	["w_left"] = { type = "Model", model = "models/aoc_weapon/w_shortsword_evil.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.4, 3.2, 6.753), angle = Angle(-80.649, 113.377, -90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/aoc_weapon/w_shortsword_evil.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.8, 0.1, -6.753), angle = Angle(70.649, -113.377, -90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+}
