@@ -1,6 +1,161 @@
 --[[
 	Begotten III: Jesus Wept
 --]]
+
+local map = game.GetMap();
+
+if map == "rp_begotten3" then
+	if !DUELING_ARENAS then
+		DUELING_ARENAS = {
+			["bridge"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(11851.328125, -11511.490234, -6132.968750),
+				spawnAngles1 = Angle(0, -90, 0),
+				spawnPosition2 = Vector(11851.328125, -13267.906250, -6132.968750),
+				spawnAngles2 = Angle(0, 90, 0),
+				timeLimit = 300,
+			},
+			["hell"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(-11658.517578, -8087.519531, -12519.070313),
+				spawnAngles1 = Angle(0, -95, 0),
+				spawnPosition2 = Vector(-11807.810547, -9189.899414, -12513.865234),
+				spawnAngles2 = Angle(0, 83, 0),
+				timeLimit = 300,
+			},
+			["gore"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(-11563.854492, -11667.994141, 12062.031250),
+				spawnAngles1 = Angle(0, -135, 0),
+				spawnPosition2 = Vector(-12546.595703, -12689.111328, 12062.031250),
+				spawnAngles2 = Angle(0, 45, 0),
+				timeLimit = 300,
+			},
+			["silenthill"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(8948.405273, -13265.604492, -6185.968750),
+				spawnAngles1 = Angle(0, 90, 0),
+				spawnPosition2 = Vector(8947.118164, -12329.220703, -6185.968750),
+				spawnAngles2 = Angle(0, -90, 0),
+				timeLimit = 300,
+			},
+			["wasteland"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(14688.909180, -4705.298340, -2343.500244),
+				spawnAngles1 = Angle(0, -135, 0),
+				spawnPosition2 = Vector(13607.927734, -5839.170898, -2343.968750),
+				spawnAngles2 = Angle(0, 45, 0),
+				timeLimit = 300,
+			},
+		};
+	end
+
+	if !DUELING_STATUES then
+		DUELING_STATUES = {
+			["castle"] = {
+				["spawnPosition"] = Vector(-14081.3125, -12238.5, -1694.34375),
+				["spawnAngles"] = Angle(0, -90, 0),
+			},
+			["cave"] = {
+				--["spawnPosition"] = Vector(14538.401367, -12252.043945, -1216.099365),
+				--["spawnAngles"] = Angle(0, 82.5, 0),
+				["spawnPosition"] = Vector(14357.21875, -11696.84375, -981.03125),
+				["spawnAngles"] = Angle(0, 173, 0),
+			},
+			["gore"] = {
+				["spawnPosition"] = Vector(387.795929, -5903.227051, 11575.831055),
+				["spawnAngles"] = Angle(0, 100, 0),
+			},
+			["hell"] = {
+				["spawnPosition"] = Vector(-2232.943115, -9138.589844, -6809.481934),
+				["spawnAngles"] = Angle(0, -90, 0),
+			},
+			["tower"] = {
+				["spawnPosition"] = Vector(-1489.162354, 14228.241211, -506.353607),
+				["spawnAngles"] = Angle(0, 180, 0),
+			},
+		};
+	end
+elseif map == "rp_begotten_redux" or map == "rp_scraptown" then
+	if !DUELING_ARENAS then
+		DUELING_ARENAS = {
+			["bridge"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(11851.328125, -11511.490234, -6132.968750),
+				spawnAngles1 = Angle(0, -90, 0),
+				spawnPosition2 = Vector(11851.328125, -13267.906250, -6132.968750),
+				spawnAngles2 = Angle(0, 90, 0),
+				timeLimit = 300,
+			},
+			["hell"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(-11658.517578, -8087.519531, -12519.070313),
+				spawnAngles1 = Angle(0, -95, 0),
+				spawnPosition2 = Vector(-11807.810547, -9189.899414, -12513.865234),
+				spawnAngles2 = Angle(0, 83, 0),
+				timeLimit = 300,
+			},
+			["silenthill"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(8948.405273, -13265.604492, -6185.968750),
+				spawnAngles1 = Angle(0, 90, 0),
+				spawnPosition2 = Vector(8947.118164, -12329.220703, -6185.968750),
+				spawnAngles2 = Angle(0, -90, 0),
+				timeLimit = 300,
+			},
+		};
+	end
+
+	if !DUELING_STATUES then
+		if map == "rp_begotten_redux" then
+			DUELING_STATUES = {
+				["hell"] = {
+					["spawnPosition"] = Vector(-2232.943115, -9138.589844, -6809.481934),
+					["spawnAngles"] = Angle(0, -90, 0),
+				},
+				["old_manor"] = {
+					["spawnPosition"] = Vector(13104.25, 8746.46875, 650.59375),
+					["spawnAngles"] = Angle(0, 0, 0),
+				},
+				["town"] = {
+					["spawnPosition"] = Vector(-11018.03125, -5878.59375, 562.4375),
+					["spawnAngles"] = Angle(0, -90, 0),
+				},
+				["underground"] = {
+					["spawnPosition"] = Vector(-8943.71875, -2801.875, -214.5),
+					["spawnAngles"] = Angle(0, 90, 0),
+				},
+			};
+		elseif map == "rp_scraptown" then
+			DUELING_STATUES = {
+				["caves"] = {
+					["spawnPosition"] = Vector(-8315.78125, 13203.3125, 409.8125),
+					["spawnAngles"] = Angle(0, 155, 0),
+				},
+				["hell"] = {
+					["spawnPosition"] = Vector(-2232.943115, -9138.589844, -6809.481934),
+					["spawnAngles"] = Angle(0, -90, 0),
+				},
+				["shanties"] = {
+					["spawnPosition"] = Vector(8410.15625, 8800.71875, 990.34375),
+					["spawnAngles"] = Angle(0, 0, 0),
+				},
+				["scrap_town"] = {
+					["spawnPosition"] = Vector(-3304.46875, -4355.4375, 483.09375),
+					["spawnAngles"] = Angle(-0.374, -107.216, -11.404),
+				},
+			};
+		end
+	end
+end
 	
 if !cwDueling.playersInMatchmaking then
 	cwDueling.playersInMatchmaking = {};
@@ -54,7 +209,7 @@ function cwDueling:MatchmakingCheck()
 	if IsValid(player1) and player1:Alive() and IsValid(player2) and player2:Alive() then
 		local available_arenas = {};
 		
-		for k, v in pairs(self.arenas) do
+		for k, v in pairs(DUELING_ARENAS) do
 			if (!v.duelingPlayer1) and (!v.duelingPlayer2) then
 				table.insert(available_arenas, k);
 			end
@@ -153,8 +308,8 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 
 	local random_arena = available_arenas[math.random(1, #available_arenas)];
 	
-	self.arenas[random_arena].duelingPlayer1 = player1;
-	self.arenas[random_arena].duelingPlayer2 = player2;
+	DUELING_ARENAS[random_arena].duelingPlayer1 = player1;
+	DUELING_ARENAS[random_arena].duelingPlayer2 = player2;
 	player1.opponent = player2;
 	player2.opponent = player1;
 	
@@ -182,8 +337,8 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 		
 			player1:Spawn();	
 			player1:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 5, 0);
-			player1:SetPos(self.arenas[random_arena].spawnPosition1);
-			player1:SetEyeAngles(self.arenas[random_arena].spawnAngles1);
+			player1:SetPos(DUELING_ARENAS[random_arena].spawnPosition1);
+			player1:SetEyeAngles(DUELING_ARENAS[random_arena].spawnAngles1);
 			player1:SetHealth(player1:GetMaxHealth());
 			
 			if player1:GetLocalVar("Hatred") then
@@ -192,8 +347,8 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 
 			player2:Spawn();	
 			player2:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 5, 0);
-			player2:SetPos(self.arenas[random_arena].spawnPosition2);
-			player2:SetEyeAngles(self.arenas[random_arena].spawnAngles2);
+			player2:SetPos(DUELING_ARENAS[random_arena].spawnPosition2);
+			player2:SetEyeAngles(DUELING_ARENAS[random_arena].spawnAngles2);
 			player2:SetHealth(player2:GetMaxHealth());
 			
 			if player2:GetLocalVar("Hatred") then
@@ -212,15 +367,15 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 			hook.Run("PlayerEnteredDuel", player1);
 			hook.Run("PlayerEnteredDuel", player2);
 			
-			timer.Create("DuelTimer_"..random_arena, self.arenas[random_arena].timeLimit, 1, function()
+			timer.Create("DuelTimer_"..random_arena, DUELING_ARENAS[random_arena].timeLimit, 1, function()
 				if IsValid(player1) and IsValid(player2) then
 					self:DuelAborted(player1, player2);
 				end
 			end)
 		else
 			-- One of the players disconnected or some shit after finding a match.
-			self.arenas[random_arena].duelingPlayer1 = nil;
-			self.arenas[random_arena].duelingPlayer2 = nil;
+			DUELING_ARENAS[random_arena].duelingPlayer1 = nil;
+			DUELING_ARENAS[random_arena].duelingPlayer2 = nil;
 			
 			if IsValid(player1) then
 				Schema:EasyText(player1, "icon16/shield_go.png", "orangered", "Duel Aborted!")
@@ -240,8 +395,8 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 end
 
 function cwDueling:PlayerIsDueling(player)
-	if self.arenas then
-		for k, v in pairs(self.arenas) do
+	if DUELING_ARENAS then
+		for k, v in pairs(DUELING_ARENAS) do
 			if v.duelingPlayer1 == player or v.duelingPlayer2 == player then
 				return true;
 			end
@@ -252,8 +407,8 @@ function cwDueling:PlayerIsDueling(player)
 end
 
 function cwDueling:PlayersAreDueling(player1, player2)
-	if self.arenas then
-		for k, v in pairs(self.arenas) do
+	if DUELING_ARENAS then
+		for k, v in pairs(DUELING_ARENAS) do
 			if v.duelingPlayer1 == player1 and v.duelingPlayer2 == player2 then
 				return true;
 			elseif v.duelingPlayer2 == player1 and v.duelingPlayer1 == player2 then
@@ -266,7 +421,7 @@ function cwDueling:PlayersAreDueling(player1, player2)
 end
 
 function cwDueling:GetPlayerDuelOpponent(player)
-	--[[for k, v in pairs(self.arenas) do
+	--[[for k, v in pairs(DUELING_ARENAS) do
 		if v.duelingPlayer1 == player then
 			if v.duelingPlayer2 then
 				return v.duelingPlayer2;
@@ -289,11 +444,11 @@ function cwDueling:DuelAborted(player1, player2)
 	local curTime = CurTime();
 
 	if IsValid(player1) and IsValid(player2) then
-		for k, v in pairs(self.arenas) do
+		for k, v in pairs(DUELING_ARENAS) do
 			if (v.duelingPlayer1 == player1 or v.duelingPlayer2 == player1) and (v.duelingPlayer1 == player2 or v.duelingPlayer2 == player2) then
 				-- There was probably a tie or something.
-				self.arenas[k].duelingPlayer1 = nil;
-				self.arenas[k].duelingPlayer2 = nil;
+				DUELING_ARENAS[k].duelingPlayer1 = nil;
+				DUELING_ARENAS[k].duelingPlayer2 = nil;
 				
 				if timer.Exists("DuelTimer_"..k) then
 					timer.Remove("DuelTimer_"..k)
@@ -331,7 +486,11 @@ function cwDueling:DuelAborted(player1, player2)
 							player1:SetHealth(player1.cachedHP);
 							player1:SetNWInt("freeze", 0);
 						end
-
+						
+						if player1.distortedRingFired then
+							player1.distortedRingFired = nil;
+						end
+						
 						if player1:GetCharacterData("Hatred") then
 							player1:SetLocalVar("Hatred", player1:GetCharacterData("Hatred"));
 						end
@@ -366,6 +525,10 @@ function cwDueling:DuelAborted(player1, player2)
 							player2:SetHealth(player2.cachedHP);
 							player2:SetNWInt("freeze", 0);
 						end
+
+						if player2.distortedRingFired then
+							player2.distortedRingFired = nil;
+						end
 						
 						if player2:GetCharacterData("Hatred") then
 							player2:SetLocalVar("Hatred", player2:GetCharacterData("Hatred"));
@@ -383,7 +546,7 @@ function cwDueling:DuelAborted(player1, player2)
 			end
 		end
 	elseif IsValid(player1) then
-		for k, v in pairs(self.arenas) do
+		for k, v in pairs(DUELING_ARENAS) do
 			if v.duelingPlayer1 == player1 or v.duelingPlayer2 == player1 then
 				-- player2 dropped
 				for k, v in pairs (_player.GetAll()) do
@@ -392,8 +555,8 @@ function cwDueling:DuelAborted(player1, player2)
 					end;
 				end;
 				
-				self.arenas[k].duelingPlayer1 = nil;
-				self.arenas[k].duelingPlayer2 = nil;
+				DUELING_ARENAS[k].duelingPlayer1 = nil;
+				DUELING_ARENAS[k].duelingPlayer2 = nil;
 				
 				if timer.Exists("DuelTimer_"..k) then
 					timer.Remove("DuelTimer_"..k)
@@ -429,6 +592,10 @@ function cwDueling:DuelAborted(player1, player2)
 							player1:SetNWInt("freeze", 0);
 						end
 						
+						if player1.distortedRingFired then
+							player1.distortedRingFired = nil;
+						end
+						
 						if player1:GetCharacterData("Hatred") then
 							player1:SetLocalVar("Hatred", player1:GetCharacterData("Hatred"));
 						end
@@ -445,7 +612,7 @@ function cwDueling:DuelAborted(player1, player2)
 			end
 		end
 	elseif IsValid(player2) then 
-		for k, v in pairs(self.arenas) do
+		for k, v in pairs(DUELING_ARENAS) do
 			if v.duelingPlayer1 == player2 or v.duelingPlayer2 == player2 then
 				-- player1 dropped
 				for k, v in pairs (_player.GetAll()) do
@@ -454,8 +621,8 @@ function cwDueling:DuelAborted(player1, player2)
 					end;
 				end;
 				
-				self.arenas[k].duelingPlayer1 = nil;
-				self.arenas[k].duelingPlayer2 = nil;
+				DUELING_ARENAS[k].duelingPlayer1 = nil;
+				DUELING_ARENAS[k].duelingPlayer2 = nil;
 				
 				if timer.Exists("DuelTimer_"..k) then
 					timer.Remove("DuelTimer_"..k)
@@ -491,6 +658,10 @@ function cwDueling:DuelAborted(player1, player2)
 							player2:SetNWInt("freeze", 0);
 						end
 						
+						if player2.distortedRingFired then
+							player2.distortedRingFired = nil;
+						end
+						
 						if player2:GetCharacterData("Hatred") then
 							player2:SetLocalVar("Hatred", player2:GetCharacterData("Hatred"));
 						end
@@ -513,7 +684,7 @@ function cwDueling:DuelCompleted(winner, loser)
 	local curTime = CurTime();
 
 	if IsValid(winner) and IsValid(loser) then
-		for k, v in pairs(self.arenas) do
+		for k, v in pairs(DUELING_ARENAS) do
 			if (v.duelingPlayer1 == winner or v.duelingPlayer2 == winner) and (v.duelingPlayer1 == loser or v.duelingPlayer2 == loser) then
 				local wins = winner:GetCharacterData("DuelWins") or 0;
 				local losses = loser:GetCharacterData("DuelLosses") or 0;
@@ -521,8 +692,8 @@ function cwDueling:DuelCompleted(winner, loser)
 				winner:SetCharacterData("DuelWins", wins + 1);
 				loser:SetCharacterData("DuelLosses", losses + 1);
 				
-				self.arenas[k].duelingPlayer1 = nil;
-				self.arenas[k].duelingPlayer2 = nil;
+				DUELING_ARENAS[k].duelingPlayer1 = nil;
+				DUELING_ARENAS[k].duelingPlayer2 = nil;
 					
 				if timer.Exists("DuelTimer_"..k) then
 					timer.Remove("DuelTimer_"..k)
@@ -560,6 +731,10 @@ function cwDueling:DuelCompleted(winner, loser)
 							winner:SetNWInt("freeze", 0);
 						end
 						
+						if winner.distortedRingFired then
+							winner.distortedRingFired = nil;
+						end
+						
 						if winner:GetCharacterData("Hatred") then
 							winner:SetLocalVar("Hatred", winner:GetCharacterData("Hatred"));
 						end
@@ -593,6 +768,10 @@ function cwDueling:DuelCompleted(winner, loser)
 						if loser.cachedHP then
 							loser:SetHealth(loser.cachedHP);
 							loser:SetNWInt("freeze", 0);
+						end
+						
+						if loser.distortedRingFired then
+							loser.distortedRingFired = nil;
 						end
 						
 						if loser:GetCharacterData("Hatred") then
@@ -633,7 +812,7 @@ function cwDueling:DuelCompleted(winner, loser)
 		end
 	elseif IsValid(winner) then
 		-- This shouldn't happen but I'd rather handle it if it does.
-		for k, v in pairs(self.arenas) do
+		for k, v in pairs(DUELING_ARENAS) do
 			if v.duelingPlayer1 == winner or v.duelingPlayer2 == winner then
 				local wins = winner:GetCharacterData("DuelWins") or 0;
 				
@@ -645,8 +824,8 @@ function cwDueling:DuelCompleted(winner, loser)
 					end;
 				end;
 				
-				self.arenas[k].duelingPlayer1 = nil;
-				self.arenas[k].duelingPlayer2 = nil;
+				DUELING_ARENAS[k].duelingPlayer1 = nil;
+				DUELING_ARENAS[k].duelingPlayer2 = nil;
 				
 				if timer.Exists("DuelTimer_"..k) then
 					timer.Remove("DuelTimer_"..k)
@@ -680,6 +859,10 @@ function cwDueling:DuelCompleted(winner, loser)
 						if winner.cachedHP then
 							winner:SetHealth(winner.cachedHP);
 							winner:SetNWInt("freeze", 0);
+						end
+						
+						if winner.distortedRingFired then
+							winner.distortedRingFired = nil;
 						end
 						
 						if winner:GetCharacterData("Hatred") then
@@ -720,7 +903,7 @@ function cwDueling:DuelCompleted(winner, loser)
 		end
 	elseif IsValid(loser) then
 		-- IDK how this would happen.
-		for k, v in pairs(self.arenas) do
+		for k, v in pairs(DUELING_ARENAS) do
 			if v.duelingPlayer1 == loser or v.duelingPlayer2 == loser then
 				local losses = loser:GetCharacterData("DuelLosses") or 0;
 
@@ -732,8 +915,8 @@ function cwDueling:DuelCompleted(winner, loser)
 					end;
 				end;
 				
-				self.arenas[k].duelingPlayer1 = nil;
-				self.arenas[k].duelingPlayer2 = nil;
+				DUELING_ARENAS[k].duelingPlayer1 = nil;
+				DUELING_ARENAS[k].duelingPlayer2 = nil;
 				
 				if timer.Exists("DuelTimer_"..k) then
 					timer.Remove("DuelTimer_"..k)
@@ -764,6 +947,10 @@ function cwDueling:DuelCompleted(winner, loser)
 						if loser.cachedHP then
 							loser:SetHealth(loser.cachedHP);
 							loser:SetNWInt("freeze", 0);
+						end
+						
+						if loser.distortedRingFired then
+							loser.distortedRingFired = nil;
 						end
 						
 						if loser:GetCharacterData("Hatred") then
