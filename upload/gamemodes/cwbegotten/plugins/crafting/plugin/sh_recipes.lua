@@ -726,7 +726,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("kings_meal");
-		RECIPE.name = "(3x) King's Meal";
+		RECIPE.name = "(2x) King's Meal";
 		RECIPE.requiresHeatSource = true;
 		RECIPE.requiredBeliefs = {"culinarian"};
 		RECIPE.requiredBeliefsNiceNames = {"Culinarian"};
@@ -737,7 +737,7 @@ function cwRecipes:ClockworkInitialized()
 			["spice"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["kings_meal"] = {amount = 3},
+			["kings_meal"] = {amount = 2},
 		};
 		RECIPE.category = "Cooking"
 		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
