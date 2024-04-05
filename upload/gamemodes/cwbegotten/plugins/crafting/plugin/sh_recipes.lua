@@ -1588,7 +1588,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 20;
+		RECIPE.experience = 50;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -1607,8 +1607,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["shagalaxian_steel_ingot"] = {amount = 1},
-			["iron_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_claws_steelclaws"] = {amount = 1},
@@ -1618,7 +1617,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 25;
+		RECIPE.experience = 75;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -2668,7 +2667,8 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 	RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 	RECIPE.requirements = {
-		["fine_steel_ingot"] = {amount = 3},
+		["fine_steel_ingot"] = {amount = 2},
+		["gold_ingot"] = {amount = 1},
 	};
 	RECIPE.result = {
 		["begotten_1h_ornateglazicus"] = {amount = 1},
@@ -2697,7 +2697,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 3},
 			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
@@ -2727,7 +2727,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 3},
 			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
@@ -3628,7 +3628,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 3},
+			["fine_steel_ingot"] = {amount = 2},
+			["gold_ingot"] = {amount = 1},
 			["wood"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -3845,7 +3846,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 60;
+		RECIPE.experience = 75;
 		
 		function RECIPE:OnCraft(player)
 		end;
