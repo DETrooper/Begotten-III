@@ -53,7 +53,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["billman"] = {
 				name = "Billman",
-				description = "Polearms, spears, rapiers, and javelins now deal 20% more armor piercing damage.",
+				description = "Polearms, spears, rapiers, crossbow bolts, and javelins now deal 20% more armor piercing damage.",
 				quote = "The honest soldier keeps his distance from the bloodthirsty fools who seek his demise.",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "halfsword_sway", "blademaster"},
@@ -122,7 +122,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 		[5] = {
 			["strength"] = {
 				name = "Strength",
-				description = "Unlocks the ability to use great weapons.",
+				description = "Unlocks the ability to use great weapons. Also unlocks the ability to reload crossbows.",
 				requirements = {"fighter"},
 				row = 2,
 			},

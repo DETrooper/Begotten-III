@@ -2340,11 +2340,11 @@ local function PlayerSayFunc(player, text)
 	local curTime = CurTime();
 
 	if (string.len(text) >= maxChatLength) then
-		text = string.sub(text, 0, maxChatLength);
+		text = string.utf8sub(text, 0, maxChatLength);
 	end;
 
-	if (string.sub(text, 1, 2) == "//") then
-		text = string.Trim(string.sub(text, 3));
+	if (string.utf8sub(text, 1, 2) == "//") then
+		text = string.Trim(string.utf8sub(text, 3));
 
 		if (text != "") then
 			if (hook.Run("PlayerCanSayOOC", player, text)) then
@@ -2358,16 +2358,16 @@ local function PlayerSayFunc(player, text)
 				end;
 			end;
 		end;
-	elseif (string.sub(text, 1, 3) == ".//" or string.sub(text, 1, 4) == ".///" or string.sub(text, 1, 2) == "[[" or string.sub(text, 1, 3) == "[[[") then
-		local adminText = string.sub(text, 1, 4) == ".///";
-		local adminTextAlt = string.sub(text, 1, 3) == "[[[";
+	elseif (string.utf8sub(text, 1, 3) == ".//" or string.utf8sub(text, 1, 4) == ".///" or string.utf8sub(text, 1, 2) == "[[" or string.utf8sub(text, 1, 3) == "[[[") then
+		local adminText = string.utf8sub(text, 1, 4) == ".///";
+		local adminTextAlt = string.utf8sub(text, 1, 3) == "[[[";
 		
 		if adminText then
-			text = string.Trim(string.sub(text, 5));
-		elseif adminTextAlt or (string.sub(text, 1, 3) == ".//") then
-			text = string.Trim(string.sub(text, 4));
+			text = string.Trim(string.utf8sub(text, 5));
+		elseif adminTextAlt or (string.utf8sub(text, 1, 3) == ".//") then
+			text = string.Trim(string.utf8sub(text, 4));
 		else
-			text = string.Trim(string.sub(text, 3));
+			text = string.Trim(string.utf8sub(text, 3));
 		end;
 
 		if (text != "") then
@@ -2381,14 +2381,14 @@ local function PlayerSayFunc(player, text)
 				end
 			end;
 		end;
-	elseif (string.sub(text, 1, 1) == prefix) then
+	elseif (string.utf8sub(text, 1, 1) == prefix) then
 		local prefixLength = string.len(prefix);
 		local arguments = Clockwork.kernel:ExplodeByTags(text, " ", "\"", "\"", true);
-		local command = string.sub(arguments[1], prefixLength + 1);
+		local command = string.utf8sub(arguments[1], prefixLength + 1);
 
 		if (Clockwork.command.stored[command] and Clockwork.command.stored[command].arguments < 2
 		and !Clockwork.command.stored[command].optionalArguments) then
-			text = string.sub(text, string.len(command) + prefixLength + 2);
+			text = string.utf8sub(text, string.len(command) + prefixLength + 2);
 
 			if (text != "") then
 				arguments = {command, text};
@@ -2815,7 +2815,7 @@ function GM:EntityHandleMenuOption(player, entity, option, arguments)
 		local itemCondition = itemTable:GetCondition();
 		local itemEngraving = itemTable:GetData("engraving");
 		local examineText = itemTable.description
-		local conditionTextCategories = {"Armor", "Firearms", "Helms", "Melee", "Shields", "Javelins"};
+		local conditionTextCategories = {"Armor", "Crossbows", "Firearms", "Helms", "Melee", "Shields", "Javelins"};
 
 		if (itemTable.GetEntityExamineText) then
 			examineText = itemTable:GetEntityExamineText(entity)

@@ -757,7 +757,7 @@ else
 				local itemCondition = itemTable:GetCondition();
 				local examineText = itemTable.description
 				local itemEngraving = itemTable:GetData("engraving");
-				local conditionTextCategories = {"Armor", "Firearms", "Helms", "Melee", "Shields", "Javelins"};
+				local conditionTextCategories = {"Armor", "Crossbows", "Firearms", "Helms", "Melee", "Shields", "Javelins"};
 
 				if (itemTable.GetEntityExamineText) then
 					examineText = itemTable:GetEntityExamineText(entity)

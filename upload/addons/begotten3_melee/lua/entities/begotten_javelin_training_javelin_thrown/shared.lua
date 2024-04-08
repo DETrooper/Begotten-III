@@ -400,7 +400,6 @@ if SERVER then
 					javelin:Spawn()
 					javelin.Owner = Ent
 					javelin:Activate()
-					eyes = Ent:EyeAngles()
 					
 					local phys = javelin:GetPhysicsObject()
 					

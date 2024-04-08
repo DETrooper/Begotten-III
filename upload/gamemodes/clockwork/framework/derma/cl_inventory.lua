@@ -333,7 +333,7 @@ function PANEL:Rebuild()
 					end
 				end
 				
-				if v2.category == "Throwables" or v2.category == "Weapons" or v2.category == "Melee" or v2.category == "Shields" or v2.category == "Firearms" or v2.category == "Javelins" or v2.category == "Lights" then
+				if v2.category == "Throwables" or v2.category == "Weapons" or v2.category == "Melee" or v2.category == "Shields" or v2.category == "Firearms" or v2.category == "Crossbows" or v2.category == "Javelins" or v2.category == "Lights" then
 					for i, slot in ipairs(slots) do
 						local slottedItem = Clockwork.Client.equipmentSlots[slot];
 						local offhandItem = Clockwork.Client.equipmentSlots[slot.."Offhand"];
@@ -433,7 +433,7 @@ function PANEL:Rebuild()
 									if occupierParent and occupierParent.itemData and occupierParent.itemTable then
 										local itemTable = occupierParent.itemTable;
 										
-										if itemTable.category == "Firearms" and itemTable.ammoTypes then
+										if (itemTable.category == "Firearms" or itemTable.category == "Crossbows") and itemTable.ammoTypes then
 											if table.HasValue(itemTable.ammoTypes, parent.itemTable.ammoType) then
 												Clockwork.datastream:Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 											end
@@ -544,10 +544,10 @@ function PANEL:Rebuild()
 							end
 						end
 						
-						if v2.category == "Melee" or v2.category == "Shields" or v2.category == "Weapons" or v2.category == "Firearms" or v2.category == "Javelins" or v2.category == "Lights" then
+						if v2.category == "Melee" or v2.category == "Shields" or v2.category == "Weapons" or v2.category == "Firearms" or v2.category == "Crossbows" or v2.category == "Javelins" or v2.category == "Lights" then
 							inventoryIcon.spawnIcon:Droppable("weaponSlot");
 							
-							if v2.category == "Firearms" then
+							if v2.category == "Firearms" or v2.category == "Crossbows" then
 								inventoryIcon.spawnIcon:Receiver("ammunition", function(self, panels, dropped, menuIndex, x, y)
 									if (dropped) then
 										local panel = panels[1];
@@ -562,7 +562,7 @@ function PANEL:Rebuild()
 													if occupierParent and occupierParent.itemData and occupierParent.itemTable then
 														local itemTable = occupierParent.itemTable;
 														
-														if itemTable.category == "Firearms" and itemTable.ammoTypes then
+														if (itemTable.category == "Firearms" or itemTable.category == "Crossbows") and itemTable.ammoTypes then
 															if table.HasValue(itemTable.ammoTypes, parent.itemTable.ammoType) then
 																Clockwork.datastream:Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 															end
@@ -723,10 +723,10 @@ function PANEL:Rebuild()
 						end
 					end
 					
-					if v2.category == "Melee" or v2.category == "Shields" or v2.category == "Weapons" or v2.category == "Firearms" or v2.category == "Javelins" then
+					if v2.category == "Melee" or v2.category == "Shields" or v2.category == "Weapons" or v2.category == "Firearms" or v2.category == "Crossbows"  or v2.category == "Javelins" then
 						inventoryIcon.spawnIcon:Droppable("weaponSlot");
 						
-						if v2.category == "Firearms" then
+						if v2.category == "Firearms" or v2.category == "Crossbows" then
 							inventoryIcon.spawnIcon:Receiver("ammunition", function(self, panels, dropped, menuIndex, x, y)
 								if (dropped) then
 									local panel = panels[1];
@@ -741,7 +741,7 @@ function PANEL:Rebuild()
 												if occupierParent and occupierParent.itemData and occupierParent.itemTable then
 													local itemTable = occupierParent.itemTable;
 													
-													if itemTable.category == "Firearms" and itemTable.ammoTypes then
+													if (itemTable.category == "Firearms" or itemTable.category == "Crossbows") and itemTable.ammoTypes then
 														if table.HasValue(itemTable.ammoTypes, parent.itemTable.ammoType) then
 															Clockwork.datastream:Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 														end

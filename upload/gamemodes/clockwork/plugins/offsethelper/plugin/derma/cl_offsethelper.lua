@@ -90,6 +90,19 @@ function PANEL:Init()
 				panel:SetKeyboardInputEnabled(true);
 			end;
 		end;
+		
+		if equippedItem then
+			if Clockwork.Client.equipmentSlotModels then
+				-- Update this every frame.
+				local modelEnt = Clockwork.Client.equipmentSlotModels[equippedItem.itemID];
+				
+				if IsValid(modelEnt) then
+					modelEnt:Remove();
+				end
+				
+				print(equippedItem.attachmentOffsetVector);
+			end
+		end
 	end;
 
 	local main = vgui.Create("DFrame", frame);
@@ -108,19 +121,18 @@ function PANEL:Init()
 		end;
 
 		for k, v in pairs(categories) do
-			if (!itemTable[v]) then continue; end;
+			if (!equippedItem[v]) then continue; end;
 
 			for i=120,122 do
 				local c = string.char(i);
 
-				itemTable[v][c] = defaults[v][c];
+				equippedItem[v][c] = defaults[v][c];
 			end;
 		end;
 
 		Clockwork.Client.vohUniqueID = nil;
 		frame:Remove();
 	end;
-
 
 	local labelPanel = vgui.Create("DPanel", main);
 	labelPanel:Dock(TOP);
@@ -137,13 +149,13 @@ function PANEL:Init()
 	label:Dock(FILL);
 
 	if (equippedItem) then
-		if (itemTable.AdjustAttachmentOffsetInfo) then
-			defaults.AdjustAttachmentOffsetInfo = itemTable.AdjustAttachmentOffsetInfo;
+		if (equippedItem.AdjustAttachmentOffsetInfo) then
+			defaults.AdjustAttachmentOffsetInfo = equippedItem.AdjustAttachmentOffsetInfo;
 			equippedItem.AdjustAttachmentOffsetInfo = nil;
 		end;
 
-		if (itemTable.attachmentBone) then
-			defaults.attachmentBone = itemTable.attachmentBone;
+		if (equippedItem.attachmentBone) then
+			defaults.attachmentBone = equippedItem.attachmentBone;
 
 			local bonePanel = vgui.Create("DPanel", main);
 			bonePanel:Dock(TOP);
@@ -173,7 +185,7 @@ function PANEL:Init()
 	local panels = {}
 
 	for k, v in pairs(categories) do
-		if (!itemTable[v]) then continue; end;
+		if (!equippedItem[v]) then continue; end;
 
 		self[v.."Cat"] = catList:Add("ITEM."..v);
 		self[v.."Cat"]:SetExpanded(0);
@@ -187,9 +199,9 @@ function PANEL:Init()
 		panels[v].reset:SizeToContents();
 
 		if (string.find(v, "Angle")) then
-			defaults[v] = Angle(itemTable[v].x, itemTable[v].y, itemTable[v].z);
+			defaults[v] = Angle(equippedItem[v].x, equippedItem[v].y, equippedItem[v].z);
 		else
-			defaults[v] = Vector(itemTable[v].x, itemTable[v].y, itemTable[v].z);
+			defaults[v] = Vector(equippedItem[v].x, equippedItem[v].y, equippedItem[v].z);
 		end;
 
 
@@ -210,13 +222,13 @@ function PANEL:Init()
 			panels[v][c]:SetDark(true);
 			panels[v][c]:SetValue(defaults[v][c]);
 			panels[v][c].OnValueChanged = function(panel, value)
-				itemTable[v][c] = value;
-				panels[v].output:SetText(GetOutputText(v, itemTable));
+				equippedItem[v][c] = value;
+				panels[v].output:SetText(GetOutputText(v, equippedItem));
 			end;
 		end;
 
 		panels[v].output = vgui.Create("DTextEntry", self[v.."Panel"]);
-		panels[v].output:SetText(GetOutputText(v, itemTable));
+		panels[v].output:SetText(GetOutputText(v, equippedItem));
 		panels[v].output:SetFont("DebugFixedSmall");
 		panels[v].output:SetDisabled(true);
 		panels[v].output:Dock(TOP);

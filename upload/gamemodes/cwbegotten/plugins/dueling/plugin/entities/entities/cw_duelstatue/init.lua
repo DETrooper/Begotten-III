@@ -48,9 +48,11 @@ function ENT:Use(activator, caller)
 					
 					if weaponItemTable then
 						if weaponItemTable.category == "Firearms" then
-							if Clockwork then
-								Schema:EasyText(caller, "peru","You cannot enter a duel with a firearm equipped!");
-							end
+							Schema:EasyText(caller, "peru","You cannot enter a duel with a firearm equipped!");
+							
+							return;
+						elseif weaponItemTable.category == "Crossbows" then
+							Schema:EasyText(caller, "peru","You cannot enter a duel with a crossbow equipped!");
 							
 							return;
 						end

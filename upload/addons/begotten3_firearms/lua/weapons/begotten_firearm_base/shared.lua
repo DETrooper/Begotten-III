@@ -270,87 +270,89 @@ function SWEP:AdjustFireBegotten()
 				local ammoType = ammo[1];
 				
 				if self.AmmoTypes[ammoType] then
-					local forceJam = false;
-				
-					if cwRituals then
-						local players = _player.GetAll();
-						local ownerPos = self.Owner:GetPos();
-						
-						for i, v in ipairs(players) do
-							if v:GetSharedVar("powderheelActive") then
-								if v:GetPos():Distance(ownerPos) <= config.Get("talk_radius"):Get() then
-									forceJam = true;
-									
-									break;
-								end
-							end
-						end
-					end
-				
-					if !self.noJam or forceJam then
-						local hasPistolier = cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("pistolier");
-						local hasFavored = self.Owner:GetSharedVar("favored");
-						local hasMarked = self.Owner:GetSharedVar("marked");
-						
-						local misfireChance = self.MisfireChance;
-						local itemCondition = itemTable:GetCondition();
-
-						if itemCondition < 90 then
-							misfireChance = misfireChance + math.Round(((100 - itemCondition) / 5));
-						end
-						
-						if hasPistolier then
-							misfireChance = math.Round(misfireChance / 5);
-						end
-						
-						if hasFavored then
-							misfireChance = math.Round(misfireChance / 2);
-						end
-						
-						if hasMarked then
-							misfireChance = math.Round(misfireChance * 1.5);
-						end
+					if !self.notPowder then
+						local forceJam = false;
 					
-						--if math.random(1, 100) <= misfireChance then
-						if forceJam or util.SharedRandom("misfire_"..self.Owner:EntIndex(), 1, 100) <= misfireChance then -- acceptable risk of people being able to hack this on the client
-							self:TakeAmmoBegotten(1); -- This should really only ever be 1 unless for some reason we have burst-fire guns or some shit, especially since we have different ammo types.
+						if cwRituals then
+							local players = _player.GetAll();
+							local ownerPos = self.Owner:GetPos();
 							
-							-- 10% chance on misfire for the gun to fucking explode.
-							if !hasPistolier and !forceJam and ((!hasMarked and math.random(1, 100) <= 10) or (hasMarked and math.random(1, 100) <= 20)) then
-								if SERVER then
-									local position = self.Owner:GetPos();
-									
-									Clockwork.chatBox:AddInTargetRadius(self.Owner, "me", "pulls the trigger on their "..self.PrintName.." and it suddenly explodes!", position, config.Get("talk_radius"):Get() * 2);
-								
-									local effectData = EffectData();
-									effectData:SetStart(position);
-									effectData:SetOrigin(position);
-									effectData:SetScale(256);
-									effectData:SetRadius(256);
-									effectData:SetMagnitude(50);
-
-									util.Effect("Explosion", effectData, true, true);
-									util.BlastDamage(self, self, position, 300, 75);
-								end
-								
-								if itemTable.TakeCondition then
-									itemTable:Break();
-								end
-							else
-								if SERVER then
-									self.Owner:EmitSound("vj_weapons/dryfire_revolver.wav");
-									
-									if forceJam then
-										Clockwork.chatBox:Add(self.Owner, nil, "it", "Some magical force prevents your firearm from firing, jamming it in the process!")
-									else
-										Clockwork.chatBox:Add(self.Owner, nil, "it", "Your firearm was loaded with a dud round and misfires!")
+							for i, v in ipairs(players) do
+								if v:GetSharedVar("powderheelActive") then
+									if v:GetPos():Distance(ownerPos) <= config.Get("talk_radius"):Get() then
+										forceJam = true;
+										
+										break;
 									end
 								end
-								
-								self:SetNextPrimaryFire(CurTime() + 2);
+							end
+						end
+					
+						if !self.noJam or forceJam then
+							local hasPistolier = cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("pistolier");
+							local hasFavored = self.Owner:GetSharedVar("favored");
+							local hasMarked = self.Owner:GetSharedVar("marked");
+							
+							local misfireChance = self.MisfireChance;
+							local itemCondition = itemTable:GetCondition();
+
+							if itemCondition < 90 then
+								misfireChance = misfireChance + math.Round(((100 - itemCondition) / 5));
+							end
+							
+							if hasPistolier then
+								misfireChance = math.Round(misfireChance / 5);
+							end
+							
+							if hasFavored then
+								misfireChance = math.Round(misfireChance / 2);
+							end
+							
+							if hasMarked then
+								misfireChance = math.Round(misfireChance * 1.5);
 							end
 						
-							return false;
+							--if math.random(1, 100) <= misfireChance then
+							if forceJam or util.SharedRandom("misfire_"..self.Owner:EntIndex(), 1, 100) <= misfireChance then -- acceptable risk of people being able to hack this on the client
+								self:TakeAmmoBegotten(1); -- This should really only ever be 1 unless for some reason we have burst-fire guns or some shit, especially since we have different ammo types.
+								
+								-- 10% chance on misfire for the gun to fucking explode.
+								if !hasPistolier and !forceJam and ((!hasMarked and math.random(1, 100) <= 10) or (hasMarked and math.random(1, 100) <= 20)) then
+									if SERVER then
+										local position = self.Owner:GetPos();
+										
+										Clockwork.chatBox:AddInTargetRadius(self.Owner, "me", "pulls the trigger on their "..self.PrintName.." and it suddenly explodes!", position, config.Get("talk_radius"):Get() * 2);
+									
+										local effectData = EffectData();
+										effectData:SetStart(position);
+										effectData:SetOrigin(position);
+										effectData:SetScale(256);
+										effectData:SetRadius(256);
+										effectData:SetMagnitude(50);
+
+										util.Effect("Explosion", effectData, true, true);
+										util.BlastDamage(self, self, position, 300, 75);
+									end
+									
+									if itemTable.TakeCondition then
+										itemTable:Break();
+									end
+								else
+									if SERVER then
+										self.Owner:EmitSound("vj_weapons/dryfire_revolver.wav");
+										
+										if forceJam then
+											Clockwork.chatBox:Add(self.Owner, nil, "it", "Some magical force prevents your firearm from firing, jamming it in the process!")
+										else
+											Clockwork.chatBox:Add(self.Owner, nil, "it", "Your firearm was loaded with a dud round and misfires!")
+										end
+									end
+									
+									self:SetNextPrimaryFire(CurTime() + 2);
+								end
+							
+								return false;
+							end
 						end
 					end
 					

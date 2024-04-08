@@ -73,6 +73,29 @@ local ITEM = Clockwork.item:New("firearm_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
+	ITEM.name = "Wooden Crossbow";
+	ITEM.uniqueID = "begotten_crossbow";
+	ITEM.category = "Crossbows";
+	ITEM.model = "models/begotten/weapons/w_crossbow.mdl";
+	ITEM.weight = 3.5;
+	ITEM.uniqueID = "begotten_crossbow";
+	ITEM.description = "Commonly employed by poorly trained levies from the county districts, the crossbow is an ancient design long pre-dating the Empire of Light. It launches bolts at high speeds and features a locking mechanism so that a draw does not need to be maintained, though it still requires considerable strength to reload.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/crossbow.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 354.15, 0);
+	ITEM.attachmentOffsetVector = Vector(-3.23, 1.39, -6.36);
+	
+	ITEM.ammoCapacity = 1;
+	ITEM.ammoTypes = {"Iron Bolt", "Scrap Bolt"};
+	ITEM.firearmType = "Crossbow";
+	ITEM.reloadTime = 5; -- Seconds (for one round)
+	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/crossbow/bow-pre1.wav.mp3", "weapons/crossbow/bowgun-stance.wav.mp3"};
+	
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, supercrateOnly = true, supercrateItems = {["grapeshot"] = {min = 15, max = 30}}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.name = "Inquisitor Revolver";
 	ITEM.model = "models/arxweapon/hellsing.mdl";
 	ITEM.weight = 3;

@@ -185,6 +185,42 @@ function GM:GUIMouseReleased(code)
 	end
 end
 
+local last_use;
+
+function GM:KeyPress(player, key)
+	if (config.Get("use_opens_entity_menus"):Get()) then
+		if (key == IN_USE) then
+			local activeWeapon = player:GetActiveWeapon()
+
+			if (IsValid(activeWeapon) and activeWeapon:GetClass() == "weapon_physgun") then
+				if (player:KeyDown(IN_ATTACK)) then
+					return
+				end
+			end
+			
+			local trace = Clockwork.Client:GetEyeTraceNoCursor();
+			
+			if (IsValid(trace.Entity) and trace.HitPos:Distance(Clockwork.Client:GetShootPos()) <= 80) then
+				if trace.Entity:GetClass() == "cw_item" then
+					if !timer.Exists("ClockworkQuickUseTimer") then
+						last_use = CurTime();
+						
+						timer.Create("ClockworkQuickUseTimer", 0.25, 1, function()
+							local trace = Clockwork.Client:GetEyeTraceNoCursor();
+							
+							if (IsValid(trace.Entity) and trace.HitPos:Distance(Clockwork.Client:GetShootPos()) <= 80) then
+								if trace.Entity:GetClass() == "cw_item" then
+									Clockwork.entity:ForceMenuOption(trace.Entity, "Take", "cwItemTake");
+								end
+							end
+						end)
+					end
+				end
+			end
+		end
+	end
+end
+
 --[[
 	@codebase Client
 	@details Called when a key has been released.
@@ -195,13 +231,24 @@ function GM:KeyRelease(player, key)
 	if (config.Get("use_opens_entity_menus"):Get()) then
 		if (key == IN_USE) then
 			local activeWeapon = player:GetActiveWeapon()
-			local trace = Clockwork.Client:GetEyeTraceNoCursor()
 
 			if (IsValid(activeWeapon) and activeWeapon:GetClass() == "weapon_physgun") then
 				if (player:KeyDown(IN_ATTACK)) then
 					return
 				end
 			end
+			
+			if last_use then 
+				last_use = nil;
+			
+				return 
+			end;
+			
+			if timer.Exists("ClockworkQuickUseTimer") then
+				timer.Remove("ClockworkQuickUseTimer");
+			end
+			
+			local trace = Clockwork.Client:GetEyeTraceNoCursor()
 
 			if (IsValid(trace.Entity) and trace.HitPos:Distance(Clockwork.Client:GetShootPos()) <= 80) then
 				Clockwork.EntityMenu = Clockwork.kernel:HandleEntityMenu(trace.Entity)

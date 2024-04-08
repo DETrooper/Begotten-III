@@ -402,7 +402,7 @@ function CLASS_TABLE:OnHandleUnequip(Callback)
 				end)
 			end
 
-			if self.category == "Firearms" then
+			if self.category == "Firearms" or self.category == "Crossbows" then
 				local ammo = self:GetData("Ammo");
 				
 				if ammo and #ammo > 0 then
@@ -918,7 +918,7 @@ function item.CreateInstance(uniqueID, itemID, data, bNoGenerate)
 			item.instances[itemID]:AddData("condition", item.instances[itemID]:GetData("condition"), true);
 		end
 		
-		if item.category == "Firearms" then
+		if item.category == "Firearms" or item.category == "Crossbows" then
 			if not item.instances[itemID]:GetData("Ammo") then
 				item.instances[itemID]:AddData("Ammo", {}, true);
 			else

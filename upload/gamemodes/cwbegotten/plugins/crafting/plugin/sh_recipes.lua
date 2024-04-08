@@ -5469,6 +5469,36 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("wooden_crossbow");
+		RECIPE.name = "Wooden_Crossbow";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 1},
+			["wood"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["begotten_crossbow"] = {amount = 1},
+		};
+		RECIPE.category = "Munitions"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 50;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("musket");
 		RECIPE.name = "Musket";
@@ -8023,6 +8053,63 @@ RECIPE:Register()
 		};
 		RECIPE.result = {
 			["volt_projectile"] = {amount = 1},
+		};
+		RECIPE.category = "Munitions"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 10;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("iron_bolt");
+		RECIPE.name = "(3x) Iron Bolt";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 1},
+			["wood"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["iron_bolt"] = {amount = 1},
+		};
+		RECIPE.category = "Munitions"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 25;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("scrap_bolt");
+		RECIPE.name = "Scrap Bolt";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredBeliefsNiceNames = {"Craftsman"};
+		RECIPE.requirements = {
+			["scrap"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["scrap_bolt"] = {amount = 1},
 		};
 		RECIPE.category = "Munitions"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";

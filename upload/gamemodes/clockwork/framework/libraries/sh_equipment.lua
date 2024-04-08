@@ -357,14 +357,14 @@ function playerMeta:GetShieldEquipped(itemTable)
 end
 
 function playerMeta:GetWeaponEquipped(itemTable)
-	return Clockwork.equipment:GetItemEquipped(self, itemTable, {"Firearms", "Weapons"});
+	return Clockwork.equipment:GetItemEquipped(self, itemTable, {"Crossbows", "Firearms", "Weapons"});
 end
 
 function playerMeta:GetWeaponsEquipped()
 	local weaponsTab = {};
 	
 	for k, v in pairs(self.equipmentSlots) do
-		if v.category == "Firearms" or v.meleeWeapon then
+		if v.category == "Firearms" or v.category == "Crossbows" or v.meleeWeapon then
 			table.insert(weaponsTab, v);
 		end
 	end

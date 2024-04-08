@@ -95,7 +95,6 @@ function SWEP:FireJavelin()
 		javelin.AttackTable = GetTable(self.AttackTable);
 		javelin.Owner = self.Owner
 		javelin:Activate()
-		eyes = self.Owner:EyeAngles()
 		
 		local phys = javelin:GetPhysicsObject()
 		

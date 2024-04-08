@@ -492,7 +492,7 @@ function Clockwork.kernel:WrapText(text, font, maximumWidth, baseTable)
 end
 
 -- A function to handle an entity's menu.
-function Clockwork.kernel:HandleEntityMenu(entity)
+function Clockwork.kernel:HandleEntityMenu(entity, bQuickTake)
 	if hook.Run("CanOpenEntityMenu") ~= false then
 		local options = {}
 		local itemTable = nil

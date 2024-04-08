@@ -14,6 +14,7 @@ local ITEM = item.New(nil, true);
 	ITEM:AddData("Rounds", 1, true) -- default to 1 round
 	ITEM.equippable = false; -- this blocks equipping the item as a melee weapon.
 	ITEM.ammoMagazineSize = nil;
+	ITEM.requiredReloadBelief = nil;
 	
 	-- A function to get the item's weight.
 	function ITEM:GetItemWeight()
@@ -48,10 +49,12 @@ local ITEM = item.New(nil, true);
 				return false;
 			end
 			
-			if player.HasBelief and not player:HasBelief("powder_and_steel") then
-				Schema:EasyText(player, "chocolate", "You do not have the required belief, 'Powder and Steel', to load this weapon!");
-				
-				return false;
+			if player.HasBelief and self.requiredReloadBelief then
+				if !player:HasBelief(self.requiredReloadBelief) then
+					Schema:EasyText(player, "chocolate", "You do not have the required belief, '"..cwBeliefs:GetBeliefName(self.requiredReloadBelief).."', to load this weapon!");
+					
+					return false;
+				end
 			end
 
 			for i, v in ipairs(player:GetWeaponsEquipped()) do
@@ -159,17 +162,19 @@ local ITEM = item.New(nil, true);
 			return false;
 		end
 		
-		if weaponItem and weaponItem.category == "Firearms" and weaponItem.ammoTypes then
+		if weaponItem and (weaponItem.category == "Firearms" or weaponItem.category == "Crossbows") and weaponItem.ammoTypes then
 			if table.HasValue(weaponItem.ammoTypes, self.ammoType) then
 				local weaponItemAmmo = weaponItem:GetData("Ammo");
 				
 				if weaponItemAmmo and #weaponItemAmmo < weaponItem.ammoCapacity then
-					if player.HasBelief and not player:HasBelief("powder_and_steel") then
-						if bNotify then
-							Schema:EasyText(player, "chocolate", "You do not have the required belief, 'Powder and Steel', to load this weapon!");
+					if player.HasBelief and self.requiredReloadBelief then
+						if !player:HasBelief(self.requiredReloadBelief) then
+							if bNotify then
+								Schema:EasyText(player, "chocolate", "You do not have the required belief, '"..cwBeliefs:GetBeliefName(self.requiredReloadBelief).."', to load this weapon!");
+							end
+							
+							return false;
 						end
-						
-						return false;
 					end
 					
 					if not weaponItem.usesMagazine then

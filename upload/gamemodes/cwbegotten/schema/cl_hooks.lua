@@ -2384,7 +2384,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		end
 		
 		return true;
-	elseif (category == "Firearms") then
+	elseif (category == "Crossbows") or (category == "Firearms") then
 		local weaponAmmo = itemTable:GetData("Ammo");
 		local weaponClass = itemTable.uniqueID;
 		local weaponTable;
