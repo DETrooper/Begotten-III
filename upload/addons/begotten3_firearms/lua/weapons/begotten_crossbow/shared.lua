@@ -123,9 +123,14 @@ function SWEP:PrimaryAttack()
 					bolt.Owner = self.Owner
 					bolt:Activate()
 					
+					local aimVector = self.Owner:GetAimVector() * 1800;
 					local phys = bolt:GetPhysicsObject()
 					
-					phys:SetVelocity(self.Owner:GetAimVector() * 1800);
+					if self.Owner:GetVelocity() ~= Vector(0, 0, 0) or !self.Owner.HasBelief or !self.Owner:HasBelief("marksman") then
+						aimVector:Rotate(Angle(math.Rand(-1, 1), math.Rand(-1, 1), 0));
+					end
+					
+					phys:SetVelocity(aimVector);
 						
 					if self.Owner:IsPlayer() then
 						local anglo = Angle(-10, -5, 0);

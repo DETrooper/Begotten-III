@@ -92,7 +92,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 5; -- Seconds (for one round)
 	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/crossbow/bow-pre1.wav.mp3", "weapons/crossbow/bowgun-stance.wav.mp3"};
 	
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, supercrateOnly = true, supercrateItems = {["grapeshot"] = {min = 15, max = 30}}};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1000, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");

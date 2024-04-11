@@ -66,7 +66,7 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 			},
 			["marksman"] = {
 				name = "Marksman",
-				description = "Greatly increases accuracy while standing still for all firearms.",
+				description = "Greatly increases accuracy while standing still for all crossbows and firearms.",
 				lockedSubfactions = {"Knights of Sol", "Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald", "Clan Grock"},
 				requirements = {"ingenious", "powder_and_steel", "pistolier"},
 				row = 4,

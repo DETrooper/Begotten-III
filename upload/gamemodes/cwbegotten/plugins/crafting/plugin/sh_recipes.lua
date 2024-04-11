@@ -5471,13 +5471,14 @@ RECIPE:Register()
 	RECIPE:Register()
 	
 	RECIPE = cwRecipes.recipes:New("wooden_crossbow");
-		RECIPE.name = "Wooden_Crossbow";
+		RECIPE.name = "Wooden Crossbow";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredBeliefsNiceNames = {"Mechanic"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 1},
+			["bindings"] = {amount = 1},
+			["iron_ingot"] = {amount = 2},
 			["wood"] = {amount = 3},
 		};
 		RECIPE.result = {
