@@ -188,6 +188,8 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoType = "Iron Bolt";
 	ITEM.ammoName = "Iron Bolt";
 	ITEM.requiredReloadBelief = "strength";
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -202,5 +204,6 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoName = "Scrap Bolt";
 	ITEM.requiredReloadBelief = "strength";
 	
+	ITEM.components = {breakdownType = "meltdown", items = {"scrap"}};
 	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 300, onGround = false};
 ITEM:Register();

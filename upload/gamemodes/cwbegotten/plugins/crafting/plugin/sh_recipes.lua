@@ -8082,7 +8082,7 @@ RECIPE:Register()
 			["wood"] = {amount = 3},
 		};
 		RECIPE.result = {
-			["iron_bolt"] = {amount = 1},
+			["iron_bolt"] = {amount = 3},
 		};
 		RECIPE.category = "Munitions"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";

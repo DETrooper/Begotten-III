@@ -6,8 +6,6 @@ local weatherEffectCheckDelay = 5;
 
 function cwWeather:ClockworkInitialized()
 	self:SetWeather("normal");
-	
-	self.nextWeatherTime = CurTime() + math.random(900, 1500);
 end
 
 function cwWeather:SetWeather(weather, bSkipTransition)
@@ -93,7 +91,7 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				
 				local activeWeapon = player:GetActiveWeapon();
 				
-				if IsValid(activeWeapon) and activeWeapon.Base == "begotten_firearm_base" then
+				if IsValid(activeWeapon) and activeWeapon.Base == "begotten_firearm_base" and !activeWeapon.notPowder then
 					if math.random(1, 30) == 30 then
 						local itemTable = item.GetByWeapon(activeWeapon);
 						

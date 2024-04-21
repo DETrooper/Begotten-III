@@ -106,6 +106,8 @@ if cwWeather.systemEnabled then
 		},
 		["normal"] = {
 			default = true,
+			minDuration = 1800,
+			maxDuration = 2400,
 		},
 		["thunderstorm"] = {
 			ambience = {

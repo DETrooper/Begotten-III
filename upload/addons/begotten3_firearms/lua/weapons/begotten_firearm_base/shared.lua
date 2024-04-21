@@ -1139,7 +1139,7 @@ function SWEP:Think()
 	if SERVER then
 		local curTime = CurTime();
 		
-		if !self.waterCheck or self.waterCheck <= curTime then
+		if !self.notPowder and (!self.waterCheck or self.waterCheck <= curTime) then
 			self.waterCheck = curTime + 0.5;
 			
 			if IsValid(self.Owner) then

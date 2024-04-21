@@ -25,6 +25,7 @@ SWEP.ViewModelFlip			= false
 SWEP.ViewModel				= "models/begotten/weapons/c_crossbow.mdl"
 SWEP.WorldModel				= "models/begotten/weapons/c_crossbow.mdl"
 SWEP.ShowWorldModel = false
+SWEP.UseHands = true
 
 -- World Model
 SWEP.Base					= "begotten_firearm_base"
