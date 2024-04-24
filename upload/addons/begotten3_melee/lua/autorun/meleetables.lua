@@ -569,6 +569,26 @@ AttackTables.TrainingJavelinAttackTable = {
 	["punchstrength"] = Angle(0,4,0),
 };
 
+AttackTables.IronBoltAttackTable = {
+	["primarydamage"] = 75,
+	["dmgtype"] = DMG_VEHICLE,
+	["armorpiercing"] = 90,
+	["poisedamage"] = 35,
+	["stabilitydamage"] = 40,
+	["takeammo"] = 0,
+	["punchstrength"] = Angle(0,2,0),
+};
+
+AttackTables.ScrapBoltAttackTable = {
+	["primarydamage"] = 60,
+	["dmgtype"] = DMG_VEHICLE,
+	["armorpiercing"] = 80,
+	["poisedamage"] = 30,
+	["stabilitydamage"] = 35,
+	["takeammo"] = 0,
+	["punchstrength"] = Angle(0,2,0),
+};
+
 -- Shortswords
 
 AttackTables.IronRapierAttackTable = {
@@ -3069,6 +3089,8 @@ AddTable("FistAttackTable", AttackTables.FistAttackTable)
 AddTable("IronJavelinAttackTable", AttackTables.IronJavelinAttackTable)
 AddTable("PilumAttackTable", AttackTables.PilumAttackTable)
 AddTable("TrainingJavelinAttackTable", AttackTables.TrainingJavelinAttackTable)
+AddTable("IronBoltAttackTable", AttackTables.IronBoltAttackTable)
+AddTable("ScrapBoltAttackTable", AttackTables.ScrapBoltAttackTable)
 AddTable("ClaymoreAttackTable", AttackTables.ClaymoreAttackTable) 
 AddTable("HaralderWarAxeAttackTable", AttackTables.HaralderWarAxeAttackTable) 
 AddTable("ClubAttackTable", AttackTables.ClubAttackTable) 
