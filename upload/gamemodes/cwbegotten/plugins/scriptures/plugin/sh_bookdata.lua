@@ -772,7 +772,7 @@ Joseph A. Philadelphus, known colloquially as Fucker Joe, was a Hard-Glazed seri
 
 Fucker Joe is infamous for being the primary cause of Lord Maximus' court reforms, including the controversial Fourth Erotica Ban (22), which by extension means he was indirectly responsible for the death of Boxer H. Krammy. This was due to his defense, mainly based on the fact that "a Philimonjio could do nothing wrong." This argument made the trial one of the most difficult and daunting cases in Glazic court history. During his crime spree spanning just over six years, the Glazic peoples were stricken by fear, due to the randomness of the victims and Fucker Joe's inability to be caught. 
 
-Executed after an agonizing seventy-four spoonings in the Third Era after being found guilty of no less than 408 counts of kidnapping, 405 counts of rape, 358 counts of murder, and 42 counts of attempted murder, Fucker Joe broke the record for the amount of spoonings endured on Death Row, a precedent set by Booby Blagoona several decades prior, for inciting mass riots against Lord Maximus' regime. 
+Executed after an agonizing seventy-four spoonings in the Third Era after being found guilty of no less than 408 counts of kidnapping, 405 counts of assault, 358 counts of murder, and 42 counts of attempted murder, Fucker Joe broke the record for the amount of spoonings endured on Death Row, a precedent set by Booby Blagoona several decades prior, for inciting mass riots against Lord Maximus' regime. 
 
 <font color='#000' size='4'><b>Origins</b></font>
 
@@ -786,7 +786,7 @@ After reaching adulthood, Fucker Joe joined the Glazic Royal Army, fighting alon
 
 After distinguishing himself in service, Fucker Joe was honorably discharged with generous benefits, buying a home and his signature vintage 1970's muscle car, used to run down many darkhides and victims alike. Modifications to this car included a frontally-mounted M2 Browning, an enlarged trunk to store victims, and the removal of the passenger-side seat for storage of weapons and tools. 
 
-Fucker Joe, driven mad supposedly by PNED, began his rampage in the rural territories of the Province of Louisiana, kidnapping over 150 women and raping and murdering them all. During his year of activity in the Province of Louisiana he was averaging just over an abduction/rape/murder per three days. Fucker Joe also infamously drove onto the Governor's plantation (through three fences and several guards), running down many merry-go berry o' pickin' darkhides while they were chained together and defenseless. 
+Fucker Joe, driven mad supposedly by PNED, began his rampage in the rural territories of the Province of Louisiana, kidnapping over 150 women and raping and murdering them all. During his year of activity in the Province of Louisiana he was averaging just over an abduction/torture/murder per three days. Fucker Joe also infamously drove onto the Governor's plantation (through three fences and several guards), running down many merry-go berry o' pickin' darkhides while they were chained together and defenseless. 
 
 Fucker Joe's car received extensive damage from security, as well as the drug-fuelled Governor firing at him with a repeating carbine from his balcony of his castle-mansion. However, even though his initial objectives were not met, Fucker Joe escaped alive and with his car in working condition. After extensive repairs, Fucker Joe set off to the west to victimize the Royal Districts. 
 ]]
@@ -794,7 +794,7 @@ Fucker Joe's car received extensive damage from security, as well as the drug-fu
 Book_Fucker_Page3 = [[
 <font color='#000' size='4'><b>Massacre of Willtan Forest</b></font>
 
-Leaving the Governor's burning plantation, Fucker Joe took Lord Maximus' extravagant Highway of Victory to District 1, but took a detour into the national park of Willtan Forest (named after a famous minister, Karmine Willtan). In the forest he abducted and raped over fifty women, but two managed to escape with their lives, reporting their encounter with Fucker Joe to the authorities. 
+Leaving the Governor's burning plantation, Fucker Joe took Lord Maximus' extravagant Highway of Victory to District 1, but took a detour into the national park of Willtan Forest (named after a famous minister, Karmine Willtan). In the forest he abducted and murdered over fifty women, but two managed to escape with their lives, reporting their encounter with Fucker Joe to the authorities. 
 
 In accordance with Code 46, the Glazic minister in charge of the National Park dispatched a security force of Powderboys to deal with the man who was terrorizing his grounds. The Powderboy patrol covered an average of fifty miles a day, running in full sprint to find the assailant. 
 
@@ -808,7 +808,7 @@ By now, most of the Glazic population had heard the rumors of disappearances, mu
 Book_Fucker_Page4 = [[
 Lord Maximus assembled his Powderboy Honor Guard, and dispatched a legion of them (numbering in the 30,000s) to hunt down and kill Fucker Joe. Armed to the teeth with rocket launchers, machine-guns, and heavy rifles, the Powderboy Honor Guard set out, from the Iron Gate of Glaze. In actuality, however, the Iron Gate of Glaze was never opened, but was only stated to have opened in government propaganda. 
 
-Meanwhile, Fucker Joe was rampaging through the suburbs of District 1, destroying entire shacks full of darkhides on their plantations while they slept, torching them with a flamethrower. The Powderboy Honor Guard arrived one night as he was torching a shack full of women and children darkhides from the District 1 sub-overseer's plantation. The Honor Guard captured and anally raped Fucker Joe for two hours outside as the wails of the women and children burning alive filled the night. 
+Meanwhile, Fucker Joe was rampaging through the suburbs of District 1, destroying entire shacks full of darkhides on their plantations while they slept, torching them with a flamethrower. The Powderboy Honor Guard arrived one night as he was torching a shack full of women and children darkhides from the District 1 sub-overseer's plantation. The Honor Guard captured and tortured Fucker Joe for two hours outside as the wails of the women and children burning alive filled the night. 
 
 <font color='#000' size='4'><b>Trial and Spooning</b></font>
 
@@ -821,7 +821,7 @@ Even Lord Maximus, the creator of Glazic Law and the all-knowing god-king of Phi
 
 Book_Alamos_Page1 = [[
 <i>"...And unto which, I heard our County District Minister return with most glorious glee. The spooning of Fucker Joe, a menace to Glazic Society, had been accomplished. Many men were satisifed and
-relieved by the results, but someone of such reputation does not just disappear into the fucking void. I knew that even if the Menace were to be dead, his namesake would continue to rape our consciousness."</i>
+relieved by the results, but someone of such reputation does not just disappear into the fucking void. I knew that even if the Menace were to be dead, his namesake would continue to violate our consciousness."</i>
 -Alamo Bigro, Recounting the news of Fucker Joes untimely Death.
 
 To those that read this. Be it discarded by those who are of faiths rivalry or history that has born leeway in blood. History tells us quite a lot. 

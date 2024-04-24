@@ -2260,7 +2260,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 3},
 			["wood"] = {amount = 3},
-			["leather"] = {amount = 2},
+			["leather"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_2h_great_eveningstar"] = {amount = 1},
