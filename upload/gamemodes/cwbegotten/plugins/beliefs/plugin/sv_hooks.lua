@@ -1057,7 +1057,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						end
 					end
 				elseif attackerWeapon.Base == "begotten_firearm_base" then -- Firearm
-					if attacker:HasBelief("blessed_powder") then
+					if !attackerWeapon.notPowder and attacker:HasBelief("blessed_powder") then
 						newDamage = newDamage + (originalDamage * 0.25);
 					end
 					

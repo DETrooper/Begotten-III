@@ -109,11 +109,11 @@ function QUERY_CLASS:Select(fieldName)
 end
 
 function QUERY_CLASS:Insert(key, value)
-	self.insertList[#self.insertList + 1] = {"`"..key.."`", "\""..self:Escape(value).."\""}
+	self.insertList[#self.insertList + 1] = {"`"..key.."`", "'"..self:Escape(value).."'"}
 end
 
 function QUERY_CLASS:Update(key, value)
-	self.updateList[#self.updateList + 1] = {"`"..key.."`", "\""..self:Escape(value).."\""}
+	self.updateList[#self.updateList + 1] = {"`"..key.."`", "'"..self:Escape(value).."'"}
 end
 
 function QUERY_CLASS:Create(key, value)
@@ -546,7 +546,7 @@ function Clockwork.database:Escape(text)
 			return self.connection:escape(text)
 		end
 	else
-		return sql.SQLStr(string.gsub(text, "\"", "'"), true)
+		return sql.SQLStr(text, true)
 	end
 end
 
