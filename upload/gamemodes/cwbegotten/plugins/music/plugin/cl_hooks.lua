@@ -258,10 +258,10 @@ function cwMusic:StartAmbientMusic()
 		
 		local musicTable = self:GetRandomAmbientMusic(trackType)
 		local trackName = musicTable.track
-		local trackLength = musicTable.length
+		local trackLength = musicTable.length or SoundDuration(trackName)
 		
 		cwMusic.MusicStartTime = curTime
-		cwMusic.MusicEndTime = curTime + trackLength + 10;
+		cwMusic.MusicEndTime = curTime + trackLength + 10
 		cwMusic.MaxAmbientLength = trackLength
 		cwMusic.AmbientMusic = CreateSound(Clockwork.Client, trackName)
 		
@@ -311,13 +311,13 @@ function cwMusic:GetRandomAmbientMusic(musicType)
 				if self.AmbientMusicTable[musicType][i].track == randomTrackName then
 					local randomTrack = self.AmbientMusicTable[musicType][i];
 					
-					return {track = randomTrack.track, length = randomTrack.length, volume = randomTrack.volume or 1};
+					return {track = randomTrack.track, length = randomTrack.length or SoundDuration(randomTrack.track), volume = randomTrack.volume or 1};
 				end
 			end
 		else
 			local randomTrack = self.AmbientMusicTable[musicType][math.random(1, #self.AmbientMusicTable[musicType])];
 			
-			return {track = randomTrack.track, length = randomTrack.length, volume = randomTrack.volume or 1};
+			return {track = randomTrack.track, length = randomTrack.length or SoundDuration(randomTrack.track), volume = randomTrack.volume or 1};
 		end
 	end
 end
@@ -468,7 +468,7 @@ function cwMusic:StartBattleMusic(limit)
 		
 		local musicTable = self:GetRandomBattleMusic(trackType)
 		local trackName = musicTable.track
-		local trackLength = musicTable.length
+		local trackLength = musicTable.length or SoundDuration(trackName)
 		
 		if limit == false then
 			cwMusic.NextBattleMusic = curTime + trackLength
@@ -528,13 +528,13 @@ function cwMusic:GetRandomBattleMusic(musicType)
 				if self.BattleMusicTable[musicType][i].track == randomTrackName then
 					local randomTrack = self.BattleMusicTable[musicType][i];
 					
-					return {track = randomTrack.track, length = randomTrack.length, volume = randomTrack.volume or 1};
+					return {track = randomTrack.track, length = randomTrack.length or SoundDuration(randomTrack.track), volume = randomTrack.volume or 1};
 				end
 			end
 		else
 			local randomTrack = self.BattleMusicTable[musicType][math.random(1, #self.BattleMusicTable[musicType])];
 			
-			return {track = randomTrack.track, length = randomTrack.length, volume = randomTrack.volume or 1};
+			return {track = randomTrack.track, length = randomTrack.length or SoundDuration(randomTrack.track), volume = randomTrack.volume or 1};
 		end
 	end
 end

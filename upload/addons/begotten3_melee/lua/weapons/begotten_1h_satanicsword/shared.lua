@@ -125,8 +125,8 @@ SWEP.WElements = {
 }
 
 SWEP.VElementsDual = {
-	["v_left"] = { type = "Model", model = "models/skyrim/daedric/sword/w_daedricsword.mdl", bone = "Dummy16", rel = "", pos = Vector(-1.309, -6.48, -1.384), angle = Angle(180, -21.112, -98.889), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
-	["v_right"] = { type = "Model", model = "models/skyrim/daedric/sword/w_daedricsword.mdl", bone = "Dummy01", rel = "", pos = Vector(5.309, 1.48, 3.407), angle = Angle(180, -21.112, -98.889), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+	["v_left"] = { type = "Model", model = "models/skyrim/daedric/sword/w_daedricsword.mdl", bone = "Dummy16", rel = "", pos = Vector(2, -8.396, -1), angle = Angle(12.222, -180, 90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["v_right"] = { type = "Model", model = "models/skyrim/daedric/sword/w_daedricsword.mdl", bone = "Dummy01", rel = "", pos = Vector(2.469, -12.346, 0.493), angle = Angle(-180, 18.888, -94.445), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElementsDual = {

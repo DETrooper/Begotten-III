@@ -240,7 +240,7 @@ function cwBeliefs:ResetBeliefSharedVars(player)
 	
 	if player:HasBelief("nimble") then
 		player:SetSharedVar("hasNimble", true);
-	elseif player:GetSharedVar("nimble") then
+	elseif player:GetSharedVar("hasNimble") then
 		player:SetSharedVar("hasNimble", nil);
 	end
 	
