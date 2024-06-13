@@ -445,7 +445,7 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 							if itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
 								itemInstance:SetAmmoMagazine(itemInstance.ammoMagazineSize);
 							else
-								Clockwork.inventory:AddInstance(supercrate.cwInventory, itemInstance, math.random(4, 10));
+								Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, math.random(4, 10));
 							end
 						end
 						
@@ -459,14 +459,14 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 											subItem:SetAmmoMagazine(subItem.ammoMagazineSize);
 										end
 										
-										Clockwork.inventory:AddInstance(supercrate.cwInventory, subItem, 1);
+										Clockwork.inventory:AddInstance(container.cwInventory, subItem, 1);
 									end
 								end
 							end
 						end
 						
 						-- Fortune finisher items will have perfect condition.
-						Clockwork.inventory:AddInstance(supercrate.cwInventory, itemInstance, 1);
+						Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
 						
 						Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..itemInstance.name.." added to their loot container from the 'Fortune' belief tree finisher bonus");
 					end
