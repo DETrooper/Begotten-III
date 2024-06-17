@@ -31,7 +31,7 @@ function cwCinematicText:ChatBoxAdjustInfo(info)
 					local nameText = info.name;
 					
 					if (!doesRecognise) then
-						nameText = "["..string.sub(Clockwork.player:GetPhysDesc(info.speaker), 0, 21).."...]";
+						nameText = "["..string.utf8sub(Clockwork.player:GetPhysDesc(info.speaker), 0, 21).."...]";
 					end
 					
 					if (info.class == "yell") then
@@ -43,7 +43,7 @@ function cwCinematicText:ChatBoxAdjustInfo(info)
 						info.text = info.text.."...";
 					end;
 					
-					local lastChar = string.sub(info.text, string.len(info.text));
+					local lastChar = string.utf8sub(info.text, string.utf8len(info.text));
 					local sayText = "says";
 					
 					if info.class == "ic" then

@@ -877,7 +877,7 @@ function Clockwork.chatBox:Paint()
 								local wrappedTableCopy = table.Copy(v.wrappedTable);
 
 								table.sort(wrappedTableCopy, function(a, b)
-									return string.len(a) > string.len(b);
+									return string.utf8len(a) > string.utf8len(b);
 								end);
 								
 								local width, height = Clockwork.kernel:GetCachedTextSize(chatBoxSyntaxFont, wrappedTableCopy[1]);
@@ -1037,7 +1037,7 @@ Clockwork.chatBox:RegisterDefaultClass("ic", "ic", function(info)
 			color = Color(175, 255, 150, 255);
 		end;
 		
-		local lastChar = string.sub(info.text, string.len(info.text));
+		local lastChar = string.utf8sub(info.text, string.utf8len(info.text));
 		local sayText = "says";
 		
 		if lastChar == "?" then

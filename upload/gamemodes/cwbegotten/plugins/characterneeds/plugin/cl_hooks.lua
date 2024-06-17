@@ -63,7 +63,7 @@ function cwCharacterNeeds:BuildNeedTooltip(need, x, y, width, height, frame)
 	if needNumber and needTextTable then
 		if table.HasValue(needsInverted, need) then
 			local needColor = Color(needNumber, 100 - needNumber, 0, 225);
-			local needName = string.upper(string.sub(need, 1, 1))..string.sub(need, 2, #need);
+			local needName = string.utf8upper(string.utf8sub(need, 1, 1))..string.utf8sub(need, 2, #need);
 			local selectedText = math.Clamp(math.Round(needNumber / 25), 1, 4);
 			
 			frame:AddText(needName, Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
@@ -71,7 +71,7 @@ function cwCharacterNeeds:BuildNeedTooltip(need, x, y, width, height, frame)
 			frame:AddBar(20, {{text = tostring(needNumber).."%", percentage = 100 - needNumber, color = needColor, font = "DermaDefault", textless = true, noDisplay = true}}, needTextTable[selectedText], needColor);
 		else
 			local needColor = Color(needNumber, 100 - needNumber, 0, 225);
-			local needName = string.upper(string.sub(need, 1, 1))..string.sub(need, 2, #need);
+			local needName = string.utf8upper(string.utf8sub(need, 1, 1))..string.utf8sub(need, 2, #need);
 			local selectedText = math.Clamp(math.Round(needNumber / 25), 1, 4);
 			
 			if needName == "Sleep" then

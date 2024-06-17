@@ -759,7 +759,7 @@ do
 			local dateString = Clockwork.date:GetString();
 			local timeString = Clockwork.time:GetString();
 			local dayName = Clockwork.time:GetDayName();
-			local text = string.upper(dateString..". "..dayName..", "..timeString..".");
+			local text = string.utf8upper(dateString..". "..dayName..", "..timeString..".");
 			
 			self:OverrideMainFont(dateTimeFont);
 				info.y = self:DrawInfo(text, info.x, info.y, colorWhite, 255, true);
@@ -787,7 +787,7 @@ function Clockwork.kernel:DrawHints()
 	if (hook.Run("PlayerCanSeeHints")) then
 		for k, v in pairs(self.Hints) do
 			self:OverrideMainFont(Clockwork.option:GetFont("hints_text"));
-				y = self:DrawInfo(string.upper(v.text), x, y, v.color, v.alpha, true, function(x, y, width, height)
+				y = self:DrawInfo(string.utf8upper(v.text), x, y, v.color, v.alpha, true, function(x, y, width, height)
 					if (v.icon != "") then
 						surface.SetDrawColor(255, 255, 255, v.alpha);
 						surface.SetMaterial(Material("icon32/hand_property.png"))
@@ -1025,7 +1025,7 @@ do
 								local diseaseTable = cwMedicalSystem:FindDiseaseByID(disease);
 								
 								table.insert(text, {
-									text = "*"..string.upper(diseaseTable.name).."*",
+									text = "*"..string.utf8upper(diseaseTable.name).."*",
 									color = Color(255, 0, 0, 255);
 								});
 							end
@@ -1320,7 +1320,7 @@ function Clockwork.kernel:DrawBar(x, y, width, height, color, text, value, maxim
 	barInfo.drawProgress = false
 	
 	if (barInfo.text) then
-		barInfo.text = string.upper(barInfo.text)
+		barInfo.text = string.utf8upper(barInfo.text)
 	end
 
 	if (barInfo.drawGradient) then

@@ -2339,7 +2339,7 @@ local function PlayerSayFunc(player, text)
 	local prefix = config.Get("command_prefix"):Get();
 	local curTime = CurTime();
 
-	if (string.len(text) >= maxChatLength) then
+	if (string.utf8len(text) >= maxChatLength) then
 		text = string.utf8sub(text, 0, maxChatLength);
 	end;
 
@@ -2382,13 +2382,13 @@ local function PlayerSayFunc(player, text)
 			end;
 		end;
 	elseif (string.utf8sub(text, 1, 1) == prefix) then
-		local prefixLength = string.len(prefix);
+		local prefixLength = string.utf8len(prefix);
 		local arguments = Clockwork.kernel:ExplodeByTags(text, " ", "\"", "\"", true);
 		local command = string.utf8sub(arguments[1], prefixLength + 1);
 
 		if (Clockwork.command.stored[command] and Clockwork.command.stored[command].arguments < 2
 		and !Clockwork.command.stored[command].optionalArguments) then
-			text = string.utf8sub(text, string.len(command) + prefixLength + 2);
+			text = string.utf8sub(text, string.utf8len(command) + prefixLength + 2);
 
 			if (text != "") then
 				arguments = {command, text};

@@ -20,7 +20,7 @@ local ITEM = Clockwork.item:New();
 		function ITEM:OnInstantiated()
 			if (self:GetData("KeyID") == "" or self:GetData("KeyName") == "") then
 				self:SetData("KeyID", self.itemID);
-				self:SetData("KeyName", string.sub(self.itemID, string.len(self.itemID) - 1, string.len(self.itemID)));
+				self:SetData("KeyName", string.utf8sub(self.itemID, string.utf8len(self.itemID) - 1, string.utf8len(self.itemID)));
 			end;
 		end;
 	else

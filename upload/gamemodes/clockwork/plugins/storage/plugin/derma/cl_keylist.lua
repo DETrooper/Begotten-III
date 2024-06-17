@@ -106,7 +106,7 @@ function PANEL:Populate(itemTable)
 		itemName:SizeToContents();
 
 		local itemDescription = vgui.Create("DLabel", keylist);
-		itemDescription:SetText(string.sub(v.description, 0, 35).."...");
+		itemDescription:SetText(string.utf8sub(v.description, 0, 35).."...");
 		itemDescription:SetPos(40 + 4 + 4, 22);
 		itemDescription:SetTextColor(Color(255, 255, 255))
 		itemDescription:SizeToContents();

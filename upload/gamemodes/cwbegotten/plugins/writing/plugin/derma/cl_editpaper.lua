@@ -62,15 +62,15 @@ function PANEL:Populate()
 	-- A function to set the text entry's real value.
 	function textEntry:SetRealValue(text)
 		self:SetValue(text);
-		self:SetCaretPos( string.len(text) );
+		self:SetCaretPos( string.utf8len(text) );
 	end;
 	
 	-- Called each frame.
 	function textEntry:Think()
 		local text = self:GetValue();
 		
-		if (string.len(text) > 500) then
-			self:SetRealValue( string.sub(text, 0, 500) );
+		if (string.utf8len(text) > 500) then
+			self:SetRealValue( string.utf8sub(text, 0, 500) );
 			
 			surface.PlaySound("common/talk.wav");
 		end;
@@ -83,10 +83,11 @@ function PANEL:Populate()
 		gui.EnableScreenClicker(false);
 		
 		if (IsValid(self.entity)) then
-			Clockwork.datastream:Start( "EditPaper", { self.entity, string.sub(textEntry:GetValue(), 0, 500) } );
+			Clockwork.datastream:Start( "EditPaper", { self.entity, utf8sub(textEntry:GetValue(), 0, 500) } );
 		end;
 	end;
-	
+	
+
 	self.panelList:AddItem(textEntry);
 	self.panelList:AddItem(button);
 end;

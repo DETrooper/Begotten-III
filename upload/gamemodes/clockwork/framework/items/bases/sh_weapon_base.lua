@@ -70,7 +70,7 @@ end;
 function ITEM:Engrave(player, text, engravingItemTable)
 	local nospaces = string.gsub(text,"%s+","")
 	
-	if string.len(text) > 32 then
+	if string.utf8len(text) > 32 then
 		Schema:EasyText(player, "peru", "This name is too long!");
 	elseif #nospaces == 0 then
 		Schema:EasyText(player, "chocolate", "You can't leave this blank!");

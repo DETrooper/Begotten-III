@@ -26,7 +26,7 @@ function cwEncumberment:PreDateTimeDrawn(info)
 		local encumberedFont = Clockwork.option:GetFont("hints_text");
 		local colorRed = Clockwork.option:GetColor("negative_hint");
 		
-		local text = string.upper("You are overencumbered!");
+		local text = string.utf8upper("You are overencumbered!");
 
 		Clockwork.kernel:OverrideMainFont(encumberedFont);
 			info.y = Clockwork.kernel:DrawInfo(text, info.x, info.y, colorRed, 255, true);

@@ -244,7 +244,7 @@ function PANEL:Rebuild()
 	for k, v in pairs (inventory) do
 		local itemTable = Clockwork.item:FindByID(k)
 		if (itemTable) then
-			local category = string.lower(itemTable("category"))
+			local category = string.utf8lower(itemTable("category"))
 
 			if (string.find(category, "catalysts")) then
 				for i = 1, Clockwork.inventory:GetItemCountByID(inventory, k) do
@@ -788,12 +788,12 @@ function PANEL:Init()
 				return false;
 			end;
 
-			if (string.len(self.fullName) < 4) then
+			if (string.utf8len(self.fullName) < 4) then
 				Clockwork.character:SetFault("Your name must be at least 4 characters long!");
 				return false;
 			end;
 
-			if (string.len(self.fullName) > 32) then
+			if (string.utf8len(self.fullName) > 32) then
 				Clockwork.character:SetFault("Your name must not be greater than 32 characters long!");
 				return false;
 			end;
@@ -832,7 +832,7 @@ function PANEL:Init()
 		
 		self.physDesc = self.physDescTextEntry:GetValue();
 		
-		if (string.len(self.physDesc) < minimumPhysDesc) then
+		if (string.utf8len(self.physDesc) < minimumPhysDesc) then
 			Clockwork.character:SetFault("The physical description must be at least "..minimumPhysDesc.." characters long!");
 			return false;
 		end;

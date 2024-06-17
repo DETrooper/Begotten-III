@@ -231,7 +231,7 @@ function PANEL:Populate(lockType, bSettingPassword, entity)
 		
 		if (!IsValid(self.itemDescription)) then
 			self.itemDescription = vgui.Create("DLabel", self);
-			self.itemDescription:SetText(string.sub("Your collection of keys", 0, 24).."...");
+			self.itemDescription:SetText(string.utf8sub("Your collection of keys", 0, 24).."...");
 			self.itemDescription:SetTextColor(Color(255, 255, 255));
 			self.itemDescription:SetPos(52, 50);
 			self.itemDescription:SizeToContents();
@@ -365,7 +365,7 @@ function PANEL:ChangeItemTable(itemTable)
 	end;
 	
 	if (IsValid(self.itemDescription)) then
-		self.itemDescription:SetText(string.sub(itemTable.description, 0, 24 + 4).."...");
+		self.itemDescription:SetText(string.utf8sub(itemTable.description, 0, 24 + 4).."...");
 		self.itemDescription:SizeToContents();
 	end;
 	

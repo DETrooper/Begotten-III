@@ -1557,8 +1557,8 @@ netstream.Hook("ObjectPhysDesc", function(player, data)
 		if (player.objectPhysDesc == data[2]) then
 			local physDesc = data[1];
 			
-			if (string.len(physDesc) > 80) then
-				physDesc = string.sub(physDesc, 1, 80).."...";
+			if (string.utf8len(physDesc) > 80) then
+				physDesc = string.utf8sub(physDesc, 1, 80).."...";
 			end;
 			
 			data[2]:SetNetworkedString("physDesc", physDesc);
@@ -1651,8 +1651,8 @@ function playerMeta:AddBounty(bounty, reason, poster)
 	
 	local physDesc = self:GetCharacterData("PhysDesc", "Wearing dirty clothes and a small satchel");
 	
-	if string.len(physDesc) > 128 then
-		physDesc = string.Left(physDesc, 129);
+	if string.utf8len(physDesc) > 128 then
+		physDesc = string.utf8left(physDesc, 129);
 	end
 	
 	tab.physDesc = physDesc;
@@ -1788,8 +1788,8 @@ function Schema:AddBounty(key, bounty, reason, poster)
 						
 						local physDesc = data["PhysDesc"] or "Wearing dirty clothes and a small satchel";
 						
-						if string.len(physDesc) > 128 then
-							physDesc = string.Left(physDesc, 129);
+						if string.utf8len(physDesc) > 128 then
+							physDesc = string.utf8left(physDesc, 129);
 						end
 						
 						tab.physDesc = physDesc;

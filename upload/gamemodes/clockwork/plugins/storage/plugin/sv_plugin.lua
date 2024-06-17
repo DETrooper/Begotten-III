@@ -41,7 +41,7 @@ function cwStorage:GetRandomItem(uniqueID)
 	if (randomItem) then
 		local itemTable = item.FindByID(randomItem[1])
 
-		if (!uniqueID or string.find(string.lower(itemTable.category), uniqueID)) then
+		if (!uniqueID or string.find(string.utf8lower(itemTable.category), uniqueID)) then
 			return randomItem
 		end
 	end
@@ -56,7 +56,7 @@ function cwStorage:CategoryExists(uniqueID)
 		for i = 1, #self.randomItems do
 			local itemTable = item.FindByID(self.randomItems[i][1])
 
-			if (string.find(string.lower(itemTable.category), uniqueID)) then
+			if (string.find(string.utf8lower(itemTable.category), uniqueID)) then
 				return true
 			end
 		end
@@ -506,7 +506,7 @@ function cwStorage:MakeKeyCopy(player, itemTable)
 	
 	if (newKey) then
 		newKey:SetData("KeyID", itemID);
-		newKey:SetData("KeyName", string.sub(itemID, string.len(itemID) - 1, string.len(itemID)));
+		newKey:SetData("KeyName", string.sub(itemID, string.utf8len(itemID) - 1, string.utf8len(itemID)));
 		newKey:SetData("bIsCopy", true);
 		
 		Schema:EasyText(player, "olivedrab", "You make a copy of the key.");

@@ -2204,6 +2204,30 @@ function utf8.gensub(str, sub_len)
 	end
 end
 
+function utf8.setchar(s, k, v)
+	return utf8.sub(s, 0, k - 1) .. v .. utf8.sub(s, k + 1)
+end
+
+function utf8.getchar(s, k)
+	return utf8.sub(s, k, k)
+end
+
+function utf8.startswith(str, start)
+	return utf8.sub(str, 1, utf8.len(start)) == start
+end
+
+function utf8.endswith(str, endStr)
+	return endStr == "" or utf8.sub(str, -utf8.len(endStr)) == endStr
+end
+
+function utf8.left(str, num)
+	return utf8.sub(str, 1, num)
+end
+
+function utf8.right(str, num)
+	return utf8.sub(str, -num)
+end
+
 string.utf8len		 = utf8.len
 string.utf8sub		 = utf8.sub
 string.utf8reverse	 = utf8.reverse
@@ -2212,3 +2236,9 @@ string.utf8unicode	 = utf8.unicode
 string.utf8gensub	= utf8.gensub
 string.utf8upper	= utf8.upper
 string.utf8lower	 = utf8.lower
+string.utf8setchar	= utf8.setchar
+string.utf8getchar	= utf8.getchar
+string.utf8startswith	= utf8.startswith
+string.utf8endswith	= utf8.endswith
+string.utf8left	= utf8.left
+string.utf8right	= utf8.right

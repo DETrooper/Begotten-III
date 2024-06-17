@@ -131,7 +131,7 @@ function cwWeaponSelect:HUDPaintImportant()
 						local printName = hook.Run("ModifyWeaponPrintName", v, self:GetWeaponPrintName(v));
 						local useColor = hook.Run("GetWeaponNameColor", v, printName) or colorWhite;
 
-						y = Clockwork.kernel:DrawInfo(string.upper(printName), x, y, useColor, math.min((255 / weaponLimit) * (k * 0.75), self.displayAlpha), true);
+						y = Clockwork.kernel:DrawInfo(string.utf8upper(printName), x, y, useColor, math.min((255 / weaponLimit) * (k * 0.75), self.displayAlpha), true);
 					end;
 				end;
 				
@@ -144,7 +144,7 @@ function cwWeaponSelect:HUDPaintImportant()
 					
 					weaponInfoX = x - 436;
 
-					y = Clockwork.kernel:DrawInfo(string.upper(currentWeaponName), x, y, useColor, self.displayAlpha, true);
+					y = Clockwork.kernel:DrawInfo(string.utf8upper(currentWeaponName), x, y, useColor, self.displayAlpha, true);
 					
 					Clockwork.kernel:OverrideMainFont(false);
 						self:DrawWeaponInformation(item.GetByWeapon(currentWeapon), currentWeapon, weaponInfoX, weaponInfoY, self.weaponDisplayAlpha);
@@ -168,7 +168,7 @@ function cwWeaponSelect:HUDPaintImportant()
 						local printName = hook.Run("ModifyWeaponPrintName", v, self:GetWeaponPrintName(v));
 						local useColor = hook.Run("GetWeaponNameColor", v, printName) or colorWhite;
 
-						y = Clockwork.kernel:DrawInfo(string.upper(printName), x, y, useColor, math.min(255 - ((255 / weaponLimit) * (k * 0.75)), self.displayAlpha), true);
+						y = Clockwork.kernel:DrawInfo(string.utf8upper(printName), x, y, useColor, math.min(255 - ((255 / weaponLimit) * (k * 0.75)), self.displayAlpha), true);
 					end;
 				end;
 			Clockwork.kernel:OverrideMainFont(false);
@@ -204,7 +204,7 @@ end;
 
 -- Called just before the weapons printname should be displayed.
 function cwWeaponSelect:ModifyWeaponPrintName(weapon, default)
-	local lowerPrintName = string.lower(default);
+	local lowerPrintName = string.utf8lower(default);
 	
 	if (string.find(lowerPrintName, "tool") and !string.find(lowerPrintName, "admin")) then
 		return "TOOL GUN";

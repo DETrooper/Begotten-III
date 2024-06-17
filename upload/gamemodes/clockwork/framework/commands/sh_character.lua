@@ -162,7 +162,7 @@ local COMMAND = Clockwork.command:New("CharGiveTrait");
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
 		local target = Clockwork.player:FindByID(arguments[1]);
-		local traitID = string.lower(arguments[2]);
+		local traitID = string.utf8lower(arguments[2]);
 		
 		if (target and target:HasInitialized()) then
 			if Clockwork.trait:FindByID(traitID) then
@@ -187,7 +187,7 @@ local COMMAND = Clockwork.command:New("CharTakeTrait");
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
 		local target = Clockwork.player:FindByID(arguments[1]);
-		local traitID = string.lower(arguments[2]);
+		local traitID = string.utf8lower(arguments[2]);
 		
 		if (target and target:HasInitialized()) then
 			if Clockwork.trait:FindByID(traitID) then
@@ -490,7 +490,7 @@ local COMMAND = Clockwork.command:New("CharForcePhysDesc");
 		local minimumPhysDesc = config.Get("minimum_physdesc"):Get();
 		local text = tostring(arguments[2]);
 		
-		if (string.len(text) < minimumPhysDesc) then
+		if (string.utf8len(text) < minimumPhysDesc) then
 			Clockwork.player:Notify(player, "The physical description must be at least "..minimumPhysDesc.." characters long!");
 			
 			return;
@@ -620,14 +620,14 @@ local COMMAND = Clockwork.command:New("CharGiveItem");
 				local bSuccess, fault = target:GiveItem(itemTable, true);
 				
 				if (bSuccess) then
-					if (string.sub(itemTable.name, -1) == "s") then
+					if (string.utf8sub(itemTable.name, -1) == "s") then
 						Clockwork.player:Notify(player, "You have given "..target:Name().." some "..itemTable.name..".");
 					else
 						Clockwork.player:Notify(player, "You have given "..target:Name().." a "..itemTable.name..".");
 					end;
 					
 					if (player != target) then
-						if (string.sub(itemTable.name, -1) == "s") then
+						if (string.utf8sub(itemTable.name, -1) == "s") then
 							Clockwork.player:Notify(target, player:Name().." has given you some "..itemTable.name..".");
 						else
 							Clockwork.player:Notify(target, player:Name().." has given you a "..itemTable.name..".");

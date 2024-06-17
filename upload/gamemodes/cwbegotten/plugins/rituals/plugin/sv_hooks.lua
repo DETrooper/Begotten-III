@@ -920,7 +920,7 @@ Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 			if Schema.Ranks then
 				for k, v in pairs(Schema.Ranks) do
 					for i, v2 in ipairs(v) do
-						table.insert(blacklistedNames, string.lower(v2));
+						table.insert(blacklistedNames, string.utf8lower(v2));
 					end
 				end
 			end
@@ -928,7 +928,7 @@ Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 			for i = 1, #blacklistedNames do
 				local blacklistedName = blacklistedNames[i];
 			
-				if string.find(string.lower(data[1]), blacklistedName) then
+				if string.find(string.utf8lower(data[1]), blacklistedName) then
 					player.selectingNewAppearance = false;
 				
 					return;
@@ -944,7 +944,7 @@ Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 					for k2, v2 in pairs(v.heads) do
 						local modelPath = "models/begotten/heads/"..v2.."_gore.mdl";
 						
-						if modelPath == data[2] and gender == string.lower(data[3]) then
+						if modelPath == data[2] and gender == string.utf8lower(data[3]) then
 							model_valid = true;
 							
 							break;

@@ -11,8 +11,8 @@ Clockwork.datastream:Hook("EditPaper", function(player, data)
 	if (IsValid( data[1] )) then
 		if (data[1]:GetClass() == "cw_paper") then
 			if (player:GetPos():Distance( data[1]:GetPos() ) <= 192 and player:GetEyeTraceNoCursor().Entity == data[1]) then
-				if (string.len( data[2] ) > 0) then
-					data[1]:SetText( string.sub(data[2], 0, 500) );
+				if (string.utf8len( data[2] ) > 0) then
+					data[1]:SetText( string.utf8sub(data[2], 0, 500) );
 				end;
 			end;
 		end;

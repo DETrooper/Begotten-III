@@ -311,7 +311,7 @@ function Schema:PreDrawBar(barInfo)
 	barInfo.drawProgress = false;
 	
 	if (barInfo.text) then
-		barInfo.text = string.upper(barInfo.text);
+		barInfo.text = string.utf8upper(barInfo.text);
 	end;
 end;
 

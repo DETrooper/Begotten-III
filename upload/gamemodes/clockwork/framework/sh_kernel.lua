@@ -1652,7 +1652,7 @@ function Clockwork.kernel:ParseData(text)
 	if (CLIENT) then
 		for k in string.gmatch(text, ":(.-):") do
 			if (k != "" and input.LookupBinding(k)) then
-				text = self:Replace(text, ":"..k..":", "<"..string.upper(tostring(input.LookupBinding(k)))..">")
+				text = self:Replace(text, ":"..k..":", "<"..string.utf8upper(tostring(input.LookupBinding(k)))..">")
 			end
 		end
 	end

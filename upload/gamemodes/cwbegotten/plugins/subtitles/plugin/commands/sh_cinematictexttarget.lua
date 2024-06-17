@@ -16,7 +16,7 @@ local COMMAND = Clockwork.command:New("CinematicTextTarget");
 		local target = Clockwork.player:FindByID(arguments[1]);
 		local text = table.concat(arguments, " ", 2);
 		
-		if (string.len(string) > 3 and string.find(string.sub(text, 0, 1), '"') or string.find(string.sub(text, 0, -1), '"')) then
+		if (string.utf8len(string) > 3 and string.find(string.utf8sub(text, 0, 1), '"') or string.find(string.utf8sub(text, 0, -1), '"')) then
 			Schema:EasyText(player, "firebrick", "You cannot include quotes at the beginning and end of your text!");
 			
 			return;
