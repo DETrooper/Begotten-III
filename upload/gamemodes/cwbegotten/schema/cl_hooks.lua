@@ -28,6 +28,52 @@ if !Schema.contentVerified then
 	Schema.contentVerified = "unverified";
 end
 
+local function PreRender(schema)
+	if (Clockwork.Client.dueling or Clockwork.Client:IsRagdolled() or Clockwork.kernel:IsChoosingCharacter() or
+		!zones:Enabled() or !zones:FogEnabled()) then
+		return
+	end
+
+	schema.oldClip = render.EnableClipping(true)
+
+	local forward = Clockwork.Client:GetForward()
+	local normal = forward * -1
+	local distance = normal:Dot(Clockwork.Client:GetPos() + forward * zones.currentFogEnd)
+
+	render.PushCustomClipPlane(normal, distance)
+end
+
+local function PostRender(schema)
+	if (schema.oldClip != nil) then
+		render.PopCustomClipPlane()
+		render.EnableClipping(schema.oldClip)
+		schema.oldClip = nil
+	end
+end
+
+function Schema:PreDrawOpaqueRenderables()
+	PreRender(self)
+end
+
+function Schema:PostDrawOpaqueRenderables()
+	PostRender(self)
+end
+
+function Schema:PreDrawTranslucentRenderables()
+	PreRender(self)
+end
+
+function Schema:PostDrawTranslucentRenderables()
+	PostRender(self)
+end
+
+function Schema:PrePlayerDraw(client)
+	if (!Clockwork.Client:GetNWBool("hasThermal") and
+		Clockwork.Client:GetPos():DistToSqr(client:GetPos()) > zones.currentFogEnd * zones.currentFogEnd) then
+		return true
+	end
+end
+
 function Schema:Initialize()
 	if (!file.Exists("b3", "DATA")) then
 		file.CreateDir("b3")
