@@ -299,10 +299,10 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 					if cwBeliefs then
 						local killXP = cwBeliefs.xpValues["kill"];
 						
-						killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
+						killXP = killXP * math.Clamp(entity:GetCharacterData("level", 1), 1, 40);
 						
 						if player:HasBelief("sister") then
-							if player:GetCharacterData("level", 1) > player:GetCharacterData("level", 1) then
+							if player:GetCharacterData("level", 1) > entity:GetCharacterData("level", 1) then
 								killXP = killXP * 2;
 							end
 						end
