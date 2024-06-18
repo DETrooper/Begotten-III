@@ -117,8 +117,12 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 					shouldBurn = true;
 				end
 				
-				if !helmetItem or (helmetItem:GetCondition() or 0) <= 0 then
-					shouldBurn = true;
+				if !shouldBurn then
+					if !armorItem or !armorItem.hasHelmet then
+						if !helmetItem or (helmetItem:GetCondition() or 0) <= 0 then
+							shouldBurn = true;
+						end
+					end
 				end
 				
 				if !cwBeliefs or !player:HasBelief("ingenuity_finisher") then

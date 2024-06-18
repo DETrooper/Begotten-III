@@ -632,8 +632,8 @@ function COMMAND:OnRun(player, arguments)
 			
 			if #contagious_diseases > 0 then
 				for k, v in pairs (ents.FindInSphere(target:GetPos(), 128)) do
-					if (v:Istarget() and not v.cwObserverMode) then
-						target:InfectOthertarget(v, contagious_diseases, 80);
+					if (v:IsPlayer() and not v.cwObserverMode) then
+						target:InfectOtherPlayer(v, contagious_diseases, 80);
 					end;
 				end;
 			end;
@@ -667,8 +667,8 @@ function COMMAND:OnRun(player, arguments)
 			
 			if #contagious_diseases > 0 then
 				for k, v in pairs (ents.FindInSphere(target:GetPos(), 128)) do
-					if (v:Istarget() and not v.cwObserverMode) then
-						target:InfectOthertarget(v, contagious_diseases, 80);
+					if (v:IsPlayer() and not v.cwObserverMode) then
+						target:InfectOtherPlayer(v, contagious_diseases, 80);
 					end;
 				end;
 			end;
