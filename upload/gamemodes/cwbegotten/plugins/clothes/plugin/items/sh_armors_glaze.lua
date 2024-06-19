@@ -1,29 +1,33 @@
 --[[
 LIGHT ARMOR MINIMUM VALUES
 
+- PROTECTION - 25
+
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
-ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 
-PROTECTION - 20
-
-MEDIUM ARMOR MINIMUM VALUES
-
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+- MEDIUM ARMOR MINIMUM VALUES
 
 PROTECTION - 40
 FALL DAMAGE - +10%
 
-HEAVY ARMOR MINIMUM VALUES
-
-ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
-ITEM.pierceScale = 0.80; -- reduces pierce damage by 15%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 
-PROTECTION - 60
-FALL DAMAGE - +13%
+- HEAVY ARMOR MINIMUM VALUES
+
+PROTECTION - 65
+FALL DAMAGE - +15%
+
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 
 --]]
 
@@ -35,7 +39,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/wanderer_mail.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 55
+ITEM.protection = 53
 ITEM.type = "chainmail";
 ITEM.weight = 4.5;
 ITEM.weightclass = "Medium";
@@ -58,10 +62,11 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.10, -- increases fall damage by 10%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.bulletScale = 0.85; -- reduces bullet damage by 15%
 
 ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "leather", "leather", "leather"}};
 ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1500};
@@ -118,10 +123,11 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 
 ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "iron_chunks", "iron_chunks", "leather", "cloth", "cloth"}};
 ITEM.itemSpawnerInfo = {category = "Armor", rarity = 5000};
@@ -179,10 +185,11 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.10, -- increases fall damage by 10%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.85; -- reduces pierce damage by 10%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.bulletScale = 0.85; -- reduces bullet damage by 15%
 
 ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
 
@@ -238,9 +245,10 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.10, -- increases fall damage by 10%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.85; -- reduces pierce damage by 10%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 ITEM.bulletScale = 0.85; -- reduces bullet damage by 15%
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
@@ -297,9 +305,10 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.10, -- increases fall damage by 10%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.85; -- reduces pierce damage by 10%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 
 ITEM.components = {breakdownType = "meltdown", items = {"gold_ingot", "gold_ingot", "fine_steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
@@ -359,9 +368,10 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.10, -- increases fall damage by 10%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 
 ITEM.components = {breakdownType = "meltdown", items = {"gold_ingot", "fine_steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
@@ -415,7 +425,10 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
-ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
 ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
 
@@ -468,7 +481,10 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
-ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
 ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
 
@@ -500,7 +516,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/praeventor_gambeson.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 1.1
 ITEM.hitParticle = "GlassImpact";
-ITEM.protection = 35
+ITEM.protection = 30
 ITEM.type = "leather";
 ITEM.weight = 2;
 ITEM.weightclass = "Light";
@@ -521,7 +537,10 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
-ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
 ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "leather", "cloth", "cloth"}};
 
@@ -573,8 +592,10 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
-ITEM.slashScale = 0.95; -- reduces slash damage by 5%
-ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 
 ITEM.components = {breakdownType = "breakdown", items = {"leather", "leather", "leather", "cloth", "cloth", "cloth"}};
 
@@ -626,8 +647,10 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
-ITEM.slashScale = 0.95; -- reduces slash damage by 5%
-ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 
 ITEM.components = {breakdownType = "breakdown", items = {"leather", "leather", "leather", "cloth", "cloth", "cloth"}};
 
@@ -659,7 +682,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/padded_coat.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 1.1
 ITEM.hitParticle = "GlassImpact";
-ITEM.protection = 33
+ITEM.protection = 35
 ITEM.type = "leather";
 ITEM.weight = 3;
 ITEM.weightclass = "Light";
@@ -678,8 +701,10 @@ ITEM.effectiveLimbs = {
 	[HITGROUP_GEAR] = true
 }
 
-ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
-ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 
 ITEM.components = {breakdownType = "breakdown", items = {"leather", "leather", "leather", "leather", "cloth", "cloth", "cloth", "cloth"}};
 
@@ -734,8 +759,10 @@ ITEM.effectiveLimbs = {
 	[HITGROUP_GEAR] = true
 }
 
-ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
-ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 
 ITEM.components = {breakdownType = "breakdown", items = {"leather", "leather", "cloth", "cloth", "cloth", "cloth"}};
 
@@ -767,7 +794,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/battle_monk_robes.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 50
+ITEM.protection = 55
 ITEM.type = "chainmail";
 ITEM.weight = 4;
 ITEM.weightclass = "Medium";
@@ -794,9 +821,10 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.10, -- increases fall damage by 10%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
 ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "cloth", "leather", "leather"}};
@@ -847,7 +875,9 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
 ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
 ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
@@ -881,7 +911,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/light_brigandine.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 1.1
 ITEM.hitParticle = "GlassImpact";
-ITEM.protection = 33
+ITEM.protection = 35
 ITEM.type = "leather";
 ITEM.weight = 2;
 ITEM.weightclass = "Light";
@@ -901,7 +931,9 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
 ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
 ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
@@ -957,9 +989,10 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.10, -- increases fall damage by 10%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 
 ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
@@ -1011,9 +1044,10 @@ ITEM.effectiveLimbs = {
 	[HITGROUP_GEAR] = true
 }
 
-ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
 ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
-ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 
 ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth", "cloth", "cloth"}};
 
@@ -1045,7 +1079,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/scribe_robes.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 1.1
 ITEM.hitParticle = "GlassImpact";
-ITEM.protection = 10
+ITEM.protection = 15
 ITEM.type = "leather";
 ITEM.weight = 1.5;
 ITEM.weightclass = "Light";
@@ -1066,7 +1100,8 @@ ITEM.effectiveLimbs = {
 
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
 ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
-ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 
 ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth", "cloth", "cloth"}};
 
@@ -1123,7 +1158,8 @@ ITEM.effectiveLimbs = {
 
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
 ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
-ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 
 ITEM.attributes = {"disease_resistance"};
 ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth", "cloth", "cloth"}};
@@ -1161,7 +1197,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/scrapper_grunt_plate.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 1
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 40
+ITEM.protection = 45
 ITEM.type = "plate";
 ITEM.weight = 5;
 ITEM.weightclass = "Medium";
@@ -1184,10 +1220,11 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.10, -- increases fall damage by 10%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 
 ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "scrap", "scrap", "cloth"}};
 
@@ -1220,7 +1257,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/scrapper_machinist_plate.pn
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 65
+ITEM.protection = 70
 ITEM.type = "plate";
 ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
@@ -1245,10 +1282,11 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
-ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 
 ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "scrap", "scrap", "scrap", "scrap", "scrap"}};
 
@@ -1309,10 +1347,11 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
-ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.65; -- reduces slash damage by 35%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 
 ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "leather", "cloth", "cloth"}};
 ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1000, supercrateOnly = true};
@@ -1377,10 +1416,10 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
-ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.65; -- reduces slash damage by 35%
-ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+ITEM.bulletScale = 0.65; -- reduces bullet damage by 35%
 ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "leather", "cloth"}};
@@ -1441,10 +1480,9 @@ ITEM.effectiveLimbs = {
 ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
-
-ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
-ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.65; -- reduces slash damage by 35%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
 ITEM.stabilityScale = 0.35; -- reduces stability damage by 65%
 
@@ -1504,10 +1542,11 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.08, -- increases fall damage by 8%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 
 ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "leather", "leather", "leather", "leather", "cloth", "cloth", "cloth"}};
 
@@ -1564,10 +1603,11 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.08, -- increases fall damage by 8%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 
 ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "leather", "leather", "leather", "leather", "cloth", "cloth", "cloth"}};
 
@@ -1624,10 +1664,11 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.08, -- increases fall damage by 8%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 
 ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "leather", "leather", "leather", "leather", "cloth", "cloth", "cloth"}};
 
@@ -1689,10 +1730,11 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
-ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 
 ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "cloth", "cloth"}};
 
@@ -1757,13 +1799,14 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.damageTypeScales = {
-	[DMG_FALL] = -0.13, -- increases fall damage by 13%
+	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
-ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 
 ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "cloth", "cloth"}};
 
@@ -1824,12 +1867,12 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.damageTypeScales = {
-	[DMG_FALL] = -0.13, -- increases fall damage by 13%
+	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
-ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 
@@ -1904,9 +1947,10 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.10, -- increases fall damage by 10%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 
 ITEM.components = {breakdownType = "meltdown", items = {"tech", "tech", "tech", "tech", "scrap", "scrap", "scrap", "scrap", "scrap"}};
@@ -2026,7 +2070,9 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
-ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 
 ITEM.components = {breakdownType = "meltdown", items = {"tech", "tech", "scrap", "scrap", "scrap", "scrap", "scrap"}};
@@ -2120,7 +2166,7 @@ ITEM.concealsFace = true;
 ITEM.conditionScale = 0
 ITEM.hasHelmet = true;
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 85
+ITEM.protection = 90
 ITEM.weight = 10;
 ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
@@ -2149,9 +2195,9 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
-ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.3; -- reduces bullet damage by 70%
 ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 
@@ -2322,7 +2368,6 @@ ITEM.effectiveLimbs = {
 
 ITEM.bluntScale = 0.60; -- reduces blunt damage by 40%
 ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
-ITEM.slashScale = 0.95; -- reduces slash damage by 5%
 
 ITEM.components = {breakdownType = "breakdown", items = {"human_bone", "human_bone", "human_bone", "human_bone", "human_bone", "cloth", "cloth"}};
 
