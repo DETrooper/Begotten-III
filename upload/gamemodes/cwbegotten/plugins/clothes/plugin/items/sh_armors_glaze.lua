@@ -1,7 +1,7 @@
 --[[
-LIGHT ARMOR MINIMUM VALUES
+- LIGHT ARMOR MINIMUM VALUES
 
-- PROTECTION - 25
+PROTECTION - 25
 
 ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
 ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
