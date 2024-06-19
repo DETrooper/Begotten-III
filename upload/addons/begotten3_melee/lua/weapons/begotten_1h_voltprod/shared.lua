@@ -17,11 +17,11 @@ SWEP.HoldTypeShield = "wos-begotten_1h_shield"
 SWEP.ViewModel = "models/v_onehandedbegotten.mdl"
 SWEP.ViewModelFOV = 62
 SWEP.ViewModelFlip = false
-
+ 
 --Anims
 SWEP.BlockAnim = "a_sword_block"
-SWEP.CriticalAnim = "a_sword_attack_chop_slow_01"
-SWEP.CriticalAnimShield = "a_sword_shield_attack_chop_slow_01"
+SWEP.CriticalAnim = "a_sword_attack_chop_fast_01"
+SWEP.CriticalAnimShield = "a_sword_shield_attack_chop_fast_01"
 SWEP.ParryAnim = "a_sword_parry"
 
 SWEP.IronSightsPos = Vector(-7.64, -6.433, -0.96)
@@ -48,7 +48,7 @@ function SWEP:CriticalAnimation()
 	-- Viewmodel attack animation!
 	local vm = self.Owner:GetViewModel()
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( "misscenter1" ) )
-	self.Owner:GetViewModel():SetPlaybackRate(0.4)
+	self.Owner:GetViewModel():SetPlaybackRate(0.55)
 	
 	if (SERVER) then
 	timer.Simple( 0.05, function() if self:IsValid() then
@@ -71,15 +71,15 @@ function SWEP:HandlePrimaryAttack()
 
 	--Attack animation
 	if self:GetNWString("activeShield"):len() > 0 then
-		self:TriggerAnim(self.Owner, "a_sword_shield_attack_chop_slow_01");
+		self:TriggerAnim(self.Owner, "a_sword_shield_attack_chop_fast_01");
 	else
-		self:TriggerAnim(self.Owner, "a_sword_attack_chop_slow_01");
+		self:TriggerAnim(self.Owner, "a_sword_attack_chop_fast_01");
 	end
 
 	-- Viewmodel attack animation!
 	local vm = self.Owner:GetViewModel()
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( "misscenter1" ) )
-	self.Owner:GetViewModel():SetPlaybackRate(0.4)
+	self.Owner:GetViewModel():SetPlaybackRate(0.55)
 	
 	self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
 	self.Owner:ViewPunch(attacktable["punchstrength"])
