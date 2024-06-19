@@ -300,9 +300,7 @@ function GM:DatabaseConnected()
 end
 
 -- Called when the Clockwork database connection fails.
-function GM:DatabaseConnectionFailed()
-	Clockwork.database:Error(errText)
-end
+function GM:DatabaseConnectionFailed(errorText) end
 
 -- Called when a player's saved inventory should be added to.
 function GM:PlayerAddToSavedInventory(player, character, Callback)

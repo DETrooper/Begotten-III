@@ -149,7 +149,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					end
 					
 					if attacker:GetCharmEquipped("ring_penetration") then
-						armorPiercing = armorPiercing + 15;
+						armorPiercing = armorPiercing + 10;
 					end
 					
 					if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("the_light") then
@@ -270,7 +270,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 							end
 							
 							if attacker:GetCharmEquipped("ring_penetration") then
-								armorPiercing = armorPiercing + 15;
+								armorPiercing = armorPiercing + 10;
 							end
 							
 							if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("the_light") then

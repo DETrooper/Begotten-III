@@ -164,7 +164,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_penetration";
 	ITEM.description = "A sharp ring, it digs into your flesh as you put it onto your finger.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/ring_pummeler.png";
-	ITEM.charmEffects = "- Increases armor-piercing damage by 15 points.";
+	ITEM.charmEffects = "- Increases armor-piercing damage by 10 points.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, supercrateOnly = true};
 ITEM:Register();
