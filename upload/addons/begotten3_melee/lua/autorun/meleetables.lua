@@ -6554,7 +6554,7 @@ BlockTables.shield19 = { -- Rusted Kite Shield
 
 BlockTables.shieldunique1 = { -- Red Wolf Skinshield (Unique)
 	["name"] = "Red Wolf Skinshield",
-	["guardblockamount"] = 4,
+	["guardblockamount"] = 3,
 	["damagereduction"] = 0.8,
 	["specialeffect"] = false,
 	["blockeffect"] = "MetalSpark",
