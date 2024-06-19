@@ -32,7 +32,7 @@ ENT.AvoidEnemyRange = 0
 ENT.HearingCoefficient = 0.5
 ENT.SightFOV = 300
 ENT.SightRange = 1024
-ENT.XPValue = 150;
+ENT.XPValue = 75;
 
 -- Relationships --
 ENT.Factions = {FACTION_ZOMBIES}
@@ -49,8 +49,8 @@ ENT.ClimbLedgesMaxHeight = 10000
 ENT.ClimbLadders = true
 ENT.ClimbSpeed = 150
 ENT.ClimbUpAnimation = "run_all_grenade"--ACT_ZOMBIE_CLIMB_UP --pull_grenade
-ENT.ClimbOffset = Vector(-14, 0, 0)ENT.ArmorPiercing = 100;
-ENT.Damage = 30;
+ENT.ClimbOffset = Vector(-14, 0, 0)ENT.ArmorPiercing = 80;
+ENT.Damage = 25;
 
 -- Detection --
 ENT.EyeBone = "ValveBiped.Bip01_Spine4"

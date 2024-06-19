@@ -44,11 +44,10 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-	ITEM.pierceScale = 0.80; -- reduces pierce damage by 20%
-	ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
-	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "cloth"}};
 ITEM:Register();
@@ -78,9 +77,9 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-	ITEM.pierceScale = 0.80; -- reduces pierce damage by 20%
-	ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+	ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 	ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
 ITEM:Register();
@@ -111,11 +110,11 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-	ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-	ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-	ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
-	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
+	ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+	ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks"}};
 	

@@ -697,11 +697,13 @@ RITUAL = cwRituals.rituals:New("demon_hunter");
 	end;
 RITUAL:Register()
 
-RITUAL = cwRituals.rituals:New("infernal_incursion");
+-- This is apparently quite unbalanced, so gabs has asked me to remove it.
+--[[RITUAL = cwRituals.rituals:New("infernal_incursion");
 	RITUAL.name = "(T1) Infernal Incursion";
-    RITUAL.description = "Loosen the veil between realms and agitate a few demons while you're at it. Preforming this ritual will give you twenty five minutes to slay a random number of thralls, which will then reward you with 1000 faith (experience).";	RITUAL.onerequiredbelief = {"soothsayer", "witch", "witch_druid"}; -- Tier I Faith of the Dark Ritual
+    RITUAL.description = "Loosen the veil between realms and agitate a few demons while you're at it. Preforming this ritual will give you twenty five minutes to slay a random number of thralls, which will then reward you with 1000 faith (experience).";
+	RITUAL.onerequiredbelief = {"soothsayer", "witch", "witch_druid"}; -- Tier I Faith of the Dark Ritual
 	RITUAL.requirements = {"belphegor_catalyst", "pentagram_catalyst", "up_catalyst"};
-	--RITUAL.corruptionCost = 5; -- Corruption gets added once the UI is closed.
+	RITUAL.corruptionCost = 5;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 5;
 	
@@ -711,7 +713,6 @@ RITUAL = cwRituals.rituals:New("infernal_incursion");
 		Schema:EasyText(player, "goldenrod", "You now have 25 minutes to kill "..player.thrallsToKill.." Begotten thralls for your reward.");
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." just activated the 'Infernal Incursion' ritual! Make sure there are enough thrall NPCs ("..player.thrallsToKill..") for him to kill!");
 		if(math.random(1,10) == 1) then Schema:EasyText(GetAdmin(), "tomato", "The die have been cast...by random chance, an admin thrall has been requested to participate in this ritual!"); end
-		
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -719,7 +720,7 @@ RITUAL = cwRituals.rituals:New("infernal_incursion");
 	end;
 	function RITUAL:EndRitual(player)
 	end;
-RITUAL:Register()
+RITUAL:Register()]]--
 
 RITUAL = cwRituals.rituals:New("empowered_blood");
 	RITUAL.name = "(T2) Empowered Blood";

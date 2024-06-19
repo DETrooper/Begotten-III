@@ -33,7 +33,7 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
 ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
@@ -99,7 +99,7 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
 ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
@@ -164,7 +164,7 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.25, -- increases fall damage by 25%
 }
 
-ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
 ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
@@ -230,10 +230,11 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
 ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
+ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -295,7 +296,7 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
 ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
@@ -360,7 +361,7 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
 ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%

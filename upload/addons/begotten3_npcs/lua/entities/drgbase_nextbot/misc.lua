@@ -207,7 +207,7 @@ if SERVER then
     if not istable(attack.relationships) then attack.relationships = {attack.relationships} end
     self:Timer(math.Clamp(attack.delay, 0, math.huge), function(self)
       local hit = {}
-      for i, ent in ipairs(self:EntitiesInCone(attack.angle, attack.range, attack.relationships)) do
+      for i, ent in ipairs(self:EntitiesInCone(attack.angle * 2, attack.range, attack.relationships)) do
         if ent == self then continue end
         if not DrGBase.CanAttack(ent) then continue end
         if not self:Visible(ent) then continue end
