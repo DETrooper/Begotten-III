@@ -56,8 +56,8 @@ AttackSoundTables.MetalFistedAttackSoundTable = {
 	["hitbody"] = {"weapons/Blunt_01.wav", "weapons/Blunt_02.wav", "weapons/Blunt_03.wav", "weapons/Blunt_04.wav", "weapons/Blunt_05.wav"},
 	["althitbody"] = {"vo/k_lab/kl_fiddlesticks.wav"},
 	["hitworld"] = {"weapons/PierceStone_01.wav", "weapons/PierceStone_02.wav", "weapons/PierceStone_03.wav", "weapons/PierceStone_04.wav"},
-	["criticalswing"] = {"vo/k_lab/kl_fiddlesticks.wav"},
-	["parryswing"] = {"vo/k_lab/kl_fiddlesticks.wav"},
+	["criticalswing"] = {"meleesounds/swing-throw.wav.mp3"},
+	["parryswing"] = {"weapons/Medium_01.wav", "weapons/Medium_02.wav", "weapons/Medium_03.wav", "weapons/Medium_04.wav", "weapons/Medium_05.wav"},
 	["drawsound"] = {"vo/k_lab/kl_fiddlesticks.wav"},
 };
 
@@ -68,7 +68,7 @@ AttackSoundTables.LeatherFistedAttackSoundTable = {
 	["althitbody"] = {"vo/k_lab/kl_fiddlesticks.wav"},
 	["hitworld"] = {"physics/body/body_medium_impact_hard4.wav", "physics/body/body_medium_impact_hard5.wav"},
 	["criticalswing"] = {"meleesounds/swing-throw.wav.mp3"},
-	["parryswing"] = {"weapons/Medium_01.wav", "weapons/Medium_02.wav", "weapons/Medium_03.wav", "weapons/Medium_04.wav", "weapons/Medium_05.wav", "weapons/Medium_06.wav", "weapons/Medium_07.wav"},
+	["parryswing"] = {"weapons/Medium_01.wav", "weapons/Medium_02.wav", "weapons/Medium_03.wav", "weapons/Medium_04.wav", "weapons/Medium_05.wav"},
 	["drawsound"] = {"vo/k_lab/kl_fiddlesticks.wav"},
 };
 
@@ -78,8 +78,8 @@ AttackSoundTables.MetalSpikeFistedAttackSoundTable = {
 	["hitbody"] = {"weapons/Pierce_02.wav", "weapons/Pierce_04.wav", "weapons/Pierce_06.wav", "weapons/Pierce_07.wav", "weapons/Pierce_08.wav", "weapons/Pierce_09.wav"},
 	["althitbody"] = {"vo/k_lab/kl_fiddlesticks.wav"},
 	["hitworld"] = {"weapons/PierceStone_01.wav", "weapons/PierceStone_02.wav", "weapons/PierceStone_03.wav", "weapons/PierceStone_04.wav"},
-	["criticalswing"] = {"vo/k_lab/kl_fiddlesticks.wav"},
-	["parryswing"] = {"vo/k_lab/kl_fiddlesticks.wav"},
+	["criticalswing"] = {"meleesounds/swing-throw.wav.mp3"},
+	["parryswing"] = {"weapons/Medium_01.wav", "weapons/Medium_02.wav", "weapons/Medium_03.wav", "weapons/Medium_04.wav", "weapons/Medium_05.wav"},
 	["drawsound"] = {"vo/k_lab/kl_fiddlesticks.wav"},
 };
 
@@ -588,7 +588,7 @@ AttackTables.FistAttackTable = {
 	["poisedamage"] = 0,
 	["stabilitydamage"] = 10,
 	["takeammo"] = 1,
-	["delay"] = 0.8,
+	["delay"] = 0.75,
 	["striketime"] = 0.3,
 	["meleearc"] = 20,
 	["meleerange"] = 525,
@@ -606,11 +606,11 @@ AttackTables.IronKnucklesAttackTable = {
 	["altarmorpiercing"] = 0,
 	["poisedamage"] = 25,
 	["stabilitydamage"] = 35,
-	["takeammo"] = 3,
-	["delay"] = 0.8,
+	["takeammo"] = 1,
+	["delay"] = 0.75,
 	["striketime"] = 0.3,
 	["meleearc"] = 20,
-	["meleerange"] = 550,
+	["meleerange"] = 555,
 	["punchstrength"] = Angle(0,2,0),
 };
 
@@ -624,12 +624,12 @@ AttackTables.SpikedKnucklesAttackTable = {
 	["armorpiercing"] = 35,
 	["altarmorpiercing"] = 0,
 	["poisedamage"] = 20,
-	["stabilitydamage"] = 20,
-	["takeammo"] = 3,
-	["delay"] = 0.8,
+	["stabilitydamage"] = 30,
+	["takeammo"] = 1,
+	["delay"] = 0.75,
 	["striketime"] = 0.3,
 	["meleearc"] = 20,
-	["meleerange"] = 550,
+	["meleerange"] = 555,
 	["punchstrength"] = Angle(0,2,0),
 };
 
@@ -642,13 +642,13 @@ AttackTables.CaestusAttackTable = {
 	["altattackpoisedamagemodifier"] = 0,
 	["armorpiercing"] = 75,
 	["altarmorpiercing"] = 0,
-	["poisedamage"] = 30,
+	["poisedamage"] = 35,
 	["stabilitydamage"] = 35,
-	["takeammo"] = 3,
+	["takeammo"] = 2,
 	["delay"] = 0.8,
 	["striketime"] = 0.3,
 	["meleearc"] = 20,
-	["meleerange"] = 550,
+	["meleerange"] = 555,
 	["punchstrength"] = Angle(0,2,0),
 };
 
@@ -4297,8 +4297,8 @@ BlockTables.IronKnucklesBlockTable = {
 	["raisespeed"] = 1.25,
 	["instantraise"] = true,
 	["parrydifficulty"] = 0.2,
-	["parrytakestamina"] = 15,
-	["canparry"] = false,
+	["parrytakestamina"] = 12,
+	["canparry"] = true,
 	["candeflect"] = true,
 };
 
@@ -4315,8 +4315,8 @@ BlockTables.SpikedKnucklesBlockTable = {
 	["raisespeed"] = 1.25,
 	["instantraise"] = true,
 	["parrydifficulty"] = 0.2,
-	["parrytakestamina"] = 15,
-	["canparry"] = false,
+	["parrytakestamina"] = 12,
+	["canparry"] = true,
 	["candeflect"] = true,
 };
 
@@ -4333,8 +4333,8 @@ BlockTables.CaestusBlockTable = {
 	["raisespeed"] = 1.25,
 	["instantraise"] = true,
 	["parrydifficulty"] = 0.2,
-	["parrytakestamina"] = 15,
-	["canparry"] = false,
+	["parrytakestamina"] = 12,
+	["canparry"] = true,
 	["candeflect"] = true,
 };
 

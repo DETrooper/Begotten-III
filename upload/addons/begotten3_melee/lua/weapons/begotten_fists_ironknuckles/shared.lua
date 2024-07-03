@@ -38,6 +38,31 @@ SWEP.SoundMaterial = "Punch" -- Metal, Wooden, MetalPierce, Punch, Default
 SWEP.AttackTable = "IronKnucklesAttackTable"
 SWEP.BlockTable = "IronKnucklesBlockTable"
 
+function SWEP:CriticalAnimation()
+
+	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+	local attacktable = GetTable(self.AttackTable)
+	local owner = self.Owner;
+
+	-- Viewmodel attack animation!
+	local vm = owner:GetViewModel()
+	vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_uppercut" ) )
+	owner:GetViewModel():SetPlaybackRate(0.4)
+	
+	if (SERVER) then
+	timer.Simple( 0.05, function() if self:IsValid() then
+	self.Weapon:EmitSound(attacksoundtable["criticalswing"][math.random(1, #attacksoundtable["criticalswing"])])
+	end end)	
+	owner:ViewPunch(Angle(1,4,1))
+	end
+	
+end
+
+function SWEP:ParryAnimation()
+	local vm = self.Owner:GetViewModel()
+	vm:SendViewModelMatchingSequence( vm:LookupSequence( "misscenter1" ))
+end
+
 function SWEP:AttackAnimination()
 	self:PlayPunchAnimation()
 end
