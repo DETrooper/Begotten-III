@@ -21,6 +21,8 @@ SWEP.ViewModelFlip = false
 
 --Anims
 SWEP.BlockAnim = "a_fists_block"
+SWEP.CriticalAnim = "a_fists_attack1"
+SWEP.ParryAnim = "a_dual_swords_parry"
 
 SWEP.IronSightsPos = Vector(0, -5, -2)
 SWEP.IronSightsAng = Vector(20, 0, 0)
@@ -109,64 +111,6 @@ function SWEP:PlayPunchAnimation()
 
  	vm:SendViewModelMatchingSequence(vm:LookupSequence(anim));	self.Owner:GetViewModel():SetPlaybackRate(0.55)
 
-end;
-
-function SWEP:PlayKnockSound()
-	if (SERVER) then
-		self.Weapon:CallOnClient("PlayKnockSound", "");
-	end;
-	self.Weapon:EmitSound("physics/wood/wood_crate_impact_hard2.wav");
-end;
-
-/*---------------------------------------------------------
-	SecondaryAttack
----------------------------------------------------------*/
-function SWEP:SecondaryAttack()
-
-	local ply = self.Owner
-	local wep = self.Weapon
-
-	if (!Clockwork.player:GetWeaponRaised(ply)) then
-		if (SERVER) then
-			local trace = self.Owner:GetEyeTraceNoCursor();
-
-			if (IsValid(trace.Entity) and Clockwork.entity:IsDoor(trace.Entity)) then
-				if (self.Owner:GetShootPos():Distance(trace.HitPos) <= 64) then
-					if (hook.Run("PlayerCanKnockOnDoor", self.Owner, trace.Entity)) then
-						self:PlayKnockSound();
-					
-						self.Weapon:SetNextPrimaryFire(CurTime() + 0.25);
-						self.Weapon:SetNextSecondaryFire(CurTime() + 0.25);
-					
-						hook.Run("PlayerKnockOnDoor", self.Owner, trace.Entity);
-					end;
-				end;
-			end;
-		end;
-	else
-		local LoweredParryDebug = self:GetNextSecondaryFire()
-		local ParryDelay = self:GetNextPrimaryFire()
-
-		if self.Owner:KeyDown(IN_ATTACK2) and !self.Owner:KeyDown(IN_RELOAD) and self.Owner:GetNWBool("Guardening") == true then
-			-- Deflection
-			if self.Owner:GetNWBool( "CanDeflect", true ) then
-			
-				if self.Owner.HasBelief and self.Owner:HasBelief("deflection") then
-					self.Owner:SetNWBool( "Deflect", true )
-				end
-				
-				self.Owner:SetNWBool( "CanDeflect", false )
-				timer.Simple( 1,function() if self:IsValid() and !self.Owner:IsRagdolled() and self.Owner:Alive() then
-				self.Owner:SetNWBool( "CanDeflect", true ) end end)
-				timer.Simple( 0.15,function() if self:IsValid() and !self.Owner:IsRagdolled() and self.Owner:Alive() then
-				self.Owner:SetNWBool( "Deflect", false ) end end)
-			end
-		end			
-	end			
-end
-
-function SWEP:OnDrop()
-	self:Remove();
 end;
 
 /*---------------------------------------------------------
