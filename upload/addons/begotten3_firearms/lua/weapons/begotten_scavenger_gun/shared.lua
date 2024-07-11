@@ -1,3 +1,23 @@
+SWEP.ViewModelBoneMods = {
+	["ValveBiped.Bip01_L_Clavicle"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, -20), angle = Angle(0, 0, 0) },
+	["tag_view"] = { scale = Vector(1, 1, 1), pos = Vector(11.17, -2.59, 0.649), angle = Angle(0.5, 0.8, -3.5) },
+	["ValveBiped.Bip01_R_Forearm"] = { scale = Vector(1, 1, 1), pos = Vector(-2, 0, 0), angle = Angle(0, 0, 0) },
+	["tag_weapon"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
+	["ValveBiped.Bip01_L_Finger01"] = { scale = Vector(1, 1, 1), pos = Vector(0, -0.556, 0), angle = Angle(0, 0, 0) },
+	["ValveBiped.Bip01_L_Finger02"] = { scale = Vector(1, 1, 1), pos = Vector(0, -0.556, 0), angle = Angle(0, 0, 0) },
+	["ValveBiped.Bip01_L_Forearm"] = { scale = Vector(1, 1, 1), pos = Vector(2, 0, 0), angle = Angle(0, 0, 0) },
+	["ValveBiped.Bip01_R_Clavicle"] = { scale = Vector(1, 1, 1), pos = Vector(-2, 0, -20), angle = Angle(0, 0, 0) },
+	["ValveBiped.Bip01_L_Finger0"] = { scale = Vector(1, 1, 1), pos = Vector(0, -0.926, 0), angle = Angle(0, 0, 0) }
+}
+
+SWEP.VElements = {
+	["v_scavgun"] = { type = "Model", model = "models/weapons/v_smg_mothgun.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-4.676, 1, 2.596), angle = Angle(-0.95, -1.951, -174.157), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElements = {
+	["mothgun"] = { type = "Model", model = "models/weapons/w_smg_mothgun.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-4.676, 0.518, 2.596), angle = Angle(-10.52, -1.17, -167.144), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}
+
 -- Variables that are used on both client and server
 SWEP.Gun = ("bb_scavgun")					-- must be the name of your swep
 if (GetConVar(SWEP.Gun.."_allowed")) != nil then
@@ -23,10 +43,12 @@ SWEP.AutoSwitchFrom			= true		-- Auto switch from if you pick up a better weapon
 SWEP.HoldType 				= "smg"		-- how others view you carrying the weapon
 
 SWEP.ViewModelFOV			= 70
-SWEP.ViewModelFlip			= true
-SWEP.ViewModel				= "models/weapons/v_smg_mth.mdl"	-- Weapon view model
+SWEP.ViewModelFlip			= false
+SWEP.ViewModel				= "models/weapons/v_rust_m1a1.mdl"	-- Weapon view model
 SWEP.WorldModel				= "models/weapons/doi/w_1911.mdl"
 SWEP.ShowWorldModel = false
+SWEP.UseHands 						= true
+
 	-- Weapon world model
 SWEP.Base				= "begotten_firearm_base"
 SWEP.Spawnable				= true
@@ -37,7 +59,7 @@ SWEP.Primary.Sound			= Sound("weapons_moth/p90-1.wav")		-- Script that calls the
 SWEP.Primary.RPM			= 650			-- This is in Rounds Per Minute
 SWEP.Primary.ClipSize			= 15		-- Size of a clip
 SWEP.Primary.DefaultClip		= 0		-- Bullets you start with
-SWEP.Primary.KickUp				= 4		-- Maximum up recoil (rise)
+SWEP.Primary.KickUp				= 2		-- Maximum up recoil (rise)
 SWEP.Primary.KickDown			= 0.3		-- Maximum down recoil (skeet)
 SWEP.Primary.KickHorizontal		= 0.3		-- Maximum up recoil (stock)
 SWEP.Primary.Automatic			= false		-- Automatic = true; Semi Auto = false
@@ -56,13 +78,10 @@ SWEP.Primary.IronAccuracy = .15 -- Ironsight accuracy, should be the same for sh
 SWEP.SelectiveFire		= false
 
 -- Enter iron sight info and bone mod info below
-
-SWEP.IronSightsPos = Vector(1.97, -1.206, 0.639)
-SWEP.IronSightsAng = Vector(0, -3.518, 0)
-SWEP.SightsPos = Vector(1.97, -1.206, 0.639)
-SWEP.SightsAng = Vector(0, -3.518, 0)
-SWEP.RunSightsPos = Vector(-1.831, -1.206, -2.56)
-SWEP.RunSightsAng = Vector(0, -45.73, 0)
+SWEP.SightsPos = Vector(-4.341, -9.247, 2.869)
+SWEP.SightsAng = Vector(-2.8, -2.201, 2.111)
+SWEP.RunSightsPos = Vector(0, 0, 0)
+SWEP.RunSightsAng = Vector(-11.961, 34.472, -16.181)
 
 SWEP.AmmoTypes = {
 	["Scrapshot"] = function(SWEP) -- Single chambered round.
@@ -133,10 +152,6 @@ SWEP.AmmoTypes = {
 		return true;
 	end,
 };
-
-SWEP.WElements = {
-	["mothgun"] = { type = "Model", model = "models/weapons/w_smg_mothgun.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-4.676, 0.518, 2.596), angle = Angle(-10.52, -1.17, -167.144), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
-}
 
 function SWEP:PrimaryAttack()
 	local curTime = CurTime();

@@ -1,4 +1,20 @@
--- Variables that are used on both client and server
+SWEP.VMPos = Vector(0.5, -4, 0.5) --The viewmodel positional offset, constantly.  Subtract this from any other modifications to viewmodel position.
+SWEP.VMAng = Vector(0, 0, 0) --The viewmodel angular offset, constantly.   Subtract this from any other modifications to viewmodel angle.
+
+SWEP.ViewModelBoneMods = {
+	["v_ee3_reference001"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
+}
+
+SWEP.VElements = {
+	["ironsight2"] = { type = "Model", model = "models/hunter/plates/plate05.mdl", bone = "v_ee3_reference001", rel = "ironsight", pos = Vector(0, 0.289, 0), angle = Angle(0, 0, 90), size = Vector(0.029, 0.029, 0.009), color = Color(255, 255, 255, 255), surpresslightning = true, material = "models/weapons/v_models/cb4/pipe", skin = 0, bodygroup = {} },
+	["v_musket"] = { type = "Model", model = "models/weapons/w_snip_ele.mdl", bone = "v_ee3_reference001", rel = "", pos = Vector(-0.201, -3, -1.558), angle = Angle(0, -90, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["ironsight"] = { type = "Model", model = "models/hunter/plates/plate05.mdl", bone = "v_ee3_reference001", rel = "v_musket", pos = Vector(12.5, -0.091, 7.289), angle = Angle(0, 0, -90), size = Vector(0.045, 0.045, 0.009), color = Color(255, 255, 255, 255), surpresslightning = true, material = "models/weapons/v_models/cb4/pipe", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElements = {
+	["elephant"] = { type = "Model", model = "models/weapons/w_snip_ele.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.557, 1.7, -0.519), angle = Angle(0, 0, -180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}
+
 SWEP.Gun = ("bb_musket")					-- must be the name of your swep
 if (GetConVar(SWEP.Gun.."_allowed")) != nil then
 	if not (GetConVar(SWEP.Gun.."_allowed"):GetBool()) then SWEP.Base = "bobs_blacklisted" SWEP.PrintName = SWEP.Gun return end
@@ -25,9 +41,10 @@ SWEP.HoldType 				= "rpg"		-- how others view you carrying the weapon
 -- View Model
 SWEP.ViewModelFOV			= 50
 SWEP.ViewModelFlip			= false
-SWEP.ViewModel				= "models/weapons/v_snip_musket.mdl"
+SWEP.ViewModel				= "models/weapons/synbf3/c_ee3.mdl"
 SWEP.WorldModel				= "models/weapons/w_airgun.mdl"
 SWEP.ShowWorldModel = false
+SWEP.UseHands 						= true
 
 -- World Model
 SWEP.Base					= "begotten_firearm_base"
@@ -45,7 +62,7 @@ SWEP.Primary.KickHorizontal	= 1			-- Maximum up recoil (stock)
 SWEP.Primary.Automatic		= false		-- Automatic = true; Semi Auto = false
 SWEP.Primary.Ammo			= "ar2"
 
-SWEP.Secondary.IronFOV		= 55		-- How much you 'zoom' in. Less is more! 	
+SWEP.Secondary.IronFOV		= 80		-- How much you 'zoom' in. Less is more! 	
 
 SWEP.data 					= {}		-- The starting firemode
 SWEP.data.ironsights		= 1
@@ -58,17 +75,10 @@ SWEP.Primary.IronAccuracy 	= .02 		-- Ironsight accuracy, should be the same for
 SWEP.SelectiveFire			= false
 
 -- Enter iron sight info and bone mod info below
-
-SWEP.IronSightsPos = Vector(-2.36, -4.02, 0.6)
-SWEP.IronSightsAng = Vector(0, 0, -10.554)
-SWEP.SightsPos = Vector(-2.36, -4.02, 0.6)
-SWEP.SightsAng = Vector(0, 0, -10.554)
-SWEP.RunSightsPos = Vector(-0.361, 0, 0.4)
-SWEP.RunSightsAng = Vector(-17.588, 31.658, -20.403)
-
-SWEP.WElements = {
-	["elephant"] = { type = "Model", model = "models/weapons/w_snip_ele.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.557, 1.7, -0.519), angle = Angle(0, 0, -180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
-}
+SWEP.SightsPos = Vector(-3.55, -15.879, 0.829)
+SWEP.SightsAng = Vector(0, 0, 0)
+SWEP.RunSightsPos = Vector(-0.64, 0, -0.08)
+SWEP.RunSightsAng = Vector(-10.554, 29.548, -19.698)
 
 SWEP.AmmoTypes = {
 	["Grapeshot"] = function(SWEP)

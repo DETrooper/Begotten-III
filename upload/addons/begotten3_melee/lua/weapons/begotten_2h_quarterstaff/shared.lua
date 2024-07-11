@@ -19,7 +19,7 @@ SWEP.ViewModelFlip = false
 
 --Anims
 SWEP.BlockAnim = "a_spear_2h_block"
-SWEP.CriticalAnim = "a_spear_2h_halberd_attack2"
+SWEP.CriticalAnim = "a_spear_2h_halberd_attack2_fast"
 SWEP.ParryAnim = "a_spear_2h_parry"
 
 SWEP.IronSightsPos = Vector(2.119, -9.247, -2.84)
