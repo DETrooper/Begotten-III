@@ -108,28 +108,41 @@ function cwPossession:StartCommand(player, ucmd)
 								possessor.changeStanceTimer = curTime + 1;
 								
 								if player:GetNWBool("ThrustStance") == false then
-									if activeWeapon.CanSwipeAttack == true then
-										player:SetNWBool( "ThrustStance", true )
+									if activeWeapon.isJavelin then
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to melee stance.")
+										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to melee stance.")
+									elseif activeWeapon.CanSwipeAttack == true then
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
 									else
-										player:SetNWBool( "ThrustStance", true )
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
 									end
+									
+									player:SetNWBool( "ThrustStance", true )
+									
+									if activeWeapon.OnMeleeStanceChanged then
+										activeWeapon:OnMeleeStanceChanged("thrust_swing");
+									end
 								else
-									if activeWeapon.CanSwipeAttack == true then
-										player:SetNWBool( "ThrustStance", false )
+									if activeWeapon.isJavelin then
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to throwing stance.")
+										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to throwing stance.")
+									elseif activeWeapon.CanSwipeAttack == true then
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
 									elseif attacktable["dmgtype"] == 128 then
-										player:SetNWBool( "ThrustStance", false )
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to bludgeoning stance.")
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to bludgeoning stance.")
 									else
-										player:SetNWBool( "ThrustStance", false )
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
+									end
+									
+									player:SetNWBool( "ThrustStance", false )
+									
+									if activeWeapon.OnMeleeStanceChanged then
+										activeWeapon:OnMeleeStanceChanged("reg_swing");
 									end
 								end
 							end

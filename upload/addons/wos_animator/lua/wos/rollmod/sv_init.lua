@@ -353,7 +353,7 @@ function meta:StartRolling(a)
 							local activeWeapon = self:GetActiveWeapon();
 
 							if activeWeapon.Base == "sword_swepbase" then
-								if (activeWeapon.IronSights == true) then
+								if (activeWeapon.realIronSights == true) then
 									local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
 									local curTime = CurTime();
 									

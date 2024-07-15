@@ -106,7 +106,13 @@ end
 netstream.Hook("PlayerJump", function(player)
 	if (player:Alive() and player:GetMoveType() != MOVETYPE_NOCLIP) then
 		if not (player.cwJumpPower <= 10) then
-			player:SetCharacterData("Stamina", math.Clamp((player:GetCharacterData("Stamina") or player:GetMaxStamina()) - 15, 0, cwStamina:GetMaxStaminaPlugin(player)))
+			local jumpCost = 15;
+			
+			if player.HasCharmEquipped and player:GetCharmEquipped("boot_contortionist") then
+				jumpCost = math.Round(jumpCost * 0.333);
+			end
+			
+			player:SetCharacterData("Stamina", math.Clamp((player:GetCharacterData("Stamina") or player:GetMaxStamina()) - jumpCost, 0, cwStamina:GetMaxStaminaPlugin(player)))
 			player:SetNWInt("Stamina", player:GetCharacterData("Stamina"));
 		end
 	end;

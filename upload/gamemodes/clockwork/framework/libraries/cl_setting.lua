@@ -33,7 +33,7 @@ function Clockwork.setting:AddMultiChoice(category, text, conVar, options, toolT
 	local index = conVar
 
 	if (options) then
-		table.sort(options, function(a, b) return a < b; end)
+		table.sort(options, function(a, b) return a[1] < b[1]; end)
 	else
 		options = {}
 	end

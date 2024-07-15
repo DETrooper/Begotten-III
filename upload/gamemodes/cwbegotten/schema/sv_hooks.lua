@@ -186,6 +186,15 @@ function Schema:ClockworkInitPostEntity()
 	self.archivesBookList = Clockwork.kernel:RestoreSchemaData("archivesBookList") or {};
 end;
 
+util.AddNetworkString("ServerSaveData");
+
+function Schema:PreSaveData()
+	-- Sends net message for icon in top right that notifies players server is being saved.
+	net.Start("ServerSaveData", true);
+	net.WriteBool(true);
+	net.Broadcast();
+end
+
 -- Called when data should be saved.
 function Schema:SaveData() 
 	if self.towerTax then
@@ -210,6 +219,11 @@ function Schema:PostSaveData()
 	self:SaveDummies();
 	self:SaveRadios();
 	self:SaveNPCs();
+	
+	-- Sends net message to fade out save icon.
+	net.Start("ServerSaveData", true);
+	net.WriteBool(false);
+	net.Broadcast();
 end;
 
 -- Called when a player attempts to drop a weapon.
@@ -2880,6 +2894,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 	
 	local attacker = damageInfo:GetAttacker();
 	local damage = damageInfo:GetDamage();
+	local inflictor = damageInfo:GetInflictor();
 	local bIsPlayer = entity:IsPlayer();
 	local bIsPlayerRagdoll = Clockwork.entity:IsPlayerRagdoll(entity);
 
@@ -2890,6 +2905,10 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 			local attackerWeapon = attacker:GetActiveWeapon();
 			
 			if IsValid(attackerWeapon) then
+				if !IsValid(inflictor) then
+					inflictor = attackerWeapon;
+				end
+			
 				if attackerWeapon:GetClass() == "weapon_crowbar" then
 					damageInfo:SetDamageType(4);
 					damageInfo:SetDamage(math.max(damage, 300));
@@ -2994,12 +3013,14 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 	end
 	
 	if (bIsPlayer or bIsPlayerRagdoll or entity.isTrainingDummy) and IsValid(attacker) and attacker:IsPlayer() then
-		local attackerWeapon = attacker:GetActiveWeapon();
-		
-		if IsValid(attackerWeapon) then
-			local weaponClass = attackerWeapon:GetClass();
+		if IsValid(inflictor) then
+			local weaponClass = inflictor:GetClass();
 			
-			if string.find(weaponClass, "begotten_dagger_") then
+			if weaponClass == "begotten_javelin_throwing_dagger_thrown" then
+				if attacker:GetSubfaction() == "Kinisger" then
+					damageInfo:ScaleDamage(1.25);
+				end
+			elseif string.find(weaponClass, "begotten_dagger_") then
 				if attacker:GetSubfaction() == "Kinisger" then
 					damageInfo:ScaleDamage(1.25);
 				end
@@ -3023,9 +3044,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		
 		-- Flat 50% damage reduction vs. ragdolled players for melees to encourage the use of daggers or wrestle and subdue.
 		if bIsPlayerRagdoll then
-			local attackerWeapon = attacker:GetActiveWeapon();
-			
-			if IsValid(attackerWeapon) and attackerWeapon.IsABegottenMelee then
+			if IsValid(inflictor) and inflictor.IsABegottenMelee then
 				damageInfo:ScaleDamage(0.5);
 			end
 		end

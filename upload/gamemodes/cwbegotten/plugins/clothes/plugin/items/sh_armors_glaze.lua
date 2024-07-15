@@ -66,7 +66,7 @@ ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
 ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
-ITEM.bulletScale = 0.85; -- reduces bullet damage by 15%
+ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
 ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "leather", "leather", "leather"}};
 ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1500};
@@ -682,7 +682,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/padded_coat.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 1.1
 ITEM.hitParticle = "GlassImpact";
-ITEM.protection = 35
+ITEM.protection = 37
 ITEM.type = "leather";
 ITEM.weight = 3;
 ITEM.weightclass = "Light";

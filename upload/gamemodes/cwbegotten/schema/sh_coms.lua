@@ -58,6 +58,49 @@ local COMMAND = Clockwork.command:New("Discord");
 	end;
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("Warhorn");
+	COMMAND.tip = "Sound a signal from your warhorn or death whistle.";
+	COMMAND.text = "[string Signal]";
+	COMMAND.flags = bit.bor(CMD_DEFAULT, CMD_DEATHCODE, CMD_FALLENOVER);
+	COMMAND.arguments = 1;
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local warhornStr = "warhorn";
+		local faction = player:GetFaction();
+	
+		if player:GetFaction() == "Children of Satan" then
+			if player:HasItemByID("death_whistle") then
+				warhornStr = "death_whistle";
+			end
+		end
+
+		if !player:HasItemByID(warhornStr) then
+			Schema:EasyText(player, "darkgrey", "You do not possess a warhorn item!")
+		
+			return;
+		end
+		
+		local warhornItemTable = Clockwork.item:FindByID(warhornStr);
+		
+		if warhornItemTable then
+			local signalStr = string.lower(table.concat(arguments, " "));
+			
+			for i, v in ipairs(warhornItemTable.customFunctions) do
+				if string.find(string.lower(v), signalStr) then
+					warhornItemTable:OnCustomFunction(player, v);
+				
+					return;
+				end
+			end
+			
+			Schema:EasyText(player, "darkgrey", "The signal you entered is invalid!");
+		else
+			Schema:EasyText(player, "darkgrey", "The warhorn item does not exist!");
+		end
+	end
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("Enlist")
 	COMMAND.tip = "Enlist a character into the ranks of the Gatekeepers. This will only work if you are an Emissary or higher."
 	COMMAND.text = "[string Subfaction]"
@@ -2067,6 +2110,12 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 			
 			if player:GetNWBool("Parried") == true then
 				Schema:EasyText(player, "peru", "You are too discombobulated to helljaunt right now!");
+				
+				return false;
+			end
+			
+			if player:GetNWBool("bliz_frozen") then
+				Schema:EasyText(player, "peru", "You cannot helljaunt while frozen solid!");
 				
 				return false;
 			end

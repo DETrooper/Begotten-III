@@ -8,12 +8,12 @@ local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_red
 
 -- Called when Clockwork has loaded all of the entities.
 function cwDueling:ClockworkInitPostEntity()
-	if (map) then
-		for k, v in pairs(DUELING_STATUES) do
+	if (map) and self.statues then
+		for k, v in pairs(self.statues) do
 			local statueEnt = ents.Create("cw_duelstatue");
 			
-			statueEnt:SetPos(DUELING_STATUES[k]["spawnPosition"]);
-			statueEnt:SetAngles(DUELING_STATUES[k]["spawnAngles"]);
+			statueEnt:SetPos(self.statues[k]["spawnPosition"]);
+			statueEnt:SetAngles(self.statues[k]["spawnAngles"]);
 			statueEnt:Spawn();
 		end
 	end;
@@ -122,3 +122,64 @@ function cwDueling:PlayerUse(player, entity)
 		return false;
 	end
 end;
+
+function cwDueling:PlayerEnteredDuel(player, arena, spawnPos, spawnAngles)
+	Clockwork.datastream:Start(player, "SetPlayerDueling", true);
+	Clockwork.limb:CacheLimbs(player, true);
+	
+	player:Spawn();	
+	player:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255), 5, 0);
+	player:SetPos(spawnPos);
+	player:SetEyeAngles(spawnAngles);
+	player:SetHealth(player:GetMaxHealth());
+	
+	if player.duelData then
+		player.duelData.duelStatue = nil;
+	end
+	
+	if player:GetLocalVar("Hatred") then
+		player:SetLocalVar("Hatred", 0);
+	end
+	
+	-- Start battle music after players have faded in.
+	timer.Simple(5, function()
+		Clockwork.datastream:Start(player, "StartBattleMusicNoLimit");
+	end);
+end
+
+function cwDueling:PlayerExitedDuel(player)
+	player:Freeze(false);
+	player:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 5, 0);
+	player:SetNWInt("freeze", 0);
+	
+	local duelData = player.duelData;
+
+	if duelData then
+		player:Spawn();
+		player:SetPos(duelData.cachedPos + Vector(0, 0, 8));
+		player:SetEyeAngles(duelData.cachedAngles);
+		
+		Clockwork.limb:RestoreLimbsFromCache(player);
+		
+		timer.Simple(0.1, function()
+			if IsValid(player) then
+				player:SetPos(duelData.cachedPos + Vector(0, 0, 8));
+				player:SetEyeAngles(duelData.cachedAngles);
+			end
+		end);
+		
+		player:SetHealth(player.duelData.cachedHP);
+	end
+	
+	if player.distortedRingFired then
+		player.distortedRingFired = nil;
+	end
+	
+	if player:GetCharacterData("Hatred") then
+		player:SetLocalVar("Hatred", player:GetCharacterData("Hatred"));
+	end
+	
+	player.opponent = nil;
+	
+	Clockwork.datastream:Start(player, "SetPlayerDueling", false);
+end

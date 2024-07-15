@@ -1,12 +1,12 @@
-
-local entMETA = FindMetaTable("Entity")
-
-if SERVER then
-
-
-
-else
-
-
-
-end
+
+local entMETA = FindMetaTable("Entity")
+
+if SERVER then
+
+
+
+else
+
+
+
+end

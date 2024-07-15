@@ -19,7 +19,7 @@ SWEP.ViewModelFlip = false
 
 --Anims
 SWEP.BlockAnim = "a_spear_2h_block"
-SWEP.CriticalAnim = "a_spear_2h_halberd_attack2"
+SWEP.CriticalAnim = "a_spear_2h_halberd_attack2_fast"
 SWEP.ParryAnim = "a_spear_2h_parry"
 
 SWEP.IronSightsPos = Vector(2.119, -9.247, -2.84)
@@ -34,7 +34,7 @@ SWEP.SoundMaterial = "Wooden" -- Metal, Wooden, MetalPierce, Punch, Default
 	PrimaryAttack
 ---------------------------------------------------------*/
 SWEP.AttackTable = "QuarterstaffAttackTable"
-SWEP.BlockTable = "QuarterstaffBlockTable"
+SWEP.BlockTable = "QuarterstaffBlockTable" 
 
 -- For polearms only
 SWEP.ShortPolearm = false
@@ -46,7 +46,7 @@ function SWEP:CriticalAnimation()
 
 	-- Viewmodel attack animation!
 	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-	self.Owner:GetViewModel():SetPlaybackRate(0.25)
+	self.Owner:GetViewModel():SetPlaybackRate(0.33)
 	
 	if (SERVER) then
 	timer.Simple( 0.05, function() if self:IsValid() then
@@ -69,13 +69,13 @@ function SWEP:HandlePrimaryAttack()
 
 	--Attack animation
 	if IsValid(self) then
-		self:TriggerAnim(self.Owner, "a_spear_2h_halberd_attack1");
+		self:TriggerAnim(self.Owner, "a_spear_2h_halberd_attack1_fast");
 	end
 	
 	-- Viewmodel attack animation!
 	local vm = self.Owner:GetViewModel()
 	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-	self.Owner:GetViewModel():SetPlaybackRate(0.25)
+	self.Owner:GetViewModel():SetPlaybackRate(0.33)
 	
 	self:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
 	self.Owner:ViewPunch(attacktable["punchstrength"])

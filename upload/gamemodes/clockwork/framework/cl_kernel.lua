@@ -1435,7 +1435,7 @@ function Clockwork.kernel:PrintColoredText(...)
 	
 	local text = {}
 
-	for k, v in ipairs({...}) do
+	for k, v in pairs({...}) do
 		if v ~= "noTime" then
 			if (type(v) == "Player") then
 				text[#text + 1] = Clockwork.kernel:PlayerNameColor(v);
@@ -3124,13 +3124,7 @@ function weaponMeta:GetPrintName()
 		name = self:OldGetPrintName()
 	end
 	
-	if self:GetNWString("activeShield"):len() > 0 then
-		local shieldTable = GetTable(self:GetNWString("activeShield"));
-		
-		if shieldTable and shieldTable.name then
-			return name.." & "..shieldTable.name;
-		end
-	elseif self:GetNWString("activeOffhand"):len() > 0 then
+	if self:GetNWString("activeOffhand"):len() > 0 then
 		local weaponTable = weapons.GetStored(self:GetNWString("activeOffhand"));
 
 		if weaponTable and weaponTable.PrintName then
@@ -3147,6 +3141,12 @@ function weaponMeta:GetPrintName()
 			
 				return tab[1].." & "..tab[2];
 			end
+		end
+	elseif self:GetNWString("activeShield"):len() > 0 then
+		local shieldTable = GetTable(self:GetNWString("activeShield"));
+		
+		if shieldTable and shieldTable.name then
+			return name.." & "..shieldTable.name;
 		end
 	end
 	

@@ -114,7 +114,7 @@ function cwMusic:ClockworkConVarChanged(name, previousValue, newValue)
 			self.AmbientMusic:ChangeVolume(math.max(0, (tonumber(newValue) / 100) * (self.TrackVolume or 1)));
 		end
 	elseif (name == "cwBattleMusic" and newValue) then
-		if newValue == "0" then
+		if newValue == "0" or newValue == "2" and cwDueling and !Clockwork.Client.dueling then
 			self:StopBattleMusic();
 		end
 	elseif (name == "cwBattleMusicVolume" and newValue) then
@@ -340,7 +340,7 @@ function cwMusic:CanPlayAmbientMusic()
 	end
 
 	--if (Clockwork.Client:IsAdmin()) then
-		if (CW_CONVAR_AMBIENTMUSIC and CW_CONVAR_AMBIENTMUSIC:GetInt() != 1) then
+		if (CW_CONVAR_AMBIENTMUSIC and CW_CONVAR_AMBIENTMUSIC:GetInt() < 1) then
 			return false
 		end
 	--end
@@ -557,7 +557,7 @@ function cwMusic:CanPlayBattleMusic()
 	end
 
 	--if (Clockwork.Client:IsAdmin()) then
-		if (CW_CONVAR_BATTLEMUSIC and CW_CONVAR_BATTLEMUSIC:GetInt() != 1) then
+		if (CW_CONVAR_BATTLEMUSIC and CW_CONVAR_BATTLEMUSIC:GetInt() < 1) then
 			return false
 		end
 	--end
@@ -671,7 +671,7 @@ end)
 
 Clockwork.setting:AddCheckBox("Dynamic Music", "Enable dynamic ambient music.", "cwAmbientMusic", "Click to enable/disable the dynamic ambient music system.")
 Clockwork.setting:AddNumberSlider("Dynamic Music", "Ambient music volume:", "cwAmbientMusicVolume", 0, 100, 0, "Adjust the volume of the ambient music.");
-Clockwork.setting:AddCheckBox("Dynamic Music", "Enable dynamic battle music.", "cwBattleMusic", "Click to enable/disable the dynamic battle music system.")
+Clockwork.setting:AddMultiChoice("Dynamic Music", "Enable dynamic battle music:", "cwBattleMusic", {{"Enable", "Click to enable the dynamic battle music system."}, {"Enable (Duels Only)", "Click to enable the dynamic battle music system only in duels."}, {"Disable", "Click to disable the dynamic battle music system."}})
 Clockwork.setting:AddNumberSlider("Dynamic Music", "Battle music volume:", "cwBattleMusicVolume", 0, 100, 0, "Adjust the volume of the battle music.");
 Clockwork.setting:AddCheckBox("Dynamic Music", "Enable main menu music.", "cwMenuMusic", "Click to enable/disable the main menu music.")
 Clockwork.setting:AddNumberSlider("Dynamic Music", "Main menu music volume:", "cwMenuMusicVolume", 0, 100, 0, "Adjust the volume of the main menu music.");

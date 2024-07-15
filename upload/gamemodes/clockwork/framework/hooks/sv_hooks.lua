@@ -2813,7 +2813,7 @@ function GM:EntityHandleMenuOption(player, entity, option, arguments)
 		local itemCondition = itemTable:GetCondition();
 		local itemEngraving = itemTable:GetData("engraving");
 		local examineText = itemTable.description
-		local conditionTextCategories = {"Armor", "Crossbows", "Firearms", "Helms", "Melee", "Shields", "Javelins"};
+		local conditionTextCategories = {"Armor", "Crossbows", "Firearms", "Helms", "Melee", "Shields", "Throwables"};
 
 		if (itemTable.GetEntityExamineText) then
 			examineText = itemTable:GetEntityExamineText(entity)
@@ -4029,27 +4029,29 @@ function GM:EntityTakeDamage(entity, damageInfo)
 
 					if IsValid(attacker) then
 						if (attacker:IsPlayer()) then
-							local inflictor = damageInfo:GetInflictor();
-							
-							if IsValid(inflictor) and (inflictor:IsWeapon() or inflictor.isJavelin) then	
-								inflictor = inflictor.PrintName or inflictor:GetClass();
+							if damageInfo:IsDamageType(DMG_POISON) then
+								Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().."'s poison, leaving them at "..player:Health().." health"..armor)
 							else
-								local activeWeapon = attacker:GetActiveWeapon();
-								
-								if IsValid(activeWeapon) then
-									if inflictor.GetPrintName then
-										inflictor = inflictor:GetPrintName();
-									end
-									
-									if !inflictor or !isstring(inflictor) then
-										inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
-									end
+								if IsValid(inflictor) and (inflictor:IsWeapon() or inflictor.isJavelin) then	
+									inflictor = inflictor.PrintName or inflictor:GetClass();
 								else
-									inflictor = "an unknown weapon";
+									local activeWeapon = attacker:GetActiveWeapon();
+									
+									if IsValid(activeWeapon) then
+										if inflictor.GetPrintName then
+											inflictor = inflictor:GetPrintName();
+										end
+										
+										if !inflictor or !isstring(inflictor) then
+											inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
+										end
+									else
+										inflictor = "an unknown weapon";
+									end
 								end
+								
+								Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..inflictor..", leaving them at "..player:Health().." health"..armor)
 							end
-							
-							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..inflictor..", leaving them at "..player:Health().." health"..armor)
 						else
 							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:GetClass()..", leaving them at "..player:Health().." health"..armor)
 						end
@@ -4101,27 +4103,29 @@ function GM:EntityTakeDamage(entity, damageInfo)
 
 				if IsValid(attacker) then
 					if (attacker:IsPlayer()) then
-						local inflictor = damageInfo:GetInflictor();
-						
-						if IsValid(inflictor) and (inflictor:IsWeapon() or inflictor.isJavelin) then	
-							inflictor = inflictor.PrintName or inflictor:GetClass();
+						if damageInfo:IsDamageType(DMG_POISON) then
+							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().."'s poison, leaving them at "..player:Health().." health"..armor)
 						else
-							local activeWeapon = attacker:GetActiveWeapon();
-							
-							if IsValid(activeWeapon) then
-								if inflictor.GetPrintName then
-									inflictor = inflictor:GetPrintName();
-								end
-								
-								if !inflictor or !isstring(inflictor) then
-									inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
-								end
+							if IsValid(inflictor) and (inflictor:IsWeapon() or inflictor.isJavelin) then	
+								inflictor = inflictor.PrintName or inflictor:GetClass();
 							else
-								inflictor = "an unknown weapon";
+								local activeWeapon = attacker:GetActiveWeapon();
+								
+								if IsValid(activeWeapon) then
+									if inflictor.GetPrintName then
+										inflictor = inflictor:GetPrintName();
+									end
+									
+									if !inflictor or !isstring(inflictor) then
+										inflictor = activeWeapon.PrintName or activeWeapon:GetClass();
+									end
+								else
+									inflictor = "an unknown weapon";
+								end
 							end
+							
+							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..inflictor..", leaving them at "..player:Health().." health"..armor)
 						end
-						
-						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..inflictor..", leaving them at "..player:Health().." health"..armor)
 					else
 						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:GetClass()..", leaving them at "..player:Health().." health"..armor)
 					end

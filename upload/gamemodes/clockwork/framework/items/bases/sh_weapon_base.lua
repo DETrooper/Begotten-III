@@ -177,7 +177,8 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 				for k, v in pairs(player.equipmentSlots) do
 					if v then
 						if v.category == "Shields" then
-							if IsValid(weapon) and weapon:GetNWString("activeShield"):len() > 0 and weapon:GetNWString("activeShield") == v.uniqueID then
+							-- Old code, restore if you want the old functionality for one shield per weapon.
+							--[[if IsValid(weapon) and weapon:GetNWString("activeShield"):len() > 0 and weapon:GetNWString("activeShield") == v.uniqueID then
 								local weaponItemTable = item.GetByWeapon(weapon);
 								
 								if weaponItemTable and weaponItemTable:IsTheSameAs(self) then
@@ -185,6 +186,24 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 								end
 								
 								break;
+							end]]--
+							
+							-- New code.
+							
+							local other_melee_found = false;
+							
+							for k2, v2 in pairs(player.equipmentSlots) do
+								if !string.find(k2, "Offhand") and !player.equipmentSlots[k2.."Offhand"] then
+									if v2.canUseShields and !v2:IsTheSameAs(self) then
+										other_melee_found = true;
+										
+										break;
+									end
+								end
+							end
+							
+							if !other_melee_found then
+								Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
 							end
 						elseif string.find(k, "Offhand") then
 							local mainSlot = string.gsub(k, "Offhand", "");
@@ -391,7 +410,22 @@ function ITEM:OnUse(player, itemEntity, interactItemTable)
 				activeWeapon:EquipOffhand(self.weaponClass);
 			end
 		else
-			player:Give(weaponClass, self);
+			local weapon = player:Give(weaponClass, self);
+			
+			if IsValid(weapon) then
+				-- Check for equipped shields.
+				if self.canUseShields then
+					for i, v in ipairs(self.slots) do
+						local shieldItem = player.equipmentSlots[v];
+						
+						if shieldItem and shieldItem.category == "Shields" then
+							weapon:EquipShield(shieldItem.uniqueID);
+						
+							break;
+						end
+					end
+				end
+			end
 		end
 		
 		return true;
@@ -443,20 +477,20 @@ function ITEM:OnEquip(player, interactItemTable)
 			local shieldItem = player:GetShieldEquipped();
 			
 			if shieldItem then
-				for i, v in ipairs(self.slots) do
-					if i < #self.slots then
-						local equipmentSlot = player.equipmentSlots[v];
-						
-						if equipmentSlot.canUseShields then
-							if equipmentSlot and equipmentSlot:IsTheSameAs(interactItemTable) then
-								--if player.equipmentSlots[self.slots[i +1]]:IsTheSameAs(shieldItem) then
-									Schema:EasyText(player, "peru", "You cannot equip an offhand weapon with a weapon that is using a shield!")
-									return false;
-								--end
-							end
-							
-							break;
-						end
+				local numValidItems = 0;
+			
+				for i, v in ipairs(player:GetWeaponsEquipped()) do
+					if v.canUseShields then
+						numValidItems = numValidItems + 1;
+					end
+				end
+				
+				if numValidItems < 2 then
+					local weaponItem = item.GetByWeapon(interactItemTable.weaponClass or interactItemTable.uniqueID);
+					
+					if !weaponItem or !weaponItem:IsTheSameAs(interactItemTable) then
+						Schema:EasyText(player, "peru", "You cannot equip an offhand weapon with a weapon that is using a shield!")
+						return false;
 					end
 				end
 			end

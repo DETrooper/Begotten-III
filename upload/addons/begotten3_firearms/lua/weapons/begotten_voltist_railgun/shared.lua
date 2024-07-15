@@ -1,6 +1,9 @@
--- Phoenix Project © 2016
+SWEP.ViewModelBoneMods = {
+	["v_ee3_reference001"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
+}
+
 SWEP.VElements = {
-	["railgun"] = { type = "Model", model = "models/arxweapon/railgun.mdl", bone = "v_weapon.xm1014_Parent", rel = "", pos = Vector(0.518, 0.5, 0), angle = Angle(90, 0, 90), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_railgun"] = { type = "Model", model = "models/arxweapon/railgun.mdl", bone = "v_ee3_reference001", rel = "", pos = Vector(-0.201, -3, -1.558), angle = Angle(1.2, -87.663, 1.169), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
@@ -27,12 +30,13 @@ SWEP.HoldType 				= "ar2"	-- how others view you carrying the weapon
 -- normal melee melee2 fist knife smg ar2 pistol rpg physgun grenade shotgun crossbow slam passive 
 -- you're mostly going to use ar2, smg, shotgun or pistol. rpg and crossbow make for good sniper rifles
 
-SWEP.ViewModelFOV			= 70
-SWEP.ViewModelFlip			= true
-SWEP.ViewModel				= "models/weapons/v_shot_xm1014.mdl"	-- Weapon view model
+SWEP.ViewModelFOV			= 50
+SWEP.ViewModelFlip			= false
+SWEP.ViewModel				= "models/weapons/synbf3/c_ee3.mdl"	-- Weapon view model
 SWEP.WorldModel				= "models/weapons/w_shot_xm1014.mdl"	-- Weapon world model
 SWEP.Base 				= "begotten_firearm_base"
 SWEP.ShowWorldModel			= false
+SWEP.UseHands 						= true
 SWEP.Spawnable				= true
 SWEP.AdminSpawnable			= true
 
@@ -65,15 +69,10 @@ SWEP.Primary.IronAccuracy = .001 // has to be the same as primary.spread
 -- Because irons don't magically give you less pellet spread!
 
 -- Enter iron sight info and bone mod info below
-SWEP.SightsPos = Vector(5.8, 0, 0.6)
+SWEP.SightsPos = Vector(-2.481, -16.684, 2.039)
 SWEP.SightsAng = Vector(0, 0, 0)
-SWEP.IronSightsPos = Vector(5.8, 0, 0.6)
-SWEP.IronSightsAng = Vector(0, 0, 0)
-SWEP.RunSightsPos = Vector(-1.841, 1.386, -1)
-SWEP.RunSightsAng = Vector(-8.441, -40.614, 0)
-SWEP.ViewModelBoneMods = {
-	["v_weapon.xm1014_Parent"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
-}
+SWEP.RunSightsPos = Vector(-0.601, 0, 0.039)
+SWEP.RunSightsAng = Vector(-7.739, 23.215, -28.142)
 
 SWEP.AmmoTypes = {
 	["Volt Projectile"] = function(SWEP)

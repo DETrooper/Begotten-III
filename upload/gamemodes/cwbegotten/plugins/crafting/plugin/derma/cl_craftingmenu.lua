@@ -492,14 +492,22 @@ function PANEL:Rebuild()
 	self.tierLabel = vgui.Create("DLabel", self);
 	
 	if requiredBeliefs then
-		for i = 1, #requiredBeliefs do
-			self.tierLabel:SetText("Requires Belief: '"..recipeData.requiredBeliefsNiceNames[i].."'");
-			
-			if cwBeliefs:HasBelief(requiredBeliefs[i]) then
-				self.tierLabel:SetTextColor(Color(25, 150, 25));
-			else
-				self.tierLabel:SetTextColor(Color(200, 25, 25));
-			end
+		local requiredBeliefNames = {};
+		
+		for i, v in ipairs(requiredBeliefs) do
+			table.insert(requiredBeliefNames, cwBeliefs:GetBeliefName(v));
+		end
+		
+		if cwBeliefs:HasBelief(requiredBeliefs) then
+			self.tierLabel:SetTextColor(Color(25, 150, 25));
+		else
+			self.tierLabel:SetTextColor(Color(200, 25, 25));
+		end
+		
+		if #requiredBeliefNames == 1 then
+			self.tierLabel:SetText("Requires Belief: '"..requiredBeliefNames[1].."'");
+		else
+			self.tierLabel:SetText("Requires Beliefs: '"..table.concat(requiredBeliefNames, "', '").."'");
 		end
 	end
 	

@@ -380,9 +380,6 @@ function SWEP:PrimaryAttack()
 	else
 		self:HandlePrimaryAttack()
 	end
-
-	local rnda = self.Primary.Recoil * 1
-	local rndb = self.Primary.Recoil * math.random(-1, 1)
 	
 	if SERVER and self:IsValid() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then 
 		owner:SetNWBool( "MelAttacking", true )
@@ -397,7 +394,7 @@ function SWEP:PrimaryAttack()
 					owner:SetNWBool( "MelAttacking", false )
 				
 					if owner:IsPlayer() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then
-						if self.Category ~= "(Begotten) Javelin" then
+						if !self.isJavelin then
 							if !owner:GetNWBool("ParrySucess", false) and !owner:GetNWBool("Guardening", false) then
 								self:Hitscan(); -- For bullet holes.
 								owner:LagCompensation(true);
@@ -535,7 +532,13 @@ function SWEP:PrimaryAttack()
 
 	if (SERVER) then
 		--local max_poise = owner:GetNetVar("maxMeleeStamina");
-		local attackCost = attacktable["takeammo"];
+		local attackCost = 1;
+
+		if self.Owner:GetNWBool("ThrustStance") and attacktable["alttakeammo"] then
+			attackCost = attacktable["alttakeammo"];
+		else
+			attackCost = attacktable["takeammo"];
+		end
 		
 		if cwMedicalSystem then
 			local injuries = {};

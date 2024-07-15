@@ -382,7 +382,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Survival Pack";
 	ITEM.cost = 30;
 	ITEM.model = "models/items/healthkit_nmrih.mdl";
-	ITEM.weight = 1;
+	ITEM.weight = 3;
 	ITEM.access = "v";
 	ITEM.useText = "Heal";
 	ITEM.useSound = "bandaging_1.wav";
@@ -399,7 +399,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useXP = 50;
 
 	ITEM.curesInjuries = {"burn", "gash", "gunshot_wound", "minor_infection"};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 3000};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 4500};
 	ITEM.limbs = "all";
 	
 	-- Called when a player uses the item.

@@ -67,7 +67,7 @@ function playerMeta:SensesOn(bRightClick)
 			--Clockwork.datastream:Start(self, "PlaySound", table.Random({"ambient/machines/teleport1.wav", "ambient/machines/teleport3.wav", "ambient/machines/teleport4.wav"}));
 			
 			timer.Simple(1, function()
-				if IsValid(self) then
+				if IsValid(self) and ((self.HasBelief and self:HasBelief("creature_of_the_dark")) or (IsValid(self:GetActiveWeapon()) and self:GetActiveWeapon():GetClass() == "cw_senses")) then
 					Clockwork.datastream:Start(self, "PlaySound", "begotten/ambient/req/whoosh_02.wav");
 					self:SetNWBool("senses", true);
 					self:SetDSP(114);

@@ -2,7 +2,7 @@ SWEP.Base = "sword_swepbase"
 -- WEAPON TYPE: Javelin
 
 SWEP.PrintName = "Pilum"
-SWEP.Category = "(Begotten) Javelin"
+SWEP.Category = "(Begotten) Throwable"
 
 SWEP.AdminSpawnable = true
 SWEP.Spawnable = true
@@ -11,7 +11,10 @@ SWEP.Slot = 0
 SWEP.Weight = 2
 SWEP.UseHands = true
 
-SWEP.HoldType = "wos-begotten_javelin"
+SWEP.HoldType = "wos-begotten_javelin_2h"
+SWEP.HoldTypeShield = "wos-begotten_javelin_shield"
+SWEP.HoldTypeAlternate = "wos-begotten_spear_2h"
+SWEP.HoldTypeAlternateShield = "wos-begotten_spear_1h_shield"
 
 SWEP.ViewModel = "models/weapons/cstrike/c_knife_t.mdl"
 SWEP.ViewModelFOV = 80
@@ -22,7 +25,7 @@ SWEP.CanParry = false;
 
 --Sounds
 SWEP.SoundMaterial = "MetalPierce" -- Metal, Wooden, MetalPierce, Punch, Default
-SWEP.AttackSoundTable = "MetalSpearAttackSoundTable" 
+SWEP.AttackSoundTable = "MetalJavelinMeleeAttackSoundTable" 
 
 /*---------------------------------------------------------
 	PrimaryAttack
@@ -35,21 +38,13 @@ SWEP.Primary.Round = ("begotten_javelin_pilum_thrown");
 SWEP.isJavelin = true;
 SWEP.SticksInShields = true;
 
-function SWEP:Hitscan()
-	return false;
-end
-
 function SWEP:AttackAnimination()
 	self.Weapon:SendWeaponAnim(ACT_VM_DRAW)
 	self.Owner:GetViewModel():SetPlaybackRate(0.75)
 end
 
 function SWEP:CanSecondaryAttack()
-	return false;
-end
-
-function SWEP:SecondaryAttack()
-	return false;
+	return self:GetNWString("activeShield"):len() > 0;
 end
 
 function SWEP:HandlePrimaryAttack()
@@ -65,7 +60,7 @@ function SWEP:HandlePrimaryAttack()
 	self.Owner:GetViewModel():SetPlaybackRate(0.8)	
 	--self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
 	self.Weapon:EmitSound(Sound("Weapon_Knife.Slash"))
-	self.Owner:ViewPunch(attacktable["punchstrength"])
+	self.Owner:ViewPunch(Angle(0, 3, 0))
 	
 	self.Weapon:SetNextPrimaryFire(CurTime() + 1000);
 	
@@ -74,61 +69,133 @@ function SWEP:HandlePrimaryAttack()
 			self:FireJavelin();
 		end
 	end);
+	
+	return false;
+end
+
+function SWEP:HandleThrustAttack()
+	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+	local attacktable = GetTable(self.AttackTable)
+
+	--Attack animation
+	if self:GetNWString("activeShield"):len() > 0 then
+		self:TriggerAnim(self.Owner, "a_spear_shield_attack_medium");
+	else
+		self:TriggerAnim(self.Owner, "a_spear_2h_attack_medium");
+	end
+
+	-- Viewmodel attack animation!
+	local vm = self.Owner:GetViewModel()
+    self.Weapon:SendWeaponAnim( ACT_VM_SECONDARYATTACK );
+	self.Owner:GetViewModel():SetPlaybackRate(0.65)
+	
+	self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
+	self.Owner:ViewPunch(attacktable["punchstrength"])
 end
 
 function SWEP:FireJavelin()
-	if !IsValid(self.Owner) then
+	local owner = self.Owner;
+
+	if !IsValid(owner) then
 		return;
 	end
 
-	pos = self.Owner:GetShootPos()
+	pos = owner:GetShootPos()
 	
 	if SERVER then
 		local javelin = ents.Create(self.Primary.Round)
 		if !javelin:IsValid() then return false end
 		
 		javelin:SetModel("models/props/begotten/melee/heide_lance.mdl");
-		javelin:SetAngles(self.Owner:GetAimVector():Angle())
+		javelin:SetAngles(owner:GetAimVector():Angle())
 		javelin:SetPos(pos)
-		javelin:SetOwner(self.Owner)
-		javelin:Spawn()
+		javelin:SetOwner(owner)
 		javelin.AttackTable = GetTable(self.AttackTable);
-		javelin.Owner = self.Owner
+		javelin.Owner = owner
+		javelin:Spawn()
 		javelin:Activate()
 		
 		local phys = javelin:GetPhysicsObject()
 		
-		if self.Owner.GetCharmEquipped and self.Owner:GetCharmEquipped("hurlers_talisman") then
-			phys:SetVelocity(self.Owner:GetAimVector() * 1600);
+		if owner.GetCharmEquipped and owner:GetCharmEquipped("hurlers_talisman") then
+			phys:SetVelocity(owner:GetAimVector() * 1700);
 		else
-			phys:SetVelocity(self.Owner:GetAimVector() * 1250);
+			phys:SetVelocity(owner:GetAimVector() * 1250);
 		end
 	end
 	
-	if SERVER and self.Owner:IsPlayer() then
+	if SERVER and owner:IsPlayer() then
 		local anglo = Angle(-10, -5, 0);
 		
-		self.Owner:ViewPunch(anglo)
+		owner:ViewPunch(anglo)
 		
 		local itemTable = Clockwork.item:GetByWeapon(self);
 		
-		if itemTable then
-			if self.Owner.opponent then
-				--Clockwork.kernel:ForceUnequipItem(self.Owner, itemTable.uniqueID, itemTable.itemID);
+		if !itemTable then
+			print("itemTable invalid! "..owner:Name().." "..self:GetClass());
+			
+			return;
+		end
+		
+		if owner.opponent then
+			--Clockwork.kernel:ForceUnequipItem(owner, itemTable.uniqueID, itemTable.itemID);
+			
+			if owner.duelData and owner.duelData.javelins then
+				local javelinCount = owner.duelData.javelins[itemTable.uniqueID];
 				
-				if (itemTable and itemTable.OnPlayerUnequipped and itemTable.HasPlayerEquipped) then
-					if (itemTable:HasPlayerEquipped(self.Owner)) then
-						itemTable:OnPlayerUnequipped(self.Owner)
-						--[[self.Owner:RebuildInventory()
-						self.Owner:SetWeaponRaised(false)]]--
+				if javelinCount and javelinCount > 1 then
+					owner.duelData.javelins[itemTable.uniqueID] = javelinCount - 1;
+					
+					owner:SetWeaponRaised(false);
+					
+					return;
+				end
+			end
+			
+			--[[if (itemTable and itemTable.OnPlayerUnequipped and itemTable.HasPlayerEquipped) then
+				if (itemTable:HasPlayerEquipped(owner)) then
+					itemTable:OnPlayerUnequipped(owner)
+				end
+			end]]--
+			
+			if owner.StripWeapon then
+				owner:StripWeapon("begotten_javelin_pilum");
+			end
+		else
+			local possible_replacements = owner:GetItemsByID(itemTable.uniqueID);
+			
+			for k, v in pairs(possible_replacements) do
+				if !v:IsTheSameAs(itemTable) and !v:IsBroken() then
+					self:SetNetworkedString("ItemID", v.itemID);
+					
+					local slot;
+					
+					for i, v2 in ipairs(itemTable.slots) do
+						local slotItem = owner.equipmentSlots[v2];
+						
+						if slotItem and slotItem:IsTheSameAs(itemTable) then
+							slot = v2;
+						end
 					end
-				end
+
+					Clockwork.equipment:EquipItem(owner, v, slot)
+					owner:SetWeaponRaised(false);
+					owner:TakeItem(itemTable);
 				
-				if self.Owner.StripWeapon then
-					self.Owner:StripWeapon("begotten_javelin_pilum");
+					return;
 				end
-			else
-				self.Owner:TakeItem(itemTable);
+			end
+		
+			owner:TakeItem(itemTable);
+		end
+		
+		for i, v in ipairs(owner:GetWeaponsEquipped()) do
+			local weaponClass = v.weaponClass or v.uniqueID;
+		
+			if weaponClass and owner:HasWeapon(weaponClass) then
+				owner:SelectWeapon(weaponClass);
+				
+				break;
 			end
 		end
 	end
@@ -143,8 +210,40 @@ function SWEP:OnDeploy()
 	end
 end
 
-function SWEP:TriggerAnim2(target, anim, beginorend)
-	return;
+function SWEP:GetHoldtypeOverride()
+	if IsValid(self.Owner) then
+		if self:GetNWString("activeShield"):len() > 0 then
+			if self.Owner:GetNWBool("ThrustStance") then
+				self.realHoldType = self.HoldTypeAlternateShield;
+			else
+				self.realHoldType = self.HoldTypeShield;
+			end
+		else
+			if self.Owner:GetNWBool("ThrustStance") then
+				self.realHoldType = self.HoldTypeAlternate;
+			else
+				self.realHoldType = self.HoldType;
+			end
+		end
+	end
+
+	return self.realHoldType or self.HoldType;
+end
+
+function SWEP:OnMeleeStanceChanged(stance)
+	self.stance = stance;
+
+	if SERVER then
+		self:CallOnClient("OnMeleeStanceChanged", stance);
+	else
+		if self.WElementsAlternate then
+			self:Initialize();
+			
+			return; -- SetHoldType already called in Initialize.
+		end
+	end
+	
+	self:SetHoldType(self:GetHoldtypeOverride());
 end
 
 /*---------------------------------------------------------
@@ -166,4 +265,8 @@ SWEP.VElements = {
 
 SWEP.WElements = {
 	["w_pilum"] = { type = "Model", model = "models/props/begotten/melee/heide_lance.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.89, 0.2, -10.91), angle = Angle(97.013, 40.909, 54.935), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElementsAlternate = {
+	["w_pilum"] = { type = "Model", model = "models/props/begotten/melee/heide_lance.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.5, -0.5, -12), angle = Angle(-80, 35, 0), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

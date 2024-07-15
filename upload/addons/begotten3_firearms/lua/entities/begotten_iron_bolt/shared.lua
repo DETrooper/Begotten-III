@@ -173,28 +173,42 @@ if SERVER then
 					local poiseDamage = self.AttackTable["poisedamage"];
 					local stabilityDamage = self.AttackTable["stabilitydamage"];
 
-					if distance < 200 * 200 then
+					if distance < 150 * 150 then
 						--print("tier 1");
-						damage = damage * 0.9;
-						poiseDamage = poiseDamage * 0.9;
-						stabilityDamage = stabilityDamage * 0.9;
-					elseif distance >= 200 * 200 and distance < 400 * 400 then
+						damage = damage * 0.8;
+						poiseDamage = poiseDamage * 0.8;
+						stabilityDamage = stabilityDamage * 0.8;
+					elseif distance >= 150 * 150 and distance < 250 * 250 then
 						--print("tier 2");
 						damage = damage * 1;
 						poiseDamage = poiseDamage * 1;
 						stabilityDamage = stabilityDamage * 1;
-					elseif distance >= 700 * 700 then
-						--print("tier 4");
+					elseif distance >= 250 * 250 and distance < 400 * 400 then
+						--print("tier 3");
 						damage = damage * 1.2;
 						poiseDamage = poiseDamage * 1.2;
 						stabilityDamage = stabilityDamage * 1.2;
+					elseif distance >= 400 * 400 and distance < 600 * 600 then
+						--print("tier 4");
+						damage = damage * 1.3;
+						poiseDamage = poiseDamage * 1.3;
+						stabilityDamage = stabilityDamage * 1.3;
+					elseif distance >= 600 * 600 and distance < 900 * 900 then
+						--print("tier 5");
+						damage = damage * 1.5;
+						poiseDamage = poiseDamage * 1.6;
+						stabilityDamage = stabilityDamage * 1.6;
+					elseif distance >= 900 * 900 then
+						--print("tier 6");
+						damage = damage * 1.7;
+						poiseDamage = poiseDamage * 1.7;
+						stabilityDamage = stabilityDamage * 1.7;
 					else
-						--print("tier 3 (normal)");
 					end
 							
 					if Ent:IsPlayer() then
 						--Ent:TakePoise(poiseDamage);
-						Ent:TakeStamina(poiseDamage);
+						--Ent:TakeStamina(poiseDamage);
 						Ent:TakeStability(stabilityDamage);
 						self:TriggerAnim4(Ent, "a_shared_hit_0"..math.random(1, 3));
 					end
