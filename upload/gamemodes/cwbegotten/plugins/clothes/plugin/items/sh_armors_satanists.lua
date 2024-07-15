@@ -467,6 +467,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/darklander_immortal_armor.p
 ITEM.category = "Armor"
 ITEM.concealsFace = true;
 ITEM.conditionScale = 0
+ITEM.attributes = {"conditionless", "not_unequippable"};
 ITEM.hasHelmet = true;
 ITEM.hitParticle = "MetalSpark";
 ITEM.protection = 85;
