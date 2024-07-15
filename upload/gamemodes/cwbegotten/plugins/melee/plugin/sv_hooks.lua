@@ -823,8 +823,6 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 			cwMelee:HandleStability(entity, math.Round(damageInfo:GetDamage() * 1.25), 5);
 		else
 			if damage >= 5 and entity:IsPlayer() then
-				Clockwork.player:SetAction(entity)
-
 				if entity:IsRunning() then
 					damageInfo:ScaleDamage(1.3);
 					entity:TakeStability(damage * 0.75);
