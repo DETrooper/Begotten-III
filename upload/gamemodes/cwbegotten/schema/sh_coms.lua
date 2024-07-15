@@ -2167,7 +2167,6 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 							summonTime = summonTime + (summonTime * ((freezeLevel - 50) / 50))
 						end
 
-						
 						Clockwork.player:SetAction(player, "helljaunting", summonTime, 999, function()
 							if IsValid(player) then
 								player.teleporting = false;

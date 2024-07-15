@@ -3094,6 +3094,8 @@ function Schema:ActionStopped(player, action)
 			
 			player.ladderConstructing = nil;
 		end
+	elseif action == "helljaunting" then
+		player.teleporting = false
 	end
 end;
 
