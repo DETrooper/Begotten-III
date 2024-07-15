@@ -7,6 +7,7 @@ local map = game.GetMap();
 if map == "rp_begotten3" then
 	if !cwDueling.arenas then
 		cwDueling.arenas = {
+		--[[
 			["bridge"] = {
 				duelingPlayer1 = nil,
 				duelingPlayer2 = nil,
@@ -16,6 +17,7 @@ if map == "rp_begotten3" then
 				spawnAngles2 = Angle(0, 90, 0),
 				timeLimit = 300,
 			},
+		]]
 			["hell"] = {
 				duelingPlayer1 = nil,
 				duelingPlayer2 = nil,
@@ -34,6 +36,7 @@ if map == "rp_begotten3" then
 				spawnAngles2 = Angle(0, 45, 0),
 				timeLimit = 300,
 			},
+		--[[
 			["silenthill"] = {
 				duelingPlayer1 = nil,
 				duelingPlayer2 = nil,
@@ -43,6 +46,7 @@ if map == "rp_begotten3" then
 				spawnAngles2 = Angle(0, -90, 0),
 				timeLimit = 300,
 			},
+		]]
 			["wasteland"] = {
 				duelingPlayer1 = nil,
 				duelingPlayer2 = nil,
