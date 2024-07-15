@@ -466,7 +466,7 @@ ITEM.model = "models/begotten/headgroups_props/darklanderimmortal.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/darklander_immortal_armor.png"
 ITEM.category = "Armor"
 ITEM.concealsFace = true;
-ITEM.conditionScale = 0.75
+ITEM.conditionScale = 0
 ITEM.hasHelmet = true;
 ITEM.hitParticle = "MetalSpark";
 ITEM.protection = 85;
@@ -510,6 +510,150 @@ ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fi
 function ITEM:GetReplacement(player)
 	--if (player:GetGender() == GENDER_FEMALE) then
 		return "models/begotten/satanists/darklanderimmortal.mdl";
+	--else
+		--return "models/begotten/satanists/hellspike_armor.mdl";
+	--end;
+end;
+
+function ITEM:OnPlayerUnequipped(player, extraData)
+	Schema:EasyText(player, "peru", "This armor is grafted into your skin and fused with your flesh, and cannot be unequipped!");
+	return false;
+end
+
+ITEM.runSound = {
+	"armormovement/body-armor-1.WAV.mp3",
+	"armormovement/body-armor-2.WAV.mp3",
+	"armormovement/body-armor-3.WAV.mp3",
+	"armormovement/body-armor-4.WAV.mp3",
+	"armormovement/body-armor-5.WAV.mp3",
+	"armormovement/body-armor-6.WAV.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/body-armor-b4.WAV.mp3",
+	"armormovement/body-armor-b5.WAV.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Warlock's Robe";
+ITEM.model = "models/begotten/items/dremorarobe.mdl"
+ITEM.iconoverride = "materials/rgs-3/itemicons/chernomant_robe.png"
+ITEM.category = "Armor"
+ITEM.concealsFace = true;
+ITEM.conditionScale = 0.75
+ITEM.hasHelmet = true;
+ITEM.hitParticle = "MetalSpark";
+ITEM.protection = 70;
+ITEM.weight = 5;
+ITEM.weightclass = "Medium";
+ITEM.type = "plate";
+ITEM.description = "N/A";
+ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+ITEM.requireFaith = {"Faith of the Dark"};
+ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.overlay = "begotten/zomboverlay/helmeyes";
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_HEAD] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.10, -- increases fall damage by 10%
+}
+
+ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+ITEM.pierceScale = 0.80; -- reduces pierce damage by 20%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+ITEM.bulletScale = 0.85; -- reduces bullet damage by 15%
+
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "cloth", "cloth"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+	--if (player:GetGender() == GENDER_FEMALE) then
+		return "models/begotten/satanists/dremorarobes.mdl";
+	--else
+		--return "models/begotten/satanists/darklanderspiceguard.mdl";
+	--end;
+end;
+
+ITEM.runSound = {
+	"armormovement/body-armor-1.WAV.mp3",
+	"armormovement/body-armor-2.WAV.mp3",
+	"armormovement/body-armor-3.WAV.mp3",
+	"armormovement/body-armor-4.WAV.mp3",
+	"armormovement/body-armor-5.WAV.mp3",
+	"armormovement/body-armor-6.WAV.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/body-armor-b4.WAV.mp3",
+	"armormovement/body-armor-b5.WAV.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Plate of the Perfect";
+ITEM.model = "models/begotten/items/dremoraplate.mdl"
+ITEM.iconoverride = "materials/rgs-3/itemicons/executor_plate.png"
+ITEM.category = "Armor"
+ITEM.concealsFace = true;
+ITEM.conditionScale = 0.75
+ITEM.hasHelmet = true;
+ITEM.hitParticle = "MetalSpark";
+ITEM.protection = 85;
+ITEM.weight = 8;
+ITEM.weightclass = "Heavy";
+ITEM.type = "plate";
+ITEM.description = "N/A";
+ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+ITEM.requireFaction = {"Children of Satan"};
+ITEM.overlay = "begotten/zomboverlay/skullhelm";
+
+ITEM.requiredbeliefs = {"hauberk"};
+ITEM.requireSubfaction = {"Philimaxio"};
+
+-- specifies which hitgroups will be affected by blunt, slash, pierce and other damage type scaling.
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_HEAD] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.15, -- increases fall damage by 15%
+}
+
+ITEM.bluntScale = 0.60; -- reduces blunt damage by 40%
+ITEM.pierceScale = 0.50; -- reduces pierce damage by 50%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+ITEM.bulletScale = 0.20; -- reduces bullet damage by 80%
+ITEM.stabilityScale = 0.40; -- reduces stability damage by 60%
+
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "human_bone", "human_bone", "human_bone", "human_bone", "human_bone"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+	--if (player:GetGender() == GENDER_FEMALE) then
+		return "models/begotten/satanists/dremoraarmor.mdl";
 	--else
 		--return "models/begotten/satanists/hellspike_armor.mdl";
 	--end;
