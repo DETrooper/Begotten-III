@@ -238,8 +238,9 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 	if (!factionTable.GetName) then
 		if (!factionTable.useFullName) then
 			if (data.forename and data.surname) then
-				data.forename = string.gsub(data.forename, "^.", string.utf8upper)
-				data.surname = string.gsub(data.surname, "^.", string.utf8upper)
+				-- ^. pattern only detects ASCII characters
+				data.forename = string.utf8upper(data.forename:utf8sub(1, 1)) .. data.forename:utf8sub(2)
+				data.surname = string.utf8upper(data.surname:utf8sub(1, 1)) .. data.surname:utf8sub(2)
 				
 				local forename = string.utf8lower(data.forename);
 				local surname = string.utf8lower(data.surname);

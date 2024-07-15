@@ -209,13 +209,13 @@ local COMMAND = Clockwork.command:New("Me");
 
 		if hook.Run("PlayerCanSayIC", player, text) then 
 			if player.victim and IsValid(player.victim) then
-				Clockwork.chatBox:AddInTargetRadius(player.victim, "me", string.gsub(text, "^.", string.utf8lower), player.victim:GetPos(), config.Get("talk_radius"):Get() * 2);
+				Clockwork.chatBox:AddInTargetRadius(player.victim, "me", text:utf8sub(1, 1) .. text:utf8sub(2), player.victim:GetPos(), config.Get("talk_radius"):Get() * 2);
 			elseif player.possessor and IsValid(player.possessor) then
 				Clockwork.player:Notify(player, "You cannot perform this action!");
 				
 				return;
 			else
-				Clockwork.chatBox:AddInTargetRadius(player, "me", string.gsub(text, "^.", string.utf8lower), player:GetPos(), config.Get("talk_radius"):Get() * 2);
+				Clockwork.chatBox:AddInTargetRadius(player, "me", text:utf8sub(1, 1) .. text:utf8sub(2), player:GetPos(), config.Get("talk_radius"):Get() * 2);
 			end
 		end
 	end;
