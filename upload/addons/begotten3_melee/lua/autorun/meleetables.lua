@@ -642,8 +642,8 @@ AttackTables.ThrowingDaggerAttackTable = {
 	["poisedamage"] = 20,
 	["stabilitydamage"] = 15,
 	["takeammo"] = 5,
-	["delay"] = 0.9,
-	["striketime"] = 0.4,
+	["delay"] = 0.6,
+	["striketime"] = 0.2,
 	["punchstrength"] = Angle(0,1,0),
 };
 

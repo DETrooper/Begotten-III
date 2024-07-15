@@ -823,7 +823,8 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 				
 				if entity:IsPlayer() and entity:Alive() and attacker:HasBelief("assassin") then
 					if not entity.assassinated then
-						if (attackerWeapon.isJavelin and attackerWeapon:GetClass() == "begotten_javelin_throwing_dagger_thrown") or (attackerWeapon.IsABegottenMelee and string.find(attackerWeapon.Category, "Dagger")) then
+						-- This check really needs to be implemented better in the future. Maybe an isDagger variable on the sweps?
+						if (attackerWeapon.isJavelin and attackerWeapon:GetClass() == "begotten_javelin_throwing_dagger_thrown") or (attackerWeapon.IsABegottenMelee and (string.find(attackerWeapon.Category, "Dagger") or attackerWeapon:GetClass() == "begotten_javelin_throwing_dagger")) then
 							if entity:Alive() and entity:Health() < entity:GetMaxHealth() / 4 or entity:GetRagdollState() == RAGDOLL_FALLENOVER and originalDamage > 0 then
 								newDamage = 666;
 								
@@ -840,7 +841,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 										
 										local strikeText = "efficiently strikes out at";
 										
-										if attackerWeapon.isJavelin then
+										if attackerWeapon.isJavelin and attackerWeapon.Base ~= "sword_swepbase" then
 											strikeText = "efficiently throws a dagger at";
 										end
 

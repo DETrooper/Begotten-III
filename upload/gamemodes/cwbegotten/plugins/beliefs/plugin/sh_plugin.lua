@@ -874,6 +874,8 @@ local COMMAND = Clockwork.command:New("Warcry");
 			return false;
 		end
 	
+		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 		local faith = player:GetFaith();
 		local player_has_belief = false;
 		local player_has_daring_trout = player:HasBelief("daring_trout");
@@ -916,12 +918,10 @@ local COMMAND = Clockwork.command:New("Warcry");
 			end
 		end
 		
-		if player_has_belief then	
+		if player_has_belief or subfaction == "Clan Grock" then	
 			local curTime = CurTime();
 			
 			if (!player.lastWarCry) or player.lastWarCry < curTime then
-				local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
-				local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 				local radius = config.Get("talk_radius"):Get() * 2;
 				local playerPos = player:GetPos();
 				
@@ -1006,10 +1006,16 @@ local COMMAND = Clockwork.command:New("Warcry");
 										end
 									end
 								
-									if v:HasBelief("saintly_composure") then
-										v:Disorient(1);
+									if subfaction == "Clan Grock" then
+										if !v:HasBelief("saintly_composure") then
+											v:Disorient(1);
+										end
 									else
-										v:Disorient(3);
+										if v:HasBelief("saintly_composure") then
+											v:Disorient(1);
+										else
+											v:Disorient(3);
+										end
 									end
 								end
 							end
@@ -1028,11 +1034,8 @@ local COMMAND = Clockwork.command:New("Warcry");
 				end
 
 				if subfaction == "Clan Grock" then
-					local soundIndex = math.random(1, 11);
-					local formattedIndex = soundIndex < 10 and ("0"..soundIndex) or tostring(soundIndex);
-					
 					player:HandleStamina(25);
-					player:EmitSound("begotten/grock/glott_-"..formattedIndex..".ogg", 100, math.random(60, 75));
+					player:EmitSound("warcries/grock_warcry"..math.random(1, 11)..".ogg", 100, math.random(60, 75));
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "barbarically shouts out!", playerPos, radius);
 				-- Kinisgers can FotF warcry if not disguised as a reaver.
 				elseif faith == "Faith of the Family" then

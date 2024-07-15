@@ -199,7 +199,6 @@ end
 function SWEP:OnDeploy()
 	self.Owner:ViewPunch(Angle(0,1,0))
     self.Weapon:EmitSound("draw/skyrim_mace_draw1.mp3")
-	self.InstantRaise = true;
 	
 	if timer.Exists("javelin_timer_"..self.Owner:EntIndex()) then
 		timer.Remove("javelin_timer_"..self.Owner:EntIndex());
@@ -221,6 +220,10 @@ function SWEP:GetHoldtypeOverride()
 				self.realHoldType = self.HoldType;
 			end
 		end
+	end
+	
+	if self:GetNWString("activeShield"):len() <= 0 then
+		self.InstantRaise = true;
 	end
 
 	return self.realHoldType or self.HoldType;
