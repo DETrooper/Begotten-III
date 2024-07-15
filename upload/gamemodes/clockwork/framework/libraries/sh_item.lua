@@ -325,7 +325,8 @@ function CLASS_TABLE:OnTakeFromPlayer(player)
 		if IsValid(weapon) then
 			for k, v in pairs(player.equipmentSlots) do
 				if v and v.category == "Shields" then
-					if weapon:GetNWString("activeShield") == v.uniqueID then
+					-- Old code for 1 weapon per shield.
+					--[[if weapon:GetNWString("activeShield") == v.uniqueID then
 						local weaponItemTable = item.GetByWeapon(weapon);
 						
 						if weaponItemTable and weaponItemTable:IsTheSameAs(self) then
@@ -333,7 +334,24 @@ function CLASS_TABLE:OnTakeFromPlayer(player)
 						end
 						
 						break;
+					end]]--
+					
+					-- New code.
+					local other_melee_found = false;
+					
+					for k2, v2 in pairs(player.equipmentSlots) do
+						if v2.canUseShields and !v2:IsTheSameAs(v) then
+							other_melee_found = true;
+							
+							break;
+						end
 					end
+					
+					if !other_melee_found then
+						Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
+					end
+					
+					break;
 				end
 			end
 		end

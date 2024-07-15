@@ -55,7 +55,7 @@ if SERVER then
 		local phys = self:GetPhysicsObject()
 		--self.NextThink = CurTime() +  1
 		
-		if IsValid(self.Owner) and self.Owner:GetActiveWeapon().Category == "(Begotten) Javelin" then
+		if IsValid(self.Owner) and self.Owner:GetActiveWeapon().isJavelin then
 			if !self.deflected then
 				self.AttackTable = GetTable(self.Owner:GetActiveWeapon().AttackTable);
 				self.itemTable = item.GetByWeapon(self.Owner:GetActiveWeapon());
@@ -72,7 +72,7 @@ if SERVER then
 
 		if (phys:IsValid()) then
 			phys:Wake()
-			phys:SetMass(10)
+			phys:SetMass(2)
 		end
 		
 		self.cachedStartPos = self:GetPos();
@@ -95,8 +95,6 @@ if SERVER then
 		Sound("physics/flesh/flesh_impact_bullet1.wav"),
 		Sound("physics/flesh/flesh_impact_bullet2.wav"),
 		Sound("physics/flesh/flesh_impact_bullet3.wav")}
-
-		self:GetPhysicsObject():SetMass(2)	
 
 		--self:SetUseType(SIMPLE_USE)
 		self.CanTool = false
@@ -264,28 +262,42 @@ if SERVER then
 					local poiseDamage = self.AttackTable["poisedamage"];
 					local stabilityDamage = self.AttackTable["stabilitydamage"];
 
-					if distance < 200 * 200 then
+					if distance < 150 * 150 then
 						--print("tier 1");
-						damage = damage * 0.6;
-						poiseDamage = poiseDamage * 0.6;
-						stabilityDamage = stabilityDamage * 0.6;
-					elseif distance >= 200 * 200 and distance < 400 * 400 then
+						damage = damage * 0.3;
+						poiseDamage = poiseDamage * 0.3;
+						stabilityDamage = stabilityDamage * 0.3;
+					elseif distance >= 150 * 150 and distance < 250 * 250 then
 						--print("tier 2");
+						damage = damage * 0.7;
+						poiseDamage = poiseDamage * 0.7;
+						stabilityDamage = stabilityDamage * 0.7;
+					elseif distance >= 250 * 250 and distance < 400 * 400 then
+						--print("tier 3");
 						damage = damage * 1;
 						poiseDamage = poiseDamage * 1;
 						stabilityDamage = stabilityDamage * 1;
-					elseif distance >= 700 * 700 then
+					elseif distance >= 400 * 400 and distance < 600 * 600 then
 						--print("tier 4");
+						damage = damage * 1.3;
+						poiseDamage = poiseDamage * 1.3;
+						stabilityDamage = stabilityDamage * 1.3;
+					elseif distance >= 600 * 600 and distance < 900 * 900 then
+						--print("tier 5");
+						damage = damage * 1.5;
+						poiseDamage = poiseDamage * 1.6;
+						stabilityDamage = stabilityDamage * 1.6;
+					elseif distance >= 900 * 900 then
+						--print("tier 6");
 						damage = damage * 1.6;
-						poiseDamage = poiseDamage * 1.8;
-						stabilityDamage = stabilityDamage * 1.8;
+						poiseDamage = poiseDamage * 1.9;
+						stabilityDamage = stabilityDamage * 1.9;
 					else
-						--print("tier 3 (normal)");
 					end
 							
 					if Ent:IsPlayer() then
 						--Ent:TakePoise(poiseDamage);
-						Ent:TakeStamina(poiseDamage);
+						--Ent:TakeStamina(poiseDamage);
 						Ent:TakeStability(stabilityDamage);
 						self:TriggerAnim4(Ent, "a_shared_hit_0"..math.random(1, 3));
 					end
@@ -342,7 +354,7 @@ if SERVER then
 								entity:Spawn();
 								entity:SetAngles(self:GetAngles());
 								self:StopSound("weapons/throw_swing_03.wav");
-								entity:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
+								entity:EmitSound(self.FleshHit[math.random(1, #self.FleshHit)], 90);
 								Clockwork.entity:Decay(entity, 300);
 								entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
 								
@@ -445,7 +457,7 @@ if SERVER then
 								entity:Spawn();
 								entity:SetAngles(self:GetAngles());
 								self:StopSound("weapons/throw_swing_03.wav");
-								entity:EmitSound(self.FleshHit[math.random(1, #self.FleshHit)], 90)
+								entity:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
 								Clockwork.entity:Decay(entity, 300);
 								entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
 								

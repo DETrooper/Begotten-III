@@ -1,6 +1,12 @@
--- Phoenix Project © 2016
+SWEP.ViewModelBoneMods = {
+	["ValveBiped.Bip01_L_Finger01"] = { scale = Vector(1, 1, 1), pos = Vector(0, -0.556, 0), angle = Angle(0, 0, 0) },
+	["ValveBiped.Bip01_L_Finger02"] = { scale = Vector(1, 1, 1), pos = Vector(0, -0.5, 0), angle = Angle(16.666, 1.11, -12.223) },
+	["v_ee3_reference001"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
+	["ValveBiped.Bip01_L_Finger0"] = { scale = Vector(1, 1, 1), pos = Vector(0, -0.5, 0), angle = Angle(0, 0, 0) }
+}
+
 SWEP.VElements = {
-	["ashot"] = { type = "Model", model = "models/arxweapon/ashot.mdl", bone = "doublebarr", rel = "", pos = Vector(-0.201, -0.519, 0.518), angle = Angle(90, -85.325, -8.183), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_blunderbuss"] = { type = "Model", model = "models/arxweapon/ashot.mdl", bone = "v_ee3_reference001", rel = "", pos = Vector(0, -0.519, 0.5), angle = Angle(1.169, -89, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
@@ -31,10 +37,11 @@ SWEP.HoldType 				= "ar2"	-- how others view you carrying the weapon
 
 SWEP.ViewModelFOV			= 70
 SWEP.ViewModelFlip			= false
-SWEP.ViewModel				= "models/arxweapon/v_doublebarrl.mdl"	-- Weapon view model
+SWEP.ViewModel				= "models/weapons/synbf3/c_ee3.mdl"	-- Weapon view model
 SWEP.WorldModel				= "models/weapons/w_airgun.mdl"	-- Weapon world model
 SWEP.Base 				= "begotten_firearm_base"
 SWEP.ShowWorldModel			= false
+SWEP.UseHands 						= true
 SWEP.Spawnable				= true
 SWEP.AdminSpawnable			= true
 
@@ -63,17 +70,10 @@ SWEP.Primary.IronAccuracy = .45 // has to be the same as primary.spread
 -- Because irons don't magically give you less pellet spread!
 
 -- Enter iron sight info and bone mod info below
-SWEP.SightsPos = Vector(-2.8, -1.81, 1.84)
-SWEP.SightsAng = Vector(-0.801, 0, 4.221)
-SWEP.RunSightsPos = Vector(-0.201, 0, -0.04)
-SWEP.RunSightsAng = Vector(-5.628, 32.361, 0)
-
-SWEP.ViewModelBoneMods = {
-	["barrels"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["doublebarr"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["shell"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["shells"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
-}
+SWEP.SightsPos = Vector(-3.52, -10.452, 3.64)
+SWEP.SightsAng = Vector(-0.9, -0.95, 1)
+SWEP.RunSightsPos = Vector(-0.44, 0, 0.36)
+SWEP.RunSightsAng = Vector(-14.775, 33.064, -21.81)
 
 SWEP.AmmoTypes = {
 	["Grapeshot"] = function(SWEP)

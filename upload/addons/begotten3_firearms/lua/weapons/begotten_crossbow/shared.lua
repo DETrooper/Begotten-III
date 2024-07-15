@@ -134,7 +134,7 @@ function SWEP:PrimaryAttack()
 					phys:SetVelocity(aimVector);
 						
 					if self.Owner:IsPlayer() then
-						local anglo = Angle(-10, -5, 0);
+						local anglo = Angle(0, -5, 0);
 						
 						self.Owner:ViewPunch(anglo)
 					end

@@ -287,6 +287,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(92.49, 0, 10.94);
 	ITEM.attachmentOffsetVector = Vector(-2.83, 3.59, -24.75);
 	
+	ITEM.attributes = {"shieldbreaker"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 ITEM:Register();

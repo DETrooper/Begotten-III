@@ -170,7 +170,7 @@ function SWEP:Initialize()
 end
  
 function SWEP:Equip()
-		self:SetHoldType(self.HoldType)
+	self:SetHoldType(self.HoldType)
 end
  
 function SWEP:Deploy()
@@ -183,10 +183,11 @@ function SWEP:Deploy()
 	self.Weapon:SetNWBool("Reloading", false)
    
 	if !self.Owner:IsNPC() and self.Owner != nil then
-			if self.ResetSights and self.Owner:GetViewModel() != nil then
-					self.ResetSights = CurTime() + self.Owner:GetViewModel():SequenceDuration()
-			end
+		if self.ResetSights and self.Owner:GetViewModel() != nil then
+			self.ResetSights = CurTime() + self.Owner:GetViewModel():SequenceDuration()
+		end
 	end
+	
 	return true
 end
 
@@ -956,7 +957,74 @@ end
  
  
 function SWEP:SecondaryAttack()
-		return false
+	return false
+end
+
+function SWEP:Reload()
+	if CLIENT then return end;
+	if !IsFirstTimePredicted() then return end;
+	if !IsValid(self.Owner) then return end;
+	if !self.Owner:IsPlayer() or !self.Owner:Alive() then return end;
+
+	timer.Simple(0, function()
+		if !IsValid(self.Owner) then return end;
+		if !self.Owner:Alive() then return end;
+		if self.Owner:IsRagdolled() then return end;
+		if self.ReloadKeyTime then return end;
+		
+		local action = Clockwork.player:GetAction(self.Owner);
+		
+		if (action == "reloading") then
+			Schema:EasyText(player, "peru", "Your character is already reloading!");
+			
+			return;
+		end
+		
+		local firearmItemTable = item.GetByWeapon(self);
+		
+		if !firearmItemTable then return end;
+		if !firearmItemTable.ammoTypes then return end;
+		
+		local inventory = self.Owner:GetInventory();
+		
+		if !inventory then return end;
+		
+		local lastLoadedShot = self.Owner.lastLoadedShot;
+		local shotToLoad;
+		
+		if lastLoadedShot then
+			local itemTable = item.FindByID(lastLoadedShot);
+			
+			if itemTable then
+				shotToLoad = itemTable;
+			end
+		else
+			-- Select a random ammo type if a previous one has not been found.
+			for i, v in RandomPairs(firearmItemTable.ammoTypes) do
+				local itemTable = item.FindByID(v);
+				
+				if itemTable then
+					shotToLoad = itemTable;
+				end
+			end
+		end
+		
+		if shotToLoad then
+			local itemInstances = inventory[shotToLoad.uniqueID];
+			
+			if itemInstances and !table.IsEmpty(itemInstances) then
+				local randomItem = table.Random(itemInstances);
+				
+				if randomItem:CanUseOnItem(self.Owner, firearmItemTable, true) then
+					randomItem:UseOnItem(self.Owner, firearmItemTable, true);
+					
+					return;
+				end
+			end
+		end
+		
+		Schema:EasyText(player, "chocolate", "No valid ammo could be found for this weapon!");
+	end);
 end
  
 --[[

@@ -874,6 +874,8 @@ local COMMAND = Clockwork.command:New("Warcry");
 			return false;
 		end
 	
+		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 		local faith = player:GetFaith();
 		local player_has_belief = false;
 		local player_has_daring_trout = player:HasBelief("daring_trout");
@@ -916,11 +918,10 @@ local COMMAND = Clockwork.command:New("Warcry");
 			end
 		end
 		
-		if player_has_belief then	
+		if player_has_belief or subfaction == "Clan Grock" then	
 			local curTime = CurTime();
 			
 			if (!player.lastWarCry) or player.lastWarCry < curTime then
-				local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 				local radius = config.Get("talk_radius"):Get() * 2;
 				local playerPos = player:GetPos();
 				
@@ -1014,22 +1015,51 @@ local COMMAND = Clockwork.command:New("Warcry");
 									end
 								end
 								
-								if player_has_daring_trout then
-									v.warcrySlowSpeed = curTime + 10;
-									
-									hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true)
-								end
-							else
-								if faith == "Faith of the Family" then
-									v:HandleSanity(3);
+								if !immune then
+									if Schema.towerSafeZoneEnabled or !v:InTower() then
+										-- Cooldown for getting sanity debuff.
+										if !v.lastWarCried or v.lastWarCried < curTime - 60 then
+											v.lastWarCried = curTime;
+											
+											if v:HasBelief("prudence") then
+												v:HandleSanity(math.Round(sanity_debuff / 2));
+											else
+												v:HandleSanity(sanity_debuff);
+											end
+										end
+										
+										if player_has_fearsome_wolf or player_has_daring_trout then
+											if not player.warCryVictims then
+												player.warCryVictims = {};
+											end
+											
+											table.insert(player.warCryVictims, v);
+										end
+									end
+								
+									if subfaction == "Clan Grock" then
+										if !v:HasBelief("saintly_composure") then
+											v:Disorient(1);
+										end
+									else
+										if v:HasBelief("saintly_composure") then
+											v:Disorient(1);
+										else
+											v:Disorient(3);
+										end
+									end
 								end
 							end
 						end
 					end
 				end
 
+				if subfaction == "Clan Grock" then
+					player:HandleStamina(25);
+					player:EmitSound("warcries/grock_warcry"..math.random(1, 11)..".ogg", 100, math.random(60, 75));
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "barbarically shouts out!", playerPos, radius);
 				-- Kinisgers can FotF warcry if not disguised as a reaver.
-				if faith == "Faith of the Family" then
+				elseif faith == "Faith of the Family" then
 					if player.bloodHowlActive then
 						if cwStamina then
 							local stamina = player:GetCharacterData("Stamina");
@@ -1115,7 +1145,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				Schema:EasyText(player, "firebrick", "You cannot war cry again for "..tostring(math.Round(player.lastWarCry - curTime)).." more seconds!");
 			end
 		else
-			Schema:EasyText(player, "firebrick", "You are not of the correct subfaith to do this!");
+			Schema:EasyText(player, "firebrick", "You do not have required belief to do this!");
 		end
 	end;
 COMMAND:Register();

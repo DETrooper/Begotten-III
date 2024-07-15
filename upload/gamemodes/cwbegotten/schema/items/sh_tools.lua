@@ -713,7 +713,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.category = "Communication"
 	ITEM.description = "A stout warhorn that when blown will communicate orders to nearby friendlies.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/warhorn.png"
-	ITEM.customFunctions = {"Sound Attack", "Sound Rally", "Sound Rally - Line", "Sound Rally - Square", "Sound Retreat"};
+	ITEM.customFunctions = {"Sound Attack", "Sound Rally", "Sound Rally - Marching Formation", "Sound Rally - Shieldwall", "Sound Retreat"};
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 	
@@ -757,13 +757,13 @@ local ITEM = Clockwork.item:New();
 						end
 						
 						player:EmitSound("warhorns/warhorn7.mp3", 100, math.random(98, 102));
-					elseif (name == "Sound Rally - Line") then
+					elseif (name == "Sound Rally - Marching Formation") then
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
 								if vFaction == "Gatekeeper" or vFaction == "Holy Hierarchy" then
-									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally in a line formation!");
+									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally in a marching formation!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
@@ -771,13 +771,13 @@ local ITEM = Clockwork.item:New();
 						end
 						
 						player:EmitSound("warhorns/warhorn8.mp3", 100, math.random(98, 102));
-					elseif (name == "Sound Rally - Square") then
+					elseif (name == "Sound Rally - Shieldwall") then
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
 								if vFaction == "Gatekeeper" or vFaction == "Holy Hierarchy" then
-									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally in a square formation!");
+									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally in a shieldwall formation!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
@@ -814,7 +814,7 @@ local ITEM = Clockwork.item:New();
 							end
 						end
 						
-						player:EmitSound("warhorns/warhorn3.mp3", 100,  math.random(80, 95));
+						player:EmitSound("warhorns/gore_warhorn_attack.mp3", 100, math.random(88, 108));
 					elseif (name == "Sound Rally") then
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
@@ -828,35 +828,35 @@ local ITEM = Clockwork.item:New();
 							end
 						end
 						
-						player:EmitSound("warhorns/warhorn7.mp3", 100,  math.random(80, 95));
-					elseif (name == "Sound Rally - Line") then
+						player:EmitSound("warhorns/gore_warhorn_rally.mp3", 100, math.random(88, 108));
+					elseif (name == "Sound Rally - Marching Formation") then
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
 								if vFaction == faction then
-									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally in a line formation!");
+									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally in a marching formation!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
 							end
 						end
 						
-						player:EmitSound("warhorns/warhorn7.mp3", 100, math.random(98, 102));
-					elseif (name == "Sound Rally - Square") then
+						player:EmitSound("warhorns/gore_warhorn_formation.mp3", 100, math.random(95, 118));
+					elseif (name == "Sound Rally - Shieldwall") then
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
 								if vFaction == faction then
-									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally in a square formation!");
+									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally in a shieldwall formation!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
 								end
 							end
 						end
 						
-						player:EmitSound("warhorns/warhorn7.mp3", 100, math.random(98, 102));
+						player:EmitSound("warhorns/gore_warhorn_formation.mp3", 100, math.random(77, 86));
 					elseif (name == "Sound Retreat") then
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
@@ -870,7 +870,7 @@ local ITEM = Clockwork.item:New();
 							end
 						end
 						
-						player:EmitSound("warhorns/warhorn6.mp3", 100, math.random(80, 95));
+						player:EmitSound("warhorns/gore_warhorn_retreat.mp3", 100, math.random(88, 108));
 					end;
  
 				else
@@ -888,17 +888,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.category = "Communication"
 	ITEM.description = "A human skull that has been grafted with holes to generate a bone-chilling whistle.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/skull.png"
-	ITEM.customFunctions = {"Sound Attack", "Sound Rally", "Sound Rally - Line", "Sound Rally - Square", "Sound Retreat"};
+	ITEM.customFunctions = {"Sound Attack", "Sound Rally", "Sound Rally - Marching Formation", "Sound Rally - Shieldwall", "Sound Retreat"};
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
+	
 	if (SERVER) then
 		function ITEM:OnCustomFunction(player, name)
 			local curTime = CurTime();
+			
 			if !player.nextWarHorn or player.nextWarHorn <= curTime then
 				player.nextWarHorn = curTime + 5;
+				
 				local faction = player:GetFaction();
 				local playerPos = player:GetPos();
 				local radius = Clockwork.config:Get("talk_radius"):Get() * 4;
+				
 				if faction == "Children of Satan" then
 					if (name == "Sound Attack") then
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
@@ -925,26 +929,26 @@ local ITEM = Clockwork.item:New();
 							end
 						end
 						player:EmitSound("warhorns/deathwhistle5.mp3", 100, math.random(98, 102));
-					elseif (name == "Sound Rally - Line") then
+					elseif (name == "Sound Rally - Marching Formation") then
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
 								if vFaction == "Children of Satan" then
-									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." sounds their death whistle, signalling a rally in a line formation!");
+									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." sounds their death whistle, signalling a rally in a marching formation!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." sounds a terrifying death whistle!");
 								end
 							end
 						end
 						player:EmitSound("warhorns/deathwhistle5.mp3", 100, math.random(98, 102));
-					elseif (name == "Sound Rally - Square") then
+					elseif (name == "Sound Rally - Shieldwall") then
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
 								if vFaction == "Children of Satan" then
-									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." sounds their death whistle, signalling a rally in a square formation!");
+									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." sounds their death whistle, signalling a rally in a shieldwall formation!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." sounds a terrifying death whistle!");
 								end

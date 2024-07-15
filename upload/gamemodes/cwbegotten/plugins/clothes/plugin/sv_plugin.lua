@@ -447,10 +447,10 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 				if player:IsPlayer() then
 					if !player.hitThisTick then
 						player.hitThisTick = true;
-						hook.Run("DoMeleeHitEffects", player, attacker, attacker:GetActiveWeapon(), damageInfo:GetDamagePosition(), originalDamage, damageInfo);
+						hook.Run("DoMeleeHitEffects", player, attacker, damageInfo:GetInflictor(), damageInfo:GetDamagePosition(), originalDamage, damageInfo);
 					end
 				else
-					hook.Run("DoMeleeHitEffects", player, attacker, attacker:GetActiveWeapon(), damageInfo:GetDamagePosition(), originalDamage, damageInfo);
+					hook.Run("DoMeleeHitEffects", player, attacker, damageInfo:GetInflictor(), damageInfo:GetDamagePosition(), originalDamage, damageInfo);
 				end
 			elseif (attacker:IsNPC() or attacker:IsNextBot()) then
 				if player:IsPlayer() then

@@ -50,89 +50,89 @@ ENT.Deceleration = 110
 ENT.PossessionEnabled = true
 ENT.PossessionMovement = POSSESSION_MOVE_8DIR
 ENT.PossessionViews = {
-  {
-    offset = Vector(0, 5, 20),
-    distance = 90
-  }
+	{
+		offset = Vector(0, 5, 20),
+		distance = 90
+	}
 }
 ENT.MaxYawRate = 200
 ENT.PossessionBinds = {
-  [IN_ATTACK] = {{
-    coroutine = true,
-    onkeydown = function(self)
-			  local att = math.random(1)	
-  if att == 1 then
-   self:Attack1()	
-   self:PlaySequenceAndMove("attack1", 1, self.PossessionFaceForward)
-end
-end
-  }}
+	[IN_ATTACK] = {{
+		coroutine = true,
+		onkeydown = function(self)
+			local att = math.random(1)	
+			if att == 1 then
+				self:Attack1()	
+				self:PlaySequenceAndMove("attack1", 1, self.PossessionFaceForward)
+			end
+		end
+	}}
 }
 
 if SERVER then
-
- -- Afraid --
-
-function ENT:OnTakeDamage(dmg)
-if math.random(1,2) == 1 and self.Flinching == false and (dmg:GetDamage() > 10 or dmg:IsDamageType(DMG_BLAST) or dmg:IsDamageType(DMG_SLASH) or dmg:IsDamageType(DMG_BULLET) or dmg:IsDamageType(DMG_CRUSH)) then
-self.Flinching = true
-if self.Charging == true then
-self:StopCharge()
+	
+	-- Afraid --
+	
+	function ENT:OnTakeDamage(dmg)
+		if math.random(1,2) == 1 and self.Flinching == false and (dmg:GetDamage() > 10 or dmg:IsDamageType(DMG_BLAST) or dmg:IsDamageType(DMG_SLASH) or dmg:IsDamageType(DMG_BULLET) or dmg:IsDamageType(DMG_CRUSH)) then
+			self.Flinching = true
+			if self.Charging == true then
+				self:StopCharge()
+			end
+			self:CallInCoroutine(function(self, delay)
+				if math.random(2) == 1 then
+					self:SetDefaultRelationship(D_FR)
+					
+				elseif math.random(2) == 2 then
+					self:SetDefaultRelationship(D_FR)
+					
+				end
+				if not self.Flinching then return true end
+				self.Flinching = false
+			end)
+		end
+	end
+	
+	-- Init/Think --
+	
+	function ENT:CustomInitialize()
+		self:SetModelScale(0.6)
+		self:SetDefaultRelationship(D_HT)
+	end
+	
+	-- AI --
+	
+	function ENT:OnMeleeAttack(enemy)
+		local att = math.random(1)	
+		if att == 1 then
+			self:Attack1()	
+			self:PlaySequenceAndMove("attack1", 1, self.FaceEnemy)
+		end
+	end
 end
-self:CallInCoroutine(function(self, delay)
-if math.random(2) == 1 then
-self:SetDefaultRelationship(D_FR)
 
-elseif math.random(2) == 2 then
-self:SetDefaultRelationship(D_FR)
+-- Patrol --
 
+function ENT:OnReachedPatrol()
+	self:Wait(9)
+	self:SetDefaultRelationship(D_HT)
 end
-if not self.Flinching then return true end
-self.Flinching = false
-end)
-end
+function ENT:OnIdle()
+	self:AddPatrolPos(self:RandomPos(1000))
 end
 
-  -- Init/Think --
+-- Animations/Sounds --
 
-function ENT:CustomInitialize()
-self:SetModelScale(0.6)
-self:SetDefaultRelationship(D_HT)
-end
-
-  -- AI --
-
-  function ENT:OnMeleeAttack(enemy)
-			  local att = math.random(1)	
-  if att == 1 then
-   self:Attack1()	
-   self:PlaySequenceAndMove("attack1", 1, self.FaceEnemy)
-end
-end
-end
-
- -- Patrol --
-
-  function ENT:OnReachedPatrol()
-  self:Wait(9)
-  self:SetDefaultRelationship(D_HT)
-  end
-  function ENT:OnIdle()
-    self:AddPatrolPos(self:RandomPos(1000))
-  end
-
-  -- Animations/Sounds --
-
-  function ENT:Attack1()
-      self:Attack({
-        damage = 100,
-        range = 50,
-        delay = 1.2,
-        type = DMG_SLASH,
-        viewpunch = Angle(20, math.random(-10, 10), 0),
-      }, function(self, hit)
-        force = Vector(500, 500, 500)
-      end)
+function ENT:Attack1()
+	self:Attack({
+		damage = 100,
+		range = 50,
+		delay = 1.2,
+		type = DMG_SLASH,
+		viewpunch = Angle(20, math.random(-10, 10), 0),
+	}, function(self, hit)
+		force = Vector(500, 500, 500)
+	end)
 end
 
 -- DO NOT TOUCH --

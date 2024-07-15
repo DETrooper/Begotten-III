@@ -357,14 +357,14 @@ function playerMeta:GetShieldEquipped(itemTable)
 end
 
 function playerMeta:GetWeaponEquipped(itemTable)
-	return Clockwork.equipment:GetItemEquipped(self, itemTable, {"Crossbows", "Firearms", "Weapons"});
+	return Clockwork.equipment:GetItemEquipped(self, itemTable, {"Crossbows", "Firearms", "Throwables", "Weapons"});
 end
 
 function playerMeta:GetWeaponsEquipped()
 	local weaponsTab = {};
 	
 	for k, v in pairs(self.equipmentSlots) do
-		if v.category == "Firearms" or v.category == "Crossbows" or v.meleeWeapon then
+		if v.category == "Firearms" or v.category == "Crossbows" or v.meleeWeapon or v.isJavelin then
 			table.insert(weaponsTab, v);
 		end
 	end
@@ -385,7 +385,6 @@ function weaponMeta:GetShield()
 		end
 	end
 end
-
 
 function weaponMeta:GetOffhand()
 	local offhand = self:GetNWString("activeOffhand");
@@ -457,6 +456,15 @@ if SERVER then
 						weapon:EquipShield(secondary.uniqueID);
 					end
 				end
+				
+				-- Remove this code if you want shields to only apply to the first one-handed weapon and not both.
+				if secondary and secondary.canUseShields and !secondaryOffhand then
+					local weapon = player:GetWeapon(secondary.weaponClass);
+					
+					if IsValid(weapon) and weapon.EquipShield then
+						weapon:EquipShield(tertiary.uniqueID);
+					end
+				end
 			end
 		end
 		
@@ -474,7 +482,9 @@ if SERVER then
 					if IsValid(weapon) and weapon.EquipShield then
 						weapon:EquipShield(tertiary.uniqueID);
 					end
-				elseif secondary and secondary.canUseShields and !secondaryOffhand then
+				end
+				
+				--[[else]]if secondary and secondary.canUseShields and !secondaryOffhand then
 					local weapon = player:GetWeapon(secondary.weaponClass);
 					
 					if IsValid(weapon) and weapon.EquipShield then

@@ -671,7 +671,11 @@ function Schema:GetPostProgressBarInfo()
 		elseif (action == "skinning") then
 			return {text = "You are skinning an animal's corpse. Click to cancel.", percentage = percentage, flash = percentage > 75};
 		elseif (action == "reloading") then
-			return {text = "You are reloading your weapon. Click to cancel.", percentage = percentage, flash = percentage > 75};
+			local weaponName = Clockwork.Client:GetLocalVar("cwProgressBarVerb") or "shot";
+			local ammoName = Clockwork.Client:GetLocalVar("cwProgressBarItem") or "weapon";
+			
+			return {text = "You are reloading your "..weaponName.." with "..ammoName..". Click to cancel.", percentage = percentage, flash = percentage < 0}
+			--return {text = "You are reloading your weapon. Click to cancel.", percentage = percentage, flash = percentage > 75};
 		elseif (action == "building") then
 			return {text = "You are erecting a siege ladder.", percentage = percentage, flash = percentage > 75};
 		elseif (action == "bloodTest") then
@@ -1594,6 +1598,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						frame:AddText("Rage (Shieldless): Movement speed is increased by 7%.", Color(110, 30, 30));
 					end
 					
+					if table.HasValue(itemTable.attributes, "shieldbreaker") then
+						frame:AddText("Shieldbreaker: Deals extra condition damage to shields.", Color(110, 30, 30));
+					end
+					
 					if table.HasValue(itemTable.attributes, "bell") then
 						frame:AddText("For Whom the Bell Tolls: Disorients any characters nearby with each holy strike.", Color(110, 30, 30));
 					end
@@ -1742,6 +1750,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				if weaponStats["attack"].canaltattack then
 					--frame:AddSpacer(4, Color(40, 40, 40, 120));
 					
+					if weaponStats["attack"].alttakeammo then
+						local percentage = math.min(weaponStats["attack"].alttakeammo / 100, 100);
+			
+						frame:AddBar(12, {{text = tostring(weaponStats["attack"].alttakeammo).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Cost", Color(110, 30, 30), true);
+					end
+					
 					if weaponStats["attack"].altarmorpiercing then
 						local armorpiercing = weaponStats["attack"].altarmorpiercing;
 						local damagetype;
@@ -1798,6 +1812,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						end
 					end
 					
+					if weaponStats["attack"].stabilitydamage and weaponStats["attack"].altattackstabilitydamagemodifier then
+						local percentage = math.min((weaponStats["attack"].stabilitydamage / 100) * weaponStats["attack"].altattackstabilitydamagemodifier, 100);
+			
+						frame:AddBar(12, {{text = tostring(weaponStats["attack"].stabilitydamage * weaponStats["attack"].altattackstabilitydamagemodifier), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Stability Damage", Color(110, 30, 30), true);
+					end
+					
 					if weaponStats["attack"].poisedamage and weaponStats["attack"].altattackpoisedamagemodifier then
 						local percentage = math.min((weaponStats["attack"].poisedamage / 100) * weaponStats["attack"].altattackpoisedamagemodifier, 100);
 			
@@ -1813,10 +1833,14 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					if weaponStats["attack"].meleerange then
 						local newRange = weaponStats["attack"].meleerange;
 						
-						if weaponTable.CanSwipeAttack then
-							newRange = math.Round(newRange * 0.8);
+						if weaponStats["attack"].altmeleerange then
+							newRange = weaponStats["attack"].altmeleerange;
 						else
-							newRange = math.Round(newRange * 1.2);
+							if weaponTable.CanSwipeAttack then
+								newRange = math.Round(newRange * 0.8);
+							else
+								newRange = math.Round(newRange * 1.2);
+							end
 						end
 						
 						local percentage = math.min((newRange - 425) / (1500 - 425), (1500 - 425));
@@ -1860,7 +1884,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		end
 		
 		return true;
-	elseif (category == "Javelins") then
+	elseif (category == "Throwables") then
 		local damageTypes = {[2] = "Bullet", [4] = "Slash", [16] = "Pierce", [128] = "Blunt", [1073741824] = "Pierce"};
 		local weaponClass = itemTable.uniqueID;
 		local weaponStats = {["attack"] = nil, ["defense"] = nil};
@@ -1875,8 +1899,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			category = string.sub(category, 12)
 		end
 		
-		if category == "Javelins" then
-			category = "Javelin";
+		if category == "Throwables" then
+			category = "Throwable";
 		end
 		
 		frame:AddText(name.." - "..category, Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
@@ -1934,6 +1958,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				frame:AddText("Weapon Attributes: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
 				
 				frame:AddText("Easily Repairable: Costs less melee repair kit condition to repair.", Color(110, 30, 30));
+				frame:AddText("Ranged Weapon: You will be disarmed upon taking damage with this weapon.", Color(110, 30, 30));
 				
 				if !weaponStats["defense"].candeflect then
 					frame:AddText("Cannot Deflect", Color(110, 30, 30));
@@ -2003,6 +2028,108 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					local percentage = math.min(weaponStats["attack"].poisedamage / 100, 100);
 		
 					frame:AddBar(12, {{text = tostring(weaponStats["attack"].poisedamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stamina Damage", Color(110, 30, 30), true);
+				end
+				
+				if weaponStats["attack"].canaltattack then
+					--frame:AddSpacer(4, Color(40, 40, 40, 120));
+					
+					if weaponStats["attack"].alttakeammo then
+						local percentage = math.min(weaponStats["attack"].alttakeammo / 100, 100);
+			
+						frame:AddBar(12, {{text = tostring(weaponStats["attack"].alttakeammo).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Cost", Color(110, 30, 30), true);
+					end
+					
+					if weaponStats["attack"].altarmorpiercing then
+						local armorpiercing = weaponStats["attack"].altarmorpiercing;
+						local damagetype;
+						local originalAP = armorpiercing;
+						
+						if weaponTable.CanSwipeAttack then
+							damagetype = DMG_CLUB;
+						else
+							damagetype = DMG_VEHICLE;
+						end
+						
+						if armorpiercing then
+							if damagetype == DMG_CLUB then
+								armorpiercing = math.Round(armorpiercing * Lerp(condition / 100, 0.7, 1));
+							else
+								armorpiercing = math.Round(armorpiercing * Lerp(condition / 100, 0.5, 1));
+							end
+						end
+					
+						local percentage = math.min(armorpiercing / 100, 100);
+			
+						if armorpiercing < originalAP then
+							frame:AddBar(12, {{text = tostring(armorpiercing).." / "..tostring(originalAP), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Armor-Piercing Damage", Color(110, 30, 30), true);
+						else
+							frame:AddBar(12, {{text = tostring(armorpiercing), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Armor-Piercing Damage", Color(110, 30, 30), true);
+						end
+					end
+				
+					if weaponStats["attack"].primarydamage and weaponStats["attack"].altattackdamagemodifier then
+						local damage = weaponStats["attack"].primarydamage;
+						local damagetype;
+						local originalDamage = damage;
+						
+						if weaponTable.CanSwipeAttack then
+							damagetype = DMG_CLUB;
+						else
+							damagetype = DMG_VEHICLE;
+						end
+						
+						if damage then
+							if damagetype == DMG_CLUB then
+								damage = math.Round(damage * Lerp(condition / 100, 0.75, 1));
+							elseif damagetype == DMG_VEHICLE then
+								damage = math.Round(damage * Lerp(condition / 100, 0.5, 1));
+							end
+						end
+					
+						local percentage = math.min((damage / 100) * weaponStats["attack"].altattackdamagemodifier, 100);
+			
+						if damage < originalDamage then
+							frame:AddBar(12, {{text = tostring(math.Round(damage * weaponStats["attack"].altattackdamagemodifier)).." / "..tostring(math.Round(originalDamage * weaponStats["attack"].altattackdamagemodifier)), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Damage", Color(110, 30, 30), true);
+						else
+							frame:AddBar(12, {{text = tostring(math.Round(damage * weaponStats["attack"].altattackdamagemodifier)), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Damage", Color(110, 30, 30), true);
+						end
+					end
+					
+					if weaponStats["attack"].stabilitydamage and weaponStats["attack"].altattackstabilitydamagemodifier then
+						local percentage = math.min((weaponStats["attack"].stabilitydamage / 100) * weaponStats["attack"].altattackstabilitydamagemodifier, 100);
+			
+						frame:AddBar(12, {{text = tostring(weaponStats["attack"].stabilitydamage * weaponStats["attack"].altattackstabilitydamagemodifier), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Stability Damage", Color(110, 30, 30), true);
+					end
+					
+					if weaponStats["attack"].poisedamage and weaponStats["attack"].altattackpoisedamagemodifier then
+						local percentage = math.min((weaponStats["attack"].poisedamage / 100) * weaponStats["attack"].altattackpoisedamagemodifier, 100);
+			
+						frame:AddBar(12, {{text = tostring(weaponStats["attack"].poisedamage * weaponStats["attack"].altattackpoisedamagemodifier), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Stamina Damage", Color(110, 30, 30), true);
+					end
+					
+					if weaponStats["attack"].altmeleearc then
+						local percentage = math.min(weaponStats["attack"].altmeleearc / 60, 60);
+			
+						frame:AddBar(12, {{text = tostring(weaponStats["attack"].altmeleearc).."°", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Weapon Arc", Color(110, 30, 30), true);
+					end
+
+					if weaponStats["attack"].meleerange then
+						local newRange = weaponStats["attack"].meleerange;
+						
+						if weaponStats["attack"].altmeleerange then
+							newRange = weaponStats["attack"].altmeleerange;
+						else
+							if weaponTable.CanSwipeAttack then
+								newRange = math.Round(newRange * 0.8);
+							else
+								newRange = math.Round(newRange * 1.2);
+							end
+						end
+						
+						local percentage = math.min((newRange - 425) / (1500 - 425), (1500 - 425));
+			
+						frame:AddBar(12, {{text = tostring(newRange), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Weapon Range", Color(110, 30, 30), true);
+					end
 				end
 			end
 		end
@@ -2466,6 +2593,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddText("Cannot Misfire", Color(110, 30, 30));
 				end
 				
+				frame:AddText("Ranged Weapon: You will be disarmed upon taking damage with this weapon.", Color(110, 30, 30));
+				
 				if itemTable.attributes then
 					if table.HasValue(itemTable.attributes, "sundering_shot") then
 						frame:AddText("Sundering Shot: Travelling at supersonic speeds, Old World Longshot ignores armor and shields entirely.", Color(110, 30, 30));
@@ -2839,4 +2968,40 @@ netstream.Hook("GoreWarhorn", function(data)
 	Clockwork.Client:EmitSound("warhorns/warhorn_gore.mp3", 60, 100);
 	
 	util.ScreenShake(Clockwork.Client:GetPos(), 2, 5, 15, 1024);
+end);
+
+-- Save data icon in top right.
+local pentaFade;
+local pentaAlpha = 0;
+local pentaRotate = 0;
+local mPentagram = Material("begotten/pentagram_red.png");
+
+net.Receive("ServerSaveData", function()
+	if net.ReadBool() then
+		hook.Add("DrawOverlay", "DrawOverlayServerSaveData", function()
+			if pentaFade then
+				pentaAlpha = math.Approach(pentaAlpha, 0, FrameTime() * 400);
+			else
+				pentaAlpha = math.Approach(pentaAlpha, 255, FrameTime() * 400);
+			end
+			
+			pentaRotate = (pentaRotate + (FrameTime() * 50)) % 360;
+			
+			local scrW = ScrW()
+			local pentaSize = scrW * 0.032;
+			
+			surface.SetDrawColor(Color(139, 64, 0, pentaAlpha));
+			surface.SetMaterial(mPentagram);
+			surface.DrawTexturedRectRotated(scrW - pentaSize, pentaSize, pentaSize, pentaSize, pentaRotate);
+		end);
+	else
+		pentaFade = true;
+	
+		timer.Simple(4, function()
+			pentaFade = nil;
+			pentaAlpha = 0;
+			pentaRotate = 0;
+			hook.Remove("DrawOverlay", "DrawOverlayServerSaveData");
+		end);
+	end
 end);

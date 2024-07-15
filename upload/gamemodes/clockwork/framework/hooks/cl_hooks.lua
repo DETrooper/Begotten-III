@@ -2527,8 +2527,8 @@ function GM:GetProgressBarInfo()
 			elseif (action == "pickupragdoll") then
 				return {text = "You are picking up a body. Click to cancel.", percentage = percentage, flash = percentage < 10}
 			elseif (action == "crafting") then
-				local craftVerb = Clockwork.Client:GetNWString("cwRecipesVerb", "crafting");
-				local itemName = Clockwork.Client:GetNWString("cwRecipesName", "an item");
+				local craftVerb = Clockwork.Client:GetLocalVar("cwProgressBarVerb") or  "crafting";
+				local itemName = Clockwork.Client:GetLocalVar("cwProgressBarItem") or "an item";
 				
 				return {text = "You are "..craftVerb.." "..itemName..". Click to cancel.", percentage = percentage, flash = percentage < 0}
 			elseif (action == "ritualing") then

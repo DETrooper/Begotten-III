@@ -2,8 +2,8 @@
 /*		My Custom Holdtype
 			Created by thats sweet( STEAM_0:1:4916602 )*/
 local DATA = {}
-DATA.Name = "begotten_javelin"
-DATA.HoldType = "wos-begotten_javelin"
+DATA.Name = "begotten_javelin_1h"
+DATA.HoldType = "wos-begotten_javelin_1h"
 DATA.BaseHoldType = "melee"
 DATA.Translations = {} 
 
@@ -29,12 +29,12 @@ DATA.Translations[ ACT_IDLE_ANGRY_MELEE ] = {
 }
 
 DATA.Translations[ ACT_IDLE ] = {
-	{ Sequence = "a_spear_2h_holstered_idle", Weight = 1 },
+	{ Sequence = "a_sword_holstered_idle", Weight = 1 },
 }
 
 -- Walking
 DATA.Translations[ ACT_WALK ] = {
-	{ Sequence = "a_spear_2h_holstered_walk", Weight = 1 },
+	{ Sequence = "a_sword_holstered_walk", Weight = 1 },
 }
 
 DATA.Translations[ ACT_WALK_AIM_RIFLE ] = {
@@ -43,7 +43,7 @@ DATA.Translations[ ACT_WALK_AIM_RIFLE ] = {
 
 -- Running
 DATA.Translations[ ACT_RUN ] = {
-	{ Sequence = "a_spear_2h_holstered_run", Weight = 1 },
+	{ Sequence = "a_sword_holstered_run", Weight = 1 },
 }
 
 DATA.Translations[ ACT_RUN_AIM_RIFLE_STIMULATED ] = {

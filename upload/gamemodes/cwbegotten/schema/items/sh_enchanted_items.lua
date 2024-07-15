@@ -17,7 +17,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "boot_contortionist";
 	ITEM.description = "A leather boot that surprisingly has not yet been eaten. Judging by its inscription, it evidently used to belong to an ancient gymnast.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Grants immunity to breaking your legs.\n- Reduces fall damage taken by 50%.\n- Reduces stamina consumption from combat rolling by 50%.";
+	ITEM.charmEffects = "- Grants immunity to breaking your legs.\n- Reduces fall damage taken by 50%.\n- Reduces stamina consumption from combat rolling by 50%.\n- Reduces stamina consumption from jumping by 66.6%.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 750};
 ITEM:Register();
@@ -104,7 +104,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "hurlers_talisman";
 	ITEM.description = "A pointed bronze charm at the end of a chain, reminiscent of the slings of yore.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Increases javelin throwing speed/range by 25%.";
+	ITEM.charmEffects = "- Increases throwable weapon projectile speed and range by 35%.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, onGround = false}
 ITEM:Register();
@@ -118,7 +118,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases stamina damage of all melee weapons by 15%.";
 	
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 725, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");

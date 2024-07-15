@@ -121,7 +121,7 @@ function cwRecipes:PlayerCanCraft(uniqueID)
 							end
 						end
 					
-						Clockwork.chatBox:Add(nil, "icon16/error.png", Color(200, 175, 200, 255), "You require the '"..recipeTable.requiredBeliefsNiceNames[i].."' belief to craft this recipe!");
+						Clockwork.chatBox:Add(nil, "icon16/error.png", Color(200, 175, 200, 255), "You require the '"..cwBeliefs:GetBeliefName(recipeTable.requiredBeliefs[i]).."' belief to craft this recipe!");
 						return false;
 					end
 				end

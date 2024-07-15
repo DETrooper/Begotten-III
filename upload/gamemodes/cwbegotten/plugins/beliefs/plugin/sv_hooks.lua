@@ -732,13 +732,13 @@ function cwBeliefs:LockpickFinished(player, entity)
 	if IsValid(player) and IsValid(entity) then
 		if entity.cwLockTier and !entity.cwPassword then
 			if cwItemSpawner and cwItemSpawner.SuperCrate and entity == cwItemSpawner.SuperCrate.supercrate then
-				player:HandleXP(100);
+				player:HandleXP(150);
 			elseif entity.cwLockTier == 1 then
-				player:HandleXP(5);
+				player:HandleXP(8);
 			elseif entity.cwLockTier == 2 then
-				player:HandleXP(10);
+				player:HandleXP(15);
 			elseif entity.cwLockTier == 3 then
-				player:HandleXP(25);
+				player:HandleXP(35);
 			end
 		end
 	end
@@ -813,6 +813,155 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			end
 			
 			if attackerWeapon then
+				if damageInfo:GetInflictor().isJavelin then
+					if damageInfo:GetInflictor():GetClass() == "begotten_javelin_throwing_axe_thrown" then
+						if attacker:HasBelief("daring_trout") or attacker:HasBelief("fearsome_wolf") then
+							newDamage = newDamage * 1.15;
+						end
+					end
+				end
+				
+				if entity:IsPlayer() and entity:Alive() and attacker:HasBelief("assassin") then
+					if not entity.assassinated then
+						-- This check really needs to be implemented better in the future. Maybe an isDagger variable on the sweps?
+						if (attackerWeapon.isJavelin and attackerWeapon:GetClass() == "begotten_javelin_throwing_dagger_thrown") or (attackerWeapon.IsABegottenMelee and (string.find(attackerWeapon.Category, "Dagger") or attackerWeapon:GetClass() == "begotten_javelin_throwing_dagger")) then
+							if entity:Alive() and entity:Health() < entity:GetMaxHealth() / 4 or entity:GetRagdollState() == RAGDOLL_FALLENOVER and originalDamage > 0 then
+								newDamage = 666;
+								
+								if entity:Health() - newDamage < 10 then
+									local hatred = entity:GetNetVar("Hatred");
+									
+									if hatred and hatred >= 100 then
+										if !entity.opponent then
+											entity:SetCharacterData("Hatred", 0);
+										end
+										
+										entity:SetLocalVar("Hatred", 0);
+										entity:Extinguish();
+										
+										local strikeText = "efficiently strikes out at";
+										
+										if attackerWeapon.isJavelin and attackerWeapon.Base ~= "sword_swepbase" then
+											strikeText = "efficiently throws a dagger at";
+										end
+
+										for k, v in pairs(ents.FindInSphere(entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
+											if v:IsPlayer() then
+												Clockwork.chatBox:Add(v, attacker, "me", strikeText.." a pressure point of "..Clockwork.player:FormatRecognisedText(v, "%s", entity)..", but their hatred is so strong that they simply refuse to die!");
+											end
+										end
+										
+										if cwMedicalSystem then
+											entity.nextBleedPoint = CurTime() + 180;
+										end
+										
+										if entity.poisonTicks then
+											entity.poisonTicks = nil;
+										end
+										
+										damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
+										return;
+									end
+								
+									local itemTable = entity:GetCharmEquipped("ring_distorted");
+									
+									if itemTable and !entTab.distortedRingFiredDuel then
+										if !cwRituals or (cwRituals and !entTab.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then
+											if !entTab.opponent then
+												itemTable:OnPlayerUnequipped(entity);
+												entity:TakeItem(itemTable, true);
+											end
+											
+											entTab.distortedRingFired = true;
+											
+											if entTab.opponent then
+												entTab.distortedRingFiredDuel = true;
+											else
+												timer.Simple(0.5, function()
+													if IsValid(entity) then
+														entity.distortedRingFired = nil;
+													end
+												end);
+											end
+											
+											entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
+											entity:Extinguish();
+											
+											local strikeText = "efficiently strikes out at";
+											
+											if attackerWeapon.isJavelin then
+												strikeText = "efficiently throws a dagger at";
+											end
+											
+											for k, v in pairs(ents.FindInSphere(entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
+												if v:IsPlayer() then
+													Clockwork.chatBox:Add(v, attacker, "me", strikeText.." a pressure point of "..Clockwork.player:FormatRecognisedText(v, "%s", entity)..", but their dagger is deflected at the last moment by an invisible force!");
+												end
+											end
+											
+											Clockwork.player:Notify(entity, "Your Distorted Ring shatters and releases a tremendous amount of energy, giving you one last chance at life!");
+											
+											if cwMedicalSystem then
+												entTab.nextBleedPoint = CurTime() + 180;
+											end
+											
+											if entTab.poisonTicks then
+												entTab.poisonTicks = nil;
+											end
+											
+											damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
+											return;
+										end
+									end
+								end
+
+
+								entity:EmitSound("meleesounds/kill"..math.random(1, 2)..".wav.mp3");
+								
+								local strikeText = "efficiently strikes out at";
+								
+								if attackerWeapon.isJavelin then
+									strikeText = "efficiently throws a dagger at";
+								end
+								
+								if entity.soulscorchActive then
+									Clockwork.chatBox:AddInTargetRadius(attacker, "me", strikeText.." a pressure point of "..entity:Name()..", snuffing out their Holy Light with dark magic and killing them instantly!", attacker:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+									
+									entity.soulscorchActive = nil;
+									entity:SetSharedVar("soulscorchActive", false);
+									
+									if timer.Exists("SoulScorchTimer_"..entity:EntIndex()) then
+										timer.Remove("SoulScorchTimer_"..entity:EntIndex());
+									end
+								else
+									Clockwork.chatBox:AddInTargetRadius(attacker, "me", strikeText.." a pressure point of "..entity:Name()..", killing them instantly!", attacker:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+								end
+								
+								-- According to gabs the /me can play twice for some reason, so I'm just making sure it doesn't.
+								entity.assassinated = true;
+
+								timer.Simple(1, function()
+									if IsValid(entity) then
+										entity.assassinated = false;
+									end
+								end);
+							end
+						end
+					end
+				end
+				
+				if attackerWeapon.Base == "sword_swepbase" or attackerWeapon.isJavelin then
+					if damageInfo:IsDamageType(16) then
+						if entity:IsPlayer() and entity:Alive() and attacker:HasBelief("survivalist") then
+							if originalDamage > 0 then
+								entity.poisonTicks = math.random(5, 7);
+								entity.poisoner = attacker;
+								entity.poisoninflictor = inflictor;
+							end
+						end
+					end
+				end
+			
 				if attackerWeapon.Base == "sword_swepbase" then -- Melee
 					if attacker:GetCharmEquipped() then
 						if attackerWeapon:GetClass() == "begotten_fists" then
@@ -885,16 +1034,6 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						end
 					end
 					
-					if damageInfo:IsDamageType(16) then
-						if entity:IsPlayer() and entity:Alive() and attacker:HasBelief("survivalist") then
-							if originalDamage > 0 then
-								entity.poisonTicks = math.random(5, 7);
-								entity.poisoner = attacker;
-								entity.poisoninflictor = inflictor;
-							end
-						end
-					end
-					
 					if attacker:HasBelief("unrelenting") then
 						if string.find(attackerWeapon.Category, "Two Handed") or string.find(attackerWeapon.Category, "Great Weapon") or string.find(attackerWeapon.Category, "Scythe") then
 							newDamage = newDamage + (originalDamage * 0.10);
@@ -945,116 +1084,6 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					
 					if attacker.decapitationBuff then
 						newDamage = newDamage + (newDamage * 0.2);
-					end
-					
-					if entity:IsPlayer() and entity:Alive() and attacker:HasBelief("assassin") then
-						if not entity.assassinated then
-							if string.find(attackerWeapon.Category, "Dagger") then
-								if entity:Alive() and entity:Health() < entity:GetMaxHealth() / 4 or entity:GetRagdollState() == RAGDOLL_FALLENOVER and originalDamage > 0 then
-									newDamage = 666;
-									
-									if entity:Health() - newDamage < 10 then
-										local hatred = entity:GetNetVar("Hatred");
-										
-										if hatred and hatred >= 100 then
-											if !entity.opponent then
-												entity:SetCharacterData("Hatred", 0);
-											end
-											
-											entity:SetLocalVar("Hatred", 0);
-											entity:Extinguish();
-
-											for k, v in pairs(ents.FindInSphere(entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
-												if v:IsPlayer() then
-													Clockwork.chatBox:Add(v, attacker, "me", "efficiently strikes out at a pressure point of "..Clockwork.player:FormatRecognisedText(v, "%s", entity)..", but their hatred is so strong that they simply refuse to die!");
-												end
-											end
-											
-											if cwMedicalSystem then
-												entity.nextBleedPoint = CurTime() + 180;
-											end
-											
-											if entity.poisonTicks then
-												entity.poisonTicks = nil;
-											end
-											
-											damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
-											return;
-										end
-									
-										local itemTable = entity:GetCharmEquipped("ring_distorted");
-										
-										if itemTable and !entTab.distortedRingFiredDuel then
-											if !cwRituals or (cwRituals and !entTab.scornificationismActive) or (!attacker:IsNPC() and !attacker:IsNextBot() and !attacker:IsPlayer()) then
-												if !entTab.opponent then
-													itemTable:OnPlayerUnequipped(entity);
-													entity:TakeItem(itemTable, true);
-												end
-												
-												entTab.distortedRingFired = true;
-												
-												if entTab.opponent then
-													entTab.distortedRingFiredDuel = true;
-												else
-													timer.Simple(0.5, function()
-														if IsValid(entity) then
-															entity.distortedRingFired = nil;
-														end
-													end);
-												end
-												
-												entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
-												entity:Extinguish();
-												
-												for k, v in pairs(ents.FindInSphere(entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
-													if v:IsPlayer() then
-														Clockwork.chatBox:Add(v, attacker, "me", "efficiently strikes out at a pressure point of "..Clockwork.player:FormatRecognisedText(v, "%s", entity)..", but their dagger is deflected at the last moment by an invisible force!");
-													end
-												end
-												
-												Clockwork.player:Notify(entity, "Your Distorted Ring shatters and releases a tremendous amount of energy, giving you one last chance at life!");
-												
-												if cwMedicalSystem then
-													entTab.nextBleedPoint = CurTime() + 180;
-												end
-												
-												if entTab.poisonTicks then
-													entTab.poisonTicks = nil;
-												end
-												
-												damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
-												return;
-											end
-										end
-									end
-
-
-									entity:EmitSound("meleesounds/kill"..math.random(1, 2)..".wav.mp3");
-									
-									if entity.soulscorchActive then
-										Clockwork.chatBox:AddInTargetRadius(attacker, "me", "efficiently strikes out at a pressure point of "..entity:Name()..", snuffing out their Holy Light with dark magic and killing them instantly!", attacker:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-										
-										entity.soulscorchActive = nil;
-										entity:SetSharedVar("soulscorchActive", false);
-										
-										if timer.Exists("SoulScorchTimer_"..entity:EntIndex()) then
-											timer.Remove("SoulScorchTimer_"..entity:EntIndex());
-										end
-									else
-										Clockwork.chatBox:AddInTargetRadius(attacker, "me", "efficiently strikes out at a pressure point of "..entity:Name()..", killing them instantly!", attacker:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-									end
-									
-									-- According to gabs the /me can play twice for some reason, so I'm just making sure it doesn't.
-									entity.assassinated = true;
-
-									timer.Simple(1, function()
-										if IsValid(entity) then
-											entity.assassinated = false;
-										end
-									end);
-								end
-							end
-						end
 					end
 				elseif attackerWeapon.Base == "begotten_firearm_base" then -- Firearm
 					if !attackerWeapon.notPowder and attacker:HasBelief("blessed_powder") then
