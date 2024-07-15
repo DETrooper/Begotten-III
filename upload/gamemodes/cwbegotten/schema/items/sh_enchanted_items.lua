@@ -104,7 +104,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "hurlers_talisman";
 	ITEM.description = "A pointed bronze charm at the end of a chain, reminiscent of the slings of yore.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Increases javelin throwing speed/range by 25%.";
+	ITEM.charmEffects = "- Increases throwable weapon projectile speed and range by 35%.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, onGround = false}
 ITEM:Register();
@@ -118,7 +118,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases stamina damage of all melee weapons by 15%.";
 	
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 725, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");

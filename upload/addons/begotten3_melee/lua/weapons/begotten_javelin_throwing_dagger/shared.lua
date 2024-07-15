@@ -113,14 +113,14 @@ function SWEP:FireJavelin()
 		local phys = javelin:GetPhysicsObject()
 		
 		if owner.GetCharmEquipped and owner:GetCharmEquipped("hurlers_talisman") then
-			phys:SetVelocity(owner:GetAimVector() * 1600);
+			phys:SetVelocity(owner:GetAimVector() * 1700);
 		else
 			phys:SetVelocity(owner:GetAimVector() * 1250);
 		end
 	end
 	
 	if SERVER and owner:IsPlayer() then
-		local anglo = Angle(-10, -5, 0);
+		local anglo = Angle(0, -2, 0);
 		
 		owner:ViewPunch(anglo)
 		

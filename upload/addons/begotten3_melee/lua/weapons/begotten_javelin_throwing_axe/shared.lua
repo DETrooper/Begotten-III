@@ -60,7 +60,7 @@ function SWEP:HandlePrimaryAttack()
 	self.Owner:GetViewModel():SetPlaybackRate(0.8)	
 	--self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
 	self.Weapon:EmitSound(Sound("Weapon_Knife.Slash"))
-	self.Owner:ViewPunch(Angle(0, 3, 0))
+	self.Owner:ViewPunch(Angle(0, 2, 1))
 	
 	self.Weapon:SetNextPrimaryFire(CurTime() + 1000);
 	
@@ -118,14 +118,14 @@ function SWEP:FireJavelin()
 		local phys = javelin:GetPhysicsObject()
 		
 		if owner.GetCharmEquipped and owner:GetCharmEquipped("hurlers_talisman") then
-			phys:SetVelocity(owner:GetAimVector() * 1280);
+			phys:SetVelocity(owner:GetAimVector() * 1380);
 		else
 			phys:SetVelocity(owner:GetAimVector() * 1000);
 		end
 	end
 	
 	if SERVER and owner:IsPlayer() then
-		local anglo = Angle(-10, -5, 0);
+		local anglo = Angle(1, -5, 1);
 		
 		owner:ViewPunch(anglo)
 		
