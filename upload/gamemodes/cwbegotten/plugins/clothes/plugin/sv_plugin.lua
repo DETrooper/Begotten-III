@@ -344,6 +344,10 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						protection = protection * (condition / 100);
 					end;
 					
+					if (!isTrainingDummy and player.warcryArmorBuff) then
+						protection = protection + 30
+					end
+					
 					-- Make sure protection does not exceed maximum value of 95.
 					protection = math.min(math.Round(protection), 95);
 					

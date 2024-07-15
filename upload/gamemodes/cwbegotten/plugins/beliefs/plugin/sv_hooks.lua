@@ -1977,6 +1977,16 @@ function cwBeliefs:PostPlayerCharacterLoaded(player)
 		end
 	end
 
+	if (player.warcryArmorBuff) then
+		local entIndex = player:EntIndex();
+	
+		player.warcryArmorBuff = false
+	
+		if timer.Exists("WarcryArmorBuffTimer_" .. entIndex) then
+			timer.Remove("WarcryArmorBuffTimer_" .. entIndex)
+		end
+	end
+
 	player:NetworkBeliefs();
 end;
 
@@ -2046,6 +2056,16 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 		
 		if timer.Exists("DecapitationBuffTimer_"..entIndex) then
 			timer.Remove("DecapitationBuffTimer_"..entIndex);
+		end
+	end
+
+	if (player.warcryArmorBuff) then
+		local entIndex = player:EntIndex();
+	
+		player.warcryArmorBuff = false
+	
+		if timer.Exists("WarcryArmorBuffTimer_" .. entIndex) then
+			timer.Remove("WarcryArmorBuffTimer_" .. entIndex)
 		end
 	end
 end

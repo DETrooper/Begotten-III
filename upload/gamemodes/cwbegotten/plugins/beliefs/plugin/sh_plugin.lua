@@ -896,17 +896,17 @@ local COMMAND = Clockwork.command:New("Warcry");
 				sanity_debuff = -25;
 				warcry_beliefs = {"sadism"};
 			end
+		elseif faith == "Faith of the Family" then
+			sanity_debuff = -10;
+			warcry_beliefs = {"father", "mother", "old_son", "young_son", "sister"};
+		elseif faith == "Faith of the Dark" then
+			sanity_debuff = -25;
+			warcry_beliefs = {"sadism"};
+		elseif (player:GetSubfaith() == "Sol Orthodoxy") then
+			warcry_beliefs = {"extinctionist"};
 		else
-			if faith == "Faith of the Family" then
-				sanity_debuff = -10;
-				warcry_beliefs = {"father", "mother", "old_son", "young_son", "sister"};
-			elseif faith == "Faith of the Dark" then
-				sanity_debuff = -25;
-				warcry_beliefs = {"sadism"};
-			else
-				Schema:EasyText(player, "firebrick", "You are not of the correct faith to do this!");
-				return;
-			end
+			Schema:EasyText(player, "firebrick", "You are not of the correct faith or subfaith to do this!");
+			return;
 		end
 		
 		for i = 1, #warcry_beliefs do
@@ -924,103 +924,105 @@ local COMMAND = Clockwork.command:New("Warcry");
 				local radius = config.Get("talk_radius"):Get() * 2;
 				local playerPos = player:GetPos();
 				
-				for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
-					local isPlayer = v:IsPlayer();
-					
-					if (isPlayer and v:GetMoveType() == MOVETYPE_WALK) then
-						local immune = false;
-						local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+				if (sanity_debuff) then
+					for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
+						local isPlayer = v:IsPlayer();
 						
-						if v:GetFaith() ~= faith then
-							-- Kinisgers can twisted warcry if disguised as a Reaver.
-							if faith == "Faith of the Dark" then
-								if faction == "Goreic Warrior" and vFaction == "Goreic Warrior" then
-									immune = true;
-								elseif v.banners then
-									for k2, v2 in pairs(v.banners) do
-										if v2 == "glazic" then
-											if vFaction == "Gatekeeper" or vFaction == "Pope Adyssa's Gatekeepers" or vFaction == "Holy Hierarchy" then
-												immune = true;
-											
-												break;
-											end
-										end
-									end
-								end
+						if (isPlayer and v:GetMoveType() == MOVETYPE_WALK) then
+							local immune = false;
+							local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
 							
-								if !immune then
-									if Schema.towerSafeZoneEnabled or !v:InTower() then
-										-- Cooldown for getting sanity debuff.
-										if !v.lastWarCried or v.lastWarCried < curTime - 60 then
-											v.lastWarCried = curTime;
-											
-											if v:HasBelief("prudence") then
-												v:HandleSanity(math.Round(sanity_debuff / 2));
-											else
-												v:HandleSanity(sanity_debuff);
+							if v:GetFaith() ~= faith then
+								-- Kinisgers can twisted warcry if disguised as a Reaver.
+								if faith == "Faith of the Dark" then
+									if faction == "Goreic Warrior" and vFaction == "Goreic Warrior" then
+										immune = true;
+									elseif v.banners then
+										for k2, v2 in pairs(v.banners) do
+											if v2 == "glazic" then
+												if vFaction == "Gatekeeper" or vFaction == "Pope Adyssa's Gatekeepers" or vFaction == "Holy Hierarchy" then
+													immune = true;
+												
+													break;
+												end
 											end
 										end
 									end
 								
-									if v:HasBelief("saintly_composure") then
-										v:Disorient(3);
-									else
-										v:Disorient(15);
+									if !immune then
+										if Schema.towerSafeZoneEnabled or !v:InTower() then
+											-- Cooldown for getting sanity debuff.
+											if !v.lastWarCried or v.lastWarCried < curTime - 60 then
+												v.lastWarCried = curTime;
+												
+												if v:HasBelief("prudence") then
+													v:HandleSanity(math.Round(sanity_debuff / 2));
+												else
+													v:HandleSanity(sanity_debuff);
+												end
+											end
+										end
+									
+										if v:HasBelief("saintly_composure") then
+											v:Disorient(3);
+										else
+											v:Disorient(15);
+										end
+									end
+								elseif faith == "Faith of the Family" then
+									if faction == "Goreic Warrior" and vFaction == "Goreic Warrior" then
+										immune = true;
+									elseif v.banners then
+										for k2, v2 in pairs(v.banners) do
+											if v2 == "glazic" then
+												if vFaction == "Gatekeeper" or vFaction == "Pope Adyssa's Gatekeepers" or vFaction == "Holy Hierarchy" then
+													immune = true;
+												
+													break;
+												end
+											end
+										end
+									end
+									
+									if !immune then
+										if Schema.towerSafeZoneEnabled or !v:InTower() then
+											-- Cooldown for getting sanity debuff.
+											if !v.lastWarCried or v.lastWarCried < curTime - 60 then
+												v.lastWarCried = curTime;
+												
+												if v:HasBelief("prudence") then
+													v:HandleSanity(math.Round(sanity_debuff / 2));
+												else
+													v:HandleSanity(sanity_debuff);
+												end
+											end
+											
+											if player_has_fearsome_wolf or player_has_daring_trout then
+												if not player.warCryVictims then
+													player.warCryVictims = {};
+												end
+												
+												table.insert(player.warCryVictims, v);
+											end
+										end
+									
+										if v:HasBelief("saintly_composure") then
+											v:Disorient(1);
+										else
+											v:Disorient(3);
+										end
 									end
 								end
-							elseif faith == "Faith of the Family" then
-								if faction == "Goreic Warrior" and vFaction == "Goreic Warrior" then
-									immune = true;
-								elseif v.banners then
-									for k2, v2 in pairs(v.banners) do
-										if v2 == "glazic" then
-											if vFaction == "Gatekeeper" or vFaction == "Pope Adyssa's Gatekeepers" or vFaction == "Holy Hierarchy" then
-												immune = true;
-											
-												break;
-											end
-										end
-									end
+								
+								if player_has_daring_trout then
+									v.warcrySlowSpeed = curTime + 10;
+									
+									hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true)
 								end
-								
-								if !immune then
-									if Schema.towerSafeZoneEnabled or !v:InTower() then
-										-- Cooldown for getting sanity debuff.
-										if !v.lastWarCried or v.lastWarCried < curTime - 60 then
-											v.lastWarCried = curTime;
-											
-											if v:HasBelief("prudence") then
-												v:HandleSanity(math.Round(sanity_debuff / 2));
-											else
-												v:HandleSanity(sanity_debuff);
-											end
-										end
-										
-										if player_has_fearsome_wolf or player_has_daring_trout then
-											if not player.warCryVictims then
-												player.warCryVictims = {};
-											end
-											
-											table.insert(player.warCryVictims, v);
-										end
-									end
-								
-									if v:HasBelief("saintly_composure") then
-										v:Disorient(1);
-									else
-										v:Disorient(3);
-									end
+							else
+								if faith == "Faith of the Family" then
+									v:HandleSanity(3);
 								end
-							end
-							
-							if player_has_daring_trout then
-								v.warcrySlowSpeed = curTime + 10;
-								
-								hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true)
-							end
-						else
-							if faith == "Faith of the Family" then
-								v:HandleSanity(3);
 							end
 						end
 					end
@@ -1051,11 +1053,28 @@ local COMMAND = Clockwork.command:New("Warcry");
 					end
 					
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a feral warcry!", playerPos, radius);
-				else
+				elseif faith == "Faith of the Dark" then
 					player:HandleSanity(-5);
 					player:EmitSound("warcries/twistedwarcry"..math.random(1, 5)..".mp3", 100, math.random(90, 105));
 					
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a twisted warcry, screaming with the voices of their past victims!", playerPos, radius);
+				else
+					player.warcryArmorBuff = true;
+					player:HandleNeed("corruption", 20);
+
+					if player:GetGender() == GENDER_MALE then
+						player:EmitSound("rgs3/warcries/sol_orthodoxy_male_warcry"..math.random(1, 3)..".mp3", 100, math.random(90, 105));
+					else
+						player:EmitSound("rgs3/warcries/sol_orthodoxy_female_warcry"..math.random(1, 2)..".mp3", 100, math.random(90, 105));
+					end
+
+					timer.Create("WarcryArmorBuffTimer_" .. player:EntIndex(), 20, 1, function()
+						if (IsValid(player)) then
+							player.warcryArmorBuff = false
+						end
+ 					end)
+
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a hateful warcry, filled with self-hatred!", playerPos, radius);
 				end
 				
 				if player_has_fearsome_wolf or player_has_daring_trout then
