@@ -135,6 +135,10 @@ function cwBeliefs:AddEntityOutlines(outlines)
 					end
 				end
 
+				if (v:GetSharedVar("whiteBanner")) then
+					self:DrawPlayerOutline(v, outlines, color_white)
+				end
+
 				if isCOS or self:HasBelief("embrace_the_darkness") then
 					if v:GetSharedVar("yellowBanner") == true then
 						if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= bannerDist) then
@@ -158,6 +162,12 @@ function cwBeliefs:AddEntityOutlines(outlines)
 				end
 			end;
 		end;
+	else
+		for i, v in ipairs(_player.GetAll()) do
+			if (v:GetSharedVar("whiteBanner")) then
+				self:DrawPlayerOutline(v, outlines, color_white)
+			end
+		end
 	end
 	
 	if cwSenses and self:HasBelief("the_black_sea") then

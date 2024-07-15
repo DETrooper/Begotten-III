@@ -559,6 +559,14 @@ function cwRituals:PlayerCharacterLoaded(player)
 		end
 	end
 	
+	if player:GetSharedVar("whiteBanner") == true then
+		player:SetSharedVar("whiteBanner", false);
+
+		if timer.Exists("whiteBannerTimer_"..entIndex) then
+			timer.Remove("whiteBannerTimer_"..entIndex);
+		end
+	end
+
 	if player:GetSharedVar("powderheelActive") then
 		player:SetSharedVar("powderheelActive", false);
 		
@@ -851,6 +859,14 @@ function cwRituals:PlayerDeath(player)
 			
 			if timer.Exists("YellowBannerTimer_"..entIndex) then
 				timer.Remove("YellowBannerTimer_"..entIndex);
+			end
+		end
+		
+		if player:GetSharedVar("whiteBanner") == true then
+			player:SetSharedVar("whiteBanner", false);
+		
+			if timer.Exists("whiteBannerTimer_"..entIndex) then
+				timer.Remove("whiteBannerTimer_"..entIndex);
 			end
 		end
 		

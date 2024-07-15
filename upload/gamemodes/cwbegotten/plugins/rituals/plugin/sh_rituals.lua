@@ -61,6 +61,71 @@ RITUAL = cwRituals.rituals:New("yellow_banner_of_quelling");
 	end;
 RITUAL:Register()
 
+RITUAL = cwRituals.rituals:New("the_white_banner");
+	RITUAL.name = "(T3) White Banner";
+	RITUAL.description = "A special rite of the Knights of Sol, invented during the campaign of Lord Maximus. Spirits fuel the powers of those who are faithful to the Light.";
+	RITUAL.onerequiredbelief = {"emissary"};
+
+	RITUAL.requirements = {"purifying_stone", "holy_spirit", "up_catalyst"};
+	RITUAL.corruptionCost = 25;
+	RITUAL.ritualTime = 10;
+	RITUAL.experience = 75;
+
+	function RITUAL:OnPerformed(player)
+		local timerID = "whiteBannerTimer_" .. player:EntIndex()
+		player:SetSharedVar("whiteBanner", true);
+
+		timer.Create(timerID, 5, 60, function()
+			if IsValid(player) then
+				local staminaToGive = 20;
+
+				if (cwWeather.weather == "ash") then
+					local lastZone = player:GetCharacterData("LastZone");
+					local zoneTable = zones:FindByID(lastZone);
+
+					if zoneTable and zoneTable.hasWeather and cwWeather:IsOutside(player:EyePos()) then
+						staminaToGive = 10;
+					end
+				end
+
+				for k, v in pairs(ents.FindInSphere(player:GetPos(), config.Get("talk_radius"):Get() * 2)) do
+					if (v:IsPlayer() and v:GetFaith() == "Faith of the Light") then
+						v:SetHealth(math.min(v:Health() + 2, v:GetMaxHealth()));
+						v:ModifyBloodLevel(50);
+
+						local staminaToGive2 = staminaToGive
+						if (v:GetNWBool("Guardening") == true or v:wOSIsRolling()) then
+							staminaToGive2 = 0;
+						elseif (staminaToGive2 ~= 10 and
+							(v:GetActiveWeapon().Base == "begotten_firearm_base" or
+							v:GetCharmEquipped("boot_contortionist"))
+						) then
+							staminaToGive2 = 10;
+						end
+
+						if (staminaToGive2 > 0) then
+							v:HandleStamina(staminaToGive2);
+						end
+					end
+				end
+
+				if (timer.RepsLeft(timerID) == 0) then
+					player:SetSharedVar("whiteBanner", false);
+					Clockwork.hint:Send(player, "The 'White Banner' ritual has worn off...", 10, Color(175, 100, 100), true, true);
+				end
+			else
+				timer.Remove(timerID)
+			end
+		end);
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+	end;
+	function RITUAL:EndRitual(player)
+	end;
+RITUAL:Register()
+
 RITUAL = cwRituals.rituals:New("xolotl_catalyst");
 	RITUAL.name = "(T2) Xolotl Catalyst Rite";
 	RITUAL.description = "Energy harnessed into stone. It could be used for something greater. Performing this ritual summons a Xolotl Catalyst item. Incurs 5 corruption.";
