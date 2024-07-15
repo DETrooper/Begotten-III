@@ -680,6 +680,8 @@ function Schema:GetPostProgressBarInfo()
 			return {text = "You are erecting a siege ladder.", percentage = percentage, flash = percentage > 75};
 		elseif (action == "bloodTest") then
 			return {text = "You are testing someone's blood for corruption. Click to cancel.", percentage = percentage, flash = percentage > 75};
+		elseif (action == "helljaunting") then
+			return {text = "You are helljaunting away.", percentage = percentage, flash = percentage > 75};
 		end;
 	end;
 end;

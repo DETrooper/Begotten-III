@@ -8,6 +8,7 @@ function cwMelee:DoFreezeEffect(target, attacker, duration)
 	if (target:GetNWBool("bliz_frozen")) then return end
 
 	if (target:IsNPC() or target:IsPlayer()) then
+		Clockwork.player:SetAction(target)
 		target:SetNWBool( "bliz_frozen", true )
 		
 		local dps = ents.Create( "dmg_freezing" )

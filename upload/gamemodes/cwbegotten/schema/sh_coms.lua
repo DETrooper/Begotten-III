@@ -2160,7 +2160,15 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 						sound.Play("misc/summon.wav", destination, 100, 100);
 						player.teleporting = true;
 						
-						timer.Create("summonplayer_"..tostring(player:EntIndex()), 0.75, 1, function()
+						local summonTime = 0.75
+						local freezeLevel = player:GetNWInt("freeze")
+
+						if (freezeLevel > 50) then
+							summonTime = summonTime + (summonTime * ((freezeLevel - 50) / 50))
+						end
+
+						
+						Clockwork.player:SetAction(player, "helljaunting", summonTime, 999, function()
 							if IsValid(player) then
 								player.teleporting = false;
 								
@@ -2169,6 +2177,7 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 								end
 								
 								if player:Alive() then
+									player:HandleNeed("corruption", 50);
 									local target = player.cwHoldingEnt;
 								
 									Clockwork.player:SetSafePosition(player, destination);
@@ -2200,7 +2209,7 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 												phys:Wake()
 												phys:SetPos(newPos)
 											end
-											
+
 											timer.Simple(1, function()
 												if IsValid(ragdollPlayer) then
 													ragdollPlayer:GodDisable();
@@ -2218,16 +2227,18 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 						
 						Schema:EasyText(player, "red", "You begin to helljaunt away!");
 						
+					--[[
 						timer.Simple(1, function()
 							if IsValid(player) and player:Alive() then
 								--if player:GetSubfaction() == "Philimaxio" then
 									-- Philimaxio get their corruption doubled, but to double 50 would be lethal so I'm exempting helljaunt corruption.
 									--player:HandleNeed("corruption", 25);
 								--else
-									player:HandleNeed("corruption", 50);
+								--	player:HandleNeed("corruption", 50);
 								--end
 							end
 						end);
+					]]
 					else
 						Schema:EasyText(player, "peru", "You cannot helljaunt for another "..nextTeleport.." seconds!");
 					end
