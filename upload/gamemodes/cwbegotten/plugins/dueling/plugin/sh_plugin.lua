@@ -19,14 +19,14 @@ local COMMAND = Clockwork.command:New("GetDuelDebug");
 		
 		for i = 1, #cwDueling.playersInMatchmaking do
 			if IsValid(cwDueling.playersInMatchmaking[i]) then
-				print(tostring(i)..") "..cwDueling.playersInMatchmaking[i]:Name().." | Statue: "..tostring(cwDueling.playersInMatchmaking[i].duelStatue));
+				print(tostring(i)..") "..cwDueling.playersInMatchmaking[i]:Name().." | Statue: "..tostring(cwDueling.playersInMatchmaking[i].duelData.duelStatue));
 			end
 		end
 		
 		print(" ");
 		print("----- DUEL ARENAS -----")
 		
-		for k, v in pairs(DUELING_ARENAS) do
+		for k, v in pairs(cwDueling.arenas) do
 			printp("DUEL ARENA: "..k);
 		
 			if v.duelingPlayer1 and IsValid(v.duelingPlayer1) then

@@ -85,7 +85,7 @@ local ITEM = item.New(nil, true);
 				player:EmitSound(weaponItem.reloadSounds[1]);
 			
 				for i = 2, #weaponItem.reloadSounds do
-					timer.Simple(consumeTime * ((i - 1) / #weaponItem.reloadSounds), function()
+					timer.Create(player:EntIndex().."reload"..i, consumeTime * ((i - 1) / #weaponItem.reloadSounds), 1, function()
 						if IsValid(player) and Clockwork.player:GetAction(player) == "reloading" then
 							player:EmitSound(weaponItem.reloadSounds[i]);
 						end
@@ -103,6 +103,11 @@ local ITEM = item.New(nil, true);
 				itemEntity.beingUsed = true;
 				player.itemUsing = itemEntity;
 			end
+			
+			player:SetLocalVar("cwProgressBarVerb", weaponItem.name);
+			player:SetLocalVar("cwProgressBarItem", self.name);
+			
+			player.lastLoadedShot = self.uniqueID;
 			
 			Clockwork.player:SetAction(player, "reloading", consumeTime, nil, function()
 				if IsValid(player) and weaponItem then

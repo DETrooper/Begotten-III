@@ -146,27 +146,7 @@ function SWEP:Deploy()
 			local weaponItem = Clockwork.item:GetByWeapon(self);
 			
 			if weaponItem then
-				if weaponItem.canUseShields then
-					local shieldItem = self.Owner:GetShieldEquipped();
-					
-					if (shieldItem) then
-						for i, v in ipairs(shieldItem.slots) do
-							if v then
-								local slot = self.Owner.equipmentSlots[v];
-								
-								if slot then
-									if slot.weaponClass == self:GetClass() then
-										self:EquipShield(shieldItem.uniqueID);
-									end
-									
-									break;
-								end
-							end
-						end
-					end
-				end
-				
-				if self:GetNWString("activeShield"):len() <= 0 and weaponItem.canUseOffhand then
+				if weaponItem.canUseOffhand then
 					for i, v in ipairs(weaponItem.slots) do
 						if v then
 							local slot = self.Owner.equipmentSlots[v];
@@ -179,6 +159,26 @@ function SWEP:Deploy()
 								end
 
 								break;
+							end
+						end
+					end
+				end
+				
+				if self:GetNWString("activeOffhand"):len() <= 0 and weaponItem.canUseShields then
+					local shieldItem = self.Owner:GetShieldEquipped();
+					
+					if (shieldItem) then
+						for i, v in ipairs(shieldItem.slots) do
+							if v then
+								local slot = self.Owner.equipmentSlots[v];
+								
+								if slot then
+									if slot.weaponClass == self:GetClass() then
+										self:EquipShield(shieldItem.uniqueID);
+										
+										break;
+									end
+								end
 							end
 						end
 					end
@@ -199,7 +199,7 @@ function SWEP:Deploy()
 	self:SendWeaponAnim( ACT_VM_DRAW )
 	self:SetNextPrimaryFire(0)
 	self:SetNextSecondaryFire(0)
-	self:SetHoldType(self.realHoldType)
+	self:SetHoldType(self:GetHoldtypeOverride())
 	self.Primary.Cone = self.DefaultCone
 	--self.Weapon:SetNWInt("Reloading", CurTime() + self:SequenceDuration() )
 	self.isAttacking = false;
@@ -229,10 +229,20 @@ end
 function SWEP:Hitscan()
 	local attacktable = GetTable(self.AttackTable);
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable);
+	local isThrusting = self.Owner:GetNWBool("ThrustStance");
+	local meleerange;
+	
+	if !isThrusting and self.isJavelin then return false end;
+	
+	if isThrusting and attacktable["altmeleerange"] then
+		meleerange = attacktable["altmeleerange"];
+	else
+		meleerange = attacktable["meleerange"] or 1;
+	end
 	
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
-		endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (attacktable["meleerange"]) / 9),
+		endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (meleerange) / 9),
 		filter = self.Owner,
 		mask = MASK_SHOT_HULL
 	} )
@@ -247,7 +257,7 @@ function SWEP:Hitscan()
 		bullet.Tracer = 0
 		bullet.Force  = 2
 		bullet.Hullsize = 0
-		bullet.Distance = (attacktable["meleerange"] / 9)
+		bullet.Distance = (meleerange / 9)
 		bullet.Damage = 0;
 	
 		bullet.Callback = function(attacker, tr, dmginfo)
@@ -392,7 +402,13 @@ function SWEP:CanPrimaryAttack()
 		end
 	end
 	
-	local attackCost = attacktable["takeammo"];
+	local attackCost = 1;
+	
+	if self.Owner:GetNWBool("ThrustStance") and attacktable["alttakeammo"] then
+		attackCost = attacktable["alttakeammo"];
+	else
+		attackCost = attacktable["takeammo"];
+	end
 	
 	if cwMedicalSystem then
 		local injuries = {};
@@ -465,6 +481,7 @@ function SWEP:PrimaryAttack()
 		hook.Run("PlayerAttacks", owner);
 	end
 	
+	local bAttack = true;
 	local bParry = owner:GetNWBool("ParrySucess");
 	local thrustOverride = false;
 
@@ -548,17 +565,14 @@ function SWEP:PrimaryAttack()
 			end
 		else
 			if self.HandleThrustAttack and owner:GetNWBool("ThrustStance") == true and !owner:GetNWBool("Riposting") then
-				self:HandleThrustAttack()
+				if self:HandleThrustAttack() ~= false then bAttack = true end;
 			else
-				self:HandlePrimaryAttack()
+				if self:HandlePrimaryAttack() ~= false then bAttack = true end;
 			end
 		end
 	end
-
-	local rnda = self.Primary.Recoil * 1
-	local rndb = self.Primary.Recoil * math.random(-1, 1)
 	
-	if SERVER and self:IsValid() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then 
+	if SERVER and bAttack and self:IsValid() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then 
 		owner:SetNWBool( "MelAttacking", true )
 		
 		self.HolsterDelay = (curTime + strikeTime)
@@ -581,22 +595,24 @@ function SWEP:PrimaryAttack()
 					end
 				
 					if owner:IsPlayer() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then
-						if self.Category ~= "(Begotten) Javelin" then
-							if !owner:GetNWBool("ParrySucess", false) and !owner:GetNWBool("Guardening", false) then
-								self:Hitscan(); -- For bullet holes.
-								owner:LagCompensation(true);
+						if !owner:GetNWBool("ParrySucess", false) and !owner:GetNWBool("Guardening", false) then
+							self:Hitscan(); -- For bullet holes.
+							owner:LagCompensation(true);
+						
+							local pos = owner:GetShootPos();
+							local aimVector = owner:GetAimVector();
+							local meleeArc = attacktable["meleearc"] or 25;
+							local meleeRange = (attacktable["meleerange"] or 1) / 10;
+							local hitsAllowed = self.MultiHit or 1;
+							local hitEntities = {};
 							
-								local pos = owner:GetShootPos();
-								local aimVector = owner:GetAimVector();
-								local meleeArc = attacktable["meleearc"] or 25;
-								local meleeRange = attacktable["meleerange"] / 10;
-								local hitsAllowed = self.MultiHit or 1;
-								local hitEntities = {};
-								
-								if !bParry and (stance == "thrust_swing" or thrustOverride) then
-									meleeArc = attacktable["altmeleearc"] or attacktable["meleearc"] or 25;
-								
-									if attacktable.canaltattack then
+							if !bParry and (stance == "thrust_swing" or thrustOverride) then
+								meleeArc = attacktable["altmeleearc"] or attacktable["meleearc"] or 25;
+							
+								if attacktable.canaltattack then
+									if attacktable.altmeleerange then
+										meleeRange = attacktable.altmeleerange / 10;
+									else
 										if self.CanSwipeAttack then
 											meleeRange = meleeRange * 0.8
 										else
@@ -604,80 +620,84 @@ function SWEP:PrimaryAttack()
 										end
 									end
 								end
+							end
 
-								local tr = util.TraceLine({
-									start = pos,
-									endpos = pos + (aimVector * meleeRange),
-									mask = MASK_SOLID,
-									filter = owner
-								})
-								
-								if tr.Hit then
-									if IsValid(tr.Entity) then
-										if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
-											table.insert(hitEntities, tr.Entity);
-										else
-											hitsAllowed = 0;
-										end
-											
-										if bParry and tr.Entity:GetNWBool("Parried") and tr.Entity == owner.parryTarget then
-											self:HandleHit(tr.Entity, tr.HitPos, "parry_swing");
-										else
-											self:HandleHit(tr.Entity, tr.HitPos, stance);
-										end
+							local tr = util.TraceLine({
+								start = pos,
+								endpos = pos + (aimVector * meleeRange),
+								mask = MASK_SOLID,
+								filter = owner
+							})
+							
+							if tr.Hit then
+								if IsValid(tr.Entity) then
+									if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
+										table.insert(hitEntities, tr.Entity);
+									else
+										hitsAllowed = 0;
+									end
+										
+									if bParry and tr.Entity:GetNWBool("Parried") and tr.Entity == owner.parryTarget then
+										self:HandleHit(tr.Entity, tr.HitPos, "parry_swing");
+									else
+										self:HandleHit(tr.Entity, tr.HitPos, stance);
 									end
 								end
-									
-								if !tr.Hit or #hitEntities < hitsAllowed then
-									for i = 1, meleeArc - 1 do
-										local newAimVector = Vector(aimVector);
-									
-										if (i % 2 == 0) then
-											-- If even go left.
-											newAimVector:Rotate(Angle(0, math.Round(i / 2), 0));
-										else
-											-- If odd go right.
-											newAimVector:Rotate(Angle(0, -math.Round(i / 2), 0));
-										end
+							end
+								
+							if !tr.Hit or #hitEntities < hitsAllowed then
+								for i = 1, meleeArc - 1 do
+									local newAimVector = Vector(aimVector);
+								
+									if (i % 2 == 0) then
+										-- If even go left.
+										newAimVector:Rotate(Angle(0, math.Round(i / 2), 0));
+									else
+										-- If odd go right.
+										newAimVector:Rotate(Angle(0, -math.Round(i / 2), 0));
+									end
 
-										local tr2 = util.TraceLine({
-											start = pos,
-											endpos = pos + (newAimVector * meleeRange),
-											mask = MASK_SOLID,
-											filter = owner
-										})
-										
-										if tr2.Hit then
-											if IsValid(tr2.Entity) and !table.HasValue(hitEntities, tr2.Entity) then
-												if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
-													table.insert(hitEntities, tr2.Entity);
-													
-													if bParry and tr2.Entity:GetNWBool("Parried") and tr2.Entity == owner.parryTarget then
-														self:HandleHit(tr2.Entity, tr2.HitPos, "parry_swing", #hitEntities);
-													else
-														self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities);
-													end
+									local tr2 = util.TraceLine({
+										start = pos,
+										endpos = pos + (newAimVector * meleeRange),
+										mask = MASK_SOLID,
+										filter = owner
+									})
+									
+									if tr2.Hit then
+										if IsValid(tr2.Entity) and !table.HasValue(hitEntities, tr2.Entity) then
+											if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
+												table.insert(hitEntities, tr2.Entity);
+												
+												if bParry and tr2.Entity:GetNWBool("Parried") and tr2.Entity == owner.parryTarget then
+													self:HandleHit(tr2.Entity, tr2.HitPos, "parry_swing", #hitEntities);
+												else
+													self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities);
 												end
 											end
-										
-											if #hitEntities >= hitsAllowed then
-												break;
-											end
+										end
+									
+										if #hitEntities >= hitsAllowed then
+											break;
 										end
 									end
 								end
-							
-								if offhandAttackTable then
-									if self.isAttacking then -- This can be set to false elsewhere and will abort the attack.
-										meleeArc = offhandAttackTable["meleearc"] or 25;
-										meleeRange = offhandAttackTable["meleerange"] / 10;
-										hitsAllowed = offhandWeapon.MultiHit or 1;
-										table.Empty(hitEntities);
-										
-										if stance == "thrust_swing" or thrustOverride then
-											meleeArc = offhandAttackTable["altmeleearc"] or offhandAttackTable["meleearc"] or 25;
-										
-											if offhandAttackTable.canaltattack then
+							end
+						
+							if offhandAttackTable then
+								if self.isAttacking then -- This can be set to false elsewhere and will abort the attack.
+									meleeArc = offhandAttackTable["meleearc"] or 25;
+									meleeRange = (offhandAttackTable["meleerange"] or 1) / 10;
+									hitsAllowed = offhandWeapon.MultiHit or 1;
+									table.Empty(hitEntities);
+									
+									if stance == "thrust_swing" or thrustOverride then
+										meleeArc = offhandAttackTable["altmeleearc"] or offhandAttackTable["meleearc"] or 25;
+									
+										if offhandAttackTable.canaltattack then
+											if offhandAttackTable.altmeleerange then
+												meleeRange = offhandAttackTable.altmeleerange;
+											else
 												if offhandWeapon.CanSwipeAttack then
 													meleeRange = meleeRange * 0.8
 												else
@@ -685,135 +705,135 @@ function SWEP:PrimaryAttack()
 												end
 											end
 										end
+									end
 
-										local tr = util.TraceLine({
-											start = pos,
-											endpos = pos + (aimVector * meleeRange),
-											mask = MASK_SOLID,
-											filter = owner
-										})
-										
-										if tr.Hit then
-											if IsValid(tr.Entity) then
-												if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
-													table.insert(hitEntities, tr.Entity);
-												else
-													hitsAllowed = 0;
-												end
+									local tr = util.TraceLine({
+										start = pos,
+										endpos = pos + (aimVector * meleeRange),
+										mask = MASK_SOLID,
+										filter = owner
+									})
+									
+									if tr.Hit then
+										if IsValid(tr.Entity) then
+											if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
+												table.insert(hitEntities, tr.Entity);
+											else
+												hitsAllowed = 0;
+											end
 
-												if bParry and tr.Entity:GetNWBool("Parried") and tr.Entity == owner.parryTarget then
-													self:HandleHit(tr.Entity, tr.HitPos, "parry_swing", nil, offhandWeapon, offhandAttackTable);
-												else
-													self:HandleHit(tr.Entity, tr.HitPos, stance, nil, offhandWeapon, offhandAttackTable);
-												end
+											if bParry and tr.Entity:GetNWBool("Parried") and tr.Entity == owner.parryTarget then
+												self:HandleHit(tr.Entity, tr.HitPos, "parry_swing", nil, offhandWeapon, offhandAttackTable);
+											else
+												self:HandleHit(tr.Entity, tr.HitPos, stance, nil, offhandWeapon, offhandAttackTable);
 											end
 										end
-											
-										if !tr.Hit or #hitEntities < hitsAllowed then
-											for i = 1, meleeArc - 1 do
-												local newAimVector = Vector(aimVector);
-											
-												if (i % 2 == 0) then
-													-- If even go left.
-													newAimVector:Rotate(Angle(0, math.Round(i / 2), 0));
-												else
-													-- If odd go right.
-													newAimVector:Rotate(Angle(0, -math.Round(i / 2), 0));
-												end
+									end
+										
+									if !tr.Hit or #hitEntities < hitsAllowed then
+										for i = 1, meleeArc - 1 do
+											local newAimVector = Vector(aimVector);
+										
+											if (i % 2 == 0) then
+												-- If even go left.
+												newAimVector:Rotate(Angle(0, math.Round(i / 2), 0));
+											else
+												-- If odd go right.
+												newAimVector:Rotate(Angle(0, -math.Round(i / 2), 0));
+											end
 
-												local tr2 = util.TraceLine({
-													start = pos,
-													endpos = pos + (newAimVector * meleeRange),
-													mask = MASK_SOLID,
-													filter = owner
-												})
-												
-												if tr2.Hit then
-													if IsValid(tr2.Entity) and !table.HasValue(hitEntities, tr2.Entity) then
-														if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
-															table.insert(hitEntities, tr2.Entity);
-															
-															if bParry and tr2.Entity:GetNWBool("Parried") and tr2.Entity == owner.parryTarget then
-																self:HandleHit(tr2.Entity, tr2.HitPos, "parry_swing", #hitEntities, offhandWeapon, offhandAttackTable);
-															else
-																self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities, offhandWeapon, offhandAttackTable);
-															end
+											local tr2 = util.TraceLine({
+												start = pos,
+												endpos = pos + (newAimVector * meleeRange),
+												mask = MASK_SOLID,
+												filter = owner
+											})
+											
+											if tr2.Hit then
+												if IsValid(tr2.Entity) and !table.HasValue(hitEntities, tr2.Entity) then
+													if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
+														table.insert(hitEntities, tr2.Entity);
+														
+														if bParry and tr2.Entity:GetNWBool("Parried") and tr2.Entity == owner.parryTarget then
+															self:HandleHit(tr2.Entity, tr2.HitPos, "parry_swing", #hitEntities, offhandWeapon, offhandAttackTable);
+														else
+															self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities, offhandWeapon, offhandAttackTable);
 														end
 													end
-												
-													if #hitEntities >= hitsAllowed then
-														break;
-													end
+												end
+											
+												if #hitEntities >= hitsAllowed then
+													break;
 												end
 											end
 										end
 									end
 								end
-								
-								owner:LagCompensation(false);
 							end
 							
-							if (owner:KeyDown(IN_ATTACK2)) then
-								if (!owner:KeyDown(IN_USE)) then
-									local activeWeapon = owner:GetActiveWeapon();
+							owner:LagCompensation(false);
+						end
+						
+						if (owner:KeyDown(IN_ATTACK2)) then
+							if (!owner:KeyDown(IN_USE)) then
+								local activeWeapon = owner:GetActiveWeapon();
 
-									if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
-										if (activeWeapon.IronSights == true) then
-											local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
-											local curTime = CurTime();
+								if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
+									if (activeWeapon.realIronSights == true) then
+										local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
+										local curTime = CurTime();
+										
+										if (loweredParryDebug < curTime) then
+											local blockTable;
 											
-											if (loweredParryDebug < curTime) then
-												local blockTable;
+											if activeWeapon:GetNWString("activeOffhand"):len() > 0 then
+												local offhandTable = weapons.GetStored(activeWeapon:GetNWString("activeOffhand"));
 												
-												if activeWeapon:GetNWString("activeOffhand"):len() > 0 then
-													local offhandTable = weapons.GetStored(activeWeapon:GetNWString("activeOffhand"));
-													
-													if offhandTable then
-														blockTable = GetDualTable(activeWeapon.realBlockTable, offhandTable.BlockTable);
-													else
-														blockTable = GetTable(activeWeapon.realBlockTable);
-													end
+												if offhandTable then
+													blockTable = GetDualTable(activeWeapon.realBlockTable, offhandTable.BlockTable);
 												else
 													blockTable = GetTable(activeWeapon.realBlockTable);
 												end
+											else
+												blockTable = GetTable(activeWeapon.realBlockTable);
+											end
+											
+											if blockTable then
+												local guardblockamount = blockTable["guardblockamount"];
 												
-												if blockTable then
-													local guardblockamount = blockTable["guardblockamount"];
+												if cwMedicalSystem then
+													local injuries = {};
 													
-													if cwMedicalSystem then
-														local injuries = {};
-														
-														if SERVER then
-															injuries = cwMedicalSystem:GetInjuries(owner);
-														else
-															injuries = Clockwork.Client.cwInjuries;
-														end
-														
-														if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
-														end
-														
-														if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
-														end
+													if SERVER then
+														injuries = cwMedicalSystem:GetInjuries(owner);
+													else
+														injuries = Clockwork.Client.cwInjuries;
 													end
 													
-													--if (owner:GetNWInt("meleeStamina", 100) >= guardblockamount and !owner:GetNWBool("Parried")) then
-													if (owner:GetNWInt("Stamina", 100) >= blockTable["guardblockamount"] and !owner:GetNWBool("Parried")) then
-														owner:SetNWBool("Guardening", true);
-														owner.beginBlockTransition = true;
-														activeWeapon.Primary.Cone = activeWeapon.IronCone;
-														activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
-													else
-														owner:CancelGuardening()
-													end;
+													if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+														guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+													end
+													
+													if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+														guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+													end
 												end
-											end;
-										else
-											owner:CancelGuardening();
+												
+												--if (owner:GetNWInt("meleeStamina", 100) >= guardblockamount and !owner:GetNWBool("Parried")) then
+												if (owner:GetNWInt("Stamina", 100) >= blockTable["guardblockamount"] and !owner:GetNWBool("Parried")) then
+													owner:SetNWBool("Guardening", true);
+													owner.beginBlockTransition = true;
+													activeWeapon.Primary.Cone = activeWeapon.IronCone;
+													activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
+												else
+													owner:CancelGuardening()
+												end;
+											end
 										end;
+									else
+										owner:CancelGuardening();
 									end;
-								end
+								end;
 							end
 						end
 					end
@@ -830,10 +850,29 @@ function SWEP:PrimaryAttack()
 
 	if (SERVER) then
 		--local max_poise = owner:GetNetVar("maxMeleeStamina");
-		local takeAmmo = attacktable["takeammo"];
+		local takeAmmo = attacktable["takeammo"] or 1;
+		local takeAmmoOffhand;
+		
+		if self.Owner:GetNWBool("ThrustStance") then
+			if attacktable["alttakeammo"] then
+				takeAmmo = attacktable["alttakeammo"];
+			end
+			
+			if offhandAttackTable then
+				if attacktable["alttakeammo"] then
+					takeAmmoOffhand = offhandAttackTable["alttakeammo"];
+				else
+					takeAmmoOffhand = offhandAttackTable["takeammo"];
+				end
+			end
+		else
+			if offhandAttackTable then
+				takeAmmoOffhand = offhandAttackTable["takeammo"];
+			end
+		end
 		
 		if offhandAttackTable then
-			takeAmmo = math.max(takeAmmo, offhandAttackTable["takeammo"]);
+			takeAmmo = math.max(takeAmmo + takeAmmoOffhand * 0.8);
 		end
 		
 		local attackCost = takeAmmo;
@@ -918,6 +957,10 @@ end
 		local damage = (attacktable["primarydamage"])
 		local damagetype = (attacktable["dmgtype"])
 		local stabilitydamage = (attacktable["stabilitydamage"]);
+
+		if self.Owner:GetNWBool("ThrustStance") and attacktable["altattackstabilitydamagemodifier"] then
+			stabilitydamage = stabilitydamage * attacktable["altattackstabilitydamagemodifier"];
+		end
 		
 		if self:GetNWString("activeOffhand"):len() > 0 then
 			damage = damage * 0.6;
@@ -2298,7 +2341,7 @@ function SWEP:SecondaryAttack()
 					local activeWeapon = ply:GetActiveWeapon();
 
 					if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
-						if (activeWeapon.IronSights == true) then
+						if (activeWeapon.realIronSights == true) then
 							local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
 							local curTime = CurTime();
 							
@@ -2365,7 +2408,7 @@ function SWEP:SecondaryAttack()
 					local activeWeapon = ply:GetActiveWeapon();
 
 					if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
-						if (activeWeapon.IronSights == true) then
+						if (activeWeapon.realIronSights == true) then
 							local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
 							local curTime = CurTime();
 							
@@ -2427,7 +2470,7 @@ function SWEP:SecondaryAttack()
 end
 	
 function SWEP:Equip()
-	self:SetHoldType(self.realHoldType)
+	self:SetHoldType(self:GetHoldtypeOverride())
 end	
 	
 function SWEP:OnRestore()
@@ -2586,7 +2629,7 @@ surface.CreateFont( "QuadFontSmall", {
 end
 
 function SWEP:ResetGestures(player)
-	if self.IronSights then
+	if self.realIronSights then
 		self:TriggerAnim2(player, self.realBlockAnim, 1);
 	end
 end
@@ -2646,7 +2689,7 @@ end
 
 function SWEP:EquipOffhand(weaponClass)
 	if self:GetNWString("activeShield"):len() > 0 then
-		return;
+		self:HolsterShield();
 	end
 
 	if SERVER then
@@ -2701,7 +2744,7 @@ function SWEP:EquipShield(uniqueID)
 		if IsValid(self.Owner) then
 			self.Owner:CancelGuardening();
 		end
-		
+
 		self:Initialize();
 	end
 end
@@ -2731,6 +2774,7 @@ function SWEP:Initialize()
 		if shieldTable then
 			local weaponTable = weapons.GetStored(self:GetClass());
 			
+			self.realIronSights = true;
 			self.realBlockAnim = shieldTable.blockanim;
 			self.realBlockTable = shieldTable;
 			self.realBlockTableOffhand = nil;
@@ -2758,6 +2802,7 @@ function SWEP:Initialize()
 		local weaponTable = weapons.GetStored(self:GetNWString("activeOffhand"));
 		
 		if weaponTable then
+			self.realIronSights = self.IronSights;
 			self.realBlockAnim = "a_dual_swords_block";
 			self.realBlockTable = GetTable(self.BlockTable);
 			self.realBlockTableOffhand = GetTable(weaponTable.BlockTable or self.BlockTable);
@@ -2777,7 +2822,8 @@ function SWEP:Initialize()
 	else
 		local weaponTable = weapons.GetStored(self:GetClass());
 		
-		self.realBlockAnim = self.BlockAnim;
+		self.realIronSights = self.IronSights;
+		self.realBlockAnim = self.BlockAnim or self.realBlockAnim;
 		self.realBlockTable = GetTable(self.BlockTable);
 		self.realBlockTableOffhand = nil;
 		self.realBlockSoundTable = self.BlockSoundTable;
@@ -2794,7 +2840,7 @@ function SWEP:Initialize()
 
 	self:InitFunc();
 	
-	if IsValid(self.Owner) and self.Owner:IsPlayer() then
+	if IsValid(self.Owner) and self.Owner:IsPlayer() and self.Owner:GetActiveWeapon() == self then
 		local vm = self.Owner:GetViewModel();
 		
 		if IsValid(vm) then
@@ -2816,8 +2862,6 @@ function SWEP:Initialize()
 	end
 	
 	self.RaiseSound = "cloth.wav";
-	
-	self:SetHoldType(self.realHoldType or self.HoldType);
 
 	if CLIENT then
 		local weaponTable = weapons.GetStored(self:GetClass());
@@ -2825,6 +2869,10 @@ function SWEP:Initialize()
 		self.VElements = table.FullCopy(weaponTable.VElements);
 		self.WElements = table.FullCopy(weaponTable.WElements);
 		self.ViewModelBoneMods = table.FullCopy(self.ViewModelBoneMods);
+		
+		if weaponTable.WElementsAlternate and self.stance == "thrust_swing" then
+			self.WElements = table.FullCopy(weaponTable.WElementsAlternate);
+		end;
 	
 		if !self.HasShield then
 			if self:GetNWString("activeShield"):len() > 0 then
@@ -2952,6 +3000,8 @@ function SWEP:Initialize()
 			end
 		end
 	end
+	
+	self:SetHoldType(self:GetHoldtypeOverride());
 end
 
 function SWEP:OnDrop()
@@ -2996,6 +3046,10 @@ function SWEP:OnRemove()
 	if CLIENT then
 		self:RemoveModels();
 	end
+end
+
+function SWEP:GetHoldtypeOverride()
+	return self.realHoldType or self.HoldType;
 end
 
 function SWEP:RemoveModels()

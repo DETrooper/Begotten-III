@@ -194,7 +194,7 @@ if SERVER then
 							
 					if Ent:IsPlayer() then
 						--Ent:TakePoise(poiseDamage);
-						Ent:TakeStamina(poiseDamage);
+						--Ent:TakeStamina(poiseDamage);
 						Ent:TakeStability(stabilityDamage);
 						self:TriggerAnim4(Ent, "a_shared_hit_0"..math.random(1, 3));
 					end

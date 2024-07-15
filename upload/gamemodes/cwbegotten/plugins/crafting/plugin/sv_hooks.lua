@@ -245,7 +245,7 @@ function cwRecipes:PlayerCanCraft(player, uniqueID, craftAmount)
 							end
 						end
 					
-						Schema:EasyText(player, "lightslategrey", "You require the '"..recipeTable.requiredBeliefsNiceNames[i].."' belief to craft this recipe!");
+						Schema:EasyText(player, "lightslategrey", "You require the '"..cwBeliefs:GetBeliefName(recipeTable.requiredBeliefs[i]).."' belief to craft this recipe!");
 						return false;
 					end
 				end
@@ -362,8 +362,8 @@ function cwRecipes:Craft(player, uniqueID, itemIDs, craftAmount)
 						local craftName = recipeTable.name..(craftAmount > 1 and " ("..craftAmount.."x)" or "");
 						
 						if (craftVerb != "") then
-							player:SetNWString("cwRecipesVerb", craftVerb);
-							player:SetNWString("cwRecipesName", craftName);
+							player:SetLocalVar("cwProgressBarVerb", craftVerb);
+							player:SetLocalVar("cwProgressBarItem", craftName);
 							
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins "..craftVerb.." a "..craftName..".", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 						end;
@@ -376,8 +376,8 @@ function cwRecipes:Craft(player, uniqueID, itemIDs, craftAmount)
 							if (IsValid(player)) then
 								recipeTable:Craft(player, itemIDs, false, craftAmount);
 								
-								player:SetNWString("cwRecipesVerb", nil);
-								player:SetNWString("cwRecipesName", nil);
+								player:SetLocalVar("cwProgressBarVerb", nil);
+								player:SetLocalVar("cwProgressBarItem", nil);
 								
 								if cwCharacterNeeds then
 									player:HandleNeed("hunger", 0.5 * craftAmount);

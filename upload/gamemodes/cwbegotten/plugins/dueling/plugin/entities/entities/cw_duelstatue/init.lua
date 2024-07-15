@@ -60,19 +60,23 @@ function ENT:Use(activator, caller)
 				end
 				
 				Clockwork.dermaRequest:RequestConfirmation(caller, "Duel", "Are you sure that you want to queue for a duel? Note that you will not lose progress or items upon death.", function()
+					local duelData = {};
+					
+					duelData.cachedPos = caller:GetPos();
+					duelData.cachedAngles = caller:GetAngles();
+					duelData.cachedHP = caller:Health();
+					duelData.duelStatue = self;
+					
+					caller.duelData = duelData;
+					
 					cwDueling:PlayerEntersMatchmaking(caller);
-					caller.cachedPos = caller:GetPos();
-					caller.cachedAngles = caller:GetAngles();
-					caller.cachedHP = caller:Health();
-					caller.duelStatue = self;
 				end);
 			else
 				Schema:EasyText(caller, "icon16/shield_go.png", "orange", "Exited Duel Matchmaking")
+				
 				cwDueling:PlayerExitsMatchmaking(caller);
-				caller.cachedPos = nil;
-				caller.cachedAngles = nil;
-				caller.cachedHP = nil;
-				caller.duelStatue = nil;
+				
+				caller.duelData = nil;
 			end;
 		end;
 	end;

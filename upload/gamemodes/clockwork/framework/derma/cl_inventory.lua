@@ -333,7 +333,7 @@ function PANEL:Rebuild()
 					end
 				end
 				
-				if v2.category == "Throwables" or v2.category == "Weapons" or v2.category == "Melee" or v2.category == "Shields" or v2.category == "Firearms" or v2.category == "Crossbows" or v2.category == "Javelins" or v2.category == "Lights" then
+				if v2.category == "Throwables" or v2.category == "Weapons" or v2.category == "Melee" or v2.category == "Shields" or v2.category == "Firearms" or v2.category == "Crossbows" or v2.category == "Throwables" or v2.category == "Lights" then
 					for i, slot in ipairs(slots) do
 						local slottedItem = Clockwork.Client.equipmentSlots[slot];
 						local offhandItem = Clockwork.Client.equipmentSlots[slot.."Offhand"];
@@ -544,7 +544,7 @@ function PANEL:Rebuild()
 							end
 						end
 						
-						if v2.category == "Melee" or v2.category == "Shields" or v2.category == "Weapons" or v2.category == "Firearms" or v2.category == "Crossbows" or v2.category == "Javelins" or v2.category == "Lights" then
+						if v2.category == "Melee" or v2.category == "Shields" or v2.category == "Weapons" or v2.category == "Firearms" or v2.category == "Crossbows" or v2.category == "Throwables" or v2.category == "Lights" then
 							inventoryIcon.spawnIcon:Droppable("weaponSlot");
 							
 							if v2.category == "Firearms" or v2.category == "Crossbows" then
@@ -723,7 +723,7 @@ function PANEL:Rebuild()
 						end
 					end
 					
-					if v2.category == "Melee" or v2.category == "Shields" or v2.category == "Weapons" or v2.category == "Firearms" or v2.category == "Crossbows"  or v2.category == "Javelins" then
+					if v2.category == "Melee" or v2.category == "Shields" or v2.category == "Weapons" or v2.category == "Firearms" or v2.category == "Crossbows"  or v2.category == "Throwables" then
 						inventoryIcon.spawnIcon:Droppable("weaponSlot");
 						
 						if v2.category == "Firearms" or v2.category == "Crossbows" then

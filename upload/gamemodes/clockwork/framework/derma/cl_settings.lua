@@ -77,16 +77,77 @@ function PANEL:Rebuild()
 			form:SetPadding(4);
 			
 			for k2, v2 in pairs(v.settings) do
+				local panel;
+			
 				if (v2.class == "numberSlider") then
 					panel = form:NumSlider(v2.text, v2.conVar, v2.minimum, v2.maximum, v2.decimals);
 					panel.Label:SetFont("begotsettingsfont2")
+					panel:SetTall(25)
 				elseif (v2.class == "multiChoice") then
-					panel = form:ComboBox(v2.text, v2.conVar);
-					panel:SetEditable(false);
+					panel = form:Help(v2.text);
+					panel:SetFont("begotsettingsfont2")
+					panel.convar = v2.conVar;
+					panel.options = {};
+					panel.Think = function(panel)
+						for i, v in ipairs(panel.options) do
+							local numValue = GetConVarNumber(v.Button.m_strConVar)
+							
+							if v.index == numValue then
+								if !v:GetChecked() then
+									v:SetChecked(true);
+								end
+							elseif v:GetChecked() then
+								v:SetChecked(false);
+								v:OnChange(false);
+								v:SetCookie("checked", false);
+							end
+						end
+					end
+					
+					for i, v3 in ipairs(v2.options) do
+						local checkBox = form:CheckBox(v3[1], v2.conVar);
+						
+						checkBox.index = i - 1;
+						checkBox:SetFont("begotsettingsfont2");
+						checkBox.Button:SetToolTip(v3[2]);
+						checkBox.Button.SetValue = function(button, val)
+							if (tonumber(val) == 0) then val = 0 end -- Tobool bugs out with "0.00"
+							val = tobool(val)
+
+							button:SetChecked(val)
+							button.m_bValue = val
+
+							button:OnChange(val)
+
+							if (val) then val = "1" else val = "0" end
+							
+							if val == "1" then
+								button:ConVarChanged(tostring(button:GetParent().index));
+							else
+								button:ConVarChanged("0");
+							end
+							
+							button:SetCookie("checked", val)
+						end
+						
+						checkBox.Button.ConVarStringThink = function()
+
+						end
+
+						checkBox.Button.ConVarNumberThink = function()
+
+						end
+						
+						checkBox:SetIndent(16);
+						
+						table.insert(panel.options, checkBox);
+					end;
+					
+					--[[panel = form:ComboBox(v2.text, v2.conVar);
 					
 					for k3, v3 in pairs(v2.options) do
 						panel:AddChoice(v3);
-					end;
+					end;]]--
 				elseif (v2.class == "numberWang") then
 					panel = form:NumberWang(v2.text, v2.conVar, v2.minimum, v2.maximum, v2.decimals);
 				elseif (v2.class == "textEntry") then

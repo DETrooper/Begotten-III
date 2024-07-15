@@ -55,7 +55,7 @@ if SERVER then
 		local phys = self:GetPhysicsObject()
 		--self.NextThink = CurTime() +  1
 		
-		if IsValid(self.Owner) and self.Owner:GetActiveWeapon().Category == "(Begotten) Javelin" then
+		if IsValid(self.Owner) and self.Owner:GetActiveWeapon().isJavelin then
 			if !self.deflected then
 				self.AttackTable = GetTable(self.Owner:GetActiveWeapon().AttackTable);
 				self.itemTable = item.GetByWeapon(self.Owner:GetActiveWeapon());
@@ -72,7 +72,7 @@ if SERVER then
 
 		if (phys:IsValid()) then
 			phys:Wake()
-			phys:SetMass(10)
+			phys:SetMass(2)
 		end
 		
 		self.cachedStartPos = self:GetPos();
@@ -95,8 +95,6 @@ if SERVER then
 		Sound("meleesounds/damage1.wav.mp3"),
 		Sound("meleesounds/damage2.wav.mp3"),
 		Sound("meleesounds/damage3.wav.mp3")}
-
-		self:GetPhysicsObject():SetMass(2)	
 
 		--self:SetUseType(SIMPLE_USE)
 		self.CanTool = false
@@ -285,7 +283,7 @@ if SERVER then
 							
 					if Ent:IsPlayer() then
 						--Ent:TakePoise(poiseDamage);
-						Ent:TakeStamina(poiseDamage);
+						--Ent:TakeStamina(poiseDamage);
 						Ent:TakeStability(stabilityDamage);
 						self:TriggerAnim4(Ent, "a_shared_hit_0"..math.random(1, 3));
 					end
@@ -342,7 +340,7 @@ if SERVER then
 								entity:Spawn();
 								entity:SetAngles(self:GetAngles());
 								self:StopSound("weapons/throw_swing_03.wav");
-								entity:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
+								entity:EmitSound(self.FleshHit[math.random(1, #self.FleshHit)], 90);
 								Clockwork.entity:Decay(entity, 300);
 								entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
 								
@@ -445,7 +443,7 @@ if SERVER then
 								entity:Spawn();
 								entity:SetAngles(self:GetAngles());
 								self:StopSound("weapons/throw_swing_03.wav");
-								entity:EmitSound(self.FleshHit[math.random(1, #self.FleshHit)], 90)
+								entity:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
 								Clockwork.entity:Decay(entity, 300);
 								entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
 								

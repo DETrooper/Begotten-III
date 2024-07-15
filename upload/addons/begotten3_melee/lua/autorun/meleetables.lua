@@ -215,6 +215,17 @@ AttackSoundTables.BluntMetalSpearAttackSoundTable = {
 	["drawsound"] = {"draw/skyrim_bow_draw.mp3"},
 };
 
+AttackSoundTables.BluntMetalJavelinMeleeAttackSoundTable = {
+	["primarysound"] = {"weapons/Pierce_01.wav", "weapons/Pierce_03.wav", "weapons/Pierce_05.wav"},
+	["altsound"] = {"weapons/Pierce_01.wav", "weapons/Pierce_03.wav", "weapons/Pierce_05.wav"},
+	["hitbody"] = {"weapons/Blunt_01.wav", "weapons/Blunt_02.wav", "weapons/Blunt_03.wav", "weapons/Blunt_04.wav", "weapons/Blunt_05.wav"},
+	["althitbody"] = {"weapons/Blunt_01.wav", "weapons/Blunt_02.wav", "weapons/Blunt_03.wav", "weapons/Blunt_04.wav", "weapons/Blunt_05.wav"},
+	["hitworld"] = {"weapons/PierceStone_01.wav", "weapons/PierceStone_02.wav", "weapons/PierceStone_03.wav", "weapons/PierceStone_04.wav"},
+	["criticalswing"] = {"meleesounds/swing-sword2.wav.mp3"},
+	["parryswing"] = {"weapons/Medium_01.wav", "weapons/Medium_02.wav", "weapons/Medium_03.wav", "weapons/Medium_04.wav", "weapons/Medium_05.wav"},
+	["drawsound"] = {"draw/skyrim_bow_draw.mp3"},
+};
+
 AttackSoundTables.MetalSpearAttackSoundTable = {
 	["primarysound"] = {"weapons/Pierce_01.wav", "weapons/Pierce_03.wav", "weapons/Pierce_05.wav"},
 	["altsound"] = {"weapons/Large_01.wav", "weapons/Large_02.wav", "weapons/Large_03.wav", "weapons/Large_04.wav", "weapons/Large_05.wav", "weapons/Large_06.wav", "weapons/Large_07.wav", "weapons/Large_08.wav", "weapons/Large_09.wav", "weapons/Large_10.wav"},
@@ -226,11 +237,33 @@ AttackSoundTables.MetalSpearAttackSoundTable = {
 	["drawsound"] = {"draw/skyrim_bow_draw.mp3"},
 };
 
+AttackSoundTables.MetalJavelinMeleeAttackSoundTable = {
+	["primarysound"] = {"weapons/Pierce_01.wav", "weapons/Pierce_03.wav", "weapons/Pierce_05.wav"},
+	["altsound"] = {"weapons/Pierce_01.wav", "weapons/Pierce_03.wav", "weapons/Pierce_05.wav"},
+	["hitbody"] = {"weapons/Pierce_02.wav", "weapons/Pierce_04.wav", "weapons/Pierce_06.wav", "weapons/Pierce_07.wav", "weapons/Pierce_08.wav", "weapons/Pierce_09.wav"},
+	["althitbody"] = {"weapons/Pierce_02.wav", "weapons/Pierce_04.wav", "weapons/Pierce_06.wav", "weapons/Pierce_07.wav", "weapons/Pierce_08.wav", "weapons/Pierce_09.wav"},
+	["hitworld"] = {"weapons/PierceStone_01.wav", "weapons/PierceStone_02.wav", "weapons/PierceStone_03.wav", "weapons/PierceStone_04.wav"},
+	["criticalswing"] = {"meleesounds/swing-sword2.wav.mp3"},
+	["parryswing"] = {"weapons/Medium_01.wav", "weapons/Medium_02.wav", "weapons/Medium_03.wav", "weapons/Medium_04.wav", "weapons/Medium_05.wav"},
+	["drawsound"] = {"draw/skyrim_bow_draw.mp3"},
+};
+
 AttackSoundTables.MetalDaggerAttackSoundTable = {
 	["primarysound"] = {"weapons/Pierce_01.wav", "weapons/Pierce_03.wav", "weapons/Pierce_05.wav"},
 	["altsound"] = {"vo/k_lab/kl_fiddlesticks.wav"},
 	["hitbody"] = {"weapons/Pierce_02.wav", "weapons/Pierce_04.wav", "weapons/Pierce_06.wav", "weapons/Pierce_07.wav", "weapons/Pierce_08.wav", "weapons/Pierce_09.wav"},
 	["althitbody"] = {"vo/k_lab/kl_fiddlesticks.wav"},
+	["hitworld"] = {"weapons/PierceStone_01.wav", "weapons/PierceStone_02.wav", "weapons/PierceStone_03.wav", "weapons/PierceStone_04.wav"},
+	["criticalswing"] = {"meleesounds/swing-sword2.wav.mp3"},
+	["parryswing"] = {"weapons/Medium_01.wav", "weapons/Medium_02.wav", "weapons/Medium_03.wav", "weapons/Medium_04.wav", "weapons/Medium_05.wav"},
+	["drawsound"] = {"draw/skyrim_waraxe_draw1.mp3"},
+};
+
+AttackSoundTables.MetalThrowingDaggerMeleeAttackSoundTable = {
+	["primarysound"] = {"weapons/Pierce_01.wav", "weapons/Pierce_03.wav", "weapons/Pierce_05.wav"},
+	["altsound"] = {"weapons/Pierce_01.wav", "weapons/Pierce_03.wav", "weapons/Pierce_05.wav"},
+	["hitbody"] = {"weapons/Pierce_02.wav", "weapons/Pierce_04.wav", "weapons/Pierce_06.wav", "weapons/Pierce_07.wav", "weapons/Pierce_08.wav", "weapons/Pierce_09.wav"},
+	["althitbody"] = {"weapons/Pierce_02.wav", "weapons/Pierce_04.wav", "weapons/Pierce_06.wav", "weapons/Pierce_07.wav", "weapons/Pierce_08.wav", "weapons/Pierce_09.wav"},
 	["hitworld"] = {"weapons/PierceStone_01.wav", "weapons/PierceStone_02.wav", "weapons/PierceStone_03.wav", "weapons/PierceStone_04.wav"},
 	["criticalswing"] = {"meleesounds/swing-sword2.wav.mp3"},
 	["parryswing"] = {"weapons/Medium_01.wav", "weapons/Medium_02.wav", "weapons/Medium_03.wav", "weapons/Medium_04.wav", "weapons/Medium_05.wav"},
@@ -297,12 +330,15 @@ AddSoundTable("MetalBluntPolearmAttackSoundTable", AttackSoundTables.MetalBluntP
 AddSoundTable("MediumMetalBluntAttackSoundTable", AttackSoundTables.MediumMetalBluntAttackSoundTable)
 AddSoundTable("SmallMetalBluntAttackSoundTable", AttackSoundTables.SmallMetalBluntAttackSoundTable)
 AddSoundTable("MetalSpearAttackSoundTable", AttackSoundTables.MetalSpearAttackSoundTable)
+AddSoundTable("MetalJavelinMeleeAttackSoundTable", AttackSoundTables.MetalJavelinMeleeAttackSoundTable)
 AddSoundTable("MetalDaggerAttackSoundTable", AttackSoundTables.MetalDaggerAttackSoundTable)
+AddSoundTable("MetalThrowingDaggerMeleeAttackSoundTable", AttackSoundTables.MetalThrowingDaggerMeleeAttackSoundTable)
 AddSoundTable("MetalClawsAttackSoundTable", AttackSoundTables.MetalClawsAttackSoundTable)
 AddSoundTable("DualSwordsAttackSoundTable", AttackSoundTables.DualSwordsAttackSoundTable)
 AddSoundTable("BellHammerAttackSoundTable", AttackSoundTables.BellHammerAttackSoundTable)
 AddSoundTable("HeavyStoneAttackSoundTable", AttackSoundTables.HeavyStoneAttackSoundTable)
 AddSoundTable("BluntMetalSpearAttackSoundTable", AttackSoundTables.BluntMetalSpearAttackSoundTable)
+AddSoundTable("BluntMetalJavelinMeleeAttackSoundTable", AttackSoundTables.BluntMetalJavelinMeleeAttackSoundTable)
 AddSoundTable("MaximusWrathAttackSoundTable", AttackSoundTables.MaximusWrathAttackSoundTable)
 
 -- Block Sound Tables
@@ -517,41 +553,98 @@ AttackTables.DefaultAttackTable = {
 };
 
 -- Projectiles
-
 AttackTables.IronJavelinAttackTable = {
 	["primarydamage"] = 100,
 	["dmgtype"] = DMG_VEHICLE,
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.4,
+	["altattackpoisedamagemodifier"] = 0.1,
+	["altattackstabilitydamagemodifier"] = 0,
+	["altmeleearc"] = 15,
+	["altmeleerange"] = 1050,
+	["alttakeammo"] = 3,
 	["armorpiercing"] = 50,
 	["poisedamage"] = 50,
 	["stabilitydamage"] = 60,
 	["takeammo"] = 20,
-	["delay"] = 0.5,
-	["striketime"] = 0.6,
-	["punchstrength"] = Angle(0,4,0),
+	["delay"] = 0.9,
+	["striketime"] = 0.4,
+	["punchstrength"] = Angle(0,1,0),
 };
 
 AttackTables.PilumAttackTable = {
 	["primarydamage"] = 70,
 	["dmgtype"] = DMG_VEHICLE,
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.4,
+	["altattackpoisedamagemodifier"] = 0.05,
+	["altattackstabilitydamagemodifier"] = 0,
+	["altmeleearc"] = 15,
+	["altmeleerange"] = 1200,
+	["alttakeammo"] = 3,
 	["armorpiercing"] = 80,
 	["poisedamage"] = 125,
 	["stabilitydamage"] = 75,
 	["takeammo"] = 25,
-	["delay"] = 0.5,
-	["striketime"] = 0.6,
-	["punchstrength"] = Angle(0,4,0),
+	["delay"] = 0.9,
+	["striketime"] = 0.4,
+	["punchstrength"] = Angle(0,1,0),
 };
 
 AttackTables.TrainingJavelinAttackTable = {
 	["primarydamage"] = 15,
 	["dmgtype"] = 128,
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.67,
+	["altattackpoisedamagemodifier"] = 0.3,
+	["altmeleearc"] = 15,
+	["altmeleerange"] = 1300,
+	["alttakeammo"] = 3,
 	["armorpiercing"] = 0,
 	["poisedamage"] = 50,
 	["stabilitydamage"] = 35,
 	["takeammo"] = 20,
-	["delay"] = 0.5,
-	["striketime"] = 0.6,
-	["punchstrength"] = Angle(0,4,0),
+	["delay"] = 0.9,
+	["striketime"] = 0.4,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.ThrowingAxeAttackTable = {
+	["primarydamage"] = 65,
+	["dmgtype"] = DMG_SLASH,
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.5,
+	["altattackpoisedamagemodifier"] = 0.3,
+	["altattackstabilitydamagemodifier"] = 0,
+	["altmeleearc"] = 35,
+	["altmeleerange"] = 650,
+	["alttakeammo"] = 3,
+	["armorpiercing"] = 35,
+	["poisedamage"] = 50,
+	["stabilitydamage"] = 40,
+	["takeammo"] = 12,
+	["delay"] = 0.95,
+	["striketime"] = 0.4,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.ThrowingDaggerAttackTable = {
+	["primarydamage"] = 20,
+	["dmgtype"] = DMG_VEHICLE,
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.5,
+	["altattackpoisedamagemodifier"] = 0,
+	["altattackstabilitydamagemodifier"] = 0,
+	["altmeleearc"] = 15,
+	["altmeleerange"] = 450,
+	["alttakeammo"] = 3,
+	["armorpiercing"] = 50,
+	["poisedamage"] = 20,
+	["stabilitydamage"] = 15,
+	["takeammo"] = 5,
+	["delay"] = 0.9,
+	["striketime"] = 0.4,
+	["punchstrength"] = Angle(0,1,0),
 };
 
 AttackTables.IronBoltAttackTable = {
@@ -3087,6 +3180,8 @@ AddTable("FistAttackTable", AttackTables.FistAttackTable)
 AddTable("IronJavelinAttackTable", AttackTables.IronJavelinAttackTable)
 AddTable("PilumAttackTable", AttackTables.PilumAttackTable)
 AddTable("TrainingJavelinAttackTable", AttackTables.TrainingJavelinAttackTable)
+AddTable("ThrowingAxeAttackTable", AttackTables.ThrowingAxeAttackTable)
+AddTable("ThrowingDaggerAttackTable", AttackTables.ThrowingDaggerAttackTable)
 AddTable("IronBoltAttackTable", AttackTables.IronBoltAttackTable)
 AddTable("ScrapBoltAttackTable", AttackTables.ScrapBoltAttackTable)
 AddTable("ClaymoreAttackTable", AttackTables.ClaymoreAttackTable) 

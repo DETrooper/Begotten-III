@@ -236,7 +236,15 @@ Clockwork.animation.stored.femaleHuman = {
         ["run"] = {ACT_RUN, ACT_RUN_AIM_RIFLE_STIMULATED},
         ["attack"] = ACT_MELEE_ATTACK_SWING
     },
-	["wos-begotten_javelin"] = {
+	["wos-begotten_javelin_1h"] = {
+        ["idle"] = {ACT_IDLE, ACT_IDLE_ANGRY_MELEE},
+        ["idle_crouch"] = {ACT_COVER_LOW, ACT_COVER_LOW},
+        ["walk"] = {ACT_WALK, ACT_WALK_AIM_RIFLE},
+        ["walk_crouch"] = {ACT_WALK_CROUCH, ACT_WALK_CROUCH},
+        ["run"] = {ACT_RUN, ACT_RUN_AIM_RIFLE_STIMULATED},
+        ["attack"] = ACT_MELEE_ATTACK_SWING
+	},
+	["wos-begotten_javelin_2h"] = {
         ["idle"] = {ACT_IDLE, ACT_IDLE_ANGRY_MELEE},
         ["idle_crouch"] = {ACT_COVER_LOW, ACT_COVER_LOW},
         ["walk"] = {ACT_WALK, ACT_WALK_AIM_RIFLE},
@@ -386,7 +394,15 @@ Clockwork.animation.stored.maleHuman = {
         ["run"] = {ACT_RUN, ACT_RUN_AIM_RIFLE_STIMULATED},
         ["attack"] = ACT_MELEE_ATTACK_SWING
     },
-	["wos-begotten_javelin"] = {
+	["wos-begotten_javelin_1h"] = {
+        ["idle"] = {ACT_IDLE, ACT_IDLE_ANGRY_MELEE},
+        ["idle_crouch"] = {ACT_COVER_LOW, ACT_COVER_LOW},
+        ["walk"] = {ACT_WALK, ACT_WALK_AIM_RIFLE},
+        ["walk_crouch"] = {ACT_WALK_CROUCH, ACT_WALK_CROUCH},
+        ["run"] = {ACT_RUN, ACT_RUN_AIM_RIFLE_STIMULATED},
+        ["attack"] = ACT_MELEE_ATTACK_SWING
+	},
+	["wos-begotten_javelin_2h"] = {
         ["idle"] = {ACT_IDLE, ACT_IDLE_ANGRY_MELEE},
         ["idle_crouch"] = {ACT_COVER_LOW, ACT_COVER_LOW},
         ["walk"] = {ACT_WALK, ACT_WALK_AIM_RIFLE},

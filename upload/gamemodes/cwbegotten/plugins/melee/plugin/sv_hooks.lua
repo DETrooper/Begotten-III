@@ -9,7 +9,7 @@ local voltistSounds = {
 };
 
 -- Called to do make fancy melee effects.
-function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, originalDamage, damageInfo)
+function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, originalDamage, damageInfo)
 	if (IsValid(entity) and IsValid(attacker)) then
 		if entity:IsPlayer() and (!entity:Alive() or entity.iFrames) or damageInfo:IsDamageType(DMG_CRUSH) then
 			return;
@@ -34,7 +34,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 
 			local entWeapon = entity:GetActiveWeapon();
 			
-			if IsValid(entWeapon) and (entWeapon.Base == "begotten_firearm_base" or entWeapon.isJavelin) then
+			if IsValid(entWeapon) and (entWeapon.Base == "begotten_firearm_base" or entWeapon.isJavelin) and !entity:GetNWBool("Guardening") then
 				local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
 				local itemTable = Clockwork.item:GetByWeapon(entWeapon);
 				
@@ -76,7 +76,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 							canblock = true;
 						end
 					end
-				elseif IsValid(activeWeapon) then
+				elseif IsValid(inflictor) then
 					if IsValid(entWeapon) and entWeapon.BlockTable then
 						local blocktable = GetTable(entWeapon.BlockTable)
 						
@@ -120,9 +120,9 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 			local didthrust = false;
 			local playlowdamage = false;
 
-			if activeWeapon and IsValid(activeWeapon) then
-				if (activeWeapon.AttackSoundTable) then
-					local attackSoundTable = GetSoundTable(activeWeapon.AttackSoundTable)
+			if inflictor and IsValid(inflictor) then
+				if (inflictor.AttackSoundTable) then
+					local attackSoundTable = GetSoundTable(inflictor.AttackSoundTable)
 					
 					if attacker:GetNWBool("ThrustStance") == true then
 						didthrust = true;
@@ -159,10 +159,10 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 						
 						if attacker:IsPlayer() then
 							if (armorTable.attributes) and table.HasValue(armorTable.attributes, "electrified") then
-								if IsValid(activeWeapon) and activeWeapon.BlockTable then
+								if IsValid(inflictor) and inflictor.BlockTable then
 									local clothesItem = attacker:GetClothesEquipped();
 									
-									if (activeWeapon:GetClass() == "begotten_fists" and clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate")) or (activeWeapon.SoundMaterial == "Metal" or activeWeapon.SoundMaterial == "MetalPierce") then
+									if (inflictor:GetClass() == "begotten_fists" and clothesItem and (clothesItem.type == "chainmail" or clothesItem.type == "plate")) or (inflictor.SoundMaterial == "Metal" or inflictor.SoundMaterial == "MetalPierce") then
 										local shockDamageInfo = DamageInfo();
 										
 										shockDamageInfo:SetDamage(10);
@@ -318,8 +318,8 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 			
 			--printp("\nSV HOOKS DISTANCE: "..tostring(distance));
 			
-			if activeWeapon and IsValid(activeWeapon) then
-				local class = activeWeapon:GetClass()
+			if inflictor and IsValid(inflictor) then
+				local class = inflictor:GetClass()
 				
 				if (string.find(class, "begotten_spear_")) then
 					if (distance > 65) or attacker:GetNWBool("Riposting") then
@@ -332,11 +332,11 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 						entity:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2, 6)..".wav");
 					end;
 				elseif (string.find(class, "begotten_polearm_")) or (string.find(class, "begotten_scythe_")) then
-					if activeWeapon.ShortPolearm != true or didthrust then
+					if inflictor.ShortPolearm != true or didthrust then
 						if (distance >= 0 and distance <= 75) then -- Polearm
 							if attacker:GetNWBool("Riposting") then
 								entity:EmitSound(armorSound);
-							elseif didthrust and activeWeapon.CanSwipeAttack then
+							elseif didthrust and inflictor.CanSwipeAttack then
 								entity:EmitSound(althitbody);
 							else
 								entity:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2, 6)..".wav");
@@ -344,7 +344,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, activeWeapon, position, ori
 						elseif (distance > 75) then
 							if attacker:GetNWBool("Riposting") then
 								entity:EmitSound(hitbody);
-							elseif didthrust and activeWeapon.CanSwipeAttack then
+							elseif didthrust and inflictor.CanSwipeAttack then
 								entity:EmitSound(althitbody);
 							else
 								entity:EmitSound(armorSound)
@@ -403,7 +403,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 			local activeWeapon = player:GetActiveWeapon()
 			
 			if (IsValid(activeWeapon)) then
-				if (activeWeapon.IronSights == false) then
+				if (activeWeapon.realIronSights == false) then
 					player:SetNWBool("Guardening", false)
 					plyTab.beginBlockTransition = true;
 				end
@@ -986,6 +986,26 @@ function GM:PlayerPlayDeathSound(player, gender)
 				player:EmitSound("voice/female2/female2_death0"..math.random(1, 9)..".wav", 90, pitch)
 			end
 		end
+	end
+end
+
+function cwMelee:PlayerEnteredDuel(player)
+	if player.duelData then
+		for i, v in ipairs(player:GetWeaponsEquipped()) do
+			if v.category == "Throwables" then
+				if !player.duelData.javelins then
+					player.duelData.javelins = {};
+				end
+				
+				player.duelData.javelins[v.uniqueID] = table.Count(player:GetItemsByID(v.uniqueID));
+			end
+		end
+	end
+end
+
+function cwMelee:PlayerExitedDuel(player)
+	if player.duelData then
+		player.duelData.javelins = nil;
 	end
 end
 

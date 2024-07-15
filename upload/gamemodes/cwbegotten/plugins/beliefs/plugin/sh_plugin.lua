@@ -921,6 +921,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 			
 			if (!player.lastWarCry) or player.lastWarCry < curTime then
 				local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+				local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 				local radius = config.Get("talk_radius"):Get() * 2;
 				local playerPos = player:GetPos();
 				
@@ -1026,8 +1027,15 @@ local COMMAND = Clockwork.command:New("Warcry");
 					end
 				end
 
+				if subfaction == "Clan Grock" then
+					local soundIndex = math.random(1, 11);
+					local formattedIndex = soundIndex < 10 and ("0"..soundIndex) or tostring(soundIndex);
+					
+					player:HandleStamina(25);
+					player:EmitSound("begotten/grock/glott_-"..formattedIndex..".ogg", 100, math.random(60, 75));
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "barbarically shouts out!", playerPos, radius);
 				-- Kinisgers can FotF warcry if not disguised as a reaver.
-				if faith == "Faith of the Family" then
+				elseif faith == "Faith of the Family" then
 					if player.bloodHowlActive then
 						if cwStamina then
 							local stamina = player:GetCharacterData("Stamina");
