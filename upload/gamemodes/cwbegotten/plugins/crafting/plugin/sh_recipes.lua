@@ -504,35 +504,6 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
-	
-	RECIPE = cwRecipes.recipes:New("transmuted_hellforged_steel_ingot");
-		RECIPE.name = "(Transmuted) Hellforged Steel Ingot";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"master_blacksmith", "enduring_bear"};
-		RECIPE.requiredFaiths = {"Faith of the Family"};
-		RECIPE.requirements = {
-			["shagalaxian_steel_ingot"] = {amount = 1},
-			["belphegor_catalyst"] = {amount = 1},
-		};
-		RECIPE.result = {
-			["hellforged_steel_ingot"] = {amount = 1},
-		};
-		RECIPE.category = "Other"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 20;
-
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("transmuted_hellforged_steel_ingot");
 		RECIPE.name = "(Transmuted) Hellforged Steel Ingot";
