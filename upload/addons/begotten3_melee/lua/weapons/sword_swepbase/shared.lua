@@ -185,6 +185,10 @@ function SWEP:Deploy()
 				end
 			end
 		end
+		
+		if self.OnMeleeStanceChanged then
+			self:OnMeleeStanceChanged("reg_swing");
+		end
 	end
 	
 	self.Owner.gestureweightbegin = 2;
@@ -2870,7 +2874,7 @@ function SWEP:Initialize()
 		self.WElements = table.FullCopy(weaponTable.WElements);
 		self.ViewModelBoneMods = table.FullCopy(self.ViewModelBoneMods);
 		
-		if weaponTable.WElementsAlternate and self.stance == "thrust_swing" then
+		if weaponTable.WElementsAlternate and self:GetNWString("stance") == "thrust_swing" then
 			self.WElements = table.FullCopy(weaponTable.WElementsAlternate);
 		end;
 	

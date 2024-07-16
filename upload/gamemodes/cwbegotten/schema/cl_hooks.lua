@@ -1923,6 +1923,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.attributes then
+					if table.HasValue(itemTable.attributes, "concealable") then
+						frame:AddText("Concealable (Does Not Show On Person)", Color(110, 30, 30));
+					end
+				
 					if table.HasValue(itemTable.attributes, "ice") then
 						frame:AddText("Frigid: Freezes enemies in a block of ice upon contact.", Color(110, 30, 30));
 					end

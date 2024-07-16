@@ -965,6 +965,14 @@ function SWEP:Reload()
 	if !IsFirstTimePredicted() then return end;
 	if !IsValid(self.Owner) then return end;
 	if !self.Owner:IsPlayer() or !self.Owner:Alive() then return end;
+	
+	local curTime = CurTime();
+	
+	if self.nextReload and self.nextReload > curTime then
+		return;
+	end
+	
+	self.nextReload = curTime + 0.1;
 
 	timer.Simple(0, function()
 		if !IsValid(self.Owner) then return end;
@@ -975,7 +983,7 @@ function SWEP:Reload()
 		local action = Clockwork.player:GetAction(self.Owner);
 		
 		if (action == "reloading") then
-			Schema:EasyText(player, "peru", "Your character is already reloading!");
+			Schema:EasyText(self.Owner, "peru", "Your character is already reloading!");
 			
 			return;
 		end
@@ -1023,7 +1031,7 @@ function SWEP:Reload()
 			end
 		end
 		
-		Schema:EasyText(player, "chocolate", "No valid ammo could be found for this weapon!");
+		Schema:EasyText(self.Owner, "chocolate", "No valid ammo could be found for this weapon!");
 	end);
 end
  
