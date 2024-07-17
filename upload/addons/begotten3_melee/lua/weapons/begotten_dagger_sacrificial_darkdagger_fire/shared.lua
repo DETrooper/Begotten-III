@@ -32,6 +32,8 @@ SWEP.AttackSoundTable = "MetalDaggerAttackSoundTable"
 SWEP.BlockSoundTable = "MetalBlockSoundTable"
 SWEP.SoundMaterial = "Metal" -- Metal, Wooden, MetalPierce, Punch, Default
 
+SWEP.isDagger = true;
+
 /*---------------------------------------------------------
 	PrimaryAttack
 ---------------------------------------------------------*/

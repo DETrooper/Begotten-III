@@ -467,7 +467,7 @@ function SWEP:PrimaryAttack()
 		if offhandWeapon then
 			offhandAttackTable = GetTable(offhandWeapon.AttackTable);
 			delay = math.max(attacktable["delay"], offhandAttackTable["delay"]) * 0.95;
-			strikeTime = math.max(strikeTime, offhandAttackTable["striketime"]);
+			strikeTime = math.max(strikeTime, offhandAttackTable["striketime"], 0.3); -- Dual weapon striketime shall not be lower than 0.3 seconds.
 		end
 	end
 	
@@ -510,13 +510,13 @@ function SWEP:PrimaryAttack()
 			if (owner:GetNWBool("ThrustStance") == true and !owner:GetNWBool("Riposting")) or thrustOverride then
 				--Attack animation
 				local anim_suffix = "_medium";
-				local speed = delay + strikeTime;
+				local speed = strikeTime;
 				
-				if speed <= 0.8 then
+				if speed <= 0.3 then
 					anim_suffix = "_veryfast";
-				elseif speed <= 0.9 then
+				elseif speed <= 0.35 then
 					anim_suffix = "_fast";
-				elseif speed >= 1.2 then
+				elseif speed >= 0.5 then
 					anim_suffix = "_slow";
 				end
 				
@@ -524,7 +524,7 @@ function SWEP:PrimaryAttack()
 
 				-- Viewmodel attack animation!
 				vm:SendViewModelMatchingSequence(vm:LookupSequence("powermissup"));
-				self.Owner:GetViewModel():SetPlaybackRate(Lerp(strikeTime + 0.1, 0.5, 0.3));
+				self.Owner:GetViewModel():SetPlaybackRate(Lerp(strikeTime, 0.7, 0.3));
 				
 				if !attacktable.canaltattack and attacktable.dmgtype == DMG_VEHICLE then
 					self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])]);
@@ -542,13 +542,13 @@ function SWEP:PrimaryAttack()
 			else
 				--Attack animation
 				local anim_suffix = "_medium";
-				local speed = delay + strikeTime;
+				local speed = strikeTime;
 				
-				if speed <= 0.8 then
+				if speed <= 0.3 then
 					anim_suffix = "_veryfast";
-				elseif speed <= 0.9 then
+				elseif speed <= 0.35 then
 					anim_suffix = "_fast";
-				elseif speed >= 1.2 then
+				elseif speed >= 0.5 then
 					anim_suffix = "_slow";
 				end
 				
@@ -990,8 +990,12 @@ end
 					d:SetDamageForce(owner:GetForward() * 5000);
 					
 					if (hit:IsRagdolled()) then
-						if string.find(weaponClass, "begotten_dagger_") then -- Daggers deal more damage against fallen opponents
+						if self.isDagger then -- Daggers deal more damage against fallen opponents
 							d:SetDamage(d:GetDamage() * 4)
+							
+							if hit:GetNetVar("ActName") == "unragdoll" then
+								Clockwork.player:ExtendAction(hit, 0.4);
+							end
 						end
 					end
 				end
@@ -1221,8 +1225,12 @@ end
 						d:SetDamageForce(owner:GetForward() * 5000);
 						
 						if (hit:IsRagdolled()) then
-							if string.find(weaponClass, "begotten_dagger_") then -- Daggers deal more damage against fallen opponents
+							if self.isDagger then -- Daggers deal more damage against fallen opponents
 								d:SetDamage(d:GetDamage() * 4)
+								
+								if hit:GetNetVar("ActName") == "unragdoll" then
+									Clockwork.player:ExtendAction(hit, 0.4);
+								end
 							end
 						end
 					end
@@ -1709,8 +1717,12 @@ end
 						d:SetDamageForce(owner:GetForward() * 5000);
 						
 						if (hit:IsRagdolled()) then
-							if string.find(weaponClass, "begotten_dagger_") then -- Daggers deal more damage against fallen opponents
+							if self.isDagger then -- Daggers deal more damage against fallen opponents
 								d:SetDamage(d:GetDamage() * 4)
+								
+								if hit:GetNetVar("ActName") == "unragdoll" then
+									Clockwork.player:ExtendAction(hit, 0.4);
+								end
 							end
 						end
 					end
@@ -1904,8 +1916,12 @@ end
 						d:SetDamageForce(owner:GetForward() * 5000);
 						
 						if (hit:IsRagdolled()) then
-							if string.find(weaponClass, "begotten_dagger_") then -- Daggers deal more damage against fallen opponents
+							if self.isDagger then -- Daggers deal more damage against fallen opponents
 								d:SetDamage(d:GetDamage() * 4)
+								
+								if hit:GetNetVar("ActName") == "unragdoll" then
+									Clockwork.player:ExtendAction(hit, 0.4);
+								end
 							end
 						end
 					end

@@ -35,6 +35,7 @@ SWEP.AttackTable = "ThrowingDaggerAttackTable"
 
 SWEP.Primary.Round = ("begotten_javelin_throwing_dagger_thrown");
 
+SWEP.isDagger = true;
 SWEP.isJavelin = true;
 SWEP.SticksInShields = true;
 

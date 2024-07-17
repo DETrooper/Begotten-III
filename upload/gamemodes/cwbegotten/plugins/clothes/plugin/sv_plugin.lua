@@ -166,7 +166,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					
 					if IsValid(inflictor) then
 						if !inflictor.isJavelin then
-							if string.find(inflictor:GetClass(), "begotten_dagger_") then
+							if inflictor.isDagger and player.IsRagdolled and player:IsRagdolled() then
 								armorPiercing = 100;
 							elseif inflictor:GetClass() == "begotten_fists" then
 								if attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist") then
@@ -287,7 +287,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 							
 							if IsValid(inflictor) then
 								if !inflictor.isJavelin then
-									if string.find(inflictor:GetClass(), "begotten_dagger_") then
+									if inflictor.isDagger and player.IsRagdolled and player:IsRagdolled() then
 										armorPiercing = 100;
 										--print("Weapon is dagger, increasing AP value to 100.");
 									elseif inflictor:GetClass() == "begotten_fists" then

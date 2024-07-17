@@ -379,7 +379,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 					offhandWeapon = activeWeapon:GetOffhand();
 				end
 				
-				if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
+				if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 					if (!entity.mutilated or entity.mutilated < 3) then
 						local model = entity:GetModel();
 						
@@ -395,7 +395,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
+									if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -431,7 +431,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
+									if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -467,7 +467,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
+									if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -503,7 +503,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
+									if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -539,7 +539,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
+									if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -618,7 +618,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 						offhandWeapon = activeWeapon:GetOffhand();
 					end
 					
-					if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
+					if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 						if (!entity.bones or entity.bones < 5) then
 							entity.bones = (entity.bones or 0) + 1;
 							
@@ -666,7 +666,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 					offhandWeapon = activeWeapon:GetOffhand();
 				end 
 				 
-				if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
+				if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 					if (!entity.skinned or entity.skinned < 1) then					
 						local model = entity:GetModel();
 						local uniqueID = "hide"
@@ -692,7 +692,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 									offhandWeapon = activeWeapon:GetOffhand();
 								end
 								
-								if IsValid(activeWeapon) and activeWeapon.Category and string.find(activeWeapon.Category, "Dagger") or offhandWeapon and offhandWeapon.Category and string.find(offhandWeapon.Category, "Dagger") then
+								if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 									if (!entity.skinned or entity.skinned < 1) then
 										entity.skinned = (entity.skinned or 0) + 1;
 										
@@ -823,8 +823,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 				
 				if entity:IsPlayer() and entity:Alive() and attacker:HasBelief("assassin") then
 					if not entity.assassinated then
-						-- This check really needs to be implemented better in the future. Maybe an isDagger variable on the sweps?
-						if (attackerWeapon.isJavelin and attackerWeapon:GetClass() == "begotten_javelin_throwing_dagger_thrown") or (attackerWeapon.IsABegottenMelee and (string.find(attackerWeapon.Category, "Dagger") or attackerWeapon:GetClass() == "begotten_javelin_throwing_dagger")) then
+						if attackerWeapon.isDagger then
 							if entity:Alive() and entity:Health() < entity:GetMaxHealth() / 4 or entity:GetRagdollState() == RAGDOLL_FALLENOVER and originalDamage > 0 then
 								newDamage = 666;
 								

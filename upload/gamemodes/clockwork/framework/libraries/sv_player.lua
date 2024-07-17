@@ -633,6 +633,17 @@ function Clockwork.player:GetAction(player, percentage)
 	end
 end
 
+function Clockwork.player:ExtendAction(player, extendTime)
+	local startActionTime = player:GetNetVar("StartActTime") or 0
+	local actionDuration = player:GetNetVar("ActDuration") or 0
+	local curTime = CurTime()
+	local action = player:GetNetVar("ActName") or "Unknown"
+
+	if (startActionTime and CurTime() < startActionTime + actionDuration) then
+		player:SetNetVar("ActDuration", actionDuration + extendTime);
+	end
+end
+
 -- A function to run a Clockwork command on a player.
 function Clockwork.player:RunClockworkCommand(player, command, ...)
 	return Clockwork.command:ConsoleCommand(player, "cwCmd", {command, ...})

@@ -503,7 +503,7 @@ function Schema:GetEntityMenuOptions(entity, options)
 				if table.HasValue(animalModels, entity:GetModel()) then
 					--local activeWeapon = Clockwork.Client:GetActiveWeapon();
 					
-					--if IsValid(activeWeapon) and string.find(activeWeapon:GetClass(), "begotten_dagger") then
+					--if IsValid(activeWeapon) and activeWeapon.isDagger then
 						options["Mutilate"] = "cwCorpseMutilate";
 						options["Skin"] = "cwCorpseSkin";
 					--else
@@ -541,7 +541,7 @@ function Schema:GetEntityMenuOptions(entity, options)
 			elseif model == "models/animals/bear.mdl" then
 				--local activeWeapon = Clockwork.Client:GetActiveWeapon();
 				
-				--if IsValid(activeWeapon) and string.find(activeWeapon:GetClass(), "begotten_dagger") then
+				--if IsValid(activeWeapon) and activeWeapon.isDagger then
 					options["Mutilate"] = "cwCorpseMutilate";
 					options["Skin"] = "cwCorpseSkin";
 				--[[else
@@ -1573,9 +1573,9 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					if weaponClass ~= "begotten_polearm_quarterstaff" then
 						frame:AddText("Has Counter Damage: Bonus against running enemies when attacked from the front.", Color(110, 30, 30));
 					end
-				elseif string.find(weaponClass, "begotten_dagger") then
+				elseif weaponTable.isDagger then
 					frame:AddText("Has Backstab: Deal double damage to enemies' backs.", Color(110, 30, 30));
-					frame:AddText("Has Coup de Grace: Deal double damage and 100% AP damage to knocked over enemies.", Color(110, 30, 30));
+					frame:AddText("Has Coup de Grace: Deal double damage and 100% AP damage to knocked over enemies. Each hit will slightly increase the time it takes for knocked over enemies to get up.", Color(110, 30, 30));
 				end
 				
 				if itemTable.requireFaction and not table.IsEmpty(itemTable.requireFaction) and itemTable.requireFaction[1] ~= "Wanderer" then
