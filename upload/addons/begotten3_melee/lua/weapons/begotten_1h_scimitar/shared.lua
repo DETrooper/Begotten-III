@@ -139,6 +139,6 @@ SWEP.WElements = {
 }
 
 SWEP.WElementsDual = {
-	["w_left"] = { type = "Model", model = "models/demonssouls/weapons/scimitar.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, 0), angle = Angle(-70, 90, -176.495), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
-	["w_right"] = { type = "Model", model = "models/demonssouls/weapons/scimitar.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.9, 0.899, -0.5), angle = Angle(105, 90, -180), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+	["w_left"] = { type = "Model", model = "models/demonssouls/weapons/scimitar.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.9, 0.899, -0.5), angle = Angle(105, 90, -180), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/demonssouls/weapons/scimitar.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 1.557, 0), angle = Angle(-70, 90, -176.495), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
