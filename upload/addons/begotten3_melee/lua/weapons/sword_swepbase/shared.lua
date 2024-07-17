@@ -2954,13 +2954,13 @@ function SWEP:Initialize()
 				self.WElements = {};
 				
 				if self.VElements and self.VElementsDual and offhandTable.VElements and offhandTable.VElementsDual then
-					self.VElements["w_left"] = table.FullCopy(self.VElementsDual["v_left"]);
-					self.VElements["w_right"] = table.FullCopy(offhandTable.VElementsDual["v_right"]);
+					self.VElements["w_left"] = table.FullCopy(offhandTable.VElementsDual["v_left"]);
+					self.VElements["w_right"] = table.FullCopy(self.VElementsDual["v_right"]);
 				end
 				
 				if self.WElements and self.WElementsDual and offhandTable.WElements and offhandTable.WElementsDual then
-					self.WElements["w_left"] = table.FullCopy(self.WElementsDual["w_left"]);
-					self.WElements["w_right"] = table.FullCopy(offhandTable.WElementsDual["w_right"]);
+					self.WElements["w_left"] = table.FullCopy(offhandTable.WElementsDual["w_left"]);
+					self.WElements["w_right"] = table.FullCopy(self.WElementsDual["w_right"]);
 				end
 			end
 		end
