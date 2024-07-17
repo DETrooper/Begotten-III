@@ -641,6 +641,8 @@ function Clockwork.player:ExtendAction(player, extendTime)
 
 	if (startActionTime and CurTime() < startActionTime + actionDuration) then
 		player:SetNetVar("ActDuration", actionDuration + extendTime);
+		
+		hook.Run("ActionExtended", player, action);
 	end
 end
 
