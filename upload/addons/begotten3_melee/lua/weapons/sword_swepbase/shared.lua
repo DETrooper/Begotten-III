@@ -936,6 +936,8 @@ end
 					break;
 				end;
 			end;
+		elseif hit:GetClass() == "prop_ragdoll" and Clockwork.entity:IsPlayerRagdoll(hit) then
+			hit = Clockwork.entity:GetPlayer(hit);
 		end;
 
 		if hit:IsValid() and hit:IsPlayer() then
@@ -988,13 +990,13 @@ end
 			
 				if (hit:IsPlayer()) then
 					d:SetDamageForce(owner:GetForward() * 5000);
-					
+
 					if (hit:IsRagdolled()) then
 						if self.isDagger then -- Daggers deal more damage against fallen opponents
-							d:SetDamage(d:GetDamage() * 4)
+							d:SetDamage(d:GetDamage() * 2)
 							
 							if hit:GetNetVar("ActName") == "unragdoll" then
-								Clockwork.player:ExtendAction(hit, 0.4);
+								Clockwork.player:ExtendAction(hit, 0.3);
 							end
 						end
 					end
@@ -1075,15 +1077,6 @@ end
 			if !owner:GetNWBool("ThrustStance") then
 				owner:SetNWBool("ThrustStance", true);
 			end
-		
-			if (hit:IsWorld()) then
-				for k, v in pairs (ents.FindInSphere(src, 32)) do
-					if (v:GetClass() == "prop_ragdoll") and Clockwork.entity:IsPlayerRagdoll(v) then
-						hit = Clockwork.entity:GetPlayer(v);
-						break;
-					end;
-				end;
-			end;
 
 			if hit:IsValid() and hit:IsPlayer() then
 				enemywep = hit:GetActiveWeapon()
@@ -1226,10 +1219,10 @@ end
 						
 						if (hit:IsRagdolled()) then
 							if self.isDagger then -- Daggers deal more damage against fallen opponents
-								d:SetDamage(d:GetDamage() * 4)
+								d:SetDamage(d:GetDamage() * 2)
 								
 								if hit:GetNetVar("ActName") == "unragdoll" then
-									Clockwork.player:ExtendAction(hit, 0.4);
+									Clockwork.player:ExtendAction(hit, 0.3);
 								end
 							end
 						end
@@ -1290,15 +1283,6 @@ end
 			if owner:GetNWBool("ThrustStance") then
 				owner:SetNWBool("ThrustStance", false);
 			end
-		
-			if (hit:IsWorld()) then
-				for k, v in pairs (ents.FindInSphere(src, 32)) do
-					if (v:GetClass() == "prop_ragdoll") and Clockwork.entity:IsPlayerRagdoll(v) then
-						hit = Clockwork.entity:GetPlayer(v);
-						break;
-					end;
-				end;
-			end;
 
 			if (!hit.nexthit or CurTime() > hit.nexthit) then 
 				hit.nexthit = CurTime() + 1
@@ -1715,13 +1699,13 @@ end
 				
 					if (hit:IsPlayer()) then
 						d:SetDamageForce(owner:GetForward() * 5000);
-						
+				
 						if (hit:IsRagdolled()) then
 							if self.isDagger then -- Daggers deal more damage against fallen opponents
-								d:SetDamage(d:GetDamage() * 4)
-								
+								d:SetDamage(d:GetDamage() * 2)
+
 								if hit:GetNetVar("ActName") == "unragdoll" then
-									Clockwork.player:ExtendAction(hit, 0.4);
+									Clockwork.player:ExtendAction(hit, 0.3);
 								end
 							end
 						end
@@ -1782,15 +1766,6 @@ end
 			if owner:GetNWBool("ThrustStance") then
 				owner:SetNWBool("ThrustStance", false);
 			end
-		
-			if (hit:IsWorld()) then
-				for k, v in pairs (ents.FindInSphere(src, 32)) do
-					if (v:GetClass() == "prop_ragdoll") and Clockwork.entity:IsPlayerRagdoll(v) then
-						hit = Clockwork.entity:GetPlayer(v);
-						break;
-					end;
-				end;
-			end;
 
 			if hit:IsValid() and hit:IsPlayer() then
 				enemywep = hit:GetActiveWeapon()
@@ -1917,10 +1892,10 @@ end
 						
 						if (hit:IsRagdolled()) then
 							if self.isDagger then -- Daggers deal more damage against fallen opponents
-								d:SetDamage(d:GetDamage() * 4)
-								
+								d:SetDamage(d:GetDamage() * 2)
+
 								if hit:GetNetVar("ActName") == "unragdoll" then
-									Clockwork.player:ExtendAction(hit, 0.4);
+									Clockwork.player:ExtendAction(hit, 0.3);
 								end
 							end
 						end
