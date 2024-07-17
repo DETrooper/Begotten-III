@@ -19,6 +19,7 @@ function cwObserverMode:MakePlayerExitObserverMode(player)
 		player:SetMoveType(player.cwObserverMoveType or MOVETYPE_WALK)
 	else
 		player:SetMoveType(MOVETYPE_OBSERVER)
+		player:SetObserverMode(OBS_MODE_ROAMING); -- Don't know why this is needed now but it is.
 	end
 	
 	timer.Simple(FrameTime() * 0.5, function()

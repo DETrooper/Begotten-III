@@ -974,11 +974,11 @@ function SWEP:Reload()
 	
 	self.nextReload = curTime + 0.1;
 
-	timer.Simple(0, function()
+	timer.Simple(0.05, function()
 		if !IsValid(self.Owner) then return end;
 		if !self.Owner:Alive() then return end;
 		if self.Owner:IsRagdolled() then return end;
-		if self.ReloadKeyTime then return end;
+		if self.ReloadKeyTime then print("ASS!"); return end;
 		
 		local action = Clockwork.player:GetAction(self.Owner);
 		
@@ -998,35 +998,84 @@ function SWEP:Reload()
 		if !inventory then return end;
 		
 		local lastLoadedShot = self.Owner.lastLoadedShot;
-		local shotToLoad;
 		
 		if lastLoadedShot then
 			local itemTable = item.FindByID(lastLoadedShot);
 			
 			if itemTable then
-				shotToLoad = itemTable;
-			end
-		else
-			-- Select a random ammo type if a previous one has not been found.
-			for i, v in RandomPairs(firearmItemTable.ammoTypes) do
-				local itemTable = item.FindByID(v);
+				local itemInstances = inventory[itemTable.uniqueID] or {};
+				local validItemInstances = {};
 				
-				if itemTable then
-					shotToLoad = itemTable;
+				for k, v in pairs(itemInstances) do
+					if !v.ammoMagazineSize or v:GetAmmoMagazine() > 0 then
+						table.insert(validItemInstances, v2);
+					end
+				end
+				
+				if !table.IsEmpty(validItemInstances) then
+					local randomItem = table.Random(itemInstances);
+					
+					if randomItem:CanUseOnItem(self.Owner, firearmItemTable, true) then
+						randomItem:UseOnItem(self.Owner, firearmItemTable, true);
+						
+						return;
+					end
 				end
 			end
 		end
 		
-		if shotToLoad then
-			local itemInstances = inventory[shotToLoad.uniqueID];
+		-- Select a random ammo type if a previous one has not been found.
+		for i, v in RandomPairs(firearmItemTable.ammoTypes) do
+			local itemTable = item.FindByID(v);
 			
-			if itemInstances and !table.IsEmpty(itemInstances) then
-				local randomItem = table.Random(itemInstances);
+			if itemTable then
+				if firearmItemTable.usesMagazine and !itemTable.ammoMagazineSize then continue end;
 				
-				if randomItem:CanUseOnItem(self.Owner, firearmItemTable, true) then
-					randomItem:UseOnItem(self.Owner, firearmItemTable, true);
+				local itemInstances = inventory[itemTable.uniqueID] or {};
+				local validItemInstances = {};
+				
+				for k2, v2 in pairs(itemInstances) do
+					if !v2.ammoMagazineSize or v2:GetAmmoMagazine() > 0 then
+						table.insert(validItemInstances, v2);
+					end
+				end
+				
+				if !table.IsEmpty(validItemInstances) then
+					local randomItem = table.Random(itemInstances);
 					
-					return;
+					if randomItem:CanUseOnItem(self.Owner, firearmItemTable, true) then
+						randomItem:UseOnItem(self.Owner, firearmItemTable, true);
+						
+						return;
+					end
+				end
+			end
+		end
+
+		-- Go over again for magazined firearms to select single shots if no magazines are found.
+		if firearmItemTable.usesMagazine then
+			for i, v in RandomPairs(firearmItemTable.ammoTypes) do
+				local itemTable = item.FindByID(v);
+				
+				if itemTable then
+					local itemInstances = inventory[itemTable.uniqueID] or {};
+					local validItemInstances = {};
+					
+					for k2, v2 in pairs(itemInstances) do
+						if !v2.ammoMagazineSize or v2:GetAmmoMagazine() > 0 then
+							table.insert(validItemInstances, v2);
+						end
+					end
+					
+					if !table.IsEmpty(validItemInstances) then
+						local randomItem = table.Random(itemInstances);
+						
+						if randomItem:CanUseOnItem(self.Owner, firearmItemTable, true) then
+							randomItem:UseOnItem(self.Owner, firearmItemTable, true);
+							
+							return;
+						end
+					end
 				end
 			end
 		end
