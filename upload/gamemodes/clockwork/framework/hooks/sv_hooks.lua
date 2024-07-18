@@ -120,7 +120,7 @@ function GM:OnePlayerSecond(player, curTime, infoTable)
 end
 
 -- Called at an interval while a player is connected.
-function GM:PlayerThink(player, curTime, infoTable)
+function GM:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	--[[if (!player:InVehicle() and !player:IsRagdolled() and !player:IsBeingHeld() and player:Alive() and player:GetMoveType() == MOVETYPE_NOCLIP) then
 		local color = player:GetColor()
 			player:SetRenderMode(RENDERMODE_TRANSALPHA);
@@ -138,15 +138,15 @@ function GM:PlayerThink(player, curTime, infoTable)
 	local waterLevel = player:WaterLevel();
 	
 	if (waterLevel >= 3) then
-		player.submerged = true
-		player.waterStartTime = player.waterStartTime or curTime
+		plyTab.submerged = true
+		plyTab.waterStartTime = plyTabplyTab.waterStartTime or curTime
 		
 		if player:IsOnFire() then
 			player:Extinguish();
 		end
 	else
-		player.submerged = false
-		player.waterStartTime = nil
+		plyTab.submerged = false
+		plyTab.waterStartTime = nil
 		
 		if (waterLevel > 1) then
 			if player:IsOnFire() then
@@ -155,10 +155,10 @@ function GM:PlayerThink(player, curTime, infoTable)
 		end
 	end
 	
-	if !player.nextRagdollCheck or player.nextRagdollCheck < curTime then
-		player.nextRagdollCheck = curTime + 1;
+	if !plyTab.nextRagdollCheck or plyTab.nextRagdollCheck < curTime then
+		plyTab.nextRagdollCheck = curTime + 1;
 	
-		if (player:IsRagdolled() and !player.cwObserverMode) then
+		if (player:IsRagdolled() and !plyTab.cwObserverMode) then
 			player:SetMoveType(MOVETYPE_OBSERVER)
 			
 			if player:GetRagdollState() == RAGDOLL_KNOCKEDOUT then
@@ -168,6 +168,22 @@ function GM:PlayerThink(player, curTime, infoTable)
 					Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER);
 				end
 			end
+		end
+	end
+	
+	if plyTab.cwUseAction then
+		if IsValid(plyTab.cwUseActionEntity) then
+			local action = Clockwork.player:GetAction(player);
+			
+			if action == plyTab.cwUseAction then
+				if !alive or !player:KeyDown(IN_USE) or player:GetPos():DistToSqr(plyTab.cwUseActionEntity:GetPos()) > (128 * 128) then
+					Clockwork.player:SetAction(player, false);
+				end
+			else
+				Clockwork.player:SetAction(player, false);
+			end
+		else
+			Clockwork.player:SetAction(player, false);
 		end
 	end
 
@@ -196,18 +212,18 @@ function GM:PlayerThink(player, curTime, infoTable)
 		printp(infoTable.runSpeed)
 	end;]]--
 	
-	if !player.nextInvThink or player.nextInvThink > curTime then
+	if !plyTab.nextInvThink or plyTab.nextInvThink > curTime then
 		local maxWeight = player:GetMaxWeight();
 
 		infoTable.inventoryWeight = maxWeight;
-		player.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
-		player.maxWeight = maxWeight;
+		plyTab.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
+		plyTab.maxWeight = maxWeight;
 		
 		player:SetNetVar("InvWeight", math.ceil(infoTable.inventoryWeight))
 		player:SetNetVar("InvSpace", math.ceil(infoTable.inventorySpace))
 		--player:SetNetVar("Wages", math.ceil(infoTable.wages or 0))
 		
-		player.nextInvThink = curTime + 2;
+		plyTab.nextInvThink = curTime + 2;
 	end
 	
 	--[[if !player.speedSetCooldown or player.speedSetCooldown < curTime then
@@ -1561,10 +1577,6 @@ function GM:PlayerRestoreCharacterData(player, data)
 	
 	Clockwork.player:RestoreCharacterData(player, data)
 end
-
-concommand.Add("save_char", function(player)
-	player:SaveCharacter();
-end);
 
 -- Called when a player's character data should be saved.
 function GM:PlayerSaveCharacterData(player, data)
@@ -4474,4 +4486,11 @@ function GM:RunModifyPlayerSpeed(player, infoTable, bIgnoreDelay)
 		
 		player.speedSetCooldown = curTime + 1;
 	end;
+end
+
+function GM:ActionStopped(player, action)
+	if player.cwUseAction then
+		player.cwUseAction = nil;
+		player.cwUseActionEntity = nil;
+	end
 end

@@ -313,9 +313,7 @@ function cwScrapFactory:StopValvesOverheating()
 end
 
 function cwScrapFactory:PlayerUse(player, entity)
-	local class = entity:GetClass();
-	
-	if (class == "cw_scrapfactoryvalve") then
+	if (entity:GetClass() == "cw_scrapfactoryvalve") then
 		if entity.overheating == true then
 			local position = player:GetPos();
 			local distance = position:Distance(entity:GetPos())
@@ -324,9 +322,8 @@ function cwScrapFactory:PlayerUse(player, entity)
 				return
 			end;
 			
-			if (!player.cwTurningValve) then
-				player.cwTurningValve = true;
-				player.cwValvePos = entity:GetPos();
+			if (!player.cwUseActionEntity) then
+				player.cwUseActionEntity = entity;
 				
 				local duration = 5;
 				
@@ -334,7 +331,7 @@ function cwScrapFactory:PlayerUse(player, entity)
 					duration = 1;
 				end
 				
-				Clockwork.player:SetAction(player, "turn_scrapfactory_valve", duration, 1, function() 
+				Clockwork.player:SetUseKeyAction(player, "turn_scrapfactory_valve", duration, 1, function() 
 					if (IsValid(entity)) then
 						if (entity.overheating == true) then
 							entity:EmitSound("buttons/lever2.wav");
@@ -343,32 +340,6 @@ function cwScrapFactory:PlayerUse(player, entity)
 						end;
 					end;
 				end);
-			end;
-		end;
-	elseif (player.cwTurningValve) then
-		player.cwTurningValve = nil;
-		player.cwValvePos = nil;
-		Clockwork.player:SetAction(player, false);
-	end;
-end;
-
-function cwScrapFactory:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
-	if (plyTab.cwTurningValve) then
-		if (!player:KeyDown(IN_USE)) then
-			Clockwork.player:SetAction(player, nil);
-			plyTab.cwTurningValve = nil;
-			plyTab.cwValvePos = nil;
-		end;
-		
-		if (plyTab.cwValvePos) then
-			local valvePosition = plyTab.cwValvePos;
-			local position = player:GetPos();
-			local distance = position:Distance(valvePosition)
-
-			if (distance > 128 or !player:Alive()) then
-				Clockwork.player:SetAction(player, nil);
-				plyTab.cwTurningValve = nil;
-				plyTab.cwValvePos = nil;
 			end;
 		end;
 	end;

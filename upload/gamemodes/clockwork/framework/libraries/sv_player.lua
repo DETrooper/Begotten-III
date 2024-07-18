@@ -610,6 +610,14 @@ function Clockwork.player:SetAction(player, action, duration, priority, Callback
 	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
 end
 
+function Clockwork.player:SetUseKeyAction(player, action, duration, priority, Callback)
+	if player:KeyDown(IN_USE) then
+		Clockwork.player:SetAction(player, action, duration, priority, Callback);
+		
+		player.cwUseAction = action;
+	end
+end
+
 -- A function to set the player's character menu state.
 function Clockwork.player:SetCharacterMenuState(player, state)
 	netstream.Start(player, "CharacterMenu", state)

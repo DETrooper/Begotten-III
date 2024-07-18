@@ -48,7 +48,7 @@ function cwWeather:Think()
 	
 	local currentWeatherTable = self.weatherTypes[self.weather];
 	
-	if currentWeatherTable.default then
+	if currentWeatherTable and currentWeatherTable.default then
 		for k, v in RandomPairs(self.weatherTypes) do
 			if !v.default and v.rarity and math.random(1, v.rarity) == 1 then self:SetWeather(k) return; end
 		end
