@@ -139,7 +139,7 @@ function GM:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	
 	if (waterLevel >= 3) then
 		plyTab.submerged = true
-		plyTab.waterStartTime = plyTabplyTab.waterStartTime or curTime
+		plyTab.waterStartTime = plyTab.waterStartTime or curTime
 		
 		if player:IsOnFire() then
 			player:Extinguish();
