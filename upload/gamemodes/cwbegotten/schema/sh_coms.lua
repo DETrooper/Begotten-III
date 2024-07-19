@@ -207,6 +207,10 @@ local COMMAND = Clockwork.command:New("Enlist")
 							
 							Schema:EasyText(player, "green", "You have invited "..target:Name().." to enlist into the "..enlistFaction.." faction!");
 							Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." has invited "..target:Name().." to join the "..enlistFaction.." faction!");
+						elseif targetFaction == "Children of Satan" then
+							-- Bogus text to prevent metagame.
+							Schema:EasyText(target, "red", player:Name().." has tried to enlist you into the "..enlistFaction.." faction, but as a Child of Satan you are unable to accept! They have been sent a fake message saying you were invited.");
+							Schema:EasyText(player, "green", "You have invited "..target:Name().." to enlist into the "..enlistFaction.." faction!");
 						else
 							Schema:EasyText(player, "firebrick", target:Name().." is not the right faction to be enlisted into this faction!");
 						end
