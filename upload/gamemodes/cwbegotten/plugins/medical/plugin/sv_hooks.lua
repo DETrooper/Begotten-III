@@ -78,7 +78,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 						end
 						
 						if player.GetCharmEquipped and player:GetCharmEquipped("embalmed_heart") then
-							bloodLossPerLimb = bloodLossPerLimb * 0.6;
+							bloodLossPerLimb = bloodLossPerLimb * 0.5;
 						end
 						
 						for k, v in pairs(bleedingLimbs) do
@@ -178,7 +178,13 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 								end
 								
 								if bloodLevel < self.maxBloodLevel then
-									player:ModifyBloodLevel(self.bloodPassiveRegen);
+									local bloodRegen = self.bloodPassiveRegen;
+									
+									if player.GetCharmEquipped and player:GetCharmEquipped("embalmed_heart") then
+										bloodRegen = bloodRegen * 3;
+									end
+									
+									player:ModifyBloodLevel(bloodRegen);
 								end
 							end
 						else
@@ -201,7 +207,13 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 							end
 							
 							if bloodLevel < self.maxBloodLevel then
-								player:ModifyBloodLevel(self.bloodPassiveRegen);
+								local bloodRegen = self.bloodPassiveRegen;
+								
+								if player.GetCharmEquipped and player:GetCharmEquipped("embalmed_heart") then
+									bloodRegen = bloodRegen * 3;
+								end
+								
+								player:ModifyBloodLevel(bloodRegen);
 							end
 						end
 						

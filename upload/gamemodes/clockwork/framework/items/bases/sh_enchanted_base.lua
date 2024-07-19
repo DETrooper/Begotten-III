@@ -12,7 +12,7 @@ local ITEM = item.New(nil, true);
 	ITEM.useText = "Equip"
 	ITEM.category = "Charms"
 	ITEM.description = "An enchanted item with a mysterious aura."
-	ITEM.requiredFaiths = nil;
+	ITEM.requireFaith = nil;
 	ITEM.slots = {"Charm1", "Charm2"};
 	ITEM.equipmentSaveString = "charms";
 
@@ -76,7 +76,7 @@ local ITEM = item.New(nil, true);
 			return false
 		end
 	
-		if self.requiredFaiths and not (table.HasValue(self.requiredFaiths, player:GetFaith())) then
+		if self.requireFaith and not (table.HasValue(self.requireFaith, player:GetFaith())) then
 			if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
 				if !player.spawning then
 					Schema:EasyText(player, "chocolate", "You are not of the correct faith to wear this!")

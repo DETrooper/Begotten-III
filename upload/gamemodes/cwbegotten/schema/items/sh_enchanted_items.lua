@@ -67,7 +67,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Reduces sanity loss by 25%.\n- Reduces stability loss by 25%.";
 	
-	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.requireFaith = {"Faith of the Family"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
@@ -78,9 +78,9 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "embalmed_heart";
 	ITEM.description = "A mummified heart, embalmed with special care by some ancient civilization.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Reduces blood loss when bleeding by 40%.";
+	ITEM.charmEffects = "- Reduces blood loss when bleeding by 50%.\n- Triples the rate of blood regeneration.";
 	
-	ITEM.requiredFaiths = {"Faith of the Dark"};
+	--ITEM.requireFaith = {"Faith of the Dark"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
@@ -93,7 +93,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Reduces all limb damage by 50%.";
 	
-	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.requireFaith = {"Faith of the Family"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
@@ -213,7 +213,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.description = "The skull of a stag, likely kept by a Gore as a trophy or as a good luck charm.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases all faith gain by 25% if you are of the Faith of the Family.";
-	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.requireFaith = {"Faith of the Family"};
 	ITEM.kinisgerOverride = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false}
@@ -227,7 +227,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.description = "The skull of a slain demon, its evil still abounds.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases all faith gain by 25% if you are of the Faith of the Dark.";
-	ITEM.requiredFaiths = {"Faith of the Dark"};
+	ITEM.requireFaith = {"Faith of the Dark"};
 	ITEM.kinisgerOverride = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false}
@@ -241,7 +241,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.description = "A ritually engraved skull belonging to one of many ancient saints of the Holy Hierarchy. A good omen for those of the Faith of the Light indeed.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases all faith gain by 25% if you are of the Faith of the Light.";
-	ITEM.requiredFaiths = {"Faith of the Light"};
+	ITEM.requireFaith = {"Faith of the Light"};
 	ITEM.kinisgerOverride = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false}

@@ -1660,6 +1660,8 @@ function playerMeta:GetMaxHealth(health)
 	local subfaith = self:GetSubfaith();
 	local faith = self:GetFaith();
 	local boost = self:GetNetVar("loyaltypoints", 0)
+	
+	-- should probably move this all into hooks later.
 
 	if FACTION then
 		maxHealth = FACTION.maxHealth or 100;
@@ -1734,6 +1736,16 @@ function playerMeta:GetMaxHealth(health)
 	
 	if self.maxHealthBoost then
 		maxHealth = maxHealth + self.maxHealthBoost;
+	end
+	
+	if cwMedicalSystem then
+		local injuries = cwMedicalSystem:GetInjuries(self);
+		
+		for k, v in pairs (injuries) do
+			if v["burn"] then
+				maxHealth = maxHealth - 10;
+			end
+		end
 	end
 	
 	if (self:Health() > maxHealth) and self.maxHealthSet then

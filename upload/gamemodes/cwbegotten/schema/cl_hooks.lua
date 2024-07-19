@@ -2695,6 +2695,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			frame:AddSpacer(2, Color(0, 0, 0, 0));
 		end;
 		
+		if itemTable.requireFaith and not table.IsEmpty(itemTable.requireFaith) then
+			frame:AddText("Required Faith: "..table.concat(itemTable.requireFaith, " or "), Color(110, 30, 30));
+		end
+		
 		frame:AddText("Effects: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
 		frame:AddText(itemTable.charmEffects, Color(110, 30, 30));
 		
