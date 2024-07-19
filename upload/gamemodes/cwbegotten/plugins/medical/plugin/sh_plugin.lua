@@ -317,8 +317,31 @@ local COMMAND = Clockwork.command:New("CharDiagnose");
 			if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
 				local bloodLevel = target:GetCharacterData("BloodLevel", cwMedicalSystem.maxBloodLevel);
 				local diagnoseString = "You take a good look at "..target:Name()..".";
+				local health = target:Health();
+				local maxHealth = target:GetMaxHealth();
+				local textColorScale = 0;
 				
 				if target:Alive() then
+					if health < maxHealth then
+						if health <= maxHealth * 0.25 then
+							diagnoseString = diagnoseString.." They appear to be near death.";
+							
+							textColorScale = math.min(textColorScale + 0.8, 1);
+						elseif health <= maxHealth * 0.55 then
+							diagnoseString = diagnoseString.." They appear to be badly wounded.";
+							
+							textColorScale = math.min(textColorScale + 0.5, 1);
+						elseif health <= maxHealth * 0.75 then
+							diagnoseString = diagnoseString.." They appear to be wounded.";
+							
+							textColorScale = math.min(textColorScale + 0.25, 1);
+						elseif health <= maxHealth * 0.9 then
+							diagnoseString = diagnoseString.." They appear to have minor wounds.";
+							
+							textColorScale = math.min(textColorScale + 0.05, 1);
+						end
+					end
+				
 					if target.bleeding then
 						local bleedingLimbsData = target:GetCharacterData("BleedingLimbs", {});
 						local bleedingLimbs = {};
@@ -326,6 +349,8 @@ local COMMAND = Clockwork.command:New("CharDiagnose");
 						for k, v in pairs(bleedingLimbsData) do
 							if v == true then
 								table.insert(bleedingLimbs, k);
+								
+								textColorScale = math.min(textColorScale + 0.1, 1);
 							end
 						end
 						
@@ -359,6 +384,8 @@ local COMMAND = Clockwork.command:New("CharDiagnose");
 							
 								if injury and injury.symptom then
 									diagnoseString = diagnoseString.." Their "..cwMedicalSystem.cwHitGroupToString[k]..injury.symptom;
+									
+									textColorScale = math.min(textColorScale + 0.1, 1);
 								end
 							end
 						end
@@ -366,6 +393,8 @@ local COMMAND = Clockwork.command:New("CharDiagnose");
 					
 					if bloodLevel < cwMedicalSystem.maxBloodLevel - 1250 then
 						diagnoseString = diagnoseString.." They look very pale from blood loss.";
+						
+						textColorScale = math.min(textColorScale + 0.2, 1);
 					end
 					
 					local symptoms = target:GetSharedVar("symptoms", {});
@@ -378,33 +407,35 @@ local COMMAND = Clockwork.command:New("CharDiagnose");
 							if symptomText then
 								symptomText = symptomText.." They look very pale and sickly.";
 							else
-								symptomText = "They look very pale and sickly.";
+								symptomText = " They look very pale and sickly.";
 							end
 						elseif symptom == "Pustules" then
 							if symptomText then
 								symptomText = symptomText.." They are covered in pustules and buboes, a textbook symptom of the Begotten Plague.";
 							else
-								symptomText = "They are covered in pustules and buboes, a textbook symptom of the Begotten Plague.";
+								symptomText = " They are covered in pustules and buboes, a textbook symptom of the Begotten Plague.";
 							end
 						elseif symptom == "Deformities" then
 							if symptomText then
 								symptomText = symptomText.." Their skin is deformed and discolored, and their eyes bulging.";
 							else
-								symptomText = "Their skin is deformed and discolored, and their eyes bulging.";
+								symptomText = " Their skin is deformed and discolored, and their eyes bulging.";
 							end
 						elseif symptom == "Coughing" then
 							if symptomText then
 								symptomText = symptomText.." They are coughing a great deal.";
 							else
-								symptomText = "They are coughing a great deal.";
+								symptomText = " They are coughing a great deal.";
 							end
 						elseif symptom == "Nausea" then
 							if symptomText then
 								symptomText = symptomText.." They look mildly disoriented as if afflicted by nausea.";
 							else
-								symptomText = "They look mildly disoriented as if afflicted by nausea.";
+								symptomText = " They look mildly disoriented as if afflicted by nausea.";
 							end
 						end
+						
+						textColorScale = math.min(textColorScale + 0.2, 1);
 					end
 					
 					if symptomText then
@@ -415,9 +446,9 @@ local COMMAND = Clockwork.command:New("CharDiagnose");
 						diagnoseString = diagnoseString.." They look perfectly healthy.";
 					end
 					
-					Schema:EasyText(player, "indianred",diagnoseString);
+					Schema:EasyText(player, Color(255 * textColorScale, 255 * (1 - textColorScale), 0), diagnoseString);
 				else
-					Schema:EasyText(player, "indianred",diagnoseString.." They would appear to be deceased, there is nothing more you can do for them.");
+					Schema:EasyText(player, "indianred", diagnoseString.." They would appear to be deceased, there is nothing more you can do for them.");
 				end
 			else
 				Schema:EasyText(player, "firebrick", "This character is too far away!");
