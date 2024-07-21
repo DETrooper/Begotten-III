@@ -139,7 +139,7 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Lesser Ring of Vitality";
-	ITEM.model = "models/items/magic/ring_regeneration/ring_regeneration.mdl";
+	ITEM.model = "models/items/magic/ring_regeneration/ring_regeneration_lesser.mdl";
 	ITEM.weight = 0.2;
 	ITEM.uniqueID = "ring_vitality_lesser";
 	ITEM.description = "A ring with a mysterious aura. Putting it on your finger makes you feel healthier.";
