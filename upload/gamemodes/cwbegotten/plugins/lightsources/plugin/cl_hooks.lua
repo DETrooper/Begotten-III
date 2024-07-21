@@ -48,7 +48,7 @@ function cwLantern:Think()
 			if (v:Alive()) then
 				local activeWeapon = v:GetActiveWeapon();
 				
-				if (IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern") or v:GetSharedVar("lanternOnHip") then
+				if (IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern") or v:GetNetVar("lanternOnHip") then
 					local position = v:GetPos();
 					
 					if (position:DistToSqr(clientPosition) <= reqDistance) then
@@ -67,18 +67,18 @@ function cwLantern:Think()
 		
 		local isRaised, activeWeapon = k:IsWeaponRaised();
 		
-		if !k:GetSharedVar("lanternOnHip") and (!isRaised or (IsValid(activeWeapon) and activeWeapon:GetClass() != "cw_lantern")) then
+		if !k:GetNetVar("lanternOnHip") and (!isRaised or (IsValid(activeWeapon) and activeWeapon:GetClass() != "cw_lantern")) then
 			self.lanternPlayers[k] = nil;
 			continue;
 		end;
 		
-		if k:GetSharedVar("hidden") then
+		if k:GetNetVar("hidden") then
 			self.lanternPlayers[k] = nil;
 			continue;
 		end;
 		
-		local currentOil = k:GetSharedVar("oil", 0);
-		local handIndex = k:GetSharedVar("lanternOnHip", false) and k:LookupBone("ValveBiped.Bip01_R_Thigh") or k:LookupBone("ValveBiped.Bip01_R_Hand");
+		local currentOil = k:GetNetVar("oil", 0);
+		local handIndex = k:GetNetVar("lanternOnHip", false) and k:LookupBone("ValveBiped.Bip01_R_Thigh") or k:LookupBone("ValveBiped.Bip01_R_Hand");
 
 		if (!handIndex) then 
 			continue;
@@ -118,8 +118,8 @@ function cwLantern:GetBars(bars)
 	if (IsValid(activeWeapon)) then
 		local activeClass = activeWeapon:GetClass();
 		
-		if (activeClass == "cw_lantern" or Clockwork.Client:GetSharedVar("lanternOnHip", false)) then
-			local oil = Clockwork.Client:GetSharedVar("oil", 0);
+		if (activeClass == "cw_lantern" or Clockwork.Client:GetNetVar("lanternOnHip", false)) then
+			local oil = Clockwork.Client:GetNetVar("oil", 0);
 			
 			--if (oil < 50) then
 				local oilColor = oil / 100;

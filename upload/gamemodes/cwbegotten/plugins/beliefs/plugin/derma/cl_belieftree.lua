@@ -156,7 +156,7 @@ function PANEL:Paint()
 		self.localLevelCap = self.localLevelCap + 5;
 	end
 	
-	if self.player:GetSharedVar("subfaction") == "Rekh-khet-sa" then
+	if self.player:GetNetVar("subfaction") == "Rekh-khet-sa" then
 		self.localLevelCap = self.localLevelCap + 666;
 	end
 
@@ -326,8 +326,8 @@ function PANEL:AddIcon(iconData)
 			return;
 		end
 		
-		local subfaction = Clockwork.Client:GetSharedVar("subfaction");
-		local subfaith = Clockwork.Client:GetSharedVar("subfaith");
+		local subfaction = Clockwork.Client:GetNetVar("subfaction");
+		local subfaith = Clockwork.Client:GetNetVar("subfaith");
 		local faction = Clockwork.Client:GetFaction();
 		local traits = Clockwork.Client.cwTraits;
 		local points = Clockwork.Client:GetNetVar("points", 0);
@@ -496,11 +496,11 @@ function PANEL:AddIcon(iconData)
 						icon:SetColor(HardLocked)
 						canTake = "This belief is locked due to a belief you took!"
 						canTakeColor = selectedBad;
-					elseif parent.lockedSubfactions and table.HasValue(parent.lockedSubfactions, beliefPanel.player:GetSharedVar("subfaction")) then
+					elseif parent.lockedSubfactions and table.HasValue(parent.lockedSubfactions, beliefPanel.player:GetNetVar("subfaction")) then
 						icon:SetColor(HardLocked)
 						canTake = "This belief tree is locked due to the subfaction you took!"
 						canTakeColor = selectedBad;
-					elseif icon.lockedSubfactions and table.HasValue(icon.lockedSubfactions, beliefPanel.player:GetSharedVar("subfaction")) then
+					elseif icon.lockedSubfactions and table.HasValue(icon.lockedSubfactions, beliefPanel.player:GetNetVar("subfaction")) then
 						icon:SetColor(HardLocked)
 						canTake = "This belief is locked due to the subfaction you took!"
 						canTakeColor = selectedBad;
@@ -512,7 +512,7 @@ function PANEL:AddIcon(iconData)
 						icon:SetColor(HardLocked)
 						canTake = "This belief is locked due to the faction you took!"
 						canTakeColor = selectedBad;
-					elseif icon.subfaith and beliefPanel.player:GetSharedVar("subfaith") and beliefPanel.player:GetSharedVar("subfaith") ~= "" and beliefPanel.player:GetSharedVar("subfaith") ~= "N/A" and icon.subfaith ~= beliefPanel.player:GetSharedVar("subfaith") then
+					elseif icon.subfaith and beliefPanel.player:GetNetVar("subfaith") and beliefPanel.player:GetNetVar("subfaith") ~= "" and beliefPanel.player:GetNetVar("subfaith") ~= "N/A" and icon.subfaith ~= beliefPanel.player:GetNetVar("subfaith") then
 						icon:SetColor(HardLocked)
 						canTake = "You have already selected a subfaith!"
 						canTakeColor = selectedBad;
@@ -655,7 +655,7 @@ function PANEL:Rebuild(player, level, experience, beliefs, points, faith, highli
 		self.localLevelCap = self.localLevelCap + 5;
 	end
 	
-	if player:GetSharedVar("subfaction") == "Rekh-khet-sa" then
+	if player:GetNetVar("subfaction") == "Rekh-khet-sa" then
 		self.localLevelCap = self.localLevelCap + 666;
 	end
 
@@ -757,7 +757,7 @@ end
 function PANEL:RebuildBeliefTrees()
 	self.panelList:Clear();
 
-	local faith = self.player:GetSharedVar("faith");
+	local faith = self.player:GetNetVar("faith");
 
 	for k, v in SortedPairsByMemberValue(cwBeliefs:GetBeliefTrees(), "order") do
 		if v.requiredFaiths and !table.HasValue(v.requiredFaiths, faith) then

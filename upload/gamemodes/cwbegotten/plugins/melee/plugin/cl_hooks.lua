@@ -105,7 +105,7 @@ end;
 	
 		for k, v in pairs(_player.GetAll()) do
 			local max_poise = v:GetMaxPoise();
-			local poise = v:GetSharedVar("meleeStamina", max_poise);
+			local poise = v:GetNetVar("meleeStamina", max_poise);
 			local playedBreathing = false;
 			
 			if (poise < max_poise * 0.8) then

@@ -149,7 +149,7 @@ function PANEL:Rebuild()
 	end
 	
 	if string.find(playerModel, "models/begotten/heads") then
-		local factionTable = Clockwork.faction:FindByID(Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction());
+		local factionTable = Clockwork.faction:FindByID(Clockwork.Client:GetNetVar("kinisgerOverride") or Clockwork.Client:GetFaction());
 		local gender = string.lower(Clockwork.Client:GetGender());
 	
 		if cwSanity and Clockwork.Client:Sanity() <= 20 then
@@ -167,7 +167,7 @@ function PANEL:Rebuild()
 		elseif factionTable then
 			playerModel = factionTable.models[gender].clothes;
 		
-			local subfaction = Clockwork.Client:GetSharedVar("subfaction");
+			local subfaction = Clockwork.Client:GetNetVar("subfaction");
 			
 			if subfaction and factionTable.subfactions then
 				for i, v in ipairs(factionTable.subfactions) do

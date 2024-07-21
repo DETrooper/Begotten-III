@@ -41,7 +41,7 @@ function cwSenses:RenderScreenspaceEffects()
 						
 						render.SuppressEngineLighting(true);
 						
-						if v:GetSharedVar("subfaith") == "Voltism" then
+						if v:GetNetVar("subfaith") == "Voltism" then
 							render.SetColorModulation(unpack(voltismModulation));
 						else
 							render.SetColorModulation(unpack(modulation));

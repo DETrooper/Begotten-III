@@ -85,7 +85,7 @@ end;
 							end;
 						end;
 						
-						if (Clockwork.Client:GetSharedVar("IsTarget") == true) then
+						if (Clockwork.Client:GetNetVar("IsTarget") == true) then
 							if (distance <= self.dangerDistance) then
 								dangerLevel = "Attack";
 							end;

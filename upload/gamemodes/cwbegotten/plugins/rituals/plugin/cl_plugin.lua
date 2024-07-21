@@ -86,8 +86,8 @@ function cwRituals:PlayerCanPerformRitual(uniqueID)
 	local requiredSubfaction = ritualTable.requiredSubfaction;
 	local requiredBeliefsSubfactionOverride = ritualTable.requiredBeliefsSubfactionOverride;
 	local onerequiredbelief = ritualTable.onerequiredbelief;
-	local subfaction = Clockwork.Client:GetSharedVar("subfaction");
-	local subfaith = Clockwork.Client:GetSharedVar("subfaith");
+	local subfaction = Clockwork.Client:GetNetVar("subfaction");
+	local subfaith = Clockwork.Client:GetNetVar("subfaith");
 	
 	if Clockwork.Client:IsRagdolled() or !Clockwork.Client:Alive() then
 		--Clockwork.chatBox:Add(nil, "icon16/error.png", Color(200, 175, 200, 255), "Your character cannot perform a ritual at this moment!");
@@ -215,7 +215,7 @@ end;
 
 -- Called to check if a player does recognise another player.
 function cwRituals:PlayerDoesRecognisePlayer(player, status, isAccurate, realValue)
-	if Clockwork.Client:GetSharedVar("faith") == "Faith of the Dark" and player:GetSharedVar("markedBySatanist") then
+	if Clockwork.Client:GetNetVar("faith") == "Faith of the Dark" and player:GetNetVar("markedBySatanist") then
 		return true;
 	end
 end;
@@ -238,16 +238,16 @@ function cwRituals:PostDrawOpaqueRenderables()
 			end
 			
 			if player then
-				if player:GetSharedVar("powderheelActive") then
+				if player:GetNetVar("powderheelActive") then
 					table.insert(self.storedPlayers, player);
 				end
 				
-				if player:GetSharedVar("enlightenmentActive") then
+				if player:GetNetVar("enlightenmentActive") then
 					table.insert(self.storedPlayers, player);
 				end
 				
 				if player ~= Clockwork.Client then
-					if player:GetSharedVar("soulscorchActive") or player:GetSharedVar("auraMotherActive") then
+					if player:GetNetVar("soulscorchActive") or player:GetNetVar("auraMotherActive") then
 						table.insert(self.storedPlayers, player);
 					end
 				end
@@ -260,7 +260,7 @@ function cwRituals:PostDrawOpaqueRenderables()
 			local entityPosition = v:GetPos();
 			local vEnt = v:GetRagdollEntity() or v;
 		
-			if v:GetSharedVar("soulscorchActive") then
+			if v:GetNetVar("soulscorchActive") then
 				local headBone = vEnt:LookupBone("ValveBiped.Bip01_Head1");
 				
 				if (headBone) then
@@ -278,7 +278,7 @@ function cwRituals:PostDrawOpaqueRenderables()
 				end;
 			end
 			
-			if v:GetSharedVar("auraMotherActive") then
+			if v:GetNetVar("auraMotherActive") then
 				local headBone = vEnt:LookupBone("ValveBiped.Bip01_Head1");
 				
 				if (headBone) then
@@ -296,7 +296,7 @@ function cwRituals:PostDrawOpaqueRenderables()
 				end;
 			end
 			
-			if v:GetSharedVar("enlightenmentActive") then
+			if v:GetNetVar("enlightenmentActive") then
 				local dynamicLight = DynamicLight(v:EntIndex());
 				
 				if (dynamicLight) then
@@ -311,7 +311,7 @@ function cwRituals:PostDrawOpaqueRenderables()
 				end;
 			end
 			
-			if v:GetSharedVar("powderheelActive") then
+			if v:GetNetVar("powderheelActive") then
 				render.SetColorMaterial();
 				render.DrawSphere(entityPosition + Vector(0, 0, 40), config.Get("talk_radius"):Get(), 32, 32, Color(0, 200, 0, 50));
 				render.DrawSphere(entityPosition + Vector(0, 0, 40), -config.Get("talk_radius"):Get(), 32, 32, Color(0, 200, 0, 50));

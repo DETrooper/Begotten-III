@@ -43,7 +43,7 @@ local function CreateMenu(state)
 		end);
 		
 		if cwShacks.shacks and Clockwork.Client:GetFaction() ~= "Holy Hierarchy" then
-			local playerShack = Clockwork.Client:GetSharedVar("shack");
+			local playerShack = Clockwork.Client:GetNetVar("shack");
 			
 			if !playerShack then
 				local subMenu = menu:AddSubMenu("Purchase Property");

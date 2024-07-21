@@ -46,7 +46,7 @@ function cwDayNight:Think()
 	
 		if cycle == "night" and Clockwork.Client:GetZone() == "wasteland" and not Clockwork.player:IsNoClipping(Clockwork.Client) and not Clockwork.Client.dueling then
 			local flashlightEnabled = Clockwork.Client:FlashlightIsOn();
-			local sanity = Clockwork.Client:GetSharedVar("sanity", 100);
+			local sanity = Clockwork.Client:GetNetVar("sanity", 100);
 			local max_shadows = 10;
 			local position = Clockwork.Client:GetPos();
 			

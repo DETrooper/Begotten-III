@@ -121,8 +121,8 @@ end;
 function Schema:ShouldPlayerModifyBlur(entity)
 	if entity:IsPlayer() and entity:GetMoveType() ~= MOVETYPE_NOCLIP and entity:GetColor().a > 0 then
 		-- There's probably a better way to do this but I don't feel like networking clothes items and shit.
-		local faction = entity:GetSharedVar("kinisgerOverride") or entity:GetFaction();
-		local clientFaction = Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction();
+		local faction = entity:GetNetVar("kinisgerOverride") or entity:GetFaction();
+		local clientFaction = Clockwork.Client:GetNetVar("kinisgerOverride") or Clockwork.Client:GetFaction();
 		
 		if faction == "Goreic Warrior" and clientFaction ~= "Goreic Warrior" then
 			if entity:GetModel() == "models/begotten/goreicwarfighters/gorechieftan.mdl" then
@@ -435,7 +435,7 @@ end;
 -- Called when the calc view table should be adjusted.
 function Schema:PlayerAdjustHeadbobInfo(info)
 	local drunk = Clockwork.player:GetDrunk();
-	local sanity = Clockwork.Client:GetSharedVar("sanity");
+	local sanity = Clockwork.Client:GetNetVar("sanity");
 	local scaleAdd = 0;
 	local weapon = Clockwork.Client:GetActiveWeapon();
 	
@@ -734,7 +734,7 @@ function Schema:RenderScreenspaceEffects()
 		DrawSharpen(self.contrast, self.distance)
 	end;
 	
-	if (Clockwork.Client:GetSharedVar("blackOut") and Clockwork.Client:Alive()) then
+	if (Clockwork.Client:GetNetVar("blackOut") and Clockwork.Client:Alive()) then
 		local blackOut = {
 			[ "$pp_colour_brightness" ] = 0,
 			[ "$pp_colour_contrast" ] = 0,

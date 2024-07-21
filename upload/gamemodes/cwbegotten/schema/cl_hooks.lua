@@ -405,7 +405,7 @@ function Schema:PlayerFootstep(player, position, foot, soundString, volume, reci
 		return true;
 	end
 	
-	if (player:Crouching() and player:GetSharedVar("hasNimble")) or player:GetCharmEquipped("urn_silence") or player:GetColor().a <= 0 then
+	if (player:Crouching() and player:GetNetVar("hasNimble")) or player:GetCharmEquipped("urn_silence") or player:GetColor().a <= 0 then
 		return true;
 	end;
 
@@ -450,10 +450,10 @@ local animalModels = {
 function Schema:GetEntityMenuOptions(entity, options)
 	if Clockwork.Client:Alive() then
 		local curTime = CurTime();
-		local clientFaction = Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction();
+		local clientFaction = Clockwork.Client:GetNetVar("kinisgerOverride") or Clockwork.Client:GetFaction();
 	
 		if entity:IsPlayer() then
-			local entFaction = entity:GetSharedVar("kinisgerOverride") or entity:GetFaction();
+			local entFaction = entity:GetNetVar("kinisgerOverride") or entity:GetFaction();
 			
 			if clientFaction == "Goreic Warrior" and entFaction ~= "Goreic Warrior" and entity:GetNetVar("tied") != 0 then
 				for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
@@ -476,7 +476,7 @@ function Schema:GetEntityMenuOptions(entity, options)
 			local player = Clockwork.entity:GetPlayer(entity);
 
 			if player then
-				local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+				local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			
 				if clientFaction == "Goreic Warrior" and playerFaction ~= "Goreic Warrior" and player:GetNetVar("tied") != 0 then
 					for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
@@ -719,13 +719,13 @@ end;
 
 -- Called when the target's subfaction should be drawn.
 function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
-	local playerSubfaction = Clockwork.Client:GetSharedVar("kinisgerOverrideSubfaction") or Clockwork.Client:GetSharedVar("subfaction");
-	local targetSubfaction = target:GetSharedVar("kinisgerOverrideSubfaction") or target:GetSharedVar("subfaction");
+	local playerSubfaction = Clockwork.Client:GetNetVar("kinisgerOverrideSubfaction") or Clockwork.Client:GetNetVar("subfaction");
+	local targetSubfaction = target:GetNetVar("kinisgerOverrideSubfaction") or target:GetNetVar("subfaction");
 	local subfactionText;
 	
 	if targetSubfaction and targetSubfaction ~= "" and targetSubfaction ~= "N/A" then
-		local playerFaction = Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction();
-		local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+		local playerFaction = Clockwork.Client:GetNetVar("kinisgerOverride") or Clockwork.Client:GetFaction();
+		local targetFaction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
 		local textColor = Color(150, 150, 150, 255);
 
 		if playerFaction == "Goreic Warrior" and targetFaction == "Goreic Warrior" then
@@ -755,14 +755,14 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 			if target:GetModel() == "models/begotten/satanists/lordvasso/male_56.mdl" then
 				subfactionText = "The chosen of Satan, the Dreadlord himself!";
 				textColor = Color(0, 255, 0, 255);
-			elseif Clockwork.Client:GetSharedVar("subfaction") == target:GetSharedVar("subfaction") or Clockwork.Client:GetSharedVar("subfaction") == "Kinisger" and target:GetSharedVar("kinisgerOverrideSubfaction") then
+			elseif Clockwork.Client:GetNetVar("subfaction") == target:GetNetVar("subfaction") or Clockwork.Client:GetNetVar("subfaction") == "Kinisger" and target:GetNetVar("kinisgerOverrideSubfaction") then
 				local brother = "brother";
 				
 				if target:GetGender() == GENDER_FEMALE then
 					brother = "sister";
 				end
 				
-				if target:GetSharedVar("kinisgerOverrideSubfaction") then
+				if target:GetNetVar("kinisgerOverrideSubfaction") then
 					subfactionText = "A "..brother.." of the Kinisger bloodline, masquerading as a "..targetSubfaction..".";
 				else
 					subfactionText = "A "..brother.." of the "..targetSubfaction.." bloodline.";
@@ -770,7 +770,7 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 				
 				textColor = Color(0, 255, 0, 255);
 			else
-				if target:GetSharedVar("kinisgerOverrideSubfaction") then
+				if target:GetNetVar("kinisgerOverrideSubfaction") then
 					subfactionText = "A member of the Kinisger bloodline, masquerading as a "..targetSubfaction..".";
 				else
 					subfactionText = "A member of the "..targetSubfaction.." bloodline.";
@@ -856,11 +856,11 @@ end
 -- Called when the target's subfaction should be drawn.
 function Schema:DrawTargetPlayerLevel(target, alpha, x, y)
 	local playerFaction = Clockwork.Client:GetFaction();
-	local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+	local targetFaction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
 	local levelText;
 	
 	if playerFaction == "Children of Satan" and targetFaction ~= "Children of Satan" then
-		local level = target:GetSharedVar("level", 1)
+		local level = target:GetNetVar("level", 1)
 		local textColor = Color(255, 100, 100, 255);
 		
 		if level < 10 then
@@ -897,8 +897,8 @@ function Schema:DrawTargetPlayerLevel(target, alpha, x, y)
 		if levelText then
 			return Clockwork.kernel:DrawInfo(Clockwork.kernel:ParseData(levelText), x, y, textColor, alpha);
 		end
-	elseif Clockwork.Client:GetSharedVar("subfaction") == "Clan Reaver" and targetFaction ~= "Goreic Warrior" then
-		local level = target:GetSharedVar("level", 1)
+	elseif Clockwork.Client:GetNetVar("subfaction") == "Clan Reaver" and targetFaction ~= "Goreic Warrior" then
+		local level = target:GetNetVar("level", 1)
 		local textColor = Color(255, 100, 100, 255);
 		
 		if level < 10 then
@@ -1018,7 +1018,7 @@ function Schema:GetScreenTextInfo()
 			title = "THIS CHARACTER IS PERMANENTLY KILLED",
 			text = "Go to the character menu to make a new one."
 		};
-	elseif (Clockwork.Client:GetSharedVar("beingChloro")) then
+	elseif (Clockwork.Client:GetNetVar("beingChloro")) then
 		return {
 			alpha = 255 - blackFadeAlpha,
 			title = "SOMEBODY IS USING CHLOROFORM ON YOU"
@@ -1115,8 +1115,8 @@ function Schema:PlayerDoesHaveFlag(player, flag) end;
 
 -- Called to check if a player does recognise another player.
 function Schema:PlayerDoesRecognisePlayer(target, status, isAccurate, realValue)
-	local playerFaction = Clockwork.Client:GetSharedVar("kinisgerOverride") or Clockwork.Client:GetFaction();
-	local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+	local playerFaction = Clockwork.Client:GetNetVar("kinisgerOverride") or Clockwork.Client:GetFaction();
+	local targetFaction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
 
 	if targetFaction == "Holy Hierarchy" then
 		return true;

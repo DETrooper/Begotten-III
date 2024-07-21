@@ -4,7 +4,7 @@
 
 -- A function to get the oil text.
 function cwLantern:GetOilText()
-	local oil = Clockwork.Client:GetSharedVar("oil", 0);
+	local oil = Clockwork.Client:GetNetVar("oil", 0);
 	local text = "No Information";
 
 	if (oil) then

@@ -39,18 +39,18 @@ function PLUGIN:Tick()
 	end
 	
 	for k, v in pairs(ents.FindByClass("prop_ragdoll")) do
-		local model = v:GetNWString("clothes");
-		
 		if string.sub(v:GetModel(), 1, 21) == "models/begotten/heads" then
+			local model = v:GetNWString("clothes");
 			local vTab = v:GetTable();
+			local clothesEnt = vTab.clothesEnt;
 			
-			if IsValid(vTab.clothesEnt) and vTab.clothesEnt:GetModel() ~= model then
-				vTab.clothesEnt:Remove();
+			if IsValid(clothesEnt) and clothesEnt:GetModel() ~= model then
+				clothesEnt:Remove();
 				vTab.clothesEnt = nil;
 			end
 		
-			if !IsValid(vTab.clothesEnt) then
-				local clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
+			if !IsValid(clothesEnt) then
+				clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
 				
 				if IsValid(clothesEnt) then
 					clothesEnt:SetParent(v);
@@ -61,8 +61,6 @@ function PLUGIN:Tick()
 					vTab.clothesEnt = clothesEnt;
 				end
 			else
-				local clothesEnt = vTab.clothesEnt;
-				
 				if clothesEnt:GetModel() ~= v:GetNWString("clothes") then
 					clothesEnt:Remove();
 					vTab.clothesEnt = ClientsideModel(v:GetNWString("clothes"), RENDERGROUP_BOTH);
@@ -89,7 +87,9 @@ end
 
 function PLUGIN:PostPlayerDraw(player, flags)
 	if string.sub(player:GetModel(), 1, 21) == "models/begotten/heads" then
-		if player:Alive() and player:GetMoveType() ~= MOVETYPE_OBSERVER and player:GetColor().a > 0 then
+		local plyColor = player:GetColor();
+	
+		if player:Alive() and player:GetMoveType() ~= MOVETYPE_OBSERVER and plyColor.a > 0 then
 			local plyTab = player:GetTable();
 			local clothes = player:GetClothesEquipped();
 			local model;
@@ -101,14 +101,22 @@ function PLUGIN:PostPlayerDraw(player, flags)
 					model = "models/begotten/"..clothes.group.."_"..string.lower(player:GetGender())..".mdl"
 				end
 			else
-				local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+				local faction = player:GetFaction();
 				
 				if faction then
+					if faction == "Children of Satan" then
+						faction = player:GetNetVar("kinisgerOverride") or faction;
+					end
+					
 					local factionTable = Clockwork.faction:FindByID(faction);
 					
 					if factionTable then
-						local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSharedVar("subfaction");
+						local subfaction = player:GetNetVar("subfaction");
 						
+						if faction == "Children of Satan" then
+							subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or subfaction;
+						end
+
 						if subfaction and factionTable.subfactions then
 							for i, v in ipairs(factionTable.subfactions) do
 								if v.name == subfaction and v.models then
@@ -126,20 +134,21 @@ function PLUGIN:PostPlayerDraw(player, flags)
 				end
 			end
 			
-			if IsValid(plyTab.clothesEnt) and plyTab.clothesEnt:GetModel() ~= model then
-				plyTab.clothesEnt:Remove();
+			local clothesEnt = plyTab.clothesEnt;
+			
+			if IsValid(clothesEnt) and clothesEnt:GetModel() ~= model then
+				clothesEnt:Remove();
 				plyTab.clothesEnt = nil;
 			end
 			
-			if !IsValid(plyTab.clothesEnt) then
+			if !IsValid(clothesEnt) then
 				if model then
 					plyTab.clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
+					clothesEnt = plyTab.clothesEnt;
 				else
 					return;
 				end
 			end
-			
-			local clothesEnt = plyTab.clothesEnt;
 			
 			if clothes and clothes.bodygroupCharms then
 				for k, v in pairs(clothes.bodygroupCharms) do
@@ -156,7 +165,7 @@ function PLUGIN:PostPlayerDraw(player, flags)
 				clothesEnt:AddEffects(EF_BONEMERGE);
 			end
 
-			clothesEnt:SetColor(player:GetColor());
+			clothesEnt:SetColor(plyColor);
 			clothesEnt:SetNoDraw(player:GetNoDraw());
 
 			plyTab.clothesDrawnThisTick = true;

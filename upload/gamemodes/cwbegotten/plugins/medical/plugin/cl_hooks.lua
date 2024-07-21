@@ -217,7 +217,7 @@ function cwMedicalSystem:RenderScreenspaceEffects()
 		
 		if (!self.nauseaAttack or self.nauseaAttack < curTime) then
 			if !Clockwork.Client:IsRagdolled() and not Clockwork.Client.dueling and Clockwork.Client:HasInitialized() and !Clockwork.Client.LoadingText then
-				local symptoms = Clockwork.Client:GetSharedVar("symptoms", {});
+				local symptoms = Clockwork.Client:GetNetVar("symptoms", {});
 				
 				if table.HasValue(symptoms, "Nausea") then
 					local strings = {"I feel like I need to puke!", "I feel like I'm gonna be sick."};
@@ -237,7 +237,7 @@ function cwMedicalSystem:RenderScreenspaceEffects()
 		
 		if (!self.headache or self.headache < curTime) then
 			if !Clockwork.Client:IsRagdolled() and not Clockwork.Client.dueling and Clockwork.Client:HasInitialized() and !Clockwork.Client.LoadingText then
-				local symptoms = Clockwork.Client:GetSharedVar("symptoms", {});
+				local symptoms = Clockwork.Client:GetNetVar("symptoms", {});
 				
 				if table.HasValue(symptoms, "Headaches") then
 					local strings = {"My head is pounding!", "My head is killing me!", "Fuck, my head hurts like hell."};
@@ -355,7 +355,7 @@ end;
 -- Called when the target's symptoms should be drawn.
 function cwMedicalSystem:DrawTargetPlayerSymptoms(target, alpha, x, y)
 	local textColor = Color(200, 50, 50, 255);
-	local symptoms = target:GetSharedVar("symptoms", {});
+	local symptoms = target:GetNetVar("symptoms", {});
 	local symptomText;
 	
 	for i = 1, #symptoms do
@@ -389,7 +389,7 @@ end
 
 function cwMedicalSystem:ModifyStatusEffects(tab)
 	local bloodLevel = Clockwork.Client:GetNWInt("bloodLevel", self.maxBloodLevel);
-	local symptoms = Clockwork.Client:GetSharedVar("symptoms", {});
+	local symptoms = Clockwork.Client:GetNetVar("symptoms", {});
 
 	if Clockwork.Client.cwLimbs then
 		for k, v in pairs(Clockwork.Client.cwLimbs) do

@@ -2,7 +2,7 @@ local PLUGIN = PLUGIN;
 
 -- Called when screen space effects should be rendered.
 function cwGore:RenderScreenspaceEffects()
-	if (Clockwork.Client:GetSharedVar("blackOut") and Clockwork.Client:Alive()) then
+	if (Clockwork.Client:GetNetVar("blackOut") and Clockwork.Client:Alive()) then
 		local blackOut = {
 			[ "$pp_colour_brightness" ] = 0,
 			[ "$pp_colour_contrast" ] = 0,

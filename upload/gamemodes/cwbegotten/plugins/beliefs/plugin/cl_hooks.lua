@@ -17,7 +17,7 @@ local animalModels = {
 
 function cwBeliefs:PlayerCharacterInitialized(data)
 	-- Hide or display Kinisger darkwhisper.
-	if Clockwork.Client:GetSharedVar("subfaction") == "Kinisger" then
+	if Clockwork.Client:GetNetVar("subfaction") == "Kinisger" then
 		Clockwork.command:SetHidden("DarkWhisperFactionKinisger", false);
 	else
 		Clockwork.command:SetHidden("DarkWhisperFactionKinisger", true);
@@ -121,7 +121,7 @@ function cwBeliefs:AddEntityOutlines(outlines)
 		end
 	end
 	
-	if Clockwork.Client:GetSharedVar("faith") == "Faith of the Dark" then
+	if Clockwork.Client:GetNetVar("faith") == "Faith of the Dark" then
 		local hasAssassin = self:HasBelief("assassin");
 		local isCOS = (Clockwork.Client:GetFaction() == "Children of Satan");
 		
@@ -136,14 +136,14 @@ function cwBeliefs:AddEntityOutlines(outlines)
 				end
 
 				if isCOS or self:HasBelief("embrace_the_darkness") then
-					if v:GetSharedVar("yellowBanner") == true then
+					if v:GetNetVar("yellowBanner") == true then
 						if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= bannerDist) then
 							self:DrawPlayerOutline(v, outlines, Color(200, 200, 0, 255));
 						end
 					end
 					
 					if isCOS then
-						if v:GetSharedVar("kinisgerOverride") then
+						if v:GetNetVar("kinisgerOverride") then
 							if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= assassinDist) then
 								self:DrawPlayerOutline(v, outlines, Color(0, 225, 225, 255));
 							end
@@ -151,7 +151,7 @@ function cwBeliefs:AddEntityOutlines(outlines)
 					end
 				end
 				
-				if v:GetSharedVar("markedBySatanist") == true then
+				if v:GetNetVar("markedBySatanist") == true then
 					if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= markedDist) then
 						self:DrawPlayerOutline(v, outlines, Color(150, 0, 150, 255));
 					end
@@ -201,9 +201,9 @@ end;
 
 -- Called when the target's marked status should be drawn.
 function cwBeliefs:DrawTargetPlayerMarked(target, alpha, x, y)
-	if target:GetSharedVar("markedBySatanist") == true then
+	if target:GetNetVar("markedBySatanist") == true then
 		if (target:Alive()) then
-			if Clockwork.Client:GetSharedVar("faith") == "Faith of the Dark" then
+			if Clockwork.Client:GetNetVar("faith") == "Faith of the Dark" then
 				local gender = "He";
 				
 				if (target:GetGender() == GENDER_FEMALE) then
@@ -260,12 +260,12 @@ netstream.Hook("UpgradedWarcry", function(data)
 	cwBeliefs.upgradedWarcryActive = true;
 	
 	local faction = Clockwork.Client:GetFaction();
-	local faith = Clockwork.Client:GetSharedVar("faith");
+	local faith = Clockwork.Client:GetNetVar("faith");
 	
 	for k, v in pairs(_player.GetAll()) do
 		if v ~= Clockwork.Client and (v:HasInitialized()) then
-			if v:GetSharedVar("faith") ~= faith then
-				local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+			if v:GetNetVar("faith") ~= faith then
+				local vFaction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 				
 				if faction == "Wanderer" or vFaction ~= faction then
 					if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= (800 * 800)) then

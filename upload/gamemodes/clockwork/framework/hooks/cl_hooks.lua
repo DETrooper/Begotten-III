@@ -2383,7 +2383,7 @@ function GM:HUDDrawTargetID()
 										end
 									elseif playerFaction == "Children of Satan" and clientFaction ~= "Children of Satan" then
 										if not string.find(player:GetModel(), "models/begotten/satanists") then
-											local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
+											local kinisgerOverride = player:GetNetVar("kinisgerOverride");
 											
 											if kinisgerOverride then
 												local classTable = Clockwork.class:GetStored()[kinisgerOverride];
@@ -2419,7 +2419,7 @@ function GM:HUDDrawTargetID()
 										end
 									elseif playerFaction == "Children of Satan" and clientFaction ~= "Children of Satan" then
 										if not string.find(player:GetModel(), "models/begotten/satanists") then
-											local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
+											local kinisgerOverride = player:GetNetVar("kinisgerOverride");
 											
 											if kinisgerOverride then
 												local classTable = Clockwork.class:GetStored()[kinisgerOverride];
@@ -3783,7 +3783,7 @@ end
 
 -- Called to check if a player does recognise another player.
 function GM:PlayerDoesRecognisePlayer(player, status, isAccurate, realValue)
-	--[[if player:GetSharedVar("faceConcealed") then
+	--[[if player:GetNetVar("faceConcealed") then
 		return false;
 	end]]--
 	
@@ -3792,7 +3792,7 @@ end
 
 -- Called when a player's name should be shown as unrecognised.
 function GM:PlayerCanShowUnrecognised(player, x, y, color, alpha, flashAlpha)
-	--[[if player:GetSharedVar("faceConcealed") then
+	--[[if player:GetNetVar("faceConcealed") then
 		return "This character's face is concealed.";
 	end]]--
 	
