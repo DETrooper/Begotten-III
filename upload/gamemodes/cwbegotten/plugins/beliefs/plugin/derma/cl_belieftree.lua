@@ -248,6 +248,17 @@ function PANEL:Paint()
 	end
 end
 
+function PANEL:PaintOver(width, height)
+	if self.highlightAlpha then
+		if self.highlightAlpha < 220 then
+			self.highlightAlpha = math.max(0, self.highlightAlpha - (FrameTime() * 200));
+		end
+	
+		surface.SetDrawColor(10, 10, 10, self.highlightAlpha);
+		surface.DrawRect(4, 4, width - 8, (height - 96) - 8);
+	end
+end
+
 -- A function to add an icon somewhere on the tree.
 function PANEL:AddIcon(iconData)
 	if (!iconData or type(iconData) != "table") then
@@ -624,7 +635,7 @@ function PANEL:AddHeader(headerData)
 end
 
 -- A function to rebuild the panel.
-function PANEL:Rebuild(player, level, experience, beliefs, points, faith)
+function PANEL:Rebuild(player, level, experience, beliefs, points, faith, highlightBelief)
 	--cwBeliefs:RegisterBackgroundBlur(self, SysTime())
 
 	self.player = player;
@@ -699,6 +710,46 @@ function PANEL:Rebuild(player, level, experience, beliefs, points, faith)
 	end
 	
 	self:RebuildBeliefTrees();
+	
+	if highlightBelief then
+		for k, v in pairs(self.panelList:GetItems()) do
+			if v.buttons then
+				for k2, v2 in pairs(v.buttons) do
+					if v2.uniqueID == highlightBelief then
+						v2.highlightAlpha = 220;
+						v2:SetDrawOnTop(true);
+						Clockwork.Client.cwBeliefPanel.highlightAlpha = 220;
+					
+						v2.PaintOver = function(panel, w, h)
+							if panel.highlightAlpha < 220 then
+								panel.highlightAlpha = math.max(0, panel.highlightAlpha - (FrameTime() * 200));
+							end
+							
+							surface.SetDrawColor(Color(200, 150, 10, panel.highlightAlpha));
+							surface.DrawOutlinedRect(0, 0, w, h, 2);
+						end
+
+						timer.Simple(3, function()
+							if IsValid(v2) then
+								Clockwork.Client.cwBeliefPanel.highlightAlpha = Clockwork.Client.cwBeliefPanel.highlightAlpha - (FrameTime() * 200);
+								v2.highlightAlpha = (v2.highlightAlpha - (FrameTime() * 200));
+								
+								timer.Simple(2, function()
+									if IsValid(v2) then
+										Clockwork.Client.cwBeliefPanel.highlightAlpha = nil;
+										v2:SetDrawOnTop(false);
+										v2.PaintOver = nil;
+									end
+								end);
+							end	
+						end);
+					
+						break;
+					end
+				end
+			end
+		end
+	end	
 
 	self:ShowCloseButton(false)
 end

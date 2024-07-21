@@ -904,7 +904,7 @@ function Clockwork.player:SetDefaultSkin(player)
 	--player:SetSkin(self:GetDefaultSkin(player))
 	
 	if player then
-		local currentCharacter = player:GetCharacter();
+		local currentCharacter = player.cwCharacter;
 		
 		if currentCharacter and currentCharacter.skin then
 			player:SetSkin(currentCharacter.skin);
@@ -1220,7 +1220,7 @@ end
 
 -- A function to query a player's character.
 function Clockwork.player:Query(player, key, default)
-	local character = player:GetCharacter()
+	local character = player.cwCharacter;
 
 	if (character) then
 		key = Clockwork.kernel:SetCamelCase(key, true)
@@ -1383,7 +1383,7 @@ end
 
 -- A function to check if a player has any flags.
 function Clockwork.player:HasAnyFlags(player, flags, bByDefault)
-	if (player:GetCharacter()) then
+	if (player.cwCharacter) then
 		local playerFlags = player:GetFlags()
 
 		if (Clockwork.class:HasAnyFlags(player:Team(), flags) and !bByDefault) then
@@ -1431,7 +1431,7 @@ end
 
 -- A function to check if a player has flags.
 function Clockwork.player:HasFlags(player, flags, bByDefault, bIsStrict)
-	if (player:IsPlayer() and player:GetCharacter()) then
+	if (player:IsPlayer() and player.cwCharacter) then
 		local playerFlags = player:GetFlags()
 
 		if (Clockwork.class:HasFlags(player:Team(), flags) and !bByDefault) then
@@ -1699,7 +1699,7 @@ function Clockwork.player:DeleteCharacter(player, characterID)
 	local character = player.cwCharacterList[characterID]
 	
 	if (character) then
-		if (player:GetCharacter() != character) then
+		if (player.cwCharacter != character) then
 			local fault = hook.Run("PlayerCanDeleteCharacter", player, character)
 			
 			if (fault == nil or fault == true) then
@@ -1722,7 +1722,7 @@ end
 -- A function to use a player's character.
 function Clockwork.player:UseCharacter(player, characterID)
 	local isCharacterMenuReset = player:IsCharacterMenuReset()
-	local currentCharacter = player:GetCharacter()
+	local currentCharacter = player.cwCharacter;
 	local character = player.cwCharacterList[characterID]
 
 	if (!character) then
@@ -1936,7 +1936,7 @@ end
 -- A function to clear a player's recognised names list.
 function Clockwork.player:ClearRecognisedNames(player, status, isAccurate)
 	if (!status) then
-		local character = player:GetCharacter()
+		local character = player.cwCharacter;
 
 		if (character) then
 			character.recognisedNames = {}
@@ -2508,9 +2508,12 @@ end
 
 -- A function to get a player's ragdoll entity.
 function Clockwork.player:GetRagdollEntity(player)
-	if (player.cwRagdollTab) then
-		if (IsValid(player.cwRagdollTab.entity)) then
-			return player.cwRagdollTab.entity
+	local plyTable = player:GetTable();
+	local ragdollTab = plyTable.cwRagdollTab;
+	
+	if (ragdollTab) then
+		if (IsValid(ragdollTab.entity)) then
+			return ragdollTab.entity
 		end
 	end
 end
@@ -2998,7 +3001,7 @@ end
 
 -- A function to get a player's character ID.
 function Clockwork.player:GetCharacterID(player)
-	local character = player:GetCharacter()
+	local character = player.cwCharacter
 
 	if (character) then
 		for k, v in pairs(player:GetCharacters()) do
@@ -3075,7 +3078,7 @@ function Clockwork.player:LoadCharacter(player, characterID, tMergeCreate, Callb
 		character = player.cwCharacterList[characterID]
 
 		if (character) then
-			if (player:GetCharacter()) then
+			if (player.cwCharacter) then
 				hook.Run("PrePlayerCharacterUnloaded", player)
 			
 				self:SaveCharacter(player)
@@ -3364,7 +3367,7 @@ function Clockwork.player:SaveCharacter(player, bCreate, character, Callback)
 		local keys = ""
 
 		if (!character or type(character) != "table") then
-			character = player:GetCharacter()
+			character = player.cwCharacter
 		end
 
 		local queryObj = Clockwork.database:Insert(charactersTable)
@@ -3403,14 +3406,14 @@ function Clockwork.player:SaveCharacter(player, bCreate, character, Callback)
 			end
 		queryObj:Execute()
 	elseif (player:HasInitialized()) then
-		local currentCharacter = player:GetCharacter()
+		local currentCharacter = player.cwCharacter
 		local charactersTable = config.Get("mysql_characters_table"):Get()
 		local schemaFolder = Clockwork.kernel:GetSchemaFolder()
 		local unixTime = os.time()
 		local steamID = player:SteamID()
 
 		if (!character) then
-			character = player:GetCharacter()
+			character = currentCharacter
 		end
 		
 		if (!character.subfaith) then

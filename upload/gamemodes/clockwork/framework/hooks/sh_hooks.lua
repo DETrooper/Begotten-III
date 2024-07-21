@@ -172,22 +172,26 @@ do
 		if (velLength > 0.5) then
 			rate = ((velLength * 0.8) / maxSeqGroundSpeed);
 		end
-
-		player.cwPlaybackRate = math.Clamp(rate, 0, 1.5);
 		
-		hook.Run("ModifyPlayerPlaybackRate", player);
-		
-		player:SetPlaybackRate(player.cwPlaybackRate);
+		local plyTab = player:GetTable();
 
-		if (player:InVehicle() and CLIENT) then
-			local vehicle = player:GetVehicle();
-			
-			if (IsValid(vehicle)) then
-				local velocity = vehicle:GetVelocity();
-				local steer = (vehicle:GetPoseParameter("vehicle_steer") * 2) - 1;
+		plyTab.cwPlaybackRate = math.Clamp(rate, 0, 1.5);
+		
+		hook.Run("ModifyPlayerPlaybackRate", player, plyTab);
+		
+		player:SetPlaybackRate(plyTab.cwPlaybackRate);
+
+		if CLIENT then
+			if (player:InVehicle()) then
+				local vehicle = player:GetVehicle();
 				
-				player:SetPoseParameter("vertical_velocity", velocity.z * 0.01);
-				player:SetPoseParameter("vehicle_steer", steer);
+				if (IsValid(vehicle)) then
+					local velocity = vehicle:GetVelocity();
+					local steer = (vehicle:GetPoseParameter("vehicle_steer") * 2) - 1;
+					
+					player:SetPoseParameter("vertical_velocity", velocity.z * 0.01);
+					player:SetPoseParameter("vehicle_steer", steer);
+				end;
 			end;
 		end;
 	end;

@@ -2354,6 +2354,7 @@ function PANEL:Init()
 		self.traitItemsList:EnableVerticalScrollbar(true);
 		self.traitItemsList:SetDrawBackground(false);
 		self.traitItemsList:HideScrollbar();
+		self.traitItemsList.traitButtons = {};
 		
 		self.chosenTraitItemsList = vgui.Create("DPanelList", self.traitsList);
 		self.chosenTraitItemsList:SetPadding(4);
@@ -2369,8 +2370,6 @@ function PANEL:Init()
 		self.traitsList:AddItem(self.traitItemsList);
 		self.traitsList:AddItem(self.chosenTraitItemsList);
 		self.traitsForm:AddItem(self.traitsList);
-		
-		TRAITBUTTONS = {};
 	
 		local selectedBad = Color(255, 50, 50, 255);
 		local selectedGood = Color(50, 255, 50, 255);
@@ -2384,7 +2383,7 @@ function PANEL:Init()
 			traitButton:SetColor(Color(41, 26, 0), true);
 			traitButton:SetSize(228, 24);
 			traitButton:SetToolTipTitle(v.name);
-			traitButton:SetTooltip("");
+			traitButton:SetTooltip(false);
 			
 			traitButton.uniqueID = v.uniqueID;
 			
@@ -2477,6 +2476,8 @@ function PANEL:Init()
 			
 			-- Called when the spawn icon is clicked.
 			function traitButton.DoClick(spawnIcon)
+				local traitButtons = self.traitItemsList.traitButtons;
+			
 				if (table.HasValue(self.selectedTraits, traitTable)) then
 					table.RemoveByValue(self.selectedTraits, traitTable);
 					table.RemoveByValue(self.info.traits, traitTable.uniqueID);
@@ -2491,38 +2492,38 @@ function PANEL:Init()
 							
 							self.info.skin = 0;
 						end
-					
-						for i = 1, #TRAITBUTTONS do		
-							if IsValid(TRAITBUTTONS[i]) then
-								if table.HasValue(traitButton.disableTable, TRAITBUTTONS[i].uniqueID) then
-									if TRAITBUTTONS[i].factions or TRAITBUTTONS[i].excludedsubfactions or TRAITBUTTONS[i].requiredfactions then
-										if TRAITBUTTONS[i].excludedfactions then
-											if not table.HasValue(TRAITBUTTONS[i].excludedfactions, Clockwork.Client.SelectedFaction) then
-												--printp("Enabling: "..TRAITBUTTONS[i].uniqueID);
-												TRAITBUTTONS[i]:SetColor(Color(41, 26, 0), true);
-												TRAITBUTTONS[i]:SetDisabled(false);
+
+						for i = 1, #traitButtons do		
+							if IsValid(traitButtons[i]) then
+								if table.HasValue(traitButton.disableTable, traitButtons[i].uniqueID) then
+									if traitButtons[i].factions or traitButtons[i].excludedsubfactions or traitButtons[i].requiredfactions then
+										if traitButtons[i].excludedfactions then
+											if not table.HasValue(traitButtons[i].excludedfactions, Clockwork.Client.SelectedFaction) then
+												--printp("Enabling: "..traitButtons[i].uniqueID);
+												traitButtons[i]:SetColor(Color(41, 26, 0), true);
+												traitButtons[i]:SetDisabled(false);
 											end
 										end
 									
-										if TRAITBUTTONS[i].excludedsubfactions then
-											if not table.HasValue(TRAITBUTTONS[i].excludedsubfactions, Clockwork.Client.SelectedSubfaction) then
-												--printp("Enabling: "..TRAITBUTTONS[i].uniqueID);
-												TRAITBUTTONS[i]:SetColor(Color(41, 26, 0), true);
-												TRAITBUTTONS[i]:SetDisabled(false);
+										if traitButtons[i].excludedsubfactions then
+											if not table.HasValue(traitButtons[i].excludedsubfactions, Clockwork.Client.SelectedSubfaction) then
+												--printp("Enabling: "..traitButtons[i].uniqueID);
+												traitButtons[i]:SetColor(Color(41, 26, 0), true);
+												traitButtons[i]:SetDisabled(false);
 											end
 										end
 										
-										if TRAITBUTTONS[i].requiredfactions then
-											if table.HasValue(TRAITBUTTONS[i].requiredfactions, Clockwork.Client.SelectedFaction) then
-												--printp("Enabling: "..TRAITBUTTONS[i].uniqueID);
-												TRAITBUTTONS[i]:SetColor(Color(41, 26, 0), true);
-												TRAITBUTTONS[i]:SetDisabled(false);
+										if traitButtons[i].requiredfactions then
+											if table.HasValue(traitButtons[i].requiredfactions, Clockwork.Client.SelectedFaction) then
+												--printp("Enabling: "..traitButtons[i].uniqueID);
+												traitButtons[i]:SetColor(Color(41, 26, 0), true);
+												traitButtons[i]:SetDisabled(false);
 											end
 										end
 									else
-										--printp("Enabling: "..TRAITBUTTONS[i].uniqueID);
-										TRAITBUTTONS[i]:SetColor(Color(41, 26, 0), true);
-										TRAITBUTTONS[i]:SetDisabled(false);
+										--printp("Enabling: "..traitButtons[i].uniqueID);
+										traitButtons[i]:SetColor(Color(41, 26, 0), true);
+										traitButtons[i]:SetDisabled(false);
 									end
 								end;
 							end;
@@ -2549,12 +2550,12 @@ function PANEL:Init()
 					end
 					
 					if traitButton.disableTable then
-						for i = 1, #TRAITBUTTONS do
-							if IsValid(TRAITBUTTONS[i]) then
-								if table.HasValue(traitButton.disableTable, TRAITBUTTONS[i].uniqueID) then
-									--printp("Disabling: "..TRAITBUTTONS[i].uniqueID);
-									TRAITBUTTONS[i]:SetColor(Color(74, 26, 0), true);
-									TRAITBUTTONS[i]:SetDisabled(true);
+						for i = 1, #traitButtons do
+							if IsValid(traitButtons[i]) then
+								if table.HasValue(traitButton.disableTable, traitButtons[i].uniqueID) then
+									--printp("Disabling: "..traitButtons[i].uniqueID);
+									traitButtons[i]:SetColor(Color(74, 26, 0), true);
+									traitButtons[i]:SetDisabled(true);
 								end;
 							end
 						end;
@@ -2565,7 +2566,7 @@ function PANEL:Init()
 
 				--[[if self.disableTable then
 					for k, v in pairs(self.disableTable) do
-						for k2, v2 in pairs(TRAITBUTTONS) do
+						for k2, v2 in pairs(traitButtons) do
 							if (string.find(v, v2.uniqueID)) then
 								temptable[k2]:SetDisabled(true);
 							end;
@@ -2623,7 +2624,7 @@ function PANEL:Init()
 			end);
 			
 			self.traitItemsList:AddItem(traitButton);
-			table.insert(TRAITBUTTONS, traitButton);
+			table.insert(self.traitItemsList.traitButtons, traitButton);
 		end;
 	end
 	

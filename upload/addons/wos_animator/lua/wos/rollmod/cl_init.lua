@@ -24,33 +24,30 @@
 
 hook.Add("ClockworkInitialized", "wOS.RollMod.SetupConvars", function()
 	if Clockwork then
-		CW_CONVAR_DOUBLETAPROLLING = Clockwork.kernel:CreateClientConVar("cwDoubleTapRolling", 1, true, true)
+		Clockwork.ConVars.DOUBLETAPROLLING = Clockwork.kernel:CreateClientConVar("cwDoubleTapRolling", 1, true, true)
 		
 		Clockwork.setting:AddCheckBox("Movement", "Enable double tapping movement keys for rolling. (If not enabled, bind begotten_roll to a key instead)", "cwDoubleTapRolling", "Click to enable/disable double-tap rolling.");
 	end
 end);
 
-hook.Add( "CreateMove", "wOS.RollMod.PreventMovement", function( cmd )
+hook.Add("CreateMove", "wOS.RollMod.PreventMovement", function( cmd )
 	if LocalPlayer():wOSIsRolling() then
 		cmd:ClearButtons()
 		cmd:ClearMovement()
+		
 		if LocalPlayer():GetRollTime() >= CurTime() + 0.1 then
 			if (Clockwork and Clockwork.player and Clockwork.player.HasFlags and !Clockwork.player:HasFlags(Clockwork.Client, "4")) then
 				cmd:SetButtons( IN_DUCK )
 			end;
 		end
 	end
-end )
+end)
 
 --Credit to Stalker for this thing, super handy.
-net.Receive( "wOS.RollMod.CallRestart", function()
-
+net.Receive("wOS.RollMod.CallRestart", function()
 	local ply = net.ReadEntity()
 	
 	if IsValid( ply ) then
-	
 		ply:AnimRestartMainSequence()
-		
 	end
-	
-end )
+end)

@@ -7,7 +7,7 @@ local Clockwork = Clockwork;
 
 --Called when the plugin is initialized.
 function cwStaticEnts:Initialize()
-	CW_CONVAR_STATICESP = Clockwork.kernel:CreateClientConVar("cwStaticESP", 0, true, true);
+	Clockwork.ConVars.STATICESP = Clockwork.kernel:CreateClientConVar("cwStaticESP", 0, true, true);
 	
 	Clockwork.setting:AddCheckBox("Admin ESP", "Show static entities.", "cwStaticESP", "Whether or not to show static entities in the admin ESP.", function()
 		return Clockwork.player:IsAdmin(Clockwork.Client);
@@ -26,7 +26,7 @@ function cwStaticEnts:GetAdminESPInfo(info)
 	local info = info;
 
 	if (self.staticEnts) then
-		if (CW_CONVAR_STATICESP:GetInt() == 1) then
+		if (Clockwork.ConVars.STATICESP:GetInt() == 1) then
 			for k, v in ipairs(self.staticEnts) do
 				local class = classTranslate[v.class] or v.class;
 
@@ -45,7 +45,7 @@ function cwStaticEnts:Tick()
 	local curTime = CurTime();
 
 	if (Clockwork.Client.HasInitialized and Clockwork.Client:HasInitialized()) then
-		if (Clockwork.plugin:Call("PlayerCanSeeAdminESP") and CW_CONVAR_STATICESP:GetInt() == 1) then
+		if (Clockwork.plugin:Call("PlayerCanSeeAdminESP") and Clockwork.ConVars.STATICESP:GetInt() == 1) then
 			if (!self.nextSync or curTime >= self.nextSync) then
 				Clockwork.datastream:Request("staticESPSync", nil, function(data)
 					cwStaticEnts.staticEnts = data;

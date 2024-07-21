@@ -25,21 +25,15 @@
 local meta = FindMetaTable( "Player" )
 
 function meta:wOSIsRolling()
-
 	return ( self:GetRollTime() >= CurTime() )
-
 end
 
 function meta:GetRollTime()
-
 	return ( self:GetNW2Float( "wOS.RollTime", 0 ) )
-
 end
 
 function meta:GetRollDir()
-
 	return ( self:GetNW2Int( "wOS.RollDir", 1 ) )
-
 end
 
 function wOS.RollMod:ResetAnimation( ply )
@@ -52,7 +46,7 @@ function wOS.RollMod:ResetAnimation( ply )
 	end
 end
 
-hook.Add( "ModifyPlayerPlaybackRate", "wOS.RollMod.SlowDownAnim", function(ply)
+hook.Add( "ModifyPlayerPlaybackRate", "wOS.RollMod.SlowDownAnim", function(ply, plyTab)
 	if ply:wOSIsRolling() then
 		--[[local roll_speed = math.Round(ply:GetNW2Float("wOS.RollSpeed", 0.9), 2);
 		
@@ -64,7 +58,7 @@ hook.Add( "ModifyPlayerPlaybackRate", "wOS.RollMod.SlowDownAnim", function(ply)
 			ply.cwPlaybackRate = 0.6;
 		end]]--
 		
-		ply.cwPlaybackRate = 0.8;
+		plyTab.cwPlaybackRate = 0.8;
 		
 		return true
 	end
@@ -78,7 +72,6 @@ hook.Add( "ModifyCalcMainActivity", "wOS.RollMod.Animations", function( ply, vel
 	if seqid < 0 then return end
 
 	return -1, seqid or nil
-
 end )
 
 local CMoveData = FindMetaTable("CMoveData")

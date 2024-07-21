@@ -42,12 +42,14 @@ function PLUGIN:Tick()
 		local model = v:GetNWString("clothes");
 		
 		if string.sub(v:GetModel(), 1, 21) == "models/begotten/heads" then
-			if IsValid(v.clothesEnt) and v.clothesEnt:GetModel() ~= model then
-				v.clothesEnt:Remove();
-				v.clothesEnt = nil;
+			local vTab = v:GetTable();
+			
+			if IsValid(vTab.clothesEnt) and vTab.clothesEnt:GetModel() ~= model then
+				vTab.clothesEnt:Remove();
+				vTab.clothesEnt = nil;
 			end
 		
-			if !IsValid(v.clothesEnt) then
+			if !IsValid(vTab.clothesEnt) then
 				local clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
 				
 				if IsValid(clothesEnt) then
@@ -56,14 +58,14 @@ function PLUGIN:Tick()
 					clothesEnt:SetColor(v:GetColor());
 					clothesEnt:SetNoDraw(v:GetNoDraw());
 					
-					v.clothesEnt = clothesEnt;
+					vTab.clothesEnt = clothesEnt;
 				end
 			else
-				local clothesEnt = v.clothesEnt;
+				local clothesEnt = vTab.clothesEnt;
 				
 				if clothesEnt:GetModel() ~= v:GetNWString("clothes") then
 					clothesEnt:Remove();
-					v.clothesEnt = ClientsideModel(v:GetNWString("clothes"), RENDERGROUP_BOTH);
+					vTab.clothesEnt = ClientsideModel(v:GetNWString("clothes"), RENDERGROUP_BOTH);
 				end
 			
 				if clothesEnt:GetParent() ~= v then
@@ -75,11 +77,12 @@ function PLUGIN:Tick()
 				clothesEnt:SetNoDraw(v:GetNoDraw());
 				clothesEnt:SetPos(v:GetPos());
 			end
-		else
+		elseif v.clothesEnt then
 			if IsValid(v.clothesEnt) then
 				v.clothesEnt:Remove();
-				v.clothesEnt = nil;
 			end
+			
+			v.clothesEnt = nil;
 		end
 	end
 end

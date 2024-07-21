@@ -199,7 +199,7 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 	
 	if beliefTable then
 		if beliefTable.subfaith and beliefTable.row == 1 then
-			local character = player:GetCharacter();
+			local character = player.cwCharacter;
 			
 			character.subfaith = beliefTable.subfaith;
 			player:SetSharedVar("subfaith", beliefTable.subfaith);

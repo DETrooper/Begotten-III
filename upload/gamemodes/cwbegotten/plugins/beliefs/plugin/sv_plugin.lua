@@ -159,7 +159,7 @@ function cwBeliefs:ForceRemoveBelief(player, uniqueID, bRemoveDependencies)
 		
 		if beliefTable and beliefTable.subfaith and beliefTable.row == 1 then
 			player:SetSharedVar("subfaith", nil);
-			player:GetCharacter().subfaith = nil;
+			player.cwCharacter.subfaith = nil;
 		end
 		
 		beliefs[uniqueID] = false;
@@ -172,7 +172,7 @@ function cwBeliefs:ForceRemoveBelief(player, uniqueID, bRemoveDependencies)
 				
 				if requirementTable and requirementTable.subfaith and requirementTable.row == 1 then
 					player:SetSharedVar("subfaith", nil);
-					player:GetCharacter().subfaith = nil;
+					player.cwCharacter.subfaith = nil;
 				end
 			
 				beliefs[v] = false;

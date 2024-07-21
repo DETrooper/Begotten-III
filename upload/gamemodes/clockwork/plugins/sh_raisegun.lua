@@ -48,11 +48,12 @@ function playerMeta:IsWeaponRaised()
 		return true
 	end
 
-	local shouldRaise = hook.Run("ShouldWeaponBeRaised", self, weapon)
+	-- This doesn't seem to be used currently so I'm disabling it for now.
+	--[[local shouldRaise = hook.Run("ShouldWeaponBeRaised", self, weapon)
 
 	if (shouldRaise) then
 		return shouldRaise
-	end
+	end]]--
 
 	return self:GetDTBool(BOOL_WEAPON_RAISED), weapon
 end

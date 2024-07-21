@@ -83,7 +83,7 @@ if cwWeather.systemEnabled then
 				
 				for i, v in ipairs(_player.GetAll()) do
 					if v:Alive() and v:HasInitialized() then
-						local lastZone = v:GetCharacterData("LastZone");
+						local lastZone = v:GetCharacterData("LastZone") or "wasteland";
 						local zoneTable = zones:FindByID(lastZone);
 						
 						if zoneTable.hasWeather then
@@ -143,7 +143,7 @@ if cwWeather.systemEnabled then
 					
 					for i, v in ipairs(_player.GetAll()) do
 						if v:Alive() and v:HasInitialized() then
-							local lastZone = v:GetCharacterData("LastZone");
+							local lastZone = v:GetCharacterData("LastZone") or "wasteland";
 							local zoneTable = zones:FindByID(lastZone);
 							
 							if zoneTable.hasWeather then

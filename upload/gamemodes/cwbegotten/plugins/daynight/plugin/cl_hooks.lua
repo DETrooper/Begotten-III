@@ -13,8 +13,8 @@ local shadowScreams = {
 	"misc/chatter_03.ogg",
 };
 
-CW_CONVAR_DAYNIGHTMOON = Clockwork.kernel:CreateClientConVar("cwDayNightMoon", 1, true, true)
-CW_CONVAR_DAYNIGHTHALLUCINATIONS = Clockwork.kernel:CreateClientConVar("cwDayNightHallucinations", 1, true, true)
+Clockwork.ConVars.DAYNIGHTMOON = Clockwork.kernel:CreateClientConVar("cwDayNightMoon", 1, true, true)
+Clockwork.ConVars.DAYNIGHTHALLUCINATIONS = Clockwork.kernel:CreateClientConVar("cwDayNightHallucinations", 1, true, true)
 
 if !cwDayNight.nightWeight then
 	cwDayNight.nightWeight = 0;
@@ -58,7 +58,7 @@ function cwDayNight:Think()
 				self.shadows = {};
 			end
 			
-			if (CW_CONVAR_DAYNIGHTHALLUCINATIONS:GetInt() == 1) then
+			if (Clockwork.ConVars.DAYNIGHTHALLUCINATIONS:GetInt() == 1) then
 				if not self.moonHallucination then
 					if not self.moonHallucinationTimer then
 						self.moonHallucinationTimer = curTime + math.random(120, 300);
@@ -462,7 +462,7 @@ end;
 
 function cwDayNight:MoonTrigger(sharpen, force)
 	if (Clockwork.Client:IsAdmin() and !force) then
-		if (CW_CONVAR_DAYNIGHTMOON and CW_CONVAR_DAYNIGHTMOON:GetInt() != 1) then
+		if (Clockwork.ConVars.DAYNIGHTMOON and Clockwork.ConVars.DAYNIGHTMOON:GetInt() != 1) then
 			return;
 		end
 	end

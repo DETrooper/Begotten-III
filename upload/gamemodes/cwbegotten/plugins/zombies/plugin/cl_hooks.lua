@@ -5,8 +5,8 @@
 
 -- Called when Clockwork is initialized.
 function cwZombies:ClockworkInitialized()
-	CW_CONVAR_ZOMBIEESP = Clockwork.kernel:CreateClientConVar("cwZombieESP", 1, false, true);
-	--CW_CONVAR_ZOMBIEMUSIC = Clockwork.kernel:CreateClientConVar("cwZombieMusic", 1, false, true);
+	Clockwork.ConVars.ZOMBIEESP = Clockwork.kernel:CreateClientConVar("cwZombieESP", 1, false, true);
+	--Clockwork.ConVars.ZOMBIEMUSIC = Clockwork.kernel:CreateClientConVar("cwZombieMusic", 1, false, true);
 end;
 
 -- Called every frame the local player is connected to the server.
@@ -332,7 +332,7 @@ end;]]--
 
 -- A function to get the admin ESP info.
 function cwZombies:GetAdminESPInfo(info)
-	if (CW_CONVAR_ZOMBIEESP:GetInt() == 1) then
+	if (Clockwork.ConVars.ZOMBIEESP:GetInt() == 1) then
 		for k, v in ipairs(ents.FindByClass("npc_bgt_*")) do
 			local class = v:GetClass();
 			

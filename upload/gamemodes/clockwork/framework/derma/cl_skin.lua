@@ -397,26 +397,22 @@ end;
 RunConsoleCommand("tooltip_delay", "0")
 
 function SKIN:PaintTooltip(panel, w, h)
-	if (Clockwork.Client:IsAdmin()) then
-		local w, h = panel:GetSize();
-				
-		DisableClipping(true);
-			for i = 1, 4 do
-				local borderSize = i * 2;
-				local bgColor = Color(0, 0, 0, (255 / i) * 0.3);
-				self:DrawGenericBackground(borderSize, borderSize, w, h, bgColor);
-				self:DrawGenericBackground(-borderSize, borderSize, w, h, bgColor);
-				self:DrawGenericBackground(borderSize, -borderSize, w, h, bgColor);
-				self:DrawGenericBackground(-borderSize, -borderSize, w, h, bgColor);
-			end;
+	local w, h = panel:GetSize();
+			
+	DisableClipping(true);
+		for i = 1, 4 do
+			local borderSize = i * 2;
+			local bgColor = Color(0, 0, 0, (255 / i) * 0.3);
+			self:DrawGenericBackground(borderSize, borderSize, w, h, bgColor);
+			self:DrawGenericBackground(-borderSize, borderSize, w, h, bgColor);
+			self:DrawGenericBackground(borderSize, -borderSize, w, h, bgColor);
+			self:DrawGenericBackground(-borderSize, -borderSize, w, h, bgColor);
+		end;
 
-			draw.RoundedBox(4, 0, 0, w, h, Color(200,0,0, 50));
-			panel:SetTextColor(Color(255, 255, 255, 255));
-			panel:SetExpensiveShadow(1, Color(0, 0, 0, 200));
-		DisableClipping(false);
-	else
-		panel:SetVisible(false);
-	end
+		draw.RoundedBox(4, 0, 0, w, h, Color(200,0,0, 50));
+		panel:SetTextColor(Color(255, 255, 255, 255));
+		panel:SetExpensiveShadow(1, Color(0, 0, 0, 200));
+	DisableClipping(false);
 end;
 
 derma.DefineSkin("Begotten", "Made for the Begotten framework.", SKIN);

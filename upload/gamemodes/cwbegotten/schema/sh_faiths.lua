@@ -160,7 +160,7 @@ local COMMAND = Clockwork.command:New("CharTransferFaith");
 					end
 					
 					target:SetCharacterData("Faith", faithTable.name, true);
-					target:GetCharacter().subfaith = nil;
+					target.cwCharacter.subfaith = nil;
 					
 					Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
 					Clockwork.player:NotifyAll(player:Name().." has transferred "..name.." to the "..faithTable.name.." faith.");

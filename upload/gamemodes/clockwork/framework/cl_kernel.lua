@@ -231,6 +231,8 @@ Clockwork.NetworkProxies = Clockwork.NetworkProxies or {}
 Clockwork.InfoMenuOpen = Clockwork.InfoMenuOpen or false
 Clockwork.ColorModify = Clockwork.ColorModify or {}
 Clockwork.Cinematics = Clockwork.Cinematics or {}
+Clockwork.ActiveDermaToolTips = Clockwork.ActiveDermaToolTips or {}
+Clockwork.ConVars = Clockwork.ConVars or {}
 
 Clockwork.kernel.CenterHints = Clockwork.kernel.CenterHints or {}
 Clockwork.kernel.ESPInfo = Clockwork.kernel.ESPInfo or {}
@@ -1093,8 +1095,8 @@ do
 			end;
 		end;
 		
-		local salesESP = CW_CONVAR_SALEESP:GetInt() == 1;
-		local itemESP = CW_CONVAR_ITEMESP:GetInt() == 1;
+		local salesESP = Clockwork.ConVars.SALEESP:GetInt() == 1;
+		local itemESP = Clockwork.ConVars.ITEMESP:GetInt() == 1;
 		local allEnts = {};
 		
 		if (salesESP or itemESP) then
@@ -1166,7 +1168,7 @@ do
 		local curTime = UnPredictedCurTime();
 
 		if (!self.NextGetESPInfo or curTime >= self.NextGetESPInfo) then
-			self.NextGetESPInfo = curTime + (CW_CONVAR_ESPTIME:GetInt() or 1);
+			self.NextGetESPInfo = curTime + (Clockwork.ConVars.ESPTIME:GetInt() or 1);
 			self.ESPInfo = {};
 
 			self:GetAdminESPInfo(self.ESPInfo)
@@ -2235,16 +2237,12 @@ do
 		return Clockwork.kernel:NewMetaTable(MARKUP_OBJECT);
 	end;
 
-	function Clockwork.kernel:GetActiveDermaToolTip()
-		return Clockwork.ActiveDermaToolTip
+	function Clockwork.kernel:GetActiveDermaToolTips()
+		return Clockwork.ActiveDermaToolTips
 	end
 
 	function Clockwork.kernel:AddMarkupLine(markupText, text, color)
 		print("Clockwork.kernel:AddMarkupLine called with text: "..text);
-	end;
-
-	function Clockwork.kernel:GetActiveMarkupToolTip()
-		return self:GetActiveDermaToolTip();
 	end;
 
 	function Clockwork.kernel:CreateMarkupToolTip(panel)
@@ -2278,8 +2276,6 @@ function Clockwork.kernel:CreateDermaToolTip(panel)
 	function panel.GetItemTable(panel)
 		return panel.itemTable;
 	end;
-	
-	panel.IsToolTip = true;
 
 	-- Called when the panel is removed.
 	function panel.OnRemove(panel, ...)

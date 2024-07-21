@@ -76,7 +76,7 @@ function GM:Initialize()
 		table.Merge(Clockwork.date, Clockwork.kernel:RestoreSchemaData("date"))
 	end
 
-	CW_CONVAR_LOG = Clockwork.kernel:CreateConVar("cwLog", 1)
+	Clockwork.ConVars.LOG = Clockwork.kernel:CreateConVar("cwLog", 1)
 
 	for k, v in pairs(config.stored) do
 		hook.Run("ClockworkConfigInitialized", k, v.value)
@@ -774,51 +774,58 @@ end
 
 -- Called when a player's move data is set up.
 function GM:SetupMove(player, moveData)
+	local plyTable = player:GetTable();
+	
+	if (plyTable.disableMovement) then
+		moveData:SetVelocity(Vector(0, 0, 0));
+		return;
+	end;
+	
 	local isRunning = player:IsRunning();
 
-	if isRunning and !player.accelerationFinished then
+	if isRunning and !plyTable.accelerationFinished then
 		local curTime = CurTime();
 		local run_speed = player:GetTargetRunSpeed();
 		local walk_speed = player:GetWalkSpeed();
 		local final_speed = run_speed;
 		
-		if !player.startAcceleration then
-			player.startAcceleration = curTime;
+		if !plyTable.startAcceleration then
+			plyTable.startAcceleration = curTime;
 		end
 		
-		final_speed = Lerp(curTime - player.startAcceleration, walk_speed, run_speed);
+		final_speed = Lerp(curTime - plyTable.startAcceleration, walk_speed, run_speed);
 		
 		moveData:SetMaxClientSpeed(final_speed);
 		
 		if run_speed <= final_speed then
-			player.accelerationFinished = true;
-			player.startAcceleration = nil;
+			plyTable.accelerationFinished = true;
+			plyTable.startAcceleration = nil;
 		end
 		
-		player.decelerationFinished = false;
-		player.startDeceleration = nil;
+		plyTable.decelerationFinished = false;
+		plyTable.startDeceleration = nil;
 	elseif !isRunning then
-		if !player.decelerationFinished then
+		if plyTable.decelerationFinished == false then
 			local curTime = CurTime();
 			local run_speed = player:GetTargetRunSpeed();
 			local walk_speed = player:GetWalkSpeed();
 			local final_speed = walk_speed;
 			
-			if !player.startDeceleration then
-				player.startDeceleration = curTime;
+			if !plyTable.startDeceleration then
+				plyTable.startDeceleration = curTime;
 			end
 			
-			final_speed = Lerp(curTime - player.startDeceleration, run_speed, walk_speed);
+			final_speed = Lerp(curTime - plyTable.startDeceleration, run_speed, walk_speed);
 			
 			moveData:SetMaxClientSpeed(final_speed);
 			
 			if run_speed >= final_speed then
-				player.decelerationFinished = true;
-				player.startDeceleration = nil;
+				plyTable.decelerationFinished = true;
+				plyTable.startDeceleration = nil;
 			end
 			
-			player.accelerationFinished = false;
-			player.startAcceleration = nil;
+			plyTable.accelerationFinished = false;
+			plyTable.startAcceleration = nil;
 		else
 			moveData:SetMaxClientSpeed(player:GetWalkSpeed());
 		end
@@ -893,11 +900,13 @@ end--]]
 -- Called when a player has spawned.
 function GM:PlayerSpawn(player)
 	if (player:HasInitialized()) then
-		player.spawning = true;
+		local plyTab = player:GetTable();
+		
+		plyTab.spawning = true;
 		
 		player:ShouldDropWeapon(false)
 
-		if (!player.cwLightSpawn) then
+		if (!plyTab.cwLightSpawn) then
 			Clockwork.hint:Clear(player);
 		
 			local FACTION = Clockwork.faction:FindByID(player:GetFaction())
@@ -1005,7 +1014,7 @@ function GM:PlayerSpawn(player)
 				end
 			end]]--
 
-			if (player.cwFirstSpawn) then
+			if (plyTab.cwFirstSpawn) then
 				--[[local ammo = player:GetSavedAmmo()
 
 				for k, v in pairs(ammo) do
@@ -1019,19 +1028,19 @@ function GM:PlayerSpawn(player)
 			end
 		end
 
-		if (player.cwLightSpawn and player.cwSpawnCallback) then
-			player.cwSpawnCallback(player, true)
-			player.cwSpawnCallback = nil
+		if (plyTab.cwLightSpawn and plyTab.cwSpawnCallback) then
+			plyTab.cwSpawnCallback(player, true)
+			plyTab.cwSpawnCallback = nil
 		end
 
-		hook.Run("PostPlayerSpawn", player, player.cwLightSpawn, player.cwChangeClass, player.cwFirstSpawn)
+		hook.Run("PostPlayerSpawn", player, plyTab.cwLightSpawn, plyTab.cwChangeClass, plyTab.cwFirstSpawn)
 		
 		Clockwork.player:SetRecognises(player, player, RECOGNISE_TOTAL)
 		
 		Clockwork.datastream:Start(player, "RadioState", player:GetCharacterData("radioState", false) or false);
 		
-		player.cwChangeClass = false
-		player.cwLightSpawn = false
+		plyTab.cwChangeClass = false
+		plyTab.cwLightSpawn = false
 		
 		timer.Simple(0.5, function()
 			if IsValid(player) then
@@ -1298,9 +1307,11 @@ end);
 
 -- Called when a player initially spawns.
 function GM:PlayerInitialSpawn(player)
-	player.cwCharacterList = player.cwCharacterList or {}
-	player.cwHasSpawned = true
-	player.cwSharedVars = player.cwSharedVars or {}
+	local plyTab = player:GetTable();
+	
+	plyTab.cwCharacterList = plyTab.cwCharacterList or {}
+	plyTab.cwHasSpawned = true
+	plyTab.cwSharedVars = plyTab.cwSharedVars or {}
 
 	if (IsValid(player)) then
 		player:KillSilent()
@@ -3569,6 +3580,8 @@ end
 
 -- Called just before a player dies.
 function GM:DoPlayerDeath(player, attacker, damageInfo)
+	local plyTab = player:GetTable();
+	
 	Clockwork.player:SetAction(player, false)
 	Clockwork.player:SetDrunk(player, false)
 
@@ -3583,7 +3596,7 @@ function GM:DoPlayerDeath(player, attacker, damageInfo)
 	if hook.Run("DoPlayerDeathPreDeathSound", player, attacker, damageInfo) ~= false then
 		local deathSound = hook.Run("PlayerPlayDeathSound", player, player:GetGender())
 
-		if (deathSound) and !player.drowned then
+		if (deathSound) and !plyTab.drowned then
 			player:EmitSound("physics/flesh/flesh_impact_hard"..math.random(1, 5)..".wav", 150)
 
 			timer.Simple(FrameTime() * 25, function()
@@ -3608,10 +3621,10 @@ function GM:DoPlayerDeath(player, attacker, damageInfo)
 	player:UnLock()
 	
 	-- Check if player is in a duel.
-	if not player.opponent then
+	if not plyTab.opponent then
 		--player:SetCharacterData("Ammo", {}, true)
 		player:StripWeapons()
-		--player.cwSpawnAmmo = {}
+		--plyTab.cwSpawnAmmo = {}
 		player:StripAmmo()
 	end
 
@@ -3621,13 +3634,13 @@ function GM:DoPlayerDeath(player, attacker, damageInfo)
 		end
 	end
 	
-	if (player.cwDeathPosition or player.cwDeathAngles) then
-		player.cwDeathPosition = nil;
-		player.cwDeathAngles = nil;
+	if (plyTab.cwDeathPosition or plyTab.cwDeathAngles) then
+		plyTab.cwDeathPosition = nil;
+		plyTab.cwDeathAngles = nil;
 	end;
 	
-	player.cwDeathAngles = player:EyeAngles();
-	player.cwDeathPosition = player:GetPos();
+	plyTab.cwDeathAngles = player:EyeAngles();
+	plyTab.cwDeathPosition = player:GetPos();
 end
 
 -- Called when a player dies.

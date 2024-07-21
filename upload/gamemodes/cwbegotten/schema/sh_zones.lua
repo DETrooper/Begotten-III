@@ -286,11 +286,11 @@ if CLIENT then
 	end
 
 	do
-		CW_CONVAR_ZONES = Clockwork.kernel:CreateClientConVar("cwZones", 1, true, true);
-		CW_CONVAR_ZONES_DEBUG = Clockwork.kernel:CreateClientConVar("cwZonesDebug", 0, false, true);
-		CW_CONVAR_ZONES_BLOOM = Clockwork.kernel:CreateClientConVar("cwZonesBloom", 1, true, true);
-		CW_CONVAR_ZONES_FOG = Clockwork.kernel:CreateClientConVar("cwZonesFog", 1, true, true);
-		CW_CONVAR_ZONES_COLORMOD = Clockwork.kernel:CreateClientConVar("cwZonesColorMod", 1, true, true);
+		Clockwork.ConVars.ZONES = Clockwork.kernel:CreateClientConVar("cwZones", 1, true, true);
+		Clockwork.ConVars.ZONES_DEBUG = Clockwork.kernel:CreateClientConVar("cwZonesDebug", 0, false, true);
+		Clockwork.ConVars.ZONES_BLOOM = Clockwork.kernel:CreateClientConVar("cwZonesBloom", 1, true, true);
+		Clockwork.ConVars.ZONES_FOG = Clockwork.kernel:CreateClientConVar("cwZonesFog", 1, true, true);
+		Clockwork.ConVars.ZONES_COLORMOD = Clockwork.kernel:CreateClientConVar("cwZonesColorMod", 1, true, true);
 		
 		Clockwork.setting:AddCheckBox("Zones", "Whether or not zones are enabled.", "cwZones", "Completely enable or disable zones and all zone-related effects.", function()
 			return Clockwork.player:IsAdmin(Clockwork.Client)
@@ -317,7 +317,7 @@ if CLIENT then
 			if not Clockwork.Client:IsAdmin() then
 				return true;
 			else
-				return CW_CONVAR_ZONES:GetBool();
+				return Clockwork.ConVars.ZONES:GetBool();
 			end
 		end;
 
@@ -326,7 +326,7 @@ if CLIENT then
 			if not Clockwork.Client:IsAdmin() then
 				return false;
 			else
-				return CW_CONVAR_ZONES_DEBUG:GetBool();
+				return Clockwork.ConVars.ZONES_DEBUG:GetBool();
 			end
 		end;
 
@@ -335,7 +335,7 @@ if CLIENT then
 			if not Clockwork.Client:IsAdmin() then
 				return true;
 			else
-				return CW_CONVAR_ZONES_BLOOM:GetBool();
+				return Clockwork.ConVars.ZONES_BLOOM:GetBool();
 			end
 		end;
 
@@ -344,7 +344,7 @@ if CLIENT then
 			if not Clockwork.Client:IsAdmin() then
 				return true;
 			else
-				return CW_CONVAR_ZONES_FOG:GetBool();
+				return Clockwork.ConVars.ZONES_FOG:GetBool();
 			end
 		end;
 
@@ -353,7 +353,7 @@ if CLIENT then
 			if not Clockwork.Client:IsAdmin() then
 				return true;
 			else
-				return CW_CONVAR_ZONES_COLORMOD:GetBool();
+				return Clockwork.ConVars.ZONES_COLORMOD:GetBool();
 			end
 		end;
 	end;

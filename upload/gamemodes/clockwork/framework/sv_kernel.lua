@@ -97,6 +97,7 @@ end
 local ServerLog = ServerLog
 local cvars = cvars
 
+Clockwork.ConVars = Clockwork.ConVars or {}
 Clockwork.Entities = Clockwork.Entities or {}
 Clockwork.HitGroupBonesCache = {
 	{"ValveBiped.Bip01_R_UpperArm", HITGROUP_RIGHTARM},
@@ -116,25 +117,6 @@ Clockwork.HitGroupBonesCache = {
 	{"ValveBiped.Bip01_Spine1", HITGROUP_CHEST},
 	{"ValveBiped.Bip01_Head1", HITGROUP_HEAD},
 	{"ValveBiped.Bip01_Neck1", HITGROUP_HEAD}
-}
-
-Clockwork.WorkshopMaps = {
-	md_venetianredux_b2fix 			= 106094354,
-	rp_c18_v1 						= 132931674,
-	rp_c18_v2 						= 132937160,
-	rp_city8 						= 132913036,
-	rp_city8_2 						= 132940295,
-	rp_city8_canals 				= 132911524,
-	rp_city8_district1 				= 132919876,
-	rp_city8_district9 				= 132916875,
-	rp_city11_night_v1b 			= 127632645,
-	rp_city17_v1 					= 113352748,
-	rp_city23_night 				= 143076340,
-	rp_city45_2013 					= 118759412,
-	rp_city45_catalyst_x1f_final 	= 221567663,
-	rp_nc_industrial17_v2 			= 698222128,
-	rp_nc_city8_v2a 				= 736405289,
-	rp_gc_city8						= 760771478
 }
 
 -- A function to add a ban.
@@ -1293,10 +1275,12 @@ end
 
 -- A function to get whether a player is running.
 function playerMeta:IsRunning()
-	if (self:Alive() and !self:IsRagdolled() and !self:InVehicle() and !self:Crouching() and self:KeyDown(IN_SPEED) and self:WaterLevel() < 2) then
-		if (self:GetVelocity():Length() >= self:GetWalkSpeed() or bNoWalkSpeed) then
-			if !self:GetNetVar("runningDisabled") then
-				return true;
+	if self:KeyDown(IN_SPEED) then
+		if self:Alive() and !self:IsRagdolled() and !self:InVehicle() and !self:Crouching() and self:WaterLevel() < 2 then
+			if (self:GetVelocity():Length() >= self:GetWalkSpeed() or bNoWalkSpeed) then
+				if !self:GetNetVar("runningDisabled") then
+					return true;
+				end
 			end
 		end
 	end
@@ -1743,7 +1727,7 @@ function playerMeta:GetMaxHealth(health)
 		
 		for k, v in pairs (injuries) do
 			if v["burn"] then
-				maxHealth = maxHealth - 10;
+				maxHealth = maxHealth - 5;
 			end
 		end
 	end
@@ -2266,7 +2250,7 @@ end
 
 -- A function to query a player's character table.
 function playerMeta:QueryCharacter(key, default)
-	if (self:GetCharacter()) then
+	if (self.cwCharacter) then
 		return Clockwork.player:Query(self, key, default)
 	else
 		return default
@@ -2286,9 +2270,9 @@ end
 
 -- A function to get a player's character data.
 function playerMeta:GetCharacterData(key, default)
-	if (self:GetCharacter()) then
-		local data = self:QueryCharacter("Data")
+	local data = self:QueryCharacter("Data")
 
+	if data then
 		if (data[key] != nil) then
 			return data[key]
 		end
@@ -2789,7 +2773,7 @@ end;
 
 -- A function to set a player's character data.
 function playerMeta:SetCharacterData(key, value, bFromBase)
-	local character = self:GetCharacter()
+	local character = self.cwCharacter
 
 	if (!character) then return end
 
