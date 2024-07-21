@@ -116,12 +116,16 @@ function cwPossession:HUDPaint()
 				draw.SimpleText("Oxygen:", "UseHint", 50, 140, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 				draw.SimpleText(victim:GetNetVar("oxygen") or 100, "UseHint", 120, 140, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
 				
-				if IsValid(victim:GetActiveWeapon()) then
+				local victimWeapon = victim:GetActiveWeapon();
+				
+				if IsValid(victimWeapon) then
+					local bRaised = victim:IsWeaponRaised(victimWeapon);
+					
 					draw.SimpleText("Weapon:", "UseHint", 50, 165, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					draw.SimpleText(victim:GetActiveWeapon():GetPrintName(), "UseHint", 120, 165, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
 				
 					draw.SimpleText("Raised:", "UseHint", 50, 190, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
-					draw.SimpleText(tostring(victim:IsWeaponRaised()), "UseHint", 120, 190, victim:IsWeaponRaised() and COLOR_GREEN or COLOR_RED, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+					draw.SimpleText(tostring(bRaised), "UseHint", 120, 190, bRaised and COLOR_GREEN or COLOR_RED, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					
 					draw.SimpleText("Stance:", "UseHint", 50, 215, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					

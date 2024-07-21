@@ -587,7 +587,7 @@ end;
 -- Called when the view model view should be calculated.
 function GM:CalcViewModelView(weapon, viewModel, oldEyePos, oldEyeAngles, eyePos, eyeAngles)
 	if (IsValid(weapon)) then
-		local bWeaponRaised = Clockwork.player:GetWeaponRaised(LocalPlayer());
+		local bWeaponRaised = LocalPlayer():IsWeaponRaised(weapon);
 		
 		if (!LocalPlayer():HasInitialized() or !Clockwork.config:HasInitialized() or LocalPlayer():GetMoveType() == MOVETYPE_OBSERVER) then
 			bWeaponRaised = nil;
@@ -2657,8 +2657,8 @@ function GM:GetProgressBarInfo()
 			elseif (action == "pickupragdoll") then
 				return {text = "You are picking up a body. Click to cancel.", percentage = percentage, flash = percentage < 10}
 			elseif (action == "crafting") then
-				local craftVerb = Clockwork.Client:GetLocalVar("cwProgressBarVerb") or  "crafting";
-				local itemName = Clockwork.Client:GetLocalVar("cwProgressBarItem") or "an item";
+				local craftVerb = Clockwork.Client:GetNetVar("cwProgressBarVerb") or  "crafting";
+				local itemName = Clockwork.Client:GetNetVar("cwProgressBarItem") or "an item";
 				
 				return {text = "You are "..craftVerb.." "..itemName..". Click to cancel.", percentage = percentage, flash = percentage < 0}
 			elseif (action == "ritualing") then

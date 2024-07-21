@@ -579,7 +579,7 @@ function GM:PlayerSwitchFlashlight(player, bIsOn)
 					
 					local defaultTime = 1.25;
 					local ti = activeWeapon.RaiseSpeed;
-					local raised = player:IsWeaponRaised();
+					local raised = player:IsWeaponRaised(activeWeapon);
 					
 					if (!raised) then
 						ti = activeWeapon.LowerSpeed;

@@ -31,7 +31,7 @@ local function CreateMenu(state)
 		menu:AddOption("Collect Ration", function() Clockwork.Client:ConCommand("cw_CoinslotRation") end);
 		
 		if state == "Gatekeeper" then
-			if !Clockwork.Client:GetLocalVar("collectedGear") then
+			if !Clockwork.Client:GetNetVar("collectedGear") then
 				menu:AddOption("Collect Gatekeeper Kit", function() Clockwork.Client:ConCommand("cw_CoinslotGear") end);
 			end
 		end

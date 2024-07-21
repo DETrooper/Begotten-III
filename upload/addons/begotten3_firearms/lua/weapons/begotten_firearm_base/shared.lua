@@ -1167,7 +1167,7 @@ function SWEP:IronSight()
 	if not IsValid(self) then return end
 	if not IsValid(self.Owner) then return end
 	
-	if !Clockwork.player:GetWeaponRaised(self.Owner) then
+	if self.Owner:IsWeaponRaised(self) then
 		return;
 	end
 

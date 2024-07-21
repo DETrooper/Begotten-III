@@ -590,7 +590,7 @@ function SWEP:PrimaryAttack()
 					if bParry and IsValid(owner.parryTarget) and owner.parryTarget:IsPlayer() then
 						local parryTargetWeapon = owner.parryTarget:GetActiveWeapon();
 						
-						if IsValid(parryTargetWeapon) and owner.parryTarget:IsWeaponRaised() then
+						if IsValid(parryTargetWeapon) and owner.parryTarget:IsWeaponRaised(parryTargetWeapon) then
 							parryTargetWeapon:SetNextPrimaryFire(0);
 							parryTargetWeapon:SetNextSecondaryFire(0);
 						end

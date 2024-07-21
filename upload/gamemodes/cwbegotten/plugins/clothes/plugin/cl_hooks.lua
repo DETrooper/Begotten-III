@@ -89,7 +89,7 @@ function PLUGIN:PostPlayerDraw(player, flags)
 	if string.sub(player:GetModel(), 1, 21) == "models/begotten/heads" then
 		local plyColor = player:GetColor();
 	
-		if player:Alive() and player:GetMoveType() ~= MOVETYPE_OBSERVER and plyColor.a > 0 then
+		if player:Alive() and player:GetMoveType() ~= MOVETYPE_OBSERVER and plyColor.a > 0 and !player:GetNoDraw() then
 			local plyTab = player:GetTable();
 			local clothes = player:GetClothesEquipped();
 			local model;
@@ -166,7 +166,6 @@ function PLUGIN:PostPlayerDraw(player, flags)
 			end
 
 			clothesEnt:SetColor(plyColor);
-			clothesEnt:SetNoDraw(player:GetNoDraw());
 
 			plyTab.clothesDrawnThisTick = true;
 		end

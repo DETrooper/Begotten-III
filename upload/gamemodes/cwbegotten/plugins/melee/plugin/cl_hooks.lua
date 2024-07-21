@@ -93,7 +93,7 @@ function cwMelee:PlayerDrawWeaponSelect()
 	local activeWeapon = Clockwork.Client:GetActiveWeapon();
 
 	if IsValid(activeWeapon) and activeWeapon.IsABegottenMelee and activeWeapon:GetNextPrimaryFire() > CurTime() then
-		if Clockwork.player:GetWeaponRaised(LocalPlayer()) then
+		if LocalPlayer():IsWeaponRaised(activeWeapon) then
 			return false;
 		end
 	end

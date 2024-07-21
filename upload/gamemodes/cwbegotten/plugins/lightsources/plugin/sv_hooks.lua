@@ -53,7 +53,7 @@ function cwLantern:PlayerThink(player, curTime, infoTable, alive, initialized, p
 			local currentOil = weaponItemTable:GetData("oil");
 			
 			if (tonumber(currentOil) > 0) then
-				local bWeaponRaised = Clockwork.player:GetWeaponRaised(player);
+				local bWeaponRaised = player:IsWeaponRaised(activeWeapon);
 
 				if (bWeaponRaised) then
 					if (!plyTab.lanternSound) then

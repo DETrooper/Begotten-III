@@ -625,8 +625,8 @@ function Schema:GetPostProgressBarInfo()
 		elseif (action == "skinning") then
 			return {text = "You are skinning an animal's corpse. Click to cancel.", percentage = percentage, flash = percentage > 75};
 		elseif (action == "reloading") then
-			local weaponName = Clockwork.Client:GetLocalVar("cwProgressBarVerb") or "shot";
-			local ammoName = Clockwork.Client:GetLocalVar("cwProgressBarItem") or "weapon";
+			local weaponName = Clockwork.Client:GetNetVar("cwProgressBarVerb") or "shot";
+			local ammoName = Clockwork.Client:GetNetVar("cwProgressBarItem") or "weapon";
 			
 			return {text = "You are reloading your "..weaponName.." with "..ammoName..". Click to cancel.", percentage = percentage, flash = percentage < 0}
 			--return {text = "You are reloading your weapon. Click to cancel.", percentage = percentage, flash = percentage > 75};
