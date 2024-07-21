@@ -111,16 +111,10 @@ do
 	end;
 
 	-- Called when the player's ducking animation should be handled.
-	function GM:HandlePlayerDucking(player, velocity, plyTable, weapon)
+	function GM:HandlePlayerDucking(player, velocity, plyTable, weaponHoldType)
 		if (player:Crouching()) then
 			local model = player:GetModel();
 			local velLength = velocity:Length2D();
-			local weaponHoldType = "normal";
-			
-			if (IsValid(weapon)) then
-				--weaponHoldType = Clockwork.animation:GetWeaponHoldType(player, weapon);
-				weaponHoldType = weapon:GetHoldType() or "normal";
-			end;
 
 			if (velLength > 0.5) then
 				plyTable.CalcIdeal = Clockwork.animation:GetForModel(model, weaponHoldType, "walk_crouch");
@@ -196,7 +190,7 @@ do
 		end;
 	end;
 
-	local IdleActivity = ACT_HL2MP_IDLE;
+	--[[local IdleActivity = ACT_HL2MP_IDLE;
 	local IdleActivityTranslate = {
 		[ACT_MP_ATTACK_CROUCH_PRIMARYFIRE] = IdleActivity + 5,
 		[ACT_MP_ATTACK_STAND_PRIMARYFIRE] = IdleActivity + 5,
@@ -208,8 +202,9 @@ do
 		[ACT_MP_JUMP] = ACT_HL2MP_JUMP_SLAM,
 		[ACT_MP_WALK] = IdleActivity + 1,
 		[ACT_MP_RUN] = IdleActivity + 2,
-	};
-		-- Called when a player's activity is supposed to be translated.
+	};]]--
+	
+	-- Called when a player's activity is supposed to be translated.
 	function GM:TranslateActivity(player, act)
 		--[[local model = player:GetModel();
 		local bIsRaised = Clockwork.player:GetWeaponRaised(player, true);
@@ -267,7 +262,7 @@ do
 		
 		if (!self:HandlePlayerDriving(player, plyTable, inVehicle, model)
 		and !self:HandlePlayerJumping(player, velocity, plyTable, moveType, waterLevel)
-		and !self:HandlePlayerDucking(player, velocity, plyTable, weapon)
+		and !self:HandlePlayerDucking(player, velocity, plyTable, weaponHoldType)
 		and !self:HandlePlayerSwimming(player, velocity, plyTable, waterLevel)) then
 			if (player:IsRunning()) then
 				act = Clockwork.animation:GetForModel(model, weaponHoldType, "run");

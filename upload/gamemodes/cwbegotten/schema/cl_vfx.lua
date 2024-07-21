@@ -322,25 +322,23 @@ function Schema:CalcView(player, origin, angles, fov)
 			
 			if headHealth then
 				if headHealth <= 90 and headHealth > 75 then
-					info.roll = 0.8;
-					info.pitch = 0.8;
-					info.yaw = 0.4;
+					info.roll = 0.25;
+					info.pitch = 0.35;
 				elseif headHealth <= 75 and headHealth > 50 then
-					info.roll = 1.5;
-					info.pitch = 1.5;
-					info.yaw = 0.5;
+					info.roll = 0.35;
+					info.pitch = 0.45;
 				elseif headHealth <= 50 and headHealth > 25 then
-					info.roll = 3;
-					info.pitch = 3;
-					info.yaw = 0.6;
+					info.roll = 0.45;
+					info.pitch = 0.55;
+					info.yaw = 0.4;
 				elseif headHealth <= 25 and headHealth > 10 then
-					info.roll = 3.5;
-					info.pitch = 3.5;
-					info.yaw = 0.8;
+					info.roll = 0.55;
+					info.pitch = 0.65;
+					info.yaw = 0.45;
 				elseif headHealth < 10 then
-					info.roll = 4;
-					info.pitch = 4;
-					info.yaw = 1;
+					info.roll = 0.7;
+					info.pitch = 0.8;
+					info.yaw = 0.5;
 				end
 			end
 			

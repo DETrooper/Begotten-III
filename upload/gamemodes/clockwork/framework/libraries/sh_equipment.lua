@@ -595,6 +595,8 @@ else
 			plyTab.equipmentSlotModels = {};
 		end
 		
+		local equipmentSlotModels = plyTab.equipmentSlotModels;
+		
 		if IsValid(activeWeapon) then
 			activeWeaponClass = activeWeapon:GetClass();
 			activeOffhand = activeWeapon:GetNWString("activeOffhand");
@@ -603,19 +605,21 @@ else
 
 		for slot, itemTable in pairs(plyTab.equipmentSlots) do
 			if itemTable and itemTable.isAttachment then
-				local equipmentModel = plyTab.equipmentSlotModels[itemTable.itemID];
+				local equipmentModel = equipmentSlotModels[itemTable.itemID];
+				local uniqueID = itemTable.uniqueID;
 
-				if !ragdollEntity and (activeWeaponClass == itemTable.weaponClass or activeShield == itemTable.uniqueID or activeOffhand == itemTable.uniqueID) then if IsValid(equipmentModel) then equipmentModel:Remove() end continue end;
+				if !ragdollEntity and (activeWeaponClass == itemTable.weaponClass or activeShield == uniqueID or activeOffhand == uniqueID) then if IsValid(equipmentModel) then equipmentModel:Remove() end continue end;
 				
 				if IsValid(equipmentModel) then
 					local parent = equipmentModel:GetParent();
 					
 					if (parent == player and ragdollEntity) or !IsValid(parent) then
 						equipmentModel:Remove();
+						equipmentModel = nil;
 					end
 				end
 
-				if !IsValid(equipmentModel) then
+				if !equipmentModel then
 					equipmentModel = ClientsideModel(itemTable.model, RENDERGROUP_BOTH);
 					
 					local modelScale = itemTable.attachmentModelScale;

@@ -25,13 +25,14 @@ end)
 do
 	pac.AddHook("UpdateAnimation", "event_part", function(ply)
 		if not ply:IsValid() then return end
+		local plyTable = ply:GetTable();
 
-		if ply.pac_death_physics_parts and ply:Alive() and ply.pac_physics_died then
+		if plyTable.pac_death_physics_parts and ply:Alive() and plyTable.pac_physics_died then
 			pac.CallPartEvent("become_physics")
-			ply.pac_physics_died = false
+			plyTable.pac_physics_died = false
 		end
 
-		local tbl = ply.pac_pose_params
+		local tbl = plyTable.pac_pose_params
 
 		if tbl then
 			for _, data in pairs(tbl) do
@@ -39,7 +40,7 @@ do
 			end
 		end
 
-		tbl = ply.pac_flex_params
+		tbl = plyTable.pac_flex_params
 
 		if tbl then
 			for flex, weight in pairs(tbl) do
@@ -49,17 +50,17 @@ do
 
 		local animrate = 1
 
-		if ply.pac_global_animation_rate and ply.pac_global_animation_rate ~= 1 then
-			if ply.pac_global_animation_rate == 0 then
+		if plyTable.pac_global_animation_rate and plyTable.pac_global_animation_rate ~= 1 then
+			if plyTable.pac_global_animation_rate == 0 then
 				animrate = ply:GetModelScale() * 2
-			elseif ply.pac_global_animation_rate ~= 1 then
-				ply:SetCycle((pac.RealTime * ply.pac_global_animation_rate)%1)
-				animrate = ply.pac_global_animation_rate
+			elseif plyTable.pac_global_animation_rate ~= 1 then
+				ply:SetCycle((pac.RealTime * plyTable.pac_global_animation_rate)%1)
+				animrate = plyTable.pac_global_animation_rate
 			end
 		end
 
-		if ply.pac_animation_sequences then
-			local part, thing = next(ply.pac_animation_sequences)
+		if plyTable.pac_animation_sequences then
+			local part, thing = next(plyTable.pac_animation_sequences)
 
 			if part and part:IsValid() then
 
@@ -74,7 +75,7 @@ do
 					part:UpdateAnimation(ply)
 				end
 			elseif part and not part:IsValid() then
-				ply.pac_animation_sequences[part] = nil
+				plyTable.pac_animation_sequences[part] = nil
 			end
 		end
 
@@ -83,7 +84,7 @@ do
 			return true
 		end
 
-		if ply.pac_holdtype_alternative_animation_rate then
+		if plyTable.pac_holdtype_alternative_animation_rate then
 			local length = ply:GetVelocity():Dot(ply:EyeAngles():Forward()) > 0 and 1 or -1
 			local scale = ply:GetModelScale() * 2
 
@@ -96,15 +97,15 @@ do
 			return true
 		end
 
-		if ply.pac_last_vehicle then
+		if plyTable.pac_last_vehicle then
 			local vehicle = ply:GetVehicle()
 
-			if ply.pac_last_vehicle ~= vehicle then
-				if ply.pac_last_vehicle ~= nil then
+			if plyTable.pac_last_vehicle ~= vehicle then
+				if plyTable.pac_last_vehicle ~= nil then
 					pac.CallPartEvent("vehicle_changed", ply, vehicle)
 				end
 				
-				ply.pac_last_vehicle = vehicle
+				plyTable.pac_last_vehicle = vehicle
 			end
 		end
 	end)
@@ -143,17 +144,19 @@ end)
 
 pac.AddHook("TranslateActivity", "events", function(ply, act)
 	if ply:IsValid() then
+		local plyTable = ply:GetTable();
+		
 		-- animation part
-		if ply.pac_animation_sequences and next(ply.pac_animation_sequences) then
+		if plyTable.pac_animation_sequences and next(plyTable.pac_animation_sequences) then
 			-- dont do any holdtype stuff if theres a sequence
 			return
 		end
 
-		if ply.pac_animation_holdtypes then
-			local key, val = next(ply.pac_animation_holdtypes)
+		if plyTable.pac_animation_holdtypes then
+			local key, val = next(plyTable.pac_animation_holdtypes)
 			if key then
 				if not val.part:IsValid() then
-					ply.pac_animation_holdtypes[key] = nil
+					plyTable.pac_animation_holdtypes[key] = nil
 				else
 					return val[act]
 				end
@@ -161,12 +164,12 @@ pac.AddHook("TranslateActivity", "events", function(ply, act)
 		end
 
 		-- holdtype part
-		if ply.pac_holdtypes then
-			local key, act_table = next(ply.pac_holdtypes)
+		if plyTable.pac_holdtypes then
+			local key, act_table = next(plyTable.pac_holdtypes)
 
 			if key then
 				if not act_table.part:IsValid() then
-					ply.pac_holdtypes[key] = nil
+					plyTable.pac_holdtypes[key] = nil
 				else
 
 					if act_table[act] and act_table[act] ~= -1 then
@@ -195,13 +198,15 @@ pac.AddHook("TranslateActivity", "events", function(ply, act)
 end)
 
 pac.AddHook("CalcMainActivity", "events", function(ply, act)
-	if ply:IsValid() and ply.pac_animation_sequences then
-		local key, val = next(ply.pac_animation_sequences)
+	local plyTable = ply:GetTable();
+	
+	if ply:IsValid() and plyTable.pac_animation_sequences then
+		local key, val = next(plyTable.pac_animation_sequences)
 
 		if not key then return end
 
 		if not val.part:IsValid() then
-			ply.pac_animation_sequences[key] = nil
+			plyTable.pac_animation_sequences[key] = nil
 			return
 		end
 
@@ -210,17 +215,19 @@ pac.AddHook("CalcMainActivity", "events", function(ply, act)
 end)
 
 pac.AddHook("pac_PlayerFootstep", "events", function(ply, pos, snd, vol)
-	ply.pac_last_footstep_pos = pos
+	local plyTable = ply:GetTable();
+	
+	plyTable.pac_last_footstep_pos = pos
 
-	if ply.pac_footstep_override then
-		for _, part in pairs(ply.pac_footstep_override) do
+	if plyTable.pac_footstep_override then
+		for _, part in pairs(plyTable.pac_footstep_override) do
 			if not part:IsHidden() then
 				part:PlaySound(snd, vol)
 			end
 		end
 	end
 
-	if ply.pac_mute_footsteps then
+	if plyTable.pac_mute_footsteps then
 		return true
 	end
 end)
