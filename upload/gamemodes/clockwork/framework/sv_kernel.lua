@@ -1716,6 +1716,8 @@ function playerMeta:GetMaxHealth(health)
 
 	if self:GetCharmEquipped("ring_vitality") then
 		maxHealth = maxHealth + 25;
+	elseif self:GetCharmEquipped("ring_vitality_lesser") then
+		maxHealth = maxHealth + 15;
 	end
 	
 	if self.maxHealthBoost then

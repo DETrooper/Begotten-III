@@ -1,4 +1,16 @@
 local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Abandoned Doll";
+	ITEM.model = "models/props_c17/doll01.mdl";
+	ITEM.weight = 1;
+	ITEM.uniqueID = "abandoned_doll";
+	ITEM.description = "An old child's toy from an age of prosperity long gone. It has seen considerable wear and tear, and yet even still can provide some comfort in these darker times.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.charmEffects = "- Reduces sanity loss by 50%.";
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 600};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Bronze Ring of Protection";
 	ITEM.model = "models/items/magic/ring_basic/ring_copper.mdl";
 	ITEM.weight = 0.2;
@@ -6,6 +18,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.description = "A ring with a mysterious aura, apparently made of bronze. Putting it on your finger makes you feel safer.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Reduces all damage taken by 5%.";
+	ITEM.mutuallyExclusive = {"ring_protection_gold", "ring_protection_silver"};
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 600, onGround = false};
 ITEM:Register();
@@ -81,7 +94,22 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.charmEffects = "- Reduces blood loss when bleeding by 50%.\n- Triples the rate of blood regeneration.";
 	
 	--ITEM.requireFaith = {"Faith of the Dark"};
-	ITEM.kinisgerOverride = true;
+	--ITEM.kinisgerOverride = true;
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Evil Eye";
+	ITEM.model = "models/mosi/fnv/props/gore/gorehead03.mdl";
+	ITEM.weight = 0.1;
+	ITEM.uniqueID = "evil_eye";
+	ITEM.description = "The detached eyeball of a Begotten thrall. Evil energy radiates from its iris.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.charmEffects = "- Increases damage against Begotten thralls by 50%.\n- Passively increases corruption.";
+	
+	--ITEM.requireFaith = {"Faith of the Dark"};
+	--ITEM.kinisgerOverride = true;
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
@@ -107,6 +135,19 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.charmEffects = "- Increases throwable weapon projectile speed and range by 35%.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, onGround = false}
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Lesser Ring of Vitality";
+	ITEM.model = "models/items/magic/ring_regeneration/ring_regeneration.mdl";
+	ITEM.weight = 0.2;
+	ITEM.uniqueID = "ring_vitality_lesser";
+	ITEM.description = "A ring with a mysterious aura. Putting it on your finger makes you feel healthier.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.charmEffects = "- Increases maximum health by 15 points.";
+	ITEM.mutuallyExclusive = {"ring_vitality"};
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
@@ -141,6 +182,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.description = "A ring with a mysterious aura, apparently made of gold. Putting it on your finger makes you feel safer.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Reduces all damage taken by 15%.\n- Supersedes the bronze and silver versions of this ring.";
+	ITEM.mutuallyExclusive = {"ring_protection_bronze", "ring_protection_silver"};
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 800, supercrateOnly = true};
 ITEM:Register();
@@ -176,7 +218,8 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_vitality";
 	ITEM.description = "A ring with a mysterious aura. Putting it on your finger makes you feel healthier.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Increases maximum health by 25 points.";
+	ITEM.charmEffects = "- Increases maximum health by 25 points. Supersedes the lesser version of this ring.";
+	ITEM.mutuallyExclusive = {"ring_vitality_lesser"};
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, supercrateOnly = true};
 ITEM:Register();
@@ -201,6 +244,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.description = "A ring with a mysterious aura, apparently made of silver. Putting it on your finger makes you feel safer.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Reduces all damage taken by 10%.\n- Supersedes the bronze version of this ring.";
+	ITEM.mutuallyExclusive = {"ring_protection_bronze", "ring_protection_gold"};
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, onGround = false}
 ITEM:Register();

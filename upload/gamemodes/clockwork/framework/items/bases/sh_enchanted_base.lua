@@ -34,7 +34,7 @@ local ITEM = item.New(nil, true);
 			end
 			
 			-- kind of shit but oh well
-			if self.uniqueID == "ring_vitality" then
+			if self.uniqueID == "ring_vitality" or self.uniqueID == "ring_vitality_lesser" then
 				local max_health = player:GetMaxHealth();
 				
 				player:SetMaxHealth(player:GetMaxHealth());
@@ -93,6 +93,18 @@ local ITEM = item.New(nil, true);
 				end
 				
 				return false
+			end
+		end
+		
+		if self.mutuallyExclusive then
+			for i, v in ipairs(self.mutuallyExclusive) do
+				if player:GetCharmEquipped(v) then
+					if !player.spawning then
+						Schema:EasyText(player, "chocolate", "This charm is mutually exclusive with another equipped charm!")
+					end
+					
+					return false
+				end
 			end
 		end
 
