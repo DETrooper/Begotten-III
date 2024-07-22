@@ -698,7 +698,7 @@ function SWEP:RicochetCallback(bouncenum, attacker, tr, dmginfo)
 				self.MaxRicochet = 0
 		elseif self.Primary.Ammo == "smg1" then -- smgs
 				self.MaxRicochet = 0
-		elseif self.Primary.Ammo == "ar2" then -- assault rifles
+		elseif self.Primary.Ammo == "smg" then -- assault rifles
 				self.MaxRicochet = 0
 		elseif self.Primary.Ammo == "buckshot" then -- shotguns
 				self.MaxRicochet = 0
@@ -756,7 +756,7 @@ function SWEP:BulletPenetrate(bouncenum, attacker, tr, paininfo)
 				MaxPenetration = 12
 		elseif self.Primary.Ammo == "smg1" then -- smgs
 				MaxPenetration = 14
-		elseif self.Primary.Ammo == "ar2" then -- assault rifles
+		elseif self.Primary.Ammo == "smg" then -- assault rifles
 				MaxPenetration = 16
 		elseif self.Primary.Ammo == "buckshot" then -- shotguns
 				MaxPenetration = 5
@@ -792,7 +792,7 @@ function SWEP:BulletPenetrate(bouncenum, attacker, tr, paininfo)
 				self.MaxRicochet = 0
 		elseif self.Primary.Ammo == "smg1" then -- smgs
 				self.MaxRicochet = 0
-		elseif self.Primary.Ammo == "ar2" then -- assault rifles
+		elseif self.Primary.Ammo == "smg" then -- assault rifles
 				self.MaxRicochet = 0
 		elseif self.Primary.Ammo == "buckshot" then -- shotguns
 				self.MaxRicochet = 0
