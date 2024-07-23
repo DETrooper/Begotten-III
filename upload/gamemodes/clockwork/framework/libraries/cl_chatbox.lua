@@ -378,7 +378,7 @@ function Clockwork.chatBox:CreateDermaPanel()
 		-- Called when the panel is scrolled with the mouse wheel.
 		self.scroll.OnMouseWheeled = function(panel, delta)
 			local bIsOpen = self:IsOpen();
-			--local maximumLines = math.Clamp(CW_CONVAR_MAXCHATLINES:GetInt(), 1, 10);
+			--local maximumLines = math.Clamp(Clockwork.ConVars.MAXCHATLINES:GetInt(), 1, 10);
 			local maximumLines = 10;
 			
 			if (bIsOpen) then
@@ -424,9 +424,9 @@ function Clockwork.chatBox:Decode(speaker, name, text, data, class, multiplier)
 	end;
 
 	--[[if (filter == "ic") then
-		filtered = (CW_CONVAR_SHOWIC:GetInt() == 0);
+		filtered = (Clockwork.ConVars.SHOWIC:GetInt() == 0);
 	else
-		filtered = (CW_CONVAR_SHOWOOC:GetInt() == 0);
+		filtered = (Clockwork.ConVars.SHOWOOC:GetInt() == 0);
 	end;]]--
 	
 	if (isstring(text)) then
@@ -536,7 +536,7 @@ function Clockwork.chatBox:Decode(speaker, name, text, data, class, multiplier)
 			self.defaultClasses[info.class].Callback(info);		
 		else
 			local yellowColor = Color(255, 255, 150, 255);
-			local filtered = --[[(CW_CONVAR_SHOWSERVER:GetInt() == 0) or]]info.filtered;
+			local filtered = --[[(Clockwork.ConVars.SHOWSERVER:GetInt() == 0) or]]info.filtered;
 			
 			Clockwork.chatBox:Add(filtered, nil, yellowColor, info.text);
 		end;
@@ -644,7 +644,7 @@ function Clockwork.chatBox:Paint()
 	
 	local bIsTypingCommand = Clockwork.chatBox:IsTypingCommand();
 	local chatBoxSpacing = Clockwork.chatBox:GetSpacing();
-	--local maximumLines = math.Clamp(CW_CONVAR_MAXCHATLINES:GetInt(), 1, 10);
+	--local maximumLines = math.Clamp(Clockwork.ConVars.MAXCHATLINES:GetInt(), 1, 10);
 	local maximumLines = 10;
 	local origX, origY = Clockwork.chatBox:GetPosition(4);
 	local onHoverData = nil;
@@ -931,7 +931,7 @@ function Clockwork.chatBox:Add(filtered, icon, ...)
 	end;
 	
 	if (!filtered) then
-		--local maximumLines = math.Clamp(CW_CONVAR_MAXCHATLINES:GetInt(), 1, 10);
+		--local maximumLines = math.Clamp(Clockwork.ConVars.MAXCHATLINES:GetInt(), 1, 10);
 		local maximumLines = 10;
 		local colorWhite = Clockwork.option:GetColor("white");
 		local curTime = UnPredictedCurTime();
@@ -954,11 +954,11 @@ function Clockwork.chatBox:Add(filtered, icon, ...)
 		local curColor = nil;
 		local text = {...};
 		
-		--[[if (CW_CONVAR_SHOWTIMESTAMPS:GetInt() == 1) then
+		--[[if (Clockwork.ConVars.SHOWTIMESTAMPS:GetInt() == 1) then
 			local timeInfo = "("..os.date("%H:%M")..") ";
 			local color = Color(150, 150, 150, 255);
 			
-			if (CW_CONVAR_TWELVEHOURCLOCK:GetInt() == 1) then
+			if (Clockwork.ConVars.TWELVEHOURCLOCK:GetInt() == 1) then
 				timeInfo = "("..string.lower(os.date("%I:%M%p"))..") ";
 			end;
 			
@@ -1007,7 +1007,7 @@ function Clockwork.chatBox:Add(filtered, icon, ...)
 		self.historyMsgs[#self.historyMsgs + 1] = message;
 		
 		if (message.noTime) then
-			if cwCinematicText and CW_CONVAR_SHOWCINEMATICS:GetInt() == 1 then
+			if cwCinematicText and Clockwork.ConVars.SHOWCINEMATICS:GetInt() == 1 then
 				message.timeFinish = curTime;
 				message.timeFade = curTime;
 				
@@ -1304,7 +1304,7 @@ Clockwork.chatBox:RegisterDefaultClass("pm", "ooc", function(info)
 end);
 
 Clockwork.chatBox:RegisterDefaultClass("disconnect", "ooc", function(info)
-	local filtered = --[[(CW_CONVAR_SHOWAURA:GetInt() == 0) or]]info.filtered;
+	local filtered = --[[(Clockwork.ConVars.SHOWAURA:GetInt() == 0) or]]info.filtered;
 			
 	Clockwork.chatBox:Add(filtered, "icon16/user_delete.png", Color(200, 150, 200, 255), info.text);
 end);
@@ -1314,7 +1314,7 @@ Clockwork.chatBox:RegisterDefaultClass("notify_all", "ooc", function(info)
 		Clockwork.kernel:AddCinematicText(info.text, Color(255, 255, 255, 255), 32, 6, Clockwork.option:GetFont("menu_text_tiny"), true);
 	end;
 
-	local filtered = --[[(CW_CONVAR_SHOWAURA:GetInt() == 0) or ]]info.filtered;
+	local filtered = --[[(Clockwork.ConVars.SHOWAURA:GetInt() == 0) or ]]info.filtered;
 	local icon = info.data.icon or "comment";
 	local color = Color(125, 150, 175, 255);
 
@@ -1331,7 +1331,7 @@ Clockwork.chatBox:RegisterDefaultClass("notify", "ooc", function(info)
 		Clockwork.kernel:AddCinematicText(info.text, Color(255, 255, 255, 255), 32, 6, Clockwork.option:GetFont("menu_text_tiny"), true);
 	end;
 			
-	local filtered = --[[(CW_CONVAR_SHOWAURA:GetInt() == 0) or ]]info.filtered;
+	local filtered = --[[(Clockwork.ConVars.SHOWAURA:GetInt() == 0) or ]]info.filtered;
 	local icon = info.data.icon or "comment";
 	local color = Color(175, 200, 255, 255);
 
@@ -1344,12 +1344,12 @@ Clockwork.chatBox:RegisterDefaultClass("notify", "ooc", function(info)
 end);
 
 Clockwork.chatBox:RegisterDefaultClass("connect", "ooc", function(info)
-	local filtered = --[[(CW_CONVAR_SHOWAURA:GetInt() == 0) or ]]info.filtered;
+	local filtered = --[[(Clockwork.ConVars.SHOWAURA:GetInt() == 0) or ]]info.filtered;
 	Clockwork.chatBox:Add(filtered, "icon16/user_add.png", Color(150, 150, 200, 255), info.text);
 end);
 
 Clockwork.chatBox:RegisterDefaultClass("connect_country", "ooc", function(info)
-	local filtered = --[[(CW_CONVAR_SHOWAURA:GetInt() == 0) or ]]info.filtered;
+	local filtered = --[[(Clockwork.ConVars.SHOWAURA:GetInt() == 0) or ]]info.filtered;
 	local flag = string.lower(info.data.countryIcon)..".png";
 	local split = string.Split(info.text, " from ");
 	local plystring = split[1]..".";

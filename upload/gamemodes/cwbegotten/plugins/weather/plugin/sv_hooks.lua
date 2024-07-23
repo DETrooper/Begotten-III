@@ -48,7 +48,7 @@ function cwWeather:Think()
 	
 	local currentWeatherTable = self.weatherTypes[self.weather];
 	
-	if currentWeatherTable.default then
+	if currentWeatherTable and currentWeatherTable.default then
 		for k, v in RandomPairs(self.weatherTypes) do
 			if !v.default and v.rarity and math.random(1, v.rarity) == 1 then self:SetWeather(k) return; end
 		end
@@ -72,7 +72,7 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 		
 		if !alive or plyTab.cwObserverMode or plyTab.cwWakingUp then return end;
 		
-		local lastZone = player:GetCharacterData("LastZone");
+		local lastZone = player:GetCharacterData("LastZone") or "wasteland";
 		local zoneTable = zones:FindByID(lastZone);
 		
 		if !zoneTable or !zoneTable.hasWeather or !self:IsOutside(player:EyePos()) then return end;
@@ -92,7 +92,7 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				local activeWeapon = player:GetActiveWeapon();
 				
 				if IsValid(activeWeapon) and activeWeapon.Base == "begotten_firearm_base" and !activeWeapon.notPowder then
-					if math.random(1, 30) == 30 then
+					if math.random(1, 10) == 10 then
 						local itemTable = item.GetByWeapon(activeWeapon);
 						
 						if itemTable then

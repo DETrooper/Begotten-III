@@ -231,6 +231,8 @@ Clockwork.NetworkProxies = Clockwork.NetworkProxies or {}
 Clockwork.InfoMenuOpen = Clockwork.InfoMenuOpen or false
 Clockwork.ColorModify = Clockwork.ColorModify or {}
 Clockwork.Cinematics = Clockwork.Cinematics or {}
+Clockwork.ActiveDermaToolTips = Clockwork.ActiveDermaToolTips or {}
+Clockwork.ConVars = Clockwork.ConVars or {}
 
 Clockwork.kernel.CenterHints = Clockwork.kernel.CenterHints or {}
 Clockwork.kernel.ESPInfo = Clockwork.kernel.ESPInfo or {}
@@ -923,7 +925,7 @@ do
 				end;
 				
 				if cwCharacterNeeds then
-					local corruption = math.Round(player:GetSharedVar("corruption") or 0);
+					local corruption = math.Round(player:GetNetVar("corruption") or 0);
 					
 					if (corruption > 0) then
 						table.insert(text, {
@@ -950,7 +952,7 @@ do
 					});
 				end;
 				
-				local subfaction = player:GetSharedVar("subfaction");
+				local subfaction = player:GetNetVar("subfaction");
 				
 				if subfaction and subfaction ~= "" and subfaction ~= "N/A" then
 					table.insert(text, {
@@ -960,7 +962,7 @@ do
 				end
 				
 				if (Schema.faiths) then
-					local faith = player:GetSharedVar("faith");
+					local faith = player:GetNetVar("faith");
 					
 					if faith then
 						local faithText = faith;
@@ -971,7 +973,7 @@ do
 							faithColor = faithTable.color;
 						end
 						
-						local subfaith = player:GetSharedVar("subfaith");
+						local subfaith = player:GetNetVar("subfaith");
 						
 						if subfaith and subfaith ~= "N/A" then
 							faithText = subfaith;
@@ -984,14 +986,14 @@ do
 					end
 				end;
 				
-				if player:GetSharedVar("favored") then
+				if player:GetNetVar("favored") then
 					table.insert(text, {
 						text = "*FAVORED*", 
 						color = Color(0, 0, 255, 255);
 					});
 				end
 				
-				if player:GetSharedVar("followed") then
+				if player:GetNetVar("followed") then
 					table.insert(text, {
 						text = "*FOLLOWED*", 
 						color = Color(255, 0, 0, 255);
@@ -999,7 +1001,7 @@ do
 				end
 				
 				--if player:HasTrait("marked") then
-				if player:GetSharedVar("marked") then
+				if player:GetNetVar("marked") then
 					table.insert(text, {
 						text = "*MARKED*", 
 						color = Color(255, 0, 0, 255);
@@ -1007,7 +1009,7 @@ do
 				end
 				
 				--if player:HasTrait("possessed") then
-				if player:GetSharedVar("possessed") then
+				if player:GetNetVar("possessed") then
 					table.insert(text, {
 						text = "*POSSESSED*", 
 						color = Color(255, 0, 0, 255);
@@ -1015,7 +1017,7 @@ do
 				end
 				
 				if cwMedicalSystem then
-					local diseases = player:GetSharedVar("diseases");
+					local diseases = player:GetNetVar("diseases");
 					
 					if diseases and not table.IsEmpty(diseases) then
 						for i = 1, #cwMedicalSystem.espDiseases do
@@ -1034,7 +1036,7 @@ do
 				end
 
 				if (weapon and IsValid(weapon)) then			
-					local raised = Clockwork.player:GetWeaponRaised(player) or player:GetNWBool("senses") == true;
+					local raised = player:IsWeaponRaised(weapon) or player:GetNWBool("senses") == true;
 					local color = colorWhite;
 
 					if (raised == true) then
@@ -1075,7 +1077,7 @@ do
 					position = v:GetPos() + Vector(0, 0, 80);
 				end;
 
-				local topText = {v:Name().." ("..v:GetSharedVar("level", 1)..")"};
+				local topText = {v:Name().." ("..v:GetNetVar("level", 1)..")"};
 					hook.Run("GetStatusInfo", v, topText);	
 				local playerColor = Clockwork.kernel:PlayerNameColor(v);
 				
@@ -1093,8 +1095,8 @@ do
 			end;
 		end;
 		
-		local salesESP = CW_CONVAR_SALEESP:GetInt() == 1;
-		local itemESP = CW_CONVAR_ITEMESP:GetInt() == 1;
+		local salesESP = Clockwork.ConVars.SALEESP:GetInt() == 1;
+		local itemESP = Clockwork.ConVars.ITEMESP:GetInt() == 1;
 		local allEnts = {};
 		
 		if (salesESP or itemESP) then
@@ -1166,7 +1168,7 @@ do
 		local curTime = UnPredictedCurTime();
 
 		if (!self.NextGetESPInfo or curTime >= self.NextGetESPInfo) then
-			self.NextGetESPInfo = curTime + (CW_CONVAR_ESPTIME:GetInt() or 1);
+			self.NextGetESPInfo = curTime + (Clockwork.ConVars.ESPTIME:GetInt() or 1);
 			self.ESPInfo = {};
 
 			self:GetAdminESPInfo(self.ESPInfo)
@@ -2235,16 +2237,12 @@ do
 		return Clockwork.kernel:NewMetaTable(MARKUP_OBJECT);
 	end;
 
-	function Clockwork.kernel:GetActiveDermaToolTip()
-		return Clockwork.ActiveDermaToolTip
+	function Clockwork.kernel:GetActiveDermaToolTips()
+		return Clockwork.ActiveDermaToolTips
 	end
 
 	function Clockwork.kernel:AddMarkupLine(markupText, text, color)
 		print("Clockwork.kernel:AddMarkupLine called with text: "..text);
-	end;
-
-	function Clockwork.kernel:GetActiveMarkupToolTip()
-		return self:GetActiveDermaToolTip();
 	end;
 
 	function Clockwork.kernel:CreateMarkupToolTip(panel)
@@ -2278,8 +2276,6 @@ function Clockwork.kernel:CreateDermaToolTip(panel)
 	function panel.GetItemTable(panel)
 		return panel.itemTable;
 	end;
-	
-	panel.IsToolTip = true;
 
 	-- Called when the panel is removed.
 	function panel.OnRemove(panel, ...)
@@ -3176,13 +3172,15 @@ end
 
 -- A function to get whether a player is running.
 function playerMeta:IsRunning(bNoWalkSpeed)
-	if (self:Alive() and !self:IsRagdolled() and !self:InVehicle() and !self:Crouching() and self:GetDTBool(BOOL_ISRUNNING) and self:WaterLevel() < 2) then
-		if (self:GetVelocity():Length() >= self:GetWalkSpeed() or bNoWalkSpeed) then
-			if self == Clockwork.Client and !self:KeyDown(IN_SPEED) then
-				return false;
+	if self:GetDTBool(BOOL_ISRUNNING) then
+		if (self:Alive() and !self:IsRagdolled() and !self:InVehicle() and !self:Crouching() and self:WaterLevel() < 2) then
+			if (self:GetVelocity():Length() >= self:GetWalkSpeed() or bNoWalkSpeed) then
+				if self == Clockwork.Client and !self:KeyDown(IN_SPEED) then
+					return false;
+				end
+				
+				return true
 			end
-			
-			return true
 		end
 	end
 
@@ -3216,15 +3214,13 @@ end
 
 -- A function to get whether a player has initialized.
 function playerMeta:HasInitialized()
-	if (IsValid(self)) then
+	--if (IsValid(self)) then
 		return self:GetNetVar("Initialized")
-	end
+	--end
 end
 
 -- A function to get a player's gender.
 function playerMeta:GetGender()
-	if (self:GetNetVar("Gender") == nil) then return GENDER_MALE; end
-
 	if (self:GetNetVar("Gender") == 1) then
 		return GENDER_FEMALE
 	else

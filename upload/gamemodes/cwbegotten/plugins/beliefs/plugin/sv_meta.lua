@@ -102,7 +102,7 @@ function playerMeta:ResetBeliefs()
 	self:SetCharacterData("beliefs", {});
 	--self:SetCharacterData("subfaith", nil);
 	self:SetSharedVar("subfaith", nil);
-	self:GetCharacter().subfaith = nil;
+	self.cwCharacter.subfaith = nil;
 	self:SetSacramentLevel(1);
 
 	--local max_poise = self:GetMaxPoise();

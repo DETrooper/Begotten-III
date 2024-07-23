@@ -136,8 +136,14 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 			end;
 			
 			if (!plyTab.nextCorruption or curTime >= plyTab.nextCorruption) then
-				if (playerNeeds["corruption"] > -1) and (playerNeeds["corruption"] < 50) then
-					if player:HasTrait("possessed") then
+				if (playerNeeds["corruption"] > -1) then
+					if (playerNeeds["corruption"] < 50) then
+						if player:HasTrait("possessed") then
+							player:HandleNeed("corruption", 1);
+						end
+					end
+					
+					if player:GetCharmEquipped("evil_eye") then
 						player:HandleNeed("corruption", 1);
 					end
 				end;

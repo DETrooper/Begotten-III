@@ -185,6 +185,10 @@ function SWEP:Deploy()
 				end
 			end
 		end
+		
+		if self.OnMeleeStanceChanged then
+			self:OnMeleeStanceChanged("reg_swing");
+		end
 	end
 	
 	self.Owner.gestureweightbegin = 2;
@@ -463,7 +467,7 @@ function SWEP:PrimaryAttack()
 		if offhandWeapon then
 			offhandAttackTable = GetTable(offhandWeapon.AttackTable);
 			delay = math.max(attacktable["delay"], offhandAttackTable["delay"]) * 0.95;
-			strikeTime = math.max(strikeTime, offhandAttackTable["striketime"]);
+			strikeTime = math.max(strikeTime, offhandAttackTable["striketime"], 0.3); -- Dual weapon striketime shall not be lower than 0.3 seconds.
 		end
 	end
 	
@@ -506,13 +510,13 @@ function SWEP:PrimaryAttack()
 			if (owner:GetNWBool("ThrustStance") == true and !owner:GetNWBool("Riposting")) or thrustOverride then
 				--Attack animation
 				local anim_suffix = "_medium";
-				local speed = delay + strikeTime;
+				local speed = strikeTime;
 				
-				if speed <= 0.8 then
+				if speed <= 0.3 then
 					anim_suffix = "_veryfast";
-				elseif speed <= 0.9 then
+				elseif speed <= 0.35 then
 					anim_suffix = "_fast";
-				elseif speed >= 1.2 then
+				elseif speed >= 0.5 then
 					anim_suffix = "_slow";
 				end
 				
@@ -520,7 +524,7 @@ function SWEP:PrimaryAttack()
 
 				-- Viewmodel attack animation!
 				vm:SendViewModelMatchingSequence(vm:LookupSequence("powermissup"));
-				self.Owner:GetViewModel():SetPlaybackRate(Lerp(strikeTime + 0.1, 0.5, 0.3));
+				self.Owner:GetViewModel():SetPlaybackRate(Lerp(strikeTime, 0.7, 0.3));
 				
 				if !attacktable.canaltattack and attacktable.dmgtype == DMG_VEHICLE then
 					self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])]);
@@ -538,13 +542,13 @@ function SWEP:PrimaryAttack()
 			else
 				--Attack animation
 				local anim_suffix = "_medium";
-				local speed = delay + strikeTime;
+				local speed = strikeTime;
 				
-				if speed <= 0.8 then
+				if speed <= 0.3 then
 					anim_suffix = "_veryfast";
-				elseif speed <= 0.9 then
+				elseif speed <= 0.35 then
 					anim_suffix = "_fast";
-				elseif speed >= 1.2 then
+				elseif speed >= 0.5 then
 					anim_suffix = "_slow";
 				end
 				
@@ -586,7 +590,7 @@ function SWEP:PrimaryAttack()
 					if bParry and IsValid(owner.parryTarget) and owner.parryTarget:IsPlayer() then
 						local parryTargetWeapon = owner.parryTarget:GetActiveWeapon();
 						
-						if IsValid(parryTargetWeapon) and owner.parryTarget:IsWeaponRaised() then
+						if IsValid(parryTargetWeapon) and owner.parryTarget:IsWeaponRaised(parryTargetWeapon) then
 							parryTargetWeapon:SetNextPrimaryFire(0);
 							parryTargetWeapon:SetNextSecondaryFire(0);
 						end
@@ -932,6 +936,8 @@ end
 					break;
 				end;
 			end;
+		elseif hit:GetClass() == "prop_ragdoll" and Clockwork.entity:IsPlayerRagdoll(hit) then
+			hit = Clockwork.entity:GetPlayer(hit);
 		end;
 
 		if hit:IsValid() and hit:IsPlayer() then
@@ -984,10 +990,14 @@ end
 			
 				if (hit:IsPlayer()) then
 					d:SetDamageForce(owner:GetForward() * 5000);
-					
+
 					if (hit:IsRagdolled()) then
-						if string.find(weaponClass, "begotten_dagger_") then -- Daggers deal more damage against fallen opponents
-							d:SetDamage(d:GetDamage() * 4)
+						if self.isDagger then -- Daggers deal more damage against fallen opponents
+							d:SetDamage(d:GetDamage() * 2)
+							
+							if hit:GetNetVar("ActName") == "unragdoll" then
+								Clockwork.player:ExtendAction(hit, 0.3);
+							end
 						end
 					end
 				end
@@ -1067,15 +1077,6 @@ end
 			if !owner:GetNWBool("ThrustStance") then
 				owner:SetNWBool("ThrustStance", true);
 			end
-		
-			if (hit:IsWorld()) then
-				for k, v in pairs (ents.FindInSphere(src, 32)) do
-					if (v:GetClass() == "prop_ragdoll") and Clockwork.entity:IsPlayerRagdoll(v) then
-						hit = Clockwork.entity:GetPlayer(v);
-						break;
-					end;
-				end;
-			end;
 
 			if hit:IsValid() and hit:IsPlayer() then
 				enemywep = hit:GetActiveWeapon()
@@ -1217,8 +1218,12 @@ end
 						d:SetDamageForce(owner:GetForward() * 5000);
 						
 						if (hit:IsRagdolled()) then
-							if string.find(weaponClass, "begotten_dagger_") then -- Daggers deal more damage against fallen opponents
-								d:SetDamage(d:GetDamage() * 4)
+							if self.isDagger then -- Daggers deal more damage against fallen opponents
+								d:SetDamage(d:GetDamage() * 2)
+								
+								if hit:GetNetVar("ActName") == "unragdoll" then
+									Clockwork.player:ExtendAction(hit, 0.3);
+								end
 							end
 						end
 					end
@@ -1278,15 +1283,6 @@ end
 			if owner:GetNWBool("ThrustStance") then
 				owner:SetNWBool("ThrustStance", false);
 			end
-		
-			if (hit:IsWorld()) then
-				for k, v in pairs (ents.FindInSphere(src, 32)) do
-					if (v:GetClass() == "prop_ragdoll") and Clockwork.entity:IsPlayerRagdoll(v) then
-						hit = Clockwork.entity:GetPlayer(v);
-						break;
-					end;
-				end;
-			end;
 
 			if (!hit.nexthit or CurTime() > hit.nexthit) then 
 				hit.nexthit = CurTime() + 1
@@ -1703,10 +1699,14 @@ end
 				
 					if (hit:IsPlayer()) then
 						d:SetDamageForce(owner:GetForward() * 5000);
-						
+				
 						if (hit:IsRagdolled()) then
-							if string.find(weaponClass, "begotten_dagger_") then -- Daggers deal more damage against fallen opponents
-								d:SetDamage(d:GetDamage() * 4)
+							if self.isDagger then -- Daggers deal more damage against fallen opponents
+								d:SetDamage(d:GetDamage() * 2)
+
+								if hit:GetNetVar("ActName") == "unragdoll" then
+									Clockwork.player:ExtendAction(hit, 0.3);
+								end
 							end
 						end
 					end
@@ -1766,15 +1766,6 @@ end
 			if owner:GetNWBool("ThrustStance") then
 				owner:SetNWBool("ThrustStance", false);
 			end
-		
-			if (hit:IsWorld()) then
-				for k, v in pairs (ents.FindInSphere(src, 32)) do
-					if (v:GetClass() == "prop_ragdoll") and Clockwork.entity:IsPlayerRagdoll(v) then
-						hit = Clockwork.entity:GetPlayer(v);
-						break;
-					end;
-				end;
-			end;
 
 			if hit:IsValid() and hit:IsPlayer() then
 				enemywep = hit:GetActiveWeapon()
@@ -1900,8 +1891,12 @@ end
 						d:SetDamageForce(owner:GetForward() * 5000);
 						
 						if (hit:IsRagdolled()) then
-							if string.find(weaponClass, "begotten_dagger_") then -- Daggers deal more damage against fallen opponents
-								d:SetDamage(d:GetDamage() * 4)
+							if self.isDagger then -- Daggers deal more damage against fallen opponents
+								d:SetDamage(d:GetDamage() * 2)
+
+								if hit:GetNetVar("ActName") == "unragdoll" then
+									Clockwork.player:ExtendAction(hit, 0.3);
+								end
 							end
 						end
 					end
@@ -2870,7 +2865,7 @@ function SWEP:Initialize()
 		self.WElements = table.FullCopy(weaponTable.WElements);
 		self.ViewModelBoneMods = table.FullCopy(self.ViewModelBoneMods);
 		
-		if weaponTable.WElementsAlternate and self.stance == "thrust_swing" then
+		if weaponTable.WElementsAlternate and self:GetNWString("stance") == "thrust_swing" then
 			self.WElements = table.FullCopy(weaponTable.WElementsAlternate);
 		end;
 	
@@ -2950,13 +2945,13 @@ function SWEP:Initialize()
 				self.WElements = {};
 				
 				if self.VElements and self.VElementsDual and offhandTable.VElements and offhandTable.VElementsDual then
-					self.VElements["w_left"] = table.FullCopy(self.VElementsDual["v_left"]);
-					self.VElements["w_right"] = table.FullCopy(offhandTable.VElementsDual["v_right"]);
+					self.VElements["w_left"] = table.FullCopy(offhandTable.VElementsDual["v_left"]);
+					self.VElements["w_right"] = table.FullCopy(self.VElementsDual["v_right"]);
 				end
 				
 				if self.WElements and self.WElementsDual and offhandTable.WElements and offhandTable.WElementsDual then
-					self.WElements["w_left"] = table.FullCopy(self.WElementsDual["w_left"]);
-					self.WElements["w_right"] = table.FullCopy(offhandTable.WElementsDual["w_right"]);
+					self.WElements["w_left"] = table.FullCopy(offhandTable.WElementsDual["w_left"]);
+					self.WElements["w_right"] = table.FullCopy(self.WElementsDual["w_right"]);
 				end
 			end
 		end

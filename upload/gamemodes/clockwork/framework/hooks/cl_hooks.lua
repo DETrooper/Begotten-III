@@ -292,30 +292,31 @@ end
 	@details Called when the client initializes.
 --]]
 function GM:Initialize()
-	--CW_CONVAR_TWELVEHOURCLOCK = Clockwork.kernel:CreateClientConVar("cwTwelveHourClock", 0, true, true)
-	--CW_CONVAR_HEADBOBSCALE = Clockwork.kernel:CreateClientConVar("cwHeadbobScale", 1, true, true)
-	--CW_CONVAR_SHOWAURA = Clockwork.kernel:CreateClientConVar("cwShowCW", 1, true, true)
-	CW_CONVAR_SHOWLOG = Clockwork.kernel:CreateClientConVar("cwShowLog", 1, true, true)
-	--CW_CONVAR_SHOWHINTS = Clockwork.kernel:CreateClientConVar("cwShowHints", 1, true, true)
-	--CW_CONVAR_VIGNETTE = Clockwork.kernel:CreateClientConVar("cwShowVignette", 1, true, true)
+	--Clockwork.ConVars.TWELVEHOURCLOCK = Clockwork.kernel:CreateClientConVar("cwTwelveHourClock", 0, true, true)
+	--Clockwork.ConVars.HEADBOBSCALE = Clockwork.kernel:CreateClientConVar("cwHeadbobScale", 1, true, true)
+	--Clockwork.ConVars.SHOWAURA = Clockwork.kernel:CreateClientConVar("cwShowCW", 1, true, true)
+	Clockwork.ConVars.SHOWLOG = Clockwork.kernel:CreateClientConVar("cwShowLog", 1, true, true)
+	--Clockwork.ConVars.SHOWHINTS = Clockwork.kernel:CreateClientConVar("cwShowHints", 1, true, true)
+	--Clockwork.ConVars.VIGNETTE = Clockwork.kernel:CreateClientConVar("cwShowVignette", 1, true, true)
 
-	CW_CONVAR_ESPTIME = Clockwork.kernel:CreateClientConVar("cwESPTime", 1, true, true)
-	CW_CONVAR_ADMINESP = Clockwork.kernel:CreateClientConVar("cwAdminESP", 0, true, true)
-	CW_CONVAR_ESPBARS = Clockwork.kernel:CreateClientConVar("cwESPBars", 1, true, true)
-	CW_CONVAR_ITEMESP = Clockwork.kernel:CreateClientConVar("cwItemESP", 0, false, true)
-	CW_CONVAR_PROPESP = Clockwork.kernel:CreateClientConVar("cwPropESP", 0, false, true)
-	CW_CONVAR_SPAWNESP = Clockwork.kernel:CreateClientConVar("cwSpawnESP", 0, false, true)
-	CW_CONVAR_SALEESP = Clockwork.kernel:CreateClientConVar("cwSaleESP", 0, false, true)
-	CW_CONVAR_NPCESP = Clockwork.kernel:CreateClientConVar("cwNPCESP", 0, false, true)
-	CW_CONVAR_PEEK_ESP = Clockwork.kernel:CreateClientConVar("cwESPPeek", 1, true, true)
-	CW_CONVAR_PHYSDESCINSPECT = Clockwork.kernel:CreateClientConVar("cwPhysdescKey", 1, true, true);
+	Clockwork.ConVars.ESPTIME = Clockwork.kernel:CreateClientConVar("cwESPTime", 1, true, true)
+	Clockwork.ConVars.ADMINESP = Clockwork.kernel:CreateClientConVar("cwAdminESP", 0, true, true)
+	Clockwork.ConVars.ESPBARS = Clockwork.kernel:CreateClientConVar("cwESPBars", 1, true, true)
+	Clockwork.ConVars.ITEMESP = Clockwork.kernel:CreateClientConVar("cwItemESP", 0, false, true)
+	Clockwork.ConVars.PROPESP = Clockwork.kernel:CreateClientConVar("cwPropESP", 0, false, true)
+	Clockwork.ConVars.SPAWNESP = Clockwork.kernel:CreateClientConVar("cwSpawnESP", 0, false, true)
+	Clockwork.ConVars.SALEESP = Clockwork.kernel:CreateClientConVar("cwSaleESP", 0, false, true)
+	Clockwork.ConVars.NPCESP = Clockwork.kernel:CreateClientConVar("cwNPCESP", 0, false, true)
+	Clockwork.ConVars.PEEK_ESP = Clockwork.kernel:CreateClientConVar("cwESPPeek", 1, true, true)
+	Clockwork.ConVars.PHYSDESCINSPECT = Clockwork.kernel:CreateClientConVar("cwPhysdescKey", 1, true, true);
+	Clockwork.ConVars.TOOLTIPFOLLOW = Clockwork.kernel:CreateClientConVar("cwTooltipFollow", 1, true, true)
 
-	--CW_CONVAR_SHOWTIMESTAMPS = Clockwork.kernel:CreateClientConVar("cwShowTimeStamps", 0, true, true);
-	--CW_CONVAR_MAXCHATLINES = Clockwork.kernel:CreateClientConVar("cwMaxChatLines", 10, true, true);
-	--CW_CONVAR_SHOWOOC = Clockwork.kernel:CreateClientConVar("cwShowOOC", 1, true, true);
-	--CW_CONVAR_SHOWIC = Clockwork.kernel:CreateClientConVar("cwShowIC", 1, true, true);
-	CW_CONVAR_SHOWSERVER = Clockwork.kernel:CreateClientConVar("cwShowServer", 1, true, true);
-	--CW_CONVAR_SHOWAURA = Clockwork.kernel:CreateClientConVar("cwShowClockwork", 1, true, true);
+	--Clockwork.ConVars.SHOWTIMESTAMPS = Clockwork.kernel:CreateClientConVar("cwShowTimeStamps", 0, true, true);
+	--Clockwork.ConVars.MAXCHATLINES = Clockwork.kernel:CreateClientConVar("cwMaxChatLines", 10, true, true);
+	--Clockwork.ConVars.SHOWOOC = Clockwork.kernel:CreateClientConVar("cwShowOOC", 1, true, true);
+	--Clockwork.ConVars.SHOWIC = Clockwork.kernel:CreateClientConVar("cwShowIC", 1, true, true);
+	Clockwork.ConVars.SHOWSERVER = Clockwork.kernel:CreateClientConVar("cwShowServer", 1, true, true);
+	--Clockwork.ConVars.SHOWAURA = Clockwork.kernel:CreateClientConVar("cwShowClockwork", 1, true, true);
 
 	if (file.Exists("cwavatars.txt", "DATA")) then
 		Clockwork.AvatarsData = pon.decode(file.Read("cwavatars.txt", "DATA")) or {}
@@ -325,10 +326,10 @@ function GM:Initialize()
 
 	item.Initialize()
 	
-	--[[CW_CONVAR_DATETIME = Clockwork.kernel:CreateClientConVar("cwDateTime", 1, true, true)
+	--[[Clockwork.ConVars.DATETIME = Clockwork.kernel:CreateClientConVar("cwDateTime", 1, true, true)
 
 	if (!Clockwork.option:GetKey("top_bars")) then
-		CW_CONVAR_TOPBARS = Clockwork.kernel:CreateClientConVar("cwTopBars", 1, true, true)
+		Clockwork.ConVars.TOPBARS = Clockwork.kernel:CreateClientConVar("cwTopBars", 1, true, true)
 	else
 		Clockwork.setting:RemoveByConVar("cwTopBars")
 	end]]--
@@ -586,7 +587,7 @@ end;
 -- Called when the view model view should be calculated.
 function GM:CalcViewModelView(weapon, viewModel, oldEyePos, oldEyeAngles, eyePos, eyeAngles)
 	if (IsValid(weapon)) then
-		local bWeaponRaised = Clockwork.player:GetWeaponRaised(LocalPlayer());
+		local bWeaponRaised = LocalPlayer():IsWeaponRaised(weapon);
 		
 		if (!LocalPlayer():HasInitialized() or !Clockwork.config:HasInitialized() or LocalPlayer():GetMoveType() == MOVETYPE_OBSERVER) then
 			bWeaponRaised = nil;
@@ -870,40 +871,6 @@ function GM:Tick()
 		end
 	end
 
-	--[[if (Clockwork.kernel:IsInfoMenuOpen() and !input.IsKeyDown(KEY_F1)) then
-		Clockwork.kernel:RemoveBackgroundBlur("InfoMenu")
-		Clockwork.kernel:CloseActiveDermaMenus()
-		Clockwork.InfoMenuOpen = false
-
-		if (IsValid(Clockwork.InfoMenuPanel)) then
-			Clockwork.InfoMenuPanel:SetVisible(false)
-			Clockwork.InfoMenuPanel:Remove()
-		end
-
-		timer.Simple(FrameTime() * 0.5, function()
-			Clockwork.kernel:RemoveActiveToolTip()
-		end)
-	end]]--
-
-	--[[local menuMusic = Clockwork.option:GetKey("menu_music")
-
-	if (menuMusic != "") then
-		if (IsValid(Clockwork.Client) and Clockwork.character:IsPanelOpen()) then
-			if (!Clockwork.MusicSound) then
-				Clockwork.MusicSound = CreateSound(Clockwork.Client, menuMusic)
-				Clockwork.MusicSound:PlayEx(0.3, 100)
-				Clockwork.MusicFading = false
-			end
-		elseif (Clockwork.MusicSound and !Clockwork.MusicFading) then
-			Clockwork.MusicSound:FadeOut(8)
-			Clockwork.MusicFading = true
-
-			timer.Simple(8, function()
-				Clockwork.MusicSound = nil
-			end)
-		end
-	end]]--
-
 	local worldEntity = game.GetWorld()
 
 	for k, v in pairs(Clockwork.NetworkProxies) do
@@ -969,49 +936,51 @@ end
 
 -- Called when a player's move data is set up.
 function GM:SetupMove(player, moveData)
-	if player:IsRunning() and !player.accelerationFinished then
+	local plyTab = player:GetTable();
+
+	if player:IsRunning() and !plyTab.accelerationFinished then
 		local curTime = CurTime();
 		local run_speed = player:GetRunSpeed()
 		local walk_speed = player:GetWalkSpeed();
 		local final_speed = run_speed;
 		
-		if !player.startAcceleration then
-			player.startAcceleration = curTime;
+		if !plyTab.startAcceleration then
+			plyTab.startAcceleration = curTime;
 		end
 		
-		final_speed = Lerp(curTime - player.startAcceleration, walk_speed, run_speed);
+		final_speed = Lerp(curTime - plyTab.startAcceleration, walk_speed, run_speed);
 		
 		moveData:SetMaxClientSpeed(final_speed);
 		
 		if run_speed <= final_speed then
-			player.accelerationFinished = true;
-			player.startAcceleration = nil;
+			plyTab.accelerationFinished = true;
+			plyTab.startAcceleration = nil;
 		end
 		
-		player.decelerationFinished = false;
-		player.startDeceleration = nil;
+		plyTab.decelerationFinished = false;
+		plyTab.startDeceleration = nil;
 	elseif !player:IsRunning() then
-		if !player.decelerationFinished then
+		if plyTab.decelerationFinished == false then
 			local curTime = CurTime();
 			local run_speed = player:GetRunSpeed()
 			local walk_speed = player:GetWalkSpeed();
 			local final_speed = walk_speed;
 			
-			if !player.startDeceleration then
-				player.startDeceleration = curTime;
+			if !plyTab.startDeceleration then
+				plyTab.startDeceleration = curTime;
 			end
 			
-			final_speed = Lerp(curTime - player.startDeceleration, run_speed, walk_speed);
+			final_speed = Lerp(curTime - plyTab.startDeceleration, run_speed, walk_speed);
 			
 			moveData:SetMaxClientSpeed(final_speed);
 			
 			if run_speed >= final_speed then
-				player.decelerationFinished = true;
-				player.startDeceleration = nil;
+				plyTab.decelerationFinished = true;
+				plyTab.startDeceleration = nil;
 			end
 			
-			player.accelerationFinished = false;
-			player.startAcceleration = nil;
+			plyTab.accelerationFinished = false;
+			plyTab.startAcceleration = nil;
 		else
 			moveData:SetMaxClientSpeed(player:GetWalkSpeed());
 		end
@@ -1086,7 +1055,7 @@ function GM:HUDPaintForeground()
 	end;
 
 	if (Clockwork.player:IsAdmin(Clockwork.Client)) then
-		if (hook.Run("PlayerCanSeeAdminESP") or input.IsKeyDown(KEY_C) and CW_CONVAR_PEEK_ESP:GetInt() == 1) then
+		if (hook.Run("PlayerCanSeeAdminESP") or input.IsKeyDown(KEY_C) and Clockwork.ConVars.PEEK_ESP:GetInt() == 1) then
 			Clockwork.kernel:DrawAdminESP()
 		end
 	end
@@ -1140,6 +1109,28 @@ function GM:ItemNetworkDataUpdated(itemTable, newData)
 	end
 end
 
+local function TooltipRecurse(panel, panelToFind)
+	local children = panel:GetChildren();
+	
+	if !children or table.IsEmpty(children) then return end;
+
+	for k, v in pairs(children) do
+		if v == panelToFind then return v end;
+	
+		return TooltipRecurse(v);
+	end
+end
+
+local function IsChildOfTooltipRecurse(panel)
+	local parent = panel:GetParent();
+	
+	if !parent then return end;
+	
+	if parent.isTooltip then return parent end;
+	
+	return IsChildOfTooltipRecurse(parent);
+end
+
 -- Called after the VGUI has been rendered.
 function GM:PostRenderVGUI()
 	local cinematic = Clockwork.Cinematics[1];
@@ -1151,61 +1142,132 @@ function GM:PostRenderVGUI()
 	
 	local hoveredPanel = vgui.GetHoveredPanel();
 	
-	if (IsValid(hoveredPanel) and hoveredPanel.IsToolTip) then
-		if (!Clockwork.kernel.OldToolTipPanel or Clockwork.kernel.OldToolTipPanel != hoveredPanel) then
-			if (IsValid(Clockwork.kernel.OldToolTipPanel)) then
-				Clockwork.kernel:ClearToolTipPanel(Clockwork.kernel.OldToolTipPanel)
-			end;
-			
-			Clockwork.ActiveDermaToolTip = hoveredPanel
-			Clockwork.kernel.OldToolTipPanel = hoveredPanel
-		end;
-	elseif (IsValid(Clockwork.kernel.OldToolTipPanel) and !IsValid(Clockwork.kernel.CurrentOpenTooltip)) then
-		Clockwork.kernel:ClearToolTipPanel(Clockwork.kernel.OldToolTipPanel)
-	end;
-
-	local panel = Clockwork.kernel:GetActiveDermaToolTip() -- returns the panel with the tooltip.
+	if !IsValid(hoveredPanel) then return end;
 	
-	if (Clockwork.kernel.TooltipCooldown and Clockwork.kernel.TooltipCooldown > CurTime()) then
+	-- A lot of this is probably unoptimized but whatever.
+	if (!hoveredPanel.DermaToolTip and !hoveredPanel.isTooltip) then
+		if !table.IsEmpty(Clockwork.ActiveDermaToolTips) then
+			local panelToCheck = hoveredPanel;
+			local tooltipFound = false;
+			
+			while !tooltipFound do
+				if panelToCheck.isTooltip then
+					tooltipFound = true;
+					
+					break;
+				end
+				
+				panelToCheck = panelToCheck.parent or panelToCheck:GetParent();
+				
+				if !panelToCheck then
+					break;
+				end
+			end
+		
+			if !tooltipFound then
+				Clockwork.kernel:ClearToolTipPanels();
+				
+				return;
+			end
+			
+			if !Clockwork.ActiveDermaToolTips[#Clockwork.ActiveDermaToolTips].frozen then
+				Clockwork.kernel:ClearToolTipPanel(Clockwork.ActiveDermaToolTips[#Clockwork.ActiveDermaToolTips]);
+			end
+		end
+	end;
+	
+	if #Clockwork.ActiveDermaToolTips > 1 and !hoveredPanel.DermaToolTip then
+		for i, v in ipairs(Clockwork.ActiveDermaToolTips) do
+			if i < #Clockwork.ActiveDermaToolTips then
+				if IsChildOfTooltipRecurse(hoveredPanel) == v then
+					Clockwork.kernel:ClearToolTipPanel(Clockwork.ActiveDermaToolTips[i + 1]);
+					
+					break;
+				end
+			end
+		end
+	end
+
+	if (Clockwork.kernel.TooltipCooldown and Clockwork.kernel.TooltipCooldown > curTime) then
 		return;
 	end;
 
-	if (panel and IsValid(panel) and panel:IsVisible()) then
-		if (!panel.DermaToolTip) then
-			if (!self.preDelay) then
-				self.preDelay = curTime + 0.5;
-			elseif (self.preDelay < curTime) then
-				panel.DermaToolTip = Clockwork.kernel:SetupDermaToolTip(panel);
-				Clockwork.ActiveDermaToolTipPanel = panel.DermaToolTip;
-			end;
+	if hoveredPanel.GetMarkupToolTip and !hoveredPanel.DermaToolTip then
+		if (!hoveredPanel.preDelay) then
+			hoveredPanel.preDelay = curTime + 0.5;
+		elseif (hoveredPanel.preDelay < curTime) then
+			hoveredPanel.preDelay = curTime + 0.5;
+			hoveredPanel.DermaToolTip = Clockwork.kernel:SetupDermaToolTip(hoveredPanel);
+			
+			if #Clockwork.ActiveDermaToolTips > 1 then
+				for i = 1, #Clockwork.ActiveDermaToolTips do
+					local tooltip = Clockwork.ActiveDermaToolTips[#Clockwork.ActiveDermaToolTips - (i - 1)];
+					
+					if IsValid(tooltip) then
+						if !TooltipRecurse(tooltip, hoveredPanel.DermaToolTip) then
+							Clockwork.kernel:ClearToolTipPanel(tooltip);
+							
+							break;
+						end
+					end
+				end
+			end
+			
+			table.insert(Clockwork.ActiveDermaToolTips, hoveredPanel.DermaToolTip);
 		end;
-	elseif (Clockwork.ActiveDermaToolTipPanel and IsValid(Clockwork.ActiveDermaToolTipPanel)) then
-		Clockwork.ActiveDermaToolTipPanel:Remove();
-		Clockwork.ActiveDermaToolTipPanel = nil;
-	end
+	end;
 end
 
--- A function to clear the most recent tool tip.
+-- A function to clear a specific derma tooltip and its nested children.
 function Clockwork.kernel:ClearToolTipPanel(panel)
 	Clockwork.kernel.TooltipCooldown = CurTime() + 0.5;
 	
-	if (Clockwork.ActiveDermaToolTipPanel and IsValid(Clockwork.ActiveDermaToolTipPanel)) then
-		Clockwork.ActiveDermaToolTipPanel:Remove();
-		Clockwork.ActiveDermaToolTipPanel = nil;
-	end;
+	local found = false;
 	
-	if (Clockwork.CurrentOpenTooltip and IsValid(Clockwork.CurrentOpenTooltip)) then
-		Clockwork.CurrentOpenTooltip:Remove();
-		Clockwork.CurrentOpenTooltip = nil;
-	end;
+	for i, v in ipairs(Clockwork.ActiveDermaToolTips) do
+		if v == panel then
+			local parent = panel.parent;
+
+			if IsValid(parent) and parent.DermaToolTip then
+				parent.DermaToolTip = nil;
+			end
+			
+			panel:Remove();
+			
+			if !found then
+				found = i;
+			end
+			
+			break;
+		end
+	end
 	
-	if (panel.DermaToolTip and IsValid(panel.DermaToolTip)) then
-		panel.DermaToolTip:Remove();
-		panel.DermaToolTip = nil;
-	else
-		panel.DermaToolTip = nil;
-	end;
+	if found then
+		for i = found, #Clockwork.ActiveDermaToolTips do
+			Clockwork.ActiveDermaToolTips[i] = nil;
+		end
+	end
 end;
+
+-- A function to clear all active derma tooltips.
+function Clockwork.kernel:ClearToolTipPanels()
+	Clockwork.kernel.TooltipCooldown = CurTime() + 0.5;
+
+	for i, panel in ipairs(Clockwork.ActiveDermaToolTips) do
+		if IsValid(panel) then
+			local parent = panel.parent;
+
+			if IsValid(parent) and parent.DermaToolTip then
+				parent.DermaToolTip = nil;
+			end
+
+			panel:Remove();
+		end;
+	end
+	
+	Clockwork.ActiveDermaToolTips = {};
+end;
+
 -- A function to get a text's width.
 function GetFontWidth(font, text)
 	if (!font or !text) then
@@ -1237,28 +1299,10 @@ if (Clockwork.kernel.toolTips) then
 	end;
 end;
 
-concommand.Add("TooltipPanic", function()
-if (Clockwork.kernel.toolTips) then
-	for k, v in pairs (Clockwork.kernel.toolTips) do
-		if (IsValid(Clockwork.kernel.toolTips[k])) then
-			Clockwork.kernel.toolTips[k]:Remove();
-			Clockwork.kernel.toolTips[k] = nil;
-		end;
-	end;
-end;
-end);
-
 -- A function to set up a tool tip.
 function Clockwork.kernel:SetupDermaToolTip(parent)
 	if (!self.toolTips) then
 		self.toolTips = {};
-	else
-		for k, v in pairs (self.toolTips) do
-			if (IsValid(self.toolTips[k])) then
-				self.toolTips[k]:Remove();
-				self.toolTips[k] = nil;
-			end;
-		end;
 	end;
 	
 	if (IsValid(Clockwork.kernel.ActiveItemMenu)) then
@@ -1275,8 +1319,10 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 	frame:SetSize(scrW * 0.18, 500);
 	frame:SetTitle("");
 	frame:MakePopup();
+	frame:SetDrawOnTop(true);
 	frame.parent = parent;
 	frame.openable = parent.openable or false;
+	frame.isTooltip = true;
 
 	parent.tooltip = frame;
 	
@@ -1332,8 +1378,6 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 			if (self.parent.openCallback) then
 				self.parent:openCallback(self);
 			end;
-			
-			Clockwork.kernel.CurrentOpenTooltip = self;
 		end;
 	end;
 	
@@ -1351,19 +1395,62 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 	
 	-- Called when the frame is painted.
 	function frame:Paint(width, height)
-		derma.SkinHook("Paint", "Frame", self, w, h);
-		
+		derma.SkinHook("Paint", "Frame", self, width, height);
+
 		return true;
 	end;
 	
+	function frame:PaintOver(width, height)
+		local curTime = CurTime();
+		
+		draw.NoTexture() -- Otherwise we draw a transparent circle.
+		
+		local x = width - 21;
+		local y = 21;
+		
+		if self:GetTitle() and self:GetTitle() ~= "" then
+			x = width - 12;
+			y = 12;
+		end
+		
+		if !self.frozen then
+			if !self.frozenTime then
+				self.frozenTime = curTime + 3;
+			end
+			
+			local timeLeft = (self.frozenTime - curTime) / 3;
+
+			surface.SetDrawColor(10, 10, 10);
+			surface.DrawPartialOutlinedCircle(math.min((1 - timeLeft) * 100, 100), x, y, 11, 7);
+			surface.SetDrawColor(150, 20, 20);
+			surface.DrawPartialOutlinedCircle(math.min((1 - timeLeft) * 100, 100), x, y, 10, 4);
+			
+			--surface.SetDrawColor(20, 20, 20, 150);
+			--surface.DrawOutlinedRect(0, 0, width, height, 4);
+
+			if timeLeft <= 0 then
+				self.frozen = true;
+			end
+		else
+			if !self.circleAlpha then
+				self.circleAlpha = 255;
+			end
+			
+			self.circleAlpha = math.max(0, self.circleAlpha - (FrameTime() * 666));
+			
+			surface.SetDrawColor(10, 10, 10, self.circleAlpha);
+			surface.DrawOutlinedCircle(x, y, 11, 7);
+			surface.SetDrawColor(150, 20, 20, self.circleAlpha);
+			surface.DrawOutlinedCircle(x, y, 10, 4);
+		end
+	end
+	
 	-- Called every frame while the panel is active.
 	function frame:Think()
-		self:MoveToFront();
-		
-		local activeToolTip = Clockwork.kernel:GetActiveDermaToolTip();
+		local activeToolTips = Clockwork.kernel:GetActiveDermaToolTips();
 		local parent = self.parent;
-
-		if (IsValid(parent) and activeToolTip != parent) then
+		
+		if !IsValid(parent) or (parent.isTooltip and !table.HasValue(activeToolTips, parent)) then
 			Clockwork.kernel:ClearToolTipPanel(parent);
 			return;
 		end;
@@ -1395,7 +1482,18 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 		self:SetAlpha(self.alpha);
 		
 		local width, height = self:GetWide(), self:GetTall();
-		local x, y = gui.MouseX() + 8, gui.MouseY() + 8;
+		local x, y;
+		
+		if Clockwork.ConVars.TOOLTIPFOLLOW:GetInt() == 1 then
+			if self.frozen then
+				x, y = self:GetPos();
+			else
+				x, y = gui.MouseX() + 8, gui.MouseY() + 8;
+			end
+		else
+			x, y = parent:LocalToScreen(0, 0);
+			x = x + parent:GetWide();
+		end
 
 		if (y + height > scrH) then
 			y = math.Clamp(y - ((y + height) - scrH), 16, scrH) - 16;
@@ -1653,7 +1751,7 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 	end;
 	
 	-- A function to add a bar with multiple stages.
-	function frame:AddBar(height, barTable, title, titleColor, bHalf)
+	function frame:AddBar(height, barTable, title, titleColor, toolTip, bHalf)
 		local height = math.max(height, 12);
 		local oX, oY = 4, 0;
 		local yOffset = 4;
@@ -1725,7 +1823,7 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 		barBox:AddItem(barBackground);
 		
 		local overflow = {};
-		local barMaxSize = barBackground:GetWide() - 24;
+		local barMaxSize = barBackground:GetWide() - 4;
 
 		for k, v in ipairs (barTable) do
 			if (!v.color) then
@@ -1827,6 +1925,21 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 				barBox:AddItem(label);
 			end;
 		end;
+		
+		if toolTip then
+			local tooltipPanel = vgui.Create("Panel", barBox);
+			
+			tooltipPanel:SetSize(barBox:GetSize());
+			tooltipPanel.Paint = function() end;
+			
+			if isfunction(toolTip) then
+				Clockwork.kernel:CreateDermaToolTip(tooltipPanel);
+
+				tooltipPanel:SetToolTipCallback(toolTip)
+			else
+				tooltipPanel:SetTooltip(toolTip);
+			end
+		end
 
 		if bHalf then
 			self.barList:AddItem(barBox);
@@ -1855,10 +1968,27 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 			self:SetTall(self.pnlCanvas:GetTall());
 		end;
 		
-		for k, v in pairs (iconTable) do
-			local icon = vgui.Create("DImage", self);
+		for i, v in ipairs(iconTable) do
+			local icon;
+			
+			if v.button and isfunction(v.button) then
+				icon = vgui.Create("DImageButton", self);
+				
+				icon.DoClick = v.button
+				icon.DoRightClick = icon.DoClick;
+			else
+				icon = vgui.Create("DImage", self);
+			end
+			
 			icon:SetSize(height, height);
-			icon:SetImage(v);
+			icon:SetImage(v.icon);
+			
+			if v.tooltip and isfunction(v.tooltip) then
+				Clockwork.kernel:CreateDermaToolTip(icon);
+
+				icon:SetToolTipCallback(v.tooltip);
+			end
+			
 			iconBox:AddItem(icon);
 		end;
 		
@@ -2050,7 +2180,7 @@ end;
 
 -- Called to get whether the local player can see the admin ESP.
 function GM:PlayerCanSeeAdminESP()
-	return (CW_CONVAR_ADMINESP:GetInt() == 1);
+	return (Clockwork.ConVars.ADMINESP:GetInt() == 1);
 end
 
 -- Called when the local player attempts to get up.
@@ -2064,7 +2194,7 @@ function GM:PlayerCanSeeBars(class)
 		return
 	end
 	
-	--return tobool(CW_CONVAR_TOPBARS:GetInt())
+	--return tobool(Clockwork.ConVars.TOPBARS:GetInt())
 	return true
 end
 
@@ -2080,7 +2210,7 @@ end
 
 -- Called when the local player attempts to see the date and time.
 function GM:PlayerCanSeeDateTime()
-	--return tobool(CW_CONVAR_DATETIME:GetInt());
+	--return tobool(Clockwork.ConVars.DATETIME:GetInt());
 	
 	return false
 end
@@ -2128,8 +2258,8 @@ function GM:HUDDrawTargetID()
 						traceEntity.WrappedTable = nil;
 					end;
 					
-					if (traceEntity.SEXMONSTERTABLE) then
-						traceEntity.SEXMONSTERTABLE = nil;
+					if (traceEntity.physDescTable) then
+						traceEntity.physDescTable = nil;
 					end;
 
 					self.TargetEntities[traceEntity] = 1
@@ -2254,7 +2384,7 @@ function GM:HUDDrawTargetID()
 										end
 									elseif playerFaction == "Children of Satan" and clientFaction ~= "Children of Satan" then
 										if not string.find(player:GetModel(), "models/begotten/satanists") then
-											local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
+											local kinisgerOverride = player:GetNetVar("kinisgerOverride");
 											
 											if kinisgerOverride then
 												local classTable = Clockwork.class:GetStored()[kinisgerOverride];
@@ -2290,7 +2420,7 @@ function GM:HUDDrawTargetID()
 										end
 									elseif playerFaction == "Children of Satan" and clientFaction ~= "Children of Satan" then
 										if not string.find(player:GetModel(), "models/begotten/satanists") then
-											local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
+											local kinisgerOverride = player:GetNetVar("kinisgerOverride");
 											
 											if kinisgerOverride then
 												local classTable = Clockwork.class:GetStored()[kinisgerOverride];
@@ -2309,7 +2439,7 @@ function GM:HUDDrawTargetID()
 									local result;
 									local newY;
 
-									if CW_CONVAR_PHYSDESCINSPECT:GetInt() == 0 or input.IsKeyDown(KEY_X) then
+									if Clockwork.ConVars.PHYSDESCINSPECT:GetInt() == 0 or input.IsKeyDown(KEY_X) then
 										result = Clockwork.plugin:Call("PlayerCanShowUnrecognised", player, x, y, unrecognisedName, teamColor, alpha)
 									else
 										--result = "Press <X> to inspect this character.";
@@ -2342,7 +2472,7 @@ function GM:HUDDrawTargetID()
 								
 								local colorWhite = Color(255, 255, 255)
 								
-								if CW_CONVAR_PHYSDESCINSPECT:GetInt() == 0 or input.IsKeyDown(KEY_X) then
+								if Clockwork.ConVars.PHYSDESCINSPECT:GetInt() == 0 or input.IsKeyDown(KEY_X) then
 									Clockwork.TargetPlayerText.stored = {}
 									
 									Clockwork.plugin:Call("GetTargetPlayerText", player, Clockwork.TargetPlayerText)
@@ -2532,8 +2662,8 @@ function GM:GetProgressBarInfo()
 			elseif (action == "pickupragdoll") then
 				return {text = "You are picking up a body. Click to cancel.", percentage = percentage, flash = percentage < 10}
 			elseif (action == "crafting") then
-				local craftVerb = Clockwork.Client:GetLocalVar("cwProgressBarVerb") or  "crafting";
-				local itemName = Clockwork.Client:GetLocalVar("cwProgressBarItem") or "an item";
+				local craftVerb = Clockwork.Client:GetNetVar("cwProgressBarVerb") or  "crafting";
+				local itemName = Clockwork.Client:GetNetVar("cwProgressBarItem") or "an item";
 				
 				return {text = "You are "..craftVerb.." "..itemName..". Click to cancel.", percentage = percentage, flash = percentage < 0}
 			elseif (action == "ritualing") then
@@ -2650,14 +2780,16 @@ function GM:GetTargetPlayerText(player, targetPlayerText)
 	end
 
 	if (Clockwork.player:DoesRecognise(player, RECOGNISE_PARTIAL)) then
-		if (!player.SEXMONSTERTABLE) then
-			player.SEXMONSTERTABLE = {};
+		local plyTab = player:GetTable();
+		
+		if (!plyTab.physDescTable) then
+			plyTab.physDescTable = {};
 			Clockwork.kernel:WrapText(Clockwork.player:GetPhysDesc(player), targetIDTextFont, math.max(math.Round(ScrW() / 3.75), 512), physDescTable)
-			player.SEXMONSTERTABLE = table.Copy(physDescTable);
+			plyTab.physDescTable = table.Copy(physDescTable);
 		end;
 		
-		if (player.SEXMONSTERTABLE) then
-			for k, v in pairs(player.SEXMONSTERTABLE) do
+		if (plyTab.physDescTable) then
+			for k, v in pairs(plyTab.physDescTable) do
 				targetPlayerText:Add("PHYSDESC_"..k, v)
 			end
 		end;
@@ -3158,8 +3290,8 @@ function GM:PlayerAdjustHeadbobInfo(info)
 	local bisDrunk = Clockwork.player:GetDrunk()
 	local scale
 
-	--[[if (CW_CONVAR_HEADBOBSCALE) then
-		scale = math.Clamp(CW_CONVAR_HEADBOBSCALE:GetFloat(),0,1) or 1
+	--[[if (Clockwork.ConVars.HEADBOBSCALE) then
+		scale = math.Clamp(Clockwork.ConVars.HEADBOBSCALE:GetFloat(),0,1) or 1
 	else]]--
 		scale = 1
 	--end
@@ -3564,7 +3696,7 @@ function GM:HUDPaint()
 			end
 		end
 
-		if (config.GetVal("enable_vignette") --[[and CW_CONVAR_VIGNETTE:GetInt() == 1]]) then
+		if (config.GetVal("enable_vignette") --[[and Clockwork.ConVars.VIGNETTE:GetInt() == 1]]) then
 			hook.Run("DrawPlayerVignette")
 		end
 
@@ -3656,7 +3788,7 @@ end
 
 -- Called to check if a player does recognise another player.
 function GM:PlayerDoesRecognisePlayer(player, status, isAccurate, realValue)
-	--[[if player:GetSharedVar("faceConcealed") then
+	--[[if player:GetNetVar("faceConcealed") then
 		return false;
 	end]]--
 	
@@ -3665,7 +3797,7 @@ end
 
 -- Called when a player's name should be shown as unrecognised.
 function GM:PlayerCanShowUnrecognised(player, x, y, color, alpha, flashAlpha)
-	--[[if player:GetSharedVar("faceConcealed") then
+	--[[if player:GetNetVar("faceConcealed") then
 		return "This character's face is concealed.";
 	end]]--
 	

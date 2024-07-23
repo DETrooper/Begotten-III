@@ -12,7 +12,7 @@ local ITEM = item.New(nil, true);
 	ITEM.useText = "Equip"
 	ITEM.category = "Charms"
 	ITEM.description = "An enchanted item with a mysterious aura."
-	ITEM.requiredFaiths = nil;
+	ITEM.requireFaith = nil;
 	ITEM.slots = {"Charm1", "Charm2"};
 	ITEM.equipmentSaveString = "charms";
 
@@ -34,7 +34,7 @@ local ITEM = item.New(nil, true);
 			end
 			
 			-- kind of shit but oh well
-			if self.uniqueID == "ring_vitality" then
+			if self.uniqueID == "ring_vitality" or self.uniqueID == "ring_vitality_lesser" then
 				local max_health = player:GetMaxHealth();
 				
 				player:SetMaxHealth(player:GetMaxHealth());
@@ -76,7 +76,7 @@ local ITEM = item.New(nil, true);
 			return false
 		end
 	
-		if self.requiredFaiths and not (table.HasValue(self.requiredFaiths, player:GetFaith())) then
+		if self.requireFaith and not (table.HasValue(self.requireFaith, player:GetFaith())) then
 			if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
 				if !player.spawning then
 					Schema:EasyText(player, "chocolate", "You are not of the correct faith to wear this!")
@@ -93,6 +93,18 @@ local ITEM = item.New(nil, true);
 				end
 				
 				return false
+			end
+		end
+		
+		if self.mutuallyExclusive then
+			for i, v in ipairs(self.mutuallyExclusive) do
+				if player:GetCharmEquipped(v) then
+					if !player.spawning then
+						Schema:EasyText(player, "chocolate", "This charm is mutually exclusive with another equipped charm!")
+					end
+					
+					return false
+				end
 			end
 		end
 

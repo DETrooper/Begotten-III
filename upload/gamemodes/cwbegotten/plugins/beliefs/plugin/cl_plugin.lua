@@ -29,7 +29,7 @@ function cwBeliefs:DrawTreeBackground(x, y, width, height, panel)
 end;
 
 -- A function to open the belief tree.
-function cwBeliefs:OpenTree(player, level, experience, beliefs, points, faith)
+function cwBeliefs:OpenTree(player, level, experience, beliefs, points, faith, highlightBelief)
 	if !player then
 		player = Clockwork.Client;
 	end
@@ -38,7 +38,7 @@ function cwBeliefs:OpenTree(player, level, experience, beliefs, points, faith)
 		local oldMenu = Clockwork.Client.cwBeliefPanel;
 		
 		Clockwork.Client.cwBeliefPanel = vgui.Create("cwBeliefTree")
-		Clockwork.Client.cwBeliefPanel:Rebuild(player, level, experience, beliefs, points, faith)
+		Clockwork.Client.cwBeliefPanel:Rebuild(player, level, experience, beliefs, points, faith, highlightBelief)
 		Clockwork.Client.cwBeliefPanel:MakePopup()
 	
 		timer.Simple(FrameTime() * 2, function()
@@ -49,7 +49,7 @@ function cwBeliefs:OpenTree(player, level, experience, beliefs, points, faith)
 		end);
 	else
 		Clockwork.Client.cwBeliefPanel = vgui.Create("cwBeliefTree")
-		Clockwork.Client.cwBeliefPanel:Rebuild(player, level, experience, beliefs, points, faith)
+		Clockwork.Client.cwBeliefPanel:Rebuild(player, level, experience, beliefs, points, faith, highlightBelief)
 		Clockwork.Client.cwBeliefPanel:MakePopup()
 	end
 	

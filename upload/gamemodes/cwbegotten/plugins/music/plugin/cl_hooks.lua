@@ -2,12 +2,12 @@
 
 local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_redux" or game.GetMap() == "rp_scraptown";
 
-CW_CONVAR_AMBIENTMUSIC = Clockwork.kernel:CreateClientConVar("cwAmbientMusic", 1, true, true)
-CW_CONVAR_AMBIENTMUSICVOLUME = Clockwork.kernel:CreateClientConVar("cwAmbientMusicVolume", 100, true, true)
-CW_CONVAR_BATTLEMUSIC = Clockwork.kernel:CreateClientConVar("cwBattleMusic", 1, true, true)
-CW_CONVAR_BATTLEMUSICVOLUME = Clockwork.kernel:CreateClientConVar("cwBattleMusicVolume", 100, true, true)
-CW_CONVAR_MENUMUSIC = Clockwork.kernel:CreateClientConVar("cwMenuMusic", 1, true, true)
-CW_CONVAR_MENUMUSICVOLUME = Clockwork.kernel:CreateClientConVar("cwMenuMusicVolume", 100, true, true)
+Clockwork.ConVars.AMBIENTMUSIC = Clockwork.kernel:CreateClientConVar("cwAmbientMusic", 1, true, true)
+Clockwork.ConVars.AMBIENTMUSICVOLUME = Clockwork.kernel:CreateClientConVar("cwAmbientMusicVolume", 100, true, true)
+Clockwork.ConVars.BATTLEMUSIC = Clockwork.kernel:CreateClientConVar("cwBattleMusic", 1, true, true)
+Clockwork.ConVars.BATTLEMUSICVOLUME = Clockwork.kernel:CreateClientConVar("cwBattleMusicVolume", 100, true, true)
+Clockwork.ConVars.MENUMUSIC = Clockwork.kernel:CreateClientConVar("cwMenuMusic", 1, true, true)
+Clockwork.ConVars.MENUMUSICVOLUME = Clockwork.kernel:CreateClientConVar("cwMenuMusicVolume", 100, true, true)
 
 cwMusic.AmbientMusicTable = {
 	["tower"] = { -- ambient music for the tower of light
@@ -107,9 +107,9 @@ function cwMusic:ClockworkConVarChanged(name, previousValue, newValue)
 		end
 	elseif (name == "cwAmbientMusicVolume" and newValue) then
 		if newValue == "0" then
-			CW_CONVAR_AMBIENTMUSIC:SetInt(0);
+			Clockwork.ConVars.AMBIENTMUSIC:SetInt(0);
 		elseif previousValue == "0" and newValue ~= "0" then
-			CW_CONVAR_AMBIENTMUSIC:SetInt(1);
+			Clockwork.ConVars.AMBIENTMUSIC:SetInt(1);
 		elseif self.AmbientMusic then
 			self.AmbientMusic:ChangeVolume(math.max(0, (tonumber(newValue) / 100) * (self.TrackVolume or 1)));
 		end
@@ -119,9 +119,9 @@ function cwMusic:ClockworkConVarChanged(name, previousValue, newValue)
 		end
 	elseif (name == "cwBattleMusicVolume" and newValue) then
 		if newValue == "0" then
-			CW_CONVAR_BATTLEMUSIC:SetInt(0);
+			Clockwork.ConVars.BATTLEMUSIC:SetInt(0);
 		elseif previousValue == "0" and newValue ~= "0" then
-			CW_CONVAR_BATTLEMUSIC:SetInt(1);
+			Clockwork.ConVars.BATTLEMUSIC:SetInt(1);
 		elseif self.BattleMusic then
 			self.BattleMusic:ChangeVolume(math.max(0, (tonumber(newValue) / 100) * (self.TrackVolume or 1)));
 		end
@@ -134,9 +134,9 @@ function cwMusic:ClockworkConVarChanged(name, previousValue, newValue)
 		end
 	elseif (name == "cwMenuMusicVolume" and newValue) then
 		if newValue == "0" then
-			CW_CONVAR_MENUMUSIC:SetInt(0);
+			Clockwork.ConVars.MENUMUSIC:SetInt(0);
 		elseif previousValue == "0" and newValue ~= "0" then
-			CW_CONVAR_MENUMUSIC:SetInt(1);
+			Clockwork.ConVars.MENUMUSIC:SetInt(1);
 		end
 	end
 end
@@ -283,10 +283,10 @@ function cwMusic:StartAmbientMusic()
 		
 		if musicTable.volume then
 			cwMusic.TrackVolume = musicTable.volume;
-			cwMusic.AmbientMusic:PlayEx(math.max((CW_CONVAR_AMBIENTMUSICVOLUME:GetInt() or 100) * musicTable.volume, 0) / 100, 100);
+			cwMusic.AmbientMusic:PlayEx(math.max((Clockwork.ConVars.AMBIENTMUSICVOLUME:GetInt() or 100) * musicTable.volume, 0) / 100, 100);
 		else
 			cwMusic.TrackVolume = 1;
-			cwMusic.AmbientMusic:PlayEx((CW_CONVAR_AMBIENTMUSICVOLUME:GetInt() or 100) / 100, 100);
+			cwMusic.AmbientMusic:PlayEx((Clockwork.ConVars.AMBIENTMUSICVOLUME:GetInt() or 100) / 100, 100);
 		end
 	end
 end
@@ -340,7 +340,7 @@ function cwMusic:CanPlayAmbientMusic()
 	end
 
 	--if (Clockwork.Client:IsAdmin()) then
-		if (CW_CONVAR_AMBIENTMUSIC and CW_CONVAR_AMBIENTMUSIC:GetInt() < 1) then
+		if (Clockwork.ConVars.AMBIENTMUSIC and Clockwork.ConVars.AMBIENTMUSIC:GetInt() < 1) then
 			return false
 		end
 	--end
@@ -500,10 +500,10 @@ function cwMusic:StartBattleMusic(limit)
 		
 		if musicTable.volume then
 			cwMusic.TrackVolume = musicTable.volume;
-			cwMusic.BattleMusic:PlayEx(math.max((CW_CONVAR_BATTLEMUSICVOLUME:GetInt() or 100) * musicTable.volume, 0) / 100, 100);
+			cwMusic.BattleMusic:PlayEx(math.max((Clockwork.ConVars.BATTLEMUSICVOLUME:GetInt() or 100) * musicTable.volume, 0) / 100, 100);
 		else
 			cwMusic.TrackVolume = 1;
-			cwMusic.BattleMusic:PlayEx((CW_CONVAR_BATTLEMUSICVOLUME:GetInt() or 100) / 100, 100);
+			cwMusic.BattleMusic:PlayEx((Clockwork.ConVars.BATTLEMUSICVOLUME:GetInt() or 100) / 100, 100);
 		end
 	end
 end
@@ -557,7 +557,7 @@ function cwMusic:CanPlayBattleMusic()
 	end
 
 	--if (Clockwork.Client:IsAdmin()) then
-		if (CW_CONVAR_BATTLEMUSIC and CW_CONVAR_BATTLEMUSIC:GetInt() < 1) then
+		if (Clockwork.ConVars.BATTLEMUSIC and Clockwork.ConVars.BATTLEMUSIC:GetInt() < 1) then
 			return false
 		end
 	--end

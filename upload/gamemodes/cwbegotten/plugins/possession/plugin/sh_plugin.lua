@@ -10,44 +10,45 @@ Clockwork.kernel:IncludePrefixed("sv_hooks.lua");
 
 function cwPossession:StartCommand(player, ucmd)
 	if IsValid(player) then
+		local plyTab = player:GetTable();
 		local possessor;
 		local victim;
 		
 		if SERVER then
-			possessor = player.possessor;
-			victim = player.victim;
+			possessor = plyTab.possessor;
+			victim = plyTab.victim;
 		else
-			if player.possessor then
-				possessor = player.possessor;
+			if plyTab.possessor then
+				possessor = plyTab.possessor;
 				victim = player;
-			elseif player.victim then
+			elseif plyTab.victim then
 				possessor = player;
-				victim = player.victim;
+				victim = plyTab.victim;
 			end
 		end
 		
 		if IsValid(victim) then 
 			if victim:Alive() then
-				player.attacking = ucmd:KeyDown(IN_ATTACK)
-				player.blocking = ucmd:KeyDown(IN_ATTACK2);
-				player.parrying = ucmd:KeyDown(IN_RELOAD)
-				player.changeStance = ucmd:KeyDown(IN_ATTACK2) and ucmd:KeyDown(IN_USE);
-				player.use = ucmd:KeyDown(IN_USE);
-				player.jumping = ucmd:KeyDown(IN_JUMP)
-				player.crouching = ucmd:KeyDown(IN_DUCK)
-				player.running = ucmd:KeyDown(IN_SPEED);
-				player.forward = ucmd:KeyDown(IN_FORWARD)
-				player.backward = ucmd:KeyDown(IN_BACK)
-				player.left = ucmd:KeyDown(IN_MOVELEFT)
-				player.right = ucmd:KeyDown(IN_MOVERIGHT)
-				player.movementForward = ucmd:GetForwardMove()
-				player.sidewaysMovement = ucmd:GetSideMove()
-				player.upMove = ucmd:GetUpMove()
-				player.MouseX = ucmd:GetMouseX()
-				player.MouseY = ucmd:GetMouseY()
+				plyTab.attacking = ucmd:KeyDown(IN_ATTACK)
+				plyTab.blocking = ucmd:KeyDown(IN_ATTACK2);
+				plyTab.parrying = ucmd:KeyDown(IN_RELOAD)
+				plyTab.changeStance = ucmd:KeyDown(IN_ATTACK2) and ucmd:KeyDown(IN_USE);
+				plyTab.use = ucmd:KeyDown(IN_USE);
+				plyTab.jumping = ucmd:KeyDown(IN_JUMP)
+				plyTab.crouching = ucmd:KeyDown(IN_DUCK)
+				plyTab.running = ucmd:KeyDown(IN_SPEED);
+				plyTab.forward = ucmd:KeyDown(IN_FORWARD)
+				plyTab.backward = ucmd:KeyDown(IN_BACK)
+				plyTab.left = ucmd:KeyDown(IN_MOVELEFT)
+				plyTab.right = ucmd:KeyDown(IN_MOVERIGHT)
+				plyTab.movementForward = ucmd:GetForwardMove()
+				plyTab.sidewaysMovement = ucmd:GetSideMove()
+				plyTab.upMove = ucmd:GetUpMove()
+				plyTab.MouseX = ucmd:GetMouseX()
+				plyTab.MouseY = ucmd:GetMouseY()
 				
 				if SERVER then
-					player.demonMove = ucmd
+					plyTab.demonMove = ucmd
 				end
 
 				ucmd:SetViewAngles(victim:EyeAngles())

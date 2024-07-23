@@ -14,7 +14,7 @@ function cwPossession:Tick()
 		self.possessionCheck = curTime + 0.5;
 		
 		if Clockwork.Client.possessor then
-			if !IsValid(Clockwork.Client.possessor) or !Clockwork.Client:GetSharedVar("currentlyPossessed") then
+			if !IsValid(Clockwork.Client.possessor) or !Clockwork.Client:GetNetVar("currentlyPossessed") then
 				if Clockwork.Client.PossessedSound then
 					Clockwork.Client.PossessedSound:Stop();
 				end
@@ -22,7 +22,7 @@ function cwPossession:Tick()
 				Clockwork.Client.possessor = nil;
 			end
 		elseif Clockwork.Client.victim then
-			if !IsValid(Clockwork.Client.victim) or !Clockwork.Client.victim:GetSharedVar("currentlyPossessed") then
+			if !IsValid(Clockwork.Client.victim) or !Clockwork.Client.victim:GetNetVar("currentlyPossessed") then
 				if Clockwork.Client.PossessedSound then
 					Clockwork.Client.PossessedSound:Stop();
 				end
@@ -52,7 +52,7 @@ function cwPossession:GetScreenTextInfo()
 	if IsValid(Clockwork.Client.victim) then
 		local blackFadeAlpha = Clockwork.kernel:GetBlackFadeAlpha();
 	
-		if (Clockwork.Client.victim:GetSharedVar("beingChloro")) then
+		if (Clockwork.Client.victim:GetNetVar("beingChloro")) then
 			return {
 				alpha = 255 - blackFadeAlpha,
 				title = "SOMEBODY IS USING CHLOROFORM ON YOUR VESSEL"
@@ -114,14 +114,18 @@ function cwPossession:HUDPaint()
 				draw.SimpleText(victim:GetNWInt("stability", 100), "UseHint", 120, 115, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
 				
 				draw.SimpleText("Oxygen:", "UseHint", 50, 140, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
-				draw.SimpleText(victim:GetSharedVar("oxygen") or 100, "UseHint", 120, 140, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
+				draw.SimpleText(victim:GetNetVar("oxygen") or 100, "UseHint", 120, 140, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
 				
-				if IsValid(victim:GetActiveWeapon()) then
+				local victimWeapon = victim:GetActiveWeapon();
+				
+				if IsValid(victimWeapon) then
+					local bRaised = victim:IsWeaponRaised(victimWeapon);
+					
 					draw.SimpleText("Weapon:", "UseHint", 50, 165, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					draw.SimpleText(victim:GetActiveWeapon():GetPrintName(), "UseHint", 120, 165, COLOR_WHITE, TEXT_ALIGN_LEFTR, TEXT_ALIGN_RIGHT);
 				
 					draw.SimpleText("Raised:", "UseHint", 50, 190, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
-					draw.SimpleText(tostring(victim:IsWeaponRaised()), "UseHint", 120, 190, victim:IsWeaponRaised() and COLOR_GREEN or COLOR_RED, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
+					draw.SimpleText(tostring(bRaised), "UseHint", 120, 190, bRaised and COLOR_GREEN or COLOR_RED, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					
 					draw.SimpleText("Stance:", "UseHint", 50, 215, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					
@@ -191,7 +195,7 @@ function cwPossession:DrawPlayerOutline(player, outlines, color)
 end;
 
 function cwPossession:PostPlayerDraw(player)
-	if player:GetSharedVar("currentlyPossessed") or player:GetSharedVar("possessionFreakout") then
+	if player:GetNetVar("currentlyPossessed") or player:GetNetVar("possessionFreakout") then
 		if player:Alive() and !player:IsNoClipping() then
 			if player ~= Clockwork.Client and !Clockwork.Client.victim then
 				local ragdollEntity = player:GetRagdollEntity();

@@ -31,7 +31,7 @@ end);
 function cwZombies:CanHearBattle()
 	local curTime = CurTime();
 	
-	if (curTime < self.battleMusicTime or CW_CONVAR_ZOMBIEMUSIC:GetInt() != 1) then
+	if (curTime < self.battleMusicTime or Clockwork.ConVars.ZOMBIEMUSIC:GetInt() != 1) then
 		return false;
 	end;
 	

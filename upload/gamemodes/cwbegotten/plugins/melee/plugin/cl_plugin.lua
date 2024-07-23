@@ -28,7 +28,7 @@ function playerMeta:Disorient(blurAmount)
 end;
 
 --[[function playerMeta:GetMaxPoise()
-	return self:GetSharedVar("maxMeleeStamina", 90);
+	return self:GetNetVar("maxMeleeStamina", 90);
 end;]]--
 
 Clockwork.datastream:Hook("Parried", function(data)

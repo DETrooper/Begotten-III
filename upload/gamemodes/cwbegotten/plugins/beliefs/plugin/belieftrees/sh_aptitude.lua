@@ -109,7 +109,7 @@ local APTITUDE = cwBeliefs.beliefTrees:New("aptitude")
 			},
 			["doctor"] = {
 				name = "Doctor",
-				description = "Unlocks the ability to diagnose a patient's injuries.",
+				description = "Unlocks the ability to diagnose a patient's injuries. Doubles the speed that chloroform can be applied to other characters.",
 				requirements = {"literacy", "sanitary"},
 				row = 3,
 			},
@@ -123,7 +123,7 @@ local APTITUDE = cwBeliefs.beliefTrees:New("aptitude")
 		[5] = {
 			["medicine_man"] = {
 				name = "Medicine Man",
-				description = "Triples the effectiveness of healing items.",
+				description = "Triples the effectiveness of healing items when used on other characters. Doubles their effectiveness for yourself.",
 				requirements = {"literacy", "sanitary"},
 				row = 3,
 			},

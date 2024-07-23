@@ -1,4 +1,4 @@
-CW_CONVAR_HITINDICATOR = CW_CONVAR_HITINDICATOR or Clockwork.kernel:CreateClientConVar("cwHitIndicator", 1, true, true);
+Clockwork.ConVars.HITINDICATOR = Clockwork.ConVars.HITINDICATOR or Clockwork.kernel:CreateClientConVar("cwHitIndicator", 1, true, true);
 Clockwork.setting:AddCheckBox("Screen effects", "Enable ranged hit indicator.", "cwHitIndicator", "Click to enable hit indicators when using ranged weapons.");
 
 net.Receive("cwReadSound", function()

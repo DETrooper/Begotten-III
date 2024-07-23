@@ -266,6 +266,10 @@ function cwZombies:EntityTakeDamageAfter(entity, damageInfo)
 					if IsValid(activeWeapon) and activeWeapon.Base == "begotten_firearm_base" then
 						damageInfo:ScaleDamage(1.5);
 					end
+					
+					if attacker:GetCharmEquipped("evil_eye") then
+						damageInfo:ScaleDamage(1.5);
+					end
 				elseif attacker:IsNPC() or attacker:IsNextBot() then
 					entity:SetEnemy(attacker);
 					

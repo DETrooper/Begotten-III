@@ -16,7 +16,7 @@ function PLUGIN:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 			player:SetData("playTime", playTime + 5);
 		end
 		
-		if player:GetCharacter() then
+		if plyTab.cwCharacter then
 			local charPlayTime = player:GetCharacterData("charPlayTime", 0);
 		
 			if (!charPlayTime) then
@@ -37,7 +37,7 @@ function playerMeta:PlayTime()
 end
 
 function playerMeta:CharPlayTime()
-	if self:GetCharacter() then
+	if self.cwCharacter then
 		return self:GetCharacterData("charPlayTime") or 0
 	else
 		return false

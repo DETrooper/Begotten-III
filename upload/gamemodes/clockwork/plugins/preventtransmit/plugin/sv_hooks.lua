@@ -25,7 +25,9 @@ function cwTransmit:DisableNetworking(client, disable)
 end
 
 function cwTransmit:PreMakePlayerEnterObserverMode(player)
-    self:DisableNetworking(player, true);
+	if player:IsAdmin() then
+		self:DisableNetworking(player, true);
+	end
 end
 
 function cwTransmit:PreMakePlayerExitObserverMode(player)

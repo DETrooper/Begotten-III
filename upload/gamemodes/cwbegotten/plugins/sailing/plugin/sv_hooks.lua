@@ -82,9 +82,3 @@ function cwSailing:ModifyPlayerSpeed(player, infoTable, action)
 		infoTable.walkSpeed = infoTable.walkSpeed * 0.1;
 	end
 end
-
-function cwSailing:SetupMove(player, moveData)
-	if (player.disableMovement) then
-		moveData:SetVelocity(Vector(0, 0, 0));
-	end;
-end;

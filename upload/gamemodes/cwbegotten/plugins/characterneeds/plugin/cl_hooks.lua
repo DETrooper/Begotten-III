@@ -16,10 +16,10 @@ local needsInverted = {"hunger", "thirst"};
 -- Called when the F1 Text is needed.
 function cwCharacterNeeds:PostMainMenuRebuild(menu)
 	if IsValid(menu) then
-		local hunger = tonumber(Clockwork.Client:GetSharedVar("hunger"));
-		local thirst = tonumber(Clockwork.Client:GetSharedVar("thirst"));
-		local corruption = tonumber(Clockwork.Client:GetSharedVar("corruption"));
-		local sleep = tonumber(Clockwork.Client:GetSharedVar("sleep"));
+		local hunger = tonumber(Clockwork.Client:GetNetVar("hunger"));
+		local thirst = tonumber(Clockwork.Client:GetNetVar("thirst"));
+		local corruption = tonumber(Clockwork.Client:GetNetVar("corruption"));
+		local sleep = tonumber(Clockwork.Client:GetNetVar("sleep"));
 
 		self.hunger = math.Round(hunger);
 		self.thirst = math.Round(thirst);
@@ -53,7 +53,7 @@ end
 
 -- A function to get a need's markup tooltip.
 function cwCharacterNeeds:BuildNeedTooltip(need, x, y, width, height, frame)
-	local needNumber = tonumber(Clockwork.Client:GetSharedVar(need));
+	local needNumber = tonumber(Clockwork.Client:GetNetVar(need));
 	local needTextTable = needTexts[need];
 	
 	if need == "sleep" and cwBeliefs and cwBeliefs:HasBelief("yellow_and_black") then
@@ -90,10 +90,10 @@ function cwCharacterNeeds:BuildNeedTooltip(need, x, y, width, height, frame)
 end;
 
 function cwCharacterNeeds:ModifyStatusEffects(tab)
-	local hunger = tonumber(Clockwork.Client:GetSharedVar("hunger"));
-	local thirst = tonumber(Clockwork.Client:GetSharedVar("thirst"));
-	local corruption = tonumber(Clockwork.Client:GetSharedVar("corruption"));
-	local sleep = tonumber(Clockwork.Client:GetSharedVar("sleep"));
+	local hunger = tonumber(Clockwork.Client:GetNetVar("hunger"));
+	local thirst = tonumber(Clockwork.Client:GetNetVar("thirst"));
+	local corruption = tonumber(Clockwork.Client:GetNetVar("corruption"));
+	local sleep = tonumber(Clockwork.Client:GetNetVar("sleep"));
 	
 	if hunger >= 75 then
 		table.insert(tab, {text = "(-) Starvation", color = Color(200, 40, 40)});
@@ -119,8 +119,8 @@ end
 -- Called when the screenspace effects are rendered.
 function cwCharacterNeeds:RenderScreenspaceEffects()
 	if Clockwork.Client:HasInitialized() then
-		local hunger = tonumber(Clockwork.Client:GetSharedVar("hunger", 0));
-		local thirst = tonumber(Clockwork.Client:GetSharedVar("thirst", 0));
+		local hunger = tonumber(Clockwork.Client:GetNetVar("hunger", 0));
+		local thirst = tonumber(Clockwork.Client:GetNetVar("thirst", 0));
 		
 		if hunger > 90 or thirst > 90 then
 			DrawMotionBlur(0.05, 1.5, 0.01)

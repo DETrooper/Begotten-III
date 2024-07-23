@@ -71,15 +71,15 @@ do
 	local normalizeAngle = math.NormalizeAngle
 	
 	-- Called when the player's jumping animation should be handled.
-	function GM:HandlePlayerJumping(player, velocity, plyTable)
-		if (player:GetMoveType() == MOVETYPE_NOCLIP) then
+	function GM:HandlePlayerJumping(player, velocity, plyTable, moveType, waterLevel)
+		if (moveType == MOVETYPE_NOCLIP) then
 			plyTable.m_bJumping = false;
 			return;
 		end;
 		
 		local curTime = CurTime();
 
-		if (!plyTable.m_bJumping && !player:OnGround() && player:WaterLevel() <= 0) then
+		if (!plyTable.m_bJumping && !player:OnGround() && waterLevel <= 0) then
 			if (!plyTable.m_fGroundTime) then
 				plyTable.m_fGroundTime = curTime;
 			elseif (curTime - plyTable.m_fGroundTime) > 0 then
@@ -95,7 +95,7 @@ do
 				player:AnimRestartMainSequence();
 			end;
 			
-			if (player:WaterLevel() >= 2 ) ||	((curTime - plyTable.m_flJumpStartTime) > 0.2 && player:OnGround()) then
+			if (waterLevel >= 2 ) ||	((curTime - plyTable.m_flJumpStartTime) > 0.2 && player:OnGround()) then
 				plyTable.m_bJumping = false;
 				plyTable.m_fGroundTime = nil;
 				player:AnimRestartMainSequence();
@@ -111,16 +111,10 @@ do
 	end;
 
 	-- Called when the player's ducking animation should be handled.
-	function GM:HandlePlayerDucking(player, velocity, plyTable)
+	function GM:HandlePlayerDucking(player, velocity, plyTable, weaponHoldType)
 		if (player:Crouching()) then
 			local model = player:GetModel();
-			local weapon = player:GetActiveWeapon();
 			local velLength = velocity:Length2D();
-			local weaponHoldType = "pistol";
-			
-			if (IsValid(weapon)) then
-				weaponHoldType = Clockwork.animation:GetWeaponHoldType(player, weapon);
-			end;
 
 			if (velLength > 0.5) then
 				plyTable.CalcIdeal = Clockwork.animation:GetForModel(model, weaponHoldType, "walk_crouch");
@@ -135,8 +129,8 @@ do
 	end;
 
 	-- Called when the player's swimming animation should be handled.
-	function GM:HandlePlayerSwimming(player, velocity, plyTable)
-		if (player:WaterLevel() >= 2) then
+	function GM:HandlePlayerSwimming(player, velocity, plyTable, waterLevel)
+		if (waterLevel >= 2) then
 			if (plyTable.m_bFirstSwimFrame) then
 				player:AnimRestartMainSequence();
 				plyTable.m_bFirstSwimFrame = false;
@@ -155,9 +149,9 @@ do
 	end;
 
 	-- Called when the player's driving animation should be handled.
-	function GM:HandlePlayerDriving(player, plyTable)
-		if (player:InVehicle()) then
-			plyTable.CalcIdeal = Clockwork.animation:GetForModel(player:GetModel(), "normal", "idle_crouch")[1];
+	function GM:HandlePlayerDriving(player, plyTable, inVehicle, model)
+		if (inVehicle) then
+			plyTable.CalcIdeal = Clockwork.animation:GetForModel(model, "normal", "idle_crouch")[1];
 			return true;
 		end;
 		
@@ -172,27 +166,31 @@ do
 		if (velLength > 0.5) then
 			rate = ((velLength * 0.8) / maxSeqGroundSpeed);
 		end
-
-		player.cwPlaybackRate = math.Clamp(rate, 0, 1.5);
 		
-		hook.Run("ModifyPlayerPlaybackRate", player);
-		
-		player:SetPlaybackRate(player.cwPlaybackRate);
+		local plyTab = player:GetTable();
 
-		if (player:InVehicle() and CLIENT) then
-			local vehicle = player:GetVehicle();
-			
-			if (IsValid(vehicle)) then
-				local velocity = vehicle:GetVelocity();
-				local steer = (vehicle:GetPoseParameter("vehicle_steer") * 2) - 1;
+		plyTab.cwPlaybackRate = math.Clamp(rate, 0, 1.5);
+		
+		hook.Run("ModifyPlayerPlaybackRate", player, plyTab);
+		
+		player:SetPlaybackRate(plyTab.cwPlaybackRate);
+
+		if CLIENT then
+			if (player:InVehicle()) then
+				local vehicle = player:GetVehicle();
 				
-				player:SetPoseParameter("vertical_velocity", velocity.z * 0.01);
-				player:SetPoseParameter("vehicle_steer", steer);
+				if (IsValid(vehicle)) then
+					local velocity = vehicle:GetVelocity();
+					local steer = (vehicle:GetPoseParameter("vehicle_steer") * 2) - 1;
+					
+					player:SetPoseParameter("vertical_velocity", velocity.z * 0.01);
+					player:SetPoseParameter("vehicle_steer", steer);
+				end;
 			end;
 		end;
 	end;
 
-	local IdleActivity = ACT_HL2MP_IDLE;
+	--[[local IdleActivity = ACT_HL2MP_IDLE;
 	local IdleActivityTranslate = {
 		[ACT_MP_ATTACK_CROUCH_PRIMARYFIRE] = IdleActivity + 5,
 		[ACT_MP_ATTACK_STAND_PRIMARYFIRE] = IdleActivity + 5,
@@ -204,8 +202,9 @@ do
 		[ACT_MP_JUMP] = ACT_HL2MP_JUMP_SLAM,
 		[ACT_MP_WALK] = IdleActivity + 1,
 		[ACT_MP_RUN] = IdleActivity + 2,
-	};
-		-- Called when a player's activity is supposed to be translated.
+	};]]--
+	
+	-- Called when a player's activity is supposed to be translated.
 	function GM:TranslateActivity(player, act)
 		--[[local model = player:GetModel();
 		local bIsRaised = Clockwork.player:GetWeaponRaised(player, true);
@@ -231,6 +230,12 @@ do
 
 	-- Called when the main activity should be calculated.
 	function GM:CalcMainActivity(player, velocity)
+		local moveType = player:GetMoveType();
+		
+		if moveType == MOVETYPE_NOCLIP or moveType == MOVETYPE_OBSERVER then
+			return -1, -1;
+		end
+	
 		local model = player:GetModel();
 		local plyTable = player:GetTable();
 		
@@ -238,27 +243,27 @@ do
 			--return self.BaseClass:CalcMainActivity(player, velocity);
 		--end;
 		
-		local weapon = player:GetActiveWeapon();
+		local bIsRaised, weapon = player:IsWeaponRaised();
 		local weaponClass;
-		local bIsRaised = Clockwork.player:GetWeaponRaised(player, true);
 		local weaponHoldType = "normal";
 		local forcedAnimation = player:GetForcedAnimation();
 
-		if (IsValid(weapon)) then
-			weaponHoldType = Clockwork.animation:GetWeaponHoldType(player, weapon);
+		if weapon then
+			--weaponHoldType = Clockwork.animation:GetWeaponHoldType(player, weapon);
+			weaponHoldType = weapon:GetHoldType() or "normal";
 			weaponClass = weapon:GetClass();
 		end;
 		
 		local act = Clockwork.animation:GetForModel(model, weaponHoldType, "idle") or ACT_IDLE;
 		local oldact = plyTable.CalcIdeal;
 		local seq = -1;
+		local inVehicle = player:InVehicle();
+		local waterLevel = player:WaterLevel();
 		
-		if (!self:HandlePlayerDriving(player, plyTable)
-		and !self:HandlePlayerJumping(player, velocity, plyTable)
-		and !self:HandlePlayerDucking(player, velocity, plyTable)
-		and !self:HandlePlayerSwimming(player, velocity, plyTable)
-		and !self:HandlePlayerNoClipping(player, velocity, plyTable)
-		and !self:HandlePlayerVaulting(player, velocity, plyTable)) then
+		if (!self:HandlePlayerDriving(player, plyTable, inVehicle, model)
+		and !self:HandlePlayerJumping(player, velocity, plyTable, moveType, waterLevel)
+		and !self:HandlePlayerDucking(player, velocity, plyTable, weaponHoldType)
+		and !self:HandlePlayerSwimming(player, velocity, plyTable, waterLevel)) then
 			if (player:IsRunning()) then
 				act = Clockwork.animation:GetForModel(model, weaponHoldType, "run");
 			elseif (velocity:Length2DSqr() > 0.25) then
@@ -302,14 +307,10 @@ do
 		if (CLIENT) then
 			player:SetIK(false);
 		end;
-		
-		local eyeAngles = player:EyeAngles();
-		local yaw = velocity:Angle().yaw;
-		local normalized = math.NormalizeAngle(yaw - eyeAngles.y);
 
-		player:SetPoseParameter("move_yaw", normalized);
+		player:SetPoseParameter("move_yaw", math.NormalizeAngle(velocity:Angle().yaw - player:EyeAngles().y));
 		
-		if !player:InVehicle() then
+		if !inVehicle then
 			-- part of wOS, moved here for optimization purposes
 			if wOS then
 				local translation = wOS.AnimExtension.TranslateHoldType[weaponHoldType];
@@ -370,7 +371,8 @@ do
 		local weaponHoldType = "normal";
 		
 		if (IsValid(weapon)) then
-			weaponHoldType = Clockwork.animation:GetWeaponHoldType(player, weapon);
+			--weaponHoldType = Clockwork.animation:GetWeaponHoldType(player, weapon);
+			weaponHoldType = weapon:GetHoldType() or "normal";
 		end;
 
 		if (event == PLAYERANIMEVENT_ATTACK_PRIMARY) then

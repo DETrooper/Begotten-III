@@ -108,7 +108,7 @@ netstream.Hook("PlayerJump", function(player)
 		if not (player.cwJumpPower <= 10) then
 			local jumpCost = 15;
 			
-			if player.HasCharmEquipped and player:GetCharmEquipped("boot_contortionist") then
+			if player.GetCharmEquipped and player:GetCharmEquipped("boot_contortionist") then
 				jumpCost = math.Round(jumpCost * 0.333);
 			end
 			

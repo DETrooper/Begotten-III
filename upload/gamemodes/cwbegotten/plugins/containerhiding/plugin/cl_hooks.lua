@@ -14,7 +14,7 @@ function cwContainerHiding:GetEntityMenuOptions(entity, options)
 		
 		if (table.HasValue(self.containerProps["white"], string.lower(model)) or table.HasValue(self.containerProps["black"], string.lower(model))) then
 			if (entity:GetNWBool("unlocked", true) == true) then
-				if (Clockwork.Client:GetSharedVar("hidden")) then
+				if (Clockwork.Client:GetNetVar("hidden")) then
 					options["Open"] = nil;
 					options["Unhide"] = "cw_entityUnHide";
 				else

@@ -31,7 +31,7 @@ local function CreateMenu(state)
 		menu:AddOption("Collect Ration", function() Clockwork.Client:ConCommand("cw_CoinslotRation") end);
 		
 		if state == "Gatekeeper" then
-			if !Clockwork.Client:GetLocalVar("collectedGear") then
+			if !Clockwork.Client:GetNetVar("collectedGear") then
 				menu:AddOption("Collect Gatekeeper Kit", function() Clockwork.Client:ConCommand("cw_CoinslotGear") end);
 			end
 		end
@@ -43,7 +43,7 @@ local function CreateMenu(state)
 		end);
 		
 		if cwShacks.shacks and Clockwork.Client:GetFaction() ~= "Holy Hierarchy" then
-			local playerShack = Clockwork.Client:GetSharedVar("shack");
+			local playerShack = Clockwork.Client:GetNetVar("shack");
 			
 			if !playerShack then
 				local subMenu = menu:AddSubMenu("Purchase Property");

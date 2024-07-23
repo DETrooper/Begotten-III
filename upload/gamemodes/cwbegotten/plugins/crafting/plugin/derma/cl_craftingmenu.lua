@@ -73,9 +73,9 @@ end
 -- A function to rebuild the panel.
 function PANEL:Rebuild()
 	local faction = Clockwork.Client:GetFaction();
-	local faith = Clockwork.Client:GetSharedVar("faith");
-	local subfaction = Clockwork.Client:GetSharedVar("subfaction");
-	local subfaith = Clockwork.Client:GetSharedVar("subfaith");
+	local faith = Clockwork.Client:GetNetVar("faith");
+	local subfaction = Clockwork.Client:GetNetVar("subfaction");
+	local subfaith = Clockwork.Client:GetNetVar("subfaith");
 	self.fire_found = false;
 	self.smithy_found = false;
 	

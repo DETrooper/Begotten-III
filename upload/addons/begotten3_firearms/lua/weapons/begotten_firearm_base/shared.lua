@@ -698,7 +698,7 @@ function SWEP:RicochetCallback(bouncenum, attacker, tr, dmginfo)
 				self.MaxRicochet = 0
 		elseif self.Primary.Ammo == "smg1" then -- smgs
 				self.MaxRicochet = 0
-		elseif self.Primary.Ammo == "ar2" then -- assault rifles
+		elseif self.Primary.Ammo == "smg" then -- assault rifles
 				self.MaxRicochet = 0
 		elseif self.Primary.Ammo == "buckshot" then -- shotguns
 				self.MaxRicochet = 0
@@ -756,7 +756,7 @@ function SWEP:BulletPenetrate(bouncenum, attacker, tr, paininfo)
 				MaxPenetration = 12
 		elseif self.Primary.Ammo == "smg1" then -- smgs
 				MaxPenetration = 14
-		elseif self.Primary.Ammo == "ar2" then -- assault rifles
+		elseif self.Primary.Ammo == "smg" then -- assault rifles
 				MaxPenetration = 16
 		elseif self.Primary.Ammo == "buckshot" then -- shotguns
 				MaxPenetration = 5
@@ -792,7 +792,7 @@ function SWEP:BulletPenetrate(bouncenum, attacker, tr, paininfo)
 				self.MaxRicochet = 0
 		elseif self.Primary.Ammo == "smg1" then -- smgs
 				self.MaxRicochet = 0
-		elseif self.Primary.Ammo == "ar2" then -- assault rifles
+		elseif self.Primary.Ammo == "smg" then -- assault rifles
 				self.MaxRicochet = 0
 		elseif self.Primary.Ammo == "buckshot" then -- shotguns
 				self.MaxRicochet = 0
@@ -965,17 +965,25 @@ function SWEP:Reload()
 	if !IsFirstTimePredicted() then return end;
 	if !IsValid(self.Owner) then return end;
 	if !self.Owner:IsPlayer() or !self.Owner:Alive() then return end;
+	
+	local curTime = CurTime();
+	
+	if self.nextReload and self.nextReload > curTime then
+		return;
+	end
+	
+	self.nextReload = curTime + 0.1;
 
-	timer.Simple(0, function()
+	timer.Simple(0.05, function()
 		if !IsValid(self.Owner) then return end;
 		if !self.Owner:Alive() then return end;
 		if self.Owner:IsRagdolled() then return end;
-		if self.ReloadKeyTime then return end;
+		if self.ReloadKeyTime then print("ASS!"); return end;
 		
 		local action = Clockwork.player:GetAction(self.Owner);
 		
 		if (action == "reloading") then
-			Schema:EasyText(player, "peru", "Your character is already reloading!");
+			Schema:EasyText(self.Owner, "peru", "Your character is already reloading!");
 			
 			return;
 		end
@@ -990,40 +998,89 @@ function SWEP:Reload()
 		if !inventory then return end;
 		
 		local lastLoadedShot = self.Owner.lastLoadedShot;
-		local shotToLoad;
 		
 		if lastLoadedShot then
 			local itemTable = item.FindByID(lastLoadedShot);
 			
 			if itemTable then
-				shotToLoad = itemTable;
+				local itemInstances = inventory[itemTable.uniqueID] or {};
+				local validItemInstances = {};
+				
+				for k, v in pairs(itemInstances) do
+					if !v.ammoMagazineSize or v:GetAmmoMagazine() > 0 then
+						table.insert(validItemInstances, v2);
+					end
+				end
+				
+				if !table.IsEmpty(validItemInstances) then
+					local randomItem = table.Random(itemInstances);
+					
+					if randomItem:CanUseOnItem(self.Owner, firearmItemTable, true) then
+						randomItem:UseOnItem(self.Owner, firearmItemTable, true);
+						
+						return;
+					end
+				end
 			end
-		else
-			-- Select a random ammo type if a previous one has not been found.
+		end
+		
+		-- Select a random ammo type if a previous one has not been found.
+		for i, v in RandomPairs(firearmItemTable.ammoTypes) do
+			local itemTable = item.FindByID(v);
+			
+			if itemTable then
+				if firearmItemTable.usesMagazine and !itemTable.ammoMagazineSize then continue end;
+				
+				local itemInstances = inventory[itemTable.uniqueID] or {};
+				local validItemInstances = {};
+				
+				for k2, v2 in pairs(itemInstances) do
+					if !v2.ammoMagazineSize or v2:GetAmmoMagazine() > 0 then
+						table.insert(validItemInstances, v2);
+					end
+				end
+				
+				if !table.IsEmpty(validItemInstances) then
+					local randomItem = table.Random(itemInstances);
+					
+					if randomItem:CanUseOnItem(self.Owner, firearmItemTable, true) then
+						randomItem:UseOnItem(self.Owner, firearmItemTable, true);
+						
+						return;
+					end
+				end
+			end
+		end
+
+		-- Go over again for magazined firearms to select single shots if no magazines are found.
+		if firearmItemTable.usesMagazine then
 			for i, v in RandomPairs(firearmItemTable.ammoTypes) do
 				local itemTable = item.FindByID(v);
 				
 				if itemTable then
-					shotToLoad = itemTable;
-				end
-			end
-		end
-		
-		if shotToLoad then
-			local itemInstances = inventory[shotToLoad.uniqueID];
-			
-			if itemInstances and !table.IsEmpty(itemInstances) then
-				local randomItem = table.Random(itemInstances);
-				
-				if randomItem:CanUseOnItem(self.Owner, firearmItemTable, true) then
-					randomItem:UseOnItem(self.Owner, firearmItemTable, true);
+					local itemInstances = inventory[itemTable.uniqueID] or {};
+					local validItemInstances = {};
 					
-					return;
+					for k2, v2 in pairs(itemInstances) do
+						if !v2.ammoMagazineSize or v2:GetAmmoMagazine() > 0 then
+							table.insert(validItemInstances, v2);
+						end
+					end
+					
+					if !table.IsEmpty(validItemInstances) then
+						local randomItem = table.Random(itemInstances);
+						
+						if randomItem:CanUseOnItem(self.Owner, firearmItemTable, true) then
+							randomItem:UseOnItem(self.Owner, firearmItemTable, true);
+							
+							return;
+						end
+					end
 				end
 			end
 		end
 		
-		Schema:EasyText(player, "chocolate", "No valid ammo could be found for this weapon!");
+		Schema:EasyText(self.Owner, "chocolate", "No valid ammo could be found for this weapon!");
 	end);
 end
  
@@ -1110,7 +1167,7 @@ function SWEP:IronSight()
 	if not IsValid(self) then return end
 	if not IsValid(self.Owner) then return end
 	
-	if !Clockwork.player:GetWeaponRaised(self.Owner) then
+	if self.Owner:IsWeaponRaised(self) then
 		return;
 	end
 

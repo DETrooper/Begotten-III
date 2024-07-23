@@ -36,13 +36,13 @@ hook.Add("SetupMove", "Multi Jump", function(ply, mv)
 		ply:SetJumpLevel(0)
 
 		return
-	end	
+	end
 
 	-- Don't do anything if not jumping
 	if not mv:KeyPressed(IN_JUMP) then
 		return
 	end
-
+	
 	if (ply.IsRagdolled and ply:IsRagdolled()) or ply:GetMoveType() ~= MOVETYPE_WALK or ply:GetNWBool("bliz_frozen") or Clockwork.player:GetAction(ply) ~= "" then
 		return;
 	end
@@ -53,6 +53,7 @@ hook.Add("SetupMove", "Multi Jump", function(ply, mv)
 		return
 	end
 
+	local plyTab = ply:GetTable();
 	local vel = mv:GetVelocity();
 
 	mv:SetVelocity(Vector(vel.x, vel.y, ply:GetJumpPower() * 3));
@@ -61,15 +62,15 @@ hook.Add("SetupMove", "Multi Jump", function(ply, mv)
 	
 	local curTime = CurTime();
 	
-	if !ply.jumpSoundPlayed or ply.jumpSoundPlayed < curTime then
+	if !ply.jumpSoundPlayed or plyTab.jumpSoundPlayed < curTime then
 		if (!ply.GetCharmEquipped or !ply:GetCharmEquipped("urn_silence")) then
 			ply:EmitSound("begotten/ambient/corpse/body_drop2.wav", 60, math.random(85, 105));
 		
-			ply.jumpSoundPlayed = curTime + 0.25;
+			plyTab.jumpSoundPlayed = curTime + 0.25;
 		end
 	end
 	
-	if ply.bloodWingsActive then
+	if plyTab.bloodWingsActive then
 		ply:ModifyBloodLevel(-15);
 
 		--ParticleEffect("blood_advisor_puncture", ply:GetPos() + Vector(0, 0, 24), ply:GetAngles());

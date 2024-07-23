@@ -173,7 +173,7 @@ if CLIENT then
 				end
 				
 				if IsValid(self.Owner) then
-					if !Clockwork.player:GetWeaponRaised(self.Owner)then
+					if !self.Owner:IsWeaponRaised(self) then
 						model:SetSkin(0)
 					else
 						model:SetSkin(1)

@@ -86,8 +86,10 @@ function entityMeta:SetNetVar(key, value, receiver)
 end
 
 function entityMeta:GetNetVar(key, default)
-	if (stored[self] and stored[self][key] != nil) then
-		return stored[self][key]
+	local storedIndex = stored[self];
+
+	if (storedIndex) then
+		return storedIndex[key] or default;
 	end
 
 	return default

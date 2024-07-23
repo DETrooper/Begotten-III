@@ -3,8 +3,8 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
-CW_CONVAR_ITEMCONTAINERESP = Clockwork.kernel:CreateClientConVar("cwItemContainerESP", 0, false, true)
-CW_CONVAR_ITEMSPAWNERESP = Clockwork.kernel:CreateClientConVar("cwItemSpawnerESP", 0, false, true)
+Clockwork.ConVars.ITEMCONTAINERESP = Clockwork.kernel:CreateClientConVar("cwItemContainerESP", 0, false, true)
+Clockwork.ConVars.ITEMSPAWNERESP = Clockwork.kernel:CreateClientConVar("cwItemSpawnerESP", 0, false, true)
 
 Clockwork.datastream:Hook("ItemContsESPInfo", function(data)
 	if data then
@@ -53,7 +53,7 @@ function cwItemSpawner:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunctions)
 end;
 
 function cwItemSpawner:GetAdminESPInfo(info)
-	if (CW_CONVAR_ITEMCONTAINERESP and CW_CONVAR_ITEMCONTAINERESP:GetInt() == 1) then
+	if (Clockwork.ConVars.ITEMCONTAINERESP and Clockwork.ConVars.ITEMCONTAINERESP:GetInt() == 1) then
 		if (self.itemContainers) then
 			local curTime = CurTime();
 			
@@ -82,7 +82,7 @@ function cwItemSpawner:GetAdminESPInfo(info)
 		end;
 	end;
 	
-	if (CW_CONVAR_ITEMSPAWNERESP and CW_CONVAR_ITEMSPAWNERESP:GetInt() == 1) then
+	if (Clockwork.ConVars.ITEMSPAWNERESP and Clockwork.ConVars.ITEMSPAWNERESP:GetInt() == 1) then
 		if (self.SpawnLocations) then
 			if (table.IsEmpty(self.SpawnLocations)) then
 				self.SpawnLocations = nil;

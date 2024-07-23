@@ -249,12 +249,12 @@ end;
 
 -- A function to get a player's bounty.
 function playerMeta:GetBounty()
-	return self:GetSharedVar("bounty", 0);
+	return self:GetNetVar("bounty", 0);
 end;
 
 -- A function to get whether a player is wanted.
 function playerMeta:IsWanted()
-	return self:GetSharedVar("bounty", 0) > 0;
+	return self:GetNetVar("bounty", 0) > 0;
 end;
 
 Clockwork.datastream:Hook("ObjectPhysDesc", function(data)

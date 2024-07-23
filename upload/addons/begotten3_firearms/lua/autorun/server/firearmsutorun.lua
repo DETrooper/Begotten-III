@@ -13,7 +13,15 @@ hook.Add("KeyRelease", "KeyReleaseFirearms", function(ply, key)
 		local activeWeapon = ply:GetActiveWeapon();
 		
 		if IsValid(activeWeapon) and activeWeapon.Base == "begotten_firearm_base" then
-			if activeWeapon.ReloadKeyTime and CurTime() - activeWeapon.ReloadKeyTime > 0.15 then
+			if activeWeapon.ReloadKeyTime and CurTime() - activeWeapon.ReloadKeyTime > 0.2 then
+				local action = Clockwork.player:GetAction(ply);
+				
+				if (action == "reloading") then
+					Schema:EasyText(ply, "peru", "Your character is already reloading!");
+					
+					return;
+				end
+					
 				netstream.Start(ply, "ReloadMenu", true);
 				
 				timer.Simple(0.5, function()
@@ -21,7 +29,7 @@ hook.Add("KeyRelease", "KeyReleaseFirearms", function(ply, key)
 						activeWeapon.ReloadKeyTime = nil;
 					end
 				end);
-			elseif IsFirstTimePredicted() then
+			else
 				activeWeapon.ReloadKeyTime = nil;
 			end
 		end

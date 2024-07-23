@@ -3014,30 +3014,30 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 	
 	if (bIsPlayer or bIsPlayerRagdoll or entity.isTrainingDummy) and IsValid(attacker) and attacker:IsPlayer() then
 		if IsValid(inflictor) then
-			local weaponClass = inflictor:GetClass();
-			
-			if weaponClass == "begotten_javelin_throwing_dagger_thrown" then
-				if attacker:GetSubfaction() == "Kinisger" then
-					damageInfo:ScaleDamage(1.25);
-				end
-			elseif string.find(weaponClass, "begotten_dagger_") then
-				if attacker:GetSubfaction() == "Kinisger" then
-					damageInfo:ScaleDamage(1.25);
-				end
-				
-				-- 2x damage for daggers vs. ragdolled players.
-				if bIsPlayerRagdoll then
-					damageInfo:ScaleDamage(2);
-				end
-
-				if (entity.isTrainingDummy and math.abs(math.AngleDifference(entity:GetAngles().y, (attacker:GetPos() - entity:GetPos()):Angle().y)) >= 100) or (bIsPlayer and (!entity:IsRagdolled() and math.abs(math.AngleDifference(entity:EyeAngles().y, (attacker:GetPos() - entity:GetPos()):Angle().y)) >= 100)) then
-					if cwBeliefs and attacker:HasBelief("assassin") then
-						damageInfo:ScaleDamage(3);
-					else
-						damageInfo:ScaleDamage(2);
+			if inflictor.isDagger then
+				if inflictor.isJavelin then
+					if attacker:GetSubfaction() == "Kinisger" then
+						damageInfo:ScaleDamage(1.25);
+					end
+				else
+					if attacker:GetSubfaction() == "Kinisger" then
+						damageInfo:ScaleDamage(1.25);
 					end
 					
-					entity:EmitSound("meleesounds/kill1.wav.mp3");
+					-- 2x damage for daggers vs. ragdolled players.
+					if bIsPlayerRagdoll then
+						damageInfo:ScaleDamage(2);
+					end
+
+					if (entity.isTrainingDummy and math.abs(math.AngleDifference(entity:GetAngles().y, (attacker:GetPos() - entity:GetPos()):Angle().y)) >= 100) or (bIsPlayer and (!entity:IsRagdolled() and math.abs(math.AngleDifference(entity:EyeAngles().y, (attacker:GetPos() - entity:GetPos()):Angle().y)) >= 100)) then
+						if cwBeliefs and attacker:HasBelief("assassin") then
+							damageInfo:ScaleDamage(3);
+						else
+							damageInfo:ScaleDamage(2);
+						end
+						
+						entity:EmitSound("meleesounds/kill1.wav.mp3");
+					end
 				end
 			end
 		end

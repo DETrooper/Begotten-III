@@ -270,8 +270,12 @@ netstream.Hook("ReloadMenu", function(data)
 			menuPanel:SetPos(
 				(ScrW() / 2) - (menuPanel:GetWide() / 2), (ScrH() / 2) - (menuPanel:GetTall() / 2)
 			)
+			
+			return;
 		end
 	end
+	
+	Schema:EasyText("chocolate", "No valid ammo could be found for this weapon!");
 end)
 
 netstream.Hook("ClockworkIntro", function(data)

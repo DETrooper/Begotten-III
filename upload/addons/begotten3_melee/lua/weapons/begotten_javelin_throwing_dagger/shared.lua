@@ -35,6 +35,7 @@ SWEP.AttackTable = "ThrowingDaggerAttackTable"
 
 SWEP.Primary.Round = ("begotten_javelin_throwing_dagger_thrown");
 
+SWEP.isDagger = true;
 SWEP.isJavelin = true;
 SWEP.SticksInShields = true;
 
@@ -230,7 +231,7 @@ function SWEP:GetHoldtypeOverride()
 end
 
 function SWEP:OnMeleeStanceChanged(stance)
-	self.stance = stance;
+	self:SetNWString("stance", stance);
 
 	if SERVER then
 		self:CallOnClient("OnMeleeStanceChanged", stance);

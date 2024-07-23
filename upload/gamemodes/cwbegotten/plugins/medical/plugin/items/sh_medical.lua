@@ -495,6 +495,10 @@ local ITEM = Clockwork.item:New();
 					local canChloroform = (target:GetAimVector():DotProduct(player:GetAimVector()) > 0);
 					local chloroformTime = 5;
 					
+					if cwBeliefs and player:HasBelief("doctor") then
+						chloroformTime = 2.5;
+					end
+					
 					if (canChloroform or target:IsRagdolled()) then
 						Clockwork.player:SetAction(player, "chloroform", chloroformTime);
 						

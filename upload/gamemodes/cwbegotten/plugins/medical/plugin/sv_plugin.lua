@@ -211,18 +211,28 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 
 			if (itemTable("healAmount") and itemTable("healDelay") and itemTable("healRepetition")) then
 				local playerIndex = player:EntIndex();
-				local playerMaxHealth = player:GetMaxHealth();
 				local healAmount = itemTable("healAmount");
 				local healDelay = itemTable("healDelay");
 				local healRepetition = itemTable("healRepetition");
 				local timesHealed = 0;
 				
 				if cwBeliefs and player:HasBelief("medicine_man") then
-					healAmount = healAmount * 3;
+					healAmount = healAmount * 2;
 				end
-				
-				timer.Create(playerIndex.."_heal", healDelay, healRepetition, function()
+
+				timer.Create(playerIndex.."_heal_"..itemTable.itemID, healDelay, healRepetition, function()
 					if (IsValid(player)) then
+						local playerMaxHealth = player:GetMaxHealth(); -- Moving this here since max health could theoretically change while a heal is happening.
+						
+						if player:Health() == playerMaxHealth then
+							timer.Destroy(playerIndex.."_heal_"..itemTable.itemID);
+							
+							Clockwork.hint:Send(player, itemTable("name").." has worn off...", 5, Color(100, 175, 100), true, true);
+							hook.Run("PlayerHealed", player, itemTable);
+							
+							return;
+						end
+					
 						local healAmount = math.Clamp(player:Health() + healAmount, 0, playerMaxHealth);
 
 						player:SetHealth(healAmount);
@@ -247,14 +257,14 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 					
 						timesHealed = timesHealed + 1;
 						
-						if (timesHealed >= healRepetition) then
-							timer.Destroy(playerIndex.."_heal");
+						if (timesHealed >= healRepetition) or player:Health() == playerMaxHealth then
+							timer.Destroy(playerIndex.."_heal_"..itemTable.itemID);
 							
 							Clockwork.hint:Send(player, itemTable("name").." has worn off...", 5, Color(100, 175, 100), true, true);
 							hook.Run("PlayerHealed", player, itemTable);
 						end;
 					else
-						timer.Destroy(playerIndex.."_heal");
+						timer.Destroy(playerIndex.."_heal_"..itemTable.itemID);
 					end;
 				end);
 			end;
@@ -398,7 +408,6 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 				
 				if (itemTable("healAmount") and itemTable("healDelay") and itemTable("healRepetition")) then
 					local targetIndex = target:EntIndex();
-					local targetMaxHealth = target:GetMaxHealth();
 					local healAmount = itemTable("healAmount");
 					local healDelay = itemTable("healDelay");
 					local healRepetition = itemTable("healRepetition");
@@ -408,8 +417,19 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 						healAmount = healAmount * 3;
 					end
 					
-					timer.Create(targetIndex.."_heal", healDelay, healRepetition, function()
+					timer.Create(targetIndex.."_heal_"..itemTable.itemID, healDelay, healRepetition, function()
 						if (IsValid(target)) then
+							local targetMaxHealth = target:GetMaxHealth(); -- Moving this here since max health could theoretically change while a heal is happening.
+							
+							if target:Health() == targetMaxHealth then
+								timer.Destroy(targetIndex.."_heal_"..itemTable.itemID);
+								
+								Clockwork.hint:Send(target, itemTable("name").." has worn off...", 5, Color(100, 175, 100), true, true);
+								hook.Run("PlayerHealed", target, itemTable);
+								
+								return;
+							end
+						
 							local healAmount = math.Clamp(target:Health() + healAmount, 0, targetMaxHealth);
 
 							target:SetHealth(healAmount);
@@ -434,14 +454,14 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 
 							timesHealed = timesHealed + 1;
 							
-							if (timesHealed >= healRepetition) then
-								timer.Destroy(targetIndex.."_heal");
+							if (timesHealed >= healRepetition) or target:Health() == targetMaxHealth then
+								timer.Destroy(targetIndex.."_heal_"..itemTable.itemID);
 								
 								Clockwork.hint:Send(target, itemTable("name").." has worn off...", 5, Color(100, 175, 100), true, true);
 								hook.Run("PlayerHealed", target, itemTable);
 							end;
 						else
-							timer.Destroy(targetIndex.."_heal");
+							timer.Destroy(targetIndex.."_heal_"..itemTable.itemID);
 						end;
 					end);
 				end;

@@ -7,14 +7,14 @@
 
 -- Called when the client initializes.
 function cwCinematicText:Initialize()
-	CW_CONVAR_SHOWCINEMATICS = Clockwork.kernel:CreateClientConVar("cwShowCinematics", 1, true, true);
+	Clockwork.ConVars.SHOWCINEMATICS = Clockwork.kernel:CreateClientConVar("cwShowCinematics", 1, true, true);
 end;
 
 -- Called when the chat box info should be adjusted.
 function cwCinematicText:ChatBoxAdjustInfo(info)
 	if (Clockwork.Client:Alive()) then
 		if (info.shouldHear) then
-			if (CW_CONVAR_SHOWCINEMATICS:GetInt() == 1) then
+			if (Clockwork.ConVars.SHOWCINEMATICS:GetInt() == 1) then
 				local textColor = Color(255, 255, 255);
 				local goodClasses = {
 					"ic",

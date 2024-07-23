@@ -86,7 +86,7 @@ else
 		local minute = Clockwork.kernel:ZeroNumberToDigits(self:GetMinute(), 2)
 		local hour = Clockwork.kernel:ZeroNumberToDigits(self:GetHour(), 2)
 
-		if (CW_CONVAR_TWELVEHOURCLOCK:GetInt() == 1) then
+		if (Clockwork.ConVars.TWELVEHOURCLOCK:GetInt() == 1) then
 			hour = tonumber(hour)
 
 			if (hour >= 12) then

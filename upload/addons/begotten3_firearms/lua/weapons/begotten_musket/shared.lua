@@ -60,7 +60,7 @@ SWEP.Primary.KickUp			= 30		-- Maximum up recoil (rise)
 SWEP.Primary.KickDown		= 1			-- Maximum down recoil (skeet)
 SWEP.Primary.KickHorizontal	= 1			-- Maximum up recoil (stock)
 SWEP.Primary.Automatic		= false		-- Automatic = true; Semi Auto = false
-SWEP.Primary.Ammo			= "ar2"
+SWEP.Primary.Ammo			= "smg"
 
 SWEP.Secondary.IronFOV		= 80		-- How much you 'zoom' in. Less is more! 	
 
@@ -123,7 +123,7 @@ SWEP.AmmoTypes = {
 		SWEP.Primary.Damage = 85;
 		SWEP.Primary.Spread = .1;
 		SWEP.Primary.IronAccuracy = .035;
-		SWEP.Primary.Ammo = "ar2";
+		SWEP.Primary.Ammo = "smg";
 		
 		if SWEP.Owner and SWEP.Owner:IsPlayer() then
 			if SWEP.Owner:GetVelocity() == Vector(0, 0, 0) then

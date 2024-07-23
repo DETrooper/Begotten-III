@@ -8,6 +8,7 @@ ENT.Spawnable			= false
 ENT.AdminOnly = true 
 ENT.DoNotDuplicate = true 
 ENT.DisableDuplicator = true
+ENT.isDagger = true;
 ENT.isJavelin = true;
 ENT.noHandsPickup = true;
 

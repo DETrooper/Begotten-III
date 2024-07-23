@@ -213,9 +213,10 @@ function cwBeliefs:GetBeliefName(beliefs, treeID)
 	if istable(beliefs) then
 		names = {};
 	else
+		beliefs = string.lower(beliefs);
 		names = "";
 	end
-
+	
 	if treeID then
 		local beliefTree = self.beliefTrees.stored[treeID];
 		
@@ -223,7 +224,7 @@ function cwBeliefs:GetBeliefName(beliefs, treeID)
 			for k, v in pairs(beliefTree.beliefs) do
 				for k2, v2 in pairs(v) do
 					if isstring(beliefs) then
-						if (string.lower(v2.uniqueID) == string.lower(beliefs)) then
+						if (string.lower(v2.uniqueID) == beliefs) then
 							return v2.name;
 						end
 					else
@@ -233,16 +234,20 @@ function cwBeliefs:GetBeliefName(beliefs, treeID)
 					end;
 				end;
 			end;
+			
+			if (istable(names) and !table.IsEmpty(names)) or (isstring(names) and names ~= "") then
+				return names;
+			end
 		end;
-		
-		return names;
 	end;
 
 	for k, v in pairs(self.beliefTrees.stored) do
+		if k == treeID then continue end;
+		
 		for k2, v2 in pairs(v.beliefs) do
 			for k3, v3 in pairs(v2) do
 				if isstring(beliefs) then
-					if (string.lower(v3.uniqueID) == string.lower(beliefs)) then
+					if (string.lower(v3.uniqueID) == beliefs) then
 						return v3.name;
 					end
 				else
@@ -253,7 +258,7 @@ function cwBeliefs:GetBeliefName(beliefs, treeID)
 			end;
 		end;
 	end;
-	
+
 	return names;
 end;
 

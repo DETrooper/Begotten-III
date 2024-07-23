@@ -161,6 +161,7 @@ function Clockwork.setting:AddSettings()
 	--Clockwork.setting:AddCheckBox("Framework", "Enable the hints system.", "cwShowHints", "Whether or not to show you any hints.");
 	--Clockwork.setting:AddCheckBox("Framework", "Enable Vignette.", "cwShowVignette", "Whether or not to draw the vignette.");
 	
+	Clockwork.setting:AddCheckBox("Framework", "Enable derma tooltips following the mouse.", "cwTooltipFollow", "Whether or not derma tooltips follow the mouse. Nested tooltips will freeze in their current position when the timer is up.");
 	Clockwork.setting:AddCheckBox("Framework", "Enable physical description inspect key.", "cwPhysdescKey", "Whether or not to enable physical description inspection.");
 
 	Clockwork.setting:AddCheckBox("Admin ESP", "Enable the admin ESP.", "cwAdminESP", "Whether or not to show the admin ESP.", function()

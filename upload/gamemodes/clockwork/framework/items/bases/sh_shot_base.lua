@@ -182,6 +182,31 @@ local ITEM = item.New(nil, true);
 						end
 					end
 					
+					if weaponItem.category == "Firearms" then
+						if (player:WaterLevel() >= 3) then 
+							Schema:EasyText(player, "peru", "You can't load your powder charge while underwater!");
+							
+							return false;
+						end
+						
+						if cwWeather then
+							local lastZone = player:GetCharacterData("LastZone");
+							local zoneTable = zones:FindByID(lastZone);
+							
+							if zoneTable and zoneTable.hasWeather and cwWeather:IsOutside(player:EyePos()) then
+								if lastZone == "wasteland" or lastZone == "tower" then
+									local weather = cwWeather.weather;
+									
+									if weather == "acidrain" or weather == "bloodstorm" or weather == "thunderstorm" then
+										Schema:EasyText(player, "peru", "You can't load your powder charge under these wet conditions!");
+								
+										return false;
+									end
+								end
+							end
+						end
+					end
+					
 					if not weaponItem.usesMagazine then
 						return true;
 					else

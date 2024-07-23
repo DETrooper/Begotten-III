@@ -4,7 +4,7 @@
 
 -- A function to get the battery text.
 function cwPowerArmor:GetBatteryText()
-	local battery = Clockwork.Client:GetSharedVar("battery", 0);
+	local battery = Clockwork.Client:GetNetVar("battery", 0);
 	local text = "No Information";
 
 	if (battery) then
@@ -25,7 +25,7 @@ end;
 -- Called when the bars are needed.
 function cwPowerArmor:GetBars(bars)
 	if Clockwork.Client:IsWearingPowerArmor() then
-		local battery = Clockwork.Client:GetSharedVar("battery", 0);
+		local battery = Clockwork.Client:GetNetVar("battery", 0);
 		
 		--if (battery < 100) then
 			local color = Color(0, 200, 255);

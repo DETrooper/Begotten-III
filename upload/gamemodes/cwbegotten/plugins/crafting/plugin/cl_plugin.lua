@@ -52,9 +52,9 @@ function cwRecipes:PlayerCanCraft(uniqueID)
 	local requiresHeatSource = recipeTable.requiresHeatSource;
 	local requiresSmithy = recipeTable.requiresSmithy;
 	local faction = Clockwork.Client:GetFaction();
-	local faith = Clockwork.Client:GetSharedVar("faith");
-	local subfaction = Clockwork.Client:GetSharedVar("subfaction");
-	local subfaith = Clockwork.Client:GetSharedVar("subfaith");
+	local faith = Clockwork.Client:GetNetVar("faith");
+	local subfaction = Clockwork.Client:GetNetVar("subfaction");
+	local subfaith = Clockwork.Client:GetNetVar("subfaith");
 	
 	if Clockwork.Client:IsRagdolled() or !Clockwork.Client:Alive() then
 		Clockwork.chatBox:Add(nil, "icon16/error.png", Color(200, 175, 200, 255), "Your character cannot craft at this moment!");

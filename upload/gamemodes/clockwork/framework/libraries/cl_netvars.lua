@@ -41,9 +41,10 @@ end
 
 function entityMeta:GetNetVar(key, default)
 	local index = self:EntIndex()
+	local storedIndex = stored[index];
 
-	if (stored[index] and stored[index][key] != nil) then
-		return stored[index][key]
+	if (storedIndex) then
+		return storedIndex[key] or default;
 	end
 
 	return default

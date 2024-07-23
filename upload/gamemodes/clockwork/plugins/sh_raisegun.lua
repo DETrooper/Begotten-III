@@ -17,7 +17,6 @@ local blockedWeapons = {
 	"weapon_physgun",
 	"gmod_tool",
 	"gmod_camera",
-	"weapon_physcannon",
 	"cw_senses",
 	"cw_keys",
 	"cw_adminasstool",
@@ -37,8 +36,8 @@ function playerMeta:SetWeaponRaised(bIsRaised)
 	end
 end
 
-function playerMeta:IsWeaponRaised()
-	local weapon = self:GetActiveWeapon()
+function playerMeta:IsWeaponRaised(weapon)
+	local weapon = weapon or self:GetActiveWeapon()
 
 	if (!IsValid(weapon)) then
 		return false
@@ -48,18 +47,21 @@ function playerMeta:IsWeaponRaised()
 		return true
 	end
 
-	local shouldRaise = hook.Run("ShouldWeaponBeRaised", self, weapon)
+	-- This doesn't seem to be used currently so I'm disabling it for now.
+	--[[local shouldRaise = hook.Run("ShouldWeaponBeRaised", self, weapon)
 
 	if (shouldRaise) then
 		return shouldRaise
-	end
+	end]]--
 
 	return self:GetDTBool(BOOL_WEAPON_RAISED), weapon
 end
 
 function playerMeta:ToggleWeaponRaised()
-	if (hook.Run("CanWeaponBeToggled", self, self:GetActiveWeapon()) != false) then
-		if (self:IsWeaponRaised()) then
+	local activeWeapon = self:GetActiveWeapon();
+	
+	if (hook.Run("CanWeaponBeToggled", self, activeWeapon) != false) then
+		if (self:IsWeaponRaised(activeWeapon)) then
 			self:SetWeaponRaised(false)	
 		else
 			self:SetWeaponRaised(true)
