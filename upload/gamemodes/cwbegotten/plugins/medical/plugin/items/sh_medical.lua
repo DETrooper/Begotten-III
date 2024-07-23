@@ -38,8 +38,12 @@ local ITEM = Clockwork.item:New("medical_base");
 		
 		--if action == "die" or action == "die_bleedout" then
 		if player:GetRagdollState() == RAGDOLL_KNOCKEDOUT then
+			if player:Health() < 10 then
+				player:SetHealth(10);
+			end
+			
 			Clockwork.player:SetAction(player, nil);
-			Clockwork.player:SetRagdollState(target, RAGDOLL_NONE);
+			Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, 0);
 			
 			Clockwork.chatBox:AddInTargetRadius(player, "me", "jolts awake!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 		end

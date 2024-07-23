@@ -2036,7 +2036,7 @@ function Schema:PlayerCanUseDoor(player, door)
 				local rank = Schema.Ranks[faction][player:GetCharacterData("rank") or 1];
 				
 				if self:GetRankTier(faction, rank) < 3 then
-					if not (doors["forge"] and table.HasValue(doors["forge"], doorName) and rank == "Smith") then
+					if not (doors["forge"] and table.HasValue(doors["forge"], doorName) and rank == "Artificer") then
 						if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 							player.nextDoorNotify = curTime + 1;
 						

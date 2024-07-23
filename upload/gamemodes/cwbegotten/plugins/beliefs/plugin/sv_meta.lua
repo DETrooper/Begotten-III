@@ -154,6 +154,8 @@ function playerMeta:HasBelief(uniqueID, bHasAny)
 					return false;
 				end
 			end
+			
+			return true;
 		end
 	else
 		if (beliefs[uniqueID]) then

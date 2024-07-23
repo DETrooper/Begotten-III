@@ -580,7 +580,7 @@ local COMMAND = Clockwork.command:New("PlyRespawnStayAll");
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("GetFlags");
-	COMMAND.tip = "Get all flags. You may specify the name of a player to give these flags to. Second argument makes flags persist across characters.";
+	COMMAND.tip = "Get the important flags (petcrnCW). You may specify the name of a player to give these flags to. Second argument makes flags persist across characters.";
 	COMMAND.text = "<string Name> <bool PlayerFlags>";
 	COMMAND.access = "s";
 	COMMAND.optionalArguments = 2;
@@ -611,11 +611,13 @@ local COMMAND = Clockwork.command:New("GetFlags");
 		
 		local playerName = player:Name();
 		local name = target:Name();
-		local flagString = "";
+		--local flagString = "";
 		
-		for k, v in pairs (Clockwork.flag.stored) do
+		--[[for k, v in pairs (Clockwork.flag.stored) do
 			flagString = flagString..k;
-		end;
+		end;]]--
+		
+		local flagString = "petcrnCW";
 		
 		if (string.len(flagString) > 0) then
 			player:RunClockworkCmd(command, name, flagString);

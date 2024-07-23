@@ -40,11 +40,14 @@ function cwMusic:EntityTakeDamageNew(entity, damageInfo)
 						netstream.Start(entity, "StartBattleMusic")
 					end
 					
+					if (attacker:IsPlayer()) then
+						netstream.Start(attacker, "StartBattleMusic")
+					end
+					
 					for k, v in pairs (ents.FindInSphere(entity:GetPos(), 512)) do
-						if (v:IsPlayer()) then
+						if (v:IsPlayer() and v ~= player and v ~= attacker) then
 							Clockwork.datastream:Start(v, "StartBattleMusic")
 						end
-
 					end
 				end
 				

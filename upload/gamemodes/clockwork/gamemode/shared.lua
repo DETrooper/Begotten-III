@@ -52,7 +52,7 @@ Clockwork.ClockworkFolder = Clockwork.ClockworkFolder or GM.Folder
 Clockwork.SchemaFolder = Clockwork.SchemaFolder or GM.Folder
 Clockwork.KernelVersion = "1"
 
-Clockwork.DebugMode = true
+Clockwork.DebugMode = false
 Clockwork.DeveloperVersion = true
 
 --[[

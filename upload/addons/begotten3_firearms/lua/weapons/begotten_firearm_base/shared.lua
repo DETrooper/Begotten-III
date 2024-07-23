@@ -978,7 +978,7 @@ function SWEP:Reload()
 		if !IsValid(self.Owner) then return end;
 		if !self.Owner:Alive() then return end;
 		if self.Owner:IsRagdolled() then return end;
-		if self.ReloadKeyTime then print("ASS!"); return end;
+		if self.ReloadKeyTime then return end;
 		
 		local action = Clockwork.player:GetAction(self.Owner);
 		
@@ -1167,7 +1167,7 @@ function SWEP:IronSight()
 	if not IsValid(self) then return end
 	if not IsValid(self.Owner) then return end
 	
-	if self.Owner:IsWeaponRaised(self) then
+	if !self.Owner:IsWeaponRaised(self) then
 		return;
 	end
 

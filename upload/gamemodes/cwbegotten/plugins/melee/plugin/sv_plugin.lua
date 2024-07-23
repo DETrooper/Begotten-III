@@ -103,7 +103,10 @@ function playerMeta:TakeStability(amount, cooldown, bNoMe)
 			self.nextStability = CurTime() + 3;
 			
 			cwMelee:HandleStability(self, -100, cooldown);
-			cwMelee:PlayerStabilityFallover(self, 30);
+			
+			if !self:IsRagdolled() then
+				cwMelee:PlayerStabilityFallover(self, 30);
+			end
 			
 			return;
 		end

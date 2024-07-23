@@ -700,6 +700,7 @@ function GM:MenuClosed()
 		end
 	end
 
+	Clockwork.kernel:ClearToolTipPanels()
 	Clockwork.kernel:RemoveActiveToolTip()
 	Clockwork.kernel:CloseActiveDermaMenus()
 end
