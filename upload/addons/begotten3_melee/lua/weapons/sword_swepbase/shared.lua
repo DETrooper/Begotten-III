@@ -616,12 +616,12 @@ function SWEP:PrimaryAttack()
 								if attacktable.canaltattack then
 									if attacktable.altmeleerange then
 										meleeRange = attacktable.altmeleerange / 10;
-									else
+									--[[else
 										if self.CanSwipeAttack then
 											meleeRange = meleeRange * 0.8
 										else
 											meleeRange = meleeRange * 1.2
-										end
+										end]]--
 									end
 								end
 							end
@@ -701,12 +701,12 @@ function SWEP:PrimaryAttack()
 										if offhandAttackTable.canaltattack then
 											if offhandAttackTable.altmeleerange then
 												meleeRange = offhandAttackTable.altmeleerange;
-											else
+											--[[else
 												if offhandWeapon.CanSwipeAttack then
 													meleeRange = meleeRange * 0.8
 												else
 													meleeRange = meleeRange * 1.2
-												end
+												end]]--
 											end
 										end
 									end
