@@ -162,6 +162,8 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						end
 					end
 					
+					armorPiercing = math.Round(armorPiercing * 0.8);
+					
 					local damage = damageInfo:GetDamage();
 					
 					if IsValid(inflictor) then
@@ -282,6 +284,8 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 									armorPiercing = armorPiercing + (armorPiercing * 0.2);
 								end
 							end
+							
+							armorPiercing = math.Round(armorPiercing * 0.8);
 							
 							--print("AP Value: "..tostring(armorPiercing));
 							
