@@ -36,7 +36,7 @@ SWEP.DrawCrosshair			= true		-- set false if you want no crosshair
 SWEP.Weight					= 30		-- rank relative to other weapons. bigger is better
 SWEP.AutoSwitchTo			= true		-- Auto switch to if we pick it up
 SWEP.AutoSwitchFrom			= true		-- Auto switch from if you pick up a better weapon
-SWEP.HoldType 				= "rpg"		-- how others view you carrying the weapon
+SWEP.HoldType 				= "shotgun"	-- how others view you carrying the weapon
 
 -- View Model
 SWEP.ViewModelFOV			= 50

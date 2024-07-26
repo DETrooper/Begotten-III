@@ -2126,7 +2126,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("upstaged");
 	RITUAL.name = "(T2) Upstaged";
-	RITUAL.description = "Don't dare try to match a jester's dance. One misstep and you'll be banished to hell. Performing this ritual causes riposte attacks to disarm your opponent, provided they aren't using a shield. This lasts 40 minutes. Incurs 5 corruption.";
+	RITUAL.description = "Don't dare try to match a jester's dance. One misstep and you'll be banished to hell. Performing this ritual causes riposte attacks to disarm your opponent. This lasts 40 minutes. Incurs 5 corruption.";
 	RITUAL.onerequiredbelief = {"soothsayer", "heretic", "shedskin"}; -- Tier II Faith of the Dark Ritual
 	
 	RITUAL.requirements = {"up_catalyst", "belphegor_catalyst", "belphegor_catalyst"};

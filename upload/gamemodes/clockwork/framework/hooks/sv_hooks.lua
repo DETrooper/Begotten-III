@@ -2058,10 +2058,7 @@ end
 
 -- Called when the player attempts to be ragdolled.
 function GM:PlayerCanRagdoll(player, state, delay, decay, ragdoll)
-	if (IsValid(player.propellerengine)) then
-		return false
-	end;
-	return true
+
 end
 
 -- Called when the player attempts to be unragdolled.

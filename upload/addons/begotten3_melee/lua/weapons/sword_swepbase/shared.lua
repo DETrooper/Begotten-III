@@ -1031,7 +1031,7 @@ end
 					
 					if owner.upstagedActive and not hit.opponent then
 						if IsValid(enemywep) then
-							if enemywep:GetNWString("activeShield"):len() == 0 and not string.find(enemywep:GetClass(), "begotten_fists") and not string.find(enemywep:GetClass(), "begotten_claws") then
+							if --[[enemywep:GetNWString("activeShield"):len() == 0 and]] not string.find(enemywep:GetClass(), "begotten_fists") and not string.find(enemywep:GetClass(), "begotten_claws") then
 								local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
 								local dropPos = hit:GetPos() + Vector(0, 0, 35) + hit:GetAngles():Forward() * 4
 								local itemTable = Clockwork.item:GetByWeapon(enemywep);
@@ -3398,6 +3398,7 @@ if CLIENT then
 
 	function SWEP:CreateModels( tab )
 		if (!tab) then return end
+		if (!IsValid(self.Owner)) then return end
 
 		for k, v in pairs( tab ) do
 			if IsValid(v.modelEnt) then

@@ -503,29 +503,23 @@ function Clockwork.animation:GetForModel(model, holdType, key, bNoFallbacks)
 
 	local lowerModel = string.lower(model);
 	local animTable = self:GetTable(lowerModel);
-	local overrideTable = self.override[lowerModel];
+	--local overrideTable = self.override[lowerModel];
 
 	if (!bNoFallbacks) then
 		if (!animTable[holdType]) then
-			holdType = "normal";
+			if (translateHoldTypes[holdType]) then
+				holdType = translateHoldTypes[holdType];
+			else
+				holdType = "normal";
+			end;
 		end;
 
 		if (!animTable[holdType][key]) then
 			key = "idle";
 		end;
 	end;
-
-	local holdTypeTable = animTable[holdType];
 	
-	if !holdTypeTable then
-		if (translateHoldTypes[holdType]) then
-			holdTypeTable = animTable[translateHoldTypes[holdType]];
-		else
-			holdType = "normal";
-			holdTypeTable = animTable[holdType];
-		end;
-	end
-	
+	--[[local holdTypeTable = animTable[holdType];
 	local finalAnimation = holdTypeTable[key];
 	
 	if overrideTable then
@@ -536,7 +530,9 @@ function Clockwork.animation:GetForModel(model, holdType, key, bNoFallbacks)
 		end
 	end;
 	
-	return finalAnimation;
+	return finalAnimation;]]--
+
+	return animTable[holdType][key];
 end;
 
 -- A function to get a model's class.
