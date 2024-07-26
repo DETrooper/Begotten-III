@@ -3217,12 +3217,14 @@ if CLIENT then
 	function SWEP:DrawWorldModel()
 		local wepTab = self:GetTable()
 		
-		if self:GetNWString("stance") ~= self.stance then
-			self:OnMeleeStanceChanged(self:GetNWString("stance"));
-			
-			return;
+		if self.OnMeleeStanceChanged then
+			if self:GetNWString("stance") ~= self.stance then
+				self:OnMeleeStanceChanged(self:GetNWString("stance"));
+				
+				return;
+			end
 		end
-	
+		
 		if self:GetNWString("activeShield"):len() > 0 then
 			if !wepTab.activeShield or wepTab.activeShield ~= self:GetNWString("activeShield") then
 				wepTab.activeShield = self:GetNWString("activeShield");
