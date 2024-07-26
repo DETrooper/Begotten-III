@@ -217,8 +217,11 @@ function SWEP:Deploy()
 				local attacksoundtableOffhand = GetSoundTable(offhandWeapon.AttackSoundTable);
 				
 				self.Owner:ViewPunch(Angle(0,1,0));
-				self.Weapon:EmitSound(attacksoundtable["drawsound"][math.random(1, #attacksoundtable["drawsound"])]);
-				self.Weapon:EmitSound(attacksoundtableOffhand["drawsound"][math.random(1, #attacksoundtableOffhand["drawsound"])]);
+				
+				if !self.Owner.cwObserverMode then 
+					self.Weapon:EmitSound(attacksoundtable["drawsound"][math.random(1, #attacksoundtable["drawsound"])])
+					self.Weapon:EmitSound(attacksoundtableOffhand["drawsound"][math.random(1, #attacksoundtableOffhand["drawsound"])])
+				end
 				
 				return true;
 			end
@@ -3213,6 +3216,12 @@ if CLIENT then
 	SWEP.wRenderOrder = nil
 	function SWEP:DrawWorldModel()
 		local wepTab = self:GetTable()
+		
+		if self:GetNWString("stance") ~= self.stance then
+			self:OnMeleeStanceChanged(self:GetNWString("stance"));
+			
+			return;
+		end
 	
 		if self:GetNWString("activeShield"):len() > 0 then
 			if !wepTab.activeShield or wepTab.activeShield ~= self:GetNWString("activeShield") then

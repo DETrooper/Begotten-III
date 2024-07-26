@@ -232,6 +232,7 @@ end
 
 function SWEP:OnMeleeStanceChanged(stance)
 	self:SetNWString("stance", stance);
+	self.stance = stance;
 
 	if SERVER then
 		self:CallOnClient("OnMeleeStanceChanged", stance);

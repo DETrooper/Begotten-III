@@ -837,7 +837,7 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 						subfactionText = "A member of the Smog City pirates.";
 					end
 				end
-			elseif playerFaction ~= "Wanderer" then
+			elseif playerFaction ~= "Wanderer" and playerFaction == targetFaction then
 				if playerSubfaction == targetSubfaction then
 					subfactionText = "A fellow member of the "..targetSubfaction..".";
 					textColor = Color(0, 255, 0, 255);

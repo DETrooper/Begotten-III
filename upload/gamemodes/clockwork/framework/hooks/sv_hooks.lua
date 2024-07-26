@@ -610,7 +610,10 @@ function GM:PlayerSwitchFlashlight(player, bIsOn)
 					
 					Clockwork.player:SetAction(player, "raise", actionTime, 5, function()
 						player:ToggleWeaponRaised();
-						player:EmitSound(raiseSound, 70);
+						
+						if !player.cwObserverMode then
+							player:EmitSound(raiseSound, 70);
+						end
 					end);
 				end;
 			end;
