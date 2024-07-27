@@ -97,25 +97,25 @@ function cwLimbs:CalculatePlayerDamage(player, hitGroup, damageInfo)
 		newDamage = math.max(newDamage, 0);
 		
 		if (bFallDamage) then
-			Clockwork.limb:TakeDamage(player, HITGROUP_RIGHTLEG, damage)
-			Clockwork.limb:TakeDamage(player, HITGROUP_LEFTLEG, damage)
+			Clockwork.limb:TakeDamage(player, HITGROUP_RIGHTLEG, newDamage)
+			Clockwork.limb:TakeDamage(player, HITGROUP_LEFTLEG, newDamage)
 			
-			hook.Run("PlayerLimbFallDamageTaken", player, damage)
+			hook.Run("PlayerLimbFallDamageTaken", player, newDamage)
 			return;
 		end
 
 		--[[if (armor > 0 and bDamageIsValid and bHitGroupIsValid) then
-			local armor = armor - damage
+			local armor = armor - newDamage
 			
 			if (armor < 0) then
-				Clockwork.limb:TakeDamage(player, hitGroup, damage)
+				Clockwork.limb:TakeDamage(player, hitGroup, newDamage)
 			end
 		else]]
-			Clockwork.limb:TakeDamage(player, hitGroup, damage)
+			Clockwork.limb:TakeDamage(player, hitGroup, newDamage)
 		--end
 		
 		--[[if (bDamageIsValid and bHitGroupIsValid) then
-			Clockwork.limb:TakeDamage(player, hitGroup, damage);
+			Clockwork.limb:TakeDamage(player, hitGroup, newDamage);
 		end]]--
 	end;
 end
