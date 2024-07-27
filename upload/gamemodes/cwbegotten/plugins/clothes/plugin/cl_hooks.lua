@@ -40,7 +40,7 @@ function PLUGIN:Tick()
 	
 	for k, v in pairs(ents.FindByClass("prop_ragdoll")) do
 		if string.sub(v:GetModel(), 1, 21) == "models/begotten/heads" then
-			local model = v:GetNWString("clothes");
+			local model = v:GetNWString("clothes") or "models/begotten/wanderers/wanderer_male.mdl";
 			local vTab = v:GetTable();
 			local clothesEnt = vTab.clothesEnt;
 			
