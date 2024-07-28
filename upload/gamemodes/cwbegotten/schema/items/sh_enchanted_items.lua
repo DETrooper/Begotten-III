@@ -361,6 +361,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 		end
 	end
 	
+	ITEM.attributes = {"not_unequippable"};
 	ITEM.components = {breakdownType = "meltdown", items = {"tech", "tech"}};
 ITEM:Register();
 

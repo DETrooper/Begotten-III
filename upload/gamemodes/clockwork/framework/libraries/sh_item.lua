@@ -870,7 +870,17 @@ function item.GetByWeapon(weapon)
 		local itemID = tonumber(weapon:GetNetworkedString("ItemID"));
 		
 		if (itemID and itemID != 0) then
-			return item.FindInstance(itemID);
+			local itemInstance = item.FindInstance(itemID);
+			
+			if !itemInstance then
+				local cwItemTable = weapon.cwItemTable;
+				
+				if cwItemTable then
+					itemInstance = item.CreateInstance(cwItemTable.uniqueID, cwItemTable.itemID, cwItemTable.data);
+				end
+			end
+			
+			return itemInstance;
 		end;
 	end;
 end;

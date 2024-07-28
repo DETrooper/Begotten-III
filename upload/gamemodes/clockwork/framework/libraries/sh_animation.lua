@@ -494,7 +494,7 @@ local weaponHoldTypes = {
 };
 
 -- A function to get an animation for a model.
-function Clockwork.animation:GetForModel(model, holdType, key, bNoFallbacks)
+function Clockwork.animation:GetForModel(model, holdType, key)
 	if (!model) then
 		debug.Trace();
 		
@@ -505,18 +505,16 @@ function Clockwork.animation:GetForModel(model, holdType, key, bNoFallbacks)
 	local animTable = self:GetTable(lowerModel);
 	--local overrideTable = self.override[lowerModel];
 
-	if (!bNoFallbacks) then
-		if (!animTable[holdType]) then
-			if (translateHoldTypes[holdType]) then
-				holdType = translateHoldTypes[holdType];
-			else
-				holdType = "normal";
-			end;
+	if (!animTable[holdType]) then
+		if (translateHoldTypes[holdType]) then
+			holdType = translateHoldTypes[holdType];
+		else
+			holdType = "normal";
 		end;
+	end;
 
-		if (!animTable[holdType][key]) then
-			key = "idle";
-		end;
+	if (!animTable[holdType][key]) then
+		key = "idle";
 	end;
 	
 	--[[local holdTypeTable = animTable[holdType];
