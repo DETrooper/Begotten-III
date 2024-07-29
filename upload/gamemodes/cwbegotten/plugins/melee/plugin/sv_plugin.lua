@@ -94,7 +94,7 @@ end
 function playerMeta:TakeStability(amount, cooldown, bNoMe)
 	--printp("Taking stability - Initial Amount: "..amount);
 	
-	if (Clockwork.player:HasFlags(self, "E") or !self:Alive()) then
+	if (Clockwork.player:HasFlags(self, "E") or !self:Alive() or self:IsRagdolled()) then
 		return;
 	end
 
