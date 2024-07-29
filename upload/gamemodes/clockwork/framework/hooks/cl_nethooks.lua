@@ -245,7 +245,7 @@ netstream.Hook("ReloadMenu", function(data)
 		local inventory = Clockwork.inventory:GetClient();
 	
 		for i, v in ipairs(weaponItem.ammoTypes) do
-			local ammoItemTable = item.FindByID(v);
+			local ammoItemTable = item.FindByID(string.lower(v));
 			
 			if ammoItemTable then
 				local itemInstances = inventory[ammoItemTable.uniqueID];
