@@ -782,7 +782,7 @@ AttackTables.MacheteAttackTable = {
 	["delay"] = 0.7,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 600,
+	["meleerange"] = 690,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -802,7 +802,7 @@ AttackTables.TwistedMacheteAttackTable = {
 	["delay"] = 0.7,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 600,
+	["meleerange"] = 690,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -822,7 +822,7 @@ AttackTables.ShortswordAttackTable = {
 	["delay"] = 0.75,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 650,
+	["meleerange"] = 750,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -842,7 +842,7 @@ AttackTables.VoltswordAttackTable = {
 	["delay"] = 0.7,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 690,
+	["meleerange"] = 795,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -862,7 +862,7 @@ AttackTables.GlazicusAttackTable = {
 	["delay"] = 0.75,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 650,
+	["meleerange"] = 750,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -882,7 +882,7 @@ AttackTables.OrnateGlazicusAttackTable = {
 	["delay"] = 0.75,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 665,
+	["meleerange"] = 765,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -902,7 +902,7 @@ AttackTables.DruidSwordAttackTable = {
 	["delay"] = 0.75,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 660,
+	["meleerange"] = 760,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -922,7 +922,7 @@ AttackTables.BlessedDruidSwordAttackTable = {
 	["delay"] = 0.75,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 660,
+	["meleerange"] = 760,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -942,7 +942,7 @@ AttackTables.GoreShortswordAttackTable = {
 	["delay"] = 0.75,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 650,
+	["meleerange"] = 760,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -962,7 +962,7 @@ AttackTables.GoreSeaxAttackTable = {
 	["delay"] = 0.7,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 625,
+	["meleerange"] = 720,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -982,7 +982,7 @@ AttackTables.FamilialSwordAttackTable = {
 	["delay"] = 0.75,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 650,
+	["meleerange"] = 750,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1002,7 +1002,7 @@ AttackTables.SatanicShortswordAttackTable = {
 	["delay"] = 0.75,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 650,
+	["meleerange"] = 750,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1043,7 +1043,7 @@ AttackTables.BillhookAttackTable = {
 	["delay"] = 1.1,
 	["striketime"] = 0.45,
 	["meleearc"] = 45,
-	["meleerange"] = 965,
+	["meleerange"] = 1110,
 	["punchstrength"] = Angle(1,3,1),
 };
 
@@ -1063,7 +1063,7 @@ AttackTables.LucerneAttackTable = {
 	["delay"] = 1.3,
 	["striketime"] = 0.45,
 	["meleearc"] = 45,
-	["meleerange"] = 970,
+	["meleerange"] = 1115,
 	["punchstrength"] = Angle(1,3,1),
 };
 
@@ -1083,7 +1083,7 @@ AttackTables.GatekeeperPoleaxeAttackTable = {
 	["delay"] = 1.2,
 	["striketime"] = 0.45,
 	["meleearc"] = 45,
-	["meleerange"] = 1000,
+	["meleerange"] = 1125,
 	["punchstrength"] = Angle(1,3,1),
 };
 
@@ -1105,7 +1105,7 @@ AttackTables.PolehammerAttackTable = {
 	["delay"] = 1.45,
 	["striketime"] = 0.55,
 	["meleearc"] = 50,
-	["meleerange"] = 1280,
+	["meleerange"] = 1410,
 	["punchstrength"] = Angle(1,3,1),
 };
 
@@ -1145,7 +1145,7 @@ AttackTables.WarSpearAttackTable = {
 	["delay"] = 1.25,
 	["striketime"] = 0.55,
 	["meleearc"] = 15,
-	["meleerange"] = 1500,
+	["meleerange"] = 1600,
 	["punchstrength"] = Angle(1,3,1),
 };
 
@@ -1165,7 +1165,7 @@ AttackTables.HalberdAttackTable = {
 	["delay"] = 1.4,
 	["striketime"] = 0.55,
 	["meleearc"] = 50,
-	["meleerange"] = 1250,
+	["meleerange"] = 1375,
 	["punchstrength"] = Angle(1,3,1),
 };
 
@@ -1207,7 +1207,7 @@ AttackTables.IronArmingSwordAttackTable = {
 	["delay"] = 0.9,
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
-	["meleerange"] = 725,
+	["meleerange"] = 835,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1227,7 +1227,7 @@ AttackTables.SteelArmingSwordAttackTable = {
 	["delay"] = 0.9,
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
-	["meleerange"] = 750,
+	["meleerange"] = 865,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1247,7 +1247,7 @@ AttackTables.SpathaAttackTable = {
 	["delay"] = 0.95,
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
-	["meleerange"] = 775,
+	["meleerange"] = 890,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1267,7 +1267,7 @@ AttackTables.BrokenSwordAttackTable = {
 	["delay"] = 0.9,
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
-	["meleerange"] = 650,
+	["meleerange"] = 750,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1287,7 +1287,7 @@ AttackTables.TrainingSwordAttackTable = {
 	["delay"] = 1,
 	["striketime"] = 0.4,
 	["meleearc"] = 35,
-	["meleerange"] = 725,
+	["meleerange"] = 835,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1307,7 +1307,7 @@ AttackTables.ScimitarAttackTable = {
 	["delay"] = 0.9,
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
-	["meleerange"] = 725,
+	["meleerange"] = 835,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1327,7 +1327,7 @@ AttackTables.ShardAttackTable = {
 	["delay"] = 0.85,
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
-	["meleerange"] = 750,
+	["meleerange"] = 865,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1347,7 +1347,7 @@ AttackTables.SatanicSwordAttackTable = {
 	["delay"] = 0.95,
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
-	["meleerange"] = 750,
+	["meleerange"] = 865,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1367,7 +1367,7 @@ AttackTables.WarpedSwordAttackTable = {
 	["delay"] = 0.9,
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
-	["meleerange"] = 700,
+	["meleerange"] = 805,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1387,7 +1387,7 @@ AttackTables.GlazicSwordAttackTable = {
 	["delay"] = 0.9,
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
-	["meleerange"] = 750,
+	["meleerange"] = 865,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1407,7 +1407,7 @@ AttackTables.BlackclawAttackTable = {
 	["delay"] = 0.95,
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
-	["meleerange"] = 750,
+	["meleerange"] = 865,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1427,7 +1427,7 @@ AttackTables.ScrapBladeAttackTable = {
 	["delay"] = 0.85,
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
-	["meleerange"] = 650,
+	["meleerange"] = 750,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1447,7 +1447,7 @@ AttackTables.GoreFalchionAttackTable = {
 	["delay"] = 0.92,
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
-	["meleerange"] = 700,
+	["meleerange"] = 805,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1467,7 +1467,7 @@ AttackTables.HellfireSwordAttackTable = {
 	["delay"] = 1.1,
 	["striketime"] = 0.35,
 	["meleearc"] = 35,
-	["meleerange"] = 700,
+	["meleerange"] = 805,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1546,7 +1546,7 @@ AttackTables.LongswordAttackTable = {
 	["delay"] = 1.2,
 	["striketime"] = 0.6,
 	["meleearc"] = 45,
-	["meleerange"] = 900,
+	["meleerange"] = 1035,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1566,7 +1566,7 @@ AttackTables.TrainingLongswordAttackTable = {
 	["delay"] = 1.2,
 	["striketime"] = 0.6,
 	["meleearc"] = 45,
-	["meleerange"] = 975,
+	["meleerange"] = 1120,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1586,7 +1586,7 @@ AttackTables.EnchantedLongswordAttackTable = {
 	["delay"] = 1.5,
 	["striketime"] = 0.6,
 	["meleearc"] = 45,
-	["meleerange"] = 900,
+	["meleerange"] = 1035,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1606,7 +1606,7 @@ AttackTables.SatanicLongswordAttackTable = {
 	["delay"] = 1.2,
 	["striketime"] = 0.6,
 	["meleearc"] = 35,
-	["meleerange"] = 950,
+	["meleerange"] = 1095,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1626,7 +1626,7 @@ AttackTables.ClaymoreAttackTable = {
 	["delay"] = 1.45,
 	["striketime"] = 0.6,
 	["meleearc"] = 45,
-	["meleerange"] = 990,
+	["meleerange"] = 1140,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1646,7 +1646,7 @@ AttackTables.VoltlongswordAttackTable = {
 	["delay"] = 1.2,
 	["striketime"] = 0.6,
 	["meleearc"] = 45,
-	["meleerange"] = 900,
+	["meleerange"] = 1035,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1666,7 +1666,7 @@ AttackTables.ExileKnightSwordAttackTable = {
 	["delay"] = 1.2,
 	["striketime"] = 0.6,
 	["meleearc"] = 45,
-	["meleerange"] = 940,
+	["meleerange"] = 1080,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1686,7 +1686,7 @@ AttackTables.InquisitorSwordAttackTable = {
 	["delay"] = 1.1,
 	["striketime"] = 0.6,
 	["meleearc"] = 45,
-	["meleerange"] = 950,
+	["meleerange"] = 1095,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1706,7 +1706,7 @@ AttackTables.SkylightSwordAttackTable = {
 	["delay"] = 1.3,
 	["striketime"] = 0.6,
 	["meleearc"] = 55,
-	["meleerange"] = 975,
+	["meleerange"] = 1120,
 	["punchstrength"] = Angle(0,1,0),
 	["isadminweapon"] = true,
 };
@@ -1727,7 +1727,7 @@ AttackTables.UnholySigilSwordAttackTable = {
 	["delay"] = 1.3,
 	["striketime"] = 0.6,
 	["meleearc"] = 45,
-	["meleerange"] = 900,
+	["meleerange"] = 1035,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1747,7 +1747,7 @@ AttackTables.UnholySigilSword_Fire_AttackTable = {
 	["delay"] = 1.3,
 	["striketime"] = 0.6,
 	["meleearc"] = 45,
-	["meleerange"] = 900,
+	["meleerange"] = 1035,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -1767,7 +1767,7 @@ AttackTables.UnholySigilSword_Ice_AttackTable = {
 	["delay"] = 1.3,
 	["striketime"] = 0.6,
 	["meleearc"] = 45,
-	["meleerange"] = 900,
+	["meleerange"] = 1035,
 	["punchstrength"] = Angle(0,1,0),
 };
 
