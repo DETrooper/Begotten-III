@@ -62,9 +62,9 @@ hook.Add("KeyRelease", "KeyReleaseFirearms", function(ply, key)
 							
 							if randomItem:CanUseOnItem(ply, firearmItemTable, true) then
 								randomItem:UseOnItem(ply, firearmItemTable, true);
-								
-								return;
 							end
+							
+							return;
 						end
 					end
 				end
@@ -90,9 +90,9 @@ hook.Add("KeyRelease", "KeyReleaseFirearms", function(ply, key)
 							
 							if randomItem:CanUseOnItem(ply, firearmItemTable, true) then
 								randomItem:UseOnItem(ply, firearmItemTable, true);
-								
-								return;
 							end
+							
+							return;
 						end
 					end
 				end
@@ -117,9 +117,9 @@ hook.Add("KeyRelease", "KeyReleaseFirearms", function(ply, key)
 								
 								if randomItem:CanUseOnItem(ply, firearmItemTable, true) then
 									randomItem:UseOnItem(ply, firearmItemTable, true);
-									
-									return;
 								end
+								
+								return;
 							end
 						end
 					end
