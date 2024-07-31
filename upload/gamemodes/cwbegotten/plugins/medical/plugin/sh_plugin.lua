@@ -280,7 +280,7 @@ function COMMAND:OnRun(player, arguments)
 	local target = Clockwork.player:FindByID(arguments[1])
 	
 	if (target) then
-		local bloodLevel = arguments[2];
+		local bloodLevel = tonumber(arguments[2]);
 		local oldBloodLevel = target:GetCharacterData("BloodLevel");
 		
 		if bloodLevel then

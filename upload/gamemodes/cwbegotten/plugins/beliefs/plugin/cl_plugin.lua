@@ -74,6 +74,8 @@ function cwBeliefs:HasBelief(uniqueID, bHasAny)
 					return false;
 				end
 			end
+			
+			return true;
 		end
 	else
 		if (self.beliefs[uniqueID]) then

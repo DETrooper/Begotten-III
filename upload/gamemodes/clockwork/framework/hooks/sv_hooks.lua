@@ -610,7 +610,10 @@ function GM:PlayerSwitchFlashlight(player, bIsOn)
 					
 					Clockwork.player:SetAction(player, "raise", actionTime, 5, function()
 						player:ToggleWeaponRaised();
-						player:EmitSound(raiseSound, 70);
+						
+						if !player.cwObserverMode then
+							player:EmitSound(raiseSound, 70);
+						end
 					end);
 				end;
 			end;
@@ -2058,10 +2061,7 @@ end
 
 -- Called when the player attempts to be ragdolled.
 function GM:PlayerCanRagdoll(player, state, delay, decay, ragdoll)
-	if (IsValid(player.propellerengine)) then
-		return false
-	end;
-	return true
+
 end
 
 -- Called when the player attempts to be unragdolled.
@@ -3314,19 +3314,21 @@ function GM:PlayerCharacterCreated(player, character)
 			
 			local queryObj = Clockwork.database:Select(charactersTable)
 				queryObj:Callback(function(result)
-					for k, v in pairs(result) do
-						if v._Key then
-							if not character.data["Key"] then
-								character.data["Key"] = v._Key;
+					if result then
+						for k, v in pairs(result) do
+							if v._Key then
+								if not character.data["Key"] then
+									character.data["Key"] = v._Key;
+									
+									key_found = true;
+								end
 								
-								key_found = true;
+								if player:GetCharacterData("Key") and player:GetCharacterData("Key") ~= player:GetNetVar("Key") then 
+									player:SetNetVar("Key", player:GetCharacterData("Key"));
+								end
+								
+								break;
 							end
-							
-							if player:GetCharacterData("Key") and player:GetCharacterData("Key") ~= player:GetNetVar("Key") then 
-								player:SetNetVar("Key", player:GetCharacterData("Key"));
-							end
-							
-							break;
 						end
 					end
 					

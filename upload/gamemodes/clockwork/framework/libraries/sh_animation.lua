@@ -461,50 +461,6 @@ function Clockwork.animation:AddOverride(model, key, value)
 	self.override[lowerModel][key] = value;
 end;
 
--- A function to get an animation for a model.
-function Clockwork.animation:GetForModel(model, holdType, key, bNoFallbacks)
-	if (!model) then
-		debug.Trace();
-		
-		return false;
-	end;
-
-	local lowerModel = string.lower(model);
-	local animTable = self:GetTable(lowerModel);
-	local overrideTable = self.override[lowerModel];
-
-	if (!bNoFallbacks) then
-		if (!animTable[holdType]) then
-			holdType = "normal";
-		end;
-
-		if (!animTable[holdType][key]) then
-			key = "idle";
-		end;
-	end;
-
-	local finalAnimation = animTable[holdType][key];
-	
-	if (overrideTable and overrideTable[holdType] and overrideTable[holdType][key]) then
-		finalAnimation = overrideTable[holdType][key];
-	end;
-	
-	return finalAnimation;
-end;
-
--- A function to get a model's class.
-function Clockwork.animation:GetModelClass(model, alwaysReal)
-	local modelClass = self.models[string.lower(model)];
-	
-	if (!modelClass) then
-		if (!alwaysReal) then
-			return "maleHuman";
-		end;
-	else
-		return modelClass;
-	end;
-end;
-
 local translateHoldTypes = {
 	["melee2"] = "melee",
 	["fist"] = "melee",
@@ -536,6 +492,59 @@ local weaponHoldTypes = {
 	["weapon_shotgun"] = "shotgun",
 	["weapon_annabelle"] = "shotgun"
 };
+
+-- A function to get an animation for a model.
+function Clockwork.animation:GetForModel(model, holdType, key)
+	if (!model) then
+		debug.Trace();
+		
+		return false;
+	end;
+
+	local lowerModel = string.lower(model);
+	local animTable = self:GetTable(lowerModel);
+	--local overrideTable = self.override[lowerModel];
+
+	if (!animTable[holdType]) then
+		if (translateHoldTypes[holdType]) then
+			holdType = translateHoldTypes[holdType];
+		else
+			holdType = "normal";
+		end;
+	end;
+
+	if (!animTable[holdType][key]) then
+		key = "idle";
+	end;
+	
+	--[[local holdTypeTable = animTable[holdType];
+	local finalAnimation = holdTypeTable[key];
+	
+	if overrideTable then
+		local ovrHoldTypeTable = overrideTable[holdType];
+		
+		if ovrHoldTypeTable then
+			finalAnimation = ovrHoldTypeTable[key] or finalAnimation;
+		end
+	end;
+	
+	return finalAnimation;]]--
+
+	return animTable[holdType][key];
+end;
+
+-- A function to get a model's class.
+function Clockwork.animation:GetModelClass(model, alwaysReal)
+	local modelClass = self.models[string.lower(model)];
+	
+	if (!modelClass) then
+		if (!alwaysReal) then
+			return "maleHuman";
+		end;
+	else
+		return modelClass;
+	end;
+end;
 
 -- A function to get a weapon's hold type.
 function Clockwork.animation:GetWeaponHoldType(player, weapon)

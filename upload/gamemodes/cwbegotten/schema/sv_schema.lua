@@ -2433,6 +2433,11 @@ concommand.Add("cw_CoinslotRation", function(player, cmd, args)
 						player:GiveItem(item.CreateInstance("purified_water"), true);
 						Schema:EasyText(player, "olivedrab", "The machine dispenses a Gatekeeper ration and a bottle of purified water.");
 						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
+					elseif player:HasBelief("favored") and math.random(1, 3) == 1 then
+						player:GiveItem(item.CreateInstance("canned_meal"), true);
+						player:GiveItem(item.CreateInstance("papa_petes_ice_cold_pop"), true);
+						Schema:EasyText(player, "lawngreen", "The machine appears to momentarily malfunction, dispensing goodies and sweet treats! It's your lucky day!");
+						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
 					else
 						player:GiveItem(item.CreateInstance("moldy_bread"), true);
 						player:GiveItem(item.CreateInstance("dirtywater"), true);

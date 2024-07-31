@@ -376,7 +376,7 @@ do
 		end;
 
 		if (event == PLAYERANIMEVENT_ATTACK_PRIMARY) then
-			local attackAnimation = Clockwork.animation:GetForModel(model, weaponHoldType, "attack", true);
+			local attackAnimation = Clockwork.animation:GetForModel(model, weaponHoldType, "attack");
 
 			if (!attackAnimation) then
 				attackAnimation = ACT_GESTURE_RANGE_ATTACK_SMG1;
@@ -385,7 +385,7 @@ do
 			player:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, attackAnimation, true);
 			return ACT_VM_PRIMARYATTACK;
 		elseif (event == PLAYERANIMEVENT_ATTACK_SECONDARY) then
-			local attackAnimation = Clockwork.animation:GetForModel(model, weaponHoldType, "attack", true);
+			local attackAnimation = Clockwork.animation:GetForModel(model, weaponHoldType, "attack");
 
 			if (!attackAnimation) then
 				attackAnimation = ACT_GESTURE_RANGE_ATTACK_SMG1;
@@ -394,7 +394,7 @@ do
 			player:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, attackAnimation, true);
 			return ACT_VM_SECONDARYATTACK;
 		elseif (event == PLAYERANIMEVENT_RELOAD) then
-			local reloadAnimation = Clockwork.animation:GetForModel(model, weaponHoldType, "reload", true);
+			local reloadAnimation = Clockwork.animation:GetForModel(model, weaponHoldType, "reload");
 
 			if (!reloadAnimation) then
 				reloadAnimation = ACT_GESTURE_RELOAD_SMG1;

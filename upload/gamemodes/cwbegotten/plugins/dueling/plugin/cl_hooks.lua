@@ -27,7 +27,7 @@ function cwDueling:CanPlayAmbientMusic()
 end
 
 function cwDueling:CanPlayBattleMusic()
-	if (Clockwork.ConVars.BATTLEMUSIC and Clockwork.ConVars.BATTLEMUSIC:GetInt() < 2) then
+	if (Clockwork.ConVars.BATTLEMUSIC and Clockwork.ConVars.BATTLEMUSIC:GetInt() == 2) then
 		if !Clockwork.Client.dueling then
 			return false
 		end

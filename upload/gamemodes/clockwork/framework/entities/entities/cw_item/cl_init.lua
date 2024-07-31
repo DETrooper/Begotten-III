@@ -48,8 +48,21 @@ end
 
 -- Called each frame.
 function ENT:Think()
+	local curTime = CurTime();
+
 	if (!Clockwork.entity:HasFetchedItemData(self)) then
-		Clockwork.entity:FetchItemData(self)
+		if Clockwork.player:HasDataStreamed() then
+			Clockwork.entity:FetchItemData(self);
+			
+			if Clockwork.Client.nextItemFetch then
+				Clockwork.Client.nextItemFetch = nil;
+			end
+		elseif !Clockwork.Client.nextItemFetch or Clockwork.Client.nextItemFetch < curTime then
+			Clockwork.Client.nextItemFetch = curTime + 0.1;
+			
+			Clockwork.entity:FetchItemData(self);
+		end
+		
 		return
 	end
 
@@ -66,6 +79,8 @@ function ENT:Think()
 
 		hook.Run("ItemEntityThink", itemTable, self)
 	end]]--
+	
+	self:SetNextClientThink(curTime + math.Rand(0.1, 1));
 end
 
 -- Called when the entity should draw.

@@ -34,10 +34,13 @@ function cwLantern:PlayerThink(player, curTime, infoTable, alive, initialized, p
 
 			if (lanternWeapon) then
 				local weaponItemTable = item.GetByWeapon(lanternWeapon);
-				local currentOil = weaponItemTable:GetData("oil");
+				
+				if weaponItemTable then
+					local currentOil = weaponItemTable:GetData("oil");
 
-				weaponItemTable:SetData("oil", math.Clamp(currentOil - 1, 0, 100));
-				player:SetSharedVar("oil", math.Clamp(currentOil - 1, 0, 100));
+					weaponItemTable:SetData("oil", math.Clamp(currentOil - 1, 0, 100));
+					player:SetSharedVar("oil", math.Clamp(currentOil - 1, 0, 100));
+				end
 
 				plyTab.nextOilDrop = curTime + 30;
 			end

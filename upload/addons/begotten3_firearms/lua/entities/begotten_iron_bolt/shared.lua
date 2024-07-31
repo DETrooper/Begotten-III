@@ -185,22 +185,22 @@ if SERVER then
 						stabilityDamage = stabilityDamage * 1;
 					elseif distance >= 250 * 250 and distance < 400 * 400 then
 						--print("tier 3");
-						damage = damage * 1.2;
+						damage = damage * 1.1;
 						poiseDamage = poiseDamage * 1.2;
 						stabilityDamage = stabilityDamage * 1.2;
 					elseif distance >= 400 * 400 and distance < 600 * 600 then
 						--print("tier 4");
-						damage = damage * 1.3;
+						damage = damage * 1.2;
 						poiseDamage = poiseDamage * 1.3;
 						stabilityDamage = stabilityDamage * 1.3;
 					elseif distance >= 600 * 600 and distance < 900 * 900 then
 						--print("tier 5");
-						damage = damage * 1.5;
+						damage = damage * 1.3;
 						poiseDamage = poiseDamage * 1.6;
 						stabilityDamage = stabilityDamage * 1.6;
 					elseif distance >= 900 * 900 then
 						--print("tier 6");
-						damage = damage * 1.7;
+						damage = damage * 1.5;
 						poiseDamage = poiseDamage * 1.7;
 						stabilityDamage = stabilityDamage * 1.7;
 					else

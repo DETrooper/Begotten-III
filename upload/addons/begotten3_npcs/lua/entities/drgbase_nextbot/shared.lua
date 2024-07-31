@@ -457,6 +457,18 @@ if SERVER then
 	-- AI Behaviour --
 
 	function ENT:AIBehaviour() end
+	
+	local entityMeta = FindMetaTable("Entity")
+	
+	entityMeta.ClockworkVisible = entityMeta.ClockworkVisible or entityMeta.Visible
+	
+	function entityMeta:Visible(target)
+		if target:IsPlayer() and target:IsRagdolled() then
+			target = target:GetRagdollEntity();
+		end
+	
+		return self:ClockworkVisible(target)
+	end
 
 	function ENT:HandleEnemy()
 		local enemy = self:GetEnemy()

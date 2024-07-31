@@ -217,8 +217,11 @@ function SWEP:Deploy()
 				local attacksoundtableOffhand = GetSoundTable(offhandWeapon.AttackSoundTable);
 				
 				self.Owner:ViewPunch(Angle(0,1,0));
-				self.Weapon:EmitSound(attacksoundtable["drawsound"][math.random(1, #attacksoundtable["drawsound"])]);
-				self.Weapon:EmitSound(attacksoundtableOffhand["drawsound"][math.random(1, #attacksoundtableOffhand["drawsound"])]);
+				
+				if !self.Owner.cwObserverMode then 
+					self.Weapon:EmitSound(attacksoundtable["drawsound"][math.random(1, #attacksoundtable["drawsound"])])
+					self.Weapon:EmitSound(attacksoundtableOffhand["drawsound"][math.random(1, #attacksoundtableOffhand["drawsound"])])
+				end
 				
 				return true;
 			end
@@ -616,12 +619,12 @@ function SWEP:PrimaryAttack()
 								if attacktable.canaltattack then
 									if attacktable.altmeleerange then
 										meleeRange = attacktable.altmeleerange / 10;
-									else
+									--[[else
 										if self.CanSwipeAttack then
 											meleeRange = meleeRange * 0.8
 										else
 											meleeRange = meleeRange * 1.2
-										end
+										end]]--
 									end
 								end
 							end
@@ -701,12 +704,12 @@ function SWEP:PrimaryAttack()
 										if offhandAttackTable.canaltattack then
 											if offhandAttackTable.altmeleerange then
 												meleeRange = offhandAttackTable.altmeleerange;
-											else
+											--[[else
 												if offhandWeapon.CanSwipeAttack then
 													meleeRange = meleeRange * 0.8
 												else
 													meleeRange = meleeRange * 1.2
-												end
+												end]]--
 											end
 										end
 									end
@@ -1031,7 +1034,7 @@ end
 					
 					if owner.upstagedActive and not hit.opponent then
 						if IsValid(enemywep) then
-							if enemywep:GetNWString("activeShield"):len() == 0 and not string.find(enemywep:GetClass(), "begotten_fists") and not string.find(enemywep:GetClass(), "begotten_claws") then
+							if --[[enemywep:GetNWString("activeShield"):len() == 0 and]] not string.find(enemywep:GetClass(), "begotten_fists") and not string.find(enemywep:GetClass(), "begotten_claws") then
 								local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
 								local dropPos = hit:GetPos() + Vector(0, 0, 35) + hit:GetAngles():Forward() * 4
 								local itemTable = Clockwork.item:GetByWeapon(enemywep);
@@ -3213,7 +3216,15 @@ if CLIENT then
 	SWEP.wRenderOrder = nil
 	function SWEP:DrawWorldModel()
 		local wepTab = self:GetTable()
-	
+		
+		if self.OnMeleeStanceChanged then
+			if self:GetNWString("stance") ~= self.stance then
+				self:OnMeleeStanceChanged(self:GetNWString("stance"));
+				
+				return;
+			end
+		end
+		
 		if self:GetNWString("activeShield"):len() > 0 then
 			if !wepTab.activeShield or wepTab.activeShield ~= self:GetNWString("activeShield") then
 				wepTab.activeShield = self:GetNWString("activeShield");
@@ -3398,6 +3409,7 @@ if CLIENT then
 
 	function SWEP:CreateModels( tab )
 		if (!tab) then return end
+		if (!IsValid(self.Owner)) then return end
 
 		for k, v in pairs( tab ) do
 			if IsValid(v.modelEnt) then

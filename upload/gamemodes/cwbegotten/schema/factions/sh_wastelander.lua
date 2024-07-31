@@ -77,8 +77,8 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 			return false;
 		end]]--
 		
-		if (!Clockwork.player:IsWhitelisted(player, faction.name)) then
-			Clockwork.player:SetWhitelisted(player, faction.name, true);
+		if (!Clockwork.player:IsWhitelisted(player, "Gatekeeper")) then
+			Clockwork.player:SetWhitelisted(player, "Gatekeeper", true);
 		end;
 	end;
 	
@@ -101,7 +101,7 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 	Schema.Ranks["Gatekeeper"] = {
 		[1] = "Disciple",
 		[2] = "Acolyte",
-		[3] = "Smith",
+		[3] = "Artificer",
 		[4] = "Forgemaster",
 		[5] = "Medicus",
 		[6] = "Master Medicus",
@@ -117,7 +117,7 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 	
 	Schema.RankTiers["Gatekeeper"] = {
 		[1] = {"Disciple"},
-		[2] = {"Acolyte", "Acolyte-Evocatus", "Smith", "Medicus", "Scout"},
+		[2] = {"Acolyte", "Acolyte-Evocatus", "Artificer", "Medicus", "Scout"},
 		[3] = {"Emissary", "Forgemaster", "Master Medicus", "Master Scout", "Vexillifer", "Squire"},
 		[4] = {"High Gatekeeper"},
 		[5] = {"Master-At-Arms"},
@@ -198,8 +198,8 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 			return false;
 		end]]--
 		
-		--[[if (!Clockwork.player:IsWhitelisted(player, faction.name)) then
-			Clockwork.player:SetWhitelisted(player, faction.name, true);
+		--[[if (!Clockwork.player:IsWhitelisted(player, "Holy Hierarchy")) then
+			Clockwork.player:SetWhitelisted(player, "Holy Hierarchy", true);
 		end;]]--
 	end;
 FACTION_HIERARCHY = FACTION:Register();
@@ -267,8 +267,8 @@ local FACTION = Clockwork.faction:New("Children of Satan");
 			return false;
 		end
 		
-		if (!Clockwork.player:IsWhitelisted(player, faction.name)) then
-			Clockwork.player:SetWhitelisted(player, faction.name, true);
+		if (!Clockwork.player:IsWhitelisted(player, "Children of Satan")) then
+			Clockwork.player:SetWhitelisted(player, "Children of Satan", true);
 		end;
 	end;
 FACTION_SATANIST = FACTION:Register();
@@ -347,8 +347,8 @@ local FACTION = Clockwork.faction:New("Pope Adyssa's Gatekeepers");
 			return false;
 		end]]--
 		
-		if (!Clockwork.player:IsWhitelisted(player, faction.name)) then
-			Clockwork.player:SetWhitelisted(player, faction.name, true);
+		if (!Clockwork.player:IsWhitelisted(player, "Pope Adyssa's Gatekeepers")) then
+			Clockwork.player:SetWhitelisted(player, "Pope Adyssa's Gatekeepers", true);
 		end;
 	end;
 	
@@ -416,8 +416,8 @@ local FACTION = Clockwork.faction:New("The Third Inquisition");
 			return false;
 		end
 		
-		if (!Clockwork.player:IsWhitelisted(player, faction.name)) then
-			Clockwork.player:SetWhitelisted(player, faction.name, true);
+		if (!Clockwork.player:IsWhitelisted(player, "The Third Inquisition")) then
+			Clockwork.player:SetWhitelisted(player, "The Third Inquisition", true);
 		end;
 	end;
 FACTION_THIRD_INQUISITION = FACTION:Register();
@@ -446,8 +446,8 @@ local FACTION = Clockwork.faction:New("Smog City Pirate");
 			return false;
 		end;
 		
-		if (!Clockwork.player:IsWhitelisted(player, faction.name)) then
-			Clockwork.player:SetWhitelisted(player, faction.name, true);
+		if (!Clockwork.player:IsWhitelisted(player, "Smog City Pirate")) then
+			Clockwork.player:SetWhitelisted(player, "Smog City Pirate", true);
 		end;
 	end;
 FACTION_SMOG_CITY_PIRATES = FACTION:Register();

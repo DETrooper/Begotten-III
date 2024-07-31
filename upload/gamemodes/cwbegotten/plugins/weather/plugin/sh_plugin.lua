@@ -32,24 +32,22 @@ if cwWeather.systemEnabled then
 			skyFixNight = {r = 12, g = 10, b = 0},
 			precipitation = "sw_acidrain",
 			rarity = 6,
-			--[[leadupCallback = function()
-				timer.Create("ThunderstormBuildupTimer", 5, 11, function()
-					local playersInWeatherZones = {};
-					
-					for i, v in ipairs(_player.GetAll()) do
-						if v:Alive() and v:HasInitialized() then
-							local lastZone = v:GetCharacterData("LastZone");
-							local zoneTable = zones:FindByID(lastZone);
-							
-							if zoneTable.hasWeather then
-								table.insert(playersInWeatherZones, v);
-							end
+			leadupCallback = function()
+				local playersInWeatherZones = {};
+				
+				for i, v in ipairs(_player.GetAll()) do
+					if v:Alive() and v:HasInitialized() then
+						local lastZone = v:GetCharacterData("LastZone") or "wasteland";
+						local zoneTable = zones:FindByID(lastZone);
+						
+						if zoneTable.hasWeather then
+							table.insert(playersInWeatherZones, v);
 						end
 					end
-					
-					netstream.Start(playersInWeatherZones, "EmitSound", {name = "ambient/ambience/rainscapes/rain/stereo_gust_0"..math.random(2, 6)..".wav", pitch = math.random(95, 105), level = 80, volume = 0.5});
-				end);
-			end,]]
+				end
+				
+				Clockwork.chatBox:Add(playersInWeatherZones, nil, "event", "An acrid smell slowly begins to permeate the Wasteland, foreshadowing the imminent arrival of acid rain.");
+			end,
 			leadupTime = 60,
 		},
 		["ash"] = {

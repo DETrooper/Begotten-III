@@ -7,17 +7,20 @@ Clockwork.config:Add("take_physcannon", true);
 -- A function to force a player to throw the entity that they are holding.
 function cwPickupObjects:ForceThrowEntity(player)
 	local entity = self:ForceDropEntity(player);
-	local force = player:GetAimVector() * 768;
 	
-	timer.Simple(FrameTime() * 0.5, function()
-		if (IsValid(entity) and IsValid(player)) then
-			local physicsObject = entity:GetPhysicsObject();
-			
-			if (IsValid(physicsObject)) then
-				physicsObject:ApplyForceCenter(force);
+	if entity then
+		local force = player:GetAimVector() * 768;
+		
+		timer.Simple(FrameTime() * 0.5, function()
+			if (IsValid(entity) and IsValid(player)) then
+				local physicsObject = entity:GetPhysicsObject();
+				
+				if (IsValid(physicsObject)) then
+					physicsObject:ApplyForceCenter(force);
+				end;
 			end;
-		end;
-	end);
+		end);
+	end
 end;
 
 -- A function to force a player to drop the entity that they are holding.
@@ -26,16 +29,15 @@ function cwPickupObjects:ForceDropEntity(player)
 	local curTime = CurTime();
 	local entity = player.cwHoldingEnt;
 	
-	if (IsValid(holdingGrab)) then
-		constraint.RemoveAll(holdingGrab);
-		holdingGrab:Remove();
-	end;
-	
 	if (IsValid(entity)) then
 		if (entity:GetClass() == "prop_ragdoll") then
 			local ragdollPlayer = Clockwork.entity:GetPlayer(entity)
 			
 			if IsValid(ragdollPlayer) then
+				if entity.noDrop and entity.noDrop > CurTime() then
+					return;
+				end
+				
 				ragdollPlayer.PickedUpBy = nil;
 			end
 		end
@@ -53,6 +55,11 @@ function cwPickupObjects:ForceDropEntity(player)
 		end;
 		
 		entity.cwDamageImmunity = CurTime() + 60;
+	end;
+	
+	if (IsValid(holdingGrab)) then
+		constraint.RemoveAll(holdingGrab);
+		holdingGrab:Remove();
 	end;
 	
 	if (player.cwHoldingEnt) then
@@ -98,6 +105,7 @@ function cwPickupObjects:ForcePickup(player, entity, trace)
 	
 	if (entity:GetClass() == "prop_ragdoll") then
 		constraint.Weld(entity, player.cwHoldingGrab, trace.PhysicsBone, 0, 0);
+		entity.noDrop = CurTime() + 1;
 	else
 		constraint.Weld(entity, player.cwHoldingGrab, 0, 0, 0);
 	end

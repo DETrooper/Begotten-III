@@ -331,7 +331,7 @@ else
 
 	netstream.Hook("TakeLimbDamage", function(data)
 		local hitGroup = data.hitGroup
-		local damage = data.damage
+		local damage = data.damage or 0; -- This is nil sometimes, no idea why.
 
 		Clockwork.limb.stored[hitGroup] = math.min((Clockwork.limb.stored[hitGroup] or 0) + damage, 100)
 		hook.Run("PlayerLimbTakeDamage", hitGroup, damage)

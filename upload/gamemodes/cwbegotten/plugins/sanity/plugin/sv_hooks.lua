@@ -40,6 +40,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 			return;
 		end
 	
+		local nearFire = false;
 		local sanityDecay = -1;
 	
 		if (map != "rp_begotten3") then
@@ -119,6 +120,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 			
 				if (isOnFire or class == "env_fire") then
 					sanityDecay = sanityDecay + 2; -- sanity gain from fires etc
+					nearFire = true;
 				end;
 			end;
 		end;
@@ -163,9 +165,23 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 			end
 		elseif (sanitySafezones[lastZone]) or (string.find(lastZone, "gore") and playerFaction == "Goreic Warrior") then
 			sanityDecay = sanityDecay + 3.5;
-		elseif (lastZone == "wasteland" and (bNight or cwWeather and cwWeather.weather == "bloodstorm")) then
-			if (map == "rp_begotten_redux") or (map == "rp_scraptown") then
-				if !player:InTower() then
+		elseif !nearFire then
+			if (lastZone == "wasteland" and (bNight or cwWeather and cwWeather.weather == "bloodstorm")) then
+				if (map == "rp_begotten_redux") or (map == "rp_scraptown") then
+					if !player:InTower() then
+						local decay = 3;
+						
+						if player:HasBelief("thirst_blood_moon") then
+							decay = (decay - 1.5);
+						end
+					
+						if player:HasBelief("lunar_repudiation") then
+							decay = (decay - 1.5);
+						end
+
+						sanityDecay = (sanityDecay - decay);
+					end
+				else
 					local decay = 3;
 					
 					if player:HasBelief("thirst_blood_moon") then
@@ -178,21 +194,9 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 
 					sanityDecay = (sanityDecay - decay);
 				end
-			else
-				local decay = 3;
-				
-				if player:HasBelief("thirst_blood_moon") then
-					decay = (decay - 1.5);
-				end
-			
-				if player:HasBelief("lunar_repudiation") then
-					decay = (decay - 1.5);
-				end
-
-				sanityDecay = (sanityDecay - decay);
-			end
-		elseif (lastZone == "caves") then
-			sanityDecay = (sanityDecay - 2);
+			elseif (lastZone == "caves") then
+				sanityDecay = (sanityDecay - 2);
+			end;
 		end;
 
 		if (hellZones[lastZone]) then

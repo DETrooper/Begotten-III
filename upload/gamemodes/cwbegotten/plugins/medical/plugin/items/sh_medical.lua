@@ -16,7 +16,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.healAmount = 10;
 	ITEM.healDelay = 5;
 	ITEM.healRepetition = 5;
-	ITEM.canSave = true;
+	ITEM.canSave = false; -- Behavior overriden in OnUsed.
 	ITEM.restoresBlood = 1000;
 	ITEM.useXP = 10;
 	ITEM.useTime = 1;
@@ -38,8 +38,11 @@ local ITEM = Clockwork.item:New("medical_base");
 		
 		--if action == "die" or action == "die_bleedout" then
 		if player:GetRagdollState() == RAGDOLL_KNOCKEDOUT then
-			Clockwork.player:SetAction(player, nil);
-			Clockwork.player:SetRagdollState(target, RAGDOLL_NONE);
+			if player:Health() < 10 then
+				player:SetHealth(10);
+			end
+			
+			Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER);
 			
 			Clockwork.chatBox:AddInTargetRadius(player, "me", "jolts awake!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 		end

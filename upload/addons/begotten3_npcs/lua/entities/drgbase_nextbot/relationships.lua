@@ -500,8 +500,11 @@ if SERVER then
 	end
 
 	function ENT:IsInFaction(faction)
-		return self._DrGBaseFactions[string.upper(faction)] or false
-	end
+		if self._DrGBaseFactions then -- bgt change
+			return self._DrGBaseFactions[string.upper(faction)] or false	
+		end		
+		return false;
+  	end
 	function ENT:GetFactions()
 		local factions = {}
 		for faction, joined in pairs(self._DrGBaseFactions) do

@@ -2567,14 +2567,14 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 		Clockwork.player:SetAction(player, false);
 		
 		if (player:IsRagdolled()) then
-			if (hook.Run("PlayerCanRagdoll", player, state, delay, decay, player.cwRagdollTab)) then
+			if (hook.Run("PlayerCanRagdoll", player, state, delay, decay, player.cwRagdollTab)) ~= false then
 				self:SetUnragdollTime(player, delay)
 					player:SetDTInt(INT_RAGDOLLSTATE, state)
 					player.cwRagdollTab.delay = delay
 					player.cwRagdollTab.decay = decay
 				hook.Run("PlayerRagdolled", player, state, player.cwRagdollTab)
 			end
-		elseif (hook.Run("PlayerCanRagdoll", player, state, delay, decay)) then
+		elseif (hook.Run("PlayerCanRagdoll", player, state, delay, decay)) ~= false then
 			local velocity = player:GetVelocity() + (player:GetAimVector() * 128);
 			local ragdoll = ents.Create("prop_ragdoll")
 			local model = player:GetModel();

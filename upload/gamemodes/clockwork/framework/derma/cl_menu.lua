@@ -474,15 +474,71 @@ function PANEL:Rebuild(change)
 		
 		for k, v in pairs(self.statusInfo.limbFrame.texInfo.limbBounds) do
 			local name = self.statusInfo.limbFrame.texInfo.names[k];
+			local limbButton = Clockwork.kernel:CreateDermaToolTip(vgui.Create("DImageButton", self.statusInfo.limbFrame));
 
-			self.statusInfo.limbFrame[name] = Clockwork.kernel:CreateDermaToolTip(vgui.Create("DImageButton", self.statusInfo.limbFrame));
-			self.statusInfo.limbFrame[name]:SetPos(38 + v.x, 8 + v.y);
-			self.statusInfo.limbFrame[name]:SetSize(v.bX, v.bY);
-			self.statusInfo.limbFrame[name].hitGroup = k;
+			limbButton:SetPos(38 + v.x, 8 + v.y);
+			limbButton:SetSize(v.bX, v.bY);
+			limbButton.hitGroup = k;
 			
-			self.statusInfo.limbFrame[name]:SetToolTipCallback(function(frame)
+			if cwMedicalSystem then
+				limbButton.DoClick = function(panel)
+					local menuOptions = {};
+
+					local inventory = Clockwork.inventory:GetClient();
+					local inventoryList = Clockwork.inventory:GetAsItemsList(inventory);
+					
+					for k, v in pairs (inventoryList) do
+						if menuOptions[v.name] then continue end;
+
+						if v.baseItem == "medical_base" then
+							if v.useOnSelf and v.applicable and v.limbs then
+								local hitGroupString = string.lower(Clockwork.limb.names[panel.hitGroup]);
+								local itemTable = item.FindInstance(v.itemID);
+								
+								if istable(v.limbs) and table.HasValue(v.limbs, panel.hitGroup) then
+									menuOptions[v.name] = function()
+										if itemTable then
+											Clockwork.inventory:InventoryAction(string.gsub("apply_"..hitGroupString, " ", "_"), itemTable.uniqueID, itemTable.itemID);
+										end
+									end
+								elseif v.limbs == "all" then
+									menuOptions[v.name] = function()
+										if itemTable then
+											Clockwork.inventory:InventoryAction("apply_all", itemTable.uniqueID, itemTable.itemID);
+										end
+									end
+								end
+							end
+						end
+					end
+					
+					if !table.IsEmpty(menuOptions) then
+						local menuPanel = DermaMenu();
+						
+						menuPanel:SetParent(Clockwork.menu:GetPanel().statusInfo);
+						
+						Clockwork.kernel:AddMenuFromData(menuPanel, menuOptions);
+
+						if (IsValid(menuPanel)) then
+							-- This is ghetto but I can't figure out how to get ScreenToLocal working for some reason.
+							local x = gui.MouseX() - Clockwork.menu:GetPanel().statusInfo:GetX();
+							local y = gui.MouseY() - Clockwork.menu:GetPanel().statusInfo:GetY();
+							
+							menuPanel:SetPos(
+								math.min(menuPanel:GetParent():GetWide() - menuPanel:GetWide(), x - (menuPanel:GetWide() / 2)), math.max(menuPanel:GetTall(), y - (menuPanel:GetTall() / 2))
+							)
+							
+							return;
+						end
+					end
+				end
+			end
+			
+			limbButton:SetToolTipCallback(function(frame)
 				Clockwork.limb:BuildTooltip(k, x, y, 220, frame:GetTall(), frame);
 			end);
+			
+			self.statusInfo.limbFrame[name] = limbButton;
 		end
 		
 		function self.statusInfo.limbFrame.Paint()

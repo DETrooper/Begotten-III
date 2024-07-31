@@ -34,13 +34,15 @@ local function GetItemFromData(player, data, index)
 end
 
 function Clockwork.equipment:GetItemEquipped(player, itemTable, category)
-	if !player.equipmentSlots then
+	local equipmentSlots = player.equipmentSlots;
+
+	if !equipmentSlots then
 		return false;
 	end
 
 	if !itemTable then
 		if category then
-			for k, v in pairs(player.equipmentSlots) do
+			for k, v in pairs(equipmentSlots) do
 				if istable(category) then
 					if table.HasValue(category, v.category) or (v.meleeWeapon and table.HasValue(category, "Weapons")) then
 						return v;
@@ -53,7 +55,7 @@ function Clockwork.equipment:GetItemEquipped(player, itemTable, category)
 	end
 	
 	if isstring(itemTable) then
-		for k, v in pairs(player.equipmentSlots) do
+		for k, v in pairs(equipmentSlots) do
 			if v.uniqueID == itemTable then
 				return v;
 			end
@@ -64,7 +66,7 @@ function Clockwork.equipment:GetItemEquipped(player, itemTable, category)
 		return false;
 	end
 
-	for k, v in pairs(player.equipmentSlots) do
+	for k, v in pairs(equipmentSlots) do
 		if v and v.uniqueID == itemTable.uniqueID and (!v.itemID or v.itemID == itemTable.itemID) then
 			return v;
 		end

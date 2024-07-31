@@ -220,6 +220,8 @@ function cwRituals:PlayerDoesRecognisePlayer(player, status, isAccurate, realVal
 	end
 end;
 
+local powderheelMat = Material("models/effects/portalfunnel_sheet");
+
 function cwRituals:PostDrawOpaqueRenderables()
 	local curTime = CurTime();
 
@@ -312,9 +314,9 @@ function cwRituals:PostDrawOpaqueRenderables()
 			end
 			
 			if v:GetNetVar("powderheelActive") then
-				render.SetColorMaterial();
-				render.DrawSphere(entityPosition + Vector(0, 0, 40), config.Get("talk_radius"):Get(), 32, 32, Color(0, 200, 0, 50));
-				render.DrawSphere(entityPosition + Vector(0, 0, 40), -config.Get("talk_radius"):Get(), 32, 32, Color(0, 200, 0, 50));
+				render.SetMaterial(powderheelMat);
+				render.DrawSphere(entityPosition + Vector(0, 0, 40), config.Get("talk_radius"):Get(), 32, 32);
+				render.DrawSphere(entityPosition + Vector(0, 0, 40), -config.Get("talk_radius"):Get(), 32, 32);
 			end
 		end;
 	end

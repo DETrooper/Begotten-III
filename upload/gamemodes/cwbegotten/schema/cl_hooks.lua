@@ -885,7 +885,7 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 						subfactionText = "A member of the Smog City pirates.";
 					end
 				end
-			elseif playerFaction ~= "Wanderer" then
+			elseif playerFaction ~= "Wanderer" and playerFaction == targetFaction then
 				if playerSubfaction == targetSubfaction then
 					subfactionText = "A fellow member of the "..targetSubfaction..".";
 					textColor = Color(0, 255, 0, 255);
@@ -1923,12 +1923,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						
 						if weaponStats["attack"].altmeleerange then
 							newRange = weaponStats["attack"].altmeleerange;
-						else
+						--[[else
 							if weaponTable.CanSwipeAttack then
 								newRange = math.Round(newRange * 0.8);
 							else
 								newRange = math.Round(newRange * 1.2);
-							end
+							end]]--
 						end
 						
 						if newRange ~= weaponStats["attack"].meleerange then
@@ -2306,12 +2306,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						
 						if weaponStats["attack"].altmeleerange then
 							newRange = weaponStats["attack"].altmeleerange;
-						else
+						--[[else
 							if weaponTable.CanSwipeAttack then
 								newRange = math.Round(newRange * 0.8);
 							else
 								newRange = math.Round(newRange * 1.2);
-							end
+							end]]--
 						end
 						
 						local percentage = math.min((newRange - 425) / (1500 - 425), (1500 - 425));
@@ -2779,7 +2779,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local percentage = (1 - itemTable.bluntScale) * 100;
 			local toolTip = function(frame)
 				frame:AddText("Blunt Damage Resistance", Color(110, 30, 30), nil, 1);
-				frame:AddText("Reduces blunt damage by a flat amount irrespective of armor condition or armor effectiveness.", Color(225, 200, 200), nil, 0.8);
+				frame:AddText("Reduces blunt damage by a flat amount irrespective of armor effectiveness.", Color(225, 200, 200), nil, 0.8);
 			end
 
 			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Blunt Damage Resistance", Color(110, 30, 30), toolTip, true);
@@ -2789,7 +2789,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local percentage = (1 - itemTable.bulletScale) * 100;
 			local toolTip = function(frame)
 				frame:AddText("Bullet Damage Resistance", Color(110, 30, 30), nil, 1);
-				frame:AddText("Reduces bullet damage by a flat amount irrespective of armor condition or armor effectiveness.", Color(225, 200, 200), nil, 0.8);
+				frame:AddText("Reduces bullet damage by a flat amount irrespective of armor effectiveness.", Color(225, 200, 200), nil, 0.8);
 			end
 
 			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Bullet Damage Resistance", Color(110, 30, 30), toolTip, true);
@@ -2805,7 +2805,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local percentage = (1 - itemTable.pierceScale) * 100;
 			local toolTip = function(frame)
 				frame:AddText("Pierce Damage Resistance", Color(110, 30, 30), nil, 1);
-				frame:AddText("Reduces pierce damage by a flat amount irrespective of armor condition or armor effectiveness.", Color(225, 200, 200), nil, 0.8);
+				frame:AddText("Reduces pierce damage by a flat amount irrespective of armor effectiveness.", Color(225, 200, 200), nil, 0.8);
 			end
 
 			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Pierce Damage Resistance", Color(110, 30, 30), toolTip, true);
@@ -2815,7 +2815,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local percentage = (1 - itemTable.slashScale) * 100;
 			local toolTip = function(frame)
 				frame:AddText("Slash Damage Resistance", Color(110, 30, 30), nil, 1);
-				frame:AddText("Reduces slash damage by a flat amount irrespective of armor condition or armor effectiveness.", Color(225, 200, 200), nil, 0.8);
+				frame:AddText("Reduces slash damage by a flat amount irrespective of armor effectiveness.", Color(225, 200, 200), nil, 0.8);
 			end
 
 			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Slash Damage Resistance", Color(110, 30, 30), toolTip, true);
@@ -2825,7 +2825,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local percentage = (1 - itemTable.stabilityScale) * 100;
 			local toolTip = function(frame)
 				frame:AddText("Stability Damage Resistance", Color(110, 30, 30), nil, 1);
-				frame:AddText("Reduces stability damage by a flat amount irrespective of armor condition or armor effectiveness.", Color(225, 200, 200), nil, 0.8);
+				frame:AddText("Reduces stability damage by a flat amount irrespective of armor effectiveness.", Color(225, 200, 200), nil, 0.8);
 			end
 
 			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage Resistance", Color(110, 30, 30), toolTip, true);
@@ -2847,7 +2847,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				
 				local toolTip = function(frame)
 					frame:AddText("Stability Damage Resistance", Color(110, 30, 30), nil, 1);
-					frame:AddText("Reduces stability damage by a flat amount irrespective of armor condition or armor effectiveness.", Color(225, 200, 200), nil, 0.8);
+					frame:AddText("Reduces stability damage by a flat amount irrespective of armor effectiveness.", Color(225, 200, 200), nil, 0.8);
 				end
 				
 				frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage Resistance", Color(110, 30, 30), toolTip, true);
