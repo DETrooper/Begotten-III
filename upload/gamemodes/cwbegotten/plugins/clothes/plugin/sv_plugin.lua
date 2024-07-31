@@ -162,7 +162,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						end
 					end
 					
-					armorPiercing = math.Round(armorPiercing * 0.8);
+					armorPiercing = math.Round(armorPiercing * 0.75); -- Scales all AP. Set this to lower to make armor more effective, or higher to make it less effective.
 					
 					local damage = damageInfo:GetDamage();
 					
@@ -285,7 +285,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 								end
 							end
 							
-							armorPiercing = math.Round(armorPiercing * 0.8);
+							armorPiercing = math.Round(armorPiercing * 0.75); -- Scales all AP. Set this to lower to make armor more effective, or higher to make it less effective.
 							
 							--print("AP Value: "..tostring(armorPiercing));
 							
@@ -480,9 +480,9 @@ function PLUGIN:ModifyPlayerSpeed(player, infoTable)
 	if (clothesItem) then
 		if clothesItem.weightclass == "Heavy" then
 			if player:HasBelief("unburdened") then
-				infoTable.runSpeed = infoTable.runSpeed * 0.85;
+				infoTable.runSpeed = infoTable.runSpeed * 0.8;
 			else
-				infoTable.runSpeed = infoTable.runSpeed * 0.75;
+				infoTable.runSpeed = infoTable.runSpeed * 0.7;
 			end
 			
 			infoTable.jumpPower = infoTable.jumpPower * 0.75;
