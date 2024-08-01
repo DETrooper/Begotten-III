@@ -62,7 +62,7 @@ end
 
 function SWEP:ParryAnimation()
 	local vm = self.Owner:GetViewModel()
-	vm:SendViewModelMatchingSequence( vm:LookupSequence( "misscenter1" ))
+	vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_uppercut" ))
 end
 
 function SWEP:AttackAnimination()

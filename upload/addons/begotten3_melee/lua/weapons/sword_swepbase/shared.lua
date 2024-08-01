@@ -2989,7 +2989,7 @@ function SWEP:Initialize()
 			end
 		end
 
-		if IsValid(self.Owner) and self.Owner:IsPlayer() then
+		if IsValid(self.Owner) and self.Owner:IsPlayer() and self.Owner:GetActiveWeapon() == self then
 			local vm = self.Owner:GetViewModel();
 			
 			if IsValid(vm) then
@@ -3039,10 +3039,12 @@ function SWEP:Holster()
 end
 
 function SWEP:OnRemove()
-	self:Holster();
-	
-	if CLIENT then
-		self:RemoveModels();
+	if IsValid(self.Owner) and self.Owner:GetActiveWeapon() == self then
+		self:Holster();
+		
+		if CLIENT then
+			self:RemoveModels();
+		end
 	end
 end
 

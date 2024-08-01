@@ -17,6 +17,7 @@ cwItemSpawner.Categories = {"city", "industrial", "mines", "rituals", "supermark
 cwItemSpawner.MaxSuperCrates = 1;
 cwItemSpawner.SuperCrateCooldown = {min = 5400, max = 10800}; -- 1.5-3 Hours.
 cwItemSpawner.SuperCrateNumItems = {min = 10, max = 20};
+cwItemSpawner.ItemsSpawned = cwItemSpawner.ItemsSpawned or {};
 
 cwItemSpawner.LocationsToCategories = {
 	["city"] = {"Armor", "Charms", "City Junk", "Communication", "Drinks", "Firearms", "Food", "Helms", "Junk", "Medical", "Melee", "Shot"},

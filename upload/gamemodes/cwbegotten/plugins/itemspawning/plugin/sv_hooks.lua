@@ -283,10 +283,6 @@ function cwItemSpawner:Think()
 			return;
 		end
 		
-		if not self.ItemsSpawned then
-			self.ItemsSpawned = {};
-		end
-		
 		if not self.nextSuperCrate then
 			-- 1 hour between supercrates.
 			self.nextSuperCrate = curTime + math.random(self.SuperCrateCooldown.min, self.SuperCrateCooldown.max);

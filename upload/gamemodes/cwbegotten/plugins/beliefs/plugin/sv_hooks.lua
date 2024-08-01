@@ -882,13 +882,13 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 											
 											if entTab.opponent then
 												entTab.distortedRingFiredDuel = true;
-											else
-												timer.Simple(0.5, function()
-													if IsValid(entity) then
-														entity.distortedRingFired = nil;
-													end
-												end);
 											end
+											
+											timer.Simple(0.5, function()
+												if IsValid(entity) then
+													entity.distortedRingFired = nil;
+												end
+											end);
 											
 											entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
 											entity:Extinguish();
@@ -1427,14 +1427,14 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 					
 					if entTab.opponent then
 						entTab.distortedRingFiredDuel = true;
-					else
-						timer.Simple(0.5, function()
-							if IsValid(entity) then
-								entity.distortedRingFired = nil;
-							end
-						end);
 					end
 					
+					timer.Simple(0.5, function()
+						if IsValid(entity) then
+							entity.distortedRingFired = nil;
+						end
+					end);
+
 					entity:EmitSound("physics/metal/metal_grate_impact_hard3.wav");
 					entity:Extinguish();
 					
