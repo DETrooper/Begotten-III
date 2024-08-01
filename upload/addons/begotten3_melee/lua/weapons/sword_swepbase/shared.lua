@@ -953,7 +953,7 @@ end
 		
 		if cwBeliefs and owner.HasBelief then
 			if owner:HasBelief("shieldwall") then
-				shield_reduction = 1 - ((1 - shield_reduction) * 0.6);
+				shield_reduction = 1;
 			end
 		end
 		

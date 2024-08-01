@@ -2635,7 +2635,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			end
 			
 			if table.HasValue(itemTable.attributes, "increased_regeneration") then
-				frame:AddText("Increased Regeneration: Passive health regeneration is tripled.", Color(110, 30, 30), nil, 0.9);
+				frame:AddText("Increased Regeneration: Triples the health regeneration from 'Gift of the Great Tree'.", Color(110, 30, 30), nil, 0.9);
 			end
 
 			if table.HasValue(itemTable.attributes, "lifeleech") then
@@ -2680,7 +2680,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			if itemTable.weightclass == "Medium" then
 				frame:AddText("Sprint Speed Reduction: 15%", Color(110, 30, 30), nil, 0.9);
 			elseif itemTable.weightclass == "Heavy" then
-				frame:AddText("Sprint Speed Reduction: 25%", Color(110, 30, 30), nil, 0.9);
+				frame:AddText("Sprint Speed Reduction: 30%", Color(110, 30, 30), nil, 0.9);
 			end
 		--end
 		

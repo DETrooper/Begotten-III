@@ -166,13 +166,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 									
 									if not hasInjury then
 										if math.random(1, 3) == 1 then
-											local clothesItem = player:GetClothesEquipped();
-											
-											if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "increased_regeneration") then
-												player:SetHealth(health + 3);
-											else
-												player:SetHealth(health + 1);
-											end
+											player:SetHealth(health + 1);
 										end
 									end
 								end

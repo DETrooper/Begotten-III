@@ -152,11 +152,18 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 					if hook.Run("PlayerShouldHealthRegenerate", player) then
 						local maxHealth = player:GetMaxHealth()
 						local health = player:Health()
+						local clothesItem = player:GetClothesEquipped();
 
 						if (health > 0 and health < maxHealth) then
-							player:SetHealth(math.Clamp(
-								health + 1, 0, maxHealth)
-							);
+							if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "increased_regeneration") then
+								player:SetHealth(math.Clamp(
+									health + 3, 0, maxHealth)
+								);
+							else
+								player:SetHealth(math.Clamp(
+									health + 1, 0, maxHealth)
+								);
+							end
 						end
 					end
 				end

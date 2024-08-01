@@ -1551,7 +1551,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Savage Claws";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 2},
 		};
@@ -1579,7 +1579,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Steel Claws";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 2},
 		};
@@ -2006,7 +2006,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 1},
+			["iron_chunks"] = {amount = 3},
 			["stone"] = {amount = 3},
 			["wood"] = {amount = 3},
 		};
@@ -4672,7 +4672,7 @@ RECIPE:Register()
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["hellforged_steel_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
 			["ice_sigil_stone"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -4702,7 +4702,7 @@ RECIPE:Register()
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["hellforged_steel_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
 			["fire_sigil_stone"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -5706,9 +5706,9 @@ RECIPE:Register()
 		RECIPE.name = "Blade Druid Robes";
 		RECIPE.requiredBeliefs = {"ingenious"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
-		RECIPE.requiredSubfactions = {"Clan Crast"};
 		RECIPE.requirements = {
-			["hide"] = {amount = 4},
+			["familial_catalyst"] = {amount = 1},
+			["hide"] = {amount = 3},
 			["cloth"] = {amount = 3},
 		};
 		RECIPE.result = {
