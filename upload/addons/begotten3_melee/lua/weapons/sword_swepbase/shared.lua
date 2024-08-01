@@ -2297,8 +2297,13 @@ function SWEP:SecondaryAttack()
 	
 	--if ply:GetNWInt("meleeStamina", 100) < parry_cost then return end
 	if ply:GetNWInt("Stamina", 100) < parry_cost then return end
-		
-	self:ParryAnimation()
+	
+	if self.ParryAnimation then
+		self:ParryAnimation()
+	else
+		ErrorNoHalt("ParryAnimation function not found for swep: "..self:GetClass());
+	end
+	
 	ply:EmitSound(attacksoundtable["parryswing"][math.random(1, #attacksoundtable["parryswing"])])
 
 	local wep = self.Weapon

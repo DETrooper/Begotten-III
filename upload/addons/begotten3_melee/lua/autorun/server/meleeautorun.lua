@@ -234,7 +234,7 @@ local function Guarding(ent, dmginfo)
 		local max_stamina = ent:GetMaxStamina();
 		local conditionDamage = dmginfo:GetDamage();
 
-		if (ent:GetNWBool("Guardening") == true) then
+		if IsValid(wep) and (ent:GetNWBool("Guardening") == true) then
 			local blocktable;
 			
 			if wep:GetNWString("activeOffhand"):len() > 0 then
