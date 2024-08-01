@@ -35,35 +35,37 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 			local entWeapon = entity:GetActiveWeapon();
 			
 			if IsValid(entWeapon) and (entWeapon.Base == "begotten_firearm_base" or entWeapon.isJavelin) and !entity:GetNWBool("Guardening") then
-				local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
-				local itemTable = Clockwork.item:GetByWeapon(entWeapon);
-				
-				if itemTable then
-					if entity.opponent then
-						if (itemTable:HasPlayerEquipped(entity)) then
-							itemTable:OnPlayerUnequipped(entity);
-							entity:RebuildInventory();
-							entity:SetWeaponRaised(false);
-						end
-						
-						Clockwork.chatBox:AddInTargetRadius(entity, "me", "'s "..itemTable.name..dropMessages[math.random(1, #dropMessages)], entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-					else
-						local dropPos = entity:GetPos() + Vector(0, 0, 35) + entity:GetAngles():Forward() * 4;
-						local itemEntity = Clockwork.entity:CreateItem(entity, itemTable, dropPos);
-						
-						if (IsValid(itemEntity)) then
-							entity:TakeItem(itemTable);
-							entity:SelectWeapon("begotten_fists");
-							entity:StripWeapon(entWeapon:GetClass());
+				if !(entWeapon.isJavelin and cwBeliefs and entity:GetNWBool("ThrustStance") and entity:HasBelief("strength")) then
+					local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
+					local itemTable = Clockwork.item:GetByWeapon(entWeapon);
+					
+					if itemTable then
+						if entity.opponent then
+							if (itemTable:HasPlayerEquipped(entity)) then
+								itemTable:OnPlayerUnequipped(entity);
+								entity:RebuildInventory();
+								entity:SetWeaponRaised(false);
+							end
 							
 							Clockwork.chatBox:AddInTargetRadius(entity, "me", "'s "..itemTable.name..dropMessages[math.random(1, #dropMessages)], entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+						else
+							local dropPos = entity:GetPos() + Vector(0, 0, 35) + entity:GetAngles():Forward() * 4;
+							local itemEntity = Clockwork.entity:CreateItem(entity, itemTable, dropPos);
+							
+							if (IsValid(itemEntity)) then
+								entity:TakeItem(itemTable);
+								entity:SelectWeapon("begotten_fists");
+								entity:StripWeapon(entWeapon:GetClass());
+								
+								Clockwork.chatBox:AddInTargetRadius(entity, "me", "'s "..itemTable.name..dropMessages[math.random(1, #dropMessages)], entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+							end
 						end
+					else
+						entity:SelectWeapon("begotten_fists");
+						entity:StripWeapon(entWeapon:GetClass());
+					
+						Clockwork.chatBox:AddInTargetRadius(entity, "me", "'s "..entWeapon.PrintName..dropMessages[math.random(1, #dropMessages)], entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 					end
-				else
-					entity:SelectWeapon("begotten_fists");
-					entity:StripWeapon(entWeapon:GetClass());
-				
-					Clockwork.chatBox:AddInTargetRadius(entity, "me", "'s "..entWeapon.PrintName..dropMessages[math.random(1, #dropMessages)], entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 				end
 			end
 		

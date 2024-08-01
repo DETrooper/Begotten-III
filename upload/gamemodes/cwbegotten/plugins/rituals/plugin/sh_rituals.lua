@@ -1011,6 +1011,7 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil");
 	RITUAL.requirements = {"down_catalyst", "pentagram_catalyst", "down_catalyst"};
 	--RITUAL.corruptionCost = 30; -- Corruption gets added once the UI is closed.
 	RITUAL.ritualTime = 10;
+	RITUAL.takeCatalysts = false;
 	
 	function RITUAL:OnPerformed(player)
 		Clockwork.dermaRequest:RequestString(player, "Mark A Character", "Type the name of a character to be marked for death.", nil, function(result)
@@ -1020,7 +1021,12 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil");
 				if target:Alive() then
 					if target:GetFaction() ~= "Children of Satan" then
 						Clockwork.dermaRequest:RequestConfirmation(player, "Mark Confirmation", "Are you sure you want to mark "..target:Name().." for death?", function()
+							
 							if IsValid(target) and target:Alive() and target:GetFaction() ~= "Children of Satan" then
+								local ritualTable = cwRituals.rituals.stored["mark_of_the_devil"];
+								
+								if !cwRituals:PlayerMeetsRitualItemRequirements(player, ritualTable, ritualTable.requirements, true) then return end;
+								
 								target:SetCharacterData("markedBySatanist", true);
 								target:SetSharedVar("markedBySatanist", true);
 								
@@ -1052,11 +1058,7 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil");
 				Schema:EasyText(player, "grey", tostring(result).." is not a valid character!");
 			end
 		end)
-		
-		for i = 1, #RITUAL.requirements do
-			player:GiveItem(item.CreateInstance(RITUAL.requirements[i]));
-		end
-		
+
 		return false;
 	end;
 	function RITUAL:OnFail(player)
@@ -1076,6 +1078,7 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil_target");
 	--RITUAL.corruptionCost = 30; -- Corruption gets added once the UI is closed.
 	RITUAL.ritualTime = 2;
 	RITUAL.isSilent = true;
+	RITUAL.takeCatalysts = false;
 	
 	function RITUAL:OnPerformed(player)
 		local target = player:GetEyeTraceNoCursor().Entity;
@@ -1087,6 +1090,10 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil_target");
 					if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
 						Clockwork.dermaRequest:RequestConfirmation(player, "Mark Confirmation", "Are you sure you want to mark "..target:Name().." for death?", function()
 							if IsValid(target) and target:Alive() and target:GetFaction() ~= "Children of Satan" then
+								local ritualTable = cwRituals.rituals.stored["mark_of_the_devil_target"];
+								
+								if !cwRituals:PlayerMeetsRitualItemRequirements(player, ritualTable, ritualTable.requirements, true) then return end;
+							
 								target:SetCharacterData("markedBySatanist", true);
 								target:SetSharedVar("markedBySatanist", true);
 								
@@ -1112,11 +1119,7 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil_target");
 		else
 			Schema:EasyText(player, "firebrick", "You must look at a valid character!");
 		end
-		
-		for i = 1, #RITUAL.requirements do
-			player:GiveItem(item.CreateInstance(RITUAL.requirements[i]));
-		end
-		
+
 		return false;
 	end;
 	function RITUAL:OnFail(player)

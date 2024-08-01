@@ -66,8 +66,14 @@ function cwRituals.rituals:Register(ritual)
 					if bHasFlags == false or bHasRequirements == false then
 						return;
 					end
+					
+					local takeCatalysts = self.takeCatalysts;
+					
+					if takeCatalysts == nil then
+						takeCatalysts = true;
+					end
 				
-					if !bIgnoreItems and !cwRituals:PlayerMeetsRitualItemRequirements(player, self, itemIDs, true) then
+					if !bIgnoreItems and !cwRituals:PlayerMeetsRitualItemRequirements(player, self, itemIDs, takeCatalysts) then
 						return;
 					end
 				end

@@ -122,7 +122,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 		[5] = {
 			["strength"] = {
 				name = "Strength",
-				description = "Unlocks the ability to use great weapons. Also unlocks the ability to reload crossbows.",
+				description = "Unlocks the ability to use great weapons. Prevents being disarmed when taking damage if using a throwable weapon in its melee stance. Also unlocks the ability to reload crossbows.",
 				requirements = {"fighter"},
 				row = 2,
 			},

@@ -171,8 +171,8 @@ function cwDueling:PlayerExitedDuel(player)
 		player:SetHealth(player.duelData.cachedHP);
 	end
 	
-	if player.distortedRingFired then
-		player.distortedRingFired = nil;
+	if player.distortedRingFiredDuel then
+		player.distortedRingFiredDuel = nil;
 	end
 	
 	if player:GetCharacterData("Hatred") then

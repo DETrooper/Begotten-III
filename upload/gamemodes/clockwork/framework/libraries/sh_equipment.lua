@@ -570,10 +570,14 @@ else
 			
 			local ragdollEntity = player:GetRagdollEntity();
 			
-			if (ragdollEntity) then
+			if (ragdollEntity) and !ragdollEntity:IsDormant() then
 				local ragdollState = player:GetDTInt(INT_RAGDOLLSTATE);
 				
 				if ragdollState != 0 and ragdollState != RAGDOLL_NONE then
+					if !ragdollEntity:GetPredictable() then
+						ragdollEntity:SetPredictable(true);
+					end
+				
 					hook.Run("PostPlayerDraw", player, 0, ragdollEntity);
 				end
 			end
@@ -660,14 +664,14 @@ else
 					plyTab.equipmentSlotModels[itemTable.itemID] = equipmentModel;
 					
 					local position, angles, bone = GetRealPosition(equipmentModel, player, ragdollEntity, itemTable, string.find(slot, "Offhand"));
-					
+
 					if position and angles then
 						equipmentModel:SetPos(position);
 						equipmentModel:SetAngles(angles);
 					end
 					
 					if bone then
-						equipmentModel:FollowBone(ragdollEntity or player, bone); 
+						equipmentModel:FollowBone(ragdollEntity or player, bone);
 					end
 				end
 				

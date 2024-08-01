@@ -1254,7 +1254,7 @@ function Schema:Tick()
 					end;
 					
 					if ((crowPosition - position):Length() > 2000) then
-						self.crows[k]:Remove();
+						v:Remove();
 						self.crows[k] = nil;
 					end;
 				else

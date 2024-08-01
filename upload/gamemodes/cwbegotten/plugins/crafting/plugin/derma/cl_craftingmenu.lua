@@ -115,7 +115,7 @@ function PANEL:Rebuild()
 		self.categoryList:SetDrawBackground(false);
 		
 		self.weaponButton = vgui.Create("DButton", self)
-		self.weaponButton:SetText("Weapons");
+		self.weaponButton:SetText("Melees");
 		self.weaponButton:SetSize(256, 70);
 		self.weaponButton:SetTextColor(Color(160, 0, 0));
 		self.weaponButton:SetFont("nov_IntroTextSmallfaaaaa");

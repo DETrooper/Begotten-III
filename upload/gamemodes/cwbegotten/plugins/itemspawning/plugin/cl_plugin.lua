@@ -18,4 +18,4 @@ config.AddToSystem("Loot Min Containers", "loot_min_containers", "Maximum loot c
 config.AddToSystem("Loot Max Containers", "loot_max_containers", "Maximum loot containers at high population.", 20, 100);
 config.AddToSystem("Loot Min Ground Spawns", "loot_min_ground_spawns", "Maximum loot ground spawns at low population.", 20, 200);
 config.AddToSystem("Loot Max Ground Spawns", "loot_max_ground_spawns", "Maximum loot ground spawns at high population.", 20, 200);
-config.AddToSystem("Loot Max Ground Spawns", "loot_max_ground_spawns", "Maximum loot ground spawns at high population.", 20, 200);
+config.AddToSystem("Loot Spawner Enabled", "loot_spawner_enabled", "Whether or not the loot spawner is enabled.");

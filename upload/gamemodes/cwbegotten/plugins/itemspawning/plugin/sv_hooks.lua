@@ -21,6 +21,10 @@ function cwItemSpawner:Think()
 	if (!self.nextContainerCheck or self.nextContainerCheck < curTime) then
 		self.nextContainerCheck = curTime + 8;
 		
+		if config.GetVal("loot_spawner_enabled") ~= true then
+			return;
+		end
+			
 		if !self.ContainerLocations then
 			return;
 		end;
@@ -275,6 +279,10 @@ function cwItemSpawner:Think()
 	if (!self.nextItemSpawn or self.nextItemSpawn < curTime) then
 		self.nextItemSpawn = curTime + 5;
 		
+		if config.GetVal("loot_spawner_enabled") ~= true then
+			return;
+		end
+		
 		if not self.ItemsSpawned then
 			self.ItemsSpawned = {};
 		end
@@ -517,3 +525,40 @@ function cwItemSpawner:Breakdown(player, itemTable, toolItem)
 		toolItem:TakeCondition(math.random(1, 2));
 	end;
 end;
+
+-- Called when Clockwork config has changed.
+function cwItemSpawner:ClockworkConfigChanged(key, data, previousValue, newValue)
+	if key == "loot_spawner_enabled" and newValue == false then
+		for k, v in pairs (ents.FindByClass("cw_item")) do
+			if v.lifeTime then
+				v:Remove();
+			end
+		end;
+		
+		local containers = self.Containers;
+		
+		if containers then
+			for i = 1, #containers do
+				local containerTable = containers[i];
+				local container = containerTable.container;
+				
+				if IsValid(container) then
+					container:Remove();
+				end
+			end
+		end
+
+		for k, v in pairs(self.ContainerLocations) do
+			for i = 1, #v do
+				v[i].occupier = nil;
+			end
+		end
+		
+		self.Containers = {};
+		
+		if self.SuperCrate and IsValid(self.SuperCrate.supercrate) then
+			self.SuperCrate.supercrate:Remove();
+			self.SuperCrate = nil;
+		end
+	end
+end

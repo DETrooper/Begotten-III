@@ -487,8 +487,14 @@ if SERVER then
 		if not self.ClimbLedges or (propOnly and not self.ClimbProps) then return end
 		local hull = self:TraceHull(self:GetForward()*self.LedgeDetectionDistance, {step = true})
 		if not hull.Hit then return end
-		if IsValid(hull.Entity) and hull.Entity:GetClass() == "prop_physics" then
-			if not self.ClimbProps then return end
+		if IsValid(hull.Entity) then
+			if hull.Entity:GetClass() == "prop_physics" then
+				if not self.ClimbProps then return end
+			elseif hull.Entity:GetClass() == "prop_door_rotating" then
+				self:EmitSound("physics/wood/wood_crate_impact_hard2.wav");
+				self:EmitSound("physics/wood/wood_panel_impact_hard1.wav", 100, math.random(70, 130));
+				self:HandleDoorDamage(hull.Entity);
+			end
 		elseif propOnly then return end
 		if IsEntityClimbable(self, hull.Entity) then
 			local up = self:TraceHull(self:GetUp()*self.ClimbLedgesMaxHeight+Vector(0, 0, self:Height()*1.1)).HitPos

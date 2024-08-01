@@ -914,7 +914,6 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 									end
 								end
 
-
 								entity:EmitSound("meleesounds/kill"..math.random(1, 2)..".wav.mp3");
 								
 								local strikeText = "efficiently strikes out at";
@@ -1578,15 +1577,19 @@ function cwBeliefs:DoPlayerDeathPreDeathSound(player, attacker, damageInfo)
 					
 					if gender == GENDER_FEMALE then
 						player:SetModel("models/begotten/heads/female_gorecap.mdl");
+						player:SetBodygroup(0, 0);
 						
 						if IsValid(ragdollEntity) then
 							ragdollEntity:SetModel("models/begotten/heads/female_gorecap.mdl");
+							ragdollEntity:SetBodygroup(0, 0);
 						end
 					else
 						player:SetModel("models/begotten/heads/male_gorecap.mdl");
+						player:SetBodygroup(0, 0);
 						
 						if IsValid(ragdollEntity) then
 							ragdollEntity:SetModel("models/begotten/heads/male_gorecap.mdl");
+							ragdollEntity:SetBodygroup(0, 0);
 						end
 					end
 					

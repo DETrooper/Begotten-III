@@ -11,6 +11,7 @@ config.Add("loot_min_containers", 40); -- Containers at low population.
 config.Add("loot_max_containers", 80); -- Containers at high population.
 config.Add("loot_min_ground_spawns", 50); -- Ground spawns at low population.
 config.Add("loot_max_ground_spawns", 100); -- Ground spawns at high population.
+config.Add("loot_spawner_enabled", true); -- Whether or not the loot spawner is enabled.
 
 cwItemSpawner.Categories = {"city", "industrial", "mines", "rituals", "supermarket"};
 cwItemSpawner.MaxSuperCrates = 1;

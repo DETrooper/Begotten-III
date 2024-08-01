@@ -172,7 +172,9 @@ local COMMAND = Clockwork.command:New("Enlist")
 				
 					if !subfaction or istable(subfaction) then
 						if targetFaction == "Wanderer" or (targetFaction == "Children of Satan" and target:GetSubfaction() == "Kinisger") then
-							Clockwork.dermaRequest:RequestConfirmation(target, enlistFaction.." Enlistment", player:Name().." has invited you to enlist into the "..enlistFaction.." faction!", function()
+							local playerName = player:Name();
+						
+							Clockwork.dermaRequest:RequestConfirmation(target, enlistFaction.." Enlistment", playerName.." has invited you to enlist into the "..enlistFaction.." faction!", function()
 								targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
 								
 								if (targetFaction == "Wanderer" or (targetFaction == "Children of Satan" and target:GetSubfaction() == "Kinisger")) and target:Alive() and Clockwork.faction:IsGenderValid(enlistFaction, target:GetGender()) then
@@ -200,7 +202,7 @@ local COMMAND = Clockwork.command:New("Enlist")
 										end
 										
 										Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
-										Clockwork.player:NotifyAll(player:Name().." has enlisted "..target:Name().." into the "..enlistFaction.." faction!");
+										Clockwork.player:NotifyAll(playerName.." has enlisted "..target:Name().." into the "..enlistFaction.." faction!");
 									end;
 								end
 							end)

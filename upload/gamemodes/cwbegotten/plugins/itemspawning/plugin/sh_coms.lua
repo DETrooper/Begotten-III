@@ -54,6 +54,12 @@ local COMMAND = Clockwork.command:New("SpawnSupercrate")
 			return;
 		end
 		
+		if config.GetVal("loot_spawner_enabled") ~= true then
+			Schema:EasyText(player, "tomato", "Loot spawning is currently disabled in the server config!");
+		
+			return;
+		end
+		
 		if cwItemSpawner.SuperCrate then
 			local supercrate = cwItemSpawner.SuperCrate.supercrate;
 

@@ -44,7 +44,7 @@ function playerMeta:IsWeaponRaised(weapon)
 	end
 
 	if (table.HasValue(blockedWeapons, weapon:GetClass())) then
-		return true
+		return true, weapon;
 	end
 
 	-- This doesn't seem to be used currently so I'm disabling it for now.
