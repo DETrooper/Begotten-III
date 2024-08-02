@@ -230,6 +230,7 @@ local POSSESSED = Clockwork.trait:New()
 	POSSESSED.description = "Your character is prone to possession by some demonic force, often speaking in tongues and unwillingly perpetrating extreme violence. Due to this malignant presence, your character will incur corruption passively up to 50%, at which point they will be able to be possessed."
 	POSSESSED.points = -6
 	POSSESSED.disables = {"favored", "zealous"}
+	POSSESSED.excludedsubfactions = {"Rekh-khet-sa"}
 Clockwork.trait:Register(POSSESSED)
 
 local SCAVENGER = Clockwork.trait:New()

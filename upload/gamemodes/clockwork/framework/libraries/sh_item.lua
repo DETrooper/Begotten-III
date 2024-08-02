@@ -872,16 +872,28 @@ function item.GetByWeapon(weapon)
 		if (itemID and itemID != 0) then
 			local itemInstance = item.FindInstance(itemID);
 			
-			if !itemInstance then
-				local cwItemTable = weapon.cwItemTable;
-				
-				if cwItemTable then
-					itemInstance = item.CreateInstance(cwItemTable.uniqueID, cwItemTable.itemID, cwItemTable.data);
-				end
+			if itemInstance then
+				return itemInstance;
 			end
 			
-			return itemInstance;
+			local cwItemTable = weapon.cwItemTable;
+			
+			if cwItemTable then
+				return item.CreateInstance(cwItemTable.uniqueID, cwItemTable.itemID, cwItemTable.data);
+			end
 		end;
+		
+		local owner = weapon.Owner;
+		
+		if IsValid(owner) and owner:IsPlayer() and owner.equipmentSlots then
+			for i, v in ipairs(weapon.Owner:GetWeaponsEquipped()) do
+				local weaponClass = weapon:GetClass();
+				
+				if v.weaponClass == weaponClass or v.uniqueID == weaponClass then
+					return item.CreateInstance(v.uniqueID, v.itemID, v.data);
+				end
+			end
+		end
 	end;
 end;
 
@@ -972,6 +984,12 @@ function item.RemoveInstance(itemID, bInstant)
 	if istable(itemID) then
 		itemID = itemID.itemID;
 	end
+	
+	--[[if CLIENT then
+		print("[CLIENT] Removing item instance: "..tostring(item.instances[itemID] or "NIL"));
+	else
+		print("[SERVER] Removing item instance: "..tostring(item.instances[itemID] or "NIL"));
+	end]]--
 	
 	if itemID then
 		if bInstant then

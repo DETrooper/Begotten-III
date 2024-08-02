@@ -172,14 +172,16 @@ function cwPickupObjects:KeyPress(player, key)
 								local ragdollPlayer = Clockwork.entity:GetPlayer(entity)
 
 								if (ragdollPlayer) and !ragdollPlayer:GetNetVar("IsDragged") and !ragdollPlayer.BeingPickedUp then
-									if ragdollPlayer.possessor then
-										Schema:EasyText(player, "chocolate", "No matter how hard you try you can't seem to hold this person down!");
-										return;
-									end
-								
-									if ragdollPlayer.stabilityStunned and !player:HasBelief("wrestle_subdue") then
-										Schema:EasyText(player, "chocolate", "You cannot pick up this person while they are knocked over from low stability unless you have the 'Wrestle and Subdue' belief!");
-										return;
+									if ragdollPlayer:Alive() then
+										if ragdollPlayer.possessor then
+											Schema:EasyText(player, "chocolate", "No matter how hard you try you can't seem to hold this person down!");
+											return;
+										end
+									
+										if ragdollPlayer.stabilityStunned and !player:HasBelief("wrestle_subdue") then
+											Schema:EasyText(player, "chocolate", "You cannot pick up this person while they are knocked over from low stability unless you have the 'Wrestle and Subdue' belief!");
+											return;
+										end
 									end
 									
 									--if (Clockwork.player:GetUnragdollTime(ragdollPlayer) != 0) or !ragdollPlayer:Alive() then

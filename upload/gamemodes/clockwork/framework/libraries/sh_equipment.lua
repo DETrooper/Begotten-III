@@ -137,6 +137,8 @@ if SERVER then
 				player:SetCharacterData(itemTable.equipmentSaveString, GetDataFromItem(itemTable));
 			end
 		end
+		
+		return true;
 	end
 
 	function Clockwork.equipment:UnequipItem(player, itemTable, slot, bNoRemove)

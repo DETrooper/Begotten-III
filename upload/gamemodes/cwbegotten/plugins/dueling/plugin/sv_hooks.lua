@@ -65,7 +65,7 @@ end;
 
 function cwDueling:PlayerDisconnected(player)
 	if self:PlayerIsDueling(player) then
-		if IsValid(player.opponent) and !player.duelStatue then
+		if IsValid(player.opponent) and (!player.duelData or !player.duelData.duelStatue) then
 			--self:DuelAborted(player.opponent, player);
 			self:DuelCompleted(player.opponent, player);
 		end
@@ -127,16 +127,20 @@ function cwDueling:PlayerEnteredDuel(player, arena, spawnPos, spawnAngles)
 	Clockwork.datastream:Start(player, "SetPlayerDueling", true);
 	Clockwork.limb:CacheLimbs(player, true);
 	
+	local duelData = {};
+	
+	duelData.cachedPos = player:GetPos();
+	duelData.cachedAngles = player:GetAngles();
+	duelData.cachedHP = player:Health();
+	
+	player.duelData = duelData;
+	
 	player:Spawn();	
 	player:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255), 5, 0);
 	player:SetPos(spawnPos);
 	player:SetEyeAngles(spawnAngles);
 	player:SetHealth(player:GetMaxHealth());
-	
-	if player.duelData then
-		player.duelData.duelStatue = nil;
-	end
-	
+
 	if player:GetLocalVar("Hatred") then
 		player:SetLocalVar("Hatred", 0);
 	end

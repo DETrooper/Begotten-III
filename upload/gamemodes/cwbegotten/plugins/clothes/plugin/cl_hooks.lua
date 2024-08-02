@@ -39,10 +39,11 @@ function PLUGIN:Tick()
 	end
 	
 	for k, v in pairs(ents.FindByClass("prop_ragdoll")) do
-		if string.sub(v:GetModel(), 1, 21) == "models/begotten/heads" then
-			local model = v:GetNWString("clothes") or "models/begotten/wanderers/wanderer_male.mdl";
+		local clothesEnt = v.clothesEnt;
+		
+		if !v:IsDormant() and string.sub(v:GetModel(), 1, 21) == "models/begotten/heads" then
 			local vTab = v:GetTable();
-			local clothesEnt = vTab.clothesEnt;
+			local model = v:GetNWString("clothes") or "models/begotten/wanderers/wanderer_male.mdl";
 			
 			if IsValid(clothesEnt) and clothesEnt:GetModel() ~= model then
 				clothesEnt:Remove();
@@ -75,9 +76,9 @@ function PLUGIN:Tick()
 				clothesEnt:SetNoDraw(v:GetNoDraw());
 				clothesEnt:SetPos(v:GetPos());
 			end
-		elseif v.clothesEnt then
-			if IsValid(v.clothesEnt) then
-				v.clothesEnt:Remove();
+		elseif clothesEnt then
+			if IsValid(clothesEnt) then
+				clothesEnt:Remove();
 			end
 			
 			v.clothesEnt = nil;

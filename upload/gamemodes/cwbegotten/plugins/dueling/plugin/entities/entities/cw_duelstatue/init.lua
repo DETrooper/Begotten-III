@@ -65,14 +65,11 @@ function ENT:Use(activator, caller)
 							return;
 						end
 						
-						local duelData = {};
+						if !caller.duelData then
+							caller.duelData = {};
+						end
 						
-						duelData.cachedPos = caller:GetPos();
-						duelData.cachedAngles = caller:GetAngles();
-						duelData.cachedHP = caller:Health();
-						duelData.duelStatue = self;
-						
-						caller.duelData = duelData;
+						caller.duelData.duelStatue = self;
 						
 						cwDueling:PlayerEntersMatchmaking(caller);
 					end

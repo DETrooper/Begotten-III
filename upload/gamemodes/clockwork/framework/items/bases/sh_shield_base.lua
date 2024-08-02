@@ -146,14 +146,44 @@ function ITEM:OnEquip(player)
 		Schema:EasyText(player, "olive", "You cannot equip more than one shield!");
 		return false;
 	end
+	
+	local slot;
 
 	for i, v in ipairs(self.slots) do
 		if !player.equipmentSlots[v] then
-			return Clockwork.equipment:EquipItem(player, self, v);
+			slot = v;
+			break;
+		end
+		
+		if i == #self.slots then
+			Schema:EasyText(player, "peru", "You do not have an open slot to equip this shield in!")
+			return false;
 		end
 	end
 	
-	Schema:EasyText(player, "peru", "You do not have an open slot to equip this shield in!")
+	-- New code for multiple one-handed weapons per shield.
+	for i, v in ipairs(self.slots) do
+		local meleeItem = player.equipmentSlots[v];
+		
+		if meleeItem and meleeItem.canUseShields then
+			-- Check to make sure the weapon isn't being dual-wielded.
+			if !player.equipmentSlots[v.."Offhand"] then
+				local weapon = player:GetWeapon(meleeItem.weaponClass or meleeItem.uniqueID);
+				
+				if IsValid(weapon) then
+					local bSuccess = Clockwork.equipment:EquipItem(player, self, slot);
+					
+					if bSuccess then
+						weapon:EquipShield(self.uniqueID);
+					
+						return true;
+					end
+				end
+			end
+		end
+	end
+	
+	Schema:EasyText(player, "chocolate", "You do not have a suitable melee weapon equipped for use with this shield!");
 	return false;
 end
 
@@ -197,93 +227,12 @@ function ITEM:OnUse(player, itemEntity)
 		return false;
 	end
 	
-	-- Old code for only allowing 1 weapon per shield. Restore if that's what you want.
-	-- The first found suitable weapon will be the one considered the weapon that will be given a shield.
-	--[[for i, v in ipairs(self.slots) do
-		local meleeItem = player.equipmentSlots[v];
-		
-		if meleeItem and meleeItem.canUseShields then
-			-- Check to make sure the weapon isn't being dual-wielded.
-			if !player.equipmentSlots[v.."Offhand"] then
-				suitable_melee = meleeItem.itemID;
-				
-				break;
-			end
+	if (self.OnEquip) then
+		if self:OnEquip(player) then
+			return true;
 		end
-	end
+	end;
 
-	if not suitable_melee then
-		Schema:EasyText(player, "chocolate", "You do not have a suitable melee weapon equipped for use with this shield!");
-		
-		return false;
-	end
-
-	local weaponItemFound = false;
-	
-	for k, v in pairs(player:GetWeapons()) do
-		local itemTable = item.GetByWeapon(v);
-
-		if itemTable then
-			if itemTable.itemID == suitable_melee then
-				weaponItemFound = true;
-				
-				if itemTable.canUseShields then
-					if (self.OnEquip) then
-						if self:OnEquip(player) == false then
-							return false;
-						end
-					end;
-					
-					v:EquipShield(self.uniqueID);
-
-					return true;
-				end
-			end
-		end
-	end
-	
-	if not weaponItemFound then
-		Schema:EasyText(player, "peru", "Your currently equipped weapons cannot be used with this shield!");
-	else
-		Schema:EasyText(player, "chocolate", "You must equip a suitable weapon to use with this shield!");
-	end
-	
-	return false;]]
-	
-	-- New code for multiple one-handed weapons per shield.
-	local valid_weapon_found = false;
-	
-	for i, v in ipairs(self.slots) do
-		local meleeItem = player.equipmentSlots[v];
-		
-		if meleeItem and meleeItem.canUseShields then
-			-- Check to make sure the weapon isn't being dual-wielded.
-			if !player.equipmentSlots[v.."Offhand"] then
-				local weapon = player:GetWeapon(meleeItem.uniqueID);
-				
-				if IsValid(weapon) then
-					if !valid_weapon_found then
-						if (self.OnEquip) then
-							if self:OnEquip(player) == false then
-								continue;
-							end
-						end;
-						
-						valid_weapon_found = true;
-					end;
-					
-					weapon:EquipShield(self.uniqueID);
-				end
-			end
-		end
-	end
-	
-	if valid_weapon_found then
-		return true;
-	end
-	
-	Schema:EasyText(player, "chocolate", "You do not have a suitable melee weapon equipped for use with this shield!");
-	
 	return false;
 end;
 

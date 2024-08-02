@@ -367,7 +367,7 @@ function ITEM:OnEquip(player)
 		end
 	end
 	
-	Schema:EasyText(player, "peru", "You do not have an open slot to equip this shield in!")
+	Schema:EasyText(player, "peru", "You do not have an open slot to equip this weapon in!")
 	return false;
 end
 

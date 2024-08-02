@@ -16,12 +16,12 @@ function Parry(target, dmginfo)
 					target:SetNWBool("ParrySucess", true)
 					attacker:SetNWBool("Parried", true)
 					target.parryTarget = attacker;
-					netstream.Start(target, "Parried", 0.2)
 					if(attacker:IsPlayer()) then netstream.Start(attacker, "Stunned", (attacker:HasBelief("encore") and 0.5 or 1)); end
 				end
 				
 				dmginfo:SetDamage(0)
 				target:EmitSound("meleesounds/DS2Parry.mp3")
+				netstream.Start(target, "Parried", 0.2)
 				
 				if !isJavelin then
 					if attacker.CancelGuardening then
@@ -1022,13 +1022,13 @@ local function Guarding(ent, dmginfo)
 							elseif dmginfo:IsDamageType(16) then
 								ent:EmitSound(blocksoundtable["deflectmetalpierce"][math.random(1, #blocksoundtable["deflectmetalpierce"])])
 								--print "DEFLECT PIERCE"
-							elseif dmginfo:IsDamageType(1073741824) then
+							elseif IsValid(inflictor) and inflictor.isJavelin then
 								ent:EmitSound(blocksoundtable["blockmissile"][math.random(1, #blocksoundtable["blockmissile"])])
 								--print "DEFLECT JAVELIN"
 							end
 						else
 							if attacker:IsPlayer() then
-								if enemywep.IsABegottenMelee == true and (!dmginfo:GetInflictor() or (dmginfo:GetInflictor() and !dmginfo:GetInflictor().isJavelin)) then
+								if enemywep.IsABegottenMelee or (IsValid(inflictor) and inflictor.isJavelin) then
 									if enemywep.SoundMaterial == "Metal" then
 										ent:EmitSound(blocksoundtable["deflectmetal"][math.random(1, #blocksoundtable["deflectmetal"])])
 										--print "deflect metal"
@@ -1047,6 +1047,9 @@ local function Guarding(ent, dmginfo)
 									elseif enemywep.SoundMaterial == "Default" then
 										ent:EmitSound(blocksoundtable["deflectsound"][math.random(1, #blocksoundtable["deflectsound"])])
 										--print "deflect default"
+									elseif IsValid(inflictor) and inflictor.isJavelin then
+										ent:EmitSound(blocksoundtable["blockmissile"][math.random(1, #blocksoundtable["blockmissile"])])
+										--print "deflect javelin"
 									end
 								elseif dmginfo:IsDamageType(128) then
 									ent:EmitSound(blocksoundtable["deflectwood"][math.random(1, #blocksoundtable["deflectwood"])])
@@ -1132,7 +1135,7 @@ local function Guarding(ent, dmginfo)
 						dmginfo:ScaleDamage(0) 
 						
 						-- Deflection "mini stun" effect
-						if attacker:IsPlayer() then
+						if attacker:IsPlayer() and (!IsValid(inflictor) or !inflictor.isJavelin) then
 							attacker:SetNWBool("Deflected", true);
 							
 							local delay = enemyattacktable["delay"];
