@@ -1411,13 +1411,17 @@ function Schema:Think()
 		
 		if self.npcSpawnsEnabled ~= false then
 			if #self.spawnedNPCs["animal"] < self.maxNPCs["animal"] then
-				local goreNPCs = {"npc_drg_animals_bear", "npc_drg_animals_deer", "npc_drg_animals_goat"};
+				local goreNPCs = {"npc_drg_animals_deer", "npc_drg_animals_goat"};
 				local npcName;
 				local spawnPos = self.npcSpawns["animal"][math.random(1, #self.npcSpawns["animal"])].pos;
 				
-				if math.random(1, 20) == 1 then
-					npcName = "npc_drg_animals_cave_bear";
-				elseif math.random(1, 10) == 1 then
+				if math.random(1, 10) == 1 then
+					npcName = "npc_drg_animals_bear";
+					
+					if math.random(1, 4) == 1 then
+						npcName = "npc_drg_animals_cave_bear";
+					end
+				elseif math.random(1, 20) == 1 then
 					npcName = "npc_drg_animals_snowleopard";
 				else
 					npcName = goreNPCs[math.random(1, #goreNPCs)];

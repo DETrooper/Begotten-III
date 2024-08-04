@@ -15,7 +15,7 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 	local subfaction = self:GetSubfaction();
 	local level = self:GetCharacterData("level", 1);
 	local xp = self:GetCharacterData("experience", 0);
-	local newAmount = amount;
+	local newAmount = amount * config.Get("xp_modifier"):Get();
 	
 	--print("Base XP: "..amount);
 	

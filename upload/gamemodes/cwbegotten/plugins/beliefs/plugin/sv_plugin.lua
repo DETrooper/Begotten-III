@@ -3,6 +3,8 @@
 	Created by cash wednesday, gabs, DETrooper and alyousha35
 --]]
 
+config.Add("xp_modifier", 1)
+
 cwBeliefs.xpValues = {
 	["breakdown"] = 1, -- 1 xp per item broken down.
 	["copy"] = 200, -- 200 xp per book copied by those with the 'Scribe' belief.
