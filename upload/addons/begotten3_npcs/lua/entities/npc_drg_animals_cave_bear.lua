@@ -32,7 +32,7 @@ ENT.ReachEnemyRange = 80
 ENT.AvoidEnemyRange = 0
 
 -- Relationships --
-ENT.Factions = {"FACTION_BROWNBEAR"}
+ENT.Factions = {"FACTION_DEER","FACTION_FORESTHERBIVORES","FACTION_BROWNBEAR", "FACTION_SNOWLEOPARD"}
 
 -- Movements/animations --
 ENT.IdleAnimation = "idle"

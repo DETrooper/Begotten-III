@@ -32,7 +32,7 @@ ENT.AvoidAfraidOfRange = 4000
 ENT.WatchAfraidOfRange = 3500
 
 -- Relationships --
-ENT.Factions = {"FACTION_DEER","FACTION_FORESTHERBIVORES","FACTION_BROWNBEAR"}
+ENT.Factions = {"FACTION_DEER","FACTION_FORESTHERBIVORES","FACTION_BROWNBEAR", "FACTION_SNOWLEOPARD"}
 
 -- Movements/animations --
 ENT.IdleAnimation = "idle"

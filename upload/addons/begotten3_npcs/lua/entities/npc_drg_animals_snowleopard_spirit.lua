@@ -158,6 +158,7 @@ self:SetCooldown("Leap", 8)
 self:SetVelocity(self:GetUp()*100)
 self:SetVelocity(self:GetForward()*600)
 self:Jump(100)
+self:EmitSound("leopard/idle1.wav", 80)
 end
 end
 

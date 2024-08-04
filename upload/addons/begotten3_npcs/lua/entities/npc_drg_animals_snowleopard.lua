@@ -32,7 +32,7 @@ ENT.ReachEnemyRange = 60
 ENT.AvoidEnemyRange = 0
 
 -- Relationships --
-ENT.Factions = {"FACTION_SNOWLEOPARD"}
+ENT.Factions = {"FACTION_DEER","FACTION_FORESTHERBIVORES","FACTION_BROWNBEAR", "FACTION_SNOWLEOPARD"}
 
 -- Movements/animations --
 ENT.IdleAnimation = "idle"
@@ -121,6 +121,7 @@ self:SetCooldown("Leap", 8)
 self:SetVelocity(self:GetUp()*100)
 self:SetVelocity(self:GetForward()*600)
 self:Jump(100)
+self:EmitSound("leopard/idle1.wav", 80)
 end
 end
 
