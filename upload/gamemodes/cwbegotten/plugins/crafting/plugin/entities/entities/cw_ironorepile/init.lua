@@ -159,7 +159,17 @@ function ENT:OnRemove()
 			if pileTable.pile == self then
 				table.remove(cwRecipes.Piles[category], i);
 				
-				return;
+				break;
+			end
+		end
+	end
+	
+	for category, v in pairs(cwRecipes.pileLocations) do
+		for i, location in ipairs(v) do
+			if location.occupier == self:EntIndex() then
+				cwRecipes.pileLocations[category].occupier = nil;
+				
+				break;
 			end
 		end
 	end
