@@ -167,7 +167,7 @@ function ENT:OnRemove()
 	for category, v in pairs(cwRecipes.pileLocations) do
 		for i, location in ipairs(v) do
 			if location.occupier == self:EntIndex() then
-				cwRecipes.pileLocations[category].occupier = nil;
+				cwRecipes.pileLocations[category][i].occupier = nil;
 				
 				break;
 			end
