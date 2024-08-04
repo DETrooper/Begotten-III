@@ -9,6 +9,7 @@ ENT.RagdollOnDeath = false
 ENT.CollisionBounds = Vector(18, 18, 65)
 ENT.BloodColor = DONT_BLEED
 ENT.Frightening = false
+ENT.SightFOV = 300
 ENT.SightRange = 800
 
 -- Sounds --
