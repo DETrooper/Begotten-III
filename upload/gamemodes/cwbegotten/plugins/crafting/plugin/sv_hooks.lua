@@ -558,7 +558,6 @@ function cwRecipes:Think()
 							end
 							
 							pile:Remove();
-							table.remove(self.Piles[category], i);
 							break;
 						else
 							-- Move this pile to the back of the queue, we'll check it again after all the others.
@@ -587,8 +586,6 @@ function cwRecipes:Think()
 						end
 						
 						pile:Remove();
-						table.remove(self.Piles[category], i);
-						
 						break;
 					else
 						-- Move this pile to the back of the queue, we'll check it again after all the others.
