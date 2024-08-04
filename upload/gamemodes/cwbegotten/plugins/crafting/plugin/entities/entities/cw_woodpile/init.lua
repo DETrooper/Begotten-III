@@ -129,7 +129,7 @@ function ENT:OnRemove()
 	for category, v in pairs(cwRecipes.Piles) do
 		for i, pileTable in ipairs(v) do
 			if pileTable.pile == self then
-				table.Remove(cwRecipes.Piles[category], i);
+				table.remove(cwRecipes.Piles[category], i);
 				
 				return;
 			end
