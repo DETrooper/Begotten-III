@@ -1047,10 +1047,12 @@ function cwMedicalSystem:RemoveInjury(player, limb, uniqueID)
 	end
 	
 	player:SetCharacterData("Injuries", injuries);
+	player:SetMaxHealth(player:GetMaxHealth());
 end;
 
 function cwMedicalSystem:ResetInjuries(player)
 	player:SetCharacterData("Injuries", {});
+	player:SetMaxHealth(player:GetMaxHealth());
 end
 
 -- A function to get the player's limb damage tables.

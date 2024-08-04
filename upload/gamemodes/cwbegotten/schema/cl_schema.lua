@@ -3,6 +3,10 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
+Clockwork.ConVars.NPCSPAWNESP = Clockwork.kernel:CreateClientConVar("cwNPCSpawnESP", 0, false, true)
+
+Clockwork.setting:AddCheckBox("Admin ESP", "Show NPC spawn points.", "cwNPCSpawnESP", "Click to enable/disable the NPC spawn point ESP.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
+
 --[[Clockwork.config:AddToSystem("Small intro text", "intro_text_small", "The small text displayed for the introduction.");
 Clockwork.config:AddToSystem("Big intro text", "intro_text_big", "The big text displayed for the introduction.");]]--
 Clockwork.config:AddToSystem("Enable Famine", "enable_famine", "Enable famine mode. This will make food/drink spawns significantly more rare and will also prevent rations from being distributed at the Coinslot.");

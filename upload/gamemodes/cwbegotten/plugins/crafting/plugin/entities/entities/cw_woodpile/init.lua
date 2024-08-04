@@ -44,7 +44,7 @@ function ENT:OnTakeDamage(damageInfo)
 	if IsValid(player) and player:IsPlayer() then
 		local activeWeapon = player:GetActiveWeapon();
 		
-		if (damageInfo:IsDamageType(4) and damageInfo:GetDamage() >= 25) or (activeWeapon and activeWeapon.isHatchet) then
+		if (damageInfo:IsDamageType(4) and damageInfo:GetDamage() >= 15) or (activeWeapon and activeWeapon.isHatchet) then
 			self:EmitSound(self.BreakSounds[math.random(1, #self.BreakSounds)]);
 			
 			if !self.woodLeft then
@@ -52,10 +52,14 @@ function ENT:OnTakeDamage(damageInfo)
 			end
 			
 			if !self.strikesRequired then
-				self.strikesRequired = math.random(5, 10);
+				self.strikesRequired = math.random(10, 20);
 			end
 			
-			self.strikesRequired = self.strikesRequired - 1;
+			if activeWeapon and activeWeapon.isHatchet then
+				self.strikesRequired = self.strikesRequired - 2;
+			else
+				self.strikesRequired = self.strikesRequired - 1;
+			end
 			
 			if cwCharacterNeeds and player.HandleNeed then
 				player:HandleNeed("thirst", 0.75);

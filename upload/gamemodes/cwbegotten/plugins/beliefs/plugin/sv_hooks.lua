@@ -1741,8 +1741,8 @@ function cwBeliefs:PostPlayerCharacterLoaded(player)
 		if (player:HasTrait("nimble")) then
 			level = level + 3;
 			self:ForceTakeBelief(player, "nimble");
+			self:ForceTakeBelief(player, "evasion");
 			self:ForceTakeBelief(player, "dexterity");
-			self:ForceTakeBelief(player, "swift");
 		end;
 		
 		if (player:HasTrait("brawny")) then
@@ -1860,11 +1860,11 @@ function cwBeliefs:PostPlayerCharacterLoaded(player)
 			
 			if faction == "Goreic Warrior" then
 				--random_armors = {"gore_chainmail", "gore_warfighter_armor"};
-				random_melees = {"begotten_spear_ironspear", "begotten_1h_goremace", "begotten_1h_goreshortsword", "begotten_1h_ironarmingsword", "begotten_1h_ironshortsword"}
+				random_melees = {"begotten_spear_ironshortspear", "begotten_1h_goremace", "begotten_1h_goreshortsword"}
 				random_shields = {"shield5"};
 			else
 				--random_armors = {"light_brigandine_armor", "wanderer_mail"};
-				random_melees = {"begotten_spear_ironspear", "begotten_1h_ironarmingsword", "begotten_1h_ironshortsword", "begotten_1h_morningstar", "begotten_1h_scrapblade"};
+				random_melees = {"begotten_spear_ironshortspear", "begotten_1h_scrapaxe", "begotten_1h_scrapblade"};
 				random_shields = {"shield1", "shield5"};
 			end
 			

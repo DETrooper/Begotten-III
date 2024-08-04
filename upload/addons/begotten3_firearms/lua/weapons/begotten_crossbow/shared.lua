@@ -131,7 +131,7 @@ function SWEP:PrimaryAttack()
 						aimVector:Rotate(Angle(math.Rand(-1, 1), math.Rand(-1, 1), 0));
 					end
 					
-					phys:SetVelocity(aimVector);
+					phys:SetVelocityInstantaneous(aimVector);
 						
 					if self.Owner:IsPlayer() then
 						local anglo = Angle(0, -5, 0);

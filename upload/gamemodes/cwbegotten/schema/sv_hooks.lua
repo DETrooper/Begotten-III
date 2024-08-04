@@ -168,6 +168,7 @@ function Schema:ClockworkInitPostEntity()
 	self:LoadDummies();
 	self:LoadRadios();
 	self:LoadNPCs();
+	self:LoadNPCSpawns();
 	self:SpawnBegottenEntities();
 	
 	-- Breaks some stuff.
@@ -1070,17 +1071,14 @@ function Schema:PlayerCanRadio(player, text, listeners, eavesdroppers)
 	local fault;
 	local stationaryRadiusSqr = (80 * 80);
 	local radios = ents.FindByClass("cw_radio");
+	local playerPos = player:GetPos();
 	
-	for k, v in ipairs(radios) do
-		if (!v:IsOff() and !v:IsCrazy() and player:GetPos():DistToSqr(v:GetPos()) <= stationaryRadiusSqr) then
-			if player:GetEyeTrace().Entity == v then
-				return nil, v:GetFrequency();
-			else
-				return;
-			end
+	for i, v in ipairs(radios) do
+		if (!v:IsOff() and !v:IsCrazy() and playerPos:DistToSqr(v:GetPos()) <= stationaryRadiusSqr) then
+			return "", v:GetFrequency();
 		end
 	end
-
+	
 	if (player:HasItemByID("handheld_radio")) or (player:HasItemByID("ecw_radio")) then
 		if !player:GetCharacterData("radioState", false) then
 			fault = "Your radio is turned off!";
@@ -1412,63 +1410,63 @@ function Schema:Think()
 		end;
 		
 		if self.npcSpawnsEnabled ~= false then
-			if self.spawnedNPCS and self.maxNPCS and #self.spawnedNPCS < self.maxNPCS then
-				if math.random(1, 6) == 1 then
-					local goreNPCs = {"npc_drg_animals_bear", "npc_drg_animals_deer", "npc_drg_animals_goat"};
-					local npcName;
-					local spawnPos = self.npcSpawns["gore"][math.random(1, #self.npcSpawns["gore"])];
-					
-					if math.random(1, 20) == 1 then
-						npcName = "npc_drg_animals_cave_bear";
-					elseif math.random(1, 10) == 1 then
-						npcName = "npc_drg_animals_snowleopard";
-					else
-						npcName = goreNPCs[math.random(1, #goreNPCs)];
-					end
-					
-					if npcName and spawnPos then
-						local entity = ents.Create(npcName);
-						
-						if IsValid(entity) then
-							entity:SetPos(spawnPos + Vector(0, 0, 32));
-							entity:SetAngles(Angle(0, math.random(1, 359), 0));
-							entity:Spawn();
-							entity:Activate();
-							
-							table.insert(self.spawnedNPCS, entity:EntIndex());
-						end
-					end
+			if #self.spawnedNPCs["animal"] < self.maxNPCs["animal"] then
+				local goreNPCs = {"npc_drg_animals_bear", "npc_drg_animals_deer", "npc_drg_animals_goat"};
+				local npcName;
+				local spawnPos = self.npcSpawns["animal"][math.random(1, #self.npcSpawns["animal"])].pos;
+				
+				if math.random(1, 20) == 1 then
+					npcName = "npc_drg_animals_cave_bear";
+				elseif math.random(1, 10) == 1 then
+					npcName = "npc_drg_animals_snowleopard";
 				else
-					local spawnPos = self.npcSpawns["wasteland"][math.random(1, #self.npcSpawns["wasteland"])];
-					local thrallNPCs;
-					
-					if cwWeather and cwWeather.weather == "bloodstorm" then
-						thrallNPCs = {"npc_bgt_chaser", "npc_bgt_guardian"};
-					else
-						if cwDayNight and cwDayNight.currentCycle == "night" then
-							thrallNPCs = {"npc_bgt_another", "npc_bgt_guardian", "npc_bgt_otis", "npc_bgt_pursuer", "npc_bgt_shambler"};
-						else
-							thrallNPCs = {"npc_bgt_another", "npc_bgt_brute", "npc_bgt_eddie", "npc_bgt_grunt"};
-						end
-						
-						if math.random(1, 33) == 1 then
-							thrallNPCs = {"npc_bgt_coinsucker", "npc_bgt_ironclad", "npc_bgt_suitor"};
-						end
-					end
-
-					local npcName = thrallNPCs[math.random(1, #thrallNPCs)];
-					
-					ParticleEffect("teleport_fx", spawnPos, Angle(0,0,0), nil);
-					sound.Play("misc/summon.wav", spawnPos, 100, 100);
-					
-					timer.Simple(0.75, function()
-						local entity = cwZombies:SpawnThrall(npcName, spawnPos, Angle(0, math.random(1, 359), 0));
-						
-						if IsValid(entity) then
-							table.insert(self.spawnedNPCS, entity:EntIndex())
-						end
-					end);
+					npcName = goreNPCs[math.random(1, #goreNPCs)];
 				end
+				
+				if npcName and spawnPos then
+					local entity = ents.Create(npcName);
+					
+					if IsValid(entity) then
+						entity:SetPos(spawnPos + Vector(0, 0, 32));
+						entity:SetAngles(Angle(0, math.random(1, 359), 0));
+						entity:Spawn();
+						entity:Activate();
+						
+						table.insert(self.spawnedNPCs["animal"], entity:EntIndex());
+					end
+				end
+			end
+			
+			if #self.spawnedNPCs["thrall"] < self.maxNPCs["thrall"] then
+				local spawnPos = self.npcSpawns["thrall"][math.random(1, #self.npcSpawns["thrall"])].pos;
+				local thrallNPCs;
+				
+				if cwWeather and cwWeather.weather == "bloodstorm" then
+					thrallNPCs = {"npc_bgt_chaser", "npc_bgt_guardian"};
+				else
+					if cwDayNight and cwDayNight.currentCycle == "night" then
+						thrallNPCs = {"npc_bgt_another", "npc_bgt_guardian", "npc_bgt_otis", "npc_bgt_pursuer", "npc_bgt_shambler"};
+					else
+						thrallNPCs = {"npc_bgt_another", "npc_bgt_brute", "npc_bgt_eddie", "npc_bgt_grunt"};
+					end
+					
+					if math.random(1, 33) == 1 then
+						thrallNPCs = {"npc_bgt_coinsucker", "npc_bgt_ironclad", "npc_bgt_suitor"};
+					end
+				end
+
+				local npcName = thrallNPCs[math.random(1, #thrallNPCs)];
+				
+				ParticleEffect("teleport_fx", spawnPos, Angle(0,0,0), nil);
+				sound.Play("misc/summon.wav", spawnPos, 100, 100);
+				
+				timer.Simple(0.75, function()
+					local entity = cwZombies:SpawnThrall(npcName, spawnPos, Angle(0, math.random(1, 359), 0));
+					
+					if IsValid(entity) then
+						table.insert(self.spawnedNPCs["thrall"], entity:EntIndex())
+					end
+				end);
 			end
 		end
 		
@@ -1699,11 +1697,13 @@ function Schema:EntityRemoved(entity)
 		end;
 	end;
 	
-	if IsValid(entity) and (entity:IsNPC() or entity:IsNextBot()) and self.spawnedNPCS then
-		for i = 1, #self.spawnedNPCS do
-			if self.spawnedNPCS[i] == entity:EntIndex() then
-				table.remove(self.spawnedNPCS, i);
-				break;
+	if IsValid(entity) and (entity:IsNPC() or entity:IsNextBot()) and self.spawnedNPCs then
+		for k, v in pairs(self.spawnedNPCs) do
+			for i, entIndex in ipairs(v) do
+				if entIndex == entity:EntIndex() then
+					table.remove(self.spawnedNPCs[k], i);
+					break;
+				end
 			end
 		end
 	end
@@ -2543,6 +2543,10 @@ function Schema:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 		
 		player.nextSpawnRun = curTime + 1;
 	end;
+	
+	if (player:IsAdmin() or player:IsUserGroup("operator")) then
+		netstream.Heavy(player, "NPCSpawnESPInfo", {self.npcSpawns});
+	end;
 end;
 
 -- Called when a player switches zones.
@@ -2683,11 +2687,13 @@ function Schema:GetPlayerDefaultModel(player) end;
 
 -- Called when an NPC has been killed.
 function Schema:OnNPCKilled(npc, attacker, inflictor)
-	if IsValid(npc) and self.spawnedNPCS then
-		for i = 1, #self.spawnedNPCS do
-			if self.spawnedNPCS[i] == npc:EntIndex() then
-				table.remove(self.spawnedNPCS, i);
-				break;
+	if IsValid(npc) and self.spawnedNPCs then
+		for k, v in pairs(self.spawnedNPCs) do
+			for i, entIndex in ipairs(v) do
+				if entIndex == npc:EntIndex() then
+					table.remove(self.spawnedNPCs[k], i);
+					break;
+				end
 			end
 		end
 	end

@@ -136,7 +136,7 @@ function cwZombies:PlayerCanOpenContainer(player, container)
 					end);
 				end
 				
-				table.insert(Schema.spawnedNPCS, thrall:EntIndex());
+				table.insert(Schema.spawnedNPCs["thrall"], thrall:EntIndex());
 			
 				return false;
 			end

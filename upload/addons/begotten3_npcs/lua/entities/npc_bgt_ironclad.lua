@@ -64,7 +64,7 @@ ENT.PossessionBinds = {
 		onkeydown = function(self)
 			if self.angry then
 			  self:EmitSound("begotten/npc/grunt/attack_claw0"..math.random(1, 3)..".mp3", 100, self.pitch)
-			  self:PlaySequenceAndMove("fastattack", 1, self.PossessionFaceForward)
+			  self:PlaySequenceAndMove("fastattack", 0.6, self.PossessionFaceForward)
 			else
 			  self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
 			  self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.PossessionFaceForward)
@@ -104,7 +104,7 @@ if SERVER then
 		if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
 			if self.angry then
 				self:EmitSound("begotten/npc/grunt/attack_claw0"..math.random(1, 3)..".mp3", 100, self.pitch)
-				self:PlaySequenceAndMove("fastattack", 1, self.FaceEnemy)
+				self:PlaySequenceAndMove("fastattack", 0.6, self.FaceEnemy)
 			else
 				self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
 				self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)
@@ -218,8 +218,9 @@ if SERVER then
 				self.UseWalkframes = false;
 				self.WalkSpeed = 50;
 				self.RunSpeed = 75;
-				self.RunAnimation = ACT_WALK_ON_FIRE;
-				self.ReachEnemyRange = 100;
+				self.RunAnimation = ACT_WALK;
+				self.MeleeAttackRange = 100;
+				self.Armor = 70;
 				
 				self:EmitSound("physics/metal/metal_box_break1.wav", 100, 90)
 			end

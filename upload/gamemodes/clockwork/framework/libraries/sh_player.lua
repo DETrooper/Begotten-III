@@ -204,26 +204,22 @@ function Clockwork.player:SayRadio(player, text, check, noEavesdrop, proclaim)
 	local listeners = {};
 	local radiospies = {};
 	local fault;
+	local frequencyOverride;
 	local info = {listeners = {}, noEavesdrop = noEavesdrop, text = text};
 
 	--Clockwork.plugin:Call("PlayerAdjustRadioInfo", player, info);
 	
 	if (check) then
-		fault, frequencyOverride = Clockwork.plugin:Call("PlayerCanRadio", player, info.text, listeners, eavesdroppers);
+		fault, frequencyOverride = hook.Run("PlayerCanRadio", player, info.text, listeners, eavesdroppers);
 	end;
 	
-	if fault then
+	if fault and fault ~= "" then
 		Schema:EasyText(player, "peru", fault);
 		
 		return;
 	end
 
-	local frequency = player:GetCharacterData("frequency");
-
-	if frequencyOverride then
-		frequency = frequencyOverride;
-	end
-	
+	local frequency = frequencyOverride or player:GetCharacterData("frequency");
 	local radios = ents.FindByClass("cw_radio");
 	local radius = Clockwork.config:Get("talk_radius"):Get();
 	local radiusSqr = (radius * radius);

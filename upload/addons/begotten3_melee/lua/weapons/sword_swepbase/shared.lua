@@ -184,8 +184,10 @@ function SWEP:Deploy()
 					end
 				end
 			end
+			
+			self.Weapon:CallOnClient("Initialize");
 		end
-		
+
 		if self.OnMeleeStanceChanged then
 			self:OnMeleeStanceChanged("reg_swing");
 		end
@@ -2657,7 +2659,7 @@ function SWEP:GetCapabilities()
 end
 
 function SWEP:ShouldDropOnDie()
-	return true
+	return false
 end
 
 function SWEP:GetPrintName()
@@ -3007,10 +3009,6 @@ function SWEP:Initialize()
 	self:SetHoldType(self:GetHoldtypeOverride());
 end
 
-function SWEP:OnDrop()
-	self:OnRemove();
-end
-
 function SWEP:Holster()
 	local player = self.OwnerOverride or self.Owner;
 	
@@ -3018,13 +3016,8 @@ function SWEP:Holster()
 		timer.Remove(player:EntIndex().."IdleAnimation");
 
 		self:StopAllAnims(player);
-		
-		player:SetNWBool("ThrustStance", false);
-		player:SetNWBool("Parry", false);
-		player:SetNWBool("ParrySucess", false);
-		player:SetNWBool("Riposting", false);
 
-		if CLIENT and player:IsPlayer() then
+		if CLIENT then
 			local vm = player:GetViewModel()
 			
 			if IsValid(vm) then
@@ -3033,6 +3026,15 @@ function SWEP:Holster()
 				vm:SetSubMaterial( 1, "" )
 				vm:SetSubMaterial( 2, "" )
 			end
+		else
+			player:SetNWBool("ThrustStance", false);
+			player:SetNWBool("Parry", false);
+			player:SetNWBool("ParrySucess", false);
+			player:SetNWBool("Riposting", false);
+		end
+		
+		if CLIENT then
+			self:RemoveModels();
 		end
 	end
 	

@@ -93,6 +93,8 @@ function cwItemSpawner:GetAdminESPInfo(info)
 			for k, v in pairs (self.SpawnLocations) do
 				if (!v or !isvector(v.position)) then
 					self.SpawnLocations[k] = nil;
+					
+					continue;
 				end;
 
 				local position = v.position;

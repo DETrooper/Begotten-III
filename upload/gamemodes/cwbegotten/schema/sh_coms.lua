@@ -1776,6 +1776,30 @@ end;
 
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("AddNPCSpawn")
+	COMMAND.tip = "Add an npc spawn location at your cursor. (Valid types: animal, thrall)"
+	COMMAND.text = "<string Category>"
+	COMMAND.access = "s"
+	COMMAND.arguments = 1;
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		Schema:AddNPCSpawn(player:GetEyeTrace().HitPos, arguments[1], player);
+	end
+COMMAND:Register()
+
+local COMMAND = Clockwork.command:New("RemoveNPCSpawn")
+	COMMAND.tip = "Remove an npc spawn location at your cursor."
+	COMMAND.access = "s"
+	COMMAND.optionalArguments = 1;
+	COMMAND.text = "[int Distance]"
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		Schema:RemoveNPCSpawn(player:GetEyeTrace().HitPos, tonumber(arguments[1]) or 64, player);
+	end
+COMMAND:Register()
+
 local COMMAND = Clockwork.command:New("ToggleNPCSpawns");
 COMMAND.tip = "Toggle the automatic NPC spawning system.";
 COMMAND.flags = CMD_DEFAULT;

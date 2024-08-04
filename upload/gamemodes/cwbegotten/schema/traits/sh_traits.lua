@@ -184,7 +184,7 @@ Clockwork.trait:Register(MINER)
 local NIMBLE = Clockwork.trait:New()
 	NIMBLE.uniqueID = "nimble"
 	NIMBLE.name = "Nimble"
-	NIMBLE.description = "Your character is quick on their feet, able to escape dangerous situations with relative ease. This trait automatically unlocks the first 3 beliefs on the right side of the 'Litheness' tree: 'Nimble', 'Dexterity', and 'Swift'."
+	NIMBLE.description = "Your character is quick on their feet, able to escape dangerous situations with relative ease. This trait automatically unlocks the first 3 beliefs on the right side of the 'Litheness' tree: 'Nimble', 'Evasion', and 'Dexterity'."
 	NIMBLE.points = 4
 	NIMBLE.disables = {"winded"}
 Clockwork.trait:Register(NIMBLE)
@@ -204,7 +204,7 @@ local PILGRIM = Clockwork.trait:New()
 	PILGRIM.name = "Pilgrim"
 	PILGRIM.description = "Your character has ventured far and wide to reach the Tower of Light, either in search of sanctuary or in pursuit of holy purpose. Your character will spawn inside the Tower of Light safezone."
 	PILGRIM.points = 2
-	PILGRIM.disables = {"escapee", "leper"}
+	PILGRIM.disables = {"escapee", "gunslinger", "leper"}
 	PILGRIM.requiredfactions = {"Wanderer"}
 Clockwork.trait:Register(PILGRIM)
 

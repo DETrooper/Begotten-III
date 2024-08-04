@@ -60,22 +60,22 @@ local LITHENESS = cwBeliefs.beliefTrees:New("litheness")
 			},
 		},
 		[3] = {
+			["evasion"] = {
+				name = "Evasion",
+				description = "Unlocks the 'Combat Roll' ability. Combat rolling grants invincibility frames based on the weight of armor worn and can also put out fires.",
+				requirements = {"nimble"},
+				row = 2,
+			},
 			["dexterity"] = {
 				name = "Dexterity",
 				description = "All progress bar actions including raising weapons, reloading, and standing up now complete 33% faster.",
-				requirements = {"nimble"},
-				row = 2,
+				requirements = {"nimble", "evasion"},
+				row = 3,
 			},
 			["swift"] = {
 				name = "Swift",
 				description = "Sprinting is now 10% faster.",
-				requirements = {"nimble", "dexterity"},
-				row = 3,
-			},
-			["evasion"] = {
-				name = "Evasion",
-				description = "Unlocks the 'Combat Roll' ability. Combat rolling grants invincibility frames based on the weight of armor worn and can also put out fires.",
-				requirements = {"nimble", "dexterity", "swift"},
+				requirements = {"nimble", "evasion", "dexterity"},
 				row = 4,
 			},
 		},

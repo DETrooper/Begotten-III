@@ -642,7 +642,7 @@ end;
 function cwItemSpawner:AddSpawn(position, category)
 	table.insert(self.SpawnLocations, {position = position, category = category});
 	
-	Clockwork.datastream:Start(Schema:GetAdmins(), "ItemSpawnESPInfo", {self.SpawnLocations});
+	netstream.Heavy(Schema:GetAdmins(), "ItemSpawnESPInfo", {self.SpawnLocations});
 	
 	self:SaveItemSpawns();
 end;
@@ -662,6 +662,8 @@ function cwItemSpawner:RemoveSpawn(position, distance, player)
 		if (player and player:IsPlayer()) then
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You removed "..count.." item spawns at your cursor position.");
 		end;
+		
+		netstream.Heavy(Schema:GetAdmins(), "ItemSpawnESPInfo", {self.SpawnLocations});
 		
 		self:SaveItemSpawns();
 	end;
@@ -683,7 +685,7 @@ function cwItemSpawner:SaveItemSpawns()
 	end;
 	
 	Clockwork.kernel:SaveSchemaData("plugins/itemspawn/"..game.GetMap(), itemspawns);
-	Clockwork.datastream:Start(Schema:GetAdmins(), "ItemSpawnESPInfo", {self.SpawnLocations});
+	--Clockwork.datastream:Start(Schema:GetAdmins(), "ItemSpawnESPInfo", {self.SpawnLocations});
 end;
 
 -- Spawns the maximum amount of containers, should only really be called at server start.

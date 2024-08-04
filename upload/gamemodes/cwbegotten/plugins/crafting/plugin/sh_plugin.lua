@@ -39,3 +39,27 @@ elseif (game.GetMap() == "rp_scraptown") then
 else
 	cwRecipes.smithyLocations = {};
 end;
+
+local COMMAND = Clockwork.command:New("AddPileSpawn")
+	COMMAND.tip = "Add a pile spawn location using a spawned entity's positions and angles. (Valid types: gorewood, ore, wood)"
+	COMMAND.text = "<string Category>"
+	COMMAND.access = "s"
+	COMMAND.arguments = 1;
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		cwRecipes:AddPileSpawn(player:GetEyeTrace().Entity, arguments[1], player);
+	end
+COMMAND:Register()
+
+local COMMAND = Clockwork.command:New("RemovePileSpawn")
+	COMMAND.tip = "Remove a pile spawn location at your cursor."
+	COMMAND.access = "s"
+	COMMAND.optionalArguments = 1;
+	COMMAND.text = "[int Distance]"
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		cwRecipes:RemovePileSpawn(player:GetEyeTrace().HitPos, tonumber(arguments[1]) or 64, player);
+	end
+COMMAND:Register()

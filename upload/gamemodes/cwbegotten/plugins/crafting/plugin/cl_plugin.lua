@@ -3,6 +3,44 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
+Clockwork.ConVars.CRAFTINGPILESPAWNESP = Clockwork.kernel:CreateClientConVar("cwCraftingPileSpawnESP", 0, false, true)
+
+Clockwork.datastream:Hook("CraftingPileSpawnESPInfo", function(data)
+	if data then
+		if data[1] then
+			cwRecipes.pileLocations = data[1];
+		end
+	end
+end);
+
+function cwRecipes:GetAdminESPInfo(info)
+	if (Clockwork.ConVars.CRAFTINGPILESPAWNESP and Clockwork.ConVars.CRAFTINGPILESPAWNESP:GetInt() == 1) then
+		if (self.pileLocations) then
+			if (table.IsEmpty(self.pileLocations)) then
+				self.pileLocations = nil;
+				
+				return;
+			end;
+			
+			for k, v in pairs (self.pileLocations) do
+				for i, v2 in ipairs(v) do
+					if (!v2 or !isvector(v2.pos)) then
+						self.pileLocations[k][i] = nil;
+						
+						continue;
+					end;
+
+					info[#info + 1] = {
+						position = v2.pos,
+						text = k;
+						color = Color(200, 200, 200);
+					};
+				end
+			end;
+		end;
+	end;
+end
+
 -- A function to build the default crafting tooltip.
 function cwRecipes:BuildCraftingTooltip(frame, recipeTable)
 
@@ -254,3 +292,5 @@ function cwRecipes:GetAvailable()
 	
 	return available;
 end;
+
+Clockwork.setting:AddCheckBox("Admin ESP", "Show resource pile spawn points.", "cwCraftingPileSpawnESP", "Click to enable/disable the resource spawner ESP.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);

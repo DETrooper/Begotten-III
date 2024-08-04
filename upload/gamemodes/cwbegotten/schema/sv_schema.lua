@@ -8,7 +8,10 @@ PrecacheParticleSystem("env_fire_large");
 
 local map = string.lower(game.GetMap());
 
-Schema.maxNPCS = 8;
+Schema.maxNPCs = {
+	["animal"] = 4,
+	["thrall"] = 8,
+};
 
 if !Schema.towerTax then
 	Schema.towerTax = 0.1;
@@ -18,8 +21,11 @@ if !Schema.towerSafeZoneEnabled then
 	Schema.towerSafeZoneEnabled = true;
 end
 
-if !Schema.spawnedNPCS then
-	Schema.spawnedNPCS = {};
+if !Schema.spawnedNPCs then
+	Schema.spawnedNPCs = {
+		["animal"] = {},
+		["thrall"] = {},
+	};
 end
 
 Schema.zones = {
@@ -195,7 +201,6 @@ Schema.icClasses = {
 };
 
 Schema.hellPortalTeleports = {};
-Schema.npcSpawns = {};
 
 if map == "rp_begotten3" then
 	Schema.hellPortalTeleports = {
@@ -221,42 +226,6 @@ if map == "rp_begotten3" then
 			{pos = Vector(-11366.947266, -1473.669067, -1672.462036), ang = Angle(0, 0, 0)},
 			{pos = Vector(-11618.375000, -604.629456, -1672.181030), ang = Angle(0, 0, 0)},
 			{pos = Vector(-10641.942383, -666.103333, -1684.018555), ang = Angle(0, 0, 0)},
-		},
-	};
-
-	Schema.npcSpawns = {
-		["wasteland"] = {
-			Vector(-10967.089844, -1220.767578, -1662.459106),
-			Vector(-5509.368652, -3200.522949, -1669.600708),
-			Vector(-1479.009888, -2197.274170, -1868.734497),
-			Vector(-60.515240, -4684.832520, -1867.231201),
-			Vector(-2441.085693, 1114.810425, -1804.695068),
-			Vector(1207.390625, 421.858704, -1849.007324),
-			Vector(1566.186035, -2591.648682, -1872.157715),
-			Vector(7980.462402, -3335.651123, -1194),
-			Vector(10192.621094, 1354.364258, -1204.581421),
-			Vector(-7206.690430, 6050.651367, -1236),
-			Vector(-11883.016602, 4312.245605, -1704.805054),
-			Vector(-11372.455078, -8726.710938, -1263.614502),
-			Vector(-5881.680176, -13524.884766, -1005.169006),
-			Vector(5071.107910, -7160.854004, -927.867126),
-			Vector(-2789.909912, 199.311493, -1878.907104),
-			Vector(-2380.191895, -271.307190, -2606.263916),
-			Vector(2785.046875, -484.878540, -2551.071289),
-			Vector(2890.712158, 4798.735352, -2318.283203),
-		},
-		["gore"] = {
-			Vector(-4635.546387, -6457.277832, 11577.454102),
-			Vector(-6177.558594, -9151.410156, 11758.606445),
-			Vector(-8018.354980, -10673.566406, 11657.213867),
-			Vector(-7668.017578, -2788.391357, 11890.031250),
-			Vector(-4762.075195, -3816.625732, 11990.207031),
-			Vector(-2285.218994, -2696.021484, 11728.489258),
-			Vector(23.739820, -4092.130615, 12048.193359),
-			Vector(-3731.094482, -5929.901855, 11640.273438),
-			Vector(-5768.370117, -10758.532227, 11612.263672),
-			Vector(-6478.125000, -11312.333008, 11610.715820),
-			Vector(-7766.898438, -12075.287109, 11612.863281),
 		},
 	};
 elseif map == "rp_begotten_redux" then
@@ -355,94 +324,6 @@ for k, v in pairs (Schema.fogDistance) do
 	Schema.fogDistance[k] = false;
 end;
 
-Schema.TurretTypes = {
-	[1] = {
-		name = "M249",
-		mdl = "models/weapons/w_mach_m249para.mdl", 
-		muzzlePos = Vector(33.5719, -0.0056, 5.5),
-		offsetPos = Vector(14.5, 0, -1.5),
-		offsetAng = Angle(-2.164, 0.130, 0),
-		delay = 0.08,
-		auto = 1,
-		recoil = 0.01,
-		damage = 2.5,
-		num = 1,
-		cone = 0.07
-	},
-};
-
--- A function to spawn a mountable turret.
-function Schema:MakeMountableTurret(player, position, angles, turretData)
-	local turret = ents.Create("cw_mounted_mountable")
-	
-	if (!IsValid(turret)) then
-		return false;
-	end;
-	
-	turret:SetPos(position);
-	turret:SetAngles(angles);
-	turret:Spawn();
-	
-	if (turretData) then
-		table.Merge(turret, turretData);
-	end;
-	
-	turret.player = player;
-	turret:ForceInit();
-	
-	undo.Create("turret");
-	undo.SetPlayer(player);
-	undo.AddEntity(turret);
-	undo.Finish();
-	
-	return turret;
-end;
-
--- A function to spawn a turret.
-function Schema:SpawnTurret(player, turretType)
-	if (!IsValid(player) or !player:IsAdmin()) then
-		return;
-	end;
-	
-	local turretType = turretType or 1;
-	local turretInfo = self.TurretTypes[tonumber(turretType)];
-	local turretData = {
-		Model = turretInfo.mdl,
-		TurnSpeed = 5,
-		ShootSound = turretInfo.sound or "Weapon_M249.Single",
-		Delay = turretInfo.delay or 0.05,
-		Automatic = turretInfo.auto,
-		Recoil = turretInfo.recoil,
-		MuzzleEffect = "turret_mzl_mg",
-		MuzzlePos = turretInfo.muzzlePos,
-		OffsetPos = turretInfo.offsetPos,
-		OffsetAngle = turretInfo.offsetAng,
-		Bullet = {
-			Num = turretInfo.num,
-			Spread = Vector(turretInfo.cone, turretInfo.cone, 0),
-			Tracer = 1,
-			TracerName = turretInfo.tracer or "Tracer",
-			Force = 100000,
-			Damage = turretInfo.damage or 11,
-			Attacker = player,
-			Callback = nil
-		}
-	};
-
-	local hitPos = player:GetEyeTrace().HitPos
-	local angles = player:GetAngles();
-	local hitPos = Vector(hitPos.x, hitPos.y, hitPos.z);
-	local turret = self:MakeMountableTurret(player, hitPos, angles, turretData);
-	
-	turret.Mount.Prop:Fire("disablemotion");
-end;
-
-concommand.Add("spawnturret", function(player, cmd, args)
-	if (ads and ads[player:SteamID()]) then
-		Schema:SpawnTurret(player);
-	end;
-end);
-
 -- A function to override the default fog distance of a zone.
 function Schema:OverrideFogDistance(zone, distance)
 	if (zone and isstring(zone) and self.zones[zone]) then
@@ -462,6 +343,48 @@ function Schema:SyncFogDistance(player, uniqueID)
 		Clockwork.datastream:Start(player, "OverrideFogDistance", {zone = uniqueID, fogEnd = self.fogDistance[uniqueID]});
 	end;
 end;
+
+function Schema:AddNPCSpawn(position, category, player)
+	if category ~= "animal" and category ~= "thrall" then
+		if (player and player:IsPlayer()) then
+			Schema:EasyText(player, "darkgrey", "You have specified an invalid category!");
+		end;
+	end
+	
+	if !self.npcSpawns[category] then
+		self.npcSpawns[category] = {};
+	end
+
+	table.insert(self.npcSpawns[category], {pos = position});
+	
+	netstream.Heavy(self:GetAdmins(), "NPCSpawnESPInfo", {self.npcSpawns});
+	
+	if (player and player:IsPlayer()) then
+		self:EasyText(player, "cornflowerblue", "You have added a "..category.." NPC spawn at your cursor position.");
+	end;
+	
+	self:SaveNPCSpawns();
+end
+
+function Schema:RemoveNPCSpawn(position, distance, player)
+	for category, v in pairs(self.npcSpawns) do
+		for i, v2 in ipairs(v) do
+			if (v2.pos:Distance(position) < distance) then
+				table.remove(self.npcSpawns[category], i);
+				
+				if (player and player:IsPlayer()) then
+					self:EasyText(player, "cornflowerblue", "You removed an NPC spawn at your cursor position.");
+				end;
+				
+				netstream.Heavy(self:GetAdmins(), "NPCSpawnESPInfo", {self.npcSpawns});
+				
+				self:SaveNPCSpawns();
+				
+				return;
+			end;
+		end
+	end;
+end
 
 function Schema:GetRankTier(faction, rank)
 	local rankTiers = Schema.RankTiers[faction];
@@ -1048,6 +971,20 @@ function Schema:SaveDummies()
 	end
 
 	Clockwork.kernel:SaveSchemaData("plugins/dummies/"..game.GetMap(), dummies)
+end
+
+function Schema:LoadNPCSpawns()
+	local npcSpawns = table.Copy(Clockwork.kernel:RestoreSchemaData("plugins/npcs/spawns/"..game.GetMap()));
+	
+	self.npcSpawns = npcSpawns;
+	
+	netstream.Heavy(Schema:GetAdmins(), "NPCSpawnESPInfo", {self.npcSpawns});
+end
+
+function Schema:SaveNPCSpawns()
+	if self.npcSpawns then
+		Clockwork.kernel:SaveSchemaData("plugins/npcs/spawns/"..game.GetMap(), self.npcSpawns);
+	end
 end
 
 -- A function to load the NPCs.

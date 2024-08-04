@@ -1094,6 +1094,34 @@ function Schema:ModifyStatusEffects(tab)
 	end
 end
 
+function Schema:GetAdminESPInfo(info)
+	if (Clockwork.ConVars.NPCSPAWNESP and Clockwork.ConVars.NPCSPAWNESP:GetInt() == 1) then
+		if (self.npcSpawns) then
+			if (table.IsEmpty(self.npcSpawns)) then
+				self.npcSpawns = nil;
+				
+				return;
+			end;
+			
+			for k, v in pairs (self.npcSpawns) do
+				for i, v2 in ipairs(v) do
+					if (!v2 or !isvector(v2.pos)) then
+						self.npcSpawns[k][i] = nil;
+						
+						continue;
+					end;
+
+					info[#info + 1] = {
+						position = v2.pos,
+						text = k;
+						color = Color(255, 150, 150);
+					};
+				end
+			end;
+		end;
+	end;
+end
+
 -- Called when a text entry has gotten focus.
 function Schema:OnTextEntryGetFocus(panel)
 	self.textEntryFocused = panel;
@@ -3299,6 +3327,14 @@ netstream.Hook("GoreWarhorn", function(data)
 	Clockwork.Client:EmitSound("warhorns/warhorn_gore.mp3", 60, 100);
 	
 	util.ScreenShake(Clockwork.Client:GetPos(), 2, 5, 15, 1024);
+end);
+
+Clockwork.datastream:Hook("NPCSpawnESPInfo", function(data)
+	if data then
+		if data[1] then
+			Schema.npcSpawns = data[1];
+		end
+	end
 end);
 
 -- Save data icon in top right.

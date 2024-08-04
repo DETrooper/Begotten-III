@@ -173,7 +173,7 @@ if SERVER then
 							if (phys:IsValid()) then
 								phys:Wake();
 								phys:SetMass(2);
-								phys:SetVelocity(self:GetPhysicsObject():GetVelocity());
+								phys:SetVelocityInstantaneous(self:GetPhysicsObject():GetVelocity());
 							end
 							
 							self:Remove();
@@ -390,11 +390,11 @@ if SERVER then
 					
 					if Ent.HasBelief and Ent:HasBelief("impossibly_skilled") then
 						javelin:SetAngles(Ent:GetAimVector():Angle())
-						phys:SetVelocity(Ent:GetAimVector() * 1250);
+						phys:SetVelocityInstantaneous(Ent:GetAimVector() * 1250);
 						
 						Clockwork.chatBox:AddInTargetRadius(Ent, "me", "suddenly catches the projectile mid-flight with their weapon and redirects it, showing impossible skill and grace as it is deflected in the direction of its hurler!", Ent:GetPos(), config.Get("talk_radius"):Get() * 4);
 					else
-						phys:SetVelocity(Ent:GetAimVector() * 50);
+						phys:SetVelocityInstantaneous(Ent:GetAimVector() * 50);
 					end
 				
 					if !Ent:GetNWBool("Parry") then
@@ -405,7 +405,7 @@ if SERVER then
 					return;
 				elseif Ent.iFrames then
 					self:SetCollisionGroup(COLLISION_GROUP_WORLD);
-					self:SetVelocity(data.OurOldVelocity);
+					self:SetVelocityInstantaneous(data.OurOldVelocity);
 					Ent:EmitSound("meleesounds/comboattack3.wav.mp3", 75, math.random( 90, 110 ));
 					
 					return;
@@ -455,7 +455,7 @@ if SERVER then
 				--end
 			end
 
-			self:SetOwner(NUL);
+			self:SetOwner(nil);
 		end
 	end
 end

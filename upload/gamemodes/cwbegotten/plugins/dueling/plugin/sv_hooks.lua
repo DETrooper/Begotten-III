@@ -134,20 +134,27 @@ function cwDueling:PlayerEnteredDuel(player, arena, spawnPos, spawnAngles)
 	duelData.cachedHP = player:Health();
 	
 	player.duelData = duelData;
+
+	if !player:Alive() then
+		player:Spawn();
+	end
 	
-	player:Spawn();	
 	player:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255), 5, 0);
 	player:SetPos(spawnPos);
 	player:SetEyeAngles(spawnAngles);
 	player:SetHealth(player:GetMaxHealth());
+	player:Freeze(true);
 
 	if player:GetLocalVar("Hatred") then
 		player:SetLocalVar("Hatred", 0);
 	end
 	
 	-- Start battle music after players have faded in.
-	timer.Simple(5, function()
-		Clockwork.datastream:Start(player, "StartBattleMusicNoLimit");
+	timer.Simple(3, function()
+		if IsValid(player) then
+			Clockwork.datastream:Start(player, "StartBattleMusicNoLimit");
+			player:Freeze(false);
+		end;
 	end);
 end
 
@@ -156,21 +163,17 @@ function cwDueling:PlayerExitedDuel(player)
 	player:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 5, 0);
 	player:SetNWInt("freeze", 0);
 	
+	if !player:Alive() then
+		player:Spawn();
+	end
+	
 	local duelData = player.duelData;
 
 	if duelData then
-		player:Spawn();
 		player:SetPos(duelData.cachedPos + Vector(0, 0, 8));
 		player:SetEyeAngles(duelData.cachedAngles);
 		
 		Clockwork.limb:RestoreLimbsFromCache(player);
-		
-		timer.Simple(0.1, function()
-			if IsValid(player) then
-				player:SetPos(duelData.cachedPos + Vector(0, 0, 8));
-				player:SetEyeAngles(duelData.cachedAngles);
-			end
-		end);
 		
 		player:SetHealth(player.duelData.cachedHP);
 	end

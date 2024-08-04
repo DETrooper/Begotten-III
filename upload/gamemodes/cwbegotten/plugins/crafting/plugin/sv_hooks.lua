@@ -6,158 +6,89 @@
 cwRecipes.pileLifetime = 1200; -- 20 Minutes.
 cwRecipes.minPileItems = 4;
 cwRecipes.maxPileItems = 10;
+cwRecipes.maxPiles = {
+	["ore"] = 8,
+	["wood"] = 8,
+	["gorewood"] = 6,
+};
 
 local map = string.lower(game.GetMap());
 
-if map == "rp_begotten3" then
-	cwRecipes.maxPiles = 12;
-else
-	cwRecipes.maxPiles = 10;
+function cwRecipes:LoadPileEnts()
+	local pileEnts = table.Copy(Clockwork.kernel:RestoreSchemaData("plugins/crafting/piles/"..map));
+	
+	self.pileLocations = pileEnts;
+	
+	netstream.Heavy(Schema:GetAdmins(), "CraftingPileSpawnESPInfo", {self.pileLocations});
 end
 
-if not cwRecipes.pileLocations then
-	cwRecipes.pileLocations = {};
-	
-	if map == "rp_begotten3" then
-		cwRecipes.pileLocations = {
-			["ore"] = {
-				-- Mines
-				{pos = Vector(-1996.78125, -132.09375, -2600.46875), angles = Angle(-4.268, 167.031, -18.902)},
-				{pos = Vector(-155.21875, -490.65625, -2634.09375), angles = Angle(42.49, 83.71, 11.376)},
-				{pos = Vector(-3734.3125, 1342.0625, -2130.6875), angles = Angle(-6.010, 87.385, -1.373)},
-				{pos = Vector(567.906250, -374.531250, -2647.687500), angles = Angle(-5.438, -176.462, -23.242)},
-				{pos = Vector(729.3125, 3404.21875, -2373.03125), angles = Angle(5.438, -58.672, -22.8193)},
-				{pos = Vector(2507.53125, 6645.0625, -2322.59375), angles = Angle(-11.003, 45.956, -12.404)},
-				{pos = Vector(-2377.125, 8145.09375, -2733.46875), angles = Angle(-9.756, 45.923, -19.874)},
-				{pos = Vector(2133.53125, 7209.40625, -2279.1875), angles = Angle(-11.492, -170.513, -30.866)},
-				{pos = Vector(2668.15625, -167.46875, -2539.25), angles = Angle(-2.791, -124.464, -2.911)},
-				{pos = Vector(3451.5625, 4565, -2299.96875), angles = Angle(-3.466, 5.433, -14.145)},
-				{pos = Vector(3040.90625, 3169.375, -2333.46875), angles = Angle(-2.043, 87.517, -22.368)},
-				{pos = Vector(2911.71875, 1753.53125, -2378.25), angles = Angle(-15.276, -91.752, -26.411)},
-				{pos = Vector(-2417.28125, -2903.53125, -2715.875), angles = Angle(-7.383, -80.041, -21.682)},
-				{pos = Vector(-2445.03125, 2931.65625, -2744.03125), angles = Angle(-1, 98.256, -25.318)},
-				{pos = Vector(-3000.1875, 8204.3125, -2746.6875), angles = Angle(-2.247, -23.286, -19.946)},
-				-- Gore Forest
-				--{pos = Vector(-7515.875, -5587.78125, 11908.6875), angles = Angle(0, -45, 0)},
-				--{pos = Vector(-8620.25, -10288.03125, 11686.5), angles = Angle(-2.368, -144.042, -11.569)},
-				--{pos = Vector(-5187.03125, -8608.5625, 11806.40625), angles = Angle(-5.202, 35.321, -5.839)},
-			},
-			["wood"] = {
-				-- Wasteland Forest
-				{pos = Vector(-7681.28125, -1304.125, -1638.59375), angles = Angle(0.143, -46.137, -0.308)},
-				{pos = Vector(-8451.78125, -1862.15625, -1650.75), angles = Angle(-3.944, 70.137, -4.125)},
-				{pos = Vector(-8690.75, -465.4375, -1668.46875), angles = Angle(-7.213, -46.703, -0.665)},
-				{pos = Vector(-6205.9375, -2449.4375, -1609.90625), angles = Angle(-0.396, 12.7, -3.818)},
-				{pos = Vector(-6419.28125, -5128.40625, -1553.1875), angles = Angle(-0.659, 155.555, -0.807)},
-				{pos = Vector(-4674.625, -4045.5625, -1649.875), angles = Angle(0.461, -159.055, 6.949)},
-				-- Gore Forest
-				{pos = Vector(-2787.71875, -2973.5625, 11679.65625), angles = Angle(3.219, -32.305, 5.751)},
-				{pos = Vector(-5854.03125, -2759.25, 11933.40625), angles = Angle(-0.055, 37.057, -5.488)},
-				{pos = Vector(354, -2565.84375, 11778.4375), angles = Angle(5.532, 26.829, -1.615)},
-				{pos = Vector(-4508.90625, -2796.4375, 11928.4375), angles = Angle(2.834, 39.315, -1.005)},
-				{pos = Vector(-3815.90625, -6824.6875, 11730.1875), angles = Angle(16.732, 125.859, 2.296)},
-				{pos = Vector(-5124.96875, -11144.65625, 11675.25), angles = Angle(22.231, 162.955, 0.681)},
-				{pos = Vector(-9206.125, -12769.25, 11946.59375), angles = Angle(1.483, 152.243, -2.296)},
-				{pos = Vector(-7522.40625, -9564.1875, 11592.34375), angles = Angle(-10.003, -50.526, -0.692)},
-			}
-		};
-	elseif map == "rp_begotten_redux" then
-		cwRecipes.pileLocations = {
-			["ore"] = {
-				-- Mines
-				{pos = Vector(-12584.21875, -10444.4375, -206.8125), angles = Angle(-21.555, -5.312, -25.466)},
-				{pos = Vector(-10502, -10035.28125, -205.25), angles = Angle(-6.531, 88.391, -19.281)},
-				{pos = Vector(-11096.4375, -9939.1875, -227.34375), angles = Angle(-2.719, 173.496, -15.353)},
-				{pos = Vector(-11646.8125, -10131.15625, -223.625), angles = Angle(-5.427, 11.382, -26.45)},
-				{pos = Vector(-12321.96875, -9931.84375, -227.375), angles = Angle(-3.203, -173.639, -20.402)},
-				{pos = Vector(-12603.15625, -9017.625, -222.59375), angles = Angle(-3.312, -176.957, -15.584)},
-				{pos = Vector(-12620.5625, -10041.625, -224.5625), angles = Angle(-6.092 ,-91.544, -12.821)},
-				
-				-- Wasteland
-				{pos = Vector(-9665.25, -1583.3125, 21.84375), angles = Angle(-1.23, -74.366, 8.998)},
-				{pos = Vector(-11100.21875, -1577.15625, 23.71875), angles = Angle(-6.603, -87.418, 15.826)},
-				{pos = Vector(-12794.5, -1141.78125, 22.6875), angles = Angle(-3.862, -25.378, 17.067)},
-				{pos = Vector(-11602.46875, -286.875, 67.4375), angles = Angle(-3.873, -140.301, -3.565)},
-			},
-			["wood"] = {
-				-- Wasteland Forest
-				{pos = Vector(-10318, 8496.25, 784.25), angles = Angle(1.758, 81.508, -2.401)},
-				{pos = Vector(-7890.71875, 6008.375, 768.8125), angles = Angle(-1.747, 175.391, -0.5)},
-				{pos = Vector(-4062.75, 7244.21875, 705.4375), angles = Angle(-0.137, -172.365, 1.582)},
-				{pos = Vector(-1586.125, 4383.28125, 767.34375), angles = Angle(0.236, -88.962, 0.489)},
-				{pos = Vector(-1348.15625, 9540.125, 751.3125), angles = Angle(-0.813, -96.784, -2.807)},
-				{pos = Vector(2753.4375, 9341.25, 684.53125), angles = Angle(0.033, 156.27, -0.104)},
-				{pos = Vector(2483.875, 5350.71875, 684.5), angles = Angle(0.132, 163.872, -0.165)},
-				{pos = Vector(2628.8125, 2622.78125, 682.28125), angles = Angle(3.032, -138.73, -1.714)},
-				{pos = Vector(5870.4375, 12611.3125, 683.3125), angles = Angle(-0.472, -54.025, 0.648)},
-			}
-		};
-	elseif map == "rp_scraptown" then
-		cwRecipes.pileLocations = {
-			["ore"] = {
-				{pos = Vector(-5779.781250, -8817.656250, 784.500000), angles = Angle(0.000, -134.978, 0.000)},
-				{pos = Vector(-5457.500000, -8720.812500, 788.875000), angles = Angle(-1.077, 171.101, -8.553)},
-				{pos = Vector(-5126.812500, -8714.156250, 797.562500), angles = Angle(1.582, -153.638, -16.150)},
-				{pos = Vector(-4619.093750, -9506.375000, 798.968750), angles = Angle(3.186, 67.225, -7.333)},
-				{pos = Vector(-4769.218750, -9664.062500, 789.093750), angles = Angle(-6.597, 48.593, -4.345)},
-				{pos = Vector(-5819.937500, -9104.250000, 809.531250), angles = Angle(0.807, -14.222, -10.909)},
-				{pos = Vector(-6796.562500, 12259.281250, 408.187500), angles = Angle(-3.016, -156.940, -9.305)},
-				{pos = Vector(-7646.875000, 11925.718750, 409.843750), angles = Angle(-4.246, 17.078, -16.979)},
-				{pos = Vector(-8517.937500, 11813.031250, 453.187500), angles = Angle(6.471, 27.834, 1.285)},
-				{pos = Vector(-8948.562500, 12684.281250, 523.125000), angles = Angle(-6.268, -89.363, -15.892)},
-				{pos = Vector(-7808.593750, 12389.625000, 406.875000), angles = Angle(-3.571, 156.736, -4.460)},
-				{pos = Vector(-6647.625000, 11416.125000, 408.156250), angles = Angle(0.983, 43.726, -6.894)},
-			},
-			["wood"] = {
-				{pos = Vector(-2711.062500, 6134.437500, 901.656250), angles = Angle(2.873, 89.973, -0.890)},
-				{pos = Vector(-2295.562500, 5768.093750, 951.593750), angles = Angle(6.141, 87.759, -4.664)},
-				{pos = Vector(-2056.187500, 6498.062500, 930.531250), angles = Angle(-3.433, 19.473, -1.456)},
-				{pos = Vector(817.062500, 7087.000000, 894.156250), angles = Angle(-1.560, -9.278, -4.521)},
-				{pos = Vector(1254.000000, 4979.843750, 877.375000), angles = Angle(0.846, -168.618, -3.631)},
-				{pos = Vector(9820.093750, -710.250000, 260.125000), angles = Angle(4.532, 8.168, -6.471)},
-				{pos = Vector(8327.593750, -1025.406250, 238.937500), angles = Angle(-1.467, -123.766, -2.911)},
-				{pos = Vector(10824.937500, -388.406250, 264.312500), angles = Angle(1.505, -87.045, 4.515)},
-				{pos = Vector(11328.000000, 6137.781250, 386.343750), angles = Angle(3.966, -147.233, 5.114)},
-				{pos = Vector(11794.062500, 6607.406250, 411.125000), angles = Angle(-0.417, -82.249, 1.945)},
-				{pos = Vector(11995.593750, 7613.843750, 410.968750), angles = Angle(0.341, -111.962, 0.775)},
-				{pos = Vector(11389.718750, 9090.375000, 255.156250), angles = Angle(-3.230, -101.151, 5.070)},
-				{pos = Vector(11730.968750, 10221.03125, 391.3750000), angles = Angle(6.498, 172.546, -4.180)},
-				{pos = Vector(11917.343750, 7230.781250, 409.437500), angles = Angle(-1.022, 73.163, -4.752)},
-				{pos = Vector(10364.750000, -267.437500, 224.218750), angles = Angle(0.681, -113.373, 7.872)},
-			}
-		};
+function cwRecipes:SavePileEnts()
+	if self.pileLocations then
+		Clockwork.kernel:SaveSchemaData("plugins/crafting/piles/"..map, self.pileLocations);
 	end
 end
 
--- Called just before a recipe table is registered.
--- please enlighten me as to why it was done this way, seems to be causing issues with autorefresh so im gonna comment it out for now - DETrooper
---[[function cwRecipes:ModifyRecipeTable(recipeTable)
-	-- A function to craft the recipe.
-	function recipeTable:Craft(player, itemIDs)
-		if (!self.result or !self.requirements) then
-			return;
+-- Called when Clockwork has loaded all of the entities.
+function cwRecipes:ClockworkInitPostEntity()
+	self:LoadPileEnts();
+end
+
+function cwRecipes:AddPileSpawn(pileEntity, pileType, player)
+	if !IsValid(pileEntity) or (pileEntity:GetClass() ~= "cw_woodpile" and pileEntity:GetClass() ~= "cw_ironorepile") then
+		if (player and player:IsPlayer()) then
+			Schema:EasyText(player, "darkgrey", "["..self.name.."] You are using an invalid entity!");
 		end;
 		
-		if !cwRecipes:PlayerMeetsCraftingItemRequirements(player, self, itemIDs, true) then
-			return;
+		return;
+	end
+
+	if pileType == "ore" or pileType == "wood" or pileType == "gorewood" then
+		if !self.pileLocations[pileType] then
+			self.pileLocations[pileType] = {};
 		end
+
+		table.insert(self.pileLocations[pileType], {pos = pileEntity:GetPos(), angles = pileEntity:GetAngles()});
 		
-		for k, v in pairs (self.result) do
-			-- todo: condition
-			player:UpdateInventory(k, math.abs(v.amount));
+		netstream.Heavy(Schema:GetAdmins(), "CraftingPileSpawnESPInfo", {self.pileLocations});
+		
+		if (player and player:IsPlayer()) then
+			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have added a "..pileType.." resource spawn at your cursor position.");
 		end;
 		
-		if (self.finishSound) then
-			player:EmitSound(self.finishSound, 70);
+		self:SavePileEnts();
+	else
+		if (player and player:IsPlayer()) then
+			Schema:EasyText(player, "darkgrey", "["..self.name.."] You have specified an invalid category!");
 		end;
-		
-		if (self.OnCraft) then
-			self:OnCraft(player);
-		end;
-		
-		hook.Run("PlayerFinishedCrafting", player, self);
+	end
+end
+
+function cwRecipes:RemovePileSpawn(position, distance, player)
+	for pileType, v in pairs(self.pileLocations) do
+		for i, v2 in ipairs(v) do
+			if (v2.pos:Distance(position) < distance) then
+				table.remove(self.pileLocations[pileType], i);
+				
+				if (player and player:IsPlayer()) then
+					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You removed a resource spawn at your cursor position.");
+				end;
+				
+				netstream.Heavy(Schema:GetAdmins(), "CraftingPileSpawnESPInfo", {self.pileLocations});
+				
+				self:SavePileEnts();
+				
+				return;
+			end;
+		end
 	end;
-end;]]--
+end
+
+-- Called just after a player spawns.
+function cwRecipes:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
+	if (player:IsAdmin() or player:IsUserGroup("operator")) then
+		netstream.Heavy(player, "CraftingPileSpawnESPInfo", {self.pileLocations});
+	end;
+end;
 
 -- Called to get whether a player can craft a recipe or not.
 function cwRecipes:PlayerCanCraft(player, uniqueID, craftAmount)
@@ -577,8 +508,8 @@ function cwRecipes:Think()
 	if (!self.nextPileCheck or self.nextPileCheck < curTime) then
 		self.nextPileCheck = curTime + 8;
 		
-		if not self.spawnLocations then
-			self.spawnLocations = {};
+		if not self.pileLocations then
+			self.pileLocations = {};
 		end
 		
 		if not self.Piles then
@@ -665,18 +596,12 @@ function cwRecipes:Think()
 		
 		if self.Piles then
 			local numPiles = #self.Piles;
+			
+			local categories = {"gorewood", "ore", "wood"};
+			local category = categories[math.random(1, #categories)];
 
-			if numPiles < self.maxPiles then
-				local categories = {"ore", "wood"};
-				--local category = categories[math.random(1, #categories)];
-				local category;
+			if numPiles < self.maxPiles[category] then
 				local unoccupiedLocations = {};
-				
-				if math.random(1, 3) == 1 then
-					category = "ore";
-				else
-					category = "wood";
-				end
 				
 				if self.pileLocations[category] then
 					for i = 1, #self.pileLocations[category] do

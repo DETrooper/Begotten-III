@@ -184,6 +184,14 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 			local traitTable = Clockwork.trait:FindByID(v);
 			
 			if (traitTable) then
+				if traitTable.disables then
+					for i, v in ipairs(traitTable.disables) do
+						if table.HasValue(data.traits, v) then
+							return self:SetCreateFault(player, "You have selected traits that are incompatible with eachother!");
+						end
+					end
+				end
+				
 				table.insert(info.data["Traits"], traitTable.uniqueID);
 				pointsSpent = pointsSpent + traitTable.points;
 			end;

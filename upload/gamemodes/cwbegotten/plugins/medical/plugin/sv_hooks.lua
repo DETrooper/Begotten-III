@@ -925,8 +925,10 @@ end;
 
 -- Called when a player is given an injury.
 function cwMedicalSystem:PlayerGivenInjury(player, uniqueID)
-	if (self.cwInjuryTable[uniqueID] and self.cwInjuryTable[uniqueID].OnRecieve) then
-		self.cwInjuryTable[uniqueID]:OnRecieve(player);
+	local injuryTable = self.cwInjuryTable[uniqueID];
+
+	if (injuryTable and injuryTable.OnReceive) then
+		injuryTable:OnReceive(player);
 	end;
 	
 	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true)
@@ -934,8 +936,10 @@ end;
 
 -- Called when an injury is taken from a player.
 function cwMedicalSystem:PlayerInjuryTaken(player, uniqueID)
-	if (self.cwInjuryTable[uniqueID] and self.cwInjuryTable[uniqueID].OnTake) then
-		self.cwInjuryTable[uniqueID]:OnTake(player);
+	local injuryTable = self.cwInjuryTable[uniqueID];
+	
+	if (injuryTable and injuryTable.OnTake) then
+		injuryTable:OnTake(player);
 	end;
 	
 	hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true)

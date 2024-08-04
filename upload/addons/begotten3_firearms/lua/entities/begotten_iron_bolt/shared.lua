@@ -279,11 +279,11 @@ if SERVER then
 					
 					if Ent.HasBelief and Ent:HasBelief("impossibly_skilled") then
 						bolt:SetAngles(Ent:GetAimVector():Angle())
-						phys:SetVelocity(Ent:GetAimVector() * 1800);
+						phys:SetVelocityInstantaneous(Ent:GetAimVector() * 1800);
 						
 						Clockwork.chatBox:AddInTargetRadius(Ent, "me", "suddenly catches the crossbow bolt mid-flight with their weapon and redirects it, showing impossible skill and grace as it is deflected in the direction of its shooter!", Ent:GetPos(), config.Get("talk_radius"):Get() * 4);
 					else
-						phys:SetVelocity(Ent:GetAimVector() * 50);
+						phys:SetVelocityInstantaneous(Ent:GetAimVector() * 50);
 					end
 				
 					if !Ent:GetNWBool("Parry") then
@@ -294,7 +294,7 @@ if SERVER then
 					return;
 				elseif Ent.iFrames then
 					self:SetCollisionGroup(COLLISION_GROUP_WORLD);
-					self:SetVelocity(data.OurOldVelocity);
+					self:SetVelocityInstantaneous(data.OurOldVelocity);
 					Ent:EmitSound("meleesounds/comboattack3.wav.mp3", 75, math.random( 90, 110 ));
 					
 					return;
