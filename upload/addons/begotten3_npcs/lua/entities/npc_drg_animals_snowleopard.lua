@@ -9,7 +9,7 @@ ENT.RagdollOnDeath = false
 ENT.CollisionBounds = Vector(15, 15, 40)
 ENT.BloodColor = BLOOD_COLOR_RED
 ENT.Frightening = true
-ENT.SightRange = 1000
+ENT.SightRange = 850
 
 -- Sounds --
 ENT.OnDamageSounds = {"leopard/attack.wav"}
