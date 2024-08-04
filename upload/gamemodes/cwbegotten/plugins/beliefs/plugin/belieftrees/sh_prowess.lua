@@ -69,7 +69,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["repulsive_riposte"] = {
 				name = "Repulsive Riposte",
-				description = "Riposte attack damage from successful parries is increased from 200% to 300%.";
+				description = "Riposte attack damage from successful parries is increased from 200% to 250%.";
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "parrying"},
 				row = 3,

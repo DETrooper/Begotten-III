@@ -147,25 +147,6 @@ function ENT:OnTakeDamage(damageInfo)
 			if self.oreLeft <= 0 then
 				Clockwork.chatBox:AddInTargetRadius(player, "it", "The ore pile is reduced to nothing, its resources fully extracted.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 				
-				--[[local piles = cwRecipes.Piles;
-				
-				for i = 1, #piles do
-					local pileTable = piles[i];
-					
-					for k, v in pairs(cwRecipes.pileLocations) do
-						for j = 1, #v do
-							if v[j].occupier == self:EntIndex() then
-								v[j].occupier = nil;
-								
-								self:Remove();
-								table.remove(cwRecipes.Piles, i);
-								
-								return;
-							end
-						end
-					end
-				end]]--
-				
 				self:Remove();
 			end
 		end
@@ -173,20 +154,12 @@ function ENT:OnTakeDamage(damageInfo)
 end
 
 function ENT:OnRemove()
-	local piles = cwRecipes.Piles;
-	
-	for i = 1, #piles do
-		local pileTable = piles[i];
-		
-		for k, v in pairs(cwRecipes.pileLocations) do
-			for j = 1, #v do
-				if v[j].occupier == self:EntIndex() then
-					v[j].occupier = nil;
-					
-					table.remove(cwRecipes.Piles, i);
-					
-					return;
-				end
+	for category, v in pairs(cwRecipes.Piles) do
+		for i, pileTable in ipairs(v) do
+			if pileTable.pile == self then
+				table.Remove(cwRecipes.piles[category], i);
+				
+				return;
 			end
 		end
 	end

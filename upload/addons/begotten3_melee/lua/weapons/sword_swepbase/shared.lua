@@ -983,7 +983,7 @@ end
 				local d = DamageInfo()
 				
 				if cwBeliefs and owner.HasBelief and owner:HasBelief("repulsive_riposte") then
-					d:SetDamage(damage * shield_reduction * 4 * hit_reduction);
+					d:SetDamage(damage * shield_reduction * 3.5 * hit_reduction);
 				else
 					d:SetDamage(damage * shield_reduction * 3 * hit_reduction);
 				end

@@ -24,7 +24,15 @@ end
 
 function cwRecipes:SavePileEnts()
 	if self.pileLocations then
-		Clockwork.kernel:SaveSchemaData("plugins/crafting/piles/"..map, self.pileLocations);
+		local saveTab = table.Copy(self.pileLocations);
+		
+		for k, v in pairs(saveTab) do
+			for i, v in ipairs(v) do
+				if v.occupier then v.occupier = nil end;
+			end
+		end
+		
+		Clockwork.kernel:SaveSchemaData("plugins/crafting/piles/"..map, saveTab);
 	end
 end
 
@@ -513,31 +521,36 @@ function cwRecipes:Think()
 		end
 		
 		if not self.Piles then
-			self.Piles = {};
+			self.Piles = {
+				["gorewood"] = {},
+				["ore"] = {},
+				["wood"] = {},
+			};
 		end
 		
-		local piles = self.Piles;
-		
-		for i = 1, #piles do
-			local pileTable = piles[i];
-			
-			if pileTable.lifeTime then
-				if pileTable.lifeTime < curTime then
-					local pile = pileTable.pile;
-					
-					if IsValid(pile) then
-						if !self.occupier and self:IsAreaClear(pileTable.position, true) then
+		for category, v in pairs(self.Piles) do
+			for i, pileTable in ipairs(v) do
+				local pile = pileTable.pile;
+				
+				if !IsValid(pile) then
+					table.remove(self.Piles[category], i);
+					break;
+				end
+				
+				if pileTable.lifeTime then
+					if pileTable.lifeTime < curTime then
+						if self:IsAreaClear(pileTable.position, true) then
 							local posFound = false;
 							
-							for k, v in pairs(self.pileLocations) do
+							for k, location in pairs(self.pileLocations) do
 								if posFound then
 									break;
 								end
 								
-								for j = 1, #v do
-									if v[j].occupier == pile:EntIndex() then
+								for j = 1, #location do
+									if location[j].occupier == pile:EntIndex() then
 										posFound = true;
-										v[j].occupier = nil;
+										location[j].occupier = nil;
 										
 										break;
 									end
@@ -545,32 +558,28 @@ function cwRecipes:Think()
 							end
 							
 							pile:Remove();
-							table.remove(self.Piles, i);
+							table.remove(self.Piles[category], i);
 							break;
 						else
 							-- Move this pile to the back of the queue, we'll check it again after all the others.
 							-- This has the added side effect of making sure camping doesn't pay off :)
-							table.remove(self.Piles, i);
-							table.insert(self.Piles, pileTable);
+							table.remove(self.Piles[category], i);
+							table.insert(self.Piles[category], pileTable);
 						end
 					end
-				end
-			else
-				local pile = pileTable.pile;
-				
-				if IsValid(pile) then
-					if !self.occupier and self:IsAreaClear(pileTable.position, true) then
+				else
+					if self:IsAreaClear(pileTable.position, true) then
 						local posFound = false;
 						
-						for k, v in pairs(self.pileLocations) do
+						for k, location in pairs(self.pileLocations) do
 							if posFound then
 								break;
 							end
 							
-							for j = 1, #v do
-								if v[j].occupier == pile:EntIndex() then
+							for j = 1, #location do
+								if location[j].occupier == pile:EntIndex() then
 									posFound = true;
-									v[j].occupier = nil;
+									location[j].occupier = nil;
 									
 									break;
 								end
@@ -578,36 +587,30 @@ function cwRecipes:Think()
 						end
 						
 						pile:Remove();
-						table.remove(self.Piles, i);
+						table.remove(self.Piles[category], i);
 						
 						break;
 					else
 						-- Move this pile to the back of the queue, we'll check it again after all the others.
 						-- This has the added side effect of making sure camping doesn't pay off :)
-						table.remove(self.Piles, i);
-						table.insert(self.Piles, pileTable);
+						table.remove(self.Piles[category], i);
+						table.insert(self.Piles[category], pileTable);
 					end
-				else
-					table.remove(self.Piles, i);
-					break;
 				end
 			end
 		end
 		
 		if self.Piles then
-			local numPiles = #self.Piles;
-			
 			local categories = {"gorewood", "ore", "wood"};
 			local category = categories[math.random(1, #categories)];
+			local numPiles = #self.Piles[category];
 
 			if numPiles < self.maxPiles[category] then
 				local unoccupiedLocations = {};
 				
 				if self.pileLocations[category] then
-					for i = 1, #self.pileLocations[category] do
-						local location = self.pileLocations[category][i];
-						
-						if not location.occupier then
+					for i, location in ipairs(self.pileLocations[category]) do
+						if !location.occupier or !IsValid(Entity(location.occupier)) then
 							table.insert(unoccupiedLocations, location);
 						end
 					end
@@ -620,7 +623,7 @@ function cwRecipes:Think()
 							
 							if category == "ore" then
 								pile = ents.Create("cw_ironorepile")
-							elseif category == "wood" then
+							elseif category == "wood" or category == "gorewood" then
 								pile = ents.Create("cw_woodpile")
 							end
 							
@@ -644,7 +647,7 @@ function cwRecipes:Think()
 									lifeTime = curTime + self.pileLifetime
 								};
 								
-								table.insert(self.Piles, pileTable);
+								table.insert(self.Piles[category], pileTable);
 							end
 						end
 					end

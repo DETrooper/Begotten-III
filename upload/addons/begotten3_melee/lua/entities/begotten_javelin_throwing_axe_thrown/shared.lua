@@ -303,7 +303,7 @@ if SERVER then
 					
 					if self.parried then
 						if cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("repulsive_riposte") then
-							damage = damage * 4;
+							damage = damage * 3.5;
 						else
 							damage = damage * 3;
 						end
