@@ -1458,6 +1458,7 @@ function Schema:TiePlayer(player, isTied, reset)
 		
 		player:Flashlight(false);
 		player:StripWeapons();
+		player:SetCharacterData("tied", true);
 	elseif (!reset) then
 		if (player:Alive()) then 
 			if !player:IsRagdolled() then
@@ -1466,6 +1467,8 @@ function Schema:TiePlayer(player, isTied, reset)
 				hook.Run("PlayerLoadout", player);
 			end
 		end;
+		
+		player:SetCharacterData("tied", false);
 		
 		Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name().." has been untied.");
 	end;

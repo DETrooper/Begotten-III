@@ -647,6 +647,24 @@ AttackTables.ThrowingDaggerAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
+AttackTables.ThrowingStoneAttackTable = {
+	["primarydamage"] = 10,
+	["dmgtype"] = 128,
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 1,
+	["altattackpoisedamagemodifier"] = 0.2,
+	["altmeleearc"] = 15,
+	["altmeleerange"] = 600,
+	["alttakeammo"] = 3,
+	["armorpiercing"] = 0,
+	["poisedamage"] = 30,
+	["stabilitydamage"] = 40,
+	["takeammo"] = 20,
+	["delay"] = 0.9,
+	["striketime"] = 0.4,
+	["punchstrength"] = Angle(0,1,0),
+};
+
 AttackTables.IronBoltAttackTable = {
 	["primarydamage"] = 75,
 	["dmgtype"] = DMG_VEHICLE,
@@ -3182,6 +3200,7 @@ AddTable("PilumAttackTable", AttackTables.PilumAttackTable)
 AddTable("TrainingJavelinAttackTable", AttackTables.TrainingJavelinAttackTable)
 AddTable("ThrowingAxeAttackTable", AttackTables.ThrowingAxeAttackTable)
 AddTable("ThrowingDaggerAttackTable", AttackTables.ThrowingDaggerAttackTable)
+AddTable("ThrowingStoneAttackTable", AttackTables.ThrowingStoneAttackTable)
 AddTable("IronBoltAttackTable", AttackTables.IronBoltAttackTable)
 AddTable("ScrapBoltAttackTable", AttackTables.ScrapBoltAttackTable)
 AddTable("ClaymoreAttackTable", AttackTables.ClaymoreAttackTable) 

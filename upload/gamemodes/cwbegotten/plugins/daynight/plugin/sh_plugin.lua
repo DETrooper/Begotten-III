@@ -21,23 +21,21 @@ local COMMAND = Clockwork.command:New("SetCycle");
 		local arg_1 = arguments[1];
 		
 		if arg_1 == "day" or arg_1 == "night" then
-			if (SERVER) then
-				local notify = true;
-				
-				if arguments[3] then
-					notify = tobool(arguments[3]);
-				end
-				
-				if tobool(arguments[2]) == true then
-					cwDayNight:ChangeCycle(arg_1, notify);
+			local notify = true;
+			
+			if arguments[3] then
+				notify = tobool(arguments[3]);
+			end
+			
+			if tobool(arguments[2]) == true then
+				cwDayNight:ChangeCycle(arg_1, notify);
+			else
+				if arg_1 == "day" then
+					cwDayNight:ChangeCycle("nighttoday", notify);
 				else
-					if arg_1 == "day" then
-						cwDayNight:ChangeCycle("nighttoday", notify);
-					else
-						cwDayNight:ChangeCycle("daytonight", notify);
-					end
+					cwDayNight:ChangeCycle("daytonight", notify);
 				end
-			end;
+			end
 		else
 			Schema:EasyText(player, "darkgrey", "This is not a valid cycle! The valid cycles are \"day\" and \"night\".");
 		end;

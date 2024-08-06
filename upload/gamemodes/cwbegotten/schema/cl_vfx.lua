@@ -187,7 +187,9 @@ function Schema:CalcView(player, origin, angles, fov)
 	local view = {origin = origin, angles = angles, fov = fov}
 
 	if (Clockwork.ConVars.SHOWCALCVIEW:GetInt() != 1) then
-		return
+		if Clockwork.Client:IsAdmin() then
+			return
+		end
 	end
 	
 	if Clockwork.Client:InVehicle() then
@@ -383,7 +385,9 @@ end;
 -- Called when the calc view table should be adjusted.
 function Schema:CalcViewAdjustTable(view)
 	if (Clockwork.ConVars.SHOWCALCVIEW:GetInt() != 1) then
-		return;
+		if Clockwork.Client:IsAdmin() then
+			return;
+		end
 	end
 
 	if (Clockwork.Client.Wakeup) then

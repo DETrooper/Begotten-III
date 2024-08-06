@@ -223,7 +223,7 @@ end
 function cwWeather:WeatherChanged(weather, oldWeather)
 	if weather == "bloodstorm" or oldWeather == "bloodstorm" then
 		for i, index in ipairs(Schema.spawnedNPCs["thrall"]) do
-			local entity = ents.GetByIndex(Schema.spawnedNPCs[i]);
+			local entity = ents.GetByIndex(index);
 			
 			if IsValid(entity) and (entity:IsNPC() or entity:IsNextBot()) then
 				entity:Remove();

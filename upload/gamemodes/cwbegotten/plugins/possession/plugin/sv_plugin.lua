@@ -226,6 +226,6 @@ function playerMeta:Unpossess()
 end
 
 -- A function to get if the player is possessed.
-function playerMeta:IsPossessed()
+function playerMeta:IsPossessedByDemon()
 	return self:GetSharedVar("currentlyPossessed") or false;
 end

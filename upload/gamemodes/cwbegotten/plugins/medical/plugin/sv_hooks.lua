@@ -1100,6 +1100,14 @@ end;
 	end;
 end;]]--
 
+function cwMedicalSystem:GetPlayerSkinOverride(player)
+	if player:HasDisease("leprosy") then
+		if string.find(player:GetModel() or "", "models/begotten/heads") then
+			return player:SkinCount() - 1;
+		end
+	end
+end
+
 -- Called when a player has been unragdolled.
 function cwMedicalSystem:PlayerUnragdolled(player, state, ragdoll)
 	Clockwork.player:SetAction(player, "die", false);

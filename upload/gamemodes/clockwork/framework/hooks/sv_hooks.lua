@@ -1441,9 +1441,11 @@ function GM:GetFallDamage(player, velocity)
 	if (damage > 30) and !player:IsRagdolled() then
 		if hook.Run("PlayerCanFallOverFromFallDamage", player) ~= false then
 			timer.Simple(0, function()
-				Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, nil)
+				if IsValid(player) then
+					Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, nil)
 
-				player:SetDTBool(BOOL_FALLENOVER, true)
+					player:SetDTBool(BOOL_FALLENOVER, true)
+				end
 			end);
 		end
 	end

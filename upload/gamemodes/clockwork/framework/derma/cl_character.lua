@@ -44,7 +44,7 @@ function PANEL:Init()
 		self.createButton:FadeIn(0.5);
 		self.createButton:SetCallback(function(panel)
 			if (table.Count(Clockwork.character:GetAll()) >= Clockwork.player:GetMaximumCharacters()) then
-				return Clockwork.character:SetFault("You cannot create any more characters!");
+				return Clockwork.character:SetFault("You cannot create any more characters! Try clearing any characters in your Necropolis first!");
 			end;
 			
 			Clockwork.character:ResetCreationInfo();

@@ -84,7 +84,7 @@ end
 
 -- Called when a player dies.
 function cwPossession:PlayerDeath(player, inflictor, attacker, damageInfo)
-	if player:IsPossessed() then
+	if player:IsPossessedByDemon() then
 		if IsValid(player.possessor) then
 			player.possessor:Spectate(0);
 			player.possessor:UnSpectate();
@@ -96,13 +96,13 @@ function cwPossession:PlayerDeath(player, inflictor, attacker, damageInfo)
 		
 		player:SetSharedVar("currentlyPossessed", false);
 		player.possessor = nil;
-	elseif attacker:IsPlayer() and attacker:IsPossessed() then
+	elseif attacker:IsPlayer() and attacker:IsPossessedByDemon() then
 		attacker:EmitSound(self.laughs[math.random(1, #self.laughs)]);
 	end
 end;
 
 function cwPossession:PlayerDisconnected(player)
-	if player:IsPossessed() then
+	if player:IsPossessedByDemon() then
 		if IsValid(player.possessor) then
 			player.possessor:Spectate(0);
 			player.possessor:UnSpectate();
@@ -134,7 +134,7 @@ end;
 -- Possessed players take 1/4th the damage.
 function cwPossession:EntityTakeDamageNew(entity, damageInfo)
 	if entity:IsPlayer() then
-		if entity:IsPossessed() then
+		if entity:IsPossessedByDemon() then
 			damageInfo:SetDamage(damageInfo:GetDamage() / 4);
 		elseif IsValid(entity.victim) then
 			damageInfo:SetDamage(0);

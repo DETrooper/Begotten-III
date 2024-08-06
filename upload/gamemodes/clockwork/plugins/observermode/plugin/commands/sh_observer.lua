@@ -174,6 +174,12 @@ local COMMAND = Clockwork.command:New("SpectatorModeOn");
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
 		cwObserverMode.spectatorMode = true;
+		
+		for i, v in ipairs(_player.GetAll()) do
+			if v:HasInitialized() and !v:Alive() then
+				Schema:EasyText(player, "darkgrey", "["..self.name.."] Spectator mode has been enabled! Type /spectate to toggle spectating.");
+			end
+		end
 
 		Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has turned spectator mode on!", nil);
 	end;

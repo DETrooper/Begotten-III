@@ -104,7 +104,7 @@ function cwDayNight:ChangeCycle(cycle, notify)
 	if cycle == "nighttoday" or cycle == "night" then
 		if !cwWeather or cwWeather.weather ~= "bloodstorm" then
 			for i, index in ipairs(Schema.spawnedNPCs["thrall"]) do
-				local entity = ents.GetByIndex(Schema.spawnedNPCs[i]);
+				local entity = ents.GetByIndex(index);
 				
 				if IsValid(entity) and (entity:IsNPC() or entity:IsNextBot()) then
 					entity:Remove();

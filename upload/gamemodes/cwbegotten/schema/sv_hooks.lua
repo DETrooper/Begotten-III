@@ -2564,7 +2564,7 @@ function Schema:PostPlayerLightSpawn(player, weapons, ammo, special) end;
 function Schema:PlayerCharacterLoaded(player)
 	netstream.Start(player, "GetZone", true);
 	
-	if self.autoTieEnabled and !player:IsAdmin() then
+	if player:GetCharacterData("tied") or (self.autoTieEnabled and !player:IsAdmin()) then
 		player:SetNetVar("tied", 1);
 	end
 	

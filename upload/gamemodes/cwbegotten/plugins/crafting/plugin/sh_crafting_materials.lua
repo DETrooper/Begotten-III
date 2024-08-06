@@ -399,15 +399,18 @@ local ITEM = Clockwork.item:New();
 	
 ITEM:Register();
 
-local ITEM = Clockwork.item:New();
+local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Stone";
 	ITEM.category = "Crafting Materials";
 	ITEM.model = "models/props_mining/rock_caves01b.mdl";
-	ITEM.weight = 0.3;
+	ITEM.weight = 0.5;
 	ITEM.uniqueID = "stone";
-	ITEM.description = "A chunk of stone that can be used in the crafting of blunt weapons.";
+	ITEM.description = "A chunk of stone that can be used in the crafting of blunt weapons, or as a blunt weapon.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = true;
+	ITEM.weaponClass = "begotten_javelin_throwing_stone";
+	ITEM.isJavelin = true;
+	ITEM.canUseShields = true;
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;

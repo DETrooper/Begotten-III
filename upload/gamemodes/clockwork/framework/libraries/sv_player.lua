@@ -140,7 +140,7 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 	info.lastPlayed = data.lastPlayed
 	info.timeCreated = data.timeCreated
 	info.data = {}
-
+	
 	if (data.plugin) then
 		for k, v in pairs(data.plugin) do
 			info.data[k] = v
@@ -196,6 +196,18 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 				pointsSpent = pointsSpent + traitTable.points;
 			end;
 		end;
+		
+		if table.HasValue(data.traits, "leper") then
+			local dummyEnt = ents.Create("prop_dynamic");
+			
+			if IsValid(dummyEnt) then
+				dummyEnt:SetModel(info.model);
+				
+				info.skin = dummyEnt:SkinCount() - 1;
+				
+				dummyEnt:Remove();
+			end
+		end
 		
 		if (pointsSpent > maximumPoints) then
 			return self:SetCreateFault(player, "Your trait point balance must be equal to or above 0!");

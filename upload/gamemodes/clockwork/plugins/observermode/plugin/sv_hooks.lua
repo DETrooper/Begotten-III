@@ -57,7 +57,7 @@ end;
 
 function cwObserverMode:PlayerDeath(player)
 	if self.spectatorMode and player:HasInitialized() then
-		Schema:EasyText(player, "darkgrey", "["..self.name.."] Spectator mode is currently enabled! Type /spectate to enable or disable it.");
+		Schema:EasyText(player, "darkgrey", "["..self.name.."] Spectator mode is currently enabled! Type /spectate to toggle spectating.");
 	end
 end;
 

@@ -885,6 +885,80 @@ local COMMAND = Clockwork.command:New("BlowWarhorn");
 	end;
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("GoreicHornSummonAll");
+	COMMAND.tip = "Summon all Goreic warriors to the village center using the Goreic Gathering Horn. Utilize discretion before doing so.";
+
+	function COMMAND:OnRun(player, arguments)
+		local trace = player:GetEyeTrace();
+
+		if (trace.Entity) then
+			local entity = trace.Entity;
+
+			if entity:GetClass() == "cw_gorevillagehorn" then
+				local faction = player:GetFaction();
+				local subfaction = player:GetSubfaction();
+				
+				if faction == "Goreic Warrior" then
+					for _,v in pairs(_player.GetAll()) do
+						local lastZone = v:GetCharacterData("LastZone");
+						if (lastZone == "gore" or lastZone == "gore_tree" or lastZone == "gore_hallway") then
+							if v:GetFaction() == "Goreic Warrior" then
+								Clockwork.chatBox:Add(v, nil, "event", "A familiar call of "..subfaction.." echoes throughout the forest. All Goreic warriors have been summoned to the village center.");
+							else
+								Clockwork.chatBox:Add(v, nil, "event", "The sound of a warhorn echoes throughout the forest, but you do not know its meaning!");
+							end
+							
+							v:SendLua([[Clockwork.Client:EmitSound("warhorns/summonhorn.mp3", 60, 100)]]);
+							util.ScreenShake(v:GetPos(), 1, 5, 10, 1024);
+						end
+					end
+				else
+					Schema:EasyText(player, "firebrick", "You are not the correct faction to blow the Goreic Gathering Horn!");
+				end
+			else
+				Schema:EasyText(player, "firebrick", "You must be looking at a Goreic Gathering Horn to do this!");
+			end
+		end
+	end;
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("GoreicHornSummonRaid");
+	COMMAND.tip = "Summon all Goreic warriors to the village center to organize for a raid.";
+
+	function COMMAND:OnRun(player, arguments)
+		local trace = player:GetEyeTrace();
+
+		if (trace.Entity) then
+			local entity = trace.Entity;
+
+			if entity:GetClass() == "cw_gorevillagehorn" then
+				local faction = player:GetFaction();
+				local subfaction = player:GetSubfaction();
+				
+				if faction == "Goreic Warrior" then
+					for _,v in pairs(_player.GetAll()) do
+						local lastZone = v:GetCharacterData("LastZone");
+						if (lastZone == "gore" or lastZone == "gore_tree" or lastZone == "gore_hallway") then
+							if v:GetFaction() == "Goreic Warrior" then
+								Clockwork.chatBox:Add(v, nil, "event", "A familiar call of "..subfaction.." echoes throughout the forest. A raiding party has been requested to organize at the village center.");
+							else
+								Clockwork.chatBox:Add(v, nil, "event", "The sound of a warhorn echoes throughout the forest, but you do not know its meaning!");
+							end
+							
+							v:SendLua([[Clockwork.Client:EmitSound("warhorns/raidhorn.mp3", 60, 100)]]);
+							util.ScreenShake(v:GetPos(), 1, 5, 11, 1024);
+						end
+					end
+				else
+					Schema:EasyText(player, "firebrick", "You are not the correct faction to blow the Goreic Gathering Horn!");
+				end
+			else
+				Schema:EasyText(player, "firebrick", "You must be looking at a Goreic Gathering Horn to do this!");
+			end
+		end
+	end;
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("CallCongregation");
 	COMMAND.tip = "Call a congregation to the Tower of Light church.";
 	COMMAND.access = "s";

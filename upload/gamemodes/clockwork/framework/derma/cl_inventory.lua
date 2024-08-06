@@ -333,7 +333,9 @@ function PANEL:Rebuild()
 					end
 				end
 				
-				if v2.category == "Throwables" or v2.category == "Weapons" or v2.category == "Melee" or v2.category == "Shields" or v2.category == "Firearms" or v2.category == "Crossbows" or v2.category == "Throwables" or v2.category == "Lights" then
+				local baseItem = v2.baseItem;
+				
+				if baseItem == "weapon_base" or baseItem == "shield_base" or baseItem == "firearm_base" then
 					for i, slot in ipairs(slots) do
 						local slottedItem = Clockwork.Client.equipmentSlots[slot];
 						local offhandItem = Clockwork.Client.equipmentSlots[slot.."Offhand"];
@@ -358,7 +360,7 @@ function PANEL:Rebuild()
 							end
 						end
 					end
-				elseif v2.category == "Charms" then	
+				elseif baseItem == "enchanted_base" then	
 					if v2:HasPlayerEquipped(Clockwork.Client) then
 						for i = 1, #charm_slots do
 							local slot = charm_slots[i];
@@ -433,7 +435,7 @@ function PANEL:Rebuild()
 									if occupierParent and occupierParent.itemData and occupierParent.itemTable then
 										local itemTable = occupierParent.itemTable;
 										
-										if (itemTable.category == "Firearms" or itemTable.category == "Crossbows") and itemTable.ammoTypes then
+										if (itemTable.baseItem == "firearm_base") and itemTable.ammoTypes then
 											if table.HasValue(itemTable.ammoTypes, parent.itemTable.ammoType) then
 												Clockwork.datastream:Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 											end
@@ -544,10 +546,12 @@ function PANEL:Rebuild()
 							end
 						end
 						
-						if v2.category == "Melee" or v2.category == "Shields" or v2.category == "Weapons" or v2.category == "Firearms" or v2.category == "Crossbows" or v2.category == "Throwables" or v2.category == "Lights" then
+						local baseItem = v2.baseItem;
+						
+						if baseItem == "weapon_base" or baseItem == "shield_base" or baseItem == "firearm_base" then
 							inventoryIcon.spawnIcon:Droppable("weaponSlot");
 							
-							if v2.category == "Firearms" or v2.category == "Crossbows" then
+							if baseItem == "firearm_base" then
 								inventoryIcon.spawnIcon:Receiver("ammunition", function(self, panels, dropped, menuIndex, x, y)
 									if (dropped) then
 										local panel = panels[1];
@@ -562,7 +566,7 @@ function PANEL:Rebuild()
 													if occupierParent and occupierParent.itemData and occupierParent.itemTable then
 														local itemTable = occupierParent.itemTable;
 														
-														if (itemTable.category == "Firearms" or itemTable.category == "Crossbows") and itemTable.ammoTypes then
+														if (itemTable.baseItem == "firearm_base") and itemTable.ammoTypes then
 															if table.HasValue(itemTable.ammoTypes, parent.itemTable.ammoType) then
 																Clockwork.datastream:Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 															end
@@ -574,8 +578,6 @@ function PANEL:Rebuild()
 									end
 								end);
 							end
-						elseif v2.category == "Helms" or v2.category == "Armor" or v2.category == "Charms" or v2.category == "Backpacks" then
-							inventoryIcon.spawnIcon:Droppable(v2.category);
 						elseif v2.category == "Containers" or v2.category == "Dissolvables" then
 							inventoryIcon.spawnIcon:Droppable("containers");
 							
@@ -606,7 +608,7 @@ function PANEL:Rebuild()
 									end
 								end);
 							end
-						elseif v2.category == "Shot" then
+						elseif baseItem == "shot_base" then
 							inventoryIcon.spawnIcon:Droppable("ammunition");
 							
 							if v2.ammoMagazineSize then
@@ -638,6 +640,8 @@ function PANEL:Rebuild()
 							else
 								inventoryIcon.spawnIcon:Droppable("ammunitionMagazine");
 							end
+						else
+							inventoryIcon.spawnIcon:Droppable(v2.category);
 						end
 						
 						inventoryIcon.spawnIcon:Droppable("dropper");
@@ -723,10 +727,12 @@ function PANEL:Rebuild()
 						end
 					end
 					
-					if v2.category == "Melee" or v2.category == "Shields" or v2.category == "Weapons" or v2.category == "Firearms" or v2.category == "Crossbows"  or v2.category == "Throwables" then
+					local baseItem = v2.baseItem;
+				
+					if baseItem == "weapon_base" or baseItem == "shield_base" or baseItem == "firearm_base" then
 						inventoryIcon.spawnIcon:Droppable("weaponSlot");
 						
-						if v2.category == "Firearms" or v2.category == "Crossbows" then
+						if baseItem == "firearm_base" then
 							inventoryIcon.spawnIcon:Receiver("ammunition", function(self, panels, dropped, menuIndex, x, y)
 								if (dropped) then
 									local panel = panels[1];
@@ -741,7 +747,7 @@ function PANEL:Rebuild()
 												if occupierParent and occupierParent.itemData and occupierParent.itemTable then
 													local itemTable = occupierParent.itemTable;
 													
-													if (itemTable.category == "Firearms" or itemTable.category == "Crossbows") and itemTable.ammoTypes then
+													if (itemTable.baseItem == "firearm_base") and itemTable.ammoTypes then
 														if table.HasValue(itemTable.ammoTypes, parent.itemTable.ammoType) then
 															Clockwork.datastream:Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 														end
@@ -753,8 +759,6 @@ function PANEL:Rebuild()
 								end
 							end);
 						end
-					elseif v2.category == "Helms" or v2.category == "Armor" or v2.category == "Charms" or v2.category == "Backpacks" then
-						inventoryIcon.spawnIcon:Droppable(v2.category);
 					elseif v2.category == "Containers" or v2.category == "Dissolvables" then
 						inventoryIcon.spawnIcon:Droppable("containers");
 						
@@ -789,7 +793,7 @@ function PANEL:Rebuild()
 								end
 							end);
 						end
-					elseif v2.category == "Shot" then
+					elseif baseItem == "shot_base" then
 						inventoryIcon.spawnIcon:Droppable("ammunition");
 						
 						if v2.ammoMagazineSize then
@@ -819,6 +823,8 @@ function PANEL:Rebuild()
 						else
 							inventoryIcon.spawnIcon:Droppable("ammunitionMagazine");
 						end
+					else
+						inventoryIcon.spawnIcon:Droppable(v2.category);
 					end
 					
 					inventoryIcon.spawnIcon:Droppable("dropper");

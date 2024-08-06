@@ -116,7 +116,7 @@ local LIGHT = cwBeliefs.beliefTrees:New("light")
 			["disciple"] = {
 				name = "Disciple",
 				subfaith = "Hard-Glazed",
-				description = "Unlocks Tier I 'Faith of the Light' Rituals.",
+				description = "Unlocks Tier I 'Faith of the Light' Rituals. Increases the chance of finding coin in Wasteland loot containers.",
 				requirements = {"hard_glazed"},
 				row = 2,
 			},
