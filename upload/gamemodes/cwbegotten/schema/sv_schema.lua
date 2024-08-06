@@ -1106,6 +1106,7 @@ function Schema:SpawnBegottenEntities()
 		local gramophoneEnt = ents.Create("cw_gramophone");
 		local hellPortalEnt = ents.Create("cw_hellportal");
 		local sacrificialAltarEnt = ents.Create("cw_sacrifical_altar");
+		local warhornEnt = ents.Create("cw_gorevillagehorn");
 		local archiveEnts = {
 			{pos = Vector(2060.40625, 12925.03125, -1009.78125), ang = Angle(0, 180, 90)},
 			{pos = Vector(2060.40625, 12796.03125, -1009.78125), ang = Angle(0, 180, 90)},
@@ -1154,6 +1155,9 @@ function Schema:SpawnBegottenEntities()
 		sacrificialAltarEnt:SetPos(Vector(-2653.78125, -9140.3125, -6581.71875));
 		sacrificialAltarEnt:SetAngles(Angle(0, 180, 0));
 		sacrificialAltarEnt:Spawn();
+		warhornEnt:SetPos(Vector(-215.81, -8982.75, 11807.88));
+		warhornEnt:SetAngles(Angle(43.79, 164.57, 26.77));
+		warhornEnt:Spawn();
 		
 		for i = 1, #archiveEnts do
 			local archiveEnt = ents.Create("cw_archives");
