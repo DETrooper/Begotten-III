@@ -146,7 +146,7 @@ function cwDueling:PlayerEnteredDuel(player, arena, spawnPos, spawnAngles)
 	player:Freeze(true);
 
 	if player:GetLocalVar("Hatred") then
-		player:SetLocalVar("Hatred", 0);
+		player:SetLocalVar("Hatred", 75);
 	end
 	
 	-- Start battle music after players have faded in.
