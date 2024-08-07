@@ -1,4 +1,5 @@
 
+
 --[[-------------------------------------------------------------------
 	Roll Mod:
 		Dodge, duck, dip, dive and... roll!
@@ -179,12 +180,12 @@ function meta:StartRolling(a)
 	if Clockwork then
 		if self.GetCharacterData then
 			local stamina = self:GetCharacterData("Stamina");
-			local stamina_loss = 15;
+			local stamina_loss = 20;
 			
 			if time == 1 then
-				stamina_loss = 20;
-			elseif time == 1.1 then
 				stamina_loss = 25;
+			elseif time == 1.1 then
+				stamina_loss = 35;
 			end
 
 			if self.GetCharmEquipped and self:GetCharmEquipped("boot_contortionist") then

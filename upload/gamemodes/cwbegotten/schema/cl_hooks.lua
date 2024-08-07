@@ -2079,6 +2079,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				
 				frame:AddText("Easily Repairable: Costs less melee repair kit condition to repair.", Color(110, 30, 30), nil, 0.9);
 				frame:AddText("Ranged Weapon: You will be disarmed upon taking damage with this weapon.", Color(110, 30, 30), nil, 0.9);
+				frame:AddText("Variable Damage: Damage will be increased or decreased depending on the distance of the target. Targets further away will receive more damage.", Color(110, 30, 30), nil, 0.9);
 				
 				if !weaponStats["defense"].candeflect then
 					frame:AddText("Cannot Deflect", Color(110, 30, 30), nil, 0.9);
@@ -2877,6 +2878,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						frame:AddText("Sundering Shot: Travelling at supersonic speeds, Old World Longshot ignores armor and shields entirely.", Color(110, 30, 30), nil, 0.9);
 					elseif table.HasValue(itemTable.attributes, "sundering_shot_grapeshot") then
 						frame:AddText("Sundering Shot: Travelling at supersonic speeds, Old World Grapeshot ignores armor and shields entirely.", Color(110, 30, 30), nil, 0.9);
+					elseif table.HasValue(itemTable.attributes, "variable_damage") then
+						frame:AddText("Variable Damage: Damage will be increased or decreased depending on the distance of the target. Targets further away will receive more damage.", Color(110, 30, 30), nil, 0.9);
 					end
 				end
 

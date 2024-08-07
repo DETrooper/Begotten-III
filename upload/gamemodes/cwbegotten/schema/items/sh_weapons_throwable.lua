@@ -88,6 +88,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.attributes = {"concealable"};
-	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.repairCostModifier = 0.25;
 ITEM:Register();

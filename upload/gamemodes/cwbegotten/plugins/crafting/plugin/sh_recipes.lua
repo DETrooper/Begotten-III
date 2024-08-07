@@ -3922,16 +3922,16 @@ RECIPE:Register()
 	RECIPE:Register()
 	
 	RECIPE = cwRecipes.recipes:New("throwing_axe");
-		RECIPE.name = "Throwing Axe";
+		RECIPE.name = "(2x) Throwing Axe";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFaiths = {"Faith of the Family"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1},
-			["wood"] = {amount = 1},
+			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
-			["begotten_javelin_throwing_axe"] = {amount = 1},
+			["begotten_javelin_throwing_axe"] = {amount = 2},
 		};
 		RECIPE.category = "Weapons"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
@@ -3951,7 +3951,7 @@ RECIPE:Register()
 	RECIPE:Register()
 	
 	RECIPE = cwRecipes.recipes:New("throwing_dagger");
-		RECIPE.name = "(2x) Throwing Dagger";
+		RECIPE.name = "(3x) Throwing Dagger";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
@@ -3960,7 +3960,7 @@ RECIPE:Register()
 			["wood"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["begotten_javelin_throwing_dagger"] = {amount = 2},
+			["begotten_javelin_throwing_dagger"] = {amount = 3},
 		};
 		RECIPE.category = "Weapons"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";

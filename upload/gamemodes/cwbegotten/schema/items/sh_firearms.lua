@@ -88,6 +88,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	
 	ITEM.ammoCapacity = 1;
 	ITEM.ammoTypes = {"Iron Bolt", "Scrap Bolt"};
+	ITEM.attributes = {"variable_damage"};
 	ITEM.firearmType = "Crossbow";
 	ITEM.reloadTime = 5; -- Seconds (for one round)
 	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/crossbow/bow-pre1.wav.mp3", "weapons/crossbow/bowgun-stance.wav.mp3"};
