@@ -2203,29 +2203,21 @@ function cwBeliefs:ModifyPlayerSpeed(player, infoTable)
 	end
 	
 	if player:HasBelief("purity_afloat") then
-		if not clothesItem or (clothesItem and (clothesItem.weightclass ~= "Heavy")) then
-			local cash = player:GetCash();
 			local health = player:Health();
 			local maxHealth = player:GetMaxHealth();
 			local lowerBound = maxHealth * 0.25;
 			local modifier = math.Clamp(-(((health - lowerBound) / (maxHealth - lowerBound)) - 1), 0, 1);
 			local bonus = 0.2 * modifier;
-			
-			--[[
-			if cash >= 100 and cash < 250 then
-				bonus = bonus * 0.75;
-			elseif cash >= 250 and cash < 500 then
-				bonus = bonus * 0.5;
-			elseif cash >= 500 and cash < 1000 then
-				bonus = bonus * 0.25;
-			elseif cash >= 1000 then
-				bonus = 0;
-			end
-			--]]
-
+		if not clothesItem or (clothesItem and (clothesItem.weightclass ~= "Heavy")) then
+			local bonus = 0.2 * modifier;
+			infoTable.runSpeed = infoTable.runSpeed + (infoTable.runSpeed * bonus);
+			infoTable.walkSpeed = infoTable.walkSpeed + (infoTable.walkSpeed * bonus);
+		elseif clothesItem.weightclass == "Heavy" then
+			local bonus = 0.15 * modifier;
 			infoTable.runSpeed = infoTable.runSpeed + (infoTable.runSpeed * bonus);
 			infoTable.walkSpeed = infoTable.walkSpeed + (infoTable.walkSpeed * bonus);
 		end
+		
 	end
 	
 	if player.warcrySlowSpeed then

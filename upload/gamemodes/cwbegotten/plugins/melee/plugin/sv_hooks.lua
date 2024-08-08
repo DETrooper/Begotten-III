@@ -637,12 +637,6 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 				else
 					player:EmitSound("voice/female2/female2_stun0"..math.random(1, 4)..".wav", 90, pitch)
 				end
-			elseif (faction == "Children of Satan") then
-				if (gender == "his") then
-					player:EmitSound("voice/man4/man4_stun0"..math.random(1, 4)..".wav", 90, pitch)
-				else
-					player:EmitSound("voice/female1/female1_stun0"..math.random(1, 4)..".wav", 90, pitch)
-				end
 			else
 				if (gender == "his") then
 					player:EmitSound("voice/man3/man3_stun0"..math.random(1, 4)..".wav", 90, pitch)
@@ -896,14 +890,6 @@ function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 					player:EmitSound("voice/female2/female2_pain0"..math.random(1, 6)..".wav", 90, pitch)
 					player.nextPainSound = CurTime()+0.5
 				end
-			elseif faction == "Children of Satan" then
-				if gender == "Male" then
-					player:EmitSound("voice/man4/man4_pain0"..math.random(1, 6)..".wav", 90, pitch)
-					player.nextPainSound = CurTime()+0.5
-				else
-					player:EmitSound("voice/female1/female1_pain0"..math.random(1, 6)..".wav", 90, pitch)
-					player.nextPainSound = CurTime()+0.5
-				end
 			else
 				if gender == "Male" then
 					player:EmitSound("voice/man3/man3_pain0"..math.random(1, 6)..".wav", 90, pitch)
@@ -974,12 +960,6 @@ function GM:PlayerPlayDeathSound(player, gender)
 				player:EmitSound("voice/man1/man1_death0"..math.random(1, 9)..".wav", 90, pitch)
 			else
 				player:EmitSound("voice/female2/female2_death0"..math.random(1, 9)..".wav", 90, pitch)
-			end
-		elseif faction == "Children of Satan" then
-			if gender == "Male" then
-				player:EmitSound("voice/man4/man4_death0"..math.random(1, 9)..".wav", 90, pitch)
-			else
-				player:EmitSound("voice/female1/female1_death0"..math.random(1, 9)..".wav", 90, pitch)
 			end
 		else
 			if gender == "Male" then

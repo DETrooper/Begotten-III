@@ -1227,7 +1227,7 @@ function COMMAND:OnRun(player, arguments)
 							if currentOil >= 1 then
 								local damageInfo = DamageInfo();
 								
-								player:TakeDamage(math.random(5,10));
+								--player:TakeDamage(math.random(5,10));
 								player:Ignite(15);
 								weaponItemTable:SetData("oil", math.Clamp(currentOil - math.random(10, 25), 0, 100));
 								player:SetSharedVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
@@ -1237,12 +1237,12 @@ function COMMAND:OnRun(player, arguments)
 								
 								return true;
 							else
-								local damage = math.random(5,10);
+								local damage = math.random(3,8);
 								
 								player:TakeDamage(damage);
 								
 								if cwStamina then
-									player:HandleStamina(damage);
+									player:HandleStamina(damage * 2);
 								end
 								
 								Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.."!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
@@ -1289,6 +1289,10 @@ function COMMAND:OnRun(player, arguments)
 					player:TakeDamageInfo(d);
 					player.flagellating = false;
 					player.ignoreConditionLoss = false;
+					
+					if cwStamina then
+						player:HandleStamina(d:GetDamage() * 2);
+					end
 					
 					if cwSanity then
 						player:HandleSanity(math.Round(d:GetDamage() / 3));
