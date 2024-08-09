@@ -2353,7 +2353,6 @@ ITEM.type = "leather";
 ITEM.description = "Created from the bones of countless victims, this armor signifies the depraved mentality of its wearer. The armor rattles as it moves, giving it a particularly terrifying presence. This armor is uniquely suited against blunt attacks.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.excludeFactions = {"Goreic Warrior"};
-ITEM.attributes = {"fear"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,

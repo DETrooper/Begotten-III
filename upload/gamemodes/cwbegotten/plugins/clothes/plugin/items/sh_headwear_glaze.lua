@@ -43,7 +43,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/skullhelm";
 	
-	ITEM.attributes = {"conditionless", "not_unequippable", "deathknell"};
+	ITEM.attributes = {"conditionless", "not_unequippable", "deathknell", "fear"};
 	ITEM.requiredbeliefs = {"repentant"};
 	ITEM.kinisgerOverride = true;
 
@@ -84,7 +84,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/skullhelm";
 	
-	ITEM.attributes = {"conditionless", "not_unequippable", "bloodtoll"};
+	ITEM.attributes = {"conditionless", "not_unequippable", "bloodtoll", "fear"};
 	ITEM.requiredbeliefs = {"repentant"};
 	ITEM.kinisgerOverride = true;
 

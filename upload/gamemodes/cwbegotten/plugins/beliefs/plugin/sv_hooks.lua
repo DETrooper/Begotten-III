@@ -854,6 +854,11 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 										for k, v in pairs(ents.FindInSphere(entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
 											if v:IsPlayer() then
 												Clockwork.chatBox:Add(v, attacker, "me", strikeText.." a pressure point of "..Clockwork.player:FormatRecognisedText(v, "%s", entity)..", but their hatred is so strong that they simply refuse to die!");
+												if entity:GetGender() == GENDER_MALE then
+													entity:EmitSound("misc/attack_01.ogg", 90, math.random(55,70))
+												else
+													entity:EmitSound("misc/attack_01.ogg", 90, math.random(100,120))
+												end	
 											end
 										end
 										
@@ -1398,7 +1403,11 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 					entity:Extinguish();
 
 					Clockwork.chatBox:AddInTargetRadius(entity, "me", "'s hatred is so strong that they simply refuse to die yet!", entity:GetPos(), config.Get("talk_radius"):Get() * 2);
-					
+					if entity:GetGender() == GENDER_MALE then
+						entity:EmitSound("misc/attack_01.ogg", 90, math.random(55,70))
+					else
+						entity:EmitSound("misc/attack_01.ogg", 90, math.random(100,120))
+					end					
 					if cwMedicalSystem then
 						entTab.nextBleedPoint = CurTime() + 180;
 					end
@@ -2207,7 +2216,6 @@ function cwBeliefs:ModifyPlayerSpeed(player, infoTable)
 			local maxHealth = player:GetMaxHealth();
 			local lowerBound = maxHealth * 0.25;
 			local modifier = math.Clamp(-(((health - lowerBound) / (maxHealth - lowerBound)) - 1), 0, 1);
-			local bonus = 0.2 * modifier;
 		if not clothesItem or (clothesItem and (clothesItem.weightclass ~= "Heavy")) then
 			local bonus = 0.2 * modifier;
 			infoTable.runSpeed = infoTable.runSpeed + (infoTable.runSpeed * bonus);

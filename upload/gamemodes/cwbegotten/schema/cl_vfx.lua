@@ -137,10 +137,32 @@ function Schema:ShouldPlayerModifyBlur(entity)
 		elseif faction == "Children of Satan" and clientFaction ~= "Children of Satan" then
 			if entity:GetModel() == "models/begotten/satanists/wraitharmor.mdl" then
 				return true;
+			else
+				local helmet = entity:GetHelmetEquipped();
+				
+				if helmet and helmet.attributes then
+					return table.HasValue(helmet.attributes, "fear");
+				end
 			end
-		elseif faction == "Gatekeeper" and clientFaction == "Goreic Warrior" or clientFaction == "Children of Satan" then
+		elseif faction == "Gatekeeper" and clientFaction ~= "Gatekeeper" and clientFaction ~= "Holy Hierarchy" then
 			if entity:GetModel() == "models/begotten/gatekeepers/vexi.mdl" then
 				return true;
+			else
+				local helmet = entity:GetHelmetEquipped();
+				
+				if helmet and helmet.attributes then
+					return table.HasValue(helmet.attributes, "fear");
+				end
+			end
+		elseif faction == "Wanderer" then
+			if entity:GetModel() == "models/begotten/gatekeepers/vexi.mdl" or entity:GetModel() == "models/begotten/satanists/wraitharmor.mdl" then
+				return true;
+			else
+				local helmet = entity:GetHelmetEquipped();
+				
+				if helmet and helmet.attributes then
+					return table.HasValue(helmet.attributes, "fear");
+				end
 			end
 		end
 	end
