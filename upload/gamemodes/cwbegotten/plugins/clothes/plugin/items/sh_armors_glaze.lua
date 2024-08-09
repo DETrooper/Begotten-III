@@ -69,7 +69,7 @@ ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
 ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "leather", "leather", "leather"}};
-ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1500};
+ITEM.itemSpawnerInfo = {category = "Armor", rarity = 2500};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -130,7 +130,7 @@ ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 
 ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "iron_chunks", "iron_chunks", "leather", "cloth", "cloth"}};
-ITEM.itemSpawnerInfo = {category = "Armor", rarity = 5000};
+ITEM.itemSpawnerInfo = {category = "Armor", rarity = 6250};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -881,7 +881,7 @@ ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
 ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
-ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1000};
+ITEM.itemSpawnerInfo = {category = "Armor", rarity = 3000};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
