@@ -7,11 +7,17 @@ function Parry(target, dmginfo)
 			local checkTypes = {[4] = true, [16] = true, [128] = true};
 
 			if (checkTypes[damageType]) then
+				local inflictor = dmginfo:GetInflictor();
+				
+				if IsValid(inflictor) and inflictor.unblockable then
+					return;
+				end
+				
 				local attacker = dmginfo:GetAttacker()
 				local blocktable = GetTable(wep.realBlockTable);
 				local curTime = CurTime();
-				local isJavelin = IsValid(dmginfo:GetInflictor()) and dmginfo:GetInflictor().isJavelin;
-				
+				local isJavelin = IsValid(inflictor) and inflictor.isJavelin and !inflictor:IsWeapon();
+
 				if !isJavelin then
 					target:SetNWBool("ParrySucess", true)
 					attacker:SetNWBool("Parried", true)
@@ -163,6 +169,18 @@ end
 hook.Add("PreEntityTakeDamage", "Parrying", Parry)
 	
 local function Guarding(ent, dmginfo)
+	if dmginfo:IsDamageType(DMG_DROWNRECOVER) then
+		return;
+	end;
+	
+	local inflictor = dmginfo:GetInflictor();
+	
+	if IsValid(inflictor) and inflictor.unblockable then
+		return;
+	end
+	
+	local isJavelin = IsValid(inflictor) and inflictor.isJavelin and !inflictor:IsWeapon();
+	
 	if (!ent:IsPlayer()) then
 		if ent:IsNPC() or ent:IsNextBot() then
 			local attacker = dmginfo:GetAttacker()
@@ -214,16 +232,6 @@ local function Guarding(ent, dmginfo)
 		
 		return;
 	end;
-	
-	if dmginfo:IsDamageType(DMG_DROWNRECOVER) then
-		return;
-	end;
-	
-	local inflictor = dmginfo:GetInflictor();
-	
-	if IsValid(inflictor) and inflictor.unblockable then
-		return;
-	end
 	
 	if ent:Alive() then
 		local wep = ent:GetActiveWeapon()
@@ -338,7 +346,7 @@ local function Guarding(ent, dmginfo)
 			end;
 			
 			if not canblock and wep.realHoldType == "wos-begotten_dual" then
-				if (dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) or (IsValid(inflictor) and inflictor.isJavelin)) and cwBeliefs and ent.HasBelief and ent:HasBelief("impossibly_skilled") then
+				if (dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) or (isJavelin)) and cwBeliefs and ent.HasBelief and ent:HasBelief("impossibly_skilled") then
 					local enemyWeapon = attacker:GetActiveWeapon();
 					
 					if !IsValid(enemyWeapon) or !enemyWeapon.IgnoresBulletResistance then
@@ -395,7 +403,7 @@ local function Guarding(ent, dmginfo)
 						end
 					else
 						if !ent:GetNWBool("Deflect") and attacker:IsPlayer() and !dmginfo:IsDamageType(1073741824) then
-							if enemywep.IsABegottenMelee and (!dmginfo:GetInflictor() or (dmginfo:GetInflictor() and !dmginfo:GetInflictor().isJavelin)) then
+							if enemywep.IsABegottenMelee and !isJavelin then
 								if enemywep.SoundMaterial == "Metal" then
 									ent:EmitSound(blocksoundtable["blockmetal"][math.random(1, #blocksoundtable["blockmetal"])])
 									--print "metal"
@@ -499,7 +507,7 @@ local function Guarding(ent, dmginfo)
 								
 								local shieldConditionDamage = conditionDamage;
 								
-								if IsValid(inflictor) and inflictor.isJavelin or inflictor.IsABegottenMelee then
+								if IsValid(inflictor) and (inflictor.isJavelin or inflictor.IsABegottenMelee) then
 									local inflictorItemTable = inflictor.itemTable or item.GetByWeapon(inflictor);
 									
 									if inflictorItemTable and inflictorItemTable.attributes then
@@ -708,16 +716,14 @@ local function Guarding(ent, dmginfo)
 							end
 							
 							if attacker:GetCharmEquipped("ring_pugilist") and enemywep:GetClass() == "begotten_fists" then
-								if IsValid(dmginfo:GetInflictor()) and dmginfo:GetInflictor().isJavelin then
-									-- nothing
-								else
+								if !isJavelin then
 									poiseDamageModifier = poiseDamageModifier * 4;
 								end
 							end
 						end
 						
 						if IsValid(enemywep) and enemywep:GetNWString("activeOffhand"):len() > 0 then
-							if !IsValid(dmginfo:GetInflictor()) or !dmginfo:GetInflictor().isJavelin then
+							if !isJavelin then
 								poiseDamageModifier = poiseDamageModifier * 0.5;
 							end
 						end
@@ -1011,9 +1017,12 @@ local function Guarding(ent, dmginfo)
 					end
 				
 					-- Deflection
-					if ent:GetNWBool("Deflect") and (!ent.nextDeflect or CurTime() > ent.nextDeflect) and (IsValid(attacker) and (dmginfo:IsDamageType(4) or dmginfo:IsDamageType(128) or dmginfo:IsDamageType(16) or (cwBeliefs and ent:HasBelief("impossibly_skilled") and IsValid(inflictor) and inflictor.isJavelin))) then
+					if ent:GetNWBool("Deflect") and (!ent.nextDeflect or CurTime() > ent.nextDeflect) and (IsValid(attacker) and (dmginfo:IsDamageType(4) or dmginfo:IsDamageType(128) or dmginfo:IsDamageType(16) or (cwBeliefs and ent:HasBelief("impossibly_skilled") and isJavelin))) then
 						if !attacker:IsPlayer() then
-							if dmginfo:IsDamageType(128) then
+							if isJavelin then
+								ent:EmitSound(blocksoundtable["blockmissile"][math.random(1, #blocksoundtable["blockmissile"])])
+								--print "DEFLECT JAVELIN"
+							elseif dmginfo:IsDamageType(128) then
 								ent:EmitSound(blocksoundtable["deflectwood"][math.random(1, #blocksoundtable["deflectwood"])])
 								--print "DEFLECT CRUSH"
 							elseif dmginfo:IsDamageType(4) then
@@ -1022,14 +1031,14 @@ local function Guarding(ent, dmginfo)
 							elseif dmginfo:IsDamageType(16) then
 								ent:EmitSound(blocksoundtable["deflectmetalpierce"][math.random(1, #blocksoundtable["deflectmetalpierce"])])
 								--print "DEFLECT PIERCE"
-							elseif IsValid(inflictor) and inflictor.isJavelin then
-								ent:EmitSound(blocksoundtable["blockmissile"][math.random(1, #blocksoundtable["blockmissile"])])
-								--print "DEFLECT JAVELIN"
 							end
 						else
 							if attacker:IsPlayer() then
-								if enemywep.IsABegottenMelee or (IsValid(inflictor) and inflictor.isJavelin) then
-									if enemywep.SoundMaterial == "Metal" then
+								if enemywep.IsABegottenMelee or isJavelin then
+									if isJavelin then
+										ent:EmitSound(blocksoundtable["blockmissile"][math.random(1, #blocksoundtable["blockmissile"])])
+										--print "deflect javelin"
+									elseif enemywep.SoundMaterial == "Metal" then
 										ent:EmitSound(blocksoundtable["deflectmetal"][math.random(1, #blocksoundtable["deflectmetal"])])
 										--print "deflect metal"
 									elseif enemywep.SoundMaterial == "Wooden" then
@@ -1047,9 +1056,6 @@ local function Guarding(ent, dmginfo)
 									elseif enemywep.SoundMaterial == "Default" then
 										ent:EmitSound(blocksoundtable["deflectsound"][math.random(1, #blocksoundtable["deflectsound"])])
 										--print "deflect default"
-									elseif IsValid(inflictor) and inflictor.isJavelin then
-										ent:EmitSound(blocksoundtable["blockmissile"][math.random(1, #blocksoundtable["blockmissile"])])
-										--print "deflect javelin"
 									end
 								elseif dmginfo:IsDamageType(128) then
 									ent:EmitSound(blocksoundtable["deflectwood"][math.random(1, #blocksoundtable["deflectwood"])])
@@ -1213,7 +1219,7 @@ local function Guarding(ent, dmginfo)
 								end
 								
 								if enemywep:GetNWString("activeOffhand"):len() > 0 then
-									if !IsValid(inflictor) or !inflictor.isJavelin then
+									if !isJavelin then
 										stabilityDamage = stabilityDamage * 0.6;
 									end
 								end
@@ -1263,7 +1269,7 @@ local function Guarding(ent, dmginfo)
 							util.Effect(bloodeffect, effectdata);
 							
 							if not attacker.opponent then
-								if IsValid(inflictor) and inflictor.isJavelin and !inflictor:IsWeapon() then
+								if isJavelin then
 									return;
 								end
 							
@@ -1370,7 +1376,7 @@ local function Guarding(ent, dmginfo)
 				end
 				
 				if not attacker.opponent then
-					if IsValid(inflictor) and inflictor.isJavelin and !inflictor:IsWeapon() then
+					if isJavelin then
 						return;
 					end
 					

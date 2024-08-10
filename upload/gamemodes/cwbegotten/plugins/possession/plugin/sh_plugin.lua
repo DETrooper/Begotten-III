@@ -527,7 +527,7 @@ function COMMAND:OnRun(player, arguments)
 		
 		if cwGore then
 			if (target:GetRagdollEntity()) then
-				cwGore:SplatCorpse(target:GetRagdollEntity(), 60);
+				cwGore:SplatCorpse(target:GetRagdollEntity(), 60, nil, true);
 			end;
 		end
 		

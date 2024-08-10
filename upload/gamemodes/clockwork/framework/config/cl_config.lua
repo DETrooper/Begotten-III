@@ -67,7 +67,7 @@ config.AddToSystem("Local-Out-Of-Character Chat Interval", "looc_interval", "The
 config.AddToSystem("Global Out-Of-Character Chat Enabled", "global_ooc_enabled", "Whether or not global OOC chat is enabled.");
 config.AddToSystem("Minute Time", "minute_time", "The time that it takes for a minute to pass (seconds).", 0, 7200);
 config.AddToSystem("Door Unlock Interval", "unlock_time", "The time that a player has to wait to unlock a door (seconds).", 0, 7200);
-config.AddToSystem("Voice Chat Enabled.", "voice_enabled", "Whether or not voice chat is enabled.");
+config.AddToSystem("Voice Chat Enabled", "voice_enabled", "Whether or not voice chat is enabled.");
 config.AddToSystem("Local Voice Chat", "local_voice", "Whether or not to enable local voice.");
 config.AddToSystem("Talk Radius", "talk_radius", "The radius of each player that other characters have to be in to hear them talk (units).", 0, 4096);
 config.AddToSystem("Give Hands", "give_hands", "Whether or not to give hands to each player.");

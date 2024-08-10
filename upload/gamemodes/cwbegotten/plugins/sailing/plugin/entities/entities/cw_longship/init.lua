@@ -41,9 +41,7 @@ function ENT:Think()
 		self.checkCooldown = curTime + 0.1;
 		
 		if self.playersOnBoard and #self.playersOnBoard > 0 then
-			for i = 1, #self.playersOnBoard do
-				local player = self.playersOnBoard[i];
-				
+			for i, player in ipairs(self.playersOnBoard) do
 				if IsValid(player) then
 					local playerPos = player:GetPos();
 					
@@ -200,40 +198,94 @@ function ENT:SetHP(newhp)
 		else
 			self.repairable = false;
 		end
-	elseif self.location and self.location ~= "calm" and self.locaiton ~= "rough" and self.location ~= "styx" then
+	elseif self.location and (self.location == "calm" or self.locaiton == "rough" or self.location == "styx") then
+		if self.location == "styx" then
+			if self.playersOnBoard and #self.playersOnBoard > 0 then
+				local playersOnBoard = table.Copy(self.playersOnBoard);
+				
+				timer.Simple(0.5, function()
+					for i, player in ipairs(playersOnBoard) do
+						if IsValid(player) then
+							if player:Alive() then
+								player:SendLua([[Clockwork.Client:EmitSound("ambient/fire/mtov_flame2.wav", 500, 100)]]);
+								player:DeathCauseOverride("Rode a sinking ship into the lava and burnt to a crisp.");
+								player:KillSilent();
+							else
+								local ragdollEntity = player:GetRagdollEntity();
+								
+								if IsValid(ragdollEntity) then
+									-- Prevent belongings from spawning.
+									ragdollEntity.cwInventory = nil;
+									ragdollEntity.cwCash = nil;
+									
+									ragdollEntity:Remove();
+								end
+							end
+						end
+					end
+				end);
+			end
+			
+			Clockwork.chatBox:AddInRadius(nil, "localevent", "The longship finally gives way under the strain of its damage, splitting in two and sinking into the lava below!", self:GetPos(), 1024);
+		else
+			if self.playersOnBoard and #self.playersOnBoard > 0 then
+				local playersOnBoard = table.Copy(self.playersOnBoard);
+				
+				timer.Simple(0.5, function()
+					for i, player in ipairs(playersOnBoard) do
+						if IsValid(player) then
+							if player:Alive() then
+								player:SendLua([[Clockwork.Client:EmitSound("ambient/water/water_splash3.wav", 500, 100)]])
+							
+								timer.Simple(1, function()
+									if IsValid(player) then
+										player:GodDisable();
+									end
+								end);
+								
+								player:SetCharacterData("permakilled", true); -- In case the player tries to d/c to avoid their fate.
+								player:DeathCauseOverride("Rode a sinking ship into the sea and drowned.");
+								
+								if player:IsRagdolled() then
+									Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);
+								end
+
+								player:GodEnable();
+								player:SetPos(Vector(15.167375, 4397.66115, -4967.96875)); -- Teleport to black box full of water.
+								player:Freeze(true);
+								netstream.Start(player, "DrowningCutscene");
+							else
+								local ragdollEntity = player:GetRagdollEntity();
+								
+								if IsValid(ragdollEntity) then
+									-- Prevent belongings from spawning.
+									ragdollEntity.cwInventory = nil;
+									ragdollEntity.cwCash = nil;
+									
+									ragdollEntity:Remove();
+								end
+							end
+						end
+					end
+				end);
+			end
+			
+			Clockwork.chatBox:AddInRadius(nil, "localevent", "The longship finally gives way under the strain of its damage, splitting in two and sinking to the bottom of the sea!", self:GetPos(), 1024);
+		end
+		
+		self:EmitSound("physics/wood/wood_crate_break5.wav");
+		self:Remove();
+	else
 		local huskEnt = ents.Create("cw_longship_husk");
 		
 		huskEnt:SetPos(self:GetPos());
 		huskEnt:SetAngles(self:GetAngles());
+		huskEnt.location = self.location;
+		huskEnt.position = self.position;
 		
-		self.husk = true;
-		
-		if self.location and self.position then
-			huskEnt.location = self.location;
-			huskEnt.position = self.position;
-			
-			huskEnt:Spawn();
-			self:Remove();
-		end
-	else
-		if self.playersOnBoard and #self.playersOnBoard > 0 then
-			for i = 1, #self.playersOnBoard do
-				local player = self.playersOnBoard[i];
-				
-				if IsValid(player) then
-					player:KillSilent();
-					Schema:PermaKillPlayer(player, nil, true);
-					
-					if self.location == "styx" then
-						player:DeathCauseOverride("Went overboard into lava and burnt to a crisp.");
-					else
-						player:DeathCauseOverride("Went overboard into the sea and drowned.");
-					end
-				end
-			end
-		end
-	
-		self:EmitSound("physics/wood/wood_crate_break5.wav");
+		self.husk = true; -- Make sure the slot doesn't get cleared.
+
+		huskEnt:Spawn();
 		self:Remove();
 	end
 end

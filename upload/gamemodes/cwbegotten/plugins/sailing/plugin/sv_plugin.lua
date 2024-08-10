@@ -262,6 +262,8 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 		
 		Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", "A longship with no owner is setting sail to destination "..destination.."!");
 		
+		longshipEnt:SetBodygroup(0, 1);
+		
 		timer.Create("SailTimer_"..tostring(longshipEnt:EntIndex()), sail_time, 1, function()
 			if IsValid(longshipEnt) then
 				cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, sea_zone);
@@ -279,7 +281,7 @@ function cwSailing:DetermineSeaZone(longshipEnt, destination)
 		local rand;
 
 		if IsValid(owner) then
-			if owner:HasTrait("favored") then
+			if owner:HasBelief("favored") then
 				rand = math.random(6);
 			elseif owner:HasTrait("marked") then
 				rand = math.random(2);
@@ -290,7 +292,7 @@ function cwSailing:DetermineSeaZone(longshipEnt, destination)
 			rand = math.random(4);
 		end
 		
-		if rand > 3 then
+		if rand == 1 then
 			sea_zone = "rough";
 		end
 	elseif destination == "hell" or destination == "pillars" then
@@ -321,11 +323,8 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 			
 			-- Cache positions of all players aboard the longship.
 			local longshipPlayers = {};
-			local players = _player.GetAll()
 			
-			for j = 1, _player.GetCount() do
-				local player = players[j];
-				
+			for i, player in ipairs(_player.GetAll()) do
 				if IsValid(player) then
 					--local playerPos = player:GetPos();
 					local tr = util.TraceLine({
@@ -373,20 +372,20 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 					--printp("Position index: "..tostring(longship.position));
 					--printp("Longship Angles Set: "..tostring(longshipEnt:GetAngles()));
 					
-					if IsValid(longshipEnt.owner) then
-						Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", longshipEnt.owner:Name().."'s longship with "..#longshipPlayers.." players aboard has arrived at "..location.."!");
-					else
-						Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", "A longship with no owner with "..#longshipPlayers.." players aboard has arrived at "..location.."!");
-					end
-					
-					local longshipNewPos = longshipEnt:GetPos();
-					
 					if IsValid(longshipEnt) then
-						for j = 1, #longshipPlayers do
-							local player = longshipPlayers[j][1];
+						if IsValid(longshipEnt.owner) then
+							Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", longshipEnt.owner:Name().."'s longship with "..#longshipPlayers.." players aboard has arrived at "..location.."!");
+						else
+							Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", "A longship with no owner with "..#longshipPlayers.." players aboard has arrived at "..location.."!");
+						end
+						
+						local longshipNewPos = longshipEnt:GetPos();
+					
+						for i, longshipPlayerTab in ipairs(longshipPlayers) do
+							local player = longshipPlayerTab[1];
 							
 							if IsValid(player) then
-								local playerDist = longshipPlayers[j][2];
+								local playerDist = longshipPlayerTab[2];
 								local playerEyeAngles = player:EyeAngles();
 								local playerNewPos = Vector(longshipNewPos.x + -playerDist.x, longshipNewPos.y + -playerDist.y, longshipNewPos.z + playerDist.z);
 								
@@ -476,8 +475,8 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 											if target:GetClass() == "prop_ragdoll" then
 												local targetPos = target:GetPos();
 												
-												for i = 0, target:GetPhysicsObjectCount() - 1 do
-													local phys = target:GetPhysicsObjectNum(i);
+												for j = 0, target:GetPhysicsObjectCount() - 1 do
+													local phys = target:GetPhysicsObjectNum(j);
 													local newPos = target:GetPos();
 													
 													newPos:Sub(targetPos);
@@ -516,7 +515,49 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 						end);
 						
 						longshipEnt.destination = nil;
-					elseif location == "wasteland" or location == "hell" or location == "pillars" then
+					elseif location == "wasteland" then
+						local alarm = self.gorewatchAlarm;
+						
+						if IsValid(alarm) and !alarm:GetNWBool("broken") then
+							for i, v in ipairs(_player.GetAll()) do
+								local faction = v:GetFaction();
+								
+								if (faction == "Gatekeeper" or faction == "Holy Hierarchy") and !v.cwObserverMode and v:GetPos():WithinAABox(Vector(9422, 11862, -1210), Vector(10055, 10389, -770)) then
+									timer.Simple(math.random(5, 10), function()
+										if IsValid(alarm) then
+											if !alarm.nextAlarm or alarm.nextAlarm < CurTime() then
+												alarm.nextAlarm = CurTime() + 180;
+												
+												util.ScreenShake(alarm:GetPos(), 1, 20, 15, 1024, true);
+												
+												Clockwork.chatBox:AddInRadius(nil, "localevent", "The Gorewatch alarm sounds, heralding the arrival of a Goreic host!", alarm:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 4);
+												
+												local alarmPos = alarm:GetPos();
+												local filter = RecipientFilter();
+												local filterTab = {};
+												
+												for i, v in ipairs(_player.GetAll()) do
+													if v:Alive() and v:GetCharacterData("zone") == "wasteland" then
+														if v:GetPos():Distance2D(alarmPos) < 6000 then
+															table.insert(filterTab, v);
+														end
+													end
+												end
+												
+												filter:AddPlayers(filterTab);
+												
+												if IsValid(alarm.speaker) then
+													alarm.speaker:EmitSound("warhorns/hell_alarm.mp3", 110, nil, nil, nil, nil, nil, filter);
+												else
+													alarm:EmitSound("warhorns/hell_alarm.mp3", 110, nil, nil, nil, nil, nil, filter);
+												end
+											end
+										end
+									end);
+								end
+							end
+						end
+						
 						longshipEnt.destination = nil;
 					elseif location == "calm" or location == "rough" or location == "styx" then
 						--timer.Create("TravelTimer_"..tostring(longshipEnt:EntIndex()), 30, 1, function() -- for testing
@@ -534,6 +575,8 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 								end
 							end
 						end);
+					else
+						longshipEnt.destination = nil;
 					end
 					
 					self:UpdateLongship(longshipEnt);
@@ -1145,6 +1188,44 @@ concommand.Add("cw_ShipToggleEnchantment", function(player, cmd, args)
 			end
 		end;
 	end
+end);
+
+concommand.Add("cw_RepairGorewatchAlarm", function(player, cmd, args)
+	local trace = player:GetEyeTrace();
+
+	if (trace.Entity) then
+		local entity = trace.Entity;
+
+		if (entity:GetClass() == "cw_gorewatchalarm") then
+			if !entity:GetNWBool("broken") then
+				Schema:EasyText(player, "chocolate", "The alarm system has already been repaired!");
+				
+				return;
+			end
+		
+			local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
+			local repairItemTable;
+
+			for k, v in pairs (itemList) do
+				if v.uniqueID == "tech" then
+					repairItemTable = v;
+					break;
+				end
+			end
+			
+			if repairItemTable then
+				Clockwork.player:SetAction(player, "repair_alarm", 30, 1, function() 
+					if entity:IsValid() and entity:GetNWBool("broken") and player:HasItemInstance(repairItemTable) then
+						entity:SetNWBool("broken", false);
+						
+						player:TakeItem(repairItemTable, true);
+					end
+				end);
+			else
+				Schema:EasyText(player, "chocolate", "You do not have any tech to repair the alarm system with!");
+			end
+		end
+	end;
 end);
 
 function cwSailing:ContainerCanDropItems(entity)

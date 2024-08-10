@@ -1106,6 +1106,7 @@ function Schema:SpawnBegottenEntities()
 		local gramophoneEnt = ents.Create("cw_gramophone");
 		local hellPortalEnt = ents.Create("cw_hellportal");
 		local sacrificialAltarEnt = ents.Create("cw_sacrifical_altar");
+		local warhornBase = ents.Create("prop_dynamic");
 		local warhornEnt = ents.Create("cw_gorevillagehorn");
 		local archiveEnts = {
 			{pos = Vector(2060.40625, 12925.03125, -1009.78125), ang = Angle(0, 180, 90)},
@@ -1155,9 +1156,40 @@ function Schema:SpawnBegottenEntities()
 		sacrificialAltarEnt:SetPos(Vector(-2653.78125, -9140.3125, -6581.71875));
 		sacrificialAltarEnt:SetAngles(Angle(0, 180, 0));
 		sacrificialAltarEnt:Spawn();
+		warhornBase:SetModel("models/props_junk/harpoon002a.mdl");
+		warhornBase:SetPos(Vector(-215.0625, -8979.75, 11750.8125));
+		warhornBase:SetAngles(Angle(90, 135, 180));
+		warhornBase:SetMoveType(MOVETYPE_VPHYSICS);
+		warhornBase:PhysicsInit(SOLID_VPHYSICS);
+		warhornBase:SetSolid(SOLID_VPHYSICS);
+		warhornBase:Spawn();
 		warhornEnt:SetPos(Vector(-215.81, -8982.75, 11807.88));
 		warhornEnt:SetAngles(Angle(43.79, 164.57, 26.77));
 		warhornEnt:Spawn();
+		
+		if cwSailing then
+			local alarmEnt = ents.Create("cw_gorewatchalarm");
+			local alarmPole = ents.Create("prop_dynamic");
+			local alarmSpeaker = ents.Create("prop_dynamic");
+			
+			alarmEnt:SetPos(Vector(10010, 11408, -1055));
+			alarmEnt:SetAngles(Angle(0, 135, 0));
+			alarmEnt:Spawn();
+			alarmPole:SetModel("models/props_docks/dock01_pole01a_128.mdl");
+			alarmPole:SetPos(Vector(10015, 11406, -1004));
+			alarmPole:SetAngles(Angle(0, 135, 0));
+			alarmPole:SetMoveType(MOVETYPE_VPHYSICS);
+			alarmPole:PhysicsInit(SOLID_VPHYSICS);
+			alarmPole:SetSolid(SOLID_VPHYSICS);
+			alarmPole:Spawn();
+			alarmSpeaker:SetModel("models/props_wasteland/speakercluster01a.mdl");
+			alarmSpeaker:SetPos(Vector(9999, 11420, -964));
+			alarmSpeaker:SetAngles(Angle(0, 135, 0));
+			alarmSpeaker:Spawn();
+			
+			alarmEnt.speaker = alarmSpeaker;
+			cwSailing.gorewatchAlarm = alarmEnt;
+		end
 		
 		for i = 1, #archiveEnts do
 			local archiveEnt = ents.Create("cw_archives");

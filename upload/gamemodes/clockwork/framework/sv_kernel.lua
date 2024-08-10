@@ -908,6 +908,10 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 						hook.Run("OnPlayerHitGround", player, false, false, true);
 						entity.cwNextFallDamage = curTime + 0.5;
 						
+						--print("Damage: " ..amount);
+						--print("Velocity: "..tostring(physicsObject:GetVelocity()));
+						--print("Vel Length: "..velocity);
+						
 						damageInfo:SetDamage(amount)
 					end
 				end

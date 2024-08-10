@@ -679,8 +679,16 @@ local COMMAND = Clockwork.command:New("EventLocal");
 	end;
 COMMAND:Register();
 
+local zoneEventClasses = {
+	["gore"] = {"gore", "gore_tree", "gore_hallway", "supragore"},
+	["wasteland"] = {"wasteland", "suprawasteland"},
+	["tower"] = {"tower"},
+	["hell"] = {"hell", "manor", "suprahell"},
+	["caves"] = {"caves"},
+};
+
 local COMMAND = Clockwork.command:New("EventZone");
-	COMMAND.tip = "Send an event to characters in a specified zone (wasteland, tower, gore, hell).";
+	COMMAND.tip = "Send an event to characters in a specific suprazone (suprawasteland will play for both wasteland and tower for example, or suprahell and supragore) or zone (i.e. wasteland, tower, caves, hell, gore).";
 	COMMAND.text = "<string Zone> <string Text>";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.access = "o";
@@ -688,16 +696,48 @@ local COMMAND = Clockwork.command:New("EventZone");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		local valid_zones = {"wasteland", "tower", "gore", "hell"};
+		local valid_zones = {};
 		local zone = string.lower(arguments[1]);
 		
+		table.insert(valid_zones, zones.cwDefaultZone.uniqueID);
+		
+		for k, v in pairs(zones:GetAll()) do
+			table.insert(valid_zones, k);
+		end
+		
+		for k, v in pairs(zones.supraZones) do
+			table.insert(valid_zones, k);
+		end
+		
+		local eventClass = "localevent";
+		
+		for k, v in pairs(zoneEventClasses) do
+			if table.HasValue(v, zone) then
+				eventClass = k.."event";
+				
+				break;
+			end
+		end
+		
 		if table.HasValue(valid_zones, zone) then
-			for k, v in pairs (_player.GetAll()) do
-				if v:HasInitialized() then
-					local lastZone = v:GetCharacterData("LastZone");
-					
-					if lastZone == zone or (zone == "gore" and (lastZone == "gore_tree" or lastZone == "gore_hallway") or (zone == "hell" and lastZone == "manor") or (zone == "tower" and lastZone == "theater")) or v == player then
-						Clockwork.chatBox:Add(v, nil, zone.."event",  table.concat(arguments, " ", 2));
+			if zones:IsSupraZone(zone) then
+				for k, v in pairs(_player.GetAll()) do
+					if v:HasInitialized() then
+						local vSupraZone = zones:GetPlayerSupraZone(v);
+							
+						if vSupraZone == zone then
+							Clockwork.chatBox:Add(v, nil, eventClass,  table.concat(arguments, " ", 2));
+						end
+					end
+				end
+			else
+				for k, v in pairs (_player.GetAll()) do
+					if v:HasInitialized() then
+						local vZone = v:GetCharacterData("LastZone", "wasteland");
+							
+						if vZone == zone then
+							Clockwork.chatBox:Add(v, nil, eventClass,  table.concat(arguments, " ", 2));
+						end
 					end
 				end
 			end
@@ -708,7 +748,7 @@ local COMMAND = Clockwork.command:New("EventZone");
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("PlaySoundZone");
-	COMMAND.tip = "Play a sound to all players in a specific zone.";
+	COMMAND.tip = "Play a sound to all players in a specific suprazone (suprawasteland will play for both wasteland and tower for example, or suprahell and supragore) or zone (i.e. wasteland, tower, caves, hell, gore).";
 	COMMAND.text = "<string Zone> <string SoundName> [int Level] [int Pitch]";
 	COMMAND.access = "o";
 	COMMAND.arguments = 2;
@@ -716,8 +756,18 @@ local COMMAND = Clockwork.command:New("PlaySoundZone");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		local valid_zones = {"wasteland", "tower", "gore", "hell"};
+		local valid_zones = {};
 		local zone = string.lower(arguments[1]);
+		
+		table.insert(valid_zones, zones.cwDefaultZone.uniqueID);
+		
+		for k, v in pairs(zones:GetAll()) do
+			table.insert(valid_zones, k);
+		end
+		
+		for k, v in pairs(zones.supraZones) do
+			table.insert(valid_zones, k);
+		end
 		
 		if (arguments[2]) then
 			local info = {name = arguments[2], pitch = 100, level = 75};
@@ -736,17 +786,27 @@ local COMMAND = Clockwork.command:New("PlaySoundZone");
 				end;
 				
 				local playerTable = _player.GetAll();
-				
-				for k, v in pairs (playerTable) do
-					if v:HasInitialized() then
-						local lastZone = v:GetCharacterData("LastZone");
-						
-						if lastZone == zone or (zone == "gore" and (lastZone == "gore_tree" or lastZone == "gore_hallway") or (zone == "hell" and lastZone == "manor") or (zone == "tower" and lastZone == "theater")) or v == player then
-							-- nothing
-						else
-							playerTable[k] = nil;
+
+				if zones:IsSupraZone(zone) then
+					for k, v in pairs(playerTable) do
+						if v:HasInitialized() then
+							local vSupraZone = zones:GetPlayerSupraZone(v);
+							
+							if vSupraZone ~= zone then
+								playerTable[k] = nil;
+							end
 						end
-					end
+					end;
+				else
+					for k, v in pairs(playerTable) do
+						if v:HasInitialized() then
+							local vZone = v:GetCharacterData("LastZone", "wasteland");
+							
+							if vZone ~= zone then
+								playerTable[k] = nil;
+							end
+						end
+					end;
 				end;
 				
 				netstream.Start(playerTable, "EmitSound", info);

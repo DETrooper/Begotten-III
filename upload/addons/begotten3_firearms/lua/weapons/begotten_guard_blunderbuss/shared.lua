@@ -127,7 +127,20 @@ function SWEP:PrimaryAttack()
 				self:ShootBulletInformation();
 			--	self.Weapon:TakeAmmo(1); -- This should really only ever be 1 unless for some reason we have burst-fire guns or some shit, especially since we have different ammo types.
 				--self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-				self.Weapon:EmitSound(self.Primary.Sound)
+				
+				if SERVER then
+					local filter = RecipientFilter();
+					
+					if zones then
+						filter:AddPlayers(zones:GetPlayersInSupraZone(zones:GetPlayerSupraZone(self.Owner)));
+					else
+						filter:AddAllPlayers();
+					end
+					
+					self.Weapon:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0, filter);
+				else
+					self.Weapon:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0);
+				end
 
 				--[[timer.Simple(0.6,function() if self:IsValid() then self.Owner:EmitSound("weapons/357/357_reload3.wav") end end)						
 				timer.Simple(1.6,function() if self:IsValid() then self.Owner:EmitSound("physics/metal/metal_grenade_impact_hard1.wav") end end)

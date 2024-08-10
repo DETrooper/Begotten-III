@@ -211,8 +211,13 @@ end
 
 -- A function to get whether an inventory item instance.
 function Clockwork.inventory:HasItemInstance(inventory, itemTable)
-	local uniqueID = itemTable.uniqueID
-	return (inventory[uniqueID] and inventory[uniqueID][itemTable.itemID] != nil)
+	if itemTable then
+		local uniqueID = itemTable.uniqueID
+		
+		return (inventory[uniqueID] and inventory[uniqueID][itemTable.itemID] != nil)
+	end
+	
+	return false;
 end
 
 -- A function to get whether an inventory is empty.

@@ -223,18 +223,19 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 				timer.Create(playerIndex.."_heal_"..itemTable.itemID, healDelay, healRepetition, function()
 					if (IsValid(player)) then
 						local playerMaxHealth = player:GetMaxHealth(); -- Moving this here since max health could theoretically change while a heal is happening.
+						local healAmount = math.Clamp(player:Health() + healAmount, 0, playerMaxHealth);
 						
 						if player:Health() == playerMaxHealth then
 							timer.Destroy(playerIndex.."_heal_"..itemTable.itemID);
+							
+							Clockwork.limb:HealDamage(player, k, healAmount * (healRepetition - timesHealed));
 							
 							Clockwork.hint:Send(player, itemTable("name").." has worn off...", 5, Color(100, 175, 100), true, true);
 							hook.Run("PlayerHealed", player, itemTable);
 							
 							return;
 						end
-					
-						local healAmount = math.Clamp(player:Health() + healAmount, 0, playerMaxHealth);
-
+						
 						player:SetHealth(healAmount);
 						
 						if hitGroup == "all" then
@@ -420,17 +421,18 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 					timer.Create(targetIndex.."_heal_"..itemTable.itemID, healDelay, healRepetition, function()
 						if (IsValid(target)) then
 							local targetMaxHealth = target:GetMaxHealth(); -- Moving this here since max health could theoretically change while a heal is happening.
+							local healAmount = math.Clamp(target:Health() + healAmount, 0, targetMaxHealth);
 							
 							if target:Health() == targetMaxHealth then
 								timer.Destroy(targetIndex.."_heal_"..itemTable.itemID);
+								
+								Clockwork.limb:HealDamage(target, k, healAmount * (healRepetition - timesHealed));
 								
 								Clockwork.hint:Send(target, itemTable("name").." has worn off...", 5, Color(100, 175, 100), true, true);
 								hook.Run("PlayerHealed", target, itemTable);
 								
 								return;
 							end
-						
-							local healAmount = math.Clamp(target:Health() + healAmount, 0, targetMaxHealth);
 
 							target:SetHealth(healAmount);
 							

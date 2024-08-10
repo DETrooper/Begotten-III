@@ -111,6 +111,31 @@ function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destinat
 	menu:SetPos(scrW / 2 - (menu:GetWide() / 2), scrH / 2 - (menu:GetTall() / 2));
 end
 
+Clockwork.datastream:Hook("OpenAlarmMenu", function(alarmEnt)
+	if IsValid(alarmEnt) then
+		if (IsValid(menu)) then
+			menu:Remove();
+		end;
+		
+		local scrW = ScrW();
+		local scrH = ScrH();
+		local menu = DermaMenu();
+		
+		menu:SetMinimumWidth(150);
+		
+		menu:AddOption("Examine", function()
+			Schema:EasyText("skyblue", "A jury-rigged alarm system with seismic sensors set to activate an alarm should a Goreic longship arrive. Note that the alarm is not powerful enough to be heard from the Tower of Light, and will only sound if Gorewatch has an occupying garrison.");
+		end);
+		
+		if alarmEnt:GetNWBool("broken") then
+			menu:AddOption("Repair", function() Clockwork.Client:ConCommand("cw_RepairGorewatchAlarm") end);
+		end
+		
+		menu:Open();
+		menu:SetPos(scrW / 2 - (menu:GetWide() / 2), scrH / 2 - (menu:GetTall() / 2));
+	end
+end);
+
 Clockwork.datastream:Hook("OpenLongshipMenu", function(ignitable, ignited, repairable, sailable, destination, cargoholdopenable)
 	cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destination, cargoholdopenable);
 end);

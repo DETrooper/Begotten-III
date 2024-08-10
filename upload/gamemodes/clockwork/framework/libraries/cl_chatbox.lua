@@ -1226,6 +1226,10 @@ Clockwork.chatBox:RegisterDefaultClass("wastelandevent", "ic", function(info)
 	Clockwork.chatBox:Add(info.filtered, nil, Color(200, 100, 50, 255), "(WASTELAND) "..info.text);
 end);
 
+Clockwork.chatBox:RegisterDefaultClass("cavesevent", "ic", function(info)
+	Clockwork.chatBox:Add(info.filtered, nil, Color(200, 100, 50, 255), "(MINES) "..info.text);
+end);
+
 Clockwork.chatBox:RegisterDefaultClass("localevent", "ic", function(info)
 	Clockwork.chatBox:Add(info.filtered, nil, Color(200, 100, 50, 255), "(LOCAL) "..info.text);
 end);

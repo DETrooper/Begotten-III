@@ -204,6 +204,26 @@ if cwWeather.systemEnabled then
 			end;
 		end;
 	COMMAND:Register();
+	
+	local COMMAND = Clockwork.command:New("ChangeWeatherLength");
+		COMMAND.tip = "Append or subtract from an active weather's length.";
+		COMMAND.text = "<number Seconds>";
+		COMMAND.access = "a";
+		COMMAND.arguments = 1;
+
+		-- Called when the command has been run.
+		function COMMAND:OnRun(player, arguments)
+			local seconds = tonumber(arguments[1] or 0);
+			
+			if seconds then
+				cwWeather.nextWeatherTime = cwWeather.nextWeatherTime + seconds;
+				
+				Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has extended the "..cwWeather.weather.." by "..tostring(cwWeather.nextWeatherTime - CurTime()).." seconds!");
+			else
+				Schema:EasyText(player, "darkgrey", "This is not a valid amount!");
+			end
+		end;
+	COMMAND:Register();
 
 	local COMMAND = Clockwork.command:New("GetWeather");
 		COMMAND.tip = "Get the active weather.";

@@ -15,7 +15,7 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 	local subfaction = self:GetSubfaction();
 	local level = self:GetCharacterData("level", 1);
 	local xp = self:GetCharacterData("experience", 0);
-	local newAmount = amount * config.Get("xp_modifier"):Get();
+	local newAmount = amount;
 	
 	--print("Base XP: "..amount);
 	
@@ -25,6 +25,8 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 		end
 		
 		if amount > 0 then
+			newAmount = newAmount * config.Get("xp_modifier"):Get();
+		
 			-- Belief gain bonuses.
 			if self:HasBelief("gifted") then
 				newAmount = newAmount + (amount * 0.25);

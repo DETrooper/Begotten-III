@@ -282,7 +282,7 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 				end
 			else]]--
 				for i = level, math.min(level + 6, levelCap) do
-					player:HandleXP(self.sacramentCosts[i] or 666);
+					player:HandleXP(self.sacramentCosts[i] or 666, true);
 				end
 			--end
 		end

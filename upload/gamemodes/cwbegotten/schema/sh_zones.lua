@@ -8,6 +8,7 @@ local playerMeta = FindMetaTable("Player");
 zones = {};
 zones.totalZones = 0;
 zones.stored = {};
+zones.supraZones = {};
 
 local ZONE_TABLE = {__index = ZONE_TABLE};
 
@@ -32,10 +33,20 @@ function zones:GetAll()
 end;
 
 -- A function to get a new zone object.
-function zones:New(uniqueID)
+function zones:New(uniqueID, supraZone)
 	if (!uniqueID) then
 		return;
 	end;
+	
+	if supraZone then
+		if !self.supraZones[supraZone] then
+			self.supraZones[supraZone] = {};
+		end
+		
+		if !table.HasValue(self.supraZones[supraZone], uniqueID) then
+			table.insert(self.supraZones[supraZone], uniqueID);
+		end
+	end
 	
 	local object = Clockwork.kernel:NewMetaTable(ZONE_TABLE);
 		object.uniqueID = self:SafeName(uniqueID);
@@ -997,10 +1008,112 @@ if CLIENT then
 			end
 		end;
 	end
+else
+	function zones:GetPlayerSupraZone(player)
+		local zone = player:GetCharacterData("LastZone", "wasteland");
+		
+		for k, v in pairs(self.supraZones) do
+			if table.HasValue(v, zone) then
+				return k;
+			end
+		end
+		
+		return zone;
+	end
+	
+	function zones:IsPlayerInSupraZone(player, supraZone)
+		local zone = player:GetCharacterData("LastZone", "wasteland");
+		
+		if table.HasValue(self.supraZones[supraZone], zone) then
+			return true;
+		end
+		
+		return false;
+	end
+	
+	function zones:IsSupraZone(supraZone)
+		if self.supraZones[supraZone] then
+			return true;
+		end
+		
+		return false;
+	end
+	
+	function zones:GetSupraZoneFromZone(zone)
+		for k, v in pairs(self.supraZones) do
+			if table.HasValue(v, zone) then
+				return k;
+			end
+		end
+		
+		return zone;
+	end
+
+	function zones:GetPlayersInZone(zone)
+		local playersInZone = {};
+	
+		if istable(zone) then
+			for i, v in ipairs(_player.GetAll()) do
+				local vZone = v:GetCharacterData("LastZone", "wasteland");
+				
+				if table.HasValue(zone, vZone) then
+					table.insert(playersInZone, v);
+				end
+			end
+		else
+			for i, v in ipairs(_player.GetAll()) do
+				if v:GetCharacterData("LastZone", "wasteland") == zone then
+					table.insert(playersInZone, v);
+				end
+			end
+		end
+		
+		return playersInZone;
+	end
+	
+	function zones:GetPlayersInSupraZone(supraZone)
+		local playersInSupraZone = {};
+	
+		if istable(supraZone) then
+			for i, v in ipairs(_player.GetAll()) do
+				local vZone = v:GetCharacterData("LastZone", "wasteland");
+				
+				if !supraZone or !self.supraZones[supraZone] then
+					if vZone == supraZone then
+						table.insert(playersInSupraZone, v);
+				
+						continue;
+					end
+				end
+				
+				for i2, v2 in ipairs(self.supraZones[supraZone]) do
+					if table.HasValue(v2, vZone) then
+						table.insert(playersInSupraZone, v);
+						
+						break;
+					end
+				end
+			end
+		else
+			for i, v in ipairs(_player.GetAll()) do
+				local vZone = v:GetCharacterData("LastZone", "wasteland");
+				
+				if !supraZone or !self.supraZones[supraZone] then
+					if vZone == supraZone then
+						table.insert(playersInSupraZone, v);
+					end
+				elseif table.HasValue(self.supraZones[supraZone], vZone) then
+					table.insert(playersInSupraZone, v);
+				end
+			end
+		end
+		
+		return playersInSupraZone;
+	end
 end
 
 if map == "rp_begotten3" then
-	local WASTELAND = zones:New("wasteland")
+	local WASTELAND = zones:New("wasteland", "suprawasteland")
 		WASTELAND.default = true;
 		WASTELAND.hasNight = true;
 		WASTELAND.name = "Wasteland";
@@ -1072,7 +1185,7 @@ if map == "rp_begotten3" then
 		};
 	SCRAPPER:Register()
 
-	local TOWER = zones:New("tower")
+	local TOWER = zones:New("tower", "suprawasteland")
 		TOWER.hasNight = true;
 		TOWER.name = "Tower";
 		TOWER.map = "rp_begotten3";
@@ -1125,7 +1238,7 @@ if map == "rp_begotten3" then
 		};
 	CAVES:Register()
 
-	local HELL = zones:New("hell")
+	local HELL = zones:New("hell", "suprahell")
 		HELL.name = "Hell";
 		HELL.map = "rp_begotten3";
 		HELL.fogColors = {r = 80, g = 10, b = 10};
@@ -1146,7 +1259,7 @@ if map == "rp_begotten3" then
 		end;
 	HELL:Register()
 
-	local MANOR = zones:New("manor")
+	local MANOR = zones:New("manor", "suprahell")
 		MANOR.name = "Manor";
 		MANOR.map = "rp_begotten3";
 		MANOR.fogColors = {r = 80, g = 10, b = 10};
@@ -1182,7 +1295,7 @@ if map == "rp_begotten3" then
 		};
 	TOOTHBOY:Register()
 
-	local GORE_TREE = zones:New("gore_tree")
+	local GORE_TREE = zones:New("gore_tree", "supragore")
 		GORE_TREE.name = "Gore Tree";
 		GORE_TREE.map = "rp_begotten3";
 		GORE_TREE.fogColors = {r = 255, g = 255, b = 255};
@@ -1200,7 +1313,7 @@ if map == "rp_begotten3" then
 		function GORE_TREE:RenderCallback() end;
 	GORE_TREE:Register()
 
-	local GORE_HALLWAY = zones:New("gore_hallway")
+	local GORE_HALLWAY = zones:New("gore_hallway", "supragore")
 		GORE_HALLWAY.name = "Gore Hallway";
 		GORE_HALLWAY.map = "rp_begotten3";
 		GORE_HALLWAY.fogColors = {r = 0, g = 0, b = 0};
@@ -1259,7 +1372,7 @@ if map == "rp_begotten3" then
 		end;
 	GORE_HALLWAY:Register()
 
-	local GORE = zones:New("gore")
+	local GORE = zones:New("gore", "supragore")
 		GORE.name = "Gore Forest";
 		GORE.map = "rp_begotten3";
 		GORE.fogColors = {r = 100, g = 100, b = 100};
@@ -1344,7 +1457,7 @@ if map == "rp_begotten3" then
 		end;
 	SEA3:Register()
 elseif map == "rp_begotten_redux" then
-	local WASTELAND = zones:New("wasteland")
+	local WASTELAND = zones:New("wasteland", "suprawasteland")
 		WASTELAND.default = true;
 		WASTELAND.hasNight = true;
 		WASTELAND.name = "Wasteland";
@@ -1366,7 +1479,7 @@ elseif map == "rp_begotten_redux" then
 		end;
 	WASTELAND:Register()
 	
-	local TOWER = zones:New("tower")
+	local TOWER = zones:New("tower", "suprawasteland")
 		TOWER.hasNight = true;
 		TOWER.name = "Town of Light";
 		TOWER.map = "rp_begotten_redux";
@@ -1483,7 +1596,7 @@ elseif map == "rp_begotten_redux" then
 		end;]]--
 	DUEL:Register()
 	
-	local HELL = zones:New("hell")
+	local HELL = zones:New("hell", "suprahell")
 		HELL.name = "Hell";
 		HELL.map = "rp_begotten_redux";
 		HELL.fogColors = {r = 80, g = 10, b = 10};
@@ -1504,7 +1617,7 @@ elseif map == "rp_begotten_redux" then
 		end;
 	HELL:Register()
 
-	local MANOR = zones:New("manor")
+	local MANOR = zones:New("manor", "suprahell")
 		MANOR.name = "Manor";
 		MANOR.map = "rp_begotten_redux";
 		MANOR.fogColors = {r = 80, g = 10, b = 10};
@@ -1527,7 +1640,7 @@ elseif map == "rp_begotten_redux" then
 		end;
 	MANOR:Register()
 elseif map == "rp_scraptown" then
-	local WASTELAND = zones:New("wasteland")
+	local WASTELAND = zones:New("wasteland", "suprawasteland")
 		WASTELAND.default = true;
 		WASTELAND.hasNight = true;
 		WASTELAND.name = "Wasteland";
@@ -1549,7 +1662,7 @@ elseif map == "rp_scraptown" then
 		end;
 	WASTELAND:Register()
 	
-	local TOWER = zones:New("tower")
+	local TOWER = zones:New("tower", "suprawasteland")
 		TOWER.hasNight = true;
 		TOWER.name = "Scrap Town";
 		TOWER.map = "rp_scraptown";
@@ -1610,7 +1723,7 @@ elseif map == "rp_scraptown" then
 		end;]]--
 	DUEL:Register()
 	
-	local HELL = zones:New("hell")
+	local HELL = zones:New("hell", "suprahell")
 		HELL.name = "Hell";
 		HELL.map = "rp_scraptown";
 		HELL.fogColors = {r = 80, g = 10, b = 10};
@@ -1631,7 +1744,7 @@ elseif map == "rp_scraptown" then
 		end;
 	HELL:Register()
 
-	local MANOR = zones:New("manor")
+	local MANOR = zones:New("manor", "suprahell")
 		MANOR.name = "Manor";
 		MANOR.map = "rp_scraptown";
 		MANOR.fogColors = {r = 80, g = 10, b = 10};
@@ -1653,7 +1766,7 @@ elseif map == "rp_scraptown" then
 		end;
 	MANOR:Register()
 elseif map == "rp_temple" then
-		local TEMPLE = zones:New("temple")
+		local TEMPLE = zones:New("temple", "temple")
 		TEMPLE.default = true;
 		TEMPLE.hasNight = false;
 		TEMPLE.name = "Temple";
@@ -1669,7 +1782,7 @@ elseif map == "rp_temple" then
 
 	TEMPLE:Register()
 	
-		local TEMPLE_INDOOR = zones:New("temple_indoor")
+		local TEMPLE_INDOOR = zones:New("temple_indoor", "temple")
 		TEMPLE_INDOOR.hasNight = false;
 		TEMPLE_INDOOR.name = "Temple Indoor";
 		TEMPLE_INDOOR.map = "rp_temple";
@@ -1684,7 +1797,7 @@ elseif map == "rp_temple" then
 		--TEMPLE.skyFixNight = {r = 10, g = 3, b = 1}
 
 	TEMPLE_INDOOR:Register()
-		local TEMPLE_TREE = zones:New("temple_tree")
+		local TEMPLE_TREE = zones:New("temple_tree", "temple")
 		TEMPLE_TREE.hasNight = false;
 		TEMPLE_TREE.name = "Temple Tree";
 		TEMPLE_TREE.map = "rp_temple";
@@ -1700,7 +1813,7 @@ elseif map == "rp_temple" then
 
 	TEMPLE_TREE:Register()
 else
-	local WASTELAND = zones:New("wasteland")
+	local WASTELAND = zones:New("wasteland", "suprawasteland")
 		WASTELAND.default = true;
 		WASTELAND.hasNight = true;
 		WASTELAND.name = "Wasteland";

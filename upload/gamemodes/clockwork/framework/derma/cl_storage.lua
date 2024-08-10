@@ -1445,8 +1445,12 @@ Clockwork.datastream:Hook("StorageTake", function(data, bRemoveInstance)
 					Clockwork.storage.inventory, v.uniqueID, v.itemID
 				);
 				
-				if !Clockwork.inventory:HasItemInstance(inventory, item.FindInstance(v.itemID)) then
-					item.RemoveInstance(v.itemID);
+				local itemInstance = item.FindInstance(v.itemID);
+				
+				if itemInstance then
+					if !Clockwork.inventory:HasItemInstance(inventory, itemInstance) then
+						item.RemoveInstance(v.itemID);
+					end
 				end
 			end;
 		else
@@ -1454,8 +1458,12 @@ Clockwork.datastream:Hook("StorageTake", function(data, bRemoveInstance)
 				Clockwork.storage.inventory, data.uniqueID, data.itemID
 			);
 			
-			if !Clockwork.inventory:HasItemInstance(inventory, item.FindInstance(data.itemID)) then
-				item.RemoveInstance(data.itemID);
+			local itemInstance = item.FindInstance(data.itemID);
+			
+			if itemInstance then
+				if !Clockwork.inventory:HasItemInstance(inventory, itemInstance) then
+					item.RemoveInstance(data.itemID);
+				end
 			end
 		end
 		

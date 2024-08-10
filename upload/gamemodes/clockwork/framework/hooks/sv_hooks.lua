@@ -3919,13 +3919,21 @@ end
 function GM:EntityTakeDamage(entity, damageInfo)
 	local class = entity:GetClass();
 	
-	if class == "prop_dynamic" or class == "cw_duelstatue" or class == "cw_hellportal" then
-		return true;
-	elseif entity.cwInventory then
+	if (class == "prop_dynamic" or class == "cw_duelstatue" or class == "cw_hellportal") or entity.cwInventory then
 		return true;
 	end
 	
-	if (entity:IsPlayer() and damageInfo:IsExplosionDamage() and !entity:IsRagdolled() and !entity:IsNoClipping()) then
+	local damage = damageInfo:GetDamage();
+	
+	if (damage == 0) then
+		return true;
+	end
+	
+	if (damageInfo:IsDamageType(DMG_CRUSH) and damage < 10) then
+		return true;
+	end
+	
+	if (entity:IsPlayer() and damageInfo:IsExplosionDamage() and damage >= 25 and !entity:IsRagdolled() and !entity:IsNoClipping()) then
 		if !Clockwork.player:HasFlags(entity, "E") and !Clockwork.player:HasFlags(entity, "K") then
 			if !cwBeliefs or (cwBeliefs and !entity:HasBelief("fortitude_finisher")) then
 				local data = {}
@@ -3943,14 +3951,6 @@ function GM:EntityTakeDamage(entity, damageInfo)
 		end
 	end
 	
-	if (damageInfo:IsDamageType(DMG_CRUSH) and damageInfo:GetDamage() < 10) then
-		damageInfo:SetDamage(0)
-	end
-	
-	if (damageInfo:GetDamage() == 0) then
-		return true;
-	end
-
 	local inflictor = damageInfo:GetInflictor()
 	local attacker = damageInfo:GetAttacker()
 

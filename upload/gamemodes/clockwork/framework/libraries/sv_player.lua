@@ -2610,6 +2610,8 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 			ragdoll:SetBodygroup(0, player:GetBodygroup(0));
 			ragdoll:SetBodygroup(1, player:GetBodygroup(1));
 			ragdoll:Spawn()
+			
+			ragdoll.cwNextFallDamage = CurTime() + 1;
 
 			if string.find(model, "models/begotten/heads") then
 				local clothesItem = player:GetClothesEquipped();
