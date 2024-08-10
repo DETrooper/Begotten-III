@@ -1217,6 +1217,9 @@ concommand.Add("cw_RepairGorewatchAlarm", function(player, cmd, args)
 				Clockwork.player:SetAction(player, "repair_alarm", 30, 1, function() 
 					if entity:IsValid() and entity:GetNWBool("broken") and player:HasItemInstance(repairItemTable) then
 						entity:SetNWBool("broken", false);
+						entity:EmitSound("ambient/levels/caves/ol04_gearengage.wav");
+						
+						Clockwork.chatBox:AddInRadius(nil, "localevent", "With the clanging of gears, the repaired alarm system re-activates.", entity:GetPos(), 666);
 						
 						player:TakeItem(repairItemTable, true);
 					end

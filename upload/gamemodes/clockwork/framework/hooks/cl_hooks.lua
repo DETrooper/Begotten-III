@@ -2678,6 +2678,8 @@ function GM:GetProgressBarInfo()
 				return {text = "You are putting on your armor. Click to cancel.", percentage = percentage, flash = percentage < 10};
 			elseif (action == "taking_off_armor") then
 				return {text = "You are taking off your armor. Click to cancel.", percentage = percentage, flash = percentage < 10};
+			elseif (action == "repair_alarm") then
+				return {text = "You are taking repairing the Gorewatch alarm. Click to cancel.", percentage = percentage, flash = percentage < 10};
 			end;
 		elseif (action == "unragdoll") then
 			if (Clockwork.Client:GetRagdollState() == RAGDOLL_FALLENOVER) then
