@@ -32,15 +32,17 @@ function ENT:UpdateTransmitState()
 end;
 
 function ENT:OnTakeDamage(damageInfo)
-	local attacker = damageInfo:GetAttacker();
-	
-	if IsValid(attacker) and attacker:IsPlayer() then
-		if damageInfo:GetDamage() >= 25 then
-			self:SetNWBool("broken", true);
-			self:EmitSound("physics/metal/metal_box_break2.wav");
-			self:EmitSound("ambient/energy/zap9.wav");
-			
-			Clockwork.chatBox:AddInRadius(nil, "itnofake", "The gorewatch alarm system breaks under the weight of an attack, ceasing its function!", self:GetPos(), config.Get("talk_radius"):Get() * 2);
+	if self:SetNWBool("broken") ~= true then
+		local attacker = damageInfo:GetAttacker();
+		
+		if IsValid(attacker) and attacker:IsPlayer() then
+			if damageInfo:GetDamage() >= 25 then
+				self:SetNWBool("broken", true);
+				self:EmitSound("physics/metal/metal_box_break2.wav");
+				self:EmitSound("ambient/energy/zap9.wav");
+				
+				Clockwork.chatBox:AddInRadius(nil, "itnofake", "The gorewatch alarm system breaks under the weight of an attack, ceasing its function!", self:GetPos(), config.Get("talk_radius"):Get() * 2);
+			end
 		end
 	end
 end
