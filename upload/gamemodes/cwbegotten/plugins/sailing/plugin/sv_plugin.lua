@@ -187,23 +187,26 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 	local longshipEntPos = longshipEnt:GetPos();
 	local longshipEntAngles = longshipEnt:GetAngles();
 	local longshipEntBoundingBox = self:GetLongshipBoundingBox(longshipEnt);
+	local owner = longshipEnt.owner;
 
 	--printp("ent pos: "..tostring(longshipEntPos));
 	--printp("ent bb1: "..tostring(longshipEntBoundingBox["lower"]));
 	--printp("ent bb2: "..tostring(longshipEntBoundingBox["upper"]));
 	
-	if IsValid(longshipEnt.owner) then
+	if IsValid(owner) then
 		--local ownerPos = longshipEnt.owner:GetPos();
 		--printp("owner pos: "..tostring(ownerPos));
 		--printp("owner is on board: "..tostring(ownerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"])));
-		local tr = util.TraceLine({
-			start = longshipEnt.owner:GetPos(),
-			endpos = longshipEnt.owner:GetPos() - Vector(0, 0, 64),
+		
+		local tr = util.TraceHull({
+			start = owner:EyePos(),
+			endpos = owner:GetPos() - Vector(0, 0, 100),
+			maxs = owner:OBBMaxs(),
+			mins = owner:OBBMins(),
 			filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end,
 			collisiongroup = COLLISION_GROUP_NONE,
 		});
-				
-		--if ownerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
+
 		if IsValid(tr.Entity) and tr.Entity == longshipEnt then
 			longshipEnt.destination = destination;
 			
@@ -211,31 +214,33 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 			--local sail_time = 5; -- for testing
 			local sea_zone = self:DetermineSeaZone(longshipEnt, destination);
 			
-			if longshipEnt.owner:GetSubfaction() == "Clan Harald" then
+			if owner:GetSubfaction() == "Clan Harald" then
 				sail_time = 10;
 			end
 			
 			--printp("selected sea zone: "..sea_zone);
-			Schema:EasyText(longshipEnt.owner, "icon16/anchor.png", "cornflowerblue", "Setting sail in "..tostring(sail_time).." seconds!");
-			Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", longshipEnt.owner:Name().."'s longship is setting sail to destination "..destination.."!");
+			Schema:EasyText(owner, "icon16/anchor.png", "cornflowerblue", "Setting sail in "..tostring(sail_time).." seconds!");
+			Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", owner:Name().."'s longship is setting sail to destination "..destination.."!");
 			
 			longshipEnt:EmitSound("ambient/machines/thumper_dust.wav");
-			Clockwork.chatBox:AddInTargetRadius(longshipEnt.owner, "me", "prepares to set sail for "..tostring(SHIP_DESTINATIONS[destination].name)..".", longshipEnt.owner:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+			Clockwork.chatBox:AddInTargetRadius(owner, "me", "prepares to set sail for "..tostring(SHIP_DESTINATIONS[destination].name)..".", owner:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 			
 			longshipEnt:SetBodygroup(0, 0);
 			
 			timer.Create("SailTimer_"..tostring(longshipEnt:EntIndex()), sail_time, 1, function()
 				if IsValid(longshipEnt) then
-					if IsValid(longshipEnt.owner) and longshipEnt.owner then
-						--local ownerPos = longshipEnt.owner:GetPos();
-						local tr = util.TraceLine({
-							start = longshipEnt.owner:GetPos(),
-							endpos = longshipEnt.owner:GetPos() - Vector(0, 0, 64),
+					local owner = longshipEnt.owner;
+					
+					if IsValid(owner) then
+						local tr = util.TraceHull({
+							start = owner:EyePos(),
+							endpos = owner:GetPos() - Vector(0, 0, 100),
+							maxs = owner:OBBMaxs(),
+							mins = owner:OBBMins(),
 							filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end,
 							collisiongroup = COLLISION_GROUP_NONE,
 						});
 						
-						--if ownerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
 						if IsValid(tr.Entity) and tr.Entity == longshipEnt then
 							cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, sea_zone);
 							
@@ -326,15 +331,15 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 			
 			for i, player in ipairs(_player.GetAll()) do
 				if IsValid(player) then
-					--local playerPos = player:GetPos();
-					local tr = util.TraceLine({
-						start = player:GetPos(),
-						endpos = player:GetPos() - Vector(0, 0, 64),
+					local tr = util.TraceHull({
+						start = player:EyePos(),
+						endpos = player:GetPos() - Vector(0, 0, 100),
+						maxs = player:OBBMaxs(),
+						mins = player:OBBMins(),
 						filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end,
 						collisiongroup = COLLISION_GROUP_NONE,
 					});
 					
-					--if playerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
 					if IsValid(tr.Entity) and tr.Entity == longshipEnt then
 						local longshipEntPos = longshipEnt:GetPos();
 						local offset = self:GetPlayerOffset(longshipEnt, player, longshipAngles.y);
@@ -517,13 +522,15 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 						longshipEnt.destination = nil;
 					elseif location == "wasteland" then
 						local alarm = self.gorewatchAlarm;
-						
+
 						if IsValid(alarm) and !alarm:GetNWBool("broken") then
 							for i, v in ipairs(_player.GetAll()) do
-								local faction = v:GetFaction();
+								local faction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
 								
 								if (faction == "Gatekeeper" or faction == "Holy Hierarchy") and !v.cwObserverMode and v:GetPos():WithinAABox(Vector(9422, 11862, -1210), Vector(10055, 10389, -770)) then
 									timer.Simple(math.random(5, 10), function()
+										local alarm = self.gorewatchAlarm;
+										
 										if IsValid(alarm) then
 											if !alarm.nextAlarm or alarm.nextAlarm < CurTime() then
 												alarm.nextAlarm = CurTime() + 180;
@@ -536,16 +543,16 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 												local filter = RecipientFilter();
 												local filterTab = {};
 												
-												for i, v in ipairs(_player.GetAll()) do
-													if v:Alive() and v:GetCharacterData("zone") == "wasteland" then
-														if v:GetPos():Distance2D(alarmPos) < 6000 then
-															table.insert(filterTab, v);
+												for i2, v2 in ipairs(_player.GetAll()) do
+													if v2:Alive() and v2:GetCharacterData("LastZone") == "wasteland" then
+														if v2:GetPos():Distance2D(alarmPos) < 6000 then
+															table.insert(filterTab, v2);
 														end
 													end
 												end
 												
 												filter:AddPlayers(filterTab);
-												
+
 												if IsValid(alarm.speaker) then
 													alarm.speaker:EmitSound("warhorns/hell_alarm.mp3", 110, nil, nil, nil, nil, nil, filter);
 												else
@@ -554,6 +561,8 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 											end
 										end
 									end);
+									
+									break;
 								end
 							end
 						end
@@ -591,28 +600,22 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 			Schema:EasyText(longshipEnt.owner, "peru", "The location you are trying to move your longship to is currently full or invalid! Waiting 30 more seconds.");
 		end
 		
-		local players = _player.GetAll()
-		
-		for i = 1, _player.GetCount() do
-			local player = players[i];
-			
-			if IsValid(player) then
-				--local playerPos = player:GetPos();
-				local tr = util.TraceLine({
-					start = player:GetPos(),
-					endpos = player:GetPos() - Vector(0, 0, 64),
-					filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end,
-					collisiongroup = COLLISION_GROUP_NONE,
-				});
+		for i, player in ipairs(_player.GetAll()) do
+			local tr = util.TraceHull({
+				start = player:EyePos(),
+				endpos = player:GetPos() - Vector(0, 0, 100),
+				maxs = player:OBBMaxs(),
+				mins = player:OBBMins(),
+				filter = function( ent ) return ( ent:GetClass() == "cw_longship" ) end,
+				collisiongroup = COLLISION_GROUP_NONE,
+			});
+	
+			if IsValid(tr.Entity) and tr.Entity == longshipEnt then
+				local longshipEntPos = longshipEnt:GetPos();
 				
-				--if playerPos:WithinAABox(longshipEntBoundingBox["lower"], longshipEntBoundingBox["upper"]) then
-				if IsValid(tr.Entity) and tr.Entity == longshipEnt then
-					local longshipEntPos = longshipEnt:GetPos();
-					
-					if (!player.cwObserverMode) then
-						player:Freeze(false);
-						player:SetGravity(1);
-					end
+				if (!player.cwObserverMode) then
+					player:Freeze(false);
+					player:SetGravity(1);
 				end
 			end
 		end
