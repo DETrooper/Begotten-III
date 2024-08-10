@@ -2,6 +2,12 @@
 	Begotten III: Jesus Wept
 --]]
 
+function cwPickupObjects:GetProgressBarInfoAction(action, percentage)
+	if (action == "pickupragdoll") then
+		return {text = "You are picking up a body. Click to cancel.", percentage = percentage, flash = percentage < 10}
+	end
+end
+
 -- Called when the top text is needed.
 function cwPickupObjects:GetTopText(topText)
 	local beingDragged = Clockwork.Client:GetNetVar("IsDragged");

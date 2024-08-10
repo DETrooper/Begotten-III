@@ -322,7 +322,7 @@ end
 			end
 		end
 		
-		Clockwork.datastream:Hook("ResetBoneScale", function(data)
+		netstream.Hook("ResetBoneScale", function(data)
 			if (type(data) == "Player" or type(data) == "Entity" and IsValid(data)) then
 				LIMBS:ResetBoneScale(data)
 			end
@@ -332,7 +332,7 @@ end
 			LIMBS:ResetBoneScale(v)
 		end
 		
-		Clockwork.datastream:Hook("ResizeBone", function(data)
+		netstream.Hook("ResizeBone", function(data)
 			if (IsValid(data.entity)) then
 				if (data.removeGroup and LIMBS.Groups[data.removeGroup]) then
 					for k, v in pairs (LIMBS.Groups[data.removeGroup]) do

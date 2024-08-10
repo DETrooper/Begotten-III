@@ -128,7 +128,7 @@ function cwZombies:SpawnZombie(class, position)
 			end;
 			
 			if (randomSound) then
-				Clockwork.datastream:Start(v, "PlaySound", randomSound);
+				netstream.Start(v, "PlaySound", randomSound);
 			end;
 		end;
 	end;

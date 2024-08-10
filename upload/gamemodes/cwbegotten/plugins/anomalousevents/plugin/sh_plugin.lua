@@ -20,9 +20,9 @@ local COMMAND = Clockwork.command:New("cosmicrupture");
 				
 				if IsValid(player) then
 					-- Maybe check to see if zone is wasteland/tower/scrap factory/toothboy?
-					Clockwork.datastream:Start(player, "FadeAmbientMusic");
-					Clockwork.datastream:Start(player, "FadeBattleMusic");
-					Clockwork.datastream:Start(player, "CosmicRupture");
+					netstream.Start(player, "FadeAmbientMusic");
+					netstream.Start(player, "FadeBattleMusic");
+					netstream.Start(player, "CosmicRupture");
 				end
 			end
 		end;
@@ -59,13 +59,13 @@ local COMMAND = Clockwork.command:New("tvhallucination");
 		local target = Clockwork.player:FindByID(arguments[1]);
 		
 		if (target) then
-			Clockwork.datastream:Start(target, "StartNearestTVHallucination");
+			netstream.Start(target, "StartNearestTVHallucination");
 		else
 			Schema:EasyText(player, "grey", "["..self.name.."] "..arguments[1].." is not a valid player!");
 		end
 		
 		if arguments[2] then
-			Clockwork.datastream:Start(player, "StartNearestTVHallucination");
+			netstream.Start(player, "StartNearestTVHallucination");
 		end
 	end;
 COMMAND:Register();

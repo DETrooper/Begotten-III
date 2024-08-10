@@ -6,7 +6,7 @@
 function Schema:CustomSoundPlaying(player)
 	if (player:IsPlayer() and player:HasInitialized()) then
 		player.HasCustomSoundRequested = true;
-		Clockwork.datastream:Start(player, "PlayerCustomSoundCheck");
+		netstream.Start(player, "PlayerCustomSoundCheck");
 		
 		timer.Create(player:EntIndex().."_soundcheckconfirm", FrameTime(), 60, function()
 			if (player.CustomSoundPlaying) then
@@ -20,7 +20,7 @@ function Schema:CustomSoundPlaying(player)
 	end;
 end;
 
-Clockwork.datastream:Hook("ConfirmCustomSoundCheck", function(player, data)
+netstream.Hook("ConfirmCustomSoundCheck", function(player, data)
 	if (player.HasCustomSoundRequested) then
 		player.HasCustomSoundRequested = nil;
 	else

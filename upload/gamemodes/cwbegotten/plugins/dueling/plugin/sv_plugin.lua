@@ -320,8 +320,8 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 	player1:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.2);
 	player2:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.2);
 	
-	Clockwork.datastream:Start(player1, "FadeAmbientMusic");
-	Clockwork.datastream:Start(player2, "FadeAmbientMusic");
+	netstream.Start(player1, "FadeAmbientMusic");
+	netstream.Start(player2, "FadeAmbientMusic");
 	
 	-- Save positions.
 	if cwSpawnSaver then
@@ -349,13 +349,13 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 				player1:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 5, 0);
 				player1.opponent = nil;
 				
-				Clockwork.datastream:Start(player1, "SetPlayerDueling", false);
+				netstream.Start(player1, "SetPlayerDueling", false);
 			elseif IsValid(player2) then
 				Schema:EasyText(player2, "icon16/shield_go.png", "orangered", "Duel Aborted!")
 				player2:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 5, 0);
 				player2.opponent = nil;
 				
-				Clockwork.datastream:Start(player2, "SetPlayerDueling", false);
+				netstream.Start(player2, "SetPlayerDueling", false);
 			end
 		end
 	end);
@@ -426,8 +426,8 @@ function cwDueling:DuelAborted(player1, player2)
 				player2:Freeze(true);
 				player2:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.1);
 				
-				Clockwork.datastream:Start(player1, "FadeBattleMusic");
-				Clockwork.datastream:Start(player2, "FadeBattleMusic");
+				netstream.Start(player1, "FadeBattleMusic");
+				netstream.Start(player2, "FadeBattleMusic");
 				
 				timer.Simple(5, function()
 					if IsValid(player1) then
@@ -462,7 +462,7 @@ function cwDueling:DuelAborted(player1, player2)
 				player1:Freeze(true);
 				player1:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.1);
 				
-				Clockwork.datastream:Start(player1, "FadeBattleMusic");
+				netstream.Start(player1, "FadeBattleMusic");
 				
 				timer.Simple(5, function()
 					if IsValid(player1) then
@@ -493,7 +493,7 @@ function cwDueling:DuelAborted(player1, player2)
 				player2:Freeze(true);
 				player2:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.1);
 				
-				Clockwork.datastream:Start(player2, "FadeBattleMusic");
+				netstream.Start(player2, "FadeBattleMusic");
 				
 				timer.Simple(5, function()
 					if IsValid(player2) then
@@ -530,8 +530,8 @@ function cwDueling:DuelCompleted(winner, loser)
 				winner:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.1);
 				loser:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.1);
 				
-				Clockwork.datastream:Start(winner, "FadeBattleMusic");
-				--Clockwork.datastream:Start(loser, "FadeBattleMusic"); -- This should already happen if the loser is dead.
+				netstream.Start(winner, "FadeBattleMusic");
+				--netstream.Start(loser, "FadeBattleMusic"); -- This should already happen if the loser is dead.
 					
 				timer.Simple(5, function()
 					if IsValid(winner) then
@@ -591,7 +591,7 @@ function cwDueling:DuelCompleted(winner, loser)
 				winner:Freeze(true);
 				winner:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.1);
 				
-				Clockwork.datastream:Start(winner, "FadeBattleMusic");
+				netstream.Start(winner, "FadeBattleMusic");
 					
 				timer.Simple(5, function()
 					if IsValid(winner) then
@@ -644,7 +644,7 @@ function cwDueling:DuelCompleted(winner, loser)
 					timer.Remove("DuelTimer_"..k)
 				end
 				
-				--Clockwork.datastream:Start(loser, "FadeBattleMusic"); -- This should already happen if the loser is dead.
+				--netstream.Start(loser, "FadeBattleMusic"); -- This should already happen if the loser is dead.
 				
 				timer.Simple(5, function()
 					if IsValid(loser) then

@@ -1032,23 +1032,23 @@ function Schema:FinishWakeupSequence()
 	netstream.Start("FinishWakeup");
 end;
 
-Clockwork.datastream:Hook("Stunned", function(data)
+netstream.Hook("Stunned", function(data)
 	Schema:AddStunEffect(data);
 end);
 
-Clockwork.datastream:Hook("BlackStunned", function(data)
+netstream.Hook("BlackStunned", function(data)
 	Schema:AddBlackFade(data);
 end);
 
-Clockwork.datastream:Hook("MotionBlurStunned", function(data)
+netstream.Hook("MotionBlurStunned", function(data)
 	Schema:AddMotionBlurStunEffect(data, true);
 end);
 
-Clockwork.datastream:Hook("Flashed", function(data)
+netstream.Hook("Flashed", function(data)
 	Schema:AddFlashEffect();
 end);
 
-Clockwork.datastream:Hook("ClearEffects", function(data)
+netstream.Hook("ClearEffects", function(data)
 	Schema.stunEffects = {};
 	Schema.flashEffect = nil;
 	Schema.motionBlurStunEffect = nil;
@@ -1056,11 +1056,11 @@ Clockwork.datastream:Hook("ClearEffects", function(data)
 end);
 
 Clockwork.setting:AddCheckBox("Screen effects", "Enable cinematic film grain.", "cwFilmGrain", "Toggle the filmgrain overlay.", function() return Clockwork.player:IsAdmin(Clockwork.Client); end);
-Clockwork.setting:AddCheckBox("Screen effects", "Enable Calcview hook.", "cwShowCalcView", "Click to enable/disable the Calcview hook.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
-Clockwork.setting:AddCheckBox("Screen effects", "Enable cinematic camera.", "cwCinematicView", "Click to enable/disable cinematic camera smoothing.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
+Clockwork.setting:AddCheckBox("Screen effects", "Enable Calcview hook.", "cwShowCalcView", "Click to toggle the Calcview hook.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
+Clockwork.setting:AddCheckBox("Screen effects", "Enable cinematic camera.", "cwCinematicView", "Click to toggle cinematic camera smoothing.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
 Clockwork.setting:AddCheckBox("Screen effects", "Cinematic camera only in observer.", "cwCinematicViewObs", "Enables the cinematic camera only when you are in observer.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
 Clockwork.setting:AddCheckBox("Admin ESP", "Enable observer lamp light.", "cwObserverLamp", "Toggle the observer lamp light.", function() return Clockwork.player:IsAdmin(Clockwork.Client); end);
 
 --
-Clockwork.setting:AddCheckBox("Wakeup sequence", "Enable the wakeup sequence.", "cwWakeupSequence", "Click to enable/disable the wakeup sequence.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
-Clockwork.setting:AddCheckBox("Zones", "Enable motion blur.", "cwShowBlur", "Click to enable/disable motion blur.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
+Clockwork.setting:AddCheckBox("Wakeup sequence", "Enable the wakeup sequence.", "cwWakeupSequence", "Click to toggle the wakeup sequence.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
+Clockwork.setting:AddCheckBox("Zones", "Enable motion blur.", "cwShowBlur", "Click to toggle motion blur.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);

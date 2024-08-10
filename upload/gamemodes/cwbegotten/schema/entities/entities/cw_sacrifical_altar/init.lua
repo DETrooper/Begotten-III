@@ -37,7 +37,7 @@ end;
 function ENT:Use(activator, caller)
 	if IsValid(caller) and caller:IsPlayer() then
 		if caller:GetFaction() == "Children of Satan" then
-			Clockwork.datastream:Start(caller, "OpenAltarMenu");
+			netstream.Start(caller, "OpenAltarMenu");
 		end
 	end;
 end;

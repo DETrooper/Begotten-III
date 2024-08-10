@@ -23,7 +23,7 @@ function cwRituals:PlayerCanPerformRitual(player, uniqueID, bIgnoreItems)
 	local subfaction = player:GetSubfaction();
 	local subfaith = player:GetSharedVar("subfaith");
 	
-	if Clockwork.player:GetAction(player) ~= "" or player:IsRagdolled() or !player:Alive() or player.opponent or (cwDueling and cwDueling:PlayerIsInMatchmaking(player)) or player:GetNetVar("tied") != 0 or player.possessor then
+	if Clockwork.player:GetAction(player) or player:IsRagdolled() or !player:Alive() or player.opponent or (cwDueling and cwDueling:PlayerIsInMatchmaking(player)) or player:GetNetVar("tied") != 0 or player.possessor then
 		Schema:EasyText(player, "peru", "Your character cannot perform a ritual at this moment!");
 		return false;
 	end
@@ -301,7 +301,7 @@ function cwRituals:PlayerThink(player, curTime, infoTable, alive, initialized, p
 						
 						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, v:Name().." has taken 3 damage from "..player:Name().."'s 'Enlightenment' ritual, leaving them at "..v:Health().." health.");
 			
-						Clockwork.datastream:Start(v, "Stunned", 3);
+						netstream.Start(v, "Stunned", 3);
 					end
 				end
 			end
@@ -912,7 +912,7 @@ function cwRituals:ModifyPlayerSpeed(player, infoTable, action)
 	end
 end
 
-Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
+netstream.Hook("AppearanceAlterationMenu", function(player, data)
 	if player.selectingNewAppearance then
 		if data and data[1] and data[2] and data[3] and data[4] and data[5] then
 			local blacklistedNames = {};
@@ -1103,7 +1103,7 @@ Clockwork.datastream:Hook("AppearanceAlterationMenu", function(player, data)
 	end
 end)
 
-Clockwork.datastream:Hook("ClosedAppearanceAlterationMenu", function(player, data)
+netstream.Hook("ClosedAppearanceAlterationMenu", function(player, data)
 	if player.selectingNewAppearance then
 		-- Refund items from the Kinisger Appearance Alteration ritual.
 		local ritualTable = cwRituals.rituals.stored["kinisger_appearance_alteration"];
@@ -1120,13 +1120,13 @@ Clockwork.datastream:Hook("ClosedAppearanceAlterationMenu", function(player, dat
 	end
 end)
 
-Clockwork.datastream:Hook("DoRitual", function(player, data)
+netstream.Hook("DoRitual", function(player, data)
 	if data and data[1] and data[2] then
 		cwRituals:PerformRitual(player, data[1], data[2]);
 	end
 end)
 
-Clockwork.datastream:Hook("RegrowthMenu", function(player, data)
+netstream.Hook("RegrowthMenu", function(player, data)
 	if player.selectingRegrowthLimb then
 		if data and isnumber(data) then
 			local hitGroup = data;
@@ -1150,7 +1150,7 @@ Clockwork.datastream:Hook("RegrowthMenu", function(player, data)
 	end
 end)
 
-Clockwork.datastream:Hook("SaveRitualBinds", function(player, data)
+netstream.Hook("SaveRitualBinds", function(player, data)
 	if data and istable(data) then
 		player:SetCharacterData("BoundRituals", data);
 	end

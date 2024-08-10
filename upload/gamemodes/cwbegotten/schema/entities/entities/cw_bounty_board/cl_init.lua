@@ -29,7 +29,7 @@ local function CreateMenu(state)
 	
 	if state ~= "Gore" then
 		menu:AddOption("View Bounties", function()
-			Clockwork.datastream:Start("QueryBountyBoard", state);
+			netstream.Start("QueryBountyBoard", state);
 		end);
 	end
 
@@ -111,11 +111,11 @@ local function CreateMenu(state)
 	menu:SetPos(scrW / 2 - (menu:GetWide() / 2), scrH / 2 - (menu:GetTall() / 2));
 end
 
-Clockwork.datastream:Hook("OpenBountyBoardMenu", function(state)
+netstream.Hook("OpenBountyBoardMenu", function(state)
 	CreateMenu(state);
 end);
 
-Clockwork.datastream:Hook("OpenBountyList", function(data, state)
+netstream.Hook("OpenBountyList", function(data, state)
 	if !Clockwork.Client.cwBountyMenu or !IsValid(Clockwork.Client.cwBountyMenu) then
 		Clockwork.Client.cwBountyMenu = vgui.Create("cwBountyMenu");
 	end

@@ -49,7 +49,7 @@ function cwContainerHiding:AttemptHide(player, entity, bHide)
 			Schema:OpenSound(entity, player);
 		end
 		
-		--Clockwork.datastream:Start(player, "cwCustomHint", {string.Split(player:Name(), " ")[1].." Thinks...", "I should be safe in here..."});
+		--netstream.Start(player, "cwCustomHint", {string.Split(player:Name(), " ")[1].." Thinks...", "I should be safe in here..."});
 	else
 		player:SetCharacterData("hidden", false);
 		player:SetSharedVar("hidden", false);
@@ -72,7 +72,7 @@ function cwContainerHiding:AttemptHide(player, entity, bHide)
 		end
 	end;
 	
-	Clockwork.datastream:Start(player, "ContainerHeartbeat", bHide)
+	netstream.Start(player, "ContainerHeartbeat", bHide)
 end;
 
 -- Called when a player opens an occupied storage container.

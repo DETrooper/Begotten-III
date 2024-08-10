@@ -121,10 +121,10 @@ function playerMeta:Possess(possessor)
 			self:StripWeapon("cw_senses");
 		end
 		
-		Clockwork.datastream:Start(possessor, "Possessing", self);
-		Clockwork.datastream:Start(possessor, "Stunned", 5); -- Replace with damnation or custom VFX later!
-		Clockwork.datastream:Start(self, "Possessed", possessor);
-		Clockwork.datastream:Start(self, "Stunned", 5); -- Replace with damnation or custom VFX later!
+		netstream.Start(possessor, "Possessing", self);
+		netstream.Start(possessor, "Stunned", 5); -- Replace with damnation or custom VFX later!
+		netstream.Start(self, "Possessed", possessor);
+		netstream.Start(self, "Stunned", 5); -- Replace with damnation or custom VFX later!
 		
 		Schema:EasyText(GetAdmins(), "tomato", possessor:Name().." has possessed '"..self:Name().."'.");
 	end
@@ -141,7 +141,7 @@ function playerMeta:PossessionFreakout()
 					v:HandleSanity(-25);
 				end
 				
-				Clockwork.datastream:Start(v, "PlaySound", "youbetterhide2.mp3");
+				netstream.Start(v, "PlaySound", "youbetterhide2.mp3");
 			end
 		end
 	end
@@ -208,7 +208,7 @@ function playerMeta:Unpossess()
 	
 	self:SetSharedVar("currentlyPossessed", false);
 	self:SetSharedVar("possessionFreakout", false);
-	Clockwork.datastream:Start(self, "Stunned", 5); -- Replace with damnation or custom VFX later!
+	netstream.Start(self, "Stunned", 5); -- Replace with damnation or custom VFX later!
 	Clockwork.player:SetRagdollState(self, RAGDOLL_KNOCKEDOUT, 15);
 	Clockwork.chatBox:AddInTargetRadius(self, "me", "suddenly falls limp and drops to the ground!", self:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 	self:EmitSound("possession/spiritsting.wav");

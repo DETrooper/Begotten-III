@@ -39,14 +39,14 @@ function COMMAND:OnRun(player, arguments)
 			
 			Clockwork.chatBox:AddInTargetRadius(player, "me", string.gsub("turns on a strange device.", "^.", string.lower), player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 			
-			Clockwork.datastream:Start(player, "radioJamming", true);
+			netstream.Start(player, "radioJamming", true);
 		else
 			player:SetCharacterData("radioJamming", false);
 			player:EmitSound("buttons/lightswitch2.wav", 70, 90, 0.4);
 			
 			Clockwork.chatBox:AddInTargetRadius(player, "me", string.gsub("turns off a strange device.", "^.", string.lower), player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 			
-			Clockwork.datastream:Start(player, "radioJamming", false);
+			netstream.Start(player, "radioJamming", false);
 		end
 	else
 		Clockwork.player:Notify(player, "You must specify true or false!");

@@ -26,7 +26,7 @@ function COMMAND:OnRun(player, arguments)
 		end;
 
 		if (hasCategory) then
-			Clockwork.datastream:Start(player, "OpenOffsetHelper", {uniqueID = itemTable.uniqueID});
+			netstream.Start(player, "OpenOffsetHelper", {uniqueID = itemTable.uniqueID});
 		else
 			Schema:EasyText(player, "grey", "["..self.name.."] This item has no offsets or angles defined!");
 		end;

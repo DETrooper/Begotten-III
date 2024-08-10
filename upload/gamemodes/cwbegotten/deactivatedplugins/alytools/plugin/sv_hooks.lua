@@ -16,7 +16,7 @@ end;
 -- Called just after a player spawns.
 function cwAlyTools:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 	if (player:IsAdmin() or player:IsUserGroup("operator")) then
-		Clockwork.datastream:Start(player, "AlyToolsTeleporters", {self.SpawnLocations});
+		netstream.Start(player, "AlyToolsTeleporters", {self.SpawnLocations});
 	end;
 end;
 

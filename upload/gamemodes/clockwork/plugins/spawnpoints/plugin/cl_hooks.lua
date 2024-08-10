@@ -3,13 +3,14 @@
 --]]
 
 local cwSpawnPoints = cwSpawnPoints
-local spawnPointData
+
+cwSpawnPoints.spawnPointData = cwSpawnPoints.spawnPointData or {};
 
 --Called when the plugin is initialized.
 function cwSpawnPoints:Initialize()
 	Clockwork.ConVars.SPAWNPOINTESP = Clockwork.kernel:CreateClientConVar("cwSpawnPointESP", 0, true, true)
 
-	Clockwork.setting:AddCheckBox("Admin ESP", "Show player spawn points.", "cwSpawnPointESP", "Whether or not to show spawn points in the admin ESP.", function()
+	Clockwork.setting:AddCheckBox("Admin ESP - Spawn Points", "Show player spawn points.", "cwSpawnPointESP", "Click to toggle the player spawn point ESP.", function()
 		return Clockwork.player:IsAdmin(Clockwork.Client)
 	end)
 end
@@ -20,6 +21,8 @@ local spawnColor
 
 -- Called when the ESP info is needed.
 function cwSpawnPoints:GetAdminESPInfo(info)
+	local spawnPointData = self.spawnPointData;
+	
 	if (Clockwork.ConVars.SPAWNPOINTESP:GetInt() == 1 and spawnPointData) then
 		for typeName, spawnPoints in pairs(spawnPointData) do
 			spawnColor = colorViolet
@@ -51,5 +54,5 @@ end
 
 -- Called to sync up the ESP data from the server.
 netstream.Hook("SpawnPointESPSync", function(data)
-	spawnPointData = data
+	cwSpawnPoints.spawnPointData = data;
 end)

@@ -30,7 +30,7 @@ function ENT:Use(activator, caller)
 		local faction = caller:GetFaction();
 		
 		if faction == "Goreic Warrior" then
-			Clockwork.datastream:Start(caller, "OpenGoreicHornMenu", "Gore");
+			netstream.Start(caller, "OpenGoreicHornMenu", "Gore");
 		end;
 	end;
 end;

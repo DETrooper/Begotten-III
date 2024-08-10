@@ -843,7 +843,7 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 	
 	if (player:Alive() and damageInfo:GetDamage() > 5) then
 		for i = 1, math.random(1, 5) do
-			Clockwork.datastream:Start(player, "ScreenBloodEffect");
+			netstream.Start(player, "ScreenBloodEffect");
 		end;
 	end;
 end;

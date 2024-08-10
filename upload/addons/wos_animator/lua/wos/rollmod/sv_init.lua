@@ -124,7 +124,7 @@ function meta:CanRoll()
 			return false;
 		end
 		
-		if Clockwork.player:GetAction(self) ~= "" then
+		if Clockwork.player:GetAction(self) then
 			return false;
 		end
 		

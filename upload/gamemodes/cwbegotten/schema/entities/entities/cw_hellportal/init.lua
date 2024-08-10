@@ -36,6 +36,6 @@ end;
 
 function ENT:Use(activator, caller)
 	if IsValid(caller) and caller:IsPlayer() then
-		Clockwork.datastream:Start(caller, "OpenHellPortalMenu");
+		netstream.Start(caller, "OpenHellPortalMenu");
 	end;
 end;

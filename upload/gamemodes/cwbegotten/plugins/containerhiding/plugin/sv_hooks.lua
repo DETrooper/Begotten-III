@@ -43,13 +43,13 @@ function cwContainerHiding:EntityHandleMenuOption(player, entity, option, argume
 							if (caller.CanEscapeTheCabin) then
 								if (!player:HasItemByID("key_shack")) then
 									player:GiveItem(Clockwork.item:CreateInstance("key_shack"), true);
-									Clockwork.datastream:Start(player, "cwPrintExamineText", {"A-a-..A K-key came o-out... T-The door!"});
-									Clockwork.datastream:Start(player, "Stunned", 1);
+									netstream.Start(player, "cwPrintExamineText", {"A-a-..A K-key came o-out... T-The door!"});
+									netstream.Start(player, "Stunned", 1);
 									
 									return;
 								end;
 							else
-								Clockwork.datastream:Start(player, "cwPrintExamineText", {"Strange.. The cabinet is locked.... I think I hear breathing from inside.."});
+								netstream.Start(player, "cwPrintExamineText", {"Strange.. The cabinet is locked.... I think I hear breathing from inside.."});
 
 								return;
 							end;
@@ -62,14 +62,14 @@ function cwContainerHiding:EntityHandleMenuOption(player, entity, option, argume
 				
 				if (IsValid(physObj)) then
 					if (physObj:IsMotionEnabled()) then
-						--Clockwork.datastream:Start(player, "cwCustomHint", {string.Split(player:Name(), " ")[1].." Thinks...", "This thing looks too wobbly. I bet I'd fall over if I got in.."});
+						--netstream.Start(player, "cwCustomHint", {string.Split(player:Name(), " ")[1].." Thinks...", "This thing looks too wobbly. I bet I'd fall over if I got in.."});
 						
 						return;
 					end;
 				end;
 				
 				if (entity:IsOnFire()) then
-					--Clockwork.datastream:Start(player, "cwCustomHint", {string.Split(player:Name(), " ")[1].." Thinks...", "Why would I get in this thing while it's up in flames!"});
+					--netstream.Start(player, "cwCustomHint", {string.Split(player:Name(), " ")[1].." Thinks...", "Why would I get in this thing while it's up in flames!"});
 					
 					return;
 				end;

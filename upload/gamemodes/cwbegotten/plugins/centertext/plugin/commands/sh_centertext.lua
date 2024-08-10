@@ -17,7 +17,7 @@ function COMMAND:OnRun(player, arguments)
 	
 	if (text != "") then
 		if (SERVER) then
-			Clockwork.datastream:Start(nil, "cwPrintTextCenter", {text});
+			netstream.Start(nil, "cwPrintTextCenter", {text});
 		end;
 	else
 		Schema:EasyText(player, "darkgrey", "["..self.name.."] You must specify text!")

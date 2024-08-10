@@ -19,7 +19,7 @@ local COMMAND = Clockwork.command:New("CinematicTextRadius");
 		if (text != "") then
 			for k, v in pairs (ents.FindInSphere(player:GetEyeTrace().HitPos, radius)) do
 				if (SERVER) then
-					Clockwork.datastream:Start(v, "cwPrintCinematicText", {text, 10});
+					netstream.Start(v, "cwPrintCinematicText", {text, 10});
 				end;
 			end;
 		else

@@ -623,27 +623,27 @@ function cwMusic:StopBattleMusic()
 	cwMusic.TrackVolume = nil
 end
 
-Clockwork.datastream:Hook("EnableDynamicMusic", function(data)
+netstream.Hook("EnableDynamicMusic", function(data)
 	cwMusic.enabled = true;
 end)
 
-Clockwork.datastream:Hook("DisableDynamicMusic", function(data)
+netstream.Hook("DisableDynamicMusic", function(data)
 	cwMusic.enabled = false;
 end)
 
-Clockwork.datastream:Hook("StartAmbientMusic", function(data)
+netstream.Hook("StartAmbientMusic", function(data)
 	cwMusic:StartAmbientMusic();
 end)
 
-Clockwork.datastream:Hook("StartBattleMusic", function(data)
+netstream.Hook("StartBattleMusic", function(data)
 	cwMusic:StartBattleMusic(true);
 end)
 
-Clockwork.datastream:Hook("StartBattleMusicNoLimit", function(data)
+netstream.Hook("StartBattleMusicNoLimit", function(data)
 	cwMusic:StartBattleMusic(false);
 end)
 
-Clockwork.datastream:Hook("FadeAllMusic", function(data)
+netstream.Hook("FadeAllMusic", function(data)
 	if cwMusic.AmbientMusic then
 		cwMusic:FadeOutAmbientMusic(4, 1);
 	end
@@ -653,25 +653,25 @@ Clockwork.datastream:Hook("FadeAllMusic", function(data)
 	end
 end)
 
-Clockwork.datastream:Hook("FadeAmbientMusic", function(data)
+netstream.Hook("FadeAmbientMusic", function(data)
 	cwMusic:FadeOutAmbientMusic(4, 1);
 end)
 
-Clockwork.datastream:Hook("StopAmbientMusic", function(data)
+netstream.Hook("StopAmbientMusic", function(data)
 	cwMusic:StopAmbientMusic();
 end)
 
-Clockwork.datastream:Hook("FadeBattleMusic", function(data)
+netstream.Hook("FadeBattleMusic", function(data)
 	cwMusic:FadeOutBattleMusic(4, 1);
 end)
 
-Clockwork.datastream:Hook("StopBattleMusic", function(data)
+netstream.Hook("StopBattleMusic", function(data)
 	cwMusic:StopBattleMusic();
 end)
 
-Clockwork.setting:AddCheckBox("Dynamic Music", "Enable dynamic ambient music.", "cwAmbientMusic", "Click to enable/disable the dynamic ambient music system.")
+Clockwork.setting:AddCheckBox("Dynamic Music", "Enable dynamic ambient music.", "cwAmbientMusic", "Click to toggle the dynamic ambient music system.")
 Clockwork.setting:AddNumberSlider("Dynamic Music", "Ambient music volume:", "cwAmbientMusicVolume", 0, 100, 0, "Adjust the volume of the ambient music.");
 Clockwork.setting:AddMultiChoice("Dynamic Music", "Enable dynamic battle music:", "cwBattleMusic", {{"Enable", "Click to enable the dynamic battle music system."}, {"Enable (Duels Only)", "Click to enable the dynamic battle music system only in duels."}, {"Disable", "Click to disable the dynamic battle music system."}})
 Clockwork.setting:AddNumberSlider("Dynamic Music", "Battle music volume:", "cwBattleMusicVolume", 0, 100, 0, "Adjust the volume of the battle music.");
-Clockwork.setting:AddCheckBox("Dynamic Music", "Enable main menu music.", "cwMenuMusic", "Click to enable/disable the main menu music.")
+Clockwork.setting:AddCheckBox("Dynamic Music", "Enable main menu music.", "cwMenuMusic", "Click to toggle the main menu music.")
 Clockwork.setting:AddNumberSlider("Dynamic Music", "Main menu music volume:", "cwMenuMusicVolume", 0, 100, 0, "Adjust the volume of the main menu music.");

@@ -5,7 +5,7 @@
 
 Clockwork.ConVars.CRAFTINGPILESPAWNESP = Clockwork.kernel:CreateClientConVar("cwCraftingPileSpawnESP", 0, false, true)
 
-Clockwork.datastream:Hook("CraftingPileSpawnESPInfo", function(data)
+netstream.Hook("CraftingPileSpawnESPInfo", function(data)
 	if data then
 		if data[1] then
 			cwRecipes.pileLocations = data[1];
@@ -32,13 +32,22 @@ function cwRecipes:GetAdminESPInfo(info)
 
 					info[#info + 1] = {
 						position = v2.pos,
-						text = k;
+						text = "Resource Pile Spawn ("..k..")";
 						color = Color(200, 200, 200);
 					};
 				end
 			end;
 		end;
 	end;
+end
+
+function cwRecipes:GetProgressBarInfoAction(action, percentage)
+	if (action == "crafting") then
+		local craftVerb = Clockwork.Client:GetNetVar("cwProgressBarVerb") or  "crafting";
+		local itemName = Clockwork.Client:GetNetVar("cwProgressBarItem") or "an item";
+		
+		return {text = "You are "..craftVerb.." "..itemName..". Click to cancel.", percentage = percentage, flash = percentage < 0}
+	end
 end
 
 -- A function to build the default crafting tooltip.
@@ -293,4 +302,4 @@ function cwRecipes:GetAvailable()
 	return available;
 end;
 
-Clockwork.setting:AddCheckBox("Admin ESP", "Show resource pile spawn points.", "cwCraftingPileSpawnESP", "Click to enable/disable the resource spawner ESP.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
+Clockwork.setting:AddCheckBox("Admin ESP - Spawn Points", "Show resource pile spawn points.", "cwCraftingPileSpawnESP", "Click to toggle the resource spawner ESP.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);

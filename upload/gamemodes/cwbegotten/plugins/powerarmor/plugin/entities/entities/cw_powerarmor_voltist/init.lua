@@ -45,7 +45,7 @@ end;
 function ENT:Use(activator, caller)
 	if IsValid(caller) and caller:IsPlayer() then
 		if caller:GetSubfaith() == "Voltism" then
-			Clockwork.datastream:Start(caller, "OpenPowerArmorMenu");
+			netstream.Start(caller, "OpenPowerArmorMenu");
 		end
 	end;
 end;

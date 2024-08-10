@@ -107,13 +107,13 @@ function PANEL:HandleUnequip(itemTable)
 		itemTable:OnHandleUnequip(
 		function(arguments)
 			if (arguments) then
-				Clockwork.datastream:Start("UnequipItem", {itemTable("uniqueID"), itemTable("itemID"), arguments});
+				netstream.Start("UnequipItem", {itemTable("uniqueID"), itemTable("itemID"), arguments});
 			else
-				Clockwork.datastream:Start("UnequipItem", {itemTable("uniqueID"), itemTable("itemID")});
+				netstream.Start("UnequipItem", {itemTable("uniqueID"), itemTable("itemID")});
 			end;
 		end);
 	else
-		Clockwork.datastream:Start("UnequipItem", {itemTable("uniqueID"), itemTable("itemID")});
+		netstream.Start("UnequipItem", {itemTable("uniqueID"), itemTable("itemID")});
 	end;
 end;
 
@@ -198,7 +198,7 @@ function PANEL:Rebuild()
 
 				if parent and parent.itemData and parent.itemTable then
 					--PANEL:HandleUnequip(parent.itemTable);
-					Clockwork.datastream:Start("UnequipItem", {parent.itemTable("uniqueID"), parent.itemTable("itemID")});
+					netstream.Start("UnequipItem", {parent.itemTable("uniqueID"), parent.itemTable("itemID")});
 				end
 			end
 		end
@@ -437,7 +437,7 @@ function PANEL:Rebuild()
 										
 										if (itemTable.baseItem == "firearm_base") and itemTable.ammoTypes then
 											if table.HasValue(itemTable.ammoTypes, parent.itemTable.ammoType) then
-												Clockwork.datastream:Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+												netstream.Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 											end
 										end
 									end
@@ -501,7 +501,7 @@ function PANEL:Rebuild()
 														local itemTable = occupierParent.itemTable;
 														
 														if itemTable.uniqueID == parent.itemTable.uniqueID then
-															Clockwork.datastream:Start("MergeRepair", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+															netstream.Start("MergeRepair", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 														end
 													end
 												end
@@ -535,7 +535,7 @@ function PANEL:Rebuild()
 														local itemTable = occupierParent.itemTable;
 														
 														if itemTable.uniqueID == parent.itemTable.uniqueID then
-															Clockwork.datastream:Start("MergeRepair", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+															netstream.Start("MergeRepair", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 														end
 													end
 												end
@@ -568,7 +568,7 @@ function PANEL:Rebuild()
 														
 														if (itemTable.baseItem == "firearm_base") and itemTable.ammoTypes then
 															if table.HasValue(itemTable.ammoTypes, parent.itemTable.ammoType) then
-																Clockwork.datastream:Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+																netstream.Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 															end
 														end
 													end
@@ -597,9 +597,9 @@ function PANEL:Rebuild()
 														local itemTable = occupierParent.itemTable;
 														
 														if itemTable.category == "Containers" then
-															Clockwork.datastream:Start("MergeAlchemyContainers", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+															netstream.Start("MergeAlchemyContainers", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 														elseif itemTable.category == "Dissolvables" then
-															Clockwork.datastream:Start("DissolveObject", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+															netstream.Start("DissolveObject", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 														end
 													end
 												end
@@ -628,7 +628,7 @@ function PANEL:Rebuild()
 														
 														if itemTable.category == "Shot" then
 															if parent.itemTable.UseOnMagazine and parent.itemTable:UseOnMagazine(Clockwork.Client, itemTable) then
-																Clockwork.datastream:Start("MergeAmmoMagazine", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+																netstream.Start("MergeAmmoMagazine", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 															end
 														end
 													end
@@ -682,7 +682,7 @@ function PANEL:Rebuild()
 													local itemTable = occupierParent.itemTable;
 													
 													if itemTable.uniqueID == parent.itemTable.uniqueID then
-														Clockwork.datastream:Start("MergeRepair", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+														netstream.Start("MergeRepair", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 													end
 												end
 											end
@@ -716,7 +716,7 @@ function PANEL:Rebuild()
 													local itemTable = occupierParent.itemTable;
 													
 													if itemTable.uniqueID == parent.itemTable.uniqueID then
-														Clockwork.datastream:Start("MergeRepair", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+														netstream.Start("MergeRepair", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 													end
 												end
 											end
@@ -749,7 +749,7 @@ function PANEL:Rebuild()
 													
 													if (itemTable.baseItem == "firearm_base") and itemTable.ammoTypes then
 														if table.HasValue(itemTable.ammoTypes, parent.itemTable.ammoType) then
-															Clockwork.datastream:Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+															netstream.Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 														end
 													end
 												end
@@ -781,9 +781,9 @@ function PANEL:Rebuild()
 														local itemTable = occupierParent.itemTable;
 														
 														if itemTable.category == "Containers" then
-															Clockwork.datastream:Start("MergeAlchemyContainers", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+															netstream.Start("MergeAlchemyContainers", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 														elseif itemTable.category == "Dissolvables" then
-															Clockwork.datastream:Start("DissolveObject", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+															netstream.Start("DissolveObject", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 														end
 													end
 												end
@@ -812,7 +812,7 @@ function PANEL:Rebuild()
 													local itemTable = occupierParent.itemTable;
 													
 													if parent.itemTable.UseOnMagazine and parent.itemTable:UseOnMagazine(Clockwork.Client, itemTable) then
-														Clockwork.datastream:Start("MergeAmmoMagazine", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
+														netstream.Start("MergeAmmoMagazine", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 													end
 												end
 											end

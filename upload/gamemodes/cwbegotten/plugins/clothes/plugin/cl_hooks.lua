@@ -1,5 +1,13 @@
 local overlay;
 
+function PLUGIN:GetProgressBarInfoAction(action, percentage)
+	if (action == "putting_on_armor") then
+		return {text = "You are putting on your armor. Click to cancel.", percentage = percentage, flash = percentage < 10};
+	elseif (action == "taking_off_armor") then
+		return {text = "You are taking off your armor. Click to cancel.", percentage = percentage, flash = percentage < 10};
+	end
+end
+
 -- Called when helmet (bodygroup 1) screen space effects should be rendered.
 function PLUGIN:RenderScreenspaceEffects()
 	local curTime = CurTime();

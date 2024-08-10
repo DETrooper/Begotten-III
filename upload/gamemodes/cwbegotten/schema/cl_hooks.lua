@@ -269,7 +269,7 @@ function Schema:Think()
 	end
 end
 
-Clockwork.datastream:Hook("CheaplePos", function(data)
+netstream.Hook("CheaplePos", function(data)
 	if Clockwork.Client:HasTrait("followed") and Clockwork.Client:Alive() and not Schema.caughtByCheaple then
 		if IsValid(statichitman) and data then
 			statichitman:SetPos(data);
@@ -279,17 +279,17 @@ Clockwork.datastream:Hook("CheaplePos", function(data)
 	end
 end);
 
-Clockwork.datastream:Hook("PlayerCustomSoundCheck", function(data)
+netstream.Hook("PlayerCustomSoundCheck", function(data)
 	local soundPlaying = false;
 	
 	if (Clockwork.Client.customSound and Clockwork.Client.customSound:IsPlaying()) then
 		soundPlaying = true;
 	end;
 	
-	Clockwork.datastream:Start("ConfirmCustomSoundCheck", {soundPlaying});
+	netstream.Start("ConfirmCustomSoundCheck", {soundPlaying});
 end);
 
-Clockwork.datastream:Hook("StartCustomSound", function(data)
+netstream.Hook("StartCustomSound", function(data)
 	local sound = data[1];
 	local volume = data[2];
 	local pitch = data[3];
@@ -298,11 +298,11 @@ Clockwork.datastream:Hook("StartCustomSound", function(data)
 	Schema:StartSound(sound, volume, pitch, dsp)
 end);
 
-Clockwork.datastream:Hook("StopCustomSound", function(data)
+netstream.Hook("StopCustomSound", function(data)
 	Schema:StopSound();
 end);
 
-Clockwork.datastream:Hook("FadeOutCustomSound", function(data)
+netstream.Hook("FadeOutCustomSound", function(data)
 	if (type(data) == "table") then
 		data = data[1];
 	end;
@@ -310,21 +310,21 @@ Clockwork.datastream:Hook("FadeOutCustomSound", function(data)
 	Schema:FadeOut(data);
 end);
 
-Clockwork.datastream:Hook("CustomSoundChangeVolume", function(data)
+netstream.Hook("CustomSoundChangeVolume", function(data)
 	local newVolume = data[1];
 	local delta = data[2];
 
 	Schema:ChangeVolume(newVolume, delta);
 end);
 
-Clockwork.datastream:Hook("CustomSoundChangePitch", function(data)
+netstream.Hook("CustomSoundChangePitch", function(data)
 	local newPitch = data[1];
 	local delta = data[2];
 
 	Schema:ChangePitch(newPitch, delta);
 end);
 
-Clockwork.datastream:Hook("CustomSoundChangeDSP", function(data)
+netstream.Hook("CustomSoundChangeDSP", function(data)
 	local newDSP = data;
 	local reset = false;
 	
@@ -363,7 +363,7 @@ function Schema:EasyText(...)
 	Clockwork.chatBox:Add(nil, icon, unpack(args));
 end;
 
-Clockwork.datastream:Hook("EasyText", function(varargs)
+netstream.Hook("EasyText", function(varargs)
 	Schema:EasyText(unpack(varargs))
 end);
 
@@ -616,25 +616,23 @@ function Schema:PlayerAdjustCharacterScreenInfo(character, info)
 end
 
 -- Called when the post progress bar info is needed.
-function Schema:GetPostProgressBarInfo()
-	if (Clockwork.Client:Alive()) then
-		local action, percentage = Clockwork.player:GetAction(Clockwork.Client, true);
-
-		if (action == "mutilating") then
-			return {text = "You are harvesting meat from a corpse. Click to cancel.", percentage = percentage, flash = percentage > 75};
-		elseif (action == "skinning") then
-			return {text = "You are skinning an animal's corpse. Click to cancel.", percentage = percentage, flash = percentage > 75};
-		elseif (action == "reloading") then
-			local weaponName = Clockwork.Client:GetNetVar("cwProgressBarVerb") or "shot";
-			local ammoName = Clockwork.Client:GetNetVar("cwProgressBarItem") or "weapon";
-			
-			return {text = "You are reloading your "..weaponName.." with "..ammoName..". Click to cancel.", percentage = percentage, flash = percentage < 0}
-			--return {text = "You are reloading your weapon. Click to cancel.", percentage = percentage, flash = percentage > 75};
-		elseif (action == "building") then
-			return {text = "You are erecting a siege ladder.", percentage = percentage, flash = percentage > 75};
-		elseif (action == "bloodTest") then
-			return {text = "You are testing someone's blood for corruption. Click to cancel.", percentage = percentage, flash = percentage > 75};
-		end;
+function Schema:GetProgressBarInfoAction(action, percentage)
+	if (action == "mutilating") then
+		return {text = "You are harvesting meat from a corpse. Click to cancel.", percentage = percentage, flash = percentage > 75};
+	elseif (action == "skinning") then
+		return {text = "You are skinning an animal's corpse. Click to cancel.", percentage = percentage, flash = percentage > 75};
+	elseif (action == "reloading") then
+		local weaponName = Clockwork.Client:GetNetVar("cwProgressBarVerb") or "shot";
+		local ammoName = Clockwork.Client:GetNetVar("cwProgressBarItem") or "weapon";
+		
+		return {text = "You are reloading your "..weaponName.." with "..ammoName..". Click to cancel.", percentage = percentage, flash = percentage < 0}
+		--return {text = "You are reloading your weapon. Click to cancel.", percentage = percentage, flash = percentage > 75};
+	elseif (action == "building") then
+		return {text = "You are erecting a siege ladder.", percentage = percentage, flash = percentage > 75};
+	elseif (action == "bloodTest") then
+		return {text = "You are testing someone's blood for corruption. Click to cancel.", percentage = percentage, flash = percentage > 75};
+	elseif (action == "hell_teleporting") then
+		return {text = "You are using dark magic to teleport to Hell.", percentage = percentage, flash = percentage < 10};
 	end;
 end;
 
@@ -3332,7 +3330,7 @@ netstream.Hook("GoreWarhorn", function(data)
 	util.ScreenShake(Clockwork.Client:GetPos(), 2, 5, 15, 1024);
 end);
 
-Clockwork.datastream:Hook("NPCSpawnESPInfo", function(data)
+netstream.Hook("NPCSpawnESPInfo", function(data)
 	if data then
 		if data[1] then
 			Schema.npcSpawns = data[1];

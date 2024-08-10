@@ -50,7 +50,7 @@ function ENT:Use(activator, caller)
 				state = "Gatekeeper";
 			end
 			
-			Clockwork.datastream:Start(caller, "OpenCoinslotMenu", state);
+			netstream.Start(caller, "OpenCoinslotMenu", state);
 		end;
 	end;
 end;

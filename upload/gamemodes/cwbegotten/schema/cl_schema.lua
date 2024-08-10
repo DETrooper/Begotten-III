@@ -5,7 +5,7 @@
 
 Clockwork.ConVars.NPCSPAWNESP = Clockwork.kernel:CreateClientConVar("cwNPCSpawnESP", 0, false, true)
 
-Clockwork.setting:AddCheckBox("Admin ESP", "Show NPC spawn points.", "cwNPCSpawnESP", "Click to enable/disable the NPC spawn point ESP.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
+Clockwork.setting:AddCheckBox("Admin ESP - Spawn Points", "Show NPC spawn points.", "cwNPCSpawnESP", "Click to toggle the NPC spawn point ESP.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
 
 --[[Clockwork.config:AddToSystem("Small intro text", "intro_text_small", "The small text displayed for the introduction.");
 Clockwork.config:AddToSystem("Big intro text", "intro_text_big", "The big text displayed for the introduction.");]]--
@@ -261,17 +261,17 @@ function playerMeta:IsWanted()
 	return self:GetNetVar("bounty", 0) > 0;
 end;
 
-Clockwork.datastream:Hook("ObjectPhysDesc", function(data)
+netstream.Hook("ObjectPhysDesc", function(data)
 	local entity = data;
 	
 	if (IsValid(entity)) then
 		Derma_StringRequest("Description", "What is the physical description of this object?", nil, function(text)
-			Clockwork.datastream:Start("ObjectPhysDesc", {text, entity});
+			netstream.Start("ObjectPhysDesc", {text, entity});
 		end);
 	end;
 end);
 
-Clockwork.datastream:Hook("Frequency", function(data)
+netstream.Hook("Frequency", function(data)
 	Derma_StringRequest("Frequency", "What would you like to set the frequency to?", data, function(text)
 		Clockwork.kernel:RunCommand("SetFreq", text);
 		
@@ -285,7 +285,7 @@ Clockwork.datastream:Hook("Frequency", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("SetRadioState", function(data)
+netstream.Hook("SetRadioState", function(data)
 	if data == true then
 		Clockwork.kernel:RunCommand("SetRadioState", "false");
 	else
@@ -293,7 +293,7 @@ Clockwork.datastream:Hook("SetRadioState", function(data)
 	end
 end);
 
-Clockwork.datastream:Hook("SetECWJamming", function(data)
+netstream.Hook("SetECWJamming", function(data)
 	if data == true then
 		Clockwork.kernel:RunCommand("SetECWJamming", "true");
 	else
@@ -301,7 +301,7 @@ Clockwork.datastream:Hook("SetECWJamming", function(data)
 	end
 end);
 
-Clockwork.datastream:Hook("TriggerCrows", function()
+netstream.Hook("TriggerCrows", function()
 	Schema:TriggerCrows();
 end);
 

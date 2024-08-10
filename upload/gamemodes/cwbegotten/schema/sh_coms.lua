@@ -472,7 +472,7 @@ local COMMAND = Clockwork.command:New("Vector")
 		
 		local vectorString = "Vector("..x..", "..y..", "..z..")"
 		Schema:EasyText(player, "blue", vectorString)
-		Clockwork.datastream:Start(player, "cwClipboardText", vectorString)
+		netstream.Start(player, "cwClipboardText", vectorString)
 	end
 COMMAND:Register()
 
@@ -918,9 +918,9 @@ local COMMAND = Clockwork.command:New("BlowWarhorn");
 					
 					if vLastZone == "wasteland" or vLastZone == "tower" or vLastZone == "theater" then
 						Clockwork.chatBox:Add(v, nil, "event", "The ground quakes as the terrifying sound of a Goreic Warfighter horn pierces the sky.");
-						--Clockwork.datastream:Start(v, "FadeAmbientMusic");
-						--Clockwork.datastream:Start(v, "EmitSound", {name = "warhorns/warhorn_gore.mp3", pitch = 100, level = 75});
-						Clockwork.datastream:Start(v, "GoreWarhorn");
+						--netstream.Start(v, "FadeAmbientMusic");
+						--netstream.Start(v, "EmitSound", {name = "warhorns/warhorn_gore.mp3", pitch = 100, level = 75});
+						netstream.Start(v, "GoreWarhorn");
 					end
 				end
 			end
@@ -933,9 +933,9 @@ local COMMAND = Clockwork.command:New("BlowWarhorn");
 					
 					if vLastZone == "gore" or vLastZone == "gore_hallway" or vLastZone == "gore_tree" then
 						Clockwork.chatBox:Add(v, nil, "event", "The ground quakes as the sound of a Goreic Warfighter horn pierces the sky.");
-						--Clockwork.datastream:Start(v, "FadeAmbientMusic");
-						--Clockwork.datastream:Start(v, "EmitSound", {name = "warhorns/warhorn_gore.mp3", pitch = 100, level = 75});
-						Clockwork.datastream:Start(v, "GoreWarhorn");
+						--netstream.Start(v, "FadeAmbientMusic");
+						--netstream.Start(v, "EmitSound", {name = "warhorns/warhorn_gore.mp3", pitch = 100, level = 75});
+						netstream.Start(v, "GoreWarhorn");
 					end
 				end
 			end
@@ -1043,17 +1043,17 @@ local COMMAND = Clockwork.command:New("CallCongregation");
 				if lastZone == "wasteland" then
 					table.insert(far_players, player);
 					Clockwork.chatBox:Add(player, nil, "event", "The church bell tolls and the holy word is spread: A congregation has been called, and all beings high and lowly are required to attend... or else risk being marked for corpsing.");
-					Clockwork.datastream:Start(player, "FadeAmbientMusic");
+					netstream.Start(player, "FadeAmbientMusic");
 				elseif lastZone == "tower" or lastZone == "theater" then
 					table.insert(close_players, player);
 					Clockwork.chatBox:Add(player, nil, "event", "The church bell tolls and the holy word is spread: A congregation has been called, and all beings high and lowly are required to attend... or else risk being marked for corpsing.");
-					Clockwork.datastream:Start(player, "FadeAmbientMusic");
+					netstream.Start(player, "FadeAmbientMusic");
 				end
 			end
 		end
 		
-		Clockwork.datastream:Start(close_players, "EmitSound", {name = "cosmicrupture/bellsclose.wav", pitch = 90, level = 60});
-		Clockwork.datastream:Start(far_players, "EmitSound", {name = "cosmicrupture/bellsdistant.wav", pitch = 100, level = 75});
+		netstream.Start(close_players, "EmitSound", {name = "cosmicrupture/bellsclose.wav", pitch = 90, level = 60});
+		netstream.Start(far_players, "EmitSound", {name = "cosmicrupture/bellsdistant.wav", pitch = 100, level = 75});
 	end;
 COMMAND:Register();
 
@@ -1078,8 +1078,8 @@ local COMMAND = Clockwork.command:New("FuckerJoeAlarm");
 				
 				if lastZone == "wasteland" or lastZone == "tower" or lastZone == "theater" then
 					Clockwork.chatBox:Add(player, nil, "event", "Is it...? No, it cannot be... The alarms sound, for Fucker Joe comes...");
-					Clockwork.datastream:Start(player, "FadeAmbientMusic");
-					Clockwork.datastream:Start(player, "EmitSound", {name = "warhorns/fuckerjoealarm.mp3", pitch = 90, level = 60});
+					netstream.Start(player, "FadeAmbientMusic");
+					netstream.Start(player, "EmitSound", {name = "warhorns/fuckerjoealarm.mp3", pitch = 90, level = 60});
 				end
 			end
 		end
@@ -2800,7 +2800,7 @@ local COMMAND = Clockwork.command:New("PoisonedWineSequence")
 							ParticleEffect("blood_advisor_puncture_withdraw", headPos + (player:GetForward() * 8) - Vector(0, 0, 1), Angle(180, 0, 0), player);
 							util.Decal("BloodLarge", playerPos - Vector(0, 0, 2), playerPos + Vector(0, 0, 2));
 							
-							Clockwork.datastream:Start(player, "TriggerCrazyBob", 75);
+							netstream.Start(player, "TriggerCrazyBob", 75);
 							
 							timer.Simple(3, function()
 								if IsValid(player) then

@@ -17,7 +17,7 @@ local COMMAND = Clockwork.command:New("CinematicText");
 		
 		if (text != "") then
 			if (SERVER) then
-				Clockwork.datastream:Start(nil, "cwPrintCinematicText", {text, 10});
+				netstream.Start(nil, "cwPrintCinematicText", {text, 10});
 			end;
 		else
 			Schema:EasyText(player, "darkgrey", "["..self.name.."] You must specify text!")

@@ -33,6 +33,6 @@ local function CreateMenu(state)
 	menu:SetPos(scrW / 2 - (menu:GetWide() / 2), scrH / 2 - (menu:GetTall() / 2));
 end
 
-Clockwork.datastream:Hook("OpenPowerArmorMenu", function(state)
+netstream.Hook("OpenPowerArmorMenu", function(state)
 	CreateMenu(state);
 end);

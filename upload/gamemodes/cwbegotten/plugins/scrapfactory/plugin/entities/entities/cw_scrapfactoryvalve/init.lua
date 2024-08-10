@@ -74,7 +74,7 @@ end
 function ENT:Use(activator, caller)
 	--[[if IsValid(caller) and caller:IsPlayer() then
 		if self.overheating == true then
-			Clockwork.datastream:Start(caller, "OpenScrapFactoryValveMenu");
+			netstream.Start(caller, "OpenScrapFactoryValveMenu");
 		end
 	end;]]--
 end;

@@ -255,7 +255,7 @@ netstream.Hook("ReloadMenu", function(data)
 					
 					menuOptions[v] = function()
 						if weaponItem then
-							Clockwork.datastream:Start("UseAmmo", {ammoItem.uniqueID, ammoItem.itemID, weaponItem("uniqueID"), weaponItem("itemID")});
+							netstream.Start("UseAmmo", {ammoItem.uniqueID, ammoItem.itemID, weaponItem("uniqueID"), weaponItem("itemID")});
 						end
 					end
 				end

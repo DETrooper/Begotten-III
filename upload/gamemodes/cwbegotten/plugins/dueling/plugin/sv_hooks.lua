@@ -124,7 +124,7 @@ function cwDueling:PlayerUse(player, entity)
 end;
 
 function cwDueling:PlayerEnteredDuel(player, arena, spawnPos, spawnAngles)
-	Clockwork.datastream:Start(player, "SetPlayerDueling", true);
+	netstream.Start(player, "SetPlayerDueling", true);
 	Clockwork.limb:CacheLimbs(player, true);
 	
 	local duelData = {};
@@ -152,7 +152,7 @@ function cwDueling:PlayerEnteredDuel(player, arena, spawnPos, spawnAngles)
 	-- Start battle music after players have faded in.
 	timer.Simple(3, function()
 		if IsValid(player) then
-			Clockwork.datastream:Start(player, "StartBattleMusicNoLimit");
+			netstream.Start(player, "StartBattleMusicNoLimit");
 			player:Freeze(false);
 		end;
 	end);
@@ -188,5 +188,5 @@ function cwDueling:PlayerExitedDuel(player)
 	
 	player.opponent = nil;
 	
-	Clockwork.datastream:Start(player, "SetPlayerDueling", false);
+	netstream.Start(player, "SetPlayerDueling", false);
 end

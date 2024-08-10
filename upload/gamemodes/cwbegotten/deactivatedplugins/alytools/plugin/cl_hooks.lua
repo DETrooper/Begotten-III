@@ -200,7 +200,7 @@ function cwAlyTools:AddEntityOutlines(outlines)
 	end
 end
 
-Clockwork.datastream:Hook("AlyToolsTeleporters", function(data)
+netstream.Hook("AlyToolsTeleporters", function(data)
 	if data then
 		if data[1] then
 			cwItemSpawner.SpawnLocations = data[1];

@@ -8,15 +8,15 @@ intro_enabled = true;
 function cwIntroduction:PlayerDataLoaded(player)
 	if intro_enabled then
 		--[[if (!player:GetData("cwSeenIntro")) then
-			Clockwork.datastream:Start(player, "MenuIntro", true);
+			netstream.Start(player, "MenuIntro", true);
 			player:SetData("cwSeenIntro", true);
 		else
 			local rand = math.random(2);
 			
 			if rand == 1 then
-				Clockwork.datastream:Start(player, "JesusWeptIntro", true);
+				netstream.Start(player, "JesusWeptIntro", true);
 			else
-				Clockwork.datastream:Start(player, "MenuIntro", true);
+				netstream.Start(player, "MenuIntro", true);
 			end
 		end;]]--
 		
@@ -25,15 +25,15 @@ function cwIntroduction:PlayerDataLoaded(player)
 			local rand = math.random(2);
 			
 			if rand == 1 then
-				Clockwork.datastream:Start(player, "JesusWeptIntro", true);
+				netstream.Start(player, "JesusWeptIntro", true);
 			else
-				Clockwork.datastream:Start(player, "MenuIntro", true);
+				netstream.Start(player, "MenuIntro", true);
 			end
 		--else
 			--netstream.Start(player, "QuizCompleted", false)
 		end
 		
-		--Clockwork.datastream:Start(player, "JesusWeptIntro", true);
+		--netstream.Start(player, "JesusWeptIntro", true);
 	end
 end;
 

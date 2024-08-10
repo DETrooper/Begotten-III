@@ -83,7 +83,7 @@ function PANEL:Populate()
 		gui.EnableScreenClicker(false);
 		
 		if (IsValid(self.entity)) then
-			Clockwork.datastream:Start( "EditPaper", { self.entity, string.sub(textEntry:GetValue(), 0, 500) } );
+			netstream.Start( "EditPaper", { self.entity, string.sub(textEntry:GetValue(), 0, 500) } );
 		end;
 	end;
 	

@@ -22,8 +22,8 @@ function COMMAND:OnRun(player, arguments)
 				--local finalText = string.Replace(text, "[NAME]", target:FirstName());
 				local finalText = text;
 				
-				Clockwork.datastream:Start(target, "cwPrintTextCenter", {finalText});
-				Clockwork.datastream:Start(player, "cwPrintTextCenter", {finalText});
+				netstream.Start(target, "cwPrintTextCenter", {finalText});
+				netstream.Start(player, "cwPrintTextCenter", {finalText});
 			end;
 		else
 			Schema:EasyText(player, "darkgrey", "["..self.name.."] You must specify text!");

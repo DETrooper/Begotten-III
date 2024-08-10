@@ -8,8 +8,8 @@ function cwDayNight:ClockworkInitialized()
 end
 
 function cwDayNight:PlayerCharacterInitialized(player)
-	Clockwork.datastream:Start(player, "SetCurrentCycle", self.currentCycle);
-	Clockwork.datastream:Start(player, "SetNightWeight", self.nightWeight);
+	netstream.Start(player, "SetCurrentCycle", self.currentCycle);
+	netstream.Start(player, "SetNightWeight", self.nightWeight);
 end;
 
 local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_redux" or game.GetMap() == "rp_scraptown";
@@ -99,7 +99,7 @@ function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized, 
 										player:CommitSuicide();
 									end
 									
-									Clockwork.datastream:Start(player, "MoonTrigger");
+									netstream.Start(player, "MoonTrigger");
 									
 									plyTab.moonCooldown = curTime + 5;
 								end
@@ -130,7 +130,7 @@ function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized, 
 								
 								Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken 3 damage from the sun, leaving them at "..player:Health().." health.");
 					
-								Clockwork.datastream:Start(player, "Stunned", 3);
+								netstream.Start(player, "Stunned", 3);
 							end
 						end
 					end

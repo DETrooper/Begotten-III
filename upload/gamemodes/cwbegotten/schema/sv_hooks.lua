@@ -2508,7 +2508,7 @@ function Schema:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 	
 	if (!player.nextSpawnRun or player.nextSpawnRun < curTime) then
 		if (!lightSpawn) then
-			Clockwork.datastream:Start(player, "ClearEffects", true);
+			netstream.Start(player, "ClearEffects", true);
 			player.beingSearched = nil;
 			player.searching = nil;
 		end;
@@ -2543,7 +2543,7 @@ function Schema:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 			end
 		end
 
-		Clockwork.datastream:Start(player, "GetZone", true);
+		netstream.Start(player, "GetZone", true);
 		
 		player.nextSpawnRun = curTime + 1;
 	end;

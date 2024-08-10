@@ -11,13 +11,13 @@ function playerMeta:HandleSenses()
 	if (IsValid(senses) and !self.sensesOn and self:Alive() and !self:IsRagdolled()) then
 		self:SetNWBool("senses", true);
 self.sensesOn = true
-		Clockwork.datastream:Start(self, "Stunned", 1.5);
-		Clockwork.datastream:Start(self, "PlaySound", table.Random({"ambient/machines/teleport1.wav", "ambient/machines/teleport3.wav", "ambient/machines/teleport4.wav"}));
+		netstream.Start(self, "Stunned", 1.5);
+		netstream.Start(self, "PlaySound", table.Random({"ambient/machines/teleport1.wav", "ambient/machines/teleport3.wav", "ambient/machines/teleport4.wav"}));
 	else
 		self:SetNWBool("senses", false);
 self.sensesOn = nil
-		Clockwork.datastream:Start(self, "Stunned", 1.5);
-		Clockwork.datastream:Start(self, "PlaySound", table.Random({"ambient/machines/teleport1.wav", "ambient/machines/teleport3.wav", "ambient/machines/teleport4.wav"}));
+		netstream.Start(self, "Stunned", 1.5);
+		netstream.Start(self, "PlaySound", table.Random({"ambient/machines/teleport1.wav", "ambient/machines/teleport3.wav", "ambient/machines/teleport4.wav"}));
 	end;--]]
 end;
 
@@ -63,12 +63,12 @@ function playerMeta:SensesOn(bRightClick)
 			
 			self:SetNWBool("senses", true);
 		else
-			Clockwork.datastream:Start(self, "BlackStunned", 1);
-			--Clockwork.datastream:Start(self, "PlaySound", table.Random({"ambient/machines/teleport1.wav", "ambient/machines/teleport3.wav", "ambient/machines/teleport4.wav"}));
+			netstream.Start(self, "BlackStunned", 1);
+			--netstream.Start(self, "PlaySound", table.Random({"ambient/machines/teleport1.wav", "ambient/machines/teleport3.wav", "ambient/machines/teleport4.wav"}));
 			
 			timer.Simple(1, function()
 				if IsValid(self) and ((self.HasBelief and self:HasBelief("creature_of_the_dark")) or (IsValid(self:GetActiveWeapon()) and self:GetActiveWeapon():GetClass() == "cw_senses")) then
-					Clockwork.datastream:Start(self, "PlaySound", "begotten/ambient/req/whoosh_02.wav");
+					netstream.Start(self, "PlaySound", "begotten/ambient/req/whoosh_02.wav");
 					self:SetNWBool("senses", true);
 					self:SetDSP(114);
 				end
@@ -98,11 +98,11 @@ function playerMeta:SensesOff()
 		self:SetDSP(0);
 	elseif self:GetNWBool("senses") then
 		if self:Alive() then
-			Clockwork.datastream:Start(self, "BlackStunned", 1);
+			netstream.Start(self, "BlackStunned", 1);
 			
 			timer.Simple(1, function()
 				if IsValid(self) then
-					Clockwork.datastream:Start(self, "PlaySound", "begotten/ambient/hits/disappear.mp3");
+					netstream.Start(self, "PlaySound", "begotten/ambient/hits/disappear.mp3");
 					self:SetNWBool("senses", false);
 					self:SetDSP(0);
 				end

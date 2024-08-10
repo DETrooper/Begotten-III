@@ -123,8 +123,8 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 			end
 		
 			if (itemTable("morphine")) then
-				Clockwork.datastream:Start(player, "Stunned", 1);
-				Clockwork.datastream:Start(player, "MorphineDream", 60);
+				netstream.Start(player, "Stunned", 1);
+				netstream.Start(player, "MorphineDream", 60);
 				
 				player:HandleSanity(10);
 			end;
@@ -697,7 +697,7 @@ function cwMedicalSystem:DoBleedEffect(entity, bForce)
 				
 				if (IsEntity(entity) and entity:IsPlayer()) then
 					if (math.random(1, 2) == 2) then
-						Clockwork.datastream:Start(player, "ScreenBloodEffect");
+						netstream.Start(player, "ScreenBloodEffect");
 					end;
 				end;
 			end;
@@ -1561,7 +1561,7 @@ function cwMedicalSystem:NetworkInjuries(player)
 	local injuries = self:FlattenInjuries(player);
 		
 	if (string.len(injuries) > 2) then
-		Clockwork.datastream:Start(player, "NetworkInjuries", injuries);
+		netstream.Start(player, "NetworkInjuries", injuries);
 	end;
 end;
 
@@ -1570,7 +1570,7 @@ function cwMedicalSystem:NetworkLimbs(player)
 	local limbs = self:FlattenLimbs(player);
 
 	if (string.len(limbs) > 2) then
-		Clockwork.datastream:Start(player, "NetworkLimbs", limbs);
+		netstream.Start(player, "NetworkLimbs", limbs);
 	end;
 end;
 

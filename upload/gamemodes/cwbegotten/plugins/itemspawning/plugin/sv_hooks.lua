@@ -5,14 +5,14 @@
 
 -- Called when Clockwork has loaded all of the entities.
 function cwItemSpawner:ClockworkInitPostEntity()
-	self:LoadItemSpawns()
-	--self:SetupContainers(); -- Potentially glitched.
+	self:LoadContainerSpawns();
+	self:LoadItemSpawns();
+	self:LoadSupercrateSpawns();
+	
+	if config.GetVal("loot_spawner_enabled") then
+		--self:SetupContainers(); -- Potentially glitched.
+	end
 end
-
--- Called just after data should be saved.
---[[function cwItemSpawner:PostSaveData()
-	self:SaveItemSpawns()
-end]]--
 
 -- Called every tick.
 function cwItemSpawner:Think()
@@ -260,16 +260,12 @@ function cwItemSpawner:Think()
 				self.nextSuperCrate = curTime + math.random(self.SuperCrateCooldown.min, self.SuperCrateCooldown.max);
 			end
 		end
-		
-		local playerCount = _player.GetCount();
-		local players = _player.GetAll();
 
-		for i = 1, playerCount do
-			local v, k = players[i], i;
-			if v:IsAdmin() then
-				if v.itemContainerSpawnESP then
-					if self.Containers then
-						Clockwork.datastream:Start(v, "ItemContsESPInfo",  {self.Containers, self.SuperCrate});
+		if self.Containers then
+			for i, v in ipairs(_player.GetAll()) do
+				if v:IsAdmin() then
+					if v.itemContainerSpawnESP then
+						netstream.Heavy(v, "ItemContsESPInfo",  {self.Containers, self.SuperCrate});
 					end
 				end
 			end
@@ -356,7 +352,9 @@ end;
 -- Called just after a player spawns.
 function cwItemSpawner:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 	if (player:IsAdmin() or player:IsUserGroup("operator")) then
+		netstream.Heavy(player, "ContainerSpawnESPInfo", {self.ContainerLocations});
 		netstream.Heavy(player, "ItemSpawnESPInfo", {self.SpawnLocations});
+		netstream.Heavy(player, "SupercrateSpawnESPInfo", {self.SupercrateLocations});
 	end;
 end;
 

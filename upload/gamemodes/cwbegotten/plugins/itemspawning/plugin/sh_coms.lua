@@ -9,22 +9,71 @@ Clockwork.kernel:IncludePrefixed("cl_hooks.lua");
 Clockwork.kernel:IncludePrefixed("sv_hooks.lua");
 Clockwork.kernel:IncludePrefixed("sv_plugin.lua");
 
+local COMMAND = Clockwork.command:New("AddItemContainerSpawn")
+	COMMAND.tip = "Add an item container spawn location using a spawned entity's positions and angles. (Valid categories: "..table.concat(cwItemSpawner.Categories, ", ")..")";
+	COMMAND.text = "<string Category>"
+	COMMAND.access = "s"
+	COMMAND.arguments = 1
+	COMMAND.alias = {"AddContainerSpawn"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		cwItemSpawner:AddContainerSpawn(player:GetEyeTrace().Entity, arguments[1], player);
+	end
+COMMAND:Register()
+
+local COMMAND = Clockwork.command:New("RemoveContainerSpawn")
+	COMMAND.tip = "Remove an item container spawn location at your cursor."
+	COMMAND.access = "s"
+	COMMAND.optionalArguments = 1;
+	COMMAND.text = "[int Distance]"
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		cwItemSpawner:RemoveContainerSpawn(player:GetEyeTrace().HitPos, tonumber(arguments[1]) or 64, player);
+	end
+COMMAND:Register()
+
+local COMMAND = Clockwork.command:New("AddSupercrateSpawn")
+	COMMAND.tip = "Add a supercrate spawn location using a spawned entity's positions and angles."
+	COMMAND.access = "s"
+	COMMAND.alias = {"AddContainerSpawn"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		cwItemSpawner:AddSupercrateSpawn(player:GetEyeTrace().Entity, player);
+	end
+COMMAND:Register()
+
+local COMMAND = Clockwork.command:New("RemoveSupercrateSpawn")
+	COMMAND.tip = "Remove a supercrate spawn location at your cursor."
+	COMMAND.access = "s"
+	COMMAND.optionalArguments = 1;
+	COMMAND.text = "[int Distance]"
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		cwItemSpawner:RemoveSupercrateSpawn(player:GetEyeTrace().HitPos, tonumber(arguments[1]) or 64, player);
+	end
+COMMAND:Register()
+
 local COMMAND = Clockwork.command:New("AddItemSpawn")
 	COMMAND.tip = "Add an item spawn location."
 	COMMAND.text = "<string Category>"
 	COMMAND.access = "s"
-	COMMAND.optionalArguments = 1
+	COMMAND.arguments = 1
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
 		if arguments and arguments[1] then
-			if !table.HasValue(cwItemSpawner.Categories, arguments[1]) then
-				Schema:EasyText(player, "darkgrey", "You have specified an invalid category!");
-				return false;
+			if table.HasValue(cwItemSpawner.Categories, arguments[1]) then
+				cwItemSpawner:AddSpawn(player:GetEyeTrace().HitPos, arguments[1] or nil);
+				return true;
 			end
 		end
 		
-		cwItemSpawner:AddSpawn(player:GetEyeTrace().HitPos, arguments[1] or nil);
+		Schema:EasyText(player, "darkgrey", "You have specified an invalid category!");
+		return false;
 	end
 COMMAND:Register()
 
@@ -36,7 +85,7 @@ local COMMAND = Clockwork.command:New("RemoveItemSpawn")
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		cwItemSpawner:RemoveSpawn(player:GetEyeTrace().HitPos, arguments[1] or 64, player);
+		cwItemSpawner:RemoveItemSpawn(player:GetEyeTrace().HitPos, arguments[1] or 64, player);
 	end
 COMMAND:Register()
 
@@ -48,7 +97,7 @@ local COMMAND = Clockwork.command:New("SpawnSupercrate")
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		if !cwItemSpawner.SuperCrates then
+		if !cwItemSpawner.SupercrateLocations then
 			Schema:EasyText(player, "tomato", "This map does not support supercrates!");
 			
 			return;
@@ -125,28 +174,11 @@ function COMMAND:OnRun(player, arguments)
 	if (player.itemContainerSpawnESP == true) then
 		player.itemContainerSpawnESP = false;
 	elseif cwItemSpawner.Containers and cwItemSpawner.SuperCrate then
-		Clockwork.datastream:Start(player, "ItemContsESPInfo", {cwItemSpawner.Containers, cwItemSpawner.SuperCrate});
+		netstream.Start(player, "ItemContsESPInfo", {cwItemSpawner.Containers, cwItemSpawner.SuperCrate});
 		player.itemContainerSpawnESP = true;
 	elseif cwItemSpawner.Containers then
-		Clockwork.datastream:Start(player, "ItemContsESPInfo", {cwItemSpawner.Containers});
+		netstream.Start(player, "ItemContsESPInfo", {cwItemSpawner.Containers});
 		player.itemContainerSpawnESP = true;
-	end;
-end;
-
-COMMAND:Register();
-
-local COMMAND = Clockwork.command:New("ItemSpawnerToggleESP");
-COMMAND.tip = "Toggles item spawnpoints on or off on the admin ESP.";
-COMMAND.flags = CMD_DEFAULT;
-COMMAND.access = "s";
-
--- Called when the command has been run.
-function COMMAND:OnRun(player, arguments)
-	if (player.itemSpawnESP == true) then
-		player.itemSpawnESP = false;
-	elseif cwItemSpawner.SpawnLocations then
-		Clockwork.datastream:Start(player, "ItemSpawnsESPInfo", cwItemSpawner.SpawnLocations);
-		player.itemSpawnESP = true;
 	end;
 end;
 

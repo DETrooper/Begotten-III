@@ -14,7 +14,7 @@ function COMMAND:OnRun(player, arguments)
 	
 	for k, v in pairs(cwSurfaceTexts.storedList) do
 		if (v.position:Distance(position) <= 256) then
-			Clockwork.datastream:Start(nil, "SurfaceTextRemove", v.position);
+			netstream.Start(nil, "SurfaceTextRemove", v.position);
 				cwSurfaceTexts.storedList[k] = nil;
 			iRemoved = iRemoved + 1;
 		end;

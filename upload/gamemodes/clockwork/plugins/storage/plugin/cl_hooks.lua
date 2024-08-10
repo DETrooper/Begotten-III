@@ -102,15 +102,11 @@ function cwStorage:PlayerStorageRebuilt(panel, categories)
 end;
 
 -- Called when the post progress bar info is needed.
-function cwStorage:GetPostProgressBarInfo()
-	if (Clockwork.Client:Alive()) then
-		local action, percentage = Clockwork.player:GetAction(Clockwork.Client, true);
-		
-		if (action == "keycutting") then
-			return {text = "You are making a copy of a key.", percentage = percentage, flash = percentage > 75};
-		end;
+--[[function cwStorage:GetProgressBarInfoAction(action, percentage)
+	if (action == "keycutting") then
+		return {text = "You are making a copy of a key.", percentage = percentage, flash = percentage > 75};
 	end;
-end;
+end;]]--
 
 -- Called before the tab menu is shown.
 function cwStorage:CanShowTabMenu()
@@ -165,16 +161,16 @@ local function StartLockpick(entity, lockTier)
 	end;
 end;
 
-Clockwork.datastream:Hook("StartLockpick", function(data)
+netstream.Hook("StartLockpick", function(data)
 	StartLockpick(data.entity, data.lockTier);
 end);
 
 -- A function to finish the lockpick minigame.
 local function FinishLockpick(bFailed, bTimeout)
 	if (bFailed) then
-		Clockwork.datastream:Start("LockpickFail", bTimeout or false);
+		netstream.Start("LockpickFail", bTimeout or false);
 	elseif (IsValid(LockpickInfo.LockpickContainer)) then
-		Clockwork.datastream:Start("FinishLockpick", LockpickInfo.LockpickContainer);
+		netstream.Start("FinishLockpick", LockpickInfo.LockpickContainer);
 	end;
 
 	if (LockpickInfo and !table.IsEmpty(LockpickInfo)) then
@@ -188,14 +184,14 @@ local function AbortLockpick()
 		LockpickInfo = {};
 	end;
 	
-	Clockwork.datastream:Start("AbortLockpick");
+	netstream.Start("AbortLockpick");
 end;
 
 -- Called when the player successfully lockpicks a container.
 local function SuccessfulPick()
 	LockpickInfo.PointsTable = nil;
 	
-	Clockwork.datastream:Start("SuccessfulPick");
+	netstream.Start("SuccessfulPick");
 	LockpickInfo.SuccessfulPicks = math.Clamp(LockpickInfo.SuccessfulPicks + 1, 0, LockpickInfo.RequiredPicks);
 	local barDivision = 2;
 	

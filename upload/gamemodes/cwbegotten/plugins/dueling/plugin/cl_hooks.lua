@@ -2,7 +2,7 @@
 	Begotten III: Jesus Wept
 --]]
 
-Clockwork.datastream:Hook("SetPlayerDueling", function(dueling)
+netstream.Hook("SetPlayerDueling", function(dueling)
 	Clockwork.Client.dueling = dueling;
 end);
 

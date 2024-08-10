@@ -31,11 +31,11 @@ end;
 	return self:GetNetVar("maxMeleeStamina", 90);
 end;]]--
 
-Clockwork.datastream:Hook("Parried", function(data)
+netstream.Hook("Parried", function(data)
 	cwMelee:AddParryEffect(data);
 	Schema:SanityZoom(-0.1)
 end);
 
-Clockwork.datastream:Hook("Disorient", function(blurAmount)
+netstream.Hook("Disorient", function(blurAmount)
 	cwMelee:Disorient(blurAmount);
 end);

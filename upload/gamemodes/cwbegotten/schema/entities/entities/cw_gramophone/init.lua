@@ -50,7 +50,7 @@ function ENT:Use(activator, caller)
 		local faction = caller:GetFaction();
 		
 		if faction == "Children of Satan" then
-			Clockwork.datastream:Start(caller, "OpenGramophoneMenu", state);
+			netstream.Start(caller, "OpenGramophoneMenu", state);
 		end;
 	end;
 end;

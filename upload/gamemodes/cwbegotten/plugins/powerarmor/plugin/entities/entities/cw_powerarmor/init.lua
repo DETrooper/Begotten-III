@@ -50,7 +50,7 @@ function ENT:Use(activator, caller)
 			local subfaction = caller:GetSubfaction();
 
 			if subfaction ~= "Inquisition" then
-				Clockwork.datastream:Start(caller, "OpenPowerArmorMenu", "Knight");
+				netstream.Start(caller, "OpenPowerArmorMenu", "Knight");
 			end
 		end;
 	end;

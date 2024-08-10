@@ -172,7 +172,7 @@ function cwStaticEnts:OnStaticEntityLoaded(entity, entTable)
 	end;
 end;
 
-Clockwork.datastream:Listen("staticESPSync", function()
+netstream.Listen("staticESPSync", function()
 	local data = {};
 
 	for k, v in ipairs(cwStaticEnts.staticEnts) do

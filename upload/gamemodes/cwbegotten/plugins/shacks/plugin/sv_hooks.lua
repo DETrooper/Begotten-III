@@ -472,7 +472,7 @@ function cwShacks:NetworkShackData(player)
 		shackInfo[k].coowners = v.coowners;
 	end
 
-	Clockwork.datastream:Start(player, "ShackInfo", shackInfo);
+	netstream.Start(player, "ShackInfo", shackInfo);
 end
 
 -- A function to load the shack owners.

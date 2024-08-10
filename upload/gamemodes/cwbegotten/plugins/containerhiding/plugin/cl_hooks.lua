@@ -30,18 +30,12 @@ function cwContainerHiding:GetEntityMenuOptions(entity, options)
 end;
 
 -- Called when the post progress bar info is needed.
-function cwContainerHiding:GetPostProgressBarInfo()
-	local alive = Clockwork.Client:Alive();
+function GetProgressBarInfoAction(action, percentage)
+	if (action == "hide") then
+		return {text = "You are hiding in the closet.", percentage = percentage, flash = percentage > 75};
+	end;
 	
-	if (alive) then
-		local action, percentage = Clockwork.player:GetAction(Clockwork.Client, true);
-
-		if (action == "hide") then
-			return {text = "You are hiding in the closet.", percentage = percentage, flash = percentage > 75};
-		end;
-		
-		if (action == "unhide") then
-			return {text = "You are coming out of the closet.", percentage = percentage, flash = percentage > 75};
-		end;
+	if (action == "unhide") then
+		return {text = "You are coming out of the closet.", percentage = percentage, flash = percentage > 75};
 	end;
 end;

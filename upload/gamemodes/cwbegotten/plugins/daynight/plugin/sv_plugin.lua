@@ -57,16 +57,16 @@ function cwDayNight:ChangeCycle(cycle, notify)
 		if IsValid(player) and player:HasInitialized() then
 			local lastZone = player:GetCharacterData("LastZone");
 			
-			Clockwork.datastream:Start(player, "SetCurrentCycle", self.currentCycle);
+			netstream.Start(player, "SetCurrentCycle", self.currentCycle);
 			
 			if cycleTable.fadeMusic then
 				if lastZone == "wasteland" or (lastZone == "tower" and cycle == "daytonight") then
-					Clockwork.datastream:Start(player, "FadeAmbientMusic");
+					netstream.Start(player, "FadeAmbientMusic");
 				end
 			end
 			
 			if lastZone == "wasteland" or lastZone == "tower" then
-				Clockwork.datastream:Start(player, "RefreshCurrentZone");
+				netstream.Start(player, "RefreshCurrentZone");
 				
 				if notify then
 					if cycleTable.eventText then
@@ -92,11 +92,11 @@ function cwDayNight:ChangeCycle(cycle, notify)
 	if notify then
 		if cycleTable.sound then
 			if istable(cycleTable.sound) then
-				Clockwork.datastream:Start(close_players, "EmitSound", {name = cycleTable.sound.closeSound, pitch = 90, level = 60});
-				Clockwork.datastream:Start(far_players, "EmitSound", {name = cycleTable.sound.farSound, pitch = 100, level = 75});
+				netstream.Start(close_players, "EmitSound", {name = cycleTable.sound.closeSound, pitch = 90, level = 60});
+				netstream.Start(far_players, "EmitSound", {name = cycleTable.sound.farSound, pitch = 100, level = 75});
 			else
-				Clockwork.datastream:Start(close_players, "EmitSound", {name = cycleTable.sound, pitch = 90, level = 60});
-				Clockwork.datastream:Start(far_players, "EmitSound", {name = cycleTable.sound, pitch = 100, level = 75});
+				netstream.Start(close_players, "EmitSound", {name = cycleTable.sound, pitch = 90, level = 60});
+				netstream.Start(far_players, "EmitSound", {name = cycleTable.sound, pitch = 100, level = 75});
 			end
 		end
 	end

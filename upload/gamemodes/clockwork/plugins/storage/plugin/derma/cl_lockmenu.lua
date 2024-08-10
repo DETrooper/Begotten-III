@@ -253,7 +253,7 @@ function PANEL:Populate(lockType, bSettingPassword, entity)
 				local uniqueID = self.itemTable.uniqueID;
 				local itemID = self.itemTable.itemID;
 				
-				Clockwork.datastream:Start("LockCombo", {
+				netstream.Start("LockCombo", {
 					lockType = "key",
 					set = false,
 					uniqueID = uniqueID,
@@ -301,7 +301,7 @@ function PANEL:Populate(lockType, bSettingPassword, entity)
 		
 		-- Called when the button is clicked.
 		function self.lockpickButton.DoClick()
-			Clockwork.datastream:Start("StartLockpick");
+			netstream.Start("StartLockpick");
 				self:Close(); self:Remove();
 			gui.EnableScreenClicker(false);
 		end;
@@ -398,7 +398,7 @@ function PANEL:SubmitCombination(valueOne, valueTwo, valueThree, valueFour, bUnl
 	if (valueFour) then valueTable.four = valueFour; end;
 	if (bUnlock) then valueTable.unlock = true; end;
 	
-	Clockwork.datastream:Start("LockCombo", valueTable);
+	netstream.Start("LockCombo", valueTable);
 end;
 
 -- Called when the panel is closed.

@@ -34,7 +34,7 @@ function cwCinematicText:PrintTextCenter(text, delay, color, font)
 	};
 end;
 
-Clockwork.datastream:Hook("cwPrintCinematicText", function(data)
+netstream.Hook("cwPrintCinematicText", function(data)
 	local text = data[1] or "Unknown...."
 	local delay = data[2] or 5;
 	local color = data[3] or Color(255, 255, 255, 255);

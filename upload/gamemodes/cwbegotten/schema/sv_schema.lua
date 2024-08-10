@@ -333,14 +333,14 @@ function Schema:OverrideFogDistance(zone, distance)
 			self.fogDistance[zone] = distance;
 		end;
 		
-		Clockwork.datastream:Start(_player.GetAll(), "OverrideFogDistance", {zone = zone, fogEnd = self.fogDistance[zone]});
+		netstream.Start(_player.GetAll(), "OverrideFogDistance", {zone = zone, fogEnd = self.fogDistance[zone]});
 	end;
 end;
 
 -- A function to sync the current custom fog distance with a player.
 function Schema:SyncFogDistance(player, uniqueID)
 	if (self.fogDistance[uniqueID]) then
-		Clockwork.datastream:Start(player, "OverrideFogDistance", {zone = uniqueID, fogEnd = self.fogDistance[uniqueID]});
+		netstream.Start(player, "OverrideFogDistance", {zone = uniqueID, fogEnd = self.fogDistance[uniqueID]});
 	end;
 end;
 
@@ -416,7 +416,7 @@ function Schema:EasyText(listeners, ...)
 	local varargs = {...};
 
 	if listeners and (istable(listeners) or listeners:IsPlayer()) then
-		Clockwork.datastream:Start(listeners, "EasyText", varargs)
+		netstream.Start(listeners, "EasyText", varargs)
 	end;
 end;
 
@@ -2006,11 +2006,11 @@ function Schema:ScriptedDeath(player, deathcause)
 	player.scriptedDying = true;
 	player:Freeze(true);
 	player:SetCharacterData("permakilled", true); -- In case the player tries to d/c to avoid their fate.
-	Clockwork.datastream:Start(player, "FadeAllMusic");
+	netstream.Start(player, "FadeAllMusic");
 	
 	timer.Simple(3, function()
 		if IsValid(player) and player.scriptedDying then
-			Clockwork.datastream:Start(player, "Stunned", 2);
+			netstream.Start(player, "Stunned", 2);
 			Clockwork.player:PlaySound(player, stingers[math.random(1, #stingers)]);
 			
 			timer.Simple(8, function()

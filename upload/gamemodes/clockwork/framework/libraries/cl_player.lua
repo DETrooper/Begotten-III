@@ -158,8 +158,6 @@ function Clockwork.player:GetAction(player, percentage)
 		else
 			return action, actionDuration, startActionTime
 		end
-	else
-		return "", 0, 0
 	end
 end
 

@@ -35,23 +35,23 @@ function cwMedicalSystem:BloodScreenBullet()
 	};
 end;
 
-Clockwork.datastream:Hook("MorphineDream", function(data)
+netstream.Hook("MorphineDream", function(data)
 	cwMedicalSystem.morphineDream = CurTime() + data;
 end);
 
-Clockwork.datastream:Hook("ScreenBloodEffect", function(data)
+netstream.Hook("ScreenBloodEffect", function(data)
 	cwMedicalSystem:BloodScreenBullet();
 end);
 
-Clockwork.datastream:Hook("NetworkInjuries", function(data)
+netstream.Hook("NetworkInjuries", function(data)
 	Clockwork.Client.cwInjuries = table.Copy(pon.decode(data))
 end);
 
-Clockwork.datastream:Hook("NetworkLimbs", function(data)
+netstream.Hook("NetworkLimbs", function(data)
 	Clockwork.Client.cwLimbs = table.Copy(pon.decode(data))
 end);
 
-Clockwork.datastream:Hook("TriggerCrazyBob", function(data)
+netstream.Hook("TriggerCrazyBob", function(data)
 	if data and isnumber(data) then
 		CRAZYBOB = data;
 	else

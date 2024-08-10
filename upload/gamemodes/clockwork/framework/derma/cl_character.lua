@@ -989,7 +989,7 @@ function PANEL:Init()
 	
 	-- Called when the button is clicked.
 	function self.useButton.DoClick()
-		Clockwork.datastream:Start("InteractCharacter", {
+		netstream.Start("InteractCharacter", {
 			characterID = self.customData.characterID, action = "use"}
 		);
 		
@@ -1006,7 +1006,7 @@ function PANEL:Init()
 	function self.deleteButton.DoClick()
 		Clockwork.kernel:AddMenuFromData(nil, {
 			["Yes"] = function()
-				Clockwork.datastream:Start("InteractCharacter", {
+				netstream.Start("InteractCharacter", {
 					characterID = self.customData.characterID, action = "delete"}
 				);
 			end,
@@ -1563,7 +1563,7 @@ function PANEL:Init()
 		
 		-- Called when the button is clicked.
 		function self.unPermakillButton.DoClick()
-			Clockwork.datastream:Start("UnpermakillCharacter", {
+			netstream.Start("UnpermakillCharacter", {
 				characterID = self.customData.characterID}
 			);
 			
@@ -1605,7 +1605,7 @@ function PANEL:Init()
 	function self.deleteButton.DoClick()
 		local cData = self.customData;
 		
-		Clockwork.datastream:Start("InteractCharacter", {
+		netstream.Start("InteractCharacter", {
 			characterID = cData.characterID, action = "delete"}
 		);
 		
@@ -3726,7 +3726,7 @@ end;
 
 vgui.Register("cwCharacterStageSubfaction", PANEL, "EditablePanel");
 
-Clockwork.datastream:Hook("CharacterRemove", function(data)
+netstream.Hook("CharacterRemove", function(data)
 	local characters = Clockwork.character:GetAll();
 	local characterID = data;
 	
@@ -3752,7 +3752,7 @@ Clockwork.datastream:Hook("CharacterRemove", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("SetWhitelisted", function(data)
+netstream.Hook("SetWhitelisted", function(data)
 	local whitelisted = Clockwork.character:GetWhitelisted();
 	
 	for k, v in pairs(whitelisted) do
@@ -3770,7 +3770,7 @@ Clockwork.datastream:Hook("SetWhitelisted", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("SetWhitelistedSubfaction", function(data)
+netstream.Hook("SetWhitelistedSubfaction", function(data)
 	local whitelisted = Clockwork.character:GetWhitelistedSubfactions();
 	
 	for k, v in pairs(whitelisted) do
@@ -3788,7 +3788,7 @@ Clockwork.datastream:Hook("SetWhitelistedSubfaction", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("CharacterAdd", function(data)
+netstream.Hook("CharacterAdd", function(data)
 	Clockwork.character:Add(data.characterID, data);
 	
 	if (!Clockwork.character:IsPanelLoading()) then
@@ -3796,7 +3796,7 @@ Clockwork.datastream:Hook("CharacterAdd", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("CharacterMenu", function(data)
+netstream.Hook("CharacterMenu", function(data)
 	local menuState = data;
 
 	if (menuState == CHARACTER_MENU_LOADED) then
@@ -3812,7 +3812,7 @@ Clockwork.datastream:Hook("CharacterMenu", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("CharacterOpen", function(data)
+netstream.Hook("CharacterOpen", function(data)
 	Clockwork.character:SetPanelOpen(true);
 	
 	if (data) then
@@ -3820,7 +3820,7 @@ Clockwork.datastream:Hook("CharacterOpen", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("CharacterFinish", function(data)
+netstream.Hook("CharacterFinish", function(data)
 	if (data.bSuccess) then
 		Clockwork.Client:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 0.1, 1.2);
 		

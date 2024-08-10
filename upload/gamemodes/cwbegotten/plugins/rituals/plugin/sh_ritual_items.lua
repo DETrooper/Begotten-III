@@ -17,8 +17,8 @@ local ITEM = Clockwork.item:New();
 	-- Called when a player drops the item.
 	function ITEM:OnUse(player, position)
 		if (player:Alive() and !player:IsRagdolled()) then
-			Clockwork.datastream:Start(player, "Stunned", 7);
-			Clockwork.datastream:Start(player, "PlaySound", "begotten/ui/sanity_gain.mp3");
+			netstream.Start(player, "Stunned", 7);
+			netstream.Start(player, "PlaySound", "begotten/ui/sanity_gain.mp3");
 			
 			if cwSanity then
 				player:HandleSanity(20);

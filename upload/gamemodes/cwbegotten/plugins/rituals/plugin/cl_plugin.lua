@@ -220,7 +220,14 @@ function cwRituals:PlayerDoesRecognisePlayer(player, status, isAccurate, realVal
 	end
 end;
 
+function cwRituals:GetProgressBarInfoAction(action, percentage)
+	if (action == "ritualing") then
+		return {text = "You are performing a ritual. Click to cancel.", percentage = percentage, flash = percentage < 0}
+	end
+end
+
 local powderheelMat = Material("models/effects/portalfunnel_sheet");
+local powderheelColor = Color(255, 255, 255, 100);
 
 function cwRituals:PostDrawOpaqueRenderables()
 	local curTime = CurTime();
@@ -315,14 +322,14 @@ function cwRituals:PostDrawOpaqueRenderables()
 			
 			if v:GetNetVar("powderheelActive") then
 				render.SetMaterial(powderheelMat);
-				render.DrawSphere(entityPosition + Vector(0, 0, 40), config.Get("talk_radius"):Get(), 32, 32);
-				render.DrawSphere(entityPosition + Vector(0, 0, 40), -config.Get("talk_radius"):Get(), 32, 32);
+				render.DrawSphere(entityPosition + Vector(0, 0, 40), config.Get("talk_radius"):Get(), 32, 32, powderheelColor);
+				render.DrawSphere(entityPosition + Vector(0, 0, 40), -config.Get("talk_radius"):Get(), 32, 32, powderheelColor);
 			end
 		end;
 	end
 end;
 
-Clockwork.datastream:Hook("HotkeyMenu", function(data)
+netstream.Hook("HotkeyMenu", function(data)
 	if cwPosession and (IsValid(Clockwork.Client.possessor) or IsValid(Clockwork.Client.victim)) then
 		return;
 	end
@@ -359,7 +366,7 @@ Clockwork.datastream:Hook("HotkeyMenu", function(data)
 		
 		for i, v in ipairs(hotkeyRituals) do
 			options[i..": "..v[1]] = function()
-				--Clockwork.datastream:Start("DoRitual", v[2])
+				--netstream.Start("DoRitual", v[2])
 				cwRituals:AttemptRitual(cwRituals:FindRitualByItems(v[2]), v[2]);
 			end;
 		end;
@@ -375,7 +382,7 @@ Clockwork.datastream:Hook("HotkeyMenu", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("LoadRitualBinds", function(data)
+netstream.Hook("LoadRitualBinds", function(data)
 	if data and istable(data) then
 		cwRituals.hotkeyRituals = data;
 	else
@@ -383,13 +390,13 @@ Clockwork.datastream:Hook("LoadRitualBinds", function(data)
 	end
 end);
 
-Clockwork.datastream:Hook("OpenAppearanceAlterationMenu", function(data)
+netstream.Hook("OpenAppearanceAlterationMenu", function(data)
 	local menu = vgui.Create("cwRitualAppearanceChange");
 	
 	menu:MakePopup();
 end);
 
-Clockwork.datastream:Hook("OpenRegrowthMenu", function(data)
+netstream.Hook("OpenRegrowthMenu", function(data)
 	local hitgroupToString = {
 		[HITGROUP_CHEST] = "Chest",
 		[HITGROUP_HEAD] = "Head",
@@ -403,7 +410,7 @@ Clockwork.datastream:Hook("OpenRegrowthMenu", function(data)
 	
 	for k, v in SortedPairs(hitgroupToString) do
 		options[v] = function()
-			Clockwork.datastream:Start("RegrowthMenu", k);
+			netstream.Start("RegrowthMenu", k);
 		end;
 	end
 	

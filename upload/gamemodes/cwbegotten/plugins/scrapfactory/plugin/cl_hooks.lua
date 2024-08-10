@@ -4,6 +4,12 @@
 
 local cwScrapFactory = cwScrapFactory;
 
+function cwScrapFactory:GetProgressBarInfoAction(action, percentage)
+	if (action == "turn_scrapfactory_valve") then
+		return {text = "You are turning the valve.", percentage = percentage, flash = percentage < 10};
+	end
+end
+
 function cwScrapFactory:CreateMenu()
 	if (IsValid(menu)) then
 		menu:Remove();
@@ -22,24 +28,24 @@ function cwScrapFactory:CreateMenu()
 	menu:SetPos(scrW / 2 - (menu:GetWide() / 2), scrH / 2 - (menu:GetTall() / 2));
 end
 
-Clockwork.datastream:Hook("OpenScrapFactoryValveMenu", function(data)
+netstream.Hook("OpenScrapFactoryValveMenu", function(data)
 	cwScrapFactory:CreateMenu();
 end);
 
-Clockwork.datastream:Hook("StartScrapFactoryAlarm", function(data)
+netstream.Hook("StartScrapFactoryAlarm", function(data)
 	if Clockwork.Client:GetZone() == "scrapper" then
 		Clockwork.Client.scrapAlarmSound = CreateSound(Clockwork.Client, "ambient/alarms/siren.wav"):PlayEx(0.5, 100);
 	end
 end);
 
-Clockwork.datastream:Hook("StopScrapFactoryAlarm", function(data)
+netstream.Hook("StopScrapFactoryAlarm", function(data)
 	if Clockwork.Client.scrapAlarmSound then
 		Clockwork.Client.scrapAlarmSound:FadeOut(3);
 	end
 end);
 
 
-Clockwork.datastream:Hook("ScrapFactoryExplosion", function(data)
+netstream.Hook("ScrapFactoryExplosion", function(data)
 	if Clockwork.Client:GetZone() == "scrapper" then
 		CreateSound(Clockwork.Client, "ambient/explosions/explode_3.wav"):PlayEx(1, 100);
 	end

@@ -1327,7 +1327,7 @@ end;
 	
 vgui.Register("cwStorageSpace", PANEL, "DPanel");
 
-Clockwork.datastream:Hook("StorageStart", function(data)
+netstream.Hook("StorageStart", function(data)
 	if (Clockwork.storage:IsStorageOpen()) then
 		CloseDermaMenus();
 		Clockwork.storage.panel:Close();
@@ -1356,14 +1356,14 @@ Clockwork.datastream:Hook("StorageStart", function(data)
 	Clockwork.kernel:RegisterBackgroundBlur(Clockwork.storage:GetPanel(), SysTime());
 end);
 
-Clockwork.datastream:Hook("StorageRebuild", function(data)
+netstream.Hook("StorageRebuild", function(data)
 	if IsValid(Clockwork.storage.panel) then
 		Clockwork.storage.panel:Rebuild();
 		Clockwork.storage.panel:MakePopup();
 	end
 end);
 
-Clockwork.datastream:Hook("StorageCash", function(data)
+netstream.Hook("StorageCash", function(data)
 	if (Clockwork.storage:IsStorageOpen()) then
 		if istable(data) then
 			Clockwork.storage.cash = data[1];
@@ -1378,7 +1378,7 @@ Clockwork.datastream:Hook("StorageCash", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("StorageWeight", function(data)
+netstream.Hook("StorageWeight", function(data)
 	if (Clockwork.storage:IsStorageOpen()) then
 		if istable(data) then
 			Clockwork.storage.weight = data[1];
@@ -1393,7 +1393,7 @@ Clockwork.datastream:Hook("StorageWeight", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("StorageSpace", function(data)
+netstream.Hook("StorageSpace", function(data)
 	if (Clockwork.storage:IsStorageOpen()) then
 		if istable(data) then
 			Clockwork.storage.space = data[1];
@@ -1408,7 +1408,7 @@ Clockwork.datastream:Hook("StorageSpace", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("StorageClose", function(data)
+netstream.Hook("StorageClose", function(data)
 	if (Clockwork.storage:IsStorageOpen()) then
 		Clockwork.kernel:RemoveBackgroundBlur(Clockwork.storage:GetPanel());
 	
@@ -1435,7 +1435,7 @@ Clockwork.datastream:Hook("StorageClose", function(data)
 	Clockwork.storage.name = nil;
 end);
 
-Clockwork.datastream:Hook("StorageTake", function(data, bRemoveInstance)
+netstream.Hook("StorageTake", function(data, bRemoveInstance)
 	if (Clockwork.storage:IsStorageOpen()) then
 		local inventory = Clockwork.inventory:GetClient();
 	
@@ -1471,7 +1471,7 @@ Clockwork.datastream:Hook("StorageTake", function(data, bRemoveInstance)
 	end;
 end);
 
-Clockwork.datastream:Hook("StorageGive", function(data)
+netstream.Hook("StorageGive", function(data)
 	if (Clockwork.storage:IsStorageOpen()) then
 		local itemTable = Clockwork.item:FindByID(data.index);
 		

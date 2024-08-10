@@ -357,7 +357,7 @@ function cwGore:DispatchBoneScale(entity, bone, scale, removeGroup)
 	if (removeGroup) then
 		resizeTable.removeGroup = removeGroup
 	end
-	Clockwork.datastream:Start(nil, "ResizeBone", resizeTable)
+	netstream.Start(nil, "ResizeBone", resizeTable)
 end
 
 local tras = {["rightarm"] = "right arm", ["leftarm"] = "left arm", ["rightleg"] = "right leg", ["leftleg"] = "left leg"}

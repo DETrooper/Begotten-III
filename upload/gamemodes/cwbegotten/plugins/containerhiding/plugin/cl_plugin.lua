@@ -5,7 +5,7 @@
 	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
 --]]
 
-Clockwork.datastream:Hook("ContainerHeartbeat", function(data)
+netstream.Hook("ContainerHeartbeat", function(data)
 	if (data) then
 		heartBeat = CreateSound(Clockwork.Client, "player/heartbeat1.wav");
 

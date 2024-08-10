@@ -46,7 +46,7 @@ function cwMusic:EntityTakeDamageNew(entity, damageInfo)
 					
 					for k, v in pairs (ents.FindInSphere(entity:GetPos(), 512)) do
 						if (v:IsPlayer() and v ~= player and v ~= attacker) then
-							Clockwork.datastream:Start(v, "StartBattleMusic")
+							netstream.Start(v, "StartBattleMusic")
 						end
 					end
 				end
@@ -93,8 +93,8 @@ end
 
 function cwMusic:PlayerCharacterLoaded(player)
 	if self.enabled then
-		Clockwork.datastream:Start(player, "EnableDynamicMusic");
+		netstream.Start(player, "EnableDynamicMusic");
 	else
-		Clockwork.datastream:Start(player, "DisableDynamicMusic");
+		netstream.Start(player, "DisableDynamicMusic");
 	end
 end

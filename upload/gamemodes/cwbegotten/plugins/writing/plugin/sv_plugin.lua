@@ -7,7 +7,7 @@
 
 local PLUGIN = PLUGIN;
 
-Clockwork.datastream:Hook("EditPaper", function(player, data)
+netstream.Hook("EditPaper", function(player, data)
 	if (IsValid( data[1] )) then
 		if (data[1]:GetClass() == "cw_paper") then
 			if (player:GetPos():Distance( data[1]:GetPos() ) <= 192 and player:GetEyeTraceNoCursor().Entity == data[1]) then

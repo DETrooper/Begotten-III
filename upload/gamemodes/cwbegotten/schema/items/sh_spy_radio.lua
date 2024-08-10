@@ -17,15 +17,15 @@ local ITEM = Clockwork.item:New();
 	if (SERVER) then
 		function ITEM:OnCustomFunction(player, name)
 			if (name == "Frequency") then
-				Clockwork.datastream:Start(player, "Frequency", player:GetCharacterData("frequency", ""));
+				netstream.Start(player, "Frequency", player:GetCharacterData("frequency", ""));
 			elseif (name == "Turn On") then
-				Clockwork.datastream:Start(player, "SetRadioState", player:GetCharacterData("radioState", false));
+				netstream.Start(player, "SetRadioState", player:GetCharacterData("radioState", false));
 			elseif (name == "Turn Off") then
-				Clockwork.datastream:Start(player, "SetRadioState", player:GetCharacterData("radioState", false));
+				netstream.Start(player, "SetRadioState", player:GetCharacterData("radioState", false));
 			elseif (name == "Jamming On") then
-				Clockwork.datastream:Start(player, "SetECWJamming", true);
+				netstream.Start(player, "SetECWJamming", true);
 			elseif (name == "Jamming Off") then
-				Clockwork.datastream:Start(player, "SetECWJamming", false);
+				netstream.Start(player, "SetECWJamming", false);
 			end;
 		end;
 	end;

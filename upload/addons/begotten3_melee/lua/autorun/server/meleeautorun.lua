@@ -1137,7 +1137,7 @@ local function Guarding(ent, dmginfo)
 							ent:SetNWInt("stability", ent:GetCharacterData("stability", max_stability));
 						end
 						
-						Clockwork.datastream:Start(ent, "Parried", 0.2)
+						netstream.Start(ent, "Parried", 0.2)
 						dmginfo:ScaleDamage(0) 
 						
 						-- Deflection "mini stun" effect

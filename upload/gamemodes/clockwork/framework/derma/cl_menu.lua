@@ -136,7 +136,7 @@ function PANEL:Rebuild(change)
 		self.characterMenu:SetCallback(function(button)
 			self:SetOpen(false);
 			Clockwork.character:SetPanelOpen(true);
-			Clockwork.datastream:Start("RefreshCharacterMenu");
+			netstream.Start("RefreshCharacterMenu");
 		end);
 		--self.characterMenu:SetToolTip("Click here to view the character menu.");
 		self.characterMenu:SizeToContents();
@@ -1037,7 +1037,7 @@ hook.Add("VGUIMousePressed", "Clockwork.menu:VGUIMousePressed", function(panel, 
 	end;
 end);
 
-Clockwork.datastream:Hook("MenuOpen", function(data)
+netstream.Hook("MenuOpen", function(data)
 	local panel = Clockwork.menu:GetPanel();
 	
 	if (panel) then

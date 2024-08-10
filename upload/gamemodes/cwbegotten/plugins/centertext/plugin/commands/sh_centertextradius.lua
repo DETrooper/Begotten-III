@@ -20,7 +20,7 @@ function COMMAND:OnRun(player, arguments)
 		if (SERVER) then
 			for k, v in pairs (ents.FindInSphere(player:GetEyeTrace().HitPos, radius or 1024)) do
 				if v:IsPlayer() then
-					Clockwork.datastream:Start(v, "cwPrintTextCenter", {text});
+					netstream.Start(v, "cwPrintTextCenter", {text});
 				end
 			end;
 		end;

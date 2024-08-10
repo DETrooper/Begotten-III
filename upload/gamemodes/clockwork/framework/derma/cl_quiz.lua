@@ -51,7 +51,7 @@ function PANEL:Init()
 	self.continueButton:SetText("CONTINUE");
 	self.continueButton:FadeIn(0.5);
 	self.continueButton:SetCallback(function(panel)
-		Clockwork.datastream:Start("QuizCompleted", true);
+		netstream.Start("QuizCompleted", true);
 	end);
 	self.continueButton:SizeToContents();
 	self.continueButton:SetMouseInputEnabled(true);
@@ -110,7 +110,7 @@ function PANEL:Populate()
 			
 		-- Called when an option is selected.
 		function panel:OnSelect(index, value, data)
-			Clockwork.datastream:Start("QuizAnswer", {key, index});
+			netstream.Start("QuizAnswer", {key, index});
 		end;
 			
 		for k2, v2 in pairs(v[2].possibleAnswers) do

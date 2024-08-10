@@ -7,7 +7,7 @@
 
 local PLUGIN = PLUGIN;
 
-Clockwork.datastream:Hook("ViewPaper", function(data)
+netstream.Hook("ViewPaper", function(data)
 	if (IsValid(data[1])) then
 		if (IsValid(PLUGIN.paperPanel)) then
 			PLUGIN.paperPanel:Close();
@@ -37,7 +37,7 @@ Clockwork.datastream:Hook("ViewPaper", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("EditPaper", function(data)
+netstream.Hook("EditPaper", function(data)
 	local entity = data;
 	
 	if (IsValid(entity)) then

@@ -299,8 +299,8 @@ function playerMeta:HandleNeed(need, amount)
 					Clockwork.chatBox:Add(self, nil, "itnofake", "You can feel claws DIGGING INTO YOUR MIND!!! You must pray for holy salvation as soon as possible!");
 					
 					if not self:HasTrait("possessed") then
-						Clockwork.datastream:Start(self, "Stunned", 5);
-						Clockwork.datastream:Start(self, "PlaySound", "possession/1shot_creep_01.wav");
+						netstream.Start(self, "Stunned", 5);
+						netstream.Start(self, "PlaySound", "possession/1shot_creep_01.wav");
 						self:GiveTrait("possessed");
 					end
 				elseif newAmount >= 66 and currentAmount < 66 then

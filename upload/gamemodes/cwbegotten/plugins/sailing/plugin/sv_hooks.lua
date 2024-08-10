@@ -77,7 +77,7 @@ function cwSailing:KeyPress(player, key)
 end;
 
 function cwSailing:ModifyPlayerSpeed(player, infoTable, action)
-	if (action == "burn_longship" or action == "extinguish_longship" or action == "repair_longship" or aciton == "repair_alarm") then
+	if (action == "burn_longship" or action == "extinguish_longship" or action == "repair_longship" or action == "repair_alarm") then
 		infoTable.runSpeed = infoTable.walkSpeed * 0.1;
 		infoTable.walkSpeed = infoTable.walkSpeed * 0.1;
 	end

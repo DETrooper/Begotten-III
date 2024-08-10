@@ -386,18 +386,18 @@ function CLASS_TABLE:OnHandleUnequip(Callback)
 					
 					unequipMenu = menu:AddSubMenu("Unequip", function()
 						if offhandSlot then
-							Clockwork.datastream:Start("UnequipItem", {offhandSlot("uniqueID"), offhandSlot("itemID")});
+							netstream.Start("UnequipItem", {offhandSlot("uniqueID"), offhandSlot("itemID")});
 						end
 					
 						if mainSlot then
-							Clockwork.datastream:Start("UnequipItem", {mainSlot("uniqueID"), mainSlot("itemID")});
+							netstream.Start("UnequipItem", {mainSlot("uniqueID"), mainSlot("itemID")});
 						end
 					end)
 					
 					--[[if mainSlot then
 						unequipMenu:AddOption(mainSlot.name, function()
 							if mainSlot then
-								Clockwork.datastream:Start("UnequipItem", {mainSlot("uniqueID"), mainSlot("itemID")});
+								netstream.Start("UnequipItem", {mainSlot("uniqueID"), mainSlot("itemID")});
 							end
 						end)
 					end]]--
@@ -405,7 +405,7 @@ function CLASS_TABLE:OnHandleUnequip(Callback)
 					if offhandSlot then
 						unequipMenu:AddOption(offhandSlot.name.." (Offhand)", function()
 							if offhandSlot then
-								Clockwork.datastream:Start("UnequipItem", {offhandSlot("uniqueID"), offhandSlot("itemID")});
+								netstream.Start("UnequipItem", {offhandSlot("uniqueID"), offhandSlot("itemID")});
 							end
 						end)
 					end

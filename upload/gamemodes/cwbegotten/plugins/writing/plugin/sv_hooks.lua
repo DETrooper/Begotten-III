@@ -27,9 +27,9 @@ function PLUGIN:EntityHandleMenuOption(player, entity, option, arguments)
 					
 					player.paperIDs[entity.uniqueID] = true;
 					
-					Clockwork.datastream:Start(player, "ViewPaper", {entity, entity.uniqueID, entity.text});
+					netstream.Start(player, "ViewPaper", {entity, entity.uniqueID, entity.text});
 				else
-					Clockwork.datastream:Start(player, "ViewPaper", {entity, entity.uniqueID});
+					netstream.Start(player, "ViewPaper", {entity, entity.uniqueID});
 				end;
 			else
 				if cwBeliefs and !player:HasBelief("literacy") then
@@ -39,7 +39,7 @@ function PLUGIN:EntityHandleMenuOption(player, entity, option, arguments)
 				end
 				
 				if player:HasItemByID("quill") then
-					Clockwork.datastream:Start(player, "EditPaper", entity);
+					netstream.Start(player, "EditPaper", entity);
 				else
 					Schema:EasyText(player, "chocolate", "You need a quill to write on paper!");
 					

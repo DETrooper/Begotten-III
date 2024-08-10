@@ -168,10 +168,6 @@ function Clockwork.setting:AddSettings()
 		return Clockwork.player:IsAdmin(Clockwork.Client);
 	end);
 
-	Clockwork.setting:AddCheckBox("Admin ESP", "Draw ESP Bars.", "cwESPBars", "Whether or not to draw progress bars for certain values.", function()
-		return Clockwork.player:IsAdmin(Clockwork.Client);
-	end);
-
 	Clockwork.setting:AddCheckBox("Admin ESP", "Show item entities.", "cwItemESP", "Whether or not to view items in the admin ESP.", function()
 		return Clockwork.player:IsAdmin(Clockwork.Client);
 	end);
@@ -184,7 +180,7 @@ function Clockwork.setting:AddSettings()
 		return Clockwork.player:IsAdmin(Clockwork.Client);
 	end);
 	
-	Clockwork.setting:AddCheckBox("Admin ESP", "ESP Peek enabled", "cwESPPeek", "Whether or not ESP peek is enabled.", function()
+	Clockwork.setting:AddCheckBox("Admin ESP", "Enable ESP peek.", "cwESPPeek", "Whether or not ESP peek is enabled. Use the context menu to ESP peek.", function()
 		return Clockwork.player:IsAdmin(Clockwork.Client);
 	end);
 end

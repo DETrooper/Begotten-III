@@ -40,7 +40,7 @@ local tasbds1r = {["$pp_colour_brightness"] = -.07,["$pp_colour_contrast"] = 2,[
 local tasbdsd = {["$pp_colour_brightness"] = -.1,["$pp_colour_contrast"] = 0.7,["$pp_colour_colour"] = 0,["$pp_colour_mulr"] = 3, }
 local tabcrosstobear = {["$pp_colour_addr"] = 0, ["$pp_colour_brightness"] = 0.1, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.25, ["$pp_colour_mulr"] = 0.25, ["$pp_colour_mulg"] = 0.1, ["$pp_colour_mulb"] = 0.1}
 local blockEffects = false;
-Clockwork.datastream:Hook("MenuIntro", function(skip_enabled)
+netstream.Hook("MenuIntro", function(skip_enabled)
 	if (Clockwork.ConVars.INTROENABLED:GetInt() ~= 1) and skip_enabled then
 		if not Clockwork.quiz:GetCompleted() then
 			Clockwork.quiz.completed = true;
@@ -155,7 +155,7 @@ local haflfHE = (scrH * 0.56)
 local oth = (scrH * 0.51)
 
 local intsa = {0.25,0.48,2.2,2.35,2.52,2.95,8.219,8.372,8.524}
-Clockwork.datastream:Hook("JesusWeptIntro", function(skip_enabled)
+netstream.Hook("JesusWeptIntro", function(skip_enabled)
 	if (Clockwork.ConVars.INTROENABLED:GetInt() ~= 1) and skip_enabled then
 		if not Clockwork.quiz:GetCompleted() then
 			Clockwork.quiz.completed = true;
@@ -851,4 +851,4 @@ function cwIntroduction:RenderScreenspaceEffects()
 	end;
 end
 
-Clockwork.setting:AddCheckBox("Introduction", "Enable main menu intro sequence.", "cwIntroEnabled", "Click to enable/disable the main menu introduction sequence.")
+Clockwork.setting:AddCheckBox("Introduction", "Enable main menu intro sequence.", "cwIntroEnabled", "Click to toggle the main menu introduction sequence.")

@@ -50,7 +50,7 @@ function ENT:Use(activator, caller)
 				state = "Hierarchy";
 			end
 		
-			Clockwork.datastream:Start(caller, "OpenBountyBoardMenu", state);
+			netstream.Start(caller, "OpenBountyBoardMenu", state);
 		end;
 	end;
 end;

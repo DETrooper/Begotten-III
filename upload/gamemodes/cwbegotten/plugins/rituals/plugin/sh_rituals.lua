@@ -460,7 +460,7 @@ RITUAL = cwRituals.rituals:New("call_of_the_blood_moon");
 		if cwDayNight then
 			if cwDayNight.currentCycle == "night" then
 				Clockwork.chatBox:Add(player, nil, "event", "You feel the Blood Moon's radiance pulsating, as though it were drawing power from something.");
-				Clockwork.datastream:Start(player, "PlaySound", "begotten/ui/sanity_touch.mp3");
+				netstream.Start(player, "PlaySound", "begotten/ui/sanity_touch.mp3");
 			
 				for i, v in ipairs(_player.GetAll()) do
 					if IsValid(v) and v:HasInitialized() then
@@ -469,7 +469,7 @@ RITUAL = cwRituals.rituals:New("call_of_the_blood_moon");
 						if lastZone == "wasteland" or lastZone == "tower" then
 							if v ~= player then
 								Clockwork.chatBox:Add(v, nil, "event", "You feel the Blood Moon's radiance pulsating, as though it were drawing power from something.");
-								Clockwork.datastream:Start(v, "PlaySound", "begotten/ambient/hits/wall_stomp5.mp3");
+								netstream.Start(v, "PlaySound", "begotten/ambient/hits/wall_stomp5.mp3");
 							end
 							
 							v:Disorient(3);
@@ -477,7 +477,7 @@ RITUAL = cwRituals.rituals:New("call_of_the_blood_moon");
 							for i = 1, 5 do
 								timer.Simple(i * 3, function()
 									if IsValid(v) then
-										Clockwork.datastream:Start(v, "PlaySound", "begotten/ambient/hits/wall_stomp"..tostring(i)..".mp3");
+										netstream.Start(v, "PlaySound", "begotten/ambient/hits/wall_stomp"..tostring(i)..".mp3");
 										v:Disorient(3);
 									end
 								end);

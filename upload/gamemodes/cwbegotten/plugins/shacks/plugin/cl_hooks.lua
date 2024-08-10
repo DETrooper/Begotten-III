@@ -41,7 +41,7 @@ cwShacks.shackData = {
 	},
 };
 
-Clockwork.datastream:Hook("ShackInfo", function(data)
+netstream.Hook("ShackInfo", function(data)
 	if data then
 		cwShacks.shacks = data;
 	end

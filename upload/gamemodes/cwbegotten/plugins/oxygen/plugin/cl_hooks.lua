@@ -27,7 +27,7 @@ function cwOxygen:GetBars(bars)
 	end;
 end;
 
-Clockwork.datastream:Hook("Drown", function(data)
+netstream.Hook("Drown", function(data)
 	if (data == true) then
 		Clockwork.Client:EmitSound("begotten/score6.mp3", 500);
 		Schema:AddBlackFade(10);

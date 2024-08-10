@@ -1040,7 +1040,7 @@ function GM:PlayerSpawn(player)
 		
 		Clockwork.player:SetRecognises(player, player, RECOGNISE_TOTAL)
 		
-		Clockwork.datastream:Start(player, "RadioState", player:GetCharacterData("radioState", false) or false);
+		netstream.Start(player, "RadioState", player:GetCharacterData("radioState", false) or false);
 		
 		plyTab.cwChangeClass = false
 		plyTab.cwLightSpawn = false

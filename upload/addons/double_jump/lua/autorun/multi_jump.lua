@@ -43,7 +43,7 @@ hook.Add("SetupMove", "Multi Jump", function(ply, mv)
 		return
 	end
 	
-	if (ply.IsRagdolled and ply:IsRagdolled()) or ply:GetMoveType() ~= MOVETYPE_WALK or ply:GetNWBool("bliz_frozen") or Clockwork.player:GetAction(ply) ~= "" then
+	if (ply.IsRagdolled and ply:IsRagdolled()) or ply:GetMoveType() ~= MOVETYPE_WALK or ply:GetNWBool("bliz_frozen") or Clockwork.player:GetAction(ply) then
 		return;
 	end
 	

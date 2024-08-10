@@ -157,7 +157,7 @@ function Clockwork.character:OpenNextCreationPanel()
 			"PlayerAdjustCharacterCreationInfo", self:GetActivePanel(), info
 		);
 		
-		Clockwork.datastream:Start("CreateCharacter", info);
+		netstream.Start("CreateCharacter", info);
 	else
 		info.index = nextPanel.index;
 		panel:OpenPanel(nextPanel.vguiName, info);

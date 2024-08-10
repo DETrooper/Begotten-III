@@ -46,7 +46,7 @@ function cwCenterText:PrintTextCenter(text, delay, color, class, heightOverride)
 	};
 end;
 
-Clockwork.datastream:Hook("cwPrintTextCenter", function(data)
+netstream.Hook("cwPrintTextCenter", function(data)
 	local text = data[1] or "Unknown...."
 	local delay = data[2] or 5;
 	local color = data[3] or Color(255, 255, 255, 255);

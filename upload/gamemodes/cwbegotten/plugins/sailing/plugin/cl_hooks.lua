@@ -4,6 +4,18 @@
 
 local cwSailing = cwSailing;
 
+function cwSailing:GetProgressBarInfoAction(action, percentage)
+	if (action == "burn_longship") then
+		return {text = "You are setting the longship alight. Click to cancel.", percentage = percentage, flash = percentage < 10};
+	elseif (action == "extinguish_longship") then
+		return {text = "You are trying to put out the flames. Click to cancel.", percentage = percentage, flash = percentage < 10};
+	elseif (action == "repair_longship") then
+		return {text = "You are making repairs to the longship. Click to cancel.", percentage = percentage, flash = percentage < 10};
+	elseif (action == "repair_alarm") then
+		return {text = "You are repairing the Gorewatch alarm. Click to cancel.", percentage = percentage, flash = percentage < 10};
+	end
+end
+
 -- Called when the local player's item menu should be adjusted.
 function cwSailing:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunctions)
 	if (itemTable.uniqueID == "scroll_longship") then
@@ -111,7 +123,7 @@ function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destinat
 	menu:SetPos(scrW / 2 - (menu:GetWide() / 2), scrH / 2 - (menu:GetTall() / 2));
 end
 
-Clockwork.datastream:Hook("OpenAlarmMenu", function(alarmEnt)
+netstream.Hook("OpenAlarmMenu", function(alarmEnt)
 	if IsValid(alarmEnt) then
 		if (IsValid(menu)) then
 			menu:Remove();
@@ -136,10 +148,10 @@ Clockwork.datastream:Hook("OpenAlarmMenu", function(alarmEnt)
 	end
 end);
 
-Clockwork.datastream:Hook("OpenLongshipMenu", function(ignitable, ignited, repairable, sailable, destination, cargoholdopenable)
+netstream.Hook("OpenLongshipMenu", function(ignitable, ignited, repairable, sailable, destination, cargoholdopenable)
 	cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destination, cargoholdopenable);
 end);
 
-Clockwork.datastream:Hook("DrowningCutscene", function(data)
+netstream.Hook("DrowningCutscene", function(data)
 	CreateSound(Clockwork.Client, "begotten/score5.mp3"):PlayEx(1, 100);
 end);

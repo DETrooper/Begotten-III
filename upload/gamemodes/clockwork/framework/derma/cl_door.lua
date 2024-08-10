@@ -60,7 +60,7 @@ function PANEL:Init()
 		local text = textEntry:GetValue();
 		
 		if (!string.find(string.gsub(string.lower(text), "%s", ""), "thisdoorcanbepurchased")) then
-			Clockwork.datastream:Start("DoorManagement", {Clockwork.door:GetEntity(), "Text", textEntry:GetValue()});
+			netstream.Start("DoorManagement", {Clockwork.door:GetEntity(), "Text", textEntry:GetValue()});
 		end;
 	end;
 	
@@ -79,9 +79,9 @@ function PANEL:Init()
 			-- Called when an option is selected.
 			self.comboBox.OnSelect = function(multiChoice, index, value, data)
 				if (value == "Share access to all children.") then
-					Clockwork.datastream:Start("DoorManagement", {Clockwork.door:GetEntity(), "Share"});
+					netstream.Start("DoorManagement", {Clockwork.door:GetEntity(), "Share"});
 				else
-					Clockwork.datastream:Start("DoorManagement", {Clockwork.door:GetEntity(), "Unshare"});
+					netstream.Start("DoorManagement", {Clockwork.door:GetEntity(), "Unshare"});
 				end;
 			end;
 			
@@ -98,9 +98,9 @@ function PANEL:Init()
 			-- Called when an option is selected.
 			self.parentText.OnSelect = function(multiChoice, index, value, data)
 				if (value == "Share text to all children.") then
-					Clockwork.datastream:Start("DoorManagement", {Clockwork.door:GetEntity(), "Share", "Text"});
+					netstream.Start("DoorManagement", {Clockwork.door:GetEntity(), "Share", "Text"});
 				else
-					Clockwork.datastream:Start("DoorManagement", {Clockwork.door:GetEntity(), "Unshare", "Text"});
+					netstream.Start("DoorManagement", {Clockwork.door:GetEntity(), "Unshare", "Text"});
 				end;
 			end;
 		end;
@@ -120,7 +120,7 @@ function PANEL:Init()
 			function button.DoClick(button)
 				if (doorCost > 0) then
 					Derma_Query("Are you sure that you want to sell this door?", "Sell the door.", "Yes", function()
-						Clockwork.datastream:Start("DoorManagement", {Clockwork.door:GetEntity(), "Sell"});
+						netstream.Start("DoorManagement", {Clockwork.door:GetEntity(), "Sell"});
 						
 						gui.EnableScreenClicker(false);
 						self:Close(); self:Remove();
@@ -129,7 +129,7 @@ function PANEL:Init()
 					end);
 				else
 					Derma_Query("Are you sure that you want to unown this door?", "Unown the door.", "Yes", function()
-						Clockwork.datastream:Start("DoorManagement", {Clockwork.door:GetEntity(), "Sell"});
+						netstream.Start("DoorManagement", {Clockwork.door:GetEntity(), "Sell"});
 						
 						gui.EnableScreenClicker(false);
 						self:Close(); self:Remove();
@@ -216,25 +216,25 @@ function PANEL:Rebuild()
 					if (access == DOOR_ACCESS_COMPLETE) then
 						options = {
 							["Take complete access."] = function()
-								Clockwork.datastream:Start("DoorManagement", {door, "Access", player, access});
+								netstream.Start("DoorManagement", {door, "Access", player, access});
 							end
 						};
 					elseif (access == DOOR_ACCESS_BASIC) then
 						options = {
 							["Take basic access."] = function()
-								Clockwork.datastream:Start("DoorManagement", {door, "Access", player, access});
+								netstream.Start("DoorManagement", {door, "Access", player, access});
 							end,
 							["Give complete access."] = function()
-								Clockwork.datastream:Start("DoorManagement", {door, "Access", player, DOOR_ACCESS_COMPLETE});
+								netstream.Start("DoorManagement", {door, "Access", player, DOOR_ACCESS_COMPLETE});
 							end
 						};
 					else
 						options = {
 							["Give basic access."] = function()
-								Clockwork.datastream:Start("DoorManagement", {door, "Access", player, DOOR_ACCESS_BASIC});
+								netstream.Start("DoorManagement", {door, "Access", player, DOOR_ACCESS_BASIC});
 							end,
 							["Give complete access."] = function()
-								Clockwork.datastream:Start("DoorManagement", {door, "Access", player, DOOR_ACCESS_COMPLETE});
+								netstream.Start("DoorManagement", {door, "Access", player, DOOR_ACCESS_COMPLETE});
 							end
 						};
 					end;
@@ -294,12 +294,12 @@ end;
 
 vgui.Register("cwDoor", PANEL, "DFrame");
 
-Clockwork.datastream:Hook("PurchaseDoor", function(data)
+netstream.Hook("PurchaseDoor", function(data)
 	local doorCost = Clockwork.config:Get("door_cost"):Get();
 	
 	if (doorCost > 0) then
 		Derma_Query("Do you want to purchase this door for "..Clockwork.kernel:FormatCash(Clockwork.config:Get("door_cost"):Get(), nil, true).."?", "Purchase this door.", "Yes", function()
-			Clockwork.datastream:Start("DoorManagement", {data, "Purchase"});
+			netstream.Start("DoorManagement", {data, "Purchase"});
 			
 			gui.EnableScreenClicker(false);
 		end, "No", function()
@@ -307,7 +307,7 @@ Clockwork.datastream:Hook("PurchaseDoor", function(data)
 		end);
 	else
 		Derma_Query("Do you want to own this door?", "Own this door.", "Yes", function()
-			Clockwork.datastream:Start("DoorManagement", {data, "Purchase"});
+			netstream.Start("DoorManagement", {data, "Purchase"});
 			
 			gui.EnableScreenClicker(false);
 		end, "No", function()
@@ -318,7 +318,7 @@ Clockwork.datastream:Hook("PurchaseDoor", function(data)
 	gui.EnableScreenClicker(true);
 end);
 
-Clockwork.datastream:Hook("SetSharedAccess", function(data)
+netstream.Hook("SetSharedAccess", function(data)
 	if (Clockwork.door:GetPanel()) then
 		Clockwork.door.cwDoorSharedAxs = data;
 		
@@ -326,7 +326,7 @@ Clockwork.datastream:Hook("SetSharedAccess", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("SetSharedText", function(data)
+netstream.Hook("SetSharedText", function(data)
 	if (Clockwork.door:GetPanel()) then
 		Clockwork.door.cwDoorSharedTxt = data;
 		
@@ -334,7 +334,7 @@ Clockwork.datastream:Hook("SetSharedText", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("DoorAccess", function(data)
+netstream.Hook("DoorAccess", function(data)
 	if (Clockwork.door:GetPanel()) then
 		local accessList = Clockwork.door:GetAccessList();
 		
@@ -350,7 +350,7 @@ Clockwork.datastream:Hook("DoorAccess", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("DoorManagement", function(data)
+netstream.Hook("DoorManagement", function(data)
 	if (Clockwork.door:GetPanel()) then
 		Clockwork.door:GetPanel():Remove();
 	end;

@@ -33,8 +33,8 @@ local ITEM = Clockwork.item:New("medical_base");
 		player:HandleStamina(100);
 		--player:GivePoise(player:GetMaxPoise());
 		player:HandleSanity(25);
-		Clockwork.datastream:Start(player, "Stunned", 1);
-		Clockwork.datastream:Start(player, "MorphineDream", 60);
+		netstream.Start(player, "Stunned", 1);
+		netstream.Start(player, "MorphineDream", 60);
 		
 		--if action == "die" or action == "die_bleedout" then
 		if player:GetRagdollState() == RAGDOLL_KNOCKEDOUT then
@@ -70,7 +70,7 @@ local ITEM = Clockwork.item:New("medical_base");
 		player:HandleStamina(40);
 		player:HandleSanity(25);
 		Schema:EasyText(player, "olivedrab","It's been done. The plight will take hold in due time.");
-		Clockwork.datastream:Start(player, "Stunned", 1);
+		netstream.Start(player, "Stunned", 1);
 	end;
 ITEM:Register();
 
@@ -94,7 +94,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	
 	function ITEM:OnUsed(player, itemEntity)
 		Schema:EasyText(player, "olivedrab","You apply the antibiotic paste to your wound.");
-		Clockwork.datastream:Start(self, "Stunned", 2);
+		netstream.Start(self, "Stunned", 2);
 	end;
 ITEM:Register();
 
@@ -277,7 +277,7 @@ local ITEM = Clockwork.item:New("medical_base");
 			player:EmitSound(self.useSound);
 			player:TakeItem(self, true);
 			
-			Clockwork.datastream:Start(player, "Stunned", 3);
+			netstream.Start(player, "Stunned", 3);
 		end
 	end;
 ITEM:Register();
@@ -328,7 +328,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	
 	function ITEM:OnUsed(player, itemEntity)
 		Schema:EasyText(player, "olivedrab","The ointment is applied to your skin. It stings like hell, but hopefully it will work.");
-		Clockwork.datastream:Start(self, "Stunned", 2);
+		netstream.Start(self, "Stunned", 2);
 	end;
 ITEM:Register();
 

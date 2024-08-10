@@ -275,7 +275,7 @@ function cwPossession:CanShowTabMenu()
 	end;
 end
 
-Clockwork.datastream:Hook("Possessing", function(data)
+netstream.Hook("Possessing", function(data)
 	if IsValid(data) then
 		Clockwork.Client.victim = data;
 		Clockwork.Client:EmitSound("possession/st_decent.wav");
@@ -289,7 +289,7 @@ Clockwork.datastream:Hook("Possessing", function(data)
 	end
 end);
 
-Clockwork.datastream:Hook("Possessed", function(data)
+netstream.Hook("Possessed", function(data)
 	if IsValid(data) then
 		Clockwork.Client.possessor = data;
 		

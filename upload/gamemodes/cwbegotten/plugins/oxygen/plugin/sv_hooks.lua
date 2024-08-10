@@ -69,7 +69,7 @@ function cwOxygen:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 				decayTime = 1
 				
 				if (!plyTab.drowned and (curTime - plyTab.suffocating) > 10) then
-					Clockwork.datastream:Start(player, "Drown", true)
+					netstream.Start(player, "Drown", true)
 					plyTab.drowned = true
 					
 					timer.Simple(2, function()
@@ -83,7 +83,7 @@ function cwOxygen:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 				
 				if (!plyTab.drowned) then
 					player:EmitSound("begotten/misc/npc_human_drowning_0"..math.random(1, 3)..".wav", 75, 100)
-					Clockwork.datastream:Start(player, "Drown")
+					netstream.Start(player, "Drown")
 				end
 			end
 		end

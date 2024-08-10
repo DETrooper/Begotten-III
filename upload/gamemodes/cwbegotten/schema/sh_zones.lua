@@ -763,7 +763,7 @@ if CLIENT then
 		end);
 	end
 
-	Clockwork.datastream:Hook("OverrideFogDistance", function(data)
+	netstream.Hook("OverrideFogDistance", function(data)
 		if (!zones.targetEndOverride or table.IsEmpty(zones.targetEndOverride)) then
 			zones.targetEndOverride = {};
 
@@ -1835,7 +1835,7 @@ else
 	WASTELAND:Register()
 end
 
-Clockwork.datastream:Hook("GetZone", function(data)
+netstream.Hook("GetZone", function(data)
 	--print("GetZone called, sending the active zone "..tostring(zones.cwCurrentZone).." to the server!");
 	if data then
 		zones:RefreshCurrentZone();
@@ -1845,7 +1845,7 @@ Clockwork.datastream:Hook("GetZone", function(data)
 	netstream.Start("EnteredZone", zones.cwCurrentZone);
 end)
 
-Clockwork.datastream:Hook("RefreshCurrentZone", function(data)
+netstream.Hook("RefreshCurrentZone", function(data)
 	zones:RefreshCurrentZone();
 end)
 

@@ -38,7 +38,7 @@ function cwZombies:CanHearBattle()
 	return true;
 end;
 
-Clockwork.datastream:Hook("EndChaser", function(data)
+netstream.Hook("EndChaser", function(data)
 	Clockwork.Client:EmitSound("begotten/npc/chaser_success.mp3");
 	
 	if (monsterPatch) then
@@ -46,7 +46,7 @@ Clockwork.datastream:Hook("EndChaser", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("KilledZombie", function()
+netstream.Hook("KilledZombie", function()
 	if (!Clockwork.Client.zombiesKilled) then
 		Clockwork.Client.zombiesKilled = 0;
 	end;
@@ -54,7 +54,7 @@ Clockwork.datastream:Hook("KilledZombie", function()
 	Clockwork.Client.zombiesKilled = Clockwork.Client.zombiesKilled + 1;
 end);
 
-Clockwork.datastream:Hook("StopMusic", function(data)
+netstream.Hook("StopMusic", function(data)
 	if (monsterPatch) then
 		monsterPatch:Stop();
 		monsterPatch = nil;
@@ -71,6 +71,6 @@ Clockwork.datastream:Hook("StopMusic", function(data)
 	end;
 end);
 
-Clockwork.datastream:Hook("DelayBattleMusic", function(data)
+netstream.Hook("DelayBattleMusic", function(data)
 	cwZombies.battleMusicTime = CurTime() + (data or 60);
 end);]]--

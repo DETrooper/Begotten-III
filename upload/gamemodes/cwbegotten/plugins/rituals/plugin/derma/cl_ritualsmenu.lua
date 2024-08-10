@@ -93,7 +93,7 @@ function PANEL:Rebuild()
 			return
 		end
 		
-		--Clockwork.datastream:Start("DoRitual", {Clockwork.Client.combinations})
+		--netstream.Start("DoRitual", {Clockwork.Client.combinations})
 		cwRituals:AttemptRitual(cwRituals:FindRitualByItems(Clockwork.Client.combinations), Clockwork.Client.combinations);
 		
 		if (IsValid(Clockwork.Client.cwRitualsMenu)) then

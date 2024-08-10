@@ -20,7 +20,7 @@ netstream.Hook("ContainerPassword", function(data)
 end)
 
 
-Clockwork.datastream:Hook("LockInteract", function(data)
+netstream.Hook("LockInteract", function(data)
 	if (IsValid(Clockwork.Client.LockMenu)) then
 		Clockwork.Client.LockMenu:Close();
 		Clockwork.Client.LockMenu:Remove();
@@ -31,6 +31,6 @@ Clockwork.datastream:Hook("LockInteract", function(data)
 	Clockwork.Client.LockMenu:Populate(data[1], data[2], data[3]);
 end);
 
-Clockwork.datastream:Hook("CloseMenu", function(data)
+netstream.Hook("CloseMenu", function(data)
 	Clockwork.menu:SetOpen(false);
 end);

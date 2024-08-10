@@ -298,7 +298,7 @@ function ENT:Use(activator, caller)
 			local callerPos = caller:GetPos();
 				
 			if not callerPos:WithinAABox(bounding_box["lower"], bounding_box["upper"]) then
-				Clockwork.datastream:Start(caller, "OpenLongshipMenu", false, false, false, false, false, false);
+				netstream.Start(caller, "OpenLongshipMenu", false, false, false, false, false, false);
 				return;
 			end
 		end
@@ -317,11 +317,11 @@ function ENT:Use(activator, caller)
 		
 		if caller:GetFaction() == "Goreic Warrior" or (caller:IsAdmin() and caller.cwObserverMode) then
 			if (IsValid(self.owner) and caller ~= self.owner) or self:IsOnFire() then
-				Clockwork.datastream:Start(caller, "OpenLongshipMenu", false, self:IsOnFire(), self.repairable, false, false, false);
+				netstream.Start(caller, "OpenLongshipMenu", false, self:IsOnFire(), self.repairable, false, false, false);
 			elseif self.destination then
-				Clockwork.datastream:Start(caller, "OpenLongshipMenu", false, self:IsOnFire(), self.repairable, false, true, true);
+				netstream.Start(caller, "OpenLongshipMenu", false, self:IsOnFire(), self.repairable, false, true, true);
 			else
-				Clockwork.datastream:Start(caller, "OpenLongshipMenu", true, self:IsOnFire(), self.repairable, true, false, true);
+				netstream.Start(caller, "OpenLongshipMenu", true, self:IsOnFire(), self.repairable, true, false, true);
 			end
 		elseif caller:GetFaction() ~= "Goreic Warrior" then
 			local activeWeapon = caller:GetActiveWeapon();
@@ -330,13 +330,13 @@ function ENT:Use(activator, caller)
 				local oil = caller:GetSharedVar("oil", 0);
 			
 				if oil >= 25 then
-					Clockwork.datastream:Start(caller, "OpenLongshipMenu", true, self:IsOnFire(), false, false, false, false);
+					netstream.Start(caller, "OpenLongshipMenu", true, self:IsOnFire(), false, false, false, false);
 					
 					return;
 				end
 			end
 			
-			Clockwork.datastream:Start(caller, "OpenLongshipMenu", false, self:IsOnFire(), false, false, false, false);
+			netstream.Start(caller, "OpenLongshipMenu", false, self:IsOnFire(), false, false, false, false);
 		end
 	end;
 end;

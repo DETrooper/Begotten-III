@@ -147,10 +147,10 @@ function cwAnomalous:StartTVHallucination(location)
 	end
 end
 
-Clockwork.datastream:Hook("CosmicRupture", function(data)
+netstream.Hook("CosmicRupture", function(data)
 	cwAnomalous:CosmicRupture();
 end);
 
-Clockwork.datastream:Hook("StartNearestTVHallucination", function(data)
+netstream.Hook("StartNearestTVHallucination", function(data)
 	cwAnomalous:StartNearestTVHallucination();
 end);

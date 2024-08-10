@@ -46,5 +46,5 @@ function ENT:OnTakeDamage(damageInfo)
 end
 
 function ENT:Use(activator, caller)
-	Clockwork.datastream:Start(caller, "OpenAlarmMenu", self);
+	netstream.Start(caller, "OpenAlarmMenu", self);
 end;

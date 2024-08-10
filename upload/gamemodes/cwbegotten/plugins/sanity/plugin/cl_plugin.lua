@@ -51,7 +51,7 @@ function playerMeta:Sanity()
 	return self:GetNetVar("sanity", 100);
 end
 
-Clockwork.datastream:Hook("SanitySpeech", function(data)
+netstream.Hook("SanitySpeech", function(data)
 	if data then
 		sound.Play(cwSanity.slowDownSpeechSounds[math.random(1, #cwSanity.slowDownSpeechSounds)], data, 70, 30, 0.8);
 	end

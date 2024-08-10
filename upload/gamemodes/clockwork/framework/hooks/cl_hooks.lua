@@ -301,7 +301,6 @@ function GM:Initialize()
 
 	Clockwork.ConVars.ESPTIME = Clockwork.kernel:CreateClientConVar("cwESPTime", 1, true, true)
 	Clockwork.ConVars.ADMINESP = Clockwork.kernel:CreateClientConVar("cwAdminESP", 0, true, true)
-	Clockwork.ConVars.ESPBARS = Clockwork.kernel:CreateClientConVar("cwESPBars", 1, true, true)
 	Clockwork.ConVars.ITEMESP = Clockwork.kernel:CreateClientConVar("cwItemESP", 0, false, true)
 	Clockwork.ConVars.PROPESP = Clockwork.kernel:CreateClientConVar("cwPropESP", 0, false, true)
 	Clockwork.ConVars.SPAWNESP = Clockwork.kernel:CreateClientConVar("cwSpawnESP", 0, false, true)
@@ -1041,18 +1040,6 @@ function GM:HUDPaintForeground()
 		y = scrH - (scrH * 0.15);
 		
 		Clockwork.kernel:DrawBar(x, y, width, height, Color(102, 0, 0, 200), info.text or "Progress Bar", info.percentage or 100, 100, info.flash);
-	else
-		info = Clockwork.plugin:Call("GetPostProgressBarInfo");
-		
-		if (info) then
-			local width = (scrW / 2) - 64;
-			local height = 16;
-			local x, y = Clockwork.kernel:GetScreenCenter();
-			x = x - (scrW / 4);
-			y = scrH - (scrH * 0.15);
-			
-			Clockwork.kernel:DrawBar(x, y, width, height, Color(102, 0, 0, 200), info.text or "Progress Bar", info.percentage or 100, 100, info.flash);
-		end;
 	end;
 
 	if (Clockwork.player:IsAdmin(Clockwork.Client)) then
@@ -2512,7 +2499,7 @@ function GM:HUDDrawTargetID()
 								end
 								
 								if (!Clockwork.nextCheckRecognises or curTime >= Clockwork.nextCheckRecognises[1] or Clockwork.nextCheckRecognises[2] != player) then
-									Clockwork.datastream:Start("GetTargetRecognises", player)
+									netstream.Start("GetTargetRecognises", player)
 									
 									Clockwork.nextCheckRecognises = {curTime + 2, player}
 								end
@@ -2633,67 +2620,42 @@ end
 	@returns Table The text, flash, and percentage of the progress bar.
 --]]
 
--- I should really improve this later to use hooks.
 function GM:GetProgressBarInfo()
-	local action, percentage = Clockwork.player:GetAction(Clockwork.Client, true)
+	--[[local action, percentage = Clockwork.player:GetAction(Clockwork.Client, true)
 
-	--[[if (!Clockwork.Client:Alive() and action == "spawn") then
+	if (!Clockwork.Client:Alive() and action == "spawn") then
 		return {text = "You will be respawned shortly.", percentage = percentage, flash = percentage < 10}
 	else]]
 	
 	if Clockwork.Client:Alive() then
-		if !Clockwork.Client:IsRagdolled() then
+		local action, percentage = Clockwork.player:GetAction(Clockwork.Client, true)
+		local ragdolled = Clockwork.Client:IsRagdolled();
+		
+		if ragdolled then
+			if (action == "unragdoll") then
+				if (Clockwork.Client:GetRagdollState() == RAGDOLL_FALLENOVER) then
+					return {text = "You are regaining stability.", percentage = percentage, flash = percentage < 10}
+				else
+					return {text = "You are regaining conciousness.", percentage = percentage, flash = percentage < 10}
+				end
+			else
+				if (Clockwork.player:GetAction(Clockwork.Client) != "unragdoll" and hook.Run("PlayerCanGetUp")) then
+					return {text = "Press 'jump' to get up.", percentage = 100}
+				end
+			end
+		elseif action then
+			local info = hook.Run("GetProgressBarInfoAction", action, percentage);
+			
+			if info then return info end;
+			
 			if (action == "lock") then
 				return {text = "The door is being locked.", percentage = percentage, flash = percentage < 10}
 			elseif (action == "unlock") then
 				return {text = "The door is being unlocked.", percentage = percentage, flash = percentage < 10}
-			elseif (action == "raise") then
-				local raiseText = "RAISING...";
-				
-				if (Clockwork.Client:IsWeaponRaised()) then
-					raiseText = "LOWERING..."
-				end;
-				
-				return {text = raiseText, percentage = percentage, flash = percentage < 10}
-			elseif (action == "pickupragdoll") then
-				return {text = "You are picking up a body. Click to cancel.", percentage = percentage, flash = percentage < 10}
-			elseif (action == "crafting") then
-				local craftVerb = Clockwork.Client:GetNetVar("cwProgressBarVerb") or  "crafting";
-				local itemName = Clockwork.Client:GetNetVar("cwProgressBarItem") or "an item";
-				
-				return {text = "You are "..craftVerb.." "..itemName..". Click to cancel.", percentage = percentage, flash = percentage < 0}
-			elseif (action == "ritualing") then
-				return {text = "You are performing a ritual. Click to cancel.", percentage = percentage, flash = percentage < 0}
-			elseif (action == "burn_longship") then
-				return {text = "You are setting the longship alight. Click to cancel.", percentage = percentage, flash = percentage < 10};
-			elseif (action == "extinguish_longship") then
-				return {text = "You are trying to put out the flames. Click to cancel.", percentage = percentage, flash = percentage < 10};
-			elseif (action == "repair_longship") then
-				return {text = "You are making repairs to the longship. Click to cancel.", percentage = percentage, flash = percentage < 10};
-			elseif (action == "turn_scrapfactory_valve") then
-				return {text = "You are turning the valve.", percentage = percentage, flash = percentage < 10};
-			elseif (action == "hell_teleporting") then
-				return {text = "You are using dark magic to teleport to Hell.", percentage = percentage, flash = percentage < 10};
-			elseif (action == "putting_on_armor") then
-				return {text = "You are putting on your armor. Click to cancel.", percentage = percentage, flash = percentage < 10};
-			elseif (action == "taking_off_armor") then
-				return {text = "You are taking off your armor. Click to cancel.", percentage = percentage, flash = percentage < 10};
-			elseif (action == "repair_alarm") then
-				return {text = "You are taking repairing the Gorewatch alarm. Click to cancel.", percentage = percentage, flash = percentage < 10};
 			end;
-		elseif (action == "unragdoll") then
-			if (Clockwork.Client:GetRagdollState() == RAGDOLL_FALLENOVER) then
-				return {text = "You are regaining stability.", percentage = percentage, flash = percentage < 10}
-			else
-				return {text = "You are regaining conciousness.", percentage = percentage, flash = percentage < 10}
-			end
-		elseif (Clockwork.Client:GetRagdollState() == RAGDOLL_FALLENOVER) then
-			local fallenOver = Clockwork.player:GetAction(Clockwork.Client) != "unragdoll"--Clockwork.Client:GetDTBool(BOOL_FALLENOVER)
 			
-			if (fallenOver and hook.Run("PlayerCanGetUp")) then
-				return {text = "Press 'jump' to get up.", percentage = 100}
-			end
-		end
+			return {text = "You are performing an action.", percentage = percentage};
+		end;
 	end;
 end
 

@@ -361,7 +361,7 @@ function cwSanity:CanHearClass(listener, speaker, class)
 		for k, v in pairs(self.deafClasses) do
 			if k == class then
 				if v == true and IsValid(speaker) then
-					Clockwork.datastream:Start(listener, "SanitySpeech", speaker:GetPos());
+					netstream.Start(listener, "SanitySpeech", speaker:GetPos());
 				end
 			
 				return false;
@@ -398,7 +398,7 @@ function cwSanity:SanityDegrade(player, oldSanity, newSanity, amount)
 		--player:PlaySound("begotten/ui/sanity_damage.mp3", 100, 90)
 		
 		if (amount >= 5 and newSanity < 50) then
-			--Clockwork.datastream:Start(player, "SanityZoom")
+			--netstream.Start(player, "SanityZoom")
 		end
 	end
 end

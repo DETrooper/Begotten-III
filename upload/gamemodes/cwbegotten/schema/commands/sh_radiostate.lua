@@ -19,7 +19,7 @@ function COMMAND:OnRun(player, arguments)
 				Clockwork.chatBox:AddInTargetRadius(player, "me", string.gsub("turns on her handheld radio.", "^.", string.lower), player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 			end;
 			
-			Clockwork.datastream:Start(player, "RadioState", true);
+			netstream.Start(player, "RadioState", true);
 		else
 			player:SetCharacterData("radioState", false);
 			player:EmitSound("buttons/lightswitch2.wav", 70, 90, 0.4);
@@ -30,7 +30,7 @@ function COMMAND:OnRun(player, arguments)
 				Clockwork.chatBox:AddInTargetRadius(player, "me", string.gsub("turns off her handheld radio.", "^.", string.lower), player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 			end;
 			
-			Clockwork.datastream:Start(player, "RadioState", false);
+			netstream.Start(player, "RadioState", false);
 		end
 	else
 		Clockwork.player:Notify(player, "You must specify true or false!");

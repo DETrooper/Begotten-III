@@ -299,9 +299,9 @@ function Clockwork.storage:SyncItem(player, itemTable)
 		end;
 		
 		if (player:HasItemInstance(itemTable)) then
-			Clockwork.datastream:Start(players, "StorageGive", {index = itemTable("index"), itemList = {definition}});
+			netstream.Start(players, "StorageGive", {index = itemTable("index"), itemList = {definition}});
 		else
-			Clockwork.datastream:Start(players, "StorageTake", Clockwork.item:GetSignature(itemTable));
+			netstream.Start(players, "StorageTake", Clockwork.item:GetSignature(itemTable));
 		end;
 	end;
 end;

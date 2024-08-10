@@ -275,7 +275,7 @@ function cwDayNight:Think()
 							if Clockwork.Client.cwInDark then
 								if Clockwork.Client:GetDTInt(INT_RAGDOLLSTATE) != RAGDOLL_KNOCKEDOUT then
 									sound.Play("misc/attack_0"..math.random(1, 2)..".ogg", v:GetPos(), 75, math.random(75, 95), 0.75);
-									Clockwork.datastream:Start("ShadowDamage");
+									netstream.Start("ShadowDamage");
 									Schema:AddStunEffect(1);
 									
 									if cwMelee then
@@ -537,11 +537,11 @@ function cwDayNight:ClockworkConVarChanged(name, previousValue, newValue)
 end
 
 
-Clockwork.datastream:Hook("MoonTrigger", function()
+netstream.Hook("MoonTrigger", function()
 	cwDayNight:MoonTrigger();
 end);
 
-Clockwork.datastream:Hook("SetCurrentCycle", function(currentCycle)
+netstream.Hook("SetCurrentCycle", function(currentCycle)
 	Clockwork.Client.currentCycle = currentCycle;
 	
 	if currentCycle == "daytonight" then
@@ -558,9 +558,9 @@ Clockwork.datastream:Hook("SetCurrentCycle", function(currentCycle)
 	end
 end);
 
-Clockwork.datastream:Hook("SetNightWeight", function(nightWeight)
+netstream.Hook("SetNightWeight", function(nightWeight)
 	cwDayNight.nightWeight = nightWeight;
 end);
 
-Clockwork.setting:AddCheckBox("Day/night cycle", "Enable moon effects.", "cwDayNightMoon", "Click to enable/disable the effects of looking at the Blood Moon.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
-Clockwork.setting:AddCheckBox("Day/night cycle", "Enable night hallucinations.", "cwDayNightHallucinations", "Click to enable/disable the nighttime hallucinatons.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
+Clockwork.setting:AddCheckBox("Day/night cycle", "Enable moon effects.", "cwDayNightMoon", "Click to toggle the effects of looking at the Blood Moon.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
+Clockwork.setting:AddCheckBox("Day/night cycle", "Enable night hallucinations.", "cwDayNightHallucinations", "Click to toggle the nighttime hallucinatons.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
