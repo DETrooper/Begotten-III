@@ -575,7 +575,7 @@ end
 function Clockwork.player:SetAction(player, action, duration, priority, Callback)
 	local currentAction = self:GetAction(player)
 
-	if (type(action) != "string" or action == "") then
+	if (!action or type(action) != "string" or action == "") then
 		timer.Remove("Action"..player:UniqueID())
 
 		player:SetNetVar("StartActTime", 0)
@@ -595,8 +595,7 @@ function Clockwork.player:SetAction(player, action, duration, priority, Callback
 	end
 
 	if (player.cwAction) then
-		if ((priority and priority > player.cwAction[2])
-		or currentAction == "" or action == player.cwAction[1]) then
+		if ((priority and priority > player.cwAction[2]) or !currentAction or action == player.cwAction[1]) then
 			player.cwAction = nil
 		end
 	end

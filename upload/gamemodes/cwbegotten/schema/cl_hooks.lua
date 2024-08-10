@@ -632,7 +632,7 @@ function Schema:GetProgressBarInfoAction(action, percentage)
 	elseif (action == "bloodTest") then
 		return {text = "You are testing someone's blood for corruption. Click to cancel.", percentage = percentage, flash = percentage > 75};
 	elseif (action == "hell_teleporting") then
-		return {text = "You are using dark magic to teleport to Hell.", percentage = percentage, flash = percentage < 10};
+		return {text = "You are using dark magic to teleport to Hell. Click to cancel.", percentage = percentage, flash = percentage < 10};
 	end;
 end;
 
