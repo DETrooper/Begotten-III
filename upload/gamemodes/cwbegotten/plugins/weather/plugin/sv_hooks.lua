@@ -113,7 +113,13 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				local helmetItem = player:GetHelmetEquipped();
 				local shouldBurn = false;
 				
-				if !armorItem or (armorItem:GetCondition() or 0) <= 0 then
+				if player.spawnTime then
+					if CurTime() < player.spawnTime + 30 then
+						return;
+					end
+				end
+				
+				if !shouldBurn and (!armorItem or (armorItem:GetCondition() or 0) <= 0) then
 					shouldBurn = true;
 				end
 				

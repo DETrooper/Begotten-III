@@ -2526,6 +2526,8 @@ function Schema:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 					
 					player.cwWoke = true;
 				end
+				
+				player.spawnTime = curTime;
 			end
 
 			if player:HasTrait("followed") then

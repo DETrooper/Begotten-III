@@ -2030,10 +2030,17 @@ end;
 function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 	if IsValid(attacker) and attacker:IsPlayer() and not player.opponent and not attacker.opponent then
 		if attacker:HasBelief("brutality_finisher") then
-			attacker:SetHealth(attacker:GetMaxHealth());
-			attacker:SetCharacterData("Stamina", attacker:GetMaxStamina());
-			--attacker:SetNWInt("meleeStamina", attacker:GetMaxPoise());
-			attacker:SetNWInt("stability", attacker:GetMaxStability());
+			local playerLevel = player:GetCharacterData("level", 1);
+			local refundPerLevel = 0.035;
+			local maxHealth = attacker:GetMaxHealth();
+			local maxStamina = attacker:GetMaxStamina();
+			--local maxPoise = attacker:GetMaxPoise();
+			local maxStability = attacker:GetMaxStability();
+			
+			attacker:SetHealth(math.min(maxHealth, attacker:Health() + ((attacker:Health() * refundPerLevel) * playerLevel)));
+			attacker:SetCharacterData("Stamina", math.min(maxStamina, attacker:GetCharacterData("Stamina", 90) + ((attacker:GetCharacterData("Stamina", 90) * refundPerLevel) * playerLevel)));
+			--attacker:SetNWInt("meleeStamina", math.min(maxPoise, attacker:GetNWInt("meleeStamina", 90) + ((attacker:GetNWInt("meleeStamina", 90) * refundPerLevel) * playerLevel)));
+			attacker:SetNWInt("stability", math.min(maxStability, attacker:GetNWInt("stability", 100) + ((attacker:GetNWInt("stability", 100) * refundPerLevel) * playerLevel)));
 			
 			attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
 			
