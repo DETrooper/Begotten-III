@@ -1283,7 +1283,7 @@ function Clockwork.kernel:DrawBar(x, y, width, height, color, text, value, maxim
 
 	barInfo.height = 24
 	
-	draw.RoundedBox(4, Clockwork.bars.x - 2, Clockwork.bars.y - 2, barInfo.width + 4, barInfo.height + 4, Color(20, 20, 20, Clockwork.Client.BarAlpha / 2))
+	draw.RoundedBox(4, barInfo.x - 2, barInfo.y - 2, barInfo.width + 4, barInfo.height + 4, Color(20, 20, 20, Clockwork.Client.BarAlpha / 2))
 
 	surface.SetDrawColor(255, 255, 255, (color.a / 2))
 	surface.SetMaterial(Clockwork.scratchTexture)
