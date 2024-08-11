@@ -5848,6 +5848,129 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("marauder_lamellar");
+	RECIPE.name = "Reaver Marauder Lamellar";
+	RECIPE.requiresSmithy = true;
+	RECIPE.requiredBeliefs = {"artisan"};
+	RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+	RECIPE.requiredFactions = {"Goreic Warrior"};
+	RECIPE.requirements = {
+		["fine_steel_ingot"] = {amount = 1},
+		["steel_ingot"] = {amount = 4},
+		["leather"] = {amount = 4},
+	};
+	RECIPE.result = {
+		["reaver_marauder_lamellar"] = {amount = 1},
+	};
+	RECIPE.category = "Armor"
+	RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+	RECIPE.failSound = "buttons/button2.wav"
+	RECIPE.craftTime = 8
+	RECIPE.craftVerb = "smithing"
+	RECIPE.experience = 100;
+	
+	function RECIPE:OnCraft(player)
+	end;
+	function RECIPE:OnFail(player)
+	end;
+	function RECIPE:StartCraft(player)
+	end;
+	function RECIPE:EndCraft(player)
+	end;
+RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("marauder_drottin_lamellar");
+	RECIPE.name = "Reaver Drottinn Lamellar";
+	RECIPE.requiresSmithy = true;
+	RECIPE.requiredBeliefs = {"artisan"};
+	RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+	RECIPE.requiredFactions = {"Goreic Warrior"};
+	RECIPE.requirements = {
+		["reaver_marauder_lamellar"] = {amount = 1},
+		["hellforged_steel_ingot"] = {amount = 1},
+		["down_catalyst"] = {amount = 3},
+	};
+	RECIPE.result = {
+		["reaver_drottinn_lamellar"] = {amount = 1},
+	};
+	RECIPE.category = "Armor"
+	RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+	RECIPE.failSound = "buttons/button2.wav"
+	RECIPE.craftTime = 8
+	RECIPE.craftVerb = "smithing"
+	RECIPE.experience = 100;
+	
+	function RECIPE:OnCraft(player)
+	end;
+	function RECIPE:OnFail(player)
+	end;
+	function RECIPE:StartCraft(player)
+	end;
+	function RECIPE:EndCraft(player)
+	end;
+RECIPE:Register()
+
+    RECIPE = cwRecipes.recipes:New("marauder_helm");
+	RECIPE.name = "Reaver Marauder Helmet";
+	RECIPE.requiresSmithy = true;
+	RECIPE.requiredBeliefs = {"artisan"};
+	RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+	RECIPE.requiredFactions = {"Goreic Warrior"};
+	RECIPE.requirements = {
+		["fine_steel_ingot"] = {amount = 1},
+		["steel_ingot"] = {amount = 1},
+		["leather"] = {amount = 2},
+	};
+	RECIPE.result = {
+		["reaver_marauder_helm"] = {amount = 1},
+	};
+	RECIPE.category = "Armor"
+	RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+	RECIPE.failSound = "buttons/button2.wav"
+	RECIPE.craftTime = 8
+	RECIPE.craftVerb = "smithing"
+	RECIPE.experience = 60;
+	
+	function RECIPE:OnCraft(player)
+	end;
+	function RECIPE:OnFail(player)
+	end;
+	function RECIPE:StartCraft(player)
+	end;
+	function RECIPE:EndCraft(player)
+	end;
+RECIPE:Register()
+
+    RECIPE = cwRecipes.recipes:New("marauder_drottin_helm");
+	RECIPE.name = "Reaver Drottinn Helmet";
+	RECIPE.requiresSmithy = true;
+	RECIPE.requiredBeliefs = {"artisan"};
+	RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+	RECIPE.requiredFactions = {"Goreic Warrior"};
+	RECIPE.requirements = {
+		["reaver_marauder_helm"] = {amount = 1},
+		["hellforged_steel_ingot"] = {amount = 1},
+	};
+	RECIPE.result = {
+		["reaver_drottinn_helm"] = {amount = 1},
+	};
+	RECIPE.category = "Armor"
+	RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+	RECIPE.failSound = "buttons/button2.wav"
+	RECIPE.craftTime = 8
+	RECIPE.craftVerb = "smithing"
+	RECIPE.experience = 40;
+	
+	function RECIPE:OnCraft(player)
+	end;
+	function RECIPE:OnFail(player)
+	end;
+	function RECIPE:StartCraft(player)
+	end;
+	function RECIPE:EndCraft(player)
+	end;
+RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("gore_housecarl_armor");
 		RECIPE.name = "Gore Housecarl Armor";
@@ -5916,6 +6039,7 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["shagalaxian_steel_ingot"] = {amount = 2},
+			["familial_catalyst"] = {amount = 2},
 			["leather"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -6409,6 +6533,151 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 
+	RECIPE = cwRecipes.recipes:New("gatekeeper_halfplate_upgrade_gambeson");
+		RECIPE.name = "(Upgrade) Gatekeeper Halfplate";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["gatekeeper_gambeson"] = {amount = 1},
+			["iron_ingot"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["gatekeeper_halfplate"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 35;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("gatekeeper_halfplate_upgrade_auxiliary");
+		RECIPE.name = "(Upgrade) Gatekeeper Halfplate";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["auxiliary_gambeson"] = {amount = 1},
+			["iron_ingot"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["gatekeeper_halfplate"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 35;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("gatekeeper_halfplate_upgrade_praeventor");
+		RECIPE.name = "(Upgrade) Gatekeeper Halfplate";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["praeventor_gambeson"] = {amount = 1},
+			["iron_ingot"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["gatekeeper_halfplate"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 35;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("gatekeeper_halfplate");
+		RECIPE.name = "Gatekeeper Halfplate";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 4},
+			["leather"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["gatekeeper_halfplate"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 70;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("gatekeeper_plate_upgrade_halfplate");
+		RECIPE.name = "(Upgrade) Gatekeeper Plate";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["gatekeeper_halfplate"] = {amount = 1},
+			["iron_ingot"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["gatekeeper_plate"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 25;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
 	RECIPE = cwRecipes.recipes:New("gatekeeper_plate");
 		RECIPE.name = "Gatekeeper Plate";
 		RECIPE.requiresSmithy = true;
@@ -6620,6 +6889,35 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("high_gatekeeper_heavy_plate_upgrade");
+		RECIPE.name = "(Upgrade) Heavy Gatekeeper Plate";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["gatekeeper_plate"] = {amount = 1},
+			["steel_ingot"] = {amount = 4},
+		};
+		RECIPE.result = {
+			["high_gatekeeper_heavy_plate"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 45;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("high_gatekeeper_heavy_plate");
 		RECIPE.name = "Heavy Gatekeeper Plate";
@@ -6714,8 +7012,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
-			["cloth"] = {amount = 2},
-			["leather"] = {amount = 4},
+			["cloth"] = {amount = 3},
+			["leather"] = {amount = 3},
 			["iron_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -6726,7 +7024,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 50;
+		RECIPE.experience = 45;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -6801,8 +7099,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["leather"] = {amount = 3},
-			["iron_ingot"] = {amount = 4},
+			["leather"] = {amount = 2},
+			["iron_ingot"] = {amount = 6},
 		};
 		RECIPE.result = {
 			["wanderer_mail"] = {amount = 1},
@@ -6812,7 +7110,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 85;
+		RECIPE.experience = 80;
 		
 		function RECIPE:OnCraft(player)
 		end;
