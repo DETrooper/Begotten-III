@@ -469,3 +469,68 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "iron_chunks", "iron_chunks", "leather"}};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Reaver Marauder Helmet"
+	ITEM.model = "models/begotten_apocalypse/items/reaver_marauder_helm.mdl"
+	ITEM.iconoverride = "begotten/ui/itemicons/reaver_marauder_helm.png"
+	ITEM.headReplacement = "models/begotten/heads/reaver_marauder_helmet.mdl";
+	ITEM.weight = 1
+	ITEM.uniqueID = "reaver_marauder_helm"
+	ITEM.category = "Helms"
+	ITEM.description = "A finely-crafted spangenhelm with a chainmail aventail underneath, it is feared amongst those in the wasteland for being the last thing they ever see before they're condemned to slavery."
+	ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
+	ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Crast", "Clan Harald", "Clan Shagalax"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.conditionScale = 0.8 -- item degrades 1.5x faster with damage related condition loss
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 65
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.95; -- reduces blunt damage by 5%
+	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+	ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
+	ITEM.insulation = 80; --Adds 16% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "leather"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Reaver Drottinn Helmet"
+	ITEM.model = "models/begotten_apocalypse/items/reaverchiefhelmet.mdl"
+	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/reaverchiefhelmet.png"
+	ITEM.headReplacement = "models/begotten/heads/reaver_chief_helmet.mdl";
+	ITEM.weight = 1
+	ITEM.uniqueID = "reaver_drottinn_helm"
+	ITEM.category = "Helms"
+	ITEM.description = "Made of blackened hellforged steel, this helmet belongs to the twisted torturer clan of Clan Reaver."
+	ITEM.requireFaction = {"Goreic Warrior"};
+	ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Crast", "Clan Harald", "Clan Shagalax"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.conditionScale = 0.8 -- item degrades 1.5x faster with damage related condition loss
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 70
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+	ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
+	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "leather"}};
+ITEM:Register();

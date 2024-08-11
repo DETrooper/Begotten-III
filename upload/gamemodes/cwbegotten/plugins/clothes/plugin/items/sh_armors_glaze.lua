@@ -430,7 +430,7 @@ ITEM.slashScale = 0.90; -- reduces slash damage by 10%
 ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
-ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -486,7 +486,7 @@ ITEM.slashScale = 0.90; -- reduces slash damage by 10%
 ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
-ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -542,7 +542,7 @@ ITEM.slashScale = 0.90; -- reduces slash damage by 10%
 ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 
-ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "leather", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -2397,6 +2397,66 @@ ITEM.walkSound = {
 	"armormovement/rattle7.mp3",
 	"armormovement/rattle8.mp3",
 	"armormovement/rattle9.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Gatekeeper Halfplate";
+ITEM.group = "gatekeepers/gatekeeperhalfplate";
+ITEM.model = "models/begotten/items/gatekeeperhalfplate.mdl"
+ITEM.iconoverride = "begotten/ui/itemicons/gatekeeperhalfplate.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 0.75
+ITEM.hitParticle = "MetalSpark";
+ITEM.protection = 50
+ITEM.type = "chainmail";
+ITEM.weight = 3.5;
+ITEM.weightclass = "Medium";
+ITEM.description = "A set of iron plate armor commonly used by the Holy Order of the Gatekeepers.";
+ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.faction = "Gatekeeper";
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.10, -- increases fall damage by 10%
+}
+
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+
+ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "cloth", "cloth", "cloth"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-hauberk-1.wav.mp3",
+	"armormovement/body-hauberk-2.wav.mp3",
+	"armormovement/body-hauberk-3.wav.mp3",
+	"armormovement/body-hauberk-4.wav.mp3",
+	"armormovement/body-hauberk-5.wav.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/body-hauberk-b4.wav.mp3",
+	"armormovement/body-hauberk-b5.wav.mp3",
 };
 
 ITEM:Register();

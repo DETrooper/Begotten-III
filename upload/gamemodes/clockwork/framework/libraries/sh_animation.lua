@@ -1043,6 +1043,14 @@ function Clockwork.animation:AddTwistedFuckArms(model)
 	});
 end;
 
+function Clockwork.animation:AddMarauderArms(model)
+    self:AddHandsModel(model, {
+        body = 0000000,
+        model = "models/begotten/arms/c_marauder.mdl",
+        skin = 0
+    });
+end
+
 -- A function to check for stored hands info by model.
 function Clockwork.animation:CheckHands(model, animTable)
 	local info = animTable.hands or {
@@ -1079,6 +1087,7 @@ end;
 Clockwork.animation:AddWandererArms("models/begotten/wanderers/wanderer");
 
 Clockwork.animation:AddGatekeeperLightArms("models/begotten/gatekeepers/gatekeeperlight");
+Clockwork.animation:AddGatekeeperLightArms("models/begotten/gatekeepers/gatekeeperhalfplate");
 Clockwork.animation:AddGatekeeperLightArms_Black("models/begotten/gatekeepers/gatekeeperlight_black");
 Clockwork.animation:AddGatekeeperLightArms_Brown("models/begotten/gatekeepers/gatekeeperlight_brown");
 
@@ -1196,3 +1205,6 @@ Clockwork.animation:AddShingarArms("models/begotten/goreicwarfighters/shingar.md
 Clockwork.animation:AddKnightJusticarArms("models/begotten/gatekeepers/knight_justicar");
 
 Clockwork.animation:AddTechnoHeavyArms("models/begotten/wanderers/voltist_technoheavy.mdl");
+
+Clockwork.animation:AddMarauderArms("models/begotten/goreicwarfighters/reaver_chief");
+Clockwork.animation:AddMarauderArms("models/begotten/goreicwarfighters/reaver_marauder");
