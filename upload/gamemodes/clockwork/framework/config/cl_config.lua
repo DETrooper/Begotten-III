@@ -18,7 +18,7 @@ config.AddToSystem("Shoot After Raise Delay", "shoot_after_raise_time", "The tim
 config.AddToSystem("Use Clockwork's Admin System", "use_own_group_system", "Whether or not you use a different group or admin system to Clockwork.");
 config.AddToSystem("Saved Recognised Names", "save_recognised_names", "Whether or not recognised names should be saved.");
 --config.AddToSystem("Save Attribute Boosts", "save_attribute_boosts", "Whether or not attribute boosts are saved.");
-config.AddToSystem("Ragdoll Damage Immunity Time", "ragdoll_immunity_time", "The time that a player's ragdoll is immune from damage (seconds).");
+config.AddToSystem("Ragdoll Damage Immunity Time", "ragdoll_immunity_time", "The time that a player's ragdoll is immune from damage (seconds).", 0, 5, 3);
 config.AddToSystem("Additional Character Count", "additional_characters", "The additional amount of characters that each player can have.");
 config.AddToSystem("Faction Ratio System Enabled", "faction_ratio_enabled", "Whether or not the faction ratio system is enabled.");
 config.AddToSystem("Class Changing Interval", "change_class_interval", "The time that a player has to wait to change class again (seconds).", 0, 7200);
@@ -31,8 +31,8 @@ config.AddToSystem("Default Inventory Space", "default_inv_space", "The default 
 config.AddToSystem("Data Save Interval", "save_data_interval", "The time that it takes for data to be saved (seconds).", 0, 7200);
 config.AddToSystem("View Punch On Damage", "damage_view_punch", "Whether or not a player's view gets punched when they take damage.");
 config.AddToSystem("Unrecognised Name", "unrecognised_name", "The name that is given to unrecognised players.");
-config.AddToSystem("Limb Damage Scale", "scale_limb_dmg", "The amount to scale limb damage by.");
-config.AddToSystem("Fall Damage Scale", "scale_fall_damage", "The amount to scale fall damage by.");
+config.AddToSystem("Limb Damage Scale", "scale_limb_dmg", "The amount to scale limb damage by.", 0, 2, 2);
+config.AddToSystem("Fall Damage Scale", "scale_fall_damage", "The amount to scale fall damage by.", 0, 2, 2);
 config.AddToSystem("Starting Currency", "default_cash", "The default amount of cash that each player starts with.", 0, 10000);
 --config.AddToSystem("Armor Affects Chest Only", "armor_chest_only", "Whether or not armor only affects the chest.");
 config.AddToSystem("Minimum Physical Description Length", "minimum_physdesc", "The minimum amount of characters a player must have in their physical description.", 0, 128);
@@ -92,3 +92,4 @@ config.AddToSystem("Entity Use Cooldown", "entity_handle_time", "The amount of t
 config.AddToSystem("Block Cash Commands Binds", "block_cash_binds", "Whether or not to block any cash command binds.")
 config.AddToSystem("Block Fallover Binds", "block_fallover_binds", "Whether or not to block charfallover binds.")
 config.AddToSystem("Max Traits", "max_trait_points", "The maximum amount of traits each character can have.")
+config.AddToSystem("Item Lifetime", "item_lifetime", "The lifetime of dropped items in seconds before they are deleted. Persists between server restarts. Script spawned items for the most part have their own lifetimes, shorter than the default.", 1800, 28800);

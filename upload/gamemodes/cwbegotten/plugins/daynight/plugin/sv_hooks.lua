@@ -95,8 +95,14 @@ function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized, 
 									player:HandleSanity(-50);
 									
 									if --[[!player:HasBelief("lunar_repudiation") and]] player:GetSanity() <= 0 then
-										Schema:EasyText(player, "maroon", "The moon is everything. There is no point anymore.");
-										player:CommitSuicide();
+										local ragdollEntity = player:GetRagdollEntity();
+										
+										if IsValid(ragdollEntity) and ragdollEntity.cwIsBeingHeld then
+											Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 60);
+										else
+											Schema:EasyText(player, "maroon", "The moon is everything. There is no point anymore.");
+											player:CommitSuicide();
+										end
 									end
 									
 									netstream.Start(player, "MoonTrigger");

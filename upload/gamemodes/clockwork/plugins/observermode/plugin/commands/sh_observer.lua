@@ -177,7 +177,7 @@ local COMMAND = Clockwork.command:New("SpectatorModeOn");
 		
 		for i, v in ipairs(_player.GetAll()) do
 			if v:HasInitialized() and !v:Alive() then
-				Schema:EasyText(player, "darkgrey", "["..self.name.."] Spectator mode has been enabled! Type /spectate to toggle spectating.");
+				Schema:EasyText(v, "darkgrey", "["..self.name.."] Spectator mode has been enabled! Type /spectate to toggle spectating.");
 			end
 		end
 

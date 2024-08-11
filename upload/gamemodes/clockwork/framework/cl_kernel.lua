@@ -32,51 +32,6 @@ COLOR_GREEN = Color(0, 255, 0)
 COLOR_BLUE = Color(0, 0, 255)
 
 do
-	-- A function to get font widescreen scale.
-	function ScaleToWideScreen(size)
-		return math.min(math.max(ScreenScale(size / 2.62467192), math.min(size, 14)), size);
-	end;
-
-	-- A function to draw some rotated text.
-	function surface.DrawRotatedText(text, font, x, y, angle, color) local matrix = Matrix();
-		local pos = Vector(x + (GetFontWidth(font, text) / 2), y + (draw.GetFontHeight(font) / 2));
-		
-		matrix:Translate(pos);
-		matrix:Rotate(Angle(0, angle, 0));
-		matrix:Translate(-pos);
-		
-		cam.PushModelMatrix(matrix);
-		surface.SetFont(font);
-		surface.SetTextColor(color);
-		surface.SetTextPos(x, y);
-		surface.DrawText(text);
-		cam.PopModelMatrix();
-	end;
-
-	-- A function to draw some scaled text.
-	function surface.DrawScaledText(text, font, x, y, scale, color)
-		local matrix = Matrix()
-		local pos = Vector(x, y)
-
-		matrix:Translate(pos)
-		matrix:Scale(Vector(1, 1, 1) * scale)
-		matrix:Translate(-pos)
-
-		cam.PushModelMatrix(matrix)
-			surface.SetFont(font)
-			surface.SetTextColor(color)
-			surface.SetTextPos(x, y)
-			surface.DrawText(text)
-		cam.PopModelMatrix()
-	end
-
-	-- A function to get if a variable is a vector.
-	function IsVector(any)
-		return isvector(any);
-	end;
-end;
-
-do
 	--[[
 		This is a hack to display world tips correctly based on their owner.
 	--]]
@@ -148,7 +103,7 @@ do
 		cwOldRunConsoleCommand(...)
 	end
 end
-
+-- A function to draw some scaled text.
 function surface.DrawScaledText(text, font, x, y, scale, color)
 	local matrix = Matrix()
 	local pos = Vector(x, y)
@@ -165,21 +120,35 @@ function surface.DrawScaledText(text, font, x, y, scale, color)
 	cam.PopModelMatrix()
 end
 
-function surface.DrawRotatedText(text, font, x, y, angle, color)
-	local matrix = Matrix()
-	local pos = Vector(x, y)
-
-	matrix:Translate(pos)
-	matrix:Rotate(Angle(0, angle, 0))
-	matrix:Translate(-pos)
-
-	cam.PushModelMatrix(matrix)
-		surface.SetFont(font)
-		surface.SetTextColor(color)
-		surface.SetTextPos(x, y)
-		surface.DrawText(text)
-	cam.PopModelMatrix()
+function surface.DrawRotatedTextCentered(text, font, x, y, angle, color) 
+	local matrix = Matrix();
+	local pos = Vector(x + (GetFontWidth(font, text) / 2), y + (draw.GetFontHeight(font) / 2));
+	
+	matrix:Translate(pos);
+	matrix:Rotate(Angle(0, angle, 0));
+	matrix:Translate(-pos);
+	
+	cam.PushModelMatrix(matrix);
+		draw.SimpleText(text, font, x, y, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);
+	cam.PopModelMatrix();
 end
+
+-- A function to draw some rotated text.
+function surface.DrawRotatedText(text, font, x, y, angle, color) 
+	local matrix = Matrix();
+	local pos = Vector(x + (GetFontWidth(font, text) / 2), y + (draw.GetFontHeight(font) / 2));
+	
+	matrix:Translate(pos);
+	matrix:Rotate(Angle(0, angle, 0));
+	matrix:Translate(-pos);
+	
+	cam.PushModelMatrix(matrix);
+		surface.SetFont(font);
+		surface.SetTextColor(color);
+		surface.SetTextPos(x, y);
+		surface.DrawText(text);
+	cam.PopModelMatrix();
+end;
 
 function surface.DrawScaled(x, y, scale, callback)
 	local matrix = Matrix()
@@ -834,15 +803,6 @@ function Clockwork.kernel:DrawBars(info, class)
 		else
 			Clockwork.bars.x = info.x
 		end
-		
-		local barNumber = #Clockwork.bars.stored
-		local padding = 1
-		
-		if (barNumber > 1) then
-			padding = (4 * barNumber) + 2
-		end
-
-		draw.RoundedBox(4, Clockwork.bars.x - 2, info.y - 4, info.width + 4, (Clockwork.bars.height * #Clockwork.bars.stored) + (padding + 6), Color(20, 20, 20, Clockwork.Client.BarAlpha / 2))
 
 		Clockwork.option:SetFont("bar_text", Clockwork.option:GetFont("auto_bar_text"))
 			for k, v in pairs(Clockwork.bars.stored) do
@@ -1277,6 +1237,13 @@ function Clockwork.kernel:DrawBar(x, y, width, height, color, text, value, maxim
 	
 	local frameTime = FrameTime()
 	local backgroundColor = Clockwork.option:GetColor("background")
+
+	if (bTopBar) then
+		local pixelsPerPoint = width / 100;
+
+		width = pixelsPerPoint * maximum;
+	end
+
 	local progressWidth = math.Clamp(((width - 2) / maximum) * value, 0, width - 2)
 	local colorWhite = Clockwork.option:GetColor("white")
 	local newBarInfo = {
@@ -1311,12 +1278,16 @@ function Clockwork.kernel:DrawBar(x, y, width, height, color, text, value, maxim
 	if (bTopBar) then
 		color.a = Clockwork.Client.BarAlpha
 	end
+	
+	local percentbar = barInfo.progressWidth / (barInfo.width - 2)
 
 	barInfo.height = 24
+	
+	draw.RoundedBox(4, Clockwork.bars.x - 2, Clockwork.bars.y - 2, barInfo.width + 4, barInfo.height + 4, Color(20, 20, 20, Clockwork.Client.BarAlpha / 2))
 
 	surface.SetDrawColor(255, 255, 255, (color.a / 2))
 	surface.SetMaterial(Clockwork.scratchTexture)
-	surface.DrawTexturedRect(barInfo.x, barInfo.y, barInfo.width, barInfo.height)
+	surface.DrawTexturedRect(barInfo.x - 4, barInfo.y, barInfo.width + 4, barInfo.height)
 	
 	barInfo.drawBackground = false
 	barInfo.drawProgress = false
@@ -1333,7 +1304,7 @@ function Clockwork.kernel:DrawBar(x, y, width, height, color, text, value, maxim
 
 	surface.SetDrawColor(barInfo.color.r, barInfo.color.g, barInfo.color.b, (color.a * 3))
 	surface.SetMaterial(Clockwork.scratchTexture)
-	surface.DrawTexturedRect(barInfo.x, barInfo.y, barInfo.progressWidth, barInfo.height)
+	surface.DrawTexturedRectUV(barInfo.x - 4, barInfo.y, barInfo.progressWidth + 4, barInfo.height, 0, 0, percentbar, 1 )
 	
 	if (barInfo.text and barInfo.text != "") then
 		local barTextX = barInfo.x + (barInfo.width / 2)
@@ -1391,6 +1362,11 @@ end;
 
 -- A function to scale a font to wide screen.
 function Clockwork.kernel:ScaleToWideScreen(size)
+	return math.min(math.max(ScreenScale(size / 2.62467192), math.min(size, 14)), size);
+end;
+
+-- A function to get font widescreen scale.
+function ScaleToWideScreen(size)
 	return math.min(math.max(ScreenScale(size / 2.62467192), math.min(size, 14)), size);
 end;
 
@@ -3094,6 +3070,10 @@ function playerMeta:GetCountryCode()
 		return string.upper(self:GetNetVar("CountryCode", "UNKNOWN"));
 	end;
 end;
+
+function playerMeta:GetSubfaction() 
+	return self:GetSharedVar("subfaction"); 
+end
 
 entityMeta.ClockworkFireBullets = entityMeta.ClockworkFireBullets or entityMeta.FireBullets
 weaponMeta.OldGetPrintName = weaponMeta.OldGetPrintName or weaponMeta.GetPrintName

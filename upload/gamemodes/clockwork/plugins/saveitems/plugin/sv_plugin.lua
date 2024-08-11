@@ -3,7 +3,7 @@
 --]]
 
 -- A function to load the shipments.
-function cwSaveItems:LoadShipments()
+--[[function cwSaveItems:LoadShipments()
 	local shipments = Clockwork.kernel:RestoreSchemaData("plugins/shipments/"..game.GetMap())
 
 	for k, v in pairs(shipments) do
@@ -21,10 +21,10 @@ function cwSaveItems:LoadShipments()
 			end
 		end
 	end
-end
+end]]--
 
 -- A function to save the shipments.
-function cwSaveItems:SaveShipments()
+--[[function cwSaveItems:SaveShipments()
 	local shipments = {}
 
 	for k, v in pairs(ents.FindByClass("cw_shipment")) do
@@ -48,13 +48,15 @@ function cwSaveItems:SaveShipments()
 	end
 
 	Clockwork.kernel:SaveSchemaData("plugins/shipments/"..game.GetMap(), shipments)
-end
+end]]--
 
 -- A function to load the items.
 function cwSaveItems:LoadItems()
 	local items = Clockwork.kernel:RestoreSchemaData("plugins/items/"..game.GetMap())
 
 	for k, v in pairs(items) do
+		if v.cullLifetime and v.cullLifetime >= config.Get("item_lifetime"):Get() then continue end;
+		
 		local itemTable = item.CreateInstance(v.item, v.itemID, v.data)
 
 		if (itemTable) then
@@ -71,12 +73,16 @@ function cwSaveItems:LoadItems()
 					end
 				end
 				
+				if v.cullLifetime then
+					entity.cullLifetime = v.cullLifetime;
+				end
+				
 				if v.IsTrapItem then
 					entity.IsTrapItem = true;
 					entity:SetCollisionGroup(COLLISION_GROUP_WORLD);
 				end
 			end
-		end
+		end 
 	end
 end
 
@@ -110,6 +116,7 @@ function cwSaveItems:SaveItems()
 						angles = v:GetAngles(),
 						uniqueID = Clockwork.entity:QueryProperty(v, "uniqueID"),
 						position = v:GetPos(),
+						cullLifetime = v.cullLifetime,
 						isMoveable = bMoveable,
 						IsTrapItem = v.IsTrapItem
 					}

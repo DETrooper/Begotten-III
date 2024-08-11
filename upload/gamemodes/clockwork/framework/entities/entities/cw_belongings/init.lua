@@ -41,7 +41,7 @@ end
 -- A function to set the data of the entity.
 function ENT:SetData(inventory, cash, name)
 	self:SetModel("models/begotten/misc/sack.mdl")
-	self.cwInventory = inventory
+	self.cwInventory = inventory or {};
 	self.cwCash = cash
 	
 	if name then
@@ -77,9 +77,12 @@ function ENT:OnRemove()
 
 	if (!Clockwork.kernel:IsShuttingDown()) then
 		--Clockwork.entity:DropItemsAndCash(self.cwInventory, self.cwCash, self:GetPos(), self)
-		for k, v in pairs(self.cwInventory) do
-			for k2, v2 in pairs(v) do
-				item.RemoveInstance(k, true);
+		
+		if self.cwInventory then
+			for k, v in pairs(self.cwInventory) do
+				for k2, v2 in pairs(v) do
+					item.RemoveInstance(k, true);
+				end
 			end
 		end
 		

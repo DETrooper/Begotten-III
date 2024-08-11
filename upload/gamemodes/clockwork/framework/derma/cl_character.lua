@@ -945,11 +945,18 @@ function PANEL:Init()
 	end
 	
 	self.sacramentsLabel = vgui.Create("DLabel", self);
-	self.sacramentsLabel:SetText("Sacrament Level: "..self.customData.level);
+	self.sacramentsLabel:SetText("Level: "..self.customData.level);
 	self.sacramentsLabel:SetTextColor(Color(160, 145, 145));
 	self.sacramentsLabel:SetFont("Decay_FormText");
 	self.sacramentsLabel:SetPos(196, 26);
 	self.sacramentsLabel:SetSize(180, 18);
+	
+	self.killsLabel = vgui.Create("DLabel", self);
+	self.killsLabel:SetText("Kills: "..self.customData.kills or 0);
+	self.killsLabel:SetTextColor(Color(160, 145, 145));
+	self.killsLabel:SetFont("Decay_FormText");
+	self.killsLabel:SetPos(286, 26);
+	self.killsLabel:SetSize(180, 18);
 	
 	self.timeSurvivedLabel = vgui.Create("DLabel", self);
 	self.timeSurvivedLabel:SetTextColor(Color(160, 145, 145));

@@ -32,7 +32,7 @@ function ENT:UpdateTransmitState()
 end;
 
 function ENT:OnTakeDamage(damageInfo)
-	if self:SetNWBool("broken") ~= true then
+	if self:GetNWBool("broken") ~= true then
 		local attacker = damageInfo:GetAttacker();
 		
 		if IsValid(attacker) and attacker:IsPlayer() then

@@ -4,10 +4,12 @@
 
 -- Called when Clockwork has loaded all of the entities.
 function cwSaveItems:ClockworkInitPostEntity()
-	self:LoadShipments() self:LoadItems()
+	--self:LoadShipments()
+	self:LoadItems()
 end
 
 -- Called just after data should be saved.
 function cwSaveItems:PostSaveData()
-	self:SaveShipments() self:SaveItems()
+	--self:SaveShipments()
+	self:SaveItems()
 end

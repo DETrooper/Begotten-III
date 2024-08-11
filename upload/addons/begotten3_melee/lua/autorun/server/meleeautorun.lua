@@ -1362,7 +1362,7 @@ local function Guarding(ent, dmginfo)
 				end
 				
 				if cwBeliefs and attacker.HasBelief and attacker:HasBelief("thirst_blood_moon") and !attacker.opponent then
-					if cwDayNight and cwDayNight.currentCycle == "night" and attacker:GetCharacterData("LastZone") == "wasteland" then
+					if attacker:GetCharacterData("LastZone") == "wasteland" and ((cwDayNight and cwDayNight.currentCycle == "night") or (cwWeather and cwWeather.weather == "bloodstorm")) then
 						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
 						
 						attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);

@@ -3,7 +3,7 @@
 	Created by cash wednesday, gabs, DETrooper and alyousha35
 --]]
 
-config.AddToSystem("Faith Modifier", "xp_modifier", "The amount to faith (XP) gain by.", 0.5, 10);
+config.AddToSystem("Faith Modifier", "xp_modifier", "The amount to faith (XP) gain by.", 0.5, 10, 2);
 
 if !cwBeliefs.beliefs then
 	cwBeliefs.beliefs = {};

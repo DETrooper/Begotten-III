@@ -1186,7 +1186,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 				if (entity:IsPlayer() and entity:Alive()) then
 					local lastZone = attacker:GetCharacterData("LastZone");
 					
-					if cwDayNight and cwDayNight.currentCycle == "night" and lastZone == "wasteland" then
+					if lastZone == "wasteland" and ((cwDayNight and cwDayNight.currentCycle == "night") or (cwWeather and cwWeather.weather == "bloodstorm")) then
 						if cwMedicalSystem and newDamage >= 25 then
 							local rand = math.random(1, 5);
 							

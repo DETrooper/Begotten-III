@@ -151,32 +151,43 @@ if SERVER then
 					self:EmitSound(self.Hit[math.random(1, #self.Hit)])
 				end
 
-				if Clockwork and !self.Owner.opponent then
-					if self.itemTable then
-						local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
-						 
-						if IsValid(entity) then
-							self.collided = true;
-							
-							self.itemTable:TakeCondition(100);
-							
-							entity:Spawn();
-							entity:SetAngles(self:GetAngles());
-							entity:GetPhysicsObject():EnableMotion(false);
-							self:StopSound("weapons/throw_swing_03.wav");
-							entity:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
-							Clockwork.entity:Decay(entity, 300);
-							entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
-							
-							local phys = entity:GetPhysicsObject();
-							
-							if (phys:IsValid()) then
-								phys:Wake();
-								phys:SetMass(2);
-								phys:SetVelocityInstantaneous(self:GetPhysicsObject():GetVelocity());
+				self:Disable();
+			
+				timer.Simple(FrameTime(), function()
+					if !IsValid(self) then return end;
+					if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
+					
+					if Clockwork and !self.Owner.opponent then
+						if self.itemTable then
+							local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
+							 
+							if IsValid(entity) then
+								self.collided = true;
+								
+								self.itemTable:TakeCondition(100);
+								
+								entity:Spawn();
+								entity:SetAngles(self:GetAngles());
+								entity:GetPhysicsObject():EnableMotion(false);
+								self:StopSound("weapons/throw_swing_03.wav");
+								entity:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
+								Clockwork.entity:Decay(entity, 300);
+								entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
+								
+								local phys = entity:GetPhysicsObject();
+								
+								if (phys:IsValid()) then
+									phys:Wake();
+									phys:SetMass(2);
+									phys:SetVelocityInstantaneous(self:GetPhysicsObject():GetVelocity());
+								end
+								
+								self:Remove();
+							else
+								self:StopSound("weapons/throw_swing_03.wav");
+								self:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
+								self:Disable();
 							end
-							
-							self:Remove();
 						else
 							self:StopSound("weapons/throw_swing_03.wav");
 							self:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
@@ -187,11 +198,7 @@ if SERVER then
 						self:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
 						self:Disable();
 					end
-				else
-					self:StopSound("weapons/throw_swing_03.wav");
-					self:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
-					self:Disable();
-				end
+				end);
 			elseif Ent.Health and IsValid(self.Owner) then
 				local should_stick = false;
 				
@@ -269,12 +276,11 @@ if SERVER then
 						damage = damage * 1.5;
 						poiseDamage = poiseDamage * 1.6;
 						stabilityDamage = stabilityDamage * 1.6;
-					elseif distance >= 900 * 900 then
+					else
 						--print("tier 6");
 						damage = damage * 1.6;
 						poiseDamage = poiseDamage * 1.9;
 						stabilityDamage = stabilityDamage * 1.9;
-					else
 					end
 							
 					if Ent:IsPlayer() then
@@ -316,92 +322,107 @@ if SERVER then
 
 					Ent:TakeDamageInfo(d)
 					
-					if Clockwork and !self.Owner.opponent then
-						if self.itemTable then
-							local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
-							 
-							if IsValid(entity) then
-								self.collided = true;
-								
-								self.itemTable:TakeCondition(100);
-								
-								entity:Spawn();
-								entity:SetAngles(self:GetAngles());
-								self:StopSound("weapons/throw_swing_03.wav");
-								entity:EmitSound(self.FleshHit[math.random(1, #self.FleshHit)])
-								Clockwork.entity:Decay(entity, 300);
-								entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
-								
-								local phys = entity:GetPhysicsObject();
-								
-								if (phys:IsValid()) then
-									phys:Wake();
-									phys:SetMass(2);
+					self:Disable();
+				
+					timer.Simple(FrameTime(), function()
+						if !IsValid(self) then return end;
+						if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
+						
+						if Clockwork and !self.Owner.opponent then
+							if self.itemTable then
+								local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
+								 
+								if IsValid(entity) then
+									self.collided = true;
 									
-									--[[if should_stick then
-										local bone = Ent:GetHitBoxBone(Ent:LastHitGroup(), 0);
+									self.itemTable:TakeCondition(100);
+									
+									entity:Spawn();
+									entity:SetAngles(self:GetAngles());
+									self:StopSound("weapons/throw_swing_03.wav");
+									entity:EmitSound(self.FleshHit[math.random(1, #self.FleshHit)])
+									Clockwork.entity:Decay(entity, 300);
+									entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
+									
+									local phys = entity:GetPhysicsObject();
+									
+									if (phys:IsValid()) then
+										phys:Wake();
+										phys:SetMass(2);
 										
-										entity:FollowBone(Ent, bone);
-									end]]--
+										--[[if should_stick then
+											local bone = Ent:GetHitBoxBone(Ent:LastHitGroup(), 0);
+											
+											entity:FollowBone(Ent, bone);
+										end]]--
+									end
+									
+									self:Remove();
+									return;
 								end
-								
-								self:Remove();
-								return;
 							end
 						end
-					end
+					end);
 				elseif Ent:IsPlayer() and (Ent:GetNWBool("Deflect") or Ent:GetNWBool("Parry")) then
-					local javelin = ents.Create(self:GetClass())
-					if !javelin:IsValid() then return false end
-					
-					self.collided = true;
-					
-					javelin:SetModel(self:GetModel());
-					javelin:SetPos(self:GetPos())
-					javelin:SetOwner(Ent)
-					
-					javelin.AttackTable = self.AttackTable;
-					javelin.itemTable = self.itemTable;
-					javelin.SticksInShields =  self.SticksInShields;
-					javelin.itemTable = self.itemTable;
-					javelin.deflected = true;
-					
-					if Ent:GetNWBool("Parry") then
-						javelin.parried = true;
-					end
-					
-					-- for parry/deflect
-					local d = DamageInfo()
-					d:SetDamage(0 )
-					d:SetAttacker(self.Owner)
-					d:SetDamageType( damagetype )
-					d:SetDamagePosition(trace.HitPos)
-					d:SetInflictor(javelin);
-
-					Ent:TakeDamageInfo(d)
-					
-					self:Remove();
-					
-					javelin:Spawn()
-					javelin.Owner = Ent
-					javelin:Activate()
-					
-					local phys = javelin:GetPhysicsObject()
-					
-					if Ent.HasBelief and Ent:HasBelief("impossibly_skilled") then
-						javelin:SetAngles(Ent:GetAimVector():Angle())
-						phys:SetVelocityInstantaneous(Ent:GetAimVector() * 1250);
+					self:Disable();
+				
+					timer.Simple(FrameTime(), function()
+						if !IsValid(self) then return end;
+						if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
+						if !IsValid(Ent) or !Ent:Alive() then return end;
 						
-						Clockwork.chatBox:AddInTargetRadius(Ent, "me", "suddenly catches the projectile mid-flight with their weapon and redirects it, showing impossible skill and grace as it is deflected in the direction of its hurler!", Ent:GetPos(), config.Get("talk_radius"):Get() * 4);
-					else
-						phys:SetVelocityInstantaneous(Ent:GetAimVector() * 50);
-					end
-				
-					if !Ent:GetNWBool("Parry") then
-						javelin:StopSound("weapons/throw_swing_03.wav");
-						javelin:EmitSound(javelin.Hit[math.random(1, #javelin.Hit)])
-					end
-				
+						local javelin = ents.Create(self:GetClass())
+						if !javelin:IsValid() then return false end
+						
+						self.collided = true;
+						
+						javelin:SetModel(self:GetModel());
+						javelin:SetPos(self:GetPos())
+						javelin:SetOwner(Ent)
+						
+						javelin.AttackTable = self.AttackTable;
+						javelin.itemTable = self.itemTable;
+						javelin.SticksInShields =  self.SticksInShields;
+						javelin.itemTable = self.itemTable;
+						javelin.deflected = true;
+						
+						if Ent:GetNWBool("Parry") then
+							javelin.parried = true;
+						end
+						
+						-- for parry/deflect
+						local d = DamageInfo()
+						d:SetDamage(0 )
+						d:SetAttacker(self.Owner)
+						d:SetDamageType( damagetype )
+						d:SetDamagePosition(trace.HitPos)
+						d:SetInflictor(javelin);
+
+						Ent:TakeDamageInfo(d)
+						
+						self:Remove();
+						
+						javelin:Spawn()
+						javelin.Owner = Ent
+						javelin:Activate()
+						
+						local phys = javelin:GetPhysicsObject()
+						
+						if Ent.HasBelief and Ent:HasBelief("impossibly_skilled") then
+							javelin:SetAngles(Ent:GetAimVector():Angle())
+							phys:SetVelocityInstantaneous(Ent:GetAimVector() * 1250);
+							
+							Clockwork.chatBox:AddInTargetRadius(Ent, "me", "suddenly catches the projectile mid-flight with their weapon and redirects it, showing impossible skill and grace as it is deflected in the direction of its hurler!", Ent:GetPos(), config.Get("talk_radius"):Get() * 4);
+						else
+							phys:SetVelocityInstantaneous(Ent:GetAimVector() * 50);
+						end
+					
+						if !Ent:GetNWBool("Parry") then
+							javelin:StopSound("weapons/throw_swing_03.wav");
+							javelin:EmitSound(javelin.Hit[math.random(1, #javelin.Hit)])
+						end
+					end);
+					
 					return;
 				elseif Ent.iFrames then
 					self:SetCollisionGroup(COLLISION_GROUP_WORLD);
@@ -410,49 +431,48 @@ if SERVER then
 					
 					return;
 				else
-					if Clockwork and !self.Owner.opponent then
-						if self.itemTable then
-							local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
-							 
-							if IsValid(entity) then
-								self.collided = true;
-								
-								self.itemTable:TakeCondition(100);
-								
-								entity:Spawn();
-								entity:SetAngles(self:GetAngles());
-								self:StopSound("weapons/throw_swing_03.wav");
-								entity:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
-								Clockwork.entity:Decay(entity, 300);
-								entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
-								
-								local phys = entity:GetPhysicsObject();
-								
-								if (phys:IsValid()) then
-									phys:Wake();
-									phys:SetMass(2);
+					self:Disable();
+				
+					timer.Simple(FrameTime(), function()
+						if !IsValid(self) then return end;
+						if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
+						
+						if Clockwork and !self.Owner.opponent then
+							if self.itemTable then
+								local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
+								 
+								if IsValid(entity) then
+									self.collided = true;
 									
-									--[[if should_stick then
-										local bone = Ent:GetHitBoxBone(Ent:LastHitGroup(), 0);
+									self.itemTable:TakeCondition(100);
+									
+									entity:Spawn();
+									entity:SetAngles(self:GetAngles());
+									self:StopSound("weapons/throw_swing_03.wav");
+									entity:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
+									Clockwork.entity:Decay(entity, 300);
+									entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
+									
+									local phys = entity:GetPhysicsObject();
+									
+									if (phys:IsValid()) then
+										phys:Wake();
+										phys:SetMass(2);
 										
-										entity:FollowBone(Ent, bone);
-									end]]--
+										--[[if should_stick then
+											local bone = Ent:GetHitBoxBone(Ent:LastHitGroup(), 0);
+											
+											entity:FollowBone(Ent, bone);
+										end]]--
+									end
+									
+									self:Remove();
+									return;
 								end
-								
-								self:Remove();
-								return;
 							end
 						end
-					end
+					end);
 				end
-				
-				--[[if should_stick then
-					local bone = Ent:GetHitBoxBone(Ent:LastHitGroup(), 0);
-					
-					self:FollowBone(Ent, bone);
-				else]]--
-					self:Disable();
-				--end
 			end
 
 			self:SetOwner(nil);

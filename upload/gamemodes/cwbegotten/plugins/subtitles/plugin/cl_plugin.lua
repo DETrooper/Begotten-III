@@ -22,6 +22,10 @@ function cwCinematicText:PrintTextCenter(text, delay, color, font)
 	end
 
 	Clockwork.kernel:WrapTextSpaced(text, centerTextFont, math.max(scrW * 0.4, 450), wrappedTable);
+	
+	if !self.cinematicTexts then
+		self.cinematicTexts = {};
+	end
 
 	self.cinematicTexts[#self.cinematicTexts + 1] = {
 		targetAlpha = 255,

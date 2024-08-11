@@ -101,3 +101,4 @@ config.Add("entity_handle_time", 0.1)
 config.Add("block_cash_binds", true, true)
 config.Add("block_fallover_binds", false, true)
 config.Add("max_trait_points", 0, true);
+config.Add("item_lifetime", 7200)

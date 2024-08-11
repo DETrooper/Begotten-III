@@ -1436,12 +1436,14 @@ function Schema:CheapleCaughtPlayer(player)
 			player.caughtByCheaple = true;
 
 			timer.Simple(9, function()
-				player:Freeze(false);
-				player.scriptedDying = false;
-				player.caughtByCheaple = false;
-				player:SetCharacterData("CheaplePos", nil);
-				player:KillSilent();
-				Schema:PermaKillPlayer(player, nil, true);
+				if IsValid(player) then
+					player:Freeze(false);
+					player.scriptedDying = false;
+					player.caughtByCheaple = false;
+					player:SetCharacterData("CheaplePos", nil);
+					player:KillSilent();
+					Schema:PermaKillPlayer(player, nil, true);
+				end
 			end);
 		else
 			player:KillSilent();
@@ -2083,7 +2085,7 @@ function Schema:PlayerFinishWakeup(player)
 	netstream.Start(player, "ForceEndWakeupSequence");
 	
 	timer.Simple(5, function()
-		if player then
+		if IsValid(player) then
 			netstream.Start(player, "StartAmbientMusic");
 		end
 	end);

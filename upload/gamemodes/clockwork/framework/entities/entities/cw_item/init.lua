@@ -18,6 +18,10 @@ function ENT:Initialize()
 	self:SetHealth(25);
 	self:SetSolid(SOLID_VPHYSICS);
 	
+	if !self.cullLifetime then
+		self.cullLifetime = 0;
+	end
+	
 	local physicsObject = self:GetPhysicsObject();
 	
 	if (IsValid(physicsObject)) then
@@ -127,6 +131,27 @@ function ENT:Think()
 	
 	local curTime = CurTime();
 	
+	if !self.lastThink then
+		self.lastThink = curTime;
+		
+		return;
+	end
+	
+	if !self.lifeTime then -- If it already has a scripted lifetime just ignore it.
+		if !self.cullLifetime then
+			self.cullLifetime = 0;
+		end
+		
+		local cullLifetime = self.cullLifetime + math.Round(curTime - (self.lastThink or (curTime - 1)));
+		
+		if cullLifetime >= config.Get("item_lifetime"):Get() then
+			self:Remove();
+			return;
+		end
+		
+		self.cullLifetime = cullLifetime;
+	end
+	
 	--[[if (!self:IsInWorld()) then
 		if (!self.cwOutOfWorldTime or curTime >= self.cwOutOfWorldTime) then
 			self.cwOutOfWorldTime = curTime + 5;
@@ -150,5 +175,7 @@ function ENT:Think()
 	
 	hook.Run("ItemEntityThink", self, itemTable);
 
+	self.lastThink = curTime;
 	self:NextThink(curTime + math.random(2, 5));
+	return true;
 end;

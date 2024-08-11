@@ -138,3 +138,120 @@ function COMMAND:OnRun(player, arguments)
 end;
 
 Clockwork.command:Register(COMMAND, "PlySmite");
+
+local COMMAND = Clockwork.command:New("SkyDrop");
+COMMAND.tip = "Spawn an object above the head of the fucklet of your choice. Will try to spawn as high up as possible, works best in open areas. The last arguments can be a list of items, including 'cash'/'coins' for a random amount of money, and 'random' for generated loot. You can also add X[num] to the end of an ID to define the number. For example: papa_petes_ice_cold_popX24 will add 24 bottles of delicious Papa Pete's® Ice Cold Pop™!";
+COMMAND.text = "<string Name> <string Model> [num CleanupTimeInSeconds] [bool Burning] [Loot ItemIDs or Random or Cash/Coins]";
+COMMAND.access = "s";
+COMMAND.arguments = 2;
+COMMAND.alias = {"PlySkyDrop", "CharSkyDrop"};
+
+-- Called when the command has been run.
+function COMMAND:OnRun(player, arguments)
+	local target = Clockwork.player:FindByID(arguments[1]);
+	local dist = 4000
+	local cleanuptime = tonumber(arguments[3]) or 60
+	local burning = arguments[4] or "false"
+	burning = string.lower(burning) == "true"
+	local loot = arguments[5] or "false"
+	if (target) then
+		model = arguments[2] or "models/props_debris/concrete_cynderblock001.mdl"
+		if !IsUselessModel(model) then
+			local tgtpos = target:GetPos()
+			local spawnpoint = tgtpos + Vector(0, 0, dist)
+			local trace = util.TraceLine({
+				endpos = spawnpoint,
+				filter = target,
+				start = tgtpos,
+				mask = CONTENTS_SOLID + CONTENTS_MOVEABLE + CONTENTS_OPAQUE + CONTENTS_DEBRIS + CONTENTS_HITBOX + CONTENTS_MONSTER
+			})
+			
+			
+			if trace.HitWorld then
+			   spawnpoint = trace.HitPos + Vector(0, 0, -32)
+			end
+			dropped=ents.Create("prop_physics")
+			dropped:SetModel(arguments[2])
+			dropped:SetPos(spawnpoint)
+			dropped:Spawn()
+			if burning then
+				dropped:Ignite(cleanuptime,32)
+			end
+			dist = tgtpos:Distance( spawnpoint )
+
+			Clockwork.player:Notify(player, "Spawned a prop ["..model.."] "..(dist*0.01905).." meters above "..target:Name()..".");
+			timer.Create("SkyDrop"..target:Name()..""..math.Round(CurTime()), cleanuptime, 1, function()
+				if IsValid(dropped) then
+					dropped:Remove();
+				else
+					Clockwork.player:Notify(player, "Could not find the recently spawned object: ["..model.."] for cleanup. It might already be removed, or in need of manual cleanup.");
+				end
+			end);
+			
+			if loot ~= "false" then
+				local itemcount = 0
+				dropped.cwInventory = {};
+				dropped.cwCash = 0;
+				for i=5, #arguments do
+					if arguments[i] then
+						if arguments[i] == string.lower("random") then
+							local itemIncrease = math.random(4, 8);
+							for i = 1, math.random(3 + itemIncrease, 6 + itemIncrease) do
+								local randomItem = cwItemSpawner:SelectItem(containerCategory, false, true);
+								
+								if randomItem then
+									local itemInstance = Clockwork.item:CreateInstance(randomItem);
+									
+									if itemInstance then
+										local category = itemInstance.category;
+										
+										if category == "Helms" or category == "Armor" or category == "Melee" or category == "Crafting Materials" then
+											-- 75% chance for these items to spawn with less than 100% condition.
+											if math.random(1, 4) ~= 1 then
+												itemInstance:TakeCondition(math.random(0, 75));
+											end
+										elseif itemInstance.category == "Shot" and itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
+											itemInstance:SetAmmoMagazine(math.random(1, itemInstance.ammoMagazineSize));
+										end
+										
+										Clockwork.inventory:AddInstance(dropped.cwInventory, itemInstance, 1);
+										itemcount = itemcount + 1
+									end
+								end
+							end
+							dropped.cwCash = (dropped.cwCash+math.random(10, 50)) or math.random(10, 50);
+							if math.random(1, 5) == 1 then
+								dropped.cwCash = math.random(50, 100);
+							end
+						elseif arguments[i] == string.lower("coins") or arguments[i] == string.lower("cash") then
+							dropped.cwCash = (dropped.cwCash+math.random(10, 50)) or math.random(10, 50);
+						else
+							local instr = arguments[i]
+							local multiX = string.find(instr, "X")
+							local numberof = 1
+							if multiX then
+								numberof = tonumber(string.sub( instr, multiX+1, -1 )) or 1
+								instr = string.sub( instr, 1, multiX-1 )
+							end
+							local theitem = Clockwork.item:CreateInstance(instr);
+							if theitem then
+								Clockwork.inventory:AddInstance(dropped.cwInventory, theitem, numberof)
+								Clockwork.player:Notify(player, "Added: "..theitem.name.." x"..numberof);
+								itemcount = itemcount + 1
+							else
+								Clockwork.player:Notify(player, instr.." not found.");
+							end
+						end
+					end
+				end
+				Clockwork.player:Notify(player, "Added "..itemcount.." items and "..dropped.cwCash.." coins to the object's inventory.");
+			end
+		else
+			Clockwork.player:Notify(player, arguments[2].." is not a valid model!");
+		end
+	else
+		Clockwork.player:Notify(player, arguments[1].." is not a valid player!");
+	end;
+end;
+
+COMMAND:Register();
