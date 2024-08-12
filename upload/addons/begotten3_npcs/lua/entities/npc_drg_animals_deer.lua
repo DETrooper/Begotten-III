@@ -17,7 +17,7 @@ ENT.OnDamageSounds = {"deer/idle1.wav"}
 -- Stats --
 ENT.ArmorPiercing = 5;
 ENT.SpawnHealth = 70
-ENT.XPValue = 40;
+ENT.XPValue = 35;
 
 -- Regen --
 

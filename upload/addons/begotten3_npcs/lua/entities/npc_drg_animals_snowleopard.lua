@@ -20,7 +20,7 @@ ENT.OnDamageSounds = {"leopard/attack.wav"}
 ENT.ArmorPiercing = 55;
 ENT.SpawnHealth = 275;
 ENT.StaminaDamage = 50;
-ENT.XPValue = 100;
+ENT.XPValue = 75;
 
 -- Regen --
 

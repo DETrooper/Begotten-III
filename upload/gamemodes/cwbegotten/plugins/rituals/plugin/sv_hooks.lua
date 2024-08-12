@@ -324,7 +324,7 @@ function cwRituals:PreEntityTakeDamage(entity, damageInfo)
 			
 			for i, v in ipairs(players) do
 				if v:GetSharedVar("powderheelActive") and v:GetPos():Distance(entPos) <= config.Get("talk_radius"):Get() then
-					damageInfo:ScaleDamage(0.3);
+					damageInfo:ScaleDamage(0.5);
 					
 					break;
 				end

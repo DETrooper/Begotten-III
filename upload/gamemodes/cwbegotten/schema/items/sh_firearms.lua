@@ -315,8 +315,6 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(0, 343.09, 90);
 	ITEM.attachmentOffsetVector = Vector(3.54, 3.54, -9.9);
-	--ITEM.loweredOrigin = Vector(-1.41, -6.031, -0.801);
-	--ITEM.loweredAngles = Angle(-19.698, 42.915, -51.357);
 	
 	ITEM.ammoCapacity = 1;
 	ITEM.ammoTypes = {"Longshot", "Pop-a-Shot"};
@@ -325,7 +323,7 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"oneuse_deploy.ogg"};
 	ITEM.requireFaith = {"Faith of the Dark"};
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"wood", "steel_chunks", "steel_chunks"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"wood", "steel_chunks", "steel_chunks", "steel_chunks"}};
 ITEM:Register();
 
 ITEM = Clockwork.item:New("firearm_base");
@@ -339,8 +337,6 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(0, 343.09, 90);
 	ITEM.attachmentOffsetVector = Vector(3.54, 3.54, -9.9);
-	--ITEM.loweredOrigin = Vector(-1.41, -6.031, -0.801);
-	--ITEM.loweredAngles = Angle(-19.698, 42.915, -51.357);
 	
 	ITEM.ammoCapacity = 1;
 	ITEM.ammoTypes = {"Longshot"};
@@ -349,5 +345,5 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"oneuse_deploy.ogg", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	ITEM.requireFaith = {"Faith of the Dark"};
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"wood", "fine_steel_chunks", "steel_chunks", "steel_chunks"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"wood", "fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks"}};
 ITEM:Register();

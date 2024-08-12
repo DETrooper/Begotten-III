@@ -2789,8 +2789,8 @@ AttackTables.WarClubAttackTable = {
 	["altattackpoisedamagemodifier"] = nil,
 	["armorpiercing"] = 70,
 	["altarmorpiercing"] = nil,
-	["poisedamage"] = 52,
-	["stabilitydamage"] = 52,
+	["poisedamage"] = 50,
+	["stabilitydamage"] = 50,
 	["takeammo"] = 10,
 	["delay"] = 1.7,
 	["striketime"] = 0.65,
@@ -2827,8 +2827,8 @@ AttackTables.SatanicMaulAttackTable = {
 	["altattackpoisedamagemodifier"] = nil,
 	["armorpiercing"] = 75,
 	["altarmorpiercing"] = nil,
-	["poisedamage"] = 60,
-	["stabilitydamage"] = 60,
+	["poisedamage"] = 62,
+	["stabilitydamage"] = 62,
 	["takeammo"] = 9,
 	["delay"] = 1.6,
 	["striketime"] = 0.65,
@@ -2933,7 +2933,7 @@ AttackTables.PickaxeAttackTable = {
 };
 
 AttackTables.EveningStarAttackTable = {
-	["primarydamage"] = 25,
+	["primarydamage"] = 30,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -2947,7 +2947,7 @@ AttackTables.EveningStarAttackTable = {
 	["delay"] = 1.35,
 	["striketime"] = 0.65,
 	["meleearc"] = 45,
-	["meleerange"] = 815,
+	["meleerange"] = 825,
 	["punchstrength"] = Angle(0,1,0),
 };
 

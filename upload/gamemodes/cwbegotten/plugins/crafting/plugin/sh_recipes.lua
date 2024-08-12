@@ -2210,7 +2210,8 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 3},
+			["steel_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 1},
 			["wood"] = {amount = 3},
 			["leather"] = {amount = 1},
 		};
@@ -5500,7 +5501,7 @@ RECIPE:Register()
 	RECIPE.requirements = {
 		["steel_ingot"] = {amount = 3},
 		["wood"] = {amount = 2},
-		["unholy_sigil_stone"] = {amount = 1},
+		["belphegor_catalyst"] = {amount = 1},
 	};
 	RECIPE.result = {
 		["begotten_jezail_short"] = {amount = 1},
@@ -5529,7 +5530,8 @@ RECIPE:Register()
 	RECIPE.requiredFaiths = {"Faith of the Dark"};
 	RECIPE.requirements = {
 		["begotten_jezail_short"] = {amount = 1},
-		["fine_steel_ingot"] = {amount = 2},
+		["fine_steel_ingot"] = {amount = 1},
+		["iron_ingot"] = {amount = 1},
 	};
 	RECIPE.result = {
 		["begotten_jezail_long"] = {amount = 1},
@@ -5539,7 +5541,7 @@ RECIPE:Register()
 	RECIPE.failSound = "buttons/button2.wav"
 	RECIPE.craftTime = 8
 	RECIPE.craftVerb = "smithing"
-	RECIPE.experience = 100;
+	RECIPE.experience = 60;
 	
 	function RECIPE:OnCraft(player)
 	end;
@@ -5889,7 +5891,6 @@ RECIPE:Register()
 	RECIPE.requirements = {
 		["reaver_marauder_lamellar"] = {amount = 1},
 		["hellforged_steel_ingot"] = {amount = 1},
-		["down_catalyst"] = {amount = 3},
 	};
 	RECIPE.result = {
 		["reaver_drottinn_lamellar"] = {amount = 1},
@@ -5950,7 +5951,8 @@ RECIPE:Register()
 	RECIPE.requiredFactions = {"Goreic Warrior"};
 	RECIPE.requirements = {
 		["reaver_marauder_helm"] = {amount = 1},
-		["hellforged_steel_ingot"] = {amount = 1},
+		["fine_steel_ingot"] = {amount = 1},
+		["steel_ingot"] = {amount = 1},
 	};
 	RECIPE.result = {
 		["reaver_drottinn_helm"] = {amount = 1},
@@ -6186,8 +6188,8 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requiredSubfactions = {"Clan Shagalax"};
 		RECIPE.requirements = {
-			["shagalaxian_steel_ingot"] = {amount = 1},
-			["steel_ingot"] = {amount = 2},
+			["shagalaxian_steel_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 3},
 		};
 		RECIPE.result = {
 			["gore_black_steel_helm"] = {amount = 1},
@@ -6197,7 +6199,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 65;
+		RECIPE.experience = 100;
 		
 		function RECIPE:OnCraft(player)
 		end;
