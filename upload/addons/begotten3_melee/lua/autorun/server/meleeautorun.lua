@@ -29,6 +29,14 @@ function Parry(target, dmginfo)
 				target:EmitSound("meleesounds/DS2Parry.mp3")
 				netstream.Start(target, "Parried", 0.2)
 				
+				if cwBeliefs and target:HasBelief("repulsive_riposte") then
+					ply.parryStacks = (ply.parryStacks or 0) + 1;
+					
+					if wep.Timers and wep.Timers["parryTimer"..tostring(ply:EntIndex())] then
+						wep.Timers["parryTimer"..tostring(ply:EntIndex())].duration = wep.Timers["parryTimer"..tostring(ply:EntIndex())].duration + 0.15,
+					end
+				end
+				
 				if !isJavelin then
 					if attacker.CancelGuardening then
 						attacker:CancelGuardening();
@@ -71,7 +79,7 @@ function Parry(target, dmginfo)
 				
 				local max_stamina = target:GetMaxStamina();
 				
-				target:SetStamina(target:GetNWInt("Stamina") + math.Round(blocktable["parrytakestamina"] / 2));
+				target:SetStamina(target:GetNWInt("Stamina") + (math.Round(blocktable["parrytakestamina"] / 2) * ply.parryStacks or 1));
 				
 				-- Poise should start regenerating upon successful parry after 0.5 seconds.
 				target.blockStaminaRegen = math.min(target.blockStaminaRegen or 0, curTime + 0.5);

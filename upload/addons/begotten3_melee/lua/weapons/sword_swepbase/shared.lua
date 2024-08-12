@@ -495,6 +495,10 @@ function SWEP:PrimaryAttack()
 	local thrustOverride = false;
 
 	owner.blockStaminaRegen = curTime + 5;
+	
+	if !owner.cloakCooldown or owner.cloakCooldown < (curTime + 5) then
+		owner.cloakCooldown = curTime + 5;
+	end
 
 	wep:SetNextPrimaryFire(curTime + delay);
 	wep:SetNextSecondaryFire(curTime + (delay * 0.1));
@@ -2338,8 +2342,12 @@ function SWEP:SecondaryAttack()
 	end
 	
 	self:CreateTimer(parryWindow, "parryTimer"..ply:EntIndex(), function()
-		if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
-			ply:SetNWBool( "Parry", false )
+		if self:IsValid() and ply:IsValid() and !ply:IsRagdolled() and ply:Alive() then
+			ply:SetNWBool("Parry", false)
+			
+			if ply.parryStacks then
+				ply.parryStacks = nil;
+			end
 			
 			if (ply:KeyDown(IN_ATTACK2)) then
 				if (!ply:KeyDown(IN_USE)) then
@@ -3031,6 +3039,10 @@ function SWEP:Holster()
 			player:SetNWBool("Parry", false);
 			player:SetNWBool("ParrySucess", false);
 			player:SetNWBool("Riposting", false);
+			
+			if player.parryStacks then
+				player.parryStacks = nil;
+			end
 		end
 		
 		if CLIENT then

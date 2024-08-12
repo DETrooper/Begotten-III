@@ -320,10 +320,10 @@ function cwStorage:LockpickFail(player, timeout)
 	
 	player.LockpickContainer = nil;
 	player.Lockpicking = nil;
-	player.LockpickCooldown = curTime + 5;
+	player.LockpickCooldown = curTime + 1;
 	
 	if (IsValid(entity)) then
-		entity.LockpickCooldown = curTime + 5;
+		entity.LockpickCooldown = curTime + 1;
 	else
 		return;
 	end;
@@ -668,7 +668,7 @@ netstream.Hook("SuccessfulPick", function(player, data)
 end);
 
 netstream.Hook("AbortLockpick", function(player, data)
-	player.LockpickCooldown = CurTime() + 5;
+	player.LockpickCooldown = CurTime() + 1;
 	player:Freeze(false);
 	player.Lockpicking = nil;
 	player.ActiveContainer = nil;

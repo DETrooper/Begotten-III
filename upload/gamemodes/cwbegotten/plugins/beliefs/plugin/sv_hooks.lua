@@ -110,8 +110,10 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 							if !blockedCloak then
 								player:Cloak();
 							end
+						elseif (plyTab.cloakCooldown - curTime) > 5 then
+							Schema:EasyText(self.Owner, "chocolate", "You are covered in black powder and cannot cloak for another "..math.ceil(plyTab.cloakCooldown - curTime).." seconds!");
 						else
-							Schema:EasyText(self.Owner, "chocolate", "You are covered in black powder and cannot cloak for "..math.Round(plyTab.cloakCooldown - curTime).." seconds!");
+							Schema:EasyText(self.Owner, "chocolate", "You cannot cloak for another "..math.ceil(plyTab.cloakCooldown - curTime).." seconds!");
 						end
 					end
 				end

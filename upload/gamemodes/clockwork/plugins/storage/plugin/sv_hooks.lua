@@ -113,7 +113,7 @@ function cwStorage:EntityRemoved(entity)
 		local player = entity.LockpickingPlayer;
 
 		if player and IsValid(player) then
-			player.LockpickCooldown = CurTime() + 5;
+			player.LockpickCooldown = CurTime() + 1;
 			player:Freeze(false);
 			player.Lockpicking = nil;
 			player.ActiveContainer = nil;

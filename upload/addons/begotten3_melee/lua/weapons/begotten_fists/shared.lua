@@ -200,6 +200,10 @@ function SWEP:PrimaryAttack()
 		hook.Run("PlayerAttacks", owner);
 	end
 	
+	if !owner.cloakCooldown or owner.cloakCooldown < (curTime + 5) then
+		owner.cloakCooldown = curTime + 5;
+	end
+	
 	-- Critical Attack
 	if owner:GetNWBool("ParrySucess") == true then
 		if SERVER then  
@@ -787,8 +791,12 @@ function SWEP:SecondaryAttack()
 		end
 		
 		self:CreateTimer(parryWindow, "parryTimer"..ply:EntIndex(), function()
-			if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
-				ply:SetNWBool( "Parry", false )
+			if self:IsValid() and ply:IsValid() and !ply:IsRagdolled() and ply:Alive() then
+				ply:SetNWBool("Parry", false)
+				
+				if ply.parryStacks then
+					ply.parryStacks = nil;
+				end
 				
 				if (ply:KeyDown(IN_ATTACK2)) then
 					if (!ply:KeyDown(IN_USE)) then

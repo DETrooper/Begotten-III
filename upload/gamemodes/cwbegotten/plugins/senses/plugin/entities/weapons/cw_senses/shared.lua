@@ -150,8 +150,10 @@ function SWEP:SecondaryAttack()
 							if !blockedCloak then
 								self.Owner:Cloak();
 							end
+						elseif (self.Owner.cloakCooldown - curTime) > 5 then
+							Schema:EasyText(self.Owner, "chocolate", "You are covered in black powder and cannot cloak for another "..math.ceil(self.Owner.cloakCooldown - curTime).." seconds!");
 						else
-							Schema:EasyText(self.Owner, "chocolate", "You are covered in black powder and cannot cloak for "..math.Round(self.Owner.cloakCooldown - curTime).." seconds!");
+							Schema:EasyText(self.Owner, "chocolate", "You cannot cloak for another "..math.ceil(self.Owner.cloakCooldown - curTime).." seconds!");
 						end
 					else
 						self.Owner:Uncloak();

@@ -146,6 +146,10 @@ function SWEP:PrimaryAttack()
 				self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 				self.Owner:SetAnimation(PLAYER_ATTACK1);
 				self.Weapon:SetNextPrimaryFire(curTime + 1 / (self.Primary.RPM / 60));
+				
+				if SERVER then
+					self.Owner.cloakCooldown = CurTime() + 5;
+				end
 			end
 		end
 	end
