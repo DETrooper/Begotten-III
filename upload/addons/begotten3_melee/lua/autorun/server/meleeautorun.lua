@@ -79,7 +79,7 @@ function Parry(target, dmginfo)
 				
 				local max_stamina = target:GetMaxStamina();
 				
-				target:SetStamina(target:GetNWInt("Stamina") + (math.Round(blocktable["parrytakestamina"] / 2) * target.parryStacks or 1));
+				target:SetStamina(target:GetNWInt("Stamina") + (math.Round(blocktable["parrytakestamina"] / 2) * (target.parryStacks or 1)));
 				
 				-- Poise should start regenerating upon successful parry after 0.5 seconds.
 				target.blockStaminaRegen = math.min(target.blockStaminaRegen or 0, curTime + 0.5);
