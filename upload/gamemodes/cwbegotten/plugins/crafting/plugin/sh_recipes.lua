@@ -6040,7 +6040,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["shagalaxian_steel_ingot"] = {amount = 2},
+			["shagalaxian_steel_ingot"] = {amount = 3},
 			["familial_catalyst"] = {amount = 2},
 			["leather"] = {amount = 1},
 		};
