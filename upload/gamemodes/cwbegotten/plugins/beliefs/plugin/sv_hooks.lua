@@ -2037,10 +2037,10 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 			--local maxPoise = attacker:GetMaxPoise();
 			local maxStability = attacker:GetMaxStability();
 			
-			attacker:SetHealth(math.min(maxHealth, attacker:Health() + ((attacker:Health() * refundPerLevel) * playerLevel)));
-			attacker:SetCharacterData("Stamina", math.min(maxStamina, attacker:GetCharacterData("Stamina", 90) + ((attacker:GetCharacterData("Stamina", 90) * refundPerLevel) * playerLevel)));
-			--attacker:SetNWInt("meleeStamina", math.min(maxPoise, attacker:GetNWInt("meleeStamina", 90) + ((attacker:GetNWInt("meleeStamina", 90) * refundPerLevel) * playerLevel)));
-			attacker:SetNWInt("stability", math.min(maxStability, attacker:GetNWInt("stability", 100) + ((attacker:GetNWInt("stability", 100) * refundPerLevel) * playerLevel)));
+			attacker:SetHealth(math.min(maxHealth, attacker:Health() + ((maxHealth * refundPerLevel) * playerLevel)));
+			attacker:SetCharacterData("Stamina", math.min(maxStamina, attacker:GetCharacterData("Stamina", 90) + ((maxStamina * refundPerLevel) * playerLevel)));
+			--attacker:SetNWInt("meleeStamina", math.min(maxPoise, attacker:GetNWInt("meleeStamina", 90) + ((maxPoise * refundPerLevel) * playerLevel)));
+			attacker:SetNWInt("stability", math.min(maxStability, attacker:GetNWInt("stability", 100) + ((maxStability * refundPerLevel) * playerLevel)));
 			
 			attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
 			
