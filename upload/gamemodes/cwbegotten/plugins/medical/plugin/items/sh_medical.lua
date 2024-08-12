@@ -211,6 +211,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.stopsBleeding = true;
 	ITEM.infectionChance = 30;
 	ITEM.useXP = 15;
+	ITEM.useTime = 10;
 
 	ITEM.curesInjuries = {"gash"};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 225};
@@ -235,6 +236,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.stopsBleeding = true;
 	ITEM.infectionChance = 50;
 	ITEM.useXP = 15;
+	ITEM.useTime = 10;
 
 	ITEM.curesInjuries = {"gash"};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 300};
@@ -400,6 +402,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.stopsBleeding = true;
 	ITEM.canSave = true;
 	ITEM.useXP = 50;
+	ITEM.useTime = 30;
 
 	ITEM.curesInjuries = {"burn", "gash", "gunshot_wound", "minor_infection"};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 4500};

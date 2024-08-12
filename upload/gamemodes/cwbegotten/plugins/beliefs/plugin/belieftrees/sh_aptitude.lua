@@ -109,7 +109,7 @@ local APTITUDE = cwBeliefs.beliefTrees:New("aptitude")
 			},
 			["doctor"] = {
 				name = "Doctor",
-				description = "Unlocks the ability to diagnose a patient's injuries. Doubles the speed that chloroform can be applied to other characters.",
+				description = "Unlocks the ability to diagnose a patient's injuries. Doubles the speed of healing other characters as well as the speed of applying chloroform.",
 				requirements = {"literacy", "sanitary"},
 				row = 3,
 			},

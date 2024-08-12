@@ -114,7 +114,7 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 		local consumeTime = itemTable.useTime or 7;
 		
 		if player:HasBelief("dexterity") then
-			consumeTime = (itemTable.useTime or 7) * 0.67;
+			consumeTime = consumeTime * 0.67;
 		end
 			
 		Clockwork.player:SetAction(player, "heal", consumeTime, nil, function()
@@ -300,7 +300,11 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 	local consumeTime = itemTable.useTime or 7;
 	
 	if player:HasBelief("dexterity") then
-		consumeTime = (itemTable.useTime or 7) * 0.67;
+		consumeTime = consumeTime * 0.67;
+	end
+	
+	if player:HasBelief("doctor") then
+		consumeTime = consumeTime * 0.5;
 	end
 	
 	if (actionPlayer != "heal" and actionPlayer != "healing" and actionPlayer != "performing_surgery") then
