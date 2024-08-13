@@ -330,7 +330,6 @@ function meta:StartRolling(a)
 
 	timer.Create("RollRaiseTimer_"..self:EntIndex(), time * 0.8, 1, function()
 		if not IsValid( self ) then return end
-		if not self:Alive() then return end
 		
 		timer.Simple(0.25, function()
 			if IsValid(self) then
@@ -339,6 +338,8 @@ function meta:StartRolling(a)
 				end
 			end
 		end);
+		
+		if not self:Alive() then return end
 		
 		local curTime = CurTime();
 
