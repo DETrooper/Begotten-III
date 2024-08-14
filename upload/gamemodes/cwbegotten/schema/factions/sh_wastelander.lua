@@ -63,6 +63,16 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 		{name = "Auxiliary", subtitle = "Auxilium - Smiths and Medici", description = "The backbone of the Holy Order and the purveyors of its superior ingenuity, auxiliaries uphold supply, maintain the troops, and act as reservists in combat. As Smiths they arm the ranks with superior weaponry, man the cannons and fortify defensive locations. As Medici they prevent outbreaks in the ranks and mend injuries taken from battle. They are still expected to fight if need be, though are not as often put into harm's way as their legionary kin.", attributes = {{Color(0, 225, 0), "(+) Men of Knowledge: +25% increased faith gain"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 12"}, {Color(225, 0, 0), "(-) Tier III and IV of the Prowess belief tree are locked"}, {Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}}},
 		{name = "Praeventor", startingRank = 12, whitelist = true, subtitle = "Praeventores - Scouts and Assassins", description = "Taking the name of a similar unit from ancient Roman times, the Praeventores serve as a small but elite cadre of scouts, hunters, and assassins for the Holy Order. Recruited from the most loyal and skilled followers of Hard-Glaze, the Praeventores lack any standardized gear to help them blend in whilst performing their duties in the wastes. These duties include: reporting on enemy movements, scavenging valuable artifacts or needed supplies, assassinating enemies of the Holy Hierarchy or sniping targets at long range, bringing in or dispatching the targets of bounties, and gathering information.", attributes = {{Color(0, 225, 0), "(+) Excursionists: -25% stamina drain and +5% sprint speed"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(225, 0, 0), "(-) The 'Sol Orthodoxy' and 'Voltism' subfaiths are locked"}}},
 	};
+	FACTION.residualXPZones = { -- Zones that boost residual XP gain for this faction.
+		["rp_begotten3"] = {
+			{pos1 = Vector(1390, 10153, -938), pos2 = Vector(-2370, 11254, -1690), modifier = 2, nightModifier = 4}, -- Gate
+			{pos1 = Vector(9422, 11862, -1210), pos2 = Vector(10055, 10389, -770), modifier = 3, nightModifier = 5}, -- Gorewatch
+			{pos1 = Vector(3458, 12655 -814), pos2 = Vector(3335, 12769, -685), modifier = 2, nightModifier = 4}, -- Watchtower
+			{pos1 = Vector(2742, 10244, -1194), pos2 = Vector(2913, 10071, -1074), modifier = 2, nightModifier = 4}, -- Watchtower
+			{pos1 = Vector(-1963, 10678, -1055), pos2 = Vector(-2144, 10886, -1194), modifier = 2, nightModifier = 4}, -- Watchtower
+			{pos1 = Vector(-3468, 12985, -375), pos2 = Vector(-3591, 13103, -241), modifier = 2, nightModifier = 4}, -- Watchtower
+		},
+	};
 	
 	-- Called when a player is transferred to the faction.
 	function FACTION:OnTransferred(player, faction, name)
@@ -88,6 +98,10 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 	
 	if !Schema.RankTiers then
 		Schema.RankTiers = {};
+	end
+	
+	if !Schema.RanksRestrictedWages then
+		Schema.RanksRestrictedWages = {};
 	end
 	
 	if !Schema.RanksToSubfaction then
@@ -122,6 +136,9 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 		[4] = {"High Gatekeeper"},
 		[5] = {"Master-At-Arms"},
 	};
+	
+	-- Do not grant wages to these ranks if they are inside the safezone.
+	Schema.RanksRestrictedWages["Gatekeeper"] = {1, 2, 12, 13, 14};
 	
 	Schema.RanksToSubfaction["Gatekeeper"] = {
 		["Scout"] = "Praeventor",

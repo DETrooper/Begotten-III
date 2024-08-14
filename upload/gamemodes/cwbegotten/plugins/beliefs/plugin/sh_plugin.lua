@@ -1075,9 +1075,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 					if player_has_daring_trout then
 						timer.Simple(10.5, function()
 							if IsValid(player) and player.warCryVictims then
-								for i = 1, #player.warCryVictims do
-									local victim = player.warCryVictims[i];
-									
+								for i, victim in ipairs(player.warCryVictims) do
 									if IsValid(victim) then
 										hook.Run("RunModifyPlayerSpeed", victim, victim.cwInfoTable, true);
 									end

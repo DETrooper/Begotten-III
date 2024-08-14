@@ -9,6 +9,7 @@ Clockwork.setting:AddCheckBox("Admin ESP - Spawn Points", "Show NPC spawn points
 
 --[[Clockwork.config:AddToSystem("Small intro text", "intro_text_small", "The small text displayed for the introduction.");
 Clockwork.config:AddToSystem("Big intro text", "intro_text_big", "The big text displayed for the introduction.");]]--
+Clockwork.config:AddToSystem("Coinslot Wages Interval", "coinslot_wages_interval", "The time that it takes for coinslot wages to be distributed (seconds).", 0, 7200);
 Clockwork.config:AddToSystem("Enable Famine", "enable_famine", "Enable famine mode. This will make food/drink spawns significantly more rare and will also prevent rations from being distributed at the Coinslot.");
 Clockwork.config:AddToSystem("Discord Invite URL", "discord_url", "The invite link for your community's discord.");
 
@@ -55,8 +56,8 @@ function Schema:DownloadMaterial(url, path)
 	end;
 end;
 
-Schema:AddTempTexture("http://begottendev.site.nfoservers.com/temp/black.vmt", "b3/black.vmt");
-Schema:AddTempTexture("http://begottendev.site.nfoservers.com/temp/black.vtf", "b3/black.vtf");
+--Schema:AddTempTexture("http://begottendev.site.nfoservers.com/temp/black.vmt", "b3/black.vmt");
+--Schema:AddTempTexture("http://begottendev.site.nfoservers.com/temp/black.vtf", "b3/black.vtf");
 
 -- A function to get whether a text entry is being used.
 function Schema:IsTextEntryBeingUsed()

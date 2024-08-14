@@ -44,7 +44,7 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 			local playerFaction = player:GetFaction();
 			
 			if not plyTab.opponent and (table.HasValue(self.residualXPZones, lastZone) or (lastZone == "tower" and ((playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy") or residualXPInSafezone == true))) then
-				local residualXP = self.xpValues["residual"] or 5;
+				local residualXP = self.xpValues["residual"] or 1;
 				
 				if playerFaction == "Goreic Warrior" and (lastZone == "wasteland" or lastZone == "tower" or lastZone == "caves" or lastZone == "scrapper") then
 					residualXP = residualXP * 2;
@@ -54,8 +54,28 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 					residualXP = residualXP * 2;
 				end
 				
-				if playerFaction == "Gatekeeper" and game.GetMap() == "rp_begotten3" and player:GetPos():WithinAABox(Vector(9422, 11862, -1210), Vector(10055, 10389, -770)) then
-					residualXP = residualXP * 2;
+				local factionTable = Clockwork.faction:FindByID(playerFaction);
+				
+				if factionTable and factionTable.residualXPZones then
+					local residualXPZones = factionTable.residualXPZones[game.GetMap()];
+					
+					if residualXPZones then
+						local playerPos = player:GetPos();
+						
+						for i, v in ipairs(residualXPZones) do
+							if playerPos:WithinAABox(v.pos1, v.pos2) then
+								local modifier = v.modifier or 2;
+								
+								if cwDayNight and v.nightModifier and cwDayNight.currentCycle == "night" then
+									modifier = v.nightModifier or 4;
+								end
+								
+								residualXP = residualXP * modifier;
+							
+								break;
+							end
+						end
+					end
 				end
 
 				player:HandleXP(residualXP);
@@ -2102,6 +2122,16 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 		
 		if timer.Exists("DecapitationBuffTimer_"..entIndex) then
 			timer.Remove("DecapitationBuffTimer_"..entIndex);
+		end
+	end
+end
+
+function cwBeliefs:PlayerDisconnected(player)
+	if player.warCryVictims then
+		for i, victim in ipairs(player.warCryVictims) do
+			if IsValid(victim) then
+				hook.Run("RunModifyPlayerSpeed", victim, victim.cwInfoTable, true);
+			end
 		end
 	end
 end

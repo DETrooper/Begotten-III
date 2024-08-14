@@ -1547,19 +1547,20 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 		end;
 		
 		local wages = Clockwork.class:Query(player:Team(), "coinslotWages", 0);
+		local rank = player:GetCharacterData("rank", 1);
 		
-		if Schema.RanksToCoin[faction] then
-			wages = Schema.RanksToCoin[faction][math.Clamp(player:GetCharacterData("rank", 1), 1, #Schema.RanksToCoin[faction])];
+		if ranksToCoin and ranksToCoin[faction] then
+			wages = ranksToCoin[faction][math.Clamp(rank, 1, #ranksToCoin[faction])];
 		end
 		
 		infoTable.coinslotWages = wages;
 		
 		if infoTable.coinslotWages > 0 then
-			if !infoTable.nextCoinslotWages then
-				infoTable.nextCoinslotWages = curTime + 1800;
-			end
+			local ranksToCoin = Schema.RanksToCoin;
+			local ranksRestrictedWages = Schema.RanksRestrictedWages;
+			local nextWages = player:GetCharacterData("nextWages", 0);
 			
-			if infoTable.nextCoinslotWages < curTime then
+			if nextWages >= config.GetVal("coinslot_wages_interval") then
 				if !self.towerTreasury then
 					self.towerTreasury = Clockwork.kernel:RestoreSchemaData("treasury")[1] or 0;
 				end
@@ -1570,7 +1571,15 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 					player:SetCharacterData("collectableWages", collectableWages + 1);
 				end
 				
-				infoTable.nextCoinslotWages = curTime + 1800;
+				player:SetCharacterData("nextWages", 0);
+			else
+				if ranksRestrictedWages and ranksRestrictedWages[faction] and table.HasValue(ranksRestrictedWages, rank) then
+					if !player:InTower() then
+						player:SetCharacterData("nextWages", nextWages + (cwThinkRate or 0.2));
+					end
+				else
+					player:SetCharacterData("nextWages", nextWages + (cwThinkRate or 0.2));
+				end
 			end
 		end;
 		

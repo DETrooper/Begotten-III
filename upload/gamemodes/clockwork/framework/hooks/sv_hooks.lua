@@ -1706,10 +1706,10 @@ end
 do
 	local defaultInvWeight = config.GetVal("default_inv_weight")
 	local defaultInvSpace = config.GetVal("default_inv_weight")
-	local thinkRate = 0.2
 	local cwNextThink = 0
 	local cwNextSecond = 0
 	local cwNextHalfSecond = 0;
+	cwThinkRate = 0.2;
 
 	-- Called each tick.
 	function GM:Tick()
@@ -1745,7 +1745,7 @@ do
 				end
 			end
 
-			cwNextThink = curTime + thinkRate
+			cwNextThink = curTime + cwThinkRate
 
 			if (curTime >= cwNextSecond) then
 				cwNextSecond = curTime + 1
@@ -3721,6 +3721,12 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:GetClass().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name()..", killing them!")
 			end
 		end
+	elseif IsValid(inflictor) then
+		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, inflictor:GetClass().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name()..", killing them!")
+	elseif damageInfo:IsFallDamage() then
+		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from fall damage, killing them!")
+	else
+		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from an unknown source, killing them!")
 	end
 end
 
@@ -4084,6 +4090,10 @@ function GM:EntityTakeDamage(entity, damageInfo)
 						else
 							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:GetClass()..", leaving them at "..player:Health().." health"..armor)
 						end
+					elseif IsValid(inflictor) then
+						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..inflictor:GetClass()..", leaving them at "..player:Health().." health"..armor)
+					elseif damageInfo:IsFallDamage() then
+						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from fall damage, leaving them at "..player:Health().." health"..armor)
 					else
 						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from an unknown source, leaving them at "..player:Health().." health"..armor)
 					end
@@ -4158,6 +4168,10 @@ function GM:EntityTakeDamage(entity, damageInfo)
 					else
 						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:GetClass()..", leaving them at "..player:Health().." health"..armor)
 					end
+				elseif IsValid(inflictor) then
+					Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..inflictor:GetClass()..", leaving them at "..player:Health().." health"..armor)
+				elseif damageInfo:IsFallDamage() then
+					Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from fall damage, leaving them at "..player:Health().." health"..armor)
 				else
 					Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from an unknown source, leaving them at "..player:Health().." health"..armor)
 				end
