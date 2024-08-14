@@ -1573,7 +1573,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 				
 				player:SetCharacterData("nextWages", 0);
 			else
-				if ranksRestrictedWages and ranksRestrictedWages[faction] and table.HasValue(ranksRestrictedWages, rank) then
+				if ranksRestrictedWages and ranksRestrictedWages[faction] and table.HasValue(ranksRestrictedWages[faction], rank) then
 					if !player:InTower() then
 						player:SetCharacterData("nextWages", nextWages + (cwThinkRate or 0.2));
 					end
