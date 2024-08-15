@@ -13,11 +13,11 @@ netstream.Hook("SendCountryCode", function(player, data)
 	end;
 end);
 
-netstream.Hook("GetTargetRecognises", function(player, data)
+--[[netstream.Hook("GetTargetRecognises", function(player, data)
 	if (IsValid(data) and data:IsPlayer()) then
 		player:SetNetVar("TargetKnows", Clockwork.player:DoesRecognise(data, player))
 	end
-end)
+end)]]--
 
 netstream.Hook("EntityMenuOption", function(player, data)
 	local entity = data[1]

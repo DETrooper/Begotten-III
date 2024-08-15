@@ -2303,9 +2303,9 @@ function GM:HUDDrawTargetID()
 					if (player and Clockwork.Client != player) then
 						if (Clockwork.plugin:Call("ShouldDrawPlayerTargetID", player)) then
 							if (!Clockwork.player:IsNoClipping(player)) then
-								if (Clockwork.nextCheckRecognises and Clockwork.nextCheckRecognises[2] != player) then
+								--[[if (Clockwork.nextCheckRecognises and Clockwork.nextCheckRecognises[2] != player) then
 									Clockwork.Client:SetSharedVar("TargetKnows", true)
-								end
+								end]]--
 								
 								local playerEntity = nil
 								local position = Clockwork.plugin:Call("GetPlayerTypingDisplayPosition", player)
@@ -2498,11 +2498,11 @@ function GM:HUDDrawTargetID()
 									y = Clockwork.kernel:DrawInfo("Press <X> to inspect this character.", x, y, colorWhite, alpha)
 								end
 								
-								if (!Clockwork.nextCheckRecognises or curTime >= Clockwork.nextCheckRecognises[1] or Clockwork.nextCheckRecognises[2] != player) then
+								--[[if (!Clockwork.nextCheckRecognises or curTime >= Clockwork.nextCheckRecognises[1] or Clockwork.nextCheckRecognises[2] != player) then
 									netstream.Start("GetTargetRecognises", player)
 									
 									Clockwork.nextCheckRecognises = {curTime + 2, player}
-								end
+								end]]--
 							end
 						end
 					--[[elseif (Clockwork.generator and Clockwork.generator:FindByID(class)) then

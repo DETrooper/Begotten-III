@@ -1689,11 +1689,11 @@ function cwBeliefs:PlayerExitedDuel(player)
 end
 
 function cwBeliefs:PrePlayerCharacterCreated(player, character)
-	local data = character.data;
+	local data = character.data or {};
 	local inventory = character.inventory;
 	local faction = character.faction;
 	local subfaction = character.subfaction;
-	local traits = data["Traits"];
+	local traits = data["Traits"] or {};
 	local level = 1;
 	
 	data["beliefs"] = {};

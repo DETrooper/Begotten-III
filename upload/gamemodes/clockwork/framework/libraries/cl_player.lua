@@ -103,13 +103,13 @@ function Clockwork.player:CanHearPlayer(player, target, allowance)
 end
 
 -- A function to get whether the target recognises the local player.
-function Clockwork.player:DoesTargetRecognise()
+--[[function Clockwork.player:DoesTargetRecognise()
 	if (config.GetVal("recognise_system")) then
 		return Clockwork.Client:GetNetVar("TargetKnows")
 	else
 		return true
 	end
-end
+end]]--
 
 -- A function to get a player's real trace.
 function Clockwork.player:GetRealTrace(player, useFilterTrace)
