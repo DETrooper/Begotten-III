@@ -1385,6 +1385,8 @@ end;
 
 -- A function to un-permanently kill a player.
 function Schema:UnPermaKillPlayer(player)
+	local oldPos = player:GetPos();
+	
 	if (!player:Alive()) then
 		player:Spawn();
 	end;

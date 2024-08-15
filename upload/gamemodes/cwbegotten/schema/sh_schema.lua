@@ -553,7 +553,7 @@ properties.Add("heal", {
 properties.Add("unpk", {
 	MenuLabel = "Unpermakill",
 	Order = 666,
-	MenuIcon = "icon16/add.png",
+	MenuIcon = "icon16/pill_add.png",
 	Filter = function(self, ent, ply)
 		if !IsValid(ent) or !IsValid(ply) or !ply:IsAdmin() then return false end
 		if !ent:IsPlayer() then
@@ -577,6 +577,37 @@ properties.Add("unpk", {
 			end
 			
 			Clockwork.kernel:RunCommand("CharUnPermakill", ent:Name())
+		end
+	end,
+});
+
+properties.Add("unpkstay", {
+	MenuLabel = "Unpermakill (Stay)",
+	Order = 666,
+	MenuIcon = "icon16/pill_go.png",
+	Filter = function(self, ent, ply)
+		if !IsValid(ent) or !IsValid(ply) or !ply:IsAdmin() then return false end
+		if !ent:IsPlayer() then
+			if Clockwork.entity:IsPlayerRagdoll(ent) then
+				ent = Clockwork.entity:GetPlayer(ent);
+			else
+				return false;
+			end
+		end
+
+		return !ent:Alive();
+	end,
+	Action = function(self, ent)
+		if IsValid(ent) then
+			if !ent:IsPlayer() then
+				if Clockwork.entity:IsPlayerRagdoll(ent) then
+					ent = Clockwork.entity:GetPlayer(ent);
+				else
+					return false;
+				end
+			end
+			
+			Clockwork.kernel:RunCommand("CharUnPermakillStay", ent:Name())
 		end
 	end,
 });

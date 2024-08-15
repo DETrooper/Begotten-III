@@ -649,6 +649,38 @@ local COMMAND = Clockwork.command:New("CharUnPermakill");
 	end;
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("CharUnPermakillStay");
+	COMMAND.tip = "Un-permanently kill a character and teleport them to where they died.";
+	COMMAND.text = "<string Name>";
+	COMMAND.access = "o";
+	COMMAND.arguments = 1;
+	COMMAND.alias = {"PlyUnPermakillStay", "UnPermakillStay"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local target = Clockwork.player:FindByID(arguments[1])
+		
+		if (target) then
+			if (target:GetCharacterData("permakilled")) then
+				local targetPos = target:GetPos();
+				
+				Schema:UnPermaKillPlayer(target, target:GetRagdollEntity());
+				Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." un-permanently killed "..target:SteamName().."'s character \""..target:Name().."\"!");
+				
+				target:SetPos(targetPos + Vector(0, 0, 16));
+				
+				return;
+			else
+				Schema:EasyText(player, "darkgrey", "This character is not permanently killed!");
+				
+				return;
+			end;
+		else
+			Schema:EasyText(player, "grey", arguments[1].." is not a valid character that can be respawned!");
+		end;
+	end;
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("CharUnPermakillAll");
 	COMMAND.tip = "Unpermakill all players on the map.";
 	COMMAND.access = "s";

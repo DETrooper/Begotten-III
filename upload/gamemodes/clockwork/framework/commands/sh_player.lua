@@ -890,6 +890,10 @@ local COMMAND = Clockwork.command:New("PlyTeleport");
 		local target = Clockwork.player:FindByID(arguments[1]);
 		
 		if (target) then
+			if target:IsRagdolled() then
+				Clockwork.player:SetRagdollState(target, RAGDOLL_NONE);
+			end
+			
 			Clockwork.player:SetSafePosition(target, player:GetEyeTraceNoCursor().HitPos);
 			Clockwork.player:NotifyAll(player:Name().." has teleported "..target:Name().." to their target location.");
 		else
@@ -910,6 +914,10 @@ local COMMAND = Clockwork.command:New("PlyTeleportFreeze");
 		local target = Clockwork.player:FindByID(arguments[1]);
 		
 		if (target) then
+			if target:IsRagdolled() then
+				Clockwork.player:SetRagdollState(target, RAGDOLL_NONE);
+			end
+		
 			Clockwork.player:SetSafePosition(target, player:GetEyeTraceNoCursor().HitPos);
 			Clockwork.player:NotifyAll(player:Name().." has teleported "..target:Name().." to their target location.");
 			
