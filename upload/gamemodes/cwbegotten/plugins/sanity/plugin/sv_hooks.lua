@@ -119,7 +119,12 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 				local isOnFire = entity:IsOnFire();
 			
 				if (isOnFire or class == "env_fire") then
-					sanityDecay = sanityDecay + 2; -- sanity gain from fires etc
+					sanityDecay = sanityDecay + 4; -- sanity gain from fires etc
+					
+					if cwBeliefs and player:HasBelief("acolyte") then
+						sanityDecay = sanityDecay + 4;
+					end
+					
 					nearFire = true;
 				end;
 			end;
@@ -195,7 +200,9 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 					sanityDecay = (sanityDecay - decay);
 				end
 			elseif (lastZone == "caves") then
-				sanityDecay = (sanityDecay - 2);
+				if !cwBeliefs or !player:HasBelief("embrace_the_darkness") then
+					sanityDecay = (sanityDecay - 2);
+				end
 			end;
 		end;
 

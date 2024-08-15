@@ -123,7 +123,7 @@ local LIGHT = cwBeliefs.beliefTrees:New("light")
 			["acolyte"] = {
 				name = "Acolyte",
 				subfaith = "Hard-Glazed",
-				description = "Unlocks Tier II 'Faith of the Light' Rituals.",
+				description = "Unlocks Tier II 'Faith of the Light' Rituals. Increases sanity gain from being near fires.",
 				requirements = {"hard_glazed", "disciple"},
 				row = 3,
 			},
