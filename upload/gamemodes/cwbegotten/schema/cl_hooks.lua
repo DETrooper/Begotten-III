@@ -1321,12 +1321,10 @@ function Schema:ChatBoxAdjustInfo(info) end;
 
 -- Called when a Clockwork ConVar has changed.
 function Schema:ClockworkConVarChanged(name, previousValue, newValue)
-	if Clockwork.player:IsAdmin(Clockwork.Client) then
-		if (name == "cwWakeupSequence" and newValue) then
-			if newValue == "0" then
-				if Clockwork.Client.LoadingText then
-					self:FinishWakeupSequence();
-				end
+	if (name == "cwWakeupSequence" and newValue) then
+		if newValue == "0" then
+			if Clockwork.Client.LoadingText then
+				self:FinishWakeupSequence();
 			end
 		end
 	end

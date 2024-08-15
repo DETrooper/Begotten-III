@@ -2337,9 +2337,15 @@ concommand.Add("cw_CoinslotSalaryCheck", function(player, cmd, args)
 			if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
 				local collectableWages = player:GetCharacterData("collectableWages", 0);
 				local coin = player.cwInfoTable.coinslotWages * collectableWages;
+				local ranksRestrictedWages = Schema.RanksRestrictedWages;
+				local rank = player:GetCharacterData("rank", 1);
 				
 				Schema:EasyText(player, "olive", "You pull the lever to check your salary. According to the Coinslot's mechanical display, you have "..collectableWages.." collectible salaries, for a total of "..coin.." coin.");
-				--Schema:EasyText(player, "lightslateblue", "You have "..collectableWages.." collectible salaries, for a total of "..coin.." coin.");
+				
+				if ranksRestrictedWages and ranksRestrictedWages[faction] and table.HasValue(ranksRestrictedWages[faction], rank) then
+					Schema:EasyText(player, "peru", "At your current rank you will not accumulate salaries whilst inside the safezone!");
+				end
+				
 				entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
 			end
 		end

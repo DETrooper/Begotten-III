@@ -2528,12 +2528,10 @@ function Schema:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 		
 		if (!lightSpawn) then
 			if firstSpawn then
-				if (!player.cwWakingUp and !player.cwWoke) then
-					if not player:IsBot() then
+				if (!player.cwWakingUp) and !player:IsBot() then
+					if player:GetCharacterData("charPlayTime", 0) < 1 then
 						self:PlayerWakeup(player);
 					end
-					
-					player.cwWoke = true;
 				end
 				
 				player.spawnTime = curTime;

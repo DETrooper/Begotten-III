@@ -1688,349 +1688,349 @@ function cwBeliefs:PlayerExitedDuel(player)
 	end
 end
 
+function cwBeliefs:PrePlayerCharacterCreated(player, character)
+	local data = character.data;
+	local inventory = character.inventory;
+	local faction = character.faction;
+	local subfaction = character.subfaction;
+	local traits = data["Traits"];
+	local level = 1;
+	
+	data["beliefs"] = {};
+	
+	if faction == "Children of Satan" then
+		if subfaction == "Kinisger" or subfaction == "Philimaxio" then
+			level = level + 6;
+		elseif subfaction == "Varazdat" then
+			level = level + 5;
+			data["beliefs"]["savage"] = true;
+			data["beliefs"]["heart_eater"] = true;
+		elseif subfaction == "Rekh-khet-sa" then
+			level = level + 16;
+			data["beliefs"]["primevalism"] = true;
+		end
+	elseif faction == "Gatekeeper" then
+		if subfaction == "Auxiliary" then
+			level = level + 11;
+		elseif subfaction == "Praeventor" then
+			level = level + 7;
+		else
+			level = level + 5;
+		end
+	elseif faction == "Goreic Warrior" then
+		if subfaction == "Clan Gore" or subfaction == "Clan Shagalax" then
+			level = level + 7;
+			
+			if subfaction == "Clan Shagalax" then
+				data["beliefs"]["ingenious"] = true;
+				data["beliefs"]["craftsman"] = true;
+				data["beliefs"]["smith"] = true;
+			end
+		elseif subfaction == "Clan Crast" then
+			level = level + 11;
+		elseif subfaction == "Clan Reaver" or subfaction == "Clan Harald" then
+			level = level + 5;
+		elseif subfaction == "Clan Grock" then
+			level = level + 7;
+		end
+	elseif faction == "Pope Adyssa's Gatekeepers" then
+		level = level + 15;
+	elseif faction == "Holy Hierarchy" then
+		level = level + 10;
+	elseif faction == "The Third Inquisition" then
+		level = level + 19;
+	elseif faction == "Smog City Pirate" then
+		if subfaction == "Machinists" then
+			level = level + 7;
+		elseif subfaction == "Voltists" then
+			level = level + 10;
+			data["beliefs"]["voltism"] = true;
+		end
+	end
+	
+	if (table.HasValue(traits, "criminal")) then
+		level = level + 3;
+		data["beliefs"]["nimble"] = true;
+		data["beliefs"]["sly_fidget"] = true;
+		data["beliefs"]["safecracker"] = true;
+
+		Clockwork.inventory:AddInstance(inventory, item.CreateInstance("lockpick"));
+		Clockwork.inventory:AddInstance(inventory, item.CreateInstance("lockpick"));
+	end
+	
+	if (table.HasValue(traits, "favored")) then
+		level = level + 3;
+		data["beliefs"]["fortunate"] = true;
+		data["beliefs"]["lucky"] = true;
+		data["beliefs"]["favored"] = true;
+	end
+	
+	if (table.HasValue(traits, "nimble")) then
+		level = level + 3;
+		data["beliefs"]["nimble"] = true;
+		data["beliefs"]["evasion"] = true;
+		data["beliefs"]["dexterity"] = true;
+	end;
+	
+	if (table.HasValue(traits, "brawny")) then
+		level = level + 3;
+		data["beliefs"]["fighter"] = true;
+		data["beliefs"]["strength"] = true;
+		data["beliefs"]["might"] = true;
+	end;
+	
+	if table.HasValue(traits, "duelist") then
+		level = level + 3;
+		data["beliefs"]["fighter"] = true;
+		data["beliefs"]["parrying"] = true;
+		data["beliefs"]["deflection"] = true;
+	end
+	
+	if table.HasValue(traits, "vigorous") then
+		level = level + 3;
+		data["beliefs"]["believers_perseverance"] = true;
+		data["beliefs"]["plenty_to_spill"] = true;
+		data["beliefs"]["unyielding"] = true;
+	end
+	
+	if (table.HasValue(traits, "cannibal")) then
+		level = level + 1;
+		data["beliefs"]["savage"] = true;
+	end;
+	
+	if table.HasValue(traits, "shrewd") then
+		level = level + 3;
+		data["beliefs"]["ingenious"] = true;
+		data["beliefs"]["craftsman"] = true;
+		data["beliefs"]["mechanic"] = true;
+	end
+	
+	if table.HasValue(traits, "scribe") then
+		level = level + 2;
+		data["beliefs"]["literacy"] = true;
+		data["beliefs"]["scribe"] = true;
+	elseif table.HasValue(traits, "literate") then
+		level = level + 1;
+		data["beliefs"]["literacy"] = true;
+	end
+	
+	if table.HasValue(traits, "gunslinger") then
+		level = level + 3;
+		data["beliefs"]["ingenious"] = true;
+		data["beliefs"]["powder_and_steel"] = true;
+		
+		local random_ammos = {--[["grapeshot",]] "pop-a-shot"};
+		local peppershot = Clockwork.item:CreateInstance("begotten_peppershot");
+			
+		if peppershot then
+			peppershot:SetCondition(math.random(60, 80));
+			
+			Clockwork.inventory:AddInstance(inventory, peppershot);
+		end
+		
+		for i = 1, math.random(3, 4) do
+			Clockwork.inventory:AddInstance(inventory, Clockwork.item:CreateInstance(random_ammos[math.random(1, #random_ammos)]));
+		end
+	end
+	
+	if table.HasValue(traits, "escapee") then
+		data["tied"] = true;
+	end
+	
+	if (table.HasValue(traits, "survivalist")) then
+		level = level + 5;
+		
+		local random_consumables = {};
+		local random_melees = {};
+		
+		if faction == "Goreic Warrior" then
+			random_consumables = {"cooked_deer_meat", "cooked_goat_meat", "crafted_bandage"};
+			random_melees = {"begotten_1h_goremace", "begotten_dagger_gorehuntingdagger", "begotten_spear_harpoon", "begotten_2h_great_club"};
+		else
+			random_consumables = {"skintape", "can_of_beans", "moldy_bread", "dirtywater", "crafted_bandage"};
+			random_melees = {"begotten_1h_bat", "begotten_1h_board", "begotten_1h_brokensword", "begotten_spear_harpoon", "begotten_2h_great_club", "begotten_2h_quarterstaff", "begotten_dagger_quickshank", "begotten_1h_pipe"};
+		end
+		
+		local random_melee = Clockwork.item:CreateInstance(random_melees[math.random(1, #random_melees)]);
+			
+		if random_melee then
+			random_melee:SetCondition(math.random(40, 70));
+			
+			Clockwork.inventory:AddInstance(inventory, random_melee);
+		end
+		
+		for i = 1, math.random(2, 4) do
+			Clockwork.inventory:AddInstance(inventory, Clockwork.item:CreateInstance(random_consumables[math.random(1, #random_consumables)]));
+		end
+	end;
+	
+	if table.HasValue(traits, "veteran") then
+		level = level + 4;
+		data["beliefs"]["fighter"] = true;
+		data["beliefs"]["halfsword_sway"] = true;
+		data["beliefs"]["blademaster"] = true;
+		data["beliefs"]["billman"] = true;
+		
+		--local random_armors = {};
+		local random_melees = {};
+		local random_shields = {};
+		
+		if faction == "Goreic Warrior" then
+			--random_armors = {"gore_chainmail", "gore_warfighter_armor"};
+			random_melees = {"begotten_spear_ironshortspear", "begotten_1h_goremace", "begotten_1h_goreshortsword"}
+			random_shields = {"shield5"};
+		else
+			--random_armors = {"light_brigandine_armor", "wanderer_mail"};
+			random_melees = {"begotten_spear_ironshortspear", "begotten_1h_scrapaxe", "begotten_1h_scrapblade"};
+			random_shields = {"shield1", "shield5"};
+		end
+		
+		--local random_armor = Clockwork.item:CreateInstance(random_armors[math.random(1, #random_armors)]);
+		local random_melee = Clockwork.item:CreateInstance(random_melees[math.random(1, #random_melees)]);
+		local random_shield = Clockwork.item:CreateInstance(random_shields[math.random(1, #random_shields)]);
+			
+		--[[if random_armor then
+			random_armor:SetCondition(math.random(40, 60));
+			
+			Clockwork.inventory:AddInstance(inventory, random_armor);
+		end]]--
+			
+		if random_melee then
+			random_melee:SetCondition(math.random(40, 60));
+			
+			Clockwork.inventory:AddInstance(inventory, random_melee);
+		end
+		
+		if random_shield then
+			random_shield:SetCondition(math.random(40, 60));
+			
+			Clockwork.inventory:AddInstance(inventory, random_shield);
+		end
+	end
+	
+	if (table.HasValue(traits, "scavenger")) then
+		Clockwork.inventory:AddInstance(inventory, Clockwork.item:CreateInstance("breakdown_kit"));
+	end
+	
+	if (table.HasValue(traits, "miner")) then
+		local pickaxe = Clockwork.item:CreateInstance("begotten_2h_great_pickaxe");
+		local lantern = Clockwork.item:CreateInstance("cw_lantern");
+	
+		pickaxe:SetCondition(math.random(40, 70));
+		lantern:SetData("oil", 60);
+	
+		Clockwork.inventory:AddInstance(inventory, pickaxe);
+		Clockwork.inventory:AddInstance(inventory, lantern);
+		--Clockwork.inventory:AddInstance(inventory, Clockwork.item:CreateInstance("large_oil"));
+	end
+	
+	if (table.HasValue(traits, "logger")) then
+		local hatchet = Clockwork.item:CreateInstance("begotten_1h_hatchet");
+		
+		hatchet:SetCondition(math.random(40, 70));
+	
+		Clockwork.inventory:AddInstance(inventory, hatchet);
+	end
+	
+	if table.HasValue(traits, "pious") then
+		level = level + 1;
+	end
+	
+	if (table.HasValue(traits, "zealous")) then
+		level = level + 5;
+		--points = points + 3;
+		data["beliefs"]["prudence"] = true;
+		data["beliefs"]["saintly_composure"] = true;
+	end;
+	
+	if cwCharacterNeeds and table.HasValue(traits, "exhausted") then
+		data["hunger"] = math.random(50, 70);
+		data["sleep"] = math.random(50, 70);
+		data["thirst"] = math.random(50, 70);
+	end
+	
+	if cwMedicalSystem and table.HasValue(traits, "wounded") then
+		local wound_applied = false;
+		
+		if !data["Injuries"] then
+			data["Injuries"] = {};
+		end
+		
+		for i = 1, 7 do
+			if !data["Injuries"][i] then
+				data["Injuries"][i] = {};
+			end
+			
+			if !data["BleedingLimbs"] then
+			
+			end
+			
+			if math.random(1, 4) == 1 or (i == 7 and !wound_applied) then
+				if (i < 8 and i > 3) and math.random(1, 6) == 1 then
+					data["Injuries"][i]["broken_bone"] = true;
+				elseif math.random(1, 4) == 1 then
+					data["Injuries"][i]["burn"] = true;
+				else
+					data["Injuries"][i]["gash"] = true;
+					
+					if !data["BleedingLimbs"] then
+						data["BleedingLimbs"] = {};
+					end
+					
+					data["BleedingLimbs"][i] = true;
+				end
+				
+				if !data["LimbData"] then
+					data["LimbData"] = {};
+				end
+				
+				data["LimbData"][i] = math.random(25, 60);
+				
+				wound_applied = true;
+			end
+		end
+		
+		data["Health"] = math.random(50, 75);
+	end
+	
+	-- FOR MELEE TEST ONLY
+	if melee_test_enabled == true then
+		if not player:HasBelief("fighter") then
+			data["beliefs"]["fighter"] = true;
+			data["beliefs"]["halfsword_sway"] = true;
+			data["beliefs"]["parrying"] = true;
+			data["beliefs"]["deflection"] = true;
+			data["beliefs"]["strength"] = true;
+			
+			level = level + 5;
+		else
+			data["beliefs"]["halfsword_sway"] = true;
+			data["beliefs"]["parrying"] = true;
+			data["beliefs"]["deflection"] = true;
+			
+			level = level + 3;
+		end
+		
+		data["beliefs"]["defender"] = true;
+		data["beliefs"]["hauberk"] = true;
+		
+		level = level + 2;
+	end
+	
+	local points = level - 1;
+	
+	for k, v in pairs(data["beliefs"]) do
+		if v then points = points - 1 end;
+	end
+	
+	data["points"] = points;
+	data["level"] = level;
+end
+
 function cwBeliefs:PostPlayerCharacterLoaded(player)
-	local playerBeliefsSetup = player:GetCharacterData("beliefsSetup");
 	local playerLevel = player:GetCharacterData("level", 1);
 	
 	player:SetSharedVar("level", playerLevel);
-
-	if playerBeliefsSetup ~= true then
-		local level = 1;
-		--local points = 0;
-		local faction = player:GetFaction();
-		local subfaction = player:GetSubfaction();
-		
-		if faction == "Children of Satan" then
-			if subfaction == "Kinisger" or subfaction == "Philimaxio" then
-				level = level + 6;
-			elseif subfaction == "Varazdat" then
-				level = level + 5;
-				self:ForceTakeBelief(player, "savage");
-				self:ForceTakeBelief(player, "heart_eater");
-			elseif subfaction == "Rekh-khet-sa" then
-				level = level + 16;
-				self:ForceTakeBelief(player, "primevalism");
-			end
-		elseif faction == "Gatekeeper" then
-			if subfaction == "Auxiliary" then
-				level = level + 11;
-			elseif subfaction == "Praeventor" then
-				level = level + 7;
-			else
-				level = level + 5;
-			end
-		elseif faction == "Goreic Warrior" then
-			if subfaction == "Clan Gore" or subfaction == "Clan Shagalax" then
-				level = level + 7;
-				
-				if subfaction == "Clan Shagalax" then
-					self:ForceTakeBelief(player, "ingenious");
-					self:ForceTakeBelief(player, "craftsman");
-					self:ForceTakeBelief(player, "smith");
-				end
-			elseif subfaction == "Clan Crast" then
-				level = level + 11;
-			elseif subfaction == "Clan Reaver" or subfaction == "Clan Harald" then
-				level = level + 5;
-			elseif subfaction == "Clan Grock" then
-				level = level + 7;
-			end
-		elseif faction == "Pope Adyssa's Gatekeepers" then
-			level = level + 15;
-		elseif faction == "Holy Hierarchy" then
-			level = level + 10;
-		elseif faction == "The Third Inquisition" then
-			level = level + 19;
-		elseif faction == "Smog City Pirate" then
-			if subfaction == "Machinists" then
-				level = level + 7;
-			elseif subfaction == "Voltists" then
-				level = level + 10;
-				self:ForceTakeBelief(player, "voltism");
-			end
-		end
-		
-		if (player:HasTrait("criminal")) then
-			level = level + 3;
-			self:ForceTakeBelief(player, "nimble");
-			self:ForceTakeBelief(player, "sly_fidget");
-			self:ForceTakeBelief(player, "safecracker");
-			
-			local inventory = player:GetInventory();
-			
-			Clockwork.inventory:AddInstance(inventory, item.CreateInstance("lockpick"));
-			Clockwork.inventory:AddInstance(inventory, item.CreateInstance("lockpick"));
-		end
-		
-		if (player:HasTrait("favored")) then
-			level = level + 3;
-			self:ForceTakeBelief(player, "fortunate");
-			self:ForceTakeBelief(player, "lucky");
-			self:ForceTakeBelief(player, "favored");
-		end
-		
-		if (player:HasTrait("nimble")) then
-			level = level + 3;
-			self:ForceTakeBelief(player, "nimble");
-			self:ForceTakeBelief(player, "evasion");
-			self:ForceTakeBelief(player, "dexterity");
-		end;
-		
-		if (player:HasTrait("brawny")) then
-			level = level + 3;
-			self:ForceTakeBelief(player, "fighter");
-			self:ForceTakeBelief(player, "strength");
-			self:ForceTakeBelief(player, "might");
-		end;
-		
-		if player:HasTrait("duelist") then
-			level = level + 3;
-			self:ForceTakeBelief(player, "fighter");
-			self:ForceTakeBelief(player, "parrying");
-			self:ForceTakeBelief(player, "deflection");
-		end
-		
-		if player:HasTrait("vigorous") then
-			level = level + 3;
-			self:ForceTakeBelief(player, "believers_perseverance");
-			self:ForceTakeBelief(player, "plenty_to_spill");
-			self:ForceTakeBelief(player, "unyielding");
-			
-			player:SetHealth(player:Health() + 25);
-		end
-		
-		if (player:HasTrait("cannibal")) then
-			level = level + 1;
-			self:ForceTakeBelief(player, "savage");
-		end;
-		
-		if player:HasTrait("shrewd") then
-			level = level + 3;
-			self:ForceTakeBelief(player, "ingenious");
-			self:ForceTakeBelief(player, "craftsman");
-			self:ForceTakeBelief(player, "mechanic");
-		end
-		
-		if player:HasTrait("scribe") then
-			level = level + 2;
-			self:ForceTakeBelief(player, "literacy");
-			self:ForceTakeBelief(player, "scribe");
-		elseif player:HasTrait("literate") then
-			level = level + 1;
-			self:ForceTakeBelief(player, "literacy");
-		end
-		
-		if player:HasTrait("gunslinger") then
-			level = level + 3;
-			self:ForceTakeBelief(player, "ingenious");
-			self:ForceTakeBelief(player, "powder_and_steel");
-			
-			local inventory = player:GetInventory();
-			local random_ammos = {--[["grapeshot",]] "pop-a-shot"};
-			
-			local peppershot = Clockwork.item:CreateInstance("begotten_peppershot");
-				
-			if peppershot then
-				peppershot:SetCondition(math.random(60, 80));
-				
-				Clockwork.inventory:AddInstance(inventory, peppershot);
-			end
-			
-			for i = 1, math.random(3, 4) do
-				Clockwork.inventory:AddInstance(inventory, Clockwork.item:CreateInstance(random_ammos[math.random(1, #random_ammos)]));
-			end
-		end
-		
-		if player:HasTrait("escapee") then
-			timer.Simple(0.1, function()
-				if IsValid(player) then
-					Schema:TiePlayer(player, true);
-				end
-			end);
-		end
-		
-		if (player:HasTrait("survivalist")) then
-			level = level + 5;
-			
-			local inventory = player:GetInventory();
-			local random_consumables = {};
-			local random_melees = {};
-			
-			if faction == "Goreic Warrior" then
-				random_consumables = {"cooked_deer_meat", "cooked_goat_meat", "crafted_bandage"};
-				random_melees = {"begotten_1h_goremace", "begotten_dagger_gorehuntingdagger", "begotten_spear_harpoon", "begotten_2h_great_club"};
-			else
-				random_consumables = {"skintape", "can_of_beans", "moldy_bread", "dirtywater", "crafted_bandage"};
-				random_melees = {"begotten_1h_bat", "begotten_1h_board", "begotten_1h_brokensword", "begotten_spear_harpoon", "begotten_2h_great_club", "begotten_2h_quarterstaff", "begotten_dagger_quickshank", "begotten_1h_pipe"};
-			end
-			
-			local random_melee = Clockwork.item:CreateInstance(random_melees[math.random(1, #random_melees)]);
-				
-			if random_melee then
-				random_melee:SetCondition(math.random(40, 70));
-				
-				Clockwork.inventory:AddInstance(inventory, random_melee);
-			end
-			
-			for i = 1, math.random(2, 4) do
-				Clockwork.inventory:AddInstance(inventory, Clockwork.item:CreateInstance(random_consumables[math.random(1, #random_consumables)]));
-			end
-		end;
-		
-		if player:HasTrait("veteran") then
-			level = level + 4;
-			self:ForceTakeBelief(player, "fighter");
-			self:ForceTakeBelief(player, "halfsword_sway");
-			self:ForceTakeBelief(player, "blademaster");
-			self:ForceTakeBelief(player, "billman");
-			
-			local inventory = player:GetInventory();
-			--local random_armors = {};
-			local random_melees = {};
-			local random_shields = {};
-			
-			if faction == "Goreic Warrior" then
-				--random_armors = {"gore_chainmail", "gore_warfighter_armor"};
-				random_melees = {"begotten_spear_ironshortspear", "begotten_1h_goremace", "begotten_1h_goreshortsword"}
-				random_shields = {"shield5"};
-			else
-				--random_armors = {"light_brigandine_armor", "wanderer_mail"};
-				random_melees = {"begotten_spear_ironshortspear", "begotten_1h_scrapaxe", "begotten_1h_scrapblade"};
-				random_shields = {"shield1", "shield5"};
-			end
-			
-			--local random_armor = Clockwork.item:CreateInstance(random_armors[math.random(1, #random_armors)]);
-			local random_melee = Clockwork.item:CreateInstance(random_melees[math.random(1, #random_melees)]);
-			local random_shield = Clockwork.item:CreateInstance(random_shields[math.random(1, #random_shields)]);
-				
-			--[[if random_armor then
-				random_armor:SetCondition(math.random(40, 60));
-				
-				Clockwork.inventory:AddInstance(inventory, random_armor);
-			end]]--
-				
-			if random_melee then
-				random_melee:SetCondition(math.random(40, 60));
-				
-				Clockwork.inventory:AddInstance(inventory, random_melee);
-			end
-			
-			if random_shield then
-				random_shield:SetCondition(math.random(40, 60));
-				
-				Clockwork.inventory:AddInstance(inventory, random_shield);
-			end
-		end
-		
-		if (player:HasTrait("scavenger")) then
-			local inventory = player:GetInventory();
-		
-			Clockwork.inventory:AddInstance(inventory, Clockwork.item:CreateInstance("breakdown_kit"));
-		end
-		
-		if (player:HasTrait("miner")) then
-			local inventory = player:GetInventory();
-			local pickaxe = Clockwork.item:CreateInstance("begotten_2h_great_pickaxe");
-			local lantern = Clockwork.item:CreateInstance("cw_lantern");
-		
-			pickaxe:SetCondition(math.random(40, 70));
-			lantern:SetData("oil", 60);
-		
-			Clockwork.inventory:AddInstance(inventory, pickaxe);
-			Clockwork.inventory:AddInstance(inventory, lantern);
-			--Clockwork.inventory:AddInstance(inventory, Clockwork.item:CreateInstance("large_oil"));
-		end
-		
-		if (player:HasTrait("logger")) then
-			local inventory = player:GetInventory();
-			local hatchet = Clockwork.item:CreateInstance("begotten_1h_hatchet");
-			
-			hatchet:SetCondition(math.random(40, 70));
-		
-			Clockwork.inventory:AddInstance(inventory, hatchet);
-		end
-		
-		if player:HasTrait("pious") then
-			level = level + 1;
-		end
-		
-		if (player:HasTrait("zealous")) then
-			level = level + 5;
-			--points = points + 3;
-			self:ForceTakeBelief(player, "prudence");
-			self:ForceTakeBelief(player, "saintly_composure");
-		end;
-		
-		if cwCharacterNeeds and player:HasTrait("exhausted") then
-			player:SetNeed("hunger", math.random(50, 80));
-			player:SetNeed("sleep", math.random(50, 80));
-			player:SetNeed("thirst", math.random(50, 80));
-		end
-		
-		if cwMedicalSystem and player:HasTrait("wounded") then
-			local hp = player:Health();
-			local wound_applied = false;
-			
-			for i = 1, 7 do
-				if math.random(1, 4) == 1 or (i == 7 and !wound_applied) then
-					if (i < 8 and i > 3) and math.random(1, 6) == 1 then
-						player:AddInjury(i, "broken_bone")
-					elseif math.random(1, 4) == 1 then
-						player:AddInjury(i, "burn");
-					else
-						player:AddInjury(i, "gash");
-						player:StartBleeding(i);
-					end
-					
-					Clockwork.limb:TakeDamage(player, i, math.random(40, 75));
-					
-					wound_applied = true;
-				end
-			end
-			
-			player:SetHealth(math.max(player:Health() - math.random(25, 40), 1));
-		end
-		
-		-- Remove taste of blood effect.
-		for i, v in ipairs(_player.GetAll()) do
-			if v.tasteOfBloodVictim and v.tasteOfBloodVictim == player then
-				v.tasteOfBloodVictim = nil;
-				
-				netstream.Start(v, "TasteofBloodHighlight", nil);
-			end
-		end
-		
-		-- FOR MELEE TEST ONLY
-		if melee_test_enabled == true then
-			if not player:HasBelief("fighter") then
-				self:ForceTakeBelief(player, "fighter");
-				self:ForceTakeBelief(player, "halfsword_sway");
-				self:ForceTakeBelief(player, "parrying");
-				self:ForceTakeBelief(player, "deflection");
-				self:ForceTakeBelief(player, "strength");
-				
-				level = level + 5;
-			else
-				self:ForceTakeBelief(player, "halfsword_sway");
-				self:ForceTakeBelief(player, "parrying");
-				self:ForceTakeBelief(player, "deflection");
-				
-				level = level + 3;
-			end
-			
-			self:ForceTakeBelief(player, "defender");
-			--self:ForceTakeBelief(player, "warden");
-			self:ForceTakeBelief(player, "hauberk");
-			
-			level = level + 2;
-		end
-		
-		if level > 1 then
-			player:SetSacramentLevel(level);
-		end
-		
-		player:SetCharacterData("beliefsSetup", true);
-	end
 	
 	if player.poisonTicks then
 		player.poisonTicks = nil;
@@ -2043,6 +2043,15 @@ function cwBeliefs:PostPlayerCharacterLoaded(player)
 		
 		if timer.Exists("DecapitationBuffTimer_"..entIndex) then
 			timer.Remove("DecapitationBuffTimer_"..entIndex);
+		end
+	end
+	
+	-- Remove taste of blood effect.
+	for i, v in ipairs(_player.GetAll()) do
+		if v.tasteOfBloodVictim and v.tasteOfBloodVictim == player then
+			v.tasteOfBloodVictim = nil;
+			
+			netstream.Start(v, "TasteofBloodHighlight", nil);
 		end
 	end
 

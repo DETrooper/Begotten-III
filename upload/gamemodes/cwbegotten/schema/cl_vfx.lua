@@ -979,7 +979,7 @@ function Schema:AddBlackFade(time)
 end
 
 netstream.Hook("WakeupSequence", function(data)
-	if Clockwork.ConVars.WAKEUPSEQUENCE:GetInt() == 1 or !Clockwork.Client:IsAdmin() then
+	if Clockwork.ConVars.WAKEUPSEQUENCE:GetInt() == 1 then
 		Schema:RefreshWakeupSequence();
 		
 		Clockwork.Client.LoadingText = true;
@@ -1062,5 +1062,5 @@ Clockwork.setting:AddCheckBox("Screen effects", "Cinematic camera only in observ
 Clockwork.setting:AddCheckBox("Admin ESP", "Enable observer lamp light.", "cwObserverLamp", "Toggle the observer lamp light.", function() return Clockwork.player:IsAdmin(Clockwork.Client); end);
 
 --
-Clockwork.setting:AddCheckBox("Wakeup sequence", "Enable the wakeup sequence.", "cwWakeupSequence", "Click to toggle the wakeup sequence.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
+Clockwork.setting:AddCheckBox("Wakeup sequence", "Enable the wakeup sequence.", "cwWakeupSequence", "Click to toggle the wakeup sequence.", function() end);
 Clockwork.setting:AddCheckBox("Zones", "Enable motion blur.", "cwShowBlur", "Click to toggle motion blur.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);

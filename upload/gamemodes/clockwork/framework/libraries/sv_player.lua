@@ -3066,11 +3066,6 @@ function Clockwork.player:LoadCharacter(player, characterID, tMergeCreate, Callb
 			table.Merge(character, tMergeCreate)
 
 			if (character and type(character) == "table") then
-				character.inventory = {}
-				hook.Run(
-					"GetPlayerDefaultInventory", player, character, character.inventory
-				)
-
 				if (!bForce) then
 					local fault = hook.Run("PlayerCanCreateCharacter", player, character, characterID)
 
@@ -3078,6 +3073,10 @@ function Clockwork.player:LoadCharacter(player, characterID, tMergeCreate, Callb
 						return self:SetCreateFault(player, fault or "You cannot create this character!")
 					end
 				end
+				
+				character.inventory = {}
+				hook.Run("GetPlayerDefaultInventory", player, character, character.inventory)
+				hook.Run("PrePlayerCharacterCreated", player, character);
 
 				self:SaveCharacter(player, true, character, function(key)
 					player.cwCharacterList[characterID] = character

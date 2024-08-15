@@ -213,7 +213,6 @@ local PIOUS = Clockwork.trait:New()
 	PIOUS.name = "Pious"
 	PIOUS.description = "Your character is pious and a firm believer in their faith. This trait grants a single free sacrament with an epiphany for use in the belief tree."
 	PIOUS.points = 1
-	PIOUS.disables = {"escapee"}
 	PIOUS.excludedsubfactions = {"Clan Grock"};
 Clockwork.trait:Register(PIOUS)
 
