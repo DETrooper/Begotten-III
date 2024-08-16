@@ -1062,5 +1062,5 @@ Clockwork.setting:AddCheckBox("Screen effects", "Cinematic camera only in observ
 Clockwork.setting:AddCheckBox("Admin ESP", "Enable observer lamp light.", "cwObserverLamp", "Toggle the observer lamp light.", function() return Clockwork.player:IsAdmin(Clockwork.Client); end);
 
 --
-Clockwork.setting:AddCheckBox("Wakeup sequence", "Enable the wakeup sequence.", "cwWakeupSequence", "Click to toggle the wakeup sequence.", function() end);
+Clockwork.setting:AddCheckBox("Wakeup sequence", "Enable the wakeup sequence.", "cwWakeupSequence", "Click to toggle the wakeup sequence.");
 Clockwork.setting:AddCheckBox("Zones", "Enable motion blur.", "cwShowBlur", "Click to toggle motion blur.", function() return Clockwork.player:IsAdmin(Clockwork.Client) end);
