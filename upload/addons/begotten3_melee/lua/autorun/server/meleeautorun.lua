@@ -1124,15 +1124,15 @@ local function Guarding(ent, dmginfo)
 						
 						if ent.HasBelief then
 							local max_stability = ent:GetMaxStability();
-							local deflectionPoisePayback = 10;
-							local deflectionStabilityPayback = 10;
+							local deflectionPoisePayback = 0;
+							local deflectionStabilityPayback = 0;
 						
 							if ent:HasBelief("sidestep") then
-								deflectionPoisePayback = 35;
-								deflectionStabilityPayback = 20;
-							elseif ent:HasBelief("deflection") then
 								deflectionPoisePayback = 25;
 								deflectionStabilityPayback = 15;
+							elseif ent:HasBelief("deflection") then
+								deflectionPoisePayback = 15;
+								deflectionStabilityPayback = 10;
 							end
 							
 							if IsValid(inflictor) and inflictor:GetNWString("activeOffhand") then
@@ -1155,9 +1155,9 @@ local function Guarding(ent, dmginfo)
 							local delay = enemyattacktable["delay"];
 							
 							if ent.HasBelief then
-								if ent:HasBelief("sidestep") then
+								if ent:HasBelief("sidestep") and enemyattacktable["delay"] >= 2 then
 									delay = enemyattacktable["delay"] + 2;
-								elseif ent:HasBelief("deflection") then
+								elseif ent:HasBelief("deflection") and enemyattacktable["delay"] >= 1 then
 									delay = enemyattacktable["delay"] + 1;
 								end
 							end

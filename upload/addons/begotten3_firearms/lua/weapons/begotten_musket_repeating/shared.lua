@@ -49,7 +49,7 @@ SWEP.data.ironsights			= 1
 SWEP.ShellTime			= .5
 
 SWEP.Primary.NumShots	= 1
-SWEP.Primary.Damage		= 85
+SWEP.Primary.Damage		= 95
 SWEP.Primary.Spread		= 0.05				
 SWEP.Primary.IronAccuracy = .02
 -- Because irons don't magically give you less pellet spread!
@@ -96,7 +96,7 @@ SWEP.AmmoTypes = {
 	["Longshot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("weapons/cb4/cb4-1.wav");
 		SWEP.Primary.NumShots = 1;
-		SWEP.Primary.Damage = 85;
+		SWEP.Primary.Damage = 95;
 		SWEP.Primary.Spread = .05;
 		SWEP.Primary.IronAccuracy = .02;
 		SWEP.Primary.Ammo = "smg";

@@ -964,9 +964,9 @@ local COMMAND = Clockwork.command:New("Warcry");
 									end
 								
 									if v:HasBelief("saintly_composure") then
-										v:Disorient(3);
+										v:Disorient(2);
 									else
-										v:Disorient(15);
+										v:Disorient(8);
 									end
 								end
 							elseif faith == "Faith of the Family" then
@@ -1014,7 +1014,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 										if v:HasBelief("saintly_composure") then
 											v:Disorient(1);
 										else
-											v:Disorient(3);
+											v:Disorient(2.5);
 										end
 									end
 								end
