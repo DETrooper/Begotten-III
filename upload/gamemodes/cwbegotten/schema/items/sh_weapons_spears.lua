@@ -14,7 +14,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(0, 3, 0);
 	ITEM.canUseShields = true;
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.components = {breakdownType = "meltdown", items = {"wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 200};
 ITEM:Register();
 
@@ -34,7 +34,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-2.83, 3, -23.24);
 	ITEM.canUseShields = true;
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood", "wood"}}; -- use "breakdown" for other type
+	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600};
 ITEM:Register();
 
