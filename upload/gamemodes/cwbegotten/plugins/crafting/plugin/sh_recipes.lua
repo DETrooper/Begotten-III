@@ -1429,24 +1429,24 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
-	
-	RECIPE = cwRecipes.recipes:New("backpack_pouches");
-		RECIPE.name = "Backpack w/ Pouches";
+
+	RECIPE = cwRecipes.recipes:New("backpack_small");
+		RECIPE.name = "Small Backpack";
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["backpack_pouch"] = {amount = 2},
-			["backpack"] = {amount = 1},
+			["backpack_pouch"] = {amount = 1},
+			["cloth"] = {amount = 3},
 		};
 		RECIPE.result = {
-			["backpack_pouches"] = {amount = 1},
+			["backpack_small"] = {amount = 1},
 		};
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "begotten/items/first_aid.wav";
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 25;
+		RECIPE.experience = 20;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -1474,7 +1474,35 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 20;
+		RECIPE.experience = 30;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("backpack_pouches");
+		RECIPE.name = "Backpack w/ Pouches";
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["backpack_pouch"] = {amount = 2},
+			["backpack"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["backpack_pouches"] = {amount = 1},
+		};
+		RECIPE.category = "Other"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 30;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -1502,7 +1530,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 25;
+		RECIPE.experience = 60;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -1519,7 +1547,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["hide"] = {amount = 4},
+			["hide"] = {amount = 3},
 		};
 		RECIPE.result = {
 			["gore_pouch"] = {amount = 1},
@@ -1529,7 +1557,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 15;
+		RECIPE.experience = 35;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -3503,7 +3531,7 @@ RECIPE:Register()
 		RECIPE.name = "Glazic Banner";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 2},
 			["cloth"] = {amount = 6},
@@ -6739,6 +6767,36 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 
+	RECIPE = cwRecipes.recipes:New("fine_gatekeeper_plate_upgrade");
+		RECIPE.name = "(Upgrade) Fine Gatekeeper Plate";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["gatekeeper_plate"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["fine_gatekeeper_plate"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
 	RECIPE = cwRecipes.recipes:New("ornate_gatekeeper_plate");
 		RECIPE.name = "Ornate Gatekeeper Plate";
 		RECIPE.requiresSmithy = true;
@@ -7935,7 +7993,7 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 2},
-			["steel_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 3},
 			["iron_ingot"] = {amount = 4},
 		};
 		RECIPE.result = {
@@ -7964,7 +8022,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
-			["hellforged_steel_ingot"] = {amount = 6},
+			["hellforged_steel_ingot"] = {amount = 4},
+			["steel_ingot"] = {amount = 2},
 			["human_bone"] = {amount = 3},
 		};
 		RECIPE.result = {

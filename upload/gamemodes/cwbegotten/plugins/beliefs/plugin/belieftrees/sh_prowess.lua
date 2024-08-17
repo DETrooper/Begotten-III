@@ -107,13 +107,13 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 		[4] = {
 			["deflection"] = {
 				name = "Deflection",
-				description = "Successful deflections (perfect blocks) now restore +15 additional points of stamina and +5 more points of stability, as well as prevent enemy attacks for 1 second.",
+				description = "Successful deflections (perfect blocks) now restore +15 points of stamina and +5 points of stability, as well as prevent enemy attacks for a minimum of 1 second.",
 				requirements = {"fighter"},
 				row = 2,
 			},
 			["sidestep"] = {
 				name = "Sidestep",
-				description = "Successful deflections now restore +10 more points of stamina and +5 more points of stability, and also prevents enemy attacks for an additional second.",
+				description = "Successful deflections now restore +10 more points of stamina and stability, and also prevents enemy attacks for an additional second.",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "deflection"},
 				row = 3,
