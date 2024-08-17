@@ -1956,13 +1956,13 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 			data["Injuries"] = {};
 		end
 		
+		if !data["BleedingLimbs"] then
+			data["BleedingLimbs"] = {};
+		end
+		
 		for i = 1, 7 do
 			if !data["Injuries"][i] then
 				data["Injuries"][i] = {};
-			end
-			
-			if !data["BleedingLimbs"] then
-			
 			end
 			
 			if math.random(1, 4) == 1 or (i == 7 and !wound_applied) then
@@ -1973,11 +1973,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 				else
 					data["Injuries"][i]["gash"] = true;
 					
-					if !data["BleedingLimbs"] then
-						data["BleedingLimbs"] = {};
-					end
-					
-					data["BleedingLimbs"][i] = true;
+					data["BleedingLimbs"][string.lower(Clockwork.limb.names[i])] = true;
 				end
 				
 				if !data["LimbData"] then
