@@ -435,7 +435,7 @@ function Clockwork.chatBox:Decode(speaker, name, text, data, class, multiplier)
 	
 	if (IsValid(speaker)) then
 		if (!Clockwork.kernel:IsChoosingCharacter() and !Clockwork.Client.LoadingText) then
-			if (speaker:Name() != "") then
+			if (name != "") then
 				local unrecognised = false;
 				local focusedOn = false;
 				local fontOverride;
@@ -498,6 +498,8 @@ function Clockwork.chatBox:Decode(speaker, name, text, data, class, multiplier)
 						end;
 						
 						info.name = "["..unrecognisedName.."]";
+					elseif info.filter == "ic" or info.filter == "looc" then
+						info.name = Clockwork.player:GetName(speaker);
 					end;
 					
 					if (self.classes[info.class]) then
@@ -1250,7 +1252,7 @@ Clockwork.chatBox:RegisterDefaultClass("meproclaim", "ic", function(info)
 	end;
 end);
 
-Clockwork.chatBox:RegisterDefaultClass("looc", "ooc", function(info)
+Clockwork.chatBox:RegisterDefaultClass("looc", "looc", function(info)
 	if (!config.Get("enable_looc_icons"):Get()) then
 		info.icon = nil;
 	end;
@@ -1258,7 +1260,7 @@ Clockwork.chatBox:RegisterDefaultClass("looc", "ooc", function(info)
 	Clockwork.chatBox:Add(info.filtered, info.icon, Color(225, 50, 50, 255), "[LOOC] ", Color(255, 255, 150, 255), info.name..": "..info.text);
 end);
 
-Clockwork.chatBox:RegisterDefaultClass("loocnoicon", "ooc", function(info)
+Clockwork.chatBox:RegisterDefaultClass("loocnoicon", "looc", function(info)
 	if (!config.Get("enable_looc_icons"):Get()) then
 		info.icon = nil;
 	else
@@ -1292,7 +1294,7 @@ Clockwork.chatBox:RegisterDefaultClass("priv", "ooc", function(info)
 	Clockwork.chatBox:Add(info.filtered, nil, colors[info.data.userGroup], "["..info.data.userGroup.."] ", classColor, "("..info.speaker:SteamName()..") "..info.name, ": ", info.text);
 end);
 
-Clockwork.chatBox:RegisterDefaultClass("roll", "ooc", function(info)
+Clockwork.chatBox:RegisterDefaultClass("roll", "looc", function(info)
 	if (info.shouldHear) then
 		Clockwork.chatBox:Add(info.filtered, nil, Color(150, 75, 75, 255), "** "..info.name.." "..info.text);
 	end;
@@ -1302,7 +1304,7 @@ Clockwork.chatBox:RegisterDefaultClass("ooc", "ooc", function(info)
 	Clockwork.chatBox:Add(info.filtered, info.icon, Color(225, 50, 50, 255), "[OOC] ", Color(255, 180, 0, 255), info.speaker:SteamName(), ": ", info.text);
 end);
 
-Clockwork.chatBox:RegisterDefaultClass("pm", "ooc", function(info)
+Clockwork.chatBox:RegisterDefaultClass("pm", "looc", function(info)
 	Clockwork.chatBox:Add(info.filtered, nil, "[PM] ", Color(125, 150, 75, 255), "("..info.speaker:SteamName()..") "..info.name..": "..info.text);
 	surface.PlaySound("hl1/fvox/bell.wav");
 end);
@@ -1428,7 +1430,7 @@ end);
 
 netstream.Hook("ChatBoxPlayerMessage", function(data)
 	if (data.speaker:IsPlayer()) then
-		Clockwork.chatBox:Decode(data.speaker, Clockwork.player:GetName(data.speaker), data.text, data.data, data.class, data.multiplier);
+		Clockwork.chatBox:Decode(data.speaker, data.speaker:Name(), data.text, data.data, data.class, data.multiplier);
 	end;
 end);
 

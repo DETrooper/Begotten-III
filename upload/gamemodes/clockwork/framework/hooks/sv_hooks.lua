@@ -410,7 +410,9 @@ end
 -- Called when a player switches their weapon. 
 function GM:PlayerSwitchWeapon(player, oldWeapon, newWeapon)
 	timer.Simple(FrameTime(), function()
-		hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
+		if IsValid(player) then
+			hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
+		end
 	end);
 end;
 

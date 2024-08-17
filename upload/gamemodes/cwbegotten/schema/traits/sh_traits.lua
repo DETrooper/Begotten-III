@@ -274,7 +274,7 @@ local VETERAN = Clockwork.trait:New()
 	VETERAN.description = "Your character is a veteran of several battles, having accrued some fighting experience and basic equipment. This trait grants a starting random melee weapon and shield, and automatically unlocks the 4 beliefs on the left side of the 'Prowess' tree: 'Fighter', 'Halfsword and Sway', 'Blademaster', and 'Billman'."
 	VETERAN.points = 16
 	VETERAN.eventlocked = false;
-	VETERAN.disables = {"escapee"}
+	VETERAN.disables = {"duelist", "escapee", "weak"}
 	VETERAN.excludedfactions = {"Children of Satan", "Gatekeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
 	VETERAN.excludedsubfactions = {"Clan Crast", "Clan Grock"};
 Clockwork.trait:Register(VETERAN)
@@ -292,7 +292,7 @@ local WEAK = Clockwork.trait:New()
 	WEAK.name = "Weak"
 	WEAK.description = "Your character has a flimsy physique, and is unable to tolerate much pain. The 'Prowess' belief tree will be locked and unable to be progressed."
 	WEAK.points = -5
-	WEAK.disables = {"brawny", "duelist", "miner", "logger", "vigorous"}
+	WEAK.disables = {"brawny", "duelist", "miner", "logger", "veteran", "vigorous"}
 Clockwork.trait:Register(WEAK)
 
 local WINDED = Clockwork.trait:New()
