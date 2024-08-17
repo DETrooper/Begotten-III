@@ -456,12 +456,14 @@ function SWEP:TakeAmmoBegotten(amount)
 			if itemTable.TakeCondition then
 				local conditionLoss = math.max((((1000 - self.Primary.RPM) / 1000) * amount), 0.5);
 				
-				if IsValid(self.Owner) and self.Owner:IsPlayer() then
-					if self.Owner.HasBelief then
-						if self.Owner:HasBelief("ingenuity_finisher") then
-							return;
-						elseif self.Owner:HasBelief("scour_the_rust") then
-							conditionLoss = conditionLoss / 2;
+				if !itemTable.unrepairable then
+					if IsValid(self.Owner) and self.Owner:IsPlayer() then
+						if self.Owner.HasBelief then
+							if self.Owner:HasBelief("ingenuity_finisher") then
+								return;
+							elseif self.Owner:HasBelief("scour_the_rust") then
+								conditionLoss = conditionLoss / 2;
+							end
 						end
 					end
 				end

@@ -1565,6 +1565,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddText("Has Increased Parry Window", Color(110, 30, 30), nil, 0.9);
 				end
 				
+				if itemTable.unrepairable then
+					frame:AddText("Unrepairable: This weapon cannot be repaired and will always take condition damage, irrespective of beliefs.", Color(110, 30, 30), nil, 0.9);
+				end
+				
 				if itemTable.attributes then
 					if table.HasValue(itemTable.attributes, "aoebuff") then
 						frame:AddText("Area of Effect Buff: +15% Attack Damage, -25% Received Damage, 1.5x Stamina Regen Rate, +2 Residual Sanity Gain, Immunity to Warcry Sanity & Disorientation Debuffs", Color(110, 30, 30), nil, 0.9);
@@ -2431,6 +2435,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddText("Great Shield: Reduces sprint speed by 10% when held.", Color(110, 30, 30), nil, 0.9);
 				end
 				
+				if itemTable.unrepairable then
+					frame:AddText("Unrepairable: This shield cannot be repaired and will always take condition damage, irrespective of beliefs.", Color(110, 30, 30), nil, 0.9);
+				end
+				
 				if itemTable.attributes then
 					if table.HasValue(itemTable.attributes, "conditionless") then
 						frame:AddText("Conditionless: This item will not take condition damage.", Color(110, 30, 30), nil, 0.9);
@@ -2636,6 +2644,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			end
 		
 			frame:AddText(effectiveLimbsText, Color(110, 30, 30), nil, 0.9);
+		end
+		
+		if itemTable.unrepairable then
+			frame:AddText("Unrepairable: This armor cannot be repaired and will always take condition damage, irrespective of beliefs.", Color(110, 30, 30), nil, 0.9);
 		end
 		
 		if itemTable.attributes then
@@ -2868,6 +2880,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				frame:AddText("Ranged Weapon: You will be disarmed upon taking damage with this weapon.", Color(110, 30, 30), nil, 0.9);
+				
+				if itemTable.unrepairable then
+					frame:AddText("Unrepairable: This weapon cannot be repaired and will always take condition damage, irrespective of beliefs.", Color(110, 30, 30), nil, 0.9);
+				end
 				
 				if itemTable.attributes then
 					if table.HasValue(itemTable.attributes, "sundering_shot") then

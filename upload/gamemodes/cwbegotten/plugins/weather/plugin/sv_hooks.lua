@@ -131,7 +131,7 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 					end
 				end
 				
-				if !cwBeliefs or !player:HasBelief("ingenuity_finisher") then
+				if !cwBeliefs or !player:HasBelief("ingenuity_finisher") or v.unrepairable then
 					local hasScourRust = cwBeliefs and player:HasBelief("scour_the_rust");
 				
 					for k, v in pairs(player.equipmentSlots) do

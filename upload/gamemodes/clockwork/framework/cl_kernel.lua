@@ -1755,7 +1755,7 @@ function Clockwork.kernel:HandleItemSpawnIconClick(itemTable, spawnIcon, Callbac
 		end
 	end
 	
-	if (itemTable.OnRepair) and (itemTable.repairItem) and itemTable:GetCondition() then
+	if (itemTable.OnRepair) and (itemTable.repairItem) and itemTable:GetCondition() and !itemTable.unrepairable then
 		if itemTable:GetCondition() < 100 and (!itemTable:IsBroken() or (cwBeliefs and cwBeliefs:HasBelief("artisan"))) then
 			if Clockwork.inventory:HasItemByID(Clockwork.inventory:GetClient(), itemTable.repairItem) then
 				itemFunctions[#itemFunctions + 1] = (itemTable.repairText or repairName);

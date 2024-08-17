@@ -201,7 +201,7 @@ local function Guarding(ent, dmginfo)
 						local weaponItemTable = item.GetByWeapon(enemywep);
 						
 						if weaponItemTable then
-							if !cwBeliefs or not attacker:HasBelief("ingenuity_finisher") then
+							if (!cwBeliefs or !attacker:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
 								local conditionLoss;
 								
 								if cwBeliefs and attacker:HasBelief("scour_the_rust") then
@@ -467,7 +467,7 @@ local function Guarding(ent, dmginfo)
 									local weaponItemTable = item.GetByWeapon(enemywep);
 									
 									if weaponItemTable then
-										if !cwBeliefs or not attacker:HasBelief("ingenuity_finisher") then
+										if (!cwBeliefs or !attacker:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
 											local conditionLoss;
 											
 											if cwBeliefs and attacker:HasBelief("scour_the_rust") then
@@ -525,7 +525,7 @@ local function Guarding(ent, dmginfo)
 									end
 								end
 								
-								if !cwBeliefs or not ent:HasBelief("ingenuity_finisher") then
+								if (!cwBeliefs or not ent:HasBelief("ingenuity_finisher")) or shieldItemTable.unrepairable then
 									if cwBeliefs and ent:HasBelief("scour_the_rust") then
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 											shieldItemTable:TakeCondition(math.max((shieldConditionDamage * (shieldItemTable.bulletConditionScale or 0.5)) / 2, 1));
@@ -543,7 +543,7 @@ local function Guarding(ent, dmginfo)
 							end
 							
 							if weaponItemTable and not shieldEquipped then
-								if !cwBeliefs or not ent:HasBelief("ingenuity_finisher") then
+								if (!cwBeliefs or not ent:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
 									if cwBeliefs and ent:HasBelief("scour_the_rust") then
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 											weaponItemTable:TakeCondition(math.max((conditionDamage * (weaponItemTable.bulletConditionScale or 0.5)) / 2, 1));
@@ -1082,7 +1082,7 @@ local function Guarding(ent, dmginfo)
 									local weaponItemTable = item.GetByWeapon(enemywep);
 									
 									if weaponItemTable then
-										if !cwBeliefs or not attacker:HasBelief("ingenuity_finisher") then
+										if (!cwBeliefs or not attacker:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
 											local conditionLoss;
 											
 											if cwBeliefs and attacker:HasBelief("scour_the_rust") then
@@ -1284,7 +1284,7 @@ local function Guarding(ent, dmginfo)
 								local weaponItemTable = item.GetByWeapon(enemywep);
 								
 								if weaponItemTable then
-									if !cwBeliefs or not attacker:HasBelief("ingenuity_finisher") then
+									if (!cwBeliefs or not attacker:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
 										local conditionLoss;
 										
 										if cwBeliefs and attacker:HasBelief("scour_the_rust") then
@@ -1392,7 +1392,7 @@ local function Guarding(ent, dmginfo)
 						local weaponItemTable = item.GetByWeapon(enemywep);
 						
 						if weaponItemTable then
-							if cwBeliefs and not attacker:HasBelief("ingenuity_finisher") then
+							if (cwBeliefs and not attacker:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
 								local conditionLoss;
 								
 								if cwBeliefs and attacker:HasBelief("scour_the_rust") then

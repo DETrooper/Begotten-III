@@ -103,7 +103,7 @@ function ENT:OnTakeDamage(damageInfo)
 				
 				if weaponItemTable then
 					if cwBeliefs then
-						if !player:HasBelief("ingenuity_finisher") then
+						if !player:HasBelief("ingenuity_finisher") or weaponItemTable.unrepairable then
 							if player:HasBelief("scour_the_rust") then
 								weaponItemTable:TakeCondition(0.25);
 							else
