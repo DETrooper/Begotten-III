@@ -1173,8 +1173,8 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 				
 				if attacker:HasBelief("taste_of_blood") then
 					if attacker.tasteOfBloodVictim then
-						if timer.Exists("tasteOfBloodTimer") then
-							timer.Destroy("tasteOfBloodTimer");
+						if timer.Exists("tasteOfBloodTimer"..tostring(attacker:EntIndex())) then
+							timer.Destroy("tasteOfBloodTimer"..tostring(attacker:EntIndex()));
 						end
 					
 						if attacker.tasteOfBloodVictim == entity then
@@ -1184,7 +1184,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					
 					attacker.tasteOfBloodVictim = entity;
 					
-					timer.Create("tasteOfBloodTimer", 180, 1, function()
+					timer.Create("tasteOfBloodTimer"..tostring(attacker:EntIndex()), 180, 1, function()
 						if IsValid(attacker) then
 							attacker.tasteOfBloodVictim = nil;
 						end

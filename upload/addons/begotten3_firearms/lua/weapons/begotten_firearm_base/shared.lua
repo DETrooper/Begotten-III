@@ -324,7 +324,7 @@ function SWEP:AdjustFireBegotten()
 										
 										Clockwork.chatBox:AddInTargetRadius(self.Owner, "me", "pulls the trigger on their "..self.PrintName.." and it suddenly explodes!", position, config.Get("talk_radius"):Get() * 2);
 										
-										Schema:EasyText(GetAdmins(), "icon16/bomb.png", "tomato", self:Name().."'s "..self.PrintName.." exploded!");
+										Schema:EasyText(GetAdmins(), "icon16/bomb.png", "tomato", self.Owner:Name().."'s "..self.PrintName.." exploded!");
 									
 										local effectData = EffectData();
 										effectData:SetStart(position);

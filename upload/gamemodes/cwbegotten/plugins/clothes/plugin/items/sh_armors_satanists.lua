@@ -16,6 +16,7 @@ ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaith = {"Faith of the Dark"};
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/helmeyes";
+ITEM.faction = "Children of Satan";
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -84,6 +85,7 @@ ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaith = {"Faith of the Dark"};
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/helmeyes";
+ITEM.faction = "Children of Satan";
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -152,6 +154,7 @@ ITEM.description = "Elegant robes that befit only the ornate followers of Satan.
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.requireFaith = {"Faith of the Dark"};
 ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.faction = "Children of Satan";
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -207,6 +210,7 @@ ITEM.description = "Once the dignified armor of the White Sentinels and the sigi
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaith = {"Faith of the Dark"};
 ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.faction = "Children of Satan";
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -271,6 +275,7 @@ ITEM.description = "Once the dignified armor of the White Sentinels and the sigi
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaith = {"Faith of the Dark"};
 ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.faction = "Children of Satan";
 
 -- specifies which hitgroups will be affected by blunt, slash, pierce and other damage type scaling.
 ITEM.effectiveLimbs = {
@@ -335,6 +340,7 @@ ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaith = {"Faith of the Dark"};
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/helmeyes";
+ITEM.faction = "Children of Satan";
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -406,6 +412,7 @@ ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaith = {"Faith of the Dark"};
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/skullhelm";
+ITEM.faction = "Children of Satan";
 
 ITEM.attributes = {"fear"};
 ITEM.requiredbeliefs = {"hauberk"};
@@ -477,6 +484,7 @@ ITEM.description = "Heavy plate armor of Eastern Nigerii design. It is meant for
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Children of Satan"};
 ITEM.overlay = "begotten/zomboverlay/skullhelm";
+ITEM.faction = "Children of Satan";
 
 ITEM.requiredbeliefs = {"hauberk"};
 ITEM.requireSubfaction = {"Varazdat"};

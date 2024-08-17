@@ -991,6 +991,16 @@ local COMMAND = Clockwork.command:New("GoreicHornSummonAll");
 				local subfaction = player:GetSubfaction();
 				
 				if faction == "Goreic Warrior" then
+					local curTime = CurTime();
+				
+					if player.nextWarHorn and player.nextWarHorn > curTime then
+						Schema:EasyText(player, "chocolate", "You must wait another "..-math.ceil(curTime - player.nextWarHorn).." seconds before blowing the gathering horn again!");
+						
+						return false;
+					end
+					
+					player.nextWarHorn = curTime + 30;
+					
 					for _,v in pairs(_player.GetAll()) do
 						local lastZone = v:GetCharacterData("LastZone");
 						if (lastZone == "gore" or lastZone == "gore_tree" or lastZone == "gore_hallway") then
@@ -1028,6 +1038,16 @@ local COMMAND = Clockwork.command:New("GoreicHornSummonRaid");
 				local subfaction = player:GetSubfaction();
 				
 				if faction == "Goreic Warrior" then
+					local curTime = CurTime();
+				
+					if player.nextWarHorn and player.nextWarHorn > curTime then
+						Schema:EasyText(player, "chocolate", "You must wait another "..-math.ceil(curTime - player.nextWarHorn).." seconds before blowing the gathering horn again!");
+						
+						return false;
+					end
+					
+					player.nextWarHorn = curTime + 30;
+				
 					for _,v in pairs(_player.GetAll()) do
 						local lastZone = v:GetCharacterData("LastZone");
 						if (lastZone == "gore" or lastZone == "gore_tree" or lastZone == "gore_hallway") then

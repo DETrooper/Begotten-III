@@ -579,6 +579,7 @@ ITEM.weightclass = "Light";
 ITEM.description = "Leather robes worn by the Gatekeepers of Pope Adyssa.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.faction = "Pope Adyssa's Gatekeepers";
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -634,6 +635,7 @@ ITEM.weightclass = "Light";
 ITEM.description = "Leather robes worn by the Gatekeepers of Pope Adyssa.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.faction = "Pope Adyssa's Gatekeepers";
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,

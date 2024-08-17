@@ -37,7 +37,7 @@ function PANEL:Setup(player)
 		self.Avatar = vgui.Create("DImage", self);
 	else
 		self.Recognises = true;
-		self.LabelName:SetText(player:Name());
+		self.LabelName:SetText(Clockwork.player:GetName(player));
 
 		self.Avatar = vgui.Create("AvatarImage", self);
 		self.Avatar:SetSize(32, 32);

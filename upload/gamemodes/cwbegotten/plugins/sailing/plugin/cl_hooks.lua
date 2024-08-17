@@ -63,14 +63,15 @@ function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destinat
 	menu:SetMinimumWidth(150);
 	
 	if ignitable then
-		if ignited == false and destination == false then
+		if !ignited and !destination then
 			if Clockwork.Client:GetFaction() ~= "Goreic Warrior" then
 				local activeWeapon = Clockwork.Client:GetActiveWeapon();
 				
-				if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
+				if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" and Clockwork.Client:IsWeaponRaised(activeWeapon) then
 					local oil = Clockwork.Client:GetNetVar("oil", 0);
 				
-					if oil >= 75 then
+					--if oil >= 75 then
+					if oil >= 1 then
 						menu:AddOption("Burn", function() Clockwork.Client:ConCommand("cw_BurnShip") end);
 					end
 				end

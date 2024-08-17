@@ -43,6 +43,7 @@ wOS.RollMod.Dodgeables[ DMG_SHOCK ] = false
 wOS.RollMod.Dodgeables[ DMG_SONIC ] = false
 wOS.RollMod.Dodgeables[ DMG_ENERGYBEAM ] = false
 wOS.RollMod.Dodgeables[ DMG_BUCKSHOT ] = false
+wOS.RollMod.Dodgeables[ DMG_POISON ] = false
 
 wOS.RollMod.Animations = {}
 wOS.RollMod.Animations[2] = "begotten_roll_forward"

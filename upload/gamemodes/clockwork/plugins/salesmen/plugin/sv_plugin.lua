@@ -69,14 +69,15 @@ netstream.Hook("Salesmenu", function(player, data)
 						if Schema.towerTax and data.entity:InTower() then
 							local tax = math.Round(cost * Schema.towerTax);
 							
-							data.entity.cwCash = data.entity.cwCash + (cost - tax);
+							--data.entity.cwCash = data.entity.cwCash + (cost - tax);
 							
 							Schema:ModifyTowerTreasury(tax);
 						else
-							data.entity.cwCash = data.entity.cwCash + cost
+							--data.entity.cwCash = data.entity.cwCash + cost
 						end
 
-						netstream.Start(player, "SalesmenuRebuild", data.entity.cwCash)
+						--netstream.Start(player, "SalesmenuRebuild", data.entity.cwCash)
+						netstream.Start(player, "SalesmenuRebuild", -1)
 						netstream.Start(player, "PlaySound", "generic_ui/coin_negative_0"..math.random(1, 3)..".wav");
 
 						if (data.entity.cwStock[itemUniqueID]) then
@@ -111,11 +112,11 @@ netstream.Hook("Salesmenu", function(player, data)
 						cost = math.max(1, math.Round(cost * Lerp(condition / 100, 0.15, 1)));
 					end
 
-					if (data.entity.cwCash == -1 or data.entity.cwCash >= cost) then
+					--if (data.entity.cwCash == -1 or data.entity.cwCash >= cost) then
 						if (player:TakeItem(itemTable, true)) then
-							if (data.entity.cwCash != -1) then
+							--[[if (data.entity.cwCash != -1) then
 								data.entity.cwCash = data.entity.cwCash - cost
-							end
+							end]]--
 							
 							if Schema.towerTax and data.entity:InTower() then
 								local tax = math.Round(cost * Schema.towerTax);
@@ -132,11 +133,12 @@ netstream.Hook("Salesmenu", function(player, data)
 							
 							netstream.Start(player, "PlaySound", "generic_ui/coin_positive_0"..math.random(1, 3)..".wav");
 						end
-					else
-						data.entity:TalkToPlayer(player, data.entity.cwTextTab.cannotAfford, "I cannot afford to buy this!")
-					end
+					--else
+						--data.entity:TalkToPlayer(player, data.entity.cwTextTab.cannotAfford, "I cannot afford to buy this!")
+					--end
 
-					netstream.Start(player, "SalesmenuRebuild", data.entity.cwCash)
+					--netstream.Start(player, "SalesmenuRebuild", data.entity.cwCash)
+					netstream.Start(player, "SalesmenuRebuild", -1)
 				end
 			end
 		end

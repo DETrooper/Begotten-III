@@ -155,7 +155,7 @@ function ENT:Think()
 	if (!self.damageCooldown or self.damageCooldown < curTime) then
 		self.damageCooldown = curTime + 1;
 	
-		if self:IsOnFire() then
+		if self.ignited then
 			if self.health then
 				if self.health > 0 then
 					self:SetHP(self.health - 2);
@@ -305,7 +305,7 @@ function ENT:Use(activator, caller)
 		
 		if self.health then
 			if (self:GetSkin() == 1 and self.health < 1000) or self.health < 500 then
-				if !self:IsOnFire() then
+				if !self.ignited then
 					self.repairable = true;
 				else
 					self.repairable = false;
@@ -316,12 +316,12 @@ function ENT:Use(activator, caller)
 		end
 		
 		if caller:GetFaction() == "Goreic Warrior" or (caller:IsAdmin() and caller.cwObserverMode) then
-			if (IsValid(self.owner) and caller ~= self.owner) or self:IsOnFire() then
-				netstream.Start(caller, "OpenLongshipMenu", false, self:IsOnFire(), self.repairable, false, false, false);
+			if (IsValid(self.owner) and caller ~= self.owner) or self.ignited then
+				netstream.Start(caller, "OpenLongshipMenu", false, self.ignited, self.repairable, false, false, false);
 			elseif self.destination then
-				netstream.Start(caller, "OpenLongshipMenu", false, self:IsOnFire(), self.repairable, false, true, true);
+				netstream.Start(caller, "OpenLongshipMenu", false, self.ignited, self.repairable, false, true, true);
 			else
-				netstream.Start(caller, "OpenLongshipMenu", true, self:IsOnFire(), self.repairable, true, false, true);
+				netstream.Start(caller, "OpenLongshipMenu", true, self.ignited, self.repairable, true, false, true);
 			end
 		elseif caller:GetFaction() ~= "Goreic Warrior" then
 			local activeWeapon = caller:GetActiveWeapon();
@@ -329,14 +329,14 @@ function ENT:Use(activator, caller)
 			if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
 				local oil = caller:GetSharedVar("oil", 0);
 			
-				if oil >= 25 then
-					netstream.Start(caller, "OpenLongshipMenu", true, self:IsOnFire(), false, false, false, false);
+				if oil >= 1 then
+					netstream.Start(caller, "OpenLongshipMenu", true, self.ignited, false, false, false, false);
 					
 					return;
 				end
 			end
 			
-			netstream.Start(caller, "OpenLongshipMenu", false, self:IsOnFire(), false, false, false, false);
+			netstream.Start(caller, "OpenLongshipMenu", false, self.ignited, false, false, false, false);
 		end
 	end;
 end;
@@ -355,6 +355,9 @@ function ENT:OnRemove()
 			end
 		end);
 	end
+	
+	self:StopParticles();
+	self:StopSound("ambient/fire/fire_med_loop1.wav");
 
 	cwSailing:RemoveLongship(self);
 end;

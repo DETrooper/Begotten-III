@@ -13,6 +13,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A ballroom mask for the most important social event that the Children of Satan partake in: the masquerade. This mask is plain and cracked, denoting a lack of social status."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+	ITEM.faction = "Children of Satan";
 	
 	ITEM.conditionScale = 1.5 -- item degrades 1.5x faster with damage related condition loss
 ITEM:Register();
@@ -32,6 +33,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A ballroom mask for the most important social event that the Children of Satan partake in: the masquerade. This mask is decorated with golden engravings, a sign of wealth and prestige."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+	ITEM.faction = "Children of Satan";
 	
 	ITEM.conditionScale = 1.5 -- item degrades 1.5x faster with damage related condition loss
 ITEM:Register();
@@ -52,6 +54,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/skullhelm";
+	ITEM.faction = "Children of Satan";
 
 	ITEM.conditionScale = 1.5 -- item degrades 1.5x faster with damage related condition loss
 
@@ -85,6 +88,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaith = {"Faith of the Dark"};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.faction = "Children of Satan";
 
 	ITEM.conditionScale = 0 -- item degrades 1.5x faster with damage related condition loss
 
@@ -118,6 +122,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.faction = "Children of Satan";
 
 	ITEM.conditionScale = 1.5 -- item degrades 1.5x faster with damage related condition loss
 
@@ -136,5 +141,4 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks"}};
-	
 ITEM:Register();

@@ -30,7 +30,7 @@ function cwContainerHiding:GetEntityMenuOptions(entity, options)
 end;
 
 -- Called when the post progress bar info is needed.
-function GetProgressBarInfoAction(action, percentage)
+function cwContainerHiding:GetProgressBarInfoAction(action, percentage)
 	if (action == "hide") then
 		return {text = "You are hiding in the closet.", percentage = percentage, flash = percentage > 75};
 	end;

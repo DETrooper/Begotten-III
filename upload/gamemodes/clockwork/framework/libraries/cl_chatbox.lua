@@ -1428,7 +1428,7 @@ end);
 
 netstream.Hook("ChatBoxPlayerMessage", function(data)
 	if (data.speaker:IsPlayer()) then
-		Clockwork.chatBox:Decode(data.speaker, data.speaker:Name(), data.text, data.data, data.class, data.multiplier);
+		Clockwork.chatBox:Decode(data.speaker, Clockwork.player:GetName(data.speaker), data.text, data.data, data.class, data.multiplier);
 	end;
 end);
 

@@ -456,8 +456,10 @@ if SERVER then
 				
 					return;
 				elseif Ent.iFrames then
+					local phys = javelin:GetPhysicsObject()
+					
 					self:SetCollisionGroup(COLLISION_GROUP_WORLD);
-					self:SetVelocityInstantaneous(data.OurOldVelocity);
+					phys:SetVelocityInstantaneous(data.OurOldVelocity);
 					Ent:EmitSound("meleesounds/comboattack3.wav.mp3", 75, math.random( 90, 110 ));
 					
 					return;

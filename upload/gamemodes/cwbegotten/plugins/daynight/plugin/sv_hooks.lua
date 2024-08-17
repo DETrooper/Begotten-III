@@ -84,12 +84,16 @@ function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized, 
 								if helmetItem and helmetItem.overlay and helmetItem and player:EyeAngles().p > -70 then
 									return;
 								end
-									
+
 								if player:GetEyeTrace().HitSky then
 									if plyTab.moonCooldown then
 										if curTime < plyTab.moonCooldown then
 											return;
 										end
+									end
+									
+									if player:GetRagdollState() == RAGDOLL_KNOCKEDOUT then
+										return;
 									end
 									
 									player:HandleSanity(-50);

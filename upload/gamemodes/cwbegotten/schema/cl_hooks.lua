@@ -640,6 +640,84 @@ function Schema:PlayerCanSeeDateTime()
     return false;
 end;
 
+function Schema:GetTargetPlayerName(player)
+	if Clockwork.Client:IsAdmin() and Clockwork.player:IsNoClipping(Clockwork.Client) then
+		return player:Name();
+	end
+
+	if player:GetSubfaction() == "Praeventor" then
+		local clientFaction = Clockwork.Client:GetFaction();
+		
+		if clientFaction ~= "Gatekeeper" and clientFaction ~= "Holy Hierarchy" then
+			return player:Name(true);
+		end
+	end
+	
+	return player:Name()
+end
+
+function Schema:OverrideTeamColor(player, bRecognized)
+	local clientFaction = Clockwork.Client:GetFaction();
+	local playerFaction = player:GetFaction();
+	local clothesItem = player:GetClothesEquipped();
+	local helmetItem = player:GetHelmetEquipped();
+	local teamColor;
+	
+	if Clockwork.Client:IsAdmin() and Clockwork.player:IsNoClipping(Clockwork.Client) then
+		return;
+	end
+
+	if bRecognized then
+		if playerFaction == "Gatekeeper" and clientFaction ~= "Gatekeeper" and clientFaction ~= "Holy Hierarchy" then
+			if player:GetSubfaction() == "Praeventor" then
+				if (!clothesItem or !clothesItem.faction or (clothesItem.faction and clothesItem.faction ~= playerFaction)) and (!helmetItem or !helmetItem.faction or (helmetItem.faction and helmetItem.faction ~= playerFaction)) then
+					teamColor = Color(200, 200, 200, 255);
+				end
+			end
+		elseif playerFaction == "Children of Satan" and clientFaction ~= "Children of Satan" then
+			if (!clothesItem or !clothesItem.faction or (clothesItem.faction and clothesItem.faction ~= playerFaction)) and (!helmetItem or !helmetItem.faction or (helmetItem.faction and helmetItem.faction ~= playerFaction)) then
+				local kinisgerOverride = player:GetNetVar("kinisgerOverride");
+				
+				if kinisgerOverride then
+					local classTable = Clockwork.class:GetStored()[kinisgerOverride];
+					
+					if classTable then
+						teamColor = _team.GetColor(classTable.index) or Color(200, 200, 200, 255);
+					else
+						teamColor = Color(200, 200, 200, 255);
+					end
+				else
+					teamColor = Color(200, 200, 200, 255);
+				end
+			end
+		end
+	else
+		if playerFaction == "Gatekeeper" and clientFaction ~= "Gatekeeper" and clientFaction ~= "Holy Hierarchy" then
+			if (!clothesItem or !clothesItem.faction or (clothesItem.faction and clothesItem.faction ~= playerFaction)) and (!helmetItem or !helmetItem.faction or (helmetItem.faction and helmetItem.faction ~= playerFaction)) then
+				teamColor = Color(200, 200, 200, 255);
+			end
+		elseif playerFaction == "Children of Satan" and clientFaction ~= "Children of Satan" then
+			if (!clothesItem or !clothesItem.faction or (clothesItem.faction and clothesItem.faction ~= playerFaction)) and (!helmetItem or !helmetItem.faction or (helmetItem.faction and helmetItem.faction ~= playerFaction)) then
+				local kinisgerOverride = player:GetNetVar("kinisgerOverride");
+				
+				if kinisgerOverride then
+					local classTable = Clockwork.class:GetStored()[kinisgerOverride];
+					
+					if classTable then
+						teamColor = _team.GetColor(classTable.index) or Color(200, 200, 200, 255);
+					else
+						teamColor = Color(200, 200, 200, 255);
+					end
+				else
+					teamColor = Color(200, 200, 200, 255);
+				end
+			end
+		end
+	end
+	
+	return teamColor;
+end
+
 -- Called when an entity's target ID HUD should be painted.
 function Schema:HUDPaintEntityTargetID(entity, info)
 	local colorTargetID = Clockwork.option:GetColor("target_id");

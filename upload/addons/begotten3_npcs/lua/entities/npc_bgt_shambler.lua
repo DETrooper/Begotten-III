@@ -105,6 +105,7 @@ function ENT:OnLost()
 end
 function ENT:OnParried()
 	self.nextMeleeAttack = CurTime() + 2;
+	self:ResetSequence(ACT_IDLE);
 end
   -- Init/Think --
   function ENT:CustomInitialize()

@@ -200,7 +200,7 @@ end
 
 function Clockwork.player:GetName(target)
 	if (self:DoesRecognise(target)) then
-		return target:Name()
+		return hook.Run("GetTargetPlayerName", target) or target:Name();
 	else
 		return self:GetUnrecognisedName(target)
 	end

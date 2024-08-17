@@ -394,7 +394,26 @@ function Clockwork.character:RefreshPanelList()
 		panel.enterHellButton:SetFont(smallTextFont);
 		panel.enterHellButton:SetText("ENTER HELL");
 		panel.enterHellButton:SetCallback(function(panel)
-			Clockwork.character:GetPanel():ReturnToMainMenu();
+			local valid_characters = {};
+			local name = Clockwork.Client:Name(true);
+			
+			for i, v in ipairs(Clockwork.character:GetAll()) do
+				if !v.permakilled and v.name ~= name then
+					table.insert(valid_characters, i);
+				end
+			end
+			
+			if !table.IsEmpty(valid_characters) then
+				local random_character = valid_characters[math.random(1, #valid_characters)];
+				
+				if random_character then
+					netstream.Start("InteractCharacter", {
+						characterID = random_character, action = "use"}
+					);
+					
+					surface.PlaySound("begotten/ui/buttonclick.wav");
+				end
+			end
 		end);
 		panel.enterHellButton:SizeToContents();
 		panel.enterHellButton:SetPos(ScrW() * 0.75 - (panel.enterHellButton:GetWide() / 2), ScrH() * 0.925);

@@ -2320,9 +2320,9 @@ function GM:HUDDrawTargetID()
 								if (!position) then
 									local headBone = "ValveBiped.Bip01_Head1"
 									
-									if (string.find(playerEntity:GetModel(), "vortigaunt")) then
+									--[[if (string.find(playerEntity:GetModel(), "vortigaunt")) then
 										headBone = "ValveBiped.Head"
-									end
+									end]]--
 									
 									local headID = playerEntity:LookupBone(headBone)
 
@@ -2355,37 +2355,13 @@ function GM:HUDDrawTargetID()
 								
 								local screenPosition = position:ToScreen()
 								local x, y = screenPosition.x, screenPosition.y
-								local clientFaction = Clockwork.Client:GetFaction();
-								local playerFaction = player:GetFaction();
+								local teamColor = _team.GetColor(player:Team());
 								
 								if (Clockwork.player:DoesRecognise(player, RECOGNISE_PARTIAL)) then
-									local teamColor = _team.GetColor(player:Team());
-									local text = string.Explode("\n", Clockwork.plugin:Call("GetTargetPlayerName", player))
+									local text = string.Explode("\n", hook.Run("GetTargetPlayerName", player) or player:Name())
 									local newY
 									
-									if playerFaction == "Gatekeeper" and clientFaction ~= "Gatekeeper" and clientFaction ~= "Holy Hierarchy" then
-										local clothesItem = player:GetClothesEquipped();
-										
-										if !clothesItem or (clothesItem.faction and clothesItem.faction ~= playerFaction) then
-											teamColor = Color(200, 200, 200, 255);
-										end
-									elseif playerFaction == "Children of Satan" and clientFaction ~= "Children of Satan" then
-										if not string.find(player:GetModel(), "models/begotten/satanists") then
-											local kinisgerOverride = player:GetNetVar("kinisgerOverride");
-											
-											if kinisgerOverride then
-												local classTable = Clockwork.class:GetStored()[kinisgerOverride];
-												
-												if classTable then
-													teamColor = _team.GetColor(classTable.index) or Color(200, 200, 200, 255);
-												else
-													teamColor = Color(200, 200, 200, 255);
-												end
-											else
-												teamColor = Color(200, 200, 200, 255);
-											end
-										end
-									end
+									teamColor = hook.Run("OverrideTeamColor", player, true) or teamColor;
 									
 									for k, v in pairs(text) do
 										newY = Clockwork.kernel:DrawInfo(v, x, y, teamColor, alpha)
@@ -2397,31 +2373,8 @@ function GM:HUDDrawTargetID()
 								else
 									local unrecognisedName, usedPhysDesc = Clockwork.player:GetUnrecognisedName(player)
 									local wrappedTable = {unrecognisedName}
-									local teamColor = _team.GetColor(player:Team())
 									
-									if playerFaction == "Gatekeeper" and clientFaction ~= "Gatekeeper" and clientFaction ~= "Holy Hierarchy" then
-										local clothesItem = player:GetClothesEquipped();
-										
-										if !clothesItem or (clothesItem.faction and clothesItem.faction ~= playerFaction) then
-											teamColor = Color(200, 200, 200, 255);
-										end
-									elseif playerFaction == "Children of Satan" and clientFaction ~= "Children of Satan" then
-										if not string.find(player:GetModel(), "models/begotten/satanists") then
-											local kinisgerOverride = player:GetNetVar("kinisgerOverride");
-											
-											if kinisgerOverride then
-												local classTable = Clockwork.class:GetStored()[kinisgerOverride];
-												
-												if classTable then
-													teamColor = _team.GetColor(classTable.index) or Color(200, 200, 200, 255);
-												else
-													teamColor = Color(200, 200, 200, 255);
-												end
-											else
-												teamColor = Color(200, 200, 200, 255);
-											end
-										end
-									end
+									teamColor = hook.Run("OverrideTeamColor", player) or teamColor;
 									
 									local result;
 									local newY;
@@ -3762,11 +3715,6 @@ function GM:PlayerCanShowUnrecognised(player, x, y, color, alpha, flashAlpha)
 	end]]--
 	
 	return true
-end
-
--- Called when the target player's name is needed.
-function GM:GetTargetPlayerName(player)
-	return player:Name()
 end
 
 -- Called when a player begins typing.

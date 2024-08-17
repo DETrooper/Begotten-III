@@ -506,7 +506,7 @@ function PANEL:RebuildPanel(storagePanel, storageType, usedWeight, weight, usedS
 				local ply = Clockwork.entity:GetPlayer(ent);
 				local recognise = Clockwork.player:DoesRecognise(ply)
 				if (recognise) then
-					storagename = string.Split(ply:Name(), " ")[1].."'s pockets are"
+					storagename = string.Split(Clockwork.player:GetName(ply), " ")[1].."'s pockets are"
 				else
 					local gender = ply:GetGender();
 					local n = "His"

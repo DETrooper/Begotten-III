@@ -95,7 +95,7 @@ function GM:OnePlayerSecond(player, curTime, infoTable)
 
 	player:SetDTString(STRING_FLAGS, player:GetFlags())
 	player:SetNetVar("Model", player:GetDefaultModel())
-	player:SetDTString(STRING_NAME, player:Name())
+	player:SetDTString(STRING_NAME, player:Name(true))
 	player:SetNetVar("Cash", player:GetCash())
 	player:SetNetVar("CustomColor", player:GetCharacterData("CustomColor"));
 

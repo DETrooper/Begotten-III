@@ -267,7 +267,7 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 		
 		Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", "A longship with no owner is setting sail to destination "..destination.."!");
 		
-		longshipEnt:SetBodygroup(0, 1);
+		longshipEnt:SetBodygroup(0, 0);
 		
 		timer.Create("SailTimer_"..tostring(longshipEnt:EntIndex()), sail_time, 1, function()
 			if IsValid(longshipEnt) then
@@ -808,7 +808,27 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 				if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
 					local oil = player:GetSharedVar("oil", 0);
 				
-					if oil >= 75 then
+					--if oil >= 75 then
+					if oil >= 1 and player:IsWeaponRaised(activeWeapon) then
+						local inventory = player:GetInventory();
+						local oil_count = 0;
+						
+						for k, v in pairs(inventory) do
+							if v and istable(v) then
+								for k2, v2 in pairs(v) do
+									if v2.uniqueID == "large_oil" then
+										oil_count = oil_count + 1;
+									end
+								end
+							end
+						end
+						
+						if oil_count < 2 then
+							Schema:EasyText(player, "peru", "You need at least two large oils to burn this longship!");
+							
+							return false;
+						end
+					
 						--if !entity.destination then
 							Clockwork.player:SetAction(player, "burn_longship", 10, 1, function() 
 								if entity:IsValid() then
@@ -818,25 +838,62 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 										if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
 											local oil = player:GetSharedVar("oil", 0);
 											
-											if oil >= 75 then
-												--if !entity.destination then
-													if entity.health and entity.health > 0 then
-														entity:Ignite(600, 0);
-														
-														local weaponItemTable = item.GetByWeapon(activeWeapon);
-														
-														if weaponItemTable then
-															weaponItemTable:SetData("oil", math.Clamp(oil - 75, 0, 100));
-															player:SetSharedVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
+											--if oil >= 75 then
+											if oil >= 1 and player:IsWeaponRaised(activeWeapon) then
+												local inventory = player:GetInventory();
+												local oil_count = 0;
+												
+												for k, v in pairs(inventory) do
+													if v and istable(v) then
+														for k2, v2 in pairs(v) do
+															if v2.uniqueID == "large_oil" then
+																oil_count = oil_count + 1;
+															end
 														end
-														
-														entity:EmitSound("ambient/fire/gascan_ignite1.wav");
-														
-														Clockwork.chatBox:AddInTargetRadius(player, "me", "ignites the longship before them with their lantern!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 													end
+												end
+												
+												if oil_count < 2 then
+													Schema:EasyText(player, "peru", "You need at least two large oils to burn this longship!");
+													
+													return false;
+												end
+												
+												for i = 1, 2 do 
+													player:TakeItemByID("large_oil");
+												end
+												
+												--[[local weaponItemTable = item.GetByWeapon(activeWeapon);
+												
+												if weaponItemTable then
+													weaponItemTable:SetData("oil", math.Clamp(oil - 75, 0, 100));
+													player:SetSharedVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
+												end]]--
+												
+												if !entity.health then
+													entity.health = 500;
+												end
+											
+												--if !entity.destination then
+													--entity:Ignite(600, 0);
+													entity.ignited = true;
+													ParticleEffect("fire_large_02", entity:GetPos() + Vector(0, 0, 16), entity:GetAngles(), entity);
+													
+													entity:EmitSound("ambient/fire/gascan_ignite1.wav");
+													entity:StartLoopingSound("ambient/fire/fire_med_loop1.wav");
+													
+													if timer.Exists("SailTimer_"..tostring(entity:EntIndex())) then
+														timer.Remove("SailTimer_"..tostring(entity:EntIndex()));
+														entity.destination = nil;
+														entity:SetBodygroup(0, 1);
+													end
+													
+													Clockwork.chatBox:AddInTargetRadius(player, "me", "ignites the longship before them with their lantern!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 												--else
 													--Schema:EasyText(player, "peru", "This longship cannot be lit on fire as it is currently setting sail!");
 												--end
+											else
+												Schema:EasyText(player, "peru", "Your lantern must be lit in order to ignite this longship!");
 											end
 										end
 									end
@@ -845,6 +902,8 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 						--else
 							--Schema:EasyText(player, "peru", "This longship cannot be lit on fire as it is currently setting sail!");
 						--end
+					else
+						Schema:EasyText(player, "peru", "Your lantern must be lit in order to ignite this longship!");
 					end
 				end
 			end
@@ -884,6 +943,10 @@ concommand.Add("cw_CheckShipStatus", function(player, cmd, args)
 						status_string = status_string.."The longship looks to be severely damaged. It is probably unsafe to sail in.";
 					end
 				end
+			end
+			
+			if entity.ignited then
+				status_string = status_string.." It is currently on fire!";
 			end
 			
 			if entity.destination then
@@ -943,7 +1006,11 @@ concommand.Add("cw_ExtinguishShip", function(player, cmd, args)
 			Clockwork.player:SetAction(player, "extinguish_longship", 10, 1, function() 
 				if entity:IsValid() then
 					if entity.health and entity.health > 0 then
-						entity:Extinguish();
+						--entity:Extinguish();
+						
+						entity.ignited = false;
+						entity:StopParticles();
+						entity:StopLoopingSound("ambient/fire/fire_med_loop1.wav");
 					end
 				end
 			end);
@@ -995,7 +1062,7 @@ concommand.Add("cw_MoveShipGoreForest", function(player, cmd, args)
 
 		if (entity:GetClass() == "cw_longship") then
 			if !entity.destination then
-				if !entity:IsOnFire() then
+				if !entity.ignited then
 					if player:GetFaction() == "Goreic Warrior" or player:IsAdmin() then
 						if IsValid(entity.owner) then
 							if entity.owner == player then
@@ -1004,9 +1071,9 @@ concommand.Add("cw_MoveShipGoreForest", function(player, cmd, args)
 						else
 							cwSailing:BeginSailing(entity, "docks");
 						end
-					else
-						Schema:EasyText(player, "maroon", "This longship cannot sail because it is on fire!");
 					end
+				else
+					Schema:EasyText(player, "maroon", "This longship cannot sail because it is on fire!");
 				end
 			end
 		end
@@ -1021,7 +1088,7 @@ concommand.Add("cw_MoveShipWasteland", function(player, cmd, args)
 
 		if (entity:GetClass() == "cw_longship") then
 			if !entity.destination then
-				if !entity:IsOnFire() then
+				if !entity.ignited then
 					if player:GetFaction() == "Goreic Warrior" or player:IsAdmin() then
 						if IsValid(entity.owner) then
 							if entity.owner == player then
@@ -1030,9 +1097,9 @@ concommand.Add("cw_MoveShipWasteland", function(player, cmd, args)
 						else
 							cwSailing:BeginSailing(entity, "wasteland");
 						end
-					else
-						Schema:EasyText(player, "maroon", "This longship cannot sail because it is on fire!");
 					end
+				else
+					Schema:EasyText(player, "maroon", "This longship cannot sail because it is on fire!");
 				end
 			end
 		end
@@ -1048,7 +1115,7 @@ concommand.Add("cw_MoveShipPillars", function(player, cmd, args)
 		if (entity:GetClass() == "cw_longship") then
 			if entity.enchantment then
 				if !entity.destination then
-					if !entity:IsOnFire() then
+					if !entity.ignited then
 						if player:GetFaction() == "Goreic Warrior" or player:IsAdmin() then
 							if IsValid(entity.owner) then
 								if entity.owner == player then
@@ -1078,7 +1145,7 @@ concommand.Add("cw_MoveShipHell", function(player, cmd, args)
 		if (entity:GetClass() == "cw_longship") then
 			if entity.enchantment then
 				if !entity.destination then
-					if !entity:IsOnFire() then
+					if !entity.ignited then
 						if player:GetFaction() == "Goreic Warrior" then
 							if IsValid(entity.owner) then
 								if entity.owner == player then

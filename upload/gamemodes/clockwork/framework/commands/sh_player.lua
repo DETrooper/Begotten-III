@@ -177,6 +177,8 @@ local COMMAND = Clockwork.command:New("PlyBan");
 		
 		if (!Clockwork.player:IsProtected(arguments[1])) then
 			if (duration) then
+				duration = math.max(duration, 0);
+				
 				Clockwork.bans:Add(arguments[1], duration * 60, reason, function(steamName, duration, reason)
 					if (IsValid(player)) then
 						if (steamName) then

@@ -564,6 +564,85 @@ end;
 
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("DarkWhisperFactionProclaim");
+COMMAND.tip = "Speak in tongues with authority through the void to your brethren.";
+COMMAND.text = "<string Message>";
+COMMAND.flags = CMD_DEFAULT;
+COMMAND.arguments = 1;
+COMMAND.alias = {"DWFP"};
+
+-- Called when the command has been run.
+function COMMAND:OnRun(player, arguments)
+	local faction = player:GetFaction();
+	local faith = player:GetFaith();
+	
+	if faith == "Faith of the Dark" then
+		if faction == "Children of Satan" then
+			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
+				if !player:IsAdmin() and !Clockwork.player:HasFlags(player, "P") then
+					Schema:EasyText(player, "peru", "You are not important enough to do this!");
+				
+					return false;
+				end
+			
+				local message = "\""..table.concat(arguments, " ", 1).."\"";
+
+				for k, v in pairs (_player.GetAll()) do
+					if v:HasInitialized() and v:Alive() and ((v:GetFaction() == "Children of Satan") or Clockwork.player:HasFlags(v, "L")) then
+						Clockwork.chatBox:SetMultiplier(1.35);
+						
+						if v:GetSubfaction() == "Kinisger" and v:GetSharedVar("kinisgerOverride") then
+							Clockwork.chatBox:Add(v, player, "darkwhisperglobalkinisger", message);
+						else
+							Clockwork.chatBox:Add(v, player, "darkwhisperglobal", message);
+						end
+							
+						v:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
+					end;
+				end;
+			else
+				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' or 'Soothsayer' belief before you can darkwhisper!");
+			end
+		elseif faction == "Goreic Warrior" then
+			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
+				if !player:IsAdmin() and !Clockwork.player:HasFlags(player, "P") then
+					Schema:EasyText(player, "peru", "You are not important enough to do this!");
+				
+					return false;
+				end
+			
+				local message = "\""..table.concat(arguments, " ", 1).."\"";
+
+				for k, v in pairs (_player.GetAll()) do
+					if v:HasInitialized() and v:Alive() then
+						local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+						
+						if ((vFaction == "Goreic Warrior") and (v:GetFaith() == "Faith of the Dark" or v:GetSubfaith() == "Faith of the Sister")) or Clockwork.player:HasFlags(v, "L") then
+							Clockwork.chatBox:SetMultiplier(1.35);
+							
+							if v:GetSubfaction() == "Kinisger" then
+								Clockwork.chatBox:Add(v, player, "darkwhisperglobalkinisger", message);
+							else
+								Clockwork.chatBox:Add(v, player, "darkwhisperglobal", message);
+							end
+							
+							v:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
+						end
+					end;
+				end;
+			else
+				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' or 'Soothsayer' belief before you can darkwhisper!");
+			end
+		else
+			Schema:EasyText(player, "firebrick", "You are not the correct faction to do this!");
+		end
+	else
+		Schema:EasyText(player, "firebrick", "You are not the correct faith to do this!");
+	end
+end;
+
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("DarkWhisperFactionKinisger");
 COMMAND.tip = "Speak in tongues through the void to your pretend brethren.";
 COMMAND.text = "<string Message>";
@@ -577,7 +656,7 @@ function COMMAND:OnRun(player, arguments)
 		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
 		
 		if faction ~= "Wanderer" then
-			if player:HasBelief("heretic") then
+			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
 				local message = "\""..table.concat(arguments, " ", 1).."\"";
 
 				for k, v in pairs (_player.GetAll()) do
@@ -585,6 +664,8 @@ function COMMAND:OnRun(player, arguments)
 						local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
 						
 						if (vFaction == faction) and (v:GetFaith() == "Faith of the Dark" or v:GetSubfaith() == "Faith of the Sister") then
+							Clockwork.chatBox:SetMultiplier(1.35);
+							
 							if v:GetSubfaction() == "Kinisger" and v:GetSharedVar("kinisgerOverride") then
 								Clockwork.chatBox:Add(v, player, "darkwhisperglobalkinisger", message)
 							else
@@ -596,7 +677,7 @@ function COMMAND:OnRun(player, arguments)
 					end;
 				end;
 			else
-				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' belief before you can darkwhisper!");
+				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' or 'Soothsayer' belief before you can darkwhisper!");
 			end
 		else
 			Schema:EasyText(player, "firebrick", "You are not the correct faction to do this!");
@@ -607,6 +688,59 @@ function COMMAND:OnRun(player, arguments)
 end;
 
 COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("DarkWhisperFactionKinisgerProclaim");
+COMMAND.tip = "Speak in tongues with authority through the void to your pretend brethren.";
+COMMAND.text = "<string Message>";
+COMMAND.flags = CMD_DEFAULT;
+COMMAND.arguments = 1;
+COMMAND.alias = {"DWFKP"};
+
+-- Called when the command has been run.
+function COMMAND:OnRun(player, arguments)
+	if player:GetSubfaction() == "Kinisger" then
+		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		
+		if faction ~= "Wanderer" then
+			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
+				if !player:IsAdmin() and !Clockwork.player:HasFlags(player, "P") then
+					Schema:EasyText(player, "peru", "You are not important enough to do this!");
+				
+					return false;
+				end
+				
+				local message = "\""..table.concat(arguments, " ", 1).."\"";
+
+				for k, v in pairs (_player.GetAll()) do
+					if v:HasInitialized() and v:Alive() then
+						local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+						
+						if (vFaction == faction) and (v:GetFaith() == "Faith of the Dark" or v:GetSubfaith() == "Faith of the Sister") then
+							Clockwork.chatBox:SetMultiplier(1.35);
+							
+							if v:GetSubfaction() == "Kinisger" and v:GetSharedVar("kinisgerOverride") then
+								Clockwork.chatBox:Add(v, player, "darkwhisperglobalkinisger", message)
+							else
+								Clockwork.chatBox:Add(v, player, "darkwhisperglobal", message);
+							end
+							
+							v:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_short"..math.random(1, 11)..".mp3", 80, 100)]]);
+						end
+					end;
+				end;
+			else
+				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' or 'Soothsayer' belief before you can darkwhisper!");
+			end
+		else
+			Schema:EasyText(player, "firebrick", "You are not the correct faction to do this!");
+		end
+	else
+		Schema:EasyText(player, "firebrick", "You are not the correct subfaction to do this!");
+	end
+end;
+
+COMMAND:Register();
+
 
 local COMMAND = Clockwork.command:New("DarkReply");
 COMMAND.tip = "Using all your willpower, reply to a darkwhisper sent to you through the void. Note that this will incur a small amount of corruption if you are not of the Faith of the Dark.";
@@ -1208,6 +1342,11 @@ function COMMAND:OnRun(player, arguments)
 	if !player.nextFlagellate or player.nextFlagellate < curTime then
 		if player:HasBelief("flagellant") or player:GetSubfaction() == "Kinisger" then
 			if player:GetSharedVar("tied") == 0 and !player:IsRagdolled() then
+				if player.iFrames then
+					Schema:EasyText(player, "firebrick", "You cannot flagellate while rolling!");
+					return false;
+				end
+			
 				local activeWeapon = player:GetActiveWeapon();
 				
 				if IsValid(activeWeapon) then

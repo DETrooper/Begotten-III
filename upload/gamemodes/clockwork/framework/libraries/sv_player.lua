@@ -3127,7 +3127,7 @@ function Clockwork.player:SetBasicSharedVars(player)
 
 	player:SetDTString(STRING_FLAGS, player:GetFlags())
 	player:SetNetVar("Model", self:GetDefaultModel(player))
-	player:SetDTString(STRING_NAME, player:Name())
+	player:SetDTString(STRING_NAME, player:Name(true))
 	player:SetNetVar("Key", player:GetCharacterKey())
 	player:SetNetVar("CharacterID", player:GetCharacterID())
 	player:SetSharedVar("faith", player:GetFaith())

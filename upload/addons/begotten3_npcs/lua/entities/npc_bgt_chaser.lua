@@ -111,6 +111,7 @@ if SERVER then
 	end
 	function ENT:OnParried()
 		self.nextMeleeAttack = CurTime() + 2;
+		self:ResetSequence(ACT_IDLE);
 	end
 	-- Init/Think --
 	function ENT:CustomInitialize()

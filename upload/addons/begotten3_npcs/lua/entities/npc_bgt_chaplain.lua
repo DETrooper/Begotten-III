@@ -6,7 +6,7 @@ ENT.Base = "drgbase_nextbot" -- DO NOT TOUCH (obviously)
 
 -- Misc --
 
-ENT.PrintName = "Guardian"
+ENT.PrintName = "Chaplain"
 
 ENT.Category = "Begotten DRG"
 
@@ -241,6 +241,7 @@ if SERVER then
 	
 	function ENT:OnParried()
 		self.nextMeleeAttack = CurTime() + 2;
+		self:ResetSequence(ACT_IDLE);
 	end
 	
 	

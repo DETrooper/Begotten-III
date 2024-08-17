@@ -177,6 +177,7 @@ end
 
   function ENT:OnParried()
     self.nextMeleeAttack = CurTime() + 2;
+	self:ResetSequence(ACT_IDLE);
   end
 
   function ENT:OnMeleeAttack(enemy)
