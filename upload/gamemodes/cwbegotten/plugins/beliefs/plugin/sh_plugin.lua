@@ -1181,16 +1181,14 @@ local COMMAND = Clockwork.command:New("Warcry");
 							player:SetCharacterData("Stamina", new_stamina);
 							player:SetNWInt("Stamina", new_stamina);
 						end
-						
-						--[[if cwMelee then
-							local poise = player:GetNWInt("meleeStamina", 90);
-							
-							player:SetNWInt("meleeStamina", math.Clamp(poise + 90, 0, player:GetMaxPoise() or 90));
-						end]]--
 					end
 					
 					if player:GetGender() == GENDER_MALE then
-						player:EmitSound("warcries/warcry"..math.random(1, 16)..".mp3", 100, math.random(90, 105));
+						if faction == "Goreic Warrior" then
+							player:EmitSound("warcries/warcry"..math.random(1, 16)..".mp3", 100, math.random(90, 105));
+						else
+							player:EmitSound("warcries/jambw_yell_"..math.random(1, 17)..".mp3", 100, math.random(90, 105));
+						end
 					else
 						player:EmitSound("warcries/warcry_female"..math.random(1, 16)..".mp3", 100, math.random(90, 105));
 					end

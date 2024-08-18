@@ -58,14 +58,14 @@ RECIPE:Register()]]--
 
 function cwRecipes:ClockworkInitialized()
 	local RECIPE = cwRecipes.recipes:New("charcoal");
-		RECIPE.name = "Charcoal";
+		RECIPE.name = "(2x) Charcoal";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"ingenious"};
 		RECIPE.requirements = {
 			["wood"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["charcoal"] = {amount = 1},
+			["charcoal"] = {amount = 2},
 		};
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
