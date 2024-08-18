@@ -1437,7 +1437,7 @@ RITUAL = cwRituals.rituals:New("eye_of_the_storm");
 RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("Sister's Blessing");
-	RITUAL.name = "(T3) Sister's Blessing";
+	RITUAL.name = "(Unique) Sister's Blessing";
 	RITUAL.description = "The River Styx is said to be a boiling body of lava that is home to the dead and damned. With the correct blood magic ritual, the Reavers have been able to bargain with the demons that their crossing will be paid in the souls of their harvest. Incurs 75 corruption.";
 	RITUAL.onerequiredbelief = {"shedskin", "watchful_raven"}; -- Unique Mother/Sister Ritual
 
