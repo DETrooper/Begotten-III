@@ -1548,6 +1548,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 		
 		local wages = Clockwork.class:Query(player:Team(), "coinslotWages", 0);
 		local rank = player:GetCharacterData("rank", 1);
+		local ranksToCoin = Schema.RanksToCoin;
 		
 		if ranksToCoin and ranksToCoin[faction] then
 			wages = ranksToCoin[faction][math.Clamp(rank, 1, #ranksToCoin[faction])];
@@ -1556,7 +1557,6 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 		infoTable.coinslotWages = wages;
 		
 		if infoTable.coinslotWages > 0 then
-			local ranksToCoin = Schema.RanksToCoin;
 			local ranksRestrictedWages = Schema.RanksRestrictedWages;
 			local nextWages = player:GetCharacterData("nextWages", 0);
 			

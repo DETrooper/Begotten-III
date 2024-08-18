@@ -24,6 +24,10 @@ function COMMAND:OnRun(player, arguments)
 			
             timer.Create("summonplayer_"..tostring(target:EntIndex()), 0.75, 1, function()
 				if IsValid(target) then
+					if cwPickupObjects then
+						cwPickupObjects:ForceDropEntity(target)
+					end
+				
 					Clockwork.player:SetSafePosition(target, destination);
 					util.Decal("PentagramBurn", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal);
 					util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));

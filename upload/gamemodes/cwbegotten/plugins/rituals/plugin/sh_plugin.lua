@@ -144,7 +144,14 @@ local COMMAND = Clockwork.command:New("CharTransferFactionOverride");
 				target:SetCharacterData("kinisgerOverrideSubfaction", "");
 				target:SetCharacterData("rank", nil);
 				
+				local targetAngles = target:EyeAngles();
+				local targetPos = target:GetPos();
+				
 				Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+				
+				target:SetPos(targetPos);
+				target:SetEyeAngles(targetAngles);
+					
 				Clockwork.player:NotifyAll(player:Name().." has changed "..name.."'s disguise to the "..faction.." faction.");
 			else
 				Clockwork.player:Notify(player, fault or target:Name().." could not have their disguise changed to the "..faction.." faction!");
@@ -184,7 +191,14 @@ local COMMAND = Clockwork.command:New("CharTransferSubfactionOverride");
 				if istable(subfaction) then
 					target:SetCharacterData("kinisgerOverrideSubfaction", subfaction.name);
 					
+					local targetAngles = target:EyeAngles();
+					local targetPos = target:GetPos();
+					
 					Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+					
+					target:SetPos(targetPos);
+					target:SetEyeAngles(targetAngles);
+					
 					Clockwork.player:NotifyAll(player:Name().." has transferred "..name.."'s disguise to the "..subfaction.name.." subfaction.");
 				else
 					Clockwork.player:Notify(player, subfaction.." is not a valid subfaction for this faction!");

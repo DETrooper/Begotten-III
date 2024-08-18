@@ -162,17 +162,7 @@ function cwScrapFactory:CheckProcessingCycle()
 			timer.Remove("ScrapCycleTimer")
 		end
 		
-		if IsValid(self.alarmEnt) then
-			local players = _player.GetAll()
-	
-			for i = 1, _player.GetCount() do
-				local player = players[i];
-				
-				if IsValid(player) then
-					netstream.Start(player, "StopScrapFactoryAlarm");
-				end
-			end
-		end
+		netstream.Start(_player.GetAll(), "StopScrapFactoryAlarm");
 		
 		timer.Simple(30, function()
 			cwScrapFactory:StopProcessingCycle();
@@ -286,17 +276,7 @@ function cwScrapFactory:StopProcessingCycle()
 			timer.Remove("ScrapCycleTimer")
 		end
 	
-		if IsValid(self.alarmEnt) then
-			local players = _player.GetAll()
-	
-			for i = 1, _player.GetCount() do
-				local player = players[i];
-				
-				if IsValid(player) then
-					netstream.Start(player, "StopScrapFactoryAlarm");
-				end
-			end
-		end
+		netstream.Start(_player.GetAll(), "StopScrapFactoryAlarm");
 		
 		self.cycleInProgress = false;
 	end

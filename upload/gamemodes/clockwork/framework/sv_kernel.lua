@@ -2391,7 +2391,7 @@ concommand.Add("cwc", function(player, command, arguments)
 	}
 	
 	if !player:IsAdmin() then
-		Schema:EasyText(GetAdmins(), "firebrick", "Player "..player:Name().." has attempted to run cwc in console! You should ban them immediately.");
+		Schema:EasyText(GetAdmins(), "firebrick", "Player "..player:Name().." has attempted to run cwc with the arguments ("..table.concat(arguments, ", ")") in console! It could be a bind or it could be malicious.");
 	end
 
 	--	if called from console

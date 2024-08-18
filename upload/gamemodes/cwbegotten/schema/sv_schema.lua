@@ -3,9 +3,6 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
-game.AddParticles("particles/fire_01.pcf");
-PrecacheParticleSystem("env_fire_large");
-
 local map = string.lower(game.GetMap());
 
 Schema.maxNPCs = {
@@ -310,7 +307,7 @@ Clockwork.config:Add("satanist_charlimit", 1, true);
 Clockwork.config:Add("enable_charlimit", true, true);
 Clockwork.config:Add("enable_famine", false);
 Clockwork.config:Add("discord_url", "https://discord.com/invite/zJnWjcW", true);
-Clockwork.config:Add("coinslot_wages_interval", 3600)
+Clockwork.config:Add("coinslot_wages_interval", 1800)
 
 Clockwork.config:Get("enable_gravgun_punt"):Set(false);
 Clockwork.config:Get("default_inv_weight"):Set(20);

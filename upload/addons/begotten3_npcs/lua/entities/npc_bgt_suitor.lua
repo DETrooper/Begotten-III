@@ -151,7 +151,19 @@ if SERVER then
 					ragdoll:EmitSound("begotten/npc/burn.wav");
 					
 					if cwRituals and cwItemSpawner then
-						local randomItem = cwItemSpawner:SelectItem("rituals");
+						local randomItem;
+						local spawnable = cwItemSpawner:GetSpawnableItems(true);
+						local lootPool = {};
+						
+						for _, itemTable in ipairs(spawnable) do
+							if itemTable.category == "Catalysts" then
+								if itemTable.itemSpawnerInfo and !itemTable.itemSpawnerInfo.supercrateOnly then
+									table.insert(lootPool, itemTable);
+								end
+							end
+						end
+						
+						randomItem = lootPool[math.random(1, #lootPool)];
 						
 						if randomItem then
 							local itemInstance = item.CreateInstance(randomItem.uniqueID);

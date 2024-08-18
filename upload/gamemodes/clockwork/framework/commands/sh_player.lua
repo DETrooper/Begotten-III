@@ -761,6 +761,10 @@ local COMMAND = Clockwork.command:New("PlyGoto");
 		local target = Clockwork.player:FindByID(arguments[1]);
 		
 		if (target) then
+			if cwPickupObjects then
+				cwPickupObjects:ForceDropEntity(player)
+			end
+		
 			Clockwork.player:SetSafePosition(player, target:GetPos());
 			Clockwork.player:NotifyAll(player:Name().." has gone to "..target:Name().."'s location.");
 		else
@@ -894,6 +898,8 @@ local COMMAND = Clockwork.command:New("PlyTeleport");
 		if (target) then
 			if target:IsRagdolled() then
 				Clockwork.player:SetRagdollState(target, RAGDOLL_NONE);
+			elseif cwPickupObjects then
+				cwPickupObjects:ForceDropEntity(target)
 			end
 			
 			Clockwork.player:SetSafePosition(target, player:GetEyeTraceNoCursor().HitPos);
@@ -918,6 +924,8 @@ local COMMAND = Clockwork.command:New("PlyTeleportFreeze");
 		if (target) then
 			if target:IsRagdolled() then
 				Clockwork.player:SetRagdollState(target, RAGDOLL_NONE);
+			elseif cwPickupObjects then
+				cwPickupObjects:ForceDropEntity(target)
 			end
 		
 			Clockwork.player:SetSafePosition(target, player:GetEyeTraceNoCursor().HitPos);

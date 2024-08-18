@@ -34,7 +34,8 @@ end);
 
 netstream.Hook("StartScrapFactoryAlarm", function(data)
 	if Clockwork.Client:GetZone() == "scrapper" then
-		Clockwork.Client.scrapAlarmSound = CreateSound(Clockwork.Client, "ambient/alarms/siren.wav"):PlayEx(0.5, 100);
+		Clockwork.Client.scrapAlarmSound = CreateSound(Clockwork.Client, "ambient/alarms/siren.wav");
+		Clockwork.Client.scrapAlarmSound:PlayEx(0.5, 100);
 	end
 end);
 
@@ -47,6 +48,6 @@ end);
 
 netstream.Hook("ScrapFactoryExplosion", function(data)
 	if Clockwork.Client:GetZone() == "scrapper" then
-		CreateSound(Clockwork.Client, "ambient/explosions/explode_3.wav"):PlayEx(1, 100);
+		surface.PlaySound("ambient/explosions/explode_3.wav");
 	end
 end);

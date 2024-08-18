@@ -24,6 +24,17 @@ Clockwork.limb.bones = {
 	["ValveBiped.Bip01_Neck1"] = HITGROUP_HEAD
 }
 
+Clockwork.limb.hitgroupToString = {
+	[HITGROUP_CHEST] = "chest",
+	[HITGROUP_HEAD] = "head",
+	[HITGROUP_STOMACH] = "stomach",
+	[HITGROUP_LEFTARM] = "left arm",
+	[HITGROUP_RIGHTARM] = "right arm",
+	[HITGROUP_LEFTLEG] = "left leg",
+	[HITGROUP_RIGHTLEG] = "right leg",
+	[HITGROUP_GENERIC] = "generic",
+}
+
 -- A function to convert a bone to a hit group.
 function Clockwork.limb:BoneToHitGroup(bone)
 	return self.bones[bone] or HITGROUP_CHEST
@@ -163,17 +174,6 @@ if (SERVER) then
 		return 0
 	end
 else
-	local hitgroupToString = {
-		[HITGROUP_CHEST] = "chest",
-		[HITGROUP_HEAD] = "head",
-		[HITGROUP_STOMACH] = "stomach",
-		[HITGROUP_LEFTARM] = "left arm",
-		[HITGROUP_RIGHTARM] = "right arm",
-		[HITGROUP_LEFTLEG] = "left leg",
-		[HITGROUP_RIGHTLEG] = "right leg",
-		[HITGROUP_GENERIC] = "generic",
-	}
-
 	Clockwork.limb.bodyTexture = Material("begotten/limbs/body.png")
 	Clockwork.limb.stored = Clockwork.limb.stored or {}
 	Clockwork.limb.hitGroups = {
@@ -222,8 +222,8 @@ else
 		local limbStateTable = cwLimbs.limbStates[Clockwork.limb.hitGroupsToLimbStateKeys[hitGroup]];
 		local name = Clockwork.limb:GetName(hitGroup);
 		local health = Clockwork.limb:GetHealth(hitGroup);
-		local bleeding = Clockwork.Client.cwLimbs[hitgroupToString[hitGroup]].bleeding;
-		local infected = Clockwork.Client.cwLimbs[hitgroupToString[hitGroup]].infected;
+		local bleeding = Clockwork.Client.cwLimbs[self.hitgroupToString[hitGroup]].bleeding;
+		local infected = Clockwork.Client.cwLimbs[self.hitgroupToString[hitGroup]].infected;
 		local injuries = Clockwork.Client.cwInjuries[hitGroup];
 		local color = Clockwork.limb:GetColor(health);
 		local status = "fine";

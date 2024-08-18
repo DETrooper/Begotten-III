@@ -259,10 +259,10 @@ COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("CharTransferFaction");
 	COMMAND.tip = "Transfer a character to a faction. This will clear their subfaction so be sure to set a new one!";
-	COMMAND.text = "<string Name> <string Faction> [string Data]";
+	COMMAND.text = "<string Name> <string Faction> [string Subfaction] [string Data]";
 	COMMAND.access = "o";
 	COMMAND.arguments = 2;
-	COMMAND.optionalArguments = 1;
+	COMMAND.optionalArguments = 2;
 	COMMAND.alias = {"TransferFaction", "PlyTransferFaction", "SetFaction", "CharSetFaction", "PlySetFaction"};
 
 	-- Called when the command has been run.
@@ -296,16 +296,53 @@ local COMMAND = Clockwork.command:New("CharTransferFaction");
 					return;
 				end;
 				
-				local bSuccess, fault = Clockwork.faction:GetStored()[faction]:OnTransferred(target, Clockwork.faction:GetStored()[targetFaction], arguments[3]);
+				local bSuccess, fault = Clockwork.faction:GetStored()[faction]:OnTransferred(target, Clockwork.faction:GetStored()[targetFaction], arguments[4]);
 				
 				if (bSuccess != false) then
 					target:SetCharacterData("Faction", faction, true);
-					target:SetCharacterData("Subfaction", "", true);
 					target:SetCharacterData("rank", nil);
 					target:SetCharacterData("rankOverride", nil);
 					
+					local factionSubfactions = Clockwork.faction:GetStored()[faction].subfactions;
+					local subfaction;
+					
+					if (factionSubfactions) then
+						for i, v in ipairs(factionSubfactions) do
+							if arguments[3] then
+								if v.name == arguments[3] then
+									subfaction = v;
+									
+									break;
+								end
+							else
+								subfaction = v;
+								
+								break;
+							end
+						end
+						
+						if subfaction and istable(subfaction) then
+							target:SetCharacterData("Subfaction", subfaction.name, true);
+						else
+							target:SetCharacterData("Subfaction", "", true);
+						end
+					else
+						target:SetCharacterData("Subfaction", "", true);
+					end
+					
+					local targetAngles = target:EyeAngles();
+					local targetPos = target:GetPos();
+					
 					Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
-					Clockwork.player:NotifyAll(player:Name().." has transferred "..name.." to the "..faction.." faction.");
+					
+					target:SetPos(targetPos);
+					target:SetEyeAngles(targetAngles);
+					
+					if subfaction then
+						Clockwork.player:NotifyAll(player:Name().." has transferred "..name.." to the "..faction.." faction and "..subfaction.name.." subfaction.");
+					else
+						Clockwork.player:NotifyAll(player:Name().." has transferred "..name.." to the "..faction.." faction.");
+					end
 				else
 					Clockwork.player:Notify(player, fault or target:Name().." could not be transferred to the "..faction.." faction!");
 				end;
@@ -348,7 +385,14 @@ local COMMAND = Clockwork.command:New("CharTransferSubfaction");
 				if istable(subfaction) then
 					target:SetCharacterData("Subfaction", subfaction.name, true);
 					
+					local targetAngles = target:EyeAngles();
+					local targetPos = target:GetPos();
+					
 					Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+					
+					target:SetPos(targetPos);
+					target:SetEyeAngles(targetAngles);
+					
 					Clockwork.player:NotifyAll(player:Name().." has transferred "..name.." to the "..subfaction.name.." subfaction.");
 				else
 					Clockwork.player:Notify(player, subfaction.." is not a valid subfaction for this faction!");

@@ -139,6 +139,10 @@ function cwDueling:PlayerEnteredDuel(player, arena, spawnPos, spawnAngles)
 		player:Spawn();
 	end
 	
+	if player:IsRagdolled() then
+		Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);
+	end
+	
 	player:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255), 5, 0);
 	player:SetPos(spawnPos);
 	player:SetEyeAngles(spawnAngles);
@@ -165,6 +169,10 @@ function cwDueling:PlayerExitedDuel(player)
 	
 	if !player:Alive() then
 		player:Spawn();
+	end
+	
+	if player:IsRagdolled() then
+		Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);
 	end
 	
 	local duelData = player.duelData;

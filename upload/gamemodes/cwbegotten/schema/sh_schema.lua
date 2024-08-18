@@ -5,6 +5,9 @@
 
 Schema:SetGlobalAlias("Begotten");
 
+game.AddParticles("particles/fire_01.pcf");
+PrecacheParticleSystem("env_fire_large");
+
 Clockwork.flag:Add("C", "Spawn Vehicles", "Access to spawn vehicles.")
 Clockwork.flag:Add("r", "Spawn Ragdolls", "Access to spawn ragdolls.")
 Clockwork.flag:Add("c", "Spawn Chairs", "Access to spawn chairs.")

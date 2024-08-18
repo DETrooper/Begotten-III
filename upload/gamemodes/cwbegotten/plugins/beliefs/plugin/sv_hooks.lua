@@ -1973,7 +1973,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 				else
 					data["Injuries"][i]["gash"] = true;
 					
-					data["BleedingLimbs"][string.lower(Clockwork.limb.names[i])] = true;
+					data["BleedingLimbs"][Clockwork.limb.Clockwork.limb.hitgroupToString[i]] = true;
 				end
 				
 				if !data["LimbData"] then

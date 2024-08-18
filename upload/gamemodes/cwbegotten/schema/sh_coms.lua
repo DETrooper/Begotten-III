@@ -201,7 +201,14 @@ local COMMAND = Clockwork.command:New("Enlist")
 											target:SetCharacterData("rank", 12);
 										end
 										
+										local targetAngles = target:EyeAngles();
+										local targetPos = target:GetPos();
+										
 										Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+										
+										target:SetPos(targetPos);
+										target:SetEyeAngles(targetAngles);
+										
 										Clockwork.player:NotifyAll(playerName.." has enlisted "..target:Name().." into the "..enlistFaction.." faction!");
 									end;
 								end
@@ -368,7 +375,13 @@ local COMMAND = Clockwork.command:New("Promote")
 								target:SetCharacterData("Subfaction", subfaction, true);
 							end
 							
+							local targetAngles = target:EyeAngles();
+							local targetPos = target:GetPos();
+							
 							Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+							
+							target:SetPos(targetPos);
+							target:SetEyeAngles(targetAngles);
 						end
 					end
 					

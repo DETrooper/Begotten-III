@@ -1010,7 +1010,7 @@ concommand.Add("cw_ExtinguishShip", function(player, cmd, args)
 						
 						entity.ignited = false;
 						entity:StopParticles();
-						entity:StopLoopingSound("ambient/fire/fire_med_loop1.wav");
+						entity:StopSound("ambient/fire/fire_med_loop1.wav");
 					end
 				end
 			end);
