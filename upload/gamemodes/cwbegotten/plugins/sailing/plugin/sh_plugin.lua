@@ -27,3 +27,5 @@ function COMMAND:OnRun(player, arguments)
 		cwSailing:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has disabled sailing to hell for enchanged longships.");
 	end
 end;
+
+COMMAND:Register()
