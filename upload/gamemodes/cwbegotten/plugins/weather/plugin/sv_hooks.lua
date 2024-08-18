@@ -70,7 +70,7 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 	if plyTab.nextWeatherEffectCheck <= curTime then
 		plyTab.nextWeatherEffectCheck = curTime + weatherEffectCheckDelay;
 		
-		if !alive or plyTab.cwObserverMode or plyTab.cwWakingUp then return end;
+		if !alive or plyTab.cwObserverMode or plyTab.cwWakingUp or plyTab.opponent then return end;
 		
 		local lastZone = player:GetCharacterData("LastZone") or "wasteland";
 		local zoneTable = zones:FindByID(lastZone);
