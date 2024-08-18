@@ -598,7 +598,7 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 							for k, v in ipairs(_player.GetAll()) do
 								if v:GetFaction() == "Children of Satan" and v:Alive() then
 									v:SendLua([[Clockwork.Client:EmitSound("begotten/sfx/hellwind.wav"]]);
-									Schema:EasyText(v, "red", "An overwhelming gust of infernal wind erupts past you, carrying the whispers of damned souls released from their suffering. The Dark Lord's domain has been breached by a Goreic host, and the manor will soon be under threat.");
+									Schema:EasyText(v, "red", "An overwhelming gust of infernal wind erupts past you, carrying the whispers of damned souls released from their suffering. The Dark Lord's domain has been breached by a Goreic host, and they will soon descend upon the manor.");
 									v:HandleSanity(-15);
 								end
 							end
