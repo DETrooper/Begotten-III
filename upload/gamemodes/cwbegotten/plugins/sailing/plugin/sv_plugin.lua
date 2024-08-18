@@ -380,8 +380,6 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 					--printp("Longship Angles Set: "..tostring(longshipEnt:GetAngles()));
 					
 					if IsValid(longshipEnt) then
-						longshipEnt.checkCooldown = CurTime() + 2;
-						
 						if longshipEnt.spawnedNPCs then
 							for i, v in ipairs(longshipEnt.spawnedNPCs) do
 								local entity = Entity(v);
@@ -597,7 +595,7 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 
 							for k, v in ipairs(_player.GetAll()) do
 								if v:GetFaction() == "Children of Satan" and v:Alive() then
-									v:SendLua([[Clockwork.Client:EmitSound("begotten/sfx/hellwind.wav"]]);
+									v:SendLua([[Clockwork.Client:EmitSound("begotten/sfx/hellwind.wav")]]);
 									Schema:EasyText(v, "red", "An overwhelming gust of infernal wind erupts past you, carrying the whispers of damned souls released from their suffering. The Dark Lord's domain has been breached by a Goreic host, and they will soon descend upon the manor.");
 									v:HandleSanity(-15);
 								end

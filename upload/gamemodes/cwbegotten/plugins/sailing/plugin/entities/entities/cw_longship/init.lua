@@ -42,7 +42,13 @@ function ENT:Think()
 		
 		if self.playersOnBoard and #self.playersOnBoard > 0 then
 			if self.location == "styx" then
-				if !self.nextNPCCheck or self.nextNPCCheck < curTime then
+				if !self.nextNPCCheck then
+					self.nextNPCCheck = curTime + 5;
+					
+					return;
+				end
+				
+				if self.nextNPCCheck < curTime then
 					self.nextNPCCheck = curTime + math.random(3, 10);
 					
 					-- Thrall combat encounters when sailing through the Styx.
@@ -100,6 +106,8 @@ function ENT:Think()
 						end
 					end
 				end
+			elseif self.nextNPCCheck then
+				self.nextNPCCheck = nil;
 			end
 		
 			for i, player in ipairs(self.playersOnBoard) do
