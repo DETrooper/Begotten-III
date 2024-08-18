@@ -41,6 +41,67 @@ function ENT:Think()
 		self.checkCooldown = curTime + 0.1;
 		
 		if self.playersOnBoard and #self.playersOnBoard > 0 then
+			if self.location == "styx" then
+				if !self.nextNPCCheck or self.nextNPCCheck < curTime then
+					self.nextNPCCheck = curTime + math.random(3, 10);
+					
+					-- Thrall combat encounters when sailing through the Styx.
+					self.maxNPCs = math.max(1, #self.playersOnBoard / 3);
+					
+					if !self.spawnedNPCs then
+						self.spawnedNPCs = {};
+					end
+					
+					if #self.spawnedNPCs < self.maxNPCs and timer.Exists("TravelTimer_"..tostring(self:EntIndex())) and math.abs(timer.TimeLeft("TravelTimer_"..tostring(self:EntIndex()))) > 30 then
+						local longshipPos = self:GetPos();
+						local maxXs = {math.random(256, 312), math.random(-256, -312)};
+						local dist = Vector(maxXs[math.random(1, #maxXs)], math.random(-312, 312), 0);
+						
+						local tr = util.TraceLine({
+							start = longshipPos + Vector(dist.x, dist.y, 128),
+							endpos = longshipPos + Vector(dist.x, dist.y, -256)
+						})
+						
+						if tr.Hit then
+							local spawnPos = tr.HitPos + Vector(0, 0, 8);
+							local thrallNPCs = {"npc_bgt_brute", "npc_bgt_pursuer"};
+							
+							if IsValid(self.owner) and self.owner:HasTrait("marked") then
+								if math.random(1, 8) == 1 then
+									thrallNPCs = {"npc_bgt_otis"};
+								end
+							end
+
+							local npcName = thrallNPCs[math.random(1, #thrallNPCs)];
+							
+							ParticleEffect("teleport_fx", spawnPos, Angle(0,0,0), nil);
+							sound.Play("misc/summon.wav", spawnPos, 100, 100);
+							
+							timer.Simple(0.75, function()
+								if IsValid(self) and self.location == "styx" then
+									local entity = cwZombies:SpawnThrall(npcName, spawnPos, Angle(0, math.random(1, 359), 0));
+
+									if IsValid(entity) then
+										entity:SetMaterial("models/props_lab/Tank_Glass001");
+										entity.noCatalysts = true;
+										
+										for i, v in RandomPairs(self.playersOnBoard) do
+											if IsValid(v) and v:Alive() and !v.cwObserverMode then
+												entity:SetEnemy(v);
+												
+												break;
+											end
+										end
+										
+										table.insert(self.spawnedNPCs, entity:EntIndex())
+									end
+								end
+							end);
+						end
+					end
+				end
+			end
+		
 			for i, player in ipairs(self.playersOnBoard) do
 				if IsValid(player) then
 					local playerPos = player:GetPos();
@@ -324,15 +385,17 @@ function ENT:Use(activator, caller)
 				netstream.Start(caller, "OpenLongshipMenu", true, self.ignited, self.repairable, true, false, true);
 			end
 		elseif caller:GetFaction() ~= "Goreic Warrior" then
-			local activeWeapon = caller:GetActiveWeapon();
-			
-			if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
-				local oil = caller:GetSharedVar("oil", 0);
-			
-				if oil >= 1 then
-					netstream.Start(caller, "OpenLongshipMenu", true, self.ignited, false, false, false, false);
-					
-					return;
+			if !self.enchantment then
+				local activeWeapon = caller:GetActiveWeapon();
+				
+				if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
+					local oil = caller:GetSharedVar("oil", 0);
+				
+					if oil >= 1 then
+						netstream.Start(caller, "OpenLongshipMenu", true, self.ignited, false, false, false, false);
+						
+						return;
+					end
 				end
 			end
 			
@@ -354,6 +417,18 @@ function ENT:OnRemove()
 				self:Remove();
 			end
 		end);
+	end
+	
+	if self.spawnedNPCs then
+		for i, v in ipairs(self.spawnedNPCs) do
+			local entity = Entity(v);
+			
+			if entity and (entity:IsNPC() or entity:IsNextBot()) then
+				entity:Remove();
+			end
+		end
+		
+		self.spawnedNPCs = nil;
 	end
 	
 	self:StopParticles();

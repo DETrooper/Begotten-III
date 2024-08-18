@@ -148,7 +148,7 @@ if SERVER then
 					ragdoll:Fire("fadeandremove", 1);
 					ragdoll:EmitSound("begotten/npc/burn.wav");
 					
-					if cwRituals and cwItemSpawner then
+					if cwRituals and cwItemSpawner and !hook.Run("GetShouldntThrallDropCatalyst", ragdoll) then
 						local randomItem;
 						local spawnable = cwItemSpawner:GetSpawnableItems(true);
 						local lootPool = {};
@@ -176,7 +176,7 @@ if SERVER then
 						end
 					end
 					
-					if cwRecipes and cwItemSpawner then
+					if cwRecipes and cwItemSpawner and !hook.Run("GetShouldntThrallDropCatalyst", ragdoll) then
 						for i = 1, math.random(3, 4) do
 							local itemInstance = item.CreateInstance("iron_chunks");
 							

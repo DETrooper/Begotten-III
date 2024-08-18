@@ -287,12 +287,12 @@ local ITEM = Clockwork.item:New();
 ITEM:Register();
 
 local ITEM = Clockwork.item:New();
-	ITEM.name = "Human Bone";
+	ITEM.name = "Bone";
 	ITEM.category = "Crafting Materials";
 	ITEM.model = "models/Gibs/HGIBS_rib.mdl";
 	ITEM.weight = 0.3;
 	ITEM.uniqueID = "human_bone";
-	ITEM.description = "A fragment of Human bone that can be used in the creation of weapons or armor.";
+	ITEM.description = "A fragment of bone that can be used in the creation of weapons or armor.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = true;
 

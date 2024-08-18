@@ -135,7 +135,7 @@ if SERVER then
 					ragdoll:Fire("fadeandremove", 1);
 					ragdoll:EmitSound("begotten/npc/burn.wav");
 					
-					if cwRituals and cwItemSpawner then
+					if cwRituals and cwItemSpawner and !hook.Run("GetShouldntThrallDropCatalyst", ragdoll) then
 						for i = 1, 10 do
 							local randomItem;
 							local spawnable = cwItemSpawner:GetSpawnableItems(true);

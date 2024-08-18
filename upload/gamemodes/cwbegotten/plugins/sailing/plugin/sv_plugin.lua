@@ -6,20 +6,20 @@
 
 local map = game.GetMap();
 
-if !SHIP_DESTINATIONS then
+if !cwSailing.shipDestinations then
 	if map == "rp_begotten3" then
-		SHIP_DESTINATIONS = {
+		cwSailing.shipDestinations = {
 			["docks"] = {name = "the Gore Forest"},
 			["hell"] = {name = "Hell"},
-			["pillars"] = {name = "the Pillars of Creation"},
 			["wasteland"] = {name = "the Wasteland"},
+			["wastelandlava"] = {name = "the Lava Coast"},
 		};
 	end
 end
 
-if !SHIP_LOCATIONS then
+if !cwSailing.shipLocations then
 	if map == "rp_begotten3" then
-		SHIP_LOCATIONS = {
+		cwSailing.shipLocations = {
 			["docks"] = {
 				{occupied = false, pos = Vector(-3103.90625, 385.65625, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
 				{occupied = false, pos = Vector(-2734.59375, 366.75, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
@@ -41,12 +41,6 @@ if !SHIP_LOCATIONS then
 				{occupied = false, pos = Vector(-6001.875, -9808.0625, -7282.75), angles = Angle(0, 180, 0), bodygroup = 1},
 				{occupied = false, pos = Vector(-7776.6875, -8341, -7273), angles = Angle(0, 0, 0), bodygroup = 1},
 				{occupied = false, pos = Vector(-8087.8125, -8427.71875, -7274.59375), angles = Angle(0, 0, 0), bodygroup = 1},
-			},
-			["pillars"] = {
-				{occupied = false, pos = Vector(-10496.59375, 252.625, -1753.875), angles = Angle(0, 90, 0), bodygroup = 1},
-				{occupied = false, pos = Vector(-11942.6875, -908.5, -1760.875), angles = Angle(0, 45, 0), bodygroup = 1},
-				{occupied = false, pos = Vector(-12148.46875, -2820.53125, -1746.59375), angles = Angle(0, 90, 0), bodygroup = 1},
-				{occupied = false, pos = Vector(-11161.21875, -3833.46875, -1755.84375), angles = Angle(0, 135, 0), bodygroup = 1},
 			},
 			["rough"] = {
 				{occupied = false, pos = Vector(9275.28125, 8330.0625, -6338.9375)},
@@ -77,6 +71,14 @@ if !SHIP_LOCATIONS then
 				{occupied = false, pos = Vector(13709.8125, 10730.25, -1921), angles = Angle(0, 225, 0), bodygroup = 1},
 				{occupied = false, pos = Vector(13000.125, 10841.0625, -1923.03125), angles = Angle(0, 225, 0), bodygroup = 1},
 				{occupied = false, pos = Vector(12022.3125, 10821.21875, -1927.6875), angles = Angle(0, 270, 0), bodygroup = 1},
+			},
+			["wastelandlava"] = {
+				{occupied = false, pos = Vector(-13442, -14395, -1752), angles = Angle(0, 90, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-14222, -14241, -1745), angles = Angle(0, -135, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-14422, -13440, -1748), angles = Angle(0, 0, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-11612, 5546, -1754), angles = Angle(0, -45, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-12431, 4962, -1752), angles = Angle(0, 0, 0), bodygroup = 1},
+				{occupied = false, pos = Vector(-12514, 3665, -1746), angles = Angle(0, 0, -0), bodygroup = 1},
 			},
 		};
 	end
@@ -157,8 +159,8 @@ function cwSailing:SpawnLongship(owner, location, itemTable)
 						if IsValid(longshipEnt) then
 							-- If the ship is still at port after five minutes and the docks are full, remove it and let someone else take a spot.
 							if longshipEnt.location == "docks" then
-								for j = 1, #SHIP_LOCATIONS["docks"] do
-									if SHIP_LOCATIONS["docks"][j].occupied == false then
+								for j = 1, #self.shipLocations["docks"] do
+									if self.shipLocations["docks"][j].occupied == false then
 										return;
 									end
 								end
@@ -223,7 +225,7 @@ function cwSailing:BeginSailing(longshipEnt, destination)
 			Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", owner:Name().."'s longship is setting sail to destination "..destination.."!");
 			
 			longshipEnt:EmitSound("ambient/machines/thumper_dust.wav");
-			Clockwork.chatBox:AddInTargetRadius(owner, "me", "prepares to set sail for "..tostring(SHIP_DESTINATIONS[destination].name)..".", owner:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+			Clockwork.chatBox:AddInTargetRadius(owner, "me", "prepares to set sail for "..tostring(self.shipDestinations[destination].name)..".", owner:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 			
 			longshipEnt:SetBodygroup(0, 0);
 			
@@ -300,7 +302,7 @@ function cwSailing:DetermineSeaZone(longshipEnt, destination)
 		if rand == 1 then
 			sea_zone = "rough";
 		end
-	elseif destination == "hell" or destination == "pillars" then
+	elseif destination == "hell" or destination == "wastelandlava" then
 		sea_zone = "styx";
 	end
 	
@@ -378,6 +380,20 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 					--printp("Longship Angles Set: "..tostring(longshipEnt:GetAngles()));
 					
 					if IsValid(longshipEnt) then
+						longshipEnt.checkCooldown = CurTime() + 2;
+						
+						if longshipEnt.spawnedNPCs then
+							for i, v in ipairs(longshipEnt.spawnedNPCs) do
+								local entity = Entity(v);
+								
+								if entity and (entity:IsNPC() or entity:IsNextBot()) then
+									entity:Remove();
+								end
+							end
+							
+							longshipEnt.spawnedNPCs = nil;
+						end
+					
 						if IsValid(longshipEnt.owner) then
 							Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", longshipEnt.owner:Name().."'s longship with "..#longshipPlayers.." players aboard has arrived at "..location.."!");
 						else
@@ -508,8 +524,8 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 							if IsValid(longshipEnt) then
 								-- If the ship is still at port after five minutes and the docks are full, remove it and let someone else take a spot.
 								if longshipEnt.location == "docks" then
-									for j = 1, #SHIP_LOCATIONS["docks"] do
-										if SHIP_LOCATIONS["docks"][j].occupied == false then
+									for j = 1, #self.shipLocations["docks"] do
+										if self.shipLocations["docks"][j].occupied == false then
 											return;
 										end
 									end
@@ -576,6 +592,26 @@ function cwSailing:MoveLongship(longshipEnt, longshipEntBoundingBox, location)
 							duration = math.random(90, 150);
 						end
 						
+						if longshipEnt.destination == "hell" then
+							duration = math.random(280, 320);
+
+							for k, v in ipairs(_player.GetAll()) do
+								if v:GetFaction() == "Children of Satan" and v:Alive() then
+									v:SendLua([[Clockwork.Client:EmitSound("begotten/sfx/hellwind.wav"]]);
+									Schema:EasyText(v, "red", "An overwhelming gust of infernal wind erupts past you, carrying the whispers of damned souls released from their suffering. The Dark Lord's domain has been breached by a Goreic host, and the manor will soon be under threat.");
+									v:HandleSanity(-15);
+								end
+							end
+							
+							timer.Simple(5, function()
+								for k, v in ipairs(_player.GetAll()) do
+									if v:GetFaction() == "Children of Satan" and v:Alive() then
+										v:Disorient(5);
+									end
+								end
+							end);
+						end
+						
 						timer.Create("TravelTimer_"..tostring(longshipEnt:EntIndex()), duration, 1, function()
 							--printp("Travel timer fired!");
 							if IsValid(longshipEnt) and longshipEnt.destination then
@@ -634,10 +670,10 @@ end
 function cwSailing:FindValidLongshipSpawn(longshipEnt, location)
 	local valid_spawns = {};
 	
-	if SHIP_LOCATIONS[location] then
-		for i = 1, #SHIP_LOCATIONS[location] do
-			if SHIP_LOCATIONS[location][i].occupied == false then
-				table.insert(valid_spawns, SHIP_LOCATIONS[location][i]);
+	if self.shipLocations[location] then
+		for i = 1, #self.shipLocations[location] do
+			if self.shipLocations[location][i].occupied == false then
+				table.insert(valid_spawns, self.shipLocations[location][i]);
 			end
 		end
 	end
@@ -648,11 +684,11 @@ function cwSailing:FindValidLongshipSpawn(longshipEnt, location)
 	
 	local spawn = valid_spawns[math.random(1, #valid_spawns)];
 	
-	for i = 1, #SHIP_LOCATIONS[location] do
-		if spawn.pos == SHIP_LOCATIONS[location][i].pos then
+	for i = 1, #self.shipLocations[location] do
+		if spawn.pos == self.shipLocations[location][i].pos then
 			if IsValid(longshipEnt) then
 				if longshipEnt.location and longshipEnt.position then
-					SHIP_LOCATIONS[longshipEnt.location][longshipEnt.position].occupied = false;
+					self.shipLocations[longshipEnt.location][longshipEnt.position].occupied = false;
 				end
 				
 				longshipEnt.location = location;
@@ -754,7 +790,7 @@ function cwSailing:RemoveLongship(longshipEnt)
 	if IsValid(longshipEnt) then
 		if !longshipEnt.husk then
 			if longshipEnt.location and longshipEnt.position then
-				SHIP_LOCATIONS[longshipEnt.location][longshipEnt.position].occupied = false;
+				self.shipLocations[longshipEnt.location][longshipEnt.position].occupied = false;
 			end
 		end
 		
@@ -770,9 +806,9 @@ function cwSailing:RemoveLongship(longshipEnt)
 			end
 		end
 
-		for i = 1, #cwSailing.longships do
-			if cwSailing.longships[i][1] == longshipEnt:EntIndex() then
-				table.remove(cwSailing.longships, i);
+		for i = 1, #self.longships do
+			if self.longships[i][1] == longshipEnt:EntIndex() then
+				table.remove(self.longships, i);
 				break;
 			end
 		end
@@ -803,6 +839,12 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 		
 		if entity:GetPos():Distance(player:GetPos()) < 256 then
 			if (entity:GetClass() == "cw_longship") then
+				if entity.enchantment then
+					Schema:EasyText(player, "peru", "This longship seems to have an invisible force that prevents it from being burnt!");
+					
+					return false;
+				end
+			
 				local activeWeapon = player:GetActiveWeapon();
 				
 				if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
@@ -950,8 +992,8 @@ concommand.Add("cw_CheckShipStatus", function(player, cmd, args)
 			end
 			
 			if entity.destination then
-				if SHIP_DESTINATIONS[entity.destination] then
-					status_string = status_string.." You remember that this longship is headed to "..tostring(SHIP_DESTINATIONS[entity.destination].name)..".";
+				if cwSailing.shipDestinations[entity.destination] then
+					status_string = status_string.." You remember that this longship is headed to "..tostring(cwSailing.shipDestinations[entity.destination].name)..".";
 				end
 			end
 			
@@ -1106,7 +1148,7 @@ concommand.Add("cw_MoveShipWasteland", function(player, cmd, args)
 	end;
 end);
 
-concommand.Add("cw_MoveShipPillars", function(player, cmd, args)
+concommand.Add("cw_MoveShipLava", function(player, cmd, args)
 	local trace = player:GetEyeTrace();
 
 	if (trace.Entity) then
@@ -1119,10 +1161,10 @@ concommand.Add("cw_MoveShipPillars", function(player, cmd, args)
 						if player:GetFaction() == "Goreic Warrior" or player:IsAdmin() then
 							if IsValid(entity.owner) then
 								if entity.owner == player then
-									cwSailing:BeginSailing(entity, "pillars");
+									cwSailing:BeginSailing(entity, "wastelandlava");
 								end
 							else
-								cwSailing:BeginSailing(entity, "pillars");
+								cwSailing:BeginSailing(entity, "wastelandlava");
 							end
 						end
 					else
@@ -1144,20 +1186,27 @@ concommand.Add("cw_MoveShipHell", function(player, cmd, args)
 
 		if (entity:GetClass() == "cw_longship") then
 			if entity.enchantment then
-				if !entity.destination then
-					if !entity.ignited then
-						if player:GetFaction() == "Goreic Warrior" then
-							if IsValid(entity.owner) then
-								if entity.owner == player then
+				if cwSailing.hellSailingEnabled then
+					if !entity.destination then
+						if !entity.ingnited then
+							if player:GetFaction() == "Goreic Warrior" then
+								if IsValid(entity.owner) then
+									if entity.owner == player then
+										cwSailing:BeginSailing(entity, "hell");
+									end
+								else
 									cwSailing:BeginSailing(entity, "hell");
 								end
-							else
-								cwSailing:BeginSailing(entity, "hell");
 							end
+						else
+							Schema:EasyText(player, "maroon", "This longship cannot sail because it is on fire!");
 						end
-					else
-						Schema:EasyText(player, "maroon", "This longship cannot sail because it is on fire!");
 					end
+				else
+					Schema:EasyText(player, "chocolate", "The mere thought of sailing to Hell drives a nail into your mind. Consult the gods for guidance.");
+					player:HandleSanity(-5);
+
+					Schema:EasyText(GetAdmins(), "icon16/anchor.png", "goldenrod", player:Name() .. " has attempted to sail to Hell while /ToggleHellSailing is disabled! Expect a prayer.")
 				end
 			else
 				Schema:EasyText(player, "chocolate", "Your longship lacks the enchantment required to navigate the River Styx safely.");

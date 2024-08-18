@@ -480,8 +480,9 @@ if SERVER then
 	local function IsEntityClimbable(self, ent)
 		if ent:IsWorld() then return true
 		elseif not IsValid(ent) then return false end
-		if ent:GetClass() == "func_lod" then return true end
-		return self.ClimbProps and ent:GetClass() == "prop_physics" and ent:GetVelocity():IsZero()
+		local class = ent:GetClass();
+		if class == "func_lod" then return true end
+		return self.ClimbProps and (class == "prop_physics" or hook.Run("IsEntityClimbable", class)) and ent:GetVelocity():IsZero()
 	end
 	function ENT:FindLedge(propOnly)
 		if not self.ClimbLedges or (propOnly and not self.ClimbProps) then return end

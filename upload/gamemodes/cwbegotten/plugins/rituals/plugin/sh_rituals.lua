@@ -1395,6 +1395,109 @@ RITUAL = cwRituals.rituals:New("aura_of_powderheel");
 	end;
 RITUAL:Register()
 
+RITUAL = cwRituals.rituals:New("eye_of_the_storm");
+	RITUAL.name = "(Unique) Eye of the Storm";
+	RITUAL.description = "The Haraldrs claim that each strike of thunder comes from the Old Son's War Axe as He chops down sky-beasts that bleed rain upon the lands. The Crasters claim that the storm clouds are from The Mother, who weeps to bring forth new life in the cycle of nature. The clans may disagree, but nonetheless they both benefit from the salty waters that drown their many foes. Performing this ritual will summon a thunderstorm within a minute of being performed. Incurs 50 corruption.";
+	RITUAL.onerequiredbelief = {"daring_trout", "watchful_raven"}; -- Unique Mother/Old Son Ritual
+	
+	RITUAL.requirements = {"purifying_stone", "up_catalyst", "xolotl_catalyst"};
+	RITUAL.corruptionCost = 50;
+	RITUAL.ritualTime = 10;
+	RITUAL.experience = 150;
+	
+	function RITUAL:OnPerformed(player)
+		if cwWeather then
+			cwWeather:SetWeather("thunderstorm");
+			
+			return true;
+		end
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		if cwWeather then
+			if cwWeather.weather ~= "thunderstorm" then
+				if cwWeather.nextWeatherTime - CurTime() <= 10 then
+					-- Add enough time to complete the ritual!
+					cwWeather.nextWeatherTime = CurTime() + 10;
+				end
+				
+				return true;
+			else
+				Schema:EasyText(player, "peru", "There is already an active thunderstorm!");
+				
+				return false;
+			end
+		end
+		
+		return false;
+	end;
+	function RITUAL:EndRitual(player)
+	end;
+RITUAL:Register()
+
+RITUAL = cwRituals.rituals:New("Sister's Blessing");
+	RITUAL.name = "(T3) Sister's Blessing";
+	RITUAL.description = "The River Styx is said to be a boiling body of lava that is home to the dead and damned. With the correct blood magic ritual, the Reavers have been able to bargain with the demons that their crossing will be paid in the souls of their harvest. Incurs 75 corruption.";
+	RITUAL.onerequiredbelief = {"shedskin", "watchful_raven"}; -- Unique Mother/Sister Ritual
+
+	RITUAL.requirements = {"xolotl_catalyst", "pentagram_catalyst", "xolotl_catalyst"};
+	RITUAL.corruptionCost = 75;
+	RITUAL.ritualTime = 10;
+	RITUAL.experience = 200;
+
+	function RITUAL:OnPerformed(player)
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		local target = player:GetEyeTraceNoCursor().Entity;
+
+		if target:GetClass() != "cw_longship" then 
+			Schema:EasyText(player, "firebrick", "You must look at a longship!");
+			return false;
+		end
+
+		if (target:GetPos():Distance(player:GetShootPos()) > 256) then
+			Schema:EasyText(player, "firebrick", "You are too far from the longship!");
+			return false;
+		end
+
+		if target.enchantment == true then
+			Schema:EasyText(player, "firebrick", "This longship is already enchanted!");
+			return false;
+		end
+
+		return true;
+
+	end;
+	
+	function RITUAL:EndRitual(player)
+		local target = player:GetEyeTraceNoCursor().Entity;
+
+		if target:GetClass() != "cw_longship" then 
+			Schema:EasyText(player, "firebrick", "You must look at a longship!");
+			return false;
+		end
+
+		if (target:GetPos():Distance(player:GetShootPos()) > 256) then
+			Schema:EasyText(player, "firebrick", "You are too far from the longship!");
+			return false;
+		end
+
+		if target.enchantment == true then
+			Schema:EasyText(player, "firebrick", "This longship is already enchanted!");
+			return false;
+		end
+
+		Schema:EasyText(player, "icon16/anchor.png", "cornflowerblue", "This ship can now navigate the River Styx!");
+		Schema:EasyText(GetAdmins(), "icon16/anchor.png", "goldenrod", player:Name() .. " has enchanted a boat to navigate the River Styx! You can perform the /ToggleHellSailing command to allow them to sail to the Hell Manor!")
+		target.enchantment = true;
+		
+		return true;
+	end;
+RITUAL:Register()
+
 RITUAL = cwRituals.rituals:New("rooting");
 	RITUAL.name = "(T1) Rooting";
 	RITUAL.description = "When the incessant demonic chanting drives you angry, consider banishing them back to the hells that birthed them. Performing this ritual will remove 45 points of corruption.";

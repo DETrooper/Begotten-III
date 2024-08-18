@@ -54,7 +54,7 @@ end
 
 -- Called when a player uses an unknown item function.
 function cwSailing:PlayerUseUnknownItemFunction(player, itemTable, itemFunction)
-	if !SHIP_LOCATIONS then
+	if !self.shipLocations then
 		return;
 	end;
 	
@@ -80,5 +80,54 @@ function cwSailing:ModifyPlayerSpeed(player, infoTable, action)
 	if (action == "burn_longship" or action == "extinguish_longship" or action == "repair_longship" or action == "repair_alarm") then
 		infoTable.runSpeed = infoTable.walkSpeed * 0.1;
 		infoTable.walkSpeed = infoTable.walkSpeed * 0.1;
+	end
+end
+
+function cwSailing:GetShouldntThrallDropCatalyst(thrall)
+	if zones and zones.stored then
+		local zoneStyx = zones.stored["sea_styx"];
+		
+		if zoneStyx then
+			local boundsTable = zoneStyx.bounds;
+			
+			return Schema:IsInBox(boundsTable.min, boundsTable.max, thrall:GetPos());
+		end
+	end
+end
+
+function cwSailing:IsEntityClimbable(class)
+	if class == "cw_longship" then
+		return true;
+	end;
+end
+
+-- Called when an NPC has been killed.
+function cwSailing:OnNPCKilled(npc)
+	if IsValid(npc) then
+		for i, longshipEnt in ipairs(ents.FindByClass("cw_longship")) do
+			if IsValid(longshipEnt) and longshipEnt.spawnedNPCs then
+				for i2, v in ipairs(longshipEnt.spawnedNPCs) do
+					if v == npc:EntIndex() then
+						table.remove(longshipEnt.spawnedNPCs, i);
+						break;
+					end
+				end
+			end
+		end
+	end
+end;
+
+function cwSailing:EntityRemoved(npc)
+	if IsValid(npc) and (npc:IsNPC() or npc:IsNextBot()) then
+		for i, longshipEnt in ipairs(ents.FindByClass("cw_longship")) do
+			if IsValid(longshipEnt) and longshipEnt.spawnedNPCs then
+				for i2, v in ipairs(longshipEnt.spawnedNPCs) do
+					if v == npc:EntIndex() then
+						table.remove(longshipEnt.spawnedNPCs, i);
+						break;
+					end
+				end
+			end
+		end
 	end
 end

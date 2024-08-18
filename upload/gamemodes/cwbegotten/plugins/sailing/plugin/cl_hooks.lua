@@ -102,7 +102,7 @@ function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destinat
 			
 		if zone ~= "wasteland" then
 			submenu:AddOption("Sail through the High Seas to the Glazic Wasteland", function() Clockwork.Client:ConCommand("cw_MoveShipWasteland") end);
-			submenu:AddOption("Sail through the River Styx to the Pillars of Creation", function() Clockwork.Client:ConCommand("cw_MoveShipPillars") end);
+			submenu:AddOption("Sail through the River Styx to the Lava Coast", function() Clockwork.Client:ConCommand("cw_MoveShipLava") end);
 		end
 			
 		if zone ~= "hell" then
@@ -111,7 +111,7 @@ function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destinat
 	end
 	
 	if isAdmin then
-		menu:AddOption("(ADMIN) Toggle Hell Enchantment", function() Clockwork.Client:ConCommand("cw_ShipToggleEnchantment") end);
+		menu:AddOption("(ADMIN) Toggle River Styx Enchantment", function() Clockwork.Client:ConCommand("cw_ShipToggleEnchantment") end);
 	
 		if zone == "sea_calm" or zone == "sea_rough" or zone == "sea_styx" then
 			menu:AddOption("(ADMIN) Speed to Destination", function() Clockwork.Client:ConCommand("cw_ShipTimerSpeed") end);
