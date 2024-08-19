@@ -1309,7 +1309,7 @@ function playerMeta:StripWeapon(weaponClass)
 
 		for k, v in pairs(ragdollWeapons) do
 			if (v.weaponData["class"] == weaponClass) then
-				weapons[k] = nil
+				ragdollWeapons[k] = nil
 			end
 		end
 	else
