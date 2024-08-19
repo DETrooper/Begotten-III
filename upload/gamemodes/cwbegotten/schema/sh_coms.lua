@@ -2349,6 +2349,24 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 				return false;
 			end
 			
+			if player:GetNWBool("PickingUpRagdoll") then
+				Schema:EasyText(player, "peru", "You cannot helljaunt while in the process of picking up a ragdoll!");
+				
+				return false;
+			end
+			
+			local holdingEnt = player.cwHoldingEnt;
+			
+			if IsValid(holdingEnt) and holdingEnt:GetClass() == "prop_ragdoll" then
+				local ragdollPlayer = Clockwork.entity:GetPlayer(holdingEnt);
+				
+				if ragdollPlayer and ragdollPlayer:GetFaction() == "Children of Satan" and ragdollPlayer:Alive() and ragdollPlayer.OverEncumbered then
+					Schema:EasyText(player, "peru", "You cannot helljaunt while holding another overencumbered Child of Satan!");
+					
+					return false;
+				end
+			end
+			
 			if not player.opponent and not player:IsRagdolled() and player:GetSharedVar("tied") == 0 then
 				local lastZone = player:GetCharacterData("LastZone");
 				

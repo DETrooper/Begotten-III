@@ -70,6 +70,8 @@ function cwPickupObjects:ForceDropEntity(player)
 	player.cwHoldingEnt = nil;
 	player.cwHoldingGrab = nil;
 	
+	hook.Run("PlayerDroppedEntity", player, entity);
+	
 	return entity;
 end;
 
@@ -109,6 +111,8 @@ function cwPickupObjects:ForcePickup(player, entity, trace)
 	else
 		constraint.Weld(entity, player.cwHoldingGrab, 0, 0, 0);
 	end
+	
+	hook.Run("PlayerPickedUpEntity", player, entity);
 end;
 
 -- A function to calculate a player's entity position.
