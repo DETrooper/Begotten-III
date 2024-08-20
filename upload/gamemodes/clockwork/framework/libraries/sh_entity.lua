@@ -488,70 +488,61 @@ if (CLIENT) then
 		@details A function to fetch the entity's item data.
 		@param Entity The entity getting the item data from.
 	--]]
-	function Clockwork.entity:FetchItemData(entity)
-		local curTime = CurTime()
+    function Clockwork.entity:FetchItemData(entity)
+        local curTime = CurTime()
 
-		if (!entity.m_iNextFetchItemData) then
-			entity.m_iNextFetchItemData = 0
-		end
+        if (!entity.m_iNextFetchItemData) then
+            entity.m_iNextFetchItemData = 0
+        end
 
-		if (curTime > entity.m_iNextFetchItemData) then
-			entity.m_iNextFetchItemData = curTime + 4
+        if (curTime > entity.m_iNextFetchItemData) then
+            entity.m_iNextFetchItemData = curTime + 4
 
-			if (entity:IsVehicle()) then
-				netstream.Start("FetchItemData", entity:EntIndex())
-			else
-				netstream.Start("FetchItemData", entity)
-			end
-		end
-	end
+            net.Start("FetchItemData");
+                net.WriteEntity(entity);
+            net.SendToServer();
+        end
+    end
 
-	netstream.Hook("FetchItemData", function(data)
-		if (type(data.entity) == "number") then
-			data.entity = ents.GetByIndex(data.entity)
-		end
+    net.Receive("FetchItemData", function()
+        local entity = net.ReadEntity();
+        if(!IsValid(entity)) then return; end
 
-		if (IsValid(data.entity)) then
-			data.entity.cwFetchedItemData = true
-			data.entity.cwItemTable = item.CreateInstance(
-				data.definition.index, data.definition.itemID, data.definition.data
-			)
-		end
-	end)
+        local definition = net.ReadTable();
+
+        entity.cwFetchedItemData = true
+        entity.cwItemTable = item.CreateInstance(
+            definition.index, definition.itemID, definition.data
+        );
+    end);
 else
-	netstream.Hook("FetchItemData", function(player, data)
-		local entity = data
+    util.AddNetworkString("FetchItemData");
 
-		if (type(data) == "number") then
-			entity = ents.GetByIndex(data)
-		end
+    net.Receive("FetchItemData", function(_, player)
+        local entity = net.ReadEntity();
+        if (!IsValid(entity)) then return; end
 
-		if (!IsValid(entity)) then return end
+        --[[
+            Find out what the entity's item table is
+            by trying a couple of common methods.
+        --]]
 
-		--[[
-			Find out what the entity's item table is
-			by trying a couple of common methods.
-		--]]
+        local itemTable = entity.cwItemTable;
 
-		local itemTable = entity.cwItemTable
+        if (entity.GetItemTable) then
+            itemTable = entity:GetItemTable();
+        end
 
-		if (entity.GetItemTable) then
-			itemTable = entity:GetItemTable()
-		end
+        if (itemTable) then
+            local definition = item.GetDefinition(itemTable, true);
 
-		if (itemTable) then
-			local definition = item.GetDefinition(itemTable, true)
+            net.Start("FetchItemData");
+                net.WriteEntity(entity);
+                net.WriteTable(definition);
+            net.Send(player);
 
-			if (entity:IsVehicle()) then
-				data = entity:EntIndex()
-			end
-
-			netstream.Start(player, "FetchItemData", {
-				definition = definition,
-				entity = data
-			})
-		end
-	end)
+        end
+    end);
 
 	--[[
 		@codebase Server
