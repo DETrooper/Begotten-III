@@ -541,6 +541,25 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Bone Mace";
+	ITEM.model = "models/begotten/weapons/bonemace.mdl";	
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "begotten_1h_bonemace";
+	ITEM.category = "Melee";
+	ITEM.description = "A primeval bludgeoning tool fashioned from the bones of your fellow man.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/bonemace.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(0, 180, 349.06);
+	ITEM.attachmentOffsetVector = Vector(3.71, -3.54, 27.58);
+	ITEM.canUseOffhand = true;
+	ITEM.canUseShields = true;
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"human_bone", "human_bone", "human_bone"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Pipe";
 	ITEM.model = "models/mosi/fallout4/props/weapons/melee/leadpipe.mdl";
 	ITEM.bodygroup1 = 1;

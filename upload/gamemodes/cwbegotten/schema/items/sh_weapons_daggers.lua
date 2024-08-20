@@ -55,6 +55,24 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Bone Dagger";
+	ITEM.model = "models/begotten/weapons/bonedagger.mdl";
+	ITEM.weight = 0.3;
+	ITEM.uniqueID = "begotten_dagger_bonedagger";
+	ITEM.category = "Melee";
+	ITEM.description = "A sharpened bone, likely used by primeval savages.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/bonedagger.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(0, 355.03, 0);
+	ITEM.attachmentOffsetVector = Vector(-3.54, 0.71, 1.41);
+	ITEM.canUseOffhand = true;
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"human_bone"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Knightsbane";
 	ITEM.model = "models/demonssouls/weapons/mail breaker.mdl";
 	ITEM.weight = 0.5;

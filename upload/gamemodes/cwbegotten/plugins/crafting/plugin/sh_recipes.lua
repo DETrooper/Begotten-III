@@ -3093,6 +3093,58 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 	
+	RECIPE = cwRecipes.recipes:New("bone_dagger");
+		RECIPE.name = "Bone Dagger";
+		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
+		RECIPE.requirements = {
+			["human_bone"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["begotten_dagger_bonedagger"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "physics/wood/wood_strain3.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 6;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("bone_mace");
+		RECIPE.name = "Bone Mace";
+		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
+		RECIPE.requirements = {
+			["human_bone"] = {amount = 4},
+		};
+		RECIPE.result = {
+			["begotten_1h_bonemace"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "physics/wood/wood_strain3.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 12;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
 	RECIPE = cwRecipes.recipes:New("scrap_axe");
 		RECIPE.name = "Scrap Axe";
 		RECIPE.requiredBeliefs = {"craftsman"};
@@ -3137,6 +3189,34 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
 		RECIPE.experience = 15;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("pickaxe");
+		RECIPE.name = "Pickaxe";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 2},
+			["wood"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["begotten_2h_great_pickaxe"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 25;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -5420,6 +5500,35 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 50;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("scrap_crossbow");
+		RECIPE.name = "Scrap Crossbow";
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["bindings"] = {amount = 1},
+			["scrap"] = {amount = 5},
+			["wood"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_scrapbow"] = {amount = 1},
+		};
+		RECIPE.category = "Munitions"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 35;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -8280,7 +8389,7 @@ RECIPE:Register()
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requirements = {
-			["scrap"] = {amount = 1},
+			["scrap"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["scrap_bolt"] = {amount = 1},

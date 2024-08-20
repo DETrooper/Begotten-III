@@ -46,7 +46,6 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 5; -- Seconds (for magazine)
 	ITEM.reloadSounds = {"weapons/m1911/handling/m1911_magrelease.wav", "weapons/m1911/handling/m1911_magout.wav", "weapons/m1911/handling/m1911_magin.wav", "weapons/m1911/handling/m1911_maghit.wav", "weapons/m1911/handling/m1911_boltback.wav", "weapons/m1911/handling/m1911_boltrelease.wav"};
 	ITEM.usesMagazine = true;
-	ITEM.unrepairable = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2500, supercrateOnly = true, supercrateItems = {["old_world_magazine"] = {min = 2, max = 3}, ["old_world_shot"] = {min = 7, max = 14}}};
 ITEM:Register();
@@ -69,7 +68,6 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.isRevolver = true;
 	ITEM.reloadTime = 2; -- Seconds (for one round)
 	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/bulkcannon/insertshell.wav", "weapons/bulkcannon/lock.wav"};
-	ITEM.unrepairable = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, supercrateOnly = true, supercrateItems = {["grapeshot"] = {min = 15, max = 30}}};
 ITEM:Register();
@@ -80,7 +78,6 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.category = "Crossbows";
 	ITEM.model = "models/begotten/weapons/w_crossbow.mdl";
 	ITEM.weight = 3.5;
-	ITEM.uniqueID = "begotten_crossbow";
 	ITEM.description = "Commonly employed by poorly trained levies from the county districts, the crossbow is an ancient design long pre-dating the Empire of Light. It launches bolts at high speeds and features a locking mechanism so that a draw does not need to be maintained, though it still requires considerable strength to reload.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/crossbow.png"
 	ITEM.isAttachment = true;
@@ -96,7 +93,30 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/crossbow/bow-pre1.wav.mp3", "weapons/crossbow/bowgun-stance.wav.mp3"};
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1000, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1650, bNoSupercrate = true};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("firearm_base");
+	ITEM.name = "Scrap Crossbow";
+	ITEM.uniqueID = "begotten_scrapbow";
+	ITEM.category = "Crossbows";
+	ITEM.model = "models/begotten/weapons/w_scrapbow.mdl";
+	ITEM.weight = 4;
+	ITEM.description = "A crossbow constructed from scrap metal and rotting wood.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scrapbow.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 354.15, 0);
+	ITEM.attachmentOffsetVector = Vector(-3.23, 1.39, -6.36);
+	
+	ITEM.ammoCapacity = 1;
+	ITEM.ammoTypes = {"Iron Bolt", "Scrap Bolt"};
+	ITEM.attributes = {"variable_damage"};
+	ITEM.firearmType = "Crossbow";
+	ITEM.reloadTime = 8; -- Seconds (for one round)
+	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/crossbow/bow-pre1.wav.mp3", "weapons/crossbow/bowgun-stance.wav.mp3"};
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "wood"}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -183,7 +203,6 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.isRevolver = true;
 	ITEM.reloadTime = 10; -- Seconds (for one round)
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
-	ITEM.unrepairable = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1500, supercrateOnly = true, supercrateItems = {["longshot"] = {min = 10, max = 20}, ["grapeshot"] = {min = 5, max = 10}}};
 ITEM:Register();
@@ -233,7 +252,6 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.firearmType = "Rifle";
 	ITEM.reloadTime = 5; -- Seconds
 	ITEM.reloadSounds = {"weapons/request day of defeat/m1903 springfield boltback 1.wav", "weapons/request day of defeat/m1903 springfield clipin.wav", "weapons/request day of defeat/m1903 springfield boltforward 2.wav"};
-	ITEM.unrepairable = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5000, supercrateOnly = true, supercrateItems = {["old_world_longshot"] = {min = 10, max = 20}}};
 ITEM:Register();
@@ -256,7 +274,6 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.firearmType = "Repeating Shotgun";
 	ITEM.reloadTime = 1; -- Seconds (for one round)
 	ITEM.reloadSounds = {"weapons/nikm1987trench/shotgun_shell_00.wav"};
-	ITEM.unrepairable = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5000, supercrateOnly = true, supercrateItems = {["old_world_grapeshot"] = {min = 10, max = 20}}};
 ITEM:Register();
@@ -280,7 +297,6 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 5; -- Seconds (for magazine)
 	ITEM.reloadSounds = {"weapons/m1911/handling/m1911_magrelease.wav", "weapons/m1911/handling/m1911_magout.wav", "weapons/m1911/handling/m1911_magin.wav", "weapons/m1911/handling/m1911_maghit.wav", "weapons/m1911/handling/m1911_boltback.wav", "weapons/m1911/handling/m1911_boltrelease.wav"};
 	ITEM.usesMagazine = true;
-	ITEM.unrepairable = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5000, supercrateOnly = true, supercrateItems = {["old_world_large_magazine"] = {min = 2, max = 3}, ["old_world_shot"] = {min = 20, max = 30}}};
 ITEM:Register();
