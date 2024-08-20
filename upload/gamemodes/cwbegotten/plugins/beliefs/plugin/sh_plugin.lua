@@ -1059,6 +1059,8 @@ local COMMAND = Clockwork.command:New("Warcry");
 				local radius = config.Get("talk_radius"):Get() * 2;
 				local playerPos = player:GetPos();
 				
+				player:HandleSanity(3);
+				
 				for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 					local isPlayer = v:IsPlayer();
 					
@@ -1158,10 +1160,6 @@ local COMMAND = Clockwork.command:New("Warcry");
 								v.warcrySlowSpeed = curTime + 10;
 								
 								hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true)
-							end
-						else
-							if faith == "Faith of the Family" then
-								v:HandleSanity(3);
 							end
 						end
 					end
