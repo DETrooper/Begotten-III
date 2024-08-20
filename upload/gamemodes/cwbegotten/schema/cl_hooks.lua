@@ -51,36 +51,55 @@ function Schema:Initialize()
 end
 
 -- A function to start a sound.
-function Schema:StartSound(sound, volume, pitch, dsp)
-	if (!sound or type(sound) != "string") then
-		return;
-	end;
-	
-	if (Clockwork.Client.customSound) then
-		Clockwork.Client.customSound:Stop();
-		Clockwork.Client.customSound = nil;
-		
-		if (Clockwork.Client.customSoundOldDSP) then
-			Clockwork.Client.customSoundOldDSP = nil;
-		end;
-	end;
-	
-	local pitch = math.Clamp(tonumber(pitch), 30, 255) or 100;
-	local volume = tonumber(volume) or 1;
-	local dsp = tonumber(dsp) or 0;
-	
-	if (volume > 1) then
-		volume = volume / 100;
-	end;
-	
-	if (!Clockwork.Client.customSound) then
-		Clockwork.Client.customSound = CreateSound(Clockwork.Client, sound);
-		
-		if (Clockwork.Client.customSound and !Clockwork.Client.customSound:IsPlaying()) then
-			Clockwork.Client.customSound:SetDSP(dsp);
-			Clockwork.Client.customSound:PlayEx(volume, pitch);
-		end;
-	end;
+function Schema:StartSound(soundStr, volume, pitch, dsp)
+    if (!soundStr or type(soundStr) != "string") then
+        return;
+    end;
+    
+    if (Clockwork.Client.customSound) then
+        Clockwork.Client.customSound:Stop();
+        Clockwork.Client.customSound = nil;
+        
+        if (Clockwork.Client.customSoundOldDSP) then
+            Clockwork.Client.customSoundOldDSP = nil;
+        end;
+    end;
+    
+    local pitch = math.Clamp(tonumber(pitch), 30, 255) or 100;
+    local volume = tonumber(volume) or 1;
+    local dsp = tonumber(dsp) or 0;
+    
+    if (volume > 1) then
+        volume = volume / 100;
+    end;
+    
+    if (!Clockwork.Client.customSound) then
+        if not string.find(soundStr, "http") then
+            Clockwork.Client.customSound = CreateSound(Clockwork.Client, soundStr);
+            
+            if (Clockwork.Client.customSound and !Clockwork.Client.customSound:IsPlaying()) then
+                Clockwork.Client.customSound:SetDSP(dsp);
+                Clockwork.Client.customSound:PlayEx(volume, pitch);
+            end;
+        else
+            if pitch then
+                if tonumber(pitch or 0) > 1 then
+                    pitch = pitch / 100
+                end
+            end
+            sound.PlayURL(soundStr, "noplay noblock", function(station)
+                if (IsValid(station)) then
+                    Clockwork.Client.customSound = station
+
+                    station:SetPos(LocalPlayer():GetPos())
+
+                    station:SetVolume(volume)
+                    station:SetPlaybackRate(pitch)
+                    station:Play()
+                end
+            end)
+        end
+    end;
 end;
 
 -- A function to stop a sound.
