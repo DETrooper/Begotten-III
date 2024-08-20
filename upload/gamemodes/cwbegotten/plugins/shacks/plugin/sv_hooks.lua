@@ -358,10 +358,12 @@ function cwShacks:GetPropertyInfo(player, shack)
 									
 									local coowners = {};
 									
-									for k, v in pairs(shack.coowners) do
-										table.insert(coowners, v);
+									if shack.coowners then
+										for k, v in pairs(shack.coowners) do
+											table.insert(coowners, v);
+										end
 									end
-									
+										
 									local timeLastPlayed = tostring(os.time() - tonumber(v._LastPlayed));
 									
 									if player:IsAdmin() then
