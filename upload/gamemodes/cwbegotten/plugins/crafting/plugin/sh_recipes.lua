@@ -3107,7 +3107,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 6;
+		RECIPE.experience = 2;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -3133,7 +3133,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 12;
+		RECIPE.experience = 3;
 		
 		function RECIPE:OnCraft(player)
 		end;

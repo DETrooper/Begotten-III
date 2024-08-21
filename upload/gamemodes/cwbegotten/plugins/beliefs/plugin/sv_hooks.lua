@@ -638,52 +638,32 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 		elseif (arguments == "cwHarvestBones") then
 			if (!entityPlayer or !entityPlayer:Alive()) then
 				local model = entity:GetModel();
-				
-				if entity:GetNWEntity("Player"):IsPlayer() or entity:GetNWEntity("Player") == game.GetWorld() or table.HasValue(animalModels, model) then
-					local activeWeapon = player:GetActiveWeapon();
-					local offhandWeapon;
+								
+				if (!entity.bones or entity.bones < 4) then
+					entity.bones = (entity.bones or 0) + 1;
 					
-					if IsValid(activeWeapon) then
-						offhandWeapon = activeWeapon:GetOffhand();
+					local instance = Clockwork.item:CreateInstance("human_bone");
+
+					player:GiveItem(instance, true);
+					player:HandleXP(math.Round(self.xpValues["mutilate"] / 2));
+					
+					if model == "models/animals/deer1.mdl" then
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "uses their hands to dig into the flesh of the stag before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+					elseif model == "models/animals/goat.mdl" then
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "uses their hands to dig into the flesh of the goat before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+					elseif model == "models/animal_ragd/piratecat_leopard.mdl" then
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "uses their hands to dig into the flesh of the leopard before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+					elseif model == "models/animals/bear.mdl" then
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "uses their hands to dig into the flesh of the bear before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+					else
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "uses their hands to dig into the flesh of the body before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 					end
 					
-					if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
-						if (!entity.bones or entity.bones < 5) then
-							entity.bones = (entity.bones or 0) + 1;
-							
-							local instance = Clockwork.item:CreateInstance("human_bone");
-
-							player:GiveItem(instance, true);
-							player:HandleXP(math.Round(self.xpValues["mutilate"] / 2));
-							
-							if model == "models/animals/deer1.mdl" then
-								Clockwork.chatBox:AddInTargetRadius(player, "me", "strips the flesh of the stag before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-							elseif model == "models/animals/goat.mdl" then
-								Clockwork.chatBox:AddInTargetRadius(player, "me", "strips the flesh of the goat before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-							elseif model == "models/animal_ragd/piratecat_leopard.mdl" then
-								Clockwork.chatBox:AddInTargetRadius(player, "me", "strips the flesh of the leopard before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-							elseif model == "models/animals/bear.mdl" then
-								Clockwork.chatBox:AddInTargetRadius(player, "me", "strips the flesh of the bear before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-							else
-								Clockwork.chatBox:AddInTargetRadius(player, "me", "strips the flesh of the body before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-							end
-							
-							player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
-							Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-							
-							local weaponItemTable = item.GetByWeapon(activeWeapon);
-							
-							if weaponItemTable then
-								if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-									weaponItemTable:TakeCondition(0.5);
-								end
-							end
-						else
-							Clockwork.player:Notify(player, "This corpse has already been harvested of all its bones!");
-						end;
-					else
-						Clockwork.player:Notify(player, "You must have a dagger equipped in order to harvest the bones of this corpse!");
-					end;
+					player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
+					Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
+											
+				else
+					Clockwork.player:Notify(player, "This corpse has already been harvested of all its bones!");
 				end;
 			end;
 		elseif (arguments == "cwCorpseSkin") then
