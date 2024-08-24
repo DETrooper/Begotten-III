@@ -127,7 +127,7 @@ if SERVER then
 		self:SetDefaultRelationship(D_HT)
 		self:EmitSound("begotten/npc/suitor/enabled0"..math.random(1, 3)..".mp3", 100)
 		
-		if cwDayNight and cwDayNight.currentCycle == "night" then
+		if (cwDayNight and cwDayNight.currentCycle == "night") or self.Summoned then
 			self:SetModel("models/begotten/thralls/another_sprinter.mdl");
 		else
 			self.RunAnimation = ACT_WALK;
@@ -225,7 +225,7 @@ if SERVER then
 				self:MoveForward(5000, function() return true end)
 			end;
 			
-			if cwDayNight and cwDayNight.currentCycle == "night" then
+			if (cwDayNight and cwDayNight.currentCycle == "night") or self.Summoned then
 				if self:GetModel() ~= "models/begotten/thralls/another_sprinter.mdl" then
 					self:SetModel("models/begotten/thralls/another_sprinter.mdl");
 				end
