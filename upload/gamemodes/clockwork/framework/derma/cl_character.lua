@@ -1000,7 +1000,7 @@ function PANEL:Init()
 			characterID = self.customData.characterID, action = "use"}
 		);
 		
-		surface.PlaySound("begotten/ui/buttonclick.wav");
+		surface.PlaySound("begotten/ui/bellclick.wav");
 	end;
 	
 	function self.useButton.Paint()

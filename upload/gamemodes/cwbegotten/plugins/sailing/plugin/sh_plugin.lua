@@ -5,7 +5,9 @@
 PLUGIN:SetGlobalAlias("cwSailing");
 
 game.AddParticles("particles/fire_01.pcf");
+game.AddParticles("particles/rocket_fx.pcf");
 PrecacheParticleSystem("env_fire_large");
+PrecacheParticleSystem("Rocket_Smoke_Trail");
 
 Clockwork.kernel:IncludePrefixed("cl_plugin.lua");
 Clockwork.kernel:IncludePrefixed("cl_hooks.lua");

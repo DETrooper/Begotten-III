@@ -13,12 +13,16 @@ function cwSailing:GetProgressBarInfoAction(action, percentage)
 		return {text = "You are making repairs to the longship. Click to cancel.", percentage = percentage, flash = percentage < 10};
 	elseif (action == "repair_alarm") then
 		return {text = "You are repairing the Gorewatch alarm. Click to cancel.", percentage = percentage, flash = percentage < 10};
+	elseif (action == "repair_steam_engine") then
+		return {text = "You are repairing the steam engine. Click to cancel.", percentage = percentage, flash = percentage < 10};
+	elseif (action == "refuel_ironclad") then
+		return {text = "You are adding Charcoal to the ironclad's steam engine. Click to cancel.", percentage = percentage, flash = percentage < 10};
 	end
 end
 
 -- Called when the local player's item menu should be adjusted.
 function cwSailing:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunctions)
-	if (itemTable.uniqueID == "scroll_longship") then
+	if (itemTable.uniqueID == "scroll_longship" or itemTable.uniqueID == "scroll_ironclad") then
 		if Clockwork.Client:GetFaction() == "Goreic Warrior" and Clockwork.Client:GetZone() == "gore" then
 			if (game.GetMap() != "rp_begotten3") then
 				return;
@@ -44,12 +48,14 @@ function cwSailing:SubModifyItemMarkupTooltip(category, maximumWeight, weight, c
 		local health = itemTable:GetData("health");
 		
 		if health then
-			frame:AddText("Longship Health: "..tostring(health), Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
+			if health > 0 then
+				frame:AddText("Longship Health: "..tostring(health), Color(110, 30, 30), nil, 0.9);
+			end
 		end
 	end
 end
 
-function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destination, cargoholdopenable)
+function cwSailing:CreateMenu(data)
 	if (IsValid(menu)) then
 		menu:Remove();
 	end;
@@ -62,8 +68,12 @@ function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destinat
 		
 	menu:SetMinimumWidth(150);
 	
-	if ignitable then
-		if !ignited and !destination then
+	if !data then
+		data = {};
+	end
+	
+	if data.ignitable then
+		if !data.ignited and !data.destination then
 			if Clockwork.Client:GetFaction() ~= "Goreic Warrior" then
 				local activeWeapon = Clockwork.Client:GetActiveWeapon();
 				
@@ -79,29 +89,39 @@ function cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destinat
 		end
 	end
 	
-	if isAdmin or cargoholdopenable then
+	if isAdmin or data.cargoholdopenable then
 		menu:AddOption("Cargo Hold", function() Clockwork.Client:ConCommand("cw_CargoHold") end);
 	end
 	
 	menu:AddOption("Examine", function() Clockwork.Client:ConCommand("cw_CheckShipStatus") end);
 	
-	if ignited then
+	if data.ignited then
 		menu:AddOption("Extinguish", function() Clockwork.Client:ConCommand("cw_ExtinguishShip") end);
 	end
 	
-	if repairable then
+	if data.repairable then
 		menu:AddOption("Repair", function() Clockwork.Client:ConCommand("cw_RepairShip") end);
 	end
 	
-	if sailable or (isAdmin and !destination) then
+	if data.sailable or (isAdmin and Clockwork.player:IsNoClipping(Clockwork.Client) and !data.destination) then
+		local location = self.location;
 		local submenu = menu:AddSubMenu("Sail", function() end);
 			
 		if zone ~= "gore" then
-			submenu:AddOption("Sail through the High Seas to the Goreic Forest", function() Clockwork.Client:ConCommand("cw_MoveShipGoreForest") end);
+			if location == "hell" or location == "wastelandlava" or location == "sea_styx" then
+				submenu:AddOption("Sail through the River Styx to the Goreic Forest", function() Clockwork.Client:ConCommand("cw_MoveShipGoreForest") end);
+			else
+				submenu:AddOption("Sail through the High Seas to the Goreic Forest", function() Clockwork.Client:ConCommand("cw_MoveShipGoreForest") end);
+			end
 		end
 			
 		if zone ~= "wasteland" then
-			submenu:AddOption("Sail through the High Seas to the Glazic Wasteland", function() Clockwork.Client:ConCommand("cw_MoveShipWasteland") end);
+			if location == "hell" or location == "sea_styx" then
+				submenu:AddOption("Sail through the River Styx to the Glazic Wasteland", function() Clockwork.Client:ConCommand("cw_MoveShipWasteland") end);
+			else
+				submenu:AddOption("Sail through the High Seas to the Glazic Wasteland", function() Clockwork.Client:ConCommand("cw_MoveShipWasteland") end);
+			end
+			
 			submenu:AddOption("Sail through the River Styx to the Lava Coast", function() Clockwork.Client:ConCommand("cw_MoveShipLava") end);
 		end
 			
@@ -149,8 +169,46 @@ netstream.Hook("OpenAlarmMenu", function(alarmEnt)
 	end
 end);
 
-netstream.Hook("OpenLongshipMenu", function(ignitable, ignited, repairable, sailable, destination, cargoholdopenable)
-	cwSailing:CreateMenu(ignitable, ignited, repairable, sailable, destination, cargoholdopenable);
+netstream.Hook("OpenLongshipMenu", function(data)
+	cwSailing:CreateMenu(data);
+end);
+
+netstream.Hook("OpenSteamEngineMenu", function(steamEngineEnt)
+	if IsValid(steamEngineEnt) then
+		if (IsValid(menu)) then
+			menu:Remove();
+		end;
+		
+		local scrW = ScrW();
+		local scrH = ScrH();
+		local menu = DermaMenu();
+		
+		menu:SetMinimumWidth(150);
+		
+		menu:AddOption("Examine", function()
+			if steamEngineEnt:GetNWBool("turnedOn") then
+				Schema:EasyText("skyblue", "A salvaged steam engine restored to working order by Clan Shagalax. It powers the Ironclad Steamship to which it is bolted down. Spewing acrid smoke and deafening noise, it shakes violently and can be felt rattling the ship.");
+			else
+				Schema:EasyText("skyblue", "A salvaged steam engine restored to working order by Clan Shagalax. It powers the Ironclad Steamship to which it is bolted down, though it is not currently running.");
+			end
+		end);
+		
+		if steamEngineEnt:GetNWBool("broken") then
+			menu:AddOption("Repair", function() Clockwork.Client:ConCommand("cw_SteamEngineRepair") end);
+		else
+			menu:AddOption("Add Fuel", function() Clockwork.Client:ConCommand("cw_SteamEngineFuel refuel") end);
+			menu:AddOption("Check Fuel", function() Clockwork.Client:ConCommand("cw_SteamEngineFuel check") end);
+		
+			if steamEngineEnt:GetNWBool("turnedOn") then
+				menu:AddOption("Turn Off Engine", function() Clockwork.Client:ConCommand("cw_SteamEngine off") end);
+			else
+				menu:AddOption("Turn On Engine", function() Clockwork.Client:ConCommand("cw_SteamEngine on") end);
+			end
+		end
+		
+		menu:Open();
+		menu:SetPos(scrW / 2 - (menu:GetWide() / 2), scrH / 2 - (menu:GetTall() / 2));
+	end
 end);
 
 netstream.Hook("DrowningCutscene", function(data)

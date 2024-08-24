@@ -108,7 +108,21 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				end
 			end
 		
-			if weather == "acidrain" then
+			if weather == "thunderstorm" and cwMedicalSystem and !player:HasDisease("common_cold") then
+				local chance = 400;
+				
+				if player:HasTrait("marked") then
+					chance = 200;
+				elseif player:HasBelief("sanitary") then
+					chance = 1000;
+				end
+				
+				if math.random(1, chance) == 1 then
+					player:GiveDisease("common_cold");
+					
+					Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has been infected with the common cold from being outside in a thunderstorm!");
+				end
+			elseif weather == "acidrain" then
 				local armorItem = player:GetClothesEquipped();
 				local helmetItem = player:GetHelmetEquipped();
 				local shouldBurn = false;

@@ -16,6 +16,14 @@ COMMAND.alias = {"R"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
+	local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+	
+	if subfaction == "Clan Grock" then
+		Schema:EasyText(player, "peru", "You cannot use radios as you shun technology!");
+		
+		return;
+	end
+	
 	Clockwork.player:SayRadio(player, table.concat(arguments, " "), true);
 end;
 
@@ -31,6 +39,13 @@ COMMAND.alias = {"RadioProclaim"};
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
 	local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+	local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+	
+	if subfaction == "Clan Grock" then
+		Schema:EasyText(player, "peru", "You cannot use radios as you shun technology!");
+		
+		return;
+	end
 	
 	if (Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
 		Clockwork.player:SayRadio(player, table.concat(arguments, " "), true, nil, true);

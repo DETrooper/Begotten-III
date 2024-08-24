@@ -68,7 +68,8 @@ function ENT:IsStuckInWorld()
 end
 
 function ENT:GetDesiredSpeed()
-	return self:GetNW2Float("DrGBaseDesiredSpeed")
+	--return self:GetNW2Float("DrGBaseDesiredSpeed")
+	return self.DrGBaseDesiredSpeed;
 end
 function ENT:SetDesiredSpeed(speed)
 	return self.loco:SetDesiredSpeed(speed)
@@ -99,8 +100,10 @@ local old_SetDesiredSpeed = locoMETA.SetDesiredSpeed
 function locoMETA:SetDesiredSpeed(speed)
 	local nextbot = self:GetNextBot()
 	if nextbot.IsDrGNextbot then
-		nextbot:SetNW2Float("DrGBaseDesiredSpeed", speed)
-		nextbot:SetNW2Float("DrGBaseSpeed", speed/nextbot:GetScale())
+		--nextbot:SetNW2Float("DrGBaseDesiredSpeed", speed)
+		--nextbot:SetNW2Float("DrGBaseSpeed", speed/nextbot:GetScale())
+		nextbot.DrGBaseDesiredSpeed = speed;
+		nextbot.DrGBaseSpeed = speed/nextbot:GetScale();
 		return old_SetDesiredSpeed(self, speed)
 	else return old_SetDesiredSpeed(self, speed) end
 end

@@ -57,10 +57,26 @@ ENT.PossessionViews = {
 	}
 }
 ENT.PossessionBinds = {
+	[IN_JUMP] = {{
+		coroutine = true,
+		onkeydown = function(self)
+			if(!self:IsOnGround()) then return; end
+
+			self:LeaveGround();
+			self:SetVelocity(self:GetVelocity() + Vector(0,0,1200) + self:GetForward() * 100);
+
+			self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
+
+		end
+
+	}},
+
 	[IN_ATTACK] = {{
 		coroutine = true,
 		onkeydown = function(self)
 			self:EmitSound("begotten/npc/brute/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
+			if(self.nextMeleeAttack and self.nextMeleeAttack > CurTime()) then return; end
+						self:EmitSound("begotten/npc/brute/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
 			self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.PossessionFaceForward)
 		end
 	}}
@@ -86,7 +102,6 @@ if SERVER then
 	end
 	function ENT:OnParried()
 		self.nextMeleeAttack = CurTime() + 2;
-		self:ResetSequence(ACT_IDLE);
 	end
 	-- Init/Think --
 	function ENT:CustomInitialize()
@@ -176,7 +191,7 @@ if SERVER then
 	ENT.pitch = 80
 	function ENT:CustomThink()
 		if (!self.lastStuck and self:IsStuck()) then
-			self.lastStuck = CurTime() + 2;
+			self.lastStuck = CurTime() + 9;
 		end;
 		
 		if (self.lastStuck and self.lastStuck < CurTime()) then

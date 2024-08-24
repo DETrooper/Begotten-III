@@ -1743,14 +1743,14 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
 			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
 
-			local entity = ents.Create("npc_bgt_eddie");
 			local playerFaith = player:GetFaith();
 			
 			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
 			sound.Play("misc/summon.wav",trace.HitPos, 100, 100)
-			--entity:SetPos(trace.HitPos);
 			
 			timer.Simple(0.5, function()
+				local entity = ents.Create("npc_bgt_eddie");
+				
 				if IsValid(entity) then
 					entity:CustomInitialize();
 					entity:Spawn();
@@ -1771,9 +1771,9 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 					
 					if !cwRituals.summonedNPCs then
 						cwRituals.summonedNPCs = {};
-						
-						table.insert(cwRituals.summonedNPCs, entity);
 					end
+					
+					table.insert(cwRituals.summonedNPCs, entity);
 					
 					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as an unholy creature of Hell suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
@@ -1846,14 +1846,14 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
 			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
 
-			local entity = ents.Create("npc_bgt_otis");
 			local playerFaith = player:GetFaith();
 			
 			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
 			sound.Play("misc/summon.wav",trace.HitPos, 100, 100)
-			--entity:SetPos(trace.HitPos);
 			
 			timer.Simple(0.5, function()
+				local entity = ents.Create("npc_bgt_otis");
+				
 				if IsValid(entity) then
 					entity:CustomInitialize();
 					entity:Spawn();
@@ -1874,9 +1874,9 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 					
 					if !cwRituals.summonedNPCs then
 						cwRituals.summonedNPCs = {};
-						
-						table.insert(cwRituals.summonedNPCs, entity);
 					end
+					
+					table.insert(cwRituals.summonedNPCs, entity);
 					
 					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as an unholy creature of Hell suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
@@ -1953,7 +1953,6 @@ RITUAL = cwRituals.rituals:New("summon_sprinter");
 			local positions = {
 				["1"] = trace.HitPos + (player:GetRight() * 25),
 				["2"] = trace.HitPos - (player:GetRight() * 25),
-
 			};
 
 			local playerFaith = player:GetFaith();
@@ -2051,16 +2050,14 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
-			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
-
-			local entity = ents.Create("npc_drg_animals_bear_spirit");
 			local playerFaith = player:GetFaith();
 			
 			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
 			sound.Play("misc/summon.wav",trace.HitPos, 100, 100)
-			--entity:SetPos(trace.HitPos);
 			
 			timer.Simple(0.5, function()
+				local entity = ents.Create("npc_drg_animals_bear_spirit");
+				
 				if IsValid(entity) then
 					entity:Spawn();
 					entity:SetHealth(700);
@@ -2068,6 +2065,8 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 					entity:SetMaterial("models/props_combine/portalball001_sheet")
 					entity:AddEntityRelationship(player, D_LI, 99);
 					entity.XPValue = 250;
+					
+					print(entity);
 					
 					entity.summonedFaith = playerFaith;
 					
@@ -2085,11 +2084,15 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 					
 					if !cwRituals.summonedNPCs then
 						cwRituals.summonedNPCs = {};
-						
-						table.insert(cwRituals.summonedNPCs, entity);
 					end
 					
+					table.insert(cwRituals.summonedNPCs, entity);
+					
+					print(entity:GetPos());
+					
 					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					
+					print(entity:GetPos());
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as a creature of the Gore Forest suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
 				end
 			end);
@@ -2147,16 +2150,14 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
-			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
-
-			local entity = ents.Create("npc_drg_animals_snowleopard_spirit");
 			local playerFaith = player:GetFaith();
 			
 			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
 			sound.Play("misc/summon.wav",trace.HitPos, 100, 100)
-			--entity:SetPos(trace.HitPos);
 			
 			timer.Simple(0.5, function()
+				local entity = ents.Create("npc_drg_animals_snowleopard_spirit");
+				
 				if IsValid(entity) then
 					entity:Spawn();
 					entity:SetHealth(475);
@@ -2181,9 +2182,9 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 					
 					if !cwRituals.summonedNPCs then
 						cwRituals.summonedNPCs = {};
-						
-						table.insert(cwRituals.summonedNPCs, entity);
 					end
+					
+					table.insert(cwRituals.summonedNPCs, entity);
 					
 					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as a creature of the Gore Forest suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);

@@ -768,6 +768,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 	end;
 
 	if entity:IsPlayer() or entity:IsNPC() or entity:IsNextBot() or entity.isTrainingDummy then
+		local entTab = entity:GetTable();
 		local originalDamage = damageInfo:GetDamage() or 0;
 		
 		if originalDamage == 0 then

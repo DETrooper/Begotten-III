@@ -321,8 +321,44 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
-		Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Grape-Flavored Ice Cold Pop™. You feel mentally and physically reinvigorated.");
+		if player:HasTrait("marked") and math.random(1, 3) == 1 then
+			Clockwork.chatBox:AddInTargetRadius(player, "me", "pops open a bottle of Papa Pete's® Grape-Flavored Ice Cold Pop™, only to have a rigged grapeshot shell explode in their face!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+			Schema:EasyText(GetAdmins(), "icon16/bomb.png", "tomato", player:Name().." got graped by Papa Pete!");
+			
+			local filter = RecipientFilter();
+			
+			if zones then
+				filter:AddPlayers(zones:GetPlayersInSupraZone(zones:GetPlayerSupraZone(player)));
+			else
+				filter:AddAllPlayers();
+			end
+			
+			player:EmitSound("musket/musket4.wav", 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0, filter);
+			local effect = EffectData();
+			local Forward = player:GetForward()
+			local Right = player:GetRight()
+			
+			effect:SetOrigin(player:GetShootPos() - (Forward * 65) + (Right * 5));
+			effect:SetNormal(-player:GetAimVector());
+			util.Effect( "effect_awoi_smoke_pistol", effect );
+		
+			player:DeathCauseOverride("Got graped by Papa Pete.");
+			player:Kill();
+			
+			if cwGore then
+				if (player:GetRagdollEntity()) then
+					cwGore:SplatCorpse(player:GetRagdollEntity(), 60);
+				end;
+			end
+			
+			return;
+		elseif player:HasBelief("favored") then
+			player:GiveItem(Clockwork.item:CreateInstance("grapeshot"));
+			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Grape-Flavored Ice Cold Pop™. Interestingly, you find a loose grapeshot shell inside the bottle. You feel mentally and physically reinvigorated.");
+		else
+			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Grape-Flavored Ice Cold Pop™. You feel mentally and physically reinvigorated.");
+		end
+		
 		player:HandleSanity(10);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;

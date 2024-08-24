@@ -8,7 +8,7 @@
 ENT.Type = "anim";
 ENT.Base = "base_gmodentity";
 ENT.Author = "DETrooper";
-ENT.PrintName = "Gorewatch Alarm";
-ENT.Spawnable = false;
-ENT.AdminSpawnable = false;
+ENT.PrintName = "Shagalaxian Ironclad";
+ENT.Spawnable = true;
+ENT.AdminSpawnable = true;
 ENT.Category = "Begotten";

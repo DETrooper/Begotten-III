@@ -14,13 +14,12 @@ local cwSailing = cwSailing;
 
 -- Called when the entity initializes.
 function ENT:Initialize()
-	self:SetModel("models/begotten/misc/gorelongship.mdl");
+	self:SetModel("models/begotten/misc/goreironclad.mdl");
 	self:SetMoveType(MOVETYPE_VPHYSICS);
 	self:PhysicsInit(SOLID_VPHYSICS);
 	self:SetUseType(SIMPLE_USE);
 	self:SetSolid(SOLID_VPHYSICS);
-	self.creaksounds = {"navalsystem/coaster_creak_01.wav", "navalsystem/coaster_creak_02.wav", "navalsystem/coaster_creak_03.wav", "navalsystem/coaster_creak_06.wav"};
-	self.longshipType = "longship";
+	self.longshipType = "ironclad";
 	
 	local physicsObject = self:GetPhysicsObject();
 	
@@ -34,6 +33,109 @@ end;
 function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS;
 end;
+
+function ENT:AttachMachinegun()
+	if !IsValid(self.sandbags) then
+		local sandbagsEnt = ents.Create("prop_physics");
+		
+		sandbagsEnt:SetModel("models/props_fortifications/sandbags_corner1.mdl");
+		sandbagsEnt:SetAngles(self:GetAngles());
+		sandbagsEnt:SetPos(self:GetPos() - (self:GetForward() * 574) + (self:GetRight() * 8) + Vector(0, 0, 30));
+		sandbagsEnt:Spawn();
+		
+		local physicsObject = sandbagsEnt:GetPhysicsObject();
+		
+		if (IsValid(physicsObject)) then
+			physicsObject:Wake();
+			physicsObject:EnableMotion(false);
+		end;
+		
+		self.sandbags = sandbagsEnt;
+	end
+
+	if !IsValid(self.machinegunEnt) then
+		local machinegunEnt = ents.Create("cw_longship_m2browningpod");
+		
+		machinegunEnt:SetAngles(self:GetAngles() - Angle(90, 0, 180));
+		machinegunEnt:SetPos(self:GetPos() - (self:GetForward() * 578) + (self:GetRight() * 0.5) + Vector(0, 0, 71.5));
+		machinegunEnt:Spawn();
+		
+		local physicsObject = machinegunEnt:GetPhysicsObject();
+		
+		if (IsValid(physicsObject)) then
+			physicsObject:Wake();
+			physicsObject:EnableMotion(false);
+		end;
+		
+		self.machinegun = machinegunEnt;
+	end
+	
+	local itemID = self.itemID;
+	
+	if itemID then
+		local itemTable = item.FindInstance(itemID);
+
+		if itemTable then
+			local clip = itemTable:GetData("ammo");
+			
+			if clip and clip > 0 then
+				self.machinegun.gun:Reload(true, math.min(clip, 100));
+			end
+		end
+	end
+end
+
+function ENT:AttachSteamEngine()
+	local steamEngine = ents.Create("cw_steam_engine");
+	
+	steamEngine:SetPos(self:GetPos() + Vector(0, 0, 108));
+	steamEngine:SetAngles(self:GetAngles() + Angle(0, 0, -90));
+	steamEngine:Spawn();
+	steamEngine.ironclad = self;
+	
+	self.steamEngine = steamEngine;
+	
+	return steamEngine;
+end
+
+function ENT:CanMove()
+	if !IsValid(self.steamEngine) or !self.steamEngine.fuel or self.steamEngine.fuel <= 0 or !self.steamEngine:GetNWBool("turnedOn") then
+		return false;
+	end
+end
+
+function ENT:OnMoved()
+	local sandbagsEnt = self.sandbags;
+
+	if IsValid(sandbagsEnt) then
+		sandbagsEnt:SetAngles(self:GetAngles());
+		sandbagsEnt:SetPos(self:GetPos() - (self:GetForward() * 574) + (self:GetRight() * 8) + Vector(0, 0, 30));
+	end
+	
+	local machinegunEnt = self.machinegun;
+	
+	if IsValid(machinegunEnt) then
+		machinegunEnt:SetAngles(self:GetAngles() - Angle(90, 0, 180));
+		machinegunEnt:SetPos(self:GetPos() - (self:GetForward() * 578) + (self:GetRight() * 0.5) + Vector(0, 0, 71.5));
+	end
+	
+	local steamEngine = self.steamEngine;
+	
+	if IsValid(steamEngine) then
+		steamEngine:SetPos(self:GetPos() + Vector(0, 0, 108));
+		steamEngine:SetAngles(self:GetAngles() + Angle(0, 0, -90));
+		
+		if steamEngine:GetNWBool("turnedOn") then
+			steamEngine:StopParticles();
+			
+			timer.Simple(1, function()
+				if IsValid(steamEngine) then
+					ParticleEffect("Rocket_Smoke_Trail", steamEngine:GetPos() + (steamEngine:GetForward() * 100) + Vector(0, 0, 45), Angle(0, 0, 0), steamEngine);
+				end
+			end);
+		end
+	end
+end
 
 function ENT:Think()
 	local curTime = CurTime();
@@ -128,7 +230,7 @@ function ENT:Think()
 								
 								break;
 							end
-							
+						
 							local alive = player:Alive();
 							
 							if alive then
@@ -227,143 +329,6 @@ function ENT:Think()
 			end
 		end
 	end
-	
-	if (!self.damageCooldown or self.damageCooldown < curTime) then
-		self.damageCooldown = curTime + 1;
-	
-		if self.ignited then
-			if self.health then
-				if self.health > 0 then
-					self:SetHP(self.health - 2);
-				end
-			else
-				self.health = 500 - 2;
-			end
-		elseif self.location == "rough" then
-			if self.health then
-				if self.health > 0 --[[and self.health < 250]] then
-					self:SetHP(self.health - math.random(1, 5));
-					
-					if self.health and self.health > 0 then
-						local sound_chance = math.random(1, 10);
-					
-						if sound_chance == 10 then
-							self:EmitSound(self.creaksounds[math.random(1, #self.creaksounds)]);
-						end
-					end
-				end
-			end
-		end
-	end
-end
-
-function ENT:SetHP(newhp)
-	self.health = newhp;
-	
-	if self.itemID then
-		local itemTable = item.FindInstance(self.itemID);
-		
-		if itemTable then
-			itemTable:SetData("health", newhp);
-		end
-	end
-
-	if newhp > 0 then
-		if newhp == 500 then
-			self.repairable = true;
-		else
-			self.repairable = false;
-		end
-	elseif self.location and (self.location == "calm" or self.locaiton == "rough" or self.location == "styx") then
-		if self.location == "styx" then
-			if self.playersOnBoard and #self.playersOnBoard > 0 then
-				local playersOnBoard = table.Copy(self.playersOnBoard);
-				
-				timer.Simple(0.5, function()
-					for i, player in ipairs(playersOnBoard) do
-						if IsValid(player) then
-							if player:Alive() then
-								player:SendLua([[Clockwork.Client:EmitSound("ambient/fire/mtov_flame2.wav", 500, 100)]]);
-								player:DeathCauseOverride("Rode a sinking ship into the lava and burnt to a crisp.");
-								player:KillSilent();
-							else
-								local ragdollEntity = player:GetRagdollEntity();
-								
-								if IsValid(ragdollEntity) then
-									-- Prevent belongings from spawning.
-									ragdollEntity.cwInventory = nil;
-									ragdollEntity.cwCash = nil;
-									
-									ragdollEntity:Remove();
-								end
-							end
-						end
-					end
-				end);
-			end
-			
-			Clockwork.chatBox:AddInRadius(nil, "localevent", "The longship finally gives way under the strain of its damage, splitting in two and sinking into the lava below!", self:GetPos(), 1024);
-		else
-			if self.playersOnBoard and #self.playersOnBoard > 0 then
-				local playersOnBoard = table.Copy(self.playersOnBoard);
-				
-				timer.Simple(0.5, function()
-					for i, player in ipairs(playersOnBoard) do
-						if IsValid(player) then
-							if player:Alive() then
-								player:SendLua([[Clockwork.Client:EmitSound("ambient/water/water_splash3.wav", 500, 100)]])
-							
-								timer.Simple(1, function()
-									if IsValid(player) then
-										player:GodDisable();
-									end
-								end);
-								
-								player:SetCharacterData("permakilled", true); -- In case the player tries to d/c to avoid their fate.
-								player:DeathCauseOverride("Rode a sinking ship into the sea and drowned.");
-								
-								if player:IsRagdolled() then
-									Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);
-								end
-
-								player:GodEnable();
-								player:SetPos(Vector(15.167375, 4397.66115, -4967.96875)); -- Teleport to black box full of water.
-								player:Freeze(true);
-								netstream.Start(player, "DrowningCutscene");
-							else
-								local ragdollEntity = player:GetRagdollEntity();
-								
-								if IsValid(ragdollEntity) then
-									-- Prevent belongings from spawning.
-									ragdollEntity.cwInventory = nil;
-									ragdollEntity.cwCash = nil;
-									
-									ragdollEntity:Remove();
-								end
-							end
-						end
-					end
-				end);
-			end
-			
-			Clockwork.chatBox:AddInRadius(nil, "localevent", "The longship finally gives way under the strain of its damage, splitting in two and sinking to the bottom of the sea!", self:GetPos(), 1024);
-		end
-		
-		self:EmitSound("physics/wood/wood_crate_break5.wav");
-		self:Remove();
-	else
-		local huskEnt = ents.Create("cw_longship_husk");
-		
-		huskEnt:SetPos(self:GetPos());
-		huskEnt:SetAngles(self:GetAngles());
-		huskEnt.location = self.location;
-		huskEnt.position = self.position;
-		
-		self.husk = true; -- Make sure the slot doesn't get cleared.
-
-		huskEnt:Spawn();
-		self:Remove();
-	end
 end
 
 function ENT:Use(activator, caller)
@@ -382,53 +347,18 @@ function ENT:Use(activator, caller)
 			return;
 		end
 		
-		if self.health then
-			if (self:GetSkin() == 1 and self.health < 1000) or self.health < 500 then
-				if !self.ignited then
-					self.repairable = true;
-				else
-					self.repairable = false;
-				end
-			else
-				self.repairable = false;
-			end
-		end
-		
 		local data = {};
 		
 		data.entity = self;
 		data.location = self.location;
 		
-		if caller:GetFaction() == "Goreic Warrior" or caller:GetSharedVar("kinisgerOverride") == "Goreic Warrior" or (caller:IsAdmin() and caller.cwObserverMode) then
-			data.cargoholdopenable = true;
+		if caller:GetFaction() == "Goreic Warrior" or (caller:IsAdmin() and caller.cwObserverMode) then
+			self.cargoholdopenable = true;
 			data.destination = self.destination;
 			data.sailable = true;
 		
 			if (IsValid(self.owner) and caller ~= self.owner) or self.destination then
 				data.sailable = false;
-			end
-			
-			if self.ignited then
-				data.cargoholdopenable = false;
-				data.ignited = true;
-			else
-				data.repairable = self.repairable;
-			end;
-		end
-		
-		if !self.ignited then
-			if caller:GetFaction() ~= "Goreic Warrior" then
-				if !self.enchantment then
-					local activeWeapon = caller:GetActiveWeapon();
-					
-					if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
-						local oil = caller:GetSharedVar("oil", 0);
-					
-						if oil >= 1 then
-							data.ignitable = true;
-						end
-					end
-				end
 			end
 		end
 		
@@ -440,7 +370,7 @@ function ENT:OnRemove()
 	local belongingsEnt = ents.Create("cw_belongings");
 
 	if (self.cwInventory and !table.IsEmpty(self.cwInventory) or self.cwCash and self.cwCash > 0) then
-		belongingsEnt:SetData(self.cwInventory, self.cwCash, "Longship Cargo");
+		belongingsEnt:SetData(self.cwInventory, self.cwCash, "Ironclad Cargo");
 		belongingsEnt:SetPos(self:GetPos() + Vector(0, 0, 128));
 		belongingsEnt:Spawn();
 		
@@ -463,16 +393,41 @@ function ENT:OnRemove()
 		self.spawnedNPCs = nil;
 	end
 	
-	if self.itemID then
-		local itemTable = item.FindInstance(self.itemID);
-		
-		if itemTable then
-			itemTable:SetData("health", self.health or 500);
-		end
+	if IsValid(self.sandbags) then
+		self.sandbags:Remove();
 	end
 	
+	if IsValid(self.machinegun) then
+		if IsValid(self.machinegun.gun) then
+			local itemID = self.itemID;
+			
+			local itemTable = item.FindInstance(itemID);
+	
+			if itemTable then
+				itemTable:SetData("ammo", self.machinegun.gun:GetDTInt(0) or 0);
+			end
+		end
+	
+		self.machinegun:Remove();
+	end
+	
+	local steamEngine = self.steamEngine;
+	
+	if IsValid(steamEngine) then
+		local itemID = self.itemID;
+		
+		if itemID then
+			local itemTable = item.FindInstance(itemID);
+	
+			if itemTable then
+				itemTable:SetData("fuel", math.Round(steamEngine.fuel or 0, 2));
+			end
+		end
+	
+		steamEngine:Remove();
+	end
+
 	self:StopParticles();
-	self:StopSound("ambient/fire/fire_med_loop1.wav");
 
 	cwSailing:RemoveLongship(self);
 end;

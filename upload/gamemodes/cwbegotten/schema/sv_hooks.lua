@@ -2574,7 +2574,7 @@ function Schema:PlayerCharacterLoaded(player)
 	netstream.Start(player, "GetZone", true);
 	
 	if player:GetCharacterData("tied") or (self.autoTieEnabled and !player:IsAdmin()) then
-		player:SetNetVar("tied", 1);
+		Schema:TiePlayer(player, true);
 	end
 	
 	if player.banners then

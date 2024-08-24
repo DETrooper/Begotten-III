@@ -8,7 +8,7 @@
 ENT.Type = "anim";
 ENT.Base = "base_gmodentity";
 ENT.Author = "DETrooper";
-ENT.PrintName = "Gorewatch Alarm";
+ENT.PrintName = "Steam Engine";
 ENT.Spawnable = false;
 ENT.AdminSpawnable = false;
 ENT.Category = "Begotten";

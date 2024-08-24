@@ -67,10 +67,10 @@ COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("CharMakeRitual");
 	COMMAND.tip = "Force a character to perform a ritual, useful for debugging.";
-	COMMAND.text = "<string Name> <string RitualID> [bool ignoreItems]";
+	COMMAND.text = "<string Name> <string RitualID> [bool ignoreItems] [bool ignoreBeliefs]";
 	COMMAND.access = "s";
 	COMMAND.arguments = 2;
-	COMMAND.optionalArguments = 1;
+	COMMAND.optionalArguments = 2;
 	COMMAND.alias = {"ForceRitual", "PlyForceRitual", "CharForceRitual", "MakeRitual", "PlyMakeRitual", "CharMakePerformRitual", "MakePerformRitual", "PlyMakePerformRitual"};
 
 	-- Called when the command has been run.
@@ -82,14 +82,8 @@ local COMMAND = Clockwork.command:New("CharMakeRitual");
 			local ritualTable = cwRituals.rituals.stored[ritualID];
 			
 			if ritualTable then
-				if tobool(arguments[3]) == true then
-					if !cwRituals:PerformRitual(target, ritualID, nil, true) then
-						Schema:EasyText(player, "grey", target:Name().." could not perform "..ritualTable.name.."!");
-					end
-				else
-					if !cwRituals:PerformRitual(target, ritualID, itemIDs) then
-						Schema:EasyText(player, "grey", target:Name().." could not perform "..ritualTable.name.."!");
-					end
+				if !cwRituals:PerformRitual(target, ritualID, nil, tobool(arguments[3] or false), tobool(arguments[4] or false)) then
+					Schema:EasyText(player, "grey", target:Name().." could not perform "..ritualTable.name.."!");
 				end
 			else
 				Schema:EasyText(player, "grey", ritualID.." is not a valid ritual!");

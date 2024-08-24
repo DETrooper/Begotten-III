@@ -22,6 +22,10 @@ end;]]--
 -- Called when an entity is removed.
 function cwZombies:EntityRemoved(entity)
 	if (table.HasValue(self.zombieNPCS, entity:GetClass())) then
+		if entity.noCatalysts then
+			return;
+		end
+		
 		for k, v in pairs (ents.FindInSphere(entity:GetPos(), 750)) do
 			if (IsValid(entity) and IsValid(v) and v:IsPlayer() and v:Alive() and v:HasInitialized()) then
 				if (Clockwork.entity:CanSeeNPC(entity, v)) and !entity.killed then

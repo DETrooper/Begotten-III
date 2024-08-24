@@ -58,17 +58,68 @@ ENT.PossessionViews = {
 		eyepos = true
 	}
 }
+
+ENT.WalkSpeed = 35;
+ENT.RunSpeed = 120;
+
+ENT.Attacks = {
+	Standard = 1,
+	Rotor = 2,
+
+};
+
+ENT.AttackFunctions = {
+	[ENT.Attacks.Standard] = function(self)
+		if self.angry then
+			self:EmitSound("begotten/npc/grunt/attack_claw0"..math.random(1, 3)..".mp3", 100, self.pitch)
+			self:PlaySequenceAndMove("fastattack", 0.6, self.FaceEnemy)
+		else
+			self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
+			self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)
+		end
+
+	end,
+
+	[ENT.Attacks.Rotor] = function(self)
+		self.MeleeAttackRange = 45;
+		self:SetDesiredSpeed(self.angry and self.RunSpeed or self.WalkSpeed);
+		self:EmitSound("begotten/npc/grunt/amb_idle_scratch0"..math.random(1, 3)..".mp3", 100, self.pitch);
+		self:PlaySequenceAndMove((self.angry and "RotorAttackRun" or "RotorAttack"), 1, self.HandleRotor);
+
+	end,
+
+}
+
+ENT.AttackChances = {
+	[ENT.Attacks.Rotor] = 5,
+
+}
+
 ENT.PossessionBinds = {
+	[IN_JUMP] = {{
+		coroutine = true,
+		onkeydown = function(self)
+			if(!self:IsOnGround()) then return; end
+
+			self:LeaveGround();
+			self:SetVelocity(self:GetVelocity() + Vector(0,0,700) + self:GetForward() * 100);
+
+			self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
+
+		end
+
+	}},
+
 	[IN_ATTACK] = {{
 		coroutine = true,
 		onkeydown = function(self)
-			if self.angry then
-			  self:EmitSound("begotten/npc/grunt/attack_claw0"..math.random(1, 3)..".mp3", 100, self.pitch)
-			  self:PlaySequenceAndMove("fastattack", 0.6, self.PossessionFaceForward)
-			else
-			  self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
-			  self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.PossessionFaceForward)
-			end
+			if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
+				self.AttackFunctions[self.nextAttack](self);
+				self:GetNextAttack();
+	
+				return true;
+	
+			else return false; end
 		end
 	}}
 }
@@ -95,22 +146,114 @@ if SERVER then
 		self.nextMeleeAttack = CurTime() + 2;
 		self:ResetSequence(ACT_IDLE);
 	end
+
+	function ENT:GetNextAttack()
+		local attack = self.Attacks.Standard;
+
+		for i, v in pairs(self.AttackChances) do
+			if(self.nextAttack == i) then continue; end
+			if(math.random(1, v) != 1) then continue; end
+
+			attack = i;
+			break;
+
+		end
+
+		self.nextAttack = attack;
+
+	end
+
 	-- Init/Think --
 	function ENT:CustomInitialize()
-		self:SetDefaultRelationship(D_HT)
+		self:SetDefaultRelationship(D_HT);
 		self:EmitSound("begotten/npc/grunt/enabled0"..math.random(1, 4)..".mp3");
+
+		self:GetNextAttack();
+
 	end
+
+	local rotorFrames = 525
+	local rotorEvents = {
+		attackStart = 41 / rotorFrames,
+		attackEnd = 441 / rotorFrames,
+		moveStart = 70 / rotorFrames,
+		moveEnd = 444 / rotorFrames,
+		attackSkip = 427 / rotorFrames,
+
+	}
+
+	function ENT:HandleRotorAttack(cycle, curTime)
+		if(cycle < rotorEvents.attackStart or cycle >= rotorEvents.attackEnd) then return; end
+		if(self.nextRotorAttack and self.nextRotorAttack > curTime) then return; end
+
+		self.nextRotorAttack = curTime + 0.25;
+
+		self:Attack({
+			damage = self.Damage * 0.5,
+			type = DMG_SLASH,
+			viewpunch = Angle(20, math.random(-10, 10), 0)
+		}, function(self, hit)
+			if #hit > 0 then
+				self:EmitSound("begotten/npc/grunt/attack_claw_hit0"..math.random(1,3)..".mp3", 100, self.pitch)
+				self:EmitSound("ambient/machines/slicer"..math.random(1,4)..".wav", 100, self.pitch, 2)
+
+				for _, v in pairs(hit) do
+					if(!v:IsPlayer()) then continue; end
+
+					v.hitByRotor = curTime + 0.8;
+					v:SetRunSpeed(v.cwInfoTable.runSpeed * 0.75);
+
+				end
+
+			end
+		end)
+
+	end
+
+	function ENT:HandleRotor()
+		local cycle = self:GetCycle();
+		local curTime = CurTime();
+
+		if(self:IsPossessed()) then
+			self:PossessionFaceForward();
+			
+		else
+			self:FaceEnemy();
+
+		end
+
+		if(cycle > rotorEvents.moveStart and cycle < rotorEvents.moveEnd) then
+			self:Approach(self:GetPos() + self:GetForward() * 5)
+
+		end
+
+		if(cycle >= rotorEvents.attackStart and cycle < rotorEvents.attackEnd and !self.playedRotor) then
+			self.playedRotor = true;
+			self:EmitSound("ambient/machines/spin_loop.wav", 100, 100, 0.5);
+
+		elseif(cycle >= rotorEvents.attackEnd and self.playedRotor) then
+			self:StopSound("ambient/machines/spin_loop.wav");
+			self.playedRotor = false;
+
+		end
+
+		self:HandleRotorAttack(cycle, curTime);
+
+		if(cycle >= rotorEvents.attackEnd) then self.MeleeAttackRange = 120; end
+
+		if((!self:IsPossessed() and !self:HasEnemy()) or (self:IsPossessed() and self:GetPossessor():KeyDown(IN_ATTACK2)) and cycle > rotorEvents.moveStart and cycle < rotorEvents.attackSkip - 0.02) then self:SetCycle(rotorEvents.attackSkip) end
+
+	end
+
 	-- AI --
 	function ENT:OnMeleeAttack(enemy)
 		if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
-			if self.angry then
-				self:EmitSound("begotten/npc/grunt/attack_claw0"..math.random(1, 3)..".mp3", 100, self.pitch)
-				self:PlaySequenceAndMove("fastattack", 0.6, self.FaceEnemy)
-			else
-				self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
-				self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)
-			end
-		end
+			self.AttackFunctions[self.nextAttack](self);
+			self:GetNextAttack();
+
+			return true;
+
+		else return false; end
 	end
 	function ENT:OnReachedPatrol()
 		self:Wait(math.random(3, 7))
@@ -214,18 +357,29 @@ if SERVER then
 			
 			self.lastStuck = nil
 			
-			if !self.angry and self:Health() < (self.SpawnHealth / 2) then
-				self.angry = true;
-				self.UseWalkframes = false;
-				self.WalkSpeed = 50;
-				self.RunSpeed = 75;
-				self.RunAnimation = ACT_WALK;
-				self.MeleeAttackRange = 100;
-				self.Armor = 70;
-				
-				self:EmitSound("physics/metal/metal_box_break1.wav", 100, 90)
-			end
 		end;
+
+		if !self.angry and self:Health() < (self.SpawnHealth / 2) then
+			self.angry = true;
+			self.UseWalkframes = false;
+			self.WalkSpeed = 35;
+			self.RunSpeed = 120;
+			self.RunAnimation = ACT_RUN;
+			self.MeleeAttackRange = 100;
+			self.Armor = 70;
+
+			self:UpdateSpeed();
+			self:EmitSound("physics/metal/metal_box_break1.wav", 100, 90);
+
+			self.nextAttack = self.Attacks.Rotor;
+
+		end
+
+	end
+
+	function ENT:OnRemove()
+		self:StopSound("ambient/machines/spin_loop.wav");
+
 	end
 	
 	-- Animations/Sounds --
@@ -242,7 +396,15 @@ if SERVER then
 	end
 	function ENT:OnLandedOnGround()
 	end;
-	function ENT:OnAnimEvent()
+
+	function ENT:OnAnimEvent(_, event)
+		if(event == 52 or event == 53) then
+			if(self:IsOnGround()) then self:EmitSound("armormovement/body-armor-"..math.random(1, 6)..".wav.mp3"); end
+
+			return;
+
+		end
+
 		if self:IsAttacking() and self:GetCycle() > 0.3 then
 			self:Attack({
 				damage = self.Damage,
@@ -256,8 +418,18 @@ if SERVER then
 		elseif self:IsOnGround() then
 			self:EmitSound("armormovement/body-armor-"..math.random(1, 6)..".wav.mp3");
 		end
+		
 	end
 end
+
+hook.Add("ModifyPlayerSpeed", "IroncladRotorAttack", function(player, infoTable)
+	local curTime = CurTime();
+	if(!player.hitByRotor) then return; end
+
+	if(player.hitByRotor > curTime) then infoTable.runSpeed = infoTable.runSpeed * 0.75; end
+
+end)
+
 -- DO NOT TOUCH --
 AddCSLuaFile()
 DrGBase.AddNextbot(ENT)

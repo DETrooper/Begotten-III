@@ -123,6 +123,8 @@ function cwBeliefs:TakeBelief(player, uniqueID, niceName, category)
 		player:Notify("You have taken the \""..niceName.."\" belief.")
 		player:SendLua([[Clockwork.Client:EmitSound("ambient/fire/ignite.wav", 40)]]);
 		
+		Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." has taken the \""..niceName.."\" belief.");
+		
 		hook.Run("BeliefTaken", player, uniqueID, category);
 	end;
 end;

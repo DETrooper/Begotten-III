@@ -8,7 +8,8 @@ local MultSpeed = CreateConVar("drgbase_multiplier_speed", "1", {FCVAR_ARCHIVE, 
 -- Getters/setters --
 
 function ENT:GetSpeed()
-	return self:GetNW2Float("DrGBaseSpeed")
+	--return self:GetNW2Float("DrGBaseSpeed")
+	return self.DrGBaseSpeed or self:Speed(true);
 end
 
 function ENT:Speed(scale)

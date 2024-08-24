@@ -4,7 +4,7 @@
 --]]
 
 -- Called to get whether a player can perform a ritual or not.
-function cwRituals:PlayerCanPerformRitual(player, uniqueID, bIgnoreItems)
+function cwRituals:PlayerCanPerformRitual(player, uniqueID, bIgnoreItems, bIgnoreBeliefs)
 	local ritualTable = self.rituals.stored[uniqueID];
 	local requirements = ritualTable.requirements;
 	
@@ -34,7 +34,7 @@ function cwRituals:PlayerCanPerformRitual(player, uniqueID, bIgnoreItems)
 		end;
 	end;
 	
-	if cwBeliefs and player.HasBelief then
+	if !bIgnoreBeliefs and cwBeliefs and player.HasBelief then
 		if !subfaith or (subfaith and (subfaith == "" or subfaith == "N/A")) then
 			Schema:EasyText(player, "chocolate", "You must have a subfaith in order to perform a ritual!");
 			return false;
@@ -141,14 +141,14 @@ function cwRituals:PlayerFailedRitual(player, uniqueID, ritualTable, bHasRequire
 end;
 
 -- A function used to peform a ritual.
-function cwRituals:PerformRitual(player, uniqueID, itemIDs, bIgnoreItems)
+function cwRituals:PerformRitual(player, uniqueID, itemIDs, bIgnoreItems, bIgnoreBeliefs)
 	local curTime = CurTime();
 	
 	if (IsValid(player) and uniqueID and isstring(uniqueID)) then
 		if (!player.cwNextRitual or player.cwNextRitual < curTime) then
 			player.cwNextRitual = curTime + 10;
 	
-			local bHasFlags, bHasRequirements = hook.Run("PlayerCanPerformRitual", player, uniqueID, bIgnoreItems);
+			local bHasFlags, bHasRequirements = hook.Run("PlayerCanPerformRitual", player, uniqueID, bIgnoreItems, bIgnoreBeliefs);
 			local ritualTable = self.rituals.stored[uniqueID];
 
 			if (ritualTable and bHasFlags != false and bHasRequirements != false) then
@@ -172,7 +172,7 @@ function cwRituals:PerformRitual(player, uniqueID, itemIDs, bIgnoreItems)
 									end
 								end;
 								
-								ritualTable:PerformRitual(player, itemIDs, false, bIgnoreItems);
+								ritualTable:PerformRitual(player, itemIDs, false, bIgnoreItems, bIgnoreBeliefs);
 								
 								if player:GetSubfaction() ~= "Rekh-khet-sa" then
 									if ritualTable.corruptionCost then
@@ -184,7 +184,7 @@ function cwRituals:PerformRitual(player, uniqueID, itemIDs, bIgnoreItems)
 						
 						return true;
 					else
-						ritualTable:PerformRitual(player, itemIDs, true, bIgnoreItems);
+						ritualTable:PerformRitual(player, itemIDs, true, bIgnoreItems, bIgnoreBeliefs);
 						
 						return true;
 					end;
