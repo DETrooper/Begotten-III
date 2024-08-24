@@ -71,9 +71,11 @@ ENT.Attacks = {
 ENT.AttackFunctions = {
 	[ENT.Attacks.Standard] = function(self)
 		if self.angry then
+			self.MeleeAttackRange = 125;
 			self:EmitSound("begotten/npc/grunt/attack_claw0"..math.random(1, 3)..".mp3", 100, self.pitch)
 			self:PlaySequenceAndMove("fastattack", 0.6, self.FaceEnemy)
 		else
+			self.MeleeAttackRange = 120;
 			self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
 			self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)
 		end

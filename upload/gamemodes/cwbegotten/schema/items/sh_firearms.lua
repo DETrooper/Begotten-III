@@ -363,7 +363,7 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.ammoCapacity = 1;
 	ITEM.ammoTypes = {"Longshot"};
 	ITEM.firearmType = "Long Gun";
-	ITEM.reloadTime = 10; -- Seconds
+	ITEM.reloadTime = 9; -- Seconds
 	ITEM.reloadSounds = {"oneuse_deploy.ogg", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	ITEM.requireFaith = {"Faith of the Dark"};
 	

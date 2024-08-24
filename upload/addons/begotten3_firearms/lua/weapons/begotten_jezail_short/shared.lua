@@ -80,16 +80,6 @@ SWEP.IronSightsAng = Vector(0, 0, 0)
 SWEP.RunSightsPos = Vector(0, 0, -0.801)
 SWEP.RunSightsAng = Vector(-7.739, 33.064, -0.704)
 
-function SWEP:AdjustMouseSensitivity()
-
-	if self.Owner:KeyPressed(IN_ATTACK2) then
-		return 0.1
-	else
-		return 1
-	end
-	
-end
-
 SWEP.AmmoTypes = {
 	["Longshot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("v51_"..math.random(1,4)..".ogg");

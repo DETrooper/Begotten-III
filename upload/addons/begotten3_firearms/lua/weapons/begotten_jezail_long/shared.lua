@@ -56,7 +56,7 @@ SWEP.Primary.Ammo			= "smg"	-- pistol, 357, smg1, ar2, buckshot, slam, SniperPen
 -- Pistol, buckshot, and slam always ricochet. Use AirboatGun for a light metal peircing shotgun pellets
 
 SWEP.Secondary.ScopeZoom			= 30
-SWEP.Secondary.IronFOV			= 20		-- How much you 'zoom' in. Less is more! 
+SWEP.Secondary.IronFOV			= 25		-- How much you 'zoom' in. Less is more! 
 SWEP.Secondary.UseSVD			= true
 
 SWEP.data 				= {}				--The starting firemode
@@ -79,16 +79,6 @@ SWEP.IronSightsPos = Vector(-4.761, -11.658, 3.2)
 SWEP.IronSightsAng = Vector(0, 0, 0)
 SWEP.RunSightsPos = Vector(0, 0, -0.801)
 SWEP.RunSightsAng = Vector(-7.739, 33.064, -0.704)
-
-function SWEP:AdjustMouseSensitivity()
-
-	if self.Owner:KeyPressed(IN_ATTACK2) then
-		return 0.1
-	else
-		return 1
-	end
-	
-end
 
 SWEP.AmmoTypes = {
 	["Longshot"] = function(SWEP)
