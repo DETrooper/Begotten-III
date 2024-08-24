@@ -37,7 +37,7 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Courier's Ring";
-	ITEM.model = "models/items/magic/ring_basic/ring_courier.mdl";
+	ITEM.model = "models/items/magic/ring_basic/ring_silver.mdl";
 	ITEM.weight = 0.2;
 	ITEM.uniqueID = "ring_courier";
 	ITEM.description = "A silver ring that once belonged to a courier that ran between the county districts. Putting it on your finger makes you feel as though you have more stamina.";

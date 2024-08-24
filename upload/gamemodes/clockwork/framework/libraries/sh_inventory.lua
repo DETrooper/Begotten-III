@@ -606,8 +606,10 @@ else
 								if repairItemTable:GetCondition() <= 0 then
 									player:TakeItem(repairItemTable, true);
 									
+									player:EmitSound("generic_ui/randomize_0"..math.random(1, 2)..".wav")
 									Schema:EasyText(player, "olivedrab", "You have repaired your "..itemTable.name.." to "..tostring(math.Round(itemTable:GetCondition(), 2))..", using the last of the repair kit's parts in the process.");
 								else
+									player:EmitSound("generic_ui/randomize_0"..math.random(1, 2)..".wav")
 									Schema:EasyText(player, "green", "You have repaired your "..itemTable.name.." to "..tostring(math.Round(itemTable:GetCondition(), 2))..".");
 									Clockwork.inventory:Rebuild(player);
 								end

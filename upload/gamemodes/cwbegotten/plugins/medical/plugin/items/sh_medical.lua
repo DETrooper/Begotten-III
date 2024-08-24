@@ -76,7 +76,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Antibiotic Paste";
-	ITEM.cost = 100;
 	ITEM.model = "models/props_c17/TrapPropeller_Lever.mdl";
 	ITEM.weight = 0.5;
 	ITEM.useText = "Apply";
@@ -100,7 +99,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Antibiotics";
-	ITEM.cost = 150;
 	ITEM.model = "models/healthvial_nmrih.mdl";
 	ITEM.weight = 0.5;
 	ITEM.useText = "Drink";
@@ -137,7 +135,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Black Remedy";
-	ITEM.cost = 150;
 	ITEM.model = "models/weapons/w_oil.mdl";
 	ITEM.weight = 0.2;
 	ITEM.useText = "Drink";
@@ -173,7 +170,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Bloody Fucked Bandage";
-	ITEM.cost = 8;
 	ITEM.model = "models/kali/miscstuff/stalker/aid/bandage.mdl";
 	ITEM.weight = 0.1;
 	ITEM.useText = "Apply";
@@ -195,7 +191,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Gauze";
-	ITEM.cost = 8;
 	ITEM.model = "models/healthvial_gauze.mdl";
 	ITEM.weight = 0.2;
 	ITEM.useText = "Apply";
@@ -220,7 +215,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Skingauze";
-	ITEM.cost = 8;
 	ITEM.model = "models/mosi/fnv/props/gore/gorehead01.mdl";
 	ITEM.weight = 0.4;
 	ITEM.useText = "Apply";
@@ -286,7 +280,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Crafted Bandage";
-	ITEM.cost = 15;
 	ITEM.model = "models/props_wasteland/prison_toiletchunk01f.mdl";
 	ITEM.weight = 0.1;
 	ITEM.useText = "Apply";
@@ -308,13 +301,12 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Ointment";
-	ITEM.cost = 8;
-	ITEM.model = "models/props_junk/glassjug01.mdl";
+	ITEM.model = "models/mosi/fallout4/props/junk/components/adhesive.mdl";
 	ITEM.weight = 0.5;
 	ITEM.useText = "Apply";
 	ITEM.useSound = "begotten/ui/sanity_gain.mp3";
 	ITEM.description = "A bottle of old ointment for use in treating burn injuries.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/laudanum.png"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/ointment.png"
 	ITEM.uniqueID = "ointment"
 	
 	ITEM.applicable = true;
@@ -336,7 +328,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Skintape";
-	ITEM.cost = 15;
 	ITEM.model = "models/cofprops/skintape.mdl";
 	ITEM.weight = 0.2;
 	ITEM.access = "v";
@@ -366,7 +357,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Makeshift Splint";
-	ITEM.cost = 8;
 	ITEM.model = "models/Gibs/wood_gib01b.mdl"; -- find a good model later
 	ITEM.weight = 1;
 	ITEM.useText = "Place";
@@ -385,7 +375,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Survival Pack";
-	ITEM.cost = 30;
 	ITEM.model = "models/items/healthkit_nmrih.mdl";
 	ITEM.weight = 3;
 	ITEM.access = "v";
@@ -417,7 +406,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Scalpel";
-	ITEM.cost = 15;
 	ITEM.model = "models/gibs/metal_gib4.mdl";
 	ITEM.weight = 0.25;
 	ITEM.access = "v";
@@ -437,7 +425,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Forceps";
-	ITEM.cost = 15;
 	ITEM.model = "models/downpour/scissors01_m0_ah.mdl";
 	ITEM.weight = 0.25;
 	ITEM.access = "v";
@@ -457,7 +444,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Suture";
-	ITEM.cost = 15;
 	ITEM.model = "models/props_junk/cardboard_box004a.mdl";
 	ITEM.weight = 0.25;
 	ITEM.access = "v";
@@ -477,7 +463,6 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New();
 	ITEM.name = "Chloroform";
-	ITEM.cost = 50;
 	ITEM.model = "models/props_junk/garbage_newspaper001a.mdl";
 	ITEM.weight = 0.1;
 	ITEM.useText = "Knock Out";

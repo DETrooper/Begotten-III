@@ -7,7 +7,7 @@
 local ITEM = Clockwork.item:New();
 	ITEM.name = "Breakdown Kit";
 	ITEM.category = "Tools";
-	ITEM.model = "models/mosi/fallout4/props/junk/modcrate.mdl";
+	ITEM.model = "models/mosi/fallout4/props/junk/breakdownkit.mdl";
 	ITEM.weight = 1;
 	ITEM.uniqueID = "breakdown_kit";
 	ITEM.description = "A kit of tools that can be used to break down items into their component pieces.";
