@@ -8,7 +8,7 @@ local RITUAL = cwRituals.rituals:New("purifying_stone_rite");
 	RITUAL.description = "Imbueing something with not only purity, but the ability to spread its purified nature to its surroundings is an act of faith practiced by few. Performing this ritual summons a Purifying Stone item. Removes 10 corruption.";
 	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "flagellant", "acolyte", "soothsayer", "heretic"}; -- Tier II Shared Ritual
 	
-	RITUAL.requirements = {"light_catalyst", "up_catalyst", "up_catalyst"};
+	RITUAL.requirements = {"light_catalyst", "up_catalyst", "trinity_catalyst"};
 	RITUAL.result = {
 		["purifying_stone"] = {amount = 1},
 	};
@@ -2109,7 +2109,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 	RITUAL.description = "Summon a spirit leopard from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. 10 second cast time. Incurs 20 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
-	RITUAL.requirements = {"xolotl_catalyst", "pantheistic_catalyst", "purifying_stone"};
+	RITUAL.requirements = {"xolotl_catalyst", "pantheistic_catalyst", "trinity_catalyst"};
 	RITUAL.corruptionCost = 20;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 50;

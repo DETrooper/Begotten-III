@@ -8,7 +8,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.model = "models/props_c17/TrapPropeller_Lever.mdl";
 	ITEM.weight = 0.15;
 	ITEM.description = "A glass vial filled with a mysterious clear liquid that can be injected into someone for a burst of energy...";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/ampoule.png"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/syringe.png"
 	ITEM.useSound = "begotten/items/meat_inject.mp3";
 	ITEM.uniqueID = "ampoule"
 	
@@ -55,7 +55,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.model = "models/props_c17/TrapPropeller_Lever.mdl";
 	ITEM.weight = 0.15;
 	ITEM.description = "A syringe that hosts something...";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/ampoule.png"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/blacksyringe.png"
 	ITEM.useSound = "begotten/items/meat_inject.mp3";
 	ITEM.uniqueID = "blacksyringe"
 	
@@ -101,12 +101,12 @@ ITEM:Register();
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Antibiotics";
 	ITEM.cost = 150;
-	ITEM.model = "models/props_junk/glassjug01.mdl";
+	ITEM.model = "models/healthvial_nmrih.mdl";
 	ITEM.weight = 0.5;
 	ITEM.useText = "Drink";
 	ITEM.useSound = "npc/barnacle/barnacle_gulp1.wav";
 	ITEM.description = "A rarity indeed! These ancient capsules are renowned for their ability to stop most diseases or cure infections.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/laudanum.png"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/antibiotics.png"
 	ITEM.uniqueID = "antibiotics"
 
 	ITEM.ingestible = {orally = true, anally = false};
@@ -418,13 +418,13 @@ ITEM:Register();
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Scalpel";
 	ITEM.cost = 15;
-	ITEM.model = "models/props_c17/TrapPropeller_Lever.mdl";
+	ITEM.model = "models/gibs/metal_gib4.mdl";
 	ITEM.weight = 0.25;
 	ITEM.access = "v";
 	ITEM.useText = "Cut";
 	ITEM.useSound = "bandaging_1.wav";
 	ITEM.description = "A rusty scalpel for surgical incisions.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/ampoule.png"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scalpel.png"
 	ITEM.uniqueID = "scalpel"
 	
 	ITEM.applicable = true;

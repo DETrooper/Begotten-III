@@ -236,10 +236,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "armor_repair_kit";
 	ITEM.cost = 50;
 	ITEM.model = "models/props/de_prodigy/ammo_can_02.mdl";
-	ITEM.weight = 1;
+	ITEM.weight = 3;
 	ITEM.category = "Tools";
 	ITEM.description = "A collection of tools and materials that can easily be used to repair one's armor.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/repair_kit.png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/repair_kit_armor.png";
 	ITEM.conditionReplenishment = 200;
 	ITEM.stackable = false;
 	
@@ -254,10 +254,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "firearm_repair_kit";
 	ITEM.cost = 50;
 	ITEM.model = "models/props/de_prodigy/ammo_can_02.mdl";
-	ITEM.weight = 1;
+	ITEM.weight = 3;
 	ITEM.category = "Tools";
 	ITEM.description = "A collection of delicate tools and spare parts that can be used to repair firearms.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/repair_kit.png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/repair_kit_firearms.png";
 	ITEM.conditionReplenishment = 200;
 	ITEM.stackable = false;
 	
@@ -272,10 +272,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "weapon_repair_kit";
 	ITEM.cost = 50;
 	ITEM.model = "models/props/de_prodigy/ammo_can_02.mdl";
-	ITEM.weight = 1;
+	ITEM.weight = 3;
 	ITEM.category = "Tools";
 	ITEM.description = "A collection of tools and materials that can easily be used to repair one's melee weapon or shield.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/repair_kit.png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/repair_kit_melee.png";
 	ITEM.conditionReplenishment = 200;
 	ITEM.stackable = false;
 	
@@ -289,11 +289,11 @@ local ITEM = Clockwork.item:New();
 	ITEM.name = "Engraving Tool";
 	ITEM.uniqueID = "engraving_tool";
 	ITEM.cost = 50;
-	ITEM.model = "models/props_c17/TrapPropeller_Lever.mdl";
+	ITEM.model = "models/items/weapons/blacksmithhammer/bl_hammer.mdl";
 	ITEM.weight = 0.25;
 	ITEM.category = "Tools";
 	ITEM.description = "A small tool that can be used to etch a name into a weapon or shield.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/ampoule.png"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/engraving_tool.png"
 	--ITEM.itemSpawnerInfo = {category = "Junk", rarity = 95};
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;

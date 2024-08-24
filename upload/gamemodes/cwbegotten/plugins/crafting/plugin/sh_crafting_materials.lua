@@ -7,11 +7,11 @@
 local ITEM = Clockwork.item:New();
 	ITEM.name = "Breakdown Kit";
 	ITEM.category = "Tools";
-	ITEM.model = "models/props/de_prodigy/ammo_can_02.mdl";
-	ITEM.weight = 0.8;
+	ITEM.model = "models/mosi/fallout4/props/junk/modcrate.mdl";
+	ITEM.weight = 1;
 	ITEM.uniqueID = "breakdown_kit";
 	ITEM.description = "A kit of tools that can be used to break down items into their component pieces.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/repair_kit.png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/breakdown_kit.png";
 	ITEM.stackable = false;
 	
 	ITEM.itemSpawnerInfo = {category = "Repair Kits", rarity = 300, bNoSupercrate = true};

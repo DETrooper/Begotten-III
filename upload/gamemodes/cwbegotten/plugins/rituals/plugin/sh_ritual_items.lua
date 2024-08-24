@@ -266,7 +266,7 @@ ITEM:Register();
 local ITEM = Clockwork.item:New();
 	ITEM.name = "Ice Sigil Stone";
 	ITEM.model = "models/srp/items/spezzy/art_moldfish.mdl";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/ice_catalyst.png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/art_moldfish.png";
 	ITEM.weight = 0.1;
 	ITEM.category = "Catalysts";
 	ITEM.description = "A sigil stone that saps the air with an unbearable chill.";

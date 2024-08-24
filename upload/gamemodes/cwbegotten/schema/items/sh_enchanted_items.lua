@@ -37,11 +37,11 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Courier's Ring";
-	ITEM.model = "models/items/magic/ring_basic/ring_silver.mdl";
+	ITEM.model = "models/items/magic/ring_basic/ring_courier.mdl";
 	ITEM.weight = 0.2;
 	ITEM.uniqueID = "ring_courier";
 	ITEM.description = "A silver ring that once belonged to a courier that ran between the county districts. Putting it on your finger makes you feel as though you have more stamina.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/ring_protection_silver.png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/ring_courier.png";
 	ITEM.charmEffects = "- Reduces stamina drain when sprinting by 25%.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, supercrateOnly = true};
@@ -205,7 +205,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.weight = 0.2;
 	ITEM.uniqueID = "ring_penetration";
 	ITEM.description = "A sharp ring, it digs into your flesh as you put it onto your finger.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/ring_pummeler.png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/ring_penetration.png";
 	ITEM.charmEffects = "- Increases armor-piercing damage by 10 points.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, supercrateOnly = true};
