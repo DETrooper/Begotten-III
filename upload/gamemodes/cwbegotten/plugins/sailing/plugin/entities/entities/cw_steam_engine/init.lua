@@ -19,6 +19,7 @@ function ENT:Initialize()
 	self:PhysicsInit(SOLID_VPHYSICS);
 	self:SetUseType(SIMPLE_USE);
 	self:SetSolid(SOLID_VPHYSICS);
+	self.health = 100;
 	
 	local physicsObject = self:GetPhysicsObject();
 	
@@ -159,10 +160,29 @@ function ENT:OnTakeDamage(damageInfo)
 		if IsValid(attacker) and attacker:IsPlayer() then
 			if damageInfo:GetDamage() >= 25 then
 				self:SetNWBool("broken", true);
+				self:SetNWBool("turnedOn", false);
+				self:StopSound("ambient/machines/turbine_loop_1.wav");
 				self:EmitSound("physics/metal/metal_box_break2.wav");
-				self:EmitSound("ambient/energy/zap9.wav");
+				
+				local ironclad = self.ironclad;
+				
+				if IsValid(ironclad) then
+					if timer.Exists("SailTimer_"..tostring(ironclad:EntIndex())) then
+						timer.Remove("SailTimer_"..tostring(ironclad:EntIndex()));
+					end
+					
+					if timer.Exists("TravelTimer_"..tostring(ironclad:EntIndex())) then
+						timer.Pause("TravelTimer_"..tostring(ironclad:EntIndex()));
+					end
+				end
 				
 				Clockwork.chatBox:AddInRadius(nil, "itnofake", "The steam engine breaks under the weight of an attack, ceasing its function!", self:GetPos(), config.Get("talk_radius"):Get() * 2);
+				
+				timer.Simple(FrameTime(), function()
+					if IsValid(self) then
+						self:StopParticles();
+					end
+				end);
 			end
 		end
 	end

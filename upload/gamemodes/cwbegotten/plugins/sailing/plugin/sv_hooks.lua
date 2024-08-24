@@ -7,7 +7,7 @@ local longshipXP = 300;
 function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 	local class = entity:GetClass();
 	
-	if (class == "cw_longship" or class == "cw_steam_engine") then
+	if (class == "cw_longship") then
 		local attacker = damageInfo:GetAttacker();
 		local damageType = damageInfo:GetDamageType();
 		local damageAmount = damageInfo:GetDamage();
@@ -30,11 +30,7 @@ function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 					end
 				end
 				
-				if class == "cw_steam_engine" then
-					entity:EmitSound("physics/metal/metal_box_strain"..tostring(math.random(1, 4))..".wav");
-				else
-					entity:EmitSound("physics/wood/wood_strain"..tostring(math.random(2, 4))..".wav");
-				end
+				entity:EmitSound("physics/wood/wood_strain"..tostring(math.random(2, 4))..".wav");
 			elseif damageType == 128 then -- BLUNT
 				local damageDealt = math.ceil(damageAmount / 12);
 				
@@ -52,11 +48,7 @@ function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 					end
 				end
 				
-				if class == "cw_steam_engine" then
-					entity:EmitSound("physics/metal/metal_box_strain"..tostring(math.random(1, 4))..".wav");
-				else
-					entity:EmitSound("physics/wood/wood_strain"..tostring(math.random(2, 4))..".wav");
-				end
+				entity:EmitSound("physics/wood/wood_strain"..tostring(math.random(2, 4))..".wav");
 			end
 		end
 	end
