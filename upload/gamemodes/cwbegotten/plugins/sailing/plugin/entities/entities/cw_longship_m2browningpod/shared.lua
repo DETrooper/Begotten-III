@@ -100,11 +100,13 @@ if (SERVER) then
 			end
 
 			if self.Owner:KeyDown( IN_RELOAD ) then
-				local reloadItem = self.Owner:GetItemInstance("ironclad_ammo_box");
-				
-				if reloadItem then
-					self.Owner:TakeItem(reloadItem);
-					self.gun:Reload()
+				if self.gun:GetDTBool(0) ~= true then
+					local reloadItem = self.Owner:GetItemInstance("ironclad_ammo_box");
+					
+					if reloadItem then
+						self.Owner:TakeItem(reloadItem);
+						self.gun:Reload()
+					end
 				end
 			end
 		else
