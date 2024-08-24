@@ -1469,31 +1469,31 @@ concommand.Add("cw_SteamEngineRepair", function(player, cmd, args)
 			end
 		
 			local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
-			local scrapRequired = 6;
+			local scrapRequired = 3;
 			local scrapCount = 0;
 
 			for k, v in pairs(itemList) do
 				if v.uniqueID == "scrap" then
 					scrapCount = scrapCount + 1;
 					
-					if scrapCount >= 6 then
+					if scrapCount >= 3 then
 						Clockwork.player:SetAction(player, "repair_steam_engine", 30, 1, function() 
 							if entity:IsValid() and entity:GetNWBool("broken") then
 								local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
-								local scrapRequired = 6;
+								local scrapRequired = 3;
 								local scrapItems = {};
 								
 								for k, v in pairs(itemList) do
 									if v.uniqueID == "scrap" then
 										table.insert(scrapItems, v);
 										
-										if #scrapItems == 6 then
+										if #scrapItems == 3 then
 											break;
 										end
 									end
 								end
 								
-								if #scrapItems == 6 then
+								if #scrapItems == 3 then
 									for i, v in ipairs(scrapItems) do
 										ent:TakeItem(v);
 									end
@@ -1506,7 +1506,7 @@ concommand.Add("cw_SteamEngineRepair", function(player, cmd, args)
 									return;
 								end
 								
-								Schema:EasyText(player, "chocolate", "You do not have enough scrap to repair the steam engine with! You require 6 scrap!");
+								Schema:EasyText(player, "chocolate", "You do not have enough scrap to repair the steam engine with! You require "..tostring(scrapRequired).." scrap!");
 							end
 						end);
 						
