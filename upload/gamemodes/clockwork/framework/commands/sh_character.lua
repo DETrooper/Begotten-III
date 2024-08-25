@@ -810,3 +810,62 @@ local COMMAND = Clockwork.command:New("CharGiveFlags");
 		end;
 	end;
 COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CharKick");
+    COMMAND.tip = "Kicks somebody off of their character.";
+    COMMAND.flags = CMD_DEFAULT;
+    COMMAND.arguments = 1;
+    COMMAND.access = "s";
+    COMMAND.text = "<string Name>";
+
+    -- Called when the command has been run.
+    function COMMAND:OnRun(player, arguments)
+        local target = Clockwork.player:FindByID(arguments[1]);
+        if(!IsValid(target)) then Schema:EasyText(player, "peru", "This is not a valid player!"); return; end
+		if !target.cwCharacter then Schema:EasyText(player, "peru", target:Name().." does not have a character loaded!"); return; end
+		
+		Clockwork.player:UnloadCharacter(target);
+        Schema:EasyText(GetAdmins(), "yellow", (target:Name().." has been kicked off of their character by "..player:Name().."."));
+		Clockwork.player:SetCreateFault(target, "You have been kicked off of your character.");
+    end
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("EnableFaction");
+	COMMAND.tip = "Enable respawning and creating new characters for a faction.";
+	COMMAND.arguments = 1;
+	COMMAND.access = "s";
+    COMMAND.text = "<string Faction>";
+	COMMAND.alias = {"UnlockFaction"};
+	
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local factionTable = Clockwork.faction:FindByID(arguments[1]);
+		
+		if !factionTable then Schema:EasyText(player, "peru", "This is not a valid faction!"); return; end
+		if !factionTable.disabled then Schema:EasyText(player, "peru", "This faction is already enabled!"); return; end
+		
+		factionTable.disabled = false;
+		
+		Clockwork.player:NotifyAdmins("operator", player:Name().." has enabled the "..factionTable.name.." faction.");
+	end;
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("DisableFaction");
+	COMMAND.tip = "Disable respawning and creating new characters for a faction.";
+	COMMAND.arguments = 1;
+	COMMAND.access = "s";
+    COMMAND.text = "<string Faction>";
+	COMMAND.alias = {"LockFaction"};
+	
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local factionTable = Clockwork.faction:FindByID(arguments[1]);
+		
+		if !factionTable then Schema:EasyText(player, "peru", "This is not a valid faction!"); return; end
+		if factionTable.disabled then Schema:EasyText(player, "peru", "This faction is already disabled!"); return; end
+		
+		factionTable.disabled = true;
+		
+		Clockwork.player:NotifyAdmins("operator", player:Name().." has disabled the "..factionTable.name.." faction.");
+	end;
+COMMAND:Register();

@@ -2322,6 +2322,26 @@ end);
 
 local coinslotSounds = {"buttons/lever1.wav", "buttons/lever4.wav"};
 
+concommand.Add("cw_CheckTaxRate", function(player, cmd, args)
+	local trace = player:GetEyeTrace();
+
+	if (trace.Entity) then
+		local entity = trace.Entity;
+
+		if (entity:GetClass() == "cw_coinslot") then
+			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			
+			if (faction ~= "Goreic Warrior") then
+				local tax = math.Round(Schema.towerTax * 100);
+				
+				Schema:EasyText(player, "olive", "You pull the lever to check the Tower of Light's tax rate. According to the Coinslot's mechanical display, the current tax rate is "..tax.."%.");
+				
+				entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
+			end
+		end
+	end;
+end);
+
 concommand.Add("cw_CoinslotSalaryCheck", function(player, cmd, args)
 	local trace = player:GetEyeTrace();
 

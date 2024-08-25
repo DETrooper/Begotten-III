@@ -1333,10 +1333,6 @@ function GM:PlayerDeathThink(player)
 
 	if (!player:HasInitialized()) then
 		return true
-	end
-
-	if (player:IsCharacterMenuReset()) then
-		return true
 	end]]--
 
 	--if (action == "spawn") then
@@ -1876,9 +1872,7 @@ function GM:PlayerCanDeleteCharacter(player, character) end
 
 -- Called when a player attempts to switch to a character.
 function GM:PlayerCanSwitchCharacter(player, character)
-	--[[if (!player:Alive() and !player:IsCharacterMenuReset()) then
-		return "You cannot switch characters while being dead."
-	else]]if (player:GetRagdollState() == RAGDOLL_KNOCKEDOUT) then
+	if (player:GetRagdollState() == RAGDOLL_KNOCKEDOUT) then
 		return "You cannot switch characters while being unconscious."
 	end
 

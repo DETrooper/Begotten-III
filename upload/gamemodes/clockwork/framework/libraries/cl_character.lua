@@ -346,7 +346,7 @@ function Clockwork.character:RefreshPanelList()
 		end
 		
 		local smallTextFont = Clockwork.option:GetFont("menu_text_small");
-		local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "SUFFER");
+		local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "RETURN");
 		
 		panel.cancelButton = vgui.Create("cwLabelButton", panel);
 		panel.cancelButton:SetFont(smallTextFont);
@@ -477,11 +477,6 @@ end;
 -- A function to get whether the character panel is polling.
 function Clockwork.character:IsPanelPolling()
 	return self.isPolling;
-end;
-
--- A function to get whether the character menu is reset.
-function Clockwork.character:IsMenuReset()
-	return self.isMenuReset;
 end;
 
 -- A function to set whether the character panel is open.

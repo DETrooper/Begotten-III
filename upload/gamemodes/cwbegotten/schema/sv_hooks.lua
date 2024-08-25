@@ -157,9 +157,7 @@ function Schema:PlayerCanInteractCharacter(player, action, character)
 	end;]]--
 	
 	if action ~= "delete" and factionTable.disabled then
-		Clockwork.player:SetCreateFault(player, "This character's faction is disabled and thus cannot be loaded!");
-	
-		return false;
+		return "This character's faction is disabled and thus cannot be loaded!";
 	end
 end;
 

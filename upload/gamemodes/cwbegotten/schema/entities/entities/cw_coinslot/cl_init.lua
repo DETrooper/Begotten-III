@@ -135,15 +135,17 @@ local function CreateMenu(state)
 		subMenu:AddOption("Collect", function() Clockwork.Client:ConCommand("cw_CoinslotSalary") end);
 	end
 	
+	local subMenu = menu:AddSubMenu("Treasury");
+	
+	subMenu:AddOption("Check Tax Rate", function() Clockwork.Client:ConCommand("cw_CheckTaxRate") end);
+	
 	if state == "Hierarchy" then
-		local subMenu = menu:AddSubMenu("Treasury");
-		
 		subMenu:AddOption("Check", function() Clockwork.Client:ConCommand("cw_CoinslotTreasury") end);
-		--[[subMenu:AddOption("Collect", function() 
-			Derma_StringRequest("Coinslot", "How much coin would you collect from the Coinslot?", nil, function(text)
-				Clockwork.kernel:RunCommand("CoinslotCollect", text);
+		subMenu:AddOption("Set Tax Rate", function() 
+			Derma_StringRequest("Coinslot", "What tax rate would you like to set for the Tower? (1-99)", nil, function(text)
+				Clockwork.kernel:RunCommand("CoinslotTax", text);
 			end) 
-		end);]]--
+		end);
 	elseif Clockwork.Client:IsAdmin() then
 		local subMenu = menu:AddSubMenu("(ADMIN) Treasury");
 		
@@ -153,7 +155,12 @@ local function CreateMenu(state)
 				Clockwork.kernel:RunCommand("CoinslotCollect", text);
 			end) 
 		end);
-		subMenu:AddOption("Set Tax", function() 
+		subMenu:AddOption("Modify", function() 
+			Derma_StringRequest("Coinslot", "How much coin would you modify the treasury by?", nil, function(text)
+				Clockwork.kernel:RunCommand("CoinslotDonate", text, "true");
+			end) 
+		end);
+		subMenu:AddOption("Set Tax Rate", function() 
 			Derma_StringRequest("Coinslot", "What tax rate would you like to set for the Tower? (1-99)", nil, function(text)
 				Clockwork.kernel:RunCommand("CoinslotTax", text);
 			end) 

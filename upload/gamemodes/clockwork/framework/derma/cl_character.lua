@@ -101,7 +101,7 @@ function PANEL:Init()
 		self.disconnectButton:SetText("RUN IN FEAR");
 		self.disconnectButton:FadeIn(0.5);
 		self.disconnectButton:SetCallback(function(panel)
-			if (Clockwork.Client:HasInitialized() and !Clockwork.character:IsMenuReset()) then
+			if (Clockwork.Client:HasInitialized()) then
 				Clockwork.character:SetPanelMainMenu();
 				Clockwork.character:SetPanelOpen(false);
 			else
@@ -537,7 +537,7 @@ function PANEL:Think()
 		if (IsValid(self.disconnectButton)) then
 			local smallTextFont = Clockwork.option:GetFont("menu_text_small");
 			
-			if (Clockwork.Client:HasInitialized() and !Clockwork.character:IsMenuReset()) then
+			if (Clockwork.Client:HasInitialized()) then
 				self.disconnectButton:SetText("SUFFER");
 				local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "SUFFER");
 				self.disconnectButton:SetPos((ScrW() / 2) - (newsizew / 2), ScrH() * 0.925);
@@ -3821,10 +3821,6 @@ end);
 
 netstream.Hook("CharacterOpen", function(data)
 	Clockwork.character:SetPanelOpen(true);
-	
-	if (data) then
-		Clockwork.character.isMenuReset = true;
-	end;
 end);
 
 netstream.Hook("CharacterFinish", function(data)

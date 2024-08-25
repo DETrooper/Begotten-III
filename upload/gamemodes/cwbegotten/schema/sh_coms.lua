@@ -2114,6 +2114,7 @@ local COMMAND = Clockwork.command:New("CoinslotCollect");
 							Clockwork.player:GiveCash(player, cash, nil, true);
 							Schema:ModifyTowerTreasury(-cash);
 							
+							Schema:EasyText(GetAdmins(), color, player:Name().." has collected "..cash.." coin from the treasury.");
 							Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name().." has collected "..cash.." coin from the coinslot. The treasury now sits at "..Schema.towerTreasury..".");
 							
 							return;
@@ -2143,7 +2144,7 @@ local COMMAND = Clockwork.command:New("CoinslotTax");
 	function COMMAND:OnRun(player, arguments)
 		local faction = player:GetFaction();
 		
-		if --[[(faction == "Holy Hierarchy" and player:GetSubfaction() == "Minister") or ]]player:IsAdmin() then
+		if (faction == "Holy Hierarchy" and player:GetSubfaction() == "Minister") or player:IsAdmin() then
 			local trace = player:GetEyeTrace();
 
 			if (trace.Entity) then
@@ -2181,6 +2182,7 @@ local COMMAND = Clockwork.command:New("CoinslotDonate");
 	COMMAND.text = "<number Coin>";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.arguments = 1;
+	COMMAND.optionalArguments = 1;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -2192,6 +2194,21 @@ local COMMAND = Clockwork.command:New("CoinslotDonate");
 			if (entity:GetClass() == "cw_coinslot") then
 				if arguments[1] and tonumber(arguments[1]) then
 					local cash = math.floor(tonumber(arguments[1]));
+					
+					if arguments[2] and player:IsAdmin() then
+						Schema:ModifyTowerTreasury(cash);
+						
+						local color = "green";
+						
+						if cash < 0 then
+							color = "red";
+						end
+						
+						Schema:EasyText(GetAdmins(), color, player:Name().." has modified the Tower treasury by "..cash.." coin.");
+						Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name().." has modified the Tower treasury by "..cash.." coin. The treasury now sits at "..Schema.towerTreasury..".");
+					
+						return;
+					end
 						
 					if (cash and Clockwork.player:CanAfford(player, cash)) then
 						if cash < 1 then
@@ -2229,7 +2246,7 @@ local COMMAND = Clockwork.command:New("CoinslotDonate");
 						entity:EmitSound("ambient/levels/labs/coinslot1.wav");
 						return;
 					else
-						Schema:EasyText(player, "darkgrey", "You need to enter a valid value to donate coin!");
+						Schema:EasyText(player, "darkgrey", "You do not have enough coin to donate this amount!");
 						return;
 					end;
 				else

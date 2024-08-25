@@ -2302,11 +2302,6 @@ function playerMeta:GetHoldingEntity()
 	return hook.Run("PlayerGetHoldingEntity", self) or self.cwIsHoldingEnt
 end
 
--- A function to get whether a player's character menu is reset.
-function playerMeta:IsCharacterMenuReset()
-	return self.cwCharMenuReset
-end
-
 -- A function to check if a player can afford an amount.
 function playerMeta:CanAfford(amount)
 	return Clockwork.player:CanAfford(self, amount)

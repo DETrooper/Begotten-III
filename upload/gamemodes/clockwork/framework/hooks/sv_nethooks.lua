@@ -99,7 +99,7 @@ netstream.Hook("InteractCharacter", function(player, data)
 			local fault = hook.Run("PlayerCanInteractCharacter", player, action, character)
 
 			if (fault == false or type(fault) == "string") then
-				return Clockwork.player:SetCreateFault(fault or "You cannot interact with this character!")
+				return Clockwork.player:SetCreateFault(player, fault or "You cannot interact with this character!")
 			elseif (action == "delete") then
 				local bSuccess, fault = Clockwork.player:DeleteCharacter(player, characterID)
 

@@ -1168,7 +1168,7 @@ function cwMedicalSystem:ModifyPlayerSpeed(player, infoTable, action)
 	else
 		local injuries = self:GetInjuries(player);
 		
-		if injuries[HITGROUP_LEFTLEG]["broken_bone"] or injuries[HITGROUP_RIGHTLEG]["broken_bone"] then
+		if injuries and (injuries[HITGROUP_LEFTLEG]["broken_bone"] or injuries[HITGROUP_RIGHTLEG]["broken_bone"]) then
 			infoTable.crouchedWalkSpeed = math.max(1, infoTable.crouchedWalkSpeed * 0.8);
 			infoTable.walkSpeed = math.max(1, infoTable.walkSpeed * 0.5);
 			infoTable.runSpeed = math.max(1, infoTable.walkSpeed);

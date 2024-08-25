@@ -495,13 +495,10 @@ end
 
 -- A function to open the character menu.
 function Clockwork.player:SetCharacterMenuOpen(player, bReset)
-	if (player:HasInitialized()) then
-		netstream.Start(player, "CharacterOpen", (bReset == true))
+	netstream.Start(player, "CharacterOpen", (bReset == true))
 
-		if (bReset) then
-			player.cwCharMenuReset = true
-			player:KillSilent()
-		end
+	if (bReset) then
+		player:KillSilent()
 	end
 end
 
@@ -1738,7 +1735,6 @@ end
 
 -- A function to use a player's character.
 function Clockwork.player:UseCharacter(player, characterID)
-	local isCharacterMenuReset = player:IsCharacterMenuReset()
 	local currentCharacter = player.cwCharacter;
 	local character = player.cwCharacterList[characterID]
 
@@ -1746,7 +1742,7 @@ function Clockwork.player:UseCharacter(player, characterID)
 		return false, "This character does not exist!"
 	end
 
-	if (currentCharacter != character or isCharacterMenuReset) then
+	if (currentCharacter != character) then
 		local factionTable = Clockwork.faction:FindByID(character.faction)
 		local fault = hook.Run("PlayerCanUseCharacter", player, character)
 
@@ -1755,7 +1751,7 @@ function Clockwork.player:UseCharacter(player, characterID)
 			local limit = Clockwork.faction:GetLimit(factionTable.name)
 			local ratio = factionTable.ratio;
 
-			if (isCharacterMenuReset and character.faction == currentCharacter.faction) then
+			if (currentCharacter and character.faction == currentCharacter.faction) then
 				players = players - 1
 			end
 
@@ -1793,12 +1789,7 @@ function Clockwork.player:UseCharacter(player, characterID)
 
 				Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:SteamName().." has loaded the character '"..character.name.."'.")
 
-				if (isCharacterMenuReset) then
-					player.cwCharMenuReset = false
-					player:Spawn()
-				else
-					self:LoadCharacter(player, characterID)
-				end
+				self:LoadCharacter(player, characterID)
 
 				return true
 			end
@@ -3116,6 +3107,25 @@ function Clockwork.player:LoadCharacter(player, characterID, tMergeCreate, Callb
 				hook.Run("PostPlayerCharacterLoaded", player)
 				player:SaveCharacter()
 			end
+		end
+	end
+end
+
+function Clockwork.player:UnloadCharacter(player, Callback)
+	if (player.cwCharacter) then
+		hook.Run("PrePlayerCharacterUnloaded", player)
+	
+		self:SaveCharacter(player)
+
+		hook.Run("PlayerCharacterUnloaded", player)
+		
+		player.cwCharacter = nil;
+		player.cwInitialized = false;
+		self:SetInitialized(player, false);
+		self:SetCharacterMenuOpen(player, true);
+		
+		if (Callback) then
+			Callback()
 		end
 	end
 end
