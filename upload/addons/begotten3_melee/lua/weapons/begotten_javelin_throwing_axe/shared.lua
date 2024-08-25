@@ -120,9 +120,9 @@ function SWEP:FireJavelin()
 		local phys = javelin:GetPhysicsObject()
 		
 		if owner.GetCharmEquipped and owner:GetCharmEquipped("hurlers_talisman") then
-			phys:SetVelocityInstantaneous(owner:GetAimVector() * 1380);
+			phys:SetVelocity(owner:GetAimVector() * 1380);
 		else
-			phys:SetVelocityInstantaneous(owner:GetAimVector() * 1000);
+			phys:SetVelocity(owner:GetAimVector() * 1000);
 		end
 	end
 	

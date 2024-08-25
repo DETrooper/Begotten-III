@@ -99,15 +99,15 @@ function SWEP:FireJavelin()
 		
 		if owner.GetSubfaction and owner:GetSubfaction() == "Clan Grock" then
 			if owner.GetCharmEquipped and owner:GetCharmEquipped("hurlers_talisman") then
-				phys:SetVelocityInstantaneous(owner:GetAimVector() * 2000);
+				phys:SetVelocity(owner:GetAimVector() * 2000);
 			else
-				phys:SetVelocityInstantaneous(owner:GetAimVector() * 1500);
+				phys:SetVelocity(owner:GetAimVector() * 1500);
 			end
 		else
 			if owner.GetCharmEquipped and owner:GetCharmEquipped("hurlers_talisman") then
-				phys:SetVelocityInstantaneous(owner:GetAimVector() * 1700);
+				phys:SetVelocity(owner:GetAimVector() * 1700);
 			else
-				phys:SetVelocityInstantaneous(owner:GetAimVector() * 1250);
+				phys:SetVelocity(owner:GetAimVector() * 1250);
 			end
 		end
 	end

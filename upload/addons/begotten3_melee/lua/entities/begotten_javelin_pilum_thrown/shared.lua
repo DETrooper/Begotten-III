@@ -179,7 +179,7 @@ if SERVER then
 								if (phys:IsValid()) then
 									phys:Wake();
 									phys:SetMass(2);
-									phys:SetVelocityInstantaneous(self:GetPhysicsObject():GetVelocity());
+									phys:SetVelocity(self:GetPhysicsObject():GetVelocity());
 								end
 								
 								self:Remove();
@@ -410,11 +410,23 @@ if SERVER then
 						
 						if Ent.HasBelief and Ent:HasBelief("impossibly_skilled") then
 							javelin:SetAngles(Ent:GetAimVector():Angle())
-							phys:SetVelocityInstantaneous(Ent:GetAimVector() * 1250);
+							phys:SetVelocity(Ent:GetAimVector() * 1250);
+							
+							if Ent:GetNWBool("Parry") then
+								Ent:EmitSound("meleesounds/DS2Parry.mp3");
+							end
+							
+							if IsValid(enemywep) then
+								local blocksoundtable = GetSoundTable(enemywep.realBlockSoundTable);
+								
+								if blocksoundtable and blocksoundtable["deflectmetal"] then
+									Ent:EmitSound(blocksoundtable["deflectmetal"][math.random(1, #blocksoundtable["deflectmetal"])], 90);
+								end
+							end
 							
 							Clockwork.chatBox:AddInTargetRadius(Ent, "me", "suddenly catches the projectile mid-flight with their weapon and redirects it, showing impossible skill and grace as it is deflected in the direction of its hurler!", Ent:GetPos(), config.Get("talk_radius"):Get() * 4);
 						else
-							phys:SetVelocityInstantaneous(Ent:GetAimVector() * 50);
+							phys:SetVelocity(Ent:GetAimVector() * 50);
 						end
 					
 						if !Ent:GetNWBool("Parry") then
@@ -428,7 +440,7 @@ if SERVER then
 					local phys = javelin:GetPhysicsObject()
 					
 					self:SetCollisionGroup(COLLISION_GROUP_WORLD);
-					phys:SetVelocityInstantaneous(data.OurOldVelocity);
+					phys:SetVelocity(data.OurOldVelocity);
 					Ent:EmitSound("meleesounds/comboattack3.wav.mp3", 75, math.random( 90, 110 ));
 					
 					return;
