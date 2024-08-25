@@ -290,14 +290,17 @@ Schema.doors = {
 		["tower"] = {
 			"churchgate1",
 			"churchgate2",
-			"cubbyblastdoor",
 			"frontblastdoor",
 			"sidedoorblastdoor",
-			"armorydoor",
 			"alchemy_lab_blastdoor",
 			"alchemy_lab_blastdoorwindw1",
 			"alchemy_lab_blastdoorwindw2",
 			"sidedoorblastdoor2",
+		},
+		["knights"] = {
+			"armorydoor",
+			"cubbyblastdoor",
+			"inquisitor_barracks_blastdoor",
 		},
 	};
 };
