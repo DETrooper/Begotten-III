@@ -51,19 +51,19 @@ function ENT:Think()
 	local curTime = CurTime();
 
 	if (!Clockwork.entity:HasFetchedItemData(self)) then
-		if Clockwork.player:HasDataStreamed() then
+		local plyTab = Clockwork.Client:GetTable();
+		
+		if Clockwork.Client:GetNetVar("Initialized") then
 			Clockwork.entity:FetchItemData(self);
 			
-			if Clockwork.Client.nextItemFetch then
-				Clockwork.Client.nextItemFetch = nil;
+			if plyTab.nextItemFetch then
+				plyTab.nextItemFetch = nil;
 			end
-		elseif !Clockwork.Client.nextItemFetch or Clockwork.Client.nextItemFetch < curTime then
-			Clockwork.Client.nextItemFetch = curTime + 0.1;
+		elseif !plyTab.nextItemFetch or plyTab.nextItemFetch <= curTime then
+			plyTab.nextItemFetch = curTime + 0.5;
 			
 			Clockwork.entity:FetchItemData(self);
 		end
-		
-		return
 	end
 
 	--[[local itemTable = Clockwork.entity:FetchItemTable(self)
@@ -80,7 +80,9 @@ function ENT:Think()
 		hook.Run("ItemEntityThink", itemTable, self)
 	end]]--
 	
-	self:SetNextClientThink(curTime + math.Rand(0.1, 1));
+	self:SetNextClientThink(curTime + math.Rand(0.5, 1));
+	
+	return true;
 end
 
 -- Called when the entity should draw.
