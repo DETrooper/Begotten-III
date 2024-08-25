@@ -83,7 +83,9 @@ if SERVER then
 	end
 
 	function ENT:SetEnemy(enemy)
-		self:SetNW2Entity("DrGBaseEnemy", enemy)
+		if enemy ~= self:GetNW2Entity("DrGBaseEnemy") then
+			self:SetNW2Entity("DrGBaseEnemy", enemy)
+		end
 		
 		if self:GetNW2Bool("DrGBaseNemesis") then
 			self:SetNW2Bool("DrGBaseNemesis", false)

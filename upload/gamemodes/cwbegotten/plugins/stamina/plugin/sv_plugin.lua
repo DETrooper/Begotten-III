@@ -85,12 +85,12 @@ function playerMeta:SetStamina(amount)
 end
 
 function playerMeta:HandleStamina(amount)
-	if math.Round(amount) == 0 then
-		return;
-	end
+	if math.Round(amount) == 0 then return; end
 	
 	local max_stamina = self:GetMaxStamina();
 	local new_stamina = math.Clamp(self:GetCharacterData("Stamina", max_stamina) + amount, 0, max_stamina);
+	
+	if new_stamina == max_stamina then return end;
 	
 	self:SetCharacterData("Stamina", new_stamina);
 	self:SetNWInt("Stamina", new_stamina);

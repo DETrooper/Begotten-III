@@ -52,9 +52,14 @@ end;]]--
 
 -- Called when a player's shared variables should be set.
 function cwStamina:OnePlayerHalfSecond(player, curTime)
-	local stamina = player:GetCharacterData("Stamina") or player:GetMaxStamina();
+	local plyTab = player:GetTable();
+	local stamina = math.floor(player:GetCharacterData("Stamina") or player:GetMaxStamina());
 	
-	player:SetNWInt("Stamina", math.floor(stamina));
+	if !plyTab.lastStamina or plyTab.lastStamina ~= stamina then
+		player:SetNWInt("Stamina", stamina);
+		
+		plyTab.lastStamina = stamina;
+	end
 end;
 
 -- Called when a player's stamina should regenerate.
