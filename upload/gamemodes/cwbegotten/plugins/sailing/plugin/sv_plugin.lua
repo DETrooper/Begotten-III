@@ -262,7 +262,7 @@ function cwSailing:BeginSailing(longshipEnt, destination, caller)
 
 	--printp("ent pos: "..tostring(longshipEntPos));
 	
-	if IsValid(owner) then
+	if IsValid(owner) and caller == owner then
 		--local ownerPos = longshipEnt.owner:GetPos();
 		--printp("owner pos: "..tostring(ownerPos));
 		
@@ -353,8 +353,8 @@ function cwSailing:BeginSailing(longshipEnt, destination, caller)
 			end);
 		end
 	else
-		if longship.CanMove then
-			if longship:CanMove() == false then return end;
+		if longshipEnt.CanMove then
+			if longshipEnt:CanMove() == false then return end;
 		end
 			
 		longshipEnt.destination = destination;
