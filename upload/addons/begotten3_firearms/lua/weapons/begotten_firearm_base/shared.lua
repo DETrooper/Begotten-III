@@ -1379,7 +1379,7 @@ if CLIENT then
 				if (v.type == "Model") then
 					local model = v.modelEnt
 					
-					if !IsValid(model) or model:GetParent() ~= self.Owner then
+					if !IsValid(model) or model:GetParent() ~= self.Owner and IsValid(self.Owner) then
 						self:CreateModels(wepTab.WElements);
 						
 						return;
