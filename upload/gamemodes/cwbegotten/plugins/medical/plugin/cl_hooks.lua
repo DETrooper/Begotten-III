@@ -157,6 +157,13 @@ function cwMedicalSystem:GetProgressBarInfoAction(action, percentage)
 	end;
 end;
 
+-- Called when the local player attempts to get up.
+function cwMedicalSystem:PlayerCanGetUp(action)
+	if action == "die" or action == "die_bleedout" then
+		return false;
+	end
+end;
+
 -- Called when the screenspace effects are rendered.
 function cwMedicalSystem:RenderScreenspaceEffects()
 	if Clockwork.Client:HasInitialized() and Clockwork.Client:Alive() and !Clockwork.kernel:IsChoosingCharacter() then

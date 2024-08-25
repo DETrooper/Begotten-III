@@ -2592,7 +2592,11 @@ function GM:GetProgressBarInfo()
 					return {text = "You are regaining conciousness.", percentage = percentage, flash = percentage < 10}
 				end
 			else
-				if (Clockwork.player:GetAction(Clockwork.Client) != "unragdoll" and hook.Run("PlayerCanGetUp")) then
+				local info = hook.Run("GetProgressBarInfoAction", action, percentage);
+				
+				if info then return info end;
+			
+				if (action != "unragdoll" and hook.Run("PlayerCanGetUp", action)) then
 					return {text = "Press 'jump' to get up.", percentage = 100}
 				end
 			end

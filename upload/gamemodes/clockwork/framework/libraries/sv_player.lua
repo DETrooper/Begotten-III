@@ -1785,6 +1785,8 @@ function Clockwork.player:UseCharacter(player, characterID)
 					if (fault != nil and fault != true) then
 						return false, fault or "You cannot switch to this character!"
 					end
+					
+					Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:SteamName().." has unloaded the character '"..currentCharacter.name.."'.")
 				end
 
 				Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:SteamName().." has loaded the character '"..character.name.."'.")

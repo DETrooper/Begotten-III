@@ -1482,6 +1482,8 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 							--if (bloodLevel <= self.lethalBloodLoss) then
 								entity:DeathCauseOverride("Bled out in a puddle of their own blood.");
 								entity:Kill();
+								
+								Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, entity:Name().." has bled out!")
 								--entity:TakeDamage(99999, entity, entity);
 								--entity:SetCrouchedWalkSpeed(1);
 							--[[else
