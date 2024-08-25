@@ -123,18 +123,22 @@ if (SERVER) then
 	end
 
 	function ENT:Use(client)
-		local faction = client:GetSharedVar("kinisgerOverride") or client:GetFaction();
-		
-		if faction == "Goreic Warrior" then
-			local subfaction = client:GetSharedVar("kinisgerOverrideSubfaction") or client:GetSubfaction();
+		if self.ironclad then
+			local faction = client:GetSharedVar("kinisgerOverride") or client:GetFaction();
 			
-			if subfaction == "Clan Shagalax" then
-				self:OnUse(client)
+			if faction == "Goreic Warrior" then
+				local subfaction = client:GetSharedVar("kinisgerOverrideSubfaction") or client:GetSubfaction();
+				
+				if subfaction == "Clan Shagalax" then
+					self:OnUse(client)
+				else
+					Schema:EasyText(client, "peru", "Only Clan Shagalax can use firearms!");
+				end
 			else
-				Schema:EasyText(client, "peru", "Only Clan Shagalax can use firearms!");
+				Schema:EasyText(client, "peru", "The turret is locked in place and cannot be budged!");
 			end
 		else
-			Schema:EasyText(client, "peru", "The turret is locked in place and cannot be budged!");
+			self:OnUse(client)
 		end
 	end
 

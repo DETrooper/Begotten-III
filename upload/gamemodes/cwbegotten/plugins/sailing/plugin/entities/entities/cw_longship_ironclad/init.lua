@@ -68,6 +68,7 @@ function ENT:AttachMachinegun()
 		end;
 		
 		self.machinegun = machinegunEnt;
+		machinegunEnt.ironclad = self;
 	end
 	
 	local itemID = self.itemID;

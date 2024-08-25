@@ -20,7 +20,7 @@ ENT.Primary.ReloadTime = 1
 local sndt = {
 	channel = CHAN_WEAPON,
 	volume = 1,
-	soundlevel = 130,
+	soundlevel = 511,
 	pitch = 100,
 }
 
@@ -83,8 +83,9 @@ if (SERVER) then
 
 	function ENT:Use(client)
 		local parent = self:GetParent()
+		
 		if (parent and IsValid(parent)) then
-			parent:OnUse(client)
+			parent:Use(client)
 		end
 	end
 	
