@@ -1940,7 +1940,7 @@ AttackTables.MorningStarAttackTable = {
 };
 
 AttackTables.BoneMaceAttackTable = {
-	["primarydamage"] = 20,
+	["primarydamage"] = 9,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -1948,13 +1948,13 @@ AttackTables.BoneMaceAttackTable = {
 	["altattackpoisedamagemodifier"] = nil,
 	["armorpiercing"] = 50,
 	["altarmorpiercing"] = nil,
-	["poisedamage"] = 25,
+	["poisedamage"] = 15,
 	["stabilitydamage"] = 25,
 	["takeammo"] = 2,
 	["delay"] = 0.8,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 635,
+	["meleerange"] = 570,
 	["punchstrength"] = Angle(0,1,0),
 };
 
