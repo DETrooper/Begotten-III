@@ -12,7 +12,7 @@ Clockwork.kernel:IncludePrefixed("sv_hooks.lua");
 
 function cwMelee:KeyPress(player, key)
 	local bUse = (key == IN_USE)
-	local bAttack2 = (key == IN_ATTACK2)
+	local bAttack2 = (key == IN_ATTACK2);
 
 	if SERVER then
 		if (bUse or bAttack2) then

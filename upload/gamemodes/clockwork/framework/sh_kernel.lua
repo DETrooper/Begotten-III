@@ -1660,11 +1660,11 @@ function Clockwork.kernel:ParseData(text)
 	return config.Parse(text)
 end
 
-function Clockwork.kernel:SetSharedVar(key, val, sendTo)
+function Clockwork.kernel:SetNetVar(key, val, sendTo)
 	return netvars.SetNetVar(key, val, sendTo)
 end
 
-function Clockwork.kernel:GetSharedVar(key, default)
+function Clockwork.kernel:GetNetVar(key, default)
 	return netvars.GetNetVar(key, default)
 end
 

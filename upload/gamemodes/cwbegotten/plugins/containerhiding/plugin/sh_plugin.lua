@@ -48,7 +48,7 @@ end;
 
 -- Called when the player's move data should be manipulated.
 function cwContainerHiding:Move(player, moveData)
-	local hidden = player:GetSharedVar("hidden");
+	local hidden = player:GetNetVar("hidden");
 	
 	if (hidden) then
 		return true;
@@ -79,8 +79,8 @@ local COMMAND = Clockwork.command:New("CharForceOut");
 					if (arguments[2]) then
 						cwContainerHiding:AttemptHide(target, target.hideEntity, false);
 						
-						if (target:GetSharedVar("blackOut") == true) then
-							target:SetSharedVar("blackOut", false);
+						if (target:GetNetVar("blackOut") == true) then
+							target:SetNetVar("blackOut", false);
 						end;
 					else
 						cwContainerHiding:OpenedStorage(target, target.hideEntity);

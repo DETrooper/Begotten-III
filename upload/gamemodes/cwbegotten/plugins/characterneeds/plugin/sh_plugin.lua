@@ -225,7 +225,7 @@ function COMMAND:OnRun(player, arguments)
 			end
 		end
 		
-		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		local playerPos = player:GetPos();
 		
 		--if faction == "Gatekeeper" or faction == "Holy Hierarchy" then

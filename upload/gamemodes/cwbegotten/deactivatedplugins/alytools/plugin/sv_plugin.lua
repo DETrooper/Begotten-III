@@ -21,7 +21,7 @@ function cwAlyTools:SetStatMultiplier(player)
 	player:SetNWInt("meleeStamina", 1000);
 	player:SetNWInt("stability", 1000);
 	player:SetSacramentLevel(40);
-	player:SetSharedVar("level", 40);
+	player:SetNetVar("level", 40);
 end;
 
 -- A function to load all the teleporters.

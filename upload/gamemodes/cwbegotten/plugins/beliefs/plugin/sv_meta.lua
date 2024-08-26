@@ -103,7 +103,7 @@ end
 function playerMeta:ResetBeliefs()
 	self:SetCharacterData("beliefs", {});
 	--self:SetCharacterData("subfaith", nil);
-	self:SetSharedVar("subfaith", nil);
+	self:SetNetVar("subfaith", nil);
 	self.cwCharacter.subfaith = nil;
 	self:SetSacramentLevel(1);
 

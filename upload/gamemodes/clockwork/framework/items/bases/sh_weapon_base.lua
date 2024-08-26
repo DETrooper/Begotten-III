@@ -365,8 +365,8 @@ end;
 function ITEM:OnUse(player, itemEntity, interactItemTable)
 	local faction = player:GetFaction();
 	local subfaction = player:GetSubfaction();
-	local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
-	local kinisgerOverrideSubfaction = player:GetSharedVar("kinisgerOverrideSubfaction");
+	local kinisgerOverride = player:GetNetVar("kinisgerOverride");
+	local kinisgerOverrideSubfaction = player:GetNetVar("kinisgerOverrideSubfaction");
 	
 	if (table.HasValue(self.excludeFactions, kinisgerOverride or faction)) then
 		Schema:EasyText(player, "peru", "You are not the correct faction for this item!")

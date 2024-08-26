@@ -27,7 +27,6 @@ Clockwork.flag:Add("L", "Listener", "Listen in to all radio frequencies, darkwhi
 Clockwork.flag:Add("I", "No Limb Damage", "Take no limb damage.")
 Clockwork.flag:Add("N", "No Character Needs", "Character needs (i.e. hunger) will not affect you.")
 Clockwork.flag:Add("M", "No Pain Sounds", "No pain or death sounds from your character.")
-Clockwork.flag:Add("U", "Clan Crast Flag", "Flag for Clan Crast merchant.")
 
 if (game.GetMap() == "rp_begotten3") then
 	Schema.MapLocations = {

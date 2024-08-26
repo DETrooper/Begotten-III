@@ -116,7 +116,7 @@ function meta:CanRoll()
 	end
 	
 	if Clockwork then
-		if (self:GetSharedVar("tied", 0) ~= 0) then
+		if (self:GetNetVar("tied", 0) ~= 0) then
 			return false;
 		end
 	
@@ -131,9 +131,11 @@ function meta:CanRoll()
 		if cwMedicalSystem then
 			local injuries = cwMedicalSystem:GetInjuries(self);
 			
-			for k, v in pairs (injuries) do
-				if v["broken_bone"] then
-					return false;
+			if injuries then
+				for k, v in pairs(injuries) do
+					if v["broken_bone"] then
+						return false;
+					end
 				end
 			end
 		end

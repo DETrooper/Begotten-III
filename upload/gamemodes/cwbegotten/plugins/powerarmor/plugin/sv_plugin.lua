@@ -171,7 +171,7 @@ function playerMeta:EnterPowerArmor(entity)
 		self:SetCharacterData("powerArmor", entity:GetModel());
 		self.wearingPowerArmor = true;
 		self:SetCharacterData("battery", entity.currentCharge or 0);
-		self:SetSharedVar("battery", math.Round(self:GetCharacterData("battery", 0), 0));
+		self:SetNetVar("battery", math.Round(self:GetCharacterData("battery", 0), 0));
 		
 		self.nextChargeDepleted = CurTime() + 120;
 		
@@ -205,7 +205,7 @@ function playerMeta:ExitPowerArmor()
 		
 		self:SetCharacterData("powerArmor", nil);
 		self:SetCharacterData("battery", 0);
-		self:SetSharedVar("battery", 0);
+		self:SetNetVar("battery", 0);
 		
 		self.wearingPowerArmor = false;
 		

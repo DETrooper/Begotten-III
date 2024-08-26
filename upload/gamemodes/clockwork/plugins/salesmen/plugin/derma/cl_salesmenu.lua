@@ -21,8 +21,9 @@ function PANEL:Init()
 			Clockwork.salesmenu.buyInShipments = nil
 			Clockwork.salesmenu.priceScale = nil
 			Clockwork.salesmenu.factions = nil
+			Clockwork.salesmenu.subfactions = nil
 			Clockwork.salesmenu.buyRate = nil
-			Clockwork.salesmenu.classes = nil
+			--Clockwork.salesmenu.classes = nil
 			Clockwork.salesmenu.entity = nil
 			Clockwork.salesmenu.stock = nil
 			Clockwork.salesmenu.sells = nil
@@ -31,6 +32,7 @@ function PANEL:Init()
 			Clockwork.salesmenu.buys = nil
 			Clockwork.salesmenu.name = nil
 			Clockwork.salesmenu.flags = nil
+			Clockwork.salesmenu.beliefs = nil
 		gui.EnableScreenClicker(false)
 	end
 
@@ -206,8 +208,9 @@ function PANEL:Think()
 			Clockwork.salesmenu.buyInShipments = nil
 			Clockwork.salesmenu.priceScale = nil
 			Clockwork.salesmenu.factions = nil
+			Clockwork.salesmenu.subfactions = nil
 			Clockwork.salesmenu.buyRate = nil
-			Clockwork.salesmenu.classes = nil
+			--Clockwork.salesmenu.classes = nil
 			Clockwork.salesmenu.entity = nil
 			Clockwork.salesmenu.stock = nil
 			Clockwork.salesmenu.sells = nil
@@ -216,6 +219,7 @@ function PANEL:Think()
 			Clockwork.salesmenu.buys = nil
 			Clockwork.salesmenu.name = nil
 			Clockwork.salesmenu.flags = nil
+			Clockwork.salesmenu.beliefs = nil
 		gui.EnableScreenClicker(false)
 	end
 end

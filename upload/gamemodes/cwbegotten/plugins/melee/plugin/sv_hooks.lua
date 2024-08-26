@@ -586,7 +586,7 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 		}
 		
 		local phrase = randomPhrases[math.random(1, #randomPhrases)];
-		local faction = (player:GetSharedVar("kinisgerOverride") or player:GetFaction())
+		local faction = (player:GetNetVar("kinisgerOverride") or player:GetFaction())
 		local pitch = 100;
 		
 		phrase = string.gsub(phrase, "#HIS", gender);
@@ -848,7 +848,7 @@ end
 -- Called when a player's pain sound should be played.
 function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 	if player:Alive() and !Clockwork.player:HasFlags(player, "M") and player:WaterLevel() < 3 then
-		local faction = (player:GetSharedVar("kinisgerOverride") or player:GetFaction())
+		local faction = (player:GetNetVar("kinisgerOverride") or player:GetFaction())
 		local pitch = 100;
 		
 		if IsValid(player.possessor) then
@@ -909,7 +909,7 @@ function GM:PlayerPlayDeathSound(player, gender)
 		return;
 	end
 
-	local faction = (player:GetSharedVar("kinisgerOverride") or player:GetFaction())
+	local faction = (player:GetNetVar("kinisgerOverride") or player:GetFaction())
 	local pitch = 100;
 	
 	if IsValid(player.possessor) then
@@ -971,7 +971,7 @@ function GM:PlayerPlayDeathSound(player, gender)
 	end
 end
 
-function cwMelee:PlayerEnteredDuel(player)
+function cwMelee:PostPlayerEnteredDuel(player)
 	if player.duelData then
 		for i, v in ipairs(player:GetWeaponsEquipped()) do
 			if v.category == "Throwables" then
@@ -986,6 +986,12 @@ function cwMelee:PlayerEnteredDuel(player)
 end
 
 function cwMelee:PlayerExitedDuel(player)
+	for i, v in ipairs(player:GetWeaponsEquipped()) do
+		if v.category == "Throwables" then
+			player:Give(v.weaponClass or v.uniqueID);
+		end
+	end
+
 	if player.duelData then
 		player.duelData.javelins = nil;
 	end

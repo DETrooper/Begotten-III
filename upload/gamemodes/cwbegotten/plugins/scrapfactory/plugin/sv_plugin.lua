@@ -182,7 +182,7 @@ function cwScrapFactory:CheckProcessingCycle()
 					if lastZone == "scrapper" then
 						table.insert(playersPresent, v);
 					
-						if v:GetSharedVar("subfaith") == "Voltism" then
+						if v:GetNetVar("subfaith") == "Voltism" then
 							voltistPresent = true;
 						else
 							local vFaith = v:GetFaith();

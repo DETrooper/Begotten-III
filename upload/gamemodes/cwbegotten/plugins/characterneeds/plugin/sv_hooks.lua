@@ -18,7 +18,7 @@ end;
 	for i = 1, #self.Needs do
 		local need = self.Needs[i];
 		
-		player:SetSharedVar(need, player:GetCharacterData(need));
+		player:SetNetVar(need, player:GetCharacterData(need));
 	end;
 end;]]--
 
@@ -28,7 +28,7 @@ function cwCharacterNeeds:PostPlayerSpawn(player, lightSpawn, changeClass, first
 			local need = self.Needs[i];
 			
 			player:SetCharacterData(need, player:GetCharacterData(need) or 0);
-			player:SetSharedVar(need, player:GetCharacterData(need));
+			player:SetNetVar(need, player:GetCharacterData(need));
 		end
 	end
 end;

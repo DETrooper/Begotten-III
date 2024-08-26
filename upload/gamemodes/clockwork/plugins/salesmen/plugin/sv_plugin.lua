@@ -152,9 +152,10 @@ netstream.Hook("SalesmanAdd", function(player, data)
 			["buyInShipments"] = "boolean",
 			["priceScale"] = "number",
 			["factions"] = "table",
+			["subfactions"] = "table",
 			["physDesc"] = "string",
 			["buyRate"] = "number",
-			["classes"] = "table",
+			--["classes"] = "table",
 			["model"] = "string",
 			["head"] = "string",
 			["sells"] = "table",
@@ -163,7 +164,8 @@ netstream.Hook("SalesmanAdd", function(player, data)
 			["cash"] = "number",
 			["buys"] = "table",
 			["name"] = "string",
-			["flags"] = "string"
+			["flags"] = "string",
+			["beliefs"] = "string",
 		}
 
 		for k, v in pairs(varTypes) do
@@ -226,13 +228,15 @@ netstream.Hook("SalesmanAdd", function(player, data)
 		salesman.cwBuyTab = data.buys
 		salesman.cwSellTab = data.sells
 		salesman.cwTextTab = data.text
-		salesman.cwClasses = data.classes
+		--salesman.cwClasses = data.classes
 		salesman.cwBuyRate = data.buyRate
 		salesman.cwFactions = data.factions
+		salesman.cwSubfactions = data.subfactions
 		salesman.cwPriceScale = data.priceScale
 		salesman.cwBuyInShipments = data.buyInShipments
 		salesman.cwAnimation = player.cwSalesmanAnim
 		salesman.cwFlags = data.flags
+		salesman.cwBeliefs = data.beliefs
 
 		salesman:SetupSalesman(data.name, data.physDesc, player.cwSalesmanAnim, data.showChatBubble)
 
@@ -265,9 +269,10 @@ function cwSalesmen:LoadSalesmen()
 
 		salesman.cwCash = v.cash
 		salesman.cwStock = v.stock
-		salesman.cwClasses = v.classes
+		--salesman.cwClasses = v.classes
 		salesman.cwBuyRate = v.buyRate
 		salesman.cwFactions = v.factions
+		salesman.cwSubfactions = v.subfactions
 		salesman.cwBuyTab = v.buyTab
 		salesman.cwSellTab = v.sellTab
 		salesman.cwTextTab = v.textTab
@@ -275,6 +280,7 @@ function cwSalesmen:LoadSalesmen()
 		salesman.cwBuyInShipments = v.buyInShipments
 		salesman.cwAnimation = v.animation
 		salesman.cwFlags = v.flags
+		salesman.cwBeliefs = v.beliefs
 
 		salesman:SetupSalesman(v.name, v.physDesc, v.animation, v.showChatBubble)
 
@@ -294,17 +300,19 @@ function cwSalesmen:GetTableFromEntity(entity)
 		angles = entity:GetAngles(),
 		buyRate = entity.cwBuyRate,
 		factions = entity.cwFactions,
+		subfactions = entity.cwSubfactions,
 		buyTab = entity.cwBuyTab,
 		sellTab = entity.cwSellTab,
 		textTab = entity.cwTextTab,
-		classes = entity.cwClasses,
+		--classes = entity.cwClasses,
 		position = entity:GetPos(),
 		physDesc = entity:GetNetworkedString("PhysDesc"),
 		animation = entity.cwAnimation,
 		priceScale = entity.cwPriceScale,
 		buyInShipments = entity.cwBuyInShipments,
 		showChatBubble = IsValid(entity:GetChatBubble()),
-		flags = entity.cwFlags
+		flags = entity.cwFlags,
+		beliefs = entity.cwBeliefs
 	}
 end
 

@@ -1731,9 +1731,11 @@ function playerMeta:GetMaxHealth(health)
 	if cwMedicalSystem then
 		local injuries = cwMedicalSystem:GetInjuries(self);
 		
-		for k, v in pairs (injuries) do
-			if v["burn"] then
-				maxHealth = maxHealth - 5;
+		if injuries then
+			for k, v in pairs (injuries) do
+				if v["burn"] then
+					maxHealth = maxHealth - 5;
+				end
 			end
 		end
 	end
@@ -2270,7 +2272,6 @@ end
 
 -- A function to set a shared variable for a player.
 function playerMeta:SetSharedVar(key, value, sharedTable)
-	--print("Sending shared var: "..key);
 	return self:SetNetVar(key, value)
 end
 

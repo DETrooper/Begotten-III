@@ -126,7 +126,7 @@ COMMAND.text = "<string Name> <int Experience>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.access = "s";
 COMMAND.arguments = 2;
-COMMAND.alias = {"CharAddXP", "AddXP", "AddExperience", "PlyAddXP", "PlyAddExperience"};
+COMMAND.alias = {"AddFaith", "GiveFaith", "CharAddXP", "AddXP", "AddExperience", "PlyAddXP", "PlyAddExperience"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -152,6 +152,48 @@ function COMMAND:OnRun(player, arguments)
 end;
 
 COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CharAddExperienceRadius")
+    COMMAND.tip = "Add faith (experience) to all characters within a specific radius.";
+    COMMAND.access = "s";
+    COMMAND.arguments = 2;
+    COMMAND.text = "<int Experience> <int Radius>";
+    COMMAND.alias = {"AddFaithRadius", "GiveFaithRadius", "CharAddXPRadius", "AddXPRadius", "AddExperienceRadius", "PlyAddXPRadius", "PlyAddExperienceRadius"};
+
+    -- Called when the command has been run.
+    function COMMAND:OnRun(player, arguments)
+		local radius = tonumber(arguments[2]);
+		local xp = tonumber(arguments[1]);
+		
+		if !radius then
+			Schema:EasyText(player, "grey", "["..self.name.."] You must specify a valid number for the radius!");
+			
+			return false;
+		end
+		
+		if !xp then
+			Schema:EasyText(player, "grey", "["..self.name.."] You must specify a valid number for the experience!");
+			
+			return false;
+		end
+		
+		local counter = 0;
+		
+        for k, v in pairs(ents.FindInSphere(player:GetPos(), radius)) do
+            if v:IsPlayer() and v:Alive() and !v.cwObserverMode then
+                v:HandleXP(xp);
+				
+				counter = counter + 1;
+            end
+        end
+		
+		if counter > 0 then
+			Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has given "..counter.." characters "..xp.." experience each.");
+		else
+			Schema:EasyText(player, "grey", "["..self.name.."] There were no nearby characters to give experience to!");
+		end
+    end
+COMMAND:Register()
 
 local COMMAND = Clockwork.command:New("CharGiveBelief");
 COMMAND.tip = "Give a player a belief.";
@@ -383,7 +425,7 @@ function COMMAND:OnRun(player, arguments)
 				local message = "\""..table.concat(arguments, " ", 2).."\"";
 				local targetFaith = target:GetFaith();
 				
-				if target:GetSharedVar("kinisgerOverride") == "Goreic Warrior" and target:GetSharedVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
+				if target:GetNetVar("kinisgerOverride") == "Goreic Warrior" and target:GetNetVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
 					targetFaith = "Faith of the Family";
 				end
 
@@ -438,7 +480,7 @@ function COMMAND:OnRun(player, arguments)
 				local message = "\""..table.concat(arguments, " ", 1).."\"";
 				local targetFaith = target:GetFaith();
 				
-				if target:GetSharedVar("kinisgerOverride") == "Goreic Warrior" and target:GetSharedVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
+				if target:GetNetVar("kinisgerOverride") == "Goreic Warrior" and target:GetNetVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
 					targetFaith = "Faith of the Family";
 				end
 
@@ -520,7 +562,7 @@ function COMMAND:OnRun(player, arguments)
 
 				for k, v in pairs (_player.GetAll()) do
 					if v:HasInitialized() and v:Alive() and ((v:GetFaction() == "Children of Satan") or Clockwork.player:HasFlags(v, "L")) then
-						if v:GetSubfaction() == "Kinisger" and v:GetSharedVar("kinisgerOverride") then
+						if v:GetSubfaction() == "Kinisger" and v:GetNetVar("kinisgerOverride") then
 							Clockwork.chatBox:Add(v, player, "darkwhisperglobalkinisger", message);
 						else
 							Clockwork.chatBox:Add(v, player, "darkwhisperglobal", message);
@@ -538,7 +580,7 @@ function COMMAND:OnRun(player, arguments)
 
 				for k, v in pairs (_player.GetAll()) do
 					if v:HasInitialized() and v:Alive() then
-						local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+						local vFaction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 						
 						if ((vFaction == "Goreic Warrior") and (v:GetFaith() == "Faith of the Dark" or v:GetSubfaith() == "Faith of the Sister")) or Clockwork.player:HasFlags(v, "L") then
 							if v:GetSubfaction() == "Kinisger" then
@@ -591,7 +633,7 @@ function COMMAND:OnRun(player, arguments)
 					if v:HasInitialized() and v:Alive() and ((v:GetFaction() == "Children of Satan") or Clockwork.player:HasFlags(v, "L")) then
 						Clockwork.chatBox:SetMultiplier(1.35);
 						
-						if v:GetSubfaction() == "Kinisger" and v:GetSharedVar("kinisgerOverride") then
+						if v:GetSubfaction() == "Kinisger" and v:GetNetVar("kinisgerOverride") then
 							Clockwork.chatBox:Add(v, player, "darkwhisperglobalkinisger", message);
 						else
 							Clockwork.chatBox:Add(v, player, "darkwhisperglobal", message);
@@ -615,7 +657,7 @@ function COMMAND:OnRun(player, arguments)
 
 				for k, v in pairs (_player.GetAll()) do
 					if v:HasInitialized() and v:Alive() then
-						local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+						local vFaction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 						
 						if ((vFaction == "Goreic Warrior") and (v:GetFaith() == "Faith of the Dark" or v:GetSubfaith() == "Faith of the Sister")) or Clockwork.player:HasFlags(v, "L") then
 							Clockwork.chatBox:SetMultiplier(1.35);
@@ -653,7 +695,7 @@ COMMAND.alias = {"DWFK"};
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
 	if player:GetSubfaction() == "Kinisger" then
-		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		
 		if faction ~= "Wanderer" then
 			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
@@ -661,12 +703,12 @@ function COMMAND:OnRun(player, arguments)
 
 				for k, v in pairs (_player.GetAll()) do
 					if v:HasInitialized() and v:Alive() then
-						local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+						local vFaction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 						
 						if (vFaction == faction) and (v:GetFaith() == "Faith of the Dark" or v:GetSubfaith() == "Faith of the Sister") then
 							Clockwork.chatBox:SetMultiplier(1.35);
 							
-							if v:GetSubfaction() == "Kinisger" and v:GetSharedVar("kinisgerOverride") then
+							if v:GetSubfaction() == "Kinisger" and v:GetNetVar("kinisgerOverride") then
 								Clockwork.chatBox:Add(v, player, "darkwhisperglobalkinisger", message)
 							else
 								Clockwork.chatBox:Add(v, player, "darkwhisperglobal", message);
@@ -699,7 +741,7 @@ COMMAND.alias = {"DWFKP"};
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
 	if player:GetSubfaction() == "Kinisger" then
-		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		
 		if faction ~= "Wanderer" then
 			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
@@ -713,12 +755,12 @@ function COMMAND:OnRun(player, arguments)
 
 				for k, v in pairs (_player.GetAll()) do
 					if v:HasInitialized() and v:Alive() then
-						local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+						local vFaction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 						
 						if (vFaction == faction) and (v:GetFaith() == "Faith of the Dark" or v:GetSubfaith() == "Faith of the Sister") then
 							Clockwork.chatBox:SetMultiplier(1.35);
 							
-							if v:GetSubfaction() == "Kinisger" and v:GetSharedVar("kinisgerOverride") then
+							if v:GetSubfaction() == "Kinisger" and v:GetNetVar("kinisgerOverride") then
 								Clockwork.chatBox:Add(v, player, "darkwhisperglobalkinisger", message)
 							else
 								Clockwork.chatBox:Add(v, player, "darkwhisperglobal", message);
@@ -805,8 +847,8 @@ function COMMAND:OnRun(player, arguments)
 			local message = table.concat(arguments, " ", 1)
 			local faith_str = string.upper(string.gsub(faith, "Faith of the ", ""));
 			local ofaithstr = faith_str
-			local marked = player:GetSharedVar("marked");
-			local favored = player:GetSharedVar("favored");
+			local marked = player:GetNetVar("marked");
+			local favored = player:GetNetVar("favored");
 			local markedstr = "";
 			local subfaith = player:GetSubfaith();
 			
@@ -1008,8 +1050,8 @@ local COMMAND = Clockwork.command:New("Warcry");
 			return false;
 		end
 	
-		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
-		local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+		local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+		local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 		local faith = player:GetFaith();
 		local player_has_belief = false;
 		local player_has_daring_trout = player:HasBelief("daring_trout");
@@ -1017,9 +1059,9 @@ local COMMAND = Clockwork.command:New("Warcry");
 		local sanity_debuff;
 		local warcry_beliefs;
 		
-		if player:GetSharedVar("kinisgerOverride") then
-			if player:GetSharedVar("kinisgerOverride") == "Goreic Warrior" then
-				if player:GetSharedVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
+		if player:GetNetVar("kinisgerOverride") then
+			if player:GetNetVar("kinisgerOverride") == "Goreic Warrior" then
+				if player:GetNetVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
 					faith = "Faith of the Family";
 					sanity_debuff = -10;
 					warcry_beliefs = {};
@@ -1066,7 +1108,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 					
 					if (isPlayer and v:GetMoveType() == MOVETYPE_WALK) then
 						local immune = false;
-						local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+						local vFaction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 						
 						if v:GetFaith() ~= faith then
 							-- Kinisgers can twisted warcry if disguised as a Reaver.
@@ -1251,7 +1293,7 @@ function COMMAND:OnRun(player, arguments)
 
 	if !player.nextFlagellate or player.nextFlagellate < curTime then
 		if player:HasBelief("voltism") then
-			if player:GetSharedVar("tied") == 0 and !player:IsRagdolled() then
+			if player:GetNetVar("tied") == 0 and !player:IsRagdolled() then
 				local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
 				local techItemTable;
 				local isTechnocraft = false;
@@ -1337,7 +1379,7 @@ function COMMAND:OnRun(player, arguments)
 	
 	if !player.nextFlagellate or player.nextFlagellate < curTime then
 		if player:HasBelief("flagellant") or player:GetSubfaction() == "Kinisger" then
-			if player:GetSharedVar("tied") == 0 and !player:IsRagdolled() then
+			if player:GetNetVar("tied") == 0 and !player:IsRagdolled() then
 				if player.iFrames then
 					Schema:EasyText(player, "firebrick", "You cannot flagellate while rolling!");
 					return false;
@@ -1363,7 +1405,7 @@ function COMMAND:OnRun(player, arguments)
 								--player:TakeDamage(math.random(5,10));
 								player:Ignite(15);
 								weaponItemTable:SetData("oil", math.Clamp(currentOil - math.random(10, 25), 0, 100));
-								player:SetSharedVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
+								player:SetNetVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
 								player:EmitSound("ambient/fire/gascan_ignite1.wav");
 								
 								Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.." with a lit lantern, dousing themselves with burning oil and bursting into flames!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
@@ -1483,7 +1525,7 @@ COMMAND.arguments = 0;
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
 	if player:HasBelief("sol_orthodoxy") then
-		if player:GetSharedVar("tied") == 0 and !player:IsRagdolled() then
+		if player:GetNetVar("tied") == 0 and !player:IsRagdolled() then
 			player:CommitSuicide()
 		else
 			Schema:EasyText(player, "firebrick", "Why the fuck would commit suicide right now? Fuck you.");

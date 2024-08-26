@@ -52,7 +52,7 @@ function ENT:Use(activator, caller)
 
 	if (caller == self.Gunner) then -- Dismount the activator if he is already gunning the turret
 		if (IsValid(self.Gunner)) then
-			self.Gunner:SetSharedVar("mountedGun", nil);
+			self.Gunner:SetNetVar("mountedGun", nil);
 			self:RemoveGunner();
 		end;
 	elseif (self:IsValidGunner(caller)) then

@@ -191,8 +191,8 @@ end
 function ITEM:OnUse(player, itemEntity)
 	local faction = player:GetFaction();
 	local subfaction = player:GetSubfaction();
-	local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
-	local kinisgerOverrideSubfaction = player:GetSharedVar("kinisgerOverrideSubfaction");
+	local kinisgerOverride = player:GetNetVar("kinisgerOverride");
+	local kinisgerOverrideSubfaction = player:GetNetVar("kinisgerOverrideSubfaction");
 	local suitable_melee;
 
 	if (table.HasValue(self.excludeFactions, kinisgerOverride or faction)) then

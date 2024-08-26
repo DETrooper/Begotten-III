@@ -115,9 +115,9 @@ function cwRecipes:PlayerCanCraft(player, uniqueID, craftAmount)
 	local requiresHeatSource = recipeTable.requiresHeatSource;
 	local requiresSmithy = recipeTable.requiresSmithy;
 	local faction = player:GetFaction();
-	local faith = player:GetSharedVar("faith");
-	local subfaction = player:GetSharedVar("subfaction");
-	local subfaith = player:GetSharedVar("subfaith");
+	local faith = player:GetNetVar("faith");
+	local subfaction = player:GetNetVar("subfaction");
+	local subfaith = player:GetNetVar("subfaith");
 	
 	if Clockwork.player:GetAction(player) or player:IsRagdolled() or !player:Alive() or player.opponent or (cwDueling and cwDueling:PlayerIsInMatchmaking(player)) or player:GetNetVar("tied") != 0 then
 		Schema:EasyText(player, "lightslategrey", "Your character cannot craft at this moment!");

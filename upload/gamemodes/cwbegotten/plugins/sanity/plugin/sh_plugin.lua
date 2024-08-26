@@ -18,7 +18,7 @@ local playerMeta = FindMetaTable("Player");
 
 -- A function to get a player's sanity level.
 function playerMeta:GetSanity()
-	return self:GetSharedVar("sanity");
+	return self:GetNetVar("sanity");
 end;
 
 -- A function to get the player's sanity level.
@@ -48,7 +48,7 @@ function COMMAND:OnRun(player, arguments)
 		end;
 
 		target:SetCharacterData("sanity", amount);
-		target:SetSharedVar("sanity", amount);
+		target:SetNetVar("sanity", amount);
 
 		if (player != target)	then
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set "..target:Name().."'s sanity to "..amount..".");

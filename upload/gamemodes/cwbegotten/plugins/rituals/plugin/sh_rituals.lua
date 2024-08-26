@@ -41,12 +41,12 @@ RITUAL = cwRituals.rituals:New("yellow_banner_of_quelling");
 	RITUAL.experience = 75; -- XP gained from performing the ritual.
 
 	function RITUAL:OnPerformed(player)
-		player:SetSharedVar("yellowBanner", true);
+		player:SetNetVar("yellowBanner", true);
 
 		timer.Create("YellowBannerTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
-				if player:GetSharedVar("yellowBanner", false) then
-					player:GetSharedVar("yellowBanner", false);
+				if player:GetNetVar("yellowBanner", false) then
+					player:GetNetVar("yellowBanner", false);
 
 					Clockwork.hint:Send(player, "The 'Yellow Banner of Quelling' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
@@ -325,7 +325,7 @@ RITUAL = cwRituals.rituals:New("aura_of_the_mother");
 	RITUAL.experience = 75;
 
 	function RITUAL:OnPerformed(player)
-		player:SetSharedVar("auraMotherActive", true);
+		player:SetNetVar("auraMotherActive", true);
 	
 		timer.Create("auraMotherTimer_"..player:EntIndex(), 5, 120, function() 
 			if IsValid(player) then
@@ -340,7 +340,7 @@ RITUAL = cwRituals.rituals:New("aura_of_the_mother");
 		
 		timer.Simple(600, function()
 			if IsValid(player) then
-				player:SetSharedVar("auraMotherActive", false);
+				player:SetNetVar("auraMotherActive", false);
 			end
 		end);
 	end;
@@ -1027,7 +1027,7 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil");
 								if !cwRituals:PlayerMeetsRitualItemRequirements(player, ritualTable, ritualTable.requirements, true) then return end;
 								
 								target:SetCharacterData("markedBySatanist", true);
-								target:SetSharedVar("markedBySatanist", true);
+								target:SetNetVar("markedBySatanist", true);
 								
 								Schema:EasyText(player, "maroon", target:Name().." has been marked for death.");
 								Schema:EasyText(GetAdmins(), "tomato", target:Name().." has been marked for death by "..player:Name().."!");
@@ -1094,7 +1094,7 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil_target");
 								if !cwRituals:PlayerMeetsRitualItemRequirements(player, ritualTable, ritualTable.requirements, true) then return end;
 							
 								target:SetCharacterData("markedBySatanist", true);
-								target:SetSharedVar("markedBySatanist", true);
+								target:SetNetVar("markedBySatanist", true);
 								
 								Schema:EasyText(player, "maroon", target:Name().." has been marked for death.");
 								Schema:EasyText(GetAdmins(), "tomato", target:Name().." has been marked for death by "..player:Name().."!");
@@ -1255,7 +1255,7 @@ RITUAL = cwRituals.rituals:New("regrowth");
 		player:SetNeed("hunger", 0);
 		player:SetNeed("corruption", 0);
 		player:SetNeed("sleep", 0);
-		player:SetSharedVar("sanity", 100);
+		player:SetNetVar("sanity", 100);
 		player:SetCharacterData("sanity", 100);
 		player:SetCharacterData("Stamina", max_stamina);
 		player:SetNWInt("Stamina", max_stamina);
@@ -1331,7 +1331,7 @@ RITUAL = cwRituals.rituals:New("regrowth_target");
 					target:SetNeed("hunger", 0);
 					target:SetNeed("corruption", 0);
 					target:SetNeed("sleep", 0);
-					target:SetSharedVar("sanity", 100);
+					target:SetNetVar("sanity", 100);
 					target:SetCharacterData("sanity", 100);
 					target:SetCharacterData("Stamina", max_stamina);
 					target:SetNWInt("Stamina", max_stamina);
@@ -1375,12 +1375,12 @@ RITUAL = cwRituals.rituals:New("aura_of_powderheel");
 	RITUAL.experience = 75; -- XP gained from performing the ritual.
 
 	function RITUAL:OnPerformed(player)
-		player:SetSharedVar("powderheelActive", true);
+		player:SetNetVar("powderheelActive", true);
 
 		timer.Create("PowderheelTimer_"..player:EntIndex(), 600, 1, function()
 			if IsValid(player) then
-				if player:GetSharedVar("powderheelActive") then
-					player:SetSharedVar("powderheelActive", false);
+				if player:GetNetVar("powderheelActive") then
+					player:SetNetVar("powderheelActive", false);
 
 					Clockwork.hint:Send(player, "The 'Aura of Powderheel' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
@@ -1586,13 +1586,13 @@ RITUAL = cwRituals.rituals:New("soulscorch");
 
 	function RITUAL:OnPerformed(player)
 		player.soulscorchActive = true;
-		player:SetSharedVar("soulscorchActive", true);
+		player:SetNetVar("soulscorchActive", true);
 
 		timer.Create("SoulScorchTimer_"..player:EntIndex(), 300, 1, function()
 			if IsValid(player) then
 				if player.soulscorchActive then
 					player.soulscorchActive = nil;
-					player:SetSharedVar("soulscorchActive", false);
+					player:SetNetVar("soulscorchActive", false);
 
 					Clockwork.hint:Send(player, "The 'Soulscorch' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
@@ -1662,12 +1662,12 @@ RITUAL = cwRituals.rituals:New("enlightenment");
 	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
-		player:SetSharedVar("enlightenmentActive", true);
+		player:SetNetVar("enlightenmentActive", true);
 		
 		timer.Create("EnlightenmentTimer_"..player:EntIndex(), 900, 1, function()
 			if IsValid(player) then
-				if player:GetSharedVar("enlightenmentActive", false) then
-					player:SetSharedVar("enlightenmentActive", false);
+				if player:GetNetVar("enlightenmentActive", false) then
+					player:SetNetVar("enlightenmentActive", false);
 					
 					Clockwork.hint:Send(player, "The 'Enlightenment' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
@@ -2074,7 +2074,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 						if v:GetFaith() == playerFaith then
 							entity:AddEntityRelationship(v, D_LI, 99);
 						else					
-							local faction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+							local faction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 							
 							if faction == "Goreic Warrior" then
 								entity:AddEntityRelationship(v, D_LI, 99);
@@ -2172,7 +2172,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 						if v:GetFaith() == playerFaith then
 							entity:AddEntityRelationship(v, D_LI, 99);
 						else					
-							local faction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+							local faction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 							
 							if faction == "Goreic Warrior" then
 								entity:AddEntityRelationship(v, D_LI, 99);

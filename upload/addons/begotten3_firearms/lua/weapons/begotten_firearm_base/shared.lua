@@ -279,7 +279,7 @@ function SWEP:AdjustFireBegotten()
 							local ownerPos = self.Owner:GetPos();
 							
 							for i, v in ipairs(players) do
-								if v:GetSharedVar("powderheelActive") then
+								if v:GetNetVar("powderheelActive") then
 									if v:GetPos():Distance(ownerPos) <= config.Get("talk_radius"):Get() then
 										forceJam = true;
 										
@@ -291,8 +291,8 @@ function SWEP:AdjustFireBegotten()
 					
 						if !self.noJam or forceJam then
 							local hasPistolier = cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("pistolier");
-							local hasFavored = self.Owner:GetSharedVar("favored");
-							local hasMarked = self.Owner:GetSharedVar("marked");
+							local hasFavored = self.Owner:GetNetVar("favored");
+							local hasMarked = self.Owner:GetNetVar("marked");
 							
 							local misfireChance = self.MisfireChance;
 							local itemCondition = itemTable:GetCondition();
@@ -1147,11 +1147,12 @@ Think
 function SWEP:Think()
 	if SERVER then
 		local curTime = CurTime();
+		local player = self.Owner;
 		
 		if !self.notPowder and (!self.waterCheck or self.waterCheck <= curTime) then
 			self.waterCheck = curTime + 0.5;
 			
-			if IsValid(self.Owner) then
+			if IsValid(player) and player:IsPlayer() then
 				if self.Owner:WaterLevel() >= 3 then
 					if !self.Owner.cwObserverMode then
 						if Clockwork then
@@ -1170,6 +1171,19 @@ function SWEP:Think()
 					end
 				end
 			end
+		end
+		
+		-- Last ditch effort to fix the clientside itemtable desync.
+		if !self.nextItemSend or self.nextItemSend <= curTime then
+			if IsValid(player) and player:IsPlayer() then
+				local itemTable = item.GetByWeapon(self);
+					
+				if itemTable then
+					item.SendToPlayer(player, itemTable);
+				end
+			end
+			
+			self.nextItemSend = curTime + math.random(1, 5);
 		end
 	--elseif CLIENT then
 		--self:IronSight();

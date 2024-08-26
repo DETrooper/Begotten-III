@@ -333,6 +333,8 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 		if IsValid(player1) and player1:Alive() and IsValid(player2) and player2:Alive() then
 			hook.Run("PlayerEnteredDuel", player1, random_arena, self.arenas[random_arena].spawnPosition1, self.arenas[random_arena].spawnAngles1);
 			hook.Run("PlayerEnteredDuel", player2, random_arena, self.arenas[random_arena].spawnPosition2, self.arenas[random_arena].spawnAngles2);
+			hook.Run("PostPlayerEnteredDuel", player1);
+			hook.Run("PostPlayerEnteredDuel", player2);
 			
 			timer.Create("DuelTimer_"..random_arena, self.arenas[random_arena].timeLimit, 1, function()
 				if IsValid(player1) and IsValid(player2) then
@@ -545,10 +547,10 @@ function cwDueling:DuelCompleted(winner, loser)
 
 				if cwBeliefs then
 					local level = winner:GetCharacterData("level", 1);
-					local kinisgerOverride = winner:GetSharedVar("kinisgerOverride");
+					local kinisgerOverride = winner:GetNetVar("kinisgerOverride");
 					
 					if winner:GetSubfaction() == "Kinisger" and kinisgerOverride then
-						if kinisgerOverride ~= "Children of Satan" and winner:GetSharedVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
+						if kinisgerOverride ~= "Children of Satan" and winner:GetNetVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
 							if level > cwBeliefs.sacramentLevelCap and winner:HasBelief("sorcerer") then
 								if winner:HasBelief("loremaster") then
 									if level > (cwBeliefs.sacramentLevelCap + 10) then
@@ -601,10 +603,10 @@ function cwDueling:DuelCompleted(winner, loser)
 				
 				if cwBeliefs then
 					local level = winner:GetCharacterData("level", 1);
-					local kinisgerOverride = winner:GetSharedVar("kinisgerOverride");
+					local kinisgerOverride = winner:GetNetVar("kinisgerOverride");
 					
 					if winner:GetSubfaction() == "Kinisger" and kinisgerOverride then
-						if kinisgerOverride ~= "Children of Satan" and winner:GetSharedVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
+						if kinisgerOverride ~= "Children of Satan" and winner:GetNetVar("kinisgerOverrideSubfaction") ~= "Clan Reaver" then
 							if level > cwBeliefs.sacramentLevelCap and winner:HasBelief("sorcerer") then
 								if winner:HasBelief("loremaster") then
 									if level > (cwBeliefs.sacramentLevelCap + 10) then

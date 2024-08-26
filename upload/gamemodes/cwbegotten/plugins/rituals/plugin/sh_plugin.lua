@@ -29,7 +29,7 @@ local COMMAND = Clockwork.command:New("CharMark");
 				Schema:EasyText(player, "darkgrey", target:Name().." is already marked for death!");
 			else
 				target:SetCharacterData("markedBySatanist", true);
-				target:SetSharedVar("markedBySatanist", true);
+				target:SetNetVar("markedBySatanist", true);
 				
 				Schema:EasyText(GetAdmins(), "cornflowerblue", target:Name().." has been manually marked for death by "..player:Name());
 			end
@@ -53,7 +53,7 @@ local COMMAND = Clockwork.command:New("CharUnMark");
 		if (target) then
 			if target:GetCharacterData("markedBySatanist") == true then
 				target:SetCharacterData("markedBySatanist", false);
-				target:SetSharedVar("markedBySatanist", false);
+				target:SetNetVar("markedBySatanist", false);
 				
 				Schema:EasyText(GetAdmins(), "cornflowerblue", target:Name().." has been manually unmarked for death by "..player:Name());
 			else

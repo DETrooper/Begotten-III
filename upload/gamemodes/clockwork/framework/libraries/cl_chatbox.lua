@@ -452,9 +452,9 @@ function Clockwork.chatBox:Decode(speaker, name, text, data, class, multiplier)
 					focusedOn = true;
 				end;
 				
-				local faction = speaker:GetSharedVar("kinisgerOverride") or speaker:GetFaction();
+				local faction = speaker:GetNetVar("kinisgerOverride") or speaker:GetFaction();
 
-				if speaker:GetSharedVar("beliefFont") == "Voltism" then
+				if speaker:GetNetVar("beliefFont") == "Voltism" then
 					fontOverride = "Voltism";
 				elseif faction == "Goreic Warrior" then
 					fontOverride = "Gore";

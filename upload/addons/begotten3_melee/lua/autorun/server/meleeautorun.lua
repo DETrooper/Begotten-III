@@ -241,6 +241,8 @@ local function Guarding(ent, dmginfo)
 		return;
 	end;
 	
+	print(dmginfo:GetAttacker());
+	
 	if ent:Alive() then
 		local wep = ent:GetActiveWeapon()
 		--local attacksoundtable = GetSoundTable(wep.AttackSoundTable)
@@ -970,12 +972,14 @@ local function Guarding(ent, dmginfo)
 						if cwMedicalSystem then
 							local injuries = cwMedicalSystem:GetInjuries(ent);
 							
-							if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-								blockamount = blockamount + (blocktable["guardblockamount"] * 2);
-							end
-							
-							if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-								blockamount = blockamount + (blocktable["guardblockamount"] * 2);
+							if injuries then
+								if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+									blockamount = blockamount + (blocktable["guardblockamount"] * 2);
+								end
+								
+								if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+									blockamount = blockamount + (blocktable["guardblockamount"] * 2);
+								end
 							end
 						end
 						
@@ -1471,12 +1475,14 @@ local function UpdateWeaponRaised(player, activeWeapon, bIsRaised, curTime)
 								if cwMedicalSystem then
 									local injuries = cwMedicalSystem:GetInjuries(player);
 									
-									if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-										guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
-									end
-									
-									if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-										guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+									if injuries then
+										if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+											guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+										end
+										
+										if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+											guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+										end
 									end
 								end
 								

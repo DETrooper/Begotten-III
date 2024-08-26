@@ -319,7 +319,7 @@ function SWEP:PrimaryAttack()
 												local guardblockamount = blockTable["guardblockamount"];
 												
 												if cwMedicalSystem then
-													local injuries = {};
+													local injuries;
 													
 													if SERVER then
 														injuries = cwMedicalSystem:GetInjuries(owner);
@@ -327,12 +327,14 @@ function SWEP:PrimaryAttack()
 														injuries = Clockwork.Client.cwInjuries;
 													end
 													
-													if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-														guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
-													end
-													
-													if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-														guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+													if injuries then
+														if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+														end
+														
+														if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+														end
 													end
 												end
 												
@@ -493,7 +495,7 @@ function SWEP:PrimaryAttack()
 													local guardblockamount = blockTable["guardblockamount"];
 													
 													if cwMedicalSystem then
-														local injuries = {};
+														local injuries;
 														
 														if SERVER then
 															injuries = cwMedicalSystem:GetInjuries(owner);
@@ -501,12 +503,14 @@ function SWEP:PrimaryAttack()
 															injuries = Clockwork.Client.cwInjuries;
 														end
 														
-														if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
-														end
-														
-														if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+														if injuries then
+															if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+																guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+															end
+															
+															if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+																guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+															end
 														end
 													end
 													
@@ -545,7 +549,7 @@ function SWEP:PrimaryAttack()
 		end
 		
 		if cwMedicalSystem then
-			local injuries = {};
+			local injuries;
 			
 			if SERVER then
 				injuries = cwMedicalSystem:GetInjuries(owner);
@@ -553,12 +557,14 @@ function SWEP:PrimaryAttack()
 				injuries = Clockwork.Client.cwInjuries;
 			end
 			
-			if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-				attackCost = attackCost + (attacktable["takeammo"] * 2);
-			end
-			
-			if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-				attackCost = attackCost + (attacktable["takeammo"] * 2);
+			if injuries then
+				if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+					attackCost = attackCost + (attacktable["takeammo"] * 2);
+				end
+				
+				if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+					attackCost = attackCost + (attacktable["takeammo"] * 2);
+				end
 			end
 		end
 		
@@ -738,7 +744,7 @@ function SWEP:SecondaryAttack()
 		local parry_cost = blocktable["parrytakestamina"];
 		
 		if cwMedicalSystem then
-			local injuries = {};
+			local injuries;
 			
 			if SERVER then
 				injuries = cwMedicalSystem:GetInjuries(ply);
@@ -746,12 +752,14 @@ function SWEP:SecondaryAttack()
 				injuries = Clockwork.Client.cwInjuries;
 			end
 			
-			if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-				parry_cost = parry_cost + (blocktable["parrytakestamina"] * 2);
-			end
-			
-			if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-				parry_cost = parry_cost + (blocktable["parrytakestamina"] * 2);
+			if injuries then
+				if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+					parry_cost = parry_cost + (blocktable["parrytakestamina"] * 2);
+				end
+				
+				if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+					parry_cost = parry_cost + (blocktable["parrytakestamina"] * 2);
+				end
 			end
 		end
 		
@@ -814,7 +822,7 @@ function SWEP:SecondaryAttack()
 										local guardblockamount = blockTable["guardblockamount"];
 										
 										if cwMedicalSystem then
-											local injuries = {};
+											local injuries;
 											
 											if SERVER then
 												injuries = cwMedicalSystem:GetInjuries(ply);
@@ -822,12 +830,14 @@ function SWEP:SecondaryAttack()
 												injuries = Clockwork.Client.cwInjuries;
 											end
 											
-											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
-											end
-											
-											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+											if injuries then
+												if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+													guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+												end
+												
+												if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+													guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+												end
 											end
 										end
 										
@@ -869,7 +879,7 @@ function SWEP:SecondaryAttack()
 										local guardblockamount = blockTable["guardblockamount"];
 										
 										if cwMedicalSystem then
-											local injuries = {};
+											local injuries;
 											
 											if SERVER then
 												injuries = cwMedicalSystem:GetInjuries(ply);
@@ -877,12 +887,14 @@ function SWEP:SecondaryAttack()
 												injuries = Clockwork.Client.cwInjuries;
 											end
 											
-											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
-											end
-											
-											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+											if injuries then
+												if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+													guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+												end
+												
+												if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+													guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
+												end
 											end
 										end
 													

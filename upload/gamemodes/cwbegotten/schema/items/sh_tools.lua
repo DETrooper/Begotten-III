@@ -328,7 +328,7 @@ local ITEM = Clockwork.item:New();
 			
 			if (target) then
 				if (!target:HasGodMode() and !target.cwObserverMode and !target.possessor) then
-					if (target:GetSharedVar("tied") == 0) then
+					if (target:GetNetVar("tied") == 0) then
 						if (target:GetShootPos():Distance( player:GetShootPos() ) <= 192) then
 							if (target:GetAimVector():DotProduct( player:GetAimVector() ) > 0 or (target:IsRagdolled() and !trace.Entity.cwIsBelongings)) then
 								local faction = player:GetFaction();
@@ -348,7 +348,7 @@ local ITEM = Clockwork.item:New();
 								Clockwork.player:SetAction(player, "tie", tieTime);
 								
 								Clockwork.player:EntityConditionTimer(player, target, trace.Entity, tieTime, 192, function()
-									if (player:Alive() and !player:IsRagdolled() and target:GetSharedVar("tied") == 0 and !target.cwObserverMode and !target.possessor 
+									if (player:Alive() and !player:IsRagdolled() and target:GetNetVar("tied") == 0 and !target.cwObserverMode and !target.possessor 
 									and (target:GetAimVector():DotProduct(player:GetAimVector()) > 0 or (target:IsRagdolled() and !trace.Entity.cwIsBelongings))) then
 										return true;
 									end;
@@ -692,7 +692,7 @@ local ITEM = Clockwork.item:New();
 			local currentCharge = player:GetCharacterData("battery", 0);
 		
 			player:SetCharacterData("battery", math.Clamp(currentCharge + 75, 0, 100));
-			player:SetSharedVar("battery", math.Round(player:GetCharacterData("battery", 0), 0));
+			player:SetNetVar("battery", math.Round(player:GetCharacterData("battery", 0), 0));
 			
 			player.nextChargeDepleted = CurTime() + 120;
 		else
@@ -724,7 +724,7 @@ local ITEM = Clockwork.item:New();
 			if !player.nextWarHorn or player.nextWarHorn <= curTime then
 				player.nextWarHorn = curTime + 5;
 				
-				local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+				local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 				local playerPos = player:GetPos();
 				local radius = Clockwork.config:Get("talk_radius"):Get() * 4;
 			

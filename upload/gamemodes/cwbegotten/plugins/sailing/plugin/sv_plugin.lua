@@ -536,7 +536,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 							timer.Simple(0.2, function()
 								if IsValid(player) then
 									if (!player.cwObserverMode) then
-										player:SetSharedVar("blackOut", true);
+										player:SetNetVar("blackOut", true);
 										
 										--[[if !player:IsRagdolled() then
 											player:Spawn();
@@ -564,7 +564,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 												
 												player:SetEyeAngles(Angle(playerEyeAngles.x, playerEyeAngles.y + combined_y, playerEyeAngles.z));
 												player:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 5, 0);
-												player:SetSharedVar("blackOut", false);
+												player:SetNetVar("blackOut", false);
 											end
 										end);
 									end
@@ -639,7 +639,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 
 						if IsValid(alarm) and !alarm:GetNWBool("broken") then
 							for i, v in ipairs(_player.GetAll()) do
-								local faction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+								local faction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 								
 								if (faction == "Gatekeeper" or faction == "Holy Hierarchy") and !v.cwObserverMode and v:GetPos():WithinAABox(Vector(9422, 11862, -1210), Vector(10055, 10389, -770)) then
 									timer.Simple(math.random(5, 10), function()
@@ -938,7 +938,7 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 				local activeWeapon = player:GetActiveWeapon();
 				
 				if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
-					local oil = player:GetSharedVar("oil", 0);
+					local oil = player:GetNetVar("oil", 0);
 				
 					--if oil >= 75 then
 					if oil >= 1 and player:IsWeaponRaised(activeWeapon) then
@@ -968,7 +968,7 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 										local activeWeapon = player:GetActiveWeapon();
 										
 										if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
-											local oil = player:GetSharedVar("oil", 0);
+											local oil = player:GetNetVar("oil", 0);
 											
 											--if oil >= 75 then
 											if oil >= 1 and player:IsWeaponRaised(activeWeapon) then
@@ -999,7 +999,7 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 												
 												if weaponItemTable then
 													weaponItemTable:SetData("oil", math.Clamp(oil - 75, 0, 100));
-													player:SetSharedVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
+													player:SetNetVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
 												end]]--
 												
 												if !entity.health then
@@ -1206,7 +1206,7 @@ concommand.Add("cw_MoveShipGoreForest", function(player, cmd, args)
 		if (entity:GetClass() == "cw_longship" or entity:GetClass() == "cw_longship_ironclad") then
 			if !entity.destination then
 				if !entity.ignited then
-					if player:GetFaction() == "Goreic Warrior" or player:GetSharedVar("kinisgerOverride") == "Goreic Warrior" or player:IsAdmin() then
+					if player:GetFaction() == "Goreic Warrior" or player:GetNetVar("kinisgerOverride") == "Goreic Warrior" or player:IsAdmin() then
 						if IsValid(entity.owner) then
 							if entity.owner == player then
 								cwSailing:BeginSailing(entity, "docks", player);
@@ -1232,7 +1232,7 @@ concommand.Add("cw_MoveShipWasteland", function(player, cmd, args)
 		if (entity:GetClass() == "cw_longship" or entity:GetClass() == "cw_longship_ironclad") then
 			if !entity.destination then
 				if !entity.ignited then
-					if player:GetFaction() == "Goreic Warrior" or player:GetSharedVar("kinisgerOverride") == "Goreic Warrior" or player:IsAdmin() then
+					if player:GetFaction() == "Goreic Warrior" or player:GetNetVar("kinisgerOverride") == "Goreic Warrior" or player:IsAdmin() then
 						if IsValid(entity.owner) then
 							if entity.owner == player then
 								cwSailing:BeginSailing(entity, "wasteland", player);
@@ -1259,7 +1259,7 @@ concommand.Add("cw_MoveShipLava", function(player, cmd, args)
 			if entity.enchantment then
 				if !entity.destination then
 					if !entity.ignited then
-						if player:GetFaction() == "Goreic Warrior" or player:GetSharedVar("kinisgerOverride") == "Goreic Warrior" or player:IsAdmin() then
+						if player:GetFaction() == "Goreic Warrior" or player:GetNetVar("kinisgerOverride") == "Goreic Warrior" or player:IsAdmin() then
 							if IsValid(entity.owner) then
 								if entity.owner == player then
 									cwSailing:BeginSailing(entity, "wastelandlava", player);
@@ -1289,8 +1289,8 @@ concommand.Add("cw_MoveShipHell", function(player, cmd, args)
 			if entity.enchantment then
 				if cwSailing.hellSailingEnabled then
 					if !entity.destination then
-						if !entity.ingnited then
-							if player:GetFaction() == "Goreic Warrior" or player:GetSharedVar("kinisgerOverride") == "Goreic Warrior" or player:IsAdmin() then
+						if !entity.ignited then
+							if player:GetFaction() == "Goreic Warrior" or player:GetNetVar("kinisgerOverride") == "Goreic Warrior" or player:IsAdmin() then
 								if IsValid(entity.owner) then
 									if entity.owner == player then
 										cwSailing:BeginSailing(entity, "hell", player);
@@ -1317,7 +1317,7 @@ concommand.Add("cw_MoveShipHell", function(player, cmd, args)
 end);
 
 concommand.Add("cw_CargoHold", function(player, cmd, args)
-	if player:IsAdmin() or player:GetFaction() == "Goreic Warrior" or player:GetSharedVar("kinisgerOverride") == "Goreic Warrior" then
+	if player:IsAdmin() or player:GetFaction() == "Goreic Warrior" or player:GetNetVar("kinisgerOverride") == "Goreic Warrior" then
 		local trace = player:GetEyeTrace();
 
 		if (trace.Entity) then

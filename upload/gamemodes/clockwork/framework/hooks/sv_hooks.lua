@@ -219,9 +219,9 @@ function GM:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 		plyTab.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
 		plyTab.maxWeight = maxWeight;
 		
-		player:SetNetVar("InvWeight", math.ceil(infoTable.inventoryWeight))
-		player:SetNetVar("InvSpace", math.ceil(infoTable.inventorySpace))
-		--player:SetNetVar("Wages", math.ceil(infoTable.wages or 0))
+		player:SetLocalVar("InvWeight", math.ceil(infoTable.inventoryWeight))
+		player:SetLocalVar("InvSpace", math.ceil(infoTable.inventorySpace))
+		--player:SetLocalVar("Wages", math.ceil(infoTable.wages or 0))
 		
 		plyTab.nextInvThink = curTime + 2;
 	end
@@ -1075,11 +1075,11 @@ function GM:PlayerSetHandsModel(player, entity)
 				model = "models/begotten/"..clothesItem.group.."_"..string.lower(player:GetGender())..".mdl";
 			end
 		else
-			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local factionTable = Clockwork.faction:FindByID(faction);
 			
 			if factionTable then
-				local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+				local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 				
 				if subfaction and factionTable.subfactions then
 					for k, v in pairs(factionTable.subfactions) do
@@ -3362,8 +3362,8 @@ end
 function GM:PlayerCharacterLoaded(player)
 	local plyTab = player:GetTable();
 	
-	player:SetNetVar("InvWeight", config.Get("default_inv_weight"):Get())
-	player:SetNetVar("InvSpace", config.Get("default_inv_space"):Get())
+	player:SetLocalVar("InvWeight", config.Get("default_inv_weight"):Get())
+	player:SetLocalVar("InvSpace", config.Get("default_inv_space"):Get())
 	plyTab.cwCharLoadedTime = CurTime()
 	plyTab.cwCrouchedSpeed = config.Get("crouched_speed"):Get()
 	plyTab.cwInitialized = true
@@ -3662,7 +3662,7 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 		end
 		
 		player:SetCharacterData("Cash", 0, true);
-		player:SetSharedVar("Cash", 0);]]--
+		player:SetNetVar("Cash", 0);]]--
 		
 		if (IsValid(inflictor) and inflictor:GetClass() == "prop_combine_ball") then
 			if (damageInfo) then
@@ -3683,7 +3683,7 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 		if (attacker:IsPlayer() and damageInfo) then
 			local weapon = attacker:GetActiveWeapon();
 			
-			if IsValid(inflictor) and (inflictor:IsWeapon() or inflictor.isJavelin) then
+			if IsValid(inflictor) --[[and (inflictor:IsWeapon() or inflictor.isJavelin)]] then
 				if inflictor.GetPrintName then
 					inflictor = inflictor:GetPrintName();
 				end
@@ -4063,7 +4063,7 @@ function GM:EntityTakeDamage(entity, damageInfo)
 							if damageInfo:IsDamageType(DMG_POISON) then
 								Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().."'s poison, leaving them at "..player:Health().." health"..armor)
 							else
-								if IsValid(inflictor) and (inflictor:IsWeapon() or inflictor.isJavelin) then	
+								if IsValid(inflictor) --[[and (inflictor:IsWeapon() or inflictor.isJavelin)]] then	
 									inflictor = inflictor.PrintName or inflictor:GetClass();
 								else
 									local activeWeapon = attacker:GetActiveWeapon();
@@ -4141,7 +4141,7 @@ function GM:EntityTakeDamage(entity, damageInfo)
 						if damageInfo:IsDamageType(DMG_POISON) then
 							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().."'s poison, leaving them at "..player:Health().." health"..armor)
 						else
-							if IsValid(inflictor) and (inflictor:IsWeapon() or inflictor.isJavelin) then	
+							if IsValid(inflictor) --[[and (inflictor:IsWeapon() or inflictor.isJavelin)]] then	
 								inflictor = inflictor.PrintName or inflictor:GetClass();
 							else
 								local activeWeapon = attacker:GetActiveWeapon();

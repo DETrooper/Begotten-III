@@ -24,7 +24,7 @@ FOOD_EMPTY = 10;
 
 -- Called when the player's move data should be manipulated.
 --function cwCooking:Move(player, moveData)
-	--[[local hidden = player:GetSharedVar("hidden");
+	--[[local hidden = player:GetNetVar("hidden");
 	
 	if (hidden) then
 		return true;

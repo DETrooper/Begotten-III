@@ -465,7 +465,7 @@ Clockwork.kernel:AddESPItem("faith", {
 	color = Color(150, 150, 150),
 	priority = 5,
 	NameFormat = function(self, tab, player)
-		local faith = player:GetSharedVar("Faith", "N/A");
+		local faith = player:GetNetVar("Faith", "N/A");
 		local color;
 		
 		if (!faith) then
@@ -489,7 +489,7 @@ Clockwork.kernel:AddESPItem("subfaction", {
 	color = Color(45, 115, 145),
 	priority = 6,
 	NameFormat = function(self, tab, player)
-		local subfaction = player:GetSharedVar("subfaction", "N/A");
+		local subfaction = player:GetNetVar("subfaction", "N/A");
 			if (!subfaction) then
 				return;
 			end;
@@ -654,8 +654,8 @@ local cwClient = Clockwork.Client;
 				if (isfunction(var)) then
 					var = var(v);
 				elseif (isstring(var)) then
-					if (v:GetSharedVar(var)) then
-						var = v:GetSharedVar(var);
+					if (v:GetNetVar(var)) then
+						var = v:GetNetVar(var);
 					elseif (v:GetNWInt(var, false) != false) then
 						var = v:GetNWInt(var);
 					end;
@@ -804,8 +804,8 @@ function Clockwork.kernel:DrawAdminESP()
 					if (isfunction(var)) then
 						var = var(player);
 					elseif (isstring(var)) then
-						if (player:GetSharedVar(var)) then
-							var = player:GetSharedVar(var);
+						if (player:GetNetVar(var)) then
+							var = player:GetNetVar(var);
 						elseif (player:GetNWInt(var, false) != false) then
 							var = player:GetNWInt(var);
 						end;
@@ -824,8 +824,8 @@ function Clockwork.kernel:DrawAdminESP()
 					if (isfunction(max)) then
 						max = max(player);
 					elseif (isstring(max)) then
-						if (player:GetSharedVar(max)) then
-							max = player:GetSharedVar(max);
+						if (player:GetNetVar(max)) then
+							max = player:GetNetVar(max);
 						elseif (player:GetNWInt(max, false) != false) then
 							max = player:GetNWInt(max);
 						end;

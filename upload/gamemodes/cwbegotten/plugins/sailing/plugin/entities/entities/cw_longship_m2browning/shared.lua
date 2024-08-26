@@ -17,21 +17,6 @@ ENT.Primary.Sound = Sound("Mounted_M2.Single")
 ENT.Primary.Clip = 100
 ENT.Primary.ReloadTime = 1
 
-local sndt = {
-	channel = CHAN_WEAPON,
-	volume = 1,
-	soundlevel = 511,
-	pitch = 100,
-}
-
-sndt.name = "Mounted_M2.Single"
-sndt.sound = {
-	"weapons/ironclad50/50-1.wav",
-	"weapons/ironclad50/50-2.wav",
-	"weapons/ironclad50/50-3.wav",
-}
-sound.Add( sndt )
-
 function ENT:GetShootPos()
 	local pos, ang = self:GetPos(), self:GetAngles()
 	local modPos = Vector(-39, 0, 5)
@@ -102,7 +87,7 @@ if (SERVER) then
 			filter:AddAllPlayers();
 		end
 		
-		self:EmitSound(self.Primary.Sound, 511, math.random(95, 102), 1, CHAN_WEAPON, 0, 0, filter);
+		self:EmitSound("weapons/ironclad50/50-"..tostring(math.random(1, 3))..".wav", 511, math.random(95, 102), 1, CHAN_WEAPON, 0, 0, filter);
 
 		self:SetDTInt(0, self:GetDTInt(0) - 1) 
 		if (self:GetDTInt(0) == 0) then
@@ -131,6 +116,7 @@ if (SERVER) then
 		bullet.TracerName = "Tracer"
 		bullet.Force  = 10
 		bullet.Damage = self.Primary.Damage  
+		bullet.Attacker = self:GetParent().Owner
 
 		self:FireBullets(bullet)  
 		self.spread = self.spread + .001
@@ -155,7 +141,7 @@ if (SERVER) then
 			self:SetBodygroup(2, 0)
 			self:SetBodygroup(4, 1)
 		
-			return;
+			return true;
 		end
 		
 		-- DT 0: Reload
@@ -206,6 +192,8 @@ if (SERVER) then
 					self:SetDTInt(0, clipOverride or self.Primary.Clip)
 				end
 			end)
+			
+			return true;
 		end
 	end
 else
@@ -301,7 +289,9 @@ else
 
 	function EFFECT:Think()
 		if (self.decayTime < CurTime()) then
-			-- garbage collecting process
+			if self.freeEmitter then
+				self.freeEmitter:Finish();
+			end
 
 			self:Remove()
 			return false

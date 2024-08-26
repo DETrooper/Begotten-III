@@ -399,7 +399,7 @@ function ENT:Use(activator, caller)
 		data.entity = self;
 		data.location = self.location;
 		
-		if caller:GetFaction() == "Goreic Warrior" or caller:GetSharedVar("kinisgerOverride") == "Goreic Warrior" or (caller:IsAdmin() and caller.cwObserverMode) then
+		if caller:GetFaction() == "Goreic Warrior" or caller:GetNetVar("kinisgerOverride") == "Goreic Warrior" or (caller:IsAdmin() and caller.cwObserverMode) then
 			data.cargoholdopenable = true;
 			data.destination = self.destination;
 			data.sailable = true;
@@ -422,7 +422,7 @@ function ENT:Use(activator, caller)
 					local activeWeapon = caller:GetActiveWeapon();
 					
 					if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
-						local oil = caller:GetSharedVar("oil", 0);
+						local oil = caller:GetNetVar("oil", 0);
 					
 						if oil >= 1 then
 							data.ignitable = true;

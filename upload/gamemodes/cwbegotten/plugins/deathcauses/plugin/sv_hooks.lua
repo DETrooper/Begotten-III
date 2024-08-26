@@ -140,7 +140,7 @@ function cwDeathCauses:PlayerDeath(player, inflictor, attacker, damageInfo)
 				local attackerClass = attacker:GetClass();
 			
 				if attacker:IsPlayer() then
-					local attackerFaction = attacker:GetSharedVar("kinisgerOverride") or attacker:GetFaction();
+					local attackerFaction = attacker:GetNetVar("kinisgerOverride") or attacker:GetFaction();
 					
 					if Clockwork.player:DoesRecognise(player, attacker) then
 						attackerName = attacker:Name();

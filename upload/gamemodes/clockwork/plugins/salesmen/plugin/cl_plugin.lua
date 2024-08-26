@@ -9,8 +9,9 @@ netstream.Hook("Salesmenu", function(data)
 	Clockwork.salesmenu.buyInShipments = data.buyInShipments
 	Clockwork.salesmenu.priceScale = data.priceScale
 	Clockwork.salesmenu.factions = data.factions
+	Clockwork.salesmenu.subfactions = data.subfactions
 	Clockwork.salesmenu.buyRate = data.buyRate
-	Clockwork.salesmenu.classes = data.classes
+	--Clockwork.salesmenu.classes = data.classes
 	Clockwork.salesmenu.entity = data.entity
 	Clockwork.salesmenu.sells = data.sells
 	Clockwork.salesmenu.stock = data.stock
@@ -19,6 +20,7 @@ netstream.Hook("Salesmenu", function(data)
 	Clockwork.salesmenu.buys = data.buys
 	Clockwork.salesmenu.name = data.name
 	Clockwork.salesmenu.flags = data.flags
+	Clockwork.salesmenu.beliefs = data.beliefs
 
 	Clockwork.salesmenu.panel = vgui.Create("cwSalesmenu")
 	Clockwork.salesmenu.panel:Rebuild()
@@ -58,9 +60,11 @@ netstream.Hook("SalesmanAdd", function(data)
 		Clockwork.salesman.priceScale = 1
 		Clockwork.salesman.physDesc = ""
 		Clockwork.salesman.flags = ""
+		Clockwork.salesman.beliefs = ""
 		Clockwork.salesman.factions = {}
+		Clockwork.salesman.subfactions = {}
 		Clockwork.salesman.buyRate = 100
-		Clockwork.salesman.classes = {}
+		--Clockwork.salesman.classes = {}
 		Clockwork.salesman.stock = -1
 		Clockwork.salesman.sells = {}
 		Clockwork.salesman.model = "models/begotten/wanderers/wanderer_male.mdl"
@@ -102,11 +106,13 @@ netstream.Hook("SalesmanEdit", function(data)
 		Clockwork.salesman.showChatBubble = data.showChatBubble
 		Clockwork.salesman.buyInShipments = data.buyInShipments
 		Clockwork.salesman.priceScale = data.priceScale
-		Clockwork.salesman.factions = data.factions
-		Clockwork.salesman.physDesc = data.physDesc
-		Clockwork.salesman.flags = data.flags
+		Clockwork.salesman.factions = data.factions or {}
+		Clockwork.salesman.subfactions = data.subfactions or {}
+		Clockwork.salesman.physDesc = data.physDesc or ""
+		Clockwork.salesman.flags = data.flags or ""
+		Clockwork.salesman.beliefs = data.beliefs or ""
 		Clockwork.salesman.buyRate = data.buyRate
-		Clockwork.salesman.classes = data.classes
+		--Clockwork.salesman.classes = data.classes
 		Clockwork.salesman.stock = -1
 		Clockwork.salesman.sells = data.sellTab
 		Clockwork.salesman.model = data.model

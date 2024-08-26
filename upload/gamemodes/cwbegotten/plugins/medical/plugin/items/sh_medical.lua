@@ -493,7 +493,7 @@ local ITEM = Clockwork.item:New();
 					if (canChloroform or target:IsRagdolled()) then
 						Clockwork.player:SetAction(player, "chloroform", chloroformTime);
 						
-						target:SetSharedVar("beingChloro", true);
+						target:SetNetVar("beingChloro", true);
 						
 						Clockwork.player:EntityConditionTimer(player, target, trace.Entity, chloroformTime, 192, function()
 							local canChloroform = (target:GetAimVector():DotProduct(player:GetAimVector()) > 0);
@@ -515,7 +515,7 @@ local ITEM = Clockwork.item:New();
 							Clockwork.player:SetAction(player, "chloroform", false);
 							
 							if (IsValid(target)) then
-								target:SetSharedVar("beingChloro", false);
+								target:SetNetVar("beingChloro", false);
 							end;
 						end);
 					else

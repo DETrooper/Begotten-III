@@ -99,7 +99,7 @@ function playerMeta:TakeStability(amount, cooldown, bNoMe)
 	end
 
 	if not self:IsInGodMode() and (!cwPowerArmor or (cwPowerArmor and --[[!self:IsWearingPowerArmor()]] !self.wearingPowerArmor)) then
-		if self:GetSharedVar("tied") ~= 0 then
+		if self:GetNetVar("tied") ~= 0 then
 			self.nextStability = CurTime() + 3;
 			
 			cwMelee:HandleStability(self, -100, cooldown);

@@ -22,9 +22,10 @@ function PANEL:Init()
 			buyInShipments = Clockwork.salesman.buyInShipments,
 			priceScale = Clockwork.salesman.priceScale,
 			factions = Clockwork.salesman.factions,
+			subfactions = Clockwork.salesman.subfactions,
 			physDesc = Clockwork.salesman.physDesc,
 			buyRate = Clockwork.salesman.buyRate,
-			classes = Clockwork.salesman.classes,
+			--classes = Clockwork.salesman.classes,
 			stock = Clockwork.salesman.stock,
 			model = Clockwork.salesman.model,
 			head = Clockwork.salesman.head,
@@ -33,12 +34,14 @@ function PANEL:Init()
 			text = Clockwork.salesman.text,
 			buys = Clockwork.salesman.buys,
 			name = Clockwork.salesman.name,
-			flags = Clockwork.salesman.flags
+			flags = Clockwork.salesman.flags,
+			beliefs = Clockwork.salesman.beliefs
 		})
 
 		Clockwork.salesman.priceScale = nil
 		Clockwork.salesman.factions = nil
-		Clockwork.salesman.classes = nil
+		Clockwork.salesman.subfactions = nil
+		--Clockwork.salesman.classes = nil
 		Clockwork.salesman.physDesc = nil
 		Clockwork.salesman.buyRate = nil
 		Clockwork.salesman.stock = nil
@@ -51,6 +54,7 @@ function PANEL:Init()
 		Clockwork.salesman.cash = nil
 		Clockwork.salesman.name = nil
 		Clockwork.salesman.flags = nil
+		Clockwork.salesman.beliefs = nil
 
 		gui.EnableScreenClicker(false)
 	end
@@ -91,7 +95,8 @@ function PANEL:Init()
 	self.showChatBubble = self.settingsForm:CheckBox("Show chat bubble.");
 	self.buyInShipments = self.settingsForm:CheckBox("Buy items in shipments.");
 	self.priceScale = self.settingsForm:TextEntry("What amount to scale prices by.");
-	self.flagsEntry = self.settingsForm:TextEntry("Required flags for access (enter '-' in front of flags so they are checked ONLY)");
+	self.flagsEntry = self.settingsForm:TextEntry("Required flags for access (separate by -).");
+	self.beliefsEntry = self.settingsForm:TextEntry("Required beliefs for access (separate by -).");
 	self.physDesc = self.settingsForm:TextEntry("The physical description of the salesman.");
 	self.buyRate = self.settingsForm:NumSlider("Buy Rate", nil, 1, 100, 0);
 	self.stock = self.settingsForm:NumSlider("Default Stock", nil, -1, 100, 0);
@@ -107,6 +112,7 @@ function PANEL:Init()
 	self.buyInShipments:SetValue(Clockwork.salesman.buyInShipments == true)
 	self.priceScale:SetValue(Clockwork.salesman.priceScale)
 	self.flagsEntry:SetValue(Clockwork.salesman.flags or "")
+	self.beliefsEntry:SetValue(Clockwork.salesman.beliefs or "")
 	self.physDesc:SetValue(Clockwork.salesman.physDesc)
 	self.buyRate:SetValue(Clockwork.salesman.buyRate)
 	self.stock:SetValue(Clockwork.salesman.stock)
@@ -181,14 +187,21 @@ function PANEL:Init()
 	self.settingsForm:AddItem(self.factionsForm);
 	self.factionsForm:Help("Leave these unchecked to allow all factions to buy and sell.");
 	
-	self.classesForm = vgui.Create("DForm");
+	self.subfactionsForm = vgui.Create("DForm");
+	self.subfactionsForm:SetPadding(4);
+	self.subfactionsForm:SetName("Subfactions");
+	self.settingsForm:AddItem(self.subfactionsForm);
+	self.subfactionsForm:Help("Leave these unchecked to allow all subfactions to buy and sell.");
+	
+	--[[self.classesForm = vgui.Create("DForm");
 	self.classesForm:SetPadding(4);
 	self.classesForm:SetName("Classes");
 	self.settingsForm:AddItem(self.classesForm);
-	self.classesForm:Help("Leave these unchecked to allow all classes to buy and sell.");
+	self.classesForm:Help("Leave these unchecked to allow all classes to buy and sell.");]]--
 
-	self.classBoxes = {}
+	--self.classBoxes = {}
 	self.factionBoxes = {}
+	self.subfactionBoxes = {}
 
 	for k, v in SortedPairs(Clockwork.faction:GetStored()) do
 		self.factionBoxes[k] = self.factionsForm:CheckBox(v.name)
@@ -203,9 +216,28 @@ function PANEL:Init()
 		if (Clockwork.salesman.factions[k]) then
 			self.factionBoxes[k]:SetValue(true)
 		end
+		
+		local subfactions = v.subfactions;
+		
+		if subfactions then
+			for k2, v2 in ipairs(subfactions) do
+				self.subfactionBoxes[v2.name] = self.subfactionsForm:CheckBox(v2.name);
+				self.subfactionBoxes[v2.name].OnChange = function(checkBox)
+					if (checkBox:GetChecked()) then
+						Clockwork.salesman.subfactions[v2.name] = true
+					else
+						Clockwork.salesman.subfactions[v2.name] = nil
+					end
+				end
+				
+				if (Clockwork.salesman.subfactions[v2.name]) then
+					self.subfactionBoxes[v2.name]:SetValue(true)
+				end
+			end
+		end
 	end
 
-	for k, v in SortedPairs(Clockwork.class:GetStored()) do
+	--[[for k, v in SortedPairs(Clockwork.class:GetStored()) do
 		self.classBoxes[k] = self.classesForm:CheckBox(v.name)
 		self.classBoxes[k].OnChange = function(checkBox)
 			if (checkBox:GetChecked()) then
@@ -218,7 +250,7 @@ function PANEL:Init()
 		if (Clockwork.salesman.classes[k]) then
 			self.classBoxes[k]:SetValue(true)
 		end
-	end
+	end]]--
 
 	self.propertySheet = vgui.Create("DPropertySheet", self);
 		self.propertySheet:SetPadding(4);
@@ -355,6 +387,7 @@ function PANEL:Think()
 	Clockwork.salesman.priceScale = tonumber(priceScale) or 1
 
 	Clockwork.salesman.flags = self.flagsEntry:GetValue() or ""
+	Clockwork.salesman.beliefs = self.beliefsEntry:GetValue() or ""
 end
 
 -- Called when the layout should be performed.

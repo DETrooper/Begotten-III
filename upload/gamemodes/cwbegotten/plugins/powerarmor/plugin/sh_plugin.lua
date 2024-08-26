@@ -53,7 +53,7 @@ function COMMAND:OnRun(player, arguments)
 	
 	if (target) then
 		target:SetCharacterData("battery", amount);
-		target:SetSharedVar("battery", amount);
+		target:SetNetVar("battery", amount);
 		
 		if (player != target) then
 			Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s battery to "..amount..".");

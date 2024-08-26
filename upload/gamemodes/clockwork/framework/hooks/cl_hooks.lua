@@ -2304,7 +2304,7 @@ function GM:HUDDrawTargetID()
 						if (Clockwork.plugin:Call("ShouldDrawPlayerTargetID", player)) then
 							if (!Clockwork.player:IsNoClipping(player)) then
 								--[[if (Clockwork.nextCheckRecognises and Clockwork.nextCheckRecognises[2] != player) then
-									Clockwork.Client:SetSharedVar("TargetKnows", true)
+									Clockwork.Client:SetNetVar("TargetKnows", true)
 								end]]--
 								
 								local playerEntity = nil

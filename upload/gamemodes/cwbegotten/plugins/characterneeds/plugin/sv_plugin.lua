@@ -203,7 +203,7 @@ function playerMeta:HandleNeed(need, amount)
 						
 						timer.Simple(20, function()
 							if IsValid(self) then
-								self:SetSharedVar("possessionFreakout", false);
+								self:SetNetVar("possessionFreakout", false);
 								self:Freeze(false);
 								
 								if self:Alive() then
@@ -314,7 +314,7 @@ function playerMeta:HandleNeed(need, amount)
 		end
 			
 		self:SetCharacterData(need, math.Clamp(newAmount, 0, 100));
-		self:SetSharedVar(need, math.Clamp(math.Round(newAmount), 0, 100));
+		self:SetNetVar(need, math.Clamp(math.Round(newAmount), 0, 100));
 	end
 end
 
@@ -329,6 +329,6 @@ end
 function playerMeta:SetNeed(need, value)
 	if need and table.HasValue(cwCharacterNeeds.Needs, need) then
 		self:SetCharacterData(need, math.Clamp(value, 0, 100));
-		self:SetSharedVar(need, math.Clamp(value, 0, 100));
+		self:SetNetVar(need, math.Clamp(value, 0, 100));
 	end
 end

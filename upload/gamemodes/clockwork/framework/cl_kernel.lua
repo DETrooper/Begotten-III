@@ -3072,7 +3072,7 @@ function playerMeta:GetCountryCode()
 end;
 
 function playerMeta:GetSubfaction() 
-	return self:GetSharedVar("subfaction"); 
+	return self:GetNetVar("subfaction"); 
 end
 
 entityMeta.ClockworkFireBullets = entityMeta.ClockworkFireBullets or entityMeta.FireBullets

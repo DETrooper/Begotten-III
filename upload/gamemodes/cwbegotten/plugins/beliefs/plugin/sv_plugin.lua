@@ -88,7 +88,7 @@ function cwBeliefs:LevelUp(player)
 			player:SetCharacterData("points", points);
 			player:SetLocalVar("points", points);
 			player:SetCharacterData("level", newLevel);
-			player:SetSharedVar("level", newLevel);
+			player:SetNetVar("level", newLevel);
 			Clockwork.plugin:Call("PlayerLevelUp", player, newLevel, points);
 		end
 	end
@@ -162,7 +162,7 @@ function cwBeliefs:ForceRemoveBelief(player, uniqueID, bRemoveDependencies)
 		local beliefTable = self:FindBeliefByID(uniqueID, category)
 		
 		if beliefTable and beliefTable.subfaith and beliefTable.row == 1 then
-			player:SetSharedVar("subfaith", nil);
+			player:SetNetVar("subfaith", nil);
 			player.cwCharacter.subfaith = nil;
 		end
 		
@@ -175,7 +175,7 @@ function cwBeliefs:ForceRemoveBelief(player, uniqueID, bRemoveDependencies)
 				local requirementTable = self:FindBeliefByID(v, category)
 				
 				if requirementTable and requirementTable.subfaith and requirementTable.row == 1 then
-					player:SetSharedVar("subfaith", nil);
+					player:SetNetVar("subfaith", nil);
 					player.cwCharacter.subfaith = nil;
 				end
 			
@@ -205,7 +205,7 @@ function cwBeliefs:ForceRemoveBelief(player, uniqueID, bRemoveDependencies)
 		
 		player:SetCharacterData("beliefs", beliefs);
 		player:SetCharacterData("level", math.max(player:GetCharacterData("level", 1) - levels_to_remove, 1));
-		player:SetSharedVar("level", player:GetCharacterData("level", 1));
+		player:SetNetVar("level", player:GetCharacterData("level", 1));
 		player:NetworkBeliefs();
 		player:SaveCharacter();
 	end
@@ -228,7 +228,7 @@ function cwBeliefs:SetSacramentLevel(player, level)
 	player:SetLocalVar("points", points);
 	player:SetCharacterData("points", points);
 	player:SetCharacterData("level", level);
-	player:SetSharedVar("level", level);
+	player:SetNetVar("level", level);
 	
 	if oldLevel < level then
 		Clockwork.plugin:Call("PlayerLevelUp", player, level, points);
@@ -237,21 +237,21 @@ end
 
 function cwBeliefs:ResetBeliefSharedVars(player)
 	if player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation") then
-		player:SetSharedVar("beliefFont", "Voltism");
-	elseif player:GetSharedVar("beliefFont") then
-		player:SetSharedVar("beliefFont", nil);
+		player:SetNetVar("beliefFont", "Voltism");
+	elseif player:GetNetVar("beliefFont") then
+		player:SetNetVar("beliefFont", nil);
 	end
 	
 	if player:HasBelief("nimble") then
-		player:SetSharedVar("hasNimble", true);
-	elseif player:GetSharedVar("hasNimble") then
-		player:SetSharedVar("hasNimble", nil);
+		player:SetNetVar("hasNimble", true);
+	elseif player:GetNetVar("hasNimble") then
+		player:SetNetVar("hasNimble", nil);
 	end
 	
 	if player:HasBelief("favored") then
-		player:SetSharedVar("favored", true);
-	elseif player:GetSharedVar("favored") then
-		player:SetSharedVar("favored", nil);
+		player:SetNetVar("favored", true);
+	elseif player:GetNetVar("favored") then
+		player:SetNetVar("favored", nil);
 	end
 end;
 

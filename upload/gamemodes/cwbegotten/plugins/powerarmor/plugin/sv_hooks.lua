@@ -43,7 +43,7 @@ function cwPowerArmor:PlayerThink(player, curTime, infoTable, alive, initialized
 				elseif (plyTab.nextChargeDepleted < curTime) then
 					local currentCharge = player:GetCharacterData("battery", 0);
 						player:SetCharacterData("battery", math.Clamp(currentCharge - 1, 0, 100));
-						player:SetSharedVar("battery", math.Round(player:GetCharacterData("battery", 0), 0));
+						player:SetNetVar("battery", math.Round(player:GetCharacterData("battery", 0), 0));
 					plyTab.nextChargeDepleted = curTime + 120;
 				end
 
@@ -92,7 +92,7 @@ function cwPowerArmor:PostPlayerSpawn(player)
 			player.wearingPowerArmor = true;
 			player:SetModel(powerArmor);
 			player.nextChargeDepleted = CurTime() + 120;
-			player:SetSharedVar("battery", math.Round(player:GetCharacterData("battery", 0), 0));
+			player:SetNetVar("battery", math.Round(player:GetCharacterData("battery", 0), 0));
 		elseif player.wearingPowerArmor then
 			player.wearingPowerArmor = false;
 		end
@@ -110,7 +110,7 @@ function cwPowerArmor:PostPlayerDeath(player)
 			
 			player.wearingPowerArmor = false;
 			player:SetCharacterData("battery", 0);
-			player:SetSharedVar("battery", 0);
+			player:SetNetVar("battery", 0);
 			player:SetCharacterData("powerArmor", nil);
 		end;
 	end;
@@ -239,7 +239,7 @@ function cwPowerArmor:EntityTakeDamageArmor(player, damageInfo)
 				local newBattery = math.Clamp(currentCharge - math.Round((damageInfo:GetDamage() / 25)), 0, 100);
 				
 				player:SetCharacterData("battery", newBattery);
-				player:SetSharedVar("battery", newBattery);
+				player:SetNetVar("battery", newBattery);
 				
 				damageInfo:ScaleDamage(0);
 			end

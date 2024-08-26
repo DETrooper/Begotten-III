@@ -29,13 +29,18 @@ function Clockwork.salesmenu:GetBuyRate()
 end
 
 -- A function to get the salesmenu classes.
-function Clockwork.salesmenu:GetClasses()
+--[[function Clockwork.salesmenu:GetClasses()
 	return self.classes
-end
+end]]--
 
 -- A function to get the salesmenu factions.
 function Clockwork.salesmenu:GetFactions()
 	return self.factions
+end
+
+-- A function to get the salesman subfactions.
+function Clockwork.salesmenu:GetSubfactions()
+	return self.subfactions
 end
 
 -- A function to get the salesmenu stock.
@@ -81,4 +86,9 @@ end
 -- A function to get the salesmenu flags.
 function Clockwork.salesmenu:GetFlags()
 	return self.flags
+end
+
+-- A function to get the salesman beliefs
+function Clockwork.salesmenu:GetBeliefs()
+	return self.beliefs
 end

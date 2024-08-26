@@ -13,7 +13,7 @@
 		if (!player.soundTimer) then
 			player.soundTimer = 0;
 		else
-			player:SetSharedVar("NextSound", curTime + (player.soundTimer));
+			player:SetNetVar("NextSound", curTime + (player.soundTimer));
 			player.soundTimer = 0;
 		end;
 	end;

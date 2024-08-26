@@ -74,9 +74,9 @@ local ITEM = item.New(nil, true);
 		
 		if self.concealsFace == true then
 			if bIsWearing then
-				player:SetSharedVar("faceConcealed", true);
+				player:SetNetVar("faceConcealed", true);
 			else
-				player:SetSharedVar("faceConcealed", false);
+				player:SetNetVar("faceConcealed", false);
 			end
 		end
 		
@@ -156,7 +156,7 @@ local ITEM = item.New(nil, true);
 				end
 				
 				if self.concealsFace == true then
-					player:SetSharedVar("faceConcealed", false);
+					player:SetNetVar("faceConcealed", false);
 				end
 				
 				if extraData == "drop" then
@@ -195,12 +195,12 @@ local ITEM = item.New(nil, true);
 							ragdollEntity:SetSkin(Clockwork.player:GetDefaultSkin(player));
 						end
 
-						local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+						local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 						local factionTable = Clockwork.faction:FindByID(faction);
 						local model = player:GetModel();
 						
 						if factionTable then
-							local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+							local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 							
 							if subfaction and factionTable.subfactions then
 								for i, v in ipairs(factionTable.subfactions) do
@@ -241,7 +241,7 @@ local ITEM = item.New(nil, true);
 	function ITEM:OnTakeFromPlayer(player)
 		if (player:GetClothesEquipped() == self) then
 			if self.concealsFace == true then
-				player:SetSharedVar("faceConcealed", false);
+				player:SetNetVar("faceConcealed", false);
 			end
 		end
 	end
@@ -259,8 +259,8 @@ local ITEM = item.New(nil, true);
 		local action = Clockwork.player:GetAction(player);
 		local faction = player:GetFaction();
 		local subfaction = player:GetSubfaction();
-		local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
-		local kinisgerOverrideSubfaction = player:GetSharedVar("kinisgerOverrideSubfaction");
+		local kinisgerOverride = player:GetNetVar("kinisgerOverride");
+		local kinisgerOverrideSubfaction = player:GetNetVar("kinisgerOverrideSubfaction");
 		
 		if action == "putting_on_armor" or action == "taking_off_armor" then
 			Schema:EasyText(player, "peru", "You cannot wear this while already putting on or taking off armor!");

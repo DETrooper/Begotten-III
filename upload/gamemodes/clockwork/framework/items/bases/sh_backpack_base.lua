@@ -27,10 +27,10 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 		player.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
 		player.maxWeight = maxWeight;
 		
-		player:SetNetVar("InvWeight", math.ceil(player.cwInfoTable.inventoryWeight))
+		player:SetLocalVar("InvWeight", math.ceil(player.cwInfoTable.inventoryWeight))
 		
 		if player.cwInfoTable.inventorySpace then
-			player:SetNetVar("InvSpace", math.ceil(player.cwInfoTable.inventorySpace))
+			player:SetLocalVar("InvSpace", math.ceil(player.cwInfoTable.inventorySpace))
 		end
 		
 		if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
@@ -70,8 +70,8 @@ end
 function ITEM:OnUse(player, itemEntity)
 	local faction = player:GetFaction();
 	local subfaction = player:GetSubfaction();
-	local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
-	local kinisgerOverrideSubfaction = player:GetSharedVar("kinisgerOverrideSubfaction");
+	local kinisgerOverride = player:GetNetVar("kinisgerOverride");
+	local kinisgerOverrideSubfaction = player:GetNetVar("kinisgerOverrideSubfaction");
 
 	if (self:HasPlayerEquipped(player)) then
 		if !player.spawning then
@@ -144,10 +144,10 @@ function ITEM:OnUse(player, itemEntity)
 		player.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
 		player.maxWeight = maxWeight;
 		
-		player:SetNetVar("InvWeight", math.ceil(player.cwInfoTable.inventoryWeight))
+		player:SetLocalVar("InvWeight", math.ceil(player.cwInfoTable.inventoryWeight))
 		
 		if player.cwInfoTable.inventorySpace then
-			player:SetNetVar("InvSpace", math.ceil(player.cwInfoTable.inventorySpace))
+			player:SetLocalVar("InvSpace", math.ceil(player.cwInfoTable.inventorySpace))
 		end
 		
 		Clockwork.equipment:EquipItem(player, self, "Backpacks")

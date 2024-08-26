@@ -22,7 +22,7 @@ function cwContainerHiding:AttemptHide(player, entity, bHide)
 
 	if (bHide) then
 		player:SetCharacterData("hidden", true);
-		player:SetSharedVar("hidden", true);
+		player:SetNetVar("hidden", true);
 		player:SetPos(entity:LocalToWorld(Vector(0, 0, -50)));
 		player:SetNoDraw(true);
 		player:DrawShadow(false);
@@ -40,8 +40,8 @@ function cwContainerHiding:AttemptHide(player, entity, bHide)
 		end);
 		
 		if (table.HasValue(self.containerProps["black"], string.lower(entity:GetModel()))) then
-			if (player:GetSharedVar("blackOut") != true) then
-				player:SetSharedVar("blackOut", true);
+			if (player:GetNetVar("blackOut") != true) then
+				player:SetNetVar("blackOut", true);
 			end;
 		end;
 		
@@ -52,7 +52,7 @@ function cwContainerHiding:AttemptHide(player, entity, bHide)
 		--netstream.Start(player, "cwCustomHint", {string.Split(player:Name(), " ")[1].." Thinks...", "I should be safe in here..."});
 	else
 		player:SetCharacterData("hidden", false);
-		player:SetSharedVar("hidden", false);
+		player:SetNetVar("hidden", false);
 		player:SetPos(entity:LocalToWorld(Vector(50, 0, -24)));
 		player:SetNoDraw(false);
 		player:DrawShadow(true);
@@ -62,8 +62,8 @@ function cwContainerHiding:AttemptHide(player, entity, bHide)
 		entity.occupier = nil;
 		
 		if (table.HasValue(self.containerProps["black"], string.lower(entity:GetModel()))) then
-			if (player:GetSharedVar("blackOut") == true) then
-				player:SetSharedVar("blackOut", false);
+			if (player:GetNetVar("blackOut") == true) then
+				player:SetNetVar("blackOut", false);
 			end;
 		end;
 		
@@ -103,8 +103,8 @@ function cwContainerHiding:OpenedStorage(player, entity)
 			end;
 		end;
 		
-		if (player:GetSharedVar("blackOut") == true) then
-			player:SetSharedVar("blackOut", false);
+		if (player:GetNetVar("blackOut") == true) then
+			player:SetNetVar("blackOut", false);
 		end;
 	end;
 end;

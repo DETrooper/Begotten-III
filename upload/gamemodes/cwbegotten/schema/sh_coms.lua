@@ -116,8 +116,8 @@ local COMMAND = Clockwork.command:New("Enlist")
 		if (target and target:Alive()) then
 			if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
 				local enlistFaction;
-				local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
-				local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+				local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+				local targetFaction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
 			
 				if player:IsAdmin() or ((playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers") and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or playerFaction == "Holy Hierarchy" then
 					if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" then
@@ -175,7 +175,7 @@ local COMMAND = Clockwork.command:New("Enlist")
 							local playerName = player:Name();
 						
 							Clockwork.dermaRequest:RequestConfirmation(target, enlistFaction.." Enlistment", playerName.." has invited you to enlist into the "..enlistFaction.." faction!", function()
-								targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+								targetFaction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
 								
 								if (targetFaction == "Wanderer" or (targetFaction == "Children of Satan" and target:GetSubfaction() == "Kinisger")) and target:Alive() and Clockwork.faction:IsGenderValid(enlistFaction, target:GetGender()) then
 									local bSuccess, fault = Clockwork.faction:GetStored()[enlistFaction]:OnTransferred(target, Clockwork.faction:GetStored()[targetFaction]);
@@ -189,11 +189,11 @@ local COMMAND = Clockwork.command:New("Enlist")
 											end
 										else
 											target:SetCharacterData("kinisgerOverride", enlistFaction);
-											target:SetSharedVar("kinisgerOverride", enlistFaction);
+											target:SetNetVar("kinisgerOverride", enlistFaction);
 											
 											if subfaction then
 												target:SetCharacterData("kinisgerOverrideSubfaction", subfaction.name);
-												target:SetSharedVar("kinisgerOverrideSubfaction", subfaction.name);
+												target:SetNetVar("kinisgerOverrideSubfaction", subfaction.name);
 											end
 										end
 										
@@ -253,8 +253,8 @@ local COMMAND = Clockwork.command:New("SetCustomRank")
 		local rank = string.lower(tostring(arguments[3]));
 		
 		if (target) then
-			local faction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
-			local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local faction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
+			local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		
 			if player:IsAdmin() or ((playerFaction == faction and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or playerFaction == "Holy Hierarchy") then
 				local name = target:Name();
@@ -316,8 +316,8 @@ local COMMAND = Clockwork.command:New("Promote")
 		local rank = string.lower(tostring(arguments[2]));
 		
 		if (target) then
-			local faction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
-			local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local faction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
+			local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		
 			if player:IsAdmin() or ((playerFaction == faction and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or playerFaction == "Holy Hierarchy") then
 				local name = target:Name();
@@ -368,9 +368,9 @@ local COMMAND = Clockwork.command:New("Promote")
 						local subfaction = Schema.RanksToSubfaction[faction][ranks[faction][rank]];
 						
 						if subfaction then
-							if target:GetSharedVar("kinisgerOverride") then
+							if target:GetNetVar("kinisgerOverride") then
 								target:SetCharacterData("kinisgerOverrideSubfaction", subfaction);
-								target:SetSharedVar("kinisgerOverrideSubfaction", subfaction);
+								target:SetNetVar("kinisgerOverrideSubfaction", subfaction);
 							else
 								target:SetCharacterData("Subfaction", subfaction, true);
 							end
@@ -420,8 +420,8 @@ local COMMAND = Clockwork.command:New("Demote")
 		local target = Clockwork.player:FindByID(arguments[1]);
 
 		if (target) then
-			local faction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
-			local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local faction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
+			local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 
 			if player:IsAdmin() or ((playerFaction == faction and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or playerFaction == "Holy Hierarchy") then
 				local name = target:Name();
@@ -1164,7 +1164,7 @@ local COMMAND = Clockwork.command:New("Proclaim");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		local text = table.concat(arguments, " ");
 		
 		if (text == "") then
@@ -1232,7 +1232,7 @@ function COMMAND:OnRun(player, arguments)
 		local subfaction = player:GetSubfaction();
 		
 		if subfaction == "Clan Crast" then
-			local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+			local targetFaction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
 			
 			if targetFaction == "Goreic Warrior" then
 				if player:HasBelief("watchful_raven") then
@@ -1319,7 +1319,7 @@ local COMMAND = Clockwork.command:New("RavenSpeakFaction");
 
 					for k, v in pairs (_player.GetAll()) do
 						if v:HasInitialized() and v:Alive() then
-							local vFaction = v:GetSharedVar("kinisgerOverride") or v:GetFaction();
+							local vFaction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 							local vLastZone = v:GetCharacterData("LastZone");
 							
 							if (vFaction == "Goreic Warrior" and vLastZone ~= "hell" and vLastZone ~= "manor") or Clockwork.player:HasFlags(v, "L") then
@@ -1768,7 +1768,7 @@ local COMMAND = Clockwork.command:New("PlyHealFull");
 		target:SetNeed("hunger", 0);
 		target:SetNeed("corruption", 0);
 		target:SetNeed("sleep", 0);
-		target:SetSharedVar("sanity", max_sanity);
+		target:SetNetVar("sanity", max_sanity);
 		target:SetCharacterData("sanity", max_sanity);
 		target:SetCharacterData("Stamina", max_stamina);
 		target:SetNWInt("Stamina", max_stamina);
@@ -1828,7 +1828,7 @@ local COMMAND = Clockwork.command:New("PlyHealFullAll");
 					v:SetNeed("hunger", 0);
 					v:SetNeed("corruption", 0);
 					v:SetNeed("sleep", 0);
-					v:SetSharedVar("sanity", max_sanity);
+					v:SetNetVar("sanity", max_sanity);
 					v:SetCharacterData("sanity", max_sanity);
 					v:SetCharacterData("Stamina", max_stamina);
 					v:SetNWInt("Stamina", max_stamina);
@@ -2384,7 +2384,7 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 				end
 			end
 			
-			if not player.opponent and not player:IsRagdolled() and player:GetSharedVar("tied") == 0 then
+			if not player.opponent and not player:IsRagdolled() and player:GetNetVar("tied") == 0 then
 				local lastZone = player:GetCharacterData("LastZone");
 				
 				if lastZone ~= "hell" and lastZone ~= "manor" then
@@ -2392,7 +2392,7 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 					
 					if nextTeleport <= 0 then
 						for k, v in pairs(_player.GetAll()) do
-							if v:HasInitialized() and v:GetSharedVar("yellowBanner") == true and v:Alive() then
+							if v:HasInitialized() and v:GetNetVar("yellowBanner") == true and v:Alive() then
 								if v:GetMoveType() == MOVETYPE_WALK or v:IsRagdolled() or v:InVehicle() then
 									if v:GetPos():Distance(player:GetPos()) <= 2048 then
 										Schema:EasyText(player, "peru", "There is one with a yellow banner raised, chaining you to this mortal plane! Vanquish them or distance yourself greatly!");
@@ -2598,7 +2598,7 @@ local COMMAND = Clockwork.command:New("HellTeleport");
 				return false;
 			end
 		
-			if not player.opponent and not player:IsRagdolled() and player:GetSharedVar("tied") == 0 then
+			if not player.opponent and not player:IsRagdolled() and player:GetNetVar("tied") == 0 then
 				local lastZone = player:GetCharacterData("LastZone");
 				
 				if lastZone ~= "hell" and lastZone ~= "manor" then
@@ -2612,7 +2612,7 @@ local COMMAND = Clockwork.command:New("HellTeleport");
 							
 							Clockwork.player:SetAction(player, "hell_teleporting", 30, 2, function()
 								if IsValid(player) then
-									if not player.opponent and not player:IsRagdolled() and player:GetSharedVar("tied") == 0 then
+									if not player.opponent and not player:IsRagdolled() and player:GetNetVar("tied") == 0 then
 										local lastZone = player:GetCharacterData("LastZone");
 										
 										if lastZone ~= "hell" and lastZone ~= "manor" then

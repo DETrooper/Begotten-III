@@ -27,7 +27,7 @@ local ITEM = Clockwork.item:New();
 				local currentOil = weaponItemTable:GetData("oil");
 				
 				weaponItemTable:SetData("oil", math.Clamp(currentOil + 30, 0, 100));
-				player:SetSharedVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
+				player:SetNetVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
 				
 				if (currentOil + 30) > 100 then
 					Schema:EasyText(player, "olive", "Some of the oil did not make it into your lantern, as it is now full.");

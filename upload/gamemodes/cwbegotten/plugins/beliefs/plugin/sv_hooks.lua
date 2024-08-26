@@ -26,7 +26,7 @@ function cwBeliefs:PlayerRestoreCharacterData(player, data)
 	
 	player:SetLocalVar("experience", data["experience"]);
 	player:SetLocalVar("points", data["points"]);
-	player:SetSharedVar("level", data["level"]);
+	player:SetNetVar("level", data["level"]);
 end
 
 -- Called when a player's character screen info should be adjusted.
@@ -95,7 +95,7 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 					local playerPos = player:GetPos();
 					
 					for i, v in ipairs(_player.GetAll()) do
-						if v:GetSharedVar("yellowBanner") then
+						if v:GetNetVar("yellowBanner") then
 							if (v:GetPos():Distance(playerPos) <= config.Get("talk_radius"):Get()) then
 								Schema:EasyText(player, "peru", "There is one with a yellow banner raised, dispelling your dark magic! Vanquish them or distance yourself!");
 								Schema:EasyText(v, "peru", "You feel your yellow banner pulsate with energy as the dark magic of "..player:Name().." is foiled and they are uncloaked for all to see!");
@@ -118,7 +118,7 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 							local blockedCloak;
 							
 							for i, v in ipairs(_player.GetAll()) do
-								if v:GetSharedVar("yellowBanner") then
+								if v:GetNetVar("yellowBanner") then
 									if (v:GetPos():Distance(playerPos) <= config.Get("talk_radius"):Get()) then
 										blockedCloak = true;
 									
@@ -231,7 +231,7 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 			local character = player.cwCharacter;
 			
 			character.subfaith = beliefTable.subfaith;
-			player:SetSharedVar("subfaith", beliefTable.subfaith);
+			player:SetNetVar("subfaith", beliefTable.subfaith);
 			
 			player:SaveCharacter();
 		end
@@ -318,9 +318,7 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 	elseif uniqueID == "the_paradox_riddle_equation" then
 		if cwMedicalSystem then
 			player:TakeAllDiseases();
-		end
-	elseif uniqueID == "scribe" then
-		Clockwork.player:GiveFlags(player, "J");
+		end;
 	end
 
 	--local max_poise = player:GetMaxPoise();
@@ -941,7 +939,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 									Clockwork.chatBox:AddInTargetRadius(attacker, "me", strikeText.." a pressure point of "..entity:Name()..", snuffing out their Holy Light with dark magic and killing them instantly!", attacker:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 									
 									entity.soulscorchActive = nil;
-									entity:SetSharedVar("soulscorchActive", false);
+									entity:SetNetVar("soulscorchActive", false);
 									
 									if timer.Exists("SoulScorchTimer_"..entity:EntIndex()) then
 										timer.Remove("SoulScorchTimer_"..entity:EntIndex());
@@ -1299,7 +1297,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 					
 					if attackerFactionTable then
 						local playerFaction = entity:GetFaction();
-						local kinisgerOverride = entity:GetSharedVar("kinisgerOverride");
+						local kinisgerOverride = entity:GetNetVar("kinisgerOverride");
 						
 						if kinisgerOverride and attackerFaction ~= "Children of Satan" then
 							playerFaction = kinisgerOverride;
@@ -1691,6 +1689,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 		elseif subfaction == "Rekh-khet-sa" then
 			level = level + 16;
 			data["beliefs"]["primevalism"] = true;
+			character.subfaith = "Primevalism";
 		end
 	elseif faction == "Gatekeeper" then
 		if subfaction == "Auxiliary" then
@@ -1728,6 +1727,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 		elseif subfaction == "Voltists" then
 			level = level + 10;
 			data["beliefs"]["voltism"] = true;
+			character.subfaith = "Voltism";
 		end
 	end
 	
@@ -2009,7 +2009,7 @@ end
 function cwBeliefs:PostPlayerCharacterLoaded(player)
 	local playerLevel = player:GetCharacterData("level", 1);
 	
-	player:SetSharedVar("level", playerLevel);
+	player:SetNetVar("level", playerLevel);
 	
 	if player.poisonTicks then
 		player.poisonTicks = nil;
@@ -2067,7 +2067,7 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 			
 			if attackerFactionTable then
 				local playerFaction = player:GetFaction();
-				local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
+				local kinisgerOverride = player:GetNetVar("kinisgerOverride");
 				
 				if kinisgerOverride and attackerFaction ~= "Children of Satan" then
 					playerFaction = kinisgerOverride;

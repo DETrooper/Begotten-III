@@ -218,5 +218,5 @@ end;
 
 -- Called when the shared vars shoud be set.
 --[[function cwContainerHiding:OnePlayerHalfSecond(player, curTime)
-	player:SetSharedVar("hidden", player:GetCharacterData("hidden"));
+	player:SetNetVar("hidden", player:GetCharacterData("hidden"));
 end;]]--

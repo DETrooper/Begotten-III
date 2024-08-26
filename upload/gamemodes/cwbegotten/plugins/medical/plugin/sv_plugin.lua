@@ -522,7 +522,7 @@ function cwMedicalSystem:PerformSurgeryOnPlayer(player, target, itemTable, hitGr
 				return;
 			end
 			
-			--[[if target:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT and target:GetSharedVar("tied") == 0 then
+			--[[if target:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT and target:GetNetVar("tied") == 0 then
 				Schema:EasyText(player, "chocolate","To perform surgery on someone, they must be unconscious or tied up.");
 			
 				return;
@@ -1305,7 +1305,7 @@ function playerMeta:GiveDisease(uniqueID, stage)
 		
 		if !has_disease then
 			local diseaseData = {};
-			local diseaseSharedVar = self:GetSharedVar("diseases", {});
+			local diseaseSharedVar = self:GetNetVar("diseases", {});
 			
 			diseaseData.uniqueID = uniqueID;
 			diseaseData.stage = tonumber(stage) or 1;
@@ -1322,8 +1322,8 @@ function playerMeta:GiveDisease(uniqueID, stage)
 			end
 		
 			self:SetCharacterData("diseases", diseases);
-			self:SetSharedVar("diseases", diseaseSharedVar);
-			self:SetSharedVar("symptoms", self:GetSymptoms());
+			self:SetNetVar("diseases", diseaseSharedVar);
+			self:SetNetVar("symptoms", self:GetSymptoms());
 			
 			return true;
 		end
@@ -1337,7 +1337,7 @@ function playerMeta:TakeDisease(uniqueID)
 	
 	if diseaseTable then
 		local diseases = self:GetCharacterData("diseases", {});
-		local diseaseSharedVar = self:GetSharedVar("diseases", {});
+		local diseaseSharedVar = self:GetNetVar("diseases", {});
 		
 		for i = 1, #diseases do
 			local disease = diseases[i];
@@ -1357,8 +1357,8 @@ function playerMeta:TakeDisease(uniqueID)
 				end
 				
 				self:SetCharacterData("diseases", diseases);
-				self:SetSharedVar("diseases", diseaseSharedVar);
-				self:SetSharedVar("symptoms", self:GetSymptoms());
+				self:SetNetVar("diseases", diseaseSharedVar);
+				self:SetNetVar("symptoms", self:GetSymptoms());
 				
 				return;
 			end
@@ -1387,17 +1387,17 @@ function playerMeta:TakeAllDiseases()
 			end
 		
 			self:SetCharacterData("diseases", diseases);
-			self:SetSharedVar("diseases", diseaseSharedVar);
-			self:SetSharedVar("symptoms", self:GetSymptoms());
+			self:SetNetVar("diseases", diseaseSharedVar);
+			self:SetNetVar("symptoms", self:GetSymptoms());
 		else
 			self:SetCharacterData("diseases", {});
-			self:SetSharedVar("diseases", nil);
-			self:SetSharedVar("symptoms", nil);
+			self:SetNetVar("diseases", nil);
+			self:SetNetVar("symptoms", nil);
 		end
 	else
 		self:SetCharacterData("diseases", {});
-		self:SetSharedVar("diseases", nil);
-		self:SetSharedVar("symptoms", nil);
+		self:SetNetVar("diseases", nil);
+		self:SetNetVar("symptoms", nil);
 	end
 end
 
@@ -1496,15 +1496,15 @@ function playerMeta:NetworkDiseases()
 	end
 	
 	if !table.IsEmpty(diseaseNetworkStrings) then
-		self:SetSharedVar("diseases", diseaseNetworkStrings);
+		self:SetNetVar("diseases", diseaseNetworkStrings);
 	else
-		self:SetSharedVar("diseases", nil);
+		self:SetNetVar("diseases", nil);
 	end
 	
 	if !table.IsEmpty(symptoms) then
-		self:SetSharedVar("symptoms", symptoms);
+		self:SetNetVar("symptoms", symptoms);
 	else
-		self:SetSharedVar("symptoms", nil);
+		self:SetNetVar("symptoms", nil);
 	end
 end
 

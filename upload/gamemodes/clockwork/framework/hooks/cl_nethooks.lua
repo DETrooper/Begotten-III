@@ -305,7 +305,7 @@ end)
 
 netstream.Hook("SharedVar", function(data)
 	local key = data.key
-	local sharedVars = Clockwork.kernel:GetSharedVars():Player()
+	local sharedVars = Clockwork.kernel:GetNetVars():Player()
 
 	if (sharedVars and sharedVars[key]) then
 		local sharedVarData = sharedVars[key]

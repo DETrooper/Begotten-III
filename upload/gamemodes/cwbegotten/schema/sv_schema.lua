@@ -1341,7 +1341,7 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 		
 		player:SetCharacterData("permakilled", true);
 		player:SetCharacterData("Cash", 0, true);
-		player:SetSharedVar("Cash", 0);
+		player:SetNetVar("Cash", 0);
 		player:SetBodygroup(0, 0);
 		player:SetBodygroup(1, 0);
 		
@@ -1595,7 +1595,7 @@ end;
 
 function playerMeta:AddBounty(bounty, reason, poster)
 	if IsValid(poster) and poster:IsPlayer() then
-		local faction = self:GetSharedVar("kinisgerOverride") or self:GetFaction()
+		local faction = self:GetNetVar("kinisgerOverride") or self:GetFaction()
 		
 		if (faction  == "Gatekeeper" or faction  == "Holy Hierarchy") and !poster:IsAdmin() then
 			Schema:EasyText(poster, "cornflowerblue", "You cannot place a bounty on "..self:Name().."!");
@@ -1613,7 +1613,7 @@ function playerMeta:AddBounty(bounty, reason, poster)
 	end
 	
 	self:SetCharacterData("bounty", self:GetCharacterData("bounty", 0) + bounty);
-	self:SetSharedVar("bounty", self:GetCharacterData("bounty", 0));
+	self:SetNetVar("bounty", self:GetCharacterData("bounty", 0));
 	
 	local characterKey = self:GetCharacterKey();
 	local bountyData = Schema.bountyData[characterKey];
@@ -1623,8 +1623,8 @@ function playerMeta:AddBounty(bounty, reason, poster)
 	tab.name = self:Name(true);
 	tab.model = self:GetModel();
 	tab.gender = self:GetGender();
-	tab.faction = self:GetSharedVar("kinisgerOverride") or self:GetFaction();
-	tab.subfaction = self:GetSharedVar("kinisgerOverrideSubfaction") or self:GetSubfaction();
+	tab.faction = self:GetNetVar("kinisgerOverride") or self:GetFaction();
+	tab.subfaction = self:GetNetVar("kinisgerOverrideSubfaction") or self:GetSubfaction();
 	tab.clothes = self:GetCharacterData("clothes");
 	tab.bodygroup1 = self:GetBodygroup(0);
 	tab.bodygroup2 = self:GetBodygroup(1);
@@ -1669,7 +1669,7 @@ end;
 function playerMeta:RemoveBounty(remover)
 	if self:GetCharacterData("bounty", 0) > 0 then
 		self:SetCharacterData("bounty", 0);
-		self:SetSharedVar("bounty", 0);
+		self:SetNetVar("bounty", 0);
 	end
 	
 	local characterKey = self:GetCharacterKey();
@@ -2332,7 +2332,7 @@ concommand.Add("cw_CheckTaxRate", function(player, cmd, args)
 		local entity = trace.Entity;
 
 		if (entity:GetClass() == "cw_coinslot") then
-			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			
 			if (faction ~= "Goreic Warrior") then
 				local tax = math.Round(Schema.towerTax * 100);
@@ -2352,7 +2352,7 @@ concommand.Add("cw_CoinslotSalaryCheck", function(player, cmd, args)
 		local entity = trace.Entity;
 
 		if (entity:GetClass() == "cw_coinslot") then
-			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			
 			if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
 				local collectableWages = player:GetCharacterData("collectableWages", 0);
@@ -2379,7 +2379,7 @@ concommand.Add("cw_CoinslotSalary", function(player, cmd, args)
 		local entity = trace.Entity;
 
 		if (entity:GetClass() == "cw_coinslot") then
-			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			
 			if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
 				local collectableWages = player:GetCharacterData("collectableWages", 0);
@@ -2422,7 +2422,7 @@ concommand.Add("cw_CoinslotRation", function(player, cmd, args)
 		local entity = trace.Entity;
 
 		if (entity:GetClass() == "cw_coinslot") then
-			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			
 			if (faction ~= "Goreic Warrior") then
 				local unixTime = os.time();
@@ -2469,7 +2469,7 @@ concommand.Add("cw_CoinslotGear", function(player, cmd, args)
 		local entity = trace.Entity;
 
 		if (entity:GetClass() == "cw_coinslot") then
-			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			
 			if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers") then
 				local collectedGear = player:GetCharacterData("collectedGear", false);

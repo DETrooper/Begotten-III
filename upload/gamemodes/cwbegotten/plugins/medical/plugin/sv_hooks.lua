@@ -399,12 +399,12 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 				end
 				
 				player:SetCharacterData("diseases", diseases);
-				player:SetSharedVar("diseases", diseaseNetworkStrings);
-				player:SetSharedVar("symptoms", player:GetSymptoms());
+				player:SetNetVar("diseases", diseaseNetworkStrings);
+				player:SetNetVar("symptoms", player:GetSymptoms());
 				
 				if not plyTab.dyingOfDisease and not player:IsRagdolled() then
 					-- Make the character do something related to their symptom.
-					local symptoms = player:GetSharedVar("symptoms", {});
+					local symptoms = player:GetNetVar("symptoms", {});
 					local valid_symptoms = {};
 					
 					for i = 1, #symptoms do
@@ -552,7 +552,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 							messupChance = (messupChance or 0) + 30;
 						end
 						
-						if player:GetSharedVar("tied") ~= 0 then
+						if player:GetNetVar("tied") ~= 0 then
 							messupChance = (messupChance or 0) + 40;
 						end
 						

@@ -277,21 +277,21 @@ end
 -- Called when traits need to be networked.
 function Schema:SetTraitSharedVars(player)
 	if player:HasTrait("marked") then
-		player:SetSharedVar("marked", true);
-	elseif player:GetSharedVar("marked") then
-		player:SetSharedVar("marked", false);
+		player:SetNetVar("marked", true);
+	elseif player:GetNetVar("marked") then
+		player:SetNetVar("marked", false);
 	end
 	
 	if player:HasTrait("possessed") then
-		player:SetSharedVar("possessed", true);
-	elseif player:GetSharedVar("possessed") then
-		player:SetSharedVar("possessed", false);
+		player:SetNetVar("possessed", true);
+	elseif player:GetNetVar("possessed") then
+		player:SetNetVar("possessed", false);
 	end
 	
 	if player:HasTrait("followed") then
-		player:SetSharedVar("followed", true);
-	elseif player:GetSharedVar("followed") then
-		player:SetSharedVar("followed", false);
+		player:SetNetVar("followed", true);
+	elseif player:GetNetVar("followed") then
+		player:SetNetVar("followed", false);
 	end
 end
 
@@ -300,8 +300,8 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 	local class = entity:GetClass();
 
 	if entity:IsPlayer() and entity:GetNetVar("tied") != 0 then
-		local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
-		local entFaction = entity:GetSharedVar("kinisgerOverride") or entity:GetFaction();
+		local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+		local entFaction = entity:GetNetVar("kinisgerOverride") or entity:GetFaction();
 	
 		if (arguments == "cw_sellSlave") and playerFaction == "Goreic Warrior" and entFaction ~= "Goreic Warrior" then
 			for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
@@ -452,8 +452,8 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 			local entityPlayer = Clockwork.entity:GetPlayer(entity);
 			
 			if entityPlayer then
-				local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
-				local entFaction = entityPlayer:GetSharedVar("kinisgerOverride") or entityPlayer:GetFaction();
+				local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+				local entFaction = entityPlayer:GetNetVar("kinisgerOverride") or entityPlayer:GetFaction();
 			
 				if playerFaction == "Goreic Warrior" and entFaction ~= "Goreic Warrior" and entityPlayer:GetNetVar("tied") != 0 then
 					for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
@@ -535,7 +535,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 							end
 							
 							local playerName;
-							local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+							local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 							
 							if Clockwork.player:DoesRecognise(entityPlayer, player) then
 								playerName = player:Name();
@@ -873,7 +873,7 @@ function Schema:PlayerAdjustRadioInfo(player, info)
 	--[[for k, v in ipairs( _player.GetAll() ) do
 		if ( v:HasInitialized() and v:HasItem("handheld_radio")) then
 			if ( v:GetCharacterData("frequency") == player:GetCharacterData("frequency") ) then
-				if (v:GetSharedVar("tied") == 0) then
+				if (v:GetNetVar("tied") == 0) then
 					info.listeners[v] = v;
 				end;
 			end;
@@ -1502,7 +1502,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 	infoTable.jumpPower = infoTable.jumpPower + acrobatics;
 	infoTable.runSpeed = infoTable.runSpeed + agility;]]--
 	if initialized and alive then
-		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+		local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		local bOnGround = player:IsOnGround();
 		local moveType = player:GetMoveType();
 		local waterLevel = player:WaterLevel();
@@ -1938,8 +1938,8 @@ function Schema:PlayerAttributeUpdated(player, attributeTable, amount) end;
 
 -- Called to check if a player does recognise another player.
 function Schema:PlayerDoesRecognisePlayer(player, target, status, isAccurate, realValue)
-	local playerFaction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
-	local targetFaction = target:GetSharedVar("kinisgerOverride") or target:GetFaction();
+	local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+	local targetFaction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
 
 	if targetFaction == "Holy Hierarchy" then
 		return true;
@@ -2030,7 +2030,7 @@ function Schema:PlayerCanUseDoor(player, door)
 		local doorName = door:GetName();
 		
 		if doors["tower"] and table.HasValue(doors["tower"], doorName) then
-			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
 			
 			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Pope Adyssa's Gatekeepers" then
@@ -2059,8 +2059,8 @@ function Schema:PlayerCanUseDoor(player, door)
 				end
 			end
 		elseif doors["knights"] and table.HasValue(doors["knights"], doorName) then
-			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
-			local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+			local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 			local curTime = CurTime();
 			
 			if faction ~= "Holy Hierarchy" or (subfaction ~= "Ministry" and subfaction ~= "Knights of Sol") then
@@ -2073,7 +2073,7 @@ function Schema:PlayerCanUseDoor(player, door)
 				return false;
 			end
 		elseif doors["gorewatch"] and table.HasValue(doors["gorewatch"], doorName) then
-			local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
 			
 			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Pope Adyssa's Gatekeepers" then
@@ -2486,14 +2486,14 @@ function Schema:PostPlayerDeath(player)
 		player.scriptedDying = false;
 	end
 	
-	if (player:GetSharedVar("blackOut")) then
-		player:SetSharedVar("blackOut", false);
+	if (player:GetNetVar("blackOut")) then
+		player:SetNetVar("blackOut", false);
 	end;
 end
 
 -- Called when a player changes ranks.
 function Schema:PlayerChangedRanks(player)
-	local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+	local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 	
 	if (self.Ranks[faction]) then
 		if (!player:GetCharacterData("rank")) then
@@ -2655,19 +2655,7 @@ function Schema:PlayerCharacterLoaded(player)
 		end
 	end;
 	
-	if faction == "Goreic Warrior" then
-		local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
-		
-		if subfaction == "Clan Crast" then
-			if !Clockwork.player:HasFlags(player, "U") then
-				Clockwork.player:GiveFlags(player, "U");
-			end
-		else
-			if Clockwork.player:HasFlags(player, "U") then
-				Clockwork.player:TakeFlags(player, "U");
-			end
-		end
-	elseif faction == "Gatekeeper" then
+	if faction == "Gatekeeper" then
 		player:SetLocalVar("collectedGear", player:GetCharacterData("collectedGear"));
 	
 		-- Code to grandfather in pre-rank update Gatekeeper characters to the new rank system during the original Begotten III, no longer required.
@@ -2761,10 +2749,10 @@ function Schema:PlayerCharacterInitialized(player)
 		
 		if !bountyData and player:GetCharacterData("bounty", 0) > 0 then
 			player:SetCharacterData("bounty", 0);
-			player:SetSharedVar("bounty", 0);
+			player:SetNetVar("bounty", 0);
 		elseif bountyData then
 			player:SetCharacterData("bounty", bountyData.bounty)
-			player:SetSharedVar("bounty", bountyData.bounty);
+			player:SetNetVar("bounty", bountyData.bounty);
 		end
 	end
 end;
@@ -3191,7 +3179,7 @@ function Schema:CinderBlockExecution(player, target, itemTable)
 		local entity = trace.Entity
 		
 		if (target:IsPlayer()) then
-			if target:GetSharedVar("tied") then
+			if target:GetNetVar("tied") then
 				Clockwork.player:SetRagdollState(target, RAGDOLL_FALLENOVER, nil);
 				entity = target:GetRagdollEntity()
 			else

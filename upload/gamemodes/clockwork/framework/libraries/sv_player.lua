@@ -2613,11 +2613,11 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 						model = "models/begotten/"..clothesItem.group.."_"..string.lower(player:GetGender())..".mdl";
 					end
 				else
-					local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+					local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 					local factionTable = Clockwork.faction:FindByID(faction);
 					
 					if factionTable then
-						local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+						local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 						
 						if subfaction and factionTable.subfactions then
 							for i, v in ipairs(factionTable.subfactions) do
@@ -3142,9 +3142,9 @@ function Clockwork.player:SetBasicSharedVars(player)
 	player:SetDTString(STRING_NAME, player:Name(true))
 	player:SetNetVar("Key", player:GetCharacterKey())
 	player:SetNetVar("CharacterID", player:GetCharacterID())
-	player:SetSharedVar("faith", player:GetFaith())
-	player:SetSharedVar("subfaith", player:GetSubfaith());
-	player:SetSharedVar("subfaction", player:GetSubfaction())
+	player:SetNetVar("faith", player:GetFaith())
+	player:SetNetVar("subfaith", player:GetSubfaith());
+	player:SetNetVar("subfaction", player:GetSubfaction())
 
 	if (Clockwork.faction:GetAll()[playerFaction]) then
 		player:SetNetVar("Faction", Clockwork.faction:GetAll()[playerFaction].index)

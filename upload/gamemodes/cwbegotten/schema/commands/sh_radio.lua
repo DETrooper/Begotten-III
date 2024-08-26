@@ -16,7 +16,7 @@ COMMAND.alias = {"R"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
-	local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+	local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 	
 	if subfaction == "Clan Grock" then
 		Schema:EasyText(player, "peru", "You cannot use radios as you shun technology!");
@@ -38,8 +38,8 @@ COMMAND.alias = {"RadioProclaim"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
-	local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
-	local subfaction = player:GetSharedVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+	local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+	local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 	
 	if subfaction == "Clan Grock" then
 		Schema:EasyText(player, "peru", "You cannot use radios as you shun technology!");

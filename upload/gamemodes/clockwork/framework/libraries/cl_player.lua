@@ -186,7 +186,7 @@ end
 
 -- A function to get a player's unrecognised name.
 function Clockwork.player:GetUnrecognisedName(player)
-	local unrecognisedPhysDesc = self:GetPhysDesc(player)
+	local unrecognisedPhysDesc = self:GetPhysDesc(player), 0, 21;
 	local unrecognisedName = config.Get("unrecognised_name"):Get()
 	local usedPhysDesc
 
@@ -202,7 +202,7 @@ function Clockwork.player:GetName(target)
 	if (self:DoesRecognise(target)) then
 		return hook.Run("GetTargetPlayerName", target) or target:Name();
 	else
-		return self:GetUnrecognisedName(target)
+		return "["..string.sub(Clockwork.player:GetPhysDesc(target), 0, 21).."...]";
 	end
 end
 

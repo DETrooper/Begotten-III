@@ -31,7 +31,7 @@ COMMAND.arguments = 1;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
-	if (player:GetSharedVar("tied") == 0) then
+	if (player:GetNetVar("tied") == 0) then
 		local itemTable = player:FindItemByID(arguments[1]);
 		local entity = player:GetEyeTraceNoCursor().Entity;
 		local target = Clockwork.entity:GetPlayer(entity);
@@ -127,15 +127,15 @@ local COMMAND = Clockwork.command:New("CharGetInjuries");
 			local injuries = cwMedicalSystem:GetInjuries(target);
 			local injuryStr = "";
 			
-			--PrintTable(injuries);
-			
-			for k, v in pairs(injuries) do
-				for k2, v2 in pairs(v) do
-					if v2 == true then
-						local injury = cwMedicalSystem.cwInjuryTable[k2];
-					
-						if injury and injury.symptom then
-							injuryStr = injuryStr.." Their "..cwMedicalSystem.cwHitGroupToString[k]..injury.symptom;
+			if injuries then 
+				for k, v in pairs(injuries) do
+					for k2, v2 in pairs(v) do
+						if v2 == true then
+							local injury = cwMedicalSystem.cwInjuryTable[k2];
+						
+							if injury and injury.symptom then
+								injuryStr = injuryStr.." Their "..cwMedicalSystem.cwHitGroupToString[k]..injury.symptom;
+							end
 						end
 					end
 				end
@@ -181,13 +181,15 @@ local COMMAND = Clockwork.command:New("CharGiveInjury");
 				local limbNumber = cwMedicalSystem.cwStringToHitGroup[limb];
 				local injuries = cwMedicalSystem:GetInjuries(target);
 			
-				for k, v in pairs(injuries) do
-					for k2, v2 in pairs(v) do
-						if v2 == true then
-							if k2 == injury and k == limbNumber then
-								Schema:EasyText(player, "darkgrey",target:Name().." already has the "..injury.." injury!");
-								
-								return false;
+				if injuries then
+					for k, v in pairs(injuries) do
+						for k2, v2 in pairs(v) do
+							if v2 == true then
+								if k2 == injury and k == limbNumber then
+									Schema:EasyText(player, "darkgrey",target:Name().." already has the "..injury.." injury!");
+									
+									return false;
+								end
 							end
 						end
 					end
@@ -377,15 +379,17 @@ local COMMAND = Clockwork.command:New("CharDiagnose");
 					
 					local injuries = cwMedicalSystem:GetInjuries(target);
 					
-					for k, v in pairs(injuries) do
-						for k2, v2 in pairs(v) do
-							if v2 == true then
-								local injury = cwMedicalSystem.cwInjuryTable[k2];
-							
-								if injury and injury.symptom then
-									diagnoseString = diagnoseString.." Their "..cwMedicalSystem.cwHitGroupToString[k]..injury.symptom;
-									
-									textColorScale = math.min(textColorScale + 0.1, 1);
+					if injuries then
+						for k, v in pairs(injuries) do
+							for k2, v2 in pairs(v) do
+								if v2 == true then
+									local injury = cwMedicalSystem.cwInjuryTable[k2];
+								
+									if injury and injury.symptom then
+										diagnoseString = diagnoseString.." Their "..cwMedicalSystem.cwHitGroupToString[k]..injury.symptom;
+										
+										textColorScale = math.min(textColorScale + 0.1, 1);
+									end
 								end
 							end
 						end
@@ -397,7 +401,7 @@ local COMMAND = Clockwork.command:New("CharDiagnose");
 						textColorScale = math.min(textColorScale + 0.2, 1);
 					end
 					
-					local symptoms = target:GetSharedVar("symptoms", {});
+					local symptoms = target:GetNetVar("symptoms", {});
 					local symptomText;
 					
 					for i = 1, #symptoms do

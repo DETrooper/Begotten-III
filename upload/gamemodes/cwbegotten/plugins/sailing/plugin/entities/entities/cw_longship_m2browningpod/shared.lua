@@ -65,8 +65,7 @@ if (SERVER) then
 			local aimVector = self.Owner:GetAimVector()
 			local turretForward = self:GetUp()
 			local turretDot = turretForward:Dot(aimVector)
-
-			if (turretDot > 0.4) then
+			if (turretDot > 0.5) then
 				self.Owner:GetViewModel():SetNoDraw(false)
 				self.Owner.Turret = nil
 				self.Owner = nil
@@ -81,8 +80,8 @@ if (SERVER) then
 			local trace = util.TraceLine(data)
 
 			local cappedVector = (turretForward + trace.Normal)
-			cappedVector.x = math.Clamp( cappedVector.x, -1, 1)
-			cappedVector.y = math.Clamp( cappedVector.y, -1, 1)
+			cappedVector.x = math.Clamp( cappedVector.x, -1.35, 1.35)
+			cappedVector.y = math.Clamp( cappedVector.y, -1.35, 1.35)
 			cappedVector.z = math.Clamp( cappedVector.z, -.4, .4)
 
 			local ang = (turretForward - cappedVector):Angle()
@@ -103,9 +102,8 @@ if (SERVER) then
 				if self.gun:GetDTBool(0) ~= true then
 					local reloadItem = self.Owner:GetItemInstance("ironclad_ammo_box");
 					
-					if reloadItem then
+					if reloadItem and self.gun:Reload() == true then
 						self.Owner:TakeItem(reloadItem);
-						self.gun:Reload()
 					end
 				end
 			end
@@ -124,10 +122,10 @@ if (SERVER) then
 
 	function ENT:Use(client)
 		if self.ironclad then
-			local faction = client:GetSharedVar("kinisgerOverride") or client:GetFaction();
+			local faction = client:GetNetVar("kinisgerOverride") or client:GetFaction();
 			
 			if faction == "Goreic Warrior" then
-				local subfaction = client:GetSharedVar("kinisgerOverrideSubfaction") or client:GetSubfaction();
+				local subfaction = client:GetNetVar("kinisgerOverrideSubfaction") or client:GetSubfaction();
 				
 				if subfaction == "Clan Shagalax" then
 					self:OnUse(client)

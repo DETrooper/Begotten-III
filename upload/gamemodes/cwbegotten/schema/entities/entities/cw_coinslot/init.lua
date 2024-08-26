@@ -33,7 +33,7 @@ end;
 
 function ENT:Use(activator, caller)
 	if IsValid(caller) and caller:IsPlayer() then
-		local faction = caller:GetSharedVar("kinisgerOverride") or caller:GetFaction();
+		local faction = caller:GetNetVar("kinisgerOverride") or caller:GetFaction();
 		
 		if faction ~= "Goreic Warrior" then
 			local subfaction = caller:GetSubfaction();

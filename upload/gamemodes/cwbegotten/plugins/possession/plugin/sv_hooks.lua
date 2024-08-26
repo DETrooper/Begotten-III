@@ -94,7 +94,7 @@ function cwPossession:PlayerDeath(player, inflictor, attacker, damageInfo)
 			player.possessor.victim = nil;
 		end
 		
-		player:SetSharedVar("currentlyPossessed", false);
+		player:SetNetVar("currentlyPossessed", false);
 		player.possessor = nil;
 	elseif attacker:IsPlayer() and attacker:IsPossessedByDemon() then
 		attacker:EmitSound(self.laughs[math.random(1, #self.laughs)]);
@@ -114,7 +114,7 @@ function cwPossession:PlayerDisconnected(player)
 		
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has disconnected while possessed!");
 	elseif IsValid(player.victim) then
-		player.victim:SetSharedVar("currentlyPossessed", false);
+		player.victim:SetNetVar("currentlyPossessed", false);
 		player.victim.possessor = nil;
 
 		netstream.Start(player.victim, "Stunned", 5); -- Replace with damnation or custom VFX later!

@@ -44,13 +44,18 @@ function Clockwork.salesman:GetBuyRate()
 end
 
 -- A function to get the salesman classes.
-function Clockwork.salesman:GetClasses()
+--[[function Clockwork.salesman:GetClasses()
 	return self.classes
-end
+end]]--
 
 -- A function to get the salesman factions.
 function Clockwork.salesman:GetFactions()
 	return self.factions
+end
+
+-- A function to get the salesman subfactions.
+function Clockwork.salesman:GetSubfactions()
+	return self.subfactions
 end
 
 -- A function to get the salesman text.
@@ -91,4 +96,9 @@ end
 -- A function to get the salesman flags.
 function Clockwork.salesman:GetFlags()
 	return self.flags
+end
+
+-- A function to get the salesman beliefs
+function Clockwork.salesman:GetBeliefs()
+	return self.beliefs
 end

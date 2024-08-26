@@ -68,7 +68,7 @@ SWEP.WElements = {
 }
 
 function SWEP:Deploy()
-	self.Owner:SetSharedVar("lanternOnHip", false);
+	self.Owner:SetNetVar("lanternOnHip", false);
 end;
 
 function SWEP:Initialize()
@@ -105,13 +105,31 @@ function SWEP:OnRemove()
 end
 
 function SWEP:Think()
-	if (IsValid(self.Owner)) then
-		if (self.Owner:IsNPC() or self.Owner:IsNextBot()) then
-			self.Owner:StripWeapon(self:GetClass());
+	if SERVER then
+		local curTime = CurTime();
+		local player = self.Owner;
+		
+		-- Last ditch effort to fix the clientside itemtable desync.
+		if !self.nextItemSend or self.nextItemSend <= curTime then
+			if IsValid(player) and player:IsPlayer() then
+				local itemTable = item.GetByWeapon(self);
+					
+				if itemTable then
+					item.SendToPlayer(player, itemTable);
+				end
+			end
 			
-			return;
+			self.nextItemSend = curTime + math.random(1, 5);
+		end
+		
+		if (IsValid(player)) then
+			if (player:IsNPC() or player:IsNextBot()) then
+				player:StripWeapon(self:GetClass());
+				
+				return;
+			end;
 		end;
-	end;
+	end
 end;
 
 if CLIENT then

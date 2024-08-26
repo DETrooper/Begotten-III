@@ -116,7 +116,7 @@ local ITEM = Clockwork.item:New(nil, true)
 		end
 
 		if self.concealsFace == true then
-			player:SetSharedVar("faceConcealed", true);
+			player:SetNetVar("faceConcealed", true);
 		end
 	end
 	
@@ -126,8 +126,8 @@ local ITEM = Clockwork.item:New(nil, true)
 		local helmetItem = player:GetHelmetEquipped();
 		local faction = player:GetFaction();
 		local subfaction = player:GetSubfaction();
-		local kinisgerOverride = player:GetSharedVar("kinisgerOverride");
-		local kinisgerOverrideSubfaction = player:GetSharedVar("kinisgerOverrideSubfaction");
+		local kinisgerOverride = player:GetNetVar("kinisgerOverride");
+		local kinisgerOverrideSubfaction = player:GetNetVar("kinisgerOverrideSubfaction");
 		
 		if cwPowerArmor and player:IsWearingPowerArmor() then
 			Schema:EasyText(player, "peru", "You cannot wear this while in power armor!");
@@ -235,7 +235,7 @@ local ITEM = Clockwork.item:New(nil, true)
 			end
 			
 			if self.concealsFace == true then
-				player:SetSharedVar("faceConcealed", false);
+				player:SetNetVar("faceConcealed", false);
 			end
 			
 			self:ResetBodygroup(player, self.bodyGroup);
@@ -254,7 +254,7 @@ local ITEM = Clockwork.item:New(nil, true)
 	function ITEM:OnTakeFromPlayer(player)
 		if (player:GetClothesEquipped() == self) then
 			if self.concealsFace == true then
-				player:SetSharedVar("faceConcealed", false);
+				player:SetNetVar("faceConcealed", false);
 			end
 			
 			self:ResetBodygroup(player, self.bodyGroup);

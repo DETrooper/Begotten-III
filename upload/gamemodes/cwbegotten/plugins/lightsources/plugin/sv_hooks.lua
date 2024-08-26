@@ -8,16 +8,16 @@ function cwLantern:PlayerThink(player, curTime, infoTable, alive, initialized, p
 	
 	if !IsValid(activeWeapon) then return end;
 	
-	local lanternOnHip = player:GetSharedVar("lanternOnHip");
+	local lanternOnHip = player:GetNetVar("lanternOnHip");
 
 	if lanternOnHip and (!player:HasWeapon("cw_lantern") or activeWeapon:GetClass() == "cw_lantern") then
-		player:SetSharedVar("lanternOnHip", false);
+		player:SetNetVar("lanternOnHip", false);
 		lanternOnHip = false;
 	end
 
 	if !plyTab.nextLanternBurn then plyTab.nextLanternBurn = curTime + math.random(60, 120); end
 
-	if (plyTab.nextLanternBurn <= curTime and lanternOnHip and player:GetSharedVar("oil", 0) > 20 and !player:GetVelocity():IsZero()) then
+	if (plyTab.nextLanternBurn <= curTime and lanternOnHip and player:GetNetVar("oil", 0) > 20 and !player:GetVelocity():IsZero()) then
 		plyTab.nextLanternBurn = curTime + math.random(60, 120);
 
 		if (math.random(0, (player:HasTrait("marked") and 50 or 150)) == 0) then
@@ -39,7 +39,7 @@ function cwLantern:PlayerThink(player, curTime, infoTable, alive, initialized, p
 					local currentOil = weaponItemTable:GetData("oil");
 
 					weaponItemTable:SetData("oil", math.Clamp(currentOil - 1, 0, 100));
-					player:SetSharedVar("oil", math.Clamp(currentOil - 1, 0, 100));
+					player:SetNetVar("oil", math.Clamp(currentOil - 1, 0, 100));
 				end
 
 				plyTab.nextOilDrop = curTime + 30;
@@ -66,7 +66,7 @@ function cwLantern:PlayerThink(player, curTime, infoTable, alive, initialized, p
 					
 					if (!plyTab.nextOilDrop or curTime > plyTab.nextOilDrop) then
 						weaponItemTable:SetData("oil", math.Clamp(currentOil - 1, 0, 100));
-						player:SetSharedVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
+						player:SetNetVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
 
 						plyTab.nextOilDrop = curTime + 30;
 					end;
@@ -77,8 +77,8 @@ function cwLantern:PlayerThink(player, curTime, infoTable, alive, initialized, p
 					end;
 				end;
 				
-				if !player:GetSharedVar("oil") then
-					player:SetSharedVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
+				if !player:GetNetVar("oil") then
+					player:SetNetVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
 				end
 				
 				return;
@@ -86,30 +86,30 @@ function cwLantern:PlayerThink(player, curTime, infoTable, alive, initialized, p
 		end;
 	end
 	
-	if player:GetSharedVar("oil") then
-		player:SetSharedVar("oil", nil);
+	if player:GetNetVar("oil") then
+		player:SetNetVar("oil", nil);
 	end;
 end;
 
 function cwLantern:PlayerCharacterLoaded(player)
-	if player:GetSharedVar("oil") then
-		player:SetSharedVar("oil", nil);
+	if player:GetNetVar("oil") then
+		player:SetNetVar("oil", nil);
 	end
 	
-	if player:GetSharedVar("lanternOnHip") then
-		player:SetSharedVar("lanternOnHip", false);
+	if player:GetNetVar("lanternOnHip") then
+		player:SetNetVar("lanternOnHip", false);
 	end
 end
 
 -- Called when a player is killed.
 function cwLantern:PlayerDeath(player)
 	if !player.opponent then
-		if player:GetSharedVar("oil") then
-			player:SetSharedVar("oil", nil);
+		if player:GetNetVar("oil") then
+			player:SetNetVar("oil", nil);
 		end
 		
-		if player:GetSharedVar("lanternOnHip") then
-			player:SetSharedVar("lanternOnHip", false);
+		if player:GetNetVar("lanternOnHip") then
+			player:SetNetVar("lanternOnHip", false);
 		end
 	end
 end;
@@ -118,12 +118,12 @@ function cwLantern:PrePlayerLowerWeapon(player, oldWeapon, newWeapon)
 	if (!IsValid(oldWeapon) or !IsValid(player)) then return; end
 
 	if (oldWeapon:GetClass() == "cw_lantern" and player:IsWeaponRaised() and player:HasBelief("ingenious")) then
-		if !player:GetSharedVar("lanternOnHip") then
-			player:SetSharedVar("lanternOnHip", true);
+		if !player:GetNetVar("lanternOnHip") then
+			player:SetNetVar("lanternOnHip", true);
 		end
 	elseif (newWeapon == "cw_lantern") then
-		if player:GetSharedVar("lanternOnHip") then
-			player:SetSharedVar("lanternOnHip", false);
+		if player:GetNetVar("lanternOnHip") then
+			player:SetNetVar("lanternOnHip", false);
 		end
 	end
 end
