@@ -64,6 +64,9 @@ local INJURY = {};
 	INJURY.description = "You have a severe gash in this limb! It cannot be treated with normal bandages.";
 	INJURY.symptom = " is torn open and bleeding severely.";
 	INJURY.causesBleeding = true;
+	INJURY.surgeryInfo = {
+		{tool = "suture", texts = {"starts stitching the gash in NAME's LIMB with a thread and needle."}, messups = {texts = {"accidentally stabs NAME's LIMB while trying to stich it up!"}, damage = 5, causesBleeding = true}},
+	};
 cwMedicalSystem:RegisterInjury(INJURY.uniqueID, INJURY);
 
 local INJURY = {};
@@ -73,9 +76,9 @@ local INJURY = {};
 	INJURY.symptom = " has a bullet hole in it with blood gushing out!";
 	INJURY.causesBleeding = true;
 	INJURY.surgeryInfo = {
-		[1] = {tool = "scalpel", texts = {"begins cutting at the site of the gunshot wound in NAME's LIMB with a scalpel."}, messups = {texts = {"slips and accidentally puncture's NAME's LIMB while trying to make an incision."}, damage = 5, causesBleeding = true}},
-		[2] = {tool = "forceps", texts = {"uses a pair of forceps to clamp the bullet inside NAME's LIMB, attempting to dislodge it and pull it out."}, messups = {texts = {"fumbles and accidentally drops the bullet inside NAME's open LIMB."}}},
-		[3] = {tool = "suture", texts = {"starts stitching the incision of NAME's LIMB with a thread and needle."}, messups = {texts = {"accidentally stabs NAME's LIMB while trying to stich it up!"}, damage = 5, causesBleeding = true}},
+		{tool = "scalpel", texts = {"begins cutting at the site of the gunshot wound in NAME's LIMB with a scalpel."}, messups = {texts = {"slips and accidentally puncture's NAME's LIMB while trying to make an incision."}, damage = 5, causesBleeding = true}},
+		{tool = "forceps", texts = {"uses a pair of forceps to clamp the bullet inside NAME's LIMB, attempting to dislodge it and pull it out."}, messups = {texts = {"fumbles and accidentally drops the bullet inside NAME's open LIMB."}}},
+		{tool = "suture", texts = {"starts stitching the incision of NAME's LIMB with a thread and needle."}, messups = {texts = {"accidentally stabs NAME's LIMB while trying to stich it up!"}, damage = 5, causesBleeding = true}},
 	};
 cwMedicalSystem:RegisterInjury(INJURY.uniqueID, INJURY);
 
