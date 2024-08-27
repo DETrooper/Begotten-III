@@ -1672,10 +1672,7 @@ function GM:OneSecond()
 	end]]--
 
 	if (!Clockwork.NextSaveData or sysTime >= Clockwork.NextSaveData) then
-		hook.Run("PreSaveData")
-		hook.Run("SaveData")
-		hook.Run("PostSaveData")
-
+		Clockwork.kernel:ProcessSaveData(false, true);
 		Clockwork.NextSaveData = sysTime + config.Get("save_data_interval"):Get()
 	elseif (!Clockwork.NextSaveItemIDs or sysTime >= Clockwork.NextSaveItemIDs) then
 		-- This is too important not to save every few seconds, otherwise items can spawn with the item IDs of existing items and that's no good!
@@ -3802,17 +3799,7 @@ end
 -- Called when the server shuts down.
 function GM:ShutDown()
 	Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, "Server shutting down!");
-	
-	--plugin.Call("PreSaveData")
-	--plugin.Call("SaveData")
-	--plugin.Call("PostSaveData")
-	
-	hook.Run("PreSaveData")
-	hook.Run("SaveData")
-	hook.Run("PostSaveData")
-	
-	Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, "Data saved!");
-
+	Clockwork.kernel:ProcessSaveData(true);
 	Clockwork.ShuttingDown = true
 end
 

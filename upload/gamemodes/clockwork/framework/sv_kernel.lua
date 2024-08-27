@@ -398,6 +398,32 @@ function Clockwork.kernel:DeleteClockworkData(fileName)
 	return fileio.Delete("settings/clockwork/"..fileName..".cw")
 end
 
+function Clockwork.kernel:ProcessSaveData(bInstant, bNotify)
+	if bInstant then
+		local saveStart = SysTime();
+	
+		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, "Starting save data!");
+		
+		hook.Run("PreSaveData")
+		hook.Run("SaveData")
+		hook.Run("PostSaveData")
+		
+		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, "Data saved! Took "..tostring(SysTime() - saveStart).." seconds.");
+	else
+		if bNotify then
+			hook.Run("SaveDataImminent")
+		end
+	
+		timer.Simple(2, function()
+			Clockwork.kernel:ProcessSaveData(true);
+			
+			timer.Simple(1, function()
+				hook.Run("SaveDataCompleted");
+			end);
+		end);
+	end
+end
+
 -- A function to convert a force.
 function Clockwork.kernel:ConvertForce(force, limit)
 	local forceLength = force:Length()

@@ -187,7 +187,7 @@ end;
 
 util.AddNetworkString("ServerSaveData");
 
-function Schema:PreSaveData()
+function Schema:SaveDataImminent()
 	-- Sends net message for icon in top right that notifies players server is being saved.
 	net.Start("ServerSaveData", true);
 	net.WriteBool(true);
@@ -218,12 +218,14 @@ function Schema:PostSaveData()
 	self:SaveDummies();
 	self:SaveRadios();
 	self:SaveNPCs();
-	
+end;
+
+function Schema:SaveDataCompleted()
 	-- Sends net message to fade out save icon.
 	net.Start("ServerSaveData", true);
 	net.WriteBool(false);
 	net.Broadcast();
-end;
+end
 
 -- Called when a player attempts to drop a weapon.
 function Schema:PlayerCanDropWeapon(player, itemTable, weapon, bNoMsg)
