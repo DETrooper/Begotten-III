@@ -2671,9 +2671,7 @@ surface.CreateFont( "QuadFontSmall", {
 end
 
 function SWEP:ResetGestures(player)
-	if self.realIronSights then
-		self:TriggerAnim2(player, self.realBlockAnim, 1);
-	end
+	self:TriggerAnim2(player, self.realBlockAnim, 1);
 end
 
 function SWEP:InitFunc()
@@ -3053,7 +3051,7 @@ function SWEP:Holster()
 		timer.Remove(player:EntIndex().."IdleAnimation");
 
 		self:StopAllAnims(player);
-
+		
 		if CLIENT then
 			local vm = player:GetViewModel()
 			
@@ -3064,18 +3062,25 @@ function SWEP:Holster()
 				vm:SetSubMaterial( 2, "" )
 			end
 		else
-			player:SetNWBool("ThrustStance", false);
-			player:SetNWBool("Parry", false);
-			player:SetNWBool("ParrySucess", false);
-			player:SetNWBool("Riposting", false);
+			if player:GetNWBool("ThrustStance") then
+				player:SetNWBool("ThrustStance", false);
+			end
+			
+			if player:GetNWBool("Parry") then
+				player:SetNWBool("Parry", false);
+			end
+			
+			if player:GetNWBool("ParrySucess") then
+				player:SetNWBool("ParrySucess", false);
+			end
+			
+			if player:GetNWBool("Riposting") then
+				player:SetNWBool("Riposting", false);
+			end
 			
 			if player.parryStacks then
 				player.parryStacks = nil;
 			end
-		end
-		
-		if CLIENT then
-			self:RemoveModels();
 		end
 	end
 	
@@ -3083,17 +3088,15 @@ function SWEP:Holster()
 		self:OnHolster();
 	end
 	
+	if CLIENT then
+		self:RemoveModels();
+	end
+	
 	return true;
 end
 
 function SWEP:OnRemove()
-	if IsValid(self.Owner) and self.Owner:GetActiveWeapon() == self then
-		self:Holster();
-		
-		if CLIENT then
-			self:RemoveModels();
-		end
-	end
+	self:Holster();
 end
 
 function SWEP:GetHoldtypeOverride()
@@ -3856,6 +3859,7 @@ if CLIENT then
 			target.gestureweightbegin = 0;
 			target.gestureweightblock = 0;
 			target.gestureweightprogress = 0;
+			target.gestureweightlookup = 0;
 
 			target:AnimResetGestureSlot(GESTURE_SLOT_ATTACK_AND_RELOAD);
 			target:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM);
@@ -3866,7 +3870,7 @@ end;
 
 function SWEP:StopAllAnims(target)
 	if SERVER then
-		net.Start( "BegottenAnimStop", true )
+		net.Start("BegottenAnimStop", true);
 		net.WriteEntity(target);
 		net.Broadcast();
 	end;

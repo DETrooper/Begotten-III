@@ -97,11 +97,47 @@ function SWEP:Holster()
 		end
 	end]]--
 	
+	if self.OnHolster then
+		self:OnHolster();
+	end
+	
+	if CLIENT then
+		self:RemoveModels();
+	end
+	
 	return true
 end
 
 function SWEP:OnRemove()
 	self:Holster()
+end
+
+function SWEP:RemoveModels()
+	if self.vRenderOrder then
+		for k, name in ipairs( self.vRenderOrder ) do
+			local v = self.VElements[name]
+			if (!v) then self.vRenderOrder = nil break end
+			
+			local model = v.modelEnt;
+			
+			if (v.type == "Model" and IsValid(model)) then
+				model:Remove();
+			end
+		end
+	end
+	
+	if self.wRenderOrder then
+		for k, name in pairs( self.wRenderOrder ) do
+			local v = self.WElements[name]
+			if (!v) then self.wRenderOrder = nil break end
+			
+			local model = v.modelEnt;
+
+			if (v.type == "Model" and IsValid(model)) then
+				model:Remove();
+			end
+		end
+	end
 end
 
 function SWEP:Think()

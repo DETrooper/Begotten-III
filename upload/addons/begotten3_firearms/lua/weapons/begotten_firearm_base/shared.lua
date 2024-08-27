@@ -209,16 +209,20 @@ function SWEP:Holster()
 		
 		self.Owner:SetFOV(0, 0.5);
 	end
+	
+	if self.OnHolster then
+		self:OnHolster();
+	end
+	
+	if CLIENT then
+		self:RemoveModels();
+	end
    
 	return true
 end
  
 function SWEP:OnRemove()
 	self:Holster();
-	
-	if CLIENT then
-		self:RemoveModels();
-	end
 end
 
 function SWEP:RemoveModels()
