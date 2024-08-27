@@ -1925,20 +1925,20 @@ end
 function playerMeta:GetMaxWeight()
 	local backpackItem = self:GetBackpackEquipped();
 	local clothesItem = self:GetClothesEquipped();
-	local itemsList = Clockwork.inventory:GetAsItemsList(self:GetInventory())
+	--local itemsList = Clockwork.inventory:GetAsItemsList(self:GetInventory())
 	--local weight = self:GetNetVar("InvWeight") or 8
 	local weight = config.GetVal("default_inv_weight") or 20;
 	
 	weight = hook.Run("PlayerAdjustMaxWeight", self, weight);
 	
 	-- Apply item weight buffs after belief weight buffs.
-	for k, v in pairs(itemsList) do
+	--[[for k, v in pairs(itemsList) do
 		local addInvWeight = v.addInvSpace;
 		
 		if (addInvWeight) then
 			weight = weight + addInvWeight
 		end
-	end
+	end]]--
 	
 	if backpackItem and backpackItem.invSpace then
 		weight = weight + backpackItem.invSpace;
@@ -1954,21 +1954,27 @@ end
 -- A function to get the maximum space a player can carry.
 function playerMeta:GetMaxSpace()
 	local backpackItem = self:GetBackpackEquipped();
-	local itemsList = Clockwork.inventory:GetAsItemsList(self:GetInventory())
-	local space = self:GetNetVar("InvSpace") or 10
+	local clothesItem = self:GetClothesEquipped();
+	--local itemsList = Clockwork.inventory:GetAsItemsList(self:GetInventory())
+	--local space = self:GetNetVar("InvSpace") or 10;
+	local space = config.GetVal("default_inv_space") or 100;
 
 	--space = hook.Run("PlayerAdjustMaxSpace", player, space)
 	
-	for k, v in pairs(itemsList) do
+	--[[for k, v in pairs(itemsList) do
 		local addInvSpace = v.addInvVolume
 		if (addInvSpace) then
 			space = space + addInvSpace
 		end
-	end
+	end]]--
 	
 	if backpackItem and backpackItem.invSpace then
 		space = space + backpackItem.invSpace;
 	end
+	
+	if clothesItem and clothesItem.pocketSpace then
+		weight = weight + clothesItem.pocketSpace;
+	end;
 
 	return space
 end

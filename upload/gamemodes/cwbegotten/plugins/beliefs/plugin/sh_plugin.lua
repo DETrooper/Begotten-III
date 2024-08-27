@@ -15,6 +15,7 @@ PLUGIN:SetGlobalAlias("cwBeliefs");
 Clockwork.kernel:IncludePrefixed("sh_beliefs.lua");
 Clockwork.kernel:IncludePrefixed("cl_hooks.lua");
 Clockwork.kernel:IncludePrefixed("cl_plugin.lua");
+Clockwork.kernel:IncludePrefixed("sh_hooks.lua");
 Clockwork.kernel:IncludePrefixed("sv_plugin.lua");
 Clockwork.kernel:IncludePrefixed("sv_meta.lua");
 Clockwork.kernel:IncludePrefixed("sv_hooks.lua");

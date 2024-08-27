@@ -213,14 +213,11 @@ function GM:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	end;]]--
 	
 	if !plyTab.nextInvThink or plyTab.nextInvThink > curTime then
-		local maxWeight = player:GetMaxWeight();
-
-		infoTable.inventoryWeight = maxWeight;
-		plyTab.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
-		plyTab.maxWeight = maxWeight;
+		infoTable.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
+		infoTable.maxWeight = player:GetMaxWeight()
 		
-		player:SetLocalVar("InvWeight", math.ceil(infoTable.inventoryWeight))
-		player:SetLocalVar("InvSpace", math.ceil(infoTable.inventorySpace))
+		--player:SetLocalVar("InvWeight", math.ceil(infoTable.inventoryWeight))
+		--player:SetLocalVar("InvSpace", math.ceil(infoTable.inventorySpace))
 		--player:SetLocalVar("Wages", math.ceil(infoTable.wages or 0))
 		
 		plyTab.nextInvThink = curTime + 2;
@@ -1702,8 +1699,6 @@ function GM:OneSecond()
 end
 
 do
-	local defaultInvWeight = config.GetVal("default_inv_weight")
-	local defaultInvSpace = config.GetVal("default_inv_weight")
 	local cwNextThink = 0
 	local cwNextSecond = 0
 	local cwNextHalfSecond = 0;
@@ -1722,8 +1717,6 @@ do
 					local plyTab = player:GetTable();
 					local infoTable = plyTab.cwInfoTable;
 
-					infoTable.inventoryWeight = defaultInvWeight
-					infoTable.inventorySpace = defaultInvSpace
 					infoTable.crouchedSpeed = plyTab.cwCrouchedSpeed
 					infoTable.jumpPower = plyTab.cwJumpPower
 					infoTable.walkSpeed = plyTab.cwWalkSpeed
@@ -3362,8 +3355,8 @@ end
 function GM:PlayerCharacterLoaded(player)
 	local plyTab = player:GetTable();
 	
-	player:SetLocalVar("InvWeight", config.Get("default_inv_weight"):Get())
-	player:SetLocalVar("InvSpace", config.Get("default_inv_space"):Get())
+	--player:SetLocalVar("InvWeight", config.Get("default_inv_weight"):Get())
+	--player:SetLocalVar("InvSpace", config.Get("default_inv_space"):Get())
 	plyTab.cwCharLoadedTime = CurTime()
 	plyTab.cwCrouchedSpeed = config.Get("crouched_speed"):Get()
 	plyTab.cwInitialized = true

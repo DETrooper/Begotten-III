@@ -240,9 +240,7 @@ local function Guarding(ent, dmginfo)
 		
 		return;
 	end;
-	
-	print(dmginfo:GetAttacker());
-	
+
 	if ent:Alive() then
 		local wep = ent:GetActiveWeapon()
 		--local attacksoundtable = GetSoundTable(wep.AttackSoundTable)
@@ -1153,7 +1151,7 @@ local function Guarding(ent, dmginfo)
 						dmginfo:ScaleDamage(0) 
 						
 						-- Deflection "mini stun" effect
-						if attacker:IsPlayer() and (!IsValid(inflictor) or !inflictor.isJavelin) then
+						if attacker:IsPlayer() and (!IsValid(inflictor) or !isJavelin) then
 							attacker:SetNWBool("Deflected", true);
 							
 							local delay = enemyattacktable["delay"];

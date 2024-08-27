@@ -11,7 +11,7 @@ function cwEncumberment:PlayerThink(player, curTime, infoTable, alive, initializ
 		if (!plyTab.nextEncumberedCheck or plyTab.nextEncumberedCheck < curTime) then
 			plyTab.nextEncumberedCheck = curTime + 0.5;
 			
-			if (!plyTab.inventoryWeight or !plyTab.maxWeight) then
+			if (!infoTable.inventoryWeight or !infoTable.maxWeight) then
 				plyTab.nextEncumberedCheck = curTime + 2
 				return;
 			end;
@@ -29,7 +29,7 @@ function cwEncumberment:PlayerThink(player, curTime, infoTable, alive, initializ
 				end
 			end
 			
-			if (plyTab.inventoryWeight > plyTab.maxWeight) then
+			if (infoTable.inventoryWeight > infoTable.maxWeight) then
 				bOverEncumbered = true;
 			end
 			
@@ -43,7 +43,7 @@ function cwEncumberment:PlayerThink(player, curTime, infoTable, alive, initializ
 					if (!player:IsRagdolled() and plyTab.cwObserverMode != true and player:IsRunning()) then
 						local stamina = player:GetCharacterData("Stamina");
 						
-						if ((plyTab.inventoryWeight > plyTab.maxWeight * 2) and stamina <= 40) then
+						if (infoTable.inventoryWeight > infoTable.maxWeight * 2) and stamina <= 40 then
 							player:SetCharacterData("Stamina", math.Clamp(stamina + 5, 0, player:GetMaxStamina()));
 								Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, math.random(7, 10));
 							player:EmitSound("physics/body/body_medium_break"..math.random(2, 3)..".wav", 60);
@@ -74,9 +74,8 @@ function cwEncumberment:SetupMove(player, moveData)
 end
 
 function cwEncumberment:ModifyPlayerSpeed(player, infoTable)
-	local plyTab = player:GetTable();
-	local inventoryWeight = plyTab.inventoryWeight;
-	local maxWeight = plyTab.maxWeight;
+	local inventoryWeight = infoTable.inventoryWeight;
+	local maxWeight = infoTable.maxWeight;
 
 	if inventoryWeight and maxWeight and (inventoryWeight > maxWeight) then
 		infoTable.walkSpeed = infoTable.walkSpeed / (inventoryWeight / maxWeight);
@@ -89,7 +88,7 @@ function cwEncumberment:ModifyPlayerSpeed(player, infoTable)
 			infoTable.jumpPower = infoTable.jumpPower / ((inventoryWeight / maxWeight) * 2);
 		end
 	else
-		local holdingEnt = plyTab.cwHoldingEnt;
+		local holdingEnt = player.cwHoldingEnt;
 		
 		if IsValid(holdingEnt) and holdingEnt:GetClass() == "prop_ragdoll" then
 			local ragdollPlayer = Clockwork.entity:GetPlayer(holdingEnt);

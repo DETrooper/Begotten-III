@@ -20,18 +20,17 @@ ITEM.equipmentSaveString = "backpack";
 -- Called when a player has unequipped the item.
 function ITEM:OnPlayerUnequipped(player, extraData)
 	if Clockwork.equipment:UnequipItem(player, self) then
-		local maxWeight = player:GetMaxWeight();
 		local useSound = self.useSound;
-			
-		player.cwInfoTable.inventoryWeight = maxWeight;
-		player.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
-		player.maxWeight = maxWeight;
+		local infoTable = player.cwInfoTable;
+
+		infoTable.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
+		infoTable.maxWeight = player:GetMaxWeight();
 		
-		player:SetLocalVar("InvWeight", math.ceil(player.cwInfoTable.inventoryWeight))
+		--[[player:SetLocalVar("InvWeight", math.ceil(infoTable.inventoryWeight))
 		
-		if player.cwInfoTable.inventorySpace then
-			player:SetLocalVar("InvSpace", math.ceil(player.cwInfoTable.inventorySpace))
-		end
+		if infoTable.inventorySpace then
+			player:SetLocalVar("InvSpace", math.ceil(infoTable.inventorySpace))
+		end]]--
 		
 		if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 			if (useSound) then
@@ -138,17 +137,16 @@ function ITEM:OnUse(player, itemEntity)
 			return false
 		end
 		
-		local maxWeight = player:GetMaxWeight();
-			
-		player.cwInfoTable.inventoryWeight = maxWeight;
-		player.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
-		player.maxWeight = maxWeight;
+		local infoTable = player.cwInfoTable;
+
+		infoTable.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
+		infoTable.maxWeight = player:GetMaxWeight();
 		
-		player:SetLocalVar("InvWeight", math.ceil(player.cwInfoTable.inventoryWeight))
+		--[[player:SetLocalVar("InvWeight", math.ceil(infoTable.inventoryWeight))
 		
-		if player.cwInfoTable.inventorySpace then
-			player:SetLocalVar("InvSpace", math.ceil(player.cwInfoTable.inventorySpace))
-		end
+		if infoTable.inventorySpace then
+			player:SetLocalVar("InvSpace", math.ceil(infoTable.inventorySpace))
+		end]]--
 		
 		Clockwork.equipment:EquipItem(player, self, "Backpacks")
 

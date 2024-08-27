@@ -38,37 +38,67 @@ end
 
 -- A function to get the maximum amount of weight the local player can carry.
 function Clockwork.player:GetMaxWeight()
-	local itemsList = Clockwork.inventory:GetAsItemsList(
+	--[[local itemsList = Clockwork.inventory:GetAsItemsList(
 		Clockwork.inventory:GetClient()
 	)
 
 	local weight = Clockwork.Client:GetNetVar("InvWeight") or config.GetVal("default_inv_weight")
 
-	--[[for k, v in pairs(itemsList) do
+	for k, v in pairs(itemsList) do
 		local addInvWeight = v.addInvSpace
 
 		if (addInvWeight) then
 			weight = weight + addInvWeight
 		end
 	end]]--
-
-	return weight
+	
+	local localPlayer = Clockwork.Client;
+	local backpackItem = localPlayer:GetBackpackEquipped();
+	local clothesItem = localPlayer:GetClothesEquipped();
+	local weight = config.GetVal("default_inv_weight") or 20;
+	
+	weight = hook.Run("PlayerAdjustMaxWeight", localPlayer, weight);
+	
+	-- Apply item weight buffs after belief weight buffs.
+	
+	if backpackItem and backpackItem.invSpace then
+		weight = weight + backpackItem.invSpace;
+	end
+	
+	if clothesItem and clothesItem.pocketSpace then
+		weight = weight + clothesItem.pocketSpace;
+	end;
+	
+	return weight;
 end
 
 -- A function to get the maximum amount of space the local player can carry.
 function Clockwork.player:GetMaxSpace()
-	local itemsList = Clockwork.inventory:GetAsItemsList(
+	--[[local itemsList = Clockwork.inventory:GetAsItemsList(
 		Clockwork.inventory:GetClient()
 	)
 	local space = Clockwork.Client:GetNetVar("InvSpace") or config.GetVal("default_inv_space")
 
-	--[[for k, v in pairs(itemsList) do
+	for k, v in pairs(itemsList) do
 		local addInvSpace = v.addInvVolume
 
 		if (addInvSpace) then
 			space = space + addInvSpace
 		end
 	end]]--
+	
+	local localPlayer = Clockwork.Client;
+	local backpackItem = localPlayer:GetBackpackEquipped();
+	local clothesItem = localPlayer:GetClothesEquipped();
+	local space = config.GetVal("default_inv_space") or 100;
+	
+	if backpackItem and backpackItem.invSpace then
+		weight = weight + backpackItem.invSpace;
+	end
+	
+	if clothesItem and clothesItem.pocketSpace then
+		weight = weight + clothesItem.pocketSpace;
+	end;
 
 	return space
 end
