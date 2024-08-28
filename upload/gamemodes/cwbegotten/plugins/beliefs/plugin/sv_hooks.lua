@@ -752,7 +752,7 @@ function cwBeliefs:LockpickFinished(player, entity)
 end
 
 -- Called when a player should take damage.
-function cwBeliefs:PlayerShouldTakeDamage(player, attacker, inflictor, damageInfo)
+function cwBeliefs:PlayerShouldTakeDamageNew(player, attacker, inflictor, damageInfo)
 	if (player.distortedRingFired) then
 		return false;
 	end;
@@ -1956,7 +1956,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 				else
 					data["Injuries"][i]["gash"] = true;
 					
-					data["BleedingLimbs"][Clockwork.limb.Clockwork.limb.hitgroupToString[i]] = true;
+					data["BleedingLimbs"][Clockwork.limb.hitgroupToString[i]] = true;
 				end
 				
 				if !data["LimbData"] then

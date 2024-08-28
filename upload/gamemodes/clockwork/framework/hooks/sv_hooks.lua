@@ -2031,14 +2031,14 @@ function GM:PlayerCanDeathClearRecognisedNames(player, attacker, damageInfo) ret
 
 -- Called when a player's ragdoll attempts to take damage.
 function GM:PlayerRagdollCanTakeDamage(player, ragdoll, inflictor, attacker, hitGroup, damageInfo)
-	if (!attacker:IsPlayer() and player:GetRagdollTable().immunity) then
+	if (!IsValid(attacker) or !attacker:IsPlayer() and player:GetRagdollTable().immunity) then
 		if (CurTime() <= player:GetRagdollTable().immunity) then
 			return false
 		end
 	end
 	
 	-- Stop held players from taking damage from trigger hurts.
-	if (attacker:GetClass() == "trigger_hurt") then
+	if (IsValid(attacker) and attacker:GetClass() == "trigger_hurt") then
 		if IsValid(ragdoll.cwHoldingGrab) then
 			return false;
 		end
@@ -3556,7 +3556,7 @@ end
 function GM:PrePlayerTakeDamage(player, attacker, inflictor, damageInfo) end
 
 -- Called when a player should take damage.
-function GM:PlayerShouldTakeDamage(player, attacker, inflictor, damageInfo)
+function GM:PlayerShouldTakeDamageNew(player, attacker, inflictor, damageInfo)
 	if Clockwork.player:IsNoClipping(player) then
 		return false;
 	end
@@ -3953,8 +3953,7 @@ function GM:EntityTakeDamage(entity, damageInfo)
 			return false
 		end
 
-		if ((IsValid(inflictor) and inflictor:IsBeingHeld())
-		or attacker:IsBeingHeld()) then
+		if ((IsValid(inflictor) and inflictor:IsBeingHeld()) or (IsValid(attacker) and attacker:IsBeingHeld())) then
 			damageInfo:SetDamage(0)
 			return false
 		end

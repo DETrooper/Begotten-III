@@ -2842,7 +2842,7 @@ function Schema:PostPlayerTakeFromStorage(player, storageTable, itemTable)
 end
 
 -- Called when a player should take damage.
-function Schema:PlayerShouldTakeDamage(player, attacker, inflictor, damageInfo)
+function Schema:PlayerShouldTakeDamageNew(player, attacker, inflictor, damageInfo)
 	if (player.cwWakingUp) then
 		return false;
 	end;
