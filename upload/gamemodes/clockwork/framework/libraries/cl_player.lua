@@ -93,11 +93,11 @@ function Clockwork.player:GetMaxSpace()
 	local space = config.GetVal("default_inv_space") or 100;
 	
 	if backpackItem and backpackItem.invSpace then
-		weight = weight + backpackItem.invSpace;
+		space = space + backpackItem.invSpace;
 	end
 	
 	if clothesItem and clothesItem.pocketSpace then
-		weight = weight + clothesItem.pocketSpace;
+		space = space + clothesItem.pocketSpace;
 	end;
 
 	return space
