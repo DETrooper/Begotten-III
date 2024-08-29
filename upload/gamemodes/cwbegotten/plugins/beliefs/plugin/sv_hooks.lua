@@ -752,7 +752,7 @@ function cwBeliefs:LockpickFinished(player, entity)
 end
 
 -- Called when a player should take damage.
-function cwBeliefs:PlayerShouldTakeDamageNew(player, attacker, inflictor, damageInfo)
+function cwBeliefs:PlayerShouldTakeDamage(player, attacker)
 	if (player.distortedRingFired) then
 		return false;
 	end;
@@ -1387,6 +1387,12 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 				
 				entity:SetLocalVar("Hatred", hatred);
 			end
+		end
+		
+		local action = Clockwork.player:GetAction(entity);
+		
+		if action == "reloading" or action == "heal" or action == "healing" or action == "pickupragdoll" then
+			Clockwork.player:ExtendAction(entity, 1);
 		end
 	end
 

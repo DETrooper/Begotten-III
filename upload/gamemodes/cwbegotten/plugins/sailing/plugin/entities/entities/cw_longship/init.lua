@@ -53,7 +53,7 @@ function ENT:Think()
 					self.nextNPCCheck = curTime + math.random(3, 10);
 					
 					-- Thrall combat encounters when sailing through the Styx.
-					self.maxNPCs = math.max(1, #self.playersOnBoard / 3);
+					self.maxNPCs = math.min(2, math.max(1, #self.playersOnBoard / 5));
 					
 					if !self.spawnedNPCs then
 						self.spawnedNPCs = {};
@@ -89,7 +89,7 @@ function ENT:Think()
 									local entity = cwZombies:SpawnThrall(npcName, spawnPos, Angle(0, math.random(1, 359), 0));
 
 									if IsValid(entity) then
-										entity:SetMaterial("models/props_lab/Tank_Glass001");
+										entity:SetMaterial("models/props_combine/com_shield001a");
 										entity.noCatalysts = true;
 										
 										for i, v in RandomPairs(self.playersOnBoard) do

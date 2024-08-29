@@ -2842,11 +2842,14 @@ function Schema:PostPlayerTakeFromStorage(player, storageTable, itemTable)
 end
 
 -- Called when a player should take damage.
-function Schema:PlayerShouldTakeDamageNew(player, attacker, inflictor, damageInfo)
+function Schema:PlayerShouldTakeDamage(player, attacker)
 	if (player.cwWakingUp) then
 		return false;
 	end;
-	
+end
+
+-- Called when a player should take damage.
+function Schema:PlayerShouldTakeDamageNew(player, attacker, inflictor, damageInfo)
 	-- rubber johnny flags
 	if (player:IsPlayer() and attacker:IsPlayer()) then
 		local hasFlags = Clockwork.player:HasFlags(player, "6");
