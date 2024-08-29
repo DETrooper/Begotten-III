@@ -21,6 +21,7 @@ ENT.ArmorPiercing = 50;
 ENT.SpawnHealth = 40
 ENT.StaminaDamage = 30;
 ENT.XPValue = 50;
+ENT.MaxMultiHit = 1;
 
 -- Regen --
 

@@ -83,6 +83,8 @@ if SERVER then
 	end
 
 	function ENT:SetEnemy(enemy)
+		if self:IsAttacking() then return false end;
+	
 		if enemy ~= self:GetNW2Entity("DrGBaseEnemy") then
 			self:SetNW2Entity("DrGBaseEnemy", enemy)
 		end

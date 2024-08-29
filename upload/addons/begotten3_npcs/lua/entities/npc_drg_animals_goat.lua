@@ -18,6 +18,7 @@ ENT.OnDamageSounds = {"goat/idle1.wav"}
 ENT.ArmorPiercing = 10;
 ENT.SpawnHealth = 60
 ENT.XPValue = 25;
+ENT.MaxMultiHit = 1;
 
 -- Regen --
 

@@ -45,6 +45,7 @@ ENT.ClimbUpAnimation = ACT_ZOMBIE_CLIMB_UP--ACT_ZOMBIE_CLIMB_UP --pull_grenade
 ENT.ClimbOffset = Vector(-14, 0, 0)
 ENT.ArmorPiercing = 10;
 ENT.Damage = 10;
+ENT.MaxMultiHit = 1;
 -- Detection --
 ENT.EyeBone = "ValveBiped.Bip01_Spine4"
 ENT.EyeOffset = Vector(7.5, 0, 5)

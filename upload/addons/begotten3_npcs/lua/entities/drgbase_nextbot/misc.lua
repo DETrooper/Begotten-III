@@ -211,6 +211,7 @@ if SERVER then
 				if ent == self then continue end
 				if not DrGBase.CanAttack(ent) then continue end
 				if not self:Visible(ent) then continue end
+				if self.maxMultiHit and i > self.MaxMultiHit then break end
 				local trace = false
 				local origin = self:WorldSpaceCenter()
 				local aimAt = ent:WorldSpaceCenter()

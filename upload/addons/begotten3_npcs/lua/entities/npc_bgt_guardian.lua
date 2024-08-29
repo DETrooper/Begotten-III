@@ -106,6 +106,8 @@ ENT.ArmorPiercing = 80;
 
 ENT.Damage = 25;
 
+ENT.MaxMultiHit = 1;
+
 
 
 -- Detection --
