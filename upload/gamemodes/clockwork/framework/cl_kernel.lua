@@ -2237,6 +2237,7 @@ function Clockwork.kernel:CreateDermaToolTip(panel)
 	-- A function to set the panel's associated item table.
 	function panel.SetItemTable(panel, itemTable, bWeightless)
 		if (itemTable and !table.IsEmpty(itemTable)) then
+			panel.itemTable = itemTable;
 			panel.itemID = itemTable.itemID;
 			panel.bWeightless = bWeightless or true;
 		end;
@@ -2250,7 +2251,7 @@ function Clockwork.kernel:CreateDermaToolTip(panel)
 
 	-- A function to get the panel's associated item table.
 	function panel.GetItemTable(panel)
-		return item.FindInstance(panel.itemID);
+		return item.FindInstance(panel.itemID) or panel.itemTable;
 	end;
 
 	-- Called when the panel is removed.
