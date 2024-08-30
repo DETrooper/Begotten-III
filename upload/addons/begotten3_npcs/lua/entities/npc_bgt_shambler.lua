@@ -276,7 +276,6 @@ end
 	self:OnRangeAttack()
   end;
   function ENT:OnAnimEvent()
-	local sha = false
     if self:IsAttacking() and self:GetCycle() > 0.3 then
       self:Attack({
         damage = self.Damage,

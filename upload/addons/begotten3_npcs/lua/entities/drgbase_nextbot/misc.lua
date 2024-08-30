@@ -211,7 +211,7 @@ if SERVER then
 				if ent == self then continue end
 				if not DrGBase.CanAttack(ent) then continue end
 				if not self:Visible(ent) then continue end
-				if self.maxMultiHit and i > self.MaxMultiHit then break end
+				if self.MaxMultiHit and i > self.MaxMultiHit then break end
 				local trace = false
 				local origin = self:WorldSpaceCenter()
 				local aimAt = ent:WorldSpaceCenter()
@@ -260,6 +260,11 @@ if SERVER then
 					trace = self:TraceLine(origin:DrG_Direction(aimAt))
 				end
 				dmg:SetDamage(isfunction(attack.damage) and attack.damage(ent, origin) or attack.damage)
+				
+				if self.MaxMultiHit then
+					dmg:ScaleDamage(1 / i);
+				end
+				
 				if attack.trace and trace and trace.Entity == ent then
 					dmg:SetReportedPosition(trace.HitPos)
 					dmg:SetDamagePosition(trace.HitPos)

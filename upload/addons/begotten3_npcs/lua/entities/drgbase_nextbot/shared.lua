@@ -201,6 +201,7 @@ function ENT:Initialize()
 	end)
 	self:_BaseInitialize()
 	self:CustomInitialize()
+	self:InitBounds()
 	if SERVER then
 		self._DrGBaseRelationshipReady = true
 		self:UpdateRelationships()
@@ -209,8 +210,17 @@ function ENT:Initialize()
 		self:UpdateAI()
 	end
 end
+
+function ENT:InitBounds()
+    if self:GetSurroundingBounds() == self:WorldSpaceAABB() then
+        local collisionMin, collisionMax = self:GetCollisionBounds()
+        self:SetSurroundingBounds(Vector(collisionMin.x * 1.8, collisionMin.y * 1.8, collisionMin.z * 1.8), Vector(collisionMax.x * 1.8, collisionMax.y * 1.8, collisionMax.z * 1.8))
+    end
+end
+
 function ENT:_BaseInitialize() end
 function ENT:CustomInitialize() end
+
 function ENT:_InitModules()
 	if SERVER then
 		self:_InitLocomotion()
@@ -242,7 +252,7 @@ function ENT:Think()
 			local pos = self:GetPos();
 			local tr = util.TraceLine({start = pos, endpos = pos - self:GetUp(), filter = self});
 			
-			if tr.HitSky then
+			if tr.HitSky or tr.HitNoDraw then
 				self:Remove();
 				return;
 			end

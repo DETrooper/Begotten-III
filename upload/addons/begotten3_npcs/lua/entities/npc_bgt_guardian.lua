@@ -440,9 +440,6 @@ if SERVER then
 	end;
 	
 	function ENT:OnAnimEvent()
-		
-		local sha = false
-		
 		if self:IsAttacking() and self:GetCycle() > 0.3 then
 			
 			self:Attack({
