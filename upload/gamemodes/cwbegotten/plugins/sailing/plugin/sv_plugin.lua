@@ -686,8 +686,12 @@ function cwSailing:MoveLongship(longshipEnt, location)
 						--timer.Create("TravelTimer_"..tostring(longshipEnt:EntIndex()), 30, 1, function() -- for testing
 						local duration = math.random(180, 240);
 						
-						if IsValid(longshipEnt.owner) and longshipEnt.owner:GetSubfaction() == "Clan Harald" then
-							duration = math.random(90, 150);
+						if longshipEnt.longshipType == "ironclad" then
+							duration = math.random(60, 90);
+						else
+							if IsValid(longshipEnt.owner) and longshipEnt.owner:GetSubfaction() == "Clan Harald" then
+								duration = math.random(90, 150);
+							end
 						end
 						
 						if longshipEnt.destination == "hell" then

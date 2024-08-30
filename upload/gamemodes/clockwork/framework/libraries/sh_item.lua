@@ -924,7 +924,8 @@ function item.CreateInstance(uniqueID, itemID, data, bNoGenerate)
 		end;
 		
 		if (data) then
-			table.Merge(item.instances[itemID].data, data);
+			--table.Merge(item.instances[itemID].data, data);
+			item.instances[itemID].data = data;
 		end;
 		
 		if generated then
