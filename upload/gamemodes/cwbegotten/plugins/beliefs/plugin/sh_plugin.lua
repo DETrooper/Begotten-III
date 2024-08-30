@@ -1102,7 +1102,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				local radius = config.Get("talk_radius"):Get() * 2;
 				local playerPos = player:GetPos();
 				
-				player:HandleSanity(3);
+				player:HandleSanity(5);
 				
 				for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 					local isPlayer = v:IsPlayer();
@@ -1217,7 +1217,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 					if player.bloodHowlActive then
 						if cwStamina then
 							local stamina = player:GetCharacterData("Stamina");
-							local new_stamina = math.Clamp(stamina + 90, 0, player:GetMaxStamina());
+							local new_stamina = math.Clamp(stamina + 60, 0, player:GetMaxStamina());
 							
 							player:SetCharacterData("Stamina", new_stamina);
 							player:SetNWInt("Stamina", new_stamina);

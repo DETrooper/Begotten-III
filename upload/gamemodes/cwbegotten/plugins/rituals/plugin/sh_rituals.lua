@@ -385,7 +385,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("bloodhowl");
 	RITUAL.name = "(T2) Bloodhowl";
-	RITUAL.description = "The thrill of battle empowers you! Performing this ritual will make your war cries restore 90 points of stamina for 40 minutes. Incurs 10 corruption.";
+	RITUAL.description = "The thrill of battle empowers you! Performing this ritual will make your war cries restore 60 points of stamina for 40 minutes. Incurs 10 corruption.";
 	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"down_catalyst", "familial_catalyst", "pantheistic_catalyst"};
@@ -896,7 +896,7 @@ RITUAL = cwRituals.rituals:New("cloak_of_the_black_hat");
 	RITUAL.description = "Any child knows how to hide in the darkness. The Black Hat brings the darkness with them, stalking the halls of the nobility who falsely believe themselves to be safe and sound. They'll never be alone again. Performing this ritual will cause you to go invisible while crouched for the next 30 minutes, but you will be unable to attack while cloaked. Incurs 25 corruption.";
 	RITUAL.requiredSubfaction = {"Kinisger"}; -- Subfaction Ritual
 	
-	RITUAL.requirements = {"pentagram_catalyst", "xolotl_catalyst", "ice_catalyst"};
+	RITUAL.requirements = {"pentagram_catalyst", "ice_catalyst", "ice_catalyst"};
 	RITUAL.corruptionCost = 25; -- Corruption gets added once the UI is closed.
 	RITUAL.ritualTime = 15;
 	
@@ -1397,10 +1397,10 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("eye_of_the_storm");
 	RITUAL.name = "(Unique) Eye of the Storm";
-	RITUAL.description = "The Haraldrs claim that each strike of thunder comes from the Old Son's War Axe as He chops down sky-beasts that bleed rain upon the lands. The Crasters claim that the storm clouds are from The Mother, who weeps to bring forth new life in the cycle of nature. The clans may disagree, but nonetheless they both benefit from the salty waters that drown their many foes. Performing this ritual will summon a thunderstorm within a minute of being performed. Incurs 50 corruption.";
+	RITUAL.description = "The Haraldrs claim that each strike of thunder comes from the Old Son's War Axe as He chops down sky-beasts that bleed rain upon the lands. The Crasters claim the storm clouds are from The Mother, who weeps to bring forth new life. Performing this ritual will summon a thunderstorm within a minute of being performed. Incurs 50 corruption.";
 	RITUAL.onerequiredbelief = {"daring_trout", "watchful_raven"}; -- Unique Mother/Old Son Ritual
 	
-	RITUAL.requirements = {"purifying_stone", "up_catalyst", "xolotl_catalyst"};
+	RITUAL.requirements = {"purifying_stone", "up_catalyst", "elysian_catalyst"};
 	RITUAL.corruptionCost = 50;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 150;
@@ -1500,11 +1500,11 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("rooting");
 	RITUAL.name = "(T1) Rooting";
-	RITUAL.description = "When the incessant demonic chanting drives you angry, consider banishing them back to the hells that birthed them. Performing this ritual will remove 45 points of corruption.";
+	RITUAL.description = "When the incessant demonic chanting drives you angry, consider banishing them back to the hells that birthed them. Performing this ritual will remove 65 points of corruption.";
 	RITUAL.onerequiredbelief = {"honor_the_gods", "one_with_the_druids", "the_black_sea", "witch_druid"}; -- Tier I Faith of the Family Ritual
 	
 	RITUAL.requirements = {"pantheistic_catalyst", "familial_catalyst", "familial_catalyst"};
-	RITUAL.corruptionCost = -45;
+	RITUAL.corruptionCost = -65;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 50;
 	
@@ -2157,6 +2157,100 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 			
 			timer.Simple(0.5, function()
 				local entity = ents.Create("npc_drg_animals_snowleopard_spirit");
+				
+				if IsValid(entity) then
+					entity:Spawn();
+					entity:SetHealth(475);
+					entity:Activate(); 
+					entity:SetMaterial("models/props_combine/portalball001_sheet")
+					entity:AddEntityRelationship(player, D_LI, 99);
+					entity.XPValue = 250;
+					
+					entity.summonedFaith = playerFaith;
+					
+					for k, v in pairs(_player.GetAll()) do
+						if v:GetFaith() == playerFaith then
+							entity:AddEntityRelationship(v, D_LI, 99);
+						else					
+							local faction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
+							
+							if faction == "Goreic Warrior" then
+								entity:AddEntityRelationship(v, D_LI, 99);
+							end
+						end
+					end
+					
+					if !cwRituals.summonedNPCs then
+						cwRituals.summonedNPCs = {};
+					end
+					
+					table.insert(cwRituals.summonedNPCs, entity);
+					
+					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as a creature of the Gore Forest suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
+				end
+			end);
+		else
+			Schema:EasyText(player, "firebrick", "You cannot summon that far away!");
+			
+			return false;
+		end;
+	end;
+RITUAL:Register()
+
+RITUAL = cwRituals.rituals:New("summon_familiar_elk");
+	RITUAL.name = "(T3) Summon Familiar (Elk)";
+	RITUAL.description = "Summon a spirit elk from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. 5 second cast time. Incurs 5 corruption.";
+	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
+	
+	RITUAL.requirements = {"elysian_catalyst", "trinity_catalyst", "elysian_catalyst"};
+	RITUAL.corruptionCost = 5;
+	RITUAL.ritualTime = 5;
+	RITUAL.experience = 50;
+	
+	function RITUAL:OnPerformed(player)
+		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit elk near their position!");
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		local lastZone = player:GetCharacterData("LastZone");
+		
+		if lastZone == "theater" or lastZone == "tower" then
+			if Schema.towerSafeZoneEnabled then
+				Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+				return false;
+			end
+		end
+		
+		local trace = player:GetEyeTraceNoCursor();
+		
+		if (trace.HitPos:Distance(player:GetShootPos()) > 192) then
+			Schema:EasyText(player, "firebrick", "You cannot summon that far away!");
+			
+			return false;
+		end;
+	end;
+	function RITUAL:EndRitual(player)
+		local lastZone = player:GetCharacterData("LastZone");
+		
+		if lastZone == "theater" or lastZone == "tower" then
+			if Schema.towerSafeZoneEnabled then
+				Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+				return false;
+			end
+		end
+		
+		local trace = player:GetEyeTraceNoCursor();
+		
+		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
+			local playerFaith = player:GetFaith();
+			
+			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
+			sound.Play("misc/summon.wav",trace.HitPos, 100, 100)
+			
+			timer.Simple(0.5, function()
+				local entity = ents.Create("npc_drg_animals_deer_spirit");
 				
 				if IsValid(entity) then
 					entity:Spawn();

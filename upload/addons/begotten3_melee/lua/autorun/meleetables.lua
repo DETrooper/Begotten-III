@@ -1730,10 +1730,10 @@ AttackTables.SkylightSwordAttackTable = {
 	["altmeleearc"] = 15,
 	["armorpiercing"] = 55,
 	["altarmorpiercing"] = 90,
-	["poisedamage"] = 30,
-	["stabilitydamage"] = 0,
+	["poisedamage"] = 55,
+	["stabilitydamage"] = 25,
 	["takeammo"] = 8,
-	["delay"] = 1.3,
+	["delay"] = 1.2,
 	["striketime"] = 0.6,
 	["meleearc"] = 55,
 	["meleerange"] = 1120,
@@ -2194,7 +2194,7 @@ AttackTables.SteelClawsAttackTable = {
 -- Daggers
 
 AttackTables.IronDaggerAttackTable = {
-	["primarydamage"] = 10,
+	["primarydamage"] = 12,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -2213,7 +2213,7 @@ AttackTables.IronDaggerAttackTable = {
 };
 
 AttackTables.BoneDaggerAttackTable = {
-	["primarydamage"] = 12,
+	["primarydamage"] = 10,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -2232,7 +2232,7 @@ AttackTables.BoneDaggerAttackTable = {
 };
 
 AttackTables.GoreHuntingDaggerAttackTable = {
-	["primarydamage"] = 14,
+	["primarydamage"] = 15,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -2270,7 +2270,7 @@ AttackTables.QuickshankAttackTable = {
 };
 
 AttackTables.ParryingDaggerAttackTable = {
-	["primarydamage"] = 12,
+	["primarydamage"] = 13,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -2289,7 +2289,7 @@ AttackTables.ParryingDaggerAttackTable = {
 };
 
 AttackTables.KnightsbaneAttackTable = {
-	["primarydamage"] = 12,
+	["primarydamage"] = 14,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
