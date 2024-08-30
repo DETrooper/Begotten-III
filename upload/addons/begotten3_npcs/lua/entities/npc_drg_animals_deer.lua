@@ -149,7 +149,7 @@ end
         damage = 14,
         range = 60,
         delay = 0,
-        type = DMG_SLASH,
+        type = DMG_CLUB,
         viewpunch = Angle(20, math.random(-10, 10), 0),
       }, function(self, hit)
         if #hit > 0 then
