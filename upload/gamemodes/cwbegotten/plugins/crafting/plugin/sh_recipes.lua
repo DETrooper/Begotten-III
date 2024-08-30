@@ -965,7 +965,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Crafted Bandage";
 		RECIPE.requiredBeliefs = {"ingenious"};
 		RECIPE.requirements = {
-			["cloth"] = {amount = 2},
+			["cloth"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["crafted_bandage"] = {amount = 1},
@@ -1043,7 +1043,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Skintape";
 		RECIPE.requiredBeliefs = {"primeval"};
 		RECIPE.requirements = {
-			["humanmeat"] = {amount = 2},
+			["humanmeat"] = {amount = 3},
 		};
 		RECIPE.result = {
 			["skintape"] = {amount = 1},
@@ -1069,8 +1069,8 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Skingauze";
 		RECIPE.requiredBeliefs = {"primeval"};
 		RECIPE.requirements = {
-			["humanmeat"] = {amount = 3},
-			["human_bone"] = {amount = 2},
+			["humanmeat"] = {amount = 5},
+			["human_bone"] = {amount = 4},
 		};
 		RECIPE.result = {
 			["skingauze"] = {amount = 1},
@@ -2662,7 +2662,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 3},
+			["steel_ingot"] = {amount = 2},
 			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
@@ -2673,7 +2673,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 25;
+		RECIPE.experience = 55;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -2691,7 +2691,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 3},
+			["steel_ingot"] = {amount = 2},
 			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
@@ -2702,7 +2702,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 25;
+		RECIPE.experience = 55;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -2732,7 +2732,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 25;
+		RECIPE.experience = 40;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -3107,7 +3107,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 2;
+		RECIPE.experience = 0;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -3133,7 +3133,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 3;
+		RECIPE.experience = 2;
 		
 		function RECIPE:OnCraft(player)
 		end;
