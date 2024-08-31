@@ -1275,7 +1275,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				
 				player.lastWarCry = curTime + 60;
 			else
-				Schema:EasyText(player, "firebrick", "You cannot war cry again for "..tostring(math.Round(player.lastWarCry - curTime)).." more seconds!");
+				Schema:EasyText(player, "firebrick", "You cannot war cry again for "..tostring(math.ceil(player.lastWarCry - curTime)).." more seconds!");
 			end
 		else
 			Schema:EasyText(player, "firebrick", "You are not of the correct subfaith to do this!");

@@ -1697,10 +1697,17 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 	
 	function RITUAL:OnPerformed(player)
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning an Eddie near their position!");
+		
+		player.nextRitualSummon = CurTime() + 180;
 	end;
 	function RITUAL:OnFail(player)
 	end;
 	function RITUAL:StartRitual(player)
+		if player.nextRitualSummon and player.nextRitualSummon > CurTime() then
+			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - curTime)).." more seconds!");
+			return false;
+		end
+	
 		local lastZone = player:GetCharacterData("LastZone");
 		
 		if lastZone == "theater" or lastZone == "tower" then
@@ -1800,10 +1807,17 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 	
 	function RITUAL:OnPerformed(player)
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning an Otis near their position!");
+		
+		player.nextRitualSummon = CurTime() + 180;
 	end;
 	function RITUAL:OnFail(player)
 	end;
 	function RITUAL:StartRitual(player)
+		if player.nextRitualSummon and player.nextRitualSummon > CurTime() then
+			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - curTime)).." more seconds!");
+			return false;
+		end
+	
 		local lastZone = player:GetCharacterData("LastZone");
 		
 		if lastZone == "theater" or lastZone == "tower" then
@@ -1902,10 +1916,17 @@ RITUAL = cwRituals.rituals:New("summon_sprinter");
 	
 	function RITUAL:OnPerformed(player)
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Sprinter' ritual, spawning 2 sprinters near their position! God save their enemies.");
+		
+		player.nextRitualSummon = CurTime() + 180;
 	end;
 	function RITUAL:OnFail(player)
 	end;
 	function RITUAL:StartRitual(player)
+		if player.nextRitualSummon and player.nextRitualSummon > CurTime() then
+			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - curTime)).." more seconds!");
+			return false;
+		end
+		
 		local lastZone = player:GetCharacterData("LastZone");
 		
 		if lastZone == "gore_tree" or lastZone == "gore_hallway" or lastZone == "gore" or lastZone == "sea_rough" or lastZone == "sea_calm" or lastZone == "sea_styx" or lastZone == "gore_soil" then
@@ -2016,10 +2037,17 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 	
 	function RITUAL:OnPerformed(player)
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit bear near their position!");
+		
+		player.nextRitualSummon = CurTime() + 180;
 	end;
 	function RITUAL:OnFail(player)
 	end;
 	function RITUAL:StartRitual(player)
+		if player.nextRitualSummon and player.nextRitualSummon > CurTime() then
+			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - curTime)).." more seconds!");
+			return false;
+		end
+		
 		local lastZone = player:GetCharacterData("LastZone");
 		
 		if lastZone == "theater" or lastZone == "tower" then
@@ -2116,10 +2144,17 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 	
 	function RITUAL:OnPerformed(player)
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit leopard near their position!");
+		
+		player.nextRitualSummon = CurTime() + 180;
 	end;
 	function RITUAL:OnFail(player)
 	end;
 	function RITUAL:StartRitual(player)
+		if player.nextRitualSummon and player.nextRitualSummon > CurTime() then
+			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - curTime)).." more seconds!");
+			return false;
+		end
+		
 		local lastZone = player:GetCharacterData("LastZone");
 		
 		if lastZone == "theater" or lastZone == "tower" then
@@ -2210,10 +2245,17 @@ RITUAL = cwRituals.rituals:New("summon_familiar_elk");
 	
 	function RITUAL:OnPerformed(player)
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit elk near their position!");
+		
+		player.nextRitualSummon = CurTime() + 180;
 	end;
 	function RITUAL:OnFail(player)
 	end;
 	function RITUAL:StartRitual(player)
+		if player.nextRitualSummon and player.nextRitualSummon > CurTime() then
+			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - curTime)).." more seconds!");
+			return false;
+		end
+		
 		local lastZone = player:GetCharacterData("LastZone");
 		
 		if lastZone == "theater" or lastZone == "tower" then

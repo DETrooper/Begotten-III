@@ -157,7 +157,7 @@ local COMMAND = Clockwork.command:New("ItemSpawnerInfo")
 		if cwItemSpawner.SuperCrate then
 			message = message.."\nSupercrate currently exists!";
 		elseif cwItemSpawner.nextSuperCrate then
-			message = message.."\nSupercrate is on cooldown for "..tostring(math.Round(cwItemSpawner.nextSuperCrate - CurTime())).." more seconds!";
+			message = message.."\nSupercrate is on cooldown for "..tostring(math.ceil(cwItemSpawner.nextSuperCrate - CurTime())).." more seconds!";
 		end
 		
 		Schema:EasyText(player, "cornflowerblue", "["..self.name.."] "..message);
