@@ -3,6 +3,14 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
+local function IsAreaClear(position, radius)
+	for k, v in pairs (ents.FindInSphere(position, radius)) do
+		if v:IsPlayer() or v:IsNPC() or v:IsNextBot() then
+			return false;
+		end
+	end
+end
+
 local RITUAL = cwRituals.rituals:New("purifying_stone_rite");
 	RITUAL.name = "(T2) Purifying Stone Rite";
 	RITUAL.description = "Imbueing something with not only purity, but the ability to spread its purified nature to its surroundings is an act of faith practiced by few. Performing this ritual summons a Purifying Stone item. Removes 10 corruption.";
@@ -326,8 +334,12 @@ RITUAL = cwRituals.rituals:New("aura_of_the_mother");
 
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("auraMotherActive", true);
+		
+		local auraMotherTick = 0;
 	
 		timer.Create("auraMotherTimer_"..player:EntIndex(), 5, 120, function() 
+			auraMotherTick = auraMotherTick + 1;
+			
 			if IsValid(player) then
 				for k, v in pairs (ents.FindInSphere(player:GetPos(), config.Get("talk_radius"):Get())) do
 					if (v:IsPlayer() and v:GetFaith() == "Faith of the Family") then
@@ -335,12 +347,10 @@ RITUAL = cwRituals.rituals:New("aura_of_the_mother");
 						v:ModifyBloodLevel(150);
 					end
 				end
-			end
-		end);
-		
-		timer.Simple(600, function()
-			if IsValid(player) then
-				player:SetNetVar("auraMotherActive", false);
+				
+				if auraMotherTick == 120 then
+					player:SetNetVar("auraMotherActive", false);
+				end
 			end
 		end);
 	end;
@@ -903,7 +913,7 @@ RITUAL = cwRituals.rituals:New("cloak_of_the_black_hat");
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("kinisgerCloak", true);
 		
-		timer.Simple(1800, function()
+		timer.Create("KinisgerCloakTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("kinisgerCloak", false) then
 					player:SetNetVar("kinisgerCloak", false);
@@ -1686,7 +1696,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("summon_eddie");
 	RITUAL.name = "(T3) Summon Demon (Eddie)";
-	RITUAL.description = "Summon a Begotten Thrall that has become the host of a hell demon. It will be hostile towards anyone not of the Faith of the Dark. 10 second cast time. Incurs 15 corruption.";
+	RITUAL.description = "Summon a Begotten Thrall that has become the host of a hell demon. It will be hostile towards anyone not of the Faith of the Dark. 10 second cast time. Adds a 3 minute cooldown to all summons. Incurs 15 corruption.";
 	RITUAL.onerequiredbelief = {"sorcerer"}; -- Tier III Faith of the Dark Ritual
 	RITUAL.requiredBeliefsSubfactionOverride = {["Rekh-khet-sa"] = {"embrace_the_darkness"}}; -- Tier III Faith of the Dark Ritual
 	
@@ -1729,6 +1739,12 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 			
 			return false;
 		end;
+		
+		if !IsAreaClear(trace.HitPos, 64) then
+			Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+			
+			return false;
+		end
 	end;
 	function RITUAL:EndRitual(player)
 		local lastZone = player:GetCharacterData("LastZone");
@@ -1748,7 +1764,11 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
-			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
+			if !IsAreaClear(trace.HitPos, 64) then
+				Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+				
+				return false;
+			end
 
 			local playerFaith = player:GetFaith();
 			
@@ -1796,7 +1816,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("summon_otis");
 	RITUAL.name = "(T3) Summon Demon (Otis)";
-	RITUAL.description = "Summon a strong chainsaw-wielding Begotten Thrall that has become the host of a hell demon. It will be hostile towards anyone not of the Faith of the Dark. 15 second cast time. Incurs 25 corruption.";
+	RITUAL.description = "Summon a strong chainsaw-wielding Begotten Thrall that has become the host of a hell demon. It will be hostile towards anyone not of the Faith of the Dark. 15 second cast time. Adds a 3 minute cooldown to all summons. Incurs 25 corruption.";
 	RITUAL.onerequiredbelief = {"sorcerer"}; -- Tier III Faith of the Dark Ritual
 	RITUAL.requiredBeliefsSubfactionOverride = {["Rekh-khet-sa"] = {"embrace_the_darkness"}}; -- Tier III Faith of the Dark Ritual
 	
@@ -1839,6 +1859,12 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 			
 			return false;
 		end;
+		
+		if !IsAreaClear(trace.HitPos, 64) then
+			Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+			
+			return false;
+		end
 	end;
 	function RITUAL:EndRitual(player)
 		local lastZone = player:GetCharacterData("LastZone");
@@ -1858,8 +1884,12 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
-			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
-
+			if !IsAreaClear(trace.HitPos, 64) then
+				Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+				
+				return false;
+			end
+			
 			local playerFaith = player:GetFaith();
 			
 			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
@@ -1905,7 +1935,7 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 
 RITUAL = cwRituals.rituals:New("summon_sprinter");
 	RITUAL.name = "(T3) Summon Demon (Sprinters)";
-	RITUAL.description = "Summon two Begotten Sprinters that have been possessed by loyal demons. They will be hostile towards anyone not of the Faith of the Dark. May their patron deity save your enemies. 15 second cast time. Incurs 25 corruption.";
+	RITUAL.description = "Summon two Begotten Sprinters that have been possessed by loyal demons. They will be hostile towards anyone not of the Faith of the Dark. May their patron deity save your enemies. 15 second cast time. Adds a 3 minute cooldown to all summons. Incurs 25 corruption.";
 	RITUAL.onerequiredbelief = {"sorcerer"}; -- Tier III Faith of the Dark Ritual
 	RITUAL.requiredBeliefsSubfactionOverride = {["Rekh-khet-sa"] = {"embrace_the_darkness"}}; -- Tier III Faith of the Dark Ritual
 	
@@ -1948,6 +1978,12 @@ RITUAL = cwRituals.rituals:New("summon_sprinter");
 			
 			return false;
 		end;
+		
+		if !IsAreaClear(trace.HitPos, 64) then
+			Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+			
+			return false;
+		end
 	end;
 	function RITUAL:EndRitual(player)
 		local lastZone = player:GetCharacterData("LastZone");
@@ -1969,7 +2005,11 @@ RITUAL = cwRituals.rituals:New("summon_sprinter");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
-			--Schema:EasyText(player, "maroon", "The ground opens up beneath you, and a creature of hell crawls out! What have you done?!");
+			if !IsAreaClear(trace.HitPos, 64) then
+				Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+				
+				return false;
+			end
 
 			local positions = {
 				["1"] = trace.HitPos + (player:GetRight() * 25),
@@ -2027,7 +2067,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 	RITUAL.name = "(T3) Summon Familiar (Bear)";
-	RITUAL.description = "Summon a spirit bear from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. 15 second cast time. Incurs 25 corruption.";
+	RITUAL.description = "Summon a spirit bear from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. 15 second cast time. Adds a 3 minute cooldown to all summons. Incurs 25 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
 	RITUAL.requirements = {"xolotl_catalyst", "familial_catalyst", "xolotl_catalyst"};
@@ -2064,6 +2104,12 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 			
 			return false;
 		end;
+		
+		if !IsAreaClear(trace.HitPos, 64) then
+			Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+			
+			return false;
+		end
 	end;
 	function RITUAL:EndRitual(player)
 		local lastZone = player:GetCharacterData("LastZone");
@@ -2078,6 +2124,12 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
+			if !IsAreaClear(trace.HitPos, 64) then
+				Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+				
+				return false;
+			end
+			
 			local playerFaith = player:GetFaith();
 			
 			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
@@ -2093,9 +2145,6 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 					entity:SetMaterial("models/props_combine/portalball001_sheet")
 					entity:AddEntityRelationship(player, D_LI, 99);
 					entity.XPValue = 250;
-					
-					print(entity);
-					
 					entity.summonedFaith = playerFaith;
 					
 					for k, v in pairs(_player.GetAll()) do
@@ -2115,12 +2164,9 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 					end
 					
 					table.insert(cwRituals.summonedNPCs, entity);
-					
-					print(entity:GetPos());
-					
+
 					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
 					
-					print(entity:GetPos());
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as a creature of the Gore Forest suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
 				end
 			end);
@@ -2134,7 +2180,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 	RITUAL.name = "(T3) Summon Familiar (Leopard)";
-	RITUAL.description = "Summon a spirit leopard from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. 10 second cast time. Incurs 20 corruption.";
+	RITUAL.description = "Summon a spirit leopard from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. 10 second cast time. Adds a 2 minute cooldown to all summons. Incurs 20 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
 	RITUAL.requirements = {"xolotl_catalyst", "pantheistic_catalyst", "trinity_catalyst"};
@@ -2145,7 +2191,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 	function RITUAL:OnPerformed(player)
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit leopard near their position!");
 		
-		player.nextRitualSummon = CurTime() + 180;
+		player.nextRitualSummon = CurTime() + 120;
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -2171,6 +2217,12 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 			
 			return false;
 		end;
+		
+		if !IsAreaClear(trace.HitPos, 64) then
+			Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+			
+			return false;
+		end
 	end;
 	function RITUAL:EndRitual(player)
 		local lastZone = player:GetCharacterData("LastZone");
@@ -2185,6 +2237,12 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
+			if !IsAreaClear(trace.HitPos, 64) then
+				Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+				
+				return false;
+			end
+		
 			local playerFaith = player:GetFaith();
 			
 			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
@@ -2235,7 +2293,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("summon_familiar_elk");
 	RITUAL.name = "(T3) Summon Familiar (Elk)";
-	RITUAL.description = "Summon a spirit elk from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. 5 second cast time. Incurs 5 corruption.";
+	RITUAL.description = "Summon a spirit elk from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. 5 second cast time. Adds a 1 minute cooldown to all summons. Incurs 5 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
 	RITUAL.requirements = {"elysian_catalyst", "trinity_catalyst", "elysian_catalyst"};
@@ -2246,7 +2304,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_elk");
 	function RITUAL:OnPerformed(player)
 		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit elk near their position!");
 		
-		player.nextRitualSummon = CurTime() + 180;
+		player.nextRitualSummon = CurTime() + 60;
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -2272,6 +2330,12 @@ RITUAL = cwRituals.rituals:New("summon_familiar_elk");
 			
 			return false;
 		end;
+		
+		if !IsAreaClear(trace.HitPos, 64) then
+			Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+			
+			return false;
+		end
 	end;
 	function RITUAL:EndRitual(player)
 		local lastZone = player:GetCharacterData("LastZone");
@@ -2286,6 +2350,12 @@ RITUAL = cwRituals.rituals:New("summon_familiar_elk");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
+			if !IsAreaClear(trace.HitPos, 64) then
+				Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+				
+				return false;
+			end
+		
 			local playerFaith = player:GetFaith();
 			
 			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
