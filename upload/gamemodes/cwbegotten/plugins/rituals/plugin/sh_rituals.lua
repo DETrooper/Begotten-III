@@ -1932,6 +1932,7 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 			return false;
 		end;
 	end;
+RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("summon_sprinter");
 	RITUAL.name = "(T3) Summon Demon (Sprinters)";
