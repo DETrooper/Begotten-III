@@ -3,12 +3,16 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
-local function IsAreaClear(position, radius)
+local function IsAreaClear(position, radius, player)
 	for k, v in pairs (ents.FindInSphere(position, radius)) do
 		if v:IsPlayer() or v:IsNPC() or v:IsNextBot() then
+			if player and v == player then continue end;
+			
 			return false;
 		end
 	end
+	
+	return true;
 end
 
 local RITUAL = cwRituals.rituals:New("purifying_stone_rite");
@@ -1740,7 +1744,7 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 			return false;
 		end;
 		
-		if !IsAreaClear(trace.HitPos, 64) then
+		if !IsAreaClear(trace.HitPos, 32, player) then
 			Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
 			
 			return false;
@@ -1764,7 +1768,7 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
-			if !IsAreaClear(trace.HitPos, 64) then
+			if !IsAreaClear(trace.HitPos, 32, player) then
 				Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
 				
 				return false;
@@ -1860,7 +1864,7 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 			return false;
 		end;
 		
-		if !IsAreaClear(trace.HitPos, 64) then
+		if !IsAreaClear(trace.HitPos, 32, player) then
 			Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
 			
 			return false;
@@ -1884,7 +1888,7 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
-			if !IsAreaClear(trace.HitPos, 64) then
+			if !IsAreaClear(trace.HitPos, 32, player) then
 				Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
 				
 				return false;
@@ -1980,7 +1984,7 @@ RITUAL = cwRituals.rituals:New("summon_sprinter");
 			return false;
 		end;
 		
-		if !IsAreaClear(trace.HitPos, 64) then
+		if !IsAreaClear(trace.HitPos, 32, player) then
 			Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
 			
 			return false;
@@ -2006,7 +2010,7 @@ RITUAL = cwRituals.rituals:New("summon_sprinter");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
-			if !IsAreaClear(trace.HitPos, 64) then
+			if !IsAreaClear(trace.HitPos, 32, player) then
 				Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
 				
 				return false;
@@ -2106,7 +2110,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 			return false;
 		end;
 		
-		if !IsAreaClear(trace.HitPos, 64) then
+		if !IsAreaClear(trace.HitPos, 32, player) then
 			Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
 			
 			return false;
@@ -2125,7 +2129,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
-			if !IsAreaClear(trace.HitPos, 64) then
+			if !IsAreaClear(trace.HitPos, 32, player) then
 				Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
 				
 				return false;
@@ -2219,7 +2223,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 			return false;
 		end;
 		
-		if !IsAreaClear(trace.HitPos, 64) then
+		if !IsAreaClear(trace.HitPos, 32, player) then
 			Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
 			
 			return false;
@@ -2238,7 +2242,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
-			if !IsAreaClear(trace.HitPos, 64) then
+			if !IsAreaClear(trace.HitPos, 32, player) then
 				Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
 				
 				return false;
@@ -2332,7 +2336,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_elk");
 			return false;
 		end;
 		
-		if !IsAreaClear(trace.HitPos, 64) then
+		if !IsAreaClear(trace.HitPos, 32, player) then
 			Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
 			
 			return false;
@@ -2351,7 +2355,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_elk");
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
-			if !IsAreaClear(trace.HitPos, 64) then
+			if !IsAreaClear(trace.HitPos, 32, player) then
 				Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
 				
 				return false;
