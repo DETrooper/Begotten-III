@@ -104,7 +104,7 @@ function cwSailing:CreateMenu(data)
 	end
 	
 	if data.sailable or (isAdmin and Clockwork.player:IsNoClipping(Clockwork.Client) and !data.destination) then
-		local location = self.location;
+		local location = data.location;
 		local submenu = menu:AddSubMenu("Sail", function() end);
 			
 		if zone ~= "gore" then

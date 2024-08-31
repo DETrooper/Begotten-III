@@ -1249,11 +1249,11 @@ end
 
 -- A function to set a player to a safe position.
 function Clockwork.player:SetSafePosition(player, position, filter)
-	player:SetPos(position + Vector(0, 0, 16))
+	player:SetPos(position + Vector(0, 0, 4))
 
 	if (player:IsStuck()) then
 		player:DropToFloor()
-		player:SetPos(player:GetPos() + Vector(0, 0, 16))
+		player:SetPos(player:GetPos() + Vector(0, 0, 4))
 
 		if (!istable(filter) and !isfunction(filter)) then
 			filter = {filter}

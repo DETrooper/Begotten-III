@@ -472,7 +472,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 							end);
 						end
 						
-						player:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255), 5, 5);
+						player:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255), 3, 3);
 						
 						table.insert(longshipPlayers, {player, offset});
 					end
@@ -512,6 +512,8 @@ function cwSailing:MoveLongship(longshipEnt, location)
 						longshipEnt:OnMoved();
 					end
 					
+					longshipEnt.checkCooldown = CurTime() + 2;
+					
 					local longshipNewPos = longshipEnt:GetPos();
 				
 					for i, longshipPlayerTab in ipairs(longshipPlayers) do
@@ -536,7 +538,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 							timer.Simple(0.2, function()
 								if IsValid(player) then
 									if (!player.cwObserverMode) then
-										player:SetNetVar("blackOut", true);
+										player:SetLocalVar("blackOut", true);
 										
 										--[[if !player:IsRagdolled() then
 											player:Spawn();
@@ -563,8 +565,8 @@ function cwSailing:MoveLongship(longshipEnt, location)
 												print("Player Eye Angles Set: "..tostring(player:EyeAngles()));]]--
 												
 												player:SetEyeAngles(Angle(playerEyeAngles.x, playerEyeAngles.y + combined_y, playerEyeAngles.z));
-												player:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 5, 0);
-												player:SetNetVar("blackOut", false);
+												player:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 3, 0);
+												player:SetLocalVar("blackOut", false);
 											end
 										end);
 									end
@@ -580,7 +582,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 													local ragdollAngles = ragdoll:GetPhysicsObject():GetAngles();
 													
 													ragdoll:GetPhysicsObject():SetAngles(Angle(ragdollAngles.x, ragdollAngles.y + combined_y, ragdollAngles.z));
-													ragdoll:GetPhysicsObject():SetPos(playerNewPos + Vector(0, 0, 32), true);
+													ragdoll:GetPhysicsObject():SetPos(playerNewPos + Vector(0, 0, 8), true);
 													
 													timer.Simple(1.5, function()
 														if IsValid(ragdoll) then
@@ -588,18 +590,18 @@ function cwSailing:MoveLongship(longshipEnt, location)
 														end
 													end);
 												elseif IsValid(player) then
-													player:SetPos(playerNewPos + Vector(0, 0, 16));
+													player:SetPos(playerNewPos);
 												end
 											end);
 										end
 									else
-										player:SetPos(playerNewPos + Vector(0, 0, 8));
+										player:SetPos(playerNewPos);
 									end
 									
 									local target = player.cwHoldingEnt;
 									
 									if IsValid(target) then
-										local destinationRaised = playerNewPos + Vector(0, 0, 32);
+										local destinationRaised = playerNewPos + Vector(0, 0, 8);
 									
 										if IsValid(player.cwHoldingGrab) then
 											player.cwHoldingGrab:SetComputePosition(destinationRaised);
@@ -1022,6 +1024,13 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 														timer.Remove("SailTimer_"..tostring(entity:EntIndex()));
 														entity.destination = nil;
 														entity:SetBodygroup(0, 1);
+													end
+													
+													local owner = entity.owner;
+													
+													if IsValid(owner) and owner:GetSubfaction() == "Clan Harald" and owner:Alive() and owner:HasBelief("daring_trout") then
+														Schema:EasyText(owner, "icon16/anchor.png", "red", "A raven lands on your shoulder with smoldering wings! Your longship has been set alight and must be extinguished soon!");
+														owner.nextShipDamageNotif = CurTime() + 60;
 													end
 													
 													Clockwork.chatBox:AddInTargetRadius(player, "me", "ignites the longship before them with their lantern!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);

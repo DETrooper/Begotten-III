@@ -123,7 +123,7 @@ function ENT:Think()
 						end
 					
 						if playerPos.z <= self:GetPos().z + offset then
-							if !table.HasValue(zones:GetPlayersInZone("sea_"..self.location)) then
+							if !table.HasValue(zones:GetPlayersInZone("sea_"..self.location), player) then
 								table.remove(self.playersOnBoard, i);
 								
 								break;
@@ -274,7 +274,7 @@ function ENT:SetHP(newhp)
 		else
 			self.repairable = false;
 		end
-	elseif self.location and (self.location == "calm" or self.locaiton == "rough" or self.location == "styx") then
+	elseif self.location and (self.location == "calm" or self.location == "rough" or self.location == "styx") then
 		if self.location == "styx" then
 			if self.playersOnBoard and #self.playersOnBoard > 0 then
 				local playersOnBoard = table.Copy(self.playersOnBoard);

@@ -2489,7 +2489,7 @@ function Schema:PostPlayerDeath(player)
 	end
 	
 	if (player:GetNetVar("blackOut")) then
-		player:SetNetVar("blackOut", false);
+		player:SetLocalVar("blackOut", false);
 	end;
 end
 

@@ -50,6 +50,7 @@ function zones:New(uniqueID, supraZone)
 	
 	local object = Clockwork.kernel:NewMetaTable(ZONE_TABLE);
 		object.uniqueID = self:SafeName(uniqueID);
+		object.supraZone = supraZone;
 	return object;
 end;
 
@@ -114,6 +115,7 @@ end;
 
 -- A function to find a zone using an identifier.
 function zones:FindByID(identifier)
+	if !identifier then return end;
 	local identifier = string.lower(identifier);
 	
 	if (identifier == self.cwDefaultZone.uniqueID) then
@@ -548,6 +550,12 @@ if CLIENT then
 						
 						if (!self.targetFogColors) then self.targetFogColors = {r = 255, g = 255, b = 255}; end;
 						if (interval == 0) then bNoFade = true end;
+						
+						local prevZone = zones:FindByID(self.cwPreviousZone);
+						
+						if prevZone and prevZone.supraZone ~= zoneTable.supraZone then
+							bNoFade = true;
+						end
 
 						if (!bNoFade) then
 							local frameTime = frameTime * interval;

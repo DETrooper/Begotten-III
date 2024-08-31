@@ -40,7 +40,13 @@ local ITEM = Clockwork.item:New(nil, true)
 				
 				if !table.HasValue(booksRead, self.uniqueID) then
 					--if cwBeliefs and player:HasBelief("scribe") then
-						player:HandleXP(cwBeliefs.xpValues["read"]);
+						local readXP = cwBeliefs.xpValues["read"] or 50;
+						
+						if player:GetFaction() ~= "Wanderer" then
+							readXP = math.Round(readXP / 2);
+						end
+						
+						player:HandleXP(readXP);
 					--end
 					
 					table.insert(booksRead, self.uniqueID);

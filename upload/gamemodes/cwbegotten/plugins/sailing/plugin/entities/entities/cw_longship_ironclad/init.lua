@@ -226,7 +226,7 @@ function ENT:Think()
 						end
 					
 						if playerPos.z <= self:GetPos().z + offset then
-							if !table.HasValue(zones:GetPlayersInZone("sea_"..self.location)) then
+							if !table.HasValue(zones:GetPlayersInZone("sea_"..self.location), player) then
 								table.remove(self.playersOnBoard, i);
 								
 								break;

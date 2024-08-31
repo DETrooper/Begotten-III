@@ -43,8 +43,8 @@ end;
 
 function ENT:OnRemove()
 	if self.location and self.position then
-		if cwSailing.shipLocations[self.longshipType][self.location][self.position] then
-			cwSailing.shipLocations[self.longshipType][self.location][self.position].occupied = false;
+		if cwSailing.shipLocations[self.location][self.longshipType][self.position] then
+			cwSailing.shipLocations[self.location][self.longshipType][self.position].occupied = false;
 		end
 	end
 end;

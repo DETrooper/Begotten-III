@@ -232,6 +232,15 @@ end;
 
 -- A function to get data from the item.
 function CLASS_TABLE:GetData(dataName)
+	-- Ghetto code to fix copies of itemTables having desynced item data with the actual instance.
+	if self:IsInstance() then
+		local instance = item.FindInstance(self.itemID);
+		
+		if instance then
+			return instance.data[dataName];
+		end
+	end
+	
 	return self.data[dataName];
 end;
 
@@ -740,12 +749,27 @@ end;
 
 if (SERVER) then
 	function CLASS_TABLE:SetData(dataName, value)
-		if (self:IsInstance() and self.data[dataName] != nil and (self.data[dataName] != value or istable(self.data[dataName]) or dataName == "Ammo")) then
-			self.data[dataName] = value;
+		local itemTable = self;
+	
+		-- Ghetto code to fix copies of itemTables having desynced item data with the actual instance.
+		if self:IsInstance() then
+			local instance = item.FindInstance(self.itemID);
 			
-			if (self:IsDataNetworked(dataName)) then
-				self.networkQueue[dataName] = value;
-				self:NetworkData();
+			if instance then
+				itemTable = instance;
+			end
+		end
+		
+		if (itemTable:IsInstance() and itemTable.data[dataName] != nil and (itemTable.data[dataName] != value or istable(itemTable.data[dataName]) or dataName == "Ammo")) then
+			itemTable.data[dataName] = value;
+			
+			if itemTable ~= self then
+				self.data[dataName] = value;
+			end
+			
+			if (itemTable:IsDataNetworked(dataName)) then
+				itemTable.networkQueue[dataName] = value;
+				itemTable:NetworkData();
 			end;
 		end;
 	end;
@@ -897,6 +921,20 @@ function item.GetByWeapon(weapon)
 	end;
 end;
 
+local function ItemDataMerge(oldData, newData)
+	for k, v in pairs(newData) do
+		if (istable(v) and istable(oldData[k])) then
+			if table.IsEmpty(v) then
+				oldData[k] = {};
+			else
+				ItemDataMerge(oldData[k], v)
+			end
+		else
+			oldData[k] = v
+		end
+	end
+end
+
 -- A function to create an instance of an item.
 function item.CreateInstance(uniqueID, itemID, data, bNoGenerate)
 	local itemTable = item.FindByID(uniqueID);
@@ -917,14 +955,18 @@ function item.CreateInstance(uniqueID, itemID, data, bNoGenerate)
 		
 		--print("Item ID: "..itemID);
 		
-		if (!item.instances[itemID]) then
+		--[[if (!item.instances[itemID]) then
 			item.instances[itemID] = table.Copy(itemTable);
 				item.instances[itemID].itemID = itemID;
 			setmetatable(item.instances[itemID], CLASS_TABLE);
-		end;
+		end;]]--
+	
+		item.instances[itemID] = table.Copy(itemTable);
+			item.instances[itemID].itemID = itemID;
+		setmetatable(item.instances[itemID], CLASS_TABLE);
 		
 		if (data) then
-			table.Merge(item.instances[itemID].data, data);
+			ItemDataMerge(item.instances[itemID].data, data);
 		end;
 		
 		if generated then

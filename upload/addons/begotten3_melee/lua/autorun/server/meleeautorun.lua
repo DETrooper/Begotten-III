@@ -1157,13 +1157,13 @@ local function Guarding(ent, dmginfo)
 							local delay = enemyattacktable["delay"];
 							
 							if ent.HasBelief then
-								if ent:HasBelief("sidestep") and enemyattacktable["delay"] >= 2 then
-									delay = enemyattacktable["delay"] + 2;
-								elseif ent:HasBelief("deflection") and enemyattacktable["delay"] >= 1 then
-									delay = enemyattacktable["delay"] + 1;
+								if ent:HasBelief("sidestep") then
+									delay = math.max(2, enemyattacktable["delay"]);
+								elseif ent:HasBelief("deflection") then
+									delay = math.max(1, enemyattacktable["delay"]);
 								end
 							end
-							
+
 							if enemywep then
 								enemywep:SetNextPrimaryFire(CurTime() + delay);
 								

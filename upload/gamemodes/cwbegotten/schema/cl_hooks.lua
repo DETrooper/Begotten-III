@@ -1452,6 +1452,32 @@ function Schema:CanPaintChatbox()
 	end;
 end;
 
+local noDisplayClasses = {
+	"dwf",
+	"dw ",
+	"dwd",
+	"dar",
+	"rav",
+	"rs ",
+	"rsc",
+	"rsf",
+	"rel",
+	"re ",
+	"adm",
+	"ad ",
+	"su ",
+	"op ",
+};
+
+function Schema:ShouldNotDisplayTyping(text)
+	local prefix = config.Get("command_prefix"):Get()
+	local stringsub = string.sub(text, 1, 4);
+	
+	if table.HasValue(noDisplayClasses, stringsub) then
+		return false;
+	end
+end
+
 -- Called to get whether the character menu should be created.
 function Schema:ShouldCharacterMenuBeCreated()
 	if Schema.contentVerified ~= "verified" then

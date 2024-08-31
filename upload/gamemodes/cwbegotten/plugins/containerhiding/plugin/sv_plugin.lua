@@ -41,7 +41,7 @@ function cwContainerHiding:AttemptHide(player, entity, bHide)
 		
 		if (table.HasValue(self.containerProps["black"], string.lower(entity:GetModel()))) then
 			if (player:GetNetVar("blackOut") != true) then
-				player:SetNetVar("blackOut", true);
+				player:SetLocalVar("blackOut", true);
 			end;
 		end;
 		
@@ -63,7 +63,7 @@ function cwContainerHiding:AttemptHide(player, entity, bHide)
 		
 		if (table.HasValue(self.containerProps["black"], string.lower(entity:GetModel()))) then
 			if (player:GetNetVar("blackOut") == true) then
-				player:SetNetVar("blackOut", false);
+				player:SetLocalVar("blackOut", false);
 			end;
 		end;
 		
@@ -104,7 +104,7 @@ function cwContainerHiding:OpenedStorage(player, entity)
 		end;
 		
 		if (player:GetNetVar("blackOut") == true) then
-			player:SetNetVar("blackOut", false);
+			player:SetLocalVar("blackOut", false);
 		end;
 	end;
 end;

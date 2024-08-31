@@ -213,6 +213,8 @@ function cwDisplayTyping:ChatBoxTextChanged(previousText, newText)
 			end
 		end
 		
-		RunConsoleCommand("cwTypingStart", "n")
+		if hook.Run("ShouldNotDisplayTyping", newText) ~= false then
+			RunConsoleCommand("cwTypingStart", "n")
+		end
 	end
 end

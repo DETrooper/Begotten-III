@@ -437,7 +437,7 @@ if SERVER then
 					
 					return;
 				elseif Ent.iFrames then
-					local phys = javelin:GetPhysicsObject()
+					local phys = self:GetPhysicsObject()
 					
 					self:SetCollisionGroup(COLLISION_GROUP_WORLD);
 					phys:SetVelocity(data.OurOldVelocity);
