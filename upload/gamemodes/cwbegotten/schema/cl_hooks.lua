@@ -1471,10 +1471,13 @@ local noDisplayClasses = {
 
 function Schema:ShouldNotDisplayTyping(text)
 	local prefix = config.Get("command_prefix"):Get()
-	local stringsub = string.sub(text, 1, 4);
 	
-	if table.HasValue(noDisplayClasses, stringsub) then
-		return false;
+	if string.sub(text, 1, 1) == prefix then
+		local stringsub = string.sub(text, 2, 4);
+		
+		if table.HasValue(noDisplayClasses, stringsub) then
+			return false;
+		end
 	end
 end
 
