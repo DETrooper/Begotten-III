@@ -8032,6 +8032,35 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("fine_gatekeeper_helmet_upgrade");
+		RECIPE.name = "(Upgrade) Fine Gatekeeper Helmet";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["gatekeeper_helmet"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["fine_gatekeeper_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 40;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 	
 	RECIPE = cwRecipes.recipes:New("ornate_gatekeeper_helmet");
 		RECIPE.name = "Ornate Gatekeeper Helmet";
@@ -8039,8 +8068,10 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
-			["gold_ingot"] = {amount = 1},
-			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
+			["maximilian_steel_ingot"] = {amount = 1},
+			["hide"] = {amount = 1},
+			["light_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["ornate_gatekeeper_helmet"] = {amount = 1},
@@ -8051,6 +8082,37 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 80;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("ornate_gatekeeper_helmet_upgrade");
+		RECIPE.name = "(Upgrade) Ornate Gatekeeper Helmet";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["fine_gatekeeper_helmet"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
+			["hide"] = {amount = 1},
+			["light_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["ornate_gatekeeper_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 60;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -8308,7 +8370,8 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["hellforged_steel_ingot"] = {amount = 1},
-			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
+			["down_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["hellplate_helmet"] = {amount = 1},
@@ -8318,7 +8381,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 45;
+		RECIPE.experience = 80;
 		
 		function RECIPE:OnCraft(player)
 		end;
