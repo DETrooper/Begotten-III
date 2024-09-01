@@ -17,25 +17,37 @@ function cwFactionStorage:ModifyStorageSaveTable(entity, saveTab)
 	saveTab.cwFactionLock = entity.cwFactionLock;
 end
 
-function cwFactionStorage:PlayerCanOpenContainer(player, entity)
+function cwFactionStorage:PlayerCanOpenContainer(player, entity, bForce)
+	if bForce then
+		return;
+	end
+
 	local data = entity.cwFactionLock;
 	
 	if data then
-		local faction = player:GetFaction();
+		local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		
 		if data.factions and !table.IsEmpty(data.factions) then
 			if !data.factions[faction] then
-				Schema:EasyText(player, "peru", "You are not the correct faction to open this container!");
+				if faction == "Children of Satan" and player:GetSubfaction() == "Kinisger" and !data.factions["Children of Satan"] then
+					Schema:EasyText(player, "peru", "You are not the correct faction to open this container!");
+				else
+					Schema:EasyText(player, "peru", "You are not the correct faction to open this container!");
+				end
 			
 				return false;
 			end
 		end
 	
 		if data.subfactions and !table.IsEmpty(data.subfactions) then
-			local subfaction = player:GetSubfaction();
+			local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 			
 			if !data.subfactions[subfaction] then
-				Schema:EasyText(player, "peru", "You are not the correct subfaction to open this container!");
+				if faction == "Children of Satan" and player:GetSubfaction() == "Kinisger" and !data.subfactions["Kinisger"] then
+					Schema:EasyText(player, "peru", "You are not the correct subfaction to open this container!");
+				else
+					Schema:EasyText(player, "peru", "You are not the correct subfaction to open this container!");
+				end
 			
 				return false;
 			end
@@ -78,5 +90,7 @@ function cwFactionStorage:PlayerCanOpenContainer(player, entity)
 				end
 			end
 		end
+		
+		Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." has opened the faction locked container "..entity:GetNetworkedString("Name")..".");
 	end
 end
