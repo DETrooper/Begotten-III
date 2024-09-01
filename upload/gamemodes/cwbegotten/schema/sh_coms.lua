@@ -260,8 +260,8 @@ local COMMAND = Clockwork.command:New("Enlist")
 COMMAND:Register()
 
 local COMMAND = Clockwork.command:New("SetCustomRank")
-	COMMAND.tip = "Set a character's custom rank. The optional rank index should correspond to what their actual rank would be (i.e. 2 for Acolyte)."
-	COMMAND.text = "<string Character> <string Rank> [number RankIndex]"
+	COMMAND.tip = "Set a character's custom rank. If blank, it will be reset. The optional rank index should correspond to what their actual rank would be (i.e. 2 for Acolyte)."
+	COMMAND.text = "<string Character> [string Rank] [number RankIndex]"
 	COMMAND.access = "o"
 	COMMAND.arguments = 2;
 	COMMAND.optionalArguments = 1;
@@ -358,16 +358,18 @@ local COMMAND = Clockwork.command:New("SetCustomRank")
 						notifyTarget = false;
 					end;
 					
-					if (notifyTarget) then
-						Schema:EasyText(target, "olivedrab", "You have been promoted to the rank of \""..rankOverride.."\".")
-					end;
-					
-					Schema:EasyText(player, "cornflowerblue", "You have promoted "..name.." to the rank of \""..rankOverride.."\".");
-					
-					if target == player then
-						Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has promoted themself to the custom rank of \""..rankOverride.."\".");
-					else
-						Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has promoted "..name.." to the custom rank of \""..rankOverride.."\".");
+					if rankOverride then
+						if (notifyTarget) then
+							Schema:EasyText(target, "olivedrab", "You have been promoted to the rank of \""..rankOverride.."\".")
+						end;
+						
+						Schema:EasyText(player, "cornflowerblue", "You have promoted "..name.." to the rank of \""..rankOverride.."\".");
+						
+						if target == player then
+							Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has promoted themself to the custom rank of \""..rankOverride.."\".");
+						else
+							Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has promoted "..name.." to the custom rank of \""..rankOverride.."\".");
+						end
 					end
 				else
 					Schema:EasyText(player, "darkgrey", "The rank index specified is not valid!");
