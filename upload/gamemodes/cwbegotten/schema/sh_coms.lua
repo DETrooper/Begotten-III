@@ -317,7 +317,7 @@ local COMMAND = Clockwork.command:New("SetCustomRank")
 						end
 					end
 					
-					if playerFactionTable.CanPromote and playerFactionTable:CanPromote(player, target, faction, targetSubfaction) == false then
+					if factionTable.CanPromote and factionTable:CanPromote(player, target, faction, targetSubfaction) == false then
 						Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().."!");
 					
 						return false;
@@ -477,7 +477,7 @@ local COMMAND = Clockwork.command:New("Promote")
 						end
 					end
 					
-					if playerFactionTable.CanPromote and playerFactionTable:CanPromote(player, target, faction, targetSubfaction) == false then
+					if factionTable.CanPromote and factionTable:CanPromote(player, target, faction, targetSubfaction) == false then
 						Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().."!");
 					
 						return false;
@@ -572,7 +572,7 @@ local COMMAND = Clockwork.command:New("Demote")
 					end
 				end
 				
-				if playerFactionTable.CanDemote and playerFactionTable:CanDemote(player, target, faction, targetSubfaction) == false then
+				if factionTable.CanDemote and factionTable:CanDemote(player, target, faction, targetSubfaction) == false then
 					Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().."!");
 				
 					return false;
