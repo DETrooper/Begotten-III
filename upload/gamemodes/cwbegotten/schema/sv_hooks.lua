@@ -2514,7 +2514,7 @@ function Schema:PlayerChangedRanks(player)
 		else
 			local rankOverride = player:GetCharacterData("rankOverride");
 			
-			if rankOverride then
+			if rankOverride and rankOverride ~= "" then
 				player:OverrideName(rankOverride.." "..player:Name(true));
 				
 				return;
@@ -2657,13 +2657,15 @@ function Schema:PlayerCharacterLoaded(player)
 		else
 			local rankOverride = player:GetCharacterData("rankOverride");
 			
-			if rankOverride then
+			if rankOverride and rankOverride ~= "" then
 				player:OverrideName(rankOverride.." "..player:Name());
 			else
 				local rank = math.Clamp(player:GetCharacterData("rank", 1), 1, #self.Ranks[faction]);
 
 				if (rank and isnumber(rank) and self.Ranks[faction][rank]) then
-					player:OverrideName(self.Ranks[faction][rank].." "..player:Name());
+					if self.Ranks[faction][rank] ~= "" then
+						player:OverrideName(self.Ranks[faction][rank].." "..player:Name());
+					end
 				end;
 			end;
 		end

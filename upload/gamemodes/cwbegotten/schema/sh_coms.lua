@@ -164,7 +164,7 @@ local COMMAND = Clockwork.command:New("Enlist")
 					local factionSubfactions = enlistFactionTable.subfactions;
 					
 					if enlistFactionTable then
-						subfaction = arguments[1];
+						subfaction = arguments[2];
 					
 						for i, v in ipairs(factionSubfactions) do
 							if i == 1 and !subfaction then

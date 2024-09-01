@@ -1081,7 +1081,9 @@ netstream.Hook("AppearanceAlterationMenu", function(player, data)
 								local rank = math.Clamp(player:GetCharacterData("rank", 1), 1, #Schema.Ranks[selectedFaction]);
 								
 								if (rank and isnumber(rank) and Schema.Ranks[selectedFaction][rank]) then
-									player:OverrideName(Schema.Ranks[selectedFaction][rank].." "..player:Name());
+									if Schema.Ranks[selectedFaction][rank] ~= "" then
+										player:OverrideName(Schema.Ranks[selectedFaction][rank].." "..player:Name());
+									end
 								end;
 							end;
 						end
