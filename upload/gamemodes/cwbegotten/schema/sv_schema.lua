@@ -3048,7 +3048,7 @@ function Schema:LoadPopeSpeakers()
 		self.PopeSpeas[#self.PopeSpeas + 1] = speaker;
 	end;
 end;
-Schema:LoadPopeSpeakers()
+
 function Schema:GetPopeSpeakers()
 	return self.PopeSpeas;
 end;

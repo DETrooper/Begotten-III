@@ -88,7 +88,9 @@ function cwStorage:SaveStorage()
 					bMoveable = physicsObject:IsMoveable();
 				end;
 				
-				storage[#storage + 1] = {
+				local saveTab = {};
+				
+				saveTab = {
 					name = v:GetNetworkedString("Name"),
 					model = model,
 					cash = v.cwCash,
@@ -103,6 +105,10 @@ function cwStorage:SaveStorage()
 					inventory = Clockwork.inventory:ToSaveable(v.cwInventory or {}),
 					isMoveable = bMoveable
 				};
+				
+				hook.Run("ModifyStorageSaveTable", v, saveTab);
+				
+				storage[#storage + 1] = saveTab;
 			end;
 		end;
 	end;
@@ -152,6 +158,8 @@ function cwStorage:LoadStorage()
 					entity:SetNWBool("hasPassword", true);
 					entity:SetNWBool("unlocked", false);
 				end
+				
+				hook.Run("ModifyLoadStorageEntityTab", entity, v);
 			end;
 		else
 			local entity = ents.Create("prop_physics");
@@ -193,6 +201,8 @@ function cwStorage:LoadStorage()
 			else
 				entity.cwLockTier = 3;
 			end;
+			
+			hook.Run("ModifyLoadStorageEntityTab", entity, v);
 		end;
 	end;
 end

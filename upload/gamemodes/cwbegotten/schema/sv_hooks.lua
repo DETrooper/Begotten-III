@@ -165,6 +165,7 @@ end;
 function Schema:ClockworkInitPostEntity()
 	self:LoadDummies();
 	self:LoadRadios();
+	self:LoadPopeSpeakers()
 	self:LoadNPCs();
 	self:LoadNPCSpawns();
 	self:SpawnBegottenEntities();
@@ -2502,26 +2503,35 @@ function Schema:PlayerChangedRanks(player)
 			player:SetCharacterData("rank", 1);
 		end;
 		
-		player:OverrideName(nil)
-		local name = player:Name();
-
 		local factionTable = Clockwork.faction:FindByID(faction);
 		
 		if factionTable and factionTable.GetName then
 			player:OverrideName(factionTable:GetName(player));
+			
+			return;
 		else
 			local rankOverride = player:GetCharacterData("rankOverride");
 			
 			if rankOverride then
-				player:OverrideName(rankOverride.." "..player:Name());
+				player:OverrideName(rankOverride.." "..player:Name(true));
+				
+				return;
 			else
 				local rank = math.Clamp(player:GetCharacterData("rank", 1), 1, #self.Ranks[faction]);
 
-				if (rank and isnumber(rank) and self.Ranks[faction][rank]) then
-					player:OverrideName(self.Ranks[faction][rank].." "..player:Name());
+				if (rank and isnumber(rank)) then
+					local rankText = self.Ranks[faction][rank];
+					
+					if rankText and rankText ~= "" then
+						player:OverrideName(rankText.." "..player:Name(true));
+					
+						return;
+					end
 				end;
 			end;
 		end
+		
+		player:OverrideName(nil);
 	end;
 end;
 
