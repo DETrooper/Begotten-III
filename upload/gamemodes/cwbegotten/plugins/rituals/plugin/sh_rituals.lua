@@ -941,7 +941,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("kinisger_appearance_alteration");
 	RITUAL.name = "(Unique) Kinisger Appearance Alteration";
-	RITUAL.description = "Members of House Kinisger are masters of infiltration, owing to their use of dark magic and their mutant blood in order to change apperances.";
+	RITUAL.description = "Members of House Kinisger are masters of infiltration, owing to their use of dark magic and their mutant blood in order to change apperances. Incurs 50 corruption.";
 	RITUAL.requiredSubfaction = {"Kinisger"}; -- Subfaction Ritual
 	
 	RITUAL.requirements = {"down_catalyst", "down_catalyst", "ice_catalyst"};
