@@ -275,7 +275,9 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 				if Schema.Ranks then
 					for k, v in pairs(Schema.Ranks) do
 						for i, v2 in ipairs(v) do
-							table.insert(blacklistedNames, string.lower(v2));
+							if v2 ~= "" then
+								table.insert(blacklistedNames, string.lower(v2));
+							end
 						end
 					end
 				end
