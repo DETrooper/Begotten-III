@@ -1718,7 +1718,7 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 	end;
 	function RITUAL:StartRitual(player)
 		if player.nextRitualSummon and player.nextRitualSummon > CurTime() then
-			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - curTime)).." more seconds!");
+			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - CurTime())).." more seconds!");
 			return false;
 		end
 	
@@ -1838,7 +1838,7 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 	end;
 	function RITUAL:StartRitual(player)
 		if player.nextRitualSummon and player.nextRitualSummon > CurTime() then
-			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - curTime)).." more seconds!");
+			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - CurTime())).." more seconds!");
 			return false;
 		end
 	
@@ -1958,7 +1958,7 @@ RITUAL = cwRituals.rituals:New("summon_sprinter");
 	end;
 	function RITUAL:StartRitual(player)
 		if player.nextRitualSummon and player.nextRitualSummon > CurTime() then
-			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - curTime)).." more seconds!");
+			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - CurTime())).." more seconds!");
 			return false;
 		end
 		
@@ -2089,7 +2089,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 	end;
 	function RITUAL:StartRitual(player)
 		if player.nextRitualSummon and player.nextRitualSummon > CurTime() then
-			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - curTime)).." more seconds!");
+			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - CurTime())).." more seconds!");
 			return false;
 		end
 		
@@ -2202,7 +2202,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 	end;
 	function RITUAL:StartRitual(player)
 		if player.nextRitualSummon and player.nextRitualSummon > CurTime() then
-			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - curTime)).." more seconds!");
+			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - CurTime())).." more seconds!");
 			return false;
 		end
 		
@@ -2315,7 +2315,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_elk");
 	end;
 	function RITUAL:StartRitual(player)
 		if player.nextRitualSummon and player.nextRitualSummon > CurTime() then
-			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - curTime)).." more seconds!");
+			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - CurTime())).." more seconds!");
 			return false;
 		end
 		
