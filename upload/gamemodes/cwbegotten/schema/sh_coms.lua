@@ -1379,7 +1379,7 @@ local COMMAND = Clockwork.command:New("Proclaim");
 		end;
 		
 		if hook.Run("PlayerCanSayIC", player, text) then 
-			if (faction == "Gatekeeper" and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
+			if (Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
 				Clockwork.chatBox:SetMultiplier(1.35);
 				
 				if player.victim and IsValid(player.victim) then
