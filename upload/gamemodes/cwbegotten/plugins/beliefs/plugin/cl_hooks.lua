@@ -100,13 +100,57 @@ local bearTrapDist = (256 * 256);
 local warcryColor = Color(180, 0, 0, 255);
 local troutColor = Color(120, 120, 120, 255);
 
+-- This can be optimized more.
 function cwBeliefs:AddEntityOutlines(outlines)
 	if self.highlightTargetOverride then
 		if IsValid(self.highlightTargetOverride) then
 			self:DrawPlayerOutline(self.highlightTargetOverride, outlines, warcryColor);
 		end
 	end
-
+	
+	if Clockwork.Client:GetNetVar("faith") == "Faith of the Dark" then
+		local hasAssassin = self:HasBelief("assassin");
+		local isCOS = (Clockwork.Client:GetFaction() == "Children of Satan");
+		
+		for i, v in ipairs(_player.GetAll()) do
+			if v ~= Clockwork.Client and v:HasInitialized() and v:Alive() and v:GetColor().a > 0 then
+				if isCOS or self:HasBelief("embrace_the_darkness") then
+					if v:GetNetVar("yellowBanner") then
+						if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= bannerDist) then
+							self:DrawPlayerOutline(v, outlines, Color(200, 200, 0, 255));
+							
+							continue;
+						end
+					end
+					
+					if isCOS then
+						if v:GetNetVar("kinisgerOverride") then
+							if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= assassinDist) then
+								self:DrawPlayerOutline(v, outlines, Color(0, 225, 225, 255));
+								
+								continue;
+							end
+						end
+					end
+				end
+				
+				if hasAssassin and (v:Health() < v:GetMaxHealth() / 4 or v:GetRagdollState() == RAGDOLL_FALLENOVER) then
+					if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= assassinDist) then
+						self:DrawPlayerOutline(v, outlines, warcryColor);
+						
+						continue;
+					end
+				end
+				
+				if v:GetNetVar("markedBySatanist") then
+					if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= markedDist) then
+						self:DrawPlayerOutline(v, outlines, Color(150, 0, 150, 255));
+					end
+				end
+			end;
+		end;
+	end
+	
 	if self.upgradedWarcryActive then
 		if self.trout then
 			for k, v in pairs(_player.GetAll()) do
@@ -121,45 +165,6 @@ function cwBeliefs:AddEntityOutlines(outlines)
 				end
 			end;
 		end
-	end
-	
-	if Clockwork.Client:GetNetVar("faith") == "Faith of the Dark" then
-		local hasAssassin = self:HasBelief("assassin");
-		local isCOS = (Clockwork.Client:GetFaction() == "Children of Satan");
-		
-		for i, v in ipairs(_player.GetAll()) do
-			if v ~= Clockwork.Client and v:HasInitialized() and v:Alive() and v:GetColor().a > 0 then
-				if hasAssassin and (v:Health() < v:GetMaxHealth() / 4 or v:GetRagdollState() == RAGDOLL_FALLENOVER) then
-					if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= assassinDist) then
-						self:DrawPlayerOutline(v, outlines, warcryColor);
-						
-						return;
-					end
-				end
-
-				if isCOS or self:HasBelief("embrace_the_darkness") then
-					if v:GetNetVar("yellowBanner") == true then
-						if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= bannerDist) then
-							self:DrawPlayerOutline(v, outlines, Color(200, 200, 0, 255));
-						end
-					end
-					
-					if isCOS then
-						if v:GetNetVar("kinisgerOverride") then
-							if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= assassinDist) then
-								self:DrawPlayerOutline(v, outlines, Color(0, 225, 225, 255));
-							end
-						end
-					end
-				end
-				
-				if v:GetNetVar("markedBySatanist") == true then
-					if (v:GetPos():DistToSqr(Clockwork.Client:GetPos()) <= markedDist) then
-						self:DrawPlayerOutline(v, outlines, Color(150, 0, 150, 255));
-					end
-				end
-			end;
-		end;
 	end
 	
 	if cwSenses and self:HasBelief("the_black_sea") then

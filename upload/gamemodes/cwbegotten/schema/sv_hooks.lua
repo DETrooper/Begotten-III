@@ -1190,14 +1190,7 @@ function Schema:KeyPress(player, key)
 	elseif (key == IN_ATTACK) then
 		local action = Clockwork.player:GetAction(player);
 		
-		if (action == "reloading") then
-			if player.itemUsing and IsValid(player.itemUsing) then
-				player.itemUsing.beingUsed = false;
-				player.itemUsing = nil;
-			end
-			
-			Clockwork.player:SetAction(player, nil);
-		elseif (action == "mutilating") or (action == "skinning") then
+		if (action == "reloading") or (action == "mutilating") or (action == "skinning") or (action == "building") then
 			Clockwork.player:SetAction(player, nil);
 		elseif (action == "bloodTest") then
 			Clockwork.chatBox:AddInTargetRadius(player, "me", "stops the blood test.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
@@ -3120,17 +3113,14 @@ end;
 function Schema:ActionStopped(player, action)
 	if action == "building" then
 		if player.ladderConstructing then
-			local ladderItem = item.CreateInstance("siege_ladder");
-			
-			if ladderItem then
-				ladderItem:SetCondition(player.ladderConstructing.condition, true);
-				
-				player:GiveItem(ladderItem);
-			end
-			
 			Schema.siegeLadderPositions[player.ladderConstructing.index].occupier = nil;
 			
 			player.ladderConstructing = nil;
+		end
+	elseif action == "reloading" then
+		if player.itemUsing and IsValid(player.itemUsing) then
+			player.itemUsing.beingUsed = false;
+			player.itemUsing = nil;
 		end
 	end
 end;

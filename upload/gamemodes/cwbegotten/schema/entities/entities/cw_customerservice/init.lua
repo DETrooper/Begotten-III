@@ -58,7 +58,6 @@ local sounds = {
 	"vo/breencast/br_instinct23.wav",
 	"vo/breencast/br_instinct24.wav",
 	"vo/breencast/br_instinct25.wav",
-
 };
 
 local differences = {
@@ -75,17 +74,16 @@ local differences = {
 	[sounds[12]] = 0.3,
 	[sounds[1]] = 0.2,
 	[sounds[10]] = 0.1,
-
 };
+
+local durations = {15, 12, 18, 10, 10, 8, 7, 7, 3, 9, 3, 4, 17, 4, 5, 4, 5, 3, 8, 5, 4, 4, 4, 12, 6};
 
 function ENT:Use(activator, caller)
 	if (!self._nextUse or CurTime() > self._nextUse) then
-		local durations = {15, 12, 18, 10, 10, 8, 7, 7, 3, 9, 3, 4, 17, 4, 5, 4, 5, 3, 8, 5, 4, 4, 4, 12, 6};
-		
 		if (IsValid(caller)) then
 			self:EmitSound("buttons/lightswitch2.wav", 70, 135);
 			
-			local randomChance = math.random(1, 25);
+			local randomChance = math.random(1, #sound);
 			local sound = sounds[randomChance];
 			local soundDuration = durations[randomChance];
 			local difference = differences[sounds[22]] and differences[sounds[22]] or 0.1;
@@ -93,7 +91,9 @@ function ENT:Use(activator, caller)
 			self:EmitSound(sound, 75, 225, 1);
 			
 			timer.Simple((soundDuration / 2.25) + difference, function()
-				self:EmitSound("hl1/fvox/bell.wav", 75, 200, 1);
+				if IsValid(self) then
+					self:EmitSound("hl1/fvox/bell.wav", 75, 200, 1);
+				end
 			end);
 		end;
 		

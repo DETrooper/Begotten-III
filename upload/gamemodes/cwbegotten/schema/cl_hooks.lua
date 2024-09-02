@@ -647,7 +647,7 @@ function Schema:GetProgressBarInfoAction(action, percentage)
 		return {text = "You are reloading your "..weaponName.." with "..ammoName..". Click to cancel.", percentage = percentage, flash = percentage < 0}
 		--return {text = "You are reloading your weapon. Click to cancel.", percentage = percentage, flash = percentage > 75};
 	elseif (action == "building") then
-		return {text = "You are erecting a siege ladder.", percentage = percentage, flash = percentage > 75};
+		return {text = "You are erecting a siege ladder. Click to cancel.", percentage = percentage, flash = percentage > 75};
 	elseif (action == "bloodTest") then
 		return {text = "You are testing someone's blood for corruption. Click to cancel.", percentage = percentage, flash = percentage > 75};
 	elseif (action == "hell_teleporting") then

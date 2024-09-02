@@ -247,7 +247,9 @@ local COMMAND = Clockwork.command:New("CharGetBeliefs");
 				local belief_strings = {};
 			
 				for k, v in pairs(beliefs) do
-					table.insert(belief_strings, k);
+					if v == true then
+						table.insert(belief_strings, k);
+					end
 				end
 			
 				Schema:EasyText(player, "cornflowerblue", "["..self.name.."] "..target:Name().." has the following beliefs: "..table.concat(belief_strings, " "));
@@ -1050,6 +1052,12 @@ local COMMAND = Clockwork.command:New("Warcry");
 		
 			return false;
 		end
+		
+		if player:GetNetVar("tied") != 0 then
+			Schema:EasyText(player, "firebrick", "You lack the will to do this!");
+		
+			return false;
+		end;
 	
 		local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
