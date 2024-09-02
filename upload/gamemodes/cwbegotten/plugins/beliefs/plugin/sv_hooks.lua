@@ -1812,12 +1812,12 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 	end
 	
 	if table.HasValue(traits, "gunslinger") then
-		level = level + 3;
+		level = level + 2;
 		data["beliefs"]["ingenious"] = true;
 		data["beliefs"]["powder_and_steel"] = true;
 		
-		local random_ammos = {--[["grapeshot",]] "pop-a-shot"};
-		local peppershot = Clockwork.item:CreateInstance("begotten_peppershot");
+		--local random_ammos = {"pop-a-shot"};
+		--[[local peppershot = Clockwork.item:CreateInstance("begotten_peppershot");
 			
 		if peppershot then
 			peppershot:SetCondition(math.random(60, 80));
@@ -1827,7 +1827,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 		
 		for i = 1, math.random(3, 4) do
 			Clockwork.inventory:AddInstance(inventory, Clockwork.item:CreateInstance(random_ammos[math.random(1, #random_ammos)]));
-		end
+		end]]--
 	end
 	
 	if table.HasValue(traits, "escapee") then
