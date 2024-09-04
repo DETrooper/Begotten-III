@@ -25,7 +25,7 @@ function cwTransmit:DisableNetworking(client, disable)
 end
 
 function cwTransmit:PreMakePlayerEnterObserverMode(player)
-	if player:IsAdmin() and !Clockwork.player:HasFlags(v, "i") then
+	if player:IsAdmin() and !Clockwork.player:HasFlags(player, "i") then
 		self:DisableNetworking(player, true);
 	end
 end
