@@ -18,6 +18,7 @@ ENT.OnDamageSounds = {"deer/idle1.wav"}
 ENT.ArmorPiercing = 5;
 ENT.SpawnHealth = 70
 ENT.XPValue = 35;
+ENT.MaxMultiHit = 1;
 
 -- Regen --
 
@@ -148,7 +149,7 @@ end
         damage = 14,
         range = 60,
         delay = 0,
-        type = DMG_SLASH,
+        type = DMG_CLUB,
         viewpunch = Angle(20, math.random(-10, 10), 0),
       }, function(self, hit)
         if #hit > 0 then

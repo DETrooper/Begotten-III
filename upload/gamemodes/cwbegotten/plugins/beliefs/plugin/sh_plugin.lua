@@ -247,7 +247,9 @@ local COMMAND = Clockwork.command:New("CharGetBeliefs");
 				local belief_strings = {};
 			
 				for k, v in pairs(beliefs) do
-					table.insert(belief_strings, k);
+					if v == true then
+						table.insert(belief_strings, k);
+					end
 				end
 			
 				Schema:EasyText(player, "cornflowerblue", "["..self.name.."] "..target:Name().." has the following beliefs: "..table.concat(belief_strings, " "));
@@ -1050,6 +1052,12 @@ local COMMAND = Clockwork.command:New("Warcry");
 		
 			return false;
 		end
+		
+		if player:GetNetVar("tied") != 0 then
+			Schema:EasyText(player, "firebrick", "You lack the will to do this!");
+		
+			return false;
+		end;
 	
 		local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
@@ -1102,7 +1110,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				local radius = config.Get("talk_radius"):Get() * 2;
 				local playerPos = player:GetPos();
 				
-				player:HandleSanity(3);
+				player:HandleSanity(5);
 				
 				for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 					local isPlayer = v:IsPlayer();
@@ -1217,7 +1225,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 					if player.bloodHowlActive then
 						if cwStamina then
 							local stamina = player:GetCharacterData("Stamina");
-							local new_stamina = math.Clamp(stamina + 90, 0, player:GetMaxStamina());
+							local new_stamina = math.Clamp(stamina + 60, 0, player:GetMaxStamina());
 							
 							player:SetCharacterData("Stamina", new_stamina);
 							player:SetNWInt("Stamina", new_stamina);
@@ -1275,7 +1283,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				
 				player.lastWarCry = curTime + 60;
 			else
-				Schema:EasyText(player, "firebrick", "You cannot war cry again for "..tostring(math.Round(player.lastWarCry - curTime)).." more seconds!");
+				Schema:EasyText(player, "firebrick", "You cannot war cry again for "..tostring(math.ceil(player.lastWarCry - curTime)).." more seconds!");
 			end
 		else
 			Schema:EasyText(player, "firebrick", "You are not of the correct subfaith to do this!");

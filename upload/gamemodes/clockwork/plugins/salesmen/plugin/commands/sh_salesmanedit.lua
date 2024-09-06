@@ -22,6 +22,7 @@ function COMMAND:OnRun(player, arguments)
 			player.cwSalesmanPos = target:GetPos()
 			player.cwSalesmanAng = target:GetAngles()
 			player.cwSalesmanHitPos = player:GetEyeTraceNoCursor().HitPos
+			player.cwSalesmanEditing = target;
 
 			if (!player.cwSalesmanAnim and type(arguments[1]) == "string") then
 				player.cwSalesmanAnim = tonumber(_G[arguments[1]])
@@ -33,7 +34,7 @@ function COMMAND:OnRun(player, arguments)
 
 			netstream.Start(player, "SalesmanEdit", salesmanTable)
 
-			for k, v in pairs(cwSalesmen.salesmen) do
+			--[[for k, v in pairs(cwSalesmen.salesmen) do
 				if (target == v) then
 					target.cwCash = nil
 					target:Remove()
@@ -42,7 +43,7 @@ function COMMAND:OnRun(player, arguments)
 
 					return
 				end
-			end
+			end]]--
 		else
 			Schema:EasyText(player, "darkgrey", "This entity is not a salesman!")
 		end

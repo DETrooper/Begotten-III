@@ -39,6 +39,7 @@ ENT.ClimbUpAnimation = "run_all_grenade"--ACT_ZOMBIE_CLIMB_UP --pull_grenade
 ENT.ClimbOffset = Vector(-14, 0, 0)
 ENT.ArmorPiercing = 55;
 ENT.Damage = 50;
+ENT.MaxMultiHit = 2;
 -- Detection --
 ENT.EyeBone = "ValveBiped.Bip01_Spine4"
 ENT.EyeOffset = Vector(7.5, 0, 5)
@@ -253,7 +254,6 @@ if SERVER then
 	function ENT:OnLandedOnGround()
 	end;
 	function ENT:OnAnimEvent()
-		local sha = false
 		if self:IsAttacking() and self:GetCycle() > 0.3 then
 			self:Attack({
 				damage = self.Damage,

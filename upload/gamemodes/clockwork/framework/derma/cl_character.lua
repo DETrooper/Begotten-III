@@ -896,7 +896,7 @@ function PANEL:Init()
 				
 				if rankOverride then
 					charName = rankOverride.." "..charName;
-				elseif rankText then
+				elseif rankText and rankText ~= "" then
 					charName = rankText.." "..charName;
 				end;
 			end

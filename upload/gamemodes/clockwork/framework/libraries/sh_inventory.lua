@@ -544,7 +544,7 @@ else
 	end
 	
 	function Clockwork.inventory:InventoryAction(player, itemAction, uniqueID, itemID, interactUniqueID, interactItemID)
-		if !player:Alive() or player:IsRagdolled() then
+		if !player:Alive() or player:IsRagdolled() or player:GetNetVar("tied") != 0 then
 			Clockwork.player:Notify(player, "You cannot use items right now!");
 			
 			return false;

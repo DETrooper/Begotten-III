@@ -18,6 +18,7 @@ ENT.OnDamageSounds = {"goat/idle1.wav"}
 ENT.ArmorPiercing = 10;
 ENT.SpawnHealth = 60
 ENT.XPValue = 25;
+ENT.MaxMultiHit = 1;
 
 -- Regen --
 
@@ -137,7 +138,7 @@ end
         damage = 10,
         range = 40,
         delay = 1,
-        type = DMG_SLASH,
+        type = DMG_CLUB,
         viewpunch = Angle(20, math.random(-10, 10), 0),
       }, function(self, hit)
         force = Vector(500, 500, 500)

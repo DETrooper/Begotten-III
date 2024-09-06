@@ -88,7 +88,9 @@ function cwStorage:SaveStorage()
 					bMoveable = physicsObject:IsMoveable();
 				end;
 				
-				storage[#storage + 1] = {
+				local saveTab = {};
+				
+				saveTab = {
 					name = v:GetNetworkedString("Name"),
 					model = model,
 					cash = v.cwCash,
@@ -103,6 +105,10 @@ function cwStorage:SaveStorage()
 					inventory = Clockwork.inventory:ToSaveable(v.cwInventory or {}),
 					isMoveable = bMoveable
 				};
+				
+				hook.Run("ModifyStorageSaveTable", v, saveTab);
+				
+				storage[#storage + 1] = saveTab;
 			end;
 		end;
 	end;
@@ -152,6 +158,8 @@ function cwStorage:LoadStorage()
 					entity:SetNWBool("hasPassword", true);
 					entity:SetNWBool("unlocked", false);
 				end
+				
+				hook.Run("ModifyLoadStorageEntityTab", entity, v);
 			end;
 		else
 			local entity = ents.Create("prop_physics");
@@ -193,12 +201,14 @@ function cwStorage:LoadStorage()
 			else
 				entity.cwLockTier = 3;
 			end;
+			
+			hook.Run("ModifyLoadStorageEntityTab", entity, v);
 		end;
 	end;
 end
 
 -- A function to open a container for a player.
-function cwStorage:OpenContainer(player, entity, weight)
+function cwStorage:OpenContainer(player, entity, weight, bForce)
 	local inventory
 	local cash = 0
 	local model = string.lower(entity:GetModel())
@@ -231,7 +241,7 @@ function cwStorage:OpenContainer(player, entity, weight)
 		name = entity:GetNetworkedString("Name")
 	end
 	
-	if hook.Run("PlayerCanOpenContainer", player, entity) == false then
+	if hook.Run("PlayerCanOpenContainer", player, entity, bForce) == false then
 		return false;
 	end
 	
@@ -393,10 +403,12 @@ function cwStorage:FinishLockpick(player, entity)
 		local containerWeight = cwStorage.containerList[model][1];
 		
 		Schema:EasyText(player, "olivedrab", "You successfully lockpick the container.");
-		cwStorage:OpenContainer(player, entity, containerWeight);
+		cwStorage:OpenContainer(player, entity, containerWeight, true);
 		
 		if entity.cwPassword then
 			Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has opened the passworded container "..entity:GetNetworkedString("Name").." by lockpicking it!");
+		elseif entity.cwFactionLock then
+			Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has opened the faction locked container "..entity:GetNetworkedString("Name").." by lockpicking it!");
 		end
 		
 		if entity.cwLockType == "none" then

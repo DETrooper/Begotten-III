@@ -41,11 +41,6 @@ if (SERVER) then
 	};
 end;
 
--- Called when the Clockwork shared variables are added.
-function cwContainerHiding:ClockworkAddSharedVars(globalVars, playerVars)
-	playerVars:Bool("hidden");
-end;
-
 -- Called when the player's move data should be manipulated.
 function cwContainerHiding:Move(player, moveData)
 	local hidden = player:GetNetVar("hidden");
@@ -80,7 +75,7 @@ local COMMAND = Clockwork.command:New("CharForceOut");
 						cwContainerHiding:AttemptHide(target, target.hideEntity, false);
 						
 						if (target:GetNetVar("blackOut") == true) then
-							target:SetNetVar("blackOut", false);
+							target:SetLocalVar("blackOut", false);
 						end;
 					else
 						cwContainerHiding:OpenedStorage(target, target.hideEntity);

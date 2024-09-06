@@ -19,7 +19,7 @@ local requiredWorkshopAddons = {
 Schema.requiredMounts = {
 	--["episodic"] = "Half-Life 2: Episode 1",
 	--["ep2"] = "Half-Life 2: Episode 2",
-	--["cstrike"] = "Counter-Strike: Source",
+	["cstrike"] = "Counter-Strike: Source",
 };
 
 Schema.cheapleMessages = {"I've gotta get away from that fucking thing!", "It's getting closer!", "What does that thing want from me!?", "Why can't anyone else see it!?", "Shit, it's getting closer!", "Gotta keep moving... gotta keep moving..."};
@@ -647,7 +647,7 @@ function Schema:GetProgressBarInfoAction(action, percentage)
 		return {text = "You are reloading your "..weaponName.." with "..ammoName..". Click to cancel.", percentage = percentage, flash = percentage < 0}
 		--return {text = "You are reloading your weapon. Click to cancel.", percentage = percentage, flash = percentage > 75};
 	elseif (action == "building") then
-		return {text = "You are erecting a siege ladder.", percentage = percentage, flash = percentage > 75};
+		return {text = "You are erecting a siege ladder. Click to cancel.", percentage = percentage, flash = percentage > 75};
 	elseif (action == "bloodTest") then
 		return {text = "You are testing someone's blood for corruption. Click to cancel.", percentage = percentage, flash = percentage > 75};
 	elseif (action == "hell_teleporting") then
@@ -1451,6 +1451,35 @@ function Schema:CanPaintChatbox()
 		return false;
 	end;
 end;
+
+local noDisplayClasses = {
+	"dwf",
+	"dw ",
+	"dwd",
+	"dar",
+	"rav",
+	"rs ",
+	"rsc",
+	"rsf",
+	"rel",
+	"re ",
+	"adm",
+	"ad ",
+	"su ",
+	"op ",
+};
+
+function Schema:ShouldNotDisplayTyping(text)
+	local prefix = config.Get("command_prefix"):Get()
+	
+	if string.sub(text, 1, 1) == prefix then
+		local stringsub = string.sub(text, 2, 4);
+		
+		if table.HasValue(noDisplayClasses, stringsub) then
+			return false;
+		end
+	end
+end
 
 -- Called to get whether the character menu should be created.
 function Schema:ShouldCharacterMenuBeCreated()

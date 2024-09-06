@@ -106,6 +106,8 @@ ENT.ArmorPiercing = 80;
 
 ENT.Damage = 25;
 
+ENT.MaxMultiHit = 1;
+
 
 
 -- Detection --
@@ -438,9 +440,6 @@ if SERVER then
 	end;
 	
 	function ENT:OnAnimEvent()
-		
-		local sha = false
-		
 		if self:IsAttacking() and self:GetCycle() > 0.3 then
 			
 			self:Attack({

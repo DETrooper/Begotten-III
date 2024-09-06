@@ -165,6 +165,7 @@ end;
 function Schema:ClockworkInitPostEntity()
 	self:LoadDummies();
 	self:LoadRadios();
+	self:LoadPopeSpeakers()
 	self:LoadNPCs();
 	self:LoadNPCSpawns();
 	self:SpawnBegottenEntities();
@@ -1189,14 +1190,7 @@ function Schema:KeyPress(player, key)
 	elseif (key == IN_ATTACK) then
 		local action = Clockwork.player:GetAction(player);
 		
-		if (action == "reloading") then
-			if player.itemUsing and IsValid(player.itemUsing) then
-				player.itemUsing.beingUsed = false;
-				player.itemUsing = nil;
-			end
-			
-			Clockwork.player:SetAction(player, nil);
-		elseif (action == "mutilating") or (action == "skinning") then
+		if (action == "reloading") or (action == "mutilating") or (action == "skinning") or (action == "building") then
 			Clockwork.player:SetAction(player, nil);
 		elseif (action == "bloodTest") then
 			Clockwork.chatBox:AddInTargetRadius(player, "me", "stops the blood test.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
@@ -2227,7 +2221,9 @@ function Schema:PlayerUseItem(player, itemTable, itemEntity)
 						if Schema.Ranks then
 							for k, v in pairs(Schema.Ranks) do
 								for i, v2 in ipairs(v) do
-									table.insert(blacklistedNames, string.lower(v2));
+									if v2 ~= "" then
+										table.insert(blacklistedNames, string.lower(v2));
+									end
 								end
 							end
 						end
@@ -2489,7 +2485,7 @@ function Schema:PostPlayerDeath(player)
 	end
 	
 	if (player:GetNetVar("blackOut")) then
-		player:SetNetVar("blackOut", false);
+		player:SetLocalVar("blackOut", false);
 	end;
 end
 
@@ -2502,26 +2498,35 @@ function Schema:PlayerChangedRanks(player)
 			player:SetCharacterData("rank", 1);
 		end;
 		
-		player:OverrideName(nil)
-		local name = player:Name();
-
 		local factionTable = Clockwork.faction:FindByID(faction);
 		
 		if factionTable and factionTable.GetName then
 			player:OverrideName(factionTable:GetName(player));
+			
+			return;
 		else
 			local rankOverride = player:GetCharacterData("rankOverride");
 			
-			if rankOverride then
-				player:OverrideName(rankOverride.." "..player:Name());
+			if rankOverride and rankOverride ~= "" then
+				player:OverrideName(rankOverride.." "..player:Name(true));
+				
+				return;
 			else
 				local rank = math.Clamp(player:GetCharacterData("rank", 1), 1, #self.Ranks[faction]);
 
-				if (rank and isnumber(rank) and self.Ranks[faction][rank]) then
-					player:OverrideName(self.Ranks[faction][rank].." "..player:Name());
+				if (rank and isnumber(rank)) then
+					local rankText = self.Ranks[faction][rank];
+					
+					if rankText and rankText ~= "" then
+						player:OverrideName(rankText.." "..player:Name(true));
+					
+						return;
+					end
 				end;
 			end;
 		end
+		
+		player:OverrideName(nil);
 	end;
 end;
 
@@ -2645,13 +2650,15 @@ function Schema:PlayerCharacterLoaded(player)
 		else
 			local rankOverride = player:GetCharacterData("rankOverride");
 			
-			if rankOverride then
+			if rankOverride and rankOverride ~= "" then
 				player:OverrideName(rankOverride.." "..player:Name());
 			else
 				local rank = math.Clamp(player:GetCharacterData("rank", 1), 1, #self.Ranks[faction]);
 
 				if (rank and isnumber(rank) and self.Ranks[faction][rank]) then
-					player:OverrideName(self.Ranks[faction][rank].." "..player:Name());
+					if self.Ranks[faction][rank] ~= "" then
+						player:OverrideName(self.Ranks[faction][rank].." "..player:Name());
+					end
 				end;
 			end;
 		end
@@ -2842,11 +2849,14 @@ function Schema:PostPlayerTakeFromStorage(player, storageTable, itemTable)
 end
 
 -- Called when a player should take damage.
-function Schema:PlayerShouldTakeDamage(player, attacker, inflictor, damageInfo)
+function Schema:PlayerShouldTakeDamage(player, attacker)
 	if (player.cwWakingUp) then
 		return false;
 	end;
-	
+end
+
+-- Called when a player should take damage.
+function Schema:PlayerShouldTakeDamageNew(player, attacker, inflictor, damageInfo)
 	-- rubber johnny flags
 	if (player:IsPlayer() and attacker:IsPlayer()) then
 		local hasFlags = Clockwork.player:HasFlags(player, "6");
@@ -3103,17 +3113,14 @@ end;
 function Schema:ActionStopped(player, action)
 	if action == "building" then
 		if player.ladderConstructing then
-			local ladderItem = item.CreateInstance("siege_ladder");
-			
-			if ladderItem then
-				ladderItem:SetCondition(player.ladderConstructing.condition, true);
-				
-				player:GiveItem(ladderItem);
-			end
-			
 			Schema.siegeLadderPositions[player.ladderConstructing.index].occupier = nil;
 			
 			player.ladderConstructing = nil;
+		end
+	elseif action == "reloading" then
+		if player.itemUsing and IsValid(player.itemUsing) then
+			player.itemUsing.beingUsed = false;
+			player.itemUsing = nil;
 		end
 	end
 end;

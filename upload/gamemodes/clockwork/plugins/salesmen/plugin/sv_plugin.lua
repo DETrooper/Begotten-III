@@ -202,46 +202,74 @@ netstream.Hook("SalesmanAdd", function(player, data)
 			end
 		end
 
-		local salesman = ents.Create("cw_salesman")
-		local angles = player:GetAngles()
-
-		angles.pitch = 0; angles.roll = 0
-		angles.yaw = angles.yaw + 180
-
-		salesman:SetPos(player.cwSalesmanPos or player.cwSalesmanHitPos)
-		salesman:SetAngles(player.cwSalesmanAng or angles)
-		salesman:SetModel(data.model)
-		salesman:Spawn()
-		salesman.cwStock = {}
-		
-		if data.head then
+		if IsValid(player.cwSalesmanEditing) then
+			local salesman = player.cwSalesmanEditing;
+			
 			salesman:SetNWString("head", data.head);
-		end
-
-		if (data.stock != -1) then
-			for k, v in pairs(data.sells) do
-				salesman.cwStock[k] = data.stock
+			
+			if (data.stock != -1) then
+				for k, v in pairs(data.sells) do
+					salesman.cwStock[k] = data.stock
+				end
 			end
+			
+			salesman.cwCash = data.cash
+			salesman.cwBuyTab = data.buys
+			salesman.cwSellTab = data.sells
+			salesman.cwTextTab = data.text
+			--salesman.cwClasses = data.classes
+			salesman.cwBuyRate = data.buyRate
+			salesman.cwFactions = data.factions
+			salesman.cwSubfactions = data.subfactions
+			salesman.cwPriceScale = data.priceScale
+			salesman.cwBuyInShipments = data.buyInShipments
+			salesman.cwAnimation = player.cwSalesmanAnim
+			salesman.cwFlags = data.flags
+			salesman.cwBeliefs = data.beliefs
+
+			salesman:SetupSalesman(data.name, data.physDesc, player.cwSalesmanAnim, data.showChatBubble)
+		else
+			local salesman = ents.Create("cw_salesman")
+			local angles = player:GetAngles()
+
+			angles.pitch = 0; angles.roll = 0
+			angles.yaw = angles.yaw + 180
+
+			salesman:SetPos(player.cwSalesmanPos or player.cwSalesmanHitPos)
+			salesman:SetAngles(player.cwSalesmanAng or angles)
+			salesman:SetModel(data.model)
+			salesman:Spawn()
+			salesman.cwStock = {}
+			
+			if data.head then
+				salesman:SetNWString("head", data.head);
+			end
+
+			if (data.stock != -1) then
+				for k, v in pairs(data.sells) do
+					salesman.cwStock[k] = data.stock
+				end
+			end
+
+			salesman.cwCash = data.cash
+			salesman.cwBuyTab = data.buys
+			salesman.cwSellTab = data.sells
+			salesman.cwTextTab = data.text
+			--salesman.cwClasses = data.classes
+			salesman.cwBuyRate = data.buyRate
+			salesman.cwFactions = data.factions
+			salesman.cwSubfactions = data.subfactions
+			salesman.cwPriceScale = data.priceScale
+			salesman.cwBuyInShipments = data.buyInShipments
+			salesman.cwAnimation = player.cwSalesmanAnim
+			salesman.cwFlags = data.flags
+			salesman.cwBeliefs = data.beliefs
+
+			salesman:SetupSalesman(data.name, data.physDesc, player.cwSalesmanAnim, data.showChatBubble)
+
+			Clockwork.entity:MakeSafe(salesman, true, true)
+			cwSalesmen.salesmen[#cwSalesmen.salesmen + 1] = salesman;
 		end
-
-		salesman.cwCash = data.cash
-		salesman.cwBuyTab = data.buys
-		salesman.cwSellTab = data.sells
-		salesman.cwTextTab = data.text
-		--salesman.cwClasses = data.classes
-		salesman.cwBuyRate = data.buyRate
-		salesman.cwFactions = data.factions
-		salesman.cwSubfactions = data.subfactions
-		salesman.cwPriceScale = data.priceScale
-		salesman.cwBuyInShipments = data.buyInShipments
-		salesman.cwAnimation = player.cwSalesmanAnim
-		salesman.cwFlags = data.flags
-		salesman.cwBeliefs = data.beliefs
-
-		salesman:SetupSalesman(data.name, data.physDesc, player.cwSalesmanAnim, data.showChatBubble)
-
-		Clockwork.entity:MakeSafe(salesman, true, true)
-		cwSalesmen.salesmen[#cwSalesmen.salesmen + 1] = salesman
 	end
 
 	player.cwSalesmanAnim = nil
@@ -249,6 +277,7 @@ netstream.Hook("SalesmanAdd", function(player, data)
 	player.cwSalesmanPos = nil
 	player.cwSalesmanAng = nil
 	player.cwSalesmanHitPos = nil
+	player.cwSalesmanEditing = nil
 end)
 
 -- A function to load the salesmen.

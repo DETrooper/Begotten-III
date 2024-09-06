@@ -69,7 +69,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["repulsive_riposte"] = {
 				name = "Repulsive Riposte",
-				description = "Unlocks the ability to chain-parry, extending your active parry window by 0.15 seconds every time you connect a parry, thus allowing you to parry multiple opponents with greater ease. Multi-parries will successively restore more stamina the more targets you parry. Riposte attack damage from successful parries is increased from 200% to 250%.";
+				description = "Unlocks the ability to chain-parry, extending your active parry window by 0.3 seconds every time you connect a parry, thus allowing you to parry multiple opponents with greater ease. Multi-parries will successively restore more stamina the more targets you parry. Riposte attack damage from successful parries is increased from 200% to 250%.";
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "parrying"},
 				row = 3,
@@ -113,7 +113,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["sidestep"] = {
 				name = "Sidestep",
-				description = "Successful deflections now restore +10 more points of stamina and stability, and also prevents enemy attacks for an additional second.",
+				description = "Successful deflections now restore +10 more points of stamina and stability, and also prevents enemy attacks for an additional second. The cooldown before your next deflection is reduced by 20%, and succesful deflections will remove your deflection cooldown.",
 				lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "deflection"},
 				row = 3,

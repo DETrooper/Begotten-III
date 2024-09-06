@@ -2046,7 +2046,7 @@ ITEM.concealsFace = true;
 ITEM.conditionScale = 0
 ITEM.hasHelmet = true;
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 40
+ITEM.protection = 50
 ITEM.weight = 5;
 ITEM.weightclass = "Light";
 ITEM.type = "plate";
@@ -2075,7 +2075,7 @@ ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
 ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
 ITEM.slashScale = 0.90; -- reduces slash damage by 10%
 ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
-ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 
 ITEM.components = {breakdownType = "meltdown", items = {"tech", "tech", "scrap", "scrap", "scrap", "scrap", "scrap"}};
 

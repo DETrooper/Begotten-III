@@ -151,7 +151,18 @@ function SWEP:Think()
 				local itemTable = item.GetByWeapon(self);
 					
 				if itemTable then
-					item.SendToPlayer(player, itemTable);
+					netstream.Start(player, "WeaponItemData", {
+						definition = item.GetDefinition(itemTable, true),
+						weapon = self:EntIndex()
+					})
+
+					if self:GetNWString("ItemID") ~= itemTable.itemID then
+						self:SetNWString(
+							"ItemID", tostring(itemTable.itemID)
+						)
+					end
+					
+					self.cwItemTable = itemTable
 				end
 			end
 			

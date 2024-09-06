@@ -84,7 +84,7 @@ function COMMAND:OnRun(player, arguments)
 		if (cwStorage.containerList[model]) then
 			local containerWeight = cwStorage.containerList[model][1]
 
-			cwStorage:OpenContainer(player, trace.Entity, containerWeight)
+			cwStorage:OpenContainer(player, trace.Entity, containerWeight, true)
 		end
 	end
 end

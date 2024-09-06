@@ -9,8 +9,15 @@ function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 	
 	if (class == "cw_longship") then
 		local attacker = damageInfo:GetAttacker();
+		local curTime = CurTime();
 		local damageType = damageInfo:GetDamageType();
 		local damageAmount = damageInfo:GetDamage();
+		local owner = entity.owner;
+		
+		if entity.health <= 700 and IsValid(owner) and owner:GetSubfaction() == "Clan Harald" and owner:Alive() and owner:HasBelief("daring_trout") and (!owner.nextShipDamageNotif or curTime > owner.nextShipDamageNotif) then
+			owner.nextShipDamageNotif = curTime + 60;
+			Schema:EasyText(owner, "icon16/anchor.png", "red", "A raven lands on your shoulder, clutching a torn piece of your longship's sail in its beak! Your longship is being damaged and may soon be destroyed if you do not act!");
+		end
 		
 		if damageAmount >= 20 then
 			if damageType == 4 then -- SLASH

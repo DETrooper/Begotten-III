@@ -870,7 +870,9 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 	if (player) then
 		ragdoll = player:GetRagdollEntity();
 	
-		if (hook.Run("PlayerShouldTakeDamage", player, attacker, inflictor, damageInfo) == false or player:IsInGodMode()) then
+		if (hook.Run("PlayerShouldTakeDamage", player, attacker) == false or
+		hook.Run("PlayerShouldTakeDamageNew", player, attacker, inflictor, damageInfo) or
+		player:IsInGodMode()) then
 			damageInfo:SetDamage(0)
 			return true
 		end
@@ -2418,8 +2420,10 @@ concommand.Add("cwc", function(player, command, arguments)
 		tf	= "takeflags"
 	}
 	
-	if !player:IsAdmin() then
-		Schema:EasyText(GetAdmins(), "firebrick", "Player "..player:Name().." has attempted to run cwc with the arguments ("..table.concat(arguments, ", ")") in console! It could be a bind or it could be malicious.");
+	if IsValid(player) then
+		if !player:IsAdmin() then
+			Schema:EasyText(GetAdmins(), "firebrick", "Player "..player:Name().." has attempted to run cwc with the arguments ("..table.concat(arguments, ", ")..") in console! It could be a bind or it could be malicious.");
+		end
 	end
 
 	--	if called from console

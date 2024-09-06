@@ -24,18 +24,22 @@ function Parry(target, dmginfo)
 					target.parryTarget = attacker;
 					if(attacker:IsPlayer()) then netstream.Start(attacker, "Stunned", (attacker:HasBelief("encore") and 0.5 or 1)); end
 				end
-				
-				dmginfo:SetDamage(0)
-				target:EmitSound("meleesounds/DS2Parry.mp3")
-				netstream.Start(target, "Parried", 0.2)
-				
+							
 				if cwBeliefs and target:HasBelief("repulsive_riposte") then
 					target.parryStacks = (target.parryStacks or 0) + 1;
-					
 					if wep.Timers and wep.Timers["parryTimer"..tostring(target:EntIndex())] then
-						wep.Timers["parryTimer"..tostring(target:EntIndex())].duration = wep.Timers["parryTimer"..tostring(target:EntIndex())].duration + 0.15;
+						wep.Timers["parryTimer"..tostring(target:EntIndex())].duration = wep.Timers["parryTimer"..tostring(target:EntIndex())].duration + 0.3;
 					end
 				end
+				
+				dmginfo:SetDamage(0)
+				if target.parryStacks and target.parryStacks > 1 then
+					target:EmitSound("meleesounds/DS2Parry.mp3", 100, 90 + math.min(255, 90 + (target.parryStacks * 10)))
+				else
+					target:EmitSound("meleesounds/DS2Parry.mp3")
+				end
+
+				netstream.Start(target, "Parried", 0.2)
 				
 				if !isJavelin then
 					if attacker.CancelGuardening then
@@ -1121,7 +1125,6 @@ local function Guarding(ent, dmginfo)
 						end
 						
 						ent:SetNWBool("Deflect", false)
-						
 						wep:SetNextPrimaryFire(0);
 						
 						if ent.HasBelief then
@@ -1132,6 +1135,8 @@ local function Guarding(ent, dmginfo)
 							if ent:HasBelief("sidestep") then
 								deflectionPoisePayback = 25;
 								deflectionStabilityPayback = 15;
+								ent:SetNWBool("CanDeflect", true)
+
 							elseif ent:HasBelief("deflection") then
 								deflectionPoisePayback = 15;
 								deflectionStabilityPayback = 10;
@@ -1141,7 +1146,6 @@ local function Guarding(ent, dmginfo)
 								deflectionPoisePayback = math.Round(deflectionPoisePayback * 1.5);
 							end
 							
-							--ent:SetNWInt("meleeStamina", math.Clamp(ent:GetNWInt("meleeStamina", max_poise) + deflectionPoisePayback, 0, max_poise));
 							ent:HandleStamina(deflectionPoisePayback);
 							ent:SetCharacterData("stability", math.Clamp(ent:GetCharacterData("stability", max_stability) + deflectionStabilityPayback, 0, max_stability));
 							ent:SetNWInt("stability", ent:GetCharacterData("stability", max_stability));
@@ -1157,13 +1161,13 @@ local function Guarding(ent, dmginfo)
 							local delay = enemyattacktable["delay"];
 							
 							if ent.HasBelief then
-								if ent:HasBelief("sidestep") and enemyattacktable["delay"] >= 2 then
-									delay = enemyattacktable["delay"] + 2;
-								elseif ent:HasBelief("deflection") and enemyattacktable["delay"] >= 1 then
-									delay = enemyattacktable["delay"] + 1;
+								if ent:HasBelief("sidestep") then
+									delay = math.max(2, enemyattacktable["delay"]);
+								elseif ent:HasBelief("deflection") then
+									delay = math.max(1, enemyattacktable["delay"]);
 								end
 							end
-							
+
 							if enemywep then
 								enemywep:SetNextPrimaryFire(CurTime() + delay);
 								

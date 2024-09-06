@@ -53,7 +53,7 @@ function ENT:Think()
 					self.nextNPCCheck = curTime + math.random(3, 10);
 					
 					-- Thrall combat encounters when sailing through the Styx.
-					self.maxNPCs = math.max(1, #self.playersOnBoard / 3);
+					self.maxNPCs = math.min(2, math.max(1, #self.playersOnBoard / 5));
 					
 					if !self.spawnedNPCs then
 						self.spawnedNPCs = {};
@@ -89,7 +89,7 @@ function ENT:Think()
 									local entity = cwZombies:SpawnThrall(npcName, spawnPos, Angle(0, math.random(1, 359), 0));
 
 									if IsValid(entity) then
-										entity:SetMaterial("models/props_lab/Tank_Glass001");
+										entity:SetMaterial("models/props_combine/com_shield001a");
 										entity.noCatalysts = true;
 										
 										for i, v in RandomPairs(self.playersOnBoard) do
@@ -123,7 +123,7 @@ function ENT:Think()
 						end
 					
 						if playerPos.z <= self:GetPos().z + offset then
-							if !table.HasValue(zones:GetPlayersInZone("sea_"..self.location)) then
+							if !table.HasValue(zones:GetPlayersInZone("sea_"..self.location), player) then
 								table.remove(self.playersOnBoard, i);
 								
 								break;
@@ -274,7 +274,7 @@ function ENT:SetHP(newhp)
 		else
 			self.repairable = false;
 		end
-	elseif self.location and (self.location == "calm" or self.locaiton == "rough" or self.location == "styx") then
+	elseif self.location and (self.location == "calm" or self.location == "rough" or self.location == "styx") then
 		if self.location == "styx" then
 			if self.playersOnBoard and #self.playersOnBoard > 0 then
 				local playersOnBoard = table.Copy(self.playersOnBoard);

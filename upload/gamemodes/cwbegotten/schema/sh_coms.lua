@@ -102,11 +102,11 @@ local COMMAND = Clockwork.command:New("Warhorn");
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("Enlist")
-	COMMAND.tip = "Enlist a character into the ranks of the Gatekeepers. This will only work if you are an Emissary or higher."
-	COMMAND.text = "[string Subfaction]"
+	COMMAND.tip = "Enlist a character into your faction or a specified faction. This will only work if you are a rank of authority."
+	COMMAND.text = "[string Faction] [string Subfaction]"
 	COMMAND.flags = CMD_DEFAULT;
 	--COMMAND.access = "o"
-	COMMAND.optionalArguments = 1;
+	COMMAND.optionalArguments = 2;
 	COMMAND.alias = {"PlyEnlist", "CharEnlist", "Recruit", "PlyRecruit", "CharRecruit"};
 
 	-- Called when the command has been run.
@@ -115,17 +115,27 @@ local COMMAND = Clockwork.command:New("Enlist")
 		
 		if (target and target:Alive()) then
 			if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
-				local enlistFaction;
 				local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+				local playerFactionTable = Clockwork.faction:GetStored()[playerFaction];
 				local targetFaction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
-			
-				if player:IsAdmin() or ((playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers") and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or playerFaction == "Holy Hierarchy" then
-					if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" then
-						enlistFaction = playerFaction;
-					else
-						enlistFaction = "Gatekeeper";
-					end
+				local enlistFaction = arguments[1] or playerFaction;
+				local enlistFactionTable = Clockwork.faction:GetStored()[enlistFaction];
 				
+				if !enlistFactionTable then
+					Schema:EasyText(player, "firebrick", enlistFaction.." is not a valid faction!");
+					
+					return;
+				end
+				
+				if !enlistFactionTable.enlist then
+					Schema:EasyText(player, "firebrick", "Characters cannot be enlisted into the "..enlistFaction.." faction!");
+					
+					return;
+				end
+				
+				local isMasterFaction = (enlistFactionTable.masterfactions and table.HasValue(enlistFactionTable.masterfactions, playerFaction));
+			
+				if player:IsAdmin() or (enlistFaction == playerFaction and enlistFactionTable and enlistFactionTable.enlist and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or isMasterFaction then
 					if targetFaction == enlistFaction then
 						Schema:EasyText(player, "grey", target:Name().." is already a "..enlistFaction.."!");
 
@@ -133,29 +143,28 @@ local COMMAND = Clockwork.command:New("Enlist")
 					end
 					
 					if !Clockwork.faction:IsGenderValid(enlistFaction, target:GetGender()) then
-						Schema:EasyText(player, "firebrick", target:Name().." is not the correct gender for the Gatekeeper faction!");
+						Schema:EasyText(player, "firebrick", target:Name().." is not the correct gender for the "..enlistFaction.." faction!");
 						
 						return;
 					end;
 					
 					if player:InTower() then
 						if !Schema.towerSafeZoneEnabled then
-							Schema:EasyText(player, "firebrick", "The tower safezone must be enabled in order to run this commmand!");
+							Schema:EasyText(player, "firebrick", "The safezone must be enabled in order to run this commmand!");
 							
 							return;
 						end
 					else
-						Schema:EasyText(player, "firebrick", "You must do this inside the Tower of Light!");
+						Schema:EasyText(player, "firebrick", "You must do this inside a safezone!");
 						
 						return;
 					end
 					
 					local subfaction;
-					local enlistFactionTable =  Clockwork.faction:GetStored()[enlistFaction];
 					local factionSubfactions = enlistFactionTable.subfactions;
 					
 					if enlistFactionTable then
-						subfaction = arguments[1];
+						subfaction = arguments[2];
 					
 						for i, v in ipairs(factionSubfactions) do
 							if i == 1 and !subfaction then
@@ -169,15 +178,19 @@ local COMMAND = Clockwork.command:New("Enlist")
 							end
 						end
 					end
+					
+					if playerFactionTable.CanEnlist and playerFactionTable:CanEnlist(player, target, enlistFaction, subfaction) == false then
+						return;
+					end
 				
 					if !subfaction or istable(subfaction) then
-						if targetFaction == "Wanderer" or (targetFaction == "Children of Satan" and target:GetSubfaction() == "Kinisger") then
+						if targetFaction == "Wanderer" or (enlistFaction ~= "Children of Satan" and targetFaction == "Children of Satan" and target:GetSubfaction() == "Kinisger") then
 							local playerName = player:Name();
 						
 							Clockwork.dermaRequest:RequestConfirmation(target, enlistFaction.." Enlistment", playerName.." has invited you to enlist into the "..enlistFaction.." faction!", function()
 								targetFaction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
 								
-								if (targetFaction == "Wanderer" or (targetFaction == "Children of Satan" and target:GetSubfaction() == "Kinisger")) and target:Alive() and Clockwork.faction:IsGenderValid(enlistFaction, target:GetGender()) then
+								if (targetFaction == "Wanderer" or (enlistFaction ~= "Children of Satan" and targetFaction == "Children of Satan" and target:GetSubfaction() == "Kinisger")) and target:Alive() and Clockwork.faction:IsGenderValid(enlistFaction, target:GetGender()) then
 									local bSuccess, fault = Clockwork.faction:GetStored()[enlistFaction]:OnTransferred(target, Clockwork.faction:GetStored()[targetFaction]);
 									
 									if (bSuccess != false) then
@@ -197,8 +210,16 @@ local COMMAND = Clockwork.command:New("Enlist")
 											end
 										end
 										
-										if subfaction and subfaction.name == "Praeventor" then
-											target:SetCharacterData("rank", 12);
+										if subfaction then
+											for i, v in ipairs(enlistFactionTable.subfactions) do
+												if v.name == subfaction then
+													if v.startingRank then
+														target:SetCharacterData("rank", v.startingRank);
+													end
+													
+													break;
+												end
+											end
 										end
 										
 										local targetAngles = target:EyeAngles();
@@ -239,10 +260,10 @@ local COMMAND = Clockwork.command:New("Enlist")
 COMMAND:Register()
 
 local COMMAND = Clockwork.command:New("SetCustomRank")
-	COMMAND.tip = "Set a character's custom rank. The rank index should correspond to what their actual rank would be (i.e. 2 for Acolyte)."
-	COMMAND.text = "<string Character> <string Rank> <number RankIndex> [bool NotifyTarget]"
+	COMMAND.tip = "Set a character's custom rank. If blank, it will be reset. The optional rank index should correspond to what their actual rank would be (i.e. 2 for Acolyte)."
+	COMMAND.text = "<string Character> [string Rank] [number RankIndex]"
 	COMMAND.access = "o"
-	COMMAND.arguments = 3;
+	COMMAND.arguments = 2;
 	COMMAND.optionalArguments = 1;
 	COMMAND.alias = {"CharSetCustomRank", "PlySetCustomRank", "PromoteCustom", "SetRankOverride", "SetRankCustom"};
 	
@@ -250,13 +271,19 @@ local COMMAND = Clockwork.command:New("SetCustomRank")
 	function COMMAND:OnRun(player, arguments)
 		local target = Clockwork.player:FindByID(arguments[1]);
 		local rankOverride = arguments[2];
-		local rank = string.lower(tostring(arguments[3]));
+		local rank;
+		
+		if arguments[3] then
+			rank = string.lower(tostring(arguments[3]));
+		end
 		
 		if (target) then
 			local faction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
+			local factionTable = Clockwork.faction:FindByID(faction);
 			local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+			local isMasterFaction = (factionTable and factionTable.masterfactions and table.HasValue(factionTable.masterfactions, playerFaction));
 		
-			if player:IsAdmin() or ((playerFaction == faction and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or playerFaction == "Holy Hierarchy") then
+			if player:IsAdmin() or ((playerFaction == faction and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or isMasterFaction) then
 				local name = target:Name();
 				local ranks = Schema.Ranks;
 
@@ -265,32 +292,85 @@ local COMMAND = Clockwork.command:New("SetCustomRank")
 					return;
 				end;
 				
-				if (rank != nil) then
-						for k, v in pairs (ranks[faction]) do
-							if (string.lower(v) == tostring(rank) or k == tonumber(rank)) then
-								rank = k;
-							end;
+				if rank then
+					for k, v in pairs (ranks[faction]) do
+						if (string.lower(v) == tostring(rank) or k == tonumber(rank)) then
+							rank = k;
 						end;
-				else
-					rank = math.Clamp(target:GetCharacterData("rank", 1) + 1, 1, #ranks[faction]);
+					end;
 				end;
 
-				if (ranks[faction][rank]) then
-					target:SetCharacterData("rank", rank);
+				if !rank or ranks[faction][rank] then
+					if !isMasterFaction and Schema:GetRankTier(faction, rank) >= Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) then
+						if !player:IsAdmin() then
+							Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().."!");
+							
+							return false;
+						end
+					end
+					
+					if !isMasterFaction and Schema:GetRankTier(faction, target:GetCharacterData("rank", 1)) >= Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) then
+						if !player:IsAdmin() then
+							Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().."!");
+							
+							return false;
+						end
+					end
+					
+					if factionTable.CanPromote and factionTable:CanPromote(player, target, faction, targetSubfaction) == false then
+						Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().."!");
+					
+						return false;
+					end
+				
+					if rank then
+						target:SetCharacterData("rank", rank);
+					end
+					
 					target:SetCharacterData("rankOverride", rankOverride);
 					hook.Run("PlayerChangedRanks", target);
-					local notifyTarget = tobool(arguments[3]);
+					
+					if Schema.RanksToSubfaction and Schema.RanksToSubfaction[faction] then
+						local subfaction = Schema.RanksToSubfaction[faction][ranks[faction][rank]];
+						
+						if subfaction then
+							if target:GetNetVar("kinisgerOverride") then
+								target:SetCharacterData("kinisgerOverrideSubfaction", subfaction);
+								target:SetNetVar("kinisgerOverrideSubfaction", subfaction);
+							else
+								target:SetCharacterData("Subfaction", subfaction, true);
+							end
+							
+							local targetAngles = target:EyeAngles();
+							local targetPos = target:GetPos();
+							
+							Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+							
+							target:SetPos(targetPos);
+							target:SetEyeAngles(targetAngles);
+						end
+					end
+					
+					local notifyTarget = true;
 					
 					if (target == player) then
 						name = "yourself";
 						notifyTarget = false;
 					end;
 					
-					if (notifyTarget) then
-						Schema:EasyText(target, "olivedrab", "You have been promoted to the rank of \""..rankOverride.."\".")
-					end;
-					
-					Schema:EasyText(player, "cornflowerblue", "You have promoted "..name.." to the rank of \""..rankOverride.."\".");
+					if rankOverride then
+						if (notifyTarget) then
+							Schema:EasyText(target, "olivedrab", "You have been promoted to the rank of \""..rankOverride.."\".")
+						end;
+						
+						Schema:EasyText(player, "cornflowerblue", "You have promoted "..name.." to the rank of \""..rankOverride.."\".");
+						
+						if target == player then
+							Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has promoted themself to the custom rank of \""..rankOverride.."\".");
+						else
+							Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has promoted "..name.." to the custom rank of \""..rankOverride.."\".");
+						end
+					end
 				else
 					Schema:EasyText(player, "darkgrey", "The rank index specified is not valid!");
 				end;
@@ -304,22 +384,30 @@ local COMMAND = Clockwork.command:New("SetCustomRank")
 COMMAND:Register()
 
 local COMMAND = Clockwork.command:New("Promote")
-	COMMAND.tip = "Promote a character if they belong to a faction with ranks. 2nd argument allows you to directly set the rank."
-	COMMAND.text = "<string Character> <string Rank> [bool NotifyTarget]"
+	COMMAND.tip = "Promote a character if they belong to a faction with ranks. Optional 2nd argument allows you to directly set the rank, otherwise they will be automatically promoted to the next rank available for their subfaction."
+	COMMAND.text = "<string Character> [string Rank]"
 	--COMMAND.access = "o"
-	COMMAND.arguments = 2;
+	COMMAND.arguments = 1;
 	COMMAND.optionalArguments = 1;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
 		local target = Clockwork.player:FindByID(arguments[1]);
-		local rank = string.lower(tostring(arguments[2]));
+		local rank;
+		
+		if arguments[2] then
+			rank = string.lower(tostring(arguments[2]));
+		end
 		
 		if (target) then
 			local faction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
+			local factionTable = Clockwork.faction:FindByID(faction);
+			local targetSubfaction = target:GetNetVar("kinisgerOverrideSubfaction") or target:GetSubfaction();
 			local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+			local targetCurrentRank = target:GetCharacterData("rank", 1);
+			local isMasterFaction = (factionTable and factionTable.masterfactions and table.HasValue(factionTable.masterfactions, playerFaction));
 		
-			if player:IsAdmin() or ((playerFaction == faction and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or playerFaction == "Holy Hierarchy") then
+			if player:IsAdmin() or ((playerFaction == faction and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or isMasterFaction) then
 				local name = target:Name();
 				local ranks = Schema.Ranks;
 
@@ -327,15 +415,45 @@ local COMMAND = Clockwork.command:New("Promote")
 					Schema:EasyText(player, "darkgrey", target:Name().." does not belong to a faction with ranks!");
 					return;
 				end;
-				
-				if (rank != nil) then
-						for k, v in pairs (ranks[faction]) do
-							if (string.lower(v) == tostring(rank) or k == tonumber(rank)) then
-								rank = k;
-							end;
+
+				if rank then
+					for k, v in pairs(ranks[faction]) do
+						if (string.lower(v) == tostring(rank) or k == tonumber(rank)) then
+							rank = k;
 						end;
+					end;
 				else
-					rank = math.Clamp(target:GetCharacterData("rank", 1) + 1, 1, #ranks[faction]);
+					local rankTier = Schema:GetRankTier(faction, targetCurrentRank);
+					local nextTierRanks = Schema.RankTiers[faction][rankTier + 1];
+					
+					if nextTierRanks then
+						local defaultRank;
+						local ranksToSubfactions = Schema.RanksToSubfaction[faction];
+						
+						for i, v in ipairs(nextTierRanks) do
+							if !ranksToSubfactions[v] then
+								if !defaultRank then
+									defaultRank = table.KeyFromValue(ranks[faction], v);
+								end
+							elseif ranksToSubfactions[v] == targetSubfaction then
+								rank = table.KeyFromValue(ranks[faction], v);
+								
+								break;
+							end
+							
+							if i == #nextTierRanks then
+								if defaultRank then
+									rank = defaultRank;
+								else
+									rank = table.KeyFromValue(ranks[faction], nextTierRanks[1]);
+								end
+							end
+						end
+					end
+					
+					if !rank then
+						rank = math.Clamp(target:GetCharacterData("rank", 1) + 1, 1, #ranks[faction]);
+					end
 				end;
 
 				if (ranks[faction][rank]) then
@@ -345,7 +463,7 @@ local COMMAND = Clockwork.command:New("Promote")
 						return false;
 					end
 				
-					if playerFaction ~= "Holy Hierarchy" and Schema:GetRankTier(faction, rank) >= Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) then
+					if !isMasterFaction and Schema:GetRankTier(faction, rank) >= Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) then
 						if !player:IsAdmin() then
 							Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().." to "..ranks[faction][rank].."!");
 							
@@ -353,12 +471,18 @@ local COMMAND = Clockwork.command:New("Promote")
 						end
 					end
 					
-					if playerFaction ~= "Holy Hierarchy" and Schema:GetRankTier(faction, target:GetCharacterData("rank", 1)) >= Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) then
+					if !isMasterFaction and Schema:GetRankTier(faction, target:GetCharacterData("rank", 1)) >= Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) then
 						if !player:IsAdmin() then
 							Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().." to "..ranks[faction][rank].."!");
 							
 							return false;
 						end
+					end
+					
+					if factionTable.CanPromote and factionTable:CanPromote(player, target, faction, targetSubfaction) == false then
+						Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().."!");
+					
+						return false;
 					end
 					
 					target:SetCharacterData("rank", rank);
@@ -385,7 +509,7 @@ local COMMAND = Clockwork.command:New("Promote")
 						end
 					end
 					
-					local notifyTarget = tobool(arguments[3]);
+					local notifyTarget = true;
 					
 					if (target == player) then
 						name = "yourself";
@@ -397,6 +521,12 @@ local COMMAND = Clockwork.command:New("Promote")
 					end;
 					
 					Schema:EasyText(player, "cornflowerblue", "You have promoted "..name.." to the rank of \""..ranks[faction][rank].."\".");
+					
+					if target == player then
+						Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has promoted themself to the rank of \""..ranks[faction][rank].."\".");
+					else
+						Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has promoted "..name.." to the rank of \""..ranks[faction][rank].."\".");
+					end
 				else
 					Schema:EasyText(player, "darkgrey", "The rank specified is not valid!");
 				end;
@@ -421,9 +551,13 @@ local COMMAND = Clockwork.command:New("Demote")
 
 		if (target) then
 			local faction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
+			local factionTable = Clockwork.faction:FindByID(faction);
+			local targetSubfaction = target:GetNetVar("kinisgerOverrideSubfaction") or target:GetSubfaction();
 			local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
-
-			if player:IsAdmin() or ((playerFaction == faction and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or playerFaction == "Holy Hierarchy") then
+			local targetCurrentRank = target:GetCharacterData("rank", 1);
+			local isMasterFaction = (factionTable and factionTable.masterfactions and table.HasValue(factionTable.masterfactions, playerFaction));
+		
+			if player:IsAdmin() or ((playerFaction == faction and Schema:GetRankTier(playerFaction, player:GetCharacterData("rank", 1)) >= 3) or isMasterFaction) then
 				local name = target:Name();
 				local ranks = Schema.Ranks;
 				
@@ -432,15 +566,21 @@ local COMMAND = Clockwork.command:New("Demote")
 					return;
 				end;
 				
-				if playerFaction ~= "Holy Hierarchy" and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) <= Schema:GetRankTier(faction, target:GetCharacterData("rank", 1)) then
+				if !isMasterFaction and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) <= Schema:GetRankTier(faction, target:GetCharacterData("rank", 1)) then
 					if !player:IsAdmin() then
 						Schema:EasyText(player, "grey", "You cannot demote "..target:Name().."!");
 						
 						return false;
 					end
 				end
+				
+				if factionTable.CanDemote and factionTable:CanDemote(player, target, faction, targetSubfaction) == false then
+					Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().."!");
+				
+					return false;
+				end
 
-				local rankTier = Schema:GetRankTier(faction, target:GetCharacterData("rank", 1));
+				local rankTier = Schema:GetRankTier(faction, targetCurrentRank);
 				
 				if rankTier == 1 then
 					Schema:EasyText(player, "grey", target:Name().." cannot be demoted any further!");
@@ -448,15 +588,80 @@ local COMMAND = Clockwork.command:New("Demote")
 					return false;
 				end
 				
-				local rank = table.KeyFromValue(Schema.Ranks[faction], Schema.RankTiers[faction][math.max(1, rankTier - 1)][1]);
+				local rank;
+				local rankTier = Schema:GetRankTier(faction, targetCurrentRank);
+				local prevTierRanks = Schema.RankTiers[faction][rankTier - 1];
+				
+				if prevTierRanks then
+					local defaultRank;
+					local ranksToSubfactions = Schema.RanksToSubfaction[faction];
+					
+					for i, v in ipairs(prevTierRanks) do
+						if !ranksToSubfactions[v] then
+							if !defaultRank then
+								defaultRank = table.KeyFromValue(ranks[faction], v);
+							end
+						elseif ranksToSubfactions[v] == targetSubfaction then
+							rank = table.KeyFromValue(ranks[faction], v);
+							
+							break;
+						end
+						
+						if i == #prevTierRanks then
+							if defaultRank then
+								rank = defaultRank;
+							else
+								rank = table.KeyFromValue(ranks[faction], prevTierRanks[1]);
+							end
+						end
+					end
+				end
+				
+				if !rank then
+					rank = math.Clamp(target:GetCharacterData("rank", 1) - 1, 1, #ranks[faction]);
+				end
+				
+				if rank == targetCurrentRank then
+					Schema:EasyText(player, "grey", target:Name().." cannot be demoted any further!");
+				
+					return false;
+				end
+				
 				target:SetCharacterData("rank", rank);
 				hook.Run("PlayerChangedRanks", target);
+				
+					if Schema.RanksToSubfaction and Schema.RanksToSubfaction[faction] then
+						local subfaction = Schema.RanksToSubfaction[faction][ranks[faction][rank]];
+						
+						if subfaction then
+							if target:GetNetVar("kinisgerOverride") then
+								target:SetCharacterData("kinisgerOverrideSubfaction", subfaction);
+								target:SetNetVar("kinisgerOverrideSubfaction", subfaction);
+							else
+								target:SetCharacterData("Subfaction", subfaction, true);
+							end
+							
+							local targetAngles = target:EyeAngles();
+							local targetPos = target:GetPos();
+							
+							Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+							
+							target:SetPos(targetPos);
+							target:SetEyeAngles(targetAngles);
+						end
+					end
 				
 				if (target == player) then
 					name = "yourself";
 				end;
 
 				Schema:EasyText(player, "cornflowerblue", "You have demoted "..name.." to the rank of \""..ranks[faction][rank].."\".");
+				
+				if target == player then
+					Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has demoted themself to the rank of \""..ranks[faction][rank].."\".");
+				else
+					Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has promoted "..name.." to the rank of \""..ranks[faction][rank].."\".");
+				end
 			else
 				Schema:EasyText(player, "grey", "You do not have permissions to change the rank of "..target:Name().."!");
 			end
@@ -1174,7 +1379,7 @@ local COMMAND = Clockwork.command:New("Proclaim");
 		end;
 		
 		if hook.Run("PlayerCanSayIC", player, text) then 
-			if (faction == "Gatekeeper" and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
+			if (Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
 				Clockwork.chatBox:SetMultiplier(1.35);
 				
 				if player.victim and IsValid(player.victim) then

@@ -275,7 +275,9 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 				if Schema.Ranks then
 					for k, v in pairs(Schema.Ranks) do
 						for i, v2 in ipairs(v) do
-							table.insert(blacklistedNames, string.lower(v2));
+							if v2 ~= "" then
+								table.insert(blacklistedNames, string.lower(v2));
+							end
 						end
 					end
 				end
@@ -664,7 +666,9 @@ function Clockwork.player:ExtendAction(player, extendTime)
 	if (startActionTime and CurTime() < startActionTime + actionDuration) then
 		player:SetNetVar("ActDuration", actionDuration + extendTime);
 		
-		timer.Adjust("Action"..player:UniqueID(), (CurTime() - startActionTime) + extendTime);
+		if timer.Exists("Action"..player:UniqueID()) then
+			timer.Adjust("Action"..player:UniqueID(), math.max(0, (startActionTime - CurTime()) + actionDuration + extendTime));
+		end
 		
 		hook.Run("ActionExtended", player, action);
 	end
@@ -1249,11 +1253,11 @@ end
 
 -- A function to set a player to a safe position.
 function Clockwork.player:SetSafePosition(player, position, filter)
-	player:SetPos(position + Vector(0, 0, 16))
+	player:SetPos(position + Vector(0, 0, 4))
 
 	if (player:IsStuck()) then
 		player:DropToFloor()
-		player:SetPos(player:GetPos() + Vector(0, 0, 16))
+		player:SetPos(player:GetPos() + Vector(0, 0, 4))
 
 		if (!istable(filter) and !isfunction(filter)) then
 			filter = {filter}

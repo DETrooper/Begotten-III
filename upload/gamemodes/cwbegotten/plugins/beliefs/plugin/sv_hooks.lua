@@ -244,6 +244,12 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 			for i, v2 in ipairs(v.lockedBeliefs) do
 				if beliefs[v2] then
 					lockedBeliefFound = true;
+					
+					if v.hasFinisher then
+						if beliefs[v.uniqueID.."_finisher"] then
+							beliefs[v.uniqueID.."_finisher"] = false;
+						end
+					end
 
 					for k2, v3 in pairs(v.beliefs) do
 						for k3, v4 in pairs(v3) do
@@ -278,6 +284,7 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 	
 	if lockedBeliefFound then
 		player:SetCharacterData("points", points);
+		player:SetLocalVar("points", points);
 		player:SetCharacterData("beliefs", beliefs);
 	end
 	
@@ -292,6 +299,7 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 		end
 		
 		player:SetCharacterData("points", points);
+		player:SetLocalVar("points", points);
 		player:SetCharacterData("beliefs", beliefs);
 		
 		local level = player:GetCharacterData("level", 1);
@@ -752,7 +760,7 @@ function cwBeliefs:LockpickFinished(player, entity)
 end
 
 -- Called when a player should take damage.
-function cwBeliefs:PlayerShouldTakeDamage(player, attacker, inflictor, damageInfo)
+function cwBeliefs:PlayerShouldTakeDamage(player, attacker)
 	if (player.distortedRingFired) then
 		return false;
 	end;
@@ -1388,6 +1396,12 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 				entity:SetLocalVar("Hatred", hatred);
 			end
 		end
+		
+		local action = Clockwork.player:GetAction(entity);
+		
+		if action == "reloading" or action == "heal" or action == "healing" or action == "pickupragdoll" then
+			Clockwork.player:ExtendAction(entity, math.max(0.5, damage / 10));
+		end
 	end
 
 	if entity:Alive() then
@@ -1798,12 +1812,12 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 	end
 	
 	if table.HasValue(traits, "gunslinger") then
-		level = level + 3;
+		level = level + 2;
 		data["beliefs"]["ingenious"] = true;
 		data["beliefs"]["powder_and_steel"] = true;
 		
-		local random_ammos = {--[["grapeshot",]] "pop-a-shot"};
-		local peppershot = Clockwork.item:CreateInstance("begotten_peppershot");
+		--local random_ammos = {"pop-a-shot"};
+		--[[local peppershot = Clockwork.item:CreateInstance("begotten_peppershot");
 			
 		if peppershot then
 			peppershot:SetCondition(math.random(60, 80));
@@ -1813,7 +1827,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 		
 		for i = 1, math.random(3, 4) do
 			Clockwork.inventory:AddInstance(inventory, Clockwork.item:CreateInstance(random_ammos[math.random(1, #random_ammos)]));
-		end
+		end]]--
 	end
 	
 	if table.HasValue(traits, "escapee") then
@@ -1956,7 +1970,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 				else
 					data["Injuries"][i]["gash"] = true;
 					
-					data["BleedingLimbs"][Clockwork.limb.Clockwork.limb.hitgroupToString[i]] = true;
+					data["BleedingLimbs"][Clockwork.limb.hitgroupToString[i]] = true;
 				end
 				
 				if !data["LimbData"] then

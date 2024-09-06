@@ -557,7 +557,44 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 	ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks"}};
+	
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Ornate Gatekeeper Helmet"
+	ITEM.model = "models/begotten/items/gatekeeper_ornatehelm.mdl"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/ornate_gatekeeper_helmet.png"
+	ITEM.weight = 1.5
+	ITEM.uniqueID = "ornate_gatekeeper_helmet"
+	ITEM.category = "Helms"
+	ITEM.bodyGroup = 1
+	ITEM.bodyGroupVal = 10
+	ITEM.headSuffix = "_glaze";
+	ITEM.description = "An expertly crafted maximilian steel helmet. It is adorned with a glorious plume which denotes rank and status among the Gatekeeper Legion. Catalysts prevent anyone who opposes the Light to wear this."
+	ITEM.requireFaith = {"Faith of the Light"};
+	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.faction = "Gatekeeper";
+
+	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 75
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+	ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
+	ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "cloth"}};
 	
 ITEM:Register();
 

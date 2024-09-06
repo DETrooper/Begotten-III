@@ -159,7 +159,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
-	ITEM.name = "Winged Spear";
+	ITEM.name = "Steel Spear"; 
 	ITEM.model = "models/demonssouls/weapons/winged spear.mdl";
 	ITEM.weight = 2.3;
 	ITEM.uniqueID = "begotten_spear_wingedspear";

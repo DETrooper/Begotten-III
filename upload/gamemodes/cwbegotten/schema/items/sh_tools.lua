@@ -152,15 +152,16 @@ local ITEM = Clockwork.item:New();
 			
 			if not ladderPos.occupier then
 				if playerPos:WithinAABox(ladderPos.boundsA, ladderPos.boundsB) then
-					player.ladderConstructing = {index = i, condition = self:GetCondition()};
+					player.ladderConstructing = {index = i, itemTable = self};
 					ladderPos.occupier = "constructing";
 					
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "begins erecting a siege ladder!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 					
 					Clockwork.player:SetAction(player, "building", 30, 3, function()
-						if IsValid(player) and player.ladderConstructing then
+						if IsValid(player) and player.ladderConstructing and player:HasItemInstance(self) then
 							local ladderPos = Schema.siegeLadderPositions[player.ladderConstructing.index];
 							local ladderEnt = ents.Create("cw_siege_ladder");
+							
 							if IsValid(ladderEnt) then
 								ladderEnt:SetAngles(ladderPos.ang);
 								ladderEnt:SetPos(ladderPos.pos);
@@ -168,17 +169,19 @@ local ITEM = Clockwork.item:New();
 								ladderEnt:Spawn();
 								
 								ladderEnt.strikesRequired = math.Round(15 * ((self:GetCondition() or 100) / 100));
+								ladderPos.occupier = ladderEnt;
+								ladderEnt.occupyingPosition = player.ladderConstructing.index;
+								
+								player:TakeItem(self);
 							end
-							
-							ladderPos.occupier = ladderEnt;
-							ladderEnt.occupyingPosition = player.ladderConstructing.index;
+
 							player.ladderConstructing = nil;
 						else
 							ladderPos.occupier = nil;
 						end
 					end);
 					
-					return;
+					return false;
 				end
 			end
 		end
@@ -187,7 +190,13 @@ local ITEM = Clockwork.item:New();
 		return false;
 	end
 	-- Called when a player drops the item.
-	function ITEM:OnDrop(player, position) end;
+	function ITEM:OnDrop(player, position)
+		if player.ladderConstructing then
+			if player.ladderConstructing.itemTable == self then
+				Clockwork.player:SetAction(player, false);
+			end
+		end
+	end;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood", "wood", "wood", "wood", "wood"}};
 ITEM:Register();

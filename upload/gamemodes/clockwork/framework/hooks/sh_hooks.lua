@@ -380,6 +380,10 @@ do
 
 			if (!attackAnimation) then
 				attackAnimation = ACT_GESTURE_RANGE_ATTACK_SMG1;
+				
+				if istable(attackAnimation) then
+					attackAnimation = table.Random(attackAnimation);
+				end
 			end;
 
 			player:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, attackAnimation, true);
@@ -389,6 +393,10 @@ do
 
 			if (!attackAnimation) then
 				attackAnimation = ACT_GESTURE_RANGE_ATTACK_SMG1;
+				
+				if istable(attackAnimation) then
+					attackAnimation = table.Random(attackAnimation);
+				end
 			end;
 
 			player:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, attackAnimation, true);
@@ -398,6 +406,10 @@ do
 
 			if (!reloadAnimation) then
 				reloadAnimation = ACT_GESTURE_RELOAD_SMG1;
+				
+				if istable(reloadAnimation) then
+					reloadAnimation = table.Random(reloadAnimation);
+				end
 			end;
 
 			player:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, reloadAnimation, true);

@@ -354,7 +354,18 @@ function SWEP:Think()
 				local itemTable = item.GetByWeapon(self);
 					
 				if itemTable then
-					item.SendToPlayer(player, itemTable);
+					netstream.Start(player, "WeaponItemData", {
+						definition = item.GetDefinition(itemTable, true),
+						weapon = self:EntIndex()
+					})
+
+					if self:GetNWString("ItemID") ~= itemTable.itemID then
+						self:SetNWString(
+							"ItemID", tostring(itemTable.itemID)
+						)
+					end
+					
+					self.cwItemTable = itemTable
 				end
 			end
 			
@@ -2280,17 +2291,29 @@ function SWEP:SecondaryAttack()
 						deflectionWindow = deflectionWindow + 0.1;
 					end
 				end
+								
+				self:CreateTimer(deflectionWindow, "deflectionOffTimer"..ply:EntIndex(), function()
+					if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
+						ply:SetNWBool( "Deflect", false ) 
+					end 
+				end);
 				
-				ply:SetNWBool( "CanDeflect", false )
-				self:CreateTimer(1, "deflectionTimer"..ply:EntIndex(), function()
+				if ply:HasBelief("sidestep") then
+					deflectioncooldown = 1.2
+				else
+					deflectioncooldown = 1.5
+				end
+				
+				ply:SetNWBool( "CanDeflect", false ) -- Clean this ass code up
+				self:CreateTimer(deflectioncooldown, "deflectionTimer"..ply:EntIndex(), function()
 					if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
 						ply:SetNWBool( "CanDeflect", true ) 
 					end 
 				end);
-				
-				self:CreateTimer(deflectionWindow, "deflectionOffTimer"..ply:EntIndex(), function()
+			else
+				self:CreateTimer(deflectioncooldown, "deflectionTimer"..ply:EntIndex(), function()
 					if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
-						ply:SetNWBool( "Deflect", false ) 
+						ply:SetNWBool( "CanDeflect", true ) 
 					end 
 				end);
 			end

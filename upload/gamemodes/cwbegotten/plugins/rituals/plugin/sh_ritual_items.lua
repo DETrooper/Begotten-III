@@ -25,7 +25,7 @@ local ITEM = Clockwork.item:New();
 			end
 			
 			player:HandleNeed("corruption", -30);
-			Clockwork.chatBox:Add(player, nil, "itnofake", "You crush the purfying stone in your hand and can immediately feel the corruption leaving your body.");
+			Clockwork.chatBox:Add(player, nil, "itnofake", "You crush the purifying stone in your hand and can immediately feel the corruption leaving your body.");
 		else
 			Schema:EasyText(player, "firebrick", "You cannot do this action at this moment.")
 		end
