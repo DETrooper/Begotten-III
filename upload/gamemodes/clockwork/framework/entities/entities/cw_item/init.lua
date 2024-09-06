@@ -17,6 +17,7 @@ function ENT:Initialize()
 	self:SetUseType(SIMPLE_USE);
 	self:SetHealth(25);
 	self:SetSolid(SOLID_VPHYSICS);
+	self:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE_DEBRIS);
 	
 	if !self.cullLifetime then
 		self.cullLifetime = 0;
@@ -25,6 +26,10 @@ function ENT:Initialize()
 	local physicsObject = self:GetPhysicsObject();
 	
 	if (IsValid(physicsObject)) then
+		if physicsObject:GetMass() > 100 then
+			physicsObject:SetMass(100);
+		end
+	
 		physicsObject:Wake();
 		physicsObject:EnableMotion(true);
 	end;
