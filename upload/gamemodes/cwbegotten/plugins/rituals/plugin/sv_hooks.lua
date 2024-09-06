@@ -145,8 +145,8 @@ function cwRituals:PerformRitual(player, uniqueID, itemIDs, bIgnoreItems, bIgnor
 	local curTime = CurTime();
 	
 	if (IsValid(player) and uniqueID and isstring(uniqueID)) then
-		if (!player.cwNextRitual or player.cwNextRitual < curTime) then
-			player.cwNextRitual = curTime + 10;
+		if (!player:GetNWInt("cwNextRitual") or player:GetNWInt("cwNextRitual")  < curTime) then
+			player:SetNWInt("cwNextRitual", curTime + 10);
 	
 			local bHasFlags, bHasRequirements = hook.Run("PlayerCanPerformRitual", player, uniqueID, bIgnoreItems, bIgnoreBeliefs);
 			local ritualTable = self.rituals.stored[uniqueID];
@@ -197,7 +197,7 @@ function cwRituals:PerformRitual(player, uniqueID, itemIDs, bIgnoreItems, bIgnor
 			
 			hook.Run("PlayerFailedRitual", player, uniqueID, ritualTable, bHasRequirements, bHasFlags)
 		else
-			Schema:EasyText(player, "peru", "You must wait another "..-math.ceil(curTime - player.cwNextRitual).." seconds before attempting to perform a ritual again!")
+			Schema:EasyText(player, "peru", "You must wait another "..-math.ceil(curTime - player:GetNWInt("cwNextRitual")).." seconds before attempting to perform a ritual again!")
 		end;
 	end;
 end;
@@ -575,7 +575,7 @@ function cwRituals:PlayerCharacterLoaded(player)
 		end
 	end
 	
-	netstream.Start(player, "LoadRitualBinds", player:GetCharacterData("BoundRituals", {}));
+	netstream.Start(player, "LoadRitualBinds", player:GetCharacterData("BoundRitualsNew", {}));
 end;
 
 function cwRituals:EntityRemoved(entity)
@@ -1156,6 +1156,6 @@ end)
 
 netstream.Hook("SaveRitualBinds", function(player, data)
 	if data and istable(data) then
-		player:SetCharacterData("BoundRituals", data);
+		player:SetCharacterData("BoundRitualsNew", data);
 	end
 end)

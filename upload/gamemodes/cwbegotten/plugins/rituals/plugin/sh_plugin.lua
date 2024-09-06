@@ -8,6 +8,7 @@ PLUGIN:SetGlobalAlias("cwRituals");
 Clockwork.kernel:IncludePrefixed("cl_plugin.lua");
 Clockwork.kernel:IncludePrefixed("sh_hooks.lua");
 Clockwork.kernel:IncludePrefixed("sv_hooks.lua");
+Clockwork.kernel:IncludePrefixed("cl_bindmenu.lua");
 
 -- Certain recipes won't load until after the items have been initialized, so they need to be required manually to ensure the correct order.
 Clockwork.kernel:IncludePrefixed("sh_ritual_items.lua");

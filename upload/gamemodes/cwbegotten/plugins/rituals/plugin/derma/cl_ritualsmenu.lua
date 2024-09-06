@@ -118,12 +118,33 @@ function PANEL:Rebuild()
 		surface.DrawTexturedRect(0, 0, width, height)
 	end
 	
-	function self.buttonHotkey:DoClick()
+	self.buttonHotkey.DoClick = function(p)
 		if (IsValid(menu)) then
 			menu:Remove();
 		end;
+
+		if(#cwRituals.hotkeyRituals >= 8) then
+			Schema:EasyText("firebrick", "You can only have a maximum of 8 bound rituals at one time!");
+			
+			return;
+
+		end
+
+		self.binding = true;
+		surface.PlaySound("begotten/ui/buttonclick.wav");
+		self.toggled = true;
 		
-		if (#Clockwork.Client.combinations == 3) then
+		self.boxbackpane:SetVisible(false);
+		self.buttonPeform:SetVisible(false);
+		self.buttonHotkey:SetVisible(false);
+		self.box1:SetVisible(false);
+		self.box2:SetVisible(false);
+		self.box3:SetVisible(false);
+		self.ritualbackpane:SetVisible(false);
+		self.ritualItems:SetVisible(false);
+		self.ritualList:SetVisible(true);
+
+		--[[if (#Clockwork.Client.combinations == 3) then
 			local scrW = ScrW();
 			local scrH = ScrH();
 			local menu = DermaMenu();
@@ -161,7 +182,7 @@ function PANEL:Rebuild()
 			menu:Open();
 			
 			menu:SetPos(x + 453, y + 55);
-		end
+		end]]
 	end
 	
 	self.box1 = vgui.Create("DPanelList", self)
@@ -398,6 +419,7 @@ function PANEL:Rebuild()
 	-- Called when the button is painted.
 	function self.listButton.DoClick()
 		surface.PlaySound("begotten/ui/buttonclick.wav")
+		self.binding = false;
 		
 		if not self.toggled then
 			self.toggled = true;
@@ -490,7 +512,13 @@ end;
 -- Called when the panel is initialized.
 function PANEL:SetRitualData(ritualData)
 	self.ritualData = ritualData;
-end;
+end
+
+local function RitualFriendlyName(name)
+	local _, pos = string.find(name, ")");
+	return string.sub(name, pos + 2, #name);
+
+end
 
 -- A function to rebuild the panel.
 function PANEL:Rebuild()
@@ -499,9 +527,53 @@ function PANEL:Rebuild()
 	local requiredBeliefs = ritualData.requiredBeliefs;
 	local textw, texth = Clockwork.kernel:GetCachedTextSize("nov_IntroTextSmallDETrooper", ritualData.name)
 	
-	self.characterFrame = vgui.Create("DImage", self);
+	self.characterFrame = vgui.Create("DImageButton", self);
 	self.characterFrame:SetImage("begotten/ui/charactermenu/necropolisframe.png");
 	self.characterFrame:SetSize(600, 100);
+	self.characterFrame:SetDepressImage(false);
+	self.characterFrame.Think = function(p)
+		if(!Clockwork.Client.cwRitualsMenu.binding) then p:SetColor(color_white); return; end
+
+		p:SetColor(p:IsHovered() and Color(200, 20, 20) or color_white);
+
+	end
+	self.characterFrame.DoClick = function(p)
+		local parent = Clockwork.Client.cwRitualsMenu;
+		if(!parent.binding) then return; end
+
+		for _, v in pairs(cwRituals.hotkeyRituals) do
+			if(v.uniqueID == ritualData.uniqueID) then
+				Schema:EasyText("firebrick", "You have already bound this ritual to your F1 menu!");
+				return;
+
+			end
+
+		end
+
+		parent.binding = false;
+		parent.toggled = false;
+		parent.boxbackpane:SetVisible(true);
+		parent.buttonPeform:SetVisible(true);
+		parent.buttonHotkey:SetVisible(true);
+		parent.box1:SetVisible(true);
+		parent.box2:SetVisible(true);
+		parent.box3:SetVisible(true);
+		parent.ritualbackpane:SetVisible(true);
+		parent.ritualItems:SetVisible(true);
+		parent.ritualList:SetVisible(false);
+
+		Clockwork.Client:EmitSound("begotten/ui/buttonclick.wav");
+		Schema:EasyText("cornflowerblue", "You have bound the "..RitualFriendlyName(ritualData.name).." ritual to your F1 menu.");
+
+		table.insert(cwRituals.hotkeyRituals, {
+			name = ritualData.name,
+			uniqueID = ritualData.uniqueID,
+			items = ritualData.requirements,
+	
+		});
+		netstream.Start("SaveRitualBinds", cwRituals.hotkeyRituals);
+
+	end
 	
 	self.nameLabel = vgui.Create("DLabel", self);
 	self.nameLabel:SetText(ritualData.name);

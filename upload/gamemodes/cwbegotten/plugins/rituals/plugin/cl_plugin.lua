@@ -334,52 +334,8 @@ netstream.Hook("HotkeyMenu", function(data)
 		return;
 	end
 	
-	local hotkeyRituals = {};
+	Clockwork.Client:ConCommand("begotten_rituals");
 	
-	for k, v in pairs(cwRituals.hotkeyRituals) do
-		if istable(v) and not table.IsEmpty(v) and #v == 3 then
-			local combination = {};
-			local combinationString;
-			
-			for i = 1, 3 do
-				local itemTable = Clockwork.item:FindByID(v[i]);
-				
-				if (itemTable) then
-					table.insert(combination, v[i]);
-					
-					if not combinationString then
-						combinationString = itemTable.name;
-					else
-						combinationString = combinationString..", "..itemTable.name;
-					end
-				end;
-			end
-			
-			if combinationString and #combination == 3 then
-				table.insert(hotkeyRituals, {combinationString, combination});
-			end
-		end
-	end;
-	
-	if (hotkeyRituals) then
-		local options = {};
-		
-		for i, v in ipairs(hotkeyRituals) do
-			options[i..": "..v[1]] = function()
-				--netstream.Start("DoRitual", v[2])
-				cwRituals:AttemptRitual(cwRituals:FindRitualByItems(v[2]), v[2]);
-			end;
-		end;
-		
-		cwRituals.hotkeyMenu = Clockwork.kernel:AddMenuFromData(nil, options);
-		
-		if (IsValid(cwRituals.hotkeyMenu)) then
-			cwRituals.hotkeyMenu:SetPos(
-				(ScrW() / 2) - (cwRituals.hotkeyMenu:GetWide() / 2),
-				(ScrH() / 2) - (cwRituals.hotkeyMenu:GetTall() / 2)
-			);
-		end;
-	end;
 end);
 
 netstream.Hook("LoadRitualBinds", function(data)
