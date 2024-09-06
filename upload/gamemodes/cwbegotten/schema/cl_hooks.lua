@@ -1675,6 +1675,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddText("Short Polearm: Up to +50% increased damage the further away the target is.", Color(110, 30, 30), nil, 0.9);
 				end
 				
+				if weaponTable.isLongsword then
+					frame:AddText("Swordplay: After deflecting or parrying an opponent, your next attack within 0.5s will have a faster striketime. This trait only works if you have 'Blademaster' unlocked.", Color(110, 30, 30), nil, 0.9);
+				end
+				
 				if weaponTable.MultiHit then
 					frame:AddText("Multi-Hit: Can hit up to "..tostring(weaponTable.MultiHit).." targets in a single swing.", Color(110, 30, 30), nil, 0.9);
 				end

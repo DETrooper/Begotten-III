@@ -6756,6 +6756,55 @@ BlockTables.shield19 = { -- Rusted Kite Shield
 	},
 };
 
+BlockTables.shield20 = { -- Old Soldier Shield
+	["name"] = "Old Soldier Shield",
+	["guardblockamount"] = 5,
+	["damagereduction"] = 0.8,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 35,
+	["blockeffectpos"] = (Vector(-5, -10, 45)),
+	["blockcone"] = 220,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
+	["blockanim"] = "a_sword_shield_block_pursuer",
+	["blocksoundtable"] = "MetalShieldSoundTable",
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 25,
+	["raisespeed"] = 1.1,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.25,
+	["parrytakestamina"] = 10,
+	["canparry"] = true,
+	["candeflect"] = true,
+	["ironsights"] = {
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(9.159, -9.849, 7.88), ang = Vector(-6.332, -3.518, -8.443)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(3.24, -7.437, 3.079), ang = Vector(-3, -15, -3.901)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.519, -8.844, 3.16), ang = Vector(4.925, -1.407, -11.256)},
+	},
+	["ViewModelBoneMods"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, -15, 0), angle = Angle(0, 0, 0) },
+		},
+		["models/v_begottenknife.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+	},
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["shield20"] = { type = "Model", model = "models/begotten/thralls/skellyshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(0, -11, 2), angle = Angle(40, 66, -33), size = Vector(1.2, 1.2, 1.2), material = "", skin = 0, bodygroup = {} },
+		},
+		["models/v_begottenknife.mdl"] = {
+			["shield20"] = { type = "Model", model = "models/begotten/thralls/skellyshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(4.675, -7.792, 8.831), angle = Angle(0, 45, -13), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["shield20"] = { type = "Model", model = "models/begotten/thralls/skellyshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(5, 0, 0), angle = Angle(15, 30, -40), size = Vector(1.2, 1.2, 1.2), material = "", skin = 0, bodygroup = {} },
+		},
+	},
+	["WElements"] = {
+		["shield20"] = { type = "Model", model = "models/begotten/thralls/skellyshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3, -3.5, 0), angle = Angle(180, -35, 90), size = Vector(1.1, 1.1, 1.1), material = "", skin = 0, bodygroup = {} }
+	},
+};
+
 BlockTables.shieldunique1 = { -- Red Wolf Skinshield (Unique)
 	["name"] = "Red Wolf Skinshield",
 	["guardblockamount"] = 3,
@@ -6835,6 +6884,7 @@ AddTable("shield16", BlockTables.shield16)
 AddTable("shield17", BlockTables.shield17)
 AddTable("shield18", BlockTables.shield18)
 AddTable("shield19", BlockTables.shield19)
+AddTable("shield20", BlockTables.shield20)
 AddTable("shieldunique1", BlockTables.shieldunique1)
 AddTable("shieldunique2", BlockTables.shieldunique2)
 

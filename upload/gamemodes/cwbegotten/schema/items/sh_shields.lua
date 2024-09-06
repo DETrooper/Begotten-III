@@ -158,6 +158,22 @@ local ITEM = Clockwork.item:New("shield_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
+	ITEM.name = "Old Soldier Shield";
+	ITEM.model = "models/begotten/thralls/skellyshield.mdl";
+	ITEM.weight = 2.5;
+	ITEM.uniqueID = "shield20";
+	ITEM.description = "Formerly used by the foot soldiers of the Empire of Light's armies, these shields now serve a more sinister purpose.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/old_soldier_shield.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 180, 0);
+	ITEM.attachmentOffsetVector = Vector(0, 2, 0);
+	ITEM.bulletConditionScale = 0.25;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("shield_base");
 	ITEM.name = "Rusted Kite Shield";
 	ITEM.model = "models/props/begotten/melee/red_rust_shield.mdl";
 	ITEM.weight = 2.5;

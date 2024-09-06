@@ -495,6 +495,10 @@ function SWEP:PrimaryAttack()
 	local delay = attacktable["delay"];
 	local stance = "reg_swing";
 	local strikeTime = attacktable["striketime"];
+
+	if self:GetNW2Bool("swordplayActive") == true then
+		strikeTime = strikeTime * 0.7;
+	end
 	
 	if self:GetNWString("activeOffhand"):len() > 0 then
 		offhandWeapon = weapons.GetStored(self:GetNWString("activeOffhand"));
@@ -534,8 +538,14 @@ function SWEP:PrimaryAttack()
 	wep:SetNextSecondaryFire(curTime + (delay * 0.1));
 	
 	if bParry then
+		local anim = self.Weapon.realCriticalAnim;
+		
+		if self:GetNW2Bool("swordplayActive") == true then
+			anim = "a_heavy_2h_attack_slash_02_fast";
+		end
+		
 		self:CriticalAnimation();
-		self:TriggerAnim(owner, self.Weapon.realCriticalAnim);
+		self:TriggerAnim(owner, anim);
 		owner:SetNWBool("Riposting", true);
 		owner:SetNWBool("ParrySucess", false);
 	else
@@ -2390,12 +2400,14 @@ function SWEP:SecondaryAttack()
 	end
 	
 	self:CreateTimer(parryWindow, "parryTimer"..ply:EntIndex(), function()
-		if self:IsValid() and ply:IsValid() and !ply:IsRagdolled() and ply:Alive() then
+		if self:IsValid() and ply:IsValid() then
 			ply:SetNWBool("Parry", false)
 			
 			if ply.parryStacks then
 				ply.parryStacks = nil;
 			end
+			
+			if ply:IsRagdolled() or !ply:Alive() then return end;
 			
 			if (ply:KeyDown(IN_ATTACK2)) then
 				if (!ply:KeyDown(IN_USE)) then
@@ -3076,13 +3088,15 @@ function SWEP:Holster()
 		self:StopAllAnims(player);
 		
 		if CLIENT then
-			local vm = player:GetViewModel()
-			
-			if IsValid(vm) then
-				self:ResetBonePositions(vm)
-				vm:SetSubMaterial( 0, "" )
-				vm:SetSubMaterial( 1, "" )
-				vm:SetSubMaterial( 2, "" )
+			if player:IsPlayer() then
+				local vm = player:GetViewModel()
+				
+				if IsValid(vm) then
+					self:ResetBonePositions(vm)
+					vm:SetSubMaterial( 0, "" )
+					vm:SetSubMaterial( 1, "" )
+					vm:SetSubMaterial( 2, "" )
+				end
 			end
 		else
 			if player:GetNWBool("ThrustStance") then

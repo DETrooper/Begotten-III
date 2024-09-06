@@ -39,6 +39,7 @@ SWEP.AmbientEffect = "env_embers_small"
 SWEP.IgniteTime = 6
 SWEP.FreezeTime = nil
 SWEP.MultiHit = 2;
+SWEP.isLongsword = true;
 
 --Sounds
 SWEP.AttackSoundTable = "HeavyMetalAttackSoundTable"
@@ -82,16 +83,22 @@ function SWEP:ParryAnimation()
 end
 
 function SWEP:HandlePrimaryAttack()
-
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
 	local attacktable = GetTable(self.AttackTable)
+	local anim = self.PrimarySwingAnim;
+	local rate = 0.7;
+	
+	if self:GetNW2Bool("swordplayActive") == true then
+		anim = anim.."_fast";
+		rate = 1;
+	end
 
 	--Attack animation
-	self:TriggerAnim(self.Owner, self.PrimarySwingAnim);
+	self:TriggerAnim(self.Owner, anim);
 
 	-- Viewmodel attack animation!
 	self.Weapon:EmitSound(self.WindUpSound)
-	timer.Simple( attacktable["striketime"] - 0.05, function() if self:IsValid() then
+	timer.Simple( attacktable["striketime"] - 0.05, function() if self:IsValid() and self.isAttacking then
 	self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
 	end end)
     
@@ -100,13 +107,13 @@ function SWEP:HandlePrimaryAttack()
 		if ani == 1 and self:IsValid() then
 			self.Owner:ViewPunch(Angle(0,6,0))
 			self.Weapon:SendWeaponAnim(ACT_VM_HITRIGHT)
-			self.Owner:GetViewModel():SetPlaybackRate(0.7)
+			self.Owner:GetViewModel():SetPlaybackRate(rate)
 			self:IdleAnimationDelay( 0.9, 0.9 )
 
 		elseif ani == 2 and self:IsValid() then
 			self.Owner:ViewPunch(Angle(0,-6,0))
 			self.Weapon:SendWeaponAnim(ACT_VM_PULLBACK)
-			self.Owner:GetViewModel():SetPlaybackRate(0.7)
+			self.Owner:GetViewModel():SetPlaybackRate(rate)
 			self:IdleAnimationDelay( 0.9, 0.9 )
 		end
 	end
@@ -117,25 +124,32 @@ function SWEP:HandlePrimaryAttack()
 end
 
 function SWEP:HandleThrustAttack()
-
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
 	local attacktable = GetTable(self.AttackTable)
 
 	self.Weapon:EmitSound(self.WindUpSound)
-	timer.Simple( attacktable["striketime"] - 0.05, function() if self:IsValid() then
+	timer.Simple( attacktable["striketime"] - 0.05, function() if self:IsValid() and self.isAttacking then
 	self.Weapon:EmitSound(attacksoundtable["altsound"][math.random(1, #attacksoundtable["altsound"])])
 	end end)
+	
+	local anim = "a_heavy_2h_attack_stab_01";
+	local rate = 0.45;
+	
+	if self:GetNW2Bool("swordplayActive") == true then
+		anim = anim.."_fast";
+		rate = 0.7;
+	end
 
 	--Attack animation
-	self:TriggerAnim(self.Owner, "a_heavy_2h_attack_stab_01");
+	self:TriggerAnim(self.Owner, anim);
 
 	-- Viewmodel attack animation!
 	self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
-	self.Owner:GetViewModel():SetPlaybackRate(0.45)
+	self.Owner:GetViewModel():SetPlaybackRate(rate)
 	self:IdleAnimationDelay( 0.8, 0.8 )
 	
 	self.Owner:ViewPunch(Angle(6,0,0))
-
+	
 	if self.Owner.HandleNeed and not self.Owner.opponent then
 		self.Owner:HandleNeed("corruption", attacktable["primarydamage"] * 0.05);
 	end
