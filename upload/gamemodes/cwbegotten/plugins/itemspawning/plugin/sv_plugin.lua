@@ -492,7 +492,7 @@ end;
 
 -- Eventually this should have its own high value loot table.
 function cwItemSpawner:SpawnSupercrate()
-	if !self.SupercrateLocations then
+	if !cwItemSpawner.SupercrateLocations or #cwItemSpawner.SupercrateLocations <= 0 then
 		return;
 	end
 	

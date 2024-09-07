@@ -97,7 +97,7 @@ local COMMAND = Clockwork.command:New("SpawnSupercrate")
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		if !cwItemSpawner.SupercrateLocations then
+		if !cwItemSpawner.SupercrateLocations or #cwItemSpawner.SupercrateLocations <= 0 then
 			Schema:EasyText(player, "tomato", "This map does not support supercrates!");
 			
 			return;
