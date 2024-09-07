@@ -189,7 +189,7 @@ else
 		if not ply:DrG_IsPossessing() then return end
 		if HUD_HIDE[name] then return false end
 		if name == "CHudCrosshair" and not ply:DrG_Possessing().PossessionCrosshair then return false end
-	end)
+	end)]]
 
 	hook.Add("CalcView", "DrGBasePossessionCalcView", function(ply, origin, angles, fov, znear, zfar)
 		if not isfunction(ply.DrG_IsPossessing) then return end
@@ -203,7 +203,7 @@ else
 		return view
 	end)
 
-	hook.Add("ContextMenuOpen", "DrGBasePossessionDisableCMenu", function()
+	--[[hook.Add("ContextMenuOpen", "DrGBasePossessionDisableCMenu", function()
 		local ply = LocalPlayer()
 		if not isfunction(ply.DrG_IsPossessing) then return end
 		if ply:DrG_IsPossessing() then return false end
@@ -222,4 +222,4 @@ else
 		-- I'll take care of it one day
 	end
 
-end]]--
+end]]
