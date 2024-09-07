@@ -78,7 +78,7 @@ local ITEM = item.New(nil, true);
 			end
 			
 			if player.holyPowderkegActive then
-				consumeTime = 3;
+				consumeTime = math.Round(consumeTime * 0.33);
 			end
 			
 			if weaponItem.reloadSounds then

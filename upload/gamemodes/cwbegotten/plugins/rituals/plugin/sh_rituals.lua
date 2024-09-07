@@ -887,7 +887,7 @@ RITUAL = cwRituals.rituals:New("holy_powderkeg");
 	function RITUAL:OnPerformed(player)
 		player.holyPowderkegActive = true;
 
-		timer.Create("HolyPowderTimer_"..player:EntIndex(), 900, 1, function()
+		timer.Create("HolyPowderTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player.holyPowderkegActive then
 					player.holyPowderkegActive = nil;
