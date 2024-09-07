@@ -5485,7 +5485,7 @@ RECIPE:Register()
 		RECIPE.name = "Wooden Crossbow";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock"};
 		RECIPE.requirements = {
 			["bindings"] = {amount = 1},
 			["iron_ingot"] = {amount = 2},
@@ -5514,7 +5514,7 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("scrap_crossbow");
 		RECIPE.name = "Scrap Crossbow";
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["bindings"] = {amount = 1},
 			["scrap"] = {amount = 5},
@@ -8541,6 +8541,7 @@ RECIPE:Register()
 		RECIPE.name = "(3x) Iron Bolt";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1},
 			["wood"] = {amount = 3},
@@ -8569,6 +8570,7 @@ RECIPE:Register()
 		RECIPE.name = "Scrap Bolt";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap"] = {amount = 2},
 		};
