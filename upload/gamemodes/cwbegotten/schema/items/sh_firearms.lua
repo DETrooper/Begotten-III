@@ -94,8 +94,9 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 5; -- Seconds (for one round)
 	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/crossbow/bow-pre1.wav.mp3", "weapons/crossbow/bowgun-stance.wav.mp3"};
 	
+	ITEM.includeSubfactions = {"Clan Crast", "Clan Shagalax"};
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1650, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -118,6 +119,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 8; -- Seconds (for one round)
 	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/crossbow/bow-pre1.wav.mp3", "weapons/crossbow/bowgun-stance.wav.mp3"};
 	
+	ITEM.includeSubfactions = {"Clan Crast", "Clan Shagalax"};
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "wood"}};
 ITEM:Register();
 

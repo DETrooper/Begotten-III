@@ -123,7 +123,7 @@ local APTITUDE = cwBeliefs.beliefTrees:New("aptitude")
 		[5] = {
 			["medicine_man"] = {
 				name = "Medicine Man",
-				description = "Triples the effectiveness of healing items when used on other characters. Doubles their effectiveness for yourself.",
+				description = "Triples the effectiveness of healing items when used on other characters. Increases the effectiveness of healing items on yourself by 70%.",
 				requirements = {"literacy", "sanitary"},
 				row = 3,
 			},

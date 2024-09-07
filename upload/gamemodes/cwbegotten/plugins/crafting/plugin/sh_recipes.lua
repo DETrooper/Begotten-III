@@ -5140,7 +5140,7 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
 			["maximilian_steel_ingot"] = {amount = 2},
-			["iron_ingot"] = {amount = 5},
+			["iron_ingot"] = {amount = 7},
 		};
 		RECIPE.result = {
 			["shield9"] = {amount = 1},
@@ -5310,8 +5310,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFaiths = {"Faith of the Family"};
 		RECIPE.requirements = {
-			["shagalaxian_steel_ingot"] = {amount = 3},
-			["iron_ingot"] = {amount = 6},
+			["shagalaxian_steel_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 7},
 		};
 		RECIPE.result = {
 			["shield10"] = {amount = 1},

@@ -218,7 +218,11 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 				local timesHealed = 0;
 				
 				if cwBeliefs and player:HasBelief("medicine_man") then
-					healAmount = healAmount * 2;
+					healAmount = healAmount * 1.7;
+				end
+				
+				if cwBeliefs and player:HasBelief("one_with_the_druids") then
+					healAmount = healAmount * 1.5;
 				end
 
 				timer.Create(playerIndex.."_heal_"..itemTable.itemID, healDelay, healRepetition, function()
@@ -423,6 +427,10 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 					
 					if cwBeliefs and player:HasBelief("medicine_man") then
 						healAmount = healAmount * 3;
+					end
+					
+					if cwBeliefs and player:HasBelief("one_with_the_druids") then
+						healAmount = healAmount * 1.5;
 					end
 					
 					timer.Create(targetIndex.."_heal_"..itemTable.itemID, healDelay, healRepetition, function()
