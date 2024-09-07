@@ -130,78 +130,82 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 			end;
 		end
 		
-		if player:IsNextBot() and (damageType ~= DMG_BULLET and damageType ~= DMG_BUCKSHOT) then
+		if player:IsNextBot() then
 			if attacker:IsPlayer() then
-				local attackTable;
-				local inflictor = damageInfo:GetInflictor()
+				local armorPiercing = 0;
+				local armorPiercingOverride;
+				local damage = damageInfo:GetDamage();
 				
-				if IsValid(inflictor) and inflictor.AttackTable then
-					attackTable = GetTable(inflictor.AttackTable);
-				end
-						
-				if attackTable then
-					local armorPiercing = 0;
-					
-					if attacker:GetNWBool("ThrustStance") and (!IsValid(inflictor) or (IsValid(inflictor) and !inflictor.isJavelin)) then
-						armorPiercing = attackTable["altarmorpiercing"] or 0;
+				if damageType == DMG_BULLET or damageType == DMG_BUCKSHOT then
+					if damageType == DMG_BULLET then
+						armorPiercingOverride = 90;
 					else
-						armorPiercing = attackTable["armorpiercing"] or 0;
+						armorPiercingOverride = 70;
 					end
+				end
+
+				if !armorPiercingOverride then
+					local attackTable;
+					local inflictor = damageInfo:GetInflictor()
 					
-					if attacker:GetCharmEquipped("ring_penetration") then
-						armorPiercing = armorPiercing + 10;
+					if IsValid(inflictor) and inflictor.AttackTable then
+						attackTable = GetTable(inflictor.AttackTable);
 					end
-					
-					if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("the_light") then
-						armorPiercing = armorPiercing + (armorPiercing * 0.15);
-					end
-					
-					if attacker:HasBelief("billman") then
-						if (inflictor.Category and (string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier"))) or inflictor.isJavelin then
-							armorPiercing = armorPiercing + (armorPiercing * 0.2);
+				
+					if attackTable then
+						if attacker:GetNWBool("ThrustStance") and (!IsValid(inflictor) or (IsValid(inflictor) and !inflictor.isJavelin)) then
+							armorPiercing = attackTable["altarmorpiercing"] or 0;
+						else
+							armorPiercing = attackTable["armorpiercing"] or 0;
 						end
-					end
-					
-					armorPiercing = math.Round(armorPiercing * 0.75); -- Scales all AP. Set this to lower to make armor more effective, or higher to make it less effective.
-					
-					local damage = damageInfo:GetDamage();
-					
-					if IsValid(inflictor) then
-						if !inflictor.isJavelin then
-							if inflictor.isDagger and player.IsRagdolled and player:IsRagdolled() then
-								armorPiercing = 100;
-							elseif inflictor:GetClass() == "begotten_fists" then
-								if attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist") then
+						
+						if attacker:GetCharmEquipped("ring_penetration") then
+							armorPiercing = armorPiercing + 10;
+						end
+						
+						if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("the_light") then
+							armorPiercing = armorPiercing + (armorPiercing * 0.15);
+						end
+						
+						if attacker:HasBelief("billman") then
+							if (inflictor.Category and (string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier"))) or inflictor.isJavelin then
+								armorPiercing = armorPiercing + (armorPiercing * 0.2);
+							end
+						end
+						
+						armorPiercing = math.Round(armorPiercing * 0.75); -- Scales all AP. Set this to lower to make armor more effective, or higher to make it less effective.
+						
+						if IsValid(inflictor) then
+							if !inflictor.isJavelin then
+								if inflictor.isDagger and player.IsRagdolled and player:IsRagdolled() then
 									armorPiercing = 100;
+								elseif inflictor:GetClass() == "begotten_fists" then
+									if attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist") then
+										armorPiercing = 100;
+									end
+								end
+							end
+						end
+						
+						if inflictor.Base == "sword_swepbase" then
+							local activeWeaponItemTable = item.GetByWeapon(inflictor);
+							
+							if activeWeaponItemTable then
+								local activeWeaponCondition = activeWeaponItemTable:GetCondition() or 100;
+								
+								if damageType == DMG_CLUB then
+									armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.7, 1));
+								else
+									armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.5, 1));
 								end
 							end
 						end
 					end
-					
-					if inflictor.Base == "sword_swepbase" then
-						local activeWeaponItemTable = item.GetByWeapon(inflictor);
-						
-						if activeWeaponItemTable then
-							local activeWeaponCondition = activeWeaponItemTable:GetCondition() or 100;
-							
-							if damageType == DMG_CLUB then
-								armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.7, 1));
-							else
-								armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.5, 1));
-							end
-						end
-					end
-
-					local effectiveness;
-					
-					if damageType == DMG_BULLET or damageType == DMG_BUCKSHOT then
-						effectiveness = damage;
-					else
-						effectiveness = math.Clamp(damage / (player.Armor / armorPiercing), 0, damage);
-					end
-					
-					damageInfo:SetDamage(effectiveness);
+				else
+					armorPiercing = armorPiercingOverride;
 				end;
+				
+				damageInfo:SetDamage(math.Clamp(damage / (player.Armor / armorPiercing), 0, damage));
 			end;
 		else
 			local armorItem;
@@ -254,72 +258,86 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						player:EmitSound("meleesounds/bell.mp3");
 					end
 					
-					if attacker:IsPlayer() and IsValid(inflictor) and (inflictor.isJavelin or inflictor:IsWeapon()) then
-						local attackTable;
-
-						if inflictor.AttackTable then
-							attackTable = GetTable(inflictor.AttackTable);
+					local armorPiercingOverride;
+					
+					if damageType == DMG_BULLET or damageType == DMG_BUCKSHOT then
+						if damageType == DMG_BULLET then
+							armorPiercingOverride = 90;
+						else
+							armorPiercingOverride = 70;
 						end
-								
-						--print("Attack table found for weapon!");
-						if attackTable then
-							if attacker:GetNWBool("ThrustStance") and (!IsValid(inflictor) or (IsValid(inflictor) and !inflictor.isJavelin)) then
-								armorPiercing = attackTable["altarmorpiercing"] or 0;
-								--print("Thrust stance.");
-							else
-								armorPiercing = attackTable["armorpiercing"] or 0;
-								--print("Not thrust stance.");
+					end
+					
+					if !armorPiercingOverride then
+						if attacker:IsPlayer() and IsValid(inflictor) and (inflictor.isJavelin or inflictor:IsWeapon()) then
+							local attackTable;
+
+							if inflictor.AttackTable then
+								attackTable = GetTable(inflictor.AttackTable);
 							end
-							
-							if attacker:GetCharmEquipped("ring_penetration") then
-								armorPiercing = armorPiercing + 10;
-							end
-							
-							if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("the_light") then
-								armorPiercing = armorPiercing + (armorPiercing * 0.15);
-							end
-							
-							if attacker:HasBelief("billman") then
-								if (inflictor.Category and (string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier"))) or inflictor.isJavelin then
-									armorPiercing = armorPiercing + (armorPiercing * 0.2);
+									
+							--print("Attack table found for weapon!");
+							if attackTable then
+								if attacker:GetNWBool("ThrustStance") and (!IsValid(inflictor) or (IsValid(inflictor) and !inflictor.isJavelin)) then
+									armorPiercing = attackTable["altarmorpiercing"] or 0;
+									--print("Thrust stance.");
+								else
+									armorPiercing = attackTable["armorpiercing"] or 0;
+									--print("Not thrust stance.");
 								end
-							end
-							
-							armorPiercing = math.Round(armorPiercing * 0.75); -- Scales all AP. Set this to lower to make armor more effective, or higher to make it less effective.
-							
-							--print("AP Value: "..tostring(armorPiercing));
-							
-							if IsValid(inflictor) then
-								if !inflictor.isJavelin then
-									if inflictor.isDagger and player.IsRagdolled and player:IsRagdolled() then
-										armorPiercing = 100;
-										--print("Weapon is dagger, increasing AP value to 100.");
-									elseif inflictor:GetClass() == "begotten_fists" then
-										if attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist") then
+								
+								if attacker:GetCharmEquipped("ring_penetration") then
+									armorPiercing = armorPiercing + 10;
+								end
+								
+								if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("the_light") then
+									armorPiercing = armorPiercing + (armorPiercing * 0.15);
+								end
+								
+								if attacker:HasBelief("billman") then
+									if (inflictor.Category and (string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier"))) or inflictor.isJavelin then
+										armorPiercing = armorPiercing + (armorPiercing * 0.2);
+									end
+								end
+								
+								armorPiercing = math.Round(armorPiercing * 0.75); -- Scales all AP. Set this to lower to make armor more effective, or higher to make it less effective.
+								
+								--print("AP Value: "..tostring(armorPiercing));
+								
+								if IsValid(inflictor) then
+									if !inflictor.isJavelin then
+										if inflictor.isDagger and player.IsRagdolled and player:IsRagdolled() then
 											armorPiercing = 100;
+											--print("Weapon is dagger, increasing AP value to 100.");
+										elseif inflictor:GetClass() == "begotten_fists" then
+											if attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist") then
+												armorPiercing = 100;
+											end
+										end
+									end
+								end
+								
+								if inflictor.Base == "sword_swepbase" then
+									local activeWeaponItemTable = item.GetByWeapon(inflictor);
+									
+									if activeWeaponItemTable then
+										local activeWeaponCondition = activeWeaponItemTable:GetCondition() or 100;
+										
+										if damageType == DMG_CLUB then
+											armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.7, 1));
+										else
+											armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.5, 1));
 										end
 									end
 								end
 							end
-							
-							if inflictor.Base == "sword_swepbase" then
-								local activeWeaponItemTable = item.GetByWeapon(inflictor);
-								
-								if activeWeaponItemTable then
-									local activeWeaponCondition = activeWeaponItemTable:GetCondition() or 100;
-									
-									if damageType == DMG_CLUB then
-										armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.7, 1));
-									else
-										armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.5, 1));
-									end
-								end
-							end
+						else
+							armorPiercing = inflictor.ArmorPiercing or attacker.ArmorPiercing or 40;
 						end;
 					else
-						armorPiercing = inflictor.ArmorPiercing or attacker.ArmorPiercing or 40;
+						armorPiercing = armorPiercingOverride;
 					end;
-					
+						
 					--print("Armor piercing: "..tostring(armorPiercing));
 					
 					local protection = armorItem.protection;
@@ -352,15 +370,8 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					protection = math.min(math.Round(protection), 95);
 					
 					--print("Armor protection value: "..tostring(protection));
-					local effectiveness;
-					
-					if damageType == DMG_BULLET or damageType == DMG_BUCKSHOT then
-						effectiveness = damage;
-					else
-						effectiveness = math.Clamp(damage / (protection / armorPiercing), 0, damage);
-					end
-					
-					damageInfo:SetDamage(effectiveness);
+
+					damageInfo:SetDamage(math.Clamp(damage / (protection / armorPiercing), 0, damage));
 					--print("Setting damage from effectiveness to: "..tostring(damageInfo:GetDamage()));
 					
 					if (damageTypeScales and !table.IsEmpty(damageTypeScales)) then
