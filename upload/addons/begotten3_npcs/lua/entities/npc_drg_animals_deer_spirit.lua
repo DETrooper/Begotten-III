@@ -4,6 +4,8 @@ ENT.Base = "drgbase_nextbot" -- DO NOT TOUCH (obviously)
 -- Misc --
 ENT.PrintName = "Deer (Spirit)"
 ENT.Category = "Begotten DRG"
+ENT.AdminSpawnable = false;
+ENT.Spawnable = false;
 ENT.Models = {"models/animals/deer1.mdl"}
 ENT.RagdollOnDeath = false
 ENT.CollisionBounds = Vector(18, 18, 50)

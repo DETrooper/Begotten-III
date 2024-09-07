@@ -61,6 +61,36 @@ function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 	end
 end
 
+function cwSailing:CanPlayerMoveLongship(longshipEnt, caller)
+	local owner = longshipEnt.owner;
+	
+	if !IsValid(owner) then
+		if Clockwork.player:GetCharacterID(caller) == longshipEnt.ownerID then
+			owner = caller;
+		end
+	elseif longshipEnt.owner == caller and Clockwork.player:GetCharacterID(caller) ~= longshipEnt.ownerID then
+		owner = nil;
+		
+		longshipEnt.owner = nil;
+	end
+
+	if longshipEnt:GetNWBool("freeSailing") then return true end;
+
+	if IsValid(owner) and owner:Alive() and ((owner:GetNetVar("tied", 0) ~= 0 and !owner:IsRagdolled()) or zones:IsPlayerInSupraZone(owner, "supragore")) then
+		if owner == caller then
+			return true;
+		end
+	elseif caller:GetFaction() == "Goreic Warrior" or caller:GetNetVar("kinisgerOverride") == "Goreic Warrior" then
+		return true;
+	end
+	
+	if caller:IsAdmin() and caller.cwObserverMode then
+		return true;
+	end
+	
+	return false;
+end
+
 -- Called when a player uses an unknown item function.
 function cwSailing:PlayerUseUnknownItemFunction(player, itemTable, itemFunction)
 	if !self.shipLocations then

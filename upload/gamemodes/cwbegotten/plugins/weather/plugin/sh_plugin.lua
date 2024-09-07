@@ -97,9 +97,9 @@ if cwWeather.systemEnabled then
 		},
 		["fog"] = {
 			fogStart = 64,
-			fogEnd = 666,
+			fogEnd = 800,
 			fogStartNight = 64,
-			fogEndNight = 666,
+			fogEndNight = 800,
 			rarity = 2,
 		},
 		["normal"] = {

@@ -2,6 +2,8 @@
 	Begotten III: Jesus Wept
 --]]
 
+local drop = EffectData();
+
 if cwWeather.Emitter2D then
 	cwWeather.Emitter2D:Finish()
 	cwWeather.Emitter2D = nil;
@@ -30,20 +32,25 @@ function cwWeather:Think()
 	local weather = self.weather;
 
 	if weather then
-		local viewPos = EyePos();
 		local weatherTable = self.weatherTypes[weather];
-		
-		if !self.Emitter2D then
-			self.Emitter2D = ParticleEmitter(viewPos);
-		end
-		
-		self.Emitter2D:SetPos(viewPos);
-		
+
 		if weatherTable then
+			local viewPos = EyePos();
+			
 			if weatherTable.precipitation then
-				local drop = EffectData();
+				if !self.Emitter2D then
+					self.Emitter2D = ParticleEmitter(viewPos);
+				end
+				
+				self.Emitter2D:SetPos(viewPos);
+			
 				drop:SetOrigin(viewPos);
 				util.Effect(weatherTable.precipitation, drop);
+			else
+				if self.Emitter2D then
+					self.Emitter2D:Finish()
+					self.Emitter2D = nil;
+				end
 			end
 			
 			local outside = self:IsOutside(viewPos);
@@ -71,12 +78,12 @@ function cwWeather:Think()
 					self.loopingAmbience = CreateSound(Clockwork.Client, weatherTable.loopingAmbience);
 					
 					if outside then
-						self.loopingAmbience:PlayEx(0.5, 100);
+						self.loopingAmbience:PlayEx(0.4, 100);
 					else
 						if Clockwork.Client:InTower() then
 							self.loopingAmbience:PlayEx(0.05, 100);
 						else
-							self.loopingAmbience:PlayEx(0.25, 100);
+							self.loopingAmbience:PlayEx(0.2, 100);
 						end
 					end
 				end
@@ -94,11 +101,11 @@ function cwWeather:Think()
 				return;
 			end
 		end
-	else
-		if self.Emitter2D then
-			self.Emitter2D:Finish()
-			self.Emitter2D = nil;
-		end
+	end
+	
+	if self.Emitter2D then
+		self.Emitter2D:Finish()
+		self.Emitter2D = nil;
 	end
 	
 	if self.loopingAmbience then

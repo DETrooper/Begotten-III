@@ -2,8 +2,8 @@
 	Begotten III: Jesus Wept
 --]]
 
-cwSenses.heatwaveMaterial = Material("sprites/heatwave");
-cwSenses.heatwaveMaterial:SetFloat("$refractamount", 0);
+--cwSenses.heatwaveMaterial = Material("sprites/heatwave");
+--cwSenses.heatwaveMaterial:SetFloat("$refractamount", 0);
 cwSenses.shinyMaterial = Material("models/shiny");
 
 -- Called when screen space effects should be rendered.
@@ -47,7 +47,7 @@ function cwSenses:RenderScreenspaceEffects()
 							render.SetColorModulation(unpack(modulation));
 						end
 						
-						self.heatwaveMaterial:SetFloat("$refractamount", -0.0007);
+						--self.heatwaveMaterial:SetFloat("$refractamount", -0.0007);
 						
 						render.MaterialOverride(self.shinyMaterial);
 						

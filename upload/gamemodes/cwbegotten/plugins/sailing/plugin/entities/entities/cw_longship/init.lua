@@ -399,6 +399,10 @@ function ENT:Use(activator, caller)
 		data.entity = self;
 		data.location = self.location;
 		
+		if Clockwork.player:GetCharacterID(caller) == self.ownerID then
+			data.isOwner = true;
+		end
+		
 		if caller:GetFaction() == "Goreic Warrior" or caller:GetNetVar("kinisgerOverride") == "Goreic Warrior" or (caller:IsAdmin() and caller.cwObserverMode) then
 			data.cargoholdopenable = true;
 			data.destination = self.destination;

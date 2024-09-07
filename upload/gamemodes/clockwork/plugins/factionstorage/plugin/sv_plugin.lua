@@ -37,10 +37,15 @@ netstream.Hook("FactionStorageAdd", function(player, data)
 				entity.cwFactionLock = cwFactionLock;
 				entity.cwLockTier = 3;
 				entity:SetNWBool("unlocked", false);
+				entity:SetNWBool("hasPassword", true);
 			else
 				entity.cwFactionLock = nil;
 				entity.cwLockTier = nil;
 				entity:SetNWBool("unlocked", true);
+				
+				if !entity.cwPassword then
+					entity:SetNWBool("hasPassword", false);
+				end
 			end
 			
 			cwStorage:SaveStorage()

@@ -336,7 +336,7 @@ function cwZombies:GetAdminESPInfo(info)
 		for k, v in ipairs(ents.FindByClass("npc_bgt_*")) do
 			local class = v:GetClass();
 			
-			if (table.HasValue(self.zombieNPCS, class)) then
+			--if (table.HasValue(self.zombieNPCS, class)) then
 				local informationColor = Clockwork.option:GetColor("information");
 				local maxHealth = v:GetMaxHealth();
 				local health = v:Health();
@@ -348,7 +348,7 @@ function cwZombies:GetAdminESPInfo(info)
 						{text = "Health: ["..health.." / "..maxHealth.."]", color = informationColor}
 					}
 				};
-			end;
+			--end;
 		end;
 		
 		for k, v in ipairs(ents.FindByClass("npc_drg_animals_*")) do

@@ -16,6 +16,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.faction = "Children of Satan";
 	
 	ITEM.conditionScale = 1.5 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
@@ -36,6 +37,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.faction = "Children of Satan";
 	
 	ITEM.conditionScale = 1.5 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
@@ -57,6 +59,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.faction = "Children of Satan";
 
 	ITEM.conditionScale = 1.5 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -91,6 +94,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.faction = "Children of Satan";
 
 	ITEM.conditionScale = 0 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -125,6 +129,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.faction = "Children of Satan";
 
 	ITEM.conditionScale = 1.5 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,

@@ -52,9 +52,9 @@ COMMAND.alias = {"SpawnNPC"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
-	local npc = ents.Create(arguments[1]);
+	local entity = ents.Create(arguments[1]);
 	
-	if IsValid(npc) then
+	if IsValid(entity) and (entity:IsNPC() or entity:IsNextBot()) then
 		local trace = player:GetEyeTraceNoCursor();
 		
 		if (trace.Hit) then
@@ -82,16 +82,21 @@ function COMMAND:OnRun(player, arguments)
 				end);
 		
 				timer.Simple(0.75, function()
+					local npc = ents.Create(arguments[1]);
+				
 					if IsValid(npc) then
-						if npc.CustomInitialize then
-							npc:CustomInitialize();
-						end
-						
 						npc:SetPos(destination + Vector(0, 0, 16));
 						npc:Spawn();
 						npc:Activate();
 						
 						util.Decal("PentagramBurn", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal);
+						
+						if IsValid(player) then
+							undo.Create("Summoned "..(npc.PrintName or npc:GetClass()))
+							undo.SetPlayer(player)
+							undo.AddEntity(npc)
+							undo.Finish()
+						end
 					end
 				end);
 			end);
@@ -100,6 +105,10 @@ function COMMAND:OnRun(player, arguments)
 		end;
 	else
 		Schema:EasyText(player, "grey", arguments[1].." is not a valid npc!");
+	end
+	
+	if IsValid(entity) then
+		entity:Remove();
 	end
 end;
 

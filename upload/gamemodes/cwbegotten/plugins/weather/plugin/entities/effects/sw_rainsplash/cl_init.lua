@@ -1,8 +1,8 @@
 function EFFECT:Init(data)
-	local cwWeather = cwWeather;
+	local emitter = cwWeather.Emitter2D;
 
-	if (cwWeather.Emitter2D) then
-		local p = cwWeather.Emitter2D:Add("simpleweather/snow", data:GetOrigin());
+	if (emitter) then
+		local p = emitter:Add("simpleweather/snow", data:GetOrigin());
 		
 		p:SetDieTime(0.5)
 		p:SetStartAlpha(15)
@@ -10,6 +10,7 @@ function EFFECT:Init(data)
 		p:SetStartSize(2)
 		p:SetEndSize(2)
 		p:SetColor(255, 255, 255)
+		p:SetCollide(true)
 	end
 end
 

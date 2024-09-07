@@ -107,7 +107,6 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 	if (!IsValid(player) or !itemTable or !player:HasItemInstance(itemTable) or !player:Alive()) then
 		return;
 	end;
-
 	local action = Clockwork.player:GetAction(player);
 	
 	if (action != "heal" and action != "healing" and action != "performing_surgery") then
@@ -116,6 +115,8 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 		if player:HasBelief("dexterity") then
 			consumeTime = consumeTime * 0.67;
 		end
+		
+		player:SetWeaponRaised(false);
 			
 		Clockwork.player:SetAction(player, "heal", consumeTime, nil, function()
 			if !IsValid(player) then
@@ -309,6 +310,8 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 	
 	if (actionPlayer != "heal" and actionPlayer != "healing" and actionPlayer != "performing_surgery") then
 		if (actionTarget != "heal" and actionTarget != "healing" and actionTarget != "performing_surgery") then
+			player:SetWeaponRaised(false);
+			
 			Clockwork.player:SetAction(player, "healing", consumeTime, nil, function()
 				if !IsValid(player) or !IsValid(target) then
 					return;
@@ -491,7 +494,7 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 				player:TakeItem(itemTable, true);
 			end);
 		else
-			Schema:EasyText(player, "peru","This player is already healing!");
+			Schema:EasyText(player, "peru", "This player is already healing!");
 		end;
 	else
 		Schema:EasyText(player, "peru", "You are already healing!");

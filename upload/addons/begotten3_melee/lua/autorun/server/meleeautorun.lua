@@ -740,7 +740,7 @@ local function Guarding(ent, dmginfo)
 					end
 					--]]
 						
-					if !ent:GetNWBool("Deflect") and ent:IsValid() and ent:Alive() and attacker:IsValid() then
+					if bIsPlayer and !ent:GetNWBool("Deflect") and ent:Alive() and attacker:IsValid() then
 						local poiseDamageModifier = 1;
 						
 						if attacker.HasBelief then

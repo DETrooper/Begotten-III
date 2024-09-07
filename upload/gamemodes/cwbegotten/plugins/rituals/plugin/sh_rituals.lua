@@ -1806,7 +1806,9 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 					
 					table.insert(cwRituals.summonedNPCs, entity);
 					
-					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					--Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					entity:SetPos(trace.HitPos + Vector(0, 0, 16));
+					
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as an unholy creature of Hell suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
 				end
 			end);
@@ -1926,7 +1928,9 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 					
 					table.insert(cwRituals.summonedNPCs, entity);
 					
-					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					--Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					entity:SetPos(trace.HitPos + Vector(0, 0, 16));
+					
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as an unholy creature of Hell suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
 				end
 			end);
@@ -2055,8 +2059,8 @@ RITUAL = cwRituals.rituals:New("summon_sprinter");
 						end
 					end
 
-					Clockwork.entity:MakeFlushToGround(entity, v + Vector(0, 0, 64), trace.HitNormal);
-
+					--Clockwork.entity:MakeFlushToGround(entity, v + Vector(0, 0, 64), trace.HitNormal);
+					entity:SetPos(v + Vector(0, 0, 16));
 				end
 					
 				Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as two unholy Sprinters of Hell summon into this plane! Oh fuck!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
@@ -2170,7 +2174,8 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 					
 					table.insert(cwRituals.summonedNPCs, entity);
 
-					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					--Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					entity:SetPos(trace.HitPos + Vector(0, 0, 16));
 					
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as a creature of the Gore Forest suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
 				end
@@ -2284,7 +2289,9 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 					
 					table.insert(cwRituals.summonedNPCs, entity);
 					
-					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					--Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					entity:SetPos(trace.HitPos + Vector(0, 0, 16));
+					
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as a creature of the Gore Forest suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
 				end
 			end);
@@ -2397,7 +2404,9 @@ RITUAL = cwRituals.rituals:New("summon_familiar_elk");
 					
 					table.insert(cwRituals.summonedNPCs, entity);
 					
-					Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					--Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					entity:SetPos(trace.HitPos + Vector(0, 0, 16));
+					
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as a creature of the Gore Forest suddenly appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
 				end
 			end);

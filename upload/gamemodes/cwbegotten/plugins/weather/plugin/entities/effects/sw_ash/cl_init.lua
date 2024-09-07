@@ -1,14 +1,15 @@
 function EFFECT:Init(data)
 	local cwWeather = cwWeather;
+	local emitter = cwWeather.Emitter2D;
 
-	if (cwWeather.Emitter2D) then
+	if (emitter) then
 		for i = 1, 8 do
 			local r = math.random(0, 1500);
 			local t = math.Rand(-math.pi, math.pi);
 			local pos = data:GetOrigin() + Vector(math.cos( t ) * r, math.sin( t ) * r, math.min(250, cwWeather.HeightMin or 250));
 			
 			if (cwWeather:IsOutside(pos)) then
-				local p = cwWeather.Emitter2D:Add("simpleweather/snow", pos);
+				local p = emitter:Add("simpleweather/snow", pos);
 				
 				p:SetVelocity(Vector(20 + math.random(-10, 10), 20 + math.random(-10, 10), -55))
 				p:SetRoll(math.random(-360, 360))

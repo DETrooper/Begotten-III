@@ -591,6 +591,7 @@ function GM:PlayerSwitchFlashlight(player, bIsOn)
 					player.cwNextRaise = curTime + (actionTime + 0.25);
 					
 					if (activeWeapon.InstantRaise) then
+						Clockwork.player:SetAction(player, false);
 						player:ToggleWeaponRaised();
 						return;
 					end;

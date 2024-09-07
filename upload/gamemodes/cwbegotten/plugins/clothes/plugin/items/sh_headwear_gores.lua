@@ -14,6 +14,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.overlay = "begotten/zomboverlay/helmeyes";
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -48,6 +49,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.overlay = "begotten/zomboverlay/helmeyes";
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -81,6 +83,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -114,6 +117,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.overlay = "begotten/zomboverlay/helmeyes";
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -147,6 +151,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -180,6 +185,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -216,6 +222,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.overlay = "begotten/zomboverlay/skullhelm";
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -251,6 +258,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.overlay = "begotten/zomboverlay/skullhelm";
 
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -283,6 +291,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -317,6 +326,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 
 	ITEM.conditionScale = 0 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -349,6 +359,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 
 	ITEM.conditionScale = 0 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -382,6 +393,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.excludeSubfactions = {"Clan Grock"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -416,6 +428,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.excludeSubfactions = {"Clan Grock"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -452,6 +465,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Crast", "Clan Harald", "Clan Shagalax"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -483,7 +497,9 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Crast", "Clan Harald", "Clan Shagalax"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	
 	ITEM.conditionScale = 0.8 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -515,7 +531,9 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Crast", "Clan Harald", "Clan Shagalax"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	
 	ITEM.conditionScale = 0.8 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,

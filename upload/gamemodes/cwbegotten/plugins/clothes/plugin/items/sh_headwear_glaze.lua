@@ -15,6 +15,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.faction = "Gatekeeper";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -49,6 +50,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.kinisgerOverride = true;
 
 	ITEM.conditionScale = 0
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -129,6 +131,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -160,6 +163,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -377,6 +381,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 	
 	ITEM.conditionScale = 1 -- item degrades 1x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -410,6 +415,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	
 	ITEM.conditionScale = 1.1 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 	
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -442,6 +448,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 
 	ITEM.conditionScale = 1 -- item degrades 1x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -475,6 +482,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 
 	ITEM.conditionScale = 0.75 -- item degrades 0.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -507,6 +515,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 
 	ITEM.conditionScale = 0.75 -- item degrades 0.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -542,6 +551,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.faction = "Gatekeeper";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -579,6 +589,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.faction = "Gatekeeper";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -612,6 +623,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
@@ -644,6 +656,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
 
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
