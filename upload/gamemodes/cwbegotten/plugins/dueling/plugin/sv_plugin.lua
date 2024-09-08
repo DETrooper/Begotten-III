@@ -307,7 +307,16 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 	if (!map) then
 		return;
 	end;
-
+	
+	-- Save positions.
+	if cwSpawnSaver then
+		cwSpawnSaver:PrePlayerCharacterUnloaded(player1);
+		cwSpawnSaver:PrePlayerCharacterUnloaded(player2);
+	end
+	
+	player1:SaveCharacter();
+	player2:SaveCharacter();
+	
 	local random_arena = available_arenas[math.random(1, #available_arenas)];
 	
 	self.arenas[random_arena].duelingPlayer1 = player1;
@@ -322,12 +331,6 @@ function cwDueling:SetupDuel(player1, player2, available_arenas)
 	
 	netstream.Start(player1, "FadeAmbientMusic");
 	netstream.Start(player2, "FadeAmbientMusic");
-	
-	-- Save positions.
-	if cwSpawnSaver then
-		cwSpawnSaver:PrePlayerCharacterUnloaded(player1);
-		cwSpawnSaver:PrePlayerCharacterUnloaded(player2);
-	end
 	
 	timer.Simple(5, function()
 		if IsValid(player1) and player1:Alive() and IsValid(player2) and player2:Alive() then

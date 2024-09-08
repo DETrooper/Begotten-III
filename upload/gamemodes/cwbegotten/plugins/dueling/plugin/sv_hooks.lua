@@ -74,6 +74,13 @@ function cwDueling:PlayerDisconnected(player)
 	end
 end;
 
+-- Called to see if a player's character should be saved.
+function cwDueling:CanSaveCharacter(player)
+	if player.opponent then
+		return false;
+	end
+end
+
 -- Called when a player wants to fallover.
 function cwDueling:PlayerCanFallover(player)
 	if player.opponent or self:PlayerIsInMatchmaking(player) then

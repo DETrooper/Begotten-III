@@ -1171,7 +1171,9 @@ function GM:SaveData()
 	
 	for k, v in pairs(players) do
 		if (v:HasInitialized()) then
-			v:SaveCharacter()
+			if hook.Run("CanSaveCharacter", v) ~= false then
+				v:SaveCharacter()
+			end
 		end
 	end;
 
