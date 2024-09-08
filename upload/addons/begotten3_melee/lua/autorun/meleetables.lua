@@ -6826,23 +6826,20 @@ BlockTables.shieldunique1 = { -- Red Wolf Skinshield (Unique)
 	["canparry"] = true,
 	["candeflect"] = false,
 	["ironsights"] = {
-		["models/v_onehandedbegotten.mdl"] = {pos = Vector(4.519, -1.206, 1.72), ang = Vector(-4.926, -23.921, 0)},
-		["models/v_begottenknife.mdl"] = {pos = Vector(4.5, -1.5, 1.72), ang = Vector(-4.926, -18.292, 5.627)},
-		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(4.519, -1.206, 1.72), ang = Vector(-4.926, -23.921, 0)},
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(5, -9.849, -3.481), ang = Vector(4.221, -16.885, 4.221)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(8.199, -4.222, -3.04), ang = Vector(0, -19.698, 4.925)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(9.96, -5.428, -2.8), ang = Vector(5.627, -20.403, 5.627)},
 	},
 	["VElements"] = {
 		["models/v_onehandedbegotten.mdl"] = {
-			["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-10.91, 6.752, -4.676), angle = Angle(35, 73.636, 134.416), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+			["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-3.636, 11.947, -6.753), angle = Angle(35, 73.636, 134.416), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 		["models/v_begottenknife.mdl"] = {
-			["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-15, 12, 5), angle = Angle(0, 50, 176), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+			["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-17.143, 7.791, 3.635), angle = Angle(0, 50, 160.13), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
-			["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-3.458, 8.395, -2.47), angle = Angle(25.555, 58.888, 143.332), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+			["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(5.714, -7.792, -1.558), angle = Angle(24.545, -31.559, -87.663), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
-	},
-	["WElements"] = {
-		["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(1.557, -3.636, 0.518), angle = Angle(3.506, 143.766, 82.986), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 	},
 };
 

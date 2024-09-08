@@ -347,6 +347,7 @@ ITEM.weight = 8;
 ITEM.weightclass = "Medium";
 ITEM.description = "The golden and ornate armor of a Vexillifer, reinforced with fine steel and topped with a lion pelt and stoic iron mask.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+ITEM.requireFaith = {"Faith of the Light"};
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.faction = "Gatekeeper";
 
