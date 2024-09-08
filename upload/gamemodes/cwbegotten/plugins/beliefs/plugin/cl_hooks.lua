@@ -103,6 +103,7 @@ end
 local bearTrapDist = (256 * 256);
 local warcryColor = Color(180, 0, 0, 255);
 local troutColor = Color(120, 120, 120, 255);
+local ravenColor = Color(0, 180, 0);
 
 -- This can be optimized more.
 function cwBeliefs:AddEntityOutlines(outlines)
@@ -160,6 +161,12 @@ function cwBeliefs:AddEntityOutlines(outlines)
 			for k, v in pairs(_player.GetAll()) do
 				if v.warcryTarget and v:Alive() and v:GetColor().a > 0 then
 					self:DrawPlayerOutline(v, outlines, troutColor);
+				end;
+			end;
+		elseif self.raven then
+			for k, v in pairs(_player.GetAll()) do
+				if v.warcryTarget and v:Alive() and v:GetColor().a > 0 then
+					self:DrawPlayerOutline(v, outlines, ravenColor);
 				end;
 			end;
 		else
@@ -269,6 +276,30 @@ netstream.Hook("UpgradedWarcry", function(data)
 	local cwBeliefs = cwBeliefs;
 	
 	cwBeliefs.upgradedWarcryActive = true;
+	
+	if cwBeliefs:HasBelief("watchful_raven") then
+		if data then
+			for i, v in ipairs(data) do
+				if IsValid(v) then
+					v.warcryTarget = true;
+				end
+			end
+		end
+		
+		cwBeliefs.raven = true;
+		
+		timer.Simple(10, function()
+			cwBeliefs.raven = false;
+			
+			for k, v in pairs(_player.GetAll()) do
+				if v.warcryTarget then
+					v.warcryTarget = nil;
+				end
+			end
+		end);
+	
+		return;
+	end
 	
 	local faction = Clockwork.Client:GetFaction();
 	local faith = Clockwork.Client:GetNetVar("faith");

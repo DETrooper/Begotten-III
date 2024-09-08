@@ -819,6 +819,10 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			end
 		end
 		
+		if entity.ravenBuff then
+			damageInfo:ScaleDamage(0.9);
+		end
+		
 		local attacker = damageInfo:GetAttacker();
 		
 		if (attacker:IsPlayer()) then
