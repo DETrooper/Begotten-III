@@ -412,8 +412,6 @@ local ITEM = Clockwork.item:New("book_base")
 
 ITEM:Register()
 
-Clockwork.item:Initialize(); -- This fixes shit for autorefresh I guess?
-
 if (SERVER) then
 	function cwScriptures:PlayerCharacterLoaded(player)
 		local booksCopied = player:GetCharacterData("BooksCopied", {});
