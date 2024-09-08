@@ -82,12 +82,16 @@ function cwBeliefs:GetEntityMenuOptions(entity, options)
 			end
 		elseif player and player:Alive() then
 			if self:HasBelief("doctor") then
-				options["Diagnose"] = "cwDiagnose";
+				if !Clockwork.Client:IsWeaponRaised() then
+					options["Diagnose"] = "cwDiagnose";
+				end
 			end
 		end;
 	elseif entity:IsPlayer() and entity:Alive() then
 		if self:HasBelief("doctor") then
-			options["Diagnose"] = "cwDiagnose";
+			if !Clockwork.Client:IsWeaponRaised() then
+				options["Diagnose"] = "cwDiagnose";
+			end
 		end
 	end;
 end;

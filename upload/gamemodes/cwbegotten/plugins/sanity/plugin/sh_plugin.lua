@@ -99,6 +99,117 @@ end;
 
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("PlyScareDoor");
+COMMAND.tip = "Scare a player with a door jumpscare.";
+COMMAND.text = "<string Name>";
+COMMAND.access = "s";
+COMMAND.arguments = 1;
+COMMAND.alias = {"DoorScare", "ScarePlayerDoor", "CharScareDoor", "ScareDoor", "JumpscareDoor"}
+
+-- Called when the command has been run.
+function COMMAND:OnRun(player, arguments)
+	local target = Clockwork.player:FindByID(arguments[1]);
+
+	if (target) then
+		local entity = nil;
+		
+		for k, v in pairs (ents.FindInSphere(target:GetPos(), 750)) do
+			if (v:GetClass() == "prop_door_rotating") then
+				entity = v;
+				
+				break;
+			end;
+		end;
+		
+		if (!entity) then
+			Clockwork.player:Notify(player, target.." is not near any doors. Aborting.");
+			
+			return;
+		end;
+	
+		if (SERVER) then
+			target:SendLua([[cwSanity:DoDoorJumpscare()]]);
+			
+			if player ~= target then
+				player:SendLua([[cwSanity:DoDoorJumpscare()]])
+			end
+		end;
+	else
+		Clockwork.player:Notify(player, target.." is not a valid player!");
+	end;
+end;
+
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("BlowDoor");
+COMMAND.tip = "Blow down a door.";
+COMMAND.access = "s";
+COMMAND.alias = {"DoorBlow", "BreakDoor"}
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local door = player:GetEyeTrace().Entity;
+
+		if (!IsValid(door)) then return	end;
+		if door:GetClass() ~= "prop_door_rotating" then return end;
+
+		door:EmitSound("physics/wood/wood_crate_impact_hard2.wav");
+		door:EmitSound("physics/wood/wood_panel_impact_hard1.wav", 100, math.random(70, 130));
+		door:EmitSound("physics/wood/wood_box_impact_hard3.wav");
+		door:SetNotSolid(true);
+		door:DrawShadow(false);
+		door:SetNoDraw(true);
+		door:Fire("Unlock", "", 0);
+		door:Fire("Open", "", 0);
+		local position = door:GetPos();
+		local angles = door:GetAngles();
+		local model = door:GetModel();
+		local skin = door:GetSkin();
+
+		local fakeDoor = ents.Create("prop_physics");
+			fakeDoor:SetPos(position);
+			fakeDoor:SetAngles(angles);
+			fakeDoor:SetModel(model);
+			fakeDoor:SetSkin(skin);
+			fakeDoor:SetCollisionGroup(COLLISION_GROUP_DEBRIS);
+			fakeDoor:DrawShadow(false);
+		fakeDoor:Spawn();
+
+		local position = player:GetPos();
+		local doorPosition = fakeDoor:GetPos();
+
+		fakeDoor:SetVelocity(Vector((position - doorPosition) * -40000, (position - doorPosition) * -40000, 0))	;
+
+		timer.Simple(180, function()
+			fakeDoor:Remove();
+
+			if (IsValid(door)) then
+				door:SetNotSolid(false);
+				door:DrawShadow(true);
+				door:SetNoDraw(false);
+				
+				door.health = nil;
+			end;
+		end);
+
+		local physObj = fakeDoor:GetPhysicsObject();
+
+		if (IsValid(physObj)) then
+			physObj:ApplyForceOffset((doorPosition - position) * 1000, position);
+		end;
+
+		for k, v in pairs (ents.FindInSphere(doorPosition, 250)) do
+			if (v:GetClass() == "prop_physics") then
+				local physObj = v:GetPhysicsObject();
+
+				if (IsValid(physObj)) then
+					physObj:ApplyForceOffset((v:GetPos() - position) * 1000, position);
+				end;
+			end;
+		end;
+	end;
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("ToggleHellSanityLoss");
 COMMAND.tip = "Toggle Hell's residual sanity loss.";
 COMMAND.flags = CMD_DEFAULT;

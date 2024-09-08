@@ -33,7 +33,7 @@ local ITEM = Clockwork.item:New();
 			return false;
 		end
 		
-		if itemFunction == "dock" then
+		--[[if itemFunction == "dock" then
 			local longshipEnt = cwSailing:LongshipExists(self.itemID);
 			
 			if longshipEnt then
@@ -41,7 +41,7 @@ local ITEM = Clockwork.item:New();
 			else
 				Schema:EasyText(player, "peru", "This longship is already docked!");
 			end
-		elseif itemFunction == "undock" then
+		else]]if itemFunction == "undock" then
 			if cwSailing:LongshipExists(self.itemID) then
 				Schema:EasyText(player, "peru", "This longship is already undocked!");
 				return false;
@@ -65,7 +65,7 @@ local ITEM = Clockwork.item:New();
 						longshipEnt.health = self:GetData("health", 500);
 					end
 					
-					self:SetData("health", longshipEnt.health);
+					--self:SetData("health", longshipEnt.health);
 				end
 			end
 		elseif itemFunction == "rename" then
@@ -84,7 +84,9 @@ local ITEM = Clockwork.item:New();
 		
 		player:EmitSound("begotten/items/note_turn.wav");
 
-		return false; -- Prevent this item from being used, it should be permanent.
+		--return false; -- Prevent this item from being used, it should be permanent.
+		
+		return true;
 	end
 	
 	function ITEM:GetCustomName()
@@ -149,7 +151,7 @@ local ITEM = Clockwork.item:New();
 			return false;
 		end
 		
-		if itemFunction == "dock" then
+		--[[if itemFunction == "dock" then
 			local longshipEnt = cwSailing:LongshipExists(self.itemID);
 			
 			if longshipEnt then
@@ -157,7 +159,7 @@ local ITEM = Clockwork.item:New();
 			else
 				Schema:EasyText(player, "peru", "This ironclad is already docked!");
 			end
-		elseif itemFunction == "undock" then
+		else]]if itemFunction == "undock" then
 			if cwSailing:LongshipExists(self.itemID) then
 				Schema:EasyText(player, "peru", "This ironclad is already undocked!");
 				return false;
@@ -186,7 +188,9 @@ local ITEM = Clockwork.item:New();
 		
 		player:EmitSound("begotten/items/note_turn.wav");
 
-		return false; -- Prevent this item from being used, it should be permanent.
+		--return false; -- Prevent this item from being used, it should be permanent.
+		
+		return true;
 	end
 	
 	function ITEM:GetCustomName()
@@ -235,7 +239,16 @@ local ITEM = Clockwork.item:New();
 			return;
 		end;
 		
-		local longshipEnt = player.longship;
+		local characterID = player:GetCharacterKey();
+		local longshipEnt;
+		
+		for i, v in ipairs(ents.FindByClass("cw_longship_ironclad")) do
+			if v.ownerID and v.ownerID == characterID then
+				longshipEnt = v;
+				
+				break;
+			end
+		end
 		
 		if !IsValid(longshipEnt) or longshipEnt:GetClass() ~= "cw_longship_ironclad" then
 			Schema:EasyText(player, "peru", "You must have an active Ironclad to mount this machinegun!");
@@ -258,7 +271,7 @@ local ITEM = Clockwork.item:New();
 			return false;
 		end
 		
-		if longshipEnt.itemID then
+		--[[if longshipEnt.itemID then
 			local itemTable = item.FindInstance(longshipEnt.itemID);
 			
 			if itemTable then
@@ -270,6 +283,12 @@ local ITEM = Clockwork.item:New();
 					itemTable:SetData("machinegunUpgrade", true);
 				end
 			end
+		end]]--
+		
+		if IsValid(longshipEnt.machinegun) then
+			Schema:EasyText(player, "peru", "This ironclad has already been upgraded!");
+			
+			return false;
 		end
 		
 		player:EmitSound("oneuse_deploy.ogg");

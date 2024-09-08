@@ -4,6 +4,16 @@
 
 local longshipXP = 300;
 
+-- Called when Clockwork has loaded all of the entities.
+function cwSailing:ClockworkInitPostEntity()
+	self:LoadLongships();
+end
+
+-- Called just after data should be saved.
+function cwSailing:PostSaveData()
+	self:SaveLongships();
+end
+
 function cwSailing:EntityTakeDamageNew(entity, damageInfo)
 	local class = entity:GetClass();
 	
@@ -65,10 +75,10 @@ function cwSailing:CanPlayerMoveLongship(longshipEnt, caller)
 	local owner = longshipEnt.owner;
 	
 	if !IsValid(owner) then
-		if Clockwork.player:GetCharacterID(caller) == longshipEnt.ownerID then
+		if caller:GetCharacterKey() == longshipEnt.ownerID then
 			owner = caller;
 		end
-	elseif longshipEnt.owner == caller and Clockwork.player:GetCharacterID(caller) ~= longshipEnt.ownerID then
+	elseif longshipEnt.owner == caller and caller:GetCharacterKey() ~= longshipEnt.ownerID then
 		owner = nil;
 		
 		longshipEnt.owner = nil;
@@ -91,13 +101,28 @@ function cwSailing:CanPlayerMoveLongship(longshipEnt, caller)
 	return false;
 end
 
+-- Called when a player's character has been loaded.
+function cwSailing:PlayerCharacterLoaded(player)
+	if player:GetFaction() == "Goreic Warrior" then
+		local characterID = player:GetCharacterKey();
+		
+		if !characterID then return end;
+		
+		for i, v in ipairs(ents.FindByClass("cw_longship*")) do
+			if v.ownerID == characterID then
+				v.owner = player;
+			end
+		end
+	end
+end
+
 -- Called when a player uses an unknown item function.
 function cwSailing:PlayerUseUnknownItemFunction(player, itemTable, itemFunction)
 	if !self.shipLocations then
 		return;
 	end;
 	
-	if itemFunction == "dock" or itemFunction == "undock" or itemFunction == "rename" then
+	if --[[itemFunction == "dock" or]] itemFunction == "undock" or itemFunction == "rename" then
 		if itemTable.OnUseCustom then
 			itemTable:OnUseCustom(player, itemTable, itemFunction);
 		end

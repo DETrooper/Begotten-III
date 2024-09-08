@@ -307,3 +307,52 @@ hook.Add("RenderScreenspaceEffects", "efra", function()
 	end;
 end);
 end;
+
+-- A function to start a door jumpscare.
+function cwSanity:DoDoorJumpscare()
+	local entity = nil;
+	
+	for k, v in pairs (ents.FindInSphere(Clockwork.Client:GetPos(), 500)) do
+		if (v:GetClass() == "prop_door_rotating") then
+			entity = v;
+			
+			break;
+		end;
+	end;
+	
+	if (entity) then
+		self:DoorHitScare(entity);
+	end;
+end;
+
+-- A function to create a door scare.
+function cwSanity:DoorHitScare(entity)
+	local soundPlayed = nil;
+	
+	if (!entity:GetClass() == "prop_door_rotating") then
+		return;
+	end;
+	
+	timer.Create(Clockwork.Client:EntIndex().."_DoorHit", 0.8, 15, function()
+		if (math.random(1, 2) == 2 and IsValid(entity)) then
+			--[[if (!soundPlayed) then
+				soundPlayed = true;
+				
+				Clockwork.Client:EmitSound("begotten/npc/event_brute_2.wav", 500);
+			end;]]--
+			-- sound missing for now
+			
+			if (math.random(1, 2) == 1) then
+				entity:EmitSound("begotten/npc/brute/amb_hunt0"..math.random(1, 3)..".mp3", 500);
+			end;
+			
+			entity:EmitSound("ambient/materials/door_hit1.wav", 90);
+			
+			local effectData = EffectData();
+				effectData:SetOrigin(entity:GetPos() + entity:OBBCenter());
+				effectData:SetScale(math.Rand(0.2, 0.4));
+				effectData:SetMagnitude(1);
+			util.Effect("cw_effect_smokedoor", effectData);
+		end;
+	end);
+end;

@@ -202,10 +202,8 @@ function cwSailing:SpawnLongship(owner, location, itemTable)
 				longshipEnt.destination = nil;
 				longshipEnt.location = location;
 				longshipEnt.owner = owner;
-				longshipEnt.ownerID = Clockwork.player:GetCharacterID(owner);
+				longshipEnt.ownerID = owner:GetCharacterKey();
 				longshipEnt.playersOnBoard = {};
-				
-				owner.longship = longshipEnt;
 				
 				if location == "docks" then
 					-- If the ship is still at port after five minutes and the docks are full, remove it and let someone else take a spot.
@@ -226,11 +224,11 @@ function cwSailing:SpawnLongship(owner, location, itemTable)
 	end
 end
 
-function cwSailing:CreateDockTimer(longshipEnt)
-	local despawnTime = 300;
+function cwSailing:CreateDockTimer(longshipEnt, timeOverride)
+	local despawnTime = timeOverride or 300;
 	
 	-- Ironclad only gets 1 spot so increase the time to 15 minutes.
-	if longshipEnt.longshipType == "ironclad" then 
+	if !timeOverride and longshipEnt.longshipType == "ironclad" then 
 		despawnTime = 900;
 	end;
 	
@@ -262,7 +260,7 @@ function cwSailing:BeginSailing(longshipEnt, destination, caller)
 
 	--printp("ent pos: "..tostring(longshipEntPos));
 	
-	if Clockwork.player:GetCharacterID(caller) == longshipEnt.ownerID then
+	if caller:GetCharacterKey() == longshipEnt.ownerID then
 		local owner = caller;
 		
 		if !IsValid(longshipEnt.owner) then
@@ -897,8 +895,6 @@ function cwSailing:RemoveLongship(longshipEnt)
 		end
 		
 		if IsValid(longshipEnt.owner) then
-			longshipEnt.owner.longship = nil;
-			
 			if longshipEnt.health then
 				if longshipEnt.health > 0 then
 					Schema:EasyText(longshipEnt.owner, "icon16/anchor.png", "cornflowerblue", "Your "..longshipEnt.longshipType.." has returned to its dock.");
@@ -927,6 +923,134 @@ function cwSailing:RemoveLongship(longshipEnt)
 			timer.Remove("TravelTimer_"..tostring(longshipEnt:EntIndex()))
 		end
 	end
+end
+
+-- A function to load saved longships
+function cwSailing:LoadLongships()
+	local longships = Clockwork.kernel:RestoreSchemaData("plugins/sailing/"..game.GetMap())
+
+	for k, v in pairs(longships) do
+		local location = v.location;
+		local position = v.position;
+		
+		if location and position then
+			local longshipType = v.longshipType or "longship";
+			
+			if !self.shipLocations[location] or !self.shipLocations[location][longshipType] then return end;
+			
+			local destination = self.shipLocations[location][longshipType][position];
+			
+			if !destination then return end;
+			
+			local longshipEnt = ents.Create(v.class or "cw_longship");
+			
+			longshipEnt:Spawn();
+			
+			local longshipAngles = Angle(0, 90, 0);
+			local longshipBodygroup = 0;
+			
+			if destination.angles then
+				longshipAngles = destination.angles;
+			end
+			
+			if destination.bodygroup then
+				longshipBodygroup = destination.bodygroup;
+			end
+		
+			longshipEnt:SetPos(destination.pos);
+			longshipEnt:SetAngles(longshipAngles);
+			longshipEnt:SetBodygroup(0, longshipBodygroup);
+
+			if longshipType == "ironclad" then
+				local steamEngineEnt = longshipEnt:AttachSteamEngine();
+				
+				if IsValid(steamEngineEnt) then
+					if v.fuel then
+						steamEngineEnt.fuel = v.fuel or 0;
+					else
+						steamEngineEnt.fuel = 0;
+					end
+				end
+				
+				if v.machinegun then
+					longshipEnt:AttachMachinegun();
+				end
+			else
+				local longshipHealth = 500;
+				
+				if v.skin then
+					longshipEnt:SetSkin(v.skin);
+				end
+				
+				if v.health then
+					longshipHealth = v.health or longshipHealth;
+				end
+				
+				longshipEnt.health = longshipHealth;
+				
+				if longshipEnt.health < 500 then
+					longshipEnt.repairable = true;
+				else
+					longshipEnt.repairable = false;
+				end
+			end
+			
+			longshipEnt:EmitSound("ambient/water/wave"..math.random(1, 6)..".wav");
+			
+			longshipEnt.itemID = v.itemID;
+			longshipEnt.location = location;
+			longshipEnt.position = position;
+			longshipEnt.ownerID = v.ownerID;
+			longshipEnt.playersOnBoard = {};
+			
+			longshipEnt.cwInventory = Clockwork.inventory:ToLoadable(v.cwInventory) or {};
+			
+			if location == "docks" then
+				-- If the ship is still at port after thirty minutes and the docks are full, remove it and let someone else take a spot.
+				self:CreateDockTimer(longshipEnt, 1800);
+			end
+			
+			table.insert(self.longships, {longshipEnt:EntIndex(), longshipEnt});
+			
+			return longshipEnt;
+		end
+	end
+end
+
+-- A function to save all active longships.
+function cwSailing:SaveLongships()
+	local longships = {}
+
+	for k, v in pairs(ents.FindByClass("cw_longship*")) do
+		if (v:GetClass() == "cw_longship_husk") then
+			continue;
+		end;
+		
+		local saveTab = {
+			itemID = v.itemID,
+			ownerID = v.ownerID,
+			location = v.location,
+			position = v.position,
+			health = v.health,
+			skin = v:GetSkin(),
+		};
+		
+		if IsValid(v.steamEngine) then
+			saveTab.fuel = v.steamEngine.fuel or 0;
+		end
+		
+		if v.machinegun then
+			saveTab.machinegun = true;
+		end
+		
+		if v.cwInventory then
+			saveTab.cwInventory = Clockwork.inventory:ToSaveable(v.cwInventory);
+		end
+
+		longships[#longships + 1] = saveTab;
+	end
+
+	Clockwork.kernel:SaveSchemaData("plugins/sailing/"..game.GetMap(), longships)
 end
 
 concommand.Add("cw_BurnShip", function(player, cmd, args)
@@ -1354,6 +1478,22 @@ concommand.Add("cw_AbortSailing", function(player, cmd, args)
 	end;
 end);
 
+concommand.Add("cw_DockLongship", function(player, cmd, args)
+	local trace = player:GetEyeTrace();
+
+	if (trace.Entity) then
+		local entity = trace.Entity;
+
+		if (entity.longshipType) then
+			if entity.location == "docks" then
+				entity:Remove();
+			else
+				Schema:EasyText(player, "maroon", "This "..entity.longshipType.." must be at the Gore Forest to dock!");
+			end
+		end
+	end;
+end);
+
 concommand.Add("cw_CargoHold", function(player, cmd, args)
 	if player:IsAdmin() or player:GetFaction() == "Goreic Warrior" or player:GetNetVar("kinisgerOverride") == "Goreic Warrior" then
 		local trace = player:GetEyeTrace();
@@ -1459,7 +1599,7 @@ concommand.Add("cw_ShipToggleFreeSailing", function(player, cmd, args)
 		local entity = trace.Entity;
 
 		if (entity.longshipType) then
-			if Clockwork.player:GetCharacterID(player) == entity.ownerID then
+			if player:GetCharacterKey() == entity.ownerID then
 				if entity:GetNWBool("freeSailing") then
 					entity:SetNWBool("freeSailing", false);
 					

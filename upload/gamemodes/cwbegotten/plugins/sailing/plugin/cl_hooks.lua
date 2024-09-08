@@ -28,9 +28,9 @@ function cwSailing:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunctions)
 				return;
 			end;
 			
-			menuPanel:AddOption("Dock", function()
+			--[[menuPanel:AddOption("Dock", function()
 				Clockwork.inventory:InventoryAction("dock", itemTable.uniqueID, itemTable.itemID);
-			end);
+			end);]]--
 
 			menuPanel:AddOption("Undock", function()
 				Clockwork.inventory:InventoryAction("undock", itemTable.uniqueID, itemTable.itemID);
@@ -120,6 +120,10 @@ function cwSailing:CreateMenu(data)
 			menu:AddOption("Disable Free Sailing", function() Clockwork.Client:ConCommand("cw_ShipToggleFreeSailing") end);
 		else
 			menu:AddOption("Enable Free Sailing", function() Clockwork.Client:ConCommand("cw_ShipToggleFreeSailing") end);
+		end
+		
+		if data.location == "docks" then
+			menu:AddOption("Dock", function() Clockwork.Client:ConCommand("cw_DockLongship") end);
 		end
 	end
 	

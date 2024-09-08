@@ -58,7 +58,7 @@ RITUAL = cwRituals.rituals:New("yellow_banner_of_quelling");
 		timer.Create("YellowBannerTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("yellowBanner", false) then
-					player:GetNetVar("yellowBanner", false);
+					player:SetNetVar("yellowBanner", false);
 
 					Clockwork.hint:Send(player, "The 'Yellow Banner of Quelling' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end

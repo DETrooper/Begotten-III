@@ -3085,7 +3085,9 @@ function SWEP:Holster()
 	if IsValid(player) then
 		timer.Remove(player:EntIndex().."IdleAnimation");
 
-		self:StopAllAnims(player);
+		if player:IsPlayer() then
+			self:StopAllAnims(player);
+		end
 		
 		if CLIENT then
 			if player:IsPlayer() then
