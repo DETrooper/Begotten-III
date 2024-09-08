@@ -457,6 +457,16 @@ local COMMAND = Clockwork.command:New("ShutDown");
 	end;
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("SaveData");
+	COMMAND.tip = "Save the server state manually.";
+	COMMAND.access = "s";
+	
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		Clockwork.kernel:ProcessSaveData(false, true);
+	end;
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("ToggleFactionRatio");
 	COMMAND.tip = "Toggle whether or not the faction ratio system should be enabled.";
 	COMMAND.access = "s";
