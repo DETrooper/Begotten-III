@@ -992,7 +992,8 @@ function Schema:DrawTargetPlayerLevel(target, alpha, x, y)
 		if levelText then
 			return Clockwork.kernel:DrawInfo(Clockwork.kernel:ParseData(levelText), x, y, textColor, alpha);
 		end
-	elseif Clockwork.Client:GetNetVar("subfaction") == "Clan Reaver" and targetFaction ~= "Goreic Warrior" then
+	--elseif Clockwork.Client:GetNetVar("subfaction") == "Clan Reaver" and targetFaction ~= "Goreic Warrior" then
+	elseif playerFaction == "Goreic Warrior" and targetFaction ~= "Goreic Warrior" then
 		local level = target:GetNetVar("level", 1)
 		local textColor = Color(255, 100, 100, 255);
 		
