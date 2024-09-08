@@ -5121,7 +5121,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 120;
+		RECIPE.experience = 180;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -5208,7 +5208,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 80;
+		RECIPE.experience = 130;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -5339,10 +5339,9 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFaiths = {"Faith of the Family"};
 		RECIPE.requirements = {
-			["hellforged_steel_ingot"] = {amount = 3},
-			["iron_ingot"] = {amount = 4},
+			["hellforged_steel_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 5},
 			["belphegor_catalyst"] = {amount = 1},
-			["down_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["shieldunique1"] = {amount = 1},
@@ -5352,7 +5351,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 225;
+		RECIPE.experience = 200;
 		
 		function RECIPE:OnCraft(player)
 		end;
