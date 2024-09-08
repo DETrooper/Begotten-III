@@ -217,6 +217,11 @@ function cwSailing:SpawnLongship(owner, location, itemTable)
 			
 			-- No available spot found so remove it.
 			Schema:EasyText(owner, "peru", "The location you are trying to spawn your longship in is currently full or invalid!");
+			
+			-- Add these so the owner gets refunded when it gets deleted.
+			longshipEnt.owner = owner;
+			longshipEnt.ownerID = owner:GetCharacterKey();
+			
 			longshipEnt:Remove();
 		else
 			Schema:EasyText(owner, "peru", "The longship for this scroll is already undocked!");
