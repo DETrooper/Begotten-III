@@ -1003,7 +1003,11 @@ function cwSailing:LoadLongships()
 			longshipEnt.ownerID = v.ownerID;
 			longshipEnt.playersOnBoard = {};
 			
-			longshipEnt.cwInventory = Clockwork.inventory:ToLoadable(v.cwInventory) or {};
+			if v.cwInventory then
+				longshipEnt.cwInventory = Clockwork.inventory:ToLoadable(v.cwInventory) or {};
+			else
+				longshipEnt.cwInventory = {};
+			end
 			
 			if location == "docks" then
 				-- If the ship is still at port after thirty minutes and the docks are full, remove it and let someone else take a spot.
