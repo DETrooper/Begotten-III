@@ -411,8 +411,12 @@ function ENT:OnRemove()
 			end
 			
 			if itemTable then
-				if IsValid(self.machinegun) and IsValid(self.machinegun.gun) then
-					itemTable:SetData("ammo", self.machinegun.gun:GetDTInt(0) or 0);
+				if IsValid(self.machinegun) then
+					itemTable:SetData("machinegunUpgrade", true);
+					
+					if IsValid(self.machinegun.gun) then
+						itemTable:SetData("ammo", self.machinegun.gun:GetDTInt(0) or 0);
+					end
 				end
 				
 				local steamEngine = self.steamEngine;
@@ -423,7 +427,6 @@ function ENT:OnRemove()
 				
 				self.owner:GiveItem(itemTable, true);
 			end
-
 		end
 	end
 	
