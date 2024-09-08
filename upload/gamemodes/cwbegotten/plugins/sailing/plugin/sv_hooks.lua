@@ -124,7 +124,9 @@ function cwSailing:PlayerUseUnknownItemFunction(player, itemTable, itemFunction)
 	
 	if --[[itemFunction == "dock" or]] itemFunction == "undock" or itemFunction == "rename" then
 		if itemTable.OnUseCustom then
-			itemTable:OnUseCustom(player, itemTable, itemFunction);
+			if itemTable:OnUseCustom(player, itemTable, itemFunction) ~= false then
+				player:TakeItem(itemTable);
+			end
 		end
 	end;
 end;

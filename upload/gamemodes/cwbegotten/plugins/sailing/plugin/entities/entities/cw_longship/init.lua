@@ -399,7 +399,7 @@ function ENT:Use(activator, caller)
 		data.entity = self;
 		data.location = self.location;
 		
-		if caller:GetCharacterKey() == self.ownerID then
+		if (caller:GetCharacterKey() == self.ownerID) or !IsValid(self.owner) or self.owner:GetCharacterKey() ~= self.ownerID then
 			data.isOwner = true;
 		end
 		

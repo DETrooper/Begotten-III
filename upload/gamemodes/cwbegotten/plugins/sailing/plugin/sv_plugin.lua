@@ -1486,6 +1486,10 @@ concommand.Add("cw_DockLongship", function(player, cmd, args)
 
 		if (entity.longshipType) then
 			if entity.location == "docks" then
+				if !IsValid(entity.owner) or entity.owner:GetCharacterKey() ~= entity.ownerID then
+					entity.owner = player;
+				end
+				
 				entity:Remove();
 			else
 				Schema:EasyText(player, "maroon", "This "..entity.longshipType.." must be at the Gore Forest to dock!");
