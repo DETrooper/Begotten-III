@@ -306,8 +306,6 @@ function cwSailing:BeginSailing(longshipEnt, destination, caller)
 			if longshipEnt.longshipType == "longship" then
 				longshipEnt:EmitSound("ambient/machines/thumper_dust.wav");
 			elseif longshipEnt.longshipType == "ironclad" then
-				longshipEnt:EmitSound("begotten/sfx/ironcladhorn.wav");
-				
 				local filter = RecipientFilter();
 				local filterTab = {};
 				local zone = owner:GetCharacterData("LastZone");
@@ -358,7 +356,7 @@ function cwSailing:BeginSailing(longshipEnt, destination, caller)
 				longshipEnt.destination = nil;
 				--printp("sailing aborted!");
 				
-				Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", "Sailing aborted for longship "..longshipEnt:EntIndex().."!");
+				Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", "Sailing aborted for "..longshipEnt.longshipType.." "..longshipEnt:EntIndex().."!");
 			end);
 		end
 	else
@@ -368,14 +366,31 @@ function cwSailing:BeginSailing(longshipEnt, destination, caller)
 			
 		longshipEnt.destination = destination;
 		
-		if longshipEnt.longshipType == "longship" then
-			longshipEnt:EmitSound("ambient/machines/thumper_dust.wav");
-		end
-		
 		local sail_time = 30;
 		local sea_zone = self:DetermineSeaZone(longshipEnt, destination);
 		
-		Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", "A longship with no owner is setting sail to destination "..destination.."!");
+		Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", "A "..longshipEnt.longshipType.." with no owner is setting sail to destination "..destination.."!");
+		
+		if longshipEnt.longshipType == "longship" then
+			longshipEnt:EmitSound("ambient/machines/thumper_dust.wav");
+		elseif longshipEnt.longshipType == "ironclad" then
+			local filter = RecipientFilter();
+			local filterTab = {};
+			local zone = caller:GetCharacterData("LastZone");
+			
+			for i2, v2 in ipairs(_player.GetAll()) do
+				if v2:Alive() and v2:GetCharacterData("LastZone") == zone then
+					if v2:GetPos():Distance2D(longshipEntPos) < 6000 then
+						table.insert(filterTab, v2);
+					end
+				end
+			end
+			
+			filter:AddPlayers(filterTab);
+
+			longshipEnt:EmitSound("begotten/sfx/ironcladhorn.wav", 110, nil, nil, nil, nil, nil, filter);
+			util.ScreenShake(longshipEntPos, 1, 20, 15, 1024, true);
+		end
 		
 		longshipEnt:SetBodygroup(0, 0);
 		
@@ -1495,11 +1510,15 @@ concommand.Add("cw_DockLongship", function(player, cmd, args)
 
 		if (entity.longshipType) then
 			if entity.location == "docks" then
-				if !IsValid(entity.owner) or entity.owner:GetCharacterKey() ~= entity.ownerID then
+				if !IsValid(entity.owner) or entity.owner:GetCharacterKey() ~= entity.ownerID or !entity.owner:Alive() or entity.owner:GetNetVar("tied") ~= 0 then
 					entity.owner = player;
 				end
 				
-				entity:Remove();
+				if entity.owner == player then
+					entity:Remove();
+				else
+					Schema:EasyText(player, "maroon", "This "..entity.longshipType.." does not belong to you!");
+				end
 			else
 				Schema:EasyText(player, "maroon", "This "..entity.longshipType.." must be at the Gore Forest to dock!");
 			end
