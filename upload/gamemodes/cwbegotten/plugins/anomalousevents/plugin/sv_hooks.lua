@@ -117,11 +117,16 @@ function cwAnomalous:MakeRadioCrazy(radio)
 		
 		timer.Simple(6, function()
 			if IsValid(radio) then
-				radio:EmitSound(scareSound.track);
+				local filter = RecipientFilter();
+				
+				filter:AddAllPlayers()
+			
+				radio:EmitSound(scareSound.track, 75, 100, 1, CHAN_AUTO, 0, 0, filter);
 				
 				timer.Simple(scareSound.length - 1, function()
 					if IsValid(radio) then
 						radio:EmitSound("ambient/levels/outland/ol01_teleconferenceend.wav");
+						radio:SetCrazy(false);
 					end
 				end);
 			end
