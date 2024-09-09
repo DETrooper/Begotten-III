@@ -5111,7 +5111,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 6},
+			["shield11"] = {amount = 1},
+			["steel_ingot"] = {amount = 8},
 		};
 		RECIPE.result = {
 			["shield18"] = {amount = 1},
@@ -5341,7 +5342,6 @@ RECIPE:Register()
 		RECIPE.requirements = {
 			["hellforged_steel_ingot"] = {amount = 2},
 			["iron_ingot"] = {amount = 5},
-			["belphegor_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["shieldunique1"] = {amount = 1},
@@ -6291,7 +6291,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["hellforged_steel_ingot"] = {amount = 1},
+			["hellforged_steel_ingot"] = {amount = 2},
 			["iron_ingot"] = {amount = 5},
 			["human_bone"] = {amount = 2},
 		};
@@ -7152,8 +7152,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 4},
-			["iron_ingot"] = {amount = 3},
+			["steel_ingot"] = {amount = 7},
 			["leather"] = {amount = 2},
 		};
 		RECIPE.result = {
@@ -8130,7 +8129,7 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["hellforged_steel_ingot"] = {amount = 2},
-			["steel_ingot"] = {amount = 5},
+			["iron_ingot"] = {amount = 5},
 			["leather"] = {amount = 1},
 		};
 		RECIPE.result = {

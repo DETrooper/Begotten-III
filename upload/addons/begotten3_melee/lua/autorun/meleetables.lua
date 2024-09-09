@@ -2637,7 +2637,7 @@ AttackTables.WarScytheAttackTable = {
 };
 
 AttackTables.GlaiveAttackTable = {
-	["primarydamage"] = 80,
+	["primarydamage"] = 90,
 	["dmgtype"] = 4,
 	["attacktype"] = "polearm_swing",
 	["canaltattack"] = false,
@@ -2723,7 +2723,7 @@ AttackTables.HaralderWarAxeAttackTable = {
 	["altattackpoisedamagemodifier"] = nil,
 	["armorpiercing"] = 45,
 	["altarmorpiercing"] = nil,
-	["poisedamage"] = 40,
+	["poisedamage"] = 45,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 7,
 	["delay"] = 1.4,
