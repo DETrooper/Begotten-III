@@ -359,7 +359,7 @@ ITEM:Register();
 ITEM = Clockwork.item:New("firearm_base");
 	ITEM.name = "Jezail Rifle";
 	ITEM.model = "models/sw_battlefront/weapons/jazail_long.mdl";
-	ITEM.weight = 6
+	ITEM.weight = 3
 	ITEM.uniqueID = "begotten_jezail_long";
 	ITEM.description = "A Darklander rifle, infamously used by the Nigerii Janissaries. It is fitted with a scope for more accurate fire. Its barrel been elongated and rifled, making it excellent for sharpshooting. A blood red engraving burns the hand of anyone who does not follow the darkness.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/jazail_long.png"

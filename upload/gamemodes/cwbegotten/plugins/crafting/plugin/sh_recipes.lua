@@ -5665,7 +5665,6 @@ RECIPE:Register()
 	RECIPE.requirements = {
 		["begotten_jezail_short"] = {amount = 1},
 		["fine_steel_ingot"] = {amount = 1},
-		["iron_ingot"] = {amount = 1},
 	};
 	RECIPE.result = {
 		["begotten_jezail_long"] = {amount = 1},
