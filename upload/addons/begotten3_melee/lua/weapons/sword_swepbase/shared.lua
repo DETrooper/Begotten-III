@@ -3716,7 +3716,7 @@ function SWEP:TriggerAnim(target, anim)
 		net.Start( "BegottenAnim", true )
 		net.WriteEntity( self.Owner );
 		net.WriteString( anim );
-		net.Broadcast();
+		net.SendPVS(target:GetPos());
 	end;
 end;
 
@@ -3851,7 +3851,7 @@ function SWEP:TriggerAnim3(target, anim)
 		net.Start( "BegottenAnim3", true )
 		net.WriteEntity( self.Owner );
 		net.WriteString( anim );
-		net.Broadcast();
+		net.SendPVS(target:GetPos());
 	end;
 end;
 
@@ -3880,7 +3880,7 @@ function SWEP:TriggerAnim4(target, anim) -- The two arguments for this function 
 		net.Start( "BegottenAnim4", true )
 		net.WriteEntity( target ); -- Before, the argument here was just "self.Owner" which was always going to return the player holding the weapon, making them flinch instead of whatever "target" is.
 		net.WriteString( anim );
-		net.Broadcast();
+		net.SendPVS(target:GetPos());
 	end;
 end;
 
