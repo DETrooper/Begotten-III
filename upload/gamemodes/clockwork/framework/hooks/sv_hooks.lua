@@ -4493,7 +4493,7 @@ function GM:RunModifyPlayerSpeed(player, infoTable, bIgnoreDelay)
 			player:SetRunSpeed(infoTable.runSpeed);
 		end;
 		
-		player.speedSetCooldown = curTime + 1;
+		player.speedSetCooldown = curTime + 0.1;
 	end;
 end
 

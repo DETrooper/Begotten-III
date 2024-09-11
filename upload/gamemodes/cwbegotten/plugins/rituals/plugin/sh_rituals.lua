@@ -876,7 +876,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("holy_powderkeg");
 	RITUAL.name = "(T2) Holy Powderkeg";
-	RITUAL.description = "Hand me your rifles, lend me your spent pepper-poppers and snapdragons! I will cock, load, pump and magazine every gun of every faithful Philimonjio in our Lord’s army as I was born and bred to do so! Performing this ritual significantly increases reload speed for the next 15 minutes. Incurs 5 corruption.";
+	RITUAL.description = "Hand me your rifles, lend me your spent pepper-poppers and snapdragons! I will cock, load, pump and magazine every gun of every faithful Philimonjio in our Lord’s army as I was born and bred to do so! Performing this ritual significantly increases reload speed for the next 30 minutes. Incurs 5 corruption.";
 	RITUAL.onerequiredbelief = {"flagellant", "acolyte"}; -- Tier II Faith of the Light Ritual
 	
 	RITUAL.requirements = {"holy_spirit", "light_catalyst", "trinity_catalyst"};
