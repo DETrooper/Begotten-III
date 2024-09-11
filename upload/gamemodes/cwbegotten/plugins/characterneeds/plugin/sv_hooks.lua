@@ -13,22 +13,13 @@ function cwCharacterNeeds:PlayerRestoreCharacterData(player, data)
 	end;
 end;
 
--- Called when a player's shared variables should be set.
---[[function cwCharacterNeeds:OnePlayerSecond(player, curTime)
-	for i = 1, #self.Needs do
-		local need = self.Needs[i];
-		
-		player:SetNetVar(need, player:GetCharacterData(need));
-	end;
-end;]]--
-
 function cwCharacterNeeds:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 	if (!lightSpawn) then
 		for i = 1, #self.Needs do
 			local need = self.Needs[i];
 			
 			player:SetCharacterData(need, player:GetCharacterData(need) or 0);
-			player:SetNetVar(need, player:GetCharacterData(need));
+			player:SetLocalVar(need, player:GetCharacterData(need));
 		end
 	end
 end;

@@ -86,31 +86,53 @@ function GM:Initialize()
 end
 
 function GM:OnePlayerSecond(player, curTime, infoTable)
-	--local weaponClass = Clockwork.player:GetWeaponClass(player)
-	--local color = player:GetColor()
-	local isDrunk = Clockwork.player:GetDrunk(player)
+	local plyTab = player:GetTable();
+	local drunkTab = plyTab.cwDrunkTab;
 
 	--player:HandleAttributeProgress(curTime)
 	--player:HandleAttributeBoosts(curTime)
 
-	player:SetDTString(STRING_FLAGS, player:GetFlags())
-	player:SetNetVar("Model", player:GetDefaultModel())
-	player:SetDTString(STRING_NAME, player:Name(true))
-	player:SetNetVar("Cash", player:GetCash())
-	player:SetNetVar("CustomColor", player:GetCharacterData("CustomColor"));
-
-	if (player.cwDrunkTab) then
-		for k, v in pairs(player.cwDrunkTab) do
-			if (curTime >= v) then
-				table.remove(player.cwDrunkTab, k)
-			end
-		end
+	local model = player:GetDefaultModel();
+	local flags = player:GetFlags();
+	local name = player:Name(true);
+	local cash = player:GetCash();
+	
+	if model ~= player:GetNetVar("Model") then
+		player:SetNetVar("Model", model);
+	end
+	
+	if flags ~= player:GetDTString(STRING_FLAGS) then
+		player:SetDTString(STRING_FLAGS, flags);
+	end
+	
+	if name ~= player:GetDTString(STRING_NAME) then
+		player:SetDTString(STRING_NAME, name);
+	end
+	
+	if cash ~= player:GetNetVar("Cash") then
+		player:SetLocalVar("Cash", cash);
+	end
+	
+	if player:GetCharacterData("CustomColor") then
+		player:SetNetVar("CustomColor", player:GetCharacterData("CustomColor"));
+	elseif player:GetNetVar("CustomColor") then
+		player:SetNetVar("CustomColor", nil);
 	end
 
-	if (isDrunk) then
-		player:SetNetVar("IsDrunk", isDrunk)
-	else
-		player:SetNetVar("IsDrunk", 0)
+	if (drunkTab) then
+		for k, v in pairs(drunkTab) do
+			if (curTime >= v) then
+				table.remove(drunkTab, k)
+			end
+		end
+		
+		if table.Count(drunkTab) > 0 then
+			player:SetLocalVar("IsDrunk", table.Count(drunkTab));
+		else
+			player:SetLocalVar("IsDrunk", nil);
+		end
+	elseif player:GetNetVar("IsDrunk") then
+		player:SetLocalVar("IsDrunk", nil);
 	end
 
 	--[[if (!config.GetVal("cash_enabled")) then
@@ -3655,7 +3677,7 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 		end
 		
 		player:SetCharacterData("Cash", 0, true);
-		player:SetNetVar("Cash", 0);]]--
+		player:SetLocalVar("Cash", 0);]]--
 		
 		if (IsValid(inflictor) and inflictor:GetClass() == "prop_combine_ball") then
 			if (damageInfo) then

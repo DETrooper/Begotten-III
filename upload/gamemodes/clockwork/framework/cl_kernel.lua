@@ -3170,9 +3170,9 @@ end
 
 -- A function to get a player's forced animation.
 function playerMeta:GetForcedAnimation()
-	local forcedAnimation = self:GetNetVar("ForceAnim")
+	local forcedAnimation = self:GetNetVar("ForceAnim");
 
-	if (forcedAnimation != 0) then
+	if (forcedAnimation) then
 		return {
 			animation = forcedAnimation,
 		}

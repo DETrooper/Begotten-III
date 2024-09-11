@@ -1341,7 +1341,7 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 		
 		player:SetCharacterData("permakilled", true);
 		player:SetCharacterData("Cash", 0, true);
-		player:SetNetVar("Cash", 0);
+		player:SetLocalVar("Cash", 0);
 		player:SetBodygroup(0, 0);
 		player:SetBodygroup(1, 0);
 		

@@ -1188,10 +1188,8 @@ function SWEP:Think()
 						weapon = self:EntIndex()
 					})
 
-					if self:GetNWString("ItemID") ~= itemTable.itemID then
-						self:SetNWString(
-							"ItemID", tostring(itemTable.itemID)
-						)
+					if self:GetNWInt("ItemID") ~= itemTable.itemID then
+						self:SetNWInt("ItemID", itemTable.itemID)
 					end
 					
 					self.cwItemTable = itemTable

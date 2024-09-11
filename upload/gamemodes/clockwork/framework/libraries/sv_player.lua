@@ -962,7 +962,7 @@ function Clockwork.player:SetDrunk(player, expire)
 		player.cwDrunkTab[#player.cwDrunkTab + 1] = curTime + expire
 	end
 
-	player:SetNetVar("IsDrunk", self:GetDrunk(player) or 0)
+	player:SetLocalVar("IsDrunk", self:GetDrunk(player) or 0)
 end
 
 -- A function to strip a player's default ammo.
@@ -2143,7 +2143,7 @@ function Clockwork.player:GiveCash(player, amount, reason, bNoMsg)
 		local cash = math.Round(math.max(player:GetCash() + roundedAmount, 0))
 
 		player:SetCharacterData("Cash", cash, true)
-		player:SetNetVar("Cash", cash)
+		player:SetLocalVar("Cash", cash)
 
 		if (roundedAmount < 0) then
 			roundedAmount = math.abs(roundedAmount)

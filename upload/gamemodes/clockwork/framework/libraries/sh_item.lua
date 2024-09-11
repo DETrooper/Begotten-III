@@ -891,7 +891,7 @@ end;
 -- A function to get a weapon instance by its object.
 function item.GetByWeapon(weapon)
 	if (IsValid(weapon)) then
-		local itemID = tonumber(weapon:GetNetworkedString("ItemID"));
+		local itemID = weapon:GetNWInt("ItemID");
 		
 		if (itemID and itemID != 0) then
 			local itemInstance = item.FindInstance(itemID);

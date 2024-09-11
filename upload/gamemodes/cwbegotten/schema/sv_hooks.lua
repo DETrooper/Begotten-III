@@ -827,9 +827,9 @@ function Schema:PlayerAdjustCharacterScreenInfo(player, character, info)
 		info.details = "This character is permanently killed.";
 	end;
 
-	if (character.data["customclass"]) then
+	--[[if (character.data["customclass"]) then
 		info.customClass = character.data["customclass"];
-	end;
+	end;]]--
 	
 	if (character.data["rank"]) then
 		info.rank = character.data["rank"];
@@ -1107,8 +1107,13 @@ end;
 
 -- Called when a player spawns for the first time.
 function Schema:PlayerInitialSpawn(player)
-	player:SetNetVar("customClass", "");
-	player:SetNetVar("permaKilled", false);
+	--[[if player:GetNetVar("customClass") then
+		player:SetNetVar("customClass", nil);
+	end]]--
+	
+	--[[if player:GetNetVar("permaKilled") then
+		player:SetLocalVar("permaKilled", false);
+	end]]--
 	
 	if !self.autoTieEnabled or player:IsAdmin() then
 		player:SetNetVar("tied", 0);
@@ -1264,9 +1269,7 @@ end;
 function Schema:CanTool(player, trace, tool) end;
 
 -- Called when a player's shared variables should be set.
-function Schema:OnePlayerSecond(player, curTime, infoTable)
-	--player:SetNetVar("customClass", player:GetCharacterData("customclass", ""));
-end;
+function Schema:OnePlayerSecond(player, curTime, infoTable) end;
 
 -- Called when an entity is created.
 function Schema:OnEntityCreated(entity)

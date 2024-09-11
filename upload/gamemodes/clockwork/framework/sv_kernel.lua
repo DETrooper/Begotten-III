@@ -188,7 +188,7 @@ function Clockwork.kernel:CountryCode(player, code)
 		end;
 		
 		player:SetData("CountryCode", code);
-		player:SetNetVar("CountryCode", string.lower(code));
+		player:SetNetVar("CountryCode", string.lower(code), Schema:GetAdmins());
 		player.CountryCode = string.lower(code);
 		player.FlagIcon = self:GetCountryIcon(player);
 	end;
@@ -1162,9 +1162,7 @@ function playerMeta:Give(class, itemTable, bForceReturn)
 				weapon = weapon:EntIndex()
 			})
 
-			weapon:SetNWString(
-				"ItemID", tostring(itemTable.itemID)
-			)
+			weapon:SetNWInt("ItemID", itemTable.itemID);
 			weapon.cwItemTable = itemTable
 
 			if (itemTable.OnWeaponGiven) then
@@ -1828,7 +1826,10 @@ function playerMeta:SetForcedAnimation(animation, delay, OnAnimate, OnFinish)
 	local sequence = nil
 
 	if (!animation) then
-		self:SetNetVar("ForceAnim", 0)
+		if self:GetNetVar("ForceAnim") then
+			self:SetNetVar("ForceAnim", nil)
+		end
+		
 		self.cwForcedAnimation = nil
 
 		if (forcedAnimation and forcedAnimation.OnFinish) then

@@ -154,7 +154,7 @@ function SWEP:FireJavelin()
 			
 			for k, v in pairs(possible_replacements) do
 				if !v:IsTheSameAs(itemTable) and !v:IsBroken() then
-					self:SetNetworkedString("ItemID", v.itemID);
+					self:SetNWInt("ItemID", v.itemID);
 					
 					local slot;
 					

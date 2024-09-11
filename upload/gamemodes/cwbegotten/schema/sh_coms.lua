@@ -1709,7 +1709,7 @@ local COMMAND = Clockwork.command:New("SpeakerIt");
 	end;
 COMMAND:Register();
 
-local COMMAND = Clockwork.command:New("CharSetCustomClass");
+--[[local COMMAND = Clockwork.command:New("CharSetCustomClass");
 	COMMAND.tip = "Set a character's custom class.";
 	COMMAND.text = "<string Name> <string Class>";
 	COMMAND.access = "o";
@@ -1745,7 +1745,7 @@ local COMMAND = Clockwork.command:New("CharTakeCustomClass");
 			Schema:EasyText(player, "grey", arguments[1].." is not a valid character!");
 		end;
 	end;
-COMMAND:Register();
+COMMAND:Register();]]--
 
 local COMMAND = Clockwork.command:New("InvTie");
 	COMMAND.tip = "Use bindings from your inventory to restrain a character that is looking away from you.";
