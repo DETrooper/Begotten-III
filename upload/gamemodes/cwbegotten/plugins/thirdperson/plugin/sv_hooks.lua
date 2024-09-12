@@ -1,1 +1,1 @@
-Clockwork.config:Add("enable_thirdperson", true);
+Clockwork.config:Add("enable_thirdperson", false);
