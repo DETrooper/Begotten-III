@@ -531,11 +531,11 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("call_of_the_blood_storm");
 	RITUAL.name = "(Unique) Call of the Blood Storm";
-	RITUAL.description = "For thousands of years the moon tribals and jungle jujus have danced around their fetish altars soaked in blood, singing for rains to cleanse them, which never came. Only those who kept dancing after their fires burnt out may feel the warm crimson droplet upon their cheek. Performing this ritual will summon a bloodstorm within a minute of being performed. Incurs 90 corruption.";
+	RITUAL.description = "For thousands of years the moon tribals and jungle jujus have danced around their fetish altars soaked in blood, singing for rains to cleanse them, which never came. Only those who kept dancing after their fires burnt out may feel the warm crimson droplet upon their cheek. Performing this ritual will summon a bloodstorm within a minute of being performed. Incurs 75 corruption.";
 	RITUAL.onerequiredbelief = {"thirst_blood_moon"}; -- Primevalist Unique Ritual
 	
 	RITUAL.requirements = {"tortured_spirit", "tortured_spirit", "tortured_spirit"};
-	RITUAL.corruptionCost = 90;
+	RITUAL.corruptionCost = 75;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 200;
 	

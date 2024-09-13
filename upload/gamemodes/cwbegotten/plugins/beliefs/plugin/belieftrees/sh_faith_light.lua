@@ -130,7 +130,7 @@ local LIGHT = cwBeliefs.beliefTrees:New("light")
 			["emissary"] = {
 				name = "Emissary",
 				subfaith = "Hard-Glazed",
-				description = "Unlocks Tier III 'Faith of the Light' Rituals and unique Hard-Glazed Rituals. Also unlocks the ability to smelt Maximilian Steel (only if 'Master Blacksmith' is also unlocked).",
+				description = "Unlocks Tier III 'Faith of the Light' Rituals. Also unlocks the ability to smelt Maximilian Steel (only if 'Master Blacksmith' is also unlocked).",
 				requirements = {"hard_glazed", "disciple", "acolyte"},
 				row = 4,
 			},
