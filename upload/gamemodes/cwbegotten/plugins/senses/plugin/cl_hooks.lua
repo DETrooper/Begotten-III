@@ -8,12 +8,12 @@ cwSenses.shinyMaterial = Material("models/shiny");
 
 -- Called when screen space effects should be rendered.
 function cwSenses:RenderScreenspaceEffects()
-	local senses = Clockwork.Client:GetNWBool("senses");
+	local senses = Clockwork.Client:GetNetVar("senses");
 
 	if !Clockwork.kernel:IsChoosingCharacter() then	
 		if (senses) then
-			local hasThermal = Clockwork.Client:GetNWBool("hasThermal");
-			local hasNV = Clockwork.Client:GetNWBool("hasNV");
+			local hasThermal = Clockwork.Client:GetNetVar("hasThermal");
+			local hasNV = Clockwork.Client:GetNetVar("hasNV");
 			
 			if (hasThermal) then
 				local modulation = {1, 0, 0};
@@ -165,7 +165,7 @@ end;
 -- Called just before the skybox is drawn.
 --[[function cwSenses:PreDrawSkyBox()
 	if !Clockwork.kernel:IsChoosingCharacter() then
-		local senses = Clockwork.Client:GetNWBool("senses");
+		local senses = Clockwork.Client:GetNetVar("senses");
 		
 		if (senses) then
 			render.Clear(0, 0, 0, 255);
@@ -177,7 +177,7 @@ end
 -- Called just after the skybox is drawn.
 function cwSenses:PostDrawSkyBox()
 	if !Clockwork.kernel:IsChoosingCharacter() then
-		local senses = Clockwork.Client:GetNWBool("senses");
+		local senses = Clockwork.Client:GetNetVar("senses");
 		
 		if (senses) then
 			render.Clear(0, 0, 0, 255);
@@ -193,11 +193,11 @@ function cwSenses:Think()
 	if (!Clockwork.Client.cwNextSenseCheck or curTime > Clockwork.Client.cwNextSenseCheck) then
 		Clockwork.Client.cwNextSenseCheck = curTime + 0.05;
 		
-		local senses = Clockwork.Client:GetNWBool("senses");
+		local senses = Clockwork.Client:GetNetVar("senses");
 
 		if (senses) then
-			local hasThermal = Clockwork.Client:GetNWBool("hasThermal");
-			local hasNV = Clockwork.Client:GetNWBool("hasNV");
+			local hasThermal = Clockwork.Client:GetNetVar("hasThermal");
+			local hasNV = Clockwork.Client:GetNetVar("hasNV");
 			
 			if !hasThermal and !hasNV then
 				if (!self.darknessSound) then

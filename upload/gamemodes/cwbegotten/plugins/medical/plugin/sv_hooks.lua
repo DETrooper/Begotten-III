@@ -399,7 +399,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 				end
 				
 				player:SetCharacterData("diseases", diseases);
-				player:SetNetVar("diseases", diseaseNetworkStrings);
+				player:SetLocalVar("diseases", diseaseNetworkStrings);
 				player:SetNetVar("symptoms", player:GetSymptoms());
 				
 				if not plyTab.dyingOfDisease and not player:IsRagdolled() then

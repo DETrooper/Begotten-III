@@ -996,7 +996,7 @@ do
 				end
 
 				if (weapon and IsValid(weapon)) then			
-					local raised = player:IsWeaponRaised(weapon) or player:GetNWBool("senses") == true;
+					local raised = player:IsWeaponRaised(weapon);
 					local color = colorWhite;
 
 					if (raised == true) then

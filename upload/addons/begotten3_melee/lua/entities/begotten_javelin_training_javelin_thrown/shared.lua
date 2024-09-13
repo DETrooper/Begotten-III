@@ -237,12 +237,12 @@ if SERVER then
 				local damagetype = (self.AttackTable["dmgtype"])
 				local trace = self.Owner:GetEyeTrace()
 				
-				if Ent:IsNPC() or Ent:IsNextBot() or (Ent:IsPlayer() and !Ent:GetNWBool("Parry") and !Ent:GetNWBool("Deflect")) and !Ent.iFrames then
-					if Ent:IsPlayer() and !Ent:GetNWBool("Guardening") then
+				if Ent:IsNPC() or Ent:IsNextBot() or (Ent:IsPlayer() and !Ent:GetNetVar("Parry") and !Ent:GetNetVar("Deflect")) and !Ent.iFrames then
+					if Ent:IsPlayer() and !Ent:GetNetVar("Guardening") then
 						damage = (self.AttackTable["primarydamage"])
 						damagetype = (self.AttackTable["dmgtype"])
 					else
-						if Ent:GetNWBool("Guardening") then
+						if Ent:GetNetVar("Guardening") then
 							if enemywep and enemywep:GetNWString("activeShield"):len() > 0 then
 								if self.SticksInShields then
 									should_stick = true;
@@ -393,7 +393,7 @@ if SERVER then
 					end);
 					
 					return;
-				elseif Ent:IsPlayer() and (Ent:GetNWBool("Deflect") or Ent:GetNWBool("Parry")) then
+				elseif Ent:IsPlayer() and (Ent:GetNetVar("Deflect") or Ent:GetNetVar("Parry")) then
 					self:Disable();
 					
 					timer.Simple(FrameTime(), function()
@@ -417,7 +417,7 @@ if SERVER then
 						javelin.itemTable = self.itemTable;
 						javelin.deflected = true;
 						
-						if Ent:GetNWBool("Parry") then
+						if Ent:GetNetVar("Parry") then
 							javelin.parried = true;
 						end
 						
@@ -443,7 +443,7 @@ if SERVER then
 							javelin:SetAngles(Ent:GetAimVector():Angle())
 							phys:SetVelocity(Ent:GetAimVector() * 1250);
 							
-							if Ent:GetNWBool("Parry") then
+							if Ent:GetNetVar("Parry") then
 								Ent:EmitSound("meleesounds/DS2Parry.mp3");
 							end
 							
@@ -460,7 +460,7 @@ if SERVER then
 							phys:SetVelocity(Ent:GetAimVector() * 50);
 						end
 					
-						if !Ent:GetNWBool("Parry") then
+						if !Ent:GetNetVar("Parry") then
 							javelin:StopSound("weapons/throw_swing_03.wav");
 							javelin:EmitSound(javelin.Hit[math.random(1, #javelin.Hit)])
 						end

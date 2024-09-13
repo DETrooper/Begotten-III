@@ -18,11 +18,8 @@ if CLIENT then
 	language.Add("tool.drgbase_tool_omniscient.desc", "Disable/enable omniscience for a nextbot.")
 	language.Add("tool.drgbase_tool_omniscient.0", "Left click to toggle omniscience. (Green => Enabled / Red => Disabled)")
 
-	hook.Add("PreDrawHalos", "DrGBaseToolOmniscientHalos", function()
-		local wep = LocalPlayer():GetActiveWeapon()
-		if not IsValid(wep) or wep:GetClass() ~= "gmod_tool" then return end
-		local tool = LocalPlayer():GetTool()
-		if tool == nil or tool.Mode ~= "drgbase_tool_omniscient" then return end
+	hook.Add("DrawDRGBaseHalos", "DrGBaseToolOmniscientHalos", function(ply, mode)
+		if mode ~= "drgbase_tool_omniscient" then return end
 		local enabled = {}
 		local disabled = {}
 		for i, nextbot in ipairs(DrGBase.GetNextbots()) do

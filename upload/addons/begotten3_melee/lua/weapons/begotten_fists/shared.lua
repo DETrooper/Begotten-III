@@ -79,7 +79,7 @@ function SWEP:PrimaryAttack()
 		return true;
 	end
 	
-	if owner:GetNWBool("Guardening") == true then 
+	if owner:GetNetVar("Guardening") == true then 
 		return true;
 	end
 	
@@ -190,7 +190,7 @@ function SWEP:PrimaryAttack()
 	local curTime = CurTime();
 	local stance = "reg_swing";
 	
-	if owner:GetNWBool("ThrustStance") == true then
+	if owner:GetNetVar("ThrustStance") == true then
 		stance = "thrust_swing";
 	else
 		stance = (attacktable["attacktype"]);
@@ -205,7 +205,7 @@ function SWEP:PrimaryAttack()
 	end
 	
 	-- Critical Attack
-	if owner:GetNWBool("ParrySucess") == true then
+	if owner:GetNetVar("ParrySuccess") == true then
 		if SERVER then  
 			self:CriticalAnimation() 
 			
@@ -222,7 +222,7 @@ function SWEP:PrimaryAttack()
 				if IsValid(self) and IsValid(owner) then
 					if self.isAttacking then -- This can be set to false elsewhere and will abort the attack.
 						self.isAttacking = false;
-						owner:SetNWBool( "MelAttacking", false )
+						owner:SetLocalVar("MelAttacking", false )
 						
 						if owner:IsPlayer() and !owner:IsRagdolled() and owner:Alive() then
 							self:Hitscan(); -- For bullet holes.
@@ -247,7 +247,7 @@ function SWEP:PrimaryAttack()
 									if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
 										table.insert(hitEntities, tr.Entity);
 										
-										if tr.Entity:GetNWBool("Parried") then
+										if tr.Entity:GetNetVar("Parried") then
 											self:HandleHit(tr.Entity, tr.HitPos, "parry_swing");
 										else
 											self:HandleHit(tr.Entity, tr.HitPos, stance);
@@ -283,7 +283,7 @@ function SWEP:PrimaryAttack()
 												if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
 													table.insert(hitEntities, tr2.Entity);
 													
-													if tr2.Entity:GetNWBool("Parried") then
+													if tr2.Entity:GetNetVar("Parried") then
 														self:HandleHit(tr2.Entity, tr2.HitPos, "parry_swing", #hitEntities);
 													else
 														self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities);
@@ -338,9 +338,9 @@ function SWEP:PrimaryAttack()
 													end
 												end
 												
-												--if (owner:GetNWInt("meleeStamina", 100) >= guardblockamount and !owner:GetNWBool("Parried")) then
-												if (owner:GetNWInt("Stamina", 100) >= guardblockamount and !owner:GetNWBool("Parried")) then
-													owner:SetNWBool("Guardening", true);
+												--if (owner:GetNWInt("meleeStamina", 100) >= guardblockamount and !owner:GetNetVar("Parried")) then
+												if (owner:GetNWInt("Stamina", 100) >= guardblockamount and !owner:GetNetVar("Parried")) then
+													owner:SetLocalVar("Guardening", true);
 													owner.beginBlockTransition = true;
 													activeWeapon.Primary.Cone = activeWeapon.IronCone;
 													activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
@@ -360,15 +360,15 @@ function SWEP:PrimaryAttack()
 			end)
 		end
 		
-		owner:SetNWBool("Riposting", true) 
+		owner:SetLocalVar("Riposting", true) 
 		self:CreateTimer(attacktable["striketime"] + 0.1, "riposteTimer"..owner:EntIndex(), function() 
 			if IsValid(self) and owner:IsValid() and owner:Alive() and !owner:IsRagdolled() then
-				owner:SetNWBool("Riposting", false)
+				owner:SetLocalVar("Riposting", false)
 			end
 		end)
 			
 		self:TriggerAnim(owner, self.Weapon.realCriticalAnim);
-		owner:SetNWBool("ParrySucess", false);
+		owner:SetLocalVar("ParrySuccess", false);
 		
 		owner.blockStaminaRegen = curTime + 5;
 		
@@ -381,14 +381,14 @@ function SWEP:PrimaryAttack()
 	wep:SetNextSecondaryFire( curTime + (attacktable["delay"]) * 0.1 )
 	
 	-- GLITCHED
-	if self.HandleThrustAttack and owner:GetNWBool("ThrustStance") == true and !owner:GetNWBool("Riposting") then
+	if self.HandleThrustAttack and owner:GetNetVar("ThrustStance") == true and !owner:GetNetVar("Riposting") then
 		self:HandleThrustAttack()
 	else
 		self:HandlePrimaryAttack()
 	end
 	
 	if SERVER and self:IsValid() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then 
-		owner:SetNWBool( "MelAttacking", true )
+		owner:SetLocalVar("MelAttacking", true )
 		
 		self.HolsterDelay = (curTime + attacktable["striketime"])
 		self.isAttacking = true;
@@ -397,11 +397,11 @@ function SWEP:PrimaryAttack()
 			if IsValid(self) and IsValid(owner) then
 				if self.isAttacking then -- This can be set to false elsewhere and will abort the attack.
 					self.isAttacking = false;
-					owner:SetNWBool( "MelAttacking", false )
+					owner:SetLocalVar("MelAttacking", false )
 				
 					if owner:IsPlayer() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then
 						if !self.isJavelin then
-							if !owner:GetNWBool("ParrySucess", false) and !owner:GetNWBool("Guardening", false) then
+							if !owner:GetNetVar("ParrySuccess", false) and !owner:GetNetVar("Guardening", false) then
 								self:Hitscan(); -- For bullet holes.
 								owner:LagCompensation(true);
 							
@@ -514,9 +514,9 @@ function SWEP:PrimaryAttack()
 														end
 													end
 													
-													--if (blockTable and owner:GetNWInt("meleeStamina", 100) >= guardblockamount and !owner:GetNWBool("Parried")) then
-													if (blockTable and owner:GetNWInt("Stamina", 100) >= guardblockamount and !owner:GetNWBool("Parried")) then
-														owner:SetNWBool("Guardening", true);
+													--if (blockTable and owner:GetNWInt("meleeStamina", 100) >= guardblockamount and !owner:GetNetVar("Parried")) then
+													if (blockTable and owner:GetNWInt("Stamina", 100) >= guardblockamount and !owner:GetNetVar("Parried")) then
+														owner:SetLocalVar("Guardening", true);
 														owner.beginBlockTransition = true;
 														activeWeapon.Primary.Cone = activeWeapon.IronCone;
 														activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
@@ -542,7 +542,7 @@ function SWEP:PrimaryAttack()
 		--local max_poise = owner:GetNetVar("maxMeleeStamina");
 		local attackCost = 1;
 
-		if self.Owner:GetNWBool("ThrustStance") and attacktable["alttakeammo"] then
+		if self.Owner:GetNetVar("ThrustStance") and attacktable["alttakeammo"] then
 			attackCost = attacktable["alttakeammo"];
 		else
 			attackCost = attacktable["takeammo"];
@@ -676,7 +676,7 @@ function SWEP:SecondaryAttack()
 
 	if ( self.SoundLightning ) then self.SoundLightning:FadeOut(1) self.SoundLightning = nil end
 	
-	ply:SetNWBool("MelAttacking", false)
+	ply:SetLocalVar("MelAttacking", false)
 
 	if (!Clockwork.player:GetWeaponRaised(ply)) then
 		if (SERVER) then
@@ -704,30 +704,30 @@ function SWEP:SecondaryAttack()
 		local parryWindow = blocktable["parrydifficulty"] or 0.15;
 		local curTime = CurTime();
 
-		if ply:KeyDown(IN_ATTACK2) and !ply:KeyDown(IN_RELOAD) and ply:GetNWBool("Guardening") == true then
+		if ply:KeyDown(IN_ATTACK2) and !ply:KeyDown(IN_RELOAD) and ply:GetNetVar("Guardening") == true then
 			-- Deflection
 			if blocktable["candeflect"] == true then
-				if ply:GetNWBool( "CanDeflect", true ) then
+				if ply:GetNetVar("CanDeflect", true ) then
 					local deflectionWindow = blocktable["deflectionwindow"] or 0.15;
 					
 					if ply.HasBelief --[[and ply:HasBelief("deflection")]] then
-						ply:SetNWBool( "Deflect", true )
+						ply:SetLocalVar("Deflect", true )
 						
 						if ply:HasBelief("impossibly_skilled") then
 							deflectionWindow = deflectionWindow + 0.1;
 						end
 					end
 					
-					ply:SetNWBool( "CanDeflect", false )
+					ply:SetLocalVar("CanDeflect", false )
 					self:CreateTimer(1, "deflectionTimer"..ply:EntIndex(), function()
 						if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
-							ply:SetNWBool( "CanDeflect", true ) 
+							ply:SetLocalVar("CanDeflect", true ) 
 						end 
 					end);
 					
 					self:CreateTimer(deflectionWindow, "deflectionOffTimer"..ply:EntIndex(), function()
 						if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
-							ply:SetNWBool( "Deflect", false ) 
+							ply:SetLocalVar("Deflect", false ) 
 						end 
 					end);
 				end
@@ -739,9 +739,9 @@ function SWEP:SecondaryAttack()
 		if ( self:GetNextPrimaryFire() > curTime * 1.5 ) then return end
 		if ( ply:KeyDown(IN_ATTACK2) ) then return end
 		if ( !self:CanSecondaryAttack() ) then return end
-		if ( ply:GetNWBool( "Guardening") ) == true then return end
+		if ( ply:GetNetVar("Guardening") ) == true then return end
 		--if ( self.Weapon:GetNWInt("Reloading") > curTime ) then return end
-		local parry_cost = blocktable["parrytakestamina"];
+		local parry_cost = blocktable["parrsytakestamina"];
 		
 		if cwMedicalSystem then
 			local injuries;
@@ -783,7 +783,7 @@ function SWEP:SecondaryAttack()
 			
 		--Parry
 		ply.blockStaminaRegen = curTime + 5;
-		ply:SetNWBool( "Parry", true )
+		ply:SetLocalVar("Parry", true )
 		self.isAttacking = false;
 		
 		if cwBeliefs and ply.HasBelief and ply:HasBelief("impossibly_skilled") then
@@ -800,7 +800,7 @@ function SWEP:SecondaryAttack()
 		
 		self:CreateTimer(parryWindow, "parryTimer"..ply:EntIndex(), function()
 			if self:IsValid() and ply:IsValid() then
-				ply:SetNWBool("Parry", false)
+				ply:SetLocalVar("Parry", false)
 				
 				if ply.parryStacks then
 					ply.parryStacks = nil;
@@ -843,9 +843,9 @@ function SWEP:SecondaryAttack()
 											end
 										end
 										
-										--if (ply:GetNWInt("meleeStamina", 100) >= guardblockamount and !ply:GetNWBool("Parried")) then
-										if (ply:GetNWInt("Stamina", 100) >= guardblockamount and !ply:GetNWBool("Parried")) then
-											ply:SetNWBool("Guardening", true);
+										--if (ply:GetNWInt("meleeStamina", 100) >= guardblockamount and !ply:GetNetVar("Parried")) then
+										if (ply:GetNWInt("Stamina", 100) >= guardblockamount and !ply:GetNetVar("Parried")) then
+											ply:SetLocalVar("Guardening", true);
 											ply.beginBlockTransition = true;
 											activeWeapon.Primary.Cone = activeWeapon.IronCone;
 											activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
@@ -900,9 +900,9 @@ function SWEP:SecondaryAttack()
 											end
 										end
 													
-										--if (ply:GetNWInt("meleeStamina", 100) >= guardblockamount and !ply:GetNWBool("Parried")) then
-										if (ply:GetNWInt("meleeStamina", 100) >= guardblockamount and !ply:GetNWBool("Parried")) then
-											ply:SetNWBool("Guardening", true);
+										--if (ply:GetNWInt("meleeStamina", 100) >= guardblockamount and !ply:GetNetVar("Parried")) then
+										if (ply:GetNWInt("meleeStamina", 100) >= guardblockamount and !ply:GetNetVar("Parried")) then
+											ply:SetLocalVar("Guardening", true);
 											ply.beginBlockTransition = true;
 											activeWeapon.Primary.Cone = activeWeapon.IronCone;
 											activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;

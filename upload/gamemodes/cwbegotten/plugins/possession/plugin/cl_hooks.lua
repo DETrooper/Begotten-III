@@ -129,7 +129,7 @@ function cwPossession:HUDPaint()
 					
 					draw.SimpleText("Stance:", "UseHint", 50, 215, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					
-					if victim:GetNWBool("ThrustStance") == true then
+					if victim:GetNetVar("ThrustStance") == true then
 						draw.SimpleText("Thrust", "UseHint", 120, 215, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);
 					else
 						draw.SimpleText("Swipe", "UseHint", 120, 215, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_RIGHT);

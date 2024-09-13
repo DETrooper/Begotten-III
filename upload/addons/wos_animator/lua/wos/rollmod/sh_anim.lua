@@ -65,7 +65,7 @@ hook.Add( "ModifyPlayerPlaybackRate", "wOS.RollMod.SlowDownAnim", function(ply, 
 end )
 
 hook.Add( "ModifyCalcMainActivity", "wOS.RollMod.Animations", function( ply, velocity )
-	if !IsValid( ply ) or !ply:wOSIsRolling() then return end
+	if !ply:wOSIsRolling() then return end
 
 	local seq = wOS.RollMod.Animations[ ply:GetRollDir() ]
 	local seqid = ply:LookupSequence( seq or "" )

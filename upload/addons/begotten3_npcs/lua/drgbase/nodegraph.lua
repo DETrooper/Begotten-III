@@ -188,7 +188,7 @@ if SERVER then
 
 else
 
-	net.Receive("DrGBaseNodegraph", function(len)
+	--[[net.Receive("DrGBaseNodegraph", function(len)
 		DRG_NODES = {}
 		local nodes = util.JSONToTable(util.Decompress(net.ReadData(len/8)))
 		for i, data in ipairs(nodes) do
@@ -228,6 +228,6 @@ else
 				render.DrawLine(node:GetPos(), next:GetPos(), DrGBase.CLR_WHITE, not DisplayTransparent:GetBool())
 			end
 		end
-	end)
+	end)]]--
 
 end

@@ -18,11 +18,8 @@ if CLIENT then
 	language.Add("tool.drgbase_tool_disableai.desc", "Disable/enable AI for a nextbot.")
 	language.Add("tool.drgbase_tool_disableai.0", "Left click to toggle AI. (Green => Enabled / Red => Disabled)")
 
-	hook.Add("PreDrawHalos", "DrGBaseToolDisableAIHalos", function()
-		local wep = LocalPlayer():GetActiveWeapon()
-		if not IsValid(wep) or wep:GetClass() ~= "gmod_tool" then return end
-		local tool = LocalPlayer():GetTool()
-		if tool == nil or tool.Mode ~= "drgbase_tool_disableai" then return end
+	hook.Add("DrawDRGBaseHalos", "DrGBaseToolDisableAIHalos", function(ply, mode)
+		if mode ~= "drgbase_tool_disableai" then return end
 		local enabled = {}
 		local disabled = {}
 		for i, nextbot in ipairs(DrGBase.GetNextbots()) do

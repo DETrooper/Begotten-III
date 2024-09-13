@@ -569,13 +569,11 @@ else
 	hook.Add("Tick", "TickEquipment", function()
 		for _, player in pairs(_player.GetAll()) do
 			player.equipmentDrawnThisTick = false;
-			
-			local ragdollEntity = player:GetRagdollEntity();
-			
-			if (ragdollEntity) and !ragdollEntity:IsDormant() then
-				local ragdollState = player:GetDTInt(INT_RAGDOLLSTATE);
+
+			if player:GetDTInt(4) != 4 then
+				local ragdollEntity = player:GetDTEntity(2);
 				
-				if ragdollState != 0 and ragdollState != RAGDOLL_NONE then
+				if IsValid(ragdollEntity) and !ragdollEntity:IsDormant() then
 					hook.Run("PostPlayerDraw", player, 0, ragdollEntity);
 				end
 			end

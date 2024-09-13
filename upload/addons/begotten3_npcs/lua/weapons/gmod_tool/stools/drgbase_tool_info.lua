@@ -162,12 +162,8 @@ if CLIENT then
 	language.Add("tool.drgbase_tool_info.desc", "View information about the nextbot.")
 	language.Add("tool.drgbase_tool_info.0", "Left click to select/deselect a nextbot.")
 
-	hook.Add("PreDrawHalos", "DrGBaseToolNextbotInfoHalos", function()
-		local ply = LocalPlayer()
-		local wep = ply:GetActiveWeapon()
-		if not IsValid(wep) or wep:GetClass() ~= "gmod_tool" then return end
-		local tool = ply:GetTool()
-		if tool == nil or tool.Mode ~= "drgbase_tool_info" then return end
+	hook.Add("DrawDRGBaseHalos", "DrGBaseToolNextbotInfoHalos", function(ply, mode)
+		if mode ~= "drgbase_tool_info" then return end
 		local selected = ply:DrG_GetSelectedEntities()[1]
 		if not IsValid(selected) then return end
 		local page = ply:GetNW2Int("DrGBaseNextbotInfoToolPage")
@@ -196,7 +192,7 @@ if CLIENT then
 		end
 	end)
 
-	hook.Add("ShouldDrawLocalPlayer", "DrGBaseNextbotInfoToolDrawPlayer", function(ply)
+	--[[hook.Add("ShouldDrawLocalPlayer", "DrGBaseNextbotInfoToolDrawPlayer", function(ply)
 		local weapon = ply:GetActiveWeapon()
 		if not IsValid(weapon) or weapon:GetClass() ~= "gmod_tool" then return end
 		local tool = ply:GetTool()
@@ -208,5 +204,5 @@ if CLIENT then
 		if pageName ~= "Viewcam" then return end
 		cam.Start3D() cam.End3D()
 		return DrGBase.INFO_TOOL.Viewcam
-	end)
+	end)]]--
 end

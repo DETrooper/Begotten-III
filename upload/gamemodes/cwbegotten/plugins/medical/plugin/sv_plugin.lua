@@ -1333,7 +1333,7 @@ function playerMeta:GiveDisease(uniqueID, stage)
 			end
 		
 			self:SetCharacterData("diseases", diseases);
-			self:SetNetVar("diseases", diseaseSharedVar);
+			self:SetLocalVar("diseases", diseaseSharedVar);
 			self:SetNetVar("symptoms", self:GetSymptoms());
 			
 			return true;
@@ -1368,7 +1368,7 @@ function playerMeta:TakeDisease(uniqueID)
 				end
 				
 				self:SetCharacterData("diseases", diseases);
-				self:SetNetVar("diseases", diseaseSharedVar);
+				self:SetLocalVar("diseases", diseaseSharedVar);
 				self:SetNetVar("symptoms", self:GetSymptoms());
 				
 				return;
@@ -1398,16 +1398,16 @@ function playerMeta:TakeAllDiseases()
 			end
 		
 			self:SetCharacterData("diseases", diseases);
-			self:SetNetVar("diseases", diseaseSharedVar);
+			self:SetLocalVar("diseases", diseaseSharedVar);
 			self:SetNetVar("symptoms", self:GetSymptoms());
 		else
 			self:SetCharacterData("diseases", {});
-			self:SetNetVar("diseases", nil);
+			self:SetLocalVar("diseases", nil);
 			self:SetNetVar("symptoms", nil);
 		end
 	else
 		self:SetCharacterData("diseases", {});
-		self:SetNetVar("diseases", nil);
+		self:SetLocalVar("diseases", nil);
 		self:SetNetVar("symptoms", nil);
 	end
 end
@@ -1507,9 +1507,9 @@ function playerMeta:NetworkDiseases()
 	end
 	
 	if !table.IsEmpty(diseaseNetworkStrings) then
-		self:SetNetVar("diseases", diseaseNetworkStrings);
+		self:SetLocalVar("diseases", diseaseNetworkStrings);
 	else
-		self:SetNetVar("diseases", nil);
+		self:SetLocalVar("diseases", nil);
 	end
 	
 	if !table.IsEmpty(symptoms) then

@@ -76,7 +76,7 @@ function playerMeta:TakeStamina(amount)
 	--self:SetNWInt("meleeStamina", math.Clamp(self:GetNWInt("meleeStamina", 90) + newAmount, 0, self:GetMaxPoise() or 90));
 	self:HandleStamina(newAmount);
 	
-	--[[if self:GetNWInt("meleeStamina", 90) <= 0 and self:GetNWBool("Guardening", false) == true then
+	--[[if self:GetNWInt("meleeStamina", 90) <= 0 and self:GetNetVar("Guardening", false) == true then
 		self:CancelGuardening();
 		self.nextStas = CurTime() + 3;
 	end]]--
@@ -209,11 +209,11 @@ function playerMeta:AddFreeze(amount, attacker)
 	local model = self:GetModel();
 	
 	if IsValid(attacker) and (!cwPowerArmor or (cwPowerArmor and --[[!self:IsWearingPowerArmor()]] !self.wearingPowerArmor)) and !self.cloakBurningActive then
-		local freeze = self:GetNWInt("freeze", 0);
+		local freeze = self:GetNetVar("freeze", 0);
 		
-		self:SetNWInt("freeze", math.Clamp(math.Round(freeze + amount), 0, 100));
+		self:SetLocalVar("freeze", math.Clamp(math.Round(freeze + amount), 0, 100));
 		
-		if self:GetNWInt("freeze") >= 100 then
+		if self:GetNetVar("freeze") >= 100 then
 			cwMelee:DoFreezeEffect(self, attacker, 20);
 		end
 		
@@ -222,9 +222,9 @@ function playerMeta:AddFreeze(amount, attacker)
 end
 
 function playerMeta:TakeFreeze(amount)
-	local freeze = self:GetNWInt("freeze", 0);
+	local freeze = self:GetNetVar("freeze", 0);
 	
-	self:SetNWInt("freeze", math.Clamp(math.Round(freeze - amount), 0, 100));
+	self:SetLocalVar("freeze", math.Clamp(math.Round(freeze - amount), 0, 100));
 	
 	hook.Run("RunModifyPlayerSpeed", self, self.cwInfoTable, true);
 end

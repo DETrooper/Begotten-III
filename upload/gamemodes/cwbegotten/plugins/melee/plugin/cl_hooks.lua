@@ -6,7 +6,7 @@
 function cwMelee:PlayerCharacterInitialized(data)
 	local stability = Clockwork.Client:GetNWInt("stability", 100);
 	--local poise = Clockwork.Client:GetNWInt("meleeStamina", 90);
-	local freeze = Clockwork.Client:GetNWInt("freeze", 0);
+	local freeze = Clockwork.Client:GetNetVar("freeze", 0);
 	
 	self.stability = stability;
 	--self.poise = poise;
@@ -19,7 +19,7 @@ function cwMelee:GetBars(bars)
 	local stability = Clockwork.Client:GetNWInt("stability", 100);
 	--local max_poise = Clockwork.Client:GetNetVar("maxMeleeStamina", 90);
 	--local poise = Clockwork.Client:GetNWInt("meleeStamina", 90);
-	local freeze = Clockwork.Client:GetNWInt("freeze", 0);
+	local freeze = Clockwork.Client:GetNetVar("freeze", 0);
 	local frameTime = FrameTime();
 	
 	if (stability) then

@@ -194,12 +194,12 @@ function SWEP:Deploy()
 	end
 	
 	self.Owner.gestureweightbegin = 2;
-	self.Owner:SetNWBool("CanBlock", true)
-	self.Owner:SetNWBool("CanDeflect", true)
-	self.Owner:SetNWBool("ThrustStance", false)
-	self.Owner:SetNWBool("ParrySucess", false) 
-	self.Owner:SetNWBool("Riposting", false)
-	self.Owner:SetNWBool( "MelAttacking", false ) -- This should fix the bug where you can't block until attacking.
+	self.Owner:SetLocalVar("CanBlock", true)
+	self.Owner:SetLocalVar("CanDeflect", true)
+	self.Owner:SetLocalVar("ThrustStance", false)
+	self.Owner:SetLocalVar("ParrySuccess", false) 
+	self.Owner:SetLocalVar("Riposting", false)
+	self.Owner:SetLocalVar("MelAttacking", false ) -- This should fix the bug where you can't block until attacking.
 	self.OwnerOverride = self.Owner;
 
 	self:SendWeaponAnim( ACT_VM_DRAW )
@@ -238,7 +238,7 @@ end
 function SWEP:Hitscan()
 	local attacktable = GetTable(self.AttackTable);
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable);
-	local isThrusting = self.Owner:GetNWBool("ThrustStance");
+	local isThrusting = self.Owner:GetNetVar("ThrustStance");
 	local meleerange;
 	
 	if !isThrusting and self.isJavelin then return false end;
@@ -283,7 +283,7 @@ function SWEP:Hitscan()
 			util.Effect("BloodImpact", effect, true, true);
 			
 			--if not Clockwork.entity:GetPlayer(tr.Entity) or not Clockwork.entity:GetPlayer(tr.Entity):Alive() then
-				if self.Owner:GetNWBool("ThrustStance") != true then
+				if self.Owner:GetNetVar("ThrustStance") != true then
 					tr.Entity:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 				else
 					tr.Entity:EmitSound(attacksoundtable["althitbody"][math.random(1, #attacksoundtable["althitbody"])])
@@ -308,21 +308,21 @@ function SWEP:Think()
 	local plyTab = player:GetTable();
 	
 	if (plyTab.beginBlockTransition) then
-		if (player:GetNWBool("Guardening") == true) then
+		if (player:GetNetVar("Guardening") == true) then
 			self:TriggerAnim2(player, self.realBlockAnim, 0);
 			
-			if ((SERVER) and player:GetNWBool("CanBlock", true)) then
+			if ((SERVER) and player:GetNetVar("CanBlock", true)) then
 				if (self.realBlockSoundTable) then
 					local blockSoundTable = GetSoundTable(self.realBlockSoundTable)
 					
 					player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 65, math.random(100, 90))
 				end;
 
-				player:SetNWBool("CanBlock", false);
+				player:SetLocalVar("CanBlock", false);
 			end;
-		elseif (player:GetNWBool("Guardening") == false) then
+		elseif !player:GetNetVar("Guardening") then
 			self:TriggerAnim2(player, self.realBlockAnim, 1);
-			player:SetNWBool("CanBlock", true)
+			player:SetLocalVar("CanBlock", true)
 			
 			local velocity = player:GetVelocity();
 			local length = velocity:Length();
@@ -385,7 +385,7 @@ function SWEP:AdjustMouseSensitivity()
 		
 		if blockTable then
 			if blockTable.sensitivityoverride then
-				if self.Owner:GetNWBool( "Guardening" ) == true then
+				if self.Owner:GetNetVar("Guardening") == true then
 					return blockTable.sensitivityoverride.guarded;
 				else
 					return blockTable.sensitivityoverride.unguarded;
@@ -394,7 +394,7 @@ function SWEP:AdjustMouseSensitivity()
 		end
 	end
 	
-	if self.Owner:GetNWBool( "Guardening" ) == true then
+	if self.Owner:GetNetVar("Guardening") == true then
 		return 0.5
 	end
 end
@@ -439,7 +439,7 @@ function SWEP:CanPrimaryAttack()
 	
 	local attackCost = 1;
 	
-	if self.Owner:GetNWBool("ThrustStance") and attacktable["alttakeammo"] then
+	if self.Owner:GetNetVar("ThrustStance") and attacktable["alttakeammo"] then
 		attackCost = attacktable["alttakeammo"];
 	else
 		attackCost = attacktable["takeammo"];
@@ -477,7 +477,7 @@ function SWEP:PrimaryAttack()
 		return true;
 	end
 	
-	if owner:GetNWBool("Guardening") == true then 
+	if owner:GetNetVar("Guardening") == true then 
 		return true;
 	end
 	
@@ -512,7 +512,7 @@ function SWEP:PrimaryAttack()
 		delay = delay * 0.9;
 	end
 	
-	if owner:GetNWBool("ThrustStance") == true then
+	if owner:GetNetVar("ThrustStance") == true then
 		stance = "thrust_swing";
 	else
 		stance = (attacktable["attacktype"]);
@@ -523,7 +523,7 @@ function SWEP:PrimaryAttack()
 	end
 	
 	local bAttack = true;
-	local bParry = owner:GetNWBool("ParrySucess");
+	local bParry = owner:GetNetVar("ParrySuccess");
 	local thrustOverride = false;
 
 	owner.blockStaminaRegen = curTime + 5;
@@ -544,8 +544,8 @@ function SWEP:PrimaryAttack()
 		
 		self:CriticalAnimation();
 		self:TriggerAnim(owner, anim);
-		owner:SetNWBool("Riposting", true);
-		owner:SetNWBool("ParrySucess", false);
+		owner:SetLocalVar("Riposting", true);
+		owner:SetLocalVar("ParrySuccess", false);
 	else
 		if offhandAttackTable then
 			local attacksoundtable = GetSoundTable(self.AttackSoundTable);
@@ -554,7 +554,7 @@ function SWEP:PrimaryAttack()
 			
 			thrustOverride = (!attacktable.canaltattack and attacktable.dmgtype == DMG_VEHICLE) or (!offhandAttackTable.canaltattack and offhandAttackTable.dmgtype == DMG_VEHICLE);
 			
-			if (owner:GetNWBool("ThrustStance") == true and !owner:GetNWBool("Riposting")) or thrustOverride then
+			if (owner:GetNetVar("ThrustStance") == true and !owner:GetNetVar("Riposting")) or thrustOverride then
 				--Attack animation
 				local anim_suffix = "_medium";
 				local speed = strikeTime;
@@ -615,7 +615,7 @@ function SWEP:PrimaryAttack()
 				self.Owner:ViewPunch(attacktable["punchstrength"] + Angle(1, 1, 1));
 			end
 		else
-			if self.HandleThrustAttack and owner:GetNWBool("ThrustStance") == true and !owner:GetNWBool("Riposting") then
+			if self.HandleThrustAttack and owner:GetNetVar("ThrustStance") == true and !owner:GetNetVar("Riposting") then
 				if self:HandleThrustAttack() ~= false then bAttack = true end;
 			else
 				if self:HandlePrimaryAttack() ~= false then bAttack = true end;
@@ -624,7 +624,7 @@ function SWEP:PrimaryAttack()
 	end
 	
 	if SERVER and bAttack and self:IsValid() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then 
-		owner:SetNWBool( "MelAttacking", true )
+		owner:SetLocalVar("MelAttacking", true )
 		
 		self.HolsterDelay = (curTime + strikeTime)
 		self.isAttacking = true;
@@ -632,7 +632,7 @@ function SWEP:PrimaryAttack()
 		self:CreateTimer(strikeTime + 0.1, "strikeTimer"..owner:EntIndex(), function()
 			if IsValid(self) and IsValid(owner) then
 				if self.isAttacking then -- This can be set to false elsewhere and will abort the attack.
-					owner:SetNWBool("MelAttacking", false);
+					owner:SetLocalVar("MelAttacking", false);
 					
 					if bParry and IsValid(owner.parryTarget) and owner.parryTarget:IsPlayer() then
 						local parryTargetWeapon = owner.parryTarget:GetActiveWeapon();
@@ -646,7 +646,7 @@ function SWEP:PrimaryAttack()
 					end
 				
 					if owner:IsPlayer() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then
-						if !owner:GetNWBool("ParrySucess", false) and !owner:GetNWBool("Guardening", false) then
+						if !owner:GetNetVar("ParrySuccess", false) and !owner:GetNetVar("Guardening", false) then
 							self:Hitscan(); -- For bullet holes.
 							owner:LagCompensation(true);
 						
@@ -688,7 +688,7 @@ function SWEP:PrimaryAttack()
 										hitsAllowed = 0;
 									end
 										
-									if bParry and tr.Entity:GetNWBool("Parried") and tr.Entity == owner.parryTarget then
+									if bParry and tr.Entity:GetNetVar("Parried") and tr.Entity == owner.parryTarget then
 										self:HandleHit(tr.Entity, tr.HitPos, "parry_swing");
 									else
 										self:HandleHit(tr.Entity, tr.HitPos, stance);
@@ -720,7 +720,7 @@ function SWEP:PrimaryAttack()
 											if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
 												table.insert(hitEntities, tr2.Entity);
 												
-												if bParry and tr2.Entity:GetNWBool("Parried") and tr2.Entity == owner.parryTarget then
+												if bParry and tr2.Entity:GetNetVar("Parried") and tr2.Entity == owner.parryTarget then
 													self:HandleHit(tr2.Entity, tr2.HitPos, "parry_swing", #hitEntities);
 												else
 													self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities);
@@ -773,7 +773,7 @@ function SWEP:PrimaryAttack()
 												hitsAllowed = 0;
 											end
 
-											if bParry and tr.Entity:GetNWBool("Parried") and tr.Entity == owner.parryTarget then
+											if bParry and tr.Entity:GetNetVar("Parried") and tr.Entity == owner.parryTarget then
 												self:HandleHit(tr.Entity, tr.HitPos, "parry_swing", nil, offhandWeapon, offhandAttackTable);
 											else
 												self:HandleHit(tr.Entity, tr.HitPos, stance, nil, offhandWeapon, offhandAttackTable);
@@ -805,7 +805,7 @@ function SWEP:PrimaryAttack()
 													if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
 														table.insert(hitEntities, tr2.Entity);
 														
-														if bParry and tr2.Entity:GetNWBool("Parried") and tr2.Entity == owner.parryTarget then
+														if bParry and tr2.Entity:GetNetVar("Parried") and tr2.Entity == owner.parryTarget then
 															self:HandleHit(tr2.Entity, tr2.HitPos, "parry_swing", #hitEntities, offhandWeapon, offhandAttackTable);
 														else
 															self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities, offhandWeapon, offhandAttackTable);
@@ -872,9 +872,9 @@ function SWEP:PrimaryAttack()
 													end
 												end
 												
-												--if (owner:GetNWInt("meleeStamina", 100) >= guardblockamount and !owner:GetNWBool("Parried")) then
-												if (owner:GetNWInt("Stamina", 100) >= blockTable["guardblockamount"] and !owner:GetNWBool("Parried")) then
-													owner:SetNWBool("Guardening", true);
+												--if (owner:GetNWInt("meleeStamina", 100) >= guardblockamount and !owner:GetNetVar("Parried")) then
+												if (owner:GetNWInt("Stamina", 100) >= blockTable["guardblockamount"] and !owner:GetNetVar("Parried")) then
+													owner:SetLocalVar("Guardening", true);
 													owner.beginBlockTransition = true;
 													activeWeapon.Primary.Cone = activeWeapon.IronCone;
 													activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
@@ -894,8 +894,8 @@ function SWEP:PrimaryAttack()
 					self.isAttacking = false;
 				end
 				
-				if owner:GetNWBool("Riposting") then
-					owner:SetNWBool("Riposting", false);
+				if owner:GetNetVar("Riposting") then
+					owner:SetLocalVar("Riposting", false);
 				end
 			end
 		end)
@@ -906,7 +906,7 @@ function SWEP:PrimaryAttack()
 		local takeAmmo = attacktable["takeammo"] or 1;
 		local takeAmmoOffhand;
 		
-		if self.Owner:GetNWBool("ThrustStance") then
+		if self.Owner:GetNetVar("ThrustStance") then
 			if attacktable["alttakeammo"] then
 				takeAmmo = attacktable["alttakeammo"];
 			end
@@ -1015,7 +1015,7 @@ end
 		local damagetype = (attacktable["dmgtype"])
 		local stabilitydamage = (attacktable["stabilitydamage"]);
 
-		if self.Owner:GetNWBool("ThrustStance") and attacktable["altattackstabilitydamagemodifier"] then
+		if self.Owner:GetNetVar("ThrustStance") and attacktable["altattackstabilitydamagemodifier"] then
 			stabilitydamage = stabilitydamage * attacktable["altattackstabilitydamagemodifier"];
 		end
 		
@@ -1077,7 +1077,7 @@ end
 					end
 				end
 
-				if hit:IsPlayer() and !hit:IsRagdolled() and hit:GetNWBool("Deflect") != true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+				if hit:IsPlayer() and !hit:IsRagdolled() and hit:GetNetVar("Deflect") != true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 					self:TriggerAnim4(hit, "a_shared_hit_0"..math.random(1, 3));
 					
 					if owner.upstagedActive and not hit.opponent then
@@ -1102,7 +1102,7 @@ end
 					end
 				end
 				 
-				if hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit.iFrames then
+				if hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit.iFrames then
 					hit:TakeStability((stabilitydamage * 3) * shield_reduction * hit_reduction)		
 
 					-- Fire attack type
@@ -1125,8 +1125,8 @@ end
 				end
 			end
 		elseif swingType == "thrust_swing" then
-			if !owner:GetNWBool("ThrustStance") then
-				owner:SetNWBool("ThrustStance", true);
+			if !owner:GetNetVar("ThrustStance") then
+				owner:SetLocalVar("ThrustStance", true);
 			end
 
 			if hit:IsValid() and hit:IsPlayer() then
@@ -1144,7 +1144,7 @@ end
 					damagetype = 128
 					
 					if hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect")) and !hit.iFrames then
+						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 							-- KNOCKBACK
 							local knockback = owner:GetAngles():Forward() * 550;
 							knockback.z = 0
@@ -1166,7 +1166,7 @@ end
 							local max_dist = 75;
 							
 							if distance >= 0 and distance <= max_dist and hit:IsValid() then
-								if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect")) and !hit.iFrames then
+								if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 									damage = (attacktable["primarydamage"]) * 0.05
 									damagetype = 128
 									
@@ -1190,18 +1190,18 @@ end
 									damage = (attacktable["primarydamage"])
 									damagetype = 16
 									
-									--[[if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect") and !hit.iFrames then
+									--[[if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect") and !hit.iFrames then
 										hit:TakeStability((stabilitydamage))		
 									end]]--
 								end
 							end
 						else
 							-- Non-polearm thrust
-							--[[if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect") and !hit.iFrames then
+							--[[if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect") and !hit.iFrames then
 								hit:TakeStability((stabilitydamage))			
 							end]]--
 							
-							--[[if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect")) and !hit.iFrames then
+							--[[if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 								hit:EmitSound(attacksoundtable["althitbody"][math.random(1, #attacksoundtable["althitbody"])])
 							end]]--
 							
@@ -1300,7 +1300,7 @@ end
 							end
 						end
 					else
-						if hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and !hit:GetNWBool("Parry") == true and !hit.iFrames then
+						if hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and !hit:GetNetVar("Parry") == true and !hit.iFrames then
 							-- Fire attack type
 							if attacktable["attacktype"] == "fire_swing" then
 								if offhandWeapon then
@@ -1325,14 +1325,14 @@ end
 						end
 					end
 
-					if hit:IsPlayer() and !hit:IsRagdolled() and hit:GetNWBool("Deflect") != true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+					if hit:IsPlayer() and !hit:IsRagdolled() and hit:GetNetVar("Deflect") != true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 						self:TriggerAnim4(hit, "a_shared_hit_0"..math.random(1, 3)); 
 					end
 				end
 			end
 		elseif swingType == "polearm_swing" then
-			if owner:GetNWBool("ThrustStance") then
-				owner:SetNWBool("ThrustStance", false);
+			if owner:GetNetVar("ThrustStance") then
+				owner:SetLocalVar("ThrustStance", false);
 			end
 
 			if (!hit.nexthit or CurTime() > hit.nexthit) then 
@@ -1355,7 +1355,7 @@ end
 							--print "Tier 0"
 							poledamage = (attacktable["primarydamage"]) * 0.01
 							poletype = 128
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability(5)
 								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
 								
@@ -1379,7 +1379,7 @@ end
 							--print "Tier 1"
 							poledamage = (attacktable["primarydamage"]) * 0.05
 							poletype = 128
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability(10)
 								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
 								
@@ -1403,7 +1403,7 @@ end
 							--print "Tier 2"
 							poledamage = (attacktable["primarydamage"]) * 0.08
 							poletype = 128
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability(15)
 								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
 								
@@ -1427,7 +1427,7 @@ end
 							--print "Tier 3"
 							poledamage = (attacktable["primarydamage"]) * 0.1
 							poletype = 128
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability(20)
 								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
 								
@@ -1463,7 +1463,7 @@ end
 							end
 							
 							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability((stabilitydamage * 0.7))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
@@ -1489,7 +1489,7 @@ end
 							end
 							
 							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability((stabilitydamage * 0.8))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
@@ -1515,7 +1515,7 @@ end
 							end
 							
 							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability((stabilitydamage * 1))			
 								hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
@@ -1541,7 +1541,7 @@ end
 							end
 							
 							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability((stabilitydamage * 1.1))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
@@ -1567,7 +1567,7 @@ end
 							end
 							
 							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability((stabilitydamage * 1.3))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
@@ -1593,7 +1593,7 @@ end
 							end
 							
 							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability((stabilitydamage * 1.6))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
@@ -1619,7 +1619,7 @@ end
 							end
 							
 							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability((stabilitydamage * 1.7))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
@@ -1634,7 +1634,7 @@ end
 							--print "Tier 1 (Small Polearm)"
 							poledamage = (attacktable["primarydamage"]) * 0.1
 							poletype = 128
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability(15)
 
 								-- KNOCKBACK
@@ -1671,7 +1671,7 @@ end
 							end
 							
 							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability((stabilitydamage * 1))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
@@ -1697,7 +1697,7 @@ end
 							end
 							
 							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 								hit:TakeStability((stabilitydamage * 1.5))			
 								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 							end
@@ -1783,7 +1783,7 @@ end
 							end
 						end
 					else
-						if hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and !hit:GetNWBool("Parry") == true and !hit.iFrames then
+						if hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and !hit:GetNetVar("Parry") == true and !hit.iFrames then
 							-- Fire attack type
 							if attacktable["attacktype"] == "fire_swing" then
 								if offhandWeapon then
@@ -1808,14 +1808,14 @@ end
 						end
 					end
 
-					if hit:IsPlayer() and !hit:IsRagdolled() and hit:GetNWBool("Deflect") != true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+					if hit:IsPlayer() and !hit:IsRagdolled() and hit:GetNetVar("Deflect") != true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 						self:TriggerAnim4(hit, "a_shared_hit_0"..math.random(1, 3)); 
 					end
 				end
 			end
 		else -- reg_swing and others
-			if owner:GetNWBool("ThrustStance") then
-				owner:SetNWBool("ThrustStance", false);
+			if owner:GetNetVar("ThrustStance") then
+				owner:SetLocalVar("ThrustStance", false);
 			end
 
 			if hit:IsValid() and hit:IsPlayer() then
@@ -1832,7 +1832,7 @@ end
 							damage = (attacktable["primarydamage"]) * 0.05
 							damagetype = 128
 							
-							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect")) and !hit.iFrames then
+							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 								--print "Spear Shaft Hit"
 								
 								-- KNOCKBACK
@@ -1854,7 +1854,7 @@ end
 							damage = (attacktable["primarydamage"])
 							damagetype = (attacktable["dmgtype"])
 							
-							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect")) and !hit.iFrames then
+							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 								-- counter damage
 								local targetVelocity = hit:GetVelocity();
 								
@@ -1873,7 +1873,7 @@ end
 						end
 					else
 						-- For non-spears
-						if hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect") and !hit.iFrames then
+						if hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect") and !hit.iFrames then
 							if owner.GetCharmEquipped and owner:GetCharmEquipped("ring_pugilist") and weaponClass == "begotten_fists" then
 								hit:TakeStability(25);
 							else
@@ -1882,7 +1882,7 @@ end
 						end
 						
 						-- Bellhammer special
-						if weapon.IsBellHammer == true and ((hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNWBool("Guardening") and !hit:GetNWBool("Parry") and !hit:GetNWBool("Deflect"))) and !hit.iFrames then
+						if weapon.IsBellHammer == true and ((hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect"))) and !hit.iFrames then
 							owner:Disorient(1)
 							
 							timer.Simple(0.2, function() 
@@ -1973,7 +1973,7 @@ end
 							end
 						end
 					else
-						if hit:IsPlayer() and !hit:GetNWBool("Guardening") == true and !hit:GetNWBool("Parry") == true and !hit.iFrames then
+						if hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and !hit:GetNetVar("Parry") == true and !hit.iFrames then
 							-- Fire attack type
 							if attacktable["attacktype"] == "fire_swing" then
 								if offhandWeapon then
@@ -1998,7 +1998,7 @@ end
 						end
 					end
 
-					if hit:IsPlayer() and !hit:IsRagdolled() and hit:GetNWBool("Deflect") != true and hit:GetNWBool("Parry") != true and !hit.iFrames then
+					if hit:IsPlayer() and !hit:IsRagdolled() and hit:GetNetVar("Deflect") != true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 						self:TriggerAnim4(hit, "a_shared_hit_0"..math.random(1, 3)); 
 					end
 				end
@@ -2120,7 +2120,7 @@ local ply = self.Owner
 local wep = self.Weapon
 	if !ply:IsValid() then return end
 
-	local bIron = ply:GetNWBool( "Guardening" )
+	local bIron = ply:GetNetVar("Guardening");
 	--local sprintshit = wep:GetNWBool( "SprintShit" )
 	
 		if ( bIron ) then 
@@ -2276,20 +2276,20 @@ function SWEP:SecondaryAttack()
 		blocktable = GetTable(self.realBlockTable);
 	end
 	
-	ply:SetNWBool("MelAttacking", false)
+	ply:SetLocalVar("MelAttacking", false)
 	
 	local parryWindow = blocktable["parrydifficulty"] or 0.15;
 	local curTime = CurTime();
 
-	if ply:KeyDown(IN_ATTACK2) and !ply:KeyDown(IN_RELOAD) and ply:GetNWBool("Guardening") == true then
+	if ply:KeyDown(IN_ATTACK2) and !ply:KeyDown(IN_RELOAD) and ply:GetNetVar("Guardening") == true then
 		-- Deflection
 		if blocktable["candeflect"] == true then
-			if ply:GetNWBool( "CanDeflect", true ) then
+			if ply:GetNetVar("CanDeflect", true ) then
 				local deflectionWindow = blocktable["deflectionwindow"] or 0.15;
 				
 				--if ply.HasBelief and ply:HasBelief("deflection") then
 				if (!ply.nextDeflect or curTime > ply.nextDeflect) then
-					ply:SetNWBool( "Deflect", true )
+					ply:SetLocalVar("Deflect", true )
 					
 					if ply:HasBelief("impossibly_skilled") then
 						deflectionWindow = deflectionWindow + 0.1;
@@ -2302,7 +2302,7 @@ function SWEP:SecondaryAttack()
 								
 				self:CreateTimer(deflectionWindow, "deflectionOffTimer"..ply:EntIndex(), function()
 					if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
-						ply:SetNWBool( "Deflect", false ) 
+						ply:SetLocalVar("Deflect", false ) 
 					end 
 				end);
 				
@@ -2312,16 +2312,16 @@ function SWEP:SecondaryAttack()
 					deflectioncooldown = 1.5
 				end
 				
-				ply:SetNWBool( "CanDeflect", false ) -- Clean this ass code up
+				ply:SetLocalVar("CanDeflect", false ) -- Clean this ass code up
 				self:CreateTimer(deflectioncooldown, "deflectionTimer"..ply:EntIndex(), function()
 					if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
-						ply:SetNWBool( "CanDeflect", true ) 
+						ply:SetLocalVar("CanDeflect", true ) 
 					end 
 				end);
 			else
 				self:CreateTimer(deflectioncooldown, "deflectionTimer"..ply:EntIndex(), function()
 					if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
-						ply:SetNWBool( "CanDeflect", true ) 
+						ply:SetLocalVar("CanDeflect", true ) 
 					end 
 				end);
 			end
@@ -2333,7 +2333,7 @@ function SWEP:SecondaryAttack()
 	if ( self:GetNextPrimaryFire() > curTime * 1.5 ) then return end
 	if ( ply:KeyDown(IN_ATTACK2) ) then return end
 	if ( !self:CanSecondaryAttack() ) then return end
-	if ( ply:GetNWBool( "Guardening") ) == true then return end
+	if ( ply:GetNetVar("Guardening") ) == true then return end
 	--if ( self.Weapon:GetNWInt("Reloading") > curTime ) then return end
 	local parry_cost = blocktable["parrytakestamina"];
 	
@@ -2382,7 +2382,7 @@ function SWEP:SecondaryAttack()
 		
 	--Parry
 	ply.blockStaminaRegen = curTime + 5;
-	ply:SetNWBool( "Parry", true )
+	ply:SetLocalVar("Parry", true )
 	self.isAttacking = false;
 	
 	if cwBeliefs and ply.HasBelief and ply:HasBelief("impossibly_skilled") then
@@ -2399,7 +2399,7 @@ function SWEP:SecondaryAttack()
 	
 	self:CreateTimer(parryWindow, "parryTimer"..ply:EntIndex(), function()
 		if self:IsValid() and ply:IsValid() then
-			ply:SetNWBool("Parry", false)
+			ply:SetLocalVar("Parry", false)
 			
 			if ply.parryStacks then
 				ply.parryStacks = nil;
@@ -2454,9 +2454,9 @@ function SWEP:SecondaryAttack()
 										end
 									end
 													
-									--if (ply:GetNWInt("meleeStamina", 100) >= guardblockamount and !ply:GetNWBool("Parried")) then
-									if (ply:GetNWInt("Stamina", 100) >= guardblockamount and !ply:GetNWBool("Parried")) then
-										ply:SetNWBool("Guardening", true);
+									--if (ply:GetNWInt("meleeStamina", 100) >= guardblockamount and !ply:GetNetVar("Parried")) then
+									if (ply:GetNWInt("Stamina", 100) >= guardblockamount and !ply:GetNetVar("Parried")) then
+										ply:SetLocalVar("Guardening", true);
 										ply.beginBlockTransition = true;
 										activeWeapon.Primary.Cone = activeWeapon.IronCone;
 										activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
@@ -2523,9 +2523,9 @@ function SWEP:SecondaryAttack()
 										end
 									end
 													
-									--if (ply:GetNWInt("meleeStamina", 100) >= guardblockamount and !ply:GetNWBool("Parried")) then
-									if (ply:GetNWInt("Stamina", 100) >= guardblockamount and !ply:GetNWBool("Parried")) then
-										ply:SetNWBool("Guardening", true);
+									--if (ply:GetNWInt("meleeStamina", 100) >= guardblockamount and !ply:GetNetVar("Parried")) then
+									if (ply:GetNWInt("Stamina", 100) >= guardblockamount and !ply:GetNetVar("Parried")) then
+										ply:SetLocalVar("Guardening", true);
 										ply.beginBlockTransition = true;
 										activeWeapon.Primary.Cone = activeWeapon.IronCone;
 										activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;
@@ -3099,20 +3099,20 @@ function SWEP:Holster()
 				end
 			end
 		else
-			if player:GetNWBool("ThrustStance") then
-				player:SetNWBool("ThrustStance", false);
+			if player:GetNetVar("ThrustStance") then
+				player:SetLocalVar("ThrustStance", false);
 			end
 			
-			if player:GetNWBool("Parry") then
-				player:SetNWBool("Parry", false);
+			if player:GetNetVar("Parry") then
+				player:SetLocalVar("Parry", false);
 			end
 			
-			if player:GetNWBool("ParrySucess") then
-				player:SetNWBool("ParrySucess", false);
+			if player:GetNetVar("ParrySuccess") then
+				player:SetLocalVar("ParrySuccess", false);
 			end
 			
-			if player:GetNWBool("Riposting") then
-				player:SetNWBool("Riposting", false);
+			if player:GetNetVar("Riposting") then
+				player:SetLocalVar("Riposting", false);
 			end
 			
 			if player.parryStacks then

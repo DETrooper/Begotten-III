@@ -122,12 +122,12 @@ function SWEP:Deploy()
 	end
 
 	self.Owner.gestureweightbegin = 1;
-	self.Owner:SetNWBool("CanBlock", true)
-	self.Owner:SetNWBool("CanDeflect", true)
-	self.Owner:SetNWBool("ThrustStance", false)
-	self.Owner:SetNWBool("ParrySucess", false) 
-	self.Owner:SetNWBool("Riposting", false)
-	self.Owner:SetNWBool( "MelAttacking", false ) -- This should fix the bug where you can't block until attacking.
+	self.Owner:SetLocalVar("CanBlock", true)
+	self.Owner:SetLocalVar("CanDeflect", true)
+	self.Owner:SetLocalVar("ThrustStance", false)
+	self.Owner:SetLocalVar("ParrySuccess", false) 
+	self.Owner:SetLocalVar("Riposting", false)
+	self.Owner:SetLocalVar("MelAttacking", false) -- This should fix the bug where you can't block until attacking.
 
 	self:SetNextPrimaryFire(0)
 	self:SetNextSecondaryFire(0)

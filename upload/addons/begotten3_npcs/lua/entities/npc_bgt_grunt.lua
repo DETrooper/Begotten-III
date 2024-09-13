@@ -341,5 +341,3 @@ end
 -- DO NOT TOUCH --
 AddCSLuaFile()
 DrGBase.AddNextbot(ENT)
-
-hook.Remove("PostDrawTranslucentRenderables", "FUCKFUCK")

@@ -523,7 +523,7 @@ if SERVER then
 
 	-- Handlers --
 
-	local lastBarnacle = nil
+	--[[local lastBarnacle = nil
 	DrGBase.BARNACLES = DrGBase.BARNACLES or {}
 	hook.Add("OnEntityCreated", "DrGBaseRegisterBarnacles", function(ent)
 		ent:DrG_Timer(0, function()
@@ -560,7 +560,7 @@ if SERVER then
 				ent:DrG_RagdollDeath(dmg)
 			end
 		end
-	end)
+	end)]]--
 
 	-- Meta --
 
@@ -666,6 +666,15 @@ else
 	end
 
 	-- Hooks --
+	hook.Add("PreDrawHalos", "DrGBaseToolHalos", function()
+		local ply = LocalPlayer();
+		--local wep = ply:GetActiveWeapon();
+		--if not IsValid(wep) or wep:GetClass() ~= "gmod_tool" then return end
+		local tool = ply:GetTool();
+		if !tool then return end
+		
+		hook.Run("DrawDRGBaseHalos", ply, tool.Mode);
+	end);
 
 	-- Handlers --
 

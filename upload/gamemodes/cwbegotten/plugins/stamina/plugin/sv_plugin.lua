@@ -76,7 +76,7 @@ function playerMeta:SetStamina(amount)
 	self:SetCharacterData("Stamina", new_stamina);
 	self:SetNWInt("Stamina", new_stamina);
 	
-	if new_stamina <= 0 and self:GetNWBool("Guardening", false) == true then
+	if new_stamina <= 0 and self:GetNetVar("Guardening", false) == true then
 		self:CancelGuardening();
 		self.nextStamina = CurTime() + 3;
 	end
@@ -97,7 +97,7 @@ function playerMeta:HandleStamina(amount)
 	self:SetCharacterData("Stamina", new_stamina);
 	self:SetNWInt("Stamina", new_stamina);
 	
-	if new_stamina <= 0 and self:GetNWBool("Guardening", false) == true then
+	if new_stamina <= 0 and self:GetNetVar("Guardening", false) == true then
 		self:CancelGuardening();
 		self.nextStamina = CurTime() + 3;
 	end

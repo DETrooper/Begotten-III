@@ -108,7 +108,7 @@ function cwPossession:StartCommand(player, ucmd)
 							if !possessor.changeStanceTimer or possessor.changeStanceTimer <= curTime then
 								possessor.changeStanceTimer = curTime + 1;
 								
-								if player:GetNWBool("ThrustStance") == false then
+								if !player:GetNetVar("ThrustStance") then
 									if activeWeapon.isJavelin then
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to melee stance.")
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to melee stance.")
@@ -120,7 +120,7 @@ function cwPossession:StartCommand(player, ucmd)
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
 									end
 									
-									player:SetNWBool( "ThrustStance", true )
+									player:SetLocalVar("ThrustStance", true);
 									
 									if activeWeapon.OnMeleeStanceChanged then
 										activeWeapon:OnMeleeStanceChanged("thrust_swing");
@@ -140,7 +140,7 @@ function cwPossession:StartCommand(player, ucmd)
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
 									end
 									
-									player:SetNWBool( "ThrustStance", false )
+									player:SetLocalVar("ThrustStance", false);
 									
 									if activeWeapon.OnMeleeStanceChanged then
 										activeWeapon:OnMeleeStanceChanged("reg_swing");
@@ -226,7 +226,7 @@ local COMMAND = Clockwork.command:New("DemonHeal");
 				target:SetNWInt("stability", max_stability);
 				--target:SetCharacterData("meleeStamina", max_poise);
 				--target:SetNWInt("meleeStamina", max_poise);
-				target:SetNWInt("freeze", 0);
+				target:SetLocalVar("freeze", 0);
 				target:SetBloodLevel(5000);
 				target:StopAllBleeding();
 				Clockwork.limb:HealBody(target, 100);

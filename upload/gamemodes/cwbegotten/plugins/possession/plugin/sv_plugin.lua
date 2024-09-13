@@ -104,7 +104,7 @@ function playerMeta:Possess(possessor)
 		self:SetCharacterData("stability", max_stability);
 		--self:SetCharacterData("meleeStamina", max_poise);
 		--self:SetNWInt("meleeStamina", max_poise);
-		self:SetNWInt("freeze", 0);
+		self:SetLocalVar("freeze", 0);
 		self:SetBloodLevel(5000);
 		self:StopAllBleeding();
 		Clockwork.limb:HealBody(self, 100);
