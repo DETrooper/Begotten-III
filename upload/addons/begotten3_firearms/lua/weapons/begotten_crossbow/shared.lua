@@ -127,6 +127,10 @@ function SWEP:PrimaryAttack()
 					local aimVector = self.Owner:GetAimVector() * 1800;
 					local phys = bolt:GetPhysicsObject()
 					
+					if self.Owner.GetCharmEquipped and self.Owner:GetCharmEquipped("hurlers_talisman") then
+						aimVector = self.Owner:GetAimVector() * 2430;
+					end
+					
 					if self.Owner:GetVelocity() ~= Vector(0, 0, 0) or !self.Owner.HasBelief or !self.Owner:HasBelief("marksman") then
 						aimVector:Rotate(Angle(math.Rand(-1, 1), math.Rand(-1, 1), 0));
 					end

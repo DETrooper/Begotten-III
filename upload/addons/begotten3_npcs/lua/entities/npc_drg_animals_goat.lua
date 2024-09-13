@@ -12,7 +12,8 @@ ENT.Frightening = false
 
 -- Sounds --
 ENT.OnDamageSounds = {"goat/idle1.wav"}
---ENT.OnIdleSounds = {"goat/idle1.wav"}
+ENT.OnIdleSounds = {"goat/idle1.wav"}
+ENT.IdleSoundDelay = 180
 
 -- Stats --
 ENT.ArmorPiercing = 10;

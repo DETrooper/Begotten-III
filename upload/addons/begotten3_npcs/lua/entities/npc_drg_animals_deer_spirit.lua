@@ -16,7 +16,8 @@ ENT.SightRange = 1024
 
 -- Sounds --
 ENT.OnDamageSounds = {"deer/idle1.wav"}
---ENT.OnIdleSounds = {"deer/idle1.wav"}
+ENT.OnIdleSounds = {"deer/idle1.wav"}
+ENT.IdleSoundDelay = 180
 
 -- Stats --
 ENT.ArmorPiercing = 5;
