@@ -316,7 +316,7 @@ function playerMeta:HandleNeed(need, amount)
 			
 		self:SetCharacterData(need, math.Clamp(newAmount, 0, 100));
 		
-		if table.HasValue(self.ESPNeeds, need) then
+		if table.HasValue(cwCharacterNeeds.ESPNeeds, need) then
 			local networkTab = table.Copy(Schema:GetAdmins());
 			
 			table.insert(networkTab, self);
@@ -340,7 +340,7 @@ function playerMeta:SetNeed(need, value)
 	if need and table.HasValue(cwCharacterNeeds.Needs, need) then
 		self:SetCharacterData(need, math.Clamp(value, 0, 100));
 		
-		if table.HasValue(self.ESPNeeds, need) then
+		if table.HasValue(cwCharacterNeeds.ESPNeeds, need) then
 			local networkTab = table.Copy(Schema:GetAdmins());
 			
 			table.insert(networkTab, self);
