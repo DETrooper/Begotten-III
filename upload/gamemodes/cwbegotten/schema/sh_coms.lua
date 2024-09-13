@@ -481,6 +481,7 @@ local COMMAND = Clockwork.command:New("Promote")
 	--COMMAND.access = "o"
 	COMMAND.arguments = 1;
 	COMMAND.optionalArguments = 1;
+	COMMAND.types = {"Player", "Rank"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
