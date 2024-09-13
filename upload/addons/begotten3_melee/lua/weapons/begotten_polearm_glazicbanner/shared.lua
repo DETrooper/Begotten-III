@@ -122,15 +122,15 @@ function SWEP:Holster()
 
 		self:StopAllAnims(player);
 		
-		player:SetNWBool("ThrustStance", false);
-		player:SetNWBool("ParrySucess", false) ;
-		player:SetNWBool("Riposting", false);
+		player:SetLocalVar("ThrustStance", false);
+		player:SetLocalVar("ParrySuccess", false) ;
+		player:SetLocalVar("Riposting", false);
 
 		if CLIENT and player:IsPlayer() then
 			local vm = player:GetViewModel()
 			
 			if IsValid(vm) then
-				player:SetNWBool( "Parry", false )
+				player:SetLocalVar("Parry", false )
 				self:ResetBonePositions(vm)
 				vm:SetSubMaterial( 0, "" )
 				vm:SetSubMaterial( 1, "" )
@@ -192,10 +192,10 @@ function SWEP:Think()
 	end
 	
 	if (player.beginBlockTransition) then
-		if (player:GetNWBool("Guardening") == true) then
+		if (player:GetNetVar("Guardening") == true) then
 			self:TriggerAnim2(player, self.BlockAnim, 0);
 			
-			if ((SERVER) and player:GetNWBool("CanBlock", true)) then
+			if ((SERVER) and player:GetNetVar("CanBlock", true)) then
 				if (!self.SexyAss) then
 					self.SexyAss = GetSoundTable(self.BlockSoundTable);
 				end;
@@ -204,11 +204,11 @@ function SWEP:Think()
 					player:EmitSound(self.SexyAss["guardsound"][math.random(1, #self.SexyAss["guardsound"])], 65, math.random(100, 90))
 				end;
 
-				player:SetNWBool("CanBlock", false);
+				player:SetLocalVar("CanBlock", false);
 			end;
-		elseif (player:GetNWBool("Guardening") == false) then
+		elseif (player:GetNetVar("Guardening") == false) then
 			self:TriggerAnim2(player, self.BlockAnim, 1);
-			player:SetNWBool("CanBlock", true)
+			player:SetLocalVar("CanBlock", true)
 			
 			local velocity = player:GetVelocity();
 			local length = velocity:Length();

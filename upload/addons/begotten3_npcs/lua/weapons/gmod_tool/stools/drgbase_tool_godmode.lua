@@ -18,11 +18,8 @@ if CLIENT then
 	language.Add("tool.drgbase_tool_godmode.desc", "Disable/enable godmode for a nextbot.")
 	language.Add("tool.drgbase_tool_godmode.0", "Left click to toggle godmode. (Green => Enabled / Red => Disabled)")
 
-	hook.Add("PreDrawHalos", "DrGBaseToolGodModeHalos", function()
-		local wep = LocalPlayer():GetActiveWeapon()
-		if not IsValid(wep) or wep:GetClass() ~= "gmod_tool" then return end
-		local tool = LocalPlayer():GetTool()
-		if tool == nil or tool.Mode ~= "drgbase_tool_godmode" then return end
+	hook.Add("DrawDRGBaseHalos", "DrGBaseToolGodModeHalos", function(ply, mode)
+		if mode ~= "drgbase_tool_godmode" then return end
 		local enabled = {}
 		local disabled = {}
 		for i, nextbot in ipairs(DrGBase.GetNextbots()) do

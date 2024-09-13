@@ -180,7 +180,7 @@ function SWEP:Deploy()
 	
 	self:SetHoldType(self.HoldType)
 
-	self.Weapon:SetNWBool("Reloading", false)
+	--self.Weapon:SetNWBool("Reloading", false)
    
 	if !self.Owner:IsNPC() and self.Owner != nil then
 		if self.ResetSights and self.Owner:GetViewModel() != nil then
@@ -1067,7 +1067,7 @@ function SWEP:IronSight()
 	
 	local bIron = self:GetIronsights();
    
-	if self.Owner:KeyPressed(IN_SPEED) and not (self.Weapon:GetNWBool("Reloading")) then
+	if self.Owner:KeyPressed(IN_SPEED) --[[and not (self.Weapon:GetNWBool("Reloading"))]] then
 		if self.Weapon:GetNextPrimaryFire() <= (CurTime()+0.3) then
 			self.Weapon:SetNextPrimaryFire(CurTime()+0.3)                           -- Make it so you can't shoot for another quarter second
 		end
@@ -1098,7 +1098,7 @@ function SWEP:IronSight()
 	end
 
 	if !self.Owner:KeyDown(IN_SPEED) then
-		if self.Owner:KeyPressed(IN_ATTACK2) and not (self.Weapon:GetNWBool("Reloading")) then
+		if self.Owner:KeyPressed(IN_ATTACK2) --[[and not (self.Weapon:GetNWBool("Reloading"))]] then
 			self.Owner:SetFOV(self.Secondary.IronFOV, 0.5);
 			self.IronSightsPos = self.SightsPos                                     -- Bring it up
 			self.IronSightsAng = self.SightsAng                                     -- Bring it up

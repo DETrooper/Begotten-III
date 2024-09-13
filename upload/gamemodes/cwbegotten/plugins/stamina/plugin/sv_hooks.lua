@@ -133,7 +133,7 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				return;
 			end
 			
-			if regeneration > 0 and (player:GetNWBool("Guardening") or (plyTab.blockStaminaRegen and curTime <= plyTab.blockStaminaRegen)) then
+			if regeneration > 0 and (player:GetNetVar("Guardening") or (plyTab.blockStaminaRegen and curTime <= plyTab.blockStaminaRegen)) then
 				return;
 			end
 

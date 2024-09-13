@@ -1467,7 +1467,7 @@ function COMMAND:OnRun(player, arguments)
 					return false;
 				end
 				
-				if player:GetNWBool("Guardening") then
+				if player:GetNetVar("Guardening") then
 					Schema:EasyText(player, "firebrick", "You cannot flagellate while blocking!");
 					return false;
 				end

@@ -199,6 +199,52 @@ local COMMAND = Clockwork.command:New("Enlist")
 											
 											if subfaction then
 												target:SetCharacterData("Subfaction", subfaction.name, true);
+												
+												if cwBeliefs then
+													-- Remove any subfaction locked beliefs.
+													local beliefsTab = cwBeliefs:GetBeliefs();
+													local targetBeliefs = target:GetCharacterData("beliefs");
+													local targetEpiphanies = target:GetCharacterData("points", 0);
+													
+													for k, v in pairs(beliefsTab) do
+														if v.lockedSubfactions and table.HasValue(v.lockedSubfactions, subfaction) then
+															if targetBeliefs[k] then
+																targetBeliefs[k] = false;
+																
+																targetEpiphanies = targetEpiphanies + 1;
+																
+																local beliefTree = cwBeliefs:FindBeliefTreeByBelief(k);
+																
+																if beliefTree.hasFinisher and targetBeliefs[beliefTree.uniqueID.."_finisher"] then
+																	targetBeliefs[beliefTree.uniqueID.."_finisher"] = false;
+																end
+															end
+														end
+													end
+													
+													target:SetCharacterData("beliefs", targetBeliefs);
+													target:SetLocalVar("points", targetEpiphanies);
+													target:SetCharacterData("points", targetEpiphanies);
+													
+													--local max_poise = target:GetMaxPoise();
+													--local poise = target:GetNWInt("meleeStamina");
+													local max_stamina = target:GetMaxStamina();
+													local max_stability = target:GetMaxStability();
+													local stamina = target:GetNWInt("Stamina", 100);
+													
+													target:SetMaxHealth(target:GetMaxHealth());
+													target:SetLocalVar("maxStability", max_stability);
+													--target:SetLocalVar("maxMeleeStamina", max_poise);
+													--target:SetNWInt("meleeStamina", math.min(poise, max_poise));
+													target:SetLocalVar("Max_Stamina", max_stamina);
+													target:SetCharacterData("Max_Stamina", max_stamina);
+													target:SetNWInt("Stamina", math.min(stamina, max_stamina));
+													target:SetCharacterData("Stamina", math.min(stamina, max_stamina));
+													
+													hook.Run("RunModifyPlayerSpeed", target, target.cwInfoTable, true)
+													
+													target:NetworkBeliefs();
+												end
 											end
 										else
 											target:SetCharacterData("kinisgerOverride", enlistFaction);
@@ -339,6 +385,52 @@ local COMMAND = Clockwork.command:New("SetCustomRank")
 								target:SetNetVar("kinisgerOverrideSubfaction", subfaction);
 							else
 								target:SetCharacterData("Subfaction", subfaction, true);
+								
+								if cwBeliefs then
+									-- Remove any subfaction locked beliefs.
+									local beliefsTab = cwBeliefs:GetBeliefs();
+									local targetBeliefs = target:GetCharacterData("beliefs");
+									local targetEpiphanies = target:GetCharacterData("points", 0);
+									
+									for k, v in pairs(beliefsTab) do
+										if v.lockedSubfactions and table.HasValue(v.lockedSubfactions, subfaction) then
+											if targetBeliefs[k] then
+												targetBeliefs[k] = false;
+												
+												targetEpiphanies = targetEpiphanies + 1;
+												
+												local beliefTree = cwBeliefs:FindBeliefTreeByBelief(k);
+												
+												if beliefTree.hasFinisher and targetBeliefs[beliefTree.uniqueID.."_finisher"] then
+													targetBeliefs[beliefTree.uniqueID.."_finisher"] = false;
+												end
+											end
+										end
+									end
+									
+									target:SetCharacterData("beliefs", targetBeliefs);
+									target:SetLocalVar("points", targetEpiphanies);
+									target:SetCharacterData("points", targetEpiphanies);
+									
+									--local max_poise = target:GetMaxPoise();
+									--local poise = target:GetNWInt("meleeStamina");
+									local max_stamina = target:GetMaxStamina();
+									local max_stability = target:GetMaxStability();
+									local stamina = target:GetNWInt("Stamina", 100);
+									
+									target:SetMaxHealth(target:GetMaxHealth());
+									target:SetLocalVar("maxStability", max_stability);
+									--target:SetLocalVar("maxMeleeStamina", max_poise);
+									--target:SetNWInt("meleeStamina", math.min(poise, max_poise));
+									target:SetLocalVar("Max_Stamina", max_stamina);
+									target:SetCharacterData("Max_Stamina", max_stamina);
+									target:SetNWInt("Stamina", math.min(stamina, max_stamina));
+									target:SetCharacterData("Stamina", math.min(stamina, max_stamina));
+									
+									hook.Run("RunModifyPlayerSpeed", target, target.cwInfoTable, true)
+									
+									target:NetworkBeliefs();
+								end
 							end
 							
 							local targetAngles = target:EyeAngles();
@@ -389,6 +481,7 @@ local COMMAND = Clockwork.command:New("Promote")
 	--COMMAND.access = "o"
 	COMMAND.arguments = 1;
 	COMMAND.optionalArguments = 1;
+	COMMAND.types = {"Player", "Rank"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -497,6 +590,52 @@ local COMMAND = Clockwork.command:New("Promote")
 								target:SetNetVar("kinisgerOverrideSubfaction", subfaction);
 							else
 								target:SetCharacterData("Subfaction", subfaction, true);
+								
+								if cwBeliefs then
+									-- Remove any subfaction locked beliefs.
+									local beliefsTab = cwBeliefs:GetBeliefs();
+									local targetBeliefs = target:GetCharacterData("beliefs");
+									local targetEpiphanies = target:GetCharacterData("points", 0);
+									
+									for k, v in pairs(beliefsTab) do
+										if v.lockedSubfactions and table.HasValue(v.lockedSubfactions, subfaction) then
+											if targetBeliefs[k] then
+												targetBeliefs[k] = false;
+												
+												targetEpiphanies = targetEpiphanies + 1;
+												
+												local beliefTree = cwBeliefs:FindBeliefTreeByBelief(k);
+												
+												if beliefTree.hasFinisher and targetBeliefs[beliefTree.uniqueID.."_finisher"] then
+													targetBeliefs[beliefTree.uniqueID.."_finisher"] = false;
+												end
+											end
+										end
+									end
+									
+									target:SetCharacterData("beliefs", targetBeliefs);
+									target:SetLocalVar("points", targetEpiphanies);
+									target:SetCharacterData("points", targetEpiphanies);
+									
+									--local max_poise = target:GetMaxPoise();
+									--local poise = target:GetNWInt("meleeStamina");
+									local max_stamina = target:GetMaxStamina();
+									local max_stability = target:GetMaxStability();
+									local stamina = target:GetNWInt("Stamina", 100);
+									
+									target:SetMaxHealth(target:GetMaxHealth());
+									target:SetLocalVar("maxStability", max_stability);
+									--target:SetLocalVar("maxMeleeStamina", max_poise);
+									--target:SetNWInt("meleeStamina", math.min(poise, max_poise));
+									target:SetLocalVar("Max_Stamina", max_stamina);
+									target:SetCharacterData("Max_Stamina", max_stamina);
+									target:SetNWInt("Stamina", math.min(stamina, max_stamina));
+									target:SetCharacterData("Stamina", math.min(stamina, max_stamina));
+									
+									hook.Run("RunModifyPlayerSpeed", target, target.cwInfoTable, true)
+									
+									target:NetworkBeliefs();
+								end
 							end
 							
 							local targetAngles = target:EyeAngles();
@@ -639,6 +778,50 @@ local COMMAND = Clockwork.command:New("Demote")
 								target:SetNetVar("kinisgerOverrideSubfaction", subfaction);
 							else
 								target:SetCharacterData("Subfaction", subfaction, true);
+								
+								-- Remove any subfaction locked beliefs.
+								local beliefsTab = cwBeliefs:GetBeliefs();
+								local targetBeliefs = target:GetCharacterData("beliefs");
+								local targetEpiphanies = target:GetCharacterData("points", 0);
+								
+								for k, v in pairs(beliefsTab) do
+									if v.lockedSubfactions and table.HasValue(v.lockedSubfactions, subfaction) then
+										if targetBeliefs[k] then
+											targetBeliefs[k] = false;
+											
+											targetEpiphanies = targetEpiphanies + 1;
+											
+											local beliefTree = cwBeliefs:FindBeliefTreeByBelief(k);
+											
+											if beliefTree.hasFinisher and targetBeliefs[beliefTree.uniqueID.."_finisher"] then
+												targetBeliefs[beliefTree.uniqueID.."_finisher"] = false;
+											end
+										end
+									end
+								end
+								
+								target:SetCharacterData("beliefs", targetBeliefs);
+								target:SetLocalVar("points", targetEpiphanies);
+								target:SetCharacterData("points", targetEpiphanies);
+								
+								--local max_poise = target:GetMaxPoise();
+								--local poise = target:GetNWInt("meleeStamina");
+								local max_stamina = target:GetMaxStamina();
+								local max_stability = target:GetMaxStability();
+								local stamina = target:GetNWInt("Stamina", 100);
+								
+								target:SetMaxHealth(target:GetMaxHealth());
+								target:SetLocalVar("maxStability", max_stability);
+								--target:SetLocalVar("maxMeleeStamina", max_poise);
+								--target:SetNWInt("meleeStamina", math.min(poise, max_poise));
+								target:SetLocalVar("Max_Stamina", max_stamina);
+								target:SetCharacterData("Max_Stamina", max_stamina);
+								target:SetNWInt("Stamina", math.min(stamina, max_stamina));
+								target:SetCharacterData("Stamina", math.min(stamina, max_stamina));
+								
+								hook.Run("RunModifyPlayerSpeed", target, target.cwInfoTable, true)
+								
+								target:NetworkBeliefs();
 							end
 							
 							local targetAngles = target:EyeAngles();
@@ -1981,7 +2164,7 @@ local COMMAND = Clockwork.command:New("PlyHealFull");
 		target:SetNWInt("stability", max_stability);
 		--target:SetCharacterData("meleeStamina", max_poise);
 		--target:SetNWInt("meleeStamina", max_poise);
-		target:SetNWInt("freeze", 0);
+		target:SetLocalVar("freeze", 0);
 		target:SetBloodLevel(5000);
 		target:StopAllBleeding();
 		Clockwork.limb:HealBody(target, 100);
@@ -2041,7 +2224,7 @@ local COMMAND = Clockwork.command:New("PlyHealFullAll");
 					v:SetNWInt("stability", max_stability);
 					--v:SetCharacterData("meleeStamina", max_poise);
 					--v:SetNWInt("meleeStamina", max_poise);
-					v:SetNWInt("freeze", 0);
+					v:SetLocalVar("freeze", 0);
 					v:SetBloodLevel(5000);
 					v:StopAllBleeding();
 					Clockwork.limb:HealBody(v, 100);
@@ -2559,7 +2742,7 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 				return false;
 			end
 			
-			if player:GetNWBool("Parried") == true then
+			if player:GetNetVar("Parried") == true then
 				Schema:EasyText(player, "peru", "You are too discombobulated to helljaunt right now!");
 				
 				return false;

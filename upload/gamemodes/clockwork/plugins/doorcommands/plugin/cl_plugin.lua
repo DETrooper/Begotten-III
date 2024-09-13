@@ -11,5 +11,6 @@ netstream.Hook("doorParentESP", function(data)
 end)
 
 -- Called before halos need to be rendered.
-function cwDoorCmds:PreDrawHalos()
-end
+--[[function cwDoorCmds:PreDrawHalos()
+
+end]]--

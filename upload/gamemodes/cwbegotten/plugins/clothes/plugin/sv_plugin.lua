@@ -153,7 +153,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					end
 				
 					if attackTable then
-						if attacker:GetNWBool("ThrustStance") and (!IsValid(inflictor) or (IsValid(inflictor) and !inflictor.isJavelin)) then
+						if attacker:GetNetVar("ThrustStance") and (!IsValid(inflictor) or (IsValid(inflictor) and !inflictor.isJavelin)) then
 							armorPiercing = attackTable["altarmorpiercing"] or 0;
 						else
 							armorPiercing = attackTable["armorpiercing"] or 0;
@@ -278,7 +278,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 									
 							--print("Attack table found for weapon!");
 							if attackTable then
-								if attacker:GetNWBool("ThrustStance") and (!IsValid(inflictor) or (IsValid(inflictor) and !inflictor.isJavelin)) then
+								if attacker:GetNetVar("ThrustStance") and (!IsValid(inflictor) or (IsValid(inflictor) and !inflictor.isJavelin)) then
 									armorPiercing = attackTable["altarmorpiercing"] or 0;
 									--print("Thrust stance.");
 								else

@@ -2,7 +2,7 @@ function Parry(target, dmginfo)
 	if (target:IsPlayer()) then
 		local wep = target:GetActiveWeapon()
 
-		if (target:IsValid() and target:Alive() and (target:GetNWBool("Parry", false) == true) and IsValid(wep)) then
+		if (target:IsValid() and target:Alive() and (target:GetNetVar("Parry", false) == true) and IsValid(wep)) then
 			local damageType = dmginfo:GetDamageType();
 			local checkTypes = {[4] = true, [16] = true, [128] = true};
 
@@ -19,8 +19,8 @@ function Parry(target, dmginfo)
 				local isJavelin = IsValid(inflictor) and inflictor.isJavelin and !inflictor:IsWeapon();
 
 				if !isJavelin then
-					target:SetNWBool("ParrySucess", true)
-					attacker:SetNWBool("Parried", true)
+					target:SetLocalVar("ParrySuccess", true)
+					attacker:SetLocalVar("Parried", true)
 					target.parryTarget = attacker;
 					if(attacker:IsPlayer()) then netstream.Start(attacker, "Stunned", (attacker:HasBelief("encore") and 0.5 or 1)); end
 					
@@ -139,7 +139,7 @@ function Parry(target, dmginfo)
 							timer.Destroy(index.."_ParrySuccessTimer")
 						end
 						
-						target:SetNWBool("ParrySucess", true)
+						target:SetLocalVar("ParrySuccess", true)
 						
 						if wep.isLongsword and (!cwBeliefs or target:HasBelief("blademaster")) then
 							wep:SetNW2Bool("swordplayActive", true);
@@ -179,13 +179,13 @@ function Parry(target, dmginfo)
 						end
 						
 						timer.Create(index.."_ParrySuccessTimer", delay, 1, function()
-							if (target:IsValid() --[[and target:Alive() and !target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false) and (target:GetNWBool("ParrySucess", false) == true)]]) then
-								target:SetNWBool("ParrySucess", false) 
+							if (target:IsValid() --[[and target:Alive() and !target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false) and (target:GetNetVar("ParrySuccess", false) == true)]]) then
+								target:SetLocalVar("ParrySuccess", false) 
 								target.parryTarget = nil;
 							end
 							
 							if IsValid(attacker) then
-								attacker:SetNWBool("Parried", false);
+								attacker:SetLocalVar("Parried", false);
 								
 								if attacker:IsPlayer() then
 									hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);
@@ -234,7 +234,7 @@ local function Guarding(ent, dmginfo)
 									conditionLoss = dmginfo:GetDamage() / 100;
 								end
 								
-								if enemywep.isJavelin and attacker:GetNWBool("ThrustStance") then
+								if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
 									conditionLoss = conditionLoss * 40;
 								end
 								
@@ -275,7 +275,7 @@ local function Guarding(ent, dmginfo)
 		--local max_poise = ent:GetNetVar("maxMeleeStamina") or 90;
 		local conditionDamage = dmginfo:GetDamage();
 
-		if IsValid(wep) and (ent:GetNWBool("Guardening") or (ent.IsBlocking and ent:IsBlocking())) then
+		if IsValid(wep) and (ent:GetNetVar("Guardening") or (ent.IsBlocking and ent:IsBlocking())) then
 			local blocktable;
 			local soundtable;
 			
@@ -427,7 +427,7 @@ local function Guarding(ent, dmginfo)
 
 				if (IsValid(attacker) and (math.abs(math.AngleDifference(ent:EyeAngles().y, (attacker:GetPos() - ent:GetPos()):Angle().y)) <= blockthreshold)) then
 					if enemywep and enemywep.IsABegottenMelee then
-						if ent:GetNWBool("Deflect") then
+						if ent:GetNetVar("Deflect") then
 							attacker:ViewPunch(Angle(-10,7,6))
 						else
 							attacker:ViewPunch(Angle(-3,1,0))
@@ -435,7 +435,7 @@ local function Guarding(ent, dmginfo)
 					end
 
 					---- Block Sound
-					if !attacker:IsPlayer() and !ent:GetNWBool("Deflect") then
+					if !attacker:IsPlayer() and !ent:GetNetVar("Deflect") then
 						if dmginfo:IsDamageType(128) then
 							ent:EmitSound(blocksoundtable["blockwood"][math.random(1, #blocksoundtable["blockwood"])])
 							--print "BLOCK NPC CRUSH"
@@ -450,7 +450,7 @@ local function Guarding(ent, dmginfo)
 							--print "BLOCK NPC BULLET"
 						end
 					else
-						if !ent:GetNWBool("Deflect") and attacker:IsPlayer() and !dmginfo:IsDamageType(1073741824) then
+						if !ent:GetNetVar("Deflect") and attacker:IsPlayer() and !dmginfo:IsDamageType(1073741824) then
 							if enemywep.IsABegottenMelee and !isJavelin then
 								if enemywep.SoundMaterial == "Metal" then
 									ent:EmitSound(blocksoundtable["blockmetal"][math.random(1, #blocksoundtable["blockmetal"])])
@@ -516,7 +516,7 @@ local function Guarding(ent, dmginfo)
 												conditionLoss = dmginfo:GetDamage() / 100;
 											end
 											
-											if enemywep.isJavelin and attacker:GetNWBool("ThrustStance") then
+											if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
 												conditionLoss = conditionLoss * 40;
 											end
 											
@@ -740,7 +740,7 @@ local function Guarding(ent, dmginfo)
 					end
 					--]]
 						
-					if bIsPlayer and !ent:GetNWBool("Deflect") and ent:Alive() and attacker:IsValid() then
+					if bIsPlayer and !ent:GetNetVar("Deflect") and ent:Alive() and attacker:IsValid() then
 						local poiseDamageModifier = 1;
 						
 						if attacker.HasBelief then
@@ -778,9 +778,9 @@ local function Guarding(ent, dmginfo)
 						if attacker:IsPlayer() and enemyattacktable["poisedamage"] then
 							--print("PRE MODIFIER POISE DAMAGE: "..enemyattacktable["poisedamage"]);
 							
-							if attacker:GetNWBool("Riposting") == true then
+							if attacker:GetNetVar("Riposting") == true then
 								attacker.enemypoise = (((enemyattacktable["poisedamage"]) * 3) * poiseDamageModifier)
-							elseif attacker:GetNWBool("ThrustStance") == true then
+							elseif attacker:GetNetVar("ThrustStance") == true then
 								attacker.enemypoise = (((enemyattacktable["poisedamage"]) * (enemyattacktable["altattackpoisedamagemodifier"])) * poiseDamageModifier)
 							else
 								attacker.enemypoise = ((enemyattacktable["poisedamage"]) * poiseDamageModifier)
@@ -996,12 +996,12 @@ local function Guarding(ent, dmginfo)
 								end
 							end
 						end
-					elseif !ent:GetNWBool("Deflect") then
+					elseif !ent:GetNetVar("Deflect") then
 						dmginfo:ScaleDamage(0)
 					end
 					-- Poise system
 			
-					if bIsPlayer and !ent:GetNWBool("Deflect") then
+					if bIsPlayer and !ent:GetNetVar("Deflect") then
 						--local melsta = ent:GetNWInt("meleeStamina", 90);
 						local melsta = ent:GetNWInt("Stamina", 100);
 						local blockamount = (blocktable["guardblockamount"]);
@@ -1066,7 +1066,7 @@ local function Guarding(ent, dmginfo)
 					end
 				
 					-- Deflection
-					if ent:GetNWBool("Deflect") and (!ent.nextDeflect or CurTime() > ent.nextDeflect) and (IsValid(attacker) and (dmginfo:IsDamageType(4) or dmginfo:IsDamageType(128) or dmginfo:IsDamageType(16) or (cwBeliefs and ent:HasBelief("impossibly_skilled") and isJavelin))) then
+					if ent:GetNetVar("Deflect") and (!ent.nextDeflect or CurTime() > ent.nextDeflect) and (IsValid(attacker) and (dmginfo:IsDamageType(4) or dmginfo:IsDamageType(128) or dmginfo:IsDamageType(16) or (cwBeliefs and ent:HasBelief("impossibly_skilled") and isJavelin))) then
 						if !attacker:IsPlayer() then
 							if isJavelin then
 								ent:EmitSound(blocksoundtable["blockmissile"][math.random(1, #blocksoundtable["blockmissile"])])
@@ -1132,7 +1132,7 @@ local function Guarding(ent, dmginfo)
 												conditionLoss = dmginfo:GetDamage() / 100;
 											end
 											
-											if enemywep.isJavelin and attacker:GetNWBool("ThrustStance") then
+											if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
 												conditionLoss = conditionLoss * 40;
 											end
 											
@@ -1159,7 +1159,7 @@ local function Guarding(ent, dmginfo)
 							end
 						end
 						
-						ent:SetNWBool("Deflect", false)
+						ent:SetLocalVar("Deflect", false)
 						wep:SetNextPrimaryFire(0);
 						
 						if ent.HasBelief then
@@ -1170,7 +1170,7 @@ local function Guarding(ent, dmginfo)
 							if ent:HasBelief("sidestep") then
 								deflectionPoisePayback = 25;
 								deflectionStabilityPayback = 15;
-								ent:SetNWBool("CanDeflect", true)
+								ent:SetLocalVar("CanDeflect", true)
 
 							elseif ent:HasBelief("deflection") then
 								deflectionPoisePayback = 15;
@@ -1191,7 +1191,7 @@ local function Guarding(ent, dmginfo)
 						
 						-- Deflection "mini stun" effect
 						if attacker:IsPlayer() and (!IsValid(inflictor) or !isJavelin) then
-							attacker:SetNWBool("Deflected", true);
+							attacker:SetLocalVar("Deflected", true);
 							
 							local delay = enemyattacktable["delay"];
 							
@@ -1225,7 +1225,7 @@ local function Guarding(ent, dmginfo)
 							
 							timer.Simple(delay, function()
 								if IsValid(attacker) then
-									attacker:SetNWBool("Deflected", false);
+									attacker:SetLocalVar("Deflected", false);
 								end
 							end);
 						end
@@ -1259,7 +1259,7 @@ local function Guarding(ent, dmginfo)
 							local enemyattacksoundtable = GetSoundTable(attackSoundTable)
 							--print(enemyattacksoundtable["hitbody"][math.random(1, #enemyattacksoundtable["hitbody"])])
 								
-							if attacker:GetNWBool("ThrustStance") == true and attacker:GetNWBool("Riposting") != true then
+							if attacker:GetNetVar("ThrustStance") == true and attacker:GetNetVar("Riposting") != true then
 								ent:EmitSound(enemyattacksoundtable["althitbody"][math.random(1, #enemyattacksoundtable["althitbody"])])
 								-- For sacrificial attacks (thrust)
 								if enemyattacktable["attacktype"] == "ice_swing" then
@@ -1273,7 +1273,7 @@ local function Guarding(ent, dmginfo)
 							else
 								local stabilityDamage = enemyattacktable["stabilitydamage"]
 
-								if attacker:GetNWBool("ThrustStance") and enemyattacktable["altattackstabilitydamagemodifier"] then
+								if attacker:GetNetVar("ThrustStance") and enemyattacktable["altattackstabilitydamagemodifier"] then
 									stabilityDamage = stabilityDamage * enemyattacktable["altattackstabilitydamagemodifier"];
 								end
 								
@@ -1344,7 +1344,7 @@ local function Guarding(ent, dmginfo)
 											conditionLoss = dmginfo:GetDamage() / 100;
 										end
 										
-										if enemywep.isJavelin and attacker:GetNWBool("ThrustStance") then
+										if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
 											conditionLoss = conditionLoss * 40;
 										end
 										
@@ -1452,7 +1452,7 @@ local function Guarding(ent, dmginfo)
 									conditionLoss = dmginfo:GetDamage() / 100;
 								end
 								
-								if enemywep.isJavelin and attacker:GetNWBool("ThrustStance") then
+								if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
 									conditionLoss = conditionLoss * 40;
 								end
 								
@@ -1533,9 +1533,9 @@ local function UpdateWeaponRaised(player, activeWeapon, bIsRaised, curTime)
 									end
 								end
 								
-								--if (blockTable and player:GetNWInt("meleeStamina", 100) >= guardblockamount and !player:GetNWBool("Parried")) then
-								if (blockTable and player:GetNWInt("Stamina", 100) >= guardblockamount and !player:GetNWBool("Parried")) then
-									player:SetNWBool("Guardening", true);
+								--if (blockTable and player:GetNWInt("meleeStamina", 100) >= guardblockamount and !player:GetNetVar("Parried")) then
+								if (blockTable and player:GetNWInt("Stamina", 100) >= guardblockamount and !player:GetNetVar("Parried")) then
+									player:SetLocalVar("Guardening", true);
 									player.beginBlockTransition = true;
 									activeWeapon.Primary.Cone = activeWeapon.IronCone;
 									activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;

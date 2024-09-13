@@ -186,6 +186,11 @@ function cwBeliefs:ForceRemoveBelief(player, uniqueID, bRemoveDependencies)
 		
 		beliefs[uniqueID] = false;
 		
+		player:SetCharacterData("beliefs", beliefs);
+		player:SetCharacterData("level", math.max(player:GetCharacterData("level", 1) - levels_to_remove, 1));
+		player:SetNetVar("level", player:GetCharacterData("level", 1));
+		player:NetworkBeliefs();
+		
 		--local max_poise = player:GetMaxPoise();
 		--local poise = player:GetNWInt("meleeStamina");
 		local max_stamina = player:GetMaxStamina();
@@ -203,10 +208,6 @@ function cwBeliefs:ForceRemoveBelief(player, uniqueID, bRemoveDependencies)
 		
 		hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true)
 		
-		player:SetCharacterData("beliefs", beliefs);
-		player:SetCharacterData("level", math.max(player:GetCharacterData("level", 1) - levels_to_remove, 1));
-		player:SetNetVar("level", player:GetCharacterData("level", 1));
-		player:NetworkBeliefs();
 		player:SaveCharacter();
 	end
 end

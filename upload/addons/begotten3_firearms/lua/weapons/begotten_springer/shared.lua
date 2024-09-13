@@ -187,7 +187,7 @@ function SWEP:BoltBack()
 	if canCycleBolt then
 		timer.Simple(.25, function()
 			if SERVER and self.Weapon != nil then 
-				self.Weapon:SetNWBool("Reloading", true);
+				--self.Weapon:SetNWBool("Reloading", true);
 				
 				if self.Weapon:GetClass() == self.Gun then
 					if(self:GetIronsights() == true) then
@@ -212,7 +212,7 @@ function SWEP:BoltBack()
 					
 					timer.Simple(boltactiontime + .1, 
 						function() if SERVER and self.Weapon != nil then
-							self.Weapon:SetNWBool("Reloading", false);
+							--self.Weapon:SetNWBool("Reloading", false);
 							
 							if self.Owner:KeyDown(IN_ATTACK2) and self.Weapon:GetClass() == self.Gun then 
 								self.Owner:SetFOV( 75/self.Secondary.ScopeZoom, 0.15 )                      		

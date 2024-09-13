@@ -64,12 +64,8 @@ if CLIENT then
 	language.Add("tool.drgbase_tool_relationship_simple.desc", "Change relationship of a nextbot towards an entity.")
 	language.Add("tool.drgbase_tool_relationship_simple.0", "Left click to select/deselect a nextbot/NPC (hold shift to select multiple entities), right click to set the relationship towards an entity (aim at the ground to set the relationship towards yourself) and reload to clear the list of selected entities.")
 
-	hook.Add("PreDrawHalos", "DrGBaseToolRelationshipHalos", function()
-		local ply = LocalPlayer()
-		local wep = ply:GetActiveWeapon()
-		if not IsValid(wep) or wep:GetClass() ~= "gmod_tool" then return end
-		local tool = ply:GetTool()
-		if tool == nil or tool.Mode ~= "drgbase_tool_relationship_simple" then return end
+	hook.Add("DrawDRGBaseHalos", "DrGBaseToolRelationshipHalos", function(ply, mode)
+		if mode ~= "drgbase_tool_relationship_simple" then return end
 		local allies = {}
 		local enemies = {}
 		local afraid = {}

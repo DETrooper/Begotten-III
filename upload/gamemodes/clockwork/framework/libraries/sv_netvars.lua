@@ -71,8 +71,10 @@ function entityMeta:SendNetVar(key, receiver)
 end
 
 function entityMeta:ClearNetVars(receiver)
-	stored[self] = nil
-	netstream.Start(receiver, "nDel", self:EntIndex())
+	if stored[self] then
+		stored[self] = nil
+		netstream.Start(receiver, "nDel", self:EntIndex())
+	end
 end
 
 function entityMeta:SetNetVar(key, value, receiver)
@@ -85,6 +87,22 @@ function entityMeta:SetNetVar(key, value, receiver)
 	self:SendNetVar(key, receiver)
 end
 
+function entityMeta:SetLocalVar(key, value)
+	if !self:IsPlayer() then
+		self:SetNetVar(key, value, self);
+	
+		return;
+	end
+	
+	if (checkBadType(key, value)) then return end
+	if (!istable(value) and value == self:GetNetVar(key)) then return end
+	
+	stored[self] = stored[self] or {}
+	stored[self][key] = value
+
+	netstream.Start(self, "nLcl", key, value)
+end
+
 function entityMeta:GetNetVar(key, default)
 	local storedIndex = stored[self];
 
@@ -95,16 +113,7 @@ function entityMeta:GetNetVar(key, default)
 	return default
 end
 
-function playerMeta:SetLocalVar(key, value)
-	if (checkBadType(key, value)) then return end
-
-	stored[self] = stored[self] or {}
-	stored[self][key] = value
-
-	netstream.Start(self, "nLcl", key, value)
-end
-
-playerMeta.GetLocalVar = entityMeta.GetNetVar
+entityMeta.GetLocalVar = entityMeta.GetNetVar
 
 function netvars.GetNetVar(key, default)
 	local value = globals[key]

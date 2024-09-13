@@ -19,7 +19,16 @@ function cwCharacterNeeds:PostPlayerSpawn(player, lightSpawn, changeClass, first
 			local need = self.Needs[i];
 			
 			player:SetCharacterData(need, player:GetCharacterData(need) or 0);
-			player:SetLocalVar(need, player:GetCharacterData(need));
+			
+			if table.HasValue(self.ESPNeeds, need) then
+				local networkTab = table.Copy(Schema:GetAdmins());
+				
+				table.insert(networkTab, player);
+				
+				player:SetNetVar(need, player:GetCharacterData(need), networkTab);
+			else
+				player:SetLocalVar(need, player:GetCharacterData(need));
+			end
 		end
 	end
 end;

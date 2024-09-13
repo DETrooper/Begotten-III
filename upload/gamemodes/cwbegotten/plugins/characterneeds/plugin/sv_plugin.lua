@@ -5,6 +5,7 @@
 local playerMeta = FindMetaTable("Player")
 
 cwCharacterNeeds.Needs = {"corruption", "hunger", "thirst", "sleep"};
+cwCharacterNeeds.ESPNeeds = {"corruption"}; -- Needs that should be networked to admins also for admin ESP.
 
 if (game.GetMap() == "rp_begotten3") then
 	cwCharacterNeeds.bedZones = {
@@ -314,7 +315,16 @@ function playerMeta:HandleNeed(need, amount)
 		end
 			
 		self:SetCharacterData(need, math.Clamp(newAmount, 0, 100));
-		self:SetLocalVar(need, math.Clamp(math.Round(newAmount), 0, 100));
+		
+		if table.HasValue(cwCharacterNeeds.ESPNeeds, need) then
+			local networkTab = table.Copy(Schema:GetAdmins());
+			
+			table.insert(networkTab, self);
+			
+			self:SetNetVar(need, self:GetCharacterData(need), networkTab);
+		else
+			self:SetLocalVar(need, self:GetCharacterData(need));
+		end
 	end
 end
 
@@ -329,6 +339,15 @@ end
 function playerMeta:SetNeed(need, value)
 	if need and table.HasValue(cwCharacterNeeds.Needs, need) then
 		self:SetCharacterData(need, math.Clamp(value, 0, 100));
-		self:SetLocalVar(need, math.Clamp(value, 0, 100));
+		
+		if table.HasValue(cwCharacterNeeds.ESPNeeds, need) then
+			local networkTab = table.Copy(Schema:GetAdmins());
+			
+			table.insert(networkTab, self);
+			
+			self:SetNetVar(need, self:GetCharacterData(need), networkTab);
+		else
+			self:SetLocalVar(need, self:GetCharacterData(need));
+		end
 	end
 end

@@ -33,6 +33,17 @@ netstream.Hook("gVar", function(key, value)
 	globals[key] = value
 end)
 
+function entityMeta:SetNetVar(key, value)
+	local index = self:EntIndex()
+
+	stored[index] = stored[index] or {}
+	stored[index][key] = value
+end
+
+function entityMeta:SetLocalVar(key, value)
+	self:SetNetVar(key, value);
+end
+
 function netvars.GetNetVar(key, default)
 	local value = globals[key]
 

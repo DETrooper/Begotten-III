@@ -1276,7 +1276,7 @@ RITUAL = cwRituals.rituals:New("regrowth");
 		player:SetCharacterData("stability", max_stability);
 		--player:SetCharacterData("meleeStamina", max_poise);
 		--player:SetNWInt("meleeStamina", max_poise);
-		player:SetNWInt("freeze", 0);
+		player:SetLocalVar("freeze", 0);
 		player:SetBloodLevel(5000);
 		player:StopAllBleeding();
 		Clockwork.limb:HealBody(player, 100);
@@ -1352,7 +1352,7 @@ RITUAL = cwRituals.rituals:New("regrowth_target");
 					target:SetCharacterData("stability", max_stability);
 					--target:SetCharacterData("meleeStamina", max_poise);
 					--target:SetNWInt("meleeStamina", max_poise);
-					target:SetNWInt("freeze", 0);
+					target:SetLocalVar("freeze", 0);
 					target:SetBloodLevel(5000);
 					target:StopAllBleeding();
 					Clockwork.limb:HealBody(target, 100);
@@ -1455,7 +1455,7 @@ RITUAL = cwRituals.rituals:New("Sister's Blessing");
 	RITUAL.description = "The River Styx is said to be a boiling body of lava that is home to the dead and damned. With the correct blood magic ritual, the Reavers have been able to bargain with the demons that their crossing will be paid in the souls of their harvest. Incurs 75 corruption.";
 	RITUAL.onerequiredbelief = {"shedskin", "watchful_raven"}; -- Unique Mother/Sister Ritual
 
-	RITUAL.requirements = {"xolotl_catalyst", "pentagram_catalyst", "xolotl_catalyst"};
+	RITUAL.requirements = {"xolotl_catalyst", "pentagram_catalyst", "familial_catalyst"};
 	RITUAL.corruptionCost = 75;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 200;
@@ -1633,10 +1633,10 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("steel_will");
 	RITUAL.name = "(T3) Steel Will";
-	RITUAL.description = "Unbroken, undisturbed - the Glaze is with you! Performing this ritual restores your sanity to full, reduces sanity loss by 90%, and makes you immune to the effects of fear for 15 minutes. Incurs 10 corruption.";
+	RITUAL.description = "Unbroken, undisturbed - the Glaze is with you! Performing this ritual restores your sanity to full, reduces sanity loss by 90%, and makes you immune to the effects of fear for 40 minutes. Incurs 10 corruption.";
 	RITUAL.onerequiredbelief = {"emissary", "extinctionist"}; -- Tier III Faith of the Light Ritual
 	
-	RITUAL.requirements = {"xolotl_catalyst", "holy_spirit", "light_catalyst"};
+	RITUAL.requirements = {"light_catalyst", "elysian_catalyst", "light_catalyst"};
 	RITUAL.corruptionCost = 10;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 50;
@@ -1645,7 +1645,7 @@ RITUAL = cwRituals.rituals:New("steel_will");
 		player:SetNetVar("steelWill", true);
 		player:HandleSanity(100);
 
-		timer.Create("SteelWillTimer_"..player:EntIndex(), 900, 1, function()
+		timer.Create("SteelWillTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("steelWill", false) then
 					player:SetNetVar("steelWill", false);

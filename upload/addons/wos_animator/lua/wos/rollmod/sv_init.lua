@@ -364,9 +364,9 @@ function meta:StartRolling(a)
 									if (loweredParryDebug < curTime) then
 										local blockTable = GetTable(activeWeapon.BlockTable);
 										
-										--if (blockTable and self:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self:GetNWBool("Parried")) then
-										if (blockTable and self:GetNWInt("Stamina", 100) >= blockTable["guardblockamount"] and !self:GetNWBool("Parried")) then
-											self:SetNWBool("Guardening", true);
+										--if (blockTable and self:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self:GetNetVar("Parried")) then
+										if (blockTable and self:GetNWInt("Stamina", 100) >= blockTable["guardblockamount"] and !self:GetNetVar("Parried")) then
+											self:SetLocalVar("Guardening", true);
 											self.beginBlockTransition = true;
 											activeWeapon.Primary.Cone = activeWeapon.IronCone;
 											activeWeapon.Primary.Recoil = activeWeapon.Primary.IronRecoil;

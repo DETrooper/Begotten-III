@@ -167,7 +167,7 @@ if SERVER then
 				local damagetype = (self.AttackTable["dmgtype"])
 				local trace = self.Owner:GetEyeTrace()
 				
-				if Ent:IsNPC() or Ent:IsNextBot() or (Ent:IsPlayer() and !Ent:GetNWBool("Parry") and !Ent:GetNWBool("Deflect")) and !Ent.iFrames then
+				if Ent:IsNPC() or Ent:IsNextBot() or (Ent:IsPlayer() and !Ent:GetNetVar("Parry") and !Ent:GetNetVar("Deflect")) and !Ent.iFrames then
 					local hitEntPos = Ent:GetPos();
 					local distance = hitEntPos:DistToSqr(self.cachedStartPos);
 					local poiseDamage = self.AttackTable["poisedamage"];
@@ -238,7 +238,7 @@ if SERVER then
 					self:SetCollisionGroup(COLLISION_GROUP_WORLD);
 					
 					return;
-				elseif Ent:IsPlayer() and (Ent:GetNWBool("Deflect") or Ent:GetNWBool("Parry")) then
+				elseif Ent:IsPlayer() and (Ent:GetNetVar("Deflect") or Ent:GetNetVar("Parry")) then
 					local bolt = ents.Create(self:GetClass())
 					if !bolt:IsValid() then return false end
 					
@@ -255,7 +255,7 @@ if SERVER then
 					bolt.itemTable = self.itemTable;
 					bolt.deflected = true;
 					
-					if Ent:GetNWBool("Parry") then
+					if Ent:GetNetVar("Parry") then
 						bolt.parried = true;
 					end
 					
@@ -281,7 +281,7 @@ if SERVER then
 						bolt:SetAngles(Ent:GetAimVector():Angle())
 						phys:SetVelocity(Ent:GetAimVector() * 1800);
 						
-						if Ent:GetNWBool("Parry") then
+						if Ent:GetNetVar("Parry") then
 							Ent:EmitSound("meleesounds/DS2Parry.mp3");
 						end
 						
@@ -298,7 +298,7 @@ if SERVER then
 						phys:SetVelocity(Ent:GetAimVector() * 50);
 					end
 				
-					if !Ent:GetNWBool("Parry") then
+					if !Ent:GetNetVar("Parry") then
 						bolt:StopSound("weapons/throw_swing_03.wav");
 						bolt:EmitSound(bolt.Hit[math.random(1, #bolt.Hit)])
 					end

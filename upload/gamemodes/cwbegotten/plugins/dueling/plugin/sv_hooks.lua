@@ -172,7 +172,7 @@ end
 function cwDueling:PlayerExitedDuel(player)
 	player:Freeze(false);
 	player:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 5, 0);
-	player:SetNWInt("freeze", 0);
+	player:SetLocalVar("freeze", 0);
 	
 	if !player:Alive() then
 		player:Spawn();

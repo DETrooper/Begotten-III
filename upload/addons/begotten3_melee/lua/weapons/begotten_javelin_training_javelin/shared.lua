@@ -215,13 +215,13 @@ end
 function SWEP:GetHoldtypeOverride()
 	if IsValid(self.Owner) then
 		if self:GetNWString("activeShield"):len() > 0 then
-			if self.Owner:GetNWBool("ThrustStance") then
+			if self.Owner:GetNetVar("ThrustStance") then
 				self.realHoldType = self.HoldTypeAlternateShield;
 			else
 				self.realHoldType = self.HoldTypeShield;
 			end
 		else
-			if self.Owner:GetNWBool("ThrustStance") then
+			if self.Owner:GetNetVar("ThrustStance") then
 				self.realHoldType = self.HoldTypeAlternate;
 			else
 				self.realHoldType = self.HoldType;

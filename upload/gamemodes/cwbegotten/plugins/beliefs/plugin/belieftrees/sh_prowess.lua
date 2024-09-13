@@ -47,7 +47,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 				name = "Blademaster",
 				description = "All one handed slashing weapons and claws now deal 15% more damage. Unlocks the use of the 'Swordplay' attribute for longswords.",
 				iconOverride = "begotten/ui/belieficons/swordsman.png",
-				lockedSubfactions = {"Auxiliary"},
+				--lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "halfsword_sway"},
 				row = 3,
 			},
@@ -70,7 +70,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			["repulsive_riposte"] = {
 				name = "Repulsive Riposte",
 				description = "Unlocks the ability to chain-parry, extending your active parry window by 0.3 seconds every time you connect a parry, thus allowing you to parry multiple opponents with greater ease. Multi-parries will successively restore more stamina the more targets you parry. Riposte attack damage from successful parries is increased from 200% to 250%.";
-				lockedSubfactions = {"Auxiliary"},
+				--lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "parrying"},
 				row = 3,
 			},
@@ -92,7 +92,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			["warrior"] = {
 				name = "Warrior",
 				description = "Maximum stamina is now increased by an additional 10 points.",
-				lockedSubfactions = {"Auxiliary"},
+				--lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "wrestle_subdue"},
 				row = 3,
 			},
@@ -114,7 +114,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			["sidestep"] = {
 				name = "Sidestep",
 				description = "Successful deflections now restore +10 more points of stamina and stability, and also prevents enemy attacks for an additional second. The cooldown before your next deflection is reduced by 20%, and succesful deflections will remove your deflection cooldown.",
-				lockedSubfactions = {"Auxiliary"},
+				--lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "deflection"},
 				row = 3,
 			},
@@ -130,7 +130,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 				name = "Might",
 				description = "Increased inventory capacity by 50%. Deal 15% more stability damage with all melee weapons. Fists and fisted weapons now deal 20% more damage.",
 				quote = "\"I smash you now!\"",
-				lockedSubfactions = {"Auxiliary"},
+				--lockedSubfactions = {"Auxiliary"},
 				requirements = {"fighter", "strength"},
 				row = 3,
 			},

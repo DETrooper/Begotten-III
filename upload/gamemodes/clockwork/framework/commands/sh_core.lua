@@ -861,6 +861,7 @@ local COMMAND = Clockwork.command:New("CharFallOver");
 	COMMAND.text = "[number Seconds]";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.optionalArguments = 1;
+	COMMAND.alias = {"Fallover", "PlyFallover"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

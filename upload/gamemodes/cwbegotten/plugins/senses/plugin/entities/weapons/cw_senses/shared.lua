@@ -56,7 +56,7 @@ function SWEP:Deploy()
 			return;
 		end
 		
-		if !(cwBeliefs and (player:HasBelief("creature_of_the_dark") or player:HasBelief("the_black_sea"))) and !player:GetNWBool("hasThermal") and !player:GetNWBool("hasNV") then
+		if !(cwBeliefs and (player:HasBelief("creature_of_the_dark") or player:HasBelief("the_black_sea"))) and !player:GetNetVar("hasThermal") and !player:GetNetVar("hasNV") then
 			local clothesItem = player:GetClothesEquipped();
 			
 			if (!clothesItem or (clothesItem and !clothesItem.attributes) or (clothesItem and clothesItem.attributes and !table.HasValue(clothesItem.attributes, "thermal_vision"))) and !player:GetCharmEquipped("thermal_implant") then
@@ -71,7 +71,7 @@ function SWEP:Holster(newWeapon)
 		local player = self.Owner;
 		
 		if !IsValid(newWeapon) or newWeapon:GetClass() ~= "cw_senses" then
-			if !(cwBeliefs and (player:HasBelief("creature_of_the_dark") or player:HasBelief("the_black_sea"))) and !player:GetNWBool("hasThermal") and !player:GetNWBool("hasNV") then
+			if !(cwBeliefs and (player:HasBelief("creature_of_the_dark") or player:HasBelief("the_black_sea"))) and !player:GetNetVar("hasThermal") and !player:GetNetVar("hasNV") then
 				local clothesItem = player:GetClothesEquipped();
 			
 				if (!clothesItem or (clothesItem and !clothesItem.attributes) or (clothesItem and clothesItem.attributes and !table.HasValue(clothesItem.attributes, "thermal_vision"))) and !player:GetCharmEquipped("thermal_implant") then

@@ -42,15 +42,3 @@ function SWEP:PrimaryAttack()
 end
 function SWEP:SecondaryAttack() end
 function SWEP:Reload() end
-hook.Add("PreDrawHalos", "DrGBasePossessorSWEPHalos", function()
-	local ply = LocalPlayer()
-	local weapon = ply:GetActiveWeapon()
-	if IsValid(weapon) and weapon:GetClass() == "drgbase_possessor" then
-		local tr = ply:GetEyeTraceNoCursor()
-		local ent = tr.Entity
-		if not IsValid(ent) then return end
-		if CanPossess(ent) and not ent:IsPossessed() then
-			halo.Add({ent}, DrGBase.CLR_GREEN)
-		else halo.Add({ent}, DrGBase.CLR_RED) end
-	end
-end)

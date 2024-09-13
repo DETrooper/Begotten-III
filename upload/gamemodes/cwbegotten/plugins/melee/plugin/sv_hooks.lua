@@ -34,8 +34,8 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 
 			local entWeapon = entity:GetActiveWeapon();
 			
-			if IsValid(entWeapon) and (entWeapon.Base == "begotten_firearm_base" or entWeapon.isJavelin) and !entity:GetNWBool("Guardening") then
-				if !(entWeapon.isJavelin and cwBeliefs and entity:GetNWBool("ThrustStance") and entity:HasBelief("strength")) then
+			if IsValid(entWeapon) and (entWeapon.Base == "begotten_firearm_base" or entWeapon.isJavelin) and !entity:GetNetVar("Guardening") then
+				if !(entWeapon.isJavelin and cwBeliefs and entity:GetNetVar("ThrustStance") and entity:HasBelief("strength")) then
 					local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
 					local itemTable = Clockwork.item:GetByWeapon(entWeapon);
 					
@@ -69,7 +69,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 				end
 			end
 		
-			if entity:GetNWBool("Guardening") then
+			if entity:GetNetVar("Guardening") then
 				if attacker:IsNPC() or attacker:IsNextBot() then
 					if IsValid(entWeapon) and entWeapon.BlockTable then
 						local blocktable = GetTable(entWeapon.BlockTable)
@@ -95,7 +95,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 			end
 		end
 		
-		if entity:IsNPC() or entity:IsNextBot() or (entity:IsPlayer() and (!entity:GetNWBool("Guardening") or (entity:GetNWBool("Guardening") and !canblock)) and (!entity:GetNWBool("Parry") == true)) or entity.isTrainingDummy then
+		if entity:IsNPC() or entity:IsNextBot() or (entity:IsPlayer() and (!entity:GetNetVar("Guardening") or (entity:GetNetVar("Guardening") and !canblock)) and (!entity:GetNetVar("Parry") == true)) or entity.isTrainingDummy then
 			local victimPosition = entity:GetPos();
 			local position = victimPosition;
 			
@@ -126,7 +126,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 				if (inflictor.AttackSoundTable) then
 					local attackSoundTable = GetSoundTable(inflictor.AttackSoundTable)
 					
-					if attacker:GetNWBool("ThrustStance") == true then
+					if attacker:GetNetVar("ThrustStance") == true then
 						didthrust = true;
 					end;
 					
@@ -196,7 +196,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 			if (damage > 15) then
 				effectName = "bloodsplat";
 				
-				if didthrust and attacker:GetNWBool("Riposting") != true then
+				if didthrust and attacker:GetNetVar("Riposting") != true then
 					armorSound = althitbody;
 				else
 					armorSound = hitbody;
@@ -246,7 +246,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 							if (damage > 15) then
 								effectName = "bloodsplat";
 								
-								if didthrust and attacker:GetNWBool("Riposting") != true then
+								if didthrust and attacker:GetNetVar("Riposting") != true then
 									armorSound = althitbody;
 								else
 									armorSound = hitbody;
@@ -266,7 +266,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 								playlowdamage = false;
 							end;
 							
-							if didthrust and attacker:GetNWBool("Riposting") != true then
+							if didthrust and attacker:GetNetVar("Riposting") != true then
 								armorSound = althitbody
 							end
 						end
@@ -292,7 +292,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 						if (damage > 15) then
 							effectName = "bloodsplat";
 							
-							if didthrust and attacker:GetNWBool("Riposting") != true then
+							if didthrust and attacker:GetNetVar("Riposting") != true then
 								armorSound = althitbody;
 							else
 								armorSound = hitbody;
@@ -324,7 +324,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 				local class = inflictor:GetClass()
 				
 				if (string.find(class, "begotten_spear_")) then
-					if (distance > 65) or attacker:GetNWBool("Riposting") then
+					if (distance > 65) or attacker:GetNetVar("Riposting") then
 						entity:EmitSound(armorSound)
 						
 						if playlowdamage then
@@ -336,7 +336,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 				elseif (string.find(class, "begotten_polearm_")) or (string.find(class, "begotten_scythe_")) then
 					if inflictor.ShortPolearm != true or didthrust then
 						if (distance >= 0 and distance <= 75) then -- Polearm
-							if attacker:GetNWBool("Riposting") then
+							if attacker:GetNetVar("Riposting") then
 								entity:EmitSound(armorSound);
 							elseif didthrust and inflictor.CanSwipeAttack then
 								entity:EmitSound(althitbody);
@@ -344,7 +344,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 								entity:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2, 6)..".wav");
 							end
 						elseif (distance > 75) then
-							if attacker:GetNWBool("Riposting") then
+							if attacker:GetNetVar("Riposting") then
 								entity:EmitSound(hitbody);
 							elseif didthrust and inflictor.CanSwipeAttack then
 								entity:EmitSound(althitbody);
@@ -354,7 +354,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 						end;
 					else
 						if (distance >= 0 and distance <= 70) then -- Short polearm
-							if attacker:GetNWBool("Riposting") then
+							if attacker:GetNetVar("Riposting") then
 								entity:EmitSound(armorSound);
 							else
 								entity:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2, 6)..".wav");
@@ -392,7 +392,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 	end
 	
 	--[[local inAttack2 = player:KeyDown(IN_ATTACK2);
-	local gardening = player:GetNWBool("Guardening", false);
+	local gardening = player:GetNetVar("Guardening", false);
 	
 	if (!inAttack2 and gardening) then
 		player:CancelGuardening();
@@ -406,7 +406,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 			
 			if (IsValid(activeWeapon)) then
 				if (activeWeapon.realIronSights == false) then
-					player:SetNWBool("Guardening", false)
+					player:SetLocalVar("Guardening", false)
 					plyTab.beginBlockTransition = true;
 				end
 			end;
@@ -435,7 +435,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 		
 		if IsValid(activeWeapon) and activeWeapon.Base == "sword_swepbase" then
 			if (poise != max_poise) then
-				if !Clockwork.player:GetWeaponRaised(player) or (poise < max_poise) and !player:GetNWBool("Guardening") then
+				if !Clockwork.player:GetWeaponRaised(player) or (poise < max_poise) and !player:GetNetVar("Guardening") then
 					player:SetNWInt("meleeStamina", math.Clamp(poise + gainedPoise, 0, max_poise))
 				end
 			end;
@@ -454,7 +454,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 		local max_stability = player:GetMaxStability();
 		local stability = player:GetCharacterData("stability", max_stability);
 
-		if player:GetNWInt("freeze") > 0 and !player:GetNWBool("bliz_frozen") then
+		if player:GetNetVar("freeze") > 0 and !player:GetNWBool("bliz_frozen") then
 			if player:IsOnFire() then
 				player:TakeFreeze(20);
 			else
@@ -712,7 +712,7 @@ function cwMelee:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 		player:SetLocalVar("maxStability", max_stability);
 		--player:SetLocalVar("maxMeleeStamina", max_poise);
 		--player:SetNWInt("meleeStamina", max_poise);
-		player:SetNWInt("freeze", 0);
+		player:SetLocalVar("freeze", 0);
 	end;
 end;
 
@@ -726,7 +726,7 @@ function cwMelee:PostPlayerDeath(player)
 	player:SetLocalVar("maxStability", max_stability);
 	--player:SetLocalVar("maxMeleeStamina", max_poise);
 	--player:SetNWInt("meleeStamina", max_poise);
-	player:SetNWInt("freeze", 0);
+	player:SetLocalVar("freeze", 0);
 end;
 
 -- Called every half second.
@@ -801,7 +801,7 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 							damageInfo:ScaleDamage(0.4);
 						end
 						
-						if entity:IsPlayer() and (!attacker:GetNWBool("Parried") and !attacker:GetNWBool("Deflected")) then
+						if entity:IsPlayer() and (!attacker:GetNetVar("Parried") and !attacker:GetNetVar("Deflected")) then
 							entity:SetNetVar("runningDisabled", true);
 							
 							timer.Create("GroundedSprintTimer_"..tostring(entity:EntIndex()), 3, 1, function()
@@ -833,12 +833,12 @@ end
 
 function cwMelee:ModifyPlayerSpeed(player, infoTable)
 	if IsValid(player) and player:HasInitialized() then
-		local freeze = player:GetNWInt("freeze", 0);
+		local freeze = player:GetNetVar("freeze", 0);
 
 		infoTable.runSpeed = infoTable.runSpeed * (1 - (freeze / 200));
 		infoTable.walkSpeed = infoTable.walkSpeed * (1 - (freeze / 200));
 		
-		if player:GetNWBool("Parried", false) then
+		if player:GetNetVar("Parried", false) then
 			infoTable.runSpeed = infoTable.runSpeed * 0.8;
 			infoTable.walkSpeed = infoTable.walkSpeed * 0.8;
 		end

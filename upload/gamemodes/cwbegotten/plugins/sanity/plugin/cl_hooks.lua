@@ -661,7 +661,7 @@ function cwSanity:RenderScreenspaceEffects()
 		end;
 		
 		if (sanity <= 50) then
-			if !Clockwork.Client:GetNWBool("senses") then
+			if !Clockwork.Client:GetNetVar("senses") then
 				if (!self.contrastAdd) then
 					self.contrastAdd = 0;
 				end;

@@ -37,12 +37,8 @@ if CLIENT then
 	language.Add("tool.drgbase_tool_mover.desc", "Force nextbots to move to a different position.")
 	language.Add("tool.drgbase_tool_mover.0", "Left click to select/deselect a nextbot (hold shift to select multiple nextbots), right click to set the position to go to and reload to clear the list of selected nextbots.")
 
-	hook.Add("PreDrawHalos", "DrGBaseToolMoverHalos", function()
-		local ply = LocalPlayer()
-		local wep = ply:GetActiveWeapon()
-		if not IsValid(wep) or wep:GetClass() ~= "gmod_tool" then return end
-		local tool = ply:GetTool()
-		if tool == nil or tool.Mode ~= "drgbase_tool_mover" then return end
+	hook.Add("DrawDRGBaseHalos", "DrGBaseToolMoverHalos", function(ply, mode)
+		if mode ~= "drgbase_tool_mover" then return end
 		halo.Add(ply:DrG_GetSelectedEntities(), DrGBase.CLR_CYAN, nil, nil, nil, nil, true)
 	end)
 end

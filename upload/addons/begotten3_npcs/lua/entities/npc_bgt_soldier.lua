@@ -104,13 +104,13 @@ if SERVER then
 		self:ResetSequence(ACT_FLINCH_PHYSICS);
 		
 		--[[if self.Shielded then
-			if self:GetNWBool("Guardening") then
-				self:SetNWBool("Guardening", false);
+			if self:GetNetVar("Guardening") then
+				self:SetLocalVar("Guardening", false);
 			end
 			
 			timer.Create("GuardResetTimer_"..self:EntIndex(), 2, 1, function()
 				if IsValid(self) then
-					self:SetNWBool("Guardening", true);
+					self:SetLocalVar("Guardening", true);
 				end
 			end);
 		end]]--
@@ -186,7 +186,7 @@ if SERVER then
 				self.Damage = 60;
 				
 				self:GiveWeapon("begotten_1h_spatha");
-				--self:SetNWBool("Guardening", true);
+				--self:SetLocalVar("Guardening", true);
 			else
 				if math.random(1, 3) == 1 then
 					self:GiveWeapon("begotten_1h_glazicus");
@@ -215,13 +215,13 @@ if SERVER then
 			end]]--
 			
 			--[[if self.Shielded then
-				if self:GetNWBool("Guardening") then
-					self:SetNWBool("Guardening", false);
+				if self:GetNetVar("Guardening") then
+					self:SetLocalVar("Guardening", false);
 				end
 				
 				timer.Create("GuardResetTimer_"..self:EntIndex(), 2, 1, function()
 					if IsValid(self) then
-						self:SetNWBool("Guardening", true);
+						self:SetLocalVar("Guardening", true);
 					end
 				end);
 			end]]--

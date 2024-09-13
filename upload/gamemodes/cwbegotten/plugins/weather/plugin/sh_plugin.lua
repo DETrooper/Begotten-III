@@ -186,6 +186,7 @@ if cwWeather.systemEnabled then
 		COMMAND.access = "a";
 		COMMAND.arguments = 1;
 		COMMAND.optionalArguments = 1;
+		COMMAND.types = {"Weather"}
 
 		-- Called when the command has been run.
 		function COMMAND:OnRun(player, arguments)
