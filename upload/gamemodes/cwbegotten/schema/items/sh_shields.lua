@@ -154,7 +154,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.bulletConditionScale = 0.45;
 	
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 750, bNoSupercrate = true};
-	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood", "wood", "wood", "leather", "leather", "leather"}};
+	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood", "wood", "leather", "leather"}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -345,7 +345,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.bulletConditionScale = 0.5;
 	
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, bNoSupercrate = true};
-	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood", "wood", "wood"}};
+	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood", "wood"}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
