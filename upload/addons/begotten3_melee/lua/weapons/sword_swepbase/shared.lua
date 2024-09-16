@@ -829,7 +829,7 @@ function SWEP:PrimaryAttack()
 							if (!owner:KeyDown(IN_USE)) then
 								local activeWeapon = owner:GetActiveWeapon();
 
-								if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
+								if activeWeapon:IsValid() and (activeWeapon.Base == "sword_swepbase") then
 									if (activeWeapon.realIronSights == true) then
 										local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
 										local curTime = CurTime();
@@ -2411,7 +2411,7 @@ function SWEP:SecondaryAttack()
 				if (!ply:KeyDown(IN_USE)) then
 					local activeWeapon = ply:GetActiveWeapon();
 
-					if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
+					if activeWeapon:IsValid() and (activeWeapon.Base == "sword_swepbase") then
 						if (activeWeapon.realIronSights == true) then
 							local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
 							local curTime = CurTime();
@@ -2480,7 +2480,7 @@ function SWEP:SecondaryAttack()
 				if (!ply:KeyDown(IN_USE)) then
 					local activeWeapon = ply:GetActiveWeapon();
 
-					if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
+					if activeWeapon:IsValid() and (activeWeapon.Base == "sword_swepbase") then
 						if (activeWeapon.realIronSights == true) then
 							local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
 							local curTime = CurTime();
@@ -3774,7 +3774,7 @@ end
 
 if CLIENT then
 	hook.Add("Think", "Blockthink", function()
-		for i, player in ipairs(_player.GetAll()) do
+		for _, player in _player.Iterator() do
 			if player:IsValid() and player:Alive() then
 				local plyTab = player:GetTable();
 				local setWeight = false;

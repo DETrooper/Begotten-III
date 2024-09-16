@@ -10,13 +10,13 @@ function cwObserverMode:MakePlayerExitObserverMode(player)
 	player:DrawWorldModel(true)
 	player:DrawShadow(true)
 	player:SetNoDraw(false)
-	player:SetNotSolid(false)
 	player:SetNoTarget(false)
 	player:SetRenderMode(RENDERMODE_TRANSALPHA);
 	player:Extinguish();
 	
 	if player:Alive() then
 		player:SetMoveType(player.cwObserverMoveType or MOVETYPE_WALK)
+		player:SetNotSolid(false)
 	else
 		player:SetMoveType(MOVETYPE_OBSERVER)
 	end

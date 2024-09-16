@@ -105,7 +105,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 			if IsValid(attacker) then
 				--local activeWeapon = attacker:GetActiveWeapon();
 				
-				--if IsValid(activeWeapon) and activeWeapon.Base == "sword_swepbase" then
+				--if activeWeapon:IsValid() and activeWeapon.Base == "sword_swepbase" then
 					hitGroup = Clockwork.kernel:GetRagdollHitGroup(player, damagePosition);
 				--end
 			end
@@ -406,7 +406,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						if attacker:IsPlayer() then
 							local activeWeapon = attacker:GetActiveWeapon();
 
-							if (IsValid(activeWeapon) and !activeWeapon.IgnoresBulletResistance) then
+							if (activeWeapon:IsValid() and !activeWeapon.IgnoresBulletResistance) then
 								local dmgScale = 1 - ((1 - armorItem.bulletScale) * (condition / 100));
 						
 								damageInfo:ScaleDamage(dmgScale);

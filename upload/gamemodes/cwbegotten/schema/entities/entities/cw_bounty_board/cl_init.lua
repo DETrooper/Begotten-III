@@ -47,7 +47,7 @@ local function CreateMenu(state)
 		--[[local subMenu = menu:AddSubMenu("Remove Bounty");
 		local bountyPlayers = {};
 			
-		for k, v in ipairs(_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if (v:HasInitialized() and v:IsWanted()) then
 				bountyPlayers[#bountyPlayers + 1] = {
 					bounty = v:GetBounty(),
@@ -83,7 +83,7 @@ local function CreateMenu(state)
 		--[[local subMenu = menu:AddSubMenu("(ADMIN) Remove Bounty");
 		local bountyPlayers = {};
 			
-		for k, v in ipairs(_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if (v:HasInitialized() and v:IsWanted()) then
 				bountyPlayers[#bountyPlayers + 1] = {
 					bounty = v:GetBounty(),

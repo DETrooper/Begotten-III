@@ -213,7 +213,7 @@ else
 					end)
 				queryObj:Execute()
 
-				Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has demoted "..data[2].." from "..cwUserGroup.." to user.")
+				Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has demoted "..data[2].." from "..cwUserGroup.." to user.")
 			end
 		end
 	end)

@@ -26,7 +26,7 @@ end;
 function cwCooking:PlayerCanUseItem(player, itemTable, noMessage)
 end;
 function printp(t)
-	--for k, v in pairs (_player.GetAll()) do
+	--for _, v in _player.Iterator() do
 		--Schema:EasyText(v, table.Random(colors), tostring(t))
 	--end;
 	--print(tostring(t))

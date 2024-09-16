@@ -15,7 +15,7 @@ function cwAlyTools:DrawStuff()
 	if Clockwork.Client:IsAdmin() then
 		Clockwork.Client.MarkPointPulse = Clockwork.Client.MarkPointPulse or 0;
 		Clockwork.Client.MarkPointPulseB = Clockwork.Client.MarkPointPulseB or false;
-		for k, v in pairs(_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if v:IsAdmin() then
 				local markeddata = cwAlyTools:UpdateMarkerTrace(v:GetNetVar("markedpoint", nil))
 				
@@ -68,7 +68,7 @@ function cwAlyTools:HUDPaint()
 		Clockwork.Client.MarkPointPulse = Clockwork.Client.MarkPointPulse or 0;
 		Clockwork.Client.MarkPointPulseB = Clockwork.Client.MarkPointPulseB or false;
 		hidedata = Clockwork.Client:GetNetVar("markeddata", false);
-		for k, v in pairs(_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if v:IsAdmin() then
 				local markeddata = cwAlyTools:UpdateMarkerTrace(v:GetNetVar("markedpoint", nil))
 				local corevect = markeddata.corepos or Clockwork.Client:GetPos()
@@ -190,10 +190,7 @@ function cwAlyTools:AddEntityOutlines(outlines)
 	local isdemon = Clockwork.Client:GetCharacterData("isDemon", false);
 	
 	if isdemon then
-		local playerCount = _player.GetCount();
-		local players = _player.GetAll();
-
-		for k, v in pairs(_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			local dist = Clockwork.Client:GetPos():Distance(v:GetPos())
 			self:DrawPlayerOutline(v, outlines, Color(255, 0, 0, 255));
 		end;

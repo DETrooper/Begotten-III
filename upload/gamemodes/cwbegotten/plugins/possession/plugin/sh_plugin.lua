@@ -101,7 +101,7 @@ function cwPossession:StartCommand(player, ucmd)
 				if possessor.changeStance then
 					local activeWeapon = player:GetActiveWeapon();
 					
-					if IsValid(activeWeapon) then
+					if activeWeapon:IsValid() then
 						local attacktable = GetTable(activeWeapon.AttackTable);
 
 						if (attackTable and attackTable["canaltattack"] == true) then
@@ -657,7 +657,7 @@ function COMMAND:OnRun(player, arguments)
 	else
 		Schema:EasyText(player, "grey", "No valid target argument found.");
 		if player:GetNetVar("tracktarget") then 
-			for k, v in pairs (_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				local steamID = v:SteamID();
 				if steamID == player:GetNetVar("tracktarget") then
 					
@@ -681,7 +681,7 @@ COMMAND.arguments = 0;
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
 	if player:GetNetVar("tracktarget") then 
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			local steamID = v:SteamID();
 			if steamID == player:GetNetVar("tracktarget") then
 				player:SetNetVar("trackedby", nil);
@@ -704,7 +704,7 @@ COMMAND.arguments = 0;
 function COMMAND:OnRun(player, arguments)
 	Schema:EasyText(player, "grey", "No valid target argument found.");
 	if player:GetNetVar("tracktarget") then 
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			local steamID = v:SteamID();
 			if steamID == player:GetNetVar("tracktarget") then
 				

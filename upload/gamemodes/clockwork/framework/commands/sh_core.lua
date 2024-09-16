@@ -113,7 +113,7 @@ local COMMAND = Clockwork.command:New("StorageTakeItems");
 			local players = {}
 			local inventory = Clockwork.storage:Query(player, "inventory");
 				
-			for k, v in pairs(_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				if (v:HasInitialized() and Clockwork.storage:Query(v, "inventory") == inventory) then
 					players[#players + 1] = v
 				end
@@ -164,7 +164,7 @@ local COMMAND = Clockwork.command:New("StorageTakeItems");
 				Clockwork.inventory:Rebuild(target);
 			end
 				
-			for k, v in pairs(_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				if (v:HasInitialized() and Clockwork.storage:Query(v, "inventory") == inventory) then
 					players[#players + 1] = v
 				end
@@ -353,7 +353,7 @@ local COMMAND = Clockwork.command:New("StorageGiveItems");
 			local players = {}
 			local inventory = Clockwork.storage:Query(player, "inventory");
 				
-			for k, v in pairs(_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				if (v:HasInitialized() and Clockwork.storage:Query(v, "inventory") == inventory) then
 					players[#players + 1] = v
 				end

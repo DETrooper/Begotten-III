@@ -475,12 +475,9 @@ end;
 if (SERVER) then
 	-- A function to get the player with the item in their inventory.
 	function CLASS_TABLE:GetHolder()
-		local players = _player.GetAll();
 		local holder = nil;
 		
-		for i = 1, _player.GetCount() do
-			local player = players[i];
-			
+		for _, player in _player.Iterator() do
 			if (IsValid(player) and player:HasInitialized()) then
 				local inventory = player:GetInventory();
 				
@@ -577,12 +574,9 @@ if (SERVER) then
 		
 		if (take) then
 			if (!IsValid(itemEntity)) then
-				local players = _player.GetAll();
 				local holder = nil;
 				
-				for i = 1, _player.GetCount() do
-					local player = players[i];
-					
+				for _, player in _player.Iterator() do
 					if (IsValid(player) and player:HasInitialized()) then
 						local inventory = player:GetInventory();
 						
@@ -613,12 +607,9 @@ if (SERVER) then
 			end;
 		else
 			if (!IsValid(itemEntity)) then
-				local players = _player.GetAll();
 				local holder = nil;
 				
-				for i = 1, _player.GetCount() do
-					local player = players[i];
-					
+				for _, player in _player.Iterator() do
 					if (IsValid(player) and player:HasInitialized()) then
 						local inventory = player:GetInventory();
 						

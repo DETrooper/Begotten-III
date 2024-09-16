@@ -213,7 +213,7 @@ function playerMeta:HandleNeed(need, amount)
 									
 									if lastZone ~= "tower" and lastZone ~= "theather" and lastZone ~= "manor" then 
 										Clockwork.chatBox:AddInTargetRadius(self, "me", "abruptly explodes into a shower of fire and gore as a fucking demon bursts from their very flesh!", playerPos, config.Get("talk_radius"):Get() * 2);
-										Schema:EasyText(GetAdmins(), "icon16/bomb.png", "tomato", self:Name().." exploded from high corruption and a demon has spawned in their stead!");
+										Schema:EasyText(Schema:GetAdmins(), "icon16/bomb.png", "tomato", self:Name().." exploded from high corruption and a demon has spawned in their stead!");
 										
 										self:Kill();
 										
@@ -246,7 +246,7 @@ function playerMeta:HandleNeed(need, amount)
 										end
 									
 										Clockwork.chatBox:AddInTargetRadius(self, "me", "abruptly explodes into a shower of gore!", playerPos, config.Get("talk_radius"):Get() * 2);
-										Schema:EasyText(GetAdmins(), "icon16/bomb.png", "tomato", self:Name().." exploded from high corruption!");
+										Schema:EasyText(Schema:GetAdmins(), "icon16/bomb.png", "tomato", self:Name().." exploded from high corruption!");
 									end
 								end
 							end
@@ -260,7 +260,7 @@ function playerMeta:HandleNeed(need, amount)
 							local playerPos = self:GetPos();
 							
 							Clockwork.chatBox:AddInTargetRadius(self, "me", "explodes into a shower of fire and gore as a fucking demon bursts from their very flesh!", playerPos, config.Get("talk_radius"):Get() * 2);
-							Schema:EasyText(GetAdmins(), "icon16/bomb.png", "tomato", self:Name().." exploded from high corruption and a demon has spawned in their stead!");
+							Schema:EasyText(Schema:GetAdmins(), "icon16/bomb.png", "tomato", self:Name().." exploded from high corruption and a demon has spawned in their stead!");
 							
 							self:Kill();
 							
@@ -293,7 +293,7 @@ function playerMeta:HandleNeed(need, amount)
 							end
 						
 							Clockwork.chatBox:AddInTargetRadius(self, "me", "abruptly explodes into a shower of gore!", playerPos, config.Get("talk_radius"):Get() * 2);
-							Schema:EasyText(GetAdmins(), "icon16/bomb.png", "tomato", self:Name().." exploded from high corruption!");
+							Schema:EasyText(Schema:GetAdmins(), "icon16/bomb.png", "tomato", self:Name().." exploded from high corruption!");
 						end
 					end
 				elseif newAmount >= 90 and currentAmount < 90 then

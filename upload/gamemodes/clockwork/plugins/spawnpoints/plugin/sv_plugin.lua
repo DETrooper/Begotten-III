@@ -70,7 +70,7 @@ function cwSpawnPoints:SaveSpawnPoints()
 		end
 	end
 
-	for i, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (player:IsAdmin()) then
 			netstream.Heavy(player, "SpawnPointESPSync", self:GetSpawnPoints())
 		end

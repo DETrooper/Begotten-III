@@ -466,12 +466,8 @@ function cwRecipes:IsAreaClear(position, bPile)
 			end;
 		end;
 	end;
-
-	local playerCount = _player.GetCount();
-	local players = _player.GetAll();
-
-	for i = 1, playerCount do
-		local v, k = players[i], i;
+	
+	for _, v in _player.Iterator() do
 		if (v:IsAdmin() or !v:Alive()) then
 			continue;
 		end;

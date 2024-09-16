@@ -56,7 +56,7 @@ function COMMAND:OnRun(player, arguments)
 		target:SetNetVar("battery", amount);
 		
 		if (player != target) then
-			Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s battery to "..amount..".");
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s battery to "..amount..".");
 		else
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own battery to "..amount..".");
 		end;

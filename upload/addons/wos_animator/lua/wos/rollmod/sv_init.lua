@@ -257,7 +257,7 @@ function meta:StartRolling(a)
 	
 	local activeWeapon = self:GetActiveWeapon();
 	
-	if IsValid(activeWeapon) and activeWeapon.IsABegottenMelee then
+	if activeWeapon:IsValid() and activeWeapon.IsABegottenMelee then
 		activeWeapon.isAttacking = false;
 		
 		if activeWeapon.AttackSoundTable and activeWeapon.Weapon then

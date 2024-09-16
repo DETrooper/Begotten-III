@@ -85,7 +85,7 @@ function cwSailing:CreateMenu(data)
 			if Clockwork.Client:GetFaction() ~= "Goreic Warrior" then
 				local activeWeapon = Clockwork.Client:GetActiveWeapon();
 				
-				if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" and Clockwork.Client:IsWeaponRaised(activeWeapon) then
+				if activeWeapon:IsValid() and activeWeapon:GetClass() == "cw_lantern" and Clockwork.Client:IsWeaponRaised(activeWeapon) then
 					local oil = Clockwork.Client:GetNetVar("oil", 0);
 				
 					--if oil >= 75 then

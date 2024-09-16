@@ -32,7 +32,7 @@ local COMMAND = Clockwork.command:New("CharMark");
 				target:SetCharacterData("markedBySatanist", true);
 				target:SetNetVar("markedBySatanist", true);
 				
-				Schema:EasyText(GetAdmins(), "cornflowerblue", target:Name().." has been manually marked for death by "..player:Name());
+				Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", target:Name().." has been manually marked for death by "..player:Name());
 			end
 		else
 			Schema:EasyText(player, "grey", arguments[1].." is not a valid character!");
@@ -56,7 +56,7 @@ local COMMAND = Clockwork.command:New("CharUnMark");
 				target:SetCharacterData("markedBySatanist", false);
 				target:SetNetVar("markedBySatanist", false);
 				
-				Schema:EasyText(GetAdmins(), "cornflowerblue", target:Name().." has been manually unmarked for death by "..player:Name());
+				Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", target:Name().." has been manually unmarked for death by "..player:Name());
 			else
 				Schema:EasyText(player, "darkgrey", target:Name().." is not marked for death!");
 			end

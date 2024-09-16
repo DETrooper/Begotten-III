@@ -160,11 +160,7 @@ end;
 function cwPossession:AddEntityOutlines(outlines)
 	local trackedPlayerID = Clockwork.Client:GetNetVar("tracktarget");
 	if trackedPlayerID then
-		local playerCount = _player.GetCount();
-		local players = _player.GetAll();
-
-		for i = 1, playerCount do
-			local v, k = players[i], i;
+		for _, v in _player.Iterator() do
 			if v:SteamID() == trackedPlayerID then
 				self:DrawPlayerOutline(v, outlines, Color(255, 0, 255, 255));
 			end;

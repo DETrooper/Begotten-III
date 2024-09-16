@@ -42,7 +42,7 @@ function PLUGIN:RenderScreenspaceEffects()
 end;
 
 function PLUGIN:Tick()
-	for _, player in pairs(_player.GetAll()) do
+	for _, player in _player.Iterator() do
 		player.clothesDrawnThisTick = false;
 	end
 	
@@ -182,7 +182,7 @@ function PLUGIN:PostPlayerDraw(player, flags)
 end
 
 function PLUGIN:Think()
-	for _, player in pairs(_player.GetAll()) do
+	for _, player in _player.Iterator() do
 		local plyTab = player:GetTable();
 		local clothesEnt = plyTab.clothesEnt;
 		

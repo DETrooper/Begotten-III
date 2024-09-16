@@ -132,7 +132,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 
 		local activeWeapon = player:GetActiveWeapon()
 		
-		if (IsValid(activeWeapon)) then
+		if (activeWeapon:IsValid()) then
 			if (activeWeapon:GetClass() == "cw_lantern") then
 				sanityDecay = sanityDecay + 2;
 			end
@@ -261,7 +261,7 @@ function cwSanity:EntityTakeDamageNew(entity, damageInfo)
 				local activeWeapon = attacker:GetActiveWeapon()
 				local entityPosition = entity:GetPos()
 				
-				if (IsValid(activeWeapon) and activeWeapon:GetClass() != "begotten_fists") then
+				if (activeWeapon:IsValid() and activeWeapon:GetClass() != "begotten_fists") then
 					for k, v in pairs (ents.FindInSphere(entityPosition, 768)) do
 						if (!v:IsPlayer() or v == attacker or v == entity) then
 							continue

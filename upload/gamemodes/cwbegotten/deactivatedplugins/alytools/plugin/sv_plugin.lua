@@ -146,7 +146,7 @@ function cwAlyTools:RemoveAllTeleporters(player)
 		count = count + 1;
 	end;
 
-	Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has deleted all teleporters.", nil);
+	Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has deleted all teleporters.", nil);
 	
 	self:SaveTeleporters();
 end;
@@ -189,7 +189,7 @@ function cwAlyTools:RemoveAllPowerCores(player)
 		count = count + 1;
 	end;
 	
-	Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has deleted all power cores.", nil);
+	Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has deleted all power cores.", nil);
 	
 	self:SavePowerCores();
 end;
@@ -198,8 +198,7 @@ end;
 function cwAlyTools:NotifyAly(text)
 	local alyishere = false;
 	
-	local players = _player.GetAll();
-	for k, v in pairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if v:SteamID() == "STEAM_0:0:15306745" then
 			alyishere = true;
 			Schema:EasyText(v, "cornflowerblue", "[ALYNOTIFY]:"..text, nil);

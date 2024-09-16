@@ -1020,9 +1020,7 @@ do
 
 	-- A function to get all ESP info.
 	function Clockwork.kernel:GetAdminESPInfo(info)
-		local players = _player.GetAll();
-		
-		for k, v in pairs(players) do
+		for _, v in _player.Iterator() do
 			if (IsValid(v) and v:HasInitialized()) then
 				local physBone = v:LookupBone("ValveBiped.Bip01_Head1");
 				local position = nil;

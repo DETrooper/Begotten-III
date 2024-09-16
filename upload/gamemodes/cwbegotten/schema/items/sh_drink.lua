@@ -323,7 +323,7 @@ local ITEM = Clockwork.item:New();
 	function ITEM:OnUse(player, itemEntity)
 		if player:HasTrait("marked") and math.random(1, 3) == 1 then
 			Clockwork.chatBox:AddInTargetRadius(player, "me", "pops open a bottle of Papa Pete's® Grape-Flavored Ice Cold Pop™, only to have a rigged grapeshot shell explode in their face!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
-			Schema:EasyText(GetAdmins(), "icon16/bomb.png", "tomato", player:Name().." got graped by Papa Pete!");
+			Schema:EasyText(Schema:GetAdmins(), "icon16/bomb.png", "tomato", player:Name().." got graped by Papa Pete!");
 			
 			local filter = RecipientFilter();
 			
@@ -623,7 +623,7 @@ local ITEM = Clockwork.item:New();
 			player:HandleSanity(-100);
 			player:ScriptedDeath("Chugged the Yum Chug.");
 			Schema:EasyText(player, "maroon", "You begin to chug the yummy chug. You feel your throat burn and you lose all ability to taste. You begin to die choking. You fucking idiot.");
-			Schema:EasyText(GetAdmins(), "tomato", player:Name().." chugged the Yum Chug!", nil);
+			Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." chugged the Yum Chug!", nil);
 		end
 	end;
 
@@ -658,7 +658,7 @@ local ITEM = Clockwork.item:New();
 			player:ScriptedDeath("Cleansed of impurities.");
 			player:Ignite(8, 0);
 			Schema:EasyText(player, "maroon", "As you chug the Holy Water and it begins to cleanse the impurities in your body, you suddenly realize that nobody in this forsaken world is pure, including yourself. Your very soul ignites and is engulfed in flames.");
-			Schema:EasyText(GetAdmins(), "tomato", player:Name().." drank holy water!", nil);
+			Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." drank holy water!", nil);
 		end
 	end;
 

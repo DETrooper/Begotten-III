@@ -307,7 +307,7 @@ function SWEP:PrimaryAttack()
 							if (!owner:KeyDown(IN_USE)) then
 								local activeWeapon = owner:GetActiveWeapon();
 
-								if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
+								if activeWeapon:IsValid() and (activeWeapon.Base == "sword_swepbase") then
 									if (activeWeapon.IronSights == true) then
 										local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
 										local curTime = CurTime();
@@ -483,7 +483,7 @@ function SWEP:PrimaryAttack()
 								if (!owner:KeyDown(IN_USE)) then
 									local activeWeapon = owner:GetActiveWeapon();
 
-									if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
+									if activeWeapon:IsValid() and (activeWeapon.Base == "sword_swepbase") then
 										if (activeWeapon.IronSights == true) then
 											local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
 											local curTime = CurTime();
@@ -812,7 +812,7 @@ function SWEP:SecondaryAttack()
 					if (!ply:KeyDown(IN_USE)) then
 						local activeWeapon = ply:GetActiveWeapon();
 
-						if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
+						if activeWeapon:IsValid() and (activeWeapon.Base == "sword_swepbase") then
 							if (activeWeapon.IronSights == true) then
 								local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
 								local curTime = CurTime();
@@ -869,7 +869,7 @@ function SWEP:SecondaryAttack()
 					if (!ply:KeyDown(IN_USE)) then
 						local activeWeapon = ply:GetActiveWeapon();
 
-						if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
+						if activeWeapon:IsValid() and (activeWeapon.Base == "sword_swepbase") then
 							if (activeWeapon.IronSights == true) then
 								local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
 								local curTime = CurTime();

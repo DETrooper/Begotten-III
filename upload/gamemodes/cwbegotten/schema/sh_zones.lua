@@ -1061,7 +1061,7 @@ else
 		local playersInZone = {};
 	
 		if istable(zone) then
-			for i, v in ipairs(_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				local vZone = v:GetCharacterData("LastZone", "wasteland");
 				
 				if table.HasValue(zone, vZone) then
@@ -1069,7 +1069,7 @@ else
 				end
 			end
 		else
-			for i, v in ipairs(_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				if v:GetCharacterData("LastZone", "wasteland") == zone then
 					table.insert(playersInZone, v);
 				end
@@ -1083,7 +1083,7 @@ else
 		local playersInSupraZone = {};
 	
 		if istable(supraZone) then
-			for i, v in ipairs(_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				local vZone = v:GetCharacterData("LastZone", "wasteland");
 				
 				if !supraZone or !self.supraZones[supraZone] then
@@ -1103,7 +1103,7 @@ else
 				end
 			end
 		else
-			for i, v in ipairs(_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				local vZone = v:GetCharacterData("LastZone", "wasteland");
 				
 				if !supraZone or !self.supraZones[supraZone] then

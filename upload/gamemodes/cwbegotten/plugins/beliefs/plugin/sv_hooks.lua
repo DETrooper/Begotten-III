@@ -94,7 +94,7 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				else
 					local playerPos = player:GetPos();
 					
-					for i, v in ipairs(_player.GetAll()) do
+					for _, v in _player.Iterator() do
 						if v:GetNetVar("yellowBanner") then
 							if (v:GetPos():Distance(playerPos) <= config.Get("talk_radius"):Get()) then
 								Schema:EasyText(player, "peru", "There is one with a yellow banner raised, dispelling your dark magic! Vanquish them or distance yourself!");
@@ -117,7 +117,7 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 							local playerPos = player:GetPos();
 							local blockedCloak;
 							
-							for i, v in ipairs(_player.GetAll()) do
+							for _, v in _player.Iterator() do
 								if v:GetNetVar("yellowBanner") then
 									if (v:GetPos():Distance(playerPos) <= config.Get("talk_radius"):Get()) then
 										blockedCloak = true;
@@ -354,11 +354,7 @@ end
 -- Called when the day/night cycle changes.
 function cwBeliefs:DayNightCycleChanged(cycle)
 	if cycle ~= "night" then
-		local players = _player.GetAll()
-		
-		for i = 1, _player.GetCount() do
-			local player = players[i];
-			
+		for _, player in _player.Iterator() do
 			if IsValid(player) then
 				if player.cloaked and player:GetCharacterData("LastZone") ~= "caves" and (!cwWeather or cwWeather.weather ~= "bloodstorm") then
 					if !player:GetNetVar("kinisgerCloak") then
@@ -410,11 +406,11 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 				local activeWeapon = player:GetActiveWeapon();
 				local offhandWeapon;
 				
-				if IsValid(activeWeapon) then
+				if activeWeapon:IsValid() then
 					offhandWeapon = activeWeapon:GetOffhand();
 				end
 				
-				if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+				if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 					if (!entity.mutilated or entity.mutilated < 3) then
 						local model = entity:GetModel();
 						
@@ -426,11 +422,11 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 									local activeWeapon = player:GetActiveWeapon();
 									local offhandWeapon;
 									
-									if IsValid(activeWeapon) then
+									if activeWeapon:IsValid() then
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -462,11 +458,11 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 									local activeWeapon = player:GetActiveWeapon();
 									local offhandWeapon;
 									
-									if IsValid(activeWeapon) then
+									if activeWeapon:IsValid() then
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -498,11 +494,11 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 									local activeWeapon = player:GetActiveWeapon();
 									local offhandWeapon;
 									
-									if IsValid(activeWeapon) then
+									if activeWeapon:IsValid() then
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -534,11 +530,11 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 									local activeWeapon = player:GetActiveWeapon();
 									local offhandWeapon;
 									
-									if IsValid(activeWeapon) then
+									if activeWeapon:IsValid() then
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -570,11 +566,11 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 									local activeWeapon = player:GetActiveWeapon();
 									local offhandWeapon;
 									
-									if IsValid(activeWeapon) then
+									if activeWeapon:IsValid() then
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 										if (!entity.mutilated or entity.mutilated < 3) then
 											entity.mutilated = (entity.mutilated or 0) + 1;
 											
@@ -677,11 +673,11 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 				local activeWeapon = player:GetActiveWeapon();
 				local offhandWeapon;
 				
-				if IsValid(activeWeapon) then
+				if activeWeapon:IsValid() then
 					offhandWeapon = activeWeapon:GetOffhand();
 				end 
 				 
-				if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+				if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 					if (!entity.skinned or entity.skinned < 1) then					
 						local model = entity:GetModel();
 						local uniqueID = "hide"
@@ -703,11 +699,11 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 								local activeWeapon = player:GetActiveWeapon();
 								local offhandWeapon;
 								
-								if IsValid(activeWeapon) then
+								if activeWeapon:IsValid() then
 									offhandWeapon = activeWeapon:GetOffhand();
 								end
 								
-								if IsValid(activeWeapon) and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+								if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
 									if (!entity.skinned or entity.skinned < 1) then
 										entity.skinned = (entity.skinned or 0) + 1;
 										
@@ -2044,7 +2040,7 @@ function cwBeliefs:PostPlayerCharacterLoaded(player)
 	end
 	
 	-- Remove taste of blood effect.
-	for i, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if v.tasteOfBloodVictim and v.tasteOfBloodVictim == player then
 			v.tasteOfBloodVictim = nil;
 			

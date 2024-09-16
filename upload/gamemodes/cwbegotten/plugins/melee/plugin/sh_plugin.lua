@@ -33,7 +33,7 @@ function cwMelee:KeyPress(player, key)
 				
 				local activeWeapon = player:GetActiveWeapon();
 				
-				if (!IsValid(activeWeapon)) then
+				if (!activeWeapon:IsValid()) then
 					return;
 				end;
 				
@@ -138,7 +138,7 @@ function cwMelee:KeyPress(player, key)
 			
 			local activeWeapon = player:GetActiveWeapon();
 			
-			if (!IsValid(activeWeapon)) then
+			if (!activeWeapon:IsValid()) then
 				return;
 			end;
 			
@@ -175,7 +175,7 @@ function cwMelee:KeyPress(player, key)
 		if (key == IN_RELOAD) then
 			local activeWeapon = player:GetActiveWeapon();
 			
-			if (IsValid(activeWeapon)) then
+			if (activeWeapon:IsValid()) then
 				if (activeWeapon.Base == "sword_swepbase") then
 					local blockTable = GetTable(activeWeapon.realBlockTable);
 
@@ -204,7 +204,7 @@ function playerMeta:CancelGuardening()
 	if self:GetNetVar("Guardening") then
 		local activeWeapon = self:GetActiveWeapon();
 		
-		if (IsValid(activeWeapon)) then
+		if (activeWeapon:IsValid()) then
 			if (activeWeapon.Base == "sword_swepbase") then
 				activeWeapon.Primary.Cone = activeWeapon.DefaultCone;
 				activeWeapon.Primary.Recoil = activeWeapon.DefaultRecoil;

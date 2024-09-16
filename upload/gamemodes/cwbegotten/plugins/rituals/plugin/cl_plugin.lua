@@ -237,7 +237,7 @@ function cwRituals:PostDrawOpaqueRenderables()
 	
 		self.storedPlayers = {};
 		
-		for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 1024)) do
+		for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 1200)) do
 			local player;
 			
 			if v:IsPlayer() then

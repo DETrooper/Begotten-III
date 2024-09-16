@@ -171,7 +171,7 @@ end
 function playerMeta:Cloak()
 	local activeWeapon = self:GetActiveWeapon();
 	
-	if IsValid(activeWeapon) then
+	if activeWeapon:IsValid() then
 		activeWeapon:SetNoDraw(true);
 	end
 	
@@ -188,7 +188,7 @@ end
 function playerMeta:Uncloak()
 	local activeWeapon = self:GetActiveWeapon();
 	
-	if IsValid(activeWeapon) then
+	if activeWeapon:IsValid() then
 		activeWeapon:SetNoDraw(false);
 	end
 	

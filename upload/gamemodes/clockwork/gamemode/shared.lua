@@ -10,7 +10,7 @@ local silentMode = true;
 if (SERVER) then
 	function printp(t)
 		print(tostring(t));
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if (v:IsAdmin()) then
 				if (silentMode) then
 					Msg(tostring(t))

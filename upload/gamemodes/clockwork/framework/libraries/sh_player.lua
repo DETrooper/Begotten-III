@@ -61,9 +61,7 @@ function player.Find(name, bCaseSensitive)
 	if !name then return end
 	if (!isstring(name)) then return (IsValid(name) and name) or nil end
 
-	local players = _player.GetAll();
-	
-	for k, v in pairs(players) do
+	for _, v in _player.Iterator() do
 		if (!v:HasInitialized()) then continue end
 
 		--local plyName = v:Name(true)
@@ -226,7 +224,7 @@ function Clockwork.player:SayRadio(player, text, check, noEavesdrop, proclaim)
 	local stationaryRadiusSqr = (80 * 80);
 	local jammed = false;
 	
-	for k, v in pairs( _player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized()) then
 			local vFreq = v:GetCharacterData("frequency");
 			

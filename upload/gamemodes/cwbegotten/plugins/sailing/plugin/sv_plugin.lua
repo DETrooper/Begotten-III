@@ -301,7 +301,7 @@ function cwSailing:BeginSailing(longshipEnt, destination, caller)
 			
 			--printp("selected sea zone: "..sea_zone);
 			Schema:EasyText(owner, "icon16/anchor.png", "cornflowerblue", "Setting sail in "..tostring(sail_time).." seconds!");
-			Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", owner:Name().."'s "..longshipEnt.longshipType.." is setting sail to destination "..destination.."!");
+			Schema:EasyText(Schema:GetAdmins(), "icon16/anchor.png", "cornflowerblue", owner:Name().."'s "..longshipEnt.longshipType.." is setting sail to destination "..destination.."!");
 			
 			if longshipEnt.longshipType == "longship" then
 				longshipEnt:EmitSound("ambient/machines/thumper_dust.wav");
@@ -310,7 +310,7 @@ function cwSailing:BeginSailing(longshipEnt, destination, caller)
 				local filterTab = {};
 				local zone = owner:GetCharacterData("LastZone");
 				
-				for i2, v2 in ipairs(_player.GetAll()) do
+				for _, v2 in _player.Iterator() do
 					if v2:Alive() and v2:GetCharacterData("LastZone") == zone then
 						if v2:GetPos():Distance2D(longshipEntPos) < 6000 then
 							table.insert(filterTab, v2);
@@ -356,7 +356,7 @@ function cwSailing:BeginSailing(longshipEnt, destination, caller)
 				longshipEnt.destination = nil;
 				--printp("sailing aborted!");
 				
-				Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", "Sailing aborted for "..longshipEnt.longshipType.." "..longshipEnt:EntIndex().."!");
+				Schema:EasyText(Schema:GetAdmins(), "icon16/anchor.png", "cornflowerblue", "Sailing aborted for "..longshipEnt.longshipType.." "..longshipEnt:EntIndex().."!");
 			end);
 		end
 	else
@@ -369,7 +369,7 @@ function cwSailing:BeginSailing(longshipEnt, destination, caller)
 		local sail_time = 30;
 		local sea_zone = self:DetermineSeaZone(longshipEnt, destination);
 		
-		Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", "A "..longshipEnt.longshipType.." with no owner is setting sail to destination "..destination.."!");
+		Schema:EasyText(Schema:GetAdmins(), "icon16/anchor.png", "cornflowerblue", "A "..longshipEnt.longshipType.." with no owner is setting sail to destination "..destination.."!");
 		
 		if longshipEnt.longshipType == "longship" then
 			longshipEnt:EmitSound("ambient/machines/thumper_dust.wav");
@@ -378,7 +378,7 @@ function cwSailing:BeginSailing(longshipEnt, destination, caller)
 			local filterTab = {};
 			local zone = caller:GetCharacterData("LastZone");
 			
-			for i2, v2 in ipairs(_player.GetAll()) do
+			for _, v2 in _player.Iterator() do
 				if v2:Alive() and v2:GetCharacterData("LastZone") == zone then
 					if v2:GetPos():Distance2D(longshipEntPos) < 6000 then
 						table.insert(filterTab, v2);
@@ -466,7 +466,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 			-- Cache positions of all players aboard the longship.
 			local longshipPlayers = {};
 			
-			for i, player in ipairs(_player.GetAll()) do
+			for _, player in _player.Iterator() do
 				if IsValid(player) then
 					local tr = util.TraceHull({
 						start = player:EyePos(),
@@ -527,9 +527,9 @@ function cwSailing:MoveLongship(longshipEnt, location)
 					end
 				
 					if IsValid(longshipEnt.owner) then
-						Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", longshipEnt.owner:Name().."'s longship with "..#longshipPlayers.." players aboard has arrived at "..location.."!");
+						Schema:EasyText(Schema:GetAdmins(), "icon16/anchor.png", "cornflowerblue", longshipEnt.owner:Name().."'s longship with "..#longshipPlayers.." players aboard has arrived at "..location.."!");
 					else
-						Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", "A longship with no owner with "..#longshipPlayers.." players aboard has arrived at "..location.."!");
+						Schema:EasyText(Schema:GetAdmins(), "icon16/anchor.png", "cornflowerblue", "A longship with no owner with "..#longshipPlayers.." players aboard has arrived at "..location.."!");
 					end
 					
 					if longshipEnt.OnMoved then
@@ -664,7 +664,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 						local alarm = self.gorewatchAlarm;
 
 						if IsValid(alarm) and !alarm:GetNWBool("broken") then
-							for i, v in ipairs(_player.GetAll()) do
+							for _, v in _player.Iterator() do
 								local faction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 								
 								if (faction == "Gatekeeper" or faction == "Holy Hierarchy") and !v.cwObserverMode and v:GetPos():WithinAABox(Vector(9422, 11862, -1210), Vector(10055, 10389, -770)) then
@@ -683,7 +683,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 												local filter = RecipientFilter();
 												local filterTab = {};
 												
-												for i2, v2 in ipairs(_player.GetAll()) do
+												for _2, v2 in _player.Iterator() do
 													if v2:Alive() and v2:GetCharacterData("LastZone") == "wasteland" then
 														if v2:GetPos():Distance2D(alarmPos) < 6000 then
 															table.insert(filterTab, v2);
@@ -723,7 +723,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 						if longshipEnt.destination == "hell" then
 							duration = math.random(280, 320);
 
-							for k, v in ipairs(_player.GetAll()) do
+							for _, v in _player.Iterator() do
 								if v:GetFaction() == "Children of Satan" and v:Alive() then
 									v:SendLua([[Clockwork.Client:EmitSound("begotten/sfx/hellwind.wav")]]);
 									Schema:EasyText(v, "red", "An overwhelming gust of infernal wind erupts past you, carrying the whispers of damned souls released from their suffering. The Dark Lord's domain has been breached by a Goreic host, and they will soon descend upon the manor.");
@@ -732,7 +732,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 							end
 							
 							timer.Simple(5, function()
-								for k, v in ipairs(_player.GetAll()) do
+								for _, v in _player.Iterator() do
 									if v:GetFaction() == "Children of Satan" and v:Alive() then
 										v:Disorient(5);
 									end
@@ -764,7 +764,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 			Schema:EasyText(longshipEnt.owner, "peru", "The location you are trying to move your longship to is currently full or invalid! Waiting 30 more seconds.");
 		end
 		
-		for i, player in ipairs(_player.GetAll()) do
+		for _, player in _player.Iterator() do
 			local tr = util.TraceHull({
 				start = player:EyePos(),
 				endpos = player:GetPos() - Vector(0, 0, 100),
@@ -1097,7 +1097,7 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 			
 				local activeWeapon = player:GetActiveWeapon();
 				
-				if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
+				if activeWeapon:IsValid() and activeWeapon:GetClass() == "cw_lantern" then
 					local oil = player:GetNetVar("oil", 0);
 				
 					--if oil >= 75 then
@@ -1127,7 +1127,7 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 									if entity:GetPos():Distance(player:GetPos()) < 256 then
 										local activeWeapon = player:GetActiveWeapon();
 										
-										if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
+										if activeWeapon:IsValid() and activeWeapon:GetClass() == "cw_lantern" then
 											local oil = player:GetNetVar("oil", 0);
 											
 											--if oil >= 75 then
@@ -1466,7 +1466,7 @@ concommand.Add("cw_MoveShipHell", function(player, cmd, args)
 					Schema:EasyText(player, "chocolate", "The mere thought of sailing to Hell drives a nail into your mind. Consult the gods for guidance.");
 					player:HandleSanity(-5);
 
-					Schema:EasyText(GetAdmins(), "icon16/anchor.png", "goldenrod", player:Name() .. " has attempted to sail to Hell while /ToggleHellSailing is disabled! Expect a prayer.")
+					Schema:EasyText(Schema:GetAdmins(), "icon16/anchor.png", "goldenrod", player:Name() .. " has attempted to sail to Hell while /ToggleHellSailing is disabled! Expect a prayer.")
 				end
 			else
 				Schema:EasyText(player, "chocolate", "Your longship lacks the enchantment required to navigate the River Styx safely.");
@@ -1491,7 +1491,7 @@ concommand.Add("cw_AbortSailing", function(player, cmd, args)
 					
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "aborts their preparations for sailing.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 					
-					Schema:EasyText(GetAdmins(), "icon16/anchor.png", "cornflowerblue", "Sailing aborted for longship "..entity:EntIndex().." by "..player:Name().."!");
+					Schema:EasyText(Schema:GetAdmins(), "icon16/anchor.png", "cornflowerblue", "Sailing aborted for longship "..entity:EntIndex().." by "..player:Name().."!");
 				else
 					Schema:EasyText(player, "maroon", "You do not have permission to abort this "..entity.longshipType.."'s sailing!");
 				end

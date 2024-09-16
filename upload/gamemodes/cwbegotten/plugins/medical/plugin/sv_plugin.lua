@@ -1520,7 +1520,7 @@ function playerMeta:NetworkDiseases()
 end
 
 -- COMMENT THIS OUT WHEN NOT TESTING, THIS RESETS INJURIES
-for k, v in pairs (_player.GetAll()) do
+for _, v in _player.Iterator() do
 	if (!v:IsBot()) then
 		--v:Freeze(false)
 	else

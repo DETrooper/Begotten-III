@@ -132,7 +132,7 @@ function ENT:Think()
 							local alive = player:Alive();
 							
 							if alive then
-								Schema:EasyText(GetAdmins(), "icon16/water.png", "cornflowerblue", player:Name().." went overboard!");
+								Schema:EasyText(Schema:GetAdmins(), "icon16/water.png", "cornflowerblue", player:Name().." went overboard!");
 							end
 							
 							if self.location == "calm" or self.location == "rough" then
@@ -425,7 +425,7 @@ function ENT:Use(activator, caller)
 				if !self.enchantment then
 					local activeWeapon = caller:GetActiveWeapon();
 					
-					if IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern" then
+					if activeWeapon:IsValid() and activeWeapon:GetClass() == "cw_lantern" then
 						local oil = caller:GetNetVar("oil", 0);
 					
 						if oil >= 1 then

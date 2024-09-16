@@ -688,7 +688,7 @@ local function Guarding(ent, dmginfo)
 							if !Clockwork.player:HasFlags(attacker, "T") then
 								local activeWeapon = ent:GetActiveWeapon();
 								
-								if (IsValid(activeWeapon) and activeWeapon:GetNWString("activeShield"):len() > 0) then
+								if (activeWeapon:IsValid() and activeWeapon:GetNWString("activeShield"):len() > 0) then
 									local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
 									
 									if blockTable.spiked then
@@ -712,7 +712,7 @@ local function Guarding(ent, dmginfo)
 						elseif enemywep.IsABegottenMelee and enemywep.BlockTable then
 							local activeWeapon = ent:GetActiveWeapon();
 							
-							if (IsValid(activeWeapon) and activeWeapon:GetNWString("activeShield"):len() > 0) then
+							if (activeWeapon:IsValid() and activeWeapon:GetNWString("activeShield"):len() > 0) then
 								local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
 
 								if blockTable.electrified then
@@ -1497,7 +1497,7 @@ local function UpdateWeaponRaised(player, activeWeapon, bIsRaised, curTime)
 		if (player:KeyDown(IN_ATTACK2)) and (!player:KeyDown(IN_USE)) then
 			timer.Simple(FrameTime(), function()
 				if (player:KeyDown(IN_ATTACK2)) and (!player:KeyDown(IN_USE)) then
-					if IsValid(activeWeapon) and (activeWeapon.Base == "sword_swepbase") then
+					if activeWeapon:IsValid() and (activeWeapon.Base == "sword_swepbase") then
 						if (activeWeapon.IronSights == true) then
 							local loweredParryDebug = activeWeapon:GetNextSecondaryFire();
 							local curTime = CurTime();
@@ -1561,7 +1561,7 @@ hook.Add("UpdateWeaponRaised", "UpdateWeaponRaisedMeleeAutorun", UpdateWeaponRai
 
 concommand.Add("atyd", function(player)
 	if player:IsAdmin() then
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			v:Give("begotten_fists");
 			v:SelectWeapon("begotten_fists");
 			v:Give("cw_senses")

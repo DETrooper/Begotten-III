@@ -42,7 +42,7 @@ function PANEL:Rebuild()
 	local availableClasses = {};
 	local classes = {};
 	
-	for k, v in pairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (Clockwork.Client:IsAdmin()) then
 			if (v:HasInitialized()) then
 				local class = Clockwork.plugin:Call("GetPlayerScoreboardClass", v);

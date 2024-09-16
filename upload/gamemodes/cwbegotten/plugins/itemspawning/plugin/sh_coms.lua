@@ -213,6 +213,6 @@ local COMMAND = Clockwork.command:New("RemoveItemSpawnerStorage");
 		cwItemSpawner.Containers = {};
 		cwItemSpawner.nextContainerCheck = CurTime() + 1;
 		
-		Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has cleared all item spawner containers!");
+		Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has cleared all item spawner containers!");
 	end;
 COMMAND:Register();

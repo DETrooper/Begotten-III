@@ -328,7 +328,7 @@ end
 			end
 		end)
 		
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			LIMBS:ResetBoneScale(v)
 		end
 		

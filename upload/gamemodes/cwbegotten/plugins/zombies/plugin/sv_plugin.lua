@@ -10,7 +10,7 @@
 -- A function to make a zombie spring up from the dead.
 function cwZombies:UndeadScare(entity, player)
 	if (!player or !IsValid(player)) then
-		player = table.Random(_player.GetAll());
+		player = table.Random(PlayerCache or _player.GetAll());
 	end;
 	
 	timer.Simple(0.5, function()
@@ -96,10 +96,10 @@ function cwZombies:SpawnZombie(class, position)
 		zombie:SetAngles(Angle(0, 0, 0));
 		
 		if (math.random(1, 3) == 3) then
-			zombie:SetEnemy(table.Random(_player.GetAll()));
+			zombie:SetEnemy(table.Random(PlayerCache or _player.GetAll()));
 		end;
 		
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			local playerPosition = v:GetPos();
 			local zombiePosition = zombie:GetPos();
 			local distance = zombiePosition:Distance(playerPosition);

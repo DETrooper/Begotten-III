@@ -58,7 +58,7 @@ function Clockwork.hint:Distribute()
 
 	if (!hintText) then return end
 
-	for k, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized() and v:GetInfoNum("cwShowHints", 1) == 1
 		and !v:IsViewingStarterHints()) then
 			if (!Callback or Callback(v) != false) then
@@ -97,7 +97,7 @@ end
 	@param Color The color of the hint text.
 --]]
 function Clockwork.hint:SendCenterAll(text, delay, color)
-	for k, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized()) then
 			self:SendCenter(v, text, delay, color)
 		end
@@ -128,7 +128,7 @@ end
 	@param Color The color of the hint text.
 --]]
 function Clockwork.hint:SendAll(text, delay, color)
-	for k, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized()) then
 			self:Send(v, text, delay, color)
 		end

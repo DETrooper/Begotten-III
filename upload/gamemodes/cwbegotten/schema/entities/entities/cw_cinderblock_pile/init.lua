@@ -61,7 +61,7 @@ function ENT:Use(activator, caller)
 				end)
 			end
 			
-			Schema:EasyText(GetAdmins(), "tomato", caller:Name().." has used the cinderblock pile.", nil);
+			Schema:EasyText(Schema:GetAdmins(), "tomato", caller:Name().." has used the cinderblock pile.", nil);
 		end;
 	end;
 end;

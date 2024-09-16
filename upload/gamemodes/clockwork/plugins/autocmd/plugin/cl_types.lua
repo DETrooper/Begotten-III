@@ -4,7 +4,7 @@ local PLUGIN = PLUGIN
 PLUGIN:RegisterArgumentType("Player", function(argument)
     local matches = {}
 
-    for _, ply in player.Iterator() do
+    for _, ply in _player.Iterator() do
         if string.find(string.lower(ply:Nick()), string.lower(argument), 1, true) then
             table.insert(matches, ply:Nick())
         end

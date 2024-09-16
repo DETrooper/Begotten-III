@@ -287,7 +287,7 @@ function GM:PlayerDisconnected(player)
 		Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." ("..player:SteamID().." / "..player:IPAddress()..") has disconnected.")
 		--Clockwork.chatBox:Add(nil, nil, "disconnect", player:SteamName().." has disconnected from the server.");
 		
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if v:IsAdmin() then
 				Clockwork.chatBox:Add(v, nil, "disconnect", player:SteamName().." has disconnected from the server.");
 			end
@@ -591,7 +591,7 @@ function GM:PlayerSwitchFlashlight(player, bIsOn)
 	if hook.Run("PlayerCanRaiseWeapon", player, activeWeapon) ~= false then
 		if (!player.cwNextRaise or player.cwNextRaise < curTime) then
 			if (player:Alive() and !player:IsRagdolled()) then
-				if (IsValid(activeWeapon)) then
+				if (activeWeapon:IsValid()) then
 					if (Clockwork.kernel:IsDefaultWeapon(activeWeapon)) then
 						return false;
 					elseif (activeWeapon:GetClass() == "cw_flashlight") then
@@ -688,7 +688,7 @@ end
 
 -- Called when Clockwork config has changed.
 function GM:ClockworkConfigChanged(key, data, previousValue, newValue)
-	local plyTable = _player.GetAll()
+	local plyTable = PlayerCache or _player.GetAll()
 
 	if (key == "default_flags") then
 		for k, v in ipairs(plyTable) do
@@ -1188,10 +1188,7 @@ end
 
 -- Called when the Clockwork data is saved.
 function GM:SaveData()
-	-- changed here
-	local players = _player.GetAll();
-	
-	for k, v in pairs(players) do
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized()) then
 			if hook.Run("CanSaveCharacter", v) ~= false then
 				v:SaveCharacter()
@@ -1304,7 +1301,7 @@ function GM:PlayerCountryAuthed(player, countryCode)
 		
 		Clockwork.kernel:PrintLog(LOGTYPE_MINOR, steamName.." ("..steamID.." / "..ipAddress..") has connected from "..countryName..".")
 		
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if v:IsAdmin() then
 				Clockwork.chatBox:Add(v, nil, "connect_country", steamName.." has connected to the server from "..countryName..".", {countryIcon = string.upper(countryCode)});
 			end
@@ -1324,7 +1321,7 @@ concommand.Add("sexfunny", function(player)
 		
 		Clockwork.kernel:PrintLog(LOGTYPE_MINOR, steamName.." ("..steamID.." / "..ipAddress..") has connected from "..countryName..".")
 		
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if v:IsAdmin() then
 				Clockwork.chatBox:Add(v, nil, "connect_country", steamName.." has connected to the server from "..countryName..".", {countryIcon = string.upper(countryCode)});
 			end
@@ -1731,7 +1728,7 @@ do
 		local curTime = CurTime()
 
 		if (curTime >= cwNextThink) then
-			for i, player in ipairs(_player.GetAll()) do
+			for _, player in _player.Iterator() do
 				local initialized = player:HasInitialized();
 
 				if (initialized) then
@@ -1901,7 +1898,7 @@ function GM:PlayerCanUseCharacter(player, character)
 	local factionCount = 0
 	local rankCount = 0
 
-	for k, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized()) then
 			if (v:GetFaction() == character.faction) then
 				if (player != v) then
@@ -3568,7 +3565,7 @@ end
 function GM:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
 	local activeWeapon = player:GetActiveWeapon();
 	
-	if IsValid(activeWeapon) and activeWeapon:GetClass() == "begotten_fists" then
+	if activeWeapon:IsValid() and activeWeapon:GetClass() == "begotten_fists" then
 		if activeWeapon.OnDeploy then
 			activeWeapon:OnDeploy();
 		end
@@ -3857,11 +3854,8 @@ function GM:ShowTeam(ply)
 									entity = entity,
 									owner = owner
 								}
-								
-								--changed here
-								local players = _player.GetAll();
-								
-								for k, v in pairs(players) do
+
+								for _, v in _player.Iterator() do
 									if (v != ply and v != owner) then
 										if (Clockwork.player:HasDoorAccess(v, entity, DOOR_ACCESS_COMPLETE)) then
 											data.accessList[v] = DOOR_ACCESS_COMPLETE
@@ -4026,7 +4020,7 @@ function GM:EntityTakeDamage(entity, damageInfo)
 			if IsValid(attacker) and attacker:IsPlayer() then
 				local activeWeapon = attacker:GetActiveWeapon();
 				
-				if IsValid(activeWeapon) and activeWeapon.Base == "sword_swepbase" then
+				if activeWeapon:IsValid() and activeWeapon.Base == "sword_swepbase" then
 					lastHitGroup = Clockwork.kernel:GetRagdollHitGroup(entity, damageInfo:GetDamagePosition());
 				end
 			end
@@ -4072,7 +4066,7 @@ function GM:EntityTakeDamage(entity, damageInfo)
 								else
 									local activeWeapon = attacker:GetActiveWeapon();
 									
-									if IsValid(activeWeapon) then
+									if activeWeapon:IsValid() then
 										if inflictor.GetPrintName then
 											inflictor = inflictor:GetPrintName();
 										end
@@ -4150,7 +4144,7 @@ function GM:EntityTakeDamage(entity, damageInfo)
 							else
 								local activeWeapon = attacker:GetActiveWeapon();
 								
-								if IsValid(activeWeapon) then
+								if activeWeapon:IsValid() then
 									if inflictor.GetPrintName then
 										inflictor = inflictor:GetPrintName();
 									end
@@ -4298,7 +4292,7 @@ function GM:PlayerSpawnedNPC(player, npc)
 	prevRelation = prevRelation or {}
 	prevRelation[player:SteamID()] = prevRelation[player:SteamID()] or {}
 
-	for k, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		faction = Clockwork.faction:FindByID(v:GetFaction())
 
 		if (faction) then

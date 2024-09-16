@@ -6,7 +6,7 @@
 function cwLantern:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	local activeWeapon = player:GetActiveWeapon();
 	
-	if !IsValid(activeWeapon) then return end;
+	if !activeWeapon:IsValid() then return end;
 	
 	local lanternOnHip = player:GetNetVar("lanternOnHip");
 

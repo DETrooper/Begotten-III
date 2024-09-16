@@ -192,7 +192,7 @@ function GM:KeyPress(player, key)
 		if (key == IN_USE) then
 			local activeWeapon = player:GetActiveWeapon()
 
-			if (IsValid(activeWeapon) and activeWeapon:GetClass() == "weapon_physgun") then
+			if (activeWeapon:IsValid() and activeWeapon:GetClass() == "weapon_physgun") then
 				if (player:KeyDown(IN_ATTACK)) then
 					return
 				end
@@ -232,7 +232,7 @@ function GM:KeyRelease(player, key)
 		if (key == IN_USE) then
 			local activeWeapon = player:GetActiveWeapon()
 
-			if (IsValid(activeWeapon) and activeWeapon:GetClass() == "weapon_physgun") then
+			if (activeWeapon:IsValid() and activeWeapon:GetClass() == "weapon_physgun") then
 				if (player:KeyDown(IN_ATTACK)) then
 					return
 				end
@@ -902,7 +902,7 @@ function GM:InitPostEntity()
 		hook.Run("LocalPlayerCreated")
 	end
 
-	for k, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		hook.Run("PlayerModelChanged", v, v:GetModel())
 	end
 

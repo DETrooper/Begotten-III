@@ -47,13 +47,8 @@ function cwDayNight:ChangeCycle(cycle, notify)
 	
 	local close_players = {};
 	local far_players = {};
-
-	local playerCount = _player.GetCount();
-	local players = _player.GetAll();
-
-	for i = 1, playerCount do
-		local player, k = players[i], i;
-
+	
+	for _, player in _player.Iterator() do
 		if IsValid(player) and player:HasInitialized() then
 			local lastZone = player:GetCharacterData("LastZone");
 			

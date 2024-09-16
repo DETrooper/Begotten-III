@@ -137,7 +137,7 @@ function SWEP:SecondaryAttack()
 							local playerPos = self.Owner:GetPos();
 							local blockedCloak;
 							
-							for i, v in ipairs(_player.GetAll()) do
+							for _, v in _player.Iterator() do
 								if v:GetNetVar("yellowBanner") then
 									if (v:GetPos():Distance(playerPos) <= config.Get("talk_radius"):Get()) then
 										blockedCloak = true;

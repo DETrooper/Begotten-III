@@ -33,8 +33,6 @@ function cwLantern:Think()
 		self.nextLanternPlayers = curTime + 1;
 		self.lanternPlayers = {};
 		
-		local playerCount = _player.GetCount();
-		local players = _player.GetAll();
 		local clientPosition = Clockwork.Client:GetPos();
 		local reqDistance = (2000 * 2000);
 		
@@ -42,13 +40,11 @@ function cwLantern:Think()
 			reqDistance = (zones.currentFogEnd * zones.currentFogEnd);
 		end;
 
-		for i = 1, playerCount do
-			local v, k = players[i], i;
-			
+		for _, v in _player.Iterator() do
 			if (v:Alive()) then
 				local activeWeapon = v:GetActiveWeapon();
 				
-				if (IsValid(activeWeapon) and activeWeapon:GetClass() == "cw_lantern") or v:GetNetVar("lanternOnHip") then
+				if (activeWeapon:IsValid() and activeWeapon:GetClass() == "cw_lantern") or v:GetNetVar("lanternOnHip") then
 					local position = v:GetPos();
 					
 					if (position:DistToSqr(clientPosition) <= reqDistance) then
@@ -67,7 +63,7 @@ function cwLantern:Think()
 		
 		local isRaised, activeWeapon = k:IsWeaponRaised();
 		
-		if !k:GetNetVar("lanternOnHip") and (!isRaised or (IsValid(activeWeapon) and activeWeapon:GetClass() != "cw_lantern")) then
+		if !k:GetNetVar("lanternOnHip") and (!isRaised or (activeWeapon:IsValid() and activeWeapon:GetClass() != "cw_lantern")) then
 			self.lanternPlayers[k] = nil;
 			continue;
 		end;
@@ -115,7 +111,7 @@ end;
 function cwLantern:GetBars(bars)
 	local activeWeapon = Clockwork.Client:GetActiveWeapon();
 	
-	if (IsValid(activeWeapon)) then
+	if (activeWeapon:IsValid()) then
 		local activeClass = activeWeapon:GetClass();
 		
 		if (activeClass == "cw_lantern" or Clockwork.Client:GetNetVar("lanternOnHip", false)) then

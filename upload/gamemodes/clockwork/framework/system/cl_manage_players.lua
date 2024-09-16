@@ -19,7 +19,7 @@ function SYSTEM:OnDisplay(systemPanel, systemForm)
 	local availableClasses = {}
 	local classes = {}
 
-	for k, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized()) then
 			local class = hook.Run("GetPlayerScoreboardClass", v)
 

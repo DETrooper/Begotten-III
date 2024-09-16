@@ -33,9 +33,7 @@ function cwSenses:RenderScreenspaceEffects()
 			
 				cam.Start3D(EyePos(), EyeAngles());
 				
-				local players = _player.GetAll();
-
-				for i, v in ipairs(players) do
+				for _, v in _player.Iterator() do
 					if (v:Alive() and v:HasInitialized() and !v:IsNoClipping()) then
 						local ragdollEntity = v:GetRagdollEntity();
 						

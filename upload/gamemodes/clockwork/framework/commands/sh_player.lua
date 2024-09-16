@@ -298,7 +298,7 @@ local COMMAND = Clockwork.command:New("PlyMuteAll");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if (!Clockwork.player:IsAdmin(v)) then
 				v:SetMuted(true);
 			end;
@@ -315,7 +315,7 @@ local COMMAND = Clockwork.command:New("PlyUnmuteAll");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if (!Clockwork.player:IsAdmin(v)) then
 				v:SetMuted(false);
 			end;
@@ -387,7 +387,7 @@ local COMMAND = Clockwork.command:New("FreezeAll");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if (!Clockwork.player:IsAdmin(v)) then
 				v:Freeze(true);
 			end;
@@ -404,7 +404,7 @@ local COMMAND = Clockwork.command:New("UnFreezeAll");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if (!Clockwork.player:IsAdmin(v)) then
 				v:Freeze(false);
 			end;
@@ -563,7 +563,7 @@ local COMMAND = Clockwork.command:New("PlyRespawnStayAll");
 			end;
 		end;
 		
-		for i, v in ipairs(_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if (exempt[v] or v:Alive() or !v.cwDeathPosition) then
 				continue;
 			end;

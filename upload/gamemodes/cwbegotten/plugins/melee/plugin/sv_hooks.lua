@@ -404,7 +404,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 		if (gardening == true) then
 			local activeWeapon = player:GetActiveWeapon()
 			
-			if (IsValid(activeWeapon)) then
+			if (activeWeapon:IsValid()) then
 				if (activeWeapon.realIronSights == false) then
 					player:SetLocalVar("Guardening", false)
 					plyTab.beginBlockTransition = true;
@@ -433,7 +433,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 			end
 		end
 		
-		if IsValid(activeWeapon) and activeWeapon.Base == "sword_swepbase" then
+		if activeWeapon:IsValid() and activeWeapon.Base == "sword_swepbase" then
 			if (poise != max_poise) then
 				if !Clockwork.player:GetWeaponRaised(player) or (poise < max_poise) and !player:GetNetVar("Guardening") then
 					player:SetNWInt("meleeStamina", math.Clamp(poise + gainedPoise, 0, max_poise))

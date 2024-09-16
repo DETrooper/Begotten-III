@@ -345,10 +345,15 @@ RITUAL = cwRituals.rituals:New("aura_of_the_mother");
 			auraMotherTick = auraMotherTick + 1;
 			
 			if IsValid(player) then
+				local curTime = CurTime();
+			
 				for k, v in pairs (ents.FindInSphere(player:GetPos(), config.Get("talk_radius"):Get())) do
 					if (v:IsPlayer() and v:GetFaith() == "Faith of the Family") then
-						v:SetHealth(math.min(v:Health() + 6, v:GetMaxHealth()));
-						v:ModifyBloodLevel(150);
+						if !v.nextAuraMotherHeal or v.nextAuraMotherHeal <= curTime then
+							v:SetHealth(math.min(v:Health() + 6, v:GetMaxHealth()));
+							v:ModifyBloodLevel(25);
+							v.nextAuraMotherHeal = curTime + 4.9;
+						end
 					end
 				end
 				
@@ -476,7 +481,7 @@ RITUAL = cwRituals.rituals:New("call_of_the_blood_moon");
 				Clockwork.chatBox:Add(player, nil, "event", "You feel the Blood Moon's radiance pulsating, as though it were drawing power from something.");
 				netstream.Start(player, "PlaySound", "begotten/ui/sanity_touch.mp3");
 			
-				for i, v in ipairs(_player.GetAll()) do
+				for _, v in _player.Iterator() do
 					if IsValid(v) and v:HasInitialized() then
 						local lastZone = v:GetCharacterData("LastZone");
 
@@ -581,7 +586,7 @@ RITUAL = cwRituals.rituals:New("call_to_darkness");
 	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Call to Darkness' ritual, meaning that an admin should probably possess them!");
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Call to Darkness' ritual, meaning that an admin should probably possess them!");
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -690,7 +695,7 @@ RITUAL = cwRituals.rituals:New("demon_hunter");
 		
 		Schema:EasyText(player, "goldenrod", "You now have 25 minutes to kill "..player.thrallsToKill.." Begotten thralls for your reward.");
 		
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." just activated the 'Demon Hunter' ritual! Make sure there are enough thrall NPCs ("..player.thrallsToKill..") for him to kill!");
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." just activated the 'Demon Hunter' ritual! Make sure there are enough thrall NPCs ("..player.thrallsToKill..") for him to kill!");
 		if(math.random(1,10) == 1) then Schema:EasyText(GetAdmin(), "tomato", "The die have been cast...by random chance, an admin thrall has been requested to participate in this ritual!"); end
 
 		timer.Create("DemonHunterTimer_"..player:EntIndex(), 1500, 1, function()
@@ -725,7 +730,7 @@ RITUAL:Register()
 		player.thrallsToKill = math.random(1, 3);
 		
 		Schema:EasyText(player, "goldenrod", "You now have 25 minutes to kill "..player.thrallsToKill.." Begotten thralls for your reward.");
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." just activated the 'Infernal Incursion' ritual! Make sure there are enough thrall NPCs ("..player.thrallsToKill..") for him to kill!");
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." just activated the 'Infernal Incursion' ritual! Make sure there are enough thrall NPCs ("..player.thrallsToKill..") for him to kill!");
 		if(math.random(1,10) == 1) then Schema:EasyText(GetAdmin(), "tomato", "The die have been cast...by random chance, an admin thrall has been requested to participate in this ritual!"); end
 	end;
 	function RITUAL:OnFail(player)
@@ -1044,9 +1049,9 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil");
 								target:SetNetVar("markedBySatanist", true);
 								
 								Schema:EasyText(player, "maroon", target:Name().." has been marked for death.");
-								Schema:EasyText(GetAdmins(), "tomato", target:Name().." has been marked for death by "..player:Name().."!");
+								Schema:EasyText(Schema:GetAdmins(), "tomato", target:Name().." has been marked for death by "..player:Name().."!");
 								
-								for k, v in pairs (_player.GetAll()) do
+								for _, v in _player.Iterator() do
 									if v:HasInitialized() then
 										if v == player or v:GetFaith() == "Faith of the Dark" then
 											Clockwork.chatBox:Add(v, nil, "darkwhispernoprefix", player:Name().." calls forth the minions of the Dark Lord, marking the one by the name of "..target:Name().." to be killed for their transgressions.");
@@ -1111,7 +1116,7 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil_target");
 								target:SetNetVar("markedBySatanist", true);
 								
 								Schema:EasyText(player, "maroon", target:Name().." has been marked for death.");
-								Schema:EasyText(GetAdmins(), "tomato", target:Name().." has been marked for death by "..player:Name().."!");
+								Schema:EasyText(Schema:GetAdmins(), "tomato", target:Name().." has been marked for death by "..player:Name().."!");
 								
 								if player:GetSubfaction() ~= "Rekh-khet-sa" then
 									player:HandleNeed("corruption", 30);
@@ -1505,7 +1510,7 @@ RITUAL = cwRituals.rituals:New("Sister's Blessing");
 		end
 
 		Schema:EasyText(player, "icon16/anchor.png", "cornflowerblue", "This ship can now navigate the River Styx!");
-		Schema:EasyText(GetAdmins(), "icon16/anchor.png", "goldenrod", player:Name() .. " has enchanted a boat to navigate the River Styx! You can perform the /ToggleHellSailing command to allow them to sail to the Hell Manor!")
+		Schema:EasyText(Schema:GetAdmins(), "icon16/anchor.png", "goldenrod", player:Name() .. " has enchanted a boat to navigate the River Styx! You can perform the /ToggleHellSailing command to allow them to sail to the Hell Manor!")
 		target.enchantment = true;
 		
 		return true;
@@ -1710,7 +1715,7 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 	RITUAL.experience = 35;
 	
 	function RITUAL:OnPerformed(player)
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning an Eddie near their position!");
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning an Eddie near their position!");
 		
 		player.nextRitualSummon = CurTime() + 180;
 	end;
@@ -1794,7 +1799,7 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 					entity:AddEntityRelationship(player, D_LI, 99);
 					entity.summonedFaith = playerFaith;
 					
-					for k, v in pairs(_player.GetAll()) do
+					for _, v in _player.Iterator() do
 						if v:GetFaith() == playerFaith then
 							entity:AddEntityRelationship(v, D_LI, 99);
 						end
@@ -1832,7 +1837,7 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning an Otis near their position!");
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning an Otis near their position!");
 		
 		player.nextRitualSummon = CurTime() + 180;
 	end;
@@ -1916,7 +1921,7 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 					entity:AddEntityRelationship(player, D_LI, 99);
 					entity.summonedFaith = playerFaith;
 					
-					for k, v in pairs(_player.GetAll()) do
+					for _, v in _player.Iterator() do
 						if v:GetFaith() == playerFaith then
 							entity:AddEntityRelationship(v, D_LI, 99);
 						end
@@ -1954,7 +1959,7 @@ RITUAL = cwRituals.rituals:New("summon_sprinter");
 	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Sprinter' ritual, spawning 2 sprinters near their position! God save their enemies.");
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Summon Sprinter' ritual, spawning 2 sprinters near their position! God save their enemies.");
 		
 		player.nextRitualSummon = CurTime() + 180;
 	end;
@@ -2053,7 +2058,7 @@ RITUAL = cwRituals.rituals:New("summon_sprinter");
 					entity.RunAnimation = ACT_RUN;
 					entity.Summoned = true;
 
-					for k, v in pairs(_player.GetAll()) do
+					for _, v in _player.Iterator() do
 						if v:GetFaith() == playerFaith then
 							entity:AddEntityRelationship(v, D_LI, 99);
 						end
@@ -2085,7 +2090,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit bear near their position!");
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit bear near their position!");
 		
 		player.nextRitualSummon = CurTime() + 180;
 	end;
@@ -2156,7 +2161,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 					entity.XPValue = 250;
 					entity.summonedFaith = playerFaith;
 					
-					for k, v in pairs(_player.GetAll()) do
+					for _, v in _player.Iterator() do
 						if v:GetFaith() == playerFaith then
 							entity:AddEntityRelationship(v, D_LI, 99);
 						else					
@@ -2199,7 +2204,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit leopard near their position!");
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit leopard near their position!");
 		
 		player.nextRitualSummon = CurTime() + 120;
 	end;
@@ -2271,7 +2276,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 					
 					entity.summonedFaith = playerFaith;
 					
-					for k, v in pairs(_player.GetAll()) do
+					for _, v in _player.Iterator() do
 						if v:GetFaith() == playerFaith then
 							entity:AddEntityRelationship(v, D_LI, 99);
 						else					
@@ -2314,7 +2319,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_elk");
 	RITUAL.experience = 50;
 	
 	function RITUAL:OnPerformed(player)
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit elk near their position!");
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Summon Familiar' ritual, spawning a spirit elk near their position!");
 		
 		player.nextRitualSummon = CurTime() + 60;
 	end;
@@ -2386,7 +2391,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_elk");
 					
 					entity.summonedFaith = playerFaith;
 					
-					for k, v in pairs(_player.GetAll()) do
+					for _, v in _player.Iterator() do
 						if v:GetFaith() == playerFaith then
 							entity:AddEntityRelationship(v, D_LI, 99);
 						else					

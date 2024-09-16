@@ -14,7 +14,7 @@ local COMMAND = Clockwork.command:New("DisableMusic");
 	function COMMAND:OnRun(player, arguments)
 		cwMusic.enabled = false;
 		
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if arguments[1] then
 				netstream.Start(v, "FadeAllMusic");
 			end
@@ -23,9 +23,9 @@ local COMMAND = Clockwork.command:New("DisableMusic");
 		end;
 		
 		if arguments[1] then
-			Schema:EasyText(GetAdmins(), "icon16/sound_delete.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has ", "red", "disabled", "lightslategrey", " and stopped all currently playing music!")
+			Schema:EasyText(Schema:GetAdmins(), "icon16/sound_delete.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has ", "red", "disabled", "lightslategrey", " and stopped all currently playing music!")
 		else
-			Schema:EasyText(GetAdmins(), "icon16/sound_delete.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has ", "red", "disabled", "lightslategrey", " the dynamic music system!")
+			Schema:EasyText(Schema:GetAdmins(), "icon16/sound_delete.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has ", "red", "disabled", "lightslategrey", " the dynamic music system!")
 		end
 	end;
 COMMAND:Register();
@@ -46,9 +46,9 @@ local COMMAND = Clockwork.command:New("PlyDisableMusic");
 			if arguments[2] then
 				netstream.Start(target, "FadeAllMusic");
 				
-				Schema:EasyText(GetAdmins(), "icon16/sound_delete.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has ", "red", "disabled", "lightslategrey", " all currently playing music for ", _team.GetColor(target:Team()), target:Name(), "lightslategrey", "!")
+				Schema:EasyText(Schema:GetAdmins(), "icon16/sound_delete.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has ", "red", "disabled", "lightslategrey", " all currently playing music for ", _team.GetColor(target:Team()), target:Name(), "lightslategrey", "!")
 			else
-				Schema:EasyText(GetAdmins(), "icon16/sound_delete.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has ", "red", "disabled", "lightslategrey", " the dynamic music system for ", _team.GetColor(target:Team()), target:Name(), "lightslategrey", "!")
+				Schema:EasyText(Schema:GetAdmins(), "icon16/sound_delete.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has ", "red", "disabled", "lightslategrey", " the dynamic music system for ", _team.GetColor(target:Team()), target:Name(), "lightslategrey", "!")
 			end
 			
 			netstream.Start(target, "DisableDynamicMusic");
@@ -72,7 +72,7 @@ local COMMAND = Clockwork.command:New("PlyEnableMusic");
 		if target then
 			netstream.Start(target, "EnableDynamicMusic");
 			
-			Schema:EasyText(GetAdmins(), "icon16/sound_add.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has ", "lawngreen", "enabled", "lightslategrey", " the dynamic music system for ", _team.GetColor(target:Team()), target:Name(), "lightslategrey", "!")
+			Schema:EasyText(Schema:GetAdmins(), "icon16/sound_add.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has ", "lawngreen", "enabled", "lightslategrey", " the dynamic music system for ", _team.GetColor(target:Team()), target:Name(), "lightslategrey", "!")
 		else
 			Clockwork.player:Notify(player, arguments[1].." is not a valid player!");
 		end;
@@ -88,11 +88,11 @@ local COMMAND = Clockwork.command:New("EnableMusic");
 	function COMMAND:OnRun(player, arguments)
 		cwMusic.enabled = true;
 		
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			netstream.Start(v, "EnableDynamicMusic");
 		end;
 		
-		Schema:EasyText(GetAdmins(), "icon16/sound_add.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has ", "lawngreen", "enabled", "lightslategrey", " the dynamic music system!")
+		Schema:EasyText(Schema:GetAdmins(), "icon16/sound_add.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has ", "lawngreen", "enabled", "lightslategrey", " the dynamic music system!")
 	end;
 COMMAND:Register();
 
@@ -103,10 +103,10 @@ local COMMAND = Clockwork.command:New("StopMusic");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			netstream.Start(v, "FadeAllMusic");
 		end;
 
-		Schema:EasyText(GetAdmins(), "icon16/sound_delete.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has stopped all currently playing music!")
+		Schema:EasyText(Schema:GetAdmins(), "icon16/sound_delete.png", _team.GetColor(player:Team()), player:Name().." ", "lightslategray", "has stopped all currently playing music!")
 	end;
 COMMAND:Register();

@@ -23,10 +23,10 @@ COMMAND.access = "s";
 function COMMAND:OnRun(player, arguments)
 	if cwSailing.hellSailingEnabled ~= true then
 		cwSailing.hellSailingEnabled = true;
-		Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has enabled sailing to hell for enchanted longships.");
+		Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has enabled sailing to hell for enchanted longships.");
 	else
 		cwSailing.hellSailingEnabled = false;
-		Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has disabled sailing to hell for enchanged longships.");
+		Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has disabled sailing to hell for enchanged longships.");
 	end
 end;
 

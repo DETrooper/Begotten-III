@@ -23,7 +23,7 @@ function cwAnimatedLegs:RenderScreenspaceEffects()
 				self.BiasAngles = Clockwork.Client:EyeAngles()
 				self.RenderAngle = Angle(0, self.BiasAngles.y, 0)
 				self.RadAngle = math.rad(self.BiasAngles.y)
-				self.ForwardOffset = -12 + (1 - (math.Clamp(self.BiasAngles.p - 45, 0, 45) / 45) * 7)
+				self.ForwardOffset = -18 + (1 - (math.Clamp(self.BiasAngles.p - 45, 0, 45) / 45) * 7)
 				self.RenderPos.x = self.RenderPos.x + math.cos(self.RadAngle) * self.ForwardOffset
 				self.RenderPos.y = self.RenderPos.y + math.sin(self.RadAngle) * self.ForwardOffset
 

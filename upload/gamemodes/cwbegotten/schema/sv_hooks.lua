@@ -5,20 +5,6 @@
 
 local map = game.GetMap() == "rp_begotten3";
 
-function GetAdmins()
-	local admins = {}
-	local players = _player.GetAll();
-	
-	for i = 1, _player.GetCount() do
-		local v = players[i];
-		if (v:IsAdmin()) then
-			admins[#admins + 1] = v;
-		end;
-	end;
-	
-	return admins;
-end;
-
 function Schema:ClockworkInitialized()
 	if !self.bountyData then
 		self.bountyData = Clockwork.kernel:RestoreSchemaData("bountyData") or {};
@@ -577,7 +563,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 							entity:Remove();
 						end
 						
-						Schema:EasyText(GetAdmins(), "green", player:Name().." has claimed the bounty on "..entityPlayer:Name().." for "..tostring(entityPlayer:GetBounty()).." coin!");
+						Schema:EasyText(Schema:GetAdmins(), "green", player:Name().." has claimed the bounty on "..entityPlayer:Name().." for "..tostring(entityPlayer:GetBounty()).." coin!");
 						
 						entityPlayer:RemoveBounty();
 						
@@ -594,7 +580,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 					Schema:RemoveBounty(entity:GetNWInt("bountyKey"));
 					entity:Remove();
 					
-					Schema:EasyText(GetAdmins(), "green", player:Name().." has claimed the bounty on "..bountyData.name.." for "..tostring(bountyData.bounty).." coin!");
+					Schema:EasyText(Schema:GetAdmins(), "green", player:Name().." has claimed the bounty on "..bountyData.name.." for "..tostring(bountyData.bounty).." coin!");
 				end
 			end
 		end
@@ -794,18 +780,14 @@ function Schema:PlayerRadioUsed(player, text, listeners, eavesdroppers)
 	local newEavesdroppers = {};
 	local talkRadius = Clockwork.config:Get("talk_radius"):Get() * 2;
 	local frequency = player:GetCharacterData("frequency");
-	
-	local playerCount = _player.GetCount();
-	local players = _player.GetAll();
 
 	for k, v in ipairs(ents.FindByClass("cw_radio")) do
 		local radioPosition = v:GetPos();
 		local radioFrequency = v:GetFrequency();
 		
 		if (!v:IsOff() and !v:IsCrazy() and radioFrequency == frequency) then
-			for i = 1, playerCount do
-				local v2, k2 = players[i], i;
-				if ( v2:HasInitialized() and !listeners[v2] and !eavesdroppers[v2] ) then
+			for _, v2 in _player.Iterator() do
+				if (v2:HasInitialized() and !listeners[v2] and !eavesdroppers[v2]) then
 					if (v2:GetPos():DistToSqr(radioPosition) <= (talkRadius * talkRadius)) then
 						newEavesdroppers[v2] = v2;
 					end;
@@ -873,7 +855,7 @@ end;
 
 -- Called when a player's radio info should be adjusted.
 function Schema:PlayerAdjustRadioInfo(player, info)
-	--[[for k, v in ipairs( _player.GetAll() ) do
+	--[[for i, v in _player.Iterator() do
 		if ( v:HasInitialized() and v:HasItem("handheld_radio")) then
 			if ( v:GetCharacterData("frequency") == player:GetCharacterData("frequency") ) then
 				if (v:GetNetVar("tied") == 0) then
@@ -1239,8 +1221,16 @@ function Schema:PlayerCanSwitchCharacter(player, character)
 		return false, "You cannot switch to this character while your current character is dying!";
 	end
 	
-	if Schema.fuckerJoeActive and !player:IsAdmin() then
-		return false, "You cannot switch to this character while Fucker Joe is on the loose!";
+	if !player:IsAdmin() then
+		if Clockwork.charSwappingDisabled and player.cwCharacter and player:Alive() then
+			Clockwork.player:NotifyAdmins("operator", player:Name().." has attempted to switch characters while charswapping is disabled!");
+		
+			if Schema.fuckerJoeActive then
+				return false, "You cannot switch to this character while Fucker Joe is on the loose!";
+			end
+			
+			return false, "You cannot switch to this character while charswapping is disabled!";
+		end
 	end
 end;
 
@@ -3155,7 +3145,7 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 	if shieldItem and shieldItem.requiredbeliefs and table.HasValue(shieldItem.requiredbeliefs, "defender") then
 		local activeWeapon = player:GetActiveWeapon();
 		
-		if IsValid(activeWeapon) and activeWeapon:GetNWString("activeShield"):len() > 0 and activeWeapon:GetNWString("activeShield") == shieldItem.uniqueID then
+		if activeWeapon:IsValid() and activeWeapon:GetNWString("activeShield"):len() > 0 and activeWeapon:GetNWString("activeShield") == shieldItem.uniqueID then
 			infoTable.runSpeed = infoTable.runSpeed * 0.9;
 		end
 	end
@@ -3222,9 +3212,7 @@ function Schema:CinderBlockExecution(player, target, itemTable)
 						cinderBlock:SetNWBool("BIsCinderBlock", true)
 						cinderBlock:SetOwner(entity)
 						
-						local players = _player.GetAll();
-
-						for k, v in pairs(players) do
+						for _, v in _player.Iterator() do
 							if (IsValid(v:GetRagdollEntity())) then
 								if (v:GetRagdollEntity() == entity) then
 									entity.RagdollOwner = v

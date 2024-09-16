@@ -61,7 +61,7 @@ function COMMAND:OnRun(player, arguments)
 	end;
 	
 	if (arguments[1]) then
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			v:ConCommand("r_cleardecals");
 		end;
 		

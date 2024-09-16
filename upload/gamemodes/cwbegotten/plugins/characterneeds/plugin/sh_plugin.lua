@@ -401,7 +401,7 @@ function COMMAND:OnRun(player, arguments)
 		target:SetNWInt("Stamina", amount);
 		
 		if (player != target) then
-			Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s stamina to "..amount..".");
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s stamina to "..amount..".");
 		else
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own stamina to "..amount..".");
 		end;
@@ -432,7 +432,7 @@ function COMMAND:OnRun(player, arguments)
 		target:SetNeed("corruption", amount);
 		
 		if (player != target) then
-			Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s corruption to "..amount..".");
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s corruption to "..amount..".");
 		else
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own corruption to "..amount..".");
 		end;
@@ -463,7 +463,7 @@ function COMMAND:OnRun(player, arguments)
 		target:SetNeed("hunger", amount);
 		
 		if (player != target) then
-			Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s hunger to "..amount..".");
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s hunger to "..amount..".");
 		else
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own Hunger to "..amount..".");
 		end;
@@ -494,7 +494,7 @@ function COMMAND:OnRun(player, arguments)
 		target:SetNeed("thirst", amount);
 		
 		if (player != target) then
-			Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s thirst to "..amount..".");
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s thirst to "..amount..".");
 		else
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own thirst to "..amount..".");
 		end;
@@ -525,7 +525,7 @@ function COMMAND:OnRun(player, arguments)
 		target:SetNeed("sleep", amount);
 		
 		if (player != target) then
-			Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s sleep to "..amount..".");
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s sleep to "..amount..".");
 		else
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own sleep to "..amount..".");
 		end;

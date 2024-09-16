@@ -114,11 +114,7 @@ function cwScrapFactory:StartProcessing()
 				end
 				
 				timer.Create("ScrapCycleAlarmTimer", self.cycleTime - 20, 1, function()
-					local players = _player.GetAll()
-			
-					for i = 1, _player.GetCount() do
-						local player = players[i];
-						
+					for _, player in _player.Iterator() do
 						if IsValid(player) then
 							netstream.Start(player, "StartScrapFactoryAlarm");
 						end
@@ -162,7 +158,7 @@ function cwScrapFactory:CheckProcessingCycle()
 			timer.Remove("ScrapCycleTimer")
 		end
 		
-		netstream.Start(_player.GetAll(), "StopScrapFactoryAlarm");
+		netstream.Start(PlayerCache or _player.GetAll(), "StopScrapFactoryAlarm");
 		
 		timer.Simple(30, function()
 			cwScrapFactory:StopProcessingCycle();
@@ -175,7 +171,7 @@ function cwScrapFactory:CheckProcessingCycle()
 			local scanPos = cwScrapFactory.rewardPositions[1];
 			local playersPresent = {};
 			
-			for k, v in pairs(_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				if IsValid(v) and v:HasInitialized() and v:Alive() and !Clockwork.player:IsNoClipping(v) then
 					local lastZone = v:GetCharacterData("LastZone");
 				
@@ -276,7 +272,7 @@ function cwScrapFactory:StopProcessingCycle()
 			timer.Remove("ScrapCycleTimer")
 		end
 	
-		netstream.Start(_player.GetAll(), "StopScrapFactoryAlarm");
+		netstream.Start(PlayerCache or _player.GetAll(), "StopScrapFactoryAlarm");
 		
 		self.cycleInProgress = false;
 	end
@@ -329,11 +325,7 @@ function cwScrapFactory:ApplyPipesForces()
 	if self.cycleInProgress == true then
 		util.ScreenShake(self.screenShakeVector, 5, 5, 2, 5000);
 	
-		local players = _player.GetAll()
-			
-		for i = 1, _player.GetCount() do
-			local player = players[i];
-			
+		for _, player in _player.Iterator() do
 			if IsValid(player) then
 				local playerPos = player:GetPos();
 				

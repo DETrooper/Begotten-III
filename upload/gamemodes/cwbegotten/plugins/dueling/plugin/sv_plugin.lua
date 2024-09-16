@@ -451,7 +451,7 @@ function cwDueling:DuelAborted(player1, player2)
 		for k, v in pairs(self.arenas) do
 			if v.duelingPlayer1 == player1 or v.duelingPlayer2 == player1 then
 				-- player2 dropped
-				for k, v in pairs (_player.GetAll()) do
+				for _, v in _player.Iterator() do
 					if v:IsAdmin() then
 						Schema:EasyText(v, "orangered","[DUELLING] Player: "..player1:Name().." dropped from an in progress duel.");
 					end;
@@ -482,7 +482,7 @@ function cwDueling:DuelAborted(player1, player2)
 		for k, v in pairs(self.arenas) do
 			if v.duelingPlayer1 == player2 or v.duelingPlayer2 == player2 then
 				-- player1 dropped
-				for k, v in pairs (_player.GetAll()) do
+				for _, v in _player.Iterator() do
 					if v:IsAdmin() then
 						Schema:EasyText(v, "orange","[DUELLING] Player: "..player2:Name().." dropped from an in progress duel.");
 					end;
@@ -580,7 +580,7 @@ function cwDueling:DuelCompleted(winner, loser)
 				
 				winner:SetCharacterData("DuelWins", wins + 1);
 			
-				for k, v in pairs (_player.GetAll()) do
+				for _, v in _player.Iterator() do
 					if v:IsAdmin() then
 						Schema:EasyText(v, "orangered","[DUELLING] Player: "..loser:Name().." dropped from an in progress duel.");
 					end;
@@ -636,7 +636,7 @@ function cwDueling:DuelCompleted(winner, loser)
 
 				loser:SetCharacterData("DuelLosses", losses + 1);
 
-				for k, v in pairs (_player.GetAll()) do
+				for _, v in _player.Iterator() do
 					if v:IsAdmin() then
 						Schema:EasyText(v, "orangered","[DUELLING] Player: "..winner:Name().." dropped from an in progress duel.");
 					end;

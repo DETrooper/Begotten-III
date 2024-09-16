@@ -312,18 +312,6 @@ local COMMAND = Clockwork.command:New("StartSoundRadius");
 	end;
 COMMAND:Register();
 
-local COMMAND = Clockwork.command:New("StopSound");
-	COMMAND.tip = "Stop all sounds.";
-	COMMAND.flags = CMD_DEFAULT;
-	COMMAND.access = "s";
-	-- Called when the command has been run.
-	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs (_player.GetAll()) do
-			v:SendLua([[RunConsoleCommand("stopsound")]])
-		end;
-	end;
-COMMAND:Register();
-
 local COMMAND = Clockwork.command:New("FadeSound");
 	COMMAND.tip = "Fade a loopable/fadeable sound.";
 	COMMAND.flags = CMD_DEFAULT;

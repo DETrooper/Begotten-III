@@ -334,7 +334,7 @@ function Schema:OverrideFogDistance(zone, distance)
 			self.fogDistance[zone] = distance;
 		end;
 		
-		netstream.Start(_player.GetAll(), "OverrideFogDistance", {zone = zone, fogEnd = self.fogDistance[zone]});
+		netstream.Start(PlayerCache or _player.GetAll(), "OverrideFogDistance", {zone = zone, fogEnd = self.fogDistance[zone]});
 	end;
 end;
 
@@ -358,7 +358,7 @@ function Schema:AddNPCSpawn(position, category, player)
 
 	table.insert(self.npcSpawns[category], {pos = position});
 	
-	netstream.Heavy(self:GetAdmins(), "NPCSpawnESPInfo", {self.npcSpawns});
+	netstream.Heavy(Schema:GetAdmins(), "NPCSpawnESPInfo", {self.npcSpawns});
 	
 	if (player and player:IsPlayer()) then
 		self:EasyText(player, "cornflowerblue", "You have added a "..category.." NPC spawn at your cursor position.");
@@ -377,7 +377,7 @@ function Schema:RemoveNPCSpawn(position, distance, player)
 					self:EasyText(player, "cornflowerblue", "You removed an NPC spawn at your cursor position.");
 				end;
 				
-				netstream.Heavy(self:GetAdmins(), "NPCSpawnESPInfo", {self.npcSpawns});
+				netstream.Heavy(Schema:GetAdmins(), "NPCSpawnESPInfo", {self.npcSpawns});
 				
 				self:SaveNPCSpawns();
 				
@@ -425,11 +425,7 @@ end;
 function Schema:GetAdmins()
 	local admins = {};
 	
-	local playerCount = _player.GetCount();
-	local players = _player.GetAll();
-
-	for i = 1, playerCount do
-		local v, k = players[i], i;
+	for _, v in _player.Iterator() do
 		if (v:IsAdmin() or v:IsUserGroup("operator")) then
 			admins[#admins + 1] = v;
 		end;
@@ -1409,15 +1405,11 @@ end;
 -- For the 'Followed' trait.
 function Schema:CheapleCaughtPlayer(player)
 	if IsValid(player) and player:Alive() then
-		local playerCount = _player.GetCount();
-		local players = _player.GetAll();
 		local listeners = {};
 		local radius = config.Get("talk_radius"):Get() * 2;
 		local playerPos = player:GetPos();
 
-		for i = 1, playerCount do
-			local v, k = players[i], i;
-			
+		for _, v in _player.Iterator() do
 			if v ~= player and (playerPos:DistToSqr(v:GetPos()) <= (radius * radius)) then
 				listeners[#listeners + 1] = v;
 			end;
@@ -1453,7 +1445,7 @@ function Schema:CheapleCaughtPlayer(player)
 			Schema:PermaKillPlayer(player, nil, true);
 		end
 		
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." was caught by a cheaple!", nil);
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." was caught by a cheaple!", nil);
 		netstream.Start(player, "CheapleCutscene");
 	end
 end
@@ -1517,9 +1509,9 @@ end;
 
 netstream.Hook("ContentBypass", function(player, data)
 	if data then
-		Schema:EasyText(GetAdmins(), "indianred", player:Name().." has skipped content verification due to a scripting error! They will be playing with missing content!")
+		Schema:EasyText(Schema:GetAdmins(), "indianred", player:Name().." has skipped content verification due to a scripting error! They will be playing with missing content!")
 	else
-		Schema:EasyText(GetAdmins(), "indianred", player:Name().." has skipped content verification! They will be playing with missing content!")
+		Schema:EasyText(Schema:GetAdmins(), "indianred", player:Name().." has skipped content verification! They will be playing with missing content!")
 	end
 end);
 
@@ -1657,10 +1649,10 @@ function playerMeta:AddBounty(bounty, reason, poster)
 		Schema:EasyText(poster, "cornflowerblue", "You have placed a "..tostring(tab.bounty).." coin bounty on "..tab.name.."!");
 	
 		if tab.bounty == bounty then
-			Schema:EasyText(GetAdmins(), "green", poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."!");
+			Schema:EasyText(Schema:GetAdmins(), "green", poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."!");
 			Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."!");
 		else
-			Schema:EasyText(GetAdmins(), "green", poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."! Their total bounty now stands at "..tostring(tab.bounty).." coin!");
+			Schema:EasyText(Schema:GetAdmins(), "green", poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."! Their total bounty now stands at "..tostring(tab.bounty).." coin!");
 			Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."! Their total bounty now stands at "..tostring(tab.bounty).." coin!");
 		end
 	end
@@ -1689,7 +1681,7 @@ function playerMeta:RemoveBounty(remover)
 		
 		if IsValid(remover) and remover:IsPlayer() then
 			Schema:EasyText(remover, "cornflowerblue", "You have removed the bounty for "..self:Name().."!");
-			Schema:EasyText(GetAdmins(), "tomato", remover:Name().." has removed the bounty for "..self:Name().."!");
+			Schema:EasyText(Schema:GetAdmins(), "tomato", remover:Name().." has removed the bounty for "..self:Name().."!");
 			Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, remover:Name().." has removed the bounty for "..self:Name().."!");
 		end
 		
@@ -1794,10 +1786,10 @@ function Schema:AddBounty(key, bounty, reason, poster)
 							Schema:EasyText(poster, "cornflowerblue", "You have placed a "..tostring(tab.bounty).." coin bounty on "..tab.name.."!");
 						
 							if tab.bounty == bounty then
-								Schema:EasyText(GetAdmins(), "green", poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."!");
+								Schema:EasyText(Schema:GetAdmins(), "green", poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."!");
 								Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."!");
 							else
-								Schema:EasyText(GetAdmins(), "green", poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."! Their total bounty now stands at "..tostring(tab.bounty).." coin!");
+								Schema:EasyText(Schema:GetAdmins(), "green", poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."! Their total bounty now stands at "..tostring(tab.bounty).." coin!");
 								Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, poster:Name().." has placed a "..tostring(bounty).." coin bounty on "..tab.name.."! Their total bounty now stands at "..tostring(tab.bounty).." coin!");
 							end
 						end
@@ -1851,7 +1843,7 @@ function Schema:RemoveBounty(key, remover)
 						
 						if IsValid(remover) and remover:IsPlayer() then
 							Schema:EasyText(remover, "cornflowerblue", "You have removed the bounty for "..v._Name.."!");
-							Schema:EasyText(GetAdmins(), "tomato", remover:Name().." has removed the bounty for "..v._Name.."!");
+							Schema:EasyText(Schema:GetAdmins(), "tomato", remover:Name().." has removed the bounty for "..v._Name.."!");
 							Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, remover:Name().." has removed the bounty for "..v._Name.."!");
 						end
 						
@@ -2096,7 +2088,7 @@ end
 
 function Schema:ModifyTowerTreasury(amount)
 	if !self.towerTreasury then
-		Schema:EasyText(GetAdmins(), "red", "The tower treasury was not initialized properly!", nil);
+		Schema:EasyText(Schema:GetAdmins(), "red", "The tower treasury was not initialized properly!", nil);
 		self.towerTreasury = 0;
 	end
 	
@@ -2116,11 +2108,7 @@ function Schema:AddBookTowerArchives(player, itemTable)
 		self.archivesBookList[uniqueID] = 1;
 	end
 	
-	local playerCount = _player.GetCount();
-	local players = _player.GetAll();
-
-	for i = 1, playerCount do
-		local v, k = players[i], i;
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized()) then
 			netstream.Start(v, "Archives", self.archivesBookList);
 		end
@@ -2149,11 +2137,7 @@ function Schema:TakeBookTowerArchives(player, uniqueID)
 		
 			Schema:EasyText(player, "olivedrab", "You have taken a copy of '"..itemTable.name.."' from the archives.");
 			
-			local playerCount = _player.GetCount();
-			local players = _player.GetAll();
-
-			for i = 1, playerCount do
-				local v, k = players[i], i;
+			for _, v in _player.Iterator() do
 				if (v:HasInitialized()) then
 					netstream.Start(v, "Archives", self.archivesBookList);
 				end
@@ -2408,7 +2392,7 @@ concommand.Add("cw_CoinslotSalary", function(player, cmd, args)
 					end);
 				else
 					Schema:EasyText(player, "olive", "Try as you might, the coinslot won't dispense your salary. How odd.");
-					Schema:EasyText(GetAdmins(), "tomato", player:Name().." has attempted to collect his salary, but the treasury is bankrupt!", nil);
+					Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has attempted to collect his salary, but the treasury is bankrupt!", nil);
 				end
 			end
 		end
@@ -3060,7 +3044,7 @@ function Schema:EmitSoundFromSpeakers(sound, level, pitch)
 end;
 
 function Schema:SpeakerTalk(player, text)
-	for k, v in pairs (_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (self:InSpeakerZone(v)) then
 			Clockwork.chatBox:SetMultiplier(1.35);
 			Clockwork.chatBox:Add(v, player, "speaker", text);
@@ -3080,7 +3064,7 @@ function Schema:InSpeakerZone(entity)
 end;
 
 function Schema:SpeakerPerform(player, text)
-	for k, v in pairs (_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (self:InSpeakerZone(v)) then
 			Clockwork.chatBox:SetMultiplier(1.35);
 			Clockwork.chatBox:Add(v, player, "speakerit", text);

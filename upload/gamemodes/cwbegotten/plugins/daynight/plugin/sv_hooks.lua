@@ -182,11 +182,7 @@ netstream.Hook("ShadowDamage", function(player, data)
 		selfless = "herself";
 	end
 	
-	local playerCount = _player.GetCount();
-	local players = _player.GetAll();
-
-	for i = 1, playerCount do
-		local v, k = players[i], i;
+	for _, v in _player.Iterator() do
 		if v ~= player and (playerPos:DistToSqr(v:GetPos()) <= (radius * radius)) then
 			listeners[#listeners + 1] = v;
 		end;

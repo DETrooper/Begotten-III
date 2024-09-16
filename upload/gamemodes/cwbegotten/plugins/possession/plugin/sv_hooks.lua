@@ -65,7 +65,7 @@ function cwPossession:PlayerCanRaiseWeapon(player, activeWeapon)
 	elseif IsValid(player.victim) then
 		local raiseSound = "cloth.wav";
 		
-		if IsValid(activeWeapon) and (activeWeapon.RaiseSound) then
+		if activeWeapon:IsValid() and (activeWeapon.RaiseSound) then
 			raiseSound = activeWeapon.RaiseSound;
 		end;
 	
@@ -112,7 +112,7 @@ function cwPossession:PlayerDisconnected(player)
 			player.possessor.victim = nil;
 		end
 		
-		Schema:EasyText(GetAdmins(), "tomato", player:Name().." has disconnected while possessed!");
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has disconnected while possessed!");
 	elseif IsValid(player.victim) then
 		player.victim:SetNetVar("currentlyPossessed", false);
 		player.victim.possessor = nil;

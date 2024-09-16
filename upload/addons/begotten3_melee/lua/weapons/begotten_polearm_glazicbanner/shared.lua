@@ -144,7 +144,7 @@ function SWEP:Holster()
 
 		local index = self:EntIndex();
 
-		for k, v in pairs(_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if v.banners and v.banners[index] then
 				v.banners[index] = nil;
 			end
@@ -172,7 +172,7 @@ function SWEP:Think()
 
 				end]]--
 				
-				for k, v in pairs(_player.GetAll()) do
+				for _, v in _player.Iterator() do
 					if v:Alive() then
 						local faction = v:GetFaction();
 						

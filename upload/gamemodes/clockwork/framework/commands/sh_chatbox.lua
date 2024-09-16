@@ -88,7 +88,7 @@ local COMMAND = Clockwork.command:New("Su");
 	function COMMAND:OnRun(player, arguments)
 		local listeners = {};
 		
-		for k, v in pairs(_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			
 			if (ads and ads[v:SteamID()]) then
 				listeners[#listeners + 1] = v;
@@ -177,7 +177,7 @@ COMMAND:Register();
 	function COMMAND:OnRun(player, arguments)
 		local listeners = {};
 		
-		for k, v in pairs(_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if (v:IsUserGroup("operator") or v:IsAdmin()
 			or v:IsSuperAdmin()) then
 				listeners[#listeners + 1] = v;
@@ -273,7 +273,7 @@ local COMMAND = Clockwork.command:New("AdminChat");
 	function COMMAND:OnRun(player, arguments)
 		local listeners = {};
 		
-		for k, v in pairs(_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if (v:IsUserGroup("operator") or v:IsAdmin() or v:IsSuperAdmin()) then
 				listeners[#listeners + 1] = v;
 			end;
@@ -296,7 +296,7 @@ COMMAND.alias = {"aHelp", "help"};
 function COMMAND:OnRun(player, arguments)
     local message = table.concat(arguments, " ", 1)
 
-    for k, v in pairs (_player.GetAll()) do
+    for _, v in _player.Iterator() do
 		if (Clockwork.player:IsAdmin(v)) then
             Clockwork.player:Notify(v, "[ADMINHELP] "..player:Name()..": "..message);
         end;
@@ -324,7 +324,7 @@ function COMMAND:OnRun(player, arguments)
 		local message = "\""..table.concat(arguments, " ", 2).."\"";
 		
 		Clockwork.player:Notify(target, "[ADMINHELP RESPONSE] "..message);
-		Clockwork.player:Notify(GetAdmins(), "[ADMINHELP RESPONSE] "..player:Name().." to "..target:Name()..": "..message);
+		Clockwork.player:Notify(Schema:GetAdmins(), "[ADMINHELP RESPONSE] "..player:Name().." to "..target:Name()..": "..message);
 	else
 		Schema:EasyText(player, "grey", "["..self.name.."] "..arguments[1].." is not a valid player!");
 	end;

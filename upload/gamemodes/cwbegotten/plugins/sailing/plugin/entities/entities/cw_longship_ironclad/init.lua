@@ -235,7 +235,7 @@ function ENT:Think()
 							local alive = player:Alive();
 							
 							if alive then
-								Schema:EasyText(GetAdmins(), "icon16/water.png", "cornflowerblue", player:Name().." went overboard!");
+								Schema:EasyText(Schema:GetAdmins(), "icon16/water.png", "cornflowerblue", player:Name().." went overboard!");
 							end
 							
 							if self.location == "calm" or self.location == "rough" then

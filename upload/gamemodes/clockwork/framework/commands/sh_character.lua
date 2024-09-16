@@ -97,7 +97,7 @@ local COMMAND = Clockwork.command:New("SetHealthMaxAll");
 			affect_duelists = true;
 		end
 		
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if v:HasInitialized() and v:Alive() then
 				if !v.opponent or (v.opponent and affect_duelists) then
 					v:SetHealth(v:GetMaxHealth() or 100);
@@ -234,7 +234,7 @@ local COMMAND = Clockwork.command:New("PlyGodAll");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			v:GodEnable();
 		end;
 		
@@ -249,7 +249,7 @@ local COMMAND = Clockwork.command:New("PlyUnGodAll");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			v:GodDisable();
 		end;
 		
@@ -917,7 +917,7 @@ local COMMAND = Clockwork.command:New("CharKick");
 		if !target.cwCharacter then Schema:EasyText(player, "peru", target:Name().." does not have a character loaded!"); return; end
 		
 		Clockwork.player:UnloadCharacter(target);
-        Schema:EasyText(GetAdmins(), "yellow", (target:Name().." has been kicked off of their character by "..player:Name().."."));
+        Schema:EasyText(Schema:GetAdmins(), "yellow", (target:Name().." has been kicked off of their character by "..player:Name().."."));
 		Clockwork.player:SetCreateFault(target, "You have been kicked off of your character.");
     end
 COMMAND:Register();

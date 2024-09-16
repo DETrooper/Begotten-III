@@ -237,7 +237,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 		end
 		
 		if !isOffhand then
-			if IsValid(activeWeapon) and activeWeapon:GetClass() == self.weaponClass then
+			if activeWeapon:IsValid() and activeWeapon:GetClass() == self.weaponClass then
 				player:SelectWeapon("begotten_fists")
 			end
 			
@@ -302,7 +302,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 				player:TakeItem(self)
 				
 				if !isOffhand then
-					if IsValid(activeWeapon) and activeWeapon:GetClass() == self.weaponClass then
+					if activeWeapon:IsValid() and activeWeapon:GetClass() == self.weaponClass then
 						player:SelectWeapon("begotten_fists")
 					end
 					

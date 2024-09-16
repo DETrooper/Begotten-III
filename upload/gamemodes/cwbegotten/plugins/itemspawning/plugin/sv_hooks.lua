@@ -262,7 +262,7 @@ function cwItemSpawner:Think()
 		end
 
 		if self.Containers then
-			for i, v in ipairs(_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				if v:IsAdmin() then
 					if v.itemContainerSpawnESP then
 						netstream.Heavy(v, "ItemContsESPInfo",  {self.Containers, self.SuperCrate});

@@ -12,20 +12,14 @@ local COMMAND = Clockwork.command:New("cosmicrupture");
 	function COMMAND:OnRun(player, arguments)
 		Clockwork.chatBox:Add(nil, player, "event", "The ground abruptly begins to shake violently and the sky explodes with lightning as a torrent of cosmic energy sweeps over the Wasteland. Experienced survivors will know what this means...");
 		
-		if (SERVER) then
-			local players = _player.GetAll()
-			
-			for i = 1, _player.GetCount() do
-				local player = players[i];
-				
-				if IsValid(player) then
-					-- Maybe check to see if zone is wasteland/tower/scrap factory/toothboy?
-					netstream.Start(player, "FadeAmbientMusic");
-					netstream.Start(player, "FadeBattleMusic");
-					netstream.Start(player, "CosmicRupture");
-				end
+		for _, v in _player.Iterator() do
+			if IsValid(v) then
+				-- Maybe check to see if zone is wasteland/tower/scrap factory/toothboy?
+				netstream.Start(v, "FadeAmbientMusic");
+				netstream.Start(v, "FadeBattleMusic");
+				netstream.Start(v, "CosmicRupture");
 			end
-		end;
+		end
 	end;
 COMMAND:Register();
 

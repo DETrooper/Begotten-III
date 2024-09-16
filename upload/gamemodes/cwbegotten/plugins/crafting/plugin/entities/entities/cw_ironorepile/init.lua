@@ -87,7 +87,7 @@ function ENT:OnTakeDamage(damageInfo)
 					
 					Clockwork.player:NotifyAdmins("operator", player:Name().." has unearthed a Blood Diamond. Let the chaos caused by greed ensue.", nil);
 					
-					for k, v in pairs(_player.GetAll()) do
+					for _, v in _player.Iterator() do
 						if v ~= player and v:GetFaith() == "Faith of the Dark" then
 							v:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_long"..math.random(1, 5)..".mp3", 80, 100)]]);
 							Schema:EasyText(v, "red", "Your mind is abruptly overcome with feelings of unrestrained desire. A Blood Diamond has been unearthed somewhere, and it must be yours...");

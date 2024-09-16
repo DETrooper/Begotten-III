@@ -51,8 +51,7 @@ function netvars.GetNetVar(key, default)
 end
 
 function entityMeta:GetNetVar(key, default)
-	local index = self:EntIndex()
-	local storedIndex = stored[index];
+	local storedIndex = stored[self:EntIndex()];
 
 	if (storedIndex) then
 		return storedIndex[key] or default;

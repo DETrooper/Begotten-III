@@ -275,7 +275,7 @@ if SERVER then
 				game.ConsoleCommand("bot\n")
 			end;
 		else
-			Schema:EasyText(GetAdmins(), "lightslategrey", player:Name().." has tried to run the botfill console command!");
+			Schema:EasyText(Schema:GetAdmins(), "lightslategrey", player:Name().." has tried to run the botfill console command!");
 		end;
 	end);
 	
@@ -286,7 +286,7 @@ if SERVER then
 			local column = 0;
 			local max_col = 8;
 		
-			for i, v in ipairs(_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				if v:IsBot() then
 					v:SetPos(Vector(-1156 + (48 * column), 14185 - (48 * row), 298));
 					v:Freeze(true);
@@ -300,13 +300,13 @@ if SERVER then
 				end
 			end
 		else
-			Schema:EasyText(GetAdmins(), "lightslategrey", player:Name().." has tried to run the botteleportall console command!");
+			Schema:EasyText(Schema:GetAdmins(), "lightslategrey", player:Name().." has tried to run the botteleportall console command!");
 		end;
 	end);
 
 	concommand.Add("botfullequip", function(player, command, arguments)
 		if player:IsAdmin() then
-			for k, v in pairs (_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				local pos = v:GetPos();
 				
 				if (v:IsBot()) then
@@ -339,13 +339,13 @@ if SERVER then
 				end;
 			end;
 		else
-			Schema:EasyText(GetAdmins(), "lightslategrey", player:Name().." has tried to run the botfullequip console command!");
+			Schema:EasyText(Schema:GetAdmins(), "lightslategrey", player:Name().." has tried to run the botfullequip console command!");
 		end;
 	end);
 
 	concommand.Add("botdistortedring", function(player, command, arguments)
 		if player:IsAdmin() then
-			for k, v in pairs (_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				if (v:IsBot()) then
 					local pos = v:GetPos();
 					
@@ -365,7 +365,7 @@ if SERVER then
 				end;
 			end;
 		else
-			Schema:EasyText(GetAdmins(), "lightslategrey", player:Name().." has tried to run the botdistortedring console command!");
+			Schema:EasyText(Schema:GetAdmins(), "lightslategrey", player:Name().." has tried to run the botdistortedring console command!");
 		end;
 	end);
 end

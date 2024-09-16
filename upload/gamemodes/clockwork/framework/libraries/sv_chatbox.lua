@@ -11,7 +11,7 @@ Clockwork.chatBox.multiplier = nil;
 function Clockwork.chatBox:Add(listeners, speaker, class, text, data)
 	if (type(listeners) != "table") then
 		if (!listeners) then
-			listeners = _player.GetAll();
+			listeners = PlayerCache or _player.GetAll();
 		else
 			listeners = {listeners};
 		end;
@@ -63,7 +63,7 @@ function Clockwork.chatBox:AddInTargetRadius(speaker, class, text, position, rad
 	local dist = (radius / 2)
 	local distSqr = (dist * dist)
 	
-	for i, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized()) then
 			local realTrace = Clockwork.player:GetRealTrace(v);
 			
@@ -94,7 +94,7 @@ function Clockwork.chatBox:AddInRadius(speaker, class, text, position, radius, d
 	local outOfRangeListeners = {};
 	local sqrRadius = (radius * radius);
 
-	for i, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized()) then
 			local distance = position:DistToSqr(v:GetPos());
 			

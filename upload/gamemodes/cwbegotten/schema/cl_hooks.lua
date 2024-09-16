@@ -522,7 +522,7 @@ function Schema:GetEntityMenuOptions(entity, options)
 				if table.HasValue(animalModels, entity:GetModel()) then
 					--local activeWeapon = Clockwork.Client:GetActiveWeapon();
 					
-					--if IsValid(activeWeapon) and activeWeapon.isDagger then
+					--if activeWeapon:IsValid() and activeWeapon.isDagger then
 						options["Mutilate"] = "cwCorpseMutilate";
 						options["Skin"] = "cwCorpseSkin";
 					--else
@@ -560,7 +560,7 @@ function Schema:GetEntityMenuOptions(entity, options)
 			elseif model == "models/animals/bear.mdl" then
 				--local activeWeapon = Clockwork.Client:GetActiveWeapon();
 				
-				--if IsValid(activeWeapon) and activeWeapon.isDagger then
+				--if activeWeapon:IsValid() and activeWeapon.isDagger then
 					options["Mutilate"] = "cwCorpseMutilate";
 					options["Skin"] = "cwCorpseSkin";
 				--[[else

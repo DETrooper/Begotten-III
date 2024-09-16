@@ -160,7 +160,7 @@ function PANEL:Rebuild()
 	local owner = Clockwork.door:GetOwner();
 	local door = Clockwork.door:GetEntity();
 	
-	for k, v in pairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized()) then
 			if (Clockwork.Client != v and owner != v) then
 				local access = accessList[v] or false;

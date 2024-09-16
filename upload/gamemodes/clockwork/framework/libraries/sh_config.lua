@@ -330,7 +330,7 @@ if (SERVER) then
 		end
 
 		if (!player) then
-			player = _player.GetAll()
+			player = PlayerCache or _player.GetAll()
 		else
 			player = {player}
 		end

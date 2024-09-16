@@ -75,7 +75,7 @@ function COMMAND:OnRun(player, arguments)
 		target:StopAllBleeding();
 		
 		if (player != target) then
-			Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has stopped all bleeding for "..target:Name()..".");
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has stopped all bleeding for "..target:Name()..".");
 		else
 			Schema:EasyText(player, "cornflowerblue","["..self.name.."] You have stopped all bleeding for yourself.");
 		end;
@@ -101,7 +101,7 @@ function COMMAND:OnRun(player, arguments)
 		target:ResetInjuries();
 		
 		if (player != target) then
-			Schema:EasyText(GetAdmins(), _team.GetColor(player:Team()), player:Name(), "cornflowerblue", " has reset all injuries for ", _team.GetColor(target:Team()), target:Name(), "cornflowerblue", ".");
+			Schema:EasyText(Schema:GetAdmins(), _team.GetColor(player:Team()), player:Name(), "cornflowerblue", " has reset all injuries for ", _team.GetColor(target:Team()), target:Name(), "cornflowerblue", ".");
 		else
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have reset all injuries for yourself.");
 		end;
@@ -197,7 +197,7 @@ local COMMAND = Clockwork.command:New("CharGiveInjury");
 				
 				target:AddInjury(limbNumber, injury);
 				
-				Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has given "..target:Name().." a "..injury.." injury on their "..limb.."!");
+				Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has given "..target:Name().." a "..injury.." injury on their "..limb.."!");
 			else
 				Schema:EasyText(player, "grey",arguments[2].." is not a valid injury!");
 			end
@@ -239,7 +239,7 @@ local COMMAND = Clockwork.command:New("CharTakeInjury");
 
 				target:RemoveInjury(cwMedicalSystem.cwStringToHitGroup[limb], injury);
 				
-				Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has taken a "..injury.." injury from "..target:Name().."'s "..limb.."!");
+				Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has taken a "..injury.." injury from "..target:Name().."'s "..limb.."!");
 			else
 				Schema:EasyText(player, "grey",arguments[2].." is not a valid injury!");
 			end
@@ -263,7 +263,7 @@ local COMMAND = Clockwork.command:New("CharClearInjuries");
 		if (target and target:HasInitialized()) then
 			target:ResetInjuries();
 			
-			Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has cleared all of "..target:Name().."'s injuries!");
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has cleared all of "..target:Name().."'s injuries!");
 		else
 			Schema:EasyText(player, "grey", "["..self.name.."] "..arguments[1].." is not a valid player!");
 		end;
@@ -289,7 +289,7 @@ function COMMAND:OnRun(player, arguments)
 			target:SetBloodLevel(bloodLevel);
 			
 			if (player != target) then
-				Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has set "..target:Name().."'s blood level to "..tostring(bloodLevel)..".");
+				Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has set "..target:Name().."'s blood level to "..tostring(bloodLevel)..".");
 			else
 				Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own blood level to "..tostring(bloodLevel)..".");
 			end;
@@ -487,7 +487,7 @@ local COMMAND = Clockwork.command:New("CharGiveDisease");
 						if not target:HasDisease(diseaseID, stage) then
 							if stage > 0 and stage <= #diseaseTable.stages then
 								target:GiveDisease(diseaseID, arguments[3]);
-								Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..target:Name().." has been given the '"..diseaseID.."' disease (Stage "..tostring(stage)..") by "..player:Name().."!", nil);
+								Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", "["..self.name.."] "..target:Name().." has been given the '"..diseaseID.."' disease (Stage "..tostring(stage)..") by "..player:Name().."!", nil);
 							else
 								Schema:EasyText(player, "grey", "["..self.name.."] You must specify a valid stage for "..diseaseID.."! (1 - "..#diseaseTable.stages..")");
 							end
@@ -497,7 +497,7 @@ local COMMAND = Clockwork.command:New("CharGiveDisease");
 					else
 						if not target:HasDisease(diseaseID) then
 							target:GiveDisease(diseaseID);
-							Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..target:Name().." has been given the '"..diseaseID.."' disease by "..player:Name().."!", nil);
+							Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", "["..self.name.."] "..target:Name().." has been given the '"..diseaseID.."' disease by "..player:Name().."!", nil);
 						else
 							Schema:EasyText(player, "cornflowerblue","["..self.name.."] "..target:Name().." already has this disease!");
 						end
@@ -531,7 +531,7 @@ local COMMAND = Clockwork.command:New("CharTakeDisease");
 				if cwMedicalSystem:FindDiseaseByID(diseaseID) then
 					if target:HasDisease(diseaseID) then
 						target:TakeDisease(diseaseID);
-						Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has taken the '"..diseaseID.."' disease from "..target:Name().."!", nil);
+						Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has taken the '"..diseaseID.."' disease from "..target:Name().."!", nil);
 					else
 						Schema:EasyText(player, "cornflowerblue","["..self.name.."] "..target:Name().." does not have that disease!");
 					end
@@ -712,7 +712,7 @@ function COMMAND:OnRun(player, arguments)
 		end
 		
 		if (player != target) then
-			Schema:EasyText(GetAdmins(), "olive", "["..self.name.."] "..player:Name().." has made "..target:Name().." vomit.");
+			Schema:EasyText(Schema:GetAdmins(), "olive", "["..self.name.."] "..player:Name().." has made "..target:Name().." vomit.");
 		else
 			Schema:EasyText(player, "olive", "["..self.name.."] You have made yourself vomit.");
 		end;

@@ -91,14 +91,14 @@ local COMMAND = Clockwork.command:New("Announce");
 		
 		if (text) then
 			if Schema.EasyText then
-				for k, v in pairs(_player.GetAll()) do
+				for _, v in _player.Iterator() do
 					if IsValid(v) and v:HasInitialized() then
 						Schema:EasyText(v, "icon16/bell.png", "goldenrod", "[ANNOUNCEMENT] "..text);
 						v:SendLua([[Clockwork.Client:EmitSound("ui/pickup_secret01.wav", 80, 80)]]);
 					end
 				end
 			else
-				Clockwork.player:Notify(_player.GetAll(), text);
+				Clockwork.player:Notify(PlayerCache or _player.GetAll(), text);
 			end
 		end;
 	end;
@@ -150,13 +150,55 @@ local COMMAND = Clockwork.command:New("ClearNPCs");
 	end;
 COMMAND:Register();
 
-local COMMAND = Clockwork.command:New("StopSound");
-	COMMAND.tip = "Stop all sounds on all clients.";
-	COMMAND.access = "a";
+local COMMAND = Clockwork.command:New("PlyStopSound");
+	COMMAND.tip = "Stop all sounds on a specific player.";
+	COMMAND.access = "s";
+	COMMAND.arguments = 1;
+	COMMAND.alias = {"CharStopSound", "StopSoundTarget", "StopSoundPlayer"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs (_player.GetAll()) do
+		local target = Clockwork.player:FindByID(arguments[1]);
+
+		if (!target) then
+			Clockwork.player:Notify(player, arguments[1].." is not a valid player!");
+			
+			return;
+		end;
+	
+		target:SendLua([[RunConsoleCommand("stopsound")]]);
+	end;
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("StopSoundGlobal");
+	COMMAND.tip = "Stop all sounds for all players.";
+	COMMAND.access = "s";
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		for _, v in _player.Iterator() do
+			v:SendLua([[RunConsoleCommand("stopsound")]]);
+		end;
+	end;
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("StopSoundRadius");
+	COMMAND.tip = "Stops all sounds to all players in a specified radius. Default radius is 512.";
+	COMMAND.optionalArguments = 1;
+	COMMAND.access = "s";
+	COMMAND.text = "[int Radius]";
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local players = {};
+		
+		for k, v in pairs (ents.FindInSphere(player:GetPos(), arguments[1] or 512)) do
+			if (v:IsPlayer()) then
+				players[#players + 1] = v;
+			end;
+		end;
+		
+		for k, v in pairs(players) do
 			v:SendLua([[RunConsoleCommand("stopsound")]]);
 		end;
 	end;
@@ -168,7 +210,7 @@ local COMMAND = Clockwork.command:New("ClearDecals");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			v:SendLua([[RunConsoleCommand("r_cleardecals")]]);
 		end;
 	end;
@@ -252,7 +294,7 @@ local COMMAND = Clockwork.command:New("PlyIgnite");
 			if (!target:IsOnFire()) then
 				local time = tonumber(arguments[2]);
 				
-				for k, v in pairs (_player.GetAll()) do
+				for _, v in _player.Iterator() do
 					if (v != player and v != target and v:IsAdmin() or v:IsUserGroup("operator")) then
 						Clockwork.player:Notify(player, playerName.." has ignited "..name.." for "..time.." seconds.")
 					end;
@@ -288,7 +330,7 @@ local COMMAND = Clockwork.command:New("PlyWarn");
 			local name = target:Name();
 			local message = table.concat(arguments, " ", 2);
 			
-			for k, v in pairs (_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				if (v != player and v != target and v:IsAdmin() or v:IsUserGroup("operator")) then
 					Clockwork.player:Notify(v, playerName.." has warned "..name.." with the following message: \""..message.."\"")
 				end;
@@ -363,7 +405,7 @@ local COMMAND = Clockwork.command:New("PluginLoad");
 			if (bSuccess) then
 				Clockwork.player:NotifyAll(player:Name().." has loaded the "..plugin.name.." plugin for the next restart.");
 				
-				for k, v in pairs(_player.GetAll()) do
+				for _, v in _player.Iterator() do
 					if (v:HasInitialized()) then
 						if (Clockwork.player:HasFlags(v, loadTable.access)
 						or Clockwork.player:HasFlags(v, unloadTable.access)) then
@@ -410,7 +452,7 @@ local COMMAND = Clockwork.command:New("PluginUnload");
 			if (bSuccess) then
 				Clockwork.player:NotifyAll(player:Name().." has unloaded the "..plugin.name.." plugin for the next restart.");
 				
-				for k, v in pairs(_player.GetAll()) do
+				for _, v in _player.Iterator() do
 					if (v:HasInitialized()) then
 						if (Clockwork.player:HasFlags(v, loadTable.access)
 						or Clockwork.player:HasFlags(v, unloadTable.access)) then
@@ -444,7 +486,7 @@ local COMMAND = Clockwork.command:New("ShutDown");
 		if delay and tonumber(delay) and tonumber(delay) > 0 then
 			local message = "The server will be shutting down in "..tostring(delay).." seconds!";
 		
-			for k, v in pairs(_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				Clockwork.player:Notify(v, message);
 			end
 			
@@ -467,6 +509,27 @@ local COMMAND = Clockwork.command:New("SaveData");
 	end;
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("ToggleCharSwapping");
+	COMMAND.tip = "Toggle whether or not charswapping should be enabled. Will only apply to alive characters and non-admins.";
+	COMMAND.access = "s";
+	COMMAND.alias = {"CharSwappingToggle", "DisableCharSwapping", "EnableCharSwapping"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		if Clockwork.charSwappingDisabled then
+			Clockwork.charSwappingDisabled = false;
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has enabled charswapping for non-admins.");
+			
+			if Schema.fuckerJoeActive then
+				Schema.fuckerJoeActive = false;
+			end
+		else
+			Clockwork.charSwappingDisabled = true;
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has disabled charswapping for non-admins.");
+		end
+	end;
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("ToggleFactionRatio");
 	COMMAND.tip = "Toggle whether or not the faction ratio system should be enabled.";
 	COMMAND.access = "s";
@@ -476,10 +539,10 @@ local COMMAND = Clockwork.command:New("ToggleFactionRatio");
 	function COMMAND:OnRun(player, arguments)
 		if Clockwork.config:Get("faction_ratio_enabled"):Get() then
 			Clockwork.config:Get("faction_ratio_enabled"):Set(false);
-			Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has disabled the faction ratio system.");
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has disabled the faction ratio system.");
 		else
 			Clockwork.config:Get("faction_ratio_enabled"):Set(true);
-			Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has enabled faction ratio system.");
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has enabled the faction ratio system.");
 		end
 	end;
 COMMAND:Register();

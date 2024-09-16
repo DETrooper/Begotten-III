@@ -8,7 +8,7 @@
 library.New("equipment", Clockwork);
 
 if CLIENT then
-	for i, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if !v.equipmentSlots then
 			v.equipmentSlots = {};
 		end
@@ -108,8 +108,8 @@ if SERVER then
 		
 		player.equipmentSlots[slot] = itemTable;
 		
-		item.SendToPlayer(_player.GetAll(), itemTable);
-		netstream.Start(_player.GetAll(), "UpdateEquipment", {player, slot, itemTable.itemID});
+		item.SendToPlayer(PlayerCache or _player.GetAll(), itemTable);
+		netstream.Start(PlayerCache or _player.GetAll(), "UpdateEquipment", {player, slot, itemTable.itemID});
 		
 		if itemTable.equipmentSaveString then
 			if #itemTable.slots > 1 then
@@ -199,7 +199,7 @@ if SERVER then
 		
 		player.equipmentSlots[slot] = nil;
 		
-		local players = _player.GetAll();
+		local players = PlayerCache or _player.GetAll();
 					
 		-- Rearrange the slots.
 		if slot ~= itemTable.slots[#itemTable.slots] then
@@ -310,7 +310,7 @@ if SERVER then
 	end
 	
 	function Clockwork.equipment:SyncEquipment(player)
-		for i, v in ipairs(_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if !v.equipmentSlots then
 				v.equipmentSlots = {};
 			end;
@@ -511,7 +511,7 @@ if SERVER then
 		
 		hook.Run("PlayerSetHandsModel", player, player:GetHands());
 		
-		for i, v in ipairs(_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			Clockwork.equipment:NetworkEquipmentToPlayer(player, v);
 		end
 	end);
@@ -567,7 +567,7 @@ else
 	end
 	
 	hook.Add("Tick", "TickEquipment", function()
-		for _, player in pairs(_player.GetAll()) do
+		for _, player in _player.Iterator() do
 			player.equipmentDrawnThisTick = false;
 
 			if player:GetDTInt(4) != 4 then
@@ -599,7 +599,7 @@ else
 		
 		local equipmentSlotModels = plyTab.equipmentSlotModels;
 		
-		if IsValid(activeWeapon) then
+		if activeWeapon:IsValid() then
 			activeWeaponClass = activeWeapon:GetClass();
 			activeOffhand = activeWeapon:GetNWString("activeOffhand");
 			activeShield = activeWeapon:GetNWString("activeShield");
@@ -693,7 +693,7 @@ else
 	end);
 	
 	hook.Add("Think", "ThinkEquipment", function()
-		for _, player in pairs(_player.GetAll()) do
+		for _, player in _player.Iterator() do
 			local plyTab = player:GetTable();
 		
 			if plyTab.equipmentSlotModels and !plyTab.equipmentDrawnThisTick then

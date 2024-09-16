@@ -126,7 +126,7 @@ function playerMeta:Possess(possessor)
 		netstream.Start(self, "Possessed", possessor);
 		netstream.Start(self, "Stunned", 5); -- Replace with damnation or custom VFX later!
 		
-		Schema:EasyText(GetAdmins(), "tomato", possessor:Name().." has possessed '"..self:Name().."'.");
+		Schema:EasyText(Schema:GetAdmins(), "tomato", possessor:Name().." has possessed '"..self:Name().."'.");
 	end
 end
 
@@ -198,7 +198,7 @@ function playerMeta:Unpossess()
 		cwObserverMode:MakePlayerEnterObserverMode(self.possessor);
 		
 		if IsValid(self.possessor.victim) then
-			Schema:EasyText(GetAdmins(), "tomato", self.possessor:Name().." has stopped possessing '"..self.possessor.victim:Name().."'.");
+			Schema:EasyText(Schema:GetAdmins(), "tomato", self.possessor:Name().." has stopped possessing '"..self.possessor.victim:Name().."'.");
 		end
 		
 		self.possessor.victim = nil;

@@ -54,10 +54,10 @@ local COMMAND = Clockwork.command:New("MakeSpectate");
 			if (target:Alive() and !target:IsRagdolled() and !target.cwObserverReset) then
 				if (target:GetMoveType(target) == MOVETYPE_NOCLIP) then
 					cwObserverMode:MakePlayerExitObserverMode(target);
-					Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has made "..target:Name().." exit spectator mode.", nil);
+					Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has made "..target:Name().." exit spectator mode.", nil);
 				else
 					cwObserverMode:MakePlayerEnterObserverMode(target);
-					Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has made "..target:Name().." enter spectator mode.", nil);
+					Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has made "..target:Name().." enter spectator mode.", nil);
 				end
 			end
 		else
@@ -73,7 +73,7 @@ local COMMAND = Clockwork.command:New("MakeSpectateAll")
 	
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if not v:IsAdmin() then
 				if v.opponent then
 					return false;
@@ -85,7 +85,7 @@ local COMMAND = Clockwork.command:New("MakeSpectateAll")
 			end
 		end
 		
-		Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has made all non-admins exit spectator mode.", nil);
+		Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has made all non-admins exit spectator mode.", nil);
 	end;
 COMMAND:Register();
 
@@ -98,7 +98,7 @@ local COMMAND = Clockwork.command:New("MakeUnSpectateAll");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if not v:IsAdmin() and v.cwObserverMode then
 				cwObserverMode:MakePlayerExitObserverMode(v);
 				Schema:EasyText(v, "cornflowerblue", "You have exited spectator mode!");
@@ -111,7 +111,7 @@ local COMMAND = Clockwork.command:New("MakeUnSpectateAll");
 			end
 		end
 		
-		Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has made all non-admins exit spectator mode.", nil);
+		Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has made all non-admins exit spectator mode.", nil);
 	end;
 COMMAND:Register();
 
@@ -124,7 +124,7 @@ local COMMAND = Clockwork.command:New("PlyTeleportSpectators");
 	function COMMAND:OnRun(player, arguments)
 		local hitPos = player:GetEyeTraceNoCursor().HitPos;
 		
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if not v:IsAdmin() and v.cwObserverMode then
 				Clockwork.player:SetSafePosition(v, hitPos);
 			end
@@ -175,13 +175,13 @@ local COMMAND = Clockwork.command:New("SpectatorModeOn");
 	function COMMAND:OnRun(player, arguments)
 		cwObserverMode.spectatorMode = true;
 		
-		for i, v in ipairs(_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if v:HasInitialized() and !v:Alive() then
 				Schema:EasyText(v, "darkgrey", "["..self.name.."] Spectator mode has been enabled! Type /spectate to toggle spectating.");
 			end
 		end
 
-		Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has turned spectator mode on!", nil);
+		Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has turned spectator mode on!", nil);
 	end;
 COMMAND:Register();
 
@@ -193,7 +193,7 @@ local COMMAND = Clockwork.command:New("SpectatorModeOff");
 	function COMMAND:OnRun(player, arguments)
 		cwObserverMode.spectatorMode = false;
 
-		Schema:EasyText(GetAdmins(), "cornflowerblue", player:Name().." has turned off spectator mode!", nil);
+		Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has turned off spectator mode!", nil);
 	end;
 COMMAND:Register();
 
@@ -206,7 +206,7 @@ local COMMAND = Clockwork.command:New("SpectatorModeStatus");
 		if cwObserverMode.spectatorMode then
 			local namesInObserver = {};
 			
-			for k, v in pairs (_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				if !v:IsAdmin() and v:GetMoveType() == MOVETYPE_NOCLIP then
 					table.insert(namesInObserver, v:Name());
 				end

@@ -28,15 +28,13 @@ function cwSpawnSaver:PrePlayerCharacterUnloaded(player)
 end
 
 function cwSpawnSaver:OnMapChange(newMap)
-	for k, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		self:PrePlayerCharacterUnloaded(v)
 	end
 end
 
 function cwSpawnSaver:PreSaveData()
-	local players = _player.GetAll();
-
-	for k, v in pairs(players) do
+	for _, v in _player.Iterator() do
 		self:PrePlayerCharacterUnloaded(v)
 	end
 end

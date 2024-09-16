@@ -118,7 +118,7 @@ local DISEASE = {};
 	};
 	DISEASE.showOnAdminESP = true; -- Show disease on admin ESP if it's important.
 	DISEASE.OnReceive = function(player)
-		Schema:EasyText(GetAdmins(), "icon16/bug.png", "tomato", player:Name().." has contracted the Begotten Plague!", nil);
+		Schema:EasyText(Schema:GetAdmins(), "icon16/bug.png", "tomato", player:Name().." has contracted the Begotten Plague!", nil);
 	end;
 	DISEASE.OnTake = function(player)
 		--printp(player:Name().." survived the Begotten Plague!");

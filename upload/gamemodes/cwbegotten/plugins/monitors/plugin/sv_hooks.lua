@@ -47,7 +47,7 @@ end;
 
 function cas:GetStaff()
 	local staff = {};
-	for k, v in pairs (_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (v:IsAdmin() or v:IsUserGroup("operator")) then
 			staff[#staff + 1] = v;
 		end;

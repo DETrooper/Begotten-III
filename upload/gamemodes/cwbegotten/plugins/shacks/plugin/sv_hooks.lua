@@ -56,7 +56,7 @@ function cwShacks:ShackPurchased(player, shack)
 					player:SetNetVar("shack", shack);
 					Clockwork.player:GiveSpawnWeapon(player, "cw_keys");
 					
-					self:NetworkShackData(_player.GetAll());
+					self:NetworkShackData(PlayerCache or _player.GetAll());
 					--self:SaveShackData();
 					
 					Schema:EasyText(player, "olivedrab", "You have bought a property. It will be in your ownership until you expire or if your character has inactive for longer than one week. You may use /OpenStash to access your property's inventory, and the positive effects of /Sleep will be boosted depending on the quality of your property. You will now also spawn with 'Keys' to unlock and lock your property.");
@@ -91,7 +91,7 @@ function cwShacks:ShackCoownerAdded(player, shack)
 			v.coowners = {};
 			v.coowners[player:GetCharacterKey()] = player:Name();
 			
-			self:NetworkShackData(_player.GetAll());
+			self:NetworkShackData(PlayerCache or _player.GetAll());
 			--self:SaveShackData();
 		
 			return;
@@ -103,7 +103,7 @@ end
 function cwShacks:ShackCoownerRemoved(coownerKey, shack)
 	for k, v in pairs(self.shacks) do
 		if k == shack then
-			for i, v2 in ipairs(_player.GetAll()) do
+			for _, v2 in _player.Iterator() do
 				if v2:GetCharacterKey() == coownerKey then
 					Clockwork.player:TakeDoorAccess(v2, v.doorEnt);
 					Clockwork.player:TakeSpawnWeapon(v2, "cw_keys");
@@ -114,7 +114,7 @@ function cwShacks:ShackCoownerRemoved(coownerKey, shack)
 			
 			v.coowners[coownerKey] = nil;
 			
-			self:NetworkShackData(_player.GetAll());
+			self:NetworkShackData(PlayerCache or _player.GetAll());
 			--self:SaveShackData();
 		
 			return;
@@ -153,7 +153,7 @@ function cwShacks:ShackSold(player, shack)
 					end
 					
 					if v.coowners then
-						for _, v2 in ipairs(_player.GetAll()) do
+						for _, v2 in _player.Iterator() do
 							if v2:HasInitialized() and v2:GetFaction() ~= "Holy Hierarchy" then
 								local characterKey = v2:GetCharacterKey();
 								
@@ -168,7 +168,7 @@ function cwShacks:ShackSold(player, shack)
 						v.coowners = nil;
 					end
 					
-					self:NetworkShackData(_player.GetAll());
+					self:NetworkShackData(PlayerCache or _player.GetAll());
 					--self:SaveShackData();
 					
 					Schema:EasyText(player, "olivedrab", "You have sold your property for "..Clockwork.kernel:FormatCash(price, nil, true).."!");
@@ -197,7 +197,7 @@ function cwShacks:ShackForeclosed(player, shack)
 			end
 			
 			if v.coowners then
-				for _, v2 in ipairs(_player.GetAll()) do
+				for _, v2 in _player.Iterator() do
 					if v2:HasInitialized() and v2:GetFaction() ~= "Holy Hierarchy" then
 						local characterKey = v2:GetCharacterKey();
 						
@@ -214,7 +214,7 @@ function cwShacks:ShackForeclosed(player, shack)
 			
 			Clockwork.entity:ClearProperty(v.doorEnt);
 			
-			self:NetworkShackData(_player.GetAll());
+			self:NetworkShackData(PlayerCache or _player.GetAll());
 			--self:SaveShackData();
 			return;
 		end
@@ -284,7 +284,7 @@ function cwShacks:ShackStashOpen(player)
 								
 									timer.Simple(0.5, function()
 										if IsValid(entity) then
-											for i, v in ipairs(_player.GetAll()) do
+											for _, v in _player.Iterator() do
 												if v.cwStorageTab then
 													if v.cwStorageTab.entity == entity then
 														return;

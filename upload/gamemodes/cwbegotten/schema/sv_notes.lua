@@ -26,7 +26,7 @@ netstream.Hook("ConfirmCustomSoundCheck", function(player, data)
 	else
 		player:Kick("Abusing datastreams. Your activity has been sent to admins for review.");
 		
-		for k, v in pairs (_player.GetAll()) do
+		for _, v in _player.Iterator() do
 			if (v:IsAdmin()) then
 				Clockwork.player:Notify(v, player:Name().." ("..player:SteamID()..") has been kicked for initiating an unauthorized datastream. This is evidence of lua cache decryption and clientside lua execution!");
 			end;
@@ -739,12 +739,8 @@ function Clockwork.kernel:DrawAdminESP()
 		self.nextRefresh = curTime + _CACHETIME;
 
 		local espItems = self.ESPItems;
-		local playerCount = _player.GetCount();
-		local players = _player.GetAll();
 		
-		for i = 1, playerCount do
-			local player = players[i];
-			
+		for _, player in _player.Iterator() do
 			if (player == cwClient or !player:IsBot() or !player:HasInitialized()) then
 				continue;
 			end;
@@ -976,7 +972,7 @@ function Clockwork.kernel:DrawAdminESP()
 	--end;
 	
 	
-	for k, v in pairs (_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		local p = v:GetPos() + Vector(0, 0, 78);
 		local ts = p:ToScreen();
 		draw.SimpleText(v:Name(), "DermaDefaultBold", ts.x, ts.y, Color(255, 255, 0), 1, 1)

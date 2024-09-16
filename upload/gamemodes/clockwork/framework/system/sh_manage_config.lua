@@ -223,14 +223,14 @@ else
 
 						if (configObject("isPrivate")) then
 							if (configObject("needsRestart")) then
-								Schema:EasyText(GetAdmins(), "skyblue", player:Name().." set "..keyPrefix..data.key.." to '"..string.rep("*", string.utf8len(printValue)).."' for the next restart.")
+								Schema:EasyText(Schema:GetAdmins(), "skyblue", player:Name().." set "..keyPrefix..data.key.." to '"..string.rep("*", string.utf8len(printValue)).."' for the next restart.")
 							else
-								Schema:EasyText(GetAdmins(), "skyblue", player:Name().." set "..keyPrefix..data.key.." to '"..string.rep("*", string.utf8len(printValue)).."'.")
+								Schema:EasyText(Schema:GetAdmins(), "skyblue", player:Name().." set "..keyPrefix..data.key.." to '"..string.rep("*", string.utf8len(printValue)).."'.")
 							end
 						elseif (configObject("needsRestart")) then
-							Schema:EasyText(GetAdmins(), "skyblue", player:Name().." set "..keyPrefix..data.key.." to '"..printValue.."' for the next restart.")
+							Schema:EasyText(Schema:GetAdmins(), "skyblue", player:Name().." set "..keyPrefix..data.key.." to '"..printValue.."' for the next restart.")
 						else
-							Schema:EasyText(GetAdmins(), "skyblue", player:Name().." set "..keyPrefix..data.key.." to '"..printValue.."'.")
+							Schema:EasyText(Schema:GetAdmins(), "skyblue", player:Name().." set "..keyPrefix..data.key.." to '"..printValue.."'.")
 						end
 
 						netstream.Start(player, "SystemCfgValue", { data.key, configObject:Get() })

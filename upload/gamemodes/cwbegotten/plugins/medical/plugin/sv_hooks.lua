@@ -630,7 +630,7 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 	if (IsValid(attacker) and attacker:IsPlayer()) then
 		local activeWeapon = attacker:GetActiveWeapon();
 		
-		if (IsValid(activeWeapon) and activeWeapon.Base == "sword_swepbase") then
+		if (activeWeapon:IsValid() and activeWeapon.Base == "sword_swepbase") then
 			hitGroup = Clockwork.kernel:GetRagdollHitGroup(player, damageInfo:GetDamagePosition());
 		end
 	end
@@ -1165,7 +1165,7 @@ function cwMedicalSystem:PreOpenedContainer(player, entity)
 		
 		if math.random(1, 100) <= 75 then
 			if player:GiveDisease(entity.disease) then
-				Schema:EasyText(GetAdmins(), "icon16/bug.png", "tomato", player:Name().." has been infected with "..entity.disease.." from looting a diseased corpse.");
+				Schema:EasyText(Schema:GetAdmins(), "icon16/bug.png", "tomato", player:Name().." has been infected with "..entity.disease.." from looting a diseased corpse.");
 				--Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has been infected with "..entity.disease.." from looting a diseased corpse.");
 			end
 		end

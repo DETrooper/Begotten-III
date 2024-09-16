@@ -65,14 +65,13 @@ if (SERVER) then
 
 		if (type(player) != "table") then
 			if (!player) then
-				player = _player.GetAll()
+				player = PlayerCache or _player.GetAll()
 			else
 				player = {player}
 			end
 		end
 
-		for i = 1, #player do
-			local v, k = player[i], i;
+		for i, v in ipairs(player) do
 			if (type(v) == "Player") then
 				recipients[#recipients + 1] = v
 
@@ -100,14 +99,13 @@ if (SERVER) then
 
 		if (type(player) != "table") then
 			if (!player) then
-				player = _player.GetAll()
+				player = PlayerCache or _player.GetAll()
 			else
 				player = {player}
 			end
 		end
 
-		for i = 1, #player do
-			local v, k = player[i], i;
+		for i, v in ipairs(player) do
 			if (type(v) == "Player") then
 				recipients[#recipients + 1] = v
 

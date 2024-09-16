@@ -32,7 +32,7 @@ function cwWeaponSelect:HUDPaintImportant()
 			self.weaponDisplayAlpha = 0;
 		end;
 
-		if (IsValid(activeWeapon)) then
+		if (activeWeapon:IsValid()) then
 			if (self.weaponDisplayAlpha <= 0 and self.displayAlpha <= 0) then
 				return;
 			end;
@@ -238,7 +238,7 @@ function cwWeaponSelect:TopLevelPlayerBindPress(player, bind, press)
 			weapons = Clockwork.Client:GetWeapons();
 		end
 		
-		if (!IsValid(activeWeapon)) then
+		if (!activeWeapon:IsValid()) then
 			return;
 		end;
 		

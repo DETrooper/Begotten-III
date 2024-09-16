@@ -213,7 +213,7 @@ function ENT:DisableGunnerWeapons()
 	local gunner = self.Gunner;
 	local activeWeapon = gunner:GetActiveWeapon();
 	
-	if (IsValid(activeWeapon)) then
+	if (activeWeapon:IsValid()) then
 		local viewModel = gunner:GetViewModel();
 		local curTime = CurTime();
 		
@@ -230,7 +230,7 @@ function ENT:EnableGunnerWeapons()
 	local gunner = self.Gunner;
 	local activeWeapon = self.Gunner:GetActiveWeapon();
 	
-	if (IsValid(activeWeapon)) then
+	if (activeWeapon:IsValid()) then
 		local viewModel = gunner:GetViewModel();
 		local curTime = CurTime();
 		

@@ -241,7 +241,7 @@ local COMMAND = Clockwork.command:New("ClearProperty");
 		end
 		
 		if shack then
-			for k, v in pairs (_player.GetAll()) do
+			for _, v in _player.Iterator() do
 				if v:GetCharacterKey() == shack.owner then
 					v:SetNetVar("shack", nil);
 					
@@ -257,7 +257,7 @@ local COMMAND = Clockwork.command:New("ClearProperty");
 			
 			Clockwork.entity:ClearProperty(shack.doorEnt);
 			
-			cwShacks:NetworkShackData(_player.GetAll());
+			cwShacks:NetworkShackData(PlayerCache or _player.GetAll());
 			--cwShacks:SaveShackData();
 			Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have cleared this property.");
 		else

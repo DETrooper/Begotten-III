@@ -35,7 +35,7 @@ if cwWeather.systemEnabled then
 			leadupCallback = function()
 				local playersInWeatherZones = {};
 				
-				for i, v in ipairs(_player.GetAll()) do
+				for _, v in _player.Iterator() do
 					if v:Alive() and v:HasInitialized() then
 						local lastZone = v:GetCharacterData("LastZone") or "wasteland";
 						local zoneTable = zones:FindByID(lastZone);
@@ -79,7 +79,7 @@ if cwWeather.systemEnabled then
 			leadupCallback = function()
 				local playersInWeatherZones = {};
 				
-				for i, v in ipairs(_player.GetAll()) do
+				for _, v in _player.Iterator() do
 					if v:Alive() and v:HasInitialized() then
 						local lastZone = v:GetCharacterData("LastZone") or "wasteland";
 						local zoneTable = zones:FindByID(lastZone);
@@ -139,7 +139,7 @@ if cwWeather.systemEnabled then
 				timer.Create("ThunderstormBuildupTimer", 5, 11, function()
 					local playersInWeatherZones = {};
 					
-					for i, v in ipairs(_player.GetAll()) do
+					for _, v in _player.Iterator() do
 						if v:Alive() and v:HasInitialized() then
 							local lastZone = v:GetCharacterData("LastZone") or "wasteland";
 							local zoneTable = zones:FindByID(lastZone);
@@ -196,7 +196,7 @@ if cwWeather.systemEnabled then
 				if cwWeather.weather ~= weather then
 					cwWeather:SetWeather(weather, tobool(arguments[2] or false));
 					
-					Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set the weather to "..weather.."!");
+					Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set the weather to "..weather.."!");
 				else
 					Schema:EasyText(player, "darkgrey", "["..self.name.."] ".."This is already the weather!");
 				end
@@ -219,7 +219,7 @@ if cwWeather.systemEnabled then
 			if seconds then
 				cwWeather.nextWeatherTime = cwWeather.nextWeatherTime + seconds;
 				
-				Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has extended the "..cwWeather.weather.." by "..tostring(cwWeather.nextWeatherTime - CurTime()).." seconds!");
+				Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has extended the "..cwWeather.weather.." by "..tostring(cwWeather.nextWeatherTime - CurTime()).." seconds!");
 			else
 				Schema:EasyText(player, "darkgrey", "This is not a valid amount!");
 			end

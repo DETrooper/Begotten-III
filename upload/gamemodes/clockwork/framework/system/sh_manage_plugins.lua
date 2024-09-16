@@ -191,12 +191,12 @@ else
 
 			if (bSuccess) then
 				if (data[2]) then
-					Schema:EasyText(GetAdmins(), "skyblue", player:Name().." has unloaded the "..pluginTable.name.." plugin for the next restart.")
+					Schema:EasyText(Schema:GetAdmins(), "skyblue", player:Name().." has unloaded the "..pluginTable.name.." plugin for the next restart.")
 				else
-					Schema:EasyText(GetAdmins(), "skyblue", player:Name().." has loaded the "..pluginTable.name.." plugin for the next restart.")
+					Schema:EasyText(Schema:GetAdmins(), "skyblue", player:Name().." has loaded the "..pluginTable.name.." plugin for the next restart.")
 				end
 
-				for k, v in ipairs(_player.GetAll()) do
+				for _, v in _player.Iterator() do
 					if (v:HasInitialized()) then
 						if (Clockwork.player:HasFlags(v, loadTable.access)
 						or Clockwork.player:HasFlags(v, unloadTable.access)) then

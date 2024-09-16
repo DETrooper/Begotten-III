@@ -26,7 +26,7 @@ function cwDisplayTyping:PostDrawTranslucentRenderables()
 		
 		local localPlayer = Clockwork.Client;
 		
-		for i, player in ipairs(_player.GetAll()) do
+		for _, player in _player.Iterator() do
 			if player ~= localPlayer and (player:GetNetVar("Typing") or 0) != 0 then
 				table.insert(self.storedPlayers, player);
 			end

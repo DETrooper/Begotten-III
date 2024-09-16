@@ -279,10 +279,9 @@ function SWEP:AdjustFireBegotten()
 						local forceJam = false;
 					
 						if cwRituals then
-							local players = _player.GetAll();
 							local ownerPos = self.Owner:GetPos();
 							
-							for i, v in ipairs(players) do
+							for _, v in _player.Iterator() do
 								if v:GetNetVar("powderheelActive") then
 									if v:GetPos():Distance(ownerPos) <= config.Get("talk_radius"):Get() then
 										forceJam = true;
@@ -328,7 +327,7 @@ function SWEP:AdjustFireBegotten()
 										
 										Clockwork.chatBox:AddInTargetRadius(self.Owner, "me", "pulls the trigger on their "..self.PrintName.." and it suddenly explodes!", position, config.Get("talk_radius"):Get() * 2);
 										
-										Schema:EasyText(GetAdmins(), "icon16/bomb.png", "tomato", self.Owner:Name().."'s "..self.PrintName.." exploded!");
+										Schema:EasyText(Schema:GetAdmins(), "icon16/bomb.png", "tomato", self.Owner:Name().."'s "..self.PrintName.." exploded!");
 									
 										local effectData = EffectData();
 										effectData:SetStart(position);

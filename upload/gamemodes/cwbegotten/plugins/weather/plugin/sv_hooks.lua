@@ -33,7 +33,7 @@ function cwWeather:SetWeather(weather, bSkipTransition)
 		
 		hook.Run("WeatherChanged", weather, oldWeather);
 		
-		netstream.Start(_player.GetAll(), "SetWeather", weather);
+		netstream.Start(PlayerCache or _player.GetAll(), "SetWeather", weather);
 	end)
 	
 	if !bSkipTransition and weatherTable.leadupCallback then
@@ -91,7 +91,7 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				
 				local activeWeapon = player:GetActiveWeapon();
 				
-				if IsValid(activeWeapon) and activeWeapon.Base == "begotten_firearm_base" and !activeWeapon.notPowder then
+				if activeWeapon:IsValid() and activeWeapon.Base == "begotten_firearm_base" and !activeWeapon.notPowder then
 					if math.random(1, 10) == 10 then
 						local itemTable = item.GetByWeapon(activeWeapon);
 						

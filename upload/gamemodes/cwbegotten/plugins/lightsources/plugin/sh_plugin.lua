@@ -23,7 +23,7 @@ function playerMeta:HasLightSource()
 	local activeWeapon = self:GetActiveWeapon();
 	local lightSources = {"cw_lantern"};
 	
-	if (IsValid(activeWeapon)) then
+	if (activeWeapon:IsValid()) then
 		if (table.HasValue(lightSources, activeWeapon:GetClass())) then
 			return true;
 		end;

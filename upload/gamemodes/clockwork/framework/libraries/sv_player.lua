@@ -287,7 +287,7 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 				
 					if (string.find(forename, blacklistedName) or string.find(surname, blacklistedName)) then
 						if Schema.EasyText then
-							Schema:EasyText(GetAdmins(), "tomato", player:Name().." has attempted to make a character with the blacklisted phrase "..blacklistedName.."!");
+							Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has attempted to make a character with the blacklisted phrase "..blacklistedName.."!");
 						end
 					
 						return self:SetCreateFault(
@@ -1872,12 +1872,7 @@ function Clockwork.player:RestoreRecognisedNames(player)
 	netstream.Start(player, "ClearRecognisedNames", true)
 
 	if (config.Get("save_recognised_names"):Get()) then
-		local playerCount = _player.GetCount();
-		local players = _player.GetAll();
-		
-		for i = 1, playerCount do
-			local v, k = players[i], i;
-			
+		for _, v in _player.Iterator() do
 			if (v:HasInitialized()) then
 				self:RestoreRecognisedName(player, v)
 				self:RestoreRecognisedName(v, player)
@@ -1958,12 +1953,7 @@ function Clockwork.player:ClearRecognisedNames(player, status, isAccurate)
 			netstream.Start(player, "ClearRecognisedNames", true)
 		end
 	else
-		local playerCount = _player.GetCount();
-		local players = _player.GetAll();
-		
-		for i = 1, playerCount do
-			local v, k = players[i], i;
-			
+		for _, v in _player.Iterator() do
 			if (v:HasInitialized()) then
 				if (self:DoesRecognise(player, v, status, isAccurate)) then
 					self:SetRecognises(player, v, false)
@@ -1977,12 +1967,7 @@ end
 
 -- A function to clear a player's name from being recognised.
 function Clockwork.player:ClearName(player, status, isAccurate)
-	local playerCount = _player.GetCount();
-	local players = _player.GetAll();
-	
-	for i = 1, playerCount do
-		local v, k = players[i], i;
-		
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized()) then
 			if (!status or self:DoesRecognise(v, player, status, isAccurate)) then
 				self:SetRecognises(v, player, false)
@@ -2189,7 +2174,7 @@ end
 
 -- A function to show cinematic text to each player.
 function Clockwork.player:CinematicTextAll(text, color, hangTime)
-	for k, v in ipairs(_player.GetAll()) do
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized()) then
 			self:CinematicText(v, text, color, hangTime)
 		end
@@ -2233,11 +2218,8 @@ end
 -- A function to notify each player in a radius.
 function Clockwork.player:NotifyInRadius(text, class, position, radius)
 	local listeners = {}
-	local playerCount = _player.GetCount();
-	local players = _player.GetAll();
-		
-	for i = 1, playerCount do
-		local v, k = players[i], i;
+
+	for _, v in _player.Iterator() do
 		if (v:HasInitialized()) then
 			if (position:DistToSqr(v:GetPos()) <= (radius * radius)) then
 				listeners[#listeners + 1] = v

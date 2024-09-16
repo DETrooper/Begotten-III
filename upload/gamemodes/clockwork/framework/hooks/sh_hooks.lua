@@ -214,7 +214,7 @@ do
 			local newAct = player:TranslateWeaponActivity(act);
 			local weaponClass;
 			
-			if IsValid(activeWeapon) then
+			if activeWeapon:IsValid() then
 				weaponClass = activeWeapon:GetClass();
 			end
 			
