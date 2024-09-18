@@ -200,14 +200,16 @@ function SWEP:OnDrop()
 end
  
 function SWEP:Holster()
-	if CLIENT and IsValid(self.Owner) and self.Owner:IsPlayer() then
-		local vm = self.Owner:GetViewModel()
-		
-		if IsValid(vm) then
-			self:ResetBonePositions(vm)
+	if IsValid(self.Owner) and self.Owner:IsPlayer() then
+		if CLIENT then
+			local vm = self.Owner:GetViewModel()
+			
+			if IsValid(vm) then
+				self:ResetBonePositions(vm)
+			end
+		else
+			self.Owner:SetFOV(0, 0.5);
 		end
-		
-		self.Owner:SetFOV(0, 0.5);
 	end
 	
 	if self.OnHolster then
