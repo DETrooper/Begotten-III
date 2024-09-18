@@ -1183,7 +1183,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 				if attacker.warCryVictims then
 					if table.HasValue(attacker.warCryVictims, entity) then
 						if attacker:HasBelief("deceitful_snake") then
-							newDamage = newDamage + (originalDamage * 0.3);
+							newDamage = newDamage + (originalDamage * 0.25);
 						else
 							newDamage = newDamage + (originalDamage * 0.2);
 						end
