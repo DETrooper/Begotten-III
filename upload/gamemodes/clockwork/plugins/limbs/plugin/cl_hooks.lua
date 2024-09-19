@@ -84,7 +84,7 @@ end
 
 -- Called just after the date time box is drawn.
 function cwLimbs:PostDrawDateTimeBox(info)
-	if (!hook.Call("PlayerCanSeeLimbDamage")) then
+	--[[if (!hook.Call("PlayerCanSeeLimbDamage")) then
 		return
 	end
 
@@ -148,7 +148,7 @@ function cwLimbs:PostDrawDateTimeBox(info)
 				end
 			end
 		end
-	end
+	end]]--
 end
 
 -- Called when the local player's limb damage is received.

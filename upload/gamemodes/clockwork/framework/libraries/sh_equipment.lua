@@ -588,16 +588,7 @@ else
 		local activeOffhand;
 		local activeShield;
 		local plyTab = player:GetTable();
-		
-		if !plyTab.equipmentSlots then
-			plyTab.equipmentSlots = {};
-		end
-		
-		if !plyTab.equipmentSlotModels then
-			plyTab.equipmentSlotModels = {};
-		end
-		
-		local equipmentSlotModels = plyTab.equipmentSlotModels;
+		local equipmentSlotModels = plyTab.equipmentSlotModels or {};
 		
 		if activeWeapon:IsValid() then
 			activeWeaponClass = activeWeapon:GetClass();
@@ -610,12 +601,12 @@ else
 				local equipmentModel = equipmentSlotModels[itemTable.itemID];
 				local uniqueID = itemTable.uniqueID;
 
-				if !ragdollEntity and (activeWeaponClass == itemTable.weaponClass or activeShield == uniqueID or activeOffhand == uniqueID) then if IsValid(equipmentModel) then equipmentModel:Remove() end continue end;
+				if !ragdollEntity and (activeWeaponClass == itemTable.weaponClass or activeShield == uniqueID or activeOffhand == uniqueID) then if IsValid(equipmentModel) then equipmentModel:Remove() equipmentSlotModels[itemTable.itemID] = nil end continue end;
 				
 				if IsValid(equipmentModel) then
 					local parent = equipmentModel:GetParent();
 					
-					if (parent == player and ragdollEntity) or !IsValid(parent) then
+					if (ragdollEntity and parent == player) or !parent:IsValid() then
 						equipmentModel:Remove();
 						equipmentModel = nil;
 					end
@@ -670,6 +661,10 @@ else
 						equipmentModel:FollowBone(ragdollEntity or player, bone);
 					end
 					
+					if !plyTab.equipmentSlotModels then
+						plyTab.equipmentSlotModels = {};
+					end
+					
 					plyTab.equipmentSlotModels[itemTable.itemID] = equipmentModel;
 					
 					if ragdollEntity then
@@ -704,6 +699,20 @@ else
 				end
 				
 				plyTab.equipmentSlotModels = nil;
+			end
+		end
+	end);
+	
+	hook.Add("OnEntityCreated", "EntityCreatedEquipment", function(entity)
+		if entity:IsPlayer() then
+			local plyTab = entity:GetTable();
+			
+			if !plyTab.equipmentSlots then
+				plyTab.equipmentSlots = {};
+			end
+			
+			if !plyTab.equipmentSlotModels then
+				plyTab.equipmentSlotModels = {};
 			end
 		end
 	end);

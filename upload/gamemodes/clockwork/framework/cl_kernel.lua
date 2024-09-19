@@ -720,12 +720,12 @@ end;
 do
 	-- A function to draw the date and time.
 	function Clockwork.kernel:DrawDateTime()
-		local colorWhite = Clockwork.option:GetColor("white");
+		--local colorWhite = Clockwork.option:GetColor("white");
 		local info = {width = ScrW() * 0.25, x = 8, y = 8};
 
 		hook.Run("HUDPaintTopScreen", info)
 		
-		if (hook.Run("PlayerCanSeeDateTime")) then
+		--[[if (hook.Run("PlayerCanSeeDateTime")) then
 			local dateTimeFont = Clockwork.option:GetFont("date_time_text");
 			local dateString = Clockwork.date:GetString();
 			local timeString = Clockwork.time:GetString();
@@ -743,7 +743,7 @@ do
 			end;
 			
 			info.y = info.y + 8;
-		end;
+		end;]]--
 
 		self:DrawBars(info);
 		hook.Run("PostDrawDateTime", info);
