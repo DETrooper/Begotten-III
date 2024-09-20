@@ -1246,12 +1246,14 @@ end
 					local condition = itemTable:GetCondition();
 					
 					if condition and condition < 100 then
+						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+					
 						if damagetype == DMG_CLUB then
-							damage = damage * Lerp(condition / 100, 0.75, 1);
+							damage = math.Round(damage * Lerp(scalar, 0.75, 1));
 						elseif damagetype == DMG_SLASH then
-							damage = damage * Lerp(condition / 100, 0.4, 1);
-						elseif damagetype == DMG_VEHICLE then
-							damage = damage * Lerp(condition / 100, 0.5, 1);
+							damage = math.Round(damage * Lerp(scalar, 0.4, 1));
+						else
+							damage = math.Round(damage * Lerp(scalar, 0.5, 1));
 						end
 					end
 				end
@@ -1729,12 +1731,14 @@ end
 					local condition = itemTable:GetCondition();
 					
 					if condition and condition < 100 then
+						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+					
 						if poletype == DMG_CLUB then
-							poledamage = poledamage * Lerp(condition / 100, 0.75, 1);
+							poledamage = math.Round(poledamage * Lerp(scalar, 0.75, 1));
 						elseif poletype == DMG_SLASH then
-							poledamage = poledamage * Lerp(condition / 100, 0.4, 1);
-						elseif poletype == DMG_VEHICLE then
-							poledamage = poledamage * Lerp(condition / 100, 0.5, 1);
+							poledamage = math.Round(poledamage * Lerp(scalar, 0.4, 1));
+						else
+							poledamage = math.Round(poledamage * Lerp(scalar, 0.5, 1));
 						end
 					end
 				end
@@ -1919,12 +1923,14 @@ end
 					local condition = itemTable:GetCondition();
 					
 					if condition and condition < 100 then
+						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+					
 						if damagetype == DMG_CLUB then
-							damage = damage * Lerp(condition / 100, 0.75, 1);
+							damage = math.Round(damage * Lerp(scalar, 0.75, 1));
 						elseif damagetype == DMG_SLASH then
-							damage = damage * Lerp(condition / 100, 0.4, 1);
-						elseif damagetype == DMG_VEHICLE then
-							damage = damage * Lerp(condition / 100, 0.5, 1);
+							damage = math.Round(damage * Lerp(scalar, 0.4, 1));
+						else
+							damage = math.Round(damage * Lerp(scalar, 0.5, 1));
 						end
 					end
 				end

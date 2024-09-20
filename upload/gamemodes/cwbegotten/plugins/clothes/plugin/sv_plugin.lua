@@ -192,11 +192,12 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 							
 							if activeWeaponItemTable then
 								local activeWeaponCondition = activeWeaponItemTable:GetCondition() or 100;
+								local scalar = Lerp(activeWeaponCondition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
 								
 								if damageType == DMG_CLUB then
-									armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.7, 1));
+									armorPiercing = math.Round(armorPiercing * Lerp(scalar, 0.7, 1));
 								else
-									armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.5, 1));
+									armorPiercing = math.Round(armorPiercing * Lerp(scalar, 0.5, 1));
 								end
 							end
 						end
@@ -322,11 +323,12 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 									
 									if activeWeaponItemTable then
 										local activeWeaponCondition = activeWeaponItemTable:GetCondition() or 100;
+										local scalar = Lerp(activeWeaponCondition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
 										
 										if damageType == DMG_CLUB then
-											armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.7, 1));
+											armorPiercing = math.Round(armorPiercing * Lerp(scalar, 0.7, 1));
 										else
-											armorPiercing = math.Round(armorPiercing * Lerp(activeWeaponCondition / 100, 0.5, 1));
+											armorPiercing = math.Round(armorPiercing * Lerp(scalar, 0.5, 1));
 										end
 									end
 								end
