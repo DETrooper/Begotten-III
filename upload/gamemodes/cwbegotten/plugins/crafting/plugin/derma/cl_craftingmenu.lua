@@ -344,7 +344,7 @@ function PANEL:Rebuild()
 		end
 
 		self.recipeSearch.OnChange = function()
-			cwRecipes.recipeSearch = string.PatternSafe(self.recipeSearch:GetText() or "");
+			cwRecipes.recipeSearch = string.gsub(self.recipeSearch:GetText() or "", "[^%w%s%-]", "");
 
 			self:BuildRecipeList(self.recipeListOpen, faction, faith, subfaction, subfaith, cwRecipes.recipeSearch);
 		end
