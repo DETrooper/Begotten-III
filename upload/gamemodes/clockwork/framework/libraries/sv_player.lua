@@ -5,6 +5,12 @@
 	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
 --]]
 
+util.AddNetworkString("SetWhitelisted")
+util.AddNetworkString("SetWhitelistedSubfaction")
+util.AddNetworkString("CharacterAdd")
+util.AddNetworkString("CharacterRemove")
+util.AddNetworkString("CharacterMenu")
+
 if (!Clockwork.player) then include("sh_player.lua") end
 if (!Clockwork.database) then include("sv_database.lua") end
 if (!Clockwork.chatBox) then include("sv_chatbox.lua") end
@@ -638,7 +644,9 @@ end
 
 -- A function to set the player's character menu state.
 function Clockwork.player:SetCharacterMenuState(player, state)
-	netstream.Start(player, "CharacterMenu", state)
+	net.Start("CharacterMenu")
+		net.WriteUInt(state, 2)
+	net.Send(player)
 end
 
 -- A function to get a player's action.
@@ -1010,9 +1018,11 @@ function Clockwork.player:SetWhitelisted(player, faction, isWhitelisted)
 		table.RemoveByValue(newTab, faction);
 	end
 
-	netstream.Start(
-		player, "SetWhitelisted", {faction, isWhitelisted}
-	)
+	net.Start("SetWhitelisted")
+		net.WriteString(faction)
+		net.WriteBool(isWhitelisted)
+	net.Send(player)
+
 	player:SetData("Whitelisted", newTab)
 end
 
@@ -1035,9 +1045,11 @@ function Clockwork.player:SetWhitelistedSubfaction(player, subfaction, isWhiteli
 		table.RemoveByValue(newTab, subfaction);
 	end
 
-	netstream.Start(
-		player, "SetWhitelistedSubfaction", {subfaction, isWhitelisted}
-	)
+	net.Start("SetWhitelistedSubfaction")
+		net.WriteString(subfaction)
+		net.WriteBool(isWhitelisted)
+	net.Send(player)
+	
 	player:SetData("WhitelistedSubfactions", newTab)
 end
 
@@ -1708,7 +1720,9 @@ function Clockwork.player:ForceDeleteCharacter(player, characterID)
 
 		player.cwCharacterList[characterID] = nil
 
-		netstream.Start(player, "CharacterRemove", characterID)
+		net.Start("CharacterRemove")
+			net.WriteUInt(characterID, 16)
+		net.Send(player)
 	end
 end
 
@@ -2979,7 +2993,9 @@ function Clockwork.player:CharacterScreenAdd(player, character)
 	end
 
 	hook.Run("PlayerAdjustCharacterScreenInfo", player, character, info)
-	netstream.Start(player, "CharacterAdd", info)
+	net.Start("CharacterAdd")
+		net.WriteTable(info)
+	net.Send(player)
 end
 
 -- A function to convert a character's MySQL variables to Lua variables.

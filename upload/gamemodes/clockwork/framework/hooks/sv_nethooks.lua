@@ -5,13 +5,17 @@
 	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
 --]]
 
-netstream.Hook("SendCountryCode", function(player, data)
+util.AddNetworkString("SendCountryCode")
+
+net.Receive("SendCountryCode", function(ply)
+	countryCode = net.ReadString()
+
 	if (player.CountryCodeRequested) then
 		player.CountryCodeRequested = nil;
 		
-		Clockwork.kernel:CountryCode(player, data);
+		Clockwork.kernel:CountryCode(ply, countryCode);
 	end;
-end);
+end)
 
 --[[netstream.Hook("GetTargetRecognises", function(player, data)
 	if (IsValid(data) and data:IsPlayer()) then

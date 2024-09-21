@@ -122,9 +122,11 @@ netstream.Hook("PlaySound", function(data)
 	surface.PlaySound(data)
 end)
 
-netstream.Hook("RequestCountryCode", function(data)
-	netstream.Start("SendCountryCode", system.GetCountry());
-end);
+net.Receive("RequestCountryCode", function()
+	net.Start("SendCountryCode")
+		net.WriteString(system.GetCountry())
+	net.SendToServer()
+end)
 
 netstream.Hook("RadioState", function(data)
 	Clockwork.Client.radioState = data or false;
