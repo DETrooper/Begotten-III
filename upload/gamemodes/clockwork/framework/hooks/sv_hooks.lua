@@ -7,6 +7,8 @@
 
 DEFINE_BASECLASS("gamemode_base")
 
+util.AddNetworkString("RequestCountryCode")
+
 --[[
 	@codebase Server
 	@details Called when the server has initialized.
@@ -1275,7 +1277,8 @@ function GM:BanExpired(steamID, ipAddress) end;
 -- Called when a player's data has loaded.
 function GM:PlayerDataLoaded(player)
 	player.CountryCodeRequested = true;
-	netstream.Start(player, "RequestCountryCode");
+	net.Start("RequestCountryCode")
+	net.Send(player)
 	if (player:IsBot()) then
 		local allcountries = Clockwork.kernel.countries;
 		local tab = {}
@@ -1527,7 +1530,10 @@ function GM:PlayerDataStreamInfoSent(player)
 			if (whitelisted) then
 				for k, v in pairs(whitelisted) do
 					if (Clockwork.faction:GetStored()[v]) then
-						netstream.Start(player, "SetWhitelisted", {v, true})
+						net.Start("SetWhitelisted")
+							net.WriteString(v)
+							net.WriteBool(true)
+						net.Send(player)
 					else
 						whitelisted[k] = nil
 					end
@@ -1536,7 +1542,10 @@ function GM:PlayerDataStreamInfoSent(player)
 			
 			if (whitelistedSubfactions) then
 				for k, v in pairs(whitelistedSubfactions) do
-					netstream.Start(player, "SetWhitelistedSubfaction", {v, true})
+					net.Start("SetWhitelistedSubfaction")
+						net.WriteString(v)
+						net.WriteBool(true)
+					net.Send(player)
 				end
 			end
 

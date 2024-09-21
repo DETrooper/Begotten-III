@@ -3733,9 +3733,9 @@ end;
 
 vgui.Register("cwCharacterStageSubfaction", PANEL, "EditablePanel");
 
-netstream.Hook("CharacterRemove", function(data)
+net.Receive("CharacterRemove", function()
 	local characters = Clockwork.character:GetAll();
-	local characterID = data;
+	local characterID = net.ReadUInt(16);
 	
 	if (table.Count(characters) == 0) then
 		return;
@@ -3759,12 +3759,15 @@ netstream.Hook("CharacterRemove", function(data)
 	end;
 end);
 
-netstream.Hook("SetWhitelisted", function(data)
+net.Receive("SetWhitelisted", function()
+	local faction = net.ReadString()
+	local isWhitelisted = net.ReadBool()
+
 	local whitelisted = Clockwork.character:GetWhitelisted();
 	
 	for k, v in pairs(whitelisted) do
-		if (v == data[1]) then
-			if (!data[2]) then
+		if (v == faction) then
+			if (!isWhitelisted) then
 				whitelisted[k] = nil;
 				
 				return;
@@ -3772,17 +3775,20 @@ netstream.Hook("SetWhitelisted", function(data)
 		end;
 	end;
 	
-	if (data[2]) then
-		whitelisted[#whitelisted + 1] = data[1];
+	if (isWhitelisted) then
+		whitelisted[#whitelisted + 1] = faction;
 	end;
-end);
+end)
 
-netstream.Hook("SetWhitelistedSubfaction", function(data)
+net.Receive("SetWhitelistedSubfaction", function()
+	local faction = net.ReadString()
+	local isWhitelisted = net.ReadBool()
+
 	local whitelisted = Clockwork.character:GetWhitelistedSubfactions();
 	
 	for k, v in pairs(whitelisted) do
-		if (v == data[1]) then
-			if (!data[2]) then
+		if (v == faction) then
+			if (!isWhitelisted) then
 				whitelisted[k] = nil;
 				
 				return;
@@ -3790,21 +3796,23 @@ netstream.Hook("SetWhitelistedSubfaction", function(data)
 		end;
 	end;
 	
-	if (data[2]) then
-		whitelisted[#whitelisted + 1] = data[1];
+	if (isWhitelisted) then
+		whitelisted[#whitelisted + 1] = faction;
 	end;
-end);
+end)
 
-netstream.Hook("CharacterAdd", function(data)
+net.Receive("CharacterAdd", function()
+	data = net.ReadTable()
+
 	Clockwork.character:Add(data.characterID, data);
 	
 	if (!Clockwork.character:IsPanelLoading()) then
 		Clockwork.character:RefreshPanelList();
 	end;
-end);
+end)
 
-netstream.Hook("CharacterMenu", function(data)
-	local menuState = data;
+net.Receive("CharacterMenu", function()
+	local menuState = net.ReadUInt(2);
 
 	if (menuState == CHARACTER_MENU_LOADED) then
 		if (Clockwork.character:GetPanel()) then
