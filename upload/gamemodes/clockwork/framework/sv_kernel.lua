@@ -1335,15 +1335,14 @@ function playerMeta:StripWeapon(weaponClass)
 			end
 		end
 	else
-		-- Experimental linux server crash fix due to weird physics stuff when stripping weapons.
+		-- Experimental linux server crash fix by just removing the weapon manually instead of using StripWeapon which can infinitely loop.
 		local weaponObj = self:GetWeapon(weaponClass);
 		
 		if IsValid(weaponObj) then
 			weaponObj:Remove();
 		end
 		
-		-- Call StripWeapon() after.
-		self:ClockworkStripWeapon(weaponClass)
+		--self:ClockworkStripWeapon(weaponClass)
 	end
 end
 
