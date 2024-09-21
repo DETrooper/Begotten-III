@@ -15,6 +15,11 @@ local playerMeta = FindMetaTable("Player")
 local stored = {}
 local globals = {}
 
+util.AddNetworkString("nVar")
+util.AddNetworkString("nDel")
+util.AddNetworkString("nLcl")
+util.AddNetworkString("gVar")
+
 -- Check if there is an attempt to send a function. Can't send those.
 local function checkBadType(name, object)
 	local objectType = type(object)
@@ -39,7 +44,17 @@ function netvars.SetNetVar(key, value, receiver)
 	if (globals[key] == value) then return end
 
 	globals[key] = value
-	netstream.Start(receiver, "gVar", key, value)
+	--netstream.Start(receiver, "gVar", key, value)
+	net.Start("gVar")
+		net.WriteString(key)
+		net.WriteType(value)
+		
+	if receiver then
+		net.Send(receiver)
+		return;
+	end
+	
+	net.Broadcast()
 end
 
 function netvars.AreEqual(old, new)
@@ -56,24 +71,53 @@ function playerMeta:SyncVars()
 	for entity, data in pairs(stored) do
 		if (IsValid(entity)) then
 			for k, v in pairs(data) do
-				netstream.Start(self, "nVar", entity:EntIndex(), k, v)
+				--netstream.Start(self, "nVar", entity:EntIndex(), k, v)
+				net.Start("nVar")
+					net.WriteUInt(entity:EntIndex(), 14);
+					net.WriteString(k)
+					net.WriteType(v)
+				net.Send(self)
 			end
 		end
 	end
 
 	for k, v in pairs(globals) do
-		netstream.Start(self, "gVar", k, v)
+		--netstream.Start(self, "gVar", k, v)
+		net.Start("gVar")
+			net.WriteString(k)
+			net.WriteType(v)
+		net.Send(self)
 	end
 end
 
 function entityMeta:SendNetVar(key, receiver)
-	netstream.Heavy(receiver, "nVar", self:EntIndex(), key, stored[self] and stored[self][key])
+	--netstream.Heavy(receiver, "nVar", self:EntIndex(), key, stored[self] and stored[self][key])
+	net.Start("nVar")
+		net.WriteUInt(self:EntIndex(), 14);
+		net.WriteString(key)
+		net.WriteType(stored[self] and stored[self][key])
+		
+	if receiver then
+		net.Send(receiver)
+		return;
+	end
+	
+	net.Broadcast()
 end
 
 function entityMeta:ClearNetVars(receiver)
 	if stored[self] then
 		stored[self] = nil
-		netstream.Start(receiver, "nDel", self:EntIndex())
+		--netstream.Start(receiver, "nDel", self:EntIndex())
+		net.Start("nDel")
+			net.WriteEntity(self)
+			
+		if receiver then
+			net.Send(receiver)
+			return;
+		end
+		
+		net.Broadcast()
 	end
 end
 
@@ -87,21 +131,26 @@ function entityMeta:SetNetVar(key, value, receiver)
 	self:SendNetVar(key, receiver)
 end
 
-function entityMeta:SetLocalVar(key, value)
+function playerMeta:SetLocalVar(key, value)
 	if !self:IsPlayer() then
 		self:SetNetVar(key, value, self);
 	
 		return;
 	end
-	
+
 	if (checkBadType(key, value)) then return end
 	if (!istable(value) and value == self:GetNetVar(key)) then return end
-	
+
 	stored[self] = stored[self] or {}
 	stored[self][key] = value
 
-	netstream.Start(self, "nLcl", key, value)
+	--netstream.Start(self, "nLcl", key, value)
+	net.Start("nLcl")
+		net.WriteString(key)
+		net.WriteType(value)
+	net.Send(self)
 end
+
 
 function entityMeta:GetNetVar(key, default)
 	local storedIndex = stored[self];
@@ -113,7 +162,7 @@ function entityMeta:GetNetVar(key, default)
 	return default
 end
 
-entityMeta.GetLocalVar = entityMeta.GetNetVar
+playerMeta.GetLocalVar = entityMeta.GetNetVar
 
 function netvars.GetNetVar(key, default)
 	local value = globals[key]

@@ -330,8 +330,8 @@ end
 
 -- A function to get the player's need level.
 function playerMeta:GetNeed(need)
-	if need and table.HasValue(cwCharacterNeeds.Needs, need) then
-		return tonumber(self:GetCharacterData(need, 0));
+	if table.HasValue(cwCharacterNeeds.Needs, need) then
+		return self:GetCharacterData(need, 0);
 	end
 end
 

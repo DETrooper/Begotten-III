@@ -3317,7 +3317,7 @@ function GM:PlayerCharacterCreated(player, character)
 	-- For some reason the character key wasn't being given.
 
 	timer.Simple(5, function()
-		if IsValid(player) and character then
+		if IsValid(player) and !player:IsBot() and character then
 			local charactersTable = config.Get("mysql_characters_table"):Get();
 			local schemaFolder = Clockwork.kernel:GetSchemaFolder()
 			local key_found = false;
