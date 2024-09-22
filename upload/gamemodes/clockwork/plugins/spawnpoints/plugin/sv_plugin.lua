@@ -71,8 +71,8 @@ function cwSpawnPoints:SaveSpawnPoints()
 	end
 
 	for _, v in _player.Iterator() do
-		if (player:IsAdmin()) then
-			netstream.Heavy(player, "SpawnPointESPSync", self:GetSpawnPoints())
+		if (v:IsAdmin()) then
+			netstream.Heavy(v, "SpawnPointESPSync", self:GetSpawnPoints())
 		end
 	end
 
