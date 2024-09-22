@@ -879,6 +879,15 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 											entity.poisonTicks = nil;
 										end
 										
+										-- Add a 0.5 second delay to taking more damage.
+										entTab.distortedRingFired = true;
+										
+										timer.Create("DistortedRingTimer_"..entity:EntIndex(), 0.5, 1, function()
+											if IsValid(entity) then
+												entity.distortedRingFired = nil;
+											end
+										end);
+										
 										damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
 										return;
 									end
@@ -898,7 +907,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 												entTab.distortedRingFiredDuel = true;
 											end
 											
-											timer.Simple(0.5, function()
+											timer.Create("DistortedRingTimer_"..entity:EntIndex(), 0.5, 1, function()
 												if IsValid(entity) then
 													entity.distortedRingFired = nil;
 												end
@@ -1422,7 +1431,8 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 						entity:EmitSound("misc/attack_01.ogg", 90, math.random(55,70))
 					else
 						entity:EmitSound("misc/attack_01.ogg", 90, math.random(100,120))
-					end					
+					end
+					
 					if cwMedicalSystem then
 						entTab.nextBleedPoint = CurTime() + 180;
 					end
@@ -1430,6 +1440,15 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 					if entTab.poisonTicks then
 						entTab.poisonTicks = nil;
 					end
+					
+					-- Add a 0.5 second delay to taking more damage.
+					entTab.distortedRingFired = true;
+					
+					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 0.5, 1, function()
+						if IsValid(entity) then
+							entity.distortedRingFired = nil;
+						end
+					end);
 					
 					damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
 					return;
@@ -1453,7 +1472,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 						entTab.distortedRingFiredDuel = true;
 					end
 					
-					timer.Simple(0.5, function()
+					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 0.5, 1, function()
 						if IsValid(entity) then
 							entity.distortedRingFired = nil;
 						end
