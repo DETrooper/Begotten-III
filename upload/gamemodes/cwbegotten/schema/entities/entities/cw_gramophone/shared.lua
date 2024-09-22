@@ -34,6 +34,10 @@ ENT.tracks = {
 	{track = "begotten3soundtrack/hellmanor/orchestral_danse.mp3", length = 430, volume = 100},
 	{track = "begotten3soundtrack/hellmanor/orchestral_sonata.mp3", length = 986, volume = 100},
 	{track = "begotten3soundtrack/hellmanor/orchestral_requiem.mp3", length = 536, volume = 100},
+	{track = "begotten3soundtrack/hellmanor/orchestral_bluedanube.mp3", length = 564, volume = 100},
+	{track = "begotten3soundtrack/hellmanor/orchestral_canon.mp3", length = 538, volume = 100},
+	{track = "begotten3soundtrack/hellmanor/orchestral_valse.mp3", length = 284, volume = 100},
+	{track = "begotten3soundtrack/hellmanor/orchestral_winter.mp3", length = 967, volume = 100},
 };
 
 -- Called when the data tables are setup.
