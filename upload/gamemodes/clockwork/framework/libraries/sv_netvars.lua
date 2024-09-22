@@ -128,7 +128,9 @@ function entityMeta:SetNetVar(key, value, receiver)
 	stored[self] = stored[self] or {}
 	stored[self][key] = value
 
-	self:SendNetVar(key, receiver)
+	if !self:IsPlayer() then
+		self:SendNetVar(key, receiver)
+	end
 end
 
 function entityMeta:SetLocalVar(key, value)
