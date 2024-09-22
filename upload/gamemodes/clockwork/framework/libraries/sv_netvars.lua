@@ -131,7 +131,7 @@ function entityMeta:SetNetVar(key, value, receiver)
 	self:SendNetVar(key, receiver)
 end
 
-function playerMeta:SetLocalVar(key, value)
+function entityMeta:SetLocalVar(key, value)
 	if !self:IsPlayer() then
 		self:SetNetVar(key, value, self);
 	
