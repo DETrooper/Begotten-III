@@ -226,8 +226,7 @@ function cwRituals:GetProgressBarInfoAction(action, percentage)
 	end
 end
 
-local powderheelMat = Material("models/effects/portalfunnel_sheet");
-local powderheelColor = Color(255, 255, 255, 100);
+local powderheelAuraDistance = 512*512;
 
 function cwRituals:PostDrawOpaqueRenderables()
 	local curTime = CurTime();
@@ -320,10 +319,20 @@ function cwRituals:PostDrawOpaqueRenderables()
 				end;
 			end
 			
-			if v:GetNetVar("powderheelActive") then
-				render.SetMaterial(powderheelMat);
-				render.DrawSphere(entityPosition + Vector(0, 0, 40), config.Get("talk_radius"):Get(), 32, 32, powderheelColor);
-				render.DrawSphere(entityPosition + Vector(0, 0, 40), -config.Get("talk_radius"):Get(), 32, 32, powderheelColor);
+			if v:GetNetVar("powderheelActive") and v:GetPos():DistToSqr(localPlayer:GetPos()) < powderheelAuraDistance then
+				cam.Start3D2D(v:GetPos(), angle_zero, 1);
+					cam.IgnoreZ(true);
+
+					surface.SetDrawColor(0, 150, 0, TimedCos(0.25, 50, 75, 0));
+					surface.SetMaterial(glowMaterial);
+
+					local radius = config.Get("talk_radius"):Get();
+					local halfRadius = radius*.5;
+
+					surface.DrawTexturedRect(-halfRadius,-halfRadius,radius,radius);
+
+					cam.IgnoreZ(false);
+				cam.End3D2D();
 			end
 		end;
 	end
