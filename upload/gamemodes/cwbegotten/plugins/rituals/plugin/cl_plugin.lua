@@ -319,7 +319,7 @@ function cwRituals:PostDrawOpaqueRenderables()
 				end;
 			end
 			
-			if v:GetNetVar("powderheelActive") and v:GetPos():DistToSqr(localPlayer:GetPos()) < powderheelAuraDistance then
+			if v:GetNetVar("powderheelActive") and v:GetPos():DistToSqr(Clockwork.Client:GetPos()) < powderheelAuraDistance then
 				cam.Start3D2D(v:GetPos(), angle_zero, 1);
 					cam.IgnoreZ(true);
 
