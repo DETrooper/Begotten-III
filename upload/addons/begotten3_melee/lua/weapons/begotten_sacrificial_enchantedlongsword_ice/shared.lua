@@ -120,7 +120,7 @@ function SWEP:HandlePrimaryAttack()
 	end
 	
 	if self.Owner.HandleNeed and not self.Owner.opponent then
-		self.Owner:HandleNeed("corruption", attacktable["primarydamage"] * 0.05);
+		self.Owner:HandleNeed("corruption", attacktable["primarydamage"] * 0.02);
 	end
 end
 
