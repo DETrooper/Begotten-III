@@ -8,10 +8,10 @@
 util.AddNetworkString("SendCountryCode")
 
 net.Receive("SendCountryCode", function(ply)
-	countryCode = net.ReadString()
+	local countryCode = net.ReadString()
 
-	if (player.CountryCodeRequested) then
-		player.CountryCodeRequested = nil;
+	if (ply.CountryCodeRequested) then
+		ply.CountryCodeRequested = nil;
 		
 		Clockwork.kernel:CountryCode(ply, countryCode);
 	end;
