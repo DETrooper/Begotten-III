@@ -7,7 +7,7 @@
 
 util.AddNetworkString("SendCountryCode")
 
-net.Receive("SendCountryCode", function(ply)
+net.Receive("SendCountryCode", function(len, ply)
 	local countryCode = net.ReadString()
 
 	if (ply.CountryCodeRequested) then
