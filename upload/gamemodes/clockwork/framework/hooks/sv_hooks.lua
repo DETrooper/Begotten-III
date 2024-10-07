@@ -2428,7 +2428,7 @@ local function PlayerSayFunc(player, text)
 
 		if (Clockwork.command.stored[command] and Clockwork.command.stored[command].arguments < 2
 		and !Clockwork.command.stored[command].optionalArguments) then
-			text = arguments[2] or ""
+			text = string.gsub(string.utf8sub(text, string.len(command) + prefixLength + 2), "\"", "");
 
 			if (text != "") then
 				arguments = {command, text};
