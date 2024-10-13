@@ -1810,7 +1810,7 @@ AttackTables.BattleAxeAttackTable = {
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 35,
+	["armorpiercing"] = 33,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 25,
 	["stabilitydamage"] = 0,
@@ -1823,18 +1823,18 @@ AttackTables.BattleAxeAttackTable = {
 };
 
 AttackTables.GoreBattleAxeAttackTable = {
-	["primarydamage"] = 55,
+	["primarydamage"] = 50,
 	["dmgtype"] = 4,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 40,
+	["armorpiercing"] = 35,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 25,
 	["stabilitydamage"] = 0,
-	["takeammo"] = 5,
-	["delay"] = 1,
+	["takeammo"] = 6,
+	["delay"] = 1.05,
 	["striketime"] = 0.4,
 	["meleearc"] = 45,
 	["meleerange"] = 650,
@@ -1848,15 +1848,34 @@ AttackTables.ReaverBattleAxeAttackTable = {
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 45,
+	["armorpiercing"] = 40,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 25,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 6,
-	["delay"] = 1.02,
+	["delay"] = 1.1,
 	["striketime"] = 0.4,
 	["meleearc"] = 35,
-	["meleerange"] = 660,
+	["meleerange"] = 665,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.SteelGoreBattleAxeAttackTable = {
+	["primarydamage"] = 55,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = false,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 40,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 25,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 4,
+	["delay"] = 1,
+	["striketime"] = 0.4,
+	["meleearc"] = 45,
+	["meleerange"] = 625,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -3295,6 +3314,7 @@ AddTable("GoreWarAxeAttackTable", AttackTables.GoreWarAxeAttackTable)
 AddTable("ReaverWarAxeAttackTable", AttackTables.ReaverWarAxeAttackTable)  
 AddTable("GoreFalchionAttackTable", AttackTables.GoreFalchionAttackTable)  
 AddTable("GoreBattleAxeAttackTable", AttackTables.GoreBattleAxeAttackTable)  
+AddTable("SteelGoreBattleAxeAttackTable", AttackTables.SteelGoreBattleAxeAttackTable)  
 AddTable("PolehammerAttackTable", AttackTables.PolehammerAttackTable)
 AddTable("IronRapierAttackTable", AttackTables.IronRapierAttackTable)    
 AddTable("ElegantEpeeAttackTable", AttackTables.ElegantEpeeAttackTable) 
@@ -4163,6 +4183,24 @@ BlockTables.GoreFalchionBlockTable = {
 };
 
 BlockTables.GoreBattleAxeBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "GlassImpact",
+	["blockeffectforward"] = 15,
+	["blockeffectpos"] = (Vector(0, 0, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 5,
+	["raisespeed"] = 0.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
+BlockTables.SteelGoreBattleAxeBlockTable = {
 	["guardblockamount"] = 10,
 	["specialeffect"] = false,
 	["blockeffect"] = "GlassImpact",
@@ -5757,6 +5795,7 @@ AddTable("GoreWarAxeBlockTable", BlockTables.GoreWarAxeBlockTable)
 AddTable("ReaverWarAxeBlockTable", BlockTables.ReaverWarAxeBlockTable)  
 AddTable("GoreFalchionBlockTable", BlockTables.GoreFalchionBlockTable)  
 AddTable("GoreBattleAxeBlockTable", BlockTables.GoreBattleAxeBlockTable)  
+AddTable("SteelGoreBattleAxeBlockTable", BlockTables.SteelGoreBattleAxeBlockTable)  
 AddTable("PolehammerBlockTable", BlockTables.PolehammerBlockTable)  
 AddTable("IronRapierBlockTable", BlockTables.IronRapierBlockTable)  
 AddTable("ElegantEpeeBlockTable", BlockTables.ElegantEpeeBlockTable) 

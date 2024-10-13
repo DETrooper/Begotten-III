@@ -64,7 +64,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
-	ITEM.name = "Battle Axe";
+	ITEM.name = "Iron Battle Axe";
 	ITEM.model = "models/demonssouls/weapons/battle axe.mdl";
 	ITEM.weight = 1.5;
 	ITEM.uniqueID = "begotten_1h_battleaxe";
@@ -80,6 +80,29 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Steel Gore Battle Axe";
+	ITEM.model = "models/weapons/goresteelaxe/goresteelaxe.mdl";
+	ITEM.weight = 1;
+	ITEM.uniqueID = "begotten_1h_steelgorebattleaxe";
+	ITEM.category = "Melee";
+	ITEM.description = "A highly practical and well crafted steel battle axe. This axe was crafted for Goreic Warfighters across numerous clans either revered or forgotten. Familial engravings bear catalyst energy which burns the hands of weaklings.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/goresteelaxe.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(94.48, 68.62, 180);
+	ITEM.attachmentOffsetVector = Vector(3.54, -2, 22.63);
+	ITEM.attachmentBoneOffhand = "ValveBiped.Bip01_R_Thigh";
+	ITEM.attachmentOffsetAnglesOffhand = Angle(94.48, 68.62, 180);
+	ITEM.attachmentOffsetVectorOffhand = Vector(-3.54, -2, 22.63);
+	ITEM.canUseOffhand = true;
+	ITEM.canUseShields = true;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}};
+	ITEM.requireFaith = {"Faith of the Family"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -210,7 +233,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.weight = 0.7;
 	ITEM.uniqueID = "begotten_1h_druidsword";
 	ITEM.category = "Melee";
-	ITEM.description = "A crude iron blade engraved with various Goreic glyphs.";
+	ITEM.description = "A crude iron blade engraved with various Goreic glyphs. Familial engravings bear catalyst energy which burns the hands of weaklings.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/druid_sword.png"
 	ITEM.meleeWeapon = true;
 	ITEM.isAttachment = true;
@@ -221,6 +244,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
+	ITEM.requireFaith = {"Faith of the Family"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -229,7 +253,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.weight = 1;
 	ITEM.uniqueID = "begotten_1h_familialsword";
 	ITEM.category = "Melee";
-	ITEM.description = "A finely crafted steel shortsword made in honor of the Family.";
+	ITEM.description = "A finely crafted steel shortsword made in honor of the Family. Familial engravings bear catalyst energy which burns the hands of weaklings.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/familial_sword.png"
 	ITEM.meleeWeapon = true;
 	ITEM.isAttachment = true;
@@ -240,6 +264,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.requireFaith = {"Faith of the Family"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -343,12 +368,12 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
-	ITEM.name = "Gore Battle Axe";
+	ITEM.name = "Iron Gore Battle Axe";
 	ITEM.model = "models/begotten/weapons/axe1.mdl";
 	ITEM.weight = 1;
 	ITEM.uniqueID = "begotten_1h_gorebattleaxe";
 	ITEM.category = "Melee";
-	ITEM.description = "A well crafted battle axe. The markings of Clan Gore are carved into its handle.";
+	ITEM.description = "A crude iron battle axe. The markings of Clan Gore are carved into its handle.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/gore_battle_axe.png"
 	ITEM.meleeWeapon = true;
 	ITEM.isAttachment = true;
@@ -361,7 +386,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -641,7 +666,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
-	ITEM.name = "Reaver Battle Axe";
+	ITEM.name = "Iron Reaver Battle Axe";
 	ITEM.model = "models/begotten/weapons/axe3.mdl";
 	ITEM.weight = 1.3;
 	ITEM.uniqueID = "begotten_1h_reaverbattleaxe";
@@ -656,7 +681,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood", "wood"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");

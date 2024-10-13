@@ -2192,7 +2192,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 25;
+		RECIPE.experience = 30;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -2487,8 +2487,8 @@ function cwRecipes:ClockworkInitialized()
 		end;
 	RECIPE:Register()
 
-	RECIPE = cwRecipes.recipes:New("battle_axe");
-		RECIPE.name = "Battle Axe";
+	RECIPE = cwRecipes.recipes:New("iron_battle_axe");
+		RECIPE.name = "Iron Battle Axe";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requirements = {
@@ -2656,13 +2656,13 @@ function cwRecipes:ClockworkInitialized()
 	end;
 RECIPE:Register()
 
-	RECIPE = cwRecipes.recipes:New("gore_battle_axe");
-		RECIPE.name = "Gore Battle Axe";
+	RECIPE = cwRecipes.recipes:New("iron_gore_battle_axe");
+		RECIPE.name = "Iron Gore Battle Axe";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 2},
 			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
@@ -2673,7 +2673,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 55;
+		RECIPE.experience = 30;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -2685,13 +2685,43 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 	
-	RECIPE = cwRecipes.recipes:New("reaverbattleaxe");
-		RECIPE.name = "Reaver Battle Axe";
+	RECIPE = cwRecipes.recipes:New("steel_gore_battle_axe");
+		RECIPE.name = "Steel Gore Battle Axe";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 2},
+			["wood"] = {amount = 1},
+			["familial_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_1h_steelgorebattleaxe"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("iron_reaver_battleaxe");
+		RECIPE.name = "Iron Reaver Battle Axe";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 2},
 			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
@@ -2702,7 +2732,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 55;
+		RECIPE.experience = 30;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -2835,10 +2865,11 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("familialsword");
 		RECIPE.name = "Familial Sword";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 2},
+			["familial_catalyst"] = {amount = 1},
 			["wood"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -2868,6 +2899,7 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 2},
+			["familial_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_1h_druidsword"] = {amount = 1},
