@@ -925,7 +925,7 @@ function SWEP:PrimaryAttack()
 		end
 		
 		if offhandAttackTable then
-			takeAmmo = math.max(takeAmmo + takeAmmoOffhand * 0.8);
+			takeAmmo = math.max((takeAmmo + takeAmmoOffhand) * 0.75);
 		end
 		
 		local attackCost = takeAmmo;
