@@ -491,10 +491,10 @@ local COMMAND = Clockwork.command:New("ShutDown");
 			end
 			
 			timer.Simple(delay, function()
-				RunConsoleCommand("killserver");
+				RunConsoleCommand("disconnect");
 			end);
 		else
-			RunConsoleCommand("killserver");
+			RunConsoleCommand("disconnect");
 		end;
 	end;
 COMMAND:Register();
