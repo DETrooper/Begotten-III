@@ -1551,8 +1551,9 @@ function Clockwork.kernel:ZeroNumberToDigits(number, digits)
 end
 
 -- A function to get a short CRC from a value.
+-- Converts the 32-bit value into a 15-bit value because Player:SetTeam() is now networked at 15 bits since the 2024.10.29 update
 function Clockwork.kernel:GetShortCRC(value)
-	return math.ceil(util.CRC(value) / 100000)
+	return math.ceil(util.CRC(value) / 131071)
 end
 
 -- A function to validate a table's keys.
