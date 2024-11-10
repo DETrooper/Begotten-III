@@ -358,7 +358,7 @@ function ENT:Use(activator, caller)
 		end
 		
 		if caller:GetFaction() == "Goreic Warrior" or caller:GetNetVar("kinisgerOverride") == "Goreic Warrior" or (caller:IsAdmin() and caller.cwObserverMode) then
-			self.cargoholdopenable = true;
+			data.cargoholdopenable = true;
 			data.destination = self.destination;
 			data.sailable = true;
 		

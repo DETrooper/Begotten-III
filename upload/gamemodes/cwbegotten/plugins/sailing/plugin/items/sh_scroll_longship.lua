@@ -186,6 +186,8 @@ local ITEM = Clockwork.item:New();
 					self:SetData("customName", result); 
 				end
 			end);
+			
+			return false;
 		end
 		
 		player:EmitSound("begotten/items/note_turn.wav");
