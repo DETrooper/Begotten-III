@@ -4388,18 +4388,18 @@ function GM:ScaleDamageByHitGroup(player, attacker, hitGroup, damageInfo, baseDa
 			end
 			
 			if IsValid(attacker) and attacker:IsPlayer() then
-				local attackerWeapon = attacker:GetActiveWeapon();
+				local inflictor = damageInfo:GetInflictor();
 				
-				if IsValid(attackerWeapon) and attackerWeapon.Base == "begotten_firearm_base" then
+				if IsValid(inflictor) and inflictor.Base == "begotten_firearm_base" then
 					if (player:GetPos():DistToSqr(attacker:GetPos()) <= massiveFuck) then
 						damageInfo:ScaleDamage(config.Get("scale_head_dmg"):Get());
 					end
 				end
 			end
 		elseif IsValid(attacker) and attacker:IsPlayer() then
-			local attackerWeapon = attacker:GetActiveWeapon();
+			local inflictor = damageInfo:GetInflictor();
 			
-			if IsValid(attackerWeapon) and attackerWeapon.Base == "begotten_firearm_base" then
+			if IsValid(inflictor) and inflictor.Base == "begotten_firearm_base" then
 				if (hitGroup == HITGROUP_CHEST or hitGroup == HITGROUP_GENERIC) then
 					damageInfo:ScaleDamage(config.Get("scale_chest_dmg"):Get());
 				elseif (hitGroup == HITGROUP_LEFTARM or hitGroup == HITGROUP_RIGHTARM or hitGroup == HITGROUP_LEFTLEG or hitGroup == HITGROUP_RIGHTLEG or hitGroup == HITGROUP_GEAR) then
