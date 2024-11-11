@@ -233,299 +233,278 @@ if SERVER then
 					enemywep = Ent:GetActiveWeapon()
 				end
 				
-				local damage = (self.AttackTable["primarydamage"])
-				local damagetype = (self.AttackTable["dmgtype"])
 				local trace = self.Owner:GetEyeTrace()
+				local hitEntPos = Ent:GetPos();
+				local distance = hitEntPos:DistToSqr(self.cachedStartPos);
+				local stabilityDamage = self.AttackTable["stabilitydamage"];
+				
+				local damagetype = (self.AttackTable["dmgtype"])
+				local minDamage = (self.AttackTable["mimimumdistancedamage"])
+				local maxDamage = (self.AttackTable["maximumdistancedamage"])
+				local maxDistance = 800 * 800
+				
+				if self.itemTable then
+					local condition = self.itemTable:GetCondition();
+					
+					if condition and condition < 100 then
+						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+						minDamage = math.Round(minDamage * Lerp(scalar, 0.5, 1));
+						maxDamage = math.Round(maxDamage * Lerp(scalar, 0.5, 1));
+					end
+				end
+				
+				local clampedDistance = math.min(math.max(distance, 0), maxDistance)
+				local ratio = clampedDistance / maxDistance
+				local variableDamage = minDamage + (maxDamage - minDamage) * ratio
+				
+									
+				damage = variableDamage
+				variableStabilityDamage = stabilityDamage * (variableDamage / 100)
 				
 				if Ent:IsNPC() or Ent:IsNextBot() or (Ent:IsPlayer() and !Ent:GetNetVar("Parry") and !Ent:GetNetVar("Deflect")) and !Ent.iFrames then
-					if Ent:IsPlayer() and !Ent:GetNetVar("Guardening") then
-						damage = (self.AttackTable["primarydamage"])
-						damagetype = (self.AttackTable["dmgtype"])
-					else
-						if Ent:GetNetVar("Guardening") then
-							if enemywep and enemywep:GetNWString("activeShield"):len() > 0 then
-								if self.SticksInShields then
-									should_stick = true;
-									self.ConditionLoss = 100;
-								end
-								
-								local shieldItem = Ent:GetShieldEquipped();
+					if Ent:GetNetVar("Guardening") then
+						if enemywep and enemywep:GetNWString("activeShield"):len() > 0 then
+							if self.SticksInShields then
+								should_stick = true;
+								self.ConditionLoss = 100;
+							end
+							
+							local shieldItem = Ent:GetShieldEquipped();
 
-								if (shieldItem) and !Ent.opponent then
-									if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
-										local conditionLoss = self.ConditionLoss or 34;
-										
-										if self.Owner:HasBelief("scour_the_rust") then
-											conditionLoss = conditionLoss * 0.5;
-										end
-										
-										self.itemTable:TakeCondition(conditionLoss);
+							if (shieldItem) and !Ent.opponent then
+								if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
+									local conditionLoss = self.ConditionLoss or 34;
+									
+									if self.Owner:HasBelief("scour_the_rust") then
+										conditionLoss = conditionLoss * 0.5;
 									end
-								end
+								self.itemTable:TakeCondition(conditionLoss);
 							end
 						end
 					end
+				end
 					
-					local hitEntPos = Ent:GetPos();
-					local distance = hitEntPos:DistToSqr(self.cachedStartPos);
-					local poiseDamage = self.AttackTable["poisedamage"];
-					local stabilityDamage = self.AttackTable["stabilitydamage"];
-
-					if distance < 150 * 150 then
-						--print("tier 1");
-						damage = damage * 0.3;
-						poiseDamage = poiseDamage * 0.3;
-						stabilityDamage = stabilityDamage * 0.3;
-					elseif distance >= 150 * 150 and distance < 250 * 250 then
-						--print("tier 2");
-						damage = damage * 0.6;
-						poiseDamage = poiseDamage * 0.6;
-						stabilityDamage = stabilityDamage * 0.6;
-					elseif distance >= 250 * 250 and distance < 400 * 400 then
-						--print("tier 3");
-						damage = damage * 1;
-						poiseDamage = poiseDamage * 1;
-						stabilityDamage = stabilityDamage * 1;
-					elseif distance >= 400 * 400 and distance < 600 * 600 then
-						--print("tier 4");
-						damage = damage * 1.3;
-						poiseDamage = poiseDamage * 1.3;
-						stabilityDamage = stabilityDamage * 1.3;
-					elseif distance >= 600 * 600 and distance < 900 * 900 then
-						--print("tier 5");
-						damage = damage * 1.5;
-						poiseDamage = poiseDamage * 1.6;
-						stabilityDamage = stabilityDamage * 1.6;
+				if Ent:IsPlayer() then
+					Ent:TakeStability(variableStabilityDamage);
+					self:TriggerAnim4(Ent, "a_shared_hit_0"..math.random(1, 3));
+				end
+				
+				if self.parried then
+					if cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("repulsive_riposte") then
+						damage = damage * 3.5;
 					else
-						--print("tier 6");
-						damage = damage * 1.6;
-						poiseDamage = poiseDamage * 1.9;
-						stabilityDamage = stabilityDamage * 1.9;
+						damage = damage * 3;
 					end
-							
-					if Ent:IsPlayer() then
-						--Ent:TakePoise(poiseDamage);
-						--Ent:TakeStamina(poiseDamage);
-						Ent:TakeStability(stabilityDamage);
-						self:TriggerAnim4(Ent, "a_shared_hit_0"..math.random(1, 3));
-					end
+				end
+				
+				local blockTable;
+				local shield_reduction = 1;
+				
+				if IsValid(enemywep) then
+					blockTable = GetTable(enemywep:GetNWString("activeShield"));
+				end
+				
+				if blockTable then
+					shield_reduction = blockTable.damagereduction or 1;
+				end
+				
+				local d = DamageInfo()
+				d:SetDamage( damage * shield_reduction )
+				d:SetAttacker(self.Owner)
+				d:SetDamageType( damagetype )
+				d:SetDamagePosition(trace.HitPos)
+				d:SetInflictor(self);
+				
+				if (Ent:IsPlayer()) then
+					d:SetDamageForce( self.Owner:GetForward() * 5000 )
+				end
+
+				Ent:TakeDamageInfo(d)
+				
+				self:Disable();
+				
+				timer.Simple(FrameTime(), function()
+					if !IsValid(self) then return end;
+					if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
 					
-					if self.parried then
-						if cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("repulsive_riposte") then
-							damage = damage * 3.5;
-						else
-							damage = damage * 3;
+					if Clockwork and !self.Owner.opponent then
+						if self.itemTable then
+							local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
+							 
+							if IsValid(entity) then
+								self.collided = true;
+								
+								if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
+									local conditionLoss = self.ConditionLoss or 34;
+									
+									if self.Owner:HasBelief("scour_the_rust") then
+										conditionLoss = conditionLoss * 0.5;
+									end
+									
+									self.itemTable:TakeCondition(conditionLoss);
+								end
+								
+								entity:Spawn();
+								entity:SetAngles(self:GetAngles());
+								self:StopSound("weapons/throw_swing_03.wav");
+								entity:EmitSound(self.FleshHit[math.random(1, #self.FleshHit)], 90);
+								Clockwork.entity:Decay(entity, 300);
+								entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
+								
+								local phys = entity:GetPhysicsObject();
+								
+								if (phys:IsValid()) then
+									phys:Wake();
+									phys:SetMass(2);
+									
+									--[[if should_stick then
+										local bone = Ent:GetHitBoxBone(Ent:LastHitGroup(), 0);
+										
+										entity:FollowBone(Ent, bone);
+									end]]--
+								end
+								
+								self:Remove();
+							end
 						end
 					end
+				end);
+				
+				return;
+			elseif Ent:IsPlayer() and (Ent:GetNetVar("Deflect") or Ent:GetNetVar("Parry")) then
+				self:Disable();
+			
+				timer.Simple(FrameTime(), function()
+					if !IsValid(self) then return end;
+					if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
+					if !IsValid(Ent) or !Ent:Alive() then return end;
 					
-					local blockTable;
-					local shield_reduction = 1;
+					local javelin = ents.Create(self:GetClass())
+					if !javelin:IsValid() then return false end
 					
-					if IsValid(enemywep) then
-						blockTable = GetTable(enemywep:GetNWString("activeShield"));
+					self.collided = true;
+					
+					javelin:SetModel(self:GetModel());
+					javelin:SetPos(self:GetPos())
+					javelin:SetOwner(Ent)
+					
+					javelin.AttackTable = self.AttackTable;
+					javelin.itemTable = self.itemTable;
+					javelin.SticksInShields =  self.SticksInShields;
+					javelin.ConditionLoss = self.ConditionLoss;
+					javelin.itemTable = self.itemTable;
+					javelin.deflected = true;
+					
+					if Ent:GetNetVar("Parry") then
+						javelin.parried = true;
 					end
 					
-					if blockTable then
-						shield_reduction = blockTable.damagereduction or 1;
-					end
-					
+					-- for parry/deflect
 					local d = DamageInfo()
-					d:SetDamage( damage * shield_reduction )
+					d:SetDamage(0 )
 					d:SetAttacker(self.Owner)
 					d:SetDamageType( damagetype )
 					d:SetDamagePosition(trace.HitPos)
-					d:SetInflictor(self);
-					
-					if (Ent:IsPlayer()) then
-						d:SetDamageForce( self.Owner:GetForward() * 5000 )
-					end
+					d:SetInflictor(javelin);
 
 					Ent:TakeDamageInfo(d)
 					
-					self:Disable();
+					self:Remove();
 					
-					timer.Simple(FrameTime(), function()
-						if !IsValid(self) then return end;
-						if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
-						
-						if Clockwork and !self.Owner.opponent then
-							if self.itemTable then
-								local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
-								 
-								if IsValid(entity) then
-									self.collided = true;
-									
-									if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
-										local conditionLoss = self.ConditionLoss or 34;
-										
-										if self.Owner:HasBelief("scour_the_rust") then
-											conditionLoss = conditionLoss * 0.5;
-										end
-										
-										self.itemTable:TakeCondition(conditionLoss);
-									end
-									
-									entity:Spawn();
-									entity:SetAngles(self:GetAngles());
-									self:StopSound("weapons/throw_swing_03.wav");
-									entity:EmitSound(self.FleshHit[math.random(1, #self.FleshHit)], 90);
-									Clockwork.entity:Decay(entity, 300);
-									entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
-									
-									local phys = entity:GetPhysicsObject();
-									
-									if (phys:IsValid()) then
-										phys:Wake();
-										phys:SetMass(2);
-										
-										--[[if should_stick then
-											local bone = Ent:GetHitBoxBone(Ent:LastHitGroup(), 0);
-											
-											entity:FollowBone(Ent, bone);
-										end]]--
-									end
-									
-									self:Remove();
-								end
-							end
-						end
-					end);
+					javelin:Spawn()
+					javelin.Owner = Ent
+					javelin:Activate()
 					
-					return;
-				elseif Ent:IsPlayer() and (Ent:GetNetVar("Deflect") or Ent:GetNetVar("Parry")) then
-					self:Disable();
-				
-					timer.Simple(FrameTime(), function()
-						if !IsValid(self) then return end;
-						if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
-						if !IsValid(Ent) or !Ent:Alive() then return end;
-						
-						local javelin = ents.Create(self:GetClass())
-						if !javelin:IsValid() then return false end
-						
-						self.collided = true;
-						
-						javelin:SetModel(self:GetModel());
-						javelin:SetPos(self:GetPos())
-						javelin:SetOwner(Ent)
-						
-						javelin.AttackTable = self.AttackTable;
-						javelin.itemTable = self.itemTable;
-						javelin.SticksInShields =  self.SticksInShields;
-						javelin.ConditionLoss = self.ConditionLoss;
-						javelin.itemTable = self.itemTable;
-						javelin.deflected = true;
+					local phys = javelin:GetPhysicsObject()
+					
+					if Ent.HasBelief and Ent:HasBelief("impossibly_skilled") then
+						javelin:SetAngles(Ent:GetAimVector():Angle())
+						phys:SetVelocity(Ent:GetAimVector() * 1250);
 						
 						if Ent:GetNetVar("Parry") then
-							javelin.parried = true;
+							Ent:EmitSound("meleesounds/DS2Parry.mp3");
 						end
 						
-						-- for parry/deflect
-						local d = DamageInfo()
-						d:SetDamage(0 )
-						d:SetAttacker(self.Owner)
-						d:SetDamageType( damagetype )
-						d:SetDamagePosition(trace.HitPos)
-						d:SetInflictor(javelin);
-
-						Ent:TakeDamageInfo(d)
-						
-						self:Remove();
-						
-						javelin:Spawn()
-						javelin.Owner = Ent
-						javelin:Activate()
-						
-						local phys = javelin:GetPhysicsObject()
-						
-						if Ent.HasBelief and Ent:HasBelief("impossibly_skilled") then
-							javelin:SetAngles(Ent:GetAimVector():Angle())
-							phys:SetVelocity(Ent:GetAimVector() * 1250);
+						if IsValid(enemywep) then
+							local blocksoundtable = GetSoundTable(enemywep.realBlockSoundTable);
 							
-							if Ent:GetNetVar("Parry") then
-								Ent:EmitSound("meleesounds/DS2Parry.mp3");
+							if blocksoundtable and blocksoundtable["deflectmetal"] then
+								Ent:EmitSound(blocksoundtable["deflectmetal"][math.random(1, #blocksoundtable["deflectmetal"])], 90);
 							end
-							
-							if IsValid(enemywep) then
-								local blocksoundtable = GetSoundTable(enemywep.realBlockSoundTable);
+						end
+						
+						Clockwork.chatBox:AddInTargetRadius(Ent, "me", "suddenly catches the projectile mid-flight with their weapon and redirects it, showing impossible skill and grace as it is deflected in the direction of its hurler!", Ent:GetPos(), config.Get("talk_radius"):Get() * 4);
+					else
+						phys:SetVelocity(Ent:GetAimVector() * 50);
+					end
+				
+					if !Ent:GetNetVar("Parry") then
+						javelin:StopSound("weapons/throw_swing_03.wav");
+						javelin:EmitSound(javelin.Hit[math.random(1, #javelin.Hit)])
+					end
+				end);
+			
+				return;
+			elseif Ent.iFrames then
+				local phys = self:GetPhysicsObject()
+				
+				self:SetCollisionGroup(COLLISION_GROUP_WORLD);
+				phys:SetVelocity(data.OurOldVelocity);
+				Ent:EmitSound("meleesounds/comboattack3.wav.mp3", 75, math.random( 90, 110 ));
+				
+				return;
+			else
+				self:Disable();
+			
+				timer.Simple(FrameTime(), function()
+					if !IsValid(self) then return end;
+					
+					if Clockwork and !self.Owner.opponent then
+						if self.itemTable then
+							local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
+							 
+							if IsValid(entity) then
+								self.collided = true;
+
+								if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
+									local conditionLoss = self.ConditionLoss or 34;
+									
+									if self.Owner:HasBelief("scour_the_rust") then
+										conditionLoss = conditionLoss * 0.5;
+									end
+									
+									self.itemTable:TakeCondition(conditionLoss);
+								end
 								
-								if blocksoundtable and blocksoundtable["deflectmetal"] then
-									Ent:EmitSound(blocksoundtable["deflectmetal"][math.random(1, #blocksoundtable["deflectmetal"])], 90);
+								entity:Spawn();
+								entity:SetAngles(self:GetAngles());
+								self:StopSound("weapons/throw_swing_03.wav");
+								entity:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
+								Clockwork.entity:Decay(entity, 300);
+								entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
+								
+								local phys = entity:GetPhysicsObject();
+								
+								if (phys:IsValid()) then
+									phys:Wake();
+									phys:SetMass(2);
+									
+									--[[if should_stick then
+										local bone = Ent:GetHitBoxBone(Ent:LastHitGroup(), 0);
+										
+										entity:FollowBone(Ent, bone);
+									end]]--
 								end
-							end
-							
-							Clockwork.chatBox:AddInTargetRadius(Ent, "me", "suddenly catches the projectile mid-flight with their weapon and redirects it, showing impossible skill and grace as it is deflected in the direction of its hurler!", Ent:GetPos(), config.Get("talk_radius"):Get() * 4);
-						else
-							phys:SetVelocity(Ent:GetAimVector() * 50);
-						end
-					
-						if !Ent:GetNetVar("Parry") then
-							javelin:StopSound("weapons/throw_swing_03.wav");
-							javelin:EmitSound(javelin.Hit[math.random(1, #javelin.Hit)])
-						end
-					end);
-				
-					return;
-				elseif Ent.iFrames then
-					local phys = self:GetPhysicsObject()
-					
-					self:SetCollisionGroup(COLLISION_GROUP_WORLD);
-					phys:SetVelocity(data.OurOldVelocity);
-					Ent:EmitSound("meleesounds/comboattack3.wav.mp3", 75, math.random( 90, 110 ));
-					
-					return;
-				else
-					self:Disable();
-				
-					timer.Simple(FrameTime(), function()
-						if !IsValid(self) then return end;
-						
-						if Clockwork and !self.Owner.opponent then
-							if self.itemTable then
-								local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
-								 
-								if IsValid(entity) then
-									self.collided = true;
-
-									if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
-										local conditionLoss = self.ConditionLoss or 34;
-										
-										if self.Owner:HasBelief("scour_the_rust") then
-											conditionLoss = conditionLoss * 0.5;
-										end
-										
-										self.itemTable:TakeCondition(conditionLoss);
-									end
-									
-									entity:Spawn();
-									entity:SetAngles(self:GetAngles());
-									self:StopSound("weapons/throw_swing_03.wav");
-									entity:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
-									Clockwork.entity:Decay(entity, 300);
-									entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
-									
-									local phys = entity:GetPhysicsObject();
-									
-									if (phys:IsValid()) then
-										phys:Wake();
-										phys:SetMass(2);
-										
-										--[[if should_stick then
-											local bone = Ent:GetHitBoxBone(Ent:LastHitGroup(), 0);
-											
-											entity:FollowBone(Ent, bone);
-										end]]--
-									end
-									
-									self:Remove();
-								end
+								
+								self:Remove();
 							end
 						end
-					end);
-					
-					return;
-				end
+					end
+				end);
+				
+				return;
 			end
+		end
 
 			self:SetOwner(nil);
 		end

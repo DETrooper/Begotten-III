@@ -37,6 +37,7 @@ SWEP.Primary.Round = ("begotten_javelin_training_javelin_thrown");
 
 SWEP.ConditionLoss = 2;
 SWEP.isJavelin = true;
+SWEP.BluntAltAttack = true;
 
 function SWEP:AttackAnimination()
 	self.Weapon:SendWeaponAnim(ACT_VM_DRAW)

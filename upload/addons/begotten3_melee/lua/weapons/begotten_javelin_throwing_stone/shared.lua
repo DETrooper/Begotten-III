@@ -13,6 +13,8 @@ SWEP.UseHands = true
 
 SWEP.HoldType = "wos-begotten_javelin_1h"
 SWEP.HoldTypeShield = "wos-begotten_javelin_shield"
+SWEP.HoldTypeAlternate = "wos-begotten_1h"
+SWEP.HoldTypeAlternateShield = "wos-begotten_1h_shield"
 
 SWEP.ViewModel = "models/weapons/cstrike/c_knife_t.mdl"
 SWEP.ViewModelFOV = 80
@@ -33,8 +35,9 @@ SWEP.AttackTable = "ThrowingStoneAttackTable"
 
 SWEP.Primary.Round = ("begotten_javelin_throwing_stone_thrown");
 
-SWEP.ConditionLoss = 0;
+SWEP.ConditionLoss = 10;
 SWEP.isJavelin = true;
+SWEP.BluntAltAttack = true;
 
 function SWEP:AttackAnimination()
 	self.Weapon:SendWeaponAnim(ACT_VM_DRAW)
@@ -71,6 +74,26 @@ function SWEP:HandlePrimaryAttack()
 	end);
 	
 	return false;
+end
+
+function SWEP:HandleThrustAttack()
+	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+	local attacktable = GetTable(self.AttackTable)
+
+	--Attack animation
+	if self:GetNWString("activeShield"):len() > 0 then
+		self:TriggerAnim(self.Owner, "a_sword_shield_attack_chop_slow_01");
+	else
+		self:TriggerAnim(self.Owner, "a_sword_attack_chop_slow_01");
+	end
+
+	-- Viewmodel attack animation!
+	local vm = self.Owner:GetViewModel()
+	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK );
+	self.Owner:GetViewModel():SetPlaybackRate(0.4)
+	
+	self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
+	self.Owner:ViewPunch(attacktable["punchstrength"])
 end
 
 function SWEP:FireJavelin()
@@ -201,13 +224,38 @@ end
 function SWEP:GetHoldtypeOverride()
 	if IsValid(self.Owner) then
 		if self:GetNWString("activeShield"):len() > 0 then
-			self.realHoldType = self.HoldTypeShield;
+			if self.Owner:GetNetVar("ThrustStance") then
+				self.realHoldType = self.HoldTypeAlternateShield;
+			else
+				self.realHoldType = self.HoldTypeShield;
+			end
 		else
-			self.realHoldType = self.HoldType;
+			if self.Owner:GetNetVar("ThrustStance") then
+				self.realHoldType = self.HoldTypeAlternate;
+			else
+				self.realHoldType = self.HoldType;
+			end
 		end
 	end
 
 	return self.realHoldType or self.HoldType;
+end
+
+function SWEP:OnMeleeStanceChanged(stance)
+	self:SetNWString("stance", stance);
+	self.stance = stance;
+
+	if SERVER then
+		self:CallOnClient("OnMeleeStanceChanged", stance);
+	else
+		if self.WElementsAlternate then
+			self:Initialize();
+			
+			return; -- SetHoldType already called in Initialize.
+		end
+	end
+	
+	self:SetHoldType(self:GetHoldtypeOverride());
 end
 
 /*---------------------------------------------------------

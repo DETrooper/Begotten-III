@@ -232,159 +232,144 @@ if SERVER then
 					enemywep = Ent:GetActiveWeapon()
 				end
 				
-				local damage = (self.AttackTable["primarydamage"])
-				local damagetype = (self.AttackTable["dmgtype"])
 				local trace = self.Owner:GetEyeTrace()
+				local hitEntPos = Ent:GetPos();
+				local distance = hitEntPos:DistToSqr(self.cachedStartPos);
+				local stabilityDamage = self.AttackTable["stabilitydamage"];
+				
+				local damagetype = (self.AttackTable["dmgtype"])
+				local minDamage = (self.AttackTable["mimimumdistancedamage"])
+				local maxDamage = (self.AttackTable["maximumdistancedamage"])
+				local maxDistance = 700 * 700
+				
+				if self.itemTable then
+					local condition = self.itemTable:GetCondition();
+					
+					if condition and condition < 100 then
+						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+						minDamage = math.Round(minDamage * Lerp(scalar, 0.5, 1));
+						maxDamage = math.Round(maxDamage * Lerp(scalar, 0.5, 1));
+					end
+				end
+				
+				local clampedDistance = math.min(math.max(distance, 0), maxDistance)
+				local ratio = clampedDistance / maxDistance
+				local variableDamage = minDamage + (maxDamage - minDamage) * ratio
+				
+									
+				damage = variableDamage
+				variableStabilityDamage = stabilityDamage * (variableDamage / 67.5)
 				
 				if Ent:IsNPC() or Ent:IsNextBot() or (Ent:IsPlayer() and !Ent:GetNetVar("Parry") and !Ent:GetNetVar("Deflect")) and !Ent.iFrames then
-					if Ent:IsPlayer() and !Ent:GetNetVar("Guardening") then
-						damage = (self.AttackTable["primarydamage"])
-						damagetype = (self.AttackTable["dmgtype"])
+					if Ent:GetNetVar("Guardening") then
+						if enemywep and enemywep:GetNWString("activeShield"):len() > 0 then
+							if self.SticksInShields then
+								should_stick = true;
+								self.ConditionLoss = 100;
+							end
+							
+							local shieldItem = Ent:GetShieldEquipped();
+
+							if (shieldItem) and !Ent.opponent then
+								if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
+									local conditionLoss = self.ConditionLoss or 34;
+									
+									if self.Owner:HasBelief("scour_the_rust") then
+										conditionLoss = conditionLoss * 0.5;
+									end
+								self.itemTable:TakeCondition(conditionLoss);
+							end
+						end
+					end
+				end
+					
+				if Ent:IsPlayer() then
+					Ent:TakeStability(variableStabilityDamage);
+					self:TriggerAnim4(Ent, "a_shared_hit_0"..math.random(1, 3));
+				end
+				
+				if self.parried then
+					if cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("repulsive_riposte") then
+						damage = damage * 3.5;
 					else
-						if Ent:GetNetVar("Guardening") then
-							if enemywep and enemywep:GetNWString("activeShield"):len() > 0 then
-								if self.SticksInShields then
-									should_stick = true;
-									self.ConditionLoss = 100;
+						damage = damage * 3;
+					end
+				end
+				
+				local blockTable;
+				local shield_reduction = 1;
+				
+				if IsValid(enemywep) then
+					blockTable = GetTable(enemywep:GetNWString("activeShield"));
+				end
+				
+				if blockTable then
+					shield_reduction = blockTable.damagereduction or 1;
+				end
+				
+				local d = DamageInfo()
+				d:SetDamage( damage * shield_reduction )
+				d:SetAttacker(self.Owner)
+				d:SetDamageType( damagetype )
+				d:SetDamagePosition(trace.HitPos)
+				d:SetInflictor(self);
+				
+				if (Ent:IsPlayer()) then
+					d:SetDamageForce( self.Owner:GetForward() * 5000 )
+				end
+
+				Ent:TakeDamageInfo(d)
+				
+				self:Disable();
+				self:SetNWBool("haslandedaxe", true);
+				
+				timer.Simple(FrameTime(), function()
+					if !IsValid(self) then return end;
+					if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
+					
+					if Clockwork and !self.Owner.opponent then
+						if self.itemTable then
+							local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
+							 
+							if IsValid(entity) then
+								self.collided = true;
+								
+								if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
+									local conditionLoss = self.ConditionLoss or 34;
+									
+									if self.Owner:HasBelief("scour_the_rust") then
+										conditionLoss = conditionLoss * 0.5;
+									end
+									
+									self.itemTable:TakeCondition(conditionLoss);
 								end
 								
-								local shieldItem = Ent:GetShieldEquipped();
-
-								if (shieldItem) and !Ent.opponent then
-									if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
-										local conditionLoss = self.ConditionLoss or 34;
+								entity:Spawn();
+								entity:SetAngles(self:GetAngles());
+								self:StopSound("weapons/throw_swing_03.wav");
+								entity:EmitSound(self.FleshHit[math.random(1, #self.FleshHit)], 90);
+								Clockwork.entity:Decay(entity, 300);
+								entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
+								
+								local phys = entity:GetPhysicsObject();
+								
+								if (phys:IsValid()) then
+									phys:Wake();
+									phys:SetMass(2);
+									
+									--[[if should_stick then
+										local bone = Ent:GetHitBoxBone(Ent:LastHitGroup(), 0);
 										
-										if self.Owner:HasBelief("scour_the_rust") then
-											conditionLoss = conditionLoss * 0.5;
-										end
-										
-										self.itemTable:TakeCondition(conditionLoss);
-									end
+										entity:FollowBone(Ent, bone);
+									end]]--
 								end
+								
+								self:Remove();
+								return;
 							end
 						end
 					end
-					
-					local hitEntPos = Ent:GetPos();
-					local distance = hitEntPos:DistToSqr(self.cachedStartPos);
-					local poiseDamage = self.AttackTable["poisedamage"];
-					local stabilityDamage = self.AttackTable["stabilitydamage"];
-
-					if distance < 150 * 150 then
-						--print("tier 1");
-						damage = damage * 0.7;
-						stabilityDamage = stabilityDamage * 0.3;
-					elseif distance >= 150 * 150 and distance < 250 * 250 then
-						--print("tier 2");
-						damage = damage * 0.8;
-						stabilityDamage = stabilityDamage * 0.7;
-					elseif distance >= 250 * 250 and distance < 400 * 400 then
-						--print("tier 3");
-						damage = damage * 1;
-						stabilityDamage = stabilityDamage * 1;
-					elseif distance >= 400 * 400 and distance < 600 * 600 then
-						--print("tier 4");
-						damage = damage * 1.3;
-						stabilityDamage = stabilityDamage * 1.3;
-					elseif distance >= 600 * 600 and distance < 900 * 900 then
-						--print("tier 5");
-						damage = damage * 1.6;
-						stabilityDamage = stabilityDamage * 1.6;
-					else
-						--print("tier 6");
-						damage = damage * 1.9;
-						stabilityDamage = stabilityDamage * 1.9;
-					end
-							
-					if Ent:IsPlayer() then
-						--Ent:TakePoise(poiseDamage);
-						--Ent:TakeStamina(poiseDamage);
-						Ent:TakeStability(stabilityDamage);
-						self:TriggerAnim4(Ent, "a_shared_hit_0"..math.random(1, 3));
-					end
-					
-					if self.parried then
-						if cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("repulsive_riposte") then
-							damage = damage * 3.5;
-						else
-							damage = damage * 3;
-						end
-					end
-					
-					local blockTable;
-					local shield_reduction = 1;
-					
-					if IsValid(enemywep) then
-						blockTable = GetTable(enemywep:GetNWString("activeShield"));
-					end
-					
-					if blockTable then
-						shield_reduction = blockTable.damagereduction or 1;
-					end
-					
-					local d = DamageInfo()
-					d:SetDamage( damage * shield_reduction )
-					d:SetAttacker(self.Owner)
-					d:SetDamageType( damagetype )
-					d:SetDamagePosition(trace.HitPos)
-					d:SetInflictor(self);
-					
-					if (Ent:IsPlayer()) then
-						d:SetDamageForce( self.Owner:GetForward() * 5000 )
-					end
-
-					Ent:TakeDamageInfo(d)
-					
-					self:Disable();
-					self:SetNWBool("haslandedaxe", true);
-					
-					timer.Simple(FrameTime(), function()
-						if !IsValid(self) then return end;
-						if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
-						
-						if Clockwork and !self.Owner.opponent then
-							if self.itemTable then
-								local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
-								 
-								if IsValid(entity) then
-									self.collided = true;
-									
-									if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
-										local conditionLoss = self.ConditionLoss or 34;
-										
-										if self.Owner:HasBelief("scour_the_rust") then
-											conditionLoss = conditionLoss * 0.5;
-										end
-										
-										self.itemTable:TakeCondition(conditionLoss);
-									end
-									
-									entity:Spawn();
-									entity:SetAngles(self:GetAngles());
-									self:StopSound("weapons/throw_swing_03.wav");
-									entity:EmitSound(self.FleshHit[math.random(1, #self.FleshHit)], 90);
-									Clockwork.entity:Decay(entity, 300);
-									entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
-									
-									local phys = entity:GetPhysicsObject();
-									
-									if (phys:IsValid()) then
-										phys:Wake();
-										phys:SetMass(2);
-										
-										--[[if should_stick then
-											local bone = Ent:GetHitBoxBone(Ent:LastHitGroup(), 0);
-											
-											entity:FollowBone(Ent, bone);
-										end]]--
-									end
-									
-									self:Remove();
-									return;
-								end
-							end
-						end
-					end);
+				end);
 				elseif Ent:IsPlayer() and (Ent:GetNetVar("Deflect") or Ent:GetNetVar("Parry")) then
 					self:Disable();
 					self:SetNWBool("haslandedaxe", true);

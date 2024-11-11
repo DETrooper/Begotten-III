@@ -1856,7 +1856,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 				end
 			
-				if weaponStats["attack"].primarydamage then
+				if weaponStats["attack"].primarydamage and !weaponTable.isJavelin then
 					local damage = weaponStats["attack"].primarydamage;
 					local damagetype = weaponStats["attack"].dmgtype;
 					local originalDamage = damage;
@@ -2273,32 +2273,108 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		
 					frame:AddBar(12, {{text = tostring(weaponStats["attack"].takeammo).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Attack Cost", Color(110, 30, 30), toolTip, true);
 				end
-			
+				
 				if weaponStats["attack"].armorpiercing then
-					local percentage = math.min(weaponStats["attack"].armorpiercing / 100, 100);
-					local toolTip = function(frame)
-						frame:AddText("Armor-Piercing Damage", Color(110, 30, 30), nil, 1);
-						frame:AddText("Armor piercing damage reflects your weapon's ability to pierce the armor of your foes. Higher values mean that less of your weapon's primary damage will be negated by their armor. For javelins, this can scale by distance; targets further away will take more damage.", Color(225, 200, 200), nil, 0.8);
-					end
-		
-					frame:AddBar(12, {{text = tostring(weaponStats["attack"].armorpiercing), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor-Piercing Damage", Color(110, 30, 30), toolTip, true);
-				end
+					local armorpiercing = weaponStats["attack"].armorpiercing;
+					local damagetype = weaponStats["attack"].dmgtype;
+					local originalAP = armorpiercing;
+					
+					if armorpiercing then
+						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+					
+						if damagetype == DMG_CLUB then
+							armorpiercing = math.Round(armorpiercing * Lerp(scalar, 0.7, 1));
+						else
+							armorpiercing = math.Round(armorpiercing * Lerp(scalar, 0.5, 1));
+						end
+					
+						local percentage = math.min(armorpiercing / 100, 100);
+						local toolTip = function(frame)
+							frame:AddText("Armor-Piercing Damage", Color(110, 30, 30), nil, 1);
+							frame:AddText("Armor piercing damage reflects your weapon's ability to pierce the armor of your foes. Higher values mean that less of your weapon's primary damage will be negated by their armor. For javelins, this applies to both the projectile and melee stance damage. However, condition loss will only affect melee damage.", Color(225, 200, 200), nil, 0.8);
+						end
 			
-				if weaponStats["attack"].primarydamage then
-					local percentage = math.min(weaponStats["attack"].primarydamage / 100, 100);
-					local toolTip = function(frame)
-						frame:AddText("Primary Damage", Color(110, 30, 30), nil, 1);
-						frame:AddText("The damage to your foe's health that your weapon does. Can be negated by armor proportional to your weapon's armor-piercing damage value. For javelins, this can scale by distance; targets further away will take more damage.", Color(225, 200, 200), nil, 0.8);
+						if armorpiercing < originalAP then
+							frame:AddBar(12, {{text = tostring(armorpiercing).." / "..tostring(originalAP), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor-Piercing Damage", Color(110, 30, 30), toolTip, true);
+						else
+							frame:AddBar(12, {{text = tostring(armorpiercing), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Armor-Piercing Damage", Color(110, 30, 30), toolTip, true);
+						end
 					end
-		
-					frame:AddBar(12, {{text = tostring(weaponStats["attack"].primarydamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Primary Damage", Color(110, 30, 30), toolTip, true);
+				end
+				
+				if weaponStats["attack"].mimimumdistancedamage then
+					local damagetype = weaponStats["attack"].dmgtype;
+					local mimimumdistancedamage = weaponStats["attack"].mimimumdistancedamage;
+					local originalDamage = mimimumdistancedamage;
+					
+					if mimimumdistancedamage then
+						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+					
+						if damagetype == DMG_CLUB then
+							mimimumdistancedamage = math.Round(mimimumdistancedamage * Lerp(scalar, 0.75, 1));
+						elseif damagetype == DMG_SLASH then
+							mimimumdistancedamage = math.Round(mimimumdistancedamage * Lerp(scalar, 0.4, 1));
+						else
+							mimimumdistancedamage = math.Round(mimimumdistancedamage * Lerp(scalar, 0.5, 1));
+						end
+
+						local percentage = math.min(mimimumdistancedamage / 200, 200);
+						local toolTip = function(frame)
+							frame:AddText("Minimum Projectile Damage", Color(110, 30, 30), nil, 1);
+							frame:AddText("The minimum amount of damage your projectile can deal. This would be dealt with a point-blank hit, and would gradually increase the further away the target is.", Color(225, 200, 200), nil, 0.8);
+						end
+			
+						if mimimumdistancedamage < originalDamage then
+							frame:AddBar(12, {{text = tostring(mimimumdistancedamage).." / "..tostring(originalDamage).." (Point-Blank)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Minimum Projectile Damage", Color(110, 30, 30), toolTip, true);
+						else
+							frame:AddBar(12, {{text = tostring(mimimumdistancedamage).." (Point-Blank)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Minimum Projectile Damage", Color(110, 30, 30), toolTip, true);
+						end
+					end
+				end
+				
+				if weaponStats["attack"].maximumdistancedamage then
+					local damagetype = weaponStats["attack"].dmgtype;
+					local maximumdistancedamage = weaponStats["attack"].maximumdistancedamage;
+					local originalDamage = maximumdistancedamage;
+					
+					if maximumdistancedamage then
+						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+					
+						if damagetype == DMG_CLUB then
+							maximumdistancedamage = math.Round(maximumdistancedamage * Lerp(scalar, 0.75, 1));
+						elseif damagetype == DMG_SLASH then
+							maximumdistancedamage = math.Round(maximumdistancedamage * Lerp(scalar, 0.4, 1));
+						else
+							maximumdistancedamage = math.Round(maximumdistancedamage * Lerp(scalar, 0.5, 1));
+						end
+
+						local percentage = math.min(maximumdistancedamage / 200, 200);
+						local toolTip = function(frame)
+							frame:AddText("Maximum Projectile Damage", Color(110, 30, 30), nil, 1);
+							frame:AddText("The maximum amount of damage your projectile can deal. The maximum distance can be reached at about 40 feet from your target, and any distance beyond that will grant no additional damage.", Color(225, 200, 200), nil, 0.8);
+						end
+			
+						if maximumdistancedamage < originalDamage then
+							if string.find(weaponClass, "begotten_javelin_throwing_axe") or string.find(weaponClass, "begotten_javelin_throwing_dagger") then
+									frame:AddBar(12, {{text = tostring(maximumdistancedamage).." / "..tostring(originalDamage).." (At 30 Feet)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Maximum Projectile Damage", Color(110, 30, 30), toolTip, true);
+								else
+									frame:AddBar(12, {{text = tostring(maximumdistancedamage).." / "..tostring(originalDamage).." (At 40 Feet)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Maximum Projectile Damage", Color(110, 30, 30), toolTip, true);
+								end
+						else
+							if string.find(weaponClass, "begotten_javelin_throwing_axe") or string.find(weaponClass, "begotten_javelin_throwing_dagger") then
+								frame:AddBar(12, {{text = tostring(maximumdistancedamage).." (At 30 Feet)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Maximum Projectile Damage", Color(110, 30, 30), toolTip, true);
+							else
+								frame:AddBar(12, {{text = tostring(maximumdistancedamage).." (At 40 Feet)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Maximum Projectile Damage", Color(110, 30, 30), toolTip, true);
+							end
+						end
+					end
 				end
 				
 				if weaponStats["attack"].stabilitydamage then
 					local percentage = math.min(weaponStats["attack"].stabilitydamage / 100, 100);
 					local toolTip = function(frame)
 						frame:AddText("Stability Damage", Color(110, 30, 30), nil, 1);
-						frame:AddText("The damage to your foe's stability that your weapon does. Dealing enough will temporarily knock your foe to the ground. Can be negated by enemy armor. For javelins, this can scale by distance; targets further away will take more damage.", Color(225, 200, 200), nil, 0.8);
+						frame:AddText("The damage to your foe's stability that your weapon does. Dealing enough will temporarily knock your foe to the ground. Can be negated by enemy armor. For javelins, this scales by distance; targets further away will take considerably more stability damage, and targets up close will take considerably less stability damage. At maximum range, the projectile will deal double this stability damage.", Color(225, 200, 200), nil, 0.8);
 					end
 		
 					frame:AddBar(12, {{text = tostring(weaponStats["attack"].stabilitydamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage", Color(110, 30, 30), toolTip, true);
@@ -2308,7 +2384,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					local percentage = math.min(weaponStats["attack"].poisedamage / 100, 100);
 					local toolTip = function(frame)
 						frame:AddText("Stamina Damage", Color(110, 30, 30), nil, 1);
-						frame:AddText("The damage to your foe's stamina that your weapon does. Dealing stamina damage will reduce an enemy's staying power in a fight or their ability to flee. Can be negated by enemy shields. For javelins, this can scale by distance; targets further away will take more damage.", Color(225, 200, 200), nil, 0.8);
+						frame:AddText("The damage to your foe's stamina that your weapon does. Dealing stamina damage will reduce an enemy's staying power in a fight or their ability to flee. Can be negated by enemy shields.", Color(225, 200, 200), nil, 0.8);
 					end
 		
 					frame:AddBar(12, {{text = tostring(weaponStats["attack"].poisedamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stamina Damage", Color(110, 30, 30), toolTip, true);
@@ -2326,6 +2402,36 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			
 						frame:AddBar(12, {{text = tostring(weaponStats["attack"].alttakeammo).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Cost", Color(110, 30, 30), toolTip, true);
 					end
+					
+				if weaponStats["attack"].primarydamage then -- Uses the "primarydamage" value but only applies to the melee attack of throwable weapons
+					local damage = weaponStats["attack"].primarydamage;
+					local damagetype = weaponStats["attack"].dmgtype;
+					local originalDamage = damage;
+					
+					if damage then
+						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+					
+						if damagetype == DMG_CLUB then
+							damage = math.Round(damage * Lerp(scalar, 0.75, 1));
+						elseif damagetype == DMG_SLASH then
+							damage = math.Round(damage * Lerp(scalar, 0.4, 1));
+						else
+							damage = math.Round(damage * Lerp(scalar, 0.5, 1));
+						end
+
+						local percentage = math.min(damage / 100, 100);
+						local toolTip = function(frame)
+							frame:AddText("Alternate Attack Damage", Color(110, 30, 30), nil, 1);
+							frame:AddText("The damage to your foe's health that your melee attack does. Can be negated by armor proportional to your weapon's armor-piercing damage value.", Color(225, 200, 200), nil, 0.8);
+						end
+			
+						if damage < originalDamage then
+							frame:AddBar(12, {{text = tostring(damage).." / "..tostring(originalDamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Damage", Color(110, 30, 30), toolTip, true);
+						else
+							frame:AddBar(12, {{text = tostring(damage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Damage", Color(110, 30, 30), toolTip, true);
+						end
+					end
+				end
 					
 					if weaponStats["attack"].altarmorpiercing then
 						local armorpiercing = weaponStats["attack"].altarmorpiercing;
@@ -2395,7 +2501,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						end
 					end
 					
-					if weaponStats["attack"].stabilitydamage and weaponStats["attack"].altattackstabilitydamagemodifier then
+					if weaponStats["attack"].stabilitydamage and weaponStats["attack"].altattackstabilitydamagemodifier and weaponStats["attack"].altattackstabilitydamagemodifier != 0 then
 						local percentage = math.min((weaponStats["attack"].stabilitydamage / 100) * weaponStats["attack"].altattackstabilitydamagemodifier, 100);
 						local toolTip = function(frame)
 							frame:AddText("Alternate Attack Stability Damage", Color(110, 30, 30), nil, 1);

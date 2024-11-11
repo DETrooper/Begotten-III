@@ -80,6 +80,7 @@ SWEP.DefaultRecoil = 1
 SWEP.IgniteTime = 5; -- For fire weapons
 SWEP.FreezeTime = 5; -- For ice weapons
 SWEP.CanSwipeAttack = false;
+SWEP.BluntAltAttack = false;
 SWEP.IsBellHammer = false;
  
 SWEP.Secondary.ClipSize		= -1;
@@ -1157,6 +1158,15 @@ end
 							
 							if hit:IsPlayer() then
 								hit:TakeStability((stabilitydamage) * shield_reduction * hit_reduction);
+							end
+						end
+					end
+				elseif weapon.BluntAltAttack == true then
+					damagetype = 128
+					if hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then							
+							if hit:IsPlayer() then
+								hit:TakeStability((stabilitydamage * 0.5) * shield_reduction * hit_reduction);
 							end
 						end
 					end
