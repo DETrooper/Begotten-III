@@ -118,6 +118,19 @@ function Clockwork.setting:AddColorMixer(category, text, conVar, toolTip, Condit
 	return index
 end
 
+-- A function to add a panel with custom functionality.
+function Clockwork.setting:AddCustomPanel(category, text, class)
+	local index = text
+
+	self.stored[index] = {
+		category = category,
+		class = class,
+		text = text
+	}
+
+	return index
+end
+
 -- A function to remove a setting by its index.
 function Clockwork.setting:RemoveByIndex(index)
 	self.stored[index] = nil

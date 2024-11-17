@@ -1198,6 +1198,10 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						end
 					end
 				end
+			elseif entity:IsNextBot() or entity:IsNPC() then
+				if attacker:HasBelief("fearsome_wolf") then
+					newDamage = newDamage + (originalDamage * 0.2);
+				end
 			end
 			
 			if attacker:HasBelief("thirst_blood_moon") then
@@ -1346,8 +1350,6 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 					end
 				end
 			end
-		elseif entity:IsNPC() then
-			attacker:HandleXP(math.min(damage, entity:Health()) * (self.xpValues["damage"] * 4));
 		end
 	end
 	

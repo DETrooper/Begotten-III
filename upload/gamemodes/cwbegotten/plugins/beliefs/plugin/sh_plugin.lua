@@ -1135,7 +1135,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 							end);
 						end
 						
-						if v:GetFaith() ~= faith then
+						--if v:GetFaith() ~= faith then
 							-- Kinisgers can twisted warcry if disguised as a Reaver.
 							if faith == "Faith of the Dark" then
 								if faction == "Goreic Warrior" and vFaction == "Goreic Warrior" then
@@ -1228,6 +1228,14 @@ local COMMAND = Clockwork.command:New("Warcry");
 								
 								hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true)
 							end
+						--end
+					elseif v:IsNPC() or v:IsNextBot() then
+						if player_has_fearsome_wolf then
+							if not player.warCryVictims then
+								player.warCryVictims = {};
+							end
+							
+							table.insert(player.warCryVictims, v);
 						end
 					end
 				end

@@ -155,6 +155,14 @@ function PANEL:Rebuild()
 				elseif (v2.class == "checkBox") then
 					panel = form:CheckBox(v2.text, v2.conVar);
 					panel:SetFont("begotsettingsfont2")
+				else
+					local classPanel = vgui.Create(v2.class);
+					
+					if classPanel then
+						hook.Run("SetupSettingsCustomPanel", v.category, v2.text, classPanel);
+					
+						panel = form:AddItem(classPanel);
+					end
 				end;
 				
 				if (IsValid(panel)) then

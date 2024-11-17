@@ -308,7 +308,7 @@ netstream.Hook("UpgradedWarcry", function(data)
 	
 	for _, v in _player.Iterator() do
 		if v ~= Clockwork.Client and (v:HasInitialized()) then
-			if v:GetNetVar("faith") ~= faith then
+			--if v:GetNetVar("faith") ~= faith then
 				local vFaction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 				
 				if faction == "Wanderer" or vFaction ~= faction then
@@ -316,11 +316,11 @@ netstream.Hook("UpgradedWarcry", function(data)
 						v.warcryTarget = true;
 					end;
 				end
-			end
+			--end
 		end;
 	end;
 	
-	if cwBeliefs:HasBelief("fearsome_wolf") then
+	--[[if cwBeliefs:HasBelief("fearsome_wolf") then
 		if timer.Exists("warcryTimer") then
 			timer.Remove("warcryTimer");
 		end
@@ -332,7 +332,7 @@ netstream.Hook("UpgradedWarcry", function(data)
 				v.warcryTarget = false;
 			end;
 		end);
-	else
+	else]]
 		if cwBeliefs:HasBelief("daring_trout") then
 			cwBeliefs.trout = true;
 		end
@@ -352,5 +352,5 @@ netstream.Hook("UpgradedWarcry", function(data)
 				v.warcryTarget = false;
 			end;
 		end);
-	end
+	--end
 end);

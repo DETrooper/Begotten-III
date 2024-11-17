@@ -10,91 +10,92 @@ Clockwork.ConVars.MENUMUSIC = Clockwork.kernel:CreateClientConVar("cwMenuMusic",
 Clockwork.ConVars.MENUMUSICVOLUME = Clockwork.kernel:CreateClientConVar("cwMenuMusicVolume", 100, true, true)
 
 cwMusic.AmbientMusicTable = {
-	["tower"] = { -- ambient music for the tower of light
-		{track = "begotten3soundtrack/ambiencetower/acclb-preparethestageofnight.mp3", length = 265},
-		{track = "begotten3soundtrack/ambiencetower/ackh-intheblackstone.mp3", length = 264},
-		{track = "begotten3soundtrack/ambiencetower/ac-thedarkmother.mp3", length = 281},
-		{track = "begotten3soundtrack/ambiencetower/ac-them.mp3", length = 306},
-		{track = "begotten3soundtrack/ambiencetower/ac-thevoid.mp3", length = 276, volume = 0.5},
-		{track = "begotten3soundtrack/ambiencetower/ct-wecannotescapethepast.mp3", length = 276, volume = 0.5},
-		{track = "begotten3soundtrack/ambiencetower/clb-conduct-edited.mp3", length = 242},
-		{track = "begotten3soundtrack/ambiencetower/clb-disembodied.mp3", length = 281},
-		{track = "begotten3soundtrack/ambiencetower/clb-eachnight.mp3", length = 411},
-		{track = "begotten3soundtrack/ambiencetower/mo-apostolikon.mp3", length = 585},
-		{track = "begotten3soundtrack/ambiencetower/mo-chaliceofeternity.mp3", length = 574},
-		{track = "begotten3soundtrack/ambiencetower/mo-illuminatio.mp3", length = 471},
-		{track = "begotten3soundtrack/ambiencetower/mo-logos.mp3", length = 354},
-		{track = "begotten3soundtrack/ambiencetower/mo-transfiguration-edited.mp3", length = 261},
+	["Tower of Light Ambience"] = { -- ambient music for the tower of light
+		{name = "Atrium Carceri & Cities Last Broadcast - Prepare the Stage of Night", track = "begotten3soundtrack/ambiencetower/acclb-preparethestageofnight.mp3", length = 265},
+		{name = "Atrium Carceri & Kammarheit - In the Black Stone", track = "begotten3soundtrack/ambiencetower/ackh-intheblackstone.mp3", length = 264},
+		{name = "Atrium Carceri - The Dark Mother", track = "begotten3soundtrack/ambiencetower/ac-thedarkmother.mp3", length = 281},
+		{name = "Atrium Carceri - Them", track = "begotten3soundtrack/ambiencetower/ac-them.mp3", length = 306},
+		{name = "Atrium Carceri - The Void", track = "begotten3soundtrack/ambiencetower/ac-thevoid.mp3", length = 276, volume = 0.5},
+		{name = "Cities Last Broadcast - Conduct", track = "begotten3soundtrack/ambiencetower/clb-conduct-edited.mp3", length = 242},
+		{name = "Cities Last Broadcast - Disembodied", track = "begotten3soundtrack/ambiencetower/clb-disembodied.mp3", length = 281},
+		{name = "Cities Last Broadcast - Each Night", track = "begotten3soundtrack/ambiencetower/clb-eachnight.mp3", length = 411},
+		{name = "Metatron Omega - Apostolikon", track = "begotten3soundtrack/ambiencetower/mo-apostolikon.mp3", length = 585},
+		{name = "Metatron Omega - Chalice of Eternity", track = "begotten3soundtrack/ambiencetower/mo-chaliceofeternity.mp3", length = 574},
+		{name = "Metatron Omega - Illuminatio", track = "begotten3soundtrack/ambiencetower/mo-illuminatio.mp3", length = 471},
+		{name = "Metatron Omega - Logos", track = "begotten3soundtrack/ambiencetower/mo-logos.mp3", length = 354},
+		{name = "Metatron Omega - Transfiguration", track = "begotten3soundtrack/ambiencetower/mo-transfiguration-edited.mp3", length = 261},
+		{name = "The Caretaker - We Cannot Escape The Past", track = "begotten3soundtrack/ambiencetower/ct-wecannotescapethepast.mp3", length = 124, volume = 0.5},
 	},
-	["wasteland"] = { -- ambient music for the wasteland
-		{track = "begotten3soundtrack/ambiencewasteland/acclb-thegreatorderofthings.mp3", length = 289},
-		{track = "begotten3soundtrack/ambiencewasteland/co9-fragmentsofmyself.mp3", length = 458},
-		{track = "begotten3soundtrack/ambiencewasteland/co9-inolongerhearyou.mp3", length = 381},
-		{track = "begotten3soundtrack/ambiencewasteland/clb-antumbra.mp3", length = 425},
-		{track = "begotten3soundtrack/ambiencewasteland/clb-wherevertheheartgoes.mp3", length = 414},
-		{track = "begotten3soundtrack/ambiencewasteland/mo-consecration.mp3", length = 428},
-		{track = "begotten3soundtrack/ambiencewasteland/mo-ecclesiauniversalis.mp3", length = 607},
-		{track = "begotten3soundtrack/ambiencewasteland/mo-heosphoros.mp3", length = 493},
-		{track = "begotten3soundtrack/ambiencewasteland/mo-hierosgamos.mp3", length = 543},
-		{track = "begotten3soundtrack/ambiencewasteland/mo-mysteriisdesanguine.mp3", length = 506},
-		{track = "begotten3soundtrack/ambiencewasteland/mo-sacrumnoctis.mp3", length = 556, volume = 0.75},
-		{track = "begotten3soundtrack/ambiencewasteland/mo-thylight.mp3", length = 570},
-		{track = "begotten3soundtrack/ambiencewasteland/ss-transference.mp3", length = 332},
+	["Wasteland Ambience"] = { -- ambient music for the wasteland
+		{name = "Atrium Carceri & Cities Last Broadcast - The Great Order of Things", track = "begotten3soundtrack/ambiencewasteland/acclb-thegreatorderofthings.mp3", length = 289},
+		{name = "Council of Nine - Fragments of Myself", track = "begotten3soundtrack/ambiencewasteland/co9-fragmentsofmyself.mp3", length = 458},
+		{name = "Council of Nine - I No Longer Hear You", track = "begotten3soundtrack/ambiencewasteland/co9-inolongerhearyou.mp3", length = 381},
+		{name = "Cities Last Broadcast - Antumbra", track = "begotten3soundtrack/ambiencewasteland/clb-antumbra.mp3", length = 425},
+		{name = "Cities Last Broadcast - Wherever the Heart Goes", track = "begotten3soundtrack/ambiencewasteland/clb-wherevertheheartgoes.mp3", length = 414},
+		{name = "Metatron Omega - Apostolikon", track = "begotten3soundtrack/ambiencewasteland/mo-consecration.mp3", length = 428},
+		{name = "Metatron Omega - Ecclesia Universalis", track = "begotten3soundtrack/ambiencewasteland/mo-ecclesiauniversalis.mp3", length = 607},
+		{name = "Metatron Omega - Heosphoros", track = "begotten3soundtrack/ambiencewasteland/mo-heosphoros.mp3", length = 493},
+		{name = "Metatron Omega - Hierosgamos", track = "begotten3soundtrack/ambiencewasteland/mo-hierosgamos.mp3", length = 543},
+		{name = "Metatron Omega - Mysteriis De Sanguine", track = "begotten3soundtrack/ambiencewasteland/mo-mysteriisdesanguine.mp3", length = 506},
+		{name = "Metatron Omega - Sacrum Noctis", track = "begotten3soundtrack/ambiencewasteland/mo-sacrumnoctis.mp3", length = 556, volume = 0.75},
+		{name = "Metatron Omega - Thy Light", track = "begotten3soundtrack/ambiencewasteland/mo-thylight.mp3", length = 570},
+		{name = "Sphäre Sechs - Transference", track = "begotten3soundtrack/ambiencewasteland/ss-transference.mp3", length = 332},
 	},
-	["wastelandnight"] = { -- ambient music for the wasteland (night)
-		{track = "begotten3soundtrack/ambiencenight/dw-untitled3.mp3", length = 128, volume = 0.75},
-		{track = "begotten3soundtrack/ambiencenight/dw-dream.mp3", length = 317, volume = 0.75},
-		{track = "begotten3soundtrack/ambiencenight/ss-thecastleanomaly.mp3", length = 612},
-		{track = "begotten3soundtrack/ambiencenight/ss-aristarchusplateau.mp3", length = 546},
-		{track = "begotten3soundtrack/ambiencenight/as-throughthedesert.mp3", length = 391},
-		{track = "begotten3soundtrack/ambiencenight/ns-blackmoonpt2.mp3", length = 253},
-		{track = "begotten3soundtrack/ambiencenight/ns-blackmoonpt1.mp3", length = 369},
-		{track = "begotten3soundtrack/ambiencenight/pa-frozencaveofwhispers.mp3", length = 696, volume = 0.75},
+	["Wasteland Nighttime Ambience"] = { -- ambient music for the wasteland (night)
+		{name = "Ager Sonus - Through the Desert", track = "begotten3soundtrack/ambiencenight/as-throughthedesert.mp3", length = 391},
+		{name = "Darkwood OST - Untitled 3", track = "begotten3soundtrack/ambiencenight/dw-untitled3.mp3", length = 128, volume = 0.75},
+		{name = "Darkwood OST - Dream", track = "begotten3soundtrack/ambiencenight/dw-dream.mp3", length = 317, volume = 0.75},
+		{name = "Psionic Asylum - Frozen Cave of Whispers", track = "begotten3soundtrack/ambiencenight/pa-frozencaveofwhispers.mp3", length = 696, volume = 0.75},
+		{name = "Sphäre Sechs - The Castle Anomaly", track = "begotten3soundtrack/ambiencenight/ss-thecastleanomaly.mp3", length = 612},
+		{name = "Sphäre Sechs - Aristarchus Plateau", track = "begotten3soundtrack/ambiencenight/ss-aristarchusplateau.mp3", length = 546},
+		{name = "Sphäre Sechs - Black Moon (Part 1)", track = "begotten3soundtrack/ambiencenight/ns-blackmoonpt1.mp3", length = 369},
+		{name = "Sphäre Sechs - Black Moon (Part 2)", track = "begotten3soundtrack/ambiencenight/ns-blackmoonpt2.mp3", length = 253},
 	},
-	["goericforest"] = { -- ambient music for the goeric forest
-		{track = "begotten3soundtrack/ambiencegoeric/hb_surtrsart.mp3", length = 141},
-		{track = "begotten3soundtrack/ambiencegoeric/hb-surtrbacktrack.mp3", length = 61},
-		{track = "begotten3soundtrack/ambiencegoeric/hb-surtrintro.mp3", length = 81},
-		{track = "begotten3soundtrack/ambiencegoeric/hb-valravnbacktracking.mp3", length = 266},
-		{track = "begotten3soundtrack/ambiencegoeric/hb-volcano.mp3", length = 444},
-		{track = "begotten3soundtrack/ambiencegoeric/nu-torngat.mp3", length = 500, volume = 0.75},
-		{track = "begotten3soundtrack/ambiencegoeric/pw-permafrost.mp3", length = 250},
-		{track = "begotten3soundtrack/ambiencegoeric/twa-barb503423011.mp3", length = 129},
-		{track = "begotten3soundtrack/ambiencegoeric/twa-menofthesea.mp3", length = 114, volume = 0.75},
-		{track = "begotten3soundtrack/ambiencegoeric/twa-wintersbard.mp3", length = 116, volume = 0.75},
+	["Goreic Forest Ambience"] = { -- ambient music for the goeric forest
+		{name = "Hellblade OST - Surtr Start", track = "begotten3soundtrack/ambiencegoeric/hb_surtrsart.mp3", length = 141},
+		{name = "Hellblade OST - Surtr Backtrack", track = "begotten3soundtrack/ambiencegoeric/hb-surtrbacktrack.mp3", length = 61},
+		{name = "Hellblade OST - Surtr Intro", track = "begotten3soundtrack/ambiencegoeric/hb-surtrintro.mp3", length = 81},
+		{name = "Hellblade OST - Valravn Backtracking", track = "begotten3soundtrack/ambiencegoeric/hb-valravnbacktracking.mp3", length = 266},
+		{name = "Hellblade OST - Volcano", track = "begotten3soundtrack/ambiencegoeric/hb-volcano.mp3", length = 444},
+		{name = "Northumbria - Torngat", track = "begotten3soundtrack/ambiencegoeric/nu-torngat.mp3", length = 500, volume = 0.75},
+		{name = "Paleowolf - Permafrost", track = "begotten3soundtrack/ambiencegoeric/pw-permafrost.mp3", length = 250},
+		{name = "Total War: ATTILA - Barbarian Ambient", track = "begotten3soundtrack/ambiencegoeric/twa-barb503423011.mp3", length = 129},
+		{name = "Total War: ATTILA - Barbarian Ambient 2", track = "begotten3soundtrack/ambiencegoeric/twa-menofthesea.mp3", length = 114, volume = 0.75},
+		{name = "Total War: ATTILA - Barbarian Ambient 3", track = "begotten3soundtrack/ambiencegoeric/twa-wintersbard.mp3", length = 116, volume = 0.75},
 	},
-	["insanity"] = { -- ambient music for insane players
-		{track = "begotten3soundtrack/insanity/scorntrailertheme.mp3", length = 97},
-	},
+	--[[["Insanity Ambience"] = {
+		{name = "Scorn - Trailer Theme", track = "begotten3soundtrack/insanity/scorntrailertheme.mp3", length = 97},
+	},]]
 }
+
 cwMusic.BattleMusicTable = {
-	["combat"] = { -- combat music for regular players/wanderers
-		{track = "begotten3soundtrack/combat/bt-afterlife.mp3", length = 265},
-		{track = "begotten3soundtrack/combat/bt-allthatremains.mp3", length = 211},
-		{track = "begotten3soundtrack/combat/bt-attackintheaftermath.mp3", length = 141},
-		{track = "begotten3soundtrack/combat/bt-blindtodefeat.mp3", length = 128},
-		{track = "begotten3soundtrack/combat/bt-challengeforpower.mp3", length = 219},
-		{track = "begotten3soundtrack/combat/bt-concessionofpain.mp3", length = 178},
-		{track = "begotten3soundtrack/combat/bt-crownoflife.mp3", length = 250},
-		{track = "begotten3soundtrack/combat/bt-denialofdestiny.mp3", length = 151},
-		{track = "begotten3soundtrack/combat/bt-drownedintorment.mp3", length = 125},
-		{track = "begotten3soundtrack/combat/bt-eternalwar.mp3", length = 128},
-		{track = "begotten3soundtrack/combat/bt-icon.mp3", length = 165},
-		{track = "begotten3soundtrack/combat/bt-lostsoulsdomain.mp3", length = 225},
-		{track = "begotten3soundtrack/combat/bt-nuclearannihilation.mp3", length = 172},
-		{track = "begotten3soundtrack/combat/bt-plaguebearer.mp3", length = 175},
-		{track = "begotten3soundtrack/combat/bt-prophetofhatred.mp3", length = 209},
-		{track = "begotten3soundtrack/combat/bt-psychologicalwarfare.mp3", length = 117},
-		{track = "begotten3soundtrack/combat/bt-warmaster.mp3", length = 190},
-		{track = "begotten3soundtrack/combat/bt-whatdwellswithin.mp3", length = 174},
+	["Wasteland Combat"] = { -- combat music for regular players/wanderers
+		{name = "Bolt Thrower - Afterlife", track = "begotten3soundtrack/combat/bt-afterlife.mp3", length = 265},
+		{name = "Bolt Thrower - All That Remains", track = "begotten3soundtrack/combat/bt-allthatremains.mp3", length = 211},
+		{name = "Bolt Thrower - Attack in the Aftermath", track = "begotten3soundtrack/combat/bt-attackintheaftermath.mp3", length = 141},
+		{name = "Bolt Thrower - Blind to Defeat", track = "begotten3soundtrack/combat/bt-blindtodefeat.mp3", length = 128},
+		{name = "Bolt Thrower - Challenge For Power", track = "begotten3soundtrack/combat/bt-challengeforpower.mp3", length = 219},
+		{name = "Bolt Thrower - Concession of Pain", track = "begotten3soundtrack/combat/bt-concessionofpain.mp3", length = 178},
+		{name = "Bolt Thrower - Crown of Life", track = "begotten3soundtrack/combat/bt-crownoflife.mp3", length = 250},
+		{name = "Bolt Thrower - Denial of Destiny", track = "begotten3soundtrack/combat/bt-denialofdestiny.mp3", length = 151},
+		{name = "Bolt Thrower - Drowned in Torment", track = "begotten3soundtrack/combat/bt-drownedintorment.mp3", length = 125},
+		{name = "Bolt Thrower - Eternal War", track = "begotten3soundtrack/combat/bt-eternalwar.mp3", length = 128},
+		{name = "Bolt Thrower - Icon", track = "begotten3soundtrack/combat/bt-icon.mp3", length = 165},
+		{name = "Bolt Thrower - Lost Souls Domain", track = "begotten3soundtrack/combat/bt-lostsoulsdomain.mp3", length = 225},
+		{name = "Bolt Thrower - Nuclear Annihilation", track = "begotten3soundtrack/combat/bt-nuclearannihilation.mp3", length = 172},
+		{name = "Bolt Thrower - Plague Bearer", track = "begotten3soundtrack/combat/bt-plaguebearer.mp3", length = 175},
+		{name = "Bolt Thrower - Prophet of Hatred", track = "begotten3soundtrack/combat/bt-prophetofhatred.mp3", length = 209},
+		{name = "Bolt Thrower - Psychological Warfare", track = "begotten3soundtrack/combat/bt-psychologicalwarfare.mp3", length = 117},
+		{name = "Bolt Thrower - War Master", track = "begotten3soundtrack/combat/bt-warmaster.mp3", length = 190},
+		{name = "Bolt Thrower - What Dwells Within", track = "begotten3soundtrack/combat/bt-whatdwellswithin.mp3", length = 174},
 	},
-	["combat_goeric"] = { -- combat music for gores
-		{track = "begotten3soundtrack/combatgoeric/hb-bridgecombatthird.mp3", length = 136},
-		{track = "begotten3soundtrack/combatgoeric/hb-combatvalravnbalcony.mp3", length = 86},
-		{track = "begotten3soundtrack/combatgoeric/hb-seaofcorpsescombat.mp3", length = 165},
-		{track = "begotten3soundtrack/combatgoeric/hb-surtrfight2.mp3", length = 194},
-		{track = "begotten3soundtrack/combatgoeric/hb-valravnbattle1.mp3", length = 93},
-		{track = "begotten3soundtrack/combatgoeric/hb-volcanofightfinal.mp3", length = 182},
+	["Gore Forest Combat"] = { -- combat music for gores
+		{name = "Hellblade OST - Bridge Combat Third", track = "begotten3soundtrack/combatgoeric/hb-bridgecombatthird.mp3", length = 136},
+		{name = "Hellblade OST - Combat Valravn Balcony", track = "begotten3soundtrack/combatgoeric/hb-combatvalravnbalcony.mp3", length = 86},
+		{name = "Hellblade OST - Sea of Corpses Combat", track = "begotten3soundtrack/combatgoeric/hb-seaofcorpsescombat.mp3", length = 165},
+		{name = "Hellblade OST - Surtr Fight 2", track = "begotten3soundtrack/combatgoeric/hb-surtrfight2.mp3", length = 194},
+		{name = "Hellblade OST - Valravn Battle 1", track = "begotten3soundtrack/combatgoeric/hb-valravnbattle1.mp3", length = 93},
+		{name = "Hellblade OST - Volcano Fight Final", track = "begotten3soundtrack/combatgoeric/hb-volcanofightfinal.mp3", length = 182},
 	},
 }
 
@@ -227,41 +228,37 @@ function cwMusic:Tick()
 	end
 end
 
-function cwMusic:StartAmbientMusic()
-	if hook.Run("CanPlayAmbientMusic") == false then
+function cwMusic:StartAmbientMusic(bForce, trackOverride)
+	if !bForce and hook.Run("CanPlayAmbientMusic") == false then
 		return
 	end
 	
 	local curTime = CurTime()
 	
-	if (!cwMusic.NextAmbientCall or curTime > cwMusic.NextAmbientCall) then
-		cwMusic.NextAmbientCall = curTime + 0.5
-	else
-		return
-	end
-
-	if (!cwMusic.AmbientMusic) then
-		local trackType = "wasteland"
-		local zone = Clockwork.Client:GetZone();
-		
-		if zone == "wasteland" and Clockwork.Client.currentCycle == "night" then
-			trackType = "wastelandnight";
-		elseif zone == "tower" and game.GetMap() ~= "rp_scraptown" then
-			trackType = "tower";
-		elseif zone == "gore" or zone == "gore_hallway" or zone == "gore_tree" then
-			trackType = "goericforest";
+	if bForce then
+		if self.AmbientMusic then
+			self:StopAmbientMusic();
 		end
 		
-		--if (cwMusic:Sanity() < 20) then
-			--trackType = "insanity"
-		--end
+		if self.BattleMusic then
+			self:StopBattleMusic();
+		end
+	else
+		if (!cwMusic.NextAmbientCall or curTime > cwMusic.NextAmbientCall) then
+			cwMusic.NextAmbientCall = curTime + 0.5
+		else
+			return
+		end
+	end
 		
-		local musicTable = self:GetRandomAmbientMusic(trackType)
-		local trackName = musicTable.track
-		local trackLength = musicTable.length or SoundDuration(trackName)
+	if (!cwMusic.AmbientMusic) then
+		local trackType = self:GetAmbientMusicCategory() or "wasteland";
+		local musicTable = trackOverride or self:GetRandomAmbientMusic(trackType);
+		local trackName = musicTable.track;
+		local trackLength = musicTable.length or SoundDuration(trackName);
 		
 		cwMusic.MusicStartTime = curTime
-		cwMusic.MusicEndTime = curTime + trackLength + 10
+		cwMusic.MusicEndTime = curTime + trackLength
 		cwMusic.MaxAmbientLength = trackLength
 		cwMusic.AmbientMusic = CreateSound(Clockwork.Client, trackName)
 		
@@ -289,6 +286,25 @@ function cwMusic:StartAmbientMusic()
 			cwMusic.AmbientMusic:PlayEx((Clockwork.ConVars.AMBIENTMUSICVOLUME:GetInt() or 100) / 100, 100);
 		end
 	end
+end
+
+function cwMusic:GetAmbientMusicCategory()
+	--if (Clockwork.Client:Sanity() < 20) then
+		--return "insanity";
+	--end
+
+	local trackType = "Wasteland Ambience"
+	local zone = Clockwork.Client:GetZone();
+	
+	if zone == "wasteland" and Clockwork.Client.currentCycle == "night" then
+		trackType = "Wasteland Nighttime Ambience";
+	elseif zone == "tower" and game.GetMap() ~= "rp_scraptown" then
+		trackType = "Tower of Light Ambience";
+	elseif zone == "gore" or zone == "gore_hallway" or zone == "gore_tree" then
+		trackType = "Gore Forest Ambience";
+	end
+	
+	return trackType;
 end
 
 function cwMusic:GetRandomAmbientMusic(musicType)
@@ -435,17 +451,27 @@ function cwMusic:AddBattleMusicTime(timeToAdd)
 	--cwMusic.NextBattleMusic = cwMusic.NextBattleMusic + math.Clamp(timeToAdd, 0, 60)
 end
 
-function cwMusic:StartBattleMusic(limit)
-	if hook.Run("CanPlayBattleMusic") == false then
+function cwMusic:StartBattleMusic(limit, bForce, trackOverride)
+	if !bForce and hook.Run("CanPlayBattleMusic") == false then
 		return
 	end
 	
 	local curTime = CurTime()
 	
-	if (!cwMusic.NextBattleCall or curTime > cwMusic.NextBattleCall) then
-		cwMusic.NextBattleCall = curTime + 0.5
+	if bForce then
+		if self.AmbientMusic then
+			self:StopAmbientMusic();
+		end
+		
+		if self.BattleMusic then
+			self:StopBattleMusic();
+		end
 	else
-		return
+		if (!cwMusic.NextBattleCall or curTime > cwMusic.NextBattleCall) then
+			cwMusic.NextBattleCall = curTime + 0.5
+		else
+			return
+		end
 	end
 	
 	if (cwMusic.NextBattleMusic) then
@@ -454,21 +480,10 @@ function cwMusic:StartBattleMusic(limit)
 			return
 		end
 	else
-		--local faction = cwMusic:GetFaction()
-		local trackType = "combat"
-		local zone = Clockwork.Client:GetZone();
-		
-		--[[if (faction == FACTION_GOREIC) then
-			trackType = "combat_goeric"
-		end]]--
-		
-		if zone == "gore" or zone == "gore_hallway" or zone == "gore_tree" then
-			trackType = "combat_goeric"
-		end
-		
-		local musicTable = self:GetRandomBattleMusic(trackType)
-		local trackName = musicTable.track
-		local trackLength = musicTable.length or SoundDuration(trackName)
+		local trackType = self:GetBattleMusicCategory() or "Wasteland Combat";
+		local musicTable = trackOverride or self:GetRandomBattleMusic(trackType);
+		local trackName = musicTable.track;
+		local trackLength = musicTable.length or SoundDuration(trackName);
 		
 		if limit == false then
 			cwMusic.NextBattleMusic = curTime + trackLength
@@ -506,6 +521,17 @@ function cwMusic:StartBattleMusic(limit)
 			cwMusic.BattleMusic:PlayEx((Clockwork.ConVars.BATTLEMUSICVOLUME:GetInt() or 100) / 100, 100);
 		end
 	end
+end
+
+function cwMusic:GetBattleMusicCategory()
+	local trackType = "Wasteland Combat";
+	local zone = Clockwork.Client:GetZone();
+	
+	if zone == "gore" or zone == "gore_hallway" or zone == "gore_tree" then
+		trackType = "Gore Forest Combat";
+	end
+	
+	return trackType;
 end
 
 function cwMusic:GetRandomBattleMusic(musicType)
@@ -669,9 +695,213 @@ netstream.Hook("StopBattleMusic", function(data)
 	cwMusic:StopBattleMusic();
 end)
 
+function cwMusic:SetupSettingsCustomPanel(category, text, panel)
+	if category == "Dynamic Music" and text == "Music player" then
+		panel:SetName("Music Player");
+		panel:SetPadding(4);
+		panel.trackButtons = {};
+		
+		function panel:Think()
+			if cwMusic.BattleMusic then
+				local playingSound = tostring(cwMusic.BattleMusic);
+				
+				if playingSound then
+					playingSound = playingSound:match("%[(.+)%]");
+					
+					for k, v in pairs(cwMusic.BattleMusicTable) do
+						for i, v2 in ipairs(v) do
+							if v2.track == playingSound then
+								local timeLeft = math.max(0, math.ceil((cwMusic.NextBattleMusic or 0) - CurTime()));
+								
+								panel:SetName("Music Player - "..(v2.name or v2.track).." ("..string.FormattedTime(timeLeft, "%02i:%02i")..")");
+								
+								for i2, v3 in ipairs(panel.trackButtons) do
+									if v3.track == playingSound then
+										if !v3:GetToggle() then
+											v3:SetToggle(true);
+										end
+									elseif v3:GetToggle() then
+										v3:SetToggle(false);
+									end
+								end
+							
+								return;
+							end
+						end
+					end
+				end
+			elseif cwMusic.AmbientMusic then
+				local playingSound = tostring(cwMusic.AmbientMusic);
+				
+				if playingSound then
+					playingSound = playingSound:match("%[(.+)%]");
+					
+					for k, v in pairs(cwMusic.AmbientMusicTable) do
+						for i, v2 in ipairs(v) do
+							if v2.track == playingSound then
+								local timeLeft = math.max(0, math.ceil((cwMusic.MusicEndTime or 0) - CurTime()));
+								
+								panel:SetName("Music Player - "..(v2.name or v2.track).." ("..string.FormattedTime(timeLeft, "%02i:%02i")..")");
+								
+								for i2, v3 in ipairs(panel.trackButtons) do
+									if v3.track == playingSound then
+										if !v3:GetToggle() then
+											v3:SetToggle(true);
+										end
+									elseif v3:GetToggle() then
+										v3:SetToggle(false);
+									end
+								end
+							
+								return;
+							end
+						end
+					end
+				end
+			end
+			
+			panel:SetName("Music Player");
+		end
+		
+		local categoryList = vgui.Create("DCategoryList");
+		
+		categoryList:SetHeight(300);
+		
+		function categoryList:Paint()
+		
+		end
+		
+		for k, v in pairs(self.AmbientMusicTable) do
+			local category = categoryList:Add(k);
+			local panelList = vgui.Create("DPanelList");
+			
+			panelList:SetPaintBackground(false);
+		
+			for i, v2 in ipairs(v) do
+				local musicButton = vgui.Create("DButton");
+				
+				musicButton:SetSize(300, 24);
+				musicButton:SetText((v2.name or v2.track).." ("..string.FormattedTime(v2.length or SoundDuration(v2.track), "%02i:%02i")..")");
+				musicButton:SetFont("begotsettingsfont2");
+				musicButton:SetIsToggle(true);
+				musicButton.track = v2.track;
+				
+				function musicButton.DoClick()
+					if musicButton:GetToggle() then
+						cwMusic:StopAmbientMusic();
+						musicButton:SetToggle(false);
+					else
+						cwMusic:StartAmbientMusic(true, v2);
+						musicButton:SetToggle(true);
+					end
+				end
+				
+				function musicButton.Paint()
+					local w, h = musicButton:GetSize();
+
+					if (musicButton.m_bBackground) then
+						local color = Color(45, 20, 20, 175);
+						
+						musicButton:SetTextColor(Color(150, 150, 150, 150));
+						
+						if (musicButton:GetDisabled()) then
+							color = Color(20, 20, 20, 175);
+							musicButton:SetTextColor(Color(100, 100, 100, 150));
+						elseif (musicButton.Depressed) or musicButton:GetToggle() then
+							color = Color(70, 0, 0, 175);
+							musicButton:SetTextColor(Color(200, 200, 200, 150));
+						elseif (musicButton.Hovered) then
+							color = Color(70, 20, 20, 175);
+							musicButton:SetTextColor(Color(175, 175, 175, 150));
+						end;
+
+						draw.RoundedBox(4, 4, 0, w - 8, h, color);
+					end;
+				end
+
+				panelList:AddItem(musicButton);
+				
+				table.insert(panel.trackButtons, musicButton);
+			end
+			
+			panelList:SetSpacing(1);
+			panelList:SetPadding(4);
+			panelList:EnableVerticalScrollbar();
+			panelList:EnableHorizontal(false);
+			
+			category:SetContents(panelList);
+		end
+		
+		for k, v in pairs(self.BattleMusicTable) do
+			local category = categoryList:Add(k);
+			local panelList = vgui.Create("DPanelList");
+			
+			panelList:SetPaintBackground(false);
+		
+			for i, v2 in ipairs(v) do
+				local musicButton = vgui.Create("DButton");
+				
+				musicButton:SetSize(300, 24);
+				musicButton:SetText((v2.name or v2.track).." ("..string.FormattedTime(v2.length or SoundDuration(v2.track), "%02i:%02i")..")");
+				musicButton:SetIsToggle(true);
+				musicButton:SetFont("begotsettingsfont2");
+				musicButton.track = v2.track;
+				
+				function musicButton.DoClick()
+					if musicButton:GetToggle() then
+						cwMusic:StopBattleMusic();
+						musicButton:SetToggle(false);
+					else
+						cwMusic:StartBattleMusic(false, true, v2);
+						musicButton:SetToggle(true);
+					end
+				end
+				
+				function musicButton.Paint()
+					local w, h = musicButton:GetSize();
+
+					if (musicButton.m_bBackground) then
+						local color = Color(45, 20, 20, 175);
+						
+						musicButton:SetTextColor(Color(150, 150, 150, 150));
+						
+						if (musicButton:GetDisabled()) then
+							color = Color(20, 20, 20, 175);
+							musicButton:SetTextColor(Color(100, 100, 100, 150));
+						elseif (musicButton.Depressed) or musicButton:GetToggle() then
+							color = Color(70, 0, 0, 175);
+							musicButton:SetTextColor(Color(200, 200, 200, 150));
+						elseif (musicButton.Hovered) then
+							color = Color(70, 20, 20, 175);
+							musicButton:SetTextColor(Color(175, 175, 175, 150));
+						end;
+
+						draw.RoundedBox(4, 4, 0, w - 8, h, color);
+					end;
+				end
+				
+				panelList:AddItem(musicButton);
+				
+				table.insert(panel.trackButtons, musicButton);
+			end
+			
+			panelList:SetSpacing(1);
+			panelList:SetPadding(4);
+			panelList:EnableVerticalScrollbar();
+			panelList:EnableHorizontal(false);
+			
+			category:SetContents(panelList);
+		end
+		
+		panel:AddItem(categoryList);
+		panel.categoryList = categoryList;
+	end
+end
+
 Clockwork.setting:AddCheckBox("Dynamic Music", "Enable dynamic ambient music.", "cwAmbientMusic", "Click to toggle the dynamic ambient music system.")
 Clockwork.setting:AddNumberSlider("Dynamic Music", "Ambient music volume:", "cwAmbientMusicVolume", 0, 100, 0, "Adjust the volume of the ambient music.");
 Clockwork.setting:AddMultiChoice("Dynamic Music", "Enable dynamic battle music:", "cwBattleMusic", {{"Enable", "Click to enable the dynamic battle music system."}, {"Enable (Duels Only)", "Click to enable the dynamic battle music system only in duels."}, {"Disable", "Click to disable the dynamic battle music system."}})
 Clockwork.setting:AddNumberSlider("Dynamic Music", "Battle music volume:", "cwBattleMusicVolume", 0, 100, 0, "Adjust the volume of the battle music.");
 Clockwork.setting:AddCheckBox("Dynamic Music", "Enable main menu music.", "cwMenuMusic", "Click to toggle the main menu music.")
 Clockwork.setting:AddNumberSlider("Dynamic Music", "Main menu music volume:", "cwMenuMusicVolume", 0, 100, 0, "Adjust the volume of the main menu music.");
+Clockwork.setting:AddCustomPanel("Dynamic Music", "Music player", "DForm");
