@@ -241,6 +241,8 @@ if SERVER then
 				local damagetype = (self.AttackTable["dmgtype"])
 				local minDamage = (self.AttackTable["mimimumdistancedamage"])
 				local maxDamage = (self.AttackTable["maximumdistancedamage"])
+				local minStabilityDamage = (self.AttackTable["minimumdistancestabilitydamage"])
+				local maxStabilityDamage = (self.AttackTable["maximumdistancestabilitydamage"])
 				local maxDistance = 800 * 800
 				
 				if self.itemTable then
@@ -256,10 +258,10 @@ if SERVER then
 				local clampedDistance = math.min(math.max(distance, 0), maxDistance)
 				local ratio = clampedDistance / maxDistance
 				local variableDamage = minDamage + (maxDamage - minDamage) * ratio
-				
+				local variableStabilityDamage = minStabilityDamage + (maxStabilityDamage - minStabilityDamage) * ratio
 									
 				damage = variableDamage
-				variableStabilityDamage = stabilityDamage * (variableDamage / 17.5)
+				stabilitydamage = variableStabilityDamage
 				
 				if Ent:IsNPC() or Ent:IsNextBot() or (Ent:IsPlayer() and !Ent:GetNetVar("Parry") and !Ent:GetNetVar("Deflect")) and !Ent.iFrames then
 					if Ent:GetNetVar("Guardening") then
@@ -285,7 +287,7 @@ if SERVER then
 				end
 					
 				if Ent:IsPlayer() then
-					Ent:TakeStability(variableStabilityDamage);
+					Ent:TakeStability(stabilitydamage);
 					self:TriggerAnim4(Ent, "a_shared_hit_0"..math.random(1, 3));
 				end
 				

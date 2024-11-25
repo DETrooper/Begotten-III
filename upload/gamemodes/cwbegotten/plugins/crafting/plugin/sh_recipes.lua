@@ -2692,8 +2692,7 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 2},
-			["wood"] = {amount = 1},
-			["familial_catalyst"] = {amount = 1},
+			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_1h_steelgorebattleaxe"] = {amount = 1},
@@ -2869,7 +2868,6 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 2},
-			["familial_catalyst"] = {amount = 1},
 			["wood"] = {amount = 1},
 		};
 		RECIPE.result = {
