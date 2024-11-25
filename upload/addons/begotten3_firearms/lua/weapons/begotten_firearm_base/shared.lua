@@ -552,7 +552,7 @@ function SWEP:ShootBulletInformation()
 			local itemCondition = itemTable:GetCondition();
 
 			if itemCondition and itemCondition < 100 then
-				CurrentCone = CurrentCone * Lerp(itemCondition / 100, 1.5, 1);
+				CurrentCone = CurrentCone * Lerp(itemCondition / 90, 1.5, 1);
 			end
 		end
 	end

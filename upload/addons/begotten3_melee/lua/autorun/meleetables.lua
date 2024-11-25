@@ -696,21 +696,27 @@ AttackTables.ThrowingStoneAttackTable = {
 };
 
 AttackTables.IronBoltAttackTable = {
-	["primarydamage"] = 75,
+	["mimimumdistancedamage"] = 50,
+	["maximumdistancedamage"] = 120,
 	["dmgtype"] = DMG_VEHICLE,
 	["armorpiercing"] = 65,
 	["poisedamage"] = 35,
 	["stabilitydamage"] = 40,
+	["minimumdistancestabilitydamage"] = 20,
+	["maximumdistancestabilitydamage"] = 80,
 	["takeammo"] = 0,
 	["punchstrength"] = Angle(0,2,0),
 };
 
 AttackTables.ScrapBoltAttackTable = {
-	["primarydamage"] = 60,
+	["mimimumdistancedamage"] = 35,
+	["maximumdistancedamage"] = 90,
 	["dmgtype"] = DMG_VEHICLE,
 	["armorpiercing"] = 50,
 	["poisedamage"] = 30,
 	["stabilitydamage"] = 35,
+	["minimumdistancestabilitydamage"] = 18,
+	["maximumdistancestabilitydamage"] = 70,
 	["takeammo"] = 0,
 	["punchstrength"] = Angle(0,2,0),
 };

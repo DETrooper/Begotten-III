@@ -53,6 +53,12 @@ SWEP.Primary.Damage			= 75		-- Base damage per bullet
 SWEP.Primary.Spread			= .05		-- Define from-the-hip accuracy 1 is terrible, .0001 is exact)
 SWEP.Primary.IronAccuracy 	= .02 		-- Ironsight accuracy, should be the same for shotguns
 
+-- For the tooltips only, actual values are stored in meleetables
+SWEP.Primary.MinimumDistanceDamage = 50;
+SWEP.Primary.MaximumDistanceDamage = 120;
+SWEP.Primary.StabilityDamage = 40;
+SWEP.Primary.BoltRange = 160;
+
 SWEP.SelectiveFire			= false
 
 -- Enter iron sight info and bone mod info below
@@ -126,13 +132,15 @@ function SWEP:PrimaryAttack()
 					
 					local aimVector = self.Owner:GetAimVector() * 1350;
 					local phys = bolt:GetPhysicsObject()
-					
-					if self.Owner.GetCharmEquipped and self.Owner:GetCharmEquipped("hurlers_talisman") then
-						aimVector = self.Owner:GetAimVector() * 1825;
-					end
+					local itemTable = item.GetByWeapon(self);
+					local itemCondition = itemTable:GetCondition();
 					
 					if self.Owner:GetVelocity() ~= Vector(0, 0, 0) or !self.Owner.HasBelief or !self.Owner:HasBelief("marksman") then
 						aimVector:Rotate(Angle(math.Rand(-1, 1), math.Rand(-1, 1), 0));
+					end
+
+					if itemCondition and itemCondition < 100 then
+						aimVector = Lerp(itemCondition / 90, aimVector * 0.5, aimVector)
 					end
 					
 					phys:SetVelocity(aimVector);

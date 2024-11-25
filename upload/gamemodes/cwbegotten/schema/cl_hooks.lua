@@ -3174,12 +3174,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				
 				frame:AddText("Weapon Stats: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
 				
-				if weaponTable.Primary.IronAccuracy then
+				if weaponTable.Primary.IronAccuracy and !weaponTable.Primary.MaximumDistanceDamage then
 					local accuracy = weaponTable.Primary.IronAccuracy;
 					local originalAccuracy = accuracy;
 					
 					if condition and condition < 100 then
-						accuracy = math.Truncate(accuracy * Lerp(condition / 100, 1.5, 1), 5);
+						accuracy = math.Truncate(accuracy * Lerp(condition / 90, 1.5, 1), 5);
 					end
 				
 					local percentage = 1 - math.min(accuracy * 2, 1);
@@ -3195,12 +3195,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 				end
 				
-				if weaponTable.Primary.Spread then
+				if weaponTable.Primary.Spread and !weaponTable.Primary.MaximumDistanceDamage then
 					local accuracy = weaponTable.Primary.Spread;
 					local originalAccuracy = accuracy;
 					
 					if condition and condition < 100 then
-						accuracy = math.Truncate(accuracy * Lerp(condition / 100, 1.5, 1), 5);
+						accuracy = math.Truncate(accuracy * Lerp(condition / 90, 1.5, 1), 5);
 					end
 				
 					local percentage = 1 - math.min(accuracy * 2, 1);
@@ -3246,7 +3246,86 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddBar(12, {{text = tostring(itemTable.reloadTime).."s", percentage = percentage * 10, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Reload Time", Color(110, 30, 30), toolTip, true);
 				end
 				
-				if weaponTable.Primary.Damage then
+				if weaponTable.Primary.MaximumDistanceDamage then
+					local maximumdistancedamage = weaponTable.Primary.MaximumDistanceDamage;
+					local originalDamage = maximumdistancedamage;
+					
+					if maximumdistancedamage then
+						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+					
+						maximumdistancedamage = math.Round(maximumdistancedamage * Lerp(scalar, 0.7, 1));
+
+						local percentage = math.min(maximumdistancedamage / 150, 150);
+						local toolTip = function(frame)
+							frame:AddText("Maximum Projectile Damage", Color(110, 30, 30), nil, 1);
+							frame:AddText("The maximum amount of damage your projectile can deal. The maximum distance can be reached at about 40 feet from your target, and any distance beyond that will grant no additional damage. Note that this damage value is for the Iron Bolt, and other ammunition types will have different values.", Color(225, 200, 200), nil, 0.8);
+						end
+			
+						if maximumdistancedamage < originalDamage then
+							frame:AddBar(12, {{text = tostring(maximumdistancedamage).." / "..tostring(originalDamage).." (At 40 Feet)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Maximum Projectile Damage", Color(110, 30, 30), toolTip, true);
+						else
+							frame:AddBar(12, {{text = tostring(maximumdistancedamage).." (At 40 Feet)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Maximum Projectile Damage", Color(110, 30, 30), toolTip, true);
+						end
+					end
+				end
+				
+				if weaponTable.Primary.MinimumDistanceDamage then
+					local minimumdistancedamage = weaponTable.Primary.MinimumDistanceDamage;
+					local originalDamage = minimumdistancedamage;
+					
+					if minimumdistancedamage then
+						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+					
+						minimumdistancedamage = math.Round(minimumdistancedamage * Lerp(scalar, 0.7, 1));
+
+						local percentage = math.min(minimumdistancedamage / 150, 150);
+						local toolTip = function(frame)
+							frame:AddText("Minimum Projectile Damage", Color(110, 30, 30), nil, 1);
+							frame:AddText("The minimum amount of damage your projectile can deal. This would be dealt with a point-blank hit, and would gradually increase the further away the target is. Note that this damage value is for the Iron Bolt, and other ammunition types will have different values.", Color(225, 200, 200), nil, 0.8);
+						end
+			
+						if minimumdistancedamage < originalDamage then
+							frame:AddBar(12, {{text = tostring(minimumdistancedamage).." / "..tostring(originalDamage).." (Point-Blank)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Minimum Projectile Damage", Color(110, 30, 30), toolTip, true);
+						else
+							frame:AddBar(12, {{text = tostring(minimumdistancedamage).." (Point-Blank)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Minimum Projectile Damage", Color(110, 30, 30), toolTip, true);
+						end
+					end
+				end
+				
+				if weaponTable.Primary.StabilityDamage then
+					local percentage = math.min(weaponTable.Primary.StabilityDamage / 100, 100);
+					local toolTip = function(frame)
+						frame:AddText("Stability Damage", Color(110, 30, 30), nil, 1);
+						frame:AddText("The damage to your foe's stability that your fired projectiles deal. Dealing enough will temporarily knock your foe to the ground. Can be negated by enemy armor. For bolts, this scales by distance; targets further away will take considerably more stability damage, and targets up close will take considerably less stability damage. At maximum range, the projectile will deal double this stability damage. Note that this damage value is for the Iron Bolt, and other ammunition types will have different values.", Color(225, 200, 200), nil, 0.8);
+					end
+		
+					frame:AddBar(12, {{text = tostring(weaponTable.Primary.StabilityDamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage", Color(110, 30, 30), toolTip, true);
+				end
+				
+				if weaponTable.Primary.BoltRange then
+					local boltRange = weaponTable.Primary.BoltRange;
+					local originalBoltRange = boltRange;
+					
+					if boltRange then
+						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+					
+						boltRange = math.Round(boltRange * Lerp(scalar, 0.5, 1));
+
+						local percentage = math.min(boltRange / 200, 200);
+						local toolTip = function(frame)
+							frame:AddText("Bolt Range", Color(110, 30, 30), nil, 1);
+							frame:AddText("The speed and maximum distance of your loosed bolt. If you wish to hit a target further away, aim higher!", Color(225, 200, 200), nil, 0.8);
+						end
+			
+						if boltRange < originalBoltRange then
+							frame:AddBar(12, {{text = tostring(boltRange).." / "..tostring(originalBoltRange), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Bolt Range", Color(110, 30, 30), toolTip, true);
+						else
+							frame:AddBar(12, {{text = tostring(boltRange), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Bolt Range", Color(110, 30, 30), toolTip, true);
+						end
+					end
+				end
+				
+				if weaponTable.Primary.Damage and !weaponTable.Primary.MaximumDistanceDamage then
 					local percentage = math.min(weaponTable.Primary.Damage / 80, 80);
 					local toolTip = function(frame)
 						frame:AddText("Shot Damage", Color(110, 30, 30), nil, 1);
