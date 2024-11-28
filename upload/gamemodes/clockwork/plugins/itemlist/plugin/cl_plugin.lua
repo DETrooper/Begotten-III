@@ -48,9 +48,17 @@ spawnmenu.AddContentType("cwItem", function(container, data)
 			SetClipboardText(data.uniqueID)
 		end)
 
-		menu:AddOption("Place in your inventory.", function()
+		menu:AddOption("Place single instance in your inventory.", function()
 			netstream.Start("MenuItemGive", data.uniqueID)
 		end)
+		
+		menu:AddOption("Place specified amount in your inventory.", function()
+			Derma_StringRequest(data.name, "How many items of this type do you want to spawn into your inventory (up to 100)", nil, function(amount)
+				if tonumber(amount) then
+					netstream.Start("MenuItemGive", data.uniqueID, math.min(100, tonumber(amount)));
+				end
+			end);
+		end);
 
 		menu:Open()
 	end

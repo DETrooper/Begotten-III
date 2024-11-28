@@ -24,15 +24,25 @@ netstream.Hook("MenuItemSpawn", function(player, uniqueID)
 	end
 end)
 
-netstream.Hook("MenuItemGive", function(player, uniqueID)
+netstream.Hook("MenuItemGive", function(player, uniqueID, amount)
 	if (!IsValid(player)) then return; end
 	if (!Clockwork.player:HasFlags(player, "s")) then return; end
+	
+	amount = amount or 1;
 
-	local itemTable = item.CreateInstance(uniqueID)
+	for i = 1, amount do
+		local itemTable = item.CreateInstance(uniqueID)
 
-	if (itemTable) then
-		player:GiveItem(itemTable, true)
-		Schema:EasyText(player, "cornflowerblue", "You gave yourself a " .. itemTable.name .. ".")
-		Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name() .. " gave themselves a " .. itemTable.name .. " (" ..itemTable.uniqueID .. ") " .. itemTable.itemID .. ".")
+		if (itemTable) then
+			player:GiveItem(itemTable, true)
+			
+			if amount == 1 then
+				Schema:EasyText(player, "cornflowerblue", "You gave yourself a " .. itemTable.name .. ".")
+			elseif i == amount then
+				Schema:EasyText(player, "cornflowerblue", "You gave yourself "..amount.." " .. itemTable.name .. "s.")
+			end
+			
+			Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name() .. " gave themselves a " .. itemTable.name .. " (" ..itemTable.uniqueID .. ") " .. itemTable.itemID .. ".")
+		end
 	end
 end)
