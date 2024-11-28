@@ -45,11 +45,11 @@ cwMusic.AmbientMusicTable = {
 		{name = "Ager Sonus - Through the Desert", track = "begotten3soundtrack/ambiencenight/as-throughthedesert.mp3", length = 391},
 		{name = "Darkwood OST - Untitled 3", track = "begotten3soundtrack/ambiencenight/dw-untitled3.mp3", length = 128, volume = 0.75},
 		{name = "Darkwood OST - Dream", track = "begotten3soundtrack/ambiencenight/dw-dream.mp3", length = 317, volume = 0.75},
+		{name = "Northumbria - Black Moon (Part 1)", track = "begotten3soundtrack/ambiencenight/ns-blackmoonpt1.mp3", length = 369},
+		{name = "Northumbria - Black Moon (Part 2)", track = "begotten3soundtrack/ambiencenight/ns-blackmoonpt2.mp3", length = 253},
 		{name = "Psionic Asylum - Frozen Cave of Whispers", track = "begotten3soundtrack/ambiencenight/pa-frozencaveofwhispers.mp3", length = 696, volume = 0.75},
 		{name = "Sphäre Sechs - The Castle Anomaly", track = "begotten3soundtrack/ambiencenight/ss-thecastleanomaly.mp3", length = 612},
 		{name = "Sphäre Sechs - Aristarchus Plateau", track = "begotten3soundtrack/ambiencenight/ss-aristarchusplateau.mp3", length = 546},
-		{name = "Sphäre Sechs - Black Moon (Part 1)", track = "begotten3soundtrack/ambiencenight/ns-blackmoonpt1.mp3", length = 369},
-		{name = "Sphäre Sechs - Black Moon (Part 2)", track = "begotten3soundtrack/ambiencenight/ns-blackmoonpt2.mp3", length = 253},
 	},
 	["Goreic Forest Ambience"] = { -- ambient music for the goeric forest
 		{name = "Hellblade OST - Surtr Start", track = "begotten3soundtrack/ambiencegoeric/hb_surtrsart.mp3", length = 141},
