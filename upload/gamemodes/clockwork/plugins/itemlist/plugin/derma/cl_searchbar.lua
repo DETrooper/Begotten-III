@@ -96,6 +96,10 @@ function PANEL:RefreshResults()
 
 	if (table.Count(results) > 0) then
 		for uniqueID, itemTable in pairs(results) do
+			if (itemTable.isBaseItem or itemTable.name == "Item Base") then
+				continue;
+			end;
+		
 			spawnmenu.CreateContentIcon("cwItem", self.searchResultsItem, itemTable)
 		end
 	end

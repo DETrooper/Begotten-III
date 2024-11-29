@@ -204,7 +204,7 @@ ITEM:Register();
 local ITEM = Clockwork.item:New();
 	ITEM.name = "Snow Dog";
 	ITEM.model = "models/food/hotdog.mdl";
-	ITEM.category = "Garbage";
+	ITEM.category = "Other";
 	ITEM.weight = 0.3;
 	ITEM.description = "A snowdog. You can wear it as a hat..";
 	ITEM.uniqueID = "snowdog";

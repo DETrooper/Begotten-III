@@ -4,29 +4,29 @@
 
 local PLUGIN = PLUGIN;
 local icons = {
-	["Ammunition"] = "briefcase",
-	["Clothing"] = "user_suit",
-	["Communication"] = "telephone",
-	["Consumables"] = "cake",
-	["Crafting Resource"] = "cog",
-	["Crafting Station"] = "cog",
-	["Crafting"] = "cog",
-	["Deployables"] = "arrow_down",
-	["Filters"] = "weather_clouds",
-	["Junk"] = "box",
-	["Lights"] = "lightbulb",
-	["Literature"] = "book",
-	["Medical"] = "heart",
-	["Melee Weapons"] = "bomb",
-	["Other"] = "brick",
-	["Promotional"] = "coins",
-	["Reusables"] = "arrow_rotate_clockwise",
-	["Storage"] = "package",
-	["Tools"] = "wrench",
-	["Turret"] = "gun",
-	["UU-Branded Items"] = "asterisk_yellow",
-	["Weapons"] = "gun",
-	["Workstations"] = "page",
+	["Alcohol"] = "begotten/ui/itemicons/beer.png",
+	["Armor"] = "begotten/ui/itemicons/auxiliary_gambeson.png",
+	["Backpacks"] = "begotten/ui/itemicons/backpack.png",
+	["Catalysts"] = "begotten/ui/itemicons/belphegor_catalyst.png",
+	["Charms"] = "begotten/ui/itemicons/ring_distorted.png",
+	["Communication"] = "begotten/ui/itemicons/warhorn.png",
+	["Crafting Materials"] = "begotten/ui/itemicons/scrap.png",
+	["Crossbows"] = "begotten/ui/itemicons/crossbow.png",
+	["Drinks"] = "begotten/ui/itemicons/cold_pop.png",
+	["Food"] = "begotten/ui/itemicons/neat_yummy_meat.png",
+	["Firearms"] = "begotten/ui/itemicons/corpsecrank.png",
+	["Fuel"] = "begotten/ui/itemicons/small_oil.png",
+	["Helms"] = "begotten/ui/itemicons/gatekeeper_helmet.png",
+	["Lights"] = "begotten/ui/itemicons/lantern.png",
+	["Medical"] = "begotten/ui/itemicons/survival_pack.png",
+	["Melee"] = "begotten/ui/itemicons/gore_axe_falchion.png",
+	["Naval"] = "begotten/ui/itemicons/scroll_open.png",
+	["Other"] = "begotten/ui/itemicons/yumchug.png",
+	["Scripture"] = "begotten/ui/itemicons/scroll_open2.png",
+	["Shields"] = "begotten/ui/itemicons/gatekeeper_shield.png",
+	["Shot"] = "begotten/ui/itemicons/grapeshot.png",
+	["Throwables"] = "begotten/ui/itemicons/throwing_axe.png",
+	["Tools"] = "begotten/ui/itemicons/breakdown_kit.png",
 };
 
 spawnmenu.AddContentType("cwItem", function(container, data)
@@ -37,6 +37,7 @@ spawnmenu.AddContentType("cwItem", function(container, data)
 	icon:SetContentType("cwItem")
 	icon:SetSpawnName(data.uniqueID)
 	icon:SetName(data.name)
+	icon:SetMaterial(data.iconoverride or "begotten/ui/itemicons/yumchug.png");
 
 	function icon:DoClick()
 		netstream.Start("MenuItemSpawn", data.uniqueID)
@@ -75,15 +76,15 @@ spawnmenu.AddCreationTab("Items", function()
 
 	vgui.Create("ItemSearchBar", base.ContentNavBar)
 
-	for k, v in SortedPairsByMemberValue(item.GetStored(), "category") do
-		if (v.isBaseItem or v.name == "Item Base") then
-			continue;
-		end;
-		
+	for k, v in SortedPairsByMemberValue(item.GetStored(), "category") do		
 		if (!categories[v.category]) then
+			if (v.isBaseItem or v.name == "Item Base") then
+				continue;
+			end;
+		
 			categories[v.category] = true;
 
-			local category = tree:AddNode(v.category, icons[v.category] and ("icon16/" .. icons[v.category] .. ".png") or "icon16/brick.png")
+			local category = tree:AddNode(v.category, icons[v.category] or "icon16/brick.png")
 
 			category.DoPopulate = function(self)
 				if (self.Container) then return; end
@@ -93,6 +94,10 @@ spawnmenu.AddCreationTab("Items", function()
 				self.Container:SetTriggerSpawnlistChange(false)
 
 				for uniqueID, itemTable in SortedPairsByMemberValue(item.GetStored(), "name") do
+					if (itemTable.isBaseItem or itemTable.name == "Item Base") then
+						continue;
+					end;
+				
 					if (itemTable.category == v.category) then
 						spawnmenu.CreateContentIcon("cwItem", self.Container, itemTable)
 					end
@@ -115,6 +120,4 @@ spawnmenu.AddCreationTab("Items", function()
 	PLUGIN:PopulateContent(base, tree, nil)
 
 	return base;
-end,
-
-"icon16/script_key.png")
+end, "icon16/script_key.png")
