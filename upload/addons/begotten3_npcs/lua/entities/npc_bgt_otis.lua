@@ -124,12 +124,13 @@ if SERVER then
 		local distance = math.random(200,250);
 
 		timer.Simple(0.1, function()
-			self:ResetSequence(ACT_WALK);
-			self:Jump(40);
-			self:SetVelocity(self:GetVelocity() + direction * distance);
-			self:EmitSound(self.OnDamageSounds[math.random(#self.OnDamageSounds)], 100, self.pitch + math.random(5,15));
-			self:EmitSound("Zombie.AttackMiss");
-
+			if IsValid(self) then
+				self:ResetSequence(ACT_WALK);
+				self:Jump(40);
+				self:SetVelocity(self:GetVelocity() + direction * distance);
+				self:EmitSound(self.OnDamageSounds[math.random(#self.OnDamageSounds)], 100, self.pitch + math.random(5,15));
+				self:EmitSound("Zombie.AttackMiss");
+			end
 		end);
 
 	end

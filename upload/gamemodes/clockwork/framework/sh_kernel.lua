@@ -1242,6 +1242,11 @@ end
 
 -- A function to modify a physical description.
 function Clockwork.kernel:ModifyPhysDesc(description)
+	-- For some reason the description can be a number. No idea why, so until I figure it out I'm throwing on this band-aid fix.
+	if isnumber(description) then
+		description = tostring(description) or "Wearing dirty clothes.";
+	end
+
 	if (string.utf8len(description) <= 1024) then
 		if (!string.find(string.utf8sub(description, -2), "%p")) then
 			return description.."."

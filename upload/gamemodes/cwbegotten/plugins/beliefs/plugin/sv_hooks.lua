@@ -1497,7 +1497,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 					return;
 				end
 			end
-			
+
 			if !entTab.scornificationismActive and !entTab.opponent and entity:HasBelief("fortitude_finisher") then
 				local action = Clockwork.player:GetAction(entity);
 			
@@ -1528,7 +1528,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 						end;
 					end);
 					
-					damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
+					damageInfo:SetDamage(math.max(entity:Health() - 5, 0));
 					return;
 				end;
 			end;

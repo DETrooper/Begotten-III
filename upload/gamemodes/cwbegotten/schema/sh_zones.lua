@@ -73,8 +73,14 @@ function zones:Register(zoneTable)
 		self.cwDefaultZone = zoneTable;
 		
 		if CLIENT then
-			self.cwCurrentZone = self.cwDefaultZone.uniqueID;
-			self.cwPreviousZone = self.cwDefaultZone.uniqueID;
+			if !self.cwCurrentZone then
+				self.cwCurrentZone = self.cwDefaultZone.uniqueID;
+			end
+			
+			if !self.cwPreviousZone then
+				self.cwPreviousZone = self.cwDefaultZone.uniqueID;
+			end
+			
 			self.recheckTable = nil;
 		end
 	end;

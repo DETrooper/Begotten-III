@@ -380,11 +380,11 @@ do
 
 			if (!attackAnimation) then
 				attackAnimation = ACT_GESTURE_RANGE_ATTACK_SMG1;
-				
-				if istable(attackAnimation) then
-					attackAnimation = table.Random(attackAnimation);
-				end
 			end;
+			
+			if istable(attackAnimation) then
+				attackAnimation = table.Random(attackAnimation);
+			end
 
 			player:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, attackAnimation, true);
 			return ACT_VM_PRIMARYATTACK;
@@ -393,11 +393,11 @@ do
 
 			if (!attackAnimation) then
 				attackAnimation = ACT_GESTURE_RANGE_ATTACK_SMG1;
-				
-				if istable(attackAnimation) then
-					attackAnimation = table.Random(attackAnimation);
-				end
 			end;
+			
+			if istable(attackAnimation) then
+				attackAnimation = table.Random(attackAnimation);
+			end
 
 			player:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, attackAnimation, true);
 			return ACT_VM_SECONDARYATTACK;
@@ -406,11 +406,11 @@ do
 
 			if (!reloadAnimation) then
 				reloadAnimation = ACT_GESTURE_RELOAD_SMG1;
-				
-				if istable(reloadAnimation) then
-					reloadAnimation = table.Random(reloadAnimation);
-				end
 			end;
+			
+			if istable(reloadAnimation) then
+				reloadAnimation = table.Random(reloadAnimation);
+			end
 
 			player:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, reloadAnimation, true);
 			return ACT_INVALID;

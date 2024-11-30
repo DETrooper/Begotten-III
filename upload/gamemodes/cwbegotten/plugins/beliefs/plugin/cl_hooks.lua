@@ -173,12 +173,12 @@ function cwBeliefs:AddEntityOutlines(outlines)
 					self:DrawPlayerOutline(v, outlines, ravenColor);
 				end;
 			end;
-		else
+		--[[else
 			for _, v in _player.Iterator() do
 				if v.warcryTarget and v:Alive() and v:GetColor().a > 0 then
 					self:DrawPlayerOutline(v, outlines, warcryColor);
 				end
-			end;
+			end;]]--
 		end
 	end
 	

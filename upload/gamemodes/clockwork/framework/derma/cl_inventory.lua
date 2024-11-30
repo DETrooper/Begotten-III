@@ -373,8 +373,17 @@ function PANEL:Rebuild()
 						end
 					end
 				else
-					equipmentPos = self.categoryLocations[v2.category or "Unknown Category"];
-					self.categoryLocations[v2.category or "Unknown Category"].occupier = equipmentIcon;
+					local category = v2.category;
+					
+					-- Handler for item with unsupported category being equipped.
+					if !self.categoryLocations[category] then
+						ErrorNoHalt(v2.uniqueID.." with category "..category.." was not able to be equipped!");
+						
+						continue;
+					end
+				
+					equipmentPos = self.categoryLocations[category];
+					self.categoryLocations[category].occupier = equipmentIcon;
 					
 					if v2.hasHelmet then
 						local helmetImage;

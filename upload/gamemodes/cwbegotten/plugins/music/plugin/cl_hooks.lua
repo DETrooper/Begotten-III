@@ -51,7 +51,7 @@ cwMusic.AmbientMusicTable = {
 		{name = "Sphäre Sechs - The Castle Anomaly", track = "begotten3soundtrack/ambiencenight/ss-thecastleanomaly.mp3", length = 612},
 		{name = "Sphäre Sechs - Aristarchus Plateau", track = "begotten3soundtrack/ambiencenight/ss-aristarchusplateau.mp3", length = 546},
 	},
-	["Goreic Forest Ambience"] = { -- ambient music for the goeric forest
+	["Gore Forest Ambience"] = { -- ambient music for the goeric forest
 		{name = "Hellblade OST - Surtr Start", track = "begotten3soundtrack/ambiencegoeric/hb_surtrsart.mp3", length = 141},
 		{name = "Hellblade OST - Surtr Backtrack", track = "begotten3soundtrack/ambiencegoeric/hb-surtrbacktrack.mp3", length = 61},
 		{name = "Hellblade OST - Surtr Intro", track = "begotten3soundtrack/ambiencegoeric/hb-surtrintro.mp3", length = 81},
@@ -153,6 +153,8 @@ function cwMusic:PlayerAttacks(player)
 end
 
 function cwMusic:PlayerChangedZones(newZone, previousZone)
+	if newZone == previousZone then return end;
+
 	if newZone == "gore_tree" or newZone == "gore" or newZone == "gore_hallway" then
 		if previousZone != "gore_tree" and previousZone != "gore" and previousZone != "gore_hallway" then
 			self:FadeOutAmbientMusic(4, 1);
