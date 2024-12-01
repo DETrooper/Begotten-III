@@ -1226,7 +1226,13 @@ local COMMAND = Clockwork.command:New("Warcry");
 							if player_has_daring_trout then
 								v.warcrySlowSpeed = curTime + 10;
 								
-								hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true)
+								hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true);
+								
+								timer.Create("warcrySlowdown"..tostring(v:EntIndex()), 10.1, 1, function()
+									if IsValid(v) then
+										hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true);
+									end
+								end);
 							end
 						--end
 					elseif v:IsNPC() or v:IsNextBot() then
