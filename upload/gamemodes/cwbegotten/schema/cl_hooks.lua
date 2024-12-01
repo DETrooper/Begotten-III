@@ -1668,12 +1668,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddText("Causes Corruption To Wielder", Color(110, 30, 30), nil, 0.9);
 				end
 				
-				if itemTable.isLongPolearm then
-					frame:AddText("Long Polearm: Up to +70% increased damage the further away the target is.", Color(110, 30, 30), nil, 0.9);
-				end
-				
-				if itemTable.isShortPolearm then
-					frame:AddText("Short Polearm: Up to +50% increased damage the further away the target is.", Color(110, 30, 30), nil, 0.9);
+				if itemTable.isPolearm then
+					frame:AddText("Polearm: Up to +70% increased damage the further away the target is.", Color(110, 30, 30), nil, 0.9);
 				end
 				
 				if weaponTable.isLongsword then
@@ -1685,7 +1681,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.hasMinimumRange then
-					frame:AddText("Has Minimum Effective Range", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Minimum Effective Range: Targets under 50% of your max range will receive ineffective non-lethal damage.", Color(110, 30, 30), nil, 0.9);
 				end
 				
 				if itemTable.hasIncreasedDeflectionWindow then
@@ -1722,7 +1718,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 					
 					if table.HasValue(itemTable.attributes, "grounded") then
-						frame:AddText("Grounded: Cannot attack while sprinting, but hitting enemies will discombobulate them, stopping them from sprinting for the next 3 seconds.", Color(110, 30, 30), nil, 0.9);
+						frame:AddText("Grounded: Cannot attack while sprinting, but hitting enemies in effective range will discombobulate them, stopping them from sprinting for the next 3 seconds.", Color(110, 30, 30), nil, 0.9);
 					end
 					
 					if table.HasValue(itemTable.attributes, "fire") then
@@ -1754,10 +1750,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddText("Has Bullet Resistance", Color(110, 30, 30), nil, 0.9);
 				end
 				
-				if string.find(weaponClass, "begotten_spear") or string.find(weaponClass, "begotten_polearm") then
-					if weaponClass ~= "begotten_polearm_quarterstaff" then
-						frame:AddText("Has Counter Damage: Bonus against running enemies when attacked from the front.", Color(110, 30, 30), nil, 0.9);
-					end
+				if string.find(weaponClass, "begotten_spear") or string.find(weaponClass, "begotten_polearm") or string.find(weaponClass, "begotten_scythe") then
+					frame:AddText("Has Counter Damage: +40% Damage Bonus against running enemies when attacked from the front.", Color(110, 30, 30), nil, 0.9);
 				elseif weaponTable.isDagger then
 					frame:AddText("Has Backstab: Deal double damage to enemies' backs.", Color(110, 30, 30), nil, 0.9);
 					frame:AddText("Has Coup de Grace: Deal double damage and 100% AP damage to knocked over enemies. Each hit will slightly increase the time it takes for knocked over enemies to get up.", Color(110, 30, 30), nil, 0.9);

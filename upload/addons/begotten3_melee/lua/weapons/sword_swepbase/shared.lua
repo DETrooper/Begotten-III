@@ -664,12 +664,6 @@ function SWEP:PrimaryAttack()
 								if attacktable.canaltattack then
 									if attacktable.altmeleerange then
 										meleeRange = attacktable.altmeleerange / 10;
-									--[[else
-										if self.CanSwipeAttack then
-											meleeRange = meleeRange * 0.8
-										else
-											meleeRange = meleeRange * 1.2
-										end]]--
 									end
 								end
 							end
@@ -749,12 +743,6 @@ function SWEP:PrimaryAttack()
 										if offhandAttackTable.canaltattack then
 											if offhandAttackTable.altmeleerange then
 												meleeRange = offhandAttackTable.altmeleerange;
-											--[[else
-												if offhandWeapon.CanSwipeAttack then
-													meleeRange = meleeRange * 0.8
-												else
-													meleeRange = meleeRange * 1.2
-												end]]--
 											end
 										end
 									end
@@ -958,7 +946,6 @@ end
 
 --if (SERVER) then
 	function SWEP:HandleHit(hit, src, swingType, hitIndex, offhandWeapon, offhandAttackTable)
-		local distance;
 		local attacktable = GetTable(offhandAttackTable or self.AttackTable);
 		local attacksoundtable = GetSoundTable(self.AttackSoundTable);
 		local blockTable = GetTable(self:GetNWString("activeShield"));
@@ -969,6 +956,21 @@ end
 		local bTake;
 		local enemywep;
 		local weapon = self;
+		local distance = (owner:GetPos():Distance(hit:GetPos()))
+		
+		-- For poleweapons
+		local poledamage = (attacktable["primarydamage"])
+		local poletype = (attacktable["dmgtype"])
+		local maxPoleRange = (attacktable["meleerange"]) * 0.1
+		local maxIneffectiveRange = maxPoleRange * 0.53
+		local clampedDistance = math.min(math.max(distance, 0), maxPoleRange)
+		local ratio = clampedDistance / maxPoleRange
+		local minDamage = (attacktable["primarydamage"] * 0.7)
+		local maxDamage = (attacktable["primarydamage"] * 1.7)
+		local variableDamage = minDamage + (maxDamage - minDamage) * ratio
+		local minStabilityDamage = (attacktable["stabilitydamage"] * 0.7)
+		local maxStabilityDamage = (attacktable["stabilitydamage"] * 1.7)
+		local variableStabilityDamage = minStabilityDamage + (maxStabilityDamage - minStabilityDamage) * ratio
 		
 		if offhandWeapon then
 			attacksoundtable = GetSoundTable(offhandWeapon.AttackSoundTable);
@@ -1135,9 +1137,7 @@ end
 			end
 
 			if owner:IsValid() and !owner:IsRagdolled() and owner:Alive() then
-				-- Spear Damage System (Messy)					
-				local distance = (owner:GetPos():Distance(hit:GetPos()));
-				
+				-- Spear Damage System (Messy) THINGS TO CONSIDER: Scythes, Grounded, Merging Short & Long Polearms				
 				damagetype = 16;
 				
 				-- Blunt swipe or piercing thrust?
@@ -1147,7 +1147,7 @@ end
 					if hit:IsValid() then
 						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 							-- KNOCKBACK
-							local knockback = owner:GetAngles():Forward() * 550;
+							local knockback = owner:GetAngles():Forward() * 750;
 							knockback.z = 0
 							
 							timer.Simple(0.1, function()
@@ -1157,7 +1157,7 @@ end
 							end);
 							
 							if hit:IsPlayer() then
-								hit:TakeStability((stabilitydamage) * shield_reduction * hit_reduction);
+								hit:TakeStability(25 * shield_reduction * hit_reduction);
 							end
 						end
 					end
@@ -1170,66 +1170,34 @@ end
 							end
 						end
 					end
-				else
-					if (IsValid(self)) then
-						if string.find(weaponClass, "begotten_polearm_") then
-							local max_dist = 75;
-							
-							if distance >= 0 and distance <= max_dist and hit:IsValid() then
-								if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
-									damage = (attacktable["primarydamage"]) * 0.05
-									damagetype = 128
-									
-									-- KNOCKBACK
-									local knockback = owner:GetAngles():Forward() * 700;
-									knockback.z = 0
-									
-									-- timers are shit but whatever
-									timer.Simple(0.1, function()
-										if IsValid(hit) then
-											hit:SetVelocity(knockback);
-										end
-									end);
-									
-									if hit:IsPlayer() then
-										hit:TakeStability(5)
+				end
+				-- Polearm alt attack spear shaft hit system
+				if (IsValid(self)) then
+					if string.find(weaponClass, "begotten_polearm_") and weapon.CanSwipeAttack != true then						
+						if distance <= maxIneffectiveRange and hit:IsValid() then
+							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
+								damage = (attacktable["primarydamage"]) * 0.01
+								damagetype = 128
+								
+								-- KNOCKBACK
+								local knockback = owner:GetAngles():Forward() * 700;
+								knockback.z = 0
+								
+								-- timers are shit but whatever
+								timer.Simple(0.1, function()
+									if IsValid(hit) then
+										hit:SetVelocity(knockback);
 									end
-								end
-							elseif distance > max_dist and hit:IsValid() then
-								if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-									damage = (attacktable["primarydamage"])
-									damagetype = 16
-									
-									--[[if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect") and !hit.iFrames then
-										hit:TakeStability((stabilitydamage))		
-									end]]--
+								end);
+								
+								if hit:IsPlayer() then
+									hit:TakeStability(5)
 								end
 							end
-						else
-							-- Non-polearm thrust
-							--[[if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect") and !hit.iFrames then
-								hit:TakeStability((stabilitydamage))			
-							end]]--
-							
-							--[[if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
-								hit:EmitSound(attacksoundtable["althitbody"][math.random(1, #attacksoundtable["althitbody"])])
-							end]]--
-							
-							if attacktable["altdamagetype"] == 16 then
-								if hit:IsValid() then
-									if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-										-- counter damage
-										local targetVelocity = hit:GetVelocity();
-										
-										if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
-											local entEyeAngles = hit:EyeAngles();
-											
-											if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-												damage = damage + (damage * 0.5);
-											end
-										end
-									end
-								end
+						elseif distance > maxIneffectiveRange and hit:IsValid() then
+							if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+								damage = variableDamage
+								damagetype = 16
 							end
 						end
 					end
@@ -1268,7 +1236,6 @@ end
 					end
 				end
 				
-				-- Spear Damage System (Messy)	
 				if (IsValid(hit) and owner:IsValid() and !owner:IsRagdolled() and owner:Alive()) then
 					local d = DamageInfo()
 					d:SetDamage( damage * shield_reduction * (attacktable["altattackdamagemodifier"] or 1) * hit_reduction)
@@ -1356,366 +1323,42 @@ end
 			end
 
 			if !owner:IsRagdolled() and owner:Alive() then
-				-- Polearm Damage System
-				local distance = owner:GetPos():Distance(hit:GetPos());
-				local poledamage = (attacktable["primarydamage"])
-				local poletype = (attacktable["dmgtype"])
-				
-				if weapon.ShortPolearm != true then
-					if distance >= 0 and distance <= 35 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 0"
-							poledamage = (attacktable["primarydamage"]) * 0.01
-							poletype = 128
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability(5)
-								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
-								
-								-- KNOCKBACK
-								local knockback = owner:GetAngles():Forward() * 750;
-								knockback.z = 0
-								
-								timer.Simple(0.1, function()
-									if IsValid(hit) then
-										hit:SetVelocity(knockback);
-									end
-								end);
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
-							end
-						end
-					
-					elseif distance > 35 and distance <= 55 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 1"
-							poledamage = (attacktable["primarydamage"]) * 0.05
-							poletype = 128
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability(10)
-								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
-								
-								-- KNOCKBACK
-								local knockback = owner:GetAngles():Forward() * 700;
-								knockback.z = 0
-								
-								timer.Simple(0.1, function()
-									if IsValid(hit) then
-										hit:SetVelocity(knockback);
-									end
-								end);
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
-							end
-						end
-					
-					elseif distance > 55 and distance <= 65 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 2"
-							poledamage = (attacktable["primarydamage"]) * 0.08
-							poletype = 128
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability(15)
-								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
-								
-								-- KNOCKBACK
-								local knockback = owner:GetAngles():Forward() * 650;
-								knockback.z = 0
-								
-								timer.Simple(0.1, function()
-									if IsValid(hit) then
-										hit:SetVelocity(knockback);
-									end
-								end);
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
-							end
-						end
-					
-					elseif distance > 65 and distance <= 75 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 3"
-							poledamage = (attacktable["primarydamage"]) * 0.1
-							poletype = 128
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability(20)
-								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
-								
-								-- KNOCKBACK
-								local knockback = owner:GetAngles():Forward() * 600;
-								knockback.z = 0
-								
-								timer.Simple(0.1, function()
-									if IsValid(hit) then
-										hit:SetVelocity(knockback);
-									end
-								end);
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
-							end
-						end
-					
-					elseif distance > 75 and distance <= 85 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 4"
-							poledamage = (attacktable["primarydamage"]) * 0.7
+				-- Polearm Damage System				
+				if distance <= maxIneffectiveRange then
+					if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+						poledamage = (attacktable["primarydamage"]) * 0.01
+						poletype = 128
+						if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
+							hit:TakeStability(15)
+							-- KNOCKBACK
+							local knockback = owner:GetAngles():Forward() * 700;
+							knockback.z = 0
 							
-							-- counter damage
-							local targetVelocity = hit:GetVelocity();
-							
-							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
-								local entEyeAngles = hit:EyeAngles();
-							
-								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-									poledamage = poledamage + (poledamage * 0.6);
+							timer.Simple(0.1, function()
+								if IsValid(hit) then
+									hit:SetVelocity(knockback);
 								end
-							end
-							
-							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability((stabilitydamage * 0.7))			
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-						end
-					
-					elseif distance > 85 and distance <= 95 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 5"
-							poledamage = (attacktable["primarydamage"]) * 0.8
-							
-							-- counter damage
-							local targetVelocity = hit:GetVelocity();
-							
-							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
-								local entEyeAngles = hit:EyeAngles();
-							
-								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-									poledamage = poledamage + (poledamage * 0.5);
-								end
-							end
-							
-							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability((stabilitydamage * 0.8))			
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-						end
-					
-					elseif distance > 95 and distance <= 105 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 6"
-							poledamage = (attacktable["primarydamage"]) * 1
-							
-							-- counter damage
-							local targetVelocity = hit:GetVelocity();
-							
-							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
-								local entEyeAngles = hit:EyeAngles();
-							
-								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-									poledamage = poledamage + (poledamage * 0.5);
-								end
-							end
-							
-							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability((stabilitydamage * 1))			
-								hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-						end
-					
-					elseif distance > 105 and distance <= 115 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 7"
-							poledamage = (attacktable["primarydamage"]) * 1.1
-							
-							-- counter damage
-							local targetVelocity = hit:GetVelocity();
-							
-							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
-								local entEyeAngles = hit:EyeAngles();
-							
-								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-									poledamage = poledamage + (poledamage * 0.5);
-								end
-							end
-							
-							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability((stabilitydamage * 1.1))			
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-						end
-					
-					elseif distance > 115 and distance <= 125 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 8"
-							poledamage = (attacktable["primarydamage"]) * 1.3
-							
-							-- counter damage
-							local targetVelocity = hit:GetVelocity();
-							
-							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
-								local entEyeAngles = hit:EyeAngles();
-							
-								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-									poledamage = poledamage + (poledamage * 0.6);
-								end
-							end
-							
-							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability((stabilitydamage * 1.3))			
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-						end
-					
-					elseif distance > 125 and distance <= 135 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 9"
-							poledamage = (attacktable["primarydamage"]) * 1.6
-							
-							-- counter damage
-							local targetVelocity = hit:GetVelocity();
-							
-							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
-								local entEyeAngles = hit:EyeAngles();
-								
-								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-									poledamage = poledamage + (poledamage * 0.6);
-								end
-							end
-							
-							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability((stabilitydamage * 1.6))			
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-						end
-					
-					elseif distance > 135 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 10"
-							poledamage = (attacktable["primarydamage"]) * 1.7
-							
-							-- counter damage
-							local targetVelocity = hit:GetVelocity();
-							
-							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
-								local entEyeAngles = hit:EyeAngles();
-							
-								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-									poledamage = poledamage + (poledamage * 0.6);
-								end
-							end
-							
-							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability((stabilitydamage * 1.7))			
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
+							end);
 						end
 					end
 				else
-					if distance >= 0 and distance <= 70 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 1 (Small Polearm)"
-							poledamage = (attacktable["primarydamage"]) * 0.1
-							poletype = 128
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability(15)
-
-								-- KNOCKBACK
-								local knockback = owner:GetAngles():Forward() * 650;
-								knockback.z = 0
-								
-								timer.Simple(0.1, function()
-									if IsValid(hit) then
-										hit:SetVelocity(knockback);
-									end
-								end);
-								
-								--hit:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2,6)..".wav" ) 
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
+					if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
+						poletype = (attacktable["dmgtype"])
+						poledamage = variableDamage
+						
+						-- counter damage
+						local targetVelocity = hit:GetVelocity();
+						
+						if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
+							local entEyeAngles = hit:EyeAngles();
+						
+							if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
+								poledamage = poledamage + (poledamage * 0.5);
 							end
 						end
 						
-					elseif distance > 70 and distance <= 85 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 2 (Small Polearm)"
-							poledamage = (attacktable["primarydamage"]) * 1
-							
-							-- counter damage
-							local targetVelocity = hit:GetVelocity();
-							
-							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
-								local entEyeAngles = hit:EyeAngles();
-							
-								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-									poledamage = poledamage + (poledamage * 0.5);
-								end
-							end
-							
-							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability((stabilitydamage * 1))			
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-						end
-						
-					elseif distance > 85 and hit:IsValid() then
-						if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-							--print "Tier 3 (Small Polearm)"
-							poledamage = (attacktable["primarydamage"]) * 1.5
-							
-							-- counter damage
-							local targetVelocity = hit:GetVelocity();
-							
-							if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
-								local entEyeAngles = hit:EyeAngles();
-							
-								if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-									poledamage = poledamage + (poledamage * 0.5);
-								end
-							end
-							
-							poletype = (attacktable["dmgtype"])
-							if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-								hit:TakeStability((stabilitydamage * 1.5))			
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
-							if (hit:IsNPC() or hit:IsNextBot()) then
-								--hit:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
-							end
+						if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
+							hit:TakeStability(variableStabilityDamage)
 						end
 					end
 				end
@@ -1815,10 +1458,6 @@ end
 									hit:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
 								end
 							end
-							
-							if weapon.CanSwipeAttack == true then
-								hit:TakeStability(15)		
-							end
 						end
 					end
 
@@ -1838,12 +1477,10 @@ end
 
 			if !owner:IsRagdolled() and owner:Alive() then				
 				-- Spear Damage System (Messy)					
-				local distance = (owner:GetPos():Distance(hit:GetPos()))
-
 				if (IsValid(self)) then
 					if string.find(weaponClass, "begotten_spear_") then
-						if distance >= 0 and distance <= 64 and hit:IsValid() then
-							damage = (attacktable["primarydamage"]) * 0.05
+						if distance <= maxIneffectiveRange and hit:IsValid() then
+							damage = (attacktable["primarydamage"]) * 0.01
 							damagetype = 128
 							
 							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
@@ -1864,7 +1501,7 @@ end
 								end
 							end
 					
-						elseif distance >= 65 and hit:IsValid() then
+						elseif distance > maxIneffectiveRange and hit:IsValid() then
 							damage = (attacktable["primarydamage"])
 							damagetype = (attacktable["dmgtype"])
 							
@@ -1876,7 +1513,7 @@ end
 									local entEyeAngles = hit:EyeAngles();
 								
 									if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-										damage = damage + (damage * 0.6);
+										damage = damage + (damage * 0.5);
 									end
 								end
 								
@@ -2006,10 +1643,6 @@ end
 								else
 									hit:AddFreeze(weapon.FreezeDamage * (hit:WaterLevel() + 1), owner);
 								end
-							end
-							
-							if weapon.CanSwipeAttack == true then
-								hit:TakeStability(15)		
 							end
 						end
 					end

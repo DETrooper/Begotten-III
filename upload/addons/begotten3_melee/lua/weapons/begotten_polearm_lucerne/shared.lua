@@ -37,7 +37,6 @@ SWEP.AttackTable = "LucerneAttackTable"
 SWEP.BlockTable = "LucerneBlockTable"
 
 -- For polearms only
-SWEP.ShortPolearm = true
 SWEP.CanSwipeAttack = false
 
 function SWEP:CriticalAnimation()

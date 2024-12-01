@@ -37,7 +37,6 @@ SWEP.AttackTable = "GatekeeperPoleaxeAttackTable"
 SWEP.BlockTable = "GatekeeperPoleaxeBlockTable"
 
 -- For polearms only
-SWEP.ShortPolearm = true
 SWEP.CanSwipeAttack = false
 SWEP.MultiHit = 2;
 

@@ -144,7 +144,7 @@ function Parry(target, dmginfo)
 						if wep.isLongsword and (!cwBeliefs or target:HasBelief("blademaster")) then
 							wep:SetNW2Bool("swordplayActive", true);
 							
-							wep:CreateTimer(0.5, "swordplayTimer"..wep:EntIndex(), function()
+							wep:CreateTimer(1.2, "swordplayTimer"..wep:EntIndex(), function()
 								if IsValid(wep) then
 									wep:SetNW2Bool("swordplayActive", false);
 								end

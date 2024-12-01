@@ -322,51 +322,40 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 			
 			if inflictor and IsValid(inflictor) then
 				local class = inflictor:GetClass()
+				local attackerWeapon = attacker:GetActiveWeapon();
+				local attacktable = GetTable(attackerWeapon.AttackTable)
+				local maxPoleRange = (attacktable["meleerange"]) * 0.1
+				local maxIneffectiveRange = maxPoleRange * 0.53
 				
 				if (string.find(class, "begotten_spear_")) then
-					if (distance > 65) or attacker:GetNetVar("Riposting") then
+					if (distance > maxIneffectiveRange) or attacker:GetNetVar("Riposting") then
 						entity:EmitSound(armorSound)
 						
 						if playlowdamage then
 							entity:EmitSound("armor/generic_lowdamage_0"..math.random(1,6)..".wav");
 						end
-					elseif (distance >= 0 and distance <= 65) then -- Spear
+					elseif (distance <= maxIneffectiveRange) then -- Spear
 						entity:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2, 6)..".wav");
 					end;
 				elseif (string.find(class, "begotten_polearm_")) or (string.find(class, "begotten_scythe_")) then
-					if inflictor.ShortPolearm != true or didthrust then
-						if (distance >= 0 and distance <= 75) then -- Polearm
-							if attacker:GetNetVar("Riposting") then
-								entity:EmitSound(armorSound);
-							elseif didthrust and inflictor.CanSwipeAttack then
-								entity:EmitSound(althitbody);
-							else
-								entity:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2, 6)..".wav");
-							end
-						elseif (distance > 75) then
-							if attacker:GetNetVar("Riposting") then
-								entity:EmitSound(hitbody);
-							elseif didthrust and inflictor.CanSwipeAttack then
-								entity:EmitSound(althitbody);
-							else
-								entity:EmitSound(armorSound)
-							end
-						end;
-					else
-						if (distance >= 0 and distance <= 70) then -- Short polearm
-							if attacker:GetNetVar("Riposting") then
-								entity:EmitSound(armorSound);
-							else
-								entity:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2, 6)..".wav");
-							end
-						elseif (distance > 70) then
-							entity:EmitSound(armorSound)
-							
-							if playlowdamage then
-								entity:EmitSound("armor/generic_lowdamage_0"..math.random(1,6)..".wav");
-							end
+
+					if (distance <= maxIneffectiveRange) then -- Polearm
+						if attacker:GetNetVar("Riposting") then
+							entity:EmitSound(armorSound);
+						elseif didthrust and inflictor.CanSwipeAttack then
+							entity:EmitSound(althitbody);
+						else
+							entity:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2, 6)..".wav", 80);
 						end
-					end
+					else
+						if attacker:GetNetVar("Riposting") then
+							entity:EmitSound(hitbody);
+						elseif didthrust and inflictor.CanSwipeAttack then
+							entity:EmitSound(althitbody);
+						else
+							entity:EmitSound(armorSound)
+						end
+					end;
 				else -- Non-spear
 					entity:EmitSound(armorSound)
 					
@@ -775,6 +764,11 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 	if damageInfo and (entity:IsPlayer() or entity.isTrainingDummy) then
 		local attacker = damageInfo:GetAttacker();
 		local damage = damageInfo:GetDamage();
+		local didthrust = false;
+
+		if attacker:GetNetVar("ThrustStance") == true then
+			didthrust = true;
+		end;
 	
 		if damageInfo:IsDamageType(DMG_BURN) then
 			entity:TakeFreeze(damageInfo:GetDamage() / 2)
@@ -802,13 +796,20 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 						end
 						
 						if entity:IsPlayer() and (!attacker:GetNetVar("Parried") and !attacker:GetNetVar("Deflected")) then
-							entity:SetNetVar("runningDisabled", true);
-							
-							timer.Create("GroundedSprintTimer_"..tostring(entity:EntIndex()), 3, 1, function()
-								if IsValid(entity) then
-									entity:SetNetVar("runningDisabled", nil);
-								end
-							end);
+							local distance = attacker:GetPos():Distance(entity:GetPos())
+							local attacktable = GetTable(attackerWeapon.AttackTable)
+							local maxPoleRange = (attacktable["meleerange"]) * 0.1
+							local maxIneffectiveRange = maxPoleRange * 0.5
+
+							if distance >= maxIneffectiveRange or (didthrust and attackerWeapon.CanSwipeAttack) then
+								entity:SetNetVar("runningDisabled", true);
+								
+								timer.Create("GroundedSprintTimer_"..tostring(entity:EntIndex()), 3, 1, function()
+									if IsValid(entity) then
+										entity:SetNetVar("runningDisabled", nil);
+									end 
+								end);
+							end
 						end
 					end
 				end

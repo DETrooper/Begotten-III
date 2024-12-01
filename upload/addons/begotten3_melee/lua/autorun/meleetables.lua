@@ -1326,7 +1326,7 @@ AttackTables.BrokenSwordAttackTable = {
 };
 
 AttackTables.TrainingSwordAttackTable = {
-	["primarydamage"] = 0,
+	["primarydamage"] = 1,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = true,
@@ -1605,7 +1605,7 @@ AttackTables.LongswordAttackTable = {
 };
 
 AttackTables.TrainingLongswordAttackTable = {
-	["primarydamage"] = 0,
+	["primarydamage"] = 1,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = true,
@@ -2564,7 +2564,7 @@ AttackTables.IronSpearAttackTable = {
 };
 
 AttackTables.TrainingSpearAttackTable = {
-	["primarydamage"] = 0,
+	["primarydamage"] = 1,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -2621,7 +2621,7 @@ AttackTables.VoltspearAttackTable = {
 };
 
 AttackTables.SatanicSpearAttackTable = {
-	["primarydamage"] = 52,
+	["primarydamage"] = 55,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,

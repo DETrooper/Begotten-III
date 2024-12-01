@@ -37,7 +37,6 @@ SWEP.AttackTable = "BillhookAttackTable"
 SWEP.BlockTable = "BillhookBlockTable"
 
 -- For polearms only
-SWEP.ShortPolearm = true
 SWEP.CanSwipeAttack = false
 
 function SWEP:CriticalAnimation()
