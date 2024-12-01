@@ -42,7 +42,7 @@ SWEP.AdminSpawnable			= true
 
 SWEP.Primary.Sound			= Sound("railgun/relsa_shoot_1.mp3")		-- script that calls the primary fire sound
 SWEP.Primary.RPM				= 32		-- This is in Rounds Per Minute
-SWEP.Primary.ClipSize			= 15			-- Size of a clip
+SWEP.Primary.ClipSize			= 1			-- Size of a clip
 SWEP.Primary.DefaultClip		= 0	-- Default number of bullets in a clip
 SWEP.Primary.KickUp				= 1				-- Maximum up recoil (rise)
 SWEP.Primary.KickDown			= 0.8		-- Maximum down recoil (skeet)
