@@ -3265,7 +3265,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						local percentage = math.min(maximumdistancedamage / 150, 150);
 						local toolTip = function(frame)
 							frame:AddText("Maximum Projectile Damage", Color(110, 30, 30), nil, 1);
-							frame:AddText("The maximum amount of damage your projectile can deal. The maximum distance can be reached at about 40 feet from your target, and any distance beyond that will grant no additional damage. Note that this damage value is for the Iron Bolt, and other ammunition types will have different values.", Color(225, 200, 200), nil, 0.8);
+							frame:AddText("The maximum amount of damage your projectile can deal. The maximum distance can be reached at about 40 feet from your target, and any distance beyond that will grant no additional damage.", Color(225, 200, 200), nil, 0.8);
 						end
 			
 						if maximumdistancedamage < originalDamage then
@@ -3288,7 +3288,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						local percentage = math.min(minimumdistancedamage / 150, 150);
 						local toolTip = function(frame)
 							frame:AddText("Minimum Projectile Damage", Color(110, 30, 30), nil, 1);
-							frame:AddText("The minimum amount of damage your projectile can deal. This would be dealt with a point-blank hit, and would gradually increase the further away the target is. Note that this damage value is for the Iron Bolt, and other ammunition types will have different values.", Color(225, 200, 200), nil, 0.8);
+							frame:AddText("The minimum amount of damage your projectile can deal. This would be dealt with a point-blank hit, and would gradually increase the further away the target is.", Color(225, 200, 200), nil, 0.8);
 						end
 			
 						if minimumdistancedamage < originalDamage then
@@ -3303,7 +3303,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					local percentage = math.min(weaponTable.Primary.StabilityDamage / 100, 100);
 					local toolTip = function(frame)
 						frame:AddText("Stability Damage", Color(110, 30, 30), nil, 1);
-						frame:AddText("The damage to your foe's stability that your fired projectiles deal. Dealing enough will temporarily knock your foe to the ground. Can be negated by enemy armor. For bolts, this scales by distance; targets further away will take considerably more stability damage, and targets up close will take considerably less stability damage. At maximum range, the projectile will deal double this stability damage. Note that this damage value is for the Iron Bolt, and other ammunition types will have different values.", Color(225, 200, 200), nil, 0.8);
+						frame:AddText("The damage to your foe's stability that your fired projectiles deal. Dealing enough will temporarily knock your foe to the ground. Can be negated by enemy armor. For bolts, this scales by distance; targets further away will take considerably more stability damage, and targets up close will take considerably less stability damage. At maximum range, the projectile will deal double this stability damage.", Color(225, 200, 200), nil, 0.8);
 					end
 		
 					frame:AddBar(12, {{text = tostring(weaponTable.Primary.StabilityDamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage", Color(110, 30, 30), toolTip, true);
@@ -3517,7 +3517,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 								local percentage = math.min(maximumdistancedamage / 150, 150);
 								local toolTip = function(frame)
 									frame:AddText("Maximum Projectile Damage", Color(110, 30, 30), nil, 1);
-									frame:AddText("The maximum amount of damage your projectile can deal. The maximum distance can be reached at about 40 feet from your target, and any distance beyond that will grant no additional damage. Note that this damage value is for the Iron Bolt, and other ammunition types will have different values.", Color(225, 200, 200), nil, 0.8);
+									frame:AddText("The maximum amount of damage your projectile can deal. The maximum distance can be reached at about 40 feet from your target, and any distance beyond that will grant no additional damage.", Color(225, 200, 200), nil, 0.8);
 								end
 					
 								if maximumdistancedamage < originalDamage then
@@ -3540,7 +3540,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 								local percentage = math.min(minimumdistancedamage / 150, 150);
 								local toolTip = function(frame)
 									frame:AddText("Minimum Projectile Damage", Color(110, 30, 30), nil, 1);
-									frame:AddText("The minimum amount of damage your projectile can deal. This would be dealt with a point-blank hit, and would gradually increase the further away the target is. Note that this damage value is for the Iron Bolt, and other ammunition types will have different values.", Color(225, 200, 200), nil, 0.8);
+									frame:AddText("The minimum amount of damage your projectile can deal. This would be dealt with a point-blank hit, and would gradually increase the further away the target is.", Color(225, 200, 200), nil, 0.8);
 								end
 					
 								if minimumdistancedamage < originalDamage then
@@ -3555,7 +3555,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 							local percentage = math.min(weaponTable.Primary.StabilityDamage / 100, 100);
 							local toolTip = function(frame)
 								frame:AddText("Stability Damage", Color(110, 30, 30), nil, 1);
-								frame:AddText("The damage to your foe's stability that your fired projectiles deal. Dealing enough will temporarily knock your foe to the ground. Can be negated by enemy armor. For bolts, this scales by distance; targets further away will take considerably more stability damage, and targets up close will take considerably less stability damage. At maximum range, the projectile will deal double this stability damage. Note that this damage value is for the Iron Bolt, and other ammunition types will have different values.", Color(225, 200, 200), nil, 0.8);
+								frame:AddText("The damage to your foe's stability that your fired projectiles deal. Dealing enough will temporarily knock your foe to the ground. Can be negated by enemy armor. For bolts, this scales by distance; targets further away will take considerably more stability damage, and targets up close will take considerably less stability damage. At maximum range, the projectile will deal double this stability damage.", Color(225, 200, 200), nil, 0.8);
 							end
 				
 							frame:AddBar(12, {{text = tostring(weaponTable.Primary.StabilityDamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage", Color(110, 30, 30), toolTip, true);

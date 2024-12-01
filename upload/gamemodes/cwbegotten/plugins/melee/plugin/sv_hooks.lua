@@ -324,10 +324,11 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 				local class = inflictor:GetClass()
 				local attackerWeapon = attacker:GetActiveWeapon();
 				local attacktable = GetTable(attackerWeapon.AttackTable)
-				local maxPoleRange = (attacktable["meleerange"]) * 0.1
-				local maxIneffectiveRange = maxPoleRange * 0.53
-				
+								
 				if (string.find(class, "begotten_spear_")) then
+					local maxPoleRange = (attacktable["meleerange"]) * 0.1
+					local maxIneffectiveRange = maxPoleRange * 0.53
+
 					if (distance > maxIneffectiveRange) or attacker:GetNetVar("Riposting") then
 						entity:EmitSound(armorSound)
 						
@@ -338,6 +339,8 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 						entity:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2, 6)..".wav");
 					end;
 				elseif (string.find(class, "begotten_polearm_")) or (string.find(class, "begotten_scythe_")) then
+					local maxPoleRange = (attacktable["meleerange"]) * 0.1
+					local maxIneffectiveRange = maxPoleRange * 0.53
 
 					if (distance <= maxIneffectiveRange) then -- Polearm
 						if attacker:GetNetVar("Riposting") then
@@ -379,66 +382,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 	if !initialized then
 		return;
 	end
-	
-	--[[local inAttack2 = player:KeyDown(IN_ATTACK2);
-	local gardening = player:GetNetVar("Guardening", false);
-	
-	if (!inAttack2 and gardening) then
-		player:CancelGuardening();
-	end;]]--
-	
-	--[[if (!plyTab.nextBlockCheck or curTime > plyTab.nextBlockCheck) then
-		plyTab.nextBlockCheck = curTime + 1;
-
-		if (gardening == true) then
-			local activeWeapon = player:GetActiveWeapon()
-			
-			if (activeWeapon:IsValid()) then
-				if (activeWeapon.realIronSights == false) then
-					player:SetLocalVar("Guardening", false)
-					plyTab.beginBlockTransition = true;
-				end
-			end;
-		end;
-	end;]]--
-
-	--[[if (!plyTab.nextStas or plyTab.nextStas < curTime) then
-		local activeWeapon = player:GetActiveWeapon();
-		local max_poise = player:GetMaxPoise();
-		local poise = player:GetNWInt("meleeStamina", max_poise);
-		local gainedPoise = 5;
 		
-		if plyTab.banners then
-			local playerFaction = player:GetFaction();
-			
-			for k, v in pairs(plyTab.banners) do
-				if v == "glazic" then
-					if playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" then
-						gainedPoise = 7;
-
-						break;
-					end
-				end
-			end
-		end
-		
-		if activeWeapon:IsValid() and activeWeapon.Base == "sword_swepbase" then
-			if (poise != max_poise) then
-				if !Clockwork.player:GetWeaponRaised(player) or (poise < max_poise) and !player:GetNetVar("Guardening") then
-					player:SetNWInt("meleeStamina", math.Clamp(poise + gainedPoise, 0, max_poise))
-				end
-			end;
-		else
-			if poise != max_poise then
-				player:SetNWInt("meleeStamina", math.Clamp(poise + gainedPoise, 0, max_poise));
-			end;
-		end;
-		
-		player:SetLocalVar("maxMeleeStamina", max_poise);
-		
-		plyTab.nextStas = curTime + 0.5;
-	end;]]--
-	
 	if (!plyTab.nextStability or plyTab.nextStability < curTime) then
 		local max_stability = player:GetMaxStability();
 		local stability = player:GetCharacterData("stability", max_stability);
