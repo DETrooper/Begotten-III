@@ -1959,22 +1959,46 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 		for i, v in ipairs(iconTable) do
 			local icon;
 			
-			if v.button and isfunction(v.button) then
-				icon = vgui.Create("DImageButton", self);
+			if v.itemTable then
+				local itemTable = v.itemTable;
 				
-				icon.DoClick = v.button
-				icon.DoRightClick = icon.DoClick;
+				if itemTable.iconoverride then
+					icon = Clockwork.kernel:CreateMarkupToolTip(vgui.Create("DImageButton", self));
+					
+					icon:SetImage(itemTable.iconoverride);
+					icon:SetSize(48, 48);
+					icon.isSpawnIcon = false;
+					icon:SetItemTable(itemTable);
+				else
+					local model, skin = Clockwork.item:GetIconInfo(itemTable);
+					
+					icon = Clockwork.kernel:CreateMarkupToolTip(vgui.Create("cwSpawnIcon", self));
+					
+					icon:SetModel(model, skin);
+					icon:SetSize(48, 48);
+					icon.isSpawnIcon = true;
+					icon:SetItemTable(itemTable);
+				end
+				
+				icon:SetItemTable(itemTable);
 			else
-				icon = vgui.Create("DImage", self);
-			end
-			
-			icon:SetSize(height, height);
-			icon:SetImage(v.icon);
-			
-			if v.tooltip and isfunction(v.tooltip) then
-				Clockwork.kernel:CreateDermaToolTip(icon);
+				if v.button and isfunction(v.button) then
+					icon = vgui.Create("DImageButton", self);
+					
+					icon.DoClick = v.button
+					icon.DoRightClick = icon.DoClick;
+				else
+					icon = vgui.Create("DImage", self);
+				end
+				
+				icon:SetSize(height, height);
+				icon:SetImage(v.icon);
+				
+				if v.tooltip and isfunction(v.tooltip) then
+					Clockwork.kernel:CreateDermaToolTip(icon);
 
-				icon:SetToolTipCallback(v.tooltip);
+					icon:SetToolTipCallback(v.tooltip);
+				end
 			end
 			
 			iconBox:AddItem(icon);
@@ -2139,6 +2163,8 @@ function Clockwork.kernel:SetupDermaToolTip(parent)
 		local itemTable = parent:GetItemTable();
 
 		if (itemTable) then
+			frame.itemTable = itemTable;
+		
 			local bShowWeight = !parent.bWeightless or true;
 			
 			if (!itemTable.bDisplayWeight) then

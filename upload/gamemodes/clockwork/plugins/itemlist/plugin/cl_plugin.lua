@@ -60,6 +60,12 @@ spawnmenu.AddContentType("cwItem", function(container, data)
 				end
 			end);
 		end);
+		
+		if Clockwork.command:FindByID("SummonItem") then
+			menu:AddOption("Summon instance of the item.", function()
+				Clockwork.kernel:RunCommand("SummonItem", data.uniqueID);
+			end);
+		end
 
 		menu:Open()
 	end

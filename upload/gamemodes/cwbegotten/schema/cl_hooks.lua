@@ -3159,9 +3159,22 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.ammoTypes then
-					frame:AddText("Shot Versatility: ", Color(110, 30, 30), nil, 0.9);
+					if itemTable.ammoTypes and #itemTable.ammoTypes > 0 then
+						local ammoIcons = {};
+						
+						for i, v in ipairs(itemTable.ammoTypes) do
+							local ammoItemTable = item.FindByID(string.lower(v));
+							
+							if ammoItemTable then
+								table.insert(ammoIcons, {itemTable = ammoItemTable});
+							end
+						end
+						
+						frame:AddText("Shot Versatility: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+						frame:AddIconRow(ammoIcons, 48);
+					end
 					
-					if itemTable.ammoTypesNice then
+					--[[if itemTable.ammoTypesNice then
 						for i = 1, #itemTable.ammoTypesNice do
 							frame:AddText("   "..itemTable.ammoTypesNice[i], Color(110, 30, 30), nil, 0.9);
 						end
@@ -3169,7 +3182,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						for i = 1, #itemTable.ammoTypes do
 							frame:AddText("   "..itemTable.ammoTypes[i], Color(110, 30, 30), nil, 0.9);
 						end
-					end
+					end]]--
 				end
 				
 				frame:AddText("Weapon Stats: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
@@ -3389,27 +3402,217 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		frame:AddText(itemTable.charmEffects, Color(110, 30, 30), nil, 0.9);
 		
 		return true;
-	elseif (category == "Shot" and itemTable.ammoMagazineSize) then
-		local magazineAmmo = itemTable:GetAmmoMagazine();
-		
-		if magazineAmmo and magazineAmmo <= 0 then
-			frame:AddText("Empty "..itemTable.name.." - Magazine", Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
+	elseif (category == "Shot") then
+		if itemTable.ammoMagazineSize then
+			local magazineAmmo = itemTable:GetAmmoMagazine();
+			
+			if magazineAmmo and magazineAmmo <= 0 then
+				frame:AddText("Empty "..itemTable.name.." - Magazine", Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
+			else
+				frame:AddText(itemTable.name.." - Magazine", Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
+			end
 		else
-			frame:AddText(itemTable.name.." - Magazine", Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
+			frame:AddText(name.." - "..category, Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
 		end
 		
 		frame:AddText(itemTable("description"), Color(180, 170, 170), "nov_IntroTextSmallDETrooper", 0.8);
 		
 		if (bShowWeight) then
 			frame:AddBar(20, {{text = weight.."kg", percentage = percentage * 100, color = Color(96, 96, 128), font = "DermaDefault", leftTextAlign = false, noDisplay = true}}, "Weight", Color(170, 170, 180));
-			frame:AddSpacer(2, Color(0, 0, 0, 0));
+		end;
+		
+		if itemTable.attributes then
+			frame:AddText("Shot Attributes: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+		
+			if table.HasValue(itemTable.attributes, "fire") then
+				frame:AddText("Incendiary: Sets enemies alight upon contact.", Color(110, 30, 30), nil, 0.9);
+			end
 		end
 		
-		if magazineAmmo and magazineAmmo > 0 then
-			frame:AddText("Loaded Shot: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
-			frame:AddText(itemTable.ammoName.." ("..tostring(magazineAmmo).."/"..tostring(itemTable.ammoMagazineSize)..")", Color(180, 170, 170), "nov_IntroTextSmallDETrooper", 0.8);
-		else
-			frame:AddText("This magazine is empty.", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+		if frame.parent then
+			local parent = frame.parent:GetParent():GetParent():GetParent():GetParent():GetParent();
+
+			if IsValid(parent) and parent.itemTable then
+				local weaponItemTable = parent.itemTable;
+				local weaponClass = weaponItemTable.uniqueID;
+				local weaponTable;
+
+				if weaponClass then
+					weaponTable = _G.weapons.Get(weaponClass);
+				end
+				
+				if weaponTable and weaponTable.AmmoTypes and weaponTable.AmmoTypes[itemTable.ammoType] then				
+					local ammoStats = weaponTable.AmmoTypes[itemTable.ammoType];
+					
+					if ammoStats then
+						ammoStats(weaponTable);
+					
+						frame:AddText("Shot Stats: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+						
+						if weaponTable.Primary.IronAccuracy and !weaponTable.Primary.MaximumDistanceDamage then
+							local accuracy = weaponTable.Primary.IronAccuracy;
+							local originalAccuracy = accuracy;
+							
+							if condition and condition < 100 then
+								accuracy = math.Truncate(accuracy * Lerp(condition / 90, 1.5, 1), 5);
+							end
+						
+							local percentage = 1 - math.min(accuracy * 2, 1);
+							local toolTip = function(frame)
+								frame:AddText("Accuracy (Aiming)", Color(110, 30, 30), nil, 1);
+								frame:AddText("The accuracy of your weapon while aiming down sights. Can be further increased by crouching and through the 'Marksman' belief.", Color(225, 200, 200), nil, 0.8);
+							end
+				
+							if accuracy > originalAccuracy then
+								frame:AddBar(12, {{text = tostring(accuracy).." / "..tostring(originalAccuracy), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Accuracy (Aiming)", Color(110, 30, 30), toolTip, true);
+							else
+								frame:AddBar(12, {{text = tostring(accuracy), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Accuracy (Aiming)", Color(110, 30, 30), toolTip, true);
+							end
+						end
+						
+						if weaponTable.Primary.Spread and !weaponTable.Primary.MaximumDistanceDamage then
+							local accuracy = weaponTable.Primary.Spread;
+							local originalAccuracy = accuracy;
+							
+							if condition and condition < 100 then
+								accuracy = math.Truncate(accuracy * Lerp(condition / 90, 1.5, 1), 5);
+							end
+						
+							local percentage = 1 - math.min(accuracy * 2, 1);
+							local toolTip = function(frame)
+								frame:AddText("Accuracy (Hip-Fire)", Color(110, 30, 30), nil, 1);
+								frame:AddText("The accuracy of your weapon while hip-firing. Can be further increased by crouching.", Color(225, 200, 200), nil, 0.8);
+							end
+				
+							if accuracy > originalAccuracy then
+								frame:AddBar(12, {{text = tostring(accuracy).." / "..tostring(originalAccuracy), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Accuracy (Hip-Fire)", Color(110, 30, 30), toolTip, true);
+							else
+								frame:AddBar(12, {{text = tostring(accuracy), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Accuracy (Hip-Fire)", Color(110, 30, 30), toolTip, true);
+							end
+						end
+						
+						if weaponTable.Primary.NumShots > 1 then
+							local percentage = math.min(weaponTable.Primary.NumShots, 32) / 32;
+							local toolTip = function(frame)
+								frame:AddText("Pellet Amount", Color(110, 30, 30), nil, 1);
+								frame:AddText("The amount of projectiles fired from this weapon.", Color(225, 200, 200), nil, 0.8);
+							end
+				
+							frame:AddBar(12, {{text = tostring(weaponTable.Primary.NumShots), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Pellet Amount", Color(110, 30, 30), toolTip, true);
+						end
+						
+						if weaponTable.Primary.RPM and weaponTable.Primary.ClipSize > 1 then
+							local percentage = math.min(weaponTable.Primary.RPM, 650) / 650;
+							local toolTip = function(frame)
+								frame:AddText("Rate of Fire", Color(110, 30, 30), nil, 1);
+								frame:AddText("The rate of fire of this weapon in rounds per minute.", Color(225, 200, 200), nil, 0.8);
+							end
+				
+							frame:AddBar(12, {{text = tostring(weaponTable.Primary.RPM), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Rate of Fire", Color(110, 30, 30), toolTip, true);
+						end
+						
+						if weaponTable.Primary.MaximumDistanceDamage then
+							local maximumdistancedamage = weaponTable.Primary.MaximumDistanceDamage;
+							local originalDamage = maximumdistancedamage;
+							
+							if maximumdistancedamage then
+								local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+							
+								maximumdistancedamage = math.Round(maximumdistancedamage * Lerp(scalar, 0.7, 1));
+
+								local percentage = math.min(maximumdistancedamage / 150, 150);
+								local toolTip = function(frame)
+									frame:AddText("Maximum Projectile Damage", Color(110, 30, 30), nil, 1);
+									frame:AddText("The maximum amount of damage your projectile can deal. The maximum distance can be reached at about 40 feet from your target, and any distance beyond that will grant no additional damage. Note that this damage value is for the Iron Bolt, and other ammunition types will have different values.", Color(225, 200, 200), nil, 0.8);
+								end
+					
+								if maximumdistancedamage < originalDamage then
+									frame:AddBar(12, {{text = tostring(maximumdistancedamage).." / "..tostring(originalDamage).." (At 40 Feet)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Maximum Projectile Damage", Color(110, 30, 30), toolTip, true);
+								else
+									frame:AddBar(12, {{text = tostring(maximumdistancedamage).." (At 40 Feet)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Maximum Projectile Damage", Color(110, 30, 30), toolTip, true);
+								end
+							end
+						end
+						
+						if weaponTable.Primary.MinimumDistanceDamage then
+							local minimumdistancedamage = weaponTable.Primary.MinimumDistanceDamage;
+							local originalDamage = minimumdistancedamage;
+							
+							if minimumdistancedamage then
+								local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+							
+								minimumdistancedamage = math.Round(minimumdistancedamage * Lerp(scalar, 0.7, 1));
+
+								local percentage = math.min(minimumdistancedamage / 150, 150);
+								local toolTip = function(frame)
+									frame:AddText("Minimum Projectile Damage", Color(110, 30, 30), nil, 1);
+									frame:AddText("The minimum amount of damage your projectile can deal. This would be dealt with a point-blank hit, and would gradually increase the further away the target is. Note that this damage value is for the Iron Bolt, and other ammunition types will have different values.", Color(225, 200, 200), nil, 0.8);
+								end
+					
+								if minimumdistancedamage < originalDamage then
+									frame:AddBar(12, {{text = tostring(minimumdistancedamage).." / "..tostring(originalDamage).." (Point-Blank)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Minimum Projectile Damage", Color(110, 30, 30), toolTip, true);
+								else
+									frame:AddBar(12, {{text = tostring(minimumdistancedamage).." (Point-Blank)", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Minimum Projectile Damage", Color(110, 30, 30), toolTip, true);
+								end
+							end
+						end
+						
+						if weaponTable.Primary.StabilityDamage then
+							local percentage = math.min(weaponTable.Primary.StabilityDamage / 100, 100);
+							local toolTip = function(frame)
+								frame:AddText("Stability Damage", Color(110, 30, 30), nil, 1);
+								frame:AddText("The damage to your foe's stability that your fired projectiles deal. Dealing enough will temporarily knock your foe to the ground. Can be negated by enemy armor. For bolts, this scales by distance; targets further away will take considerably more stability damage, and targets up close will take considerably less stability damage. At maximum range, the projectile will deal double this stability damage. Note that this damage value is for the Iron Bolt, and other ammunition types will have different values.", Color(225, 200, 200), nil, 0.8);
+							end
+				
+							frame:AddBar(12, {{text = tostring(weaponTable.Primary.StabilityDamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stability Damage", Color(110, 30, 30), toolTip, true);
+						end
+						
+						if weaponTable.Primary.BoltRange then
+							local boltRange = weaponTable.Primary.BoltRange;
+							local originalBoltRange = boltRange;
+							
+							if boltRange then
+								local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
+							
+								boltRange = math.Round(boltRange * Lerp(scalar, 0.5, 1));
+
+								local percentage = math.min(boltRange / 200, 200);
+								local toolTip = function(frame)
+									frame:AddText("Bolt Range", Color(110, 30, 30), nil, 1);
+									frame:AddText("The speed and maximum distance of your loosed bolt. If you wish to hit a target further away, aim higher!", Color(225, 200, 200), nil, 0.8);
+								end
+					
+								if boltRange < originalBoltRange then
+									frame:AddBar(12, {{text = tostring(boltRange).." / "..tostring(originalBoltRange), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Bolt Range", Color(110, 30, 30), toolTip, true);
+								else
+									frame:AddBar(12, {{text = tostring(boltRange), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Bolt Range", Color(110, 30, 30), toolTip, true);
+								end
+							end
+						end
+						
+						if weaponTable.Primary.Damage and !weaponTable.Primary.MaximumDistanceDamage then
+							local percentage = math.min(weaponTable.Primary.Damage / 80, 80);
+							local toolTip = function(frame)
+								frame:AddText("Shot Damage", Color(110, 30, 30), nil, 1);
+								frame:AddText("The damage of this weapon's shot. Note that firearms have 100% armor-piercing.", Color(225, 200, 200), nil, 0.8);
+							end
+				
+							frame:AddBar(12, {{text = tostring(weaponTable.Primary.Damage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Shot Damage", Color(110, 30, 30), toolTip, true);
+						end
+					end
+				end
+			end
+		end
+		
+		if itemTable.ammoMagazineSize then
+			local magazineAmmo = itemTable:GetAmmoMagazine();
+			
+			if magazineAmmo and magazineAmmo > 0 then
+				frame:AddText("Loaded Shot: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+				frame:AddText(itemTable.ammoName.." ("..tostring(magazineAmmo).."/"..tostring(itemTable.ammoMagazineSize)..")", Color(180, 170, 170), "nov_IntroTextSmallDETrooper", 0.8);
+			else
+				frame:AddText("This magazine is empty.", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+			end
 		end
 		
 		return true;

@@ -65,6 +65,8 @@ function Clockwork.equipment:GetItemEquipped(player, itemTable, category)
 	if !itemTable then
 		return false;
 	end
+	
+	if !itemTable.slots then return false end;
 
 	for k, v in pairs(equipmentSlots) do
 		if v and v.uniqueID == itemTable.uniqueID and (!v.itemID or v.itemID == itemTable.itemID) then

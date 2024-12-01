@@ -71,9 +71,9 @@ SWEP.data 				= {}				--The starting firemode
 SWEP.data.ironsights			= 1
 
 SWEP.Primary.NumShots	= 1		-- How many bullets to shoot per trigger pull
-SWEP.Primary.Damage		= 30	-- Base damage per bullet
-SWEP.Primary.Spread		= .2	-- Define from-the-hip accuracy 1 is terrible, .0001 is exact)
-SWEP.Primary.IronAccuracy = .15 -- Ironsight accuracy, should be the same for shotguns
+SWEP.Primary.Damage		= 27	-- Base damage per bullet
+SWEP.Primary.Spread		= .15	-- Define from-the-hip accuracy 1 is terrible, .0001 is exact)
+SWEP.Primary.IronAccuracy = .09 -- Ironsight accuracy, should be the same for shotguns
 
 SWEP.SelectiveFire		= false
 
@@ -88,9 +88,9 @@ SWEP.AmmoTypes = {
 		SWEP.Primary.Sound = Sound("weapons_moth/p90-1.wav");
 		SWEP.Primary.SoundLevel = 400;
 		SWEP.Primary.NumShots = 1;
-		SWEP.Primary.Damage = 30;
-		SWEP.Primary.Spread = .2;
-		SWEP.Primary.IronAccuracy = .15;
+		SWEP.Primary.Damage = 27;
+		SWEP.Primary.Spread = .15;
+		SWEP.Primary.IronAccuracy = .09;
 		SWEP.Primary.ClipSize = 1;
 		
 		if SWEP.Owner and SWEP.Owner:IsPlayer() then

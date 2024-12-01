@@ -1858,6 +1858,8 @@ function PANEL:Init()
 	end;
 	
 	self.categoryList:AddItem(self.classForm);
+	
+	cwMapScene:RefreshCharacterModel();
 end;
 
 -- Called when the panel is painted.
@@ -2041,9 +2043,8 @@ function PANEL:Init()
 	end
 	
 	if IsValid(Clockwork.Client.CharSelectionModel) then
-		Clockwork.Client.CharSelectionModel:SetBodygroup(0, 0);
-		Clockwork.Client.CharSelectionModel:SetBodygroup(1, 0);
-	
+		cwMapScene:RefreshCharacterModel(true);
+		
 		local clientsideModel = Clockwork.Client.CharSelectionModel:GetModel();
 		
 		if IsValid(Clockwork.Client.CharSelectionModel.HeadModel) then
@@ -3228,6 +3229,8 @@ function PANEL:Init()
 			end;
 		end;
 	end;
+	
+	cwMapScene:RefreshCharacterModel();
 end;
 
 -- Called when the next button is pressed.
@@ -3616,6 +3619,8 @@ function PANEL:Init()
 	if (self.informationForm) then
 		self.informationList:AddItem(self.informationForm);
 	end
+	
+	cwMapScene:RefreshCharacterModel();
 end;
 
 -- Called when the next button is pressed.

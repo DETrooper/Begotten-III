@@ -50,7 +50,7 @@ SWEP.ShellTime			= .5
 
 SWEP.Primary.NumShots	= 1
 SWEP.Primary.Damage		= 95
-SWEP.Primary.Spread		= 0.05				
+SWEP.Primary.Spread		= .05				
 SWEP.Primary.IronAccuracy = .02
 -- Because irons don't magically give you less pellet spread!
 

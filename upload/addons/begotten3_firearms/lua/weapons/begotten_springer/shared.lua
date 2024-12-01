@@ -49,8 +49,8 @@ SWEP.ScopeScale 			= 0.7
 
 SWEP.Primary.NumShots	= 1		--how many bullets to shoot per trigger pull
 SWEP.Primary.Damage		= 85	--base damage per bullet
-SWEP.Primary.Spread		= .02	--define from-the-hip accuracy 1 is terrible, .0001 is exact)
-SWEP.Primary.IronAccuracy = .004 -- ironsight accuracy, should be the same for shotguns
+SWEP.Primary.Spread		= .05	--define from-the-hip accuracy 1 is terrible, .0001 is exact)
+SWEP.Primary.IronAccuracy = .05 -- ironsight accuracy, should be the same for shotguns
 SWEP.BoltAction	=	true;
 
 SWEP.MisfireChance = 0;

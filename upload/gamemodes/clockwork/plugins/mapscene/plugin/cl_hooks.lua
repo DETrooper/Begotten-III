@@ -509,6 +509,58 @@ elseif map == "rp_scraptown" then
 	};
 end
 
+local function RefreshCharacterModel(modelEnt, faction, subfaction, bClearBodyGroups)
+	if modelEnt.HeadModel then
+		modelEnt.HeadModel:SetSkin(0);
+	else
+		modelEnt:SetSkin(0);
+	end
+	
+	if bClearBodyGroups then
+		if modelEnt.HeadModel then
+			modelEnt.HeadModel:SetBodygroup(0, 0);
+			modelEnt.HeadModel:SetBodygroup(1, 0);
+		else
+			modelEnt:SetBodygroup(0, 0);
+			modelEnt:SetBodygroup(1, 0);
+		end
+	
+		return;
+	end
+
+	if subfaction then
+		if subfactionCamTable[subfaction] and subfactionCamTable[subfaction].charBodygroup then
+			if modelEnt.HeadModel then
+				modelEnt.HeadModel:SetBodygroup(subfactionCamTable[subfaction].charBodygroup[1], subfactionCamTable[subfaction].charBodygroup[2]);
+			else
+				modelEnt:SetBodygroup(subfactionCamTable[subfaction].charBodygroup[1], subfactionCamTable[subfaction].charBodygroup[2]);
+			end
+		elseif !subfactionCamTable[subfaction] or (subfactionCamTable[subfaction] and subfactionCamTable[subfaction].charModel) then
+			if modelEnt.HeadModel then
+				modelEnt.HeadModel:SetBodygroup(0, 0);
+				modelEnt.HeadModel:SetBodygroup(1, 0);
+			else
+				modelEnt:SetBodygroup(0, 0);
+				modelEnt:SetBodygroup(1, 0);
+			end
+		end
+	elseif camTable[faction].charBodygroup then
+		if modelEnt.HeadModel then
+			modelEnt.HeadModel:SetBodygroup(camTable[faction].charBodygroup[1], camTable[faction].charBodygroup[2]);
+		else
+			modelEnt:SetBodygroup(camTable[faction].charBodygroup[1], camTable[faction].charBodygroup[2]);
+		end
+	else
+		if modelEnt.HeadModel then
+			modelEnt.HeadModel:SetBodygroup(0, 0);
+			modelEnt.HeadModel:SetBodygroup(1, 0);
+		else
+			modelEnt:SetBodygroup(0, 0);
+			modelEnt:SetBodygroup(1, 0);
+		end
+	end
+end
+
 -- Called when the character background should be drawn.
 function cwMapScene:ShouldDrawCharacterBackground()
 	if (self.curStored) then return false end
@@ -599,9 +651,9 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 					dynamicLight.r = 200;
 					dynamicLight.g = 200;
 					dynamicLight.b = 200;
-					dynamicLight.brightness = 0.5;
+					dynamicLight.brightness = 1;
 					dynamicLight.Decay = 0;
-					dynamicLight.Size = 100;
+					dynamicLight.Size = 256;
 					dynamicLight.DieTime = curTime + 0.5;
 				end;
 				
@@ -626,25 +678,7 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 				end
 				
 				if (!Clockwork.Client.ModelSelectionOpen) then
-					if modelEnt.HeadModel then
-						modelEnt.HeadModel:SetSkin(0);
-					else
-						modelEnt:SetSkin(0);
-					end
-				
-					if subfaction and subfactionCamTable[subfaction] and subfactionCamTable[subfaction].charBodygroup then
-						if modelEnt.HeadModel then
-							modelEnt.HeadModel:SetBodygroup(subfactionCamTable[subfaction].charBodygroup[1], subfactionCamTable[subfaction].charBodygroup[2]);
-						else
-							modelEnt:SetBodygroup(subfactionCamTable[subfaction].charBodygroup[1], subfactionCamTable[subfaction].charBodygroup[2]);
-						end
-					elseif camTable[faction].charBodygroup then
-						if modelEnt.HeadModel then
-							modelEnt.HeadModel:SetBodygroup(camTable[faction].charBodygroup[1], camTable[faction].charBodygroup[2]);
-						else
-							modelEnt:SetBodygroup(camTable[faction].charBodygroup[1], camTable[faction].charBodygroup[2]);
-						end
-					end
+					RefreshCharacterModel(modelEnt, faction, subfaction);
 				end
 				
 				Clockwork.Client.CharSelectionModel = modelEnt;
@@ -681,25 +715,7 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 				end
 				
 				if (!Clockwork.Client.ModelSelectionOpen) then
-					if modelEnt.HeadModel then
-						modelEnt.HeadModel:SetSkin(0);
-					else
-						modelEnt:SetSkin(0);
-					end
-				
-					if subfaction and subfactionCamTable[subfaction] and subfactionCamTable[subfaction].charBodygroup then
-						if modelEnt.HeadModel then
-							modelEnt.HeadModel:SetBodygroup(subfactionCamTable[subfaction].charBodygroup[1], subfactionCamTable[subfaction].charBodygroup[2]);
-						else
-							modelEnt:SetBodygroup(subfactionCamTable[subfaction].charBodygroup[1], subfactionCamTable[subfaction].charBodygroup[2]);
-						end
-					elseif camTable[faction].charBodygroup then
-						if modelEnt.HeadModel then
-							modelEnt.HeadModel:SetBodygroup(camTable[faction].charBodygroup[1], camTable[faction].charBodygroup[2]);
-						else
-							modelEnt:SetBodygroup(camTable[faction].charBodygroup[1], camTable[faction].charBodygroup[2]);
-						end
-					end
+					RefreshCharacterModel(modelEnt, faction, subfaction);
 				end
 
 				Clockwork.Client.CharSelectionModel = modelEnt;
@@ -805,5 +821,11 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 				}
 			end
 		end
+	end
+end
+
+function cwMapScene:RefreshCharacterModel(bClearBodyGroups)
+	if IsValid(Clockwork.Client.CharSelectionModel) then
+		RefreshCharacterModel(Clockwork.Client.CharSelectionModel, Clockwork.Client.SelectedFaction, Clockwork.Client.SelectedSubfaction, bClearBodyGroups);
 	end
 end

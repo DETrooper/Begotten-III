@@ -80,6 +80,9 @@ SWEP.WElements = {
 
 SWEP.AmmoTypes = {
 	["Iron Bolt"] = function(SWEP)
+		SWEP.Primary.MinimumDistanceDamage = 50;
+		SWEP.Primary.MaximumDistanceDamage = 120;
+		SWEP.Primary.StabilityDamage = 80;
 		SWEP.Primary.Sound = Sound("weapons/crossbow/bowgun-shot.wav.mp3");
 		SWEP.Primary.Round = "begotten_iron_bolt";
 		SWEP.AttackTable = "IronBoltAttackTable";
@@ -90,6 +93,9 @@ SWEP.AmmoTypes = {
 		return true;
 	end,
 	["Scrap Bolt"] = function(SWEP)
+		SWEP.Primary.MinimumDistanceDamage = 35;
+		SWEP.Primary.MaximumDistanceDamage = 90;
+		SWEP.Primary.StabilityDamage = 70;
 		SWEP.Primary.Sound = Sound("weapons/crossbow/bowgun-shot.wav.mp3");
 		SWEP.Primary.Round = "begotten_scrap_bolt";
 		SWEP.AttackTable = "ScrapBoltAttackTable";

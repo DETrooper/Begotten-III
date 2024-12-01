@@ -369,6 +369,8 @@ end
 
 -- Called to get whether a player has the item equipped.
 function CLASS_TABLE:HasPlayerEquipped(player, bIsValidWeapon, bMelee)
+	if !self.slots then return false end;
+	
 	return Clockwork.equipment:GetItemEquipped(player, self);
 end
 
