@@ -4384,7 +4384,7 @@ RECIPE:Register()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 3},
-			["down_catalyst"] = {amount = 3},
+			["down_catalyst"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_2h_sataniclongsword"] = {amount = 1},
@@ -4414,7 +4414,7 @@ RECIPE:Register()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 4},
-			["pentagram_catalyst"] = {amount = 1},
+			["down_catalyst"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_2h_great_satanicmaul"] = {amount = 1},
@@ -4424,7 +4424,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 50;
+		RECIPE.experience = 60;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -4443,9 +4443,9 @@ RECIPE:Register()
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["unholy_sigil_stone"] = {amount = 1},
 			["hellforged_steel_ingot"] = {amount = 1},
 			["steel_ingot"] = {amount = 1},
+			["down_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_1h_shard"] = {amount = 1},
