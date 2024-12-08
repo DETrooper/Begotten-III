@@ -41,7 +41,6 @@ local FACTION = Clockwork.faction:New("Wanderer");
 	FACTION.description = "The Wanderers are the carrion carcass eaters of the Wasteland. \nThey were the many lowly commoners of the County Districts, barely literate and ill-fed. \nTo survive as a Wanderer, one must be sharp and brutal, and choose their allegiance carefully. \nTheir weapons are their faith and fear, and their strife will be everlasting.";
 	FACTION.availablefaiths = {"Faith of the Light", "Faith of the Family", "Faith of the Dark"};
 	FACTION.imposters = true;
-	FACTION.names = "glazic";
 	
 	if game.GetMap() == "rp_district21" then
 		FACTION.models = {
@@ -54,6 +53,10 @@ local FACTION = Clockwork.faction:New("Wanderer");
 				heads = DEFAULT_MODELS.female.heads,
 			},
 		}
+		
+		FACTION.names = "gore-glazic";
+	else
+		FACTION.names = "glazic";
 	end
 	
 	-- Called when a player is transferred to the faction.
