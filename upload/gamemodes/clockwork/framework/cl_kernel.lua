@@ -3099,8 +3099,8 @@ function weaponMeta:GetPrintName()
 		name = self:OldGetPrintName()
 	end
 	
-	if self:GetNWString("activeOffhand"):len() > 0 then
-		local weaponTable = weapons.GetStored(self:GetNWString("activeOffhand"));
+	if self:GetNW2String("activeOffhand"):len() > 0 then
+		local weaponTable = weapons.GetStored(self:GetNW2String("activeOffhand"));
 
 		if weaponTable and weaponTable.PrintName then
 			if weaponTable.PrintName == self.PrintName then
@@ -3117,8 +3117,8 @@ function weaponMeta:GetPrintName()
 				return tab[1].." & "..tab[2];
 			end
 		end
-	elseif self:GetNWString("activeShield"):len() > 0 then
-		local shieldTable = GetTable(self:GetNWString("activeShield"));
+	elseif self:GetNW2String("activeShield"):len() > 0 then
+		local shieldTable = GetTable(self:GetNW2String("activeShield"));
 		
 		if shieldTable and shieldTable.name then
 			return name.." & "..shieldTable.name;

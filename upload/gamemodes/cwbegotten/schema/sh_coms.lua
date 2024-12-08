@@ -17,6 +17,8 @@ elseif map == "rp_begotten_redux" then
 elseif map == "rp_scraptown" then
 	archPos = Vector(5040, 10213, 357);
 	pillarPos = Vector(9386, -9070, 610);
+elseif map == "rp_district21" then
+	pillarPos = Vector(11376, -2410, -192);
 end
 
 if (Schema.MapLocations) then
@@ -1796,7 +1798,7 @@ local COMMAND = Clockwork.command:New("Speaker");
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		if arguments[1] and player:IsAdmin() then
+		if arguments[1] and (player:IsAdmin() or (player:GetSubfaction() == "Ministry" or player:GetSubfaction() == "Low Ministry")) then
 			Schema:SpeakerTalk(player, table.concat(arguments, " "));
 		end
 	end;
@@ -1892,7 +1894,7 @@ local COMMAND = Clockwork.command:New("ProclaimMe");
 		end;
 	
 		if hook.Run("PlayerCanSayIC", player, text) then 
-			if (faction == "Gatekeeper" and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
+			if Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3 or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
 				Clockwork.chatBox:SetMultiplier(1.35);
 				
 				if player.victim and IsValid(player.victim) then
@@ -2763,7 +2765,7 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 				return false;
 			end
 		
-			if Schema.hellJauntDisabled or (map ~= "rp_begotten3" and map ~= "rp_begotten_redux") then
+			if Schema.hellJauntDisabled or (map ~= "rp_begotten3" and map ~= "rp_begotten_redux" and map ~= "rp_district21") then
 				Schema:EasyText(player, "peru", "Your connection with Hell appears to be severed and you cannot helljaunt!");
 				
 				return false;
@@ -3363,3 +3365,247 @@ local COMMAND = Clockwork.command:New("PoisonedWineSequence")
 		end
 	end
 COMMAND:Register()
+
+local COMMAND = Clockwork.command:New("CauldronInspect");
+	COMMAND.tip = "Inspect the quality of the stew within the cauldron.";
+	
+	function COMMAND:OnRun(player, arguments)
+		local trace = player:GetEyeTrace();
+
+		if (trace.Entity) then
+			local entity = trace.Entity;
+
+			if (entity:GetClass() == "cw_cauldron") then
+				local liquidity = Schema:GetCauldronLiquidity();
+				local quality = Schema:GetCauldronQuality();
+				local servings = Schema:GetCauldronServings();
+				servings = math.floor(servings);
+				local isPoisoned = Schema:GetPoisonedServings() > 0;
+				local isDiseased = Schema:GetDiseasedServings() > 0;
+
+				if liquidity > 0 and liquidity < 5 then
+					Schema:EasyText(player, "lightslateblue", "The cauldron is getting low on liquid. A refill will soon be in order.");
+				elseif liquidity > 5 then
+					Schema:EasyText(player, "lightslateblue", "The cauldron contains an adequate amount of liquid.");
+				elseif liquidity == 0 then
+					Schema:EasyText(player, "lightslateblue", "The cauldron is devoid of any liquid.");
+				end
+
+				if servings > 0 then
+					if quality >= 10 then
+						Schema:EasyText(player, "lightslateblue", "The cauldron is full of fresh, high quality ingredients.");
+					elseif quality < 10 and quality >= 0 then
+						Schema:EasyText(player, "lightslateblue", "The cauldron is full of unremarkable, bland ingredients.");
+					elseif quality < 0 then
+						Schema:EasyText(player, "lightslateblue", "The cauldron is full of vile, inedible ingredients.");
+					end
+
+					Schema:EasyText(player, "lightslateblue", "There are approximately "..servings.." servings of stew remaining.");
+				else
+					Schema:EasyText(player, "lightslateblue", "The cauldron is out of ingredients.");
+				end;
+
+				if (isPoisoned or isDiseased) and player:HasBelief("culinarian") then
+					Schema:EasyText(player, "olivedrab", "The stew doesn't smell quite right, even given its nature of being a bunch of random things thrown together.");
+				end
+			end;
+		end;
+	end;
+
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CauldronReset");
+	COMMAND.tip = "Reset the cauldron entirely. Use this command carefully.";
+	COMMAND.access = "s";
+	
+	function COMMAND:OnRun(player, arguments)
+		Clockwork.player:NotifyAdmins(player:Name().." has reset the cauldron.");
+
+		Schema:ResetCauldronLiquidity();
+		Schema:ResetCauldronQuality();
+		Schema:ResetCauldronServings();
+		Schema:ResetDiseasedServings();
+		Schema:ResetPoisonedServings();
+	end;
+
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CauldronAddWater");
+	COMMAND.tip = "Add water to the caulron.";
+	COMMAND.arguments = 1;
+	COMMAND.text = "<uniqueID>";
+	
+	function COMMAND:OnRun(player, arguments)
+		local trace = player:GetEyeTrace();
+
+		if (trace.Entity) then
+			local entity = trace.Entity;
+			local uniqueID = arguments[1];
+
+			if (entity:GetClass() == "cw_cauldron") then
+				if player:HasItemByID(uniqueID) then
+
+					if uniqueID == "purified_water_bucket" or uniqueID == "dirty_water_bucket" then
+						Schema:ModifyCauldronLiquidity(10);
+						player:GiveItem(Clockwork.item:CreateInstance("empty_bucket"));
+					elseif uniqueID == "dirtywater" or uniqueID == "purified_water" then
+						Schema:ModifyCauldronLiquidity(4);
+						player:GiveItem(Clockwork.item:CreateInstance("empty_bottle"));
+					else
+						return false;
+					end
+
+					local item = Clockwork.item:FindByID(uniqueID);
+					
+					if item.cauldronQuality then
+						Schema:ModifyCauldronQuality(item.cauldronQuality);
+					end
+
+					player:EmitSound("apocalypse/cauldron/putin.mp3");
+					player:TakeItem(player:FindItemByID(uniqueID));
+
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "pours water into the cauldron, filling it up.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+				else
+					Schema:EasyText(player, "firebrick", "You do not have water to add to the cauldron!");
+				end
+			end;
+		end;
+	end;
+
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CauldronDispense");
+	COMMAND.tip = "Dispense some stew from the cauldron.";
+	
+	function COMMAND:OnRun(player, arguments)
+		local trace = player:GetEyeTrace();
+		local itemID;
+
+		if (trace.Entity) then
+			local entity = trace.Entity;
+
+			if (entity:GetClass() == "cw_cauldron") then
+				local servings = Schema:GetCauldronServings();
+				local liquidity = Schema:GetCauldronLiquidity();
+				local quality = Schema:GetCauldronQuality();
+
+				if servings > 0 and liquidity > 0 then
+					if quality >= 10 then
+						itemID = "finestew";
+					elseif quality >= 0 and quality < 10 then
+						itemID = "blandstew";
+					elseif quality < 0 then
+						itemID = "shitstew";
+					end
+
+					player:GiveItem(Clockwork.item:CreateInstance(itemID));
+
+					local isPoisoned = Schema:GetPoisonedServings() > 0;
+					if isPoisoned then
+						local stew = player:FindItemByID(itemID);
+						stew:SetData("isPoisoned", true);
+						Schema:ModifyPoisonedServings(-1);
+						Clockwork.player:NotifyAdmins("operator", player:Name().." has dispensed a serving of poisoned stew from the cauldron.");
+					end
+
+					local isDiseased = Schema:GetDiseasedServings() > 0;
+					if isDiseased then
+						local stew = player:FindItemByID(itemID);
+						stew:SetData("isPlagued", true);
+						Schema:ModifyDiseasedServings(-1);
+						Clockwork.player:NotifyAdmins("operator", player:Name().." has dispensed a serving of plagued stew from the cauldron.");
+					end
+
+					Schema:ModifyCauldronServings(-1);
+					Schema:ModifyCauldronLiquidity(-1);
+
+					player:EmitSound("apocalypse/cauldron/foodget.mp3");
+
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "dispenses a serving of stew from the cauldron.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+				else
+					Schema:EasyText(player, "peru", "You try to dispense some stew from the cauldron, but nothing happens.");
+				end;
+			end;
+		end;
+	end;
+
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CauldronAddIngredient");
+	COMMAND.tip = "Dispense some stew from the cauldron.";
+	COMMAND.arguments = 1;
+	COMMAND.text = "<uniqueID>";
+	
+	function COMMAND:OnRun(player, arguments)
+		if arguments[1] then
+			local itemID = arguments[1];
+			local item = player:FindItemByID(itemID);
+
+			if item and itemID then
+				local trace = player:GetEyeTrace();
+
+				if (trace.Entity) then
+					local entity = trace.Entity;
+
+					if (entity:GetClass() == "cw_cauldron") then
+						local quality = item.cauldronQuality;
+
+						Schema:ModifyCauldronQuality(quality);
+
+						if item.cauldronLiquidity then
+							Schema:ModifyCauldronLiquidity(1);
+						else
+							Schema:ModifyCauldronServings(1.5);
+						end;
+
+						if item.cauldronPoison then
+							Schema:ModifyPoisonedServings(2);
+							Clockwork.player:NotifyAdmins("operator", player:Name().." has poisoned the cauldron!")
+						end
+
+						if item.cauldronPlague then
+							Schema:ModifyDiseasedServings(2);
+							Clockwork.player:NotifyAdmins("operator", player:Name().." has plagued the cauldron!")
+						end
+
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "splashes an item into the cauldron.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+
+						player:TakeItem(player:FindItemByID(itemID));
+					end;
+				end;
+			end;
+		end
+	end;
+
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CauldronDump");
+	COMMAND.tip = "Dump the contents of the cauldron.";
+	COMMAND.arguments = 0;
+	
+	function COMMAND:OnRun(player, arguments)
+		local trace = player:GetEyeTrace();
+
+		if (trace.Entity) then
+			local entity = trace.Entity;
+
+			if (entity:GetClass() == "cw_cauldron") then
+
+				if Schema:GetCauldronServings() > 0 or Schema:GetCauldronLiquidity() > 0 then
+					Schema:ResetCauldronLiquidity();
+					Schema:ResetCauldronQuality();
+					Schema:ResetCauldronServings();
+					Schema:ResetDiseasedServings();
+					Schema:ResetPoisonedServings();
+
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "dumps the contents of the cauldron onto the ground.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+					Clockwork.player:NotifyAdmins("operator", player:Name().." has dumped the cauldron.");
+				else
+					Schema:EasyText(player, "firebrick", "There are no contents to dump!");
+				end;
+			end;
+		end
+	
+	end;
+
+COMMAND:Register();

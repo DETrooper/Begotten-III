@@ -165,7 +165,7 @@ function SWEP:Deploy()
 					end
 				end
 				
-				if self:GetNWString("activeOffhand"):len() <= 0 and weaponItem.canUseShields then
+				if self:GetNW2String("activeOffhand"):len() <= 0 and weaponItem.canUseShields then
 					local shieldItem = self.Owner:GetShieldEquipped();
 					
 					if (shieldItem) then
@@ -212,8 +212,8 @@ function SWEP:Deploy()
 	self.isAttacking = false;
 	
 	if self:GetClass() == "begotten_fists" or (!self.Owner.cwWakingUp and !self.Owner.LoadingText) then
-		if self:GetNWString("activeShield"):len() <= 0 then
-			local offhandWeapon = weapons.GetStored(self:GetNWString("activeOffhand"));
+		if self:GetNW2String("activeShield"):len() <= 0 then
+			local offhandWeapon = weapons.GetStored(self:GetNW2String("activeOffhand"));
 			
 			if offhandWeapon then
 				local attacksoundtable = GetSoundTable(self.AttackSoundTable);
@@ -381,8 +381,8 @@ function SWEP:Think()
 end
 
 function SWEP:AdjustMouseSensitivity()
-	if self:GetNWString("activeShield"):len() > 0 then
-		local blockTable = GetTable(self:GetNWString("activeShield"));
+	if self:GetNW2String("activeShield"):len() > 0 then
+		local blockTable = GetTable(self:GetNW2String("activeShield"));
 		
 		if blockTable then
 			if blockTable.sensitivityoverride then
@@ -421,7 +421,7 @@ function SWEP:CanPrimaryAttack()
 			end
 		end
 
-		if self.Owner:GetNWBool("Cloaked", false) == true then
+		if self.Owner:GetNW2Bool("Cloaked", false) == true then
 			return false;
 		end
 	end
@@ -499,8 +499,8 @@ function SWEP:PrimaryAttack()
 		strikeTime = strikeTime * 0.7;
 	end
 	
-	if self:GetNWString("activeOffhand"):len() > 0 then
-		offhandWeapon = weapons.GetStored(self:GetNWString("activeOffhand"));
+	if self:GetNW2String("activeOffhand"):len() > 0 then
+		offhandWeapon = weapons.GetStored(self:GetNW2String("activeOffhand"));
 		
 		if offhandWeapon then
 			offhandAttackTable = GetTable(offhandWeapon.AttackTable);
@@ -826,8 +826,8 @@ function SWEP:PrimaryAttack()
 										if (loweredParryDebug < curTime) then
 											local blockTable;
 											
-											if activeWeapon:GetNWString("activeOffhand"):len() > 0 then
-												local offhandTable = weapons.GetStored(activeWeapon:GetNWString("activeOffhand"));
+											if activeWeapon:GetNW2String("activeOffhand"):len() > 0 then
+												local offhandTable = weapons.GetStored(activeWeapon:GetNW2String("activeOffhand"));
 												
 												if offhandTable then
 													blockTable = GetDualTable(activeWeapon.realBlockTable, offhandTable.BlockTable);
@@ -948,7 +948,7 @@ end
 	function SWEP:HandleHit(hit, src, swingType, hitIndex, offhandWeapon, offhandAttackTable)
 		local attacktable = GetTable(offhandAttackTable or self.AttackTable);
 		local attacksoundtable = GetSoundTable(self.AttackSoundTable);
-		local blockTable = GetTable(self:GetNWString("activeShield"));
+		local blockTable = GetTable(self:GetNW2String("activeShield"));
 		local hit_reduction = 1;
 		local shield_reduction = 1;
 		local owner = self.Owner;
@@ -957,10 +957,24 @@ end
 		local enemywep;
 		local weapon = self;
 		local distance = (owner:GetPos():Distance(hit:GetPos()))
-				
+		
+		-- For poleweapons
+		local poledamage = (attacktable["primarydamage"])
+		local poletype = (attacktable["dmgtype"])
+		local maxPoleRange = (attacktable["meleerange"]) * 0.1
+		local maxIneffectiveRange = maxPoleRange * 0.53
+		local clampedDistance = math.min(math.max(distance, 0), maxPoleRange)
+		local ratio = clampedDistance / maxPoleRange
+		local minDamage = (attacktable["primarydamage"] * 0.7)
+		local maxDamage = (attacktable["primarydamage"] * 1.7)
+		local variableDamage = minDamage + (maxDamage - minDamage) * ratio
+		local minStabilityDamage = (attacktable["stabilitydamage"] * 0.7)
+		local maxStabilityDamage = (attacktable["stabilitydamage"] * 1.7)
+		local variableStabilityDamage = minStabilityDamage + (maxStabilityDamage - minStabilityDamage) * ratio
+		
 		if offhandWeapon then
 			attacksoundtable = GetSoundTable(offhandWeapon.AttackSoundTable);
-			weaponClass = self:GetNWString("activeOffhand");
+			weaponClass = self:GetNW2String("activeOffhand");
 			
 			if !self.Owner:HasWeapon(weaponClass) then
 				weapon = self.Owner:Give(weaponClass) or self;
@@ -1008,7 +1022,7 @@ end
 			stabilitydamage = stabilitydamage * attacktable["altattackstabilitydamagemodifier"];
 		end
 		
-		if self:GetNWString("activeOffhand"):len() > 0 then
+		if self:GetNW2String("activeOffhand"):len() > 0 then
 			damage = damage * 0.6;
 			stabilitydamage = stabilitydamage * 0.6;
 		end
@@ -1071,7 +1085,7 @@ end
 					
 					if owner.upstagedActive and not hit.opponent then
 						if IsValid(enemywep) then
-							if --[[enemywep:GetNWString("activeShield"):len() == 0 and]] not string.find(enemywep:GetClass(), "begotten_fists") and not string.find(enemywep:GetClass(), "begotten_claws") then
+							if --[[enemywep:GetNW2String("activeShield"):len() == 0 and]] not string.find(enemywep:GetClass(), "begotten_fists") and not string.find(enemywep:GetClass(), "begotten_claws") then
 								local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
 								local dropPos = hit:GetPos() + Vector(0, 0, 35) + hit:GetAngles():Forward() * 4
 								local itemTable = Clockwork.item:GetByWeapon(enemywep);
@@ -1123,7 +1137,7 @@ end
 			end
 
 			if owner:IsValid() and !owner:IsRagdolled() and owner:Alive() then
-				-- Spear Damage System		
+				-- Spear Damage System (Messy) THINGS TO CONSIDER: Scythes, Grounded, Merging Short & Long Polearms				
 				damagetype = 16;
 				
 				-- Blunt swipe or piercing thrust?
@@ -1159,16 +1173,7 @@ end
 				end
 				-- Polearm alt attack spear shaft hit system
 				if (IsValid(self)) then
-					if string.find(weaponClass, "begotten_polearm_") and weapon.CanSwipeAttack != true then		
-					
-						local maxPoleRange = (attacktable["meleerange"]) * 0.1
-						local maxIneffectiveRange = maxPoleRange * 0.53
-						local clampedDistance = math.min(math.max(distance, 0), maxPoleRange)
-						local ratio = clampedDistance / maxPoleRange
-						local minDamage = (attacktable["primarydamage"] * 0.7)
-						local maxDamage = (attacktable["primarydamage"] * 1.7)
-						local variableDamage = minDamage + (maxDamage - minDamage) * ratio
-						
+					if string.find(weaponClass, "begotten_polearm_") and weapon.CanSwipeAttack != true then						
 						if distance <= maxIneffectiveRange and hit:IsValid() then
 							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 								damage = (attacktable["primarydamage"]) * 0.01
@@ -1178,6 +1183,7 @@ end
 								local knockback = owner:GetAngles():Forward() * 700;
 								knockback.z = 0
 								
+								-- timers are shit but whatever
 								timer.Simple(0.1, function()
 									if IsValid(hit) then
 										hit:SetVelocity(knockback);
@@ -1304,20 +1310,6 @@ end
 				end
 			end
 		elseif swingType == "polearm_swing" then
-		
-			local poledamage = (attacktable["primarydamage"])
-			local poletype = (attacktable["dmgtype"])
-			local maxPoleRange = (attacktable["meleerange"]) * 0.1
-			local maxIneffectiveRange = maxPoleRange * 0.53
-			local clampedDistance = math.min(math.max(distance, 0), maxPoleRange)
-			local ratio = clampedDistance / maxPoleRange
-			local minDamage = (attacktable["primarydamage"] * 0.7)
-			local maxDamage = (attacktable["primarydamage"] * 1.7)
-			local variableDamage = minDamage + (maxDamage - minDamage) * ratio
-			local minStabilityDamage = (attacktable["stabilitydamage"] * 0.7)
-			local maxStabilityDamage = (attacktable["stabilitydamage"] * 1.7)
-			local variableStabilityDamage = minStabilityDamage + (maxStabilityDamage - minStabilityDamage) * ratio
-
 			if owner:GetNetVar("ThrustStance") then
 				owner:SetLocalVar("ThrustStance", false);
 			end
@@ -1487,10 +1479,6 @@ end
 				-- Spear Damage System (Messy)					
 				if (IsValid(self)) then
 					if string.find(weaponClass, "begotten_spear_") then
-					
-						local maxPoleRange = (attacktable["meleerange"]) * 0.1
-						local maxIneffectiveRange = maxPoleRange * 0.53
-
 						if distance <= maxIneffectiveRange and hit:IsValid() then
 							damage = (attacktable["primarydamage"]) * 0.01
 							damagetype = 128
@@ -1499,7 +1487,7 @@ end
 								--print "Spear Shaft Hit"
 								
 								-- KNOCKBACK
-								local knockback = owner:GetAngles():Forward() * 600;
+								local knockback = owner:GetAngles():Forward() * 650;
 								knockback.z = 0
 
 								timer.Simple(0.1, function()
@@ -1925,8 +1913,8 @@ function SWEP:SecondaryAttack()
 	local blocktable;
 	local ply = self.Owner;
 
-	if self:GetNWString("activeOffhand"):len() > 0 then
-		local offhandTable = weapons.GetStored(self:GetNWString("activeOffhand"));
+	if self:GetNW2String("activeOffhand"):len() > 0 then
+		local offhandTable = weapons.GetStored(self:GetNW2String("activeOffhand"));
 		
 		if offhandTable then
 			blocktable = GetDualTable(self.realBlockTable, offhandTable.BlockTable);
@@ -2080,8 +2068,8 @@ function SWEP:SecondaryAttack()
 							if (loweredParryDebug < curTime) then
 								local blockTable;
 
-								if activeWeapon:GetNWString("activeOffhand"):len() > 0 then
-									local offhandTable = weapons.GetStored(activeWeapon:GetNWString("activeOffhand"));
+								if activeWeapon:GetNW2String("activeOffhand"):len() > 0 then
+									local offhandTable = weapons.GetStored(activeWeapon:GetNW2String("activeOffhand"));
 									
 									if offhandTable then
 										blockTable = GetDualTable(activeWeapon.realBlockTable, offhandTable.BlockTable);
@@ -2149,8 +2137,8 @@ function SWEP:SecondaryAttack()
 							if (loweredParryDebug < curTime) then
 								local blockTable;
 
-								if activeWeapon:GetNWString("activeOffhand"):len() > 0 then
-									local offhandTable = weapons.GetStored(activeWeapon:GetNWString("activeOffhand"));
+								if activeWeapon:GetNW2String("activeOffhand"):len() > 0 then
+									local offhandTable = weapons.GetStored(activeWeapon:GetNW2String("activeOffhand"));
 									
 									if offhandTable then
 										blockTable = GetDualTable(activeWeapon.realBlockTable, offhandTable.BlockTable);
@@ -2392,14 +2380,14 @@ function SWEP:ShouldDropOnDie()
 end
 
 function SWEP:GetPrintName()
-	if self:GetNWString("activeShield"):len() > 0 and !self.HasShield then
-		local shieldTable = GetTable(self:GetNWString("activeShield"));
+	if self:GetNW2String("activeShield"):len() > 0 and !self.HasShield then
+		local shieldTable = GetTable(self:GetNW2String("activeShield"));
 		
 		if shieldTable and shieldTable.name then
 			return self.PrintName.." & "..shieldTable.name;
 		end
-	elseif self:GetNWString("activeOffhand"):len() > 0 then
-		local weaponTable = weapons.GetStored(self:GetNWString("activeOffhand"));
+	elseif self:GetNW2String("activeOffhand"):len() > 0 then
+		local weaponTable = weapons.GetStored(self:GetNW2String("activeOffhand"));
 
 		if weaponTable and weaponTable.PrintName then
 			if weaponTable.PrintName == self.PrintName then
@@ -2422,7 +2410,7 @@ function SWEP:GetPrintName()
 end
 
 function SWEP:EquipOffhand(weaponClass)
-	if self:GetNWString("activeShield"):len() > 0 then
+	if self:GetNW2String("activeShield"):len() > 0 then
 		self:HolsterShield();
 	end
 
@@ -2433,7 +2421,7 @@ function SWEP:EquipOffhand(weaponClass)
 	local weaponTable = weapons.GetStored(weaponClass);
 	
 	if weaponTable then
-		self:SetNWString("activeOffhand", weaponClass);
+		self:SetNW2String("activeOffhand", weaponClass);
 
 		if IsValid(self.Owner) then
 			self.Owner:CancelGuardening();
@@ -2448,7 +2436,7 @@ function SWEP:HolsterOffhand()
 		self:CallOnClient("HolsterOffhand"); 
 	end
 
-	self:SetNWString("activeOffhand", "");
+	self:SetNW2String("activeOffhand", "");
 	
 	if CLIENT then
 		self:RemoveModels();
@@ -2462,7 +2450,7 @@ function SWEP:HolsterOffhand()
 end
 
 function SWEP:EquipShield(uniqueID)
-	if self:GetNWString("activeOffhand"):len() > 0 then
+	if self:GetNW2String("activeOffhand"):len() > 0 then
 		return;
 	end
 
@@ -2473,7 +2461,7 @@ function SWEP:EquipShield(uniqueID)
 	local shieldTable = GetTable(uniqueID);
 	
 	if shieldTable then
-		self:SetNWString("activeShield", uniqueID);
+		self:SetNW2String("activeShield", uniqueID);
 
 		if IsValid(self.Owner) then
 			self.Owner:CancelGuardening();
@@ -2488,7 +2476,7 @@ function SWEP:HolsterShield()
 		self:CallOnClient("HolsterShield"); 
 	end
 	
-	self:SetNWString("activeShield", "");
+	self:SetNW2String("activeShield", "");
 	
 	if CLIENT then
 		self:RemoveModels();
@@ -2502,8 +2490,8 @@ function SWEP:HolsterShield()
 end
 
 function SWEP:Initialize()
-	if self:GetNWString("activeShield"):len() > 0 and !self.HasShield then
-		local shieldTable = GetTable(self:GetNWString("activeShield"));
+	if self:GetNW2String("activeShield"):len() > 0 and !self.HasShield then
+		local shieldTable = GetTable(self:GetNW2String("activeShield"));
 		
 		if shieldTable then
 			local weaponTable = weapons.GetStored(self:GetClass());
@@ -2530,10 +2518,10 @@ function SWEP:Initialize()
 				self.realIronSightsAng = self.IronSightsAng;
 			end
 		else
-			error("Shield not found for player "..self.Owner:GetName().." swep "..self:GetPrintName().." shield "..self:GetNWString("activeShield").."!");
+			error("Shield not found for player "..self.Owner:GetName().." swep "..self:GetPrintName().." shield "..self:GetNW2String("activeShield").."!");
 		end
-	elseif self:GetNWString("activeOffhand"):len() > 0 then
-		local weaponTable = weapons.GetStored(self:GetNWString("activeOffhand"));
+	elseif self:GetNW2String("activeOffhand"):len() > 0 then
+		local weaponTable = weapons.GetStored(self:GetNW2String("activeOffhand"));
 		
 		if weaponTable then
 			self.realIronSights = self.IronSights;
@@ -2551,7 +2539,7 @@ function SWEP:Initialize()
 			self.ViewModelBoneMods = {};
 			self.MultiHit = 2;
 		else
-			error("Weapon for dual-wielding not found for player "..self.Owner:GetName().." swep "..self:GetPrintName().." left weapon "..self:GetNWString("activeOffhand").."!");
+			error("Weapon for dual-wielding not found for player "..self.Owner:GetName().." swep "..self:GetPrintName().." left weapon "..self:GetNW2String("activeOffhand").."!");
 		end
 	else
 		local weaponTable = weapons.GetStored(self:GetClass());
@@ -2604,13 +2592,13 @@ function SWEP:Initialize()
 		self.WElements = table.FullCopy(weaponTable.WElements);
 		self.ViewModelBoneMods = table.FullCopy(self.ViewModelBoneMods);
 		
-		if weaponTable.WElementsAlternate and self:GetNWString("stance") == "thrust_swing" then
+		if weaponTable.WElementsAlternate and self:GetNW2String("stance") == "thrust_swing" then
 			self.WElements = table.FullCopy(weaponTable.WElementsAlternate);
 		end;
 	
 		if !self.HasShield then
-			if self:GetNWString("activeShield"):len() > 0 then
-				local shieldTable = GetTable(self:GetNWString("activeShield"));
+			if self:GetNW2String("activeShield"):len() > 0 then
+				local shieldTable = GetTable(self:GetNW2String("activeShield"));
 				
 				if shieldTable then
 					if shieldTable.ViewModelBoneMods then
@@ -2676,8 +2664,8 @@ function SWEP:Initialize()
 			end
 		end
 		
-		if self:GetNWString("activeOffhand"):len() > 0 then
-			local offhandTable = weapons.GetStored(self:GetNWString("activeOffhand"));
+		if self:GetNW2String("activeOffhand"):len() > 0 then
+			local offhandTable = weapons.GetStored(self:GetNW2String("activeOffhand"));
 			
 			if offhandTable then
 				self.VElements = {};
@@ -2969,16 +2957,16 @@ if CLIENT then
 		local wepTab = self:GetTable()
 		
 		if self.OnMeleeStanceChanged then
-			if self:GetNWString("stance") ~= self.stance then
-				self:OnMeleeStanceChanged(self:GetNWString("stance"));
+			if self:GetNW2String("stance") ~= self.stance then
+				self:OnMeleeStanceChanged(self:GetNW2String("stance"));
 				
 				return;
 			end
 		end
 		
-		if self:GetNWString("activeShield"):len() > 0 then
-			if !wepTab.activeShield or wepTab.activeShield ~= self:GetNWString("activeShield") then
-				wepTab.activeShield = self:GetNWString("activeShield");
+		if self:GetNW2String("activeShield"):len() > 0 then
+			if !wepTab.activeShield or wepTab.activeShield ~= self:GetNW2String("activeShield") then
+				wepTab.activeShield = self:GetNW2String("activeShield");
 				self:EquipShield(wepTab.activeShield);
 			end
 		elseif wepTab.activeShield then
@@ -2986,9 +2974,9 @@ if CLIENT then
 			self:HolsterShield();
 		end
 		
-		if self:GetNWString("activeOffhand"):len() > 0 then
-			if !wepTab.activeOffhand or wepTab.activeOffhand ~= self:GetNWString("activeOffhand") then
-				wepTab.activeOffhand = self:GetNWString("activeOffhand");
+		if self:GetNW2String("activeOffhand"):len() > 0 then
+			if !wepTab.activeOffhand or wepTab.activeOffhand ~= self:GetNW2String("activeOffhand") then
+				wepTab.activeOffhand = self:GetNW2String("activeOffhand");
 				self:EquipOffhand(wepTab.activeOffhand);
 			end
 		elseif wepTab.activeOffhand then

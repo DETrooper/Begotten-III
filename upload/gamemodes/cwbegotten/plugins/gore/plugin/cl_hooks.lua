@@ -1,40 +1,33 @@
-local PLUGIN = PLUGIN;
+--[[
+	Begotten III: Jesus Wept
+	By: DETrooper, cash wednesday, gabs, alyousha35
 
--- Called when screen space effects should be rendered.
-function cwGore:RenderScreenspaceEffects()
-	if (Clockwork.Client:GetNetVar("blackOut") and Clockwork.Client:Alive()) then
-		local blackOut = {
-			[ "$pp_colour_brightness" ] = 0,
-			[ "$pp_colour_contrast" ] = 0,
-			[ "$pp_colour_colour" ] = 0,
-		}
-		
-		DrawColorModify(blackOut);
-	end;
-end;
+	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
+--]]
 
 -- Called when an entity's target ID HUD should be painted.
 function cwGore:HUDPaintEntityTargetID(entity, info)
-	local colorTargetID = Clockwork.option:GetColor("target_id");
-	local colorWhite = Clockwork.option:GetColor("white");
+	local class = entity:GetClass();
 	
-	if (entity:GetClass() == "prop_physics") then
+	if (class == "prop_physics") then
 		if (entity:GetModel() == "models/gibs/hgibs.mdl") then
-			info.y = Clockwork.kernel:DrawInfo("A human skull.", info.x, info.y, colorTargetID, info.alpha);
+			info.y = Clockwork.kernel:DrawInfo("A human skull.", info.x, info.y, Clockwork.option:GetColor("target_id"), info.alpha);
 		end;
-	elseif (entity:GetClass() == "prop_ragdoll") then
-		if (entity:GetModel() == "models/undead/charple01.mdl") then
-			info.y = Clockwork.kernel:DrawInfo("A rotting body.", info.x, info.y, colorTargetID, info.alpha);
-		elseif (entity:GetModel() == "models/skeleton/skeleton_torso2.mdl") then
-			info.y = Clockwork.kernel:DrawInfo("A human ribcage.", info.x, info.y, colorTargetID, info.alpha);
-		elseif (entity:GetModel() == "models/skeleton/skeleton_leg_l.mdl" or entity:GetModel() == "models/skeleton/skeleton_leg.mdl") then
-			info.y = Clockwork.kernel:DrawInfo("A human leg bone.", info.x, info.y, colorTargetID, info.alpha);
-		elseif (entity:GetModel() == "models/skeleton/skeleton_arm.mdl" or entity:GetModel() == "models/skeleton/skeleton_arm_l.mdl") then
-			info.y = Clockwork.kernel:DrawInfo("A human arm bone.", info.x, info.y, colorTargetID, info.alpha);
+	elseif (class == "prop_ragdoll") then
+		local model = entity:GetModel();
+		
+		if (model == "models/undead/charple01.mdl") then
+			info.y = Clockwork.kernel:DrawInfo("A rotting body.", info.x, info.y, Clockwork.option:GetColor("target_id"), info.alpha);
+		elseif (model == "models/skeleton/skeleton_torso2.mdl") then
+			info.y = Clockwork.kernel:DrawInfo("A human ribcage.", info.x, info.y, Clockwork.option:GetColor("target_id"), info.alpha);
+		elseif (model == "models/skeleton/skeleton_leg_l.mdl" or entity:GetModel() == "models/skeleton/skeleton_leg.mdl") then
+			info.y = Clockwork.kernel:DrawInfo("A human leg bone.", info.x, info.y, Clockwork.option:GetColor("target_id"), info.alpha);
+		elseif (model == "models/skeleton/skeleton_arm.mdl" or entity:GetModel() == "models/skeleton/skeleton_arm_l.mdl") then
+			info.y = Clockwork.kernel:DrawInfo("A human arm bone.", info.x, info.y, Clockwork.option:GetColor("target_id"), info.alpha);
 		end;
 		
 		if (entity:GetSkin() == 2) then
-			info.y = Clockwork.kernel:DrawInfo("It is still fresh with blood.", info.x, info.y, colorWhite, info.alpha);
+			info.y = Clockwork.kernel:DrawInfo("It is still fresh with blood.", info.x, info.y, Clockwork.option:GetColor("white"), info.alpha);
 		end;
 	end;
 end;

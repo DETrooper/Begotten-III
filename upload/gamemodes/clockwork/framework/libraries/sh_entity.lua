@@ -357,7 +357,7 @@ end
 	@returns Bool Whether or not the entity is a player ragdoll.
 --]]
 function Clockwork.entity:IsPlayerRagdoll(entity)
-	local player = entity:GetNWEntity("Player")
+	local player = entity:GetNW2Entity("Player")
 
 	if (IsValid(player)) then
 		local ragdollEntity = player:GetRagdollEntity();
@@ -375,7 +375,7 @@ end
 	@returns Entity The player from the entity.
 --]]
 function Clockwork.entity:GetPlayer(entity)
-	local player = entity:GetNWEntity("Player")
+	local player = entity:GetNW2Entity("Player")
 
 	if (IsValid(player)) then
 		return player
@@ -1393,7 +1393,7 @@ if (SERVER) then
 		@param Entity What to set the entity's player to.
 	--]]
 	function Clockwork.entity:SetPlayer(entity, player)
-		entity:SetNWEntity("Player", player)
+		entity:SetNW2Entity("Player", player)
 	end
 
 	--[[

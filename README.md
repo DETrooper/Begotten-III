@@ -25,6 +25,8 @@ cash wednesday - Programmer
 
 alyousha35 - Programmer
 
+sky - Mapping (Scraptown)
+
 Minor code contributions by venty.
 
 ### Post-Release Contributors
@@ -32,6 +34,12 @@ Minor code contributions by venty.
 filterfeeder - Models & Animations
 
 dave - Programming
+
+Vlad - Programming
+
+robert - Models
+
+gus - Mapping (District 21)
 
 ObamasGrandpa - Exploit Reporting
 

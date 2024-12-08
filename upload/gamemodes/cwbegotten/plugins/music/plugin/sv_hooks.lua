@@ -1,6 +1,6 @@
 cwMusic.enabled = true;
 
-local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_redux" or game.GetMap() == "rp_scraptown";
+local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_redux" or game.GetMap() == "rp_scraptown" or game.GetMap() == "rp_district21";
 
 function cwMusic:EntityTakeDamageNew(entity, damageInfo)
 	if (!map) then

@@ -10,6 +10,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.infectchance = 75;
 	ITEM.poison = 15;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = -1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
 	ITEM.needs = {hunger = 10, thirst = 15};
@@ -36,13 +38,14 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.description = "A glass bottle filled with a stale, frothy liquid. It reads 'Willtan's Brew'.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = 1;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 600, bNoSupercrate = true};
 	ITEM.needs = {hunger = 5, thirst = 35};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_bottle"));
 		Schema:EasyText(player, "olivedrab", "This drink has no taste, but it makes you feel very good.");
 		player:HandleSanity(5);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -57,13 +60,14 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/beer.png"
 	ITEM.infectchance = 5;
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = 1;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 600, bNoSupercrate = true};
 	ITEM.needs = {hunger = 10, thirst = 20};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_bottle"));
 		Schema:EasyText(player, "olivedrab", "This drink tastes like shit, but it still makes you feel good! How weird!");
 		player:HandleSanity(10);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -78,6 +82,9 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.description = "An innocuous, polished bottle of a clear liquid. It has a very strong smell.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/corpsebrew.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = -1;
+	ITEM.cauldronPoison = true;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 675, bNoSupercrate = true};
 	ITEM.needs = {thirst = 50};
@@ -109,12 +116,15 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "dirtywater"
 	ITEM.infectchance = 60;
 	ITEM.poison = 20;
+	ITEM.cauldronQuality = -2;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 675, bNoSupercrate = true};
 	ITEM.needs = {thirst = 25};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)		
+		player:GiveItem(Clockwork.item:CreateInstance("empty_bottle"), true);
+	
 		if player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm") then
 			Schema:EasyText(player, "maroon", "You open the bottle and pour water down your receptacle, but it begins to short-circuit your insides!");
 			Schema:DoTesla(player, true);			
@@ -139,13 +149,14 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.description = "A silver-coloured bottle, appearing extremely well preserved. Enticing white wine is kept within.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/corpsebrew.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = 1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1150};
 	ITEM.needs = {hunger = 5, thirst = 50};
 	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_bottle"));
 		Schema:EasyText(player, "lawngreen", "This drink tastes good! You feel really good too!");
 		player:HandleSanity(20);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -162,6 +173,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "An off-brand can of soda from the county districts. It would be unwise to consume this in the vicinity of Papa Pete.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/soda.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = 0;
 
 	ITEM.infectchance = 10;
 	ITEM.dysentery = 5;
@@ -171,7 +184,6 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_soda_bottle"));
 		Schema:EasyText(player, "lawngreen", "When you pop open the can, it still has a fizz. It tastes very sweet compared to anything else you've had before.");
 		player:HandleSanity(2);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -197,6 +209,8 @@ local ITEM = Clockwork.item:New();
 	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		player:GiveItem(Clockwork.item:CreateInstance("empty_bottle"), true);
+	
 		if player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm") then
 			Schema:EasyText(player, "maroon", "You open the bottle and pour water down your receptacle, but it begins to short-circuit your insides!");
 			Schema:DoTesla(player, true);
@@ -205,7 +219,6 @@ local ITEM = Clockwork.item:New();
 			return;
 		end
 	
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
 		Schema:EasyText(player, "lawngreen", "As clean water enters your parched throat, you feel an immense satisfaction knowing that you will not die of disease today.");
 		player:HandleSanity(10);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -232,7 +245,6 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
 		Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Ice Cold Pop™. You feel mentally and physically reinvigorated.");
 		player:HandleSanity(10);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -287,13 +299,14 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A bottle Papa Pete's® Ice Cold Pop™ with a citrus twist!";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = 0;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1150, bNoSupercrate = true};
 	ITEM.needs = {thirst = 50, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
 		Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Orange-Flavored Ice Cold Pop™. You feel mentally and physically reinvigorated.");
 		player:HandleSanity(10);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -315,6 +328,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A bottle Papa Pete's® Ice Cold Pop™ with a grape flavor!";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = 0;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1150, bNoSupercrate = true};
 	ITEM.needs = {thirst = 50, sleep = 5};
@@ -378,13 +393,14 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A bottle of Papa Pete's® Ice Cold Crazy Pop™. It advertises the fact that the taste of this Ice Cold Pop™ is so good that it will make you crazy.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = -1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1150, bNoSupercrate = true};
 	ITEM.needs = {thirst = 50, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
 		player:HandleStamina(50);
 
 		if !player:HasBelief("savage_animal") then
@@ -411,13 +427,14 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A bottle of Papa Pete's cream. We all scream for Papa Pete's cream!";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = 1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2000, bNoSupercrate = true};
 	ITEM.needs = {thirst = 60, sleep = 15};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
 		player:HandleStamina(80);
 		Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Cream Pop™. It is very creamy and delicious. You feel mentally and physically reinvigorated, and you feel a renewed sense of energy!");
 		player:HandleSanity(15);
@@ -439,13 +456,14 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "An unusual brand of Papa Pete's Cold Pop. It's filled with a pink slime.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = 0;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1500, bNoSupercrate = true};
 	ITEM.needs = {hunger = 50, thirst = 20};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
 		Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Meat Pop™. The meaty taste comes as a surprise, but it fills your tummy up all the same.");
 		player:HandleSanity(5);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -466,14 +484,14 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "An incredibly cold Papa Pete's Ice Cold Pop. This one comes with a warning that you might get a brain freeze.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = -1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1300, bNoSupercrate = true};
 	ITEM.needs = {thirst = 55, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
-
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Ice Cold Ice Pop™. Aside from a minor brain freeze, you feel really good!");
 			player:AddFreeze(25, player);
@@ -501,13 +519,14 @@ ITEM:Register();
 	ITEM.description = "A very hot bottle of Papa Pete's brand. It has red sizzling liquid. It must be very spicy!";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = -1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1300, bNoSupercrate = true};
 	ITEM.needs = {thirst = 55, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
 		player:HandleStamina(100);
 
 		if player:HasBelief("favored") then
@@ -537,13 +556,14 @@ ITEM:Register();
 	ITEM.description = "A Papa Pete Cold Pop that states that this funny taste will make you silly!";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = -1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1750, bNoSupercrate = true};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
 		player:HandleStamina(100);
 
 		if player:HasBelief("favored") then
@@ -572,13 +592,15 @@ ITEM:Register();
 	ITEM.description = "A Papa Pete Cold Pop that states that claims it tastes so good it'll bring out the end of days for mortal men!";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = -1;
+	ITEM.cauldronPlague = true;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2500};
 	ITEM.needs = {thirst = 60, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_water_bottle"));
 		player:HandleStamina(100);
 
 		if player:HasBelief("favored") then
@@ -607,6 +629,9 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A bottle of yummy chug, it looks like white thick liquid, it must taste very good.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/yumchug.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = -1;
+	ITEM.cauldronPoison = true;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
 	ITEM.needs = {hunger = 0, thirst = 0};
@@ -641,6 +666,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A glass bottle of blessed water. It is said to cleanse all impurities.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/laudanum.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = 0;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 666, bNoSupercrate = true};
 	ITEM.needs = {thirst = 20};
@@ -676,12 +703,13 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A bottle of finely aged wine from the Darklands. It is apparently fermented with human blood, expensive spices, and delicious berries.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/bottle02.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = 1;
 	
 	ITEM.needs = {hunger = 85, thirst = 100};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_soda_bottle"));
 		Schema:EasyText(player, "lawngreen", "The wine tastes excellent! You are filled with a sense of elevated self-worth.");
 		player:HandleSanity(70);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -701,12 +729,13 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A bottle of exotic wine from the Darklands. It is apparently fermented with human blood, expensive spices, and delicious berries. This particular bottle is said to be spiced with the blood of virgin slave-whores and aged for over 300 years.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/bottle02.png"
 	ITEM.stackable = true;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = 1;
 	
 	ITEM.needs = {hunger = 85, thirst = 100};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		--player:GiveItem(Clockwork.item:CreateInstance("empty_soda_bottle"));
 		Schema:EasyText(player, "lawngreen", "The wine tastes excellent! You are filled with a sense of elevated self-worth.");
 		player:HandleSanity(70);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -740,6 +769,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.infectchance = 8;
 	ITEM.poison = 10;
+	ITEM.cauldronLiquidity = 1;
+	ITEM.cauldronQuality = -1;
 	
 	ITEM.needs = {thirst = 100};
 
@@ -756,6 +787,79 @@ local ITEM = Clockwork.item:New();
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You chug the pissjug. It tastes of salt and misery.");
 			player:HandleSanity(-8);
+			player:HandleXP(cwBeliefs.xpValues["drink"]);
+		end
+	end;
+
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position) end;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New();
+	ITEM.name = "Bucket of Purified Water";
+	ITEM.model = "models/props_junk/MetalBucket01a.mdl";
+	ITEM.weight = 4;
+	ITEM.useText = "Drink";
+	ITEM.category = "Drinks";
+	ITEM.useSound = "ambient/levels/canals/toxic_slime_gurgle4.wav";
+	ITEM.description = "A bucket filled with purified water.";
+	ITEM.stackable = false;
+	ITEM.needs = {thirst = 80};
+	ITEM.uniqueID = "purified_water_bucket";
+	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/bucket.png"
+	
+	-- Called when a player uses the item.
+	function ITEM:OnUse(player, itemEntity)
+		Clockwork.chatBox:AddInTargetRadius(player, "me", "brings a bucket of water up to their face, chugging its entire contents uninterrupted.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+		
+		player:GiveItem(Clockwork.item:CreateInstance("empty_bucket"), true);
+
+		if player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm") then
+			Schema:EasyText(player, "maroon", "You pour water down your receptacle, but it begins to short-circuit your insides!");
+			Schema:DoTesla(player, true);
+			--player:TakeDamage(25);
+			
+			return;
+		end
+	
+		Schema:EasyText(player, "lawngreen", "As clean water enters your parched throat, you feel an immense satisfaction knowing that you will not die of disease today.");
+		player:HandleSanity(20);
+		player:HandleXP(cwBeliefs.xpValues["drink"]);
+	end;
+
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position) end;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New();
+	ITEM.name = "Bucket of Dirty Water";
+	ITEM.model = "models/props_junk/MetalBucket01a.mdl";
+	ITEM.weight = 4;
+	ITEM.useText = "Drink";
+	ITEM.category = "Drinks";
+	ITEM.useSound = "ambient/levels/canals/toxic_slime_gurgle4.wav";
+	ITEM.description = "A bucket filled with dirty water.";
+	ITEM.stackable = false;
+	ITEM.needs = {thirst = 50};
+	ITEM.uniqueID = "dirty_water_bucket";
+	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/bucket.png"
+	ITEM.cauldronQuality = -3;
+	
+	-- Called when a player uses the item.
+	function ITEM:OnUse(player, itemEntity)
+		Clockwork.chatBox:AddInTargetRadius(player, "me", "brings a bucket of water up to their face, chugging its entire contents uninterrupted.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+		
+		player:GiveItem(Clockwork.item:CreateInstance("empty_bucket"), true);
+		
+		if player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm") then
+			Schema:EasyText(player, "maroon", "You chug the bucket of dirty water, but it begins to short-circuit your insides!");
+			Schema:DoTesla(player, true);
+			return;
+		end
+
+		if !player:HasBelief("savage_animal") then
+			Schema:EasyText(player, "olive", "Cold, vile water from the freezing wasteland travels through your gullet and into your stomach. You feel like you could throw up.");
+			player:HandleSanity(-25);
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		end
 	end;

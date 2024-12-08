@@ -5,10 +5,18 @@
 
 local map = string.lower(game.GetMap());
 
-Schema.maxNPCs = {
-	["animal"] = 4,
-	["thrall"] = 8,
-};
+if map == "rp_district21" then
+	Schema.maxNPCs = {
+		["animal"] = 12,
+		["thrall"] = 4,
+		["thrallnight"] = 8,
+	};
+else
+	Schema.maxNPCs = {
+		["animal"] = 4,
+		["thrall"] = 8,
+	};
+end
 
 if !Schema.towerTax then
 	Schema.towerTax = 0.1;
@@ -274,6 +282,32 @@ elseif map == "rp_scraptown" then
 			{pos = Vector(10513.347656, -8684.458008, 289.911560), ang = Angle(0, 90, 0)},
 		},
 	};
+elseif map == "rp_district21" then
+	Schema.hellPortalTeleports = {
+		["church"] = {
+			{pos = Vector(5046, -14360, -396), ang = Angle(0, 90, 0)},
+			{pos = Vector(5548, -14353, -396), ang = Angle(0, 90, 0)},
+			{pos = Vector(5017, -13423, -433), ang = Angle(0, 90, 0)},
+			{pos = Vector(5517, -13357, -433), ang = Angle(0, 90, 0)},
+			{pos = Vector(5283, -13182, -433), ang = Angle(0, 90, 0)},
+			{pos = Vector(5475, -13918, -433), ang = Angle(0, 90, 0)},
+		},
+		["hell"] = {
+			{pos = Vector(-8189.942871, -9051.384766, -7228.304688), ang = Angle(0, 0, 0)},
+			{pos = Vector(-8188.711914, -9110.074219, -7227.193848), ang = Angle(0, 0, 0)},
+			{pos = Vector(-8187.417480, -9171.792969, -7222.851074), ang = Angle(0, 0, 0)},
+			{pos = Vector(-8186.472168, -9216.850586, -7220.369141), ang = Angle(0, 0, 0)},
+		},
+		["pillars"] = {
+			{pos = Vector(11315.130859375, -2950.7373046875, -262.35202026367), ang = Angle(0, 0, 0)},
+			{pos = Vector(11708.241210938, -1948.8614501953, -250.24641418457), ang = Angle(0, 0, 0)},
+			{pos = Vector(9744.060546875, -2900.1538085938, -258.00085449219), ang = Angle(0, 0, 0)},
+			{pos = Vector(9469.142578125, -2676.0432128906, -207.97163391113), ang = Angle(0, 0, 0)},
+			{pos = Vector(9555.01171875, -2541.2172851563, -229.84474182129), ang = Angle(0, 0, 0)},
+			{pos = Vector(9628.8935546875, -2425.25390625, -243.84014892578), ang = Angle(0, 0, 0)},
+			{pos = Vector(9705.625, -2304.818359375, -229.85108947754), ang = Angle(0, 0, 0)},
+		},
+	};
 end
 
 Schema.doors = {
@@ -301,6 +335,27 @@ Schema.doors = {
 			"armorydoor",
 			"cubbyblastdoor",
 			"inquisitor_barracks_blastdoor",
+		},
+	},
+	["rp_district21"] = {
+		["forge"] = {
+			"hk_forge1",
+			"hk_forge2",
+		},
+		["gorewatch"] = {
+			"cellgrn_4",
+		},
+		["tower"] = {
+			"sidedoorblastdoor2",
+			"frontblastdoor2",
+			"cubbyblastdoorprop",
+			"cubbyblastdoor",
+			"churchblastdoor1",
+			"churchblastdoor2",
+			"sol_dr_1",
+			"sol_dr_2",
+			"sol_dr_3",
+			"sol_dr_4",
 		},
 	};
 };
@@ -1222,6 +1277,91 @@ function Schema:SpawnBegottenEntities()
 		sacrificialAltarEnt:Spawn();
 		
 		self.sacrificialAltarEnt = sacrificialAltarEnt;
+	elseif map == "rp_district21" then
+		local bountyBoardEnt = ents.Create("cw_bounty_board");
+		local coinslotBase = ents.Create("prop_dynamic");
+		local coinslotEnt = ents.Create("cw_coinslot");
+		local cinderblockPileEnt = ents.Create("cw_cinderblock_pile");
+		local gramophoneBase = ents.Create("prop_dynamic");
+		local gramophoneEnt = ents.Create("cw_gramophone");
+		local vinylEnt = ents.Create("cw_vinyl_player");
+		local hellPortalEnt = ents.Create("cw_hellportal");
+		local sacrificialAltarEnt = ents.Create("cw_sacrifical_altar");
+		local customerServiceEnt = ents.Create("cw_customerservice");
+		local warhornBase = ents.Create("prop_dynamic");
+		local warhornEnt = ents.Create("cw_gorevillagehorn");
+		local archiveEnts = {
+			{pos = Vector(-8567, 9474, -1609), ang = Angle(0, -90, 180)},
+			{pos = Vector(-8855, 9474, -1609), ang = Angle(0, -90, 180)},
+			{pos = Vector(-8567, 9807, -1609), ang = Angle(90, 90, 180)},
+			{pos = Vector(-8855, 9807, -1609), ang = Angle(90, 90, 180)},
+		};
+		
+		bountyBoardEnt:SetPos(Vector(-6398, 9413, 128));
+		bountyBoardEnt:SetAngles(Angle(0, 90, 0));
+		bountyBoardEnt:Spawn();
+		coinslotBase:SetModel("models/props/de_inferno/confessional.mdl")
+		coinslotBase:SetPos(Vector(-8338.78125, 11133.96875, 283.09375));
+		coinslotBase:SetAngles(Angle(0, 90, 0));
+		coinslotBase:SetMoveType(MOVETYPE_VPHYSICS);
+		coinslotBase:PhysicsInit(SOLID_VPHYSICS);
+		coinslotBase:SetSolid(SOLID_VPHYSICS);
+		coinslotBase:Spawn();
+		
+		local physObject = coinslotBase:GetPhysicsObject();
+		
+		if IsValid(physObject) then
+			coinslotBase:GetPhysicsObject():Wake();
+			coinslotBase:GetPhysicsObject():EnableMotion(false);
+		end
+		
+		coinslotEnt:SetPos(Vector(-8347.625, 11135.65625, 334.5));
+		coinslotEnt:SetAngles(Angle(0, -90, 0));
+		coinslotEnt:Spawn();
+		gramophoneBase:SetModel("models/props/furnitures/humans/l10/l10_bedsidetable.mdl")
+		gramophoneBase:SetPos(Vector(-394.28125, -9214.9375, -6466.71875));
+		gramophoneBase:SetAngles(Angle(0, 90, 0));
+		gramophoneBase:SetMoveType(MOVETYPE_VPHYSICS);
+		gramophoneBase:PhysicsInit(SOLID_VPHYSICS);
+		gramophoneBase:SetSolid(SOLID_VPHYSICS);
+		gramophoneBase:Spawn();
+		gramophoneEnt:SetPos(Vector(-393.1875, -9214.90625, -6426.65625));
+		gramophoneEnt:SetAngles(Angle(0, 180, 0));
+		gramophoneEnt:Spawn();
+		vinylEnt:SetPos(Vector(-8618, 9638, -1616));
+		vinylEnt:SetAngles(Angle(0, 0, 0));
+		vinylEnt:Spawn();
+		cinderblockPileEnt:SetPos(Vector(-9032, 11789, 283));
+		cinderblockPileEnt:SetAngles(Angle(0, 165, 0));
+		cinderblockPileEnt:Spawn();
+		hellPortalEnt:SetPos(Vector(-8246.09375, -9135.40625, -7182.28125));
+		hellPortalEnt:SetAngles(Angle(90, 180, 180));
+		hellPortalEnt:Spawn();
+		sacrificialAltarEnt:SetPos(Vector(-2653.78125, -9140.3125, -6581.71875));
+		sacrificialAltarEnt:SetAngles(Angle(0, 180, 0));
+		sacrificialAltarEnt:Spawn();
+		self.sacrificialAltarEnt = sacrificialAltarEnt;
+		customerServiceEnt:SetPos(Vector(-12867.94, -3330.91, -475.25));
+		customerServiceEnt:SetAngles(Angle(0, 0, 0));
+		customerServiceEnt:Spawn();
+		warhornBase:SetModel("models/props_junk/harpoon002a.mdl");
+		warhornBase:SetPos(Vector(-215.0625, -8979.75, 11750.8125));
+		warhornBase:SetAngles(Angle(90, 135, 180));
+		warhornBase:SetMoveType(MOVETYPE_VPHYSICS);
+		warhornBase:PhysicsInit(SOLID_VPHYSICS);
+		warhornBase:SetSolid(SOLID_VPHYSICS);
+		warhornBase:Spawn();
+		warhornEnt:SetPos(Vector(-215.81, -8982.75, 11807.88));
+		warhornEnt:SetAngles(Angle(43.79, 164.57, 26.77));
+		warhornEnt:Spawn();
+		
+		for i = 1, #archiveEnts do
+			local archiveEnt = ents.Create("cw_archives");
+			
+			archiveEnt:SetPos(archiveEnts[i].pos);
+			archiveEnt:SetAngles(archiveEnts[i].ang);
+			archiveEnt:Spawn();
+		end
 	end
 end;
 
@@ -1233,6 +1373,8 @@ function Schema:InTower(entity)
 		return entity:GetPos():WithinAABox(Vector(-8896, -10801, 69), Vector(-13525, -3070, 914));
 	elseif map == "rp_scraptown" then
 		return entity:GetPos():WithinAABox(Vector(-2446, -7, -262), Vector(-8792, -8935, 2110));
+	elseif map == "rp_district21" then
+		return entity:GetPos():WithinAABox(Vector(-10622, 9407, 476), Vector(-4861, 13313, -2100));
 	end
 end;
 
@@ -1589,7 +1731,7 @@ function playerMeta:AddBounty(bounty, reason, poster)
 	if IsValid(poster) and poster:IsPlayer() then
 		local faction = self:GetNetVar("kinisgerOverride") or self:GetFaction()
 		
-		if (faction  == "Gatekeeper" or faction  == "Holy Hierarchy") and !poster:IsAdmin() then
+		if (faction  == "Gatekeeper" or faction == "Hillkeeper" or faction  == "Holy Hierarchy") and !poster:IsAdmin() then
 			Schema:EasyText(poster, "cornflowerblue", "You cannot place a bounty on "..self:Name().."!");
 			
 			return;
@@ -1716,7 +1858,7 @@ function Schema:AddBounty(key, bounty, reason, poster)
 					end
 					
 					if IsValid(poster) and poster:IsPlayer() and faction then
-						if (faction  == "Gatekeeper" or faction  == "Holy Hierarchy") and !poster:IsAdmin() then
+						if (faction  == "Gatekeeper" or faction == "Hillkeeper" or faction  == "Holy Hierarchy") and !poster:IsAdmin() then
 							Schema:EasyText(poster, "cornflowerblue", "You cannot place a bounty on "..v._Name.."!");
 							
 							return;
@@ -2338,7 +2480,7 @@ concommand.Add("cw_CoinslotSalaryCheck", function(player, cmd, args)
 		if (entity:GetClass() == "cw_coinslot") then
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			
-			if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
+			if (faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
 				local collectableWages = player:GetCharacterData("collectableWages", 0);
 				local coin = player.cwInfoTable.coinslotWages * collectableWages;
 				local ranksRestrictedWages = Schema.RanksRestrictedWages;
@@ -2365,7 +2507,7 @@ concommand.Add("cw_CoinslotSalary", function(player, cmd, args)
 		if (entity:GetClass() == "cw_coinslot") then
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			
-			if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
+			if (faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
 				local collectableWages = player:GetCharacterData("collectableWages", 0);
 				local coin = player.cwInfoTable.coinslotWages * collectableWages
 				
@@ -2419,7 +2561,7 @@ concommand.Add("cw_CoinslotRation", function(player, cmd, args)
 						return;
 					end
 				
-					if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
+					if (faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
 						player:GiveItem(item.CreateInstance("gatekeeper_ration"), true);
 						player:GiveItem(item.CreateInstance("purified_water"), true);
 						Schema:EasyText(player, "olivedrab", "The machine dispenses a Gatekeeper ration and a bottle of purified water.");
@@ -2455,7 +2597,7 @@ concommand.Add("cw_CoinslotGear", function(player, cmd, args)
 		if (entity:GetClass() == "cw_coinslot") then
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			
-			if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers") then
+			if (faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers") then
 				local collectedGear = player:GetCharacterData("collectedGear", false);
 				
 				if !collectedGear then
@@ -2463,7 +2605,7 @@ concommand.Add("cw_CoinslotGear", function(player, cmd, args)
 					
 					if (unixTime >= player:GetData("nextGear", 0)) then
 						if (Schema.towerTreasury and Schema.towerTreasury <= 250) then
-							Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue Gatekeeper kit, but one is not dispensed. How odd.");
+							Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue "..faction.." kit, but one is not dispensed. How odd.");
 							entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
 							
 							return;
@@ -2473,11 +2615,13 @@ concommand.Add("cw_CoinslotGear", function(player, cmd, args)
 						
 						if faction == "Pope Adyssa's Gatekeepers" then
 							player:GiveItem(item.CreateInstance("renegade_gatekeeper_standard_issue"), true);
+						elseif faction == "Hillkeeper" then
+							player:GiveItem(item.CreateInstance("hillkeeper_standard_issue"), true);
 						else
 							player:GiveItem(item.CreateInstance("gatekeeper_standard_issue"), true);
 						end
 						
-						Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue Gatekeeper kit. A receptacle beneath the machine opens and a crude duffel bag dispenses.");
+						Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue "..faction.." kit. A receptacle beneath the machine opens and a crude duffel bag dispenses.");
 						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
 						
 						timer.Simple(0.5, function()
@@ -2490,7 +2634,7 @@ concommand.Add("cw_CoinslotGear", function(player, cmd, args)
 						player:SetCharacterData("collectedGear", true);
 						player:SetLocalVar("collectedGear", true);
 					else
-						Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue Gatekeeper kit, but one is not dispensed. You must wait for now.");
+						Schema:EasyText(player, "olive", "You pull the lever to dispense your standard issue "..faction.." kit, but one is not dispensed. You must wait for now.");
 						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);
 					end
 				end;
@@ -2514,6 +2658,52 @@ concommand.Add("cw_CoinslotTreasury", function(player, cmd, args)
 		end
 	end;
 end);
+
+if map == "rp_district21" then
+	concommand.Add("cw_HellPortalAbandonedChurch", function(player, cmd, args)
+		if not player.teleporting then
+			local trace = player:GetEyeTrace();
+	
+			if (trace.Entity) then
+				local entity = trace.Entity;
+	
+				if (entity:GetClass() == "cw_hellportal") then
+					local nextTeleport = player:GetCharacterData("nextTeleport", 0);
+					
+					if nextTeleport <= 0 then
+						local origin = player:GetPos();
+						local chosenspot = math.random(1, #Schema.hellPortalTeleports["church"]);
+						local destination = Schema.hellPortalTeleports["church"][chosenspot].pos;
+						local angles = Schema.hellPortalTeleports["church"][chosenspot].ang;
+						
+						ParticleEffect("teleport_fx", origin, Angle(0,0,0), player);
+						sound.Play("misc/summon.wav", origin, 100, 100);
+						ParticleEffect("teleport_fx", destination, Angle(0,0,0));
+						sound.Play("misc/summon.wav", destination, 100, 100);
+						player.teleporting = true;
+						
+						timer.Create("summonplayer_"..tostring(player:EntIndex()), 0.75, 1, function()
+							if IsValid(player) then
+								player.teleporting = false;
+								
+								if player:Alive() then
+									Clockwork.player:SetSafePosition(player, destination);
+									player:SetEyeAngles(angles);
+									util.Decal("PentagramBurn", destination, destination + Vector(0, 0, -256));
+									util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));
+									
+									--player:SetCharacterData("nextTeleport", 1200);
+								end
+							end
+						end);
+					else
+						Schema:EasyText(player, "peru", "You cannot use the Hellportal for another "..nextTeleport.." seconds!");
+					end
+				end
+			end;
+		end;
+	end);
+end
 
 concommand.Add("cw_HellPortalArch", function(player, cmd, args)
 	if not player.teleporting then
@@ -2996,6 +3186,19 @@ elseif map == "rp_scraptown" then
 		[14] = {pos = Vector(-3505.53125, -4947.625, 384.625), angles = Angle(0, -90, 0)},
 		[15] = {pos = Vector(-5583.21875, -2887.65625, 314.625), angles = Angle(0, 90, 0)},
 	};
+elseif map == "rp_district21" then
+	Schema.PopeSpeakers = {
+		{pos = Vector(-5774.25, 9342, 608), angles = Angle(0, 180, 0)},
+		{pos = Vector(-6514, 9342, 608), angles = Angle(0, 0, 0)},
+		{pos = Vector(-8355.34375, 11133.625, 658), angles = Angle(0, 0, 0)},
+		{pos = Vector(-7857.65625, 11068.78125, 477), angles = Angle(0, 0, 0)},
+		{pos = Vector(-6120.65625, 12222.875, 310), angles = Angle(0, 180, 0)},
+		{pos = Vector(-6347.9375, 13233.1875, 580.5), angles = Angle(0, -90, 0)},
+		{pos = Vector(-5309.09375, 11919.34375, 391), angles = Angle(0, 0, 0)},
+		{pos = Vector(-5020.15625, 12028.875, 252.21875), angles = Angle(0, 180, 0)},
+		{pos = Vector(-9659.5, 11132.21875, 535), angles = Angle(0, 180, 0)},
+		{pos = Vector(-7191, 10255.03125, 433.75), angles = Angle(0, 45, 0)},
+	};
 end
 
 function Schema:LoadPopeSpeakers()
@@ -3058,7 +3261,7 @@ end;
 function Schema:InSpeakerZone(entity)
 	if map == "rp_begotten3" then
 		return entity:GetPos():WithinAABox(Vector(2400, 15147, -2778), Vector(-2426, 9867, 960));
-	elseif map == "rp_begotten_redux" or map == "rp_scraptown" then
+	elseif map == "rp_begotten_redux" or map == "rp_scraptown" or map == "rp_district21" then
 		return entity:InTower();
 	end
 end;
@@ -3073,3 +3276,135 @@ function Schema:SpeakerPerform(player, text)
 	
 	self:EmitSoundFromSpeakers("damnation/apocalypt/speaker"..math.random(1, 5)..".mp3", 100, math.random(80, 120))
 end;
+
+function Schema:GetCauldronLiquidity()
+	if !self.cauldronLiquidity then
+		self.cauldronLiquidity = 0;
+	end
+	
+	return self.cauldronLiquidity;
+end
+
+function Schema:ModifyCauldronLiquidity(amount)
+	if !self.cauldronLiquidity then
+		self.cauldronLiquidity = 0;
+	end
+	
+	self.cauldronLiquidity = self.cauldronLiquidity + amount;
+
+	if self.cauldronLiquidity > 10 then
+		self.cauldronLiquidity = 10;
+	end
+
+	if self.cauldronLiquidity <= 0 and self.cauldronServings <= 0 then
+		self.cauldronLiquidity = 0;
+		Schema:ResetPoisonedServings();
+		Schema:ResetDiseasedServings();
+	end
+end
+
+function Schema:ResetCauldronLiquidity()
+	self.cauldronLiquidity = 0;
+end
+
+function Schema:GetCauldronQuality()
+	if !self.cauldronQuality then
+		self.cauldronQuality = 0;
+	end
+	
+	return self.cauldronQuality;
+end
+
+function Schema:ModifyCauldronQuality(amount)
+	if !self.cauldronQuality then
+		self.cauldronQuality = 0;
+	end
+	
+	self.cauldronQuality = self.cauldronQuality + amount;
+end
+
+function Schema:ResetCauldronQuality()
+	self.cauldronQuality = 0;
+end
+
+function Schema:GetCauldronServings()
+	if !self.cauldronServings then
+		self.cauldronServings = 0;
+	end
+	
+	return self.cauldronServings;
+end
+
+function Schema:ModifyCauldronServings(amount)
+	if !self.cauldronServings then
+		self.cauldronServings = 0;
+	end
+	
+	self.cauldronServings = self.cauldronServings + amount;
+
+	if self.cauldronServings > 0 and self.cauldronServings < 1 then
+		self.cauldronServings = 1;
+	end
+
+	if self.cauldronServings <= 0 then
+		self.cauldronServings = 0;
+		Schema:ResetCauldronQuality();
+
+		if self.cauldronLiquidity <= 0 then
+			Schema:ResetPoisonedServings();
+			Schema:ResetDiseasedServings();
+		end
+	end
+end
+
+function Schema:ResetCauldronServings()
+	self.cauldronServings = 0;
+end
+
+function Schema:ModifyPoisonedServings(amount)
+	if !self.poisonServings then
+		self.poisonServings = 0;
+	end
+	
+	self.poisonServings = self.poisonServings + amount;
+
+	if self.poisonServings <= 0 then
+		self.poisonServings = 0;
+	end
+end
+
+function Schema:GetPoisonedServings()
+	if !self.poisonServings then
+		self.poisonServings = 0;
+	end
+	
+	return self.poisonServings;
+end
+
+function Schema:ResetPoisonedServings()
+	self.poisonServings = 0;
+end
+
+function Schema:GetDiseasedServings()
+	if !self.diseasedServings then
+		self.diseasedServings = 0;
+	end
+
+	return self.diseasedServings;
+end
+
+function Schema:ModifyDiseasedServings(amount)
+	if !self.diseasedServings then
+		self.diseasedServings = 0;
+	end
+	
+	self.diseasedServings = self.diseasedServings + amount;
+
+	if self.diseasedServings <= 0 then
+		self.diseasedServings = 0;
+	end
+end
+
+function Schema:ResetDiseasedServings()
+	self.diseasedServings = 0;
+end

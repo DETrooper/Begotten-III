@@ -43,7 +43,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 		local nearFire = false;
 		local sanityDecay = -1;
 	
-		if (map != "rp_begotten3") then
+		if (map != "rp_begotten3" and map != "rp_district21") then
 			if (map == "rp_begotten_redux") or (map == "rp_scraptown") then
 				if player:InTower() then
 					plyTab.nextSanityDecay = curTime + sanity_interval;
@@ -87,7 +87,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 					sanityDecay = sanityDecay - 1.5;
 				end;
 				
-				if (player:GetFaith() != "Faith of the Dark" and entity:GetFaith() == "Faith of the Dark" and entity:HasBelief("blank_stare")) then
+				if (player:GetFaith() != "Faith of the Dark" and entity:GetFaith() == "Faith of the Dark" and entity:HasBelief("blank_stare") and player:GetFaction() != "Hillkeeper") then
 					local entityFaction = entity:GetFaction();
 					local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 					local kinisgerOverride = entity:GetNetVar("kinisgerOverride");
@@ -142,19 +142,21 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 		local bNight = tobool(cycle == "night")
 		local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction()
 		
-		if (plyTab.LightColor) then
-			local requiredLight = 15;
-			local lightColor = plyTab.LightColor
-			local r, g, b = lightColor.r, lightColor.g, lightColor.b
+		if map ~= "rp_district21" then
+			if (plyTab.LightColor) then
+				local requiredLight = 15;
+				local lightColor = plyTab.LightColor
+				local r, g, b = lightColor.r, lightColor.g, lightColor.b
 
-			if (r > requiredLight or g > requiredLight or b > requiredLight) then
-				if (lastZone == "wasteland") then
-					if sanityDecay < 0 then
-						sanityDecay = math.Round(sanityDecay / 5); -- When by a fire or using a lantern you'll lose significantly less sanity.
+				if (r > requiredLight or g > requiredLight or b > requiredLight) then
+					if (lastZone == "wasteland") then
+						if sanityDecay < 0 then
+							sanityDecay = math.Round(sanityDecay / 5); -- When by a fire or using a lantern you'll lose significantly less sanity.
+						end
 					end
+				else
+					sanityDecay = sanityDecay - 1; -- sanity loss from darkness
 				end
-			else
-				sanityDecay = sanityDecay - 1; -- sanity loss from darkness
 			end
 		end
 		
@@ -217,7 +219,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 		if plyTab.banners then
 			for k, v in pairs(plyTab.banners) do
 				if v == "glazic" then
-					if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Holy Hierarchy" then
+					if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy" then
 						sanityDecay = sanityDecay + 2;
 					
 						break;

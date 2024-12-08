@@ -269,3 +269,23 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "scrap", "scrap", "tech", "tech", "tech", "tech"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"wriggle_fucking_eel"};
 ITEM:Register();
+
+-- Hill shit
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Hill Yeoman Longsword";
+	ITEM.model = "models/begotten_apocalypse/items/IronClaymore.mdl";
+	ITEM.skin = 2;
+	ITEM.weight = 2.5;
+	ITEM.uniqueID = "begotten_2h_hilllongsword";
+	ITEM.category = "Melee";
+	ITEM.description = "A staple of landowners in the north alongside the venerable musket; a sign of wealth. The blade is adorned with Gore-Glazic runes.";
+	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/IronClaymore.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(280, 180, 191.93);
+	ITEM.attachmentOffsetVector = Vector(3.54, 4.95, 16.97);
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
+ITEM:Register();

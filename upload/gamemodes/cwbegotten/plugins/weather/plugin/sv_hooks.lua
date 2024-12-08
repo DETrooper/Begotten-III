@@ -251,5 +251,13 @@ function cwWeather:WeatherChanged(weather, oldWeather)
 		end
 		
 		Schema.spawnedNPCs["thrall"] = {};
+	elseif weather == "snow" or weather == "blizzard" then
+		for _, v in ipairs(_player.GetAll()) do
+			if (v.cloaked and !v:GetNetVar("kinisgerCloak")) then v:Uncloak(); end
+
+			if !v:HasBelief("thirst_blood_moon") and !v:HasBelief("embrace_the_darkness") then return; end
+
+			Clockwork.chatBox:Add(v, nil, "event", "You feel the Blood Moon's dark power fade away, obscured by the changing weather.");
+		end
 	end
 end

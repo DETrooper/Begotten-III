@@ -38,6 +38,7 @@ ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
 ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
+ITEM.insulation = 80; -- Adds 44% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -104,6 +105,7 @@ ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
 ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
+ITEM.insulation = 80; -- Adds 44% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -169,6 +171,7 @@ ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
 ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
+ITEM.insulation = 80; -- Adds 44% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -235,6 +238,7 @@ ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
 ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
+ITEM.insulation = 80; -- Adds 44% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -301,6 +305,7 @@ ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
 ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
+ITEM.insulation = 80; -- Adds 44% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -366,6 +371,7 @@ ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
 ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
+ITEM.insulation = 80; -- Adds 44% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)

@@ -31,6 +31,11 @@ cwZombies.zombieNPCS = {
 	"npc_bgt_suitor",
 };
 
+cwZombies.npcSpawnAmounts = {
+	["npc_bgt_pursuer"] = function() return math.random(1,3) end,
+	["npc_drg_animals_wolf"] = function() return math.random(3,5) end,
+};
+
 cwZombies.terrorNPCs = cwZombies.zombieNPCS;
 
 local entityMeta = FindMetaTable("Entity");

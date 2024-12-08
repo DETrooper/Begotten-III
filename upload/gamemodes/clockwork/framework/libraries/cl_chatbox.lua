@@ -453,11 +453,14 @@ function Clockwork.chatBox:Decode(speaker, name, text, data, class, multiplier)
 				end;
 				
 				local faction = speaker:GetNetVar("kinisgerOverride") or speaker:GetFaction();
+				local subfaction = speaker:GetSharedVar("kinisgerOverrideSubfaction") or speaker:GetSharedVar("subfaction");
 
 				if speaker:GetNetVar("beliefFont") == "Voltism" then
 					fontOverride = "Voltism";
 				elseif faction == "Goreic Warrior" then
 					fontOverride = "Gore";
+				elseif (faction == "Hillkeeper" and !speaker:GetSharedVar("southlander")) or subfaction == "Northlander" or subfaction == "Low Ministry" then
+					fontOverride = "Mordred";
 				end
 				
 				local info = {

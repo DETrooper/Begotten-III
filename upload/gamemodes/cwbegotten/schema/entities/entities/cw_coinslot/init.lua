@@ -46,7 +46,7 @@ function ENT:Use(activator, caller)
 					-- Inquisition/Knights can get salary from Coinslot the same as Gatekeepers.
 					state = "Gatekeeper";
 				end
-			elseif faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
+			elseif faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Hillkeeper" then
 				state = "Gatekeeper";
 			end
 			

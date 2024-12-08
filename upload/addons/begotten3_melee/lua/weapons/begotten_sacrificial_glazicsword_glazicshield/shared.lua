@@ -41,7 +41,7 @@ SWEP.AttackTable = "GlazicSwordAttackTable"
 SWEP.BlockTable = "shieldunique2"
 
 function SWEP:InitFunc()
-	self:SetNWString("activeShield", "shieldunique2");
+	self:SetNW2String("activeShield", "shieldunique2");
 	self.realBlockAnim = self.BlockAnim;
 	self.realBlockTable = GetTable(self.BlockTable);
 	self.realBlockSoundTable = self.BlockSoundTable;

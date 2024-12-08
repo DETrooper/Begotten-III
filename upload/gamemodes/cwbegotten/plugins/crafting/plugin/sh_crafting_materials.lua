@@ -426,6 +426,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A collection of wood that can be used in the construction of weaponry or shields.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = true;
+	ITEM.cauldronQuality = 0;
 	
 	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 25};
 
@@ -443,6 +444,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A pouch of various spices. It was likely taken from a Darklander merchant host.";
 	ITEM.iconoverride = "begotten/ui/itemicons/big_purse.png";
 	ITEM.stackable = true;
+	ITEM.cauldronQuality = 1;
 	
 	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 95};
 

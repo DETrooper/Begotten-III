@@ -367,3 +367,38 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.requireFaction = {"Goreic Warrior"};
 	ITEM.requireSubfaction = {"Clan Reaver"};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("shield_base");
+	ITEM.name = "Hillkeeper Kite Shield";
+	ITEM.model = "models/begotten_apocalypse/items/hill_kite_shield.mdl";
+	ITEM.weight = 5;
+	ITEM.uniqueID = "shieldhill";
+	ITEM.description = "A well-crafted teardrop shield bearing a painted depiction of Sol, painted in the Hill's colors.";
+	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/hill_kite_shield.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 0, 0);
+	ITEM.attachmentOffsetVector = Vector(0, -2.3, 0);
+	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.bulletConditionScale = 0.2;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood", "wood", "wood"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("shield_base");
+	ITEM.name = "Steel Hillkeeper Shield";
+	ITEM.model = "models/props/begotten/melee/defender_shield.mdl";
+	ITEM.weight = 8;
+	ITEM.uniqueID = "shieldhillsteel";
+	ITEM.description = "A finely smithed steel shield, engraved with runic imagery of Glazic warriors and heroes upon its front.";
+	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/defender_shield.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 180, 180);
+	ITEM.attachmentOffsetVector = Vector(0, -2, 0);
+	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.bulletConditionScale = 0.2;
+	
+	ITEM.requiredbeliefs = {"defender"};
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks"}};
+ITEM:Register();

@@ -335,7 +335,7 @@ function CLASS_TABLE:OnTakeFromPlayer(player)
 			for k, v in pairs(player.equipmentSlots) do
 				if v and v.category == "Shields" then
 					-- Old code for 1 weapon per shield.
-					--[[if weapon:GetNWString("activeShield") == v.uniqueID then
+					--[[if weapon:GetNW2String("activeShield") == v.uniqueID then
 						local weaponItemTable = item.GetByWeapon(weapon);
 						
 						if weaponItemTable and weaponItemTable:IsTheSameAs(self) then

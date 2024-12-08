@@ -206,3 +206,23 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requireSubfaction = {"Kinisger"};
 	ITEM.requireFaction = {"Children of Satan"};
 ITEM:Register();
+
+-- Hill shit
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Hill Dagger";
+	ITEM.model = "models/begotten_apocalypse/items/GuardDagger.mdl";
+	ITEM.weight = 0.5;
+	ITEM.uniqueID = "begotten_dagger_hilldagger";
+	ITEM.category = "Melee";
+	ITEM.description = "A hunting blade made to skin and flay animals. The hilt has Gore-Glazic runes on it.";
+	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/guarddagger.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(353.04, 179.05, 14.21);
+	ITEM.attachmentOffsetVector = Vector(-3.54, 1.41, -2.12);
+	ITEM.canUseOffhand = true;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
+ITEM:Register();

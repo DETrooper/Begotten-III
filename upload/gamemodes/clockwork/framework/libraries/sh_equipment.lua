@@ -369,9 +369,11 @@ end
 function playerMeta:GetWeaponsEquipped()
 	local weaponsTab = {};
 	
-	for k, v in pairs(self.equipmentSlots) do
-		if v.category == "Firearms" or v.category == "Crossbows" or v.meleeWeapon or v.isJavelin then
-			table.insert(weaponsTab, v);
+	if self.equipmentSlots then
+		for k, v in pairs(self.equipmentSlots) do
+			if v.category == "Firearms" or v.category == "Crossbows" or v.meleeWeapon or v.isJavelin then
+				table.insert(weaponsTab, v);
+			end
 		end
 	end
 	
@@ -381,7 +383,7 @@ end
 local weaponMeta = FindMetaTable("Weapon")
 
 function weaponMeta:GetShield()
-	local shield = self:GetNWString("activeShield");
+	local shield = self:GetNW2String("activeShield");
 	
 	if shield and shield:len() > 0 then
 		local shieldTable = GetTable(shield);
@@ -393,7 +395,7 @@ function weaponMeta:GetShield()
 end
 
 function weaponMeta:GetOffhand()
-	local offhand = self:GetNWString("activeOffhand");
+	local offhand = self:GetNW2String("activeOffhand");
 	
 	if offhand and offhand:len() > 0 then
 		local offhandWeapon = weapons.GetStored(offhand);
@@ -594,8 +596,8 @@ else
 		
 		if activeWeapon:IsValid() then
 			activeWeaponClass = activeWeapon:GetClass();
-			activeOffhand = activeWeapon:GetNWString("activeOffhand");
-			activeShield = activeWeapon:GetNWString("activeShield");
+			activeOffhand = activeWeapon:GetNW2String("activeOffhand");
+			activeShield = activeWeapon:GetNW2String("activeShield");
 		end
 
 		for slot, itemTable in pairs(plyTab.equipmentSlots) do
@@ -767,6 +769,10 @@ else
 		end
 		
 		plyTab.equipmentSlots[slot] = itemTable;
+		
+		if !player:IsDormant() then
+			hook.Run("EquipmentUpdated", player);
+		end
 	end);
 	
 	netstream.Hook("SyncEquipment", function(data)
@@ -798,5 +804,9 @@ else
 		end
 		
 		plyTab.equipmentSlots = equipmentSlots;
+		
+		if !player:IsDormant() then
+			hook.Run("EquipmentUpdated", player);
+		end
 	end);
 end

@@ -3286,6 +3286,166 @@ AttackTables.MaximusWrathAttackTable = {
 	["isadminweapon"] = true,
 };
 
+-- Hill shit (weapons)
+
+AttackTables.HillGlazicusAttackTable = {
+	["primarydamage"] = 35,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.85,
+	["altattackpoisedamagemodifier"] = 0.3,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = 40,
+	["poisedamage"] = 12,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 3,
+	["delay"] = 0.72,
+	["striketime"] = 0.3,
+	["meleearc"] = 35,
+	["meleerange"] = 650,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.HillSteelArmingSwordAttackTable = {
+	["primarydamage"] = 40,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.8,
+	["altattackpoisedamagemodifier"] = 0.3,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = 50,
+	["poisedamage"] = 15,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 5,
+	["delay"] = 0.8,
+	["striketime"] = 0.35,
+	["meleearc"] = 35,
+	["meleerange"] = 750,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.HillBattleAxeAttackTable = {
+	["primarydamage"] = 50,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = false,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 42,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 22,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 5,
+	["delay"] = 0.95,
+	["striketime"] = 0.4,
+	["meleearc"] = 45,
+	["meleerange"] = 625,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.HillLongswordAttackTable = {
+	["primarydamage"] = 75,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.8,
+	["altattackpoisedamagemodifier"] = 0.25,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = 45,
+	["poisedamage"] = 20,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 8,
+	["delay"] = 1.2,
+	["striketime"] = 0.6,
+	["meleearc"] = 45,
+	["meleerange"] = 915,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.HillHeavyBattleAxeAttackTable = {
+	["primarydamage"] = 85,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = false,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 35,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 30,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 7,
+	["delay"] = 1.5,
+	["striketime"] = 0.65,
+	["meleearc"] = 45,
+	["meleerange"] = 885,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.HillGoreHuntingDaggerAttackTable = {
+	["primarydamage"] = 15,
+	["dmgtype"] = 16,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = false,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 0,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 2,
+	["delay"] = 0.62,
+	["striketime"] = 0.2,
+	["meleearc"] = 15,
+	["meleerange"] = 475,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.HillThrowingAxeAttackTable = {
+	["primarydamage"] = 55,
+	["mimimumdistancedamage"] = 45,
+	["maximumdistancedamage"] = 135,
+	["dmgtype"] = DMG_SLASH,
+	["canaltattack"] = true,
+	["altattackpoisedamagemodifier"] = 0.5,
+	["altattackstabilitydamagemodifier"] = 0,
+	["altmeleearc"] = 35,
+	["altmeleerange"] = 625,
+	["alttakeammo"] = 3,
+	["armorpiercing"] = 60,
+	["poisedamage"] = 40,
+	["stabilitydamage"] = 40,
+	["minimumdistancestabilitydamage"] = 20,
+	["maximumdistancestabilitydamage"] = 80,
+	["takeammo"] = 12,
+	["delay"] = 0.5,
+	["striketime"] = 0.6,
+	["punchstrength"] = Angle(0,4,0),
+};
+
+AttackTables.OrdainedGorefellerAttackTable = {
+	["primarydamage"] = 100,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = false,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 60,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 45,
+	["stabilitydamage"] = 40,
+	["takeammo"] = 12,
+	["delay"] = 2.3,
+	["striketime"] = 0.955,
+	["meleearc"] = 55,
+	["meleerange"] = 1100,
+	["punchstrength"] = Angle(0,7,0),
+};
+
 AddTable("DefaultAttackTable", AttackTables.DefaultAttackTable) 
 AddTable("FistAttackTable", AttackTables.FistAttackTable) 
 AddTable("IronJavelinAttackTable", AttackTables.IronJavelinAttackTable)
@@ -3425,6 +3585,14 @@ AddTable("Ancestraldagger_Kinisger_AttackTable", AttackTables.Ancestraldagger_Ki
 AddTable("DarklanderBardicheAttackTable", AttackTables.DarklanderBardicheAttackTable)
 AddTable("EveningStarAttackTable", AttackTables.EveningStarAttackTable)
 AddTable("WarHammerAttackTable", AttackTables.WarHammerAttackTable)
+AddTable("HillGlazicusAttackTable", AttackTables.HillGlazicusAttackTable)
+AddTable("HillSteelArmingSwordAttackTable", AttackTables.HillSteelArmingSwordAttackTable)
+AddTable("HillBattleAxeAttackTable", AttackTables.HillBattleAxeAttackTable) 
+AddTable("HillLongswordAttackTable", AttackTables.HillLongswordAttackTable)  
+AddTable("HillHeavyBattleAxeAttackTable", AttackTables.HillHeavyBattleAxeAttackTable) 
+AddTable("HillGoreHuntingDaggerAttackTable", AttackTables.HillGoreHuntingDaggerAttackTable)
+AddTable("HillThrowingAxeAttackTable", AttackTables.HillThrowingAxeAttackTable)
+AddTable("OrdainedGorefellerAttackTable", AttackTables.OrdainedGorefellerAttackTable)
 
 -- Block Stat Tables
 
@@ -5774,6 +5942,132 @@ BlockTables.WarHammerBlockTable = {
 	["candeflect"] = true,
 };
 
+BlockTables.HillGlazicusBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 15,
+	["blockeffectpos"] = (Vector(0, 0, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 10,
+	["raisespeed"] = 0.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
+BlockTables.HillSteelArmingSwordBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 15,
+	["blockeffectpos"] = (Vector(0, 0, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 17,
+	["raisespeed"] = 0.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
+BlockTables.HillBattleAxeBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 15,
+	["blockeffectpos"] = (Vector(0, 0, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 5,
+	["raisespeed"] = 0.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
+BlockTables.HillLongswordBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 20,
+	["raisespeed"] = 1.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
+BlockTables.HillHeavyBattleAxeBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 10,
+	["raisespeed"] = 1.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
+BlockTables.HillGoreHuntingDaggerBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 30,
+	["blockeffectpos"] = (Vector(5, 0, 60)),
+	["blockcone"] = 135,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 0,
+	["raisespeed"] = 1.25,
+	["instantraise"] = true,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 5,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
+BlockTables.OrdainedGorefellerBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 25,
+	["raisespeed"] = 2,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 30,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
 AddTable("DefaultBlockTable", BlockTables.DefaultBlockTable) 
 AddTable("AdminTwistedMacheteBlockTable", BlockTables.AdminTwistedMacheteBlockTable)
 AddTable("FistBlockTable", BlockTables.FistBlockTable) 
@@ -5904,6 +6198,13 @@ AddTable("Ancestraldagger_Kinisger_BlockTable", BlockTables.Ancestraldagger_Kini
 AddTable("DarklanderBardicheBlockTable", BlockTables.DarklanderBardicheBlockTable)
 AddTable("EveningStarBlockTable", BlockTables.EveningStarBlockTable)
 AddTable("WarHammerBlockTable", BlockTables.WarHammerBlockTable)
+AddTable("HillGlazicusBlockTable", BlockTables.HillGlazicusBlockTable)
+AddTable("HillSteelArmingSwordBlockTable", BlockTables.HillSteelArmingSwordBlockTable)
+AddTable("HillBattleAxeBlockTable", BlockTables.HillBattleAxeBlockTable)
+AddTable("HillLongswordBlockTable", BlockTables.HillLongswordBlockTable)        
+AddTable("HillHeavyBattleAxeBlockTable", BlockTables.HillHeavyBattleAxeBlockTable)        
+AddTable("HillGoreHuntingDaggerBlockTable", BlockTables.HillGoreHuntingDaggerBlockTable)  
+AddTable("OrdainedGorefellerBlockTable", BlockTables.OrdainedGorefellerBlockTable)
 
 -- Shield Stat Tables
 
@@ -6928,6 +7229,100 @@ BlockTables.shieldunique2 = { -- Sol Shield (Unique)
 	["candeflect"] = true,
 };
 
+-- Hill shit (shields)
+
+BlockTables.shieldhill = { -- Hillkeeper Shield
+	["name"] = "Hillkeeper Shield",
+	["guardblockamount"] = 5,
+	["damagereduction"] = 0.8,
+	["specialeffect"] = false,
+	["blockeffect"] = "GlassImpact",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 50)),
+	["blockcone"] = 220,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BUCKSHOT},
+	["blockanim"] = "a_sword_shield_block_twindragon",
+	["blocksoundtable"] = "WoodenShieldSoundTable",
+	["partialbulletblock"] = true,
+	["poiseresistance"] = 35,
+	["raisespeed"] = 1.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 35,
+	["canparry"] = true,
+	["candeflect"] = true,
+	["ironsights"] = {
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(8.039, -7.237, 2.411), ang = Vector(0, -16.181, 0)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(10.8, -8.643, 4.159), ang = Vector(0, 0, -2)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.68, -6.835, 0.479), ang = Vector(2.111, -26.031, -4.222)},
+	},
+	["ViewModelBoneMods"] = {
+		["models/v_begottenknife.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+	},
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["hillshield"] = { type = "Model", model = "models/begotten_apocalypse/items/hill_kite_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-10.91, 3.5, 0), angle = Angle(35, 73.636, 134.416), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+		},
+		["models/v_begottenknife.mdl"] = {
+			["hillshield"] = { type = "Model", model = "models/begotten_apocalypse/items/hill_kite_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-5.715, -4.557, 8), angle = Angle(178.83, -132.079, -36.235), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["hillshield"] = { type = "Model", model = "models/begotten_apocalypse/items/hill_kite_shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(16, 4, 4), angle = Angle(20, -30, -90), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+	},
+	["WElements"] = {
+		["hillshield"] = { type = "Model", model = "models/begotten_apocalypse/items/hill_kite_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3, 3, 0), angle = Angle(5.843, 146.104, 87.662), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	},
+};
+
+BlockTables.shieldhillsteel = { -- Steel Hillkeeper Shield
+	["name"] = "Steel Hillkeeper Shield",
+	["guardblockamount"] = 3,
+	["damagereduction"] = 0.75,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 50)),
+	["blockcone"] = 220,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
+	["blockanim"] = "a_sword_shield_block_drakekeeper",
+	["blocksoundtable"] = "MetalShieldSoundTable",
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 70,
+	["raisespeed"] = 1.9,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 50,
+	["canparry"] = true,
+	["candeflect"] = false,
+	["ironsights"] = {
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(6.639, -9.046, -0.08), ang = Vector(7.5, -2, -7)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(6, -8.04, 2.68), ang = Vector(0, -9.146, -6.332)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.559, -6.031, 1.279), ang = Vector(0, -27.438, -5.628)},
+	},
+	["ViewModelBoneMods"] = {
+		["models/v_begottenknife.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+	},
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["hillsteelshield"] = { type = "Model", model = "models/props/begotten/melee/defender_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-12, 5, 0), angle = Angle(-212, -120, 120), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+		},
+		["models/v_begottenknife.mdl"] = {
+			["hillsteelshield"] = { type = "Model", model = "models/props/begotten/melee/defender_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-3, -.4, 5), angle = Angle(176.494, -136.754, -216.235), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["hillsteelshield"] = { type = "Model", model = "models/props/begotten/melee/defender_shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(13, 8, 3.5), angle = Angle(20, -30, 90), size = Vector(0.75, 0.75, 0.75), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+	},
+	["WElements"] = {
+		["hillsteelshield"] = { type = "Model", model = "models/props/begotten/melee/defender_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, 1.557, 0.518), angle = Angle(180.844, -33.896, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	},
+};
+
 AddTable("shield1", BlockTables.shield1)
 AddTable("shield2", BlockTables.shield2)
 AddTable("shield3", BlockTables.shield3)
@@ -6950,6 +7345,8 @@ AddTable("shield19", BlockTables.shield19)
 AddTable("shield20", BlockTables.shield20)
 AddTable("shieldunique1", BlockTables.shieldunique1)
 AddTable("shieldunique2", BlockTables.shieldunique2)
+AddTable("shieldhill", BlockTables.shieldhill)
+AddTable("shieldhillsteel", BlockTables.shieldhillsteel)
 
 -- Dummy tables for use with tooltips that have the min/max values.
 local meleemax = {};

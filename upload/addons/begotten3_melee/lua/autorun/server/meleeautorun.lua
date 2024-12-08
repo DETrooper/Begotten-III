@@ -156,8 +156,8 @@ function Parry(target, dmginfo)
 						if wep.AttackTable then
 							local attackTable;
 							
-							if wep:GetNWString("activeOffhand"):len() > 0 then
-								local offhandTable = weapons.GetStored(wep:GetNWString("activeOffhand"));
+							if wep:GetNW2String("activeOffhand"):len() > 0 then
+								local offhandTable = weapons.GetStored(wep:GetNW2String("activeOffhand"));
 								
 								if offhandTable then
 									attackTable = GetDualTable(wep.AttackTable, offhandTable.AttackTable);
@@ -240,7 +240,7 @@ local function Guarding(ent, dmginfo)
 								
 								weaponItemTable:TakeCondition(math.min(conditionLoss, 100));
 
-								local enemyoffhand = enemywep:GetNWString("activeOffhand");
+								local enemyoffhand = enemywep:GetNW2String("activeOffhand");
 								
 								if enemyoffhand:len() > 0 then
 									for k, v in pairs(attacker.equipmentSlots) do
@@ -290,8 +290,8 @@ local function Guarding(ent, dmginfo)
 					blocktable = GetTable(wep.realBlockTable);
 				end
 			else
-				if wep:GetNWString("activeOffhand"):len() > 0 then
-					local offhandTable = weapons.GetStored(wep:GetNWString("activeOffhand"));
+				if wep:GetNW2String("activeOffhand"):len() > 0 then
+					local offhandTable = weapons.GetStored(wep:GetNW2String("activeOffhand"));
 								
 					if offhandTable then
 						blocktable = GetDualTable(wep.realBlockTable, offhandTable.BlockTable);
@@ -522,7 +522,7 @@ local function Guarding(ent, dmginfo)
 											
 											weaponItemTable:TakeCondition(math.min(conditionLoss, 100));
 
-											local enemyoffhand = enemywep:GetNWString("activeOffhand");
+											local enemyoffhand = enemywep:GetNW2String("activeOffhand");
 											
 											if enemyoffhand:len() > 0 then
 												for k, v in pairs(attacker.equipmentSlots) do
@@ -550,7 +550,7 @@ local function Guarding(ent, dmginfo)
 							local weaponItemTable = item.GetByWeapon(wep);
 							local shieldEquipped = false;
 							
-							if shieldItemTable and wep:GetNWString("activeShield") == shieldItemTable.uniqueID then
+							if shieldItemTable and wep:GetNW2String("activeShield") == shieldItemTable.uniqueID then
 								shieldEquipped = true;
 								
 								local shieldConditionDamage = conditionDamage;
@@ -598,7 +598,7 @@ local function Guarding(ent, dmginfo)
 										end
 									end
 									
-									local offhand = wep:GetNWString("activeOffhand");
+									local offhand = wep:GetNW2String("activeOffhand");
 									
 									if offhand:len() > 0 then
 										for k, v in pairs(ent.equipmentSlots) do
@@ -688,8 +688,8 @@ local function Guarding(ent, dmginfo)
 							if !Clockwork.player:HasFlags(attacker, "T") then
 								local activeWeapon = ent:GetActiveWeapon();
 								
-								if (activeWeapon:IsValid() and activeWeapon:GetNWString("activeShield"):len() > 0) then
-									local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
+								if (activeWeapon:IsValid() and activeWeapon:GetNW2String("activeShield"):len() > 0) then
+									local blockTable = GetTable(activeWeapon:GetNW2String("activeShield"));
 									
 									if blockTable.spiked then
 										attacker:TakeDamage(5, ent);
@@ -712,8 +712,8 @@ local function Guarding(ent, dmginfo)
 						elseif enemywep.IsABegottenMelee and enemywep.BlockTable then
 							local activeWeapon = ent:GetActiveWeapon();
 							
-							if (activeWeapon:IsValid() and activeWeapon:GetNWString("activeShield"):len() > 0) then
-								local blockTable = GetTable(activeWeapon:GetNWString("activeShield"));
+							if (activeWeapon:IsValid() and activeWeapon:GetNW2String("activeShield"):len() > 0) then
+								local blockTable = GetTable(activeWeapon:GetNW2String("activeShield"));
 
 								if blockTable.electrified then
 									
@@ -769,7 +769,7 @@ local function Guarding(ent, dmginfo)
 							end
 						end
 						
-						if IsValid(enemywep) and enemywep:GetNWString("activeOffhand"):len() > 0 then
+						if IsValid(enemywep) and enemywep:GetNW2String("activeOffhand"):len() > 0 then
 							if !isJavelin then
 								poiseDamageModifier = poiseDamageModifier * 0.5;
 							end
@@ -802,7 +802,7 @@ local function Guarding(ent, dmginfo)
 								if ent:HasBelief("shieldwall") then
 									local activeWeapon = ent:GetActiveWeapon();
 									
-									if activeWeapon:GetNWString("activeShield"):len() > 0 then
+									if activeWeapon:GetNW2String("activeShield"):len() > 0 then
 										newEnemyPoise = newEnemyPoise * 0.85;
 									end
 								end
@@ -836,7 +836,7 @@ local function Guarding(ent, dmginfo)
 								if ent:HasBelief("shieldwall") then
 									local activeWeapon = ent:GetActiveWeapon();
 									
-									if activeWeapon:GetNWString("activeShield"):len() > 0 then
+									if activeWeapon:GetNW2String("activeShield"):len() > 0 then
 										newEnemyPoise = newEnemyPoise * 0.85;
 									end
 								end
@@ -1037,7 +1037,7 @@ local function Guarding(ent, dmginfo)
 						
 						if melsa <= blockamount and not ent:IsRagdolled() and chance == 1 then
 							if ent:GetCharacterData("stability") < 70 then
-								if wep:GetNWString("activeShield"):len() == 0 and not string.find(wep:GetClass(), "begotten_fists") and not string.find(wep:GetClass(), "begotten_claws") then
+								if wep:GetNW2String("activeShield"):len() == 0 and not string.find(wep:GetClass(), "begotten_fists") and not string.find(wep:GetClass(), "begotten_claws") then
 									local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
 									local itemTable = Clockwork.item:GetByWeapon(wep);
 									
@@ -1138,7 +1138,7 @@ local function Guarding(ent, dmginfo)
 											
 											weaponItemTable:TakeCondition(math.min(conditionLoss, 100));
 
-											local enemyoffhand = enemywep:GetNWString("activeOffhand");
+											local enemyoffhand = enemywep:GetNW2String("activeOffhand");
 											
 											if enemyoffhand:len() > 0 then
 												for k, v in pairs(attacker.equipmentSlots) do
@@ -1177,7 +1177,7 @@ local function Guarding(ent, dmginfo)
 								deflectionStabilityPayback = 10;
 							end
 							
-							if IsValid(inflictor) and inflictor:GetNWString("activeOffhand") then
+							if IsValid(inflictor) and inflictor:GetNW2String("activeOffhand") then
 								deflectionPoisePayback = math.Round(deflectionPoisePayback * 1.5);
 							end
 							
@@ -1277,7 +1277,7 @@ local function Guarding(ent, dmginfo)
 									stabilityDamage = stabilityDamage * enemyattacktable["altattackstabilitydamagemodifier"];
 								end
 								
-								if enemywep:GetNWString("activeOffhand"):len() > 0 then
+								if enemywep:GetNW2String("activeOffhand"):len() > 0 then
 									if !isJavelin then
 										stabilityDamage = stabilityDamage * 0.6;
 									end
@@ -1350,7 +1350,7 @@ local function Guarding(ent, dmginfo)
 										
 										weaponItemTable:TakeCondition(math.min(conditionLoss, 100));
 
-										local enemyoffhand = enemywep:GetNWString("activeOffhand");
+										local enemyoffhand = enemywep:GetNW2String("activeOffhand");
 										
 										if enemyoffhand:len() > 0 then
 											for k, v in pairs(attacker.equipmentSlots) do
@@ -1403,7 +1403,7 @@ local function Guarding(ent, dmginfo)
 						end);
 					end
 				else
-					if IsValid(enemywep) and enemywep.IsABegottenMelee and enemywep:GetNWString("activeShield"):len() <= 0 then
+					if IsValid(enemywep) and enemywep.IsABegottenMelee and enemywep:GetNW2String("activeShield"):len() <= 0 then
 						local clothesItem = attacker:GetClothesEquipped();
 						
 						if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "lifeleech") then
@@ -1458,7 +1458,7 @@ local function Guarding(ent, dmginfo)
 								
 								weaponItemTable:TakeCondition(math.min(conditionLoss, 100));
 
-								local enemyoffhand = enemywep:GetNWString("activeOffhand");
+								local enemyoffhand = enemywep:GetNW2String("activeOffhand");
 								
 								if enemyoffhand:len() > 0 then
 									for k, v in pairs(attacker.equipmentSlots) do
@@ -1505,8 +1505,8 @@ local function UpdateWeaponRaised(player, activeWeapon, bIsRaised, curTime)
 							if (loweredParryDebug < curTime) then
 								local blockTable;
 								
-								if activeWeapon:GetNWString("activeOffhand"):len() > 0 then
-									local offhandTable = weapons.GetStored(activeWeapon:GetNWString("activeOffhand"));
+								if activeWeapon:GetNW2String("activeOffhand"):len() > 0 then
+									local offhandTable = weapons.GetStored(activeWeapon:GetNW2String("activeOffhand"));
 												
 									if offhandTable then
 										blockTable = GetDualTable(activeWeapon.realBlockTable, offhandTable.BlockTable);

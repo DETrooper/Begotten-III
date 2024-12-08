@@ -3,7 +3,7 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
-local map = game.GetMap() == "rp_begotten3";
+local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_district21";
 
 function Schema:ClockworkInitialized()
 	if !self.bountyData then
@@ -292,49 +292,109 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 		local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		local entFaction = entity:GetNetVar("kinisgerOverride") or entity:GetFaction();
 	
-		if (arguments == "cw_sellSlave") and playerFaction == "Goreic Warrior" and entFaction ~= "Goreic Warrior" then
-			for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
-				if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
-					Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 15, "Sold Slave");
-					player:EmitSound("generic_ui/coin_positive_02.wav");
-					
-					if cwBeliefs then
-						local killXP = cwBeliefs.xpValues["kill"];
+		if (arguments == "cw_sellSlave") then
+			if playerFaction == "Goreic Warrior" and entFaction ~= "Goreic Warrior" then
+				for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
+					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
+						Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 15, "Sold Slave");
+						player:EmitSound("generic_ui/coin_positive_02.wav");
 						
-						killXP = killXP * math.Clamp(entity:GetCharacterData("level", 1), 1, 40);
+						if cwBeliefs then
+							local killXP = cwBeliefs.xpValues["kill"];
+							
+							killXP = killXP * math.Clamp(entity:GetCharacterData("level", 1), 1, 40);
+							
+							if player:HasBelief("sister") then
+								if player:GetCharacterData("level", 1) > entity:GetCharacterData("level", 1) then
+									killXP = killXP * 2;
+								end
+							end
 						
-						if player:HasBelief("sister") then
-							if player:GetCharacterData("level", 1) > entity:GetCharacterData("level", 1) then
-								killXP = killXP * 2;
+							player:HandleXP(killXP);
+						end
+						
+						local playerName;
+						
+						if Clockwork.player:DoesRecognise(entity, player) then
+							playerName = player:Name();
+						else
+							playerName = "an unknown Goreic Warrior";
+						end
+						
+						if cwDeathCauses then
+							cwDeathCauses:DeathCauseOverride(entity, "Sold into slavery by "..playerName..".");
+						end
+						
+						Schema:EasyText(entity, "firebrick", "You have been sold into slavery by "..playerName.."!");
+						entity:KillSilent();
+						
+						if IsValid(entity:GetRagdollEntity()) then
+							entity:GetRagdollEntity():Remove();
+						end
+						
+						Schema:PermaKillPlayer(entity, nil, true);
+						player:SetKills(player:GetKills() + 1);
+						
+						return;
+					end
+				end
+			elseif playerFaction == "Hillkeeper" or "Holy Hierarchy" and entFaction ~= playerFaction then
+				for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
+					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "The Headsman" then
+						if entFaction == "Children of Satan" then
+							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 60, "Sold Slave");
+							Schema:EasyText(player, "lawngreen", "You have received a three times bonus for selling a captured Children of Satan!")
+						elseif entFaction == "Goreic Warrior" then
+							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 40, "Sold Slave");
+							Schema:EasyText(player, "lawngreen", "You have received a two times bonus for selling a captured Goreic Warrior!")
+						else
+							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 20, "Sold Slave");
+						end
+						
+						player:EmitSound("generic_ui/coin_positive_02.wav");
+						
+						if cwBeliefs then
+							local killXP = cwBeliefs.xpValues["kill"];
+							
+							killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
+							
+							if entFaction == "Goreic Warrior" then
+								killXP = killXP * 2
+							elseif entFaction == "Children of Satan" then
+								killXP = killXP * 3
+							end
+							
+							player:HandleXP(killXP);
+						end
+						
+						local playerName;
+						
+						if Clockwork.player:DoesRecognise(entity, player) then
+							playerName = player:Name();
+						else
+							if player:GetFaction() == "Hillkeeper" then
+								playerName = "an unknown Hillkeeper";
+							else
+								playerName = "An unknown Nobleman"
 							end
 						end
-					
-						player:HandleXP(killXP);
+						
+						if cwDeathCauses then
+							cwDeathCauses:DeathCauseOverride(entity, "Sold into slavery by "..playerName..".");
+						end
+						
+						Schema:EasyText(entity, "firebrick", "You have been sold into slavery by "..playerName.."!");
+						entity:KillSilent();
+						
+						if IsValid(entity:GetRagdollEntity()) then
+							entity:GetRagdollEntity():Remove();
+						end
+						
+						Schema:PermaKillPlayer(entity, nil, true);
+						player:SetKills(player:GetKills() + 1);
+						
+						return;
 					end
-					
-					local playerName;
-					
-					if Clockwork.player:DoesRecognise(entity, player) then
-						playerName = player:Name();
-					else
-						playerName = "an unknown Goreic Warrior";
-					end
-					
-					if cwDeathCauses then
-						cwDeathCauses:DeathCauseOverride(entity, "Sold into slavery by "..playerName..".");
-					end
-					
-					Schema:EasyText(entity, "firebrick", "You have been sold into slavery by "..playerName.."!");
-					entity:KillSilent();
-					
-					if IsValid(entity:GetRagdollEntity()) then
-						entity:GetRagdollEntity():Remove();
-					end
-					
-					Schema:PermaKillPlayer(entity, nil, true);
-					player:SetKills(player:GetKills() + 1);
-					
-					return;
 				end
 			end
 		elseif (arguments == "cw_turnInBounty") and entity:IsWanted() then
@@ -483,6 +543,63 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 								entity:Remove();
 							end
 						
+							Schema:PermaKillPlayer(entityPlayer, nil, true);
+							player:SetKills(player:GetKills() + 1);
+							
+							return;
+						end
+					end
+				elseif playerFaction == "Hillkeeper" or "Holy Hierarchy" and entFaction ~= playerFaction and entityPlayer:GetNetVar("tied") != 0 then
+					for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
+						if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "The Headsman" then
+
+							if entFaction == "Children of Satan" then
+								Clockwork.player:GiveCash(player, entityPlayer:GetCharacterData("level", 1) * 60, "Sold Slave");
+								Schema:EasyText(player, "lawngreen", "You have received a three times bonus for selling a captured Children of Satan!")
+							elseif entFaction == "Goreic Warrior" then
+								Clockwork.player:GiveCash(player, entityPlayer:GetCharacterData("level", 1) * 40, "Sold Slave");
+								Schema:EasyText(player, "lawngreen", "You have received a two times bonus for selling a captured Goreic Warrior!")
+							else
+								Clockwork.player:GiveCash(player, entityPlayer:GetCharacterData("level", 1) * 20, "Sold Slave");
+							end
+							player:EmitSound("generic_ui/coin_positive_02.wav");
+							
+							if cwBeliefs then
+								local killXP = cwBeliefs.xpValues["kill"];
+								
+								killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
+								
+								if entFaction == "Goreic Warrior" then
+									killXP = killXP * 2
+								elseif entFaction == "Children of Satan" then
+									killXP = killXP * 3
+								end
+								player:HandleXP(killXP);
+							end
+							
+							local playerName;
+							
+							if Clockwork.player:DoesRecognise(entityPlayer, player) then
+								playerName = player:Name();
+							else
+								if player:GetFaction() == "Hillkeeper" then
+									playerName = "an unknown Hillkeeper";
+								else
+									playerName = "An unknown Nobleman"
+								end
+							end
+							
+							if cwDeathCauses then
+								cwDeathCauses:DeathCauseOverride(entityPlayer, "Sold into slavery by "..playerName..".");
+							end
+							
+							Schema:EasyText(entityPlayer, "firebrick", "You have been sold into slavery by "..playerName.."!");
+							entityPlayer:KillSilent();
+							
+							if IsValid(entityPlayer:GetRagdollEntity()) then
+								entityPlayer:GetRagdollEntity():Remove();
+							end
+							
 							Schema:PermaKillPlayer(entityPlayer, nil, true);
 							player:SetKills(player:GetKills() + 1);
 							
@@ -1397,10 +1514,14 @@ function Schema:Think()
 		end;
 		
 		if self.npcSpawnsEnabled ~= false then
-			if #self.spawnedNPCs["animal"] < self.maxNPCs["animal"] then
+			if self.npcSpawns["animal"] and #self.spawnedNPCs["animal"] < self.maxNPCs["animal"] then
 				local goreNPCs = {"npc_drg_animals_deer", "npc_drg_animals_goat"};
 				local npcName;
 				local spawnPos = self.npcSpawns["animal"][math.random(1, #self.npcSpawns["animal"])].pos;
+				
+				if map == "rp_district21" then
+					table.insert(goreNPCs, "npc_drg_animals_wolf");
+				end
 				
 				if math.random(1, 10) == 1 then
 					npcName = "npc_drg_animals_bear";
@@ -1413,51 +1534,87 @@ function Schema:Think()
 				else
 					npcName = goreNPCs[math.random(1, #goreNPCs)];
 				end
-				
+
 				if npcName and spawnPos then
-					local entity = ents.Create(npcName);
+					local spawnAmount = cwZombies.npcSpawnAmounts[npcName] and cwZombies.npcSpawnAmounts[npcName]() or 1;
 					
-					if IsValid(entity) then
-						entity:SetPos(spawnPos + Vector(0, 0, 32));
-						entity:SetAngles(Angle(0, math.random(1, 359), 0));
-						entity:Spawn();
-						entity:Activate();
+					for i = 1, spawnAmount do
+						local entity = ents.Create(npcName);
 						
-						table.insert(self.spawnedNPCs["animal"], entity:EntIndex());
+						if IsValid(entity) then
+							local newSpawnPos;
+
+							if i == 1 then
+								newSpawnPos = spawnPos;
+							else
+								newSpawnPos = Vector(spawnPos.x + math.random(-225,225), spawnPos.y + math.random(-225,225), spawnPos.z);
+							end
+						
+							entity:SetPos(newSpawnPos + Vector(0, 0, 32));
+							entity:SetAngles(Angle(0, math.random(1, 359), 0));
+							entity:Spawn();
+							entity:Activate();
+							
+							table.insert(self.spawnedNPCs["animal"], entity:EntIndex());
+						end
 					end
 				end
 			end
 			
-			if #self.spawnedNPCs["thrall"] < self.maxNPCs["thrall"] then
-				local spawnPos = self.npcSpawns["thrall"][math.random(1, #self.npcSpawns["thrall"])].pos;
-				local thrallNPCs;
-				
-				if cwWeather and cwWeather.weather == "bloodstorm" then
-					thrallNPCs = {"npc_bgt_chaser", "npc_bgt_guardian"};
-				else
-					if cwDayNight and cwDayNight.currentCycle == "night" then
-						thrallNPCs = {"npc_bgt_another", "npc_bgt_guardian", "npc_bgt_otis", "npc_bgt_pursuer", "npc_bgt_shambler"};
-					else
-						thrallNPCs = {"npc_bgt_another", "npc_bgt_brute", "npc_bgt_eddie", "npc_bgt_grunt"};
-					end
-					
+			if game.GetMap() == "rp_district21" and cwDayNight and cwDayNight.currentCycle == "night" then
+				if self.npcSpawns["thrallnight"] and #self.spawnedNPCs["thrall"] < self.maxNPCs["thrallnight"] then
+					local spawnPos = self.npcSpawns["thrallnight"][math.random(1, #self.npcSpawns["thrallnight"])].pos;
+					local thrallNPCs = {"npc_bgt_another", "npc_bgt_guardian", "npc_bgt_otis", "npc_bgt_pursuer", "npc_bgt_shambler"};
+						
 					if math.random(1, 33) == 1 then
 						thrallNPCs = {"npc_bgt_coinsucker", "npc_bgt_ironclad", "npc_bgt_suitor"};
 					end
-				end
 
-				local npcName = thrallNPCs[math.random(1, #thrallNPCs)];
-				
-				ParticleEffect("teleport_fx", spawnPos, Angle(0,0,0), nil);
-				sound.Play("misc/summon.wav", spawnPos, 100, 100);
-				
-				timer.Simple(0.75, function()
-					local entity = cwZombies:SpawnThrall(npcName, spawnPos, Angle(0, math.random(1, 359), 0));
+					local npcName = thrallNPCs[math.random(1, #thrallNPCs)];
 					
-					if IsValid(entity) then
-						table.insert(self.spawnedNPCs["thrall"], entity:EntIndex())
+					ParticleEffect("teleport_fx", spawnPos, Angle(0,0,0), nil);
+					sound.Play("misc/summon.wav", spawnPos, 100, 100);
+					
+					timer.Simple(0.75, function()
+						local entity = cwZombies:SpawnThrall(npcName, spawnPos, Angle(0, math.random(1, 359), 0));
+						
+						if IsValid(entity) then
+							table.insert(self.spawnedNPCs["thrall"], entity:EntIndex())
+						end
+					end);
+				end
+			else
+				if self.npcSpawns["thrall"] and #self.spawnedNPCs["thrall"] < self.maxNPCs["thrall"] then
+					local spawnPos = self.npcSpawns["thrall"][math.random(1, #self.npcSpawns["thrall"])].pos;
+					local thrallNPCs;
+					
+					if cwWeather and cwWeather.weather == "bloodstorm" then
+						thrallNPCs = {"npc_bgt_chaser", "npc_bgt_guardian"};
+					else
+						if cwDayNight and cwDayNight.currentCycle == "night" then
+							thrallNPCs = {"npc_bgt_another", "npc_bgt_guardian", "npc_bgt_otis", "npc_bgt_pursuer", "npc_bgt_shambler"};
+						else
+							thrallNPCs = {"npc_bgt_another", "npc_bgt_brute", "npc_bgt_eddie", "npc_bgt_grunt"};
+						end
+						
+						if math.random(1, 33) == 1 then
+							thrallNPCs = {"npc_bgt_coinsucker", "npc_bgt_ironclad", "npc_bgt_suitor"};
+						end
 					end
-				end);
+
+					local npcName = thrallNPCs[math.random(1, #thrallNPCs)];
+					
+					ParticleEffect("teleport_fx", spawnPos, Angle(0,0,0), nil);
+					sound.Play("misc/summon.wav", spawnPos, 100, 100);
+					
+					timer.Simple(0.75, function()
+						local entity = cwZombies:SpawnThrall(npcName, spawnPos, Angle(0, math.random(1, 359), 0));
+						
+						if IsValid(entity) then
+							table.insert(self.spawnedNPCs["thrall"], entity:EntIndex())
+						end
+					end);
+				end
 			end
 		end
 		
@@ -1932,8 +2089,8 @@ function Schema:PlayerDoesRecognisePlayer(player, target, status, isAccurate, re
 
 	if targetFaction == "Holy Hierarchy" then
 		return true;
-	elseif targetFaction == "Gatekeeper" or targetFaction == "Pope Adyssa's Gatekeepers" then
-		if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Holy Hierarchy" then
+	elseif targetFaction == "Gatekeeper" or targetFaction == "Pope Adyssa's Gatekeepers" or targetFaction == "Hillkeeper" then
+		if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy" then
 			return true;
 		end
 	elseif targetFaction == "Goreic Warrior" and playerFaction == "Goreic Warrior" then
@@ -2017,12 +2174,20 @@ function Schema:PlayerCanUseDoor(player, door)
 	
 	if doors then
 		local doorName = door:GetName();
+		local doorIndex = door:EntIndex();
+		local faction = player:GetSharedVar("kinisgerOverride") or player:GetFaction();
+
+		if(doorName == "gate_door") then return false; end -- we dont want anyone to just open the tower gate
+
+		if doorName == "city_castle_door" and faction ~= "Hillkeeper" and faction ~= "Holy Hierarchy" then
+			return false;
+		end
 		
 		if doors["tower"] and table.HasValue(doors["tower"], doorName) then
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
 			
-			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Pope Adyssa's Gatekeepers" then
+			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Pope Adyssa's Gatekeepers" then
 				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 					player.nextDoorNotify = curTime + 1;
 				
@@ -2032,7 +2197,7 @@ function Schema:PlayerCanUseDoor(player, door)
 				return false;
 			end
 			
-			if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
+			if faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" then
 				local rank = Schema.Ranks[faction][player:GetCharacterData("rank") or 1];
 				
 				if self:GetRankTier(faction, rank) < 3 then
@@ -2065,7 +2230,7 @@ function Schema:PlayerCanUseDoor(player, door)
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
 			
-			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Pope Adyssa's Gatekeepers" then
+			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Pope Adyssa's Gatekeepers" then
 				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 					player.nextDoorNotify = curTime + 1;
 				
@@ -2074,7 +2239,7 @@ function Schema:PlayerCanUseDoor(player, door)
 			
 				return false;
 			end
-		elseif doorName == "toothboyblastdoor" or doorName == "toothboyblastdoor2" then
+		elseif doorName == "toothboyblastdoor" or doorName == "toothboyblastdoor2" or doorName == "ftbase_maindr" or doorName == "ftbase_entrydoor_2" or doorName == "ftbase_entrydoor_1" or doorName == "ft_barks" then
 			if player:GetSubfaith() ~= "Voltism" then
 				Schema:DoTesla(player, true);
 				player:TakeStability(player:GetMaxStability() * 3, nil, true);
@@ -2657,7 +2822,7 @@ function Schema:PlayerCharacterLoaded(player)
 		end
 	end;
 	
-	if faction == "Gatekeeper" then
+	if faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" then
 		player:SetLocalVar("collectedGear", player:GetCharacterData("collectedGear"));
 	
 		-- Code to grandfather in pre-rank update Gatekeeper characters to the new rank system during the original Begotten III, no longer required.
@@ -3024,7 +3189,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 				if IsValid(damageInfo:GetAttacker()) and damageInfo:GetAttacker():IsPlayer() then
 					local faction = damageInfo:GetAttacker():GetFaction();
 				
-					if faction ~= "Gatekeeper" and faction ~= "Pope Adyssa's Gatekeepers" and faction ~= "Holy Hierarchy" and !damageInfo:GetAttacker():IsAdmin() then
+					if faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" and faction ~= "Hillkeeper" and faction ~= "Pope Adyssa's Gatekeepers" and !damageInfo:GetAttacker():IsAdmin() then
 						damageInfo:SetDamage(0);
 						return true;
 					end
@@ -3078,7 +3243,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 				if v == "glazic" then
 					local faction = entity:GetFaction();
 					
-					if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy" then
+					if faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" then
 						damageInfo:ScaleDamage(0.75);
 
 						break;
@@ -3092,7 +3257,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 				if v == "glazic" then
 					local faction = attacker:GetFaction();
 					
-					if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy" then
+					if faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" then
 						damageInfo:ScaleDamage(1.15);
 
 						break;
@@ -3134,10 +3299,12 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 		if player:Health() > player:GetMaxHealth() * 0.95 then
 			infoTable.runSpeed = infoTable.runSpeed * 1.1;
 		end
-	elseif subfaction == "Praeventor" then
+	elseif subfaction == "Praeventor" or subfaction == "Outrider" then
 		if player:GetSubfaith() ~= "Sol Orthodoxy" then
 			infoTable.runSpeed = infoTable.runSpeed * 1.05;
 		end
+	elseif subfaction == "Watchman" then
+		infoTable.runSpeed = infoTable.runSpeed * 0.95
 	end
 	
 	local shieldItem = player:GetShieldEquipped();
@@ -3145,7 +3312,7 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 	if shieldItem and shieldItem.requiredbeliefs and table.HasValue(shieldItem.requiredbeliefs, "defender") then
 		local activeWeapon = player:GetActiveWeapon();
 		
-		if activeWeapon:IsValid() and activeWeapon:GetNWString("activeShield"):len() > 0 and activeWeapon:GetNWString("activeShield") == shieldItem.uniqueID then
+		if activeWeapon:IsValid() and activeWeapon:GetNW2String("activeShield"):len() > 0 and activeWeapon:GetNW2String("activeShield") == shieldItem.uniqueID then
 			infoTable.runSpeed = infoTable.runSpeed * 0.9;
 		end
 	end

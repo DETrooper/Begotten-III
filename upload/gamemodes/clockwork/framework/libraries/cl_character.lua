@@ -262,6 +262,36 @@ function Clockwork.character:FadeOutAll()
 	end;
 end;
 
+function Clockwork.character:KillMePlease(panel)
+	local x, y = 0, 0;
+
+	surface.SetFont("demiurgemenuTextDistrict21Menu");
+
+	for i = 1, #panel.aText do
+		local text = string.sub(panel.aText, i, i);
+
+		if (panel:GetHovered()) then
+			local matrix = Matrix();
+			matrix:Translate(Vector(TimedCos(0.2, -5, 5, i+2), TimedCos(0.2, -5, 5, i+3)));
+			cam.PushModelMatrix(matrix);
+				draw.SimpleText(text, panel:GetFont(), x, y, Color(255, 255, 255, 15));
+			cam.PopModelMatrix();
+
+		end
+
+		local hoverColor = (panel:GetHovered() and 200 or 255);
+
+		local matrix = Matrix();
+		matrix:Translate(Vector(TimedCos(0.1, -1, 1, i), TimedCos(0.1, -2, 2, i+3)));
+		cam.PushModelMatrix(matrix);
+			draw.SimpleText(text, panel:GetFont(), x+2, y+2, Color(0, 0, 0, 255));
+			draw.SimpleText(text, panel:GetFont(), x, y, Color(hoverColor, hoverColor, hoverColor, 255));
+		cam.PopModelMatrix();
+
+		x = x + surface.GetTextSize(text);
+	end
+end
+
 -- A function to refresh the character panel list.
 function Clockwork.character:RefreshPanelList()
 	local availableFactions = {};
@@ -345,87 +375,143 @@ function Clockwork.character:RefreshPanelList()
 			end;
 		end
 		
-		local smallTextFont = Clockwork.option:GetFont("menu_text_small");
-		local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "RETURN");
-		
-		panel.cancelButton = vgui.Create("cwLabelButton", panel);
-		panel.cancelButton:SetFont(smallTextFont);
-		panel.cancelButton:SetText("RETURN");
-		panel.cancelButton:SetCallback(function(panel)
-			Clockwork.character:GetPanel():ReturnToMainMenu();
-		end);
-		panel.cancelButton:SizeToContents();
-		panel.cancelButton:SetPos(ScrW() * 0.25 - (panel.cancelButton:GetWide() / 2), ScrH() * 0.925);
-		panel.cancelButton:SetMouseInputEnabled(true);
-		panel.cancelButton.bStartFaded = true;
-		
-		function panel.cancelButton:Paint(w, h)
-			if (self:GetHovered()) then
-				local texts = {"RETURN", "rEtUrN", "ReTuRn"};
-				
-				for i = 1, math.random(2, 4) do
-					surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
-				end;
+		if game.GetMap() == "rp_district21" then
+			local smallTextFont = Clockwork.option:GetFont("menu_text_small");
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize("demiurgemenuTextDistrict21Menu", "Suffer");
+
+			panel.cancelButton = vgui.Create("cwLabelButton", panel);
+			panel.cancelButton:SetFont("demiurgemenuTextDistrict21Menu");
+			panel.cancelButton:SetText("Return");
+			panel.cancelButton.aText = "Return";
+			panel.cancelButton:SetCallback(function(panel)
+				Clockwork.character:GetPanel():ReturnToMainMenu();
+			end);
+			panel.cancelButton:SizeToContents();
+			panel.cancelButton:SetText("");
+			panel.cancelButton:SetPos(ScrW() * 0.25 - (panel.cancelButton:GetWide() / 2), ScrH() * 0.925);
+			panel.cancelButton:SetMouseInputEnabled(true);
+			panel.cancelButton.bStartFaded = true;
+
+			function panel.cancelButton:Paint(w, h)
+				Clockwork.character:KillMePlease(self);
 			end;
-		end;
-		
-		panel.necropolisButton = vgui.Create("cwLabelButton", panel);
-		panel.necropolisButton:SetFont(smallTextFont);
-		panel.necropolisButton:SetText("NECROPOLIS");
-		panel.necropolisButton:SetCallback(function(panel)
-			self:GetPanel():OpenPanel("cwNecropolis", nil);
-		end);
-		panel.necropolisButton:SizeToContents();
-		panel.necropolisButton:SetPos(ScrW() * 0.5 - (panel.necropolisButton:GetWide() / 2), ScrH() * 0.925);
-		panel.necropolisButton:SetMouseInputEnabled(true);
-		panel.necropolisButton.bStartFaded = true;
-		
-		function panel.necropolisButton:Paint(w, h)
-			if (self:GetHovered()) then
-				local texts = {"NECROPOLIS", "nEcRoPoLiS", "NeCrOpOlIs"};
-				
-				for i = 1, math.random(2, 4) do
-					surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
-				end;
+
+			panel.necropolisButton = vgui.Create("cwLabelButton", panel);
+			panel.necropolisButton:SetFont("demiurgemenuTextDistrict21Menu");
+			panel.necropolisButton:SetText("Necropolis");
+			panel.necropolisButton.aText = "Necropolis";
+			panel.necropolisButton:SetCallback(function(panel)
+				self:GetPanel():OpenPanel("cwNecropolis", nil);
+			end);
+			panel.necropolisButton:SizeToContents();
+			panel.necropolisButton:SetText("");
+			panel.necropolisButton:SetPos(ScrW() * 0.5 - (panel.necropolisButton:GetWide() / 2), ScrH() * 0.925);
+			panel.necropolisButton:SetMouseInputEnabled(true);
+			panel.necropolisButton.bStartFaded = true;
+
+			function panel.necropolisButton:Paint(w, h)
+				Clockwork.character:KillMePlease(self);
 			end;
-		end;
-		
-		panel.enterHellButton = vgui.Create("cwLabelButton", panel);
-		panel.enterHellButton:SetFont(smallTextFont);
-		panel.enterHellButton:SetText("ENTER HELL");
-		panel.enterHellButton:SetCallback(function(panel)
-			local valid_characters = {};
-			local name = Clockwork.Client:Name(true);
+
+			panel.enterHellButton = vgui.Create("cwLabelButton", panel);
+			panel.enterHellButton:SetFont("demiurgemenuTextDistrict21Menu");
+			panel.enterHellButton:SetText("Enter the Forest");
+			panel.enterHellButton.aText = "Enter the Forest"
+			panel.enterHellButton:SetCallback(function(panel)
+				Clockwork.character:GetPanel():ReturnToMainMenu();
+			end);
+			panel.enterHellButton:SizeToContents();
+			panel.enterHellButton:SetText("");
+			panel.enterHellButton:SetPos(ScrW() * 0.75 - (panel.enterHellButton:GetWide() / 2), ScrH() * 0.925);
+			panel.enterHellButton:SetMouseInputEnabled(true);
+			panel.enterHellButton.bStartFaded = true;
+
+			function panel.enterHellButton:Paint(w, h)
+				Clockwork.character:KillMePlease(self);
+			end;
+		else
+			local smallTextFont = Clockwork.option:GetFont("menu_text_small");
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "RETURN");
 			
-			for i, v in ipairs(Clockwork.character:GetAll()) do
-				if !v.permakilled and v.name ~= name then
-					table.insert(valid_characters, i);
-				end
-			end
+			panel.cancelButton = vgui.Create("cwLabelButton", panel);
+			panel.cancelButton:SetFont(smallTextFont);
+			panel.cancelButton:SetText("RETURN");
+			panel.cancelButton:SetCallback(function(panel)
+				Clockwork.character:GetPanel():ReturnToMainMenu();
+			end);
+			panel.cancelButton:SizeToContents();
+			panel.cancelButton:SetPos(ScrW() * 0.25 - (panel.cancelButton:GetWide() / 2), ScrH() * 0.925);
+			panel.cancelButton:SetMouseInputEnabled(true);
+			panel.cancelButton.bStartFaded = true;
 			
-			if !table.IsEmpty(valid_characters) then
-				local random_character = valid_characters[math.random(1, #valid_characters)];
-				
-				if random_character then
-					netstream.Start("InteractCharacter", {
-						characterID = random_character, action = "use"}
-					);
+			function panel.cancelButton:Paint(w, h)
+				if (self:GetHovered()) then
+					local texts = {"RETURN", "rEtUrN", "ReTuRn"};
 					
-					surface.PlaySound("begotten/ui/buttonclick.wav");
-				end
-			end
-		end);
-		panel.enterHellButton:SizeToContents();
-		panel.enterHellButton:SetPos(ScrW() * 0.75 - (panel.enterHellButton:GetWide() / 2), ScrH() * 0.925);
-		panel.enterHellButton:SetMouseInputEnabled(true);
-		panel.enterHellButton.bStartFaded = true;
-		
-		function panel.enterHellButton:Paint(w, h)
-			if (self:GetHovered()) then
-				local texts = {"ENTER HELL", "eNtEr HeLl", "EnTeR hElL"};
+					for i = 1, math.random(2, 4) do
+						surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+					end;
+				end;
+			end;
+			
+			panel.necropolisButton = vgui.Create("cwLabelButton", panel);
+			panel.necropolisButton:SetFont(smallTextFont);
+			panel.necropolisButton:SetText("NECROPOLIS");
+			panel.necropolisButton:SetCallback(function(panel)
+				self:GetPanel():OpenPanel("cwNecropolis", nil);
+			end);
+			panel.necropolisButton:SizeToContents();
+			panel.necropolisButton:SetPos(ScrW() * 0.5 - (panel.necropolisButton:GetWide() / 2), ScrH() * 0.925);
+			panel.necropolisButton:SetMouseInputEnabled(true);
+			panel.necropolisButton.bStartFaded = true;
+			
+			function panel.necropolisButton:Paint(w, h)
+				if (self:GetHovered()) then
+					local texts = {"NECROPOLIS", "nEcRoPoLiS", "NeCrOpOlIs"};
+					
+					for i = 1, math.random(2, 4) do
+						surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+					end;
+				end;
+			end;
+			
+			panel.enterHellButton = vgui.Create("cwLabelButton", panel);
+			panel.enterHellButton:SetFont(smallTextFont);
+			panel.enterHellButton:SetText("ENTER HELL");
+			panel.enterHellButton:SetCallback(function(panel)
+				local valid_characters = {};
+				local name = Clockwork.Client:Name(true);
 				
-				for i = 1, math.random(2, 4) do
-					surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+				for i, v in ipairs(Clockwork.character:GetAll()) do
+					if !v.permakilled and v.name ~= name then
+						table.insert(valid_characters, i);
+					end
+				end
+				
+				if !table.IsEmpty(valid_characters) then
+					local random_character = valid_characters[math.random(1, #valid_characters)];
+					
+					if random_character then
+						netstream.Start("InteractCharacter", {
+							characterID = random_character, action = "use"}
+						);
+						
+						surface.PlaySound("begotten/ui/buttonclick.wav");
+					end
+				end
+			end);
+			panel.enterHellButton:SizeToContents();
+			panel.enterHellButton:SetPos(ScrW() * 0.75 - (panel.enterHellButton:GetWide() / 2), ScrH() * 0.925);
+			panel.enterHellButton:SetMouseInputEnabled(true);
+			panel.enterHellButton.bStartFaded = true;
+			
+			function panel.enterHellButton:Paint(w, h)
+				if (self:GetHovered()) then
+					local texts = {"ENTER HELL", "eNtEr HeLl", "EnTeR hElL"};
+					
+					for i = 1, math.random(2, 4) do
+						surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+					end;
 				end;
 			end;
 		end;

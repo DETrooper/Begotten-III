@@ -77,3 +77,12 @@ local CLASS = Clockwork.class:New("Smog City Pirate");
 	CLASS.defaultPhysDesc = "Wearing dirty clothes and a small satchel";
 	CLASS.coinslotWages = 0;
 CLASS_SMOG_CITY_PIRATES = CLASS:Register();
+
+local CLASS = Clockwork.class:New("Hillkeeper");
+	CLASS.color = Color(103, 142, 180);
+	CLASS.factions = {FACTION_HILLKEEPER};
+	CLASS.isDefault = true;
+	CLASS.description = "A survivor of the apocalypse.";
+	CLASS.defaultPhysDesc = "Wearing dirty clothes and a small satchel";
+	CLASS.coinslotWages = 25;
+CLASS_HILLKEEPER = CLASS:Register();

@@ -519,7 +519,8 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 		}
 		
 		local phrase = randomPhrases[math.random(1, #randomPhrases)];
-		local faction = (player:GetNetVar("kinisgerOverride") or player:GetFaction())
+		local faction = (player:GetNetVar("kinisgerOverride") or player:GetFaction());
+		local subfaction = (player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction());
 		local pitch = 100;
 		
 		phrase = string.gsub(phrase, "#HIS", gender);
@@ -548,7 +549,11 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 				end
 			elseif (faction == "Holy Hierarchy") then
 				if (gender == "his") then
-					player:EmitSound("voice/man4/man4_stun0"..math.random(1, 4)..".wav", 90, pitch)
+					if subfaction == "Low Ministry" then
+						player:EmitSound("lmpainsounds/lm_stun" .. math.random(1, 4) .. ".mp3", 90, pitch)
+					else
+						player:EmitSound("voice/man4/man4_stun0"..math.random(1, 4)..".wav", 90, pitch)
+					end
 				else
 					player:EmitSound("voice/female1/female1_stun0"..math.random(1, 4)..".wav", 90, pitch)
 				end
@@ -561,6 +566,12 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 			elseif (faction == "Goreic Warrior") then
 				if (gender == "his") then
 					player:EmitSound("voice/man1/man1_stun0"..math.random(1, 4)..".wav", 90, pitch)
+				else
+					player:EmitSound("voice/female2/female2_stun0"..math.random(1, 4)..".wav", 90, pitch)
+				end
+			elseif (faction == "Hillkeeper") then
+				if (gender == "his") then
+					player:EmitSound("hkpainsounds/hk_stun"..math.random(1, 4)..".mp3", 90, pitch)
 				else
 					player:EmitSound("voice/female2/female2_stun0"..math.random(1, 4)..".wav", 90, pitch)
 				end
@@ -794,6 +805,7 @@ end
 function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 	if player:Alive() and !Clockwork.player:HasFlags(player, "M") and player:WaterLevel() < 3 then
 		local faction = (player:GetNetVar("kinisgerOverride") or player:GetFaction())
+		local subfaction = (player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction());
 		local pitch = 100;
 		
 		if IsValid(player.possessor) then
@@ -821,7 +833,12 @@ function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 				end
 			elseif faction == "Holy Hierarchy" then
 				if gender == "Male" then
-					player:EmitSound("voice/man4/man4_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					if subfaction == "Low Ministry" then
+						player:EmitSound("lmpainsounds/lm_pain"..math.random(1, 6)..".mp3", 90, pitch)
+					else
+						player:EmitSound("voice/man4/man4_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					end
+					
 					player.nextPainSound = CurTime()+0.5
 				else
 					player:EmitSound("voice/female1/female1_pain0"..math.random(1, 6)..".wav", 90, pitch)
@@ -830,6 +847,14 @@ function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 			elseif faction == "Goreic Warrior" then
 				if gender == "Male" then
 					player:EmitSound("voice/man1/man1_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					player.nextPainSound = CurTime()+0.5
+				else
+					player:EmitSound("voice/female2/female2_pain0"..math.random(1, 6)..".wav", 90, pitch)
+					player.nextPainSound = CurTime()+0.5
+				end
+			elseif faction == "Hillkeeper" then
+				if gender == "Male" then
+					player:EmitSound("hkpainsounds/hk_pain"..math.random(1, 6)..".mp3", 90, pitch)
 					player.nextPainSound = CurTime()+0.5
 				else
 					player:EmitSound("voice/female2/female2_pain0"..math.random(1, 6)..".wav", 90, pitch)
@@ -854,7 +879,8 @@ function GM:PlayerPlayDeathSound(player, gender)
 		return;
 	end
 
-	local faction = (player:GetNetVar("kinisgerOverride") or player:GetFaction())
+	local faction = (player:GetNetVar("kinisgerOverride") or player:GetFaction());
+	local subfaction = (player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction());
 	local pitch = 100;
 	
 	if IsValid(player.possessor) then
@@ -883,10 +909,14 @@ function GM:PlayerPlayDeathSound(player, gender)
 				player:EmitSound("voice/female1/female1_death0"..math.random(1, 9)..".wav", 90, pitch)
 			end
 		elseif faction == "Holy Hierarchy" then
-			if gender == "Male" then
-				player:EmitSound("voice/man4/man4_death0"..math.random(1, 9)..".wav", 90, pitch)
+			if subfaction ~= "Low Ministry" then
+				if gender == "Male" then
+					player:EmitSound("voice/man4/man4_death0"..math.random(1, 9)..".wav", 90, pitch)
+				else
+					player:EmitSound("voice/female1/female1_death0"..math.random(1, 9)..".wav", 90, pitch)
+				end
 			else
-				player:EmitSound("voice/female1/female1_death0"..math.random(1, 9)..".wav", 90, pitch)
+				player:EmitSound("lmpainsounds/lm_death"..math.random(1, 6)..".mp3", 90, pitch)
 			end
 		elseif faction == "The Third Inquisition" then
 			if gender == "Male" then
@@ -897,6 +927,12 @@ function GM:PlayerPlayDeathSound(player, gender)
 		elseif faction == "Goreic Warrior" then
 			if gender == "Male" then
 				player:EmitSound("voice/man1/man1_death0"..math.random(1, 9)..".wav", 90, pitch)
+			else
+				player:EmitSound("voice/female2/female2_death0"..math.random(1, 9)..".wav", 90, pitch)
+			end
+		elseif faction == "Hillkeeper" then
+			if gender == "Male" then
+				player:EmitSound("hkpainsounds/hk_death"..math.random(1, 9)..".mp3", 90, pitch)
 			else
 				player:EmitSound("voice/female2/female2_death0"..math.random(1, 9)..".wav", 90, pitch)
 			end

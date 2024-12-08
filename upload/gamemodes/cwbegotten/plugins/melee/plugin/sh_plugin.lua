@@ -46,7 +46,7 @@ function cwMelee:KeyPress(player, key)
 						
 						if (!player.StanceSwitchOn or curTime > player.StanceSwitchOn) then
 							if (player.HasBelief and player:HasBelief("halfsword_sway")) then
-								local activeOffhand = activeWeapon:GetNWString("activeOffhand");
+								local activeOffhand = activeWeapon:GetNW2String("activeOffhand");
 								
 								if activeOffhand:len() > 0 then
 									local offhandWeapon = weapons.GetStored(activeOffhand);

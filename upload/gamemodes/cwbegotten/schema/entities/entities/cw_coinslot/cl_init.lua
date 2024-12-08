@@ -142,7 +142,7 @@ local function CreateMenu(state)
 	if state == "Hierarchy" then
 		subMenu:AddOption("Check", function() Clockwork.Client:ConCommand("cw_CoinslotTreasury") end);
 		subMenu:AddOption("Set Tax Rate", function() 
-			Derma_StringRequest("Coinslot", "What tax rate would you like to set for the Tower? (1-99)", nil, function(text)
+			Derma_StringRequest("Coinslot", "What tax rate would you like to set for the "..(game.GetMap() == "rp_district21" and "Hill" or "Tower").."? (1-99)", nil, function(text)
 				Clockwork.kernel:RunCommand("CoinslotTax", text);
 			end) 
 		end);

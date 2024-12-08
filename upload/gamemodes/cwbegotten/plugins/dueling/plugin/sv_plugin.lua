@@ -155,13 +155,79 @@ elseif map == "rp_begotten_redux" or map == "rp_scraptown" then
 			};
 		end
 	end
+elseif map == "rp_district21" then
+	if !cwDueling.arenas then
+		cwDueling.arenas = {
+			["bridge"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(11851.328125, -11511.490234, -6132.968750),
+				spawnAngles1 = Angle(0, -90, 0),
+				spawnPosition2 = Vector(11851.328125, -13267.906250, -6132.968750),
+				spawnAngles2 = Angle(0, 90, 0),
+				timeLimit = 300,
+			},
+			["hell"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(-11658.517578, -8087.519531, -12519.070313),
+				spawnAngles1 = Angle(0, -95, 0),
+				spawnPosition2 = Vector(-11807.810547, -9189.899414, -12513.865234),
+				spawnAngles2 = Angle(0, 83, 0),
+				timeLimit = 300,
+			},
+			["gore"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(-11563.854492, -11667.994141, 12062.031250),
+				spawnAngles1 = Angle(0, -135, 0),
+				spawnPosition2 = Vector(-12546.595703, -12689.111328, 12062.031250),
+				spawnAngles2 = Angle(0, 45, 0),
+				timeLimit = 300,
+			},
+			["silenthill"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(8948.405273, -13265.604492, -6185.968750),
+				spawnAngles1 = Angle(0, 90, 0),
+				spawnPosition2 = Vector(8947.118164, -12329.220703, -6185.968750),
+				spawnAngles2 = Angle(0, -90, 0),
+				timeLimit = 300,
+			},
+		};
+	end
+
+	if !cwDueling.statues then
+		cwDueling.statues = {
+			["gasstation"] = {
+				["spawnPosition"] = Vector(-12942.53, 4202.75, -718),
+				["spawnAngles"] = Angle(0, -118, 0),
+			},
+			["gore"] = {
+				["spawnPosition"] = Vector(387.795929, -5903.227051, 11575.831055),
+				["spawnAngles"] = Angle(0, 100, 0),
+			},
+			["hell"] = {
+				["spawnPosition"] = Vector(-2232.943115, -9138.589844, -6809.481934),
+				["spawnAngles"] = Angle(0, -90, 0),
+			},
+			["hill"] = {
+				["spawnPosition"] = Vector(-10576.1875, 11205.90625, 295),
+				["spawnAngles"] = Angle(0, -90, 0),
+			},
+			["bunker"] = {
+				["spawnPosition"] = Vector(-13989.34, -2841.12, -914.59),
+				["spawnAngles"] = Angle(0, 179.99, -0.05),
+			},
+		};
+	end
 end
 	
 if !cwDueling.playersInMatchmaking then
 	cwDueling.playersInMatchmaking = {};
 end
 
-local bMap = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_redux" or game.GetMap() == "rp_scraptown";
+local bMap = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_redux" or game.GetMap() == "rp_scraptown" or game.GetMap() == "rp_district21";
 
 function cwDueling:Think()
 	if (!bMap) then

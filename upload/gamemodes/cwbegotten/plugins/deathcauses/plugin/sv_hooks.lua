@@ -160,6 +160,8 @@ function cwDeathCauses:PlayerDeath(player, inflictor, attacker, damageInfo)
 						else
 							attackerName =  "an unknown Glazic nobleman";
 						end
+					elseif attackerFaction == "Hillkeeper" then
+						attackerName = "an unknown Hillkeeper";
 					else
 						attackerName = "an unknown assailant";
 					end
@@ -305,7 +307,7 @@ function cwDeathCauses:PlayerDeath(player, inflictor, attacker, damageInfo)
 					end
 				end
 				
-				if (attacker:IsPlayer() or attacker:IsNPC() or attacker:IsNextBot()) then
+				if IsValid(attacker) and (attacker:IsPlayer() or attacker:IsNPC() or attacker:IsNextBot()) then
 					if (IsValid(attacker:GetActiveWeapon())) then
 						local weapon = attacker:GetActiveWeapon()
 						local itemTable = item.GetByWeapon(weapon)
@@ -332,7 +334,7 @@ function cwDeathCauses:PlayerDeath(player, inflictor, attacker, damageInfo)
 				end
 			else
 				--printp("No damageinfo found!");
-				if (attacker:IsPlayer() or attacker:IsNPC() or attacker:IsNextBot()) then
+				if IsValid(attacker) and (attacker:IsPlayer() or attacker:IsNPC() or attacker:IsNextBot()) then
 					if (IsValid(attacker:GetActiveWeapon())) then
 						local weapon = attacker:GetActiveWeapon()
 						local itemTable = item.GetByWeapon(weapon)
