@@ -204,7 +204,13 @@ Clockwork.trait:Register(PACIFIST)
 local PILGRIM = Clockwork.trait:New()
 	PILGRIM.uniqueID = "pilgrim"
 	PILGRIM.name = "Pilgrim"
-	PILGRIM.description = "Your character has ventured far and wide to reach the Tower of Light, either in search of sanctuary or in pursuit of holy purpose. Your character will spawn inside the Tower of Light safezone."
+	
+	if game.GetMap() == "rp_district21" then
+		PILGRIM.description = "Your character has ventured far and wide to reach the Hill of Light, either in search of sanctuary or in pursuit of holy purpose. Your character will spawn inside the Hill of Light safezone."
+	else
+		PILGRIM.description = "Your character has ventured far and wide to reach the Tower of Light, either in search of sanctuary or in pursuit of holy purpose. Your character will spawn inside the Tower of Light safezone."
+	end
+	
 	PILGRIM.points = 2
 	PILGRIM.disables = {"escapee", "gunslinger", "leper"}
 	PILGRIM.requiredfactions = {"Wanderer"}

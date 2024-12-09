@@ -2,7 +2,7 @@ SWEP.Base = "sword_swepbase"
 -- WEAPON TYPE: Javelin
 
 SWEP.PrintName = "Hillkeeper Throwing Axe"
-SWEP.Category = "(Begotten) Javelin"
+SWEP.Category = "(Begotten) Throwable"
 
 SWEP.AdminSpawnable = true
 SWEP.Spawnable = true
@@ -38,9 +38,8 @@ SWEP.Primary.Round = ("begotten_javelin_axehill_thrown");
 SWEP.isJavelin = true;
 SWEP.SticksInShields = true;
 
-function SWEP:Hitscan()
-	return false;
-end
+SWEP.isJavelin = true;
+SWEP.SticksInShields = true;
 
 function SWEP:AttackAnimination()
 	self.Weapon:SendWeaponAnim(ACT_VM_DRAW)
@@ -48,11 +47,7 @@ function SWEP:AttackAnimination()
 end
 
 function SWEP:CanSecondaryAttack()
-	return false;
-end
-
-function SWEP:SecondaryAttack()
-	return false;
+	return self:GetNW2String("activeShield"):len() > 0;
 end
 
 function SWEP:HandlePrimaryAttack()
@@ -68,15 +63,19 @@ function SWEP:HandlePrimaryAttack()
 	self.Owner:GetViewModel():SetPlaybackRate(0.8)	
 	--self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
 	self.Weapon:EmitSound(Sound("Weapon_Knife.Slash"))
-	self.Owner:ViewPunch(attacktable["punchstrength"])
+	self.Owner:ViewPunch(Angle(0, 2, 1))
 	
 	self.Weapon:SetNextPrimaryFire(CurTime() + 1000);
 	
 	timer.Create("javelin_timer_"..self.Owner:EntIndex(), 0.5, 1, function()
-		if IsValid(self) and IsValid(self.Owner) and self.Owner:GetActiveWeapon() and self.Owner:GetActiveWeapon().PrintName == "Hillkeeper Throwing Axe" then
+		if IsValid(self) and IsValid(self.Owner) and self.Owner:GetActiveWeapon() and self.Owner:GetActiveWeapon().PrintName == "Throwing Axe" then
 			self:FireJavelin();
+			
+			self.Owner.cloakCooldown = CurTime() + 5;
 		end
 	end);
+	
+	return false;
 end
 
 function SWEP:HandleThrustAttack()
