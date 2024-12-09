@@ -100,7 +100,7 @@ function PANEL:Init()
 					modelEnt:Remove();
 				end
 				
-				print(equippedItem.attachmentOffsetVector);
+				Clockwork.Client.equipmentSlotModels[equippedItem.itemID] = nil;
 			end
 		end
 	end;
