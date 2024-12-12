@@ -3,7 +3,8 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
-local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_district21";
+local map = game.GetMap();
+local bMap = map == "rp_begotten3" or map == "rp_district21";
 
 function Schema:ClockworkInitialized()
 	if !self.bountyData then
@@ -163,7 +164,7 @@ function Schema:ClockworkInitPostEntity()
 		end
 	end;
 	
-	if (!map) then
+	if (!bMap) then
 		return;
 	end;
 	
@@ -1484,7 +1485,7 @@ function Schema:Think()
 	if (!self.nextCinderBlock or self.nextCinderBlock < curTime) then
 		self.nextCinderBlock = curTime + 3
 		
-		if (!map) then
+		if (!bMap) then
 			return;
 		end;
 		
@@ -1509,7 +1510,7 @@ function Schema:Think()
 	end
 	
 	if (!self.nextNpcSpawn or self.nextNpcSpawn < curTime) then
-		if (!map) then
+		if (!bMap) then
 			return;
 		end;
 		
@@ -1561,7 +1562,7 @@ function Schema:Think()
 				end
 			end
 			
-			if game.GetMap() == "rp_district21" and cwDayNight and cwDayNight.currentCycle == "night" then
+			if map == "rp_district21" and cwDayNight and cwDayNight.currentCycle == "night" then
 				if self.npcSpawns["thrallnight"] and #self.spawnedNPCs["thrall"] < self.maxNPCs["thrallnight"] then
 					local spawnPos = self.npcSpawns["thrallnight"][math.random(1, #self.npcSpawns["thrallnight"])].pos;
 					local thrallNPCs = {"npc_bgt_another", "npc_bgt_guardian", "npc_bgt_otis", "npc_bgt_pursuer", "npc_bgt_shambler"};
@@ -1772,6 +1773,21 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 			end
 			
 			if (player:GetMoveType() != MOVETYPE_NOCLIP) then
+				if map == "rp_district21" and cwMedicalSystem then
+					if !plyTab.nextCorpseFieldCheck or plyTab.nextCorpseFieldCheck < curTime then
+						if ((player:GetPos():WithinAABox(Vector(-4550, 5649, -509), Vector(-4722, 3972, -333))) or (player:GetPos():WithinAABox(Vector(-4621, 4045, -527), Vector(-3337, 3675, -450)))) and player:GetClothesEquipped() ~= "Plague Doctor Robes" and not player.cwObserverMode then
+							if math.random(1, 10) == 1 then
+								if !player:HasDisease("common_cold") then
+									player:GiveDisease("common_cold");
+									Clockwork.player:NotifyAdmins("operator", ""..player:Name().." has contracted the common cold from the corpse field!");
+								end
+							end
+						end
+
+						plyTab.nextCorpseFieldCheck = curTime + 3;
+					end
+				end
+			
 				if (player:IsRunning()) then
 					if (player:HasTrait("clumsy")) then
 						if (!plyTab.lastClumsyFallen or plyTab.lastClumsyFallen < curTime) then

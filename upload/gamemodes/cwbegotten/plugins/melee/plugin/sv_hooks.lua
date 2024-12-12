@@ -34,7 +34,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 
 			local entWeapon = entity:GetActiveWeapon();
 			
-			if IsValid(entWeapon) and (entWeapon.Base == "begotten_firearm_base" or entWeapon.isJavelin) and !entity:GetNetVar("Guardening") then
+			if IsValid(entWeapon) and (entWeapon.Base == "begotten_firearm_base" or (entWeapon.isMeleeFirearm and !entity:GetNetVar("ThrustStance")) or entWeapon.isJavelin) and !entity:GetNetVar("Guardening") then
 				if !(entWeapon.isJavelin and cwBeliefs and entity:GetNetVar("ThrustStance") and entity:HasBelief("strength")) then
 					local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
 					local itemTable = Clockwork.item:GetByWeapon(entWeapon);

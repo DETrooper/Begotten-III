@@ -3208,7 +3208,9 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.attributes then
-					if table.HasValue(itemTable.attributes, "sundering_shot") then
+					if table.HasValue(itemTable.attributes, "melee") then
+						frame:AddText("Melee Stance: Can be used as a melee weapon by switching stances.", Color(110, 30, 30), nil, 0.9);
+					elseif table.HasValue(itemTable.attributes, "sundering_shot") then
 						frame:AddText("Sundering Shot: Travelling at supersonic speeds, Old World Longshot ignores armor and shields entirely.", Color(110, 30, 30), nil, 0.9);
 					elseif table.HasValue(itemTable.attributes, "sundering_shot_grapeshot") then
 						frame:AddText("Sundering Shot: Travelling at supersonic speeds, Old World Grapeshot ignores armor and shields entirely.", Color(110, 30, 30), nil, 0.9);

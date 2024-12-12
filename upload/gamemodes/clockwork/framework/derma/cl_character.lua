@@ -2350,12 +2350,15 @@ function PANEL:Init()
 			self.forenameRandomButton:SetImage("begotten/ui/bgtbtnrandom.png");
 			self.forenameRandomButton:SetPos(82, 30);
 			
+			local factionNames = factionTable.names;
+			local randomNames = subfactionTable and (subfactionTable.namesOverride and subfactionTable.namesOverride or factionNames) or factionNames;
+			
 			-- Called when an option is selected.
 			self.forenameRandomButton.DoClick = function()
-				if RANDOM_FORENAMES and Clockwork.faction.stored[self.info.faction].names then
+				if RANDOM_FORENAMES and factionNames then
 					local random_forename = "";
 					
-					random_forename = table.Random(RANDOM_FORENAMES[Clockwork.faction.stored[self.info.faction].names][string.lower(Clockwork.Client.CurrentGender)]);
+					random_forename = table.Random(RANDOM_FORENAMES[randomNames][string.lower(Clockwork.Client.CurrentGender)]);
 					
 					self.forenameTextEntry:SetValue(random_forename);
 				end
@@ -2374,7 +2377,7 @@ function PANEL:Init()
 				if RANDOM_SURNAMES and Clockwork.faction.stored[self.info.faction].names then
 					local random_surname = "";
 
-					random_surname = table.Random(RANDOM_SURNAMES[Clockwork.faction.stored[self.info.faction].names]);
+					random_surname = table.Random(RANDOM_SURNAMES[randomNames]);
 					
 					self.surnameTextEntry:SetValue(random_surname);
 				end
@@ -3770,6 +3773,10 @@ function PANEL:Init()
 		
 		if (factionTable.subfactions) then -- If there isn't something has gone wrong.
 			for i = 1, #factionTable.subfactions do
+				if factionTable.subfactions[i].maps and !table.HasValue(factionTable.subfactions[i].maps, game.GetMap()) then
+					continue;
+				end
+				
 				local button = vgui.Create("DButton", self.subfactionList)
 				button:SetSize(256, 70);
 				self.subfactionList:AddItem(button);

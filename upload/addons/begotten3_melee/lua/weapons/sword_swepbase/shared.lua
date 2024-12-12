@@ -372,6 +372,10 @@ function SWEP:Think()
 		end
 	end
 	
+	if self.PostThink then
+		self:PostThink();
+	end
+	
 	for k, v in next, self.Timers do
 		if v.start + v.duration <= CurTime() then
 			v.callback()
@@ -2566,7 +2570,11 @@ function SWEP:Initialize()
 		local vm = self.Owner:GetViewModel();
 		
 		if IsValid(vm) then
-			vm:SetModel(self.ViewModel);
+			if self.ViewModelAlternate and self:GetNW2String("stance") == "thrust_swing" then
+				vm:SetModel(self.ViewModelAlternate);
+			else
+				vm:SetModel(self.ViewModel);
+			end
 		end
 	end
 	
@@ -2592,9 +2600,19 @@ function SWEP:Initialize()
 		self.WElements = table.FullCopy(weaponTable.WElements);
 		self.ViewModelBoneMods = table.FullCopy(self.ViewModelBoneMods);
 		
-		if weaponTable.WElementsAlternate and self:GetNW2String("stance") == "thrust_swing" then
-			self.WElements = table.FullCopy(weaponTable.WElementsAlternate);
-		end;
+		if self:GetNW2String("stance") == "thrust_swing" then
+			if weaponTable.VElementsAlternate then
+				self.VElements = table.FullCopy(weaponTable.VElementsAlternate);
+			end;
+			
+			if weaponTable.WElementsAlternate then
+				self.WElements = table.FullCopy(weaponTable.WElementsAlternate);
+			end;
+			
+			if weaponTable.ViewModelBoneModsAlternate then
+				self.ViewModelBoneMods = table.FullCopy(weaponTable.ViewModelBoneMods);
+			end
+		end
 	
 		if !self.HasShield then
 			if self:GetNW2String("activeShield"):len() > 0 then

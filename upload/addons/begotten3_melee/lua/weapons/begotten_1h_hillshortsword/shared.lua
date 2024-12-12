@@ -133,3 +133,13 @@ SWEP.VElements = {
 SWEP.WElements = {
 	["w_hillglazicus"] = { type = "Model", model = "models/begotten_apocalypse/items/RiftenSword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.68, 1.2, -1.5), angle = Angle(85, 90, -25), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
+
+SWEP.VElementsDual = {
+	["rhand"] = { type = "Model", model = "models/begotten_apocalypse/items/RiftenSword.mdl", bone = "Dummy01", rel = "", pos = Vector(0.493, -12.346, 0.493), angle = Angle(-3.333, -101.112, 180), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["lhand"] = { type = "Model", model = "models/begotten_apocalypse/items/RiftenSword.mdl", bone = "Dummy16", rel = "", pos = Vector(0, -9.384, 0.1), angle = Angle(180, 81.111, 10), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElementsDual = {
+	["lhand"] = { type = "Model", model = "models/begotten_apocalypse/items/RiftenSword.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.457, 0.493, -0.5), angle = Angle(-76.667, 103.333, 10), size = Vector(1.027, 1.027, 1.027), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["rhand"] = { type = "Model", model = "models/begotten_apocalypse/items/RiftenSword.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.5, 1.7, 0.5), angle = Angle(112.222, 101.111, -25), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}

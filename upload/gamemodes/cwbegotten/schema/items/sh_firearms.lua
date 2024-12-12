@@ -123,6 +123,28 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "wood"}};
 ITEM:Register();
 
+ITEM = Clockwork.item:New("firearm_base");
+	ITEM.name = "Hillkeeper Axmusket";
+	ITEM.model = "models/sw_battlefront/weapons/jazail_long.mdl";
+	ITEM.weight = 3
+	ITEM.uniqueID = "begotten_hillkeeper_axmusket";
+	ITEM.description = "An expertly crafted Glazic Musket with a steel axehead in place of its stock. An efficient weapon typical of the Hillmen; every tool shall serve a double purpose, with every inch of steel and speck of powder utilized to its most practical end.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/hillkeeper_axmusket.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(0, 343.09, 90);
+	ITEM.attachmentOffsetVector = Vector(3.54, 3.54, -9.9);
+	
+	ITEM.ammoCapacity = 1;
+	ITEM.ammoTypes = {"Longshot"};
+	ITEM.attributes = {"melee"};
+	ITEM.firearmType = "Long Gun (Two-Handed Axe)";
+	ITEM.reloadTime = 9; -- Seconds
+	ITEM.reloadSounds = {"oneuse_deploy.ogg", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"wood", "wood", "iron_chunks", "iron_chunks", "steel_chunks"}};
+ITEM:Register();
+
 local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.name = "Inquisitor Revolver";
 	ITEM.model = "models/arxweapon/hellsing.mdl";

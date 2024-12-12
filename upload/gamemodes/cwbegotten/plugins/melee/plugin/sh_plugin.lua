@@ -67,6 +67,14 @@ function cwMelee:KeyPress(player, key)
 										if IsValid(player.possessor) then
 											player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to melee stance.")
 										end
+									elseif activeWeapon.isMeleeFirearm then
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to melee stance.")
+										
+										if IsValid(player.possessor) then
+											player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to melee stance.")
+										end
+										
+										player:SetWeaponRaised(false);
 									elseif (activeWeapon.CanSwipeAttack == true) then
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
 										
@@ -94,6 +102,14 @@ function cwMelee:KeyPress(player, key)
 										if IsValid(player.possessor) then
 											player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to throwing stance.")
 										end
+									elseif activeWeapon.isMeleeFirearm then
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to firing stance.")
+										
+										if IsValid(player.possessor) then
+											player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to firing stance.")
+										end
+										
+										player:SetWeaponRaised(false);
 									elseif (activeWeapon.CanSwipeAttack == true) and canThrust then
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
 										
@@ -151,7 +167,7 @@ function cwMelee:KeyPress(player, key)
 						local blockTable = GetTable(activeWeapon.BlockTable);
 						
 						--if (blockTable and player:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"]) then
-						if (blockTable and player:GetNWInt("Stamina", 100) >= blockTable["guardblockamount"]) then
+						if (!activeWeapon.isMeleeFirearm or player:GetNetVar("ThrustStance")) and (blockTable and player:GetNWInt("Stamina", 100) >= blockTable["guardblockamount"]) then
 							if !player:GetNetVar("Guardening") then
 								player:SetLocalVar("Guardening", true);
 								player.beginBlockTransition = true;

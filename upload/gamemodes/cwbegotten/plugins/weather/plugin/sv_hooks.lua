@@ -91,7 +91,7 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				
 				local activeWeapon = player:GetActiveWeapon();
 				
-				if activeWeapon:IsValid() and activeWeapon.Base == "begotten_firearm_base" and !activeWeapon.notPowder then
+				if activeWeapon:IsValid() and (activeWeapon.Base == "begotten_firearm_base" or activeWeapon.isMeleeFirearm) and !activeWeapon.notPowder then
 					if math.random(1, 10) == 10 then
 						local itemTable = item.GetByWeapon(activeWeapon);
 						

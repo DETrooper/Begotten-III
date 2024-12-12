@@ -8,7 +8,7 @@ local playerMeta = FindMetaTable("Player");
 cwShacks.expireTime = 1209600; -- 2 weeks in seconds.
 
 local charactersTable = config.Get("mysql_characters_table"):Get()
-local map = game.GetMap() == "rp_begotten3";
+local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_district21";
 
 -- Called when Clockwork has loaded all of the entities.
 function cwShacks:ClockworkInitPostEntity()

@@ -1279,6 +1279,7 @@ function Schema:SpawnBegottenEntities()
 		self.sacrificialAltarEnt = sacrificialAltarEnt;
 	elseif map == "rp_district21" then
 		local bountyBoardEnt = ents.Create("cw_bounty_board");
+		local cauldron = ents.Create("cw_cauldron");
 		local coinslotBase = ents.Create("prop_dynamic");
 		local coinslotEnt = ents.Create("cw_coinslot");
 		local cinderblockPileEnt = ents.Create("cw_cinderblock_pile");
@@ -1318,6 +1319,9 @@ function Schema:SpawnBegottenEntities()
 		coinslotEnt:SetPos(Vector(-8347.625, 11135.65625, 334.5));
 		coinslotEnt:SetAngles(Angle(0, -90, 0));
 		coinslotEnt:Spawn();
+		cauldron:SetPos(Vector(-5176 11902 314));
+		cauldron:SetAngles(Angle(0, 180, 0));
+		cauldron:Spawn();
 		gramophoneBase:SetModel("models/props/furnitures/humans/l10/l10_bedsidetable.mdl")
 		gramophoneBase:SetPos(Vector(-394.28125, -9214.9375, -6466.71875));
 		gramophoneBase:SetAngles(Angle(0, 90, 0));

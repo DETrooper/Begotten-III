@@ -3427,6 +3427,26 @@ AttackTables.HillThrowingAxeAttackTable = {
 	["punchstrength"] = Angle(0,4,0),
 };
 
+AttackTables.HillBannerAttackTable = {
+	["primarydamage"] = 15,
+	["dmgtype"] = 128,
+	["attacktype"] = "polearm_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 1.5,
+	["altattackpoisedamagemodifier"] = 0.3,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 55,
+	["altarmorpiercing"] = 40,
+	["poisedamage"] = 15,
+	["stabilitydamage"] = 25,
+	["takeammo"] = 8,
+	["delay"] = 1.7,
+	["striketime"] = 0.65,
+	["meleearc"] = 60,
+	["meleerange"] = 1200,
+	["punchstrength"] = Angle(1,3,1),
+};
+
 AttackTables.OrdainedGorefellerAttackTable = {
 	["primarydamage"] = 100,
 	["dmgtype"] = 4,
@@ -3444,6 +3464,25 @@ AttackTables.OrdainedGorefellerAttackTable = {
 	["meleearc"] = 55,
 	["meleerange"] = 1100,
 	["punchstrength"] = Angle(0,7,0),
+};
+
+AttackTables.GunAxeAttackTable = {
+	["primarydamage"] = 90,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 35,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 35,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 8,
+	["delay"] = 1.7,
+	["striketime"] = 0.65,
+	["meleearc"] = 35,
+	["meleerange"] = 800,
+	["punchstrength"] = Angle(0,1,0),
 };
 
 AddTable("DefaultAttackTable", AttackTables.DefaultAttackTable) 
@@ -3592,7 +3631,9 @@ AddTable("HillLongswordAttackTable", AttackTables.HillLongswordAttackTable)
 AddTable("HillHeavyBattleAxeAttackTable", AttackTables.HillHeavyBattleAxeAttackTable) 
 AddTable("HillGoreHuntingDaggerAttackTable", AttackTables.HillGoreHuntingDaggerAttackTable)
 AddTable("HillThrowingAxeAttackTable", AttackTables.HillThrowingAxeAttackTable)
+AddTable("HillBannerAttackTable", AttackTables.HillBannerAttackTable)
 AddTable("OrdainedGorefellerAttackTable", AttackTables.OrdainedGorefellerAttackTable)
+AddTable("GunAxeAttackTable", AttackTables.GunAxeAttackTable)
 
 -- Block Stat Tables
 
@@ -6068,6 +6109,25 @@ BlockTables.OrdainedGorefellerBlockTable = {
 	["candeflect"] = true,
 };
 
+BlockTables.GunAxeBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 10,
+	["raisespeed"] = 1.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+	["canaltattack"] = true,
+};
+
 AddTable("DefaultBlockTable", BlockTables.DefaultBlockTable) 
 AddTable("AdminTwistedMacheteBlockTable", BlockTables.AdminTwistedMacheteBlockTable)
 AddTable("FistBlockTable", BlockTables.FistBlockTable) 
@@ -6205,6 +6265,7 @@ AddTable("HillLongswordBlockTable", BlockTables.HillLongswordBlockTable)
 AddTable("HillHeavyBattleAxeBlockTable", BlockTables.HillHeavyBattleAxeBlockTable)        
 AddTable("HillGoreHuntingDaggerBlockTable", BlockTables.HillGoreHuntingDaggerBlockTable)  
 AddTable("OrdainedGorefellerBlockTable", BlockTables.OrdainedGorefellerBlockTable)
+AddTable("GunAxeBlockTable", BlockTables.GunAxeBlockTable) 
 
 -- Shield Stat Tables
 

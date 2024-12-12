@@ -365,7 +365,7 @@ function meta:StartRolling(a)
 										local blockTable = GetTable(activeWeapon.BlockTable);
 										
 										--if (blockTable and self:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"] and !self:GetNetVar("Parried")) then
-										if (blockTable and self:GetNWInt("Stamina", 100) >= blockTable["guardblockamount"] and !self:GetNetVar("Parried")) then
+										if (!activeWeapon.isMeleeFirearm or self:GetNetVar("ThrustStance")) and (blockTable and self:GetNWInt("Stamina", 100) >= blockTable["guardblockamount"] and !self:GetNetVar("Parried")) then
 											self:SetLocalVar("Guardening", true);
 											self.beginBlockTransition = true;
 											activeWeapon.Primary.Cone = activeWeapon.IronCone;

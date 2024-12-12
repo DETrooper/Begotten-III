@@ -112,6 +112,9 @@ function cwPossession:StartCommand(player, ucmd)
 									if activeWeapon.isJavelin then
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to melee stance.")
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to melee stance.")
+									elseif activeWeapon.isMeleeFirearm then
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to firing stance.")
+										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to firing stance.")
 									elseif activeWeapon.CanSwipeAttack == true then
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
@@ -129,6 +132,9 @@ function cwPossession:StartCommand(player, ucmd)
 									if activeWeapon.isJavelin then
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to throwing stance.")
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to throwing stance.")
+									elseif activeWeapon.isJavelin then
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to melee stance.")
+										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to melee stance.")
 									elseif activeWeapon.CanSwipeAttack == true then
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")

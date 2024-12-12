@@ -1534,7 +1534,7 @@ local function UpdateWeaponRaised(player, activeWeapon, bIsRaised, curTime)
 								end
 								
 								--if (blockTable and player:GetNWInt("meleeStamina", 100) >= guardblockamount and !player:GetNetVar("Parried")) then
-								if (blockTable and player:GetNWInt("Stamina", 100) >= guardblockamount and !player:GetNetVar("Parried")) then
+								if (!activeWeapon.isMeleeFirearm or player:GetNetVar("ThrustStance")) and (blockTable and player:GetNWInt("Stamina", 100) >= guardblockamount and !player:GetNetVar("Parried")) then
 									player:SetLocalVar("Guardening", true);
 									player.beginBlockTransition = true;
 									activeWeapon.Primary.Cone = activeWeapon.IronCone;

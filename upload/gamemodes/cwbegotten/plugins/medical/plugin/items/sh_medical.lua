@@ -316,7 +316,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.infectionChance = 25;
 	ITEM.useXP = 15;
 
-	ITEM.curesInjuries = {"burn"};
+	ITEM.curesInjuries = {"burn", "frostbite"};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 700, bNoSupercrate = true};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 	
@@ -393,7 +393,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useXP = 50;
 	ITEM.useTime = 30;
 
-	ITEM.curesInjuries = {"burn", "gash", "gunshot_wound", "minor_infection"};
+	ITEM.curesInjuries = {"burn", "frostbite", "gash", "gunshot_wound", "minor_infection"};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 4500};
 	ITEM.limbs = "all";
 	
