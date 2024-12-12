@@ -29,7 +29,7 @@ local function CreateMenu(state)
 
 	local subMenu = menu:AddSubMenu("Traverse...");
 	
-	if map == "rp_district21" then
+	if game.GetMap() == "rp_district21" then
 		subMenu:AddOption("...to the Pillars of Creation", function() Clockwork.Client:ConCommand("cw_HellPortalPillars") end);
 		subMenu:AddOption("...to the Abandoned Church.", function() Clockwork.Client:ConCommand("cw_HellPortalAbandonedChurch") end);
 	else
