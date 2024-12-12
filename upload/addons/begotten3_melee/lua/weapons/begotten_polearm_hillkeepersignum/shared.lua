@@ -39,7 +39,7 @@ SWEP.WindUpSound = "draw/skyrim_axe_draw1.mp3" --For 2h weapons only, plays befo
 /*---------------------------------------------------------
 	PrimaryAttack
 ---------------------------------------------------------*/
-SWEP.AttackTable = "DarklanderBannerAttackTable"
+SWEP.AttackTable = "HillBannerAttackTable"
 SWEP.BlockTable = "GlazicBannerBlockTable"
 
 local bannerDistance = (824 * 824);
