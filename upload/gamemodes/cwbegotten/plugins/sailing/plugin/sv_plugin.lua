@@ -6,6 +6,12 @@
 
 local map = game.GetMap();
 
+if map == "rp_begotten3" then
+	cwSailing.gorewatchBounds = {Vector(9422, 11862, -1210), Vector(10055, 10389, -770)};
+elseif map == "rp_district21" then
+	cwSailing.gorewatchBounds = {Vector(-9328, -8640, -146), Vector(-8771, -8105, 686)};
+end
+
 if !cwSailing.shipDestinations then
 	if map == "rp_begotten3" or map == "rp_district21" then
 		cwSailing.shipDestinations = {
@@ -193,7 +199,7 @@ if !cwSailing.shipLocations then
 					{occupied = false, pos = Vector(-13822, -13339, -1081), angles = Angle(0, 90, 0), bodygroup = 1},
 				},
 				["ironclad"] = {
-					{occupied = false, pos = Vector(-13822, -13339, -1081), angles = Angle(0, 90, 0)},
+					{occupied = false, pos = Vector(-11858, -13461, -1081), angles = Angle(0, -90, 0)},
 				},
 			},
 		};
@@ -748,7 +754,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 							for _, v in _player.Iterator() do
 								local faction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 								
-								if (faction == "Gatekeeper" or faction == "Holy Hierarchy") and !v.cwObserverMode and v:GetPos():WithinAABox(Vector(9422, 11862, -1210), Vector(10055, 10389, -770)) then
+								if (faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper") and !v.cwObserverMode and v:GetPos():WithinAABox(cwSailing.gorewatchBounds[1], cwSailing.gorewatchBounds[2]) then
 									timer.Simple(math.random(5, 10), function()
 										local alarm = self.gorewatchAlarm;
 										

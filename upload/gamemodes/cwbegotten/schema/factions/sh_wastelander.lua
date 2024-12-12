@@ -801,8 +801,9 @@ local FACTION = Clockwork.faction:New("Hillkeeper");
 			{pos1 = Vector(-3468, 12985, -375), pos2 = Vector(-3591, 13103, -241), modifier = 2, nightModifier = 4}, -- Watchtower
 		},
 		["rp_district21"] = {
-			{pos1 = Vector(-4765, 9246, 838), pos2 = Vector(-8075, 10488, 489), modifier = 2, nightModifier = 4},
-			{pos1 = Vector(-10637, 13043, 465), pos2 = Vector(-4664, 9210, 879), modifier = 2, nightModifier = 4},
+			{pos1 = Vector(-4765, 9246, 838), pos2 = Vector(-8075, 10488, 489), modifier = 2, nightModifier = 4}, -- Hill
+			{pos1 = Vector(-10637, 13043, 465), pos2 = Vector(-4664, 9210, 879), modifier = 2, nightModifier = 4}, -- Hill
+			{pos1 = Vector(-9328, -8640, -146), pos2 = Vector(-8771, -8105, 686), modifier = 3, nightModifier = 5}, -- Gorewatch
 		},
 	};
 	

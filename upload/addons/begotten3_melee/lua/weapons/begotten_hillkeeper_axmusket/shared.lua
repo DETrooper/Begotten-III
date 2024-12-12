@@ -15,7 +15,7 @@ SWEP.ViewModelBoneModsAlternate = {
 }
 
 SWEP.VElements = {
-	["v_axmusket"] = { type = "Model", model = "models/begoyten/gunaxe/gunaxe.mdl", bone = "v_ee3_reference001", rel = "", pos = Vector(0.5, 3.5, 2), angle = Angle(0, -95, 90), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["v_axmusket"] = { type = "Model", model = "models/begoyten/gunaxe/gunaxe.mdl", bone = "v_ee3_reference001", rel = "", pos = Vector(0.5, 3.5, 2), angle = Angle(0, -90, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
 }
 
 SWEP.VElementsAlternate = {
@@ -93,8 +93,8 @@ SWEP.SelectiveFire			= false
 SWEP.MisfireChance = 5;
 
 -- Enter iron sight info and bone mod info below
-SWEP.SightsPos = Vector(-3.55, -15.879, 0.829)
-SWEP.SightsAng = Vector(0, 0, 0)
+SWEP.SightsPos = Vector(-2.9, -10, 1)
+SWEP.SightsAng = Vector(0, 0, -1)
 SWEP.SightsPosAlternate = Vector(-12.04, -1.407, -0.12)
 SWEP.SightsAngAlternate = Vector(7.738, 0, -27.438)
 SWEP.RunSightsPos = Vector(-0.64, 0, -0.08)
@@ -1873,13 +1873,8 @@ function SWEP:OnMeleeStanceChanged(stance)
 
 	if SERVER then
 		self:CallOnClient("OnMeleeStanceChanged", stance);
-	else
-		if self.WElementsAlternate then
-			self:Initialize();
-			
-			return; -- SetHoldType already called in Initialize.
-		end
 	end
 	
 	self:SetHoldType(self:GetHoldtypeOverride());
+	self:Initialize();
 end

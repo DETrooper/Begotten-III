@@ -1359,6 +1359,22 @@ function Schema:SpawnBegottenEntities()
 		warhornEnt:SetAngles(Angle(43.79, 164.57, 26.77));
 		warhornEnt:Spawn();
 		
+		if cwSailing then
+			local alarmEnt = ents.Create("cw_gorewatchalarm");
+			local alarmSpeaker = ents.Create("prop_dynamic");
+			
+			alarmEnt:SetPos(Vector(-8943, -8254, 482));
+			alarmEnt:SetAngles(Angle(0, -135, 0));
+			alarmEnt:Spawn();
+			alarmSpeaker:SetModel("models/props_wasteland/speakercluster01a.mdl");
+			alarmSpeaker:SetPos(Vector(-9253, -8357, 576));
+			alarmSpeaker:SetAngles(Angle(0, 180, 0));
+			alarmSpeaker:Spawn();
+			
+			alarmEnt.speaker = alarmSpeaker;
+			cwSailing.gorewatchAlarm = alarmEnt;
+		end
+		
 		for i = 1, #archiveEnts do
 			local archiveEnt = ents.Create("cw_archives");
 			
