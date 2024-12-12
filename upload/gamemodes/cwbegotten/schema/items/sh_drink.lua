@@ -24,7 +24,7 @@ local ITEM = Clockwork.item:New();
 	function ITEM:OnUse(player, itemEntity)		
 		local freezing = self:GetData("freezing");
 		
-		if freezing and freezing > 1 then
+		if freezing and freezing > 25 then
 			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
 		
 			return false;
@@ -141,7 +141,7 @@ local ITEM = Clockwork.item:New();
 	function ITEM:OnUse(player, itemEntity)	
 		local freezing = self:GetData("freezing");
 		
-		if freezing and freezing > 1 then
+		if freezing and freezing > 25 then
 			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
 		
 			return false;
@@ -214,7 +214,7 @@ local ITEM = Clockwork.item:New();
 	function ITEM:OnUse(player, itemEntity)
 		local freezing = self:GetData("freezing");
 		
-		if freezing and freezing > 1 then
+		if freezing and freezing > 25 then
 			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
 		
 			return false;
@@ -251,7 +251,7 @@ local ITEM = Clockwork.item:New();
 	function ITEM:OnUse(player, itemEntity)
 		local freezing = self:GetData("freezing");
 		
-		if freezing and freezing > 1 then
+		if freezing and freezing > 25 then
 			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
 		
 			return false;
@@ -830,7 +830,7 @@ local ITEM = Clockwork.item:New();
 	function ITEM:OnUse(player, itemEntity)	
 		local freezing = self:GetData("freezing");
 		
-		if freezing and freezing > 1 then
+		if freezing and freezing > 25 then
 			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
 		
 			return false;
@@ -876,7 +876,7 @@ local ITEM = Clockwork.item:New();
 	function ITEM:OnUse(player, itemEntity)
 		local freezing = self:GetData("freezing");
 		
-		if freezing and freezing > 1 then
+		if freezing and freezing > 25 then
 			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
 		
 			return false;
@@ -925,7 +925,7 @@ local ITEM = Clockwork.item:New();
 	function ITEM:OnUse(player, itemEntity)
 		local freezing = self:GetData("freezing");
 		
-		if freezing and freezing > 1 then
+		if freezing and freezing > 25 then
 			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
 		
 			return false;

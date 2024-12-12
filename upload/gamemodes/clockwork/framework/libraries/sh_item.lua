@@ -1387,7 +1387,7 @@ else
 			percentage = 1;
 		end
 		
-		if freezing and freezing > 1 then
+		if freezing and freezing > 25 then
 			name = "Frozen "..name;
 		elseif condition and condition <= 0 then
 			name = "Broken "..name;
