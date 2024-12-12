@@ -15,19 +15,19 @@ SWEP.ViewModelBoneModsAlternate = {
 }
 
 SWEP.VElements = {
-	["v_axmusket"] = { type = "Model", model = "models/weapons/w_snip_ele.mdl", bone = "v_ee3_reference001", rel = "", pos = Vector(-0.201, -3, -1.558), angle = Angle(0, -90, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["v_axmusket"] = { type = "Model", model = "models/begoyten/gunaxe/gunaxe.mdl", bone = "v_ee3_reference001", rel = "", pos = Vector(0.5, 3.5, 2), angle = Angle(0, -95, 90), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
 }
 
 SWEP.VElementsAlternate = {
-	["v_axmusket"] = { type = "Model", model = "models/weapons/w_snip_ele.mdl", bone = "v_ee3_reference001", rel = "", pos = Vector(-0.201, -3, -1.558), angle = Angle(0, -90, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["v_axmusket"] = { type = "Model", model = "models/begoyten/gunaxe/gunaxe.mdl", bone = "RightHand_1stP", rel = "", pos = Vector(-3.5, -3.5, 2.5), angle = Angle(-3.5, -90, 0), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
 }
 
 SWEP.WElements = {
-	["w_axmusket"] = { type = "Model", model = "models/weapons/w_snip_ele.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.557, 1.7, -0.519), angle = Angle(0, 0, -180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_axmusket"] = { type = "Model", model = "models/begoyten/gunaxe/gunaxe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(8, 1, -2.5), angle = Angle(-16, 0, -90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElementsAlternate = {
-	["w_axmusket"] = { type = "Model", model = "models/weapons/w_snip_ele.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.5, -0.5, -12), angle = Angle(-80, 35, 0), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+	["w_axmusket"] = { type = "Model", model = "models/begoyten/gunaxe/gunaxe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(5.099, -1, 16), angle = Angle(-100, 57, -67), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.Gun = ("begotten_hillkeeper_axmusket")					-- must be the name of your swep

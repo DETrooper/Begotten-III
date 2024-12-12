@@ -2563,6 +2563,10 @@ function SWEP:Initialize()
 		self.ViewModelBoneMods = weaponTable.ViewModelBoneMods;
 		self.MultiHit = weaponTable.MultiHit;
 	end
+	
+	if self.ViewModelAlternate and self.Owner:GetNetVar("ThrustStance") then
+		self.ViewModel = self.ViewModelAlternate;
+	end
 
 	self:InitFunc();
 	
@@ -2570,11 +2574,7 @@ function SWEP:Initialize()
 		local vm = self.Owner:GetViewModel();
 		
 		if IsValid(vm) then
-			if self.ViewModelAlternate and self:GetNW2String("stance") == "thrust_swing" then
-				vm:SetModel(self.ViewModelAlternate);
-			else
-				vm:SetModel(self.ViewModel);
-			end
+			vm:SetModel(self.ViewModel);
 		end
 	end
 	

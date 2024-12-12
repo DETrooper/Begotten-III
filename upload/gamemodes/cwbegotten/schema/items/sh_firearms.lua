@@ -125,15 +125,15 @@ ITEM:Register();
 
 ITEM = Clockwork.item:New("firearm_base");
 	ITEM.name = "Hillkeeper Axmusket";
-	ITEM.model = "models/sw_battlefront/weapons/jazail_long.mdl";
+	ITEM.model = "models/begoyten/gunaxe/gunaxe.mdl";
 	ITEM.weight = 3
 	ITEM.uniqueID = "begotten_hillkeeper_axmusket";
 	ITEM.description = "An expertly crafted Glazic Musket with a steel axehead in place of its stock. An efficient weapon typical of the Hillmen; every tool shall serve a double purpose, with every inch of steel and speck of powder utilized to its most practical end.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/hillkeeper_axmusket.png"
 	ITEM.isAttachment = true;
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
-	ITEM.attachmentOffsetAngles = Angle(0, 343.09, 90);
-	ITEM.attachmentOffsetVector = Vector(3.54, 3.54, -9.9);
+	ITEM.attachmentOffsetAngles = Angle(87.73, 360, 170.9);
+	ITEM.attachmentOffsetVector = Vector(1.39, 5.08, -5.08);
 	
 	ITEM.ammoCapacity = 1;
 	ITEM.ammoTypes = {"Longshot"};
