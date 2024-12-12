@@ -8,6 +8,29 @@ function cwWarmth:PostPlayerCharacterLoaded(player)
 	player:SetLocalVar("warmth", player:GetCharacterData("warmth", 100));
 end
 
+-- Called at an interval for every active item entity.
+function cwWarmth:ItemEntityThink(entity, itemTable)	
+	local freezing = itemTable:GetData("freezing");
+	
+	if freezing then
+		local ents = ents.FindInSphere(entity:GetPos(), 320);
+		
+		for i, v in ipairs(ents) do
+			if v:GetClass() == "env_fire" then
+				if freezing > 0 then
+					itemTable:SetData("freezing", math.max(freezing - 5, 0));
+				end
+				
+				return;
+			end
+		end
+		
+		if freezing < 100 then
+			itemTable:SetData("freezing", math.min(freezing + 1, 100));
+		end
+	end
+end
+
 -- Called at an interval while the player is connected to the server.
 function cwWarmth:PlayerThink(player, curTime, infoTable, alive, initialized, plyTable)
 	if !plyTable.nextTempDecay then

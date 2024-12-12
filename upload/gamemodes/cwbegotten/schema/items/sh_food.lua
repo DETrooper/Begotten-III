@@ -14,9 +14,21 @@ local ITEM = Clockwork.item:New();
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 715};
 	ITEM.needs = {hunger = 30, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+		
 		--player:GiveItem(Clockwork.item:CreateInstance("empty_can"));
 		
 		Schema:EasyText(player, "olivedrab", "Although long expired and slightly frothy, the beans are still perfectly palatable.");
@@ -45,9 +57,21 @@ local ITEM = Clockwork.item:New();
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
 	ITEM.needs = {hunger = 25, thirst = 10};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
-	function ITEM:OnUse(player, itemEntity)		
+	function ITEM:OnUse(player, itemEntity)	
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+		
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You feel fucking disgusted that you just ate something so foul. As a result you begin feel emotionally and mentally unstable.");
 			player:HandleSanity(-25);
@@ -77,9 +101,21 @@ local ITEM = Clockwork.item:New();
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500};
 	ITEM.needs = {hunger = 15};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "The bread is mushy and moldy but it's far better than some of the other food found in the wasteland.");
 			player:HandleSanity(-5);
@@ -107,9 +143,21 @@ local ITEM = Clockwork.item:New();
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 875};
 	ITEM.needs = {hunger = 40, thirst = 10};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		player:HandleSanity(5);
 		player:SetHealth(math.Clamp(player:Health() + 5, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
@@ -136,10 +184,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.needs = {hunger = 25, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+		
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You begrudgingly consume raw meat.");
 			player:HandleSanity(-5);
@@ -172,9 +231,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 1;
 	
 	ITEM.needs = {hunger = 50, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		player:HandleSanity(5);
 		player:SetHealth(math.Clamp(player:Health() + 10, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
@@ -192,7 +263,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.useText = "Force Down Your Throat";
 	ITEM.useSound = "npc/barnacle/barnacle_crunch3.wav";
 	ITEM.category = "Food";
-	ITEM.description = "Raw meat harvested from a wolf.";
+	ITEM.description = "Raw meat harvested from a wolf. It is not very nutritious.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/human_meat.png"
 	ITEM.stackable = true;
 	ITEM.uniqueID = "wolf_meat"
@@ -200,11 +271,22 @@ local ITEM = Clockwork.item:New();
 	ITEM.poison = 5;
 	ITEM.cauldronQuality = 0;
 	
-	ITEM.needs = {hunger = 20, thirst = 5};
+	ITEM.needs = {hunger = 5, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+		
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You begrudgingly consume raw meat.");
 			player:HandleSanity(-5);
@@ -230,16 +312,28 @@ local ITEM = Clockwork.item:New();
 	ITEM.useText = "Eat";
 	ITEM.useSound = "npc/barnacle/barnacle_crunch3.wav";
 	ITEM.category = "Food";
-	ITEM.description = "Cooked wolf meat, very nutritious.";
+	ITEM.description = "Cooked wolf meat. It is not very nutritious.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/cooked_meat.png"
 	ITEM.stackable = true;
 	ITEM.uniqueID = "cooked_wolf_meat"
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 40, thirst = 5};
+	ITEM.needs = {hunger = 15, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		player:HandleSanity(5);
 		
 		player:HandleXP(cwBeliefs.xpValues["food"]);
@@ -266,10 +360,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.needs = {hunger = 25, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+		
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You begrudgingly consume raw meat.");
 			player:HandleSanity(-5);
@@ -302,9 +407,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 1;
 	
 	ITEM.needs = {hunger = 50, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		player:HandleSanity(5);
 		player:SetHealth(math.Clamp(player:Health() + 5, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
@@ -331,6 +448,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.needs = {hunger = 20, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -367,9 +488,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 1;
 	
 	ITEM.needs = {hunger = 45, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		player:HandleSanity(5);
 		player:SetHealth(math.Clamp(player:Health() + 5, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
@@ -393,11 +526,22 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "cooked_goat_meat"
 	ITEM.cauldronQuality = 1;
 	
-	
 	ITEM.needs = {hunger = 45, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		player:HandleSanity(5);
 		player:SetHealth(math.Clamp(player:Health() + 5, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
@@ -424,10 +568,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.needs = {hunger = 20, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+		
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You begrudgingly consume raw meat.");
 			player:HandleSanity(-5);
@@ -458,9 +613,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 
 	ITEM.needs = {hunger = 50, thirst = 15};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		player:HandleSanity(5);
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
@@ -486,9 +653,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.needs = {hunger = 35, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You engorge yourself on the fresh meat of another. You question your sanity.");
 			player:HandleSanity(-20);
@@ -524,9 +703,21 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
 	ITEM.needs = {hunger = 25, thirst = 0};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You eat the fucked meat and to your suprise, the meat is fucked! You spit out the worms and rot and are left with a sinking feeling of regret.");
 			player:HandleSanity(-25);
@@ -559,9 +750,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.needs = {hunger = 40, thirst = 15};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Schema:EasyText(player, "olivedrab", "The meat is flavorful. You feel proud of such an honest meal.");
 		player:HandleSanity(10);
 		player:SetHealth(math.Clamp(player:Health() + 8, 0, player:GetMaxHealth()));
@@ -590,9 +793,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "meatmeal"
 	
 	ITEM.needs = {hunger = 80, thirst = 45};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Schema:EasyText(player, "olivedrab", "An honest meal!");
 		player:HandleSanity(30);
 		player:SetHealth(math.Clamp(player:Health() + 25, 0, player:GetMaxHealth()));
@@ -625,9 +840,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 1;
 	
 	ITEM.needs = {hunger = 50, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		if player:HasBelief("savage") then
 			Schema:EasyText(player, "olivedrab", "You enjoy the savory taste of your fellow man.");
 			player:HandleSanity(2);
@@ -661,9 +888,21 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
 	ITEM.needs = {hunger = 15, thirst = 30};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
-	function ITEM:OnUse(player, itemEntity)		
+	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You feel fucking disgusted that you just ate something so foul. As a result you begin feel emotionally and mentally unstable.");
 			player:HandleSanity(-25);
@@ -732,10 +971,21 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
 	ITEM.needs = {hunger = 50};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+		
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You notice a glimmer of light inside the can, and are rejoiced to discover coins aplenty! Your sanity is restored! You are favored by the Gods!");
 			player:HandleSanity(20);
@@ -777,9 +1027,21 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
 	ITEM.needs = {hunger = 50};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		local playerPos = player:GetPos();
 
 		if player:HasBelief("favored") then
@@ -839,9 +1101,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = -1;
 	
 	ITEM.needs = {hunger = 50};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Schema:EasyText(player, "olivedrab", "The taste is a bit odd but the meat is certainly fresh.");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
@@ -868,10 +1142,21 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
 	ITEM.needs = {hunger = 25, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "The neat yummy meat was indeed yummy. Furthermore, your sanity is rejuvenated and you cough up a few coins!");
 			Clockwork.player:GiveCash(player, 12, "Blessed coins!");
@@ -915,9 +1200,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "cooked_yummy_meat"
 	
 	ITEM.needs = {hunger = 50, thirst = 10};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Schema:EasyText(player, "olive", "The meat did not taste good.");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 		player:SetHealth(math.Clamp(player:Health() + 3, 0, player:GetMaxHealth()));
@@ -942,9 +1239,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 1;
 	
 	ITEM.needs = {hunger = 90, thirst = 75};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Schema:EasyText(player, "lawngreen", "You consume the meal. It was an excellent cuisine!");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 		player:SetHealth(math.Clamp(player:Health() + 10, 0, player:GetMaxHealth()));
@@ -970,9 +1279,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 1;
 	
 	ITEM.needs = {hunger = 100, thirst = 100};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Schema:EasyText(player, "lawngreen", "You consume the meal. It was excellent!");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 		player:HandleSanity(100);
@@ -998,9 +1319,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "wanderers_delight"
 	
 	ITEM.needs = {hunger = 70, thirst = 60};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Schema:EasyText(player, "lawngreen", "You consume the meal. It tasted decent!");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 		player:HandleSanity(80);
@@ -1028,9 +1361,21 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
 	ITEM.needs = {hunger = 15, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
-	function ITEM:OnUse(player, itemEntity)		
+	function ITEM:OnUse(player, itemEntity)	
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "The contents of the can have left you emotionally scarred and mentally deranged.");
 			player:HandleSanity(-95);
@@ -1089,9 +1434,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.needs = {hunger = 45, thirst = 35};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Schema:EasyText(player, "lawngreen", "You fucking devour the horrible slop. It turns out it wasn't as bad as advertised.");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 		player:HandleSanity(5);
@@ -1118,9 +1475,21 @@ local ITEM = Clockwork.item:New();
 	ITEM:AddData("isPoisoned", false, true)
 	
 	ITEM.needs = {hunger = 20, thirst = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Schema:EasyText(player, "olivedrab", "You fucking devour the horrible slop. Despite its horrid taste, it manages to fill your gut up a little.");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 
@@ -1166,9 +1535,21 @@ local ITEM = Clockwork.item:New();
 	ITEM:AddData("isPoisoned", false, true)
 	
 	ITEM.needs = {hunger = 35, thirst = 15};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Schema:EasyText(player, "olivedrab", "You devour the stew. It's completely unremarkable the whole way through.");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 
@@ -1214,9 +1595,21 @@ local ITEM = Clockwork.item:New();
 	ITEM:AddData("isPoisoned", false, true)
 	
 	ITEM.needs = {hunger = 60, thirst = 30};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Schema:EasyText(player, "lawngreen", "You devour the stew. It is, by far, the greatest thing you ever have and ever will put in your mouth. Your stomach will thank you for days to come.");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 
@@ -1262,9 +1655,21 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500};
 	ITEM.needs = {hunger = 25, thirst = 25};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
-	function ITEM:OnUse(player, itemEntity)		
+	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "The contents of the can were so awful that you feel physically abused - throatfucked with an aftertaste that will never go away.. You no longer crave, only starve.");
 			player:HandleSanity(-15);

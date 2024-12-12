@@ -17,8 +17,11 @@ function ENT:HUDPaintTargetID(x, y, alpha)
 			local colorWhite = Clockwork.option:GetColor("white")
 			local color = itemTable.color or colorTargetID
 			local name = itemTable:GetName();
+			local freezing = itemTable:GetData("freezing");
 			
-			if itemTable:IsBroken() or itemTable:GetCondition() <= 0 then
+			if freezing and freezing > 1 then
+				y = Clockwork.kernel:DrawInfo("Frozen "..name, x, y, color, alpha)
+			elseif itemTable:IsBroken() or itemTable:GetCondition() <= 0 then
 				y = Clockwork.kernel:DrawInfo("Broken "..name, x, y, color, alpha)
 			else
 				y = Clockwork.kernel:DrawInfo(name, x, y, color, alpha)

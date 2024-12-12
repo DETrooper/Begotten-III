@@ -16,8 +16,20 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
 	ITEM.needs = {hunger = 10, thirst = 15};
 	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
+	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)		
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You feel fucking disgusted that you just drank something so foul. As a result you begin feel emotionally and mentally unstable.");
 			player:HandleSanity(-25);
@@ -120,9 +132,21 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 675, bNoSupercrate = true};
 	ITEM.needs = {thirst = 25};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
-	function ITEM:OnUse(player, itemEntity)		
+	function ITEM:OnUse(player, itemEntity)	
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		player:GiveItem(Clockwork.item:CreateInstance("empty_bottle"), true);
 	
 		if player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm") then
@@ -181,9 +205,21 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 600, bNoSupercrate = true};
 	ITEM.needs = {hunger = 10, thirst = 30, sleep = 5};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Schema:EasyText(player, "lawngreen", "When you pop open the can, it still has a fizz. It tastes very sweet compared to anything else you've had before.");
 		player:HandleSanity(2);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -207,8 +243,20 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
 	ITEM.needs = {thirst = 65};
 	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
+	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		player:GiveItem(Clockwork.item:CreateInstance("empty_bottle"), true);
 	
 		if player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm") then
@@ -773,9 +821,21 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = -1;
 	
 	ITEM.needs = {thirst = 100};
+	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
 
 	-- Called when a player uses the item.
-	function ITEM:OnUse(player, itemEntity)		
+	function ITEM:OnUse(player, itemEntity)	
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		if player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm") then
 			Schema:EasyText(player, "maroon", "You open jug and pour piss down your receptacle, but it begins to short-circuit your insides!");
 			Schema:DoTesla(player, true);
@@ -808,8 +868,20 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "purified_water_bucket";
 	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/bucket.png"
 	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
+	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Clockwork.chatBox:AddInTargetRadius(player, "me", "brings a bucket of water up to their face, chugging its entire contents uninterrupted.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 		
 		player:GiveItem(Clockwork.item:CreateInstance("empty_bucket"), true);
@@ -845,8 +917,20 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/bucket.png"
 	ITEM.cauldronQuality = -3;
 	
+	if cwWarmth then
+		ITEM:AddData("freezing", 0, true);
+	end
+	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 1 then
+			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
 		Clockwork.chatBox:AddInTargetRadius(player, "me", "brings a bucket of water up to their face, chugging its entire contents uninterrupted.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 		
 		player:GiveItem(Clockwork.item:CreateInstance("empty_bucket"), true);
