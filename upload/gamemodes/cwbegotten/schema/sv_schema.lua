@@ -1319,7 +1319,7 @@ function Schema:SpawnBegottenEntities()
 		coinslotEnt:SetPos(Vector(-8347.625, 11135.65625, 334.5));
 		coinslotEnt:SetAngles(Angle(0, -90, 0));
 		coinslotEnt:Spawn();
-		cauldron:SetPos(Vector(-5176 11902 314));
+		cauldron:SetPos(Vector(-5176, 11902, 314));
 		cauldron:SetAngles(Angle(0, 180, 0));
 		cauldron:Spawn();
 		gramophoneBase:SetModel("models/props/furnitures/humans/l10/l10_bedsidetable.mdl")
