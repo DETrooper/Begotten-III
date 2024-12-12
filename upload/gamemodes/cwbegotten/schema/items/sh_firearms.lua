@@ -138,7 +138,7 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.ammoCapacity = 1;
 	ITEM.ammoTypes = {"Longshot"};
 	ITEM.attributes = {"melee"};
-	ITEM.firearmType = "Long Gun (Two-Handed Axe)";
+	ITEM.firearmType = "Long Gun (Great Weapon)";
 	ITEM.reloadTime = 9; -- Seconds
 	ITEM.reloadSounds = {"oneuse_deploy.ogg", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
