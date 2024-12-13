@@ -128,7 +128,7 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.model = "models/begoyten/gunaxe/gunaxe.mdl";
 	ITEM.weight = 3
 	ITEM.uniqueID = "begotten_hillkeeper_axmusket";
-	ITEM.description = "An expertly crafted Glazic Musket with a steel axehead in place of its stock. An efficient weapon typical of the Hillmen; every tool shall serve a double purpose, with every inch of steel and speck of powder utilized to its most practical end.";
+	ITEM.description = "An expertly crafted Glazic Musket with a steel axehead in place of its stock. An efficient weapon typical of the Hillmen; every tool shall serve a double purpose, with every inch of steel and speck of powder utilized to its most practical end. This weapon's handle has been thrice-blessed and now burns the hands of heretics.";
 	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/gunaxe.png"
 	ITEM.isAttachment = true;
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
@@ -142,7 +142,8 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 9; -- Seconds
 	ITEM.reloadSounds = {"oneuse_deploy.ogg", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"wood", "wood", "iron_chunks", "iron_chunks", "steel_chunks"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"wood", "wood", "steel_chunks", "steel_chunks", "steel_chunks"}};
+	ITEM.requireFaith = {"Faith of the Light"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");

@@ -1543,7 +1543,11 @@ function COMMAND:OnRun(player, arguments)
 					player.ignoreConditionLoss = false;
 					
 					if cwStamina then
-						player:HandleStamina(d:GetDamage() * 2);
+						if activeWeapon:GetClass() == "begotten_1h_ironflail" then -- Flails give more stamina when flagellating!
+							player:HandleStamina(d:GetDamage() * 4);
+						else
+							player:HandleStamina(d:GetDamage() * 2);
+						end
 					end
 					
 					if cwSanity then

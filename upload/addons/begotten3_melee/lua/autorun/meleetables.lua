@@ -171,6 +171,17 @@ AttackSoundTables.MetalBluntPolearmAttackSoundTable = {
 	["drawsound"] = {"draw/skyrim_mace_draw1.mp3"},
 };
 
+AttackSoundTables.MetalFlailAttackSoundTable = {
+	["primarysound"] = {"weapons/ageofchivalry/flailshield/flailshield_attack2.wav"},
+	["altsound"] = {"vo/k_lab/kl_fiddlesticks.wav"},	
+	["hitbody"] = {"weapons/Blunt_01.wav", "weapons/Blunt_02.wav", "weapons/Blunt_03.wav", "weapons/Blunt_04.wav", "weapons/Blunt_05.wav"},
+	["altsound"] = {"vo/k_lab/kl_fiddlesticks.wav"},
+	["hitworld"] = {"weapons/metal_weapon_to_ground_01.wav", "weapons/metal_weapon_to_ground_02.wav", "weapons/metal_weapon_to_ground_03.wav", "weapons/metal_weapon_to_ground_04.wav", "weapons/metal_weapon_to_ground_05.wav"},
+	["criticalswing"] = {"weapons/ageofchivalry/flailshield/flailshield_stab.wav"},
+	["parryswing"] = {"weapons/ageofchivalry/flailshield/flailshield_attack1.wav"},
+	["drawsound"] = {"weapons/ageofchivalry/flailshield/flailshield_block.wav"},
+};
+
 AttackSoundTables.MaximusWrathAttackSoundTable = {
 	["primarysound"] = {"weapons/Large_01.wav", "weapons/Large_02.wav", "weapons/Large_03.wav", "weapons/Large_04.wav", "weapons/Large_05.wav", "weapons/Large_06.wav", "weapons/Large_07.wav", "weapons/Large_08.wav", "weapons/Large_09.wav", "weapons/Large_10.wav"},
 	["altsound"] = {"weapons/Pierce_01.wav", "weapons/Pierce_03.wav", "weapons/Pierce_05.wav"},
@@ -338,6 +349,7 @@ AddSoundTable("MediumMetalAttackSoundTable", AttackSoundTables.MediumMetalAttack
 AddSoundTable("SmallMetalAttackSoundTable", AttackSoundTables.SmallMetalAttackSoundTable)
 AddSoundTable("MetalPolearmAttackSoundTable", AttackSoundTables.MetalPolearmAttackSoundTable)
 AddSoundTable("MetalBluntPolearmAttackSoundTable", AttackSoundTables.MetalBluntPolearmAttackSoundTable)
+AddSoundTable("MetalFlailAttackSoundTable", AttackSoundTables.MetalFlailAttackSoundTable)
 AddSoundTable("MediumMetalBluntAttackSoundTable", AttackSoundTables.MediumMetalBluntAttackSoundTable)
 AddSoundTable("SmallMetalBluntAttackSoundTable", AttackSoundTables.SmallMetalBluntAttackSoundTable)
 AddSoundTable("MetalSpearAttackSoundTable", AttackSoundTables.MetalSpearAttackSoundTable)
@@ -2097,6 +2109,25 @@ AttackTables.WarHammerAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
+AttackTables.IronFlailAttackTable = {
+	["primarydamage"] = 20,
+	["dmgtype"] = 128,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = false,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 65,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 35,
+	["stabilitydamage"] = 40,
+	["takeammo"] = 6,
+	["delay"] = 1.3,
+	["striketime"] = 0.4,
+	["meleearc"] = 35,
+	["meleerange"] = 650,
+	["punchstrength"] = Angle(0,1,0),
+};
+
 -- Short Maces
 
 AttackTables.PipeAttackTable = {
@@ -2796,7 +2827,7 @@ AttackTables.HeavyBattleAxeAttackTable = {
 };
 
 AttackTables.GoreFalxAttackTable = {
-	["primarydamage"] = 55,
+	["primarydamage"] = 60,
 	["dmgtype"] = 4,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -3106,13 +3137,13 @@ AttackTables.GrocklingSacredStoneMaulAttackTable = {
 -- Great Axes
 
 AttackTables.DemonSlayerAxeAttackTable = {
-	["primarydamage"] = 95,
+	["primarydamage"] = 100,
 	["dmgtype"] = 4,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 55,
+	["armorpiercing"] = 60,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 45,
 	["stabilitydamage"] = 40,
@@ -3125,13 +3156,13 @@ AttackTables.DemonSlayerAxeAttackTable = {
 };
 
 AttackTables.DreadaxeAttackTable = {
-	["primarydamage"] = 95,
+	["primarydamage"] = 100,
 	["dmgtype"] = 4,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 55,
+	["armorpiercing"] = 60,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 45,
 	["stabilitydamage"] = 40,
@@ -3293,53 +3324,53 @@ AttackTables.HillGlazicusAttackTable = {
 	["dmgtype"] = 4,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = true,
-	["altattackdamagemodifier"] = 0.85,
-	["altattackpoisedamagemodifier"] = 0.3,
+	["altattackdamagemodifier"] = 0.7,
+	["altattackpoisedamagemodifier"] = 0.1,
 	["altmeleearc"] = 15,
-	["armorpiercing"] = 25,
-	["altarmorpiercing"] = 40,
+	["armorpiercing"] = 30,
+	["altarmorpiercing"] = 45,
 	["poisedamage"] = 12,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 3,
 	["delay"] = 0.72,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 650,
-	["punchstrength"] = Angle(0,1,0),
-};
-
-AttackTables.HillSteelArmingSwordAttackTable = {
-	["primarydamage"] = 40,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = true,
-	["altattackdamagemodifier"] = 0.8,
-	["altattackpoisedamagemodifier"] = 0.3,
-	["altmeleearc"] = 15,
-	["armorpiercing"] = 25,
-	["altarmorpiercing"] = 50,
-	["poisedamage"] = 15,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 5,
-	["delay"] = 0.8,
-	["striketime"] = 0.35,
-	["meleearc"] = 35,
 	["meleerange"] = 750,
 	["punchstrength"] = Angle(0,1,0),
 };
 
-AttackTables.HillBattleAxeAttackTable = {
+AttackTables.HillSteelArmingSwordAttackTable = {
 	["primarydamage"] = 50,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.75,
+	["altattackpoisedamagemodifier"] = 0.1,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 28,
+	["altarmorpiercing"] = 47,
+	["poisedamage"] = 15,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 4,
+	["delay"] = 0.82,
+	["striketime"] = 0.35,
+	["meleearc"] = 35,
+	["meleerange"] = 865,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.HillBattleAxeAttackTable = {
+	["primarydamage"] = 52,
 	["dmgtype"] = 4,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 42,
+	["armorpiercing"] = 40,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 22,
 	["stabilitydamage"] = 0,
-	["takeammo"] = 5,
+	["takeammo"] = 4,
 	["delay"] = 0.95,
 	["striketime"] = 0.4,
 	["meleearc"] = 45,
@@ -3359,11 +3390,11 @@ AttackTables.HillLongswordAttackTable = {
 	["altarmorpiercing"] = 45,
 	["poisedamage"] = 20,
 	["stabilitydamage"] = 0,
-	["takeammo"] = 8,
-	["delay"] = 1.2,
+	["takeammo"] = 5,
+	["delay"] = 1.15,
 	["striketime"] = 0.6,
 	["meleearc"] = 45,
-	["meleerange"] = 915,
+	["meleerange"] = 1050,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -3374,12 +3405,12 @@ AttackTables.HillHeavyBattleAxeAttackTable = {
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 35,
+	["armorpiercing"] = 45,
 	["altarmorpiercing"] = nil,
-	["poisedamage"] = 30,
+	["poisedamage"] = 45,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 7,
-	["delay"] = 1.5,
+	["delay"] = 1.4,
 	["striketime"] = 0.65,
 	["meleearc"] = 45,
 	["meleerange"] = 885,
@@ -3406,9 +3437,9 @@ AttackTables.HillGoreHuntingDaggerAttackTable = {
 };
 
 AttackTables.HillThrowingAxeAttackTable = {
-	["primarydamage"] = 55,
-	["mimimumdistancedamage"] = 45,
-	["maximumdistancedamage"] = 135,
+	["primarydamage"] = 50,
+	["mimimumdistancedamage"] = 50,
+	["maximumdistancedamage"] = 145,
 	["dmgtype"] = DMG_SLASH,
 	["canaltattack"] = true,
 	["altattackpoisedamagemodifier"] = 0.5,
@@ -3416,15 +3447,15 @@ AttackTables.HillThrowingAxeAttackTable = {
 	["altmeleearc"] = 35,
 	["altmeleerange"] = 625,
 	["alttakeammo"] = 3,
-	["armorpiercing"] = 60,
+	["armorpiercing"] = 50,
 	["poisedamage"] = 40,
 	["stabilitydamage"] = 40,
 	["minimumdistancestabilitydamage"] = 20,
 	["maximumdistancestabilitydamage"] = 80,
-	["takeammo"] = 12,
-	["delay"] = 0.5,
-	["striketime"] = 0.6,
-	["punchstrength"] = Angle(0,4,0),
+	["takeammo"] = 10,
+	["delay"] = 0.9,
+	["striketime"] = 0.4,
+	["punchstrength"] = Angle(0,1,0),
 };
 
 AttackTables.HillBannerAttackTable = {
@@ -3441,7 +3472,7 @@ AttackTables.HillBannerAttackTable = {
 	["stabilitydamage"] = 25,
 	["takeammo"] = 8,
 	["delay"] = 1.7,
-	["striketime"] = 0.65,
+	["striketime"] = 0.55,
 	["meleearc"] = 60,
 	["meleerange"] = 1200,
 	["punchstrength"] = Angle(1,3,1),
@@ -3458,29 +3489,29 @@ AttackTables.OrdainedGorefellerAttackTable = {
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 45,
 	["stabilitydamage"] = 40,
-	["takeammo"] = 12,
-	["delay"] = 2.3,
-	["striketime"] = 0.955,
+	["takeammo"] = 15,
+	["delay"] = 2.4,
+	["striketime"] = 0.95,
 	["meleearc"] = 55,
 	["meleerange"] = 1100,
 	["punchstrength"] = Angle(0,7,0),
 };
 
 AttackTables.GunAxeAttackTable = {
-	["primarydamage"] = 90,
+	["primarydamage"] = 85,
 	["dmgtype"] = 4,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = true,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 35,
+	["armorpiercing"] = 45,
 	["altarmorpiercing"] = nil,
-	["poisedamage"] = 35,
+	["poisedamage"] = 40,
 	["stabilitydamage"] = 0,
-	["takeammo"] = 8,
-	["delay"] = 1.7,
+	["takeammo"] = 7,
+	["delay"] = 1.4,
 	["striketime"] = 0.65,
-	["meleearc"] = 35,
+	["meleearc"] = 40,
 	["meleerange"] = 800,
 	["punchstrength"] = Angle(0,1,0),
 };
@@ -3624,6 +3655,7 @@ AddTable("Ancestraldagger_Kinisger_AttackTable", AttackTables.Ancestraldagger_Ki
 AddTable("DarklanderBardicheAttackTable", AttackTables.DarklanderBardicheAttackTable)
 AddTable("EveningStarAttackTable", AttackTables.EveningStarAttackTable)
 AddTable("WarHammerAttackTable", AttackTables.WarHammerAttackTable)
+AddTable("IronFlailAttackTable", AttackTables.IronFlailAttackTable)
 AddTable("HillGlazicusAttackTable", AttackTables.HillGlazicusAttackTable)
 AddTable("HillSteelArmingSwordAttackTable", AttackTables.HillSteelArmingSwordAttackTable)
 AddTable("HillBattleAxeAttackTable", AttackTables.HillBattleAxeAttackTable) 
@@ -5983,6 +6015,24 @@ BlockTables.WarHammerBlockTable = {
 	["candeflect"] = true,
 };
 
+BlockTables.IronFlailBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 15,
+	["blockeffectpos"] = (Vector(0, 0, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 10,
+	["raisespeed"] = 0.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.25,
+	["parrytakestamina"] = 10,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
 BlockTables.HillGlazicusBlockTable = {
 	["guardblockamount"] = 10,
 	["specialeffect"] = false,
@@ -6258,6 +6308,7 @@ AddTable("Ancestraldagger_Kinisger_BlockTable", BlockTables.Ancestraldagger_Kini
 AddTable("DarklanderBardicheBlockTable", BlockTables.DarklanderBardicheBlockTable)
 AddTable("EveningStarBlockTable", BlockTables.EveningStarBlockTable)
 AddTable("WarHammerBlockTable", BlockTables.WarHammerBlockTable)
+AddTable("IronFlailBlockTable", BlockTables.IronFlailBlockTable)
 AddTable("HillGlazicusBlockTable", BlockTables.HillGlazicusBlockTable)
 AddTable("HillSteelArmingSwordBlockTable", BlockTables.HillSteelArmingSwordBlockTable)
 AddTable("HillBattleAxeBlockTable", BlockTables.HillBattleAxeBlockTable)
@@ -6293,10 +6344,14 @@ BlockTables.shield1 = { -- Scrap Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(5.44, -8, 2), ang = Vector(2.5, -8.443, -14.775)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(-1.241, -8.844, 2.2), ang = Vector(-1.5, -40.102, 4.221)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(19.639, -4.02, 3.67), ang = Vector(3.517, 0, -4)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(0.2, -12.865, -5.29), ang = Vector(0, -56.281, 4.925)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -6308,6 +6363,9 @@ BlockTables.shield1 = { -- Scrap Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield1"] = { type = "Model", model = "models/props_bebris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(2, -16.105, 4), angle = Angle(26.881, -127.403, -62), size = Vector(1.4, 1.4, 1.4), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield1"] = { type = "Model", model = "models/props_bebris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -0.519, 1.557), angle = Angle(0, 61.948, -12.858), size = Vector(0.5, 0.5, 0.5), material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -6339,6 +6397,7 @@ BlockTables.shield2 = { -- Slaveshield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(8.119, -1.609, 2.359), ang = Vector(2.111, -8.443, 9.145)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(7.4, -10.051, 5.079), ang = Vector(5.627, -6.332, -11.256)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(4.199, -5.026, 4.719), ang = Vector(0, -4.926, -13.367)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(-4.74, -13.065, -1.591), ang = Vector(-2.112, -58.392, -1.407)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_onehandedbegotten.mdl"] = {
@@ -6346,6 +6405,9 @@ BlockTables.shield2 = { -- Slaveshield
 		},
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -6357,6 +6419,9 @@ BlockTables.shield2 = { -- Slaveshield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield2"] = { type = "Model", model = "models/demonssouls/shields/slave's shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(18.181, 8.831, 4.675), angle = Angle(66.623, 90, -29.222), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield2"] = { type = "Model", model = "models/demonssouls/shields/slave's shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.635, -0.301, 0.518), angle = Angle(-78.312, -40.91, 97.013), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -6388,6 +6453,7 @@ BlockTables.shield3 = { -- Car Door Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(16.04, -7.237, 0.639), ang = Vector(0, 11.96, 25.326)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(15.079, -7.639, 11.279), ang = Vector(-14.07, -3.518, 56.985)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(10, -4, 5), ang = Vector(0, 0, 30)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(-1.081, -14.674, -0.12), ang = Vector(7.738, -34.473, -11.256)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_onehandedbegotten.mdl"] = {
@@ -6395,6 +6461,9 @@ BlockTables.shield3 = { -- Car Door Shield
 		},
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -6406,6 +6475,9 @@ BlockTables.shield3 = { -- Car Door Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield3"] = { type = "Model", model = "models/props_vehicles/carparts_door01a.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(16, 2, 4), angle = Angle(-5, 140.779, 5.843), size = Vector(0.8, 0.8, 0.8), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield3"] = { type = "Model", model = "models/props_vehicles/carparts_door01a.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.635, -2.597, -0.519), angle = Angle(-24.546, 120.389, 3.506), size = Vector(0.699, 0.699, 0.699), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -6438,6 +6510,7 @@ BlockTables.shield4 = { -- Buckler
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(10.039, -10.051, 9.159), ang = Vector(-1.407, -4.222, -18.996)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(7, -6.433, 5.119), ang = Vector(-3.518, -3.518, -13.367)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(0.959, -4.222, 2.68), ang = Vector(0, -7.035, -16.181)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(-4.74, -13.065, -1.591), ang = Vector(-2.112, -58.392, -1.407)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_onehandedbegotten.mdl"] = {
@@ -6445,6 +6518,9 @@ BlockTables.shield4 = { -- Buckler
 		},
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -6456,6 +6532,9 @@ BlockTables.shield4 = { -- Buckler
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield4"] = { type = "Model", model = "models/demonssouls/shields/buckler.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(19.221, 5.714, 1.557), angle = Angle(71.299, 90, -24.546), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield4"] = { type = "Model", model = "models/demonssouls/shields/buckler.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3, 0.899, 0.518), angle = Angle(-78.312, -40.91, 97.013), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -6487,6 +6566,7 @@ BlockTables.shield5 = { -- Wooden Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(11.96, -7.035, 5.4), ang = Vector(-3.518, 1.406, 0.703)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(8.96, -7.639, 2.279), ang = Vector(-4.222, -1.407, -4.926)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(2.68, -9.849, 3.17), ang = Vector(5.627, -2.112, -15.478)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(-3.1, -16.684, -5.611), ang = Vector(-1.407, -68.945, 3.517)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_onehandedbegotten.mdl"] = {
@@ -6494,6 +6574,9 @@ BlockTables.shield5 = { -- Wooden Shield
 		},
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -6505,6 +6588,9 @@ BlockTables.shield5 = { -- Wooden Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield5"] = { type = "Model", model = "models/skyrim/shield_stormcloaks.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(18.181, 1.557, -0.519), angle = Angle(-68.961, -101.689, 5.843), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield5"] = { type = "Model", model = "models/skyrim/shield_stormcloaks.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3.5, -0, 1), angle = Angle(-75.974, -31.559, 80.649), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -6536,6 +6622,7 @@ BlockTables.shield6 = { -- Iron Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(9.56, -8.242, 6.199), ang = Vector(-1.407, -5.628, -3.518)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(2.96, -5.428, 3.72), ang = Vector(-5.628, -16.181, -4.926)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(4.88, -9.447, 4.039), ang = Vector(0, 1.406, -14.775)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(-4.881, -14.874, -4.52), ang = Vector(-9.146, -70, 6.331)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_onehandedbegotten.mdl"] = {
@@ -6543,6 +6630,9 @@ BlockTables.shield6 = { -- Iron Shield
 		},
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -6554,6 +6644,9 @@ BlockTables.shield6 = { -- Iron Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield6"] = { type = "Model", model = "models/demonssouls/shields/soldier's shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(15.064, -0.519, -0.519), angle = Angle(61.948, 80.649, -15.195), size = Vector(1.299, 1.299, 1.299), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield6"] = { type = "Model", model = "models/demonssouls/shields/soldier's shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.9, 1.2, 1), angle = Angle(-75.974, -31.559, 80.649), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -6585,6 +6678,7 @@ BlockTables.shield7 = { -- Knight's Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(9.159, -9.849, 7.88), ang = Vector(-6.332, -3.518, -8.443)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(3.24, -7.437, 3.079), ang = Vector(-3, -15, -3.901)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.519, -8.844, 3.16), ang = Vector(4.925, -1.407, -11.256)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(0.25, -12.865, -2.921), ang = Vector(0, -37.991, -7.035)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_onehandedbegotten.mdl"] = {
@@ -6592,6 +6686,9 @@ BlockTables.shield7 = { -- Knight's Shield
 		},
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -6603,6 +6700,9 @@ BlockTables.shield7 = { -- Knight's Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield7"] = { type = "Model", model = "models/demonssouls/shields/knight's shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(15.064, -0.519, -1.558), angle = Angle(64.286, 92.337, -22.209), size = Vector(1.2, 1.2, 1.2), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield7"] = { type = "Model", model = "models/demonssouls/shields/knight's shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(1.557, 2.596, 1.557), angle = Angle(-8.183, 134.416, -66.624), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -6635,6 +6735,7 @@ BlockTables.shield8 = { -- Spiked Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(9.8, -9.247, 3.68), ang = Vector(6.331, 0, -7.739)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(3.559, -6.433, 3.839), ang = Vector(-6, -14, -3.79)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(4.36, -8.643, 4.28), ang = Vector(0, 2.813, -15.478)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(-3.86, -12.261, -3.741), ang = Vector(-4.222, -54.172, -4.926)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_onehandedbegotten.mdl"] = {
@@ -6642,6 +6743,9 @@ BlockTables.shield8 = { -- Spiked Shield
 		},
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -6653,6 +6757,9 @@ BlockTables.shield8 = { -- Spiked Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield8"] = { type = "Model", model = "models/demonssouls/shields/spiked shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(15.064, -0.519, -0.519), angle = Angle(61.948, 80.649, -15.195), size = Vector(1.2, 1.2, 1.2), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield8"] = { type = "Model", model = "models/demonssouls/shields/spiked shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(1.557, 2.596, 1.557), angle = Angle(-8.183, 134.416, -66.624), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -6685,6 +6792,7 @@ BlockTables.shield9 = { -- Sol Sentinel Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(14, -10.051, 5.88), ang = Vector(1.406, 0, -2.112)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(5.079, -7.035, 5), ang = Vector(-2.814, -16.885, -4.222)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(2.279, -4.422, 1.44), ang = Vector(0, -5.628, -9.146)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(2.609, -8.443, -0.201), ang = Vector(0, -47.84, 0)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_onehandedbegotten.mdl"] = {
@@ -6704,9 +6812,12 @@ BlockTables.shield9 = { -- Sol Sentinel Shield
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield9"] = { type = "Model", model = "models/demonssouls/shields/tower shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(11.947, 5.714, 0.518), angle = Angle(64.286, 101.688, -22.209), size = Vector(0.6, 0.6, 0.6), material = "", skin = 0, bodygroup = {} }
 		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield9"] = { type = "Model", model = "models/demonssouls/shields/tower shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-0.519, -3.636, 17.142), angle = Angle(164.804, 141.429, -59.611), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
 	},
 	["WElements"] = {
-		["shield9"] = { type = "Model", model = "models/demonssouls/shields/tower shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3, 1.5, 0), angle = Angle(82.986, -101.689, 180), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+		["shield9"] = { type = "Model", model = "models/demonssouls/shields/tower shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, 1.557, -0.519), angle = Angle(101.688, 87.662, 0), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 	},
 };
 
@@ -6735,6 +6846,7 @@ BlockTables.shield10 = { -- Gore Guardian Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(-2.481, -6.231, 1.24), ang = Vector(3.517, -27.57, -12.9)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(5.079, -3.82, -0.361), ang = Vector(8.442, -0.704, -12.664)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(2.64, -8.242, -0.08), ang = Vector(9.848, 0.703, -16.181)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(2.609, -8.443, -0.201), ang = Vector(-20.403, -47.84, 0)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_begottenknife.mdl"] = {
@@ -6750,6 +6862,9 @@ BlockTables.shield10 = { -- Gore Guardian Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield10"] = { type = "Model", model = "models/demonssouls/shields/large brushwood shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(15.064, -0.519, -0.519), angle = Angle(61.948, 80.649, -15.195), size = Vector(0.8, 0.8, 0.8), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield10"] = { type = "Model", model = "models/demonssouls/shields/large brushwood shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-0.519, -3.636, 17.142), angle = Angle(164.804, 141.429, -59.611), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -6781,6 +6896,7 @@ BlockTables.shield11 = { -- Gatekeeper Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(8.039, -7.237, 2.411), ang = Vector(0, -16.181, 0)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(10.8, -8.643, 4.159), ang = Vector(0, 0, -2)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.68, -6.835, 0.479), ang = Vector(2.111, -26.031, -4.222)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(5.559, -6.835, 0.72), ang = Vector(-0.704, -37.286, -0.704)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_begottenknife.mdl"] = {
@@ -6796,6 +6912,9 @@ BlockTables.shield11 = { -- Gatekeeper Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield11"] = { type = "Model", model = "models/props/begotten/melee/twin_dragon_greatshield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(12, 4, 2), angle = Angle(20, -30, -90), size = Vector(0.8, 0.8, 0.8), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield11"] = { type = "Model", model = "models/props/begotten/melee/twin_dragon_greatshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(0.518, -5.715, 14.026), angle = Angle(73.636, 155.455, 68.96), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -6827,10 +6946,14 @@ BlockTables.shield12 = { -- Warfighter Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(10.6, -3.217, -0.32), ang = Vector(0, 0, -2.112)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(9, -8.04, 0.68), ang = Vector(0, -7.035, -7.739)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(9.8, 0, 4.8), ang = Vector(-10.554, -12.664, 13.366)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(-4.85, -8.04, 0.119), ang = Vector(5.627, -56.986, -21.81)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -6842,6 +6965,9 @@ BlockTables.shield12 = { -- Warfighter Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield12"] = { type = "Model", model = "models/props/begotten/melee/pursuer_greatshield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(12, 7, 5), angle = Angle(-140, -30, -80), size = Vector(0.6, 0.6, 0.6), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield12"] = { type = "Model", model = "models/props/begotten/melee/pursuer_greatshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-5.715, 0.5, -0.25), angle = Angle(0, 150.779, 90), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -6862,7 +6988,7 @@ BlockTables.shield13 = { -- Dreadshield
 	["blockanim"] = "a_sword_shield_block_drakekeeper",
 	["blocksoundtable"] = "MetalShieldSoundTable",
 	["partialbulletblock"] = false,
-	["poiseresistance"] = 40,
+	["poiseresistance"] = 55,
 	["raisespeed"] = 1.75,
 	["instantraise"] = false,
 	["parrydifficulty"] = 0.2,
@@ -6873,6 +6999,7 @@ BlockTables.shield13 = { -- Dreadshield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(6.639, -9.046, -0.08), ang = Vector(7.5, -2, -7)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(6, -8.04, 2.68), ang = Vector(0, -9.146, -6.332)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.559, -6.031, 1.279), ang = Vector(0, -27.438, -5.628)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(9.96, -8.04, 1.399), ang = Vector(-20, -11.256, -11.256)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_begottenknife.mdl"] = {
@@ -6889,9 +7016,12 @@ BlockTables.shield13 = { -- Dreadshield
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield13"] = { type = "Model", model = "models/props/begotten/melee/drakekeeper_greatshield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(10, 2, 2), angle = Angle(20, -30, -90), size = Vector(0.75, 0.75, 0.75), material = "", skin = 0, bodygroup = {} }
 		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield13"] = { type = "Model", model = "models/props/begotten/melee/drakekeeper_greatshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -6.753, 16.104), angle = Angle(75.973, 180, 33.895), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
 	},
 	["WElements"] = {
-		["shield13"] = { type = "Model", model = "models/props/begotten/melee/drakekeeper_greatshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, 1.557, 0.518), angle = Angle(174.156, -33.896, -90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+		["shield13"] = { type = "Model", model = "models/props/begotten/melee/drakekeeper_greatshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, 1.557, 1.557), angle = Angle(5.843, 139.091, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 	},
 };
 
@@ -6919,6 +7049,7 @@ BlockTables.shield14 = { -- Clan Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(9.72, -1.005, 5.92), ang = Vector(-4.926, -6.332, -9.146)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(8.079, -5.428, 1.6), ang = Vector(3.517, -10.9, -6.332)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(9.479, -5.628, 4.639), ang = Vector(-2.112, 1.406, -0.704)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(-0.281, -15.277, -4.421), ang = Vector(0, -52.061, -14.775)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_onehandedbegotten.mdl"] = {
@@ -6926,6 +7057,9 @@ BlockTables.shield14 = { -- Clan Shield
 		},
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -6937,6 +7071,9 @@ BlockTables.shield14 = { -- Clan Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield14"] = { type = "Model", model = "models/begotten/weapons/goreroundshield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(15.064, -2.901, -0.519), angle = Angle(153.117, 150.779, -26.883), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield14"] = { type = "Model", model = "models/begotten/weapons/goreroundshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, 1.557, 0.518), angle = Angle(0, 150, 0), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -6969,10 +7106,14 @@ BlockTables.shield15 = { -- Voltshield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(5.44, -8, 2), ang = Vector(2.5, -8.443, -14.775)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(-1.241, -8.844, 2.2), ang = Vector(-1.5, -40.102, 4.221)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(19.639, -4.02, 3.67), ang = Vector(3.517, 0, -4)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(0.2, -12.865, -5.29), ang = Vector(0, -56.281, 4.925)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -6984,6 +7125,9 @@ BlockTables.shield15 = { -- Voltshield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield1"] = { type = "Model", model = "models/props_vebris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(2, -16.105, 4), angle = Angle(26.881, -127.403, -62), size = Vector(1.4, 1.4, 1.4), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield1"] = { type = "Model", model = "models/props_bebris/metal_panel02a.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -0.519, 1.557), angle = Angle(0, 61.948, -12.858), size = Vector(0.5, 0.5, 0.5), material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -7015,6 +7159,7 @@ BlockTables.shield16 = { -- Steel Tower Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(6.639, -9.046, -0.08), ang = Vector(7.5, -2, -7)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(6, -8.04, 2.68), ang = Vector(0, -9.146, -6.332)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.559, -6.031, 1.279), ang = Vector(0, -27.438, -5.628)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(12.319, -13.669, 4), ang = Vector(0, -14.07, -16.885)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_begottenknife.mdl"] = {
@@ -7030,6 +7175,9 @@ BlockTables.shield16 = { -- Steel Tower Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield18"] = { type = "Model", model = "models/props/begotten/melee/pate_shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(14.5, 6, 3.5), angle = Angle(200, -30, 90), size = Vector(0.75, 0.75, 0.75), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield18"] = { type = "Model", model = "models/props/begotten/melee/pate_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -10.91, 16.104), angle = Angle(-97.014, 180, -19.871), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -7061,6 +7209,7 @@ BlockTables.shield17 = { -- Leather Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(11.96, -7.035, 5.4), ang = Vector(-3.518, 1.406, 0.703)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(8.96, -7.639, 2.279), ang = Vector(-4.222, -1.407, -4.926)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(2.68, -9.849, 3.17), ang = Vector(5.627, -2.112, -15.478)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(-0.35, -11.056, -2.52), ang = Vector(-9.146, -52.061, 4.221)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_onehandedbegotten.mdl"] = {
@@ -7068,6 +7217,9 @@ BlockTables.shield17 = { -- Leather Shield
 		},
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -7079,6 +7231,9 @@ BlockTables.shield17 = { -- Leather Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield17"] = { type = "Model", model = "models/props/begotten/melee/large_leather_shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(18.181, 0, -0.519), angle = Angle(-15, 160, -60), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield17"] = { type = "Model", model = "models/props/begotten/melee/large_leather_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(0.518, 2, 0.518), angle = Angle(15.194, -26.883, 80.649), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -7110,10 +7265,14 @@ BlockTables.shield18 = { -- Steel Gatekeeper Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(6.639, -9.046, -0.08), ang = Vector(7.5, -2, -7)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(6, -8.04, 2.68), ang = Vector(0, -9.146, -6.332)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.559, -6.031, 1.279), ang = Vector(0, -27.438, -5.628)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(3.769, -13.87, -1.841), ang = Vector(-46.432, -70, 30.954)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -7125,6 +7284,9 @@ BlockTables.shield18 = { -- Steel Gatekeeper Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield18"] = { type = "Model", model = "models/props/begotten/melee/tower_shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(12, 8, 3.5), angle = Angle(200, -30, 90), size = Vector(0.75, 0.75, 0.75), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield18"] = { type = "Model", model = "models/props/begotten/melee/tower_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(0.518, 3.5, -6.753), angle = Angle(-71.3, -36.235, 66.623), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -7156,6 +7318,7 @@ BlockTables.shield19 = { -- Rusted Kite Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(9.159, -9.849, 7.88), ang = Vector(-6.332, -3.518, -8.443)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(3.24, -7.437, 3.079), ang = Vector(-3, -15, -3.901)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.519, -8.844, 3.16), ang = Vector(4.925, -1.407, -11.256)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(0.09, -16.08, -2.391), ang = Vector(-9.146, -62.613, 0)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_onehandedbegotten.mdl"] = {
@@ -7163,6 +7326,9 @@ BlockTables.shield19 = { -- Rusted Kite Shield
 		},
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -7174,6 +7340,9 @@ BlockTables.shield19 = { -- Rusted Kite Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield19"] = { type = "Model", model = "models/props/begotten/melee/red_rust_shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(13, 5, 4), angle = Angle(-15, 160, -60), size = Vector(1.2, 1.2, 1.2), material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield19"] = { type = "Model", model = "models/props/begotten/melee/red_rust_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(0.518, 2.596, 0.518), angle = Angle(-78.312, 0, 113.376), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -7205,6 +7374,7 @@ BlockTables.shield20 = { -- Old Soldier Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(9.159, -9.849, 7.88), ang = Vector(-6.332, -3.518, -8.443)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(3.24, -7.437, 3.079), ang = Vector(-3, -15, -3.901)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.519, -8.844, 3.16), ang = Vector(4.925, -1.407, -11.256)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(1.35, -17.688, -2.151), ang = Vector(58.391, -35.176, -57.688)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_onehandedbegotten.mdl"] = {
@@ -7212,6 +7382,9 @@ BlockTables.shield20 = { -- Old Soldier Shield
 		},
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -7224,13 +7397,16 @@ BlockTables.shield20 = { -- Old Soldier Shield
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["shield20"] = { type = "Model", model = "models/begotten/thralls/skellyshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(5, 0, 0), angle = Angle(15, 30, -40), size = Vector(1.2, 1.2, 1.2), material = "", skin = 0, bodygroup = {} },
 		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield20"] = { type = "Model", model = "models/begotten/thralls/skellyshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-3.636, -0.9, 0), angle = Angle(47.922, 3.506, 50.259), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
 	},
 	["WElements"] = {
 		["shield20"] = { type = "Model", model = "models/begotten/thralls/skellyshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3, -3.5, 0), angle = Angle(180, -35, 90), size = Vector(1.1, 1.1, 1.1), material = "", skin = 0, bodygroup = {} }
 	},
 };
 
-BlockTables.shieldunique1 = { -- Red Wolf Skinshield (Unique)
+BlockTables.shieldunique1 = { -- Red Wolf Skinshield
 	["name"] = "Red Wolf Skinshield",
 	["guardblockamount"] = 3,
 	["damagereduction"] = 0.8,
@@ -7254,16 +7430,20 @@ BlockTables.shieldunique1 = { -- Red Wolf Skinshield (Unique)
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(5, -9.849, -3.481), ang = Vector(4.221, -16.885, 4.221)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(8.199, -4.222, -3.04), ang = Vector(0, -19.698, 4.925)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(9.96, -5.428, -2.8), ang = Vector(5.627, -20.403, 5.627)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(5.44, -6.031, -1.481), ang = Vector(-9.146, -40.102, 1.406)},
 	},
-		["VElements"] = {
-			["models/v_onehandedbegotten.mdl"] = {
-				["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-3.636, 11.947, -6.753), angle = Angle(35, 73.636, 134.416), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
-			},
-			["models/v_begottenknife.mdl"] = {
-				["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-17.143, 7.791, 3.635), angle = Angle(0, 50, 160.13), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
-			},
-			["models/weapons/cstrike/c_knife_t.mdl"] = {
-				["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(5.714, -7.792, -1.558), angle = Angle(24.545, -31.559, -87.663), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-3.636, 11.947, -6.753), angle = Angle(35, 73.636, 134.416), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/v_begottenknife.mdl"] = {
+			["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-17.143, 7.791, 3.635), angle = Angle(0, 50, 160.13), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(5.714, -7.792, -1.558), angle = Angle(24.545, -31.559, -87.663), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shield_red_wolf"] = { type = "Model", model = "models/begotten/weapons/uniquegoreshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -7.792, 11.947), angle = Angle(75.973, 160.13, 68.96), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -7355,7 +7535,7 @@ BlockTables.shieldhillsteel = { -- Steel Hillkeeper Shield
 	["raisespeed"] = 1.9,
 	["instantraise"] = false,
 	["parrydifficulty"] = 0.2,
-	["parrytakestamina"] = 50,
+	["parrytakestamina"] = 45,
 	["canparry"] = true,
 	["candeflect"] = false,
 	["ironsights"] = {

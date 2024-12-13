@@ -28,7 +28,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.65; -- reduces bullet damage by 35%
-	ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
+	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
 	ITEM.insulation = 40; -- Adds 8% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
@@ -64,7 +64,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
-	ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
+	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
 	ITEM.insulation = 40; -- Adds 8% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks"}};
@@ -492,7 +492,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
-	ITEM.stabilityScale = 0.45; -- reduces stability damage by 55%
+	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
 	ITEM.insulation = 40; -- Adds 8% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks"}};

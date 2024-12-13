@@ -1,5 +1,5 @@
 local ITEM = Clockwork.item:New("bodygroup_base")
-	ITEM.name = "Hillkeeper Watch Helm"
+	ITEM.name = "Hillkeeper Watch Helm" -- Gatekeeper Helmet equivalent
 	ITEM.model = "models/begotten_apocalypse/items/hill_acolyte_helm.mdl"
 	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/hill_acolyte_helm.png"
 	ITEM.weight = 1.5
@@ -23,11 +23,11 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-	ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-	ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-	ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
-	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+	ITEM.bulletScale = 0.85; -- reduces bullet damage by 15%
+	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 	ITEM.insulation = 45; -- Adds 7% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
@@ -57,10 +57,9 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "GlassImpact";
 	ITEM.type = "leather";
 
-	ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
-	ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
+	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+	ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
 	ITEM.slashScale = 0.90; -- reduces slash damage by 10%
-	ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%	
 	ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 	ITEM.insulation = 60; -- Adds 10% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
@@ -68,7 +67,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
-	ITEM.name = "Hillkeeper Nasal Helm"
+	ITEM.name = "Hillkeeper Nasal Helm" -- Fine Gatekeeper Helmet equivalent
 	ITEM.model = "models/begotten_apocalypse/items/hill_fine_coat_helmet.mdl"
 	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/hill_fine_coat_helmet.png"
 	ITEM.weight = 1.5
@@ -92,11 +91,11 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-	ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-	ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-	ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
-	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
+	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
+	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
 	ITEM.insulation = 50; -- Adds 7% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
@@ -104,7 +103,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
-	ITEM.name = "Hillkeeper Defender Helm"
+	ITEM.name = "Hillkeeper Defender Helm" -- Ornate Gatekeeper Helmet equivalent
 	ITEM.model = "models/begotten_apocalypse/items/hill_coat_helmet.mdl"
 	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/hill_coat_helmet.png"
 	ITEM.weight = 1.5
@@ -128,18 +127,18 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-	ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
-	ITEM.slashScale = 0.75; -- reduces slash damage by 25%
-	ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
-	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
+	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+	ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
+	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
 	ITEM.insulation = 60; -- Adds 4% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
-	ITEM.name = "Hillkeeper Heavy Helm"
+	ITEM.name = "Hillkeeper Heavy Helm" -- Wanderer Crude Plate Helm equivalent
 	ITEM.model = "models/begotten_apocalypse/items/hill_heavy_helm.mdl"
 	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/hill_heavy_helm.png"
 	ITEM.weight = 1.5
@@ -163,11 +162,11 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-	ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
-	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
 	ITEM.insulation = 60; -- Adds 4% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
@@ -244,7 +243,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
-	ITEM.name = "Low Ministry Scowling Helm"
+	ITEM.name = "Low Ministry Scowling Helm" -- Fine Gatekeeper Helmet equivalent
 	ITEM.model = "models/begotten_apocalypse/items/clerichelmet.mdl"
 	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/clerichelmet.png"
 	ITEM.weight = 1.5
@@ -266,11 +265,11 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
-	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-	ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
-	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
+	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
 	ITEM.insulation = 50; -- Adds 7% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};

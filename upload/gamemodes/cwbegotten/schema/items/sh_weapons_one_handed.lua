@@ -915,7 +915,28 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood", "leather"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 300, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 650, supercrateOnly = true};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Iron Flail";
+	ITEM.model = "models/weapons/ageofchivalry/w_begotten_flail_prop.mdl";	
+	ITEM.weight = 1.4;
+	ITEM.uniqueID = "begotten_1h_ironflail";
+	ITEM.category = "Melee";
+	ITEM.description = "A wooden shaft chained to an iron ball. A cheaply made weapon synonymous with fools and fanatics; those who would put their faith in higher powers to see their blow land true.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/iron_flail.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(104.42, 349.06, 273.48);
+	ITEM.attachmentOffsetVector = Vector(5.05, -1.01, 16.97);
+	ITEM.canUseOffhand = false;
+	ITEM.canUseShields = true;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.attributes = {"flail"};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 500, supercrateOnly = true};
 ITEM:Register();
 
 -- Hill shit
@@ -975,4 +996,5 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
+	ITEM.attributes = {"versatile"};
 ITEM:Register();
