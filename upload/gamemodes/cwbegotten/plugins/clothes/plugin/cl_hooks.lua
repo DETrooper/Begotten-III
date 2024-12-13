@@ -41,7 +41,7 @@ function PLUGIN:RenderScreenspaceEffects()
 	end
 end;
 
---[[function PLUGIN:Tick()
+function PLUGIN:Tick()
 	for _, player in _player.Iterator() do
 		player.clothesDrawnThisTick = false;
 	end
@@ -194,9 +194,9 @@ function PLUGIN:Think()
 			plyTab.clothesEnt = nil;
 		end
 	end
-end]]--
+end
 
-local function SetupClothesModelRagdoll(ragdoll)
+--[[local function SetupClothesModelRagdoll(ragdoll)
 	local clothesEnt = ragdoll.clothesEnt;
 
 	if string.sub(ragdoll:GetModel(), 1, 21) == "models/begotten/heads" then
@@ -413,6 +413,18 @@ function PLUGIN:EntityRemoved(entity, bFullUpdate)
 
 	if entity:IsPlayer() or entity:GetClass() == "prop_ragdoll" then
 		ClearClothesModel(entity);
+	end
+end]]--
+
+function PLUGIN:EntityRemoved(entity, bFullUpdate)
+	if bFullUpdate then return end;
+
+	if entity:IsPlayer() or entity:GetClass() == "prop_ragdoll" then
+		if IsValid(entity.clothesEnt) then
+			entity.clothesEnt:Remove();
+		end
+		
+		entity.clothesEnt = nil;
 	end
 end
 
