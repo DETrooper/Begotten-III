@@ -3034,6 +3034,38 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("ordained_gorefeller");
+		RECIPE.name = "Ordained Gorefeller";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
+		RECIPE.requiredFaiths = {"Faith of the Light"};
+		RECIPE.requirements = {
+			["maximilian_steel_ingot"] = {amount = 3},
+			["fine_steel_ingot"] = {amount = 1},
+			["iron_ingot"] = {amount = 2},
+			["glazic_sigil_stone"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_2h_great_ordainedgorefeller"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons";
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav";
+		RECIPE.craftTime = 8;
+		RECIPE.craftVerb = "smithing";
+		RECIPE.experience = 125;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("morning_star");
 		RECIPE.name = "Morning Star";
