@@ -5,31 +5,33 @@
 cwDayNight.launchExtraLength = 900; -- Extra 15 minutes (in seconds) of daytime after server launches.
 
 if game.GetMap() == "rp_district21" then
-	["day"] = {
-		length = 5400, -- 1.5 hours in seconds.
-		nextCycle = "daytonight",
-		fadeMusic = false -- Fade music on transitioning to this phase?
-	},
-	["daytonight"] = {
-		length = 300, -- 5 minutes in seconds.
-		nextCycle = "night",
-		eventText = "Alarm horns shudder to life and fill the world with noise. The signal that the night approaches, and so do its terrors - a warning to seek shelter.",
-		sound = {farSound = "hillsounds/distantsiren.mp3", closeSound = "hillsounds/silenthillalarm.mp3"},
-		fadeMusic = true
-	},
-	["night"] = {
-		length = 1800, -- 30 minutes in seconds.
-		nextCycle = "nighttoday",
-		eventText = "The Blood Moon has risen to claim those who still wander the wasteland.",
-		fadeMusic = true
-	},
-	["nighttoday"] = {
-		length = 300, -- 5 minutes in seconds.
-		nextCycle = "day",
-		eventText = "The Blood Moon finally subsides and the sky begins to lighten. You have survived another night.",
-		sound = {farSound = "nighttoday.mp3", closeSound = "nighttoday.mp3"},
-		fadeMusic = true
-	},
+	cwDayNight.cycles = {
+		["day"] = {
+			length = 5400, -- 1.5 hours in seconds.
+			nextCycle = "daytonight",
+			fadeMusic = false -- Fade music on transitioning to this phase?
+		},
+		["daytonight"] = {
+			length = 300, -- 5 minutes in seconds.
+			nextCycle = "night",
+			eventText = "Alarm horns shudder to life and fill the world with noise. The signal that the night approaches, and so do its terrors - a warning to seek shelter.",
+			sound = {farSound = "hillsounds/distantsiren.mp3", closeSound = "hillsounds/silenthillalarm.mp3"},
+			fadeMusic = true
+		},
+		["night"] = {
+			length = 1800, -- 30 minutes in seconds.
+			nextCycle = "nighttoday",
+			eventText = "The Blood Moon has risen to claim those who still wander the wasteland.",
+			fadeMusic = true
+		},
+		["nighttoday"] = {
+			length = 300, -- 5 minutes in seconds.
+			nextCycle = "day",
+			eventText = "The Blood Moon finally subsides and the sky begins to lighten. You have survived another night.",
+			sound = {farSound = "nighttoday.mp3", closeSound = "nighttoday.mp3"},
+			fadeMusic = true
+		},
+	};
 else
 	cwDayNight.cycles = {
 		["day"] = {
