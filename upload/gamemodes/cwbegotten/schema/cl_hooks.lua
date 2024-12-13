@@ -480,7 +480,7 @@ function Schema:GetEntityMenuOptions(entity, options)
 		if entity:IsPlayer() then
 			local entFaction = entity:GetNetVar("kinisgerOverride") or entity:GetFaction();
 			
-			if player and (clientfaction == "Hillkeeper" or clientfaction == "Holy Hierarchy") and (entFaction != clientfaction and entFaction ~= "Holy Hierarchy") and player:GetNetVar("tied") != 0 then
+			if (clientFaction == "Hillkeeper" or clientFaction == "Holy Hierarchy") and (entFaction ~= "Hillkeeper" and entFaction ~= "Holy Hierarchy") and entity:GetNetVar("tied") != 0 then
 				for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
 					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "The Headsman" then
 						options["Sell Into Slavery"] = "cw_sellSlave";
@@ -510,8 +510,16 @@ function Schema:GetEntityMenuOptions(entity, options)
 
 			if player then
 				local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
-			
-				if clientFaction == "Goreic Warrior" and playerFaction ~= "Goreic Warrior" and player:GetNetVar("tied") != 0 then
+				
+				if clientFaction == "Hillkeeper" or clientFaction == "Holy Hierarchy" and (entFaction ~= "Hillkeeper" and entFaction ~= "Holy Hierarchy") and player:GetNetVar("tied") != 0 then
+					for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
+						if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "The Headsman" then
+							options["Sell Into Slavery"] = "cw_sellSlave";
+							
+							break;
+						end
+					end
+				elseif clientFaction == "Goreic Warrior" and playerFaction ~= "Goreic Warrior" and player:GetNetVar("tied") != 0 then
 					for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
 						if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
 							options["Sell Into Slavery"] = "cw_sellSlave";
