@@ -486,6 +486,8 @@ function SWEP:PrimaryAttack()
 		return true;
 	end
 	
+	if self.critted then self.critted = false end;
+	
 	local attacktable = GetTable(self.AttackTable);
 	local offhandAttackTable;
 	local offhandWeapon;
@@ -552,6 +554,10 @@ function SWEP:PrimaryAttack()
 		owner:SetLocalVar("Riposting", true);
 		owner:SetLocalVar("ParrySuccess", false);
 	else
+		if self.ShouldCriticalHit then
+			self.critted = self:ShouldCriticalHit();
+		end
+	
 		if offhandAttackTable then
 			local attacksoundtable = GetSoundTable(self.AttackSoundTable);
 			local attacksoundtableOffhand = GetSoundTable(offhandWeapon.AttackSoundTable);
@@ -628,7 +634,7 @@ function SWEP:PrimaryAttack()
 		end
 	end
 	
-	if SERVER and bAttack and self:IsValid() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then 
+	if SERVER and bAttack and self:IsValid() and (!owner.IsRagdolled or !owner:IsRagdolled()) and owner:Alive() then
 		owner:SetLocalVar("MelAttacking", true )
 		
 		self.HolsterDelay = (curTime + strikeTime)
@@ -637,6 +643,8 @@ function SWEP:PrimaryAttack()
 		self:CreateTimer(strikeTime + 0.1, "strikeTimer"..owner:EntIndex(), function()
 			if IsValid(self) and IsValid(owner) then
 				if self.isAttacking then -- This can be set to false elsewhere and will abort the attack.
+					local hitSomething = false;
+					
 					owner:SetLocalVar("MelAttacking", false);
 					
 					if bParry and IsValid(owner.parryTarget) and owner.parryTarget:IsPlayer() then
@@ -692,6 +700,8 @@ function SWEP:PrimaryAttack()
 									else
 										self:HandleHit(tr.Entity, tr.HitPos, stance);
 									end
+									
+									hitSomething = true;
 								end
 							end
 								
@@ -724,6 +734,8 @@ function SWEP:PrimaryAttack()
 												else
 													self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities);
 												end
+												
+												hitSomething = true;
 											end
 										end
 									
@@ -771,6 +783,8 @@ function SWEP:PrimaryAttack()
 											else
 												self:HandleHit(tr.Entity, tr.HitPos, stance, nil, offhandWeapon, offhandAttackTable);
 											end
+											
+											hitSomething = true;
 										end
 									end
 										
@@ -803,6 +817,8 @@ function SWEP:PrimaryAttack()
 														else
 															self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities, offhandWeapon, offhandAttackTable);
 														end
+														
+														hitSomething = true;
 													end
 												end
 											
@@ -881,6 +897,27 @@ function SWEP:PrimaryAttack()
 									end;
 								end;
 							end
+						end
+					end
+					
+					if !hitSomething and self.OnMiss then
+						local meleerange;
+						
+						if self.Owner:GetNetVar("ThrustStance") and attacktable["altmeleerange"] then
+							meleerange = attacktable["altmeleerange"];
+						else
+							meleerange = attacktable["meleerange"] or 1;
+						end
+					
+						local tr = util.TraceLine( {
+							start = self.Owner:GetShootPos(),
+							endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (meleerange) / 9),
+							filter = self.Owner,
+							mask = MASK_SHOT_HULL
+						} )
+					
+						if !tr.Hit then
+							self:OnMiss();
 						end
 					end
 					
@@ -1598,6 +1635,10 @@ end
 							damage = math.Round(damage * Lerp(scalar, 0.5, 1));
 						end
 					end
+				end
+				
+				if self.critted then
+					damage = math.Round(damage * 1.7);
 				end
 			
 				-- Spear Damage System (Messy)

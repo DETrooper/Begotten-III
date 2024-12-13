@@ -66,7 +66,6 @@ function SWEP:ParryAnimation()
 end
 
 function SWEP:HandlePrimaryAttack()
-
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
 	local attacktable = GetTable(self.AttackTable)
 
@@ -76,15 +75,71 @@ function SWEP:HandlePrimaryAttack()
 	else
 		self:TriggerAnim(self.Owner, "a_sword_attack_slash_slow_0"..math.random(1,2));
 	end
-
+	
 	-- Viewmodel attack animation!
 	local vm = self.Owner:GetViewModel()
-	vm:SendViewModelMatchingSequence( vm:LookupSequence( "Swing1" ) )
-	self.Owner:GetViewModel():SetPlaybackRate(1.1)
+	
+	if self.critted then
+		vm:SendViewModelMatchingSequence( vm:LookupSequence( "Stab" ))
+		self.Owner:GetViewModel():SetPlaybackRate(1.5)
+	else
+		vm:SendViewModelMatchingSequence( vm:LookupSequence( "Swing1" ) )
+		self.Owner:GetViewModel():SetPlaybackRate(1.1)
+	end
 	
 	self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
 	self.Owner:ViewPunch(attacktable["punchstrength"])
+end
 
+function SWEP:ShouldCriticalHit()
+	local chance = 10;
+	
+	if cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("favored") then
+		chance = 20;
+	end
+	
+	if math.random(1, 100) <= chance then
+		return true;
+	end
+end
+
+function SWEP:OnMiss()
+	local chance = 25;
+	
+	if cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("favored") then
+		chance = 10;
+	end
+	
+	if math.random(1, 100) <= chance then
+		local attacktable = GetTable(self.AttackTable)
+		
+		if attacktable then
+			local damage = attacktable["primarydamage"];
+			local damagetype = attacktable["dmgtype"];
+			local attacksoundtable = GetSoundTable(self.AttackSoundTable);
+			
+			if attacksoundtable then
+				self.Owner:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])]);
+			end
+
+			local d = DamageInfo()
+			d:SetDamage(damage * math.Rand(0.5, 0.75));
+			d:SetAttacker(self.Owner);
+			d:SetDamageType(damagetype);
+			d:SetDamagePosition(self.Owner:GetPos() + Vector(0, 0, 48));
+			d:SetInflictor(self);
+
+			self.Owner:TakeDamageInfo(d);
+			
+			local selfless = "himself";
+			
+			if (self.Owner:GetGender() == GENDER_FEMALE) then
+				selfless = "herself";
+			end
+			
+			Clockwork.chatBox:AddInTargetRadius(self.Owner, "me", "accidentally hits "..selfless.." with their own flail!", self.Owner:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+		end
+	end
 end
 
 function SWEP:OnDeploy()
