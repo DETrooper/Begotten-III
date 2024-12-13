@@ -15,13 +15,13 @@ ENT.SightFOV = 300
 ENT.SightRange = 1024
 
 -- Sounds --
-ENT.OnDamageSounds = {"leopard/attack.wav"}
+--ENT.OnDamageSounds = {"leopard/attack.wav"}
 --ENT.OnIdleSounds = {"leopard/idle1.wav"}
 
 -- Stats --
-ENT.ArmorPiercing = 75;
+ENT.ArmorPiercing = 60;
 ENT.SpawnHealth = 450;
-ENT.StaminaDamage = 60;
+ENT.StaminaDamage = 40;
 ENT.XPValue = 145;
 ENT.MaxMultiHit = 1;
 
@@ -94,7 +94,7 @@ ENT.PossessionBinds = {
 			  local att = math.random(1)	
   if att == 1 then
    self:Attack1()	
-   self:PlaySequenceAndMove("attack1", 1, self.PossessionFaceForward)
+   self:PlaySequenceAndMove("attack1", 2, self.PossessionFaceForward)
 end
 end
   }}
@@ -203,7 +203,7 @@ end
 			  local att = math.random(1)	
   if att == 1 then
    self:Attack1()	
-   self:PlaySequenceAndMove("attack1", 1, self.FaceEnemy)
+   self:PlaySequenceAndMove("attack1", 2, self.FaceEnemy)
 end
 end
 end
@@ -224,7 +224,7 @@ end
 
   function ENT:Attack1()
       self:Attack({
-        damage = 50,
+        damage = 40,
         range = 150,
 	      delay = 0.8,
         type = DMG_SLASH,
@@ -232,7 +232,7 @@ end
       }, function(self, hit)
         force = Vector(1000, 1000, 1000)
         if #hit > 0 then
-					self:EmitSound("leopard/attack.wav", 90)
+					self:EmitSound("leopard/attack1.wav", 90)
 				else self:EmitSound("bear/woosh1.wav", 80) end
       end)
 end

@@ -52,7 +52,7 @@ SWEP.Weight					= 30		-- rank relative to other weapons. bigger is better
 SWEP.AutoSwitchTo			= true		-- Auto switch to if we pick it up
 SWEP.AutoSwitchFrom			= true		-- Auto switch from if you pick up a better weapon
 SWEP.HoldType 				= "shotgun"	-- how others view you carrying the weapon
-SWEP.HoldTypeAlternate = "wos-begotten_2h"
+SWEP.HoldTypeAlternate = "wos-begotten_2h_great"
 
 -- View Model
 SWEP.ViewModelFOV			= 50
@@ -95,8 +95,8 @@ SWEP.MisfireChance = 5;
 -- Enter iron sight info and bone mod info below
 SWEP.SightsPos = Vector(-2.9, -10, 1)
 SWEP.SightsAng = Vector(0, 0, -1)
-SWEP.SightsPosAlternate = Vector(-12.04, -1.407, -0.12)
-SWEP.SightsAngAlternate = Vector(7.738, 0, -27.438)
+SWEP.SightsPosAlternate = Vector(-10.761, 2.411, -9.961)
+SWEP.SightsAngAlternate = Vector(21.106, 0, -23.921)
 SWEP.RunSightsPos = Vector(-0.64, 0, -0.08)
 SWEP.RunSightsAng = Vector(-10.554, 29.548, -19.698)
 SWEP.BlockAnim = "a_heavy_great_block"
@@ -163,7 +163,7 @@ SWEP.AmmoTypes = {
 		return true;
 	end,
 	["Longshot"] = function(SWEP)
-		SWEP.Primary.Sound = Sound("weapons/cb4/cb4-1.wav");
+		SWEP.Primary.Sound = Sound("musket/musket1.wav");
 		SWEP.Primary.NumShots = 1;
 		SWEP.Primary.Damage = 95;
 		SWEP.Primary.Spread = .1;
@@ -1874,6 +1874,8 @@ function SWEP:OnMeleeStanceChanged(stance)
 	if SERVER then
 		self:CallOnClient("OnMeleeStanceChanged", stance);
 	end
+	
+	self.Owner:EmitSound("weapons/ageofchivalry/flailshield/flailshield_block.wav", 60)
 	
 	self:SetHoldType(self:GetHoldtypeOverride());
 	self:Initialize();
