@@ -16,8 +16,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
 	ITEM.needs = {hunger = 10, thirst = 15};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 	
 	-- Called when a player uses the item.
@@ -133,8 +135,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 675, bNoSupercrate = true};
 	ITEM.needs = {thirst = 25};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -206,8 +210,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 600, bNoSupercrate = true};
 	ITEM.needs = {hunger = 10, thirst = 30, sleep = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -243,8 +249,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
 	ITEM.needs = {thirst = 65};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 	
 	-- Called when a player uses the item.
@@ -822,8 +830,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {thirst = 100};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -868,8 +878,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "purified_water_bucket";
 	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/bucket.png"
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 	
 	-- Called when a player uses the item.
@@ -917,8 +929,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/bucket.png"
 	ITEM.cauldronQuality = -3;
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 	
 	-- Called when a player uses the item.

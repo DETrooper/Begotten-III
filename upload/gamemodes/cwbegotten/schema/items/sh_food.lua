@@ -15,8 +15,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 715};
 	ITEM.needs = {hunger = 30, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -58,8 +60,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
 	ITEM.needs = {hunger = 25, thirst = 10};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -102,8 +106,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500};
 	ITEM.needs = {hunger = 15};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -144,8 +150,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 875};
 	ITEM.needs = {hunger = 40, thirst = 10};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -185,10 +193,11 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 25, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
-
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		local freezing = self:GetData("freezing");
@@ -232,8 +241,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 50, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -273,8 +284,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 5, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -320,8 +333,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 15, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -361,8 +376,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 25, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -408,10 +425,11 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 50, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
-
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		local freezing = self:GetData("freezing");
@@ -449,8 +467,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 20, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -489,10 +509,12 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 45, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
-
+	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		local freezing = self:GetData("freezing");
@@ -528,8 +550,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 45, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -569,8 +593,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 20, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -614,8 +640,10 @@ local ITEM = Clockwork.item:New();
 
 	ITEM.needs = {hunger = 50, thirst = 15};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -654,8 +682,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 35, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -704,8 +734,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
 	ITEM.needs = {hunger = 25, thirst = 0};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -751,8 +783,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 40, thirst = 15};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -794,8 +828,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 80, thirst = 45};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -841,8 +877,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 50, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -889,8 +927,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
 	ITEM.needs = {hunger = 15, thirst = 30};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -972,8 +1012,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
 	ITEM.needs = {hunger = 50};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -1028,8 +1070,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
 	ITEM.needs = {hunger = 50};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -1102,8 +1146,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 50};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -1143,8 +1189,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
 	ITEM.needs = {hunger = 25, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -1201,8 +1249,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 50, thirst = 10};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -1240,10 +1290,12 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 90, thirst = 75};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
-
+	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		local freezing = self:GetData("freezing");
@@ -1280,8 +1332,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 100, thirst = 100};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -1320,8 +1374,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 70, thirst = 60};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -1362,8 +1418,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
 	ITEM.needs = {hunger = 15, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -1435,8 +1493,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 45, thirst = 35};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -1476,8 +1536,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 20, thirst = 5};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -1536,8 +1598,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 35, thirst = 15};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -1596,8 +1660,10 @@ local ITEM = Clockwork.item:New();
 	
 	ITEM.needs = {hunger = 60, thirst = 30};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
@@ -1656,8 +1722,10 @@ local ITEM = Clockwork.item:New();
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500};
 	ITEM.needs = {hunger = 25, thirst = 25};
 	
-	if cwWarmth then
-		ITEM:AddData("freezing", 0, true);
+	function ITEM:OnSetup()
+		if cwWarmth then
+			ITEM:AddData("freezing", 0, true);
+		end
 	end
 
 	-- Called when a player uses the item.
