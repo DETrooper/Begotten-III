@@ -7472,7 +7472,7 @@ BlockTables.shieldunique2 = { -- Sol Shield (Unique)
 
 -- Hill shit (shields)
 
-BlockTables.shieldhill = { -- Hillkeeper Shield
+BlockTables.shieldhill = { -- Hillkeeper Kite Shield
 	["name"] = "Hillkeeper Shield",
 	["guardblockamount"] = 5,
 	["damagereduction"] = 0.8,
@@ -7496,10 +7496,14 @@ BlockTables.shieldhill = { -- Hillkeeper Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(8.039, -7.237, 2.411), ang = Vector(0, -16.181, 0)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(10.8, -8.643, 4.159), ang = Vector(0, 0, -2)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.68, -6.835, 0.479), ang = Vector(2.111, -26.031, -4.222)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(1.309, -12.061, -4.24), ang = Vector(-18.996, -60.503, 13.366)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
 	["VElements"] = {
@@ -7511,6 +7515,9 @@ BlockTables.shieldhill = { -- Hillkeeper Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["hillshield"] = { type = "Model", model = "models/begotten_apocalypse/items/hill_kite_shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(16, 4, 4), angle = Angle(20, -30, -90), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["hillshield"] = { type = "Model", model = "models/begotten_apocalypse/items/hill_kite_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-0.519, 5.199, -2.597), angle = Angle(108.7, -33.896, -80.65), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {
@@ -7542,6 +7549,7 @@ BlockTables.shieldhillsteel = { -- Steel Hillkeeper Shield
 		["models/v_onehandedbegotten.mdl"] = {pos = Vector(6.639, -9.046, -0.08), ang = Vector(7.5, -2, -7)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(6, -8.04, 2.68), ang = Vector(0, -9.146, -6.332)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.559, -6.031, 1.279), ang = Vector(0, -27.438, -5.628)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(5.28, -6.433, 1.279), ang = Vector(0, -35.88, 3.517)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_begottenknife.mdl"] = {
@@ -7557,6 +7565,9 @@ BlockTables.shieldhillsteel = { -- Steel Hillkeeper Shield
 		},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {
 			["hillsteelshield"] = { type = "Model", model = "models/props/begotten/melee/defender_shield.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(13, 8, 3.5), angle = Angle(20, -30, 90), size = Vector(0.75, 0.75, 0.75), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["hillsteelshield"] = { type = "Model", model = "models/props/begotten/melee/defender_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-0.519, -3.636, 17.142), angle = Angle(71.299, 132.078, -90), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 	},
 	["WElements"] = {

@@ -134,11 +134,11 @@ SWEP.WElements = {
 }
 
 SWEP.VElementsDual = {
-	["rhand"] = { type = "Model", model = "models/begotten_apocalypse/items/1hsword1.mdl", bone = "Dummy01", rel = "", pos = Vector(0.493, -12.346, 0.493), angle = Angle(-3.333, -101.112, -14.445), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["lhand"] = { type = "Model", model = "models/begotten_apocalypse/items/1hsword1.mdl", bone = "Dummy16", rel = "", pos = Vector(0, -9.53, 0.1), angle = Angle(180, 81.111, 10), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["v_right"] = { type = "Model", model = "models/begotten_apocalypse/items/1hsword1.mdl", bone = "Dummy01", rel = "", pos = Vector(0.493, -12.346, 0.493), angle = Angle(-3.333, -101.112, -14.445), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["v_left"] = { type = "Model", model = "models/begotten_apocalypse/items/1hsword1.mdl", bone = "Dummy16", rel = "", pos = Vector(0, -9.53, 0.1), angle = Angle(180, 81.111, 10), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElementsDual = {
-	["lhand"] = { type = "Model", model = "models/begotten_apocalypse/items/1hsword1.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.469, 1.2, 1.5), angle = Angle(-85, 90, 10), size = Vector(1.027, 1.027, 1.027), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["rhand"] = { type = "Model", model = "models/begotten_apocalypse/items/1hsword1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.68, 1.2, -1.5), angle = Angle(85, 90, -20), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["w_left"] = { type = "Model", model = "models/begotten_apocalypse/items/1hsword1.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.469, 1.2, 1.5), angle = Angle(-85, 90, 10), size = Vector(1.027, 1.027, 1.027), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/begotten_apocalypse/items/1hsword1.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.68, 1.2, -1.5), angle = Angle(85, 90, -20), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
