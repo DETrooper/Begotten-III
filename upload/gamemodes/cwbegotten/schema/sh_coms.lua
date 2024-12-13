@@ -1540,7 +1540,7 @@ local COMMAND = Clockwork.command:New("CallCongregation");
 					table.insert(far_players, v);
 					Clockwork.chatBox:Add(v, nil, "event", "The church bell tolls and the holy word is spread: A congregation has been called, and all beings high and lowly are required to attend... or else risk being marked for corpsing.");
 					netstream.Start(v, "FadeAmbientMusic");
-				elseif lastZone == "tower" or lastZone == "theater" then
+				elseif lastZone == "tower" or lastZone == "theater" or lastZone == "hillbunker" then
 					table.insert(close_players, v);
 					Clockwork.chatBox:Add(v, nil, "event", "The church bell tolls and the holy word is spread: A congregation has been called, and all beings high and lowly are required to attend... or else risk being marked for corpsing.");
 					netstream.Start(v, "FadeAmbientMusic");
@@ -3015,7 +3015,7 @@ local COMMAND = Clockwork.command:New("HellTeleport");
 				return false;
 			end
 		
-			if Schema.hellTeleportDisabled or !archPos or !pillarPos then
+			if Schema.hellTeleportDisabled or (!archPos and !pillarPos) then
 				Schema:EasyText(player, "peru", "Your connection with Hell appears to be severed and you cannot teleport there!");
 				
 				return false;
@@ -3027,7 +3027,7 @@ local COMMAND = Clockwork.command:New("HellTeleport");
 				if lastZone ~= "hell" and lastZone ~= "manor" then
 					local origin = player:GetPos();
 					
-					if origin:DistToSqr(archPos) <= (1600 * 1600) or origin:DistToSqr(pillarPos) <= (3000 * 3000) then
+					if (archPos and origin:DistToSqr(archPos) <= (1600 * 1600)) or (pillarPos and origin:DistToSqr(pillarPos) <= (3000 * 3000)) then
 						local nextTeleport = player:GetCharacterData("nextTeleport", 0);
 						
 						if nextTeleport <= 0 then
@@ -3041,7 +3041,7 @@ local COMMAND = Clockwork.command:New("HellTeleport");
 										if lastZone ~= "hell" and lastZone ~= "manor" then
 											local origin = player:GetPos();
 											
-											if origin:DistToSqr(archPos) <= (1600 * 1600) or origin:DistToSqr(pillarPos) <= (3000 * 3000) then
+											if (archPos and origin:DistToSqr(archPos) <= (1600 * 1600)) or (pillarPos and origin:DistToSqr(pillarPos) <= (3000 * 3000)) then
 												local chosenspot = math.random(1, #Schema.hellPortalTeleports["hell"]);
 												local destination = Schema.hellPortalTeleports["hell"][chosenspot].pos;
 												local angles = Schema.hellPortalTeleports["hell"][chosenspot].ang;

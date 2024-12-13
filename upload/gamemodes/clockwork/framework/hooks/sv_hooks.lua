@@ -4390,7 +4390,7 @@ function GM:ScaleDamageByHitGroup(player, attacker, hitGroup, damageInfo, baseDa
 			if IsValid(attacker) and attacker:IsPlayer() then
 				local inflictor = damageInfo:GetInflictor();
 				
-				if IsValid(inflictor) and (inflictor.Base == "begotten_firearm_base" or (inflcitor.isMeleeFirearm and !attacker:GetNetVar("ThrustStance"))) then
+				if IsValid(inflictor) and (inflictor.Base == "begotten_firearm_base" or (inflictor.isMeleeFirearm and !attacker:GetNetVar("ThrustStance"))) then
 					if (player:GetPos():DistToSqr(attacker:GetPos()) <= massiveFuck) then
 						damageInfo:ScaleDamage(config.Get("scale_head_dmg"):Get());
 					end
@@ -4399,7 +4399,7 @@ function GM:ScaleDamageByHitGroup(player, attacker, hitGroup, damageInfo, baseDa
 		elseif IsValid(attacker) and attacker:IsPlayer() then
 			local inflictor = damageInfo:GetInflictor();
 			
-			if IsValid(inflictor) and (inflictor.Base == "begotten_firearm_base" or (inflcitor.isMeleeFirearm and !attacker:GetNetVar("ThrustStance"))) then
+			if IsValid(inflictor) and (inflictor.Base == "begotten_firearm_base" or (inflictor.isMeleeFirearm and !attacker:GetNetVar("ThrustStance"))) then
 				if (hitGroup == HITGROUP_CHEST or hitGroup == HITGROUP_GENERIC) then
 					damageInfo:ScaleDamage(config.Get("scale_chest_dmg"):Get());
 				elseif (hitGroup == HITGROUP_LEFTARM or hitGroup == HITGROUP_RIGHTARM or hitGroup == HITGROUP_LEFTLEG or hitGroup == HITGROUP_RIGHTLEG or hitGroup == HITGROUP_GEAR) then

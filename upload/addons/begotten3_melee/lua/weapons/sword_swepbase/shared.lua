@@ -962,20 +962,6 @@ end
 		local weapon = self;
 		local distance = (owner:GetPos():Distance(hit:GetPos()))
 		
-		-- For poleweapons
-		local poledamage = (attacktable["primarydamage"])
-		local poletype = (attacktable["dmgtype"])
-		local maxPoleRange = (attacktable["meleerange"]) * 0.1
-		local maxIneffectiveRange = maxPoleRange * 0.53
-		local clampedDistance = math.min(math.max(distance, 0), maxPoleRange)
-		local ratio = clampedDistance / maxPoleRange
-		local minDamage = (attacktable["primarydamage"] * 0.7)
-		local maxDamage = (attacktable["primarydamage"] * 1.7)
-		local variableDamage = minDamage + (maxDamage - minDamage) * ratio
-		local minStabilityDamage = (attacktable["stabilitydamage"] * 0.7)
-		local maxStabilityDamage = (attacktable["stabilitydamage"] * 1.7)
-		local variableStabilityDamage = minStabilityDamage + (maxStabilityDamage - minStabilityDamage) * ratio
-		
 		if offhandWeapon then
 			attacksoundtable = GetSoundTable(offhandWeapon.AttackSoundTable);
 			weaponClass = self:GetNW2String("activeOffhand");
@@ -1141,7 +1127,7 @@ end
 			end
 
 			if owner:IsValid() and !owner:IsRagdolled() and owner:Alive() then
-				-- Spear Damage System (Messy) THINGS TO CONSIDER: Scythes, Grounded, Merging Short & Long Polearms				
+				-- Spear Damage System		
 				damagetype = 16;
 				
 				-- Blunt swipe or piercing thrust?
@@ -1177,7 +1163,15 @@ end
 				end
 				-- Polearm alt attack spear shaft hit system
 				if (IsValid(self)) then
-					if string.find(weaponClass, "begotten_polearm_") and weapon.CanSwipeAttack != true then						
+					if string.find(weaponClass, "begotten_polearm_") and weapon.CanSwipeAttack != true then		
+						local maxPoleRange = (attacktable["meleerange"]) * 0.1
+						local maxIneffectiveRange = maxPoleRange * 0.53
+						local clampedDistance = math.min(math.max(distance, 0), maxPoleRange)
+						local ratio = clampedDistance / maxPoleRange
+						local minDamage = (attacktable["primarydamage"] * 0.7)
+						local maxDamage = (attacktable["primarydamage"] * 1.7)
+						local variableDamage = minDamage + (maxDamage - minDamage) * ratio
+						
 						if distance <= maxIneffectiveRange and hit:IsValid() then
 							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 								damage = (attacktable["primarydamage"]) * 0.01
@@ -1314,6 +1308,19 @@ end
 				end
 			end
 		elseif swingType == "polearm_swing" then
+			local poledamage = (attacktable["primarydamage"])
+			local poletype = (attacktable["dmgtype"])
+			local maxPoleRange = (attacktable["meleerange"]) * 0.1
+			local maxIneffectiveRange = maxPoleRange * 0.53
+			local clampedDistance = math.min(math.max(distance, 0), maxPoleRange)
+			local ratio = clampedDistance / maxPoleRange
+			local minDamage = (attacktable["primarydamage"] * 0.7)
+			local maxDamage = (attacktable["primarydamage"] * 1.7)
+			local variableDamage = minDamage + (maxDamage - minDamage) * ratio
+			local minStabilityDamage = (attacktable["stabilitydamage"] * 0.7)
+			local maxStabilityDamage = (attacktable["stabilitydamage"] * 1.7)
+			local variableStabilityDamage = minStabilityDamage + (maxStabilityDamage - minStabilityDamage) * ratio
+		
 			if owner:GetNetVar("ThrustStance") then
 				owner:SetLocalVar("ThrustStance", false);
 			end
@@ -1483,6 +1490,9 @@ end
 				-- Spear Damage System (Messy)					
 				if (IsValid(self)) then
 					if string.find(weaponClass, "begotten_spear_") then
+						local maxPoleRange = (attacktable["meleerange"]) * 0.1
+						local maxIneffectiveRange = maxPoleRange * 0.53
+					
 						if distance <= maxIneffectiveRange and hit:IsValid() then
 							damage = (attacktable["primarydamage"]) * 0.01
 							damagetype = 128
@@ -1491,7 +1501,7 @@ end
 								--print "Spear Shaft Hit"
 								
 								-- KNOCKBACK
-								local knockback = owner:GetAngles():Forward() * 650;
+								local knockback = owner:GetAngles():Forward() * 600;
 								knockback.z = 0
 
 								timer.Simple(0.1, function()
