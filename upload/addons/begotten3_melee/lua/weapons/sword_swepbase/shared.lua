@@ -1119,7 +1119,9 @@ end
 			end
 		elseif swingType == "thrust_swing" then
 			if !owner:GetNetVar("ThrustStance") then
-				owner:SetLocalVar("ThrustStance", true);
+				if !self.isMeleeFirearm then
+					owner:SetLocalVar("ThrustStance", false);
+				end
 			end
 
 			if hit:IsValid() and hit:IsPlayer() then
@@ -1479,7 +1481,9 @@ end
 			end
 		else -- reg_swing and others
 			if owner:GetNetVar("ThrustStance") then
-				owner:SetLocalVar("ThrustStance", false);
+				if !self.isMeleeFirearm then
+					owner:SetLocalVar("ThrustStance", false);
+				end
 			end
 
 			if hit:IsValid() and hit:IsPlayer() then
