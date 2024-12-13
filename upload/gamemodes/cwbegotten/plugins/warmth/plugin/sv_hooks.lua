@@ -4,6 +4,11 @@ local pillarsBounds = {
 };
 local temperature_interval = 5;
 
+function cwWarmth:ClockworkInitialized()
+	-- Make sure items get the freezing data.
+	Clockwork.item:Initialize();
+end
+
 function cwWarmth:PostPlayerCharacterLoaded(player)
 	player:SetLocalVar("warmth", player:GetCharacterData("warmth", 100));
 end
