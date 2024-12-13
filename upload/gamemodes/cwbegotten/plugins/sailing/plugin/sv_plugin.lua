@@ -1500,6 +1500,8 @@ concommand.Add("cw_MoveShipWasteland", function(player, cmd, args)
 end);
 
 concommand.Add("cw_MoveShipLava", function(player, cmd, args)
+	if game.GetMap() ~= "rp_begotten3" then return end;
+	
 	local trace = player:GetEyeTrace();
 
 	if (trace.Entity) then
