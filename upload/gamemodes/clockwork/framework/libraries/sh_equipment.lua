@@ -570,7 +570,7 @@ else
 		end
 	end
 	
-	--[[hook.Add("Tick", "TickEquipment", function()
+	hook.Add("Tick", "TickEquipment", function()
 		for _, player in _player.Iterator() do
 			player.equipmentDrawnThisTick = false;
 
@@ -705,9 +705,9 @@ else
 				plyTab.equipmentSlotModels = nil;
 			end
 		end
-	end);]]--
+	end);
 	
-	local function SetupPlayerEquipmentModels(player, ragdollEntity)
+	--[[local function SetupPlayerEquipmentModels(player, ragdollEntity)
 		if player == LocalPlayer() and !player:ShouldDrawLocalPlayer() then return end
 		if !player:Alive() or (player:GetMoveType() == MOVETYPE_OBSERVER and !ragdollEntity) or player:GetColor().a == 0 then return end
 	
@@ -886,20 +886,6 @@ else
 		end
 	end);
 	
-	--[[gameevent.Listen("player_spawn")
-	hook.Add("player_spawn", "player_spawnEquipment", function(data)
-		local userID = data.userid
-		local player = Player(userID);
-		
-		if IsValid(player) then
-			ClearPlayerEquipmentModels(player);
-			
-			if !player:IsDormant() then
-				SetupPlayerEquipmentModels(entity);
-			end
-		end
-	end)]]--
-	
 	hook.Add("NotifyShouldTransmit", "NotifyShouldTransmitEquipment", function(entity, bShouldTransmit)
 		if entity:IsPlayer() then
 			if bShouldTransmit then
@@ -922,7 +908,7 @@ else
 				end
 			end
 		end
-	end);
+	end);]]--
 	
 	hook.Add("OnEntityCreated", "EntityCreatedEquipment", function(entity)
 		if entity:IsPlayer() then
@@ -940,8 +926,24 @@ else
 	
 	hook.Add("EntityRemoved", "EntityRemovedEquipment", function(entity, bFullUpdate)
 		if bFullUpdate then return end;
-	
+		
 		if Clockwork.entity:IsPlayerRagdoll(entity) then
+			entity = entity:GetNWEntity("Player");
+		end
+		
+		if entity:IsPlayer() then
+			if entity.equipmentSlotModels then
+				for itemID, equipmentModel in pairs(entity.equipmentSlotModels) do
+					if IsValid(equipmentModel) then
+						equipmentModel:Remove();
+					end
+				end
+				
+				entity.equipmentSlotModels = nil;
+			end
+		end
+	
+		--[[if Clockwork.entity:IsPlayerRagdoll(entity) then
 			ClearPlayerEquipmentModels(entity:GetNW2Entity("Player"), entity);
 			
 			return;
@@ -949,12 +951,12 @@ else
 	
 		if entity:IsPlayer() then
 			ClearPlayerEquipmentModels(entity, entity:GetRagdollEntity());
-		end
+		end]]--
 	end);
 	
-	hook.Add("EquipmentUpdated", "EquipmentUpdatedEquipment", function(player)
+	--[[hook.Add("EquipmentUpdated", "EquipmentUpdatedEquipment", function(player)
 		SetupPlayerEquipmentModels(player, player:GetRagdollEntity());
-	end);
+	end);]]--
 
 	netstream.Hook("UpdateEquipment", function(data)
 		local player = data[1];
