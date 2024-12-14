@@ -751,6 +751,7 @@ local FACTION = Clockwork.faction:New("Hillkeeper");
 	FACTION.enlist = true;
 	FACTION.singleGender = GENDER_MALE;
 	FACTION.characterLimit = 1; -- # of characters of this faction a player can have.
+	FACTION.ratio = 0.3; -- 0.3 slots per player (9 at 30 players).
 	--FACTION.imposters = true; -- Kinisgers should get enlisted through /enlist on Wanderer disguises.
 	FACTION.names = "gore-glazic";
 	FACTION.subfactions = {
