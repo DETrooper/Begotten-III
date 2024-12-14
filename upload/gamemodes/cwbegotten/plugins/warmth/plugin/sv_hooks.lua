@@ -13,20 +13,40 @@ function cwWarmth:ItemEntityThink(entity, itemTable)
 	local freezing = itemTable:GetData("freezing");
 	
 	if freezing then
-		local ents = ents.FindInSphere(entity:GetPos(), 320);
+		local supraZones = zones.supraZones;
 		
-		for i, v in ipairs(ents) do
-			if v:GetClass() == "env_fire" then
-				if freezing > 0 then
-					itemTable:SetData("freezing", math.max(freezing - 5, 0));
-				end
+		for k, v in pairs(zones.stored) do
+			if table.HasValue(supraZones["suprawasteland"], k) then
+				local boundsTable = v.bounds;
 				
-				return;
+				if boundsTable then
+					local entPos = entity:GetPos();
+					
+					if entPos:WithinAABox(boundsTable.min, boundsTable.max) then
+						local ents = ents.FindInSphere(entity:GetPos(), 320);
+		
+						for i, v2 in ipairs(ents) do
+							if v2:GetClass() == "env_fire" then
+								if freezing > 0 then
+									itemTable:SetData("freezing", math.max(freezing - 5, 0));
+								end
+								
+								return;
+							end
+						end
+						
+						if freezing < 100 then
+							itemTable:SetData("freezing", math.min(freezing + 1, 100));
+						end
+						
+						return;
+					end
+				end
 			end
 		end
 		
-		if freezing < 100 then
-			itemTable:SetData("freezing", math.min(freezing + 1, 100));
+		if freezing > 0 then
+			itemTable:SetData("freezing", math.max(freezing - 5, 0));
 		end
 	end
 end
