@@ -88,7 +88,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.attachmentOffsetVector = Vector(-3.23, 1.39, -6.36);
 	
 	ITEM.ammoCapacity = 1;
-	ITEM.ammoTypes = {"Iron Bolt", "Scrap Bolt"};
+	ITEM.ammoTypes = {"Iron Bolt", "Iron Bolt (Incendiary)", "Scrap Bolt"};
 	ITEM.attributes = {"variable_damage"};
 	ITEM.firearmType = "Crossbow";
 	ITEM.reloadTime = 5; -- Seconds (for one round)
@@ -113,7 +113,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.attachmentOffsetVector = Vector(-3.23, 1.39, -6.36);
 	
 	ITEM.ammoCapacity = 1;
-	ITEM.ammoTypes = {"Iron Bolt", "Scrap Bolt"};
+	ITEM.ammoTypes = {"Iron Bolt", "Iron Bolt (Incendiary)", "Scrap Bolt"};
 	ITEM.attributes = {"variable_damage"};
 	ITEM.firearmType = "Crossbow";
 	ITEM.reloadTime = 8; -- Seconds (for one round)

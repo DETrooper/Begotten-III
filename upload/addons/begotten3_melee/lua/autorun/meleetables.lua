@@ -720,6 +720,19 @@ AttackTables.IronBoltAttackTable = {
 	["punchstrength"] = Angle(0,2,0),
 };
 
+AttackTables.IronBoltIncendiaryAttackTable = {
+	["mimimumdistancedamage"] = 50,
+	["maximumdistancedamage"] = 120,
+	["dmgtype"] = DMG_VEHICLE,
+	["armorpiercing"] = 50,
+	["poisedamage"] = 35,
+	["stabilitydamage"] = 40,
+	["minimumdistancestabilitydamage"] = 20,
+	["maximumdistancestabilitydamage"] = 80,
+	["takeammo"] = 0,
+	["punchstrength"] = Angle(0,2,0),
+};
+
 AttackTables.ScrapBoltAttackTable = {
 	["mimimumdistancedamage"] = 35,
 	["maximumdistancedamage"] = 90,
@@ -3525,6 +3538,7 @@ AddTable("ThrowingAxeAttackTable", AttackTables.ThrowingAxeAttackTable)
 AddTable("ThrowingDaggerAttackTable", AttackTables.ThrowingDaggerAttackTable)
 AddTable("ThrowingStoneAttackTable", AttackTables.ThrowingStoneAttackTable)
 AddTable("IronBoltAttackTable", AttackTables.IronBoltAttackTable)
+AddTable("IronBoltIncendiaryAttackTable", AttackTables.IronBoltIncendiaryAttackTable)
 AddTable("ScrapBoltAttackTable", AttackTables.ScrapBoltAttackTable)
 AddTable("ClaymoreAttackTable", AttackTables.ClaymoreAttackTable) 
 AddTable("HaralderWarAxeAttackTable", AttackTables.HaralderWarAxeAttackTable) 

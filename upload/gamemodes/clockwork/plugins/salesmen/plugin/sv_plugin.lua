@@ -122,7 +122,14 @@ netstream.Hook("Salesmenu", function(player, data)
 								local tax = math.Round(cost * Schema.towerTax);
 								
 								Clockwork.player:GiveCash(player, cost, "1 "..itemTable.name)
-								Clockwork.player:GiveCash(player, -tax, "Tower of Light Tax")
+								
+								if game.GetMap() == "rp_begotten3" then
+									Clockwork.player:GiveCash(player, -tax, "Tower of Light Tax")
+								elseif game.GetMap() == "rp_district21" then
+									Clockwork.player:GiveCash(player, -tax, "Hill of Light Tax")
+								else
+									Clockwork.player:GiveCash(player, -tax, "Tax")
+								end
 								
 								Schema:ModifyTowerTreasury(tax);
 							else

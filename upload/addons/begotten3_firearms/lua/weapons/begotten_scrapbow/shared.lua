@@ -92,6 +92,19 @@ SWEP.AmmoTypes = {
 		
 		return true;
 	end,
+	["Iron Bolt (Incendiary)"] = function(SWEP)
+		SWEP.Primary.MinimumDistanceDamage = 50;
+		SWEP.Primary.MaximumDistanceDamage = 120;
+		SWEP.Primary.StabilityDamage = 80;
+		SWEP.Primary.Sound = Sound("weapons/crossbow/bowgun-shot.wav.mp3");
+		SWEP.Primary.Round = "begotten_iron_bolt_incendiary";
+		SWEP.AttackTable = "IronBoltIncendiaryAttackTable";
+		SWEP.BoltModel = "models/begotten/items/bolt.mdl";
+		SWEP.ConditionLoss = 50;
+		SWEP.BodyGroup = 0;
+		
+		return true;
+	end,
 	["Scrap Bolt"] = function(SWEP)
 		SWEP.Primary.MinimumDistanceDamage = 35;
 		SWEP.Primary.MaximumDistanceDamage = 90;

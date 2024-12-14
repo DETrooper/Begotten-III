@@ -62,7 +62,7 @@ function cwWarmth:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 	if plyTable.nextTempDecay <= curTime then
 		plyTable.nextTempDecay = curTime + temperature_interval;
 	
-		if Clockwork.player:HasFlags(player, "E") or !initialized or (!alive or player:GetMoveType() == MOVETYPE_NOCLIP or player.opponent or player.cwWakingUp or (player.possessor and IsValid(player.possessor)) or (player.victim and IsValid(player.victim))) then
+		if Clockwork.player:HasFlags(player, "N") or !initialized or (!alive or player:GetMoveType() == MOVETYPE_NOCLIP or player.opponent or player.cwWakingUp or (player.possessor and IsValid(player.possessor)) or (player.victim and IsValid(player.victim))) then
 			return;
 		end;
 

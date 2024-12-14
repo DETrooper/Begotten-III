@@ -8679,6 +8679,35 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 	
+	RECIPE = cwRecipes.recipes:New("iron_bolt_incendiary");
+		RECIPE.name = "Iron Bolt (Incendiary)";
+		RECIPE.requiresSmithy = false;
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock"};
+		RECIPE.requirements = {
+			["iron_bolt"] = {amount = 1},
+			["small_oil"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["iron_bolt_incendiary"] = {amount = 3},
+		};
+		RECIPE.category = "Munitions"
+		RECIPE.finishSound = "generic_ui/refine_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 4
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 10;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
 	RECIPE = cwRecipes.recipes:New("scrap_bolt");
 		RECIPE.name = "Scrap Bolt";
 		RECIPE.requiresSmithy = true;
@@ -9264,14 +9293,14 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 
-	RECIPE = cwRecipes.recipes:New("hill_acolyte_helm");
-		RECIPE.name = "Hillkeeper Watch Helm";
+	RECIPE = cwRecipes.recipes:New("hill_acolyte_helm_upgrade_helm");
+		RECIPE.name = "(Upgrade) Hillkeeper Watch Helm";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 2},
-			["hillkeeper_helm"] = {amount = 2},
+			["hillkeeper_helm"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["hill_acolyte_helm"] = {amount = 1},
@@ -9293,8 +9322,8 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 
-	RECIPE = cwRecipes.recipes:New("hill_acolyte_helm_upgrade_helm");
-		RECIPE.name = "(Upgrade) Hillkeeper Watch Helm";
+	RECIPE = cwRecipes.recipes:New("hill_acolyte_helm");
+		RECIPE.name = "Hillkeeper Watch Helm";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredFactions = {"Hillkeeper"};
@@ -9413,14 +9442,14 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 
-	RECIPE = cwRecipes.recipes:New("hill_coat_helmet");
+	RECIPE = cwRecipes.recipes:New("hill_coat_helmet_upgrade_helm");
 		RECIPE.name = "(Upgrade) Hillkeeper Defender Helm";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
-			["hill_coat_helmet"] = {amount = 1},
+			["hill_acolyte_helm"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["hill_coat_helmet"] = {amount = 1},

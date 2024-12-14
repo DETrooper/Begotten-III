@@ -193,6 +193,22 @@ local ITEM = Clockwork.item:New("shot_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
+	ITEM.name = "Iron Bolt (Incendiary)";
+	ITEM.model = "models/begotten/items/bolt.mdl";
+	ITEM.weight = 0.2;
+	ITEM.stackable = true;
+	ITEM.description = "An iron-tipped wooden crossbow bolt of good aerodynamic quality. It has been coated with oil that will ignite upon firing, sacrificing armor-piercing potential for setting targets alight upon contact.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/iron_bolt_incendiary.png"
+	
+	ITEM.ammoType = "Iron Bolt (Incendiary)";
+	ITEM.ammoName = "Iron Bolt (Incendiary)";
+	ITEM.requiredReloadBelief = "strength";
+	
+	ITEM.attributes = {"incendiary"};
+	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("shot_base");
 	ITEM.name = "Scrap Bolt";
 	ITEM.model = "models/begotten/items/rebar.mdl";
 	ITEM.weight = 0.2;
