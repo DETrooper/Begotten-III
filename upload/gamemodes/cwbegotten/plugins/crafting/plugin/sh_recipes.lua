@@ -9615,7 +9615,7 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 
-	RECIPE = cwRecipes.recipes:New("musket");
+	RECIPE = cwRecipes.recipes:New("begotten_hillkeeper_axmusket");
 		RECIPE.name = "Hillkeeper Axmusket";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
