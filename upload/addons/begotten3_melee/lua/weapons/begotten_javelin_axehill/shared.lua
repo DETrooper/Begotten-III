@@ -38,9 +38,6 @@ SWEP.Primary.Round = ("begotten_javelin_axehill_thrown");
 SWEP.isJavelin = true;
 SWEP.SticksInShields = true;
 
-SWEP.isJavelin = true;
-SWEP.SticksInShields = true;
-
 function SWEP:AttackAnimination()
 	self.Weapon:SendWeaponAnim(ACT_VM_DRAW)
 	self.Owner:GetViewModel():SetPlaybackRate(0.75)
@@ -68,7 +65,7 @@ function SWEP:HandlePrimaryAttack()
 	self.Weapon:SetNextPrimaryFire(CurTime() + 1000);
 	
 	timer.Create("javelin_timer_"..self.Owner:EntIndex(), 0.5, 1, function()
-		if IsValid(self) and IsValid(self.Owner) and self.Owner:GetActiveWeapon() and self.Owner:GetActiveWeapon().PrintName == "Throwing Axe" then
+		if IsValid(self) and IsValid(self.Owner) and self.Owner:GetActiveWeapon() and self.Owner:GetActiveWeapon().PrintName == "Hillkeeper Throwing Axe" then
 			self:FireJavelin();
 			
 			self.Owner.cloakCooldown = CurTime() + 5;
@@ -99,7 +96,9 @@ function SWEP:HandleThrustAttack()
 end
 
 function SWEP:FireJavelin()
-	if !IsValid(self.Owner) then
+	local owner = self.Owner;
+
+	if !IsValid(owner) then
 		return;
 	end
 
@@ -107,6 +106,7 @@ function SWEP:FireJavelin()
 	
 	if SERVER then
 		local javelin = ents.Create(self.Primary.Round)
+		
 		if !javelin:IsValid() then return false end
 		
 		javelin:SetModel("models/begotten_apocalypse/items/WinterholdAxe Thrown.mdl");
