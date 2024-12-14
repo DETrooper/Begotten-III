@@ -329,7 +329,7 @@ function Clockwork.kernel:PlayerNameColor(player)
 		--local override = plugin.Call("GetPlayerNameColor", player, color, playerTeam);
 		local override = hook.Run("GetPlayerNameColor", player, color, playerTeam);
 
-		if (customColor != nil) then
+		if isstring(customColor) then
 			color = util.JSONToTable(customColor);
 		end;
 		
