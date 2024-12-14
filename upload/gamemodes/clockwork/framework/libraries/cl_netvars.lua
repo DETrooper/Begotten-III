@@ -94,3 +94,13 @@ end
 
 playerMeta.GetNetVar = entityMeta.GetNetVar
 playerMeta.GetLocalVar = entityMeta.GetNetVar
+
+hook.Add("EntityRemoved", "nCleanUp", function(entity, bFullUpdate)
+	if !bFullUpdate then
+		local index = entity:EntIndex();
+		
+		if stored[index] then
+			stored[index] = nil;
+		end
+	end
+end)

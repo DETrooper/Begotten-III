@@ -469,6 +469,7 @@ local animalModels = {
 	"models/animals/goat.mdl",
 	"models/animals/bear.mdl",
 	"models/animal_ragd/piratecat_leopard.mdl",
+	"models/begotten/creatures/wolf.mdl",
 };
 
 -- Called when an entity's menu options are needed.

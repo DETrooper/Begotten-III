@@ -1081,6 +1081,9 @@ local COMMAND = Clockwork.command:New("Warcry");
 					sanity_debuff = -25;
 					warcry_beliefs = {"sadism"};
 				end
+			elseif player:GetNetVar("kinisgerOverride") == "Hillkeeper" then
+				warcry_beliefs = {}
+				player_has_belief = true;
 			else
 				sanity_debuff = -25;
 				warcry_beliefs = {"sadism"};
@@ -1094,6 +1097,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				warcry_beliefs = {"sadism"};
 			elseif faith == "Faith of the Light" and (faction == "Hillkeeper" or subfaction == "Low Ministry") then
 				warcry_beliefs = {}
+				player_has_belief = true;
 			else
 				Schema:EasyText(player, "firebrick", "You are not of the correct faith to do this!");
 				return;
@@ -1227,7 +1231,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 										end
 									end
 								end
-							elseif faith == "Faith of the Light" then
+							--[[elseif faith == "Faith of the Light" then
 								if vFaction == "Hillkeeper" or vFaction == "Gatekeeper" or vFaction == "Holy Hierarchy" then
 									immune = true
 								end
@@ -1241,7 +1245,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 											end
 										end
 									end
-								end
+								end]]--
 							end
 							
 							if player_has_daring_trout then

@@ -13,6 +13,7 @@ local animalModels = {
 	"models/animals/goat.mdl",
 	"models/animals/bear.mdl",
 	"models/animal_ragd/piratecat_leopard.mdl",
+	"models/begotten/creatures/wolf.mdl",
 };
 
 function cwBeliefs:PlayerCharacterInitialized(data)

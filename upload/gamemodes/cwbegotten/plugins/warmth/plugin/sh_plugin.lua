@@ -33,7 +33,7 @@ if cwWarmth.systemEnabled then
 				target:SetCharacterData("warmth", amount);
 				
 				if (player != target) then
-					Schema:EasyText(GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s temperature to "..amount..".");
+					Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set "..target:Name().."'s temperature to "..amount..".");
 				else
 					Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You have set your own temperature to "..amount..".");
 				end;

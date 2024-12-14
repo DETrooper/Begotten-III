@@ -410,6 +410,7 @@ local animalModels = {
 	"models/animals/goat.mdl",
 	"models/animals/bear.mdl",
 	"models/animal_ragd/piratecat_leopard.mdl",
+	"models/begotten/creatures/wolf.mdl",
 };
 
 function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
@@ -542,6 +543,42 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 									end
 								end
 							end);
+						elseif model == "models/begotten/creatures/wolf.mdl" then
+							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins cutting the flesh of the wolf before them, harvesting its meat.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+						
+							Clockwork.player:SetAction(player, "mutilating", 10, 5, function()
+								if IsValid(player) and IsValid(entity) then
+									local activeWeapon = player:GetActiveWeapon();
+									local offhandWeapon;
+									
+									if IsValid(activeWeapon) then
+										offhandWeapon = activeWeapon:GetOffhand();
+									end
+									
+									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+										if (!entity.mutilated or entity.mutilated < 3) then
+											entity.mutilated = (entity.mutilated or 0) + 1;
+											
+											local instance = Clockwork.item:CreateInstance("wolf_meat");
+
+											player:GiveItem(instance, true);
+											player:HandleXP(self.xpValues["mutilate"]);
+											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
+											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
+											
+											local weaponItemTable = item.GetByWeapon(activeWeapon);
+											
+											if weaponItemTable then
+												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
+													weaponItemTable:TakeCondition(1);
+												end
+											end
+										else
+											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
+										end
+									end
+								end
+							end);
 						elseif model == "models/animals/bear.mdl" then
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins cutting the flesh of the bear before them, harvesting its meat.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						
@@ -646,6 +683,8 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "plunges their hand into the chest of the leopard before them, ripping out its heart and devouring it whole.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						elseif model == "models/animals/bear.mdl" then
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "plunges their hand into the chest of the bear before them, ripping out its heart and devouring it whole.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+						elseif model == "models/begotten/creatures/wolf.mdl" then
+							Clockwork.chatBox:AddInTargetRadius(player, "me", "plunges their hand into the chest of the wolf before them, ripping out its heart and devouring it whole.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						else
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "plunges their hand into the chest of the body before them, ripping out its heart and devouring it whole.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						end
@@ -677,6 +716,8 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 						Clockwork.chatBox:AddInTargetRadius(player, "me", "uses their hands to dig into the flesh of the leopard before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 					elseif model == "models/animals/bear.mdl" then
 						Clockwork.chatBox:AddInTargetRadius(player, "me", "uses their hands to dig into the flesh of the bear before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+					elseif model == "models/begotten/creatures/wolf.mdl" then
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "uses their hands to dig into the flesh of the wolf before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 					else
 						Clockwork.chatBox:AddInTargetRadius(player, "me", "uses their hands to dig into the flesh of the body before them, harvesting its bones.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 					end
@@ -708,6 +749,8 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins flaying the skin of the goat before them, harvesting its fur and hide.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						elseif model == "models/animal_ragd/piratecat_leopard.mdl" then
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins flaying the skin of the leopard before them, harvesting its fur and hide.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+						elseif model == "models/begotten/creatures/wolf.mdl" then
+							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins flaying the skin of the wolf before them, harvesting its fur and hide.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						elseif model == "models/animals/bear.mdl" then
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins flaying the skin of the bear before them, harvesting its fur and hide.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 							

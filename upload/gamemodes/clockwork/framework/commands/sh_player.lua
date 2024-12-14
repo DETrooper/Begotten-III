@@ -982,7 +982,7 @@ local COMMAND = Clockwork.command:New("PlyUnwhitelist");
 						Clockwork.player:SaveCharacter(target);
 						
 						Clockwork.player:Notify(target, "You have been removed from the "..factionTable.name.." whitelist.");
-						Clockwork.player:Notify(player, player:Name().." has removed "..target:Name().." from the "..factionTable.name.." whitelist.");
+						Clockwork.player:Notify(Schema:GetAdmins(), player:Name().." has removed "..target:Name().." from the "..factionTable.name.." whitelist.");
 						--Clockwork.player:NotifyAll(player:Name().." has removed "..target:Name().." from the "..factionTable.name.." whitelist.");
 					else
 						Clockwork.player:Notify(player, target:Name().." is not on the "..factionTable.name.." whitelist!");
@@ -1025,7 +1025,7 @@ local COMMAND = Clockwork.command:New("PlyUnwhitelistSubfaction");
 										Clockwork.player:SaveCharacter(target);
 										
 										Clockwork.player:Notify(target, "You have been removed from the "..subfaction.." subfaction whitelist.");
-										Clockwork.player:Notify(player, player:Name().." has removed "..target:Name().." from the "..subfaction.." subfaction whitelist.");
+										Clockwork.player:Notify(Schema:GetAdmins(), player:Name().." has removed "..target:Name().." from the "..subfaction.." subfaction whitelist.");
 										--Clockwork.player:NotifyAll(player:Name().." has removed "..target:Name().." from the "..subfaction.." subfaction whitelist.");
 										return;
 									else
@@ -1109,7 +1109,7 @@ local COMMAND = Clockwork.command:New("PlyWhitelist");
 						Clockwork.player:SaveCharacter(target);
 						
 						Clockwork.player:Notify(target, "You have been added to the "..factionTable.name.." whitelist.");
-						Clockwork.player:Notify(player, player:Name().." has added "..target:Name().." to the "..factionTable.name.." whitelist.");
+						Clockwork.player:Notify(Schema:GetAdmins(), player:Name().." has added "..target:Name().." to the "..factionTable.name.." whitelist.");
 						--Clockwork.player:NotifyAll(player:Name().." has added "..target:Name().." to the "..factionTable.name.." whitelist.");
 					else
 						Clockwork.player:Notify(player, target:Name().." is already on the "..factionTable.name.." whitelist!");
@@ -1152,7 +1152,7 @@ local COMMAND = Clockwork.command:New("PlyWhitelistSubfaction");
 										Clockwork.player:SaveCharacter(target);
 										
 										Clockwork.player:Notify(target, "You have been added to the "..subfaction.." subfaction whitelist.");
-										Clockwork.player:Notify(player, player:Name().." has added "..target:Name().." to the "..subfaction.." subfaction whitelist.");
+										Clockwork.player:Notify(Schema:GetAdmins(), player:Name().." has added "..target:Name().." to the "..subfaction.." subfaction whitelist.");
 										--Clockwork.player:NotifyAll(player:Name().." has added "..target:Name().." to the "..subfaction.." whitelist.");
 										return;
 									else

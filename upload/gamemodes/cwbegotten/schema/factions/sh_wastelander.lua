@@ -827,8 +827,8 @@ local FACTION = Clockwork.faction:New("Hillkeeper");
 			return false;
 		end]]--
 		
-		if (!Clockwork.player:IsWhitelisted(player, faction.name)) then
-			Clockwork.player:SetWhitelisted(player, faction.name, true);
+		if (!Clockwork.player:IsWhitelisted(player, "Hillkeeper")) then
+			Clockwork.player:SetWhitelisted(player, "Hillkeeper", true);
 		end;
 	end;
 	
