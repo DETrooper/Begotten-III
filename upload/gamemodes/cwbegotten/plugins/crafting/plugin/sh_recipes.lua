@@ -3067,7 +3067,7 @@ RECIPE:Register()
 		RECIPE.name = "Ordained Gorefeller";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
 		RECIPE.requiredFaiths = {"Faith of the Light"};
 		RECIPE.requirements = {
@@ -8740,7 +8740,7 @@ RECIPE:Register()
 		RECIPE.name = "Hillkeeper Hauberk";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 3},
 			["leather"] = {amount = 2},
@@ -8770,7 +8770,7 @@ RECIPE:Register()
 		RECIPE.name = "Hillkeeper Fine Brigandine";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
 			["iron_ingot"] = {amount = 2},
@@ -8801,7 +8801,7 @@ RECIPE:Register()
 		RECIPE.name = "Hillkeeper Defender Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["leather"] = {amount = 3},
 			["cloth"] = {amount = 2},
@@ -8832,7 +8832,7 @@ RECIPE:Register()
 		RECIPE.name = "Hillkeeper Signifer Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["hide"] = {amount = 5},
 			["fine_steel_ingot"] = {amount = 2},
@@ -8862,7 +8862,7 @@ RECIPE:Register()
 		RECIPE.name = "Hillkeeper Heavy Coat of Plate & Heavy Hill Helm";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 4},
 			["hillkeeper_defender_plate"] = {amount = 1},
@@ -8947,7 +8947,7 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("hillkeeper_aketon");
 		RECIPE.name = "Hillkeeper Aketon";
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["cloth"] = {amount = 3},
 			["leather"] = {amount = 3},
@@ -8976,7 +8976,7 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("low_ministry_vestments");
 		RECIPE.name = "Low Ministry Vestments";
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["cloth"] = {amount = 5},
 			["leather"] = {amount = 3},
@@ -9005,7 +9005,7 @@ RECIPE:Register()
 		RECIPE.name = "Low Ministry Cuirass";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 2},
 			["steel_ingot"] = {amount = 3},
@@ -9034,7 +9034,7 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("footpad_wrappings");
 		RECIPE.name = "Footpad Wrappings";
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["cloth"] = {amount = 3},
 			["leather"] = {amount = 3},
@@ -9093,7 +9093,7 @@ RECIPE:Register()
 		RECIPE.name = "(Upgrade) Hillkeeper Low Brigandine";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["hillkeeper_aketon"] = {amount = 1},
 			["iron_ingot"] = {amount = 3},
@@ -9122,7 +9122,7 @@ RECIPE:Register()
 		RECIPE.name = "(Upgrade) Hillkeeper Mailed Brigandine";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["hillkeeper_low_brigandine"] = {amount = 1},
 			["iron_ingot"] = {amount = 3},
@@ -9151,7 +9151,7 @@ RECIPE:Register()
 		RECIPE.name = "(Upgrade) Hillkeeper Hauberk";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["hillkeeper_low_brigandine"] = {amount = 1},
 			["iron_ingot"] = {amount = 3},
@@ -9180,7 +9180,7 @@ RECIPE:Register()
 		RECIPE.name = "(Upgrade) Hillkeeper Fine Brigandine";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["hillkeeper_mailed_brigandine"] = {amount = 1},
 			["fine_steel_ingot"] = {amount = 1},
@@ -9210,7 +9210,7 @@ RECIPE:Register()
 		RECIPE.name = "(Upgrade) Hillkeeper Defender Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["hillkeeper_hauberk"] = {amount = 1},
 			["steel_ingot"] = {amount = 3},
@@ -9268,7 +9268,7 @@ RECIPE:Register()
 		RECIPE.name = "Hillkeeper Watch Helm";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 2},
 			["leather"] = {amount = 1},
@@ -9297,7 +9297,7 @@ RECIPE:Register()
 		RECIPE.name = "Hillkeeper Nasal Helm";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
 			["steel_ingot"] = {amount = 1},
@@ -9328,7 +9328,7 @@ RECIPE:Register()
 		RECIPE.name = "Hillkeeper Defender Helm";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 2},
 			["steel_ingot"] = {amount = 2},
@@ -9358,7 +9358,7 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("ministryhat");
 		RECIPE.name = "Low Ministry Hat";
 		RECIPE.requiredBeliefs = {"ingenious"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["leather"] = {amount = 2},
 			["cloth"] = {amount = 2},
@@ -9387,7 +9387,7 @@ RECIPE:Register()
 		RECIPE.name = "Low Ministry Scowling Helm";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
 			["iron_ingot"] = {amount = 1},
@@ -9447,7 +9447,7 @@ RECIPE:Register()
 		RECIPE.name = "Hillkeeper Helm";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1},
 			["leather"] = {amount = 2},
@@ -9476,7 +9476,7 @@ RECIPE:Register()
 		RECIPE.name = "Hill Shortsword";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
 			["wood"] = {amount = 1},
@@ -9505,7 +9505,7 @@ RECIPE:Register()
 		RECIPE.name = "Hill Spatha";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 3},
 			["leather"] = {amount = 1},
@@ -9534,7 +9534,7 @@ RECIPE:Register()
 		RECIPE.name = "Hill Yeoman Longsword";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 3},
 			["fine_steel_ingot"] = {amount = 1},
@@ -9564,7 +9564,7 @@ RECIPE:Register()
 		RECIPE.name = "Hill Long Axe";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 2},
 			["leather"] = {amount = 1},
@@ -9594,7 +9594,7 @@ RECIPE:Register()
 		RECIPE.name = "Hill Crackaxe";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 2},
 			["wood"] = {amount = 2},
@@ -9623,7 +9623,7 @@ RECIPE:Register()
 		RECIPE.name = "Hill Dagger";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"ingenious"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1},
 			["wood"] = {amount = 1},
@@ -9652,7 +9652,7 @@ RECIPE:Register()
 		RECIPE.name = "Hillkeeper Axmusket";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
 			["steel_ingot"] = {amount = 1},
@@ -9683,7 +9683,7 @@ RECIPE:Register()
 		RECIPE.name = "Hillkeeper Kite Shield";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 1},
 			["wood"] = {amount = 5},
@@ -9712,7 +9712,7 @@ RECIPE:Register()
 		RECIPE.name = "Steel Hillkeeper Shield";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["shieldhill"] = {amount = 1},
 			["steel_ingot"] = {amount = 8},
@@ -9741,7 +9741,7 @@ RECIPE:Register()
 		RECIPE.name = "(2x) Hill Throwing Axe";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1},
 			["wood"] = {amount = 2},
@@ -9883,7 +9883,7 @@ RECIPE:Register()
 		RECIPE.name = "Hillkeeper Signum";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 1},
 			["iron_ingot"] = {amount = 1},
