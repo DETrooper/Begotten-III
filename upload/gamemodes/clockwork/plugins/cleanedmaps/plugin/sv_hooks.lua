@@ -21,6 +21,15 @@ function cwCleanedMaps:InitPostEntity()
 			v:Remove()
 		end
 	end
+	
+	for k, v in pairs(ents.FindByClass("lua_run")) do
+		print("lua_run entity "..v:GetName().." found! removing!");
+		v:Remove()
+	end
+	
+	for k, v in pairs(ents.FindByClass("func_button")) do
+		print("func_button entity "..v:GetName().." found!");
+	end
 
 	if (string.lower(game.GetMap()) == "rp_tb_city45_v02n") then
 		for k, v in pairs(ents.FindInSphere(Vector(226.2188, 4550, 238.0313), 32)) do
@@ -48,10 +57,6 @@ function cwCleanedMaps:InitPostEntity()
 		end
 
 		for k, v in pairs(ents.FindByClass("point_servercommand")) do
-			v:Remove()
-		end
-
-		for k, v in pairs(ents.FindByClass("lua_run")) do
 			v:Remove()
 		end
 	end

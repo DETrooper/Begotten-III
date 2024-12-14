@@ -42,9 +42,9 @@ function ENT:OnTakeDamage(damageInfo)
 	local player = damageInfo:GetAttacker();
 	
 	if IsValid(player) and player:IsPlayer() then
-		if damageInfo:IsDamageType(128) and damageInfo:GetDamage() >= 15 then
-			local activeWeapon = player:GetActiveWeapon();
-			
+		local activeWeapon = player:GetActiveWeapon();
+		
+		if (damageInfo:IsDamageType(128) and damageInfo:GetDamage() >= 15) or activeWeapon.isPickaxe then
 			self:EmitSound(self.BreakSounds[math.random(1, #self.BreakSounds)]);
 			
 			if math.random(1, 20) == 20 then

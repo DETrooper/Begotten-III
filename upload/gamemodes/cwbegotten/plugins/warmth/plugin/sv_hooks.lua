@@ -236,16 +236,21 @@ function playerMeta:HandleTemperature(amount)
 	if newTemp <= 0 then
 		if !self:IsRagdolled() then
 			Clockwork.player:SetRagdollState(self, RAGDOLL_KNOCKEDOUT, 20);
+		elseif self:GetNetVar("ActName") == "unragdoll" then
+			Clockwork.player:ExtendAction(self, 20);
 		end;
 
 		local health = self:Health();
-		local maxHealth = self:GetMaxHealth();
 		
-		if health > health - (maxHealth / 4) then
-			self:SetHealth(health - (maxHealth / 4));
+		if health > 1 then
+			self:SetHealth(math.max(1, health - 20));
+			
+			Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, self:Name().." has taken "..health - self:Health().." damage from hypothermia, leaving them at "..self:Health().." health!");
 		else
 			self:DeathCauseOverride("Froze to death.");
 			self:Kill();
+			
+			Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, self:Name().." has died from hypothermia!");
 		end
 	elseif newTemp <= 10 and currentTemp > 10 then
 		Clockwork.chatBox:Add(self, nil, "itnofake", "So... cold...");

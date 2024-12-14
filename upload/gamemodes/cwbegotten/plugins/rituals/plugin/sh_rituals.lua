@@ -555,6 +555,12 @@ RITUAL = cwRituals.rituals:New("call_of_the_blood_storm");
 	end;
 	function RITUAL:StartRitual(player)
 		if cwWeather then
+			if !cwWeather.weatherTypes["bloodstorm"] then
+				Schema:EasyText(player, "peru", "This climate is unsuited for blood rain!");
+				
+				return false;
+			end
+			
 			if cwWeather.weather ~= "bloodstorm" then
 				if cwWeather.nextWeatherTime - CurTime() <= 10 then
 					-- Add enough time to complete the ritual!
@@ -1435,6 +1441,12 @@ RITUAL = cwRituals.rituals:New("eye_of_the_storm");
 	end;
 	function RITUAL:StartRitual(player)
 		if cwWeather then
+			if !cwWeather.weatherTypes["thunderstorm"] then
+				Schema:EasyText(player, "peru", "This climate is unsuited for a thunderstorm!");
+				
+				return false;
+			end
+		
 			if cwWeather.weather ~= "thunderstorm" then
 				if cwWeather.nextWeatherTime - CurTime() <= 10 then
 					-- Add enough time to complete the ritual!
