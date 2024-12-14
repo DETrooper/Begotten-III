@@ -173,7 +173,7 @@ function cwSanity:Think()
 				
 				for k, v in pairs (ents.FindInSphere(Clockwork.Client:GetPos(), 256)) do
 					if (v:GetClass() == "prop_ragdoll") then
-						local nwEntity = v:GetNW2Entity("Player");
+						local nwEntity = v:GetNWEntity("Player");
 						
 						if (nwEntity:IsPlayer() and !nwEntity:Alive()) or nwEntity == game.GetWorld() or v:GetModel() == "models/undead/charple01.mdl" then
 							corpseFound = v;
@@ -192,13 +192,13 @@ function cwSanity:Think()
 					if cwBeliefs and cwBeliefs:HasBelief("savage") then
 						local cannibalSaying = self.cannibalSayings[math.random(1, #self.cannibalSayings)];
 						
-						if corpseFound:GetNW2Entity("Player"):IsPlayer() then
+						if corpseFound:GetNWEntity("Player"):IsPlayer() then
 							local name = "The corpse";
 
-							if Clockwork.player:DoesRecognise(corpseFound:GetNW2Entity("Player")) then
-								name = corpseFound:GetNW2Entity("Player"):Name();
+							if Clockwork.player:DoesRecognise(corpseFound:GetNWEntity("Player")) then
+								name = corpseFound:GetNWEntity("Player"):Name();
 							else
-								local unrecognisedName, usedPhysDesc = Clockwork.player:GetUnrecognisedName(corpseFound:GetNW2Entity("Player"));
+								local unrecognisedName, usedPhysDesc = Clockwork.player:GetUnrecognisedName(corpseFound:GetNWEntity("Player"));
 								
 								if (usedPhysDesc and string.utf8len(unrecognisedName) > 24) then
 									unrecognisedName = string.utf8sub(unrecognisedName, 1, 21).."...";
@@ -214,13 +214,13 @@ function cwSanity:Think()
 					else
 						local corpseSaying = self.corpseSayings[math.random(1, #self.corpseSayings)];
 						
-						if corpseFound:GetNW2Entity("Player"):IsPlayer() then
+						if corpseFound:GetNWEntity("Player"):IsPlayer() then
 							local name = "The corpse";
 
-							if Clockwork.player:DoesRecognise(corpseFound:GetNW2Entity("Player")) then
-								name = corpseFound:GetNW2Entity("Player"):Name();
+							if Clockwork.player:DoesRecognise(corpseFound:GetNWEntity("Player")) then
+								name = corpseFound:GetNWEntity("Player"):Name();
 							else
-								local unrecognisedName, usedPhysDesc = Clockwork.player:GetUnrecognisedName(corpseFound:GetNW2Entity("Player"));
+								local unrecognisedName, usedPhysDesc = Clockwork.player:GetUnrecognisedName(corpseFound:GetNWEntity("Player"));
 								
 								if (usedPhysDesc and string.utf8len(unrecognisedName) > 24) then
 									unrecognisedName = string.utf8sub(unrecognisedName, 1, 21).."...";

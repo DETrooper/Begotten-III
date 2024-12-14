@@ -68,7 +68,7 @@ function cwBeliefs:GetEntityMenuOptions(entity, options)
 		local player = Clockwork.entity:GetPlayer(entity);
 
 		if (!player or !player:Alive()) then
-			if entity:GetNW2Entity("Player"):IsPlayer() or entity:GetNW2Entity("Player") == game.GetWorld() or table.HasValue(animalModels, entity:GetModel()) then
+			if entity:GetNWEntity("Player"):IsPlayer() or entity:GetNWEntity("Player") == game.GetWorld() or table.HasValue(animalModels, entity:GetModel()) then
 				if (self:HasBelief("savage")) then
 					options["Mutilate"] = "cwCorpseMutilate";
 				end;

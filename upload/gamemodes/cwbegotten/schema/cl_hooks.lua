@@ -555,7 +555,7 @@ function Schema:GetEntityMenuOptions(entity, options)
 							--self.skinNotificationTimer = curTime + 0.5;
 						--end
 					--end
-				elseif entity:GetNW2Entity("Player"):IsPlayer() or entity:GetNW2Entity("Player") == game.GetWorld() then
+				elseif entity:GetNWEntity("Player"):IsPlayer() or entity:GetNWEntity("Player") == game.GetWorld() then
 					options["Pillage"] = "cw_corpseLoot";
 					
 					if entity:GetNWInt("bountyKey") then

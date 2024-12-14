@@ -898,7 +898,7 @@ else
 				end
 			end
 		elseif entity:GetClass() == "prop_ragdoll" then
-			local player = entity:GetNW2Entity("Player");
+			local player = entity:GetNWEntity("Player");
 
 			if player and player:IsValid() and player:IsPlayer() then
 				if bShouldTransmit then
@@ -944,7 +944,7 @@ else
 		end
 	
 		--[[if Clockwork.entity:IsPlayerRagdoll(entity) then
-			ClearPlayerEquipmentModels(entity:GetNW2Entity("Player"), entity);
+			ClearPlayerEquipmentModels(entity:GetNWEntity("Player"), entity);
 			
 			return;
 		end

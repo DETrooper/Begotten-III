@@ -615,7 +615,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 									end
 								end
 							end);
-						elseif entity:GetNW2Entity("Player"):IsPlayer() or entity:GetNW2Entity("Player") == game.GetWorld() then
+						elseif entity:GetNWEntity("Player"):IsPlayer() or entity:GetNWEntity("Player") == game.GetWorld() then
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins cutting the flesh of the body before them, harvesting its meat.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						
 							Clockwork.player:SetAction(player, "mutilating", 10, 5, function()
@@ -663,7 +663,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 			if (!entityPlayer or !entityPlayer:Alive()) then
 				local model = entity:GetModel();
 			
-				if entity:GetNW2Entity("Player"):IsPlayer() or entity:GetNW2Entity("Player") == game.GetWorld() or table.HasValue(animalModels, model) then
+				if entity:GetNWEntity("Player"):IsPlayer() or entity:GetNWEntity("Player") == game.GetWorld() or table.HasValue(animalModels, model) then
 					if (!entity.hearteaten) then
 						entity.hearteaten = true;
 						
