@@ -23,7 +23,7 @@ SWEP.VElementsAlternate = {
 }
 
 SWEP.WElements = {
-	["w_axmusket"] = { type = "Model", model = "models/begoyten/gunaxe/gunaxe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(8, 1, -2.5), angle = Angle(-16, 0, -90), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+	["w_axmusket"] = { type = "Model", model = "models/begoyten/gunaxe/gunaxe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(7.791, 0.899, -3.3), angle = Angle(-8.183, 1.169, -97.014), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElementsAlternate = {
