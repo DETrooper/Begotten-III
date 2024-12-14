@@ -382,7 +382,7 @@ function SWEP:CanFireBegotten()
 			if self.Owner.GetFaction and self.Owner.InTower and self.Owner:InTower() and not self.Owner:IsAdmin() then
 				local faction = self.Owner:GetFaction();
 			
-				if faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" and faction ~= "Pope Adyssa's Gatekeepers" then
+				if faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" and faction ~= "Pope Adyssa's Gatekeepers" and faction ~= "Hillkeeper" then
 					if SERVER then
 						Clockwork.player:Notify(self.Owner, "You cannot attack in this holy place!");
 					end
