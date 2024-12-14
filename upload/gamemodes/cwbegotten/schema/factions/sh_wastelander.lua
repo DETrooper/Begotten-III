@@ -263,36 +263,42 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 	
 	if SERVER then
 		function FACTION:CanEnlist(player, target, faction, subfaction)
-			if faction == "Holy Hierarchy" then
-				local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
-				
-				if playerSubfaction ~= "Ministry" then
-					if subfaction and subfaction.name ~= playerSubfaction then
-						return false;
+			if !player:IsAdmin() then
+				if faction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						if subfaction and subfaction.name ~= playerSubfaction then
+							return false;
+						end
 					end
 				end
 			end
 		end
 		
 		function FACTION:CanPromote(player, target, faction, subfaction)
-			if faction == "Holy Hierarchy" then
-				local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
-				
-				if playerSubfaction ~= "Ministry" then
-					if subfaction and subfaction.name ~= playerSubfaction then
-						return false;
+			if !player:IsAdmin() then
+				if faction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						if subfaction and subfaction.name ~= playerSubfaction then
+							return false;
+						end
 					end
 				end
 			end
 		end
 		
 		function FACTION:CanDemote(player, target, faction, subfaction)
-			if faction == "Holy Hierarchy" then
-				local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
-				
-				if playerSubfaction ~= "Ministry" then
-					if subfaction and subfaction.name ~= playerSubfaction then
-						return false;
+			if !player:IsAdmin() then
+				if faction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						if subfaction and subfaction.name ~= playerSubfaction then
+							return false;
+						end
 					end
 				end
 			end

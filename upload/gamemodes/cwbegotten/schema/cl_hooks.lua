@@ -613,7 +613,7 @@ function Schema:GetEntityMenuOptions(entity, options)
 					options["Take"] = "cw_radioTake";
 				end
 			end;
-		elseif (entity:GetClass() == "cw_gramophone") then
+		elseif (entity.tracks and entity.IsOff) then
 			if (!entity:IsOff()) then
 				options["Turn Off"] = "cwToggleGramophone";
 			else

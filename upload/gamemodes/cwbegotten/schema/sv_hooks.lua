@@ -793,8 +793,10 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 		
 		player:GiveItem(Clockwork.item:CreateInstance("cinder_block"), true)
 		--player:GiveItem(Clockwork.item:CreateInstance("length_of_rope"), true)
-	elseif (class == "cw_gramophone" and arguments == "cwToggleGramophone") then
-		entity:Toggle();
+	elseif (arguments == "cwToggleGramophone") then
+		if entity.Toggle then
+			entity:Toggle();
+		end;
 	elseif (class == "cw_siege_ladder" and arguments == "cwTearDownSiegeLadder") then
 		if entity:GetNWEntity("owner") == player then
 			local itemTable = Clockwork.item:CreateInstance("siege_ladder");
