@@ -2110,7 +2110,7 @@ AttackTables.WarHammerAttackTable = {
 };
 
 AttackTables.IronFlailAttackTable = {
-	["primarydamage"] = 20,
+	["primarydamage"] = 22,
 	["dmgtype"] = 128,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -2118,13 +2118,13 @@ AttackTables.IronFlailAttackTable = {
 	["altattackpoisedamagemodifier"] = nil,
 	["armorpiercing"] = 65,
 	["altarmorpiercing"] = nil,
-	["poisedamage"] = 35,
-	["stabilitydamage"] = 40,
+	["poisedamage"] = 40,
+	["stabilitydamage"] = 45,
 	["takeammo"] = 6,
 	["delay"] = 1.3,
 	["striketime"] = 0.4,
 	["meleearc"] = 35,
-	["meleerange"] = 650,
+	["meleerange"] = 675,
 	["punchstrength"] = Angle(0,1,0),
 };
 
