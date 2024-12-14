@@ -353,3 +353,72 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 		return false;
 	end
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Northern Orthodoxist Ceremonial Helm"
+	ITEM.model = "models/begotten/headgroups_props/anglo_helmet_world.mdl"
+	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/anglo_helmet_world.png"
+	ITEM.weight = 2.5
+	ITEM.uniqueID = "northern_orthodoxist_ceremonial_helm"
+	ITEM.category = "Helms"
+	ITEM.headReplacement = "models/begotten/heads/sutton_hoo.mdl";
+	ITEM.description = "A fine steel helm with elegant inlays. It boasts wealth, yet the wearer is a hateful soul. This infamous attire is associated with the Great Northern Orthodoxy, a band of fanatics who have pillaged and murdered pilgrims in the North in the name of atonement. It appears to be protected by a judgemental aura that brings great unease to sinners."
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/skullhelm";
+	
+	ITEM.attributes = {"fear"};
+	ITEM.requiredbeliefs = {"repentant"};
+	ITEM.kinisgerOverride = true;
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 85
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
+	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+	ITEM.insulation = 50; -- Adds 8% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Hillkeeper Helm"
+	ITEM.model = "models/begotten_apocalypse/items/helmet1.mdl"
+	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/helmet1.png"
+	ITEM.weight = 1
+	ITEM.uniqueID = "hillkeeper_helm"
+	ITEM.category = "Helms"
+	ITEM.bodyGroup = 1
+	ITEM.bodyGroupVal = 9
+	ITEM.headSuffix = "_hill";
+	ITEM.description = "An iron and leather helm used by men of the Hill. It protects well against the elements."
+	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	
+	ITEM.conditionScale = 1.1 -- item degrades 1.5x faster with damage related condition loss
+	
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 52
+	ITEM.hitParticle = "GlassImpact";
+	ITEM.type = "leather";
+
+	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+	ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+	ITEM.bulletScale = 0.80; -- reduces bullet damage by 10%
+	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.insulation = 60; -- Adds 10% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"leather", "iron_chunks"}};
+ITEM:Register();

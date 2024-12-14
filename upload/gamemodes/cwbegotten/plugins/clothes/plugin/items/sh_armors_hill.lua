@@ -89,7 +89,7 @@ ITEM.walkSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "Hillkeeper Brigandine"; -- Fine Gatekeeper Plate equivalent
+ITEM.name = "Hillkeeper Fine Brigandine"; -- Fine Gatekeeper Plate equivalent
 ITEM.group = "hillkeepers/fine_coat";
 ITEM.model = "models/begotten_apocalypse/items/hill_fine_coat_item.mdl"
 ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/hill_fine_coat_item.png"
@@ -157,10 +157,10 @@ ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/hilltop_coat_ite
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 70
+ITEM.protection = 75
 ITEM.type = "chainmail";
 ITEM.weight = 6;
-ITEM.weightclass = "Medium";
+ITEM.weightclass = "Heavy";
 ITEM.description = "Cold steel over banded mail and fine aketon. Majestic armor worn by the elite of the Hill, veterans who found that all they knew how to do was fight.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.excludeFactions = {"Goreic Warrior"};
@@ -178,15 +178,15 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.damageTypeScales = {
-	[DMG_FALL] = -0.10, -- increases fall damage by 10%
+	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
-ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
-ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
-ITEM.insulation = 65; -- Adds 24% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+ITEM.insulation = 65; -- Adds 40% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}, xp = 30};
 
@@ -719,6 +719,192 @@ ITEM.bulletScale = 0.85; -- reduces bullet damage by 15%
 ITEM.insulation = 70; -- Adds 36% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}, xp = 30};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-hauberk-1.wav.mp3",
+	"armormovement/body-hauberk-2.wav.mp3",
+	"armormovement/body-hauberk-3.wav.mp3",
+	"armormovement/body-hauberk-4.wav.mp3",
+	"armormovement/body-hauberk-5.wav.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/body-hauberk-b4.wav.mp3",
+	"armormovement/body-hauberk-b5.wav.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Hillkeeper Low Brigandine"; -- Gatekeeper Halfplate equivalent
+ITEM.group = "hillkeepers/halfplate";
+ITEM.model = "models/begotten_apocalypse/items/halfplate.mdl"
+ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/halfplate.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 0.75
+ITEM.hitParticle = "GlassImpact";
+ITEM.protection = 48
+ITEM.type = "leather";
+ITEM.weight = 4;
+ITEM.weightclass = "Medium";
+ITEM.description = "Brigandine plates fitted over an aketon. Cost-effective armament commonly used by the Watch.";
+ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.faction = "Hillkeeper";
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.10, -- increases fall damage by 10%
+}
+
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+ITEM.insulation = 55; -- Adds 24% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+
+ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "cloth", "cloth", "cloth"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-lobe-1.wav.mp3",
+	"armormovement/body-lobe-2.wav.mp3",
+	"armormovement/body-lobe-3.wav.mp3",
+	"armormovement/body-lobe-4.wav.mp3",
+	"armormovement/body-lobe-5.wav.mp3",
+};
+
+--[[ITEM.walkSound = {
+	"armormovement/body-lobe-b1.wav.mp3",
+	"armormovement/body-lobe-b2.wav.mp3",
+};]]--
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Hillkeeper Mailed Brigandine"; -- Gatekeeper Plate equivalent
+ITEM.group = "hillkeepers/nevsky";
+ITEM.model = "models/begotten_apocalypse/items/nevsky.mdl"
+ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/nevsky.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 0.75
+ITEM.hitParticle = "MetalSpark";
+ITEM.protection = 55
+ITEM.type = "chainmail";
+ITEM.weight = 6;
+ITEM.weightclass = "Medium";
+ITEM.description = "Brigandine over mail fitted with Aketon. In the far North, layers of protection are what keep your blood warm and unspilled.";
+ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.faction = "Hillkeeper";
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.10, -- increases fall damage by 10%
+}
+
+ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+ITEM.insulation = 62; -- Adds 24% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+
+ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}, xp = 30};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-hauberk-1.wav.mp3",
+	"armormovement/body-hauberk-2.wav.mp3",
+	"armormovement/body-hauberk-3.wav.mp3",
+	"armormovement/body-hauberk-4.wav.mp3",
+	"armormovement/body-hauberk-5.wav.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/body-hauberk-b4.wav.mp3",
+	"armormovement/body-hauberk-b5.wav.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Northern Orthodoxist Battle Monk Robes";
+ITEM.group = "wanderers/anglo";
+ITEM.model = "models/begotten/items/anglochainworld.mdl"
+ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/anglochainworld.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 0.75
+ITEM.hitParticle = "MetalSpark";
+ITEM.protection = 65
+ITEM.type = "chainmail";
+ITEM.weight = 4.5;
+ITEM.weightclass = "Medium";
+ITEM.description = "Mail and robes fit for harsh weather. This infamous attire is associated with the Great Northern Orthodoxy, a band of fanatics who have pillaged and murdered pilgrims in the North in the name of atonement. It appears to be protected by a judgemental aura that brings great unease to sinners.";
+ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+
+ITEM.kinisgerOverride = true;
+ITEM.requiredbeliefs = {"repentant"};
+
+ITEM.attributes = {"solblessed"};
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.10, -- increases fall damage by 10%
+}
+
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+ITEM.insulation = 60; -- Adds 36% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+
+ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "cloth", "leather", "leather"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)

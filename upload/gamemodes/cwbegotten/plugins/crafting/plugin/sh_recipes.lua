@@ -3034,38 +3034,6 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
-	
-	RECIPE = cwRecipes.recipes:New("ordained_gorefeller");
-		RECIPE.name = "Ordained Gorefeller";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
-		RECIPE.requiredFaiths = {"Faith of the Light"};
-		RECIPE.requirements = {
-			["maximilian_steel_ingot"] = {amount = 3},
-			["fine_steel_ingot"] = {amount = 1},
-			["iron_ingot"] = {amount = 2},
-			["glazic_sigil_stone"] = {amount = 1},
-		};
-		RECIPE.result = {
-			["begotten_2h_great_ordainedgorefeller"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons";
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav";
-		RECIPE.craftTime = 8;
-		RECIPE.craftVerb = "smithing";
-		RECIPE.experience = 125;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("morning_star");
 		RECIPE.name = "Morning Star";
@@ -8737,8 +8705,8 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 
-	RECIPE = cwRecipes.recipes:New("hillkeeper_brigandine");
-		RECIPE.name = "Hillkeeper Brigandine";
+	RECIPE = cwRecipes.recipes:New("hillkeeper_fine_brigandine");
+		RECIPE.name = "Hillkeeper Fine Brigandine";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
@@ -8749,7 +8717,7 @@ RECIPE:Register()
 			["leather"] = {amount = 2},
 		};
 		RECIPE.result = {
-			["hillkeeper_brigandine"] = {amount = 1},
+			["hillkeeper_fine_brigandine"] = {amount = 1},
 		};
 		RECIPE.category = "Armor"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
@@ -8776,8 +8744,8 @@ RECIPE:Register()
 		RECIPE.requirements = {
 			["leather"] = {amount = 3},
 			["cloth"] = {amount = 2},
-			["fine_steel_ingot"] = {amount = 3},
-			["hillkeeper_brigandine"] = {amount = 1},
+			["steel_ingot"] = {amount = 3},
+			["hillkeeper_fine_brigandine"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["hillkeeper_defender_plate"] = {amount = 1},
@@ -8830,18 +8798,17 @@ RECIPE:Register()
 	RECIPE:Register()
 	
 	RECIPE = cwRecipes.recipes:New("hillkeeper_heavy_coat_of_plates");
-		RECIPE.name = "Hillkeeper Heavy Coat of Plate";
+		RECIPE.name = "Hillkeeper Heavy Coat of Plate & Heavy Hill Helm";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 6},
-			["cloth"] = {amount = 1},
-			["leather"] = {amount = 2},
+			["steel_ingot"] = {amount = 4},
+			["hillkeeper_defender_plate"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["hillkeeper_heavy_coat_of_plates"] = {amount = 1},
 			["hill_heavy_helm"] = {amount = 1},
+			["hillkeeper_heavy_coat_of_plates"] = {amount = 1},
 		};
 		RECIPE.category = "Armor"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
@@ -9030,6 +8997,182 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("northern_orthodoxist_battle_monk_robes");
+		RECIPE.name = "Northern Orthodoxist Battle Monk Robes";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredSubfaiths = {"Sol Orthodoxy", "Hard-Glazed"};
+		RECIPE.requirements = {
+			["leather"] = {amount = 4},
+			["steel_ingot"] = {amount = 3},
+			["judgemental_sigil_stone"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["northern_orthodoxist_battle_monk_robes"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 90;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("hillkeeper_low_brigandine_upgrade_aketon");
+		RECIPE.name = "(Upgrade) Hillkeeper Low Brigandine";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["hillkeeper_aketon"] = {amount = 1},
+			["iron_ingot"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["hillkeeper_low_brigandine"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 35;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("hillkeeper_mailed_brigandine_upgrade_low_brigandine");
+		RECIPE.name = "(Upgrade) Hillkeeper Mailed Brigandine";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["hillkeeper_low_brigandine"] = {amount = 1},
+			["iron_ingot"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["hillkeeper_mailed_brigandine"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 25;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("hillkeeper_hauberk_upgrade_low_brigandine");
+		RECIPE.name = "(Upgrade) Hillkeeper Hauberk";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["hillkeeper_low_brigandine"] = {amount = 1},
+			["iron_ingot"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["hillkeeper_hauberk"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 25;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("hillkeeper_fine_brigandine_upgrade_mailed_brigandine");
+		RECIPE.name = "(Upgrade) Hillkeeper Fine Brigandine";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["hillkeeper_mailed_brigandine"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["hillkeeper_fine_brigandine"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("hillkeeper_defender_plate_upgrade_hauberk");
+		RECIPE.name = "(Upgrade) Hillkeeper Defender Plate";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["hillkeeper_hauberk"] = {amount = 1},
+			["steel_ingot"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["hillkeeper_defender_plate"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 45;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 	-- Hill shit (recipes for helmets)
 
 	RECIPE = cwRecipes.recipes:New("furhat");
@@ -9198,6 +9341,65 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+		RECIPE = cwRecipes.recipes:New("northern_orthodoxist_ceremonial_helm");
+		RECIPE.name = "Northern Orthodoxist Ceremonial Helm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredSubfaiths = {"Sol Orthodoxy", "Hard-Glazed"};
+		RECIPE.requirements = {
+			["fine_steel_ingot"] = {amount = 3},
+			["gold_ingot"] = {amount = 1},
+			["leather"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["northern_orthodoxist_ceremonial_helm"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 80;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("hillkeeper_helm");
+		RECIPE.name = "Hillkeeper Helm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Hillkeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 1},
+			["leather"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["hillkeeper_helm"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 40;
 		
 		function RECIPE:OnCraft(player)
 		end;
