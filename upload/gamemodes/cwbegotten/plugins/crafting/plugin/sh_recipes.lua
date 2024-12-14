@@ -7052,7 +7052,7 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("fine_gatekeeper_plate_upgrade");
 		RECIPE.name = "(Upgrade) Fine Gatekeeper Plate";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
 			["gatekeeper_plate"] = {amount = 1},
@@ -8859,7 +8859,7 @@ RECIPE:Register()
 	RECIPE:Register()
 	
 	RECIPE = cwRecipes.recipes:New("hillkeeper_heavy_coat_of_plates");
-		RECIPE.name = "Hillkeeper Heavy Coat of Plate & Heavy Hill Helm";
+		RECIPE.name = "Hillkeeper Heavy Coat of Plate & Helm";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Hillkeeper"};
@@ -9090,7 +9090,7 @@ RECIPE:Register()
 	RECIPE:Register()
 	
 	RECIPE = cwRecipes.recipes:New("hillkeeper_low_brigandine_upgrade_aketon");
-		RECIPE.name = "(Upgrade) Hillkeeper Low Brigandine";
+		RECIPE.name = "Hillkeeper Low Brigandine";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredFactions = {"Hillkeeper"};
@@ -9119,7 +9119,7 @@ RECIPE:Register()
 	RECIPE:Register()
 	
 	RECIPE = cwRecipes.recipes:New("hillkeeper_mailed_brigandine_upgrade_low_brigandine");
-		RECIPE.name = "(Upgrade) Hillkeeper Mailed Brigandine";
+		RECIPE.name = "Hillkeeper Mailed Brigandine";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredFactions = {"Hillkeeper"};
@@ -9271,7 +9271,36 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 2},
-			["leather"] = {amount = 1},
+			["hillkeeper_helm"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["hill_acolyte_helm"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("hill_acolyte_helm_upgrade_helm");
+		RECIPE.name = "(Upgrade) Hillkeeper Watch Helm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 3},
+			["leather"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["hill_acolyte_helm"] = {amount = 1},
@@ -9324,6 +9353,35 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 
+	RECIPE = cwRecipes.recipes:New("hill_fine_coat_helmet_upgrade_watch_helm");
+		RECIPE.name = "(Upgrade) Hillkeeper Nasal Helm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
+		RECIPE.requirements = {
+			["fine_steel_ingot"] = {amount = 1},
+			["hill_acolyte_helm"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["hill_fine_coat_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 50;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
 	RECIPE = cwRecipes.recipes:New("hill_coat_helmet");
 		RECIPE.name = "Hillkeeper Defender Helm";
 		RECIPE.requiresSmithy = true;
@@ -9344,6 +9402,35 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("hill_coat_helmet");
+		RECIPE.name = "(Upgrade) Hillkeeper Defender Helm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
+		RECIPE.requirements = {
+			["fine_steel_ingot"] = {amount = 1},
+			["hill_coat_helmet"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["hill_coat_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 50;
 		
 		function RECIPE:OnCraft(player)
 		end;

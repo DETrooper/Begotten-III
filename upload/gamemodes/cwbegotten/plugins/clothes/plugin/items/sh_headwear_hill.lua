@@ -19,7 +19,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 		[HITGROUP_HEAD] = true,
 	}
 
-	ITEM.protection = 55
+	ITEM.protection = 57
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
@@ -409,7 +409,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 		[HITGROUP_HEAD] = true,
 	}
 
-	ITEM.protection = 52
+	ITEM.protection = 50
 	ITEM.hitParticle = "GlassImpact";
 	ITEM.type = "leather";
 
@@ -418,7 +418,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.slashScale = 0.75; -- reduces slash damage by 25%
 	ITEM.bulletScale = 0.80; -- reduces bullet damage by 10%
 	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
-	ITEM.insulation = 60; -- Adds 10% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
+	ITEM.insulation = 35; -- Adds 10% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"leather", "iron_chunks"}};
 ITEM:Register();
