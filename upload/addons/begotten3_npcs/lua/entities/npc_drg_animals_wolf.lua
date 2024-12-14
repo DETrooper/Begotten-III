@@ -17,10 +17,11 @@ ENT.Skins = {0, 1, 2}
 ENT.OnDamageSounds = {"apocalypse/wolves/pseudodog/pdog_hurt_0.ogg", "apocalypse/wolves/pseudodog/pdog_hurt_1.ogg"}
 --ENT.OnIdleSounds = {"leopard/idle1.wav"}
 -- Stats --
-ENT.ArmorPiercing = 45
+ENT.ArmorPiercing = 35
 ENT.SpawnHealth = 100
 ENT.StaminaDamage = 25;
 ENT.XPValue = 65
+ENT.MaxMultiHit = 1;
 -- Regen --
 ENT.HealthRegen = 1
 -- AI --
