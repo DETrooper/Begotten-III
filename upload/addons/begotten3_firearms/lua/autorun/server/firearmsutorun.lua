@@ -60,11 +60,11 @@ hook.Add("KeyRelease", "KeyReleaseFirearms", function(ply, key)
 						if !table.IsEmpty(validItemInstances) then
 							local randomItem = table.Random(itemInstances);
 							
-							if randomItem:CanUseOnItem(ply, firearmItemTable, true) then
+							if randomItem:CanUseOnItem(ply, firearmItemTable) then
 								randomItem:UseOnItem(ply, firearmItemTable, true);
+								
+								return;
 							end
-							
-							return;
 						end
 					end
 				end
@@ -88,11 +88,11 @@ hook.Add("KeyRelease", "KeyReleaseFirearms", function(ply, key)
 						if !table.IsEmpty(validItemInstances) then
 							local randomItem = table.Random(itemInstances);
 							
-							if randomItem:CanUseOnItem(ply, firearmItemTable, true) then
+							if randomItem:CanUseOnItem(ply, firearmItemTable) then
 								randomItem:UseOnItem(ply, firearmItemTable, true);
+								
+								return;
 							end
-							
-							return;
 						end
 					end
 				end
@@ -115,11 +115,11 @@ hook.Add("KeyRelease", "KeyReleaseFirearms", function(ply, key)
 							if !table.IsEmpty(validItemInstances) then
 								local randomItem = table.Random(itemInstances);
 								
-								if randomItem:CanUseOnItem(ply, firearmItemTable, true) then
+								if randomItem:CanUseOnItem(ply, firearmItemTable) then
 									randomItem:UseOnItem(ply, firearmItemTable, true);
+									
+									return;
 								end
-								
-								return;
 							end
 						end
 					end
