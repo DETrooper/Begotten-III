@@ -3,16 +3,26 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
+local map = string.lower(game.GetMap());
+
 cwRecipes.pileLifetime = 1200; -- 20 Minutes.
 cwRecipes.minPileItems = 4;
 cwRecipes.maxPileItems = 10;
-cwRecipes.maxPiles = {
-	["ore"] = 8,
-	["wood"] = 8,
-	["gorewood"] = 6,
-};
 
-local map = string.lower(game.GetMap());
+if map == "rp_district21" then
+	cwRecipes.maxPiles = {
+		["ore"] = 8,
+		["wood"] = 16,
+		["gorewood"] = 6,
+	};
+else
+	cwRecipes.maxPiles = {
+		["ore"] = 8,
+		["wood"] = 8,
+		["gorewood"] = 6,
+	};
+end
+
 
 function cwRecipes:LoadPileEnts()
 	local pileEnts = table.Copy(Clockwork.kernel:RestoreSchemaData("plugins/crafting/piles/"..map));
