@@ -621,6 +621,34 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("cooked_wolf_meat");
+		RECIPE.name = "Cooked Wolf Meat";
+		RECIPE.requiresHeatSource = true;
+		RECIPE.requiredBeliefs = {"cookist"};
+		RECIPE.requiredBeliefsNiceNames = {"Cookist"};
+		RECIPE.requirements = {
+			["wolf_meat"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["cooked_wolf_meat"] = {amount = 1},
+		};
+		RECIPE.category = "Cooking"
+		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "cooking"
+		RECIPE.experience = 25;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register() 
 
 	RECIPE = cwRecipes.recipes:New("cooked_deer_meat");
 		RECIPE.name = "Cooked Deer Meat";
