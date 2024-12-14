@@ -16,6 +16,21 @@ local string = string;
 local vgui = vgui;
 local math = math;
 
+local function makeFont(title, font)
+    surface.CreateFont(title,
+    {
+    	font		= font,
+    	size		= ScreenScale(10),
+    	weight		= 700,
+    	antialiase	= true,
+    	additive 	= false,
+    	extended 	= true
+
+    });
+end
+
+makeFont("demiurgemenuTextDistrict21Menu", "Subway Haze");
+
 local smallTextFont = Clockwork.option:GetFont("menu_text_small");
 local tinyTextFont = Clockwork.option:GetFont("menu_text_tiny");
 local hugeTextFont = Clockwork.option:GetFont("menu_text_huge");
@@ -35,218 +50,405 @@ function PANEL:Init()
 		self:SetPaintBackground(false);
 		self:SetMouseInputEnabled(true);
 		
-		local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "NEW VICTIM");
-		
-		self.createButton = vgui.Create("cwLabelButton", self);
-		self.createButton:SetFont(smallTextFont);
-		self.createButton:SetText("NEW VICTIM");
-		self.createButton.originalText = "NEW VICTIM";
-		self.createButton:FadeIn(0.5);
-		self.createButton:SetCallback(function(panel)
-			if (table.Count(Clockwork.character:GetAll()) >= Clockwork.player:GetMaximumCharacters()) then
-				return Clockwork.character:SetFault("You cannot create any more characters! Try clearing any characters in your Necropolis first!");
-			end;
-			
-			Clockwork.character:ResetCreationInfo();
-			Clockwork.character:OpenNextCreationPanel();
-			
-			--surface.PlaySound("begotten/ui/buttonclick.wav");
-		end);
-		self.createButton:SizeToContents();
-		self.createButton:SetMouseInputEnabled(true);
-		self.createButton:SetPos(ScrW() * 0.25 - (newsizew / 2), ScrH() * 0.925);
-		
-		function self.createButton:Paint(w, h)
-			if (self:GetHovered()) then
-				local texts = {"NEW VICTIM", "nEw ViCtIm", "NeW vIcTiM"};
-				
-				for i = 1, math.random(2, 4) do
-					surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+		if game.GetMap() == "rp_district21" then
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize("demiurgemenuTextDistrict21Menu", "New Victim");
+
+			self.createButton = vgui.Create("cwLabelButton", self);
+			self.createButton:SetFont("demiurgemenuTextDistrict21Menu");
+			self.createButton:SetText("New Victim");
+			self.createButton.aText = "New Victim";
+			self.createButton:FadeIn(0.5);
+			self.createButton:SetCallback(function(panel)
+				if (table.Count(Clockwork.character:GetAll()) >= Clockwork.player:GetMaximumCharacters()) then
+					return Clockwork.character:SetFault("You cannot create any more characters!");
 				end;
-			end;
-		end;
-		
-		local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "VICTIMS");
-		
-		self.loadButton = vgui.Create("cwLabelButton", self);
-		self.loadButton:SetFont(smallTextFont);
-		self.loadButton:SetText("VICTIMS");
-		self.loadButton.originalText = "VICTIMS";
-		self.loadButton:FadeIn(0.5);
-		self.loadButton:SetCallback(function(panel)
-			self:OpenPanel("cwCharacterList", nil, function(panel)
-				Clockwork.character:RefreshPanelList();
+
+				Clockwork.character:ResetCreationInfo();
+				Clockwork.character:OpenNextCreationPanel();
+
+				--surface.PlaySound("begotten/ui/buttonclick.wav");
 			end);
+			self.createButton:SizeToContents();
+			self.createButton:SetText("");
+			self.createButton:SetMouseInputEnabled(true);
+			self.createButton:SetPos(ScrW() * 0.25 - (newsizew / 2), ScrH() * 0.925);
+
+			function self.createButton:Paint(w, h)
+				Clockwork.character:KillMePlease(self);
+
+			end
+
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize("demiurgemenuTextDistrict21Menu", "Victims");
+
+			self.loadButton = vgui.Create("cwLabelButton", self);
+			self.loadButton:SetFont("demiurgemenuTextDistrict21Menu");
+			self.loadButton:SetText("Victims");
+			self.loadButton.aText = "Victims";
+			self.loadButton:FadeIn(0.5);
+			self.loadButton:SetCallback(function(panel)
+				self:OpenPanel("cwCharacterList", nil, function(panel)
+					Clockwork.character:RefreshPanelList();
+				end);
+
+				surface.PlaySound("begotten/ui/buttonclick.wav");
+			end);
+			self.loadButton:SizeToContents();
+			self.loadButton:SetText("");
+			self.loadButton:SetMouseInputEnabled(true);
+			self.loadButton:SetPos(ScrW() * 0.75 - (newsizew / 2), ScrH() * 0.925);
+
+			function self.loadButton:Paint(w, h)
+				Clockwork.character:KillMePlease(self);
+
+			end
+
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize("demiurgemenuTextDistrict21Menu", "Run in Fear");
+
+			self.disconnectButton = vgui.Create("cwLabelButton", self);
+			self.disconnectButton:SetFont("demiurgemenuTextDistrict21Menu");
+			self.disconnectButton:SetText("Run in Fear");
+			self.disconnectButton.aText = "Run in Fear";
+			self.disconnectButton:FadeIn(0.5);
+			self.disconnectButton:SetCallback(function(panel)
+				if (Clockwork.Client:HasInitialized()) then
+					Clockwork.character:SetPanelMainMenu();
+					Clockwork.character:SetPanelOpen(false);
+				else
+					Derma_Query("Are you sure you want to disconnect?", "Disconnect", "Yes", function()
+						Derma_Query("Are you really sure?", "Disconnect", "No, I would like to stay for longer.", function() end, "Yes, disconnect now.", function()
+							Derma_Query("Are you sure you don't want to stay?", "Disconnect", "No, I would like to leave now.", function()
+								print("okay, bye then!!! bye bye!!!");
+								RunConsoleCommand("disconnect");
+							end, "Yes, I will stay.", function() end);
+						end);
+					end, "No", function() end);
+				end;
+
+				surface.PlaySound("begotten/ui/buttonclick.wav");
+			end);
+			self.disconnectButton:SizeToContents();
+			self.disconnectButton:SetText("");
+			self.disconnectButton:SetPos((ScrW() / 2) - (newsizew / 2), ScrH() * 0.925);
+			self.disconnectButton:SetMouseInputEnabled(true);
+
+			function self.disconnectButton:Paint(w, h)
+				Clockwork.character:KillMePlease(self);
+
+			end
+
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize("demiurgemenuTextDistrict21Menu", "Previous");
+			self.previousButton = vgui.Create("cwLabelButton", self);
+			self.previousButton:SetFont("demiurgemenuTextDistrict21Menu");
+			self.previousButton:SetText("Previous");
+			self.previousButton.aText = "Previous";
+			self.previousButton:SetCallback(function(panel)
+				if (!Clockwork.character:IsCreationProcessActive()) then
+					local activePanel = Clockwork.character:GetActivePanel();
+
+					if (activePanel and activePanel.OnPrevious) then
+						activePanel:OnPrevious();
+					end;
+				else
+					Clockwork.character:OpenPreviousCreationPanel()
+				end;
+			end);
+			self.previousButton:SizeToContents();
+			self.previousButton:SetText("");
+			self.previousButton:SetMouseInputEnabled(true);
+			self.previousButton:SetPos(ScrW() * 0.25 - (newsizew / 2), ScrH() * 0.925);
+			self.previousButton.bStartFaded = true;
+			--self.previousButton:SetEnabled(false);
+
+			function self.previousButton:Paint(w, h)
+				Clockwork.character:KillMePlease(self);
+
+			end
+
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize("demiurgemenuTextDistrict21Menu", "Suffer");
+			self.cancelButton = vgui.Create("cwLabelButton", self);
+			self.cancelButton:SetFont("demiurgemenuTextDistrict21Menu");
+			self.cancelButton:SetText("Suffer");
+			self.cancelButton.aText = "Suffer";
+			self.cancelButton:SetCallback(function(panel)
+				Clockwork.Client:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 1, 1.2);
+
+				timer.Simple(1, function()
+					if self then
+						local activePanel = Clockwork.character:GetActivePanel();
+
+						if activePanel then
+							activePanel:FadeOut(0.5);
+						end
+
+						self:ReturnToMainMenu();
+
+						timer.Simple(1, function()
+							Clockwork.Client:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 1, 0);
+						end);
+					end
+				end);
+			end);
+			self.cancelButton:SizeToContents();
+			self.cancelButton:SetText("");
+			self.cancelButton:SetMouseInputEnabled(true);
+			self.cancelButton:SetPos((ScrW() / 2) - (newsizew / 2), ScrH() * 0.925);
+			self.cancelButton.bStartFaded = true;
+
+			function self.cancelButton:Paint(w, h)
+				Clockwork.character:KillMePlease(self);
+
+			end
+
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize("demiurgemenuTextDistrict21Menu", "Next");
+			self.nextButton = vgui.Create("cwLabelButton", self);
+			self.nextButton:SetFont("demiurgemenuTextDistrict21Menu");
+			self.nextButton:SetText("Next");
+			self.nextButton.aText = "Next";
+
+			function self.nextButton:Paint(w, h)
+				Clockwork.character:KillMePlease(self);
+
+			end
+
+			self.nextButton:SetCallback(function(panel)
+				if (!Clockwork.character:IsCreationProcessActive()) then
+					local activePanel = Clockwork.character:GetActivePanel();
+
+					if (activePanel and activePanel.OnNext) then
+						activePanel:OnNext();
+					end;
+				else
+					Clockwork.character:OpenNextCreationPanel()
+				end;
+
+				panel.bCooldown = true;
+
+				timer.Simple(0.5, function()
+					if IsValid(panel) then
+						panel.bCooldown = false;
+					end
+				end);
+			end);
+			self.nextButton:SizeToContents();
+			self.nextButton:SetText("");
+			self.nextButton:SetMouseInputEnabled(true);
+			self.nextButton:SetPos(ScrW() * 0.75 - (newsizew / 2), ScrH() * 0.925);
+			self.nextButton.bStartFaded = true;
+			self.nextButton:SetEnabled(false);
+		else
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "NEW VICTIM");
 			
-			surface.PlaySound("begotten/ui/buttonclick.wav");
-		end);
-		self.loadButton:SizeToContents();
-		self.loadButton:SetMouseInputEnabled(true);
-		self.loadButton:SetPos(ScrW() * 0.75 - (newsizew / 2), ScrH() * 0.925);
-		
-		function self.loadButton:Paint(w, h)
-			if (self:GetHovered()) then
-				local texts = {"VICTIMS", "vIcTiMs", "ViCtImS"};
-				
-				for i = 1, math.random(2, 4) do
-					surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+			self.createButton = vgui.Create("cwLabelButton", self);
+			self.createButton:SetFont(smallTextFont);
+			self.createButton:SetText("NEW VICTIM");
+			self.createButton.originalText = "NEW VICTIM";
+			self.createButton:FadeIn(0.5);
+			self.createButton:SetCallback(function(panel)
+				if (table.Count(Clockwork.character:GetAll()) >= Clockwork.player:GetMaximumCharacters()) then
+					return Clockwork.character:SetFault("You cannot create any more characters! Try clearing any characters in your Necropolis first!");
 				end;
-			end;
-		end;
-		
-		local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "RUN IN FEAR");
-		
-		self.disconnectButton = vgui.Create("cwLabelButton", self);
-		self.disconnectButton:SetFont(smallTextFont);
-		self.disconnectButton:SetText("RUN IN FEAR");
-		self.disconnectButton:FadeIn(0.5);
-		self.disconnectButton:SetCallback(function(panel)
-			if (Clockwork.Client:HasInitialized()) then
-				Clockwork.character:SetPanelMainMenu();
-				Clockwork.character:SetPanelOpen(false);
-			else
-				Derma_Query("Are you sure you want to disconnect?", "Disconnect", "Yes", function()
-					Derma_Query("Are you really sure?", "Disconnect", "No, I would like to stay for longer.", function() end, "Yes, disconnect now.", function()
-						Derma_Query("Are you sure you don't want to stay?", "Disconnect", "No, I would like to leave now.", function()
-							print("okay, bye then!!! bye bye!!!");
-							RunConsoleCommand("disconnect");
-						end, "Yes, I will stay.", function() end);
-					end);
-				end, "No", function() end);
+				
+				Clockwork.character:ResetCreationInfo();
+				Clockwork.character:OpenNextCreationPanel();
+				
+				--surface.PlaySound("begotten/ui/buttonclick.wav");
+			end);
+			self.createButton:SizeToContents();
+			self.createButton:SetMouseInputEnabled(true);
+			self.createButton:SetPos(ScrW() * 0.25 - (newsizew / 2), ScrH() * 0.925);
+			
+			function self.createButton:Paint(w, h)
+				if (self:GetHovered()) then
+					local texts = {"NEW VICTIM", "nEw ViCtIm", "NeW vIcTiM"};
+					
+					for i = 1, math.random(2, 4) do
+						surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+					end;
+				end;
 			end;
 			
-			surface.PlaySound("begotten/ui/buttonclick.wav");
-		end);
-		self.disconnectButton:SizeToContents();
-		self.disconnectButton:SetPos((ScrW() / 2) - (newsizew / 2), ScrH() * 0.925);
-		self.disconnectButton:SetMouseInputEnabled(true);
-		self.disconnectButton.originalText = "RUN IN FEAR";
-		
-		function self.disconnectButton:Paint(w, h)
-			if (self:GetHovered()) then
-				local texts = {"RUN IN FEAR", "rUn In FeAr", "RuN iN fEaR"};
-				
-				for i = 1, math.random(2, 4) do
-					surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
-				end;
-			end;
-		end;
-		
-		local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "PREVIOUS");
-		self.previousButton = vgui.Create("cwLabelButton", self);
-		self.previousButton:SetFont(smallTextFont);
-		self.previousButton:SetText("PREVIOUS");
-		self.previousButton:SetCallback(function(panel)
-			if (!Clockwork.character:IsCreationProcessActive()) then
-				local activePanel = Clockwork.character:GetActivePanel();
-				
-				if (activePanel and activePanel.OnPrevious) then
-					activePanel:OnPrevious();
-				end;
-			else
-				Clockwork.character:OpenPreviousCreationPanel()
-			end;
-		end);
-		self.previousButton:SizeToContents();
-		self.previousButton:SetMouseInputEnabled(true);
-		self.previousButton:SetPos(ScrW() * 0.25 - (newsizew / 2), ScrH() * 0.925);
-		self.previousButton.bStartFaded = true;
-		--self.previousButton:SetEnabled(false);
-		
-		function self.previousButton:Paint(w, h)
-			if (self:GetHovered()) then
-				local texts = {"PrEvIoUs", "pReViOuS"};
-				
-				for i = 1, math.random(2, 4) do
-					surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
-				end;
-			end;
-		end;
-		
-		local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "SUFFER");
-		self.cancelButton = vgui.Create("cwLabelButton", self);
-		self.cancelButton:SetFont(smallTextFont);
-		self.cancelButton:SetText("SUFFER");
-		self.cancelButton:SetCallback(function(panel)
-			Clockwork.Client:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 1, 1.2);
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "VICTIMS");
 			
-			timer.Simple(1, function()
-				if self then
+			self.loadButton = vgui.Create("cwLabelButton", self);
+			self.loadButton:SetFont(smallTextFont);
+			self.loadButton:SetText("VICTIMS");
+			self.loadButton.originalText = "VICTIMS";
+			self.loadButton:FadeIn(0.5);
+			self.loadButton:SetCallback(function(panel)
+				self:OpenPanel("cwCharacterList", nil, function(panel)
+					Clockwork.character:RefreshPanelList();
+				end);
+				
+				surface.PlaySound("begotten/ui/buttonclick.wav");
+			end);
+			self.loadButton:SizeToContents();
+			self.loadButton:SetMouseInputEnabled(true);
+			self.loadButton:SetPos(ScrW() * 0.75 - (newsizew / 2), ScrH() * 0.925);
+			
+			function self.loadButton:Paint(w, h)
+				if (self:GetHovered()) then
+					local texts = {"VICTIMS", "vIcTiMs", "ViCtImS"};
+					
+					for i = 1, math.random(2, 4) do
+						surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+					end;
+				end;
+			end;
+			
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "RUN IN FEAR");
+			
+			self.disconnectButton = vgui.Create("cwLabelButton", self);
+			self.disconnectButton:SetFont(smallTextFont);
+			self.disconnectButton:SetText("RUN IN FEAR");
+			self.disconnectButton:FadeIn(0.5);
+			self.disconnectButton:SetCallback(function(panel)
+				if (Clockwork.Client:HasInitialized()) then
+					Clockwork.character:SetPanelMainMenu();
+					Clockwork.character:SetPanelOpen(false);
+				else
+					Derma_Query("Are you sure you want to disconnect?", "Disconnect", "Yes", function()
+						Derma_Query("Are you really sure?", "Disconnect", "No, I would like to stay for longer.", function() end, "Yes, disconnect now.", function()
+							Derma_Query("Are you sure you don't want to stay?", "Disconnect", "No, I would like to leave now.", function()
+								print("okay, bye then!!! bye bye!!!");
+								RunConsoleCommand("disconnect");
+							end, "Yes, I will stay.", function() end);
+						end);
+					end, "No", function() end);
+				end;
+				
+				surface.PlaySound("begotten/ui/buttonclick.wav");
+			end);
+			self.disconnectButton:SizeToContents();
+			self.disconnectButton:SetPos((ScrW() / 2) - (newsizew / 2), ScrH() * 0.925);
+			self.disconnectButton:SetMouseInputEnabled(true);
+			self.disconnectButton.originalText = "RUN IN FEAR";
+			
+			function self.disconnectButton:Paint(w, h)
+				if (self:GetHovered()) then
+					local texts = {"RUN IN FEAR", "rUn In FeAr", "RuN iN fEaR"};
+					
+					for i = 1, math.random(2, 4) do
+						surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+					end;
+				end;
+			end;
+			
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "PREVIOUS");
+			self.previousButton = vgui.Create("cwLabelButton", self);
+			self.previousButton:SetFont(smallTextFont);
+			self.previousButton:SetText("PREVIOUS");
+			self.previousButton:SetCallback(function(panel)
+				if (!Clockwork.character:IsCreationProcessActive()) then
 					local activePanel = Clockwork.character:GetActivePanel();
 					
-					if activePanel then
-						activePanel:FadeOut(0.5);
+					if (activePanel and activePanel.OnPrevious) then
+						activePanel:OnPrevious();
+					end;
+				else
+					Clockwork.character:OpenPreviousCreationPanel()
+				end;
+			end);
+			self.previousButton:SizeToContents();
+			self.previousButton:SetMouseInputEnabled(true);
+			self.previousButton:SetPos(ScrW() * 0.25 - (newsizew / 2), ScrH() * 0.925);
+			self.previousButton.bStartFaded = true;
+			--self.previousButton:SetEnabled(false);
+			
+			function self.previousButton:Paint(w, h)
+				if (self:GetHovered()) then
+					local texts = {"PrEvIoUs", "pReViOuS"};
+					
+					for i = 1, math.random(2, 4) do
+						surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+					end;
+				end;
+			end;
+			
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "SUFFER");
+			self.cancelButton = vgui.Create("cwLabelButton", self);
+			self.cancelButton:SetFont(smallTextFont);
+			self.cancelButton:SetText("SUFFER");
+			self.cancelButton:SetCallback(function(panel)
+				Clockwork.Client:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 1, 1.2);
+				
+				timer.Simple(1, function()
+					if self then
+						local activePanel = Clockwork.character:GetActivePanel();
+						
+						if activePanel then
+							activePanel:FadeOut(0.5);
+						end
+						
+						self:ReturnToMainMenu();
+						
+						timer.Simple(1, function()
+							Clockwork.Client:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 1, 0);
+						end);
 					end
-					
-					self:ReturnToMainMenu();
-					
-					timer.Simple(1, function()
-						Clockwork.Client:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 1, 0);
-					end);
-				end
+				end);
 			end);
-		end);
-		self.cancelButton:SizeToContents();
-		self.cancelButton:SetMouseInputEnabled(true);
-		self.cancelButton:SetPos((ScrW() / 2) - (newsizew / 2), ScrH() * 0.925);
-		self.cancelButton.bStartFaded = true;
-		
-		function self.cancelButton:Paint(w, h)
-			if (self:GetHovered()) then
-				local texts = {"sUfFeR", "SuFfEr"};
-				
-				for i = 1, math.random(2, 4) do
-					surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+			self.cancelButton:SizeToContents();
+			self.cancelButton:SetMouseInputEnabled(true);
+			self.cancelButton:SetPos((ScrW() / 2) - (newsizew / 2), ScrH() * 0.925);
+			self.cancelButton.bStartFaded = true;
+			
+			function self.cancelButton:Paint(w, h)
+				if (self:GetHovered()) then
+					local texts = {"sUfFeR", "SuFfEr"};
+					
+					for i = 1, math.random(2, 4) do
+						surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+					end;
 				end;
 			end;
-		end;
-		
-		local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "NEXT");
-		self.nextButton = vgui.Create("cwLabelButton", self);
-		self.nextButton:SetFont(smallTextFont);
-		self.nextButton:SetText("NEXT");
-		
-		function self.nextButton:Paint(w, h)
-			if (self:GetHovered()) then
-				local texts = {"NeXt", "nExT"};
-				
-				for i = 1, math.random(2, 4) do
-					surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+			
+			local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "NEXT");
+			self.nextButton = vgui.Create("cwLabelButton", self);
+			self.nextButton:SetFont(smallTextFont);
+			self.nextButton:SetText("NEXT");
+			
+			function self.nextButton:Paint(w, h)
+				if (self:GetHovered()) then
+					local texts = {"NeXt", "nExT"};
+					
+					for i = 1, math.random(2, 4) do
+						surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+					end;
 				end;
 			end;
-		end;
 
-		self.nextButton:SetCallback(function(panel)
-			if (!Clockwork.character:IsCreationProcessActive()) then
-				local activePanel = Clockwork.character:GetActivePanel();
-				
-				if (activePanel and activePanel.OnNext) then
-					activePanel:OnNext();
+			self.nextButton:SetCallback(function(panel)
+				if (!Clockwork.character:IsCreationProcessActive()) then
+					local activePanel = Clockwork.character:GetActivePanel();
+					
+					if (activePanel and activePanel.OnNext) then
+						activePanel:OnNext();
+					end;
+				else
+					Clockwork.character:OpenNextCreationPanel()
 				end;
-			else
-				Clockwork.character:OpenNextCreationPanel()
-			end;
-			
-			panel.bCooldown = true;
-			
-			timer.Simple(0.5, function()
-				if IsValid(panel) then
-					panel.bCooldown = false;
-				end
+				
+				panel.bCooldown = true;
+				
+				timer.Simple(0.5, function()
+					if IsValid(panel) then
+						panel.bCooldown = false;
+					end
+				end);
 			end);
-		end);
-		self.nextButton:SizeToContents();
-		self.nextButton:SetMouseInputEnabled(true);
-		self.nextButton:SetPos(ScrW() * 0.75 - (newsizew / 2), ScrH() * 0.925);
-		self.nextButton.bStartFaded = true;
-		self.nextButton:SetEnabled(false);
-		
+			self.nextButton:SizeToContents();
+			self.nextButton:SetMouseInputEnabled(true);
+			self.nextButton:SetPos(ScrW() * 0.75 - (newsizew / 2), ScrH() * 0.925);
+			self.nextButton.bStartFaded = true;
+			self.nextButton:SetEnabled(false);
+		end
+			
 		self.characterModel = vgui.Create("cwCharacterModel", self);
 		self.characterModel:SetSize(512, 512);
 		self.characterModel:SetAlpha(0);
 		self.characterModel:SetModel("models/error.mdl");
 		self.createTime = SysTime();
-		
+			
 		hook.Run("PostCharacterMenuInit", self)
 	end;
 end;
@@ -538,15 +740,33 @@ function PANEL:Think()
 			local smallTextFont = Clockwork.option:GetFont("menu_text_small");
 			
 			if (Clockwork.Client:HasInitialized()) then
-				self.disconnectButton:SetText("SUFFER");
-				local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "SUFFER");
-				self.disconnectButton:SetPos((ScrW() / 2) - (newsizew / 2), ScrH() * 0.925);
-				self.disconnectButton:SizeToContents();
+				if game.GetMap() == "rp_district21" then
+					self.disconnectButton:SetText("Suffer");
+					self.disconnectButton.aText = "Suffer";
+					local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "Suffer");
+					self.disconnectButton:SetPos((ScrW() / 2) - (newsizew / 2), ScrH() * 0.925);
+					self.disconnectButton:SizeToContents();
+					self.disconnectButton:SetText("");
+				else
+					self.disconnectButton:SetText("SUFFER");
+					local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "SUFFER");
+					self.disconnectButton:SetPos((ScrW() / 2) - (newsizew / 2), ScrH() * 0.925);
+					self.disconnectButton:SizeToContents();
+				end
 			else
-				self.disconnectButton:SetText("RUN IN FEAR");
-				local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "RUN IN FEAR");
-				self.disconnectButton:SetPos((ScrW() / 2) - (newsizew / 2), ScrH() * 0.925);
-				self.disconnectButton:SizeToContents();
+				if game.GetMap() == "rp_district21" then
+					self.disconnectButton:SetText("Run in Fear");
+					self.disconnectButton.aText = "Run in Fear";
+					local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "Run in Fear");
+					self.disconnectButton:SetPos((ScrW() / 2) - (newsizew / 2), ScrH() * 0.925);
+					self.disconnectButton:SizeToContents();
+					self.disconnectButton:SetText("");
+				else
+					self.disconnectButton:SetText("RUN IN FEAR");
+					local newsizew, newsizeH = Clockwork.kernel:GetCachedTextSize(smallTextFont, "RUN IN FEAR");
+					self.disconnectButton:SetPos((ScrW() / 2) - (newsizew / 2), ScrH() * 0.925);
+					self.disconnectButton:SizeToContents();
+				end
 			end;
 		end;
 		
@@ -923,6 +1143,7 @@ function PANEL:Init()
 	self.locationLabel:SetPos(16, 48);
 	self.locationLabel:SetSize(180, 18);
 	
+	-- Find a better way to do this later.
 	if self.customData then
 		local zones_to_names = {
 			["caves"] = "Mines",
@@ -936,6 +1157,13 @@ function PANEL:Init()
 			["tower"] = "Tower of Light",
 			["wasteland"] = "Wasteland"
 		};
+		
+		if game.GetMap() == "rp_begotten_redux" then
+			zones_to_names["tower"] = "Town of Light";
+		elseif game.GetMap() == "rp_district21" then
+			zones_to_names["tower"] = "Hill of Light";
+			zones_to_names["hillbunker"] = "Hill of Light Bunker";
+		end
 		
 		local zoneName = zones_to_names[self.customData.location] or "Unknown";
 		
@@ -1729,25 +1957,46 @@ function PANEL:Rebuild()
 		end;
 	end
 	
-	self.cancelButton = vgui.Create("cwLabelButton", self);
-	self.cancelButton:SetFont(smallTextFont);
-	self.cancelButton:SetText("RETURN");
-	self.cancelButton:SetCallback(function(self)
-		Clockwork.character:GetPanel():OpenPanel("cwCharacterList", nil, function(panel)
-			Clockwork.character:RefreshPanelList();
+	if game.GetMap() == "rp_district21" then
+		self.cancelButton = vgui.Create("cwLabelButton", self);
+		self.cancelButton:SetFont("demiurgemenuTextDistrict21Menu");
+		self.cancelButton:SetText("Return");
+		self.cancelButton.aText = "Return";
+		self.cancelButton:SetCallback(function(self)
+			Clockwork.character:GetPanel():OpenPanel("cwCharacterList", nil, function(panel)
+				Clockwork.character:RefreshPanelList();
+			end);
 		end);
-	end);
-	self.cancelButton:SizeToContents();
-	self.cancelButton:SetPos(ScrW() * 0.5 - (self.cancelButton:GetWide() / 2), ScrH() * 0.925);
-	self.cancelButton:SetMouseInputEnabled(true);
-	self.cancelButton.bStartFaded = true;
-	
-	function self.cancelButton:Paint(w, h)
-		if (self:GetHovered()) then
-			local texts = {"RETURN", "rEtUrN", "ReTuRn"};
-			
-			for i = 1, math.random(2, 4) do
-				surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+		self.cancelButton:SizeToContents();
+		self.cancelButton:SetText("");
+		self.cancelButton:SetPos(ScrW() * 0.5 - (self.cancelButton:GetWide() / 2), ScrH() * 0.925);
+		self.cancelButton:SetMouseInputEnabled(true);
+		self.cancelButton.bStartFaded = true;
+
+		function self.cancelButton:Paint(w, h)
+			Clockwork.character:KillMePlease(self);
+		end;
+	else
+		self.cancelButton = vgui.Create("cwLabelButton", self);
+		self.cancelButton:SetFont(smallTextFont);
+		self.cancelButton:SetText("RETURN");
+		self.cancelButton:SetCallback(function(self)
+			Clockwork.character:GetPanel():OpenPanel("cwCharacterList", nil, function(panel)
+				Clockwork.character:RefreshPanelList();
+			end);
+		end);
+		self.cancelButton:SizeToContents();
+		self.cancelButton:SetPos(ScrW() * 0.5 - (self.cancelButton:GetWide() / 2), ScrH() * 0.925);
+		self.cancelButton:SetMouseInputEnabled(true);
+		self.cancelButton.bStartFaded = true;
+		
+		function self.cancelButton:Paint(w, h)
+			if (self:GetHovered()) then
+				local texts = {"RETURN", "rEtUrN", "ReTuRn"};
+				
+				for i = 1, math.random(2, 4) do
+					surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+				end;
 			end;
 		end;
 	end;
@@ -1983,17 +2232,27 @@ function PANEL:Init()
 	
 	Clockwork.Client.CurrentGender = GENDER_MALE;
 	
-	panel.nextButton:SetText("CREATE");
-	panel.nextButton:SizeToContents();
-	panel.nextButton.Paint = function(panel, w, h)
-		if (panel:GetHovered()) then
-			local texts = {"CrEaTe", "cReAtE"};
-			
-			for i = 1, math.random(2, 4) do
-				surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+	if game.GetMap() == "rp_district21" then
+		panel.nextButton:SetText("Create");
+		panel.nextButton.aText = "Create";
+		panel.nextButton:SizeToContents();
+		panel.nextButton:SetText("");
+		panel.nextButton.Paint = function(panel, w, h)
+			Clockwork.character:KillMePlease(panel);
+		end;
+	else
+		panel.nextButton:SetText("CREATE");
+		panel.nextButton:SizeToContents();
+		panel.nextButton.Paint = function(panel, w, h)
+			if (panel:GetHovered()) then
+				local texts = {"CrEaTe", "cReAtE"};
+				
+				for i = 1, math.random(2, 4) do
+					surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+				end;
 			end;
 		end;
-	end;
+	end
 	
 	if (!Clockwork.faction.stored[self.info.faction].GetModel) then
 		self.bSelectModel = true;
@@ -2091,12 +2350,15 @@ function PANEL:Init()
 			self.forenameRandomButton:SetImage("begotten/ui/bgtbtnrandom.png");
 			self.forenameRandomButton:SetPos(82, 30);
 			
+			local factionNames = factionTable.names;
+			local randomNames = subfactionTable and (subfactionTable.namesOverride and subfactionTable.namesOverride or factionNames) or factionNames;
+			
 			-- Called when an option is selected.
 			self.forenameRandomButton.DoClick = function()
-				if RANDOM_FORENAMES and Clockwork.faction.stored[self.info.faction].names then
+				if RANDOM_FORENAMES and factionNames then
 					local random_forename = "";
 					
-					random_forename = table.Random(RANDOM_FORENAMES[Clockwork.faction.stored[self.info.faction].names][string.lower(Clockwork.Client.CurrentGender)]);
+					random_forename = table.Random(RANDOM_FORENAMES[randomNames][string.lower(Clockwork.Client.CurrentGender)]);
 					
 					self.forenameTextEntry:SetValue(random_forename);
 				end
@@ -2115,7 +2377,7 @@ function PANEL:Init()
 				if RANDOM_SURNAMES and Clockwork.faction.stored[self.info.faction].names then
 					local random_surname = "";
 
-					random_surname = table.Random(RANDOM_SURNAMES[Clockwork.faction.stored[self.info.faction].names]);
+					random_surname = table.Random(RANDOM_SURNAMES[randomNames]);
 					
 					self.surnameTextEntry:SetValue(random_surname);
 				end
@@ -3057,17 +3319,27 @@ function PANEL:Init()
 	self.info = Clockwork.character:GetCreationInfo();
 	self.uniqueID = "cwCharacterStageOne";
 	
-	panel.nextButton:SetText("NEXT");
-	panel.nextButton:SizeToContents();
-	panel.nextButton.Paint = function(panel, w, h)
-		if (panel:GetHovered()) then
-			local texts = {"NeXt", "nExT"};
-			
-			for i = 1, math.random(2, 4) do
-				surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+	if game.GetMap() == "rp_district21" then
+		panel.nextButton:SetText("Next");
+		panel.nextButton.aText = "Next";
+		panel.nextButton:SizeToContents();
+		panel.nextButton:SetText("");
+		panel.nextButton.Paint = function(panel, w, h)
+			Clockwork.character:KillMePlease(panel);
+		end;
+	else
+		panel.nextButton:SetText("NEXT");
+		panel.nextButton:SizeToContents();
+		panel.nextButton.Paint = function(panel, w, h)
+			if (panel:GetHovered()) then
+				local texts = {"NeXt", "nExT"};
+				
+				for i = 1, math.random(2, 4) do
+					surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+				end;
 			end;
 		end;
-	end;
+	end
 	
 	if Clockwork.Client.SelectedFaction then
 		local factionTable = Clockwork.faction:FindByID(Clockwork.Client.SelectedFaction);
@@ -3426,17 +3698,27 @@ function PANEL:Init()
 	self.curFaction = nil;
 	self.info.subfaction = nil;
 	
-	panel.nextButton:SetText("NEXT");
-	panel.nextButton:SizeToContents();
-	panel.nextButton.Paint = function(panel, w, h)
-		if (panel:GetHovered()) then
-			local texts = {"NeXt", "nExT"};
-			
-			for i = 1, math.random(2, 4) do
-				surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+	if game.GetMap() == "rp_district21" then
+		panel.nextButton:SetText("Next");
+		panel.nextButton.aText = "Next";
+		panel.nextButton:SizeToContents();
+		panel.nextButton:SetText("");
+		panel.nextButton.Paint = function(panel, w, h)
+			Clockwork.character:KillMePlease(panel);
+		end;
+	else
+		panel.nextButton:SetText("NEXT");
+		panel.nextButton:SizeToContents();
+		panel.nextButton.Paint = function(panel, w, h)
+			if (panel:GetHovered()) then
+				local texts = {"NeXt", "nExT"};
+				
+				for i = 1, math.random(2, 4) do
+					surface.DrawRotatedText(table.Random(texts), table.Random(fonts), math.random(-20, 20), math.random(-20, 20), math.random(-5, 5), Color(170, 0, 0))
+				end;
 			end;
 		end;
-	end;
+	end
 	
 	for k, v in pairs(Clockwork.faction.stored) do
 		if (v.name == self.info.faction) then
@@ -3453,7 +3735,7 @@ function PANEL:Init()
 	
 	if self.curFaction == "Goreic Warrior" then
 		self.subfactionForm:SetName("Clans");
-	elseif self.curFaction == "Gatekeeper" then
+	elseif self.curFaction == "Gatekeeper" or self.curFaction == "Hillkeeper" then
 		self.subfactionForm:SetName("Troops");
 	elseif self.curFaction == "Holy Hierarchy" then
 		self.subfactionForm:SetName("Orders");
@@ -3491,6 +3773,10 @@ function PANEL:Init()
 		
 		if (factionTable.subfactions) then -- If there isn't something has gone wrong.
 			for i = 1, #factionTable.subfactions do
+				if factionTable.subfactions[i].maps and !table.HasValue(factionTable.subfactions[i].maps, game.GetMap()) then
+					continue;
+				end
+				
 				local button = vgui.Create("DButton", self.subfactionList)
 				button:SetSize(256, 70);
 				self.subfactionList:AddItem(button);

@@ -453,11 +453,14 @@ function Clockwork.chatBox:Decode(speaker, name, text, data, class, multiplier)
 				end;
 				
 				local faction = speaker:GetNetVar("kinisgerOverride") or speaker:GetFaction();
+				local subfaction = speaker:GetSharedVar("kinisgerOverrideSubfaction") or speaker:GetSharedVar("subfaction");
 
 				if speaker:GetNetVar("beliefFont") == "Voltism" then
 					fontOverride = "Voltism";
 				elseif faction == "Goreic Warrior" then
 					fontOverride = "Gore";
+				elseif (faction == "Hillkeeper" and !speaker:GetSharedVar("southlander")) or subfaction == "Northlander" or subfaction == "Low Ministry" then
+					fontOverride = "Mordred";
 				end
 				
 				local info = {
@@ -603,6 +606,7 @@ function Clockwork.chatBox:Paint()
 	local chatBoxTextFont = Clockwork.option:GetFont("chat_box_text");
 	local chatBoxTextGoreFont = Clockwork.option:GetFont("chat_box_text_gore");
 	local chatBoxTextVoltistFont = Clockwork.option:GetFont("chat_box_text_voltist");
+	local chatBoxTextMordredFont = Clockwork.option:GetFont("chat_box_text_mordred")
 	local bIsOpen = Clockwork.chatBox:IsOpen();
 --[[
 	if (bIsOpen) then
@@ -680,6 +684,8 @@ function Clockwork.chatBox:Paint()
 				fontName = Clockwork.fonts:GetMultiplied(chatBoxTextVoltistFont, v.multiplier or 1)
 			elseif v.font == "Gore" then
 				fontName = Clockwork.fonts:GetMultiplied(chatBoxTextGoreFont, v.multiplier or 1)
+			elseif v.font == "Mordred" then
+				fontName = Clockwork.fonts:GetMultiplied(chatBoxTextMordredFont, v.multiplier or 1)
 			end
 		end
 		
@@ -980,6 +986,8 @@ function Clockwork.chatBox:Add(filtered, icon, ...)
 					message.font = "Voltism";
 				elseif v == "Gore" then
 					message.font = "Gore";
+				elseif v == "Mordred" then
+					message.font = "Mordred";
 				elseif v == "noTime" then
 					message.noTime = true;
 				elseif (type(v) == "string" or type(v) == "number" or type(v) == "boolean") then

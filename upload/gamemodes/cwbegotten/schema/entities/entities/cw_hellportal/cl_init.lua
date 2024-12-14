@@ -29,8 +29,13 @@ local function CreateMenu(state)
 
 	local subMenu = menu:AddSubMenu("Traverse...");
 	
-	subMenu:AddOption("...to the Arch of Perdition", function() Clockwork.Client:ConCommand("cw_HellPortalArch") end);
-	subMenu:AddOption("...to the Pillars of Creation", function() Clockwork.Client:ConCommand("cw_HellPortalPillars") end);
+	if game.GetMap() == "rp_district21" then
+		subMenu:AddOption("...to the Pillars of Creation", function() Clockwork.Client:ConCommand("cw_HellPortalPillars") end);
+		subMenu:AddOption("...to the Abandoned Church.", function() Clockwork.Client:ConCommand("cw_HellPortalAbandonedChurch") end);
+	else
+		subMenu:AddOption("...to the Arch of Perdition", function() Clockwork.Client:ConCommand("cw_HellPortalArch") end);
+		subMenu:AddOption("...to the Pillars of Creation", function() Clockwork.Client:ConCommand("cw_HellPortalPillars") end);
+	end
 	
 	menu:Open();
 	menu:SetPos(scrW / 2 - (menu:GetWide() / 2), scrH / 2 - (menu:GetTall() / 2));

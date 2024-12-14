@@ -3943,20 +3943,26 @@ function GM:EntityTakeDamage(entity, damageInfo)
 		return true;
 	end
 	
-	if (entity:IsPlayer() and damageInfo:IsExplosionDamage() and damage >= 25 and !entity:IsRagdolled() and !entity:IsNoClipping()) then
-		if !Clockwork.player:HasFlags(entity, "E") and !Clockwork.player:HasFlags(entity, "K") then
-			if !cwBeliefs or (cwBeliefs and !entity:HasBelief("fortitude_finisher")) then
-				local data = {}
-					data.start = damageInfo:GetDamagePosition()
-					data.endpos = entity:GetPos()
-				local trace = util.TraceLine(data)
+	if (entity:IsPlayer()) then
+		if !entity:Alive() then
+			return true;
+		end
+	
+		if damageInfo:IsExplosionDamage() and damage >= 25 and !entity:IsRagdolled() and !entity:IsNoClipping() then
+			if !Clockwork.player:HasFlags(entity, "E") and !Clockwork.player:HasFlags(entity, "K") then
+				if !cwBeliefs or (cwBeliefs and !entity:HasBelief("fortitude_finisher")) then
+					local data = {}
+						data.start = damageInfo:GetDamagePosition()
+						data.endpos = entity:GetPos()
+					local trace = util.TraceLine(data)
 
-				Clockwork.player:SetRagdollState(entity, RAGDOLL_FALLENOVER, nil, nil, nil, nil, function(physicsObject, boneIndex, ragdoll, velocity, force)
-					physicsObject:SetVelocity(trace.Normal * damageInfo:GetReportedPosition())
-				end)
-				
-				entity:SetDTBool(BOOL_FALLENOVER, true)
-				entity:SetDSP(36, false)
+					Clockwork.player:SetRagdollState(entity, RAGDOLL_FALLENOVER, nil, nil, nil, nil, function(physicsObject, boneIndex, ragdoll, velocity, force)
+						physicsObject:SetVelocity(trace.Normal * damageInfo:GetReportedPosition())
+					end)
+					
+					entity:SetDTBool(BOOL_FALLENOVER, true)
+					entity:SetDSP(36, false)
+				end
 			end
 		end
 	end
@@ -4390,7 +4396,7 @@ function GM:ScaleDamageByHitGroup(player, attacker, hitGroup, damageInfo, baseDa
 			if IsValid(attacker) and attacker:IsPlayer() then
 				local inflictor = damageInfo:GetInflictor();
 				
-				if IsValid(inflictor) and inflictor.Base == "begotten_firearm_base" then
+				if IsValid(inflictor) and (inflictor.Base == "begotten_firearm_base" or (inflictor.isMeleeFirearm and !attacker:GetNetVar("ThrustStance"))) then
 					if (player:GetPos():DistToSqr(attacker:GetPos()) <= massiveFuck) then
 						damageInfo:ScaleDamage(config.Get("scale_head_dmg"):Get());
 					end
@@ -4399,7 +4405,7 @@ function GM:ScaleDamageByHitGroup(player, attacker, hitGroup, damageInfo, baseDa
 		elseif IsValid(attacker) and attacker:IsPlayer() then
 			local inflictor = damageInfo:GetInflictor();
 			
-			if IsValid(inflictor) and inflictor.Base == "begotten_firearm_base" then
+			if IsValid(inflictor) and (inflictor.Base == "begotten_firearm_base" or (inflictor.isMeleeFirearm and !attacker:GetNetVar("ThrustStance"))) then
 				if (hitGroup == HITGROUP_CHEST or hitGroup == HITGROUP_GENERIC) then
 					damageInfo:ScaleDamage(config.Get("scale_chest_dmg"):Get());
 				elseif (hitGroup == HITGROUP_LEFTARM or hitGroup == HITGROUP_RIGHTARM or hitGroup == HITGROUP_LEFTLEG or hitGroup == HITGROUP_RIGHTLEG or hitGroup == HITGROUP_GEAR) then

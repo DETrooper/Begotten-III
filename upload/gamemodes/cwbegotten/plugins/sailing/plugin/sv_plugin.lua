@@ -6,8 +6,14 @@
 
 local map = game.GetMap();
 
+if map == "rp_begotten3" then
+	cwSailing.gorewatchBounds = {Vector(9422, 11862, -1210), Vector(10055, 10389, -770)};
+elseif map == "rp_district21" then
+	cwSailing.gorewatchBounds = {Vector(-9328, -8640, -146), Vector(-8771, -8105, 686)};
+end
+
 if !cwSailing.shipDestinations then
-	if map == "rp_begotten3" then
+	if map == "rp_begotten3" or map == "rp_district21" then
 		cwSailing.shipDestinations = {
 			["docks"] = {name = "the Gore Forest"},
 			["hell"] = {name = "Hell"},
@@ -113,6 +119,87 @@ if !cwSailing.shipLocations then
 				},
 				["ironclad"] = {
 					{occupied = false, pos = Vector(-11391, -14609, -1747), angles = Angle(0, -90, 0)},
+				},
+			},
+		};
+	elseif game.GetMap() == "rp_district21" then
+		cwSailing.shipLocations = {
+			["docks"] = {
+				["longship"] = {
+					{occupied = false, pos = Vector(-3103.90625, 385.65625, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-2734.59375, 366.75, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-2449.3125, 526.375, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-2075.25, 489.28125, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
+				},
+				["ironclad"] = {
+					{occupied = false, pos = Vector(-2589, 373, 11619), angles = Angle(0, -90, 0)},
+				},
+			},
+			["calm"] = {
+				["longship"] = {
+					{occupied = false, pos = Vector(1876.71875, 10203.3125, -6371.375)},
+					{occupied = false, pos = Vector(790.40625, 11458, -6360)},
+					{occupied = false, pos = Vector(640, 8000, -6350)},
+					{occupied = false, pos = Vector(-808.40625, 6717.125, -6345.21875)},
+					{occupied = false, pos = Vector(-2537.46875, 7600.9375, -6348.8125)},
+					{occupied = false, pos = Vector(-1691.71875, 9417.625, -6330.75)},
+					{occupied = false, pos = Vector(-2067.9375, 11629.28125, -6340)},
+					{occupied = false, pos = Vector(2746.5625, 7385.03125, -6334)},
+				},
+				["ironclad"] = {
+					{occupied = false, pos = Vector(-1939, 13492, -6318), angles = Angle(0, 180, 0)},
+				},
+			},
+			["hell"] = {
+				["longship"] = {
+					{occupied = false, pos = Vector(-6427.40625, -9967.3125, -7286.4375), angles = Angle(0, 180, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-6001.875, -9808.0625, -7282.75), angles = Angle(0, 180, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-7776.6875, -8341, -7273), angles = Angle(0, 0, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-8087.8125, -8427.71875, -7274.59375), angles = Angle(0, 0, 0), bodygroup = 1},
+				},
+				["ironclad"] = {
+					{occupied = false, pos = Vector(-7399, -9808, -7230), angles = Angle(0, 180, 0)},
+				},
+			},
+			["rough"] = {
+				["longship"] = {
+					{occupied = false, pos = Vector(9275.28125, 8330.0625, -6338.9375)},
+					{occupied = false, pos = Vector(6780.6875, 10250.71875, -6334.1875)},
+					{occupied = false, pos = Vector(6564.09375, 13210.03125, -6372.9375)},
+					{occupied = false, pos = Vector(12241.09375, 13060.8125, -6325.8125)},
+					{occupied = false, pos = Vector(11180.84375, 9724.34375, -6359.21875)},
+					{occupied = false, pos = Vector(12100.0625, 6700.15625, -6345.15625)},
+					{occupied = false, pos = Vector(6785.84375, 7462.71875, -6370.03125)},
+					{occupied = false, pos = Vector(9380.34375, 5756.28125, -6350.15625)},
+				},
+				["ironclad"] = {
+					{occupied = false, pos = Vector(6984, 10383, -6312), angles = Angle(0, 180, 0)},
+				},
+			},
+			["styx"] = {
+				["longship"] = {
+					{occupied = false, pos = Vector(-7068.96875, 11547.34375, -6354.25), angles = Angle(0, 0, 0)},
+					{occupied = false, pos = Vector(-6981.4375, 9059.625, -6353.1875), angles = Angle(0, 0, 0)},
+					{occupied = false, pos = Vector(-7200.84375, 6400.71875, -6318.6875), angles = Angle(0, 0, 0)},
+					{occupied = false, pos = Vector(-10678.65625, 6590.59375, -6353.59375), angles = Angle(0, 0, 0)},
+					{occupied = false, pos = Vector(-12773.3125, 7341.09375, -6345.40625), angles = Angle(0, 0, 0)},
+					{occupied = false, pos = Vector(-13250.3125, 13000.5, -6350.40625), angles = Angle(0, 0, 0)},
+					{occupied = false, pos = Vector(-11920.90625, 10846.6875, -6364.40625), angles = Angle(0, 0, 0)},
+					{occupied = false, pos = Vector(-9430.5, 11500, -6365.90625), angles = Angle(0, 0, 0)},
+				},
+				["ironclad"] = {
+					{occupied = false, pos = Vector(-10942, 9260, -6332), angles = Angle(0, 90, 0)},
+				},
+			},
+			["wasteland"] = {
+				["longship"] = {
+					{occupied = false, pos = Vector(-12337, -12851, -1081), angles = Angle(0, 0, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-13006, -12851, -1081), angles = Angle(0, 0, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-9137, -11912, -1081), angles = Angle(0, 90, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-13822, -13339, -1081), angles = Angle(0, 90, 0), bodygroup = 1},
+				},
+				["ironclad"] = {
+					{occupied = false, pos = Vector(-11858, -13461, -1081), angles = Angle(0, -90, 0)},
 				},
 			},
 		};
@@ -667,7 +754,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 							for _, v in _player.Iterator() do
 								local faction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 								
-								if (faction == "Gatekeeper" or faction == "Holy Hierarchy") and !v.cwObserverMode and v:GetPos():WithinAABox(Vector(9422, 11862, -1210), Vector(10055, 10389, -770)) then
+								if (faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper") and !v.cwObserverMode and v:GetPos():WithinAABox(cwSailing.gorewatchBounds[1], cwSailing.gorewatchBounds[2]) then
 									timer.Simple(math.random(5, 10), function()
 										local alarm = self.gorewatchAlarm;
 										
@@ -1413,6 +1500,8 @@ concommand.Add("cw_MoveShipWasteland", function(player, cmd, args)
 end);
 
 concommand.Add("cw_MoveShipLava", function(player, cmd, args)
+	if game.GetMap() ~= "rp_begotten3" then return end;
+	
 	local trace = player:GetEyeTrace();
 
 	if (trace.Entity) then

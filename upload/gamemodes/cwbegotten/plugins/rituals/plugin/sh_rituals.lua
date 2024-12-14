@@ -2485,3 +2485,28 @@ RITUAL = cwRituals.rituals:New("upstaged");
 	function RITUAL:EndRitual(player)
 	end;
 RITUAL:Register()
+
+RITUAL = cwRituals.rituals:New("waste_not_want_not");
+	RITUAL.name = "(Unique) Waste Not, Want Not";
+	RITUAL.description = "The blacksmiths of the North know better than to squander their goods - every last bit, from the littlest twine to the rustiest nail, will have a use found. Upon performing this ritual, any and all items disassembled or smelted down will provide greater returns closer to the original crafting price. This ritual lasts for a period of thirty minutes. Incurs 5 corruption.";
+	RITUAL.onerequiredbelief = {"acolyte"}; -- Unique Servus ritual
+	RITUAL.requiredSubfaction = {"Servus"}; -- Subfaction Ritual
+	
+	RITUAL.requirements = {"light_catalyst", "xolotl_catalyst", "elysian_catalyst"};
+	RITUAL.corruptionCost = 5;
+	RITUAL.ritualTime = 10;
+	RITUAL.experience = 50;
+
+	RITUAL.time = 1800;
+	RITUAL.onTimerEnd = function(self, player)
+	end
+	
+	function RITUAL:OnPerformed(player)
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+	end;
+	function RITUAL:EndRitual(player)
+	end;
+RITUAL:Register()

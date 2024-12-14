@@ -43,14 +43,14 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 			local lastZone = player:GetCharacterData("LastZone");
 			local playerFaction = player:GetFaction();
 			
-			if not plyTab.opponent and (table.HasValue(self.residualXPZones, lastZone) or (lastZone == "tower" and ((playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy") or residualXPInSafezone == true))) then
+			if not plyTab.opponent and (table.HasValue(self.residualXPZones, lastZone) or (lastZone == "tower" and ((playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy") or residualXPInSafezone == true))) then
 				local residualXP = self.xpValues["residual"] or 1;
 				
 				if playerFaction == "Goreic Warrior" and (lastZone == "wasteland" or lastZone == "tower" or lastZone == "caves" or lastZone == "scrapper") then
 					residualXP = residualXP * 2;
 				end
 				
-				if (cwDayNight and cwDayNight.currentCycle == "night" and player:HasBelief("primevalism") and lastZone == "wasteland") or player:HasBelief("old_son") or (lastZone != "tower" and (playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Holy Hierarchy")) then
+				if (cwDayNight and cwDayNight.currentCycle == "night" and player:HasBelief("primevalism") and lastZone == "wasteland") or player:HasBelief("old_son") or (lastZone != "tower" and (playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy")) then
 					residualXP = residualXP * 2;
 				end
 				
@@ -79,6 +79,26 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				end
 
 				player:HandleXP(residualXP);
+			end
+		end
+		
+		if !plyTab.bucketCheck or plyTab.bucketCheck < curTime then
+			plyTab.bucketCheck = curTime + 2;
+
+			if !player:HasBelief("dexterity") and (player:HasItemByID("dirty_water_bucket") or player:HasItemByID("purified_water_bucket")) and !player.cwObserverMode then
+				if player:IsRunning() then
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "drops a bucket of water as they run, spilling it all over themselves like a fucking idiot!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+					player:EmitSound("apocalypse/cauldron/dropping.mp3");
+					player:HandleTemperature(-20);
+
+					if player:HasItemByID("dirty_water_bucket") then
+						player:TakeItem(player:FindItemByID("dirty_water_bucket"));
+					else
+						player:TakeItem(player:FindItemByID("purified_water_bucket"));
+					end
+
+					player:GiveItem(Clockwork.item:CreateInstance("empty_bucket"), true);
+				end
 			end
 		end
 		
@@ -558,7 +578,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 									end
 								end
 							end);
-						elseif entity:GetNWEntity("Player"):IsPlayer() or entity:GetNWEntity("Player") == game.GetWorld() then
+						elseif entity:GetNW2Entity("Player"):IsPlayer() or entity:GetNW2Entity("Player") == game.GetWorld() then
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins cutting the flesh of the body before them, harvesting its meat.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						
 							Clockwork.player:SetAction(player, "mutilating", 10, 5, function()
@@ -606,7 +626,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 			if (!entityPlayer or !entityPlayer:Alive()) then
 				local model = entity:GetModel();
 			
-				if entity:GetNWEntity("Player"):IsPlayer() or entity:GetNWEntity("Player") == game.GetWorld() or table.HasValue(animalModels, model) then
+				if entity:GetNW2Entity("Player"):IsPlayer() or entity:GetNW2Entity("Player") == game.GetWorld() or table.HasValue(animalModels, model) then
 					if (!entity.hearteaten) then
 						entity.hearteaten = true;
 						
@@ -1113,7 +1133,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					if attacker.decapitationBuff then
 						newDamage = newDamage + (newDamage * 0.2);
 					end
-				elseif attackerWeapon.Base == "begotten_firearm_base" then -- Firearm
+				elseif attackerWeapon.Base == "begotten_firearm_base" or (attackerWeapon.isMeleeFirearm and !attacker:GetNetVar("ThrustStance")) then -- Firearm
 					if !attackerWeapon.notPowder and attacker:HasBelief("blessed_powder") then
 						newDamage = newDamage + (originalDamage * 0.25);
 					end
@@ -1341,7 +1361,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 								end
 							end
 							
-							if attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary" then
+							if (attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary") or (attacker:GetFaction() == "Hillkeeper" and subfaction == "Watchman") then
 								damageXP = damageXP * 2;
 							end
 						
@@ -1754,6 +1774,10 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 		level = level + 15;
 	elseif faction == "Holy Hierarchy" then
 		level = level + 10;
+
+		if subfaction == "Low Ministry" then
+			data["beliefs"]["literate"] = true;
+		end
 	elseif faction == "The Third Inquisition" then
 		level = level + 19;
 	elseif faction == "Smog City Pirate" then
@@ -1763,6 +1787,14 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 			level = level + 10;
 			data["beliefs"]["voltism"] = true;
 			character.subfaith = "Voltism";
+		end
+	elseif faction == "Hillkeeper" then
+		if subfaction == "Servus" then
+			level = level + 11;
+		elseif subfaction == "Outrider" then
+			level = level + 7;
+		else
+			level = level + 5;
 		end
 	end
 	

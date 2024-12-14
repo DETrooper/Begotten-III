@@ -68,7 +68,7 @@ local LITHENESS = cwBeliefs.beliefTrees:New("litheness")
 			},
 			["dexterity"] = {
 				name = "Dexterity",
-				description = "All progress bar actions including raising weapons, reloading, and standing up now complete 33% faster.",
+				description = "All progress bar actions including raising weapons, reloading, and standing up now complete 33% faster. Unlocks the abiility to run safely with a full bucket of liquid.",
 				requirements = {"nimble", "evasion"},
 				row = 3,
 			},

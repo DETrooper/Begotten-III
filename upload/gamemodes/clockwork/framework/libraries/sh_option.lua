@@ -192,4 +192,5 @@ if (CLIENT) then
 	
 	Clockwork.option:SetFont("chat_box_text_gore", "cwChatGore")
 	Clockwork.option:SetFont("chat_box_text_voltist", "cwChatVoltist")
+	Clockwork.option:SetFont("chat_box_text_mordred", "cwChatMordred")
 end

@@ -91,3 +91,22 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.repairCostModifier = 0.25;
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Hillkeeper Throwing Axe";
+	ITEM.model = "models/begotten_apocalypse/items/WinterholdAxe Thrown.mdl";
+	ITEM.weight = 1.3;
+	ITEM.uniqueID = "begotten_javelin_axehill";
+	ITEM.category = "Throwables";
+	ITEM.description = "An axehead of Gore-Glaze making on an oddly-curved and twisted wooden haft. It's shape is made for throwing.";
+	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/WinterholdAxe.png"
+	ITEM.isAttachment = true;
+	ITEM.isJavelin = true;
+	ITEM.canUseShields = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(0, 258.63, 0);
+	ITEM.attachmentOffsetVector = Vector(7.78, 0.71, -4.24);
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.repairCostModifier = 0.25;
+ITEM:Register();

@@ -2389,7 +2389,7 @@ function Clockwork.player:GetWeapons(player, bDoKeep)
 			weaponData = {
 				itemTable = itemTable,
 				class = class,
-				shield = v:GetNWString("activeShield"),
+				shield = v:GetNW2String("activeShield"),
 			},
 			teamIndex = teamIndex
 		}
@@ -2635,7 +2635,7 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 					end
 				end
 				
-				ragdoll:SetNWString("clothes", model);
+				ragdoll:SetNW2String("clothes", model);
 			end
 
 			player.cwRagdollTab = {}

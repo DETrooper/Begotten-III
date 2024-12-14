@@ -67,7 +67,7 @@ local ITEM = item.New(nil, true);
 						model = "models/begotten/"..self.group.."_"..string.lower(player:GetGender())..".mdl";
 					end
 					
-					ragdollEntity:SetNWString("clothes", model);
+					ragdollEntity:SetNW2String("clothes", model);
 				end
 			end
 		end
@@ -217,7 +217,7 @@ local ITEM = item.New(nil, true);
 							end
 						end
 
-						ragdollEntity:SetNWString("clothes", model);
+						ragdollEntity:SetNW2String("clothes", model);
 					end
 				end
 				

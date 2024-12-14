@@ -175,7 +175,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 		if (SERVER) then
 			for k, v in pairs(player.equipmentSlots) do
 				if v and v.category == "Shields" then
-					if IsValid(weapon) and weapon:GetNWString("activeShield"):len() > 0 and weapon:GetNWString("activeShield") == v.uniqueID then
+					if IsValid(weapon) and weapon:GetNW2String("activeShield"):len() > 0 and weapon:GetNW2String("activeShield") == v.uniqueID then
 						Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
 						
 						break;

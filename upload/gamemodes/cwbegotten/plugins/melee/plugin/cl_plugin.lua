@@ -22,10 +22,18 @@ function cwMelee:Disorient(blurAmount)
 	self.blurAmount = blurAmount or 1.5;
 end;
 
+function cwMelee:CustomDisorient(intensity, wobble, duration)
+	util.ScreenShake(Clockwork.Client:GetPos(), intensity, wobble, duration, 10)
+end
+
 -- A function to disorient the player.
 function playerMeta:Disorient(blurAmount)
 	cwMelee:Disorient(blurAmount);
 end;
+
+function playerMeta:CustomDisorient(intensity, wobble, duration)
+	cwMelee:CustomDisorient(intensity, wobble, duration)
+end
 
 --[[function playerMeta:GetMaxPoise()
 	return self:GetNetVar("maxMeleeStamina", 90);

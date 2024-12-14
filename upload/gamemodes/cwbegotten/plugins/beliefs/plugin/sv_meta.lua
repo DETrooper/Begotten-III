@@ -38,10 +38,12 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 				newAmount = newAmount + (amount * 0.75);
 			end
 			
-			if subfaction == "Auxiliary" or subfaction == "Rekh-khet-sa" then
+			if subfaction == "Auxiliary" or subfaction == "Rekh-khet-sa" or subfaction == "Servus" then
 				newAmount = newAmount + (amount * 0.25);
 			elseif subfaction == "Inquisition" then
 				newAmount = newAmount + (amount * 0.5);
+			elseif subfaction == "Low Ministry" then
+				newAmount = newAmount + (amount * 0.15);
 			end
 			
 			if self:HasBelief("sol_orthodoxy") then
@@ -182,7 +184,7 @@ function playerMeta:Cloak()
 	self:SetRenderMode(RENDERMODE_TRANSALPHA);
 	self:SetColor(Color(255, 255, 255, 0));
 	self.cloaked = true;
-	self:SetNWBool("Cloaked", true);
+	self:SetNW2Bool("Cloaked", true);
 end
 
 function playerMeta:Uncloak()
@@ -199,7 +201,7 @@ function playerMeta:Uncloak()
 	self:SetRenderMode(RENDERMODE_TRANSALPHA);
 	self:SetColor(Color(255, 255, 255, 255));
 	self.cloaked = false;
-	self:SetNWBool("Cloaked", false);
+	self:SetNW2Bool("Cloaked", false);
 end
 
 function playerMeta:NetworkBeliefs()

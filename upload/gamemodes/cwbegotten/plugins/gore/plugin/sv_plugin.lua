@@ -1,3 +1,10 @@
+--[[
+	Begotten III: Jesus Wept
+	By: DETrooper, cash wednesday, gabs, alyousha35
+
+	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
+--]]
+
 -- A function to turn a ragdoll into gibs.
 function cwGore:SplatCorpse(corpse, fadeDelay, damageForce, onFire)
 	local ignite = onFire or false
@@ -18,10 +25,6 @@ function cwGore:SplatCorpse(corpse, fadeDelay, damageForce, onFire)
 		end;
 		
 		if (corpse:GetClass() == "prop_ragdoll") then
-			if (!corpse) then
-				return;
-			end;
-			
 			cwMedicalSystem:DoBleedEffect(corpse, true);
 			corpse:EmitSound("physics/flesh/flesh_squishy_impact_hard3.wav");
 			corpse:EmitSound("begotten/ambient/corpse/body_splat1.wav");
@@ -29,7 +32,6 @@ function cwGore:SplatCorpse(corpse, fadeDelay, damageForce, onFire)
 			for i = 1, math.random(2, 6) do
 				corpse:EmitSound("physics/body/body_medium_break"..math.random(2, 4)..".wav")
 			end;
-
 
 			local headEnt = ents.Create("prop_physics");
 				headEnt:SetModel("models/gibs/hgibs.mdl");

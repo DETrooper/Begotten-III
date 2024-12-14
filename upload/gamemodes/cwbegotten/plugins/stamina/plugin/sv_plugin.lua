@@ -60,7 +60,9 @@ function cwStamina:GetMaxStaminaPlugin(player)
 end;
 
 function cwStamina:ModifyStaminaDrain(player, drainTab)
-	if player:GetSubfaction() == "Praeventor" then
+	local subfaction = player:GetSubfaction();
+	
+	if subfaction == "Praeventor" or subfaction == "Outrider" then
 		drainTab.decrease = drainTab.decrease * 0.75;
 	end
 end

@@ -182,7 +182,7 @@ function cwBeliefs:GetBeliefsByTree(beliefTree)
 				beliefsTab[treeID.."_finisher"] = {uniqueID = treeID.."_finisher", name = beliefTree.name.." Finisher", isFinisher = true};
 			end
 			
-			return beliefTree.beliefs;
+			return beliefsTab;
 		end
 	end
 end;

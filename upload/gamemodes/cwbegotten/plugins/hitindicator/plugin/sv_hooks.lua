@@ -5,7 +5,7 @@ function cwHitIndicator:PostEntityTakeDamage(entity, damageInfo)
     if(!IsValid(attacker) or !attacker:IsPlayer()) then return; end
 
     local inflictor = damageInfo:GetInflictor();
-    if(!IsValid(inflictor) or (!inflictor.isJavelin and inflictor.Base != "begotten_firearm_base")) then return; end
+    if(!IsValid(inflictor) or (!inflictor.isJavelin and inflictor.Base != "begotten_firearm_base" and (!inflictor.isMeleeFirearm or inflictor:GetNetVar("ThrustStance")))) then return; end
 
     attacker:ReadSound("begotten/sfx/shot_"..math.random(1,5)..".wav", _, _, 0.4, "cwHitIndicator");
 end

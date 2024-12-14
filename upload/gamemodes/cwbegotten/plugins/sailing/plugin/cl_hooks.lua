@@ -24,7 +24,7 @@ end
 function cwSailing:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunctions)
 	if (itemTable.uniqueID == "scroll_longship" or itemTable.uniqueID == "scroll_ironclad") then
 		if Clockwork.Client:GetFaction() == "Goreic Warrior" and Clockwork.Client:GetZone() == "gore" then
-			if (game.GetMap() != "rp_begotten3") then
+			if (game.GetMap() != "rp_begotten3" and game.GetMap() != "rp_district21") then
 				return;
 			end;
 			
@@ -65,6 +65,7 @@ function cwSailing:CreateMenu(data)
 	local menu = DermaMenu();
 	local isAdmin = Clockwork.Client:IsAdmin();
 	local zone = Clockwork.Client:GetZone();
+	local map = game.GetMap();
 		
 	menu:SetMinimumWidth(150);
 	
@@ -132,7 +133,7 @@ function cwSailing:CreateMenu(data)
 		local submenu = menu:AddSubMenu("Sail", function() end);
 			
 		if location ~= "docks" then
-			if location == "hell" or location == "wastelandlava" or location == "styx" then
+			if location == "hell" or (location == "wastelandlava" and map == "rp_begotten3") or location == "styx" then
 				submenu:AddOption("Sail through the River Styx to the Goreic Forest", function() Clockwork.Client:ConCommand("cw_MoveShipGoreForest") end);
 			else
 				submenu:AddOption("Sail through the High Seas to the Goreic Forest", function() Clockwork.Client:ConCommand("cw_MoveShipGoreForest") end);
@@ -140,13 +141,15 @@ function cwSailing:CreateMenu(data)
 		end
 			
 		if zone ~= "wasteland" then
-			if location == "hell" or location == "styx" then
+			if (location == "hell" or location == "styx") and map == "rp_begotten3" then
 				submenu:AddOption("Sail through the River Styx to the Glazic Wasteland", function() Clockwork.Client:ConCommand("cw_MoveShipWasteland") end);
 			else
 				submenu:AddOption("Sail through the High Seas to the Glazic Wasteland", function() Clockwork.Client:ConCommand("cw_MoveShipWasteland") end);
 			end
 			
-			submenu:AddOption("Sail through the River Styx to the Lava Coast", function() Clockwork.Client:ConCommand("cw_MoveShipLava") end);
+			if map == "rp_begotten3" then
+				submenu:AddOption("Sail through the River Styx to the Lava Coast", function() Clockwork.Client:ConCommand("cw_MoveShipLava") end);
+			end
 		end
 			
 		if location ~= "hell" then

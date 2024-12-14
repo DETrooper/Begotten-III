@@ -369,9 +369,11 @@ end
 function playerMeta:GetWeaponsEquipped()
 	local weaponsTab = {};
 	
-	for k, v in pairs(self.equipmentSlots) do
-		if v.category == "Firearms" or v.category == "Crossbows" or v.meleeWeapon or v.isJavelin then
-			table.insert(weaponsTab, v);
+	if self.equipmentSlots then
+		for k, v in pairs(self.equipmentSlots) do
+			if v.category == "Firearms" or v.category == "Crossbows" or v.meleeWeapon or v.isJavelin then
+				table.insert(weaponsTab, v);
+			end
 		end
 	end
 	
@@ -381,7 +383,7 @@ end
 local weaponMeta = FindMetaTable("Weapon")
 
 function weaponMeta:GetShield()
-	local shield = self:GetNWString("activeShield");
+	local shield = self:GetNW2String("activeShield");
 	
 	if shield and shield:len() > 0 then
 		local shieldTable = GetTable(shield);
@@ -393,7 +395,7 @@ function weaponMeta:GetShield()
 end
 
 function weaponMeta:GetOffhand()
-	local offhand = self:GetNWString("activeOffhand");
+	local offhand = self:GetNW2String("activeOffhand");
 	
 	if offhand and offhand:len() > 0 then
 		local offhandWeapon = weapons.GetStored(offhand);
@@ -594,8 +596,8 @@ else
 		
 		if activeWeapon:IsValid() then
 			activeWeaponClass = activeWeapon:GetClass();
-			activeOffhand = activeWeapon:GetNWString("activeOffhand");
-			activeShield = activeWeapon:GetNWString("activeShield");
+			activeOffhand = activeWeapon:GetNW2String("activeOffhand");
+			activeShield = activeWeapon:GetNW2String("activeShield");
 		end
 
 		for slot, itemTable in pairs(plyTab.equipmentSlots) do
@@ -705,6 +707,209 @@ else
 		end
 	end);
 	
+	--[[local function SetupPlayerEquipmentModels(player, ragdollEntity)
+		if player == LocalPlayer() and !player:ShouldDrawLocalPlayer() then return end
+		if !player:Alive() or (player:GetMoveType() == MOVETYPE_OBSERVER and !ragdollEntity) or player:GetColor().a == 0 then return end
+	
+		local activeWeapon = player:GetActiveWeapon();
+		local activeWeaponClass;
+		local activeOffhand;
+		local activeShield;
+		local plyTab = player:GetTable();
+		local equipmentSlotModels = plyTab.equipmentSlotModels or {};
+		
+		if activeWeapon:IsValid() then
+			activeWeaponClass = activeWeapon:GetClass();
+			activeOffhand = activeWeapon:GetNW2String("activeOffhand");
+			activeShield = activeWeapon:GetNW2String("activeShield");
+		end
+
+		for slot, itemTable in pairs(plyTab.equipmentSlots) do
+			if itemTable and itemTable.isAttachment then
+				local equipmentModel = equipmentSlotModels[itemTable.itemID];
+				local uniqueID = itemTable.uniqueID;
+
+				if !ragdollEntity and (activeWeaponClass == itemTable.weaponClass or activeShield == uniqueID or activeOffhand == uniqueID) then if IsValid(equipmentModel) then equipmentModel:Remove() equipmentSlotModels[itemTable.itemID] = nil end continue end;
+				
+				if IsValid(equipmentModel) then
+					local parent = equipmentModel:GetParent();
+					
+					if (ragdollEntity and parent == player) or !parent:IsValid() then
+						equipmentModel:Remove();
+						equipmentModel = nil;
+					end
+				end
+
+				if !equipmentModel then
+					equipmentModel = ClientsideModel(itemTable.model, RENDERGROUP_BOTH);
+					
+					if !IsValid(equipmentModel) then continue end;
+					
+					local modelScale = itemTable.attachmentModelScale;
+
+					if (itemTable.GetAttachmentModelScale) then
+						modelScale = itemTable:GetAttachmentModelScale(player, equipmentModel) or modelScale;
+					end
+					
+					if itemTable.attachmentSkin then
+						equipmentModel:SetSkin(itemTable.attachmentSkin);
+					end
+					
+					if itemTable.bodygroup0 then
+						equipmentModel:SetBodygroup(0, itemTable.bodygroup0 - 1);
+					end
+					
+					if itemTable.bodygroup1 then
+						equipmentModel:SetBodygroup(0, itemTable.bodygroup1 - 1);
+					end
+					
+					if itemTable.bodygroup2 then
+						equipmentModel:SetBodygroup(1, itemTable.bodygroup2 - 1);
+					end
+					
+					if itemTable.bodygroup3 then
+						equipmentModel:SetBodygroup(2, itemTable.bodygroup3 - 1);
+					end
+					
+					if modelScale then
+						local entityMatrix = Matrix();
+						
+						entityMatrix:Scale(modelScale);
+						equipmentModel:EnableMatrix("RenderMultiply", entityMatrix);
+					end
+
+					local position, angles, bone = GetRealPosition(equipmentModel, player, ragdollEntity, itemTable, string.find(slot, "Offhand"));
+
+					if position and angles then
+						equipmentModel:SetPos(position);
+						equipmentModel:SetAngles(angles);
+					end
+					
+					if bone then
+						equipmentModel:FollowBone(ragdollEntity or player, bone);
+					end
+					
+					if !plyTab.equipmentSlotModels then
+						plyTab.equipmentSlotModels = {};
+					end
+					
+					plyTab.equipmentSlotModels[itemTable.itemID] = equipmentModel;
+					
+					if ragdollEntity then
+						ragdollEntity.equipmentCreatedThisTick = true;
+					end
+				end
+			end
+		end
+		
+		-- Extremely ghetto fix for equipment models being rotated wrong when leaving render distance and returning.
+		if ragdollEntity then
+			if ragdollEntity.equipmentCreatedThisTick then
+				ragdollEntity:SetPos(ragdollEntity:GetPos() + Vector(0, 0, 1));
+				ragdollEntity:SetPos(ragdollEntity:GetPos() - Vector(0, 0, 1));
+				
+				ragdollEntity.equipmentCreatedThisTick = false;
+			end
+		end
+	end
+	
+	local function ClearPlayerEquipmentModels(player)
+		if player.equipmentSlotModels then
+			for itemID, equipmentModel in pairs(player.equipmentSlotModels) do
+				if IsValid(equipmentModel) then
+					equipmentModel:Remove();
+				end
+			end
+			
+			player.equipmentSlotModels = nil;
+		end
+	end
+	
+	hook.Add("Think", "ThinkEquipment", function()
+		for _, player in _player.Iterator() do
+			local plyTab = player:GetTable();
+			local activeWeapon = player:GetActiveWeapon();
+			
+			if !plyTab.activeWeapon or plyTab.activeWeapon ~= activeWeapon then
+				plyTab.activeWeapon = activeWeapon;
+				
+				if !player:IsDormant() then
+					SetupPlayerEquipmentModels(player, player:GetRagdollEntity());
+				end
+			end
+		end
+		
+		local client = Clockwork.Client;
+		
+		if client:ShouldDrawLocalPlayer() then
+			SetupPlayerEquipmentModels(client);
+		else
+			ClearPlayerEquipmentModels(client);
+		end
+	end);
+	
+	gameevent.Listen("entity_killed")
+	hook.Add("entity_killed", "enemy_killedEquipment", function(data)
+		local entIndex = data.entindex_killed;
+		local entity = Entity(entIndex);
+		
+		if IsValid(entity) and entity:IsPlayer() then
+			ClearPlayerEquipmentModels(entity, entity:GetRagdollEntity());
+		end
+	end)
+	
+	hook.Add("EntityNetworkedVarChanged", "EntityNetworkedVarChangedEquipment", function(entity, var, value, oldVal)
+		if var == "Cloaked" then
+			if entity:IsPlayer() then
+				if value then
+					ClearPlayerEquipmentModels(entity);
+				else
+					SetupPlayerEquipmentModels(entity, entity:GetRagdollEntity());
+				end
+			end
+		elseif var == "Player" then
+			if entity:GetClass() == "prop_ragdoll" then
+				if value and value:IsValid() and value:IsPlayer() then
+					SetupPlayerEquipmentModels(value, entity);
+				else
+					ClearPlayerEquipmentModels(entity);
+				end
+			end
+		elseif entity:IsWeapon() then
+			if var == "activeShield" or var == "activeOffhand" then
+				local owner = entity.OwnerOverride or entity.Owner;
+				
+				if IsValid(owner) and owner:IsPlayer() and owner:Alive() then
+					SetupPlayerEquipmentModels(owner);
+				end
+			end
+		end
+	end);
+	
+	hook.Add("NotifyShouldTransmit", "NotifyShouldTransmitEquipment", function(entity, bShouldTransmit)
+		if entity:IsPlayer() then
+			if bShouldTransmit then
+				SetupPlayerEquipmentModels(entity);
+			else
+				local ragdollEntity = entity:GetRagdollEntity();
+				
+				if !IsValid(ragdollEntity) or ragdollEntity:IsDormant() then
+					ClearPlayerEquipmentModels(entity);
+				end
+			end
+		elseif entity:GetClass() == "prop_ragdoll" then
+			local player = entity:GetNW2Entity("Player");
+
+			if player and player:IsValid() and player:IsPlayer() then
+				if bShouldTransmit then
+					SetupPlayerEquipmentModels(player, entity)
+				else
+					ClearPlayerEquipmentModels(player);
+				end
+			end
+		end
+	end);]]--
+	
 	hook.Add("OnEntityCreated", "EntityCreatedEquipment", function(entity)
 		if entity:IsPlayer() then
 			local plyTab = entity:GetTable();
@@ -721,11 +926,11 @@ else
 	
 	hook.Add("EntityRemoved", "EntityRemovedEquipment", function(entity, bFullUpdate)
 		if bFullUpdate then return end;
-	
+		
 		if Clockwork.entity:IsPlayerRagdoll(entity) then
 			entity = entity:GetNWEntity("Player");
 		end
-	
+		
 		if entity:IsPlayer() then
 			if entity.equipmentSlotModels then
 				for itemID, equipmentModel in pairs(entity.equipmentSlotModels) do
@@ -737,7 +942,21 @@ else
 				entity.equipmentSlotModels = nil;
 			end
 		end
+	
+		--[[if Clockwork.entity:IsPlayerRagdoll(entity) then
+			ClearPlayerEquipmentModels(entity:GetNW2Entity("Player"), entity);
+			
+			return;
+		end
+	
+		if entity:IsPlayer() then
+			ClearPlayerEquipmentModels(entity, entity:GetRagdollEntity());
+		end]]--
 	end);
+	
+	--[[hook.Add("EquipmentUpdated", "EquipmentUpdatedEquipment", function(player)
+		SetupPlayerEquipmentModels(player, player:GetRagdollEntity());
+	end);]]--
 
 	netstream.Hook("UpdateEquipment", function(data)
 		local player = data[1];
@@ -765,8 +984,12 @@ else
 		if !plyTab.equipmentSlots then
 			plyTab.equipmentSlots = {};
 		end
-		
+
 		plyTab.equipmentSlots[slot] = itemTable;
+		
+		if !player:IsDormant() then
+			hook.Run("EquipmentUpdated", player);
+		end
 	end);
 	
 	netstream.Hook("SyncEquipment", function(data)
@@ -798,5 +1021,9 @@ else
 		end
 		
 		plyTab.equipmentSlots = equipmentSlots;
+		
+		if !player:IsDormant() then
+			hook.Run("EquipmentUpdated", player);
+		end
 	end);
 end

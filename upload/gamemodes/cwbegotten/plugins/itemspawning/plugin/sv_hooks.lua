@@ -212,6 +212,10 @@ function cwItemSpawner:Think()
 										elseif itemInstance.category == "Shot" and itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
 											itemInstance:SetAmmoMagazine(math.random(1, itemInstance.ammoMagazineSize));
 										end
+											
+										if itemInstance:GetData("freezing") then
+											itemInstance:SetData("freezing", 100);
+										end
 										
 										Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
 									end
@@ -442,35 +446,45 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 					if randomItem then
 						local itemInstance = item.CreateInstance(randomItem);
 						
-						-- If it is a magazine, make it full of ammo. If it is a normal ammo, spawn a bunch of duplicates.
-						if itemInstance.category == "Shot" then
-							if itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
-								itemInstance:SetAmmoMagazine(itemInstance.ammoMagazineSize);
-							else
-								Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, math.random(4, 10));
+						if itemInstance then
+							-- If it is a magazine, make it full of ammo. If it is a normal ammo, spawn a bunch of duplicates.
+							if itemInstance.category == "Shot" then
+								if itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
+									itemInstance:SetAmmoMagazine(itemInstance.ammoMagazineSize);
+								else
+									Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, math.random(4, 10));
+								end
 							end
-						end
-						
-						if itemInstance.itemSpawnerInfo.supercrateItems then
-							for k, v in pairs(itemInstance.itemSpawnerInfo.supercrateItems) do
-								for j = 1, math.random(v.min, v.max) do
-									local subItem = item.CreateInstance(k);
-								
-									if subItem then
-										if subItem.ammoMagazineSize and subItem.SetAmmoMagazine then
-											subItem:SetAmmoMagazine(subItem.ammoMagazineSize);
+							
+							if itemInstance:GetData("freezing") then
+								itemInstance:SetData("freezing", 100);
+							end
+							
+							if itemInstance.itemSpawnerInfo.supercrateItems then
+								for k, v in pairs(itemInstance.itemSpawnerInfo.supercrateItems) do
+									for j = 1, math.random(v.min, v.max) do
+										local subItem = item.CreateInstance(k);
+									
+										if subItem then
+											if subItem.ammoMagazineSize and subItem.SetAmmoMagazine then
+												subItem:SetAmmoMagazine(subItem.ammoMagazineSize);
+											end
+											
+											if subItem:GetData("freezing") then
+												subItem:SetData("freezing", 100);
+											end
+											
+											Clockwork.inventory:AddInstance(container.cwInventory, subItem, 1);
 										end
-										
-										Clockwork.inventory:AddInstance(container.cwInventory, subItem, 1);
 									end
 								end
 							end
+							
+							-- Fortune finisher items will have perfect condition.
+							Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
+							
+							Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..itemInstance.name.." added to their loot container from the 'Fortune' belief tree finisher bonus");
 						end
-						
-						-- Fortune finisher items will have perfect condition.
-						Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
-						
-						Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..itemInstance.name.." added to their loot container from the 'Fortune' belief tree finisher bonus");
 					end
 				end
 			end
@@ -492,6 +506,10 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 						end
 					elseif itemInstance.category == "Shot" and itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
 						itemInstance:SetAmmoMagazine(math.random(1, itemInstance.ammoMagazineSize));
+					end
+					
+					if itemInstance:GetData("freezing") then
+						itemInstance:SetData("freezing", 100);
 					end
 					
 					Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);

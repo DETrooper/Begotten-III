@@ -45,7 +45,7 @@ function SWEP:AttackAnimination()
 end
 
 function SWEP:CanSecondaryAttack()
-	return self:GetNWString("activeShield"):len() > 0;
+	return self:GetNW2String("activeShield"):len() > 0;
 end
 
 function SWEP:HandlePrimaryAttack()
@@ -81,7 +81,7 @@ function SWEP:HandleThrustAttack()
 	local attacktable = GetTable(self.AttackTable)
 
 	--Attack animation
-	if self:GetNWString("activeShield"):len() > 0 then
+	if self:GetNW2String("activeShield"):len() > 0 then
 		self:TriggerAnim(self.Owner, "a_spear_shield_attack_medium");
 	else
 		self:TriggerAnim(self.Owner, "a_spear_2h_attack_medium");
@@ -215,7 +215,7 @@ end
 
 function SWEP:GetHoldtypeOverride()
 	if IsValid(self.Owner) then
-		if self:GetNWString("activeShield"):len() > 0 then
+		if self:GetNW2String("activeShield"):len() > 0 then
 			if self.Owner:GetNetVar("ThrustStance") then
 				self.realHoldType = self.HoldTypeAlternateShield;
 			else
@@ -234,7 +234,7 @@ function SWEP:GetHoldtypeOverride()
 end
 
 function SWEP:OnMeleeStanceChanged(stance)
-	self:SetNWString("stance", stance);
+	self:SetNW2String("stance", stance);
 	self.stance = stance;
 
 	if SERVER then

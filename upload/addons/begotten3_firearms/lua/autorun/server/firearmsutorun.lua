@@ -2,7 +2,7 @@ hook.Add("KeyPress", "KeyPressFirearms", function(ply, key)
 	if key == IN_RELOAD then
 		local activeWeapon = ply:GetActiveWeapon();
 		
-		if activeWeapon:IsValid() and activeWeapon.Base == "begotten_firearm_base" then
+		if activeWeapon:IsValid() and (activeWeapon.Base == "begotten_firearm_base" or (activeWeapon.isMeleeFirearm and !ply:GetNetVar("ThrustStance"))) then
 			activeWeapon.ReloadKeyTime = CurTime();
 		end
 	end
@@ -12,7 +12,7 @@ hook.Add("KeyRelease", "KeyReleaseFirearms", function(ply, key)
 	if key == IN_RELOAD then
 		local activeWeapon = ply:GetActiveWeapon();
 		
-		if activeWeapon:IsValid() and activeWeapon.Base == "begotten_firearm_base" and ply:Alive() then
+		if activeWeapon:IsValid() and (activeWeapon.Base == "begotten_firearm_base" or (activeWeapon.isMeleeFirearm and !ply:GetNetVar("ThrustStance"))) and ply:Alive() then
 			if (Clockwork.player:GetAction(ply) == "reloading") then
 				Schema:EasyText(ply, "peru", "Your character is already reloading!");
 				

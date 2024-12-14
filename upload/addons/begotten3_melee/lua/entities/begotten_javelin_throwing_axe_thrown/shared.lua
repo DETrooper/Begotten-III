@@ -265,7 +265,7 @@ if SERVER then
 				
 				if Ent:IsNPC() or Ent:IsNextBot() or (Ent:IsPlayer() and !Ent:GetNetVar("Parry") and !Ent:GetNetVar("Deflect")) and !Ent.iFrames then
 					if Ent:GetNetVar("Guardening") then
-						if enemywep and enemywep:GetNWString("activeShield"):len() > 0 then
+						if enemywep and enemywep:GetNW2String("activeShield"):len() > 0 then
 							if self.SticksInShields then
 								should_stick = true;
 								self.ConditionLoss = 100;
@@ -303,7 +303,7 @@ if SERVER then
 				local shield_reduction = 1;
 				
 				if IsValid(enemywep) then
-					blockTable = GetTable(enemywep:GetNWString("activeShield"));
+					blockTable = GetTable(enemywep:GetNW2String("activeShield"));
 				end
 				
 				if blockTable then

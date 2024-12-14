@@ -209,6 +209,26 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Ordained Gorefeller";
+	ITEM.model = "models/props/begotten/melee/ordained_gorefeller.mdl";
+	ITEM.weight = 7.5;
+	ITEM.uniqueID = "begotten_2h_great_ordainedgorefeller";
+	ITEM.category = "Melee";
+	ITEM.description = "A giant Maximillian Steel greataxe paradoxically wreathed in Northern runes. Said to be wielded by the first warriors of the north, this design has been reforged by the pious Gore-Glazics of District 21. It bears a striking resemblance to Maximus' ancient godslayer, forged to be similar to its likeness. It is believed to be as capable of cutting down pagans as efficiently as the axe it is forged in honor of.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/ordained_gorefeller.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.isSacrifical = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(0.99, 339.12, 88.51);
+	ITEM.attachmentOffsetVector = Vector(7.78, 2.83, -24.04);
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"strength", "the_light"};
+	ITEM.requireFaith = {"Faith of the Light"};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Dreadaxe";
 	ITEM.model = "models/props/begotten/melee/black_knight_greataxe.mdl";
 	ITEM.weight = 7;

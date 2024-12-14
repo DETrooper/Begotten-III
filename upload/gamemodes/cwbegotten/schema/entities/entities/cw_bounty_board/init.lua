@@ -45,7 +45,7 @@ function ENT:Use(activator, caller)
 				--else
 					--state = "Gatekeeper";
 				--end
-			elseif faction == "Gatekeeper" then
+			elseif faction == "Gatekeeper" or faction == "Hillkeeper" then
 				--state = "Gatekeeper";
 				state = "Hierarchy";
 			end

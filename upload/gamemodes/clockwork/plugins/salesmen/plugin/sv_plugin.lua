@@ -282,9 +282,11 @@ end)
 
 -- A function to load the salesmen.
 function cwSalesmen:LoadSalesmen()
-	self.salesmen = Clockwork.kernel:RestoreSchemaData("plugins/salesmen/"..game.GetMap())
+	local salesmen = Clockwork.kernel:RestoreSchemaData("plugins/salesmen/"..game.GetMap())
+	
+	self.salesmen = {};
 
-	for k, v in pairs(self.salesmen) do
+	for k, v in pairs(salesmen) do
 		local salesman = ents.Create("cw_salesman")
 
 		salesman:SetPos(v.position)

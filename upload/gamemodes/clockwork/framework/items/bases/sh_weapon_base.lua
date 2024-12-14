@@ -178,7 +178,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 					if v then
 						if v.category == "Shields" then
 							-- Old code, restore if you want the old functionality for one shield per weapon.
-							--[[if IsValid(weapon) and weapon:GetNWString("activeShield"):len() > 0 and weapon:GetNWString("activeShield") == v.uniqueID then
+							--[[if IsValid(weapon) and weapon:GetNW2String("activeShield"):len() > 0 and weapon:GetNW2String("activeShield") == v.uniqueID then
 								local weaponItemTable = item.GetByWeapon(weapon);
 								
 								if weaponItemTable and weaponItemTable:IsTheSameAs(self) then
@@ -210,7 +210,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 							
 							if player.equipmentSlots[mainSlot] then
 								if player.equipmentSlots[mainSlot].itemID == self.itemID then
-									if IsValid(weapon) and weapon:GetNWString("activeOffhand"):len() > 0 and weapon:GetNWString("activeOffhand") == v.uniqueID then
+									if IsValid(weapon) and weapon:GetNW2String("activeOffhand"):len() > 0 and weapon:GetNW2String("activeOffhand") == v.uniqueID then
 										player.equipmentSlots[k] = nil; -- Infinite loop unless this line is here.
 										Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
 									
@@ -220,7 +220,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 									weapon = player:GetWeapon(player.equipmentSlots[mainSlot].weaponClass);
 									
 									if weapon then
-										if IsValid(weapon) and weapon:GetNWString("activeOffhand"):len() > 0 then
+										if IsValid(weapon) and weapon:GetNW2String("activeOffhand"):len() > 0 then
 											weapon:HolsterOffhand();
 										end
 									end
@@ -254,7 +254,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 					for k, v in pairs(player.equipmentSlots) do
 						if v then
 							if v.category == "Shields" then
-								if IsValid(weapon) and weapon:GetNWString("activeShield"):len() > 0 and weapon:GetNWString("activeShield") == v.uniqueID then
+								if IsValid(weapon) and weapon:GetNW2String("activeShield"):len() > 0 and weapon:GetNW2String("activeShield") == v.uniqueID then
 									local weaponItemTable = item.GetByWeapon(weapon);
 									
 									if weaponItemTable and weaponItemTable:IsTheSameAs(self) then
@@ -268,7 +268,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 								
 								if player.equipmentSlots[mainSlot] then
 									if player.equipmentSlots[mainSlot].itemID == self.itemID then
-										if IsValid(weapon) and weapon:GetNWString("activeOffhand"):len() > 0 and weapon:GetNWString("activeOffhand") == v.uniqueID then
+										if IsValid(weapon) and weapon:GetNW2String("activeOffhand"):len() > 0 and weapon:GetNW2String("activeOffhand") == v.uniqueID then
 											Clockwork.kernel:ForceUnequipItem(player, v.uniqueID, v.itemID);
 										
 											break;
@@ -277,7 +277,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 										weapon = player:GetWeapon(player.equipmentSlots[mainSlot].weaponClass);
 										
 										if weapon then
-											if IsValid(weapon) and weapon:GetNWString("activeOffhand"):len() > 0 then
+											if IsValid(weapon) and weapon:GetNW2String("activeOffhand"):len() > 0 then
 												weapon:HolsterOffhand();
 											end
 										end

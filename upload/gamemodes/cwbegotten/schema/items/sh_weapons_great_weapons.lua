@@ -116,7 +116,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.weight = 3.5;
 	ITEM.uniqueID = "begotten_2h_great_haralderwaraxe";
 	ITEM.category = "Melee";
-	ITEM.description = "An ornate war axe made from Shagalaxian steel. This axe is often used by the sea raiders of Clan Harald.";
+	ITEM.description = "An ornate war axe made from Shagalaxian steel. This axe is often used by the sea raiders of Clan Harald. An old curse prevents weaklings from firmly grasping its handle.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/haralder_war_axe.png"
 	ITEM.meleeWeapon = true;
 	ITEM.isAttachment = true;
@@ -126,6 +126,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
+	ITEM.requireFaith = {"Faith of the Family"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -308,4 +309,25 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "steel_chunks", "wood", "leather"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
+ITEM:Register();
+
+-- Hill shit
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Hill Long Axe";
+	ITEM.model = "models/begotten_apocalypse/items/2HAxe2.mdl";
+	ITEM.weight = 5;
+	ITEM.uniqueID = "begotten_2h_great_hilllongaxe";
+	ITEM.category = "Melee";
+	ITEM.description = "A modified logging axe made to reach over shield walls. The blade is sharp, and now what once cut logs now cuts flesh. The wooden shaft has been thrice-blessed and it now burns the hands of heretics.";
+	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/2HAxe2.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetVector = Vector(0.71, 2.83, -6.36);
+	ITEM.attachmentOffsetAngles = Angle(90, 2.84, 201.79);
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"strength"};
+	ITEM.requireFaith = {"Faith of the Light"};
 ITEM:Register();

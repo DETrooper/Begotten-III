@@ -335,7 +335,7 @@ function CLASS_TABLE:OnTakeFromPlayer(player)
 			for k, v in pairs(player.equipmentSlots) do
 				if v and v.category == "Shields" then
 					-- Old code for 1 weapon per shield.
-					--[[if weapon:GetNWString("activeShield") == v.uniqueID then
+					--[[if weapon:GetNW2String("activeShield") == v.uniqueID then
 						local weaponItemTable = item.GetByWeapon(weapon);
 						
 						if weaponItemTable and weaponItemTable:IsTheSameAs(self) then
@@ -1379,6 +1379,7 @@ else
 		local maximumWeight = Clockwork.inventory:CalculateWeight(Clockwork.inventory:GetClient());
 		local weight = itemTable("weight");
 		local condition = itemTable:GetCondition() or 100;
+		local freezing = itemTable:GetData("freezing");
 		local percentage = (weight / maximumWeight);
 		local name = itemTable:GetName();
 		
@@ -1386,7 +1387,9 @@ else
 			percentage = 1;
 		end
 		
-		if condition and condition <= 0 then
+		if freezing and freezing > 25 then
+			name = "Frozen "..name;
+		elseif condition and condition <= 0 then
 			name = "Broken "..name;
 		end
 		

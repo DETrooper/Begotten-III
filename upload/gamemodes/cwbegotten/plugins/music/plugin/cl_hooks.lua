@@ -1,6 +1,6 @@
 -- Dynamic Music by Cash Wednesday and DETrooper
 
-local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_redux" or game.GetMap() == "rp_scraptown";
+local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_redux" or game.GetMap() == "rp_scraptown" or game.GetMap() == "rp_district21";
 
 Clockwork.ConVars.AMBIENTMUSIC = Clockwork.kernel:CreateClientConVar("cwAmbientMusic", 1, true, true)
 Clockwork.ConVars.AMBIENTMUSICVOLUME = Clockwork.kernel:CreateClientConVar("cwAmbientMusicVolume", 100, true, true)
@@ -8,6 +8,11 @@ Clockwork.ConVars.BATTLEMUSIC = Clockwork.kernel:CreateClientConVar("cwBattleMus
 Clockwork.ConVars.BATTLEMUSICVOLUME = Clockwork.kernel:CreateClientConVar("cwBattleMusicVolume", 100, true, true)
 Clockwork.ConVars.MENUMUSIC = Clockwork.kernel:CreateClientConVar("cwMenuMusic", 1, true, true)
 Clockwork.ConVars.MENUMUSICVOLUME = Clockwork.kernel:CreateClientConVar("cwMenuMusicVolume", 100, true, true)
+
+if game.GetMap() == "rp_district21" then
+	Clockwork.ConVars.AMBIENTMUSICCLASSIC = Clockwork.kernel:CreateClientConVar("cwAmbientMusicClassic", 0, true, true)
+	Clockwork.ConVars.BATTLEMUSICCLASSIC = Clockwork.kernel:CreateClientConVar("cwBattleMusicClassic", 0, true, true)
+end
 
 cwMusic.AmbientMusicTable = {
 	["Tower of Light Ambience"] = { -- ambient music for the tower of light
@@ -98,6 +103,69 @@ cwMusic.BattleMusicTable = {
 		{name = "Hellblade OST - Volcano Fight Final", track = "begotten3soundtrack/combatgoeric/hb-volcanofightfinal.mp3", length = 182},
 	},
 }
+
+if game.GetMap() == "rp_district21" then
+	local ambientTable = {
+		["Hill of Light Ambience"] = { -- ambient music for the hill of light
+			{track = "ambience/hill_of_light/Altars.ogg", length = 256},
+			{track = "ambience/hill_of_light/Bleak_Night.ogg", length = 268},
+			{track = "ambience/hill_of_light/Cold_Breeze.ogg", length = 272},
+			{track = "ambience/hill_of_light/Frostbite.ogg", length = 335},
+			{track = "ambience/hill_of_light/Howling_Wolves.ogg", length = 247, volume = 0.5},
+			{track = "ambience/hill_of_light/Moonlight.ogg", length = 185, volume = 0.5},
+			{track = "ambience/hill_of_light/Nox_Eterna.ogg", length = 273},
+			{track = "ambience/hill_of_light/Voice_Of_The_Night.ogg", length = 186},
+		},
+		["District 21 Ambience"] = { -- ambient music for the d21 wasteland
+			{track = "ambience/outskirts/day/cripple.mp3", length = 74, volume = 1.8},
+			{track = "ambience/outskirts/day/darkness_falls.mp3", length = 280, volume = 1.8},
+			{track = "ambience/outskirts/day/dawn.mp3", length = 216, volume = 1.8},
+			{track = "ambience/outskirts/day/frequency.mp3", length = 434, volume = 1.8},
+			{track = "ambience/outskirts/day/hunter.mp3", length = 179, volume = 1.85},
+			{track = "ambience/outskirts/day/mother.mp3", length = 95, volume = 1.85},
+			{track = "ambience/outskirts/day/passing.mp3", length = 138, volume = 1.85},
+			{track = "ambience/outskirts/day/prepare.mp3", length = 184, volume = 1.85},
+			{track = "ambience/outskirts/day/reborn.mp3", length = 234, volume = 1.85},
+			{track = "ambience/outskirts/day/rest.mp3", length = 70, volume = 1.85},
+			{track = "ambience/outskirts/day/watcher.mp3", length = 263, volume = 1.85},
+			{track = "ambience/outskirts/day/winds.mp3", length = 196, volume = 1.85},
+			{track = "ambience/outskirts/day/abberance.mp3", length = 184, volume = 1.85},
+			{track = "ambience/outskirts/day/deepwoods.mp3", length = 117, volume = 1.85},
+			{track = "ambience/outskirts/day/rally.mp3", length = 184, volume = 1.85},
+			{track = "ambience/outskirts/day/saintly.mp3", length = 44, volume = 1.85},
+			{track = "ambience/outskirts/day/wicked_things.mp3", length = 44, volume = 1.85},
+			{track = "ambience/outskirts/day/youth.mp3", length = 74, volume = 1.85},
+		},
+		["District 21 Nighttime Ambience"] = { -- ambient music for the d21 wasteland night
+			{track = "ambience/outskirts/night/amnesia.mp3", length = 65, volume = 1.8},
+			{track = "ambience/outskirts/night/ancient_land.mp3", length = 206, volume = 1.8},
+			{track = "ambience/outskirts/night/before.mp3", length = 227, volume = 1.8},
+			{track = "ambience/outskirts/night/dark_water.mp3", length = 77, volume = 1.8},
+			{track = "ambience/outskirts/night/darkness.mp3", length = 76, volume = 1.8},
+			{track = "ambience/outskirts/night/lost_moon.mp3", length = 127, volume = 1.8},
+			{track = "ambience/outskirts/night/memory.mp3", length = 179, volume = 1.8},
+			{track = "ambience/outskirts/night/penumbra.mp3", length = 120, volume = 1.8},
+			{track = "ambience/outskirts/night/prelude.mp3", length = 154, volume = 1.8},
+		},
+	};
+	
+	local combatTable = {
+		["District 21 Combat"] = {
+			{track = "ambience/outskirtscombat/defenders_of_light.mp3", length = 167}, volume = 1.75,
+			{track = "ambience/outskirtscombat/fight_with_fear.mp3", length = 152, volume = 1.75},
+			{track = "ambience/outskirtscombat/hearth.mp3", length = 159, volume = 1.75},
+			{track = "ambience/outskirtscombat/highlander.mp3", length = 194, volume = 1.75},
+			{track = "ambience/outskirtscombat/kite_wall.mp3", length = 203, volume = 1.75},
+			{track = "ambience/outskirtscombat/northern_horde.mp3", length = 252, volume = 1.75},
+			{track = "ambience/outskirtscombat/sacrifice_the_forsaken.mp3", length = 188, volume = 1.75},
+			{track = "ambience/outskirtscombat/vengeance.mp3", length = 163, volume = 1.75},
+			{track = "ambience/outskirtscombat/wrath_of_blood.mp3", length = 193, volume = 1.75},
+		},
+	};
+	
+	table.Merge(cwMusic.AmbientMusicTable, ambientTable, true);
+	table.Merge(cwMusic.BattleMusicTable, combatTable, true);
+end
 
 function cwMusic:ClockworkConVarChanged(name, previousValue, newValue)
 	if (name == "cwAmbientMusic" and newValue) then
@@ -291,19 +359,27 @@ function cwMusic:StartAmbientMusic(bForce, trackOverride)
 end
 
 function cwMusic:GetAmbientMusicCategory()
-	--if (Clockwork.Client:Sanity() < 20) then
-		--return "insanity";
-	--end
-
 	local trackType = "Wasteland Ambience"
 	local zone = Clockwork.Client:GetZone();
 	
-	if zone == "wasteland" and Clockwork.Client.currentCycle == "night" then
-		trackType = "Wasteland Nighttime Ambience";
-	elseif zone == "tower" and game.GetMap() ~= "rp_scraptown" then
-		trackType = "Tower of Light Ambience";
-	elseif zone == "gore" or zone == "gore_hallway" or zone == "gore_tree" then
-		trackType = "Gore Forest Ambience";
+	if game.GetMap() == "rp_district21" and Clockwork.ConVars.AMBIENTMUSICCLASSIC:GetInt() ~= 1 then
+		trackType = "District 21 Ambience"
+		
+		if zone == "wasteland" and Clockwork.Client.currentCycle == "night" then
+			trackType = "District 21 Nighttime Ambience";
+		elseif zone == "tower"  then
+			trackType = "Hill of Light Ambience";
+		elseif zone == "gore" or zone == "gore_hallway" or zone == "gore_tree" then
+			trackType = "Gore Forest Ambience";
+		end
+	else
+		if zone == "wasteland" and Clockwork.Client.currentCycle == "night" then
+			trackType = "Wasteland Nighttime Ambience";
+		elseif zone == "tower" and game.GetMap() ~= "rp_scraptown" then
+			trackType = "Tower of Light Ambience";
+		elseif zone == "gore" or zone == "gore_hallway" or zone == "gore_tree" then
+			trackType = "Gore Forest Ambience";
+		end
 	end
 	
 	return trackType;
@@ -528,6 +604,10 @@ end
 function cwMusic:GetBattleMusicCategory()
 	local trackType = "Wasteland Combat";
 	local zone = Clockwork.Client:GetZone();
+	
+	if (game.GetMap() == "rp_district21" and Clockwork.ConVars.BATTLEMUSICCLASSIC:GetInt() ~= 1) then
+		trackType = "District 21 Combat"
+	end
 	
 	if zone == "gore" or zone == "gore_hallway" or zone == "gore_tree" then
 		trackType = "Gore Forest Combat";
@@ -901,8 +981,10 @@ function cwMusic:SetupSettingsCustomPanel(category, text, panel)
 end
 
 Clockwork.setting:AddCheckBox("Dynamic Music", "Enable dynamic ambient music.", "cwAmbientMusic", "Click to toggle the dynamic ambient music system.")
+if game.GetMap() == "rp_district21" then Clockwork.setting:AddCheckBox("Dynamic Music", "Enable classic ambient music.", "cwAmbientMusicClassic", "Click to enable/disable the classic Begotten III music.") end
 Clockwork.setting:AddNumberSlider("Dynamic Music", "Ambient music volume:", "cwAmbientMusicVolume", 0, 100, 0, "Adjust the volume of the ambient music.");
 Clockwork.setting:AddMultiChoice("Dynamic Music", "Enable dynamic battle music:", "cwBattleMusic", {{"Enable", "Click to enable the dynamic battle music system."}, {"Enable (Duels Only)", "Click to enable the dynamic battle music system only in duels."}, {"Disable", "Click to disable the dynamic battle music system."}})
+if game.GetMap() == "rp_district21" then Clockwork.setting:AddCheckBox("Dynamic Music", "Enable classic battle music.", "cwBattleMusicClassic", "Click to enable/disable the classic Begotten III music.") end
 Clockwork.setting:AddNumberSlider("Dynamic Music", "Battle music volume:", "cwBattleMusicVolume", 0, 100, 0, "Adjust the volume of the battle music.");
 Clockwork.setting:AddCheckBox("Dynamic Music", "Enable main menu music.", "cwMenuMusic", "Click to toggle the main menu music.")
 Clockwork.setting:AddNumberSlider("Dynamic Music", "Main menu music volume:", "cwMenuMusicVolume", 0, 100, 0, "Adjust the volume of the main menu music.");

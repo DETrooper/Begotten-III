@@ -485,3 +485,90 @@ local ITEM = Clockwork.item:New("enchanted_base");
 		end
 	end
 ITEM:Register();
+
+-- Hill shit (charms)
+
+local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Codex Solis";
+	ITEM.model = "models/props_clutter/book_mg03.mdl";
+	ITEM.weight = 0.2;
+	ITEM.uniqueID = "codex_solis";
+	ITEM.description = "A gilded leather-bound book with a clasp made of steel. Contained within is an assortment of long forgotten Hard-Glaze canon with the accompanied footnotes and the crazed ramblings of hundreds of ministers prior. Worn visibly on the hip with zeal, one would not wield the righteous authority to preach or chastise the common man without it.";
+	ITEM.charmEffects = "- Requires Low Ministry Vestments to be worn.\n- Increases faith gain by 15%.\n- Decreases sanity loss by 50%.\n- Decreases corruption gain by 50%.\n- Increases damage against all non-Hard-Glazed characters by 15%.\n- Moderately increases parry and deflection windows for all melee weapons.\n The Glaze Sees All...";
+	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/book_mg03.png";
+	ITEM.kinisgerOverride = true;
+	ITEM.requiredSubfaiths = {"Hard-Glazed"};
+	
+	-- Called when a player uses the item.
+	function ITEM:OnUse(player, itemEntity)
+		if (self:HasPlayerEquipped(player)) then
+			if !player.spawning then
+				Schema:EasyText(player, "peru", "You already have a charm of this type equipped!")
+			end
+			
+			return false
+		end
+		
+		if self.requiredSubfaiths and not (table.HasValue(self.requiredSubfaiths, player:GetSubfaith())) then
+			if !player.spawning then
+				Schema:EasyText(player, "chocolate", "You are not of the correct subfaith to wear this!")
+			end
+			
+			return false
+		end
+
+		if (player:Alive()) then
+			local clothesItem = player:GetClothesEquipped();
+			
+			if !clothesItem or !clothesItem.bodygroupCharms or !clothesItem.bodygroupCharms[self.uniqueID] then
+				Schema:EasyText(player, "peru", "This charm cannot be worn without Low Ministry garb!")
+				
+				return false;
+			end
+		
+			for i, v in ipairs(self.slots) do
+				if !player.equipmentSlots[v] then
+					Clockwork.equipment:EquipItem(player, self, v);
+
+					return true
+				end
+			end
+	
+			if !player.spawning then
+				Schema:EasyText(player, "peru", "You do not have an open slot to equip this charm in!")
+			end
+			
+			return false;
+		else
+			if !player.spawning then
+				Schema:EasyText(player, "peru", "You cannot do this action at this moment.")
+			end
+		end
+
+		return false
+	end
+	
+	function ITEM:OnBodygroupItemUnequipped(player, itemTable)
+		if itemTable.bodygroupCharms[self.uniqueID] then
+			Clockwork.kernel:ForceUnequipItem(player, self.uniqueID, self.itemID);
+		end
+	end
+	
+	function ITEM:OnPlayerUnequipped(player, extraData)
+		if Clockwork.equipment:UnequipItem(player, self) then
+			local useSound = self.useSound;
+			
+			if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+				if (useSound) then
+					if (type(useSound) == "table") then
+						player:EmitSound(useSound[math.random(1, #useSound)]);
+					else
+						player:EmitSound(useSound);
+					end;
+				elseif (useSound != false) then
+					player:EmitSound("begotten/items/first_aid.wav");
+				end;
+			end
+		end
+	end
+ITEM:Register();

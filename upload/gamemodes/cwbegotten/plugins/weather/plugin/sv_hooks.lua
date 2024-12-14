@@ -91,7 +91,7 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				
 				local activeWeapon = player:GetActiveWeapon();
 				
-				if activeWeapon:IsValid() and activeWeapon.Base == "begotten_firearm_base" and !activeWeapon.notPowder then
+				if activeWeapon:IsValid() and (activeWeapon.Base == "begotten_firearm_base" or activeWeapon.isMeleeFirearm) and !activeWeapon.notPowder then
 					if math.random(1, 10) == 10 then
 						local itemTable = item.GetByWeapon(activeWeapon);
 						
@@ -251,5 +251,13 @@ function cwWeather:WeatherChanged(weather, oldWeather)
 		end
 		
 		Schema.spawnedNPCs["thrall"] = {};
+	elseif weather == "snow" or weather == "blizzard" then
+		for _, v in ipairs(_player.GetAll()) do
+			if (v.cloaked and !v:GetNetVar("kinisgerCloak")) then v:Uncloak(); end
+
+			if !v:HasBelief("thirst_blood_moon") and !v:HasBelief("embrace_the_darkness") then return; end
+
+			Clockwork.chatBox:Add(v, nil, "event", "You feel the Blood Moon's dark power fade away, obscured by the changing weather.");
+		end
 	end
 end

@@ -18,6 +18,8 @@ function cwCinematicText:PrintTextCenter(text, delay, color, font)
 			centerTextFont = Clockwork.option:GetFont("chat_box_text_gore");
 		elseif font == "Voltism" then
 			centerTextFont = Clockwork.option:GetFont("chat_box_text_voltist");
+		elseif font == "Mordred" then
+			centerTextFont = Clockwork.option:GetFont("chat_box_text_mordred")
 		end
 	end
 

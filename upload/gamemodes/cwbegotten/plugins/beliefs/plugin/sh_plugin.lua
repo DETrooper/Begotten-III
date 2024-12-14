@@ -1092,10 +1092,16 @@ local COMMAND = Clockwork.command:New("Warcry");
 			elseif faith == "Faith of the Dark" then
 				sanity_debuff = -25;
 				warcry_beliefs = {"sadism"};
+			elseif faith == "Faith of the Light" and (faction == "Hillkeeper" or subfaction == "Low Ministry") then
+				warcry_beliefs = {}
 			else
 				Schema:EasyText(player, "firebrick", "You are not of the correct faith to do this!");
 				return;
 			end
+		end
+		
+		if faction == "Hillkeeper" or subfaction == "Low Ministry" then
+			player_has_belief = true
 		end
 		
 		for i = 1, #warcry_beliefs do
@@ -1143,7 +1149,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 								elseif v.banners then
 									for k2, v2 in pairs(v.banners) do
 										if v2 == "glazic" then
-											if vFaction == "Gatekeeper" or vFaction == "Pope Adyssa's Gatekeepers" or vFaction == "Holy Hierarchy" then
+											if vFaction == "Gatekeeper" or vFaction == "Pope Adyssa's Gatekeepers" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
 												immune = true;
 											
 												break;
@@ -1178,7 +1184,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 								elseif v.banners then
 									for k2, v2 in pairs(v.banners) do
 										if v2 == "glazic" then
-											if vFaction == "Gatekeeper" or vFaction == "Pope Adyssa's Gatekeepers" or vFaction == "Holy Hierarchy" then
+											if vFaction == "Gatekeeper" or vFaction == "Pope Adyssa's Gatekeepers" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
 												immune = true;
 											
 												break;
@@ -1221,6 +1227,21 @@ local COMMAND = Clockwork.command:New("Warcry");
 										end
 									end
 								end
+							elseif faith == "Faith of the Light" then
+								if vFaction == "Hillkeeper" or vFaction == "Gatekeeper" or vFaction == "Holy Hierarchy" then
+									immune = true
+								end
+
+								if !immune then
+									if Schema.towerSafeZoneEnabled or !v:InTower() then
+										if !v.lastWarCried or v.lastWarCried < curTime - 5 then
+											v.lastWarCried = curTime;
+											if !v:HasBelief("saintly_composure") then
+												v:CustomDisorient(1.25,0.8,3);
+											end
+										end
+									end
+								end
 							end
 							
 							if player_has_daring_trout then
@@ -1246,7 +1267,20 @@ local COMMAND = Clockwork.command:New("Warcry");
 					end
 				end
 
-				if subfaction == "Clan Grock" then
+				if (faction == "Hillkeeper") then
+					if (faith == "Faith of the Family" and player.bloodHowlActive) then
+						if cwStamina then
+							player:HandleStamina(60);
+						end
+					end
+
+					player:EmitSound((Clockwork.player:HasFlags(player, "~") and "warcries/warcry"..math.random(1, 16)..".mp3" or "glazecries/hillcry_"..math.random(1, 20)..".wav"), 100, math.random(90, 105));
+
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a booming shout!", playerPos, radius);
+				elseif (subfaction == "Low Ministry") then
+					player:EmitSound("lmcries/lm_cry" .. math.random(1,19) .. ".mp3", 100, math.random(90, 105));
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a withering scream!", playerPos, radius);
+				elseif subfaction == "Clan Grock" then
 					player:HandleStamina(25);
 					player:EmitSound("warcries/grock_warcry"..math.random(1, 11)..".ogg", 100, math.random(60, 75));
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "barbarically shouts out!", playerPos, radius);
@@ -1254,11 +1288,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				elseif faith == "Faith of the Family" then
 					if player.bloodHowlActive then
 						if cwStamina then
-							local stamina = player:GetCharacterData("Stamina");
-							local new_stamina = math.Clamp(stamina + 60, 0, player:GetMaxStamina());
-							
-							player:SetCharacterData("Stamina", new_stamina);
-							player:SetNWInt("Stamina", new_stamina);
+							player:HandleStamina(60);
 						end
 					end
 					
@@ -1513,7 +1543,11 @@ function COMMAND:OnRun(player, arguments)
 					player.ignoreConditionLoss = false;
 					
 					if cwStamina then
-						player:HandleStamina(d:GetDamage() * 2);
+						if activeWeapon:GetClass() == "begotten_1h_ironflail" then -- Flails give more stamina when flagellating!
+							player:HandleStamina(d:GetDamage() * 4);
+						else
+							player:HandleStamina(d:GetDamage() * 2);
+						end
 					end
 					
 					if cwSanity then

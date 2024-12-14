@@ -45,7 +45,7 @@ function ENT:HUDPaintTargetID(x, y, alpha)
 	else
 		local faction = Clockwork.Client:GetFaction();
 		
-		if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy" then
+		if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy" or faction == "Hillkeeper" then
 			y = Clockwork.kernel:DrawInfo(frequency, x, y, colorWhite, alpha);
 		end
 	end;

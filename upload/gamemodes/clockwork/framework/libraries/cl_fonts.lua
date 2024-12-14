@@ -220,3 +220,14 @@ Clockwork.fonts:Add("cwChatVoltist",
 	additive 	= false,
 	extended 	= true
 })
+
+Clockwork.fonts:Add("cwChatMordred",
+{
+	font = "Mordred",
+	size = Clockwork.kernel:FontScreenScale(7),
+	weight = 600,
+	antialiase = true,
+	additive = false,
+	extended = true
+
+})

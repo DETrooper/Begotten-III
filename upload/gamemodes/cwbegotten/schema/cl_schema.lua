@@ -14,6 +14,7 @@ Clockwork.config:AddToSystem("Enable Famine", "enable_famine", "Enable famine mo
 Clockwork.config:AddToSystem("Discord Invite URL", "discord_url", "The invite link for your community's discord.");
 
 local playerMeta = FindMetaTable("Player");
+local map = game.GetMap();
 
 if (!Schema.towerSafeZoneEnabled) then
 	Schema.towerSafeZoneEnabled = true;
@@ -80,8 +81,17 @@ end;
 
 -- A function to get whether an entity is inside the tower of light.
 function Schema:InTower(entity)
-	return entity:GetPos():WithinAABox(Vector(2400, 15147, -2778), Vector(-2532, 11748, 2048));
+	if map == "rp_begotten3" then
+		return entity:GetPos():WithinAABox(Vector(2400, 15147, -2778), Vector(-2532, 11748, 2048));
+	elseif map == "rp_begotten_redux" then
+		return entity:GetPos():WithinAABox(Vector(-8896, -10801, 69), Vector(-13525, -3070, 914));
+	elseif map == "rp_scraptown" then
+		return entity:GetPos():WithinAABox(Vector(-2446, -7, -262), Vector(-8792, -8935, 2110));
+	elseif map == "rp_district21" then
+		return entity:GetPos():WithinAABox(Vector(-10622, 9407, 476), Vector(-4861, 13313, -2100));
+	end
 end;
+
 
 -- Trigger crows manually.
 function Schema:TriggerCrows()

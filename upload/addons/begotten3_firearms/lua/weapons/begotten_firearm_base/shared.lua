@@ -392,7 +392,7 @@ function SWEP:CanFireBegotten()
 			end
 		end
 	
-		if self.Owner:GetNWBool("Cloaked", false) == true then
+		if self.Owner:GetNW2Bool("Cloaked", false) == true then
 			return false;
 		end
 	

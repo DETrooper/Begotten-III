@@ -160,3 +160,24 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth", "iron_chunks", "iron_chunks"}};
 	ITEM.requireFaith = {"Faith of the Light"};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Hillkeeper Signum";
+	ITEM.model = "models/begotten_apocalypse/items/cla_rome_standard_signum_1.mdl";
+	ITEM.weight = 11;
+	ITEM.uniqueID = "begotten_polearm_hillkeepersignum";
+	ITEM.category = "Melee";
+	ITEM.description = "A heavy iron and silver standard, bearing an eagle and the majestic name of MAXIMUS upon a plate. It evokes a deep feeling of strength and to lose it would be grave indeed.";
+	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/cla_rome_standard_signum_1.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.isLongPolearm = true;
+	ITEM.hasMinimumRange = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(114.36, 271.49, 152.15);
+	ITEM.attachmentOffsetVector = Vector(0, 6, -38.74);
+	
+	ITEM.attributes = {"aoebuff"};
+	ITEM.components = {breakdownType = "meltdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth", "iron_chunks", "iron_chunks"}};
+	ITEM.requireFaith = {"Faith of the Light"};
+ITEM:Register();

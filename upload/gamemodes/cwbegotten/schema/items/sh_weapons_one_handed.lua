@@ -915,5 +915,86 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood", "leather"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 300, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 650, supercrateOnly = true};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Iron Flail";
+	ITEM.model = "models/weapons/ageofchivalry/w_begotten_flail_prop.mdl";	
+	ITEM.weight = 1.4;
+	ITEM.uniqueID = "begotten_1h_ironflail";
+	ITEM.category = "Melee";
+	ITEM.description = "A wooden shaft chained to an iron ball. A cheaply made weapon synonymous with fools and fanatics; those who would put their faith in higher powers to see their blow land true.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/iron_flail.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(104.42, 349.06, 273.48);
+	ITEM.attachmentOffsetVector = Vector(5.05, -1.01, 16.97);
+	ITEM.canUseOffhand = false;
+	ITEM.canUseShields = true;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.attributes = {"flail"};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 500, supercrateOnly = true};
+ITEM:Register();
+
+-- Hill shit
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Hill Shortsword";
+	ITEM.model = "models/begotten_apocalypse/items/RiftenSword.mdl";
+	ITEM.weight = 0.8;
+	ITEM.uniqueID = "begotten_1h_hillshortsword";
+	ITEM.category = "Melee";
+	ITEM.description = "A well balanced blade with a short crossguard covered in etchings of Gore-Glazic origin, equally suited to slashing or stabbing.";
+	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/riftensword.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(14.92, 0, 207.47);
+	ITEM.attachmentOffsetVector = Vector(2.83, 3.54, 0);
+	ITEM.canUseOffhand = true;
+	ITEM.canUseShields = true;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}}; -- use "breakdown" for other type
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Hill Spatha";
+	ITEM.model = "models/begotten_apocalypse/items/1hsword1.mdl";	
+	ITEM.weight = 1.2;
+	ITEM.uniqueID = "begotten_1h_hillarmingsword";
+	ITEM.category = "Melee";
+	ITEM.description = "A well forged straight blade of Northern persuasion, mostly built for stabbing. It has sharpened sides, and a pointed tip.";
+	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/1hsword1.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(14.92, 0, 207.47);
+	ITEM.attachmentOffsetVector = Vector(3, 2.12, 4);
+	ITEM.canUseOffhand = true;
+	ITEM.canUseShields = true;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Hill Crackaxe";
+	ITEM.model = "models/begotten_apocalypse/items/DawnstarAxe.mdl";
+	ITEM.weight = 1.5;
+	ITEM.uniqueID = "begotten_1h_hillcrackaxe";
+	ITEM.category = "Melee";
+	ITEM.description = "A finely wrought tool bearing an axe head made for chopping flesh and wood, and a pick for cracking rock. Often used by miners in the North for utility and defense.";
+	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/DawnstarAxe.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
+	ITEM.attachmentOffsetVector = Vector(4.24, -2.83, 10.61);
+	ITEM.attachmentOffsetAngles = Angle(20.88, 0, 22.87);
+	ITEM.canUseOffhand = true;
+	ITEM.canUseShields = true;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
+	ITEM.attributes = {"versatile"};
 ITEM:Register();

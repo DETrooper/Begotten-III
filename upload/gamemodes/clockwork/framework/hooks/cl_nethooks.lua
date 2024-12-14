@@ -227,7 +227,7 @@ netstream.Hook("ReloadMenu", function(data)
 	local activeWeapon = Clockwork.Client:GetActiveWeapon();
 	
 	if !activeWeapon:IsValid() then return end;
-	if activeWeapon.Base ~= "begotten_firearm_base" then return end;
+	if activeWeapon.Base ~= "begotten_firearm_base" and !activeWeapon.isMeleeFirearm then return end;
 	
 	local weaponItem = item.GetByWeapon(activeWeapon);
 	

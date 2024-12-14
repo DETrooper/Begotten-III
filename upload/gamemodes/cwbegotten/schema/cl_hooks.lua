@@ -15,6 +15,12 @@ local requiredWorkshopAddons = {
 	"2790936125",
 };
 
+if game.GetMap() == "rp_district21" then
+	table.insert(requiredWorkshopAddons, "3121268073");
+	table.insert(requiredWorkshopAddons, "3126101449");
+	table.insert(requiredWorkshopAddons, "3015058225");
+end
+
 -- Disabled these for now since gabs added their content to the Begotten III content.
 Schema.requiredMounts = {
 	--["episodic"] = "Half-Life 2: Episode 1",
@@ -474,7 +480,15 @@ function Schema:GetEntityMenuOptions(entity, options)
 		if entity:IsPlayer() then
 			local entFaction = entity:GetNetVar("kinisgerOverride") or entity:GetFaction();
 			
-			if clientFaction == "Goreic Warrior" and entFaction ~= "Goreic Warrior" and entity:GetNetVar("tied") != 0 then
+			if (clientFaction == "Hillkeeper" or clientFaction == "Holy Hierarchy") and (entFaction ~= "Hillkeeper" and entFaction ~= "Holy Hierarchy") and entity:GetNetVar("tied") != 0 then
+				for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
+					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "The Headsman" then
+						options["Sell Into Slavery"] = "cw_sellSlave";
+						
+						break;
+					end
+				end
+			elseif clientFaction == "Goreic Warrior" and entFaction ~= "Goreic Warrior" and entity:GetNetVar("tied") != 0 then
 				for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
 					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
 						options["Sell Into Slavery"] = "cw_sellSlave";
@@ -496,8 +510,16 @@ function Schema:GetEntityMenuOptions(entity, options)
 
 			if player then
 				local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
-			
-				if clientFaction == "Goreic Warrior" and playerFaction ~= "Goreic Warrior" and player:GetNetVar("tied") != 0 then
+				
+				if clientFaction == "Hillkeeper" or clientFaction == "Holy Hierarchy" and (entFaction ~= "Hillkeeper" and entFaction ~= "Holy Hierarchy") and player:GetNetVar("tied") != 0 then
+					for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
+						if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "The Headsman" then
+							options["Sell Into Slavery"] = "cw_sellSlave";
+							
+							break;
+						end
+					end
+				elseif clientFaction == "Goreic Warrior" and playerFaction ~= "Goreic Warrior" and player:GetNetVar("tied") != 0 then
 					for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
 						if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
 							options["Sell Into Slavery"] = "cw_sellSlave";
@@ -532,7 +554,7 @@ function Schema:GetEntityMenuOptions(entity, options)
 							--self.skinNotificationTimer = curTime + 0.5;
 						--end
 					--end
-				elseif entity:GetNWEntity("Player"):IsPlayer() or entity:GetNWEntity("Player") == game.GetWorld() then
+				elseif entity:GetNW2Entity("Player"):IsPlayer() or entity:GetNW2Entity("Player") == game.GetWorld() then
 					options["Pillage"] = "cw_corpseLoot";
 					
 					if entity:GetNWInt("bountyKey") then
@@ -591,7 +613,7 @@ function Schema:GetEntityMenuOptions(entity, options)
 					options["Take"] = "cw_radioTake";
 				end
 			end;
-		elseif (entity:GetClass() == "cw_gramophone") then
+		elseif (entity.tracks and entity.IsOff) then
 			if (!entity:IsOff()) then
 				options["Turn Off"] = "cwToggleGramophone";
 			else
@@ -652,6 +674,10 @@ function Schema:GetProgressBarInfoAction(action, percentage)
 		return {text = "You are testing someone's blood for corruption. Click to cancel.", percentage = percentage, flash = percentage > 75};
 	elseif (action == "hell_teleporting") then
 		return {text = "You are using dark magic to teleport to Hell. Click to cancel.", percentage = percentage, flash = percentage < 10};
+	elseif (action == "filling_bucket") then
+		return {text = "You are filling a bucket. Click to cancel.", percentage = percentage, flash = percentage < 10};
+	elseif (action == "filling_bottle") then
+		return {text = "You are filling a bottle. Click to cancel.", percentage = percentage, flash = percentage < 10};
 	end;
 end;
 
@@ -663,11 +689,13 @@ function Schema:GetTargetPlayerName(player)
 	if Clockwork.Client:IsAdmin() and Clockwork.player:IsNoClipping(Clockwork.Client) then
 		return player:Name();
 	end
+	
+	local subfaction = player:GetSubfaction();
 
-	if player:GetSubfaction() == "Praeventor" then
+	if subfaction == "Praeventor" or subfaction == "Outrider" then
 		local clientFaction = Clockwork.Client:GetFaction();
 		
-		if clientFaction ~= "Gatekeeper" and clientFaction ~= "Holy Hierarchy" then
+		if clientFaction ~= "Gatekeeper" and clientFaction ~= "Hillkeeper" and clientFaction ~= "Holy Hierarchy" then
 			return player:Name(true);
 		end
 	end
@@ -879,6 +907,39 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 				else
 					subfactionText = "A minister of the Holy Hierarchy.";
 				end
+			elseif targetSubfaction == "Low Ministry" then
+				local wordstouse = "Clergyman"
+				
+				if target:GetGender() == GENDER_FEMALE then
+					wordstouse = "Clergywoman"
+				end
+
+				local brother = "brother";
+				
+				if target:GetGender() == GENDER_FEMALE then
+					brother = "sister";
+				end
+
+				if playerSubfaction == targetSubfaction then
+					subfactionText = "A fellow " .. brother ..  " of the cloth.";
+					textColor = Color(0, 255, 0, 255);
+
+					local nameshield = string.lower(target:GetName())
+					local ismaiden = string.find(nameshield, "shieldmaiden")
+
+					if ismaiden == 1 then
+						subfactionText = "The Shieldmaiden of the Holy Hierarchy. A fellow sister."
+					end
+				else
+					subfactionText = "A lay " .. wordstouse .. " of the lesser Ministry.";
+
+					local nameshield = string.lower(target:GetName())
+					local ismaiden = string.find(nameshield, "shieldmaiden")
+
+					if ismaiden == 1 then
+						subfactionText = "The Shieldmaiden of the Holy Hierarchy."
+					end
+				end
 			elseif targetSubfaction == "Inquisition" then
 				if playerSubfaction == targetSubfaction then
 					subfactionText = "A fellow inquisitor of the Holy Hierarchy.";
@@ -893,7 +954,7 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 				else
 					subfactionText = "A knight of the Holy Hierarchy.";
 				end
-			elseif playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" then
+			elseif playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" or playerFaction == "Hillkeeper" then
 				if targetSubfaction == "Auxiliary" then
 					if playerSubfaction == targetSubfaction then
 						subfactionText = "A fellow auxiliary of the Holy Order of the Gatekeepers.";
@@ -914,6 +975,27 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 						textColor = Color(0, 255, 0, 255);
 					else
 						subfactionText = "A praeventor of the Holy Order of the Gatekeepers.";
+					end
+				elseif targetSubfaction == "Watchman" then
+					if playerSubfaction == targetSubfaction then
+						subfactionText = "A fellow watchman of the Hill of Light.";
+						textColor = Color(0, 255, 0, 255);
+					else
+						subfactionText = "A watchman of the northern Hill of Light.";
+					end
+				elseif targetSubfaction == "Servus" then
+					if playerSubfaction == targetSubfaction then
+						subfactionText = "A fellow servant of the Hill of Light.";
+						textColor = Color(0, 255, 0, 255);
+					else
+						subfactionText = "A servant of the northern Hill of Light.";
+					end
+				elseif targetSubfaction == "Outrider" then
+					if playerSubfaction == targetSubfaction then
+						subfactionText = "A fellow outrider of the Hill of Light.";
+						textColor = Color(0, 255, 0, 255);
+					else
+						subfactionText = "An outrider of the northern Hill of Light.";
 					end
 				end
 			elseif playerFaction == "Smog City Pirate" then
@@ -1244,12 +1326,8 @@ function Schema:PlayerDoesRecognisePlayer(target, status, isAccurate, realValue)
 
 	if targetFaction == "Holy Hierarchy" then
 		return true;
-	elseif targetFaction == "Gatekeeper" then
-		if playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" then
-			return true;
-		end
-	elseif targetFaction == "Pope Adyssa's Gatekeepers" then
-		if playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Holy Hierarchy" then
+	elseif targetFaction == "Gatekeeper" or targetFaction == "Pope Adyssa's Gatekeepers" or targetFaction == "Hillkeeper" then
+		if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy" then
 			return true;
 		end
 	elseif targetFaction == "Goreic Warrior" and playerFaction == "Goreic Warrior" then
@@ -1723,6 +1801,17 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					
 					if table.HasValue(itemTable.attributes, "fire") then
 						frame:AddText("Incendiary: Sets enemies alight upon contact.", Color(110, 30, 30), nil, 0.9);
+					end
+
+					if table.HasValue(itemTable.attributes, "flail") then
+						frame:AddText("Cannot Be Dual Wielded", Color(110, 30, 30), nil, 0.9);
+						frame:AddText("Punisher: Doubles the stamina gained from flagellation.", Color(110, 30, 30), nil, 0.9);
+						frame:AddText("Trust in God: With each strike, there is a 10% chance you will deal an overhead attack that deals +70% raw, stability and stamina damage. The 'Favored' belief raises this chance to 20%.", Color(110, 30, 30), nil, 0.9);
+						frame:AddText("Foolhardy: With each miss, there is a 25% chance that you will strike yourself for half damage. The 'Favored' belief lowers this chance to 10%.", Color(110, 30, 30), nil, 0.9);
+					end
+
+					if table.HasValue(itemTable.attributes, "versatile") then
+						frame:AddText("Versatile: Efficient in both mining and woodcutting, and suffers no condition loss from harvesting these nodes.", Color(110, 30, 30), nil, 0.9);
 					end
 				
 					if table.HasValue(itemTable.attributes, "lifeleech") then
@@ -3086,6 +3175,15 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			end
 		end
 		
+		if cwWarmth and cwWarmth.systemEnabled and itemTable.insulation then
+			local percentage = itemTable.insulation;
+
+			if(category == "Helmet") then percentage = percentage * 0.20;
+			elseif(!itemTable.hasHelmet) then percentage = percentage * 0.80; end
+		
+			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Insulation", Color(110, 30, 30), true);
+		end
+		
 		return true;
 	elseif (category == "Crossbows") or (category == "Firearms") then
 		local weaponAmmo = itemTable:GetData("Ammo");
@@ -3129,7 +3227,9 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.attributes then
-					if table.HasValue(itemTable.attributes, "sundering_shot") then
+					if table.HasValue(itemTable.attributes, "melee") then
+						frame:AddText("Melee Stance: Can be used as a melee weapon by switching stances.", Color(110, 30, 30), nil, 0.9);
+					elseif table.HasValue(itemTable.attributes, "sundering_shot") then
 						frame:AddText("Sundering Shot: Travelling at supersonic speeds, Old World Longshot ignores armor and shields entirely.", Color(110, 30, 30), nil, 0.9);
 					elseif table.HasValue(itemTable.attributes, "sundering_shot_grapeshot") then
 						frame:AddText("Sundering Shot: Travelling at supersonic speeds, Old World Grapeshot ignores armor and shields entirely.", Color(110, 30, 30), nil, 0.9);
@@ -3728,6 +3828,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		if (bShowWeight) then
 			frame:AddBar(20, {{text = weight.."kg", percentage = percentage * 100, color = Color(96, 96, 128), font = "DermaDefault", leftTextAlign = false, noDisplay = true}}, "Weight", Color(170, 170, 180));
 		end;
+		
+		if cwWarmth and cwWarmth.systemEnabled and itemTable.insulation then
+			local percentage = itemTable.insulation * 0.20;
+		
+			frame:AddBar(12, {{text = tostring(percentage).."%", percentage = percentage, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Insulation", Color(110, 30, 30), true);
+		end
 		
 		return true;
 	elseif category == "Catalysts" then

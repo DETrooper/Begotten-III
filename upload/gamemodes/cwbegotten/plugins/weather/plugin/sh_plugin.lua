@@ -10,6 +10,7 @@ PLUGIN:SetGlobalAlias("cwWeather");
 
 cwWeather.enabledMaps = {
     ["rp_begotten3"] = true,
+    ["rp_district21"] = true,
 }
 
 cwWeather.systemEnabled = cwWeather.enabledMaps[game.GetMap()];
@@ -18,125 +19,68 @@ if cwWeather.systemEnabled then
 	Clockwork.kernel:IncludePrefixed("cl_hooks.lua")
 	Clockwork.kernel:IncludePrefixed("sv_hooks.lua")
 
-	cwWeather.weatherTypes = {
-		["acidrain"] = {
-			loopingAmbience = "ambient/ambience/rainscapes/crucial_waterrain_light_loop.wav",
-			fogColors = {r = 60, g = 47, b = 0},
-			fogColorsNight = {r = 20, g = 16, b = 0},
-			fogStart = 128,
-			fogEnd = 1024,
-			fogStartNight = 128,
-			fogEndNight = 1024,
-			maxDuration = 360,
-			skyFix = {r = 25, g = 20, b = 1},
-			skyFixNight = {r = 12, g = 10, b = 0},
-			precipitation = "sw_acidrain",
-			rarity = 6,
-			leadupCallback = function()
-				local playersInWeatherZones = {};
-				
-				for _, v in _player.Iterator() do
-					if v:Alive() and v:HasInitialized() then
-						local lastZone = v:GetCharacterData("LastZone") or "wasteland";
-						local zoneTable = zones:FindByID(lastZone);
-						
-						if zoneTable.hasWeather then
-							table.insert(playersInWeatherZones, v);
-						end
-					end
-				end
-				
-				Clockwork.chatBox:Add(playersInWeatherZones, nil, "event", "An acrid smell slowly begins to permeate the Wasteland, foreshadowing the imminent arrival of acid rain.");
-			end,
-			leadupTime = 60,
-		},
-		["ash"] = {
-			fogColors = {r = 40, g = 30, b = 17},
-			fogColorsNight = {r = 20, g = 15, b = 7},
-			fogStart = 256,
-			fogEnd = 1300,
-			fogStartNight = 256,
-			fogEndNight = 950,
-			skyFix = {r = 18, g = 15, b = 9},
-			skyFixNight = {r = 12, g = 10, b = 6},
-			precipitation = "sw_ash",
-			rarity = 3,
-		},
-		["bloodstorm"] = {
-			loopingAmbience = "ambient/ambience/rainscapes/crucial_waterrain_light_loop.wav",
-			fogColors = {r = 39, g = 2, b = 2},
-			fogColorsNight = {r = 20, g = 1, b = 1},
-			fogStart = 128,
-			fogEnd = 1024,
-			fogStartNight = 128,
-			fogEndNight = 1024,
-			maxDuration = 900,
-			minDuration = 600,
-			precipitation = "sw_rain",
-			skyFix = {r = 18, g = 2, b = 2},
-			skyFixNight = {r = 11, g = 1, b = 1},
-			rarity = 10,
-			leadupCallback = function()
-				local playersInWeatherZones = {};
-				
-				for _, v in _player.Iterator() do
-					if v:Alive() and v:HasInitialized() then
-						local lastZone = v:GetCharacterData("LastZone") or "wasteland";
-						local zoneTable = zones:FindByID(lastZone);
-						
-						if zoneTable.hasWeather then
-							table.insert(playersInWeatherZones, v);
-						end
-					end
-				end
-			
-				netstream.Start(playersInWeatherZones, "EmitSound", {name = "begotten2/doom_moan.wav", pitch = 90, level = 80});
-				Clockwork.chatBox:Add(playersInWeatherZones, nil, "event", "The distant howls of Begotten thralls can be heard throughout the land. Something evil is coming.");
-			end,
-			leadupTime = 60,
-		},
-		["fog"] = {
-			fogStart = 64,
-			fogEnd = 800,
-			fogStartNight = 64,
-			fogEndNight = 800,
-			rarity = 2,
-		},
-		["normal"] = {
-			default = true,
-			minDuration = 1800,
-			maxDuration = 2400,
-		},
-		["thunderstorm"] = {
-			ambience = {
-				"ambient/ambience/rainscapes/thunder_close01.wav",
-				"ambient/ambience/rainscapes/thunder_close02.wav",
-				"ambient/ambience/rainscapes/thunder_close03.wav",
-				"ambient/ambience/rainscapes/thunder_close04.wav",
-				"ambient/ambience/rainscapes/thunder_distant01.wav",
-				"ambient/ambience/rainscapes/thunder_distant02.wav",
-				"ambient/ambience/rainscapes/thunder_distant03.wav",
-				"ambient/ambience/rainscapes/rain/stereo_gust_01.wav",
-				"ambient/ambience/rainscapes/rain/stereo_gust_02.wav",
-				"ambient/ambience/rainscapes/rain/stereo_gust_03.wav",
-				"ambient/ambience/rainscapes/rain/stereo_gust_04.wav",
-				"ambient/ambience/rainscapes/rain/stereo_gust_05.wav",
-				"ambient/ambience/rainscapes/rain/stereo_gust_06.wav",
+	if game.GetMap() == "rp_district21" then
+		cwWeather.weatherTypes = {
+			["blizzard"] = {
+				ambience = {
+					"ambience/weather/blizzardgust1.mp3",
+					"ambience/weather/blizzardgust2.mp3",
+					"ambience/weather/blizzardgust3.mp3",
+					"ambience/weather/blusterygust1.mp3",
+					"ambience/weather/blusterygust2.mp3",
+					"ambience/weather/blusterygust3.mp3",
+					"ambience/weather/blusterygust4.mp3",
+					"ambience/weather/blusterygust5.mp3",
+					"ambience/weather/blusterygust6.mp3",
+					"ambience/weather/blusterygust7.mp3",
+					"ambience/weather/blusterygust8.mp3",
+					"ambience/weather/blusterygust9.mp3",
+				},
+				fogStart = 128,
+				fogEnd = 512,
+				fogStartNight = 128,
+				fogEndNight = 512,
+				maxDuration = 600,
+				precipitation = "sw_snow",
+				rarity = 5
 			},
-			loopingAmbience = "ambient/ambience/rainscapes/crucial_waterrain_med_loop.wav",
-			fogColors = {r = 24, g = 21, b = 18},
-			fogColorsNight = {r = 24, g = 21, b = 18},
-			fogStart = 128,
-			fogEnd = 1024,
-			fogStartNight = 128,
-			fogEndNight = 1024,
-			maxDuration = 1200,
-			skyFix = {r = 13, g = 12, b = 10},
-			skyFixNight = {r = 13, g = 12, b = 10},
-			precipitation = "sw_rain",
-			rarity = 6,
-			leadupCallback = function()
-				timer.Create("ThunderstormBuildupTimer", 5, 11, function()
+			["fog"] = {
+				fogStart = 128,
+				fogEnd = 1024,
+				fogStartNight = 128,
+				fogEndNight = 666,
+				rarity = 2
+			},
+			["normal"] = {
+				default = true,
+				minDuration = 1800,
+				maxDuration = 2400,
+			},
+			["snow"] = {
+				fogStart = 128,
+				fogEnd = 2048,
+				fogStartNight = 128,
+				fogEndNight = 1024,
+				precipitation = "sw_snow",
+				rarity = 2
+			},
+		};
+	else
+		cwWeather.weatherTypes = {
+			["acidrain"] = {
+				loopingAmbience = "ambient/ambience/rainscapes/crucial_waterrain_light_loop.wav",
+				fogColors = {r = 60, g = 47, b = 0},
+				fogColorsNight = {r = 20, g = 16, b = 0},
+				fogStart = 128,
+				fogEnd = 1024,
+				fogStartNight = 128,
+				fogEndNight = 1024,
+				maxDuration = 360,
+				skyFix = {r = 25, g = 20, b = 1},
+				skyFixNight = {r = 12, g = 10, b = 0},
+				precipitation = "sw_acidrain",
+				rarity = 6,
+				leadupCallback = function()
 					local playersInWeatherZones = {};
 					
 					for _, v in _player.Iterator() do
@@ -150,12 +94,117 @@ if cwWeather.systemEnabled then
 						end
 					end
 					
-					netstream.Start(playersInWeatherZones, "EmitSound", {name = "ambient/ambience/rainscapes/thunder_distant0"..math.random(1, 3)..".wav", pitch = math.random(95, 105), level = 80});
-				end);
-			end,
-			leadupTime = 60,
-		},
-	};
+					Clockwork.chatBox:Add(playersInWeatherZones, nil, "event", "An acrid smell slowly begins to permeate the Wasteland, foreshadowing the imminent arrival of acid rain.");
+				end,
+				leadupTime = 60,
+			},
+			["ash"] = {
+				fogColors = {r = 40, g = 30, b = 17},
+				fogColorsNight = {r = 20, g = 15, b = 7},
+				fogStart = 256,
+				fogEnd = 1300,
+				fogStartNight = 256,
+				fogEndNight = 950,
+				skyFix = {r = 18, g = 15, b = 9},
+				skyFixNight = {r = 12, g = 10, b = 6},
+				precipitation = "sw_ash",
+				rarity = 3,
+			},
+			["bloodstorm"] = {
+				loopingAmbience = "ambient/ambience/rainscapes/crucial_waterrain_light_loop.wav",
+				fogColors = {r = 39, g = 2, b = 2},
+				fogColorsNight = {r = 20, g = 1, b = 1},
+				fogStart = 128,
+				fogEnd = 1024,
+				fogStartNight = 128,
+				fogEndNight = 1024,
+				maxDuration = 900,
+				minDuration = 600,
+				precipitation = "sw_rain",
+				skyFix = {r = 18, g = 2, b = 2},
+				skyFixNight = {r = 11, g = 1, b = 1},
+				rarity = 10,
+				leadupCallback = function()
+					local playersInWeatherZones = {};
+					
+					for _, v in _player.Iterator() do
+						if v:Alive() and v:HasInitialized() then
+							local lastZone = v:GetCharacterData("LastZone") or "wasteland";
+							local zoneTable = zones:FindByID(lastZone);
+							
+							if zoneTable.hasWeather then
+								table.insert(playersInWeatherZones, v);
+							end
+						end
+					end
+				
+					netstream.Start(playersInWeatherZones, "EmitSound", {name = "begotten2/doom_moan.wav", pitch = 90, level = 80});
+					Clockwork.chatBox:Add(playersInWeatherZones, nil, "event", "The distant howls of Begotten thralls can be heard throughout the land. Something evil is coming.");
+				end,
+				leadupTime = 60,
+			},
+			["fog"] = {
+				fogStart = 64,
+				fogEnd = 800,
+				fogStartNight = 64,
+				fogEndNight = 800,
+				rarity = 2,
+			},
+			["normal"] = {
+				default = true,
+				minDuration = 1800,
+				maxDuration = 2400,
+			},
+			["thunderstorm"] = {
+				ambience = {
+					"ambient/ambience/rainscapes/thunder_close01.wav",
+					"ambient/ambience/rainscapes/thunder_close02.wav",
+					"ambient/ambience/rainscapes/thunder_close03.wav",
+					"ambient/ambience/rainscapes/thunder_close04.wav",
+					"ambient/ambience/rainscapes/thunder_distant01.wav",
+					"ambient/ambience/rainscapes/thunder_distant02.wav",
+					"ambient/ambience/rainscapes/thunder_distant03.wav",
+					"ambient/ambience/rainscapes/rain/stereo_gust_01.wav",
+					"ambient/ambience/rainscapes/rain/stereo_gust_02.wav",
+					"ambient/ambience/rainscapes/rain/stereo_gust_03.wav",
+					"ambient/ambience/rainscapes/rain/stereo_gust_04.wav",
+					"ambient/ambience/rainscapes/rain/stereo_gust_05.wav",
+					"ambient/ambience/rainscapes/rain/stereo_gust_06.wav",
+				},
+				loopingAmbience = "ambient/ambience/rainscapes/crucial_waterrain_med_loop.wav",
+				fogColors = {r = 24, g = 21, b = 18},
+				fogColorsNight = {r = 24, g = 21, b = 18},
+				fogStart = 128,
+				fogEnd = 1024,
+				fogStartNight = 128,
+				fogEndNight = 1024,
+				maxDuration = 1200,
+				skyFix = {r = 13, g = 12, b = 10},
+				skyFixNight = {r = 13, g = 12, b = 10},
+				precipitation = "sw_rain",
+				rarity = 6,
+				leadupCallback = function()
+					timer.Create("ThunderstormBuildupTimer", 5, 11, function()
+						local playersInWeatherZones = {};
+						
+						for _, v in _player.Iterator() do
+							if v:Alive() and v:HasInitialized() then
+								local lastZone = v:GetCharacterData("LastZone") or "wasteland";
+								local zoneTable = zones:FindByID(lastZone);
+								
+								if zoneTable.hasWeather then
+									table.insert(playersInWeatherZones, v);
+								end
+							end
+						end
+						
+						netstream.Start(playersInWeatherZones, "EmitSound", {name = "ambient/ambience/rainscapes/thunder_distant0"..math.random(1, 3)..".wav", pitch = math.random(95, 105), level = 80});
+					end);
+				end,
+				leadupTime = 60,
+			},
+		};
+	end
 	
 	function cwWeather:IsOutside(pos)
 		local trace = {}

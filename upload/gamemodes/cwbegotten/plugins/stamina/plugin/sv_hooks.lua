@@ -142,7 +142,7 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				
 				for k, v in pairs(plyTab.banners) do
 					if v == "glazic" then
-						if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Holy Hierarchy" then
+						if playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" or playerFaction == "Hillkeeper" or playerFaction == "Pope Adyssa's Gatekeepers" then
 							regeneration = 7;
 
 							break;

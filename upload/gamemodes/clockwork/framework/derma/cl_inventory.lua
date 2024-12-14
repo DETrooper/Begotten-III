@@ -444,7 +444,7 @@ function PANEL:Rebuild()
 									if occupierParent and occupierParent.itemData and occupierParent.itemTable then
 										local itemTable = occupierParent.itemTable;
 										
-										if (itemTable.baseItem == "firearm_base") and itemTable.ammoTypes then
+										if itemTable.ammoTypes then
 											if table.HasValue(itemTable.ammoTypes, parent.itemTable.ammoType) then
 												netstream.Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 											end
@@ -560,7 +560,7 @@ function PANEL:Rebuild()
 						if baseItem == "weapon_base" or baseItem == "shield_base" or baseItem == "firearm_base" then
 							inventoryIcon.spawnIcon:Droppable("weaponSlot");
 							
-							if baseItem == "firearm_base" then
+							if v2.ammoTypes then
 								inventoryIcon.spawnIcon:Receiver("ammunition", function(self, panels, dropped, menuIndex, x, y)
 									if (dropped) then
 										local panel = panels[1];
@@ -575,7 +575,7 @@ function PANEL:Rebuild()
 													if occupierParent and occupierParent.itemData and occupierParent.itemTable then
 														local itemTable = occupierParent.itemTable;
 														
-														if (itemTable.baseItem == "firearm_base") and itemTable.ammoTypes then
+														if itemTable.ammoTypes then
 															if table.HasValue(itemTable.ammoTypes, parent.itemTable.ammoType) then
 																netstream.Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 															end
@@ -741,7 +741,7 @@ function PANEL:Rebuild()
 					if baseItem == "weapon_base" or baseItem == "shield_base" or baseItem == "firearm_base" then
 						inventoryIcon.spawnIcon:Droppable("weaponSlot");
 						
-						if baseItem == "firearm_base" then
+						if v2.ammoTypes then
 							inventoryIcon.spawnIcon:Receiver("ammunition", function(self, panels, dropped, menuIndex, x, y)
 								if (dropped) then
 									local panel = panels[1];
@@ -756,7 +756,7 @@ function PANEL:Rebuild()
 												if occupierParent and occupierParent.itemData and occupierParent.itemTable then
 													local itemTable = occupierParent.itemTable;
 													
-													if (itemTable.baseItem == "firearm_base") and itemTable.ammoTypes then
+													if itemTable.ammoTypes then
 														if table.HasValue(itemTable.ammoTypes, parent.itemTable.ammoType) then
 															netstream.Start("UseAmmo", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), itemTable("uniqueID"), itemTable("itemID")});
 														end

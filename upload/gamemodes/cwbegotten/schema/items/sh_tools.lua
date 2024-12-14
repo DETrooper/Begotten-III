@@ -40,6 +40,22 @@ if (SERVER) then
 			{pos = Vector(-1861.375, -3282.84375, 186.125), ang = Angle(67.401, 180, 0), boundsA = Vector(-1619, -2970, 113), boundsB = Vector(-2447, -3455, 562)},
 			{pos = Vector(-1859.59375, -3643.625, 188.4375), ang = Angle(67.401, 180, 0), boundsA = Vector(-2447, -3455, 562), boundsB = Vector(-1736, -3869, 153)},
 		}
+	elseif map == "rp_district21" then
+		Schema.siegeLadderPositions = {
+			-- Hill of Light
+			{pos = Vector(-4253.44, 11041.47, 44.88), ang = Angle(45, 179.99, 0), boundsA = Vector(-4698, 11293, 232), boundsB = Vector(-3865, 10651, -35)},
+			{pos = Vector(-8154.84, 9666.28, 46.56), ang = Angle(44.99, -0.88, 0), boundsA = Vector(7696, 10106, 480), boundsB = Vector(-8326, 9341, 66)},
+			-- Hill of Light Citadel
+			{pos = Vector(-7311.12, 11067, 176.69), ang = Angle(-58.67, 0, 0), boundsA = Vector(-7754, 11317, 345), boundsB = Vector(-7136, 10858, 132)},
+			{pos = Vector(-7339.94, 11914.5, 156.59), ang = Angle(-55.8, 0, 0), boundsA = Vector(-7216, 11715, 141), boundsB = Vector(-7671, 12004, 289)},
+			-- Gorewatch
+			{pos = Vector(-8296.06, -8492.81, -319), ang = Angle(45, -179.56, 0), boundsA = Vector(-8756, -8612, 176), boundsB = Vector(-8414, -8168, -150)},
+			{pos = Vector(-9182.06, -9113.06, -320.75), ang = Angle(45, 90, 0), boundsA = Vector(-9293, -8649, 176), boundsB = Vector(-8842, -9041, -150)},
+			-- Crane
+			{pos = Vector(-13654.16, -12306.47, -883.59), ang = Angle(44.99, -88.9, 0), boundsA = Vector(-13461, -12773, -445), boundsB = Vector(-13783, -12079, -873)},
+			-- Water Tower
+			{pos = Vector(-2745.69, -1459.94, -537.44), ang = Angle(54.55, -88.07, -0.15), boundsA = Vector(-2679, -1879, -225), boundsB = Vector(-3486, -1373, -689)},
+		}
 	end
 end
 
@@ -186,7 +202,14 @@ local ITEM = Clockwork.item:New();
 			end
 		end
 		
-		Schema:EasyText(player, "chocolate", "You must erect this siege ladder at a valid location outside the walls of the Castle or the Tower of Light!");
+		local map = game.GetMap();
+		
+		if map == "rp_district21" then
+			Schema:EasyText(player, "chocolate", "You must erect this siege ladder at a valid location outside the walls of the Hill of Light or Gorewatch, or near the Crane or Water Tower!");
+		else
+			Schema:EasyText(player, "chocolate", "You must erect this siege ladder at a valid location outside the walls of the Castle or the Tower of Light!");
+		end
+		
 		return false;
 	end
 	-- Called when a player drops the item.
@@ -342,8 +365,13 @@ local ITEM = Clockwork.item:New();
 							if (target:GetAimVector():DotProduct( player:GetAimVector() ) > 0 or (target:IsRagdolled() and !trace.Entity.cwIsBelongings)) then
 								local faction = player:GetFaction();
 								
-								if target:InTower() and Schema.towerSafeZoneEnabled and (faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy") then
-									Schema:EasyText(player, "peru", "You cannot tie characters in the Tower of Light if you are not of the Holy Hierarchy!");
+								if target:InTower() and Schema.towerSafeZoneEnabled and (faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" and faction ~= "Hillkeeper") then
+									if game.GetMap() == "rp_begotten3" then
+										Schema:EasyText(player, "peru", "You cannot tie characters in the Tower of Light if you are not of the Holy Hierarchy!");
+									else
+										Schema:EasyText(player, "peru", "You cannot tie characters in the safezone if you are not of the Holy Hierarchy!");
+									end
+									
 									return false;
 								end
 								
@@ -737,13 +765,13 @@ local ITEM = Clockwork.item:New();
 				local playerPos = player:GetPos();
 				local radius = Clockwork.config:Get("talk_radius"):Get() * 4;
 			
-				if faction == "Gatekeeper" or faction == "Holy Hierarchy" then
+				if faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Holy Hierarchy" then
 					if (name == "Sound Attack") then
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
-								if vFaction == "Gatekeeper" or vFaction == "Holy Hierarchy" then
+								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling an attack!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
@@ -757,7 +785,7 @@ local ITEM = Clockwork.item:New();
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
-								if vFaction == "Gatekeeper" or vFaction == "Holy Hierarchy" then
+								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
@@ -771,7 +799,7 @@ local ITEM = Clockwork.item:New();
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
-								if vFaction == "Gatekeeper" or vFaction == "Holy Hierarchy" then
+								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally in a marching formation!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
@@ -785,7 +813,7 @@ local ITEM = Clockwork.item:New();
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
-								if vFaction == "Gatekeeper" or vFaction == "Holy Hierarchy" then
+								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally in a shieldwall formation!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
@@ -799,7 +827,7 @@ local ITEM = Clockwork.item:New();
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
-								if vFaction == "Gatekeeper" or vFaction == "Holy Hierarchy" then
+								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a retreat!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
@@ -981,6 +1009,109 @@ local ITEM = Clockwork.item:New();
 					Schema:EasyText(player, "peru", "You are not the correct faction to do this!");
 				end
 			end
+		end;
+	end;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New();
+	ITEM.name = "Empty Bucket";
+	ITEM.uniqueID = "empty_bucket";
+	ITEM.model = "models/props_junk/MetalBucket01a.mdl";
+	ITEM.weight = 1;
+	ITEM.category = "Tools";
+	ITEM.description = "An iron bucket devoid of any contents.";
+	ITEM.customFunctions = {"Fill"};
+	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/bucket.png"
+	--ITEM.itemSpawnerInfo = {category = "Junk", rarity = 95};
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position) end;
+
+	function ITEM:OnCustomFunction(player, name)
+		if (name == "Fill") then
+			local lastZone = player:GetCharacterData("LastZone");
+			local waterLevel = player:WaterLevel();
+			local nearSmithy;
+			if (waterLevel and waterLevel > 0) then
+				for i = 1, #cwRecipes.smithyLocations do
+					if player:GetPos():DistToSqr(cwRecipes.smithyLocations[i]) < (256 * 256) then
+						Schema:EasyText(player, "firebrick", "You cannot fill a bucket with this water!");
+						return false;
+					end
+				end
+
+				
+				Clockwork.chatBox:AddInTargetRadius(player, "me", "begins filling a bucket with water.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+				-- input water swish sound
+
+				player:EmitSound("apocalypse/cauldron/fillup.mp3");
+				-- start progress bar for begins filling a bucket of water.
+				Clockwork.player:SetAction(player, "filling_bucket", 10, 3, function()
+					-- input water full sound
+					
+					if lastZone ~= "gore" then
+						player:GiveItem(Clockwork.item:CreateInstance("dirty_water_bucket"), true);
+					else
+						player:GiveItem(Clockwork.item:CreateInstance("purified_water_bucket"), true);
+					end
+
+					player:TakeItem(self, true);
+				end);
+			else
+				Schema:EasyText(player, "firebrick", "You must be standing in water to fill this bucket!");
+			end;
+		end;
+	end;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New();
+	ITEM.name = "Empty Bottle";
+	ITEM.uniqueID = "empty_bottle";
+	ITEM.model = "models/props_junk/GlassBottle01a.mdl";
+	ITEM.weight = 0.1;
+	ITEM.category = "Tools";
+	ITEM.description = "A glass bottle devoid of any contents.";
+	ITEM.customFunctions = {"Fill"};
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png";
+	--ITEM.itemSpawnerInfo = {category = "Junk", rarity = 95};
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position) end;
+
+	function ITEM:OnCustomFunction(player, name)
+		if (name == "Fill") then
+			local waterLevel = player:WaterLevel();
+			local lastZone = player:GetCharacterData("LastZone");
+			if waterLevel and waterLevel > 0 then
+				for i = 1, #cwRecipes.smithyLocations do
+					if player:GetPos():DistToSqr(cwRecipes.smithyLocations[i]) < (256 * 256) then
+						Schema:EasyText(player, "firebrick", "You cannot fill a bucket with this water!");
+						return false;
+					end
+				end
+
+				if lastZone ~= "gore" then
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "begins filling an empty bottle with water, almost spilling the contents multiple times as they struggle to fight off the cold biting their fingers.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+					-- input water swish sound
+
+					-- start progress bar for begins filling a bucket of water.
+					Clockwork.player:SetAction(player, "filling_bottle", 15, 3, function()
+						-- input water full sound
+						player:GiveItem(Clockwork.item:CreateInstance("dirtywater"), true);
+						player:TakeItem(self, true);
+					end);
+				else
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "begins filling an empty bottle with water.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+					-- input water swish sound
+
+					-- start progress bar for begins filling a bucket of water.
+					Clockwork.player:SetAction(player, "filling_bottle", 5, 3, function()
+						-- input water full sound
+						player:GiveItem(Clockwork.item:CreateInstance("purified_water"), true);
+						player:TakeItem(self, true);
+					end);
+				end
+			else
+				Schema:EasyText(player, "firebrick", "You must be standing in water to fill this bottle!");
+			end;
 		end;
 	end;
 ITEM:Register();

@@ -1051,6 +1051,96 @@ function Clockwork.animation:AddMarauderArms(model)
     });
 end
 
+-- Hill event arms
+
+function Clockwork.animation:AddBearhideWandererArms(model)
+    self:AddHandsModel(model, {
+        body = 0000000,
+        model = "models/begotten/arms/c_bearhidewanderer.mdl",
+        skin = 0
+    });
+end;
+
+function Clockwork.animation:AddClericArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_cleric.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddCoatOfPlateArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_coat_of_plate.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddFineCoatArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_fine_coat.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddHeavyLamellarArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_heavy_lamellar.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddHidewandererArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_hidewanderer.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddHillAcolyteArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_hill_acolyte.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddHillDiscipleArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_hill_disciple.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddHillMasterArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_hill_master.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddNorthWandererArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_northwanderer.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddFootpadArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_footpad.mdl",
+		skin = 0
+	});
+end;
+
 -- A function to check for stored hands info by model.
 function Clockwork.animation:CheckHands(model, animTable)
 	local info = animTable.hands or {
@@ -1208,3 +1298,24 @@ Clockwork.animation:AddTechnoHeavyArms("models/begotten/wanderers/voltist_techno
 
 Clockwork.animation:AddMarauderArms("models/begotten/goreicwarfighters/reaver_chief");
 Clockwork.animation:AddMarauderArms("models/begotten/goreicwarfighters/reaver_marauder");
+
+-- Hill arms
+
+Clockwork.animation:AddBearhideWandererArms("models/begotten/wanderers/bearhidewanderer")
+Clockwork.animation:AddClericArms("models/begotten/wanderers/cleric")
+Clockwork.animation:AddClericArms("models/begotten/wanderers/clericarmored")
+Clockwork.animation:AddHidewandererArms("models/begotten/wanderers/hidewanderer")
+
+Clockwork.animation:AddCoatOfPlateArms("models/begotten/hillkeepers/coat_of_plate")
+Clockwork.animation:AddFineCoatArms("models/begotten/hillkeepers/fine_coat")
+Clockwork.animation:AddHeavyLamellarArms("models/begotten/hillkeepers/heavy_lamellar")
+Clockwork.animation:AddHillAcolyteArms("models/begotten/hillkeepers/acolyte")
+Clockwork.animation:AddHillAcolyteArms("models/begotten/hillkeepers/nevsky")
+Clockwork.animation:AddHillDiscipleArms("models/begotten/hillkeepers/disciple")
+Clockwork.animation:AddHillDiscipleArms("models/begotten/hillkeepers/halfplate")
+Clockwork.animation:AddHillMasterArms("models/begotten/hillkeepers/master_at_arms")
+
+Clockwork.animation:AddNorthWandererArms("models/begotten/wanderers/northwanderer")
+Clockwork.animation:AddFootpadArms("models/begotten/wanderers/footpad")
+
+Clockwork.animation:AddMonkRobeArms("models/begotten/wanderers/anglo"); -- Temp for now, replace later?

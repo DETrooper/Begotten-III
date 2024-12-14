@@ -100,7 +100,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 		end
 		
 		for k, v in pairs(player:GetWeapons()) do
-			if v:GetNWString("activeShield"):len() > 0 then
+			if v:GetNW2String("activeShield"):len() > 0 then
 				v:HolsterShield();
 			end
 		end
@@ -115,7 +115,7 @@ function ITEM:OnPlayerUnequipped(player, extraData)
 			if (IsValid(entity)) then
 				if (self:HasPlayerEquipped(player)) then
 					for k, v in pairs(player:GetWeapons()) do
-						if v:GetNWString("activeShield"):len() > 0 then
+						if v:GetNW2String("activeShield"):len() > 0 then
 							v:HolsterShield();
 						end
 					end

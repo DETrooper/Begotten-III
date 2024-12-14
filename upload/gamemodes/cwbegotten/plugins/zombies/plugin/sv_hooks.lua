@@ -265,7 +265,7 @@ function cwZombies:EntityTakeDamageAfter(entity, damageInfo)
 				if attacker:IsPlayer() then
 					local activeWeapon = attacker:GetActiveWeapon();
 					
-					if activeWeapon:IsValid() and activeWeapon.Base == "begotten_firearm_base" then
+					if activeWeapon:IsValid() and (activeWeapon.Base == "begotten_firearm_base" or (activeWeapon.isMeleeFirearm and !attacker:GetNetVar("ThrustStance"))) then
 						damageInfo:ScaleDamage(1.5);
 					end
 					

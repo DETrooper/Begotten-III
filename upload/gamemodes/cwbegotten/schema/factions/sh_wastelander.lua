@@ -11,6 +11,10 @@ RANDOM_FORENAMES = {
 		["male"] = {"Abraham", "Aaron", "Adam", "Alan", "Albert", "Alfred", "Alexander", "Atticus", "Andrew", "Anthony", "Angus", "Allen", "Alvin", "Albert", "Ambrose", "Arnold", "Arthur", "Buford", "Benjamin", "Benedict", "Bernard", "Brigham", "Braxton", "Barnabas", "Boxer", "Charles", "Christopher", "Clarence", "Clark", "Clayton", "Calvin", "Chester", "Cornelius", "David", "Donald", "Daniel", "Duncan", "Elias", "Eric", "Eugene", "Eustace", "Ernest", "Edward", "Earl", "Francis", "George", "Gregory", "Gerald", "Grover", "Gordon", "Hector", "Harold", "Horatio", "Henry", "Isaac", "Ian", "Joseph", "Jeffrey", "John", "Jonathan", "Jebediah", "James", "Jacob", "Julius", "Julian", "Justin", "Josiah", "Joshua", "Karmine", "Leonard", "Louis", "Lawrence", "Leland", "Lucas", "Lionel", "Lamont", "Lyman", "Magnus", "Moses", "Michael", "Michelangelo", "Marcus", "Martin", "Milton", "Nathaniel", "Noah", "Nicholas", "Oliver", "Obadiah", "Odysseus", "Orville", "Owen", "Philip", "Peter", "Paul", "Patrick", "Reginald", "Robert", "Richard", "Ronald", "Rufus", "Rhett", "Samuel", "Scott", "Stephen", "Sampson", "Sylvester", "Theodore", "Thomas", "Timothy", "Upton", "Ulysses", "Victor", "Vincent", "William", "Walter", "Wilbur", "Wallace", "Wyatt", "Zachary"},
 		["female"] = {"Adela", "Adriana", "Alice", "Amelia", "Anna", "Audrey", "Autumn", "Aveline", "Beatrice", "Caroline", "Catherine", "Cecilia", "Daisy", "Dawn", "Ella", "Eleanor", "Elizabeth", "Emma", "Gloria", "Grace", "Heather", "Helen", "Isabel", "Isabella", "Jennifer", "Joan", "Joanna", "Julia", "Juliana", "Laura", "Livia", "Madeline", "Margaret", "Maria", "Mary", "Olympia", "Scarlett", "Sarah", "Silvia", "Sophia", "Susanna", "Sybilla", "Theodora", "Victoria", "Virginia", "Valeria", "Zelda"}
 	},
+	["gore-glazic"] = {
+        ["male"] = {"Ludovic", "Leofric", "Jasper", "Gawain", "Albert", "Alfred", "Robert", "Saewulf", "Lefwald", "Asher", "Angus", "Carling", "Heath", "Dunstan", "Hale", "Leighwen", "Wyot", "Arthur", "Royce", "Clifford", "Hereward", "Brigham", "Eadwig", "Selwine", "Boxer", "Daltenn", "Oswen", "Edraed", "Gledwin", "Cenric", "Presley", "Chester", "Riley", "Linton", "Kingsley", "Whitney", "Cynameer", "Kenelm", "Erik", "Cuthbert", "Winthrop", "Riley", "Edward", "Earl", "Cythrid", "George", "Deorwine", "Haywood", "Grover", "Upton", "Huxley", "Camdyn", "Heren", "Wulfwin", "Solomon", "Esbort", "Athel", "Athelstan", "Swithin", "Aslac", "Ulfi", "Adrien", "Fulk", "Joscelin", "Julian", "Aelnod", "Fitzher", "Sewel", "Karmine", "Drogo", "Dene", "Valen", "Barantyn", "Samwell", "Lionel", "Lamont", "Lyman", "Magnus", "Moses", "Michael", "Michelangelo", "Marcus", "Martin", "Milton", "Nathaniel", "Noah", "Nicholas", "Oliver", "Guy", "Odysseus", "Orville", "Owen", "Philip", "Peter", "Paul", "Patrick", "Akeman", "Algar", "Richard", "Ronald", "Rufus", "Thori", "Wicing", "Merewin", "Marmaduke", "Eynolde", "Stannard", "Odo", "Jodoc", "Timothy", "Upton", "Ulysses", "Bartholomew", "Geoffrey", "William", "Wulsi", "Griffin", "Wallace", "Wyatt", "Zachary"},
+        ["female"] = {"Thomasine", "Odelina", "Kynburgh", "Maud", "Anna", "Joyceline", "Marjorie", "Aveline", "Beatrice", "Caroline", "Catherine", "Cecilia", "Ismenia", "Stanilde", "Alfleta", "Eleanor", "Elizabeth", "Emma", "Gloria", "Grace", "Heather", "Helen", "Isabel", "Isabella", "Jennifer", "Joan", "Joanna", "Julia", "Juliana", "Laura", "Livia", "Madeline", "Margaret", "Maria", "Mary", "Olympia", "Scarlett", "Sarah", "Silvia", "Sophia", "Susanna", "Sybilla", "Theodora", "Victoria", "Virginia", "Valeria", "Tiecia", "Goditha", "Ediva", "Emmaline", "Basilia", "Pleasance", "Joy", "Ysopa", "Rosamund", "Avis", "Cwenhild", "Agatha", "Helewis"}
+	},
 	["goreic"] = {
 		["male"] = {"Ale", "Alfr", "Alfgeir", "Anders", "Anlaufr", "Anundr", "Arnbjörn", "Arngrimr", "Arni", "Arnfast", "Asbjörn", "Bagge", "Baldr", "Barid", "Bengt", "Bersi", "Bertil", "Birger", "Björn", "Bo", "Borkvard", "Botulfr", "Bragi", "Buðli", "Dag", "Dan", "Dyre", "Eilif", "Egill", "Emund", "Einarr", "Eirikr", "Eskild", "Falki", "Faste", "Filip", "Fredrik", "Frirek", "Froði", "Freyr", "Folki", "Gandalfr", "Geirr", "Georg", "Gnupa", "Gorm", "Greger", "Grimr", "Guðfrið", "Guðmundr", "Guðröðr", "Gunnarr", "Hakon", "Halsten", "Haraldr", "Haukr", "Helgi", "Hemming", "Holmger", "Hrafn", "Hrolfr", "Hrane", "Hæsteinn", "Hjalmar", "Hroðgar", "Hroðulfr", "Hrörekr", "Hysing", "Ingólfr", "Ingemar", "Ingjald", "Ivar", "Jedvard", "Jon", "Karl", "Kettil", "Kettilmund", "Kjartan", "Klas", "Knut", "Kol", "Kolbjörn", "Magnus", "Markus", "Magni", "Mats", "Nils", "Niklas", "Oddr", "Ofeig", "Olafr", "Ormr", "Ottarr", "Refr", "Refil", "Ragnarr", "Rikulfr", "Rögnvaldr", "Skuli", "Snorri", "Sigbjörn", "Sigtrygg", "Sigurðr", "Starkaðr", "Steinn", "Sturla", "Styrbjörn", "Styrkar", "Sumarliði", "Suni", "Sveinn", "Sverker", "Sæmundr", "Sölvi", "Sörkver", "Tjudmund", "Toke", "Tolir", "Þorbjörn", "Þorfinn", "Þorbrandr", "Þordr", "Þorgil", "Þorsteinn", "Þorolfr", "Toste", "Totil", "Tryggve", "Tyke", "Ulfr", "Vagn", "Valdemar", "Åke", "Yngvar", "Örvar", "Öysteinn"},
 		["female"] = {"Aleta", "Alfhildr", "Alfrið", "Alvör", "Anna", "Asa", "Aslaug", "Asta", "Astrid", "Beata", "Birgitta", "Björg", "Bodil", "Bothildr", "Cecilia", "Edla", "Elin", "Elisabet", "Freyja", "Gerðr", "Gloð", "Grima", "Gunnhildr", "Gurli", "Guðrun", "Gyla", "Gyrið", "Gyða", "Hafrid", "Halla", "Helena", "Holmfrid", "Iliana", "Inga", "Ingfrid", "Ingibjörg", "Ingjerðr", "Ingrid", "Karin", "Katarina", "Kraka", "Kristina", "Linda", "Maer", "Malmfrið", "Margareta", "Maria", "Rikissa", "Rögnfrið", "Rögnhildr", "Saga", "Sara", "Sif", "Sigrid", "Skuld", "Sofia", "Svanhildr", "Ulfhildr", "Vigdis", "Ylva", "Yrsa"}
@@ -20,6 +24,9 @@ RANDOM_FORENAMES = {
 RANDOM_SURNAMES = {
 	["glazic"] = {
 		"Abriallias", "Aelius", "Anderson", "Antonius", "Appius", "Arcadius", "Armstrong", "Armistead", "Aetius", "Aurelius", "Bateman", "Barclay", "Brutus", "Buchanan", "Caecilius", "Carrinas", "Cassius", "Clemens", "Cornelius", "Chamberlain", "Cranston", "Crassus", "Crawford", "Decimius", "Dilworth", "Domitius", "Fabius", "Flavius", "Franklin", "Fulvius", "Galerius", "Hamilton", "Harris", "Harvus", "Honorius", "Horatius", "Julius", "Jupiter", "Koulius", "Krammy", "Labienus", "Lincoln", "Marius", "Morgan", "Morris", "Nasennius", "Oswald", "Opimius", "Patrobius", "Parker", "Petronius", "Philadelphus", "Pompeius", "Quinctius", "Randolph", "Roberts", "Rufinius", "Septimius", "Severus", "Simmons", "Sheridan", "Stevens", "Stuart", "Sullivan", "Suetonius", "Taylor", "Temple", "Thompson", "Titus", "Tullius", "Tyler", "Valerius", "Vorenus", "Wales", "Wilkes"
+	},
+	["gore-glazic"] = {
+        "Leveson", "Frilleck", "Stokes", "Holbrook", "Sayth", "Arderne", "Bewley", "Bost", "Blount", "Kent", "Makepiece", "Lichefield", "Wenmann", "Hertcombe", "Wilkins", "Carrinas", "Daggas", "Thomisson", "Pursglove", "Coultherst", "Battyl", "Henshawe", "Wything", "Brennyng", "Peltie", "Socksson", "Stokton", "Boltone", "Hamme", "Ledleye", "Maxwells", "Haytere", "Cocke", "Harlande", "Blakeslee", "Calidwalle", "Esburne", "Oldwood", "Helmwood", "Krammy", "Haige", "Hathiwey", "Raclyffe", "Deadmane", "Greymane", "Battleborn", "Gladwyne", "Hurst", "Aston", "Glaziere", "Parrywy", "Rayne", "Chestere", "Colee", "Ackerg", "Stune", "Westcotte", "Reever", "Arte", "Rey", "Stidolphe", "Blackburn", "Washennon", "Willough", "Townsend", "Kardene", "Blakisle", "Ekklesonne", "Wiccam", "Rode", "Kyrstone", "Bourke", "Heile", "Wilkiee", "Sawvers", "Albyne", "Fitsgeffrey", "Pennebrygg", "Morecote", "Fox", "Tegonwell", "Baldwin", "Bedgbery", "Sedrigg", "Swan", "Bridgeman"
 	},
 	["goreic"] = {
 		"Askelsson", "Axel", "Bengtsson", "Björnsson", "Borgesson", "Bundersson", "Ericsson", "Erling", "Eskelsson", "Estensson", "Fredriksson", "Glazkill", "Gustavsson", "Guttormsson", "Haldorsson", "Haralder", "Helgasson", "Helvig", "Heskin", "Hexum", "Hohlt", "Jostad", "Junge", "Kaase", "Karsten", "Klingenberg", "Knudtson", "Krogh", "Leif", "Lorensson", "Mathiesson", "Nygaard", "Nylund", "Ohlsson", "Olafsson", "Skau", "Thostensson", "Torgrimsson", "Tostensson", "Westergaard"
@@ -34,7 +41,23 @@ local FACTION = Clockwork.faction:New("Wanderer");
 	FACTION.description = "The Wanderers are the carrion carcass eaters of the Wasteland. \nThey were the many lowly commoners of the County Districts, barely literate and ill-fed. \nTo survive as a Wanderer, one must be sharp and brutal, and choose their allegiance carefully. \nTheir weapons are their faith and fear, and their strife will be everlasting.";
 	FACTION.availablefaiths = {"Faith of the Light", "Faith of the Family", "Faith of the Dark"};
 	FACTION.imposters = true;
-	FACTION.names = "glazic";
+	
+	if game.GetMap() == "rp_district21" then
+		FACTION.models = {
+			["male"] = {
+				clothes = "models/begotten/wanderers/northwanderer_male.mdl",
+				heads = DEFAULT_MODELS.male.heads,
+			},
+			["female"] = {
+				clothes = "models/begotten/wanderers/northwanderer_female.mdl",
+				heads = DEFAULT_MODELS.female.heads,
+			},
+		}
+		
+		FACTION.names = "gore-glazic";
+	else
+		FACTION.names = "glazic";
+	end
 	
 	-- Called when a player is transferred to the faction.
 	function FACTION:OnTransferred(player, faction, name)
@@ -45,14 +68,20 @@ local FACTION = Clockwork.faction:New("Wanderer");
 FACTION_WANDERER = FACTION:Register();
 
 local FACTION = Clockwork.faction:New("Gatekeeper");
-	FACTION.disabled = false; -- For events.
+	if game.GetMap() == "rp_district21" then
+		FACTION.disabled = true;
+		FACTION.hidden = true;
+	else
+		FACTION.disabled = false;
+	end
+	
 	FACTION.whitelist = true;
 	FACTION.useFullName = false;
 	FACTION.material = "begotten/faction/faction_logo_gatekeepers";
 	FACTION.color = Color(80, 100, 120);
 	FACTION.description = "The Gatekeepers are the front line of defence against the countless unholy horrors that threaten the Glaze. \nTheir ranks swell with conscripted power-hungry commoners and fanatical flagellants. \nThey must serve the Holy Hierarchy diligently and without question, no matter how outrageous their demands may be. \nIll-trained and poorly equipped, these soldiers are expected to lay their lives down to protect the Light. \nAnd so they shall.";
 	FACTION.availablefaiths = {"Faith of the Light"};
-	FACTION.alliedfactions = {"Holy Hierarchy"};
+	FACTION.alliedfactions = {"Hillkeeper", "Holy Hierarchy"};
 	FACTION.masterfactions = {"Holy Hierarchy"};
 	FACTION.enlist = true;
 	FACTION.singleGender = GENDER_MALE;
@@ -73,6 +102,10 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 			{pos1 = Vector(2742, 10244, -1194), pos2 = Vector(2913, 10071, -1074), modifier = 2, nightModifier = 4}, -- Watchtower
 			{pos1 = Vector(-1963, 10678, -1055), pos2 = Vector(-2144, 10886, -1194), modifier = 2, nightModifier = 4}, -- Watchtower
 			{pos1 = Vector(-3468, 12985, -375), pos2 = Vector(-3591, 13103, -241), modifier = 2, nightModifier = 4}, -- Watchtower
+		},
+		["rp_district21"] = {
+			{pos1 = Vector(-4765, 9246, 838), pos2 = Vector(-8075, 10488, 489), modifier = 2, nightModifier = 4},
+			{pos1 = Vector(-10637, 13043, 465), pos2 = Vector(-4664, 9210, 879), modifier = 2, nightModifier = 4},
 		},
 	};
 	
@@ -200,7 +233,7 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 	FACTION.color = Color(225, 175, 0);
 	FACTION.description = "The Holy Hierarchy upholds the ancient superiority of the enlightened few. \nAmongst the dark sea of bastard blood and uncivilized rabble, they are the adjudicators and administrators to enforce Holy Light. \nStill, many are corrupt, seeking self indulgence rather than directing rights. \nAfter all, from their high seats, there are none above them to look down in judgement."
 	FACTION.availablefaiths = {"Faith of the Light"};
-	FACTION.alliedfactions = {"Gatekeeper"};
+	FACTION.alliedfactions = {"Gatekeeper", "Hillkeeper"};
 	FACTION.enlist = true;
 	FACTION.ratio = 0.1; -- 0.1 slots per player (3 at 30 players).
 	--FACTION.imposters = true;
@@ -208,7 +241,8 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 	FACTION.subfactions = {
 		{name = "Ministry", startingRank = 3, whitelist = true, subtitle = "The Ministry - The Privileged Few Overseers of Glazic Supremacy", description = "The Holy Hierarchy is perhaps the only surviving institution of the old world and is the only known church of the Light remaining. Many view the Holy Hierarchy as the direct continuation of the Empire of Light, including the Holy Hierarchy themselves, who push this narrative to solidify their grasp on their subjects. Any who doubt its legitimacy are executed on the spot. Lording over most of the 'civilized' peasantry that wander the wasteland, the Holy Hierarchy strictly enforces its religious codes, which are ever-changing at the whim of the Pope. At the very top of the Hierarchy lies the Pope, supreme in power. He lives in a penthouse at the top of the hotel in absolute luxury in comparison to the shanties that the rabble share. Below him lies the cardinals, who serve as the Pope's council. Lower still are the Bishops, many of whom are now in open rebellion against the new Pope, with some even claiming his title as their own. Lastly, there are the priests, who are barely above commoner status and equal in rank to those in the Knights of Sol or Inquisition. A priest's duties often involve searching ancient texts held within the grand archives for any advantage that could be offered to the Hierarchy over their rivals, or for clues to decipher the ramblings of the machine that so many wanderers speak of.", models = ministerModels},
 		{name = "Inquisition", startingRank = 2, whitelist = true, subtitle = "The Second Inquisition - Hunters, Judges, and Executioners", description = "The Holy Order of the Glaze's Inquisitors is an ancient institution, founded by Lord Maximus during his campaigns against the Black Hats and born of a need to destroy infilitrators and weed out heresy. Although disbanded after their task was completed, it would not be long before the Inquisition was re-instated, as enemies of the Glaze only grew in both numbers and ferocity. The coming of the Undergod and subsequent displacement of the Dark Lord from Hell only strengthened the need for the Inquisition, as unknown powers were now openly unleashed upon mankind. The Inquisition is the most important line of defense for the Holy Hierarchy, as they root out the hidden enemies of the Glaze and uphold religious doctrine. Inquisitors strictly abide by their 'Book of Law', which details their methodology and the rules by which all followers of the Glaze must adhere to. The inquisition also holds the unique ability to hold any member of Glazic society accountable to the 'Book of Law', including members of the Holy Hierarchy. Accusations of heresy are not taken lightly however, and being proved wrong after accusing someone in power may have disastrous consequences for the accuser.", attributes = {{Color(0, 225, 0), "(+) Pious: +50% increased faith gain"}, {Color(0, 225, 0), "(+) Starts with +50 maximum health"}}}, 
-		{name = "Knights of Sol", startingRank = 1, whitelist = true, subtitle = "The Knights of Sol - The Most Devoted Order of the Glaze", description = "Only a few years ago Skylight fell to Earth in a blazing inferno, the last promise of a future for mankind careening into the ground alongside it. From its innumerable enlightened inhabitants only seventeen emerged: the Glorious Seventeen. Donning glorious white armor and wielding sword glowing bright, the Glorious Seventeen slaughtered every demon that fell upon them. Thousands fell by their blade before the demons retreated into the darkness, and it seemed that humanity would live for at least another day. Although the Glorious Seventeen no longer walk this Earth, their legacy lives on in the newly founded Holy Order of the Knights of Sol. These Knights of Sol consist of the very best of the Holy Hierarchy, unmatched in prowess and seen by many of the faithful as guardian angels incarnate. Knights are given the absolute best equipment available in the royal armories. Despite this, Knights are never seen with muskets or any other sort of firearm, believing them too cowardly for someone of such noble stature. Knights of Sol are also known to keep squires in their service, often recruited from the ranks of the Gatekeepers.", attributes = {{Color(0, 225, 0), "(+) Bullet damage is reduced by 70%"}, {Color(0, 225, 0), "(+) Bulwark +25 stamina and +25 stability"}, {Color(0, 225, 0), "(+) Starts with +75 maximum health"}, {Color(225, 0, 0), "(-) Burdened: Run speed is decreased by 15%"}}, models = ministerModels}
+		{name = "Knights of Sol", startingRank = 1, whitelist = true, subtitle = "The Knights of Sol - The Most Devoted Order of the Glaze", description = "Only a few years ago Skylight fell to Earth in a blazing inferno, the last promise of a future for mankind careening into the ground alongside it. From its innumerable enlightened inhabitants only seventeen emerged: the Glorious Seventeen. Donning glorious white armor and wielding sword glowing bright, the Glorious Seventeen slaughtered every demon that fell upon them. Thousands fell by their blade before the demons retreated into the darkness, and it seemed that humanity would live for at least another day. Although the Glorious Seventeen no longer walk this Earth, their legacy lives on in the newly founded Holy Order of the Knights of Sol. These Knights of Sol consist of the very best of the Holy Hierarchy, unmatched in prowess and seen by many of the faithful as guardian angels incarnate. Knights are given the absolute best equipment available in the royal armories. Despite this, Knights are never seen with muskets or any other sort of firearm, believing them too cowardly for someone of such noble stature. Knights of Sol are also known to keep squires in their service, often recruited from the ranks of the Gatekeepers.", attributes = {{Color(0, 225, 0), "(+) Bullet damage is reduced by 70%"}, {Color(0, 225, 0), "(+) Bulwark +25 stamina and +25 stability"}, {Color(0, 225, 0), "(+) Starts with +75 maximum health"}, {Color(225, 0, 0), "(-) Burdened: Run speed is decreased by 15%"}}, models = ministerModels},
+		{name = "Low Ministry", startingRank = 12, whitelist = true, maps = {"rp_district21"}, subtitle = "The Low Ministry - Defenders of the Glaze", description = "Within the North exists a unique section of the Hierarchy - the Low Ministry. While behind closed doors the lesser clergy of the South operate, on the now-empty streets of hamlets in the North did the Low Ministry walk and preach. Even now in the streets of the Hill the Low Ministry defends the faith with zealous abandon. They have authority over all Men of the Watch and Wanderers, bar the lowly Almsman who stands only at the authority of a Yeoman, and are entrusted with keeping the cohesion of the community intact; with a holy book in one hand and a cross in the other. If they fail in their duties, dire punishment is to be wrought.", attributes = {{Color(0, 225, 0), "(+) Quiet Piety: 15% Faith Gain Boost"}, {Color(0, 225, 0), "(+) Blood of Zealots: Starts with +15 maximum health"}, {Color(225, 0, 0), "(-) Tier III and IV of the Prowess belief tree are locked"}}, models = ministerModels, namesOverride = "gore-glazic"}
 	};
 	FACTION.singleGender = GENDER_MALE;
 	
@@ -229,36 +263,42 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 	
 	if SERVER then
 		function FACTION:CanEnlist(player, target, faction, subfaction)
-			if faction == "Holy Hierarchy" then
-				local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
-				
-				if playerSubfaction ~= "Ministry" then
-					if subfaction and subfaction.name ~= playerSubfaction then
-						return false;
+			if !player:IsAdmin() then
+				if faction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						if subfaction and subfaction.name ~= playerSubfaction then
+							return false;
+						end
 					end
 				end
 			end
 		end
 		
 		function FACTION:CanPromote(player, target, faction, subfaction)
-			if faction == "Holy Hierarchy" then
-				local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
-				
-				if playerSubfaction ~= "Ministry" then
-					if subfaction and subfaction.name ~= playerSubfaction then
-						return false;
+			if !player:IsAdmin() then
+				if faction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						if subfaction and subfaction.name ~= playerSubfaction then
+							return false;
+						end
 					end
 				end
 			end
 		end
 		
 		function FACTION:CanDemote(player, target, faction, subfaction)
-			if faction == "Holy Hierarchy" then
-				local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
-				
-				if playerSubfaction ~= "Ministry" then
-					if subfaction and subfaction.name ~= playerSubfaction then
-						return false;
+			if !player:IsAdmin() then
+				if faction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						if subfaction and subfaction.name ~= playerSubfaction then
+							return false;
+						end
 					end
 				end
 			end
@@ -289,13 +329,18 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 		[9] = "Magistrate",
 		[10] = "Grand Inquisitor",
 		[11] = "Regent",
+		[12] = "Almsman",
+		[13] = "Pater",
+		[14] = "Castigator",
+		[15] = "Suffragan",
+		[16] = "High Priest",
 	};
 	
 	Schema.RankTiers["Holy Hierarchy"] = {
-		[1] = {"Sir", "Apprentice", "Vicar"},
-		[2] = {"Justicar", "Inquisitor", "Minister"},
-		[3] = {"Grand Knight", "Ordinator", "Magistrate"},
-		[4] = {"Grand Inquisitor", "Regent"},
+		[1] = {"Sir", "Apprentice", "Vicar", "Almsman"},
+		[2] = {"Justicar", "Inquisitor", "Minister", "Pater", "Castigator"},
+		[3] = {"Grand Knight", "Ordinator", "Magistrate", "Suffragan"},
+		[4] = {"Grand Inquisitor", "Regent", "High Priest"},
 	};
 	
 	Schema.RanksToSubfaction["Holy Hierarchy"] = {
@@ -306,6 +351,11 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 		["Inquisitor"] = "Inquisition",
 		["Ordinator"] = "Inquisition",
 		["Grand Inquisitor"] = "Inquisition",
+		["Almsman"] = "Low Ministry",
+		["Pater"] = "Low Ministry",
+		["Castigator"] = "Low Ministry",
+		["Suffragan"] = "Low Ministry",
+		["High Priest"] = "Low Ministry",
 	};
 FACTION_HIERARCHY = FACTION:Register();
 
@@ -656,3 +706,191 @@ local FACTION = Clockwork.faction:New("Smog City Pirate");
 		end;
 	end;
 FACTION_SMOG_CITY_PIRATES = FACTION:Register();
+
+local FACTION = Clockwork.faction:New("Hillkeeper");
+	local goreglazeModels = {
+		male = {
+			clothes = "models/begotten/wanderers/northwanderer_male.mdl",
+			heads = {
+				"male_02",
+				"male_04",
+				"male_06",
+				"male_07",
+				"male_08",
+				"male_09",
+				"male_11",
+				"male_12",
+				"male_16",
+				"male_22",
+				"male_56"
+			},
+		},
+		female = {
+			clothes = "models/begotten/wanderers/northwanderer_female.mdl",
+			heads = {
+				"female_01",
+				"female_02",
+			}
+		}
+	};
+	
+	if game.GetMap() == "rp_district21" then
+		FACTION.disabled = false;
+	else
+		FACTION.disabled = true;
+		FACTION.hidden = true;
+	end
+
+	FACTION.whitelist = true;
+	FACTION.useFullName = false;
+	FACTION.material = "begotten/faction/faction_logo_hillkeepers";
+	FACTION.color = Color(103, 142, 180);
+	FACTION.description = "The Goreic-Glazemen of the Hill are a simple, hardy folk. They have raised their blades and bats and hooks against the darkness for generations. \nThey don't fight for coin, but for survival and family. All must pull together to survive in the empty cold. \nPagan heresy spreads once more through the ranks, but many still stand faithful and loyal to the Light no matter the cost. \nNow they must stand resolute against the coming darkness, even as the long night draws close. The Hill must not fall. \nGlory awaits the bold and daring.";	FACTION.availablefaiths = {"Faith of the Light"};
+	FACTION.alliedfactions = {"Holy Hierarchy", "Gatekeeper"};
+	FACTION.masterfactions = {"Holy Hierarchy"};
+	FACTION.enlist = true;
+	FACTION.singleGender = GENDER_MALE;
+	FACTION.characterLimit = 1; -- # of characters of this faction a player can have.
+	--FACTION.imposters = true; -- Kinisgers should get enlisted through /enlist on Wanderer disguises.
+	FACTION.names = "gore-glazic";
+	FACTION.subfactions = {
+		{
+			name = "Watchman",
+			subtitle = "Watchmen - Militiamen of the Hill",
+			description = "Throughout much of the Hierarchy, each of the Districts found they required protection. This led to the introduction of the Lower Orders, the Gatekeepers, to hold their gates and defend their flagging settlements. In the harsh and cold north, where two men could live in the same area and never meet one another, the few district settlements that existed in the cold needed no organized standing force of soldiers. But when the Gores came, or thralls threatened their families, they organized fyrds and pressgangs, militias born of necessity. The Hill of Light expects every man of able body to serve in the Town Watch for at least a few years, and so this has made it the Hill's equivalent of the Lower Order; a gang of conscripts and peasants. These men have fought for generations for a multitude of reasons, always ready to take up arms to defend their home.",
+			attributes = {
+				{Color(0, 225, 0), "(+) Martial Ancestry: Starts with +15 maximum stamina"},
+				{Color(0, 225, 0), "(+) Blood of the Gore: Starts with +30 maximum health."},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 6"},
+				{Color(0, 225, 0), "(+) Boisterous: +100% faith gain from dealing damage"},
+				{Color(0, 225, 0), "(+) Voice of the North: Able to Warcry"},
+				{Color(225, 0, 0), "(-) Pious: Restricted to the 'Hard-Glaze' subfaith"},
+				{Color(225, 0, 0), "(-) Burdened: Run speed is decreased by 5%"}
+			},
+			models = goreglazeModels
+		},
+		{
+			name = "Servus",
+			subtitle = "Servants - Stokers and Physicians",
+			description = "There are few in the northern districts who can claim to know valuable skills beyond hunting or fighting, and the few who know how to read, tend wounds, or stoke the mighty forges are quickly taken under the Ministry's wing. The servus are the ones that serve the Watch of the Hill by authority of the Cardinal, the few learned men of the settlement that know how to stitch up bloody limbs or forge fine weapons. For their knowledge, they are not expected to bloody their blades. However, in the harsh empty of the north, there will always be a reason to fight alongside one's brothers.",
+			attributes = {
+				{Color(0, 225, 0), "(+) Learned Few: +25% increased faith gain"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 12"},
+				{Color(0, 225, 0), "(+) Voice of the North: Able to Warcry"},
+				{Color(225, 0, 0), "(-) Tier IV of the Prowess belief tree is locked"},
+				{Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}
+			},
+			models = goreglazeModels
+		},
+		{
+			name = "Outrider",
+			startingRank = 10,
+			whitelist = true,
+			subtitle = "Coachmen - Scouts and Thieves",
+			description = "To waste a life in the north is to waste a set of hands that could be used for better things. To this end the Outriders serve a dual purpose in that they allow the criminals a chance to regain their honor and serve the Light before their death, and allow the wretched of society to provide for the community while still atoning for their sins. For their lawbreaking they are sent out into the wilds outside of the safety of the walls, to scout and scavenge for the Ministry. While not all of the Outriders are criminals, the vast majority tend to be; a life toiling is better than a life ended.",
+			attributes = {
+				{Color(0, 225, 0), "(+) Second Chance: +25% maximum stamina and +5% sprint speed"},
+				{Color(0, 225, 0), "(+) Voice of the North: Able to Warcry"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 8"},
+				{Color(225, 0, 0), "(-) The 'Sol Orthodoxy' and 'Voltism' subfaiths are locked"}
+			},
+			models = goreglazeModels
+		},
+	}
+	FACTION.residualXPZones = { -- Zones that boost residual XP gain for this faction.
+		["rp_begotten3"] = {
+			{pos1 = Vector(1390, 10153, -938), pos2 = Vector(-2370, 11254, -1690), modifier = 2, nightModifier = 4}, -- Gate
+			{pos1 = Vector(9422, 11862, -1210), pos2 = Vector(10055, 10389, -770), modifier = 3, nightModifier = 5}, -- Gorewatch
+			{pos1 = Vector(3458, 12655 -814), pos2 = Vector(3335, 12769, -685), modifier = 2, nightModifier = 4}, -- Watchtower
+			{pos1 = Vector(2742, 10244, -1194), pos2 = Vector(2913, 10071, -1074), modifier = 2, nightModifier = 4}, -- Watchtower
+			{pos1 = Vector(-1963, 10678, -1055), pos2 = Vector(-2144, 10886, -1194), modifier = 2, nightModifier = 4}, -- Watchtower
+			{pos1 = Vector(-3468, 12985, -375), pos2 = Vector(-3591, 13103, -241), modifier = 2, nightModifier = 4}, -- Watchtower
+		},
+		["rp_district21"] = {
+			{pos1 = Vector(-4765, 9246, 838), pos2 = Vector(-8075, 10488, 489), modifier = 2, nightModifier = 4}, -- Hill
+			{pos1 = Vector(-10637, 13043, 465), pos2 = Vector(-4664, 9210, 879), modifier = 2, nightModifier = 4}, -- Hill
+			{pos1 = Vector(-9328, -8640, -146), pos2 = Vector(-8771, -8105, 686), modifier = 3, nightModifier = 5}, -- Gorewatch
+		},
+	};
+	
+	-- Called when a player is transferred to the faction.
+	function FACTION:OnTransferred(player, faction, name)
+		if (faction.name != "Wanderer" and faction.name != "Holy Hierarchy" and faction.name != "Gatekeeper") then
+			if player:GetSubfaction() ~= "Kinisger" then
+				return false;
+			end
+		end;
+		
+		-- It is the IC responsibility of Gatekeepers to bloodtest recruits.
+		--[[if player:GetFaith() ~= "Faith of the Light" or player:GetSubfaith() == "Voltism" then
+			return false;
+		end]]--
+		
+		if (!Clockwork.player:IsWhitelisted(player, faction.name)) then
+			Clockwork.player:SetWhitelisted(player, faction.name, true);
+		end;
+	end;
+	
+	if !Schema.Ranks then
+		Schema.Ranks = {};
+	end
+	
+	if !Schema.RankTiers then
+		Schema.RankTiers = {};
+	end
+	
+	if !Schema.RanksToSubfaction then
+		Schema.RanksToSubfaction = {};
+	end
+	
+	if !Schema.RanksToCoin then
+		Schema.RanksToCoin = {};
+	end
+	
+	Schema.Ranks["Hillkeeper"] = {
+        [1] = "Novice",
+        [2] = "Yeoman",
+        [3] = "Stoker",
+        [4] = "Magnate",
+        [5] = "Barber",
+        [6] = "Surgeon",
+        [7] = "Emissary",
+        [8] = "High Emissary",
+        [9] = "Master-At-Arms",
+        [10] = "Footpad",
+        [11] = "Highwayman",
+        [12] = "Signifer",
+		[13] = "Ealdorman",
+		[14] = "Squire",
+    };
+	
+	Schema.RankTiers["Hillkeeper"] = {
+		[1] = {"Novice"},
+		[2] = {"Yeoman", "Stoker", "Barber", "Footpad", "Ealdorman"},
+		[3] = {"Emissary", "Magnate", "Surgeon", "Highwayman", "Signifer", "Squire"},
+		[4] = {"High Emissary"},
+		[5] = {"Master-At-Arms"},
+	};
+	
+	Schema.RanksToSubfaction["Hillkeeper"] = {
+		["Footpad"] = "Outrider",
+		["Highwayman"] = "Outrider",
+	};
+	
+	Schema.RanksToCoin["Hillkeeper"] = {
+		[1] = 25,
+		[2] = 35,
+		[3] = 35,
+		[4] = 50,
+		[5] = 35,
+		[6] = 50,
+		[7] = 50,
+		[8] = 100,
+		[9] = 200,
+		[10] = 35,
+		[11] = 50,
+		[12] = 50,
+		[13] = 50,
+	};
+
+FACTION_HILLKEEPER = FACTION:Register();

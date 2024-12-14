@@ -96,7 +96,7 @@ function cwPossession:PlayerDeath(player, inflictor, attacker, damageInfo)
 		
 		player:SetNetVar("currentlyPossessed", false);
 		player.possessor = nil;
-	elseif attacker:IsPlayer() and attacker:IsPossessedByDemon() then
+	elseif IsValid(attacker) and attacker:IsPlayer() and attacker:IsPossessedByDemon() then
 		attacker:EmitSound(self.laughs[math.random(1, #self.laughs)]);
 	end
 end;

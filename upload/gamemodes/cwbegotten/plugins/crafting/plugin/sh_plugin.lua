@@ -36,6 +36,15 @@ elseif (game.GetMap() == "rp_scraptown") then
 		Vector(7605, 8609, 1054),
 		Vector(-228, -9635, -6436),
 	};
+elseif (game.GetMap() == "rp_district21") then
+	cwRecipes.smithyLocations = {
+		Vector(-11430, 4139, -679),
+		Vector(-5481, 12443, 189),
+		Vector(6955, 13743, -199),
+		Vector(-14131, -3835, -812),
+		Vector(-704, -7617, 11902),
+		Vector(-228, -9635, -6436),
+	};
 else
 	cwRecipes.smithyLocations = {};
 end;

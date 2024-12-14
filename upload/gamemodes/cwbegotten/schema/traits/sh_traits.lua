@@ -96,7 +96,7 @@ local FOLLOWED = Clockwork.trait:New()
 	FOLLOWED.description = "Long ago, your character made the blunder of ransacking an ancient tomb. Through their ignorance, they missed that it had been prophesied that those who would defile the tomb would be cursed to be hunted for all eternity..."
 	FOLLOWED.disables = {"pilgrim", "shrewd"}
 	FOLLOWED.points = -7
-	FOLLOWED.excludedfactions = {"Gatekeeper", "Pope Adyssa's Gatekeepers"};
+	FOLLOWED.excludedfactions = {"Gatekeeper", "Hillkeeper", "Pope Adyssa's Gatekeepers"};
 Clockwork.trait:Register(FOLLOWED)
 
 local GLUTTONY = Clockwork.trait:New()
@@ -114,7 +114,7 @@ local GUNSLINGER = Clockwork.trait:New()
 	GUNSLINGER.disables = {"pilgrim"}
 	--GUNSLINGER.points = 7
 	GUNSLINGER.points = 3
-	GUNSLINGER.excludedfactions = {"Children of Satan", "Gatekeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
+	GUNSLINGER.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
 	GUNSLINGER.excludedsubfactions = {"Clan Crast", "Clan Grock", "Clan Harald", "Clan Reaver", "Clan Gore"};
 Clockwork.trait:Register(GUNSLINGER)
 
@@ -143,7 +143,7 @@ local LEPER = Clockwork.trait:New()
 	LEPER.points = -5
 	LEPER.disables = {"pilgrim"}
 	LEPER.disablesSkins = true;
-	LEPER.excludedfactions = {"Gatekeeper", "Goreic Warrior", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"};
+	LEPER.excludedfactions = {"Gatekeeper", "Hillkeeper", "Goreic Warrior", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"};
 Clockwork.trait:Register(LEPER)
 
 local LITERATE = Clockwork.trait:New()
@@ -204,7 +204,13 @@ Clockwork.trait:Register(PACIFIST)
 local PILGRIM = Clockwork.trait:New()
 	PILGRIM.uniqueID = "pilgrim"
 	PILGRIM.name = "Pilgrim"
-	PILGRIM.description = "Your character has ventured far and wide to reach the Tower of Light, either in search of sanctuary or in pursuit of holy purpose. Your character will spawn inside the Tower of Light safezone."
+	
+	if game.GetMap() == "rp_district21" then
+		PILGRIM.description = "Your character has ventured far and wide to reach the Hill of Light, either in search of sanctuary or in pursuit of holy purpose. Your character will spawn inside the Hill of Light safezone."
+	else
+		PILGRIM.description = "Your character has ventured far and wide to reach the Tower of Light, either in search of sanctuary or in pursuit of holy purpose. Your character will spawn inside the Tower of Light safezone."
+	end
+	
 	PILGRIM.points = 2
 	PILGRIM.disables = {"escapee", "gunslinger", "leper"}
 	PILGRIM.requiredfactions = {"Wanderer"}
@@ -266,7 +272,7 @@ local SURVIVALIST = Clockwork.trait:New()
 	SURVIVALIST.points = 10
 	SURVIVALIST.eventlocked = false;
 	SURVIVALIST.disables = {"escapee"}
-	SURVIVALIST.excludedfactions = {"Children of Satan", "Gatekeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
+	SURVIVALIST.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
 	SURVIVALIST.excludedsubfactions = {"Clan Crast", "Clan Grock"};
 Clockwork.trait:Register(SURVIVALIST)
 
@@ -277,7 +283,7 @@ local VETERAN = Clockwork.trait:New()
 	VETERAN.points = 16
 	VETERAN.eventlocked = false;
 	VETERAN.disables = {"duelist", "escapee", "weak"}
-	VETERAN.excludedfactions = {"Children of Satan", "Gatekeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
+	VETERAN.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
 	VETERAN.excludedsubfactions = {"Clan Crast", "Clan Grock"};
 Clockwork.trait:Register(VETERAN)
 

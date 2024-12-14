@@ -457,6 +457,10 @@ function cwItemSpawner:SetupContainers()
 										itemInstance:SetAmmoMagazine(math.random(1, itemInstance.ammoMagazineSize));
 									end
 									
+									if itemInstance:GetData("freezing") then
+										itemInstance:SetData("freezing", 100);
+									end
+									
 									Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
 								end
 							end
@@ -544,6 +548,10 @@ function cwItemSpawner:SpawnSupercrate()
 							end
 						end
 						
+						if itemInstance:GetData("freezing") then
+							itemInstance:SetData("freezing", 100);
+						end
+						
 						if itemInstance.itemSpawnerInfo.supercrateItems then
 							for k, v in pairs(itemInstance.itemSpawnerInfo.supercrateItems) do
 								for j = 1, math.random(v.min, v.max) do
@@ -552,6 +560,10 @@ function cwItemSpawner:SpawnSupercrate()
 									if subItem then
 										if subItem.ammoMagazineSize and subItem.SetAmmoMagazine then
 											subItem:SetAmmoMagazine(subItem.ammoMagazineSize);
+										end
+										
+										if subItem:GetData("freezing") then
+											subItem:SetData("freezing", 100);
 										end
 										
 										Clockwork.inventory:AddInstance(supercrate.cwInventory, subItem, 1);

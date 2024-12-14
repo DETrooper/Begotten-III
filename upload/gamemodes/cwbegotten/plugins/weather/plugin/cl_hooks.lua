@@ -3,6 +3,7 @@
 --]]
 
 local drop = EffectData();
+local map = game.GetMap();
 
 if cwWeather.Emitter2D then
 	cwWeather.Emitter2D:Finish()
@@ -10,7 +11,7 @@ if cwWeather.Emitter2D then
 end
 
 function cwWeather:Think()
-	if Clockwork.kernel:IsChoosingCharacter() then	
+	if Clockwork.kernel:IsChoosingCharacter() and map ~= "rp_district21" then
 		return;
 	end
 
@@ -30,6 +31,11 @@ function cwWeather:Think()
 	end
 	
 	local weather = self.weather;
+	
+	if map == "rp_district21" and Clockwork.kernel:IsChoosingCharacter() then
+		-- Always snow for title screen & char creation.
+		weather = "snow";
+	end
 
 	if weather then
 		local weatherTable = self.weatherTypes[weather];
@@ -161,7 +167,19 @@ function cwWeather:OverrideZoneFogColorsSkyboxNight(zoneTable)
 end
 
 function cwWeather:OverrideZoneFogDistance(zoneTable, fogStart, fogEnd)
-	if Clockwork.Client.dueling or Clockwork.kernel:IsChoosingCharacter() then return end;
+	if Clockwork.kernel:IsChoosingCharacter() then
+		if cwMapScene and Clockwork.Client.MenuVector and cwMapScene.curStored and cwMapScene.curStored.position and cwMapScene.curStored.position:IsEqualTol(Clockwork.Client.MenuVector, 5) then
+			if game.GetMap() == "rp_district21" then
+				return 128, 1024;
+			else
+				return 4000, 4028;
+			end
+		else
+			return;
+		end
+	end
+
+	if Clockwork.Client.dueling then return end;
 	if Clockwork.Client:InTower() then return end;
 
 	if self.weather and zoneTable.hasWeather then
@@ -176,6 +194,13 @@ function cwWeather:OverrideZoneFogDistance(zoneTable, fogStart, fogEnd)
 						targetStart = Lerp(cwDayNight.nightWeight, weatherTable.fogStart or fogStart, weatherTable.fogStartNight or zoneTable.fogStartNight);
 						targetEnd = Lerp(cwDayNight.nightWeight, weatherTable.fogEnd or fogEnd, weatherTable.fogEndNight or zoneTable.fogEndNight);
 					end
+				end
+			end
+			
+			if game.GetMap() == "rp_district21" then
+				if (!self:IsOutside(Clockwork.Client:GetPos()) and Clockwork.Client:InTower()) then
+					targetStart = self.weatherTypes["normal"].fogStart * 1.5;
+					targetEnd = self.weatherTypes["normal"].fogEnd * 1.5;
 				end
 			end
 

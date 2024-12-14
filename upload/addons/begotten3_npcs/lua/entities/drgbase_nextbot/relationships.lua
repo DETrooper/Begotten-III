@@ -171,7 +171,7 @@ if SERVER then
 			if ent:GetClass() == "prop_ragdoll" then
 				local ragdollPlayer = Clockwork.entity:GetPlayer(ent);
 				
-				if ent:GetNWEntity("Player") == game.GetWorld() then
+				if ent:GetNW2Entity("Player") == game.GetWorld() then
 					return D_ER;
 				end
 				
@@ -277,7 +277,7 @@ if SERVER then
 			if ent:GetClass() == "prop_ragdoll" then
 				local ragdollPlayer = Clockwork.entity:GetPlayer(ent);
 				
-				if ent:GetNWEntity("Player") == game.GetWorld() then
+				if ent:GetNW2Entity("Player") == game.GetWorld() then
 					return true;
 				end
 				

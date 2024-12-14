@@ -23,9 +23,17 @@ function COMMAND:OnRun(player, arguments)
 		local thirst = player:GetNeed("thirst", 0);
 		
 		if player:GetSubfaction() == "Varazdat" then
-			Schema:EasyText(player, "chocolate", "There is no blood in these waters, to drink from this would be a moot point.");
+			if game.GetMap() == "rp_district21" and player:GetPos():WithinAABox(Vector(11202, -6080, -686), Vector(12083, -5412, -897)) then
+				player:HandleNeed("thirst", -25);
+				player:HandleNeed("corruption", 5);
+				
+				player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
+				Schema:EasyText(player, "olivedrab", "This strange puddle of water is full of delicacy indeed...");
+			else
+				Schema:EasyText(player, "chocolate", "There is no blood in these waters, to drink from this would be a moot point.");
 			
-			return;
+				return;
+			end
 		end;
 		
 		if cwBeliefs and (player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm")) then
@@ -46,28 +54,34 @@ function COMMAND:OnRun(player, arguments)
 			player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
 			Schema:EasyText(player, "olivedrab", "You drink from the pure waters of the Gore Forest, quenching your thirst.");
 		else
-			if cwRituals and player.drownedKingActive then
+			if game.GetMap() == "rp_district21" then
 				player:HandleNeed("thirst", -25);
 				player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
-				Schema:EasyText(player, "olivedrab", "You drink from the Begotten waters, but the protection of the Drowned King keeps you safe.");
+				Schema:EasyText(player, "olivedrab", "You drink from the pure waters of the county district, quenching your thirst.");
 			else
-				if cwBeliefs and player:HasBelief("savage_animal") then
+				if cwRituals and player.drownedKingActive then
 					player:HandleNeed("thirst", -25);
 					player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
-					Schema:EasyText(player, "olivedrab", "You drink from the yummy Begotten waters.");
+					Schema:EasyText(player, "olivedrab", "You drink from the Begotten waters, but the protection of the Drowned King keeps you safe.");
 				else
-					if cwMedicalSystem then
-						if cwBeliefs and player:HasBelief("sanitary") then
-							player:HandleDiseaseChance("water", 33);
-						else
-							player:HandleDiseaseChance("water", 80);
+					if cwBeliefs and player:HasBelief("savage_animal") then
+						player:HandleNeed("thirst", -25);
+						player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
+						Schema:EasyText(player, "olivedrab", "You drink from the yummy Begotten waters.");
+					else
+						if cwMedicalSystem then
+							if cwBeliefs and player:HasBelief("sanitary") then
+								player:HandleDiseaseChance("water", 33);
+							else
+								player:HandleDiseaseChance("water", 80);
+							end
 						end
+					
+						player:HandleSanity(-10);
+						player:HandleNeed("thirst", -25);
+						player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
+						Schema:EasyText(player, "olive", "You drink from the Begotten waters. Who knows what foulness you have just consumed? You feel your sanity drain.");
 					end
-				
-					player:HandleSanity(-10);
-					player:HandleNeed("thirst", -25);
-					player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
-					Schema:EasyText(player, "olive", "You drink from the Begotten waters. Who knows what foulness you have just consumed? You feel your sanity drain.");
 				end
 			end
 		end
@@ -260,6 +274,20 @@ function COMMAND:OnRun(player, arguments)
 					end
 				end
 				
+				if cwCharacterNeeds.bedZones["ministers2"] then
+					if playerPos:WithinAABox(cwCharacterNeeds.bedZones["ministers2"].pos1, cwCharacterNeeds.bedZones["ministers2"].pos2) then
+						player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
+						--player:HandleSanity(50);
+						--player:HandleNeed("hunger", 5);
+						--player:HandleNeed("thirst", 10);
+						--player:HandleNeed("sleep", -100);
+						
+						Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
+						Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
+						return;
+					end
+				end
+				
 				if cwCharacterNeeds.bedZones["hierarchy"] and playerPos:WithinAABox(cwCharacterNeeds.bedZones["hierarchy"].pos1, cwCharacterNeeds.bedZones["hierarchy"].pos2) then
 					player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
 					--player:HandleSanity(50);
@@ -350,6 +378,34 @@ function COMMAND:OnRun(player, arguments)
 				
 				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
 				Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
+				return;
+			end
+		end
+		
+		if cwCharacterNeeds.bedZones["hillkeeper"] then
+			if cwCharacterNeeds.bedZones["hillkeeper"] and playerPos:WithinAABox(cwCharacterNeeds.bedZones["hillkeeper"].pos2, cwCharacterNeeds.bedZones["hillkeeper"].pos1) then
+				player.sleepData = {health = 25, hunger = 10, thirst = 20, rest = -60, sanity = 25};
+				--player:HandleSanity(25);
+				--player:HandleNeed("hunger", 10);
+				--player:HandleNeed("thirst", 20);
+				--player:HandleNeed("sleep", -60);
+				
+				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 150);
+				Schema:EasyText(player, "olivedrab", "You climb into a cot and get some rest.");
+				return;
+			end
+		end
+		
+		if cwCharacterNeeds.bedZones["gorewatch"] then
+			if cwCharacterNeeds.bedZones["gorewatch"] and playerPos:WithinAABox(cwCharacterNeeds.bedZones["gorewatch"].pos2, cwCharacterNeeds.bedZones["gorewatch"].pos1) then
+				player.sleepData = {health = 25, hunger = 10, thirst = 20, rest = -60, sanity = 25};
+				--player:HandleSanity(25);
+				--player:HandleNeed("hunger", 10);
+				--player:HandleNeed("thirst", 20);
+				--player:HandleNeed("sleep", -60);
+				
+				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 150);
+				Schema:EasyText(player, "olivedrab", "You climb into a cot and get some rest.");
 				return;
 			end
 		end

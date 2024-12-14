@@ -44,8 +44,8 @@ end;
 function cwStaticEnts:Tick()
 	local curTime = CurTime();
 
-	if (Clockwork.Client.HasInitialized and Clockwork.Client:HasInitialized()) then
-		if (Clockwork.plugin:Call("PlayerCanSeeAdminESP") and Clockwork.ConVars.STATICESP:GetInt() == 1) then
+	if (Clockwork.Client.HasInitialized and Clockwork.Client:HasInitialized() and Clockwork.Client:IsAdmin()) then
+		if (hook.Run("PlayerCanSeeAdminESP") ~= false and Clockwork.ConVars.STATICESP:GetInt() == 1) then
 			if (!self.nextSync or curTime >= self.nextSync) then
 				netstream.Request("staticESPSync", nil, function(data)
 					cwStaticEnts.staticEnts = data;
