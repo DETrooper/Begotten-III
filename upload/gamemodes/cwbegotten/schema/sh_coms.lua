@@ -3567,6 +3567,14 @@ local COMMAND = Clockwork.command:New("CauldronAddIngredient");
 							Schema:ModifyDiseasedServings(2);
 							Clockwork.player:NotifyAdmins("operator", player:Name().." has plagued the cauldron!")
 						end
+						
+						if cwBeliefs then
+							if quality == 1 then
+								player:HandleXP(15);
+							elseif quality == 0 then
+								player:HandleXP(8);
+							end
+						end
 
 						Clockwork.chatBox:AddInTargetRadius(player, "me", "splashes an item into the cauldron.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 

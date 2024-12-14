@@ -1089,7 +1089,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				warcry_beliefs = {"sadism"};
 			end
 		else
-			if faith == "Faith of the Family" then
+			if faith == "Faith of the Family" and faction ~= "Hillkeeper" then
 				sanity_debuff = -10;
 				warcry_beliefs = {"father", "mother", "old_son", "young_son", "sister"};
 			elseif faith == "Faith of the Dark" then
