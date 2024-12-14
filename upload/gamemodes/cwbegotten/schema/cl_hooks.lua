@@ -511,8 +511,8 @@ function Schema:GetEntityMenuOptions(entity, options)
 
 			if player then
 				local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
-				
-				if player:Alive() and clientFaction == "Hillkeeper" or clientFaction == "Holy Hierarchy" and (entFaction ~= "Hillkeeper" and entFaction ~= "Holy Hierarchy") and player:GetNetVar("tied") != 0 then
+
+				if player:Alive() and (clientFaction == "Hillkeeper" or clientFaction == "Holy Hierarchy") and (entFaction ~= "Hillkeeper" and entFaction ~= "Holy Hierarchy") and player:GetNetVar("tied") != 0 then
 					for k, v in pairs(ents.FindInSphere(Clockwork.Client:GetPos(), 512)) do
 						if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "The Headsman" then
 							options["Sell Into Slavery"] = "cw_sellSlave";

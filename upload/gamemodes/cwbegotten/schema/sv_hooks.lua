@@ -552,7 +552,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 							return;
 						end
 					end
-				elseif playerFaction == "Hillkeeper" or "Holy Hierarchy" and entFaction ~= playerFaction and entityPlayer:GetNetVar("tied") != 0 then
+				elseif (playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy") and entFaction ~= playerFaction and entityPlayer:GetNetVar("tied") != 0 then
 					for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
 						if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "The Headsman" then
 
