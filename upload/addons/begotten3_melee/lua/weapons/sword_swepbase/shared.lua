@@ -2655,7 +2655,7 @@ function SWEP:Initialize()
 		self.WElements = table.FullCopy(weaponTable.WElements);
 		self.ViewModelBoneMods = table.FullCopy(self.ViewModelBoneMods);
 		
-		if self:GetNW2String("stance") == "thrust_swing" then
+		if self:GetNWString("stance") == "thrust_swing" then
 			if weaponTable.VElementsAlternate then
 				self.VElements = table.FullCopy(weaponTable.VElementsAlternate);
 			end;
@@ -3030,8 +3030,8 @@ if CLIENT then
 		local wepTab = self:GetTable()
 		
 		if self.OnMeleeStanceChanged then
-			if self:GetNW2String("stance") ~= self.stance then
-				self:OnMeleeStanceChanged(self:GetNW2String("stance"));
+			if self:GetNWString("stance") ~= self.stance then
+				self:OnMeleeStanceChanged(self:GetNWString("stance"));
 				
 				return;
 			end

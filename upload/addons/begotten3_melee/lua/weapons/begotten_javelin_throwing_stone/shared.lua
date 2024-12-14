@@ -242,7 +242,7 @@ function SWEP:GetHoldtypeOverride()
 end
 
 function SWEP:OnMeleeStanceChanged(stance)
-	self:SetNW2String("stance", stance);
+	self:SetNWString("stance", stance);
 	self.stance = stance;
 
 	if SERVER then
