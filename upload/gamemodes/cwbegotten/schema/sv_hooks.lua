@@ -294,6 +294,8 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 		local entFaction = entity:GetNetVar("kinisgerOverride") or entity:GetFaction();
 	
 		if (arguments == "cw_sellSlave") then
+			if !entity:Alive() then return end
+		
 			if playerFaction == "Goreic Warrior" and entFaction ~= "Goreic Warrior" then
 				for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
 					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
@@ -339,7 +341,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 						return;
 					end
 				end
-			elseif playerFaction == "Hillkeeper" or "Holy Hierarchy" and entFaction ~= playerFaction then
+			elseif (playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy") and entFaction ~= playerFaction and entFaction ~= "Holy Hierarchy" then
 				for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
 					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "The Headsman" then
 						if entFaction == "Children of Satan" then
