@@ -136,7 +136,7 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.attachmentOffsetVector = Vector(1.39, 5.08, -5.08);
 	
 	ITEM.ammoCapacity = 1;
-	ITEM.ammoTypes = {"Longshot", "Grapeshot"};
+	ITEM.ammoTypes = {"Longshot"};
 	ITEM.attributes = {"melee"};
 	ITEM.firearmType = "Long Gun (Great Weapon)";
 	ITEM.reloadTime = 9; -- Seconds

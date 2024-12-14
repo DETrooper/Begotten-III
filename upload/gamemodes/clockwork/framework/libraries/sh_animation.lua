@@ -1310,8 +1310,12 @@ Clockwork.animation:AddCoatOfPlateArms("models/begotten/hillkeepers/coat_of_plat
 Clockwork.animation:AddFineCoatArms("models/begotten/hillkeepers/fine_coat")
 Clockwork.animation:AddHeavyLamellarArms("models/begotten/hillkeepers/heavy_lamellar")
 Clockwork.animation:AddHillAcolyteArms("models/begotten/hillkeepers/acolyte")
+Clockwork.animation:AddHillAcolyteArms("models/begotten/hillkeepers/nevsky")
 Clockwork.animation:AddHillDiscipleArms("models/begotten/hillkeepers/disciple")
+Clockwork.animation:AddHillDiscipleArms("models/begotten/hillkeepers/halfplate")
 Clockwork.animation:AddHillMasterArms("models/begotten/hillkeepers/master_at_arms")
 
 Clockwork.animation:AddNorthWandererArms("models/begotten/wanderers/northwanderer")
 Clockwork.animation:AddFootpadArms("models/begotten/wanderers/footpad")
+
+Clockwork.animation:AddMonkRobeArms("models/begotten/wanderers/anglo"); -- Temp for now, replace later?

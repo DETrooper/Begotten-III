@@ -126,44 +126,8 @@ SWEP.BlockTable = "GunAxeBlockTable"
 SWEP.isMeleeFirearm = true;
 
 SWEP.AmmoTypes = {
-	["Grapeshot"] = function(SWEP)
-		SWEP.Primary.Sound = Sound("musket/musket4.wav");
-		SWEP.Primary.NumShots = 32;
-		SWEP.Primary.Damage = 7;
-		SWEP.Primary.Spread = .4;
-		SWEP.Primary.IronAccuracy = .4;
-		SWEP.Primary.Ammo = "buckshot";
-		
-		SWEP.Primary.KickUp				= 50		-- Maximum up recoil (rise)
-		SWEP.Primary.KickDown			= 1		-- Maximum down recoil (skeet)
-		SWEP.Primary.KickHorizontal		= 25		-- Maximum up recoil (stock)
-		
-		if SWEP.Owner and SWEP.Owner:IsPlayer() then
-			if SWEP.Owner:GetVelocity() == Vector(0, 0, 0) then
-				if SWEP.Owner.HasBelief and SWEP.Owner:HasBelief("marksman") then
-					if SWEP.Owner:Crouching() then
-						SWEP.Primary.Spread = .19;
-						SWEP.Primary.IronAccuracy = .19;
-					else
-						SWEP.Primary.Spread = .2;
-						SWEP.Primary.IronAccuracy = .2;
-					end
-				else
-					if SWEP.Owner:Crouching() then
-						SWEP.Primary.Spread = .25;
-						SWEP.Primary.IronAccuracy = .25;
-					else
-						SWEP.Primary.Spread = .28;
-						SWEP.Primary.IronAccuracy = .28;
-					end
-				end
-			end
-		end
-		
-		return true;
-	end,
 	["Longshot"] = function(SWEP)
-		SWEP.Primary.Sound = Sound("musket/musket1.wav");
+		SWEP.Primary.Sound = Sound("weapons/cb4/cb4-1.wav");
 		SWEP.Primary.NumShots = 1;
 		SWEP.Primary.Damage = 95;
 		SWEP.Primary.Spread = .1;

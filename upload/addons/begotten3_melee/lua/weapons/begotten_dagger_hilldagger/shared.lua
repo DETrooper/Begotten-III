@@ -96,3 +96,13 @@ SWEP.VElements = {
 SWEP.WElements = {
 	["w_gorehuntingdagger"] = { type = "Model", model = "models/begotten_apocalypse/items/GuardDagger.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.5, 2.299, -0.301), angle = Angle(90.844, -113.377, 0.506), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
+
+SWEP.VElementsDual = {
+    ["v_right"] = { type = "Model", model = "models/begotten_apocalypse/items/GuardDagger.mdl", bone = "Dummy01", rel = "", pos = Vector(0.493, -12, 0), angle = Angle(0, -103.334, -20), size = Vector(0.903, 0.903, 0.903), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+    ["v_left"] = { type = "Model", model = "models/begotten_apocalypse/items/GuardDagger.mdl", bone = "Dummy16", rel = "", pos = Vector(0.5, -9, -0.5), angle = Angle(180, 70, 180), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElementsDual = {
+    ["w_right"] = { type = "Model", model = "models/begotten_apocalypse/items/GuardDagger.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.5, 1.5, -0.301), angle = Angle(70, -113.377, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+    ["w_left"] = { type = "Model", model = "models/begotten_apocalypse/items/GuardDagger.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.5, 0, -0.301), angle = Angle(-70, 72.222, 180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}
