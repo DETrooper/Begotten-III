@@ -122,7 +122,7 @@ function SWEP:Holster()
 
 		self:StopAllAnims(player);
 		
-		player:SetLocalVar("ThrustStance", false);
+		player:SetNetVar("ThrustStance", false);
 		player:SetLocalVar("ParrySuccess", false) ;
 		player:SetLocalVar("Riposting", false);
 

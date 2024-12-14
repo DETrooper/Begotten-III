@@ -204,7 +204,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoName = "Iron Bolt (Incendiary)";
 	ITEM.requiredReloadBelief = "strength";
 	
-	ITEM.attributes = {"incendiary"};
+	ITEM.attributes = {"fire"};
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
 ITEM:Register();
 

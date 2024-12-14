@@ -197,7 +197,7 @@ function SWEP:Deploy()
 	self.Owner.gestureweightbegin = 2;
 	self.Owner:SetLocalVar("CanBlock", true)
 	self.Owner:SetLocalVar("CanDeflect", true)
-	self.Owner:SetLocalVar("ThrustStance", false)
+	self.Owner:SetNetVar("ThrustStance", false)
 	self.Owner:SetLocalVar("ParrySuccess", false) 
 	self.Owner:SetLocalVar("Riposting", false)
 	self.Owner:SetLocalVar("MelAttacking", false ) -- This should fix the bug where you can't block until attacking.
@@ -1157,7 +1157,7 @@ end
 		elseif swingType == "thrust_swing" then
 			if !owner:GetNetVar("ThrustStance") then
 				if !self.isMeleeFirearm then
-					owner:SetLocalVar("ThrustStance", false);
+					owner:SetNetVar("ThrustStance", false);
 				end
 			end
 
@@ -1361,7 +1361,7 @@ end
 			local variableStabilityDamage = minStabilityDamage + (maxStabilityDamage - minStabilityDamage) * ratio
 		
 			if owner:GetNetVar("ThrustStance") then
-				owner:SetLocalVar("ThrustStance", false);
+				owner:SetNetVar("ThrustStance", false);
 			end
 
 			if (!hit.nexthit or CurTime() > hit.nexthit) then 
@@ -1519,7 +1519,7 @@ end
 		else -- reg_swing and others
 			if owner:GetNetVar("ThrustStance") then
 				if !self.isMeleeFirearm then
-					owner:SetLocalVar("ThrustStance", false);
+					owner:SetNetVar("ThrustStance", false);
 				end
 			end
 
@@ -2822,7 +2822,7 @@ function SWEP:Holster()
 			end
 		else
 			if player:GetNetVar("ThrustStance") then
-				player:SetLocalVar("ThrustStance", false);
+				player:SetNetVar("ThrustStance", false);
 			end
 			
 			if player:GetNetVar("Parry") then

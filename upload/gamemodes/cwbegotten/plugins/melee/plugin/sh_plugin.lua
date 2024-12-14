@@ -89,7 +89,7 @@ function cwMelee:KeyPress(player, key)
 										end
 									end;
 									
-									player:SetLocalVar("ThrustStance", true)
+									player:SetNetVar("ThrustStance", true)
 									player.StanceSwitchOn = curTime + 1;
 									
 									if activeWeapon.OnMeleeStanceChanged then
@@ -130,7 +130,7 @@ function cwMelee:KeyPress(player, key)
 										end
 									end;
 									
-									player:SetLocalVar("ThrustStance", false)
+									player:SetNetVar("ThrustStance", false)
 									player.StanceSwitchOn = curTime + 1;
 									
 									if activeWeapon.OnMeleeStanceChanged then

@@ -123,7 +123,7 @@ function cwPossession:StartCommand(player, ucmd)
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
 									end
 									
-									player:SetLocalVar("ThrustStance", true);
+									player:SetNetVar("ThrustStance", true);
 									
 									if activeWeapon.OnMeleeStanceChanged then
 										activeWeapon:OnMeleeStanceChanged("thrust_swing");
@@ -146,7 +146,7 @@ function cwPossession:StartCommand(player, ucmd)
 										possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to slashing stance.")
 									end
 									
-									player:SetLocalVar("ThrustStance", false);
+									player:SetNetVar("ThrustStance", false);
 									
 									if activeWeapon.OnMeleeStanceChanged then
 										activeWeapon:OnMeleeStanceChanged("reg_swing");

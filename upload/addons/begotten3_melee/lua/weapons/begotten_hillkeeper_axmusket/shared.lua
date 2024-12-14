@@ -1181,7 +1181,7 @@ function SWEP:Deploy()
 	self.Owner.gestureweightbegin = 1;
 	self.Owner:SetLocalVar("CanBlock", true)
 	self.Owner:SetLocalVar("CanDeflect", true)
-	self.Owner:SetLocalVar("ThrustStance", false)
+	self.Owner:SetNetVar("ThrustStance", false)
 	self.Owner:SetLocalVar("ParrySuccess", false) 
 	self.Owner:SetLocalVar("Riposting", false)
 	self.Owner:SetLocalVar("MelAttacking", false ) -- This should fix the bug where you can't block until attacking.
@@ -1837,10 +1837,9 @@ function SWEP:OnMeleeStanceChanged(stance)
 
 	if SERVER then
 		self:CallOnClient("OnMeleeStanceChanged", stance);
+		self.Owner:EmitSound("weapons/ageofchivalry/flailshield/flailshield_block.wav", 60)
 	end
-	
-	self.Owner:EmitSound("weapons/ageofchivalry/flailshield/flailshield_block.wav", 60)
-	
+
 	self:SetHoldType(self:GetHoldtypeOverride());
 	self:Initialize();
 end

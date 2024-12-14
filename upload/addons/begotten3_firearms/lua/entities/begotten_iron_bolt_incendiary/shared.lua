@@ -144,6 +144,7 @@ if SERVER then
 				end
 				
 				self:EmitSound("weapons/arrow_to_shield_02.wav", 65)
+				self:Ignite(5, 16);
 				self:Disable();
 			elseif Ent.Health and IsValid(self.Owner) then
 				local should_stick = false;
@@ -223,7 +224,10 @@ if SERVER then
 				end
 
 				Ent:TakeDamageInfo(d)
-				Ent:Ignite(5);
+				
+				if Ent:IsPlayer() or Ent:IsNPC() or Ent:IsNextBot() or Ent:GetClass() == "prop_ragdoll" then
+					Ent:Ignite(5);
+				end
 				
 				self:EmitSound(self.FleshHit[math.random(1, #self.FleshHit)])
 				self:SetCollisionGroup(COLLISION_GROUP_WORLD);
