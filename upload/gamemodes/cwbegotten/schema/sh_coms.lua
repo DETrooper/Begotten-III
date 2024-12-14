@@ -3617,3 +3617,62 @@ local COMMAND = Clockwork.command:New("CauldronDump");
 	end;
 
 COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CheckRatio");
+COMMAND.tip = "Check the ratio of players between different factions who are flagged up.";
+COMMAND.text = "[bool Include Admins] [bool Include Subfactions]";
+COMMAND.access = "s";
+
+-- Called when the command has been run.
+function COMMAND:OnRun(player, arguments)
+    local factionCounts = {};
+
+    for _, v in pairs(_player.GetAll()) do
+        local faction = v:GetFaction();
+        local subfaction = v:GetSubfaction();
+
+		if(!tobool(arguments[1]) and v:IsAdmin()) then continue; end
+		if(!faction) then continue; end
+
+		local factionCount = factionCounts[faction];
+
+		if(!factionCount) then
+			factionCounts[faction] = {
+				count = 0,
+				subfactions = {},
+
+			};
+
+			factionCount = factionCounts[faction];
+
+		end
+
+		factionCount.count = factionCount.count + 1;
+
+		if(subfaction and tobool(arguments[2])) then
+			subfaction = subfaction == "" and "N/A" or subfaction;
+
+			local subfactionCount = factionCount.subfactions[subfaction];
+			factionCount.subfactions[subfaction] = subfactionCount and subfactionCount + 1 or 1;
+			
+		end
+
+    end
+
+	if tobool(arguments[1]) then Schema:EasyText(player, "cornflowerblue", "Including admins:"); end
+
+	for i, v in pairs(factionCounts) do
+		local playerLimit = Clockwork.faction:FindByID(i).playerLimit and Clockwork.faction:FindByID(i).playerLimit or 0;
+
+    	Schema:EasyText(player, "cornflowerblue", (i..": "..tostring(v.count).."/"..tostring(playerLimit)));
+
+		if(!tobool(arguments[2])) then continue; end
+
+		for ii, vv in pairs(v.subfactions) do
+			Schema:EasyText(player, "cornflowerblue", ("      "..ii..": "..tostring(vv)));
+
+		end
+
+	end
+end
+COMMAND:Register();
