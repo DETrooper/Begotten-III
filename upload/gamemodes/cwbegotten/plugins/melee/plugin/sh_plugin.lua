@@ -37,7 +37,7 @@ function cwMelee:KeyPress(player, key)
 					return;
 				end;
 				
-				if (activeWeapon.Base == "sword_swepbase") then
+				if (activeWeapon.Base == "sword_swepbase") and !activeWeapon.isAttacking then
 					local attackTable = GetTable(activeWeapon.AttackTable);
 					
 					if (attackTable and attackTable["canaltattack"] == true) then

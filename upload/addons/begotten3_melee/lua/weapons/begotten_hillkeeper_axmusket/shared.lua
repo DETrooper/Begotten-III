@@ -1174,6 +1174,16 @@ function SWEP:OnDeploy()
 end
 
 function SWEP:Deploy()
+	if SERVER then
+		if IsValid(self.Owner) and self.Owner:IsPlayer() then
+			self.Weapon:CallOnClient("Initialize");
+		end
+
+		if self.OnMeleeStanceChanged then
+			self:OnMeleeStanceChanged("reg_swing");
+		end
+	end
+
 	if not self.Owner.cwWakingUp and not self.Owner.LoadingText then
 		self:OnDeploy()
 	end
