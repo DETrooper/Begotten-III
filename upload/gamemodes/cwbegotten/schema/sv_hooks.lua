@@ -299,7 +299,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 			if playerFaction == "Goreic Warrior" and entFaction ~= "Goreic Warrior" then
 				for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
 					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
-						Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 15, "Sold Slave");
+						Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 20, "Sold Slave");
 						player:EmitSound("generic_ui/coin_positive_02.wav");
 						
 						if cwBeliefs then
@@ -345,13 +345,13 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 				for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
 					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "The Headsman" then
 						if entFaction == "Children of Satan" then
-							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 60, "Sold Slave");
+							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 30, "Sold Slave");
 							Schema:EasyText(player, "lawngreen", "You have received a three times bonus for selling a captured Children of Satan!")
 						elseif entFaction == "Goreic Warrior" then
-							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 40, "Sold Slave");
+							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 20, "Sold Slave");
 							Schema:EasyText(player, "lawngreen", "You have received a two times bonus for selling a captured Goreic Warrior!")
 						else
-							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 20, "Sold Slave");
+							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 10, "Sold Slave");
 						end
 						
 						player:EmitSound("generic_ui/coin_positive_02.wav");
