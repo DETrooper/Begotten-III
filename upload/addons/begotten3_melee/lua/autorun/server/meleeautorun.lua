@@ -803,7 +803,7 @@ local function Guarding(ent, dmginfo)
 									local activeWeapon = ent:GetActiveWeapon();
 									
 									if activeWeapon:GetNW2String("activeShield"):len() > 0 then
-										newEnemyPoise = newEnemyPoise * 0.85;
+										newEnemyPoise = newEnemyPoise - 10;
 									end
 								end
 								
@@ -837,7 +837,7 @@ local function Guarding(ent, dmginfo)
 									local activeWeapon = ent:GetActiveWeapon();
 									
 									if activeWeapon:GetNW2String("activeShield"):len() > 0 then
-										newEnemyPoise = newEnemyPoise * 0.85;
+										newEnemyPoise = newEnemyPoise - 10;
 									end
 								end
 								

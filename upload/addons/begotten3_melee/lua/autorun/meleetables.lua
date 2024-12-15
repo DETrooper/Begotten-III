@@ -6938,7 +6938,7 @@ BlockTables.shield11 = { -- Gatekeeper Shield
 
 BlockTables.shield12 = { -- Warfighter Shield
 	["name"] = "Warfighter Shield",
-	["guardblockamount"] = 5,
+	["guardblockamount"] = 4,
 	["damagereduction"] = 0.8,
 	["specialeffect"] = false,
 	["blockeffect"] = "MetalSpark",
