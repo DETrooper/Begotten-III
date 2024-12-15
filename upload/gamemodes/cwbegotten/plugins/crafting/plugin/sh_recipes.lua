@@ -8685,11 +8685,11 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock"};
 		RECIPE.requirements = {
-			["iron_bolt"] = {amount = 3},
+			["iron_bolt"] = {amount = 1},
 			["small_oil"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["iron_bolt_incendiary"] = {amount = 3},
+			["iron_bolt_incendiary"] = {amount = 1},
 		};
 		RECIPE.category = "Munitions"
 		RECIPE.finishSound = "generic_ui/refine_success_02.wav";
