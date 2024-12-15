@@ -150,14 +150,14 @@ ITEM.walkSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "Hillkeeper Defender Plate"; -- Heavy Gatekeeper Plate equivalent
+ITEM.name = "Hillkeeper Defender Plate"; -- -- Heavy Gatekeeper Reinforced Plate equivalent
 ITEM.group = "hillkeepers/coat_of_plate";
 ITEM.model = "models/begotten_apocalypse/items/hilltop_coat_item.mdl"
 ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/hilltop_coat_item.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 75
+ITEM.protection = 80
 ITEM.type = "chainmail";
 ITEM.weight = 6;
 ITEM.weightclass = "Heavy";
@@ -443,7 +443,7 @@ ITEM.runSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "Hillkeeper Heavy Coat of Plates"; -- Heavy Gatekeeper Reinforced Plate equivalent
+ITEM.name = "Hillkeeper Heavy Coat of Plates"; -- Heavy Gatekeeper Plate equivalent
 ITEM.model = "models/begotten_apocalypse/items/hilltop_heavy_item.mdl"
 ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/hilltop_heavy_item.png"
 ITEM.category = "Armor"
@@ -474,7 +474,7 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.damageTypeScales = {
-	[DMG_FALL] = -0.13, -- increases fall damage by 13%
+	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
 ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%

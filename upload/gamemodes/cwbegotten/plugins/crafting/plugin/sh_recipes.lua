@@ -8894,7 +8894,7 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 4},
-			["hillkeeper_defender_plate"] = {amount = 1},
+			["hillkeeper_hauberk"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["hill_heavy_helm"] = {amount = 1},
@@ -9235,13 +9235,13 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 	
-	RECIPE = cwRecipes.recipes:New("hillkeeper_defender_plate_upgrade_hauberk");
+	RECIPE = cwRecipes.recipes:New("hillkeeper_defender_plate_upgrade_heavy_coat");
 		RECIPE.name = "(Upgrade) Hillkeeper Defender Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
-			["hillkeeper_hauberk"] = {amount = 1},
+			["hillkeeper_heavy_coat_of_plates"] = {amount = 1},
 			["steel_ingot"] = {amount = 3},
 		};
 		RECIPE.result = {
@@ -9252,7 +9252,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 45;
+		RECIPE.experience = 70;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -9450,6 +9450,35 @@ RECIPE:Register()
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
 			["hill_acolyte_helm"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["hill_coat_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 50;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("hill_coat_helmet_upgrade_heavy_helm");
+		RECIPE.name = "(Upgrade) Hillkeeper Defender Helm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 2},
+			["hill_heavy_helm"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["hill_coat_helmet"] = {amount = 1},
