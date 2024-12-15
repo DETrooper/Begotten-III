@@ -183,7 +183,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 									if attacker.GetCharmEquipped and attacker:GetCharmEquipped("ring_pugilist") then
 										armorPiercing = 100;
 									end
-								elseif (math.abs(math.AngleDifference(player:EyeAngles().y, (inflictor:GetPos() - player:GetPos()):Angle().y)) >= 100) then
+								elseif inflictor.isDagger and (math.abs(math.AngleDifference(player:EyeAngles().y, (inflictor:GetPos() - player:GetPos()):Angle().y)) >= 100) then
 									armorPiercing = 100; -- Backstab 100% AP
 								end
 							end
