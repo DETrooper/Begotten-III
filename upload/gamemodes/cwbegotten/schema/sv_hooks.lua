@@ -1542,10 +1542,15 @@ function Schema:Think()
 
 				if npcName and spawnPos then
 					local spawnAmount = cwZombies.npcSpawnAmounts[npcName] and cwZombies.npcSpawnAmounts[npcName]() or 1;
+					local pack;
+					
+					if spawnAmount > 1 then
+						pack = {};
+					end
 					
 					for i = 1, spawnAmount do
 						local entity = ents.Create(npcName);
-						
+
 						if IsValid(entity) then
 							local newSpawnPos;
 
@@ -1554,6 +1559,10 @@ function Schema:Think()
 							else
 								newSpawnPos = Vector(spawnPos.x + math.random(-225,225), spawnPos.y + math.random(-225,225), spawnPos.z);
 							end
+							
+							if spawnAmount > 1 then
+								entity.pack = pack;
+							end
 						
 							entity:SetPos(newSpawnPos + Vector(0, 0, 32));
 							entity:SetAngles(Angle(0, math.random(1, 359), 0));
@@ -1561,6 +1570,7 @@ function Schema:Think()
 							entity:Activate();
 							
 							table.insert(self.spawnedNPCs["animal"], entity:EntIndex());
+							table.insert(pack, self);
 						end
 					end
 				end

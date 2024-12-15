@@ -11,7 +11,8 @@ ENT.RagdollOnDeath = false
 ENT.CollisionBounds = Vector(15, 15, 40)
 ENT.BloodColor = BLOOD_COLOR_RED
 ENT.Frightening = false
-ENT.SightRange = 1000
+ENT.SightRange = 1200
+ENT.HearingCoefficient = 0.8
 ENT.Skins = {0, 1, 2}
 -- Sounds --
 ENT.OnDamageSounds = {"apocalypse/wolves/pseudodog/pdog_hurt_0.ogg", "apocalypse/wolves/pseudodog/pdog_hurt_1.ogg"}
@@ -177,6 +178,18 @@ end
 function ENT:OnIdle()
   self:AddPatrolPos(self:RandomPos(1000))
   self:SetPlaybackRate(1)
+end
+
+function ENT:OnNewEnemy() 
+	if self.pack then
+		for i, v in ipairs(self.pack) do
+			if IsValid(v) then
+				if !v:GetEnemy() then
+					v:SetEnemy(self:GetEnemy());
+				end
+			end
+		end
+	end
 end
 
 -- Animations/Sounds --
