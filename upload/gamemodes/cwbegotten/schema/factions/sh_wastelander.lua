@@ -773,7 +773,7 @@ local FACTION = Clockwork.faction:New("Hillkeeper");
 			subtitle = "Watchmen - Militiamen of the Hill",
 			description = "Throughout much of the Hierarchy, each of the Districts found they required protection. This led to the introduction of the Lower Orders, the Gatekeepers, to hold their gates and defend their flagging settlements. In the harsh and cold north, where two men could live in the same area and never meet one another, the few district settlements that existed in the cold needed no organized standing force of soldiers. But when the Gores came, or thralls threatened their families, they organized fyrds and pressgangs, militias born of necessity. The Hill of Light expects every man of able body to serve in the Town Watch for at least a few years, and so this has made it the Hill's equivalent of the Lower Order; a gang of conscripts and peasants. These men have fought for generations for a multitude of reasons, always ready to take up arms to defend their home.",
 			attributes = {
-				{Color(0, 225, 0), "(+) Martial Ancestry: Starts with +15 maximum stamina"},
+				{Color(0, 225, 0), "(+) Martial Ancestry: Starts with +10 maximum stamina"},
 				{Color(0, 225, 0), "(+) Blood of the Gore: Starts with +30 maximum health."},
 				{Color(0, 225, 0), "(+) Starts at Sacrament Level 6"},
 				{Color(0, 225, 0), "(+) Boisterous: +100% faith gain from dealing damage"},
