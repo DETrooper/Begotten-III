@@ -12,12 +12,7 @@ local function CreateMenu()
 		menu:Remove();
 	end;
 	
-	local scrW = ScrW();
-	local scrH = ScrH();
-	local menu = DermaMenu();
-		
-	menu:SetMinimumWidth(150);
-	
+	local menu;
 	local subMenu;
 	local itemList = Clockwork.inventory:GetItemsAsList(Clockwork.inventory:GetClient());
 	local fuelItems = {};
@@ -25,6 +20,9 @@ local function CreateMenu()
 	for k, v in pairs(itemList) do
 		if v.fireplaceFuel and !table.HasValue(fuelItems, v.uniqueID) then
 			if !subMenu then
+				menu = DermaMenu();
+					
+				menu:SetMinimumWidth(150);
 				subMenu = menu:AddSubMenu("Add Fuel...");
 			end
 			
@@ -35,9 +33,14 @@ local function CreateMenu()
 			table.insert(fuelItems, v.uniqueID);
 		end
 	end
-
-	menu:Open();
-	menu:SetPos(scrW / 2 - (menu:GetWide() / 2), scrH / 2 - (menu:GetTall() / 2));
+	
+	if menu then
+		local scrW = ScrW();
+		local scrH = ScrH();
+	
+		menu:Open();
+		menu:SetPos(scrW / 2 - (menu:GetWide() / 2), scrH / 2 - (menu:GetTall() / 2));
+	end
 end
 
 netstream.Hook("OpenFireplaceMenu", function()

@@ -2694,7 +2694,7 @@ local COMMAND = Clockwork.command:New("FireplaceAddFuel");
 	function COMMAND:OnRun(player, arguments)
 		local trace = player:GetEyeTrace();
 
-		if (trace.Entity) then
+		if (trace.Entity) and player:GetPos():Distance(trace.Entity:GetPos()) < 256 then
 			local entity = trace.Entity;
 
 			if (entity:GetClass() == "cw_fireplace") then
