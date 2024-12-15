@@ -1133,7 +1133,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 					local isPlayer = v:IsPlayer();
 					
 					if (isPlayer and v:GetMoveType() == MOVETYPE_WALK) then
-						local immune = false;
+						local immune = v == player;
 						local vFaction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 						
 						if player_has_watchful_raven and Clockwork.player:DoesRecognise(v, player) then
