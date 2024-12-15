@@ -45,6 +45,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetAngles = Angle(360, 309.28, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 0, 0);
 	ITEM.bulletConditionScale = 0.3;
+	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood", "wood", "wood"}};
 	ITEM.requireFaith = {"Faith of the Family"};
@@ -81,6 +82,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, 0, 0);
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.bulletConditionScale = 0.2;
+	ITEM.fireplaceFuel = 300;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood", "wood", "wood"}};
 ITEM:Register();
@@ -152,6 +154,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetAngles = Angle(270, 0, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 1.6, 0);
 	ITEM.bulletConditionScale = 0.45;
+	ITEM.fireplaceFuel = 240;
 	
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 750, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood", "wood", "leather", "leather"}};
@@ -219,6 +222,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetAngles = Angle(114.36, 183.98, 181.99);
 	ITEM.attachmentOffsetVector = Vector(0, 0.71, 4.24);
 	ITEM.bulletConditionScale = 0.6;
+	ITEM.fireplaceFuel = 60;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 80};
@@ -343,6 +347,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetAngles = Angle(273.48, 360, 90);
 	ITEM.attachmentOffsetVector = Vector(0, 1.6, 0);
 	ITEM.bulletConditionScale = 0.5;
+	ITEM.fireplaceFuel = 180;
 	
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood", "wood"}};
@@ -381,6 +386,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, -2.3, 0);
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.bulletConditionScale = 0.2;
+	ITEM.fireplaceFuel = 300;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood", "wood", "wood"}};
 ITEM:Register();

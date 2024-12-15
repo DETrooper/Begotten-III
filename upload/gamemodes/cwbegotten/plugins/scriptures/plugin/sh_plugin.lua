@@ -15,6 +15,7 @@ local ITEM = Clockwork.item:New(nil, true)
 	ITEM.uniqueID = "book_base"
 	ITEM.notStackable = true
 	ITEM.customFunctions = {"Copy"};
+	ITEM.fireplaceFuel = 180;
 
 	-- Called when the item should be setup.
 	function ITEM:OnSetup()

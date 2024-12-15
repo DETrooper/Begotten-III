@@ -164,7 +164,7 @@ function cwMelee:KeyPress(player, key)
 					local curTime = CurTime();
 					
 					if (loweredParryDebug < curTime) then
-						local blockTable = GetTable(activeWeapon.BlockTable);
+						local blockTable = GetTable(activeWeapon.realBlockTable);
 						
 						--if (blockTable and player:GetNWInt("meleeStamina", 100) >= blockTable["guardblockamount"]) then
 						if (!activeWeapon.isMeleeFirearm or player:GetNetVar("ThrustStance")) and (blockTable and player:GetNWInt("Stamina", 100) >= blockTable["guardblockamount"]) then

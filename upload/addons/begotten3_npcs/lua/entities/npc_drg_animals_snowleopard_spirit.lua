@@ -13,6 +13,7 @@ ENT.BloodColor = DONT_BLEED
 ENT.Frightening = false
 ENT.SightFOV = 300
 ENT.SightRange = 1024
+ENT.HearingCoefficient = 0.5
 
 -- Sounds --
 --ENT.OnDamageSounds = {"leopard/attack.wav"}

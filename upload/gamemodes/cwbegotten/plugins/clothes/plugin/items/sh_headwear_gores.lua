@@ -242,6 +242,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.75; -- reduces slash damage by 25%
 	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.bulletScale = 0.65; -- reduces bullet damage by 35%
 	ITEM.insulation = 70; -- Adds 14% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"hide", "hide", "wood"}};
@@ -279,6 +280,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.75; -- reduces slash damage by 25%
 	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.bulletScale = 0.65; -- reduces bullet damage by 35%
 	ITEM.insulation = 70; -- Adds 14% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"hide", "hide", "wood"}};

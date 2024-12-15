@@ -11,6 +11,7 @@ ENT.BloodColor = BLOOD_COLOR_RED
 ENT.Frightening = false
 ENT.SightFOV = 300
 ENT.SightRange = 800
+ENT.HearingCoefficient = 0.5
 
 -- Sounds --
 ENT.OnDamageSounds = {"bear/attack1.wav"}

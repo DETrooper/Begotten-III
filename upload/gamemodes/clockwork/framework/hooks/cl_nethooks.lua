@@ -237,13 +237,21 @@ netstream.Hook("ReloadMenu", function(data)
 	
 	local ammo = weaponItem:GetData("Ammo");
 	
-	if ammo and #ammo > 0 then
+	if ammo and #ammo > ((weaponItem.ammoCapacity - 1) or 0) then
 		menuOptions["Unload"] = function()
 			if weaponItem then
 				Clockwork.inventory:InventoryAction("ammo", weaponItem.uniqueID, weaponItem.itemID);
 			end
 		end
 	elseif weaponItem.ammoTypes then
+		if ammo and #ammo > 0 then
+			menuOptions["Unload"] = function()
+				if weaponItem then
+					Clockwork.inventory:InventoryAction("ammo", weaponItem.uniqueID, weaponItem.itemID);
+				end
+			end
+		end
+	
 		local inventory = Clockwork.inventory:GetClient();
 	
 		for i, v in ipairs(weaponItem.ammoTypes) do

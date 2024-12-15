@@ -105,8 +105,8 @@ function ITEM:OnUse(player, itemEntity)
 	local subfaction = player:GetSubfaction();
 
 	Clockwork.player:GiveCash(player, 200, "Hillkeeper Allowance");
-	player:GiveItem(Clockwork.item:CreateInstance("cooked_goat_meat"), true);
-	player:GiveItem(Clockwork.item:CreateInstance("moldy_bread"), true);
+	--player:GiveItem(Clockwork.item:CreateInstance("cooked_goat_meat"), true);
+	--player:GiveItem(Clockwork.item:CreateInstance("moldy_bread"), true);
 	player:GiveItem(Clockwork.item:CreateInstance("purified_water"), true);
 	
 	if subfaction == "Servus" then

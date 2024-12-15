@@ -15,6 +15,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A small bottle of oil. Use it wisely.";
 	ITEM.useSound = "begotten/ui/use_oil.mp3";
 	ITEM.uniqueID = "small_oil";
+	ITEM.fireplaceFuel = 300;
 	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)

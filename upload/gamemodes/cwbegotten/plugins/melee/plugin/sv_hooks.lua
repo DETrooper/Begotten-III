@@ -401,17 +401,17 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 		end;
 
 		local armorClass = player:GetArmorClass();
-		local stabilityDelay = 4;
-		local falloverTime = 4;
+		local stabilityDelay = 5;
+		local falloverTime = 5;
 		
 		--printp(armorClass);
 
 		if (armorClass == "Medium") then
-			stabilityDelay = 5;
-			falloverTime = 5;
-		elseif (armorClass == "Heavy") then
 			stabilityDelay = 6;
 			falloverTime = 6;
+		elseif (armorClass == "Heavy") then
+			stabilityDelay = 7;
+			falloverTime = 7;
 		end;
 		
 		--printp(stabilityDelay);
@@ -479,7 +479,7 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 	local curTime = CurTime();
 	
 	if !falloverTime then
-		falloverTime = 3;
+		falloverTime = 5;
 	end
 
 	Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, falloverTime);

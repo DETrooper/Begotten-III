@@ -42,6 +42,12 @@ hook.Add("KeyRelease", "KeyReleaseFirearms", function(ply, key)
 				
 				if !inventory then return end;
 				
+				local ammo = firearmItemTable:GetData("Ammo");
+				
+				if ammo and #ammo > ((firearmItemTable.ammoCapacity - 1) or 0) then
+					return;
+				end
+				
 				local lastLoadedShot = ply.lastLoadedShot;
 				
 				if lastLoadedShot then

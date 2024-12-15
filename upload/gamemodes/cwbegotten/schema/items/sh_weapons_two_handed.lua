@@ -11,6 +11,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(0, 14.92, 0);
 	ITEM.attachmentOffsetVector = Vector(-2.83, 4.95, -10.61);
+	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "wood", "wood", "wood"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 300, bNoSupercrate = true};
@@ -139,6 +140,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(360, 76.57, 92.49);
 	ITEM.attachmentOffsetVector = Vector(-4.24, 2.83, 14.85);
+	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
 ITEM:Register();
@@ -176,6 +178,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(183.98, 100.44, 130.28);
 	ITEM.attachmentOffsetVector = Vector(-1.41, 3, 4.24);
+	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, bNoSupercrate = true};

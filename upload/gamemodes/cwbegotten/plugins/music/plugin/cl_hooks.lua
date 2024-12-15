@@ -453,7 +453,7 @@ function cwMusic:CanPlayAmbientMusic()
 	
 	local zone = Clockwork.Client:GetZone();
 		
-	if zone == "caves" or zone == "scrapper" or zone == "hell" or zone == "manor" or zone == "toothboy" or zone == "duel" or zone == "theater" or string.find(zone, "sea_") then
+	if zone == "caves" or zone == "scrapper" or zone == "hell" or zone == "manor" or zone == "toothboy" or zone == "duel" or zone == "theater" or zone == "hillbunker" or string.find(zone, "sea_") then
 		-- No ambient music in these areas.
 		return false
 	end

@@ -3473,3 +3473,15 @@ end
 function Schema:ResetDiseasedServings()
 	self.diseasedServings = 0;
 end
+
+function Schema:Summon(pos, normal, callback, time)
+	ParticleEffect("teleport_fx", pos, Angle(0,0,0));
+    sound.Play("misc/summon.wav", pos, 100, 100);
+
+    timer.Simple(time or 0.75, function()
+        util.Decal("PentagramBurn", pos + normal, pos - normal);
+
+		if(callback) then callback(); end
+    
+    end);
+end

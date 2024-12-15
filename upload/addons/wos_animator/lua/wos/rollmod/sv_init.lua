@@ -150,7 +150,7 @@ function meta:CanRoll()
 			end
 		end
 		
-		if self.GetCharacterData then
+		--[[if self.GetCharacterData then
 			local lastZone = self:GetCharacterData("LastZone");
 			
 			if lastZone == "tower" then
@@ -158,7 +158,7 @@ function meta:CanRoll()
 					return false;
 				end
 			end
-		end
+		end]]--
 	end
 	
 	local hookcheck = hook.Call( "wOS.RollMod.ShouldRoll", nil, self )

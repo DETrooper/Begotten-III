@@ -299,7 +299,7 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 			if playerFaction == "Goreic Warrior" and entFaction ~= "Goreic Warrior" then
 				for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
 					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler" then
-						Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 15, "Sold Slave");
+						Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 20, "Sold Slave");
 						player:EmitSound("generic_ui/coin_positive_02.wav");
 						
 						if cwBeliefs then
@@ -345,13 +345,13 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 				for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
 					if v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "The Headsman" then
 						if entFaction == "Children of Satan" then
-							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 60, "Sold Slave");
+							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 30, "Sold Slave");
 							Schema:EasyText(player, "lawngreen", "You have received a three times bonus for selling a captured Children of Satan!")
 						elseif entFaction == "Goreic Warrior" then
-							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 40, "Sold Slave");
+							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 20, "Sold Slave");
 							Schema:EasyText(player, "lawngreen", "You have received a two times bonus for selling a captured Goreic Warrior!")
 						else
-							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 20, "Sold Slave");
+							Clockwork.player:GiveCash(player, entity:GetCharacterData("level", 1) * 10, "Sold Slave");
 						end
 						
 						player:EmitSound("generic_ui/coin_positive_02.wav");
@@ -1542,10 +1542,15 @@ function Schema:Think()
 
 				if npcName and spawnPos then
 					local spawnAmount = cwZombies.npcSpawnAmounts[npcName] and cwZombies.npcSpawnAmounts[npcName]() or 1;
+					local pack;
+					
+					if spawnAmount > 1 then
+						pack = {};
+					end
 					
 					for i = 1, spawnAmount do
 						local entity = ents.Create(npcName);
-						
+
 						if IsValid(entity) then
 							local newSpawnPos;
 
@@ -1554,6 +1559,10 @@ function Schema:Think()
 							else
 								newSpawnPos = Vector(spawnPos.x + math.random(-225,225), spawnPos.y + math.random(-225,225), spawnPos.z);
 							end
+							
+							if spawnAmount > 1 then
+								entity.pack = pack;
+							end
 						
 							entity:SetPos(newSpawnPos + Vector(0, 0, 32));
 							entity:SetAngles(Angle(0, math.random(1, 359), 0));
@@ -1561,6 +1570,10 @@ function Schema:Think()
 							entity:Activate();
 							
 							table.insert(self.spawnedNPCs["animal"], entity:EntIndex());
+							
+							if pack then
+								table.insert(pack, entity);
+							end
 						end
 					end
 				end
@@ -3253,7 +3266,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		
 		-- Flat 50% damage reduction vs. ragdolled players for melees to encourage the use of daggers or wrestle and subdue.
 		if bIsPlayerRagdoll then
-			if IsValid(inflictor) and inflictor.IsABegottenMelee then
+			if IsValid(inflictor) and inflictor.IsABegottenMelee and !inflictor.IsDagger then
 				damageInfo:ScaleDamage(0.5);
 			end
 		end

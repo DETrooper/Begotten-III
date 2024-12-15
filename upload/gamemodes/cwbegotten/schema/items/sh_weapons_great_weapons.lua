@@ -232,6 +232,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(0, 12.32, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 3.54, -12.02);
+	ITEM.fireplaceFuel = 240;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood", "wood"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 700};

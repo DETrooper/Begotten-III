@@ -15,6 +15,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/small_oil.png";
 	ITEM.useSound = "begotten/ui/use_oil.mp3";
 	ITEM.uniqueID = "large_oil";
+	ITEM.fireplaceFuel = 600;
 	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)

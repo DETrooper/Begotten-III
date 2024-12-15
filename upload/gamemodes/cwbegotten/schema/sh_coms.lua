@@ -2683,6 +2683,51 @@ local COMMAND = Clockwork.command:New("CoinslotDonate");
 	end;
 COMMAND:Register();
 
+local COMMAND = Clockwork.command:New("FireplaceAddFuel");
+	COMMAND.tip = "Add an item to a fireplace as fuel.";
+	COMMAND.text = "<string uniqueID>";
+	COMMAND.flags = CMD_DEFAULT;
+	COMMAND.arguments = 1;
+	COMMAND.alias = {"CampfireAddFuel"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local trace = player:GetEyeTrace();
+
+		if (trace.Entity) and player:GetPos():Distance(trace.Entity:GetPos()) < 256 then
+			local entity = trace.Entity;
+
+			if (entity:GetClass() == "cw_fireplace") then
+				if arguments[1] then
+					local itemTable;
+					local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
+					
+					for k, v in pairs(itemList) do
+						if v.uniqueID == arguments[1] then
+							itemTable = v;
+							break;
+						end
+					end
+					
+					if (itemTable and itemTable.fireplaceFuel) then
+						entity:AddFuel(itemTable);
+						player:TakeItem(itemTable);
+						return;
+					else
+						Schema:EasyText(player, "grey", "This is not a valid item to add to the campfire, or you do not have it!");
+						return;
+					end;
+				else
+					Schema:EasyText(player, "darkgrey", "You need to enter a valid item uniqueID to add fuel!");
+					return;
+				end
+			end;
+		end;
+		
+		Schema:EasyText(player, "peru", "You must be looking at a fireplace to add fuel to!");
+	end;
+COMMAND:Register();
+
 local COMMAND = Clockwork.command:New("ArchivesAdd");
 	COMMAND.tip = "Add a scripture to the Grand Archives.";
 	COMMAND.text = "<string uniqueID>";
