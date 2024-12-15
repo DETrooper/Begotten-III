@@ -222,6 +222,8 @@ end;
 
 -- Called when the target's marked status should be drawn.
 function cwBeliefs:DrawTargetPlayerMarked(target, alpha, x, y)
+	if(target:GetSharedVar("isThrall")) then return; end
+
 	if target:GetNetVar("markedBySatanist") == true then
 		if (target:Alive()) then
 			if Clockwork.Client:GetNetVar("faith") == "Faith of the Dark" then

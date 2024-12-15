@@ -846,6 +846,8 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 	local playerSubfaction = Clockwork.Client:GetNetVar("kinisgerOverrideSubfaction") or Clockwork.Client:GetNetVar("subfaction");
 	local targetSubfaction = target:GetNetVar("kinisgerOverrideSubfaction") or target:GetNetVar("subfaction");
 	local subfactionText;
+
+	if(target:GetSharedVar("isThrall")) then return; end
 	
 	if targetSubfaction and targetSubfaction ~= "" and targetSubfaction ~= "N/A" then
 		local playerFaction = Clockwork.Client:GetNetVar("kinisgerOverride") or Clockwork.Client:GetFaction();
@@ -1036,6 +1038,8 @@ function Schema:DrawTargetPlayerLevel(target, alpha, x, y)
 	local playerFaction = Clockwork.Client:GetFaction();
 	local targetFaction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
 	local levelText;
+
+	if(target:GetSharedVar("isThrall")) then return; end
 	
 	if playerFaction == "Children of Satan" and targetFaction ~= "Children of Satan" then
 		local level = target:GetNetVar("level", 1)

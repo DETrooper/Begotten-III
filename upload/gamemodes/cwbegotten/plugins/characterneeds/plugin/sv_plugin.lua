@@ -54,6 +54,8 @@ function playerMeta:HandleNeed(need, amount)
 		return;
 	end
 
+	if(self:GetCharacterData("isThrall", false)) then return; end
+
 	if need and table.HasValue(cwCharacterNeeds.Needs, need) then
 		if (!amount or type(amount) != "number") then
 			return

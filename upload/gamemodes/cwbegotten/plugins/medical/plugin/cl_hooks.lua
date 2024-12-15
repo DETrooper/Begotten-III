@@ -418,6 +418,8 @@ function cwMedicalSystem:DrawTargetPlayerSymptoms(target, alpha, x, y)
 	local textColor = Color(200, 50, 50, 255);
 	local symptoms = target:GetNetVar("symptoms", {});
 	local symptomText;
+
+	if(target:GetSharedVar("isThrall")) then return; end
 	
 	for i = 1, #symptoms do
 		local symptom = symptoms[i];

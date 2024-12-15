@@ -1510,6 +1510,51 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 		if !ragdoll then
 			ragdoll = player:GetRagdollEntity();
 		end
+
+		if(player:GetCharacterData("isThrall")) then
+			if IsValid(ragdoll) then
+				ParticleEffectAttach("doom_dissolve", PATTACH_POINT_FOLLOW, ragdoll, 0);
+				
+				timer.Simple(1.6, function() 
+					if IsValid(ragdoll) then
+						ParticleEffectAttach("doom_dissolve_flameburst", PATTACH_POINT_FOLLOW, ragdoll, 0);
+						ragdoll:Fire("fadeandremove", 1);
+						ragdoll:EmitSound("begotten/npc/burn.wav");
+						
+						if cwRituals and cwItemSpawner then
+							local randomItem;
+							local spawnable = cwItemSpawner:GetSpawnableItems(true);
+							local lootPool = {};
+							
+							for _, itemTable in ipairs(spawnable) do
+								if itemTable.category == "Catalysts" then
+									if itemTable.itemSpawnerInfo and !itemTable.itemSpawnerInfo.supercrateOnly then
+										table.insert(lootPool, itemTable);
+									end
+								end
+							end
+							
+							randomItem = lootPool[math.random(1, #lootPool)];
+							
+							if randomItem then
+								local itemInstance = item.CreateInstance(randomItem.uniqueID);
+	
+								if itemInstance then
+									local entity = Clockwork.entity:CreateItem(nil, itemInstance, ragdoll:GetPos() + Vector(0, 0, 16));
+									
+									entity.lifeTime = CurTime() + cwItemSpawner.ItemLifetime;
+									
+									table.insert(cwItemSpawner.ItemsSpawned, entity);
+								end
+							end
+						end
+					end;
+				end)
+				
+				return true;
+			end
+
+		end
 		
 		if !bSilent then
 			if (!IsValid(ragdoll)) then
@@ -1533,7 +1578,7 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 					ragdoll:SetNWInt("bountyKey", player:GetCharacterKey());
 				end
 			end;
-		elseif IsValid(ragdoll) then
+		elseif !player:GetCharacterData("isThrall") and IsValid(ragdoll) then
 			ragdoll:Remove();
 		end;
 		

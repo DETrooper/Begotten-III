@@ -823,6 +823,10 @@ function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 				return;
 			end
 		
+			if(player:GetCharacterData("isThrall")) then
+				player:EmitSound("apocalypse/screams/far"..math.random(1,6)..".wav", 90, pitch);
+				player.nextPainSound = CurTime()+0.5;
+			end
 			if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
 				if gender == "Male" then
 					player:EmitSound("voice/man2/man2_pain0"..math.random(1, 6)..".wav", 90, pitch)

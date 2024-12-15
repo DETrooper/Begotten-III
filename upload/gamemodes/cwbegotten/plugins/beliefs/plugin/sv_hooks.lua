@@ -1613,6 +1613,8 @@ local decapitationSuffixes = {
 };
 
 function cwBeliefs:DoPlayerDeathPreDeathSound(player, attacker, damageInfo)
+	if(player:GetCharacterData("isThrall")) then return; end
+	
 	if IsValid(attacker) and attacker:IsPlayer() and attacker:HasBelief("headtaker") then
 		local ragdollEntity = player:GetRagdollEntity();
 		

@@ -261,7 +261,7 @@ COMMAND.alias = {"Shriek"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
-	if player.victim then
+	if player.victim or player:GetCharacterData("isThrall") then
 		local curTime = CurTime();
 	
 		if !player.nextDemonShriek or player.nextDemonShriek < curTime then

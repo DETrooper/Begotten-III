@@ -2326,6 +2326,8 @@ function GM:HUDDrawTargetID()
 				if alpha > 0 then
 					local player = Clockwork.entity:GetPlayer(entity)
 					
+					if(player and player:GetSharedVar("isThrall")) then return; end
+
 					if (player and Clockwork.Client != player) then
 						if (Clockwork.plugin:Call("ShouldDrawPlayerTargetID", player)) then
 							if (!Clockwork.player:IsNoClipping(player)) then
@@ -2542,6 +2544,8 @@ function GM:DrawTargetPlayerStatus(target, alpha, x, y)
 	if (target:GetGender() == GENDER_FEMALE) then
 		gender = "She"
 	end
+
+	if(target:GetSharedVar("isThrall")) then return; end
 
 	if (!target:Alive()) then
 		return Clockwork.kernel:DrawInfo(gender.." is clearly deceased.", x, y, informationColor, alpha)
