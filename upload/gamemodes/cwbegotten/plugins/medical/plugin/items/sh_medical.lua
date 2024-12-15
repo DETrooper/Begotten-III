@@ -358,7 +358,7 @@ ITEM:Register();
 local ITEM = Clockwork.item:New("medical_base");
 	ITEM.name = "Makeshift Splint";
 	ITEM.model = "models/Gibs/wood_gib01b.mdl"; -- find a good model later
-	ITEM.weight = 1;
+	ITEM.weight = 0.5;
 	ITEM.useText = "Place";
 	ITEM.useSound = "begotten/items/first_aid.wav";
 	ITEM.description = "A makeshift splint made using a plank of wood and some lengths wire.";
