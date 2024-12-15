@@ -156,7 +156,7 @@ local ITEM = Clockwork.item:New();
 		eyetraceplayer = player:GetEyeTrace()
 		if eyetraceplayer.Hit == true and eyetraceplayer.Entity then
 			local ent = eyetraceplayer.Entity
-			if IsValid(ent) and ent:GetClass() == "npc_animal_wolf" and ent:GetPos():Distance(player:GetPos())<100 and player:GetFaction() == ent.summonedFaith then
+			if IsValid(ent) and ent:GetClass() == "npc_drg_animals_wolf" and ent:GetPos():Distance(player:GetPos())<100 and player:GetFaction() == ent.summonedFaith then
 				local item = player:GiveItem(Clockwork.item:CreateInstance("war_hound_cage"), true);
 				if item then
 					item:SetData("wolfskin", ent:GetSkin())
