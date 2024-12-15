@@ -1570,7 +1570,10 @@ function Schema:Think()
 							entity:Activate();
 							
 							table.insert(self.spawnedNPCs["animal"], entity:EntIndex());
-							table.insert(pack, self);
+							
+							if pack then
+								table.insert(pack, entity);
+							end
 						end
 					end
 				end

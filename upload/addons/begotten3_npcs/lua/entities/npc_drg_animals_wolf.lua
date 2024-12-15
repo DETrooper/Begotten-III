@@ -184,7 +184,7 @@ function ENT:OnNewEnemy()
 	if self.pack then
 		for i, v in ipairs(self.pack) do
 			if IsValid(v) then
-				if !v:GetEnemy() then
+				if !IsValid(v:GetEnemy()) then
 					v:SetEnemy(self:GetEnemy());
 				end
 			end
