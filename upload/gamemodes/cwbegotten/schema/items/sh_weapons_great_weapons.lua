@@ -84,7 +84,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0, 283.26, 0);
 	ITEM.attachmentOffsetVector = Vector(-4.95, 3.54, -21.22);
 	
-	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "stone", "wood", "wood"}};
+	ITEM.components = {breakdownType = "breakdown", items = {"stone", "stone", "stone", "wood", "wood"}};
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.requireFaith = {"Faith of the Family"};
 	ITEM.excludeSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast"};
@@ -104,7 +104,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0, 287.05, 0);
 	ITEM.attachmentOffsetVector = Vector(-2.12, 2.83, -17.68);
 	
-	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "stone", "stone", "stone", "wood", "wood"}};
+	ITEM.components = {breakdownType = "breakdown", items = {"stone", "stone", "stone", "stone", "wood", "wood"}};
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.requireFaith = {"Faith of the Family"};
 	ITEM.excludeSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast"};

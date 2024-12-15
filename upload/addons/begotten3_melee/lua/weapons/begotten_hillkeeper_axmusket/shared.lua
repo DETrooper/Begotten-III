@@ -27,7 +27,7 @@ SWEP.WElements = {
 }
 
 SWEP.WElementsAlternate = {
-	["w_axmusket"] = { type = "Model", model = "models/begoyten/gunaxe/gunaxe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(5.099, -1, 16), angle = Angle(-100, 57, -67), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+	["w_axmusket"] = { type = "Model", model = "models/begoyten/gunaxe/gunaxe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(4.199, -0.9, 17.142), angle = Angle(-97.014, 78.311, -22.209), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.Gun = ("begotten_hillkeeper_axmusket")					-- must be the name of your swep

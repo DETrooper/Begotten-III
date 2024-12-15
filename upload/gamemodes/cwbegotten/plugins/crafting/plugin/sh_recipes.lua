@@ -2062,8 +2062,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["iron_chunks"] = {amount = 3},
-			["stone"] = {amount = 3},
+			["stone"] = {amount = 6},
 			["wood"] = {amount = 3},
 		};
 		RECIPE.result = {

@@ -134,7 +134,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
-	ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
+	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 	ITEM.insulation = 45; -- Adds 9% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "wood"}};
