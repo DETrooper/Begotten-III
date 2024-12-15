@@ -67,7 +67,7 @@ local COMMAND = Clockwork.command:New("AddItemSpawn")
 	function COMMAND:OnRun(player, arguments)
 		if arguments and arguments[1] then
 			if table.HasValue(cwItemSpawner.Categories, arguments[1]) then
-				cwItemSpawner:AddSpawn(player:GetEyeTrace().HitPos, arguments[1] or nil);
+				cwItemSpawner:AddItemSpawn(player:GetEyeTrace().HitPos, arguments[1] or nil);
 				return true;
 			end
 		end
@@ -85,7 +85,7 @@ local COMMAND = Clockwork.command:New("RemoveItemSpawn")
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
-		cwItemSpawner:RemoveItemSpawn(player:GetEyeTrace().HitPos, arguments[1] or 64, player);
+		cwItemSpawner:RemoveItemSpawn(player:GetEyeTrace().HitPos, tonumber(arguments[1]) or 64, player);
 	end
 COMMAND:Register()
 
