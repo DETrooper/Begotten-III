@@ -11,6 +11,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(309.28, 148.18, 265.52);
 	ITEM.attachmentOffsetVector = Vector(-0.71, 3.54, 0);
+	ITEM.fireplaceFuel = 60;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"leather", "wood"}};
 ITEM:Register();

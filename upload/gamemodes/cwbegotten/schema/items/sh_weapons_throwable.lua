@@ -12,6 +12,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(273.48, 178.01, 191.93);
 	ITEM.attachmentOffsetVector = Vector(-6.36, 2.1, -16.27);
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2000};
@@ -32,6 +33,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(170.06, 187.96, 181.99);
 	ITEM.attachmentOffsetVector = Vector(0, 2.9, 0);
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 120;
 	
 	ITEM.attributes = {"malleable", "shieldbreaker"};
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}}; -- use "breakdown" for other type
@@ -52,6 +54,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0, 279.45, 0);
 	ITEM.attachmentOffsetVector = Vector(-4.24, 3, -24.75);
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
 	ITEM.repairCostModifier = 0.25;

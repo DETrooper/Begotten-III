@@ -102,7 +102,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.useText = "Deploy";
 	ITEM.category = "Other";
 	ITEM.useSound = "physics/wood/wood_strain3.wav";
-	ITEM.description = "A large kit that is able to deploy a campfire which will last for 15 minutes, though more wood may be added as fuel to extend its lifetime.";
+	ITEM.description = "A large kit that is able to deploy a campfire which will last for 10 minutes, though more wood may be added as fuel to extend its lifetime.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/wood.png"
 	ITEM.stackable = false;
 

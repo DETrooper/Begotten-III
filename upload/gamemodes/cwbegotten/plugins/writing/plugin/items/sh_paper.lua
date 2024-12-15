@@ -15,6 +15,7 @@ ITEM.category = "Tools";
 ITEM.stackable = true;
 ITEM.description = "A blank piece of paper, likely procured by the Hierarchy. It can be used to write on.";
 ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
+ITEM.fireplaceFuel = 30;
 
 ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 100, onGround = false};
 

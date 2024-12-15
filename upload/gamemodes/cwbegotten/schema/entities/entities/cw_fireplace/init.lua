@@ -12,7 +12,7 @@ AddCSLuaFile("shared.lua");
 
 -- Called when the entity initializes.
 function ENT:Initialize()
-	self:SetCollisionGroup(COLLISION_GROUP_WORLD);
+	self:SetCollisionGroup(COLLISION_GROUP_WEAPON);
 	self:SetModel("models/begotten/misc/campfire_b.mdl");
 	self:SetMoveType(MOVETYPE_VPHYSICS);
 	self:PhysicsInit(SOLID_VPHYSICS);
@@ -27,30 +27,77 @@ function ENT:Initialize()
 	end;
 
 	self:EmitSound("ambient/fire/mtov_flame2.wav", 60, 100);
-	self.igniteTime = CurTime();
+	self.extinguishTime = CurTime() + 600;
 	
+	self:CreateFire(1);
+end;
+
+function ENT:CreateFire(size)
+	if IsValid(self.fire) then self.fire:Remove() end;
+
 	local fire = ents.Create("env_fire")
 	if not IsValid(fire) then return end
 
 	fire:SetPos(self:GetPos() + Vector(0, 0, 4));
 	--no glow + delete when out + start on + last forever
 	fire:SetKeyValue("spawnflags", tostring(128 + 16 + 4 + 2 + 1))
-	fire:SetKeyValue("firesize", 1)
+	fire:SetKeyValue("firesize", size or 1)
 	fire:SetKeyValue("fireattack", 1)
 	fire:SetKeyValue("damagescale", "1") -- only neg. value prevents dmg
 
 	fire:Spawn()
 	fire:Activate()
 	
-	self:SetNWBool("Ignited", true);
-	
 	self.fire = fire;
-end;
+	self:SetNWFloat("firesize", size);
+end
+
+function ENT:AddFuel(itemTable)
+	if itemTable and itemTable.fireplaceFuel then
+		self.extinguishTime = (self.extinguishTime or CurTime()) + itemTable.fireplaceFuel;
+		
+		self:EmitSound("physics/wood/wood_strain3.wav");
+		
+		return true;
+	end
+end
 
 function ENT:Think()
-	if self.igniteTime then
-		if CurTime() - self.igniteTime >= 900 then
+	if self.extinguishTime then
+		local timeLeft = self.extinguishTime - CurTime();
+	
+		if IsValid(self.fire) then
+			if timeLeft <= 60 then
+				if self.fire:GetInternalVariable("firesize") ~= 0.2 then
+					self:CreateFire(0.2);
+				end
+			elseif timeLeft <= 180 then
+				if self.fire:GetInternalVariable("firesize") ~= 0.5 then
+					self:CreateFire(0.5);
+				end
+			elseif timeLeft <= 300 then
+				if self.fire:GetInternalVariable("firesize") ~= 0.7 then
+					self:CreateFire(0.7);
+				end
+			elseif timeLeft <= 600 then
+				if self.fire:GetInternalVariable("firesize") ~= 1 then
+					self:CreateFire(1);
+				end
+			elseif timeLeft <= 1200 then
+				if self.fire:GetInternalVariable("firesize") ~= 1.25 then
+					self:CreateFire(1.25);
+				end
+			else
+				if self.fire:GetInternalVariable("firesize") ~= 1.5 then
+					self:CreateFire(1.5);
+				end
+			end
+		end
+		
+		if timeLeft <= 0 then
 			self:Remove();
+			
+			return;
 		end
 	end
 	
@@ -79,6 +126,12 @@ function ENT:Think()
 		end
 	end
 end
+
+function ENT:Use(activator, caller)
+	if IsValid(caller) and caller:IsPlayer() and IsValid(self.fire) then
+		netstream.Start(caller, "OpenFireplaceMenu");
+	end;
+end;
 
 -- Called when the entity's transmit state should be updated.
 function ENT:UpdateTransmitState()

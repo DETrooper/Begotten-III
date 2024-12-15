@@ -30,6 +30,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A roll of pieced-together cloth, it can be used in the creation of clothing or bandages.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = true;
+	ITEM.fireplaceFuel = 20;
 	
 	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 25};
 
@@ -47,6 +48,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "Burnt fragments of wood that can be used as a fuel source for crafting.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = true;
+	ITEM.fireplaceFuel = 120;
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
@@ -372,6 +374,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A patch of leather that can be used in the crafting of clothing or shields.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = true;
+	ITEM.fireplaceFuel = 30;
 
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth"}};
 	
@@ -427,6 +430,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = true;
 	ITEM.cauldronQuality = 0;
+	ITEM.fireplaceFuel = 60;
 	
 	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 25};
 

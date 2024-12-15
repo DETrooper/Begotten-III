@@ -99,13 +99,6 @@ else
 	Schema.MapLocations = {};
 end
 
---[[
-CoinslotPurchase
-local COMMAND = Clockwork.command:New("CoinslotSell");
-local COMMAND = Clockwork.command:New("OpenStash");
-local COMMAND = Clockwork.command:New("ClearProperty");
-local COMMAND = Clockwork.command:New("GetPropertyInfo");
---]]
 Schema.eventDisabledCommands = {
 	["maplocation"] = true,
 	["helljaunt"] = true,
@@ -114,10 +107,6 @@ Schema.eventDisabledCommands = {
 	["getcycle"] = true,
 	["setcycle"] = true,
 }
---[[
-ArchivesAdd
-ArchivesTake
---]]
 
 -- what is this
 --[[for k, v in pairs (Schema.eventDisabledCommands) do

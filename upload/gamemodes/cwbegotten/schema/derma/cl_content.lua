@@ -73,7 +73,11 @@ function PANEL:Rebuild()
 		self.contentButton:SizeToContents();
 		self.contentButton:SetPos(scrW / 2 - (newsizew / 2), scrH * 0.925);		self.contentButton:SetMouseInputEnabled(true);
 		self.contentButton:SetCallback(function(panel)
-			steamworks.ViewFile("2443075973")
+			if game.GetMap() == "rp_district21" then
+				steamworks.ViewFile("3380244456")
+			else
+				steamworks.ViewFile("2443075973")
+			end
 		end);
 		function self.contentButton:Paint(w, h)
 			if (self:GetHovered()) then

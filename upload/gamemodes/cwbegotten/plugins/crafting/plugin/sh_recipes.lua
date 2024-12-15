@@ -1188,7 +1188,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Campfire Kit";
 		RECIPE.requiredBeliefs = {"ingenious"};
 		RECIPE.requirements = {
-			["wood"] = {amount = 6},
+			["wood"] = {amount = 3},
 			["stone"] = {amount = 3},
 		};
 		RECIPE.result = {

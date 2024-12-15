@@ -14,6 +14,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(4.24, -1.41, 31.12);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 75};
@@ -37,6 +38,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(4.24, -1.41, 31.12);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "wood"}};
 ITEM:Register();
@@ -59,6 +61,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(4.24, -1.41, 31.12);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "wood", "wood"}};
 ITEM:Register();
@@ -120,6 +123,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(1.41, 2.83, -27.58);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 50};
@@ -141,6 +145,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(1.41, 2.83, -27.58);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "wood"}};
 ITEM:Register();
@@ -161,6 +166,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(1.41, 2.83, -27.58);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "wood", "wood"}};
 ITEM:Register();
@@ -809,6 +815,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(2.83, 3.54, -4.24);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
 ITEM:Register();

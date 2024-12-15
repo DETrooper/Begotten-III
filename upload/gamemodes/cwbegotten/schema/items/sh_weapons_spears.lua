@@ -13,6 +13,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(90, 0, 10.94);
 	ITEM.attachmentOffsetVector = Vector(0, 3, 0);
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 200};
@@ -33,6 +34,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(90, 0, 8.95);
 	ITEM.attachmentOffsetVector = Vector(-2.83, 3, -23.24);
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600};
@@ -53,6 +55,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(90, 0, 279.45);
 	ITEM.attachmentOffsetVector = Vector(-7.78, 3, -45.97);
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 150;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800};
@@ -73,6 +76,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0, 279.45, 0);
 	ITEM.attachmentOffsetVector = Vector(-4.24, 3, -24.75);
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 125};
@@ -114,6 +118,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0, 279.45, 0);
 	ITEM.attachmentOffsetVector = Vector(-4.24, 3, -24.75);
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "wood", "wood"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 250, bNoSupercrate = true};
@@ -134,6 +139,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0, 279.45, 0);
 	ITEM.attachmentOffsetVector = Vector(-4.24, 3, -24.75);
 	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
 ITEM:Register();
