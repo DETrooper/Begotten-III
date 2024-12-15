@@ -95,6 +95,98 @@ local ITEM = Clockwork.item:New();
 ITEM:Register();
 
 local ITEM = Clockwork.item:New();
+	ITEM.name = "War Hound Cage";
+	ITEM.uniqueID = "war_hound_cage";
+	ITEM.model = "models/begotten_apocalypse/items/houndcage.mdl";
+	ITEM.weight = 15;
+	ITEM.category = "Tools";
+	ITEM.description = "A steel cage for tamed wolves provided by the Headsman and his slaving ilk. The numerous wolves of the North, believed to be descendants of once-loyal hounds, can still be brought back into the fold and live a loyal life. Snakecatchers and Headsmen often used these hounds to hunt men in the woods, for the mines or for their faith. ";
+	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/houndcage.png";
+	--ITEM.useText = "Deploy";
+	ITEM.requiredbeliefs = {};
+	ITEM.stackable = false;
+	ITEM:AddData("wolfskin", 0, true);
+	ITEM:AddData("wolfhealth", 0, true);
+	
+	--[[
+	function ITEM:OnUse(player, itemEntity)
+	end
+	]]
+	
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position) 
+	end;
+
+	function ITEM:OnEntitySpawned(entity2)
+		local entity = ents.Create("cw_hound_cage_next");
+		entity:Spawn();
+		entity:Activate();
+		entity:SetPos(entity2:GetPos());
+		entity:SetAngles(entity2:GetAngles());
+		if self:GetData("wolfskin") then
+			entity:SetSkin(self:GetData("wolfskin"));
+		end
+		if self:GetData("wolfhealth") then
+			entity.setwolfhealth = self:GetData("wolfhealth");
+		end
+
+		if entity.isplayingsound then
+			entity:StopLoopingSound(entity.isplayingsound)
+			entity.isplayingsound = entity:StartLoopingSound( "fiend/cagehound.wav" )
+		end
+		
+		entity2:Remove();
+	end;
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New();
+	ITEM.name = "Empty Hound Cage";
+	ITEM.uniqueID = "empty_hound_cage";
+	ITEM.model = "models/begotten_apocalypse/items/houndcage.mdl";
+	ITEM.weight = 10;
+	ITEM.category = "Tools";
+	ITEM.description = "A steel cage for tamed wolves provided by the Headsman and his slaving ilk. The cage is empty, devoid of a loyal companion. Fetch one, would you?";
+	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/houndcage.png";
+	ITEM.useText = "Capture";
+	ITEM.requiredbeliefs = {};
+	ITEM.stackable = false;
+	
+	function ITEM:OnUse(player, itemEntity)
+		eyetraceplayer = player:GetEyeTrace()
+		if eyetraceplayer.Hit == true and eyetraceplayer.Entity then
+			local ent = eyetraceplayer.Entity
+			if IsValid(ent) and ent:GetClass() == "npc_animal_wolf" and ent:GetPos():Distance(player:GetPos())<100 and player:GetFaction() == ent.summonedFaith then
+				local item = player:GiveItem(Clockwork.item:CreateInstance("war_hound_cage"), true);
+				if item then
+					item:SetData("wolfskin", ent:GetSkin())
+					item:SetData("wolfhealth", ent:Health())
+				end
+				ent:Remove();
+				player:TakeItem(self, true);
+				Schema:EasyText(player, "chocolate", "A hound is captured.");
+				player:EmitSound("fiend/cageshut.wav")
+			else
+				Schema:EasyText(player, "chocolate", "Nothing to catch.");
+				return false
+			end
+		end
+	end
+	
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position) 
+	end;
+	
+	function ITEM:OnEntitySpawned(entity2)
+		for i = 1, 9 do
+			entity2:SetSubMaterial(i, "begotten/effects/blureffect")
+		end
+	end;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"scrap", "scrap", "scrap"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New();
 	ITEM.name = "Campfire Kit";
 	ITEM.uniqueID = "campfire_kit"
 	ITEM.model = "models/mosi/fallout4/props/junk/components/wood.mdl";

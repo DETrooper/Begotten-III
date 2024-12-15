@@ -620,6 +620,14 @@ function Schema:GetEntityMenuOptions(entity, options)
 			else
 				options["Turn On"] = "cwToggleGramophone";
 			end;
+		elseif (entity:GetClass() == "cw_hound_cage_next") then
+			options["Examine"] = "cwItemExamine";
+			options["Pick Up"] = "cwItemHoundPickup";
+		
+			if entity:GetNWBool("houndunleashed",0) == 0 then
+				options["Attack All"] = "cwHoundCageAttackAll";
+				options["Spare Wanderers"] = "cwHoundCageSpareWanderers";
+			end
 		elseif (entity:GetClass() == "cw_siege_ladder") then
 			if entity:GetNWEntity("owner") == Clockwork.Client then
 				options["Tear Down"] = "cwTearDownSiegeLadder";
