@@ -31,7 +31,7 @@ local COMMAND = Clockwork.command:New("ToggleThrall");
 
 		end
 
-        Schema:EasyText(GetAdmins(), "skyblue", player:Nick().." set "..target:Nick().." '".."isThrall".."' to '"..tostring(isNowThrall).."'.");
+        Schema:EasyText(Schema:GetAdmins(), "skyblue", player:Nick().." set "..target:Nick().." '".."isThrall".."' to '"..tostring(isNowThrall).."'.");
 
 	end;
 COMMAND:Register();
