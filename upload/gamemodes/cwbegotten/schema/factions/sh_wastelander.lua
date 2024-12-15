@@ -477,6 +477,19 @@ local FACTION = Clockwork.faction:New("Children of Satan");
 	};
 	--FACTION.singleGender = GENDER_MALE;
 	
+	if game.GetMap() == "rp_district21" then
+		FACTION.models = {
+			["male"] = {
+				clothes = "models/begotten/wanderers/northwanderer_male.mdl",
+				heads = DEFAULT_MODELS.male.heads,
+			},
+			["female"] = {
+				clothes = "models/begotten/wanderers/northwanderer_female.mdl",
+				heads = DEFAULT_MODELS.female.heads,
+			},
+		}
+	end
+	
 	-- Called when a player is transferred to the faction.
 	function FACTION:OnTransferred(player, faction, name)
 		if player:GetFaith() ~= "Faith of the Dark" then
