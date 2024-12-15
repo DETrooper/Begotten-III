@@ -1129,6 +1129,18 @@ local COMMAND = Clockwork.command:New("Warcry");
 				
 				player:HandleSanity(5);
 				
+				if player_has_watchful_raven and faction == "Hillkeeper" then
+					player:HandleSanity(10);
+					player:HandleStamina(10);
+					player.ravenBuff = true;
+					
+					timer.Create("RavenTimer_"..player:EntIndex(), 10, 1, function()
+						if IsValid(player) then
+							player.ravenBuff = false;
+						end
+					end);
+				end
+				
 				for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 					local isPlayer = v:IsPlayer();
 					
@@ -1136,20 +1148,22 @@ local COMMAND = Clockwork.command:New("Warcry");
 						local immune = v == player;
 						local vFaction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 						
-						if player_has_watchful_raven and Clockwork.player:DoesRecognise(v, player) then
-							v:HandleSanity(10);
-							v:HandleStamina(10);
-							v.ravenBuff = true;
-							
-							table.insert(affected_players, v);
-							
-							timer.Create("RavenTimer_"..v:EntIndex(), 10, 1, function()
-								if IsValid(v) then
-									v.ravenBuff = false;
-								end
-							end);
+						if faction ~= "Hillkeeper" then
+							if player_has_watchful_raven and Clockwork.player:DoesRecognise(v, player) then
+								v:HandleSanity(10);
+								v:HandleStamina(10);
+								v.ravenBuff = true;
+								
+								table.insert(affected_players, v);
+								
+								timer.Create("RavenTimer_"..v:EntIndex(), 10, 1, function()
+									if IsValid(v) then
+										v.ravenBuff = false;
+									end
+								end);
+							end
 						end
-						
+							
 						--if v:GetFaith() ~= faith then
 							-- Kinisgers can twisted warcry if disguised as a Reaver.
 							if faith == "Faith of the Dark" then
@@ -1190,6 +1204,10 @@ local COMMAND = Clockwork.command:New("Warcry");
 							elseif faith == "Faith of the Family" then
 								if faction == "Goreic Warrior" and vFaction == "Goreic Warrior" then
 									immune = true;
+								elseif faction == "Hillkeeper" then
+									if vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" or v:GetFaith() == "Faith of the Light" then
+										immune = true;
+									end
 								elseif v.banners then
 									for k2, v2 in pairs(v.banners) do
 										if v2 == "glazic" then
