@@ -199,6 +199,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.stackable = true;
 	ITEM.description = "An iron-tipped wooden crossbow bolt of good aerodynamic quality. It has been coated with oil that will ignite upon firing, sacrificing armor-piercing potential for setting targets alight upon contact.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/iron_bolt_incendiary.png"
+	ITEM.uniqueID = "iron_bolt_incendiary";
 	
 	ITEM.ammoType = "Iron Bolt (Incendiary)";
 	ITEM.ammoName = "Iron Bolt (Incendiary)";
