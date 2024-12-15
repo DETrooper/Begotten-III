@@ -50,7 +50,7 @@ function ENT:OnTakeDamage(damageInfo)
 	
 	if self.hasunleashedwolf then return end
 	
-	local entity = ents.Create("npc_animal_wolf");
+	local entity = ents.Create("npc_drg_animals_wolf");
 
 	
 	
