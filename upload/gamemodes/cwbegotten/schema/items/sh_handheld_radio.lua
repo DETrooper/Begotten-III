@@ -1,7 +1,7 @@
 local ITEM = Clockwork.item:New();
 	ITEM.name = "Handheld Radio";
 	ITEM.model = "models/damnation/radio.mdl";
-	ITEM.weight = 1;
+	ITEM.weight = 0.4;
 	ITEM.category = "Communication"
 	ITEM.description = "An ancient piece of technology from a bygone era that allows communication over vast distances.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/handheld_radio.png"
