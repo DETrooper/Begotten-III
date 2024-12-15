@@ -638,7 +638,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "cooking"
-		RECIPE.experience = 25;
+		RECIPE.experience = 10;
 		
 		function RECIPE:OnCraft(player)
 		end;
