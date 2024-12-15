@@ -8685,7 +8685,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock"};
 		RECIPE.requirements = {
-			["iron_bolt"] = {amount = 1},
+			["iron_bolt"] = {amount = 3},
 			["small_oil"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -9310,7 +9310,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 60;
+		RECIPE.experience = 20;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -9339,7 +9339,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 40;
+		RECIPE.experience = 55;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -9399,7 +9399,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 50;
+		RECIPE.experience = 30;
 		
 		function RECIPE:OnCraft(player)
 		end;
