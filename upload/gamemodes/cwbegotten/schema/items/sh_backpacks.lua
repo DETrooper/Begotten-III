@@ -13,7 +13,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
 	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 600, bNoSupercrate = true};
-	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth"}};
+	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth"}};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM:Register();
 
@@ -32,7 +32,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
 	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 800};
-	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth"}};
+	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth"}};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM:Register();
 
@@ -51,7 +51,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
 	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1200};
-	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth"}};
+	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth"}};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM:Register();
 
@@ -70,7 +70,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
 	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1500};
-	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth"}};
+	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth", "leather", "leather"}};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM:Register();
 
@@ -79,7 +79,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.uniqueID = "backpack_pouch";
 	ITEM.model = "models/props_junk/garbage_bag001a.mdl";
 	ITEM.weight = 0.5;
-	ITEM.invSpace = 4;
+	ITEM.invSpace = 5;
 	ITEM.description = "A small crafted pouch ideal for holding small things.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png"
 	ITEM.isAttachment = true;
@@ -106,5 +106,5 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentOffsetAngles = Angle(273.48, 164.09, 268);
 	ITEM.attachmentShieldOffset = Vector(0, 5.5, 4);
 
-	ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide"}};
+	ITEM.components = {breakdownType = "breakdown", items = {"hide", "leather"}};
 ITEM:Register();
