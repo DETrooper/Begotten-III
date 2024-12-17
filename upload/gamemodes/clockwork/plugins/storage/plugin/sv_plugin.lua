@@ -685,6 +685,8 @@ netstream.Hook("ContainerPassword", function(player, data)
 	local entity = data[2];
 	
 	if (IsValid(entity) and Clockwork.entity:IsPhysicsEntity(entity)) then
+		if entity:GetPos():DistToSqr(player:GetPos()) > 16384 then return end
+
 		local model = string.lower(entity:GetModel());
 		
 		if (cwStorage.containerList[model]) then
