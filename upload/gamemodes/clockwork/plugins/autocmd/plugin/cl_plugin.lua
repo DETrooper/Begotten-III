@@ -72,26 +72,25 @@ end
 
 function PLUGIN:HandleAutoComplete(cmd, args)
     local cmdtbl = Clockwork.command:FindByAlias(cmd)
+    if not cmdtbl then return end
 
-    if !cmdtbl then return end
-    
     local argc = (cmdtbl.arguments or 0) + (cmdtbl.optionalArguments or 0)
-
     for i = 1, argc do
         local argument = args[i] or ""
         local argument_type = cmdtbl.types and cmdtbl.types[i]
         if argument ~= "" and argument:sub(-1) == "*" then
-            argument = string.gsub(argument, "*", "", 1) // remove our EOF
-            argument = string.gsub(argument, "\"", "", 2) //long strings ie [' /cmd "spaced string '] ->  [ '/cmd "spaced string autocompleted" ']
+            argument = string.gsub(argument, "%*$", "") // remove our EOF
+            argument = string.gsub(argument, "\"", "", 2) // long strings ie [' /cmd "spaced string '] ->  [ '/cmd "spaced string autocompleted" ']
+            
             local matches = self:ParseArgumentType(argument_type, argument, args)
-
-            if #matches == 1 then
+            if #matches == 0 then
+                return
+            elseif #matches == 1 then
                 args[i] = "\"" .. matches[1] .. "\""
                 return "/" .. cmd .. " " .. table.concat(args, " ") .. " ", matches
-            elseif #matches > 1 then
+            else
                 return nil, matches
             end
         end
     end
-
 end
