@@ -200,7 +200,7 @@ function cwItemSpawner:AddContainerSpawn(containerEntity, category, player)
 		self.ContainerLocations[category] = {};
 	end
 
-	table.insert(self.ContainerLocations[category], {pos = containerEntity:GetPos(), angles = containerEntity:GetAngles()});
+	table.insert(self.ContainerLocations[category], {model = containerEntity:GetModel(), pos = containerEntity:GetPos(), angles = containerEntity:GetAngles()});
 	
 	netstream.Heavy(Schema:GetAdmins(), "ContainerSpawnESPInfo", {self.ContainerLocations});
 	

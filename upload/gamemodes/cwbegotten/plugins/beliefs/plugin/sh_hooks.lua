@@ -6,6 +6,11 @@
 -- A function to get the maximum weight a player can carry.
 function cwBeliefs:PlayerAdjustMaxWeight(player, weight)
 	local new_weight = weight;
+	local subfaction = player:GetSubfaction();
+	
+	if subfaction == "Auxiliary" or subfaction == "Inquisition" or subfaction == "Rekh-khet-sa" or subfaction == "Clan Shagalax" or subfaction == "Servus" then
+		new_weight = new_weight + 5;
+	end
 	
 	if player:HasBelief("might") then
 		new_weight = new_weight + (weight * 0.25);
