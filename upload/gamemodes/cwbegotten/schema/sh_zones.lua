@@ -1851,7 +1851,11 @@ elseif map == "rp_district21" then
 		HOTSPRING.map = "rp_district21";
 		HOTSPRING.colorModify = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 1.2, ["$pp_colour_colour"] = 1.25, ["$pp_colour_mulb"] = 0.1};
 		HOTSPRING.fogStart = 128;
-		HOTSPRING.fogEnd = 1684;
+		HOTSPRING.fogEnd = 1268;
+		HOTSPRING.fogColors = {r = 91, g = 103, b = 119};
+		HOTSPRING.fogColorsNight = {r = 56, g = 63, b = 73};
+		HOTSPRING.skyFix = {r = 17, g = 22, b = 30};
+		HOTSPRING.skyFixNight = {r = 4, g = 8, b = 15};
 		HOTSPRING.bounds = {
 			min = Vector(2860, -4117, -828),
 			max = Vector(1306, -5199, 333),
