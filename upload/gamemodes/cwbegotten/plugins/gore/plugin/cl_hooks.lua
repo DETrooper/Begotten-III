@@ -56,9 +56,11 @@ function cwGore:OnEntityCreated(entity)
 end
 
 function cwGore:EntityRemoved(entity)
-	if entity.rottingSound then
-		entity:StopSound("ambient/creatures/housefly_loop_01.wav");
-		entity:StopSound("ambient/creatures/housefly_loop_02.wav");
+	if IsValid(entity) then
+		if entity.rottingSound then
+			entity:StopSound("ambient/creatures/housefly_loop_01.wav");
+			entity:StopSound("ambient/creatures/housefly_loop_02.wav");
+		end
 	end
 end
 

@@ -196,7 +196,7 @@ function SWEP:Deploy()
 	
 	self.Owner.gestureweightbegin = 2;
 	self.Owner:SetLocalVar("CanBlock", true)
-	self.Owner:SetLocalVar("CanDeflect", true)
+	self.canDeflect = true;
 	self.Owner:SetNetVar("ThrustStance", false)
 	self.Owner:SetLocalVar("ParrySuccess", false) 
 	self.Owner:SetLocalVar("Riposting", false)
@@ -1992,7 +1992,7 @@ function SWEP:SecondaryAttack()
 	if ply:KeyDown(IN_ATTACK2) and !ply:KeyDown(IN_RELOAD) and ply:GetNetVar("Guardening") == true then
 		-- Deflection
 		if blocktable["candeflect"] == true then
-			if ply:GetNetVar("CanDeflect", true ) then
+			if self.canDeflect then
 				local deflectionWindow = blocktable["deflectionwindow"] or 0.15;
 				
 				--if ply.HasBelief and ply:HasBelief("deflection") then
@@ -2020,16 +2020,16 @@ function SWEP:SecondaryAttack()
 					deflectioncooldown = 1.5
 				end
 				
-				ply:SetLocalVar("CanDeflect", false ) -- Clean this ass code up
+				self.canDeflect = false;
 				self:CreateTimer(deflectioncooldown, "deflectionTimer"..ply:EntIndex(), function()
 					if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
-						ply:SetLocalVar("CanDeflect", true ) 
+						self.canDeflect = true;
 					end 
 				end);
 			else
 				self:CreateTimer(deflectioncooldown, "deflectionTimer"..ply:EntIndex(), function()
 					if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
-						ply:SetLocalVar("CanDeflect", true ) 
+						self.canDeflect = true;
 					end 
 				end);
 			end

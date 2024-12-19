@@ -76,8 +76,6 @@ if cwWeather.systemEnabled then
 				fogStartNight = 128,
 				fogEndNight = 1024,
 				maxDuration = 360,
-				skyFix = {r = 25, g = 20, b = 1},
-				skyFixNight = {r = 12, g = 10, b = 0},
 				precipitation = "sw_acidrain",
 				rarity = 6,
 				leadupCallback = function()
@@ -100,20 +98,18 @@ if cwWeather.systemEnabled then
 			},
 			["ash"] = {
 				fogColors = {r = 40, g = 30, b = 17},
-				fogColorsNight = {r = 20, g = 15, b = 7},
+				fogColorsNight = {r = 24, g = 20, b = 7},
 				fogStart = 256,
 				fogEnd = 1300,
 				fogStartNight = 256,
 				fogEndNight = 950,
-				skyFix = {r = 18, g = 15, b = 9},
-				skyFixNight = {r = 12, g = 10, b = 6},
 				precipitation = "sw_ash",
 				rarity = 3,
 			},
 			["bloodstorm"] = {
 				loopingAmbience = "ambient/ambience/rainscapes/crucial_waterrain_light_loop.wav",
 				fogColors = {r = 39, g = 2, b = 2},
-				fogColorsNight = {r = 20, g = 1, b = 1},
+				fogColorsNight = {r = 30, g = 1, b = 1},
 				fogStart = 128,
 				fogEnd = 1024,
 				fogStartNight = 128,
@@ -121,8 +117,6 @@ if cwWeather.systemEnabled then
 				maxDuration = 900,
 				minDuration = 600,
 				precipitation = "sw_rain",
-				skyFix = {r = 18, g = 2, b = 2},
-				skyFixNight = {r = 11, g = 1, b = 1},
 				rarity = 10,
 				leadupCallback = function()
 					local playersInWeatherZones = {};
@@ -179,8 +173,6 @@ if cwWeather.systemEnabled then
 				fogStartNight = 128,
 				fogEndNight = 1024,
 				maxDuration = 1200,
-				skyFix = {r = 13, g = 12, b = 10},
-				skyFixNight = {r = 13, g = 12, b = 10},
 				precipitation = "sw_rain",
 				rarity = 6,
 				leadupCallback = function()

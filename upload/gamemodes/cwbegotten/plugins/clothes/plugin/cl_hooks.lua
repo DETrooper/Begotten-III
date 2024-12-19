@@ -419,7 +419,7 @@ end]]--
 function PLUGIN:EntityRemoved(entity, bFullUpdate)
 	if bFullUpdate then return end;
 
-	if entity:IsPlayer() or entity:GetClass() == "prop_ragdoll" then
+	if IsValid(entity) and entity:IsPlayer() or entity:GetClass() == "prop_ragdoll" then
 		if IsValid(entity.clothesEnt) then
 			entity.clothesEnt:Remove();
 		end
