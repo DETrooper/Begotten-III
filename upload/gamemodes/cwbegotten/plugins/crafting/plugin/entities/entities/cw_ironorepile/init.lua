@@ -117,6 +117,8 @@ function ENT:OnTakeDamage(damageInfo)
 					
 					if playerFaction == "Gatekeeper" or playerFaction == "Goreic Warrior" then
 						player:HandleXP(30);
+					elseif playerFaction == "Hillkeeper" then
+						player:HandleXP(20);
 					else
 						player:HandleXP(10);
 					end
