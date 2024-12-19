@@ -26,13 +26,3 @@ function cwStamina:GetBars(bars)
 		bars:Add("STAMINA", Color(100, 175, 100, 255), "STAMINA", self.stamina, max_stamina, self.stamina < 10);
 	end;
 end;
-
-function cwStamina:TopLevelPlayerBindPress(player, bind, bPress)
-	if hook.Run("PlayerCanJump") ~= false then
-		if (string.find(bind, "+jump")) then
-			if player:IsOnGround() then
-				netstream.Start("PlayerJump");
-			end
-		end;
-	end
-end;
