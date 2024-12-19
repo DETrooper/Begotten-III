@@ -2259,6 +2259,20 @@ function Schema:PlayerCanUseDoor(player, door)
 				
 				return false;
 			end
+		elseif doors["ministry"] and table.HasValue(doors["ministry"], doorName) then
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+			local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+			local curTime = CurTime();
+			
+			if faction ~= "Holy Hierarchy" or (subfaction ~= "Ministry" and subfaction ~= "Low Ministry") then
+				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
+					player.nextDoorNotify = curTime + 1;
+				
+					Schema:EasyText(player, "firebrick", "You aren't the correct faction to open this blastdoor!");
+				end
+				
+				return false;
+			end
 		elseif doors["gorewatch"] and table.HasValue(doors["gorewatch"], doorName) then
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();

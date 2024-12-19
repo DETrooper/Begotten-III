@@ -344,17 +344,21 @@ Schema.doors = {
 		},
 		["gorewatch"] = {
 			"cellgrn_4",
+			"sol_dr_2",
+			"sol_dr_3",
+		},
+		["ministry"] = {
+			"churchblastdoor1",
+			"churchblastdoor2",
+			"alchemy_lab_blastdoor",
 		},
 		["tower"] = {
 			"sidedoorblastdoor2",
 			"frontblastdoor2",
+			"city_castle_door",
 			"cubbyblastdoorprop",
 			"cubbyblastdoor",
-			"churchblastdoor1",
-			"churchblastdoor2",
 			"sol_dr_1",
-			"sol_dr_2",
-			"sol_dr_3",
 			"sol_dr_4",
 		},
 	};
