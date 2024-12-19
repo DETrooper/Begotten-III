@@ -1846,6 +1846,19 @@ elseif map == "rp_district21" then
 		WASTELAND.skyFixNight = {r = 4, g = 8, b = 15};
 	WASTELAND:Register()
 
+	local HOTSPRING = zones:New("hotspring", "suprawasteland")
+		HOTSPRING.name = "Hot Spring";
+		HOTSPRING.map = "rp_district21";
+		HOTSPRING.colorModify = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 1.2, ["$pp_colour_colour"] = 1.25, ["$pp_colour_mulb"] = 0.1};
+		HOTSPRING.fogStart = 128;
+		HOTSPRING.fogEnd = 1684;
+		HOTSPRING.bounds = {
+			min = Vector(2860, -4117, -828),
+			max = Vector(1306, -5199, 333),
+		};
+
+	HOTSPRING:Register()
+
 	local DUEL = zones:New("duel")
 		DUEL.name = "Duel Zone";
 		DUEL.map = "rp_district21";

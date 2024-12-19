@@ -45,6 +45,8 @@ function playerMeta:HandleSanity(amount)
 		if self:HasBelief("prudence") then
 			amount = amount * 0.75;
 		end
+
+		if(self:GetLocalVar("hotSpringBuff", 0) >= CurTime()) then amount = amount * 0.5; end
 		
 		if self.GetCharmEquipped then
 			if self:GetFaith() == "Faith of the Family" and self:GetCharmEquipped("effigy_earthing") then
