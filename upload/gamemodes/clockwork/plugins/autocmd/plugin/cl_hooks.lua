@@ -1,54 +1,83 @@
 local PLUGIN = PLUGIN
 
 local font = Clockwork.option:GetFont("chat_box_syntax");
-
 local color = Color(128, 0, 0)
+local highlight_color = Color(255, 83, 0)
 
 function PLUGIN:HUDPaintForeground()
     local bIsTypingCommand = Clockwork.chatBox:IsTypingCommand()
+    if not bIsTypingCommand then return end
 
-    if bIsTypingCommand then
-        local x, y = Clockwork.chatBox:GetPosition(2, -100)
+    local cmd, args = self:ParseCommand(Clockwork.chatBox.textEntry:GetValue())
 
-        local cmd, args = self:ParseCommand(Clockwork.chatBox.textEntry:GetValue())
+    if not cmd then return end
+    
+    if #args < 1 then return end
+    
+    local x, y = Clockwork.chatBox:GetPosition(2, -100)
+    
+    Clockwork.kernel:OverrideMainFont(font)
+    
+    local _, matches = self:HandleAutoComplete(cmd, args)
+    if not matches or #matches == 0 then return end
 
-        if !cmd then return end
+    local count = 0
 
-        if #args < 1 then return end
-
-        Clockwork.kernel:OverrideMainFont(font)
-        local _, matches = self:HandleAutoComplete(cmd, args)
-        local count = 0
-
-            if matches and #matches > 0 then
-                for k, v in pairs(matches) do
-
-                    if count >= 12 then
-                        break
-                    end
-                    
-                    Clockwork.kernel:DrawSimpleText(v, x, y - 175, color)
-                    y = y + 15
-                    count = count + 1
-                end
-            end
-
-        Clockwork.kernel:OverrideMainFont(false)
-
-
+    for k, suggestion in ipairs(matches) do
+        if count >= 12 then
+            break
+        end
+        
+        local colnew = (k == self.autoCompleteIndex) and highlight_color or color
+        
+        Clockwork.kernel:DrawSimpleText(suggestion, x, y - 175, colnew)
+        y = y + 15
+        count = count + 1
     end
     
+    Clockwork.kernel:OverrideMainFont(false)
 end
+
+PLUGIN.autoCompleteMatches = {}
+PLUGIN.autoCompleteIndex   = 1
 
 function PLUGIN:OnChatTab(text)
     local cmd, args = self:ParseCommand(text)
+    if not cmd then 
+        return text
+    end
 
-    if !cmd then return text end
+    local newText, matches = self:HandleAutoComplete(cmd, args)
 
-    local cmdstr = self:HandleAutoComplete(cmd, args)
+    if matches and #matches > 1 then
+        self.autoCompleteMatches = matches
+    else
+        self.autoCompleteMatches = matches or {}
+    end
 
-    if cmdstr then //TODO: integrate selecting between multiple results
-        text = cmdstr
+    local isShiftDown = input.IsKeyDown(KEY_LSHIFT)
+    if #self.autoCompleteMatches > 1 then
+        if isShiftDown then
+            self.autoCompleteIndex = self.autoCompleteIndex + 1
+        end
+
+        if self.autoCompleteIndex < 1 then
+            self.autoCompleteIndex = #self.autoCompleteMatches
+        elseif self.autoCompleteIndex > #self.autoCompleteMatches then
+            self.autoCompleteIndex = 1
+        end
+    else
+        self.autoCompleteIndex = 1
+    end
+
+    if not isShiftDown and #self.autoCompleteMatches > 1 then
+        local selected_match = self.autoCompleteMatches[self.autoCompleteIndex]
+        if selected_match then
+            args[#args] = "\"" .. selected_match .. "\""
+            text = "/" .. cmd .. " " .. table.concat(args, " ") .. " "
+        end
+    elseif newText then
+        text = newText
     end
 
     return text
