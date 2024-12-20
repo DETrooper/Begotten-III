@@ -39,8 +39,8 @@ function ENT:UpdateTransmitState()
 end;
 
 local buddiestable = {
-	["Gatekeeper"] = "Holy Hierarchy",
-	["Holy Hierarchy"] = "Gatekeeper",
+	["Hillkeeper"] = "Holy Hierarchy",
+	["Holy Hierarchy"] = "Hillkeeper",
 }
 
 function ENT:OnTakeDamage(damageInfo)
