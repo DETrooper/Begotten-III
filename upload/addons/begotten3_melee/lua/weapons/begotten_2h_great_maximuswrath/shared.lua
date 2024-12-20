@@ -132,7 +132,7 @@ function SWEP:Deploy()
 
 	self.Owner.gestureweightbegin = 1;
 	self.Owner:SetLocalVar("CanBlock", true)
-	self.Owner:SetLocalVar("CanDeflect", true)
+	self.canDeflect = true
 	self.Owner:SetNetVar("ThrustStance", false)
 	self.Owner:SetLocalVar("ParrySuccess", false) 
 	self.Owner:SetLocalVar("Riposting", false)

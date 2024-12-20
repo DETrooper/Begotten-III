@@ -4,26 +4,6 @@
 
 cwStorage.storage = cwStorage.storage or {}
 
-netstream.Hook("ContainerPassword", function(player, data)
-	local password = data[1]
-	local entity = data[2]
-
-	if (IsValid(entity) and Clockwork.entity:IsPhysicsEntity(entity)) then
-		local model = string.lower(entity:GetModel())
-
-		if (cwStorage.containerList[model]) then
-			local containerWeight = cwStorage.containerList[model][1]
-
-			if (entity.cwPassword == password) then
-				cwStorage:OpenContainer(player, entity, containerWeight)
-				Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." has opened the passworded container "..entity:GetNetworkedString("Name").." by using a password.");
-			else
-				Schema:EasyText(player, "peru", "The password you entered was incorrect!")
-			end
-		end
-	end
-end)
-
 -- A function to get a random item.
 function cwStorage:GetRandomItem(uniqueID)
 	if (uniqueID) then
@@ -705,6 +685,8 @@ netstream.Hook("ContainerPassword", function(player, data)
 	local entity = data[2];
 	
 	if (IsValid(entity) and Clockwork.entity:IsPhysicsEntity(entity)) then
+		if entity:GetPos():DistToSqr(player:GetPos()) > 16384 then return end
+
 		local model = string.lower(entity:GetModel());
 		
 		if (cwStorage.containerList[model]) then

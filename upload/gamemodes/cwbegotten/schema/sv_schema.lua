@@ -7,15 +7,31 @@ local map = string.lower(game.GetMap());
 
 if map == "rp_district21" then
 	Schema.maxNPCs = {
-		["animal"] = 12,
+		["animal"] = 4,
+		["animalwasteland"] = 12,
 		["thrall"] = 4,
 		["thrallnight"] = 8,
 	};
+	
+	if !Schema.spawnedNPCs then
+		Schema.spawnedNPCs = {
+			["animal"] = {},
+			["animalwasteland"] = {},
+			["thrall"] = {},
+		};
+	end
 else
 	Schema.maxNPCs = {
 		["animal"] = 4,
 		["thrall"] = 8,
 	};
+	
+	if !Schema.spawnedNPCs then
+		Schema.spawnedNPCs = {
+			["animal"] = {},
+			["thrall"] = {},
+		};
+	end
 end
 
 if !Schema.towerTax then
@@ -24,13 +40,6 @@ end
 
 if !Schema.towerSafeZoneEnabled then
 	Schema.towerSafeZoneEnabled = true;
-end
-
-if !Schema.spawnedNPCs then
-	Schema.spawnedNPCs = {
-		["animal"] = {},
-		["thrall"] = {},
-	};
 end
 
 Schema.zones = {
@@ -344,17 +353,21 @@ Schema.doors = {
 		},
 		["gorewatch"] = {
 			"cellgrn_4",
+			"sol_dr_2",
+			"sol_dr_3",
+		},
+		["ministry"] = {
+			"churchblastdoor1",
+			"churchblastdoor2",
+			"alchemy_lab_blastdoor",
 		},
 		["tower"] = {
 			"sidedoorblastdoor2",
 			"frontblastdoor2",
+			"city_castle_door",
 			"cubbyblastdoorprop",
 			"cubbyblastdoor",
-			"churchblastdoor1",
-			"churchblastdoor2",
 			"sol_dr_1",
-			"sol_dr_2",
-			"sol_dr_3",
 			"sol_dr_4",
 		},
 	};
@@ -368,7 +381,6 @@ Clockwork.config:Add("discord_url", "https://discord.com/invite/zJnWjcW", true);
 Clockwork.config:Add("coinslot_wages_interval", 1800)
 
 Clockwork.config:Get("enable_gravgun_punt"):Set(false);
-Clockwork.config:Get("default_inv_weight"):Set(20);
 Clockwork.config:Get("enable_crosshair"):Set(false);
 Clockwork.config:Get("disable_sprays"):Set(true);
 Clockwork.config:Get("stamina_drain_scale"):Set(0.15);
@@ -401,7 +413,7 @@ function Schema:SyncFogDistance(player, uniqueID)
 end;
 
 function Schema:AddNPCSpawn(position, category, player)
-	if category ~= "animal" and category ~= "thrall" then
+	if category ~= "animal" and category ~= "thrall" and category ~= "thrallnight" and (Schema.spawnedNPCs["animalwasteland"] and category ~= "animalwasteland") then
 		if (player and player:IsPlayer()) then
 			Schema:EasyText(player, "darkgrey", "You have specified an invalid category!");
 		end;
@@ -1382,19 +1394,6 @@ function Schema:SpawnBegottenEntities()
 			archiveEnt:SetAngles(archiveEnts[i].ang);
 			archiveEnt:Spawn();
 		end
-	end
-end;
-
--- A function to get whether an entity is inside the tower of light.
-function Schema:InTower(entity)
-	if map == "rp_begotten3" then
-		return entity:GetPos():WithinAABox(Vector(2400, 15147, -2778), Vector(-2532, 11748, 2048));
-	elseif map == "rp_begotten_redux" then
-		return entity:GetPos():WithinAABox(Vector(-8896, -10801, 69), Vector(-13525, -3070, 914));
-	elseif map == "rp_scraptown" then
-		return entity:GetPos():WithinAABox(Vector(-2446, -7, -262), Vector(-8792, -8935, 2110));
-	elseif map == "rp_district21" then
-		return entity:GetPos():WithinAABox(Vector(-10622, 9407, 476), Vector(-4861, 13313, -2100));
 	end
 end;
 

@@ -161,7 +161,7 @@ function cwSenses:RenderScreenspaceEffects()
 end;
 
 -- Called just before the skybox is drawn.
---[[function cwSenses:PreDrawSkyBox()
+function cwSenses:PreDrawSkyBox()
 	if !Clockwork.kernel:IsChoosingCharacter() then
 		local senses = Clockwork.Client:GetNetVar("senses");
 		
@@ -182,7 +182,7 @@ function cwSenses:PostDrawSkyBox()
 			return true;
 		end;
 	end;
-end]]--
+end
 
 -- Called every frame.
 function cwSenses:Think()

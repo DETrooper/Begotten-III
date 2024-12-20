@@ -55,7 +55,7 @@ function Clockwork.player:GetMaxWeight()
 	local localPlayer = Clockwork.Client;
 	local backpackItem = localPlayer:GetBackpackEquipped();
 	local clothesItem = localPlayer:GetClothesEquipped();
-	local weight = config.GetVal("default_inv_weight") or 20;
+	local weight = config.GetVal("default_inv_weight") or 15;
 	
 	weight = hook.Run("PlayerAdjustMaxWeight", localPlayer, weight);
 	

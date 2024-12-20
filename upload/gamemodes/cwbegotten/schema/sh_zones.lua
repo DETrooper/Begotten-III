@@ -413,7 +413,18 @@ if CLIENT then
 				
 				if (boundsTable) then
 					local position = mapscenePosition or clientPosition;
-					local bInZone = Schema:IsInBox(boundsTable.min, boundsTable.max, position);
+					local bInZone;
+					
+					if table.IsSequential(boundsTable) then
+						for i, subTable in ipairs(boundsTable) do
+							if Schema:IsInBox(subTable.min, subTable.max, position) then
+								bInZone = true;
+								break;
+							end
+						end
+					else
+						bInZone = Schema:IsInBox(boundsTable.min, boundsTable.max, position);
+					end
 
 					if (bInZone) then
 						if (self.lastActiveZone) then
@@ -749,8 +760,19 @@ if CLIENT then
 			
 			if (boundsTable) then
 				local position = clientPosition;
-				local bInZone = Schema:IsInBox(boundsTable.min, boundsTable.max, position);
-
+				local bInZone;
+				
+				if table.IsSequential(boundsTable) then
+					for i, subTable in ipairs(boundsTable) do
+						if Schema:IsInBox(subTable.min, subTable.max, position) then
+							bInZone = true;
+							break;
+						end
+					end
+				else
+					bInZone = Schema:IsInBox(boundsTable.min, boundsTable.max, position);
+				end
+				
 				if (bInZone) then
 					if (self.lastActiveZone) then
 						if (self.stored[self.lastActiveZone].priority > self.stored[k].priority) then
@@ -795,43 +817,55 @@ if CLIENT then
 
 	-- Called after all translucent entities are drawn.
 	function zones:PostDrawTranslucentRenderables(bDrawDepth, bDrawSkybox)
-		if (bDrawSkybox) then
-			return
+		if (bDrawSkybox or bDrawDepth or !self:Enabled()) then
+			return;
 		end
 
-		if (!self:Enabled() or !self:DebugEnabled()) then
-			return;
-		end;
-		
-		local boxColor = Color(0, 0, 150, 20);
-		local textColor = Color(20, 20, 255)
-		local redColor = Color(150, 0, 0, 20);
-		local redText = Color(255, 0, 0);
+		if self:DebugEnabled() then
+			local boxColor = Color(0, 0, 150, 20);
+			local textColor = Color(20, 20, 255)
+			local redColor = Color(150, 0, 0, 20);
+			local redText = Color(255, 0, 0);
 
-		for k, v in pairs (self.stored) do
-			local boxColor = boxColor;
-			local textColor = textColor; 
+			for k, v in pairs (self.stored) do
+				local boxColor = boxColor;
+				local textColor = textColor; 
 
-			if (v.bounds) then
-				local position = v.bounds.min:ToScreen()
-				
-				render.SetColorMaterial()
-					local max = v.bounds.max - v.bounds.min
-				render.DrawBox(v.bounds.min, Angle(0, 0, 0), Vector(0, 0, 0), max, boxColor)
+				if (v.bounds) then
+					if table.IsSequential(v.bounds) then
+						for i, v2 in ipairs(v.bounds) do
+							local position = v2.min:ToScreen()
+							
+							render.SetColorMaterial()
+								local max = v2.max - v2.min
+							render.DrawBox(v2.min, Angle(0, 0, 0), Vector(0, 0, 0), max, boxColor)
 
-				cam.Start2D()
-					draw.WordBox(4, position.x, position.y, k, "Default", Color(0, 0, 0), textColor)
-				cam.End2D()
-			elseif (v.origin and v.radius) then
-				local origin = v.origin:ToScreen()
-				
-				render.SetColorMaterial()
-				render.DrawSphere(v.origin, v.radius, 30, 30, boxColor)
+							cam.Start2D()
+								draw.WordBox(4, position.x, position.y, k, "Default", Color(0, 0, 0), textColor)
+							cam.End2D()
+						end
+					else
+						local position = v.bounds.min:ToScreen()
+						
+						render.SetColorMaterial()
+							local max = v.bounds.max - v.bounds.min
+						render.DrawBox(v.bounds.min, Angle(0, 0, 0), Vector(0, 0, 0), max, boxColor)
 
-				cam.Start2D()
-					draw.WordBox(4, origin.x, origin.y, k.." - Radius: "..v.radius, "Default", Color(0, 0, 0), textColor)
-				cam.End2D()
-			end;
+						cam.Start2D()
+							draw.WordBox(4, position.x, position.y, k, "Default", Color(0, 0, 0), textColor)
+						cam.End2D()
+					end
+				elseif (v.origin and v.radius) then
+					local origin = v.origin:ToScreen()
+					
+					render.SetColorMaterial()
+					render.DrawSphere(v.origin, v.radius, 30, 30, boxColor)
+
+					cam.Start2D()
+						draw.WordBox(4, origin.x, origin.y, k.." - Radius: "..v.radius, "Default", Color(0, 0, 0), textColor)
+					cam.End2D()
+				end;
+			end
 		end
 	end
 
@@ -929,98 +963,24 @@ if CLIENT then
 
 		return false
 	end
-
-	-- A function to fix color values if the player has full bloom enabled.
-	function zones:ResolveHDR(r, g, b)
-		if (GetConVar("mat_hdr_level"):GetInt() != 2) then
-			return r, g, b;
-		end;
-		
-		if (self.currentZoneTable) then
-			local zoneTable = self.currentZoneTable;
-			local skyFix = hook.Run("OverrideZoneFogColorsSkybox", zoneTable) or zoneTable.skyFix
-			
-			if zoneTable.hasNight and cwDayNight and cwDayNight.nightWeight and !Clockwork.Client.dueling and !Clockwork.kernel:IsChoosingCharacter() then
-				if skyFix and zoneTable.skyFixNight then
-					local skyFixNight = hook.Run("OverrideZoneFogColorsSkyboxNight", zoneTable) or zoneTable.skyFixNight;
-				
-					r = r + Lerp(cwDayNight.nightWeight, skyFix.r, skyFixNight.r);
-					g = g + Lerp(cwDayNight.nightWeight, skyFix.g, skyFixNight.g);
-					b = b + Lerp(cwDayNight.nightWeight, skyFix.b, skyFixNight.b);
-				
-					return r, g, b
-				end
-			end
-			
-			if (skyFix) then
-				r = r + skyFix.r
-				g = g + skyFix.g
-				b = b + skyFix.b
-			end
-		end
-
-		return r, g, b
-	end
 	
-	-- Called just after the skybox is drawn.
-	function zones:PostDrawSkyBox()
-		-- Moved from senses plugin for compatibility.
-		if !Clockwork.kernel:IsChoosingCharacter() then
-			local senses = Clockwork.Client:GetNetVar("senses");
-			
-			if (senses) then
-				render.Clear(0, 0, 0, 255);
-				return true;
-			end;
-		end;
-	end
-
-	-- Called just after the skybox is drawn.
+	local maxs = Vector(512, 512, 512)
+	local mins = -maxs
+	
 	function zones:PostDraw2DSkyBox()
-		-- Moved from senses plugin for compatibility.
-		if !Clockwork.kernel:IsChoosingCharacter() then
-			local senses = Clockwork.Client:GetNetVar("senses");
-			
-			if (senses) then
-				render.Clear(0, 0, 0, 255);
-				return true;
-			end;
-		end;
-		-- End senses shit.
+		if self.currentFogColors then
+			render.OverrideDepthEnable(true, false)
+		
+			cam.Start3D(Vector(0, 0, 0), Angle(0, 0, 0))
+				render.SetColorMaterial()
+				-- Swapped mins and maxs so that the box will render inside out
+				render.DrawBox(Vector(0, 0, 0), Angle(0, 0, 0), maxs, mins, self.currentFogColors)
 
-		if (self:Enabled() and self:FogEnabled() and self.currentFogColors) then
-			local zoneTable = self.currentZoneTable;
+				hook.Run("BegottenSkyboxDrawn");
+			cam.End3D()
 			
-			if zoneTable then
-				if (!zoneTable.fogStart or !zoneTable.fogEnd or !zoneTable.fogColors) then
-					return;
-				end;
-				
-				if !Clockwork.kernel:IsChoosingCharacter() then
-					if cwDayNight and Clockwork.Client.currentCycle == "night" then
-						if zoneTable.hasNight and zoneTable.uniqueID ~= "tower" then
-							return;
-						end
-					end
-				end
-				
-				local r, g, b = self:ResolveHDR(self.currentFogColors.r, self.currentFogColors.g, self.currentFogColors.b);
-				--[[local env_skypaint_list = ents.FindByClass("env_skypaint");
-				
-				if (#env_skypaint_list > 0) then
-					local env_skypaint = env_skypaint_list[1];
-			
-					if IsValid(env_skypaint) then
-						env_skypaint:SetTopColor(Vector((self.currentFogColors.r / 255), (self.currentFogColors.g / 255), (self.currentFogColors.b / 255)));
-						env_skypaint:SetBottomColor(env_skypaint:GetTopColor());
-					end
-				end]]--
-				
-				render.Clear(r, g, b, 255);
-				
-				return true;
-			end
-		end;
+			render.OverrideDepthEnable(false, false)
+		end
 	end
 else
 	function zones:GetPlayerSupraZone(player)
@@ -1140,8 +1100,6 @@ if map == "rp_begotten3" then
 		WASTELAND.fogEndNight = 1024;
 		WASTELAND.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
 		WASTELAND.colorModifyNight = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 0.9, ["$pp_colour_colour"] = 0.75};
-		WASTELAND.skyFix = {r = 32, g = 21, b = 1}
-		WASTELAND.skyFixNight = {r = 15, g = 5, b = 1}
 		WASTELAND.hasWeather = true;
 		
 		-- Called every frame.
@@ -1192,7 +1150,6 @@ if map == "rp_begotten3" then
 		SCRAPPER.fogStart = 0;
 		SCRAPPER.fogEnd = 2048;
 		SCRAPPER.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1.5, ["$pp_colour_colour"] = 1.5, ["$pp_colour_mulr"] = 1.5};
-		SCRAPPER.skyFix = {r = 0, g = 0, b = 0}
 		SCRAPPER.bounds = {
 			min = Vector(454, -12393, -2189),
 			max = Vector(-4214, -11057, -703),
@@ -1201,7 +1158,7 @@ if map == "rp_begotten3" then
 
 	local TOWER = zones:New("tower", "suprawasteland")
 		TOWER.hasNight = true;
-		TOWER.name = "Tower";
+		TOWER.name = "Tower of Light";
 		TOWER.map = "rp_begotten3";
 		TOWER.fogColors = {r = 96, g = 47, b = 0};
 		TOWER.fogColorsNight = {r = 18, g = 6, b = 1};
@@ -1209,18 +1166,22 @@ if map == "rp_begotten3" then
 		TOWER.fogEnd = 4096;
 		TOWER.colorModify = {["$pp_colour_brightness"] = -0.035, ["$pp_colour_contrast"] = 1.22, ["$pp_colour_colour"] = 1};
 		TOWER.colorModifyNight = {["$pp_colour_brightness"] = -0.045, ["$pp_colour_contrast"] = 1.05, ["$pp_colour_colour"] = 0.95};
-		TOWER.skyFix = {r = 35, g = 21, b = 0}
-		TOWER.skyFixNight = {r = 10, g = 3, b = 1}
 		TOWER.hasWeather = true;
 		TOWER.bounds = {
-			min = Vector(2400, 15147, -2778),
-			max = Vector(-2532, 11748, 2048),
+			{
+				min = Vector(2400, 15147, -2778),
+				max = Vector(-2532, 12022, 2048),
+			},
+			{
+				min = Vector(-839, 11737, -1130),
+				max = Vector(865, 12022, -897),
+			},
 		};
 	TOWER:Register()
 
 	local THEATER = zones:New("theater")
 		THEATER.hasNight = true;
-		THEATER.name = "Tower";
+		THEATER.name = "Tower Theater";
 		THEATER.map = "rp_begotten3";
 		THEATER.fogColors = {r = 96, g = 47, b = 0};
 		THEATER.fogColorsNight = {r = 18, g = 6, b = 1};
@@ -1229,8 +1190,6 @@ if map == "rp_begotten3" then
 		THEATER.bloomDisabled = true;
 		THEATER.colorModify = {["$pp_colour_brightness"] = -0.035, ["$pp_colour_contrast"] = 1.05, ["$pp_colour_colour"] = 1};
 		THEATER.colorModifyNight = {["$pp_colour_brightness"] = -0.035, ["$pp_colour_contrast"] = 1.05, ["$pp_colour_colour"] = 1};
-		THEATER.skyFix = {r = 35, g = 21, b = 0}
-		THEATER.skyFixNight = {r = 10, g = 3, b = 1}
 		THEATER.bounds = {
 			min = Vector(1448, 14585, 554),
 			max = Vector(648, 13774, 298),
@@ -1245,7 +1204,6 @@ if map == "rp_begotten3" then
 		CAVES.fogStart = 0;
 		CAVES.fogEnd = 768;
 		CAVES.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
-		CAVES.skyFix = {r = 0, g = 0, b = 0}
 		CAVES.bounds = {
 			min = Vector(6975, 9000, -3000),
 			max = Vector(-6920, -7353, -2173),
@@ -1259,13 +1217,10 @@ if map == "rp_begotten3" then
 		HELL.fogStart = 0;
 		HELL.fogEnd = 1024;
 		HELL.colorModify = {["$pp_colour_brightness"] = -0.2, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
-		HELL.skyFix = {r = 30, g = 4, b = 4}
 		HELL.bounds = {
 			min = Vector(-16069, -15314, -16119),
 			max = Vector(5637, -3537, -4757),
 		};
-		HELL.ForceCallback = true;
-		HELL.ForceFog = true;
 		
 		-- Called every frame.
 		function HELL:RenderCallback()
@@ -1280,14 +1235,10 @@ if map == "rp_begotten3" then
 		MANOR.fogStart = 1024;
 		MANOR.fogEnd = 3072;
 		MANOR.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
-		MANOR.skyFix = {r = 30, g = 4, b = 4}
 		MANOR.bounds = {
 			min = Vector(-1079, -8472, -6505),
 			max = Vector(261, -9704, -6163),
 		};
-		MANOR.ForceCallback = true;
-		MANOR.ForceFog = true;
-		MANOR.priority = 2;
 
 		-- Called every frame.
 		function MANOR:RenderCallback()
@@ -1302,7 +1253,6 @@ if map == "rp_begotten3" then
 		TOOTHBOY.fogStart = 0;
 		TOOTHBOY.fogEnd = 4096;
 		TOOTHBOY.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
-		TOOTHBOY.skyFix = {r = 0, g = 0, b = 0}
 		TOOTHBOY.bounds = {
 			min = Vector(12250, -9968, -2182),
 			max = Vector(12992, -14144, -1262),
@@ -1316,7 +1266,6 @@ if map == "rp_begotten3" then
 		GORE_TREE.fogStart = 0;
 		GORE_TREE.fogEnd = 10240;
 		GORE_TREE.colorModify = {["$pp_colour_brightness"] = 0, ["$pp_colour_contrast"] = 1.2, ["$pp_colour_colour"] = 0};
-		GORE_TREE.skyFix = {r = 0, g = 0, b = 0}
 		GORE_TREE.bounds = {
 			min = Vector(11713, -6746, 10673),
 			max = Vector(5600, -11005, 15544),
@@ -1334,7 +1283,6 @@ if map == "rp_begotten3" then
 		GORE_HALLWAY.fogStart = 1024;
 		GORE_HALLWAY.fogEnd = 2048;
 		GORE_HALLWAY.colorModify = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 2, ["$pp_colour_colour"] = 1};
-		GORE_HALLWAY.skyFix = {r = 0, g = 0, b = 0}
 		GORE_HALLWAY.bounds = {
 			min = Vector(5600, -6800, 11685),
 			max = Vector(2199, -8997, 12118),
@@ -1393,7 +1341,6 @@ if map == "rp_begotten3" then
 		GORE.fogStart = 0;
 		GORE.fogEnd = 1024
 		GORE.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.2};
-		GORE.skyFix = {r = 38, g = 38, b = 38}
 		GORE.bounds = {
 			min = Vector(2199, 4478, 10673),
 			max = Vector(-15045, -15158, 15544),
@@ -1415,13 +1362,10 @@ if map == "rp_begotten3" then
 		SEA1.fogStart = 0;
 		SEA1.fogEnd = 1024;
 		SEA1.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.15};
-		SEA1.skyFix = {r = 0, g = 14, b = 37}
 		SEA1.bounds = {
 			min = Vector(15392, 14700, -5400),
 			max = Vector(5158, 4500, -6500),
 		};
-		SEA1.ForceCallback = true;
-		SEA1.ForceFog = true;
 
 		-- Called every frame.
 		function SEA1:RenderCallback()
@@ -1436,13 +1380,10 @@ if map == "rp_begotten3" then
 		SEA2.fogStart = 0;
 		SEA2.fogEnd = 1024;
 		SEA2.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.15};
-		SEA2.skyFix = {r = 27, g = 27, b = 27}
 		SEA2.bounds = {
 			min = Vector(5110, 14700, -5400),
 			max = Vector(-5095, 4500, -6500),
 		};
-		SEA2.ForceCallback = true;
-		SEA2.ForceFog = true;
 		
 		-- Called every frame.
 		function SEA2:RenderCallback()
@@ -1457,13 +1398,10 @@ if map == "rp_begotten3" then
 		SEA3.fogStart = 0;
 		SEA3.fogEnd = 1024;
 		SEA3.colorModify = {["$pp_colour_brightness"] = -0.2, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
-		SEA3.skyFix = {r = 30, g = 4, b = 4}
 		SEA3.bounds = {
 			min = Vector(-5110, 14700, -5400),
 			max = Vector(-15349, 4500, -6500),
 		};
-		SEA3.ForceCallback = true;
-		SEA3.ForceFog = true;
 		
 		-- Called every frame.
 		function SEA3:RenderCallback()
@@ -1484,8 +1422,6 @@ elseif map == "rp_begotten_redux" then
 		WASTELAND.fogEndNight = 1024;
 		WASTELAND.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
 		WASTELAND.colorModifyNight = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 0.9, ["$pp_colour_colour"] = 0.75};
-		WASTELAND.skyFix = {r = 32, g = 21, b = 1}
-		WASTELAND.skyFixNight = {r = 15, g = 5, b = 1}
 		
 		-- Called every frame.
 		function WASTELAND:RenderCallback()
@@ -1505,8 +1441,6 @@ elseif map == "rp_begotten_redux" then
 		TOWER.fogEndNight = 1024;
 		TOWER.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
 		TOWER.colorModifyNight = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 0.9, ["$pp_colour_colour"] = 0.75};
-		TOWER.skyFix = {r = 32, g = 21, b = 1}
-		TOWER.skyFixNight = {r = 15, g = 5, b = 1}
 		TOWER.bounds = {
 			min = Vector(-12420, -7793, 646),
 			max = Vector(-13674, -8453, 55),
@@ -1525,7 +1459,6 @@ elseif map == "rp_begotten_redux" then
 		CAVES.fogStart = 0;
 		CAVES.fogEnd = 768;
 		CAVES.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
-		CAVES.skyFix = {r = 0, g = 0, b = 0}
 		CAVES.bounds = {
 			min = Vector(-12818, -8894, -62),
 			max = Vector(-10391, -10661, -255),
@@ -1539,7 +1472,6 @@ elseif map == "rp_begotten_redux" then
 		CARTUNNELS.fogStart = 0;
 		CARTUNNELS.fogEnd = 768;
 		CARTUNNELS.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
-		CARTUNNELS.skyFix = {r = 0, g = 0, b = 0}
 		CARTUNNELS.bounds = {
 			min = Vector(-12119, -5624, 20),
 			max = Vector(-4815, -2656, -202),
@@ -1553,7 +1485,6 @@ elseif map == "rp_begotten_redux" then
 		TUNNELS1.fogStart = 0;
 		TUNNELS1.fogEnd = 768;
 		TUNNELS1.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
-		TUNNELS1.skyFix = {r = 0, g = 0, b = 0}
 		TUNNELS1.bounds = {
 			min = Vector(-8500, -8449, -127),
 			max = Vector(-10037, -9402, -346),
@@ -1567,7 +1498,6 @@ elseif map == "rp_begotten_redux" then
 		TUNNELS2.fogStart = 0;
 		TUNNELS2.fogEnd = 768;
 		TUNNELS2.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
-		TUNNELS2.skyFix = {r = 0, g = 0, b = 0}
 		TUNNELS2.bounds = {
 			min = Vector(-9167, -8637, -155),
 			max = Vector(-13804, -8530, -16),
@@ -1581,7 +1511,6 @@ elseif map == "rp_begotten_redux" then
 		TUNNELS3.fogStart = 0;
 		TUNNELS3.fogEnd = 768;
 		TUNNELS3.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
-		TUNNELS3.skyFix = {r = 0, g = 0, b = 0}
 		TUNNELS3.bounds = {
 			min = Vector(-13804, -8530, -16),
 			max = Vector(-13655, -5382, -142),
@@ -1617,13 +1546,10 @@ elseif map == "rp_begotten_redux" then
 		HELL.fogStart = 0;
 		HELL.fogEnd = 1024;
 		HELL.colorModify = {["$pp_colour_brightness"] = -0.2, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
-		HELL.skyFix = {r = 30, g = 4, b = 4}
 		HELL.bounds = {
 			min = Vector(-16069, -15314, -16119),
 			max = Vector(5637, -3537, -4757),
 		};
-		HELL.ForceCallback = true;
-		HELL.ForceFog = true;
 		
 		-- Called every frame.
 		function HELL:RenderCallback()
@@ -1638,14 +1564,10 @@ elseif map == "rp_begotten_redux" then
 		MANOR.fogStart = 1024;
 		MANOR.fogEnd = 3072;
 		MANOR.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
-		--MANOR.skyFix = {r = 30, g = 4, b = 4}
-		MANOR.skyFix = {r = 30, g = 4, b = 4}
 		MANOR.bounds = {
 			min = Vector(-1079, -8472, -6505),
 			max = Vector(261, -9704, -6163),
 		};
-		MANOR.ForceCallback = true;
-		MANOR.ForceFog = true;
 		MANOR.priority = 2;
 
 		-- Called every frame.
@@ -1667,8 +1589,6 @@ elseif map == "rp_scraptown" then
 		WASTELAND.fogEndNight = 1024;
 		WASTELAND.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
 		WASTELAND.colorModifyNight = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 0.9, ["$pp_colour_colour"] = 0.75};
-		WASTELAND.skyFix = {r = 32, g = 21, b = 1}
-		WASTELAND.skyFixNight = {r = 15, g = 5, b = 1}
 		
 		-- Called every frame.
 		function WASTELAND:RenderCallback()
@@ -1688,8 +1608,6 @@ elseif map == "rp_scraptown" then
 		TOWER.fogEndNight = 1024;
 		TOWER.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
 		TOWER.colorModifyNight = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 0.9, ["$pp_colour_colour"] = 0.75};
-		TOWER.skyFix = {r = 32, g = 21, b = 1}
-		TOWER.skyFixNight = {r = 15, g = 5, b = 1}
 		TOWER.bounds = {
 			min = Vector(-2446, -7, -262),
 			max = Vector(-8792, -8935, 2110),
@@ -1708,7 +1626,6 @@ elseif map == "rp_scraptown" then
 		SCRAPPER.fogStart = 0;
 		SCRAPPER.fogEnd = 2048;
 		SCRAPPER.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1.5, ["$pp_colour_colour"] = 1.5, ["$pp_colour_mulr"] = 1.5};
-		SCRAPPER.skyFix = {r = 0, g = 0, b = 0}
 		SCRAPPER.bounds = {
 			min = Vector(-5279, -6466, 6),
 			max = Vector(-9740, -7616, -2139),
@@ -1744,13 +1661,10 @@ elseif map == "rp_scraptown" then
 		HELL.fogStart = 0;
 		HELL.fogEnd = 1024;
 		HELL.colorModify = {["$pp_colour_brightness"] = -0.2, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
-		--HELL.skyFix = {r = 30, g = 4, b = 4}
 		HELL.bounds = {
 			min = Vector(-16069, -15314, -16119),
 			max = Vector(5637, -3537, -4757),
 		};
-		HELL.ForceCallback = true;
-		HELL.ForceFog = true;
 		
 		-- Called every frame.
 		function HELL:RenderCallback()
@@ -1765,13 +1679,10 @@ elseif map == "rp_scraptown" then
 		MANOR.fogStart = 1024;
 		MANOR.fogEnd = 3072;
 		MANOR.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
-		--MANOR.skyFix = {r = 30, g = 4, b = 4}
 		MANOR.bounds = {
 			min = Vector(-1079, -8472, -6505),
 			max = Vector(261, -9704, -6163),
 		};
-		MANOR.ForceCallback = true;
-		MANOR.ForceFog = true;
 		MANOR.priority = 2;
 
 		-- Called every frame.
@@ -1791,9 +1702,6 @@ elseif map == "rp_temple" then
 		TEMPLE.bloomDisabled = true;
 		TEMPLE.colorModify = {["$pp_colour_brightness"] = -0.035, ["$pp_colour_contrast"] = 1.05, ["$pp_colour_colour"] = 0.67};
 		TEMPLE.colorModifyNight = {["$pp_colour_brightness"] = -0.035, ["$pp_colour_contrast"] = 1.05, ["$pp_colour_colour"] = 1};
-		TEMPLE.skyFix = {r = 0, g = 0, b = 0}
-		--TEMPLE.skyFixNight = {r = 10, g = 3, b = 1}
-
 	TEMPLE:Register()
 	
 		local TEMPLE_INDOOR = zones:New("temple_indoor", "temple")
@@ -1807,9 +1715,6 @@ elseif map == "rp_temple" then
 		TEMPLE_INDOOR.bloomDisabled = true;
 		TEMPLE_INDOOR.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1.2, ["$pp_colour_colour"] = 0.7};
 		TEMPLE_INDOOR.colorModifyNight = {["$pp_colour_brightness"] = -0.035, ["$pp_colour_contrast"] = 1.05, ["$pp_colour_colour"] = 1};
-		TEMPLE_INDOOR.skyFix = {r = 0, g = 0, b = 0}
-		--TEMPLE.skyFixNight = {r = 10, g = 3, b = 1}
-
 	TEMPLE_INDOOR:Register()
 		local TEMPLE_TREE = zones:New("temple_tree", "temple")
 		TEMPLE_TREE.hasNight = false;
@@ -1822,9 +1727,6 @@ elseif map == "rp_temple" then
 		TEMPLE_TREE.bloomDisabled = true;
 		TEMPLE_TREE.colorModify = {["$pp_colour_brightness"] = -0.04, ["$pp_colour_contrast"] = 1.25, ["$pp_colour_colour"] = 1.25};
 		TEMPLE_TREE.colorModifyNight = {["$pp_colour_brightness"] = -0.035, ["$pp_colour_contrast"] = 1.05, ["$pp_colour_colour"] = 1};
-		TEMPLE_TREE.skyFix = {r = 0, g = 0, b = 0}
-		--TEMPLE.skyFixNight = {r = 10, g = 3, b = 1}
-
 	TEMPLE_TREE:Register()
 elseif map == "rp_district21" then
 	local WASTELAND = zones:New("wasteland", "suprawasteland")
@@ -1842,9 +1744,21 @@ elseif map == "rp_district21" then
 		WASTELAND.fogStartNight = 128;
 		WASTELAND.fogEnd = 2048;
 		WASTELAND.fogEndNight = 1024;
-		WASTELAND.skyFix = {r = 17, g = 22, b = 30};
-		WASTELAND.skyFixNight = {r = 4, g = 8, b = 15};
 	WASTELAND:Register()
+
+	local HOTSPRING = zones:New("hotspring", "suprawasteland")
+		HOTSPRING.name = "Hot Spring";
+		HOTSPRING.map = "rp_district21";
+		HOTSPRING.colorModify = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 1.2, ["$pp_colour_colour"] = 1.25, ["$pp_colour_mulb"] = 0.1};
+		HOTSPRING.fogStart = 128;
+		HOTSPRING.fogEnd = 1268;
+		HOTSPRING.fogColors = {r = 91, g = 103, b = 119};
+		HOTSPRING.fogColorsNight = {r = 56, g = 63, b = 73};
+		HOTSPRING.bounds = {
+			min = Vector(2860, -4117, -828),
+			max = Vector(1306, -5199, 333),
+		};
+	HOTSPRING:Register()
 
 	local DUEL = zones:New("duel")
 		DUEL.name = "Duel Zone";
@@ -1888,7 +1802,6 @@ elseif map == "rp_district21" then
 		SCRAPPER.fogStart = 0;
 		SCRAPPER.fogEnd = 2048;
 		SCRAPPER.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1.5, ["$pp_colour_colour"] = 1.5, ["$pp_colour_mulr"] = 1.5};
-		SCRAPPER.skyFix = {r = 0, g = 0, b = 0}
 		SCRAPPER.bounds = {
 			min = Vector(7462, 14976, -600),
 			max = Vector(12190, 12956, -2277),
@@ -1902,7 +1815,6 @@ elseif map == "rp_district21" then
 		CAVES.fogStart = 0;
 		CAVES.fogEnd = 768;
 		CAVES.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
-		CAVES.skyFix = {r = 0, g = 0, b = 0}
 		CAVES.bounds = {
 			min = Vector(-11600, 4800, -1080),
 			max = Vector(1834, -11573, -2100),
@@ -1914,7 +1826,6 @@ elseif map == "rp_district21" then
 		TOWER.map = "rp_district21";
 		TOWER.hasNight = true;
 		TOWER.hasWeather = true;
-		TOWER.skyboxOverride = true;
 		TOWER.colorModify = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 1.2, ["$pp_colour_colour"] = 1.25, ["$pp_colour_mulb"] = 0.1};
 		TOWER.colorModifyNight = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 0.9, ["$pp_colour_colour"] = 1, ["$pp_colour_mulb"] = 0.1};
 		TOWER.fogColors = {r = 38, g = 54, b = 76};
@@ -1923,11 +1834,15 @@ elseif map == "rp_district21" then
 		TOWER.fogStartNight = 128;
 		TOWER.fogEnd = 2048;
 		TOWER.fogEndNight = 1024;
-		TOWER.skyFix = {r = 17, g = 22, b = 30};
-		TOWER.skyFixNight = {r = 4, g = 8, b = 15};
 		TOWER.bounds = {
-			min = Vector(-10622, 9407, 476),
-			max = Vector(-4861, 13313, 0),
+			{
+				min = Vector(-4861, 13313, 0),
+				max = Vector(-7600, 9407, 476),
+			},
+			{
+				min = Vector(-10622, 12500, 476),
+				max = Vector(-7600, 10368, 0),
+			},
 		};
 	TOWER:Register()
 
@@ -1950,13 +1865,10 @@ elseif map == "rp_district21" then
 		HELL.fogStart = 0;
 		HELL.fogEnd = 1024;
 		HELL.colorModify = {["$pp_colour_brightness"] = -0.2, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
-		HELL.skyFix = {r = 30, g = 4, b = 4}
 		HELL.bounds = {
 			min = Vector(-16069, -15314, -16119),
 			max = Vector(5637, -3537, -4757),
 		};
-		HELL.ForceCallback = true;
-		HELL.ForceFog = true;
 		
 		-- Called every frame.
 		function HELL:RenderCallback()
@@ -1971,13 +1883,10 @@ elseif map == "rp_district21" then
 		MANOR.fogStart = 1024;
 		MANOR.fogEnd = 3072;
 		MANOR.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
-		MANOR.skyFix = {r = 30, g = 4, b = 4}
 		MANOR.bounds = {
 			min = Vector(-1079, -8472, -6505),
 			max = Vector(261, -9704, -6163),
 		};
-		MANOR.ForceCallback = true;
-		MANOR.ForceFog = true;
 		MANOR.priority = 2;
 
 		-- Called every frame.
@@ -1993,7 +1902,6 @@ elseif map == "rp_district21" then
 		GORE_TREE.fogStart = 0;
 		GORE_TREE.fogEnd = 10240;
 		GORE_TREE.colorModify = {["$pp_colour_brightness"] = 0, ["$pp_colour_contrast"] = 1.2, ["$pp_colour_colour"] = 0};
-		GORE_TREE.skyFix = {r = 0, g = 0, b = 0}
 		GORE_TREE.bounds = {
 			min = Vector(11713, -6746, 10673),
 			max = Vector(5600, -11005, 15544),
@@ -2011,7 +1919,6 @@ elseif map == "rp_district21" then
 		GORE_SOIL.fogStart = 0;
 		GORE_SOIL.fogEnd = 10240;
 		GORE_SOIL.colorModify = {["$pp_colour_brightness"] = 0, ["$pp_colour_contrast"] = 1.2, ["$pp_colour_colour"] = 0};
-		GORE_SOIL.skyFix = {r = 0, g = 0, b = 0}
 		GORE_SOIL.bounds = {
 			min = Vector(11622, -6836, 12500),
 			max = Vector(8744, -10586, 11180),
@@ -2029,7 +1936,6 @@ elseif map == "rp_district21" then
 		GORE_HALLWAY.fogStart = 1024;
 		GORE_HALLWAY.fogEnd = 2048;
 		GORE_HALLWAY.colorModify = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 2, ["$pp_colour_colour"] = 1};
-		GORE_HALLWAY.skyFix = {r = 0, g = 0, b = 0}
 		GORE_HALLWAY.bounds = {
 			min = Vector(5600, -6800, 11685),
 			max = Vector(2199, -8997, 12118),
@@ -2088,7 +1994,6 @@ elseif map == "rp_district21" then
 		GORE.fogStart = 0;
 		GORE.fogEnd = 1024
 		GORE.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.2};
-		GORE.skyFix = {r = 38, g = 38, b = 38}
 		GORE.bounds = {
 			min = Vector(2199, 4478, 10673),
 			max = Vector(-15045, -15158, 15544),
@@ -2110,13 +2015,10 @@ elseif map == "rp_district21" then
 		SEA1.fogStart = 0;
 		SEA1.fogEnd = 1024;
 		SEA1.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.15};
-		SEA1.skyFix = {r = 0, g = 14, b = 37}
 		SEA1.bounds = {
 			min = Vector(15392, 14700, -5400),
 			max = Vector(5158, 4500, -6500),
 		};
-		SEA1.ForceCallback = true;
-		SEA1.ForceFog = true;
 
 		-- Called every frame.
 		function SEA1:RenderCallback()
@@ -2131,13 +2033,10 @@ elseif map == "rp_district21" then
 		SEA2.fogStart = 0;
 		SEA2.fogEnd = 1024;
 		SEA2.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.15};
-		SEA2.skyFix = {r = 27, g = 27, b = 27}
 		SEA2.bounds = {
 			min = Vector(5110, 14700, -5400),
 			max = Vector(-5095, 4500, -6500),
 		};
-		SEA2.ForceCallback = true;
-		SEA2.ForceFog = true;
 		
 		-- Called every frame.
 		function SEA2:RenderCallback()
@@ -2152,13 +2051,10 @@ elseif map == "rp_district21" then
 		SEA3.fogStart = 0;
 		SEA3.fogEnd = 1024;
 		SEA3.colorModify = {["$pp_colour_brightness"] = -0.2, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
-		SEA3.skyFix = {r = 30, g = 4, b = 4}
 		SEA3.bounds = {
 			min = Vector(-5110, 14700, -5400),
 			max = Vector(-15349, 4500, -6500),
 		};
-		SEA3.ForceCallback = true;
-		SEA3.ForceFog = true;
 		
 		-- Called every frame.
 		function SEA3:RenderCallback()
@@ -2178,8 +2074,6 @@ else
 		WASTELAND.fogEndNight = 1024;
 		WASTELAND.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
 		WASTELAND.colorModifyNight = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 0.9, ["$pp_colour_colour"] = 0.75};
-		WASTELAND.skyFix = {r = 32, g = 21, b = 1}
-		WASTELAND.skyFixNight = {r = 15, g = 5, b = 1}
 		
 		-- Called every frame.
 		function WASTELAND:RenderCallback()

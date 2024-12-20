@@ -22,24 +22,48 @@ function cwWarmth:ItemEntityThink(entity, itemTable)
 				if boundsTable then
 					local entPos = entity:GetPos();
 					
-					if entPos:WithinAABox(boundsTable.min, boundsTable.max) then
-						local ents = ents.FindInSphere(entity:GetPos(), 320);
-		
-						for i, v2 in ipairs(ents) do
-							if v2:GetClass() == "env_fire" then
-								if freezing > 0 then
-									itemTable:SetData("freezing", math.max(freezing - 5, 0));
+					if table.IsSequential(boundsTable) then
+						for i, v2 in ipairs(boundsTable) do
+							if entPos:WithinAABox(v2.min, v2.max) then
+								local ents = ents.FindInSphere(entity:GetPos(), 320);
+				
+								for i, v2 in ipairs(ents) do
+									if v2:GetClass() == "env_fire" then
+										if freezing > 0 then
+											itemTable:SetData("freezing", math.max(freezing - 5, 0));
+										end
+										
+										return;
+									end
+								end
+								
+								if freezing < 100 then
+									itemTable:SetData("freezing", math.min(freezing + 1, 100));
 								end
 								
 								return;
 							end
 						end
-						
-						if freezing < 100 then
-							itemTable:SetData("freezing", math.min(freezing + 1, 100));
+					else
+						if entPos:WithinAABox(boundsTable.min, boundsTable.max) then
+							local ents = ents.FindInSphere(entity:GetPos(), 320);
+			
+							for i, v2 in ipairs(ents) do
+								if v2:GetClass() == "env_fire" then
+									if freezing > 0 then
+										itemTable:SetData("freezing", math.max(freezing - 5, 0));
+									end
+									
+									return;
+								end
+							end
+							
+							if freezing < 100 then
+								itemTable:SetData("freezing", math.min(freezing + 1, 100));
+							end
+							
+							return;
 						end
-						
-						return;
 					end
 				end
 			end
@@ -53,6 +77,13 @@ end
 
 -- Called at an interval while the player is connected to the server.
 function cwWarmth:PlayerThink(player, curTime, infoTable, alive, initialized, plyTable)
+	if(!plyTable.nextHotSpringBuff or plyTable.nextHotSpringBuff <= curTime) then
+		plyTable.nextHotSpringBuff = curTime + 15;
+
+		player:SetHealth(math.min(player:Health() + 2, player:GetMaxHealth()));
+
+	end
+
 	if !plyTable.nextTempDecay then
 		plyTable.nextTempDecay = curTime + temperature_interval;
 		
@@ -82,19 +113,48 @@ function cwWarmth:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 		local waterLevel = player:WaterLevel();
 		
 		if waterLevel > 0 then
-			if !cwBeliefs or !player:HasBelief("the_black_sea") then
+			if(cwBeliefs and player:HasBelief("the_black_sea")) then // do nothing
+			elseif(lastZone == "hotspring") then
+				if(waterLevel == 1) then
+					player:HandleTemperature(2);
+					player:HandleSanity(2);
+					player:SetHealth(math.min(player:Health() + 1, player:GetMaxHealth()));
+
+				elseif(waterLevel == 2) then
+					player:HandleTemperature(5);
+					player:HandleSanity(5);
+					player:SetHealth(math.min(player:Health() + 2, player:GetMaxHealth()));
+
+				elseif(waterLevel >= 3) then
+					player:HandleTemperature(10);
+					player:HandleSanity(5);
+					player:SetHealth(math.min(player:Health() + 2, player:GetMaxHealth()));
+
+				end
+
+				player:SetLocalVar("hotSpringTime", player:GetLocalVar("hotSpringTime", 0) + 15);
+				
+			else
 				if !string.find(lastZone, "gore") then
-					if waterLevel == 1 then
-						player:HandleTemperature(-2);
-					elseif waterLevel == 2 then
-						player:HandleTemperature(-25);
-					elseif waterLevel > 2 then
-						player:HandleTemperature(-50);
+					if waterLevel == 1 then player:HandleTemperature(-2);
+					elseif waterLevel == 2 then player:HandleTemperature(-25);
+					elseif waterLevel > 2 then player:HandleTemperature(-50);
 					end
 					
 					return;
+
 				end
 			end
+		else
+			local hotSpringTime = player:GetLocalVar("hotSpringTime", 0);
+
+			if(hotSpringTime >= 60) then
+				player:SetLocalVar("hotSpringBuff", CurTime() + hotSpringTime);
+			
+			end
+
+			player:SetLocalVar("hotSpringTime", 0);
+
 		end
 
 		if game.GetMap() == "rp_district21" and player:GetPos():WithinAABox(pillarsBounds["min"], pillarsBounds["max"]) then
@@ -300,4 +360,10 @@ function playerMeta:HandleTemperature(amount)
 	self:SetCharacterData("warmth", newTemp);
 	
 	hook.Run("RunModifyPlayerSpeed", self, self.cwInfoTable, true)
+end
+
+function cwWarmth:CharacterLoaded(player)
+	player:SetLocalVar("hotSpringBuff", 0);
+	player:SetLocalVar("hotSpringTime", 0);
+
 end

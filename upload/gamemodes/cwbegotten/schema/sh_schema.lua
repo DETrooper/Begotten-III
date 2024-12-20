@@ -237,6 +237,23 @@ function Schema:IsInBox(firstVector, secondVector, position, bOptimized, delay)
 	return bInBox
 end
 
+-- A function to get whether an entity is inside the tower of light.
+function Schema:InTower(entity)
+	if SERVER and entity:IsPlayer() and entity:GetCharacterData("LastZone") == "tower" then
+		return true;
+	end
+
+	if map == "rp_begotten3" then
+		return entity:GetPos():WithinAABox(Vector(2400, 15147, -2778), Vector(-2532, 12022, 2048)) or entity:GetPos():WithinAABox(Vector(-839, 11737, -1130), Vector(865, 12022, -897));
+	elseif map == "rp_begotten_redux" then
+		return entity:GetPos():WithinAABox(Vector(-8896, -10801, 69), Vector(-13525, -3070, 914));
+	elseif map == "rp_scraptown" then
+		return entity:GetPos():WithinAABox(Vector(-2446, -7, -262), Vector(-8792, -8935, 2110));
+	elseif map == "rp_district21" then
+		return entity:GetPos():WithinAABox(Vector(-7600, 9407, 476), Vector(-4861, 13313, -2100)) or entity:GetPos():WithinAABox(Vector(-10622, 12500, 476), Vector(-7600, 10368, -2100));
+	end
+end;
+
 local COMMAND = Clockwork.command:New("StartSound");
 	COMMAND.tip = "Start a loopable/fadeable sound.";
 	COMMAND.flags = CMD_DEFAULT;

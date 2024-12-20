@@ -130,38 +130,13 @@ function cwWeather:OverrideZoneFogColors(zoneTable)
 			if cwDayNight and cwDayNight.nightWeight and zoneTable.hasNight then
 				if weatherTable.fogColorsNight then
 					local fogColors = weatherTable.fogColors;
-					--local fogColorsNight = weatherTable.fogColorsNight;
-					local fogColorsNight = zoneTable.fogColorsNight;
+					local fogColorsNight = weatherTable.fogColorsNight;
 					
 					return {r = Lerp(cwDayNight.nightWeight, fogColors.r, fogColorsNight.r), g = Lerp(cwDayNight.nightWeight, fogColors.g, fogColorsNight.g), b = Lerp(cwDayNight.nightWeight, fogColors.b, fogColorsNight.b)};
 				end
 			elseif weatherTable.fogColors then
 				return weatherTable.fogColors;
 			end
-		end
-	end
-end
-
-function cwWeather:OverrideZoneFogColorsSkybox(zoneTable)
-	if Clockwork.Client.dueling or Clockwork.kernel:IsChoosingCharacter() then return end;
-
-	if self.weather and zoneTable.hasWeather then
-		local weatherTable = self.weatherTypes[self.weather];
-		
-		if weatherTable then
-			return weatherTable.skyFix;
-		end
-	end
-end
-
-function cwWeather:OverrideZoneFogColorsSkyboxNight(zoneTable)
-	if Clockwork.Client.dueling or Clockwork.kernel:IsChoosingCharacter() then return end;
-
-	if self.weather and zoneTable.hasWeather then
-		local weatherTable = self.weatherTypes[self.weather];
-		
-		if weatherTable then
-			return weatherTable.skyFixNight;
 		end
 	end
 end

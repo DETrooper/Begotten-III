@@ -53,6 +53,12 @@ function cwWarmth:ModifyStatusEffects(tab)
 	if warmth <= 50 then
 		table.insert(tab, {text = "(-) Hypothermia", color = Color(200, 40, 40)});
 	end
+
+	if(Clockwork.Client:GetLocalVar("hotSpringBuff", 0) >= CurTime() or Clockwork.Client:GetLocalVar("hotSpringTime", 0) >= 60) then
+		table.insert(tab, {text = "(+) Refreshed", color = Color(0, 225, 0)});
+	
+	end
+
 end
 
 -- A function to get temperature's markup tooltip.

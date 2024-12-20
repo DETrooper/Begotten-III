@@ -1170,8 +1170,7 @@ local function Guarding(ent, dmginfo)
 							if ent:HasBelief("sidestep") then
 								deflectionPoisePayback = 25;
 								deflectionStabilityPayback = 15;
-								ent:SetLocalVar("CanDeflect", true)
-
+								wep.canDeflect = true;
 							elseif ent:HasBelief("deflection") then
 								deflectionPoisePayback = 15;
 								deflectionStabilityPayback = 10;
