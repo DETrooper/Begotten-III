@@ -266,7 +266,7 @@ else
 		local configObject = config.Get(data)
 
 		if (configObject:IsValid()) then
-			if (type(configObject:Get()) == "string" and configObject("isPrivate")) then
+			if (type(configObject:Get()) == "string" and configObject("isPrivate") and not player:IsSuperAdmin()) then
 				netstream.Start(player, "SystemCfgValue", {data, "****"})
 			else
 				netstream.Start(player, "SystemCfgValue", {
