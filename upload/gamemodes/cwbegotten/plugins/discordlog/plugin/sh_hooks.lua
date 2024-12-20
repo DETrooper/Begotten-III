@@ -1,10 +1,10 @@
 Clockwork.config:Add("discordlogs_enabled", false);
-Clockwork.config:Add("discordlogs_webhook_ic", "");
-Clockwork.config:Add("discordlogs_webhook_ooc", "");
-Clockwork.config:Add("discordlogs_webhook_commands", "");
-Clockwork.config:Add("discordlogs_webhook_miscellaneous", "");
-Clockwork.config:Add("discordlogs_webhook_invaction", "");
-Clockwork.config:Add("discordlogs_webhook_damage", "");
+Clockwork.config:Add("discordlogs_webhook_ic", "", nil, nil, nil, true);
+Clockwork.config:Add("discordlogs_webhook_ooc", "", nil, nil, nil, true);
+Clockwork.config:Add("discordlogs_webhook_commands", "", nil, nil, nil, true);
+Clockwork.config:Add("discordlogs_webhook_miscellaneous", "", nil, nil, nil, true);
+Clockwork.config:Add("discordlogs_webhook_invaction", "", nil, nil, nil, true);
+Clockwork.config:Add("discordlogs_webhook_damage", "", nil, nil, nil, true);
 
 if CLIENT then
 Clockwork.config:AddToSystem("Discord Logs - Enabled", "discordlogs_enabled", "Whether or not the Discord logs are enabled.");
