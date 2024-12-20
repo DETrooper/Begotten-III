@@ -1961,7 +1961,7 @@ function playerMeta:GetMaxWeight()
 	local clothesItem = self:GetClothesEquipped();
 	--local itemsList = Clockwork.inventory:GetAsItemsList(self:GetInventory())
 	--local weight = self:GetNetVar("InvWeight") or 8
-	local weight = config.GetVal("default_inv_weight") or 20;
+	local weight = config.GetVal("default_inv_weight") or 15;
 	
 	weight = hook.Run("PlayerAdjustMaxWeight", self, weight);
 	
