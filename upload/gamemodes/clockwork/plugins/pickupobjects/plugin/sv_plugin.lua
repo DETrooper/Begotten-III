@@ -33,6 +33,10 @@ function cwPickupObjects:ForceDropEntity(player)
 		if (entity:GetClass() == "prop_ragdoll") then
 			local ragdollPlayer = Clockwork.entity:GetPlayer(entity)
 			
+			if timer.Exists("CorpseDecay_"..tostring(entity:EntIndex())) then
+				timer.UnPause("CorpseDecay_"..tostring(entity:EntIndex()))
+			end
+			
 			if IsValid(ragdollPlayer) then
 				if entity.noDrop and entity.noDrop > CurTime() then
 					return;
@@ -108,6 +112,11 @@ function cwPickupObjects:ForcePickup(player, entity, trace)
 	if (entity:GetClass() == "prop_ragdoll") then
 		constraint.Weld(entity, player.cwHoldingGrab, trace.PhysicsBone, 0, 0);
 		entity.noDrop = CurTime() + 1;
+
+		if timer.Exists("CorpseDecay_"..tostring(entity:EntIndex())) then -- corpse decomposition is paused while corpses are held for rp and bounty reasons
+			timer.Pause("CorpseDecay_"..tostring(entity:EntIndex()))
+		end
+		
 	else
 		constraint.Weld(entity, player.cwHoldingGrab, 0, 0, 0);
 	end
