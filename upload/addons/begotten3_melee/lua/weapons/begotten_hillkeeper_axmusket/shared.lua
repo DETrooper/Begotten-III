@@ -738,6 +738,12 @@ function SWEP:SecondaryAttack()
 	if ply:KeyDown(IN_ATTACK2) and !ply:KeyDown(IN_RELOAD) and ply:GetNetVar("Guardening") == true then
 		-- Deflection
 		if blocktable["candeflect"] == true then
+			local deflectioncooldown = 1.5;
+			
+			if ply:HasBelief("sidestep") then
+				deflectioncooldown = 1.2
+			end
+		
 			if self.canDeflect then
 				local deflectionWindow = blocktable["deflectionwindow"] or 0.15;
 				
@@ -759,13 +765,7 @@ function SWEP:SecondaryAttack()
 						ply:SetLocalVar("Deflect", false ) 
 					end 
 				end);
-				
-				if ply:HasBelief("sidestep") then
-					deflectioncooldown = 1.2
-				else
-					deflectioncooldown = 1.5
-				end
-				
+
 				self.canDeflect = false;
 				self:CreateTimer(deflectioncooldown, "deflectionTimer"..ply:EntIndex(), function()
 					if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
