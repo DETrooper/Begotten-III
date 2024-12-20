@@ -192,8 +192,16 @@ function cwWeather:ItemEntityThink(entity, itemTable)
 				local boundsTable = v.bounds;
 				
 				if boundsTable then
-					if entPos:WithinAABox(boundsTable.min, boundsTable.max) then
-						if !v.hasWeather then return end;
+					if table.IsSequential(boundsTable) then
+						for i, v2 in ipairs(boundsTable) do
+							if entPos:WithinAABox(v2.min, v2.max) then
+								if !v.hasWeather then return end;
+							end
+						end
+					else
+						if entPos:WithinAABox(boundsTable.min, boundsTable.max) then
+							if !v.hasWeather then return end;
+						end
 					end
 				end
 			end

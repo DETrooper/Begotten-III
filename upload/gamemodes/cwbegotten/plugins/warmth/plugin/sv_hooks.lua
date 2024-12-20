@@ -22,24 +22,48 @@ function cwWarmth:ItemEntityThink(entity, itemTable)
 				if boundsTable then
 					local entPos = entity:GetPos();
 					
-					if entPos:WithinAABox(boundsTable.min, boundsTable.max) then
-						local ents = ents.FindInSphere(entity:GetPos(), 320);
-		
-						for i, v2 in ipairs(ents) do
-							if v2:GetClass() == "env_fire" then
-								if freezing > 0 then
-									itemTable:SetData("freezing", math.max(freezing - 5, 0));
+					if table.IsSequential(boundsTable) then
+						for i, v2 in ipairs(boundsTable) do
+							if entPos:WithinAABox(v2.min, v2.max) then
+								local ents = ents.FindInSphere(entity:GetPos(), 320);
+				
+								for i, v2 in ipairs(ents) do
+									if v2:GetClass() == "env_fire" then
+										if freezing > 0 then
+											itemTable:SetData("freezing", math.max(freezing - 5, 0));
+										end
+										
+										return;
+									end
+								end
+								
+								if freezing < 100 then
+									itemTable:SetData("freezing", math.min(freezing + 1, 100));
 								end
 								
 								return;
 							end
 						end
-						
-						if freezing < 100 then
-							itemTable:SetData("freezing", math.min(freezing + 1, 100));
+					else
+						if entPos:WithinAABox(boundsTable.min, boundsTable.max) then
+							local ents = ents.FindInSphere(entity:GetPos(), 320);
+			
+							for i, v2 in ipairs(ents) do
+								if v2:GetClass() == "env_fire" then
+									if freezing > 0 then
+										itemTable:SetData("freezing", math.max(freezing - 5, 0));
+									end
+									
+									return;
+								end
+							end
+							
+							if freezing < 100 then
+								itemTable:SetData("freezing", math.min(freezing + 1, 100));
+							end
+							
+							return;
 						end
-						
-						return;
 					end
 				end
 			end
