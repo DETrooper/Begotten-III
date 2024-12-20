@@ -67,7 +67,7 @@ function ENT:OnTakeDamage(damageInfo)
 		end
 		entity:Activate(); 
 		entity:AddEntityRelationship(player, D_LI, 99);
-		entity.XPValue = 200;
+		entity.XPValue = 50;
 		self.hasunleashedwolf = true
 		self:SetNWBool("houndunleashed", 1)
 
