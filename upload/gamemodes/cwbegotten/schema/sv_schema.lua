@@ -1541,7 +1541,7 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 								if itemInstance then
 									local entity = Clockwork.entity:CreateItem(nil, itemInstance, ragdoll:GetPos() + Vector(0, 0, 16));
 									
-									entity.lifeTime = CurTime() + cwItemSpawner.ItemLifetime;
+									entity.lifeTime = CurTime() + config.GetVal("loot_item_lifetime");
 									
 									table.insert(cwItemSpawner.ItemsSpawned, entity);
 								end
