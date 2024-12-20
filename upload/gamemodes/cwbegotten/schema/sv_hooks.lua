@@ -1523,11 +1523,7 @@ function Schema:Think()
 				local goreNPCs = {"npc_drg_animals_deer", "npc_drg_animals_goat"};
 				local npcName;
 				local spawnPos = self.npcSpawns["animal"][math.random(1, #self.npcSpawns["animal"])].pos;
-				
-				if map == "rp_district21" then
-					table.insert(goreNPCs, "npc_drg_animals_wolf");
-				end
-				
+
 				if math.random(1, 10) == 1 then
 					npcName = "npc_drg_animals_bear";
 					
@@ -1570,6 +1566,62 @@ function Schema:Think()
 							entity:Activate();
 							
 							table.insert(self.spawnedNPCs["animal"], entity:EntIndex());
+							
+							if pack then
+								table.insert(pack, entity);
+							end
+						end
+					end
+				end
+			end
+			
+			if self.npcSpawns["animalwasteland"] and #self.spawnedNPCs["animalwasteland"] < self.maxNPCs["animalwasteland"] then
+				local animalNPCs = {"npc_drg_animals_deer", "npc_drg_animals_goat", "npc_drg_animals_wolf"};
+				local npcName;
+				local spawnPos = self.npcSpawns["animalwasteland"][math.random(1, #self.npcSpawns["animalwasteland"])].pos;
+				
+				if math.random(1, 10) == 1 then
+					npcName = "npc_drg_animals_bear";
+					
+					if math.random(1, 4) == 1 then
+						npcName = "npc_drg_animals_cave_bear";
+					end
+				elseif math.random(1, 20) == 1 then
+					npcName = "npc_drg_animals_snowleopard";
+				else
+					npcName = animalNPCs[math.random(1, #animalNPCs)];
+				end
+
+				if npcName and spawnPos then
+					local spawnAmount = cwZombies.npcSpawnAmounts[npcName] and cwZombies.npcSpawnAmounts[npcName]() or 1;
+					local pack;
+					
+					if spawnAmount > 1 then
+						pack = {};
+					end
+					
+					for i = 1, spawnAmount do
+						local entity = ents.Create(npcName);
+
+						if IsValid(entity) then
+							local newSpawnPos;
+
+							if i == 1 then
+								newSpawnPos = spawnPos;
+							else
+								newSpawnPos = Vector(spawnPos.x + math.random(-225,225), spawnPos.y + math.random(-225,225), spawnPos.z);
+							end
+							
+							if spawnAmount > 1 then
+								entity.pack = pack;
+							end
+						
+							entity:SetPos(newSpawnPos + Vector(0, 0, 32));
+							entity:SetAngles(Angle(0, math.random(1, 359), 0));
+							entity:Spawn();
+							entity:Activate();
+							
+							table.insert(self.spawnedNPCs["animalwasteland"], entity:EntIndex());
 							
 							if pack then
 								table.insert(pack, entity);

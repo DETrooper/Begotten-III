@@ -7,15 +7,31 @@ local map = string.lower(game.GetMap());
 
 if map == "rp_district21" then
 	Schema.maxNPCs = {
-		["animal"] = 12,
+		["animal"] = 4,
+		["animalwasteland"] = 12,
 		["thrall"] = 4,
 		["thrallnight"] = 8,
 	};
+	
+	if !Schema.spawnedNPCs then
+		Schema.spawnedNPCs = {
+			["animal"] = {},
+			["animalwasteland"] = {},
+			["thrall"] = {},
+		};
+	end
 else
 	Schema.maxNPCs = {
 		["animal"] = 4,
 		["thrall"] = 8,
 	};
+	
+	if !Schema.spawnedNPCs then
+		Schema.spawnedNPCs = {
+			["animal"] = {},
+			["thrall"] = {},
+		};
+	end
 end
 
 if !Schema.towerTax then
@@ -24,13 +40,6 @@ end
 
 if !Schema.towerSafeZoneEnabled then
 	Schema.towerSafeZoneEnabled = true;
-end
-
-if !Schema.spawnedNPCs then
-	Schema.spawnedNPCs = {
-		["animal"] = {},
-		["thrall"] = {},
-	};
 end
 
 Schema.zones = {
@@ -404,7 +413,7 @@ function Schema:SyncFogDistance(player, uniqueID)
 end;
 
 function Schema:AddNPCSpawn(position, category, player)
-	if category ~= "animal" and category ~= "thrall" then
+	if category ~= "animal" and category ~= "thrall" and category ~= "thrallnight" and (Schema.spawnedNPCs["animalwasteland"] and category ~= "animalwasteland") then
 		if (player and player:IsPlayer()) then
 			Schema:EasyText(player, "darkgrey", "You have specified an invalid category!");
 		end;
