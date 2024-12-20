@@ -1434,9 +1434,8 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("backpack_pouch");
 		RECIPE.name = "Pouch";
 		RECIPE.requiredBeliefs = {"ingenious"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["cloth"] = {amount = 5},
+			["cloth"] = {amount = 3},
 		};
 		RECIPE.result = {
 			["backpack_pouch"] = {amount = 1},
@@ -1548,7 +1547,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["backpack_pouches"] = {amount = 1},
-			["leather"] = {amount = 8},
+			["leather"] = {amount = 7},
 		};
 		RECIPE.result = {
 			["backpack_survivalist"] = {amount = 1},
@@ -1575,7 +1574,9 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["hide"] = {amount = 3},
+			["hide"] = {amount = 1},
+			["leather"] = {amount = 2},
+			["cloth"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["gore_pouch"] = {amount = 1},

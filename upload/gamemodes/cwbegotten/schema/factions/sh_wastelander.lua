@@ -879,9 +879,9 @@ local FACTION = Clockwork.faction:New("Hillkeeper");
     };
 	
 	Schema.RankTiers["Hillkeeper"] = {
-		[1] = {"Novice"},
-		[2] = {"Yeoman", "Stoker", "Barber", "Footpad", "Ealdorman"},
-		[3] = {"Emissary", "Magnate", "Surgeon", "Highwayman", "Signifer", "Squire"},
+		[1] = {"Novice", "Footpad"},
+		[2] = {"Yeoman", "Stoker", "Barber", "Highwayman", "Ealdorman"},
+		[3] = {"Emissary", "Magnate", "Surgeon", "Signifer", "Squire"},
 		[4] = {"High Emissary"},
 		[5] = {"Master-At-Arms"},
 	};
