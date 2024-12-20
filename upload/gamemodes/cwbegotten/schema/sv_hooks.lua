@@ -820,6 +820,39 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 		
 			entity:Remove();
 		end
+	elseif (class == "cw_hound_cage_next") then
+		if arguments == "cwItemExamine" then
+			local examineText = "A cage used to transport war hounds.";
+			
+			Schema:EasyText(player, "skyblue", examineText);
+		elseif arguments == "cwItemHoundPickup" then
+			if entity.hasunleashedwolf then
+				player:GiveItem(Clockwork.item:CreateInstance("empty_hound_cage"), true);
+				entity:Remove();
+				local text = "You pick up the empty cage.";
+			
+				Schema:EasyText(player, "skyblue", text);
+			elseif !entity.hasunleashedwolf then
+				local item = player:GiveItem(Clockwork.item:CreateInstance("war_hound_cage"), true);
+				if item then
+					item:SetData("wolfskin", entity:GetSkin())
+				end
+				entity:Remove();
+				local text = "You pick up the caged hound.";
+			
+				Schema:EasyText(player, "skyblue", text);
+			end
+		elseif arguments == "cwHoundCageAttackAll" then
+			entity.houndattackall = true
+			local text = "The hound will now attack your enemies.";
+			
+			Schema:EasyText(player, "skyblue", text);
+		elseif arguments == "cwHoundCageSpareWanderers" then
+			entity.houndattackall = false
+			local text = "The hound will now attack your enemies. Wanderers will be spared.";
+			
+			Schema:EasyText(player, "skyblue", text);
+		end
 	elseif (class == "cw_bear_trap") then
 		if arguments == "cwItemExamine" then
 			local examineText = "A deployed bear trap.";
