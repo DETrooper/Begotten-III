@@ -106,7 +106,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.requiredbeliefs = {};
 	ITEM.stackable = false;
 	ITEM:AddData("wolfskin", 0, true);
-	ITEM:AddData("wolfhealth", 0, true);
+	ITEM:AddData("wolfhealth", 300, true);
 	
 	--[[
 	function ITEM:OnUse(player, itemEntity)
