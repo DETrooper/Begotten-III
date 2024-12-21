@@ -88,7 +88,7 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 	
 	--print("Giving XP: "..newAmount);
 	
-	local newXP = math.Round(xp + newAmount);
+	local newXP = math.max(0, math.Round(xp + newAmount));
 	
 	self:SetCharacterData("experience", newXP);
 	self:SetLocalVar("experience", newXP);
