@@ -974,7 +974,7 @@ ITEM.slashScale = 0.95; -- reduces slash damage by 5%
 ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 ITEM.insulation = 60;
 
-ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "leather"};
+ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "leather"}};
 ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1500};
 
 -- Called when a replacement is needed for a player.
