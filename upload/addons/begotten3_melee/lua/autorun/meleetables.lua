@@ -738,9 +738,9 @@ AttackTables.IronBoltIncendiaryAttackTable = {
 	["dmgtype"] = DMG_VEHICLE,
 	["armorpiercing"] = 50,
 	["poisedamage"] = 30,
-	["stabilitydamage"] = 25,
-	["minimumdistancestabilitydamage"] = 20,
-	["maximumdistancestabilitydamage"] = 80,
+	["stabilitydamage"] = 30,
+	["minimumdistancestabilitydamage"] = 15,
+	["maximumdistancestabilitydamage"] = 60,
 	["takeammo"] = 0,
 	["punchstrength"] = Angle(0,2,0),
 };
