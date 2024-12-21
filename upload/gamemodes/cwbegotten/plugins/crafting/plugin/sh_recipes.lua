@@ -5111,7 +5111,7 @@ RECIPE:Register()
 		RECIPE.name = "Clan Shield";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFaiths = {"Faith of the Family"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1};
 			["wood"] = {amount = 4},
