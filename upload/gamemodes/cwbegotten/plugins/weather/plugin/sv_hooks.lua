@@ -8,7 +8,7 @@ function cwWeather:ClockworkInitialized()
 	self:SetWeather("normal");
 end
 
-function cwWeather:SetWeather(weather, bSkipTransition)
+function cwWeather:SetWeather(weather, bSkipTransition, customDuration)
 	local curTime = CurTime();
 	
 	if (!table.HasValue(table.GetKeys(self.weatherTypes), weather)) then self.nextWeatherTime = curTime + 5; return; end
@@ -16,7 +16,11 @@ function cwWeather:SetWeather(weather, bSkipTransition)
 	local minDuration = self.weatherTypes[weather].minDuration or 300;
 	local maxDuration = math.max(self.weatherTypes[weather].maxDuration or 1800, minDuration);
 	
-	self.nextWeatherTime = curTime + math.random(minDuration, maxDuration);
+	if customDuration then
+		self.nextWeatherTime = curTime + customDuration;
+	else
+		self.nextWeatherTime = curTime + math.random(minDuration, maxDuration);
+	end
 	
 	local oldWeather = self.weather or "normal";
 	local weatherTable = self.weatherTypes[weather];
@@ -242,7 +246,7 @@ function cwWeather:PlayerRadioJammed(player, frequency, lastZone)
 	local zoneTable = zones:FindByID(lastZone);
 	
 	if zoneTable and zoneTable.hasWeather then
-		if self.weather == "thunderstorm" then
+		if self.weather == "thunderstorm" or self.weather == "blizzard"  then
 			return true;
 		end
 	end

@@ -476,6 +476,8 @@ RITUAL = cwRituals.rituals:New("call_of_the_blood_moon");
 	RITUAL.experience = 100;
 	
 	function RITUAL:OnPerformed(player)
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Call of the Blood Moon' ritual!");
+
 		if cwDayNight then
 			if cwDayNight.currentCycle == "night" then
 				Clockwork.chatBox:Add(player, nil, "event", "You feel the Blood Moon's radiance pulsating, as though it were drawing power from something.");
@@ -545,6 +547,8 @@ RITUAL = cwRituals.rituals:New("call_of_the_blood_storm");
 	RITUAL.experience = 200;
 	
 	function RITUAL:OnPerformed(player)
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Call of the Blood Storm' ritual!");
+
 		if cwWeather then
 			cwWeather:SetWeather("bloodstorm");
 			
@@ -1420,52 +1424,103 @@ RITUAL = cwRituals.rituals:New("aura_of_powderheel");
 	end;
 RITUAL:Register()
 
-RITUAL = cwRituals.rituals:New("eye_of_the_storm");
-	RITUAL.name = "(Unique) Eye of the Storm";
-	RITUAL.description = "The Haraldrs claim that each strike of thunder comes from the Old Son's War Axe as He chops down sky-beasts that bleed rain upon the lands. The Crasters claim the storm clouds are from The Mother, who weeps to bring forth new life. Performing this ritual will summon a thunderstorm within a minute of being performed. Incurs 50 corruption.";
-	RITUAL.onerequiredbelief = {"daring_trout", "watchful_raven"}; -- Unique Mother/Old Son Ritual
-	
-	RITUAL.requirements = {"purifying_stone", "up_catalyst", "elysian_catalyst"};
-	RITUAL.corruptionCost = 50;
-	RITUAL.ritualTime = 10;
-	RITUAL.experience = 150;
-	
-	function RITUAL:OnPerformed(player)
-		if cwWeather then
-			cwWeather:SetWeather("thunderstorm");
-			
-			return true;
-		end
-	end;
-	function RITUAL:OnFail(player)
-	end;
-	function RITUAL:StartRitual(player)
-		if cwWeather then
-			if !cwWeather.weatherTypes["thunderstorm"] then
-				Schema:EasyText(player, "peru", "This climate is unsuited for a thunderstorm!");
-				
-				return false;
-			end
+if game.GetMap() == "rp_district21" then
+	RITUAL = cwRituals.rituals:New("eye_of_the_storm");
+		RITUAL.name = "(Unique) Eye of the Storm";
+		RITUAL.description = "The Haraldrs claim that each strike of thunder comes from the Old Son's War Axe as He chops down sky-beasts that bleed rain upon the lands. The Crasters claim the storm clouds are from The Mother, who weeps to bring forth new life. Performing this ritual will summon a longer-lasting blizzard within mere moments of it being performed. Incurs 50 corruption.";
+		RITUAL.onerequiredbelief = {"daring_trout", "watchful_raven"}; -- Unique Mother/Old Son Ritual
 		
-			if cwWeather.weather ~= "thunderstorm" then
-				if cwWeather.nextWeatherTime - CurTime() <= 10 then
-					-- Add enough time to complete the ritual!
-					cwWeather.nextWeatherTime = CurTime() + 10;
-				end
+		RITUAL.requirements = {"purifying_stone", "up_catalyst", "elysian_catalyst"};
+		RITUAL.corruptionCost = 50;
+		RITUAL.ritualTime = 10;
+		RITUAL.experience = 150;
+		
+		function RITUAL:OnPerformed(player)
+			Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Eye of the Storm' ritual!");
+
+			if cwWeather then
+				cwWeather:SetWeather("blizzard", 0, 900);
 				
 				return true;
-			else
-				Schema:EasyText(player, "peru", "There is already an active thunderstorm!");
-				
-				return false;
 			end
-		end
+		end;
+		function RITUAL:OnFail(player)
+		end;
+		function RITUAL:StartRitual(player)
+			if cwWeather then
+				if !cwWeather.weatherTypes["blizzard"] then
+					Schema:EasyText(player, "peru", "This climate is unsuited for a blizzard!");
+					
+					return false;
+				end
+			
+				if cwWeather.weather ~= "blizzard" then
+					if cwWeather.nextWeatherTime - CurTime() <= 10 then
+						-- Add enough time to complete the ritual!
+						cwWeather.nextWeatherTime = CurTime() + 10;
+					end
+					
+					return true;
+				else
+					Schema:EasyText(player, "peru", "There is already an active blizzard!");
+					
+					return false;
+				end
+			end
+			
+			return false;
+		end;
+		function RITUAL:EndRitual(player)
+		end;
+	RITUAL:Register()
+else
+	RITUAL = cwRituals.rituals:New("eye_of_the_storm");
+		RITUAL.name = "(Unique) Eye of the Storm";
+		RITUAL.description = "The Haraldrs claim that each strike of thunder comes from the Old Son's War Axe as He chops down sky-beasts that bleed rain upon the lands. The Crasters claim the storm clouds are from The Mother, who weeps to bring forth new life. Performing this ritual will summon a thunderstorm within a minute of being performed. Incurs 50 corruption.";
+		RITUAL.onerequiredbelief = {"daring_trout", "watchful_raven"}; -- Unique Mother/Old Son Ritual
 		
-		return false;
-	end;
-	function RITUAL:EndRitual(player)
-	end;
-RITUAL:Register()
+		RITUAL.requirements = {"purifying_stone", "up_catalyst", "elysian_catalyst"};
+		RITUAL.corruptionCost = 50;
+		RITUAL.ritualTime = 10;
+		RITUAL.experience = 150;
+		
+		function RITUAL:OnPerformed(player)
+			if cwWeather then
+				cwWeather:SetWeather("thunderstorm");
+				
+				return true;
+			end
+		end;
+		function RITUAL:OnFail(player)
+		end;
+		function RITUAL:StartRitual(player)
+			if cwWeather then
+				if !cwWeather.weatherTypes["thunderstorm"] then
+					Schema:EasyText(player, "peru", "This climate is unsuited for a thunderstorm!");
+					
+					return false;
+				end
+			
+				if cwWeather.weather ~= "thunderstorm" then
+					if cwWeather.nextWeatherTime - CurTime() <= 10 then
+						-- Add enough time to complete the ritual!
+						cwWeather.nextWeatherTime = CurTime() + 10;
+					end
+					
+					return true;
+				else
+					Schema:EasyText(player, "peru", "There is already an active thunderstorm!");
+					
+					return false;
+				end
+			end
+			
+			return false;
+		end;
+		function RITUAL:EndRitual(player)
+		end;
+	RITUAL:Register()
+end
 
 RITUAL = cwRituals.rituals:New("Sister's Blessing");
 	RITUAL.name = "(Unique) Sister's Blessing";

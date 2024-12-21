@@ -222,11 +222,11 @@ if cwWeather.systemEnabled then
 	end
 		
 	local COMMAND = Clockwork.command:New("SetWeather");
-		COMMAND.tip = "Set the weather. Valid weathers: "..table.concat(table.GetKeys(cwWeather.weatherTypes), ", ")..". \"Force\" argument skips the transitionary period.";
-		COMMAND.text = "<string Cycle> [bool Force]";
+		COMMAND.tip = "Set the weather. Valid weathers: "..table.concat(table.GetKeys(cwWeather.weatherTypes), ", ")..". \"Force\" argument skips the transitionary period. \"customDuration\" argument sets a custom duration for the weathertype.";
+		COMMAND.text = "<string Cycle> [bool Force] [int customDuration]";
 		COMMAND.access = "a";
 		COMMAND.arguments = 1;
-		COMMAND.optionalArguments = 1;
+		COMMAND.optionalArguments = 2;
 		COMMAND.types = {"Weather"}
 
 		-- Called when the command has been run.
@@ -235,7 +235,7 @@ if cwWeather.systemEnabled then
 			
 			if table.HasValue(table.GetKeys(cwWeather.weatherTypes), weather) then
 				if cwWeather.weather ~= weather then
-					cwWeather:SetWeather(weather, tobool(arguments[2] or false));
+					cwWeather:SetWeather(weather, tobool(arguments[2] or false, tonumber(arguments[3] or nil)));
 					
 					Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", "["..self.name.."] "..player:Name().." has set the weather to "..weather.."!");
 				else
