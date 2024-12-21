@@ -381,7 +381,6 @@ Clockwork.config:Add("discord_url", "https://discord.com/invite/zJnWjcW", true);
 Clockwork.config:Add("coinslot_wages_interval", 1800)
 
 Clockwork.config:Get("enable_gravgun_punt"):Set(false);
-Clockwork.config:Get("enable_crosshair"):Set(false);
 Clockwork.config:Get("disable_sprays"):Set(true);
 Clockwork.config:Get("stamina_drain_scale"):Set(0.15);
 

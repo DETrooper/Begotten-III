@@ -497,12 +497,12 @@ function PLUGIN:ModifyPlayerSpeed(player, infoTable)
 	if (clothesItem) then
 		if clothesItem.weightclass == "Heavy" then
 			if player:HasBelief("unburdened") then
-				infoTable.runSpeed = infoTable.runSpeed * 0.8;
+				infoTable.runSpeed = infoTable.runSpeed * 0.75;
 			else
-				infoTable.runSpeed = infoTable.runSpeed * 0.7;
+				infoTable.runSpeed = infoTable.runSpeed * 0.65;
 			end
 			
-			infoTable.jumpPower = infoTable.jumpPower * 0.75;
+			infoTable.jumpPower = infoTable.jumpPower * 0.7;
 		elseif clothesItem.weightclass == "Medium" then
 			if player:HasBelief("unburdened") then
 				infoTable.runSpeed = infoTable.runSpeed * 0.95;
@@ -552,18 +552,18 @@ function PLUGIN:GetRollTime(player)
 			return 1.1;
 		elseif clothesItem.weightclass == "Medium" then
 			if player:HasBelief("unburdened") then
-				return 0.9;
+				return 0.8; 
 			end
 			
-			return 1;
+			return 0.9;
 		end
 	end
 	
 	local model = player:GetModel();
 	
-	if (model == "models/begotten/gatekeepers/districtonearmor.mdl" or model == "models/begotten/wanderers/scrapperking.mdl") then
+	if (model == "models/begotten/gatekeepers/districtonearmor.mdl" or model == "models/begotten/wanderers/scrapperking.mdl") then -- Update this list later
 		return 1.1;
 	end
 	
-	return 0.9;
+	return 0.7;
 end

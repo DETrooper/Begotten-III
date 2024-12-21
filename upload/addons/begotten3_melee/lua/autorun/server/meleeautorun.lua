@@ -560,7 +560,7 @@ local function Guarding(ent, dmginfo)
 									
 									if inflictorItemTable and inflictorItemTable.attributes then
 										if table.HasValue(inflictorItemTable.attributes, "shieldbreaker") then
-											shieldConditionDamage = shieldConditionDamage * 10;
+											shieldConditionDamage = shieldConditionDamage * 30;
 										end
 									end
 								end

@@ -183,15 +183,27 @@ function meta:StartRolling(a)
 		if self.GetCharacterData then
 			local stamina = self:GetCharacterData("Stamina");
 			local stamina_loss = 20;
+
+			--[[
+			1.1 == Heavy Armor
+			1 == Heavy Armor (Unburdened)
+			0.9 == Medium Armor
+			0.8 == Medium Armor (Unburdened)
+			0.7 == Light Armor
+			]]
 			
-			if time == 1 then
-				stamina_loss = 25;
-			elseif time == 1.1 then
-				stamina_loss = 35;
+			if time == 1.1 then
+				stamina_loss = 45;
+			elseif time == 1 then
+				stamina_loss = 40;
+			elseif time == 0.9 then
+				stamina_loss = 30
+			elseif time == 0.8 then
+				stamina_loss = 25
 			end
 
 			if self.GetCharmEquipped and self:GetCharmEquipped("boot_contortionist") then
-				stamina_loss = stamina_loss * 0.5;
+				stamina_loss = stamina_loss * 0.75;
 			end
 			
 			if stamina < stamina_loss then

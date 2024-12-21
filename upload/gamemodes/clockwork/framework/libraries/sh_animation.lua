@@ -1141,6 +1141,30 @@ function Clockwork.animation:AddFootpadArms(model)
 	});
 end;
 
+function Clockwork.animation:AddFlayedFuckArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_flayedfuck.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddEnvelopeDressArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_envelopedress.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddArmoredFursArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_armoredfurs.mdl",
+		skin = 0
+	});
+end;
+
 -- A function to check for stored hands info by model.
 function Clockwork.animation:CheckHands(model, animTable)
 	local info = animTable.hands or {
@@ -1316,6 +1340,14 @@ Clockwork.animation:AddHillDiscipleArms("models/begotten/hillkeepers/halfplate")
 Clockwork.animation:AddHillMasterArms("models/begotten/hillkeepers/master_at_arms")
 
 Clockwork.animation:AddNorthWandererArms("models/begotten/wanderers/northwanderer")
+Clockwork.animation:AddNorthWandererArms("models/begotten/wanderers/furvest")
+
 Clockwork.animation:AddFootpadArms("models/begotten/wanderers/footpad")
 
 Clockwork.animation:AddMonkRobeArms("models/begotten/wanderers/anglo"); -- Temp for now, replace later?
+
+Clockwork.animation:AddFlayedFuckArms("models/begotten/wanderers/flayedfuck");
+
+Clockwork.animation:AddEnvelopeDressArms("models/begotten/wanderers/envelopedress");
+
+Clockwork.animation:AddArmoredFursArms("models/begotten/wanderers/armoredfurs");

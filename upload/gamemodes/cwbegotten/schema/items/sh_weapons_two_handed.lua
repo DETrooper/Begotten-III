@@ -226,7 +226,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.weight = 3.5;
 	ITEM.uniqueID = "begotten_2h_great_falx";
 	ITEM.category = "Melee";
-	ITEM.description = "A steel blade curved inwards for penetrating power. It can punch holes in metal and bone with each devastating strike.";
+	ITEM.description = "A steel blade curved inwards for penetrating power. It can punch holes in metal and bone with each devastating strike. The handle of this weapon is engraved with Goreic runes that burns the hands of weaklings.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/falx.png"
 	ITEM.meleeWeapon = true;
 	ITEM.isAttachment = true;
@@ -236,6 +236,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.attributes = {"shieldbreaker"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
+	ITEM.requireFaith = {"Faith of the Family"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");

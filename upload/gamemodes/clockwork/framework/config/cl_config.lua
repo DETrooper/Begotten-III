@@ -39,7 +39,6 @@ config.AddToSystem("Minimum Physical Description Length", "minimum_physdesc", "T
 config.AddToSystem("Wood Breaks Fall", "wood_breaks_fall", "Whether or not wooden physics entities break a player's fall.");
 config.AddToSystem("Vignette Enabled", "enable_vignette", "Whether or not the vignette is enabled.");
 config.AddToSystem("Heartbeat Sounds Enabled", "enable_heartbeat", "Whether or not the heartbeat is enabled.");
-config.AddToSystem("Crosshair Enabled", "enable_crosshair", "Whether or not the crosshair is enabled.");
 config.AddToSystem("Free Aiming Enabled", "use_free_aiming", "Whether or not free aiming is enabled.");
 config.AddToSystem("Recognise System Enabled", "recognise_system", "Whether or not the recognise system is enabled.");
 config.AddToSystem("Currency Enabled", "cash_enabled", "Whether or not cash is enabled.");
