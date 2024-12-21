@@ -1485,6 +1485,8 @@ else
 		RITUAL.experience = 150;
 		
 		function RITUAL:OnPerformed(player)
+			Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Eye of the Storm' ritual!");
+
 			if cwWeather then
 				cwWeather:SetWeather("thunderstorm");
 				
