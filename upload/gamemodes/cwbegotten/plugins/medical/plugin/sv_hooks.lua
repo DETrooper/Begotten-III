@@ -152,37 +152,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 					else
 						local health = player:Health();
 						
-						if cwCharacterNeeds then
-							if player:GetNeed("hunger") <= 50 and player:GetNeed("thirst") <= 50 then
-								if health < player:GetMaxHealth() then
-									local injuries = self:GetInjuries(player);
-									local hasInjury = false;
-
-									for k, v in pairs(injuries) do
-										if istable(v) and not table.IsEmpty(v) then
-											hasInjury = true;
-											break;
-										end
-									end
-									
-									if not hasInjury then
-										if math.random(1, 3) == 1 then
-											player:SetHealth(health + 1);
-										end
-									end
-								end
-								
-								if bloodLevel < self.maxBloodLevel then
-									local bloodRegen = self.bloodPassiveRegen;
-									
-									if player.GetCharmEquipped and player:GetCharmEquipped("embalmed_heart") then
-										bloodRegen = bloodRegen * 3;
-									end
-									
-									player:ModifyBloodLevel(bloodRegen);
-								end
-							end
-						else
+						if !cwCharacterNeeds or (player:GetNeed("hunger") <= 50 and player:GetNeed("thirst") <= 50) then
 							if health < player:GetMaxHealth() then
 								local injuries = self:GetInjuries(player);
 								local hasInjury = false;
@@ -193,7 +163,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 										break;
 									end
 								end
-
+								
 								if not hasInjury then
 									if math.random(1, 3) == 1 then
 										player:SetHealth(health + 1);
