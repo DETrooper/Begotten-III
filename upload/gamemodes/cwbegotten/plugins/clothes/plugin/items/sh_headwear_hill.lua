@@ -422,3 +422,37 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"leather", "iron_chunks"}};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Armored Fur Helmet"
+	ITEM.model = "models/begotten_apocalypse/items/armoredfurhelmet.mdl"
+	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/armoredfurhelmet.png"
+	ITEM.weight = 1.2
+	ITEM.uniqueID = "armored_fur_helmet"
+	ITEM.category = "Helms"
+	ITEM.bodyGroup = 1
+	ITEM.bodyGroupVal = 10
+	ITEM.headSuffix = "_hill";
+	ITEM.description = "A metal and leather helmet heavily cushioned with furs. Provides excellent protection and keeps you warm."
+	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+	
+	ITEM.conditionScale = 1.1 -- item degrades 1.5x faster with damage related condition loss
+	
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 50
+	ITEM.hitParticle = "GlassImpact";
+	ITEM.type = "leather";
+
+	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+	ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+	ITEM.bulletScale = 0.80; -- reduces bullet damage by 10%
+	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.insulation = 65; -- Adds 10% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"leather", "iron_chunks"}};
+ITEM:Register();

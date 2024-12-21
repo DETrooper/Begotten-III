@@ -154,8 +154,9 @@ function COMMAND:OnRun(player, arguments)
 	local burning = arguments[4] or "false"
 	burning = string.lower(burning) == "true"
 	local loot = arguments[5] or "false"
+	
 	if (target) then
-		model = arguments[2] or "models/props_debris/concrete_cynderblock001.mdl"
+		local model = arguments[2] or "models/props_debris/concrete_cynderblock001.mdl"
 		if !IsUselessModel(model) then
 			local tgtpos = target:GetPos()
 			local spawnpoint = tgtpos + Vector(0, 0, dist)
@@ -166,11 +167,11 @@ function COMMAND:OnRun(player, arguments)
 				mask = CONTENTS_SOLID + CONTENTS_MOVEABLE + CONTENTS_OPAQUE + CONTENTS_DEBRIS + CONTENTS_HITBOX + CONTENTS_MONSTER
 			})
 			
-			
 			if trace.HitWorld then
 			   spawnpoint = trace.HitPos + Vector(0, 0, -32)
 			end
-			dropped=ents.Create("prop_physics")
+			
+			local dropped=ents.Create("prop_physics")
 			dropped:SetModel(arguments[2])
 			dropped:SetPos(spawnpoint)
 			dropped:Spawn()

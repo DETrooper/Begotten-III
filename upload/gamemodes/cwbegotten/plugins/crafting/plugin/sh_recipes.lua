@@ -2152,7 +2152,6 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
-			["steel_ingot"] = {amount = 2},
 			["wood"] = {amount = 3},
 		};
 		RECIPE.result = {
@@ -5112,7 +5111,7 @@ RECIPE:Register()
 		RECIPE.name = "Clan Shield";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFaiths = {"Faith of the Family"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1};
 			["wood"] = {amount = 4},
@@ -5755,7 +5754,6 @@ RECIPE:Register()
 	RECIPE.requirements = {
 		["steel_ingot"] = {amount = 3},
 		["wood"] = {amount = 2},
-		["belphegor_catalyst"] = {amount = 1},
 	};
 	RECIPE.result = {
 		["begotten_jezail_short"] = {amount = 1},
@@ -6521,7 +6519,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 5},
+			["iron_ingot"] = {amount = 4},
 			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
@@ -6532,7 +6530,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 40;
+		RECIPE.experience = 45;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -7553,6 +7551,7 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("twisted_fuck_armor");
 		RECIPE.name = "Twisted Fuck Armor";
 		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["human_bone"] = {amount = 6},
 			["cloth"] = {amount = 2},
@@ -7808,6 +7807,7 @@ RECIPE:Register()
 		RECIPE.name = "Wanderer Crude Plate Helm";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
 			["steel_ingot"] = {amount = 1},
@@ -8765,6 +8765,7 @@ RECIPE:Register()
 	RECIPE:Register()
 
 	-- Hill shit (recipes for armor)
+	
 	RECIPE = cwRecipes.recipes:New("hillkeeper_hauberk");
 		RECIPE.name = "Hillkeeper Hauberk";
 		RECIPE.requiresSmithy = true;
@@ -8920,6 +8921,7 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("hide_parka");
 		RECIPE.name = "Hide Parka";
 		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["cloth"] = {amount = 3},
 			["leather"] = {amount = 2},
@@ -8933,7 +8935,36 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 45;
+		RECIPE.experience = 55;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("hide_parka_upgrade_furvest");
+		RECIPE.name = "(Upgrade) Hide Parka";
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["fur_vest"] = {amount = 1},
+			["leather"] = {amount = 1},
+			["hide"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["hide_parka"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 40;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -8948,6 +8979,7 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("bearhide_parka");
 		RECIPE.name = "Bearhide Parka";
 		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["cloth"] = {amount = 4},
 			["leather"] = {amount = 2},
@@ -9263,6 +9295,149 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("armored_furs");
+		RECIPE.name = "Armored Furs";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["leather"] = {amount = 2},
+			["hide"] = {amount = 2},
+			["iron_ingot"] = {amount = 5},
+		};
+		RECIPE.result = {
+			["armored_furs"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 80;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("armored_furs_upgrade_hideparka");
+		RECIPE.name = "(Upgrade) Armored Furs";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["hide_parka"] = {amount = 1},
+			["iron_ingot"] = {amount = 5},
+		};
+		RECIPE.result = {
+			["armored_furs"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 50;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("fur_vest");
+		RECIPE.name = "Fur Vest";
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["cloth"] = {amount = 5},
+			["hide"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["fur_vest"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 40;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("flayed_fuck_armor");
+		RECIPE.name = "Flayed Fuck Armor";
+		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["humanmeat"] = {amount = 8},
+			["cloth"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["flayed_fuck_armor"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 30;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("envelope_dress");
+		RECIPE.name = "Envelope Dress";
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["cloth"] = {amount = 5},
+		};
+		RECIPE.result = {
+			["envelope_dress"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 40;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
 	-- Hill shit (recipes for helmets)
 
 	RECIPE = cwRecipes.recipes:New("furhat");
@@ -9616,7 +9791,39 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("armored_fur_helmet");
+		RECIPE.name = "Armored Fur Helmet";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 2},
+			["leather"] = {amount = 2},
+			["hide"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["armored_fur_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 45;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
 	-- Hill shit (recipes for weapons)
+
 	RECIPE = cwRecipes.recipes:New("begotten_1h_hillshortsword");
 		RECIPE.name = "Hill Shortsword";
 		RECIPE.requiresSmithy = true;
@@ -9799,8 +10006,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 1},
-			["steel_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 2},
 			["iron_ingot"] = {amount = 1},
 			["wood"] = {amount = 3},
 		};
@@ -9823,7 +10029,9 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+
 	-- Hill shit (recipes for shields)
+
 	RECIPE = cwRecipes.recipes:New("shieldhill");
 		RECIPE.name = "Hillkeeper Kite Shield";
 		RECIPE.requiresSmithy = true;

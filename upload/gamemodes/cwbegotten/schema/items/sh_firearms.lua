@@ -126,7 +126,7 @@ ITEM:Register();
 ITEM = Clockwork.item:New("firearm_base");
 	ITEM.name = "Hillkeeper Axmusket";
 	ITEM.model = "models/begoyten/gunaxe/gunaxe.mdl";
-	ITEM.weight = 3
+	ITEM.weight = 5;
 	ITEM.uniqueID = "begotten_hillkeeper_axmusket";
 	ITEM.description = "An expertly crafted Glazic Musket with a steel axehead in place of its stock. An efficient weapon typical of the Hillmen; every tool shall serve a double purpose, with every inch of steel and speck of powder utilized to its most practical end. This weapon's handle has been thrice-blessed and now burns the hands of heretics.";
 	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/gunaxe.png"
@@ -139,10 +139,10 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.ammoTypes = {"Longshot"};
 	ITEM.attributes = {"melee"};
 	ITEM.firearmType = "Long Gun (Great Weapon)";
-	ITEM.reloadTime = 9; -- Seconds
-	ITEM.reloadSounds = {"oneuse_deploy.ogg", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
+	ITEM.reloadTime = 10; -- Seconds
+	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"wood", "wood", "steel_chunks", "steel_chunks", "steel_chunks"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"wood", "fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks"}};
 	ITEM.requireFaith = {"Faith of the Light"};
 ITEM:Register();
 
@@ -394,7 +394,7 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.ammoCapacity = 1;
 	ITEM.ammoTypes = {"Longshot"};
 	ITEM.firearmType = "Long Gun";
-	ITEM.reloadTime = 9; -- Seconds
+	ITEM.reloadTime = 8; -- Seconds
 	ITEM.reloadSounds = {"oneuse_deploy.ogg", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	ITEM.requireFaith = {"Faith of the Dark"};
 	

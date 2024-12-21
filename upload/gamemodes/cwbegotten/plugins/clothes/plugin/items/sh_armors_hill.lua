@@ -325,11 +325,6 @@ ITEM.runSound = {
 	"armormovement/body-lobe-5.wav.mp3",
 };
 
---[[ITEM.walkSound = {
-	"armormovement/body-lobe-b1.wav.mp3",
-	"armormovement/body-lobe-b2.wav.mp3",
-};]]--
-
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
@@ -342,7 +337,7 @@ ITEM.conditionScale = 1.1
 ITEM.hitParticle = "GlassImpact";
 ITEM.protection = 30
 ITEM.type = "leather";
-ITEM.weight = 3;
+ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "A parka made of gathered hide, wrapped together and tied with string and crude stitching. Insulative and warm, even comfy.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
@@ -380,11 +375,6 @@ ITEM.runSound = {
 	"armormovement/body-lobe-5.wav.mp3",
 };
 
---[[ITEM.walkSound = {
-	"armormovement/body-lobe-b1.wav.mp3",
-	"armormovement/body-lobe-b2.wav.mp3",
-};]]--
-
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
@@ -397,7 +387,7 @@ ITEM.conditionScale = 1.1
 ITEM.hitParticle = "GlassImpact";
 ITEM.protection = 35
 ITEM.type = "leather";
-ITEM.weight = 3;
+ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "A parka made of the great skin of a bear, with a hide jerkin underneath. It is held together with fine stitching. Very comfy, very warm, and protective.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
@@ -434,11 +424,6 @@ ITEM.runSound = {
 	"armormovement/body-lobe-4.wav.mp3",
 	"armormovement/body-lobe-5.wav.mp3",
 };
-
---[[ITEM.walkSound = {
-	"armormovement/body-lobe-b1.wav.mp3",
-	"armormovement/body-lobe-b2.wav.mp3",
-};]]--
 
 ITEM:Register();
 
@@ -615,11 +600,6 @@ ITEM.runSound = {
 	"armormovement/body-lobe-5.wav.mp3",
 };
 
---[[ITEM.walkSound = {
-	"armormovement/body-lobe-b1.wav.mp3",
-	"armormovement/body-lobe-b2.wav.mp3",
-};]]--
-
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
@@ -670,11 +650,6 @@ ITEM.runSound = {
 	"armormovement/body-lobe-4.wav.mp3",
 	"armormovement/body-lobe-5.wav.mp3",
 };
-
---[[ITEM.walkSound = {
-	"armormovement/body-lobe-b1.wav.mp3",
-	"armormovement/body-lobe-b2.wav.mp3",
-};]]--
 
 ITEM:Register();
 
@@ -793,11 +768,6 @@ ITEM.runSound = {
 	"armormovement/body-lobe-4.wav.mp3",
 	"armormovement/body-lobe-5.wav.mp3",
 };
-
---[[ITEM.walkSound = {
-	"armormovement/body-lobe-b1.wav.mp3",
-	"armormovement/body-lobe-b2.wav.mp3",
-};]]--
 
 ITEM:Register();
 
@@ -922,6 +892,216 @@ ITEM.runSound = {
 ITEM.walkSound = {
 	"armormovement/body-hauberk-b4.wav.mp3",
 	"armormovement/body-hauberk-b5.wav.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Flayed Fuck Armor";
+ITEM.group = "wanderers/flayedfuck";
+ITEM.model = "models/begotten_apocalypse/items/flayedfuck.mdl"
+ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/flayedfuck.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 1.5
+ITEM.hitParticle = "GlassImpact";
+ITEM.protection = 25
+ITEM.type = "leather";
+ITEM.weight = 3;
+ITEM.weightclass = "Light";
+ITEM.description = "A disgusting coat composed of layers upon layers of rotting flesh. It has a wretched stench. Savages from the Far North are known to wear this to keep themselves warm from the brutal weather.";
+ITEM.useSound = "vj_gib/gibbing2.wav";
+ITEM.excludeFactions = {"Goreic Warrior"};
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.bluntScale = 0.60; -- reduces blunt damage by 40%
+ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+ITEM.insulation = 45; -- Adds 28% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+
+ITEM.components = {breakdownType = "breakdown", items = {"humanmeat", "humanmeat", "humanmeat", "humanmeat", "humanmeat", "humanmeat", "humanmeat"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"vj_flesh/alien_flesh1.wav",
+	"vj_flesh/alien_flesh2.wav",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Fur Vest";
+ITEM.group = "wanderers/furvest";
+ITEM.model = "models/begotten_apocalypse/items/furvest.mdl"
+ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/furvest.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 1.25
+ITEM.hitParticle = "GlassImpact";
+ITEM.protection = 25
+ITEM.type = "leather";
+ITEM.weight = 3;
+ITEM.weightclass = "Light";
+ITEM.description = "A heavy vest of animal furs and scavenged cloth. It provides decent protection against the elements.";
+ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+ITEM.excludeFactions = {"Goreic Warrior"};
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
+ITEM.slashScale = 0.95; -- reduces slash damage by 5%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+ITEM.insulation = 60;
+
+ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "leather"}};
+ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1500};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-lobe-1.wav.mp3",
+	"armormovement/body-lobe-2.wav.mp3",
+	"armormovement/body-lobe-3.wav.mp3",
+	"armormovement/body-lobe-4.wav.mp3",
+	"armormovement/body-lobe-5.wav.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Envelope Dress";
+ITEM.group = "wanderers/envelopedress";
+ITEM.model = "models/begotten_apocalypse/items/envelopedress.mdl"
+ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/envelopedress.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 1.25
+ITEM.hitParticle = "GlassImpact";
+ITEM.protection = 24
+ITEM.type = "leather";
+ITEM.weight = 1.2;
+ITEM.weightclass = "Light";
+ITEM.description = "A cheaply made, yet highly practical dress of ragged salvaged cloth likely taken from dead men. It protects against the elements just enough to get by.";
+ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+ITEM.excludeFactions = {"Goreic Warrior"};
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
+ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+ITEM.insulation = 45;
+
+ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth"}};
+ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1500};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-lobe-1.wav.mp3",
+	"armormovement/body-lobe-2.wav.mp3",
+	"armormovement/body-lobe-3.wav.mp3",
+	"armormovement/body-lobe-4.wav.mp3",
+	"armormovement/body-lobe-5.wav.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Armored Furs";
+ITEM.group = "wanderers/armoredfurs";
+ITEM.model = "models/begotten_apocalypse/items/armoredfurs.mdl"
+ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/armoredfurs.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 0.75
+ITEM.hitParticle = "GlassImpact";
+ITEM.protection = 53
+ITEM.type = "leather";
+ITEM.weight = 4.5;
+ITEM.weightclass = "Medium";
+ITEM.description = "Heavy furs overlapping studded leather. This provides good insulation and excellent protection against ravenous beasts.";
+ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+ITEM.excludeFactions = {"Goreic Warrior"};
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.10, -- increases fall damage by 10%
+}
+
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+ITEM.insulation = 60; -- Adds 28% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+
+ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "leather", "leather", "leather"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-lobe-1.wav.mp3",
+	"armormovement/body-lobe-2.wav.mp3",
+	"armormovement/body-lobe-3.wav.mp3",
+	"armormovement/body-lobe-4.wav.mp3",
+	"armormovement/body-lobe-5.wav.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/body-lobe-1.wav.mp3",
+	"armormovement/body-lobe-2.wav.mp3",
+	"armormovement/body-lobe-3.wav.mp3",
+	"armormovement/body-lobe-4.wav.mp3",
+	"armormovement/body-lobe-5.wav.mp3",
 };
 
 ITEM:Register();

@@ -30,7 +30,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "boot_contortionist";
 	ITEM.description = "A leather boot that surprisingly has not yet been eaten. Judging by its inscription, it evidently used to belong to an ancient gymnast.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Grants immunity to breaking your legs.\n- Reduces fall damage taken by 50%.\n- Reduces stamina consumption from combat rolling by 50%.\n- Reduces stamina consumption from jumping by 66.6%.";
+	ITEM.charmEffects = "- Grants immunity to breaking your legs.\n- Reduces fall damage taken by 50%.\n- Reduces stamina consumption from combat rolling by 25%.\n- Reduces stamina consumption from jumping by 66.6%.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 750};
 ITEM:Register();

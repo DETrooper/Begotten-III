@@ -823,11 +823,10 @@ function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 				return;
 			end
 		
-			if(player:GetCharacterData("isThrall")) then
+			if player:GetCharacterData("isThrall") then
 				player:EmitSound("apocalypse/screams/far"..math.random(1,6)..".wav", 90, pitch);
 				player.nextPainSound = CurTime()+0.5;
-			end
-			if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
+			elseif faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
 				if gender == "Male" then
 					player:EmitSound("voice/man2/man2_pain0"..math.random(1, 6)..".wav", 90, pitch)
 					player.nextPainSound = CurTime()+0.5
@@ -889,7 +888,7 @@ function GM:PlayerPlayDeathSound(player, gender)
 	
 	if IsValid(player.possessor) then
 		pitch = 50;
-	elseif gender == "Male" then
+	elseif gender == "Male" and !player:GetCharacterData("isThrall") then
 		if math.random(1, 100) == 100 then
 			player:EmitSound("wilhelm.wav", 90, 100);
 			return;
@@ -906,7 +905,10 @@ function GM:PlayerPlayDeathSound(player, gender)
 			return;
 		end
 
-		if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
+		if player:GetCharacterData("isThrall") then
+			player:EmitSound("apocalypse/screams/far"..math.random(1,6)..".wav", 90, pitch);
+			player.nextPainSound = CurTime()+0.5;
+		elseif faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
 			if gender == "Male" then
 				player:EmitSound("voice/man2/man2_death0"..math.random(1, 9)..".wav", 90, pitch)
 			else

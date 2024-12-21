@@ -1049,9 +1049,9 @@ end
 			stabilitydamage = stabilitydamage * attacktable["altattackstabilitydamagemodifier"];
 		end
 		
-		if self:GetNW2String("activeOffhand"):len() > 0 then
-			damage = damage * 0.6;
-			stabilitydamage = stabilitydamage * 0.6;
+		if self:GetNW2String("activeOffhand"):len() > 0 then -- Dual Weapon damage reduction
+			damage = damage * 0.75;
+			stabilitydamage = stabilitydamage * 0.7;
 		end
 
 		if swingType == "parry_swing" then

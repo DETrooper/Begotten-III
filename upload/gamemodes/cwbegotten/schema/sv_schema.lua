@@ -55,14 +55,6 @@ Schema.zones = {
 	["gore_hallway"] = true,
 };
 
-Schema.RotModels = {
-	[1] = "models/Humans/corpse1.mdl",
-	[2] = "models/Humans/Charple01.mdl",
-	[3] = "models/Humans/Charple02.mdl",
-	[4] = "models/Humans/Charple04.mdl",
-	[5] = "models/Humans/Charple03.mdl"
-};
-
 Schema.cwExplodePropDamages = {
 	[DMG_BLAST] = true,
 	[DMG_BULLET] = true,
@@ -381,7 +373,6 @@ Clockwork.config:Add("discord_url", "https://discord.com/invite/zJnWjcW", true);
 Clockwork.config:Add("coinslot_wages_interval", 1800)
 
 Clockwork.config:Get("enable_gravgun_punt"):Set(false);
-Clockwork.config:Get("enable_crosshair"):Set(false);
 Clockwork.config:Get("disable_sprays"):Set(true);
 Clockwork.config:Get("stamina_drain_scale"):Set(0.15);
 
