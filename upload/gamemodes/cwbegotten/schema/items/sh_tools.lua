@@ -167,8 +167,10 @@ local ITEM = Clockwork.item:New();
 				player:EmitSound("fiend/cageshut.wav")
 				return
 			end
-			return false
+
 			Schema:EasyText(player, "chocolate", "Nothing to catch.");
+			return false
+			
 		end
 	end
 	
