@@ -127,6 +127,17 @@ AttackSoundTables.HeavyMetalAttackSoundTable = {
 	["drawsound"] = {"draw/skyrim_axe_draw1.mp3"},
 };
 
+AttackSoundTables.HeavyMetalRangedAttackSoundTable = {
+	["primarysound"] = {"weapons/Large_01.wav", "weapons/Large_02.wav", "weapons/Large_03.wav", "weapons/Large_04.wav", "weapons/Large_05.wav", "weapons/Large_06.wav", "weapons/Large_07.wav", "weapons/Large_08.wav", "weapons/Large_09.wav", "weapons/Large_10.wav"},
+	["altsound"] = {"weapons/Large_01.wav", "weapons/Large_02.wav", "weapons/Large_03.wav", "weapons/Large_04.wav", "weapons/Large_05.wav", "weapons/Large_06.wav", "weapons/Large_07.wav", "weapons/Large_08.wav", "weapons/Large_09.wav", "weapons/Large_10.wav"},
+	["hitbody"] = {"armor/cut_01.wav", "armor/cut_02.wav", "armor/cut_03.wav", "armor/cut_04.wav", "armor/cut_05.wav", "armor/cut_06.wav", "armor/cut_07.wav", "armor/cut_08.wav"},
+	["althitbody"] = {"armor/cut_01.wav", "armor/cut_02.wav", "armor/cut_03.wav", "armor/cut_04.wav", "armor/cut_05.wav", "armor/cut_06.wav", "armor/cut_07.wav", "armor/cut_08.wav"},
+	["hitworld"] = {"weapons/metal_weapon_to_ground_01.wav", "weapons/metal_weapon_to_ground_02.wav", "weapons/metal_weapon_to_ground_03.wav", "weapons/metal_weapon_to_ground_04.wav", "weapons/metal_weapon_to_ground_05.wav"},
+	["criticalswing"] = {"meleesounds/swing-sword-large.wav.mp3"},
+	["parryswing"] = {"weapons/Medium_01.wav", "weapons/Medium_02.wav", "weapons/Medium_03.wav", "weapons/Medium_04.wav", "weapons/Medium_05.wav"},
+	["drawsound"] = {"draw/skyrim_axe_draw1.mp3"},
+};
+
 AttackSoundTables.MediumMetalAttackSoundTable = {
 	["primarysound"] = {"weapons/Medium_01.wav", "weapons/Medium_02.wav", "weapons/Medium_03.wav", "weapons/Medium_04.wav", "weapons/Medium_05.wav"},
 	["altsound"] = {"weapons/Pierce_01.wav", "weapons/Pierce_03.wav", "weapons/Pierce_05.wav"},
@@ -345,6 +356,7 @@ AddSoundTable("MetalSpikeFistedAttackSoundTable", AttackSoundTables.MetalSpikeFi
 AddSoundTable("MetalSpikeAttackSoundTable", AttackSoundTables.MetalSpikeAttackSoundTable)
 AddSoundTable("LeatherFistedAttackSoundTable", AttackSoundTables.LeatherFistedAttackSoundTable)
 AddSoundTable("HeavyMetalAttackSoundTable", AttackSoundTables.HeavyMetalAttackSoundTable)
+AddSoundTable("HeavyMetalRangedAttackSoundTable", AttackSoundTables.HeavyMetalRangedAttackSoundTable)
 AddSoundTable("MediumMetalAttackSoundTable", AttackSoundTables.MediumMetalAttackSoundTable)
 AddSoundTable("SmallMetalAttackSoundTable", AttackSoundTables.SmallMetalAttackSoundTable)
 AddSoundTable("MetalPolearmAttackSoundTable", AttackSoundTables.MetalPolearmAttackSoundTable)
