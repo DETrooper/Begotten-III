@@ -193,8 +193,8 @@ function cwDeathCauses:PlayerDeath(player, inflictor, attacker, damageInfo)
 						
 						burnsound = CreateSound( ragdollEntity, "npc/headcrab/headcrab_burning_loop2.wav")
 					end
+					
 					if melt then
-						
 						timer.Create( "lavadeath"..player:Name(), 5, 1, function()
 							if IsValid(player) then
 								--[[local model = "models/Humans/Charple01.mdl";
@@ -205,40 +205,65 @@ function cwDeathCauses:PlayerDeath(player, inflictor, attacker, damageInfo)
 								end]]--
 								
 								if (IsValid(ragdollEntity)) then
-									if cwGore then
-										cwGore:SplatCorpse(ragdollEntity, 60);
-									end
-									
 									game.AddParticles( "particles/gmod_effects.pcf" )
 									PrecacheParticleSystem( "generic_smoke" )
 									ParticleEffectAttach( "generic_smoke", 1, ragdollEntity, 1 )
 									burnsound:Stop()
-									if melt then
-										ragdollEntity:Ignite(5,64)
-										ragdollEntity:Remove()
-									end
+									ragdollEntity.cwInventory = nil;
+									ragdollEntity:Remove()
+									
+									--[[if cwGore then
+										cwGore:SplatCorpse(ragdollEntity, 60);
+									end]]--
 								end
 							end
 						end);
 					else
-						timer.Create( "burndeath"..player:Name(), 5, 1, function()
-							--[[local model = "models/Humans/Charple01.mdl"
-							
-							if !Clockwork.player:HasFlags(player, "E") then
+						timer.Create("burndeath"..player:Name(), 5, 1, function()
+							--[[if !Clockwork.player:HasFlags(player, "E") then
 								player:SetCharacterData("Model", model, true);
 								player:SetModel(model);
 							end]]--
 							
-							if cwGore then
-								cwGore:RotCorpse(ragCorpse, 0.1);
+							if burnsound then
+								burnsound:Stop();
 							end
-							
+
 							if (IsValid(ragdollEntity)) then
-								ragdollEntity:SetModel(model);
-								game.AddParticles( "particles/gmod_effects.pcf" )
-								PrecacheParticleSystem( "generic_smoke" )
-								ParticleEffectAttach( "generic_smoke", 1, ragdollEntity, 1 )
-								burnsound:Stop()
+								local corpse = ents.Create("prop_ragdoll");
+									corpse:SetPos(ragdollEntity:GetPos());
+									corpse:SetAngles(ragdollEntity:GetAngles());			
+									corpse:SetModel("models/Humans/Charple01.mdl");
+									corpse:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
+								corpse:Spawn();
+								
+								if (IsValid(corpse)) then
+									local velocity = ragdollEntity:GetVelocity();
+									local physCount = corpse:GetPhysicsObjectCount();
+
+									for i = 1, physCount do
+										local physicsObject = corpse:GetPhysicsObjectNum(i);
+										local boneIndex = corpse:TranslatePhysBoneToBone(i);
+										local position, angle = ragdollEntity:GetBonePosition(boneIndex);
+										
+										if (IsValid(physicsObject) and position and angle) then
+											physicsObject:SetPos(position);
+											physicsObject:SetAngles(angle);
+											physicsObject:SetVelocity(velocity);
+										end;
+									end;
+									
+									game.AddParticles( "particles/gmod_effects.pcf" )
+									PrecacheParticleSystem( "generic_smoke" )
+									ParticleEffectAttach( "generic_smoke", 1, corpse, 1 )
+									
+									if cwGore then
+										cwGore:RotCorpse(corpse, 180);
+									end
+								end
+								
+								ragdollEntity.cwInventory = nil;
+								ragdollEntity:Remove();
 							end
 						end
 						)

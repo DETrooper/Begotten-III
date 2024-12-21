@@ -2705,6 +2705,7 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 			end
 
 			if (player:IsOnFire()) then
+				player:Extinguish();
 				ragdoll:Ignite(8, 0)
 			end
 

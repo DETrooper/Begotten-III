@@ -975,8 +975,6 @@ if CLIENT then
 				render.SetColorMaterial()
 				-- Swapped mins and maxs so that the box will render inside out
 				render.DrawBox(Vector(0, 0, 0), Angle(0, 0, 0), maxs, mins, self.currentFogColors)
-
-				hook.Run("BegottenSkyboxDrawn");
 			cam.End3D()
 			
 			render.OverrideDepthEnable(false, false)

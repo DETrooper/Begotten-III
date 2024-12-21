@@ -55,14 +55,6 @@ Schema.zones = {
 	["gore_hallway"] = true,
 };
 
-Schema.RotModels = {
-	[1] = "models/Humans/corpse1.mdl",
-	[2] = "models/Humans/Charple01.mdl",
-	[3] = "models/Humans/Charple02.mdl",
-	[4] = "models/Humans/Charple04.mdl",
-	[5] = "models/Humans/Charple03.mdl"
-};
-
 Schema.cwExplodePropDamages = {
 	[DMG_BLAST] = true,
 	[DMG_BULLET] = true,
