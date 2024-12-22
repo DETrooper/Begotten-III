@@ -70,4 +70,6 @@ Begotten III utilizes some modified external addons as well, so the lua is inclu
 
 I also highly recommend [this addon](https://steamcommunity.com/sharedfiles/filedetails/?id=1907060869) to improve server performance.
 
+If your server is struggling to maintain performance or you have no need to use it, it is advised to disable PAC3.
+
 Visit us on [Discord](https://discord.gg/zJnWjcW) for any questions, comments, or concerns.
