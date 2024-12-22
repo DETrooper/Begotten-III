@@ -153,10 +153,9 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = false;
 	
 	function ITEM:OnUse(player, itemEntity)
-		eyetraceplayer = player:GetEyeTrace()
-		if eyetraceplayer.Hit == true and eyetraceplayer.Entity then
-			local ent = eyetraceplayer.Entity
-			if IsValid(ent) and ent:GetClass() == "npc_drg_animals_wolf" and ent:GetPos():Distance(player:GetPos())<100 and player:GetFaction() == ent.summonedFaith then
+		for k, v in pairs (ents.FindInSphere(player:GetPos(), 150)) do
+			local ent = v
+			if IsValid(ent) and ent:GetClass() == "npc_drg_animals_wolf" and player:GetFaction() == ent.summonedFaith then
 				local item = player:GiveItem(Clockwork.item:CreateInstance("war_hound_cage"), true);
 				if item then
 					item:SetData("wolfskin", ent:GetSkin())
@@ -166,10 +165,12 @@ local ITEM = Clockwork.item:New();
 				player:TakeItem(self, true);
 				Schema:EasyText(player, "chocolate", "A hound is captured.");
 				player:EmitSound("fiend/cageshut.wav")
-			else
-				Schema:EasyText(player, "chocolate", "Nothing to catch.");
-				return false
+				return
 			end
+
+			Schema:EasyText(player, "chocolate", "Nothing to catch.");
+			return false
+			
 		end
 	end
 	
