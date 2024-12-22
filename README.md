@@ -41,11 +41,13 @@ dave - Programming
 
 Vlad - Programming
 
+sprite - Programming
+
 robert - Models
 
 gus - Mapping (District 21)
 
-ObamasGrandpa - Exploit Reporting
+ObamasGrandpa - Exploit Reporting/Fixing
 
 Various other people in the discord who report bugs.
 
