@@ -1530,7 +1530,18 @@ function Schema:CanShowTabMenu()
 	if self.caughtByCheaple then
 		return false;
 	end
+	
+	if (Clockwork.Client:HasInitialized() and !Clockwork.Client:Alive()) then
+		return false;
+	end;
 end
+
+-- Called when the scoreboard should be shown.
+function Schema:ScoreboardShow()
+	if (Clockwork.Client:HasInitialized() and !Clockwork.Client:Alive()) then
+		Clockwork.character:SetPanelOpen(true);
+	end;
+end;
 
 function Schema:PlayerCanSeeBars(class)
 	if self.caughtByCheaple then
