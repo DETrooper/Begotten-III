@@ -1,8 +1,13 @@
-local pillarsBounds = {
-	["min"] = Vector(13132, -1394, 26),
-	["max"] = Vector(9247, -4288, -913),
-};
+local map = game.GetMap();
 local temperature_interval = 5;
+local warmthSubzones = {
+	["rp_district21"] = {
+		["wasteland"] = {
+			["pillars"] = {Vector(13132, -1394, 26), Vector(9247, -4288, -913)},
+			["voltbunker"] = {Vector(-13051, -2702, -576), Vector(-14379, -3897, -889)},
+		},
+	},
+};
 
 function cwWarmth:PostPlayerCharacterLoaded(player)
 	player:SetLocalVar("warmth", player:GetCharacterData("warmth", 100));
@@ -11,24 +16,22 @@ end
 -- Called at an interval for every active item entity.
 function cwWarmth:ItemEntityThink(entity, itemTable)	
 	local freezing = itemTable:GetData("freezing");
-	
+
 	if freezing then
-		local supraZones = zones.supraZones;
-		
 		for k, v in pairs(zones.stored) do
-			if table.HasValue(supraZones["suprawasteland"], k) then
-				local boundsTable = v.bounds;
+			local boundsTable = v.bounds;
+			
+			if boundsTable then
+				local entPos = entity:GetPos();
 				
-				if boundsTable then
-					local entPos = entity:GetPos();
-					
-					if table.IsSequential(boundsTable) then
-						for i, v2 in ipairs(boundsTable) do
-							if entPos:WithinAABox(v2.min, v2.max) then
+				if table.IsSequential(boundsTable) then
+					for i, v2 in ipairs(boundsTable) do
+						if entPos:WithinAABox(v2.min, v2.max) then
+							if v.hasWarmth then
 								local ents = ents.FindInSphere(entity:GetPos(), 320);
 				
-								for i, v2 in ipairs(ents) do
-									if v2:GetClass() == "env_fire" then
+								for i, v3 in ipairs(ents) do
+									if v3:GetClass() == "env_fire" then
 										if freezing > 0 then
 											itemTable:SetData("freezing", math.max(freezing - 5, 0));
 										end
@@ -40,12 +43,16 @@ function cwWarmth:ItemEntityThink(entity, itemTable)
 								if freezing < 100 then
 									itemTable:SetData("freezing", math.min(freezing + 1, 100));
 								end
-								
-								return;
+							else
+								itemTable:SetData("freezing", math.max(freezing - 5, 0));
 							end
+							
+							return;
 						end
-					else
-						if entPos:WithinAABox(boundsTable.min, boundsTable.max) then
+					end
+				else
+					if entPos:WithinAABox(boundsTable.min, boundsTable.max) then
+						if v.hasWarmth then
 							local ents = ents.FindInSphere(entity:GetPos(), 320);
 			
 							for i, v2 in ipairs(ents) do
@@ -61,16 +68,31 @@ function cwWarmth:ItemEntityThink(entity, itemTable)
 							if freezing < 100 then
 								itemTable:SetData("freezing", math.min(freezing + 1, 100));
 							end
-							
-							return;
+						else
+							itemTable:SetData("freezing", math.max(freezing - 5, 0));
 						end
+						
+						return;
 					end
 				end
 			end
 		end
+
+		-- If no zone is found, assume it's the default zone.
+		local ents = ents.FindInSphere(entity:GetPos(), 320);
+
+		for i, v in ipairs(ents) do
+			if v:GetClass() == "env_fire" then
+				if freezing > 0 then
+					itemTable:SetData("freezing", math.max(freezing - 5, 0));
+				end
+				
+				return;
+			end
+		end
 		
-		if freezing > 0 then
-			itemTable:SetData("freezing", math.max(freezing - 5, 0));
+		if freezing < 100 then
+			itemTable:SetData("freezing", math.min(freezing + 1, 100));
 		end
 	end
 end
@@ -157,10 +179,14 @@ function cwWarmth:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 
 		end
 
-		if game.GetMap() == "rp_district21" and player:GetPos():WithinAABox(pillarsBounds["min"], pillarsBounds["max"]) then
-			player:HandleTemperature(3);
-			
-			return;
+		if warmthSubzones[map] and warmthSubzones[map][lastZone] then
+			for k, v in pairs(warmthSubzones[map][lastZone]) do
+				if player:GetPos():WithinAABox(v[1], v[2]) then
+					player:HandleTemperature(3);
+					
+					return;
+				end
+			end
 		end
 
 		local temperatureDecay = -0.75;
@@ -175,11 +201,11 @@ function cwWarmth:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 		end
 
 		-- Zones aren't shared so I'll just have to do this sloppily.
-		if string.find(lastZone, "sea") or string.find(lastZone, "gore") then
+		if string.find(lastZone, "sea") or string.find(lastZone, "gore") or lastZone == "hillbunker" then
 			temperatureDecay = 1;
 		elseif lastZone == "hell" or lastZone == "manor" then
 			temperatureDecay = 50;
-		elseif player:InTower() or lastZone == "hillbunker" or player:GetPos():WithinAABox(Vector(-4765, 9246, 838), Vector(-8075, 10488, 489)) or player:GetPos():WithinAABox(Vector(-4912, 12882, 119), Vector(-7787, 13492, 681)) then
+		elseif player:InTower() then
 			temperatureDecay = 0;
 		elseif cwDayNight and cwDayNight.currentCycle == "night" then
 			temperatureDecay = -1;

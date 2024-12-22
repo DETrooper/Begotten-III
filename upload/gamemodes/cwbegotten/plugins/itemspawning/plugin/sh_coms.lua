@@ -37,7 +37,6 @@ COMMAND:Register()
 local COMMAND = Clockwork.command:New("AddSupercrateSpawn")
 	COMMAND.tip = "Add a supercrate spawn location using a spawned entity's positions and angles."
 	COMMAND.access = "s"
-	COMMAND.alias = {"AddContainerSpawn"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

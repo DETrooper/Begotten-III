@@ -1731,6 +1731,7 @@ elseif map == "rp_district21" then
 		WASTELAND.default = true;
 		WASTELAND.hasNight = true;
 		WASTELAND.hasWeather = true;
+		WASTELAND.hasWarmth = true;
 		WASTELAND.mapScene = true;
 		WASTELAND.name = "Wasteland";
 		WASTELAND.map = "rp_district21";
@@ -1809,6 +1810,7 @@ elseif map == "rp_district21" then
 	local CAVES = zones:New("caves")
 		CAVES.name = "Caves";
 		CAVES.map = "rp_district21";
+		CAVES.hasWarmth = true;
 		CAVES.fogColors = {r = 0, g = 0, b = 0};
 		CAVES.fogStart = 0;
 		CAVES.fogEnd = 768;
@@ -1824,6 +1826,7 @@ elseif map == "rp_district21" then
 		TOWER.map = "rp_district21";
 		TOWER.hasNight = true;
 		TOWER.hasWeather = true;
+		TOWER.hasWarmth = true;
 		TOWER.colorModify = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 1.2, ["$pp_colour_colour"] = 1.25, ["$pp_colour_mulb"] = 0.1};
 		TOWER.colorModifyNight = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 0.9, ["$pp_colour_colour"] = 1, ["$pp_colour_mulb"] = 0.1};
 		TOWER.fogColors = {r = 38, g = 54, b = 76};

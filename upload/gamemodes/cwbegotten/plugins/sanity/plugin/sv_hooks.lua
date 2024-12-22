@@ -10,6 +10,8 @@ local sanitySafezones = {
 	["gore"] = true,
 	["tower"] = true,
 	["gore_tree"] = true,
+	["hillbunker"] = true,
+	["hotspring"] = true,
 }
 
 local sanitySubSafezones = {
@@ -17,6 +19,11 @@ local sanitySubSafezones = {
 		["wasteland"] = {
 			{pos1 = Vector(-13813, -13472, -1546), pos2 = Vector(-13048, -12315, -1133)}, -- Castle 
 			{pos1 = Vector(11278, -11108, -835), pos2 = Vector(14556, -13878, -1798)}, -- Caves
+		},
+	},
+	["rp_district21"] = {
+		["wasteland"] = {
+			{pos1 = Vector(-13051, -2702, -576), pos2 = Vector(-14379, -3897, -889)}, -- Voltbunker
 		},
 	},
 };

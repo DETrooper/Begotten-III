@@ -54,11 +54,11 @@ function COMMAND:OnRun(player, arguments)
 			player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
 			Schema:EasyText(player, "olivedrab", "You drink from the pure waters of the Gore Forest, quenching your thirst.");
 		else
-			if game.GetMap() == "rp_district21" then
+			--[[if game.GetMap() == "rp_district21" then
 				player:HandleNeed("thirst", -25);
 				player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
 				Schema:EasyText(player, "olivedrab", "You drink from the pure waters of the county district, quenching your thirst.");
-			else
+			else]]--
 				if cwRituals and player.drownedKingActive then
 					player:HandleNeed("thirst", -25);
 					player:EmitSound("npc/barnacle/barnacle_gulp1.wav");
@@ -83,7 +83,7 @@ function COMMAND:OnRun(player, arguments)
 						Schema:EasyText(player, "olive", "You drink from the Begotten waters. Who knows what foulness you have just consumed? You feel your sanity drain.");
 					end
 				end
-			end
+			--end
 		end
 		
 		if cwBeliefs then

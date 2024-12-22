@@ -374,9 +374,22 @@ function ITEM:OnUse(player, itemEntity, interactItemTable)
 		return false
 	end
 	
-	if #self.requireFaith > 0 then
-		if (!table.HasValue(self.requireFaith, player:GetFaith())) then
-			Schema:EasyText(player, "peru", "You are not the correct faith for this item!")
+	if self.requireFaith and not (table.HasValue(self.requireFaith, player:GetFaith())) then
+		if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+			if !player.spawning then
+				Schema:EasyText(player, "chocolate", "You are not of the correct faith to wear this!")
+			end
+			
+			return false
+		end
+	end
+	
+	if self.requiredSubfaiths and not (table.HasValue(self.requiredSubfaiths, player:GetSubfaith())) then
+		if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+			if !player.spawning then
+				Schema:EasyText(player, "chocolate", "You are not of the correct subfaith to wear this!")
+			end
+			
 			return false
 		end
 	end
