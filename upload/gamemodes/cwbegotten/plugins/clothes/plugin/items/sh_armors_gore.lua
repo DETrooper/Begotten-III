@@ -115,12 +115,12 @@ ITEM.group = "goreicwarfighters/goreseafarer";
 ITEM.model = "models/begotten/headgroup_props/seafarerarmor.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/gore_seafarer_garb.png"
 ITEM.category = "Armor"
-ITEM.weight = 2;
+ITEM.weight = 1;
 ITEM.description = "A fur cloak traditionally worn by Goreic seafaring raiders. It has no protective value.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.requireFaction = {"Goreic Warrior"};
 
-ITEM.insulation = 30; -- Adds 24% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 25; -- Adds 24% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
 
 ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth"}};
 
@@ -157,7 +157,7 @@ ITEM.effectiveLimbs = {
 
 ITEM.bluntScale = 0.60; -- reduces blunt damage by 40%
 ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
-ITEM.insulation = 50; -- Adds 40% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 25; -- Adds 40% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
 
 ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide", "bearskin", "cloth"}};
 
@@ -478,7 +478,7 @@ ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
 ITEM.protection = 80;
-ITEM.weight = 12;
+ITEM.weight = 11;
 ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "Heavy armor made from hellforged black iron. Decorated with skulls and hides from man and demon alike, the Red Wolves of Clan Reaver make sure their presence is known.";
