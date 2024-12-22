@@ -3781,7 +3781,7 @@ local COMMAND = Clockwork.command:New("HellPortalGaze");
 						if v:GetPos():WithinAABox(tab[1], tab[2]) and v:Alive() and not v.cwObserverMode then
 							count = count + 1;
 
-							if v:GetNetVar("yellowBanner") == true then
+							if v:GetNetVar("yellowBanner", false) then
 								banner = true;
 							end
 						end
@@ -3797,7 +3797,10 @@ local COMMAND = Clockwork.command:New("HellPortalGaze");
 						message = message.." One of the figures has a sickly yellow aura.";
 					end
 
-					Schema:EasyText(player, "olivedrab", message);
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "approaches the Hell Portal, their eyes staring deeply into the veil. Their pupils dilate rapidly for a brief moment.", player:GetPos(), config.Get("talk_radius"):Get() * 1.5);
+					timer.Simple(1.5, function()
+						Schema:EasyText(player, "olivedrab", message);
+					end)
 				end
 			end;
 		end;
