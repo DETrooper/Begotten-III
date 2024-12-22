@@ -1140,7 +1140,7 @@ local ITEM = Clockwork.item:New();
 				Clockwork.player:SetAction(player, "filling_bucket", 10, 3, function()
 					-- input water full sound
 					
-					if lastZone ~= "gore" then
+					if lastZone ~= "gore" and lastZone ~= "hotspring" then
 						player:GiveItem(Clockwork.item:CreateInstance("dirty_water_bucket"), true);
 					else
 						player:GiveItem(Clockwork.item:CreateInstance("purified_water_bucket"), true);
