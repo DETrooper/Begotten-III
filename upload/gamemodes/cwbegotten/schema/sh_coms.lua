@@ -3721,3 +3721,86 @@ function COMMAND:OnRun(player, arguments)
 	end
 end
 COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("HellPortalGaze");
+	COMMAND.tip = "Gaze through the veil of the Hell Portal.";
+	COMMAND.arguments = 1;
+	COMMAND.text = "<name of location>";
+
+	local GazeVectorTable = {
+		["Arch"] = 
+		{
+			["rp_begotten3"] = 
+			{
+				Vector(6606.255859, -10780.157227, -1437.645752), -- box start
+				Vector(11185.331055, -14702.863281, 472.348114) -- box end
+			}
+		},
+		["Pillars"] = 
+		{
+			["rp_begotten3"] = 
+			{
+				Vector(-7066.134277, -2969.978027, -1364.597778), -- box start
+				Vector(-15229.947266, 1520.333984, 223.156769) -- box end
+			},
+			["rp_district21"] = 
+			{
+				Vector(9687.704102, -7364.185547, -398.682037), -- box start
+				Vector(15093.301758, 1914.199951, 1704.999023) -- box end
+			}
+		},
+		["Church"] = 
+		{
+			["rp_district21"] = 
+			{
+				Vector(8241.556641, -11463.334961, -704.866455), -- box start
+				Vector(1634.260498, -15241.533203, 1665.453247) -- box end
+			}
+		}
+	}
+
+	function COMMAND:OnRun(player, arguments)
+		local trace = player:GetEyeTrace();
+		local count = 0;
+		local banner = false;
+		local map = game.GetMap();
+
+
+		if (trace.Entity) then
+			local entity = trace.Entity;
+
+			if (entity:GetClass() == "cw_hellportal") then
+				if player:GetFaction() ~= "Children of Satan" then
+					Schema:EasyText(player, "olive", "You attempt to gaze through the Hell Portal, but you see nothing except a fiery veil.")
+					return false;
+				end
+
+				if GazeVectorTable[arguments[1]][map] then
+					local tab = GazeVectorTable[arguments[1]][map];
+					for _,v in _player.Iterator() do
+						if v:GetPos():WithinAABox(tab[1], tab[2]) and v:Alive() and not v.cwObserverMode then
+							count = count + 1;
+
+							if v:GetNetVar("yellowBanner") == true then
+								banner = true;
+							end
+						end
+					end
+
+					if count == 0 then
+						count = "no";
+					end
+
+					local message = "You gaze through the fiery veil of the portal and witness "..count.." other beings in the vicinity.";
+
+					if banner then
+						message = message.." One of the figures has a sickly yellow aura.";
+					end
+
+					Schema:EasyText(player, "olivedrab", message);
+				end
+			end;
+		end;
+	end;
+
+COMMAND:Register();
