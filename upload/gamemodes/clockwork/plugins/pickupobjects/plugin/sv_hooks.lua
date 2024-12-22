@@ -81,9 +81,6 @@ function cwPickupObjects:PlayerDeath(player, inflictor, attacker, damageInfo)
 	end
 end
 
--- Called when a player's ragdoll attempts to take damage.
-function cwPickupObjects:PlayerRagdollCanTakeDamage(player, ragdoll, inflictor, attacker, hitGroup, damageInfo) end;
-
 -- Called when a player enters a vehicle.
 function cwPickupObjects:PlayerEnteredVehicle(player, vehicle, class)
 	if (IsValid(player.cwHoldingEnt) and player.cwHoldingEnt == vehicle) then

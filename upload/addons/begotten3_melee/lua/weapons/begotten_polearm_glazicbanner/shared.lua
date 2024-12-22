@@ -221,11 +221,6 @@ function SWEP:Think()
 				weapon:SetNextPrimaryFire(curTime + 0.3);
 				weapon:SetNextSecondaryFire(curTime + 0.3);
 			end
-
-			function self.Owner:OnTakeDamage(dmginfo)
-				self:HandleDamage(dmginfo)
-				dmginfo:SetDamage(0)
-			end;
 		end;
 		
 		player.beginBlockTransition = false;

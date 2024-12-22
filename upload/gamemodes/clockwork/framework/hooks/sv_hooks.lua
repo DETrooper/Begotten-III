@@ -4022,7 +4022,7 @@ function GM:EntityTakeDamage(entity, damageInfo)
 	local player = Clockwork.entity:GetPlayer(entity);
 	local lastHitGroup;
 	
-	if isPlayerRagdoll and !hook.Run("PlayerRagdollCanTakeDamage", player, entity, inflictor, attacker, hitGroup, damageInfo) then
+	if isPlayerRagdoll and hook.Run("PlayerRagdollCanTakeDamage", player, entity, inflictor, attacker, hitGroup, damageInfo) ~= false then
 		damageInfo:SetDamage(0)
 		return false
 	end
