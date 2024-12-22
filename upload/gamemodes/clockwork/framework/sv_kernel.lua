@@ -94,6 +94,15 @@ end
 
 -- End Ghetto Fix
 
+-- More ghetto fix to check if logs folder exists
+if fileio and file.Exists("logs/clockwork", "MOD") then
+    print("\'logs/clockwork\' has been found.")
+else
+    fileio.MakeDirectory("logs/clockwork")
+
+	print("\'logs/clockwork\' has been created.")
+end
+
 local ServerLog = ServerLog
 local cvars = cvars
 

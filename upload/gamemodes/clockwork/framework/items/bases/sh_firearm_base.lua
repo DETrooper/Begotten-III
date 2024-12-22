@@ -85,6 +85,7 @@ function ITEM:Engrave(player, text, engravingItemTable)
 		self:SetData("engraving", text);
 		player:TakeItem(engravingItemTable, true);
 		Schema:EasyText(player, "olivedrab", "You engrave \'"..text.."\' into the side of your weapon.");
+		Clockwork.kernel:PrintLog(LOGTYPE_GENERIC, player:Name().." has engraved a "..self.name.." "..self.itemID.." to "..text)
 		Clockwork.inventory:Rebuild(player);
 	end;
 end;

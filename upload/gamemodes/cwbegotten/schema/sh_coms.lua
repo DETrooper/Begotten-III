@@ -1769,6 +1769,7 @@ COMMAND.tip = "Speak to the Ravens to deliver a message back to the Clan Crast m
 COMMAND.text = "<string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
+COMMAND.alias = {"RR"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
