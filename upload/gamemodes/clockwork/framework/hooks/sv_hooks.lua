@@ -2074,8 +2074,6 @@ function GM:PlayerRagdollCanTakeDamage(player, ragdoll, inflictor, attacker, hit
 			return false;
 		end
 	end
-
-	return true
 end
 
 -- Called when the player attempts to be ragdolled.
@@ -4022,7 +4020,7 @@ function GM:EntityTakeDamage(entity, damageInfo)
 	local player = Clockwork.entity:GetPlayer(entity);
 	local lastHitGroup;
 	
-	if isPlayerRagdoll and hook.Run("PlayerRagdollCanTakeDamage", player, entity, inflictor, attacker, hitGroup, damageInfo) ~= false then
+	if isPlayerRagdoll and hook.Run("PlayerRagdollCanTakeDamage", player, entity, inflictor, attacker, hitGroup, damageInfo) == false then
 		damageInfo:SetDamage(0)
 		return false
 	end
