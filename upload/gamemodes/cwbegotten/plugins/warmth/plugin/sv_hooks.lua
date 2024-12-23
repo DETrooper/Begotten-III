@@ -102,7 +102,10 @@ function cwWarmth:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 	if(!plyTable.nextHotSpringBuff or plyTable.nextHotSpringBuff <= curTime) then
 		plyTable.nextHotSpringBuff = curTime + 15;
 
-		player:SetHealth(math.min(player:Health() + 2, player:GetMaxHealth()));
+		if(player:GetNetVar("hotSpringBuff", 0) > curTime) then
+			player:SetHealth(math.min(player:Health() + 2, player:GetMaxHealth()));
+
+		end
 
 	end
 
