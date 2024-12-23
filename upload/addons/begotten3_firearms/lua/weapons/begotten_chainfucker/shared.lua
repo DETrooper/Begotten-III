@@ -43,7 +43,7 @@ SWEP.FiresUnderwater = true
 SWEP.noJam = true;
 
 SWEP.Primary.Sound			= Sound("gatling/gatling_close_shot_4.mp3")		-- Script that calls the primary fire sound
-SWEP.Primary.RPM			= 550			-- This is in Rounds Per Minute
+SWEP.Primary.RPM			= 1200			-- This is in Rounds Per Minute
 SWEP.Primary.ClipSize			= 200		-- Size of a clip
 SWEP.Primary.DefaultClip		= 0		-- Bullets you start with
 SWEP.Primary.KickUp				= 0		-- Maximum up recoil (rise)
@@ -58,7 +58,7 @@ SWEP.Secondary.IronFOV			= 65		-- How much you 'zoom' in. Less is more!
 SWEP.data 				= {}				--The starting firemode
 SWEP.data.ironsights			= 1
 
-SWEP.Primary.NumShots	= 5		-- How many bullets to shoot per trigger pull
+SWEP.Primary.NumShots	= 1		-- How many bullets to shoot per trigger pull
 SWEP.Primary.Damage		= 40	-- Base damage per bullet
 SWEP.Primary.Spread		= .1	-- Define from-the-hip accuracy 1 is terrible, .0001 is exact)
 SWEP.Primary.IronAccuracy = .1 -- Ironsight accuracy, should be the same for shotguns
@@ -92,67 +92,14 @@ function SWEP:PrimaryAttack()
 		return;
 	end
 	
-	if IsFirstTimePredicted() then
-		if self.Owner:IsPlayer() then
-			if !self.Owner:KeyDown(IN_SPEED) and !self.Owner:KeyDown(IN_RELOAD) then
-				--self:ShootBulletInformation();
-				
-				self:ShootEffects()
-			   
-				local bullet = {}
-				bullet.Num              = 5
-				bullet.Src              = self.Owner:GetShootPos()                      -- Source
-				bullet.Dir              = self.Owner:GetAimVector()                     -- Dir of bullet
-				bullet.Spread   = Vector(0.15, 0.15, 0)                   -- Aim Cone
-				bullet.Tracer   = 1                                                -- Show a tracer on every x bullets
-				bullet.TracerName = "Tracer"
-				bullet.Force    = 50 * 0.25                                 -- Amount of force to give to phys objects
-				bullet.Damage   = 50
-						
-				if IsValid(self) then
-					if IsValid(self.Weapon) then
-						if IsValid(self.Owner) then
-							self.Owner:FireBullets(bullet)
-						end
-					end
-				end
-				
-				self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-				self.Weapon:EmitSound(self.Primary.Sound)
-
-				self.Owner:SetAnimation( PLAYER_ATTACK1 )
-				self.Owner:MuzzleFlash()
-				self.Weapon:SetNextPrimaryFire(curTime + 0.1);
-			end
+	if self.Owner:IsPlayer() then
+		if !self.Owner:KeyDown(IN_SPEED) and !self.Owner:KeyDown(IN_RELOAD) then
+			self:ShootBulletInformation()
+			self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
+			self.Weapon:EmitSound(self.Primary.Sound, 511, math.random(95, 102));
+			self.Owner:SetAnimation( PLAYER_ATTACK1 )
+			self.Owner:MuzzleFlash()
+			self.Weapon:SetNextPrimaryFire(CurTime()+1/(self.Primary.RPM/60))
 		end
-	elseif self:CanPrimaryAttack() and self.Owner:IsNPC() then
-		--self:ShootBulletInformation()
-		
-		self:ShootEffects()
-		
-		local bullet = {}
-		bullet.Num              = 5
-		bullet.Src              = self.Owner:GetShootPos()                      -- Source
-		bullet.Dir              = self.Owner:GetAimVector()                     -- Dir of bullet
-		bullet.Spread   = Vector(0.15, 0.15, 0)                   -- Aim Cone
-		bullet.Tracer   = 1                                                -- Show a tracer on every x bullets
-		bullet.TracerName = "Tracer"
-		bullet.Force    = 50 * 0.25                                 -- Amount of force to give to phys objects
-		bullet.Damage   = 50
-				
-		if IsValid(self) then
-			if IsValid(self.Weapon) then
-				if IsValid(self.Owner) then
-					self.Owner:FireBullets(bullet)
-				end
-			end
-		end
-		
-		self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-		self.Weapon:EmitSound(self.Primary.Sound)
-		self.Owner:SetAnimation( PLAYER_ATTACK1 )
-		self.Owner:MuzzleFlash()
-		self.Weapon:SetNextPrimaryFire(curTime + 0.1);
-		--self.RicochetCoin = (math.random(1,4))
 	end
 end
