@@ -13,6 +13,7 @@ local powerArmor = {
 	["models/begotten/gatekeepers/magistratearmor.mdl"] = true,
 	["models/begotten/gatekeepers/adyssa.mdl"] = true,
 	["models/begotten/wanderers/voltistpowerarmor.mdl"] = true,
+	["models/begotten/gatekeepers/triumphant_roan.mdl"] = true;
 }
 
 function playerMeta:IsWearingPowerArmor()
