@@ -425,6 +425,27 @@ function cwDayNight:PlayerDrawWeaponSelect()
 	end;
 end;
 
+local up = Vector(0, 0, 500);
+local down = Angle(0, -90, 0);
+
+function cwDayNight:PostDrawSkyBox()
+	if Clockwork.Client.currentCycle == "night" then
+		local zoneTable = zones:FindByID(zones.cwCurrentZone or "wasteland");
+
+		if zoneTable.hasNight then
+			cam.Start3D2D(Clockwork.Client:GetPos() + up, down, 1);
+				cam.IgnoreZ(true);
+				render.SuppressEngineLighting(true)
+				surface.SetMaterial(moonMat);
+				surface.SetDrawColor(255, 255, 255, 255);
+				surface.DrawTexturedRect(-100, -100, 200, 200);
+				render.SuppressEngineLighting(false)
+				cam.IgnoreZ(false);
+			cam.End3D2D();
+		end
+	end
+end
+
 -- this is all spaghetti and I just don't give a fuck!!!!!!!!!!!!!!!!!!!!!
 function cwDayNight:RenderScreenspaceEffects()
 	if (Clockwork.Client.MoonSharps and Clockwork.Client.MoonSharps > 0) then
