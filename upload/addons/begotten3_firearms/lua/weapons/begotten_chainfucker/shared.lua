@@ -1,7 +1,5 @@
--- Phoenix Project © 2016
 SWEP.VElements = {
-	["gatling"] = { type = "Model", model = "models/arxweapon/gatling.mdl", bone = "cgun1", rel = "", pos = Vector(-2.597, -1.558, -9.87), angle = Angle(-90, -90, -180), size = Vector(0.699, 0.699, 0.699), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {[0] = 1, [2] = 1} },
-	["stvol"] = { type = "Model", model = "models/arxweapon/gatling_dulo.mdl", bone = "BONE_BARRELS", rel = "", pos = Vector(-0, -5.715, -0.301), angle = Angle(1.169, -90, 0), size = Vector(0.629, 0.629, 0.629), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["element_name"] = { type = "Model", model = "models/arxweapon/gatling.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(14.321, 1.48, 10.369), angle = Angle(5.556, -10, -81.112), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
@@ -31,9 +29,11 @@ SWEP.HoldType = "physgun"		-- how others view you carrying the weapon
 
 SWEP.SelectiveFire		= true
 
+SWEP.ShowViewModel = false;
+SWEP.UseHands = true
 SWEP.ViewModelFOV			= 65
 SWEP.ViewModelFlip			= false
-SWEP.ViewModel = "models/weapons/v_minigunvulcan.mdl"
+SWEP.ViewModel = "models/weapons/c_physcannon.mdl"
 SWEP.WorldModel				= "models/weapons/w_pistol.mdl"		-- Weapon world model
 SWEP.ShowWorldModel			= false
 SWEP.Base 				= "begotten_firearm_base"
@@ -68,22 +68,6 @@ SWEP.SightsPos = Vector(-4.08, -4.02, -0.171)
 SWEP.SightsAng = Vector(0, 0, 0)
 SWEP.RunSightsPos = Vector(0.6, 0, 2.68)
 SWEP.RunSightsAng = Vector(-9.849, 9.848, 0)
-SWEP.ViewModelBoneMods = {
-	["bigfathand"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["handlemini"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["chainstuff"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["cgun1"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["main_body-"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["barrelbox"] = { scale = Vector(0.018, 0.018, 0.018), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["chain_pin"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["barrels"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["Bone01"] = { scale = Vector(0.222, 0.222, 0.222), pos = Vector(1.296, -4.631, 2.407), angle = Angle(0, 0, 0) },
-	["Bone_Lefthand"] = { scale = Vector(1, 1, 1), pos = Vector(3.519, 0.185, -6.481), angle = Angle(0, 0, 0) },
-	["BONE_AMMO_CHAIN"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["cgun2"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["trigger"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["BONE_BARRELS"] = { scale = Vector(1, 1, 1), pos = Vector(-2.779, -10.556, 1.296), angle = Angle(0, 0, 0) }
-}
 
 function SWEP:PrimaryAttack()
 	local curTime = CurTime();
@@ -94,7 +78,30 @@ function SWEP:PrimaryAttack()
 	
 	if self.Owner:IsPlayer() then
 		if !self.Owner:KeyDown(IN_SPEED) and !self.Owner:KeyDown(IN_RELOAD) then
-			self:ShootBulletInformation()
+			local aimcone;
+			
+			if (self:GetIronsights() == true) and self.Owner:KeyDown(IN_ATTACK2) then
+				aimcone = self.Primary.IronAccuracy
+			else
+				aimcone = self.Primary.Spread
+			end
+				
+			local bullet = {}
+			bullet.Num              = self.Primary.NumShots
+			bullet.Src              = self.Owner:GetShootPos()                      -- Source
+			bullet.Dir              = self.Owner:GetAimVector()                     -- Dir of bullet
+			bullet.Spread   = Vector(aimcone, aimcone, 0)                   -- Aim Cone
+			bullet.Tracer   = 3                                                     -- Show a tracer on every x bullets
+			bullet.TracerName = "Tracer"
+			bullet.AmmoType = "SMG1"
+			bullet.Force    = self.Primary.Damage * 0.25                                 -- Amount of force to give to phys objects
+			bullet.Damage   = self.Primary.Damage
+			bullet.Callback = function(attacker, tracedata, dmginfo)
+				dmginfo:SetInflictor(self);
+			end
+
+			self:ShootEffects()
+			self.Owner:FireBullets(bullet)
 			self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 			self.Weapon:EmitSound(self.Primary.Sound, 511, math.random(95, 102));
 			self.Owner:SetAnimation( PLAYER_ATTACK1 )
