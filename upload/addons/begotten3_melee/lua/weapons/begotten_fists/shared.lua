@@ -741,7 +741,7 @@ function SWEP:SecondaryAttack()
 		if ( !self:CanSecondaryAttack() ) then return end
 		if ( ply:GetNetVar("Guardening") ) == true then return end
 		--if ( self.Weapon:GetNWInt("Reloading") > curTime ) then return end
-		local parry_cost = blocktable["parrsytakestamina"];
+		local parry_cost = blocktable["parrytakestamina"];
 		
 		if cwMedicalSystem then
 			local injuries;

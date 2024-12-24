@@ -779,10 +779,13 @@ function cwMedicalSystem:PostCalculatePlayerDamage(player, hitGroup, damageInfo)
 								player:EmitSound("misc/bone_fracture.wav", 75, math.random(95, 100));
 							end;
 						else
-							if !(injuries[hitGroup]["gash"]) then
-								player:AddInjury(self.cwHitGroupToString[hitGroup], "gash");
-								player:StartBleeding(hitGroup);
+							if !IsValid(attacker) or attacker:IsPlayer() or ((attacker:IsNPC() or attacker:IsNextBot()) and math.random(1, 3) == 1) then
+								if !(injuries[hitGroup]["gash"]) then
+									player:AddInjury(self.cwHitGroupToString[hitGroup], "gash");
+								end
 							end
+							
+							player:StartBleeding(hitGroup);
 						end
 					end
 				end

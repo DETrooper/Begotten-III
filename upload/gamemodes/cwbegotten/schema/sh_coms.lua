@@ -18,6 +18,7 @@ elseif map == "rp_scraptown" then
 	archPos = Vector(5040, 10213, 357);
 	pillarPos = Vector(9386, -9070, 610);
 elseif map == "rp_district21" then
+	archPos = Vector(5292, -14361, -406); -- church
 	pillarPos = Vector(11376, -2410, -192);
 end
 

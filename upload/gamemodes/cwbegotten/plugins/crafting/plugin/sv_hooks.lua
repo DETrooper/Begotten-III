@@ -12,7 +12,7 @@ cwRecipes.maxPileItems = 10;
 if map == "rp_district21" then
 	cwRecipes.maxPiles = {
 		["ore"] = 8,
-		["wood"] = 16,
+		["wood"] = 20,
 		["gorewood"] = 6,
 	};
 else
