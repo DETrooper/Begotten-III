@@ -3172,7 +3172,11 @@ local COMMAND = Clockwork.command:New("HellTeleport");
 
 												Schema:EasyText(player, "red", "You begin to teleport to Hell from an area protected by Satanic magic, thus sparing yourself any corruption!");
 											else
-												Schema:EasyText(player, "peru", "You must be near the Arch of Perdition or the Pillars of Creation to teleport back to Hell!");
+												if game.GetMap() == "rp_district21" then
+													Schema:EasyText(player, "peru", "You must be near the Arch of Perdition or the Abandoned Church to teleport back to Hell!");
+												else
+													Schema:EasyText(player, "peru", "You must be near the Arch of Perdition or the Pillars of Creation to teleport back to Hell!");
+												end
 											end
 										else
 											Schema:EasyText(player, "peru", "You cannot teleport to Hell while in Hell!");
@@ -3186,7 +3190,11 @@ local COMMAND = Clockwork.command:New("HellTeleport");
 							Schema:EasyText(player, "peru", "You cannot teleport back to Hell for another "..nextTeleport.." seconds!");
 						end
 					else
-						Schema:EasyText(player, "peru", "You must be near the Arch of Perdition or the Pillars of Creation to teleport back to Hell!");
+						if game.GetMap() == "rp_district21" then
+							Schema:EasyText(player, "peru", "You must be near the Arch of Perdition or the Abandoned Church to teleport back to Hell!");
+						else
+							Schema:EasyText(player, "peru", "You must be near the Arch of Perdition or the Pillars of Creation to teleport back to Hell!");
+						end
 					end
 				else
 					Schema:EasyText(player, "peru", "You cannot teleport to Hell while in Hell!");
