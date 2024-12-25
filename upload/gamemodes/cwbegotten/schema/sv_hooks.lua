@@ -1418,7 +1418,9 @@ function Schema:OnePlayerSecond(player, curTime, infoTable) end;
 
 -- Called when an entity is created.
 function Schema:OnEntityCreated(entity)
-	if (entity:GetClass() == "prop_physics") then
+	local class = entity:GetClass();
+
+	if (class == "prop_physics") then
 		timer.Simple(FrameTime(), function()
 			if (IsValid(entity)) then
 				if (string.find(entity:GetModel(), "wood_crate")) then
@@ -1428,6 +1430,24 @@ function Schema:OnEntityCreated(entity)
 				end;
 			end;
 		end);
+	elseif class == "prop_vehicle_jeep" then
+		timer.Simple(FrameTime(), function()
+			if IsValid(entity) and entity:GetModel() == "models/begoyten/fuckerjoecar.mdl" then
+				entity.isFuckerJoesCar = true;
+			
+				if !IsValid(entity.machinegunEnt) then
+					local machinegunEnt = ents.Create("cw_longship_m2browningpod");
+					
+					machinegunEnt:SetParent(entity);
+					machinegunEnt:SetAngles(entity:GetAngles() - Angle(90, 0, 270));
+					machinegunEnt:SetPos(entity:GetPos() + (entity:GetForward() * 58) + (entity:GetRight() * 20) + Vector(0, 0, 36));
+					machinegunEnt:Spawn();
+					machinegunEnt.vehicle = entity;
+					
+					entity.machinegunEnt = machinegunEnt;
+				end
+			end
+		end)
 	end;
 end;
 
@@ -2175,6 +2195,30 @@ end;
 
 -- Called each tick.
 function Schema:Tick() end;
+
+-- Called when a player attempts to enter a vehicle.
+function Schema:CanPlayerEnterVehicle(player, vehicle, role)
+	if vehicle.isFuckerJoesCar then
+		if !player:IsAdmin() then
+			return false;
+		end
+	end
+	
+	return true;
+end
+
+-- Called when a player enters a vehicle.
+function Schema:PlayerEnteredVehicle(player, vehicle, class)
+	if vehicle.isFuckerJoesCar then
+		if IsValid(vehicle.machinegunEnt) then
+			timer.Simple(1, function()
+				if IsValid(player) and player:InVehicle() and IsValid(vehicle) and IsValid(vehicle.machinegunEnt) then
+					vehicle.machinegunEnt:OnUse(player);
+				end
+			end);
+		end
+	end
+end
 
 -- Called when a player's health is set.
 function Schema:PlayerHealthSet(player, newHealth, oldHealth) end;

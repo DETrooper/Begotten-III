@@ -50,7 +50,6 @@ if (SERVER) then
 
 	function ENT:AddGunAngle(ang)
 		self.gunAng = self.gunAng + ang
-
 	end
 
 	function ENT:OnRemove()
@@ -61,33 +60,48 @@ if (SERVER) then
 	end
 
 	function ENT:Think()
-		if (self.Owner and IsValid(self.Owner) and self.Owner:Alive() and self:GetPos():Distance(self.Owner:GetPos()) <= 80) then
-			local aimVector = self.Owner:GetAimVector()
-			local turretForward = self:GetUp()
-			local turretDot = turretForward:Dot(aimVector)
-			if (turretDot > 0.5) then
-				self.Owner:GetViewModel():SetNoDraw(false)
-				self.Owner.Turret = nil
-				self.Owner = nil
-				self:EmitSound("weapons/ironclad50/50-dismount.wav")
-				return
+		if (self.Owner and IsValid(self.Owner) and self.Owner:Alive() and ((self.vehicle and self.Owner:InVehicle()) or (!self.vehicle and self:GetPos():Distance(self.Owner:GetPos()) <= 80))) then
+			if !self.vehicle then
+				local aimVector = self.Owner:GetAimVector()
+				local turretForward = self:GetUp()
+				local turretDot = turretForward:Dot(aimVector)
+				if (turretDot > 0.5) then
+					self.Owner:GetViewModel():SetNoDraw(false)
+					self.Owner.Turret = nil
+					self.Owner = nil
+					self:EmitSound("weapons/ironclad50/50-dismount.wav")
+					return
+				end
+
+				local data = {}
+					data.start = self.Owner:GetShootPos()
+					data.endpos = data.start + aimVector*10000
+					data.filter = {self.Owner, self, self.gun}
+				local trace = util.TraceLine(data)
+
+				local cappedVector = (turretForward + trace.Normal)
+				cappedVector.x = math.Clamp( cappedVector.x, -1.35, 1.35)
+				cappedVector.y = math.Clamp( cappedVector.y, -1.35, 1.35)
+				cappedVector.z = math.Clamp( cappedVector.z, -.4, .4)
+
+				local ang = (turretForward - cappedVector):Angle()
+				
+				ang:RotateAroundAxis(ang:Up(), 90)
+				
+				self.gunAng = LerpAngle( .1, self.gunAng, ang )
+				self.gun:SetAngles(self.gunAng)
+			else
+				local ang = self.Owner:GetAimVector():Angle()
+			
+				ang:RotateAroundAxis(ang:Up(), -90)
+			
+				self.gunAng = LerpAngle(.25, self.gunAng, ang)
+				self.gun:SetAngles(self.gunAng)
+				
+				if IsValid(self.gun) then
+					self.gun.Primary.Delay = 1/(800/60)
+				end
 			end
-
-			local data = {}
-				data.start = self.Owner:GetShootPos()
-				data.endpos = data.start + aimVector*10000
-				data.filter = {self.Owner, self, self.gun}
-			local trace = util.TraceLine(data)
-
-			local cappedVector = (turretForward + trace.Normal)
-			cappedVector.x = math.Clamp( cappedVector.x, -1.35, 1.35)
-			cappedVector.y = math.Clamp( cappedVector.y, -1.35, 1.35)
-			cappedVector.z = math.Clamp( cappedVector.z, -.4, .4)
-
-			local ang = (turretForward - cappedVector):Angle()
-			ang:RotateAroundAxis(ang:Up(), 90)
-			self.gunAng = LerpAngle( .1, self.gunAng, ang )
-			self.gun:SetAngles(self.gunAng)
 
 			if self.Owner:GetActiveWeapon():IsValid() then
 				self.Owner:GetActiveWeapon():SetNextPrimaryFire(CurTime()+1)
@@ -121,6 +135,8 @@ if (SERVER) then
 	end
 
 	function ENT:Use(client)
+		if self.vehicle then return end;
+	
 		if self.ironclad then
 			local faction = client:GetNetVar("kinisgerOverride") or client:GetFaction();
 			
@@ -149,16 +165,18 @@ if (SERVER) then
 				self.Owner = nil
 			end
 		else
-			local aimVector = client:GetAimVector()
-			local turretForward = self:GetUp()
-			local turretDot = turretForward:Dot(aimVector)
+			if !self.vehicle then
+				local aimVector = client:GetAimVector()
+				local turretForward = self:GetUp()
+				local turretDot = turretForward:Dot(aimVector)
 
-			if (turretDot > 0 or math.abs(turretDot) < .2) then
-				return
-			end
+				if (turretDot > 0 or math.abs(turretDot) < .2) then
+					return
+				end
 
-			if (client.Turret and IsValid(client.Turret)) then
-				return
+				if (client.Turret and IsValid(client.Turret)) then
+					return
+				end
 			end
 
 			self.gun.nextFire = CurTime() + .7

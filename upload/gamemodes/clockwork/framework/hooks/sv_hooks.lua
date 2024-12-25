@@ -2261,9 +2261,7 @@ function GM:PlayerLeaveVehicle(player, vehicle)
 end
 
 -- Called when a player attempts to enter a vehicle.
-function GM:CanPlayerEnterVehicle(player, vehicle, role)
-	return true
-end
+function GM:CanPlayerEnterVehicle(player, vehicle, role) end
 
 -- Called when a player enters a vehicle.
 function GM:PlayerEnteredVehicle(player, vehicle, class)
