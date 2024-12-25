@@ -142,14 +142,14 @@ local DARK = cwBeliefs.beliefTrees:New("dark")
 			["witch"] = {
 				name = "Witch",
 				subfaith = "Satanism",
-				description = "Unlocks Tier I 'Faith of the Dark' Rituals.",
+				description = "Unlocks Tier I 'Faith of the Dark' Rituals. Also unlocks the ability to darkwhisper.",
 				requirements = {"satanism"},
 				row = 2,
 			},
 			["heretic"] = {
 				name = "Heretic",
 				subfaith = "Satanism",
-				description = "Unlocks Tier II 'Faith of the Dark' Rituals. Also unlocks the ability to darkwhisper.",
+				description = "Unlocks Tier II 'Faith of the Dark' Rituals.",
 				requirements = {"satanism", "witch"},
 				row = 3,
 			},

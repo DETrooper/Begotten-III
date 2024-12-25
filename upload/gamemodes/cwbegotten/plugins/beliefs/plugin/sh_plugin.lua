@@ -453,7 +453,7 @@ function COMMAND:OnRun(player, arguments)
 				
 				target.lastDarkWhisperer = player;
 			else
-				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' or 'Soothsayer' belief before you can darkwhisper!");
+				Schema:EasyText(player, "chocolate", "You must have the 'Witch' or 'Soothsayer' belief before you can darkwhisper!");
 			end
 		else
 			Schema:EasyText(player, "firebrick", "You are not the correct faith to do this!");
@@ -478,7 +478,7 @@ function COMMAND:OnRun(player, arguments)
 	
 	if (target) then
 		if player:GetFaith() == "Faith of the Dark" then
-			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
+			if player:HasBelief("witch") or player:HasBelief("soothsayer") then
 				local curTime = CurTime();
 				local message = "\""..table.concat(arguments, " ", 1).."\"";
 				local targetFaith = target:GetFaith();
@@ -508,7 +508,7 @@ function COMMAND:OnRun(player, arguments)
 				
 				target.lastDarkWhisperer = player;
 			else
-				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' or 'Soothsayer' belief before you can darkwhisper!");
+				Schema:EasyText(player, "chocolate", "You must have the 'Witch' or 'Soothsayer' belief before you can darkwhisper!");
 			end
 		else
 			Schema:EasyText(player, "firebrick", "You are not the correct faith to do this!");
@@ -560,7 +560,7 @@ function COMMAND:OnRun(player, arguments)
 	
 	if faith == "Faith of the Dark" then
 		if faction == "Children of Satan" then
-			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
+			if player:HasBelief("witch") or player:HasBelief("soothsayer") then
 				local message = "\""..table.concat(arguments, " ", 1).."\"";
 
 				for _, v in _player.Iterator() do
@@ -575,10 +575,10 @@ function COMMAND:OnRun(player, arguments)
 					end;
 				end;
 			else
-				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' or 'Soothsayer' belief before you can darkwhisper!");
+				Schema:EasyText(player, "chocolate", "You must have the 'Witch' or 'Soothsayer' belief before you can darkwhisper!");
 			end
 		elseif faction == "Goreic Warrior" then
-			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
+			if player:HasBelief("witch") or player:HasBelief("soothsayer") then
 				local message = "\""..table.concat(arguments, " ", 1).."\"";
 
 				for _, v in _player.Iterator() do
@@ -597,7 +597,7 @@ function COMMAND:OnRun(player, arguments)
 					end;
 				end;
 			else
-				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' or 'Soothsayer' belief before you can darkwhisper!");
+				Schema:EasyText(player, "chocolate", "You must have the 'Witch' or 'Soothsayer' belief before you can darkwhisper!");
 			end
 		else
 			Schema:EasyText(player, "firebrick", "You are not the correct faction to do this!");
@@ -623,7 +623,7 @@ function COMMAND:OnRun(player, arguments)
 	
 	if faith == "Faith of the Dark" then
 		if faction == "Children of Satan" then
-			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
+			if player:HasBelief("witch") or player:HasBelief("soothsayer") then
 				if !player:IsAdmin() and !Clockwork.player:HasFlags(player, "P") and !Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3 then
 					Schema:EasyText(player, "peru", "You are not important enough to do this!");
 				
@@ -646,10 +646,10 @@ function COMMAND:OnRun(player, arguments)
 					end;
 				end;
 			else
-				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' or 'Soothsayer' belief before you can darkwhisper!");
+				Schema:EasyText(player, "chocolate", "You must have the 'Witch' or 'Soothsayer' belief before you can darkwhisper!");
 			end
 		elseif faction == "Goreic Warrior" then
-			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
+			if player:HasBelief("witch") or player:HasBelief("soothsayer") then
 				if !player:IsAdmin() and !Clockwork.player:HasFlags(player, "P") then
 					Schema:EasyText(player, "peru", "You are not important enough to do this!");
 				
@@ -676,7 +676,7 @@ function COMMAND:OnRun(player, arguments)
 					end;
 				end;
 			else
-				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' or 'Soothsayer' belief before you can darkwhisper!");
+				Schema:EasyText(player, "chocolate", "You must have the 'Witch' or 'Soothsayer' belief before you can darkwhisper!");
 			end
 		else
 			Schema:EasyText(player, "firebrick", "You are not the correct faction to do this!");
@@ -701,7 +701,7 @@ function COMMAND:OnRun(player, arguments)
 		local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		
 		if faction ~= "Wanderer" then
-			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
+			if player:HasBelief("witch") or player:HasBelief("soothsayer") then
 				local message = "\""..table.concat(arguments, " ", 1).."\"";
 
 				for _, v in _player.Iterator() do
@@ -722,7 +722,7 @@ function COMMAND:OnRun(player, arguments)
 					end;
 				end;
 			else
-				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' or 'Soothsayer' belief before you can darkwhisper!");
+				Schema:EasyText(player, "chocolate", "You must have the 'Witch' or 'Soothsayer' belief before you can darkwhisper!");
 			end
 		else
 			Schema:EasyText(player, "firebrick", "You are not the correct faction to do this!");
@@ -747,7 +747,7 @@ function COMMAND:OnRun(player, arguments)
 		local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		
 		if faction ~= "Wanderer" then
-			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
+			if player:HasBelief("witch") or player:HasBelief("soothsayer") then
 				if !player:IsAdmin() and !Clockwork.player:HasFlags(player, "P") and !Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3 then
 					Schema:EasyText(player, "peru", "You are not important enough to do this!");
 				
@@ -774,7 +774,7 @@ function COMMAND:OnRun(player, arguments)
 					end;
 				end;
 			else
-				Schema:EasyText(player, "chocolate", "You must have the 'Heretic' or 'Soothsayer' belief before you can darkwhisper!");
+				Schema:EasyText(player, "chocolate", "You must have the 'Witch' or 'Soothsayer' belief before you can darkwhisper!");
 			end
 		else
 			Schema:EasyText(player, "firebrick", "You are not the correct faction to do this!");
