@@ -1208,7 +1208,7 @@ end
 						
 						if distance <= maxIneffectiveRange and hit:IsValid() then
 							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
-								damage = (attacktable["primarydamage"]) * 0.01
+								damage = math.max(1, (attacktable["primarydamage"]) * 0.01)
 								damagetype = 128
 								
 								-- KNOCKBACK
@@ -1535,6 +1535,8 @@ end
 							
 							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 								--print "Spear Shaft Hit"
+								damage = math.max(1, (attacktable["primarydamage"]) * 0.01)
+								damagetype = 128
 								
 								-- KNOCKBACK
 								local knockback = owner:GetAngles():Forward() * 600;
