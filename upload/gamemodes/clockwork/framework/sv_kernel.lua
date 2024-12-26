@@ -859,10 +859,6 @@ end
 
 -- A function to do the entity take damage hook.
 function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
-	if (!IsValid(entity)) then
-		return
-	end
-
 	local inflictor = damageInfo:GetInflictor()
 	local attacker = damageInfo:GetAttacker()
 	local amount = damageInfo:GetDamage()
@@ -874,6 +870,15 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 	
 	if (player) then
 		ragdoll = player:GetRagdollEntity();
+		
+		if ragdoll and !ragdoll.cwIsBelongings then
+			if (entity != ragdoll) then
+				hook.Run("EntityTakeDamage", ragdoll, damageInfo)
+				damageInfo:SetDamage(0)
+
+				return true
+			end
+		end
 	
 		if (hook.Run("PlayerShouldTakeDamage", player, attacker) == false or
 		hook.Run("PlayerShouldTakeDamageNew", player, attacker, inflictor, damageInfo) or
@@ -919,34 +924,27 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 		end
 		
 		if ragdoll and !ragdoll.cwIsBelongings then
-			if (entity != ragdoll) then
-				hook.Run("EntityTakeDamage", ragdoll, damageInfo)
-				damageInfo:SetDamage(0)
+			local physicsObject = entity:GetPhysicsObject()
 
-				return true
-			else
-				local physicsObject = entity:GetPhysicsObject()
+			if (IsValid(physicsObject)) then
+				local velocity = physicsObject:GetVelocity():Length()
+				local curTime = CurTime()
 
-				if (IsValid(physicsObject)) then
-					local velocity = physicsObject:GetVelocity():Length()
-					local curTime = CurTime()
-
-					if (damageInfo:IsDamageType(DMG_CRUSH)) then
-						if (entity:IsBeingHeld() or (entity.cwNextFallDamage and curTime < entity.cwNextFallDamage)) then
-							damageInfo:SetDamage(0)
-							return true
-						end
-
-						amount = hook.Run("GetFallDamage", player, velocity)
-						hook.Run("OnPlayerHitGround", player, false, false, true);
-						entity.cwNextFallDamage = curTime + 0.5;
-						
-						--print("Damage: " ..amount);
-						--print("Velocity: "..tostring(physicsObject:GetVelocity()));
-						--print("Vel Length: "..velocity);
-						
-						damageInfo:SetDamage(amount)
+				if (damageInfo:IsDamageType(DMG_CRUSH)) then
+					if (entity:IsBeingHeld() or (entity.cwNextFallDamage and curTime < entity.cwNextFallDamage)) then
+						damageInfo:SetDamage(0)
+						return true
 					end
+
+					amount = hook.Run("GetFallDamage", player, velocity)
+					hook.Run("OnPlayerHitGround", player, false, false, true);
+					entity.cwNextFallDamage = curTime + 0.5;
+					
+					--print("Damage: " ..amount);
+					--print("Velocity: "..tostring(physicsObject:GetVelocity()));
+					--print("Vel Length: "..velocity);
+					
+					damageInfo:SetDamage(amount)
 				end
 			end
 		end

@@ -3388,11 +3388,6 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 					if attacker:GetSubfaction() == "Kinisger" then
 						damageInfo:ScaleDamage(1.25);
 					end
-					
-					-- 2x damage for daggers vs. ragdolled players.
-					if bIsPlayerRagdoll then
-						damageInfo:ScaleDamage(2);
-					end
 
 					if (entity.isTrainingDummy and math.abs(math.AngleDifference(entity:GetAngles().y, (attacker:GetPos() - entity:GetPos()):Angle().y)) >= 100) or (bIsPlayer and (!entity:IsRagdolled() and math.abs(math.AngleDifference(entity:EyeAngles().y, (attacker:GetPos() - entity:GetPos()):Angle().y)) >= 100)) then
 						if cwBeliefs and attacker:HasBelief("assassin") then

@@ -1069,7 +1069,7 @@ end
 
 					if (hit:IsRagdolled()) then
 						if self.isDagger then -- Daggers deal more damage against fallen opponents
-							d:SetDamage(d:GetDamage() * 2)
+							d:ScaleDamage(2);
 							
 							if hit:GetNetVar("ActName") == "unragdoll" then
 								Clockwork.player:ExtendAction(hit, 0.3);
@@ -1281,7 +1281,7 @@ end
 						
 						if (hit:IsRagdolled()) then
 							if self.isDagger then -- Daggers deal more damage against fallen opponents
-								d:SetDamage(d:GetDamage() * 2)
+								d:ScaleDamage(2);
 								
 								if hit:GetNetVar("ActName") == "unragdoll" then
 									Clockwork.player:ExtendAction(hit, 0.3);
@@ -1455,7 +1455,7 @@ end
 				
 						if (hit:IsRagdolled()) then
 							if self.isDagger then -- Daggers deal more damage against fallen opponents
-								d:SetDamage(d:GetDamage() * 2)
+								d:ScaleDamage(2);
 
 								if hit:GetNetVar("ActName") == "unragdoll" then
 									Clockwork.player:ExtendAction(hit, 0.3);
@@ -1463,7 +1463,7 @@ end
 							end
 						end
 					end
-					
+
 					hit:TakeDamageInfo(d)
 
 					if (hit:IsNPC() or hit:IsNextBot()) then
@@ -1650,7 +1650,7 @@ end
 						
 						if (hit:IsRagdolled()) then
 							if self.isDagger then -- Daggers deal more damage against fallen opponents
-								d:SetDamage(d:GetDamage() * 2)
+								d:ScaleDamage(2);
 
 								if hit:GetNetVar("ActName") == "unragdoll" then
 									Clockwork.player:ExtendAction(hit, 0.3);
