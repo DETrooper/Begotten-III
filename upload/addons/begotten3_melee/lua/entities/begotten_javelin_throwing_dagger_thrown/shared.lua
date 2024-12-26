@@ -427,18 +427,18 @@ if SERVER then
 							if Ent:GetNetVar("Parry") then
 								Ent:EmitSound("meleesounds/DS2Parry.mp3");
 							end
-							
-							if IsValid(enemywep) then
-								local blocksoundtable = GetSoundTable(enemywep.realBlockSoundTable);
-								
-								if blocksoundtable and blocksoundtable["deflectmetal"] then
-									Ent:EmitSound(blocksoundtable["deflectmetal"][math.random(1, #blocksoundtable["deflectmetal"])], 90);
-								end
-							end
-							
+
 							Clockwork.chatBox:AddInTargetRadius(Ent, "me", "suddenly catches the projectile mid-flight with their weapon and redirects it, showing impossible skill and grace as it is deflected in the direction of its hurler!", Ent:GetPos(), config.Get("talk_radius"):Get() * 4);
 						else
 							phys:SetVelocity(Ent:GetAimVector() * 50);
+						end
+						
+						if IsValid(enemywep) then
+							local blocksoundtable = GetSoundTable(enemywep.realBlockSoundTable);
+							
+							if blocksoundtable and blocksoundtable["deflectmetal"] then
+								Ent:EmitSound(blocksoundtable["deflectmetal"][math.random(1, #blocksoundtable["deflectmetal"])], 90);
+							end
 						end
 					
 						if !Ent:GetNetVar("Parry") then
