@@ -167,6 +167,18 @@ local ITEM = item.New(nil, true);
 			return false;
 		end
 		
+		if cwStamina and weaponItem.category == "Crossbows" then
+			local stamina = player:GetCharacterData("Stamina");
+			
+			if stamina < 10 then
+				if bNotify then
+					Schema:EasyText(player, "chocolate", "You do not have enough stamina to reload this crossbow!");
+				end
+				
+				return false;
+			end
+		end
+		
 		if weaponItem and (weaponItem.category == "Firearms" or weaponItem.category == "Crossbows") and weaponItem.ammoTypes then
 			if table.HasValue(weaponItem.ammoTypes, self.ammoType) then
 				local weaponItemAmmo = weaponItem:GetData("Ammo");
@@ -208,6 +220,11 @@ local ITEM = item.New(nil, true);
 					end
 					
 					if not weaponItem.usesMagazine then
+						if cwStamina and weaponItem.category == "Crossbows" then
+							player:HandleStamina(-10);
+							player.nextStamina = CurTime() + 3;
+						end
+						
 						return true;
 					else
 						if self.ammoMagazineSize and #weaponItemAmmo <= 0 then			
