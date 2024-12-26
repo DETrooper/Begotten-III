@@ -2787,6 +2787,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddText("Has Increased Parry Window", Color(110, 30, 30), nil, 0.9);
 				end
 				
+				if itemTable.hasIncreasedDeflectionWindow then
+					frame:AddText("Increased deflection window (0.25s)", Color(110, 30, 30), nil, 0.9);
+				end
+				
 				if category == "Great Shield" then
 					frame:AddText("Great Shield: Reduces sprint speed by 10% when held.", Color(110, 30, 30), nil, 0.9);
 				end

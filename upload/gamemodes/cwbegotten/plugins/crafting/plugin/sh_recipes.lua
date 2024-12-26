@@ -9304,7 +9304,7 @@ RECIPE:Register()
 		RECIPE.requirements = {
 			["leather"] = {amount = 2},
 			["hide"] = {amount = 2},
-			["iron_ingot"] = {amount = 5},
+			["iron_ingot"] = {amount = 4},
 		};
 		RECIPE.result = {
 			["armored_furs"] = {amount = 1},
@@ -9333,7 +9333,7 @@ RECIPE:Register()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["hide_parka"] = {amount = 1},
-			["iron_ingot"] = {amount = 5},
+			["iron_ingot"] = {amount = 4},
 		};
 		RECIPE.result = {
 			["armored_furs"] = {amount = 1},
@@ -9344,6 +9344,35 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 50;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("armored_furs_upgrade_bearhideparka");
+		RECIPE.name = "(Upgrade) Armored Furs";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["bearhide_parka"] = {amount = 1},
+			["iron_ingot"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["armored_furs"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 40;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -10007,7 +10036,6 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Hillkeeper"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 2},
-			["iron_ingot"] = {amount = 1},
 			["wood"] = {amount = 3},
 		};
 		RECIPE.result = {
@@ -10018,7 +10046,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 90;
+		RECIPE.experience = 85;
 		
 		function RECIPE:OnCraft(player)
 		end;

@@ -182,7 +182,7 @@ function meta:StartRolling(a)
 	if Clockwork then
 		if self.GetCharacterData then
 			local stamina = self:GetCharacterData("Stamina");
-			local stamina_loss = 20;
+			local stamina_loss = 15;
 
 			--[[
 			1.1 == Heavy Armor

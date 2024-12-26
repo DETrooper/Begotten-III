@@ -3,7 +3,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.model = "models/demonssouls/shields/buckler.mdl";
 	ITEM.weight = 2;
 	ITEM.uniqueID = "shield4";
-	ITEM.description = "For its impressive metalwork, it is clear that this offensive shield was forged by the Holy Hierarchy long ago. A weapon once infamous for its use by Glazic mercenaries and thugs, for its ability to parry hits and stun opponents.";
+	ITEM.description = "For its impressive metalwork, it is clear that this offensive shield was forged by the Holy Hierarchy long ago. A weapon once infamous for its use by Glazic mercenaries and thugs for its ability to parry hits and stun opponents.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/buckler.png"
 	ITEM.isAttachment = true;
 	ITEM.hasIncreasedDeflectionWindow = true;
@@ -189,7 +189,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, 2, 0);
 	ITEM.bulletConditionScale = 0.25;
 	
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2500};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 5000};
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "leather"}};
 ITEM:Register();
 

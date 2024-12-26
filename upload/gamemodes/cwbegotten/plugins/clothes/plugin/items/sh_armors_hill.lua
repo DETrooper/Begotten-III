@@ -1052,7 +1052,7 @@ ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/armoredfurs.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "GlassImpact";
-ITEM.protection = 53
+ITEM.protection = 48
 ITEM.type = "leather";
 ITEM.weight = 5;
 ITEM.weightclass = "Medium";
@@ -1077,10 +1077,10 @@ ITEM.damageTypeScales = {
 
 ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
-ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.slashScale = 0.75; -- reduces slash damage by 25%
 ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
-ITEM.insulation = 60; -- Adds 28% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 65; -- Adds 28% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
 
 ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "leather", "leather", "leather"}};
 

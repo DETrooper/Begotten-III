@@ -70,7 +70,7 @@ SWEP.data.ironsights		= 1
 SWEP.Primary.NumShots		= 1			-- How many bullets to shoot per trigger pull
 SWEP.Primary.Damage			= 95		-- Base damage per bullet
 SWEP.Primary.Spread			= .1		-- Define from-the-hip accuracy 1 is terrible, .0001 is exact)
-SWEP.Primary.IronAccuracy 	= .035 		-- Ironsight accuracy, should be the same for shotguns
+SWEP.Primary.IronAccuracy 	= .05 		-- Ironsight accuracy, should be the same for shotguns
 
 SWEP.SelectiveFire			= false
 
@@ -118,30 +118,30 @@ SWEP.AmmoTypes = {
 		return true;
 	end,
 	["Longshot"] = function(SWEP)
-		SWEP.Primary.Sound = Sound("weapons/cb4/cb4-1.wav");
+		SWEP.Primary.Sound = Sound("musket/musket1.wav");
 		SWEP.Primary.NumShots = 1;
 		SWEP.Primary.Damage = 95;
 		SWEP.Primary.Spread = .1;
-		SWEP.Primary.IronAccuracy = .035;
+		SWEP.Primary.IronAccuracy = .05;
 		SWEP.Primary.Ammo = "smg";
 		
 		if SWEP.Owner and SWEP.Owner:IsPlayer() then
 			if SWEP.Owner:GetVelocity() == Vector(0, 0, 0) then
 				if SWEP.Owner.HasBelief and SWEP.Owner:HasBelief("marksman") then
 					if SWEP.Owner:Crouching() then
-						SWEP.Primary.Spread = .02;
-						SWEP.Primary.IronAccuracy = .0075;
+						SWEP.Primary.Spread = .035;
+						SWEP.Primary.IronAccuracy = .02;
 					else
-						SWEP.Primary.Spread = .025;
-						SWEP.Primary.IronAccuracy = .01;
+						SWEP.Primary.Spread = .045;
+						SWEP.Primary.IronAccuracy = .03;
 					end
 				else
 					if SWEP.Owner:Crouching() then
 						SWEP.Primary.Spread = .045;
-						SWEP.Primary.IronAccuracy = .0225;
+						SWEP.Primary.IronAccuracy = .03;
 					else
 						SWEP.Primary.Spread = .05;
-						SWEP.Primary.IronAccuracy = .025;
+						SWEP.Primary.IronAccuracy = .035;
 					end
 				end
 			end

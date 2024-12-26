@@ -421,7 +421,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
 	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
-	ITEM.insulation = 40; -- Adds 8% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
+	ITEM.insulation = 40;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "leather"}};
 ITEM:Register();
@@ -457,7 +457,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
 	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
-	ITEM.insulation = 50; -- Adds 10% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
+	ITEM.insulation = 50;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "leather"}};
 ITEM:Register();
@@ -495,7 +495,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
 	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
-	ITEM.insulation = 40; -- Adds 8% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
+	ITEM.insulation = 40;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks"}};
 ITEM:Register();
@@ -530,7 +530,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.65; -- reduces bullet damage by 35%
 	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
-	ITEM.insulation = 80; --Adds 16% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
+	ITEM.insulation = 60;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "leather"}};
 ITEM:Register();
@@ -565,7 +565,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
 	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
-	ITEM.insulation = 80; --Adds 16% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
+	ITEM.insulation = 65;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "leather"}};
 ITEM:Register();

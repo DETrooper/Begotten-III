@@ -38,15 +38,11 @@ ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
 ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
-ITEM.insulation = 80; -- Adds 44% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 80;
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
-	--if (player:GetGender() == GENDER_FEMALE) then
 		return "models/begotten/satanists/lordvasso/male_56.mdl";
-	--else
-		--return "models/begotten/satanists/lordvasso/male_56.mdl";
-	--end;
 end;
 
 ITEM.runSound = {
@@ -105,15 +101,11 @@ ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
 ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
-ITEM.insulation = 80; -- Adds 44% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 80;
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
-	--if (player:GetGender() == GENDER_FEMALE) then
 		return "models/begotten/gatekeepers/grandknight.mdl";
-	--else
-		--return "models/begotten/gatekeepers/grandknight.mdl";
-	--end;
 end;
 
 ITEM.runSound = {
@@ -171,15 +163,11 @@ ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
 ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
-ITEM.insulation = 80; -- Adds 44% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 80;
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
-	--if (player:GetGender() == GENDER_FEMALE) then
 		return "models/begotten/goreicwarfighters/bjornling.mdl";
-	--else
-		--return "models/begotten/satanists/dreadarmor.mdl";
-	--end;
 end;
 
 ITEM.runSound = {
@@ -238,15 +226,11 @@ ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
 ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
-ITEM.insulation = 80; -- Adds 44% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 80;
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
-	--if (player:GetGender() == GENDER_FEMALE) then
 		return "models/begotten/goreicwarfighters/goreking.mdl";
-	--else
-		--return "models/begotten/satanists/lordvasso/male_56.mdl";
-	--end;
 end;
 
 ITEM.runSound = {
@@ -305,15 +289,11 @@ ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
 ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
-ITEM.insulation = 80; -- Adds 44% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 80;
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
-	--if (player:GetGender() == GENDER_FEMALE) then
 		return "models/begotten/goreicwarfighters/shingar.mdl";
-	--else
-		--return "models/begotten/satanists/lordvasso/male_56.mdl";
-	--end;
 end;
 
 ITEM.runSound = {
@@ -371,15 +351,11 @@ ITEM.pierceScale = 0.60; -- reduces pierce damage by 40%
 ITEM.slashScale = 0.50; -- reduces slash damage by 50%
 ITEM.bulletScale = 0.15; -- reduces bullet damage by 85%
 ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
-ITEM.insulation = 80; -- Adds 44% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 80;
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
-	--if (player:GetGender() == GENDER_FEMALE) then
 		return "models/begotten/satanists/emperorvarazdat.mdl";
-	--else
-		--return "models/begotten/satanists/lordvasso/male_56.mdl";
-	--end;
 end;
 
 ITEM.runSound = {

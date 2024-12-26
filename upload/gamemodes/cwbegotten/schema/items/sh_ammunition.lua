@@ -1,7 +1,7 @@
 local ITEM = Clockwork.item:New("shot_base");
 	ITEM.name = "Grapeshot";
 	ITEM.model = "models/kali/weapons/metro 2033/magazines/12 gauge shotgun shell.mdl";
-	ITEM.weight = 0.2;
+	ITEM.weight = 0.25;
 	ITEM.stackable = true;
 	ITEM.description = "A single shell of Grapeshot.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/grapeshot.png"
@@ -10,7 +10,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoName = "Grapeshot";
 	ITEM.requiredReloadBelief = "powder_and_steel";
 	
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 350, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 1000, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -40,7 +40,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoName = "Pop-a-Shot";
 	ITEM.requiredReloadBelief = "powder_and_steel";
 	
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 85, onGround = false, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 100, onGround = false, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -55,7 +55,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoName = "Longshot";
 	ITEM.requiredReloadBelief = "powder_and_steel";
 	
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 300, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 900, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -131,7 +131,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.requiredReloadBelief = "powder_and_steel";
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 1000, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 1500, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");

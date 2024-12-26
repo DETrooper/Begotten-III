@@ -39,7 +39,7 @@ ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
-ITEM.insulation = 50; -- Adds 40% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 50;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "cloth", "cloth"}};
 
@@ -111,7 +111,7 @@ ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
-ITEM.insulation = 50; -- Adds 40% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 50;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "cloth", "cloth"}};
 
@@ -173,7 +173,7 @@ ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
 ITEM.slashScale = 0.90; -- reduces slash damage by 10%
 ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
-ITEM.insulation = 65; -- Adds 52% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 60;
 
 ITEM.components = {breakdownType = "breakdown", items = {"fine_steel_chunks", "cloth", "cloth", "cloth", "cloth", "cloth", "cloth"}};
 
@@ -238,7 +238,7 @@ ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
-ITEM.insulation = 40; -- Adds 32% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 40;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "cloth", "cloth"}};
 
@@ -302,7 +302,7 @@ ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
-ITEM.insulation = 40; -- Adds 32% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 40;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "cloth", "cloth"}};
 
@@ -371,7 +371,7 @@ ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
-ITEM.insulation = 50; -- Adds 40% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 50;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
 
@@ -445,7 +445,7 @@ ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
-ITEM.insulation = 60; -- Adds 48% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 60;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "human_bone", "human_bone", "human_bone", "human_bone", "human_bone"}};
 
@@ -518,7 +518,7 @@ ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
-ITEM.insulation = 50; -- Adds 40% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.insulation = 50;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "human_bone", "human_bone", "human_bone", "human_bone", "human_bone"}};
 
