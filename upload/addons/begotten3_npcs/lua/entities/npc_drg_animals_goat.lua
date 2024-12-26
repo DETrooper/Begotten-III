@@ -81,6 +81,7 @@ function ENT:OnDeath(dmg, delay, hitgroup)
 	gib:SetModel( "models/animals/goat.mdl" )
 	gib:SetPos( self:LocalToWorld(Vector(0,0,0))) -- The Postion the model spawns
 	gib:SetAngles( self:GetAngles() )
+	gib:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
 	gib:Spawn()
 	
 	timer.Simple(600, function()
@@ -93,6 +94,7 @@ end
   -- Init/Think --
 
 function ENT:CustomInitialize()
+self:SetSolidMask(MASK_PLAYERSOLID)
 self:SetModelScale(0.8)
 self:SetDefaultRelationship(D_FR)
 self:SequenceEvent("walk",0/2,self.Step)

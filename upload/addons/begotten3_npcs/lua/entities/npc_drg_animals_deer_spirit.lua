@@ -95,6 +95,7 @@ function ENT:OnDeath(dmg)
 	gib:SetMaterial("models/props_combine/portalball001_sheet")  
 	gib:SetPos( self:LocalToWorld(Vector(0,0,0))) -- The Postion the model spawns
 	gib:SetAngles( self:GetAngles() )
+	gib:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR);
 	gib:Spawn()
 	  
 	  if IsValid(gib) then
@@ -143,6 +144,7 @@ function ENT:OnDeath(dmg)
   -- Init/Think --
 
 function ENT:CustomInitialize()
+self:SetSolidMask(MASK_PLAYERSOLID)
 self:SetDefaultRelationship(D_HT)
 self:SequenceEvent("walk",0/2,self.Step)
 self:SequenceEvent("walk",1/2,self.Step)
