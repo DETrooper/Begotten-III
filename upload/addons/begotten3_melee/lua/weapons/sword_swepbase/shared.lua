@@ -1106,7 +1106,7 @@ end
 					self:TriggerAnim4(hit, "a_shared_hit_0"..math.random(1, 3));
 					
 					if owner.upstagedActive and not hit.opponent then
-						if IsValid(enemywep) then
+						if IsValid(enemywep) and !enemywep.noDisarm then
 							if --[[enemywep:GetNW2String("activeShield"):len() == 0 and]] not string.find(enemywep:GetClass(), "begotten_fists") and not string.find(enemywep:GetClass(), "begotten_claws") then
 								local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
 								local dropPos = hit:GetPos() + Vector(0, 0, 35) + hit:GetAngles():Forward() * 4
