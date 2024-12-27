@@ -154,7 +154,7 @@ function Schema:ShouldPlayerModifyBlur(entity)
 					return table.HasValue(helmet.attributes, "fear");
 				end
 			end
-		elseif faction == "Hillkeeper" and clientFaction == "Goreic Warrior" or clientFaction == "Children of Satan" then
+		elseif faction == "Hillkeeper" and (clientFaction == "Goreic Warrior" or clientFaction == "Children of Satan") then
 			if entity:GetModel() == "models/bmoc/hill/hill_signifier.mdl" then
 				return true;
 			else
