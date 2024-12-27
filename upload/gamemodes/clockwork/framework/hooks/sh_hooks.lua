@@ -231,9 +231,12 @@ do
 	-- Called when the main activity should be calculated.
 	function GM:CalcMainActivity(player, velocity)
 		local moveType = player:GetMoveType();
+		local inVehicle = player:InVehicle();
 		
 		if moveType == MOVETYPE_NOCLIP or moveType == MOVETYPE_OBSERVER then
-			return -1, -1;
+			if !inVehicle then
+				return -1, -1;
+			end
 		end
 	
 		local model = player:GetModel();
@@ -257,7 +260,6 @@ do
 		local act = Clockwork.animation:GetForModel(model, weaponHoldType, "idle") or ACT_IDLE;
 		local oldact = plyTable.CalcIdeal;
 		local seq = -1;
-		local inVehicle = player:InVehicle();
 		local waterLevel = player:WaterLevel();
 		
 		if (!self:HandlePlayerDriving(player, plyTable, inVehicle, model)
