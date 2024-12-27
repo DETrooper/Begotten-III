@@ -35,9 +35,9 @@ function cwBeliefs:PlayerCharacterInitialized(data)
 		self.upgradedWarcryActive = nil;
 	end
 	
-	if self.trout then
+	--[[if self.trout then
 		self.trout = nil;
-	end
+	end]]--
 	
 	if timer.Exists("tasteOfBloodTimer") then
 		timer.Remove("tasteOfBloodTimer");
@@ -162,13 +162,13 @@ function cwBeliefs:AddEntityOutlines(outlines)
 	end
 	
 	if self.upgradedWarcryActive then
-		if self.trout then
+		--[[if self.trout then
 			for _, v in _player.Iterator() do
 				if v.warcryTarget and v:Alive() and v:GetColor().a > 0 then
 					self:DrawPlayerOutline(v, outlines, troutColor);
 				end;
 			end;
-		elseif self.raven then
+		else]]if self.raven then
 			for _, v in _player.Iterator() do
 				if v.warcryTarget and v:Alive() and v:GetColor().a > 0 then
 					self:DrawPlayerOutline(v, outlines, ravenColor);
@@ -336,24 +336,24 @@ netstream.Hook("UpgradedWarcry", function(data)
 			end;
 		end);
 	else]]
-		if cwBeliefs:HasBelief("daring_trout") then
+		--[[if cwBeliefs:HasBelief("daring_trout") then
 			cwBeliefs.trout = true;
-		end
+		end]]--
 		
 		if timer.Exists("warcryTimer") then
 			timer.Remove("warcryTimer");
 		end
 	
 		timer.Create("warcryTimer", 10, 1, function()
-			if cwBeliefs.trout then
+			--[[if cwBeliefs.trout then
 				cwBeliefs.trout = false;
-			end
+			end]]--
 			
 			cwBeliefs.upgradedWarcryActive = false;
 			
-			for _, v in _player.Iterator() do
+			--[[for _, v in _player.Iterator() do
 				v.warcryTarget = false;
-			end;
+			end;]]--
 		end);
 	--end
 end);

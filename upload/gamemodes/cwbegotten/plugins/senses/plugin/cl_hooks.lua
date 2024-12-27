@@ -160,8 +160,8 @@ function cwSenses:RenderScreenspaceEffects()
 	end;
 end;
 
--- Called just before the skybox is drawn.
-function cwSenses:PreDrawSkyBox()
+-- Called after the 2D skbox is drawn.
+function cwSenses:PostDraw2DSkyBox()
 	if !Clockwork.kernel:IsChoosingCharacter() then
 		local senses = Clockwork.Client:GetNetVar("senses");
 		
