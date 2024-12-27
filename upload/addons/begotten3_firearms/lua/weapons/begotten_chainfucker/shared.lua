@@ -40,6 +40,7 @@ SWEP.Base 				= "begotten_firearm_base"
 SWEP.Spawnable				= true
 SWEP.AdminSpawnable			= true
 SWEP.FiresUnderwater = true
+SWEP.noDisarm = true;
 SWEP.noJam = true;
 
 SWEP.Primary.Sound			= Sound("gatling/gatling_close_shot_4.mp3")		-- Script that calls the primary fire sound
