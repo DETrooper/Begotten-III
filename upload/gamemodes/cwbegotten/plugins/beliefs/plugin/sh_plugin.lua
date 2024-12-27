@@ -1167,7 +1167,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 						--if v:GetFaith() ~= faith then
 							-- Kinisgers can twisted warcry if disguised as a Reaver.
 							if faith == "Faith of the Dark" then
-								if faction == "Goreic Warrior" and vFaction == "Goreic Warrior" then
+								if faction == vFaction then
 									immune = true;
 								elseif v.banners then
 									for k2, v2 in pairs(v.banners) do
@@ -1202,12 +1202,12 @@ local COMMAND = Clockwork.command:New("Warcry");
 									end
 								end
 							elseif faith == "Faith of the Family" then
-								if faction == "Goreic Warrior" and vFaction == "Goreic Warrior" then
-									immune = true;
-								elseif faction == "Hillkeeper" then
+								if faction == "Hillkeeper" then
 									if vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" or v:GetFaith() == "Faith of the Light" then
 										immune = true;
 									end
+								elseif faction == vFaction then
+									immune = true;
 								elseif v.banners then
 									for k2, v2 in pairs(v.banners) do
 										if v2 == "glazic" then
