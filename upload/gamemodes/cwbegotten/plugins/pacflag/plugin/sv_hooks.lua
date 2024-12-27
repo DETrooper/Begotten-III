@@ -38,5 +38,7 @@ function PLUGIN:InitPostEntity()
 end
 
 function PLUGIN:PlayerCharacterLoaded(player)
-	player:ConCommand("pac_clear_parts")
+	if pacx then
+		player:ConCommand("pac_clear_parts")
+	end
 end;
