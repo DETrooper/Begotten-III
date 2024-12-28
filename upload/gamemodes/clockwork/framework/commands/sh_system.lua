@@ -490,12 +490,31 @@ local COMMAND = Clockwork.command:New("ShutDown");
 				Clockwork.player:Notify(v, message);
 			end
 			
-			timer.Simple(delay, function()
+			timer.Create("ServerShutdownTimer", delay, 1 function()
 				RunConsoleCommand("disconnect");
 			end);
 		else
 			RunConsoleCommand("disconnect");
 		end;
+	end;
+COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("ShutDownAbort");
+	COMMAND.tip = "Cancel the timer of a server shutdown.";
+	COMMAND.access = "s";
+	COMMAND.alias = {"CancelShutDown", "ShutDownCancel", "AbortShutDown"};
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		if timer.Exists("ServerShutdownTimer") then
+			timer.Remove("ServerShutdownTimer");
+			
+			for _, v in _player.Iterator() do
+				Clockwork.player:Notify(v, "The server shutdown has been aborted!");
+			end
+		else
+			Clockwork.player:Notify(player, "There is no server shutdown currently in progress!");
+		end
 	end;
 COMMAND:Register();
 
