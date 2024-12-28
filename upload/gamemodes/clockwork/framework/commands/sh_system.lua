@@ -490,7 +490,7 @@ local COMMAND = Clockwork.command:New("ShutDown");
 				Clockwork.player:Notify(v, message);
 			end
 			
-			timer.Create("ServerShutdownTimer", delay, 1 function()
+			timer.Create("ServerShutdownTimer", delay, 1, function()
 				RunConsoleCommand("disconnect");
 			end);
 		else
