@@ -144,7 +144,7 @@ function cwBeliefs:AddEntityOutlines(outlines)
 					end
 				end
 				
-				if hasAssassin and (v:Health() < v:GetMaxHealth() / 4 or v:GetRagdollState() == RAGDOLL_FALLENOVER) then
+				if hasAssassin and (v:Health() < v:GetMaxHealth() / 4 or v:IsRagdolled()) then
 					if (v:GetPos():DistToSqr(playerPos) <= assassinDist) then
 						self:DrawPlayerOutline(v, outlines, warcryColor);
 						
