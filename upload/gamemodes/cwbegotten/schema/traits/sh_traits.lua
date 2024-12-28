@@ -53,6 +53,7 @@ local CRIMINAL = Clockwork.trait:New()
 	CRIMINAL.name = "Criminal"
 	CRIMINAL.description = "Your character is a common criminal, skilled in the art of lockpicking. This trait automatically unlocks the first 3 beliefs on the left side of the 'Litheness' tree: 'Nimble', 'Sly Fidget', and 'Safecracker', and also grants two starting lockpicks."
 	CRIMINAL.points = 4
+	CRIMINAL.disables = {"pilgrim"};
 	CRIMINAL.excludedfactions = {"Holy Hierarchy"};
 Clockwork.trait:Register(CRIMINAL)
 
@@ -212,7 +213,7 @@ local PILGRIM = Clockwork.trait:New()
 	end
 	
 	PILGRIM.points = 2
-	PILGRIM.disables = {"escapee", "gunslinger", "leper"}
+	PILGRIM.disables = {"criminal", "escapee", "gunslinger", "leper"}
 	PILGRIM.requiredfactions = {"Wanderer"}
 Clockwork.trait:Register(PILGRIM)
 
