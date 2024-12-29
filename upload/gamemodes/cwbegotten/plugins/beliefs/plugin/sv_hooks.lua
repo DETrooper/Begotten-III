@@ -429,16 +429,37 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 				
 				if activeWeapon:IsValid() then
 					offhandWeapon = activeWeapon:GetOffhand();
+					weaponItemTable = item.GetByWeapon(activeWeapon);
 				end
 				
-				if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+				if weaponItemTable then
+					local huntingValue = weaponItemTable.huntingValue
+					if huntingValue == 1 then
+						huntingDaggerStrength = 1
+						mutilationValue = 1.5
+						conditionLoss = 12
+						mutilationTime = 15
+					elseif huntingValue == 2 then
+						huntingDaggerStrength = 2
+						mutilationValue = 1
+						conditionLoss = 4
+						mutilationTime = 8
+					else
+						huntingDaggerStrength = 3
+						mutilationValue = 1
+						conditionLoss = 2
+						mutilationTime = 5
+					end
+				end
+				
+				if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger and weaponItemTable then
 					if (!entity.mutilated or entity.mutilated < 3) then
 						local model = entity:GetModel();
 						
 						if model == "models/animals/deer1.mdl" then
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins cutting the flesh of the stag before them, harvesting its meat.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 							
-							Clockwork.player:SetAction(player, "mutilating", 10, 5, function()
+							Clockwork.player:SetAction(player, "mutilating", mutilationTime, 5, function()
 								if IsValid(player) and IsValid(entity) then
 									local activeWeapon = player:GetActiveWeapon();
 									local offhandWeapon;
@@ -447,26 +468,26 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
-										if (!entity.mutilated or entity.mutilated < 3) then
-											entity.mutilated = (entity.mutilated or 0) + 1;
-											
-											local instance = Clockwork.item:CreateInstance("deer_meat");
+									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger and weaponItemTable then
+										if huntingDaggerStrength > 1 then
+											if (!entity.mutilated or entity.mutilated < 3) then
+												entity.mutilated = (entity.mutilated or 0) + mutilationValue;
+												
+												local instance = Clockwork.item:CreateInstance("deer_meat");
 
-											player:GiveItem(instance, true);
-											player:HandleXP(self.xpValues["mutilate"]);
-											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
-											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-											
-											local weaponItemTable = item.GetByWeapon(activeWeapon);
-											
-											if weaponItemTable then
+												player:GiveItem(instance, true);
+												player:HandleXP(self.xpValues["mutilate"]);
+												player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
+												Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
+																							
 												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(1);
+													weaponItemTable:TakeCondition(conditionLoss, true);
 												end
+											else
+												Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 											end
 										else
-											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
+											Clockwork.player:Notify(player, "Your dagger is not strong enough to effectively mutilate this corpse!");
 										end
 									end
 								end
@@ -474,7 +495,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 						elseif model == "models/animals/goat.mdl" then
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins cutting the flesh of the goat before them, harvesting its meat.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						
-							Clockwork.player:SetAction(player, "mutilating", 10, 5, function()
+							Clockwork.player:SetAction(player, "mutilating", mutilationTime, 5, function()
 								if IsValid(player) and IsValid(entity) then
 									local activeWeapon = player:GetActiveWeapon();
 									local offhandWeapon;
@@ -483,9 +504,9 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger and weaponItemTable then
 										if (!entity.mutilated or entity.mutilated < 3) then
-											entity.mutilated = (entity.mutilated or 0) + 1;
+											entity.mutilated = (entity.mutilated or 0) + mutilationValue;
 											
 											local instance = Clockwork.item:CreateInstance("goat_meat");
 
@@ -493,13 +514,9 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 											player:HandleXP(self.xpValues["mutilate"]);
 											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-											
-											local weaponItemTable = item.GetByWeapon(activeWeapon);
-											
-											if weaponItemTable then
-												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(1);
-												end
+																						
+											if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
+												weaponItemTable:TakeCondition(conditionLoss, true);
 											end
 										else
 											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
@@ -510,7 +527,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 						elseif model == "models/animal_ragd/piratecat_leopard.mdl" then
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins cutting the flesh of the leopard before them, harvesting its meat.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						
-							Clockwork.player:SetAction(player, "mutilating", 10, 5, function()
+							Clockwork.player:SetAction(player, "mutilating", mutilationTime, 5, function()
 								if IsValid(player) and IsValid(entity) then
 									local activeWeapon = player:GetActiveWeapon();
 									local offhandWeapon;
@@ -519,26 +536,26 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
-										if (!entity.mutilated or entity.mutilated < 3) then
-											entity.mutilated = (entity.mutilated or 0) + 1;
-											
-											local instance = Clockwork.item:CreateInstance("leopard_meat");
+									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger and weaponItemTable then
+										if huntingDaggerStrength > 1 then
+											if (!entity.mutilated or entity.mutilated < 3) then
+												entity.mutilated = (entity.mutilated or 0) + mutilationValue;
+												
+												local instance = Clockwork.item:CreateInstance("leopard_meat");
 
-											player:GiveItem(instance, true);
-											player:HandleXP(self.xpValues["mutilate"]);
-											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
-											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-											
-											local weaponItemTable = item.GetByWeapon(activeWeapon);
-											
-											if weaponItemTable then
+												player:GiveItem(instance, true);
+												player:HandleXP(self.xpValues["mutilate"]);
+												player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
+												Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
+																								
 												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(1);
+													weaponItemTable:TakeCondition(conditionLoss, true);
 												end
+											else
+												Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 											end
 										else
-											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
+											Clockwork.player:Notify(player, "Your dagger is not strong enough to effectively mutilate this corpse!");
 										end
 									end
 								end
@@ -546,7 +563,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 						elseif model == "models/begotten/creatures/wolf.mdl" then
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins cutting the flesh of the wolf before them, harvesting its meat.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						
-							Clockwork.player:SetAction(player, "mutilating", 10, 5, function()
+							Clockwork.player:SetAction(player, "mutilating", mutilationTime, 5, function()
 								if IsValid(player) and IsValid(entity) then
 									local activeWeapon = player:GetActiveWeapon();
 									local offhandWeapon;
@@ -555,9 +572,9 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger and weaponItemTable then
 										if (!entity.mutilated or entity.mutilated < 3) then
-											entity.mutilated = (entity.mutilated or 0) + 1;
+											entity.mutilated = (entity.mutilated or 0) + mutilationValue;
 											
 											local instance = Clockwork.item:CreateInstance("wolf_meat");
 
@@ -565,13 +582,9 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 											player:HandleXP(self.xpValues["mutilate"]);
 											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-											
-											local weaponItemTable = item.GetByWeapon(activeWeapon);
-											
-											if weaponItemTable then
-												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(1);
-												end
+																						
+											if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
+												weaponItemTable:TakeCondition(conditionLoss, true);
 											end
 										else
 											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
@@ -582,7 +595,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 						elseif model == "models/animals/bear.mdl" then
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins cutting the flesh of the bear before them, harvesting its meat.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						
-							Clockwork.player:SetAction(player, "mutilating", 10, 5, function()
+							Clockwork.player:SetAction(player, "mutilating", mutilationTime, 5, function()
 								if IsValid(player) and IsValid(entity) then
 									local activeWeapon = player:GetActiveWeapon();
 									local offhandWeapon;
@@ -591,26 +604,26 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
-										if (!entity.mutilated or entity.mutilated < 3) then
-											entity.mutilated = (entity.mutilated or 0) + 1;
-											
-											local instance = Clockwork.item:CreateInstance("bear_meat");
+									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger and weaponItemTable then
+										if huntingDaggerStrength >= 3 then
+											if (!entity.mutilated or entity.mutilated < 3) then
+												entity.mutilated = (entity.mutilated or 0) + mutilationValue;
+												
+												local instance = Clockwork.item:CreateInstance("bear_meat");
 
-											player:GiveItem(instance, true);
-											player:HandleXP(self.xpValues["mutilate"]);
-											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
-											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-											
-											local weaponItemTable = item.GetByWeapon(activeWeapon);
-											
-											if weaponItemTable then
+												player:GiveItem(instance, true);
+												player:HandleXP(self.xpValues["mutilate"]);
+												player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
+												Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
+																							
 												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(1);
+													weaponItemTable:TakeCondition(conditionLoss, true);
 												end
+											else
+												Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 											end
 										else
-											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
+											Clockwork.player:Notify(player, "Your dagger is not strong enough to effectively mutilate this corpse!");
 										end
 									end
 								end
@@ -618,7 +631,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 						elseif entity:GetNWEntity("Player"):IsPlayer() or entity:GetNWEntity("Player") == game.GetWorld() then
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins cutting the flesh of the body before them, harvesting its meat.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						
-							Clockwork.player:SetAction(player, "mutilating", 10, 5, function()
+							Clockwork.player:SetAction(player, "mutilating", mutilationTime, 5, function()
 								if IsValid(player) and IsValid(entity) then
 									local activeWeapon = player:GetActiveWeapon();
 									local offhandWeapon;
@@ -627,9 +640,9 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 										offhandWeapon = activeWeapon:GetOffhand();
 									end
 									
-									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger and weaponItemTable then
 										if (!entity.mutilated or entity.mutilated < 3) then
-											entity.mutilated = (entity.mutilated or 0) + 1;
+											entity.mutilated = (entity.mutilated or 0) + mutilationValue;
 											
 											local instance = Clockwork.item:CreateInstance("humanmeat");
 
@@ -637,13 +650,9 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 											player:HandleXP(self.xpValues["mutilate"]);
 											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-											
-											local weaponItemTable = item.GetByWeapon(activeWeapon);
-											
-											if weaponItemTable then
-												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(1);
-												end
+																						
+											if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
+												weaponItemTable:TakeCondition(conditionLoss, true);
 											end
 										else
 											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
@@ -736,28 +745,53 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 				
 				if activeWeapon:IsValid() then
 					offhandWeapon = activeWeapon:GetOffhand();
-				end 
+					weaponItemTable = item.GetByWeapon(activeWeapon);
+				end
+				
+				if weaponItemTable then
+					local huntingValue = weaponItemTable.huntingValue
+					if huntingValue == 1 then
+						huntingDaggerStrength = 1
+						skinningValue = 40
+						skinningConditionLoss = 12
+						skinningTime = 15
+					elseif huntingValue == 2 then
+						huntingDaggerStrength = 2
+						skinningValue = 75
+						skinningConditionLoss = 6
+						skinningTime = 8
+					else
+						huntingDaggerStrength = 3
+						skinningValue = 100
+						skinningConditionLoss = 3
+						skinningTime = 5
+					end
+				end
 				 
-				if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
+				if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger and weaponItemTable then
 					if (!entity.skinned or entity.skinned < 1) then					
 						local model = entity:GetModel();
 						local uniqueID = "hide"
 						
 						if model == "models/animals/deer1.mdl" then
+							requiredDaggerStrength = 2
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins flaying the skin of the stag before them, harvesting its fur and hide.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						elseif model == "models/animals/goat.mdl" then
+							requiredDaggerStrength = 1
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins flaying the skin of the goat before them, harvesting its fur and hide.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						elseif model == "models/animal_ragd/piratecat_leopard.mdl" then
+							requiredDaggerStrength = 2
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins flaying the skin of the leopard before them, harvesting its fur and hide.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						elseif model == "models/begotten/creatures/wolf.mdl" then
+							requiredDaggerStrength = 1
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins flaying the skin of the wolf before them, harvesting its fur and hide.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						elseif model == "models/animals/bear.mdl" then
+							requiredDaggerStrength = 3	
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins flaying the skin of the bear before them, harvesting its fur and hide.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-							
 							uniqueID = "bearskin";
 						end
 						
-						Clockwork.player:SetAction(player, "skinning", 10, 5, function()
+						Clockwork.player:SetAction(player, "skinning", skinningTime, 5, function()
 							if IsValid(player) and IsValid(entity) then
 								local activeWeapon = player:GetActiveWeapon();
 								local offhandWeapon;
@@ -767,26 +801,31 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 								end
 								
 								if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger then
-									if (!entity.skinned or entity.skinned < 1) then
-										entity.skinned = (entity.skinned or 0) + 1;
-										
-										local instance = Clockwork.item:CreateInstance(uniqueID);
+									if requiredDaggerStrength <= huntingDaggerStrength then
+										if (!entity.skinned or entity.skinned < 1) then
+											entity.skinned = (entity.skinned or 0) + 1;
+											
+											local instance = Clockwork.item:CreateInstance(uniqueID);
+											instance:SetCondition(skinningValue)
 
-										player:GiveItem(instance, true);
-										player:HandleXP(self.xpValues["mutilate"] * 2);
-										player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
-										Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-										entity:SetMaterial("models/flesh");
-										
-										local weaponItemTable = item.GetByWeapon(activeWeapon);
-										
-										if weaponItemTable then
-											if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-												weaponItemTable:TakeCondition(1);
+											player:GiveItem(instance, true);
+											player:HandleXP(self.xpValues["mutilate"] * 2);
+											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
+											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
+											entity:SetMaterial("models/flesh");
+											
+											local weaponItemTable = item.GetByWeapon(activeWeapon);
+											
+											if weaponItemTable then
+												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
+													weaponItemTable:TakeCondition(skinningConditionLoss, true);
+												end
 											end
+										else
+											Clockwork.player:Notify(player, "This corpse has already been skinned!");
 										end
 									else
-										Clockwork.player:Notify(player, "This corpse has already been skinned!");
+										Clockwork.player:Notify(player, "Your dagger is not strong enough to pierce this creature's hide!");
 									end
 								end
 							end

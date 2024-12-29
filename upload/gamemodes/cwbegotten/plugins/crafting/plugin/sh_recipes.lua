@@ -8363,7 +8363,8 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["hellforged_steel_ingot"] = {amount = 1},
-			["steel_ingot"] = {amount = 4},
+			["fine_steel_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 1},
 			["cloth"] = {amount = 2},
 		};
 		RECIPE.result = {
@@ -8846,7 +8847,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 300;
+		RECIPE.experience = 80;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -8876,7 +8877,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 200;
+		RECIPE.experience = 90;
 		
 		function RECIPE:OnCraft(player)
 		end;

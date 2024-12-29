@@ -1789,6 +1789,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				if itemTable.hasIncreasedDeflectionWindow then
 					frame:AddText("Increased deflection window (0.25s)", Color(110, 30, 30), nil, 0.9);
 				end
+				
+				if itemTable.huntingValue == 3 then
+					frame:AddText("Hunting Dagger: Skinning and mutilating corpses gives higher quality yields and is much faster.", Color(110, 30, 30), nil, 0.9);
+				end
 
 				if weaponStats["defense"].parrydifficulty and weaponStats["defense"].parrydifficulty > 0.2 then
 					frame:AddText("Has Increased Parry Window", Color(110, 30, 30), nil, 0.9);

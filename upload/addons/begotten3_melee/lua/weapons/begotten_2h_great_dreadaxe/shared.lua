@@ -40,6 +40,8 @@ SWEP.SoundMaterial = "Metal" -- Metal, Wooden, MetalPierce, Punch, Default
 
 SWEP.WindUpSound = "draw/skyrim_axe_draw1.mp3" --For 2h weapons only, plays before primarysound
 
+SWEP.CorruptionGain = 3; -- For sacrificial weapons, gives corruption for each swing
+
 /*---------------------------------------------------------
 	PrimaryAttack
 ---------------------------------------------------------*/
@@ -90,8 +92,8 @@ function SWEP:HandlePrimaryAttack()
 	self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
 	end end)
 	
-	if self.Owner.HandleNeed and not self.Owner.opponent then
-		self.Owner:HandleNeed("corruption", attacktable["primarydamage"] * 0.02);
+	if self.Owner.HandleNeed and not self.Owner.opponent and !self.Owner:GetCharmEquipped("crucifix") and !self.Owner:GetCharmEquipped("warding_talisman") then
+		self.Owner:HandleNeed("corruption", self.CorruptionGain);
 	end
     
     if (SERVER) then

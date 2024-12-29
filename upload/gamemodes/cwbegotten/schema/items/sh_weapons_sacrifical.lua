@@ -119,6 +119,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(76.57, 355.03, 355.03);
 	ITEM.attachmentOffsetVector = Vector(-2.9, 1.41, -3.54);
+	ITEM.huntingValue = 3; -- Affects speed of skinning and mutilating corpses as well as the condition of the hides and meat, 1 = terrible, 3 = great
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"ice"};
@@ -139,6 +140,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(76.57, 355.03, 355.03);
 	ITEM.attachmentOffsetVector = Vector(-2.9, 1.41, -3.54);
+	ITEM.huntingValue = 3; -- Affects speed of skinning and mutilating corpses as well as the condition of the hides and meat, 1 = terrible, 3 = great
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"fire"};

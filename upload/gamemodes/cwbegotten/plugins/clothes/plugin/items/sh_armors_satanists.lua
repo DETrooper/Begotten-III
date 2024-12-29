@@ -205,7 +205,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/heavy_hellplate_armor.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 85;
+ITEM.protection = 90;
 ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
@@ -271,7 +271,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/hellplate_armor.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.9
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 65;
+ITEM.protection = 70;
 ITEM.weight = 6;
 ITEM.weightclass = "Medium";
 ITEM.type = "plate";
@@ -301,7 +301,7 @@ ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
-ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
+ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 ITEM.insulation = 40;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "cloth", "cloth"}};

@@ -1408,7 +1408,7 @@ ITEM.walkSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "Knight Plate";
+ITEM.name = "Knight Plate"; 
 ITEM.group = "gatekeepers/knight_set"
 ITEM.model = "models/begotten/headgroup_props/knightarmor.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/knight_plate.png"

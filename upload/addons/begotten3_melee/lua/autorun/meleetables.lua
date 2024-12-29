@@ -2293,7 +2293,7 @@ AttackTables.SteelClawsAttackTable = {
 -- Daggers
 
 AttackTables.IronDaggerAttackTable = {
-	["primarydamage"] = 12,
+	["primarydamage"] = 13,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -2331,7 +2331,7 @@ AttackTables.BoneDaggerAttackTable = {
 };
 
 AttackTables.GoreHuntingDaggerAttackTable = {
-	["primarydamage"] = 15,
+	["primarydamage"] = 12,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
@@ -3443,7 +3443,7 @@ AttackTables.HillHeavyBattleAxeAttackTable = {
 };
 
 AttackTables.HillGoreHuntingDaggerAttackTable = {
-	["primarydamage"] = 15,
+	["primarydamage"] = 12,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,

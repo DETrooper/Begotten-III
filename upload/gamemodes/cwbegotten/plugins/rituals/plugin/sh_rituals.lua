@@ -1395,7 +1395,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("aura_of_powderheel");
 	RITUAL.name = "(T3) Aura of Powderheel";
-	RITUAL.description = "Call upon the power of the Great Tree in times of battle against its enemies to protect you from their non-traditional weaponry. Performing this ritual generates a spherical forcefield for 10 minutes, which reduces bullet damage to everyone around you within talking distance by 30%. Attempting to fire while inside the sphere will guarantee a misfire. Incurs 15 corruption.";
+	RITUAL.description = "Call upon the power of the Great Tree in times of battle against its enemies to protect you from their non-traditional weaponry. Performing this ritual generates a spherical forcefield for 10 minutes, which reduces bullet damage to everyone around you within talking distance by 25%. Attempting to fire while inside the sphere will guarantee a misfire. Incurs 15 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
 	RITUAL.requirements = {"pantheistic_catalyst", "xolotl_catalyst", "xolotl_catalyst"};

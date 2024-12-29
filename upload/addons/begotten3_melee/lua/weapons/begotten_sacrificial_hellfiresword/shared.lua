@@ -40,6 +40,8 @@ SWEP.SoundMaterial = "Metal" -- Metal, Wooden, MetalPierce, Punch, Default
 
 SWEP.SpecialDrawSound = "ambient/fire/ignite.wav" --For sacrifical weapons only, plays on top of regular draw sound
 
+SWEP.CorruptionGain = 1; -- For sacrificial weapons, gives corruption for each swing
+
 /*---------------------------------------------------------
 	PrimaryAttack
 ---------------------------------------------------------*/
@@ -90,8 +92,8 @@ function SWEP:HandlePrimaryAttack()
 	self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
 	self.Owner:ViewPunch(attacktable["punchstrength"])
 
-	if self.Owner.HandleNeed and not self.Owner.opponent then
-		self.Owner:HandleNeed("corruption", attacktable["primarydamage"] * 0.05);
+	if self.Owner.HandleNeed and not self.Owner.opponent and !self.Owner:GetCharmEquipped("crucifix") and !self.Owner:GetCharmEquipped("warding_talisman") then
+		self.Owner:HandleNeed("corruption", self.CorruptionGain);
 	end
 end
 
@@ -115,8 +117,8 @@ function SWEP:HandleThrustAttack()
 	self.Weapon:EmitSound(attacksoundtable["altsound"][math.random(1, #attacksoundtable["altsound"])])
 	self.Owner:ViewPunch(attacktable["punchstrength"])
 
-	if self.Owner.HandleNeed and not self.Owner.opponent then
-		self.Owner:HandleNeed("corruption", attacktable["primarydamage"] * 0.05);
+	if self.Owner.HandleNeed and not self.Owner.opponent and !self.Owner:GetCharmEquipped("crucifix") and !self.Owner:GetCharmEquipped("warding_talisman") then
+		self.Owner:HandleNeed("corruption", self.CorruptionGain);
 	end
 end
 
