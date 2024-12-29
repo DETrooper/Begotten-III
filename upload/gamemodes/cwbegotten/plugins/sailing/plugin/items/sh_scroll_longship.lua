@@ -18,7 +18,7 @@ local ITEM = Clockwork.item:New();
 	
 	function ITEM:OnUseCustom(player, itemEntity, itemFunction)
 		if (game.GetMap() != "rp_begotten3" and game.GetMap() != "rp_district21") then
-			return;
+			return false;
 		end;
 	
 		local faction = player:GetFaction();
@@ -67,6 +67,8 @@ local ITEM = Clockwork.item:New();
 					
 					--self:SetData("health", longshipEnt.health);
 				end
+			else
+				return false;
 			end
 		elseif itemFunction == "rename" then
 			Clockwork.dermaRequest:RequestString(player, "Rename Longship", "What would you like to rename this Longship to?", "", function(result)
@@ -138,7 +140,7 @@ local ITEM = Clockwork.item:New();
 	
 	function ITEM:OnUseCustom(player, itemEntity, itemFunction)
 		if (game.GetMap() != "rp_begotten3" and game.GetMap() != "rp_district21") then
-			return;
+			return false;
 		end;
 	
 		local faction = player:GetFaction();
@@ -173,6 +175,8 @@ local ITEM = Clockwork.item:New();
 				if self:GetData("customName") and self:GetData("customName") ~= "" then
 					longshipEnt:SetNWString("name", self:GetData("customName"));
 				end
+			else
+				return false;
 			end
 		elseif itemFunction == "rename" then
 			Clockwork.dermaRequest:RequestString(player, "Rename Ironclad", "What would you like to rename this Ironclad to?", "", function(result)

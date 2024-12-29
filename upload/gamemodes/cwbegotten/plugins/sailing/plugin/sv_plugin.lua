@@ -1818,7 +1818,7 @@ concommand.Add("cw_SteamEngineRepair", function(player, cmd, args)
 								
 								if #scrapItems == 3 then
 									for i, v in ipairs(scrapItems) do
-										ent:TakeItem(v);
+										player:TakeItem(v);
 									end
 									
 									entity:SetNWBool("broken", false);
