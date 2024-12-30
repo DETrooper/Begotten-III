@@ -1512,8 +1512,18 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 		
 		local action = Clockwork.player:GetAction(entity);
 		
-		if action == "reloading" or action == "heal" or action == "healing" or action == "pickupragdoll" then
+		if action == "reloading" or action == "heal" or action == "healing" then
 			Clockwork.player:ExtendAction(entity, math.max(0.5, damage / 10));
+		elseif action == "pickupragdoll" or action == "pickupobject" then
+			Clockwork.player:SetAction(entity, false);
+		end
+		
+		local holdingEnt = entity:GetHoldingEntity();
+
+		if IsValid(holdingEnt) then
+			if holdingEnt:GetClass() ~= "prop_ragdoll" or !entity:HasBelief("prowess_finisher") then
+				cwPickupObjects:ForceDropEntity(entity);
+			end
 		end
 	end
 

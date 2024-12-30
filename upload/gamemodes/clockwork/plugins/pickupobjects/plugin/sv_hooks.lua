@@ -51,33 +51,25 @@ end;
 
 -- Called just after a player spawns.
 function cwPickupObjects:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
-	Clockwork.player:SetAction(player, "pickupragdoll", false);
-	
-	if player.PickingUpRagdoll then
-		player:SetNWBool("PickingUpRagdoll", false);
-		
-		if (IsValid(player.PickingUpRagdoll)) then
-			player.PickingUpRagdoll:SetNetVar("IsBeingPickedUp", false);
-			player.PickingUpRagdoll.BeingPickedUp = nil;
+	if player.PickingUpObject then
+		if (IsValid(player.PickingUpObject)) then
+			player.PickingUpObject:SetNetVar("IsBeingPickedUp", false);
+			player.PickingUpObject.BeingPickedUp = nil;
 		end;
 		
-		player.PickingUpRagdoll = nil;
+		player.PickingUpObject = nil;
 	end
 end
 
 -- Called when a player dies.
 function cwPickupObjects:PlayerDeath(player, inflictor, attacker, damageInfo)
-	Clockwork.player:SetAction(player, "pickupragdoll", false);
-	
-	if player.PickingUpRagdoll then
-		player:SetNWBool("PickingUpRagdoll", false);
-		
-		if (IsValid(player.PickingUpRagdoll)) then
-			player.PickingUpRagdoll:SetNetVar("IsBeingPickedUp", false);
-			player.PickingUpRagdoll.BeingPickedUp = nil;
+	if player.PickingUpObject then
+		if (IsValid(player.PickingUpObject)) then
+			player.PickingUpObject:SetNetVar("IsBeingPickedUp", false);
+			player.PickingUpObject.BeingPickedUp = nil;
 		end;
 		
-		player.PickingUpRagdoll = nil;
+		player.PickingUpObject = nil;
 	end
 end
 
@@ -101,7 +93,6 @@ function cwPickupObjects:PlayerStartGetUp(player)
 		
 		if (IsValid(attacker)) then
 			Clockwork.player:SetAction(attacker, nil);
-			attacker:SetNWBool("PickingUpRagdoll", false);
 		end;
 
 		player:SetNetVar("IsDragged", false);
@@ -154,7 +145,9 @@ function cwPickupObjects:KeyPress(player, key)
 					local bIsDoor = Clockwork.entity:IsDoor(entity);
 
 					if (bCanPickup and !bIsDoor and !player:InVehicle()) then
-						if (entity:GetClass() == "prop_ragdoll") then
+						local class = entity:GetClass();
+						
+						if (class == "prop_ragdoll") then
 							if (Clockwork.player:GetAction(player) != "pickupragdoll") then
 								local ragdollPlayer = Clockwork.entity:GetPlayer(entity)
 
@@ -171,66 +164,58 @@ function cwPickupObjects:KeyPress(player, key)
 										end
 									end
 									
-									--if (Clockwork.player:GetUnragdollTime(ragdollPlayer) != 0) or !ragdollPlayer:Alive() then
-										ragdollPlayer:SetNetVar("IsBeingPickedUp", true);
-										player.PickingUpRagdoll = ragdollPlayer;
-										ragdollPlayer.BeingPickedUp = true;
-										ragdollPlayer.PickedUpBy = player;
-										
-										if Clockwork.player:GetAction(ragdollPlayer) == "unragdoll" and (ragdollPlayer:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT or ragdollPlayer.sleepData) then
-											if ragdollPlayer.sleepData then
-												ragdollPlayer.sleepData = nil;
-											end
-										
-											hook.Run("PlayerCancelGetUp", ragdollPlayer);
-											Clockwork.player:SetUnragdollTime(ragdollPlayer, nil);
+									ragdollPlayer:SetNetVar("IsBeingPickedUp", true);
+									player.PickingUpObject = ragdollPlayer;
+									ragdollPlayer.BeingPickedUp = true;
+									ragdollPlayer.PickedUpBy = player;
+									
+									if Clockwork.player:GetAction(ragdollPlayer) == "unragdoll" and (ragdollPlayer:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT or ragdollPlayer.sleepData) then
+										if ragdollPlayer.sleepData then
+											ragdollPlayer.sleepData = nil;
 										end
-										
-										player:SetNWBool("PickingUpRagdoll", true);
-										Clockwork.chatBox:AddInTargetRadius(player, "me", "starts picking up the body before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
-										
-										local pickupTime = 5;
-										
-										if player.HasBelief and player:HasBelief("dexterity") then
-											pickupTime = 3;
-										end
+									
+										hook.Run("PlayerCancelGetUp", ragdollPlayer);
+										Clockwork.player:SetUnragdollTime(ragdollPlayer, nil);
+									end
+									
+									Clockwork.chatBox:AddInTargetRadius(player, "me", "starts picking up the body before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+									
+									local pickupTime = 5;
+									
+									if player.HasBelief and player:HasBelief("dexterity") then
+										pickupTime = 3;
+									end
 
-										Clockwork.player:SetAction(player, "pickupragdoll", pickupTime, 5, function()
-											if (IsValid(player) and IsValid(entity)) and IsValid(player:GetActiveWeapon()) and player:GetActiveWeapon():GetClass() == "begotten_fists" and (!cwDueling or (cwDueling and !cwDueling:PlayerIsInMatchmaking(player))) then
-												self:ForcePickup(player, entity, trace);
-												
-												if (IsValid(ragdollPlayer)) then
-													ragdollPlayer.PickedUpBy = nil;
-													ragdollPlayer:SetNetVar("IsDragged", true);
-												end
-											else
-												if (IsValid(ragdollPlayer)) then
-													ragdollPlayer.PickedUpBy = nil;
-													ragdollPlayer:SetNetVar("IsDragged", false);
-												end
-											end;
-											
-											if IsValid(player) then
-												player.PickingUpRagdoll = nil;
-												player:SetNWBool("PickingUpRagdoll", false);
-											end
+									Clockwork.player:SetAction(player, "pickupragdoll", pickupTime, 5, function()
+										if (IsValid(player) and IsValid(entity)) and IsValid(player:GetActiveWeapon()) and player:GetActiveWeapon():GetClass() == "begotten_fists" and (!cwDueling or (cwDueling and !cwDueling:PlayerIsInMatchmaking(player))) then
+											self:ForcePickup(player, entity, trace);
 											
 											if (IsValid(ragdollPlayer)) then
-												ragdollPlayer:SetNetVar("IsBeingPickedUp", false);
-												ragdollPlayer.BeingPickedUp = nil;
-											end;
-										end);
-									--[[else
-										Schema:EasyText(player, "peru", "You can't get a grip on this person as they are getting up!")
-										return;
-									end;]]--
+												ragdollPlayer.PickedUpBy = nil;
+												ragdollPlayer:SetNetVar("IsDragged", true);
+											end
+										else
+											if (IsValid(ragdollPlayer)) then
+												ragdollPlayer.PickedUpBy = nil;
+												ragdollPlayer:SetNetVar("IsDragged", false);
+											end
+										end;
+										
+										if IsValid(player) then
+											player.PickingUpObject = nil;
+										end
+										
+										if (IsValid(ragdollPlayer)) then
+											ragdollPlayer:SetNetVar("IsBeingPickedUp", false);
+											ragdollPlayer.BeingPickedUp = nil;
+										end;
+									end);
 								elseif !ragdollPlayer and entity:GetPhysicsObject():IsMoveable() and !IsValid(entity.cwHoldingGrab) and !entity.BeingPickedUp then
 									entity:SetNetVar("IsBeingPickedUp", true);
-									player.PickingUpRagdoll = entity;
+									player.PickingUpObject = entity;
 									entity.BeingPickedUp = true;
 									entity.PickedUpBy = player;
 									
-									player:SetNWBool("PickingUpRagdoll", true);
 									Clockwork.chatBox:AddInTargetRadius(player, "me", "starts picking up the body before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 									
 									local pickupTime = 5;
@@ -254,8 +239,7 @@ function cwPickupObjects:KeyPress(player, key)
 										end;
 										
 										if IsValid(player) then
-											player.PickingUpRagdoll = nil;
-											player:SetNWBool("PickingUpRagdoll", false);
+											player.PickingUpObject = nil;
 										end
 										
 										if (IsValid(entity)) then
@@ -265,6 +249,52 @@ function cwPickupObjects:KeyPress(player, key)
 									end);
 								end;
 							end;
+						elseif class ~= "cw_item" and entity:GetPhysicsObject():IsMoveable() and entity:GetPhysicsObject():GetMass() > 15 and !IsValid(entity.cwHoldingGrab) and !entity.BeingPickedUp then
+							entity:SetNetVar("IsBeingPickedUp", true);
+							player.PickingUpObject = entity;
+							entity.BeingPickedUp = true;
+							entity.PickedUpBy = player;
+							
+							local objectName = "object";
+							local customName = entity:GetNetworkedString("Name");
+
+							if (customName and customName != "") then
+								objectName = customName;
+							elseif cwStorage and cwStorage.containerList[entity:GetModel()] then
+								objectName = cwStorage.containerList[entity:GetModel()][2] or "object";
+							end
+							
+							Clockwork.chatBox:AddInTargetRadius(player, "me", "starts picking up the "..objectName.." before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+							
+							local pickupTime = math.min(10, entity:GetPhysicsObject():GetMass() / 5);
+							
+							if player.HasBelief and player:HasBelief("dexterity") then
+								pickupTime = pickupTime * 0.67;
+							end
+							
+							Clockwork.player:SetAction(player, "pickupobject", pickupTime, 5, function()
+								if (IsValid(player) and IsValid(entity)) then
+									self:ForcePickup(player, entity, trace);
+									
+									if (IsValid(entity)) then
+										entity:SetNetVar("IsDragged", true);
+									end
+								else
+									if (IsValid(entity)) then
+										entity.PickedUpBy = nil;
+										entity:SetNetVar("IsDragged", false);
+									end
+								end;
+								
+								if IsValid(player) then
+									player.PickingUpObject = nil;
+								end
+								
+								if (IsValid(entity)) then
+									entity:SetNetVar("IsBeingPickedUp", false);
+									entity.BeingPickedUp = nil;
+								end;
+							end);
 						else
 							self:ForcePickup(player, entity, trace);
 						end;
@@ -274,19 +304,24 @@ function cwPickupObjects:KeyPress(player, key)
 					end;
 				end;
 			elseif (key == IN_ATTACK) then
-				if (Clockwork.player:GetAction(player) == "pickupragdoll") then
-					if (IsValid(player.PickingUpRagdoll)) then
-						player.PickingUpRagdoll:SetNetVar("IsDragged", false);
-						player.PickingUpRagdoll:SetNetVar("IsBeingPickedUp", false);
-						player.PickingUpRagdoll.BeingPickedUp = nil;
-						player.PickingUpRagdoll.PickedUpBy = nil;
+				local action = Clockwork.player:GetAction(player);
+				
+				if (action == "pickupragdoll" or action == "pickupobject") then
+					if (IsValid(player.PickingUpObject)) then
+						player.PickingUpObject:SetNetVar("IsDragged", false);
+						player.PickingUpObject:SetNetVar("IsBeingPickedUp", false);
+						player.PickingUpObject.BeingPickedUp = nil;
+						player.PickingUpObject.PickedUpBy = nil;
+						
+						if player.PickingUpObject:GetClass() == "prop_ragdoll" then
+							Clockwork.chatBox:AddInTargetRadius(player, "me", "releases their grip on the body before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+						else
+							Clockwork.chatBox:AddInTargetRadius(player, "me", "releases their grip on the object before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+						end
 					end;
 					
-					Clockwork.chatBox:AddInTargetRadius(player, "me", "releases their grip on the body before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
-					
 					player.NextPickup = CurTime() + 1;
-					player.PickingUpRagdoll = nil;
-					player:SetNWBool("PickingUpRagdoll", false);
+					player.PickingUpObject = nil;
 					Clockwork.player:SetAction(player, nil);
 				end;
 			end;

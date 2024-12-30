@@ -15,7 +15,9 @@ Clockwork.kernel:IncludePrefixed("sv_hooks.lua");
 Clockwork.kernel:IncludePrefixed("cl_hooks.lua");
 
 function cwPickupObjects:Move(player, moveData)
-	if (player:GetNWBool("PickingUpRagdoll", false) == true) then
+	local action = Clockwork.player:GetAction(player);
+	
+	if action == "pickupragdoll" or action == "pickupobject" then
 		moveData:SetVelocity(Vector(0, 0, moveData:GetVelocity().z or 0));
 	end;
 end;

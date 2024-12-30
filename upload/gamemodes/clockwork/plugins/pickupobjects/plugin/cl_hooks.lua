@@ -5,6 +5,8 @@
 function cwPickupObjects:GetProgressBarInfoAction(action, percentage)
 	if (action == "pickupragdoll") then
 		return {text = "You are picking up a body. Click to cancel.", percentage = percentage, flash = percentage < 10}
+	elseif (action == "pickupobject") then
+		return {text = "You are picking up an object. Click to cancel.", percentage = percentage, flash = percentage < 10}
 	end
 end
 

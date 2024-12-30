@@ -76,7 +76,7 @@ local APTITUDE = cwBeliefs.beliefTrees:New("aptitude")
 		[3] = {
 			["literacy"] = {
 				name = "Literacy",
-				description = "Unlocks the ability to read. Gain a moderate amount of faith for each unique scripture read.",
+				description = "Unlocks the ability to read. Gain a moderate amount of faith for each unique scripture read (up to a maximum of 8).",
 				row = 1,
 			},
 			["scribe"] = {
