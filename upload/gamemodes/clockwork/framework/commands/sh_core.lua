@@ -792,7 +792,7 @@ local COMMAND = Clockwork.command:New("CharPhysDesc");
 	COMMAND.text = "[string Text]";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.arguments = 0;
-	COMMAND.alias = {"PhysDesc", "SetPhysDesc"};
+	COMMAND.alias = {"PhysDesc", "SetPhysDesc", "CharDesc"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
