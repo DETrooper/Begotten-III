@@ -2658,16 +2658,16 @@ function Schema:ChatBoxAdjustInfo(info)
 							end
 						elseif #currentSplit >= 2 then
 							local characterToRepeat = math.random(1, #currentSplit - 1);
-							local str = string.sub(currentSplit, characterToRepeat, characterToRepeat);
+							local str = string.utf8sub(currentSplit, characterToRepeat, characterToRepeat);
 							
-							currentSplit = string.gsub(string.SetChar(currentSplit, characterToRepeat, "#"), "#", str.."-"..string.lower(str));
+							currentSplit = string.gsub(string.utf8setchar(currentSplit, characterToRepeat, "#"), "#", str.."-"..string.utf8lower(str));
 						end
 						
 						if #currentSplit >= 2 and math.random(1, 3) == 1 then
 							local suffix_found = false;
 							
 							for j = 1, #suffixes do
-								if string.EndsWith(currentSplit, suffixes[j]) then
+								if string.utf8endswith(currentSplit, suffixes[j]) then
 									suffix_found = true;
 									break;
 								end
@@ -2683,7 +2683,7 @@ function Schema:ChatBoxAdjustInfo(info)
 						end
 						
 						if math.random(1, 6) == 1 then
-							currentSplit = string.upper(currentSplit);
+							currentSplit = string.utf8upper(currentSplit);
 						end
 						
 						splitText[i] = currentSplit;
