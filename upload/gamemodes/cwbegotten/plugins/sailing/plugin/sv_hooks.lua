@@ -136,14 +136,14 @@ function cwSailing:KeyPress(player, key)
 	if (key == IN_ATTACK) then
 		local action = Clockwork.player:GetAction(player);
 		
-		if (action == "burn_longship" or action == "extinguish_longship" or action == "repair_longship" or action == "repair_alarm" or action == "repair_ironclad" or action == "refuel_ironclad") then
+		if (action == "burn_longship" or action == "extinguish_longship" or action == "repair_longship" or action == "repair_alarm" or action == "repair_steam_engine" or action == "refuel_ironclad") then
 			Clockwork.player:SetAction(player, nil);
 		end
 	end;
 end;
 
 function cwSailing:ModifyPlayerSpeed(player, infoTable, action)
-	if (action == "burn_longship" or action == "extinguish_longship" or action == "repair_longship" or action == "repair_alarm" or action == "repair_ironclad" or action == "refuel_ironclad") then
+	if (action == "burn_longship" or action == "extinguish_longship" or action == "repair_longship" or action == "repair_alarm" or action == "repair_steam_engine" or action == "refuel_ironclad") then
 		infoTable.runSpeed = infoTable.walkSpeed * 0.1;
 		infoTable.walkSpeed = infoTable.walkSpeed * 0.1;
 	end
