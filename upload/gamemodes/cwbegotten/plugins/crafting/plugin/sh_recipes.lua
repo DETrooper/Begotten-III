@@ -3558,9 +3558,9 @@ RECIPE:Register()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
-			["steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 2},
 			["wood"] = {amount = 2},
-			["leather"] = {amount = 2},
+			["leather"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_polearm_lucerne"] = {amount = 1},
@@ -3570,7 +3570,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 80;
+		RECIPE.experience = 70;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -3657,7 +3657,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 60;
+		RECIPE.experience = 70;
 		
 		function RECIPE:OnCraft(player)
 		end;

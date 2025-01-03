@@ -69,7 +69,7 @@ SWEP.Spawnable				= true
 SWEP.AdminSpawnable			= true
 SWEP.FiresUnderwater 		= false
 
-SWEP.Primary.Sound			= Sound("musket/musket1.wav")		-- Script that calls the primary fire sound
+SWEP.Primary.Sound			= Sound("weapons/cb4/cb4-1.wav")		-- Script that calls the primary fire sound
 SWEP.Primary.RPM			= 25		-- This is in Rounds Per Minute
 SWEP.Primary.ClipSize		= 1		-- Size of a clip
 SWEP.Primary.DefaultClip	= 0			-- Bullets you start with
@@ -127,7 +127,7 @@ SWEP.isMeleeFirearm = true;
 
 SWEP.AmmoTypes = {
 	["Longshot"] = function(SWEP)
-		SWEP.Primary.Sound = Sound("musket/musket1.wav");
+		SWEP.Primary.Sound = Sound("weapons/cb4/cb4-1.wav");
 		SWEP.Primary.NumShots = 1;
 		SWEP.Primary.Damage = 95;
 		SWEP.Primary.Spread = .1;
