@@ -1411,7 +1411,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 				end
 			end
 			
-			if not attacker.opponent and entity:CharPlayTime() > 1800 and attacker ~= entity then
+			if not attacker.opponent and entity:CharPlayTime() > config.GetVal("min_xp_charplaytime") and attacker ~= entity then
 				if !cwRituals or (cwRituals and !entTab.scornificationismActive) then
 					local attackerFaction = attacker:GetFaction();
 					local attackerFactionTable = Clockwork.faction:FindByID(attackerFaction);
@@ -2220,7 +2220,7 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 			end);
 		end
 		
-		if player:CharPlayTime() > 1800 then
+		if player:CharPlayTime() > config.GetVal("min_xp_charplaytime") then
 			local attackerFaction = attacker:GetFaction();
 			local attackerFactionTable = Clockwork.faction:FindByID(attackerFaction);
 			

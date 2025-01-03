@@ -730,6 +730,12 @@ function Schema:OverrideTeamColor(player, bRecognized)
 					teamColor = Color(200, 200, 200, 255);
 				end
 			end
+		elseif playerFaction == "Hillkeeper" and clientFaction ~= "Hillkeeper" and clientFaction ~= "Holy Hierarchy" then
+			if player:GetSubfaction() == "Outrider" then
+				if (!clothesItem or !clothesItem.faction or (clothesItem.faction and clothesItem.faction ~= playerFaction)) and (!helmetItem or !helmetItem.faction or (helmetItem.faction and helmetItem.faction ~= playerFaction)) then
+					teamColor = Color(200, 200, 200, 255);
+				end
+			end
 		elseif playerFaction == "Children of Satan" and clientFaction ~= "Children of Satan" then
 			if (!clothesItem or !clothesItem.faction or (clothesItem.faction and clothesItem.faction ~= playerFaction)) and (!helmetItem or !helmetItem.faction or (helmetItem.faction and helmetItem.faction ~= playerFaction)) then
 				local kinisgerOverride = player:GetNetVar("kinisgerOverride");
@@ -749,6 +755,10 @@ function Schema:OverrideTeamColor(player, bRecognized)
 		end
 	else
 		if playerFaction == "Gatekeeper" and clientFaction ~= "Gatekeeper" and clientFaction ~= "Holy Hierarchy" then
+			if (!clothesItem or !clothesItem.faction or (clothesItem.faction and clothesItem.faction ~= playerFaction)) and (!helmetItem or !helmetItem.faction or (helmetItem.faction and helmetItem.faction ~= playerFaction)) then
+				teamColor = Color(200, 200, 200, 255);
+			end
+		elseif playerFaction == "Hillkeeper" and clientFaction ~= "Hillkeeper" and clientFaction ~= "Holy Hierarchy" then
 			if (!clothesItem or !clothesItem.faction or (clothesItem.faction and clothesItem.faction ~= playerFaction)) and (!helmetItem or !helmetItem.faction or (helmetItem.faction and helmetItem.faction ~= playerFaction)) then
 				teamColor = Color(200, 200, 200, 255);
 			end
