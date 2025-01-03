@@ -287,6 +287,7 @@ function PANEL:AddIcon(iconData)
 	local lockedSubfactions = iconData.lockedSubfactions
 	local lockedFactions = iconData.lockedFactions
 	local lockedTraits = iconData.lockedTraits;
+	local lockedBeliefs = iconData.lockedBeliefs;
 	local description = iconData.description
 	local quote = iconData.quote;
 	local name = iconData.name
@@ -310,6 +311,7 @@ function PANEL:AddIcon(iconData)
 	icon.lockedSubfactions = lockedSubfactions;
 	icon.lockedFactions = lockedFactions;
 	icon.lockedTraits = lockedTraits;
+	icon.lockedBeliefs = lockedBeliefs;
 	icon.locked = locked;
 	icon.disabled = disabled;
 	icon.row = row;
@@ -371,6 +373,7 @@ function PANEL:AddIcon(iconData)
 		end
 		
 		if icon.lockedBeliefs then
+			PrintTable(icon.lockedBeliefs);
 			for i, v in ipairs(icon.lockedBeliefs) do
 				if beliefs[v] then
 					return;

@@ -289,14 +289,12 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 			for k3, v3 in pairs(v2) do
 				if v3.lockedBeliefs then
 					for i, v4 in ipairs(v3.lockedBeliefs) do
-						if beliefs[k3] then
+						if beliefs[k3] and beliefs[v4] then
 							lockedBeliefFound = true;
 							beliefs[k3] = false;
 							points = points + 1;
 						end
 					end
-					
-					break;
 				end
 			end
 		end
