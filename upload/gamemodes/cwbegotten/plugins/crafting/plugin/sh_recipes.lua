@@ -8415,11 +8415,11 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("blackplate_armor");
 		RECIPE.name = "Blackplate Armor";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 3},
-			["steel_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 4},
 			["cloth"] = {amount = 2},
 		};
 		RECIPE.result = {
@@ -8430,7 +8430,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 95;
+		RECIPE.experience = 85;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -8480,8 +8480,8 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["blackplate_armor"] = {amount = 1},
-			["hellforged_steel_ingot"] = {amount = 1},
-			["steel_ingot"] = {amount = 2},
+			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["hellplate_armor"] = {amount = 1},

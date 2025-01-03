@@ -417,8 +417,7 @@ ITEM.overlay = "begotten/zomboverlay/skullhelm";
 ITEM.faction = "Children of Satan";
 
 ITEM.attributes = {"fear"};
-ITEM.requiredbeliefs = {"hauberk"};
-ITEM.requireSubfaction = {"Rekh-khet-sa"};
+ITEM.requiredbeliefs = {"hauberk", "primevalism"};
 
 -- specifies which hitgroups will be affected by blunt, slash, pierce and other damage type scaling.
 ITEM.effectiveLimbs = {
@@ -600,7 +599,7 @@ ITEM:Register();
 local ITEM = Clockwork.item:New("clothes_base");
 ITEM.name = "Blackplate Armor";
 ITEM.group = "satanists/halfhellplate";
-ITEM.model = "models/begotten/headgroup_props/hellplatemediumarmor.mdl"
+ITEM.model = "models/begotten/items/halfhellplate.mdl"
 ITEM.iconoverride = "begotten/ui/itemicons/halfhellplate.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.9
