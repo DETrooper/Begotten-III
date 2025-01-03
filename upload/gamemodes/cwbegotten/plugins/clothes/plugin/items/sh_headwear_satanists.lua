@@ -76,45 +76,10 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
 	ITEM.insulation = 40;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "cloth"}};
-ITEM:Register();
-
-local ITEM = Clockwork.item:New("bodygroup_base")
-	ITEM.name = "Gothic Plate Helmet"
-	ITEM.model = "models/begotten/headgroup_props/vasso_helm.mdl"
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/gothic_plate_helmet.png"
-	ITEM.concealsFace = true;
-	ITEM.weight = 1.5
-	ITEM.uniqueID = "gothic_plate_helmet"
-	ITEM.category = "Helms"
-	ITEM.bodyGroup = 1
-	ITEM.bodyGroupVal = 1
-	ITEM.description = "A Gothic plate helmet belonging to the one and only Lord Vasso."
-	ITEM.requireFaith = {"Faith of the Dark"};
-	ITEM.excludeFactions = {"Goreic Warrior"};
-	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.faction = "Children of Satan";
-
-	ITEM.conditionScale = 0 -- item degrades 1.5x faster with damage related condition loss
-	ITEM.repairCostModifier = 0.5;
-
-	ITEM.effectiveLimbs = {
-		[HITGROUP_HEAD] = true,
-	}
-
-	ITEM.protection = 80
-	ITEM.hitParticle = "MetalSpark";
-	ITEM.type = "plate";
-
-	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
-	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
-	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
-	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
-	ITEM.stabilityScale = 0.20; -- reduces stability damage by 80%
-	ITEM.insulation = 100;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
@@ -145,12 +110,50 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
+	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
-	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 50;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Blackplate Helmet"
+	ITEM.model = "models/begotten/items/cc_ebony_helm.mdl"
+	ITEM.iconoverride = "begotten/ui/itemicons/cc_ebony_helm.png"
+	ITEM.weight = 1.8
+	ITEM.uniqueID = "blackplate_helmet"
+	ITEM.category = "Helms"
+	ITEM.bodyGroup = 1
+	ITEM.bodyGroupVal = 5
+	ITEM.headSuffix = "_satanist";
+	ITEM.description = "A helmet that only barely resembles its original design. It has been reforged countless times in the fires of Hell and has been scarred in battle. Was it once the helm of an honored Philimaxio, or a gladiator from the pits of the Darklands?"
+	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.faction = "Children of Satan";
+
+	ITEM.conditionScale = 1.5 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 70
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.65; -- reduces slash damage by 35%
+	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	ITEM.insulation = 50;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks"}};
 ITEM:Register();

@@ -6072,6 +6072,35 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 	
+	RECIPE = cwRecipes.recipes:New("gore_chainmail_upgrade_warfighter");
+		RECIPE.name = "(Upgrade) Gore Chainmail";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["gore_warfighter_armor"] = {amount = 1},
+			["iron_ingot"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["gore_chainmail"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 35;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
 	RECIPE = cwRecipes.recipes:New("gore_lamellar");
 		RECIPE.name = "Gore Lamellar";
 		RECIPE.requiresSmithy = true;
@@ -6348,7 +6377,7 @@ RECIPE:Register()
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 4},
 			["leather"] = {amount = 2},
-			["cloth"] = {amount = 1},
+			["cloth"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["haralder_chainmail"] = {amount = 1},
@@ -6359,6 +6388,35 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 65;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("haralder_chainmail_upgrade_warfighter");
+		RECIPE.name = "(Upgrade) Haralder Chainmail";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["gore_warfighter_armor"] = {amount = 1},
+			["iron_ingot"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["haralder_chainmail"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 35;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -7751,9 +7809,9 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
-			["scrap"] = {amount = 2},
+			["scrapper_grunt_plate"] = {amount = 1},
 			["leather"] = {amount = 4},
-			["steel_ingot"] = {amount = 3},
+			["steel_ingot"] = {amount = 4},
 		};
 		RECIPE.result = {
 			["wanderer_oppressor_armor"] = {amount = 1},
@@ -8236,36 +8294,6 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
-
-	RECIPE = cwRecipes.recipes:New("dread_armor");
-		RECIPE.name = "Dread Armor";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Children of Satan"};
-		RECIPE.requirements = {
-			["hellforged_steel_ingot"] = {amount = 2},
-			["iron_ingot"] = {amount = 5},
-			["leather"] = {amount = 1},
-		};
-		RECIPE.result = {
-			["dread_armor"] = {amount = 1},
-		};
-		RECIPE.category = "Armor"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 225;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
 	
 	RECIPE = cwRecipes.recipes:New("darklander_immortal_armor");
 		RECIPE.name = "Darklander Immortal Armor";
@@ -8275,7 +8303,6 @@ RECIPE:Register()
 		RECIPE.requirements = {
 			["hellforged_steel_ingot"] = {amount = 4},
 			["fine_steel_ingot"] = {amount = 2},
-			["pentagram_catalyst"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["darklander_immortal_armor"] = {amount = 1},
@@ -8324,6 +8351,35 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("helldancer_robes");
+		RECIPE.name = "Helldancer Robes";
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Children of Satan"};
+		RECIPE.requirements = {
+			["elegant_robes"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 3},
+			["steel_ingot"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["helldancer_robes"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 100;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("heavy_hellplate_armor");
 		RECIPE.name = "Heavy Hellplate Armor";
@@ -8355,6 +8411,36 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("blackplate_armor");
+		RECIPE.name = "Blackplate Armor";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Children of Satan"};
+		RECIPE.requirements = {
+			["fine_steel_ingot"] = {amount = 3},
+			["steel_ingot"] = {amount = 1},
+			["cloth"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["blackplate_armor"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 95;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("hellplate_armor");
 		RECIPE.name = "Hellplate Armor";
@@ -8376,6 +8462,36 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 150;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("hellplate_armor_upgrade_blackplate");
+		RECIPE.name = "(Upgrade) Hellplate Armor";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Children of Satan"};
+		RECIPE.requirements = {
+			["blackplate_armor"] = {amount = 1},
+			["hellforged_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["hellplate_armor"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 70;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -8476,6 +8592,34 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("blackplate_helmet");
+		RECIPE.name = "Blackplate Helmet";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Children of Satan"};
+		RECIPE.requirements = {
+			["fine_steel_ingot"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["blackplate_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("hellplate_helmet");
 		RECIPE.name = "Hellplate Helmet";
@@ -8496,6 +8640,37 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 80;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("hellplate_helmet_upgrade_blackplate");
+		RECIPE.name = "(Upgrade) Hellplate Helmet";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Children of Satan"};
+		RECIPE.requirements = {
+			["blackplate_helmet"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
+			["down_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["hellplate_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 50;
 		
 		function RECIPE:OnCraft(player)
 		end;
