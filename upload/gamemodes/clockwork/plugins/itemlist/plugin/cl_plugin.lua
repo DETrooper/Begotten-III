@@ -47,11 +47,11 @@ spawnmenu.AddContentType("cwItem", function(container, data)
 		local menu = DermaMenu()
 		menu:AddOption("Copy entity name to clipboard.", function()
 			SetClipboardText(data.uniqueID)
-		end)
+		end):SetIcon("icon16/script_edit.png");
 
 		menu:AddOption("Place single instance in your inventory.", function()
 			netstream.Start("MenuItemGive", data.uniqueID)
-		end)
+		end):SetIcon("icon16/basket_put.png");
 		
 		menu:AddOption("Place specified amount in your inventory.", function()
 			Derma_StringRequest(data.name, "How many items of this type do you want to spawn into your inventory (up to 100)", nil, function(amount)
@@ -59,12 +59,12 @@ spawnmenu.AddContentType("cwItem", function(container, data)
 					netstream.Start("MenuItemGive", data.uniqueID, math.min(100, tonumber(amount)));
 				end
 			end);
-		end);
+		end):SetIcon("icon16/basket_edit.png");
 		
 		if Clockwork.command:FindByID("SummonItem") then
 			menu:AddOption("Summon instance of the item.", function()
 				Clockwork.kernel:RunCommand("SummonItem", data.uniqueID);
-			end);
+			end):SetIcon("icon16/arrow_down.png");
 		end
 
 		menu:Open()

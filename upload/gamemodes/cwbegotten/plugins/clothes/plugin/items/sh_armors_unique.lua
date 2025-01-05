@@ -373,3 +373,59 @@ ITEM.walkSound = {
 };
 
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Elder Druid Robes";
+ITEM.model = "models/begotten/headgroups_props/elderdruid.mdl"
+ITEM.iconoverride = "materials/begotten/ui/itemicons/elder_druid_robes.png"
+ITEM.helmetIconOverride = "materials/begotten/ui/itemicons/gore_skull_helm.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 0.9
+ITEM.hitParticle = "GlassImpact";
+ITEM.protection = 55
+ITEM.type = "leather";
+ITEM.hasHelmet = true;
+ITEM.weight = 3.5;
+ITEM.weightclass = "Light";
+ITEM.description = "An original set of Blade Druid Robes somehow well kept over centuries. It is permanently attached to a Dread Minotaur Helm and is highly protected by the Maternal Aura. It appears that bullet projectiles are completely ineffective against this armor, as the aura protects from such cowardly means.";
+ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+ITEM.requireFaction = {"Goreic Warrior"};
+ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver"};
+ITEM.overlay = "begotten/zomboverlay/skullhelm";
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_HEAD] = true,
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.25, -- increases fall damage by 25%
+}
+
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+ITEM.bulletScale = 0.10; -- reduces bullet damage by 90%
+ITEM.insulation = 70;
+
+ITEM.attributes = {"mothers_blessing", "increased_regeneration", "fear"};
+ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide", "cloth", "cloth", "cloth"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+	--if (player:GetGender() == GENDER_FEMALE) then
+		return "models/begotten/goreicwarfighters/elderdruid.mdl";
+	--else
+		--return "models/begotten/satanists/lordvasso/male_56.mdl";
+	--end;
+end;
+
+ITEM:Register();

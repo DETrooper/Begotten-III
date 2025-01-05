@@ -118,7 +118,7 @@ SWEP.AmmoTypes = {
 		return true;
 	end,
 	["Longshot"] = function(SWEP)
-		SWEP.Primary.Sound = Sound("musket/musket1.wav");
+		SWEP.Primary.Sound = Sound("weapons/cb4/cb4-1.wav");
 		SWEP.Primary.NumShots = 1;
 		SWEP.Primary.Damage = 95;
 		SWEP.Primary.Spread = .1;

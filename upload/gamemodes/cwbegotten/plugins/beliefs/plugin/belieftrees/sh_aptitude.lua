@@ -76,7 +76,7 @@ local APTITUDE = cwBeliefs.beliefTrees:New("aptitude")
 		[3] = {
 			["literacy"] = {
 				name = "Literacy",
-				description = "Unlocks the ability to read. Gain a moderate amount of faith for each unique scripture read.",
+				description = "Unlocks the ability to read. Gain a moderate amount of faith for each unique scripture read (up to a maximum of 8).",
 				row = 1,
 			},
 			["scribe"] = {
@@ -93,7 +93,8 @@ local APTITUDE = cwBeliefs.beliefTrees:New("aptitude")
 			},
 			["loremaster"] = {
 				name = "Loremaster",
-				description = "Increases your sacrament level cap by 10 but locks the 'Prowess' tree. Any epiphanies invested in 'Prowess' will be refunded.",
+				--description = "Increases your sacrament level cap by 10 but locks the 'Prowess' tree. Any epiphanies invested in 'Prowess' will be refunded.",
+				description = "Increases your sacrament level cap by 10 but locks the Tier III and IV beliefs of the 'Prowess' tree. Any epiphanies invested in these will be refunded.",
 				quote = "Throw away your desires. Toss aside your warrior spirit. You are a beacon of knowledge. Let the young fools squabble and die. Become all-knowing, and wisdom will be your weapon.",
 				requirements = {"literacy", "scribe", "anthropologist"},
 				row = 4,

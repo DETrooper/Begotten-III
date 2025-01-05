@@ -324,21 +324,27 @@ function cwDueling:PlayerEntersMatchmaking(player)
 		cwPickupObjects:ForceDropEntity(player);
 	end;
 	
-	if (Clockwork.player:GetAction(player) == "pickupragdoll") then
-		if (IsValid(player.PickingUpRagdoll)) then
-			player.PickingUpRagdoll:SetNetVar("IsDragged", false);
-			player.PickingUpRagdoll:SetNetVar("IsBeingPickedUp", false);
-			player.PickingUpRagdoll.BeingPickedUp = nil;
-			player.PickingUpRagdoll.PickedUpBy = nil;
+	local action = Clockwork.player:GetAction(player);
+	
+	if (action == "pickupragdoll" or action == "pickupobject") then
+		if (IsValid(player.PickingUpObject)) then
+			player.PickingUpObject:SetNetVar("IsDragged", false);
+			player.PickingUpObject:SetNetVar("IsBeingPickedUp", false);
+			player.PickingUpObject.BeingPickedUp = nil;
+			player.PickingUpObject.PickedUpBy = nil;
+			
+			if player.PickingUpObject:GetClass() == "prop_ragdoll" then
+				Clockwork.chatBox:AddInTargetRadius(player, "me", "releases their grip on the body before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+			else
+				Clockwork.chatBox:AddInTargetRadius(player, "me", "releases their grip on the object before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+			end
 		end;
 		
-		Clockwork.chatBox:AddInTargetRadius(player, "me", "releases their grip on the body before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
-		
 		player.NextPickup = CurTime() + 1;
-		player.PickingUpRagdoll = nil;
-		player:SetNWBool("PickingUpRagdoll", false);
-		Clockwork.player:SetAction(player, nil);
+		player.PickingUpObject = nil;
 	end
+	
+	Clockwork.player:SetAction(player, nil)
 
 	for i = 1, #self.playersInMatchmaking do
 		if self.playersInMatchmaking[i] == player then

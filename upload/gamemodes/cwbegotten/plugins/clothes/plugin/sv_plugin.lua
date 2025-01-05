@@ -355,7 +355,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					
 					if !isTrainingDummy then
 						if player:GetSubfaction() == "Philimaxio" then
-							protection = protection + (protection * 0.15);
+							protection = protection + (protection * 0.1);
 						end
 						
 						if player:HasBelief("fortify_the_plate") then

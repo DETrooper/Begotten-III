@@ -4,6 +4,7 @@
 --]]
 
 config.AddToSystem("Faith Modifier", "xp_modifier", "The amount to faith (XP) gain by.", 0.5, 10, 2);
+config.AddToSystem("Minimum Character Lifetime for Damage & Kill XP", "min_xp_charplaytime", "The minimum playtime (in seconds) a character has to achieve for others to get damage and kill XP off of them.", 0, 6000)
 
 if !cwBeliefs.beliefs then
 	cwBeliefs.beliefs = {};

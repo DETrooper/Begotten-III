@@ -29,7 +29,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 	ITEM.bulletScale = 0.85; -- reduces bullet damage by 15%
-	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
 	ITEM.insulation = 30;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
@@ -66,7 +66,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
-	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 35;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
@@ -108,7 +108,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
-	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 30;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
@@ -148,7 +148,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
 	ITEM.insulation = 35;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}};
@@ -178,11 +178,11 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
-	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 40;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
@@ -248,8 +248,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "GlassImpact";
 	ITEM.type = "leather";
 
-	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
-	ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+	ITEM.stabilityScale = 0.75; -- reduces stability damage by 35%
 	ITEM.insulation = 40;
 		
 	ITEM.attributes = {"fear"};
@@ -419,7 +419,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
 	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 	ITEM.insulation = 45;
 	
@@ -454,7 +454,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 	ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
 	ITEM.slashScale = 0.90; -- reduces slash damage by 10%
-	ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+	ITEM.stabilityScale = 0.90; -- reduces stability damage by 10%
 	ITEM.insulation = 35;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"leather"}};
@@ -488,7 +488,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
 	ITEM.insulation = 30;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
@@ -523,7 +523,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
 	ITEM.insulation = 40;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}};
@@ -554,11 +554,11 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
-	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 45;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "leather"}};
@@ -591,11 +591,11 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
-	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 30;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks"}};
@@ -630,11 +630,11 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
-	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 35;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "cloth"}};
@@ -668,11 +668,11 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
-	ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
-	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+	ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
+	ITEM.stabilityScale = 0.75; -- reduces stability damage by 35%
 	ITEM.insulation = 35;
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
@@ -702,9 +702,9 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
-	ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
-	ITEM.stabilityScale = 0.40; -- reduces stability damage by 60%
+	ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
+	ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 	ITEM.insulation = 35;
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
 ITEM:Register();

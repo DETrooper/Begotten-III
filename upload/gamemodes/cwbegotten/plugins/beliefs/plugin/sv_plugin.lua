@@ -4,6 +4,7 @@
 --]]
 
 config.Add("xp_modifier", 1)
+config.Add("min_xp_charplaytime", 1800) -- The minimum playtime a character has to achieve for others to get damage and kill XP off them
 
 cwBeliefs.xpValues = {
 	["breakdown"] = 1, -- 1 xp per item broken down.

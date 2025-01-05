@@ -37,7 +37,7 @@ ITEM.damageTypeScales = {
 ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 ITEM.insulation = 50;
 
@@ -106,7 +106,7 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
@@ -172,7 +172,7 @@ ITEM.effectiveLimbs = {
 ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
 ITEM.slashScale = 0.90; -- reduces slash damage by 10%
-ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+ITEM.stabilityScale = 0.90; -- reduces stability damage by 10%
 ITEM.insulation = 60;
 
 ITEM.components = {breakdownType = "breakdown", items = {"fine_steel_chunks", "cloth", "cloth", "cloth", "cloth", "cloth", "cloth"}};
@@ -189,11 +189,6 @@ ITEM.runSound = {
 	"armormovement/body-lobe-4.wav.mp3",
 	"armormovement/body-lobe-5.wav.mp3",
 };
-
---[[ITEM.walkSound = {
-	"armormovement/body-lobe-b1.wav.mp3",
-	"armormovement/body-lobe-b2.wav.mp3",
-};]]--
 
 ITEM:Register();
 
@@ -216,6 +211,7 @@ ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.faction = "Children of Satan";
 
 ITEM.requiredbeliefs = {"hauberk"};
+ITEM.requireSubfaction = {"Philimaxio"};
 
 -- specifies which hitgroups will be affected by blunt, slash, pierce and other damage type scaling.
 ITEM.effectiveLimbs = {
@@ -240,7 +236,7 @@ ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
 ITEM.insulation = 40;
 
-ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -300,7 +296,7 @@ ITEM.damageTypeScales = {
 ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
 ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 ITEM.insulation = 40;
 
@@ -366,7 +362,7 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
@@ -421,7 +417,7 @@ ITEM.overlay = "begotten/zomboverlay/skullhelm";
 ITEM.faction = "Children of Satan";
 
 ITEM.attributes = {"fear"};
-ITEM.requiredbeliefs = {"hauberk"};
+ITEM.requiredbeliefs = {"hauberk", "primevalism"};
 
 -- specifies which hitgroups will be affected by blunt, slash, pierce and other damage type scaling.
 ITEM.effectiveLimbs = {
@@ -440,7 +436,7 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
@@ -484,7 +480,7 @@ ITEM.conditionScale = 0.75
 ITEM.hasHelmet = true;
 ITEM.hitParticle = "MetalSpark";
 ITEM.protection = 85;
-ITEM.weight = 11;
+ITEM.weight = 9;
 ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "Heavy plate armor of Eastern Nigerii design. It is meant for the infamous Immortals, an elite band of warriors devoted to the Emperor. A dark magic prevents this armor from being worn by anyone not of the bloodline of the King of Kings.";
@@ -529,6 +525,123 @@ function ITEM:GetReplacement(player)
 	--else
 		--return "models/begotten/satanists/hellspike_armor.mdl";
 	--end;
+end;
+
+ITEM.runSound = {
+	"armormovement/body-armor-1.WAV.mp3",
+	"armormovement/body-armor-2.WAV.mp3",
+	"armormovement/body-armor-3.WAV.mp3",
+	"armormovement/body-armor-4.WAV.mp3",
+	"armormovement/body-armor-5.WAV.mp3",
+	"armormovement/body-armor-6.WAV.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/body-armor-b4.WAV.mp3",
+	"armormovement/body-armor-b5.WAV.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Helldancer Robes";
+ITEM.group = "satanists/elegantrobesupgrade";
+ITEM.model = "models/begotten/items/elegantrobesupgrade.mdl"
+ITEM.iconoverride = "materials/begotten/ui/itemicons/elegantrobesupgrade.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 1.1
+ITEM.hitParticle = "GlassImpact";
+ITEM.protection = 55
+ITEM.type = "leather";
+ITEM.weight = 4;
+ITEM.weightclass = "Light";
+ITEM.description = "Elegant robes that share the designs of Glazic Ministry and Nigerii Golden Order Princes fitted perfectly underneath blackplate of similar contrasting cultural design. This armor pays homage to the Darklander Blood Dancers; a troop of gladiators who would sadistically cut down crowds of naked slaves with their twin swords, dancing and laughing all the while.";
+ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+ITEM.requireFaith = {"Faith of the Dark"};
+ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.faction = "Children of Satan";
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+ITEM.pierceScale = 0.90; -- reduces pierce damage by 10%
+ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+ITEM.stabilityScale = 0.90; -- reduces stability damage by 10%
+ITEM.bulletScale = 0.85; -- reduces bullet damage by 15%
+ITEM.insulation = 55;
+
+ITEM.components = {breakdownType = "breakdown", items = {"fine_steel_chunks", "cloth", "cloth", "cloth", "cloth", "cloth", "cloth"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-lobe-1.wav.mp3",
+	"armormovement/body-lobe-2.wav.mp3",
+	"armormovement/body-lobe-3.wav.mp3",
+	"armormovement/body-lobe-4.wav.mp3",
+	"armormovement/body-lobe-5.wav.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Blackplate Armor";
+ITEM.group = "satanists/halfhellplate";
+ITEM.model = "models/begotten/items/halfhellplate.mdl"
+ITEM.iconoverride = "begotten/ui/itemicons/halfhellplate.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 0.9
+ITEM.hitParticle = "MetalSpark";
+ITEM.protection = 65;
+ITEM.weight = 5.5;
+ITEM.weightclass = "Medium";
+ITEM.type = "plate";
+ITEM.description = "Cursed black armor that has been reforged in Hell countless times. Was it once the armor of an esteemed Gateekeeper, or perhaps these plates were once used by a Janissary? It no longer matters, for this is now used by the Children of Satan.";
+ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+ITEM.requireFaith = {"Faith of the Dark"};
+ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.faction = "Children of Satan";
+
+-- specifies which hitgroups will be affected by blunt, slash, pierce and other damage type scaling.
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.10, -- increases fall damage by 10%
+}
+
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.75; -- reduces slash damage by 25%
+ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
+ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
+ITEM.insulation = 40;
+
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "cloth", "cloth"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
 end;
 
 ITEM.runSound = {

@@ -2836,7 +2836,13 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 				return false;
 			end
 			
-			if player:GetNWBool("PickingUpRagdoll") then
+			local action = Clockwork.player:GetAction(player);
+			
+			if action == "pickupobject" then
+				Schema:EasyText(player, "peru", "You cannot helljaunt while in the process of picking up an object!");
+				
+				return false;
+			elseif action == "pickupragdoll" then
 				Schema:EasyText(player, "peru", "You cannot helljaunt while in the process of picking up a ragdoll!");
 				
 				return false;

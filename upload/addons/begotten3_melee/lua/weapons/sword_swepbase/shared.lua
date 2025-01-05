@@ -1086,9 +1086,9 @@ end
 					-- Fire attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "fire_swing" then
 						if offhandWeapon then
-							hit:Ignite(weapon.IgniteTime * 2);
+							hit:Ignite(weapon.IgniteTime);
 						else
-							hit:Ignite(weapon.IgniteTime * 3);
+							hit:Ignite(weapon.IgniteTime);
 						end
 					end
 					
@@ -1133,9 +1133,9 @@ end
 					-- Fire attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "fire_swing" then
 						if offhandWeapon then
-							hit:Ignite(weapon.IgniteTime * 2);
+							hit:Ignite(weapon.IgniteTime);
 						else
-							hit:Ignite(weapon.IgniteTime * 3);
+							hit:Ignite(weapon.IgniteTime);
 						end
 					end
 					
@@ -1296,9 +1296,9 @@ end
 						-- Fire attack type
 						if attacktable["attacktype"] == "fire_swing" then
 							if offhandWeapon then
-								hit:Ignite(weapon.IgniteTime * 2);
+								hit:Ignite(weapon.IgniteTime);
 							else
-								hit:Ignite(weapon.IgniteTime * 3);
+								hit:Ignite(weapon.IgniteTime);
 							end
 						end
 						
@@ -1315,9 +1315,9 @@ end
 							-- Fire attack type
 							if attacktable["attacktype"] == "fire_swing" then
 								if offhandWeapon then
-									hit:Ignite(weapon.IgniteTime * 2);
+									hit:Ignite(weapon.IgniteTime);
 								else
-									hit:Ignite(weapon.IgniteTime * 3);
+									hit:Ignite(weapon.IgniteTime);
 								end
 							end
 							
@@ -1470,9 +1470,9 @@ end
 						-- Fire attack type
 						if attacktable["attacktype"] == "fire_swing" then
 							if offhandWeapon then
-								hit:Ignite(weapon.IgniteTime * 2);
+								hit:Ignite(weapon.IgniteTime);
 							else
-								hit:Ignite(weapon.IgniteTime * 3);
+								hit:Ignite(weapon.IgniteTime);
 							end
 						end
 						
@@ -1489,9 +1489,9 @@ end
 							-- Fire attack type
 							if attacktable["attacktype"] == "fire_swing" then
 								if offhandWeapon then
-									hit:Ignite(weapon.IgniteTime * 2);
+									hit:Ignite(weapon.IgniteTime);
 								else
-									hit:Ignite(weapon.IgniteTime * 3);
+									hit:Ignite(weapon.IgniteTime);
 								end
 							end
 							
@@ -1667,9 +1667,9 @@ end
 						-- Fire attack type
 						if attacktable["attacktype"] == "fire_swing" then
 							if offhandWeapon then
-								hit:Ignite(weapon.IgniteTime * 2);
+								hit:Ignite(weapon.IgniteTime);
 							else
-								hit:Ignite(weapon.IgniteTime * 3);
+								hit:Ignite(weapon.IgniteTime);
 							end
 						end
 						
@@ -1686,9 +1686,9 @@ end
 							-- Fire attack type
 							if attacktable["attacktype"] == "fire_swing" then
 								if offhandWeapon then
-									hit:Ignite(weapon.IgniteTime * 2);
+									hit:Ignite(weapon.IgniteTime);
 								else
-									hit:Ignite(weapon.IgniteTime * 3);
+									hit:Ignite(weapon.IgniteTime);
 								end
 							end
 							

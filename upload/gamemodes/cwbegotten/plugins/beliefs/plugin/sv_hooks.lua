@@ -289,14 +289,12 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 			for k3, v3 in pairs(v2) do
 				if v3.lockedBeliefs then
 					for i, v4 in ipairs(v3.lockedBeliefs) do
-						if beliefs[k3] then
+						if beliefs[k3] and beliefs[v4] then
 							lockedBeliefFound = true;
 							beliefs[k3] = false;
 							points = points + 1;
 						end
 					end
-					
-					break;
 				end
 			end
 		end
@@ -1413,7 +1411,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 				end
 			end
 			
-			if not attacker.opponent and entity:CharPlayTime() > 1800 and attacker ~= entity then
+			if not attacker.opponent and entity:CharPlayTime() > config.GetVal("min_xp_charplaytime") and attacker ~= entity then
 				if !cwRituals or (cwRituals and !entTab.scornificationismActive) then
 					local attackerFaction = attacker:GetFaction();
 					local attackerFactionTable = Clockwork.faction:FindByID(attackerFaction);
@@ -1512,8 +1510,18 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 		
 		local action = Clockwork.player:GetAction(entity);
 		
-		if action == "reloading" or action == "heal" or action == "healing" or action == "pickupragdoll" then
+		if action == "reloading" or action == "heal" or action == "healing" then
 			Clockwork.player:ExtendAction(entity, math.max(0.5, damage / 10));
+		elseif action == "pickupragdoll" or action == "pickupobject" then
+			Clockwork.player:SetAction(entity, false);
+		end
+		
+		local holdingEnt = entity:GetHoldingEntity();
+
+		if IsValid(holdingEnt) then
+			if holdingEnt:GetClass() ~= "prop_ragdoll" or !entity:HasBelief("prowess_finisher") then
+				cwPickupObjects:ForceDropEntity(entity);
+			end
 		end
 	end
 
@@ -2212,7 +2220,7 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 			end);
 		end
 		
-		if player:CharPlayTime() > 1800 then
+		if player:CharPlayTime() > config.GetVal("min_xp_charplaytime") then
 			local attackerFaction = attacker:GetFaction();
 			local attackerFactionTable = Clockwork.faction:FindByID(attackerFaction);
 			
