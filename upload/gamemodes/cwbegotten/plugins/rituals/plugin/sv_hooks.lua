@@ -277,6 +277,23 @@ function cwRituals:PlayerMeetsRitualItemRequirements(player, ritualTable, itemID
 	return true;
 end
 
+-- Summoned NPCs have their HP decay by 1 per second.
+function cwRituals:OneSecond()
+	if self.summonedNPCs then
+		for i, v in ipairs(self.summonedNPCs) do
+			if IsValid(v) then
+				local health = v:GetHealth();
+				
+				if health > 1 then
+					v:SetHealth(health - 1);
+				else
+					v:TakeDamage(1);
+				end
+			end
+		end
+	end
+end
+
 function cwRituals:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	if player:GetNetVar("enlightenmentActive") and !plyTab.opponent then
 		if !plyTab.nextEnlightenmentTick or plyTab.nextEnlightenmentTick > curTime then
