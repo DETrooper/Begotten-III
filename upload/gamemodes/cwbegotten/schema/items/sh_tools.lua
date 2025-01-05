@@ -153,7 +153,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = false;
 	
 	function ITEM:OnUse(player, itemEntity)
-		for k, v in pairs (ents.FindInSphere(player:GetPos(), 150)) do
+		for k, v in pairs (ents.FindInSphere(player:GetPos(), 250)) do
 			local ent = v
 			if IsValid(ent) and ent:GetClass() == "npc_drg_animals_wolf" and player:GetFaction() == ent.summonedFaith then
 				local item = player:GiveItem(Clockwork.item:CreateInstance("war_hound_cage"), true);
@@ -168,11 +168,11 @@ local ITEM = Clockwork.item:New();
 				return
 			end
 
-			Schema:EasyText(player, "chocolate", "Nothing to catch.");
-			return false
+			
 			
 		end
-	end
+		Schema:EasyText(player, "chocolate", "Nothing to catch.");
+		return false
 	
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) 
