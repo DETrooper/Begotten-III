@@ -25,7 +25,7 @@ SWEP.ParryAnim = "a_sword_parry"
 SWEP.IronSightsPos = Vector(0, -11.86, -1.81)
 SWEP.IronSightsAng = Vector(26.733, 0, 0)
 
-SWEP.IgniteTime = 6
+SWEP.IgniteTime = 2
 
 --Sounds
 SWEP.AttackSoundTable = "MetalDaggerAttackSoundTable" 
@@ -34,7 +34,7 @@ SWEP.SoundMaterial = "Metal" -- Metal, Wooden, MetalPierce, Punch, Default
 
 SWEP.isDagger = true;
 
-SWEP.CorruptionGain = 0.5; -- For sacrificial weapons, gives corruption for each swing
+SWEP.CorruptionGain = 0.7; -- For sacrificial weapons, gives corruption for each swing
 
 /*---------------------------------------------------------
 	PrimaryAttack

@@ -30,7 +30,7 @@ SWEP.IronSightsAng = Vector(-2.814, 8.442, -48.543)
 -- Sacrificial Effects
 SWEP.DrawEffect = "fire_small_03"
 SWEP.AmbientEffect = "env_embers_small"
-SWEP.IgniteTime = 3
+SWEP.IgniteTime = 1.5
 SWEP.FreezeTime = nil
 
 --Sounds
@@ -40,7 +40,7 @@ SWEP.SoundMaterial = "Metal" -- Metal, Wooden, MetalPierce, Punch, Default
 
 SWEP.SpecialDrawSound = "ambient/fire/ignite.wav" --For sacrifical weapons only, plays on top of regular draw sound
 
-SWEP.CorruptionGain = 1.5; -- For sacrificial weapons, gives corruption for each swing
+SWEP.CorruptionGain = 1.75; -- For sacrificial weapons, gives corruption for each swing
 
 /*---------------------------------------------------------
 	PrimaryAttack

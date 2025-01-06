@@ -36,7 +36,7 @@ SWEP.PrimarySwingAnim = "a_heavy_2h_attack_slash_01"
 -- Sacrificial Effects
 SWEP.DrawEffect = "fire_small_03"
 SWEP.AmbientEffect = "env_embers_small"
-SWEP.IgniteTime = 6
+SWEP.IgniteTime = 3
 SWEP.FreezeTime = nil
 SWEP.MultiHit = 2;
 SWEP.isLongsword = true;
@@ -49,7 +49,7 @@ SWEP.SoundMaterial = "Metal" -- Metal, Wooden, MetalPierce, Punch, Default
 SWEP.WindUpSound = "draw/skyrim_axe_draw1.mp3" --For 2h weapons only, plays before primarysound
 SWEP.SpecialDrawSound = "ambient/fire/ignite.wav" --For sacrifical weapons only, plays on top of regular draw sound
 
-SWEP.CorruptionGain = 1.25; -- For sacrificial weapons, gives corruption for each swing
+SWEP.CorruptionGain = 2.25; -- For sacrificial weapons, gives corruption for each swing
 
 /*---------------------------------------------------------
 	PrimaryAttack
