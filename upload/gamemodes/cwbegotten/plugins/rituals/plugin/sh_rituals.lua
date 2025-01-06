@@ -1982,7 +1982,7 @@ RITUAL = cwRituals.rituals:New("summon_otis");
 					entity:CustomInitialize();
 					entity:Spawn();
 					entity:Activate();
-					entity:SetHealth(400);
+					entity:SetHealth(350);
 
 					entity:SetColor(Color(255,0,0));
 					entity:SetMaterial("models/effects/splode_sheet");
@@ -2223,7 +2223,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 				
 				if IsValid(entity) then
 					entity:Spawn();
-					entity:SetHealth(700);
+					entity:SetHealth(575);
 					entity:Activate(); 
 					entity:SetMaterial("models/props_combine/portalball001_sheet")
 					entity:AddEntityRelationship(player, D_LI, 99);
