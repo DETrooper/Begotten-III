@@ -96,14 +96,10 @@ function cwWarmth:PostMainMenuRebuild(menu)
 	end;
 end
 
-function cwWarmth:ClockworkInitialized()
-	if cwBeliefs then
-		local fortitudeTree = cwBeliefs.stored["fortitude"];
-		
-		if fortitudeTree and fortitudeTree.beliefs then
-			if fortitudeTree.beliefs[4]["unyielding"] then
-				fortitudeTree.beliefs[4]["unyielding"].description = fortitudeTree.beliefs[4]["unyielding"].description.." Increases your base insulation value by 20%.";
-			end
+function cwWarmth:ModifyBeliefTree(tab)
+	if tab.uniqueID == "fortitude" then
+		if tab.beliefs[4]["unyielding"] then
+			tab.beliefs[4]["unyielding"].description = tab.beliefs[4]["unyielding"].description.." Increases your base insulation value by 20%.";
 		end
 	end
 end

@@ -173,6 +173,7 @@ local ITEM = Clockwork.item:New();
 		end
 		Schema:EasyText(player, "chocolate", "Nothing to catch.");
 		return false
+	end
 	
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) 

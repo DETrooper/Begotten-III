@@ -624,7 +624,7 @@ function COMMAND:OnRun(player, arguments)
 	if faith == "Faith of the Dark" then
 		if faction == "Children of Satan" then
 			if player:HasBelief("witch") or player:HasBelief("soothsayer") then
-				if !player:IsAdmin() and !Clockwork.player:HasFlags(player, "P") and !Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3 then
+				if !player:IsAdmin() and !Clockwork.player:HasFlags(player, "P") and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) < 3 then
 					Schema:EasyText(player, "peru", "You are not important enough to do this!");
 				
 					return false;

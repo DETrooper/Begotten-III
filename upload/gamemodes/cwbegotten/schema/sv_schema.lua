@@ -3316,7 +3316,9 @@ end;
 function Schema:InSpeakerZone(entity)
 	if map == "rp_begotten3" then
 		return entity:GetPos():WithinAABox(Vector(2400, 15147, -2778), Vector(-2426, 9867, 960));
-	elseif map == "rp_begotten_redux" or map == "rp_scraptown" or map == "rp_district21" then
+	elseif map == "rp_district21" then
+		return entity:GetPos():WithinAABox(Vector(-4483, 8472, 1000), Vector(-11160, 13594, -2000));
+	else
 		return entity:InTower();
 	end
 end;

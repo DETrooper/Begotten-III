@@ -147,6 +147,8 @@ function cwBeliefs.beliefTrees:Register(beliefTree)
 				tab.requiredFaiths = beliefTree.requiredFaiths;
 			end
 		end
+
+		hook.Run("ModifyBeliefTree", tab);
 		
 		self.stored[beliefTree.uniqueID] = tab;
 	end;

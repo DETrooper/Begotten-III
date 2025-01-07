@@ -40,23 +40,48 @@ local FACTION = Clockwork.faction:New("Wanderer");
 	FACTION.color = Color(160, 100, 15);
 	FACTION.description = "The Wanderers are the carrion carcass eaters of the Wasteland. \nThey were the many lowly commoners of the County Districts, barely literate and ill-fed. \nTo survive as a Wanderer, one must be sharp and brutal, and choose their allegiance carefully. \nTheir weapons are their faith and fear, and their strife will be everlasting.";
 	FACTION.availablefaiths = {"Faith of the Light", "Faith of the Family", "Faith of the Dark"};
+	FACTION.subfactionsToAvailableFaiths = {["Northlander"] = {"Faith of the Light", "Faith of the Family"}};
 	FACTION.imposters = true;
+	FACTION.names = "glazic";
 	
 	if game.GetMap() == "rp_district21" then
-		FACTION.models = {
-			["male"] = {
-				clothes = "models/begotten/wanderers/northwanderer_male.mdl",
-				heads = DEFAULT_MODELS.male.heads,
+		FACTION.subfactions = {
+			{
+				name = "Northlander", 
+				namesOverride = "gore-glazic", 
+				subtitle = "Blood of the North", 
+				description = "The Gore-Glazic of the Hill are a simple, hardy folk. They have raised their blades and bats and hooks against the darkness for generations. They don't fight for coin, but for survival and family. All must pull together to survive in the empty cold. They have found purchase in their own niches, for they were once many things; farmers, shepherds, warriors. They have since become hunters and fighters, fighting tooth and nail to clutch on to any scrap of soil they still can claim ownership of. These woods are their home, and they will not see it fall to Gay-Goreic invaders, or even their Southern brothers, if given the opportunity. They are born of the union of border Gores and Glazics during the latter days of Maximus’ Conquests. They have faithfully served the Empire of Light and the Holy Hierarchy that followed ever since their inception, their people zealous to a fault - but, within them still flows the blood of the North, and the Family wishes to bring the misguided home. They are the last of their kind, a near extinct people.", 
+				attributes = {
+					{Color(255, 225, 0), "(~) Pagan by Blood: Can only pick the 'Hard-Glazed' or 'Family' faiths"},
+				}, 
+				models = {
+					["male"] = {
+						clothes = "models/begotten/wanderers/northwanderer_male.mdl",
+						heads = DEFAULT_MODELS.male.heads,
+					},
+					["female"] = {
+						clothes = "models/begotten/wanderers/northwanderer_female.mdl",
+						heads = DEFAULT_MODELS.female.heads,
+					},
+				},
+				default = true
 			},
-			["female"] = {
-				clothes = "models/begotten/wanderers/northwanderer_female.mdl",
-				heads = DEFAULT_MODELS.female.heads,
+			{
+				name = "Southlander", 
+				subtitle = "Remnants of the South", 
+				description = "Pilgrims from the southlands continually migrate north in spite of the harsh elements, seeking deliverance from the more corrupted lands of the south. They bring with them their strange traditions and heresies.", 
+				models = {
+					["male"] = {
+						clothes = "models/begotten/wanderers/wanderer_male.mdl",
+						heads = DEFAULT_MODELS.male.heads,
+					},
+					["female"] = {
+						clothes = "models/begotten/wanderers/wanderer_female.mdl",
+						heads = DEFAULT_MODELS.female.heads,
+					},
+				},
 			},
-		}
-		
-		FACTION.names = "gore-glazic";
-	else
-		FACTION.names = "glazic";
+		};
 	end
 	
 	-- Called when a player is transferred to the faction.
@@ -477,7 +502,7 @@ local FACTION = Clockwork.faction:New("Children of Satan");
 	};
 	--FACTION.singleGender = GENDER_MALE;
 	
-	if game.GetMap() == "rp_district21" then
+	--[[if game.GetMap() == "rp_district21" then
 		FACTION.models = {
 			["male"] = {
 				clothes = "models/begotten/wanderers/northwanderer_male.mdl",
@@ -488,7 +513,7 @@ local FACTION = Clockwork.faction:New("Children of Satan");
 				heads = DEFAULT_MODELS.female.heads,
 			},
 		}
-	end
+	end]]--
 	
 	-- Called when a player is transferred to the faction.
 	function FACTION:OnTransferred(player, faction, name)

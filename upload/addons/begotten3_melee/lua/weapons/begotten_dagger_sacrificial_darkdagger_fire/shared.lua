@@ -86,6 +86,7 @@ function SWEP:HandlePrimaryAttack()
 			self.Owner:HandleNeed("corruption", self.CorruptionGain);
 		else
 			self.Owner:HandleNeed("corruption", self.CorruptionGain * 0.5);
+		end
 	end
 
 end

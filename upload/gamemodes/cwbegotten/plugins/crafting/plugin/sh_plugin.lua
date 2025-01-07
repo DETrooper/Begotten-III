@@ -15,7 +15,9 @@ Clockwork.kernel:IncludePrefixed("sh_recipes.lua");
 
 cwRecipes.smithyLocations = {};
 
-if (game.GetMap() == "rp_begotten3") then
+local map = game.GetMap();
+
+if (map == "rp_begotten3") then
 	cwRecipes.smithyLocations = {
 		Vector(-3725, -11744, -1262),
 		Vector(-90, 14176, -1021),
@@ -24,19 +26,19 @@ if (game.GetMap() == "rp_begotten3") then
 		Vector(-704, -7617, 11902),
 		Vector(14487, -12316, -1182),
 	};
-elseif (game.GetMap() == "rp_begotten_redux") then
+elseif (map == "rp_begotten_redux") then
 	cwRecipes.smithyLocations = {
 		Vector(-12687, -6497, 85),
 		Vector(13505, 10557, 695),
 		Vector(-228, -9635, -6436),
 	};
-elseif (game.GetMap() == "rp_scraptown") then
+elseif (map == "rp_scraptown") then
 	cwRecipes.smithyLocations = {
 		Vector(-3025, -5089., 203),
 		Vector(7605, 8609, 1054),
 		Vector(-228, -9635, -6436),
 	};
-elseif (game.GetMap() == "rp_district21") then
+elseif (map == "rp_district21") then
 	cwRecipes.smithyLocations = {
 		Vector(-11430, 4139, -679),
 		Vector(-5481, 12443, 189),
@@ -45,6 +47,8 @@ elseif (game.GetMap() == "rp_district21") then
 		Vector(-704, -7617, 11902),
 		Vector(-228, -9635, -6436),
 	};
+	
+	Clockwork.kernel:IncludePrefixed("sh_recipes_rp_district21.lua");
 else
 	cwRecipes.smithyLocations = {};
 end;
