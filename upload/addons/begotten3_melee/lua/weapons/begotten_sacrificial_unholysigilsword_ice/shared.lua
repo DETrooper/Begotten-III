@@ -121,8 +121,12 @@ function SWEP:HandlePrimaryAttack()
 		end
 	end
 	
-	if self.Owner.HandleNeed and not self.Owner.opponent and !self.Owner:GetCharmEquipped("crucifix") and !self.Owner:GetCharmEquipped("warding_talisman") then
-		self.Owner:HandleNeed("corruption", self.CorruptionGain);
+	if self.Owner.HandleNeed and not self.Owner.opponent and !self.Owner:GetCharmEquipped("warding_talisman") then
+		if !self.Owner:GetCharmEquipped("crucifix") then
+			self.Owner:HandleNeed("corruption", self.CorruptionGain);
+		else
+			self.Owner:HandleNeed("corruption", self.CorruptionGain * 0.5);
+		end
 	end
 end
 
@@ -153,8 +157,12 @@ function SWEP:HandleThrustAttack()
 	
 	self.Owner:ViewPunch(Angle(6,0,0))
 	
-	if self.Owner.HandleNeed and not self.Owner.opponent and !self.Owner:GetCharmEquipped("crucifix") and !self.Owner:GetCharmEquipped("warding_talisman") then
-		self.Owner:HandleNeed("corruption", self.CorruptionGain);
+	if self.Owner.HandleNeed and not self.Owner.opponent and !self.Owner:GetCharmEquipped("warding_talisman") then
+		if !self.Owner:GetCharmEquipped("crucifix") then
+			self.Owner:HandleNeed("corruption", self.CorruptionGain);
+		else
+			self.Owner:HandleNeed("corruption", self.CorruptionGain * 0.5);
+		end
 	end
 end
 

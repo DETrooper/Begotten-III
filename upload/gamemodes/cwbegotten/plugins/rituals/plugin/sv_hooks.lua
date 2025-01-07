@@ -294,6 +294,7 @@ function cwRituals:OneSecond()
 	end
 end
 
+--[[
 function cwRituals:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	if player:GetNetVar("enlightenmentActive") and !plyTab.opponent then
 		if !plyTab.nextEnlightenmentTick or plyTab.nextEnlightenmentTick > curTime then
@@ -325,6 +326,7 @@ function cwRituals:PlayerThink(player, curTime, infoTable, alive, initialized, p
 		end
 	end
 end
+--]]
 
 -- Called when an item entity has taken damage (before armor damage is calculated).
 function cwRituals:PreEntityTakeDamage(entity, damageInfo)
@@ -583,6 +585,7 @@ function cwRituals:PlayerCharacterLoaded(player)
 		end
 	end
 	
+	--[[
 	if player:GetNetVar("enlightenmentActive") then
 		player:SetNetVar("enlightenmentActive", false);
 		
@@ -590,6 +593,7 @@ function cwRituals:PlayerCharacterLoaded(player)
 			timer.Remove("EnlightenmentTimer_"..entIndex);
 		end
 	end
+	--]]
 	
 	netstream.Start(player, "LoadRitualBinds", player:GetCharacterData("BoundRitualsNew", {}));
 end;
@@ -874,6 +878,7 @@ function cwRituals:PlayerDeath(player)
 			end
 		end
 		
+		--[[
 		if player:GetNetVar("enlightenmentActive") then
 			player:SetNetVar("enlightenmentActive", false);
 			
@@ -881,6 +886,7 @@ function cwRituals:PlayerDeath(player)
 				timer.Remove("EnlightenmentTimer_"..entIndex);
 			end
 		end
+		--]]
 	end
 end;
 

@@ -250,9 +250,11 @@ function cwRituals:PostDrawOpaqueRenderables()
 					table.insert(self.storedPlayers, player);
 				end
 				
+				--[[
 				if player:GetNetVar("enlightenmentActive") then
 					table.insert(self.storedPlayers, player);
 				end
+				--]]
 				
 				if player ~= Clockwork.Client then
 					if player:GetNetVar("soulscorchActive") or player:GetNetVar("auraMotherActive") then
@@ -304,6 +306,7 @@ function cwRituals:PostDrawOpaqueRenderables()
 				end;
 			end
 			
+			--[[
 			if v:GetNetVar("enlightenmentActive") then
 				local dynamicLight = DynamicLight(v:EntIndex());
 				
@@ -318,6 +321,7 @@ function cwRituals:PostDrawOpaqueRenderables()
 					dynamicLight.Style = 0;
 				end;
 			end
+			--]]
 			
 			if v:GetNetVar("powderheelActive") and v:GetPos():DistToSqr(Clockwork.Client:GetPos()) < powderheelAuraDistance then
 				cam.Start3D2D(v:GetPos(), angle_zero, 1);

@@ -54,7 +54,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "crucifix";
 	ITEM.description = "A wooden cross with a carved figure of a bearded prophet. Although a relic of a bygone era, you feel as though it still provides some protection from evil.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Reduces any corruption taken by 25%.\n- Removes corruption gain from sacrificial weapons entirely.";
+	ITEM.charmEffects = "- Reduces any corruption taken by 25%.\n- Reduces corruption taken from sacrificial weapons by 50%.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false};
 ITEM:Register();

@@ -34,7 +34,7 @@ ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
-ITEM.bulletScale = 0.25; -- reduces bullet damage by 75%
+ITEM.bulletScale = 0.5; -- reduces bullet damage by 50%
 ITEM.insulation = 70;
 
 ITEM.attributes = {"mothers_blessing", "increased_regeneration"};
@@ -266,7 +266,7 @@ ITEM.damageTypeScales = {
 ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
-ITEM.bulletScale = 0.65; -- reduces bullet damage by 35%
+ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 ITEM.insulation = 60;
 
@@ -507,7 +507,7 @@ ITEM.damageTypeScales = {
 ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
-ITEM.bulletScale = 0.65; -- reduces bullet damage by 35%
+ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 ITEM.insulation = 70;
 
@@ -633,7 +633,7 @@ ITEM.damageTypeScales = {
 ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
-ITEM.bulletScale = 0.30; -- reduces bullet damage by 70%
+ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
 ITEM.stabilityScale = 0.75; -- reduces stability damage by 35%
 ITEM.insulation = 60;
 
@@ -752,7 +752,7 @@ ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
-ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 ITEM.insulation = 70;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "iron_chunks", "iron_chunks", "human_bone", "human_bone"}};

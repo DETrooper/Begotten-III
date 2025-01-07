@@ -5142,7 +5142,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 6},
+			["steel_ingot"] = {amount = 7},
 			["pentagram_catalyst"] = {amount = 1},
 			["tortured_spirit"] = {amount = 1},
 		};
@@ -5154,7 +5154,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 65;
+		RECIPE.experience = 70;
 		
 		function RECIPE:OnCraft(player)
 		end;

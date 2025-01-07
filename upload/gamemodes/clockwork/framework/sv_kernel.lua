@@ -1741,6 +1741,10 @@ function playerMeta:GetMaxHealth(health)
 	if self:HasBelief("unyielding") then
 		maxHealth = maxHealth + 25;
 	end
+
+	if self:HasBelief("fortitude_finisher") then
+		maxHealth = maxHealth + 15;
+	end
 	
 	if faith == "Faith of the Family" then	
 		if self:HasBelief("man_become_beast") then

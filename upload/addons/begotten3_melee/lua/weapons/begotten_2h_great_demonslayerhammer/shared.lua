@@ -89,8 +89,12 @@ function SWEP:HandlePrimaryAttack()
 	self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
 	end end)
 	
-	if self.Owner.HandleNeed and not self.Owner.opponent and !self.Owner:GetCharmEquipped("crucifix") and !self.Owner:GetCharmEquipped("warding_talisman") then
-		self.Owner:HandleNeed("corruption", self.CorruptionGain);
+	if self.Owner.HandleNeed and not self.Owner.opponent and !self.Owner:GetCharmEquipped("warding_talisman") then
+		if !self.Owner:GetCharmEquipped("crucifix") then
+			self.Owner:HandleNeed("corruption", self.CorruptionGain);
+		else
+			self.Owner:HandleNeed("corruption", self.CorruptionGain * 0.5);
+		end
 	end
     
     if (SERVER) then

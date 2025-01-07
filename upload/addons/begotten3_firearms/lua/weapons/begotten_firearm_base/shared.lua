@@ -276,6 +276,7 @@ function SWEP:AdjustFireBegotten()
 					if !self.notPowder then
 						local forceJam = false;
 					
+						--[[
 						if cwRituals then
 							local ownerPos = self.Owner:GetPos();
 							
@@ -289,6 +290,7 @@ function SWEP:AdjustFireBegotten()
 								end
 							end
 						end
+						--]]
 					
 						if !self.noJam or forceJam then
 							local hasPistolier = cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("pistolier");

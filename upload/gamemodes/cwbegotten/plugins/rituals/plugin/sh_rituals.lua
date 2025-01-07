@@ -541,7 +541,7 @@ RITUAL = cwRituals.rituals:New("call_of_the_blood_storm");
 	RITUAL.description = "For thousands of years the moon tribals and jungle jujus have danced around their fetish altars soaked in blood, singing for rains to cleanse them, which never came. Only those who kept dancing after their fires burnt out may feel the warm crimson droplet upon their cheek. Performing this ritual will summon a bloodstorm within a minute of being performed. Incurs 75 corruption.";
 	RITUAL.onerequiredbelief = {"thirst_blood_moon"}; -- Primevalist Unique Ritual
 	
-	RITUAL.requirements = {"tortured_spirit", "tortured_spirit", "tortured_spirit"};
+	RITUAL.requirements = {"tortured_spirit", "down_catalyst", "tortured_spirit"};
 	RITUAL.corruptionCost = 75;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 200;
@@ -1395,11 +1395,11 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("aura_of_powderheel");
 	RITUAL.name = "(T3) Aura of Powderheel";
-	RITUAL.description = "Call upon the power of the Great Tree in times of battle against its enemies to protect you from their non-traditional weaponry. Performing this ritual generates a spherical forcefield for 10 minutes, which reduces bullet damage to everyone around you within talking distance by 25%. Attempting to fire while inside the sphere will guarantee a misfire. Incurs 15 corruption.";
+	RITUAL.description = "Call upon the power of the Great Tree in times of battle against its enemies to protect you from their non-traditional weaponry. Performing this ritual generates a spherical forcefield for 10 minutes, which reduces bullet damage to everyone around you within talking distance by 25%. Incurs 25 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
 	RITUAL.requirements = {"pantheistic_catalyst", "xolotl_catalyst", "xolotl_catalyst"};
-	RITUAL.corruptionCost = 15; -- Corruption incurred from performing rituals.
+	RITUAL.corruptionCost = 25; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
 	RITUAL.experience = 75; -- XP gained from performing the ritual.
 
@@ -1523,6 +1523,55 @@ else
 		end;
 	RITUAL:Register()
 end
+
+RITUAL = cwRituals.rituals:New("glazic_rite_of_clear_skies");
+	RITUAL.name = "(Unique) Glazic Rite of Clear Skies";
+	RITUAL.description = "With broken pieces of God, the Glazic Astronomers League proudly state No to the savage shamans who covet power over the skies. Performing this ritual will clear the weather to normal. Incurs 50 corruption.";
+	RITUAL.onerequiredbelief = {"emissary"}; -- Hard-Glazed Unique Ritual
+	
+	RITUAL.requirements = {"purifying_stone", "up_catalyst", "trinity_catalyst"};
+	RITUAL.corruptionCost = 50;
+	RITUAL.ritualTime = 10;
+	RITUAL.experience = 150;
+	
+	function RITUAL:OnPerformed(player)
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Glazic Rite of Clear Skies' ritual!");
+
+		if cwWeather then
+			cwWeather:SetWeather("normal", 0, 900);
+			
+			return true;
+		end
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		if cwWeather then
+			if !cwWeather.weatherTypes["normal"] then
+				Schema:EasyText(player, "peru", "This climate is unsuited for this!");
+				
+				return false;
+			end
+		
+			if cwWeather.weather ~= "normal" then
+				if cwWeather.nextWeatherTime - CurTime() <= 10 then
+					-- Add enough time to complete the ritual!
+					cwWeather.nextWeatherTime = CurTime() + 10;
+				end
+				
+				return true;
+			else
+				Schema:EasyText(player, "peru", "The skies are already clear!");
+				
+				return false;
+			end
+		end
+		
+		return false;
+	end;
+	function RITUAL:EndRitual(player)
+	end;
+RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("Sister's Blessing");
 	RITUAL.name = "(Unique) Sister's Blessing";
@@ -1739,6 +1788,7 @@ RITUAL = cwRituals.rituals:New("steel_will");
 	end;
 RITUAL:Register()
 
+--[[
 RITUAL = cwRituals.rituals:New("enlightenment");
 	RITUAL.name = "(T3) Enlightenment";
 	RITUAL.description = "You have reached the pinnacle of Glazic understanding. Performing this ritual illuminates a large area around you for 15 minutes with holy light. It will raise the sanity of all Hard-Glazed characters in its light and also burn any Rekh-khet-sa heretics that approach. Incurs 10 corruption.";
@@ -1771,22 +1821,23 @@ RITUAL = cwRituals.rituals:New("enlightenment");
 	function RITUAL:EndRitual(player)
 	end;
 RITUAL:Register()
+--]]
 
 RITUAL = cwRituals.rituals:New("summon_eddie");
 	RITUAL.name = "(T3) Summon Demon (Eddie)";
-	RITUAL.description = "Summon a Begotten Thrall that has become the host of a hell demon. It will be hostile towards anyone not of the Faith of the Dark. 10 second cast time. Adds an 8 minute cooldown to all summons. Incurs 15 corruption.";
+	RITUAL.description = "Summon a Begotten Thrall that has become the host of a hell demon. It will be hostile towards anyone not of the Faith of the Dark. 15 second cast time. Adds a 10 minute cooldown to all summons. Incurs 25 corruption.";
 	RITUAL.onerequiredbelief = {"sorcerer"}; -- Tier III Faith of the Dark Ritual
 	RITUAL.requiredBeliefsSubfactionOverride = {["Rekh-khet-sa"] = {"embrace_the_darkness"}}; -- Tier III Faith of the Dark Ritual
 	
 	RITUAL.requirements = {"belphegor_catalyst", "tortured_spirit", "down_catalyst"};
-	RITUAL.corruptionCost = 15;
-	RITUAL.ritualTime = 10;
+	RITUAL.corruptionCost = 25;
+	RITUAL.ritualTime = 15;
 	RITUAL.experience = 35;
 	
 	function RITUAL:OnPerformed(player)
 		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning an Eddie near their position!");
 		
-		player.nextRitualSummon = CurTime() + 480;
+		player.nextRitualSummon = CurTime() + 600;
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -1860,7 +1911,7 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 					entity:CustomInitialize();
 					entity:Spawn();
 					entity:Activate();
-					entity:SetHealth(475);
+					entity:SetHealth(400);
 
 					entity:SetColor(Color(255,0,0));
 					entity:SetMaterial("models/effects/splode_sheet");
