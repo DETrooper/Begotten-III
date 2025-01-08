@@ -14,6 +14,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll_open.png";
 	ITEM.longshipEnt = "cw_longship";
 	ITEM:AddData("customName", "", true);
+	ITEM:AddData("enchantment", false);
 	ITEM:AddData("health", -1, true);
 	
 	function ITEM:OnUseCustom(player, itemEntity, itemFunction)
@@ -63,6 +64,10 @@ local ITEM = Clockwork.item:New();
 						end
 					else
 						longshipEnt.health = self:GetData("health", 500);
+					end
+					
+					if self:GetData("enchantment") == true then
+						longshipEnt.enchantment = true;
 					end
 					
 					--self:SetData("health", longshipEnt.health);
@@ -134,6 +139,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll_open.png";
 	ITEM.longshipEnt = "cw_longship_ironclad";
 	ITEM:AddData("customName", "", true);
+	ITEM:AddData("enchantment", false);
 	ITEM:AddData("fuel", 0);
 	ITEM:AddData("machinegunUpgrade", false);
 	ITEM:AddData("ammo", 0);

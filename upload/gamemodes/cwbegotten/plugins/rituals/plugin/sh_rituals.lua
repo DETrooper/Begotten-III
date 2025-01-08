@@ -1630,6 +1630,16 @@ RITUAL = cwRituals.rituals:New("Sister's Blessing");
 		Schema:EasyText(player, "icon16/anchor.png", "cornflowerblue", "This ship can now navigate the River Styx!");
 		Schema:EasyText(Schema:GetAdmins(), "icon16/anchor.png", "goldenrod", player:Name() .. " has enchanted a boat to navigate the River Styx! You can perform the /ToggleHellSailing command to allow them to sail to the Hell Manor!")
 		target.enchantment = true;
+			
+		local itemID = target.itemID;
+		
+		if itemID then
+			local itemTable = item.FindInstance(itemID);
+
+			if itemTable then
+				itemTable:SetData("enchantment", true);
+			end
+		end
 		
 		return true;
 	end;

@@ -1708,6 +1708,16 @@ concommand.Add("cw_ShipToggleEnchantment", function(player, cmd, args)
 					
 					Schema:EasyText(player, "icon16/anchor.png", "cornflowerblue", "[cw_ShipToggleEnchantment] This ship can now navigate the River Styx!");
 				end
+				
+				local itemID = entity.itemID;
+				
+				if itemID then
+					local itemTable = item.FindInstance(itemID);
+
+					if itemTable then
+						itemTable:SetData("enchantment", entity.enchantment);
+					end
+				end
 			end
 		end;
 	end
