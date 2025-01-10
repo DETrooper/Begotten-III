@@ -195,11 +195,11 @@ function meta:StartRolling(a)
 			if time == 1.1 then
 				stamina_loss = 45;
 			elseif time == 1 then
-				stamina_loss = 40;
+				stamina_loss = 35;
 			elseif time == 0.9 then
 				stamina_loss = 30
 			elseif time == 0.8 then
-				stamina_loss = 25
+				stamina_loss = 20
 			end
 
 			if self.GetCharmEquipped and self:GetCharmEquipped("boot_contortionist") then
