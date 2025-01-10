@@ -3,6 +3,8 @@ function Parry(target, dmginfo)
 		local wep = target:GetActiveWeapon()
 
 		if (target:IsValid() and target:Alive() and (target:GetNetVar("Parry", false) == true) and IsValid(wep)) then
+			if target == dmginfo:GetAttacker() then return end;
+			
 			local damageType = dmginfo:GetDamageType();
 			local checkTypes = {[4] = true, [16] = true, [128] = true};
 
