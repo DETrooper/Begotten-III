@@ -947,6 +947,27 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 500, supercrateOnly = true};
 ITEM:Register();
 
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Flail of Atonement";
+	ITEM.model = "models/weapons/ageofchivalry/w_begotten_solflail_prop.mdl";	
+	ITEM.weight = 1.6;
+	ITEM.uniqueID = "begotten_1h_solflail";
+	ITEM.category = "Melee";
+	ITEM.description = "A blessed instrument of bronze and steel bearing an incense burner that has been dipped thricely in holy water. Such a weapon is used only by the Sol Orthodoxy, for it burns the hands of the unhateful.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/sol_flail.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(38.78, 353.04, 273.48);
+	ITEM.attachmentOffsetVector = Vector(5.05, 2.83, 10.44);
+	ITEM.canUseOffhand = false;
+	ITEM.canUseShields = true;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.attributes = {"flail"};
+	ITEM.requiredbeliefs = {"repentant"};
+ITEM:Register();
+
 -- Hill shit
 
 local ITEM = Clockwork.item:New("weapon_base");

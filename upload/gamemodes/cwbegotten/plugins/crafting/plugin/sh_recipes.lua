@@ -3153,6 +3153,37 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 	
+	RECIPE = cwRecipes.recipes:New("flail_of_atonement");
+		RECIPE.name = "Flail of Atonement";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requiredFaiths = {"Faith of the Light"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 4},
+			["light_catalyst"] = {amount = 1},
+			["holy_water"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_1h_solflail"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 55;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
 	RECIPE = cwRecipes.recipes:New("war_hammer");
 		RECIPE.name = "War Hammer";
 		RECIPE.requiresSmithy = true;
