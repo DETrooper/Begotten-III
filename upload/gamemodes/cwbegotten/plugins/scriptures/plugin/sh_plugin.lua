@@ -204,30 +204,45 @@ local ITEM = Clockwork.item:New("book_base")
 ITEM:Register()
 
 local ITEM = Clockwork.item:New("book_base")
-	ITEM.name = "The County Districts"
-	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
+	ITEM.name = "Ballad of Saint Ragnar"
+	ITEM.model = "models/props_monastery/book_small.mdl"
 	ITEM.weight = 0.6;
-	ITEM.uniqueID = "book_tcd"
-	ITEM.description = "A scroll detailing a brief summary of the poor outlying districts of Hard-Glazed society."
+	ITEM.uniqueID = "book_bosr"
+	ITEM.description = "A leatherbound book that details one of the two Northern saints - the first, the Gore."
 	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
-	ITEM.bookInformation = {Book_County_Page1}
+	ITEM.bookInformation = {Book_SaintRagnar_Page1, Book_SaintRagnar_Page2, Book_SaintRagnar_Page3}
 	ITEM.bookType = "Glazic"
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 800, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
 
 ITEM:Register()
 
 local ITEM = Clockwork.item:New("book_base")
-	ITEM.name = "Discovery of the Gay Gore"
+	ITEM.name = "Saga of Saint Jeremiah Matheus the Bald"
 	ITEM.model = "models/props_monastery/book_small.mdl"
 	ITEM.weight = 0.6;
-	ITEM.uniqueID = "book_dtgg"
-	ITEM.description = "A leatherbound book detailing a brief synopsis on the Gores."
+	ITEM.uniqueID = "book_sosjtb"
+	ITEM.description = "A leatherbound book that details one of the two Northern saints - the last, the Philimonjio."
 	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
-	ITEM.bookInformation = {Book_Discovery_Page1, Book_Discovery_Page2, Book_Discovery_Page3}
+	ITEM.bookInformation = {Book_SaintMatheus_Page1, Book_SaintMatheus_Page2, Book_SaintMatheus_Page3, Book_SaintMatheus_Page4}
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The County Districts"
+	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_tcd"
+	ITEM.description = "A scroll of paper detailing a brief summary of the poor outlying districts."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_County1}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
 	
 	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 800, onGround = false};
 
@@ -238,7 +253,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.model = "models/props_monastery/book_large.mdl"
 	ITEM.weight = 1.4;
 	ITEM.uniqueID = "book_gks"
-	ITEM.description = "A large leatherbound epic dictating the first encounter with the Northern threat."
+	ITEM.description = "An large leatherbound epic detailing the first encounter with the Northern threat."
 	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
 	ITEM.bookInformation = {Book_Gay_Page1, Book_Gay_Page2, Book_Gay_Page3, Book_Gay_Page4, Book_Gay_Page5, Book_Gay_Page6, Book_Gay_Page7, Book_Gay_Page8, Book_Gay_Page9, Book_Gay_Page10, Book_Gay_Page11, Book_Gay_Page12, Book_Gay_Page13, Book_Gay_Page14, Book_Gay_Page15, Book_Gay_Page16, Book_Gay_Page17, Book_Gay_Page18, Book_Gay_Page19, Book_Gay_Page20, Book_Gay_Page21, Book_Gay_Page22, Book_Gay_Page23, Book_Gay_Page24, Book_Gay_Page25, Book_Gay_Page26, Book_Gay_Page27}
 	ITEM.bookType = "Glazic"
@@ -253,7 +268,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
 	ITEM.weight = 0.6;
 	ITEM.uniqueID = "book_s"
-	ITEM.description = "A scroll of paper dictating the method of spooning."
+	ITEM.description = "A scroll of paper dictating the practice of spooning."
 	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
 	ITEM.bookInformation = {Book_Spooning}
 	ITEM.bookType = "Glazic"
@@ -289,7 +304,22 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Glazic"
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1200, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Quotes of Northern Piety"
+	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_qonp"
+	ITEM.description = "A scroll of paper displaying quotes of Gore-Glazic faith."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_NorthQuotes_Page1, Book_NorthQuotes_Page2, Book_NorthQuotes_Page3}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
 
 ITEM:Register()
 
@@ -298,7 +328,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
 	ITEM.weight = 0.6;
 	ITEM.uniqueID = "book_tpu"
-	ITEM.description = "A scroll of paper regarding the Fourth Erotica Ban."
+	ITEM.description = "A scroll of paper regarding a publication on the Fourth Erotica Ban."
 	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
 	ITEM.bookInformation = {Book_Urges1}
 	ITEM.bookType = "Glazic"
@@ -324,11 +354,26 @@ local ITEM = Clockwork.item:New("book_base")
 ITEM:Register()
 
 local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Treachery of the Great Northern Orthodoxy"
+	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_totgno"
+	ITEM.description = "A scroll of paper detailing a great betrayal in a Gore-Glazic settlement."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Treachery1}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 800, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
 	ITEM.name = "Death Ships"
 	ITEM.model = "models/props_monastery/book_small.mdl"
 	ITEM.weight = 1;
 	ITEM.uniqueID = "book_ds"
-	ITEM.description = "A leatherbound book detailing the first voyage of the Death Ships."
+	ITEM.description = "A leatherbound book dictating the maiden voyage of the Death Ships."
 	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
 	ITEM.bookInformation = {Book_Deathships_Page1, Book_Deathships_Page2, Book_Deathships_Page3, Book_Deathships_Page4, Book_Deathships_Page5}
 	ITEM.bookType = "Glazic"
@@ -373,7 +418,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.model = "models/props_monastery/book_large.mdl"
 	ITEM.weight = 1.4;
 	ITEM.uniqueID = "book_lord"
-	ITEM.description = "A leatherbound epic titled after the greatest of all the Glazic figures."
+	ITEM.description = "A large leatherbound epic titled after the greatest of all Glazic figures."
 	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
 	ITEM.bookInformation = {Book_Maximus_Page1, Book_Maximus_Page2, Book_Maximus_Page3, Book_Maximus_Page4, Book_Maximus_Page5, Book_Maximus_Page6, Book_Maximus_Page7, Book_Maximus_Page8, Book_Maximus_Page9, Book_Maximus_Page10, Book_Maximus_Page11}
 	ITEM.bookType = "Glazic"
@@ -403,7 +448,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
 	ITEM.weight = 0.6;
 	ITEM.uniqueID = "book_alamos"
-	ITEM.description = "A scroll depicting the eulogy of a fallen follower."
+	ITEM.description = "A scroll of paper depicting the eulogy of a fallen follower."
 	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
 	ITEM.bookInformation = {Book_Alamos_Page1}
 	ITEM.bookType = "Glazic"
@@ -425,52 +470,6 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
 	
 	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1500, onGround = false};
-
-ITEM:Register()
-
-local ITEM = Clockwork.item:New("book_base")
-	ITEM.name = "Ballad of Saint Ragnar"
-	ITEM.model = "models/props_monastery/book_narrow.mdl"
-	ITEM.weight = 0.6;
-	ITEM.uniqueID = "book_bosr"
-	ITEM.description = "A leatherbound codex of the Hill that details one of its two saints - the first, the Gore."
-	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
-	ITEM.bookInformation = {Book_Saint_Ragnar_Page1, Book_Saint_Ragnar_Page2, Book_Saint_Ragnar_Page3}
-	ITEM.bookType = "Glazic"
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
-	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
-
-ITEM:Register()
-
-local ITEM = Clockwork.item:New("book_base")
-	ITEM.name = "Saga of Saint Jeremiah Matheus the Bald"
-	ITEM.model = "models/props_monastery/book_narrow.mdl"
-	ITEM.weight = 0.6;
-	ITEM.uniqueID = "book_sosjmtb"
-	ITEM.description = "A leatherbound codex of the Hill that details one of its two saints - the last, the Philimonjio."
-	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
-	ITEM.bookInformation = {Book_Saint_Matheus_Page1, Book_Saint_Matheus_Page2, Book_Saint_Matheus_Page3, Book_Saint_Matheus_Page4}
-	ITEM.bookType = "Glazic"
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
-	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
-
-ITEM:Register()
-
-local ITEM = Clockwork.item:New("book_base")
-	ITEM.name = "Quotes of Northern Piety"
-	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
-	ITEM.weight = 0.6;
-	ITEM.uniqueID = "book_qonr"
-	ITEM.description = "A scroll of paper that contains scripture for the enlightened in the North."
-	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
-	ITEM.bookInformation = {Book_Northern_ Quotes_Page1, Book_Northern_ Quotes_Page2, Book_Northern_ Quotes_Page3}
-	ITEM.bookType = "Glazic"
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
-	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 800, onGround = false};
-
 
 ITEM:Register()
 
