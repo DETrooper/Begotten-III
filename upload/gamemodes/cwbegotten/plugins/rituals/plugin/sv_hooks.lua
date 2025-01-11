@@ -1046,6 +1046,21 @@ netstream.Hook("AppearanceAlterationMenu", function(player, data)
 					player:SetNetVar("kinisgerOverrideSubfaction", nil);
 					player:SetCharacterData("rank", nil);
 					player:OverrideName(nil);
+					
+					local selectedSubfaction = data[6];
+					
+					if selectedSubfaction then
+						for k, v in pairs(factionTable.subfactions) do
+							if v.name == selectedSubfaction then
+								player:SetCharacterData("kinisgerOverride", "Wanderer");
+								player:SetNetVar("kinisgerOverride", "Wanderer");
+								player:SetCharacterData("kinisgerOverrideSubfaction", selectedSubfaction);
+								player:SetNetVar("kinisgerOverrideSubfaction", selectedSubfaction);
+								
+								break;
+							end
+						end
+					end
 				else
 					if factionTable.imposters and !factionTable.disabled then
 						player:SetCharacterData("kinisgerOverride", selectedFaction);
