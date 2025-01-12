@@ -995,3 +995,227 @@ The Golden Faced Prophet enchanted his followers with a desire for murder and th
 
 The Sanctuary I was sworn to protect is no more. The halls have been ransacked, the stores pillaged, and all that remains are the corpses of the fallen. The Gate has been breached, the walls brought low, and the Thralls are soon to roam the bloodied streets. I still live but only by mine own cowardice. That is why I pen these words, for as witness I at least spread truth of their deeds. This night I shall plunge a dagger deep into mine neck, for it is my duty as Emissary to execute deserters.
 ]]
+
+Book_Undergod_Page1 = [[
+<font color='#000' size='4'><b>The Undergod</b></font>
+
+<i>"Behold, the shattered mirror held against the visage of our world, so pure and untouched that those who gaze upon it would weep vacuum. For its form is void, so unknowable, so tantalizing in the coming darkness and inferno that yearns to consume our land - for the light that touches all would be snuffed out, its beaming proclamation of salvation for all to flicker and die, and the children within would reach for the fading light with outstretched arms and gaping mouths, only to swallow oblivion."</i>
+
+At the end of the Fifth Era, the Undergod entered the mortal realm, bringing forth eternal darkness.
+
+<font color='#000' size='4'><b>Theory of Origins</b></font>
+Long ago, hidden vestiges of the world were said to possess ancient and otherworldly tomes containing forbidden knowledge that no mortal souls were meant to comprehend - to know these secrets was to live an eternal nightmare where the mind was forever overtaken with the aggregate of existence itself. Those who returned with this knowledge were cast into the farthest confinements of catacombs and dungeons, their writings burned by scribes under orders of the very clergy they pledged affinity to. For all their rantings and despair, those who would foretell blackness beneath the fabrics of our reality were considered madmen, pronounced insane.
+
+And yet, despite every inkling of inquisitorial censure, even the harshest of scrutiny became unwarranted in the face of a lack of knowledge - for without conception by any mortal being was a truth so unfounded and beneath determinant features of the afterlife, or even of Hell itself - lurking in the dark shadows of nonexistence, shielded from the understanding of any being of mortality or divinity alike, was a fact that would spell the undoing of everything - and so indeed, men of holy esteem ascribed earthly titles.
+]]
+
+Book_Undergod_Page2 = [[
+This new calamity was finally christened, and for decades thereafter - for the precognitive conduits amongst the Loremasters were found to suffer many gripping nightmares as the power of the catalysts were wrought upon Gaia during its infernal purification, and the maws of the Earth's mantle opened to swallow entire kingdoms and billow with the brimming monstrosities of the Begotten. The clergy, dazzled and terrified by the sudden affliction upon all of mankind, turned to their most trusted for ethereal guidance - only to find many of their archivists spiraling into frenzy. Over the course of days, these archivists would perish one by one, choking and spluttering as if suffocating on their words alone - some foaming at the mouth as horrible sickness overtook their body, their delirious minds knowing no quarter. It is said that within the grand magistrate's catacombs, one of the Empire's most composed librarians awoke from a madness-induced slumber, just as the chamber Medici had tended to his care - witnesses spoke that he had restrained the assistant Medicus to his side with great panic and frustration, any and all semblance of soul devoid in his crazed eyes. Shortly before his heart was said to give out, with a single guttural avalanche of hysteria, he warned all who would listen of the eldritch curse that had finally manifested itself beyond the slivers of happenstance, the same being that was responsible for the fall of the great empires at the hands of the Begotten - a being which he coined as being "below God Himself" - <b>“the Undergod".</b>
+]]
+
+Book_Undergod_Page3 = [[
+Since the decades that followed, the Undergod has continued to exact its sacrilegious influence upon the ruins of Hard-Glazed society - its composed silence and unfathomable nature showing no desire for tithing paid be it in commodity or iconography. From the spiraling voids and infinite blackness from which it came, the only predictable facet is its hatred for all things living, and the slow, calculated vanquishing of existence itself.
+]]
+
+Book_Undergod_Page4 = [[
+<font color='#000' size='4'><b>Appearance</b></font>
+The rumination of the Undergod in any semblance is considered a high crime, an unforgivable blasphemy by almost every leading faith authority within the lands - for the temptations of the icon lead to deprivation and dullness of the mind. To contemplate the Undergod is to dispel one's own faith, a willing transfiguration of the self into a beacon for attack. Despite this, the last of peasant rabble had convened in secret, muttering to one another their limited conceptions of what the Undergod is.
+]]
+
+Book_Undergod_Page5 = [[
+As a result of these conflicting sacrilegious accounts and texts, it is impossible to determine the true form of the Undergod - when not taking the form of clouded blots and subterranean tendrils that span for eternal intervals, the preferred anthropological icon of the Undergod is that of a newborn baby, a man, or an apparition which draws from elements of both - the informative behind this artistry is clear, as the Undergod itself has been considered a "young" deity, but to do so would be sorely mistaken, as it would suggest the passage of time as a commonality between our realm and that of the Undergod. In more dramatic portrayals, this amalgam of young and old would wear breastplate stained with the blood of slain deities, and a massive, flaming sword of purifying white light - it is said that a single swing of this sword was enough to create the great rifts within the Earth which still remain today.
+
+Despite the detailed nature of these depictions, no mortal being has perceived the Undergod in its true form - those who would, it is believed, shall be swiftly extinguished by the cleansing of the Undergod's essence.
+]]
+
+Book_Begotten_Page1 = [[
+<font color='#000' size='4'><b>History & Origins</b></font>
+At the very height of power among the great empires of the Philimonjio after the final defeat of the Gay Gore, the mantles of Gaia suffered a disturbance which caught the attention of leading clergy authorities worldwide - great quakes shook the necropolises of the ancient world to their core, enormous cracks within the ground giving way and blistering with the bubbling pools of magma and brimstone which came fountaining into the atmosphere, polluting the clean air and fertile grounds in every corner of the Earth. Tranquil and serene vignettes of rummaging fauna and plant life were immediately covered in ash, blackened carbon polluting the lungs of animals and inhabitants alike. 
+
+As the ravines deepened, ridges and canyons filled with bubbling magma soon gave way to unearthed tusks of flesh, bone, and sinew - thrashing limbs, gibbering mouths and faces were visible within, screaming in flavorful tongues of death and calamity to be wrought upon all of mankind. Onlookers hastily retreated to their great palaces and forts, those Holy men servile to their government displaying the first and only instance of true mortal terror - spilling over fine cheeses and wines, with the first inclination to backhand their servitors for their drivel, soon flushing white as the plates upon which they dined - many officials indeed resigned themselves to their chambers under guard, while the few men of Holy honor who had found themselves among the living.
+]]
+
+Book_Begotten_Page2 = [[
+The onslaught began, as apparitions incomprehensible to the very nightmares of men appeared within the villages, towns, and homes, their sulfur-slicked skin burning the ground wherever they touched - the peasant breadwinners and wives and children made easy prey to the thralls, as their final moments were punctuated by the sheer revulsion of horror which befell the most dreaded of fates. Residents were poked, punctured, and picked apart in the most unholy and inhumane ways, the thralls savoring their wails of pain and mercy until their souls were fully consumed. Millions across Hard-Glazed society were harvested and brutalized. Those who managed to seek respite in fortified areas were soon struck by the blight upon the air they breathed - the black, choking smoke and a plague that seemed to affect those men unsteady in their faith the most. Many simply gave up, cursing the Glaze in blasphemous tongues and abandoning their faith entirely - they themselves would find their bodies splintering apart and rotting, transforming into an apparition themselves. Most solutions were to kill oneself, before the thralls killed them first.
+]]
+
+Book_Begotten_Page3 = [[
+As the swarm of malevolent monstrosities barreled towards the secure gates of the inner districts, the men of honor - individuals of Holy esteem and Noble Stature - rose above their station and gave out a rallying cry for their military brethren to take up arms. For many, a life of pious servitude had to culminate in a prophetic crusade just as this - and so, war was waged on every front against the advancing demons. Musket-wielding privateers in echelon cut down thousands of the hordes, while great marvels of engineering fired cannons from secure moving pillboxes and airborne contraptions rained down fire from the sky. Warlords rejoiced, assuring their followers - these unholy beasts shed blood, and if they did so, then they could be killed just as well.
+
+In a matter of days, these Lords would find themselves and their families cornered in their fortress chambers, surrounded by the manifestation of beings, forced to watch as their innards were slowly torn apart from one another and expressed upon the marble walls as sacraments to a new faith. For all too late the lesson was learned - no one escapes the Begotten.
+]]
+
+Book_Begotten_Page4 = [[
+Begotten, despite being fairly common in the apocalyptic days, are now few and far between. Hard-Glaze interpreters have determined that many Begotten thralls have migrated in accordance with creeds passed directly upon them from their master, the Child God - the new frontier of Begotten consumption is the Hell of Satan, in the efforts of the Undergod to usurp and reign dominion of the inferno.
+
+<font color='#000' size='4'><b>Physiology & Behavior </b></font>
+Begotten demons come in many forms, however, the most common warring variant takes the appearance of shambling, rotting carcasses of men - these apparitions are deceptive in their territorialism, for they are capable of pursuing their prey for days on end with an almost insatiable bloodlust, without a need for rest or sustenance. Although Begotten thralls are aptly capable of using their hands or claws to pry apart their victims, many have been reported to use weaponry devised by Man, such as knives, hammers, cleavers, and even diesel-fueled chainsaws - these strange bastardizations of technology are inscribed with unholy runes which singe to the touch, imbuing these weapons with hexing properties which dramatically escalate the pain, blood loss, and healing process of even the smallest of wounds inflicted by them.
+]]
+
+Book_Begotten_Page5 = [[
+It is universally understood that Begotten thralls pose an astronomical threat, even when travelling in numbers - their persistence, lack of inhibition, and hardiness make them a reckoning to contend with.
+
+<font color='#000' size='4'><b>Power from Despair</b></font>
+Begotten do not require worship to sustain their unholy power. Rather, it is said that they thrive on the lack of worship, the very fabric of despair sustaining their lifeblood. Only the foolish would attempt to give any Begotten thrall payment, in credence or penance alike - those who do so would invariably find themselves victims of the next harvest.
+
+Individuals who find themselves of already waning faith are susceptible to otherworldly plagues and diseases wrought upon by the great rending of Gaia - spore clusters sprung from the most elusive corners of Earth's mantle take root within the bodies of men and begin the utmost deterioration of the individual, resulting in an exponentially painful demise. Those who abandon their faith entirely, turning their backs on the power of the Glaze, will invariably undergo a twisted transformation as their bodies distort and splinter, any semblance of humanity and holiness expunged from their mortal coils as the dullness of pure bloodlust and misanthropy overtakes their minds, becoming yet another thrall subservient to the Undergod's every whim.
+]]
+
+Book_Begotten_Page6 = [[
+<font color='#000' size='4'><b>Pillars of Creation</b></font>
+When Begotten complete the conquest of all human life in a particular area, the thralls will manifest primitive stone structures which can tower hundreds of meters in height - these pillars seem to spur the emergence of more thralls from deep below the Earth. The structures, aptly named "Pillars of Creation" by Holy authorities, appear quickly and with no discernable method behind their construction. Many have theorized that destruction of these pillars could slow or halt the incursion of Begotten thralls, however, no demolition attempts have been successful on account of the massive resources necessary to perform such an undertaking. Still, the pillars remain looming over the wasteland, a solemn and foreboding reminder of Begotten dominion over these lands.
+]]
+
+Book_FirstInquisition_Page1 = [[
+<font color='#000' size='4'><b>The First Inquisition</b></font>
+<i>"Silence!"</i> boomed the Lord's thunderous voice. Silence overcame the courtroom. <i>"Enemies of the Glaze, quake and shiver. You will be found, you will face my judgement."</i>
+-Lord Maximus in the First Era addressing the Black-Hat threat.
+
+The very first Inquisition was formed shortly after the events of the Holy Hierarchy Wars in the First Era. The ruling class, the Hard-Glazed Phillimonjios, found their newly formed Empire in utter ruin, as a result of their holy wars. The common rabble did not recognize the authority of their new lords, as instead they partook in anarchistic mayhem to stay alive in the battle-torn lands. Even though the new Holy Hierarchy was bleeding, it did not have any true enemies remaining. To the West, the filthy tribes were scattered and destroyed. In the East, the squabbling darkhides warred over one another for resources, and in the North there was nothing but tales of crazed old men in the woods calling themselves Blade Druids. All that remained were the threats within.
+
+For the first time in the history, the very first calling of nobility was sent out to all across the known Hierarchy. Every man of power, from business people to wealthy families, to military generals and most importantly the keepers of the Faith, all came to partake in the first Royal Senate. The weak minded fools were put in their place, while the strong and influential would come to cement their power for an entire generation to come. These men would become the first of the Glazic Noble Stature, but even with their great power they surely hungered for more. The nobility elected their First Citizen, the glorious Lord Maximus - an easy choice, there was no doubt to it. He would be the one to call forth arms against any who threaten the Glaze, even those within it.
+]]
+
+Book_FirstInquisition_Page2 = [[
+<font color='#000' size='4'><b>The Enemy Within</b></font>
+A few decades have passed since the first Royal Senate hearing, and the Holy Hierarchy had finally managed to take firm control of the Hard-Glazed system. Indeed, the commoners were put in their place, the rabble quieted, the tribals put to slave labor, and a new Church was erected in the light of holy Glaze in the seat of District 1. Yet the Holy Hierarchy's first true test of their power was soon upon them. Trouble was brewing at court, with many noble houses voicing their distaste of the Phillimonjios hoarding all the true power to themselves. They thought nothing of it at first, petty drama from envious men surely - until members of the Phillimonjios household began to go missing, one by one. Blaming it upon the rival houses, the Phillimonjios started hiring killers to slit the throats of their perceived enemies as retaliation. The other houses would have none of it, for in truth they were not the ones responsible for the abductions. Calling forth their appointed Minsters armies, blood once again was spilled in the Holy Hierarchy.
+
+The scholars made sure to note in great detail Lord Maximus' ferocious and authoritarian swagger as he marched into the halls of the Royal Senate. With his booming voice he silenced the room, calling forth the three top lords of the Phillimonjios family. With one single swing of his mighty blade, he cleaved off all three of their heads, letting their lifeless bodies slump to the floor in tremendous synchronization. The court room was in shock, but Lord Maximus remained still in his resolve. He pointed to the three bodies, exposing them of their black blood that oozed from their torn necks. Indeed, a great heresy was upon the Holy Hierarchy. The mutant scourge that would later be known as the Black-Hats have infiltrated the Royal Senate, by wearing the skins of the noble stature - walking in their flesh as horrific puppeteers, seeking to bring down an Empire from within.
+]]
+
+Book_FirstInquisition_Page3 = [[
+<font color='#000' size='4'><b>Rise and Fall of the Holy Inquisition</b></font>
+Lord Maximus selected the most trusted of his advisers to organize the creation of the Holy Inquisition. Vance Heimann the First was a man of practicality. While any ordinary Minister would simply pick the strongest of his army, Vance instead looked to the common folk, seeking honest men over brutish warriors. He selected a band of simple hunters from a large forest, those who rely upon their skills of tracking and killing in order to stay alive. It did not take long for them to be trained for the part, as many of these men had already faced many vile witches of the great woods, who preyed upon men such as them for sacrifice. The true struggle was teaching these men the complexities of court, a vital skill that they would never truly grasp, which later led to their downfall. They were given their arms, their books of law, and were finally set out upon the Royal Senate, their new hunting grounds.
+]]
+
+Book_FirstInquisition_Page4 = [[
+It only took a single month for the remainder of the Black-Hats to be sought out and defeated. Whispers here, a bribe of coin there, and a trail of footprints that led to a guilty fool. The first of the Black-Hat infiltrators were easy to discover, for all it took was a simple cut from a dagger to reveal their black blood for all to see. The deception grew deeper when the Black-Hats hid their true colors through witchcraft. This only increased the Inquisition's power, as they were now allowed to carry out accusations on even red blooded men. Many were accused, and all were executed, guilty or not. Any forces of retaliation that they cooked up from their ranks of mutant men were firmly smited by Lord Maximus and his holy army. The home village of the Black-Hats were uncovered through various means of interrogation, and before the armies could arrive to give these mutant freaks a worthy genocide, they came to discover that the last of their kind had all killed themselves in a mass suicide in the village square. The Inquisition had succeeded in their task tenfold, marking the complete extinction of the Black-Hat scourge.
+
+Too much duty and dedication can sometimes be a bad thing, as the Inquisition would soon discover. Indeed they succeeded in their task, destroying the greatest threat to the Holy Hierarchy thus far, but now they looked further within. At first they tolerated their snooping, until they began exposing men of Faith. Every single branch by which the Hierarchy was governed were facing equal, unrestrained political assassinations, with no motivation other than the various Inquisitor's sense of duty. Lord Maximus had no other option than to officially disband the Holy Inquisition, returning the men to their forest where they would live out their remaining life as simple hunters. Of course, the offended nobility would later send out hired helpers to retrieve these honest men, sending the former Inquisitors to their personal torture rooms where they would never leave. Although the Inquisition was now gone, their work would not go unnoticed by the few faithful nobility who watched as the Royal Senate's corrupt ways were exposed for all to see. Vance Heimann and his legacy would later cause the destruction of the Royal Senate, birthing the Small Council in its place.
+]]
+
+Book_GodSuicide_Page1 = [[
+It started when the sky screamed. The air went thick, and the sun turned black as pitch. Then the flashes began, like lightning, and the sounds that came with them… sounds that made my ears bleed. I remember stumbling into the village square, stunned and confused, the others there too, all staring at the big box they brought in years ago—the one that showed moving pictures.
+
+It turned itself on. No one touched it. And on the screen… God.
+
+I knew it was Him. His body was twisted, bloated like a corpse pulled from a swamp. His eyes were endless pits, staring through me, through all of us. Then He started.
+]]
+
+Book_GodSuicide_Page2 = [[
+He took His own hands and ripped Himself open like a sack of grain, spilling His guts—ropes of them—onto the floor. Blood, black and shining like oil, fountained out of Him, spraying across the screen. It didn’t stop. It couldn’t stop. He clawed deeper, tearing at Himself, pulling chunks of meat and bone free like He was digging for something. The sound of it—wet, ripping, snapping.
+]]
+
+Book_GodSuicide_Page3 = [[
+Some fell to their knees, screaming and clawing at their faces. Others laughed like lunatics and started tearing at each other, biting, scratching. And me? I just stood there, staring, unable to move, feeling my mind slip away. When it was done, He sat there, hollow and slumped, His entrails coiled around Him like snakes.
+
+That’s when it began.
+]]
+
+Book_GodSuicide_Page4 = [[
+They came. Monsters, things born of nightmares, crawling out of the shadows and the ground itself. They didn’t just kill. They twisted people, turned them into more of their kind. I saw Father Corbin dragged screaming from the church, his skin peeling back as he was torn into something… something that shouldn’t exist. The children too, their small bodies cracked and remade into horrors.
+
+The flashes keep coming, lighting up the night. Each time, you hear the screaming again. Sometimes I see Him, see the moment it all went wrong. I feel His despair, His terror. And then there’s the whispers—God’s voice, worming into your head. Promises, lies, truths.
+
+We’re all cursed now. There’s no hope. No Heaven. No salvation.
+
+If you’re reading this, throw it in the fire. Or maybe stab yourself in the heart, before the Begotten find you. It’s better that way.
+
+<i>May the worms take me soon.</i>
+]]
+
+Book_Vance_Page1 = [[
+<font color='#000' size='4'><b>The Early Years: Life of Simplicity</b></font>
+Vance Heimann the First (b. 1E d. 2E) was not born to wealth, power, or privilege. His origins were humble, and his life before the Holy Hierarchy's rise was spent as a simple hunter in the vast and treacherous forests of what became the county districts. The dense woods teemed with predators and Vance became known for his keen instincts, practical cunning, and unmatched skill in tracking.
+
+In those years, Heimann and his fellow hunters often clashed with the strange, reclusive witches who inhabited the darkest corners of the woods. These malevolent figures, known to lure men to their doom, forced Heimann and his group to develop both physical prowess and a deep mistrust of the arcane. His triumphs over these woodland foes laid the foundation for his future as the first Grand Inquisitor.
+]]
+
+Book_Vance_Page2 = [[
+<font color='#000' size='4'><b>Call to Service: Formation of the First Inquisition</b></font>
+When Lord Maximus sought to eradicate the Black-Hat scourge, he turned to Heimann, whose reputation as a pragmatic, incorruptible man preceded him. While other ministers might have sought to build the Inquisition from the ranks of soldiers or nobles, Heimann broke tradition by assembling his order from men of his own peasant hunters.
+
+These men, accustomed to the perils of stalking prey and surviving in harsh conditions, were uniquely suited for the task at hand. They were practical, efficient, and above all, untainted by the intrigue of court life. Heimann’s vision was simple: the Inquisition would be an instrument of justice, guided not by greed or ambition, but by duty to the Holy Hierarchy.
+
+The early days of the Inquisition were marked by swift victories. Armed with steel, wit, and the holy texts outlining the laws of Glaze, Heimann’s hunters-turned-Inquisitors hunted down Black-Hats with brutal efficiency. They developed methods of interrogation that blended Heimann’s practical cunning with an almost fanatical zeal. A simple cut of the blade was often enough to reveal the black blood of the mutant infiltrators, and from there, it was a matter of following the trail of corruption to its source.
+]]
+
+Book_Vance_Page3 = [[
+<font color='#000' size='4'><b>Rise and Triumph</b></font>
+Under Heimann’s leadership, the Inquisition purged the Holy Hierarchy of its most immediate threat. The Black-Hats, those vile puppeteers who wore the flesh of nobles to infiltrate the very heart of the Royal Senate, were eradicated in record time. Heimann’s Inquisition uncovered their hidden villages, their covert gatherings, and their twisted schemes, driving the mutants to extinction.
+
+The Inquisition’s success brought a brief era of security to the Holy Hierarchy. Yet, it was not without its costs. The Inquisition’s growing power and zeal began to spill beyond its original purpose. No longer content with rooting out the Black-Hats, Heimann’s hunters turned their gaze inward, exposing corruption and sin among the very nobility they were sworn to protect. Ministers, generals, and even priests fell under their scrutiny, and accusations of heresy flew like spent powder cartridges in the Senate halls.
+]]
+
+Book_Vance_Page4 = [[
+<font color='#000' size='4'><b>Fall and Demise</b></font>
+Though Heimann’s dedication to justice was unwavering, it became his undoing. The nobility, increasingly threatened by the Inquisition’s relentless investigations, turned against Heimann and his men. What began as whispers of discontent soon evolved into a coordinated effort to dismantle the Inquisition.
+
+Faced with mounting pressure, Lord Maximus, once Heimann’s staunchest supporter, made the difficult decision to disband the Inquisition. The hunters were sent back to their forests, stripped of their titles and authority. Heimann himself retired quietly, returning to the life of a simple man. But the nobility, their pride wounded and their secrets exposed, could not let the matter rest. Hired assassins were dispatched to ensure that the former Inquisitors—and Heimann himself—would never again threaten the delicate balance of power within the Holy Hierarchy.
+]]
+
+Book_Vance_Page5 = [[
+<font color='#000' size='4'><b>Legacy of Justice</b></font>
+Though Heimann’s life ended in obscurity, his legacy endured. The Inquisition’s work had exposed the rot within the Royal Senate, planting seeds of dissent that would later blossom into full rebellion. The Small Council, which replaced the corrupt Senate at the end of the Third Era, was in many ways a testament to Heimann’s ideals of accountability and justice.
+
+Vance Heimann the First is remembered as a man of principle, whose uncompromising dedication to duty changed the course of the Holy Hierarchy. Though his methods were brutal and his end tragic, his name remains a symbol of incorruptibility.
+]]
+
+Book_GoreFolly_Page1 = [[
+<font color='#000' size='4'><b>Discovery of the Gore</b></font>
+
+Dating back to the dawn of the First Era, the ‘Gay Gores’ started off in a shroud of mystery. Originally thought to be a mad cult of northern folk, the Glazic nobility paid them little attention. Early serfs would report to their local Minister about 'mad mountain-men and spearfolk, white of skin' who would watch their villages at a distance. Rumors would spread among the County Districts which bordered between the Gore and Glaze.
+
+It was not until the Second Era, in the aftermath of the Hierarchy wars, that the Royal Senate heard word of the Goreic Kingdom. It was said that a local county district's tradition was to send their village elders to the north, so that they would become one with the snow. For years they would send their elders into the cold winds of the north, and none would return. This changed when an elder returned from their quest with a 'ghastly look,' and a word of their findings in the Northlands. His findings were immediately reported to the Royal Senate, detailing a face-to-face meeting with these men, who called themselves 'the Gores' and spoke of false gods that were of anti-Glazic intent. 
+]]
+
+Book_GoreFolly_Page2 = [[
+<font color='#000' size='4'><b>Goreic Kingdoms</b></font>
+
+<i>"I suppose It'd be quite requisitory of the Royal Senate to enact a burdening response to these recent attacks on our peasant friends. To sit back, wait, and hope for a digression? Simply put, these Spearfolk must be swiftly cut down before they grow in number."</i>
+—V.K Heimann - the 'Steel Tongue' of his days.
+
+Around the early phase of the Second Era, beginning with the first encounter of the Gores at the Gay King Summit, Goreic raids have grown from legendary to quite common and then annoyingly frequent. From ambassador intelligence to captured Spearfolk, it was apparent that a great number of Goreic men were actually once of Glazic faith, and have converted over. Life among these people is extremely simple, their day consisting of crawling around in dark underground tunnels, or in cold villages on the mountains. Strangely, when asked what these men believe in, each response will vary. 
+
+According to the beliefs of the Gores, a great set of deities rule over the world, known as the 'Family.' This family, consisting of two brothers, a sister, a mother, and a father, had created the world by 'finding the way.' The names of these deities never seem to be agreed on, but their roles seem unanimously known. The mother is the caretaker, the voice of reason. The father is the hunter, the seeker of nourishment for the family, but without the other members of the family to support him, he is nothing. The first brother is intelligent, but lacks communion. The second brother is of great communion, but lacks intelligence. The sister is the trickster, who causes troubles for the family, but will also help the family in time of need. 
+]]
+
+Book_GoreFolly_Page3 = [[
+There is no noble class of these Gore people, but only a single faith system that guides them all. A series of schisms along the county districts have called for various purges to occur, but for every dead Gore another rises to take their place. Goreic activities have become widespread knowledge after the late Goreic Purges called by Minister Willtan that resulted in an absolute suppression of the Spearfolk militia. Despite our victories, it will indeed be a great struggle before these beast-men are completely removed from the light of Sol.
+]]
+
+Book_Seventeen_Page1 = [[
+<font color='#000' size='4'><b>History & Origins</b></font>
+Unlike the other Holy Orders, the Knights of Sol are entirely new, having no history from times before. Of course, there have always been Anointed Knights within the Holy Hierarchy, but such a role was mostly regarded as a status symbol of sorts. The legend of the Knights of Sol began as any Glazic tale of triumph does, when the Light comes to meet darkness in its strongest hour. When Skylight ascended to abandon the Earth, those who remained witnessed an unholy battle. One by one the Ministers in charge of their sanctuaries of Light found themselves alone. Those preparing themselves for the mass suicides were cut short by the horrifying sight of Skylight falling to the Earth, a blazing inferno. Now it was truly hopeless, the last promise of a future for mankind was surely gone. The Undergod had succeeded in its task to purify the world of Man and its sin. When the foundations of the church quaked and cracked, and the Gatekeepers ran low on munitions for their muskets, suffering was soon upon the last defenders. Then they saw it, a crack emerged from the hellish sky to reveal a golden ray of Light, something that none had ever seen before in their short lives. Seventeen men stood tall in the horizon, wearing glorious white armor, wielding swords glowing bright. Demons fell upon them, but these Seventeen hacked and sliced a path through them. Thousands fell by their blade before the demons retreated into the darkness, and it seemed that humanity would live for at least another day.
+
+It has been many, many years since that dark day and now the Seventeen no longer walk this Earth. They may be gone, but their legacy stands tall. A surviving Minister in the county district sanctuary had created a new Greater Order, the Knights of Sol, in honor of the Glorious Seventeen. These Knights may never be as powerful as them, though they will mold themselves in their image, choosing to lock away petty needs and desires of man for a purely zealous and dutiful lifestyle. The rigorous process of becoming a Knight is one of the reasons that the order is so uncorrupted. One must first become recognized by their Lord, often by surviving the ranks of the Gatekeepers, an achievement only one in a hundred could boast. Then they must complete a task requiring absolute bravery, and enormous luck only the Glaze could provide. Even when they are given the opportunity to drink from the holy waters, they risk being 'purified' through flame, often turning their innards into ash, killing them on the spot. Having great skill and ambitions is not enough for one to become a Knight of Sol, instead they must truly be someone favored by the Light.
+]]
+
+Book_Seventeen_Page2 = [[
+While the Knights of Sol may seem like perfect men, it is not often the truth. Many who have finally been accepted into the Knights of Sol will be consumed by prayer, choosing to live out the rest of their lives kneeling before an altar, most even collapsing from starvation before one. Other Knights may turn to sin as they have been consumed by their own ego, seeing themselves as gods for they have completed an impossible task. These Knights will later feel an inferno obliterating their bellies after drinking from the holy waters in their daily ritual. As a Knight of Sol, if you have mere fleeting thoughts of corruption and sin, it may lead to your instant death following the daily purification ritual. As such, the Knights of Sol holds its name as the most pure order within the Holy Hierarchy.
+
+The duties of a Knight are to serve the Holy Hierarchy without question, and to follow the Chivalric Code of the Seventeen. Following the unholy conquest, there are many territories belonging to the Hierarchy that have no living Lords to hold them. Knights are encouraged to rally up mobs of Gatekeepers or commoners to reclaim these lost territories, holding them until a capable Minister can step forth to claim them as their own.
+
+Knights are given the absolute best equipment available in the royal armories. Despite this, Knights are never seen with muskets or any other sort of firearm. Guns are not forbidden by the order, but to use one would be seen as stooping to the level of a dirty common man. Knights forge their own swords, tempering the molten blade in holy water and praying every step of the way. They may also wear plate armor, although some Knights prefer to fight in their robes as warrior priests. When the situation calls for the use of firearms, a Knight may assign themselves a Squire from the ranks of the Gatekeepers, giving them a list of duties in return for privileges, such as training.
+]]
+
+Book_Seventeen_Page3 = [[
+<font color='#000' size='4'><b>The Chivalric Code of the Glorious Seventeen</b></font>
+
+<b>Nobility</b>
+Obey thy demands of thine Minister.
+Thou must never question thy word of thine Royal Pope.
+Thou must obey thy Book of Law and the Inquisition that defend it.
+
+<b>Valor</b>
+Thou must defend the weak and innocent.
+Thou must exhibit great courage in the face of evil.
+Thou must fight with honor.
+Thou must avenge the fallen.
+Thou must never allow a heathen to live.
+
+<b>Honor</b>
+Thou must avoid deception.
+Thou must never attack an enemy from behind.
+Thou must never compromise or hesitate thy holy principles.
+]]

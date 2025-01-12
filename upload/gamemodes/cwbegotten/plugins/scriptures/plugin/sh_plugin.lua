@@ -204,6 +204,51 @@ local ITEM = Clockwork.item:New("book_base")
 ITEM:Register()
 
 local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Vance K. Heimann: A Bibliography"
+	ITEM.model = "models/props_monastery/book_small.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_vkhab"
+	ITEM.description = "A leatherbound book titled after the first Grand Inquisitor."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Vance_Page1, Book_Vance_Page2, Book_Vance_Page3, Book_Vance_Page4, Book_Vance_Page5}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Folly of the Gore"
+	ITEM.model = "models/props_monastery/book_small.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_fotg"
+	ITEM.description = "A leatherbound book detailing a brief summary on the Gores."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_GoreFolly_Page1, Book_GoreFolly_Page2, Book_GoreFolly_Page3}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The Glorious Seventeen"
+	ITEM.model = "models/props_monastery/book_small.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_fotg"
+	ITEM.description = "A leatherbound book detailing the history of the Knights of Sol."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Seventeen_Page1, Book_Seventeen_Page2, Book_Seventeen_Page3}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1000, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
 	ITEM.name = "Ballad of Saint Ragnar"
 	ITEM.model = "models/props_monastery/book_small.mdl"
 	ITEM.weight = 0.6;
@@ -455,6 +500,66 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
 	
 	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 3000, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The Undergod"
+	ITEM.model = "models/props_monastery/book_small.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_underg"
+	ITEM.description = "A leatherbound book titled after the ultimate antagonist of mankind. Written by an unknown Glazic author. Its presence fills you with unease."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Undergod_Page1, Book_Undergod_Page2, Book_Undergod_Page3, Book_Undergod_Page4, Book_Undergod_Page5}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
+
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 3000, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The First Inquisition"
+	ITEM.model = "models/props_monastery/book_small.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_tfi"
+	ITEM.description = "A leatherbound book detailing the First Inquisition."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_FirstInquisition_Page1, Book_FirstInquisition_Page2, Book_FirstInquisition_Page3, Book_FirstInquisition_Page4}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
+
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1100, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The Begotten"
+	ITEM.model = "models/props_monastery/book_small.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_tbegot"
+	ITEM.description = "A leatherbound book titled after the unholy corruption that plagues the world. Written by an unknown Glazic author. Its presence fills you with unease."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Begotten_Page1, Book_Begotten_Page2, Book_Begotten_Page3, Book_Begotten_Page4, Book_Begotten_Page5, Book_Begotten_Page6}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_small.png";
+
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1800, onGround = false};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Death of Him"
+	ITEM.model = "models/items/magic/scrolls/scroll_rolled.mdl"
+	ITEM.weight = 0.6;
+	ITEM.uniqueID = "book_deadgod"
+	ITEM.description = "A rolled piece of paper detailing an eye-witness account from an unknown county peasant."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_GodSuicide_Page1, Book_GodSuicide_Page2, Book_GodSuicide_Page3, Book_GodSuicide_Page4}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
+
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 2000, onGround = false};
 
 ITEM:Register()
 
