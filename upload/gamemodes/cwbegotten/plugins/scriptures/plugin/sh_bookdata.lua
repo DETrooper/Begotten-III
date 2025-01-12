@@ -7,12 +7,10 @@
 
 Book_Booby_Page1 = [[
 <font color='#000' size='4'><b>A Misunderstood Legacy</b></font>
-
 The Blagoona family began when a remarkable young Philimonjio man by the name of Blagoona Torquez ventured into the African continent across the sea. Blagoona Torquez began his reign of power after the establishment of the Holy Hierarchy in the African continent, and gave it the teachings of the Glaze. He began his worship with the Unenlightened Fucklets, those who lived in the East, but soon grew angry and distressed. The initial reasoning for this is yet unknown, but what is told in stories dating back to the beginning of Glaze and its formation, was that Torquez felt an immediate disconnection between his mind and the faith he was building upward.
 
 <font color='#000' size='4'><b>Booby Blagoona - His faith, the people... and the beginning</b></font>
-
-The Blagoona family was first recognized with Booby Blagoona in the last years of the First Era, a darkhided peasant from the far reaches of a Glazic discovery. What was unheard of by the Blagoona family, was that they were characters of great strength and ability. They looked for outreaches in their ways of guidance. They traveled very far and very boldly, and these characters of great ability, great mastery and great vigilance go on to tell their stories. These charismatic beings gave birth to a new age of reason and mindfulness among those they visited. These characters known as the Blagoonas came forth from an age of iron and steel, and threw themselves at the world for the world to see. There was no stopping Booby Blagoona, a man who rose to show the time of his age that he was up for the task of uniting, and so he did.
+The Blagoona family was first recognized with Booby Blagoona (b. 1E, d. ?) in the last years of the First Era, a darkhided peasant from the far reaches of a Glazic discovery. What was unheard of by the Blagoona family, was that they were characters of great strength and ability. They looked for outreaches in their ways of guidance. They traveled very far and very boldly, and these characters of great ability, great mastery and great vigilance go on to tell their stories. These charismatic beings gave birth to a new age of reason and mindfulness among those they visited. These characters known as the Blagoonas came forth from an age of iron and steel, and threw themselves at the world for the world to see. There was no stopping Booby Blagoona, a man who rose to show the time of his age that he was up for the task of uniting, and so he did.
 ]]
 
 Book_Booby_Page2 = [[
@@ -29,7 +27,6 @@ It was a warm August morning when Blagoona made farewells to his people of inner
 The next morning it was documented that his village was savagely destroyed by a nearby rival tribe... Booby would discover the abandonment of his home village many years after in the tale of his return to the African continent. Those who lived with him were either killed or enslaved and he would want revenge for it all. 
 
 <font color='#000' size='4'><b>A Tale of Beauty Inside</b></font>
-
 The tale goes that as the grand poet Booby Blagoona stepped onto the pedestal and gave forth his first speech, many years later, all eyes glistened and focused on the master at his finest. It was only then that everybody in the crowd felt his inner beauty, his majestic nature, his intelligence. The stars sparkled under the night of a man soaked in the passions of speech. He gave forth the words later deciphered by Hard-Glaze translators and literary geniuses associated. These words go as following:
 
 <i>"I want the world to know, the peasants and darkhides, keep fighting, but know what you are fighting for in this world. I want you all to understand the embodiment of a man. It is I, Blagoona. Do not stop fighting may I say, but do know what you are fighting for in this world. Understand, comprehend the wars that go on in this world. As I firmly place my hand on my chest, and read out the scriptures, I want all to twinkle with vitality."</i>
@@ -39,24 +36,21 @@ The tale goes that as the grand poet Booby Blagoona stepped onto the pedestal an
 Book_Booby_Page4 = [[
 An uproar of Powderboys and Guardians scrambled to their feet and began a displacement in the capital's parade. It is said that during this change in behavior, noblemen and peasants together within the walls of the Capitol had gained a huge surge of rebellion in their hearts from Blagoona's speech, and had sent the entire city on a full lockdown status alert. Every door in the Garden of Glaze is put on full lock-down. Soldiers were struggling to stop the rioting as the city went into a full-fledged outbreak. Infrastructure destroyed, burnt to the ground. Even the royal escort vehicle was flipped upside down in the road and torched to a crisp by the rioters. All of this commotion only got worse when the Royal Palace was surrounded by a lynch mob of angry protesters, all wanting to kill Lord Maximus.
 
-To be continued in Lord Maximus: A Bibliography.
+To be continued in <b>Lord Maximus: A Bibliography.</b>
 ]]
 
 Book_Boxer_Page1 = [[
 <font color='#000' size='4'><b>Esteemed Writer and Visionary</b></font>
-
 Boxer Harvus Krammy (b. 3E d. 4E), was a Hard-Glazed author, humorist, philosopher, researcher, and Royal Senator. He is universally acclaimed for his works, including the world-famous The Perpetual Urges and its lost-to-time sequel, The Persistent Urges. Krammy, in his younger years as a Hard-Glazed researcher, contributed to the immensely valued and important research document, The Manifesto, which forever changed the way that the Phillimonjios viewed the Hard-Glazed system, as well as The Festering Bypass.
 
 Though Krammy at the height of his career was among the richest men in all of the world, it soon came crashing down. Indeed, throughout his life Krammy was plagued by never-ending scandals. However, regardless of this, he was a man highly respected by those in the Royal Senate, including his enemies. Even Lord Maximus himself held Krammy as a dear friend. 
 
 <font color='#000' size='4'><b>Early Life</b></font>
-
 Not much is known of Krammy's early life, other than that he attended university District 1 and that his name appeared in many essays and research documents dating from the early years of the Third Era. It would appear that he was an esteemed researcher of the human mind, but soon decided to take up penmanship, writing many short stories and novels deeply rooted in Hard-Glazed culture.
 ]]
 
 Book_Boxer_Page2 = [[
 <font color='#000' size='4'><b>Political Career and Fateful Duel</b></font>
-
 Beginning in the last year of the Third Era, Krammy was suddenly instated by the Lord's decree to the office of Advisor to the Royal Senate. This appointment was a prestigious one, bringing with it the benefits and respect of noble life. However, it was revealed by an investigation shortly after Krammy's death that Krammy, despite his unusual rising within the upper echelons of Hard-Glazed society, had always despised the Royal Senate. Fragments from his diary state that Krammy thought the Royal Senate "prioritized morality" when it came to the lesser gene pool.
 
 Indeed, during the turbulent times in the early years of the Fourth Era, the Royal Senate passed legislation that forbade the masters from striking their slaves for disobedience.
@@ -74,7 +68,6 @@ As a direct result of the Royal Senate's involvement, Lord Maximus crippled the 
 
 Book_Boxer_Page4 = [[
 <font color='#000' size='4'><b>The Perpetual Urges and Controversy</b></font>
-
 Even as Krammy took up the mantle of Advisor to the Royal Senate, a laborious and strenuous job, he still continued to work on novels and stories for the masses. However, he was forced to abandon his pursuits in writing upon becoming an official Royal Senator, returning after being dismissed by Lord Maximus.
 
 After the passing of the Fourth Erotica Ban (22) by the new Royal Senate, Krammy had decided that he'd "had enough with the Royal Senate's games". He sought to inspire the masses to revolt against the oligarchy and install a new senate in its place. It was during his time of peak suspicion and hatred of the Royal Senate that he completed his greatest masterpiece, The Perpetual Urges. It quickly became a bestseller, and is widely regarded to be the single most impactful work in all of Hard-Glazed history. Because of the success of The Perpetual Urges, Boxer H. Krammy became a household name. Yet, the vast audiences who had read Krammy's work had ignored the deeper message within, and Krammy soon found himself frustrated that the Royal Senate was still in power.
@@ -84,7 +77,6 @@ At the same time, many of the more conservative in the population were offended 
 
 Book_Boxer_Page5 = [[
 <font color='#000' size='4'><b>Later Life and Execution</b></font>
-
 The Royal Senate, joined by the obedient Small Council, chastised Krammy in the middle Fourth Era, citing the fact that The Perpetual Urges was a likely bypass to the Fourth Erotica Ban (22). Times were becoming more turbulent due to the rapid industrialization, and worker unrest was rising. The political and social backlash was immediate. Krammy was stripped of all honorary titles and his accounts were frozen. All of his works and originals were confiscated, though for some unknown reason his published works remained unbanned and available to the general public. Krammy retired to a log cabin deep in the outskirts of District 3. During this time he wrote poetry about the depressing smokestacks of the encroaching factories as more were built across the County Districts, and began work on a sequel to The Perpetual Urges, called The Persistent Urges. However, as his next great work was nearing completion, the Royal Senate took further action to impede Krammy. One night, while Krammy was visiting District 1 to recite poetry for Lord Maximus himself, unknown assailants burnt Krammy's cabin to the ground. Lost were many historical artifacts of utmost importance, as Krammy was a collector of antiquities. Some of the artifacts lost included items from the Old World, pre-dating the First Era. Additionally, while Krammy was in District 1, the Royal Senate stealthily organized riots against Krammy and The Perpetual Urges. In face of mass social unrest and a possible collapse of society, Lord Maximus had Krammy condemned to die by spooning. 
 
 His last words were reportedly:
@@ -95,7 +87,6 @@ The true meaning of these words remains unclear.
 
 Book_County1 = [[
 <font color='#000' size='4'><b>County Districts</b></font>
-
 The 'County Districts' refer to the Glaze-owned territories along the border separating the Glaze and the Gore. These districts are typically of lower quality and are the only districts under control of the Ministers, and not the Small Council. Many consider these districts to not actually be part of the Hard-Glazed system, and are rather independent villages owned by peasants. 
 
 Among the population of the County Districts include the retard, the darkhide, the savage, the pagan, the poor, the hungry, the fucked, the unenlightened, and the rejected of Philimonjio ancestry. For this, they are barred from the Central Districts and relegated to fucked living conditions hilariously out-matched by the pure perfection of the Central Districts.
@@ -105,7 +96,6 @@ Despite this, they remain of high population. Some Glazic scholars assume this i
 
 Book_Discovery_Page1 = [[
 <font color='#000' size='4'><b>Discovery of the Gore</b></font>
-
 Dating back to the dawn of the First Era, the ‘Gay Gores’ started off in a shroud of mystery. Originally thought to be a mad cult of northern folk, the Glazic nobility paid them little attention. Early serfs would report to their local Minister about 'mad mountain-men and spearfolk, white of skin' who would watch their villages at a distance. Rumors would spread among the County Districts which bordered between the Gore and Glaze.
 
 It was not until the Second Era, in the aftermath of the Hierarchy wars, that the Royal Senate heard word of the Goreic Kingdom. It was said that a local county district's tradition was to send their village elders to the north, so that they would become one with the snow. For years they would send their elders into the cold winds of the north, and none would return. This changed when an elder returned from their quest with a 'ghastly look,' and a word of their findings in the Northlands. His findings were immediately reported to the Royal Senate, detailing a face-to-face meeting with these men, who called themselves 'the Gores' and spoke of false gods that were of anti-Glazic intent. 
@@ -113,7 +103,6 @@ It was not until the Second Era, in the aftermath of the Hierarchy wars, that th
 
 Book_Discovery_Page2 = [[
 <font color='#000' size='4'><b>Goreic Kingdoms</b></font>
-
 <i>"I suppose It'd be quite requisitory of the Royal Senate to enact a burdening response to these recent attacks on our peasant friends. To sit back, wait, and hope for a digression? Simply put, these Spearfolk must be swiftly cut down before they grow in number."</i>
 —V.K Heimann - the 'Steel Tongue' of his days.
 
@@ -128,10 +117,9 @@ There is no noble class of these Gore people, but only a single faith system tha
 
 Book_Gay_Page1 = [[
 <font color='#000' size='4'><b>Gay King Summit</b></font>
-
 <i>"They have many names to be exact. Some call them 'bizzaros' or 'the sinless,' 'mystified ones,' or "pagans," 'messengers,' 'decipoles,' 'creators,' destroyers',' 'immigrants,' 'enemies,' 'friends,' 'the mysterious.' 'Gays.' 
 I will only call them 'strangers.' Only that."</i>
-- Millar C. Pance, N. Goeric-Glaze Regional Administration. Senior Officer & Artillery Commander - April 23rd, I. Holy Hierarchy Wars.
+- Millar C. Pance, N. Goeric-Glaze Regional Administration. Senior Officer & Artillery Commander - April 23rd, II.
 
 Millar C. Pance was a military tactician during thump and clash of the very well identified Holy Hierarchy Wars. A well deserved champion, however with troubling recurrences of almost dying in combat.
 
@@ -140,9 +128,8 @@ It was April 23rd, when two political heros and serious competitors of Goreic an
 
 Book_Gay_Page2 = [[
 <font color='#000' size='4'><b>"These ... Strange Men"</b></font>
-
 <i>"They rose from the ashes of a terrible conflict and gave hope to the nation, but that was only the beginning..."</i> 
--Charles Simmons, Drill Sergeant under command of Gen. Millar C. Prance. Second man to witness the first encounter. April 23rd, I. Holy Hierarchy Wars. 
+-Charles Simmons, Drill Sergeant under command of Gen. Millar C. Prance. Second man to witness the first encounter. April 23rd, II. 
 
 There is no dispute in the empire that is powerful enough to reign hell on rayless beings of charcoal, a true land of gold, house of cultural diversity even when fucklets are crust, shit, or simply both. As always, the diversity allows for the fowls of evil to be admitted their blessings from The Glaze. It was the Gay Kings Men however, that stuttered the speech of noble spokesmen. Sabre clung men, the hardest of foul-mouthed raiders, to kill for coin. Soothe blanketed soldiers pledging an oath to unfair tactics. 
 
@@ -155,22 +142,20 @@ Book_Gay_Page3 = [[
 They looked to find refuge, worse in a triumphant nation at best, but who is to say the coin is not turned to reveal the Glazic people and their looking for salvation. Only one would hope not, for the Glaze is all they knew, and hopes to only know when darkness shrouded the world, as history tends to repeat itself. 
 
 <font color='#000' size='4'><b>Arrival of The Evil Sentiment</b></font>
-
 The strangers received zero backlash, as the country itself was hanging on the balance, with a war in the closing, and the leftover destruction unimaginable. So when these interesting beings arrived, making their first appearances in autonomous regions bordering Goeric mountains, it was no wonder that all banded together and greeted these fascinating ones. Those who would seem to magically morph from thin air into the many neighboring treelines, walking endlessly from wherever they came from through enormous plains.
 ]]
 
 Book_Gay_Page4 = [[
 <font color='#000' size='4'><b>Immortal Awakenings (A Child Abduction)</b></font>
-
 A terrible scheme of backstabbing had surfaced after six months from when the powerful beings was discovered, in one of outlying Goeric-Glaze autonomous regions, known for the first sightings of travelers by the Hard-Glaze commander. The story so goes, that a young boy onwards to becoming an apprentice hunter, only at the time coming of age, had traveled with his grand father deep into the forests almost bordering the mysterious Goeric lands. This boy was innocent, and never thought much of what he was doing. He was going by what his grand father had instructed him to do, both of them originally together on a pleasant hunting trip. It was until the boy was specifically told by the wiser man to go fetch five items of the land, that something had happened. It was told in order as is. 
 
-"Child do as I say.. recite the words three times after me. I acquire these five things." 
+<i>"Child do as I say.. recite the words three times after me. I acquire these five things." 
 And so the child listened attentively, eyes wide awake. 
 "One Portobello Mushroom from the largest of ancestors oak tree." 
 "One picking of Microsorum Pteropus, three leaves each." 
 "One Dryopteris Filix-Mas, one single leaf." 
 "One slice of wet bark from last nights sprinkle, found on a oak tree of our ancestors." 
-"And finally one handful of the purest red berries, careful not to be poisonous." 
+"And finally one handful of the purest red berries, careful not to be poisonous."</i>
 
 The boys grand father told the boy to open his hand, where the man gently placed a cold dagger in, and slowly had the boy close his clutch around it protectively. He also put his very own leather satchel on the boys frail body, over his small shoulders, and kissed the boy on his forehead before sending him on his way. 
 
@@ -211,7 +196,6 @@ The land was fresh and cleansed of chemicals and pollutions left after a terribl
 The child watched as little ants moved across the skyline, the land timelapsing into morning, evening, night, and repeat.. People in their daily lives. Society in motion, as the beauty seemed to continue endlessly like a simulation, the shining imagery then began to quickly dim into darkness, and the eyes of the child shielded once again.. he blinked, realizing what now was in front of him. Something wasn't right here at all. 
 
 <font color='#000' size='4'><b>The Mass Mobilization (The Rising)</b></font>
-
 After five back to back days of fear and anguish in the local community the boy resided in, the regional governor had received word of the tragedy, and under the pressures of the entire populace the man delivered a notion of action. He spited every fucker peasant deterring him from finishing a mediocre meat platter that tasted as dry as disgusting old peasant nibble. 
 ]]
 
@@ -259,7 +243,6 @@ Book_Gay_Page12 = [[
 -Elmer Roskimer, Glazic minuteman of the militias 41st Sword & Slingers, and eye witness account during the arrival of Goeric Warbands from the north. 
 
 <font color='#000' size='4'><b>A Goeric-Glaze Dispute</b></font>
-
 The Goeric re-enforcements had arrived at request, and the governor had gold coins in his eyes. He dismounted to salute the toughest Gore chieftains he could find in the outback, and these warriors stood still with unreadable expressions, as they expected something "more serious." These warriors looked as if they were living in caves for a milinium. Giant muscular males with the longest unkempt beards ever seen. 
 
 These guys put the governors toughest militia to pity, and the meatiest man alive in rank stepped aside as the Goerics entered the governor's caravan. It was all a true sign of an overreaction on the Governor’s part, and now he had to pay the price for it. Over a fucking child lost. 
@@ -313,7 +296,6 @@ Lt. Markus Lambua perished in the line of duty, when left with no other option b
 
 Book_Gay_Page17 = [[
 <font color='#000' size='4'><b>The Governor's Escape (Climax)</b></font>
-
 The township was seen for miles over pinetrees, engulfed in a maroon smoke. The governor managing to escape the undergoing mayhem, had barely outrun Goeric pursuers on foot to a nearby horse stable. There, he rode the last remaining steed to his fortified castle estate. 
 
 The army was in shambles, men dragging their fallen peoples across the battlefield. Some made it outside the boundary, but found themselves being attacked by bandits. 
@@ -346,7 +328,6 @@ Book_Gay_Page19 = [[
 - the ramblings of Governor Alexander Pantis heard by a reporter, many years after the horrifying conflict that left him admitted to a mental hospital. 
 
 <font color='#000' size='4'><b>A Bitter Rival</b></font>
-
 He was greeted by hundreds of surviving men congregating outside a swampy moat. The drawbridge was lifted up to keep their own men from entering the facility. It was only an hour and a half into the battle and men were retreating to their last line of defense. Troopers were heard in agony, doctors hastily working in tents to patch up the wounded, and those unable to be saved quickly shoved into makeshift graves that dug up the outer perimeter. Some were thrown in large craters with dozens of others on top, a mixture of dead and alive, many assumed already gone. Upon seeing the governor arrive on horseback, many of these defeated men gave an exhausted cheer. The lord bestowing a tired gesture himself, and numerous souls continued working at a snails pace with shovels. There were plenty of dead sons to bury in the earth. 
 
 It was dark and the governor shouted from below for the defiant sentries to drop the bridge. Finally they complied, only after the governor ordered his men to begin torching his stronghold. The governor had little energy left.
@@ -372,7 +353,6 @@ A line of pikemen formed at the entrance to slow the advancement, a priest now g
 The remaining observed as the pikes pulled back, and the gates came crashing down. The father of the boy continued to look at his dying son until he could not. Suddenly there was the sound of a crossbow bolt released, and a gurgling sound replacing horrifying shrieks. The father was relieved of all worry, shutting his eyes. The final siege had only just begun. 
 
 <font color='#000' size='4'><b>Fallen County</b></font>
-
 "They're backing off sire!" 
 
 "So replenish arms, and skin goats in the wilderness!" 
@@ -450,7 +430,6 @@ Men were told not to fire their guns, but several violated and spent their preci
 
 Book_Gay_Page27 = [[
 <font color='#000' size='4'><b>Super Strength Conspiracy</b></font>
-
 One thing came certain to the Glazic general, and it was that these men in leather and cloth somehow had inherited super strength and abilities, much like the three giant super Gores that decimated Alexander Pantis' county. As one account was so powerful to the nation that even peasant workers had begged their masters for the daily word, or even the popular but luxurious Hard-Glaze Insider that some would receive from the postman. 
 
 <i>"They are bound by spectacular strength and energy, something beyond one’s senses. I have to continue observation, but I doubt thou shall ever come to care!"</i>
@@ -459,21 +438,17 @@ One thing came certain to the Glazic general, and it was that these men in leath
 
 Book_Spooning = [[
 <font color='#000' size='4'><b>Origins</b></font>
-
 Spooning is an Italian torture execution method invented solely for the deaths of the Unenlightened Fucklets.
 
 <font color='#000' size='4'><b>Description</b></font>
-
 For one to be spooned, you must remove their clothing and firmly strap them into your position of choosing. The victim will be slouched downward, revealing the depths. You must stuff said spoon into the victims chocolate inventory, removing all of its contents. Start by penetrating through the rim, inserting an opposite route, then plunging it deep further. Once you scoop out a creamy, sticky substance, start scooping slower to increase pain. Continue scooping until the 'canal' is fully breached, then sit back, and enjoy the sights of the victim being drained.
 ]]
 
 Book_Tears = [[
 <font color='#000' size='4'><b>The Ride of Tears</b></font>
-
 The Ride of Tears is among the most shameful ways to die in the Hard-Glazed society, more-so than spooning. Those executed on the Ride of Tears are normally murderers. Indeed, similar to spooning, those executed on the Ride of Tears lose all hierarchical status and all their heirs are nullified if they are of formerly noble stature. 
 
 <font color='#000' size='4'><b>The Contraption</b></font>
-
 The Ride of Tears consists of an extra-tall water-slide, standing at approximately twenty-five feet tall. It is three feet wide and about thirty feet long. The water-slide, however, is filled to the brim with razorblades and other sharp blades, beginning at about the four-foot mark on the way down. Those condemned to die have their hands tied, are blindfolded, drenched with honey to lubricate them, and forced down the slide by two powderboys, each armed with a pike. If the condemned is still alive by the time he reaches the bottom, at which point he will have likely lost several limbs and all of the skin on his back, several nearby beekeepers will let their bees loose upon him, to feast upon the honey and his flesh. After the condemned is expired, they are transported to the Iron Gate of Glaze to be displayed outside, for the doors have not opened in centuries. 
 ]]
 
@@ -522,7 +497,6 @@ Historians believe that it was during The Age of Enlightenment in the First Era 
 
 Book_Deathships_Page1 = [[
 <font color='#000' size='4'><b>Death Ships</b></font>
-
 <i>"I simply obey the rules of Glaze in either contemporary or of preceding state. It was knowledge to many that state-of-the-art, hot off the press designs such as these have such craftsmanship, mastery and adeptness crafted into each and every Death Ship I have been accustomed to document wholesomely. It would seem as though wizardry or some kind of off-worldly pseudo science began these measures of talent, but I can only be so certain."</i>
 —Dobby C. Soljian, statesman of the recent rennouned Hard-Glaze naval Meritime Museum, poet and novelist. 
 
@@ -531,7 +505,6 @@ In the dark near-by remoteness of the river basin, lies the many sailors in serv
 
 Book_Deathships_Page2 = [[
 <font color='#000' size='4'><b>The First Sightings & Confrontation</b></font>
-
 It was said on the day of April, late era of Holy Hierarchy, that these immense ships were first spotted off the coast of Madagascar, and from there their highest commanding officer of the navy and royal estates -- Lord Maximus, stood atop the vessels quarter deck, just below the main sail, as he protruded out over the railing as the waves and low currents settled around the top commanding Death Ship in the Hard-Glaze armada. "Ahoy, we've made it alas!" -- Lord Maximus' first words of rejoice, as he and his superior officers made landfall onto the coast of Madagascar. "Alas, bring me two men to the crows nest, and prepare me a meal from the galley..." But soon enough, the entire fleet in its formation encountered a rather intimidating foe around the rocky cliffs of the coast. It was a darkhide pirate vessel, and beyond that, many more of them in a line, swiftly maneuvering into the direction of the setting sun so that they could aim starboard side their smaller barrel cannons at the Hard-Glaze armada, as it clearly lacked the readiness to dispense ammunitions back if to be attacked by the fleet, moving in a forward line. The top officer, below the stature of Lord Maximus, ordered a sailor man to ride the bowsprit of the boat, and gaze his binoculars in direction to the incoming fleet that would be turning its guns in direction of Lord Maximus' ship in front of every other vessel. This course of action left the sailor with his life lost in the depths of the sea, as a response to this was the darkhides and their stolen cannons, discharging the first shots that ignited conflict. As one might imagine, the warm waters would prove a manageable one for this sailor to remain in the depths for a little longer than frigid waters, but no. He was without delay, smashed by the frontal portion of Lord Maximus and his ship, leaving the sailor as the first casualty of Hard-Glaze and the Death Ships. 
 ]]
 
@@ -567,7 +540,6 @@ And so the day folded over, and the scum failed ever again to decimate another D
 
 Book_Assault_Page1 = [[
 <font color='#000' size='4'><b>The Precursor</b></font>
-
 When Fucker Joe, A.K.A Joseph A. Philadelphus, who was known as a Hard-Glaze genocidal killer who ravaged the rural area in the 16th District, kidnapping over 400 people and killing them all. The killer fixated his eyes on a new target of interest. It was the Governors Plantation, commonly referred to by commanding leaders in council meetings as Farmstead 8, or Castle 8. A heavily fortified plantation with a castle established on top of a hill. This well-defended area was Fucker Joe's interest, and he wanted so dearly to plot terrible things against the Glazic Union and strike them deep and hard. So he prepared a week-long annihilation idea of his, to attack mobile, in his vehicle and blaze the crops and all of the inhabitants with the machine gun mounted to it. This was no ordinary plot, he went into full depth with it, deciding what to do in the event he were caught. He had suicide pills, explosive grenades, Molotov Cocktails, handcuffs, and other various tools to attack with. Fucker Joe decided he would use the handcuffs to subdue the Governor and interrogate/torture him in his very own fortified Mansion on top of the hill, while using ducktape to strap make-shift explosives to various places, giving him an advantage, and then he would toss grenades from his windows while in motion as he made his escape from the burning farm. It was an elaborate plot it seemed, but for the Governor, he knew that Fucker Joe was coming. He had a prediction the night prior to the attack. 
 
 A 'vision' one would consider, but experts concluded that it could have been a hallucination after taking various drugs in his mansion the following night, and in addition to having been with many mistresses, which may have led it up to be a mere coincidence. The vision was said to have sparked a new era of alert mentality for governors all mingled, as the governor simply put in his personal agenda papers the night the vision occurred in his mind. The man behind the ink pen wrote and recorded the finest vision ever produced by a Governor in a smaller township region, rumoring the demise of himself and his high-ranking officials as he saw in his horrible vision, though merely as sacrifice to Hard-Glaze and death as honorable as possible with a flowerbed to be pronounced at his funeral. 
@@ -581,7 +553,6 @@ He took on the Amish during the beginning days of Holy Hierarchy Wars, decimatin
 
 Book_Assault_Page3 = [[
 <font color='#000' size='4'><b>The Event that Shook The County</b></font>
-
 It was the following morning that Fucker Joe began his demonic pursuit for destruction on a national level, all that would inevitably hit Glazic news stations around Hard-Glazed society. As remembered by several eye-witnesses, they all reportedly saw Fucker Joe enter a small township two miles outside the road of notorious Castle 8, where he picked up a plentiful amount of alcoholic beverages to consume while he inflicted sickening slaughter on weaklings..
 
 Joe knew he would have to blast his way through the beverage store in order to obtain his liquor, and that he indeed did, leaving entrails behind the counter where the man was mercilessly fucked beyond repair in his own business. 
@@ -599,13 +570,11 @@ Book_Assault_Page5 = [[
 "Get the f-fucking rifle, Johnny!" -- The words of Alberto to his personal security guard, the man besides Alberto named Johnny scrambling quickly to toss him a beer-keg barrel that contained the goodies, then kicking the sucker over onto the floor where the Governor resumes to load many loose single bullets into a magazine of his rifle -- A considerably drawn-out process that left the fate of the Castle in both of their hands. The Governor then threw his full body weight against the balcony door to his bedroom, smashing it down with his fat obnoxious body, stepped out onto the top balcony of his bedroom window, where he took a glimpse of all of his profits being thrown down the drain, or in other words, thrown in the air to burn. He aimed down the sights and unleashed a full magazine of hollow point tracer rounds in direction to the oncoming Muscle Car, the car clearly not stopping at this point. The Governor then watched in awe as the muscle car drove away and rolled quickly outside of the fortified Castle gate from the side entrance, leaving dust in every face, and never to be seen again by Alberto or his crew. 
 
 <font color='#000' size='4'><b>The Aftermath & The Scorched Earth Policy</b></font>
-
 It was said that in the aftermath of the attack of Fucker Joe on Alberto's precious cargo, half-consumed liquor bottles and blood all tainted the land and prevented further occupation and work. It took weeks after the attack for things to be considered "normal" again for Alberto and his crew, and although much of the prophecies that Alberto envisioned never occurred, the one that did stick in his mind for the rest of his life, was the original vision of his castle being assaulted. As one responsible Glazic commander would order, the Scorched Earth Policies came after the outbreak of Fucker Joe, in response to what he performed on Alberto's precious cargo. Said to have been one of the biggest epidemics in Glazic history, the retardation and drunkards that consume so much alcohol per household is surely to be locked on the charts for future priority-makers in the Central Regions today. 
 ]]
 
 Book_Karmine_Page1 = [[
 <font color='#000' size='4'><b>Karmine Willtan </b></font>
-
 <i>"I've not a man nor a prophet. Simply an inferno."</i>
 —Karmine Willtan - When asked if he was a man or god by a serf.
 
@@ -614,17 +583,14 @@ Karmine Willtan (b. 4E), is a Minister of Glazic Faith within the County Distric
 Many wonder if Willtan was once a firm believer of the Goreic Faith before his time serving on the Small Council, due to his high level of knowledge about the nature of the Goreic Faith itself. Philosophers explained his wide level of knowledge of all topics, including those with controversial themes. 
 
 <font color='#000' size='4'><b>Early Life</b></font>
-
 Karmine Willtan was believed to be born a peasant of a different name. His life consisted of heavy labor, working side by side with the darkhides as he was believed to be of Slavic or Hispanic descent. This, of course, was confirmed to be a slanderous lie as later DNA testing proved him to be a Philimonjio Superior. Willtan, though not renowned as a poet, produced various sonnets describing his laborious stay in the county districts. The sonnets documented his struggles, including the time a peasant had stolen his grapefruit, forcing him to retrieve the grapefruit from the man’s skull. 
 ]]
 
 Book_Karmine_Page2 = [[
 <font color='#000' size='4'><b>Rise to Power </b></font>
-
 It is still up to speculation on how Karmine Willtan received the knowledge necessary to become a spreader of the Glaze. To be born a peasant and exhibit vast wisdom is indeed a rare thing. Willtan himself refused to comment on how he gained such information, stating that "I was born in darkness, but then I saw the light. Nothing more." Lord Maximus himself hand-picked Willtan to replace the previous Minister of Faith, who was executed by crucifixion for suspicion of malicious intent upon the Council Pedestal. Karmine Willtan accepted the offer, and was transported to the Palace of the Small Council. His first years on the Council were indeed hard ones, as the noblemen refused to accept him for his lack of true noble blood. In a legendary show of fervor, Willtan retrieved a dagger which he used to cut his arm, drawing blood as he exclaimed, "Am I not appointed by Sol? Do I not shed blood for the Glaze?" From then on he was acknowledged, but it will be many years before he will be truly accepted as an equal, if at all. 
 
 <font color='#000' size='4'><b>Goreic Purges</b></font>
-
 When delivering a speech upon the current state of the Council Pedestal and the Hierarchy itself, a peasant interrupted the scene and hefted a heavy stone at Karmine Willtan. Due to its inferior genetics, the slave missed its aim, hitting another man in the crowd. Before being shot down by guardsmen, the pagan yelled out "Death to the Glaze and rise to the Gay Gore!" Willtan took note of this, as the entire rest of the day he was reported to be very distressed, running down the halls of the palace, banging his head against the walls and throwing pots and pans and silverware across the corridors. 
 ]]
 
@@ -636,7 +602,6 @@ The slaughterings began shortly afterwards, burning down shantytowns and small v
 
 Book_Maximus_Page1 = [[
 <font color='#000' size='4'><b>Lord Maximus </b></font>
-
 <i>"Almighty creator, deity, holiness, idol of mine. Give me power, spirit, allegiance with those who have disbanded from my ordnance of an army. Divine overseer, universal forces be with me. And for those demons, fight back in means to protect Hard-Glaze and society from its inevitable destruction. Dump the spiritual trophies for now, and unload the ammunition to purify these unfaithful sinners of the land. Stockpile the explosives, magazine the rifles, warehouse the vehicles, but most of all, plant the inflorescence of Hard-Glaze society inside the dirt for future generations to come."</i>
 — Lord Maximus XII, beginning his march on the tribes in the First Era during the Holy Hierarchy wars.
 
@@ -645,7 +610,6 @@ On the silver saddle piece, it shows a carving of a trademark symbol, and the gl
 He wears the glove to give off the symbolism that he cannot stand the grotesque values of the peasant backbone. Therefore, he uses their simple mind as a tool to his regime, for it is his to use.
 
 <font color='#000' size='4'><b>Origins</b></font>
-
 It was the beginning of the time for one to decide the fate of the world. His name was Lord 'Henry-Harrison' Maximus, a brilliant scholar of talents. His name stemmed from his royal heritage. It was a brilliant time for him to decide the fate of many in the region. It was a time of tribal justice, but he knew that there were alternatives involved. The Unenlightened Fucklets grew restless, and with that, came the possibility of war. It was real to Lord Maximus, it was no-longer child's play. It was outright war. And with war, came genocide. And with genocide, came coffers drained. And with that, was death and finality. He aged from royalty as a man of golden status. He was truly the brightest of the bunch.
 ]]
 
@@ -661,7 +625,6 @@ The year was of the Holy Hierarchy Wars, when the Unenlightened Fucklets had gro
 
 Book_Maximus_Page3 = [[
 <font color='#000' size='4'><b>Age of Innocence</b></font>
-
 The age of innocence, as some would have called it. They were the days of agitation for Lord Maximus. A common pre-conceived notion of Lord Maximus, is that he lived the life of glory. But what's commonly mistaken for those to see, is that he was not glorious during his 'earlier' years, but in-fact innocent. This personal belief or judgement, has led Lord Maximus to the brink of destroying his own people. And with that, comes the possibility of never giving them the receiving side of things. Lord Maximus' childhood was a violent one, a noisy one. A commotion indeed as many would agree to these words. There was anxiety, restlessness, and an overall sense of insecurity amongst the royal family. The man that raised Maximus, for starters, was a drunkard. A disgusting wench of a man.
 
 And yes Maximus, a thinker at the time, was correct. It was during Lord Maximus' childhood that gave him a bitter impression of his father. And with that, he carried with him for the rest of his life.
@@ -679,7 +642,6 @@ Long before the time of Lord Maximus and the Glaze, there grew a civilization in
 However, at the time, both Lord Maximus and his contemporaries knew something was amiss. For several months, there had been many black-hat incursions into Hard-Glazed territory. Reports from the counties flooded into the capital district, of mutant men in robes and tall hats attacking villages, butchering the populace, and feasting upon the livestock.      
 
 <font color='#000' size='4'><b>Campaigns & Expansion</b></font>
-
 Lord Maximus would not stand for the treachery taking place in his provinces. He swiftly sent for his top generals, and devised a plan. He would levy the peasants to attack black-hat caravans in overwhelming numbers, while his main army pillaged and razed their towns, ensuring their total destruction. After a conflict (known today as the Amish wars) lasting only a few mere months, the black-hats were completely eradicated. 
 ]]
 
@@ -691,7 +653,6 @@ However, the looming threat were the hundreds of darkhide tribes to the east.
 After launching an assault and enslaving or killing the entirety of fifty tribes, Lord Maximus was repulsed at the Battle of the District 10. With this crushing defeat, Lord Maximus tactically retreated to the border, fortifying the entire border with a wall of howitzers and other arms, both large and small, whilst he made plans for his next expedition into these lands.
 
 <font color='#000' size='4'><b>The Wars of the Holy Hierarchy</b></font>
-
 Expansions came years later  in the wars of Holy Hierarchy. It was a storm of vigilance on the tribal populace. A fury frenzy of gold-plated soldiers racing their feet to break into compounds that fell to the tribes. It wasn't unusual for a tribal army to fling piles of fecal matter at the retreating Hard-Glaze soldiers within distance to them. Orgies of soldiers would confiscate the land's treasures and then either throw them in a corner of the compound, or simply hold on to these treasures for no understanding at all. Savages of the more harmonious types, would be reluctant to melt down these treasures for profit. But not all thought that way, and as a result, many decided to ill-mindedly throw these treasures away rather than doing the deed for profits. Valued silvers, gems, crystals, and other corresponding items of ceremonial use were taken to the homeland. It would seem as though these possessions of monetary value were simply ditched. The savage had no idea in his mind how to profit from any of it.
 ]]
 
@@ -703,7 +664,6 @@ But then, the bombs began to fall. Entire cities were erased by the will of the 
 Not much is known about the late years of the Holy Hierarchy, but what is known is that the Hard-Glazed Phillimonjios prevailed in the face of insurmountable odds, due the efforts of Lord Maximus in preserving the Hard-Glazed system. Indeed, many cities were reduced to ash, but in the aftermath of this pyrrhic victory, the Glaze reigned supreme. 
 
 <font color='#000' size='4'><b>Post-Holy Hierarchy Wars</b></font>
-
 In the aftermath of the apocalyptic Holy Hierarchy Wars, Lord Maximus' empire was reduced to rubble and dirt. However, despite the destruction of pre-established cities, the territory under his control had tripled, as all tribes in the known world had been pacified (during the Cleansing of Unruly). The Inquisition, which ensured that every black-hat and savage not in submission was destroyed, now found itself without purpose. And so, in a demonstration of his noble stature, Lord Maximus granted all former Inquisition members vast estates in a show of generosity. 
 ]]
 
@@ -742,7 +702,6 @@ Motivated once more, the Powderboys completed the encirclement, and advanced int
 
 Book_Maximus_Page10 = [[
 <font color='#000' size='4'><b>A Prophecy Fulfilled</b></font>
-
 <i>"You speak so highly as to consider yourself a tributary? Then if God wills it, give this man his honorable celebration. Vile thing, remember these words! Corpse the savage, but do not corpse the Philimonjio, for he is spiritual and his integrity is leveled to that of the God that speaks to us in the skies."</i>
 —Lord Maximus XII, speaking to the last holdout of Powderboys.
 
@@ -763,7 +722,6 @@ And with that, Lord Maximus was left unchallenged and so began the start of the 
 
 Book_Fucker_Page1 = [[
 <font color='#000' size='4'><b>Fucker Joe</b></font>
-
 Joseph A. Philadelphus, known colloquially as Fucker Joe, was a Hard-Glazed serial killer, kidnapper, and necrophile who murdered several hundred people in the Second Era, before being caught by a detachment of Honor Guard Powderboys (who then ironically murdered him). 
 
 Fucker Joe is infamous for being the primary cause of Lord Maximus' court reforms, including the controversial Fourth Erotica Ban (22), which by extension means he was indirectly responsible for the death of Boxer H. Krammy. This was due to his defense, mainly based on the fact that "a Philimonjio could do nothing wrong." This argument made the trial one of the most difficult and daunting cases in Glazic court history. During his crime spree spanning over multiple eras, the Glazic peoples were stricken by fear, due to the randomness of the victims and Fucker Joe's inability to be caught. 
@@ -771,7 +729,6 @@ Fucker Joe is infamous for being the primary cause of Lord Maximus' court reform
 Executed after an agonizing seventy-four spoonings in the Second Era after being found guilty of no less than 408 counts of kidnapping, 405 counts of assault, 358 counts of murder, and 42 counts of attempted murder, Fucker Joe broke the record for the amount of spoonings endured on Death Row.
 
 <font color='#000' size='4'><b>Origins</b></font>
-
 Not much is known of Fucker Joe's early life, but several sources from the time indicate that he was born to a peasant farming family in the county district on the outskirts of District 2. Farming was a laborious task, and contributed to Fucker Joe's mind-blowing physique which he would rely on to strangle his victims. 
 ]]
 
@@ -779,7 +736,6 @@ Book_Fucker_Page2 = [[
 After reaching adulthood, Fucker Joe joined the Glazic Royal Army, fighting alongside Lord Maximus' loyal men in the Holy Hierarchy Wars. It is from this training that Fucker Joe truly became the killing machine that was feared by the Glazic populace. On his campaigns with Lord Maximus, Fucker Joe had regular encounters with the worst of humanity, resulting in the inevitable corruption of his mind. Fucker Joe went without treatment, and eventually went mad. 
 
 <font color='#000' size='4'><b>First Killings</b></font>
-
 After distinguishing himself in service, Fucker Joe was honorably discharged with generous benefits, buying a home and his signature vintage 1970's muscle car, which was later used to run down many victims. Modifications to this car included a frontally-mounted M2 Browning, an enlarged trunk to store victims, and the removal of the passenger-side seat for storage of weapons and tools. 
 
 Fucker Joe, driven mad supposedly, began his rampage in the rural territories of the District 16, kidnapping over 150 people and murdering them all. During his year of activity in District 16 he was averaging just over an abduction per three days. Fucker Joe also infamously drove onto the Governor's plantation (through three fences and several guards), running down many merry-go berry pickin' slaves while they were chained together and defenseless. 
@@ -789,7 +745,6 @@ Fucker Joe's car received extensive damage from security, as well as the drug-fu
 
 Book_Fucker_Page3 = [[
 <font color='#000' size='4'><b>Massacre of Maximillian Forest</b></font>
-
 Leaving the Governor's burning plantation, Fucker Joe took Lord Maximus' extravagant Highway of Victory to District 1, but took a detour into the national park of Maximillian Forest (named after the elite guard of District 1). In the forest he abducted and murdered over fifty people, but two managed to escape with their lives, reporting their encounter with Fucker Joe to the authorities. 
 
 In accordance with Code 46, the Glazic Minister in charge of the National Park dispatched a security force of Powderboys to deal with the man who was terrorizing his grounds. The Powderboy patrol covered an average of fifty miles a day, running in full sprint to find the assailant. 
@@ -797,7 +752,6 @@ In accordance with Code 46, the Glazic Minister in charge of the National Park d
 Fucker Joe, however, was already on his way out of MaximillianForest (having grown bored of it), but unfortunately stumbled upon the Powderboy patrol, which actually numbered in the hundreds. Fucker Joe accelerated his muscle car to speeds which he hadn't thought possible, and began firing the front-mounted .50 cal machine-gun at the wall of powdered boys of noble stature rushing at him in human waves. The .50 cal hollow-point rounds shredded and gored innumerable amounts of the Powderboys, but the powder-clad warriors maintained their advance, and then were promptly run down by the car. 
 
 <font color='#000' size='4'><b>Panic, Final Murders, and Lord Maximus' Divine Intervention </b></font>
-
 By now, most of the Glazic population had heard the rumors of disappearances, murders, and massacres. In District 1, Lord Maximus stood atop the Golden Balcony of his palace, overlooking the chaos and anarchy that consumed District 1. Panic-stricken citizens looted, stole, and burned, as they tried to prepare themselves for the coming of the antichrist. Lord Maximus knew that to stop this chaos he had to personally stop Fucker Joe. 
 ]]
 
@@ -807,7 +761,6 @@ Lord Maximus assembled his Maximillian Honor Guard, and dispatched a legion of t
 Meanwhile, Fucker Joe was rampaging through the suburbs of District 1, destroying entire houses full of people while they slept, torching them with a flamethrower. The Honor Guard arrived one night as he was torching a shack from the District 1 sub-overseer's land. The Honor Guard captured and tortured Fucker Joe for two hours outside the walls.
 
 <font color='#000' size='4'><b>Trial and Spooning</b></font>
-
 In the Grand Courthouse in the grounds of the Royal Senate, Fucker Joe was put on trial for his crimes. Lord Maximus himself was the presiding judge of the case. Fucker Joe, surprising many of those in the courtroom, announced his intention to represent himself in the court of Glazic Law. Indeed, Fucker Joe was an eloquent and persuasive speaker, likely contributing to his success as a serial killer. Fucker Joe's primary defense shocked the civilized world. 
 
 A Philimonjio, he argued, could do no wrong. 
@@ -847,7 +800,6 @@ If you are educated and coined enough, you may join us. Don’t be shy! If you s
 
 Book_SaintRagnar_Page1 = [[
 <font color='#000' size='4'><b>Birth of the North</b></font>
-
 <i>"With conviction I shall say this to my last breath, we are a kind to hate. Anathema to your sordid lot, I shall carry the weight of a burden divine. Your deceit will be cast aside, as I vow to expose it with mine righteous hand! Sol as my resolve, the Iron Gate of the Glaze shall stand!"</i>
 — Saint Ragnar Odwyn
 
@@ -856,7 +808,6 @@ Hard-Glaze historians and literary geniuses of that sort have found it hard to p
 
 Book_SaintRagnar_Page2 = [[
 <font color='#000' size='4'><b>Subsistence and Death</b></font>
-
 <i>"Know that the eternal glory of the Glaze, its beauty and its simplicity, its truth and its power, has come to this place forever. The Light has smothered out the puke of putrid belief we brothers and sisters once believed in, and it has laid the foundations of a greater whole. Do not kneel before delusion, kneel before this elite fucking power."</i>
 — Saint Ragnar Odwyn
 
@@ -884,7 +835,6 @@ With the swing of a wicked axe, Ragnar's belly was split wide and he died on the
 
 Book_SaintMatheus_Page1 = [[
 <font color='#000' size='4'><b>Start of the Great Northern Architect</b></font>
-
 <i>"We stand in one of the last remaining gardens on Gaia, a veritable Eden of proportions not unlike those of the days of the Empire. Yet long ago here, in the North, has arisen a sinister creed - one of misbegotten hatred of our people, cast upon us by savages! When the darkness descends, they will be smothered and lost - oh, Lord and Father Maximus, the great dark will not be our end. When the world falls into the end of days, we will rise again like a bright star."</i>
 — Saint Matheus the Bald
 
@@ -898,7 +848,6 @@ By Matheus’ own holy hand he restored hope and prevented a great collapse, bri
 
 Book_SaintMatheus_Page2 = [[
 <font color='#000' size='4'><b>Bounty Before Them</b></font>
-
 <i>“Know sanctuary, for it is all you will find here. Know compassion, for it is all I will show you. Know peace, for it is what I promise to render unto you. Know the Light, for it is truth and glory.”</i>
 —  Saint Matheus the Bald 
 
@@ -913,7 +862,6 @@ Led by a Shagalaxian King, the many native clans of Gores marched upon the few w
 
 Book_SaintMatheus_Page3 = [[
 <font color='#000' size='4'><b>Fire and Smoke</b></font>
-
 <i>“Oh, ye old and wicked sons of Heaven's lost! Stand in awe and raise your inverted cross! For you, kings of the earth, with your words of iron, you should have served his Holiness that you have so ruefully dismissed. Stand before your final day, and I rejoice in that I may watch you choke on every line you pray! Spit out your wretched words, but know they will be your last!”</i>
 —  Saint Matheus the Bald 
 
@@ -929,7 +877,6 @@ And so they did, roaring out from the Hill with furious abandon. The iron treads
 
 Book_SaintMatheus_Page4 = [[
 <font color='#000' size='4'><b>On His Glory We Reign</b></font>
-
 <i>“Oh, know me as I have died, not as I lived. I am but a man, simple man. My ichor drains just like any other, my blood spills and wets the soil. Know that even a holy man may die.”</i>
 —  Saint Matheus the Bald 
 
@@ -939,7 +886,6 @@ Matheus, much like Ragnar before him, was felled in battle. Unlike Ragnar, Mathe
 
 
 <font color='#000' size='4'><b>Consecration of Dust</b></font>
-
 <i>“There was no greater man than Ragnar, who made us. But there was his equal, Matheus, who bound us back together under the Light. He brought hope when there was none.”</i>
 —  Master-at-Arms Yeshua Torrention II, then High Emissary 
 
@@ -998,7 +944,6 @@ The Sanctuary I was sworn to protect is no more. The halls have been ransacked, 
 
 Book_Undergod_Page1 = [[
 <font color='#000' size='4'><b>The Undergod</b></font>
-
 <i>"Behold, the shattered mirror held against the visage of our world, so pure and untouched that those who gaze upon it would weep vacuum. For its form is void, so unknowable, so tantalizing in the coming darkness and inferno that yearns to consume our land - for the light that touches all would be snuffed out, its beaming proclamation of salvation for all to flicker and die, and the children within would reach for the fading light with outstretched arms and gaping mouths, only to swallow oblivion."</i>
 
 At the end of the Fifth Era, the Undergod entered the mortal realm, bringing forth eternal darkness.
@@ -1163,7 +1108,6 @@ Vance Heimann the First is remembered as a man of principle, whose uncompromisin
 
 Book_GoreFolly_Page1 = [[
 <font color='#000' size='4'><b>Discovery of the Gore</b></font>
-
 Dating back to the dawn of the First Era, the ‘Gay Gores’ started off in a shroud of mystery. Originally thought to be a mad cult of northern folk, the Glazic nobility paid them little attention. Early serfs would report to their local Minister about 'mad mountain-men and spearfolk, white of skin' who would watch their villages at a distance. Rumors would spread among the County Districts which bordered between the Gore and Glaze.
 
 It was not until the Second Era, in the aftermath of the Hierarchy wars, that the Royal Senate heard word of the Goreic Kingdom. It was said that a local county district's tradition was to send their village elders to the north, so that they would become one with the snow. For years they would send their elders into the cold winds of the north, and none would return. This changed when an elder returned from their quest with a 'ghastly look,' and a word of their findings in the Northlands. His findings were immediately reported to the Royal Senate, detailing a face-to-face meeting with these men, who called themselves 'the Gores' and spoke of false gods that were of anti-Glazic intent. 
@@ -1171,7 +1115,6 @@ It was not until the Second Era, in the aftermath of the Hierarchy wars, that th
 
 Book_GoreFolly_Page2 = [[
 <font color='#000' size='4'><b>Goreic Kingdoms</b></font>
-
 <i>"I suppose It'd be quite requisitory of the Royal Senate to enact a burdening response to these recent attacks on our peasant friends. To sit back, wait, and hope for a digression? Simply put, these Spearfolk must be swiftly cut down before they grow in number."</i>
 —V.K Heimann - the 'Steel Tongue' of his days.
 
