@@ -21,6 +21,10 @@ if cwWeather.systemEnabled then
 
 	if game.GetMap() == "rp_district21" then
 		cwWeather.weatherTypes = {
+			-- for sailing
+			["ash"] = {
+				precipitation = "sw_ash",
+			},
 			["blizzard"] = {
 				ambience = {
 					"ambience/weather/blizzardgust1.mp3",
@@ -55,6 +59,10 @@ if cwWeather.systemEnabled then
 				default = true,
 				minDuration = 1800,
 				maxDuration = 2400,
+			},
+			-- for sailing
+			["rain"] = {
+				precipitation = "sw_rain",
 			},
 			["snow"] = {
 				fogStart = 128,
@@ -148,6 +156,10 @@ if cwWeather.systemEnabled then
 				default = true,
 				minDuration = 1800,
 				maxDuration = 2400,
+			},
+			-- for sailing
+			["rain"] = {
+				precipitation = "sw_rain",
 			},
 			["thunderstorm"] = {
 				ambience = {

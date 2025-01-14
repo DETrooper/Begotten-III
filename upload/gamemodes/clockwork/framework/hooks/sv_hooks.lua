@@ -3745,16 +3745,13 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 		end
 	elseif IsValid(inflictor) then
 		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, inflictor:GetClass().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name()..", killing them!")
-		cwDiscordLog:DamageLog(player, inflictor, damageInfo:GetDamage(), "");
-	
+		hook.Run("DamageLog", player, inflictor, damageInfo:GetDamage(), "");
 	elseif damageInfo:IsFallDamage() then
 		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from fall damage, killing them!")
 		cwDiscordLog:KillLog(player, false, damageInfo:GetDamage(), " from fall damage");
-	
 	else
 		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from an unknown source, killing them!")
 		cwDiscordLog:KillLog(player, false, damageInfo:GetDamage(), " from an unknown source");
-	
 	end
 end
 
@@ -4086,7 +4083,7 @@ function GM:EntityTakeDamage(entity, damageInfo)
 						if (attacker:IsPlayer()) then
 							if damageInfo:IsDamageType(DMG_POISON) then
 								Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().."'s poison, leaving them at "..player:Health().." health"..armor)
-								cwDiscordLog:DamageLog(player, false, damageInfo:GetDamage(), " from "..attacker:Name().."'s poision", player:Health(), armor);
+								hook.Run("DamageLog", player, false, damageInfo:GetDamage(), " from "..attacker:Name().."'s poision", player:Health(), armor);
 							
 							else
 								if IsValid(inflictor) --[[and (inflictor:IsWeapon() or inflictor.isJavelin)]] then	
@@ -4108,28 +4105,22 @@ function GM:EntityTakeDamage(entity, damageInfo)
 								end
 								
 								Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..inflictor..", leaving them at "..player:Health().." health"..armor)
-								cwDiscordLog:DamageLog(player, attacker, damageInfo:GetDamage(), " with "..inflictor, player:Health(), armor);
-							
+								hook.Run("DamageLog", player, attacker, damageInfo:GetDamage(), " with "..inflictor, player:Health(), armor);
 							end
-							
 						else
 							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:GetClass()..", leaving them at "..player:Health().." health"..armor)
-							cwDiscordLog:DamageLog(player, attacker, damageInfo:GetDamage(), "", player:Health(), armor);
-						
+							hook.Run("DamageLog", player, attacker, damageInfo:GetDamage(), "", player:Health(), armor);
 						end
 
 					elseif IsValid(inflictor) then
 						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..inflictor:GetClass()..", leaving them at "..player:Health().." health"..armor)
-						cwDiscordLog:DamageLog(player, inflictor, damageInfo:GetDamage(), "", player:Health(), armor);
-					
+						hook.Run("DamageLog", player, inflictor, damageInfo:GetDamage(), "", player:Health(), armor);
 					elseif damageInfo:IsFallDamage() then
 						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from fall damage, leaving them at "..player:Health().." health"..armor)
-						cwDiscordLog:DamageLog(player, false, damageInfo:GetDamage(), "from fall damage", player:Health(), armor);
-					
+						hook.Run("DamageLog", player, false, damageInfo:GetDamage(), "from fall damage", player:Health(), armor);
 					else
 						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from an unknown source, leaving them at "..player:Health().." health"..armor)
-						cwDiscordLog:DamageLog(player, false, damageInfo:GetDamage(), "from an unknown source", player:Health(), armor);
-					
+						hook.Run("DamageLog", player, false, damageInfo:GetDamage(), "from an unknown source", player:Health(), armor);
 					end
 				end
 			end
@@ -4198,28 +4189,23 @@ function GM:EntityTakeDamage(entity, damageInfo)
 							end
 							
 							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:Name().." with "..inflictor..", leaving them at "..player:Health().." health"..armor)
-							cwDiscordLog:DamageLog(player, attacker, damageInfo:GetDamage(), " with "..inflictor, player:Health(), armor);
-							
+							hook.Run("DamageLog", player, attacker, damageInfo:GetDamage(), " with "..inflictor, player:Health(), armor);
 						end
 
 					else
 						Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..attacker:GetClass()..", leaving them at "..player:Health().." health"..armor)
-						cwDiscordLog:DamageLog(player, attacker, damageInfo:GetDamage(), "", player:Health(), armor);
-					
+						hook.Run("DamageLog", player, attacker, damageInfo:GetDamage(), "", player:Health(), armor);
 					end
 
 				elseif IsValid(inflictor) then
 					Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from "..inflictor:GetClass()..", leaving them at "..player:Health().." health"..armor)
-					cwDiscordLog:DamageLog(player, inflictor, damageInfo:GetDamage(), "", player:Health(), armor);
-				
+					hook.Run("DamageLog", player, inflictor, damageInfo:GetDamage(), "", player:Health(), armor);
 				elseif damageInfo:IsFallDamage() then
 					Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from fall damage, leaving them at "..player:Health().." health"..armor)
-					cwDiscordLog:DamageLog(player, false, damageInfo:GetDamage(), "from fall damage", player:Health(), armor);
-				
+					hook.Run("DamageLog", player, false, damageInfo:GetDamage(), "from fall damage", player:Health(), armor);
 				else
 					Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from an unknown source, leaving them at "..player:Health().." health"..armor)
-					cwDiscordLog:DamageLog(player, false, damageInfo:GetDamage(), "from an unknown source", player:Health(), armor);
-				
+					hook.Run("DamageLog", player, false, damageInfo:GetDamage(), "from an unknown source", player:Health(), armor);
 				end
 			end
 

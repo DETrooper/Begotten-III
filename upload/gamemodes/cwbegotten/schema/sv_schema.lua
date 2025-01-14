@@ -326,6 +326,7 @@ Schema.doors = {
 			"churchgate1",
 			"churchgate2",
 			"frontblastdoor",
+			"frontblastdoor2",
 			"sidedoorblastdoor",
 			"alchemy_lab_blastdoor",
 			"alchemy_lab_blastdoorwindw1",

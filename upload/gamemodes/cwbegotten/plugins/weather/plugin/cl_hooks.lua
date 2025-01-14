@@ -11,15 +11,15 @@ if cwWeather.Emitter2D then
 end
 
 function cwWeather:Think()
-	if Clockwork.kernel:IsChoosingCharacter() and map ~= "rp_district21" then
-		return;
-	end
-
+	local weather;
+	
 	if zones then
 		local zoneTable = zones.currentZoneTable or zones.cwDefaultZone;
 		
 		if zoneTable then
-			if !zoneTable.hasWeather then
+			if zoneTable.weatherOverride then
+				weather = zoneTable.weatherOverride;
+			elseif !zoneTable.hasWeather then
 				if self.loopingAmbience then
 					self.loopingAmbience:FadeOut(2);
 					self.loopingAmbience = nil;
@@ -30,11 +30,15 @@ function cwWeather:Think()
 		end
 	end
 	
-	local weather = self.weather;
-	
-	if map == "rp_district21" and Clockwork.kernel:IsChoosingCharacter() then
-		-- Always snow for title screen & char creation.
-		weather = "snow";
+	if Clockwork.kernel:IsChoosingCharacter() then
+		if map == "rp_district21" then
+			-- Always snow for title screen & char creation.
+			weather = "snow";
+		else
+			return;
+		end
+	elseif !weather then
+		weather = self.weather;
 	end
 
 	if weather then

@@ -34,7 +34,7 @@ if !cwSailing.shipLocations then
 					{occupied = false, pos = Vector(-2075.25, 489.28125, 11600), angles = Angle(0, 180, 0), bodygroup = 1},
 				},
 				["ironclad"] = {
-					{occupied = false, pos = Vector(-2589, 373, 11619), angles = Angle(0, -90, 0)},
+					{occupied = false, pos = Vector(-2610, 1189, 11619), angles = Angle(0, 0, 0)},
 				},
 			},
 			["calm"] = {
@@ -105,7 +105,7 @@ if !cwSailing.shipLocations then
 					{occupied = false, pos = Vector(12022.3125, 10821.21875, -1927.6875), angles = Angle(0, 270, 0), bodygroup = 1},
 				},
 				["ironclad"] = {
-					{occupied = false, pos = Vector(13623, 8707, -1913), angles = Angle(0, 0, 0)},
+					{occupied = false, pos = Vector(14406, 9225, -1913), angles = Angle(0, 0, 0)},
 				},
 			},
 			["wastelandlava"] = {
@@ -890,19 +890,21 @@ function cwSailing:FindValidLongshipSpawn(longshipEnt, location)
 		for i, v in ipairs(self.shipLocations[location][longshipType]) do
 			if v.occupied == false then
 				if location == "docks" then
-					-- Ironclad shares docking space with middle 2 longship docking spaces, so make sure they're clear.
-					if longshipEnt.longshipType == "ironclad" then
-						if !self.shipLocations[location]["longship"][2].occupied and !self.shipLocations[location]["longship"][3].occupied then
-							table.insert(valid_spawns, v);
+					if game.GetMap() == "rp_district21" then
+						-- Ironclad shares docking space with middle 2 longship docking spaces, so make sure they're clear.
+						if longshipEnt.longshipType == "ironclad" then
+							if !self.shipLocations[location]["longship"][2].occupied and !self.shipLocations[location]["longship"][3].occupied then
+								table.insert(valid_spawns, v);
+							end
+							
+							continue;
+						else
+							if !self.shipLocations[location]["ironclad"][1].occupied then
+								table.insert(valid_spawns, v);
+							end
+							
+							continue;
 						end
-						
-						continue;
-					else
-						if !self.shipLocations[location]["ironclad"][1].occupied then
-							table.insert(valid_spawns, v);
-						end
-						
-						continue;
 					end
 				end
 				

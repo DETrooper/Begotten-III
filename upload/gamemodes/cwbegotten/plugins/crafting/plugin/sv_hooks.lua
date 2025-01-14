@@ -660,23 +660,6 @@ function cwRecipes:Think()
 	end
 end;
 
-function cwRecipes:InitPostEntity()
-	if map == "rp_begotten3" then
-		local fire = ents.Create("env_fire")
-		if not IsValid(fire) then return end
-
-		fire:SetPos(Vector(14508, -12308, -1160))
-		--no glow + delete when out + start on + last forever
-		fire:SetKeyValue("spawnflags", tostring(128 + 16 + 4 + 2 + 1))
-		fire:SetKeyValue("firesize", 1)
-		fire:SetKeyValue("fireattack", 1)
-		fire:SetKeyValue("damagescale", "1") -- only neg. value prevents dmg
-
-		fire:Spawn()
-		fire:Activate()
-	end
-end
-
 netstream.Hook("Craft", function(player, uniqueID, itemIDs, craftAmount)
 	cwRecipes:Craft(player, uniqueID, itemIDs, craftAmount);
 end);

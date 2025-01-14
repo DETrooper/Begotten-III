@@ -1354,6 +1354,7 @@ if map == "rp_begotten3" then
 	GORE:Register()
 
 	local SEA1 = zones:New("sea_rough")
+		SEA1.weatherOverride = "rain";
 		SEA1.name = "Sea (Rough)";
 		SEA1.map = "rp_begotten3";
 		SEA1.fogColors = {r = 0, g = 30, b = 90};
@@ -1390,6 +1391,7 @@ if map == "rp_begotten3" then
 	SEA2:Register()
 
 	local SEA3 = zones:New("sea_styx")
+		SEA3.weatherOverride = "ash";
 		SEA3.name = "River Styx";
 		SEA3.map = "rp_begotten3";
 		SEA3.fogColors = {r = 80, g = 10, b = 10};
