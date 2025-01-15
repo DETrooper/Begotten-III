@@ -2,7 +2,7 @@
 	Begotten III: Jesus Wept
 --]]
 
-local moonMat = Material("begotten/effects/bloodmoon.png", "ignorez");
+local moonMat = Material("engine/lightsprite");
 local moonSubMat = Material("begotten/effects/moonsubliminal1.png");
 local shadowScreams = {
 	"misc/sight_01.wav",
@@ -24,7 +24,7 @@ end
 function cwDayNight:Think()
 	if Clockwork.Client:HasInitialized() then
 		local curTime = CurTime();
-		local cycle = Clockwork.Client.currentCycle;
+		local cycle = self.currentCycle;
 		
 		if self.nightWeight and (self.nightWeight < 1 or self.nightWeight > 0) then
 			if !self.nextWeightTick or self.nextWeightTick <= curTime then
@@ -429,7 +429,7 @@ local up = Vector(0, 0, 500);
 local down = Angle(0, -90, 0);
 
 function cwDayNight:PostDrawTranslucentRenderables(bDrawingDepth, bDrawingSkybox, isDraw3DSkybox)
-	--if Clockwork.Client.currentCycle == "night" then
+	if self.currentCycle == "night" then
 		local zoneTable = zones:FindByID(zones.cwCurrentZone or "wasteland");
 
 		if zoneTable.hasNight then
@@ -437,13 +437,13 @@ function cwDayNight:PostDrawTranslucentRenderables(bDrawingDepth, bDrawingSkybox
 				render.SuppressEngineLighting(true);
 
 				surface.SetMaterial(moonMat);
-				surface.SetDrawColor(255, 255, 255);
+				surface.SetDrawColor(200, 20, 20);
 				surface.DrawTexturedRect(-100, -100, 200, 200);
 
 				render.SuppressEngineLighting(false);
 			cam.End3D2D();
 		end
-	--end
+	end
 end
 
 -- this is all spaghetti and I just don't give a fuck!!!!!!!!!!!!!!!!!!!!!
@@ -563,7 +563,7 @@ netstream.Hook("MoonTrigger", function()
 end);
 
 netstream.Hook("SetCurrentCycle", function(currentCycle)
-	Clockwork.Client.currentCycle = currentCycle;
+	cwDayNight.currentCycle = currentCycle;
 	
 	if currentCycle == "daytonight" then
 		cwDayNight.nightWeight = 0;

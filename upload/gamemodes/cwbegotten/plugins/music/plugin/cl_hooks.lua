@@ -365,7 +365,7 @@ function cwMusic:GetAmbientMusicCategory()
 	if game.GetMap() == "rp_district21" and Clockwork.ConVars.AMBIENTMUSICCLASSIC:GetInt() ~= 1 then
 		trackType = "District 21 Ambience"
 		
-		if zone == "wasteland" and Clockwork.Client.currentCycle == "night" then
+		if zone == "wasteland" and cwDayNight and cwDayNight.currentCycle == "night" then
 			trackType = "District 21 Nighttime Ambience";
 		elseif zone == "tower"  then
 			trackType = "Hill of Light Ambience";
@@ -373,7 +373,7 @@ function cwMusic:GetAmbientMusicCategory()
 			trackType = "Gore Forest Ambience";
 		end
 	else
-		if zone == "wasteland" and Clockwork.Client.currentCycle == "night" then
+		if zone == "wasteland" and cwDayNight and cwDayNight.currentCycle == "night" then
 			trackType = "Wasteland Nighttime Ambience";
 		elseif zone == "tower" and game.GetMap() ~= "rp_scraptown" then
 			trackType = "Tower of Light Ambience";

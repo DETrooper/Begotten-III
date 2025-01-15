@@ -863,7 +863,7 @@ function Schema:RenderScreenspaceEffects()
 		end;
 		
 		if (Clockwork.ConVars.FILMGRAIN:GetInt() == 1) and !choosingCharacter then
-			if Clockwork.Client.currentCycle == "night" then
+			if cwDayNight.currentCycle == "night" then
 				local zone = Clockwork.Client:GetZone();
 				
 				if zone == "wasteland" or zone == "tower" then
