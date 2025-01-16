@@ -491,8 +491,15 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 		end
 		
 		if math.random(1, 100) <= chance then
-			local randomItem = self:SelectItem(container.lootCategory, false, true);
+			local bIsSuperCrate = self.SuperCrate and self.SuperCrate.supercrate == container;
+			local randomItem;
 			
+			if bIsSuperCrate then
+				randomItem = self:SelectItem(nil, true);
+			else
+				randomItem = self:SelectItem(container.lootCategory, false, true);
+			end
+				
 			if randomItem then
 				local itemInstance = item.CreateInstance(randomItem);
 				
@@ -500,16 +507,48 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 					local category = itemInstance.category;
 					
 					if category == "Helms" or category == "Armor" or category == "Melee" or category == "Crafting Materials" then
-						-- 75% chance for these items to spawn with less than 100% condition.
-						if math.random(1, 4) ~= 1 then
-							itemInstance:TakeCondition(math.random(0, 75));
+						if !bIsSuperCrate then
+							-- 75% chance for these items to spawn with less than 100% condition.
+							if math.random(1, 4) ~= 1 then
+								itemInstance:TakeCondition(math.random(0, 75));
+							end
 						end
-					elseif itemInstance.category == "Shot" and itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
-						itemInstance:SetAmmoMagazine(math.random(1, itemInstance.ammoMagazineSize));
+					elseif itemInstance.category == "Shot" then
+						if itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
+							if bIsSuperCrate then
+								itemInstance:SetAmmoMagazine(itemInstance.ammoMagazineSize);
+							else
+								itemInstance:SetAmmoMagazine(math.random(1, itemInstance.ammoMagazineSize));
+							end
+						elseif bIsSuperCrate then
+							Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, math.random(4, 10));
+						end
 					end
 					
 					if itemInstance:GetData("freezing") then
 						itemInstance:SetData("freezing", 100);
+					end
+					
+					if bIsSuperCrate then
+						if itemInstance.itemSpawnerInfo.supercrateItems then
+							for k, v in pairs(itemInstance.itemSpawnerInfo.supercrateItems) do
+								for j = 1, math.random(v.min, v.max) do
+									local subItem = item.CreateInstance(k);
+								
+									if subItem then
+										if subItem.ammoMagazineSize and subItem.SetAmmoMagazine then
+											subItem:SetAmmoMagazine(subItem.ammoMagazineSize);
+										end
+										
+										if subItem:GetData("freezing") then
+											subItem:SetData("freezing", 100);
+										end
+										
+										Clockwork.inventory:AddInstance(container.cwInventory, subItem, 1);
+									end
+								end
+							end
+						end
 					end
 					
 					Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
