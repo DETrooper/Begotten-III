@@ -431,6 +431,11 @@ function Schema:RemoveNPCSpawn(position, distance, player)
 		for i, v2 in ipairs(v) do
 			if (v2.pos:Distance(position) < distance) then
 				table.remove(self.npcSpawns[category], i);
+
+				-- Properly cleans up tables in the settings file so it doesn't throw lua errors if you remove all npc spawns for whatever reason.
+				if self.npcSpawns[category] and table.IsEmpty(self.npcSpawns[category]) then
+					self.npcSpawns[category] = nil
+				end
 				
 				if (player and player:IsPlayer()) then
 					self:EasyText(player, "cornflowerblue", "You removed an NPC spawn at your cursor position.");
