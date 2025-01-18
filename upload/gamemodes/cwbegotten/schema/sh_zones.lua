@@ -981,6 +981,14 @@ if CLIENT then
 		end
 	end
 else
+	if map == "rp_begotten3" then
+		function zones:ClockworkInitPostEntity()
+			for i, v in ipairs(ents.FindByClass("env_fog_controller")) do
+				v:SetKeyValue("farz", 3500);
+			end
+		end
+	end
+
 	function zones:GetPlayerSupraZone(player)
 		local zone = player:GetCharacterData("LastZone", "wasteland");
 		
@@ -1161,7 +1169,7 @@ if map == "rp_begotten3" then
 		TOWER.fogColors = {r = 96, g = 47, b = 0};
 		TOWER.fogColorsNight = {r = 18, g = 6, b = 1};
 		TOWER.fogStart = 1536;
-		TOWER.fogEnd = 4096;
+		TOWER.fogEnd = 3200;
 		TOWER.colorModify = {["$pp_colour_brightness"] = -0.035, ["$pp_colour_contrast"] = 1.22, ["$pp_colour_colour"] = 1};
 		TOWER.colorModifyNight = {["$pp_colour_brightness"] = -0.045, ["$pp_colour_contrast"] = 1.05, ["$pp_colour_colour"] = 0.95};
 		TOWER.hasWeather = true;
@@ -1184,7 +1192,7 @@ if map == "rp_begotten3" then
 		THEATER.fogColors = {r = 96, g = 47, b = 0};
 		THEATER.fogColorsNight = {r = 18, g = 6, b = 1};
 		THEATER.fogStart = 1536;
-		THEATER.fogEnd = 4096;
+		THEATER.fogEnd = 3200;
 		THEATER.bloomDisabled = true;
 		THEATER.colorModify = {["$pp_colour_brightness"] = -0.035, ["$pp_colour_contrast"] = 1.05, ["$pp_colour_colour"] = 1};
 		THEATER.colorModifyNight = {["$pp_colour_brightness"] = -0.035, ["$pp_colour_contrast"] = 1.05, ["$pp_colour_colour"] = 1};
@@ -1249,7 +1257,7 @@ if map == "rp_begotten3" then
 		TOOTHBOY.map = "rp_begotten3";
 		TOOTHBOY.fogColors = {r = 0, g = 0, b = 0};
 		TOOTHBOY.fogStart = 0;
-		TOOTHBOY.fogEnd = 4096;
+		TOOTHBOY.fogEnd = 3200;
 		TOOTHBOY.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
 		TOOTHBOY.bounds = {
 			min = Vector(12250, -9968, -2182),
@@ -1261,8 +1269,8 @@ if map == "rp_begotten3" then
 		GORE_TREE.name = "Gore Tree";
 		GORE_TREE.map = "rp_begotten3";
 		GORE_TREE.fogColors = {r = 255, g = 255, b = 255};
-		GORE_TREE.fogStart = 0;
-		GORE_TREE.fogEnd = 10240;
+		GORE_TREE.fogStart = 3200;
+		GORE_TREE.fogEnd = 6000;
 		GORE_TREE.colorModify = {["$pp_colour_brightness"] = 0, ["$pp_colour_contrast"] = 1.2, ["$pp_colour_colour"] = 0};
 		GORE_TREE.bounds = {
 			min = Vector(11713, -6746, 10673),
