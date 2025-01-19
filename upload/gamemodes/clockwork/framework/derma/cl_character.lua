@@ -2869,16 +2869,22 @@ function PANEL:Init()
 						local disabledTraitsText = "Disables ";
 						
 						for i = 1, #traitButton.disableTable do
-							disabledTraitsText = disabledTraitsText.."'"..Clockwork.trait:FindByID(traitButton.disableTable[i]).name.."'";
+							local disabledTrait = Clockwork.trait:FindByID(traitButton.disableTable[i]);
 							
-							if i == #traitButton.disableTable - 1 then
-								disabledTraitsText = disabledTraitsText..", and ";
-							elseif i < #traitButton.disableTable then
-								disabledTraitsText = disabledTraitsText..", ";
+							if disabledTrait then
+								disabledTraitsText = disabledTraitsText.."'"..disabledTrait.name.."'";
+								
+								if i == #traitButton.disableTable - 1 then
+									disabledTraitsText = disabledTraitsText..", and ";
+								elseif i < #traitButton.disableTable then
+									disabledTraitsText = disabledTraitsText..", ";
+								end
 							end
 						end
 						
-						frame:AddText(disabledTraitsText, selectedBad);
+						if disabledTraitsText ~= "Disables " then
+							frame:AddText(disabledTraitsText, selectedBad);
+						end
 					end
 					
 					if traitButton.eventlocked then
