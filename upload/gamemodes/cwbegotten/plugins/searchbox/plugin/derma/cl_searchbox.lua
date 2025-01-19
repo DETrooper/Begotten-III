@@ -12,8 +12,8 @@ end
 
 DEFINE_BASECLASS("DTextEntry");
 function PANEL:Paint(w,h)
-	surface.SetDrawColor(255,255,255);
-	surface.SetMaterial(Material("begotten/ui/generic_scratch.png"));
+	surface.SetDrawColor(188,188,188);
+	surface.SetMaterial(Material("begotten/ui/itemrandom2.png"));
 	surface.DrawTexturedRect(0,0,w,h);
 	BaseClass.Paint(self,w,h);
 
