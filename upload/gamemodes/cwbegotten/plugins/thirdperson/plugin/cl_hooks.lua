@@ -45,6 +45,6 @@ function cwThirdPerson:CalcViewAdjustTable(view)
 end
 
 function cwThirdPerson:PreDrawViewModel()
-    if(Clockwork.ConVars.THIRDPERSON:GetBool() and !Clockwork.character.isOpen) then return true; end
+    if(Clockwork.ConVars.THIRDPERSON:GetBool() and (Clockwork.config:Get("enable_thirdperson"):Get() or Clockwork.player:IsAdmin(Clockwork.Client)) and !Clockwork.character.isOpen) then return true; end
 
 end
