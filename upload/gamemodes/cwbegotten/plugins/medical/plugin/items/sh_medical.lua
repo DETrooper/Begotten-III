@@ -253,9 +253,9 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.uniqueID = "laudanum";
 	ITEM.useSound = "begotten/ui/sanity_gain.mp3";
 
-	ITEM.healAmount = 5;
-	ITEM.healDelay = 4;
-	ITEM.healRepetition = 5;
+	--ITEM.healAmount = 5;
+	--ITEM.healDelay = 4;
+	--ITEM.healRepetition = 5;
 	
 	ITEM.ingestible = {orally = true, anally = false};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 250};
