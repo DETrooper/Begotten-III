@@ -94,14 +94,8 @@ end
 
 -- End Ghetto Fix
 
--- More ghetto fix to check if logs folder exists
-if fileio and file.Exists("logs/clockwork", "MOD") then
-    print("\'logs/clockwork\' has been found.")
-else
-    fileio.MakeDirectory("logs/clockwork")
-
-	print("\'logs/clockwork\' has been created.")
-end
+file.CreateDir("clockwork/logs") -- Clockwork.kernel:ServerLog
+file.CreateDir("clockwork/lua_errors") -- GM:OnLuaError
 
 local ServerLog = ServerLog
 local cvars = cvars
@@ -837,24 +831,11 @@ end
 
 -- A function to log to the server.
 function Clockwork.kernel:ServerLog(text)
-	local dateInfo = os.date("*t")
-	local unixTime = os.time()
+	local logText = os.date("%X").." - "..string.gsub(text, "\n", "")
+	
+	file.Append("clockwork/logs/"..os.date("%d-%m-%y")..".txt", logText.."\n")
 
-	if (dateInfo) then
-		if (dateInfo.month < 10) then dateInfo.month = "0"..dateInfo.month; end
-		if (dateInfo.day < 10) then dateInfo.day = "0"..dateInfo.day; end
-		local fileName = dateInfo.year.."-"..dateInfo.month.."-"..dateInfo.day
-
-		if (dateInfo.hour < 10) then dateInfo.hour = "0"..dateInfo.hour; end
-		if (dateInfo.min < 10) then dateInfo.min = "0"..dateInfo.min; end
-		if (dateInfo.sec < 10) then dateInfo.sec = "0"..dateInfo.sec; end
-		local time = dateInfo.hour..":"..dateInfo.min..":"..dateInfo.sec
-		local logText = time..": "..string.gsub(text, "\n", "")
-
-		fileio.Append("logs/clockwork/"..fileName..".log", logText.."\n")
-	end
-
-	ServerLog(text.."\n") hook.Run("ClockworkLog", text, unixTime)
+	ServerLog(text.."\n")
 end
 
 -- A function to do the entity take damage hook.

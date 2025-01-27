@@ -87,6 +87,12 @@ function GM:Initialize()
 	hook.Run("ClockworkInitialized")
 end
 
+function GM:OnLuaError(errorText, realm, stack)
+	local logText = os.date("%X") .. " - " .. string.gsub(errorText, "\n", "")
+	file.Append("clockwork/lua_errors/" .. os.date("%d-%m-%y") .. ".txt", logText .. "\n" .. table.ToString(stack, "", true) .. "\n")
+	file.Append("clockwork/lua_errors/" .. os.date("%d-%m-%y") .. "-simple.txt", logText .. "\n")
+end
+
 function GM:OnePlayerSecond(player, curTime, infoTable)
 	local plyTab = player:GetTable();
 	local drunkTab = plyTab.cwDrunkTab;
