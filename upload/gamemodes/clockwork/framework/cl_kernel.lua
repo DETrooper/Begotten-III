@@ -806,7 +806,7 @@ function Clockwork.kernel:DrawBars(info, class)
 
 		Clockwork.option:SetFont("bar_text", Clockwork.option:GetFont("auto_bar_text"))
 			for k, v in pairs(Clockwork.bars.stored) do
-				Clockwork.bars.y = self:DrawBar(Clockwork.bars.x, Clockwork.bars.y, Clockwork.bars.width, Clockwork.bars.height, v.color, v.text, v.value, v.maximum, v.flash, {uniqueID = v.uniqueID}, true, true) + (Clockwork.bars.padding + 4)
+				Clockwork.bars.y = self:DrawBar(Clockwork.bars.x, Clockwork.bars.y, Clockwork.bars.width, Clockwork.bars.height, v.color, v.text, v.value, v.maximum, v.flash, {uniqueID = v.uniqueID}, true, true, v.precedingVal) + (Clockwork.bars.padding + 4)
 			end
 		Clockwork.option:SetFont("bar_text", barTextFont)
 		
@@ -1228,7 +1228,7 @@ do
 end
 
 -- A function to draw a bar with a value and a maximum.
-function Clockwork.kernel:DrawBar(x, y, width, height, color, text, value, maximum, flash, barInfo, bBarText, bTopBar)
+function Clockwork.kernel:DrawBar(x, y, width, height, color, text, value, maximum, flash, barInfo, bBarText, bTopBar, precedingVal)
 	if (!Clockwork.Client.BarAlpha) then
 		return
 	end
@@ -1255,11 +1255,16 @@ function Clockwork.kernel:DrawBar(x, y, width, height, color, text, value, maxim
 		width = width,
 		color = color,
 		value = value,
+		precedingVal = precedingVal,
 		flash = flash,
 		text = text,
 		x = x,
 		y = y
 	}
+	
+	if precedingVal then
+		newBarInfo.precedingWidth = math.Clamp(((width - 2) / maximum) * precedingVal, 0, width - 2)
+	end
 	
 	if (barInfo) then
 		for k, v in pairs(newBarInfo) do
@@ -1298,6 +1303,14 @@ function Clockwork.kernel:DrawBar(x, y, width, height, color, text, value, maxim
 		surface.SetDrawColor(100, 100, 100, (color.a / 2))
 		surface.SetTexture(surface.GetTextureID("gui/gradient_up"))
 		surface.DrawTexturedRect(barInfo.x + 2, barInfo.y + 2, barInfo.width - 4, barInfo.height - 4)
+	end
+	
+	if barInfo.precedingWidth then
+		local precedingpercentbar = barInfo.precedingWidth / (barInfo.width - 2)
+	
+		surface.SetDrawColor(230, 184, 0, (color.a * 3))
+		surface.SetMaterial(Clockwork.scratchTexture)
+		surface.DrawTexturedRectUV(barInfo.x - 4, barInfo.y, barInfo.precedingWidth + 4, barInfo.height, 0, 0, precedingpercentbar, 1 )
 	end
 
 	surface.SetDrawColor(barInfo.color.r, barInfo.color.g, barInfo.color.b, (color.a * 3))
@@ -2357,18 +2370,40 @@ end
 
 -- A function to draw the health bar.
 function Clockwork.kernel:DrawHealthBar()
-	local health = math.Clamp(Clockwork.Client:Health(), 0, Clockwork.Client:GetMaxHealth())
+	local maxHealth = Clockwork.Client:GetMaxHealth();
+	local health = math.Clamp(Clockwork.Client:Health(), 0, maxHealth)
 	
-	if (!self.health) then
+	--[[if (!self.health) then
 		self.health = health
 	else
 		if (self.health != health) then
 			self.health = math.Approach(self.health, health, 1)
 		end
+	end]]--
+	
+	self.health = health;
+	
+	if !self.healthDamage then
+		self.healthDamage = health;
 	end
 	
+	if self.healthDamage > maxHealth or self.healthDamage < health then
+		self.healthDamage = health;
+		self.healthDamageDelay = nil;
+	end
+	
+	if !self.healthDamageDelay and health < self.healthDamage then
+		self.healthDamageDelay = CurTime() + 2;
+	end
+	
+	if self.healthDamageDelay then
+		if CurTime() > self.healthDamageDelay then
+			self.healthDamage = math.Approach(self.healthDamage or self.health, health, FrameTime() * 8)
+		end
+	end
+
 	if (health > 0) then
-		Clockwork.bars:Add("HEALTH", Color(179, 46, 49, 255), "HEALTH", self.health, Clockwork.Client:GetMaxHealth(), self.health < 10, 2)
+		Clockwork.bars:Add("HEALTH", Color(179, 46, 49, 255), "HEALTH", self.health, maxHealth, self.health < 10, 2, self.healthDamage)
 	end
 end
 

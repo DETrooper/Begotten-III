@@ -3899,6 +3899,11 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			frame:AddBar(20, {{text = weight.."kg", percentage = percentage * 100, color = Color(96, 96, 128), font = "DermaDefault", leftTextAlign = false, noDisplay = true}}, "Weight", Color(170, 170, 180));
 		end;
 		
+		if itemTable.invSpace then
+			frame:AddText("Item Attributes: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+			frame:AddText("Increases Maximum Carry Weight: +"..tostring(itemTable.invSpace).."kg", Color(110, 30, 30), nil, 0.9);
+		end
+		
 		return true;
 	elseif category == "Scripture" and cwScriptures then
 		frame:AddText(name.." - "..category, Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);

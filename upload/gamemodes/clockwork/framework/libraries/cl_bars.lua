@@ -24,7 +24,7 @@ function Clockwork.bars:FindByID(uniqueID)
 end
 
 -- A function to add a top bar.
-function Clockwork.bars:Add(uniqueID, color, text, value, maximum, flash, priority, maxValue, limitText)
+function Clockwork.bars:Add(uniqueID, color, text, value, maximum, flash, priority, precedingVal)
 	table.insert(self.stored, {
 		uniqueID = uniqueID,
 		priority = priority or 0,
@@ -32,8 +32,7 @@ function Clockwork.bars:Add(uniqueID, color, text, value, maximum, flash, priori
 		color = color,
 		class = class,
 		value = value,
-		maxValue = maxValue,
-		limitText = limitText,
+		precedingVal = precedingVal,
 		flash = flash,
 		text = text,
 	})
