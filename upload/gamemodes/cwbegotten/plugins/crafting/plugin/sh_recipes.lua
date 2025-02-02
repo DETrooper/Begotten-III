@@ -4421,7 +4421,7 @@ RECIPE:Register()
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 3},
+			["iron_ingot"] = {amount = 1},
 			["begotten_spear_ironspear"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -4432,7 +4432,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 25;
+		RECIPE.experience = 20;
 		
 		function RECIPE:OnCraft(player)
 		end;
