@@ -114,7 +114,7 @@ ITEM:Register();
 local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Haralder War Axe";
 	ITEM.model = "models/witcher2soldiers/tw2_bigaxe.mdl";
-	ITEM.weight = 3.5;
+	ITEM.weight = 5;
 	ITEM.uniqueID = "begotten_2h_great_haralderwaraxe";
 	ITEM.category = "Melee";
 	ITEM.description = "An ornate war axe made from Shagalaxian steel. This axe is often used by the sea raiders of Clan Harald. An old curse prevents weaklings from firmly grasping its handle.";

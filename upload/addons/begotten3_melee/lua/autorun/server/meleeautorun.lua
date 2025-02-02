@@ -817,9 +817,9 @@ local function Guarding(ent, dmginfo)
 							if attacker.StaminaDamage then
 								attacker.enemypoise = attacker.StaminaDamage;
 							elseif attacker.Damage then
-								attacker.enemypoise = (attacker.Damage * 2) or 20;
+								attacker.enemypoise = (attacker.Damage * 1.25) or 15;
 							else
-								attacker.enemypoise = 20;
+								attacker.enemypoise = 15;
 							end
 							
 							--print("POST MODIFIER POISE DAMAGE: "..attacker.enemypoise);

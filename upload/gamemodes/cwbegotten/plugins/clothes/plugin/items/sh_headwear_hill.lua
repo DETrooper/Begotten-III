@@ -170,7 +170,6 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.insulation = 60;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 4000};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
@@ -184,10 +183,10 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 5
 	ITEM.headSuffix = "_hill";
 	ITEM.description = "A high ridged helm covered in runic emblems and sigils of the Gore-Glazic, with a split-coif design. A sign of the ultimate position a man of the Watch could attain."
-	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
-
+	ITEM.requireFaction = {"Hillkeeper"};
+	
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 
 	ITEM.effectiveLimbs = {
@@ -273,7 +272,6 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.insulation = 50;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 4000};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")

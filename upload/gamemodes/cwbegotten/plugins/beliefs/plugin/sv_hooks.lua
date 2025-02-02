@@ -435,7 +435,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 					if huntingValue == 1 then
 						huntingDaggerStrength = 1
 						mutilationValue = 1.5
-						conditionLoss = 12
+						conditionLoss = 9
 						mutilationTime = 15
 					elseif huntingValue == 2 then
 						huntingDaggerStrength = 2
@@ -761,7 +761,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 					else
 						huntingDaggerStrength = 3
 						skinningValue = 100
-						skinningConditionLoss = 3
+						skinningConditionLoss = 4
 						skinningTime = 5
 					end
 				end
@@ -802,19 +802,25 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 									if requiredDaggerStrength <= huntingDaggerStrength then
 										if (!entity.skinned or entity.skinned < 1) then
 											entity.skinned = (entity.skinned or 0) + 1;
-											
-											local instance = Clockwork.item:CreateInstance(uniqueID);
-											instance:SetCondition(skinningValue)
-
-											player:GiveItem(instance, true);
-											player:HandleXP(self.xpValues["mutilate"] * 2);
-											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
-											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-											entity:SetMaterial("models/flesh");
-											
+																					
 											local weaponItemTable = item.GetByWeapon(activeWeapon);
 											
 											if weaponItemTable then
+												local instance = Clockwork.item:CreateInstance(uniqueID);
+												local daggerCondition = weaponItemTable:GetCondition()
+												
+												if daggerCondition <= 90 then
+													instance:SetCondition(skinningValue - ((math.abs(daggerCondition - 100)) * 0.7))
+												else
+													instance:SetCondition(skinningValue)
+												end
+
+												player:GiveItem(instance, true);
+												player:HandleXP(self.xpValues["mutilate"] * 2);
+												player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
+												Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
+												entity:SetMaterial("models/flesh");
+												
 												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
 													weaponItemTable:TakeCondition(skinningConditionLoss, true);
 												end

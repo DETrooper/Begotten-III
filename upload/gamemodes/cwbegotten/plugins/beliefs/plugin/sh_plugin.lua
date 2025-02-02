@@ -1506,7 +1506,6 @@ function COMMAND:OnRun(player, arguments)
 							if currentOil >= 1 then
 								local damageInfo = DamageInfo();
 								
-								--player:TakeDamage(math.random(5,10));
 								player:Ignite(15);
 								weaponItemTable:SetData("oil", math.Clamp(currentOil - math.random(10, 25), 0, 100));
 								player:SetNetVar("oil", math.Round(weaponItemTable:GetData("oil"), 0));
@@ -1517,16 +1516,19 @@ function COMMAND:OnRun(player, arguments)
 								return true;
 							else
 								local damage = math.random(3,8);
-								
-								player:TakeDamage(damage);
-								
-								if cwStamina then
-									player:HandleStamina(damage * 2);
+								if (player:Health() - 10) >= damage then -- Fix this later (does not account for damage buffs)
+									player:TakeDamage(damage);
+									Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.." with an unlit lantern!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+									player.nextFlagellate = curTime + 1;
+									
+									if cwStamina then
+										player:HandleStamina(damage * 2); -- Fix this later (does not account for damage buffs)
+									end
+									return true;
+								else
+									Schema:EasyText(player, "firebrick", "You cannot flagellate yourself to death!");
+									return false
 								end
-								
-								Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.."!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-								
-								return true;
 							end
 						end
 					elseif activeWeapon:GetClass() == "begotten_fists" or !activeWeapon.IsABegottenMelee then
@@ -1549,63 +1551,65 @@ function COMMAND:OnRun(player, arguments)
 					local damage = attacktable["primarydamage"];
 					local damagetype = attacktable["dmgtype"];
 					local attacksoundtable = GetSoundTable(activeWeapon.AttackSoundTable);
-					
-					if attacksoundtable then
-						player:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])]);
-					end
-					
-					--player:TakeDamage(damage * math.Rand(0.5, 0.75), player, activeWeapon);
-					
+										
 					local d = DamageInfo()
-					d:SetDamage(damage * math.Rand(0.5, 0.75));
+					d:SetDamage(damage * 0.5);
 					d:SetAttacker(player);
 					d:SetDamageType(damagetype);
 					d:SetDamagePosition(player:GetPos() + Vector(0, 0, 48));
 					d:SetInflictor(activeWeapon);
 					
-					player.flagellating = true;
-					player.ignoreConditionLoss = true;
-					player:TakeDamageInfo(d);
-					player.flagellating = false;
-					player.ignoreConditionLoss = false;
-					
-					if cwStamina then
-						if activeWeapon:GetClass() == "begotten_1h_ironflail" then -- Flails give more stamina when flagellating!
-							player:HandleStamina(d:GetDamage() * 4);
-						else
-							player:HandleStamina(d:GetDamage() * 2);
+					if (player:Health() - 18) >= d:GetDamage() then -- Fix this later (does not account for damage buffs)
+						player.flagellating = true;
+						player.ignoreConditionLoss = true;
+						player:TakeDamageInfo(d);
+						player.flagellating = false;
+						player.ignoreConditionLoss = false;
+						
+						if attacksoundtable then
+							player:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])]);
 						end
-					end
-					
-					if cwSanity then
-						player:HandleSanity(math.Round(d:GetDamage() / 3));
-					end
-					
-					local selfless = "himself";
-					
-					if (player:GetGender() == GENDER_FEMALE) then
-						selfless = "herself";
-					end
-					
-					-- Bellhammer special
-					if activeWeapon.IsBellHammer then
-						timer.Simple(0.2, function() if player:IsValid() then
-							player:EmitSound("meleesounds/bell.mp3")
-						end end)
 						
-						local entities = ents.FindInSphere(player:GetPos(), 512);
-						
-						for i, v in ipairs(entities) do
-							if v:IsPlayer() and v:Alive() then
-								v:Disorient(5);
+						if cwStamina then
+							if activeWeapon:GetClass() == "begotten_1h_ironflail" then -- Flails give more stamina when flagellating!
+								player:HandleStamina(d:GetDamage() * 4); -- Fix this later (does not account for damage buffs)
+							else
+								player:HandleStamina(d:GetDamage() * 2); -- Fix this later (does not account for damage buffs)
 							end
 						end
 						
-						Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.." with a thunderous toll of their Bell Hammer!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+						if cwSanity then
+							player:HandleSanity(math.Round(d:GetDamage() / 3));
+						end
+						
+						local selfless = "himself";
+						
+						if (player:GetGender() == GENDER_FEMALE) then
+							selfless = "herself";
+						end
+						
+						-- Bellhammer special
+						if activeWeapon.IsBellHammer then
+							timer.Simple(0.2, function() if player:IsValid() then
+								player:EmitSound("meleesounds/bell.mp3")
+							end end)
+							
+							local entities = ents.FindInSphere(player:GetPos(), 512);
+							
+							for i, v in ipairs(entities) do
+								if v:IsPlayer() and v:Alive() then
+									v:Disorient(5);
+								end
+							end
+							
+							Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.." with a thunderous toll of their Bell Hammer!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+						else
+							Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.."!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+						end
 					else
-						Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.."!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-					end
-					
+						Schema:EasyText(player, "firebrick", "You cannot flagellate yourself to death!");
+						return false
+					end					
 					player.nextFlagellate = curTime + (attacktable["delay"] or 1);
 				else
 					Schema:EasyText(player, "firebrick", "You cannot flagellate with this weapon!");

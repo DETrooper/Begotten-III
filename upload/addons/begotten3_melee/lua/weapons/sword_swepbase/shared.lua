@@ -1072,7 +1072,7 @@ end
 							d:ScaleDamage(2);
 							
 							if hit:GetNetVar("ActName") == "unragdoll" then
-								Clockwork.player:ExtendAction(hit, 0.3);
+								Clockwork.player:ExtendAction(hit, 0.7);
 							end
 						end
 					end
@@ -1284,7 +1284,7 @@ end
 								d:ScaleDamage(2);
 								
 								if hit:GetNetVar("ActName") == "unragdoll" then
-									Clockwork.player:ExtendAction(hit, 0.3);
+									Clockwork.player:ExtendAction(hit, 0.7);
 								end
 							end
 						end
@@ -1458,7 +1458,7 @@ end
 								d:ScaleDamage(2);
 
 								if hit:GetNetVar("ActName") == "unragdoll" then
-									Clockwork.player:ExtendAction(hit, 0.3);
+									Clockwork.player:ExtendAction(hit, 0.7);
 								end
 							end
 						end
@@ -1655,7 +1655,7 @@ end
 								d:ScaleDamage(2);
 
 								if hit:GetNetVar("ActName") == "unragdoll" then
-									Clockwork.player:ExtendAction(hit, 0.3);
+									Clockwork.player:ExtendAction(hit, 0.7);
 								end
 							end
 						end

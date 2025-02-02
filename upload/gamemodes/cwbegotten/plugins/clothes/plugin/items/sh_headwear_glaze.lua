@@ -202,8 +202,22 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A ragged hood commonly worn by those who inhabit the Wasteland to protect themselves from the elements."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 300};
+	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 300};	
+	ITEM.conditionScale = 2 -- item degrades 2x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.2;
 	
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 8
+	ITEM.hitParticle = "GlassImpact";
+	ITEM.type = "leather";
+
+	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+	ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
+	ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+	ITEM.stabilityScale = 0.90; -- reduces stability damage by 10%
 	ITEM.insulation = 40;
 		
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth"}};
@@ -223,9 +237,23 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 800};
+	ITEM.conditionScale = 2 -- item degrades 2x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.2;
 	
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 12
+	ITEM.hitParticle = "GlassImpact";
+	ITEM.type = "leather";
+
+	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+	ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
+	ITEM.slashScale = 0.90; -- reduces slash damage by 10%
+	ITEM.stabilityScale = 0.90; -- reduces stability damage by 10%
 	ITEM.insulation = 60;
-		
+	
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth"}};
 ITEM:Register();
 
@@ -239,12 +267,14 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.headReplacement = "models/begotten/heads/skintape_helmet.mdl";
 	ITEM.description = "The horrifying creation of a twisted mind, this mask is made from the face of a cannibalized victim. Although it has very little protective value, it is sure to strike fear into the hearts of the wearer's future meals."
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
+	ITEM.conditionScale = 2 -- item degrades 2x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.2;
 	
 	ITEM.effectiveLimbs = {
 		[HITGROUP_HEAD] = true,
 	}
 
-	ITEM.protection = 10;
+	ITEM.protection = 18;
 	ITEM.hitParticle = "GlassImpact";
 	ITEM.type = "leather";
 

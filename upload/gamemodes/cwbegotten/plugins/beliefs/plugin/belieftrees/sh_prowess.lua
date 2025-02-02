@@ -54,7 +54,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["billman"] = {
 				name = "Billman",
-				description = "Polearms, spears, rapiers, crossbow bolts, and throwables now deal 20% more armor piercing damage.",
+				description = "Polearms, spears, rapiers, scythes, crossbow bolts, and throwables now deal 20% more armor piercing damage.",
 				quote = "The honest soldier keeps his distance from the bloodthirsty fools who seek his demise.",
 				lockedSubfactions = {"Auxiliary", "Servus", "Low Ministry"},
 				lockedBeliefs = {"loremaster"},

@@ -126,7 +126,7 @@ ITEM:Register();
 ITEM = Clockwork.item:New("firearm_base");
 	ITEM.name = "Hillkeeper Axmusket";
 	ITEM.model = "models/begoyten/gunaxe/gunaxe.mdl";
-	ITEM.weight = 5;
+	ITEM.weight = 4;
 	ITEM.uniqueID = "begotten_hillkeeper_axmusket";
 	ITEM.description = "An expertly crafted Glazic Musket with a steel axehead in place of its stock. An efficient weapon typical of the Hillmen; every tool shall serve a double purpose, with every inch of steel and speck of powder utilized to its most practical end. This weapon's handle has been thrice-blessed and now burns the hands of heretics.";
 	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/gunaxe.png"

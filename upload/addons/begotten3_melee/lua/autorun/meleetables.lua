@@ -1722,7 +1722,7 @@ AttackTables.ClaymoreAttackTable = {
 };
 
 AttackTables.VoltlongswordAttackTable = {
-	["primarydamage"] = 65,
+	["primarydamage"] = 70,
 	["dmgtype"] = 4,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = true,
@@ -1730,7 +1730,7 @@ AttackTables.VoltlongswordAttackTable = {
 	["altattackpoisedamagemodifier"] = 0.1,
 	["altmeleearc"] = 15,
 	["armorpiercing"] = 25,
-	["altarmorpiercing"] = 40,
+	["altarmorpiercing"] = 45,
 	["poisedamage"] = 25,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 5,
@@ -2262,7 +2262,7 @@ AttackTables.VoltprodAttackTable = {
 	["poisedamage"] = 30,
 	["stabilitydamage"] = 35,
 	["takeammo"] = 2,
-	["delay"] = 0.8,
+	["delay"] = 0.95,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
 	["meleerange"] = 635,
@@ -2746,7 +2746,7 @@ AttackTables.WarScytheAttackTable = {
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 20,
 	["stabilitydamage"] = 0,
-	["takeammo"] = 8,
+	["takeammo"] = 6,
 	["delay"] = 1.7,
 	["striketime"] = 0.6,
 	["meleearc"] = 60,
@@ -2765,7 +2765,7 @@ AttackTables.GlaiveAttackTable = {
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 15,
 	["stabilitydamage"] = 0,
-	["takeammo"] = 8,
+	["takeammo"] = 6,
 	["delay"] = 1.55,
 	["striketime"] = 0.6,
 	["meleearc"] = 60,
@@ -2841,7 +2841,7 @@ AttackTables.HaralderWarAxeAttackTable = {
 	["altattackpoisedamagemodifier"] = nil,
 	["armorpiercing"] = 45,
 	["altarmorpiercing"] = nil,
-	["poisedamage"] = 45,
+	["poisedamage"] = 35,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 7,
 	["delay"] = 1.4,
@@ -3415,7 +3415,7 @@ AttackTables.HillBattleAxeAttackTable = {
 	["poisedamage"] = 22,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 4,
-	["delay"] = 1,
+	["delay"] = 1.05,
 	["striketime"] = 0.4,
 	["meleearc"] = 45,
 	["meleerange"] = 625,
@@ -3451,7 +3451,7 @@ AttackTables.HillHeavyBattleAxeAttackTable = {
 	["altattackpoisedamagemodifier"] = nil,
 	["armorpiercing"] = 45,
 	["altarmorpiercing"] = nil,
-	["poisedamage"] = 45,
+	["poisedamage"] = 35,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 7,
 	["delay"] = 1.4,
@@ -4667,10 +4667,11 @@ BlockTables.ParryingDaggerBlockTable = {
 	["poiseresistance"] = 0,
 	["raisespeed"] = 1.25,
 	["instantraise"] = true,
-	["parrydifficulty"] = 0.3,
+	["parrydifficulty"] = 0.32,
 	["parrytakestamina"] = 5,
 	["canparry"] = true,
 	["candeflect"] = true,
+	["deflectionwindow"] = 0.25,
 };
 
 BlockTables.KnightsbaneBlockTable = {
@@ -7076,7 +7077,7 @@ BlockTables.shield12 = { -- Warfighter Shield
 	["canparry"] = true,
 	["candeflect"] = true,
 	["ironsights"] = {
-		["models/v_onehandedbegotten.mdl"] = {pos = Vector(10.6, -3.217, -0.32), ang = Vector(0, 0, -2.112)},
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(4.199, -8.242, 3.079), ang = Vector(-4.926, -7.739, -7.035)},
 		["models/v_begottenknife.mdl"] = {pos = Vector(9, -8.04, 0.68), ang = Vector(0, -7.035, -7.739)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(9.8, 0, 4.8), ang = Vector(-10.554, -12.664, 13.366)},
 		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(-4.85, -8.04, 0.119), ang = Vector(5.627, -56.986, -21.81)},
@@ -7095,7 +7096,7 @@ BlockTables.shield12 = { -- Warfighter Shield
 	},
 	["VElements"] = {
 		["models/v_onehandedbegotten.mdl"] = {
-			["shield12"] = { type = "Model", model = "models/props/begotten/melee/pursuer_greatshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-10.91, 4.675, -1.558), angle = Angle(-31.559, -106.364, -115.714), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+			["shield12"] = { type = "Model", model = "models/props/begotten/melee/pursuer_greatshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-3.636, 4.675, -1.558), angle = Angle(-33.896, -122.727, -132.079), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
 		["models/v_begottenknife.mdl"] = {
 			["shield12"] = { type = "Model", model = "models/props/begotten/melee/pursuer_greatshield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(0.518, -6.753, 2.596), angle = Angle(178.83, -132.079, -36.235), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }

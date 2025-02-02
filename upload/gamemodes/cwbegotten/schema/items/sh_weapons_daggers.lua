@@ -16,6 +16,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, supercrateOnly = true};
+	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -35,6 +36,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.huntingValue = 3;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
+	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -51,10 +53,11 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0, 355.03, 0);
 	ITEM.attachmentOffsetVector = Vector(-3.54, 0.71, 1.41);
 	ITEM.canUseOffhand = true;
-	ITEM.huntingValue = 2;
+	ITEM.huntingValue = 3;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 750};
+	ITEM.repairCostModifier = 0.8;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -74,6 +77,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.huntingValue = 1;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"human_bone"}};
+	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -94,6 +98,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 900, supercrateOnly = true};
+	ITEM.repairCostModifier = 0.8;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -106,6 +111,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/parrying_dagger.png"
 	ITEM.meleeWeapon = true;
 	ITEM.isAttachment = true;
+	ITEM.hasIncreasedDeflectionWindow = true;
 	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(329.17, 355.03, 4.97);
 	ITEM.attachmentOffsetVector = Vector(-2.83, 2.12, -3.54);
@@ -114,6 +120,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 250, supercrateOnly = true};
+	ITEM.repairCostModifier = 0.8;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -131,6 +138,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attributes = {"concealable"};
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 100};
+	ITEM.repairCostModifier = 0.4;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -153,6 +161,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requireFaith = {"Faith of the Dark"};
 	ITEM.requireSubfaction = {"Rekh-khet-sa"};
 	ITEM.requireFaction = {"Children of Satan"};
+	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -175,6 +184,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requireFaith = {"Faith of the Dark"};
 	ITEM.requireSubfaction = {"Varazdat"};
 	ITEM.requireFaction = {"Children of Satan"};
+	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -197,6 +207,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requireFaith = {"Faith of the Dark"};
 	ITEM.requireSubfaction = {"Philimaxio"};
 	ITEM.requireFaction = {"Children of Satan"};
+	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -216,6 +227,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requireFaith = {"Faith of the Dark"};
 	ITEM.requireSubfaction = {"Kinisger"};
 	ITEM.requireFaction = {"Children of Satan"};
+	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
 
 -- Hill shit
@@ -237,4 +249,5 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.huntingValue = 3;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
+	ITEM.repairCostModifier = 0.3;
 ITEM:Register();

@@ -474,7 +474,7 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "chainmail";
 ITEM.description = "A set of overlapping steel plates and scales sat atop a heavy chain hauberk and a long gambeson, wreathed in ornate sigils and emblems."
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.requireFaction = {"Hillkeeper"};
 ITEM.faction = "Hillkeeper";
 
 ITEM.requiredbeliefs = {"hauberk"};

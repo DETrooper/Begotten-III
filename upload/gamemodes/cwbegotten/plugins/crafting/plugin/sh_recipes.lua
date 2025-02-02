@@ -70,7 +70,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 4;
 		
@@ -96,7 +96,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "begotten/items/first_aid.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "stitching"
 		RECIPE.experience = 10;
 		
@@ -122,7 +122,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "begotten/items/first_aid.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "stitching"
 		RECIPE.experience = 10;
 		
@@ -148,7 +148,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "begotten/items/first_aid.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "stitching"
 		RECIPE.experience = 10;
 		
@@ -176,7 +176,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 5;
 		
@@ -204,7 +204,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 5;
 		
@@ -232,7 +232,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 5;
 		
@@ -260,7 +260,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 10;
 		
@@ -288,7 +288,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 10;
 		
@@ -316,7 +316,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 35;
 		
@@ -344,7 +344,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 35;
 		
@@ -372,7 +372,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 25;
 		
@@ -402,7 +402,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 35;
 		
@@ -432,7 +432,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 35;
 		
@@ -461,7 +461,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 55;
 		
@@ -491,7 +491,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 55;
 		
@@ -520,7 +520,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
+		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 20;
 		
@@ -1071,7 +1071,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Skintape";
 		RECIPE.requiredBeliefs = {"primeval"};
 		RECIPE.requirements = {
-			["humanmeat"] = {amount = 3},
+			["humanmeat"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["skintape"] = {amount = 1},
@@ -1097,8 +1097,8 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Skingauze";
 		RECIPE.requiredBeliefs = {"primeval"};
 		RECIPE.requirements = {
-			["humanmeat"] = {amount = 5},
-			["human_bone"] = {amount = 4},
+			["humanmeat"] = {amount = 3},
+			["human_bone"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["skingauze"] = {amount = 1},
@@ -1154,8 +1154,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["antibiotic_paste"] = {amount = 1},
 			["forceps"] = {amount = 1},
-			["gauze"] = {amount = 4},
-			["ointment"] = {amount = 1},
+			["gauze"] = {amount = 1},
 			["suture"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -1971,6 +1970,36 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("steel_longsword_upgrade_longsword");
+		RECIPE.name = "(Upgrade) Steel Longsword";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
+			["begotten_2h_longsword"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_2h_exileknightsword"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 40;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("gore_cleaver");
 		RECIPE.name = "Gore Cleaver";
@@ -2613,7 +2642,36 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 35;
+		RECIPE.experience = 70;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("flanged_mace_upgrade_morningstar");
+		RECIPE.name = "(Upgrade) Flanged Mace";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 2},
+			["begotten_1h_morningstar"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_1h_flangedmace"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 40;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -2730,6 +2788,64 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("steel_gore_battle_axe_upgrade_irongore");
+		RECIPE.name = "(Upgrade) Steel Gore Battle Axe";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 1},
+			["begotten_1h_gorebattleaxe"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_1h_steelgorebattleaxe"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 30;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("steel_gore_battle_axe_upgrade_ironreaver");
+		RECIPE.name = "(Upgrade) Steel Gore Battle Axe";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 1},
+			["begotten_1h_reaverbattleaxe"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_1h_steelgorebattleaxe"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 30;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -2917,6 +3033,35 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 	
+	RECIPE = cwRecipes.recipes:New("familialsword_upgrade_goreshortsword");
+		RECIPE.name = "(Upgrade) Familial Sword";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 1},
+			["begotten_1h_goreshortsword"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_1h_familialsword"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 25;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
 	RECIPE = cwRecipes.recipes:New("druidsword");
 		RECIPE.name = "Druid Sword";
 		RECIPE.requiresSmithy = true;
@@ -3022,6 +3167,67 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("steel_arming_sword_upgrade_ironarming");
+		RECIPE.name = "(Upgrade) Steel Arming Sword";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 1},
+			["iron_ingot"] = {amount = 1},
+			["leather"] = {amount = 1},
+			["begotten_1h_ironarmingsword"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_1h_steelarmingsword"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 40;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("steel_arming_sword_upgrade_spatha");
+		RECIPE.name = "(Upgrade) Steel Arming Sword";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 1},
+			["leather"] = {amount = 1},
+			["begotten_1h_spatha"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_1h_steelarmingsword"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 35;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -3552,6 +3758,35 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 	
+	RECIPE = cwRecipes.recipes:New("poleaxe_upgrade_billhook");
+		RECIPE.name = "(Upgade) Poleaxe";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 1},
+			["begotten_polearm_billhook"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_polearm_gatekeeperpoleaxe"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 20;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
 	RECIPE = cwRecipes.recipes:New("billhook");
 		RECIPE.name = "Billhook";
 		RECIPE.requiresSmithy = true;
@@ -3602,6 +3837,37 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 70;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("lucerne_upgrade_billhook");
+		RECIPE.name = "(Upgrade) Lucerne";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
+			["cloth"] = {amount = 1},
+			["begotten_polearm_billhook"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_polearm_lucerne"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 30;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -4138,7 +4404,35 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 45;
+		RECIPE.experience = 50;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("steel_spear_upgrade_ironspear");
+		RECIPE.name = "(Upgrade) Steel Spear";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 3},
+			["begotten_spear_ironspear"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_spear_wingedspear"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 25;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -4166,7 +4460,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 35;
+		RECIPE.experience = 20;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -4253,7 +4547,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 10;
+		RECIPE.experience = 35;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -4264,7 +4558,36 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
-
+	
+	RECIPE = cwRecipes.recipes:New("pilum_upgrade_ironjavelin");
+		RECIPE.name = "(Upgrade) Pilum";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 1},
+			["begotten_javelin_iron_javelin"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_javelin_pilum"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 15;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
 	RECIPE = cwRecipes.recipes:New("club");
 		RECIPE.name = "Club";
 		RECIPE.requiredBeliefs = {"ingenious"};
@@ -4602,7 +4925,7 @@ RECIPE:Register()
 		RECIPE.requirements = {
 			["hellforged_steel_ingot"] = {amount = 1},
 			["iron_ingot"] = {amount = 2},
-			["fire_sigil_stone"] = {amount = 1},
+			["fire_sigil_stone"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_sacrificial_hellfiresword"] = {amount = 1},
@@ -4838,7 +5161,7 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["begotten_1h_druidsword"] = {amount = 1},
-			["fire_sigil_stone"] = {amount = 1},
+			["fire_sigil_stone"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_sacrificial_blesseddruidsword"] = {amount = 1},
@@ -4899,7 +5222,7 @@ RECIPE:Register()
 		RECIPE.requirements = {
 			["gold_ingot"] = {amount = 1},
 			["maximilian_steel_ingot"] = {amount = 1},
-			["fire_sigil_stone"] = {amount = 1},
+			["fire_sigil_stone"] = {amount = 2},
 			["glazic_sigil_stone"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -8600,7 +8923,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
-			["fune_steel_ingot"] = {amount = 1},
+			["scrap"] = {amount = 3},
 			["steel_ingot"] = {amount = 1},
 			["cloth"] = {amount = 1},
 		};
@@ -8858,7 +9181,7 @@ RECIPE:Register()
 	RECIPE:Register()
 	
 	RECIPE = cwRecipes.recipes:New("iron_bolt");
-		RECIPE.name = "(3x) Iron Bolt";
+		RECIPE.name = "(4x) Iron Bolt";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock"};
@@ -8867,7 +9190,7 @@ RECIPE:Register()
 			["wood"] = {amount = 3},
 		};
 		RECIPE.result = {
-			["iron_bolt"] = {amount = 3},
+			["iron_bolt"] = {amount = 4},
 		};
 		RECIPE.category = "Munitions"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
@@ -8921,7 +9244,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock"};
 		RECIPE.requirements = {
-			["scrap"] = {amount = 2},
+			["scrap"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["scrap_bolt"] = {amount = 1},

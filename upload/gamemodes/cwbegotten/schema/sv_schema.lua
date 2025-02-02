@@ -2180,8 +2180,11 @@ function Schema:PlayerCommitSuicide(player)
 	
 	Clockwork.chatBox:AddInTargetRadius(player, "me", suicideMethod, player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 	
-	timer.Simple(3, function()
+	player:EmitSound("crossed/rc_alert"..math.random(1,3)..".wav", 80, 110)
+	
+	timer.Simple(4, function()
 		if IsValid(player) then
+			player:EmitSound("meleesounds/kill2.wav.mp3", 80)
 			player:Kill();
 			player:DeathCauseOverride("Went fucking insane and brutally killed "..selfless..".");
 			Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, player:Name().." has committed fucking suicide.");

@@ -178,7 +178,7 @@ ITEM:Register();
 local ITEM = Clockwork.item:New();
 	ITEM.name = "Raw Bear Meat";
 	ITEM.model = "models/gibs/humans/mgib_07.mdl";
-	ITEM.weight = 0.35;
+	ITEM.weight = 0.5;
 	ITEM.plural = "Raw Bear Meat";
 	ITEM.useText = "Force Down Your Throat";
 	ITEM.useSound = "npc/barnacle/barnacle_crunch3.wav";
@@ -228,7 +228,7 @@ ITEM:Register();
 local ITEM = Clockwork.item:New();
 	ITEM.name = "Cooked Bear Meat";
 	ITEM.model = "models/items/provisions/ham_dry/ham_dry.mdl";
-	ITEM.weight = 0.35;
+	ITEM.weight = 0.5;
 	ITEM.plural = "Cooked Bear Meat";
 	ITEM.useText = "Eat";
 	ITEM.useSound = "npc/barnacle/barnacle_crunch3.wav";
@@ -258,7 +258,7 @@ local ITEM = Clockwork.item:New();
 		end
 	
 		player:HandleSanity(5);
-		player:SetHealth(math.Clamp(player:Health() + 10, 0, player:GetMaxHealth()));
+		player:SetHealth(math.Clamp(player:Health() + 7, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
@@ -350,7 +350,7 @@ local ITEM = Clockwork.item:New();
 		end
 	
 		player:HandleSanity(5);
-		
+		player:SetHealth(math.Clamp(player:Health() + 2, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
