@@ -44,8 +44,9 @@ ENT.ClimbLadders = true
 ENT.ClimbSpeed = 100
 ENT.ClimbUpAnimation = "run_all_grenade"--ACT_ZOMBIE_CLIMB_UP --pull_grenade
 ENT.ClimbOffset = Vector(-14, 0, 0)
-ENT.ArmorPiercing = 85;
+ENT.ArmorPiercing = 65;
 ENT.Damage = 50;
+ENT.StaminaDamage = 40;
 ENT.MaxMultiHit = 3;
 -- Detection --
 ENT.EyeBone = "ValveBiped.Bip01_Spine4"

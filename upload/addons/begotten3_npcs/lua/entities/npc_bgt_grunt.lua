@@ -11,7 +11,7 @@ ENT.OnDamageSounds = {"begotten/npc/grunt/attack_claw01.mp3", "begotten/npc/grun
 ENT.OnDeathSounds = {"begotten/npc/grunt/amb_idle_scratch01.mp3", "begotten/npc/grunt/amb_idle_scratch02.mp3", "begotten/npc/grunt/amb_idle_scratch03.mp3"}
 ENT.PainSounds = {"begotten/npc/grunt/attack_launch01.mp3", "begotten/npc/grunt/attack_launch02.mp3"};
 -- Stats --
-ENT.SpawnHealth = 500
+ENT.SpawnHealth = 400
 ENT.SpotDuration = 20
 -- AI --
 ENT.RangeAttackRange = 0
@@ -37,8 +37,9 @@ ENT.ClimbLadders = true
 ENT.ClimbSpeed = 100
 ENT.ClimbUpAnimation = "run_all_grenade"--ACT_ZOMBIE_CLIMB_UP --pull_grenade
 ENT.ClimbOffset = Vector(-14, 0, 0)
-ENT.ArmorPiercing = 65;
-ENT.Damage = 40;
+ENT.ArmorPiercing = 40;
+ENT.Damage = 25;
+ENT.StaminaDamage = 25;
 ENT.MaxMultiHit = 1;
 -- Detection --
 ENT.EyeBone = "ValveBiped.Bip01_Spine4"
@@ -91,7 +92,7 @@ ENT.PossessionBinds = {
 		onkeydown = function(self)
 			if(self.nextMeleeAttack and self.nextMeleeAttack > CurTime()) then return; end
 						self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
-			self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.PossessionFaceForward)
+			self:PlaySequenceAndMove("fastattack", 1, self.PossessionFaceForward)
 		end
 	}}
 }
@@ -151,7 +152,7 @@ if SERVER then
 	function ENT:OnMeleeAttack(enemy)
 		if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
 			self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
-			self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)
+			self:PlaySequenceAndMove("fastattack", 1, self.PossessionFaceForward)
 		end
 	end
 	function ENT:OnReachedPatrol()
