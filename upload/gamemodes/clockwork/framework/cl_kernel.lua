@@ -2398,7 +2398,7 @@ function Clockwork.kernel:DrawHealthBar()
 	
 	if self.healthDamageDelay then
 		if CurTime() > self.healthDamageDelay then
-			self.healthDamage = math.Approach(self.healthDamage or self.health, health, FrameTime() * 8)
+			self.healthDamage = math.Approach(self.healthDamage or self.health, health, FrameTime() * 80)
 		end
 	end
 
