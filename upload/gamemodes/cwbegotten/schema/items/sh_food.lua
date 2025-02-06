@@ -16,7 +16,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 30, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -61,7 +61,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 25, thirst = 10};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -107,7 +107,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 15};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -151,7 +151,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 40, thirst = 10};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -194,7 +194,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 25, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -242,7 +242,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 50, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -285,7 +285,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 5, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -334,7 +334,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 15, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -377,7 +377,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 25, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -426,7 +426,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 50, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -468,7 +468,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 20, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -510,7 +510,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 45, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -551,7 +551,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 45, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -594,7 +594,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 20, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -641,7 +641,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 50, thirst = 15};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -683,7 +683,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 35, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -735,7 +735,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 25, thirst = 0};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -784,7 +784,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 40, thirst = 15};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -829,7 +829,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 80, thirst = 45};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -878,7 +878,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 50, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -928,7 +928,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 15, thirst = 30};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1013,7 +1013,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 50};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1071,7 +1071,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 50};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1147,7 +1147,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 50};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1190,7 +1190,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 25, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1250,7 +1250,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 50, thirst = 10};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1291,7 +1291,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 90, thirst = 75};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1333,7 +1333,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 100, thirst = 100};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1375,7 +1375,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 70, thirst = 60};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1419,7 +1419,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 15, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1494,7 +1494,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 45, thirst = 35};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1537,7 +1537,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 20, thirst = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1599,7 +1599,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 35, thirst = 15};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1661,7 +1661,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 60, thirst = 30};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -1723,7 +1723,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 25, thirst = 25};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end

@@ -17,7 +17,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 10, thirst = 15};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -136,7 +136,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {thirst = 25};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -211,7 +211,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {hunger = 10, thirst = 30, sleep = 5};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -250,7 +250,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {thirst = 65};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -831,7 +831,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {thirst = 100};
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -879,7 +879,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/bucket.png"
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
@@ -930,7 +930,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = -3;
 	
 	function ITEM:OnSetup()
-		if cwWarmth then
+		if cwWarmth and cwWarmth.systemEnabled then
 			ITEM:AddData("freezing", 0, true);
 		end
 	end
