@@ -3367,7 +3367,6 @@ RECIPE:Register()
 		RECIPE.requiredFaiths = {"Faith of the Light"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 4},
-			["light_catalyst"] = {amount = 1},
 			["holy_water"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -5314,7 +5313,6 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
-			["pentagram_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_houserekhkhetsaancestraldagger"] = {amount = 1},
@@ -5324,7 +5322,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 75;
+		RECIPE.experience = 60;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -5344,7 +5342,6 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
-			["pentagram_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_housevarazdatancestraldagger"] = {amount = 1},
@@ -5354,7 +5351,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 75;
+		RECIPE.experience = 60;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -5374,7 +5371,6 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
-			["pentagram_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_housephilimaxioancestraldagger"] = {amount = 1},
@@ -5384,7 +5380,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 75;
+		RECIPE.experience = 60;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -5414,7 +5410,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 75;
+		RECIPE.experience = 80;
 		
 		function RECIPE:OnCraft(player)
 		end;

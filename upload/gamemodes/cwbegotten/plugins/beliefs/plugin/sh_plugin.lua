@@ -1297,7 +1297,8 @@ local COMMAND = Clockwork.command:New("Warcry");
 				if (faction == "Hillkeeper") then
 					if (faith == "Faith of the Family" and player.bloodHowlActive) then
 						if cwStamina then
-							player:HandleStamina(60);
+							player:HandleStamina(50);
+							player:ModifyBloodLevel(-150);
 						end
 					end
 
@@ -1315,7 +1316,8 @@ local COMMAND = Clockwork.command:New("Warcry");
 				elseif faith == "Faith of the Family" then
 					if player.bloodHowlActive then
 						if cwStamina then
-							player:HandleStamina(60);
+							player:HandleStamina(50);
+							player:ModifyBloodLevel(-150);
 						end
 					end
 					

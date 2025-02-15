@@ -138,6 +138,7 @@ end
 
 function ENT:CustomInitialize()
 self:SetSolidMask(MASK_PLAYERSOLID)
+self:SetModelScale(1.15)
 self:SetDefaultRelationship(D_HT)
 self:SequenceEvent("walk",0/2,self.Step)
 self:SequenceEvent("walk",0.4/2,self.Step)
@@ -160,18 +161,21 @@ end
   end
   
   function ENT:OnMeleeAttack(enemy)
-    if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
-      local att = math.random(2)	
-      if att == 1 then
-      self:Attack1()	
-      self:PlaySequenceAndMove("attack1", 1, self.FaceEnemy)
-      end
-      if att == 2 then
-      self:Attack1()	
-      self:PlaySequenceAndMove("attack2", 1, self.FaceEnemy)
-      end
-    end
-  end
+       if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
+		   local att = math.random(3)	
+		   if att == 1 then
+			   self:Attack1()	
+			   self:PlaySequenceAndMove("attack1", 1, self.FaceEnemy)
+		   elseif att == 2 then
+			   self:Attack1()	
+			   self:PlaySequenceAndMove("attack2", 1, self.FaceEnemy)
+		   else
+			   self:EmitSound("bear/idle1.wav", 90, 80)
+			   self:Attack2()	
+			   self:PlaySequenceAndMove("attack2", 0.5, self.FaceEnemy)
+		   end
+	   end
+   end
 end
 
  -- Patrol --
@@ -200,6 +204,22 @@ end
 			self:EmitSound("physics/body/body_medium_impact_hard"..math.random(1, 2)..".wav", 90)
 		else 
 			self:EmitSound("bear/woosh1.wav", 80) end
+      end)
+end
+
+  function ENT:Attack2() 
+      self:Attack({
+        damage = 75,
+        range = 160,
+        delay = 0.95,
+        type = DMG_SLASH,
+        viewpunch = Angle(20, math.random(-10, 10), 0),
+      }, function(self, hit)
+        force = Vector(1000, 1000, 1000)
+        if #hit > 0 then
+			self:EmitSound("physics/body/body_medium_impact_hard"..math.random(1, 2)..".wav", 95)
+		else 
+			self:EmitSound("bear/woosh1.wav", 85) end
       end)
 end
 

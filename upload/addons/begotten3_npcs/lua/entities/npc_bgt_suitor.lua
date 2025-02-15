@@ -80,8 +80,11 @@ ENT.PossessionBinds = {
 		onkeydown = function(self)
 			if(self.nextMeleeAttack and self.nextMeleeAttack > CurTime()) then return; end
 						self:EmitSound("begotten/npc/suitor/attack_launch0"..math.random(1, 2)..".mp3", 100, self.pitch)
-			self:PlaySequenceAndMove("fastattack", 1, self.PossessionFaceForward)
-			--self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.PossessionFaceForward)
+			if math.random(1,3) == 1 then
+				self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)
+			else
+				self:PlaySequenceAndMove("fastattack", 0.75, self.PossessionFaceForward)
+			end
 		end
 	}}
 }
@@ -140,8 +143,11 @@ if SERVER then
 	function ENT:OnMeleeAttack(enemy)
 		if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
 			self:EmitSound("begotten/npc/suitor/attack_launch0"..math.random(1, 2)..".mp3", 100, self.pitch)
-			self:PlaySequenceAndMove("fastattack", 1, self.FaceEnemy)
-			--self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1.25, self.FaceEnemy)
+			if math.random(1,3) == 1 then
+				self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)
+			else
+				self:PlaySequenceAndMove("fastattack", 0.75, self.PossessionFaceForward)
+			end
 		end
 	end
 	function ENT:OnReachedPatrol()

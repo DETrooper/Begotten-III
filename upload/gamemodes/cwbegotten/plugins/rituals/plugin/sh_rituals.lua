@@ -404,8 +404,8 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("bloodhowl");
 	RITUAL.name = "(T2) Bloodhowl";
-	RITUAL.description = "The thrill of battle empowers you! Performing this ritual will make your war cries restore 60 points of stamina for 40 minutes. Incurs 10 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin"}; -- Tier II Faith of the Family Ritual
+	RITUAL.description = "The thrill of battle empowers you! Performing this ritual will make your war cries restore 50 points of stamina and drain 150 points of blood for 40 minutes. Incurs 10 corruption.";
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "shieldwall"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"down_catalyst", "familial_catalyst", "pantheistic_catalyst"};
 	RITUAL.corruptionCost = 10;
@@ -630,7 +630,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("cloak_of_always_burning");
 	RITUAL.name = "(T2) Cloak of Always Burning";
 	RITUAL.description = "With an offering of catalysts, runestones and wicker branches you will be infused with a resistance to the natural and unnatural forces of life. Performing this ritual will grant you 100% resistance to fire and ice damage for 40 minutes. Incurs 10 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin"}; -- Tier II Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "shieldwall"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"belphegor_catalyst", "ice_catalyst", "familial_catalyst"};
 	RITUAL.corruptionCost = 10;
@@ -661,7 +661,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("cries_of_the_drowned_king");
 	RITUAL.name = "(T1) Cries of the Drowned King";
 	RITUAL.description = "After a long time at sea, you may hear the gurglings and wails of a drowned legend. Make an offering to the Gods and you may heed his wisdom. Performing this ritual will make you unable to lose oxygen while underwater for 1 hour, and during this time you will be able to drink from bodies of water without consequence.";
-	RITUAL.onerequiredbelief = {"honor_the_gods", "one_with_the_druids", "the_black_sea", "witch_druid"}; -- Tier I Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"honor_the_gods", "one_with_the_druids", "the_black_sea", "witch_druid", "taste_of_iron"}; -- Tier I Faith of the Family Ritual
 	
 	RITUAL.requirements = {"down_catalyst", "down_catalyst", "down_catalyst"};
 	--RITUAL.corruptionCost = 5; -- Corruption gets added once the UI is closed.
@@ -692,7 +692,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("demon_hunter");
 	RITUAL.name = "(T1) Demon Hunter";
 	RITUAL.description = "Show your hubris, ask for a challenge worthy of your martial prowess! Performing this ritual will give you 25 minutes to slay a random number of thralls, which will then reward you with 1000 faith (experience).";
-	RITUAL.onerequiredbelief = {"honor_the_gods", "one_with_the_druids", "the_black_sea", "witch_druid"}; -- Tier I Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"honor_the_gods", "one_with_the_druids", "the_black_sea", "witch_druid", "taste_of_iron"}; -- Tier I Faith of the Family Ritual
 	
 	RITUAL.requirements = {"light_catalyst", "elysian_catalyst", "pantheistic_catalyst"};
 	--RITUAL.corruptionCost = 5; -- Corruption gets added once the UI is closed.
@@ -793,7 +793,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("familial_seed");
 	RITUAL.name = "(T1) Familial Seed";
 	RITUAL.description = "The Gore Forest is lush and teeming with life when compared to the realms that followers of the Glaze inhabit. Goreic shamans can call upon the magic of the Goreic Forest to help mend their wounds. Performing this ritual will restore 150 health, 60% blood, and heal the specified limb of injuries. Removes 25 corruption.";
-	RITUAL.onerequiredbelief = {"honor_the_gods", "one_with_the_druids", "the_black_sea", "witch_druid"}; -- Tier I Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"honor_the_gods", "one_with_the_druids", "the_black_sea", "witch_druid", "taste_of_iron"}; -- Tier I Faith of the Family Ritual
 	
 	RITUAL.requirements = {"familial_catalyst", "familial_catalyst", "familial_catalyst"};
 	RITUAL.corruptionCost = -25; -- Corruption gets added once the UI is closed.
@@ -1648,7 +1648,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("rooting");
 	RITUAL.name = "(T1) Rooting";
 	RITUAL.description = "When the incessant demonic chanting drives you angry, consider banishing them back to the hells that birthed them. Performing this ritual will remove 65 points of corruption.";
-	RITUAL.onerequiredbelief = {"honor_the_gods", "one_with_the_druids", "the_black_sea", "witch_druid"}; -- Tier I Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"honor_the_gods", "one_with_the_druids", "the_black_sea", "witch_druid", "taste_of_iron"}; -- Tier I Faith of the Family Ritual
 	
 	RITUAL.requirements = {"pantheistic_catalyst", "familial_catalyst", "familial_catalyst"};
 	RITUAL.corruptionCost = -65;
@@ -1699,7 +1699,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("sprouting");
 	RITUAL.name = "(T2) Sprouting";
 	RITUAL.description = "There is something to be learned from leaves, dirt, and bone. Performing this ritual will restore 200 health and 100% of blood, as well as healing all injuries. Removes 5 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin"}; -- Tier II Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "shieldwall"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"pantheistic_catalyst", "pantheistic_catalyst", "pantheistic_catalyst"};
 	RITUAL.corruptionCost = -5;
@@ -2558,7 +2558,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("triumph_of_the_bark");
 	RITUAL.name = "(T2) Triumph of Bark";
 	RITUAL.description = "The Mother may be the creator of affliction, but she may cure those seen as strong. Performing this ritual will cure you of all diseases. Incurs 20 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin"}; -- Tier II Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "shieldwall"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"up_catalyst", "pantheistic_catalyst", "pantheistic_catalyst"};
 	RITUAL.corruptionCost = 20;
