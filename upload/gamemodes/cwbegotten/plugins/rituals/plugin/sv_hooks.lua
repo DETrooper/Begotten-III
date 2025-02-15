@@ -277,6 +277,7 @@ function cwRituals:PlayerMeetsRitualItemRequirements(player, ritualTable, itemID
 	return true;
 end
 
+--[[
 -- Summoned NPCs have their HP decay by 1 per second.
 function cwRituals:OneSecond()
 	if self.summonedNPCs then
@@ -293,6 +294,7 @@ function cwRituals:OneSecond()
 		end
 	end
 end
+--]]
 
 --[[
 function cwRituals:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)

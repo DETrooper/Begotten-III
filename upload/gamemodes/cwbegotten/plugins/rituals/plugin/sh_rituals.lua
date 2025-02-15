@@ -1833,21 +1833,21 @@ RITUAL = cwRituals.rituals:New("enlightenment");
 RITUAL:Register()
 --]]
 
-RITUAL = cwRituals.rituals:New("summon_eddie");
-	RITUAL.name = "(T3) Summon Demon (Eddie)";
-	RITUAL.description = "Summon a Begotten Thrall that has become the host of a hell demon. It will be hostile towards anyone not of the Faith of the Dark. 15 second cast time. Adds a 10 minute cooldown to all summons. Incurs 25 corruption.";
+RITUAL = cwRituals.rituals:New("summon_soldier");
+	RITUAL.name = "(T3) Summon Soldier";
+	RITUAL.description = "Rise up a damned soldier from Hell to do your bidding. It will be hostile towards anyone not of the Faith of the Dark. 3 second cast time. Adds a 2 minute cooldown to all summons. Incurs 5 corruption.";
 	RITUAL.onerequiredbelief = {"sorcerer"}; -- Tier III Faith of the Dark Ritual
 	RITUAL.requiredBeliefsSubfactionOverride = {["Rekh-khet-sa"] = {"embrace_the_darkness"}}; -- Tier III Faith of the Dark Ritual
 	
-	RITUAL.requirements = {"belphegor_catalyst", "tortured_spirit", "down_catalyst"};
-	RITUAL.corruptionCost = 25;
-	RITUAL.ritualTime = 15;
+	RITUAL.requirements = {"trinity_catalyst", "down_catalyst", "down_catalyst"};
+	RITUAL.corruptionCost = 5;
+	RITUAL.ritualTime = 3;
 	RITUAL.experience = 35;
 	
 	function RITUAL:OnPerformed(player)
-		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Summon Demon' ritual, spawning an Eddie near their position!");
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Summon Soldier' ritual, spawning a Soldier near their position!");
 		
-		player.nextRitualSummon = CurTime() + 600;
+		player.nextRitualSummon = CurTime() + 120;
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -1915,13 +1915,13 @@ RITUAL = cwRituals.rituals:New("summon_eddie");
 			sound.Play("misc/summon.wav",trace.HitPos, 100, 100)
 			
 			timer.Simple(0.5, function()
-				local entity = ents.Create("npc_bgt_eddie");
+				local entity = ents.Create("npc_bgt_soldier_hell");
 				
 				if IsValid(entity) then
 					entity:CustomInitialize();
 					entity:Spawn();
 					entity:Activate();
-					entity:SetHealth(400);
+					entity:SetHealth(math.random(100, 300));
 
 					entity:SetColor(Color(255,0,0));
 					entity:SetMaterial("models/effects/splode_sheet");
@@ -2325,6 +2325,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_bear");
 RITUAL:Register()
 --]]
 
+--[[
 RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 	RITUAL.name = "(T3) Summon Familiar (Leopard)";
 	RITUAL.description = "Summon a spirit leopard from the Gore Forest so that it may do your bidding. It will be hostile towards anyone not of the Faith of the Family. 15 second cast time. Adds a 10 minute cooldown to all summons. Incurs 25 corruption.";
@@ -2439,6 +2440,7 @@ RITUAL = cwRituals.rituals:New("summon_familiar_leopard");
 		end;
 	end;
 RITUAL:Register()
+--]]
 
 RITUAL = cwRituals.rituals:New("summon_familiar_elk");
 	RITUAL.name = "(T3) Summon Familiar (Elk)";

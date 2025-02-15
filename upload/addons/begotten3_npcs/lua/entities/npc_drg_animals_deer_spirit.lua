@@ -20,7 +20,7 @@ ENT.OnIdleSounds = {"deer/idle1.wav"}
 ENT.IdleSoundDelay = 180
 
 -- Stats --
-ENT.ArmorPiercing = 5;
+ENT.ArmorPiercing = 10;
 ENT.SpawnHealth = 200;
 ENT.StaminaDamage = 15;
 ENT.XPValue = 30;

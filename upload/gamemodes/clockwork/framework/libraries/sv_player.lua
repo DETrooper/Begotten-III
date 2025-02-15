@@ -2706,7 +2706,6 @@ function Clockwork.player:SetRagdollState(player, state, delay, decay, force, mu
 
 			if (player:IsOnFire()) then
 				player:Extinguish();
-				ragdoll:Ignite(8, 0)
 			end
 
 			player:Spectate(OBS_MODE_CHASE)
