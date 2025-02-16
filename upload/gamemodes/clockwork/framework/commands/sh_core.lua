@@ -858,9 +858,9 @@ COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("CharFallOver");
 	COMMAND.tip = "Make your character fall to the floor.";
-	COMMAND.text = "[number Seconds]";
+	--COMMAND.text = "[number Seconds]";
 	COMMAND.flags = CMD_DEFAULT;
-	COMMAND.optionalArguments = 1;
+	--COMMAND.optionalArguments = 1;
 	COMMAND.alias = {"Fallover", "PlyFallover"};
 
 	-- Called when the command has been run.
@@ -871,6 +871,7 @@ local COMMAND = Clockwork.command:New("CharFallOver");
 			player.cwNextFallTime = curTime + 5;
 			
 			if (!player:InVehicle() and !Clockwork.player:IsNoClipping(player) and hook.Run("PlayerCanFallover", player) ~= false) then
+				--[[
 				local seconds = tonumber(arguments[1]);
 				
 				if (seconds) then
@@ -878,9 +879,10 @@ local COMMAND = Clockwork.command:New("CharFallOver");
 				elseif (seconds == 0) then
 					seconds = nil;
 				end;
+				--]]
 				
 				if (!player:IsRagdolled()) then
-					Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, seconds);
+					Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER);
 				end;
 			else
 				Clockwork.player:Notify(player, "You cannot do this action at the moment!");
