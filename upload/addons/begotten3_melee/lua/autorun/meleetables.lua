@@ -3748,7 +3748,7 @@ BlockTables.FistBlockTable = {
 	["raisespeed"] = 1.25,
 	["instantraise"] = true,
 	["parrydifficulty"] = 0.2,
-	["parrytakestamina"] = 15,
+	["parrytakestamina"] = 5,
 	["canparry"] = false,
 	["candeflect"] = true,
 };

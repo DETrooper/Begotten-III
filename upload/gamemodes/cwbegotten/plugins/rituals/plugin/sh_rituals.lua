@@ -1833,9 +1833,131 @@ RITUAL = cwRituals.rituals:New("enlightenment");
 RITUAL:Register()
 --]]
 
+RITUAL = cwRituals.rituals:New("summon_champion");
+	RITUAL.name = "(T3) Summon Champion";
+	RITUAL.description = "Rise up an eternally damned mercenary to do your bidding. It wields a shield and steel weapon. It will be hostile towards anyone not of the Faith of the Dark. 15 second cast time. Adds an 8 minute cooldown to all summons. Incurs 15 corruption.";
+	RITUAL.onerequiredbelief = {"sorcerer"}; -- Tier III Faith of the Dark Ritual
+	RITUAL.requiredBeliefsSubfactionOverride = {["Rekh-khet-sa"] = {"embrace_the_darkness"}}; -- Tier III Faith of the Dark Ritual
+	
+	RITUAL.requirements = {"tortured_spirit", "down_catalyst", "down_catalyst"};
+	RITUAL.corruptionCost = 15;
+	RITUAL.ritualTime = 15;
+	RITUAL.experience = 60;
+	
+	function RITUAL:OnPerformed(player)
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Summon Champion' ritual, spawning a Hell Champion near their position!");
+		
+		player.nextRitualSummon = CurTime() + 480;
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		if player.nextRitualSummon and player.nextRitualSummon > CurTime() then
+			Schema:EasyText(player, "firebrick", "You cannot summon again for "..tostring(math.ceil(player.nextRitualSummon - CurTime())).." more seconds!");
+			return false;
+		end
+	
+		local lastZone = player:GetCharacterData("LastZone");
+		
+		if lastZone == "theater" or lastZone == "tower" then
+			if Schema.towerSafeZoneEnabled then
+				Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+				return false;
+			end
+		end
+
+		if lastZone == "gore_tree" or lastZone == "gore_hallway" or lastZone == "gore" or lastZone == "sea_rough" or lastZone == "sea_calm" or lastZone == "sea_styx" or lastZone == "gore_soil" then
+			Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+			return false;
+		end
+		
+		local trace = player:GetEyeTraceNoCursor();
+		
+		if (trace.HitPos:Distance(player:GetShootPos()) > 192) then
+			Schema:EasyText(player, "firebrick", "You cannot summon that far away!");
+			
+			return false;
+		end;
+		
+		if !IsAreaClear(trace.HitPos, 32, player) then
+			Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+			
+			return false;
+		end
+	end;
+	function RITUAL:EndRitual(player)
+		local lastZone = player:GetCharacterData("LastZone");
+		
+		if lastZone == "gore_tree" or lastZone == "gore_hallway" or lastZone == "gore" or lastZone == "sea_rough" or lastZone == "sea_calm" or lastZone == "sea_styx" or lastZone == "gore_soil" then
+			Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+			return false;
+		end
+
+		if lastZone == "theater" or lastZone == "tower" then
+			if Schema.towerSafeZoneEnabled then
+				Schema:EasyText(player, "firebrick", "There is some sort of supernatural force preventing you from doing this here!");
+				return false;
+			end
+		end
+		
+		local trace = player:GetEyeTraceNoCursor();
+		
+		if (trace.HitPos:Distance(player:GetShootPos()) <= 192) then
+			if !IsAreaClear(trace.HitPos, 32, player) then
+				Schema:EasyText(player, "firebrick", "The area you are trying to summon in is not clear!");
+				
+				return false;
+			end
+
+			local playerFaith = player:GetFaith();
+			
+			ParticleEffect("teleport_fx",trace.HitPos, Angle(0,0,0), nil)
+			sound.Play("misc/summon.wav",trace.HitPos, 100, 100)
+			
+			timer.Simple(0.5, function()
+				local entity = ents.Create("npc_bgt_hell_champion");
+				
+				if IsValid(entity) then
+					entity:CustomInitialize();
+					entity:Spawn();
+					entity:Activate();
+					entity:SetHealth(math.random(200, 300));
+
+					entity:SetColor(Color(255,0,0));
+					entity:SetMaterial("models/effects/splode_sheet");
+					
+					entity:AddEntityRelationship(player, D_LI, 99);
+					entity.summonedFaith = playerFaith;
+					
+					for _, v in _player.Iterator() do
+						if v:GetFaith() == playerFaith then
+							entity:AddEntityRelationship(v, D_LI, 99);
+						end
+					end
+					
+					if !cwRituals.summonedNPCs then
+						cwRituals.summonedNPCs = {};
+					end
+					
+					table.insert(cwRituals.summonedNPCs, entity);
+					
+					--Clockwork.entity:MakeFlushToGround(entity, trace.HitPos + Vector(0, 0, 64), trace.HitNormal);
+					entity:SetPos(trace.HitPos + Vector(0, 0, 16));
+					
+					Clockwork.chatBox:AddInTargetRadius(player, "it", "There is a blinding flash of light and thunderous noise as an unholy champion of Hell appears!", trace.HitPos, config.Get("talk_radius"):Get() * 3);
+				end
+			end);
+		else
+			Schema:EasyText(player, "firebrick", "You cannot summon that far away!");
+			
+			return false;
+		end;
+	end;
+RITUAL:Register()
+
 RITUAL = cwRituals.rituals:New("summon_soldier");
 	RITUAL.name = "(T3) Summon Soldier";
-	RITUAL.description = "Rise up a damned soldier from Hell to do your bidding. It will be hostile towards anyone not of the Faith of the Dark. 3 second cast time. Adds a 2 minute cooldown to all summons. Incurs 5 corruption.";
+	RITUAL.description = "Rise up a damned soldier from Hell to do your bidding. It wields an iron weapon. It will be hostile towards anyone not of the Faith of the Dark. 3 second cast time. Adds a 2 minute cooldown to all summons. Incurs 5 corruption.";
 	RITUAL.onerequiredbelief = {"sorcerer"}; -- Tier III Faith of the Dark Ritual
 	RITUAL.requiredBeliefsSubfactionOverride = {["Rekh-khet-sa"] = {"embrace_the_darkness"}}; -- Tier III Faith of the Dark Ritual
 	
@@ -1845,7 +1967,7 @@ RITUAL = cwRituals.rituals:New("summon_soldier");
 	RITUAL.experience = 35;
 	
 	function RITUAL:OnPerformed(player)
-		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Summon Soldier' ritual, spawning a Soldier near their position!");
+		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Summon Soldier' ritual, spawning a Hell Soldier near their position!");
 		
 		player.nextRitualSummon = CurTime() + 120;
 	end;
@@ -1921,7 +2043,7 @@ RITUAL = cwRituals.rituals:New("summon_soldier");
 					entity:CustomInitialize();
 					entity:Spawn();
 					entity:Activate();
-					entity:SetHealth(math.random(100, 300));
+					entity:SetHealth(math.random(125, 200));
 
 					entity:SetColor(Color(255,0,0));
 					entity:SetMaterial("models/effects/splode_sheet");

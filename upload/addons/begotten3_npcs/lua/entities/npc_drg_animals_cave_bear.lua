@@ -19,9 +19,9 @@ ENT.OnIdleSounds = {"bear/idle1.wav", "bear/idle2.wav"}
 ENT.IdleSoundDelay = 240
 
 -- Stats --
-ENT.ArmorPiercing = 60;
+ENT.ArmorPiercing = 55;
 ENT.SpawnHealth = 600;
-ENT.StaminaDamage = 65;
+ENT.StaminaDamage = 45;
 ENT.XPValue = 150;
 ENT.MaxMultiHit = 2;
 
@@ -192,8 +192,9 @@ end
   -- Animations/Sounds --
 
   function ENT:Attack1()
+  	  self.StaminaDamage = 45,
       self:Attack({
-        damage = 60,
+        damage = 55,
         range = 160,
         delay = 0.6,
         type = DMG_SLASH,
@@ -208,6 +209,7 @@ end
 end
 
   function ENT:Attack2() 
+ 	  self.StaminaDamage = 65
       self:Attack({
         damage = 75,
         range = 160,

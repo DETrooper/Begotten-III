@@ -23,7 +23,7 @@ ENT.IdleSoundDelay = 240
 -- Stats --
 ENT.ArmorPiercing = 55;
 ENT.SpawnHealth = 600;
-ENT.StaminaDamage = 65;
+ENT.StaminaDamage = 45;
 ENT.XPValue = 175;
 ENT.MaxMultiHit = 2;
 
@@ -231,8 +231,9 @@ end
   -- Animations/Sounds --
 
   function ENT:Attack1()
+  	  self.StaminaDamage = 40,
       self:Attack({
-        damage = 60,
+        damage = 50,
         range = 160,
         delay = 0.6,
         type = DMG_SLASH,
@@ -246,9 +247,10 @@ end
       end)
 end
 
-  function ENT:Attack2()
+  function ENT:Attack2() 
+ 	  self.StaminaDamage = 60
       self:Attack({
-        damage = 75,
+        damage = 70,
         range = 160,
         delay = 0.95,
         type = DMG_SLASH,

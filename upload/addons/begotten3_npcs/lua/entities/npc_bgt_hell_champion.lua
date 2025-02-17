@@ -1,9 +1,9 @@
 if not DrGBase then return end -- return if DrGBase isn't installed
 ENT.Base = "drgbase_nextbot" -- DO NOT TOUCH (obviously)
 -- Misc --
-ENT.PrintName = "Hell Soldier"
+ENT.PrintName = "Hell Champion"
 ENT.Category = "Begotten DRG"
-ENT.Models = {"models/begotten/thralls/skelly01.mdl", "models/begotten/thralls/skelly02.mdl", "models/begotten/thralls/skelly03.mdl", "models/begotten/thralls/skelly04.mdl", "models/begotten/thralls/spearskelly01.mdl"}
+ENT.Models = {"models/begotten/thralls/skelly05.mdl", "models/begotten/thralls/skelly06.mdl"}
 ENT.BloodColor = DONT_BLEED
 ENT.RagdollOnDeath = true;
 -- Sounds --
@@ -16,12 +16,12 @@ ENT.SpotDuration = 20
 -- AI --
 ENT.RangeAttackRange = 0
 ENT.MeleeAttackRange = 100
-ENT.ReachEnemyRange = 45
+ENT.ReachEnemyRange = 35
 ENT.AvoidEnemyRange = 0
 ENT.HearingCoefficient = 0.5
 ENT.SightFOV = 300
 ENT.SightRange = 1024
-ENT.XPValue = 30;
+ENT.XPValue = 85;
 -- Relationships --
 ENT.Factions = {FACTION_ANTLIONS}
 -- Movements/animations --
@@ -39,8 +39,6 @@ ENT.ClimbUpAnimation = "run_all_grenade"--ACT_ZOMBIE_CLIMB_UP --pull_grenade
 ENT.ClimbOffset = Vector(-14, 0, 0)
 ENT.ArmorPiercing = 20;
 ENT.Damage = 30;
-ENT.WeaponSpeed = 0.6;
-ENT.DamageType = DMG_SLASH
 ENT.StaminaDamage = 15;
 ENT.MaxMultiHit = 1;
 -- Detection --
@@ -131,105 +129,43 @@ if SERVER then
 			
 			local model = self:GetModel();
 			
-			if model == "models/begotten/thralls/spearskelly01.mdl" then
-				if math.random(1, 2) == 1 then
-					self:GiveWeapon("begotten_spear_ironspear");
-					self.DamageType = DMG_VEHICLE
-					
-					self.ArmorPiercing = 45;
-					self.Damage = 40;
-					
-					self.MeleeAttackRange = 125
-					self.ReachEnemyRange = 80
-				else
-					self:GiveWeapon("begotten_polearm_pike");
-					self.DamageType = DMG_VEHICLE
-					
-					self.ArmorPiercing = 50;
-					self.Damage = 50;
-					
-					self.MeleeAttackRange = 160
-					self.ReachEnemyRange = 110
-				end
-				
-				self.RunAnimation = ACT_WALK;
-			elseif model == "models/begotten/thralls/skelly03.mdl" then
-				self.Armor = 25;
-				self.ArmorMaterial = "leather"
-				
-				if math.random(1, 2) == 1 then
-					self:GiveWeapon("begotten_1h_ironflail");
-					self.WeaponSpeed = 0.5;
-					self.DamageType = DMG_CLUB
-					
-					self.ArmorPiercing = 75;
-					self.Damage = 15;
-					self.StaminaDamage = 40
-				else
-					self:GiveWeapon("begotten_1h_morningstar");
-					self.WeaponSpeed = 0.5;
-					self.DamageType = DMG_CLUB
-					
-					self.ArmorPiercing = 75;
-					self.Damage = 15;
-					self.StaminaDamage = 40
-				end
-			elseif model == "models/begotten/thralls/skelly04.mdl" then
-				self.Armor = 40;
+			if model == "models/begotten/thralls/skelly05.mdl" then
+				self.Armor = 65;
 				self.ArmorMaterial = "plate"
+				self.BlockTable = "shield8";
+				self.Shielded = true
 				
-				if math.random(1, 2) == 1 then
-					self:GiveWeapon("begotten_1h_ironarmingsword");
-					self.WeaponSpeed = 0.6;
-					self.DamageType = DMG_SLASH
-					
-					self.ArmorPiercing = 40;
-					self.Damage = 45;
-				else
-					self:GiveWeapon("begotten_1h_ironshortsword");
-					self.WeaponSpeed = 0.75;
-					self.DamageType = DMG_SLASH
-					
-					self.ArmorPiercing = 30;
-					self.Damage = 40;
-				end
-			else
-				self:GiveWeapon("begotten_1h_scimitar");
-				self.WeaponSpeed = 0.6;
+				self.ArmorPiercing = 40;
+				self.Damage = 60;
 				self.DamageType = DMG_SLASH
-				
-				self.ArmorPiercing = 30;
-				self.Damage = 55;
 				self.StaminaDamage = 20;
-			end 
-		end); 
-	end  
+				
+				self:GiveWeapon("begotten_1h_satanicsword");
+			elseif model == "models/begotten/thralls/skelly06.mdl" then
+				self.Armor = 65;
+				self.ArmorMaterial = "plate"
+				self.BlockTable = "shield8";
+				self.Shielded = true
+				
+				self.ArmorPiercing = 70;
+				self.Damage = 25;
+				self.DamageType = DMG_CLUB
+				self.StaminaDamage = 45;
+				
+				self:GiveWeapon("begotten_1h_satanicmace");
+			end
+		end);
+	end
 	-- AI --
 	function ENT:OnMeleeAttack(enemy)
 		if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
 			self:EmitSound("npc/stalker/stalker_alert"..math.random(1, 3).."b.wav", 100, self.pitch)
 			
-			if self:GetModel() ~= "models/begotten/thralls/spearskelly01.mdl" and math.random(1, 3) == 1 then
-				self:PlaySequenceAndMove("fastattack", self.WeaponSpeed, self.FaceEnemy)
-			else
-				self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1.25, self.FaceEnemy)
+			if self:GetModel() == "models/begotten/thralls/skelly05.mdl" then
+				self:PlaySequenceAndMove("fastattack", 0.6, self.FaceEnemy)
+			elseif self:GetModel() == "models/begotten/thralls/skelly06.mdl" then
+				self:PlaySequenceAndMove("fastattack", 0.4, self.FaceEnemy)
 			end
-			
-			--[[if self.Shielded then
-				self.nextMeleeAttack = CurTime() + math.Rand(1, 3);
-			end]]--
-			
-			--[[if self.Shielded then
-				if self:GetNetVar("Guardening") then
-					self:SetLocalVar("Guardening", false);
-				end
-				
-				timer.Create("GuardResetTimer_"..self:EntIndex(), 2, 1, function()
-					if IsValid(self) then
-						self:SetLocalVar("Guardening", true);
-					end
-				end);
-			end]]--
 		end
 	end
 	function ENT:OnReachedPatrol()
@@ -288,7 +224,7 @@ if SERVER then
 	function ENT:Makeup()
 	end;
 	ENT.ModelScale = 1
-	ENT.pitch = 100
+	ENT.pitch = math.random(80, 110)
 	function ENT:CustomThink()
 		if (!self.lastStuck and self:IsStuck()) then
 			self.lastStuck = CurTime() + 2;
@@ -306,7 +242,8 @@ if SERVER then
 	
 	-- Animations/Sounds --
 	function ENT:OnNewEnemy()
-		self:EmitSound("npc/stalker/stalker_scream"..math.random(1,3)..".wav", 100, self.pitch, 0.6)
+		local laughs = {01, 03, 06, 09, 11, 12}
+		self:EmitSound("possession/laugh_0"..laughs[math.random(1, #laughs)]..".wav", 80, self.pitch, 0.6)
 	end
 	
 	function ENT:OnChaseEnemy()
@@ -345,9 +282,9 @@ if SERVER then
 				viewpunch = Angle(20, math.random(-10, 10), 0)
 			}, function(self, hit)
 				if #hit > 0 then
-					if self:GetModel() == "models/begotten/thralls/skelly03.mdl" then
+					if self:GetModel() == "models/begotten/thralls/skelly06.mdl" then
 						self:EmitSound("meleesounds/shield-iron2.wav.mp3", 100, self.pitch)
-					else
+					elseif self:GetModel() == "models/begotten/thralls/skelly05.mdl" then
 						self:EmitSound("begotten/npc/brute/attack_claw_hit0"..math.random(1,3)..".mp3", 80, self.pitch)
 					end
 				else self:EmitSound("Zombie.AttackMiss") end
