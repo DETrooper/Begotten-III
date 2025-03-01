@@ -4004,6 +4004,45 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 	end
 end
 
+function Schema:ClockworkInitialized()
+	Clockwork.directory:AddCategory("Faiths", "Faith is an integral part of Begotten III, as nearly all of Begotten's gameplay elements and story revolve around it. God has committed suicide, and no one left alive is pure, but that has not stopped what little that remains of humanity from looking to their gods in hope of salvation. After all, those without it have been targeted by the Undergod, and subsequently the Begotten. Each faith has its own rituals and major faction(s) associated with it.")
+	Clockwork.directory:AddCategory("Mechanics", "Distinguishing Begotten III from its other text-based roleplay peers is its myriad gameplay mechanics. Character needs such as hunger and thirst form the backbone of your character's goal to stay alive. The beliefs system rewards those who survive longest with a means to increase their power and abilities. Crafting and resource gathering form the engine of every faction's economy. The medical system simulates disease and injuries to characters.\n\nBegotten III also features a comprehensive melee combat system.\n\nUltimately, while you are free to play Begotten in almost any way you see fit, mastering all of its mechanics is essential to survival in the Wasteland.")
+end
+
+function Schema:DirectoryOpenHomePage(panel)
+	local WIPLabel = vgui.Create("DLabel", panel);
+	
+	WIPLabel:SetText("THE MANIFESTO IS A WORK IN PROGRESS!");
+	WIPLabel:SetFont("manifestoContentHeader");
+	WIPLabel:SetTextColor(Color(255, 20, 20));
+	WIPLabel:SizeToContents();
+	
+	panel.panelList:AddItem(WIPLabel);
+	
+	local videoLabel = vgui.Create("DLabel", panel);
+	
+	videoLabel:SetText("Featured Video:");
+	videoLabel:SetFont("manifestoContentHeader");
+	videoLabel:SizeToContents();
+	
+	panel.panelList:AddItem(videoLabel)
+	
+	local video = vgui.Create("cwVideoPanel");
+	
+	video:SetSize(720, 380);
+	video:SetURL();
+	
+	panel.panelList:AddItem(video)
+
+	local beginnersLabel = vgui.Create("DLabel", panel);
+	
+	beginnersLabel:SetText("Beginner's Guide:");
+	beginnersLabel:SetFont("manifestoContentHeader");
+	beginnersLabel:SizeToContents();
+	
+	panel.panelList:AddItem(beginnersLabel);
+end
+
 netstream.Hook("Archives", function(data)
 	Schema.archivesBookList = data;
 end);

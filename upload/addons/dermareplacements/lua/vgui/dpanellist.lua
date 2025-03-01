@@ -1,6 +1,5 @@
 
 local PANEL = {}
-PANEL.Hidden = false;
 AccessorFunc( PANEL, "m_bSizeToContents",		"AutoSize" )
 AccessorFunc( PANEL, "m_bStretchHorizontally",	"StretchHorizontally" )
 AccessorFunc( PANEL, "m_bNoSizing",				"NoSizing" )
@@ -24,6 +23,7 @@ function PANEL:Init()
 	self.pnlCanvas.InvalidateLayout = function() self:InvalidateLayout() end
 
 	self.Items = {}
+	self.XOffset = 0
 	self.YOffset = 0
 	self.m_fAnimTime = 0
 	self.m_fAnimEase = -1 -- means ease in out
@@ -71,24 +71,42 @@ function PANEL:EnableHorizontal( bHoriz )
 end
 
 function PANEL:EnableVerticalScrollbar()
-
 	if ( self.VBar ) then return end
 
 	self.VBar = vgui.Create( "DVScrollBar", self )
+end
+
+function PANEL:EnableHorizontalScrollbar()
+	if ( self.HBar ) then return end
 	
+	self.HBar = vgui.Create( "DHScrollBar", self )
 end
 
 function PANEL:HideScrollbar()
 	if (IsValid(self.VBar)) then
 		self.VBar:SetAlpha(0);
-		self.Hidden = true;
+		self.VBar.Enabled = false;
 	end;
 end;
 
 function PANEL:ShowScrollbar()
 	if (IsValid(self.VBar)) then
 		self.VBar:SetAlpha(255);
-		self.Hidden = false;
+		self.VBar.Enabled = true;
+	end;
+end;
+
+function PANEL:HideHorizontalScrollbar()
+	if (IsValid(self.HBar)) then
+		self.HBar:SetAlpha(0);
+		self.HBar.Enabled = false;
+	end;
+end;
+
+function PANEL:ShowHorizontalScrollbar()
+	if (IsValid(self.HBar)) then
+		self.HBar:SetAlpha(255);
+		self.HBar.Enabled = true;
 	end;
 end;
 
@@ -332,9 +350,7 @@ function PANEL:Rebuild()
 	end
 
 end
-
 function PANEL:OnMouseWheeled( dlta )
-
 	if ( self.VBar ) then
 		return self.VBar:OnMouseWheeled( dlta )
 	end
@@ -348,6 +364,12 @@ function PANEL:Paint( w, h )
 
 end
 
+function PANEL:OnHScroll( iOffset )
+
+	self.pnlCanvas:SetPos( iOffset, 0 )
+
+end
+
 function PANEL:OnVScroll( iOffset )
 
 	self.pnlCanvas:SetPos( 0, iOffset )
@@ -358,6 +380,7 @@ function PANEL:PerformLayout()
 
 	local Wide = self:GetWide()
 	local Tall = self.pnlCanvas:GetTall()
+	local XPos = 0
 	local YPos = 0
 
 	if ( !self.Rebuild ) then
@@ -373,20 +396,35 @@ function PANEL:PerformLayout()
 		self.VBar:SetUp( self:GetTall(), self.pnlCanvas:GetTall() ) -- Disables scrollbar if nothing to scroll
 		YPos = self.VBar:GetOffset()
 
-		if ( self.VBar.Enabled and !self.Hidden ) then Wide = Wide - 13 end
+		if ( self.VBar.Enabled) then Wide = Wide - 13 end
+
+	end
+	
+	if ( self.HBar ) then
+
+		self.HBar:SetPos( 0, self:GetTall() - 13 )
+		self.HBar:SetSize( self:GetWide(), 13 )
+		self.HBar:SetUp( self:GetWide(), self.pnlCanvas:GetWide() ) -- Disables scrollbar if nothing to scroll
+		HPos = self.HBar:GetOffset()
+
+		if ( self.HBar.Enabled) then Tall = Tall - 13 end
 
 	end
 
-	self.pnlCanvas:SetPos( 0, YPos )
+	self.pnlCanvas:SetPos( XPos, YPos )
 	self.pnlCanvas:SetWide( Wide )
+	self.pnlCanvas:SetTall( Tall )
 
 	self:Rebuild()
 
 	if ( self:GetAutoSize() ) then
-
+		self:SetWide( self.pnlCanvas:GetWide() )
 		self:SetTall( self.pnlCanvas:GetTall() )
 		self.pnlCanvas:SetPos( 0, 0 )
+	end
 
+	if ( self.HBar && !self:GetAutoSize() && Wide != self.pnlCanvas:GetWide() ) then
+		self.HBar:SetScroll( self.HBar:GetScroll() ) -- Make sure we are not too far down!
 	end
 
 	if ( self.VBar && !self:GetAutoSize() && Tall != self.pnlCanvas:GetTall() ) then
@@ -403,15 +441,16 @@ function PANEL:OnChildRemoved()
 end
 
 function PANEL:ScrollToChild( panel )
-
 	local x, y = self.pnlCanvas:GetChildPosition( panel )
 	local w, h = panel:GetSize()
 
+	x = x + w * 0.5
+	x = x - self:GetWide() * 0.5
 	y = y + h * 0.5
 	y = y - self:GetTall() * 0.5
 
 	self.VBar:AnimateTo( y, 0.5, 0, 0.5 )
-
+	self.HBar:AnimateTo( x, 0.5, 0, 0.5 )
 end
 
 function PANEL:SortByMember( key, desc )

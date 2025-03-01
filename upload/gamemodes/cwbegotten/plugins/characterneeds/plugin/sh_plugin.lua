@@ -13,6 +13,7 @@ Clockwork.kernel:IncludePrefixed("sv_plugin.lua");
 local COMMAND = Clockwork.command:New("Drink");
 COMMAND.tip = "Drink from surviving bodies of water. This should be done sparingly, as the waters are filthy and drinking from them will drain your sanity.";
 COMMAND.text = "<none>";
+COMMAND.important = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -202,6 +203,7 @@ COMMAND:Register();
 local COMMAND = Clockwork.command:New("Sleep");
 COMMAND.tip = "Try your best to sleep. Note that you will gain hunger and thirst, and that sleeping on the ground won't be as effective as sleeping in proper bedding.";
 COMMAND.text = "<none>";
+COMMAND.important = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)

@@ -65,10 +65,6 @@ function Clockwork.command:SetHidden(name, bHidden)
 		netstream.Start(nil, "HideCommand", {
 			index = Clockwork.kernel:GetShortCRC(uniqueID), hidden = bHidden
 		})
-	elseif (bHidden and hidden[uniqueID]) then
-		self:RemoveHelp(hidden[uniqueID])
-	elseif (!bHidden and stored[uniqueID]) then
-		self:AddHelp(stored[uniqueID])
 	end
 end
 
@@ -76,12 +72,6 @@ end
 function Clockwork.command:Register(data, name)
 	local realName = string.gsub(name, "%s", "")
 	local uniqueID = string.lower(realName)
-
-	if (CLIENT) then
-		if (stored[uniqueID]) then
-			self:RemoveHelp(stored[uniqueID])
-		end
-	end
 
 	-- We do that so the Command Interpreter can find the command
  	-- if it's original, non-aliased name has been used.
@@ -100,10 +90,6 @@ function Clockwork.command:Register(data, name)
 	stored[uniqueID].access = data.access or "b"
 	stored[uniqueID].arguments = data.arguments or 0
 	stored[uniqueID].uniqueID = uniqueID or "ERROR"
-
-	if (CLIENT) then
-		self:AddHelp(stored[uniqueID])
-	end
 
 	return stored[uniqueID]
 end
@@ -261,48 +247,4 @@ if (SERVER) then
 
 		netstream.Heavy(player, "HiddenCommands", hiddenCommands);
 	end)
-else
-	function Clockwork.command:AddHelp(commandTable)
-		if (_G["ClockworkClientsideBooted"]) then return end
-
-		local text = string.gsub(string.gsub(commandTable.text, ">", "&gt;"), "<", "&lt;")
-
-		if (!commandTable.helpID) then
-			if commandTable.access ~= "b" then
-				commandTable.helpID = Clockwork.directory:AddCode("Admin Commands", [[
-					<div class="cwTitleSeperator">
-						$command_prefix$]]..string.upper(commandTable.name)..[[
-					</div>
-					<div class="cwContentText">
-						<div class="cwCodeText">
-							<i>]]..text..[[</i>
-						</div>
-						]]..commandTable.tip..[[
-					</div>
-					<br>
-				]], true, commandTable.name, nil, true)
-			else
-				commandTable.helpID = Clockwork.directory:AddCode("Commands", [[
-					<div class="cwTitleSeperator">
-						$command_prefix$]]..string.upper(commandTable.name)..[[
-					</div>
-					<div class="cwContentText">
-						<div class="cwCodeText">
-							<i>]]..text..[[</i>
-						</div>
-						]]..commandTable.tip..[[
-					</div>
-					<br>
-				]], true, commandTable.name)
-			end
-		end
-	end
-
-	-- A function to remove a command's help.
-	function Clockwork.command:RemoveHelp(commandTable)
-		if (commandTable.helpID) then
-			Clockwork.directory:RemoveCode("Commands", commandTable.helpID)
-			commandTable.helpID = nil
-		end
-	end
 end

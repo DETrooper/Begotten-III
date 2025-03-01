@@ -9,6 +9,7 @@ local COMMAND = Clockwork.command:New("W");
 	COMMAND.flags = bit.bor(CMD_DEFAULT, CMD_DEATHCODE);
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"Whisper"};
+	COMMAND.important = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -41,6 +42,7 @@ local COMMAND = Clockwork.command:New("Y");
 	COMMAND.flags = bit.bor(CMD_DEFAULT, CMD_DEATHCODE);
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"Yell", "Shout"};
+	COMMAND.important = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -196,6 +198,7 @@ local COMMAND = Clockwork.command:New("Me");
 	COMMAND.flags = bit.bor(CMD_DEFAULT, CMD_DEATHCODE);
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"Perform"};
+	COMMAND.important = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -226,6 +229,7 @@ local COMMAND = Clockwork.command:New("It");
 	COMMAND.text = "<string Text>";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.arguments = 1;
+	COMMAND.important = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -291,6 +295,7 @@ COMMAND.text = "<string Message>";
 --COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"aHelp", "help"};
+COMMAND.important = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)

@@ -52,11 +52,235 @@ end
 	@param <DPanel> The directory panel.
 --]]
 function GM:ClockworkDirectoryRebuilt(panel)
-	for k, v in pairs(Clockwork.command.stored) do
-		if (!Clockwork.player:HasFlags(Clockwork.Client, v.access)) then
-			Clockwork.command:RemoveHelp(v)
-		else
-			Clockwork.command:AddHelp(v)
+
+end
+
+function GM:DirectoryOpenPage(panel, ...)
+	local args = {...};
+	local pageName = args[1];
+	
+	if pageName then
+		local colBlack = Color(0, 0, 0, 225);
+		local colRed = Color(200, 0, 0);
+		local colGreen = Color(0, 200, 0);
+		local panelList = panel.panelList;
+		local width = panelList:GetWide() - panelList:GetSpacing();
+	
+		if pageName == "Factions" then
+			for k, v in SortedPairsByMemberValue(Clockwork.faction.stored, "name") do
+				if !v.hidden and !v.disabled then
+					local factionInfo = vgui.Create("DPanel", panel);
+					local factionLogo = vgui.Create("DImage", factionInfo);
+					local factionTitle = vgui.Create("DLabel", factionInfo);
+					local factionDescriptionList = vgui.Create("DPanelList", factionInfo);
+					local factionDescription = vgui.Create("DLabel", factionInfo);
+					local subfactionText;
+					
+					factionInfo:SetSize(width, 180);
+					factionLogo:SetImage("begotten/ui/charactermenu/"..string.lower(v.name)..".png");
+					factionLogo:SetSize(170, 170);
+					factionLogo:SetPos(4, 4);
+					factionTitle:SetPos(172, 4);
+					factionTitle:SetFont("manifestoContentHeader");
+					factionTitle:SetText(v.name);
+					factionTitle:SetTextColor(colRed);
+					factionTitle:SizeToContents();
+					factionDescription:SetFont("manifestoContent");
+					factionDescription:SetText(string.gsub(v.description, "[\n\r]", ""));
+					factionDescription:SetWide(width - 200);
+					factionDescription:SetWrap(true);
+					factionDescription:SetAutoStretchVertical(true);
+					factionDescriptionList:SetPaintBackground(false);
+					factionDescriptionList:SetPos(176, 34);
+					factionDescriptionList:SetSize(width - 204, 110);
+					factionDescriptionList:AddItem(factionDescription);
+					factionDescriptionList:EnableVerticalScrollbar();
+					
+					if v.subfactions then
+						subfactionText = vgui.Create("RichText", factionInfo);
+						subfactionText:SetPos(172, factionDescriptionList:GetY() + factionDescriptionList:GetTall());
+						subfactionText:SetWide(width - 204);
+						subfactionText:SetVerticalScrollbarEnabled(false);
+						
+						subfactionText:InsertColorChange(220, 220, 220, 255)
+						subfactionText:AppendText("Subfactions: ");
+						
+						for i, subfactionTable in ipairs(v.subfactions) do
+							if subfactionTable.maps and !table.HasValue(subfactionTable.maps, game.GetMap()) then
+								continue;
+							end
+							
+							if i > 1 then
+								subfactionText:InsertColorChange(220, 220, 220, 255)
+								subfactionText:AppendText(", ");
+							end
+							
+							subfactionText:InsertColorChange(255, 20, 20, 255)
+							subfactionText:InsertClickableTextStart(v.name.."_subfaction_"..subfactionTable.name);
+							subfactionText:AppendText(subfactionTable.name);
+							subfactionText:InsertClickableTextEnd();
+						end
+						
+						function subfactionText:PerformLayout()
+							self:SetUnderlineFont("manifestoContent");
+							self:SetFontInternal("manifestoContent");
+						end
+						
+						function subfactionText:OnTextClicked(id)
+							Clockwork.directory.panel:OpenPage(id);
+						end
+						
+						subfactionText:SetHeight(40);
+					end
+					
+					factionInfo.Paint = function(panel, w, h)
+						draw.RoundedBox(8, 0, 0, w, h, Color(32, 0, 0, 245));
+					end
+					
+					panelList:AddItem(factionInfo);
+				end
+			end
+		elseif pageName == "Commands" then
+			local importantCommandList = vgui.Create("DPanelList", panel);
+			local adminCommandList;
+			local commandList = vgui.Create("DPanelList", panel);
+			
+			importantCommandList:HideScrollbar();
+			importantCommandList:SetPaintBackground(false);
+			commandList:SetPaintBackground(false);
+			
+			if Clockwork.Client:IsAdmin() then
+				adminCommandList = vgui.Create("DPanelList", panel);
+				adminCommandList:SetPaintBackground(false);
+				adminCommandList:HideScrollbar();
+			end
+			
+			commandList:HideScrollbar();
+			
+			local height = 0;
+			local height2 = 0;
+			local height3 = 0;
+			
+			for k, v in SortedPairs(Clockwork.command.stored) do
+				local commandHolder = vgui.Create("DPanel", panel);
+				
+				commandHolder:SetWide(width);
+				
+				commandHolder.Paint = function(panel, w, h)
+					draw.RoundedBox(2, 0, 0, w, h, colBlack);
+				end
+				
+				local commandTitle = vgui.Create("DLabel", commandHolder);
+				local commandDescription = vgui.Create("DLabel", commandHolder);
+				
+				commandTitle:SetWrap(true);
+				commandTitle:SetAutoStretchVertical(true);
+				commandTitle:SetWide(width - 8);
+				commandTitle:SetFont("manifestoContentSubtitle");
+				commandTitle:SetTextColor(colRed);
+				commandDescription:SetWide(width - 8);
+				commandDescription:SetWrap(true);
+				commandDescription:SetAutoStretchVertical(true);
+				commandDescription:SetFont("manifestoContent");
+				
+				if v.alias then
+					commandTitle:SetText("/"..v.name.." (/"..table.concat(v.alias, ", /")..")");
+				else
+					commandTitle:SetText("/"..v.name);
+				end
+				
+				commandTitle:SetX(4);
+				commandDescription:SetText(v.tip);
+				commandDescription:SetPos(4, commandTitle:GetY() + commandTitle:GetTall() + 2);
+				commandHolder:SetHeight(commandTitle:GetTall() + commandDescription:GetTall() + 2);
+				
+				if v.important then
+					importantCommandList:AddItem(commandHolder);
+					
+					height = height + commandHolder:GetTall();
+				elseif v.access ~= "b" then
+					if Clockwork.player:HasFlags(Clockwork.Client, v.access) then
+						adminCommandList:AddItem(commandHolder);
+						
+						height2 = height2 + commandHolder:GetTall();
+					end
+				else
+					commandList:AddItem(commandHolder);
+					
+					height3 = height3 + commandHolder:GetTall();
+				end
+			end
+
+			local importantCommandLabel = vgui.Create("DLabel", panel);
+			local adminCommandLabel;
+			local commandLabel = vgui.Create("DLabel", panel);
+			
+			importantCommandLabel:SetText("Important Commands");
+			importantCommandLabel:SetFont("manifestoContentHeader");
+
+			if Clockwork.Client:IsAdmin() then
+				adminCommandLabel = vgui.Create("DLabel", panel);
+				adminCommandLabel:SetText("Admin Commands");
+				adminCommandLabel:SetFont("manifestoContentHeader");
+			end
+			
+			commandLabel:SetText("Other Commands");
+			commandLabel:SetFont("manifestoContentHeader");
+			
+			panelList:AddItem(importantCommandLabel);
+			panelList:AddItem(importantCommandList);
+			importantCommandList:SetSize(width, height);
+			
+			if Clockwork.Client:IsAdmin() then
+				panelList:AddItem(adminCommandLabel);
+				panelList:AddItem(adminCommandList);
+				adminCommandList:SetSize(width, height2);
+			end
+			
+			panelList:AddItem(commandLabel);
+			panelList:AddItem(commandList);
+			commandList:SetSize(width, height3);
+			
+			panelList:Rebuild();
+		elseif pageName == "Flags" then
+			for k, v in SortedPairs(Clockwork.flag.stored) do
+				local flagHolder = vgui.Create("DPanel", panel);
+				
+				flagHolder:SetWide(width);
+				
+				flagHolder.Paint = function(panel, w, h)
+					draw.RoundedBox(2, 0, 0, w, h, colBlack);
+				end
+				
+				local flagTitle = vgui.Create("DLabel", flagHolder);
+				local flagDescription = vgui.Create("DLabel", flagHolder);
+				
+				flagTitle:SetWrap(true);
+				flagTitle:SetAutoStretchVertical(true);
+				flagTitle:SetWide(width - 8);
+				flagTitle:SetFont("manifestoContentSubtitle");
+				
+				if Clockwork.player:HasFlags(Clockwork.Client, k) then
+					flagTitle:SetTextColor(colGreen);
+				else
+					flagTitle:SetTextColor(colRed);
+				end
+				
+				flagDescription:SetWide(width - 8);
+				flagDescription:SetWrap(true);
+				flagDescription:SetAutoStretchVertical(true);
+				flagDescription:SetFont("manifestoContent");
+				
+				flagTitle:SetText("("..k..") "..v.name);
+				flagTitle:SetX(4);
+				flagDescription:SetText(v.details);
+				flagDescription:SetPos(4, flagTitle:GetY() + flagTitle:GetTall() + 2);
+				flagHolder:SetHeight(flagTitle:GetTall() + flagDescription:GetTall() + 2);
+				
+				panelList:AddItem(flagHolder);
+			end
+			
+			panelList:Rebuild();
 		end
 	end
 end
@@ -366,18 +590,10 @@ function GM:ClockworkInitialized()
 
 	Clockwork.setting:AddSettings()
 
-	Clockwork.directory:SetCategoryTip("Admin", "Contains admin relevant information. Does not show to players.")
-	Clockwork.directory:SetCategoryTip("Admin Commands", "Contains a list of admin commands and their syntax.")
-	Clockwork.directory:SetCategoryTip("Flags", "Contains a list of character flags and their usage.")
-	Clockwork.directory:SetCategoryTip("Commands", "Contains a list of commands and their syntax.")
-
-	Clockwork.directory:AddCode("Admin", [[
-		
-	]], true, "Admin")
-
-	Clockwork.directory:AddCategory("Admin Commands", "Admin", true)
-	--Clockwork.directory:AddCategory("Plugins", "Admin", true)
-	Clockwork.directory:AddCategory("Flags", "Admin", true)
+	Clockwork.directory:AddCategory("Flags", "Character flags can be enabled to provide special effects.", true)
+	Clockwork.directory:AddCategory("Commands", "Commands are used to execute specific actions.")
+	Clockwork.directory:AddCategory("Factions", "Factions are an integral part of gameplay, your presence or absence in one will greatly affect your playstyle and experience.")
+	Clockwork.directory:AddCategory("Items", "Items have a large variety of uses. Some items can be equipped, others used as tools or in crafting, or otherwise consumed to provide some benefit.")
 
 	_G["ClockworkClientsideBooted"] = true
 end
@@ -2619,7 +2835,7 @@ function GM:GetProgressBarInfo()
 				if (Clockwork.Client:GetRagdollState() == RAGDOLL_FALLENOVER) then
 					return {text = "You are regaining stability.", percentage = percentage, flash = percentage < 10}
 				else
-					return {text = "You are regaining conciousness.", percentage = percentage, flash = percentage < 10}
+					return {text = "You are regaining consciousness.", percentage = percentage, flash = percentage < 10}
 				end
 			else
 				local info = hook.Run("GetProgressBarInfoAction", action, percentage);

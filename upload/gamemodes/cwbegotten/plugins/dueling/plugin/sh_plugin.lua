@@ -11,7 +11,7 @@ Clockwork.kernel:IncludePrefixed("sv_hooks.lua");
 local COMMAND = Clockwork.command:New("GetDuelDebug");
 	COMMAND.tip = "Get debug information about active duels and matchmaking.";
 	COMMAND.access = "a";
-	COMMAND.alias = "DuelDebug";
+	COMMAND.alias = {"DuelDebug"};
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

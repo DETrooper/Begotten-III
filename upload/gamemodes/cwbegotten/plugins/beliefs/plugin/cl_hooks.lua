@@ -16,6 +16,10 @@ local animalModels = {
 	"models/begotten/creatures/wolf.mdl",
 };
 
+function cwBeliefs:ClockworkInitialized()
+	Clockwork.directory:AddCategory("Beliefs", "Beliefs are the primary means of progression in Begotten III. Faith (experience) can be earned from a variety of sources, such as dealing damage, consuming items, crafting and performing rituals, or residually over time in dangerous areas. Once enough faith has concentrated, your character will advance to their next Sacrament Level, granting the use of an Epiphany (skill point). Epiphanies can then be spent on unlocking beliefs.\n\nThere are several belief trees, each with different purposes and unique belief tree finishers. Belief trees or individual beliefs may be locked depending on several factors, such as the faith or subfaith of your character, their faction or subfaction, and traits or other beliefs taken.")
+end
+
 function cwBeliefs:PlayerCharacterInitialized(data)
 	-- Hide or display Kinisger darkwhisper.
 	if Clockwork.Client:GetNetVar("subfaction") == "Kinisger" then

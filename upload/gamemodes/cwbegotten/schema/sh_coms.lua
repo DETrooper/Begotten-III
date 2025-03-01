@@ -54,6 +54,7 @@ end
 
 local COMMAND = Clockwork.command:New("Discord");
 	COMMAND.tip = "Open a redirect to the server's Discord.";
+	COMMAND.important = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -485,6 +486,7 @@ local COMMAND = Clockwork.command:New("Promote")
 	COMMAND.arguments = 1;
 	COMMAND.optionalArguments = 1;
 	COMMAND.types = {"Player", "Rank"}
+	COMMAND.important = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -1585,6 +1587,7 @@ local COMMAND = Clockwork.command:New("Proclaim");
 	COMMAND.tip = "Proclaim your words with the attention they deserve if you are sufficiently noble stature.";
 	COMMAND.text = "<string Text>";
 	COMMAND.arguments = 1;
+	COMMAND.important = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -1883,6 +1886,7 @@ local COMMAND = Clockwork.command:New("ProclaimMe");
 	COMMAND.text = "<string Text>";
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"MeProclaim"};
+	COMMAND.important = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -2804,6 +2808,7 @@ COMMAND:Register();
 local COMMAND = Clockwork.command:New("HellJaunt");
 	COMMAND.tip = "Return to Hell using dark magic if you are a Child of Satan, although this act will leave you temporarily vulnerable to the influence of demons and will thus incur extreme corruption. Anyone held in your hands will also be teleported. You cannot helljaunt while overencumbered.";
 	COMMAND.flags = CMD_DEFAULT;
+	COMMAND.important = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -3060,6 +3065,7 @@ COMMAND:Register();
 local COMMAND = Clockwork.command:New("HellTeleport");
 	COMMAND.tip = "Return to Hell using dark magic if you are a Child of Satan if you are near Arch of Perdition or the Pillars of Creation, though this will take time. Anyone close to you or held in your hands will also be teleported.";
 	COMMAND.flags = CMD_DEFAULT;
+	COMMAND.important = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

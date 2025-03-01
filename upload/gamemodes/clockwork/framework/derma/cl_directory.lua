@@ -5,221 +5,252 @@
 	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
 --]]
 
+surface.CreateFont("manifestoLogoFont", {
+	font		= "Immortal",
+	size		= 24,
+	weight		= 600,
+	antialiase	= true,
+	additive 	= false
+});
+
+surface.CreateFont("manifestoCategoryFont", {
+	font		= "Dominican Small Caps",
+	size		= 24,
+	weight		= 100,
+	antialias 	= true,
+	shadow 		= false
+});
+
+surface.CreateFont("manifestoBreadcrumbs", {
+	font		= "Day Roman",
+	size		= 24,
+	weight		= 500,
+	antialias 	= true,
+	shadow 		= true
+});
+
+surface.CreateFont("manifestoBreadcrumbsURL", {
+	font		= "Day Roman",
+	size		= 24,
+	weight		= 500,
+	antialias 	= true,
+	shadow 		= true,
+	underline = true,
+});
+
+Clockwork.fonts:Add("manifestoContentHeader", {
+	font		= "Day Roman",
+	size		= 32,
+	weight		= 600,
+	antialiase	= true,
+	additive 	= false,
+	extended 	= true
+});
+
+Clockwork.fonts:Add("manifestoContentSubtitle", {
+	font		= "Day Roman",
+	size		= 24,
+	weight		= 600,
+	antialiase	= true,
+	additive 	= false,
+	extended 	= true
+});
+
+Clockwork.fonts:Add("manifestoContent", {
+	font		= "Day Roman",
+	size		= 18,
+	weight		= 600,
+	antialiase	= true,
+	additive 	= false,
+	extended 	= true
+});
+
 local PANEL = {};
+local bgImage = Material("begotten/ui/oilcanvas.png")
 
 -- Called when the panel is initialized.
 function PANEL:Init()
 	self:SetSize(Clockwork.menu:GetWidth(), Clockwork.menu:GetHeight());
-	
-	self.treeNode = vgui.Create("DTree", self);
-	self.treeNode:SetPadding(2);
-	self.htmlPanel = vgui.Create("HTML", self);
-	
-	Clockwork.directory.panel = self;
-	Clockwork.directory.panel.categoryHistory = {};
-	
-	self:Rebuild();
-end;
 
--- A function to show a directory category.
-function PANEL:ShowCategory(category)
-	if (!category) then
-		local masterFormatting = Clockwork.directory:GetMasterFormatting();
-		local finalCode = [[
-			<div class="auraInfoTitle">SELECT A CATEGORY</div>
-			<div class="auraInfoText">
-				Some categories may only be available to users with special priviledges.
-			</div>
-		]];
-		
-		if (masterFormatting) then
-			finalCode = Clockwork.kernel:Replace(masterFormatting, "{information}", finalCode);
-		end;
-		
-		finalCode = Clockwork.kernel:Replace(finalCode, "[category]", "Directory");
-		finalCode = Clockwork.kernel:Replace(finalCode, "{category}", "DIRECTORY");
-		finalCode = Clockwork.kernel:ParseData(finalCode);
-		
-		self.htmlPanel:SetHTML(finalCode);
-	else
-		local categoryTable = Clockwork.directory:GetCategory(category);
-		
-		if (categoryTable) then
-			if (!categoryTable.isHTML) then
-				local newPageData = {};
-				
-				for k, v in pairs(categoryTable.pageData) do
-					newPageData[#newPageData + 1] = v;
-				end;
-				
-				local sorting = Clockwork.directory:GetCategorySorting(category);
-				
-				if (sorting) then
-					table.sort(newPageData, sorting);
-				end;
-				
-				if (table.Count(newPageData) > 0) then
-					local masterFormatting = Clockwork.directory:GetMasterFormatting();
-					local formatting = Clockwork.directory:GetCategoryFormatting(category);
-					local firstKey = true;
-					local finalCode = "";
-				
-					for k, v in pairs(newPageData) do
-						local htmlCode = v.htmlCode;
-						
-						if (type(v.Callback) == "function") then
-							htmlCode = v.Callback(htmlCode, v.sortData);
-						end;
-						
-						if (htmlCode and htmlCode != "") then
-							if (!firstKey) then
-								if ((!formatting or !formatting.noLineBreaks) and !v.noLineBreak) then
-									finalCode = finalCode.."<br>"..htmlCode;
-								else
-									finalCode = finalCode..htmlCode;
-								end;
-							else
-								finalCode = htmlCode;
-							end;
-							
-							firstKey = false;
-						end;
-					end;
-					
-					if (formatting) then
-						finalCode = Clockwork.kernel:Replace(formatting.htmlCode, "{information}", finalCode);
-					end;
-					
-					if (masterFormatting) then
-						finalCode = Clockwork.kernel:Replace(masterFormatting, "{information}", finalCode);
-					end;
-					
-					finalCode = Clockwork.kernel:Replace(finalCode, "[category]", category);
-					finalCode = Clockwork.kernel:Replace(finalCode, "{category}", string.upper(category));
-					finalCode = Clockwork.kernel:ParseData(finalCode);
-					
-					self.htmlPanel:SetHTML(finalCode);
-				end;
-			elseif (!categoryTable.isWebsite) then
-				local masterFormatting = Clockwork.directory:GetMasterFormatting();
-				local formatting = Clockwork.directory:GetCategoryFormatting(category);
-				local finalCode = categoryTable.pageData;
-				
-				if (formatting) then
-					finalCode = Clockwork.kernel:Replace(formatting.htmlCode, "{information}", finalCode);
-				end;
-				
-				if (masterFormatting) then
-					finalCode = Clockwork.kernel:Replace(masterFormatting, "{information}", finalCode);
-				end;
-				
-				finalCode = Clockwork.kernel:Replace(finalCode, "[category]", category);
-				finalCode = Clockwork.kernel:Replace(finalCode, "{category}", string.upper(category));
-				finalCode = Clockwork.kernel:ParseData(finalCode);
-				
-				self.htmlPanel:SetHTML(finalCode);
-			else
-				self.htmlPanel:OpenURL(categoryTable.pageData);
-			end;
-		end;
-	end;
-end;
-
--- A function to clear the nodes.
-function PANEL:ClearNodes()
-	if (self.treeNode.Items) then
-		for k, v in pairs(self.treeNode.Items) do
-			if (IsValid(v)) then v:Remove(); end;
-		end;
-	end;
+	local manifestoPanel = vgui.Create("DPanel", self);
 	
-	self.treeNode.m_pSelectedItem = nil;
-	self.treeNode.Items = {};
-end;
+	manifestoPanel:SetSize(self:GetWide() - 8, self:GetTall() - 7);
+	manifestoPanel:SetPos(4, 0);
+	
+	self.manifestoPanel = manifestoPanel;
+	
+	local header = vgui.Create("DPanel", manifestoPanel);
+	
+	header:SetSize(manifestoPanel:GetWide(), 150);
+	
+	header.Paint = function(panel, w, h)
+		surface.SetDrawColor(0, 0, 0, 252);
+		surface.DrawRect(0, 0, w, h);
+	end
+	
+	local logoHolder = vgui.Create("DPanel", header);
+	logoHolder:SetSize(250, 100);
+	logoHolder:CenterHorizontal();
+	logoHolder:CenterVertical(0.48);
+	
+	local manifestoLogo = vgui.Create("DImage", logoHolder);
+	
+	manifestoLogo:SetSize(250, 65);
+	manifestoLogo:SetImage("begotten/ui/manifesto/Site-logo.png");
+	manifestoLogo:CenterHorizontal();
+	
+	local manifestoTitle = vgui.Create("DLabel", logoHolder);
+	
+	manifestoTitle:SetText("Manifesto");
+	manifestoTitle:SetFont("manifestoLogoFont");
+	manifestoTitle:SetTextColor(Color(190, 57, 64));
+	manifestoTitle:SizeToContents();
+	manifestoTitle:CenterHorizontal();
+	manifestoTitle:SetY(66);
+	
+	local logoButton = vgui.Create("DButton", header);
+	
+	logoButton:SetSize(logoHolder:GetWide(), logoHolder:GetTall());
+	logoButton:SetPos(logoHolder:GetX(), logoHolder:GetY());
+	logoButton:SetAlpha(0);
+	
+	logoButton.DoClick = function()
+		Clockwork.directory.panel:OpenPage(nil); -- Open the home page.
+	end
+	
+	local headerButtonList = vgui.Create("DPanelList", header);
+	local width = 0;
+	
+	headerButtonList:EnableHorizontal(true);
+	headerButtonList:SetSpacing(16);
+	headerButtonList:SetY(header:GetTall() - 32);
+	headerButtonList:SetPaintBackground(false);
 
-local CW_REBUILDING_DIRECTORY;
-
--- A function to rebuild the panel.
-function PANEL:Rebuild()
-	if (!CW_REBUILDING_DIRECTORY) then
-		self:ClearNodes();
-		
-		CW_REBUILDING_DIRECTORY = true;
-			Clockwork.plugin:Call("ClockworkDirectoryRebuilt", self);
-		CW_REBUILDING_DIRECTORY = nil;
-		
-		Clockwork.kernel:ValidateTableKeys(Clockwork.directory.stored);
-		
-		table.sort(Clockwork.directory.stored, function(a, b)
-			return a.category < b.category;
-		end);
-		
-		local nodeTable = {};
-		
-		for k, v in pairs(Clockwork.directory.stored) do
-			if (!v.parent) and (!v.adminOnly or Clockwork.Client:IsAdmin()) then
-				nodeTable[v.category] = self.treeNode:AddNode(v.category);
-				nodeTable[v.category]:SetExpanded(true, true);
-			end;
-		end;
-		
-		for k, v in pairs(Clockwork.directory.stored) do
-			if (v.adminOnly and !Clockwork.Client:IsAdmin()) then continue end;
+	for k, v in SortedPairs(Clockwork.directory.stored) do
+		if !v.adminOnly or Clockwork.Client:IsAdmin() then
+			local button = vgui.Create("cwLabelButton", header);
 			
-			if (v.parent and nodeTable[v.parent]) then
-				nodeTable[v.category] = nodeTable[v.parent]:AddNode(v.category);
-			elseif (!nodeTable[v.category]) then
-				nodeTable[v.category] = self.treeNode:AddNode(v.category);
-				nodeTable[v.category]:SetExpanded(true, true);
-			end;
+			button:SetFont("manifestoCategoryFont");
+			button:SetText(k);
+			button:SizeToContents();
 			
-			if (!nodeTable[v.category].Initialized) then
-				local friendlyName = Clockwork.directory:GetFriendlyName(v.category);
-				local tip = Clockwork.directory:GetCategoryTip(v.category);
-				
-				if (tip) then
-					nodeTable[v.category]:SetToolTip(tip);
-				end;
-				
-				nodeTable[v.category].Initialized = true;
-				nodeTable[v.category]:SetText(friendlyName);
-				nodeTable[v.category].DoClick = function(node)
-					for k2, v2 in pairs(Clockwork.directory.stored) do
-						if (v2.category == v.category and (v2.isWebsite
-						or v2.isHTML or #v2.pageData > 0)) then
-							self.currentCategory = v.category;
-							self:ShowCategory(self.currentCategory);
-							
-							break;
-						end;
-					end;
-				end;
-			end;
-		end;
+			button.DoClick = function()
+				Clockwork.directory.panel:OpenPage(button:GetText());
+			end
+			
+			width = width + button:GetWide() + 16;
+			
+			headerButtonList:AddItem(button);
+		end
+	end
+	
+	headerButtonList:SetWide(width);
+	headerButtonList:SetTall(30);
+	headerButtonList:CenterHorizontal();
+	
+	self.header = header;
+	
+	local body = vgui.Create("DPanel", self);
+	
+	body:SetSize(self:GetWide(), self:GetTall() - header:GetTall());
+	body:SetY(header:GetTall());
+	
+	local bodyList = vgui.Create("DPanelList", body);
+	
+	bodyList:SetSpacing(4);
+	bodyList:SetPadding(8);
+	bodyList:SetSize(body:GetWide(), body:GetTall());
+	bodyList:SetPaintBackground(false);
+	bodyList:EnableHorizontal(false);
+	bodyList:EnableVerticalScrollbar(true);
+	
+	body.panelList = bodyList;
+	
+	--[[local mainMenuPanelList = vgui.Create("DPanelList", body);
+	local width = 0;
+	
+	for i, v in ipairs(buttonList) do
+		local button = vgui.Create("DImageButton", body);
 		
-		self:ShowCategory(self.currentCategory);
-	end;
-end;
-
--- Called when the layout should be performed.
-function PANEL:PerformLayout()
-	self:SetSize(self:GetWide(), ScrH() * 0.75);
-	self.treeNode:SetPos(4, 28);
-	self.treeNode:SetSize(self:GetWide() * 0.2, self:GetTall() - 36);
-	self.htmlPanel:SetPos((self:GetWide() * 0.2) + 8, 28);
-	self.htmlPanel:SetSize((self:GetWide() * 0.8) - 16, self:GetTall() - 36);
+		button:SetImage("begotten/ui/charactermenu/characterframe.png");
+		button:SetSize(160, 256);
+		
+		width = width + button:GetWide() + 30;
+		
+		mainMenuPanelList:AddItem(button);
+	end
+	
+	mainMenuPanelList:EnableHorizontal(true);
+	mainMenuPanelList:EnableHorizontalScrollbar();
+	mainMenuPanelList:SetSpacing(30);
+	mainMenuPanelList:SetSize(730, 266);
+	mainMenuPanelList:CenterHorizontal();
+	mainMenuPanelList:SetY(24);
+	mainMenuPanelList:SetPaintBackground(false);]]--
+	
+	self.body = body;
+	
+	local hbar = vgui.Create("DImage", manifestoPanel);
+	hbar:SetPos(0, header:GetTall() - 1);
+	hbar:SetSize(manifestoPanel:GetWide(), 3);
+	hbar:SetImage("begotten/ui/hbar.png");
+	
+	self:OpenPage(nil); -- Open the home page.
+	
+	Clockwork.directory.panel = self
 end;
 
 -- Called when the panel is painted.
 function PANEL:Paint(w, h)
 	derma.SkinHook("Paint", "Frame", self, w, h);
+	surface.SetDrawColor(255, 255, 255, 255)
+	surface.SetMaterial(bgImage)
+	surface.DrawTexturedRect(4, 4, w - 8, h - 8)
 	
 	return true;
 end;
 
--- Called each frame.
-function PANEL:Think()
-	self:InvalidateLayout(true);
-end;
+function PANEL:OpenPage(...)
+	local args = {...};
+
+	for k, panel in pairs(self.body.panelList.Items) do
+		panel:Remove();
+	end
+	
+	self.body.panelList:CleanList();
+	
+	if !args[1] or args[1] == "" then
+		Schema:DirectoryOpenHomePage(self.body);
+	else
+		local pathText = vgui.Create("RichText", self.body);
+		
+		pathText:SetWide(self.body.panelList:GetWide() - self.body.panelList:GetPadding());
+		pathText:SetVerticalScrollbarEnabled(false);
+		
+		pathText:InsertColorChange(255, 20, 20, 255)
+		pathText:InsertClickableTextStart("");
+		pathText:AppendText("Home")
+		pathText:InsertClickableTextEnd();
+		
+		pathText:InsertColorChange(220, 220, 220, 255)
+		pathText:AppendText(" > ");
+		pathText:AppendText(args[1]);
+		
+		function pathText:PerformLayout()
+			self:SetUnderlineFont("manifestoBreadcrumbsURL");
+			self:SetFontInternal("manifestoBreadcrumbs");
+		end
+		
+		function pathText:OnTextClicked(id)
+			Clockwork.directory.panel:OpenPage(id);
+		end
+		
+		pathText:SizeToContentsY();
+		
+		self.body.panelList:AddItem(pathText);
+		
+		hook.Run("DirectoryOpenPage", self.body, ...);
+	end
+end
 
 vgui.Register("cwDirectory", PANEL, "EditablePanel");

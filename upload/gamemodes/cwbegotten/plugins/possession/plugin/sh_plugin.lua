@@ -486,7 +486,7 @@ end;
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("PlyMakeFreakout");
-COMMAND.tip = "Make a possessed player go fucking crazy!!! Lowers the sanity of nearby players. Lasts 30 seconds and then knocks the player unconcious, though possessing them prior will abort the latter behavior. Optional argument to ignore the trait requirement.";
+COMMAND.tip = "Make a possessed player go fucking crazy!!! Lowers the sanity of nearby players. Lasts 30 seconds and then knocks the player unconscious, though possessing them prior will abort the latter behavior. Optional argument to ignore the trait requirement.";
 COMMAND.text = "<string Name> [bool IgnoreTrait]";
 COMMAND.access = "s";
 COMMAND.arguments = 1;

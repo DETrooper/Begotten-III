@@ -529,7 +529,7 @@ local COMMAND = Clockwork.command:New("SetClass");
 	end;
 COMMAND:Register();
 
-local COMMAND = Clockwork.command:New("OrderShipment");
+--[[local COMMAND = Clockwork.command:New("OrderShipment");
 	COMMAND.tip = "Order an item shipment at your target position.";
 	COMMAND.text = "<string UniqueID>";
 	COMMAND.flags = bit.bor(CMD_DEFAULT, CMD_FALLENOVER);
@@ -604,7 +604,7 @@ local COMMAND = Clockwork.command:New("OrderShipment");
 			Clockwork.player:Notify(player, "You need another "..Clockwork.kernel:FormatCash(amount, nil, true).."!");
 		end;
 	end;
-COMMAND:Register();
+COMMAND:Register();]]--
 
 local COMMAND = Clockwork.command:New("GiveCoin");
 COMMAND.tip = "Give coin to a target character.";
@@ -612,6 +612,7 @@ COMMAND.text = "<number Coin>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"GiveTokens", "GiveCash"}
+COMMAND.important = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -752,6 +753,7 @@ local COMMAND = Clockwork.command:New("DropCoin");
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"DropTokens", "DropCash"};
+	COMMAND.important = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -793,6 +795,7 @@ local COMMAND = Clockwork.command:New("CharPhysDesc");
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.arguments = 0;
 	COMMAND.alias = {"PhysDesc", "SetPhysDesc", "CharDesc"};
+	COMMAND.important = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -862,6 +865,7 @@ local COMMAND = Clockwork.command:New("CharFallOver");
 	COMMAND.flags = CMD_DEFAULT;
 	--COMMAND.optionalArguments = 1;
 	COMMAND.alias = {"Fallover", "PlyFallover"};
+	COMMAND.important = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
