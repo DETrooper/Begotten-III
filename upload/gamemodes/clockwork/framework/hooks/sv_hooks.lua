@@ -95,10 +95,17 @@ function GM:OnLuaError(errorText, realm, stack)
 		return
 	end
 
-	local logText = os.date("%X") .. " - " .. string.gsub(errorText, "\n", "")
-	file.Append("clockwork/lua_errors/" .. os.date("%d-%m-%y") .. ".txt", logText .. "\n" .. table.ToString(stack, "", true) .. "\n")
-	file.Append("clockwork/lua_errors/" .. os.date("%d-%m-%y") .. "-simple.txt", logText .. "\n")
+	local tbl = {}
+
+	tbl["error"] = errorText
+	tbl["time"] = os.date("%X")
+	tbl["stack"] = stack
+
+	local logText = util.TableToJSON(tbl, true) .. "\n"
+	file.Append("clockwork/lua_errors/" .. os.date("%d-%m-%y") .. ".json", logText)
+	file.Append("clockwork/lua_errors/" .. os.date("%d-%m-%y") .. "-simple.txt", tbl["time"] .. " - " ..  errorText .. "\n")
 end
+
 
 function GM:OnePlayerSecond(player, curTime, infoTable)
 	local plyTab = player:GetTable();
