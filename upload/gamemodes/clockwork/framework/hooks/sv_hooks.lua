@@ -3720,7 +3720,7 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 				end
 
 				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..inflictor..", killing them!")
-				cwDiscordLog:KillLog(player, attacker, damageInfo:GetDamage(), " with "..inflictor);
+				hook.Run("KillLog", player, attacker, damageInfo:GetDamage(), " with "..inflictor);
 			
 			elseif IsValid(weapon) then
 				local inflictor;
@@ -3734,30 +3734,30 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 				end
 				
 				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..inflictor..", killing them!")
-				cwDiscordLog:KillLog(player, attacker, damageInfo:GetDamage(), " with "..inflictor);
+				hook.Run("KillLog", player, attacker, damageInfo:GetDamage(), " with "..inflictor);
 			
 			else
 				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name()..", killing them!")
-				cwDiscordLog:KillLog(player, attacker, damageInfo:GetDamage(), "");
+				hook.Run("KillLog", player, attacker, damageInfo:GetDamage(), "");
 			
 			end
 		else
 			if (damageInfo) then
 				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:GetClass().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name()..", killing them!")
-				cwDiscordLog:KillLog(player, attacker, damageInfo:GetDamage(), "");
+				hook.Run("KillLog", player, attacker, damageInfo:GetDamage(), "");
 			
 			end
 
 		end
 	elseif IsValid(inflictor) then
 		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, inflictor:GetClass().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name()..", killing them!")
-		hook.Run("DamageLog", player, inflictor, damageInfo:GetDamage(), "");
+		hook.Run("KillLog", player, inflictor, damageInfo:GetDamage(), "");
 	elseif damageInfo:IsFallDamage() then
 		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from fall damage, killing them!")
-		cwDiscordLog:KillLog(player, false, damageInfo:GetDamage(), " from fall damage");
+		hook.Run("KillLog", player, false, damageInfo:GetDamage(), " from fall damage");
 	else
 		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from an unknown source, killing them!")
-		cwDiscordLog:KillLog(player, false, damageInfo:GetDamage(), " from an unknown source");
+		hook.Run("KillLog", player, false, damageInfo:GetDamage(), " from an unknown source");
 	end
 end
 
