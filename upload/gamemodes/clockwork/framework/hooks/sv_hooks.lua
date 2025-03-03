@@ -87,7 +87,14 @@ function GM:Initialize()
 	hook.Run("ClockworkInitialized")
 end
 
+Clockwork.config:Add("clockwork_log_errors", false)
+
 function GM:OnLuaError(errorText, realm, stack)
+
+	if not Clockwork.config:Get("clockwork_log_errors"):Get() then
+		return
+	end
+
 	local logText = os.date("%X") .. " - " .. string.gsub(errorText, "\n", "")
 	file.Append("clockwork/lua_errors/" .. os.date("%d-%m-%y") .. ".txt", logText .. "\n" .. table.ToString(stack, "", true) .. "\n")
 	file.Append("clockwork/lua_errors/" .. os.date("%d-%m-%y") .. "-simple.txt", logText .. "\n")

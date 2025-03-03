@@ -5,6 +5,8 @@
 	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
 --]]
 
+Clockwork.config:AddToSystem("Error logging", "clockwork_log_errors", "Whether or not to log errors to disk");
+
 function GM:OnUndo(name, customText)
 	if (!customText) then
 		customText = "UNDONE "..name;
