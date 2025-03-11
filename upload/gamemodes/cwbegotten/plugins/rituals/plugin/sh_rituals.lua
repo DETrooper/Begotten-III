@@ -1109,9 +1109,18 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil_target");
 	RITUAL.takeCatalysts = false;
 	
 	function RITUAL:OnPerformed(player)
-		local target = player:GetEyeTraceNoCursor().Entity;
+		local ent = player:GetEyeTraceNoCursor().Entity;
+		local target;
 		
-		if IsValid(target) and target:IsPlayer() then
+		if IsValid(ent) then
+			if ent:IsPlayer() then
+				target = ent;
+			elseif Clockwork.entity:IsPlayerRagdoll(ent) then
+				target = Clockwork.entity:GetPlayer(ent);
+			end
+		end
+		
+		if target then
 			if target:Alive() then
 				--if target:GetFaith() ~= "Faith of the Dark" then
 				if target:GetFaction() ~= "Children of Satan" then
@@ -1147,15 +1156,26 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil_target");
 		else
 			Schema:EasyText(player, "firebrick", "You must look at a valid character!");
 		end
+		
+		Schema:EasyText(player, "firebrick", "You must look at a valid character!");
 
 		return false;
 	end;
 	function RITUAL:OnFail(player)
 	end;
 	function RITUAL:StartRitual(player)
-		local target = player:GetEyeTraceNoCursor().Entity;
+		local ent = player:GetEyeTraceNoCursor().Entity;
+		local target;
 		
-		if IsValid(target) and target:IsPlayer() then
+		if IsValid(ent) then
+			if ent:IsPlayer() then
+				target = ent;
+			elseif Clockwork.entity:IsPlayerRagdoll(ent) then
+				target = Clockwork.entity:GetPlayer(ent);
+			end
+		end
+		
+		if target then
 			if target:Alive() then
 				--if target:GetFaith() ~= "Faith of the Dark" then
 				if target:GetFaction() ~= "Children of Satan" then
@@ -1325,9 +1345,18 @@ RITUAL = cwRituals.rituals:New("regrowth_target");
 	function RITUAL:OnFail(player)
 	end;
 	function RITUAL:StartRitual(player)
-		local target = player:GetEyeTraceNoCursor().Entity;
+		local ent = player:GetEyeTraceNoCursor().Entity;
+		local target;
 		
-		if IsValid(target) and target:IsPlayer() then
+		if IsValid(ent) then
+			if ent:IsPlayer() then
+				target = ent;
+			elseif Clockwork.entity:IsPlayerRagdoll(ent) then
+				target = Clockwork.entity:GetPlayer(ent);
+			end
+		end
+		
+		if target then
 			if target:Alive() then
 				if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
 					return true;
@@ -1344,9 +1373,18 @@ RITUAL = cwRituals.rituals:New("regrowth_target");
 		return false;
 	end;
 	function RITUAL:EndRitual(player)
-		local target = player:GetEyeTraceNoCursor().Entity;
+		local ent = player:GetEyeTraceNoCursor().Entity;
+		local target;
 		
-		if IsValid(target) and target:IsPlayer() then
+		if IsValid(ent) then
+			if ent:IsPlayer() then
+				target = ent;
+			elseif Clockwork.entity:IsPlayerRagdoll(ent) then
+				target = Clockwork.entity:GetPlayer(ent);
+			end
+		end
+		
+		if target then
 			if target:Alive() then
 				if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
 					--local max_poise = target:GetMaxPoise();
