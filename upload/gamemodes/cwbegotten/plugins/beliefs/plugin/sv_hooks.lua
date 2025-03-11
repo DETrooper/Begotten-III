@@ -1417,7 +1417,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 				end
 			end
 			
-			if not attacker.opponent and entity:CharPlayTime() > config.GetVal("min_xp_charplaytime") and attacker ~= entity then
+			if not attacker.opponent and (entity:CharPlayTime() > config.GetVal("min_xp_charplaytime") or entity:IsAdmin()) and attacker ~= entity then
 				if !cwRituals or (cwRituals and !entTab.scornificationismActive) then
 					local attackerFaction = attacker:GetFaction();
 					local attackerFactionTable = Clockwork.faction:FindByID(attackerFaction);
@@ -1431,7 +1431,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 						end
 						
 						-- Make sure players can't get XP from damaging the same faction as them!
-						if (attackerFaction ~= playerFaction and (!attackerFactionTable.alliedfactions or !table.HasValue(attackerFactionTable.alliedfactions, playerFaction))) or attackerFaction == "Wanderer" then
+						if ((attackerFaction ~= playerFaction and (!attackerFactionTable.alliedfactions or !table.HasValue(attackerFactionTable.alliedfactions, playerFaction))) or attackerFaction == "Wanderer") and (attacker:GetSubfaith() ~= "Voltism" or entity:GetSubfaith() ~= "Voltism") then
 							local subfaction = attacker:GetSubfaction();
 							local damageXP = math.min(damage, entity:Health()) * self.xpValues["damage"];
 							
@@ -2226,7 +2226,7 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 			end);
 		end
 		
-		if player:CharPlayTime() > config.GetVal("min_xp_charplaytime") then
+		if player:CharPlayTime() > config.GetVal("min_xp_charplaytime") or player:IsAdmin() then
 			local attackerFaction = attacker:GetFaction();
 			local attackerFactionTable = Clockwork.faction:FindByID(attackerFaction);
 			
@@ -2239,7 +2239,7 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 				end
 				
 				-- Make sure players can't get XP from damaging the same faction as them!
-				if (attackerFaction ~= playerFaction and (!attackerFactionTable.alliedfactions or !table.HasValue(attackerFactionTable.alliedfactions, playerFaction))) or attackerFaction == "Wanderer" then
+				if ((attackerFaction ~= playerFaction and (!attackerFactionTable.alliedfactions or !table.HasValue(attackerFactionTable.alliedfactions, playerFaction))) or attackerFaction == "Wanderer") and (attacker:GetSubfaith() ~= "Voltism" or player:GetSubfaith() ~= "Voltism") then
 					local killXP = self.xpValues["kill"];
 					
 					killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);

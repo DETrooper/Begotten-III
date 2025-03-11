@@ -226,7 +226,20 @@ if SERVER then
 				Ent:TakeDamageInfo(d)
 				
 				if Ent:IsPlayer() or Ent:IsNPC() or Ent:IsNextBot() or Ent:GetClass() == "prop_ragdoll" then
-					Ent:Ignite(5);
+					local blockTable;
+					local blockthreshold = 135 / 2;
+					
+					if Ent.GetActiveWeapon then
+						blockTable = GetTable(Ent:GetActiveWeapon().realBlockTable);
+						
+						if blockTable then
+							blockthreshold = (blockTable["blockcone"] or 135) / 2
+						end
+					end
+
+					if !Ent:GetNetVar("Guardening") or (math.abs(math.AngleDifference(Ent:EyeAngles().y, (self:GetPos() - Ent:GetPos()):Angle().y)) > blockthreshold) then
+						Ent:Ignite(5);
+					end
 				end
 				
 				self:EmitSound(self.FleshHit[math.random(1, #self.FleshHit)])

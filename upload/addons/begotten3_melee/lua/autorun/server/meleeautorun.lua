@@ -1008,6 +1008,12 @@ local function Guarding(ent, dmginfo)
 						local melsta = ent:GetNWInt("Stamina", 100);
 						local blockamount = (blocktable["guardblockamount"]);
 						
+						if IsValid(enemywep) and enemywep:GetNW2String("activeOffhand"):len() > 0 then
+							if !isJavelin then
+								blockamount = blockamount * 0.5;
+							end
+						end
+						
 						if cwMedicalSystem then
 							local injuries = cwMedicalSystem:GetInjuries(ent);
 							
@@ -1571,3 +1577,13 @@ concommand.Add("atyd", function(player)
 		Clockwork.player:NotifyAdmins("operator", "fucklet "..player:Name().." just tried to run atyd");
 	end
 end);
+
+-- Bot blocking tester.
+
+--[[local function StartCommandMeleeAutorun(player, ucmd)
+	if player:IsBot() and player:Alive() then
+		ucmd:SetButtons( IN_ATTACK2 )
+	end
+end
+
+hook.Add("StartCommand", "StartCommandMeleeAutorun", StartCommandMeleeAutorun)]]--
