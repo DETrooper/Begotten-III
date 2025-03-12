@@ -258,7 +258,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	--ITEM.healRepetition = 5;
 	
 	ITEM.ingestible = {orally = true, anally = false};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 250};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 300};
 	ITEM.useXP = 25;
 	
 	function ITEM:OnUsed(player, itemEntity)
@@ -269,7 +269,7 @@ local ITEM = Clockwork.item:New("medical_base");
 				player:HandleXP(self.useXP);
 			end
 			
-			player:HandleSanity(100);
+			player:HandleSanity(55);
 			player:EmitSound(self.useSound);
 			player:TakeItem(self, true);
 			

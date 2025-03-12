@@ -1078,14 +1078,14 @@ local COMMAND = Clockwork.command:New("Warcry");
 					warcry_beliefs = {};
 					player_has_belief = true;
 				else
-					sanity_debuff = -25;
+					sanity_debuff = -35;
 					warcry_beliefs = {"sadism"};
 				end
 			elseif player:GetNetVar("kinisgerOverride") == "Hillkeeper" then
 				warcry_beliefs = {}
 				player_has_belief = true;
 			else
-				sanity_debuff = -25;
+				sanity_debuff = -35;
 				warcry_beliefs = {"sadism"};
 			end
 		else
@@ -1098,7 +1098,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 					warcry_beliefs = {"father", "mother", "old_son", "young_son", "sister"};
 				end
 			elseif faith == "Faith of the Dark" then
-				sanity_debuff = -25;
+				sanity_debuff = -35;
 				warcry_beliefs = {"sadism"};
 			elseif faith == "Faith of the Light" and (faction == "Hillkeeper" or subfaction == "Low Ministry") then
 				warcry_beliefs = {}
@@ -1127,10 +1127,10 @@ local COMMAND = Clockwork.command:New("Warcry");
 				local radius = config.Get("talk_radius"):Get() * 2;
 				local playerPos = player:GetPos();
 				
-				player:HandleSanity(5);
+				player:HandleSanity(2);
 				
 				if player_has_watchful_raven and faction == "Hillkeeper" then
-					player:HandleSanity(10);
+					player:HandleSanity(5);
 					player:HandleStamina(10);
 					player.ravenBuff = true;
 					
@@ -1150,7 +1150,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 						
 						if faction ~= "Hillkeeper" then
 							if player_has_watchful_raven and Clockwork.player:DoesRecognise(v, player) then
-								v:HandleSanity(10);
+								v:HandleSanity(5);
 								v:HandleStamina(10);
 								v.ravenBuff = true;
 								
@@ -1198,7 +1198,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 									if v:HasBelief("saintly_composure") then
 										v:Disorient(2);
 									else
-										v:Disorient(8);
+										v:Disorient(5.5);
 									end
 								end
 							elseif faith == "Faith of the Family" then

@@ -1399,7 +1399,18 @@ local function Guarding(ent, dmginfo)
 				if attacker:GetSubfaction() == "Varazdat" then
 					if IsValid(enemywep) and enemywep.IsABegottenMelee then
 						
-						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
+						local clothesItem = attacker:GetClothesEquipped();
+ 						local modifier = 1.45;
+ 
+ 						if clothesItem then
+ 							if clothesItem.weightclass == "Medium" then
+ 								modifier = 2;
+ 							elseif clothesItem.weightclass == "Heavy" then
+ 								modifier = 3.25;
+ 							end
+ 						end
+						
+						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / modifier)), 0, attacker:GetMaxHealth()));
 						
 						attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
 						

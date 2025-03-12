@@ -1686,10 +1686,10 @@ function playerMeta:GetMaxHealth(health)
 			maxHealth = maxHealth + 175;
 		elseif subfaction == "Knights of Sol" then
 			maxHealth = maxHealth + 75;
-		elseif subfaction == "Clan Gore" or subfaction == "Inquisition" or subfaction == "Philimaxio" then
+		elseif subfaction == "Inquisition" or subfaction == "Philimaxio" then
 			maxHealth = maxHealth + 50;
-		elseif subfaction == "Clan Harald" then
-			maxHealth = maxHealth + 45;
+		elseif subfaction == "Clan Harald" or subfaction == "Clan Gore" then
+			maxHealth = maxHealth + 30;
 		elseif subfaction == "Clan Shagalax" or subfaction == "Machinists" or subfaction == "Watchman" then
 			maxHealth = maxHealth + 30;
 		elseif subfaction == "Clan Reaver" or subfaction == "Clan Crast" or subfaction == "Legionary" or subfaction == "Limitanei" or subfaction == "Varazdat" then
@@ -1729,11 +1729,11 @@ function playerMeta:GetMaxHealth(health)
 	
 	if faith == "Faith of the Family" then	
 		if self:HasBelief("man_become_beast") then
-			maxHealth = maxHealth + 40;
+			maxHealth = maxHealth + 30;
 		end
 		
 		if self:HasBelief("taste_of_blood") then
-			maxHealth = maxHealth + 35;
+			maxHealth = maxHealth + 30;
 		end
 		
 		if self:HasBelief("shieldwall") or self:HasBelief("shedskin") or self:HasBelief("gift_great_tree") then

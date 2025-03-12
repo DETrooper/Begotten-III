@@ -1181,7 +1181,19 @@ end
 							end);
 							
 							if hit:IsPlayer() then
-								hit:TakeStability(25 * shield_reduction * hit_reduction);
+								local blockTable;
+								local blockthreshold = 135 / 2;
+								
+								if hit.GetActiveWeapon then
+									blockTable = GetTable(hit:GetActiveWeapon().realBlockTable);
+									
+									if blockTable then
+										blockthreshold = (blockTable["blockcone"] or 135) / 2
+									end
+								end
+								if !hit:GetNetVar("Guardening") or (math.abs(math.AngleDifference(hit:EyeAngles().y, (self:GetPos() - hit:GetPos()):Angle().y)) > blockthreshold) then
+									hit:TakeStability(25 * shield_reduction * hit_reduction);
+								end
 							end
 						end
 					end

@@ -3464,7 +3464,7 @@ end
 function Schema:ModifyPlayerSpeed(player, infoTable, action)
 	local subfaction = player:GetSubfaction();
 	
-	if subfaction == "Philimaxio" or subfaction == "Knights of Sol" then
+	if subfaction == "Knights of Sol" then
 		infoTable.runSpeed = infoTable.runSpeed * 0.9;
 	elseif subfaction == "Varazdat" then
 		if player:Health() > player:GetMaxHealth() * 0.95 then

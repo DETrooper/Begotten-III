@@ -68,7 +68,7 @@ if map == "rp_begotten3" then
 			closeCamVector = Vector(-7369, -10200, -6996),
 			charVector = Vector(-7368.25, -10245, -7044.90625),
 			charAngles = Angle(0, 90, 0),
-			charModel = "models/begotten/satanists/dreadarmor.mdl",
+			charModel = "models/begotten/satanists/hellspike_armor.mdl",
 			charModelOverride = {clothes = "models/begotten/wanderers/wanderer_male.mdl", head = "models/begotten/heads/male_13_wanderer.mdl"},
 			zone = "hell"
 		},
@@ -76,7 +76,7 @@ if map == "rp_begotten3" then
 
 	subfactionCamTable = {
 		["Varazdat"] = {
-			charModel = "models/begotten/satanists/dreadarmor.mdl",
+			charModel = "models/begotten/satanists/darklanderspiceguard.mdl",
 			camVector = Vector(-7390, -10185, -6996),
 			camAngles = Angle(0, -90, 0),
 		},
@@ -239,14 +239,14 @@ elseif map == "rp_begotten_redux" then
 			closeCamVector = Vector(-7369, -10200, -6996),
 			charVector = Vector(-7368.25, -10245, -7044.90625),
 			charAngles = Angle(0, 90, 0),
-			charModel = "models/begotten/satanists/dreadarmor.mdl",
+			charModel = "models/begotten/satanists/hellspike_armor.mdl",
 			zone = "hell"
 		},
 	};
 
 	subfactionCamTable = {
 		["Varazdat"] = {
-			charModel = "models/begotten/satanists/dreadarmor.mdl",
+			charModel = "models/begotten/satanists/darklanderspiceguard.mdl",
 			camVector = Vector(-7390, -10185, -6996),
 			camAngles = Angle(0, -90, 0),
 		},
@@ -405,14 +405,14 @@ elseif map == "rp_scraptown" then
 			closeCamVector = Vector(-7369, -10200, -6996),
 			charVector = Vector(-7368.25, -10245, -7044.90625),
 			charAngles = Angle(0, 90, 0),
-			charModel = "models/begotten/satanists/dreadarmor.mdl",
+			charModel = "models/begotten/satanists/hellspike_armor.mdl",
 			zone = "hell"
 		},
 	};
 
 	subfactionCamTable = {
 		["Varazdat"] = {
-			charModel = "models/begotten/satanists/dreadarmor.mdl",
+			charModel = "models/begotten/satanists/darklanderspiceguard.mdl",
 			camVector = Vector(-7390, -10185, -6996),
 			camAngles = Angle(0, -90, 0),
 		},
@@ -559,7 +559,7 @@ elseif map == "rp_district21" then
 			closeCamVector = Vector(-7369, -10200, -6996),
 			charVector = Vector(-7368.25, -10245, -7044.90625),
 			charAngles = Angle(0, 90, 0),
-			charModel = "models/begotten/satanists/dreadarmor.mdl",
+			charModel = "models/begotten/satanists/hellspike_armor.mdl",
 			charModelOverride = {clothes = "models/begotten/wanderers/wanderer_male.mdl", head = "models/begotten/heads/male_13_wanderer.mdl"},
 			zone = "hell"
 		},
@@ -587,7 +587,7 @@ elseif map == "rp_district21" then
 
 	subfactionCamTable = {
 		["Varazdat"] = {
-			charModel = "models/begotten/satanists/dreadarmor.mdl",
+			charModel = "models/begotten/satanists/darklanderspiceguard.mdl",
 			camVector = Vector(-7390, -10185, -6996),
 			camAngles = Angle(0, -90, 0),
 		},

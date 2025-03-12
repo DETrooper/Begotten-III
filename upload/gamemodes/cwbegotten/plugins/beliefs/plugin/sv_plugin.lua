@@ -61,7 +61,7 @@ function cwBeliefs:LevelUp(player)
 			levelCap = levelCap + 10;
 		end
 		
-		if player:HasBelief("sorcerer") then
+		if player:HasBelief("sorcerer") or player:HasBelief("the_paradox_riddle_equation") then
 			levelCap = levelCap + 5;
 		end
 		

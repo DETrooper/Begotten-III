@@ -2667,6 +2667,7 @@ function GM:HUDDrawTargetID()
 									y = Clockwork.plugin:Call("DrawTargetPlayerLevel", player, alpha, x, y) or y
 									y = Clockwork.plugin:Call("DrawTargetPlayerMarked", player, alpha, x, y) or y
 									y = Clockwork.plugin:Call("DrawTargetPlayerSymptoms", player, alpha, x, y) or y
+									y = Clockwork.plugin:Call("DrawTargetSanityLevel", player, alpha, x, y) or y
 									
 									for k, v in pairs(Clockwork.TargetPlayerText.stored) do
 										if (v.scale) then

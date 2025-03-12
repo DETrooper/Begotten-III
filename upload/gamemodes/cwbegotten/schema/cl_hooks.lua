@@ -1139,6 +1139,50 @@ function Schema:DrawTargetPlayerLevel(target, alpha, x, y)
 	end
 end
 
+-- Called when the target's sanity level should be drawn.
+function Schema:DrawTargetSanityLevel(target, alpha, x, y)
+	local targetSanity = target:GetNetVar("sanity", 100)
+	local playerHasBelief = Clockwork.Client:HasBelief("blank_stare")
+
+	if(target:GetSharedVar("isThrall")) or !playerHasBelief then return; end
+	
+	if targetSanity > 90 then
+		sanityText = "This one is perfectly sane."
+		textColor = Color(255, 0, 0, 255);
+	elseif targetSanity <= 90 and targetSanity > 80 then
+		sanityText = "This one is slightly unnerved."
+		textColor = Color(225, 30, 0, 255);
+	elseif targetSanity <= 80 and targetSanity > 70 then
+		sanityText = "This one questions their thoughts."
+		textColor = Color(195, 60, 0, 255);
+	elseif targetSanity <= 70 and targetSanity > 60 then
+		sanityText = "This one is quite disturbed."
+		textColor = Color(165, 90, 0, 255);
+	elseif targetSanity <= 60 and targetSanity > 50 then
+		sanityText = "This one frolicks towards insanity."
+		textColor = Color(135, 120, 0, 255);
+	elseif targetSanity <= 50 and targetSanity > 40 then
+		sanityText = "This one is insane."
+		textColor = Color(105, 150, 0, 255);
+	elseif targetSanity <= 40 and targetSanity > 30 then
+		sanityText = "This one is quite mad!"
+		textColor = Color(75, 180, 0, 255);
+	elseif targetSanity <= 30 and targetSanity > 20 then
+		sanityText = "This one is deliciously demented!"
+		textColor = Color(45, 210, 0, 255);
+	elseif targetSanity <= 20 and targetSanity > 10 then
+		sanityText = "This one's mind has ascended!"
+		textColor = Color(15, 240, 0, 255);
+	elseif targetSanity <= 10 then
+		sanityText = "This one dances in the moonlight!"
+		textColor = Color(0, 255, 0, 255);
+	end
+		
+	if sanityText then
+		return Clockwork.kernel:DrawInfo(Clockwork.kernel:ParseData(sanityText), x, y, textColor, alpha);
+	end
+end
+
 -- Called when a player's scoreboard options are needed.
 function Schema:GetPlayerScoreboardOptions(player, options, menu)
 	--[[if (Clockwork.command:FindByID("CharSetCustomClass")) then

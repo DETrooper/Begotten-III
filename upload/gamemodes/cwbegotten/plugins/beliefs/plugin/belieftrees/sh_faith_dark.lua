@@ -165,7 +165,7 @@ local DARK = cwBeliefs.beliefTrees:New("dark")
 			["blank_stare"] = {
 				name = "A Blank Stare",
 				subfaith = "Satanism",
-				description = "Your very presence now residually lowers the sanity of all non-Faith of the Dark characters standing near you. Does nothing if you are using a Kinisger disguise.",
+				description = "Unlocks the ability to roughly determine the sanity level of inspected characters.",
 				requirements = {"satanism"},
 				row = 2,
 			},
