@@ -173,6 +173,10 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 							end
 						end
 						
+						if attacker.daringTroutActive then
+							armorPiercing = armorPiercing + 8;
+						end
+						
 						armorPiercing = math.Round(armorPiercing * 0.75); -- Scales all AP. Set this to lower to make armor more effective, or higher to make it less effective.
 						
 						if IsValid(inflictor) then
@@ -301,6 +305,10 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 									if (inflictor.Category and (string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier") or string.find(inflictor.Category, "Scythe"))) or inflictor.isJavelin then
 										armorPiercing = armorPiercing + (armorPiercing * 0.2);
 									end
+								end
+								
+								if attacker.daringTroutActive then
+									armorPiercing = armorPiercing + 8;
 								end
 								
 								armorPiercing = math.Round(armorPiercing * 0.75); -- Scales all AP. Set this to lower to make armor more effective, or higher to make it less effective.

@@ -1233,24 +1233,12 @@ local COMMAND = Clockwork.command:New("Warcry");
 											end
 										end
 										
-										if player_has_fearsome_wolf or player_has_daring_trout then
+										if player_has_fearsome_wolf then
 											if not player.warCryVictims then
 												player.warCryVictims = {};
 											end
 											
 											table.insert(player.warCryVictims, v);
-										end
-										
-										if player_has_daring_trout then
-											v.warcrySlowSpeed = curTime + 10;
-											
-											hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true);
-											
-											timer.Create("warcrySlowdown"..tostring(v:EntIndex()), 10.1, 1, function()
-												if IsValid(v) then
-													hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true);
-												end
-											end);
 										end
 									end
 								
@@ -1347,35 +1335,32 @@ local COMMAND = Clockwork.command:New("Warcry");
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a twisted warcry, screaming with the voices of their past victims!", playerPos, radius);
 				end
 				
-				if player_has_fearsome_wolf or player_has_daring_trout then
+				if player_has_daring_trout then
+					player.daringTroutActive = true;
+					timer.Create("DaringTroutTimer_"..player:EntIndex(), 20, 1, function()
+						if IsValid(player) then
+							if player.daringTroutActive then
+								player.daringTroutActive = nil;
+							end
+						end
+					end);
+				end
+				
+				if player_has_fearsome_wolf then
 					netstream.Start(player, "UpgradedWarcry");
 					
-					if player_has_daring_trout then
-						timer.Simple(10.5, function()
-							if IsValid(player) and player.warCryVictims then
-								for i, victim in ipairs(player.warCryVictims) do
-									if IsValid(victim) then
-										hook.Run("RunModifyPlayerSpeed", victim, victim.cwInfoTable, true);
-									end
-								end
+					player.fearsomeSpeed = true;
+				
+					hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
+				
+					timer.Simple(20.5, function()
+						if IsValid(player) then
+							player.fearsomeSpeed = nil;
+							player.warCryVictims = nil;
 							
-								player.warCryVictims = nil;
-							end
-						end);
-					else
-						player.fearsomeSpeed = true;
-					
-						hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
-					
-						timer.Simple(20.5, function()
-							if IsValid(player) then
-								player.fearsomeSpeed = nil;
-								player.warCryVictims = nil;
-								
-								hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
-							end
-						end);
-					end
+							hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
+						end
+					end);
 				end
 				
 				player.lastWarCry = curTime + 60;
