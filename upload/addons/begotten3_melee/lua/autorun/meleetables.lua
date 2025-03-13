@@ -4762,7 +4762,6 @@ BlockTables.LongswordBlockTable = {
 	["parrytakestamina"] = 15,
 	["canparry"] = true,
 	["candeflect"] = true,
-	["deflectionwindow"] = 0.25,
 };
 
 BlockTables.VoltlongswordBlockTable = {

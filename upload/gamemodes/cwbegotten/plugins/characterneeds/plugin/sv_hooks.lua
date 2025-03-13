@@ -171,7 +171,7 @@ function cwCharacterNeeds:PlayerUseItem(player, itemTable, itemEntity)
 	
 		for k, v in pairs(itemTable.needs) do
 			if (k == "hunger" or k == "thirst") and subfaction == "Varazdat" then
-				if itemTable.uniqueID == "humanmeat" or itemTable.uniqueID == "cooked_human_meat" or itemTable.uniqueID == "canned_fresh_meat" or itemTable.uniqueID == "varazdat_bloodwine" or itemTable.uniqueID == "varazdat_masterclass_bloodwine" then
+				if itemTable.uniqueID == "humanmeat" or itemTable.uniqueID == "cooked_human_meat" or itemTable.uniqueID == "canned_fresh_meat" or itemTable.uniqueID == "varazdat_bloodwine" or itemTable.uniqueID == "varazdat_masterclass_bloodwine" or itemTable.uniqueID == "blood_bottle" then
 					player:HandleNeed(k, -v);
 				end
 			elseif subfaction ~= "Varazdat" then
