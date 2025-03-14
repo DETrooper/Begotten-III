@@ -497,7 +497,7 @@ function SWEP:PrimaryAttack()
 	local stance = "reg_swing";
 	local strikeTime = attacktable["striketime"];
 
-	if self:GetNW2Bool("swordplayActive") == true then
+	if self:GetNW2Bool("swordplayActive") == true and !offhandAttackTable then
 		if self.isArmingSword then
 			strikeTime = 0.3;
 		else
@@ -552,8 +552,6 @@ function SWEP:PrimaryAttack()
 				else
 					anim = "a_sword_attack_slash_fast_02"
 				end
-			elseif offhandAttackTable then
-				anim = "a_dual_swords_slash_veryfast_01"
 			else
 				anim = "a_heavy_2h_attack_slash_02_fast";
 			end

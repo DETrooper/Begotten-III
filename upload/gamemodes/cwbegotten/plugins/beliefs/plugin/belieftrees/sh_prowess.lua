@@ -45,7 +45,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			},
 			["blademaster"] = {
 				name = "Blademaster",
-				description = "All one handed slashing weapons and claws now deal 15% more damage. Unlocks the use of the 'Swordplay' attribute for longswords and arming swords.",
+				description = "All one handed slashing weapons and claws now deal 15% more damage. Unlocks the use of the 'Swordplay' attribute for longswords and one handed arming swords.",
 				iconOverride = "begotten/ui/belieficons/swordsman.png",
 				--lockedSubfactions = {"Auxiliary", "Servus", "Low Ministry"},
 				lockedBeliefs = {"loremaster"},
