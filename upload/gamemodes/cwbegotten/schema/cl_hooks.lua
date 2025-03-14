@@ -1828,7 +1828,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddText("Polearm: Up to +70% increased damage the further away the target is.", Color(110, 30, 30), nil, 0.9);
 				end
 				
-				if weaponTable.isLongsword then
+				if weaponTable.hasSwordplay then
 					frame:AddText("Swordplay: After deflecting or parrying an opponent, your next attack within 0.5s will have a faster striketime. This trait only works if you have 'Blademaster' unlocked.", Color(110, 30, 30), nil, 0.9);
 				end
 				

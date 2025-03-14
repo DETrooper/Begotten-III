@@ -87,11 +87,25 @@ function GM:Initialize()
 	hook.Run("ClockworkInitialized")
 end
 
+Clockwork.config:Add("clockwork_log_errors", false)
+
 function GM:OnLuaError(errorText, realm, stack)
-	local logText = os.date("%X") .. " - " .. string.gsub(errorText, "\n", "")
-	file.Append("clockwork/lua_errors/" .. os.date("%d-%m-%y") .. ".txt", logText .. "\n" .. table.ToString(stack, "", true) .. "\n")
-	file.Append("clockwork/lua_errors/" .. os.date("%d-%m-%y") .. "-simple.txt", logText .. "\n")
+
+	if not Clockwork.config:Get("clockwork_log_errors"):Get() then
+		return
+	end
+
+	local tbl = {}
+
+	tbl["error"] = errorText
+	tbl["time"] = os.date("%X")
+	tbl["stack"] = stack
+
+	local logText = util.TableToJSON(tbl, true) .. "\n"
+	file.Append("clockwork/lua_errors/" .. os.date("%d-%m-%y") .. ".json", logText)
+	file.Append("clockwork/lua_errors/" .. os.date("%d-%m-%y") .. "-simple.txt", tbl["time"] .. " - " ..  errorText .. "\n")
 end
+
 
 function GM:OnePlayerSecond(player, curTime, infoTable)
 	local plyTab = player:GetTable();

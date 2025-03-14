@@ -472,6 +472,7 @@ end
 function SWEP:PrimaryAttack()
 	local wep = self.Weapon;
 	local owner = self.Owner;
+	local weaponClass = self:GetClass();
 	
 	if (!self:CanPrimaryAttack()) then 
 		return true;
@@ -496,8 +497,12 @@ function SWEP:PrimaryAttack()
 	local stance = "reg_swing";
 	local strikeTime = attacktable["striketime"];
 
-	if self:GetNW2Bool("swordplayActive") == true then
-		strikeTime = strikeTime * 0.7;
+	if self:GetNW2Bool("swordplayActive") == true and !offhandAttackTable then
+		if self.isArmingSword then
+			strikeTime = 0.3;
+		else
+			strikeTime = strikeTime * 0.7;
+		end
 	end
 	
 	if self:GetNW2String("activeOffhand"):len() > 0 then
@@ -541,7 +546,15 @@ function SWEP:PrimaryAttack()
 		local anim = self.Weapon.realCriticalAnim;
 		
 		if self:GetNW2Bool("swordplayActive") == true then
-			anim = "a_heavy_2h_attack_slash_02_fast";
+			if self.isArmingSword and !offhandAttackTable then
+				if self:GetNW2String("activeShield"):len() > 0 then
+					anim = "a_sword_shield_attack_slash_fast_01"
+				else
+					anim = "a_sword_attack_slash_fast_02"
+				end
+			else
+				anim = "a_heavy_2h_attack_slash_02_fast";
+			end
 		end
 		
 		self:CriticalAnimation();

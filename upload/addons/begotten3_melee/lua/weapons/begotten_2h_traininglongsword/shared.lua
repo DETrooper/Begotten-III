@@ -32,7 +32,7 @@ SWEP.PrimaryIdleDelay = 0.85
 SWEP.AltPlaybackRate = 0.65
 SWEP.AltIdleDelay = 0.75
 SWEP.PrimarySwingAnim = "a_heavy_2h_attack_slash_01"
-SWEP.isLongsword = true;
+SWEP.hasSwordplay = true;
 
 --Sounds
 SWEP.AttackSoundTable = "MediumWoodenAttackSoundTable" 

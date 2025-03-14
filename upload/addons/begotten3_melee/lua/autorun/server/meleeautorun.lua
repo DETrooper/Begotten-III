@@ -26,7 +26,7 @@ function Parry(target, dmginfo)
 					target.parryTarget = attacker;
 					if(attacker:IsPlayer()) then netstream.Start(attacker, "Stunned", (attacker:HasBelief("encore") and 0.5 or 1)); end
 					
-					if wep.isLongsword and (!cwBeliefs or target:HasBelief("blademaster")) then
+					if wep.hasSwordplay and (!cwBeliefs or target:HasBelief("blademaster")) then
 						wep:SetNW2Bool("swordplayActive", true);
 						
 						wep:CreateTimer(0.5, "swordplayTimer"..wep:EntIndex(), function()
@@ -143,7 +143,7 @@ function Parry(target, dmginfo)
 						
 						target:SetLocalVar("ParrySuccess", true)
 						
-						if wep.isLongsword and (!cwBeliefs or target:HasBelief("blademaster")) then
+						if wep.hasSwordplay and (!cwBeliefs or target:HasBelief("blademaster")) then
 							wep:SetNW2Bool("swordplayActive", true);
 							
 							wep:CreateTimer(1.2, "swordplayTimer"..wep:EntIndex(), function()
@@ -1237,7 +1237,7 @@ local function Guarding(ent, dmginfo)
 							end);
 						end
 						
-						if wep.isLongsword and (!cwBeliefs or ent:HasBelief("blademaster")) then
+						if wep.hasSwordplay and (!cwBeliefs or ent:HasBelief("blademaster")) then
 							wep:SetNW2Bool("swordplayActive", true);
 							
 							wep:CreateTimer(0.5, "swordplayTimer"..wep:EntIndex(), function()

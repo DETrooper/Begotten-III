@@ -1471,11 +1471,11 @@ AttackTables.GlazicSwordAttackTable = {
 	["altattackpoisedamagemodifier"] = 0.5,
 	["altmeleearc"] = 15,
 	["armorpiercing"] = 25,
-	["altarmorpiercing"] = 50,
+	["altarmorpiercing"] = 45,
 	["poisedamage"] = 15,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 3,
-	["delay"] = 0.9,
+	["delay"] = 1.1,
 	["striketime"] = 0.35,
 	["meleearc"] = 40,
 	["meleerange"] = 865,
@@ -1543,7 +1543,7 @@ AttackTables.GoreFalchionAttackTable = {
 };
 
 AttackTables.HellfireSwordAttackTable = {
-	["primarydamage"] = 45,
+	["primarydamage"] = 40,
 	["dmgtype"] = 4,
 	["attacktype"] = "fire_swing",
 	["canaltattack"] = true,
