@@ -931,6 +931,7 @@ function cwMapScene:CalcView(player, origin, angles, fov)
 					modelEnt.HeadModel:AddEffects(EF_BONEMERGE);
 					
 					if panel.info and panel.info.traits and table.HasValue(panel.info.traits, "leper") and faction ~= "Goreic Warrior" then
+						modelEnt:SetSkin(modelEnt:SkinCount() - 1);
 						modelEnt.HeadModel:SetSkin(modelEnt.HeadModel:SkinCount() - 1);
 					end
 				else

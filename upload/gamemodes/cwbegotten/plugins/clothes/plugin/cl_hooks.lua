@@ -154,6 +154,7 @@ function PLUGIN:PostPlayerDraw(player, flags)
 				if model then
 					plyTab.clothesEnt = ClientsideModel(model, RENDERGROUP_BOTH);
 					clothesEnt = plyTab.clothesEnt;
+					clothesEnt:SetSkin(player:GetSkin());
 				else
 					return;
 				end

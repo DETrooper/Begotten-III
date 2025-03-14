@@ -1060,6 +1060,7 @@ function PANEL:Init()
 	if IsValid(self.characterModel.modelPanel.Entity) then
 		if headModel then
 			self.characterModel.modelPanel.headModel = ClientsideModel(headModel, RENDERGROUP_OPAQUE);
+			self.characterModel.modelPanel.Entity:SetSkin(self.customData.skin or 0);
 			
 			if IsValid(self.characterModel.modelPanel.headModel) then
 				self.characterModel.modelPanel.headModel.noDelete = true;
@@ -1070,7 +1071,6 @@ function PANEL:Init()
 			end
 		else
 			self.characterModel.modelPanel.Entity:SetBodygroup(bodygroup, bodygroupVal);
-			self.characterModel.modelPanel.Entity:SetSkin(self.customData.skin or 0);
 		end
 	end
 	
@@ -2509,9 +2509,9 @@ function PANEL:Init()
 							options[tostring(i)] = function()
 								if IsValid(Clockwork.Client.CharSelectionModel.HeadModel) then
 									Clockwork.Client.CharSelectionModel.HeadModel:SetSkin(i);
-								else
-									Clockwork.Client.CharSelectionModel:SetSkin(i);
 								end
+								
+								Clockwork.Client.CharSelectionModel:SetSkin(i);
 								
 								self.info.skin = i;
 							end;
@@ -2756,9 +2756,9 @@ function PANEL:Init()
 						if traitTable.disablesSkins then
 							if IsValid(Clockwork.Client.CharSelectionModel.HeadModel) then
 								Clockwork.Client.CharSelectionModel.HeadModel:SetSkin(0);
-							else
-								Clockwork.Client.CharSelectionModel:SetSkin(0);
 							end
+							
+							Clockwork.Client.CharSelectionModel:SetSkin(0);
 							
 							self.info.skin = 0;
 						end
@@ -2809,6 +2809,7 @@ function PANEL:Init()
 						if IsValid(Clockwork.Client.CharSelectionModel.HeadModel) then
 							local skinCount = Clockwork.Client.CharSelectionModel.HeadModel:SkinCount() - 1;
 							
+							Clockwork.Client.CharSelectionModel:SetSkin(skinCount);
 							Clockwork.Client.CharSelectionModel.HeadModel:SetSkin(skinCount);
 							self.info.skin = skinCount;
 						else

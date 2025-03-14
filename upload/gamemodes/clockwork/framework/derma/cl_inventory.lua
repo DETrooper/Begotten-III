@@ -912,12 +912,13 @@ function PANEL:Rebuild()
 		else
 			self.characterModel.modelPanel.Entity:SetBodygroup(0, playerBodygroups[1]);
 			self.characterModel.modelPanel.Entity:SetBodygroup(1, playerBodygroups[2]);
-			self.characterModel.modelPanel.Entity:SetSkin(Clockwork.Client:GetSkin() or 0);
 			
 			if IsValid(self.characterModel.modelPanel.headModel) then
 				self.characterModel.modelPanel.headModel:Remove();
 			end
 		end
+		
+		self.characterModel.modelPanel.Entity:SetSkin(Clockwork.Client:GetSkin() or 0);
 		
 		if clothes and clothes.bodygroupCharms then
 			for k, v in pairs(clothes.bodygroupCharms) do
