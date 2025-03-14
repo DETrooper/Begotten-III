@@ -32,6 +32,9 @@ function Clockwork.chatBox:Add(listeners, speaker, class, text, data)
 	end;
 	
 	hook.Run("ChatBoxAdjustInfo", info);
+	
+	if info.text == "" then return end;
+	
 	hook.Run("ChatBoxMessageAdded", info);
 	
 	if (info.bShouldSend) then

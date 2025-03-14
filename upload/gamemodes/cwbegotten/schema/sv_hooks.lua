@@ -2635,61 +2635,69 @@ function Schema:ChatBoxAdjustInfo(info)
 
                 info.text = newText;
             elseif info.speaker:HasTrait("imbecile") then
-				local imbecileText = info.text;
-				
-				if #imbecileText > 2 then
-					local fillers = {"uh", "uhh", "uhhh", "erm", "ehh", "like"};
-					local suffixes = {".", ",", ";", "!", ":", "?"};
-					local splitText = string.Split(imbecileText, " ");
-					local tourettes = {"ASSHOLE", "FUCKING", "FUCK", "ASS", "BITCH", "CUNT", "PENIS"};
-					local vowels = {["upper"] = {"A", "E", "I", "O", "U"}, ["lower"] = {"a", "e", "i", "o", "u"}};
+				if !info.speaker.nextChatDelay or info.speaker.nextChatDelay <= CurTime() then
+					info.speaker.nextChatDelay = CurTime() + 5;
 					
-					for i = 1, #splitText do
-						local currentSplit = splitText[i];
+					local imbecileText = info.text;
+					
+					if #imbecileText > 2 then
+						local fillers = {"uh", "uhh", "uhhh", "erm", "ehh", "like"};
+						local suffixes = {".", ",", ";", "!", ":", "?"};
+						local splitText = string.Split(imbecileText, " ");
+						local tourettes = {"ASSHOLE", "FUCKING", "FUCK", "ASS", "BITCH", "CUNT", "PENIS"};
+						local vowels = {["upper"] = {"A", "E", "I", "O", "U"}, ["lower"] = {"a", "e", "i", "o", "u"}};
 						
-						if math.random(1, 2) == 1 then
-							for j = 1, #currentSplit do
-								for k = 1, 5 do
-									local vowelShuffle = math.random(1, 5);
-									
-									currentSplit = string.gsub(currentSplit, vowels["upper"][k], vowels["upper"][vowelShuffle]);
-									currentSplit = string.gsub(currentSplit, vowels["lower"][k], vowels["lower"][vowelShuffle]);
+						for i = 1, #splitText do
+							local currentSplit = splitText[i];
+							
+							if math.random(1, 2) == 1 then
+								for j = 1, #currentSplit do
+									for k = 1, 5 do
+										local vowelShuffle = math.random(1, 5);
+										
+										currentSplit = string.gsub(currentSplit, vowels["upper"][k], vowels["upper"][vowelShuffle]);
+										currentSplit = string.gsub(currentSplit, vowels["lower"][k], vowels["lower"][vowelShuffle]);
+									end
+								end
+							elseif #currentSplit >= 2 then
+								local characterToRepeat = math.random(1, #currentSplit - 1);
+								local str = string.utf8sub(currentSplit, characterToRepeat, characterToRepeat);
+								
+								currentSplit = string.gsub(string.utf8setchar(currentSplit, characterToRepeat, "#"), "#", str.."-"..string.utf8lower(str));
+							end
+							
+							if #currentSplit >= 2 and math.random(1, 3) == 1 then
+								local suffix_found = false;
+								
+								for j = 1, #suffixes do
+									if string.utf8endswith(currentSplit, suffixes[j]) then
+										suffix_found = true;
+										break;
+									end
+								end
+								
+								if not suffix_found then
+									if math.random(1, 10) == 1 then
+										currentSplit = currentSplit.."- "..tourettes[math.random(1, #tourettes)].."!";
+									else
+										currentSplit = fillers[math.random(1, #fillers)];
+									end
 								end
 							end
-						elseif #currentSplit >= 2 then
-							local characterToRepeat = math.random(1, #currentSplit - 1);
-							local str = string.utf8sub(currentSplit, characterToRepeat, characterToRepeat);
 							
-							currentSplit = string.gsub(string.utf8setchar(currentSplit, characterToRepeat, "#"), "#", str.."-"..string.utf8lower(str));
-						end
-						
-						if #currentSplit >= 2 and math.random(1, 3) == 1 then
-							local suffix_found = false;
-							
-							for j = 1, #suffixes do
-								if string.utf8endswith(currentSplit, suffixes[j]) then
-									suffix_found = true;
-									break;
-								end
+							if math.random(1, 6) == 1 then
+								currentSplit = string.utf8upper(currentSplit);
 							end
 							
-							if not suffix_found then
-								if math.random(1, 10) == 1 then
-									currentSplit = currentSplit.."- "..tourettes[math.random(1, #tourettes)].."!";
-								else
-									currentSplit = fillers[math.random(1, #fillers)];
-								end
-							end
+							splitText[i] = currentSplit;
 						end
 						
-						if math.random(1, 6) == 1 then
-							currentSplit = string.utf8upper(currentSplit);
-						end
-						
-						splitText[i] = currentSplit;
+						info.text = table.concat(splitText, " ");
 					end
-					
-					info.text = table.concat(splitText, " ");
+				else
+					info.text = "";
+						
+					Schema:EasyText(info.speaker, "grey", "Your character is slow and cannot formulate another sentence for another "..math.ceil(info.speaker.nextChatDelay - CurTime()).." second(s)!");
 				end;
 			end;
 		end
