@@ -78,6 +78,7 @@ SWEP.RunSightsAng = Vector(-14.775, 33.064, -21.81)
 SWEP.AmmoTypes = {
 	["Grapeshot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("musket/musket4.wav");
+		SWEP.Primary.FarSound = Sound("musket/musket4_distant.wav");
 		SWEP.Primary.NumShots = 24;
 		SWEP.Primary.Damage = 10;
 		SWEP.Primary.Spread = .2;
@@ -129,19 +130,42 @@ function SWEP:PrimaryAttack()
 				--self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 				
 				if SERVER then
+					local playerTab = {};
+					local farPlayers = {};
+
+					if zones then
+						playerTab = zones:GetPlayersInSupraZone(zones:GetPlayerSupraZone(self.Owner));
+					else
+						playerTab = _player.GetAll();
+					end
+					
+					local pos = self.Owner:GetPos();
+					
+					-- Close sound.
 					local filter = RecipientFilter();
 					
-					if zones then
-						filter:AddPlayers(zones:GetPlayersInSupraZone(zones:GetPlayerSupraZone(self.Owner)));
-					else
-						filter:AddAllPlayers();
+					for i, v in ipairs(playerTab) do
+						if v:GetPos():Distance(pos) < 1600 then
+							filter:AddPlayer(v);
+						else
+							table.insert(farPlayers, v);
+						end
 					end
 					
 					self.Weapon:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0, filter);
+					
+					filter = RecipientFilter();
+					
+					-- Far sound.
+					for i, v in ipairs(farPlayers) do
+						filter:AddPlayer(v);
+					end
+					
+					self.Weapon:EmitSound(self.Primary.FarSound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0, filter);
 				else
 					self.Weapon:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0);
 				end
-
+				
 				--[[timer.Simple(0.6,function() if self:IsValid() then self.Owner:EmitSound("weapons/357/357_reload3.wav") end end)						
 				timer.Simple(1.6,function() if self:IsValid() then self.Owner:EmitSound("physics/metal/metal_grenade_impact_hard1.wav") end end)
 				timer.Simple(2,function() if self:IsValid() then self.Owner:EmitSound("weapons/357/357_reload4.wav") end end)]]--  

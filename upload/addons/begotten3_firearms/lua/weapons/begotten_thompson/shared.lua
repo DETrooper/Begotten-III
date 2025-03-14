@@ -66,6 +66,7 @@ SWEP.MisfireChance = 0;
 SWEP.AmmoTypes = {
 	["Old World Shot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("weapons/thompson_01.wav");
+		SWEP.Primary.FarSound = Sound("weapons/thompson_01_distant.mp3");
 		SWEP.Primary.NumShots = 1;
 		SWEP.Primary.Damage = 45;
 		SWEP.Primary.Spread = .02;
@@ -149,17 +150,40 @@ function SWEP:PrimaryAttack()
 				self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 				
 				if SERVER then
-					local filter = RecipientFilter();
-					
+					local playerTab = {};
+					local farPlayers = {};
+
 					if zones then
-						filter:AddPlayers(zones:GetPlayersInSupraZone(zones:GetPlayerSupraZone(self.Owner)));
+						playerTab = zones:GetPlayersInSupraZone(zones:GetPlayerSupraZone(self.Owner));
 					else
-						filter:AddAllPlayers();
+						playerTab = _player.GetAll();
 					end
 					
-					self.Weapon:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 511, math.random(90, 95), 1, CHAN_WEAPON, 0, 0, filter);
+					local pos = self.Owner:GetPos();
+					
+					-- Close sound.
+					local filter = RecipientFilter();
+					
+					for i, v in ipairs(playerTab) do
+						if v:GetPos():Distance(pos) < 1600 then
+							filter:AddPlayer(v);
+						else
+							table.insert(farPlayers, v);
+						end
+					end
+					
+					self.Weapon:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0, filter);
+					
+					filter = RecipientFilter();
+					
+					-- Far sound.
+					for i, v in ipairs(farPlayers) do
+						filter:AddPlayer(v);
+					end
+					
+					self.Weapon:EmitSound(self.Primary.FarSound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0, filter);
 				else
-					self.Weapon:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 511, math.random(90, 95), 1, CHAN_WEAPON, 0, 0);
+					self.Weapon:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0);
 				end
 
 				local effect = EffectData();
