@@ -249,38 +249,38 @@ function cwScrapFactory:CheckProcessingCycle()
 			local shitResources = {"wrought_iron_ingot"};
 			
 			if darkPresent then
-				table.insert(bestResources, "hellforged_steel_ingot");
+				table.insert(greatResources, "hellforged_steel_ingot");
 			end
 			
 			if familyPresent then
-				table.insert(bestResources, "shagalaxian_steel_ingot");
+				table.insert(greatResources, "shagalaxian_steel_ingot");
 			end
 			
 			if lightPresent then
-				table.insert(bestResources, "maximilian_steel_ingot");
+				table.insert(greatResources, "maximilian_steel_ingot");
 			end
 			
 			if voltistPresent then
-				table.insert(bestResources, "technocraft");
-				table.insert(greatResources, "tech");
+				table.insert(greatResources, "technocraft");
 				table.insert(goodResources, "tech");
+				table.insert(decentResources, "tech");
 			end
 			
 			for i = 1, #cwScrapFactory.rewardPositions do
 				local position = cwScrapFactory.rewardPositions[i];
 				local resource = "scrap";
 				
-				if i == 1 and voltistPresent then
+				if voltistPresent and (i == 1 or i == 2) then
 					resource = "tech";
 				else
-					if math.random(1, 100) >= 75 then
-						if math.random(1, 50) == 1 then
+					if math.random(1, 100) >= 60 then
+						if math.random(1, 30) == 1 then
 							resource = bestResources[math.random(1, #bestResources)];
 						elseif math.random(1, 15) == 1 then
 							resource = greatResources[math.random(1, #greatResources)];
-						elseif math.random(1, 5) == 1 then
+						elseif math.random(1, 4) == 1 then
 							resource = goodResources[math.random(1, #goodResources)];
-						elseif math.random(1, 3) == 1 then
+						elseif math.random(1, 2) == 1 then
 							resource = decentResources[math.random(1, #decentResources)];
 						else
 							resource = shitResources[math.random(1, #shitResources)];

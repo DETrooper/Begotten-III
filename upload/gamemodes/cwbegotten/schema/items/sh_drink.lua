@@ -35,8 +35,9 @@ local ITEM = Clockwork.item:New();
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You feel fucking disgusted that you just drank something so foul. As a result you begin feel emotionally and mentally unstable.");
 			player:HandleSanity(-25);
-			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		end
+		
+		player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
 
 	-- Called when a player drops the item.
@@ -162,8 +163,9 @@ local ITEM = Clockwork.item:New();
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You begin to feel light headed and nauseous. You feel like you're gonna throw up.");
 			player:HandleSanity(-25);
-			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		end
+		
+		player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
 
 	-- Called when a player drops the item.
@@ -276,7 +278,7 @@ local ITEM = Clockwork.item:New();
 		end
 	
 		Schema:EasyText(player, "lawngreen", "As clean water enters your parched throat, you feel an immense satisfaction knowing that you will not die of disease today.");
-		player:HandleSanity(10);
+		player:HandleSanity(8);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
 
@@ -762,12 +764,12 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronLiquidity = 1;
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 85, thirst = 100};
+	ITEM.needs = {hunger = 35, thirst = 70};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		Schema:EasyText(player, "lawngreen", "The wine tastes excellent! You are filled with a sense of elevated self-worth.");
-		player:HandleSanity(70);
+		player:HandleSanity(30);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
 
@@ -788,12 +790,12 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronLiquidity = 1;
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 85, thirst = 100};
+	ITEM.needs = {hunger = 40, thirst = 75};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		Schema:EasyText(player, "lawngreen", "The wine tastes excellent! You are filled with a sense of elevated self-worth.");
-		player:HandleSanity(70);
+		player:HandleSanity(50);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
 		
 		if !player:HasBelief("favored") then
@@ -857,8 +859,9 @@ local ITEM = Clockwork.item:New();
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You chug the pissjug. It tastes of salt and misery.");
 			player:HandleSanity(-8);
-			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		end
+		
+		player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
 
 	-- Called when a player drops the item.
@@ -958,8 +961,67 @@ local ITEM = Clockwork.item:New();
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "Cold, vile water from the freezing wasteland travels through your gullet and into your stomach. You feel like you could throw up.");
 			player:HandleSanity(-25);
-			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		end
+			player:HandleXP(cwBeliefs.xpValues["drink"]);
+	end;
+
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position) end;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New();
+	ITEM.name = "Blood Bottle";
+	ITEM.model = "models/props_junk/GlassBottle01a.mdl";
+	ITEM.weight = 0.25;
+	ITEM.useText = "Drink";
+	ITEM.category = "Drinks";
+	ITEM.useSound = "ambient/levels/canals/toxic_slime_gurgle4.wav";
+	ITEM.description = "A bottle of blood appraised by flesh cultists and bizarros.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png"
+	ITEM.stackable = true;
+	ITEM.infectchance = 30;
+	ITEM.poison = 20;
+	ITEM.cauldronQuality = -4;
+	
+	ITEM.needs = {thirst = 30};
+	
+	function ITEM:OnSetup()
+		if cwWarmth and cwWarmth.systemEnabled then
+			ITEM:AddData("freezing", 0, true);
+		end
+	end
+
+	-- Called when a player uses the item.
+	function ITEM:OnUse(player, itemEntity)	
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 25 then
+			Schema:EasyText(player, "lightslateblue", "This drink is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
+		player:GiveItem(Clockwork.item:CreateInstance("empty_bottle"), true);
+	
+		if player:HasBelief("the_paradox_riddle_equation") or player:HasBelief("the_storm") then
+			Schema:EasyText(player, "maroon", "You open the bottle and pour blood down your receptacle, but it begins to short-circuit your insides!");
+			Schema:DoTesla(player, true);	
+			player:HandleSanity(-5);			
+			return;
+		end
+		
+		if !player:HasBelief("heart_eater") then
+			Schema:EasyText(player, "olive", "The blood oozes out the bottle and down your throat.. You feel repulsed, both physically and spiritually..");
+			player:HandleSanity(-50);
+			player:HandleXP(cwBeliefs.xpValues["drink"]);
+		elseif player:HasBelief("heart_eater") and !player:HasBelief("savage_animal") then
+			Schema:EasyText(player, "olivedrab", "The blood oozes out the bottle and down your throat.. Even as an experienced drinker of blood, you find the taste and consistency disturbing.");
+			player:HandleSanity(-15);
+		else
+			Schema:EasyText(player, "lawngreen", "The blood oozes out the bottle and down your throat.. Delicious!");
+		end
+		
+		player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
 
 	-- Called when a player drops the item.

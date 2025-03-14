@@ -288,13 +288,15 @@ function playerMeta:GetMaxStability()
 		max_stability = tonumber(max_stability + boost);
 	end]]--
 	
-	if subfaction == "Philimaxio" or subfaction == "Knights of Sol" then
+	if subfaction == "Knights of Sol" then
 		max_stability = max_stability + 25;
+	elseif subfaction == "Philimaxio" then
+		max_stability = max_stability + 15;
 	end
 	
 	if cwBeliefs and self.HasBelief then
 		if self:HasBelief("litheness_finisher") then
-			max_stability = max_stability + 25;
+			max_stability = max_stability + 15;
 		end
 		
 		if self:HasBelief("enduring_bear") then

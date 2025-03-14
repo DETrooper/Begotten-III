@@ -899,6 +899,34 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("blood_bottle");
+		RECIPE.name = "Blood Bottle";
+		RECIPE.requiresHeatSource = true;
+		RECIPE.requiredBeliefs = {"cookist"};
+		RECIPE.requirements = {
+			["empty_bottle"] = {amount = 1},
+			["humanmeat"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["blood_bottle"] = {amount = 1},
+		};
+		RECIPE.category = "Cooking"
+		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "cooking"
+		RECIPE.experience = 15;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("unfuckedmeat");
 		RECIPE.name = "Unfucked Meat";
@@ -959,9 +987,8 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"culinarian"};
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.requirements = {
-			["finechug"] = {amount = 1},
 			["spice"] = {amount = 1},
-			["humanmeat"] = {amount = 1},
+			["humanmeat"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["varazdat_bloodwine"] = {amount = 1},
@@ -971,7 +998,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "brewing"
-		RECIPE.experience = 60;
+		RECIPE.experience = 55;
 		
 		function RECIPE:OnCraft(player)
 		end;

@@ -87,7 +87,7 @@ local DARK = cwBeliefs.beliefTrees:New("dark")
 			["thirst_blood_moon"] = {
 				name = "Thirst of the Blood Moon",
 				subfaith = "Primevalism",
-				description = "While outside in the Wasteland at night or during bloodstorms, 50% of damage dealt will be returned as health. Also provides a small chance of healing injuries or stopping bleeding if the damage dealt is above 25. Halves residual nighttime/bloodstorm sanity loss. Unlocks unique 'Primevalism' Rituals.",
+				description = "While outside in the Wasteland at night or during bloodstorms, or while in the mines, 50% of damage dealt will be returned as health. Also provides a small chance of healing injuries or stopping bleeding if the damage dealt is above 25. Halves residual nighttime/bloodstorm sanity loss. Unlocks unique 'Primevalism' Rituals.",
 				quote = "\"The guardsman heard howling and could not discern if it were a man or beast. In truth, it did not matter.\"",
 				iconOverride = "begotten/ui/belieficons/lunar_repudiation.png",
 				requirements = {"primevalism", "creature_of_the_dark", "soothsayer"},
@@ -165,7 +165,7 @@ local DARK = cwBeliefs.beliefTrees:New("dark")
 			["blank_stare"] = {
 				name = "A Blank Stare",
 				subfaith = "Satanism",
-				description = "Your very presence now residually lowers the sanity of all non-Faith of the Dark characters standing near you. Does nothing if you are using a Kinisger disguise.",
+				description = "Unlocks the ability to roughly determine the sanity level of inspected characters.",
 				requirements = {"satanism"},
 				row = 2,
 			},

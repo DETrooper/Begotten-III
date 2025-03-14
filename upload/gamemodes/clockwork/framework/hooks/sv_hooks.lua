@@ -3735,7 +3735,6 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 
 				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..inflictor..", killing them!")
 				hook.Run("KillLog", player, attacker, damageInfo:GetDamage(), " with "..inflictor);
-			
 			elseif IsValid(weapon) then
 				local inflictor;
 			
@@ -3749,19 +3748,15 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 				
 				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name().." with "..inflictor..", killing them!")
 				hook.Run("KillLog", player, attacker, damageInfo:GetDamage(), " with "..inflictor);
-			
 			else
 				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:Name().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name()..", killing them!")
 				hook.Run("KillLog", player, attacker, damageInfo:GetDamage(), "");
-			
 			end
 		else
 			if (damageInfo) then
 				Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, attacker:GetClass().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name()..", killing them!")
 				hook.Run("KillLog", player, attacker, damageInfo:GetDamage(), "");
-			
 			end
-
 		end
 	elseif IsValid(inflictor) then
 		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, inflictor:GetClass().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name()..", killing them!")

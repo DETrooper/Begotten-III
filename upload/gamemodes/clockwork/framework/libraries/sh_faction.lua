@@ -166,18 +166,19 @@ end
 -- A function to get whether a model is valid.
 function Clockwork.faction:IsModelValid(faction, gender, model)
 	if (gender and model) then
-		local factionTable = Clockwork.faction:FindByID(faction)
+		local factionTable = Clockwork.faction:FindByID(faction);
+		local gender = string.lower(gender);
 
-		if factionTable then
-			for i, v in ipairs(factionTable.models[string.lower(gender)].heads) do
-				if string.find(model, v) then
+		if (factionTable) then
+			for k, v in ipairs(factionTable.models[gender].heads) do
+				if (string.find(model, v)) then
 					return true;
 				end
 			end
 			
-			if factionTable.subfactions then
-				for i, v in ipairs(factionTable.subfactions[i].models[string.lower(gender)].heads) do
-					if string.find(model, v) then
+			for k, v in ipairs(factionTable.subfactions or {}) do
+				for i, j in ipairs(v.models[gender].heads) do
+					if (string.find(model, j)) then
 						return true;
 					end
 				end

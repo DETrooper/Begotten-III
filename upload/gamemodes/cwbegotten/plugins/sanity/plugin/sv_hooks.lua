@@ -93,7 +93,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 				if !entity:Alive() then
 					sanityDecay = sanityDecay - 1.5;
 				end;
-				
+			--[[
 				if (player:GetFaith() != "Faith of the Dark" and entity:GetFaith() == "Faith of the Dark" and entity:HasBelief("blank_stare") and player:GetFaction() != "Hillkeeper") then
 					local entityFaction = entity:GetFaction();
 					local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
@@ -109,6 +109,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 						end
 					end
 				end
+			--]]
 			end;
 			
 			local class = entity:GetClass();

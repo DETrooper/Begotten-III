@@ -77,12 +77,18 @@ ENT.PossessionBinds = {
 	[IN_ATTACK] = {{
 		coroutine = true,
 		onkeydown = function(self)
-			if(self.nextMeleeAttack and self.nextMeleeAttack > CurTime()) then return; end
-						self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
-			if math.random(1,3) == 3 then
-				self:PlaySequenceAndMove("fastattack", 0.5, self.PossessionFaceForward)
-			else
-				self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)
+			if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
+				if math.random(1,3) == 3 then
+					self.StaminaDamage = 35
+					self.Damage = 25
+					self:EmitSound("begotten/npc/grunt/attack_launch03.mp3", 100, 120)
+					self:PlaySequenceAndMove("fastattack", 0.5, self.PossessionFaceForward)
+				else
+					self.StaminaDamage = 60
+					self.Damage = 50
+					self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 2)..".mp3", 100, 80)
+					self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)
+				end
 			end
 		end
 	}}
@@ -133,10 +139,15 @@ if SERVER then
 	-- AI --
 	function ENT:OnMeleeAttack(enemy)
 		if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
-			self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
 			if math.random(1,3) == 3 then
+				self.StaminaDamage = 35
+				self.Damage = 25
+				self:EmitSound("begotten/npc/grunt/attack_launch03.mp3", 100, 120)
 				self:PlaySequenceAndMove("fastattack", 0.5, self.PossessionFaceForward)
 			else
+				self.StaminaDamage = 60
+				self.Damage = 50
+				self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 2)..".mp3", 100, 80)
 				self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)
 			end
 		end

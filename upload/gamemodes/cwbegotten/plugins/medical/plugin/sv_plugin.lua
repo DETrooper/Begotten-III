@@ -233,7 +233,23 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 						if player:Health() == playerMaxHealth then
 							timer.Destroy(playerIndex.."_heal_"..itemTable.itemID);
 							
-							Clockwork.limb:HealDamage(player, k, healAmount * (healRepetition - timesHealed));
+							if hitGroup == "all" then
+								local limbData = player:GetCharacterData("LimbData")
+
+								if (limbData) then
+									local newHealth = player:Health();
+									
+									for k, v in pairs(limbData) do
+										local limbHealth = Clockwork.limb:GetHealth(player, k);
+										
+										if limbHealth < newHealth then
+											Clockwork.limb:HealDamage(player, k, healAmount * (healRepetition - timesHealed));
+										end
+									end
+								end
+							else
+								Clockwork.limb:HealDamage(player, hitGroup, healAmount * (healRepetition - timesHealed));
+							end
 							
 							Clockwork.hint:Send(player, itemTable("name").." has worn off...", 5, Color(100, 175, 100), true, true);
 							hook.Run("PlayerHealed", player, itemTable);
@@ -441,8 +457,24 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 							if target:Health() == targetMaxHealth then
 								timer.Destroy(targetIndex.."_heal_"..itemTable.itemID);
 								
-								Clockwork.limb:HealDamage(target, k, healAmount * (healRepetition - timesHealed));
-								
+								if hitGroup == "all" then
+									local limbData = target:GetCharacterData("LimbData")
+
+									if (limbData) then
+										local newHealth = target:Health();
+										
+										for k, v in pairs(limbData) do
+											local limbHealth = Clockwork.limb:GetHealth(target, k);
+											
+											if limbHealth < newHealth then
+												Clockwork.limb:HealDamage(target, k, healAmount * (healRepetition - timesHealed));
+											end
+										end
+									end
+								else
+									Clockwork.limb:HealDamage(target, hitGroup, healAmount * (healRepetition - timesHealed));
+								end
+									
 								Clockwork.hint:Send(target, itemTable("name").." has worn off...", 5, Color(100, 175, 100), true, true);
 								hook.Run("PlayerHealed", target, itemTable);
 								

@@ -26,7 +26,7 @@ function Parry(target, dmginfo)
 					target.parryTarget = attacker;
 					if(attacker:IsPlayer()) then netstream.Start(attacker, "Stunned", (attacker:HasBelief("encore") and 0.5 or 1)); end
 					
-					if wep.isLongsword and (!cwBeliefs or target:HasBelief("blademaster")) then
+					if wep.hasSwordplay and (!cwBeliefs or target:HasBelief("blademaster")) then
 						wep:SetNW2Bool("swordplayActive", true);
 						
 						wep:CreateTimer(0.5, "swordplayTimer"..wep:EntIndex(), function()
@@ -143,7 +143,7 @@ function Parry(target, dmginfo)
 						
 						target:SetLocalVar("ParrySuccess", true)
 						
-						if wep.isLongsword and (!cwBeliefs or target:HasBelief("blademaster")) then
+						if wep.hasSwordplay and (!cwBeliefs or target:HasBelief("blademaster")) then
 							wep:SetNW2Bool("swordplayActive", true);
 							
 							wep:CreateTimer(1.2, "swordplayTimer"..wep:EntIndex(), function()
@@ -1008,6 +1008,12 @@ local function Guarding(ent, dmginfo)
 						local melsta = ent:GetNWInt("Stamina", 100);
 						local blockamount = (blocktable["guardblockamount"]);
 						
+						if IsValid(enemywep) and enemywep:GetNW2String("activeOffhand"):len() > 0 then
+							if !isJavelin then
+								blockamount = blockamount * 0.5;
+							end
+						end
+						
 						if cwMedicalSystem then
 							local injuries = cwMedicalSystem:GetInjuries(ent);
 							
@@ -1231,7 +1237,7 @@ local function Guarding(ent, dmginfo)
 							end);
 						end
 						
-						if wep.isLongsword and (!cwBeliefs or ent:HasBelief("blademaster")) then
+						if wep.hasSwordplay and (!cwBeliefs or ent:HasBelief("blademaster")) then
 							wep:SetNW2Bool("swordplayActive", true);
 							
 							wep:CreateTimer(0.5, "swordplayTimer"..wep:EntIndex(), function()
@@ -1389,52 +1395,6 @@ local function Guarding(ent, dmginfo)
 					end
 				end
 				
-				-- If a beserker or a member of House Varazdat, gain HP back via lifeleech.
-				if attacker:GetSubfaction() == "Varazdat" then
-					if IsValid(enemywep) and enemywep.IsABegottenMelee then
-						
-						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
-						
-						attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
-						
-						timer.Simple(0.2, function()
-							if IsValid(attacker) then
-								attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
-							end
-						end);
-					end
-				else
-					if IsValid(enemywep) and enemywep.IsABegottenMelee and enemywep:GetNW2String("activeShield"):len() <= 0 then
-						local clothesItem = attacker:GetClothesEquipped();
-						
-						if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "lifeleech") then
-							attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
-							
-							attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
-							
-							timer.Simple(0.2, function()
-								if IsValid(attacker) then
-									attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
-								end
-							end);
-						end
-					end
-				end
-				
-				if cwBeliefs and attacker.HasBelief and attacker:HasBelief("thirst_blood_moon") and !attacker.opponent then
-					if attacker:GetCharacterData("LastZone") == "wasteland" and ((cwDayNight and cwDayNight.currentCycle == "night") or (cwWeather and cwWeather.weather == "bloodstorm")) then
-						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
-						
-						attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
-						
-						timer.Simple(0.2, function()
-							if IsValid(attacker) then
-								attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
-							end
-						end);
-					end
-				end
-				
 				if not attacker.opponent then
 					if isJavelin then
 						return;
@@ -1571,3 +1531,13 @@ concommand.Add("atyd", function(player)
 		Clockwork.player:NotifyAdmins("operator", "fucklet "..player:Name().." just tried to run atyd");
 	end
 end);
+
+-- Bot blocking tester.
+
+--[[local function StartCommandMeleeAutorun(player, ucmd)
+	if player:IsBot() and player:Alive() then
+		ucmd:SetButtons( IN_ATTACK2 )
+	end
+end
+
+hook.Add("StartCommand", "StartCommandMeleeAutorun", StartCommandMeleeAutorun)]]--

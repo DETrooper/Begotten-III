@@ -1078,14 +1078,14 @@ local COMMAND = Clockwork.command:New("Warcry");
 					warcry_beliefs = {};
 					player_has_belief = true;
 				else
-					sanity_debuff = -25;
+					sanity_debuff = -35;
 					warcry_beliefs = {"sadism"};
 				end
 			elseif player:GetNetVar("kinisgerOverride") == "Hillkeeper" then
 				warcry_beliefs = {}
 				player_has_belief = true;
 			else
-				sanity_debuff = -25;
+				sanity_debuff = -35;
 				warcry_beliefs = {"sadism"};
 			end
 		else
@@ -1098,7 +1098,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 					warcry_beliefs = {"father", "mother", "old_son", "young_son", "sister"};
 				end
 			elseif faith == "Faith of the Dark" then
-				sanity_debuff = -25;
+				sanity_debuff = -35;
 				warcry_beliefs = {"sadism"};
 			elseif faith == "Faith of the Light" and (faction == "Hillkeeper" or subfaction == "Low Ministry") then
 				warcry_beliefs = {}
@@ -1127,10 +1127,10 @@ local COMMAND = Clockwork.command:New("Warcry");
 				local radius = config.Get("talk_radius"):Get() * 2;
 				local playerPos = player:GetPos();
 				
-				player:HandleSanity(5);
+				player:HandleSanity(2);
 				
 				if player_has_watchful_raven and faction == "Hillkeeper" then
-					player:HandleSanity(10);
+					player:HandleSanity(5);
 					player:HandleStamina(10);
 					player.ravenBuff = true;
 					
@@ -1150,7 +1150,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 						
 						if faction ~= "Hillkeeper" then
 							if player_has_watchful_raven and Clockwork.player:DoesRecognise(v, player) then
-								v:HandleSanity(10);
+								v:HandleSanity(5);
 								v:HandleStamina(10);
 								v.ravenBuff = true;
 								
@@ -1198,7 +1198,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 									if v:HasBelief("saintly_composure") then
 										v:Disorient(2);
 									else
-										v:Disorient(8);
+										v:Disorient(5.5);
 									end
 								end
 							elseif faith == "Faith of the Family" then
@@ -1233,24 +1233,12 @@ local COMMAND = Clockwork.command:New("Warcry");
 											end
 										end
 										
-										if player_has_fearsome_wolf or player_has_daring_trout then
+										if player_has_fearsome_wolf then
 											if not player.warCryVictims then
 												player.warCryVictims = {};
 											end
 											
 											table.insert(player.warCryVictims, v);
-										end
-										
-										if player_has_daring_trout then
-											v.warcrySlowSpeed = curTime + 10;
-											
-											hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true);
-											
-											timer.Create("warcrySlowdown"..tostring(v:EntIndex()), 10.1, 1, function()
-												if IsValid(v) then
-													hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true);
-												end
-											end);
 										end
 									end
 								
@@ -1347,35 +1335,49 @@ local COMMAND = Clockwork.command:New("Warcry");
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a twisted warcry, screaming with the voices of their past victims!", playerPos, radius);
 				end
 				
-				if player_has_fearsome_wolf or player_has_daring_trout then
+				if player:HasBelief("deceitful_snake") then
+					if player.deceitfulLastDamages then
+						local healthToRestore = 0;
+						
+						for i, v in ipairs(player.deceitfulLastDamages) do
+							if v.damageTime >= (curTime - 2) then
+								healthToRestore = healthToRestore + (v.damage / 2);
+							end
+						end
+						
+						if healthToRestore > 0 then
+							player:SetHealth(math.min(player:Health() + healthToRestore, player:GetMaxHealth()));
+						end
+					end
+				end
+				
+				if player_has_daring_trout then
+					player.daringTroutActive = true;
+					
+					timer.Create("DaringTroutTimer_"..player:EntIndex(), 20, 1, function()
+						if IsValid(player) then
+							if player.daringTroutActive then
+								player.daringTroutActive = nil;
+							end
+						end
+					end);
+				end
+				
+				if player_has_fearsome_wolf then
 					netstream.Start(player, "UpgradedWarcry");
 					
-					if player_has_daring_trout then
-						timer.Simple(10.5, function()
-							if IsValid(player) and player.warCryVictims then
-								for i, victim in ipairs(player.warCryVictims) do
-									if IsValid(victim) then
-										hook.Run("RunModifyPlayerSpeed", victim, victim.cwInfoTable, true);
-									end
-								end
+					player.fearsomeSpeed = true;
+				
+					hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
+				
+					timer.Simple(20.5, function()
+						if IsValid(player) then
+							player.fearsomeSpeed = nil;
+							player.warCryVictims = nil;
 							
-								player.warCryVictims = nil;
-							end
-						end);
-					else
-						player.fearsomeSpeed = true;
-					
-						hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
-					
-						timer.Simple(20.5, function()
-							if IsValid(player) then
-								player.fearsomeSpeed = nil;
-								player.warCryVictims = nil;
-								
-								hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
-							end
-						end);
-					end
+							hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
+						end
+					end);
 				end
 				
 				player.lastWarCry = curTime + 60;

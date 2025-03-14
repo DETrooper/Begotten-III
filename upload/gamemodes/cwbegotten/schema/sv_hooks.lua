@@ -3215,8 +3215,10 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		elseif damageInfo:IsDamageType(DMG_BULLET) or damageInfo:IsDamageType(DMG_BUCKSHOT) then
 			local subfaction = entity:GetSubfaction();
 		
-			if subfaction == "Philimaxio" or subfaction == "Knights of Sol" then
+			if subfaction == "Knights of Sol" then
 				damageInfo:ScaleDamage(0.3);
+			elseif subfaction == "Philimaxio" then
+				damageInfo:ScaleDamage(0.5);
 			end
 		end;
 	elseif (entity:IsNPC() or entity:IsNextBot()) then
@@ -3464,7 +3466,7 @@ end
 function Schema:ModifyPlayerSpeed(player, infoTable, action)
 	local subfaction = player:GetSubfaction();
 	
-	if subfaction == "Philimaxio" or subfaction == "Knights of Sol" then
+	if subfaction == "Knights of Sol" then
 		infoTable.runSpeed = infoTable.runSpeed * 0.9;
 	elseif subfaction == "Varazdat" then
 		if player:Health() > player:GetMaxHealth() * 0.95 then

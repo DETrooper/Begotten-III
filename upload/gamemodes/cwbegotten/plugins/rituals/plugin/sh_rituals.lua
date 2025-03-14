@@ -607,17 +607,18 @@ RITUAL = cwRituals.rituals:New("call_to_darkness");
 RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("cherished_by_evil");
-	RITUAL.name = "(T1) Cherished By Evil";
-	RITUAL.description = "Insanity is for the weak, and your soul surely won't be taken without a reasonable sum. Performing this ritual instantly restores your sanity to full, and removes 50 points of corruption.";
-	RITUAL.onerequiredbelief = {"soothsayer", "witch", "witch_druid"}; -- Tier I Faith of the Dark Ritual
+	RITUAL.name = "(T2) Cherished By Evil";
+	RITUAL.description = "Insanity is for the weak, and your soul surely won't be taken without a reasonable sum. Performing this ritual instantly restores your sanity to full, replenishes 50% of your maximum blood level and cleanses all corruption.";
+	RITUAL.onerequiredbelief = {"soothsayer", "heretic", "shedskin"}; -- Tier II Faith of the Dark Ritual
 	
 	RITUAL.requirements = {"ice_catalyst", "purifying_stone", "elysian_catalyst"};
-	RITUAL.corruptionCost = -50;
+	RITUAL.corruptionCost = -100;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 25;
 	
 	function RITUAL:OnPerformed(player)
 		player:HandleSanity(100);
+		player:SetBloodLevel(player:GetNWInt("bloodLevel", 5000) + 1250);
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -753,7 +754,7 @@ RITUAL:Register()]]--
 
 RITUAL = cwRituals.rituals:New("empowered_blood");
 	RITUAL.name = "(T2) Empowered Blood";
-	RITUAL.description = "Bloodlines mean all to the Children of Satan, especially those which have descent from ancient kings and sorcerers. Those with the purest bloodlines can draw on the strength of their ancestors to temporarily increase their maximum health by 50 for 15 minutes. Incurs 10 corruption.";
+	RITUAL.description = "Bloodlines mean all to the Children of Satan, especially those which have descent from ancient kings and sorcerers. Those with the purest bloodlines can draw on the strength of their ancestors to temporarily increase their maximum health by 50 for 20 minutes. Incurs 10 corruption.";
 	RITUAL.onerequiredbelief = {"soothsayer", "heretic", "shedskin"}; -- Tier II Faith of the Dark Ritual
 	
 	RITUAL.requirements = {"pentagram_catalyst", "belphegor_catalyst", "elysian_catalyst"};
@@ -766,7 +767,7 @@ RITUAL = cwRituals.rituals:New("empowered_blood");
 		player:SetMaxHealth(player:GetMaxHealth());
 		player:SetHealth(player:Health() + 50);
 		
-		timer.Create("EmpoweredBloodTimer_"..player:EntIndex(), 900, 1, function()
+		timer.Create("EmpoweredBloodTimer_"..player:EntIndex(), 1200, 1, function()
 			if IsValid(player) then
 				player.maxHealthBoost = nil;
 				
@@ -1068,10 +1069,6 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil");
 										end
 									end
 								end
-								
-								if player:GetSubfaction() ~= "Rekh-khet-sa" then
-									player:HandleNeed("corruption", 30);
-								end
 							end
 						end);
 						
@@ -1109,9 +1106,18 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil_target");
 	RITUAL.takeCatalysts = false;
 	
 	function RITUAL:OnPerformed(player)
-		local target = player:GetEyeTraceNoCursor().Entity;
+		local ent = player:GetEyeTraceNoCursor().Entity;
+		local target;
 		
-		if IsValid(target) and target:IsPlayer() then
+		if IsValid(ent) then
+			if ent:IsPlayer() then
+				target = ent;
+			elseif Clockwork.entity:IsPlayerRagdoll(ent) then
+				target = Clockwork.entity:GetPlayer(ent);
+			end
+		end
+		
+		if target then
 			if target:Alive() then
 				--if target:GetFaith() ~= "Faith of the Dark" then
 				if target:GetFaction() ~= "Children of Satan" then
@@ -1127,10 +1133,6 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil_target");
 								
 								Schema:EasyText(player, "maroon", target:Name().." has been marked for death.");
 								Schema:EasyText(Schema:GetAdmins(), "tomato", target:Name().." has been marked for death by "..player:Name().."!");
-								
-								if player:GetSubfaction() ~= "Rekh-khet-sa" then
-									player:HandleNeed("corruption", 30);
-								end
 							end
 						end);
 						
@@ -1147,15 +1149,26 @@ RITUAL = cwRituals.rituals:New("mark_of_the_devil_target");
 		else
 			Schema:EasyText(player, "firebrick", "You must look at a valid character!");
 		end
+		
+		Schema:EasyText(player, "firebrick", "You must look at a valid character!");
 
 		return false;
 	end;
 	function RITUAL:OnFail(player)
 	end;
 	function RITUAL:StartRitual(player)
-		local target = player:GetEyeTraceNoCursor().Entity;
+		local ent = player:GetEyeTraceNoCursor().Entity;
+		local target;
 		
-		if IsValid(target) and target:IsPlayer() then
+		if IsValid(ent) then
+			if ent:IsPlayer() then
+				target = ent;
+			elseif Clockwork.entity:IsPlayerRagdoll(ent) then
+				target = Clockwork.entity:GetPlayer(ent);
+			end
+		end
+		
+		if target then
 			if target:Alive() then
 				--if target:GetFaith() ~= "Faith of the Dark" then
 				if target:GetFaction() ~= "Children of Satan" then
@@ -1325,9 +1338,18 @@ RITUAL = cwRituals.rituals:New("regrowth_target");
 	function RITUAL:OnFail(player)
 	end;
 	function RITUAL:StartRitual(player)
-		local target = player:GetEyeTraceNoCursor().Entity;
+		local ent = player:GetEyeTraceNoCursor().Entity;
+		local target;
 		
-		if IsValid(target) and target:IsPlayer() then
+		if IsValid(ent) then
+			if ent:IsPlayer() then
+				target = ent;
+			elseif Clockwork.entity:IsPlayerRagdoll(ent) then
+				target = Clockwork.entity:GetPlayer(ent);
+			end
+		end
+		
+		if target then
 			if target:Alive() then
 				if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
 					return true;
@@ -1344,9 +1366,18 @@ RITUAL = cwRituals.rituals:New("regrowth_target");
 		return false;
 	end;
 	function RITUAL:EndRitual(player)
-		local target = player:GetEyeTraceNoCursor().Entity;
+		local ent = player:GetEyeTraceNoCursor().Entity;
+		local target;
 		
-		if IsValid(target) and target:IsPlayer() then
+		if IsValid(ent) then
+			if ent:IsPlayer() then
+				target = ent;
+			elseif Clockwork.entity:IsPlayerRagdoll(ent) then
+				target = Clockwork.entity:GetPlayer(ent);
+			end
+		end
+		
+		if target then
 			if target:Alive() then
 				if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
 					--local max_poise = target:GetMaxPoise();
@@ -1834,14 +1865,13 @@ RITUAL:Register()
 --]]
 
 RITUAL = cwRituals.rituals:New("summon_champion");
-	RITUAL.name = "(T3) Summon Champion";
-	RITUAL.description = "Rise up an eternally damned mercenary to do your bidding. It wields a shield and steel weapon. It will be hostile towards anyone not of the Faith of the Dark. 15 second cast time. Adds an 8 minute cooldown to all summons. Incurs 15 corruption.";
-	RITUAL.onerequiredbelief = {"sorcerer"}; -- Tier III Faith of the Dark Ritual
-	RITUAL.requiredBeliefsSubfactionOverride = {["Rekh-khet-sa"] = {"embrace_the_darkness"}}; -- Tier III Faith of the Dark Ritual
+	RITUAL.name = "(Unique) Summon Champion";
+	RITUAL.description = "Rise up an eternally damned mercenary to do your bidding. It wields a shield and steel weapon. It will be hostile towards anyone not of the Faith of the Dark. 10 second cast time. Adds an 8 minute cooldown to all summons. Incurs 15 corruption.";
+	RITUAL.requiredSubfaction = {"Rekh-khet-sa"}; -- Tier III Subfaction Ritual
 	
 	RITUAL.requirements = {"tortured_spirit", "down_catalyst", "down_catalyst"};
 	RITUAL.corruptionCost = 15;
-	RITUAL.ritualTime = 15;
+	RITUAL.ritualTime = 10;
 	RITUAL.experience = 60;
 	
 	function RITUAL:OnPerformed(player)
@@ -1921,7 +1951,6 @@ RITUAL = cwRituals.rituals:New("summon_champion");
 					entity:CustomInitialize();
 					entity:Spawn();
 					entity:Activate();
-					entity:SetHealth(math.random(200, 300));
 
 					entity:SetColor(Color(255,0,0));
 					entity:SetMaterial("models/effects/splode_sheet");
@@ -2043,7 +2072,6 @@ RITUAL = cwRituals.rituals:New("summon_soldier");
 					entity:CustomInitialize();
 					entity:Spawn();
 					entity:Activate();
-					entity:SetHealth(math.random(125, 200));
 
 					entity:SetColor(Color(255,0,0));
 					entity:SetMaterial("models/effects/splode_sheet");
@@ -2639,7 +2667,6 @@ RITUAL = cwRituals.rituals:New("summon_familiar_elk");
 				
 				if IsValid(entity) then
 					entity:Spawn();
-					entity:SetHealth(475);
 					entity:Activate(); 
 					entity:SetMaterial("models/props_combine/portalball001_sheet")
 					entity:AddEntityRelationship(player, D_LI, 99);
