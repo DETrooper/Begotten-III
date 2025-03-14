@@ -40,7 +40,7 @@ SWEP.IgniteTime = nil
 SWEP.FreezeTime = 10
 SWEP.FreezeDamage = 45;
 SWEP.MultiHit = 2;
-SWEP.isLongsword = true;
+SWEP.hasSwordplay = true;
 
 --Sounds
 SWEP.AttackSoundTable = "HeavyMetalAttackSoundTable"

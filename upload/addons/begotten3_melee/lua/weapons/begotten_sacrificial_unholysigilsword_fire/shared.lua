@@ -39,7 +39,7 @@ SWEP.AmbientEffect = "env_embers_small"
 SWEP.IgniteTime = 3
 SWEP.FreezeTime = nil
 SWEP.MultiHit = 2;
-SWEP.isLongsword = true;
+SWEP.hasSwordplay = true;
 
 --Sounds
 SWEP.AttackSoundTable = "HeavyMetalAttackSoundTable"

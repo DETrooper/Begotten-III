@@ -27,6 +27,9 @@ SWEP.ParryAnim = "a_sword_parry"
 SWEP.IronSightsPos = Vector(-7.64, -6.433, -0.96)
 SWEP.IronSightsAng = Vector(-2.814, 8.442, -48.543)
 
+SWEP.hasSwordplay = true;
+SWEP.isArmingSword = true;
+
 --Sounds
 SWEP.AttackSoundTable = "MediumMetalAttackSoundTable"
 SWEP.BlockSoundTable = "MetalBlockSoundTable"
@@ -42,11 +45,16 @@ function SWEP:CriticalAnimation()
 
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
 	local attacktable = GetTable(self.AttackTable)
+	local rate = 0.45
+	
+	if self:GetNW2Bool("swordplayActive") == true then
+		rate = 0.55
+	end
 
 	-- Viewmodel attack animation!
 	local vm = self.Owner:GetViewModel()
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( "misscenter1" ) )
-	self.Owner:GetViewModel():SetPlaybackRate(0.45)
+	self.Owner:GetViewModel():SetPlaybackRate(rate)
 	
 	if (SERVER) then
 	timer.Simple( 0.05, function() if self:IsValid() then
@@ -66,18 +74,25 @@ function SWEP:HandlePrimaryAttack()
 
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
 	local attacktable = GetTable(self.AttackTable)
+	
+	local isShieldActive = self:GetNW2String("activeShield"):len() > 0
+	local isSwordplayActive = self:GetNW2Bool("swordplayActive")
+	local rate = 0.45
 
-	--Attack animation
-	if self:GetNW2String("activeShield"):len() > 0 then
-		self:TriggerAnim(self.Owner, "a_sword_shield_attack_slash_slow_01");
+	if isSwordplayActive then
+		anim = isShieldActive and "a_sword_shield_attack_slash_fast_01" or "a_sword_attack_slash_fast_0" .. math.random(1, 2)
+		rate = 0.55
 	else
-		self:TriggerAnim(self.Owner, "a_sword_attack_slash_slow_0"..math.random(1,2));
+		anim = isShieldActive and "a_sword_shield_attack_slash_slow_01" or "a_sword_attack_slash_slow_0" .. math.random(1, 2)
 	end
+	
+	--Attack animation
+	self:TriggerAnim(self.Owner, anim);
 
 	-- Viewmodel attack animation!
 	local vm = self.Owner:GetViewModel()
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( "misscenter1" ) )
-	self.Owner:GetViewModel():SetPlaybackRate(0.45)
+	self.Owner:GetViewModel():SetPlaybackRate(rate)
 	
 	self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
 	self.Owner:ViewPunch(attacktable["punchstrength"])
@@ -88,18 +103,25 @@ function SWEP:HandleThrustAttack()
 
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
 	local attacktable = GetTable(self.AttackTable)
+	local rate = 0.45;
+	
+	local isShieldActive = self:GetNW2String("activeShield"):len() > 0
+	local isSwordplayActive = self:GetNW2Bool("swordplayActive")
 
-	--Attack animation
-	if self:GetNW2String("activeShield"):len() > 0 then
-		self:TriggerAnim(self.Owner, "a_sword_shield_attack_stab_medium_01");
+	if isSwordplayActive then
+		anim = isShieldActive and "a_sword_shield_attack_stab_fast_01" or "a_sword_attack_stab_fast_01"
+		rate = 0.6
 	else
-		self:TriggerAnim(self.Owner, "a_sword_attack_stab_medium_01");
+		anim = isShieldActive and "a_sword_shield_attack_stab_medium_01" or "a_sword_attack_stab_medium_01"
 	end
+	
+	--Attack animation
+	self:TriggerAnim(self.Owner, anim);
 
 	-- Viewmodel attack animation!
 	local vm = self.Owner:GetViewModel()
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( "thrust1" ) )
-	self.Owner:GetViewModel():SetPlaybackRate(0.45)
+	self.Owner:GetViewModel():SetPlaybackRate(rate)
 	
 	self.Weapon:EmitSound(attacksoundtable["altsound"][math.random(1, #attacksoundtable["altsound"])])
 	self.Owner:ViewPunch(attacktable["punchstrength"])
