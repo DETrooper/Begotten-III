@@ -140,14 +140,11 @@ function cwAnimatedLegs:CreateLegs()
 				end
 			end
 		end
-		
-		self.LegsEntity = ClientsideModel(model, RENDER_GROUP_OPAQUE_ENTITY)
-		self.LegsEntity:SetMaterial(Clockwork.Client:GetMaterial())
-	else
-		self.LegsEntity = ClientsideModel(model, RENDER_GROUP_OPAQUE_ENTITY)
-		self.LegsEntity:SetSkin(Clockwork.Client:GetSkin())
-		self.LegsEntity:SetMaterial(Clockwork.Client:GetMaterial())
 	end
+
+	self.LegsEntity = ClientsideModel(model, RENDER_GROUP_OPAQUE_ENTITY)
+	self.LegsEntity:SetSkin(Clockwork.Client:GetSkin())
+	self.LegsEntity:SetMaterial(Clockwork.Client:GetMaterial())
 	
 	self.LegsEntity:SetNoDraw(true)
 	self.LegsEntity.LastTick = 0
