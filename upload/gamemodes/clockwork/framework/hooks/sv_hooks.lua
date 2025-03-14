@@ -3746,7 +3746,7 @@ function GM:PlayerDeath(player, inflictor, attacker, damageInfo)
 		end
 	elseif IsValid(inflictor) then
 		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, inflictor:GetClass().." has dealt "..tostring(math.ceil(damageInfo:GetDamage())).." damage to "..player:Name()..", killing them!")
-		hook.Run("DamageLog", player, inflictor, damageInfo:GetDamage(), "");
+		hook.Run("KillLog", player, inflictor, damageInfo:GetDamage(), "");
 	elseif damageInfo:IsFallDamage() then
 		Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, player:Name().." has taken "..tostring(math.ceil(damageInfo:GetDamage())).." damage from fall damage, killing them!")
 		hook.Run("KillLog", player, false, damageInfo:GetDamage(), " from fall damage");
