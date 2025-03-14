@@ -37,6 +37,18 @@ end
 -- Called at an interval while the player is connected to the server.
 function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	if initialized and alive then
+		if plyTab.deceitfulLastDamages then
+			for i, v in ipairs(plyTab.deceitfulLastDamages) do
+				if v.damageTime < (curTime - 2) then
+					table.remove(plyTab.deceitfulLastDamages, i);
+				end
+			end
+			
+			if table.IsEmpty(plyTab.deceitfulLastDamages) then
+				plyTab.deceitfulLastDamages = nil;
+			end
+		end
+	
 		if (!plyTab.residualXPCheck or plyTab.residualXPCheck < curTime) then
 			plyTab.residualXPCheck = curTime + 60;
 			
@@ -1467,23 +1479,30 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 		end
 	end
 	
-	if entity:IsPlayer() and not entTab.opponent and damage >= 10 then
-		if cwCharacterNeeds then
-			if entity:HasBelief("prison_of_flesh") then
-				if entity:HasTrait("possessed") then
-					local corruption = entity:GetNeed("corruption");
-					local reduction = math.max(-(damage / 2), -(math.max(corruption, 50) - 50));
+	if entity:IsPlayer() and damage > 0 then
+		if entity:HasBelief("deceitful_snake") then
+			if !entity.deceitfulLastDamages then
+				entity.deceitfulLastDamages = {};
+			end
+			
+			table.insert(entity.deceitfulLastDamages, {damageTime = CurTime(), damage = damage});
+		end
+		
+		if not entTab.opponent and damage >= 10 then
+			if cwCharacterNeeds then
+				if entity:HasBelief("prison_of_flesh") then
+					if entity:HasTrait("possessed") then
+						local corruption = entity:GetNeed("corruption");
+						local reduction = math.max(-(damage / 2), -(math.max(corruption, 50) - 50));
 
-					entity:HandleNeed("corruption", reduction);
-				else
-					entity:HandleNeed("corruption", -(damage / 2));
+						entity:HandleNeed("corruption", reduction);
+					else
+						entity:HandleNeed("corruption", -(damage / 2));
+					end
 				end
 			end
 		end
 	end
-	
-	local attacker = damageInfo:GetAttacker();
-	local damage = damageInfo:GetDamage();
 	
 	if damage > 0 then
 		--[[if IsValid(attacker) and attacker:IsPlayer() and not attacker.cwWakingUp then
@@ -1502,7 +1521,6 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 		
 		if entity:IsPlayer() and not entTab.cwWakingUp then
 			local clothesItem = entity:GetClothesEquipped();
-			
 			if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
 				local hatred = math.min(entity:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 1.5))), 100);
 				
@@ -1511,6 +1529,68 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 				end
 				
 				entity:SetLocalVar("Hatred", hatred);
+			end
+			
+			if IsValid(attacker) and attacker:IsPlayer() then
+				local enemywep = attacker:GetActiveWeapon();
+			
+				-- If a beserker or a member of House Varazdat, gain HP back via lifeleech.
+				if attacker:GetSubfaction() == "Varazdat" then
+					if IsValid(enemywep) and enemywep.IsABegottenMelee then
+						local clothesItem = attacker:GetClothesEquipped();
+						local modifier = 1.45;
+
+						if clothesItem then
+							if clothesItem.weightclass == "Medium" then
+								modifier = 2;
+							elseif clothesItem.weightclass == "Heavy" then
+								modifier = 3.25;
+							end
+						end
+						
+						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (damageInfo:GetDamage() / modifier)), 0, attacker:GetMaxHealth()));
+						
+						attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
+						
+						timer.Simple(0.2, function()
+							if IsValid(attacker) then
+								attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
+							end
+						end);
+					end
+				else
+					if IsValid(enemywep) and enemywep.IsABegottenMelee and enemywep:GetNW2String("activeShield"):len() <= 0 then
+						local clothesItem = attacker:GetClothesEquipped();
+						
+						if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "lifeleech") then
+							attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (damageInfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
+							
+							attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
+							
+							timer.Simple(0.2, function()
+								if IsValid(attacker) then
+									attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
+								end
+							end);
+						end
+					end
+				end
+				
+				if attacker:HasBelief("thirst_blood_moon") and !attacker.opponent then
+					local lastZone = attacker:GetCharacterData("LastZone");
+					
+					if (lastZone == "wasteland" and ((cwDayNight and cwDayNight.currentCycle == "night") or (cwWeather and cwWeather.weather == "bloodstorm"))) or lastZone == "caves"  then
+						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (damageInfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
+						
+						attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
+						
+						timer.Simple(0.2, function()
+							if IsValid(attacker) then
+								attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
+							end
+						end);
+					end
+				end
 			end
 		end
 		

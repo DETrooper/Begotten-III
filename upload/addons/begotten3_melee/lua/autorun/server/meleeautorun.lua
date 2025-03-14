@@ -1395,63 +1395,6 @@ local function Guarding(ent, dmginfo)
 					end
 				end
 				
-				-- If a beserker or a member of House Varazdat, gain HP back via lifeleech.
-				if attacker:GetSubfaction() == "Varazdat" then
-					if IsValid(enemywep) and enemywep.IsABegottenMelee then
-						
-						local clothesItem = attacker:GetClothesEquipped();
- 						local modifier = 1.45;
- 
- 						if clothesItem then
- 							if clothesItem.weightclass == "Medium" then
- 								modifier = 2;
- 							elseif clothesItem.weightclass == "Heavy" then
- 								modifier = 3.25;
- 							end
- 						end
-						
-						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / modifier)), 0, attacker:GetMaxHealth()));
-						
-						attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
-						
-						timer.Simple(0.2, function()
-							if IsValid(attacker) then
-								attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
-							end
-						end);
-					end
-				else
-					if IsValid(enemywep) and enemywep.IsABegottenMelee and enemywep:GetNW2String("activeShield"):len() <= 0 then
-						local clothesItem = attacker:GetClothesEquipped();
-						
-						if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "lifeleech") then
-							attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
-							
-							attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
-							
-							timer.Simple(0.2, function()
-								if IsValid(attacker) then
-									attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
-								end
-							end);
-						end
-					end
-				end
-				
-				if cwBeliefs and attacker.HasBelief and attacker:HasBelief("thirst_blood_moon") and !attacker.opponent then
-					if attacker:GetCharacterData("LastZone") == "wasteland" and ((cwDayNight and cwDayNight.currentCycle == "night") or (cwWeather and cwWeather.weather == "bloodstorm")) then
-						attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (dmginfo:GetDamage() / 2)), 0, attacker:GetMaxHealth()));
-						
-						attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
-						
-						timer.Simple(0.2, function()
-							if IsValid(attacker) then
-								attacker:ScreenFade(SCREENFADE.IN, Color(100, 20, 20, 80), 0.2, 0);
-							end
-						end);
-					end
-				end
-				
 				if not attacker.opponent then
 					if isJavelin then
 						return;

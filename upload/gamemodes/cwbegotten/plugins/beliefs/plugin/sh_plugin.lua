@@ -1335,8 +1335,25 @@ local COMMAND = Clockwork.command:New("Warcry");
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a twisted warcry, screaming with the voices of their past victims!", playerPos, radius);
 				end
 				
+				if player:HasBelief("deceitful_snake") then
+					if player.deceitfulLastDamages then
+						local healthToRestore = 0;
+						
+						for i, v in ipairs(player.deceitfulLastDamages) do
+							if v.damageTime >= (curTime - 2) then
+								healthToRestore = healthToRestore + (v.damage / 2);
+							end
+						end
+						
+						if healthToRestore > 0 then
+							player:SetHealth(math.min(player:Health() + healthToRestore, player:GetMaxHealth()));
+						end
+					end
+				end
+				
 				if player_has_daring_trout then
 					player.daringTroutActive = true;
+					
 					timer.Create("DaringTroutTimer_"..player:EntIndex(), 20, 1, function()
 						if IsValid(player) then
 							if player.daringTroutActive then

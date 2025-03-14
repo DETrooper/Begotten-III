@@ -55,11 +55,17 @@ function ENT:OnTakeDamage(damageInfo)
 				self.strikesRequired = math.random(20, 40);
 			end
 			
+			local damageDealt = 1;
+			
 			if activeWeapon and activeWeapon.isPickaxe then
-				self.strikesRequired = self.strikesRequired - 4;
-			else
-				self.strikesRequired = self.strikesRequired - 1;
+				damageDealt = 4;
 			end
+			
+			if activeWeapon and activeWeapon:GetOffhand() then
+				damageDealt = damageDealt / 2;
+			end
+			
+			self.strikesRequired = self.strikesRequired - damageDealt;
 			
 			if cwCharacterNeeds and player.HandleNeed then
 				player:HandleNeed("thirst", 0.75);

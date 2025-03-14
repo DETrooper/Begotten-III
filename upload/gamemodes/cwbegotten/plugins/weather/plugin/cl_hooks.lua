@@ -146,9 +146,11 @@ function cwWeather:OverrideZoneFogColors(zoneTable)
 end
 
 function cwWeather:OverrideZoneFogDistance(zoneTable, fogStart, fogEnd)
+	local map = game.GetMap();
+
 	if Clockwork.kernel:IsChoosingCharacter() then
 		if cwMapScene and Clockwork.Client.MenuVector and cwMapScene.curStored and cwMapScene.curStored.position and cwMapScene.curStored.position:IsEqualTol(Clockwork.Client.MenuVector, 5) then
-			if game.GetMap() == "rp_district21" then
+			if map == "rp_district21" then
 				return 128, 1024;
 			else
 				return 4000, 4028;
@@ -159,13 +161,21 @@ function cwWeather:OverrideZoneFogDistance(zoneTable, fogStart, fogEnd)
 	end
 
 	if Clockwork.Client.dueling then return end;
-	if Clockwork.Client:InTower() then return end;
 
 	if self.weather and zoneTable.hasWeather then
 		local weatherTable = self.weatherTypes[self.weather];
 		
 		if weatherTable then
 			local targetStart, targetEnd;
+			
+			if map == "rp_district21" then
+				if (!self:IsOutside(Clockwork.Client:GetPos()) and Clockwork.Client:InTower()) then
+					targetStart = self.weatherTypes["normal"].fogStart * 1.5;
+					targetEnd = self.weatherTypes["normal"].fogEnd * 1.5;
+				end
+			elseif map == "rp_begotten3" and Clockwork.Client:InTower() then
+				return fogStart, fogEnd;
+			end
 			
 			if cwDayNight and cwDayNight.nightWeight then
 				if zoneTable.hasNight then
@@ -175,19 +185,12 @@ function cwWeather:OverrideZoneFogDistance(zoneTable, fogStart, fogEnd)
 					end
 				end
 			end
-			
-			if game.GetMap() == "rp_district21" then
-				if (!self:IsOutside(Clockwork.Client:GetPos()) and Clockwork.Client:InTower()) then
-					targetStart = self.weatherTypes["normal"].fogStart * 1.5;
-					targetEnd = self.weatherTypes["normal"].fogEnd * 1.5;
-				end
-			end
 
 			if !targetStart or !targetEnd then
 				targetStart = weatherTable.fogStart or fogStart;
 				targetEnd = weatherTable.fogEnd or fogEnd;
 			end
-			
+
 			return targetStart, targetEnd;
 		end
 	end

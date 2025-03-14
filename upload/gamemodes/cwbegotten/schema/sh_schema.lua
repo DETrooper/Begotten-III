@@ -28,7 +28,9 @@ Clockwork.flag:Add("I", "No Limb Damage", "Take no limb damage.")
 Clockwork.flag:Add("N", "No Character Needs", "Character needs (i.e. hunger) will not affect you.")
 Clockwork.flag:Add("M", "No Pain Sounds", "No pain or death sounds from your character.")
 
-if (game.GetMap() == "rp_begotten3") then
+local map = game.GetMap();
+
+if (map == "rp_begotten3") then
 	Schema.MapLocations = {
 		["castle"] = Vector(-12972, -12901, -1529),
 		["city"] = Vector(-357, -4365, -1870),
@@ -49,7 +51,7 @@ if (game.GetMap() == "rp_begotten3") then
 		["toothboy"] = Vector(12646, -12983, -1074),
 		["tower"] = Vector(-84, 11626, -1081),
 	}
-elseif (game.GetMap() == "rp_begotten_redux") then
+elseif (map == "rp_begotten_redux") then
 	Schema.MapLocations = {
 		["church"] = Vector(-13184, -8123, 163),
 		["city"] = Vector(-6317, -8067, 709),
@@ -61,7 +63,7 @@ elseif (game.GetMap() == "rp_begotten_redux") then
 		["pillars"] = Vector(-5675, 8253, 1454),
 		["town"] = Vector(-9805, -8128, 463),
 	}
-elseif (game.GetMap() == "rp_scraptown") then
+elseif (map == "rp_scraptown") then
 	Schema.MapLocations = {
 		["duel_bridge"] = Vector(11855, -12557, -6132),
 		["duel_hell"] = Vector(-11684, -8681, -12481),
@@ -71,7 +73,7 @@ elseif (game.GetMap() == "rp_scraptown") then
 		["scrapfactory"] = Vector(-5816.024414, -7112.630859, -787.41449),
 		["scraptown"] = Vector(-4161.598633, -3384.802979, 571),
 	}
-elseif (game.GetMap() == "rp_district21") then
+elseif (map == "rp_district21") then
 	Schema.MapLocations = {
 		["church"] = Vector(5299, -13730, -496),
 		["docks"] = Vector(-12920, -12259, -862),
