@@ -66,6 +66,7 @@ function PLUGIN:Tick()
 					clothesEnt:AddEffects(EF_BONEMERGE);
 					clothesEnt:SetColor(v:GetColor());
 					clothesEnt:SetNoDraw(v:GetNoDraw());
+					clothesEnt:SetSkin(v:GetSkin());
 					
 					vTab.clothesEnt = clothesEnt;
 				end
