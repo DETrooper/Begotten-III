@@ -8448,7 +8448,7 @@ RECIPE:Register()
 			["scrap"] = {amount = 5},
 		};
 		RECIPE.result = {
-			["scrap_helmet"] = {amount = 1},
+			["scrapper_machinist_plate_helmet"] = {amount = 1},
 		};
 		RECIPE.category = "Armor"
 		RECIPE.finishSound = "generic_ui/refine_success_02.wav";
