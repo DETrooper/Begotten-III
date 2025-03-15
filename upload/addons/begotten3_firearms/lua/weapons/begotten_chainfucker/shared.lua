@@ -44,6 +44,7 @@ SWEP.noDisarm = true;
 SWEP.noJam = true;
 
 SWEP.Primary.Sound			= Sound("gatling/gatling_close_shot_4.mp3")		-- Script that calls the primary fire sound
+SWEP.Primary.FarSound 		= Sound("gatling/gatling_close_shot_4_distant.mp3");
 SWEP.Primary.RPM			= 1200			-- This is in Rounds Per Minute
 SWEP.Primary.ClipSize			= 200		-- Size of a clip
 SWEP.Primary.DefaultClip		= 0		-- Bullets you start with
@@ -100,11 +101,48 @@ function SWEP:PrimaryAttack()
 			bullet.Callback = function(attacker, tracedata, dmginfo)
 				dmginfo:SetInflictor(self);
 			end
+			
+			if SERVER then
+				local playerTab = {};
+				local farPlayers = {};
+
+				if zones then
+					playerTab = zones:GetPlayersInSupraZone(zones:GetPlayerSupraZone(self.Owner));
+				else
+					playerTab = _player.GetAll();
+				end
+				
+				local pos = self.Owner:GetPos();
+				
+				-- Close sound.
+				local filter = RecipientFilter();
+				
+				for i, v in ipairs(playerTab) do
+					if v:GetPos():Distance(pos) < 1600 then
+						filter:AddPlayer(v);
+					else
+						table.insert(farPlayers, v);
+					end
+				end
+				
+				self.Weapon:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0, filter);
+				
+				filter = RecipientFilter();
+				
+				-- Far sound.
+				for i, v in ipairs(farPlayers) do
+					filter:AddPlayer(v);
+				end
+				
+				if math.random(1, 3) == 3 then -- this is ghetto
+					self.Weapon:EmitSound(self.Primary.FarSound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0, filter);
+				end
+			end
 
 			self:ShootEffects()
 			self.Owner:FireBullets(bullet)
 			self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-			self.Weapon:EmitSound(self.Primary.Sound, 511, math.random(95, 102));
+			--self.Weapon:EmitSound(self.Primary.Sound, 511, math.random(95, 102));
 			self.Owner:SetAnimation( PLAYER_ATTACK1 )
 			self.Owner:MuzzleFlash()
 			self.Weapon:SetNextPrimaryFire(CurTime()+1/(self.Primary.RPM/60))

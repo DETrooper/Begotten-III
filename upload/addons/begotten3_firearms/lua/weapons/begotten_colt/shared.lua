@@ -68,7 +68,7 @@ SWEP.MisfireChance = 0;
 SWEP.AmmoTypes = {
 	["Old World Shot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("weapons/m1911/m1911_fp.wav");
-		SWEP.Primary.FarSound = Sound("weapons/m1911/m1911_dist.wav");
+		SWEP.Primary.FarSound = Sound("weapons/m1911/m1911_dist.mp3");
 		SWEP.Primary.NumShots = 1;
 		SWEP.Primary.Damage = 60;
 		SWEP.Primary.Spread = .02;
@@ -101,7 +101,7 @@ SWEP.AmmoTypes = {
 	end,
 	["Old World Magazine"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("weapons/m1911/m1911_fp.wav");
-		SWEP.Primary.FarSound = Sound("weapons/m1911/m1911_dist.wav");
+		SWEP.Primary.FarSound = Sound("weapons/m1911/m1911_dist.mp3");
 		SWEP.Primary.NumShots = 1;
 		SWEP.Primary.Damage = 60;
 		SWEP.Primary.Spread = .02;

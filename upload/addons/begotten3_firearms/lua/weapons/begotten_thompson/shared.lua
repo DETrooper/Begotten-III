@@ -99,6 +99,7 @@ SWEP.AmmoTypes = {
 	end,
 	["Old World Large Magazine"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("weapons/thompson_01.wav");
+		SWEP.Primary.FarSound = Sound("weapons/thompson_01_distant.mp3");
 		SWEP.Primary.NumShots = 1;
 		SWEP.Primary.Damage = 60;
 		SWEP.Primary.Spread = .02;
