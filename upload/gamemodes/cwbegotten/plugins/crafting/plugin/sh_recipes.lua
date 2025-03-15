@@ -7842,7 +7842,7 @@ RECIPE:Register()
 	RECIPE = cwRecipes.recipes:New("knight_plate_purify");
 		RECIPE.name = "(Purify) Knight Plate";
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requiredFaiths = {"Faith of the Light"};
 		RECIPE.requirements = {
 			["exile_knight_armor"] = {amount = 1},
 			["light_catalyst"] = {amount = 3},
@@ -8160,7 +8160,7 @@ RECIPE:Register()
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrapper_grunt_plate"] = {amount = 1},
-			["scrap"] = {amount = 4},
+			["scrap"] = {amount = 5},
 		};
 		RECIPE.result = {
 			["scrapper_machinist_plate"] = {amount = 1},
@@ -8428,6 +8428,64 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
 		RECIPE.experience = 25;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("scrapper_machinist_plate_helmet");
+		RECIPE.name = "Scrapper Machinist Plate Helmet";
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
+		RECIPE.requirements = {
+			["scrap_helmet"] = {amount = 1},
+			["scrap"] = {amount = 5},
+		};
+		RECIPE.result = {
+			["scrap_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/refine_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 35;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("scrapper_smog_priest_helmet");
+		RECIPE.name = "Scrapper Smog Priest Helmet";
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
+		RECIPE.requirements = {
+			["scrap_helmet"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
+			["small_oil"] = {amount = 1},
+			["leather"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["scrapper_smog_priest_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/refine_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 40;
 		
 		function RECIPE:OnCraft(player)
 		end;

@@ -738,3 +738,69 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Scrapper Machinist Plate Helmet"
+	ITEM.model = "models/begotten/headgroups_props/scraphead.mdl"
+	ITEM.iconoverride = "begotten/ui/itemicons/scrap_gasmask.png"
+	ITEM.weight = 3.5
+	ITEM.category = "Helms"
+	ITEM.headReplacement = "models/begotten/heads/scraphead.mdl";
+	ITEM.description = "A burdensome scrap metal contraption to be fitted uncomfortably around one's skull. It has been painted with sigils supposedly meant to instill the wearer with power."
+	ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/voltyellow";
+
+	ITEM.conditionScale = 1 -- item degrades 1x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 60
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
+	ITEM.pierceScale = 0.75; -- reduces pierce damage by 25%
+	ITEM.slashScale = 0.65; -- reduces slash damage by 35%
+	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
+	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.insulation = 35;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"scrap", "scrap", "scrap", "scrap", "scrap"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Scrapper Smog Priest Helmet"
+	ITEM.model = "models/begotten/headgroups_props/scrapperhelmet.mdl"
+	ITEM.iconoverride = "begotten/ui/itemicons/scrapface.png"
+	ITEM.weight = 2.5
+	ITEM.category = "Helms"
+	ITEM.headReplacement = "models/begotten/heads/scrapface.mdl";
+	ITEM.description = "A bolted rusty steel plate helm and gasmask cowled under a leather hood. An exhaust pipe feeds the holy fumes of diesel into the wearer's lungs."
+	ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/voltyellow";
+
+	ITEM.conditionScale = 0.85 -- item degrades 1x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 60
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+	ITEM.bulletScale = 0.65; -- reduces bullet damage by 35%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	ITEM.insulation = 50;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "leather", "cloth", "scrap", "scrap", "scrap"}};
+ITEM:Register();
