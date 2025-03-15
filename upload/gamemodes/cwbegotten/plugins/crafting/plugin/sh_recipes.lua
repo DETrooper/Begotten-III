@@ -8131,7 +8131,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
-			["scrap"] = {amount = 6},
+			["scrap"] = {amount = 5},
 			["cloth"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -8142,7 +8142,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 30;
+		RECIPE.experience = 35;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -8160,7 +8160,7 @@ RECIPE:Register()
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrapper_grunt_plate"] = {amount = 1},
-			["scrap"] = {amount = 5},
+			["scrap"] = {amount = 6},
 		};
 		RECIPE.result = {
 			["scrapper_machinist_plate"] = {amount = 1},
@@ -8170,7 +8170,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 25;
+		RECIPE.experience = 40;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -8445,7 +8445,7 @@ RECIPE:Register()
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap_helmet"] = {amount = 1},
-			["scrap"] = {amount = 4},
+			["scrap"] = {amount = 5},
 		};
 		RECIPE.result = {
 			["scrap_helmet"] = {amount = 1},
@@ -8455,7 +8455,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 30;
+		RECIPE.experience = 35;
 		
 		function RECIPE:OnCraft(player)
 		end;

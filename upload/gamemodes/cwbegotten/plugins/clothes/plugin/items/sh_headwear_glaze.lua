@@ -749,7 +749,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A burdensome scrap metal contraption to be fitted uncomfortably around one's skull. It has been painted with sigils supposedly meant to instill the wearer with power."
 	ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/voltyellow";
+	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 
 	ITEM.conditionScale = 1 -- item degrades 1x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -758,7 +758,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 		[HITGROUP_HEAD] = true,
 	}
 
-	ITEM.protection = 60
+	ITEM.protection = 58
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
@@ -791,7 +791,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 		[HITGROUP_HEAD] = true,
 	}
 
-	ITEM.protection = 60
+	ITEM.protection = 58
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
