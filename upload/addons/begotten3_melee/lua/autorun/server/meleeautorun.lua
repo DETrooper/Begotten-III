@@ -588,13 +588,13 @@ local function Guarding(ent, dmginfo)
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 											shieldItemTable:TakeCondition(math.max((shieldConditionDamage * (shieldItemTable.bulletConditionScale or 0.5)) / 2, 1));
 										else
-											shieldItemTable:TakeCondition(math.max(shieldConditionDamage / 50, 1));
+											shieldItemTable:TakeCondition(math.max(shieldConditionDamage / 20, 1));
 										end
 									else
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 											shieldItemTable:TakeCondition(math.max((shieldConditionDamage * (shieldItemTable.bulletConditionScale or 0.5)), 1));
 										else
-											shieldItemTable:TakeCondition(math.max(shieldConditionDamage / 25, 1));
+											shieldItemTable:TakeCondition(math.max(shieldConditionDamage / 10, 1));
 										end
 									end
 								end
@@ -606,13 +606,13 @@ local function Guarding(ent, dmginfo)
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 											weaponItemTable:TakeCondition(math.max((conditionDamage * (weaponItemTable.bulletConditionScale or 0.5)) / 2, 1));
 										else
-											weaponItemTable:TakeCondition(math.max(conditionDamage / 50, 1));
+											weaponItemTable:TakeCondition(math.max(conditionDamage / 20, 1));
 										end
 									else
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 											weaponItemTable:TakeCondition(math.max((conditionDamage * (weaponItemTable.bulletConditionScale or 0.5)), 1));
 										else
-											weaponItemTable:TakeCondition(math.max(conditionDamage / 25, 1));
+											weaponItemTable:TakeCondition(math.max(conditionDamage / 10, 1));
 										end
 									end
 									
@@ -628,13 +628,13 @@ local function Guarding(ent, dmginfo)
 														if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 															offhandItemTable:TakeCondition(math.max((conditionDamage * (offhandItemTable.bulletConditionScale or 0.5)) / 2, 1));
 														else
-															offhandItemTable:TakeCondition(math.max(conditionDamage / 50, 1));
+															offhandItemTable:TakeCondition(math.max(conditionDamage / 20, 1));
 														end
 													else
 														if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 															offhandItemTable:TakeCondition(math.max((conditionDamage * (offhandItemTable.bulletConditionScale or 0.5)), 1));
 														else
-															offhandItemTable:TakeCondition(math.max(conditionDamage / 25, 1));
+															offhandItemTable:TakeCondition(math.max(conditionDamage / 10, 1));
 														end
 													end
 												end

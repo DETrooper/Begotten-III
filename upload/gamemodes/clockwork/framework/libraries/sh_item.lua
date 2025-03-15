@@ -533,7 +533,7 @@ if (SERVER) then
 		
 		self:SetData("condition", math.Clamp(condition, 0, 100));
 		
-		local condition = self:GetData("condition");
+		condition = self:GetData("condition");
 		
 		if (condition <= 0 and self.breakable) then
 			self:Break()
@@ -558,7 +558,7 @@ if (SERVER) then
 		
 		self:SetData("condition", math.Clamp(condition + -math.abs(amount), 0, 100));
 		
-		local condition = self:GetData("condition");
+		condition = self:GetData("condition");
 		
 		if (condition <= 0 and self.breakable) then
 			self:Break()
@@ -569,14 +569,16 @@ if (SERVER) then
 	
 	-- A function to add to an item's condition.
 	function CLASS_TABLE:GiveCondition(amount, force)
-		local scale = self.conditionGainScale;
+		local scale = self.conditionScale or self.conditionGainScale;
 		local condition = self:GetCondition();
-			if (!force and amount and scale) then
-				amount = amount * math.Clamp(scale, 0, 1);
-			end;
+	
+		if (!force and amount and scale) then
+			amount = amount * math.Clamp(scale, 0, 1);
+		end;
+		
 		self:SetData("condition", math.Clamp(condition + math.abs(amount), 0, 100));
 		
-		local condition = self:GetData("condition");
+		condition = self:GetData("condition");
 		
 		if (condition <= 0 and self.breakable) then
 			self:Break()
