@@ -8445,7 +8445,7 @@ RECIPE:Register()
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap_helmet"] = {amount = 1},
-			["scrap"] = {amount = 5},
+			["scrap"] = {amount = 4},
 		};
 		RECIPE.result = {
 			["scrap_helmet"] = {amount = 1},
@@ -8455,7 +8455,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 35;
+		RECIPE.experience = 30;
 		
 		function RECIPE:OnCraft(player)
 		end;
