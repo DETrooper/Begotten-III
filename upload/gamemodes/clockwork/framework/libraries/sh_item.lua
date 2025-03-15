@@ -516,13 +516,21 @@ if (SERVER) then
 	-- A function to set an item's condition.
 	function CLASS_TABLE:SetCondition(condition, force)
 		local scale = self.conditionGainScale;
-			if (condition <= 0) then
-				scale = self.conditionDrainScale;
-			end;
+	
+		if (condition <= 0) then
+			scale = self.conditionScale or self.conditionDrainScale;
+		end;
+			
 		local condition = math.Clamp(condition, 0, 100);
-			if (!force and scale) then
-				condition = condition * math.Clamp(scale, 0.01, 1);
+		
+		if (!force and scale) then
+			if scale <= 0 then 
+				return;
 			end;
+			
+			condition = condition * math.Clamp(scale, 0.01, 1);
+		end;
+		
 		self:SetData("condition", math.Clamp(condition, 0, 100));
 		
 		local condition = self:GetData("condition");
@@ -536,11 +544,18 @@ if (SERVER) then
 	
 	-- A function to take from an item's condition.
 	function CLASS_TABLE:TakeCondition(amount, force)
-		local scale = self.conditionDrainScale;
-		local condition = self:GetCondition();
-			if (!force and amount and scale) then
-				amount = amount * math.Clamp(scale, 0, 1);
+		local scale = self.conditionScale or self.conditionDrainScale;
+		
+		if (!force and amount and scale) then
+			if scale <= 0 then 
+				return;
 			end;
+			
+			amount = amount * math.Clamp(scale, 0, 1);
+		end;
+		
+		local condition = self:GetCondition();
+		
 		self:SetData("condition", math.Clamp(condition + -math.abs(amount), 0, 100));
 		
 		local condition = self:GetData("condition");

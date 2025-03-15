@@ -979,6 +979,8 @@ end
 
 -- A function to check if a player is whitelisted for a faction.
 function Clockwork.player:IsWhitelisted(player, faction)
+	if player:IsAdmin() then return true end;
+
 	local whitelists = player:GetData("Whitelisted")
 
 	if (whitelists) then
@@ -990,6 +992,8 @@ end
 
 -- A function to check if a player is whitelisted for a subfaction.
 function Clockwork.player:IsWhitelistedSubfaction(player, subfaction)
+	if player:IsAdmin() then return true end;
+
 	local whitelists = player:GetData("WhitelistedSubfactions")
 
 	if (whitelists) then

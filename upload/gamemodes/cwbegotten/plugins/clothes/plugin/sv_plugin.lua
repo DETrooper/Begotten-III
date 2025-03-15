@@ -438,7 +438,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					
 					if not player.opponent then
 						--print("Armor condition value: "..tostring(condition));
-						local conditionLoss = math.Clamp(damageInfo:GetDamage() * 0.1, 0, 5) * (armorItem.conditionScale or 1);
+						local conditionLoss = math.Clamp(damageInfo:GetDamage() * 0.1, 0, 5);
 						
 						if !isTrainingDummy then
 							if player:HasBelief("ingenuity_finisher") and !armorItem.unrepairable then

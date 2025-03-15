@@ -2065,7 +2065,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					local percentage = math.min(weaponStats["attack"].poisedamage / 100, 100);
 					local toolTip = function(frame)
 						frame:AddText("Stamina Damage", Color(110, 30, 30), nil, 1);
-						frame:AddText("The damage to your foe's stamina that your weapon does. Dealing stamina damage will reduce an enemy's staying power in a fight or their ability to flee. Can be negated by enemy shields.", Color(225, 200, 200), nil, 0.8);
+						frame:AddText("The damage to your foe's stamina that your weapon does. Dealing stamina damage will reduce an enemy's staying power in a fight or their ability to flee. Can be negated by enemy shields, though stamina damage is combined with primary damage to deal condition damage to shields or blocking weapons.", Color(225, 200, 200), nil, 0.8);
 					end
 		
 					frame:AddBar(12, {{text = tostring(weaponStats["attack"].poisedamage), percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Stamina Damage", Color(110, 30, 30), toolTip, true);

@@ -1147,6 +1147,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 					if (isPlayer and v:GetMoveType() == MOVETYPE_WALK) then
 						local immune = v == player;
 						local vFaction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
+						local vSubfaction = v:GetNetVar("kinisgerOverrideSubfaction") or v:GetSubfaction();
 						
 						if faction ~= "Hillkeeper" then
 							if player_has_watchful_raven and Clockwork.player:DoesRecognise(v, player) then
@@ -1164,7 +1165,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 							end
 						end
 							
-						--if v:GetFaith() ~= faith then
+						if (faction == "Wanderer" or vFaction == "Wanderer") and v:GetFaith() ~= faith then
 							-- Kinisgers can twisted warcry if disguised as a Reaver.
 							if faith == "Faith of the Dark" then
 								if faction == vFaction then
@@ -1206,7 +1207,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 									if vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" or v:GetFaith() == "Faith of the Light" then
 										immune = true;
 									end
-								elseif faction == vFaction then
+								elseif faction == vFaction or (faction == "Wanderer" and vSubfaction == "Clan Reaver") then
 									immune = true;
 								elseif v.banners then
 									for k2, v2 in pairs(v.banners) do
@@ -1270,7 +1271,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 									end
 								end]]--
 							end
-						--end
+						end
 					elseif v:IsNPC() or v:IsNextBot() then
 						if player_has_fearsome_wolf then
 							if not player.warCryVictims then

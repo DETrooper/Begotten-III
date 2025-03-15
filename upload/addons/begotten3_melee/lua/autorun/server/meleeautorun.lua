@@ -229,6 +229,7 @@ local function Guarding(ent, dmginfo)
 						if weaponItemTable then
 							if (!cwBeliefs or !attacker:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
 								local conditionLoss;
+
 								
 								if cwBeliefs and attacker:HasBelief("scour_the_rust") then
 									conditionLoss = dmginfo:GetDamage() / 200;
@@ -276,6 +277,20 @@ local function Guarding(ent, dmginfo)
 		local attacker = dmginfo:GetAttacker()
 		--local max_poise = ent:GetNetVar("maxMeleeStamina") or 90;
 		local conditionDamage = dmginfo:GetDamage();
+		
+		if inflictor:IsValid() and inflictor:IsWeapon() and inflictor.IsABegottenMelee and inflictor.AttackTable then
+			local inflictorAttackTable = GetTable(inflictor.AttackTable);
+			
+			if inflictorAttackTable then
+				if IsValid(attacker) and attacker.GetNetVar and attacker:GetNetVar("ThrustStance") then
+					conditionDamage = (conditionDamage + (inflictorAttackTable.poisedamage or attacker.StaminaDamage or 0) * (inflictorAttackTable.altattackpoisedamagemodifier or 1)) / 2;
+				else
+					conditionDamage = (conditionDamage + (inflictorAttackTable.poisedamage or attacker.StaminaDamage or 0)) / 2;
+				end
+			end
+		elseif attacker:IsValid() and attacker.StaminaDamage then
+			conditionDamage = (conditionDamage + attacker.StaminaDamage) / 2;
+		end
 
 		if IsValid(wep) and (ent:GetNetVar("Guardening") or (ent.IsBlocking and ent:IsBlocking())) then
 			local blocktable;
@@ -546,8 +561,9 @@ local function Guarding(ent, dmginfo)
 						end
 					end
 					
+					-- Condition damage.
 					if bIsPlayer and !ent.opponent then
-						if wep then
+						if wep and !ent:GetNetVar("Deflect") then
 							local shieldItemTable = ent:GetShieldEquipped();
 							local weaponItemTable = item.GetByWeapon(wep);
 							local shieldEquipped = false;
@@ -562,7 +578,7 @@ local function Guarding(ent, dmginfo)
 									
 									if inflictorItemTable and inflictorItemTable.attributes then
 										if table.HasValue(inflictorItemTable.attributes, "shieldbreaker") then
-											shieldConditionDamage = shieldConditionDamage * 30;
+											shieldConditionDamage = shieldConditionDamage * 5;
 										end
 									end
 								end
@@ -572,13 +588,13 @@ local function Guarding(ent, dmginfo)
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 											shieldItemTable:TakeCondition(math.max((shieldConditionDamage * (shieldItemTable.bulletConditionScale or 0.5)) / 2, 1));
 										else
-											shieldItemTable:TakeCondition(math.max(shieldConditionDamage / 100, 1));
+											shieldItemTable:TakeCondition(math.max(shieldConditionDamage / 50, 1));
 										end
 									else
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 											shieldItemTable:TakeCondition(math.max((shieldConditionDamage * (shieldItemTable.bulletConditionScale or 0.5)), 1));
 										else
-											shieldItemTable:TakeCondition(math.max(shieldConditionDamage / 50, 1));
+											shieldItemTable:TakeCondition(math.max(shieldConditionDamage / 25, 1));
 										end
 									end
 								end
@@ -590,13 +606,13 @@ local function Guarding(ent, dmginfo)
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 											weaponItemTable:TakeCondition(math.max((conditionDamage * (weaponItemTable.bulletConditionScale or 0.5)) / 2, 1));
 										else
-											weaponItemTable:TakeCondition(math.max(conditionDamage / 100, 1));
+											weaponItemTable:TakeCondition(math.max(conditionDamage / 50, 1));
 										end
 									else
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 											weaponItemTable:TakeCondition(math.max((conditionDamage * (weaponItemTable.bulletConditionScale or 0.5)), 1));
 										else
-											weaponItemTable:TakeCondition(math.max(conditionDamage / 50, 1));
+											weaponItemTable:TakeCondition(math.max(conditionDamage / 25, 1));
 										end
 									end
 									
@@ -612,13 +628,13 @@ local function Guarding(ent, dmginfo)
 														if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 															offhandItemTable:TakeCondition(math.max((conditionDamage * (offhandItemTable.bulletConditionScale or 0.5)) / 2, 1));
 														else
-															offhandItemTable:TakeCondition(math.max(conditionDamage / 100, 1));
+															offhandItemTable:TakeCondition(math.max(conditionDamage / 50, 1));
 														end
 													else
 														if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 															offhandItemTable:TakeCondition(math.max((conditionDamage * (offhandItemTable.bulletConditionScale or 0.5)), 1));
 														else
-															offhandItemTable:TakeCondition(math.max(conditionDamage / 50, 1));
+															offhandItemTable:TakeCondition(math.max(conditionDamage / 25, 1));
 														end
 													end
 												end

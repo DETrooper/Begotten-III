@@ -207,12 +207,12 @@ end;
 
 -- A function to get whether the local player is whitelisted for a faction.
 function Clockwork.character:IsWhitelisted(faction)
-	return table.HasValue(self:GetWhitelisted(), faction);
+	return Clockwork.Client:IsAdmin() or table.HasValue(self:GetWhitelisted(), faction);
 end;
 
 -- A function to get whether the local player is whitelisted for a faction.
 function Clockwork.character:IsWhitelistedSubfaction(subfaction)
-	return table.HasValue(self:GetWhitelistedSubfactions(), subfaction);
+	return Clockwork.Client:IsAdmin() or table.HasValue(self:GetWhitelistedSubfactions(), subfaction);
 end;
 
 -- A function to get the local player's characters.
