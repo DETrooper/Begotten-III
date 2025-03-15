@@ -66,7 +66,7 @@ ENT.SightFOV = 300
 
 ENT.SightRange = 1024
 
-ENT.XPValue = 75;
+ENT.XPValue = 85;
 
 
 

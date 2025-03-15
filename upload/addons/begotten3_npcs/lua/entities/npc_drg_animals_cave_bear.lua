@@ -22,7 +22,7 @@ ENT.IdleSoundDelay = 240
 ENT.ArmorPiercing = 55;
 ENT.SpawnHealth = 600;
 ENT.StaminaDamage = 45;
-ENT.XPValue = 150;
+ENT.XPValue = 180;
 ENT.MaxMultiHit = 2;
 
 -- Regen --

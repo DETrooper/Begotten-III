@@ -1302,53 +1302,62 @@ local COMMAND = Clockwork.command:New("Warcry");
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "barbarically shouts out!", playerPos, radius);
 				-- Kinisgers can FotF warcry if not disguised as a reaver.
 				elseif faith == "Faith of the Family" then
+					local warcryText = "lets out a feral warcry!"
+					local warcryPitch = math.random(90, 105)
+					local warcrySound = "warcries/warcry"..math.random(1, 16)..".mp3"
+					
+					if player:GetGender() == GENDER_MALE then
+						if faction != "Goreic Warrior" then
+							warcrySound = "warcries/jambw_yell_"..math.random(1, 17)..".mp3"								
+						end
+					else
+						warcrySound = "warcries/warcry_female"..math.random(1, 16)..".mp3"
+					end
+					
 					if player.bloodHowlActive then
 						if cwStamina then
+							warcryText = "howls a feral warcry and spits blood!"
+							warcryPitch = math.random(70, 80)
 							player:HandleStamina(50);
 							player:ModifyBloodLevel(-150);
 						end
 					end
 					
-					if player_has_watchful_raven then
-						player:EmitSound("warcries/motherwarcry"..math.random(1, 9)..".mp3", 100);
-						
-						Clockwork.chatBox:AddInTargetRadius(player, "me", "speaks in tongues with the voice of a vengeful spirit of Nature!", playerPos, radius);
+					if player:HasBelief("deceitful_snake") then
+						if player.deceitfulLastDamages then
+							local healthToRestore = 0;
+							
+							for i, v in ipairs(player.deceitfulLastDamages) do
+								if v.damageTime >= (curTime - 2) then
+									healthToRestore = healthToRestore + (v.damage / 2);
+								end
+							end
+							
+							if healthToRestore > 0 then
+								player:SetHealth(math.min(player:Health() + healthToRestore, player:GetMaxHealth()));
+							end
+							
+							if healthToRestore >= 15 then
+								warcrySound = "vj_dm_giantworm/worm_strikingarch"..math.random(1, 2)..".wav"
+								warcryText = "growls with the voice of an abyssal horror, and their flesh shifts and regrows itself!"
+							end
+						end		
+					end
+					
+					if player_has_watchful_raven then						
+						warcryText = "speaks in tongues with the voice of a vengeful spirit of Nature!"
+						warcrySound = "warcries/motherwarcry"..math.random(1, 9)..".mp3"
 						
 						netstream.Start(player, "UpgradedWarcry", affected_players);
-					else
-						if player:GetGender() == GENDER_MALE then
-							if faction == "Goreic Warrior" then
-								player:EmitSound("warcries/warcry"..math.random(1, 16)..".mp3", 100, math.random(90, 105));
-							else
-								player:EmitSound("warcries/jambw_yell_"..math.random(1, 17)..".mp3", 100, math.random(90, 105));
-							end
-						else
-							player:EmitSound("warcries/warcry_female"..math.random(1, 16)..".mp3", 100, math.random(90, 105));
-						end
-					
-						Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a feral warcry!", playerPos, radius);
 					end
+					
+					player:EmitSound(warcrySound, 100, warcryPitch);
+					Clockwork.chatBox:AddInTargetRadius(player, "me", warcryText, playerPos, radius);
 				else
 					player:HandleSanity(-5);
 					player:EmitSound("warcries/twistedwarcry"..math.random(1, 5)..".mp3", 100, math.random(90, 105));
 					
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a twisted warcry, screaming with the voices of their past victims!", playerPos, radius);
-				end
-				
-				if player:HasBelief("deceitful_snake") then
-					if player.deceitfulLastDamages then
-						local healthToRestore = 0;
-						
-						for i, v in ipairs(player.deceitfulLastDamages) do
-							if v.damageTime >= (curTime - 2) then
-								healthToRestore = healthToRestore + (v.damage / 2);
-							end
-						end
-						
-						if healthToRestore > 0 then
-							player:SetHealth(math.min(player:Health() + healthToRestore, player:GetMaxHealth()));
-						end
-					end
 				end
 				
 				if player_has_daring_trout then

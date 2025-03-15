@@ -21,7 +21,7 @@ ENT.AvoidEnemyRange = 0
 ENT.HearingCoefficient = 1
 ENT.SightFOV = 360
 ENT.SightRange = 1500
-ENT.XPValue = 100;
+ENT.XPValue = 125;
 -- Relationships --
 ENT.Factions = {FACTION_ZOMBIES}
 -- Movements/animations --
