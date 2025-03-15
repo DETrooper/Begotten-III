@@ -243,21 +243,21 @@ function cwScrapFactory:CheckProcessingCycle()
 			end
 			
 			local bestResources = {"gold_ingot"};
-			local greatResources = {"fine_steel_ingot"};
+			local greatResources = {"fine_steel_ingot", "steel_ingot"};
 			local goodResources = {"steel_ingot"};
 			local decentResources = {"iron_ingot"};
 			local shitResources = {"wrought_iron_ingot"};
 			
 			if darkPresent then
-				table.insert(greatResources, "hellforged_steel_ingot");
+				table.insert(bestResources, "hellforged_steel_ingot");
 			end
 			
 			if familyPresent then
-				table.insert(greatResources, "shagalaxian_steel_ingot");
+				table.insert(bestResources, "shagalaxian_steel_ingot");
 			end
 			
 			if lightPresent then
-				table.insert(greatResources, "maximilian_steel_ingot");
+				table.insert(bestResources, "maximilian_steel_ingot");
 			end
 			
 			if voltistPresent then
@@ -274,7 +274,7 @@ function cwScrapFactory:CheckProcessingCycle()
 					resource = "tech";
 				else
 					if math.random(1, 100) >= 60 then
-						if math.random(1, 30) == 1 then
+						if math.random(1, 40) == 1 then
 							resource = bestResources[math.random(1, #bestResources)];
 						elseif math.random(1, 15) == 1 then
 							resource = greatResources[math.random(1, #greatResources)];
