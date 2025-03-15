@@ -1010,6 +1010,19 @@ local ITEM = Clockwork.item:New();
 			end
 		end;
 	end;
+	
+	if CLIENT then
+		Clockwork.ConVars.Binds.WARHORNATTACK = Clockwork.kernel:CreateClientConVar("cwWarhornAtttackBind", 0, true, true)
+		Clockwork.ConVars.Binds.WARHORNRALLY = Clockwork.kernel:CreateClientConVar("cwWarhornRallyBind", 0, true, true)
+		Clockwork.ConVars.Binds.WARHORNSHIELDWALL = Clockwork.kernel:CreateClientConVar("cwWarhornShieldWallBind", 0, true, true)
+		Clockwork.ConVars.Binds.WARHORNMARCH = Clockwork.kernel:CreateClientConVar("cwWarhornMarchBind", 0, true, true)
+		Clockwork.ConVars.Binds.WARHORNRETREAT = Clockwork.kernel:CreateClientConVar("cwWarhornRetreatBind", 0, true, true)
+		Clockwork.setting:AddKeyBinding("Key Bindings", "Warhorn (Attack): ", "cwWarhornAtttackBind", "cwsay /warhorn Sound Attack");
+		Clockwork.setting:AddKeyBinding("Key Bindings", "Warhorn (Rally): ", "cwWarhornRallyBind", "cwsay /warhorn Sound Rally");
+		Clockwork.setting:AddKeyBinding("Key Bindings", "Warhorn (Shieldwall): ", "cwWarhornShieldWallBind", "cwsay /warhorn Sound Rally - Shieldwall");
+		Clockwork.setting:AddKeyBinding("Key Bindings", "Warhorn (March): ", "cwWarhornMarchBind", "cwsay /warhorn Sound Rally - Marching Formation");
+		Clockwork.setting:AddKeyBinding("Key Bindings", "Warhorn (Regreat): ", "cwWarhornRetreatBind", "cwsay /warhorn Sound Retreat");
+	end
 ITEM:Register();
 
 local ITEM = Clockwork.item:New();

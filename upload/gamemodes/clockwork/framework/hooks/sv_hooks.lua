@@ -607,8 +607,20 @@ function GM:PlayerSwitchFlashlight(player, bIsOn)
 		player.DidAdminFlashlight = nil;
 		return true;
 	end;
-	
+
+	return false;
+end
+
+concommand.Add("light", function(player)
+	if (player:IsAdmin()) then
+		player.DidAdminFlashlight = true;
+		player:Flashlight(!player:FlashlightIsOn())
+	end;
+end);
+
+concommand.Add("begotten_raise", function(player)
 	local activeWeapon = player:GetActiveWeapon();
+	local curTime = CurTime();
 	
 	if hook.Run("PlayerCanRaiseWeapon", player, activeWeapon) ~= false then
 		if (!player.cwNextRaise or player.cwNextRaise < curTime) then
@@ -669,21 +681,6 @@ function GM:PlayerSwitchFlashlight(player, bIsOn)
 			player.cwNextRaise = curTime + 0.1;
 		end;
 	end
-
-	return false;
-end
-
-concommand.Add("light", function(player)
-	if (player:IsAdmin()) then
-		player.DidAdminFlashlight = true;
-		player:Flashlight(!player:FlashlightIsOn())
-	end;
-end);
-
-concommand.Add("raise", function(player)
-	if (player:IsAdmin()) then
-		player:ToggleWeaponRaised();
-	end;
 end);
 
 -- Called when Clockwork config has initialized.

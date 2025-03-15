@@ -119,6 +119,22 @@ function Clockwork.setting:AddColorMixer(category, text, conVar, toolTip, Condit
 end
 
 -- A function to add a panel with custom functionality.
+function Clockwork.setting:AddKeyBinding(category, text, conVar, bindedConVar)
+	local index = conVar
+
+	self.stored[index] = {
+		category = category,
+		conVar = conVar,
+		bindedConVar = bindedConVar,
+		class = "bind",
+		text = text
+	}
+
+	return index
+end
+
+
+-- A function to add a panel with custom functionality.
 function Clockwork.setting:AddCustomPanel(category, text, class)
 	local index = text
 
@@ -176,6 +192,7 @@ function Clockwork.setting:AddSettings()
 	
 	Clockwork.setting:AddCheckBox("Framework", "Enable derma tooltips following the mouse.", "cwTooltipFollow", "Whether or not derma tooltips follow the mouse. Nested tooltips will freeze in their current position when the timer is up.");
 	Clockwork.setting:AddCheckBox("Framework", "Enable physical description inspect key.", "cwPhysdescKey", "Whether or not to enable physical description inspection.");
+	Clockwork.setting:AddKeyBinding("Key Bindings", "Inspect: ", "cwPhysdescBind");
 
 	Clockwork.setting:AddCheckBox("Admin ESP", "Enable the admin ESP.", "cwAdminESP", "Whether or not to show the admin ESP.", function()
 		return Clockwork.player:IsAdmin(Clockwork.Client);

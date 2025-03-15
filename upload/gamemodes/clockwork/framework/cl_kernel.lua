@@ -202,6 +202,7 @@ Clockwork.ColorModify = Clockwork.ColorModify or {}
 Clockwork.Cinematics = Clockwork.Cinematics or {}
 Clockwork.ActiveDermaToolTips = Clockwork.ActiveDermaToolTips or {}
 Clockwork.ConVars = Clockwork.ConVars or {}
+Clockwork.ConVars.Binds = Clockwork.ConVars.Binds or {}
 
 Clockwork.kernel.CenterHints = Clockwork.kernel.CenterHints or {}
 Clockwork.kernel.ESPInfo = Clockwork.kernel.ESPInfo or {}

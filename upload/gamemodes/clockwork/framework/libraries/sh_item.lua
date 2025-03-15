@@ -528,7 +528,7 @@ if (SERVER) then
 				return;
 			end;
 			
-			condition = condition * math.Clamp(scale, 0.01, 1);
+			condition = condition * scale;
 		end;
 		
 		self:SetData("condition", math.Clamp(condition, 0, 100));
@@ -551,7 +551,7 @@ if (SERVER) then
 				return;
 			end;
 			
-			amount = amount * math.Clamp(scale, 0, 1);
+			amount = amount * scale;
 		end;
 		
 		local condition = self:GetCondition();

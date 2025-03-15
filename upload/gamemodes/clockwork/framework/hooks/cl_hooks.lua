@@ -489,6 +489,22 @@ function GM:KeyRelease(player, key)
 	end
 end
 
+function GM:PlayerButtonDown(player, button)
+	if IsFirstTimePredicted() then
+		for k, v in pairs(Clockwork.ConVars.Binds) do
+			local value = v:GetInt();
+			
+			if value ~= 0 and value == button then
+				local bindedConVar = Clockwork.setting.stored[v:GetName()].bindedConVar;
+				
+				if bindedConVar then
+					player:ConCommand(bindedConVar);
+				end
+			end
+		end
+	end
+end
+
 function GM:PreDrawHalos() end
 
 function GM:PreDrawPlayerHands(ent, viewModel, player, weapon)
@@ -534,6 +550,7 @@ function GM:Initialize()
 	Clockwork.ConVars.NPCESP = Clockwork.kernel:CreateClientConVar("cwNPCESP", 0, false, true)
 	Clockwork.ConVars.PEEK_ESP = Clockwork.kernel:CreateClientConVar("cwESPPeek", 1, true, true)
 	Clockwork.ConVars.PHYSDESCINSPECT = Clockwork.kernel:CreateClientConVar("cwPhysdescKey", 1, true, true);
+	Clockwork.ConVars.Binds.PHYSDESCINSPECT = Clockwork.kernel:CreateClientConVar("cwPhysdescBind", KEY_X, true, true);
 	Clockwork.ConVars.TOOLTIPFOLLOW = Clockwork.kernel:CreateClientConVar("cwTooltipFollow", 1, true, true)
 
 	--Clockwork.ConVars.SHOWTIMESTAMPS = Clockwork.kernel:CreateClientConVar("cwShowTimeStamps", 0, true, true);
@@ -2625,7 +2642,7 @@ function GM:HUDDrawTargetID()
 									local result;
 									local newY;
 
-									if Clockwork.ConVars.PHYSDESCINSPECT:GetInt() == 0 or input.IsKeyDown(KEY_X) then
+									if Clockwork.ConVars.PHYSDESCINSPECT:GetInt() == 0 or input.IsKeyDown(Clockwork.ConVars.Binds["PHYSDESCINSPECT"]:GetInt()) then
 										result = Clockwork.plugin:Call("PlayerCanShowUnrecognised", player, x, y, unrecognisedName, teamColor, alpha)
 									else
 										--result = "Press <X> to inspect this character.";
@@ -2658,7 +2675,7 @@ function GM:HUDDrawTargetID()
 								
 								local colorWhite = Color(255, 255, 255)
 								
-								if Clockwork.ConVars.PHYSDESCINSPECT:GetInt() == 0 or input.IsKeyDown(KEY_X) then
+								if Clockwork.ConVars.PHYSDESCINSPECT:GetInt() == 0 or input.IsKeyDown(Clockwork.ConVars.Binds["PHYSDESCINSPECT"]:GetInt()) then
 									Clockwork.TargetPlayerText.stored = {}
 									
 									Clockwork.plugin:Call("GetTargetPlayerText", player, Clockwork.TargetPlayerText)

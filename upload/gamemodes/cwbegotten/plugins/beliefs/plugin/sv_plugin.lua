@@ -21,7 +21,7 @@ cwBeliefs.xpValues = {
 
 cwBeliefs.beliefNotifications = {
 	["embrace_the_darkness"] = "You can now right click with Senses equipped in order to toggle invisibility while outside in the Wasteland at night, during blood storms, or while in the mines, though you must remain crouched with your Senses equipped. Note that after attacking there will be a five second delay before you can cloak. Firing a firearm will increase this delay to 30 seconds.",
-	["evasion"] = "You can now roll by double-tapping your movement keys (toggled in the Clockwork Settings menu), or by binding a key to 'begotten_roll' and pressing it while moving. Rolling grants invincibility frames and can also put out fires.",
+	["evasion"] = "You can now roll by double-tapping your movement keys (toggled in the Clockwork Settings menu), or by binding a key in the settings menu and pressing it while moving. Rolling grants invincibility frames and can also put out fires.",
 	["father"] = "You can now pray to the Gods by typing '/pray' in the chatbox. You can also now warcry by typing '/warcry' in chat, which will temporarily disorient and lower the sanity of nearby enemy players.",
 	["flagellant"] = "You can now scourge your own flesh by typing '/flagellate' in the chatbox.",
 	["halfsword_sway"] = "You can now change stances with certain weapons by using E + Right Click!",

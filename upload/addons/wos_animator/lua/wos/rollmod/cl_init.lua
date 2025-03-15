@@ -25,8 +25,10 @@
 hook.Add("ClockworkInitialized", "wOS.RollMod.SetupConvars", function()
 	if Clockwork then
 		Clockwork.ConVars.DOUBLETAPROLLING = Clockwork.kernel:CreateClientConVar("cwDoubleTapRolling", 1, true, true)
+		Clockwork.ConVars.Binds.ROLL = Clockwork.kernel:CreateClientConVar("cwRollBind", KEY_LALT, true, true)
 		
-		Clockwork.setting:AddCheckBox("Movement", "Enable double tapping movement keys for rolling. (If not enabled, bind begotten_roll to a key instead)", "cwDoubleTapRolling", "Click to toggle double-tap rolling.");
+		Clockwork.setting:AddCheckBox("Movement", "Enable double tapping movement keys for rolling.", "cwDoubleTapRolling", "Click to toggle double-tap rolling.");
+		Clockwork.setting:AddKeyBinding("Key Bindings", "Combat Roll: ", "cwRollBind", "begotten_roll");
 	end
 end);
 

@@ -106,20 +106,6 @@ function PLUGIN:PlayerThink(player, curTime)
 	end
 end
 
-function PLUGIN:KeyPress(player, key)
-	--[[if (key == IN_RELOAD) then
-		timer.Create("WeaponRaise"..player:SteamID(), 1, 1, function()
-			player:ToggleWeaponRaised()
-		end)
-	end--]]
-end
-
-function PLUGIN:KeyRelease(player, key)
-	--[[if (key == IN_RELOAD) then
-		timer.Remove("WeaponRaise"..player:SteamID())
-	end--]]
-end
-
 function PLUGIN:ModelWeaponRaised(player, model)
 	return player:IsWeaponRaised()
 end
@@ -147,5 +133,10 @@ if CLIENT then
 						
 			return {text = raiseText, percentage = percentage, flash = percentage < 10}
 		end
+	end
+	
+	function PLUGIN:ClockworkInitialized()
+		Clockwork.ConVars.Binds.RAISEWEAPON = Clockwork.kernel:CreateClientConVar("cwRaiseBind", KEY_F, true, true)
+		Clockwork.setting:AddKeyBinding("Key Bindings", "Raise Weapon: ", "cwRaiseBind", "begotten_raise");
 	end
 end

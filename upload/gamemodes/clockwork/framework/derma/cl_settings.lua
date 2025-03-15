@@ -155,6 +155,39 @@ function PANEL:Rebuild()
 				elseif (v2.class == "checkBox") then
 					panel = form:CheckBox(v2.text, v2.conVar);
 					panel:SetFont("begotsettingsfont2")
+				elseif (v2.class == "bind") then
+					local bindPanel = vgui.Create("DPanel");
+					
+					bindPanel:SetSize(500, 24);
+					
+					local bindLabel = vgui.Create("DLabel", bindPanel);
+					bindLabel:SetText(v2.text);
+					bindLabel:SetFont("begotsettingsfont2");
+					bindLabel:SizeToContents();
+					bindLabel:CenterVertical();
+					
+					local binder = vgui.Create("DBinder", bindPanel);
+					binder:SetX(bindLabel:GetWide() + 2);
+					binder:SetSize(100, 24);
+					binder.conVar = v2.conVar;
+					
+					local conVar = GetConVar(v2.conVar);
+					
+					if conVar and conVar:GetInt() ~= 0 then
+						binder:SetValue(conVar:GetInt());
+					end
+					
+					function binder:OnChange(num)
+						local conVar = GetConVar(self.conVar);
+						
+						if conVar then
+							conVar:SetInt(num);
+						end
+					end
+					
+					bindPanel:SetWide(bindLabel:GetWide() + binder:GetWide() + 4);
+					
+					panel = form:AddItem(bindPanel);
 				else
 					local classPanel = vgui.Create(v2.class);
 					

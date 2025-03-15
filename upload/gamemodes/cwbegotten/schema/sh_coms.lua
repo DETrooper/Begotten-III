@@ -2986,6 +2986,11 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 			Schema:EasyText(player, "peru", "You are not the correct faction to do this!");
 		end
 	end;
+	
+	if CLIENT then
+		Clockwork.ConVars.Binds.HELLJAUNT = Clockwork.kernel:CreateClientConVar("cwHelljauntBind", 0, true, true)
+		Clockwork.setting:AddKeyBinding("Key Bindings", "Helljaunt: ", "cwHelljauntBind", "cwsay /helljaunt");
+	end
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("HellJauntAdmin");
@@ -3218,6 +3223,11 @@ local COMMAND = Clockwork.command:New("HellTeleport");
 			Schema:EasyText(player, "peru", "You are not the correct faction to do this!");
 		end
 	end;
+	
+	if CLIENT then
+		Clockwork.ConVars.Binds.HELLTELEPORT = Clockwork.kernel:CreateClientConVar("cwHellteleportBind", 0, true, true)
+		Clockwork.setting:AddKeyBinding("Key Bindings", "Hellteleport: ", "cwHellteleportBind", "cwsay /hellteleport");
+	end
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("AddBounty");

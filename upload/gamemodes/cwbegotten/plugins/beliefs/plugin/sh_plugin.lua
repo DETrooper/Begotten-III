@@ -1398,6 +1398,11 @@ local COMMAND = Clockwork.command:New("Warcry");
 			Schema:EasyText(player, "firebrick", "You are not of the correct subfaith to do this!");
 		end
 	end;
+	
+	if CLIENT then
+		Clockwork.ConVars.Binds.WARCRY = Clockwork.kernel:CreateClientConVar("cwWarcryBind", 0, true, true)
+		Clockwork.setting:AddKeyBinding("Key Bindings", "Warcry: ", "cwWarcryBind", "cwsay /warcry");
+	end
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("Electrocute");
@@ -1483,6 +1488,11 @@ function COMMAND:OnRun(player, arguments)
 		Schema:EasyText(player, "firebrick", "You cannot self-electrocute right now!");
 	end
 end;
+
+if CLIENT then
+	Clockwork.ConVars.Binds.ELECTROCUTE = Clockwork.kernel:CreateClientConVar("cwElectrocuteBind", 0, true, true)
+	Clockwork.setting:AddKeyBinding("Key Bindings", "Electrocute: ", "cwElectrocuteBind", "cwsay /electrocute");
+end
 
 COMMAND:Register();
 
@@ -1640,6 +1650,11 @@ function COMMAND:OnRun(player, arguments)
 		Schema:EasyText(player, "firebrick", "You cannot flagellate right now!");
 	end
 end;
+
+if CLIENT then
+	Clockwork.ConVars.Binds.FLAGELLATE = Clockwork.kernel:CreateClientConVar("cwFlagellateBind", 0, true, true)
+	Clockwork.setting:AddKeyBinding("Key Bindings", "Flagellate: ", "cwFlagellateBind", "cwsay /flagellate");
+end
 
 COMMAND:Register();
 
