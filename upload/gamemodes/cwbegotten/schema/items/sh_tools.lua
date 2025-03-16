@@ -1021,7 +1021,7 @@ local ITEM = Clockwork.item:New();
 		Clockwork.setting:AddKeyBinding("Key Bindings", "Warhorn (Rally): ", "cwWarhornRallyBind", "cwsay /warhorn Sound Rally");
 		Clockwork.setting:AddKeyBinding("Key Bindings", "Warhorn (Shieldwall): ", "cwWarhornShieldWallBind", "cwsay /warhorn Sound Rally - Shieldwall");
 		Clockwork.setting:AddKeyBinding("Key Bindings", "Warhorn (March): ", "cwWarhornMarchBind", "cwsay /warhorn Sound Rally - Marching Formation");
-		Clockwork.setting:AddKeyBinding("Key Bindings", "Warhorn (Regreat): ", "cwWarhornRetreatBind", "cwsay /warhorn Sound Retreat");
+		Clockwork.setting:AddKeyBinding("Key Bindings", "Warhorn (Retreat): ", "cwWarhornRetreatBind", "cwsay /warhorn Sound Retreat");
 	end
 ITEM:Register();
 
