@@ -2856,6 +2856,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				if itemTable.unrepairable then
 					frame:AddText("Unrepairable: This shield cannot be repaired and will always take condition damage, irrespective of beliefs.", Color(110, 30, 30), nil, 0.9);
 				end
+
+				if table.HasValue(itemTable.attributes, "spiked") then
+					frame:AddText("Spiked: Taking damage from most fisted weapons will deal a small amount of damage back to the attacker.", Color(110, 30, 30), nil, 0.9);
+				end
 				
 				if itemTable.attributes then
 					if table.HasValue(itemTable.attributes, "conditionless") then
@@ -3129,6 +3133,11 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			if table.HasValue(itemTable.attributes, "bloodtoll") then
 				frame:AddText("Blood Toll: Taking any damage to the head will always result in a bleed injury.", Color(110, 30, 30), nil, 0.9);
 			end
+
+			if table.HasValue(itemTable.attributes, "spiked") then
+				frame:AddText("Spiked: Taking damage from most fisted weapons will deal a small amount of damage back to the attacker.", Color(110, 30, 30), nil, 0.9);
+			end
+
 		end
 		
 		--if itemTable.weight then

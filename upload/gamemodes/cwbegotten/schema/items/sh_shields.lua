@@ -273,6 +273,8 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, 0.34, 0);
 	ITEM.bulletConditionScale = 0.2;
 	ITEM.conditionScale = 0.6;
+
+	ITEM.attributes = {"spiked"};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};

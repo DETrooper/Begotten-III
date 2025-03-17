@@ -343,6 +343,8 @@ ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/helmeyes";
 ITEM.faction = "Children of Satan";
 
+ITEM.attributes = {"spiked"}
+
 ITEM.requiredbeliefs = {"hauberk"};
 
 -- specifies which hitgroups will be affected by blunt, slash, pierce and other damage type scaling.

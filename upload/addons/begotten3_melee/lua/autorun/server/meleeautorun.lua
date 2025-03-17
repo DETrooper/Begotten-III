@@ -292,6 +292,16 @@ local function Guarding(ent, dmginfo)
 			conditionDamage = (conditionDamage + attacker.StaminaDamage) / 2;
 		end
 
+		local enemywep;
+		if attacker:IsPlayer() or attacker:IsNPC() or attacker.GetActiveWeapon then
+			enemywep = inflictor or attacker:GetActiveWeapon()
+		end
+		
+		local enemyattacktable = {}
+		if enemywep and (enemywep.AttackTable) then
+			enemyattacktable = GetTable(enemywep.AttackTable)
+		end
+
 		if IsValid(wep) and (ent:GetNetVar("Guardening") or (ent.IsBlocking and ent:IsBlocking())) then
 			local blocktable;
 			local soundtable;
@@ -421,18 +431,7 @@ local function Guarding(ent, dmginfo)
 			end
 
 			if canblock then
-				local enemywep;
-				
-				if attacker:IsPlayer() or attacker:IsNPC() or attacker.GetActiveWeapon then
-					enemywep = inflictor or attacker:GetActiveWeapon()
-				end
-				
-				local enemyattacktable = {}
 				local PoiseTotal = 0;
-				
-				if enemywep and (enemywep.AttackTable) then
-					enemyattacktable = GetTable(enemywep.AttackTable)
-				end;
 				
 				if dmginfo:IsDamageType(DMG_BULLET) then
 					PoiseTotal = -math.Round(dmginfo:GetDamage() * 0.33);
@@ -702,7 +701,7 @@ local function Guarding(ent, dmginfo)
 					
 					if attacker:IsPlayer() and enemywep:IsValid() then
 						-- Deal damage to people using fists if they hit a spiked shield.
-						if enemywep:GetClass() == "begotten_fists" then
+						if(enemyattacktable.takesSpikedDamage) then
 							if !Clockwork.player:HasFlags(attacker, "T") then
 								local activeWeapon = ent:GetActiveWeapon();
 								
@@ -1402,7 +1401,7 @@ local function Guarding(ent, dmginfo)
 				
 				if ent:IsPlayer() then
 					-- Deal damage to people using fists if they hit spiked armor.
-					if enemywep:IsValid() and enemywep:GetClass() == "begotten_fists" then
+					if enemywep:IsValid() and enemyattacktable.takesSpikedDamage then
 						if !Clockwork.player:HasFlags(attacker, "T") then
 							if ent:GetModel() == "models/begotten/satanists/hellspike_armor.mdl" then
 								attacker:TakeDamage(5, ent);

@@ -777,6 +777,7 @@ AttackTables.FistAttackTable = {
 	["meleearc"] = 20,
 	["meleerange"] = 525,
 	["punchstrength"] = Angle(0,2,0),
+	["takesSpikedDamage"] = true,
 };
 
 AttackTables.IronKnucklesAttackTable = {
@@ -796,6 +797,7 @@ AttackTables.IronKnucklesAttackTable = {
 	["meleearc"] = 20,
 	["meleerange"] = 555,
 	["punchstrength"] = Angle(0,2,0),
+	["takesSpikedDamage"] = true,
 };
 
 AttackTables.SpikedKnucklesAttackTable = {
@@ -815,6 +817,7 @@ AttackTables.SpikedKnucklesAttackTable = {
 	["meleearc"] = 20,
 	["meleerange"] = 555,
 	["punchstrength"] = Angle(0,2,0),
+	["takesSpikedDamage"] = true,
 };
 
 AttackTables.CaestusAttackTable = {
