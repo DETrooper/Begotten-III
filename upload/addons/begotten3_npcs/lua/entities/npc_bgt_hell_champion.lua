@@ -11,7 +11,7 @@ ENT.OnDamageSounds = {}
 ENT.OnDeathSounds = {}
 ENT.PainSounds = {"npc/stalker/stalker_pain1.wav", "npc/stalker/stalker_pain2.wav", "npc/stalker/stalker_pain3.wav"};
 -- Stats --
-ENT.SpawnHealth = 100
+ENT.SpawnHealth = math.random(225, 300)
 ENT.SpotDuration = 20
 -- AI --
 ENT.RangeAttackRange = 0

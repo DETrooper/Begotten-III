@@ -1058,7 +1058,7 @@ end
 		end
 		
 		if self:GetNW2String("activeOffhand"):len() > 0 then -- Dual Weapon damage reduction
-			damage = damage * 0.75;
+			damage = damage * 0.7;
 			stabilitydamage = stabilitydamage * 0.7;
 		end
 
