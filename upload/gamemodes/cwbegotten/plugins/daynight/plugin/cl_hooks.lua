@@ -429,7 +429,7 @@ local up = Vector(0, 0, 500);
 local down = Angle(0, -90, 0);
 
 function cwDayNight:PostDrawTranslucentRenderables(bDrawingDepth, bDrawingSkybox, isDraw3DSkybox)
-	if self.currentCycle == "night" then
+	if self.currentCycle == "night" and zones.cwCurrentZone ~= "tower" then
 		local zoneTable = zones:FindByID(zones.cwCurrentZone or "wasteland");
 
 		if zoneTable.hasNight then
@@ -438,7 +438,7 @@ function cwDayNight:PostDrawTranslucentRenderables(bDrawingDepth, bDrawingSkybox
 
 				surface.SetMaterial(moonMat);
 				surface.SetDrawColor(200, 20, 20);
-				surface.DrawTexturedRect(-100, -100, 200, 200);
+				surface.DrawTexturedRect(-125, -125, 250, 250);
 
 				render.SuppressEngineLighting(false);
 			cam.End3D2D();

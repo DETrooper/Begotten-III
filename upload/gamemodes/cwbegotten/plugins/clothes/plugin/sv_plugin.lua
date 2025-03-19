@@ -74,6 +74,22 @@ function PLUGIN:DoPlayerDeath(player, attacker, damageInfo)
 	end;
 end;
 
+function PLUGIN:PreEntityTakeDamage(player, damageInfo)
+	local inflictor = damageInfo:GetInflictor();
+
+	if inflictor:IsValid() and inflictor.isJavelin then
+		local attacker = damageInfo:GetAttacker();
+		
+		if attacker:IsValid() and attacker:IsPlayer() then
+			local attackerClothes = attacker:GetClothesEquipped();
+			
+			if attackerClothes and attackerClothes.attributes and table.HasValue(attackerClothes.attributes, "seafarer") then
+				damageInfo:ScaleDamage(1.1);
+			end
+		end
+	end
+end
+
 function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 	if damageInfo:IsDamageType(DMG_BLAST) then
 		return;
@@ -521,10 +537,13 @@ function PLUGIN:ModifyPlayerSpeed(player, infoTable)
 			infoTable.jumpPower = infoTable.jumpPower * 0.9;
 		end
 		
-		if clothesItem.attributes and table.HasValue(clothesItem.attributes, "rage") then
-			if not player:GetShieldEquipped() then
+		if clothesItem.attributes then
+			if table.HasValue(clothesItem.attributes, "rage") and !player:GetShieldEquipped() then
 				infoTable.runSpeed = infoTable.runSpeed * 1.07;
 				infoTable.walkSpeed = infoTable.walkSpeed * 1.07;
+			elseif table.HasValue(clothesItem.attributes, "seafarer") then
+				infoTable.runSpeed = infoTable.runSpeed * 1.03;
+				infoTable.walkSpeed = infoTable.walkSpeed * 1.03;
 			end
 		end
 	end

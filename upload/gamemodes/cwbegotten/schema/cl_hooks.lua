@@ -2962,7 +2962,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		end
 		
 		return true;
-	elseif (category == "Armor" or category == "Helms") and itemTable.effectiveLimbs then
+	elseif (category == "Armor" or category == "Helms") then
 		local damageTypes = {[2] = "Bullet", [4] = "Slash", [16] = "Pierce", [128] = "Blunt"};
 		local limbs = {[1] = "Head", [2] = "Chest", [3] = "Stomach", [4] = "Left Arm", [5] = "Right Arm", [6] = "Left Leg", [7] = "Right Leg"};
 		local name = itemTable:GetName();
@@ -3117,6 +3117,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				frame:AddText("Rage (Shieldless): Movement speed is increased by 7%", Color(110, 30, 30), nil, 0.9);
 			end
 			
+			if table.HasValue(itemTable.attributes, "seafarer") then
+				frame:AddText("Seafarer: Movement speed is increased by 3%, and throwables have 10% increased damage.", Color(110, 30, 30), nil, 0.9);
+			end
+			
 			if table.HasValue(itemTable.attributes, "thermal_vision") then
 				frame:AddText("Thermal Vision: Thermal vision replaces Senses while this armor is equipped.", Color(110, 30, 30), nil, 0.9);
 			end
@@ -3168,9 +3172,15 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			frame:AddText("Excluded Subfactions: "..table.concat(itemTable.excludeSubfactions, ", "), Color(110, 30, 30), nil, 0.9);
 		end
 		
-		frame:AddText("Armor Stats: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+		local addedStats = false;
 		
 		if itemTable.protection then
+			if !addedStats then
+				frame:AddText("Armor Stats: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+				
+				addedStats = true;
+			end	
+			
 			local protection = itemTable.protection;
 			local originalProtection = protection;
 			
@@ -3192,6 +3202,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		end
 		
 		if itemTable.bluntScale then
+			if !addedStats then
+				frame:AddText("Armor Stats: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+				
+				addedStats = true;
+			end	
+		
 			local percentage = (1 - itemTable.bluntScale) * 100;
 			local toolTip = function(frame)
 				frame:AddText("Blunt Damage Resistance", Color(110, 30, 30), nil, 1);
@@ -3202,6 +3218,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		end
 		
 		if itemTable.bulletScale then
+			if !addedStats then
+				frame:AddText("Armor Stats: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+				
+				addedStats = true;
+			end	
+		
 			local percentage = (1 - itemTable.bulletScale) * 100;
 			local toolTip = function(frame)
 				frame:AddText("Bullet Damage Resistance", Color(110, 30, 30), nil, 1);
@@ -3218,6 +3240,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		end]]--
 		
 		if itemTable.pierceScale then
+			if !addedStats then
+				frame:AddText("Armor Stats: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+				
+				addedStats = true;
+			end	
+			
 			local percentage = (1 - itemTable.pierceScale) * 100;
 			local toolTip = function(frame)
 				frame:AddText("Pierce Damage Resistance", Color(110, 30, 30), nil, 1);
@@ -3228,6 +3256,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		end
 		
 		if itemTable.slashScale then
+			if !addedStats then
+				frame:AddText("Armor Stats: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+				
+				addedStats = true;
+			end	
+			
 			local percentage = (1 - itemTable.slashScale) * 100;
 			local toolTip = function(frame)
 				frame:AddText("Slash Damage Resistance", Color(110, 30, 30), nil, 1);
@@ -3238,6 +3272,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		end
 		
 		if itemTable.stabilityScale then
+			if !addedStats then
+				frame:AddText("Armor Stats: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+				
+				addedStats = true;
+			end	
+			
 			local percentage = (1 - itemTable.stabilityScale) * 100;
 			local toolTip = function(frame)
 				frame:AddText("Stability Damage Resistance", Color(110, 30, 30), nil, 1);
@@ -3249,6 +3289,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			local armorClass = itemTable.weightclass;
 			
 			if armorClass then
+				if !addedStats then
+					frame:AddText("Armor Stats: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+					
+					addedStats = true;
+				end	
+			
 				local percentage = 0;
 			
 				if armorClass == "Heavy" then
@@ -3271,6 +3317,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		end
 		
 		if cwWarmth and cwWarmth.systemEnabled and itemTable.insulation then
+			if !addedStats then
+				frame:AddText("Armor Stats: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
+				
+				addedStats = true;
+			end
+			
 			local percentage = itemTable.insulation;
 
 			if(category == "Helmet") then percentage = percentage * 0.20;

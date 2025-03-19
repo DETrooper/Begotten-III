@@ -423,7 +423,7 @@ function COMMAND:OnRun(player, arguments)
 	
 	if (target) then
 		if player:GetFaith() == "Faith of the Dark" then
-			if player:HasBelief("heretic") or player:HasBelief("soothsayer") then
+			if player:HasBelief("witch") or player:HasBelief("soothsayer") then
 				local curTime = CurTime();
 				local message = "\""..table.concat(arguments, " ", 2).."\"";
 				local targetFaith = target:GetFaith();
@@ -1024,13 +1024,16 @@ function COMMAND:OnRun(player, arguments)
 	if subfaith == "Voltism" then
 		if player:HasBelief("wire_therapy") then
 			local message = "\""..table.concat(arguments, " ", 1).."\"";
+			local listeners = {};
 
 			for _, v in _player.Iterator() do
 				if v:HasInitialized() and v:Alive() and ((v:GetSubfaith() == "Voltism") or Clockwork.player:HasFlags(v, "L")) then
-					Clockwork.chatBox:Add(v, player, "relay", message);
+					table.insert(listeners, v);
 					v:SendLua([[Clockwork.Client:EmitSound("buttons/combine_button"..math.random(2, 3)..".wav", 90, 150)]]);
 				end;
 			end;
+			
+			Clockwork.chatBox:Add(listeners, player, "relay", message);
 		else
 			Schema:EasyText(player, "chocolate", "You must have the 'Wire Therapy' belief before you can relay!");
 		end

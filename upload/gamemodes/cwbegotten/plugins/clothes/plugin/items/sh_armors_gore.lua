@@ -122,6 +122,7 @@ ITEM.requireFaction = {"Goreic Warrior"};
 
 ITEM.insulation = 25;
 
+ITEM.attributes = {"seafarer"};
 ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.

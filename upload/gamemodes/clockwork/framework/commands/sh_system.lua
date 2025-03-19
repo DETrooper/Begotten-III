@@ -484,13 +484,13 @@ local COMMAND = Clockwork.command:New("ShutDown");
 		local delay = arguments[1];
 	
 		if delay and tonumber(delay) and tonumber(delay) > 0 then
-			local message = "The server will be shutting down in "..tostring(delay).." seconds!";
+			local message = "The server will be shutting down in "..delay.." seconds!";
 		
 			for _, v in _player.Iterator() do
 				Clockwork.player:Notify(v, message);
 			end
 			
-			timer.Create("ServerShutdownTimer", delay, 1, function()
+			timer.Create("ServerShutdownTimer", tonumber(delay), 1, function()
 				RunConsoleCommand("disconnect");
 			end);
 		else
