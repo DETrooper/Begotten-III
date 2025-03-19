@@ -49,6 +49,8 @@ gus - Mapping (District 21)
 
 ObamasGrandpa - Exploit Reporting/Fixing
 
+Other [contributors](https://github.com/DETrooper/Begotten-III/graphs/contributors) who contribute pull requests.
+
 Various other people in the discord who report bugs.
 
 ### External Addons
