@@ -43,9 +43,9 @@ function ENT:HUDPaintTargetID(x, y, alpha)
 	elseif (frequency == 0) then
 		y = Clockwork.kernel:DrawInfo("This radio has no frequency.", x, y, colorWhite, alpha);
 	else
-		local faction = Clockwork.Client:GetFaction();
+		local faction = Clockwork.Client:GetNetVar("kinisgerOverride") or Clockwork.Client:GetFaction();
 		
-		if faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy" or faction == "Hillkeeper" then
+		if (Clockwork.Client:IsAdmin() and LocalPlayer():GetMoveType() == MOVETYPE_OBSERVER) or faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy" or faction == "Hillkeeper" then
 			y = Clockwork.kernel:DrawInfo(frequency, x, y, colorWhite, alpha);
 		end
 	end;
