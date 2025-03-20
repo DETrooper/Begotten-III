@@ -432,16 +432,16 @@ local function Guarding(ent, dmginfo)
 
 			if canblock then
 				local PoiseTotal = 0;
-				
-				if dmginfo:IsDamageType(DMG_BULLET) then
-					PoiseTotal = -math.Round(dmginfo:GetDamage() * 0.33);
-					dmginfo:ScaleDamage(0);
-				elseif dmginfo:IsDamageType(DMG_BUCKSHOT) then
-					PoiseTotal = -math.Round(dmginfo:GetDamage());
-					dmginfo:ScaleDamage(0);
-				end
 
 				if (IsValid(attacker) and (math.abs(math.AngleDifference(ent:EyeAngles().y, (attacker:GetPos() - ent:GetPos()):Angle().y)) <= blockthreshold)) then
+					if dmginfo:IsDamageType(DMG_BULLET) then
+						PoiseTotal = -math.Round(dmginfo:GetDamage() * 0.33);
+						dmginfo:ScaleDamage(0);
+					elseif dmginfo:IsDamageType(DMG_BUCKSHOT) then
+						PoiseTotal = -math.Round(dmginfo:GetDamage());
+						dmginfo:ScaleDamage(0);
+					end
+				
 					if enemywep and enemywep.IsABegottenMelee then
 						if ent:GetNetVar("Deflect") then
 							attacker:ViewPunch(Angle(-10,7,6))
