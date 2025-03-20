@@ -1123,7 +1123,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 			end
 		end
 		
-		if player_has_belief or subfaction == "Clan Grock" then	
+		if player_has_belief or subfaction == "Clan Grock" then
 			local curTime = CurTime();
 			
 			if (!player.lastWarCry) or player.lastWarCry < curTime then
@@ -1165,6 +1165,17 @@ local COMMAND = Clockwork.command:New("Warcry");
 										v.ravenBuff = false;
 									end
 								end);
+							end
+						end
+						
+						-- Make fearsome wolf damage buff apply to everyone irrespective of faith or faction.
+						if player_has_fearsome_wolf then
+							if not player.warCryVictims then
+								player.warCryVictims = {};
+							end
+							
+							if !immune then
+								table.insert(player.warCryVictims, v);
 							end
 						end
 							
@@ -1235,14 +1246,6 @@ local COMMAND = Clockwork.command:New("Warcry");
 											else
 												v:HandleSanity(sanity_debuff);
 											end
-										end
-										
-										if player_has_fearsome_wolf then
-											if not player.warCryVictims then
-												player.warCryVictims = {};
-											end
-											
-											table.insert(player.warCryVictims, v);
 										end
 									end
 								
@@ -1377,7 +1380,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				end
 				
 				if player_has_fearsome_wolf then
-					netstream.Start(player, "UpgradedWarcry");
+					--netstream.Start(player, "UpgradedWarcry");
 					
 					player.fearsomeSpeed = true;
 				

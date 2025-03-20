@@ -1307,18 +1307,18 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					netstream.Start(attacker, "TasteofBloodHighlight", entity);
 				end
 				
-				if attacker.warCryVictims then
-					if table.HasValue(attacker.warCryVictims, entity) then
-						if attacker:HasBelief("deceitful_snake") then
-							newDamage = newDamage + (originalDamage * 0.25);
-						elseif attacker:HasBelief("fearsome_wolf") then
-							newDamage = newDamage + (originalDamage * 0.2);
-						end
+				if attacker.warCryVictims and table.HasValue(attacker.warCryVictims, entity) then
+					if attacker:HasBelief("deceitful_snake") then
+						newDamage = newDamage + (originalDamage * 0.25);
+					elseif attacker:HasBelief("fearsome_wolf") then
+						newDamage = newDamage + (originalDamage * 0.2);
 					end
 				end
 			elseif entity:IsNextBot() or entity:IsNPC() then
-				if attacker:HasBelief("fearsome_wolf") then
-					newDamage = newDamage + (originalDamage * 0.2);
+				if attacker.warCryVictims and table.HasValue(attacker.warCryVictims, entity) then
+					if attacker:HasBelief("fearsome_wolf") then
+						newDamage = newDamage + (originalDamage * 0.2);
+					end
 				end
 			end
 			
