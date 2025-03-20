@@ -193,8 +193,6 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 							armorPiercing = armorPiercing + 8;
 						end
 						
-						armorPiercing = math.Round(armorPiercing * 0.75); -- Scales all AP. Set this to lower to make armor more effective, or higher to make it less effective.
-						
 						if IsValid(inflictor) then
 							if !inflictor.isJavelin then
 								if inflictor.isDagger and player.IsRagdolled and player:IsRagdolled() then
@@ -326,8 +324,6 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 								if attacker.daringTroutActive then
 									armorPiercing = armorPiercing + 8;
 								end
-								
-								armorPiercing = math.Round(armorPiercing * 0.75); -- Scales all AP. Set this to lower to make armor more effective, or higher to make it less effective.
 								
 								--print("AP Value: "..tostring(armorPiercing));
 								
