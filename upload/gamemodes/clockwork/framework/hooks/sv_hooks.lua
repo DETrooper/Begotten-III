@@ -2645,9 +2645,8 @@ function GM:PhysgunPickup(player, entity)
 		player.cwIsHoldingEnt = entity
 		entity.cwIsBeingHeld = player
 
-		if (!entity:IsPlayer() or !entity:IsNPC()) then
-			if (config.Get("prop_kill_protection"):Get()
-			and !entity.cwLastCollideGroup) then
+		if (!entity:IsPlayer() and !entity:IsNPC() and !entity:IsNextBot()) then
+			if (config.Get("prop_kill_protection"):Get() and !entity.cwLastCollideGroup) then
 				Clockwork.entity:StopCollisionGroupRestore(entity)
 				entity.cwLastCollideGroup = entity:GetCollisionGroup()
 				entity:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
