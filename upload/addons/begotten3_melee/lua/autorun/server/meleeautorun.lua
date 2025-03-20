@@ -601,6 +601,14 @@ local function Guarding(ent, dmginfo)
 							
 							if weaponItemTable and not shieldEquipped then
 								if (!cwBeliefs or not ent:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
+									local offhand = wep:GetNW2String("activeOffhand");
+									
+									if offhand:len() > 0 and ent:HasBelief("impossibly_skilled") then
+										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
+											conditionDamage = conditionDamage * 0.1;
+										end
+									end
+								
 									if cwBeliefs and ent:HasBelief("scour_the_rust") then
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 											weaponItemTable:TakeCondition(math.max((conditionDamage * (weaponItemTable.bulletConditionScale or 0.5)) / 2, 1));
@@ -614,8 +622,6 @@ local function Guarding(ent, dmginfo)
 											weaponItemTable:TakeCondition(math.max(conditionDamage / 10, 1));
 										end
 									end
-									
-									local offhand = wep:GetNW2String("activeOffhand");
 									
 									if offhand:len() > 0 then
 										for k, v in pairs(ent.equipmentSlots) do
