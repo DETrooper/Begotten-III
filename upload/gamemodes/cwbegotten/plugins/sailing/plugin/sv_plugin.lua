@@ -95,14 +95,13 @@ if !cwSailing.shipLocations then
 			},
 			["wasteland"] = {
 				["longship"] = {
-					{occupied = false, pos = Vector(13921.59375, 6783.96875, -1913.40625), angles = Angle(0, 315, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(13556.78125, 7011.25, -1918.03125), angles = Angle(0, 315, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(12609.5625, 7953.28125, -1925.0625), angles = Angle(0, 315, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(13014.09375, 8767.59375, -1913.1875), angles = Angle(0, 270, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(13358.46875, 9641.65625, -1925.15625), angles = Angle(0, 315, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(13709.8125, 10730.25, -1921), angles = Angle(0, 225, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(13000.125, 10841.0625, -1923.03125), angles = Angle(0, 225, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(12022.3125, 10821.21875, -1927.6875), angles = Angle(0, 270, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(13369, 10869, -1932), angles = Angle(0, -90, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(13530, 10152, -1930), angles = Angle(0, -90, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(12134, 10843, -1927), angles = Angle(0, -90, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(12690, 8688, -1927), angles = Angle(0, 0, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(12558, 6973, -1929), angles = Angle(0, 0, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(13388, 6824, -1927), angles = Angle(0, -90, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(12648, 8041, -1935), angles = Angle(0, -90, 0), bodygroup = 1},
 				},
 				["ironclad"] = {
 					{occupied = false, pos = Vector(14406, 9225, -1913), angles = Angle(0, 0, 0)},
@@ -111,9 +110,7 @@ if !cwSailing.shipLocations then
 			["wastelandlava"] = {
 				["longship"] = {
 					{occupied = false, pos = Vector(-13442, -14395, -1752), angles = Angle(0, 90, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(-14222, -14241, -1745), angles = Angle(0, -135, 0), bodygroup = 1},
 					{occupied = false, pos = Vector(-14422, -13440, -1748), angles = Angle(0, 0, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(-11612, 5546, -1754), angles = Angle(0, -45, 0), bodygroup = 1},
 					{occupied = false, pos = Vector(-12431, 4962, -1752), angles = Angle(0, 0, 0), bodygroup = 1},
 					{occupied = false, pos = Vector(-12514, 3665, -1746), angles = Angle(0, 0, -0), bodygroup = 1},
 				},
