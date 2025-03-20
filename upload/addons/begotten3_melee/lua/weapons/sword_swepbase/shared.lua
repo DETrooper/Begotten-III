@@ -2616,7 +2616,7 @@ function SWEP:Initialize()
 			self.realIronSightsPos = Vector(7.76, -4.824, -1.321);
 			self.realIronSightsAng = Vector(0, 28.843, 8.442);
 			self.ViewModel = "models/c_begotten_duals.mdl";
-			self.ViewModelFOV = 70;
+			self.ViewModelFOV = 75;
 			self.ViewModelBoneMods = {};
 			self.MultiHit = 2;
 		else

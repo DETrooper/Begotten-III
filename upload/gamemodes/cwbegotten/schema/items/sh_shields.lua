@@ -104,6 +104,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetAngles = Angle(88.51, 201.79, 268.11);
 	ITEM.attachmentOffsetVector = Vector(0, 0.71, -4.24);
 	ITEM.bulletConditionScale = 0.1;
+	ITEM.conditionScale = 0.05;
 	
 	ITEM.attributes = {"unbreakable"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
@@ -252,6 +253,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetAngles = Angle(90.5, 158.12, 88.51);
 	ITEM.attachmentOffsetVector = Vector(0, -1.41, 0);
 	ITEM.bulletConditionScale = 0.1;
+	ITEM.conditionScale = 0.05;
 	
 	ITEM.attributes = {"unbreakable"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
@@ -385,6 +387,8 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 360, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 4.24, -4.95);
+	ITEM.bulletConditionScale = 0.1;
+	ITEM.conditionScale = 0.05;
 
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
 	ITEM.attributes = {"unbreakable"};

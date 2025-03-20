@@ -2645,7 +2645,7 @@ function GM:PhysgunPickup(player, entity)
 		player.cwIsHoldingEnt = entity
 		entity.cwIsBeingHeld = player
 
-		if (!entity:IsPlayer()) then
+		if (!entity:IsPlayer() or !entity:IsNPC()) then
 			if (config.Get("prop_kill_protection"):Get()
 			and !entity.cwLastCollideGroup) then
 				Clockwork.entity:StopCollisionGroupRestore(entity)

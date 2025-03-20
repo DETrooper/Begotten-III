@@ -2871,7 +2871,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 
 					if table.HasValue(itemTable.attributes, "unbreakable") then
-						frame:AddText("Perfect Poise Damage Resistance: You are immune to poise damage while blocking, and will only suffer minimum block cost.", Color(110, 30, 30), nil, 0.9);
+						frame:AddText("Perfect Stamina Damage Resistance: You are immune to stamina damage while blocking, and will only suffer minimum block cost.", Color(110, 30, 30), nil, 0.9);
 					end
 				end
 				
