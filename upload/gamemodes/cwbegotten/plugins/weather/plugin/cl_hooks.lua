@@ -170,8 +170,8 @@ function cwWeather:OverrideZoneFogDistance(zoneTable, fogStart, fogEnd)
 			
 			if map == "rp_district21" then
 				if (!self:IsOutside(Clockwork.Client:GetPos()) and Clockwork.Client:InTower()) then
-					targetStart = self.weatherTypes["normal"].fogStart * 1.5;
-					targetEnd = self.weatherTypes["normal"].fogEnd * 1.5;
+					targetStart = (self.weatherTypes["normal"].fogStart or zoneTable.fogStart) * 1.5;
+					targetEnd = (self.weatherTypes["normal"].fogEnd or zoneTable.fogEnd) * 1.5;
 				end
 			elseif map == "rp_begotten3" and Clockwork.Client:InTower() then
 				return fogStart, fogEnd;
