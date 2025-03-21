@@ -673,33 +673,6 @@ hook.Add("ClockworkInitialized", "ClockworkInitializedD21", function()
 		end;
 	RECIPE:Register()
 
-	RECIPE = cwRecipes.recipes:New("envelope_dress");
-		RECIPE.name = "Envelope Dress";
-		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
-		RECIPE.requirements = {
-			["cloth"] = {amount = 5},
-		};
-		RECIPE.result = {
-			["envelope_dress"] = {amount = 1},
-		};
-		RECIPE.category = "Armor"
-		RECIPE.finishSound = "begotten/items/first_aid.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 40;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-
 	-- Hill shit (recipes for helmets)
 
 	RECIPE = cwRecipes.recipes:New("furhat");

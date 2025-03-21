@@ -232,7 +232,7 @@ local function Guarding(ent, dmginfo)
 
 								
 								if cwBeliefs and attacker:HasBelief("scour_the_rust") then
-									conditionLoss = dmginfo:GetDamage() / 200;
+									conditionLoss = dmginfo:GetDamage() / 155;
 								else
 									conditionLoss = dmginfo:GetDamage() / 100;
 								end
@@ -527,7 +527,7 @@ local function Guarding(ent, dmginfo)
 											local conditionLoss;
 											
 											if cwBeliefs and attacker:HasBelief("scour_the_rust") then
-												conditionLoss = dmginfo:GetDamage() / 200;
+												conditionLoss = dmginfo:GetDamage() / 155;
 											else
 												conditionLoss = dmginfo:GetDamage() / 100;
 											end
@@ -585,9 +585,9 @@ local function Guarding(ent, dmginfo)
 								if (!cwBeliefs or not ent:HasBelief("ingenuity_finisher")) or shieldItemTable.unrepairable then
 									if cwBeliefs and ent:HasBelief("scour_the_rust") then
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
-											shieldItemTable:TakeCondition(math.max((shieldConditionDamage * (shieldItemTable.bulletConditionScale or 0.5)) / 2, 1));
+											shieldItemTable:TakeCondition(math.max((shieldConditionDamage * (shieldItemTable.bulletConditionScale or 0.5)) / 1.55, 1));
 										else
-											shieldItemTable:TakeCondition(math.max(shieldConditionDamage / 20, 1));
+											shieldItemTable:TakeCondition(math.max(shieldConditionDamage / 15, 1));
 										end
 									else
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
@@ -611,9 +611,9 @@ local function Guarding(ent, dmginfo)
 								
 									if cwBeliefs and ent:HasBelief("scour_the_rust") then
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
-											weaponItemTable:TakeCondition(math.max((conditionDamage * (weaponItemTable.bulletConditionScale or 0.5)) / 2, 1));
+											weaponItemTable:TakeCondition(math.max((conditionDamage * (weaponItemTable.bulletConditionScale or 0.5)) / 1.55, 1));
 										else
-											weaponItemTable:TakeCondition(math.max(conditionDamage / 20, 1));
+											weaponItemTable:TakeCondition(math.max(conditionDamage / 15, 1));
 										end
 									else
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
@@ -631,9 +631,9 @@ local function Guarding(ent, dmginfo)
 												if offhandItemTable then
 													if cwBeliefs and ent:HasBelief("scour_the_rust") then
 														if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
-															offhandItemTable:TakeCondition(math.max((conditionDamage * (offhandItemTable.bulletConditionScale or 0.5)) / 2, 1));
+															offhandItemTable:TakeCondition(math.max((conditionDamage * (offhandItemTable.bulletConditionScale or 0.5)) / 1.55, 1));
 														else
-															offhandItemTable:TakeCondition(math.max(conditionDamage / 20, 1));
+															offhandItemTable:TakeCondition(math.max(conditionDamage / 15, 1));
 														end
 													else
 														if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
@@ -1156,7 +1156,7 @@ local function Guarding(ent, dmginfo)
 											local conditionLoss;
 											
 											if cwBeliefs and attacker:HasBelief("scour_the_rust") then
-												conditionLoss = dmginfo:GetDamage() / 200;
+												conditionLoss = dmginfo:GetDamage() / 155;
 											else
 												conditionLoss = dmginfo:GetDamage() / 100;
 											end
@@ -1367,7 +1367,7 @@ local function Guarding(ent, dmginfo)
 										local conditionLoss;
 										
 										if cwBeliefs and attacker:HasBelief("scour_the_rust") then
-											conditionLoss = dmginfo:GetDamage() / 200;
+											conditionLoss = dmginfo:GetDamage() / 155;
 										else
 											conditionLoss = dmginfo:GetDamage() / 100;
 										end
@@ -1429,7 +1429,7 @@ local function Guarding(ent, dmginfo)
 								local conditionLoss;
 								
 								if cwBeliefs and attacker:HasBelief("scour_the_rust") then
-									conditionLoss = dmginfo:GetDamage() / 200;
+									conditionLoss = dmginfo:GetDamage() / 155;
 								else
 									conditionLoss = dmginfo:GetDamage() / 100;
 								end

@@ -363,7 +363,7 @@ function SWEP:TakeAmmoBegotten(amount)
 							if self.Owner:HasBelief("ingenuity_finisher") then
 								return;
 							elseif self.Owner:HasBelief("scour_the_rust") then
-								conditionLoss = conditionLoss / 2;
+								conditionLoss = conditionLoss / 1.55;
 							end
 						end
 					end

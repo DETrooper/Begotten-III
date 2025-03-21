@@ -13,7 +13,7 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 		{"Ingenuity", INGENUITY.color, "Civ5ToolTip4"},
 		{"Ingenuity is a measure of your character's craftiness, primarily affecting your character's effectiveness at Crafting. Upgrading this belief set will progressively unlock more crafting options. More Crafting options may become available if this belief set is paired with aptitude.", Color(225, 200, 200)},
 		{"\n\"Bobby all proud 'an cool with that 'ol apparatus back in the truck that laid him out with sweet social status, far from junior status. It be the saddest machine but nice with molasses in the power gauge, as well as the mathematics and administrative tactics.\"", Color(128, 90, 90, 240)},
-		{"\nBelief Tree Completion Bonus: Armor and weapon condition will no longer decay.", Color(50, 255, 50)}
+		{"\nBelief Tree Completion Bonus: Armor and weapon condition will no longer decay. Increases the protection value of all armor by 5 points.", Color(50, 255, 50)}
 	};
 	INGENUITY.columnPositions = {
 		[1] = (INGENUITY.size.w - 4) * 0.1,
@@ -120,17 +120,17 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 			},
 		},
 		[5] = {
-			["scour_the_rust"] = {
-				name = "Scour the Rust",
-				description = "Reduces armor and weapon condition decay by 50%.",
+			["fortify_the_plate"] = {
+				name = "Fortify the Plate",
+				description = "Increases the protection value of all armor by 5 points.",
+				iconOverride = "begotten/ui/belieficons/hauberk.png",
 				requirements = {"ingenious"},
 				row = 2,
 			},
-			["fortify_the_plate"] = {
-				name = "Fortify the Plate",
-				description = "Increases the protection value of all armor by 10 points.",
-				iconOverride = "begotten/ui/belieficons/hauberk.png",
-				requirements = {"ingenious", "scour_the_rust"},
+			["scour_the_rust"] = {
+				name = "Scour the Rust",
+				description = "Reduces armor and weapon condition decay by 35%.",
+				requirements = {"ingenious", "fortify_the_plate"},
 				row = 3,
 			},
 		},

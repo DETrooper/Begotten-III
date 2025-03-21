@@ -168,7 +168,7 @@ if SERVER then
 									local conditionLoss = self.ConditionLoss or 34;
 									
 									if self.Owner:HasBelief("scour_the_rust") then
-										conditionLoss = conditionLoss * 0.5;
+										conditionLoss = conditionLoss * 0.65;
 									end
 									
 									self.itemTable:TakeCondition(conditionLoss);
@@ -274,7 +274,7 @@ if SERVER then
 									local conditionLoss = self.ConditionLoss or 34;
 									
 									if self.Owner:HasBelief("scour_the_rust") then
-										conditionLoss = conditionLoss * 0.5;
+										conditionLoss = conditionLoss * 0.65;
 									end
 								self.itemTable:TakeCondition(conditionLoss);
 							end
@@ -340,7 +340,7 @@ if SERVER then
 									local conditionLoss = self.ConditionLoss or 34;
 									
 									if self.Owner:HasBelief("scour_the_rust") then
-										conditionLoss = conditionLoss * 0.5;
+										conditionLoss = conditionLoss * 0.65;
 									end
 									
 									self.itemTable:TakeCondition(conditionLoss);
@@ -473,7 +473,7 @@ if SERVER then
 										local conditionLoss = self.ConditionLoss or 34;
 										
 										if self.Owner:HasBelief("scour_the_rust") then
-											conditionLoss = conditionLoss * 0.5;
+											conditionLoss = conditionLoss * 0.65;
 										end
 										
 										self.itemTable:TakeCondition(conditionLoss);

@@ -782,7 +782,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A bolted rusty steel plate helm and gasmask cowled under a leather hood. An exhaust pipe feeds the holy fumes of diesel into the wearer's lungs."
 	ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/voltyellow";
+	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 
 	ITEM.conditionScale = 0.85 -- item degrades 1x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;

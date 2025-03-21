@@ -373,13 +373,17 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						protection = math.max(0, protection - 10);
 					end
 					
-					if !isTrainingDummy then
-						if player:GetSubfaction() == "Philimaxio" then
-							protection = protection + (protection * 0.1);
+					if !isTrainingDummy then	
+						if player:HasBelief("fortify_the_plate") then
+							protection = protection + 5;
 						end
 						
-						if player:HasBelief("fortify_the_plate") then
-							protection = protection + 10;
+						if player:HasBelief("ingenuity_finisher") then
+							protection = protection + 5;
+						end
+						
+						if player:GetSubfaction() == "Philimaxio" then
+							protection = protection + (protection * 0.1);
 						end
 						
 						if player:HasBelief("shedskin") then
@@ -461,7 +465,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 								end
 								
 								if player:HasBelief("scour_the_rust") then
-									conditionLoss = conditionLoss / 2;
+									conditionLoss = conditionLoss / 1.55;
 								end
 							end
 						end

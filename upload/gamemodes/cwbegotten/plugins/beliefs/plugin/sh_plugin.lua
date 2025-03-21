@@ -1336,7 +1336,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 							
 							for i, v in ipairs(player.deceitfulLastDamages) do
 								if v.damageTime >= (curTime - 2) then
-									healthToRestore = healthToRestore + (v.damage / 2);
+									healthToRestore = healthToRestore + (v.damage / 1.43);
 								end
 							end
 							
@@ -1370,10 +1370,11 @@ local COMMAND = Clockwork.command:New("Warcry");
 				if player_has_daring_trout then
 					player.daringTroutActive = true;
 					
-					timer.Create("DaringTroutTimer_"..player:EntIndex(), 20, 1, function()
+					timer.Create("DaringTroutTimer_"..player:EntIndex(), 20.5, 1, function()
 						if IsValid(player) then
 							if player.daringTroutActive then
 								player.daringTroutActive = nil;
+								Clockwork.hint:Send(attacker, "'Daring is the Trout' has worn off...", 10, Color(175, 100, 100), true, true);
 							end
 						end
 					end);
@@ -1392,6 +1393,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 							player.warCryVictims = nil;
 							
 							hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
+							Clockwork.hint:Send(attacker, "'Fearsome is the Wolf' has worn off...", 10, Color(175, 100, 100), true, true);
 						end
 					end);
 				end

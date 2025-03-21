@@ -165,7 +165,7 @@ local ITEM = Clockwork.item:New();
 			player:HandleSanity(-25);
 		end
 		
-		player:HandleXP(cwBeliefs.xpValues["drink"]);
+		--player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
 
 	-- Called when a player drops the item.
@@ -279,7 +279,7 @@ local ITEM = Clockwork.item:New();
 	
 		Schema:EasyText(player, "lawngreen", "As clean water enters your parched throat, you feel an immense satisfaction knowing that you will not die of disease today.");
 		player:HandleSanity(8);
-		player:HandleXP(cwBeliefs.xpValues["drink"]);
+		--player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
 
 	-- Called when a player drops the item.
@@ -911,7 +911,7 @@ local ITEM = Clockwork.item:New();
 	
 		Schema:EasyText(player, "lawngreen", "As clean water enters your parched throat, you feel an immense satisfaction knowing that you will not die of disease today.");
 		player:HandleSanity(20);
-		player:HandleXP(cwBeliefs.xpValues["drink"]);
+		--player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
 
 	-- Called when a player drops the item.
@@ -962,7 +962,7 @@ local ITEM = Clockwork.item:New();
 			Schema:EasyText(player, "olive", "Cold, vile water from the freezing wasteland travels through your gullet and into your stomach. You feel like you could throw up.");
 			player:HandleSanity(-25);
 		end
-			player:HandleXP(cwBeliefs.xpValues["drink"]);
+			--player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
 
 	-- Called when a player drops the item.
