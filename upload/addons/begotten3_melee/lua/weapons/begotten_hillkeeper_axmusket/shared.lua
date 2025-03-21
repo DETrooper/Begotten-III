@@ -234,12 +234,12 @@ function SWEP:AdjustFireBegotten()
 										effectData:SetRadius(256);
 										effectData:SetMagnitude(50);
 
+										util.BlastDamage(self, self, position, 300, 75);
 										util.Effect("Explosion", effectData, true, true);
-										util.BlastDamage(self, self, position, 8, 75);
 									end
 									
-									if itemTable.TakeCondition then
-										itemTable:Break();
+									if itemTable.SetCondition then
+										itemTable:SetCondition(0, true);
 									end
 								else
 									if SERVER then
