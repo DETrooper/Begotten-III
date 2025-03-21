@@ -1374,7 +1374,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 						if IsValid(player) then
 							if player.daringTroutActive then
 								player.daringTroutActive = nil;
-								Clockwork.hint:Send(attacker, "'Daring is the Trout' has worn off...", 10, Color(175, 100, 100), true, true);
+								Clockwork.hint:Send(player, "'Daring is the Trout' has worn off...", 10, Color(175, 100, 100), true, true);
 							end
 						end
 					end);
@@ -1393,7 +1393,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 							player.warCryVictims = nil;
 							
 							hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
-							Clockwork.hint:Send(attacker, "'Fearsome is the Wolf' has worn off...", 10, Color(175, 100, 100), true, true);
+							Clockwork.hint:Send(player, "'Fearsome is the Wolf' has worn off...", 10, Color(175, 100, 100), true, true);
 						end
 					end);
 				end
