@@ -3772,8 +3772,8 @@ local COMMAND = Clockwork.command:New("HellPortalGaze");
 		{
 			["rp_begotten3"] = 
 			{
-				Vector(-7066.134277, -2969.978027, -1364.597778), -- box start
-				Vector(-15229.947266, 1520.333984, 223.156769) -- box end
+				Vector(-14141.288086, 2363.732666, -1726.485474), -- box start
+				Vector(-4726.570312, -6574.257324, -952.406616) -- box end
 			},
 			["rp_district21"] = 
 			{
