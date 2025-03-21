@@ -2561,7 +2561,7 @@ function GM:HUDDrawTargetID()
 				if alpha > 0 then
 					local player = Clockwork.entity:GetPlayer(entity)
 					
-					if(player and player:GetSharedVar("isThrall")) then return; end
+					if (player and player:GetSharedVar("isThrall")) then return; end
 
 					if (player and Clockwork.Client != player) then
 						if (Clockwork.plugin:Call("ShouldDrawPlayerTargetID", player)) then
@@ -2570,27 +2570,20 @@ function GM:HUDDrawTargetID()
 									Clockwork.Client:SetNetVar("TargetKnows", true)
 								end]]--
 								
-								local playerEntity = nil
+								local playerEntity = entity;
 								local position = Clockwork.plugin:Call("GetPlayerTypingDisplayPosition", player)
-								local ragdoll = player:GetRagdollEntity()
-								
-								if (IsValid(ragdoll)) then
-									playerEntity = ragdoll
-								else
-									playerEntity = player
-								end
 
 								if (!position) then
-									local headBone = "ValveBiped.Bip01_Head1"
+									local boneID;
 									
-									--[[if (string.find(playerEntity:GetModel(), "vortigaunt")) then
-										headBone = "ValveBiped.Head"
-									end]]--
-									
-									local headID = playerEntity:LookupBone(headBone)
+									if entity:GetClass() == "prop_ragdoll" then
+										boneID = playerEntity:LookupBone("ValveBiped.Bip01_Spine1") or playerEntity:LookupBone("ValveBiped.Bip01_Spine") or playerEntity:LookupBone("ValveBiped.Bip01_Pelvis");
+									else
+										boneID = playerEntity:LookupBone("ValveBiped.Bip01_Head1") or playerEntity:LookupBone("ValveBiped.Head");
+									end
 
-									if (headID) then
-										local bonePosition = playerEntity:GetBonePosition(headID)
+									if (boneID) then
+										local bonePosition = playerEntity:GetBonePosition(boneID)
 										
 										if (!bonePosition) then
 											local ragdolled = playerEntity:IsRagdolled()
@@ -2645,7 +2638,9 @@ function GM:HUDDrawTargetID()
 									if Clockwork.ConVars.PHYSDESCINSPECT:GetInt() == 0 or input.IsKeyDown(Clockwork.ConVars.Binds["PHYSDESCINSPECT"]:GetInt()) then
 										result = Clockwork.plugin:Call("PlayerCanShowUnrecognised", player, x, y, unrecognisedName, teamColor, alpha)
 									else
-										--result = "Press <X> to inspect this character.";
+										--[[local key = input.GetKeyName(Clockwork.ConVars.Binds["PHYSDESCINSPECT"]:GetInt()) or "NOT BOUND";
+										
+										result = "Press <"..key:upper().."> to inspect this character.";]]--
 									end
 									
 									if result then
@@ -2712,7 +2707,10 @@ function GM:HUDDrawTargetID()
 									end
 									
 									y = Clockwork.plugin:Call("DrawTargetPlayerStatus", player, alpha, x, y) or y
-									y = Clockwork.kernel:DrawInfo("Press <X> to inspect this character.", x, y, colorWhite, alpha)
+									
+									local key = input.GetKeyName(Clockwork.ConVars.Binds["PHYSDESCINSPECT"]:GetInt()) or "NOT BOUND";
+									
+									y = Clockwork.kernel:DrawInfo("Press <"..key:upper().."> to inspect this character.", x, y, colorWhite, alpha)
 								end
 								
 								--[[if (!Clockwork.nextCheckRecognises or curTime >= Clockwork.nextCheckRecognises[1] or Clockwork.nextCheckRecognises[2] != player) then
