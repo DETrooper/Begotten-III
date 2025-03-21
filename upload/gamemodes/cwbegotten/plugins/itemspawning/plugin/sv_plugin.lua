@@ -451,7 +451,7 @@ function cwItemSpawner:SetupContainers()
 									if category == "Helms" or category == "Armor" or category == "Melee" or category == "Crafting Materials" then
 										-- 75% chance for these items to spawn with less than 100% condition.
 										if math.random(1, 4) ~= 1 then
-											itemInstance:TakeCondition(math.random(0, 75));
+											itemInstance:SetCondition(math.random(15, 99), true);
 										end
 									elseif itemInstance.category == "Shot" and itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
 										itemInstance:SetAmmoMagazine(math.random(1, itemInstance.ammoMagazineSize));

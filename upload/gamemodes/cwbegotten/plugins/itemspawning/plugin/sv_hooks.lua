@@ -207,7 +207,7 @@ function cwItemSpawner:Think()
 										if category == "Helms" or category == "Armor" or category == "Melee" or category == "Crafting Materials" then
 											-- 86% chance for these items to spawn with less than 100% condition.
 											if math.random(1, 6) ~= 1 then
-												itemInstance:TakeCondition(math.random(math.random(10, 50), 75));
+												itemInstance:SetCondition(math.random(15, 99), true);
 											end
 										elseif itemInstance.category == "Shot" and itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
 											itemInstance:SetAmmoMagazine(math.random(1, itemInstance.ammoMagazineSize));
@@ -341,7 +341,7 @@ function cwItemSpawner:Think()
 				if itemTable.category == "Helms" or itemTable.category == "Armor" or itemTable.category == "Melee" then
 					-- 86% chance for these items to spawn with less than 100% condition.
 					if math.random(1, 6) ~= 1 then
-						itemTable:TakeCondition(math.random(math.random(20, 50), 75));
+						itemTable:SetCondition(math.random(15, 99), true);
 					end
 				elseif itemTable.category == "Shot" and itemTable.ammoMagazineSize and itemTable.SetAmmoMagazine then
 					itemTable:SetAmmoMagazine(math.random(1, itemTable.ammoMagazineSize));
@@ -510,7 +510,7 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 						if !bIsSuperCrate then
 							-- 75% chance for these items to spawn with less than 100% condition.
 							if math.random(1, 4) ~= 1 then
-								itemInstance:TakeCondition(math.random(0, 75));
+								itemInstance:SetCondition(math.random(15, 99), true);
 							end
 						end
 					elseif itemInstance.category == "Shot" then
