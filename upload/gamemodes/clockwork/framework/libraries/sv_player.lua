@@ -340,6 +340,10 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 			return self:SetCreateFault(
 				player, "The description must be at least "..minimumPhysDesc.." letters long."
 			)
+		elseif (string.match(data.physDesc, "%s%s+")) then
+			return self:SetCreateFault(
+				player, "The description must not have consecutive spaces."
+			)
 		end
 
 		info.data["PhysDesc"] = Clockwork.kernel:ModifyPhysDesc(data.physDesc)
