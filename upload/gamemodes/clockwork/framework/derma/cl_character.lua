@@ -3106,6 +3106,11 @@ function PANEL:OnNext()
 			Clockwork.character:SetFault("The physical description must be at least "..minimumPhysDesc.." characters long!");
 			return false;
 		end;
+
+		if (string.match(self.info.physDesc, "%s%s+")) then
+			Clockwork.character:SetFault(player, "The description must not have consecutive spaces.");
+			return false;
+		end;
 		
 		if (IsValid(self.backstoryTextEntry)) then
 			self.info.backstory = self.backstoryTextEntry:GetValue();

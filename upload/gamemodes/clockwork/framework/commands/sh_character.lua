@@ -631,6 +631,11 @@ local COMMAND = Clockwork.command:New("CharForcePhysDesc");
 			
 			return;
 		end;
+
+		if (string.match(text, "%s%s+")) then
+			Clockwork.player:Notify(player, "The physical description must not have consecutive spaces.");
+			return;
+		end;
 		
 		target:SetCharacterData("PhysDesc", Clockwork.kernel:ModifyPhysDesc(text));
 		target:SaveCharacter();

@@ -808,6 +808,11 @@ local COMMAND = Clockwork.command:New("CharPhysDesc");
 				Clockwork.player:Notify(player, "The physical description must be at least "..minimumPhysDesc.." characters long!");
 				return;
 			end;
+
+			if (string.match(text, "%s%s+")) then
+				Clockwork.player:Notify(player, "The description must not have consecutive spaces.");
+				return;
+			end;
 			
 			player:SetCharacterData("PhysDesc", Clockwork.kernel:ModifyPhysDesc(text));
 			player:SaveCharacter();

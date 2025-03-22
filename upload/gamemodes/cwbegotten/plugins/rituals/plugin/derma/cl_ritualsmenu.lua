@@ -910,6 +910,11 @@ function PANEL:Init()
 			Clockwork.character:SetFault("The physical description must be at least "..minimumPhysDesc.." characters long!");
 			return false;
 		end;
+
+		if (string.match(self.physDesc, "%s%s+")) then
+			Clockwork.character:SetFault("The physical description must not have consecutive spaces.");
+			return;
+		end;
 		
 		netstream.Start("AppearanceAlterationMenu", {self.fullName, self.selectedModel, self.selectedGender, self.physDesc, self.selectedFaction, self.selectedSubfaction});
 		
