@@ -6425,7 +6425,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["gore_seafarer_garb"] = {amount = 4},
+			["gore_seafarer_garb"] = {amount = 1},
 			["bearskin"] = {amount = 1},
 			["hide"] = {amount = 2},
 		};
