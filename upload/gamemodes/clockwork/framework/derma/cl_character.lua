@@ -3108,7 +3108,7 @@ function PANEL:OnNext()
 		end;
 
 		if (string.match(self.info.physDesc, "%s%s+")) then
-			Clockwork.character:SetFault(player, "The description must not have consecutive spaces.");
+			Clockwork.character:SetFault("The description must not have consecutive spaces.");
 			return false;
 		end;
 		
