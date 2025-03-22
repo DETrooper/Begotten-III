@@ -416,6 +416,7 @@ COMMAND.text = "<string Name> <string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 2;
 COMMAND.alias = {"DW"};
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -471,6 +472,7 @@ COMMAND.text = "<string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"DWD"};
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -526,6 +528,7 @@ COMMAND.text = "<string Message>";
 COMMAND.access = "s";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -552,6 +555,7 @@ COMMAND.text = "<string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"DWF"};
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -615,6 +619,7 @@ COMMAND.text = "<string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"DWFP"};
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -694,6 +699,7 @@ COMMAND.text = "<string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"DWFK"};
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -740,6 +746,7 @@ COMMAND.text = "<string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"DWFKP"};
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -792,6 +799,7 @@ COMMAND.tip = "Using all your willpower, reply to a darkwhisper sent to you thro
 COMMAND.text = "<string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -819,6 +827,7 @@ COMMAND.tip = "Make a prayer to the ones who rule you. Prepare for the consequen
 COMMAND.text = "<string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
+COMMAND.isChatCommand = true;
 
 local faithcolors = {
 	["HARD-GLAZED"] = "goldenrod",
@@ -1016,6 +1025,7 @@ COMMAND.text = "<string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"RE"};
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)

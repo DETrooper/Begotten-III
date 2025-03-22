@@ -14,6 +14,7 @@ COMMAND.flags = bit.bor(CMD_DEFAULT, CMD_DEATHCODE, CMD_FALLENOVER);
 COMMAND.arguments = 1;
 COMMAND.alias = {"R"};
 COMMAND.important = true;
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -37,6 +38,7 @@ COMMAND.flags = bit.bor(CMD_DEFAULT, CMD_DEATHCODE, CMD_FALLENOVER);
 COMMAND.arguments = 1;
 COMMAND.alias = {"RadioProclaim"};
 COMMAND.important = true;
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)

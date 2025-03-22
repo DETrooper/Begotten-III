@@ -156,7 +156,8 @@ function Parry(parrier, dmginfo)
 					if wep.hasSwordplay and (!cwBeliefs or parrier:HasBelief("blademaster")) then
 						wep:SetNW2Bool("swordplayActive", true);
 						
-						wep:CreateTimer(0.5, "swordplayTimer"..wep:EntIndex(), function()
+						-- 0.7 is weapon fire delay.
+						wep:CreateTimer(0.5 + 0.7, "swordplayTimer"..wep:EntIndex(), function()
 							if IsValid(wep) then
 								wep:SetNW2Bool("swordplayActive", false);
 							end

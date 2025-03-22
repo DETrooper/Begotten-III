@@ -1110,6 +1110,7 @@ local COMMAND = Clockwork.command:New("EventLocal");
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.access = "o";
 	COMMAND.arguments = 1;
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -1588,6 +1589,7 @@ local COMMAND = Clockwork.command:New("Proclaim");
 	COMMAND.text = "<string Text>";
 	COMMAND.arguments = 1;
 	COMMAND.important = true;
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -1650,6 +1652,7 @@ COMMAND.text = "<string Name> <string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 2;
 COMMAND.alias = {"RS"};
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -1696,6 +1699,7 @@ local COMMAND = Clockwork.command:New("RavenSpeakClan");
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"RSC"};
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -1731,6 +1735,7 @@ local COMMAND = Clockwork.command:New("RavenSpeakFaction");
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"RSF"};
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -1774,6 +1779,7 @@ COMMAND.text = "<string Message>";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"RR"};
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -1800,6 +1806,7 @@ local COMMAND = Clockwork.command:New("Speaker");
 	COMMAND.text = "<string Text>";
 	COMMAND.arguments = 1;
 	COMMAND.access = "s";
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -1887,6 +1894,7 @@ local COMMAND = Clockwork.command:New("ProclaimMe");
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"MeProclaim"};
 	COMMAND.important = true;
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -1924,6 +1932,7 @@ local COMMAND = Clockwork.command:New("SpeakerIt");
 	COMMAND.text = "<string Text>";
 	COMMAND.arguments = 1;
 	COMMAND.access = "s";
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

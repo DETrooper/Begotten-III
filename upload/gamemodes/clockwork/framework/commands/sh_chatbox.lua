@@ -10,6 +10,7 @@ local COMMAND = Clockwork.command:New("W");
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"Whisper"};
 	COMMAND.important = true;
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -43,6 +44,7 @@ local COMMAND = Clockwork.command:New("Y");
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"Yell", "Shout"};
 	COMMAND.important = true;
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -85,6 +87,7 @@ local COMMAND = Clockwork.command:New("Su");
 	COMMAND.text = "<string Msg>";
 	COMMAND.access = "s";
 	COMMAND.arguments = 1;
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -146,6 +149,7 @@ local COMMAND = Clockwork.command:New("PM");
 	COMMAND.text = "<string Name> <string Text>";
 	--COMMAND.flags = CMD_DEFAULT;
 	COMMAND.arguments = 2;
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -199,6 +203,7 @@ local COMMAND = Clockwork.command:New("Me");
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"Perform"};
 	COMMAND.important = true;
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -230,6 +235,7 @@ local COMMAND = Clockwork.command:New("It");
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.arguments = 1;
 	COMMAND.important = true;
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -259,6 +265,7 @@ local COMMAND = Clockwork.command:New("Event");
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.access = "o";
 	COMMAND.arguments = 1;
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -272,6 +279,7 @@ local COMMAND = Clockwork.command:New("AdminChat");
 	COMMAND.access = "a";
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"Ad", "Op"};
+	COMMAND.isChatCommand = true;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -296,6 +304,7 @@ COMMAND.text = "<string Message>";
 COMMAND.arguments = 1;
 COMMAND.alias = {"aHelp", "help"};
 COMMAND.important = true;
+COMMAND.isChatCommand = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)

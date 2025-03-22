@@ -2698,6 +2698,8 @@ function Schema:ChatBoxAdjustInfo(info)
 					info.text = "";
 						
 					Schema:EasyText(info.speaker, "grey", "Your character is slow and cannot formulate another sentence for another "..math.ceil(info.speaker.nextChatDelay - CurTime()).." second(s)!");
+					
+					return false;
 				end;
 			end;
 		end

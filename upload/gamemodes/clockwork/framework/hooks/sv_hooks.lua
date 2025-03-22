@@ -2439,10 +2439,13 @@ local function PlayerSayFunc(player, text)
 		local arguments = Clockwork.kernel:ExplodeByTags(text, " ", "\"", "\"", true);
 		local command = string.utf8sub(arguments[1], prefixLength + 1);
 
-		if (Clockwork.command.stored[command] and Clockwork.command.stored[command].arguments < 2
-		and !Clockwork.command.stored[command].optionalArguments) then
-			text = string.gsub(string.utf8sub(text, string.len(command) + prefixLength + 2), "\"", "");
-
+		if (Clockwork.command.stored[command] and Clockwork.command.stored[command].arguments < 2 and !Clockwork.command.stored[command].optionalArguments) then
+			if Clockwork.command.stored[command].isChatCommand then
+				text = string.utf8sub(text, string.len(command) + prefixLength + 2);
+			else
+				text = string.gsub(string.utf8sub(text, string.len(command) + prefixLength + 2), "\"", "");
+			end
+			
 			if (text != "") then
 				arguments = {command, text};
 			else
@@ -2451,8 +2454,8 @@ local function PlayerSayFunc(player, text)
 		else
 			arguments[1] = command;
 		end;
-
-		Clockwork.command:ConsoleCommand(player, "cwCmd", arguments);
+		
+		Clockwork.command:ConsoleCommand(player, command, arguments)
 	elseif (hook.Run("PlayerCanSayIC", player, text)) then
 		if player.victim and IsValid(player.victim) then
 			Clockwork.chatBox:AddInRadius(player.victim, "ic", text, player:GetPos(), config.Get("talk_radius"):Get());

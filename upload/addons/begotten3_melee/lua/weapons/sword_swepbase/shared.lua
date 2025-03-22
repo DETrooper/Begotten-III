@@ -1369,8 +1369,6 @@ end
 				end
 			end
 		elseif swingType == "polearm_swing" then
-			local poledamage = (attacktable["primarydamage"])
-			local poletype = (attacktable["dmgtype"])
 			local maxPoleRange = (attacktable["meleerange"]) * 0.1
 			local maxIneffectiveRange = maxPoleRange * 0.53
 			local clampedDistance = math.min(math.max(distance, 0), maxPoleRange)
@@ -1398,8 +1396,8 @@ end
 				-- Polearm Damage System				
 				if distance <= maxIneffectiveRange then
 					if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-						poledamage = (attacktable["primarydamage"]) * 0.01
-						poletype = 128
+						damage = (attacktable["primarydamage"]) * 0.01
+						damagetype = 128
 						if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 							hit:TakeStability(15)
 							-- KNOCKBACK
@@ -1415,8 +1413,8 @@ end
 					end
 				else
 					if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-						poletype = (attacktable["dmgtype"])
-						poledamage = variableDamage
+						damagetype = (attacktable["dmgtype"])
+						damage = variableDamage
 						
 						-- counter damage
 						local targetVelocity = hit:GetVelocity();
@@ -1425,7 +1423,7 @@ end
 							local entEyeAngles = hit:EyeAngles();
 						
 							if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-								poledamage = poledamage + (poledamage * 0.5);
+								damage = damage + (damage * 0.5);
 							end
 						end
 						
@@ -1458,12 +1456,12 @@ end
 					if condition and condition < 100 then
 						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
 					
-						if poletype == DMG_CLUB then
-							poledamage = math.Round(poledamage * Lerp(scalar, 0.75, 1));
-						elseif poletype == DMG_SLASH then
-							poledamage = math.Round(poledamage * Lerp(scalar, 0.4, 1));
+						if damagetype == DMG_CLUB then
+							damage = math.Round(damage * Lerp(scalar, 0.75, 1));
+						elseif damagetype == DMG_SLASH then
+							damage = math.Round(damage * Lerp(scalar, 0.4, 1));
 						else
-							poledamage = math.Round(poledamage * Lerp(scalar, 0.5, 1));
+							damage = math.Round(damage * Lerp(scalar, 0.5, 1));
 						end
 					end
 				end
@@ -1471,7 +1469,7 @@ end
 				-- Polearm Damage System
 				if (IsValid(hit) and owner:IsValid() and !owner:IsRagdolled() and owner:Alive()) then
 					local d = DamageInfo()
-					d:SetDamage( poledamage * shield_reduction * hit_reduction)
+					d:SetDamage( damage * shield_reduction * hit_reduction)
 					d:SetAttacker( owner )
 					d:SetDamageType( damagetype )
 					d:SetDamagePosition(src)
