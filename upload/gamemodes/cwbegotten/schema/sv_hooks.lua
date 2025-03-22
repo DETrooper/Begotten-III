@@ -1969,7 +1969,7 @@ function Schema:EntityRemoved(entity)
 		if (entity.cwInventory or entity.cwCash) then
 			local invEmpty = true;
 				
-			if (!table.IsEmpty(entity.cwInventory)) then
+			if entity.cwInventory and (!table.IsEmpty(entity.cwInventory)) then
 				for k, v in pairs(entity.cwInventory) do
 					if v and !table.IsEmpty(v) then
 						invEmpty = false;
@@ -1978,7 +1978,7 @@ function Schema:EntityRemoved(entity)
 				end
 			end
 			
-			if !invEmpty or entity.cwCash > 0 then
+			if !invEmpty or (entity.cwCash and entity.cwCash > 0) then
 				local belongings = ents.Create("cw_belongings");
 				
 				belongings:SetAngles(Angle(0, 0, -90));

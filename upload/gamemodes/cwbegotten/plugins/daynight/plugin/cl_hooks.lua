@@ -273,7 +273,7 @@ function cwDayNight:Think()
 							end
 						elseif (distance < 64 * 64) then
 							if Clockwork.Client.cwInDark then
-								if Clockwork.Client:GetDTInt(INT_RAGDOLLSTATE) != RAGDOLL_KNOCKEDOUT then
+								if Clockwork.Client:GetDTInt(INT_RAGDOLLSTATE) != RAGDOLL_KNOCKEDOUT and Clockwork.Client:Alive() then
 									sound.Play("misc/attack_0"..math.random(1, 2)..".ogg", v:GetPos(), 75, math.random(75, 95), 0.75);
 									netstream.Start("ShadowDamage");
 									Schema:AddStunEffect(1);

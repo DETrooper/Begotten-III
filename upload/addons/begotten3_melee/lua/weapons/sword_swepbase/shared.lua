@@ -1126,6 +1126,8 @@ end
 								local itemTable = Clockwork.item:GetByWeapon(enemywep);
 								
 								if itemTable then
+									itemTable:TakeCondition(10);
+								
 									local itemEnt = Clockwork.entity:CreateItem(hit, itemTable, dropPos);
 									
 									if (IsValid(itemEnt)) then

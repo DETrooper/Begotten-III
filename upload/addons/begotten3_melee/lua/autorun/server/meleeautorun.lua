@@ -1,10 +1,8 @@
-function Parry(target, dmginfo)
-	if (target:IsPlayer()) then
-		local wep = target:GetActiveWeapon()
+function Parry(parrier, dmginfo)
+	if (parrier:IsPlayer() and parrier:Alive() and !parrier:IsRagdolled() and parrier:GetNetVar("Parry", false) and parrier ~= dmginfo:GetAttacker()) then
+		local wep = parrier:GetActiveWeapon()
 
-		if (target:IsValid() and target:Alive() and (target:GetNetVar("Parry", false) == true) and IsValid(wep)) then
-			if target == dmginfo:GetAttacker() then return end;
-			
+		if IsValid(wep) then
 			local damageType = dmginfo:GetDamageType();
 			local checkTypes = {[4] = true, [16] = true, [128] = true};
 
@@ -15,18 +13,147 @@ function Parry(target, dmginfo)
 					return;
 				end
 				
-				local attacker = dmginfo:GetAttacker()
-				local blocktable = GetTable(wep.realBlockTable);
 				local curTime = CurTime();
+				
+				dmginfo:SetDamage(0);
+				wep:SetNextPrimaryFire(curTime + 0.7);
+				netstream.Start(parrier, "Parried", 0.2)
+				
+				-- Stamina should start regenerating upon successful parry after 0.5 seconds.
+				parrier.blockStaminaRegen = math.min(parrier.blockStaminaRegen or 0, curTime + 0.5);
+				
+				if (wep.realBlockSoundTable) then
+					local blocksoundtable = GetSoundTable(wep.realBlockSoundTable)
+					
+					parrier:EmitSound(blocksoundtable["blocksound"][math.random(1, #blocksoundtable["blocksound"])])
+				end;
+				
+				local parryTarget = dmginfo:GetAttacker()
+				local blocktable = GetTable(wep.realBlockTable);
 				local isJavelin = IsValid(inflictor) and inflictor.isJavelin and !inflictor:IsWeapon();
 
+				if cwBeliefs and parrier:HasBelief("repulsive_riposte") then
+					parrier.parryStacks = (parrier.parryStacks or 0) + 1;
+
+					if wep.Timers and wep.Timers["parryTimer"..tostring(parrier:EntIndex())] then
+						wep.Timers["parryTimer"..tostring(parrier:EntIndex())].duration = wep.Timers["parryTimer"..tostring(parrier:EntIndex())].duration + 0.3;
+					end
+				end
+				
+				if parrier.parryStacks and parrier.parryStacks > 1 then
+					parrier:EmitSound("meleesounds/DS2Parry.mp3", 100, 90 + math.min(255, 90 + (parrier.parryStacks * 10)))
+				else
+					parrier:EmitSound("meleesounds/DS2Parry.mp3")
+				end
+
+				-- Refund half the stamina cost of parrying upon a successful parry.
+				--[[local max_poise = parrier:GetNetVar("maxMeleeStamina");
+				
+				parrier:SetNWInt("meleeStamina", math.Clamp(parrier:GetNWInt("meleeStamina") + math.Round(blocktable["parrytakestamina"] / 2), 0, max_poise));]]--
+				
+				local max_stamina = parrier:GetMaxStamina();
+				
+				parrier:SetStamina(math.min(max_stamina, parrier:GetNWInt("Stamina") + (math.Round(blocktable["parrytakestamina"] / 2) * (parrier.parryStacks or 1))));
+
 				if !isJavelin then
-					target:SetLocalVar("ParrySuccess", true)
-					attacker:SetLocalVar("Parried", true)
-					target.parryTarget = attacker;
-					if(attacker:IsPlayer()) then netstream.Start(attacker, "Stunned", (attacker:HasBelief("encore") and 0.5 or 1)); end
+					local index = parrier:EntIndex();
 					
-					if wep.hasSwordplay and (!cwBeliefs or target:HasBelief("blademaster")) then
+					if (timer.Exists(index.."_ParrySuccessTimer")) then 
+						timer.Destroy(index.."_ParrySuccessTimer")
+					end
+					
+					local delay = 2.5;
+					
+					if wep.AttackTable then
+						local attackTable;
+						
+						if wep:GetNW2String("activeOffhand"):len() > 0 then
+							local offhandTable = weapons.GetStored(wep:GetNW2String("activeOffhand"));
+							
+							if offhandTable then
+								attackTable = GetDualTable(wep.AttackTable, offhandTable.AttackTable);
+							else
+								attackTable = GetTable(wep.AttackTable);
+							end
+						else
+							attackTable = GetTable(wep.AttackTable);
+						end
+						
+						if attackTable then
+							delay = (attackTable["delay"] + 1.5);
+						end
+					end
+					
+					parrier:SetLocalVar("ParrySuccess", true)
+					parrier.parryTarget = parryTarget;
+					
+					if IsValid(parryTarget) then
+						parryTarget:SetLocalVar("Parried", true)
+
+						timer.Create(tostring(index).."_ParriedTimer", delay, 1, function()
+							if IsValid(parryTarget) then
+								parryTarget:SetLocalVar("Parried", false);
+								
+								if parryTarget:IsPlayer() then
+									hook.Run("RunModifyPlayerSpeed", parryTarget, parryTarget.cwInfoTable, true);
+								end
+							end
+						end);
+					
+						if parryTarget:IsPlayer() then
+							local parryTargetWeapon = parryTarget:GetActiveWeapon();
+							
+							if IsValid(parryTargetWeapon) then
+								if cwBeliefs and parryTarget.HasBelief and parryTarget:HasBelief("encore") then
+									parryTargetWeapon:SetNextPrimaryFire(curTime + 1.5)
+									parryTargetWeapon:SetNextSecondaryFire(curTime + 1.5)
+								else
+									parryTargetWeapon:SetNextPrimaryFire(curTime + 3)
+									parryTargetWeapon:SetNextSecondaryFire(curTime + 3)
+								end
+								
+								-- Make sure offhand swing is aborted if deflected.
+								if parryTargetWeapon.Timers then
+									if parryTargetWeapon.Timers["strikeTimer"..tostring(parryTarget:EntIndex())] then
+										parryTargetWeapon.Timers["strikeTimer"..tostring(parryTarget:EntIndex())] = nil;
+									end
+								
+									if parryTargetWeapon.Timers["offhandStrikeTimer"..tostring(parryTarget:EntIndex())] then
+										parryTargetWeapon.Timers["offhandStrikeTimer"..tostring(parryTarget:EntIndex())] = nil;
+									end
+									
+									parryTargetWeapon.isAttacking = false;
+								end
+								
+								if wep:GetClass() == "begotten_fists" then
+									Clockwork.chatBox:AddInTargetRadius(parrier, "me", "parries "..parryTarget:Name().." with their bare hands!", parrier:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+								end
+							end
+							
+							-- Make it so they can't regenerate poise while parried.
+							parryTarget.blockStaminaRegen = curTime + delay + 1.5;
+							
+							parryTarget:SetNetVar("runningDisabled", true);
+							
+							timer.Create("GroundedSprintTimer_"..tostring(parryTarget:EntIndex()), 3, 1, function()
+								if IsValid(parryTarget) then
+									parryTarget:SetNetVar("runningDisabled", nil);
+								end
+							end);
+						
+							netstream.Start(parryTarget, "Stunned", (parryTarget:HasBelief("encore") and 0.5 or 1));
+						end
+						
+						if parryTarget.CancelGuardening then
+							parryTarget:CancelGuardening();
+						end
+						
+						if parryTarget.OnParried then
+							parryTarget:OnParried();
+						end
+					end
+
+					if wep.hasSwordplay and (!cwBeliefs or parrier:HasBelief("blademaster")) then
 						wep:SetNW2Bool("swordplayActive", true);
 						
 						wep:CreateTimer(0.5, "swordplayTimer"..wep:EntIndex(), function()
@@ -35,166 +162,13 @@ function Parry(target, dmginfo)
 							end
 						end);
 					end
-				end
-
-				if cwBeliefs and target:HasBelief("repulsive_riposte") then
-					target.parryStacks = (target.parryStacks or 0) + 1;
-					if wep.Timers and wep.Timers["parryTimer"..tostring(target:EntIndex())] then
-						wep.Timers["parryTimer"..tostring(target:EntIndex())].duration = wep.Timers["parryTimer"..tostring(target:EntIndex())].duration + 0.3;
-					end
-				end
-				
-				dmginfo:SetDamage(0)
-				if target.parryStacks and target.parryStacks > 1 then
-					target:EmitSound("meleesounds/DS2Parry.mp3", 100, 90 + math.min(255, 90 + (target.parryStacks * 10)))
-				else
-					target:EmitSound("meleesounds/DS2Parry.mp3")
-				end
-
-				netstream.Start(target, "Parried", 0.2)
-				
-				if !isJavelin then
-					if attacker.CancelGuardening then
-						attacker:CancelGuardening();
-					end
 					
-					if attacker.OnParried then
-						attacker:OnParried();
-					end
-					
-					if attacker:IsPlayer() then
-						-- Kill their acceleration and make them slower.
-						--[[attacker.accelerationFinished = false;
-						attacker.startAcceleration = nil;
-						attacker.cwTargetRunSpeed = attacker:GetRunSpeed();
-					
-						hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);]]--
-						
-						attacker:SetNetVar("runningDisabled", true);
-						
-						timer.Create("GroundedSprintTimer_"..tostring(attacker:EntIndex()), 3, 1, function()
-							if IsValid(attacker) then
-								attacker:SetNetVar("runningDisabled", nil);
-							end
-						end);
-					end
-				end
-				
-				wep:SetNextPrimaryFire(curTime + 0.7);
-				
-				if (wep.realBlockSoundTable) then
-					local blocksoundtable = GetSoundTable(wep.realBlockSoundTable)
-					
-					target:EmitSound(blocksoundtable["blocksound"][math.random(1, #blocksoundtable["blocksound"])])
-				end;
-				
-				-- Refund half the poise cost of parrying upon a successful parry.
-				--[[local max_poise = target:GetNetVar("maxMeleeStamina");
-				
-				target:SetNWInt("meleeStamina", math.Clamp(target:GetNWInt("meleeStamina") + math.Round(blocktable["parrytakestamina"] / 2), 0, max_poise));]]--
-				
-				local max_stamina = target:GetMaxStamina();
-				
-				target:SetStamina(math.min(max_stamina, target:GetNWInt("Stamina") + (math.Round(blocktable["parrytakestamina"] / 2) * (target.parryStacks or 1))));
-				
-				-- Poise should start regenerating upon successful parry after 0.5 seconds.
-				target.blockStaminaRegen = math.min(target.blockStaminaRegen or 0, curTime + 0.5);
-
-				if !isJavelin then
-					if (IsValid(attacker) and attacker:IsPlayer()) then
-						local attackerWeapon = attacker:GetActiveWeapon();
-						
-						if IsValid(attackerWeapon) then
-							if cwBeliefs and attacker.HasBelief and attacker:HasBelief("encore") then
-								attackerWeapon:SetNextPrimaryFire(curTime + 1.5)
-								attackerWeapon:SetNextSecondaryFire(curTime + 1.5)
-							else
-								attackerWeapon:SetNextPrimaryFire(curTime + 3)
-								attackerWeapon:SetNextSecondaryFire(curTime + 3)
-							end
-							
-							-- Make sure offhand swing is aborted if deflected.
-							if attackerWeapon.Timers then
-								if attackerWeapon.Timers["strikeTimer"..tostring(attacker:EntIndex())] then
-									attackerWeapon.Timers["strikeTimer"..tostring(attacker:EntIndex())] = nil;
-								end
-							
-								if attackerWeapon.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] then
-									attackerWeapon.Timers["offhandStrikeTimer"..tostring(attacker:EntIndex())] = nil;
-								end
-								
-								attackerWeapon.isAttacking = false;
-							end
-							
-							if wep:GetClass() == "begotten_fists" then
-								Clockwork.chatBox:AddInTargetRadius(target, "me", "parries "..attacker:Name().." with their bare hands!", target:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-							end
+					timer.Create(index.."_ParrySuccessTimer", delay, 1, function()
+						if (parrier:IsValid()) then
+							parrier:SetLocalVar("ParrySuccess", false) 
+							parrier.parryTarget = nil;
 						end
-					end
-				end
-				
-				if !isJavelin then
-					local index = target:EntIndex();
-					
-					if (!target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false)) then
-						if (timer.Exists(index.."_ParrySuccessTimer")) then 
-							timer.Destroy(index.."_ParrySuccessTimer")
-						end
-						
-						target:SetLocalVar("ParrySuccess", true)
-						
-						if wep.hasSwordplay and (!cwBeliefs or target:HasBelief("blademaster")) then
-							wep:SetNW2Bool("swordplayActive", true);
-							
-							wep:CreateTimer(1.2, "swordplayTimer"..wep:EntIndex(), function()
-								if IsValid(wep) then
-									wep:SetNW2Bool("swordplayActive", false);
-								end
-							end);
-						end
-						
-						local delay = 2.5;
-						
-						if wep.AttackTable then
-							local attackTable;
-							
-							if wep:GetNW2String("activeOffhand"):len() > 0 then
-								local offhandTable = weapons.GetStored(wep:GetNW2String("activeOffhand"));
-								
-								if offhandTable then
-									attackTable = GetDualTable(wep.AttackTable, offhandTable.AttackTable);
-								else
-									attackTable = GetTable(wep.AttackTable);
-								end
-							else
-								attackTable = GetTable(wep.AttackTable);
-							end
-							
-							if attackTable then
-								delay = (attackTable["delay"] + 1.5);
-							end
-						end
-						
-						if (IsValid(attacker) and attacker:IsPlayer()) then
-							-- Make it so they can't regenerate poise while parried.
-							attacker.blockStaminaRegen = curTime + delay + 1.5;
-						end
-						
-						timer.Create(index.."_ParrySuccessTimer", delay, 1, function()
-							if (target:IsValid() --[[and target:Alive() and !target:IsRagdolled() and !target:GetNWBool("HasChangedWeapons", false) and (target:GetNetVar("ParrySuccess", false) == true)]]) then
-								target:SetLocalVar("ParrySuccess", false) 
-								target.parryTarget = nil;
-							end
-							
-							if IsValid(attacker) then
-								attacker:SetLocalVar("Parried", false);
-								
-								if attacker:IsPlayer() then
-									hook.Run("RunModifyPlayerSpeed", attacker, attacker.cwInfoTable, true);
-								end
-							end
-						end)
-					end
+					end);
 				end
 			end
 		end
@@ -1070,23 +1044,27 @@ local function Guarding(ent, dmginfo)
 									local dropMessages = {" goes flying out of their hand!", " is knocked out of their hand!"};
 									local itemTable = Clockwork.item:GetByWeapon(wep);
 									
-									if ent.opponent then
-										if (itemTable:HasPlayerEquipped(ent)) then
-											itemTable:OnPlayerUnequipped(ent);
-											ent:RebuildInventory();
-											ent:SetWeaponRaised(false);
-										end
-										
-										Clockwork.chatBox:AddInTargetRadius(ent, "me", "'s "..itemTable.name..dropMessages[math.random(1, #dropMessages)], ent:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-									else
-										local dropPos = ent:GetPos() + Vector(0, 0, 35) + ent:GetAngles():Forward() * 4
-										local itemEnt = Clockwork.entity:CreateItem(ent, itemTable, dropPos);
-										
-										if (IsValid(itemEnt)) then
+									if itemTable then
+										if ent.opponent then
+											if (itemTable:HasPlayerEquipped(ent)) then
+												itemTable:OnPlayerUnequipped(ent);
+												ent:RebuildInventory();
+												ent:SetWeaponRaised(false);
+											end
+											
 											Clockwork.chatBox:AddInTargetRadius(ent, "me", "'s "..itemTable.name..dropMessages[math.random(1, #dropMessages)], ent:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-											ent:TakeItem(itemTable)
-											--ent:SelectWeapon("begotten_fists")
-											ent:StripWeapon(wep:GetClass())
+										else
+											itemTable:TakeCondition(10);
+										
+											local dropPos = ent:GetPos() + Vector(0, 0, 35) + ent:GetAngles():Forward() * 4
+											local itemEnt = Clockwork.entity:CreateItem(ent, itemTable, dropPos);
+											
+											if (IsValid(itemEnt)) then
+												Clockwork.chatBox:AddInTargetRadius(ent, "me", "'s "..itemTable.name..dropMessages[math.random(1, #dropMessages)], ent:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+												ent:TakeItem(itemTable)
+												--ent:SelectWeapon("begotten_fists")
+												ent:StripWeapon(wep:GetClass())
+											end
 										end
 									end
 								end

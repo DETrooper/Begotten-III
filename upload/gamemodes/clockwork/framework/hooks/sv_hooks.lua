@@ -2673,7 +2673,7 @@ function GM:PhysgunDrop(player, entity)
 
 		entity.cwLastCollideGroup = nil
 	elseif (entity.cwMoveType) then
-		entity:SetMoveType(MOVETYPE_WALK)
+		entity:SetMoveType(entity.cwMoveType)
 		entity.cwMoveType = nil
 	end
 

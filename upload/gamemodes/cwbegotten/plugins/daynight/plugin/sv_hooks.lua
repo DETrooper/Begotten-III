@@ -157,6 +157,10 @@ function cwDayNight:PlayerExitedDuel(player)
 end
 
 netstream.Hook("ShadowDamage", function(player, data)
+	if !player:HasInitialized() or !player:Alive() then
+		return;
+	end;
+	
 	local playerPos = player:GetPos();
 	local radius = config.Get("talk_radius"):Get() * 2;
 	local weapon = player:GetActiveWeapon();

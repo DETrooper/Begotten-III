@@ -1900,6 +1900,8 @@ function cwBeliefs:PlayerExitedDuel(player)
 	if player.distortedRingFiredDuel then
 		player.distortedRingFiredDuel = false;
 	end
+	
+	player.lastWarCry = nil;
 end
 
 function cwBeliefs:PrePlayerCharacterCreated(player, character)

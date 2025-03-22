@@ -49,6 +49,8 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 							
 							Clockwork.chatBox:AddInTargetRadius(entity, "me", "'s "..itemTable.name..dropMessages[math.random(1, #dropMessages)], entity:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 						else
+							itemTable:TakeCondition(10);
+						
 							local dropPos = entity:GetPos() + Vector(0, 0, 35) + entity:GetAngles():Forward() * 4;
 							local itemEntity = Clockwork.entity:CreateItem(entity, itemTable, dropPos);
 							
@@ -973,6 +975,8 @@ function cwMelee:PostPlayerEnteredDuel(player)
 end
 
 function cwMelee:PlayerExitedDuel(player)
+	player:SetNWInt("stability", player:GetMaxStability());
+
 	for i, v in ipairs(player:GetWeaponsEquipped()) do
 		if v.category == "Throwables" then
 			player:Give(v.weaponClass or v.uniqueID);
