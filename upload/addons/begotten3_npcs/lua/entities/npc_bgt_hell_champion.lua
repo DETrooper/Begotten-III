@@ -13,6 +13,7 @@ ENT.PainSounds = {"npc/stalker/stalker_pain1.wav", "npc/stalker/stalker_pain2.wa
 -- Stats --
 ENT.SpawnHealth = math.random(225, 300)
 ENT.SpotDuration = 20
+ENT.bulletScale = 1.25
 -- AI --
 ENT.RangeAttackRange = 0
 ENT.MeleeAttackRange = 100

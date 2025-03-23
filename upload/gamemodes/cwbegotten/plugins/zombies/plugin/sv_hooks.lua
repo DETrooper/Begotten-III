@@ -247,8 +247,7 @@ end;
 
 -- Called when an entity takes damage.
 function cwZombies:EntityTakeDamageAfter(entity, damageInfo)
-	-- 1.5x damage bonus for firearms to NPCs.
-	if (entity:IsNPC() or entity:IsNextBot()) then
+	if (entity:IsNPC() and entity.bulletScale) then
 		local attacker = damageInfo:GetAttacker();
 		local inflictor = damageInfo:GetInflictor();
 	
@@ -266,11 +265,11 @@ function cwZombies:EntityTakeDamageAfter(entity, damageInfo)
 					local activeWeapon = attacker:GetActiveWeapon();
 					
 					if activeWeapon:IsValid() and (activeWeapon.Base == "begotten_firearm_base" or (activeWeapon.isMeleeFirearm and !attacker:GetNetVar("ThrustStance"))) then
-						damageInfo:ScaleDamage(1.5);
+						damageInfo:ScaleDamage(entity.bulletScale);
 					end
 					
 					if attacker:GetCharmEquipped("evil_eye") then
-						damageInfo:ScaleDamage(1.5);
+						damageInfo:ScaleDamage(entity.bulletScale);
 					end
 				elseif attacker:IsNPC() or attacker:IsNextBot() then
 					entity:SetEnemy(attacker);

@@ -22,6 +22,7 @@ ENT.HearingCoefficient = 0.5
 -- Stats --
 ENT.ArmorPiercing = 60;
 ENT.SpawnHealth = 450;
+ENT.bulletScale = 1.25
 ENT.StaminaDamage = 40;
 ENT.XPValue = 145;
 ENT.MaxMultiHit = 1;

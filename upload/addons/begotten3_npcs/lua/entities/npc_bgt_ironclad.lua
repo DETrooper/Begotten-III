@@ -14,6 +14,7 @@ ENT.PainSounds = {"begotten/npc/grunt/attack_launch01.mp3", "begotten/npc/grunt/
 ENT.SpawnHealth = 500
 ENT.SpotDuration = 20
 ENT.Armor = 90;
+ENT.bulletScale = 0.5
 ENT.ArmorMaterial = "plate"
 -- AI --
 ENT.RangeAttackRange = 0

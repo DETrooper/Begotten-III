@@ -13,6 +13,7 @@ ENT.PainSounds = {"begotten/npc/suitor/attack_launch01.mp3", "begotten/npc/suito
 -- Stats --
 ENT.SpawnHealth = 100
 ENT.SpotDuration = 20
+ENT.bulletScale = 1.25
 -- AI --
 ENT.RangeAttackRange = 0
 ENT.MeleeAttackRange = 50
