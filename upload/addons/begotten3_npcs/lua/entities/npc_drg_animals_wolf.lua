@@ -20,7 +20,7 @@ ENT.OnDamageSounds = {"apocalypse/wolves/pseudodog/pdog_hurt_0.ogg", "apocalypse
 -- Stats --
 ENT.ArmorPiercing = 35
 ENT.SpawnHealth = 100
-ENT.bulletScale = 1.25
+ENT.bulletScale = 1.5
 ENT.StaminaDamage = 25;
 ENT.XPValue = 65
 ENT.MaxMultiHit = 1;

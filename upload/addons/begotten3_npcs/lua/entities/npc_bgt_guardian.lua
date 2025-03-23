@@ -49,7 +49,7 @@ ENT.PainSounds = painSounds;
 ENT.SpawnHealth = 300
 
 ENT.SpotDuration = 20
-ENT.bulletScale = 1.25
+ENT.bulletScale = 1.5
 
 -- AI --
 

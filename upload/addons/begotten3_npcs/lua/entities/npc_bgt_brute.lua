@@ -13,7 +13,7 @@ ENT.PainSounds = {"begotten/npc/brute/attack_launch01.mp3", "begotten/npc/brute/
 -- Stats --
 ENT.SpawnHealth = 300
 ENT.SpotDuration = 20
-ENT.bulletScale = 1.25
+ENT.bulletScale = 1.5
 -- AI --
 ENT.RangeAttackRange = 0
 ENT.MeleeAttackRange = 120

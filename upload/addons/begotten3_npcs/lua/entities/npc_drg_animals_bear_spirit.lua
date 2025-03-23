@@ -24,7 +24,7 @@ ENT.IdleSoundDelay = 240
 ENT.ArmorPiercing = 55;
 ENT.SpawnHealth = 600;
 ENT.StaminaDamage = 45;
-ENT.bulletScale = 1.25
+ENT.bulletScale = 1.5
 ENT.XPValue = 175;
 ENT.MaxMultiHit = 1;
 
