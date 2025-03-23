@@ -332,7 +332,7 @@ ITEM.concealsFace = true;
 ITEM.conditionScale = 0.75
 ITEM.hasHelmet = true;
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 75;
+ITEM.protection = 80;
 ITEM.weight = 8.5;
 ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
@@ -368,10 +368,10 @@ ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
-ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
-ITEM.insulation = 50;
+ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
+ITEM.insulation = 45;
 
-ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "steel_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -441,8 +441,8 @@ ITEM.damageTypeScales = {
 ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
-ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
-ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
+ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
 ITEM.insulation = 60;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "human_bone", "human_bone", "human_bone", "human_bone", "human_bone"}};
