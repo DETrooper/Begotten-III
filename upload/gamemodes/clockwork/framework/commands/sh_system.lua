@@ -473,6 +473,27 @@ local COMMAND = Clockwork.command:New("PluginUnload");
 	end;
 COMMAND:Register();
 
+local function CreateShutdownWarningTimer(id, time, delay)
+	timer.Create("ServerShutdownTimerWarning"..id, delay, 1, function()
+		for _, v in _player.Iterator() do Clockwork.player:Notify(v, "The server will be shutting down in "..time.."!") end
+	
+	end)
+
+end
+
+local function FancyTime(seconds)
+	seconds = math.ceil(seconds)
+	
+	local minutes = math.floor(seconds / 60)
+	local fancyTime = tostring(minutes).." minutes"
+  
+	local extraSeconds = (seconds - (minutes * 60))
+  	if(extraSeconds > 0) then fancyTime = fancyTime.." and "..tostring(extraSeconds).." seconds" end
+
+	return fancyTime
+
+end
+
 local COMMAND = Clockwork.command:New("ShutDown");
 	COMMAND.tip = "Shut down the server safely (this is the only way the save data functions will be called, so use this instead of the control panel). Leave the optional argument blank if you want the shut down to be immediate.";
 	COMMAND.text = "[seconds Delay]";
@@ -484,13 +505,21 @@ local COMMAND = Clockwork.command:New("ShutDown");
 		local delay = arguments[1];
 	
 		if delay and tonumber(delay) and tonumber(delay) > 0 then
-			local message = "The server will be shutting down in "..delay.." seconds!";
+			delay = tonumber(delay)
+
+			local message = "The server will be shutting down in "..FancyTime(delay).."!";
 		
 			for _, v in _player.Iterator() do
 				Clockwork.player:Notify(v, message);
 			end
+
+			if(delay > 30) then CreateShutdownWarningTimer("30Seconds", "30 seconds", delay - 30) end
+			if(delay > 120) then CreateShutdownWarningTimer("2Minutes", "2 minutes", delay - 120) end
+			if(delay > 300) then CreateShutdownWarningTimer("5Minutes", "5 minutes", delay - 300) end
+			if(delay > 600) then CreateShutdownWarningTimer("10Minutes", "10 minutes", delay - 600) end
+			if(delay > 1800) then CreateShutdownWarningTimer("30Minutes", "30 minutes", delay - 1800) end
 			
-			timer.Create("ServerShutdownTimer", tonumber(delay), 1, function()
+			timer.Create("ServerShutdownTimer", delay, 1, function()
 				RunConsoleCommand("disconnect");
 			end);
 		else
@@ -508,6 +537,11 @@ local COMMAND = Clockwork.command:New("ShutDownAbort");
 	function COMMAND:OnRun(player, arguments)
 		if timer.Exists("ServerShutdownTimer") then
 			timer.Remove("ServerShutdownTimer");
+			timer.Remove("ServerShutdownTimerWarning30Seconds")
+			timer.Remove("ServerShutdownTimerWarning2Minutes")
+			timer.Remove("ServerShutdownTimerWarning5Minutes")
+			timer.Remove("ServerShutdownTimerWarning10Minutes")
+			timer.Remove("ServerShutdownTimerWarning30Minutes")
 			
 			for _, v in _player.Iterator() do
 				Clockwork.player:Notify(v, "The server shutdown has been aborted!");
