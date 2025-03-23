@@ -2897,6 +2897,17 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				
 				frame:AddText("Shield Stats: ", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1.15);
 				
+				if itemTable.conditionScale then
+					local shieldDurability = math.Max(math.Round(500 + (50 - 500) * ((itemTable.conditionScale - 0.25) / (1.3 - 0.25))), 25)
+					local percentage = shieldDurability / 500
+					local toolTip = function(frame)
+						frame:AddText("Shield Durability", Color(110, 30, 30), nil, 1);
+						frame:AddText("The higher this stat is, the more blows your shield can take before it is broken.", Color(225, 200, 200), nil, 0.8);
+					end
+
+					frame:AddBar(12, {{text = tostring(shieldDurability).." / 500", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Shield Durability", Color(110, 30, 30), toolTip, true);
+				end
+				
 				if shieldStats.blockcone then
 					local percentage = math.min(shieldStats.blockcone / 270, 270);
 					local toolTip = function(frame)

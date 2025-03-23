@@ -1178,7 +1178,8 @@ local ITEM = Clockwork.item:New();
 	ITEM.category = "Tools";
 	ITEM.description = "A glass bottle devoid of any contents.";
 	ITEM.customFunctions = {"Fill"};
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/cold_pop.png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/empty_bottle.png";
+	ITEM.stackable = true;
 	--ITEM.itemSpawnerInfo = {category = "Junk", rarity = 95};
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
