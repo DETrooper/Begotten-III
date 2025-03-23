@@ -391,9 +391,9 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.stopsBleeding = true;
 	ITEM.canSave = true;
 	ITEM.useXP = 50;
-	ITEM.useTime = 30;
+	ITEM.useTime = 25;
 
-	ITEM.curesInjuries = {"burn", "frostbite", "gash", "gunshot_wound", "minor_infection"};
+	ITEM.curesInjuries = {"broken_bone", "burn", "frostbite", "gash", "gunshot_wound", "minor_infection"};
 	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 4500};
 	ITEM.limbs = "all";
 	
