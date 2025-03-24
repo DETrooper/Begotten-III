@@ -161,6 +161,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
 	ITEM.attachmentOffsetAngles = Angle(14.92, 0, 20.88);
 	ITEM.attachmentOffsetVector = Vector(2.83, 3.54, 0);
+	ITEM.bulletConditionScale = 0.2;
+	ITEM.conditionScale = 0.45;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"gold_ingot"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"fire"};

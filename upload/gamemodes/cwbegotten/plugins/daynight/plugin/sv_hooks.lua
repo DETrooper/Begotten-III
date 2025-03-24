@@ -127,6 +127,8 @@ function cwDayNight:PlayerThink(player, curTime, infoTable, alive, initialized, 
 						local lastZone = player:GetCharacterData("LastZone");
 						
 						if lastZone == "wasteland" then
+							if cwWeather and cwWeather.weather == "bloodstorm" then return end;
+							
 							if util.TraceLine(util.GetPlayerTrace(player, player:GetUp())).HitSky then
 								--player:TakeDamage(3, player, player);
 								

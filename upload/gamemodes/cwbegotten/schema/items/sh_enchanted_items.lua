@@ -105,11 +105,11 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "evil_eye";
 	ITEM.description = "The detached eyeball of a Begotten thrall. Evil energy radiates from its iris.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Increases damage against Begotten thralls by 50%.\n- Passively increases corruption.";
+	ITEM.charmEffects = "- Increases damage against Begotten thralls by 50%.";
 	
 	--ITEM.requireFaith = {"Faith of the Dark"};
 	--ITEM.kinisgerOverride = true;
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
@@ -134,7 +134,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases throwable and crossbow weapon projectile speed and range by 35%.";
 	
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, onGround = false}
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, onGround = false}
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");

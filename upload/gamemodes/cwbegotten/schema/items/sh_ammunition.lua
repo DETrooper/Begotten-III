@@ -10,7 +10,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoName = "Grapeshot";
 	ITEM.requiredReloadBelief = "powder_and_steel";
 	
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 1000, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 1150, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");
@@ -55,7 +55,7 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.ammoName = "Longshot";
 	ITEM.requiredReloadBelief = "powder_and_steel";
 	
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 900, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 1000, onGround = false};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shot_base");

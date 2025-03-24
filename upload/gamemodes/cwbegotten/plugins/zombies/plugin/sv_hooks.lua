@@ -247,7 +247,7 @@ end;
 
 -- Called when an entity takes damage.
 function cwZombies:EntityTakeDamageAfter(entity, damageInfo)
-	if (entity:IsNPC() and entity.bulletScale) then
+	if (entity:IsNPC() or entity:IsNextBot()) then
 		local attacker = damageInfo:GetAttacker();
 		local inflictor = damageInfo:GetInflictor();
 	
@@ -264,12 +264,14 @@ function cwZombies:EntityTakeDamageAfter(entity, damageInfo)
 				if attacker:IsPlayer() then
 					local activeWeapon = attacker:GetActiveWeapon();
 					
-					if activeWeapon:IsValid() and (activeWeapon.Base == "begotten_firearm_base" or (activeWeapon.isMeleeFirearm and !attacker:GetNetVar("ThrustStance"))) then
-						damageInfo:ScaleDamage(entity.bulletScale);
+					if entity.bulletScale then
+						if activeWeapon:IsValid() and (activeWeapon.Base == "begotten_firearm_base" or (activeWeapon.isMeleeFirearm and !attacker:GetNetVar("ThrustStance"))) then
+							damageInfo:ScaleDamage(entity.bulletScale);
+						end
 					end
 					
 					if attacker:GetCharmEquipped("evil_eye") then
-						damageInfo:ScaleDamage(entity.bulletScale);
+						damageInfo:ScaleDamage(1.5);
 					end
 				elseif attacker:IsNPC() or attacker:IsNextBot() then
 					entity:SetEnemy(attacker);

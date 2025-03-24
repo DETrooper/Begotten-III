@@ -1558,7 +1558,7 @@ function COMMAND:OnRun(player, arguments)
 								return true;
 							else
 								local damage = math.random(3,8);
-								if (player:Health() - 10) >= damage then -- Fix this later (does not account for damage buffs)
+								if (player:Health() - 10) >= damage or player.scornificationismActive then -- Fix this later (does not account for damage buffs)
 									player:TakeDamage(damage);
 									Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.." with an unlit lantern!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 									player.nextFlagellate = curTime + 1;
@@ -1601,7 +1601,7 @@ function COMMAND:OnRun(player, arguments)
 					d:SetDamagePosition(player:GetPos() + Vector(0, 0, 48));
 					d:SetInflictor(activeWeapon);
 					
-					if (player:Health() - 18) >= d:GetDamage() then -- Fix this later (does not account for damage buffs)
+					if (player:Health() - 18) >= d:GetDamage() or player.scornificationismActive then -- Fix this later (does not account for damage buffs)
 						player.flagellating = true;
 						player.ignoreConditionLoss = true;
 						player:TakeDamageInfo(d);

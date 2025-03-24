@@ -145,10 +145,6 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 						player:HandleNeed("corruption", 1);
 					end
 				end
-				
-				if player:GetCharmEquipped("evil_eye") then
-					player:HandleNeed("corruption", 1);
-				end
 			end;
 			
 			plyTab.nextCorruption = curTime + 150;

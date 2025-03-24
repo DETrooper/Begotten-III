@@ -24,7 +24,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"scrap", "scrap", "wood", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 800, supercrateItems = {["grapeshot"] = {min = 10, max = 20}}};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1000, supercrateItems = {["grapeshot"] = {min = 10, max = 20}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -96,7 +96,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	
 	ITEM.includeSubfactions = {"Clan Crast", "Clan Shagalax"};
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1500, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");

@@ -299,7 +299,7 @@ function cwRecipes:Craft(player, uniqueID, itemIDs, craftAmount)
 	
 	if (IsValid(player) and uniqueID and isstring(uniqueID)) then
 		if (!player.cwNextCraft or player.cwNextCraft < curTime) then
-			player.cwNextCraft = curTime + 10;
+			player.cwNextCraft = curTime + 3;
 
 			local bHasFlags, bHasRequirements = hook.Run("PlayerCanCraft", player, uniqueID, craftAmount);
 			local recipeTable = self.recipes.stored[uniqueID];
