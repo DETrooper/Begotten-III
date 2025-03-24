@@ -436,6 +436,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 			if (!entityPlayer or !entityPlayer:Alive()) then
 				local activeWeapon = player:GetActiveWeapon();
 				local offhandWeapon;
+				local weaponItemTable
 				
 				if activeWeapon:IsValid() then
 					offhandWeapon = activeWeapon:GetOffhand();

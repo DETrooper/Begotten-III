@@ -401,7 +401,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					
 					--print("Armor protection value: "..tostring(protection));
 
-					damageInfo:SetDamage(math.Clamp(damage / (protection / armorPiercing), 0, damage));
+					if(protection != 0) then damageInfo:SetDamage(math.Clamp(damage / (protection / armorPiercing), 0, damage)); end
 					--print("Setting damage from effectiveness to: "..tostring(damageInfo:GetDamage()));
 					
 					if (damageTypeScales and !table.IsEmpty(damageTypeScales)) then
