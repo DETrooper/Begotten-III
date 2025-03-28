@@ -801,7 +801,7 @@ function Clockwork.chatBox:Paint()
 				and (!splitTable[2] or string.lower(command) == k)) then
 					local cmdTable = Clockwork.command:FindByAlias(v);
  					
- 					if (cmdTable and Clockwork.player:HasFlags(Clockwork.Client, cmdTable.access)) then
+ 					if (cmdTable and Clockwork.player:HasFlags(Clockwork.Client, cmdTable.access) and hook.Run("PlayerCanSeeCommand", cmdTable) ~= false) then
  						local bShouldAdd = true;
  
  						-- It can so happen that multiple alias for the same command begin with the same string.

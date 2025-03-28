@@ -1773,9 +1773,15 @@ function Clockwork.player:UseCharacter(player, characterID)
 		local fault = hook.Run("PlayerCanUseCharacter", player, character)
 
 		if (fault == nil or fault == true) then
-			local players = #Clockwork.faction:GetPlayers(character.faction)
+			local players;
 			local limit = Clockwork.faction:GetLimit(factionTable.name)
 			local ratio = factionTable.ratio;
+			
+			if factionTable.GetPlayerCount then
+				players = factionTable:GetPlayerCount();
+			else
+				players = #Clockwork.faction:GetPlayers(character.faction)
+			end
 
 			if (currentCharacter and character.faction == currentCharacter.faction) then
 				players = players - 1

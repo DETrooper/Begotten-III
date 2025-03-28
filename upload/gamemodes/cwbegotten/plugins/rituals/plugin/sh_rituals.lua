@@ -2793,3 +2793,135 @@ RITUAL = cwRituals.rituals:New("waste_not_want_not");
 	function RITUAL:EndRitual(player)
 	end;
 RITUAL:Register()
+
+-- CoS ascension rituals
+RITUAL = cwRituals.rituals:New("ascension_house_varazdat");
+	RITUAL.name = "(Unique) Ascension to House Varazdat";
+	RITUAL.description = "Reject your insignificant peasant heritage and be reborn a Child of Satan. With the bloodline of the King of Kings, your bloodlust and murderous prowess shall be unmatched!";
+	RITUAL.requiredFaction = {"Children of Satan"}; -- Faction Ritual
+	
+	RITUAL.requirements = {"tortured_spirit", "up_catalyst", "pentagram_catalyst"};
+	RITUAL.corruptionCost = 25;
+	RITUAL.ritualTime = 10;
+	RITUAL.experience = 50;
+	
+	function RITUAL:OnPerformed(player)
+		player:SetCharacterData("subfaction", "Varazdat", true);
+		player:SetCharacterData("rank", 1);
+		Clockwork.player:SetWhitelisted(player, "Children of Satan", true);
+	
+		Clockwork.player:LoadCharacter(player, Clockwork.player:GetCharacterID(player));
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		local subfaction = player:GetSubfaction();
+		
+		if subfaction and subfaction ~= "" and subfaction ~= "N/A" then
+			Schema:EasyText(player, "peru", "You have already ascended to a bloodline!");
+		
+			return false;
+		end
+	end;
+	function RITUAL:EndRitual(player)
+	end;
+RITUAL:Register()
+
+-- CoS ascension rituals
+RITUAL = cwRituals.rituals:New("ascension_house_philimaxio");
+	RITUAL.name = "(Unique) Ascension to House Philimaxio";
+	RITUAL.description = "Reject your insignificant peasant heritage and be reborn a Child of Satan. With the bloodline of the White Sentinels, you will conquer the souls of the unworthy!";
+	RITUAL.requiredFaction = {"Children of Satan"}; -- Faction Ritual
+	
+	RITUAL.requirements = {"tortured_spirit", "light_catalyst", "pentagram_catalyst"};
+	RITUAL.corruptionCost = 25;
+	RITUAL.ritualTime = 10;
+	RITUAL.experience = 50;
+	
+	function RITUAL:OnPerformed(player)
+		player:SetCharacterData("subfaction", "Philimaxio", true);
+		player:SetCharacterData("rank", 1);
+		Clockwork.player:SetWhitelisted(player, "Children of Satan", true);
+	
+		Clockwork.player:LoadCharacter(player, Clockwork.player:GetCharacterID(player));
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		local subfaction = player:GetSubfaction();
+		
+		if subfaction and subfaction ~= "" and subfaction ~= "N/A" then
+			Schema:EasyText(player, "peru", "You have already ascended to a bloodline!");
+		
+			return false;
+		end
+	end;
+	function RITUAL:EndRitual(player)
+	end;
+RITUAL:Register()
+
+-- CoS ascension rituals
+RITUAL = cwRituals.rituals:New("ascension_house_rekh-khet-sa");
+	RITUAL.name = "(Unique) Ascension to House Rekh-khet-sa";
+	RITUAL.description = "Reject your insignificant peasant heritage and be reborn a Child of Satan. With the ancient bloodline of sorcerers, you will become all-knowing and life will be everlasting!";
+	RITUAL.requiredFaction = {"Children of Satan"}; -- Faction Ritual
+	
+	RITUAL.requirements = {"tortured_spirit", "up_catalyst", "xolotl_catalyst"};
+	RITUAL.corruptionCost = 25;
+	RITUAL.ritualTime = 10;
+	RITUAL.experience = 50;
+	
+	function RITUAL:OnPerformed(player)
+		player:SetCharacterData("subfaction", "Rekh-khet-sa", true);
+		player:SetCharacterData("rank", 1);
+		Clockwork.player:SetWhitelisted(player, "Children of Satan", true);
+	
+		Clockwork.player:LoadCharacter(player, Clockwork.player:GetCharacterID(player));
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		local subfaction = player:GetSubfaction();
+		
+		if subfaction and subfaction ~= "" and subfaction ~= "N/A" then
+			Schema:EasyText(player, "peru", "You have already ascended to a bloodline!");
+		
+			return false;
+		end
+	end;
+	function RITUAL:EndRitual(player)
+	end;
+RITUAL:Register()
+
+-- CoS ascension rituals
+RITUAL = cwRituals.rituals:New("ascension_house_kinisger");
+	RITUAL.name = "(Unique) Ascension to House Kinisger";
+	RITUAL.description = "Reject your insignificant peasant heritage and be reborn a Child of Satan. With the cursed mutant bloodline of the Black Hats, you will be a master of shadows and trickery!";
+	RITUAL.requiredFaction = {"Children of Satan"}; -- Faction Ritual
+	
+	RITUAL.requirements = {"tortured_spirit", "down_catalyst", "pentagram_catalyst"};
+	RITUAL.corruptionCost = 25;
+	RITUAL.ritualTime = 10;
+	RITUAL.experience = 50;
+	
+	function RITUAL:OnPerformed(player)
+		player:SetCharacterData("subfaction", "Kinisger", true);
+		player:SetCharacterData("rank", 1);
+		Clockwork.player:SetWhitelisted(player, "Children of Satan", true);
+	
+		Clockwork.player:LoadCharacter(player, Clockwork.player:GetCharacterID(player));
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+		local subfaction = player:GetSubfaction();
+		
+		if subfaction and subfaction ~= "" and subfaction ~= "N/A" then
+			Schema:EasyText(player, "peru", "You have already ascended to a bloodline!");
+		
+			return false;
+		end
+	end;
+	function RITUAL:EndRitual(player)
+	end;
+RITUAL:Register()

@@ -658,6 +658,28 @@ end
 -- Called when the local player attempts to see a business item.
 function GM:PlayerCanSeeBusinessItem(itemTable) return true end
 
+function GM:PlayerCanSeeCommand(commandTable)
+	if commandTable.faction then
+		if istable(commandTable.faction) and !table.HasValue(commandTable.faction, Clockwork.Client:GetFaction()) then
+			return false;
+		elseif isstring(commandTable.faction) then
+			if Clockwork.Client:GetFaction() ~= commandTable.faction then
+				return false;
+			end
+		end
+	end
+	
+	if commandTable.subfaction then
+		if istable(commandTable.subfaction) and !table.HasValue(commandTable.subfaction, Clockwork.Client:GetSubfaction()) then
+			return false;
+		elseif isstring(commandTable.subfaction) then
+			if Clockwork.Client:GetSubfaction() ~= commandTable.subfaction then
+				return false;
+			end
+		end
+	end
+end
+
 function GM:PlayerBindPress(player, bind, bPress)
 	if (string.find(bind, "+reload")) then
 		if (Clockwork.player:GetAction(Clockwork.Client) == "raise") then

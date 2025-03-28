@@ -2368,11 +2368,6 @@ function GM:PlayerCanSayLOOC(player, text)
 	return true;
 end
 
--- Called when attempts to use a command.
-function GM:PlayerCanUseCommand(player, commandTable, arguments)
-	return true
-end
-
 function GM:PlayerSay(player, text, bPublic)
 	if (CLOCKWORK_PLAYERSAY_OVERRIDE) then
 		return text;

@@ -1538,6 +1538,28 @@ function Schema:Tick()
 	end;
 end;
 
+function Schema:PlayerCanSeeCommand(commandTable)
+	if commandTable.faith then
+		local faith = Clockwork.Client:GetNetVar("faith");
+		
+		if istable(commandTable.faith) and !table.HasValue(commandTable.faith, faith) then
+			return false;
+		elseif isstring(commandTable.faith) and commandTable.faith ~= faith then
+			return false;
+		end
+	end
+	
+	if commandTable.subfaith then
+		local subfaith = Clockwork.Client:GetNetVar("subfaith");
+		
+		if istable(commandTable.subfaith) and !table.HasValue(commandTable.subfaith, subfaith) then
+			return false;
+		elseif isstring(commandTable.subfaith) and commandTable.subfaith ~= subfaith then
+			return false;
+		end
+	end
+end
+
 -- Called when the local player attempts to see a class.
 function Schema:PlayerCanSeeClass(class) end;
 
