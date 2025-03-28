@@ -2808,6 +2808,7 @@ RITUAL = cwRituals.rituals:New("ascension_house_varazdat");
 	function RITUAL:OnPerformed(player)
 		player:SetCharacterData("subfaction", "Varazdat", true);
 		player:SetCharacterData("rank", 1);
+		Clockwork.player:SetWhitelisted(player, "Children of Satan", true);
 	
 		Clockwork.player:LoadCharacter(player, Clockwork.player:GetCharacterID(player));
 	end;
@@ -2840,6 +2841,7 @@ RITUAL = cwRituals.rituals:New("ascension_house_philimaxio");
 	function RITUAL:OnPerformed(player)
 		player:SetCharacterData("subfaction", "Philimaxio", true);
 		player:SetCharacterData("rank", 1);
+		Clockwork.player:SetWhitelisted(player, "Children of Satan", true);
 	
 		Clockwork.player:LoadCharacter(player, Clockwork.player:GetCharacterID(player));
 	end;
@@ -2872,6 +2874,7 @@ RITUAL = cwRituals.rituals:New("ascension_house_rekh-khet-sa");
 	function RITUAL:OnPerformed(player)
 		player:SetCharacterData("subfaction", "Rekh-khet-sa", true);
 		player:SetCharacterData("rank", 1);
+		Clockwork.player:SetWhitelisted(player, "Children of Satan", true);
 	
 		Clockwork.player:LoadCharacter(player, Clockwork.player:GetCharacterID(player));
 	end;
@@ -2904,6 +2907,7 @@ RITUAL = cwRituals.rituals:New("ascension_house_kinisger");
 	function RITUAL:OnPerformed(player)
 		player:SetCharacterData("subfaction", "Kinisger", true);
 		player:SetCharacterData("rank", 1);
+		Clockwork.player:SetWhitelisted(player, "Children of Satan", true);
 	
 		Clockwork.player:LoadCharacter(player, Clockwork.player:GetCharacterID(player));
 	end;

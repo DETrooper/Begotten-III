@@ -526,6 +526,15 @@ local FACTION = Clockwork.faction:New("Children of Satan");
 		end;]]--
 	end;
 	
+	function FACTION:CanPromote(player, target, faction, subfaction)
+		if !player:IsAdmin() then
+			-- Aspirants can't be manually promoted, they must use their ritual.
+			if target:GetCharacterData("rank") == 10 then
+				return false;
+			end
+		end
+	end
+	
 	function FACTION:GetPlayerCount()
 		local numPlayers = 0;
 
