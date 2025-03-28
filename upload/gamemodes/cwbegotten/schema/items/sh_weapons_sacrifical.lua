@@ -13,6 +13,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(110.39, 337.13, 2.98);
 	ITEM.attachmentOffsetVector = Vector(2.12, 4.95, -0.71);
 	ITEM.canUseShields = true;
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2000, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"fire"};
@@ -33,6 +35,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(294.63, 288.95, 0);
 	ITEM.attachmentOffsetVector = Vector(2.83, 3, 0);	
 	ITEM.canUseShields = true;
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2000, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"fire"};
@@ -56,6 +60,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0, 185.97, 92.49);
 	ITEM.attachmentOffsetVector = Vector(-1.41, 2.83, -35.36);
 	ITEM.attachmentSkin = 0;
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2000, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"fire"};
@@ -78,6 +84,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0, 185.97, 92.49);
 	ITEM.attachmentOffsetVector = Vector(-1.41, 2.83, -35.36);
 	ITEM.attachmentSkin = 1;
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2000, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"ice"};
@@ -98,6 +106,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(176.02, 281.44, 88.51);
 	ITEM.attachmentOffsetVector = Vector(-3.54, 2.9, 16.97);
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2000, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"ice"};
@@ -121,6 +131,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-2.9, 1.41, -3.54);
 	ITEM.huntingValue = 3; -- Affects speed of skinning and mutilating corpses as well as the condition of the hides and meat, 1 = terrible, 3 = great
 	
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1500, supercrateOnly = true};
+
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"ice"};
 	ITEM.requiredbeliefs = {"murder_artform"};
@@ -142,6 +154,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-2.9, 1.41, -3.54);
 	ITEM.huntingValue = 3; -- Affects speed of skinning and mutilating corpses as well as the condition of the hides and meat, 1 = terrible, 3 = great
 	
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1500, supercrateOnly = true};
+
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"fire"};
 	ITEM.requiredbeliefs = {"murder_artform"};
@@ -163,6 +177,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(2.83, 3.54, 0);
 	ITEM.bulletConditionScale = 0.2;
 	ITEM.conditionScale = 0.45;
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2000, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"gold_ingot"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"fire"};
@@ -185,6 +201,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(287.4, 0, 347);
 	ITEM.attachmentOffsetVector = Vector(-2.12, 1.41, -20.51);
 	
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2000, supercrateOnly = true};
+
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"bell"};
 	ITEM.requiredbeliefs = {"strength", "repentant"};
@@ -206,6 +224,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0.99, 339.12, 88.51);
 	ITEM.attachmentOffsetVector = Vector(7.78, 2.83, -24.04);
 	
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2500, supercrateOnly = true};
+
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.onerequiredbelief = {"father", "mother", "old_son", "young_son", "sister"};
@@ -247,6 +267,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0.99, 339.12, 88.51);
 	ITEM.attachmentOffsetVector = Vector(7.78, 2.83, -24.04);
 	
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2500, supercrateOnly = true};
+
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"murder_artform", "strength"};
 ITEM:Register();
@@ -266,6 +288,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(360, 193.92, 94.48);
 	ITEM.attachmentOffsetVector = Vector(-1.41, 2, -7.07);
 	
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2000, supercrateOnly = true};
+
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "ice_catalyst", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"ice"};
 	ITEM.requiredbeliefs = {"strength"};

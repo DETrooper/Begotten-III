@@ -11,6 +11,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90.5, 180, 347.07);
 	ITEM.attachmentOffsetVector = Vector(5.66, 2.9, 17.68);
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1300, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "wood"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
@@ -237,7 +239,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.fireplaceFuel = 240;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 700};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 700, bNoSupercrate = true};
 	ITEM.requiredbeliefs = {"strength"};
 ITEM:Register();
 
@@ -254,6 +256,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(10.42, 275.68, 353.37);
 	ITEM.attachmentOffsetVector = Vector(0.71, 2.83, -9.19);
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
@@ -290,6 +294,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(92.49, 0, 10.94);
 	ITEM.attachmentOffsetVector = Vector(-2.83, 3.59, -24.75);
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
 	
 	ITEM.attributes = {"shieldbreaker"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type

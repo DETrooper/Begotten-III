@@ -20,7 +20,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.charmEffects = "- Reduces all damage taken by 5%.";
 	ITEM.mutuallyExclusive = {"ring_protection_gold", "ring_protection_silver"};
 	
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 600, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 600, onGround = false, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
@@ -147,7 +147,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.charmEffects = "- Increases maximum health by 15 points.";
 	ITEM.mutuallyExclusive = {"ring_vitality"};
 	
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, onGround = false, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
@@ -171,7 +171,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases the damage and stamina damage of your fists to four times its original values and gives them 100% armor-piercing damage. Also allows you to parry with your fists.";
 	
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 725, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 725, onGround = false, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
@@ -196,7 +196,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Has a 5% chance to set enemies on fire when hit with a melee weapon.\n- Stacks with fire sacrifical weapons for additional ignition time.";
 	
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, supercrateOnly = true, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");

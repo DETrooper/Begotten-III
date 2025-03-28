@@ -15,7 +15,7 @@ config.Add("loot_spawner_enabled", true); -- Whether or not the loot spawner is 
 
 cwItemSpawner.MaxSuperCrates = 1;
 cwItemSpawner.SuperCrateCooldown = {min = 5400, max = 10800}; -- 1.5-3 Hours.
-cwItemSpawner.SuperCrateNumItems = {min = 10, max = 20};
+cwItemSpawner.SuperCrateNumItems = {min = 15, max = 25};
 cwItemSpawner.ItemsSpawned = cwItemSpawner.ItemsSpawned or {};
 cwItemSpawner.ContainerLocations = cwItemSpawner.ContainerLocations or {};
 cwItemSpawner.SpawnLocations = cwItemSpawner.SpawnLocations or {};

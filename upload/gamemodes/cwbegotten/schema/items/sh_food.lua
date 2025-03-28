@@ -12,7 +12,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.infectionchance = 10; -- Chance to give you a disease.
 	ITEM.cauldronQuality = 1;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 715};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 715, bNoSupercrate = true};
 	ITEM.needs = {hunger = 30, thirst = 5};
 	
 	function ITEM:OnSetup()
@@ -57,7 +57,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.poison = 6; -- Holdover from Begotten II, maybe we can use it.
 	ITEM.cauldronQuality = 0;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350, bNoSupercrate = true};
 	ITEM.needs = {hunger = 25, thirst = 10};
 	
 	function ITEM:OnSetup()
@@ -103,7 +103,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.poison = 3;
 	ITEM.cauldronQuality = 0;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500, bNoSupercrate = true};
 	ITEM.needs = {hunger = 15};
 	
 	function ITEM:OnSetup()
@@ -731,7 +731,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.poison = 35;
 	ITEM.cauldronQuality = -1;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300, bNoSupercrate = true};
 	ITEM.needs = {hunger = 25, thirst = 0};
 	
 	function ITEM:OnSetup()
@@ -924,7 +924,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.poison = 6;
 	ITEM.cauldronQuality = 0;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350, bNoSupercrate = true};
 	ITEM.needs = {hunger = 15, thirst = 30};
 	
 	function ITEM:OnSetup()
@@ -969,7 +969,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "kittycandy";
 	ITEM.cauldronQuality = 0;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1500};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1500, bNoSupercrate = true};
 	ITEM.needs = {hunger = 25};
 	
 	-- Called when a player uses the item.
@@ -1009,7 +1009,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.cauldronQuality = -1;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350, bNoSupercrate = true};
 	ITEM.needs = {hunger = 50};
 	
 	function ITEM:OnSetup()
@@ -1067,7 +1067,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.cauldronQuality = -1;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350, bNoSupercrate = true};
 	ITEM.needs = {hunger = 50};
 	
 	function ITEM:OnSetup()
@@ -1186,7 +1186,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.poison = 10;
 	ITEM.cauldronQuality = -1;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350, bNoSupercrate = true};
 	ITEM.needs = {hunger = 25, thirst = 5};
 	
 	function ITEM:OnSetup()
@@ -1415,7 +1415,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.poison = 30;
 	ITEM.cauldronQuality = -1;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300, bNoSupercrate = true};
 	ITEM.needs = {hunger = 15, thirst = 5};
 	
 	function ITEM:OnSetup()
@@ -1719,7 +1719,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.poison = 30;
 	ITEM.cauldronQuality = -1;
 	
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500, bNoSupercrate = true};
 	ITEM.needs = {hunger = 25, thirst = 25};
 	
 	function ITEM:OnSetup()

@@ -17,7 +17,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 75};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 75, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -127,7 +127,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 50};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 50, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -189,7 +189,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 50};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 50, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -350,6 +350,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(2.83, 3.54, 0);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 950, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
 ITEM:Register();
@@ -369,6 +371,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(3, 1.41, 2.12);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 700, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requireFaith = {"Faith of the Dark"};
@@ -489,7 +493,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 300, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -529,7 +533,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 250, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -549,7 +553,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 150};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 150, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -569,7 +573,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 400, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 750, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -609,7 +613,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 60};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 60, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -649,7 +653,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 70};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 70, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -798,7 +802,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 200};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 200, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -857,6 +861,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(5, -2, 13.44);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 900, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requireFaith = {"Faith of the Dark"};
@@ -877,7 +883,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(3.54, 2.12, 0.71);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
-	
+
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requireFaith = {"Faith of the Dark"};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1000, supercrateOnly = true};
@@ -901,6 +907,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVectorOffhand = Vector(-1.41, 4.24, -1.41);
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1200, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "down_catalyst"}}; -- use "breakdown" for other type
 	ITEM.requireFaith = {"Faith of the Dark"};
@@ -944,7 +952,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "wood"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"flail"};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 500, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 750, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -962,6 +970,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(5.05, 2.83, 10.44);
 	ITEM.canUseOffhand = false;
 	ITEM.canUseShields = true;
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "wood"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"flail"};

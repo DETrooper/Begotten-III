@@ -13,6 +13,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(88.51, 0, 351.05);
 	ITEM.attachmentOffsetVector = Vector(1.41, 3, -9.9);
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 850, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood", "wood"}}; -- use "breakdown" for other type
 ITEM:Register();
@@ -34,5 +36,5 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(5.66, 1.5, -23.34);
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood", "wood", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2000};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2000, bNoSupercrate = true};
 ITEM:Register();

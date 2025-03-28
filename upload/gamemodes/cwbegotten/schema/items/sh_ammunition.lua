@@ -222,5 +222,5 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.requiredReloadBelief = "strength";
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"scrap"}};
-	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 300, onGround = false};
+	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 300, onGround = false, bNoSupercrate = true};
 ITEM:Register();

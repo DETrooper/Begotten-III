@@ -185,7 +185,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.stopsBleeding = true;
 	ITEM.infectionChance = 80;
 
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 70};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 70, bNoSupercrate = true};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 ITEM:Register();
 
@@ -233,7 +233,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useTime = 10;
 
 	ITEM.curesInjuries = {"gash"};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 300};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 300, bNoSupercrate = true};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 
 	-- Called when a player uses the item.
@@ -258,7 +258,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	--ITEM.healRepetition = 5;
 	
 	ITEM.ingestible = {orally = true, anally = false};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 300};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 300, bNoSupercrate = true};
 	ITEM.useXP = 25;
 	
 	function ITEM:OnUsed(player, itemEntity)
@@ -345,7 +345,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.stopsBleeding = true;
 	ITEM.useXP = 5;
 	
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 200};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 200, bNoSupercrate = true};
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 
 	-- Called when a player uses the item.
@@ -369,7 +369,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.useXP = 5;
 
 	ITEM.curesInjuries = {"broken_bone"};
-	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 125};
+	ITEM.itemSpawnerInfo = {category = "Medical", rarity = 125, bNoSupercrate = true};
 	ITEM.limbs = {HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};
 ITEM:Register();
 
@@ -559,7 +559,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = false;
 	
-	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 55};
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 55, bNoSupercrate = true};
 	
 	if cwMedicalSystem then
 		ITEM.useText = "Apply";

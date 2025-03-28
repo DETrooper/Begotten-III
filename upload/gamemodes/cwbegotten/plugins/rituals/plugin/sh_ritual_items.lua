@@ -120,7 +120,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A small piece of coiled rock. It appears electrically charged.";
 	ITEM.stackable = true;
 
-	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 75};
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 75, bNoSupercrate = true};
 	
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
@@ -231,7 +231,7 @@ local ITEM = Clockwork.item:New();
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 	
-	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 95};
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 95, bNoSupercrate = true};
 	
 ITEM:Register();
 
@@ -246,6 +246,8 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
+
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 250, supercrateOnly = true};
 	
 ITEM:Register();
 
@@ -260,6 +262,8 @@ local ITEM = Clockwork.item:New();
 	
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
+
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 250, supercrateOnly = true};
 	
 ITEM:Register();
 
@@ -274,6 +278,8 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
+
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 250, supercrateOnly = true};
 	
 ITEM:Register();
 
@@ -288,6 +294,8 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
+
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 250, supercrateOnly = true};
 	
 ITEM:Register();
 
@@ -302,6 +310,8 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
+
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 250, supercrateOnly = true};
 	
 ITEM:Register();
 
@@ -316,5 +326,7 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
+
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 250, supercrateOnly = true};
 	
 ITEM:Register();

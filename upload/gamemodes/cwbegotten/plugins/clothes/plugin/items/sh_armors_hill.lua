@@ -948,7 +948,7 @@ ITEM.stabilityScale = 0.90; -- reduces stability damage by 10%
 ITEM.insulation = 60;
 
 ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "leather"}};
-ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1500};
+ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1500, bNoSupercrate = true};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -999,7 +999,7 @@ ITEM.stabilityScale = 0.90; -- reduces stability damage by 10%
 ITEM.insulation = 45;
 
 ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth"}};
-ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1500};
+ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1500, bNoSupercrate = true};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)

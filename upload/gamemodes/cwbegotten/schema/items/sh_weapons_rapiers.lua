@@ -35,5 +35,5 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 500};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 500, bNoSupercrate = true};
 ITEM:Register();

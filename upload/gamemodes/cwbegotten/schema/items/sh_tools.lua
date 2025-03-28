@@ -541,7 +541,7 @@ local ITEM = Clockwork.item:New();
 			return false;
 		end;
 	end;
-	ITEM.itemSpawnerInfo = {category = "Junk", rarity = 200};
+	ITEM.itemSpawnerInfo = {category = "Junk", rarity = 200, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New();

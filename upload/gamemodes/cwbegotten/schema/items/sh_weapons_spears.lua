@@ -16,7 +16,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"wood", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 200};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 200, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -37,7 +37,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -58,7 +58,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.fireplaceFuel = 150;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -79,7 +79,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.fireplaceFuel = 120;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 125};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 125, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -97,6 +97,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0, 8.95, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 3, -17.85);
 	ITEM.canUseShields = true;
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 950, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.requireFaith = {"Faith of the Dark"};
@@ -181,5 +183,5 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1000, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 750, supercrateOnly = true};
 ITEM:Register();

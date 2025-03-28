@@ -17,7 +17,7 @@ ITEM.description = "A blank piece of paper, likely procured by the Hierarchy. It
 ITEM.iconoverride = "materials/begotten/ui/itemicons/scroll.png";
 ITEM.fireplaceFuel = 30;
 
-ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 100, onGround = false};
+ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 100, onGround = false, bNoSupercrate = true};
 
 -- Called when a player uses the item.
 function ITEM:OnUse(player, itemEntity)

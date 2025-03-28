@@ -14,6 +14,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.conditionScale = 1.3; -- 0.25 minimum, 2 maximum, higher is better
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood", "wood"}};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 700, supercrateOnly = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -111,6 +112,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.requiredbeliefs = {"defender"};
 	ITEM.requireFaction = {"Goreic Warrior"};
 	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 850, supercrateOnly = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -184,6 +186,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.conditionScale = 0.5;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks"}};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 750, supercrateOnly = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -238,7 +241,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.conditionScale = 2;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"wood"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 80};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 80, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -315,6 +318,8 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, 2, -1);
 	ITEM.bulletConditionScale = 0.25;
 	ITEM.conditionScale = 0.45;
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1000, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "wood", "wood", "wood"}};
 ITEM:Register();

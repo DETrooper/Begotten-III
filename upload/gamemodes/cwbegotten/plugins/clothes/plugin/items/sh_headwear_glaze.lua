@@ -202,7 +202,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A ragged hood commonly worn by those who inhabit the Wasteland to protect themselves from the elements."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 300};	
+	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 300, bNoSupercrate = true};	
 	ITEM.conditionScale = 2 -- item degrades 2x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.2;
 	
@@ -236,7 +236,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A ragged hood and bandana commonly worn by those who inhabit the Wasteland to protect themselves from the elements."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 800};
+	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 800, bNoSupercrate = true};
 	ITEM.conditionScale = 2 -- item degrades 2x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.2;
 	

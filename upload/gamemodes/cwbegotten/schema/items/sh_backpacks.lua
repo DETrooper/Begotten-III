@@ -31,7 +31,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentOffsetVector = Vector(-2, 5, -1);
 	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
-	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 800};
+	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 800, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth"}};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM:Register();

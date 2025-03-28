@@ -32,7 +32,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.fireplaceFuel = 20;
 	
-	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 25};
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 25, bNoSupercrate = true};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
@@ -65,7 +65,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = true;
 	
-	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 35};
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 35, bNoSupercrate = true};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
@@ -82,7 +82,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = true;
 	
-	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 95};
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 95, bNoSupercrate = true};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
@@ -378,7 +378,7 @@ local ITEM = Clockwork.item:New();
 
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth"}};
 	
-	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 65};
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 65, bNoSupercrate = true};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
@@ -395,7 +395,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.stackable = true;
 	
-	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 25};
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 25, bNoSupercrate = true};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
@@ -432,7 +432,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 0;
 	ITEM.fireplaceFuel = 60;
 	
-	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 25};
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 25, bNoSupercrate = true};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
@@ -450,7 +450,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 95};
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 95, bNoSupercrate = true};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
