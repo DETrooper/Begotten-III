@@ -31,6 +31,7 @@ local COMMAND = Clockwork.command:New("Expel");
 	COMMAND.text = "<string Target>";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.faction = "Children of Satan";
+	COMMAND.arguments = 1;
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
