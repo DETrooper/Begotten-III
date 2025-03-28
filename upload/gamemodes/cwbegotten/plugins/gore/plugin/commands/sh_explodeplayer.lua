@@ -65,7 +65,7 @@ local COMMAND = Clockwork.command:New("Expel");
 					Schema:EasyText(player, "cornflowerblue", target:Name().." must be in Hell to be expelled!");
 				
 					return;
-				elseif target:GetCharacterData("rank", 1) >= player:GetCharacterData("rank", 1) then
+				elseif Schema:GetRankTier("Children of Satan", target:GetCharacterData("rank", 1)) >= Schema:GetRankTier("Children of Satan", player:GetCharacterData("rank", 1)) then
 					Schema:EasyText(player, "cornflowerblue", target:Name().." is too high of a rank to be expelled by you!");
 				
 					return;
@@ -97,6 +97,8 @@ local COMMAND = Clockwork.command:New("Expel");
 					
 					for i, v in ipairs(_player.GetAll()) do
 						if v:IsAdmin() or (v:Alive() and v:GetFaction() == "Children of Satan") then
+							v:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_long"..math.random(1, 5)..".mp3", 80, 100)]]);
+							Clockwork.chatBox:SetMultiplier(1.35);
 							Clockwork.chatBox:Add(v, nil, "darkwhisperevent", player:Name().." has expelled "..target:Name().."'s soul to damnation for their insolence! Let "..pronoun.." sentence instill fear to all those found wanting.");
 						end
 					end

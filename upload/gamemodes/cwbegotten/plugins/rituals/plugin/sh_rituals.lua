@@ -2868,6 +2868,7 @@ RITUAL = cwRituals.rituals:New("ascension_house_rekh-khet-sa");
 	RITUAL.description = "Reject your insignificant peasant heritage and be reborn a Child of Satan. With the ancient bloodline of sorcerers, you will become all-knowing and life will be everlasting!";
 	RITUAL.requiredFaction = {"Children of Satan"}; -- Faction Ritual
 	RITUAL.requiredSubfaction = {""}; -- Subfaction Ritual
+	RITUAL.onerequiredbelief = {"primevalism"};
 	
 	RITUAL.requirements = {"tortured_spirit", "up_catalyst", "xolotl_catalyst"};
 	RITUAL.corruptionCost = 25;

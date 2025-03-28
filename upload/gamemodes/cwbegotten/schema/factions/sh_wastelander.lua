@@ -582,7 +582,8 @@ local FACTION = Clockwork.faction:New("Children of Satan");
 		[1] = {"", "Aspirant"},
 		[2] = {"Dark Justicar", "Hierophant", "Sultan", "Black Finger", "Immortal"},
 		[3] = {"Dreadlord"},
-		[4] = {"Hell Baron", "Caretaker"},
+		[4] = {"Caretaker"},
+		[5] = {"Hell Baron"},
 	};
 	
 	Schema.RanksToSubfaction["Children of Satan"] = {

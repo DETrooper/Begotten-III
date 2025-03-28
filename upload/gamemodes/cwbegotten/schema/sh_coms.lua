@@ -2587,6 +2587,8 @@ function COMMAND:OnRun(player, arguments)
 			
 				for i, v in ipairs(_player.GetAll()) do
 					if (v:Alive() and v:GetFaction() == "Children of Satan") then
+						v:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_long"..math.random(1, 5)..".mp3", 80, 100)]]);
+						Clockwork.chatBox:SetMultiplier(1.35);
 						Clockwork.chatBox:Add(v, nil, "darkwhisperevent", player:Name().." has arrogantly halted the power of jaunting, thus freeing your mind of cowardly thoughts of routing. Will "..pronoun.." tyranny know no end?!");
 					end
 				end
@@ -2605,6 +2607,8 @@ function COMMAND:OnRun(player, arguments)
 			
 				for i, v in ipairs(_player.GetAll()) do
 					if (v:Alive() and v:GetFaction() == "Children of Satan") then
+						v:SendLua([[Clockwork.Client:EmitSound("darkwhisper/darkwhisper_long"..math.random(1, 5)..".mp3", 80, 100)]]);
+						Clockwork.chatBox:SetMultiplier(1.35);
 						Clockwork.chatBox:Add(v, nil, "darkwhisperevent", player:Name().." has benevolently returned your power of jaunting, thus giving you the warm comfort of safe ventures. Praise "..pronoun.." name!");
 					end
 				end
