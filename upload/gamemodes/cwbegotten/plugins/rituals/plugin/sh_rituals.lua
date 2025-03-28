@@ -2833,7 +2833,7 @@ RITUAL = cwRituals.rituals:New("ascension_house_philimaxio");
 	RITUAL.description = "Reject your insignificant peasant heritage and be reborn a Child of Satan. With the bloodline of the White Sentinels, you will conquer the souls of the unworthy!";
 	RITUAL.requiredFaction = {"Children of Satan"}; -- Faction Ritual
 	
-	RITUAL.requirements = {"tortured_spirit", "up_catalyst", "light_catalyst"};
+	RITUAL.requirements = {"tortured_spirit", "light_catalyst", "pentagram_catalyst"};
 	RITUAL.corruptionCost = 25;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 50;
