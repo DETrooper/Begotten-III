@@ -247,7 +247,7 @@ local ITEM = Clockwork.item:New();
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 
-	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 250, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 600, supercrateOnly = true};
 	
 ITEM:Register();
 
@@ -263,7 +263,7 @@ local ITEM = Clockwork.item:New();
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 
-	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 250, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 600, supercrateOnly = true};
 	
 ITEM:Register();
 
@@ -279,7 +279,7 @@ local ITEM = Clockwork.item:New();
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 
-	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 250, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 600, supercrateOnly = true};
 	
 ITEM:Register();
 
@@ -295,7 +295,7 @@ local ITEM = Clockwork.item:New();
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 
-	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 250, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 700, supercrateOnly = true};
 	
 ITEM:Register();
 
@@ -311,7 +311,7 @@ local ITEM = Clockwork.item:New();
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 
-	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 250, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 600, supercrateOnly = true};
 	
 ITEM:Register();
 
@@ -327,6 +327,6 @@ local ITEM = Clockwork.item:New();
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 
-	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 250, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 600, supercrateOnly = true};
 	
 ITEM:Register();
