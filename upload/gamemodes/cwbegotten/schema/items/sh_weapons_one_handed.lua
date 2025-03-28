@@ -493,7 +493,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1550, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -533,7 +533,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1500, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -573,7 +573,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "wood"}}; -- use "breakdown" for other type
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 750, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1600, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -952,7 +952,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "wood"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"flail"};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 750, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1570, bNoSupercrate = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
