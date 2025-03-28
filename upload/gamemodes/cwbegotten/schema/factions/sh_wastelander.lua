@@ -521,10 +521,28 @@ local FACTION = Clockwork.faction:New("Children of Satan");
 			return false;
 		end
 		
-		if (!Clockwork.player:IsWhitelisted(player, "Children of Satan")) then
+		--[[if (!Clockwork.player:IsWhitelisted(player, "Children of Satan")) then
 			Clockwork.player:SetWhitelisted(player, "Children of Satan", true);
-		end;
+		end;]]--
 	end;
+	
+	function FACTION:GetPlayerCount()
+		local numPlayers = 0;
+
+		for _, v in _player.Iterator() do
+			if (v:HasInitialized()) then
+				if (v:GetFaction() == "Children of Satan") then
+					if v:GetCharacterData("rank") == 10 then
+						numPlayers = numPlayers + 0.5; -- Aspirants only count for 0.5.
+					else
+						numPlayers = numPlayers + 1;
+					end
+				end
+			end
+		end
+		
+		return numPlayers;
+	end
 	
 	if !Schema.Ranks then
 		Schema.Ranks = {};
@@ -548,10 +566,11 @@ local FACTION = Clockwork.faction:New("Children of Satan");
 		[7] = "Dreadlord",
 		[8] = "Hell Baron",
 		[9] = "Caretaker",
+		[10] = "Aspirant",
 	};
 	
 	Schema.RankTiers["Children of Satan"] = {
-		[1] = {""},
+		[1] = {"", "Aspirant"},
 		[2] = {"Dark Justicar", "Hierophant", "Sultan", "Black Finger", "Immortal"},
 		[3] = {"Dreadlord"},
 		[4] = {"Hell Baron", "Caretaker"},

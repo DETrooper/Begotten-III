@@ -309,6 +309,113 @@ local COMMAND = Clockwork.command:New("Enlist")
 	end
 COMMAND:Register()
 
+local COMMAND = Clockwork.command:New("Initiate")
+	COMMAND.tip = "Initiate an aspirant into the Children of Satan."
+	COMMAND.flags = CMD_DEFAULT;
+	COMMAND.alias = {"PlyInitiate", "CharInitiate"};
+	COMMAND.faction = "Children of Satan";
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		if player:GetFaction() ~= "Children of Satan" then
+			Schema:EasyText(player, "chocolate", "You are not the correct faction to do this!");
+
+			return false;
+		end
+	
+		local target = Clockwork.entity:GetPlayer(player:GetEyeTraceNoCursor().Entity);
+		
+		if (target and target:Alive()) then
+			if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
+				local faction = "Children of Satan";
+				local factionTable = Clockwork.faction:GetStored()[faction];
+				local targetFaction = target:GetFaction();
+				
+				if player:IsAdmin() or (player:GetFaction() == faction and factionTable and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) then
+					local lastZone = player:GetCharacterData("LastZone");
+					
+					if targetFaction == faction then
+						Schema:EasyText(player, "grey", target:Name().." is already a Child of Satan!");
+
+						return;
+					end
+					
+					if target:GetFaith() ~= "Faith of the Dark" then
+						Schema:EasyText(player, "firebrick", target:Name().." does not worship the Dark Lord!");
+
+						return;
+					end
+					
+					if lastZone ~= "hell" and lastZone ~= "manor" then
+						Schema:EasyText(player, "firebrick", "You must do this in hell!");
+						
+						return;
+					end
+				
+					if targetFaction == "Wanderer" then
+						local playerName = player:Name();
+					
+						Clockwork.dermaRequest:RequestConfirmation(target, "A Dark Invitation", playerName.." has extended an invitation into the Children of Satan!", function()
+							targetFaction = target:GetFaction();
+							
+							if (targetFaction == "Wanderer" and target:Alive() and target:GetFaith() == "Faith of the Dark") then
+								local bSuccess, fault = Clockwork.faction:GetStored()[faction]:OnTransferred(target, Clockwork.faction:GetStored()[targetFaction]);
+								
+								if (bSuccess != false) then
+									target:SetCharacterData("Faction", faction, true);
+									target:SetCharacterData("Subfaction", "", true);
+									target:SetCharacterData("rank", 10); -- Aspirant
+									target:SetCharacterData("rankOverride", nil);
+									
+									if cwBeliefs then
+										--local max_poise = target:GetMaxPoise();
+										--local poise = target:GetNWInt("meleeStamina");
+										local max_stamina = target:GetMaxStamina();
+										local max_stability = target:GetMaxStability();
+										local stamina = target:GetNWInt("Stamina", 100);
+										
+										target:SetMaxHealth(target:GetMaxHealth());
+										target:SetLocalVar("maxStability", max_stability);
+										--target:SetLocalVar("maxMeleeStamina", max_poise);
+										--target:SetNWInt("meleeStamina", math.min(poise, max_poise));
+										target:SetLocalVar("Max_Stamina", max_stamina);
+										target:SetCharacterData("Max_Stamina", max_stamina);
+										target:SetNWInt("Stamina", math.min(stamina, max_stamina));
+										target:SetCharacterData("Stamina", math.min(stamina, max_stamina));
+										
+										hook.Run("RunModifyPlayerSpeed", target, target.cwInfoTable, true);
+									end
+									
+									local targetAngles = target:EyeAngles();
+									local targetPos = target:GetPos();
+									
+									Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+									
+									target:SetPos(targetPos);
+									target:SetEyeAngles(targetAngles);
+									
+									Clockwork.player:NotifyAll(playerName.." has initiated "..target:Name().." into the Children of Satan!");
+								end;
+							end
+						end)
+						
+						Schema:EasyText(player, "green", "You have extended an invitation to "..target:Name().." to join he Children of Satan!");
+						Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." has invited "..target:Name().." to join the Children of Satan!");
+					else
+						Schema:EasyText(player, "firebrick", target:Name().." is not the right faction to be initiated into this faction!");
+					end
+				else
+					Schema:EasyText(player, "firebrick", "You do not have permissions to enlist "..target:Name().."!");
+				end;
+			else
+				Schema:EasyText(player, "firebrick", "This character is too far away!");
+			end;
+		else
+			Schema:EasyText(player, "firebrick", "You must look at a character!");
+		end
+	end
+COMMAND:Register()
+
 local COMMAND = Clockwork.command:New("SetCustomRank")
 	COMMAND.tip = "Set a character's custom rank. If blank, it will be reset. The optional rank index should correspond to what their actual rank would be (i.e. 2 for Acolyte)."
 	COMMAND.text = "<string Character> [string Rank] [number RankIndex]"
@@ -622,23 +729,6 @@ local COMMAND = Clockwork.command:New("Promote")
 									target:SetLocalVar("points", targetEpiphanies);
 									target:SetCharacterData("points", targetEpiphanies);
 									
-									--local max_poise = target:GetMaxPoise();
-									--local poise = target:GetNWInt("meleeStamina");
-									local max_stamina = target:GetMaxStamina();
-									local max_stability = target:GetMaxStability();
-									local stamina = target:GetNWInt("Stamina", 100);
-									
-									target:SetMaxHealth(target:GetMaxHealth());
-									target:SetLocalVar("maxStability", max_stability);
-									--target:SetLocalVar("maxMeleeStamina", max_poise);
-									--target:SetNWInt("meleeStamina", math.min(poise, max_poise));
-									target:SetLocalVar("Max_Stamina", max_stamina);
-									target:SetCharacterData("Max_Stamina", max_stamina);
-									target:SetNWInt("Stamina", math.min(stamina, max_stamina));
-									target:SetCharacterData("Stamina", math.min(stamina, max_stamina));
-									
-									hook.Run("RunModifyPlayerSpeed", target, target.cwInfoTable, true)
-									
 									target:NetworkBeliefs();
 								end
 							end
@@ -652,6 +742,23 @@ local COMMAND = Clockwork.command:New("Promote")
 							target:SetEyeAngles(targetAngles);
 						end
 					end
+	
+					--local max_poise = target:GetMaxPoise();
+					--local poise = target:GetNWInt("meleeStamina");
+					local max_stamina = target:GetMaxStamina();
+					local max_stability = target:GetMaxStability();
+					local stamina = target:GetNWInt("Stamina", 100);
+					
+					target:SetMaxHealth(target:GetMaxHealth());
+					target:SetLocalVar("maxStability", max_stability);
+					--target:SetLocalVar("maxMeleeStamina", max_poise);
+					--target:SetNWInt("meleeStamina", math.min(poise, max_poise));
+					target:SetLocalVar("Max_Stamina", max_stamina);
+					target:SetCharacterData("Max_Stamina", max_stamina);
+					target:SetNWInt("Stamina", math.min(stamina, max_stamina));
+					target:SetCharacterData("Stamina", math.min(stamina, max_stamina));
+					
+					hook.Run("RunModifyPlayerSpeed", target, target.cwInfoTable, true)
 					
 					local notifyTarget = true;
 					
@@ -774,70 +881,72 @@ local COMMAND = Clockwork.command:New("Demote")
 				target:SetCharacterData("rank", rank);
 				hook.Run("PlayerChangedRanks", target);
 				
-					if Schema.RanksToSubfaction and Schema.RanksToSubfaction[faction] then
-						local subfaction = Schema.RanksToSubfaction[faction][ranks[faction][rank]];
-						
-						if subfaction then
-							if target:GetNetVar("kinisgerOverride") then
-								target:SetCharacterData("kinisgerOverrideSubfaction", subfaction);
-								target:SetNetVar("kinisgerOverrideSubfaction", subfaction);
-							else
-								target:SetCharacterData("Subfaction", subfaction, true);
-								
-								-- Remove any subfaction locked beliefs.
-								local beliefsTab = cwBeliefs:GetBeliefs();
-								local targetBeliefs = target:GetCharacterData("beliefs");
-								local targetEpiphanies = target:GetCharacterData("points", 0);
-								
-								for k, v in pairs(beliefsTab) do
-									if v.lockedSubfactions and table.HasValue(v.lockedSubfactions, subfaction) then
-										if targetBeliefs[k] then
-											targetBeliefs[k] = false;
-											
-											targetEpiphanies = targetEpiphanies + 1;
-											
-											local beliefTree = cwBeliefs:FindBeliefTreeByBelief(k);
-											
-											if beliefTree.hasFinisher and targetBeliefs[beliefTree.uniqueID.."_finisher"] then
-												targetBeliefs[beliefTree.uniqueID.."_finisher"] = false;
-											end
+				if Schema.RanksToSubfaction and Schema.RanksToSubfaction[faction] then
+					local subfaction = Schema.RanksToSubfaction[faction][ranks[faction][rank]];
+					
+					if subfaction then
+						if target:GetNetVar("kinisgerOverride") then
+							target:SetCharacterData("kinisgerOverrideSubfaction", subfaction);
+							target:SetNetVar("kinisgerOverrideSubfaction", subfaction);
+						else
+							target:SetCharacterData("Subfaction", subfaction, true);
+							
+							-- Remove any subfaction locked beliefs.
+							local beliefsTab = cwBeliefs:GetBeliefs();
+							local targetBeliefs = target:GetCharacterData("beliefs");
+							local targetEpiphanies = target:GetCharacterData("points", 0);
+							
+							for k, v in pairs(beliefsTab) do
+								if v.lockedSubfactions and table.HasValue(v.lockedSubfactions, subfaction) then
+									if targetBeliefs[k] then
+										targetBeliefs[k] = false;
+										
+										targetEpiphanies = targetEpiphanies + 1;
+										
+										local beliefTree = cwBeliefs:FindBeliefTreeByBelief(k);
+										
+										if beliefTree.hasFinisher and targetBeliefs[beliefTree.uniqueID.."_finisher"] then
+											targetBeliefs[beliefTree.uniqueID.."_finisher"] = false;
 										end
 									end
 								end
-								
-								target:SetCharacterData("beliefs", targetBeliefs);
-								target:SetLocalVar("points", targetEpiphanies);
-								target:SetCharacterData("points", targetEpiphanies);
-								
-								--local max_poise = target:GetMaxPoise();
-								--local poise = target:GetNWInt("meleeStamina");
-								local max_stamina = target:GetMaxStamina();
-								local max_stability = target:GetMaxStability();
-								local stamina = target:GetNWInt("Stamina", 100);
-								
-								target:SetMaxHealth(target:GetMaxHealth());
-								target:SetLocalVar("maxStability", max_stability);
-								--target:SetLocalVar("maxMeleeStamina", max_poise);
-								--target:SetNWInt("meleeStamina", math.min(poise, max_poise));
-								target:SetLocalVar("Max_Stamina", max_stamina);
-								target:SetCharacterData("Max_Stamina", max_stamina);
-								target:SetNWInt("Stamina", math.min(stamina, max_stamina));
-								target:SetCharacterData("Stamina", math.min(stamina, max_stamina));
-								
-								hook.Run("RunModifyPlayerSpeed", target, target.cwInfoTable, true)
-								
-								target:NetworkBeliefs();
 							end
 							
-							local targetAngles = target:EyeAngles();
-							local targetPos = target:GetPos();
+							target:SetCharacterData("beliefs", targetBeliefs);
+							target:SetLocalVar("points", targetEpiphanies);
+							target:SetCharacterData("points", targetEpiphanies);
 							
-							Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+							hook.Run("RunModifyPlayerSpeed", target, target.cwInfoTable, true)
 							
-							target:SetPos(targetPos);
-							target:SetEyeAngles(targetAngles);
+							target:NetworkBeliefs();
 						end
+						
+						local targetAngles = target:EyeAngles();
+						local targetPos = target:GetPos();
+						
+						Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
+						
+						target:SetPos(targetPos);
+						target:SetEyeAngles(targetAngles);
 					end
+				end
+					
+				--local max_poise = target:GetMaxPoise();
+				--local poise = target:GetNWInt("meleeStamina");
+				local max_stamina = target:GetMaxStamina();
+				local max_stability = target:GetMaxStability();
+				local stamina = target:GetNWInt("Stamina", 100);
+				
+				target:SetMaxHealth(target:GetMaxHealth());
+				target:SetLocalVar("maxStability", max_stability);
+				--target:SetLocalVar("maxMeleeStamina", max_poise);
+				--target:SetNWInt("meleeStamina", math.min(poise, max_poise));
+				target:SetLocalVar("Max_Stamina", max_stamina);
+				target:SetCharacterData("Max_Stamina", max_stamina);
+				target:SetNWInt("Stamina", math.min(stamina, max_stamina));
+				target:SetCharacterData("Stamina", math.min(stamina, max_stamina));
+				
+				hook.Run("RunModifyPlayerSpeed", target, target.cwInfoTable, true)
 				
 				if (target == player) then
 					name = "yourself";
@@ -2458,16 +2567,51 @@ COMMAND:Register();
 local COMMAND = Clockwork.command:New("ToggleHellJaunting");
 COMMAND.tip = "Toggle whether helljaunting is enabled.";
 COMMAND.flags = CMD_DEFAULT;
-COMMAND.access = "s";
+COMMAND.faction = "Children of Satan";
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
-	if !Schema.hellJauntDisabled then
-		Schema.hellJauntDisabled = true;
-		Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has disabled helljaunting.");
-	else
-		Schema.hellJauntDisabled = false;
-		Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has enabled helljaunting.");
+	local isAdmin = player:IsAdmin();
+	local isHellBaron = (player:GetFaction() == "Children of Satan" and Schema:GetRankTier("Children of Satan", player:GetCharacterData("rank", 1)) > 3);
+
+	if isAdmin or isHellBaron then
+		if !Schema.hellJauntDisabled then
+			Schema.hellJauntDisabled = true;
+			
+			if isHellBaron and !player.cwObserverMode then
+				local pronoun = "his";
+				
+				if player:GetGender() == GENDER_FEMALE then
+					pronoun = "her";
+				end
+			
+				for i, v in ipairs(_player.GetAll()) do
+					if (v:Alive() and v:GetFaction() == "Children of Satan") then
+						Clockwork.chatBox:Add(v, nil, "darkwhisperevent", player:Name().." has arrogantly halted the power of jaunting, thus freeing your mind of cowardly thoughts of routing. Will "..pronoun.." tyranny know no end?!");
+					end
+				end
+			end
+			
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has disabled helljaunting.");
+		else
+			Schema.hellJauntDisabled = false;
+			
+			if isHellBaron and !player.cwObserverMode then
+				local pronoun = "his";
+				
+				if player:GetGender() == GENDER_FEMALE then
+					pronoun = "her";
+				end
+			
+				for i, v in ipairs(_player.GetAll()) do
+					if (v:Alive() and v:GetFaction() == "Children of Satan") then
+						Clockwork.chatBox:Add(v, nil, "darkwhisperevent", player:Name().." has benevolently returned your power of jaunting, thus giving you the warm comfort of safe ventures. Praise "..pronoun.." name!");
+					end
+				end
+			end
+			
+			Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has enabled helljaunting.");
+		end
 	end
 end;
 
@@ -2818,11 +2962,18 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 	COMMAND.tip = "Return to Hell using dark magic if you are a Child of Satan, although this act will leave you temporarily vulnerable to the influence of demons and will thus incur extreme corruption. Anyone held in your hands will also be teleported. You cannot helljaunt while overencumbered.";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.important = true;
+	COMMAND.faction = "Children of Satan";
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
 		if player:GetFaction() == "Children of Satan" then
 			if player.caughtByCheaple then
+				return false;
+			end
+			
+			if player:GetCharacterData("rank") == 10 and !player:GetCharacterData("kinisgerOverride") then -- Aspirants cannot helljaunt.
+				Schema:EasyText(player, "peru", "Aspirants cannot helljaunt!");
+				
 				return false;
 			end
 		
@@ -3080,6 +3231,7 @@ local COMMAND = Clockwork.command:New("HellTeleport");
 	COMMAND.tip = "Return to Hell using dark magic if you are a Child of Satan if you are near Arch of Perdition or the Pillars of Creation, though this will take time. Anyone close to you or held in your hands will also be teleported.";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.important = true;
+	COMMAND.faction = "Children of Satan";
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

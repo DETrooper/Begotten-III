@@ -67,6 +67,32 @@ function cwBeliefs:PlayerAdjustCharacterScreenInfo(character, info)
 	info.level = character.level or 1;
 end
 
+function cwBeliefs:PlayerCanSeeCommand(commandTable)
+	if commandTable.requiredbeliefs then
+		for i, v in ipairs(commandTable.requiredbeliefs) do
+			if !Clockwork.Client:HasBelief(v) then
+				return false;
+			end
+		end
+	end
+	
+	if commandTable.onerequiredbelief then
+		local has_belief = false;
+		
+		for i, v in ipairs(commandTable.onerequiredbelief) do
+			if Clockwork.Client:HasBelief(v) then
+				has_belief = true;
+				
+				break;
+			end
+		end
+		
+		if !has_belief then
+			return false;
+		end
+	end
+end
+
 function cwBeliefs:GetEntityMenuOptions(entity, options)
 	if (entity:GetClass() == "prop_ragdoll") then
 		local player = Clockwork.entity:GetPlayer(entity);

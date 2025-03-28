@@ -153,11 +153,11 @@ if (SERVER) then
 						arguments[k] = Clockwork.kernel:Replace(arguments[k], " : ", ":")
 					end
 
-					if (hook.Run("PlayerCanUseCommand", player, commandTable, arguments)) then
+					if (hook.Run("PlayerCanUseCommand", player, commandTable, arguments)) ~= false then
 						if (#arguments >= commandTable.arguments) then
-							if ((Clockwork.player:HasFlags(player, commandTable.access) and ((!commandTable.faction)
+							if ((Clockwork.player:HasFlags(player, commandTable.access) --[[and ((!commandTable.faction)
 							or (commandTable.faction and (commandTable.faction == player:GetFaction())
-							or (istable(commandTable.faction) and table.HasValue(commandTable.faction, player:GetFaction())))))
+							or (istable(commandTable.faction) and table.HasValue(commandTable.faction, player:GetFaction()))))]])
 							or player:HasPermission(commandTable.uniqueID)) then
 								local flags = commandTable.flags
 

@@ -417,6 +417,7 @@ COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 2;
 COMMAND.alias = {"DW"};
 COMMAND.isChatCommand = true;
+COMMAND.onerequiredbelief = {"soothsayer", "witch"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -473,6 +474,7 @@ COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"DWD"};
 COMMAND.isChatCommand = true;
+COMMAND.onerequiredbelief = {"soothsayer", "witch"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -556,6 +558,7 @@ COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"DWF"};
 COMMAND.isChatCommand = true;
+COMMAND.onerequiredbelief = {"soothsayer", "witch"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -620,6 +623,7 @@ COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"DWFP"};
 COMMAND.isChatCommand = true;
+COMMAND.onerequiredbelief = {"soothsayer", "witch"};
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -700,6 +704,8 @@ COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"DWFK"};
 COMMAND.isChatCommand = true;
+COMMAND.onerequiredbelief = {"soothsayer", "witch"};
+COMMAND.subfaction = "Kinisger";
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -747,6 +753,8 @@ COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"DWFKP"};
 COMMAND.isChatCommand = true;
+COMMAND.onerequiredbelief = {"soothsayer", "witch"};
+COMMAND.subfaction = "Kinisger";
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -792,7 +800,6 @@ function COMMAND:OnRun(player, arguments)
 end;
 
 COMMAND:Register();
-
 
 local COMMAND = Clockwork.command:New("DarkReply");
 COMMAND.tip = "Using all your willpower, reply to a darkwhisper sent to you through the void. Note that this will incur a small amount of corruption if you are not of the Faith of the Dark.";
@@ -1026,6 +1033,7 @@ COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 1;
 COMMAND.alias = {"RE"};
 COMMAND.isChatCommand = true;
+COMMAND.subfaith = "Voltism";
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -1427,6 +1435,7 @@ local COMMAND = Clockwork.command:New("Electrocute");
 COMMAND.tip = "Electrocute yourself to stimulate your mind. This will regain some sanity but cause damage to yourself. Requires a 'Tech' or 'Technocraft' item in your inventory, and will take a small amount of condition from it.";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 0;
+COMMAND.subfaith = "Voltism";
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -1518,6 +1527,7 @@ local COMMAND = Clockwork.command:New("Flagellate");
 COMMAND.tip = "Repent for your sins by scourging your flesh.";
 COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 0;
+COMMAND.subfaith = "Sol Orthodoxy";
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)

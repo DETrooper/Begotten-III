@@ -19,6 +19,7 @@ function cwStamina:GetMaxStaminaPlugin(player)
 		return 1000;
 	else
 		local max_stamina = hook.Run("GetMaxStamina", player, 90);
+		local faction = player:GetFaction();
 		local subfaction = player:GetSubfaction();
 		
 		if player:GetCharacterData("isDemon", false) then
@@ -49,6 +50,10 @@ function cwStamina:GetMaxStaminaPlugin(player)
 			if player:HasBelief("man_become_beast") then
 				max_stamina = max_stamina + 10;
 			end
+		end
+		
+		if Schema.RankTiers[faction] and (Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= #Schema.RankTiers[faction]) then
+			max_stamina = max_stamina + 50;
 		end
 		
 		if cwPossession and IsValid(player.possessor) then
