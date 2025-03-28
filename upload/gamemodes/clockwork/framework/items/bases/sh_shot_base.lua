@@ -80,6 +80,8 @@ local ITEM = item.New(nil, true);
 			if player.holyPowderkegActive then
 				consumeTime = math.Round(consumeTime * 0.33);
 			end
+
+			consumeTime = math.max(consumeTime, 0.1)
 			
 			if weaponItem.reloadSounds then
 				player:EmitSound(weaponItem.reloadSounds[1]);
@@ -106,8 +108,7 @@ local ITEM = item.New(nil, true);
 			
 			player:SetLocalVar("cwProgressBarVerb", weaponItem.name);
 			player:SetLocalVar("cwProgressBarItem", self.name);
-			
-			player.lastLoadedShot = self.uniqueID;
+			player:SetLocalVar("lastLoadedShot", self.uniqueID)
 			
 			Clockwork.player:SetAction(player, "reloading", consumeTime, nil, function()
 				if IsValid(player) and weaponItem then
