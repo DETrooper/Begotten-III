@@ -70,6 +70,8 @@ local COMMAND = Clockwork.command:New("Expel");
 				
 					return;
 				else
+					player.nextExpel = CurTime() + 180;
+				
 					local thirdPerson = "his";
 					
 					if (player:GetGender() == GENDER_FEMALE) then
@@ -100,7 +102,7 @@ local COMMAND = Clockwork.command:New("Expel");
 					end
 				end;
 			else
-				Schema:EasyText(player, "grey", target.." is not a valid player!");
+				Schema:EasyText(player, "grey", arguments[1].." is not a valid player!");
 			end;
 		else
 			Schema:EasyText(player, "chocolate", "You are not high enough in rank to use this command!");

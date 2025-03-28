@@ -2799,6 +2799,7 @@ RITUAL = cwRituals.rituals:New("ascension_house_varazdat");
 	RITUAL.name = "(Unique) Ascension to House Varazdat";
 	RITUAL.description = "Reject your insignificant peasant heritage and be reborn a Child of Satan. With the bloodline of the King of Kings, your bloodlust and murderous prowess shall be unmatched!";
 	RITUAL.requiredFaction = {"Children of Satan"}; -- Faction Ritual
+	RITUAL.requiredSubfaction = {""}; -- Subfaction Ritual
 	
 	RITUAL.requirements = {"tortured_spirit", "up_catalyst", "pentagram_catalyst"};
 	RITUAL.corruptionCost = 25;
@@ -2832,6 +2833,7 @@ RITUAL = cwRituals.rituals:New("ascension_house_philimaxio");
 	RITUAL.name = "(Unique) Ascension to House Philimaxio";
 	RITUAL.description = "Reject your insignificant peasant heritage and be reborn a Child of Satan. With the bloodline of the White Sentinels, you will conquer the souls of the unworthy!";
 	RITUAL.requiredFaction = {"Children of Satan"}; -- Faction Ritual
+	RITUAL.requiredSubfaction = {""}; -- Subfaction Ritual
 	
 	RITUAL.requirements = {"tortured_spirit", "light_catalyst", "pentagram_catalyst"};
 	RITUAL.corruptionCost = 25;
@@ -2865,6 +2867,7 @@ RITUAL = cwRituals.rituals:New("ascension_house_rekh-khet-sa");
 	RITUAL.name = "(Unique) Ascension to House Rekh-khet-sa";
 	RITUAL.description = "Reject your insignificant peasant heritage and be reborn a Child of Satan. With the ancient bloodline of sorcerers, you will become all-knowing and life will be everlasting!";
 	RITUAL.requiredFaction = {"Children of Satan"}; -- Faction Ritual
+	RITUAL.requiredSubfaction = {""}; -- Subfaction Ritual
 	
 	RITUAL.requirements = {"tortured_spirit", "up_catalyst", "xolotl_catalyst"};
 	RITUAL.corruptionCost = 25;
@@ -2898,6 +2901,7 @@ RITUAL = cwRituals.rituals:New("ascension_house_kinisger");
 	RITUAL.name = "(Unique) Ascension to House Kinisger";
 	RITUAL.description = "Reject your insignificant peasant heritage and be reborn a Child of Satan. With the cursed mutant bloodline of the Black Hats, you will be a master of shadows and trickery!";
 	RITUAL.requiredFaction = {"Children of Satan"}; -- Faction Ritual
+	RITUAL.requiredSubfaction = {""}; -- Subfaction Ritual
 	
 	RITUAL.requirements = {"tortured_spirit", "down_catalyst", "pentagram_catalyst"};
 	RITUAL.corruptionCost = 25;

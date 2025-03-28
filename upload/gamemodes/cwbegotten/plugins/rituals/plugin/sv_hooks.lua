@@ -17,9 +17,11 @@ function cwRituals:PlayerCanPerformRitual(player, uniqueID, bIgnoreItems, bIgnor
 	local hasBeliefs = false;
 	local hasRequirements = true;
 	local hasFlags = true;
+	local requiredFaction = ritualTable.requiredFaction;
 	local requiredSubfaction = ritualTable.requiredSubfaction;
 	local requiredBeliefsSubfactionOverride = ritualTable.requiredBeliefsSubfactionOverride;
 	local onerequiredbelief = ritualTable.onerequiredbelief;
+	local faction = player:GetFaction();
 	local subfaction = player:GetSubfaction();
 	local subfaith = player:GetNetVar("subfaith");
 	
@@ -71,6 +73,13 @@ function cwRituals:PlayerCanPerformRitual(player, uniqueID, bIgnoreItems, bIgnor
 		
 		if !hasBeliefs then
 			Schema:EasyText(player, "chocolate", "You do not have the belief required to perform this ritual!");
+			return false;
+		end
+	end
+	
+	if requiredFaction and faction then
+		if not table.HasValue(requiredFaction, faction) then
+			Schema:EasyText(player, "chocolate", "You are not the correct faction to perform this ritual!");
 			return false;
 		end
 	end
