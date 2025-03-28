@@ -10,8 +10,8 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(287.4, 360, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 0, 4.95);
-	ITEM.bulletConditionScale = 0.4;
-	ITEM.conditionScale = 1.3;
+	ITEM.bulletConditionScale = 0.5;
+	ITEM.conditionScale = 1.3; -- 0.25 minimum, 2 maximum, higher is better
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood", "wood"}};
 ITEM:Register();
@@ -46,7 +46,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(360, 309.28, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 0, 0);
-	ITEM.bulletConditionScale = 0.3;
+	ITEM.bulletConditionScale = 0.5;
 	ITEM.conditionScale = 1;
 	ITEM.fireplaceFuel = 180;
 	
@@ -65,7 +65,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 359.01, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 2.12, -4.95);
-	ITEM.bulletConditionScale = 0.15;
+	ITEM.bulletConditionScale = 0.25;
 	ITEM.conditionScale = 0.5;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
@@ -85,7 +85,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetAngles = Angle(90, 0, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 0, 0);
 	ITEM.excludeFactions = {"Goreic Warrior"};
-	ITEM.bulletConditionScale = 0.2;
+	ITEM.bulletConditionScale = 0.4;
 	ITEM.conditionScale = 0.75;
 	ITEM.fireplaceFuel = 300;
 	
@@ -103,8 +103,8 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(88.51, 201.79, 268.11);
 	ITEM.attachmentOffsetVector = Vector(0, 0.71, -4.24);
-	ITEM.bulletConditionScale = 0.1;
-	ITEM.conditionScale = 0.2;
+	ITEM.bulletConditionScale = 0.15;
+	ITEM.conditionScale = 0.25;
 	
 	ITEM.attributes = {"unbreakable"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
@@ -142,7 +142,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90.5, 201.88, 269.5);
 	ITEM.attachmentOffsetVector = Vector(0, -0.71, 0);
-	ITEM.bulletConditionScale = 0.2;
+	ITEM.bulletConditionScale = 0.25;
 	ITEM.conditionScale = 0.35;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks"}};
@@ -197,7 +197,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 180, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 2, 0);
-	ITEM.bulletConditionScale = 0.25;
+	ITEM.bulletConditionScale = 0.3;
 	ITEM.conditionScale = 0.6;
 	
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 5000};
@@ -215,7 +215,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 275, 180.15);
 	ITEM.attachmentOffsetVector = Vector(0, 3, -1);
-	ITEM.bulletConditionScale = 0.4;
+	ITEM.bulletConditionScale = 0.55;
 	ITEM.conditionScale = 1.15;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "scrap"}};
@@ -273,7 +273,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(74.59, 183.98, 360);
 	ITEM.attachmentOffsetVector = Vector(0, 0.34, 0);
-	ITEM.bulletConditionScale = 0.2;
+	ITEM.bulletConditionScale = 0.25;
 	ITEM.conditionScale = 0.55;
 
 	ITEM.attributes = {"spiked"};
@@ -295,7 +295,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetAngles = Angle(90, 180, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 2, 0);
 	ITEM.excludeFactions = {"Goreic Warrior"};
-	ITEM.bulletConditionScale = 0.2;
+	ITEM.bulletConditionScale = 0.25;
 	ITEM.conditionScale = 0.4;
 	
 	ITEM.requiredbeliefs = {"defender"};
@@ -313,7 +313,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 180, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 2, -1);
-	ITEM.bulletConditionScale = 0.2;
+	ITEM.bulletConditionScale = 0.25;
 	ITEM.conditionScale = 0.45;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "wood", "wood", "wood"}};
@@ -330,7 +330,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 275, 180.15);
 	ITEM.attachmentOffsetVector = Vector(0, 9, -4.95);
-	ITEM.bulletConditionScale = 0.4;
+	ITEM.bulletConditionScale = 0.45;
 	ITEM.conditionScale = 1.1;
 	
 	ITEM.attributes = {"electrified"};
@@ -349,7 +349,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 0, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 0, 0);
-	ITEM.bulletConditionScale = 0.1;
+	ITEM.bulletConditionScale = 0.25;
 	ITEM.conditionScale = 0.45;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "iron_chunks", "iron_chunks"}};
@@ -387,7 +387,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 360, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 4.24, -4.95);
-	ITEM.bulletConditionScale = 0.1;
+	ITEM.bulletConditionScale = 0.15;
 	ITEM.conditionScale = 0.25;
 
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
@@ -410,7 +410,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(0, -2.3, 0);
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.conditionScale = 0.7;
-	ITEM.bulletConditionScale = 0.2;
+	ITEM.bulletConditionScale = 0.4;
 	ITEM.fireplaceFuel = 300;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood", "wood", "wood"}};
@@ -428,7 +428,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetAngles = Angle(90, 180, 180);
 	ITEM.attachmentOffsetVector = Vector(0, -2, 0);
 	ITEM.excludeFactions = {"Goreic Warrior"};
-	ITEM.bulletConditionScale = 0.2;
+	ITEM.bulletConditionScale = 0.3;
 	ITEM.conditionScale = 0.45;
 	
 	ITEM.requiredbeliefs = {"defender"};
