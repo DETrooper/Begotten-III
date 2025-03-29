@@ -30,7 +30,7 @@ SWEP.ShowWorldModel			= false
 SWEP.Spawnable				= true
 SWEP.AdminSpawnable			= true
 
-SWEP.Primary.Sound 			= Sound("weapons/cb4/cb4-1.mp3")				-- This is the sound of the weapon, when you shoot.
+SWEP.Primary.Sound 			= Sound("weapons/cb4/cb4-1.wav")				-- This is the sound of the weapon, when you shoot.
 SWEP.Primary.RPM				= 100		-- This is in Rounds Per Minute
 SWEP.Primary.ClipSize			= 7			-- Size of a clip
 SWEP.Primary.DefaultClip		= 0	-- Default number of bullets in a clip
@@ -95,7 +95,7 @@ SWEP.AmmoTypes = {
 		return true;
 	end,
 	["Longshot"] = function(SWEP)
-		SWEP.Primary.Sound = Sound("weapons/cb4/cb4-1.mp3");
+		SWEP.Primary.Sound = Sound("weapons/cb4/cb4-1.wav");
 		SWEP.Primary.FarSound = Sound("weapons/cb4/cb4-1_distant.mp3");
 		SWEP.Primary.NumShots = 1;
 		SWEP.Primary.Damage = 95;

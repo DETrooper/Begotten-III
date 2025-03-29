@@ -11,5 +11,5 @@ include("shared.lua");
 function ENT:HUDPaintTargetID(x, y, alpha)
 	local colorWhite = Clockwork.option:GetColor("white")
 	
-	y = Clockwork.kernel:DrawInfo("A sturdy Goreic siege ladder.", x, y, colorWhite, alpha);
+	y = Clockwork.kernel:DrawInfo("A sturdy siege ladder.", x, y, colorWhite, alpha);
 end;

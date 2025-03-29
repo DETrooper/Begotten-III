@@ -742,6 +742,16 @@ local function Guarding(ent, dmginfo)
 						local poiseDamageModifier = 1;
 						
 						if attacker.HasBelief then
+							if attacker:HasBelief("fanaticism") then
+								local health = attacker:Health();
+								local maxHealth = attacker:GetMaxHealth();
+								local lowerBound = maxHealth * 0.1;
+								local modifier = math.Clamp(-(((health - lowerBound) / (maxHealth - lowerBound)) - 1), 0, 1);
+								local bonus = 1.5 * modifier;
+								
+								poiseDamageModifier = math.max(bonus, 1)
+							end
+							
 							if attacker:HasBelief("unrelenting") then
 								poiseDamageModifier = poiseDamageModifier + 0.25;
 							end
@@ -1294,7 +1304,7 @@ local function Guarding(ent, dmginfo)
 									stabilityDamage = stabilityDamage * 1.15;
 								end
 								
-								ent:TakeStability(stabilityDamage)		
+								ent:TakeStability(stabilityDamage) // Note: Rework this shit!!! Should not make extra checks if the attack comes from behind while user is blocking
 								
 								ent:EmitSound(enemyattacksoundtable["hitbody"][math.random(1, #enemyattacksoundtable["hitbody"])])
 								-- For sacrificial attacks (regular)

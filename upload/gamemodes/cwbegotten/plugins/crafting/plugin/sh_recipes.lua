@@ -9023,6 +9023,39 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 	
+	RECIPE = cwRecipes.recipes:New("hell_baron_gothic_plate");
+		RECIPE.name = "Hell Baron Gothic Plate";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Children of Satan"};
+		RECIPE.requirements = {
+			["heavy_hellplate_armor"] = {amount = 1},
+			["hellplate_helmet"] = {amount = 1},
+			["hellforged_steel_ingot"] = {amount = 4},
+			["gold_ingot"] = {amount = 1},
+			["tortured_spirit"] = {amount = 1},
+			["pentagram_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["hell_baron_gothic_plate"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 300;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
 	RECIPE = cwRecipes.recipes:New("blackplate_armor");
 		RECIPE.name = "Blackplate Armor";
 		RECIPE.requiresSmithy = true;

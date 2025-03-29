@@ -248,7 +248,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.name = "Siege Ladder";
 	ITEM.uniqueID = "siege_ladder";
 	ITEM.model = "models/begotten/misc/siegeladder_compact.mdl";
-	ITEM.weight = 9;
+	ITEM.weight = 8;
 	ITEM.category = "Tools";
 	ITEM.description = "A long, sturdy siege ladder for the express purpose of scaling the fortifications of the Castle, Gorewatch, or the Tower of Light.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/siege_ladder.png";
@@ -315,7 +315,7 @@ local ITEM = Clockwork.item:New();
 		end
 	end;
 	
-	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood", "wood", "wood", "wood", "wood"}};
+	ITEM.components = {breakdownType = "breakdown", items = {"wood", "wood", "wood", "wood"}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New();

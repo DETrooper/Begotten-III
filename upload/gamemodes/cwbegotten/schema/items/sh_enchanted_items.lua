@@ -157,7 +157,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_pummeler";
 	ITEM.description = "A ring with a mysterious aura. Putting it on your finger makes your strikes feel weightier.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Increases stamina damage of all melee weapons by 15%.";
+	ITEM.charmEffects = "- Increases stamina damage of all melee weapons by 15%. \n- Increases stability damage of all melee weapons by 15%.";
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, onGround = false};
 ITEM:Register();

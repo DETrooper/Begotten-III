@@ -469,6 +469,32 @@ function SWEP:CanPrimaryAttack()
 	return self.Owner:GetNWInt("Stamina") >= attackCost;
 end
 
+function GetStabilityModifier(owner)
+	local stabilityModifier = 1
+	
+	if cwBeliefs and owner.HasBelief then
+		if owner:HasBelief("fanaticism") then
+			local health = owner:Health();
+			local maxHealth = owner:GetMaxHealth();
+			local lowerBound = maxHealth * 0.1;
+			local modifier = math.Clamp(-(((health - lowerBound) / (maxHealth - lowerBound)) - 1), 0, 1);
+			local bonus = 1.5 * modifier;
+			
+			stabilityModifier = math.max(bonus, 1)
+		end
+		
+		if owner:HasBelief("might") then
+			stabilityModifier = stabilityModifier * 1.15;
+		end
+	end
+	
+	if owner.GetCharmEquipped and owner:GetCharmEquipped("ring_pummeler") then
+		stabilityModifier = stabilityModifier * 1.15;
+	end
+	
+	return stabilityModifier
+end
+
 function SWEP:PrimaryAttack()
 	local wep = self.Weapon;
 	local owner = self.Owner;
@@ -1143,7 +1169,7 @@ end
 				end
 				 
 				if hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit.iFrames then
-					hit:TakeStability((stabilitydamage * 3) * shield_reduction * hit_reduction)		
+					hit:TakeStability(((stabilitydamage * 3) * shield_reduction * hit_reduction) * GetStabilityModifier(self.Owner))	
 
 					-- Fire attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "fire_swing" then
@@ -1152,7 +1178,7 @@ end
 						else
 							hit:Ignite(weapon.IgniteTime);
 						end
-					end
+					end 
 					
 					-- Ice attack type
 					if (hit:IsValid()) and attacktable["attacktype"] == "ice_swing" and hit.AddFreeze then
@@ -1207,7 +1233,7 @@ end
 									end
 								end
 								if !hit:GetNetVar("Guardening") or (math.abs(math.AngleDifference(hit:EyeAngles().y, (self:GetPos() - hit:GetPos()):Angle().y)) > blockthreshold) then
-									hit:TakeStability(25 * shield_reduction * hit_reduction);
+									hit:TakeStability((25 * shield_reduction * hit_reduction) * GetStabilityModifier(self.Owner));
 								end
 							end
 						end
@@ -1217,7 +1243,7 @@ end
 					if hit:IsValid() then
 						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then							
 							if hit:IsPlayer() then
-								hit:TakeStability((stabilitydamage * 0.5) * shield_reduction * hit_reduction);
+								hit:TakeStability(((stabilitydamage * 0.5) * shield_reduction * hit_reduction) * GetStabilityModifier(self.Owner));
 							end
 						end
 					end
@@ -1250,7 +1276,7 @@ end
 								end);
 								
 								if hit:IsPlayer() then
-									hit:TakeStability(5)
+									hit:TakeStability(5 * GetStabilityModifier(self.Owner))
 								end
 							end
 						elseif distance > maxIneffectiveRange and hit:IsValid() then
@@ -1358,7 +1384,7 @@ end
 							end
 							
 							if weapon.CanSwipeAttack == true then
-								hit:TakeStability(15)		
+								hit:TakeStability(15 * GetStabilityModifier(self.Owner))		
 							end
 						end
 					end
@@ -1399,7 +1425,7 @@ end
 						damage = (attacktable["primarydamage"]) * 0.01
 						damagetype = 128
 						if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-							hit:TakeStability(15)
+							hit:TakeStability(15 * GetStabilityModifier(self.Owner))
 							-- KNOCKBACK
 							local knockback = owner:GetAngles():Forward() * 700;
 							knockback.z = 0
@@ -1428,7 +1454,7 @@ end
 						end
 						
 						if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-							hit:TakeStability(variableStabilityDamage)
+							hit:TakeStability(variableStabilityDamage * GetStabilityModifier(self.Owner))
 						end
 					end
 				end
@@ -1574,7 +1600,7 @@ end
 								end);
 								
 								if hit:IsPlayer() then
-									hit:TakeStability(15)
+									hit:TakeStability(15 * GetStabilityModifier(self.Owner))
 								end
 							end
 					
@@ -1595,7 +1621,7 @@ end
 								end
 								
 								if hit:IsPlayer() then
-									hit:TakeStability((stabilitydamage * shield_reduction * hit_reduction));
+									hit:TakeStability(((stabilitydamage * shield_reduction * hit_reduction)) * GetStabilityModifier(self.Owner));
 								end
 							end
 						end
@@ -1603,9 +1629,9 @@ end
 						-- For non-spears
 						if hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect") and !hit.iFrames then
 							if owner.GetCharmEquipped and owner:GetCharmEquipped("ring_pugilist") and weaponClass == "begotten_fists" then
-								hit:TakeStability(25);
+								hit:TakeStability(25 * GetStabilityModifier(self.Owner));
 							else
-								hit:TakeStability((stabilitydamage * shield_reduction * hit_reduction));
+								hit:TakeStability(((stabilitydamage * shield_reduction * hit_reduction)) * GetStabilityModifier(self.Owner));
 							end
 						end
 						

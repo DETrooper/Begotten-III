@@ -661,3 +661,72 @@ ITEM.walkSound = {
 };
 
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Hell Baron Gothic Plate";
+ITEM.model = "models/begotten/headgroups_props/ornatehellplatebaron.mdl"
+ITEM.iconoverride = "begotten/ui/itemicons/ornatehellplatebaron.png"
+ITEM.helmetIconOverride = "materials/begotten/ui/itemicons/hellplate_helmet.png"
+ITEM.category = "Armor"
+ITEM.concealsFace = true;
+ITEM.conditionScale = 0.75
+ITEM.hasHelmet = true;
+ITEM.hitParticle = "MetalSpark";
+ITEM.protection = 90;
+ITEM.weight = 8.5;
+ITEM.weightclass = "Heavy";
+ITEM.type = "plate";
+ITEM.description = "Blackplate of the finest hellforged steel fitted to only the most brutal, gentle, loathsome, charming, terrible, benevolent, beautiful and ogrish Baron of Hell that there ever could be!";
+ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+ITEM.requireFaith = {"Faith of the Dark"};
+ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+ITEM.faction = "Children of Satan";
+
+ITEM.requiredbeliefs = {"hauberk"};
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_HEAD] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.15, -- increases fall damage by 15%
+}
+
+ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+ITEM.pierceScale = 0.65; -- reduces pierce damage by 35%
+ITEM.slashScale = 0.55; -- reduces slash damage by 45%
+ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
+ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
+ITEM.insulation = 65;
+
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "gold_ingot", "cloth", "cloth"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+	return "models/begotten/satanists/ornatehellplatebaron.mdl";
+end;
+
+ITEM.runSound = {
+	"armormovement/body-armor-1.WAV.mp3",
+	"armormovement/body-armor-2.WAV.mp3",
+	"armormovement/body-armor-3.WAV.mp3",
+	"armormovement/body-armor-4.WAV.mp3",
+	"armormovement/body-armor-5.WAV.mp3",
+	"armormovement/body-armor-6.WAV.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/body-armor-b4.WAV.mp3",
+	"armormovement/body-armor-b5.WAV.mp3",
+};
+
+ITEM:Register();
