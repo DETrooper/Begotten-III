@@ -85,11 +85,11 @@ function ENT:Think()
 				light.B = 0
 				light.Brightness = 1.7 * (self:GetNWFloat("firesize") or 1)
 				light.Size = 2250
-				light.Decay = 400
+				light.Decay = 0
 				light.DieTime = curTime + 1
 			end
 			
-			self.nextLightCheck = curTime + 0.2;
+			self.nextLightCheck = curTime + 0.8;
 		end
 	end
 end
