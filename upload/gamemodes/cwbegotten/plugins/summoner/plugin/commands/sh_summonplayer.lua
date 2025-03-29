@@ -170,25 +170,33 @@ function COMMAND:OnRun(player, arguments)
 			local faction = target:GetFaction();
 			
 			if faction == "Children of Satan" and Schema:GetRankTier(faction, target:GetCharacterData("rank", 1)) < 4 and (target:GetCharacterData("LastZone") == "hell" or target:GetCharacterData("LastZone") == "manor") then
-				local origin = target:GetPos();
-				local destination = trace.HitPos;
+				local curTime = CurTime();
 				
-				ParticleEffect("teleport_fx", origin, Angle(0,0,0), target);
-				sound.Play("misc/summon.wav", origin, 100, 100);
-				ParticleEffect("teleport_fx", destination, Angle(0,0,0));
-				sound.Play("misc/summon.wav", destination, 100, 100);
-				
-				timer.Create("summonplayer_"..tostring(target:EntIndex()), 0.75, 1, function()
-					if IsValid(target) then
-						if cwPickupObjects then
-							cwPickupObjects:ForceDropEntity(target)
-						end
+				if !player.nextSummon or player.nextSummon < curTime then
+					player.nextSummon = curTime + 10;
 					
-						Clockwork.player:SetSafePosition(target, destination);
-						util.Decal("PentagramBurn", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal);
-						util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));
-					end
-				end);
+					local origin = target:GetPos();
+					local destination = trace.HitPos;
+					
+					ParticleEffect("teleport_fx", origin, Angle(0,0,0), target);
+					sound.Play("misc/summon.wav", origin, 100, 100);
+					ParticleEffect("teleport_fx", destination, Angle(0,0,0));
+					sound.Play("misc/summon.wav", destination, 100, 100);
+					
+					timer.Create("summonplayer_"..tostring(target:EntIndex()), 0.75, 1, function()
+						if IsValid(target) then
+							if cwPickupObjects then
+								cwPickupObjects:ForceDropEntity(target)
+							end
+						
+							Clockwork.player:SetSafePosition(target, destination);
+							util.Decal("PentagramBurn", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal);
+							util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));
+						end
+					end);
+				else
+					Schema:EasyText(player, "grey", "You cannot summon for another "..math.ceil(player.nextSummon - CurTime()).." seconds!");
+				end
 			else
 				Schema:EasyText(player, "firebrick", target:Name().." cannot be summoned!");
 			end
