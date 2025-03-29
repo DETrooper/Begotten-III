@@ -455,12 +455,12 @@ function SWEP:CanPrimaryAttack()
 		end
 		
 		if injuries then
-			if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
-				attackCost = attackCost + (attacktable["takeammo"] * 2);
+			if injuries[HITGROUP_LEFTARM] and injuries[HITGROUP_LEFTARM]["broken_bone"] then
+				attackCost = attackCost * 3;
 			end
 			
-			if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
-				attackCost = attackCost + (attacktable["takeammo"] * 2);
+			if injuries[HITGROUP_RIGHTARM] and injuries[HITGROUP_RIGHTARM]["broken_bone"] then
+				attackCost = attackCost * 3;
 			end
 		end
 	end

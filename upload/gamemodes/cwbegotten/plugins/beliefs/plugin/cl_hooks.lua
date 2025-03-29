@@ -21,15 +21,6 @@ function cwBeliefs:ClockworkInitialized()
 end
 
 function cwBeliefs:PlayerCharacterInitialized(data)
-	-- Hide or display Kinisger darkwhisper.
-	if Clockwork.Client:GetNetVar("subfaction") == "Kinisger" then
-		Clockwork.command:SetHidden("DarkWhisperFactionKinisger", false);
-		Clockwork.command:SetHidden("DarkWhisperFactionKinisgerProclaim", false);
-	else
-		Clockwork.command:SetHidden("DarkWhisperFactionKinisger", true);
-		Clockwork.command:SetHidden("DarkWhisperFactionKinisgerProclaim", true);
-	end
-
 	-- Reset belief outlines on character respawn.
 	if self.highlightTargetOverride then
 		self.highlightTargetOverride = nil;

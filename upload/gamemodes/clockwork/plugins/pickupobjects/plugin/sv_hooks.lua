@@ -249,55 +249,57 @@ function cwPickupObjects:KeyPress(player, key)
 									end);
 								end;
 							end;
-						elseif class ~= "cw_item" and entity:GetPhysicsObject():IsMoveable() and entity:GetPhysicsObject():GetMass() > 15 and !IsValid(entity.cwHoldingGrab) and !entity.BeingPickedUp then
-							entity:SetNetVar("IsBeingPickedUp", true);
-							player.PickingUpObject = entity;
-							entity.BeingPickedUp = true;
-							entity.PickedUpBy = player;
-							
-							local objectName = "object";
-							local customName = entity:GetNetworkedString("Name");
-
-							if (customName and customName != "") then
-								objectName = customName;
-							elseif cwStorage and cwStorage.containerList[entity:GetModel()] then
-								objectName = cwStorage.containerList[entity:GetModel()][2] or "object";
-							end
-							
-							Clockwork.chatBox:AddInTargetRadius(player, "me", "starts picking up the "..objectName.." before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
-							
-							local pickupTime = math.min(10, entity:GetPhysicsObject():GetMass() / 5);
-							
-							if player.HasBelief and player:HasBelief("dexterity") then
-								pickupTime = pickupTime * 0.67;
-							end
-							
-							Clockwork.player:SetAction(player, "pickupobject", pickupTime, 5, function()
-								if (IsValid(player) and IsValid(entity)) then
-									self:ForcePickup(player, entity, trace);
-									
-									if (IsValid(entity)) then
-										entity:SetNetVar("IsDragged", true);
-									end
-								else
-									if (IsValid(entity)) then
-										entity.PickedUpBy = nil;
-										entity:SetNetVar("IsDragged", false);
-									end
-								end;
+						elseif !entity.BeingPickedUp then
+							if class ~= "cw_item" and entity:GetPhysicsObject():IsMoveable() and entity:GetPhysicsObject():GetMass() > 15 and !IsValid(entity.cwHoldingGrab) and !entity.BeingPickedUp then
+								entity:SetNetVar("IsBeingPickedUp", true);
+								player.PickingUpObject = entity;
+								entity.BeingPickedUp = true;
+								entity.PickedUpBy = player;
 								
-								if IsValid(player) then
-									player.PickingUpObject = nil;
+								local objectName = "object";
+								local customName = entity:GetNetworkedString("Name");
+
+								if (customName and customName != "") then
+									objectName = customName;
+								elseif cwStorage and cwStorage.containerList[entity:GetModel()] then
+									objectName = cwStorage.containerList[entity:GetModel()][2] or "object";
 								end
 								
-								if (IsValid(entity)) then
-									entity:SetNetVar("IsBeingPickedUp", false);
-									entity.BeingPickedUp = nil;
-								end;
-							end);
-						else
-							self:ForcePickup(player, entity, trace);
-						end;
+								Clockwork.chatBox:AddInTargetRadius(player, "me", "starts picking up the "..objectName.." before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+								
+								local pickupTime = math.min(10, entity:GetPhysicsObject():GetMass() / 5);
+								
+								if player.HasBelief and player:HasBelief("dexterity") then
+									pickupTime = pickupTime * 0.67;
+								end
+								
+								Clockwork.player:SetAction(player, "pickupobject", pickupTime, 5, function()
+									if (IsValid(player) and IsValid(entity)) then
+										self:ForcePickup(player, entity, trace);
+										
+										if (IsValid(entity)) then
+											entity:SetNetVar("IsDragged", true);
+										end
+									else
+										if (IsValid(entity)) then
+											entity.PickedUpBy = nil;
+											entity:SetNetVar("IsDragged", false);
+										end
+									end;
+									
+									if IsValid(player) then
+										player.PickingUpObject = nil;
+									end
+									
+									if (IsValid(entity)) then
+										entity:SetNetVar("IsBeingPickedUp", false);
+										entity.BeingPickedUp = nil;
+									end;
+								end);
+							else
+								self:ForcePickup(player, entity, trace);
+							end;
+						end
 					elseif (bIsDoor) then
 						local hands = player:GetActiveWeapon();
 						hands:SecondaryAttack();

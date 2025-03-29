@@ -1762,6 +1762,7 @@ COMMAND.flags = CMD_DEFAULT;
 COMMAND.arguments = 2;
 COMMAND.alias = {"RS"};
 COMMAND.isChatCommand = true;
+COMMAND.subfaction = "Clan Crast";
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -1809,6 +1810,7 @@ local COMMAND = Clockwork.command:New("RavenSpeakClan");
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"RSC"};
 	COMMAND.isChatCommand = true;
+	COMMAND.subfaction = "Clan Crast";
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -1845,13 +1847,15 @@ local COMMAND = Clockwork.command:New("RavenSpeakFaction");
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"RSF"};
 	COMMAND.isChatCommand = true;
+	COMMAND.faction = "Goreic Warrior";
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
+		local isKing = (player:GetFaction() == "Goreic Warrior" and Schema:GetRankTier("Goreic Warrior", player:GetCharacterData("rank", 1)) >= 5);
 		local subfaction = player:GetSubfaction();
 		
-		if subfaction == "Clan Crast" or player:IsAdmin() then
-			if player:HasBelief("watchful_raven") or player:IsAdmin() then
+		if subfaction == "Clan Crast" or isKing or player:IsAdmin() then
+			if player:HasBelief("watchful_raven") or isKing or player:IsAdmin() then
 				--if player:GetPos():WithinAABox(Vector(11622, -6836, 12500), Vector(8744, -10586, 11180)) then
 					local message = "\""..table.concat(arguments, " ", 1).."\"";
 					
