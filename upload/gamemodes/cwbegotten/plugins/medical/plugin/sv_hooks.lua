@@ -526,7 +526,13 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 							messupChance = (messupChance or 0) + 40;
 						end
 						
+						if plyTab.playerPerformingSurgery:HasTrait("clumsy") then
+							messupChance = (messupChance or 0) + 40;
+						end
+						
 						if messupChance then
+							messupChance = math.min(messupChance, 90); -- There's always a 10% chance minimum to succeed.
+						
 							if math.random(1, 20) == 1 and player:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT then
 								Clockwork.chatBox:AddInTargetRadius(player, "me", "screams in pain!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 							elseif math.random(1, (100 - messupChance)) == 1 then
