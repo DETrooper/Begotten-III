@@ -42,7 +42,7 @@ Clockwork.trait:Register(CANNIBAL)
 local CLUMSY = Clockwork.trait:New()
 	CLUMSY.uniqueID = "clumsy"
 	CLUMSY.name = "Clumsy"
-	CLUMSY.description = "Your character is clumsy, a dolt, a fucking absent minded fool. While running, you will trip and fall over at random."
+	CLUMSY.description = "Your character is clumsy, a dolt, a fucking absent minded fool. While running, there is a small chance that you will trip and fall over at random, and other actions have a chance of failing."
 	CLUMSY.points = -6
 	CLUMSY.excludedfactions = {"Children of Satan"}
 	CLUMSY.disables = {"duelist"}

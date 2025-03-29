@@ -1910,11 +1910,11 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 					end
 				end
 			
-				if (player:IsRunning()) then
-					if (player:HasTrait("clumsy")) then
+				if (player:HasTrait("clumsy")) then
+					if (player:IsRunning()) then
 						if (!plyTab.lastClumsyFallen or plyTab.lastClumsyFallen < curTime) then
-							if (math.random(1, 4) == 4) then
-								Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, math.random(4, 7));
+							if (math.random(1, 20) == 20) then
+								Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, math.random(3, 5));
 								Clockwork.chatBox:AddInTargetRadius(player, "me", "trips and falls like a fucking idiot!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 							
 								if (cwContainerHiding) then
@@ -1934,6 +1934,32 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 								plyTab.lastClumsyFallen = curTime + 5;
 							end;
 						end;
+					else
+						local action = Clockwork.player:GetAction(player);
+						
+						if action == "reloading" then
+							if math.random(1, 10) == 1 then
+								local thirdPerson = "his";
+								
+								if (player:GetGender() == GENDER_FEMALE) then
+									thirdPerson = "her";
+								end
+							
+								Clockwork.chatBox:AddInTargetRadius(player, "me", "bungles "..thirdPerson.." attempt to reload, fumbling "..thirdPerson.." shot!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+								Clockwork.player:SetAction(player, false);
+							end
+						elseif action == "heal" or action == "healing" then
+							if math.random(1, 15) == 1 then
+								local thirdPerson = "his";
+								
+								if (player:GetGender() == GENDER_FEMALE) then
+									thirdPerson = "her";
+								end
+							
+								Clockwork.chatBox:AddInTargetRadius(player, "me", "bungles "..thirdPerson.." attempt to heal and has to start over!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+								Clockwork.player:SetAction(player, false);
+							end
+						end
 					end;
 				end;
 			end;
