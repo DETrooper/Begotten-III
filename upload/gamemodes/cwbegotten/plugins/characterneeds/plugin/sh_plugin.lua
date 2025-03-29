@@ -214,6 +214,12 @@ function COMMAND:OnRun(player, arguments)
 	end
 
 	if (player:GetNeed("sleep") >= 40) then
+		if player.OverEncumbered then
+			Schema:EasyText(player, "peru", "You cannot sleep while overencumbered!");
+			
+			return false;
+		end
+	
 		if cwShacks and cwShacks.shacks then
 			for k, v in pairs(cwShacks.shacks) do
 				if player:GetPos():WithinAABox(v.pos1, v.pos2) then

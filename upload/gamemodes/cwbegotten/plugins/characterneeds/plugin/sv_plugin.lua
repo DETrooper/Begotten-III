@@ -181,9 +181,15 @@ function playerMeta:HandleNeed(need, amount)
 						return;
 					end
 
-					self.sleepData = {health = 10, hunger = 15, thirst = 30, rest = -30};
-					Clockwork.player:SetRagdollState(self, RAGDOLL_KNOCKEDOUT, 300);
-					Schema:EasyText(self, "olive", "You finally collapse from exhaustion.");
+					if player.OverEncumbered then
+						self.sleepData = {health = 1, hunger = 1, thirst = 2, rest = -2};
+						Clockwork.player:SetRagdollState(self, RAGDOLL_KNOCKEDOUT, 15);
+						Schema:EasyText(self, "olive", "You finally collapse from exhaustion, but as you are overencumbered you do not rest well.");
+					else
+						self.sleepData = {health = 10, hunger = 15, thirst = 30, rest = -30};
+						Clockwork.player:SetRagdollState(self, RAGDOLL_KNOCKEDOUT, 300)
+						Schema:EasyText(self, "olive", "You finally collapse from exhaustion.");
+					end
 				elseif newAmount >= 90 and currentAmount < 90 then
 					if cwBeliefs and self:HasBelief("yellow_and_black") then
 						Clockwork.chatBox:Add(self, nil, "itnofake", "My systems are starting to shut down, I NEED TECH!");
