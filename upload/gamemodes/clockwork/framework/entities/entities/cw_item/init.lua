@@ -18,6 +18,7 @@ function ENT:Initialize()
 	self:SetHealth(25);
 	self:SetSolid(SOLID_VPHYSICS);
 	self:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE_DEBRIS);
+	self.instantPickupOverride = true;
 	
 	if !self.cullLifetime then
 		self.cullLifetime = 0;

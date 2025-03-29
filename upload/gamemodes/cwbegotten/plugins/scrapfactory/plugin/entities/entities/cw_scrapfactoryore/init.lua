@@ -20,6 +20,7 @@ function ENT:Initialize()
 	self:SetUseType(SIMPLE_USE);
 	self:SetSolid(SOLID_VPHYSICS);
 	--self:SetColor(25, 25, 25, 255);
+	self.instantPickupOverride = true;
 	
 	local physicsObject = self:GetPhysicsObject();
 	

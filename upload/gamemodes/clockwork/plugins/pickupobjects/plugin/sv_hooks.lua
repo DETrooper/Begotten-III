@@ -250,7 +250,7 @@ function cwPickupObjects:KeyPress(player, key)
 								end;
 							end;
 						elseif !entity.BeingPickedUp then
-							if class ~= "cw_item" and entity:GetPhysicsObject():IsMoveable() and entity:GetPhysicsObject():GetMass() > 15 and !IsValid(entity.cwHoldingGrab) and !entity.BeingPickedUp then
+							if !entity.instantPickupOverride and entity:GetPhysicsObject():IsMoveable() and entity:GetPhysicsObject():GetMass() > 15 and !IsValid(entity.cwHoldingGrab) and !entity.BeingPickedUp then
 								entity:SetNetVar("IsBeingPickedUp", true);
 								player.PickingUpObject = entity;
 								entity.BeingPickedUp = true;
