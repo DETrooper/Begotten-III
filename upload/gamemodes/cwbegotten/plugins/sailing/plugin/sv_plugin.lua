@@ -1206,6 +1206,12 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 							
 							return false;
 						end
+						
+						if cwWeather and cwWeather.weather == "rainstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
+							Schema:EasyText(player, "peru", "You cannot start a fire while it is raining outside!");
+							
+							return false;
+						end
 					
 						--if !entity.destination then
 							Clockwork.player:SetAction(player, "burn_longship", 10, 1, function() 
@@ -1233,6 +1239,12 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 												
 												if oil_count < 2 then
 													Schema:EasyText(player, "peru", "You need at least two large oils to burn this longship!");
+													
+													return false;
+												end
+												
+												if cwWeather and cwWeather.weather == "rainstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
+													Schema:EasyText(player, "peru", "You cannot start a fire while it is raining outside!");
 													
 													return false;
 												end

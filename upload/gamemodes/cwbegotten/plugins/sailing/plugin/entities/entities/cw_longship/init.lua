@@ -232,6 +232,14 @@ function ENT:Think()
 		self.damageCooldown = curTime + 1;
 	
 		if self.ignited then
+			if cwWeather and cwWeather.weather == "rainstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
+				self.ignited = false;
+				self:StopParticles();
+				self:StopSound("ambient/fire/fire_med_loop1.wav");
+				
+				return;
+			end
+		
 			if self.health then
 				if self.health > 0 then
 					self:SetHP(self.health - 2);
