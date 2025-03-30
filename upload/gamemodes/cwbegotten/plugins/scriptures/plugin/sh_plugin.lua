@@ -5,7 +5,7 @@
 
 PLUGIN:SetGlobalAlias("cwScriptures");
 
-Clockwork.kernel:IncludePrefixed("sh_bookdata.lua");
+util.IncludeDirectory("cwbegotten/plugins/scriptures/plugin/booktexts/")
 
 local ITEM = Clockwork.item:New(nil, true)
 	ITEM.name = "Book Base"
@@ -56,7 +56,12 @@ local ITEM = Clockwork.item:New(nil, true)
 					netstream.Start(player, "UpdateBooksRead", booksRead);
 				end
 				
-				player:EmitSound("begotten/items/note_turn.wav")
+				if self.model == "models/begoyten/goretablet/goretablet.mdl" then
+					player:EmitSound("physics/concrete/rock_impact_soft"..math.random(1, 3)..".wav");
+				else
+					player:EmitSound("begotten/items/note_turn.wav")
+				end;
+				
 				netstream.Start(player, "OpenBook", self("uniqueID"))
 			else
 				Schema:EasyText(player, "chocolate", "You cannot decipher the glyphs in this scripture!");
@@ -578,6 +583,96 @@ local ITEM = Clockwork.item:New("book_base")
 
 ITEM:Register()
 
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Succession of the Bark Throne"
+	ITEM.model = "models/begoyten/goretablet/goretablet.mdl"
+	ITEM.weight = 1.4;
+	ITEM.uniqueID = "book_shagalax"
+	ITEM.description = "A runic stone of the North. It has foreign text carved into it."
+	ITEM.background = "https://i.imgur.com/1rRASI3.png"
+	ITEM.bookInformation = {Book_Shagalax_Page1, Book_Shagalax_Page2, Book_Shagalax_Page3, Book_Shagalax_Page4, Book_Shagalax_Page5, Book_Shagalax_Page6}
+	ITEM.bookType = "Goreic"
+	ITEM.iconoverride = "begotten/ui/itemicons/goretablet.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1600, onGround = false, bNoSupercrate = true};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The Reaper King"
+	ITEM.model = "models/begoyten/goretablet/goretablet.mdl"
+	ITEM.weight = 1.4;
+	ITEM.uniqueID = "book_kalkaslash"
+	ITEM.description = "A runic stone of the North. It has foreign text carved into it."
+	ITEM.background = "https://i.imgur.com/1rRASI3.png"
+	ITEM.bookInformation = {Book_Gore_Page1, Book_Gore_Page2, Book_Gore_Page3, Book_Gore_Page4}
+	ITEM.bookType = "Goreic"
+	ITEM.iconoverride = "begotten/ui/itemicons/goretablet.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1900, onGround = false, bNoSupercrate = true};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "Arrival of the Blade Druids"
+	ITEM.model = "models/begoyten/goretablet/goretablet.mdl"
+	ITEM.weight = 1.4;
+	ITEM.uniqueID = "book_druids"
+	ITEM.description = "A runic stone of the North. It has foreign text carved into it."
+	ITEM.background = "https://i.imgur.com/1rRASI3.png"
+	ITEM.bookInformation = {Book_Druids_Page1, Book_Druids_Page2, Book_Druids_Page3}
+	ITEM.bookType = "Goreic"
+	ITEM.iconoverride = "begotten/ui/itemicons/goretablet.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1500, onGround = false, bNoSupercrate = true};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The First Blind Seer"
+	ITEM.model = "models/begoyten/goretablet/goretablet.mdl"
+	ITEM.weight = 1.4;
+	ITEM.uniqueID = "book_crast"
+	ITEM.description = "A runic stone of the North. It has foreign text carved into it."
+	ITEM.background = "https://i.imgur.com/1rRASI3.png"
+	ITEM.bookInformation = {Book_Crast_Page1, Book_Crast_Page2, Book_Crast_Page3, Book_Crast_Page4, Book_Crast_Page5}
+	ITEM.bookType = "Goreic"
+	ITEM.iconoverride = "begotten/ui/itemicons/goretablet.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 2000, onGround = false, bNoSupercrate = true};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The Leviathan"
+	ITEM.model = "models/begoyten/goretablet/goretablet.mdl"
+	ITEM.weight = 1.4;
+	ITEM.uniqueID = "book_harald"
+	ITEM.description = "A runic stone of the North. It has foreign text carved into it."
+	ITEM.background = "https://i.imgur.com/1rRASI3.png"
+	ITEM.bookInformation = {Book_Harald_Page1, Book_Harald_Page2, Book_Harald_Page3}
+	ITEM.bookType = "Goreic"
+	ITEM.iconoverride = "begotten/ui/itemicons/goretablet.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 2000, onGround = false, bNoSupercrate = true};
+
+ITEM:Register()
+
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The Sister's Curse"
+	ITEM.model = "models/begoyten/goretablet/goretablet.mdl"
+	ITEM.weight = 1.4;
+	ITEM.uniqueID = "book_reaver"
+	ITEM.description = "A runic stone of the North. It has foreign text carved into it."
+	ITEM.background = "https://i.imgur.com/1rRASI3.png"
+	ITEM.bookInformation = {Book_Reaver_Page1, Book_Reaver_Page2, Book_Reaver_Page3, Book_Reaver_Page4}
+	ITEM.bookType = "Goreic"
+	ITEM.iconoverride = "begotten/ui/itemicons/goretablet.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 2200, onGround = false, bNoSupercrate = true};
+
+ITEM:Register()
+
 if (SERVER) then
 	function cwScriptures:PlayerCharacterLoaded(player)
 		local booksCopied = player:GetCharacterData("BooksCopied", {});
@@ -653,7 +748,7 @@ if (CLIENT) then
 
 	-- A function to populate the panel.
 	function PANEL:Populate(itemTable)
-		Clockwork.Client.CurrentitemTable = itemTable
+		self.itemTable = itemTable
 		pages = itemTable.bookInformation
 		
 		self.leftButton = vgui.Create("DButton", self)
@@ -692,9 +787,14 @@ if (CLIENT) then
 		
 		-- Called when the button is clicked.
 		function self.closebutton:DoClick()
+			if Clockwork.Client.BookPanel.itemTable and Clockwork.Client.BookPanel.itemTable.model == "models/begoyten/goretablet/goretablet.mdl" then
+				surface.PlaySound("physics/concrete/rock_impact_soft"..math.random(1, 3)..".wav");
+			else
+				surface.PlaySound("begotten/items/note_turn.wav")
+			end;
+		
 			Clockwork.Client.BookPanel:Close() Clockwork.Client.BookPanel:Remove()
 			gui.EnableScreenClicker(false)
-			surface.PlaySound("begotten/items/note_turn.wav")
 		end
 
 		htmlPanel = vgui.Create("DHTML", self)
@@ -705,7 +805,11 @@ if (CLIENT) then
 
 	-- A function to change the page.
 	function PANEL:DoPage(bLeft)
-		surface.PlaySound("begotten/items/note_turn.wav")
+		if Clockwork.Client.BookPanel.itemTable and Clockwork.Client.BookPanel.itemTable.model == "models/begoyten/goretablet/goretablet.mdl" then
+			surface.PlaySound("physics/concrete/rock_impact_soft"..math.random(1, 3)..".wav");
+		else
+			surface.PlaySound("begotten/items/note_turn.wav")
+		end;
 		
 		if (!Clockwork.Client.currentPage) then
 			Clockwork.Client.currentPage = 1

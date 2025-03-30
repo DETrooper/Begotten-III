@@ -19,6 +19,7 @@ local ITEM = Clockwork.item:New(nil, true)
 	ITEM.requireFaction = {};
 	ITEM.requireRank = {};
 	ITEM.requireFaith = {};
+	ITEM.requireSubfaction = {};
 	ITEM.excludeSubfactions = {};
 	ITEM.bodyGroup = -1
 	ITEM.bodyGroupVal = -1
