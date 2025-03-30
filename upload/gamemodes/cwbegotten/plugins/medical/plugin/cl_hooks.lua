@@ -484,6 +484,8 @@ function cwMedicalSystem:ModifyStatusEffects(tab)
 		table.insert(tab, {text = "(-) Blood Loss", color = Color(200, 40, 40)});
 	elseif bloodLevel <= self.maxBloodLevel - 1500 and bloodLevel > self.lethalBloodLoss then
 		table.insert(tab, {text = "(-) Severe Blood Loss", color = Color(200, 40, 40)});
+	elseif bloodLevel <= self.lethalBloodLoss then
+		table.insert(tab, {text = "(-) Critical Blood Loss", color = Color(200, 40, 40)});
 	end
 	
 	for i = 1, #symptoms do
