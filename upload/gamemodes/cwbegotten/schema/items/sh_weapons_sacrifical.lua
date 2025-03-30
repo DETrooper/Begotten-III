@@ -296,3 +296,23 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.onerequiredbelief = {"father", "mother", "old_son", "young_son", "sister"};
 	ITEM.requireFaith = {"Faith of the Family"};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Demon Knight Sword";
+	ITEM.model = "models/prelude/demonknightsword.mdl";
+	ITEM.weight = 2.7;
+	ITEM.uniqueID = "begotten_2h_demonknightsword";
+	ITEM.category = "Melee";
+	ITEM.description = "A gargantuan broadsword forged in the fires of Hell only for the most elite knights of Satan. The reinforced Hellforged Blacksteel blade both burns and freezes to the touch. The hilt has been cursed by a thousand Rekh-khet-sa hermits and slowly corrupts those who do not follow the Dark Lord.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/demonknightsword.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90.5, 180, 76.22);
+	ITEM.attachmentOffsetVector = Vector(5.66, 2.9, 17.68);
+
+	ITEM.attributes = {"last_stand", "cursed"};
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"strength"};
+ITEM:Register();

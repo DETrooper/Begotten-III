@@ -304,6 +304,67 @@ function SWEP:Hitscan()
 	end
 end
 
+function SWEP:LastStandCheck(player, curTime)
+	if(!self.lastStand or !IsValid(player) or !player:IsPlayer() or (self.nextLastStandCheck and self.nextLastStandCheck > curTime)) then return end
+	self.nextLastStandCheck = curTime + 0.2
+
+	if(!Clockwork.player:HasFlags(player, "l") and player:Health() > player:GetMaxHealth() * 0.4) then
+		if(self:GetNWBool("lastStandActive")) then
+			self:SetNWBool("lastStandActive", false)
+			self:SetNWBool("fireSword", false)
+			self:SetNWBool("iceSword", false)
+
+			self.nextLastStandCheck = curTime + 20
+
+		end
+
+		return
+	
+	end
+
+	if(self:GetNWBool("lastStandActive")) then return end
+
+	self:SetNWBool("lastStandActive", true)
+
+	if(math.random(0, 1) == 0) then
+		self:SetNWBool("fireSword", true)
+		self.Owner:EmitSound("ambient/fire/ignite.wav", 100, 80)
+
+	else
+		self:SetNWBool("iceSword", true)
+		self.Owner:EmitSound("ambient/fire/ignite.wav", 100, 50)
+
+	end
+
+end
+
+function SWEP:CheckElementalStatus()
+	if(!self.setElemental) then
+		if(self:GetNWBool("fireSword")) then
+			self.originalAttackTable = self.AttackTable
+			self.AttackTable = self.AttackTable.."Fire"
+
+			self.setElemental = true
+
+		elseif(self:GetNWBool("iceSword")) then
+			self.originalAttackTable = self.AttackTable
+			self.AttackTable = self.AttackTable.."Ice"
+
+			self.setElemental = true
+
+		end
+
+		return
+		
+	elseif(self.setElemental and !self:GetNWBool("iceSword") and !self:GetNWBool("fireSword")) then
+		self.setElemental = false
+
+		self.AttackTable = self.originalAttackTable
+
+	end
+
+end
+
 function SWEP:Think()
 	local player = self.Owner;
 	local plyTab = player:GetTable();
@@ -365,7 +426,12 @@ function SWEP:Think()
 			
 			self.nextItemSend = curTime + math.random(1, 5);
 		end
+
+		self:LastStandCheck(player, curTime)
+
 	end
+
+	self:CheckElementalStatus()
 	
 	if self.PostThink then
 		self:PostThink();
@@ -3195,6 +3261,7 @@ if CLIENT then
 				cam.End3D2D()
 			end
 		end
+
 	end
 
 	function SWEP:GetBoneOrientation( basetab, tab, ent, bone_override )
