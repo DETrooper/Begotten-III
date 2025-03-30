@@ -76,3 +76,23 @@ local COMMAND = Clockwork.command:New("RemovePileSpawn")
 		cwRecipes:RemovePileSpawn(player:GetEyeTrace().HitPos, tonumber(arguments[1]) or 64, player);
 	end
 COMMAND:Register()
+
+local COMMAND = Clockwork.command:New("PityOreSpawn")
+	COMMAND.tip = "Force an ore pile to have its next drop be gold ore or a blood diamond. Use 'gold' or 'blooddiamond'."
+	COMMAND.text = "<string dropType>"
+	COMMAND.access = "s"
+	COMMAND.arguments = 1;
+
+	-- Called when the command has been run.
+	function COMMAND:OnRun(player, arguments)
+		local ent = player:GetEyeTrace().Entity;
+		
+		if IsValid(ent) and ent:GetClass() == "cw_ironorepile" then
+			if arguments[1] == "blooddiamond" then
+				ent.nextDropOverride = "blooddiamond";
+			else
+				ent.nextDropOverride = "gold";
+			end
+		end
+	end
+COMMAND:Register()

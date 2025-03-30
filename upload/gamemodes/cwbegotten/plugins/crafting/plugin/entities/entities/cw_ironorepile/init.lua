@@ -80,11 +80,11 @@ function ENT:OnTakeDamage(damageInfo)
 					itemName = "stone";
 				end
 				
-				if math.random(1, 150) == 1 then
+				if math.random(1, 150) == 1 or self.nextDropOverride == "gold" then
 					itemName = "gold_ore";
 					
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "As you strike the rocks, you notice a faint glimmer. Are your eyes decieving you? Gold!.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
-				elseif math.random(1, 666) == 1 then
+				elseif math.random(1, 666) == 1 or self.nextDropOverride == "blooddiamond" then
 					itemName = "uncut_blood_diamond";
 					
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "As you strike the rocks, a beautiful blood-red gem is unearthed from the pile. Whispers fill the caverns around you as the precious stone glimmers.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
@@ -101,6 +101,8 @@ function ENT:OnTakeDamage(damageInfo)
 						end
 					end
 				end
+				
+				self.nextDropOverride = nil;
 				
 				local itemTable = item.CreateInstance(itemName)
 
