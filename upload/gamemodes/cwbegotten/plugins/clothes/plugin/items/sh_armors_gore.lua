@@ -613,6 +613,7 @@ ITEM.description = "Shagalaxian steel scale armor decorated with brass Familial 
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Goreic Warrior"};
 ITEM.excludeSubfactions = {"Clan Grock"};
+ITEM.requireRank = {"King's Chosen"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 

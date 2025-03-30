@@ -17,6 +17,7 @@ local ITEM = Clockwork.item:New(nil, true)
 	ITEM.description = "Default Bodygroup Clothing Item."
 	ITEM.excludeFactions = {};
 	ITEM.requireFaction = {};
+	ITEM.requireRank = {};
 	ITEM.requireFaith = {};
 	ITEM.excludeSubfactions = {};
 	ITEM.bodyGroup = -1
@@ -160,6 +161,30 @@ local ITEM = Clockwork.item:New(nil, true)
 			if (!table.HasValue(self.requireFaction, faction) and (!kinisgerOverride or !table.HasValue(self.requireFaction, kinisgerOverride))) then
 				Schema:EasyText(player, "peru", "You are not the correct faction to wear this!")
 				return false
+			end
+		end
+		
+		if #self.requireSubfaction > 0 then
+			if (!table.HasValue(self.requireSubfaction, subfaction) and (!kinisgerOverrideSubfaction or !table.HasValue(self.requireSubfaction, kinisgerOverrideSubfaction))) then
+				Schema:EasyText(player, "peru", "You are not the correct subfaction to wear this!")
+				
+				return false
+			end
+		end
+		
+		if #self.requireRank > 0 then
+			local rank = player:GetCharacterData("rank", 1);
+			
+			if Schema.Ranks[faction] then
+				local rankString = Schema.Ranks[faction][rank];
+				
+				if rankString then
+					if (!table.HasValue(self.requireRank, rankString)) then
+						Schema:EasyText(player, "peru", "You are not the correct rank to wear this!")
+						
+						return false;
+					end
+				end
 			end
 		end
 		

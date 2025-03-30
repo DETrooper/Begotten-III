@@ -16,6 +16,7 @@ local ITEM = item.New(nil, true);
 	ITEM.excludeFactions = {};
 	ITEM.requireFaction = {};
 	ITEM.requireSubfaction = {};
+	ITEM.requireRank = {};
 	ITEM.requireFaith = {};
 	ITEM.excludeSubfactions = {};
 	ITEM.repairItem = "armor_repair_kit";
@@ -307,6 +308,22 @@ local ITEM = item.New(nil, true);
 				Schema:EasyText(player, "peru", "You are not the correct subfaction to wear this!")
 				
 				return false
+			end
+		end
+		
+		if #self.requireRank > 0 then
+			local rank = player:GetCharacterData("rank", 1);
+			
+			if Schema.Ranks[faction] then
+				local rankString = Schema.Ranks[faction][rank];
+				
+				if rankString then
+					if (!table.HasValue(self.requireRank, rankString)) then
+						Schema:EasyText(player, "peru", "You are not the correct rank to wear this!")
+						
+						return false;
+					end
+				end
 			end
 		end
 	

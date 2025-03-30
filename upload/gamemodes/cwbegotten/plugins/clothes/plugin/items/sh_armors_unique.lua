@@ -77,7 +77,8 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "Plate armor covered in holy cloth and blessed sigils. A helmet forged in Maximillian steel with gold engravings. It was meant for a powerful figure of Glazic faith.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-
+ITEM.requireFaction = {"Holy Hierarchy"};
+ITEM.requireRank = {"Grand Knight"};
 ITEM.requiredbeliefs = {"hauberk"};
 
 ITEM.effectiveLimbs = {
@@ -105,7 +106,7 @@ ITEM.insulation = 80;
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
-		return "models/begotten/gatekeepers/grandknight.mdl";
+	return "models/begotten/gatekeepers/grandknight.mdl";
 end;
 
 ITEM.runSound = {
@@ -202,7 +203,7 @@ ITEM.type = "plate";
 ITEM.description = "Plate armor forged from supreme Shagalaxian Steel. It is meant for a King of the Bark Throne.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Goreic Warrior"};
-
+ITEM.requireRank = {"King"};
 ITEM.requiredbeliefs = {"hauberk"};
 
 ITEM.effectiveLimbs = {
@@ -265,7 +266,7 @@ ITEM.type = "chainmail";
 ITEM.description = "Shagalaxian chainmail, boiled leather and a bloody wolf's pelt. A brutish set of armor that gets the job done well.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Goreic Warrior"};
-
+ITEM.requireRank = {"King"};
 ITEM.requiredbeliefs = {"hauberk"};
 
 ITEM.effectiveLimbs = {

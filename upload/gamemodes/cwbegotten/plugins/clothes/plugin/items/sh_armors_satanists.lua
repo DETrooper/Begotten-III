@@ -682,6 +682,7 @@ ITEM.requireFaith = {"Faith of the Dark"};
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 ITEM.faction = "Children of Satan";
+ITEM.requireRank = {"Hell Baron"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
