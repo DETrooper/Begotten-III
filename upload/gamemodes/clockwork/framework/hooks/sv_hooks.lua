@@ -636,7 +636,7 @@ concommand.Add("begotten_raise", function(player)
 					local ti = activeWeapon.RaiseSpeed;
 					local raised = player:IsWeaponRaised(activeWeapon);
 					
-					if (!raised) then
+					if (raised) then
 						ti = activeWeapon.LowerSpeed;
 					end;
 					if (!ti) then

@@ -80,6 +80,8 @@ SWEP.SightsAng = Vector(0, 0, 0)
 SWEP.RunSightsPos = Vector(-0.64, 0, -0.08)
 SWEP.RunSightsAng = Vector(-10.554, 29.548, -19.698)
 
+SWEP.RaiseSpeed = 2
+
 SWEP.AmmoTypes = {
 	["Grapeshot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("musket/musket4.wav");

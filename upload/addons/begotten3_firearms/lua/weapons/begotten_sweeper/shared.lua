@@ -64,6 +64,8 @@ SWEP.RunSightsAng = Vector(-7, 20, 5)
 
 SWEP.IgnoresBulletResistance = true;
 
+SWEP.RaiseSpeed = 2
+
 SWEP.AmmoTypes = {
 	["Old World Grapeshot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("weapons/nikm1987trench/trigger.wav");

@@ -80,6 +80,8 @@ SWEP.IronSightsAng = Vector(0, 0, 0)
 SWEP.RunSightsPos = Vector(0, 0, -0.801)
 SWEP.RunSightsAng = Vector(-7.739, 33.064, -0.704)
 
+SWEP.RaiseSpeed = 2
+
 SWEP.AmmoTypes = {
 	["Longshot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("v51_"..math.random(1,4)..".ogg");

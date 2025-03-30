@@ -56,6 +56,8 @@ SWEP.BoltAction	=	true;
 SWEP.MisfireChance = 0;
 SWEP.IgnoresBulletResistance = true;
 
+SWEP.RaiseSpeed = 2
+
 SWEP.AmmoTypes = {
 	["Old World Longshot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("gmodtower/pvpbattle/sniper/sniperfire.wav");

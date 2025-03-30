@@ -69,7 +69,7 @@ SWEP.ShellTime			= .35
 SWEP.Primary.NumShots	= 1		//how many bullets to shoot, use with shotguns
 SWEP.Primary.Damage		= 100	//base damage, scaled by game
 SWEP.Primary.Spread		= .1	//define from-the-hip accuracy 1 is terrible, .0001 is exact)
-SWEP.Primary.IronAccuracy = .035 // has to be the same as primary.spread
+SWEP.Primary.IronAccuracy = .04 // has to be the same as primary.spread
 -- Because irons don't magically give you less pellet spread!
 
 -- Enter iron sight info and bone mod info below
@@ -80,6 +80,8 @@ SWEP.IronSightsAng = Vector(0, 0, 0)
 SWEP.RunSightsPos = Vector(0, 0, -0.801)
 SWEP.RunSightsAng = Vector(-7.739, 33.064, -0.704)
 
+SWEP.RaiseSpeed = 1.75
+
 SWEP.AmmoTypes = {
 	["Longshot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("v51_"..math.random(1,4)..".ogg");
@@ -88,7 +90,7 @@ SWEP.AmmoTypes = {
 		SWEP.Primary.NumShots = 1;
 		SWEP.Primary.Damage = 100;
 		SWEP.Primary.Spread = .1;
-		SWEP.Primary.IronAccuracy = .035;
+		SWEP.Primary.IronAccuracy = .04;
 		SWEP.Primary.Ammo = "smg";
 		
 		SWEP.Primary.KickUp				= 30		-- Maximum up recoil (rise)
@@ -99,16 +101,16 @@ SWEP.AmmoTypes = {
 			if SWEP.Owner:GetVelocity() == Vector(0, 0, 0) then
 				if SWEP.Owner.HasBelief and SWEP.Owner:HasBelief("marksman") then
 					if SWEP.Owner:Crouching() then
-						SWEP.Primary.Spread = .015;
-						SWEP.Primary.IronAccuracy = .007;
-					else
-						SWEP.Primary.Spread = .02;
+						SWEP.Primary.Spread = .025;
 						SWEP.Primary.IronAccuracy = .01;
+					else
+						SWEP.Primary.Spread = .03;
+						SWEP.Primary.IronAccuracy = .02;
 					end
 				else
 					if SWEP.Owner:Crouching() then
-						SWEP.Primary.Spread = .045;
-						SWEP.Primary.IronAccuracy = .0225;
+						SWEP.Primary.Spread = .04;
+						SWEP.Primary.IronAccuracy = .02;
 					else
 						SWEP.Primary.Spread = .045;
 						SWEP.Primary.IronAccuracy = .02;

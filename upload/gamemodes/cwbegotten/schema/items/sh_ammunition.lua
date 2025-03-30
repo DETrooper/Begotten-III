@@ -224,3 +224,18 @@ local ITEM = Clockwork.item:New("shot_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"scrap"}};
 	ITEM.itemSpawnerInfo = {category = "Shot", rarity = 300, onGround = false, bNoSupercrate = true};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("shot_base");
+	ITEM.name = "Shagalax Bullet Box Magazine";
+	ITEM.model = "models/begotten/items/shagalaxlmgammobox.mdl";
+	ITEM.weight = 1.5;
+	ITEM.description = "Beaten scrap formed into a box for Scrapshot belts. Commonly stockpiled by Scrapper bosses for use in terrifying assaults or oppressive defensives.";
+	ITEM.iconoverride = "begotten/ui/itemicons/shagalaxlmgammobox.png"
+	
+	ITEM.ammoType = "Shagalax Bullet Box Magazine";
+	ITEM.ammoName = "Scrapshot";
+	ITEM.ammoMagazineSize = 100;
+	ITEM.requiredReloadBelief = "powder_and_steel";
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "scrap", "scrap", "scrap"}};
+ITEM:Register();

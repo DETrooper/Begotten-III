@@ -190,7 +190,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						end
 						
 						if attacker.daringTroutActive then
-							armorPiercing = armorPiercing + 8;
+							armorPiercing = armorPiercing + 10;
 						end
 						
 						if IsValid(inflictor) then

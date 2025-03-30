@@ -5953,8 +5953,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 1},
-			["scrap"] = {amount = 2},
+			["iron_ingot"] = {amount = 2},
+			["scrap"] = {amount = 3},
 			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
@@ -6123,6 +6123,38 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("stormdrummer");
+		RECIPE.name = "Storm Drummer";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
+		RECIPE.requirements = {
+			["begotten_scavenger_gun"] = {amount = 1},
+			["shagalaxian_steel_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 1},
+			["scrap"] = {amount = 5},
+		};
+		RECIPE.result = {
+			["begotten_stormdrummer"] = {amount = 1},
+		};
+		RECIPE.category = "Munitions"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 250;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("jezail");
 	RECIPE.name = "Jezail";
@@ -6161,6 +6193,7 @@ RECIPE:Register()
 	RECIPE.requirements = {
 		["begotten_jezail_short"] = {amount = 1},
 		["fine_steel_ingot"] = {amount = 1},
+		["wood"] = {amount = 1},
 	};
 	RECIPE.result = {
 		["begotten_jezail_long"] = {amount = 1},
@@ -6229,6 +6262,37 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 15;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("shagalax_bullet_box_magazine");
+		RECIPE.name = "Shagalax Bullet Box Magazine";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
+		RECIPE.requirements = {
+			["scavenger_gun_large_magazine"] = {amount = 3},
+			["iron_ingot"] = {amount = 1},
+			["scrap"] = {amount = 4},
+		};
+		RECIPE.result = {
+			["shagalax_bullet_box_magazine"] = {amount = 1},
+		};
+		RECIPE.category = "Munitions"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 60;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -9385,7 +9449,7 @@ RECIPE:Register()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("grapeshot");
-		RECIPE.name = "(3x) Grapeshot";
+		RECIPE.name = "(2x) Grapeshot";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
@@ -9394,7 +9458,7 @@ RECIPE:Register()
 			["gunpowder"] = {amount = 2},
 		};
 		RECIPE.result = {
-			["grapeshot"] = {amount = 3},
+			["grapeshot"] = {amount = 2},
 		};
 		RECIPE.category = "Munitions"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
@@ -9414,7 +9478,7 @@ RECIPE:Register()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("scrapshot");
-		RECIPE.name = "(10x) Scrapshot";
+		RECIPE.name = "(15x) Scrapshot";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
@@ -9423,7 +9487,7 @@ RECIPE:Register()
 			["gunpowder"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["scrapshot"] = {amount = 10},
+			["scrapshot"] = {amount = 15},
 		};
 		RECIPE.category = "Munitions"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";

@@ -74,6 +74,8 @@ SWEP.SightsAng = Vector(0, 0, 0)
 SWEP.RunSightsPos = Vector(-0.601, 0, 0.039)
 SWEP.RunSightsAng = Vector(-7.739, 23.215, -28.142)
 
+SWEP.RaiseSpeed = 2
+
 SWEP.AmmoTypes = {
 	["Volt Projectile"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("railgun/relsa_shoot_"..math.random(1,4)..".mp3");

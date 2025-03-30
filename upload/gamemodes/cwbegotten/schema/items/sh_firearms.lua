@@ -23,8 +23,8 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 10; -- Seconds
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"scrap", "scrap", "wood", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1000, supercrateItems = {["grapeshot"] = {min = 10, max = 20}}};
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "scrap", "scrap", "wood", "wood"}};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2250, supercrateItems = {["grapeshot"] = {min = 7, max = 15}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -399,4 +399,28 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.requireFaith = {"Faith of the Dark"};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"wood", "fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("firearm_base");
+	ITEM.name = "Storm Drummer";
+	ITEM.model = "models/begotten/weapons/w_shagalaxlmg.mdl";
+	ITEM.weight = 6.5;
+	ITEM.uniqueID = "begotten_stormdrummer";
+	ITEM.description = "A warlord's pride, a relic of the age when steam-tanks rolled across the County Districts. This machinegun was invented by Shagalaxian Pseudo-Scrap Machinists for the explicit purpose of suppressing and dominating Glazic gunlines with a storm of bullets.";
+	ITEM.iconoverride = "begotten/ui/itemicons/w_shagalaxlmg.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(0, 353.04, 357.02);
+	ITEM.attachmentOffsetVector = Vector(-2.83, 2.83, -7.78);
+	
+	ITEM.ammoCapacity = 100;
+	ITEM.ammoTypes = {"Scrapshot", "Shagalax Bullet Box Magazine"};
+	ITEM.ammoTypesNice = {"Scrapshot"};
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "iron_chunks", "scrap", "scrap", "scrap", "scrap", "scrap"}};
+	ITEM.firearmType = "Machine Gun";
+	ITEM.reloadTime = 10; -- Seconds (for magazine)
+	ITEM.reloadSounds = {"begotten/scraplmg/cloth.wav", "begotten/scraplmg/wfoly_plr_lm_pkilo_drop.wav", "begotten/scraplmg/wpfoly_m249_reload_open_v1.wav", "begotten/scraplmg/wpfoly_m249_reload_clipout_v1.wav", "begotten/scraplmg/wpn_h1_saw_ins_look_01.wav", "begotten/scraplmg/wpfoly_m249_reload_clipin_v1.wav", "begotten/scraplmg/wpfoly_m249_reload_close_v2.wav", "begotten/scraplmg/wpfoly_m249_reload_chamber_v1.wav"};
+	ITEM.usesMagazine = true;
+	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredbeliefs = {"strength"};
 ITEM:Register();
