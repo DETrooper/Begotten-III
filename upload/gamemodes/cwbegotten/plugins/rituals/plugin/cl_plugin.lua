@@ -279,40 +279,42 @@ function cwRituals:PostDrawOpaqueRenderables()
 			local entityPosition = v:GetPos();
 			local vEnt = v:GetRagdollEntity() or v;
 		
-			if v:GetNetVar("soulscorchActive") then
-				local headBone = vEnt:LookupBone("ValveBiped.Bip01_Head1");
-				
-				if (headBone) then
-					local bonePosition, boneAngles = vEnt:GetBonePosition(headBone);
-					local eyes = vEnt:LookupAttachment("eyes");
-					local eyesAttachment = vEnt:GetAttachment(eyes);
+			if v ~= Clockwork.Client then
+				if v:GetNetVar("soulscorchActive") then
+					local headBone = vEnt:LookupBone("ValveBiped.Bip01_Head1");
 					
-					if (bonePosition and eyesAttachment) then
-						local glowColor = Color(255, 215, 0, 255);
-						local position = eyesAttachment.Pos + Vector(0, 0, 4);
+					if (headBone) then
+						local bonePosition, boneAngles = vEnt:GetBonePosition(headBone);
+						local eyes = vEnt:LookupAttachment("eyes");
+						local eyesAttachment = vEnt:GetAttachment(eyes);
 						
-						render.SetMaterial(glowMaterial);
-						render.DrawSprite(position, 32, 32, glowColor);
+						if (bonePosition and eyesAttachment) then
+							local glowColor = Color(255, 215, 0, 255);
+							local position = eyesAttachment.Pos + Vector(0, 0, 4);
+							
+							render.SetMaterial(glowMaterial);
+							render.DrawSprite(position, 32, 32, glowColor);
+						end;
 					end;
-				end;
-			end
-			
-			if v:GetNetVar("auraMotherActive") then
-				local headBone = vEnt:LookupBone("ValveBiped.Bip01_Head1");
+				end
 				
-				if (headBone) then
-					local bonePosition, boneAngles = vEnt:GetBonePosition(headBone);
-					local eyes = vEnt:LookupAttachment("eyes");
-					local eyesAttachment = vEnt:GetAttachment(eyes);
+				if v:GetNetVar("auraMotherActive") then
+					local headBone = vEnt:LookupBone("ValveBiped.Bip01_Head1");
 					
-					if (bonePosition and eyesAttachment) then
-						local glowColor = Color(0, 255, 0, 255);
-						local position = eyesAttachment.Pos + Vector(0, 0, 4);
+					if (headBone) then
+						local bonePosition, boneAngles = vEnt:GetBonePosition(headBone);
+						local eyes = vEnt:LookupAttachment("eyes");
+						local eyesAttachment = vEnt:GetAttachment(eyes);
 						
-						render.SetMaterial(glowMaterial);
-						render.DrawSprite(position, 32, 32, glowColor);
+						if (bonePosition and eyesAttachment) then
+							local glowColor = Color(0, 255, 0, 255);
+							local position = eyesAttachment.Pos + Vector(0, 0, 4);
+							
+							render.SetMaterial(glowMaterial);
+							render.DrawSprite(position, 32, 32, glowColor);
+						end;
 					end;
-				end;
+				end
 			end
 			
 			--[[
