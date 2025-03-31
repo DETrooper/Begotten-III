@@ -40,12 +40,12 @@ SWEP.AdminSpawnable			= true
 SWEP.FiresUnderwater = false
 
 SWEP.Primary.Sound			= Sound("begotten/scraplmg/fire"..math.random(1,3)..".ogg")		-- Script that calls the primary fire sound
-SWEP.Primary.RPM			= 625			-- This is in Rounds Per Minute
+SWEP.Primary.RPM			= 550			-- This is in Rounds Per Minute
 SWEP.Primary.ClipSize			= 15		-- Size of a clip
 SWEP.Primary.DefaultClip		= 0		-- Bullets you start with
-SWEP.Primary.KickUp				= 1		-- Maximum up recoil (rise)
+SWEP.Primary.KickUp				= 1.5		-- Maximum up recoil (rise)
 SWEP.Primary.KickDown			= 0		-- Maximum down recoil (skeet)
-SWEP.Primary.KickHorizontal		= 0		-- Maximum up recoil (stock)
+SWEP.Primary.KickHorizontal		= 0.5		-- Maximum up recoil (stock)
 SWEP.Primary.Automatic			= true		-- Automatic = true; Semi Auto = false
 SWEP.Primary.Ammo			= "smg1"
 
@@ -73,7 +73,7 @@ SWEP.AmmoTypes = {
 		SWEP.Primary.Sound = Sound("begotten/scraplmg/fire"..math.random(1,3)..".ogg");
 		SWEP.Primary.FarSound = Sound("begotten/scraplmg/fire"..math.random(1,3).."_distant.mp3");
 		SWEP.Primary.NumShots = 1;
-		SWEP.Primary.Damage = 27;
+		SWEP.Primary.Damage = 20;
 		SWEP.Primary.Spread = .08;
 		SWEP.Primary.IronAccuracy = .07;
 		SWEP.Primary.ClipSize = 1;
@@ -186,7 +186,7 @@ function SWEP:PrimaryAttack()
 						end
 					end
 					
-					self.Weapon:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0, filter);
+					self.Owner:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0, filter);
 					
 					filter = RecipientFilter();
 					
@@ -195,9 +195,9 @@ function SWEP:PrimaryAttack()
 						filter:AddPlayer(v);
 					end
 					
-					self.Weapon:EmitSound(self.Primary.FarSound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0, filter);
+					self.Owner:EmitSound(self.Primary.FarSound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0, filter);
 				else
-					self.Weapon:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0);
+					self.Owner:EmitSound(self.Primary.Sound, self.Primary.SoundLevel or 511, math.random(98, 102), 1, CHAN_WEAPON, 0, 0);
 				end
 				
 				local effect = EffectData();
@@ -225,7 +225,7 @@ function SWEP:PrimaryAttack()
 	elseif self:CanPrimaryAttack() and !self.Owner:IsNPC() then
 		self:ShootBulletInformation()
 		self.Weapon:TakePrimaryAmmo(1)
-		self.Weapon:EmitSound(self.Primary.Sound)
+		--self.Owner:EmitSound(self.Primary.Sound)
 		self.Owner:SetAnimation( PLAYER_ATTACK1 )
 		self.Owner:MuzzleFlash()
 		self.Weapon:SetNextPrimaryFire(curTime + 1 / (self.Primary.RPM / 60))
