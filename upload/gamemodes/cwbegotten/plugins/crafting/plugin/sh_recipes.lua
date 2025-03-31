@@ -9218,8 +9218,8 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 2},
-			["steel_ingot"] = {amount = 4},
-			["iron_ingot"] = {amount = 4},
+			["steel_ingot"] = {amount = 5},
+			["iron_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["hellspike_armor"] = {amount = 1},
