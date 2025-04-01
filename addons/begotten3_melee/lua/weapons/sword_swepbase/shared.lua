@@ -304,6 +304,14 @@ function SWEP:Hitscan()
 	end
 end
 
+function SWEP:ActivateLastStand(player, element)
+	self:SetNWBool(element == 0 and "fireSword" or "iceSword", true)
+	self:SetNWBool(element == 0 and "iceSword" or "fireSword", false)
+
+	player:EmitSound("ambient/fire/ignite.wav", 100, (element == 0 and 80 or 50))
+
+end
+
 function SWEP:LastStandCheck(player, curTime)
 	if(!self.lastStand or !IsValid(player) or !player:IsPlayer() or (self.nextLastStandCheck and self.nextLastStandCheck > curTime)) then return end
 	self.nextLastStandCheck = curTime + 0.2
@@ -326,15 +334,7 @@ function SWEP:LastStandCheck(player, curTime)
 
 	self:SetNWBool("lastStandActive", true)
 
-	if(math.random(0, 1) == 0) then
-		self:SetNWBool("fireSword", true)
-		self.Owner:EmitSound("ambient/fire/ignite.wav", 100, 80)
-
-	else
-		self:SetNWBool("iceSword", true)
-		self.Owner:EmitSound("ambient/fire/ignite.wav", 100, 50)
-
-	end
+	self:ActivateLastStand(player, math.random(0, 1))
 
 end
 
@@ -358,7 +358,6 @@ function SWEP:CheckElementalStatus()
 		
 	elseif(self.setElemental and !self:GetNWBool("iceSword") and !self:GetNWBool("fireSword")) then
 		self.setElemental = false
-
 		self.AttackTable = self.originalAttackTable
 
 	end
@@ -426,12 +425,7 @@ function SWEP:Think()
 			
 			self.nextItemSend = curTime + math.random(1, 5);
 		end
-
-		self:LastStandCheck(player, curTime)
-
 	end
-
-	self:CheckElementalStatus()
 	
 	if self.PostThink then
 		self:PostThink();
@@ -2964,12 +2958,6 @@ function SWEP:Holster()
 	if CLIENT then
 		self:RemoveModels();
 	end
-
-	if(self.originalAttackTable) then
-		self.setElemental = false
-		self.AttackTable = self.originalAttackTable
-
-	end
 	
 	return true;
 end
@@ -3293,7 +3281,6 @@ if CLIENT then
 				cam.End3D2D()
 			end
 		end
-
 	end
 
 	function SWEP:GetBoneOrientation( basetab, tab, ent, bone_override )
@@ -3755,6 +3742,71 @@ function SWEP:StopAllAnims(target)
 		net.Broadcast();
 	end;
 end;
+
+-- Unholy Blessing element swapping functionality.
+if(SERVER) then
+	util.AddNetworkString("cwUnholyBlessingSwap")
+
+	net.Receive("cwUnholyBlessingSwap", function(_, player)
+		local curTime = CurTime()
+
+		if(player.nextUnholyBlessingSwap and player.nextUnholyBlessingSwap > curTime) then return end
+		player.nextUnholyBlessingSwap = curTime + 2
+
+		local weapon = player:GetActiveWeapon()
+		if(!IsValid(weapon) or !weapon.lastStand or !weapon:GetNWBool("lastStandActive")) then return end
+
+		weapon:ActivateLastStand(player, weapon:GetNWBool("fireSword") and 1 or 0)
+
+		if(weapon.setElemental and weapon.originalAttackTable) then
+			weapon.setElemental = false
+			weapon.AttackTable = weapon.originalAttackTable
+	
+		end
+
+		timer.Simple(0.1, function()
+			if(!IsValid(player) or !IsValid(weapon)) then return end
+
+			net.Start("cwUnholyBlessingSwap")
+				net.WriteEntity(weapon)
+			net.Send(player)
+
+		end)
+
+	end)
+
+else
+	Clockwork.ConVars.Binds.UNHOLYSWAP = Clockwork.kernel:CreateClientConVar("cwUnholyBlessingSwap", 0, true, true)
+	Clockwork.setting:AddKeyBinding("Key Bindings", "Swap Imbuement (Unholy Blessing) ", "cwUnholyBlessingSwap", "begotten_unholyswap")
+
+	concommand.Add("begotten_unholyswap", function()
+		local player = Clockwork.Client
+		local curTime = CurTime()
+
+		if(player.nextUnholyBlessingSwap and player.nextUnholyBlessingSwap > curTime) then return end
+		player.nextUnholyBlessingSwap = curTime + 2
+
+		local weapon = player:GetActiveWeapon()
+		if(!IsValid(weapon) or !weapon.lastStand or !weapon:GetNWBool("lastStandActive")) then return end
+
+		net.Start("cwUnholyBlessingSwap")
+		net.SendToServer()
+	
+	end)
+
+	net.Receive("cwUnholyBlessingSwap", function()
+		local weapon = net.ReadEntity()
+		if(!weapon) then return end
+
+		if(weapon.setElemental and weapon.originalAttackTable) then
+			weapon.setElemental = false
+			weapon.AttackTable = weapon.originalAttackTable
+	
+		end
+	
+	end)
+
+end
 
 -- ENDS --
 
