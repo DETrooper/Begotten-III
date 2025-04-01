@@ -1,0 +1,14 @@
+*
+
+!.git/
+!*.gitignore
+!*.gitattributes
+!LICENSE.md
+!README.md
+
+!images/
+!lua/
+!settings/clockwork/
+!gamemodes/clockwork/
+!gamemodes/cwbegotten/
+!addons/
