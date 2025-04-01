@@ -23,7 +23,7 @@ garrysmod_001.vpk
 garrysmod_002.vpk
 garrysmod_dir.vpk
 lights.rad
-map.pak
+map.pack
 modelsounds.cache
 steam.inf
 sv.db
@@ -39,6 +39,9 @@ lua/entities/
 lua/includes/
 lua/matproxy/
 lua/menu/
+lua/postprocess/
+lua/skins/
+lua/vgui/
 lua/weapons/
 lua/Clockwork.lua
 lua/send.txt
