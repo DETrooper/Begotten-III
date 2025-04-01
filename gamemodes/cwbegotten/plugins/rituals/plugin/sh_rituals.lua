@@ -1739,6 +1739,7 @@ RITUAL = cwRituals.rituals:New("sprouting");
 	
 	function RITUAL:OnPerformed(player)
 		player:ResetInjuries();
+		player:StopAllBleeding();
 		player:SetHealth(math.min(player:Health() + 200, player:GetMaxHealth()));
 		player:SetBloodLevel(5000);
 		

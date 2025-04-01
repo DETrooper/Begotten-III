@@ -491,14 +491,16 @@ end
 
 function GM:PlayerButtonDown(player, button)
 	if IsFirstTimePredicted() then
-		for k, v in pairs(Clockwork.ConVars.Binds) do
-			local value = v:GetInt();
-			
-			if value ~= 0 and value == button then
-				local bindedConVar = Clockwork.setting.stored[v:GetName()].bindedConVar;
+		if !Clockwork.Client.nextBind or Clockwork.Client.nextBind < CurTime() then
+			for k, v in pairs(Clockwork.ConVars.Binds) do
+				local value = v:GetInt();
 				
-				if bindedConVar then
-					player:ConCommand(bindedConVar);
+				if value ~= 0 and value == button then
+					local bindedConVar = Clockwork.setting.stored[v:GetName()].bindedConVar;
+					
+					if bindedConVar then
+						player:ConCommand(bindedConVar);
+					end
 				end
 			end
 		end
@@ -3420,7 +3422,9 @@ end
 function GM:ChatBoxOpened() end
 
 -- Called when the chat box is closed.
-function GM:ChatBoxClosed(textTyped) end
+function GM:ChatBoxClosed(textTyped)
+	Clockwork.Client.nextBind = CurTime() + 0.25;
+end
 
 -- Called when the chat box text has been typed.
 function ChatBoxTextTyped(text)

@@ -1344,7 +1344,10 @@ local COMMAND = Clockwork.command:New("Warcry");
 							warcryText = "howls a feral warcry and spits blood!"
 							warcryPitch = math.random(70, 80)
 							player:HandleStamina(50);
-							player:ModifyBloodLevel(-150);
+							
+							if !player.opponent then
+								player:ModifyBloodLevel(-150);
+							end
 						end
 					end
 					
