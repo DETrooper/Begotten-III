@@ -342,13 +342,13 @@ function SWEP:CheckElementalStatus()
 	if(!self.setElemental) then
 		if(self:GetNWBool("fireSword")) then
 			self.originalAttackTable = self.AttackTable
-			self.AttackTable = self.AttackTable.."Fire"
+			self.AttackTable = self.originalAttackTable.."Fire"
 
 			self.setElemental = true
 
 		elseif(self:GetNWBool("iceSword")) then
 			self.originalAttackTable = self.AttackTable
-			self.AttackTable = self.AttackTable.."Ice"
+			self.AttackTable = self.originalAttackTable.."Ice"
 
 			self.setElemental = true
 
@@ -2937,6 +2937,12 @@ function SWEP:Holster()
 	
 	if CLIENT then
 		self:RemoveModels();
+	end
+
+	if(self.originalAttackTable) then
+		self.setElemental = false
+		self.AttackTable = self.originalAttackTable
+
 	end
 	
 	return true;

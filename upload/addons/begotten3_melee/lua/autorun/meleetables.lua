@@ -3563,17 +3563,16 @@ AttackTables.GunAxeAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
--- temp: reskin of claymore
 AttackTables.DemonKnightSwordAttackTable = {
-	["primarydamage"] = 80,
+	["primarydamage"] = 90,
 	["dmgtype"] = 4,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = true,
 	["altattackdamagemodifier"] = 0.75,
 	["altattackpoisedamagemodifier"] = 0.1,
 	["altmeleearc"] = 15,
-	["armorpiercing"] = 22,
-	["altarmorpiercing"] = 33,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = 35,
 	["poisedamage"] = 35,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 6,
@@ -3585,15 +3584,15 @@ AttackTables.DemonKnightSwordAttackTable = {
 };
 
 AttackTables.DemonKnightSwordAttackTableFire = {
-	["primarydamage"] = 80,
+	["primarydamage"] = 85,
 	["dmgtype"] = 4,
 	["attacktype"] = "fire_swing",
 	["canaltattack"] = true,
 	["altattackdamagemodifier"] = 0.75,
 	["altattackpoisedamagemodifier"] = 0.1,
 	["altmeleearc"] = 15,
-	["armorpiercing"] = 22,
-	["altarmorpiercing"] = 33,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = 35,
 	["poisedamage"] = 35,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 6,
@@ -3605,15 +3604,15 @@ AttackTables.DemonKnightSwordAttackTableFire = {
 };
 
 AttackTables.DemonKnightSwordAttackTableIce = {
-	["primarydamage"] = 80,
+	["primarydamage"] = 90,
 	["dmgtype"] = 4,
 	["attacktype"] = "ice_swing",
 	["canaltattack"] = true,
 	["altattackdamagemodifier"] = 0.75,
 	["altattackpoisedamagemodifier"] = 0.1,
 	["altmeleearc"] = 15,
-	["armorpiercing"] = 22,
-	["altarmorpiercing"] = 33,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = 35,
 	["poisedamage"] = 35,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 6,
@@ -6310,7 +6309,6 @@ BlockTables.GunAxeBlockTable = {
 	["canaltattack"] = true,
 };
 
--- temp: reskin of claymore
 BlockTables.DemonKnightSwordBlockTable = {
 	["guardblockamount"] = 10,
 	["specialeffect"] = false,
@@ -6323,8 +6321,8 @@ BlockTables.DemonKnightSwordBlockTable = {
 	["poiseresistance"] = 25,
 	["raisespeed"] = 1.75,
 	["instantraise"] = false,
-	["parrydifficulty"] = 0.2,
-	["parrytakestamina"] = 20,
+	["parrydifficulty"] = 0.25,
+	["parrytakestamina"] = 15,
 	["canparry"] = true,
 	["candeflect"] = true,
 };
