@@ -317,7 +317,7 @@ function SWEP:LastStandCheck(player, curTime)
 	self.nextLastStandCheck = curTime + 0.2
 
 	if(!Clockwork.player:HasFlags(player, "l") and player:Health() > player:GetMaxHealth() * 0.4) then
-		if(self:GetNWBool("lastStandActive")) then
+		if(self:GetNWBool("lastStandActive") or self:SetNWBool("fireSword") or self:SetNWBool("iceSword")) then
 			self:SetNWBool("lastStandActive", false)
 			self:SetNWBool("fireSword", false)
 			self:SetNWBool("iceSword", false)
@@ -425,7 +425,12 @@ function SWEP:Think()
 			
 			self.nextItemSend = curTime + math.random(1, 5);
 		end
+
+		self:LastStandCheck(player, curTime)
+
 	end
+
+	self:CheckElementalStatus()
 	
 	if self.PostThink then
 		self:PostThink();
