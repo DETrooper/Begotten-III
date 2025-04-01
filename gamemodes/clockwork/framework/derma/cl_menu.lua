@@ -987,7 +987,9 @@ function PANEL:Think()
 		-- Hacky fix for losing focus when a menu panel is opened. Also need to make sure tooltips take priority.
 		if self.statusInfo then
 			if !Clockwork.ActiveDermaToolTips or table.IsEmpty(Clockwork.ActiveDermaToolTips) then
-				self.statusInfo:MakePopup();
+				self.statusInfo:SetMouseInputEnabled(true)
+				self.statusInfo:SetKeyboardInputEnabled(true)
+				--self.statusInfo:MakePopup();
 			end
 		end
 	end;
