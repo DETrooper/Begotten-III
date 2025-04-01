@@ -14,11 +14,11 @@ end
 function cwDiscordLog:Enabled()
     return CHTTP and
         Clockwork.config:Get("discordlogs_enabled"):Get() and
-        #Clockwork.config:Get("discordlogs_webhook_ic"):GetString() > 0 or
-        #Clockwork.config:Get("discordlogs_webhook_ooc"):GetString() > 0 or
-        #Clockwork.config:Get("discordlogs_webhook_commands"):GetString() > 0 or
-        #Clockwork.config:Get("discordlogs_webhook_miscellaneous"):GetString() > 0 or
-        #Clockwork.config:Get("discordlogs_webhook_invaction"):GetString() > 0 or
+        #Clockwork.config:Get("discordlogs_webhook_ic"):GetString() > 0 and
+        #Clockwork.config:Get("discordlogs_webhook_ooc"):GetString() > 0 and
+        #Clockwork.config:Get("discordlogs_webhook_commands"):GetString() > 0 and
+        #Clockwork.config:Get("discordlogs_webhook_miscellaneous"):GetString() > 0 and
+        #Clockwork.config:Get("discordlogs_webhook_invaction"):GetString() > 0 and
         #Clockwork.config:Get("discordlogs_webhook_damage"):GetString() > 0;
 
 end
