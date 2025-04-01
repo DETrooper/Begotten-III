@@ -131,6 +131,20 @@ function cwSailing:PlayerUseUnknownItemFunction(player, itemTable, itemFunction)
 	end;
 end;
 
+function cwSailing:PlayerTeleported(player)
+	for i, longshipEnt in ipairs(ents.FindByClass("cw_longship*")) do
+		if longshipEnt.playersOnBoard then
+			for i2, v in ipairs(longshipEnt.playersOnBoard) do
+				if player == v then
+					table.remove(longshipEnt.playersOnBoard, i2);
+				
+					return;
+				end
+			end
+		end
+	end
+end
+
 -- Called when a player presses a key.
 function cwSailing:KeyPress(player, key)
 	if (key == IN_ATTACK) then

@@ -767,6 +767,8 @@ local COMMAND = Clockwork.command:New("PlyGoto");
 		
 			Clockwork.player:SetSafePosition(player, target:GetPos());
 			Clockwork.player:NotifyAll(player:Name().." has gone to "..target:Name().."'s location.");
+			
+			hook.Run("PlayerTeleported", player);
 		else
 			Clockwork.player:Notify(player, arguments[1].." is not a valid player!");
 		end;
@@ -904,6 +906,8 @@ local COMMAND = Clockwork.command:New("PlyTeleport");
 			
 			Clockwork.player:SetSafePosition(target, player:GetEyeTraceNoCursor().HitPos);
 			Clockwork.player:NotifyAll(player:Name().." has teleported "..target:Name().." to their target location.");
+			
+			hook.Run("PlayerTeleported", target);
 		else
 			Clockwork.player:Notify(player, arguments[1].." is not a valid player!");
 		end;
@@ -934,6 +938,8 @@ local COMMAND = Clockwork.command:New("PlyTeleportFreeze");
 			if (!target:IsFrozen()) then
 				target:Freeze(true);
 			end;
+			
+			hook.Run("PlayerTeleported", target);
 		else
 			Clockwork.player:Notify(player, arguments[1].." is not a valid player!");
 		end;

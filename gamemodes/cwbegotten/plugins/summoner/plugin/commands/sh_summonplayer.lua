@@ -31,6 +31,8 @@ function COMMAND:OnRun(player, arguments)
 					Clockwork.player:SetSafePosition(target, destination);
 					util.Decal("PentagramBurn", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal);
 					util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));
+					
+					hook.Run("PlayerTeleported", target);
 				end
             end);
         else
@@ -133,6 +135,8 @@ function COMMAND:OnRun(player, arguments)
 				Clockwork.player:SetSafePosition(player, destination);
 				cwObserverMode:MakePlayerExitObserverMode(player);
 				util.Decal("PentagramBurn", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal);
+				
+				hook.Run("PlayerTeleported", player);
 			end
 		end);
     else
@@ -192,6 +196,8 @@ function COMMAND:OnRun(player, arguments)
 							Clockwork.player:SetSafePosition(target, destination);
 							util.Decal("PentagramBurn", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal);
 							util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));
+							
+							hook.Run("PlayerTeleported", target);
 						end
 					end);
 				else

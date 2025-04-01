@@ -71,7 +71,9 @@ hook.Add("SetupMove", "Multi Jump", function(ply, mv)
 	end
 	
 	if plyTab.bloodWingsActive then
-		ply:ModifyBloodLevel(-15);
+		if !plyTab.opponent then
+			ply:ModifyBloodLevel(-15);
+		end
 
 		--ParticleEffect("blood_advisor_puncture", ply:GetPos() + Vector(0, 0, 24), ply:GetAngles());
 		
