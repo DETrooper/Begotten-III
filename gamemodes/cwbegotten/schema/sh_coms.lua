@@ -91,7 +91,7 @@ local COMMAND = Clockwork.command:New("Warhorn");
 			local signalStr = string.lower(table.concat(arguments, " "));
 			
 			for i, v in ipairs(warhornItemTable.customFunctions) do
-				if string.find(string.lower(v), signalStr) then
+				if string.find(string.lower(v), signalStr, 1, true) then
 					warhornItemTable:OnCustomFunction(player, v);
 				
 					return;
@@ -3088,6 +3088,8 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 									player:SetEyeAngles(angles);
 									util.Decal("PentagramBurn", destination, destination + Vector(0, 0, -256));
 									util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));
+									
+									hook.Run("PlayerTeleported", player);
 
 									if IsValid(target) then
 										local destinationRaised = destination + Vector(0, 0, 32);
@@ -3122,6 +3124,8 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 										else
 											target:SetPos(destinationRaised);
 										end
+										
+										hook.Run("PlayerTeleported", target);
 									end
 								end
 							end
@@ -3191,6 +3195,8 @@ local COMMAND = Clockwork.command:New("HellJauntAdmin");
 					util.Decal("PentagramBurn", destination, destination + Vector(0, 0, -256));
 					util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));
 					
+					hook.Run("PlayerTeleported", player);
+					
 					if IsValid(target) then
 						local destinationRaised = destination + Vector(0, 0, 32);
 					
@@ -3224,6 +3230,8 @@ local COMMAND = Clockwork.command:New("HellJauntAdmin");
 						else
 							target:SetPos(destinationRaised);
 						end
+						
+						hook.Run("PlayerTeleported", target);
 					end
 					
 					--player:SetCharacterData("nextTeleport", 600);
@@ -3329,12 +3337,16 @@ local COMMAND = Clockwork.command:New("HellTeleport");
 																else
 																	target:SetPos(destinationRaised);
 																end
+																
+																hook.Run("PlayerTeleported", target);
 															end
 														
 															Clockwork.player:SetSafePosition(player, destination);
 															player:SetEyeAngles(angles);
 															util.Decal("PentagramBurn", destination, destination + Vector(0, 0, -256));
 															util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));
+															
+															hook.Run("PlayerTeleported", player);
 															
 															--player:SetCharacterData("nextTeleport", 1200);
 															
