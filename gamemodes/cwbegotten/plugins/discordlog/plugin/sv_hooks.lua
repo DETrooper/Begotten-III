@@ -29,7 +29,10 @@ function cwDiscordLog:Refresh()
 
 end
 
-cwDiscordLog:Refresh();
+function cwDiscordLog:ClockworkSchemaLoaded()
+	cwDiscordLog:Refresh();
+
+end
 
 HTTP = CHTTP;
 
