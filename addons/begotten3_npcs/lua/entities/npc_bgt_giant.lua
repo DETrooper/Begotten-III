@@ -75,20 +75,144 @@ ENT.PossessionBinds = {
 	[IN_ATTACK] = {{
 		coroutine = true,
 		onkeydown = function(self)
-			self:EmitSound("begotten/npc/brute/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
-			if(self.nextMeleeAttack and self.nextMeleeAttack > CurTime()) then return; end
-						self:EmitSound("begotten/npc/brute/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
-			if math.random(1,2) == 1 then
-				self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 0.85, self.FaceEnemy)
-			else
-				self:PlaySequenceAndMove("fastattack", 0.6, self.PossessionFaceForward)
-			end
+			if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
+				self.AttackFunctions[self.nextAttack](self);
+				self:GetNextAttack();
+	
+				return true;
+	
+			else return false; end
 		end
 	}}
 }
-if (CLIENT) then
+
+ENT.Attacks = {
+	Standard = 1,
+	Stomp = 2,
+
+};
+
+local stompFrames = 100
+local stompEvents = {
+	warning = 4 / stompFrames,
+	stomp = 36 / stompFrames,
+}
+
+function ENT:Stomp()
+	local shakeeffect = ents.Create("env_shake")
+	shakeeffect:SetKeyValue("amplitude", 5000000)
+	shakeeffect:SetKeyValue("spawnflags",4 + 8 + 16)
+	shakeeffect:SetKeyValue("frequency", 5000000)
+	shakeeffect:SetKeyValue("duration", 5)
+	shakeeffect:SetKeyValue("radius", 500)
+	shakeeffect:Spawn()
+	shakeeffect:SetPos(self:GetPos())
+	shakeeffect:Fire("StartShake","",0)
+	shakeeffect:Fire("Kill","",4)
+
+	ParticleEffect("dust_bridge_crack", self:GetPos(), Angle(0, 0, 0), self)
+	self:EmitSound("physics/concrete/concrete_break"..math.random(2, 3)..".wav", 100)
+	self:EmitSound("physics/concrete/concrete_break"..math.random(2, 3)..".wav", 100)
+	self:EmitSound("physics/concrete/concrete_break"..math.random(2, 3)..".wav", 100)
+
+	local effect = EffectData()
+	effect:SetOrigin(self:GetPos())
+	effect:SetScale(1500)
+	effect:SetEntity(self)
+	util.Effect("ThumperDust", effect)
+
+	local co = coroutine.create(function()
+		for i, v in pairs(ents.FindInSphere(self:GetPos(), 500)) do
+			if(!v:IsPlayer() or !v:Alive() or v:GetMoveType() == MOVETYPE_NOCLIP) then continue end
+
+			if(v.iFrames) then
+				v:EmitSound("meleesounds/comboattack3.wav.mp3", 75, math.random( 90, 110 ));
+				netstream.Start(v, "Parried", 0.2);
+				
+				continue
+
+			end
+
+			local ragdollState = v:GetRagdollState()
+			if(!v:IsOnGround() and ragdollState != RAGDOLL_FALLENOVER) then continue end
+
+			local d = DamageInfo()
+			d:SetDamage(30);
+			d:SetDamageType(DMG_CLUB);
+			d:SetDamagePosition(v:GetPos() + Vector(0, 0, 48));
+			
+			v:TakeDamageInfo(d);
 	
-end;
+			if(ragdollState != RAGDOLL_FALLENOVER) then cwMelee:PlayerStabilityFallover(v, 5, true) end
+			
+			local ragdoll = v:GetRagdollEntity()
+			if(!IsValid(ragdoll)) then return end
+			
+			for ii = 1, ragdoll:GetPhysicsObjectCount() do
+				local physObj = ragdoll:GetPhysicsObjectNum(i)
+				if(!IsValid(physObj)) then continue end
+	
+				physObj:SetVelocity(Vector(0, 0, 20000))
+	
+			end
+
+			if(i % 5 == 1) then coroutine.wait(0.01) end
+	
+		end
+	
+	end)
+
+	coroutine.resume(co)
+
+end
+
+function ENT:HandleStomp()
+	local cycle = self:GetCycle();
+
+	if(cycle >= stompEvents.warning and !self.playedWarning) then
+		self.playedWarning = true
+		self:EmitSound("begotten/npcs/giant/stomp.mp3", 130)
+		self:EmitSound("begotten/npcs/giant/stomp.mp3", 130)
+		self:EmitSound("begotten/npcs/giant/stomp.mp3", 130)
+
+	end
+
+	if(cycle >= stompEvents.stomp and !self.didStomp) then
+		self.didStomp = true
+		self:Stomp()
+
+	end
+
+end
+
+ENT.AttackFunctions = {
+	[ENT.Attacks.Standard] = function(self)
+		self:EmitSound("begotten/npc/brute/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
+		if math.random(1,2) == 1 then
+			self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 0.85, self.FaceEnemy)
+		else
+			self:PlaySequenceAndMove("fastattack", 0.6, self.PossessionFaceForward)
+		end
+
+	end,
+
+	[ENT.Attacks.Stomp] = function(self)
+		self:EmitSound("begotten/npc/grunt/amb_idle_scratch0"..math.random(1, 3)..".mp3", 100, self.pitch)
+
+		self.playedWarning = false
+		self.didStomp = false
+		self.stomping = true
+		self:PlaySequenceAndMove("GiantStomp", 1, self.HandleStomp)
+		self.stomping = false
+
+	end,
+
+}
+
+ENT.AttackChances = {
+	[ENT.Attacks.Stomp] = 3,
+}
+
 if SERVER then
 	function ENT:OnSpotted()
 		local curTime = CurTime();
@@ -108,20 +232,37 @@ if SERVER then
 	function ENT:OnParried()
 		self.nextMeleeAttack = CurTime() + 2;
 	end
+
+	function ENT:GetNextAttack()
+		local attack = self.Attacks.Standard;
+
+		for i, v in pairs(self.AttackChances) do
+			if(self.nextAttack == i) then continue; end
+			if(math.random(1, v) != 1) then continue; end
+
+			attack = i;
+			break;
+
+		end
+
+		self.nextAttack = attack;
+
+	end
+
 	-- Init/Think --
 	function ENT:CustomInitialize()
 		self:SetDefaultRelationship(D_HT)
+		self:GetNextAttack();
 	end
 	-- AI --
 	function ENT:OnMeleeAttack(enemy)
 		if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
-			self:EmitSound("begotten/npc/brute/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
-			if math.random(1,2) == 1 then
-				self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 0.85, self.FaceEnemy)
-			else
-				self:PlaySequenceAndMove("fastattack", 0.6, self.PossessionFaceForward)
-			end
-		end
+			self.AttackFunctions[self.nextAttack](self);
+			self:GetNextAttack();
+
+			return true;
+
+		else return false; end
 	end
 	function ENT:OnReachedPatrol()
 		self:Wait(math.random(3, 7))
@@ -248,6 +389,8 @@ if SERVER then
 		end;
 	end;
 	function ENT:OnAnimEvent()
+		if(self.stomping) then return end
+
 		local sha = false
 		if self:IsAttacking() and self:GetCycle() > 0.3 then
 			self:Attack({
@@ -314,3 +457,11 @@ end
 -- DO NOT TOUCH --
 AddCSLuaFile()
 DrGBase.AddNextbot(ENT)
+
+--[[hook.Add("PostDrawTranslucentRenderables", "AASDASDADASDASDASDADASDA", function()
+	for _, v in pairs(ents.FindByClass("npc_bgt_giant")) do
+		render.DrawWireframeSphere(v:GetPos(), 500, 16, 16, Color(255, 255, 0), true)
+
+	end
+
+end)]]
