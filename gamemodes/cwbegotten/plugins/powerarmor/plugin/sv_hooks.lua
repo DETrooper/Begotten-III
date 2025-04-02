@@ -133,6 +133,58 @@ function cwPowerArmor:KeyPress(player, key)
 	end;
 	
 	if (key == IN_JUMP) then
+		if (player.wearingPowerArmor or Clockwork.player:HasFlags(player, "T")) and !player:IsOnGround() and player.FirstJump >= 1 and player:GetMoveType() != MOVETYPE_NOCLIP then
+			if player.FirstJump == 1 then
+				player:SetVelocity(Vector(0,0,500) + Vector(0,0,-1*player:GetVelocity().z));
+				player:EmitSound("weapons/grenade_launcher1.wav");
+				player.FirstJump = 2;
+
+				local vPoint = player:GetPos();
+				local effectdata = EffectData();
+				effectdata:SetOrigin( vPoint );
+				effectdata:SetMagnitude(1);
+				effectdata:SetNormal(Vector(0,0,-1));
+				effectdata:SetRadius(50);
+				effectdata:SetScale(15);
+				util.Effect( "AR2Explosion", effectdata, true, true );
+
+				local vPoint = player:GetPos();
+				local effectdata = EffectData();
+				effectdata:SetOrigin( vPoint );
+				effectdata:SetMagnitude(1);
+				effectdata:SetNormal(Vector(0,0,-1));
+				effectdata:SetRadius(50);
+				effectdata:SetScale(15);
+				util.Effect( "ThumperDust", effectdata, true, true );
+			elseif player.FirstJump == 2 and Clockwork.player:HasFlags(player, "?") then
+				player:SetVelocity(Vector(0,0,1000) + Vector(0,0,-1*player:GetVelocity().z));
+				player:EmitSound("weapons/grenade_launcher1.wav");
+				player.FirstJump = 2;
+
+				local vPoint = player:GetPos();
+				local effectdata = EffectData();
+				effectdata:SetOrigin( vPoint );
+				effectdata:SetMagnitude(1);
+				effectdata:SetNormal(Vector(0,0,-1));
+				effectdata:SetRadius(50);
+				effectdata:SetScale(15);
+				util.Effect( "AR2Explosion", effectdata, true, true );
+
+				local vPoint = player:GetPos();
+				local effectdata = EffectData();
+				effectdata:SetOrigin( vPoint );
+				effectdata:SetMagnitude(1);
+				effectdata:SetNormal(Vector(0,0,-1));
+				effectdata:SetRadius(50);
+				effectdata:SetScale(15);
+				util.Effect( "ThumperDust", effectdata, true, true );
+			end;
+
+		else
+			player.FirstJump = 1;
+
+		end
+
 		local curTime = CurTime();
 		
 		if (!player.nextJumpServo or player.nextJumpServo < curTime) then

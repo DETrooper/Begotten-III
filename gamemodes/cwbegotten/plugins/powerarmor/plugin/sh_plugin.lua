@@ -16,6 +16,8 @@ local powerArmor = {
 	["models/begotten/gatekeepers/triumphant_roan.mdl"] = true;
 }
 
+Clockwork.flag:Add("?", "Infinite Jumps in Power Armor", "Allows you to jump infinitely while in power armor or with the Mister Electric flag.")
+
 function playerMeta:IsWearingPowerArmor()
 	return powerArmor[self:GetModel()];
 end
