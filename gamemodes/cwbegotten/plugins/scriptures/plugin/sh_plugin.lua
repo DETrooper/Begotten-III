@@ -594,7 +594,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Goreic"
 	ITEM.iconoverride = "begotten/ui/itemicons/goretablet.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1600, onGround = false, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 6000, onGround = false, bNoSupercrate = true};
 
 ITEM:Register()
 
@@ -609,7 +609,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Goreic"
 	ITEM.iconoverride = "begotten/ui/itemicons/goretablet.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1900, onGround = false, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 6000, onGround = false, bNoSupercrate = true};
 
 ITEM:Register()
 
@@ -624,7 +624,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Goreic"
 	ITEM.iconoverride = "begotten/ui/itemicons/goretablet.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 1500, onGround = false, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 6000, onGround = false, bNoSupercrate = true};
 
 ITEM:Register()
 
@@ -639,7 +639,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Goreic"
 	ITEM.iconoverride = "begotten/ui/itemicons/goretablet.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 2000, onGround = false, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 6000, onGround = false, bNoSupercrate = true};
 
 ITEM:Register()
 
@@ -654,7 +654,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Goreic"
 	ITEM.iconoverride = "begotten/ui/itemicons/goretablet.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 2000, onGround = false, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 6000, onGround = false, bNoSupercrate = true};
 
 ITEM:Register()
 
@@ -669,7 +669,7 @@ local ITEM = Clockwork.item:New("book_base")
 	ITEM.bookType = "Goreic"
 	ITEM.iconoverride = "begotten/ui/itemicons/goretablet.png";
 	
-	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 2200, onGround = false, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 7000, onGround = false, bNoSupercrate = true};
 
 ITEM:Register()
 

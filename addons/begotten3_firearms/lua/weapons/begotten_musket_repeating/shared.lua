@@ -49,7 +49,7 @@ SWEP.data.ironsights			= 1
 SWEP.ShellTime			= .5
 
 SWEP.Primary.NumShots	= 1
-SWEP.Primary.Damage		= 95
+SWEP.Primary.Damage		= 85
 SWEP.Primary.Spread		= .1				
 SWEP.Primary.IronAccuracy = .04
 -- Because irons don't magically give you less pellet spread!
@@ -67,28 +67,32 @@ SWEP.AmmoTypes = {
 		SWEP.Primary.Sound = Sound("musket/musket4.wav");
 		SWEP.Primary.FarSound = Sound("musket/musket4_distant.mp3");
 		SWEP.Primary.NumShots = 24;
-		SWEP.Primary.Damage = 10;
-		SWEP.Primary.Spread = .2;
-		SWEP.Primary.IronAccuracy = .2;
+		SWEP.Primary.Damage = 8;
+		SWEP.Primary.Spread = .3;
+		SWEP.Primary.IronAccuracy = .3;
 		SWEP.Primary.Ammo = "buckshot";
+		
+		SWEP.Primary.KickUp				= 50		-- Maximum up recoil (rise)
+		SWEP.Primary.KickDown			= 1		-- Maximum down recoil (skeet)
+		SWEP.Primary.KickHorizontal		= 25		-- Maximum up recoil (stock)
 		
 		if SWEP.Owner and SWEP.Owner:IsPlayer() then
 			if SWEP.Owner:GetVelocity() == Vector(0, 0, 0) then
 				if SWEP.Owner.HasBelief and SWEP.Owner:HasBelief("marksman") then
-					if SWEP.Owner:Crouching() then
-						SWEP.Primary.Spread = .1;
-						SWEP.Primary.IronAccuracy = .1;
-					else
-						SWEP.Primary.Spread = .125;
-						SWEP.Primary.IronAccuracy = .125;
-					end
-				else
 					if SWEP.Owner:Crouching() then
 						SWEP.Primary.Spread = .15;
 						SWEP.Primary.IronAccuracy = .15;
 					else
 						SWEP.Primary.Spread = .175;
 						SWEP.Primary.IronAccuracy = .175;
+					end
+				else
+					if SWEP.Owner:Crouching() then
+						SWEP.Primary.Spread = .2;
+						SWEP.Primary.IronAccuracy = .2;
+					else
+						SWEP.Primary.Spread = 0.23;
+						SWEP.Primary.IronAccuracy = 0.23;
 					end
 				end
 			end
@@ -100,7 +104,7 @@ SWEP.AmmoTypes = {
 		SWEP.Primary.Sound = Sound("weapons/cb4/cb4-1.wav");
 		SWEP.Primary.FarSound = Sound("weapons/cb4/cb4-1_distant.mp3");
 		SWEP.Primary.NumShots = 1;
-		SWEP.Primary.Damage = 95;
+		SWEP.Primary.Damage = 85;
 		SWEP.Primary.Spread = .1;
 		SWEP.Primary.IronAccuracy = .04;
 		SWEP.Primary.Ammo = "smg";

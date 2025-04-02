@@ -6124,38 +6124,6 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 	
-	RECIPE = cwRecipes.recipes:New("stormdrummer");
-		RECIPE.name = "Storm Drummer";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFaiths = {"Faith of the Family"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
-		RECIPE.requirements = {
-			["begotten_scavenger_gun"] = {amount = 1},
-			["shagalaxian_steel_ingot"] = {amount = 2},
-			["iron_ingot"] = {amount = 1},
-			["scrap"] = {amount = 5},
-		};
-		RECIPE.result = {
-			["begotten_stormdrummer"] = {amount = 1},
-		};
-		RECIPE.category = "Munitions"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 250;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-
 	RECIPE = cwRecipes.recipes:New("jezail");
 	RECIPE.name = "Jezail";
 	RECIPE.requiresSmithy = true;
@@ -6273,37 +6241,6 @@ RECIPE:Register()
 		end;
 	RECIPE:Register()
 	
-	RECIPE = cwRecipes.recipes:New("shagalax_bullet_box_magazine");
-		RECIPE.name = "Shagalax Bullet Box Magazine";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
-		RECIPE.requiredFaiths = {"Faith of the Family"};
-		RECIPE.requirements = {
-			["scavenger_gun_large_magazine"] = {amount = 3},
-			["iron_ingot"] = {amount = 1},
-			["scrap"] = {amount = 4},
-		};
-		RECIPE.result = {
-			["shagalax_bullet_box_magazine"] = {amount = 1},
-		};
-		RECIPE.category = "Munitions"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 60;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-
 	RECIPE = cwRecipes.recipes:New("voltist_railgun");
 		RECIPE.name = "Voltist Railgun";
 		RECIPE.requiresSmithy = true;

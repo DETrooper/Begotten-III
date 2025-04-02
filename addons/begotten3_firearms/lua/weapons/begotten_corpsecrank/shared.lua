@@ -34,9 +34,9 @@ SWEP.Primary.Sound 			= Sound("weapons/en/m3-1.wav")				-- This is the sound of 
 SWEP.Primary.RPM				= 45		-- This is in Rounds Per Minute
 SWEP.Primary.ClipSize			= 6			-- Size of a clip
 SWEP.Primary.DefaultClip		= 0	-- Default number of bullets in a clip
-SWEP.Primary.KickUp			= 4.70					-- This is the maximum upwards recoil (rise)
+SWEP.Primary.KickUp			= 10					-- This is the maximum upwards recoil (rise)
 SWEP.Primary.KickDown			= 0.31					-- This is the maximum downwards recoil (skeet)
-SWEP.Primary.KickHorizontal			= 0.04					-- This is the maximum sideways recoil (no real term)
+SWEP.Primary.KickHorizontal			= 0.5					-- This is the maximum sideways recoil (no real term)
 SWEP.Primary.Automatic			= false		-- Automatic/Semi Auto
 SWEP.Primary.Ammo			= "buckshot"	-- pistol, 357, smg1, ar2, buckshot, slam, SniperPenetratedRound, AirboatGun
 -- Pistol, buckshot, and slam always ricochet. Use AirboatGun for a light metal peircing shotgun pellets
@@ -51,7 +51,7 @@ SWEP.data.ironsights			= 1
 
 SWEP.ShellTime			= 0.55 -- For shotguns, how long it takes to insert a shell.
 
-SWEP.Primary.NumShots = 32;
+SWEP.Primary.NumShots = 24;
 SWEP.Primary.Damage = 8;
 SWEP.Primary.Spread = .18;
 SWEP.Primary.IronAccuracy = .18;
@@ -69,7 +69,7 @@ SWEP.AmmoTypes = {
 	["Grapeshot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("weapons/en/m3-1.wav");
 		SWEP.Primary.FarSound = Sound("weapons/en/m3-1_distant.mp3");
-		SWEP.Primary.NumShots = 32;
+		SWEP.Primary.NumShots = 24;
 		SWEP.Primary.Damage = 8;
 		SWEP.Primary.Spread = .18;
 		SWEP.Primary.IronAccuracy = .18;

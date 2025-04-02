@@ -67,7 +67,7 @@ SWEP.ReticleScale 			= 0.75
 SWEP.ShellTime			= .35
 
 SWEP.Primary.NumShots	= 1		//how many bullets to shoot, use with shotguns
-SWEP.Primary.Damage		= 105	//base damage, scaled by game
+SWEP.Primary.Damage		= 95	//base damage, scaled by game
 SWEP.Primary.Spread		= .1	//define from-the-hip accuracy 1 is terrible, .0001 is exact)
 SWEP.Primary.IronAccuracy = .035 // has to be the same as primary.spread
 -- Because irons don't magically give you less pellet spread!
@@ -87,7 +87,7 @@ SWEP.AmmoTypes = {
 		SWEP.Primary.Sound = Sound("v51_"..math.random(1,4)..".ogg");
 		SWEP.Primary.FarSound = Sound("v51_"..math.random(1,4).."_distant.mp3");
 		SWEP.Primary.NumShots = 1;
-		SWEP.Primary.Damage = 105;
+		SWEP.Primary.Damage = 95;
 		SWEP.Primary.Spread = .1;
 		SWEP.Primary.IronAccuracy = .035;
 		SWEP.Primary.Ammo = "smg";
