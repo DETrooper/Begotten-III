@@ -136,6 +136,14 @@ function ENT:Stomp()
 			local ragdollState = v:GetRagdollState()
 			if(!v:IsOnGround() and ragdollState != RAGDOLL_FALLENOVER) then continue end
 
+			if(v.wearingPowerArmor) then
+				v:SetVelocity(Vector(0,0,500) + Vector(0,0,-1*v:GetVelocity().z))
+				v.nextChargeDepleted = 0
+				
+				continue
+
+			end
+
 			local d = DamageInfo()
 			d:SetDamage(30);
 			d:SetDamageType(DMG_CLUB);
