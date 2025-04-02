@@ -215,6 +215,9 @@ local function Guarding(ent, dmginfo)
 								if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
 									conditionLoss = conditionLoss * 40;
 								end
+
+								-- For NPCs
+								conditionLoss = conditionLoss * (ent.weaponConditionScale or 0.5)
 								
 								weaponItemTable:TakeCondition(math.min(conditionLoss, 100));
 
