@@ -19,7 +19,6 @@ local requiredWorkshopAddons = {
 if game.GetMap() == "rp_district21" then
 	table.insert(requiredWorkshopAddons, "3121268073");
 	table.insert(requiredWorkshopAddons, "3126101449");
-	table.insert(requiredWorkshopAddons, "3015058225");
 end
 
 -- Disabled these for now since gabs added their content to the Begotten III content.

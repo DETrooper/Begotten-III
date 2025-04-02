@@ -49,8 +49,7 @@ function cwPickupObjects:ClockworkConfigChanged(key, data, previousValue, newVal
 	end;]]--
 end;
 
--- Called just after a player spawns.
-function cwPickupObjects:PostPlayerSpawn(player, lightSpawn, changeClass, firstSpawn)
+function cwPickupObjects:ActionStopped(player, action)
 	if player.PickingUpObject then
 		if (IsValid(player.PickingUpObject)) then
 			player.PickingUpObject:SetNetVar("IsBeingPickedUp", false);
@@ -59,19 +58,7 @@ function cwPickupObjects:PostPlayerSpawn(player, lightSpawn, changeClass, firstS
 		
 		player.PickingUpObject = nil;
 	end
-end
-
--- Called when a player dies.
-function cwPickupObjects:PlayerDeath(player, inflictor, attacker, damageInfo)
-	if player.PickingUpObject then
-		if (IsValid(player.PickingUpObject)) then
-			player.PickingUpObject:SetNetVar("IsBeingPickedUp", false);
-			player.PickingUpObject.BeingPickedUp = nil;
-		end;
-		
-		player.PickingUpObject = nil;
-	end
-end
+end;
 
 -- Called when a player enters a vehicle.
 function cwPickupObjects:PlayerEnteredVehicle(player, vehicle, class)
