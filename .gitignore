@@ -27,6 +27,8 @@ map.pack
 modelsounds.cache
 steam.inf
 sv.db
+GameState.txt
+stats.txt
 
 gamemodes/base/
 gamemodes/sandbox/
@@ -50,5 +52,4 @@ settings/presets/
 settings/spawnlist_default/
 settings/users.txt
 
-
-
+addons/custom/
