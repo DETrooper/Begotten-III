@@ -153,8 +153,8 @@ function cwPowerArmor:KeyPress(player, key)
 				effectdata:SetOrigin( vPoint );
 				effectdata:SetMagnitude(1);
 				effectdata:SetNormal(Vector(0,0,-1));
-				effectdata:SetRadius(50);
-				effectdata:SetScale(15);
+				effectdata:SetRadius(30);
+				effectdata:SetScale(150);
 				util.Effect( "ThumperDust", effectdata, true, true );
 			elseif player.FirstJump == 2 and Clockwork.player:HasFlags(player, "?") then
 				player:SetVelocity(Vector(0,0,1000) + Vector(0,0,-1*player:GetVelocity().z));
@@ -175,8 +175,8 @@ function cwPowerArmor:KeyPress(player, key)
 				effectdata:SetOrigin( vPoint );
 				effectdata:SetMagnitude(1);
 				effectdata:SetNormal(Vector(0,0,-1));
-				effectdata:SetRadius(50);
-				effectdata:SetScale(15);
+				effectdata:SetRadius(30);
+				effectdata:SetScale(150);
 				util.Effect( "ThumperDust", effectdata, true, true );
 			end;
 
