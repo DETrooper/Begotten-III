@@ -13,6 +13,7 @@ local requiredWorkshopAddons = {
 	"2465148067",
 	"2594063203",
 	"2790936125",
+	"3456524237",
 };
 
 if game.GetMap() == "rp_district21" then
