@@ -156,6 +156,10 @@ function PANEL:Paint()
 		self.localLevelCap = self.localLevelCap + 5;
 	end
 	
+	if self.player:HasBelief("paradox_riddle_equation") then
+		self.localLevelCap = self.localLevelCap + 5;
+	end
+	
 	if self.player:GetNetVar("subfaction") == "Rekh-khet-sa" then
 		self.localLevelCap = self.localLevelCap + 666;
 	end
@@ -655,6 +659,10 @@ function PANEL:Rebuild(player, level, experience, beliefs, points, faith, highli
 	end
 	
 	if player:HasBelief("sorcerer") then
+		self.localLevelCap = self.localLevelCap + 5;
+	end
+	
+	if player:HasBelief("paradox_riddle_equation") then
 		self.localLevelCap = self.localLevelCap + 5;
 	end
 	

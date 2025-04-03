@@ -905,11 +905,11 @@ function SWEP:PrimaryAttack()
 													end
 													
 													if injuries then
-														if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+														if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 														end
 														
-														if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+														if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 														end
 													end
@@ -1004,11 +1004,11 @@ function SWEP:PrimaryAttack()
 			end
 			
 			if injuries then
-				if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+				if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 					attackCost = attackCost + (takeAmmo * 2);
 				end
 				
-				if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+				if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 					attackCost = attackCost + (takeAmmo * 2);
 				end
 			end
@@ -2103,11 +2103,11 @@ function SWEP:SecondaryAttack()
 		end
 		
 		if injuries then
-			if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+			if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 				parry_cost = parry_cost + (blocktable["parrytakestamina"] * 2);
 			end
 			
-			if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+			if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 				parry_cost = parry_cost + (blocktable["parrytakestamina"] * 2);
 			end
 		end
@@ -2200,11 +2200,11 @@ function SWEP:SecondaryAttack()
 										end
 										
 										if injuries then
-											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+											if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 											end
 											
-											if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+											if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 											end
 										end
@@ -2269,11 +2269,11 @@ function SWEP:SecondaryAttack()
 										end
 										
 										if injuries then
-											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+											if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 											end
 											
-											if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+											if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 											end
 										end

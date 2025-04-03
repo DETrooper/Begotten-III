@@ -1027,11 +1027,11 @@ local function Guarding(ent, dmginfo)
 							local injuries = cwMedicalSystem:GetInjuries(ent);
 							
 							if injuries then
-								if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+								if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 									blockamount = blockamount + (blocktable["guardblockamount"] * 2);
 								end
 								
-								if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+								if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 									blockamount = blockamount + (blocktable["guardblockamount"] * 2);
 								end
 							end
@@ -1497,11 +1497,11 @@ local function UpdateWeaponRaised(player, activeWeapon, bIsRaised, curTime)
 									local injuries = cwMedicalSystem:GetInjuries(player);
 									
 									if injuries then
-										if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+										if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 											guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 										end
 										
-										if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+										if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 											guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 										end
 									end

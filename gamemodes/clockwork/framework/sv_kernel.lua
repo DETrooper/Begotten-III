@@ -1747,8 +1747,12 @@ function playerMeta:GetMaxHealth(health)
 		maxHealth = maxHealth + 15;
 	end
 	
-	if Schema.RankTiers[factionName] and (Schema:GetRankTier(factionName, self:GetCharacterData("rank", 1)) >= #Schema.RankTiers[factionName]) then
-		maxHealth = maxHealth + 50;
+	if Schema.RanksToBuffs[factionName] then
+		local rankName = Schema.Ranks[factionName][self:GetCharacterData("rank", 1)];
+		
+		if rankName and Schema.RanksToBuffs[factionName][rankName] and Schema.RanksToBuffs[factionName][rankName].health then
+			maxHealth = maxHealth + Schema.RanksToBuffs[factionName][rankName].health;
+		end
 	end
 	
 	if self.maxHealthBoost then

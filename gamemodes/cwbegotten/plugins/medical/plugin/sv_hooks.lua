@@ -951,6 +951,14 @@ function cwMedicalSystem:PlayerLimbFallDamageTaken(player, amount)
 			local left_leg_chance = math.min(amount * 1.5, 100);
 			local right_leg_chance = math.min(amount * 1.5, 100);
 			
+			if !injuries[HITGROUP_RIGHTLEG] then
+				injuries[HITGROUP_RIGHTLEG] = {};
+			end
+			
+			if !injuries[HITGROUP_LEFTLEG] then
+				injuries[HITGROUP_LEFTLEG] = {};
+			end
+			
 			if !(injuries[HITGROUP_RIGHTLEG]["broken_bone"]) and math.random(1, 100) < right_leg_chance then
 				player:AddInjury(self.cwHitGroupToString[HITGROUP_RIGHTLEG], "broken_bone");
 				player:StartBleeding(HITGROUP_RIGHTLEG);
@@ -1159,7 +1167,7 @@ function cwMedicalSystem:ModifyPlayerSpeed(player, infoTable, action)
 	else
 		local injuries = self:GetInjuries(player);
 		
-		if injuries and (injuries[HITGROUP_LEFTLEG]["broken_bone"] or injuries[HITGROUP_RIGHTLEG]["broken_bone"]) then
+		if injuries and ((injuries[HITGROUP_LEFTLEG] and injuries[HITGROUP_LEFTLEG]["broken_bone"]) or (injuries[HITGROUP_RIGHTLEG] and injuries[HITGROUP_RIGHTLEG]["broken_bone"])) then
 			infoTable.crouchedWalkSpeed = math.max(1, infoTable.crouchedWalkSpeed * 0.8);
 			infoTable.walkSpeed = math.max(1, infoTable.walkSpeed * 0.5);
 			infoTable.runSpeed = math.max(1, infoTable.walkSpeed);

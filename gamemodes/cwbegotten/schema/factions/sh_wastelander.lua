@@ -160,6 +160,10 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 		Schema.RankTiers = {};
 	end
 	
+	if !Schema.RanksToBuffs then
+		Schema.RanksToBuffs = {};
+	end
+	
 	if !Schema.RanksRestrictedWages then
 		Schema.RanksRestrictedWages = {};
 	end
@@ -195,6 +199,10 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 		[3] = {"Emissary", "Forgemaster", "Master Medicus", "Master Scout", "Vexillifer", "Squire"},
 		[4] = {"High Gatekeeper"},
 		[5] = {"Master-At-Arms"},
+	};
+	
+	Schema.RanksToBuffs["Gatekeeper"] = {
+		["Master-At-Arms"] = {health = 50, stamina = 50},
 	};
 	
 	-- Do not grant wages to these ranks if they are inside the safezone.
@@ -337,6 +345,10 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 	if !Schema.RankTiers then
 		Schema.RankTiers = {};
 	end
+	
+	if !Schema.RanksToBuffs then
+		Schema.RanksToBuffs = {};
+	end
 
 	if !Schema.RanksToSubfaction then
 		Schema.RanksToSubfaction = {};
@@ -442,6 +454,10 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 	if !Schema.RankTiers then
 		Schema.RankTiers = {};
 	end
+	
+	if !Schema.RanksToBuffs then
+		Schema.RanksToBuffs = {};
+	end
 
 	if !Schema.RanksToSubfaction then
 		Schema.RanksToSubfaction = {};
@@ -469,6 +485,10 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 		[3] = {"Chieftain", "Elder", "Grand Admiral"},
 		[4] = {"King's Chosen"},
 		[5] = {"King"},
+	};
+	
+	Schema.RanksToBuffs["Goreic Warrior"] = {
+		["King"] = {health = 50, stamina = 50},
 	};
 	
 	Schema.RanksToSubfaction["Goreic Warrior"] = {
@@ -560,6 +580,10 @@ local FACTION = Clockwork.faction:New("Children of Satan");
 	if !Schema.RankTiers then
 		Schema.RankTiers = {};
 	end
+	
+	if !Schema.RanksToBuffs then
+		Schema.RanksToBuffs = {};
+	end
 
 	if !Schema.RanksToSubfaction then
 		Schema.RanksToSubfaction = {};
@@ -584,6 +608,10 @@ local FACTION = Clockwork.faction:New("Children of Satan");
 		[3] = {"Dreadlord"},
 		[4] = {"Caretaker"},
 		[5] = {"Hell Baron"},
+	};
+	
+	Schema.RanksToBuffs["Children of Satan"] = {
+		["Hell Baron"] = {health = 50, stamina = 50},
 	};
 	
 	Schema.RanksToSubfaction["Children of Satan"] = {
@@ -624,6 +652,10 @@ local FACTION = Clockwork.faction:New("Pope Adyssa's Gatekeepers");
 		Schema.RankTiers = {};
 	end
 	
+	if !Schema.RanksToBuffs then
+		Schema.RanksToBuffs = {};
+	end
+	
 	if !Schema.RanksToSubfaction then
 		Schema.RanksToSubfaction = {};
 	end
@@ -646,6 +678,10 @@ local FACTION = Clockwork.faction:New("Pope Adyssa's Gatekeepers");
 		[3] = {"EMISSARY"},
 		[4] = {"HIGH-EMISSARY"},
 		[5] = {"MASTER-AT-ARMS"},
+	};
+	
+	Schema.RanksToBuffs["Pope Adyssa's Gatekeepers"] = {
+		["MASTER-AT-ARMS"] = {health = 50, stamina = 50},
 	};
 
 	Schema.RanksToCoin["Pope Adyssa's Gatekeepers"] = {
@@ -908,6 +944,10 @@ local FACTION = Clockwork.faction:New("Hillkeeper");
 		Schema.RankTiers = {};
 	end
 	
+	if !Schema.RanksToBuffs then
+		Schema.RanksToBuffs = {};
+	end
+	
 	if !Schema.RanksToSubfaction then
 		Schema.RanksToSubfaction = {};
 	end
@@ -939,6 +979,10 @@ local FACTION = Clockwork.faction:New("Hillkeeper");
 		[3] = {"Emissary", "Magnate", "Surgeon", "Signifer", "Squire"},
 		[4] = {"High Emissary"},
 		[5] = {"Master-At-Arms"},
+	};
+	
+	Schema.RanksToBuffs["Hillkeeper"] = {
+		["Master-At-Arms"] = {health = 50, stamina = 50},
 	};
 	
 	Schema.RanksToSubfaction["Hillkeeper"] = {

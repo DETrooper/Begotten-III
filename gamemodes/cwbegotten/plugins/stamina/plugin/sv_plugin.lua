@@ -52,8 +52,12 @@ function cwStamina:GetMaxStaminaPlugin(player)
 			end
 		end
 		
-		if Schema.RankTiers[faction] and (Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= #Schema.RankTiers[faction]) then
-			max_stamina = max_stamina + 50;
+		if Schema.RanksToBuffs[faction] then
+			local rankName = Schema.Ranks[faction][player:GetCharacterData("rank", 1)];
+			
+			if rankName and Schema.RanksToBuffs[faction][rankName] and Schema.RanksToBuffs[faction][rankName].stamina then
+				max_stamina = max_stamina + Schema.RanksToBuffs[faction][rankName].stamina;
+			end
 		end
 		
 		if cwPossession and IsValid(player.possessor) then
