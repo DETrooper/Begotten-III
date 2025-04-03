@@ -5,6 +5,7 @@
 	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
 --]]
 
+util.AddNetworkString("Log")
 util.AddNetworkString("SendCountryCode")
 
 net.Receive("SendCountryCode", function(len, ply)
