@@ -388,16 +388,14 @@ function cwMelee:PlayerHasBanner(player)
 	local weapon = player:GetActiveWeapon()
 	if(#weapon:GetNW2String("activeShield", "") > 0) then return false end
 
-	if(weapon.isBanner) then return true
+	if(weapon.bannerType) then return weapon
 	else
 		-- If the player's armor has Blessing of the Banner, they don't need the banner actively out in order to have the effect.
 		local clothes = player:GetClothesEquipped()
 		if(clothes and clothes.attributes and table.HasValue(clothes.attributes, "banner_blessing")) then
 			for _, v in pairs(bannerIds) do
-				if(player:HasWeapon(v)) then
-					return true
-
-				end
+				local wep = player:GetWeapon(v)
+				if(IsValid(wep)) then return wep end
 
 			end
 
@@ -418,8 +416,8 @@ function cwMelee:HandleBanners(player, curTime)
 
 	local index = player:EntIndex()
 
-	local hasBanner = self:PlayerHasBanner(player)
-	if(!hasBanner) then
+	local banner = self:PlayerHasBanner(player)
+	if(!banner) then
 		if(player.hadBanner) then
 			player.hadBanner = false
 
@@ -442,7 +440,7 @@ function cwMelee:HandleBanners(player, curTime)
 
 		if(!v.banners) then v.banners = {} end
 		
-		if(playerPos:DistToSqr(v:GetPos()) <= bannerDistance) then v.banners[index] = "glazic"
+		if(playerPos:DistToSqr(v:GetPos()) <= bannerDistance) then v.banners[index] = banner.bannerType
 		elseif v.banners[index] then v.banners[index] = nil end
 
 	end

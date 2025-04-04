@@ -36,7 +36,7 @@ SWEP.SoundMaterial = "MetalPierce" -- Metal, Wooden, MetalPierce, Punch, Default
 
 SWEP.WindUpSound = "draw/skyrim_axe_draw1.mp3" --For 2h weapons only, plays before primarysound
 
-SWEP.isBanner = true
+SWEP.bannerType = "glazic"
 
 /*---------------------------------------------------------
 	PrimaryAttack
