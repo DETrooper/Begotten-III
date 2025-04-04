@@ -2335,7 +2335,7 @@ ITEM.weightclass = "Medium";
 ITEM.description = "A unique set of Gatekeeper plate made of the finest materials, designed specifically to protect the Master-at-Arms.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Gatekeeper"};
-ITEM.requireRank = {"Master-at-Arms"};
+ITEM.requireRank = {"Master-At-Arms"};
 ITEM.faction = "Gatekeeper";
 
 ITEM.effectiveLimbs = {
