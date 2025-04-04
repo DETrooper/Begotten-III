@@ -379,11 +379,83 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 	end;
 end;
 
+local bannerIds = {
+	"begotten_polearm_glazicbanner",
+	"begotten_polearm_hillkeepersignum",
+}
+
+function cwMelee:PlayerHasBanner(player)
+	local weapon = player:GetActiveWeapon()
+	if(#weapon:GetNW2String("activeShield", "") > 0) then return false end
+
+	if(weapon.isBanner) then return true
+	else
+		-- If the player's armor has Blessing of the Banner, they don't need the banner actively out in order to have the effect.
+		local clothes = player:GetClothesEquipped()
+		if(clothes and clothes.attributes and table.HasValue(clothes.attributes, "banner_blessing")) then
+			for _, v in pairs(bannerIds) do
+				if(player:HasWeapon(v)) then
+					return true
+
+				end
+
+			end
+
+		end
+
+	end
+
+	return false
+
+end
+
+local bannerDistance = (824 * 824);
+function cwMelee:HandleBanners(player, curTime)
+	if(player.nextBannerCheck and player.nextBannerCheck > curTime) then return end
+	player.nextBannerCheck = curTime + 2
+
+	if(!player:Alive()) then return end
+
+	local index = player:EntIndex()
+
+	local hasBanner = self:PlayerHasBanner(player)
+	if(!hasBanner) then
+		if(player.hadBanner) then
+			player.hadBanner = false
+
+			for _, v in _player.Iterator() do
+				if(v.banners and v.banners[index]) then v.banners[index] = nil end
+
+			end
+
+		end
+
+		return
+
+	end
+
+	player.hadBanner = true
+
+	local playerPos = player:GetPos()
+	for _, v in _player.Iterator() do
+		if(!v:Alive()) then continue end
+
+		if(!v.banners) then v.banners = {} end
+		
+		if(playerPos:DistToSqr(v:GetPos()) <= bannerDistance) then v.banners[index] = "glazic"
+		elseif v.banners[index] then v.banners[index] = nil end
+
+	end
+
+end
+
 -- Called at an interval while a player is connected.
 function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 	if !initialized then
 		return;
 	end
+
+	self:HandleBanners(player, curTime)
 		
 	if (!plyTab.nextStability or plyTab.nextStability < curTime) then
 		local max_stability = player:GetMaxStability();

@@ -356,7 +356,7 @@ ITEM.requireFaith = {"Faith of the Light"};
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.faction = "Gatekeeper";
 
-ITEM.attributes = {"fear"};
+ITEM.attributes = {"fear", "banner_blessing"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_HEAD] = true,

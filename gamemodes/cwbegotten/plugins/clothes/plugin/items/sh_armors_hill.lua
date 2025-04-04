@@ -201,7 +201,7 @@ ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.faction = "Hillkeeper";
 ITEM.helmetIconOverride = "materials/begotten_apocalypse/ui/itemicons/hill_signifier.png"
 
-ITEM.attributes = {"fear"};
+ITEM.attributes = {"fear", "banner_blessing"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_HEAD] = true,

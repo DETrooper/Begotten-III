@@ -36,6 +36,8 @@ SWEP.SoundMaterial = "MetalPierce" -- Metal, Wooden, MetalPierce, Punch, Default
 
 SWEP.WindUpSound = "draw/skyrim_axe_draw1.mp3" --For 2h weapons only, plays before primarysound
 
+SWEP.isBanner = true
+
 /*---------------------------------------------------------
 	PrimaryAttack
 ---------------------------------------------------------*/
@@ -139,99 +141,7 @@ function SWEP:Holster()
 		end
 	end
 	
-	if SERVER then
-		self.nextBannerCheck = CurTime() + 2;
-
-		local index = self:EntIndex();
-
-		for _, v in _player.Iterator() do
-			if v.banners and v.banners[index] then
-				v.banners[index] = nil;
-			end
-		end
-	end
-	
 	return true;
-end
-
--- Unique think for Glazic Banner.
-function SWEP:Think()
-	local player = self.Owner;
-	
-	if SERVER then
-		local curTime = CurTime();
-		
-		if !self.nextBannerCheck or self.nextBannerCheck <= curTime then
-			self.nextBannerCheck = curTime + 2;
-		
-			if IsValid(player) then
-				local index = self:EntIndex();
-				local playerPos = player:GetPos();
-			
-				--[[for k, v in pairs(ents.FindInSphere(playerPos)) do
-
-				end]]--
-				
-				for _, v in _player.Iterator() do
-					if v:Alive() then
-						local faction = v:GetFaction();
-						
-						if !v.banners then
-							v.banners = {};
-						end
-						
-						if playerPos:DistToSqr(v:GetPos()) <= (bannerDistance) then
-							v.banners[index] = "glazic";
-						elseif v.banners[index] then
-							v.banners[self:EntIndex()] = nil;
-						end
-					end
-				end
-			end
-		end
-	end
-	
-	if (player.beginBlockTransition) then
-		if (player:GetNetVar("Guardening") == true) then
-			self:TriggerAnim2(player, self.BlockAnim, 0);
-			
-			if ((SERVER) and player:GetNetVar("CanBlock", true)) then
-				if (!self.SexyAss) then
-					self.SexyAss = GetSoundTable(self.BlockSoundTable);
-				end;
-				
-				if (self.SexyAss) then
-					player:EmitSound(self.SexyAss["guardsound"][math.random(1, #self.SexyAss["guardsound"])], 65, math.random(100, 90))
-				end;
-
-				player:SetLocalVar("CanBlock", false);
-			end;
-		elseif (player:GetNetVar("Guardening") == false) then
-			self:TriggerAnim2(player, self.BlockAnim, 1);
-			player:SetLocalVar("CanBlock", true)
-			
-			local velocity = player:GetVelocity();
-			local length = velocity:Length();
-			local running = player:KeyDown(IN_SPEED);
-
-			if (running and length > 350 and (self.Sprint == true)) then
-				local weapon = self.Weapon
-				local curTime = CurTime();
-				
-				weapon:SetNextPrimaryFire(curTime + 0.3);
-				weapon:SetNextSecondaryFire(curTime + 0.3);
-			end
-		end;
-		
-		player.beginBlockTransition = false;
-	end;
-	
-	for k, v in next, self.Timers do
-		if v.start + v.duration <= CurTime() then
-			v.callback()
-			self.Timers[k] = nil
-		end
-	end
 end
 
 /*---------------------------------------------------------

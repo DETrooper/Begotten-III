@@ -3141,6 +3141,11 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			if table.HasValue(itemTable.attributes, "lifeleech") then
 				frame:AddText("Lifeleech (Shieldless): 50% of damage dealt is returned as health", Color(110, 30, 30), nil, 0.9);
 			end
+
+			if(table.HasValue(itemTable.attributes, "banner_blessing")) then
+				frame:AddText("Blessing of the Banner (Shieldless): While a support banner is equipped, it does not need to be held to receive its effects.", Color(110, 30, 30), nil, 0.9)
+
+			end
 			
 			if table.HasValue(itemTable.attributes, "mothers_blessing") then
 				frame:AddText("Mother's Blessing: Reduces corruption gain by 50%.", Color(110, 30, 30), nil, 0.9);
