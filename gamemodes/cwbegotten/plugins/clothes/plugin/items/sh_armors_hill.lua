@@ -475,7 +475,7 @@ ITEM.type = "chainmail";
 ITEM.description = "A set of overlapping steel plates and scales sat atop a heavy chain hauberk and a long gambeson, wreathed in ornate sigils and emblems."
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Hillkeeper"};
-ITEM.requireRank = {"Master-at-Arms"};
+ITEM.requireRank = {"Master-At-Arms"};
 ITEM.faction = "Hillkeeper";
 
 ITEM.requiredbeliefs = {"hauberk"};

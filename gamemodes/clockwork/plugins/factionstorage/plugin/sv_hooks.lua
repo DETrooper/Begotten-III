@@ -29,13 +29,11 @@ function cwFactionStorage:PlayerCanOpenContainer(player, entity, bForce)
 		
 		if data.factions and !table.IsEmpty(data.factions) then
 			if !data.factions[faction] then
-				if faction == "Children of Satan" and player:GetSubfaction() == "Kinisger" and !data.factions["Children of Satan"] then
+				if !data.factions["Children of Satan"] or data.factions["Children of Satan"] and player:GetSubfaction() ~= "Kinisger" then
 					Schema:EasyText(player, "peru", "You are not the correct faction to open this container!");
-				else
-					Schema:EasyText(player, "peru", "You are not the correct faction to open this container!");
+					
+					return false;
 				end
-			
-				return false;
 			end
 		end
 	
@@ -43,13 +41,11 @@ function cwFactionStorage:PlayerCanOpenContainer(player, entity, bForce)
 			local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 			
 			if !data.subfactions[subfaction] then
-				if faction == "Children of Satan" and player:GetSubfaction() == "Kinisger" and !data.subfactions["Kinisger"] then
+				if !data.subfactions["Kinisger"] or data.subfactions["Kinisger"] and player:GetSubfaction() ~= "Kinisger" then
 					Schema:EasyText(player, "peru", "You are not the correct subfaction to open this container!");
-				else
-					Schema:EasyText(player, "peru", "You are not the correct subfaction to open this container!");
-				end
 			
-				return false;
+					return false;
+				end
 			end
 		end
 		

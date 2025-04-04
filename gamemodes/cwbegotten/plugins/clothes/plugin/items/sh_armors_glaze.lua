@@ -1514,7 +1514,7 @@ ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
 ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 ITEM.insulation = 40;
 
-ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "leather", "leather"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -2335,7 +2335,7 @@ ITEM.weightclass = "Medium";
 ITEM.description = "A unique set of Gatekeeper plate made of the finest materials, designed specifically to protect the Master-at-Arms.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Gatekeeper"};
-ITEM.requireRank = {"Master-at-Arms"};
+ITEM.requireRank = {"Master-At-Arms"};
 ITEM.faction = "Gatekeeper";
 
 ITEM.effectiveLimbs = {
@@ -2499,6 +2499,72 @@ ITEM.runSound = {
 ITEM.walkSound = {
 	"armormovement/body-hauberk-b4.wav.mp3",
 	"armormovement/body-hauberk-b5.wav.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Grand Knight Plate";
+ITEM.model = "models/begotten/headgroup_props/knightarmor.mdl"
+ITEM.iconoverride = "materials/begotten/ui/itemicons/grand_knight_armor.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 0.75
+ITEM.hasHelmet = true;
+ITEM.hitParticle = "MetalSpark";
+ITEM.isUnique = true;
+ITEM.protection = 90;
+ITEM.weight = 9;
+ITEM.weightclass = "Heavy";
+ITEM.type = "plate";
+ITEM.description = "Plate armor covered in holy cloth and blessed sigils. A helmet forged in Maximillian steel with gold engravings. It was meant for a powerful figure of Glazic faith.";
+ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+ITEM.requireFaction = {"Holy Hierarchy"};
+ITEM.requireRank = {"Grand Knight"};
+ITEM.requiredbeliefs = {"hauberk"};
+ITEM.genderless = true;
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_HEAD] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.15, -- increases fall damage by 15%
+}
+
+ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.55; -- reduces slash damage by 45%
+ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
+ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+ITEM.insulation = 70;
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+	return "models/begotten/gatekeepers/grandknight.mdl";
+end;
+
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "leather", "leather", "leather"}};
+
+ITEM.runSound = {
+	"armormovement/body-armor-1.WAV.mp3",
+	"armormovement/body-armor-2.WAV.mp3",
+	"armormovement/body-armor-3.WAV.mp3",
+	"armormovement/body-armor-4.WAV.mp3",
+	"armormovement/body-armor-5.WAV.mp3",
+	"armormovement/body-armor-6.WAV.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/body-armor-b4.WAV.mp3",
+	"armormovement/body-armor-b5.WAV.mp3",
 };
 
 ITEM:Register();

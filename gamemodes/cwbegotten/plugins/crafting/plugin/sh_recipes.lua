@@ -7761,13 +7761,47 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
 			["knight_plate"] = {amount = 1},
+			["knight_helmet"] = {amount = 1},
 			["maximilian_steel_ingot"] = {amount = 2},
 			["glazic_sigil_stone"] = {amount = 1},
-			["cloth"] = {amount = 3},
+			["leather"] = {amount = 3},
+			["gold_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["knight_justicar_plate"] = {amount = 1},
 			["knight_justicar_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 400;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("grand_knight_plate");
+		RECIPE.name = "Grand Knight Plate";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["knight_justicar_plate"] = {amount = 1},
+			["knight_justicar_helmet"] = {amount = 1},
+			["gold_ingot"] = {amount = 1},
+			["leather"] = {amount = 3},
+			["maximilian_steel_ingot"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["grand_knight_plate"] = {amount = 1},
 		};
 		RECIPE.category = "Armor"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
@@ -9034,7 +9068,7 @@ RECIPE:Register()
 			["hellplate_helmet"] = {amount = 1},
 			["hellforged_steel_ingot"] = {amount = 4},
 			["gold_ingot"] = {amount = 1},
-			["tortured_spirit"] = {amount = 1},
+			["unholy_sigil_stone"] = {amount = 1},
 			["pentagram_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {

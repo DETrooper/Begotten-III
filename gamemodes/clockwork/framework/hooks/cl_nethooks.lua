@@ -60,9 +60,9 @@ netstream.Hook("CharacterInit", function(data)
 	hook.Run("PlayerCharacterInitialized", data)
 end)
 
-netstream.Hook("Log", function(data)
-	local logType = data.logType
-	local text = data.text
+net.Receive("Log", function()
+	local logType = net.ReadUInt(3)
+	local text = net.ReadString()
 
 	Clockwork.kernel:PrintColoredText(Clockwork.kernel:GetLogTypeColor(logType), text)
 end)

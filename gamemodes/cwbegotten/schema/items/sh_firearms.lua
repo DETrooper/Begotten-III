@@ -421,7 +421,6 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 10; -- Seconds (for magazine)
 	ITEM.reloadSounds = {"begotten/scraplmg/cloth.wav", "begotten/scraplmg/wfoly_plr_lm_pkilo_drop.wav", "begotten/scraplmg/wpfoly_m249_reload_open_v1.wav", "begotten/scraplmg/wpfoly_m249_reload_clipout_v1.wav", "begotten/scraplmg/wpn_h1_saw_ins_look_01.wav", "begotten/scraplmg/wpfoly_m249_reload_clipin_v1.wav", "begotten/scraplmg/wpfoly_m249_reload_close_v2.wav", "begotten/scraplmg/wpfoly_m249_reload_chamber_v1.wav"};
 	ITEM.usesMagazine = true;
-	ITEM.requireFaith = {"Faith of the Family"};
 	
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, supercrateOnly = true, supercrateItems = {["shagalax_bullet_box_magazine"] = {min = 1, max = 2}}};
 ITEM:Register();

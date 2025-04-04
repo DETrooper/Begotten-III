@@ -820,9 +820,10 @@ function Clockwork.kernel:PrintLog(logType, text)
 		end
 	end
 
-	netstream.Start(listeners, "Log", {
-		logType = (logType or 5), text = text
-	})
+	net.Start("Log")
+		net.WriteUInt(logType or 5, 3)
+		net.WriteString(text)
+	net.Send(listeners)
 
 	if (game.IsDedicated()) then
 		self:ServerLog(text)
