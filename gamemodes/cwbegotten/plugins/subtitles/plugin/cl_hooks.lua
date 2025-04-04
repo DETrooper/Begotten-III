@@ -12,76 +12,78 @@ end;
 
 -- Called when the chat box info should be adjusted.
 function cwCinematicText:ChatBoxAdjustInfo(info)
-	if (Clockwork.Client:Alive()) then
-		if (info.shouldHear) then
-			if (Clockwork.ConVars.SHOWCINEMATICS:GetInt() == 1) then
-				local textColor = Color(255, 255, 255);
-				local goodClasses = {
-					"ic",
-					"yell",
-					"whisper"
-				};
-				
-				if (info.focusedOn) then
-					textColor = Color(255, 255, 150);
-				end;
-				
-				if (info.filter == "ic" and table.HasValue(goodClasses, info.class)) then
-					local doesRecognise = Clockwork.player:DoesRecognise(info.speaker);
-					local nameText = Clockwork.player:GetName(info.speaker);
-					
-					if (!doesRecognise) then
-						local unrecognisedName, usedPhysDesc = Clockwork.player:GetUnrecognisedName(info.speaker);
-						
-						if (usedPhysDesc and string.utf8len(unrecognisedName) > 24) then
-							unrecognisedName = string.utf8sub(unrecognisedName, 1, 21).."...";
-						end;
-						
-						nameText = "["..unrecognisedName.."]";
-					end
-					
-					if (info.class == "yell") then
-						info.text = string.Trim(info.text, "!")
-						info.text = string.Trim(info.text, ".")
+	if (!Clockwork.Client:Alive() and Clockwork.Client:GetMoveType() ~= MOVETYPE_NOCLIP) then
+		return;
+	end
 
-						info.text = info.text.."!";
-					elseif (info.class == "whisper") then
-						info.text = info.text.."...";
+	if (info.shouldHear) then
+		if (Clockwork.ConVars.SHOWCINEMATICS:GetInt() == 1) then
+			local textColor = Color(255, 255, 255);
+			local goodClasses = {
+				"ic",
+				"yell",
+				"whisper"
+			};
+			
+			if (info.focusedOn) then
+				textColor = Color(255, 255, 150);
+			end;
+			
+			if (info.filter == "ic" and table.HasValue(goodClasses, info.class)) then
+				local doesRecognise = Clockwork.player:DoesRecognise(info.speaker);
+				local nameText = Clockwork.player:GetName(info.speaker);
+				
+				if (!doesRecognise) then
+					local unrecognisedName, usedPhysDesc = Clockwork.player:GetUnrecognisedName(info.speaker);
+					
+					if (usedPhysDesc and string.utf8len(unrecognisedName) > 24) then
+						unrecognisedName = string.utf8sub(unrecognisedName, 1, 21).."...";
 					end;
 					
-					local lastChar = string.sub(info.text, string.len(info.text));
-					local sayText = "says";
-					
-					if info.class == "ic" then
-						if lastChar == "?" then
-							sayText = "asks";
-						elseif lastChar == "!" then
-							sayText = "exclaims";
-						end
-					elseif info.class == "yell" then
-						sayText = "yells";
-					elseif info.class == "whisper" then
-						sayText = "whispers";
-					end
-					
-					if info.font then
-						if info.font == "Voltism" then
-							sayText = "chirps";
-							
-							if info.class == "ic" then
-								if lastChar == "?" then
-									sayText = "queries";
-								elseif lastChar == "!" then
-									sayText = "emits";
-								end
-							elseif info.class == "yell" then
-								sayText = "shrieks";
-							end
-						end
-					end
-					
-					cwCinematicText:PrintTextCenter(nameText.." "..sayText.." ".."\""..info.text.."\"", 10, textColor, info.font);
+					nameText = "["..unrecognisedName.."]";
+				end
+				
+				if (info.class == "yell") then
+					info.text = string.Trim(info.text, "!")
+					info.text = string.Trim(info.text, ".")
+
+					info.text = info.text.."!";
+				elseif (info.class == "whisper") then
+					info.text = info.text.."...";
 				end;
+				
+				local lastChar = string.sub(info.text, string.len(info.text));
+				local sayText = "says";
+				
+				if info.class == "ic" then
+					if lastChar == "?" then
+						sayText = "asks";
+					elseif lastChar == "!" then
+						sayText = "exclaims";
+					end
+				elseif info.class == "yell" then
+					sayText = "yells";
+				elseif info.class == "whisper" then
+					sayText = "whispers";
+				end
+				
+				if info.font then
+					if info.font == "Voltism" then
+						sayText = "chirps";
+						
+						if info.class == "ic" then
+							if lastChar == "?" then
+								sayText = "queries";
+							elseif lastChar == "!" then
+								sayText = "emits";
+							end
+						elseif info.class == "yell" then
+							sayText = "shrieks";
+						end
+					end
+				end
+				
+				cwCinematicText:PrintTextCenter(nameText.." "..sayText.." ".."\""..info.text.."\"", 10, textColor, info.font);
 			end;
 		end;
 	end;
