@@ -132,7 +132,7 @@ local COMMAND = Clockwork.command:New("CharTransferFactionOverride");
 				return;
 			end;
 			
-			local bSuccess, fault = Clockwork.faction:GetStored()[faction]:OnTransferred(target, Clockwork.faction:GetStored()[targetFaction], arguments[3]);
+			local bSuccess, fault = Clockwork.faction:GetStored()[faction]:OnTransferred(target, Clockwork.faction:GetStored()[target:GetFaction()]);
 			
 			if (bSuccess != false) then
 				target:SetCharacterData("kinisgerOverride", faction);
@@ -171,6 +171,12 @@ local COMMAND = Clockwork.command:New("CharTransferSubfactionOverride");
 		if (target) then
 			local subfaction = arguments[2];
 			local faction = target:GetCharacterData("kinisgerOverride");
+			
+			if !faction or faction == "" then
+				Clockwork.player:Notify(player, target:Name().." does not have a valid false faction!");
+				return;
+			end
+			
 			local factionSubfactions = Clockwork.faction:GetStored()[faction].subfactions;
 			local name = target:Name();
 			
