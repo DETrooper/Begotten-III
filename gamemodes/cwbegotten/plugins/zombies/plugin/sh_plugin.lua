@@ -29,6 +29,8 @@ cwZombies.zombieNPCS = {
 	"npc_bgt_pursuer",
 	"npc_bgt_shambler",
 	"npc_bgt_suitor",
+	"npc_bgt_chaplain",
+	"npc_bgt_demonknight",
 };
 
 cwZombies.npcSpawnAmounts = {
