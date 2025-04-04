@@ -304,6 +304,68 @@ function SWEP:Hitscan()
 	end
 end
 
+function SWEP:ActivateLastStand(player, element)
+	self:SetNWBool(element == 0 and "fireSword" or "iceSword", true)
+	self:SetNWBool(element == 0 and "iceSword" or "fireSword", false)
+
+	player:EmitSound("ambient/fire/ignite.wav", 100, (element == 0 and 80 or 50))
+
+end
+
+function SWEP:LastStandCheck(player, curTime)
+	if(!self.lastStand or !IsValid(player) or !player:IsPlayer() or (self.nextLastStandCheck and self.nextLastStandCheck > curTime)) then return end
+	self.nextLastStandCheck = curTime + 0.2
+
+	if(!Clockwork.player:HasFlags(player, "l") and player:Health() > player:GetMaxHealth() * 0.6) then
+		if(self:GetNWBool("lastStandActive") or self:SetNWBool("fireSword") or self:SetNWBool("iceSword")) then
+			self:SetNWBool("lastStandActive", false)
+			self:SetNWBool("fireSword", false)
+			self:SetNWBool("iceSword", false)
+
+			self.nextLastStandCheck = curTime + 20
+
+		end
+
+		return
+	
+	end
+
+	if(self:GetNWBool("lastStandActive")) then return end
+
+	self:SetNWBool("lastStandActive", true)
+
+	self:ActivateLastStand(player, math.random(0, 1))
+
+	self.nextLastStandCheck = curTime + 20
+
+end
+
+function SWEP:CheckElementalStatus()
+	if(!self.setElemental) then
+		if(self:GetNWBool("fireSword")) then
+			self.originalAttackTable = self.AttackTable
+			self.AttackTable = self.originalAttackTable.."Fire"
+
+			self.setElemental = true
+
+		elseif(self:GetNWBool("iceSword")) then
+			self.originalAttackTable = self.AttackTable
+			self.AttackTable = self.originalAttackTable.."Ice"
+
+			self.setElemental = true
+
+		end
+
+		return
+		
+	elseif(self.setElemental and !self:GetNWBool("iceSword") and !self:GetNWBool("fireSword")) then
+		self.setElemental = false
+		self.AttackTable = self.originalAttackTable
+
+	end
+
+end
+
 function SWEP:Think()
 	local player = self.Owner;
 	local plyTab = player:GetTable();

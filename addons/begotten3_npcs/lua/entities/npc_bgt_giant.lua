@@ -31,7 +31,7 @@ ENT.RunAnimation = ACT_WALK
 ENT.JumpAnimation = "releasecrab"
 ENT.RunAnimRate = 0
 -- Climbing --
-ENT.ClimbLedges = false
+ENT.ClimbLedges = true
 ENT.ClimbProps = true
 ENT.ClimbLedgesMaxHeight = 10000
 ENT.ClimbLadders = true
@@ -83,8 +83,23 @@ ENT.PossessionBinds = {
 	
 			else return false; end
 		end
+	}},
+
+	[IN_ATTACK2] = {{
+		coroutine = true,
+		onkeydown = function(self)
+			if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
+				self.nextAttack = self.Attacks.Stomp;
+				self.AttackFunctions[self.nextAttack](self);
+				self:GetNextAttack();
+	
+				return true;
+	
+			else return false; end
+		end
 	}}
 }
+
 
 ENT.Attacks = {
 	Standard = 1,

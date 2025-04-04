@@ -1879,6 +1879,14 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.attributes then
+					if table.HasValue(itemTable.attributes, "last_stand") then
+						frame:AddText("Unholy Blessing: Upon reaching 60% of your maximum health, this weapon will become imbued with either fire or ice, and will deal elemental damage.", Color(110, 30, 30), nil, 0.9);
+					end
+
+					if table.HasValue(itemTable.attributes, "cursed") then
+						frame:AddText("Cursed: Causes corruption to wielder on swing if you are not Faith of the Dark.", Color(110, 30, 30), nil, 0.9);
+					end
+
 					if table.HasValue(itemTable.attributes, "aoebuff") then
 						frame:AddText("Area of Effect Buff: +15% Attack Damage, -25% Received Damage, 1.5x Stamina Regen Rate, +2 Residual Sanity Gain, Immunity to Warcry Sanity & Disorientation Debuffs", Color(110, 30, 30), nil, 0.9);
 					end

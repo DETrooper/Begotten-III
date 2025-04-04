@@ -20,9 +20,12 @@ concommand.Add("ix_togglethirdperson", ToggleThirdPerson);
 concommand.Add("ark_thirdperson", ToggleThirdPerson);
 
 function cwThirdPerson:CalcViewAdjustTable(view)
-    if(!Clockwork.ConVars.THIRDPERSON:GetBool()) then return; end
-    if(!Clockwork.player:IsAdmin(Clockwork.Client) and !Clockwork.config:Get("enable_thirdperson"):Get()) then return; end
-    if(Clockwork.character.isOpen) then return; end
+    if(!hook.Run("ShouldForceThirdPerson", Clockwork.Client)) then
+        if(!Clockwork.ConVars.THIRDPERSON:GetBool()) then return; end
+        if(!Clockwork.player:IsAdmin(Clockwork.Client) and !Clockwork.config:Get("enable_thirdperson"):Get()) then return; end
+        if(Clockwork.character.isOpen) then return; end
+
+    end
 
     view.drawviewer = true;
 
@@ -31,10 +34,13 @@ function cwThirdPerson:CalcViewAdjustTable(view)
 
     local up, forward, right = 2, -60, 30;
 
+    local filter = {Clockwork.Client}
+    hook.Run("ModifyThirdPersonFilter", player, filter)
+
     local data = {
         start = view.origin,
         endpos = view.origin + (view.angles:Forward() * forward) + (view.angles:Up() * up) + (view.angles:Right() * right),
-        filter = Clockwork.Client,
+        filter = filter,
         mins = Vector(-10, -10, -10),
         maxs = Vector(10, 10, 10),
 
