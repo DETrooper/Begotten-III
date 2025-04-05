@@ -328,7 +328,7 @@ ITEM.description = "An original set of Blade Druid Robes somehow well kept over 
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.requireFaction = {"Goreic Warrior"};
 ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver"};
-ITEM.overlay = "begotten/zomboverlay/skullhelm";
+ITEM.overlay = "begotten/zomboverlay/new/goreminotaur";
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_HEAD] = true,

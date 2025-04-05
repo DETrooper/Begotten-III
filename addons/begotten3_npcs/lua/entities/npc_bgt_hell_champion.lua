@@ -149,7 +149,7 @@ if SERVER then
 				self.Shielded = true
 				
 				self.ArmorPiercing = 70;
-				self.Damage = 25;
+				self.Damage = 30;
 				self.DamageType = DMG_CLUB
 				self.StaminaDamage = 45;
 				
@@ -224,7 +224,7 @@ if SERVER then
 	end
 	function ENT:Makeup()
 	end;
-	ENT.ModelScale = 1
+	ENT.ModelScale = 1.15
 	ENT.pitch = math.random(80, 110)
 	function ENT:CustomThink()
 		if (!self.lastStuck and self:IsStuck()) then

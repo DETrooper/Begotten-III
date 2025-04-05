@@ -11,7 +11,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "An iron helmet mass-produced in an ancient era, now commonly used by the Holy Order of the Gatekeepers."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/gatekeeperhelmet";
 	ITEM.faction = "Gatekeeper";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
@@ -45,7 +45,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.headReplacement = "models/begotten/heads/sol_bellhelm.mdl";
 	ITEM.description = "A holy iron bell to be permanently fitted around a flagellant's head. Once a technique of torture and humiliation; the bell would be repeatedly struck, deafening and disorienting the victim. Now the Orthodoxy wears this helm willingly, striking fear into the hearts of the sane."
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/skullhelm";
+	ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 	
 	ITEM.attributes = {"conditionless", "not_unequippable", "deathknell", "fear"};
 	ITEM.requiredbeliefs = {"repentant"};
@@ -88,7 +88,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.headReplacement = "models/begotten/heads/sol_ironcladhelm.mdl";
 	ITEM.description = "An ironclad torture device that is bolted into the flayed faces of the accused. Inside the helm are various bloodied screws that can be further tightened to increase agony. It is now used by the flagellants of the Orthodoxy, who wear this torturous instrument to ensure their continued suffering."
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/skullhelm";
+	ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 	
 	ITEM.attributes = {"conditionless", "not_unequippable", "bloodtoll", "fear"};
 	ITEM.requiredbeliefs = {"repentant"};
@@ -165,7 +165,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A crudely constructed steel helmet, its design obviously inspired by older Empire of Light designs."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/crudeplatehelmet";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -433,7 +433,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A makeshift helmet made of various scrap found from the Wasteland."
 	ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/scraphelmet";
 	
 	ITEM.conditionScale = 1 -- item degrades 1x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -607,7 +607,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A more robust variant of the Gatekeeper Helmet made with fine steel."
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/gatekeeperhelmet";
 	ITEM.faction = "Gatekeeper";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
@@ -646,7 +646,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaith = {"Faith of the Light"};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/gatekeeperhelmet";
 	ITEM.faction = "Gatekeeper";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
@@ -682,7 +682,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A Gothic helmet for use with the rest of a Knight's armor."
 	ITEM.requireFaction = {"Holy Hierarchy"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/knightplate";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -716,7 +716,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "Elite blackened steel adorned with the colors of a noble household."
 	ITEM.requireFaction = {"Holy Hierarchy"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/knightplate";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -749,7 +749,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A burdensome scrap metal contraption to be fitted uncomfortably around one's skull. It has been painted with sigils supposedly meant to instill the wearer with power."
 	ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/machinistplatehelmet";
 
 	ITEM.conditionScale = 1 -- item degrades 1x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -782,7 +782,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A bolted rusty steel plate helm and gasmask cowled under a leather hood. An exhaust pipe feeds the holy fumes of diesel into the wearer's lungs."
 	ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/smogpriesthelmet";
 
 	ITEM.conditionScale = 0.85 -- item degrades 1x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;

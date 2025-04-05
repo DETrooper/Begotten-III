@@ -1162,7 +1162,7 @@ ITEM.weightclass = "Light";
 ITEM.description = "Fine black robes with a beaked mask stuffed with odd-smelling herbs. It grafts its owner with a silhouette synonymous with death; the Plague has come for us all.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.excludeFactions = {"Goreic Warrior"};
-ITEM.overlay = "begotten/zomboverlay/skullhelm";
+ITEM.overlay = "begotten/zomboverlay/new/goreminotaur";
 
 ITEM.requiredbeliefs = {"plague_doctor"};
 
@@ -1352,7 +1352,7 @@ ITEM.type = "plate";
 ITEM.description = "An old set of armor, once belonging to a disgraced Knight of Sol. Although covered in tattered cloth that has hardly withstood the harsh conditions of the wasteland, the armor itself is in substantially better condition, with faded gold markings still visible.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.excludeFactions = {"Goreic Warrior"};
-ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+ITEM.overlay = "begotten/zomboverlay/new/knightplate";
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -1740,7 +1740,7 @@ ITEM.type = "plate";
 ITEM.description = "Further augmented by increased steel thickness, this plate is armored to the standard of a Knight's armor set.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.excludeFactions = {"Goreic Warrior"};
-ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+ITEM.overlay = "begotten/zomboverlay/new/gatekeeperhelmet";
 ITEM.faction = "Gatekeeper";
 
 ITEM.requiredbeliefs = {"hauberk"};
@@ -1812,7 +1812,7 @@ ITEM.type = "plate";
 ITEM.description = "A sturdy set of steel plate armor, scarred by constant battle and war.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.excludeFactions = {"Goreic Warrior"};
-ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+ITEM.overlay = "begotten/zomboverlay/new/gatekeeperhelmet";
 ITEM.faction = "Gatekeeper";
 
 ITEM.requiredbeliefs = {"hauberk"};
@@ -1883,7 +1883,7 @@ ITEM.weightclass = "Heavy";
 ITEM.description = "The armor of a wasteland tyrant. It is fitted with crude steel plates and held together by scrap. This style of armor is often used by Scrapper Warlords who are paranoid of Voltist assassins.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
-ITEM.overlay = "begotten/zomboverlay/skullhelm";
+ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 
 ITEM.requiredbeliefs = {"hauberk"};
 

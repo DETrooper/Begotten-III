@@ -12,7 +12,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentOffsetVector = Vector(-2, 3.54, -1.41);
 	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
-	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 600, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1200, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth"}};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM:Register();
@@ -31,7 +31,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentOffsetVector = Vector(-2, 5, -1);
 	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
-	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 800, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 2500, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth"}};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM:Register();
@@ -50,7 +50,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentOffsetVector = Vector(-2, 9, -4);
 	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
-	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1200};
+	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 3500};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth"}};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM:Register();
@@ -69,7 +69,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentOffsetVector = Vector(-2, 7.07, -2.83);
 	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
-	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1500};
+	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 7500};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth", "leather", "leather"}};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM:Register();
@@ -88,7 +88,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	ITEM.attachmentOffsetVector = Vector(0, 1.4, -7.5);
 	ITEM.attachmentShieldOffset = Vector(1, -0.5, 1);
 	
-	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 250, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 300, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth"}};
 ITEM:Register();
 

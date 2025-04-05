@@ -15,7 +15,7 @@ ITEM.description = "Cast in the most pure Hellforged steel and adorned with fine
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaith = {"Faith of the Dark"};
 ITEM.excludeFactions = {"Goreic Warrior"};
-ITEM.overlay = "begotten/zomboverlay/helmeyes";
+ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 ITEM.faction = "Children of Satan";
 
 ITEM.effectiveLimbs = {
@@ -85,7 +85,7 @@ ITEM.description = "A set of heavy armor forged in the fires of Hell, befitting 
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaith = {"Faith of the Dark"};
 ITEM.excludeFactions = {"Goreic Warrior"};
-ITEM.overlay = "begotten/zomboverlay/helmeyes";
+ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 ITEM.faction = "Children of Satan";
 
 ITEM.requiredbeliefs = {"hauberk"};
@@ -340,7 +340,7 @@ ITEM.description = "A set of metal plate armor adorned with spikes, its design o
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaith = {"Faith of the Dark"};
 ITEM.excludeFactions = {"Goreic Warrior"};
-ITEM.overlay = "begotten/zomboverlay/helmeyes";
+ITEM.overlay = "begotten/zomboverlay/new/hellspike";
 ITEM.faction = "Children of Satan";
 
 ITEM.attributes = {"spiked"}
@@ -415,7 +415,7 @@ ITEM.description = "Hellforged Steel armor said to contain the bones of many sac
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaith = {"Faith of the Dark"};
 ITEM.excludeFactions = {"Goreic Warrior"};
-ITEM.overlay = "begotten/zomboverlay/skullhelm";
+ITEM.overlay = "begotten/zomboverlay/new/wraithplate";
 ITEM.faction = "Children of Satan";
 
 ITEM.attributes = {"fear"};
@@ -488,7 +488,7 @@ ITEM.type = "plate";
 ITEM.description = "Heavy plate armor of Eastern Nigerii design. It is meant for the infamous Immortals, an elite band of warriors devoted to the Emperor. A dark magic prevents this armor from being worn by anyone not of the bloodline of the King of Kings.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaction = {"Children of Satan"};
-ITEM.overlay = "begotten/zomboverlay/skullhelm";
+ITEM.overlay = "begotten/zomboverlay/new/immortal";
 ITEM.faction = "Children of Satan";
 
 ITEM.requiredbeliefs = {"hauberk"};
@@ -680,7 +680,7 @@ ITEM.description = "Blackplate of the finest hellforged steel fitted to only the
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requireFaith = {"Faith of the Dark"};
 ITEM.excludeFactions = {"Goreic Warrior"};
-ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+ITEM.overlay = "begotten/zomboverlay/new/hellplate";
 ITEM.faction = "Children of Satan";
 ITEM.requireRank = {"Hell Baron"};
 

@@ -59,7 +59,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaith = {"Faith of the Dark"};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/skullhelm";
+	ITEM.overlay = "begotten/zomboverlay/new/skullshield";
 	ITEM.faction = "Children of Satan";
 
 	ITEM.conditionScale = 1.5 -- item degrades 1.5x faster with damage related condition loss
@@ -96,7 +96,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaith = {"Faith of the Dark"};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/hellplatehelmet";
 	ITEM.faction = "Children of Satan";
 
 	ITEM.conditionScale = 1.5 -- item degrades 1.5x faster with damage related condition loss
@@ -134,7 +134,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaith = {"Faith of the Dark"};
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/hellplatehelmet";
 	ITEM.faction = "Children of Satan";
 
 	ITEM.conditionScale = 1.5 -- item degrades 1.5x faster with damage related condition loss

@@ -11,7 +11,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A blackened steel helmet used by many Gores of Clan Shagalax. It provides exemplary protection."
 	ITEM.requireFaction = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/helmeyes";
+	ITEM.overlay = "begotten/zomboverlay/new/goreshagalaxhelm";
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -47,7 +47,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A spiked and horned steel helmet typically worn by the defenders of the Great Tree. It provides exemplary protection."
 	ITEM.requireFaction = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/helmeyes";
+	ITEM.overlay = "begotten/zomboverlay/new/goreguardianhelm";
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -117,7 +117,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A crudely made horned helmet commonly worn by the savage warriors of Clan Gore. It provides reasonable protection."
 	ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/helmeyes";
+	ITEM.overlay = "begotten/zomboverlay/new/gorewarfighterhelm";
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -187,7 +187,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "An iron ridge helm of Goreic origin, embellished with decorations."
 	ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/goreridgehelm";
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -225,7 +225,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaction = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	ITEM.attributes = {"fear"};
-	ITEM.overlay = "begotten/zomboverlay/skullhelm";
+	ITEM.overlay = "begotten/zomboverlay/new/goreminotaur";
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -263,7 +263,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaction = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	ITEM.attributes = {"fear"};
-	ITEM.overlay = "begotten/zomboverlay/skullhelm";
+	ITEM.overlay = "begotten/zomboverlay/new/goreminotaur";
 
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -333,7 +333,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A steel ridge helm that has been proven in combat. Only a worthy Gore may wear it."
 	ITEM.requireFaction = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/goreridgehelm";
 	ITEM.excludeSubfactions = {"Clan Grock"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
@@ -369,7 +369,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A Shagalaxian steel helmet decorated with brass Familial sigils."
 	ITEM.requireFaction = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/gorekingschosenhelmet";
 	ITEM.excludeSubfactions = {"Clan Grock"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
@@ -407,7 +407,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A sadistic hellforged steel helm decorated by human bone and demon horns. It has been cursed with catalystic energy that prevents it from being worn by the meek."
 	ITEM.requireFaction = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/goredespoilerhelm";
 	ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Crast", "Clan Harald", "Clan Shagalax"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
@@ -443,7 +443,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
 	ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Crast", "Clan Harald", "Clan Shagalax"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 	
 	ITEM.conditionScale = 0.8 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -478,7 +478,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaction = {"Goreic Warrior"};
 	ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Crast", "Clan Harald", "Clan Shagalax"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 	
 	ITEM.conditionScale = 0.8 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;

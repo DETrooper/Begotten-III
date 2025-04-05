@@ -1461,7 +1461,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Pouch";
 		RECIPE.requiredBeliefs = {"ingenious"};
 		RECIPE.requirements = {
-			["cloth"] = {amount = 3},
+			["cloth"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["backpack_pouch"] = {amount = 1},
@@ -1517,7 +1517,8 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["backpack_small"] = {amount = 1},
-			["leather"] = {amount = 3},
+			["leather"] = {amount = 2},
+			["cloth"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["backpack"] = {amount = 1},
@@ -1573,7 +1574,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["backpack_pouches"] = {amount = 1},
-			["leather"] = {amount = 7},
+			["leather"] = {amount = 5},
 		};
 		RECIPE.result = {
 			["backpack_survivalist"] = {amount = 1},
@@ -7638,8 +7639,8 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
-			["iron_ingot"] = {amount = 5},
-			["steel_ingot"] = {amount = 3},
+			["steel_ingot"] = {amount = 4},
+			["leather"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["fine_gatekeeper_plate"] = {amount = 1},
@@ -7669,7 +7670,7 @@ RECIPE:Register()
 		RECIPE.requirements = {
 			["gatekeeper_plate"] = {amount = 1},
 			["fine_steel_ingot"] = {amount = 1},
-			["steel_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["fine_gatekeeper_plate"] = {amount = 1},
@@ -7886,7 +7887,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 3},
+			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 2},
 			["high_gatekeeper_heavy_plate"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -8715,7 +8717,8 @@ RECIPE:Register()
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap_helmet"] = {amount = 1},
-			["scrap"] = {amount = 5},
+			["scrap"] = {amount = 6},
+			["iron_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["scrapper_machinist_plate_helmet"] = {amount = 1},
@@ -8725,7 +8728,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 35;
+		RECIPE.experience = 40;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -8744,6 +8747,7 @@ RECIPE:Register()
 		RECIPE.requirements = {
 			["scrap_helmet"] = {amount = 1},
 			["steel_ingot"] = {amount = 1},
+			["scrap"] = {amount = 3},
 			["small_oil"] = {amount = 1},
 			["leather"] = {amount = 2},
 		};
@@ -8755,7 +8759,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 40;
+		RECIPE.experience = 45;
 		
 		function RECIPE:OnCraft(player)
 		end;

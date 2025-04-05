@@ -311,7 +311,7 @@ ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.attributes = {"fear"};
 ITEM.requireFaction = {"Goreic Warrior"};
 ITEM.excludeSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast"};
-ITEM.overlay = "begotten/zomboverlay/skullhelm";
+ITEM.overlay = "begotten/zomboverlay/new/goreminotaur";
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
