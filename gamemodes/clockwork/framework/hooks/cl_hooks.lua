@@ -491,7 +491,7 @@ end
 
 function GM:PlayerButtonDown(player, button)
 	if IsFirstTimePredicted() then
-		if (!Clockwork.Client.nextBind or Clockwork.Client.nextBind < CurTime()) and hook.Run("BegottenPlayerCanUseBind", player, button) then
+		if (!Clockwork.Client.nextBind or Clockwork.Client.nextBind < CurTime()) and !hook.Run("BegottenPlayerCantUseBind", player, button) then
 			for k, v in pairs(Clockwork.ConVars.Binds) do
 				local value = v:GetInt();
 				
