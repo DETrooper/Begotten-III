@@ -112,7 +112,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 		[4] = {
 			["deflection"] = {
 				name = "Deflection",
-				description = "Successful deflections (perfect blocks) now restore +15 points of stamina and +5 points of stability, as well as prevent enemy attacks for a minimum of 1 second.",
+				description = "Successful deflections (perfect blocks) now restore +10 points of stamina and +5 points of stability, as well as prevent enemy attacks for a minimum of 1 second. When your deflection window is triggered, your block sound will be at a higher pitch. Note that there is a 2 second cooldown to your deflection window that is set each time you block.",
 				requirements = {"fighter"},
 				row = 2,
 			},

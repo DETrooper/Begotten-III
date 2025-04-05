@@ -785,7 +785,7 @@ ITEM:Register();
 local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Hatchet";
 	ITEM.model = "models/begotten/weapons/serfhatchet.mdl";
-	ITEM.weight = 1.2;
+	ITEM.weight = 0.9;
 	ITEM.uniqueID = "begotten_1h_hatchet";
 	ITEM.category = "Melee";
 	ITEM.description = "A small hatchet that excels at cutting wood. It also excels at cutting flesh...";

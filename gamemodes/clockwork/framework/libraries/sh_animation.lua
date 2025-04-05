@@ -1181,6 +1181,14 @@ function Clockwork.animation:AddHellplateHellBaronArms(model)
 	});
 end;
 
+function Clockwork.animation:AddGatekeeperMediciHalfplateArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_gatekeepermedicusarms.mdl",
+		skin = 0
+	});
+end;
+
 -- A function to check for stored hands info by model.
 function Clockwork.animation:CheckHands(model, animTable)
 	local info = animTable.hands or {
@@ -1343,6 +1351,8 @@ Clockwork.animation:AddMarauderArms("models/begotten/goreicwarfighters/reaver_ma
 Clockwork.animation:AddHellHalfPlateArms("models/begotten/satanists/halfhellplate");
 
 Clockwork.animation:AddHellplateHellBaronArms("models/begotten/satanists/ornatehellplatebaron.mdl");
+
+Clockwork.animation:AddGatekeeperMediciHalfplateArms("models/begotten/gatekeepers/medicushalfplate");
 
 -- Hill arms
 

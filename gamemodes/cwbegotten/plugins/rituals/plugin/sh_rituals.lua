@@ -1609,7 +1609,7 @@ RITUAL = cwRituals.rituals:New("Sister's Blessing");
 	RITUAL.description = "The River Styx is said to be a boiling body of lava that is home to the dead and damned. With the correct blood magic ritual, the Reavers have been able to bargain with the demons that their crossing will be paid in the souls of their harvest. Incurs 75 corruption.";
 	RITUAL.onerequiredbelief = {"shedskin", "watchful_raven"}; -- Unique Mother/Sister Ritual
 
-	RITUAL.requirements = {"xolotl_catalyst", "pentagram_catalyst", "familial_catalyst"};
+	RITUAL.requirements = {"xolotl_catalyst", "down_catalyst", "familial_catalyst"};
 	RITUAL.corruptionCost = 75;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 200;

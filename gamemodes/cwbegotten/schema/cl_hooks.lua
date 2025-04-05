@@ -1928,6 +1928,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				
 					if table.HasValue(itemTable.attributes, "lifeleech") then
 						frame:AddText("Lifeleech (Shieldless): 50% of damage dealt is returned as health.", Color(110, 30, 30), nil, 0.9);
+						frame:AddText("Lifeleech (Shieldless): 70% of damage dealt is returned as health.", Color(110, 30, 30), nil, 0.9);
 					end
 				
 					if table.HasValue(itemTable.attributes, "rage") then
@@ -3187,7 +3188,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			if table.HasValue(itemTable.attributes, "spiked") then
 				frame:AddText("Spiked: Taking damage from most fisted weapons will deal a small amount of damage back to the attacker.", Color(110, 30, 30), nil, 0.9);
 			end
-
+			
+			if table.HasValue(itemTable.attributes, "practitioner") then
+				frame:AddText("Practitioner: Increases the effectiveness of healing items used on yourself and others by 25%.", Color(110, 30, 30), nil, 0.9);
+			end
 		end
 		
 		--if itemTable.weight then

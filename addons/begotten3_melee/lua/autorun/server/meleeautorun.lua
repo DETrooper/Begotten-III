@@ -1189,12 +1189,12 @@ local function Guarding(ent, dmginfo)
 							local deflectionStabilityPayback = 0;
 						
 							if ent:HasBelief("sidestep") then
-								deflectionPoisePayback = 25;
+								deflectionPoisePayback = 20;
 								deflectionStabilityPayback = 15;
 								wep.canDeflect = true;
 							elseif ent:HasBelief("deflection") then
-								deflectionPoisePayback = 15;
-								deflectionStabilityPayback = 10;
+								deflectionPoisePayback = 10;
+								deflectionStabilityPayback = 5;
 							end
 							
 							if IsValid(inflictor) and inflictor:GetNW2String("activeOffhand") then

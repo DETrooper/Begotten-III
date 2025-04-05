@@ -2034,7 +2034,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 3},
+			["iron_ingot"] = {amount = 2},
 			["wood"] = {amount = 3},
 		};
 		RECIPE.result = {
@@ -2045,7 +2045,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 40;
+		RECIPE.experience = 35;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -7543,6 +7543,35 @@ RECIPE:Register()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("gatekeeper_medici_halfplate");
+		RECIPE.name = "Gatekeeper Medici Halfplate";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["gatekeeper_halfplate"] = {amount = 1},
+			["cloth"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["gatekeeper_medici_halfplate"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 8;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("gatekeeper_plate_upgrade_halfplate");
 		RECIPE.name = "(Upgrade) Gatekeeper Plate";
@@ -7681,6 +7710,37 @@ RECIPE:Register()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 300;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("master-at-arms_gatekeeper_plate");
+		RECIPE.name = "Master-at-Arms Gatekeeper Plate";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requirements = {
+			["ornate_gatekeeper_plate"] = {amount = 1},
+			["maximilian_steel_ingot"] = {amount = 3},
+			["leather"] = {amount = 3},
+			["glazic_sigil_stone"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["master-at-arms_gatekeeper_plate"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 400;
 		
 		function RECIPE:OnCraft(player)
 		end;

@@ -91,6 +91,38 @@ hook.Add("ClockworkInitialized", "ClockworkInitializedD21", function()
 		end;
 	RECIPE:Register()
 	
+	RECIPE = cwRecipes.recipes:New("hillkeeper_master-at-arms_harness");
+		RECIPE.name = "Hillkeeper Master-at-Arms Harness";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
+		RECIPE.requirements = {
+			["leather"] = {amount = 3},
+			["glazic_sigil_stone"] = {amount = 1},
+			["hillkeeper_defender_plate"] = {amount = 1},
+			["maximilian_steel_ingot"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["hillkeeper_master-at-arms_harness"] = {amount = 1},
+			
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 375;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
 	RECIPE = cwRecipes.recipes:New("hillkeeper_signifer_plate");
 		RECIPE.name = "Hillkeeper Signifer Plate";
 		RECIPE.requiresSmithy = true;
@@ -834,6 +866,37 @@ hook.Add("ClockworkInitialized", "ClockworkInitializedD21", function()
 		};
 		RECIPE.result = {
 			["hill_coat_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 80;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("hill_master_at_arms_helm");
+		RECIPE.name = "Hillkeeper Master-at-Arms Ridgehelm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Hillkeeper"};
+		RECIPE.requirements = {
+			["hill_coat_helmet"] = {amount = 1},
+			["maximilian_steel_ingot"] = {amount = 2},
+			["hide"] = {amount = 2},
+			["light_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["hill_master_at_arms_helm"] = {amount = 1},
 		};
 		RECIPE.category = "Armor"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";

@@ -216,6 +216,7 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 				local healDelay = itemTable("healDelay");
 				local healRepetition = itemTable("healRepetition");
 				local timesHealed = 0;
+				local clothesItem = player:GetClothesEquipped();
 				
 				if cwBeliefs and player:HasBelief("medicine_man") then
 					healAmount = healAmount * 1.7;
@@ -223,6 +224,10 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 				
 				if cwBeliefs and player:HasBelief("one_with_the_druids") then
 					healAmount = healAmount * 1.5;
+				end
+				
+				if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "practitioner") then
+					healAmount = healAmount * 1.25;
 				end
 
 				timer.Create(playerIndex.."_heal_"..itemTable.itemID, healDelay, healRepetition, function()

@@ -8,6 +8,7 @@ ITEM.category = "Firearms";
 ITEM.useInVehicle = false;
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.includeSubfactions = {"Clan Shagalax"};
+ITEM.excludeSubfactions = {};
 ITEM.requireFaith = {};
 ITEM.requireFaction = {};
 ITEM.breakable = true;
@@ -322,6 +323,11 @@ function ITEM:OnUse(player, itemEntity)
 			Schema:EasyText(player, "chocolate", "You are not the correct faction for this item!")
 			return false
 		end
+	end
+	
+	if (table.HasValue(self.excludeSubfactions, kinisgerOverrideSubfaction or subfaction)) then
+		Schema:EasyText(player, "peru", "Your subfaction cannot use this!")
+		return false
 	end
 	
 	local weaponClass = self("weaponClass");

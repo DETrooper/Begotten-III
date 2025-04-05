@@ -185,6 +185,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A high ridged helm covered in runic emblems and sigils of the Gore-Glazic, with a split-coif design. A sign of the ultimate position a man of the Watch could attain."
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.requireRank = {"Master-At-Arms"};
 	ITEM.requireFaction = {"Hillkeeper"};
 	
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
