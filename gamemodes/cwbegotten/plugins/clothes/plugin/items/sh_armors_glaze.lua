@@ -1163,7 +1163,7 @@ ITEM.description = "Fine black robes with a beaked mask stuffed with odd-smellin
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/skullhelm";
-ITEM.attributes = {"practitioner"};
+ITEM.attributes = {"practitioner", "miracle_doctor"};
 
 ITEM.requiredbeliefs = {"plague_doctor"};
 

@@ -3192,6 +3192,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			if table.HasValue(itemTable.attributes, "practitioner") then
 				frame:AddText("Practitioner: Increases the effectiveness of healing items used on yourself and others by 25%.", Color(110, 30, 30), nil, 0.9);
 			end
+
+			if table.HasValue(itemTable.attributes, "miracle_doctor") then
+				frame:AddText("Miracle Doctor: Any healing items that would normally cure only bleeding will now also cure gashes.", Color(110, 30, 30), nil, 0.9);
+			end
 		end
 		
 		--if itemTable.weight then
