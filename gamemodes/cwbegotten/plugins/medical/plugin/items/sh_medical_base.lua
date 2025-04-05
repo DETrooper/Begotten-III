@@ -28,6 +28,7 @@ local ITEM = Clockwork.item:New(nil, true)
 	ITEM.ingestible = nil;
 	ITEM.stackable = true;
 	ITEM.useOnSelf = true; -- Can use on self.
+	ITEM.curesInjuries = {};
 
 	ITEM.canSave = false; -- Can save people in critical condition.
 	ITEM.healAmount = nil; -- Amount of HP healed per repetition.
