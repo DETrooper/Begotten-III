@@ -386,6 +386,7 @@ local bannerIds = {
 
 function cwMelee:PlayerHasBanner(player)
 	local weapon = player:GetActiveWeapon()
+	if(!IsValid(weapon)) then return false end
 	if(#weapon:GetNW2String("activeShield", "") > 0) then return false end
 
 	if(weapon.bannerType) then return weapon
