@@ -378,7 +378,11 @@ function SWEP:Think()
 				if (self.realBlockSoundTable) then
 					local blockSoundTable = GetSoundTable(self.realBlockSoundTable)
 					
-					player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 65, math.random(100, 90))
+					if(self.canDeflect) then
+						player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 90, math.random(130, 160))
+					else
+						player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 65, math.random(90, 100))
+					end
 				end;
 
 				player:SetLocalVar("CanBlock", false);
@@ -972,11 +976,11 @@ function SWEP:PrimaryAttack()
 													end
 													
 													if injuries then
-														if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+														if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 														end
 														
-														if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+														if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 														end
 													end
@@ -1071,11 +1075,11 @@ function SWEP:PrimaryAttack()
 			end
 			
 			if injuries then
-				if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+				if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 					attackCost = attackCost + (takeAmmo * 2);
 				end
 				
-				if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+				if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 					attackCost = attackCost + (takeAmmo * 2);
 				end
 			end
@@ -2107,10 +2111,10 @@ function SWEP:SecondaryAttack()
 	if ply:KeyDown(IN_ATTACK2) and !ply:KeyDown(IN_RELOAD) and ply:GetNetVar("Guardening") == true then
 		-- Deflection
 		if blocktable["candeflect"] == true then
-			local deflectioncooldown = 1.5;
+			local deflectioncooldown = 2;
 			
 			if ply:HasBelief("sidestep") then
-				deflectioncooldown = 1.2
+				deflectioncooldown = 1.6
 			end
 		
 			if self.canDeflect then
@@ -2170,11 +2174,11 @@ function SWEP:SecondaryAttack()
 		end
 		
 		if injuries then
-			if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+			if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 				parry_cost = parry_cost + (blocktable["parrytakestamina"] * 2);
 			end
 			
-			if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+			if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 				parry_cost = parry_cost + (blocktable["parrytakestamina"] * 2);
 			end
 		end
@@ -2267,11 +2271,11 @@ function SWEP:SecondaryAttack()
 										end
 										
 										if injuries then
-											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+											if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 											end
 											
-											if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+											if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 											end
 										end
@@ -2336,11 +2340,11 @@ function SWEP:SecondaryAttack()
 										end
 										
 										if injuries then
-											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+											if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 											end
 											
-											if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+											if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 											end
 										end
