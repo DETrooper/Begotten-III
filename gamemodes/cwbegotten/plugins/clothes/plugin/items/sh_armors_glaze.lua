@@ -1163,7 +1163,6 @@ ITEM.description = "Fine black robes with a beaked mask stuffed with odd-smellin
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.excludeFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/skullhelm";
-ITEM.attributes = {"practitioner", "miracle_doctor"};
 
 ITEM.requiredbeliefs = {"plague_doctor"};
 
@@ -1185,7 +1184,7 @@ ITEM.slashScale = 0.90; -- reduces slash damage by 10%
 ITEM.stabilityScale = 0.90; -- reduces stability damage by 10%
 ITEM.insulation = 45;
 
-ITEM.attributes = {"disease_resistance"};
+ITEM.attributes = {"disease_resistance", "practitioner", "miracle_doctor"};
 ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
