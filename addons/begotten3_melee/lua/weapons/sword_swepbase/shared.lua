@@ -379,9 +379,9 @@ function SWEP:Think()
 					local blockSoundTable = GetSoundTable(self.realBlockSoundTable)
 					
 					if(self.canDeflect) then
-						player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 90, 150)
+						player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 85, 135)
 					else
-						player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 65, 100)
+						player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 65, 95)
 					end
 				end;
 
@@ -3886,4 +3886,4 @@ end
 
 -- ENDS --
 
-print ('The Undergod is watching.') 
+print ('The Undergod is watching.')
