@@ -1196,7 +1196,7 @@ local ITEM = Clockwork.item:New();
 					end
 				end
 
-				if lastZone ~= "gore" and lastZone ~= "hotspring" then
+				if (lastZone ~= "gore" and lastZone ~= "hotspring") and cwWarmth and cwWarmth.systemEnabled then
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "begins filling an empty bottle with water, almost spilling the contents multiple times as they struggle to fight off the cold biting their fingers.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 					-- input water swish sound
 
