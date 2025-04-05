@@ -99,7 +99,7 @@ ITEM.stabilityScale = 0.90; -- reduces stability damage by 10%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
 ITEM.insulation = 60;
 
-ITEM.attributes = {"mothers_blessing", "increased_regeneration"};
+ITEM.attributes = {"mothers_blessing", "increased_regeneration", "miracle_doctor"};
 ITEM.components = {breakdownType = "breakdown", items = {"hide", "cloth", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
