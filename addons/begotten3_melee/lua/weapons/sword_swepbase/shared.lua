@@ -377,11 +377,8 @@ function SWEP:Think()
 			if ((SERVER) and player:GetNetVar("CanBlock", true)) then
 				if (self.realBlockSoundTable) then
 					local blockSoundTable = GetSoundTable(self.realBlockSoundTable)
-					if self.canDeflect then
-						player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 90, math.random(130, 160))
-					else
-						player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 65, math.random(90, 100))
-					end
+					
+					player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 65, math.random(100, 90))
 				end;
 
 				player:SetLocalVar("CanBlock", false);
@@ -430,7 +427,12 @@ function SWEP:Think()
 			
 			self.nextItemSend = curTime + math.random(1, 5);
 		end
+
+		self:LastStandCheck(player, curTime)
+
 	end
+
+	self:CheckElementalStatus()
 	
 	if self.PostThink then
 		self:PostThink();
@@ -970,11 +972,11 @@ function SWEP:PrimaryAttack()
 													end
 													
 													if injuries then
-														if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+														if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 														end
 														
-														if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+														if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 															guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 														end
 													end
@@ -1069,11 +1071,11 @@ function SWEP:PrimaryAttack()
 			end
 			
 			if injuries then
-				if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+				if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 					attackCost = attackCost + (takeAmmo * 2);
 				end
 				
-				if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+				if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 					attackCost = attackCost + (takeAmmo * 2);
 				end
 			end
@@ -2105,10 +2107,10 @@ function SWEP:SecondaryAttack()
 	if ply:KeyDown(IN_ATTACK2) and !ply:KeyDown(IN_RELOAD) and ply:GetNetVar("Guardening") == true then
 		-- Deflection
 		if blocktable["candeflect"] == true then
-			local deflectioncooldown = 2;
+			local deflectioncooldown = 1.5;
 			
 			if ply:HasBelief("sidestep") then
-				deflectioncooldown = 1.6
+				deflectioncooldown = 1.2
 			end
 		
 			if self.canDeflect then
@@ -2168,11 +2170,11 @@ function SWEP:SecondaryAttack()
 		end
 		
 		if injuries then
-			if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+			if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 				parry_cost = parry_cost + (blocktable["parrytakestamina"] * 2);
 			end
 			
-			if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+			if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 				parry_cost = parry_cost + (blocktable["parrytakestamina"] * 2);
 			end
 		end
@@ -2265,11 +2267,11 @@ function SWEP:SecondaryAttack()
 										end
 										
 										if injuries then
-											if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 											end
 											
-											if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+											if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 											end
 										end
@@ -2334,11 +2336,11 @@ function SWEP:SecondaryAttack()
 										end
 										
 										if injuries then
-											if injuries[HITGROUP_LEFTARM] and (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
+											if (injuries[HITGROUP_LEFTARM]["broken_bone"]) then
 												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 											end
 											
-											if injuries[HITGROUP_RIGHTARM] and (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
+											if (injuries[HITGROUP_RIGHTARM]["broken_bone"]) then
 												guardblockamount = guardblockamount + (blockTable["guardblockamount"] * 2);
 											end
 										end
@@ -3747,6 +3749,136 @@ function SWEP:StopAllAnims(target)
 		net.Broadcast();
 	end;
 end;
+
+-- Unholy Blessing element swapping functionality.
+if(SERVER) then
+	util.AddNetworkString("cwUnholyBlessingSwap")
+
+	net.Receive("cwUnholyBlessingSwap", function(_, player)
+		local curTime = CurTime()
+
+		if(player.nextUnholyBlessingSwap and player.nextUnholyBlessingSwap > curTime) then return end
+		player.nextUnholyBlessingSwap = curTime + 2
+
+		local weapon = player:GetActiveWeapon()
+		if(!IsValid(weapon) or !weapon.lastStand or !weapon:GetNWBool("lastStandActive")) then return end
+
+		weapon:ActivateLastStand(player, weapon:GetNWBool("fireSword") and 1 or 0)
+
+		if(weapon.setElemental and weapon.originalAttackTable) then
+			weapon.setElemental = false
+			weapon.AttackTable = weapon.originalAttackTable
+	
+		end
+
+		timer.Simple(0.1, function()
+			if(!IsValid(player) or !IsValid(weapon)) then return end
+
+			net.Start("cwUnholyBlessingSwap")
+				net.WriteEntity(weapon)
+			net.Send(player)
+
+		end)
+
+	end)
+
+else
+	Clockwork.ConVars.Binds.UNHOLYSWAP = Clockwork.kernel:CreateClientConVar("cwUnholyBlessingSwap", 0, true, true)
+	Clockwork.setting:AddKeyBinding("Key Bindings", "Swap Imbuement (Unholy Blessing) ", "cwUnholyBlessingSwap", "begotten_unholyswap")
+
+	concommand.Add("begotten_unholyswap", function()
+		local player = Clockwork.Client
+		local curTime = CurTime()
+
+		if(player.nextUnholyBlessingSwap and player.nextUnholyBlessingSwap > curTime) then return end
+		player.nextUnholyBlessingSwap = curTime + 2
+
+		local weapon = player:GetActiveWeapon()
+		if(!IsValid(weapon) or !weapon.lastStand or !weapon:GetNWBool("lastStandActive")) then return end
+
+		net.Start("cwUnholyBlessingSwap")
+		net.SendToServer()
+	
+	end)
+
+	net.Receive("cwUnholyBlessingSwap", function()
+		local weapon = net.ReadEntity()
+		if(!weapon) then return end
+
+		if(weapon.setElemental and weapon.originalAttackTable) then
+			weapon.setElemental = false
+			weapon.AttackTable = weapon.originalAttackTable
+	
+		end
+	
+	end)
+
+end
+
+-- Unholy Blessing element swapping functionality.
+if(SERVER) then
+	util.AddNetworkString("cwUnholyBlessingSwap")
+
+	net.Receive("cwUnholyBlessingSwap", function(_, player)
+		local curTime = CurTime()
+
+		if(player.nextUnholyBlessingSwap and player.nextUnholyBlessingSwap > curTime) then return end
+		player.nextUnholyBlessingSwap = curTime + 2
+
+		local weapon = player:GetActiveWeapon()
+		if(!IsValid(weapon) or !weapon.lastStand or !weapon:GetNWBool("lastStandActive")) then return end
+
+		weapon:ActivateLastStand(player, weapon:GetNWBool("fireSword") and 1 or 0)
+
+		if(weapon.setElemental and weapon.originalAttackTable) then
+			weapon.setElemental = false
+			weapon.AttackTable = weapon.originalAttackTable
+	
+		end
+
+		timer.Simple(0.1, function()
+			if(!IsValid(player) or !IsValid(weapon)) then return end
+
+			net.Start("cwUnholyBlessingSwap")
+				net.WriteEntity(weapon)
+			net.Send(player)
+
+		end)
+
+	end)
+
+else
+	Clockwork.ConVars.Binds.UNHOLYSWAP = Clockwork.kernel:CreateClientConVar("cwUnholyBlessingSwap", 0, true, true)
+	Clockwork.setting:AddKeyBinding("Key Bindings", "Swap Imbuement (Unholy Blessing) ", "cwUnholyBlessingSwap", "begotten_unholyswap")
+
+	concommand.Add("begotten_unholyswap", function()
+		local player = Clockwork.Client
+		local curTime = CurTime()
+
+		if(player.nextUnholyBlessingSwap and player.nextUnholyBlessingSwap > curTime) then return end
+		player.nextUnholyBlessingSwap = curTime + 2
+
+		local weapon = player:GetActiveWeapon()
+		if(!IsValid(weapon) or !weapon.lastStand or !weapon:GetNWBool("lastStandActive")) then return end
+
+		net.Start("cwUnholyBlessingSwap")
+		net.SendToServer()
+	
+	end)
+
+	net.Receive("cwUnholyBlessingSwap", function()
+		local weapon = net.ReadEntity()
+		if(!weapon) then return end
+
+		if(weapon.setElemental and weapon.originalAttackTable) then
+			weapon.setElemental = false
+			weapon.AttackTable = weapon.originalAttackTable
+	
+		end
+	
+	end)
+
+end
 
 -- ENDS --
 

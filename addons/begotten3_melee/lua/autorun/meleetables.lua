@@ -3563,6 +3563,66 @@ AttackTables.GunAxeAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
+AttackTables.DemonKnightSwordAttackTable = {
+	["primarydamage"] = 90,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.75,
+	["altattackpoisedamagemodifier"] = 0.1,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = 35,
+	["poisedamage"] = 35,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 6,
+	["delay"] = 1.4,
+	["striketime"] = 0.6,
+	["meleearc"] = 55,
+	["meleerange"] = 1140,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.DemonKnightSwordAttackTableFire = {
+	["primarydamage"] = 85,
+	["dmgtype"] = 4,
+	["attacktype"] = "fire_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.75,
+	["altattackpoisedamagemodifier"] = 0.1,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = 35,
+	["poisedamage"] = 35,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 6,
+	["delay"] = 1.4,
+	["striketime"] = 0.6,
+	["meleearc"] = 55,
+	["meleerange"] = 1140,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.DemonKnightSwordAttackTableIce = {
+	["primarydamage"] = 90,
+	["dmgtype"] = 4,
+	["attacktype"] = "ice_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.75,
+	["altattackpoisedamagemodifier"] = 0.1,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = 35,
+	["poisedamage"] = 35,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 6,
+	["delay"] = 1.4,
+	["striketime"] = 0.6,
+	["meleearc"] = 55,
+	["meleerange"] = 1140,
+	["punchstrength"] = Angle(0,1,0),
+};
+
 AddTable("DefaultAttackTable", AttackTables.DefaultAttackTable) 
 AddTable("FistAttackTable", AttackTables.FistAttackTable) 
 AddTable("IronJavelinAttackTable", AttackTables.IronJavelinAttackTable)
@@ -3715,6 +3775,9 @@ AddTable("HillThrowingAxeAttackTable", AttackTables.HillThrowingAxeAttackTable)
 AddTable("HillBannerAttackTable", AttackTables.HillBannerAttackTable)
 AddTable("OrdainedGorefellerAttackTable", AttackTables.OrdainedGorefellerAttackTable)
 AddTable("GunAxeAttackTable", AttackTables.GunAxeAttackTable)
+AddTable("DemonKnightSwordAttackTable", AttackTables.DemonKnightSwordAttackTable)
+AddTable("DemonKnightSwordAttackTableFire", AttackTables.DemonKnightSwordAttackTableFire)
+AddTable("DemonKnightSwordAttackTableIce", AttackTables.DemonKnightSwordAttackTableIce)
 
 -- Block Stat Tables
 
@@ -6246,6 +6309,24 @@ BlockTables.GunAxeBlockTable = {
 	["canaltattack"] = true,
 };
 
+BlockTables.DemonKnightSwordBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 25,
+	["raisespeed"] = 1.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.25,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
 AddTable("DefaultBlockTable", BlockTables.DefaultBlockTable) 
 AddTable("AdminTwistedMacheteBlockTable", BlockTables.AdminTwistedMacheteBlockTable)
 AddTable("FistBlockTable", BlockTables.FistBlockTable) 
@@ -6386,6 +6467,7 @@ AddTable("HillHeavyBattleAxeBlockTable", BlockTables.HillHeavyBattleAxeBlockTabl
 AddTable("HillGoreHuntingDaggerBlockTable", BlockTables.HillGoreHuntingDaggerBlockTable)  
 AddTable("OrdainedGorefellerBlockTable", BlockTables.OrdainedGorefellerBlockTable)
 AddTable("GunAxeBlockTable", BlockTables.GunAxeBlockTable) 
+AddTable("DemonKnightSwordBlockTable", BlockTables.DemonKnightSwordBlockTable)
 
 -- Shield Stat Tables
 
