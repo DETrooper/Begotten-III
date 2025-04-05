@@ -1926,11 +1926,6 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						frame:AddText("Versatile: Efficient in both mining and woodcutting, and suffers no condition loss from harvesting these nodes.", Color(110, 30, 30), nil, 0.9);
 					end
 				
-					if table.HasValue(itemTable.attributes, "lifeleech") then
-						frame:AddText("Lifeleech (Shieldless): 50% of damage dealt is returned as health.", Color(110, 30, 30), nil, 0.9);
-						frame:AddText("Lifeleech (Shieldless): 70% of damage dealt is returned as health.", Color(110, 30, 30), nil, 0.9);
-					end
-				
 					if table.HasValue(itemTable.attributes, "rage") then
 						frame:AddText("Rage (Shieldless): Movement speed is increased by 7%.", Color(110, 30, 30), nil, 0.9);
 					end
@@ -2435,10 +2430,6 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					
 					if table.HasValue(itemTable.attributes, "fire") then
 						frame:AddText("Incendiary: Sets enemies alight upon contact.", Color(110, 30, 30), nil, 0.9);
-					end
-				
-					if table.HasValue(itemTable.attributes, "lifeleech") then
-						frame:AddText("Lifeleech (Shieldless): 50% of damage dealt is returned as health.", Color(110, 30, 30), nil, 0.9);
 					end
 				
 					if table.HasValue(itemTable.attributes, "rage") then
@@ -3140,7 +3131,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			end
 
 			if table.HasValue(itemTable.attributes, "lifeleech") then
-				frame:AddText("Lifeleech (Shieldless): 50% of damage dealt is returned as health", Color(110, 30, 30), nil, 0.9);
+				frame:AddText("Lifeleech (Shieldless): 70% of damage dealt is returned as health", Color(110, 30, 30), nil, 0.9);
 			end
 
 			if(table.HasValue(itemTable.attributes, "banner_blessing")) then
