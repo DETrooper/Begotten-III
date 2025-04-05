@@ -379,9 +379,9 @@ function SWEP:Think()
 					local blockSoundTable = GetSoundTable(self.realBlockSoundTable)
 					
 					if(self.canDeflect) then
-						player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 90, math.random(150, 160))
+						player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 90, 150)
 					else
-						player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 65, math.random(90, 100))
+						player:EmitSound(blockSoundTable["guardsound"][math.random(1, #blockSoundTable["guardsound"])], 65, 100)
 					end
 				end;
 

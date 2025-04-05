@@ -740,10 +740,10 @@ function SWEP:SecondaryAttack()
 	if ply:KeyDown(IN_ATTACK2) and !ply:KeyDown(IN_RELOAD) and ply:GetNetVar("Guardening") == true then
 		-- Deflection
 		if blocktable["candeflect"] == true then
-			local deflectioncooldown = 1.5;
+			local deflectioncooldown = 2;
 			
 			if ply:HasBelief("sidestep") then
-				deflectioncooldown = 1.2
+				deflectioncooldown = 1.6
 			end
 		
 			if self.canDeflect then

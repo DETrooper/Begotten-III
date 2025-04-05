@@ -707,27 +707,44 @@ function SWEP:SecondaryAttack()
 		if ply:KeyDown(IN_ATTACK2) and !ply:KeyDown(IN_RELOAD) and ply:GetNetVar("Guardening") == true then
 			-- Deflection
 			if blocktable["candeflect"] == true then
+				local deflectioncooldown = 2;
+				
+				if ply:HasBelief("sidestep") then
+					deflectioncooldown = 1.6
+				end
+			
 				if self.canDeflect then
 					local deflectionWindow = blocktable["deflectionwindow"] or 0.15;
 					
-					if ply.HasBelief --[[and ply:HasBelief("deflection")]] then
+					--if ply.HasBelief and ply:HasBelief("deflection") then
+					if (!ply.nextDeflect or curTime > ply.nextDeflect) then
 						ply:SetLocalVar("Deflect", true )
 						
 						if ply:HasBelief("impossibly_skilled") then
 							deflectionWindow = deflectionWindow + 0.1;
 						end
+						
+						if ply:GetCharmEquipped("holy_sigils") then
+							deflectionWindow = deflectionWindow + 0.1;
+						end
 					end
-					
+									
+					self:CreateTimer(deflectionWindow, "deflectionOffTimer"..ply:EntIndex(), function()
+						if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
+							ply:SetLocalVar("Deflect", false ) 
+						end 
+					end);
+
 					self.canDeflect = false;
-					self:CreateTimer(1, "deflectionTimer"..ply:EntIndex(), function()
+					self:CreateTimer(deflectioncooldown, "deflectionTimer"..ply:EntIndex(), function()
 						if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
 							self.canDeflect = true;
 						end 
 					end);
-					
-					self:CreateTimer(deflectionWindow, "deflectionOffTimer"..ply:EntIndex(), function()
+				else
+					self:CreateTimer(deflectioncooldown, "deflectionTimer"..ply:EntIndex(), function()
 						if self:IsValid() and !ply:IsRagdolled() and ply:Alive() then
-							ply:SetLocalVar("Deflect", false ) 
+							self.canDeflect = true;
 						end 
 					end);
 				end
