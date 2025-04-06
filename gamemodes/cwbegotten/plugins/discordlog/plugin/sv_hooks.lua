@@ -125,15 +125,21 @@ function cwDiscordLog:GetSteamCommunityLink(player)
 
 end
 
+timer.Remove("cwDiscordLog_Watchman")
+
 local logqueue = logqueue or {}
+for i, v in pairs(cwDiscordLog.webhooks) do
+	logqueue[i] = {}
 
-timer.Create("cwDiscordLog_Watchman", 0.75, 0, function()
-	if #logqueue == 0 then return end
+	timer.Create("cwDiscordLog_Watchman_"..i, 0.75, 0, function()
+		if #logqueue[i] == 0 then return end
+	
+		local msg, _, logType = unpack(logqueue[i][1])
+		cwDiscordLog:Send(msg, logType)
+		table.remove(logqueue[i], 1)
+	end)
 
-	local msg, _, logType = unpack(logqueue[1])
-	cwDiscordLog:Send(msg, logType)
-	table.remove(logqueue, 1)
-end)
+end
 
 ---@param message table
 ---@param player Player
