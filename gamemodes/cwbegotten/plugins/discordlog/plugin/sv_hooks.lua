@@ -148,7 +148,7 @@ end
 function cwDiscordLog:Add(message, player, logType)
     if(!cwDiscordLog.enabled) then return; end
 
-	logqueue[logType][#logqueue + 1] = {
+	logqueue[logType][#logqueue[logType] + 1] = {
 		message,
 		player,
 		logType,
