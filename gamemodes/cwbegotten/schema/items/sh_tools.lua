@@ -265,6 +265,10 @@ local ITEM = Clockwork.item:New();
 					player.ladderConstructing = {index = i, itemTable = self};
 					ladderPos.occupier = "constructing";
 					
+					if player.cloaked then
+						player:Uncloak();
+					end
+					
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "begins erecting a siege ladder!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 					
 					Clockwork.player:SetAction(player, "building", 30, 3, function()
