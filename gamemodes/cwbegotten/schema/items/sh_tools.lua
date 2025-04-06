@@ -1210,12 +1210,21 @@ local ITEM = Clockwork.item:New();
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "begins filling an empty bottle with water.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 					-- input water swish sound
 
-					-- start progress bar for begins filling a bucket of water.
-					Clockwork.player:SetAction(player, "filling_bottle", 5, 3, function()
-						-- input water full sound
-						player:GiveItem(Clockwork.item:CreateInstance("purified_water"), true);
-						player:TakeItem(self, true);
-					end);
+					if (lastZone ~= "gore" and lastZone ~= "hotspring") 
+						-- start progress bar for begins filling a bucket of water.
+						Clockwork.player:SetAction(player, "filling_bottle", 5, 3, function()
+							-- input water full sound
+							player:GiveItem(Clockwork.item:CreateInstance("dirtywater"), true);
+							player:TakeItem(self, true);
+						end);
+					else
+						-- start progress bar for begins filling a bucket of water.
+						Clockwork.player:SetAction(player, "filling_bottle", 5, 3, function()
+							-- input water full sound
+							player:GiveItem(Clockwork.item:CreateInstance("purified_water"), true);
+							player:TakeItem(self, true);
+						end);
+					end
 				end
 			else
 				Schema:EasyText(player, "firebrick", "You must be standing in water to fill this bottle!");
