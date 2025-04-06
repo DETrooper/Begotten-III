@@ -682,7 +682,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A Gothic helmet for use with the rest of a Knight's armor."
 	ITEM.requireFaction = {"Holy Hierarchy"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/new/knightplate";
+	ITEM.overlay = "begotten/zomboverlay/new/knighthelmet";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -716,7 +716,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "Elite blackened steel adorned with the colors of a noble household."
 	ITEM.requireFaction = {"Holy Hierarchy"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/new/knightplate";
+	ITEM.overlay = "begotten/zomboverlay/new/knighthelmet";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
