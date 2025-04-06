@@ -1214,7 +1214,7 @@ local ITEM = Clockwork.item:New();
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "begins filling an empty bottle with water.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 					-- input water swish sound
 
-					if (lastZone ~= "gore" and lastZone ~= "hotspring") 
+					if (lastZone ~= "gore" and lastZone ~= "hotspring") then
 						-- start progress bar for begins filling a bucket of water.
 						Clockwork.player:SetAction(player, "filling_bottle", 5, 3, function()
 							-- input water full sound
