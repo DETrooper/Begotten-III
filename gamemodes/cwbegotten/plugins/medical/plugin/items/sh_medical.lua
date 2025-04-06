@@ -491,6 +491,10 @@ local ITEM = Clockwork.item:New();
 					end
 					
 					if (canChloroform or target:IsRagdolled()) then
+						if player.cloaked then
+							player:Uncloak();
+						end
+						
 						Clockwork.player:SetAction(player, "chloroform", chloroformTime);
 						
 						target:SetNetVar("beingChloro", true);

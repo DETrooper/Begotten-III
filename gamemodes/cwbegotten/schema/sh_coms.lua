@@ -1333,31 +1333,31 @@ local COMMAND = Clockwork.command:New("PlaySoundZone");
 					end;
 				end;
 				
-				local playerTable = _player.GetAll();
-
+				local plyTab = {};
+				
 				if zones:IsSupraZone(zone) then
-					for k, v in pairs(playerTable) do
+					for i, v in ipairs(_player.GetAll()) do
 						if v:HasInitialized() then
 							local vSupraZone = zones:GetPlayerSupraZone(v);
 							
-							if vSupraZone ~= zone then
-								playerTable[k] = nil;
+							if vSupraZone == zone then
+								table.insert(plyTab, v);
 							end
 						end
 					end;
 				else
-					for k, v in pairs(playerTable) do
+					for i, v in ipairs(_player.GetAll()) do
 						if v:HasInitialized() then
 							local vZone = v:GetCharacterData("LastZone", "wasteland");
 							
-							if vZone ~= zone then
-								playerTable[k] = nil;
+							if vZone == zone then
+								table.insert(plyTab, v);
 							end
 						end
 					end;
 				end;
 				
-				netstream.Start(playerTable, "EmitSound", info);
+				netstream.Start(plyTab, "EmitSound", info);
 				Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has played the sound sound \""..arguments[2].."\" in zone \""..zone.."\".");
 			else
 				Schema:EasyText(player, "grey", "You must specify a valid zone!");
