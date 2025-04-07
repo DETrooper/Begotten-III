@@ -1443,7 +1443,7 @@ function Schema:Tick()
 		
 		for k, v in pairs(ents.GetAll()) do
 			if string.find(v:GetClass(), "class C_BaseFlex") and v:GetModel() then
-				if v:GetPos() == Vector(0, 0, 0) then
+				if IsValid(v) and IsValid(Clockwork.Client) and v:GetPos() == Vector(0, 0, 0) then
 					if v:GetModel() == Clockwork.Client:GetModel() or v.noDelete then
 						continue;
 					end
@@ -3153,7 +3153,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			end
 
 			if table.HasValue(itemTable.attributes, "rage") then
-				frame:AddText("Rage (Shieldless): Movement speed is increased by 7%", Color(110, 30, 30), nil, 0.9);
+				frame:AddText("Rage (Shieldless): Movement speed is increased by 7%. Warcries return +15 stamina.", Color(110, 30, 30), nil, 0.9);
 			end
 			
 			if table.HasValue(itemTable.attributes, "seafarer") then
