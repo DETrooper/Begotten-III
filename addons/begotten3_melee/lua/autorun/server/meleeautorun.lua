@@ -1266,6 +1266,7 @@ local function Guarding(ent, dmginfo)
 					-- For being hit while blocking but outside of your blockcone (ex: hit in the back while blocking)
 					if (ent:IsPlayer() and attacker:IsPlayer()) then
 						local attacker = dmginfo:GetAttacker();
+						local attackerWeapon = attacker:GetActiveWeapon();
 						local trace = attacker:GetEyeTrace();
 						local pos = ent:GetPos() + Vector(0,0, 50);
 						
@@ -1282,8 +1283,8 @@ local function Guarding(ent, dmginfo)
 							if attacker:GetNetVar("ThrustStance") == true and attacker:GetNetVar("Riposting") != true then
 								ent:EmitSound(enemyattacksoundtable["althitbody"][math.random(1, #enemyattacksoundtable["althitbody"])])
 								-- For sacrificial attacks (thrust)
-								if enemyattacktable["attacktype"] == "ice_swing" then
-									ent:AddFreeze((enemyattacktable["primarydamage"] * 1.5) * (ent:WaterLevel() + 1), attacker);
+								if enemyattacktable["attacktype"] == "ice_swing" and attackerWeapon.FreezeDamage then
+									ent:AddFreeze(attackerWeapon.FreezeDamage * (ent:WaterLevel() + 1), attacker);
 								end
 								if enemyattacktable["attacktype"] == "fire_swing" then
 									if !ent.wOSIsRolling or !ent:wOSIsRolling() then
@@ -1311,8 +1312,8 @@ local function Guarding(ent, dmginfo)
 								
 								ent:EmitSound(enemyattacksoundtable["hitbody"][math.random(1, #enemyattacksoundtable["hitbody"])])
 								-- For sacrificial attacks (regular)
-								if enemyattacktable["attacktype"] == "ice_swing" then
-									ent:AddFreeze((enemyattacktable["primarydamage"] * 1.5) * (ent:WaterLevel() + 1), attacker);
+								if enemyattacktable["attacktype"] == "ice_swing" and attackerWeapon.FreezeDamage then
+									ent:AddFreeze(attackerWeapon.FreezeDamage * (ent:WaterLevel() + 1), attacker);
 								end
 								if enemyattacktable["attacktype"] == "fire_swing" then
 									if !ent.wOSIsRolling or !ent:wOSIsRolling() then
