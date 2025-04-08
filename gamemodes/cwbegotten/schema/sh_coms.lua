@@ -1333,31 +1333,31 @@ local COMMAND = Clockwork.command:New("PlaySoundZone");
 					end;
 				end;
 				
-				local playerTable = _player.GetAll();
-
+				local plyTab = {};
+				
 				if zones:IsSupraZone(zone) then
-					for k, v in pairs(playerTable) do
+					for i, v in ipairs(_player.GetAll()) do
 						if v:HasInitialized() then
 							local vSupraZone = zones:GetPlayerSupraZone(v);
 							
-							if vSupraZone ~= zone then
-								playerTable[k] = nil;
+							if vSupraZone == zone then
+								table.insert(plyTab, v);
 							end
 						end
 					end;
 				else
-					for k, v in pairs(playerTable) do
+					for i, v in ipairs(_player.GetAll()) do
 						if v:HasInitialized() then
 							local vZone = v:GetCharacterData("LastZone", "wasteland");
 							
-							if vZone ~= zone then
-								playerTable[k] = nil;
+							if vZone == zone then
+								table.insert(plyTab, v);
 							end
 						end
 					end;
 				end;
 				
-				netstream.Start(playerTable, "EmitSound", info);
+				netstream.Start(plyTab, "EmitSound", info);
 				Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", player:Name().." has played the sound sound \""..arguments[2].."\" in zone \""..zone.."\".");
 			else
 				Schema:EasyText(player, "grey", "You must specify a valid zone!");
@@ -1494,23 +1494,46 @@ COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("BlowWarhorn");
 	COMMAND.tip = "Blow a warhorn in your current area (wasteland/tower or gore forest).";
-	COMMAND.access = "s";
+	COMMAND.flags = CMD_DEFAULT;
+	COMMAND.faction = "Goreic Warrior";
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
+		local curTime = CurTime();
+	
+		if !player:IsAdmin() or !(player:GetFaction() == "Goreic Warrior" and Schema:GetRankTier("Goreic Warrior", player:GetCharacterData("rank", 1)) >= 5) then
+			Schema:EasyText(player, "peru", "Only the Gore King may use this command!");
+		
+			return false;
+		end
+		
+		if (!player.blowWarhornCooldown or curTime > player.blowWarhornCooldown) then
+			player.blowWarhornCooldown = curTime + 600;
+			
+			Schema:EasyText(player, "firebrick", "You cannot blow the gore warhorn again for another "..math.ceil(player.blowWarhornCooldown - curTime).." seconds!");
+		end;
+		
 		-- Prevent the bell sound and warhorn sound from playing over eachother.
 		if cwDayNight and cwDayNight.currentCycle == "day" then
-			cwDayNight:ModifyCycleTimeLeft(120);
+			cwDayNight:ModifyCycleTimeLeft(30);
 		end
 		
 		local lastZone = player:GetCharacterData("LastZone");
 		
-		if lastZone == "wasteland" or lastZone == "tower" or lastZone == "theater" then
+		if lastZone == "wasteland" or lastZone == "tower" then
 			for _, v in _player.Iterator() do
 				if IsValid(v) and v:HasInitialized() then
 					local vLastZone = v:GetCharacterData("LastZone");
 					
-					if vLastZone == "wasteland" or vLastZone == "tower" or vLastZone == "theater" then
+					if vLastZone == "wasteland" or vLastZone == "tower" then
+						if v:GetFaction() == "Goreic Warrior" then
+							if cwStamina then
+								v:HandleStamina(25);
+							end
+							
+							v.lastWarCry = nil;
+						end
+						
 						Clockwork.chatBox:Add(v, nil, "event", "The ground quakes as the terrifying sound of a Goreic Warfighter horn pierces the sky.");
 						--netstream.Start(v, "FadeAmbientMusic");
 						--netstream.Start(v, "EmitSound", {name = "warhorns/warhorn_gore.mp3", pitch = 100, level = 75});
@@ -1524,6 +1547,14 @@ local COMMAND = Clockwork.command:New("BlowWarhorn");
 					local vLastZone = v:GetCharacterData("LastZone");
 					
 					if vLastZone == "gore" or vLastZone == "gore_hallway" or vLastZone == "gore_tree" then
+						if v:GetFaction() == "Goreic Warrior" then
+							if cwStamina then
+								v:HandleStamina(25);
+							end
+							
+							v.lastWarCry = nil;
+						end
+					
 						Clockwork.chatBox:Add(v, nil, "event", "The ground quakes as the sound of a Goreic Warfighter horn pierces the sky.");
 						--netstream.Start(v, "FadeAmbientMusic");
 						--netstream.Start(v, "EmitSound", {name = "warhorns/warhorn_gore.mp3", pitch = 100, level = 75});

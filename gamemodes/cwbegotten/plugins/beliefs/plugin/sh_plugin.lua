@@ -1350,7 +1350,22 @@ local COMMAND = Clockwork.command:New("Warcry");
 							end
 						end
 					end
-					
+
+					local clothesItem = player:GetClothesEquipped()
+
+					if (clothesItem) then
+						if clothesItem.attributes then
+							if table.HasValue(clothesItem.attributes, "rage") and !player:GetShieldEquipped() and cwStamina then
+								warcryText = "cries out in fearless rage!"
+								warcrySound = "begotten/berserker/new/"..math.random(1, 5)..".wav"
+								warcryPitch = math.random(90, 100)
+								-- if !player.bloodHowlActive then
+									player:HandleStamina(15);
+								-- end
+							end
+						end
+					end
+
 					if player:HasBelief("deceitful_snake") then
 						if player.deceitfulLastDamages then
 							local healthToRestore = 0;

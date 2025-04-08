@@ -165,6 +165,10 @@ function cwPickupObjects:KeyPress(player, key)
 										Clockwork.player:SetUnragdollTime(ragdollPlayer, nil);
 									end
 									
+									if player.cloaked then
+										player:Uncloak();
+									end
+									
 									Clockwork.chatBox:AddInTargetRadius(player, "me", "starts picking up the body before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 									
 									local pickupTime = 5;
@@ -209,6 +213,10 @@ function cwPickupObjects:KeyPress(player, key)
 									
 									if player.HasBelief and player:HasBelief("dexterity") then
 										pickupTime = 3;
+									end
+									
+									if player.cloaked then
+										player:Uncloak();
 									end
 									
 									Clockwork.player:SetAction(player, "pickupragdoll", pickupTime, 5, function()
@@ -258,6 +266,10 @@ function cwPickupObjects:KeyPress(player, key)
 								
 								if player.HasBelief and player:HasBelief("dexterity") then
 									pickupTime = pickupTime * 0.67;
+								end
+								
+								if player.cloaked then
+									player:Uncloak();
 								end
 								
 								Clockwork.player:SetAction(player, "pickupobject", pickupTime, 5, function()

@@ -1352,7 +1352,7 @@ ITEM.type = "plate";
 ITEM.description = "An old set of armor, once belonging to a disgraced Knight of Sol. Although covered in tattered cloth that has hardly withstood the harsh conditions of the wasteland, the armor itself is in substantially better condition, with faded gold markings still visible.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.excludeFactions = {"Goreic Warrior"};
-ITEM.overlay = "begotten/zomboverlay/new/knightplate";
+ITEM.overlay = "begotten/zomboverlay/new/knighthelmet";
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -2580,6 +2580,7 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "Plate armor covered in holy cloth and blessed sigils. A helmet forged in Maximillian steel with gold engravings. It was meant for a powerful figure of Glazic faith.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+ITEM.overlay = "begotten/zomboverlay/new/grandknight";
 ITEM.requireFaction = {"Holy Hierarchy"};
 ITEM.requireRank = {"Grand Knight"};
 ITEM.requiredbeliefs = {"hauberk"};
