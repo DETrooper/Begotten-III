@@ -446,16 +446,6 @@ local endOffset = Vector(-5, 0, 55)
 local startOffsetWorld = Vector(4, 0, -6)
 local endOffsetWorld = Vector(2, -2, -48)
 
-concommand.Add("startoffset", function(_, _, args)
-	startOffsetWorld = Vector(tonumber(args[1]), tonumber(args[2]), tonumber(args[3]))
-
-end)
-
-concommand.Add("endoffset", function(_, _, args)
-	endOffsetWorld = Vector(tonumber(args[1]), tonumber(args[2]), tonumber(args[3]))
-	
-end)
-
 local particleMaterial = Material("particle/smokesprites_0001")
 
 function SWEP:PostDrawViewModel(viewModel)
