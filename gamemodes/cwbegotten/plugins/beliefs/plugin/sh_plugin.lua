@@ -1357,7 +1357,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 						if clothesItem.attributes then
 							if table.HasValue(clothesItem.attributes, "rage") and !player:GetShieldEquipped() and cwStamina then
 								warcryText = "cries out in fearless rage!"
-								warcrySound = "begotten/berserker/berserker-0"..math.random(1, 5)..".ogg"
+								warcrySound = "begotten/berserker/new/"..math.random(1, 5)..".wav"
 								warcryPitch = math.random(90, 100)
 								-- if !player.bloodHowlActive then
 									player:HandleStamina(15);
