@@ -501,7 +501,8 @@ if SERVER then
 					if not velocity:IsZero() then
 						local speed = velocity:Length()
 						local seqspeed = self:GetSequenceGroundSpeed(seq)
-						if seqspeed ~= 0 then self:SetPlaybackRate(speed/seqspeed) end
+						--print(speed/seqspeed)
+						if seqspeed ~= 0 then self:SetPlaybackRate(math.Clamp(speed/seqspeed, -4, 12)) end --https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/baseanimating.cpp#L246
 					elseif self:IsTurning() then
 						local success, _, angles = self:GetSequenceMovement(seq, 0, 1)
 						if success and angles.y ~= 0 then

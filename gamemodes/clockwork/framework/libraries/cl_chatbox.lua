@@ -220,6 +220,8 @@ function Clockwork.chatBox:CreateDermaTextEntry()
 		-- Called when enter has been pressed.
 		self.textEntry.OnEnter = function(textEntry)
 			local text = textEntry:GetValue();
+
+			text = string.Trim(text)
 			
 			if (text and text != "") then
 				self.historyPos = #self.historyMsgs;

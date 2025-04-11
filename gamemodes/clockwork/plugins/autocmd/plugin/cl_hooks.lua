@@ -14,7 +14,7 @@ function PLUGIN:HUDPaintForeground()
     
     if #args < 1 then return end
     
-    local x, y = Clockwork.chatBox:GetPosition(2, -100)
+    local x, y = Clockwork.chatBox:GetPosition(2, -295)
     
     Clockwork.kernel:OverrideMainFont(font)
     
@@ -23,15 +23,17 @@ function PLUGIN:HUDPaintForeground()
 
     local count = 0
 
-    for k, suggestion in ipairs(matches) do
+    for i, suggestion in ipairs(matches) do
         if count >= 12 then
             break
         end
         
-        local colnew = (k == self.autoCompleteIndex) and highlight_color or color
+        local _, th = Clockwork.kernel:GetCachedTextSize(font, suggestion)
         
-        Clockwork.kernel:DrawSimpleText(suggestion, x, y - 175, colnew)
-        y = y + 15
+        local colnew = (i == self.autoCompleteIndex) and highlight_color or color
+        
+        Clockwork.kernel:DrawSimpleText(suggestion, x, y, colnew)
+        y = y + th - 2
         count = count + 1
     end
     
