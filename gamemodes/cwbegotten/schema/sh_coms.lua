@@ -1501,7 +1501,7 @@ local COMMAND = Clockwork.command:New("BlowWarhorn");
 	function COMMAND:OnRun(player, arguments)
 		local curTime = CurTime();
 	
-		if !player:IsAdmin() or !(player:GetFaction() == "Goreic Warrior" and Schema:GetRankTier("Goreic Warrior", player:GetCharacterData("rank", 1)) >= 5) then
+		if !player:IsAdmin() and !(player:GetFaction() == "Goreic Warrior" and Schema:GetRankTier("Goreic Warrior", player:GetCharacterData("rank", 1)) >= 5) then
 			Schema:EasyText(player, "peru", "Only the Gore King may use this command!");
 		
 			return false;
