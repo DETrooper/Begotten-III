@@ -1270,11 +1270,9 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 											
 												--if !entity.destination then
 													--entity:Ignite(600, 0);
-													entity.ignited = true;
-													ParticleEffect("fire_large_02", entity:GetPos() + Vector(0, 0, 16), entity:GetAngles(), entity);
+													entity:SetNWBool("Ignited", true);
 													
 													entity:EmitSound("ambient/fire/gascan_ignite1.wav");
-													entity:StartLoopingSound("ambient/fire/fire_med_loop1.wav");
 													
 													if timer.Exists("SailTimer_"..tostring(entity:EntIndex())) then
 														timer.Remove("SailTimer_"..tostring(entity:EntIndex()));
@@ -1355,7 +1353,7 @@ concommand.Add("cw_CheckShipStatus", function(player, cmd, args)
 				end
 			end
 			
-			if entity.ignited then
+			if entity:GetNWBool("Ignited") then
 				status_string = status_string.." It is currently on fire!";
 			end
 			
@@ -1420,9 +1418,8 @@ concommand.Add("cw_ExtinguishShip", function(player, cmd, args)
 					if entity.health and entity.health > 0 then
 						--entity:Extinguish();
 						
-						entity.ignited = false;
+						entity:SetNWBool("Ignited", false);
 						entity:StopParticles();
-						entity:StopSound("ambient/fire/fire_med_loop1.wav");
 					end
 				end
 			end);
@@ -1474,7 +1471,7 @@ concommand.Add("cw_MoveShipGoreForest", function(player, cmd, args)
 
 		if (entity.longshipType) then
 			if !entity.destination then
-				if !entity.ignited then
+				if !entity:GetNWBool("Ignited") then
 					if hook.Run("CanPlayerMoveLongship", entity, player) then
 						cwSailing:BeginSailing(entity, "docks", player);
 					else
@@ -1498,7 +1495,7 @@ concommand.Add("cw_MoveShipWasteland", function(player, cmd, args)
 
 		if (entity.longshipType) then
 			if !entity.destination then
-				if !entity.ignited then
+				if !entity:GetNWBool("Ignited") then
 					if hook.Run("CanPlayerMoveLongship", entity, player) then
 						cwSailing:BeginSailing(entity, "wasteland", player);
 					else
@@ -1525,7 +1522,7 @@ concommand.Add("cw_MoveShipLava", function(player, cmd, args)
 		if (entity.longshipType) then
 			if entity.enchantment then
 				if !entity.destination then
-					if !entity.ignited then
+					if !entity:GetNWBool("Ignited") then
 						if hook.Run("CanPlayerMoveLongship", entity, player) then
 							cwSailing:BeginSailing(entity, "wastelandlava", player);
 						else
@@ -1554,7 +1551,7 @@ concommand.Add("cw_MoveShipHell", function(player, cmd, args)
 			if entity.enchantment then
 				if cwSailing.hellSailingEnabled then
 					if !entity.destination then
-						if !entity.ignited then
+						if !entity:GetNWBool("Ignited") then
 							if hook.Run("CanPlayerMoveLongship", entity, player) then
 								cwSailing:BeginSailing(entity, "hell", player);
 							else

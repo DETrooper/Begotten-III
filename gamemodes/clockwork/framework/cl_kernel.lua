@@ -57,6 +57,9 @@ timer.Destroy("HintSystem_OpeningMenu")
 timer.Destroy("HintSystem_Annoy1")
 timer.Destroy("HintSystem_Annoy2")
 
+spawnmenu.GetCreationTabs()["#spawnmenu.category.postprocess"] = nil;
+spawnmenu.GetCreationTabs()["#spawnmenu.category.saves"] = nil;
+
 base64 = base64 or {}
 
 local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/' -- You will need this for encoding/decoding

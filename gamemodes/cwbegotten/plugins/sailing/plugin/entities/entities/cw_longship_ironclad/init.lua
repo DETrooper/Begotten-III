@@ -372,9 +372,9 @@ function ENT:Use(activator, caller)
 end;
 
 function ENT:OnRemove()
-	local belongingsEnt = ents.Create("cw_belongings");
-
 	if (self.cwInventory and !table.IsEmpty(self.cwInventory) or self.cwCash and self.cwCash > 0) then
+		local belongingsEnt = ents.Create("cw_belongings");
+	
 		belongingsEnt:SetData(self.cwInventory, self.cwCash, "Ironclad Cargo");
 		belongingsEnt:SetPos(self:GetPos() + Vector(0, 0, 128));
 		belongingsEnt:Spawn();
