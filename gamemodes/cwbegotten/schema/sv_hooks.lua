@@ -3241,6 +3241,18 @@ end
 
 -- Called when an entity takes damage.
 function Schema:EntityTakeDamageNew(entity, damageInfo)
+	if (entity:GetClass() == "prop_ragdoll") then
+		if (IsValid(entity.CinderBlock) and damageInfo:GetAttacker():IsWorld()) then
+			return true
+		end
+	end
+
+	local player = entity:GetNWEntity("Player");
+
+	if (IsValid(player)) then
+		entity = player;
+	end
+
 	if (entity.GodMode) then
 		return true;
 	end;
@@ -3286,12 +3298,6 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 			entity:Remove()
 		else
 			entity:EmitSound("physics/concrete/concrete_block_impact_hard"..math.random(2, 3)..".wav")
-		end
-	end
-	
-	if (entity:GetClass() == "prop_ragdoll") then
-		if (IsValid(entity.CinderBlock) and damageInfo:GetAttacker():IsWorld()) then
-			return true
 		end
 	end
 	
@@ -3415,7 +3421,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		end
 	end
 	
-	if (bIsPlayer or bIsPlayerRagdoll or entity.isTrainingDummy) and IsValid(attacker) and attacker:IsPlayer() then
+	if (bIsPlayer or entity.isTrainingDummy) and IsValid(attacker) and attacker:IsPlayer() then
 		if IsValid(inflictor) then
 			if inflictor.isDagger then
 				if inflictor.isJavelin then
@@ -3437,16 +3443,12 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 						entity:EmitSound("meleesounds/kill1.wav.mp3");
 					end
 				end
-			end
-		end
-		
-		-- Flat 50% damage reduction vs. ragdolled players for melees to encourage the use of daggers or wrestle and subdue.
-		if bIsPlayerRagdoll then
-			if IsValid(inflictor) and inflictor.IsABegottenMelee and !inflictor.isDagger then
+			elseif inflictor.IsABegottenMelee and bIsPlayer and entity:IsRagdolled() then
+				-- Flat 50% damage reduction vs. ragdolled players for melees to encourage the use of daggers or wrestle and subdue.
 				damageInfo:ScaleDamage(0.5);
 			end
 		end
-		
+
 		if entity.banners then
 			for k, v in pairs(entity.banners) do
 				if v == "glazic" then

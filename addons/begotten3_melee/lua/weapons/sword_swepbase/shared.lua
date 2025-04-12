@@ -252,7 +252,7 @@ function SWEP:Hitscan()
 	
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
-		endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (meleerange) / 9),
+		endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (meleerange) / 10),
 		filter = self.Owner,
 		mask = MASK_SHOT_HULL
 	} )
@@ -267,7 +267,7 @@ function SWEP:Hitscan()
 		bullet.Tracer = 0
 		bullet.Force  = 2
 		bullet.Hullsize = 0
-		bullet.Distance = (meleerange / 9)
+		bullet.Distance = (meleerange / 10)
 		bullet.Damage = 0;
 	
 		bullet.Callback = function(attacker, tr, dmginfo)
@@ -1016,7 +1016,7 @@ function SWEP:PrimaryAttack()
 					
 						local tr = util.TraceLine( {
 							start = self.Owner:GetShootPos(),
-							endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (meleerange) / 9),
+							endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (meleerange) / 10),
 							filter = self.Owner,
 							mask = MASK_SHOT_HULL
 						} )

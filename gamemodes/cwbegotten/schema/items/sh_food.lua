@@ -9,7 +9,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "An old can of beans, it seems to still be sealed although its freshness remains questionable.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/can.png"
 	ITEM.stackable = true;
-	ITEM.infectionchance = 10; -- Chance to give you a disease.
+	ITEM.infectchance = 10; -- Chance to give you a disease.
 	ITEM.cauldronQuality = 1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 715, bNoSupercrate = true};
@@ -53,8 +53,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A punctured tin can with what used to be beans inside. Now a soupy mix of maggots, mold and disease. Hey, at least it's something to fill your belly.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/can_punctured.png"
 	ITEM.stackable = true;
-	ITEM.infectionchance = 50; -- Chance to give you a disease.
-	ITEM.poison = 6; -- Holdover from Begotten II, maybe we can use it.
+	ITEM.infectchance = 50; -- Chance to give you a disease.
 	ITEM.cauldronQuality = 0;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350, bNoSupercrate = true};
@@ -100,7 +99,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/bread.png"
 	ITEM.stackable = true;
 	ITEM.infectchance = 15;
-	ITEM.poison = 3;
 	ITEM.cauldronQuality = 0;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500, bNoSupercrate = true};
@@ -188,7 +186,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "bear_meat"
 	ITEM.infectchance = 30;
-	ITEM.poison = 5;
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.needs = {hunger = 25, thirst = 5};
@@ -279,7 +276,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "wolf_meat"
 	ITEM.infectchance = 30;
-	ITEM.poison = 5;
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.needs = {hunger = 5, thirst = 5};
@@ -371,7 +367,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "leopard_meat"
 	ITEM.infectchance = 30;
-	ITEM.poison = 5;
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.needs = {hunger = 25, thirst = 5};
@@ -462,7 +457,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "deer_meat"
 	ITEM.infectchance = 30;
-	ITEM.poison = 5;
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.needs = {hunger = 20, thirst = 5};
@@ -588,7 +582,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "goat_meat"
 	ITEM.infectchance = 30;
-	ITEM.poison = 5;
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.needs = {hunger = 20, thirst = 5};
@@ -677,7 +670,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "humanmeat"
 	ITEM.infectchance = 50;
-	ITEM.poison = 5;
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.needs = {hunger = 35, thirst = 5};
@@ -728,7 +720,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "fuckedmeat"
 	ITEM.infectchance = 50;
-	ITEM.poison = 35;
 	ITEM.cauldronQuality = -1;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300, bNoSupercrate = true};
@@ -920,8 +911,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A punctured tin can with what used to be mushroom soup inside. Now a soupy mix of maggots, mold and disease. Hey, at least it's something to fill your belly.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/can_punctured.png"
 	ITEM.stackable = true;
-	ITEM.infectionchance = 50;
-	ITEM.poison = 6;
+	ITEM.infectchance = 50;
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350, bNoSupercrate = true};
@@ -1183,7 +1173,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "neatmeat";
 	ITEM.infectchance = 50;
-	ITEM.poison = 10;
 	ITEM.cauldronQuality = -1;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 350, bNoSupercrate = true};
@@ -1411,8 +1400,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "A can of strange edibles. It tastes so good it'll drive you crazy!";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/can_punctured.png"
 	ITEM.stackable = true;
-	ITEM.infectionchance = 50;
-	ITEM.poison = 30;
+	ITEM.infectchance = 50;
 	ITEM.cauldronQuality = -1;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300, bNoSupercrate = true};
@@ -1457,7 +1445,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "Where's the pickle?";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/can.png"
 	ITEM.stackable = true;
-	ITEM.infectionchance = 10;
 	ITEM.cauldronQuality = 0;
 	
 	--ITEM.itemSpawnerInfo = {category = "Food", rarity = 2500};
@@ -1715,8 +1702,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.description = "Awful, FUCKED BEANS! This horrible paste was likely created by Scrappers to be fed to their slaves. It is just enough to keep them alive.. or is it?";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/can_punctured.png"
 	ITEM.stackable = true;
-	ITEM.infectionchance = 15;
-	ITEM.poison = 30;
+	ITEM.infectchance = 15;
 	ITEM.cauldronQuality = -1;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 500, bNoSupercrate = true};
