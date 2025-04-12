@@ -179,9 +179,11 @@ local function ReallyQuickReload(ply, firearmItemTable, inventory)
 	local lastLoadedShot = ply:GetLocalVar("lastLoadedShot")
 	
 	if(lastLoadedShot) then
-		local itemTable = item.FindByID(lastLoadedShot)
-        if(itemTable and TryLoad(itemTable, inventory, firearmItemTable)) then return true end
-
+		if table.HasValue(firearmItemTable.ammoTypes, lastLoadedShot) then
+			local itemTable = item.FindByID(lastLoadedShot)
+			
+			if(itemTable and TryLoad(itemTable, inventory, firearmItemTable)) then return true end
+		end
 	end
 	
 	-- Select a random ammo type if a previous one has not been found.
