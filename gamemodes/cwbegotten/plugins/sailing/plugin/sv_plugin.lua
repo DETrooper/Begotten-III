@@ -1115,6 +1115,8 @@ function cwSailing:LoadLongships()
 				longshipEnt.cwInventory = {};
 			end
 			
+			longshipEnt.cwCash = v.cwCash or 0;
+			
 			if location == "docks" then
 				-- If the ship is still at port after thirty minutes and the docks are full, remove it and let someone else take a spot.
 				self:CreateDockTimer(longshipEnt, 1800);
@@ -1156,6 +1158,8 @@ function cwSailing:SaveLongships()
 		if v.cwInventory then
 			saveTab.cwInventory = Clockwork.inventory:ToSaveable(v.cwInventory);
 		end
+		
+		saveTab.cwCash = v.cwCash or 0;
 
 		longships[#longships + 1] = saveTab;
 	end
@@ -1637,6 +1641,10 @@ concommand.Add("cw_CargoHold", function(player, cmd, args)
 				if (!entity.cwInventory) then
 					entity.cwInventory = {};
 				end;
+				
+				if (!entity.cwCash) then
+					entity.cwCash = 0;
+				end
 
 				player:EmitSound("physics/body/body_medium_impact_soft"..math.random(1, 7)..".wav");
 				
@@ -1652,6 +1660,13 @@ concommand.Add("cw_CargoHold", function(player, cmd, args)
 					entity = entity,
 					distance = entity:OBBMaxs():Length(),
 					inventory = entity.cwInventory,
+					cash = entity.cwCash,
+					OnGiveCash = function(player, storageTable, cash)
+						entity.cwCash = storageTable.cash;
+					end,
+					OnTakeCash = function(player, storageTable, cash)
+						entity.cwCash = storageTable.cash;
+					end
 				});
 			end
 		end;
