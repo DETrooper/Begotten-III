@@ -474,27 +474,6 @@ function Clockwork.kernel:HandleEntityMenu(entity, bQuickTake)
 
 		hook.Run("GetEntityMenuOptions", entity, options)
 
-		if (entity:GetClass() == "cw_item") then
-			-- Seems to be some weird lua error where sometimes this function doesn't exist right away. - DETrooper
-			if !entity.GetItemTable then
-				return;
-			end
-			
-			itemTable = entity:GetItemTable()
-			if (itemTable and itemTable:IsInstance() and itemTable.GetOptions) then
-				local itemOptions = itemTable:GetOptions(entity)
-
-				for k, v in pairs(itemOptions) do
-					options[k] = {
-						title = k,
-						name = v,
-						isOptionTable = true,
-						isArgTable = true
-					}
-				end
-			end
-		end
-
 		if (table.IsEmpty(options)) then return end
 
 		if (self:GetEntityMenuType()) then
@@ -1872,13 +1851,6 @@ function Clockwork.kernel:HandleItemSpawnIconClick(itemTable, spawnIcon, Callbac
 			else
 				itemFunctions[#itemFunctions + 1] = v;
 			end
-		end
-	end
-
-	if (itemTable.GetOptions) then
-		local options = itemTable:GetOptions(nil, nil)
-		for k, v in pairs(options) do
-			itemFunctions[#itemFunctions + 1] = {title = k, name = v}
 		end
 	end
 

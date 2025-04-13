@@ -11,6 +11,8 @@ end
 -- Remove drive so admins don't accidentally possess props or items.
 properties.Remove("drive");
 
+function MsgAll() end -- Remove giving swep console message.
+
 -- Select optimizations from Pika's random patches.
 local hook_Add, hook_Remove = hook.Add, hook.Remove
 

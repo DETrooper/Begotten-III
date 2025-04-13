@@ -78,7 +78,13 @@ Clockwork.trait:Register(ESCAPEE)
 local EXHAUSTED = Clockwork.trait:New()
 	EXHAUSTED.uniqueID = "exhausted"
 	EXHAUSTED.name = "Exhausted"
-	EXHAUSTED.description = "Your character has travelled long and far to reach the Tower of Light, leaving them exhausted. This trait starts your character with high hunger, thirst, and fatigue values."
+	
+	if game.GetMap() == "rp_district21" then
+		EXHAUSTED.description = "Your character has travelled long and far to reach the Hill of Light, leaving them exhausted. This trait starts your character with high hunger, thirst, and fatigue values."
+	else
+		EXHAUSTED.description = "Your character has travelled long and far to reach the Tower of Light, leaving them exhausted. This trait starts your character with high hunger, thirst, and fatigue values."
+	end
+
 	EXHAUSTED.points = -2
 	EXHAUSTED.requiredfactions = {"Wanderer"}
 Clockwork.trait:Register(EXHAUSTED)

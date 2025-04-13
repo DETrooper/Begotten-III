@@ -2077,6 +2077,7 @@ else
 		WASTELAND.default = true;
 		WASTELAND.hasNight = true;
 		WASTELAND.name = "Wasteland";
+		WASTELAND.map = game.GetMap();
 		WASTELAND.fogColors = {r = 96, g = 47, b = 0};
 		WASTELAND.fogColorsNight = {r = 32, g = 12, b = 4};
 		WASTELAND.fogStart = 256;
