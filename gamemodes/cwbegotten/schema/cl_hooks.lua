@@ -1847,7 +1847,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.isPolearm then
-					frame:AddText("Polearm: Up to +70% increased damage the further away the target is.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Polearm: Up to +60% increased damage the further away the target is.", Color(110, 30, 30), nil, 0.9);
 				end
 				
 				if weaponTable.hasSwordplay then
@@ -1859,7 +1859,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.hasMinimumRange then
-					frame:AddText("Minimum Effective Range: Targets under 50% of your max range will receive ineffective non-lethal damage.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Minimum Effective Range: Targets under 60% of your max range will receive ineffective non-lethal damage.", Color(110, 30, 30), nil, 0.9);
 				end
 				
 				if itemTable.hasIncreasedDeflectionWindow then
