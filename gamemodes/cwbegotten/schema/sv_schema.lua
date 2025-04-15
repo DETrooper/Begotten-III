@@ -1460,7 +1460,9 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 		if (!player:GetCharacterData("permakilled")) then
 			player:SetCharacterData("permakilled", true);
 		end
-		
+
+		local flaggedDeath = Clockwork.player:HasFlags(player, "-")
+
 		if player.GetCharmEquipped and player:GetCharmEquipped("satchel_denial") then
 			bSilent = true;
 			
@@ -1474,8 +1476,8 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 		local cash = player:GetCash();
 		local info = {};
 		
-		info.inventory = copy;
-		info.cash = cash;
+		info.inventory = (flaggedDeath and {} or copy)
+		info.cash = (flaggedDeath and 0 or cash)
 		
 		Clockwork.plugin:Call("PlayerAdjustPermaKillInfo", player, info);
 		
@@ -1487,10 +1489,13 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 			end;
 		end;
 		
-		for k, v in pairs(inventory) do
-			for k2,v2 in pairs(v) do
-				player:TakeItem(v2);
+		if(!flaggedDeath) then
+			for k, v in pairs(inventory) do
+				for k2,v2 in pairs(v) do
+					player:TakeItem(v2);
+				end
 			end
+
 		end
 		
 		player:SetCharacterData("permakilled", true);
@@ -1499,8 +1504,11 @@ function Schema:PermaKillPlayer(player, ragdoll, bSilent)
 		player:SetBodygroup(0, 0);
 		player:SetBodygroup(1, 0);
 		
-		for k, v in pairs(player.equipmentSlots) do
-			player.equipmentSlots[k] = nil;
+		if(!flaggedDeath) then
+			for k, v in pairs(player.equipmentSlots) do
+				player.equipmentSlots[k] = nil;
+			end
+
 		end
 
 		if !ragdoll then

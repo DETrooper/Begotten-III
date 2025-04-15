@@ -217,7 +217,7 @@ end
 
 -- Called when a player attempts to drop a weapon.
 function Schema:PlayerCanDropWeapon(player, itemTable, weapon, bNoMsg)
-	if (itemTable.isUnique) then
+	if (itemTable.isUnique or Clockwork.player:HasFlags(player, "-")) then
 		return false;
 	else
 		return true

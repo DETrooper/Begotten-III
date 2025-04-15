@@ -28,6 +28,7 @@ Clockwork.flag:Add("I", "No Limb Damage", "Take no limb damage.")
 Clockwork.flag:Add("N", "No Character Needs", "Character needs (i.e. hunger) will not affect you.")
 Clockwork.flag:Add("M", "No Pain Sounds", "No pain or death sounds from your character.")
 Clockwork.flag:Add("l", "Unholy Blessing Always Active", "Unholy Blessing is always active on weapons that have the attribute.")
+Clockwork.flag:Add("-", "Drop Prevention", "Do not drop items on death. Keep items when perma-killed.")
 
 local map = game.GetMap();
 
