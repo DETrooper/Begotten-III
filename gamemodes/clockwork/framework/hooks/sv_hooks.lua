@@ -3616,12 +3616,14 @@ function GM:DoPlayerDeath(player, attacker, damageInfo)
 	Clockwork.player:SetAction(player, false)
 	Clockwork.player:SetDrunk(player, false)
 
-	if (hook.Run("PlayerCanDeathClearRecognisedNames", player, attacker, damageInfo)) then
-		Clockwork.player:ClearRecognisedNames(player)
-	end
+	if not plyTab.opponent then
+		if (hook.Run("PlayerCanDeathClearRecognisedNames", player, attacker, damageInfo)) then
+			Clockwork.player:ClearRecognisedNames(player)
+		end
 
-	if (hook.Run("PlayerCanDeathClearName", player, attacker, damageInfo)) then
-		Clockwork.player:ClearName(player)
+		if (hook.Run("PlayerCanDeathClearName", player, attacker, damageInfo)) then
+			Clockwork.player:ClearName(player)
+		end
 	end
 	
 	if hook.Run("DoPlayerDeathPreDeathSound", player, attacker, damageInfo) ~= false then

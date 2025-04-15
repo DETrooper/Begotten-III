@@ -9,7 +9,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/milk.png"
 	ITEM.stackable = true;
 	ITEM.infectchance = 75;
-	ITEM.poison = 15;
 	ITEM.cauldronLiquidity = 1;
 	ITEM.cauldronQuality = -1;
 
@@ -130,7 +129,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "dirtywater"
 	ITEM.infectchance = 60;
-	ITEM.poison = 20;
 	ITEM.cauldronQuality = -2;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 675, bNoSupercrate = true};
@@ -826,7 +824,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/yumchug.png"
 	ITEM.stackable = true;
 	ITEM.infectchance = 8;
-	ITEM.poison = 10;
 	ITEM.cauldronLiquidity = 1;
 	ITEM.cauldronQuality = -1;
 	
@@ -980,7 +977,6 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/bottle_2.png"
 	ITEM.stackable = true;
 	ITEM.infectchance = 30;
-	ITEM.poison = 20;
 	ITEM.cauldronQuality = -4;
 	
 	ITEM.needs = {thirst = 30};

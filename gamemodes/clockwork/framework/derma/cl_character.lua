@@ -35,6 +35,7 @@ local smallTextFont = Clockwork.option:GetFont("menu_text_small");
 local tinyTextFont = Clockwork.option:GetFont("menu_text_tiny");
 local hugeTextFont = Clockwork.option:GetFont("menu_text_huge");
 local fonts = {tinyTextFont, smallTextFont};
+local map = game.GetMap();
 
 local PANEL = {};
 
@@ -2690,7 +2691,7 @@ function PANEL:Init()
 				traitButton.disableTable = v.disables;
 			end
 			
-			if v.eventlocked then
+			if v.eventlocked or (v.excludedmaps and table.HasValue(v.excludedmaps, game.GetMap())) then
 				traitButton.eventlocked = true;
 				traitButton:SetColor(Color(74, 26, 0), true);
 				traitButton:SetDisabled(true);

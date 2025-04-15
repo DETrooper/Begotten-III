@@ -115,8 +115,8 @@ function SWEP:HandlePrimaryAttack()
 end
 
 function SWEP:HandleThrustAttack()
-
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+	local attacktable = GetTable(self.AttackTable)
 	local rate = 0.45;
 	
 	local isSwordplayActive = self:GetNW2Bool("swordplayActive")

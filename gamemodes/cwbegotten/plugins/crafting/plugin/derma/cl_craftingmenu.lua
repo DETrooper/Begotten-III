@@ -869,6 +869,12 @@ function PANEL:Init()
 							if !cwRecipes.slottedItems then
 								cwRecipes.slottedItems = {};
 							end
+							
+							-- Check to see if the itemID is already inserted. Lag can sometimes cause this.
+							if table.HasValue(cwRecipes.slottedItems, parent.itemTable.itemID) then
+								cwRecipes.inventoryPanel:Rebuild();
+								return;
+							end
 						
 							if !v.occupier then
 								table.insert(cwRecipes.slottedItems, parent.itemTable.itemID);
@@ -1226,7 +1232,10 @@ function PANEL:Rebuild()
 							local slot = cwRecipes.inventoryPanel.craftingSlotLocations[i];
 							
 							if !slot.occupier then
-								table.insert(cwRecipes.slottedItems, inventoryIcon.itemData.itemTable.itemID);
+								-- Check to see if the itemID is already inserted. Lag can sometimes cause this.
+								if !table.HasValue(cwRecipes.slottedItems, inventoryIcon.itemData.itemTable.itemID) then
+									table.insert(cwRecipes.slottedItems, inventoryIcon.itemData.itemTable.itemID);
+								end
 								
 								cwRecipes.inventoryPanel:Rebuild();
 								return;

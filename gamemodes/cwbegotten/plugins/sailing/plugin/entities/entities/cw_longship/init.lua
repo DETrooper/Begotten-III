@@ -231,11 +231,10 @@ function ENT:Think()
 	if (!self.damageCooldown or self.damageCooldown < curTime) then
 		self.damageCooldown = curTime + 1;
 	
-		if self.ignited then
+		if self:GetNWBool("Ignited") then
 			if cwWeather and cwWeather.weather == "rainstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
-				self.ignited = false;
+				self:SetNWBool("Ignited", false);
 				self:StopParticles();
-				self:StopSound("ambient/fire/fire_med_loop1.wav");
 				
 				return;
 			end
@@ -392,7 +391,7 @@ function ENT:Use(activator, caller)
 		
 		if self.health then
 			if (self:GetSkin() == 1 and self.health < 1000) or self.health < 500 then
-				if !self.ignited then
+				if !self:GetNWBool("Ignited") then
 					self.repairable = true;
 				else
 					self.repairable = false;
@@ -420,7 +419,7 @@ function ENT:Use(activator, caller)
 				data.sailable = false;
 			end
 			
-			if self.ignited then
+			if self:GetNWBool("Ignited") then
 				data.cargoholdopenable = false;
 				data.ignited = true;
 			else
@@ -428,7 +427,7 @@ function ENT:Use(activator, caller)
 			end;
 		end
 		
-		if !self.ignited then
+		if !self:GetNWBool("Ignited") then
 			if caller:GetFaction() ~= "Goreic Warrior" then
 				if !self.enchantment then
 					local activeWeapon = caller:GetActiveWeapon();
@@ -449,9 +448,9 @@ function ENT:Use(activator, caller)
 end;
 
 function ENT:OnRemove()
-	local belongingsEnt = ents.Create("cw_belongings");
-
 	if (self.cwInventory and !table.IsEmpty(self.cwInventory) or self.cwCash and self.cwCash > 0) then
+		local belongingsEnt = ents.Create("cw_belongings");
+	
 		belongingsEnt:SetData(self.cwInventory, self.cwCash, "Longship Cargo");
 		belongingsEnt:SetPos(self:GetPos() + Vector(0, 0, 128));
 		belongingsEnt:Spawn();
@@ -494,7 +493,6 @@ function ENT:OnRemove()
 	end
 	
 	self:StopParticles();
-	self:StopSound("ambient/fire/fire_med_loop1.wav");
 
 	cwSailing:RemoveLongship(self);
 end;

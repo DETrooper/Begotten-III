@@ -252,7 +252,7 @@ function SWEP:Hitscan()
 	
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
-		endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (meleerange) / 9),
+		endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (meleerange) / 10),
 		filter = self.Owner,
 		mask = MASK_SHOT_HULL
 	} )
@@ -267,7 +267,7 @@ function SWEP:Hitscan()
 		bullet.Tracer = 0
 		bullet.Force  = 2
 		bullet.Hullsize = 0
-		bullet.Distance = (meleerange / 9)
+		bullet.Distance = (meleerange / 10)
 		bullet.Damage = 0;
 	
 		bullet.Callback = function(attacker, tr, dmginfo)
@@ -1016,7 +1016,7 @@ function SWEP:PrimaryAttack()
 					
 						local tr = util.TraceLine( {
 							start = self.Owner:GetShootPos(),
-							endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (meleerange) / 9),
+							endpos = self.Owner:GetShootPos() + ( self.Owner:GetAimVector() * (meleerange) / 10),
 							filter = self.Owner,
 							mask = MASK_SHOT_HULL
 						} )
@@ -1323,7 +1323,7 @@ end
 				if (IsValid(self)) then
 					if string.find(weaponClass, "begotten_polearm_") and weapon.CanSwipeAttack != true then		
 						local maxPoleRange = (attacktable["meleerange"]) * 0.1
-						local maxIneffectiveRange = maxPoleRange * 0.53
+						local maxIneffectiveRange = maxPoleRange * 0.62
 						local clampedDistance = math.min(math.max(distance, 0), maxPoleRange)
 						local ratio = clampedDistance / maxPoleRange
 						local minDamage = (attacktable["primarydamage"] * 0.7)
@@ -1467,7 +1467,7 @@ end
 			end
 		elseif swingType == "polearm_swing" then
 			local maxPoleRange = (attacktable["meleerange"]) * 0.1
-			local maxIneffectiveRange = maxPoleRange * 0.53
+			local maxIneffectiveRange = maxPoleRange * 0.62
 			local clampedDistance = math.min(math.max(distance, 0), maxPoleRange)
 			local ratio = clampedDistance / maxPoleRange
 			local minDamage = (attacktable["primarydamage"] * 0.7)
@@ -1649,7 +1649,7 @@ end
 				if (IsValid(self)) then
 					if string.find(weaponClass, "begotten_spear_") then
 						local maxPoleRange = (attacktable["meleerange"]) * 0.1
-						local maxIneffectiveRange = maxPoleRange * 0.53
+						local maxIneffectiveRange = maxPoleRange * 0.62
 					
 						if distance <= maxIneffectiveRange and hit:IsValid() then
 							damage = (attacktable["primarydamage"]) * 0.01

@@ -353,7 +353,7 @@ function GM:GetEntityMenuOptions(entity, options)
 		local itemTable = nil
 
 		if (entity.GetItemTable) then
-			itemTable = entity:GetItemTable()
+			itemTable = entity:GetItemTable() or entity.cwItemTable;
 		else
 			debug.Trace()
 		end

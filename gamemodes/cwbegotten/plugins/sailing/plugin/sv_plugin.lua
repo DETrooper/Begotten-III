@@ -1115,6 +1115,8 @@ function cwSailing:LoadLongships()
 				longshipEnt.cwInventory = {};
 			end
 			
+			longshipEnt.cwCash = v.cwCash or 0;
+			
 			if location == "docks" then
 				-- If the ship is still at port after thirty minutes and the docks are full, remove it and let someone else take a spot.
 				self:CreateDockTimer(longshipEnt, 1800);
@@ -1156,6 +1158,8 @@ function cwSailing:SaveLongships()
 		if v.cwInventory then
 			saveTab.cwInventory = Clockwork.inventory:ToSaveable(v.cwInventory);
 		end
+		
+		saveTab.cwCash = v.cwCash or 0;
 
 		longships[#longships + 1] = saveTab;
 	end
@@ -1266,11 +1270,9 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 											
 												--if !entity.destination then
 													--entity:Ignite(600, 0);
-													entity.ignited = true;
-													ParticleEffect("fire_large_02", entity:GetPos() + Vector(0, 0, 16), entity:GetAngles(), entity);
+													entity:SetNWBool("Ignited", true);
 													
 													entity:EmitSound("ambient/fire/gascan_ignite1.wav");
-													entity:StartLoopingSound("ambient/fire/fire_med_loop1.wav");
 													
 													if timer.Exists("SailTimer_"..tostring(entity:EntIndex())) then
 														timer.Remove("SailTimer_"..tostring(entity:EntIndex()));
@@ -1351,7 +1353,7 @@ concommand.Add("cw_CheckShipStatus", function(player, cmd, args)
 				end
 			end
 			
-			if entity.ignited then
+			if entity:GetNWBool("Ignited") then
 				status_string = status_string.." It is currently on fire!";
 			end
 			
@@ -1416,9 +1418,8 @@ concommand.Add("cw_ExtinguishShip", function(player, cmd, args)
 					if entity.health and entity.health > 0 then
 						--entity:Extinguish();
 						
-						entity.ignited = false;
+						entity:SetNWBool("Ignited", false);
 						entity:StopParticles();
-						entity:StopSound("ambient/fire/fire_med_loop1.wav");
 					end
 				end
 			end);
@@ -1470,7 +1471,7 @@ concommand.Add("cw_MoveShipGoreForest", function(player, cmd, args)
 
 		if (entity.longshipType) then
 			if !entity.destination then
-				if !entity.ignited then
+				if !entity:GetNWBool("Ignited") then
 					if hook.Run("CanPlayerMoveLongship", entity, player) then
 						cwSailing:BeginSailing(entity, "docks", player);
 					else
@@ -1494,7 +1495,7 @@ concommand.Add("cw_MoveShipWasteland", function(player, cmd, args)
 
 		if (entity.longshipType) then
 			if !entity.destination then
-				if !entity.ignited then
+				if !entity:GetNWBool("Ignited") then
 					if hook.Run("CanPlayerMoveLongship", entity, player) then
 						cwSailing:BeginSailing(entity, "wasteland", player);
 					else
@@ -1521,7 +1522,7 @@ concommand.Add("cw_MoveShipLava", function(player, cmd, args)
 		if (entity.longshipType) then
 			if entity.enchantment then
 				if !entity.destination then
-					if !entity.ignited then
+					if !entity:GetNWBool("Ignited") then
 						if hook.Run("CanPlayerMoveLongship", entity, player) then
 							cwSailing:BeginSailing(entity, "wastelandlava", player);
 						else
@@ -1550,7 +1551,7 @@ concommand.Add("cw_MoveShipHell", function(player, cmd, args)
 			if entity.enchantment then
 				if cwSailing.hellSailingEnabled then
 					if !entity.destination then
-						if !entity.ignited then
+						if !entity:GetNWBool("Ignited") then
 							if hook.Run("CanPlayerMoveLongship", entity, player) then
 								cwSailing:BeginSailing(entity, "hell", player);
 							else
@@ -1637,6 +1638,10 @@ concommand.Add("cw_CargoHold", function(player, cmd, args)
 				if (!entity.cwInventory) then
 					entity.cwInventory = {};
 				end;
+				
+				if (!entity.cwCash) then
+					entity.cwCash = 0;
+				end
 
 				player:EmitSound("physics/body/body_medium_impact_soft"..math.random(1, 7)..".wav");
 				
@@ -1652,6 +1657,13 @@ concommand.Add("cw_CargoHold", function(player, cmd, args)
 					entity = entity,
 					distance = entity:OBBMaxs():Length(),
 					inventory = entity.cwInventory,
+					cash = entity.cwCash,
+					OnGiveCash = function(player, storageTable, cash)
+						entity.cwCash = storageTable.cash;
+					end,
+					OnTakeCash = function(player, storageTable, cash)
+						entity.cwCash = storageTable.cash;
+					end
 				});
 			end
 		end;
