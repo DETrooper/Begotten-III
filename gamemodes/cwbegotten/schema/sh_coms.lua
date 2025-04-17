@@ -2689,7 +2689,7 @@ function COMMAND:OnRun(player, arguments)
 	if(!hearMeEnabled and arguments[1]) then Schema.hearMeFlags = bit.bor(Schema.hearMeFlags, HEARME_INCLUDEHELLBARON)
 	else Schema.hearMeFlags = bit.band(Schema.hearMeFlags, bit.bnot(HEARME_INCLUDEHELLBARON)) end
 
-	local hellBaronIncluded = (bit.band(Schema.hearMeFlags, HEARME_ENABLED) <= 0 and bit.band(Schema.hearMeFlags, HEARME_INCLUDEHELLBARON) >= 0)
+	local hellBaronIncluded = (bit.band(Schema.hearMeFlags, HEARME_ENABLED) <= 0 and bit.band(Schema.hearMeFlags, HEARME_INCLUDEHELLBARON) > 0)
 	Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", name.." has "..(hearMeEnabled and "enabled" or "disabled").." the Hear Me ritual"..(hellBaronIncluded and ", including the Hell Baron." or "."))
 
 	if(!isHellBaron) then return end
