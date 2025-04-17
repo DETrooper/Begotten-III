@@ -860,6 +860,13 @@ RITUAL = cwRituals.rituals:New("hear_me");
 	function RITUAL:OnFail(player)
 	end;
 	function RITUAL:StartRitual(player)
+		if(bit.band(Schema.hearMeFlags, HEARME_ENABLED) <= 0) then
+			Schema:EasyText(player, "peru", "The Hell Baron has cut off your connection to the Dark Lord!")
+
+			return false
+		
+		end
+
 	end;
 	function RITUAL:EndRitual(player)
 	end;

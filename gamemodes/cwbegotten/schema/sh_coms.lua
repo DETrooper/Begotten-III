@@ -2654,7 +2654,62 @@ function COMMAND:OnRun(player, arguments)
 	end
 end;
 
-COMMAND:Register();
+COMMAND:Register()
+
+local COMMAND = Clockwork.command:New("ToggleHearMe")
+COMMAND.tip = "Toggle whether or not Children of Satan can use the Hear Me ritual, Hell Baron excluded."
+COMMAND.flags = CMD_DEFAULT
+COMMAND.faction = "Children of Satan"
+COMMAND.text = "[bool Include Hell Baron]"
+COMMAND.optionalArguments = 1
+
+HEARME_ENABLED = 1
+HEARME_ADMINENFORCED = 2
+HEARME_INCLUDEHELLBARON = 4
+
+Schema.hearMeFlags = Schema.hearMeFlags or HEARME_ENABLED
+
+function COMMAND:OnRun(player, arguments)
+	local isAdmin = player:IsAdmin()
+	local isHellBaron = (player:GetFaction() == "Children of Satan" and Schema:GetRankTier("Children of Satan", player:GetCharacterData("rank", 1)) > 3)
+
+	if(!isAdmin and !isHellBaron) then Schema:EasyText(player, "peru", "You are not the Hell Baron.") return end
+	if(!isAdmin and bit.band(Schema.hearMeFlags, HEARME_ADMINENFORCED) > 0) then Schema:EasyText(player, "peru", "A higher power has already made this decision for you.") return end
+	
+	local name = player:Name()
+
+	if(bit.band(Schema.hearMeFlags, HEARME_ENABLED) > 0) then Schema.hearMeFlags = bit.band(Schema.hearMeFlags, bit.bnot(HEARME_ENABLED))
+	else Schema.hearMeFlags = bit.bor(Schema.hearMeFlags, HEARME_ENABLED) end
+
+	local hearMeEnabled = bit.band(Schema.hearMeFlags, HEARME_ENABLED) > 0
+
+	if(isAdmin and !hearMeEnabled) then Schema.hearMeFlags = bit.bor(Schema.hearMeFlags, HEARME_ADMINENFORCED)
+	elseif(isAdmin) then Schema.hearMeFlags = bit.band(Schema.hearMeFlags, bit.bnot(HEARME_ADMINENFORCED)) end
+
+	if(!hearMeEnabled and arguments[1]) then Schema.hearMeFlags = bit.bor(Schema.hearMeFlags, HEARME_INCLUDEHELLBARON)
+	else Schema.hearMeFlags = bit.band(Schema.hearMeFlags, bit.bnot(HEARME_INCLUDEHELLBARON)) end
+
+	local hellBaronIncluded = (bit.band(Schema.hearMeFlags, HEARME_ENABLED) <= 0 and bit.band(Schema.hearMeFlags, HEARME_INCLUDEHELLBARON) >= 0)
+	Schema:EasyText(Schema:GetAdmins(), "cornflowerblue", name.." has "..(hearMeEnabled and "enabled" or "disabled").." the Hear Me ritual"..(hellBaronIncluded and ", including the Hell Baron." or "."))
+
+	if(!isHellBaron) then return end
+	local pronoun = (player:GetGender() == GENDER_FEMALE and "her" or "his")
+
+	local message = (hearMeEnabled and name.." has graciously restored your connection to the Dark Lord, allowing you to perform the Hear Me ritual once again. Praise "..pronoun.." name!" or name.." has selfishly cut off your connection to the Dark Lord, witholding your ability to perform the Hear Me ritual. Will "..pronoun.." tyranny know no end?!")
+
+	for i, v in _player.Iterator() do
+		if(!v:Alive() or v:GetFaction() != "Children of Satan") then continue end
+
+		v:ReadSound("darkwhisper/darkwhisper_long"..math.random(1, 5)..".mp3", 80, 100)
+
+		Clockwork.chatBox:SetMultiplier(1.35)
+		Clockwork.chatBox:Add(v, nil, "darkwhisperevent", message)
+	
+	end
+
+end
+
+COMMAND:Register()
 
 local COMMAND = Clockwork.command:New("ToggleHellTeleporting");
 COMMAND.tip = "Toggle whether teleporting to Hell is enabled.";
