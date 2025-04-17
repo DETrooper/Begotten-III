@@ -115,6 +115,10 @@ function meta:CanRoll()
 		return false;
 	end
 	
+	if self.OverEncumbered then
+		return false;
+	end
+	
 	if Clockwork then
 		if (self:GetNetVar("tied", 0) ~= 0) then
 			return false;
