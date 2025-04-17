@@ -794,13 +794,21 @@ function SWEP:PrimaryAttack()
 							
 							if tr.Hit then
 								if IsValid(tr.Entity) then
-									if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
+									local bIsPlayerRagdoll = Clockwork.entity:IsPlayerRagdoll(tr.Entity);
+								
+									if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or bIsPlayerRagdoll then
 										table.insert(hitEntities, tr.Entity);
 									else
 										hitsAllowed = 0;
 									end
+									
+									local hitEnt = tr.Entity;
+									
+									if bIsPlayerRagdoll then
+										hitEnt = Clockwork.entity:GetPlayer(tr.Entity);
+									end
 										
-									if bParry and tr.Entity:GetNetVar("Parried") and tr.Entity == owner.parryTarget then
+									if bParry and hitEnt:GetNetVar("Parried") and hitEnt == owner.parryTarget then
 										self:HandleHit(tr.Entity, tr.HitPos, "parry_swing");
 									else
 										self:HandleHit(tr.Entity, tr.HitPos, stance);
@@ -831,10 +839,18 @@ function SWEP:PrimaryAttack()
 									
 									if tr2.Hit then
 										if IsValid(tr2.Entity) and !table.HasValue(hitEntities, tr2.Entity) then
-											if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
+											local bIsPlayerRagdoll = Clockwork.entity:IsPlayerRagdoll(tr2.Entity);
+										
+											if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or bIsPlayerRagdoll then
 												table.insert(hitEntities, tr2.Entity);
 												
-												if bParry and tr2.Entity:GetNetVar("Parried") and tr2.Entity == owner.parryTarget then
+												local hitEnt = tr2.Entity;
+												
+												if bIsPlayerRagdoll then
+													hitEnt = Clockwork.entity:GetPlayer(tr2.Entity);
+												end
+												
+												if bParry and hitEnt:GetNetVar("Parried") and hitEnt == owner.parryTarget then
 													self:HandleHit(tr2.Entity, tr2.HitPos, "parry_swing", #hitEntities);
 												else
 													self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities);
@@ -877,13 +893,21 @@ function SWEP:PrimaryAttack()
 									
 									if tr.Hit then
 										if IsValid(tr.Entity) then
-											if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr.Entity) then
+											local bIsPlayerRagdoll = Clockwork.entity:IsPlayerRagdoll(tr.Entity);
+										
+											if tr.Entity:IsPlayer() or tr.Entity:IsNPC() or tr.Entity:IsNextBot() or bIsPlayerRagdoll then
 												table.insert(hitEntities, tr.Entity);
 											else
 												hitsAllowed = 0;
 											end
 
-											if bParry and tr.Entity:GetNetVar("Parried") and tr.Entity == owner.parryTarget then
+											local hitEnt = tr.Entity;
+											
+											if bIsPlayerRagdoll then
+												hitEnt = Clockwork.entity:GetPlayer(tr.Entity);
+											end
+											
+											if bParry and hitEnt:GetNetVar("Parried") and hitEnt == owner.parryTarget then
 												self:HandleHit(tr.Entity, tr.HitPos, "parry_swing", nil, offhandWeapon, offhandAttackTable);
 											else
 												self:HandleHit(tr.Entity, tr.HitPos, stance, nil, offhandWeapon, offhandAttackTable);
@@ -914,10 +938,18 @@ function SWEP:PrimaryAttack()
 											
 											if tr2.Hit then
 												if IsValid(tr2.Entity) and !table.HasValue(hitEntities, tr2.Entity) then
-													if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or Clockwork.entity:IsPlayerRagdoll(tr2.Entity) then
+													local bIsPlayerRagdoll = Clockwork.entity:IsPlayerRagdoll(tr2.Entity);
+													
+													if tr2.Entity:IsPlayer() or tr2.Entity:IsNPC() or tr2.Entity:IsNextBot() or bIsPlayerRagdoll then
 														table.insert(hitEntities, tr2.Entity);
 														
-														if bParry and tr2.Entity:GetNetVar("Parried") and tr2.Entity == owner.parryTarget then
+														local hitEnt = tr2.Entity;
+														
+														if bIsPlayerRagdoll then
+															hitEnt = Clockwork.entity:GetPlayer(tr2.Entity);
+														end
+														
+														if bParry and hitEnt:GetNetVar("Parried") and hitEnt == owner.parryTarget then
 															self:HandleHit(tr2.Entity, tr2.HitPos, "parry_swing", #hitEntities, offhandWeapon, offhandAttackTable);
 														else
 															self:HandleHit(tr2.Entity, tr2.HitPos, stance, #hitEntities, offhandWeapon, offhandAttackTable);
