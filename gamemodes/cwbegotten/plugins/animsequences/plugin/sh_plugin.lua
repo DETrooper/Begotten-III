@@ -14,10 +14,15 @@ function cwAnimSequences:StartCommand(player, cmd)
     local sequence = player:GetAnimSequence()
     if(#sequence <= 0) then return end
 
-    cmd:ClearMovement()
+    --[[cmd:RemoveKey(IN_FORWARD)
+    cmd:RemoveKey(IN_BACK)
+    cmd:RemoveKey(IN_MOVELEFT)
+    cmd:RemoveKey(IN_MOVERIGHT)
+    cmd:RemoveKey(IN_JUMP)
+    cmd:RemoveKey(IN_DUCK)
     cmd:RemoveKey(IN_ATTACK)
     cmd:RemoveKey(IN_ATTACK2)
-    cmd:RemoveKey(IN_RELOAD)
+    cmd:RemoveKey(IN_RELOAD)]]
 
 end
 
@@ -34,5 +39,11 @@ end
 
 function cwAnimSequences:UpdateAnimation(player)
 	local angle = player:GetNWAngle("bgAnimAngle", nil)
-	if(angle) then player:SetRenderAngles(angle) end
+	if(angle and !angle:IsZero()) then player:SetRenderAngles(angle) end
+
+end
+
+function cwAnimSequences:ModifyPlayerPlaybackRate(player, plyTab)
+    if(#player:GetAnimSequence() > 0) then plyTab.cwPlaybackRate = 1 end
+
 end

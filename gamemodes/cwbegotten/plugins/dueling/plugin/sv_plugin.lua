@@ -498,9 +498,9 @@ function cwDueling:DuelAborted(player1, player2)
 					timer.Remove("DuelTimer_"..k)
 				end
 				
-				player1:Freeze(true);
+				player1:SetMoveType(MOVETYPE_NONE)
 				player1:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.1);
-				player2:Freeze(true);
+				player2:SetMoveType(MOVETYPE_NONE)
 				player2:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.1);
 				
 				netstream.Start(player1, "FadeBattleMusic");
@@ -536,7 +536,7 @@ function cwDueling:DuelAborted(player1, player2)
 					timer.Remove("DuelTimer_"..k)
 				end
 				
-				player1:Freeze(true);
+				player1:SetMoveType(MOVETYPE_NONE)
 				player1:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.1);
 				
 				netstream.Start(player1, "FadeBattleMusic");
@@ -567,7 +567,7 @@ function cwDueling:DuelAborted(player1, player2)
 					timer.Remove("DuelTimer_"..k)
 				end
 				
-				player2:Freeze(true);
+				player2:SetMoveType(MOVETYPE_NONE)
 				player2:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.1);
 				
 				netstream.Start(player2, "FadeBattleMusic");
@@ -583,6 +583,15 @@ function cwDueling:DuelAborted(player1, player2)
 		end
 	end
 end
+
+cwDueling.winAnimations = {
+	"Ds_Wellwhatisit",
+	"Ds_Bow",
+	"Ds_Facepalm",
+	"Ds_Pointdown",
+	"Ds_Shrug",
+	"Ds_Thumbsdown",
+}
 
 function cwDueling:DuelCompleted(winner, loser)
 	local curTime = CurTime();
@@ -603,14 +612,19 @@ function cwDueling:DuelCompleted(winner, loser)
 					timer.Remove("DuelTimer_"..k)
 				end
 
-				winner:Freeze(true);
-				winner:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.1);
-				loser:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.1);
+				local sequence = cwDueling.winAnimations[math.random(1, #cwDueling.winAnimations)]
+				local time = winner:SequenceDuration(winner:LookupSequence(sequence))
+
+				winner:SetMoveType(MOVETYPE_NONE)
+				winner:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), time, 1.1);
+				loser:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), time, 1.1);
 				
 				netstream.Start(winner, "FadeBattleMusic");
 				--netstream.Start(loser, "FadeBattleMusic"); -- This should already happen if the loser is dead.
-					
-				timer.Simple(5, function()
+
+				winner:SetAnimSequence(sequence)
+				
+				timer.Simple(time, function()
 					if IsValid(winner) then
 						hook.Run("PlayerExitedDuel", winner);
 					end
@@ -665,7 +679,7 @@ function cwDueling:DuelCompleted(winner, loser)
 					timer.Remove("DuelTimer_"..k)
 				end
 				
-				winner:Freeze(true);
+				winner:SetMoveType(MOVETYPE_NONE)
 				winner:ScreenFade(SCREENFADE.OUT, Color(0, 0, 0, 255 ), 4, 1.1);
 				
 				netstream.Start(winner, "FadeBattleMusic");

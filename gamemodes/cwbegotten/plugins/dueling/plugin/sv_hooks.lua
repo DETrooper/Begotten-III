@@ -154,7 +154,7 @@ function cwDueling:PlayerEnteredDuel(player, arena, spawnPos, spawnAngles)
 	player:SetPos(spawnPos);
 	player:SetEyeAngles(spawnAngles);
 	player:SetHealth(player:GetMaxHealth());
-	player:Freeze(true);
+	player:SetMoveType(MOVETYPE_NONE)
 
 	if player:GetLocalVar("Hatred") then
 		player:SetLocalVar("Hatred", 75);
@@ -164,13 +164,13 @@ function cwDueling:PlayerEnteredDuel(player, arena, spawnPos, spawnAngles)
 	timer.Simple(3, function()
 		if IsValid(player) then
 			netstream.Start(player, "StartBattleMusicNoLimit");
-			player:Freeze(false);
+			player:SetMoveType(MOVETYPE_WALK)
 		end;
 	end);
 end
 
 function cwDueling:PlayerExitedDuel(player)
-	player:Freeze(false);
+	player:SetMoveType(MOVETYPE_WALK)
 	player:ScreenFade(SCREENFADE.IN, Color(0, 0, 0, 255 ), 5, 0);
 	player:SetLocalVar("freeze", 0);
 	
