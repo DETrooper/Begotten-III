@@ -104,7 +104,7 @@ It was not until the Second Era, in the aftermath of the Hierarchy wars, that th
 Book_Discovery_Page2 = [[
 <font color='#000' size='4'><b>Goreic Kingdoms</b></font>
 <i>"I suppose It'd be quite requisitory of the Royal Senate to enact a burdening response to these recent attacks on our peasant friends. To sit back, wait, and hope for a digression? Simply put, these Spearfolk must be swiftly cut down before they grow in number."</i>
-—V.K Heimann - the 'Steel Tongue' of his days.
+-V.K Heimann - the 'Steel Tongue' of his days.
 
 Around the late phase of the Second Era, beginning with the first encounter of the Gores at the Gay King Summit, Goreic raids have grown from legendary to quite common and then annoyingly frequent. From ambassador intelligence to captured Spearfolk, it was apparent that a great number of Goreic men were actually once of Glazic faith, and have converted over. Life among these people is extremely simple, their day consisting of crawling around in dark underground tunnels, or in cold villages on the mountains. Strangely, when asked what these men believe in, each response will vary. 
 
@@ -459,19 +459,19 @@ Quotes of Glazic Renewal is an act signed by the legislation of the Royal Senate
 <font color='#000' size='4'><b>Quote 1.3</b></font>
 <i>"The Glaze is the light.. it is the truth - you cannot see it in perspective as it is you; your foolishness, greatness, your power... "</i>
 
-—Lord Maximus XII some time in the Fifth Era, after the most recent indoctrination of Hard-Glaze structure remodeling. 
+-Lord Maximus XII some time in the Fifth Era, after the most recent indoctrination of Hard-Glaze structure remodeling. 
 
 <font color='#000' size='4'><b>Quote 1.4</b></font>
 <i>"Almighty creator, deity, holiness, idol of mine. Give me power, spirit, allegiance with those who have disbanded from my ordnance of an army. Divine overseer, universal forces be with me. And for those demons, fight back in means to protect Hard-Glaze and society from its inevitable destruction. Dump the spiritual trophies for now, and unload the ammunition to purify these unfaithful sinners of the land. Stockpile the explosives, magazine the rifles, warehouse the vehicles, but most of all, plant the inflorescence of Hard-Glaze society inside the dirt for future generations to come."</i>
 
-— Lord Maximus XII, beginning his march on the tribes in the First Era during the Holy Hierarchy wars.
+- Lord Maximus XII, beginning his march on the tribes in the First Era during the Holy Hierarchy wars.
 ]]
 
 Book_Quotes2 = [[
 <font color='#000' size='4'><b>Quote 1.8</b></font>
 <i>"With the help of powder and steel, I set forth to carry out my divine duty, OUR divine duty! Beyond this river lies many things unholy, and they shall be devoured by the wrath of the Glaze, so help me God!"</i> 
 
-—Lord Maximus XII's short speech to his men as he crosses the river separating Glazic territory from the Northlands, setting off his re-conquests.
+-Lord Maximus XII's short speech to his men as he crosses the river separating Glazic territory from the Northlands, setting off his re-conquests.
 ]]
 
 Book_Urges1 = [[
@@ -498,7 +498,7 @@ Historians believe that it was during The Age of Enlightenment in the First Era 
 Book_Deathships_Page1 = [[
 <font color='#000' size='4'><b>Death Ships</b></font>
 <i>"I simply obey the rules of Glaze in either contemporary or of preceding state. It was knowledge to many that state-of-the-art, hot off the press designs such as these have such craftsmanship, mastery and adeptness crafted into each and every Death Ship I have been accustomed to document wholesomely. It would seem as though wizardry or some kind of off-worldly pseudo science began these measures of talent, but I can only be so certain."</i>
-—Dobby C. Soljian, statesman of the recent rennouned Hard-Glaze naval Meritime Museum, poet and novelist. 
+-Dobby C. Soljian, statesman of the recent rennouned Hard-Glaze naval Meritime Museum, poet and novelist. 
 
 In the dark near-by remoteness of the river basin, lies the many sailors in servitude with their commanding officer. The heart of the rivers and oceans in the world are strictly forbidden for darkhides and Amish alike, leaving one which rules over sovereignty. He is Lord Maximus, and he is the commander of the royal navy's greatest ever display of Death Ships. Black and drifting aimlessly as locked in port, these ferocious warriors above their Death Ships go by the common nickname of the Blagoonie Sailor Sweets. This name stems from Booby Blagoona's recorded sneak into one of these vastly superior Death Ships, without documentation, without purpose it would seem, but many knew in the aftermath that he did it for one reason, to exploit the greatest nation on Earth. God bless his nasty soul. These whaling ships are guarded by some of the most elite protection leagues under Hard-Glaze legislature and authorities. Multi-plated and covered in a final layer of chain-mail just below parts of the rudder and haul, these disturbingly secure Death Ships, as called by Hard-Glaze politicians and figures of importance, have displayed some of the greatest achievements of all time in naval history.
 ]]
@@ -576,7 +576,7 @@ It was said that in the aftermath of the attack of Fucker Joe on Alberto's preci
 Book_Karmine_Page1 = [[
 <font color='#000' size='4'><b>Karmine Willtan </b></font>
 <i>"I've not a man nor a prophet. Simply an inferno."</i>
-—Karmine Willtan - When asked if he was a man or god by a serf.
+-Karmine Willtan - When asked if he was a man or god by a serf.
 
 Karmine Willtan (b. 4E), is a Minister of Glazic Faith within the County Districts. His works are well known across the entirety of the Hierarchy, as his teachings led to the building of the Faith Ministry, the replacement of the inferior Royal Pope system. Willtan is said to be the first man, born as a peasant, to rise to the Small Council due to his political cunning. Even more admirable was his efforts to root out the spread of the Goreic Faith, a puppet religion system.
 
@@ -603,7 +603,7 @@ The slaughterings began shortly afterwards, burning down shantytowns and small v
 Book_Maximus_Page1 = [[
 <font color='#000' size='4'><b>Lord Maximus </b></font>
 <i>"Almighty creator, deity, holiness, idol of mine. Give me power, spirit, allegiance with those who have disbanded from my ordnance of an army. Divine overseer, universal forces be with me. And for those demons, fight back in means to protect Hard-Glaze and society from its inevitable destruction. Dump the spiritual trophies for now, and unload the ammunition to purify these unfaithful sinners of the land. Stockpile the explosives, magazine the rifles, warehouse the vehicles, but most of all, plant the inflorescence of Hard-Glaze society inside the dirt for future generations to come."</i>
-— Lord Maximus XII, beginning his march on the tribes in the First Era during the Holy Hierarchy wars.
+- Lord Maximus XII, beginning his march on the tribes in the First Era during the Holy Hierarchy wars.
 
 On the silver saddle piece, it shows a carving of a trademark symbol, and the globe in the glove of the Lord, as he stands on his pedestal. 
 
@@ -680,8 +680,8 @@ Book_Maximus_Page8 = [[
 
 Pressured by his officers and nearly-mutinous troops, General Booby began preparations for the final assault. Several obstacles stood in his way. The main bridge leading into the city, and most importantly, to the symbolic Iron Gate of Glaze, was extremely well defended. The General ordered his artillery to fire on the defenders, with limited success, but ceased firing to prevent the bridge's destruction. The General then ordered his elite shock troops, veterans of Lord Maximus' conquests of the Black-Hats to advance across the bridge. Covered by General Booby's best crossbowmen, the elite swordsmen crossed the bridge slowly. The defending force, a contingent of about five hundred Maximilian Guard, did not back down against the force of five thousand advancing upon them. Volleys of crossbow fire rained down on the defenders, but did little damage due to the defender's superior armor and shields. Meanwhile, across the city, the secondary force of over 80,000 regulars began advancing to the walls with massive siege towers pulled by mules. Boxer H. Krammy describes what happened next in his Glazica Historica written in the early Fourth Era: 
 
-<i>"At sunrise, the six-story siege towers which had been immobile for weeks began advancing across the plains on the south side of the capital. Lord Maximus happened to be on the southern walls at this time. The Glazic gunners took note of the siege towers being pulled by mules, rather than conventionally pushed from behind. Lord Maximus shouted with his thunderous voice "”Give them the steel", and so, the steel was given."</i>
-—Boxer H. Krammy - Glazica Historica 
+<i>"At sunrise, the six-story siege towers which had been immobile for weeks began advancing across the plains on the south side of the capital. Lord Maximus happened to be on the southern walls at this time. The Glazic gunners took note of the siege towers being pulled by mules, rather than conventionally pushed from behind. Lord Maximus shouted with his thunderous voice ""Give them the steel", and so, the steel was given."</i>
+-Boxer H. Krammy - Glazica Historica 
 ]]
 
 Book_Maximus_Page8 = [[
@@ -703,7 +703,7 @@ Motivated once more, the Powderboys completed the encirclement, and advanced int
 Book_Maximus_Page10 = [[
 <font color='#000' size='4'><b>A Prophecy Fulfilled</b></font>
 <i>"You speak so highly as to consider yourself a tributary? Then if God wills it, give this man his honorable celebration. Vile thing, remember these words! Corpse the savage, but do not corpse the Philimonjio, for he is spiritual and his integrity is leveled to that of the God that speaks to us in the skies."</i>
-—Lord Maximus XII, speaking to the last holdout of Powderboys.
+-Lord Maximus XII, speaking to the last holdout of Powderboys.
 
 After the eventful conclusion of the wars of the Holy Hierarchy, Lord Maximus had consolidated his power. With his mutinous army subdued and the Unenlightened Fucklets all but eradicated, with the remnants under control, Lord Maximus could again look forward to an age of peace and prosperity. However, this was not to be the case, as several controversies would stand in his way, the first being the most devastating to Lord Maximus' image. 
 
@@ -781,7 +781,7 @@ And yet, despite every inkling of inquisitorial censure, even the harshest of sc
 ]]
 
 Book_Undergod_Page2 = [[
-This new calamity was finally christened, and for decades thereafter - for the precognitive conduits amongst the Loremasters were found to suffer many gripping nightmares as the power of the catalysts were wrought upon Gaia during its infernal purification, and the maws of the Earth's mantle opened to swallow entire kingdoms and billow with the brimming monstrosities of the Begotten. The clergy, dazzled and terrified by the sudden affliction upon all of mankind, turned to their most trusted for ethereal guidance - only to find many of their archivists spiraling into frenzy. Over the course of days, these archivists would perish one by one, choking and spluttering as if suffocating on their words alone - some foaming at the mouth as horrible sickness overtook their body, their delirious minds knowing no quarter. It is said that within the grand magistrate's catacombs, one of the Empire's most composed librarians awoke from a madness-induced slumber, just as the chamber Medici had tended to his care - witnesses spoke that he had restrained the assistant Medicus to his side with great panic and frustration, any and all semblance of soul devoid in his crazed eyes. Shortly before his heart was said to give out, with a single guttural avalanche of hysteria, he warned all who would listen of the eldritch curse that had finally manifested itself beyond the slivers of happenstance, the same being that was responsible for the fall of the great empires at the hands of the Begotten - a being which he coined as being "below God Himself" - <b>“the Undergod".</b>
+This new calamity was finally christened, and for decades thereafter - for the precognitive conduits amongst the Loremasters were found to suffer many gripping nightmares as the power of the catalysts were wrought upon Gaia during its infernal purification, and the maws of the Earth's mantle opened to swallow entire kingdoms and billow with the brimming monstrosities of the Begotten. The clergy, dazzled and terrified by the sudden affliction upon all of mankind, turned to their most trusted for ethereal guidance - only to find many of their archivists spiraling into frenzy. Over the course of days, these archivists would perish one by one, choking and spluttering as if suffocating on their words alone - some foaming at the mouth as horrible sickness overtook their body, their delirious minds knowing no quarter. It is said that within the grand magistrate's catacombs, one of the Empire's most composed librarians awoke from a madness-induced slumber, just as the chamber Medici had tended to his care - witnesses spoke that he had restrained the assistant Medicus to his side with great panic and frustration, any and all semblance of soul devoid in his crazed eyes. Shortly before his heart was said to give out, with a single guttural avalanche of hysteria, he warned all who would listen of the eldritch curse that had finally manifested itself beyond the slivers of happenstance, the same being that was responsible for the fall of the great empires at the hands of the Begotten - a being which he coined as being "below God Himself" - <b>"the Undergod".</b>
 ]]
 
 Book_Undergod_Page3 = [[
@@ -866,7 +866,7 @@ Too much duty and dedication can sometimes be a bad thing, as the Inquisition wo
 ]]
 
 Book_GodSuicide_Page1 = [[
-It started when the sky screamed. The air went thick, and the sun turned black as pitch. Then the flashes began, like lightning, and the sounds that came with them… sounds that made my ears bleed. I remember stumbling into the village square, stunned and confused, the others there too, all staring at the big box they brought in years ago—the one that showed moving pictures.
+It started when the sky screamed. The air went thick, and the sun turned black as pitch. Then the flashes began, like lightning, and the sounds that came with them… sounds that made my ears bleed. I remember stumbling into the village square, stunned and confused, the others there too, all staring at the big box they brought in years ago-the one that showed moving pictures.
 
 It turned itself on. No one touched it. And on the screen… God.
 
@@ -874,7 +874,7 @@ I knew it was Him. His body was twisted, bloated like a corpse pulled from a swa
 ]]
 
 Book_GodSuicide_Page2 = [[
-He took His own hands and ripped Himself open like a sack of grain, spilling His guts—ropes of them—onto the floor. Blood, black and shining like oil, fountained out of Him, spraying across the screen. It didn’t stop. It couldn’t stop. He clawed deeper, tearing at Himself, pulling chunks of meat and bone free like He was digging for something. The sound of it—wet, ripping, snapping.
+He took His own hands and ripped Himself open like a sack of grain, spilling His guts-ropes of them-onto the floor. Blood, black and shining like oil, fountained out of Him, spraying across the screen. It didn’t stop. It couldn’t stop. He clawed deeper, tearing at Himself, pulling chunks of meat and bone free like He was digging for something. The sound of it-wet, ripping, snapping.
 ]]
 
 Book_GodSuicide_Page3 = [[
@@ -886,7 +886,7 @@ That’s when it began.
 Book_GodSuicide_Page4 = [[
 They came. Monsters, things born of nightmares, crawling out of the shadows and the ground itself. They didn’t just kill. They twisted people, turned them into more of their kind. I saw Father Corbin dragged screaming from the church, his skin peeling back as he was torn into something… something that shouldn’t exist. The children too, their small bodies cracked and remade into horrors.
 
-The flashes keep coming, lighting up the night. Each time, you hear the screaming again. Sometimes I see Him, see the moment it all went wrong. I feel His despair, His terror. And then there’s the whispers—God’s voice, worming into your head. Promises, lies, truths.
+The flashes keep coming, lighting up the night. Each time, you hear the screaming again. Sometimes I see Him, see the moment it all went wrong. I feel His despair, His terror. And then there’s the whispers-God’s voice, worming into your head. Promises, lies, truths.
 
 We’re all cursed now. There’s no hope. No Heaven. No salvation.
 
@@ -922,7 +922,7 @@ Book_Vance_Page4 = [[
 <font color='#000' size='4'><b>Fall and Demise</b></font>
 Though Heimann’s dedication to justice was unwavering, it became his undoing. The nobility, increasingly threatened by the Inquisition’s relentless investigations, turned against Heimann and his men. What began as whispers of discontent soon evolved into a coordinated effort to dismantle the Inquisition.
 
-Faced with mounting pressure, Lord Maximus, once Heimann’s staunchest supporter, made the difficult decision to disband the Inquisition. The hunters were sent back to their forests, stripped of their titles and authority. Heimann himself retired quietly, returning to the life of a simple man. But the nobility, their pride wounded and their secrets exposed, could not let the matter rest. Hired assassins were dispatched to ensure that the former Inquisitors—and Heimann himself—would never again threaten the delicate balance of power within the Holy Hierarchy.
+Faced with mounting pressure, Lord Maximus, once Heimann’s staunchest supporter, made the difficult decision to disband the Inquisition. The hunters were sent back to their forests, stripped of their titles and authority. Heimann himself retired quietly, returning to the life of a simple man. But the nobility, their pride wounded and their secrets exposed, could not let the matter rest. Hired assassins were dispatched to ensure that the former Inquisitors-and Heimann himself-would never again threaten the delicate balance of power within the Holy Hierarchy.
 ]]
 
 Book_Vance_Page5 = [[
@@ -942,7 +942,7 @@ It was not until the Second Era, in the aftermath of the Hierarchy wars, that th
 Book_GoreFolly_Page2 = [[
 <font color='#000' size='4'><b>Goreic Kingdoms</b></font>
 <i>"I suppose It'd be quite requisitory of the Royal Senate to enact a burdening response to these recent attacks on our peasant friends. To sit back, wait, and hope for a digression? Simply put, these Spearfolk must be swiftly cut down before they grow in number."</i>
-—V.K Heimann - the 'Steel Tongue' of his days.
+-V.K Heimann - the 'Steel Tongue' of his days.
 
 Around the early phase of the Second Era, beginning with the first encounter of the Gores at the Gay King Summit, Goreic raids have grown from legendary to quite common and then annoyingly frequent. From ambassador intelligence to captured Spearfolk, it was apparent that a great number of Goreic men were actually once of Glazic faith, and have converted over. Life among these people is extremely simple, their day consisting of crawling around in dark underground tunnels, or in cold villages on the mountains. Strangely, when asked what these men believe in, each response will vary. 
 
@@ -987,4 +987,273 @@ Thou must never allow a heathen to live.
 Thou must avoid deception.
 Thou must never attack an enemy from behind.
 Thou must never compromise or hesitate thy holy principles.
+]]
+
+Book_Doomed_Page1 = [[
+<font color='#000' size='4'><b>The Doomed Legion</b></font>
+
+<i>In nomine Lucii et Maximi</i>
+
+I, humble and nameless Scribe in the service of County-District Thirty-Seven, do now commit quill to parchment, for it is both my solemn charge and sacred duty to the Light Eternal that I give account of those grim events which may yet trouble the hearts of all noble Philimonjios. Ours was a Southern district, distant and estranged from the refined customs and gentle governance of the North-Western realms. Ere the coming of the Demon Scourge, our only neighbors were the jungle-born savages - and by my hand I swear, they were of a most detestable nature. For countless generations, the Southern Deadlands lay wild and unbroken by the just and civilizing hand of Glazic dominion. And yet, the stalwart folk of District Thirty-Seven, children of grit and fire, did hold the line.
+
+Let the Northerners take heed: it was the jungleborn who unhinged our very minds. The fathers of our fathers did not plant their boots upon this soil with cruelty in their hearts - nay - such ferocity was born of bitter necessity. Spears were cast with deadly precision, venomous darts found the soft necks of our kin, unholy plagues roamed unseen, and from the shadows crept men of no light, accompanied by gatorbeasts and foul creatures unnamed. In the night, the jungle rose to swallow us whole. Thus, when the Demons at last emerged, shrieking from their infernal abyss, we of the South had already become the necessary monsters fit to endure their wrath.
+
+The Ministry, in their vaulted ignorance, offered but the coldest comfort. With lips chapped from prophecy and madness, they declared the end of all things, and with trembling hands, bade every soul to embrace self-sacrifice as a pious deliverance. Woe upon me to recount that many obeyed, for even before the jungle warped and heaved with blasphemous shapes, spewing forth unholy terrors, spirits had been broken and hope lay strangled in its cradle.
+]]
+
+Book_Doomed_Page2 = [[
+Yet there rose among us a singular soul, a man of iron and divine defiance - our Capitán Dominique. He raised his sword against the Ministry, whose heads he struck from their shoulders with righteous fury. He then proclaimed us a Low Order of Gatekeepers, sanctified not by parchment nor crown, but by blood and fire. With holy madness burning in his eyes, he led our beleaguered ranks northward, that we might seek the face of the Divine hidden within the Manifesto’s sacred pages.
+
+He would not bow to death. No - our Capitán Dominique bore within his breast a will as merciless as the sun, and from it poured deeds which the tongue dares not name. The first curse to befall our death-marched Legion was that of starvation. The land, twisted and profane, bore no fruit, no game, no grain. And so the Capitán, unmoved and unflinching, offered the flesh of his own six wives - women of dubious blood, whom he claimed bore the taint of the jungleborn. Thus, he declared, their meat was no more human than the flesh of swine or serpent.
+
+Their bodies were flayed and charred, their marrow stewed for strength, and the meat apportioned among the seven-hundred and sixty-two who yet stood. For a few cursed days, the Legion endured - bellies sated, minds fraying. Yet this act, though it staved off death, sowed the seed of sedition.
+
+The first of seven mutinies ignited like wildfire, sparked by the fearsome dread that the Capitán’s hunger would not end with his wives. It began with the jungleborn retinue - scouts and servants, drawn from the very tribes we had once battled. They feared, perhaps rightly so, that their lives would be next upon the spit. In the blackness before dawn, they rose in shadow, and with obsidian blades slit the throats of twelve Sargentos - the hard backbone of our Gatekeeper command.
+]]
+
+Book_Doomed_Page3 = [[
+Yet fate, cruel and cunning, spared Capitán Dominique. By some divine instinct or calculated deceit, he had taken his rest not in the upper officers’ quarters that night but among the Soldados - humble, rank-stinking, and safe. Come the morning, blood pooled like baptismal wine, and justice came swift as a falling star. The Capitán, resolute, condemned the mutineers to stoning - a punishment as ancient as the sin of rebellion.
+
+Their corpses, mangled by stone and guilt, like those of beasts unfit for burial, were given unto the fire and the pot, thus the Capitán made true their greatest fear. Their boiled flesh was promptly distributed to the loyal, who by then had long since ceased to ask where the meat had been sourced. 
+
+The second mutiny was born not of hunger, but of wounded pride. The Capitán, in a move that many deemed heretical, commanded the jungleborn contingent be withdrawn from the vanguard and replaced with sons of Philimonjios stock. This was an affront to the Glazic Articles of War, where it is written in iron law that indentured flesh must bleed first for the banner of Light. To place noble-born men at the tip of the spear was seen as betrayal most foul.
+
+Three full cohorts, arrayed in silent judgment, marched to the Capitán’s tent beneath the veil of night and demanded his abdication. What followed was an act so dreadful, it seemed as if the heavens themselves recoiled. The Capitán’s tent burst asunder in a blast of gunpowder - the Rite of Holy Powderkeg, glorious yet terrifying. Shards of bone and armor painted the dead trees, limbs were torn asunder like wheat in a storm, and the mutineers perished before their grievance could even be uttered.
+
+But the Capitán, ever the architect of terror and dominion, was not content. He commanded the rite of Decimation. Every tenth man, chosen by lot and weeping like babes, was bludgeoned to death with iron clubs. Their skulls were shattered, their bodies broken, and yet, the rite did not end in silence.
+]]
+
+Book_Doomed_Page4 = [[
+For their flesh, still warm, was rendered unto the cookfires.
+
+No longer could the Philimonjios claim moral distance. They who had once recoiled at jungle-meat were now commanded to feast upon their own - to break bread with the Devil and chew the sinew of their kin. We became one in hunger, in horror, and in guilt. The line between Man and Beast was not merely blurred - it was extinguished.
+
+The third mutiny - if such pitiful insurrection can be granted the title - was snuffed before it could even kindle. Three miscreant Corporals, glutted with rum stolen from the Officer’s Quota, drowned their wits and let their tongues wag like damned bells. In their inebriation, they conceived a plan to strike down the Capitán and divide command between themselves, like jackals gnawing at the corpse of Empire.
+
+Two schemed openly, debating whether to poison the Capitán's broth or load his tent with grapeshot. The third, a coward veiled in craven loyalty, slithered to the acting Sargento Major and spilled the treason like bile.
+
+Justice, as ever beneath Capitán Dominique, came swift and monstrous.
+
+The first traitor was knelt beside the great bronze cannon, and it was fired not at foes, but at the air - again and again - until the bones in his ears burst and he could hear the cries of no man nor angel. The second was made blind: his eyes plucked from their sockets with rusted iron tweezers, as he screamed the names of saints that would not answer. And the third - the informant - had his tongue torn out with pincers, so that he might speak no more poison unto the world.
+
+All three were shackled by the ankle, bound in chain, and cast out into the desolate wilds - left to wander as exiles, half-men, cursed shadows of what they once were.
+]]
+
+Book_Doomed_Page5 = [[
+Weeks hence, the whispers began.
+
+Some among us swore that, in the dead hours before dawn, they heard the dragging of iron - the scraping moan of chains across stone and root. Some saw a pale figure slinking through the underbrush, neither beast nor wholly man. It did not speak. It did not charge. It only watched - a specter of our sins.
+
+None could say which of the three still lived, if indeed any did. But all agreed upon this: the other two had met a fate too vile for even our tongues to name.
+
+The fourth mutiny came upon us in the dead of winter, deep in the mire - that foul, groaning expanse which stretched beyond sight, sense, or reason. A landscape not of this world, where the sun hung low like a blood-blister in the sky and every breath clung to the lungs like mold. We had known illness before, aye, and many good men had already succumbed to fevers and chills no harsher than a common cold. But it was in that mire that we came to know true plague - a curse not born of nature, but of something older, more wicked.
+
+The deathmarch halted. For the first time since we had begun our infernal pilgrimage, we did not press forward, but made camp - for weeks, then months, in that swamp of weeping trees and whispering bogs. When we at last resumed our trudging, it was but a day before the Legion was again forced to kneel beneath the weight of disease and exhaustion. We were made to dwell in filth, and the bodies - Glaze preserve us - they piled like siege stones, great towers of the dead, their limbs stiffened into mockeries of prayer.
+
+Yet we were forbidden to burn them. The Capitán’s decree was clear: <i>Let not the dead be set to flame.</i>
+]]
+
+Book_Doomed_Page6 = [[
+Even I, the chronicler, the once-steady hand of County-District Thirty-Seven, became a vessel of pestilence. My flesh swelled with vile pustules, my skin blistered with strange growths. All were afflicted. None were spared - save one.
+
+The Capitán.
+
+He remained untouched, whole and hale, sequestered in his private tent, unseen save for the comings and goings of his jungleborn curandero - a wiry man whose breath reeked of root-vapors and whose eyes shone with the stare of the underworld. This secrecy gnawed at our spirits more than the illness itself. We were dying, and he remained aloof, cloaked in mystery and vigor.
+
+One among us could endure no more. A lone mutineer - his name lost to mercy or shame - strode through camp and set torch to the mountains of the fallen. The fire roared to life like a devil’s choir. Flames danced over bloated corpses, and at last the miasma of rot was driven back by cleansing smoke. We cheered - not for rebellion, but for air that no longer tasted of carrion.
+
+And then, like a serpent from its hole, the Capitán emerged.
+
+He bore no armor. His blades were sheathed. His face was unreadable.
+
+We stood still as tombstones when the mutineer raised his pistol and leveled it at the Capitán’s heart. Perhaps he thought destiny would strike in his favor. Perhaps he thought himself righteous.
+
+He pulled the trigger.
+
+<b><i>Click.</i></b>
+]]
+
+Book_Doomed_Page7 = [[
+No thunder. No fire. Only silence, broken by the soft sound of something spat out by the Capitán himself - a glint of silver arcing through the air, vanishing into the bog.
+
+Panic overtook the mutineer as he fumbled with his weapon. Before he could fire again, the Capitán’s Lieutenant descended upon him like a vulture, and with fists and fury rendered him limp upon the mire-mud.
+
+His punishment, like all that had come before, was devised with artistry and dread.
+
+He was strung upside-down from a hanging tree, his head swaying with the breeze. His body was anointed in honey, as if prepared for pagan sacrifice. Then, six hornets' nests were shattered before him. The swarm was released, a vengeful cloud of stings and shrieks, and his body danced in pain for hours before the swamp finally claimed him whole.
+
+Yet what disturbed me most - what haunts me still - was the Capitán’s lament not for the dead, but for the corpses that had been lost to flame.
+
+"Why burn what yet serves a purpose?" he muttered once, as he gazed over the scorched pyres. I dared not ask his meaning, for fear of knowing it too well.
+
+The next day, as we broke camp and once more waded through that blighted land, I stumbled upon something curious: a small metal ball, smooth and dark - the very kind packed into powder and lead. A shot. A round. The seed of murder.
+
+When the mire at last reached its end, and spring touched the earth with a mockery of grace, we emerged changed. The sickness had faded, but it left behind a cruel gift: our skin peeled like bark, and wounds bled as if from sacred stigmata. We no longer bled like men.
+]]
+
+Book_Doomed_Page8 = [[
+We had become things - reflections of the horror we endured. And as we stepped into the lands beyond, where war and fire reigned eternal, we did so not with pride, nor hope, but with the vacant gaze of those already condemned.
+
+In this new and accursed dominion, we passed under the shadow of towers so tall they pierced the heavens, a blasphemous architecture of cold stone and shining glass, unlike anything dreamt of in the humble minds of Philimonjios. These temples of steel did not welcome us; nay, they greeted us with fire and fury. From every height came the hiss and crack of leaden hail, and our Legion was baptized anew in pain and thunder.
+
+These were no jungleborn - no shrieking savages armed with dart and fang. These were warriors of a different creed, brutish and terrible, whom we came to know as the Shagalaxians. They fought not with cunning or trickery, but with an appalling honesty, as if war itself were their cradle and their coffin both. Gunfire, great iron axes, machines belching flame - these were the tools of their gospel, and they preached death without sermon.
+
+But our Capitán - may the saints forgive his sins and his genius - showed no fear. For we, the cursed children of District Thirty-Seven, still bore with us our blessed cannons. With the thunder of chain-shot, we shredded their charging lines, and with sweeps of grapeshot, we painted the earth pink with their fleeing dead. Our jungleborn skirmishers, half-beast and wholly deadly, herded these barbarian swine into our fields of fire, where they met their grape-flavored doom with splendid shrieks.
+
+For days we bathed in victory. The slaughter was methodical, and the ground itself drank deeply of Shagalaxian blood.
+
+But pride, as always, bore bitter fruit.
+]]
+
+Book_Doomed_Page9 = [[
+These brutes, forged in the crucible of endless war, learned fast - far faster than we dared imagine. Our tactics, once triumphant, became our own undoing. The jungleborn were ignored, our harassers rendered irrelevant. Mines bloomed beneath our feet like metal blossoms of death, and concertina wire wrapped our ankles in the embrace of devils. The towers, once spires of gunfire, became silent tombs that watched as we were picked apart from afar.
+
+Still the Capitán pressed us forward - onward through fields of spikes, bombs, and steel vines. We obeyed, for we knew no other life than the march.
+
+Then came the great beast of iron and sky - a flying dragon of spinning blades, roaring like Judgment Day, its shadow blotting the sun from Heaven. It loosed its fire upon us not in flame, but in brown oil, a vile nectar that kissed our Legion and turned flesh to molten slag. Nearly half of our number were swallowed in fire, screaming as their bones wept.
+
+And yet - miracle or curse - the Capitán did not die. I saw him, blackened and broken, his face a dripping candle of flesh. And even then, with his jaw half-hanging and teeth like pale tombstones, he barked a command with smoke in his throat: "Entrench!"
+
+So we did.
+
+We buried ourselves in mud and ash, dug into the corpse-choked earth like rats clawing toward a dream of survival. For days we endured. The sky bled acid; our equipment melted in our hands. Hunger gnawed with teeth of glass, and we, unwilling to perish with empty bellies, tore strips from the charred flesh of our fallen brothers. They were crisp as parchment and tasted of sin.
+]]
+
+Book_Doomed_Page10 = [[
+And in all that time, the Capitán vanished from our eyes, as if the fire had taken him at last. I heard murmurs. Some wept. Others laughed. I myself whispered, "At last, it ends." For surely, in that pit of mud and sorrow, we had reached the final station of our cursed march. Better to perish beneath the thunder of barbarians than to consume one another beneath the shadow of his will.
+
+But sleep would not come.
+
+The nights were not silent - they were filled with howling, gurgled screams, moaning prayers that went unheard. On the seventh night, as I lay in my trench with madness clinging to my ears, a new sound rose above the dirge of suffering: bells.
+
+At first, soft. Then louder. Louder still, until it was as if the very sky had been rung like a cathedral bell at the end of the world.
+
+And from the mist they came.
+
+A procession of peasants - though they bore no human gait - clad in rusted iron plates wrapped in cruel barbed wire. They marched with piety, beating themselves with rods and flails, their faces hidden beneath masks of shame. They bore no banner save for their own blood, and with every step, they sang with their agony.
+
+Upon the seventh night, when the bells of madness had drowned the cries of mortal suffering, there emerged from the fog a procession most dreadful - the Order of Eternal Penance, they called themselves. A band of peasants so wretched in soul and birth that the very earth seemed to recoil at their coming. They marched clad in iron crusted with rust and barbed wire, their bare flesh torn by self-inflicted scourges, ever in the throes of ceaseless flagellation. They were pilgrims of pain, priests of agony, apostles of hatred.
+]]
+
+Book_Doomed_Page11 = [[
+Their flag was no banner, but a man - a man crucified upon a great wooden cross borne aloft by three pale and naked attendants. Nails fixed his limbs to timber, and yet he lived still, his eyes two wells of unshed torment. When he spoke, his voice was like the wind through dry reeds - cracked, rasping, heavy with sorrow. And yet, he praised us.
+
+Yes - praised our holy march, our deathbound pilgrimage, and the bountiful torments we had endured thus far. To these lost men, suffering was the most sacred gospel, and we had become its prophets. Moved by some divine recognition of kindred ruin, they bestowed upon us provisions enough to delay our starvation another day. More wondrous still, they retrieved our sacred cannon from the mud, though this feat cost the life of one among them.
+
+The wretch who took the cannon’s place in the mire was offered the mercy of a swift death - a blunderbuss held to his temple - but he spat at our pity and sank of his own will, his eyes shining with fervent ecstasy as the muck claimed him. Such madness wore the mask of martyrdom.
+
+Then the crucified one, voice shaking the bones within us, uttered his question:
+
+<b>"Which of thee… is the Capitán?"</b>
+
+No sooner had these words been spoken than a half-dead soldier rose from his foxhole, his visage a ruin of charred flesh and crusted sores. "I am he!" he cried, though any man with eyes knew this was a farce. His stature lacked the iron spine of true command.
+
+Three more emerged, each claiming the title, and one by one they gripped their bayonets, daring each other to bloody trial for the mantle of leadership.
+
+]]
+
+Book_Doomed_Page12 = [[
+But a hush came over the penitent host - a sacred silence. All eyes turned to one direction, their flails stilled, their whips at rest.
+
+I, too, turned. And what I saw then shall haunt me until my bones are dust.
+
+A man rose from the mire.
+
+Blackened beyond recognition, his flesh naught but char, yet upright he stood. His gait bore no tremble, his form no doubt. He was the Capitán. There could be no mistaking it. Even as he reeked of death, the power of his command pressed upon us like the glaze of Holy Light.
+
+The mutineers fell before him, their pride shriveling to ash. Without a word from the Capitán, they took their bayonets and, as if compelled by the very gaze of Hell’s sentinel, opened their bellies. Thus ended the fifth mutiny - in silence, blood, and the glimmer of steaming entrails.
+
+Thereafter, the Capitán, that resurrected specter of iron and fire, raised his blackened arm and led us forth once more - this time not into the wilds, but to vengeance. The Skyscraper, that unholy ziggurat of steel, loomed before us.
+
+We marched, our numbers tattered and souls spent, but we marched. Our formation, a loose congregation of ghosts and ghouls, advanced toward its iron gate, ever poised to dive into the mud should the dragon’s wings return. Yet fortune, or some cruel Providence, favored us: the Shagalaxians had thought us slain, erased from existence in that blighted field. Our sudden resurgence stunned them.
+
+Their response was chaos.
+]]
+
+Book_Doomed_Page13 = [[
+They threw waves of barbarian slaves upon us - wretches armed with clubs and blades, while the masters fired from their windows  above. But the flagellants, possessed by fury and sanctified hate, waded through them like the wrath of Maximus himself. I, who have seen massacre and conquest alike, confess this plainly: I feared the flagellants more than I feared the enemy. They fought not for land or glory, but for the beauty of pain.
+
+Then the dragon came, as it must.
+
+Its mechanical groans roared overhead. But our cannon, rebaptized in the blood of saints and sinners alike, found its mark. A ball of forged wrath tore through its cockpit, and the beast plummeted, shrieking, into the mire - drowned, broken, avenged.
+
+With that, the assault began in earnest.
+
+Our jungleborn tribesmen, agile and vengeful, were the first to breach the gates. With poisoned spears they felled the cowards who fired from cover. We climbed, floor upon floor, through that tower of pagan design. Every chamber a slaughterhouse. Every stairwell a trial.
+
+And when it was over, there was no cheer.
+
+No glory.
+
+Only silence.
+
+We had won - yes - but the price was plain upon our faces. For we, the survivors, bore not the countenance of men, but of demons. Our hearts had long since blackened to match our skins, and in our victory, we saw only the reflection of all we had lost.
+]]
+
+Book_Doomed_Page14 = [[
+When next I beheld the Capitán, it was as unshattered resolve made manifest. He emerged from the molten womb of the Shagalaxian forges reborn in iron and sanctified flame. Gone was the blackened husk of charred flesh, for in its place was a glistening monument - a cuirass grafted to sinew, gauntlets fused to bone, greaves that struck the earth with divine arrogance. And his face - oh, that dreadful mask! Forged of silver and gold, sculpted to divine perfection, but empty of soul.
+
+The Soldados, once hardened men who had long since buried their innocence, looked upon him not with reverence, but with dread. Their weary eyes knew: this transformation was not salvation, but the final sundering of what little humanity remained. The Capitán had become something else - no longer leader nor tyrant, but icon. And icons demand worship or blood.
+
+The Order of Eternal Penance, mad and maddening, were stirred to outrage. Their flails swung with renewed fervor, and their eyes brimmed with disgust. The Capitán's glistening visage was, to them, a blasphemy - a mockery of humility, a crown of arrogance upon the brow of a godless king.
+
+And yet, the jungleborn - those barefoot prophets of the vine and fang - fell upon their hands and knees, grunting and sobbing in a tongue lost to memory. Their shamans wailed like wind through broken bone flutes. Their allegiance, once fickle and born of fear, had matured into blind worship. Whether from prophecy, dread, or some fell manipulation whispered through the aether, they hailed the Capitán as god made flesh.
+
+I, who have seen idols carved from flesh and crucifixes forged from scapula, felt bile rise in my throat. For each day that passed, the light behind his golden mask grew dimmer. It became abundantly clear to all that we no longer followed a man, but a manifestation.
+
+The sixth mutiny was not a rebellion - it was an exorcism.
+]]
+
+Book_Doomed_Page15 = [[
+We had just finished the cleansing of a corrupted village that dared barter with devils. Their magic stank of rot and desperation, but even their blood sacrifices could not save them. Mercy was forgotten - beheadings were gifts, burnings the rule. I watched one of our fanatics crush a crying mother beneath a stone idol, all while screaming praises to the Light.
+
+And still the Capitán was not satisfied.
+
+A Soldado punished for pissing during watch - not relieved, no, punished - made an example of in a way no sane man could imagine. Forced to drink the very waters of filth and waste until his bowels wept into a cauldron, and then - by the justice of madness - boiled alive in his own waters.
+
+The Capitán, claiming our pace was laggard, drove us through double marches for six nights straight. With each collapse, the crows grew bolder. They feasted on the fallen while their hearts still beat, and none dared shoo them away - for fear, perhaps, that such kindness might be seen as weakness or treason.
+
+This terror made beasts of us.
+
+And in that desperation, I - yes, I, the chronicler - became conspirator. I taught the old codes, the script of spies and silent traitors. In whispers and glances, in marks upon canteens and scratches upon bayonets, we shared our gospel of revolt.
+
+We dared not trust the flagellants, for their minds were broken by a desire for further suffering. And the jungleborn - fanatics now, high on superstition - would sooner gut us for heresy than entertain treachery. So we walked among them like ghosts, planning our salvation in silence.
+
+Then came the morning of our intent.
+]]
+
+Book_Doomed_Page16 = [[
+The tents were collapsed, and we stood in muster, our hands near hilts, our eyes on the Capitán. And then he spoke.
+
+<b>"Men,"</b> he rasped, his golden face unmoving, <b>"we are in the presence of the holy."</b>
+
+I saw it before the words sank in: jungleborn had already begun their work. Seventeen of our brethren - most among the plotters, but others unknown to me - were dragged forth in silence. I will never forget the look in their eyes. They understood, as I did, that we had been known before we had even begun. The Capitán had played us like marionettes - his golden mask, his metallic limbs, all perhaps mere theatre to draw out our rot.
+
+And rot we were.
+
+He named them saints - <i>saints!</i> - and sentenced them to be mummified alive. Their tongues were torn from their mouths, their eyes sewn shut. They were embalmed in pitch and myrrh, wrapped in linens soaked in salt and prayer, and left to moan and twitch as their lives ebbed away. For six days we carried them, groaning bundles of agony strapped to stretchers like sacrificial offerings.
+
+Then we buried them - not with honor, not with rites - but beneath a dead tree, gnarled and split by lightning. A tree as lifeless as the mercy in our Capitán’s soul.
+
+Our insurrection was extinguished, for whether by providence or some unholy prescience, the Capitán had divined our treachery. In the encampment that followed, I, poor and afflicted soul, was summoned to the Capitán’s own pavilion - that dreaded sanctum where few had entered and fewer still had emerged. Certain was I that mine hour had come, that he, having knowledge of our cabal, would now visit upon me a punishment both cruel and exemplary. Yet, upon crossing the threshold, I beheld a spectacle most confounding.
+]]
+
+Book_Doomed_Page17 = [[
+There, amidst the dusky shadows, were golden trophies glinting like suns captured in metal, pelts of lions spread across the earth like rugs of kings, and a table of dark, polished mahogany. The Capitán bade me sit, and his mute servants - clad in robes finer than any we had seen in months of blood and fire - placed before me a feast the likes of which I had not known since our departure from the County District. Rich meats, seared and dripping with savor, rested upon plates of silver, and flagons of wine glistened like rubies in the candlelight.
+
+I ate greedily, like a wolf at slaughter, until I had filled my belly beyond its humble station and did disgorge it upon the lion's mane. As I knelt there, trembling in shame and ruin, the Capitán, whose voice had become as metal upon the wind, inquired of me: "Do you deem me mad?" he said. "Do I now serve the Devil’s court? Is it a demon’s guise that gazes back at thee?"
+
+Struck dumb by fear, I dared not answer. And seeing my silence, he gestured, and I was seized and cast out into the filth like refuse, with naught but my breath and dread to keep me.
+
+What followed seems more a vision sent by angels weeping than any waking hour. I awoke one morn to find our camp encircled by sharpened stakes, thrust like spears into the barren waste. Upon many of these hung the severed heads of men I had once marched beside - comrades with whom I had shared bread, blood, and battle. The few that remained were changed beyond recognition, their forms wasted, their skin corrupted with sores and tumorous lumps, as though the very earth had rejected their flesh.
+]]
+
+Book_Doomed_Page18 = [[
+No word passed between us. We no longer dared speak nor even meet one another’s gaze. Those on watch stood frozen like statues of ash, gripping their polearms until their hands bled, their eyes fixed eternally upon the far and lifeless horizon. One soul had hanged himself from a broken pike, and I beheld that his legs had been removed, his lifeless body swaying like a flag of despair in the poisoned air. In the cookpots there were bones - fingers and teeth blackened by fire.
+
+A haze of smoke, bitter with the scent of flesh and spent powder, cloaked the camp like a funeral shroud. The seventh mutiny had come - and gone - like a whisper in the black wind. I cannot recall its shape, only its shadow that clings to my soul. That night, trembling like a sinner before judgement, I buried myself in the ash, fearing they would rend me apart as they had others, driven mad by hunger and darkness.
+
+When dawn broke, I found myself alone. The tents had been struck, the men departed, and I remained abandoned among the dead. Where once stood the Capitán’s pavilion, I discovered only parchment and quill - his final mercy, or perhaps his last command, left for me, the shattered scribe of a cursed expedition.
+
+My hands bleed. My flesh cracks like old leather, and my eyes are near lost to rot. I know not what land I am in, nor what day has dawned. Yet I know this: with these last words, I complete my charge - my sacred burden - in service of the Light. And should any soul ever behold our standard, that sun of argent and gold held aloft by damned men, I beg thee to pray, pray to whatever voice might yet answer, ere it is swallowed by silence.
 ]]

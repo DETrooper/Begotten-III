@@ -673,6 +673,21 @@ local ITEM = Clockwork.item:New("book_base")
 
 ITEM:Register()
 
+local ITEM = Clockwork.item:New("book_base")
+	ITEM.name = "The Doomed Legion"
+	ITEM.model = "models/props_monastery/book_large.mdl"
+	ITEM.weight = 1.2;
+	ITEM.uniqueID = "book_doomed"
+	ITEM.description = "A large leatherbound book bearing the cursed chronicles of a doomed legion."
+	ITEM.background = "https://i.imgur.com/ofkBgu0.png"
+	ITEM.bookInformation = {Book_Doomed_Page1, Book_Doomed_Page2, Book_Doomed_Page3, Book_Doomed_Page4, Book_Doomed_Page5, Book_Doomed_Page6, Book_Doomed_Page7, Book_Doomed_Page8, Book_Doomed_Page9, Book_Doomed_Page10, Book_Doomed_Page11, Book_Doomed_Page12, Book_Doomed_Page13, Book_Doomed_Page14, Book_Doomed_Page15, Book_Doomed_Page16, Book_Doomed_Page17, Book_Doomed_Page18}
+	ITEM.bookType = "Glazic"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/book_large.png";
+	
+	ITEM.itemSpawnerInfo = {category = "City Junk", rarity = 7000, onGround = false, bNoSupercrate = true};
+	
+ITEM:Register()
+
 if (SERVER) then
 	function cwScriptures:PlayerCharacterLoaded(player)
 		local booksCopied = player:GetCharacterData("BooksCopied", {});
