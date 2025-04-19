@@ -2193,6 +2193,7 @@ function Schema:PlayerCommitSuicide(player)
 	timer.Simple(4, function()
 		if IsValid(player) then
 			player:EmitSound("meleesounds/kill2.wav.mp3", 80)
+			player:Freeze(false);
 			player:Kill();
 			player:DeathCauseOverride("Went fucking insane and brutally killed "..selfless..".");
 			Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, player:Name().." has committed fucking suicide.");
