@@ -76,6 +76,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1500, bNoSupercrate = true};
 	ITEM.repairCostModifier = 0.25;
 ITEM:Register();
 
@@ -92,6 +93,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.attributes = {"concealable"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}}; -- use "breakdown" for other type
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 700, bNoSupercrate = true};
 	ITEM.repairCostModifier = 0.1;
 ITEM:Register();
 

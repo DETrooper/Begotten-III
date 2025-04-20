@@ -44,7 +44,7 @@ function cwStamina:GetMaxStaminaPlugin(player)
 					max_stamina = max_stamina + 10;
 					
 					if player:HasBelief("master_at_arms") then
-						max_stamina = max_stamina + 15;
+						max_stamina = max_stamina + 10;
 					end
 				end
 			end
