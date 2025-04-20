@@ -898,9 +898,9 @@ RITUAL = cwRituals.rituals:New("hellgorge");
 RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("holy_powderkeg");
-	RITUAL.name = "(T2) Holy Powderkeg";
+	RITUAL.name = "(Unique) Holy Powderkeg";
 	RITUAL.description = "Hand me your rifles, lend me your spent pepper-poppers and snapdragons! I will cock, load, pump and magazine every gun of every faithful Philimonjio in our Lord’s army as I was born and bred to do so! Performing this ritual significantly increases reload speed for the next 30 minutes. Incurs 5 corruption.";
-	RITUAL.onerequiredbelief = {"flagellant", "acolyte"}; -- Tier II Faith of the Light Ritual
+	RITUAL.onerequiredbelief = {"emissary"}; -- Hard-Glazed Unique Ritual
 	
 	RITUAL.requirements = {"holy_spirit", "light_catalyst", "trinity_catalyst"};
 	RITUAL.corruptionCost = 5; -- Corruption incurred from performing rituals.
@@ -1252,11 +1252,11 @@ RITUAL = cwRituals.rituals:New("payment_of_light");
 RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("perseverance");
-	RITUAL.name = "(T2) Perseverance";
-	RITUAL.description = "In the Districts, work is unending, back-breaking, and purifying. Performing this ritual doubles the rate of your Stamina regeneration for 40 minutes. Incurs 10 corruption.";
-	RITUAL.onerequiredbelief = {"flagellant", "acolyte"}; -- Tier II Faith of the Light Ritual
+	RITUAL.name = "(T3) Perseverance";
+	RITUAL.description = "In the Districts, work is unending, back-breaking, and purifying. Performing this ritual doubles the rate of your Stamina regeneration for 30 minutes. Incurs 10 corruption.";
+	RITUAL.onerequiredbelief = {"emissary", "extinctionist"}; -- Tier III Faith of the Light Ritual
 	
-	RITUAL.requirements = {"light_catalyst", "elysian_catalyst", "down_catalyst"};
+	RITUAL.requirements = {"light_catalyst", "elysian_catalyst", "holy_spirit"};
 	RITUAL.corruptionCost = 10; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
 	RITUAL.experience = 25; -- XP gained from performing the ritual.
@@ -1264,7 +1264,7 @@ RITUAL = cwRituals.rituals:New("perseverance");
 	function RITUAL:OnPerformed(player)
 		player.perseveranceActive = true;
 
-		timer.Create("PerseveranceTimer_"..player:EntIndex(), 2400, 1, function()
+		timer.Create("PerseveranceTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player.perseveranceActive then
 					player.perseveranceActive = nil;
@@ -1804,9 +1804,9 @@ RITUAL = cwRituals.rituals:New("soulscorch");
 RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("steel_will");
-	RITUAL.name = "(T3) Steel Will";
+	RITUAL.name = "(T2) Steel Will";
 	RITUAL.description = "Unbroken, undisturbed - the Glaze is with you! Performing this ritual restores your sanity to full, reduces sanity loss by 90%, and makes you immune to the effects of fear for 40 minutes. Incurs 10 corruption.";
-	RITUAL.onerequiredbelief = {"emissary", "extinctionist"}; -- Tier III Faith of the Light Ritual
+	RITUAL.onerequiredbelief = {"flagellant", "acolyte"}; -- Tier II Faith of the Light Ritual
 	
 	RITUAL.requirements = {"light_catalyst", "elysian_catalyst", "light_catalyst"};
 	RITUAL.corruptionCost = 10;

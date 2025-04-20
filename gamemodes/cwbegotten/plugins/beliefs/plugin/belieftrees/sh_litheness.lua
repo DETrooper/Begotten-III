@@ -13,7 +13,7 @@ local LITHENESS = cwBeliefs.beliefTrees:New("litheness")
 		{"Litheness", LITHENESS.color, "Civ5ToolTip4"},
 		{"Litheness is a measurement of the indirection and deviousness of your character, as well as their flexibility and speed. Upgrading this belief tree will allow your character to become a master of stealth, thievery, and trickery, as well as increasing sprint speed and unlocking dodges.", Color(225, 200, 200)},
 		{"\n\"Flay the fool who falters in their step. Let them run naked, flesh unsheathed, while shadowy eyes cast judgement to their sluggish speed.\"", Color(128, 90, 90, 240)},
-		{"\nBelief Tree Completion Bonus: +5% sprint speed and +15 maximum stability points.", Color(50, 255, 50)}
+		{"\nBelief Tree Completion Bonus: +5% sprint speed, +15 maximum stability points, and 20% increased stability regeneration rate.", Color(50, 255, 50)}
 	};
 	LITHENESS.columnPositions = {
 		[1] = (LITHENESS.size.w - 4) * 0.3,

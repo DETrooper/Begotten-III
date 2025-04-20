@@ -474,7 +474,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 		end;
 
 		local armorClass = player:GetArmorClass();
-		local stabilityDelay = 5;
+		local stabilityDelay = 3;
 		local falloverTime = 5;
 		
 		--printp(armorClass);
@@ -483,9 +483,13 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 			stabilityDelay = 6;
 			falloverTime = 6;
 		elseif (armorClass == "Heavy") then
-			stabilityDelay = 7;
+			stabilityDelay = 8;
 			falloverTime = 7;
 		end;
+		
+		if player:HasBelief("litheness_finisher") then
+			stabilityDelay = stabilityDelay * 0.8;
+		end
 		
 		--printp(stabilityDelay);
 		
