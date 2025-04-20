@@ -462,7 +462,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 
 		if player:GetNetVar("freeze") > 0 and !player:GetNWBool("bliz_frozen") then
 			if player:IsOnFire() then
-				player:TakeFreeze(20);
+				player:TakeFreeze(50);
 			else
 				player:TakeFreeze(1);
 			end
@@ -803,7 +803,7 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 		end;
 	
 		if damageInfo:IsDamageType(DMG_BURN) then
-			entity:TakeFreeze(damageInfo:GetDamage() / 2)
+			entity:TakeFreeze(damageInfo:GetDamage())
 			
 			if entity:GetNWBool("bliz_frozen") and IsValid(entity.freezeEnt) then
 				entity.freezeEnt:Remove();
