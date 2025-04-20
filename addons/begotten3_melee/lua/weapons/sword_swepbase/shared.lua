@@ -1315,7 +1315,7 @@ end
 					if hit:IsValid() then
 						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 							-- KNOCKBACK
-							local knockback = owner:GetAngles():Forward() * 750;
+							local knockback = owner:GetAngles():Forward() * 675;
 							knockback.z = 0
 							
 							timer.Simple(0.1, function()
@@ -1336,7 +1336,7 @@ end
 									end
 								end
 								if !hit:GetNetVar("Guardening") or (math.abs(math.AngleDifference(hit:EyeAngles().y, (self:GetPos() - hit:GetPos()):Angle().y)) > blockthreshold) then
-									hit:TakeStability((25 * shield_reduction * hit_reduction) * GetStabilityModifier(self.Owner));
+									hit:TakeStability((20 * shield_reduction * hit_reduction) * GetStabilityModifier(self.Owner));
 								end
 							end
 						end
@@ -1368,7 +1368,7 @@ end
 								damagetype = 128
 								
 								-- KNOCKBACK
-								local knockback = owner:GetAngles():Forward() * 700;
+								local knockback = owner:GetAngles():Forward() * 150;
 								knockback.z = 0
 								
 								-- timers are shit but whatever
@@ -1379,7 +1379,7 @@ end
 								end);
 								
 								if hit:IsPlayer() then
-									hit:TakeStability(5 * GetStabilityModifier(self.Owner))
+									hit:TakeStability(10 * GetStabilityModifier(self.Owner))
 								end
 							end
 						elseif distance > maxIneffectiveRange and hit:IsValid() then
@@ -1528,9 +1528,9 @@ end
 						damage = (attacktable["primarydamage"]) * 0.01
 						damagetype = 128
 						if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
-							hit:TakeStability(15 * GetStabilityModifier(self.Owner))
+							hit:TakeStability(10 * GetStabilityModifier(self.Owner))
 							-- KNOCKBACK
-							local knockback = owner:GetAngles():Forward() * 700;
+							local knockback = owner:GetAngles():Forward() * 150;
 							knockback.z = 0
 							
 							timer.Simple(0.1, function()
@@ -1548,7 +1548,7 @@ end
 						-- counter damage
 						local targetVelocity = hit:GetVelocity();
 						
-						if math.abs(targetVelocity.x) > 150 or math.abs(targetVelocity.y) > 150 then
+						if math.abs(targetVelocity.x) > 225 or math.abs(targetVelocity.y) > 225 then
 							local entEyeAngles = hit:EyeAngles();
 						
 							if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
@@ -1693,7 +1693,7 @@ end
 								damagetype = 128
 								
 								-- KNOCKBACK
-								local knockback = owner:GetAngles():Forward() * 600;
+								local knockback = owner:GetAngles():Forward() * 100;
 								knockback.z = 0
 
 								timer.Simple(0.1, function()
@@ -1703,7 +1703,7 @@ end
 								end);
 								
 								if hit:IsPlayer() then
-									hit:TakeStability(15 * GetStabilityModifier(self.Owner))
+									hit:TakeStability(10 * GetStabilityModifier(self.Owner))
 								end
 							end
 					

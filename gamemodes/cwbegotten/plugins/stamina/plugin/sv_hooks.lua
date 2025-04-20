@@ -154,6 +154,10 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized, p
 			if plyTab.perseveranceActive then
 				regeneration = regeneration * 2;
 			end;
+			
+			if player:HasBelief("prowess_finisher") then
+				regeneration = regeneration * 1.35;
+			end;
 		
 			if (regeneration > 0 and hook.Run("PlayerShouldStaminaRegenerate", player) != false) then
 				local max_stamina = player:GetMaxStamina();

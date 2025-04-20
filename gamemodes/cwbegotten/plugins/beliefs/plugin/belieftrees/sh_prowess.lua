@@ -13,7 +13,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 		{"Prowess", PROWESS.color, "Civ5ToolTip4"},
 		{"Prowess is a measure of your character's physical strength, primarily affecting your character's melee combat effectiveness, as well as inventory capacity.", Color(225, 200, 200)},
 		{"\n\"But then he visited the Dark Kingdom, and this was the point of no return. He felt in his wrist a tremble that manifested into a quake. His fibers were now thorns, his liquids boiled. He felt he would lose sight of the truth, and that he did...\"", Color(128, 90, 90, 240)},
-		{"\nBelief Tree Completion Bonus: +40% Inventory Capacity and +5% Melee Damage (Stacks w/ Other Buffs). Grants the ability to avoid dropping ragdolls when taking damage.", Color(50, 255, 50)}
+		{"\nBelief Tree Completion Bonus: +40% Inventory Capacity and +35% stamina regeneration. Grants the ability to avoid dropping ragdolls when taking damage.", Color(50, 255, 50)}
 	};
 	PROWESS.columnPositions = {
 		[1] = (PROWESS.size.w - 4) * 0.1,
@@ -85,27 +85,26 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 				quote = "\"Pick up that spear, boy! You'll be fighting in the Lord's army now.\"",
 				row = 1,
 			},
-			["wrestle_subdue"] = {
-				name = "Wrestle and Subdue",
-				description = "Unlocks the ability to pick up foes who have been knocked over in combat, even while they are getting up.",
-				quote = "\"Lose your footing and fall? I will smother you into the dirt.\"",
-				requirements = {"fighter"},
-				row = 2,
-			},
 			["warrior"] = {
 				name = "Warrior",
 				description = "Maximum stamina is now increased by an additional 10 points.",
-				--lockedSubfactions = {"Auxiliary", "Servus", "Low Ministry"},
 				lockedBeliefs = {"loremaster"},
-				requirements = {"fighter", "wrestle_subdue"},
-				row = 3,
+				requirements = {"fighter"},
+				row = 2,
 			},
 			["master_at_arms"] = {
 				name = "Master at Arms",
-				description = "Maximum stamina is now increased by an additional 15 points.",
-				lockedSubfactions = {"Auxiliary", "Servus", "Low Ministry"},
+				description = "Maximum stamina is now increased by an additional 10 points.",
 				lockedBeliefs = {"loremaster"},
-				requirements = {"fighter", "wrestle_subdue", "warrior"},
+				requirements = {"fighter", "warrior"},
+				row = 3,
+			},
+			["wrestle_subdue"] = {
+				name = "Wrestle and Subdue",
+				description = "Unlocks the ability to pick up foes who have been knocked over in combat, even while they are getting up.",
+				lockedSubfactions = {"Auxiliary", "Servus", "Low Ministry"},
+				quote = "\"Lose your footing and fall? I will smother you into the dirt.\"",
+				requirements = {"fighter", "warrior", "master_at_arms"},
 				row = 4,
 			},
 		},

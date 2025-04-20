@@ -1225,10 +1225,6 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						end
 					end
 					
-					if attacker:HasBelief("prowess_finisher") then
-						newDamage = newDamage + (newDamage * 0.05);
-					end
-					
 					if attacker.decapitationBuff then
 						newDamage = newDamage + (newDamage * 0.2);
 					end
