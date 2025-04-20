@@ -1717,11 +1717,13 @@ function Schema:Think()
 						if cwDayNight and cwDayNight.currentCycle == "night" then
 							thrallNPCs = {"npc_bgt_another", "npc_bgt_guardian", "npc_bgt_otis", "npc_bgt_pursuer", "npc_bgt_shambler"};
 						else
-							thrallNPCs = {"npc_bgt_another", "npc_bgt_brute", "npc_bgt_eddie", "npc_bgt_grunt"};
+							thrallNPCs = {"npc_bgt_another", "npc_bgt_brute", "npc_bgt_grunt"};
 						end
 						
-						if math.random(1, 33) == 1 then
+						if math.random(1, 30) == 1 then
 							thrallNPCs = {"npc_bgt_coinsucker", "npc_bgt_ironclad", "npc_bgt_suitor"};
+						elseif math.random(1, 15) == 1 then
+							thrallNPCs = {"npc_bgt_eddie"};
 						end
 					end
 
