@@ -78,6 +78,7 @@ function PANEL:Populate()
 	self.questionsForm = vgui.Create("DForm");
 	self.questionsForm:SetName(Clockwork.quiz:GetName());
 	self.questionsForm:SetPadding(4);
+	self.questionsForm.Header:SetEnabled(false);
 	
 	self.panelList:Clear(true);
 	

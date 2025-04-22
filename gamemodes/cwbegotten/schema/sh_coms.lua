@@ -1509,61 +1509,61 @@ local COMMAND = Clockwork.command:New("BlowWarhorn");
 		
 		if (!player.blowWarhornCooldown or curTime > player.blowWarhornCooldown) then
 			player.blowWarhornCooldown = curTime + 600;
-			
-			Schema:EasyText(player, "firebrick", "You cannot blow the gore warhorn again for another "..math.ceil(player.blowWarhornCooldown - curTime).." seconds!");
-		end;
 		
-		-- Prevent the bell sound and warhorn sound from playing over eachother.
-		if cwDayNight and cwDayNight.currentCycle == "day" then
-			cwDayNight:ModifyCycleTimeLeft(30);
-		end
-		
-		local lastZone = player:GetCharacterData("LastZone");
-		
-		if lastZone == "wasteland" or lastZone == "tower" then
-			for _, v in _player.Iterator() do
-				if IsValid(v) and v:HasInitialized() then
-					local vLastZone = v:GetCharacterData("LastZone");
-					
-					if vLastZone == "wasteland" or vLastZone == "tower" then
-						if v:GetFaction() == "Goreic Warrior" then
-							if cwStamina then
-								v:HandleStamina(25);
-							end
-							
-							v.lastWarCry = nil;
-						end
-						
-						Clockwork.chatBox:Add(v, nil, "event", "The ground quakes as the terrifying sound of a Goreic Warfighter horn pierces the sky.");
-						--netstream.Start(v, "FadeAmbientMusic");
-						--netstream.Start(v, "EmitSound", {name = "warhorns/warhorn_gore.mp3", pitch = 100, level = 75});
-						netstream.Start(v, "GoreWarhorn");
-					end
-				end
+			-- Prevent the bell sound and warhorn sound from playing over eachother.
+			if cwDayNight and cwDayNight.currentCycle == "day" then
+				cwDayNight:ModifyCycleTimeLeft(30);
 			end
-		elseif lastZone == "gore" or lastZone == "gore_hallway" or lastZone == "gore_tree" then
-			for _, v in _player.Iterator() do
-				if IsValid(v) and v:HasInitialized() then
-					local vLastZone = v:GetCharacterData("LastZone");
-					
-					if vLastZone == "gore" or vLastZone == "gore_hallway" or vLastZone == "gore_tree" then
-						if v:GetFaction() == "Goreic Warrior" then
-							if cwStamina then
-								v:HandleStamina(25);
+			
+			local lastZone = player:GetCharacterData("LastZone");
+			
+			if lastZone == "wasteland" or lastZone == "tower" then
+				for _, v in _player.Iterator() do
+					if IsValid(v) and v:HasInitialized() then
+						local vLastZone = v:GetCharacterData("LastZone");
+						
+						if vLastZone == "wasteland" or vLastZone == "tower" then
+							if v:GetFaction() == "Goreic Warrior" then
+								if cwStamina then
+									v:HandleStamina(25);
+								end
+								
+								v.lastWarCry = nil;
 							end
 							
-							v.lastWarCry = nil;
+							Clockwork.chatBox:Add(v, nil, "event", "The ground quakes as the terrifying sound of a Goreic Warfighter horn pierces the sky.");
+							--netstream.Start(v, "FadeAmbientMusic");
+							--netstream.Start(v, "EmitSound", {name = "warhorns/warhorn_gore.mp3", pitch = 100, level = 75});
+							netstream.Start(v, "GoreWarhorn");
 						end
-					
-						Clockwork.chatBox:Add(v, nil, "event", "The ground quakes as the sound of a Goreic Warfighter horn pierces the sky.");
-						--netstream.Start(v, "FadeAmbientMusic");
-						--netstream.Start(v, "EmitSound", {name = "warhorns/warhorn_gore.mp3", pitch = 100, level = 75});
-						netstream.Start(v, "GoreWarhorn");
 					end
 				end
+			elseif lastZone == "gore" or lastZone == "gore_hallway" or lastZone == "gore_tree" then
+				for _, v in _player.Iterator() do
+					if IsValid(v) and v:HasInitialized() then
+						local vLastZone = v:GetCharacterData("LastZone");
+						
+						if vLastZone == "gore" or vLastZone == "gore_hallway" or vLastZone == "gore_tree" then
+							if v:GetFaction() == "Goreic Warrior" then
+								if cwStamina then
+									v:HandleStamina(25);
+								end
+								
+								v.lastWarCry = nil;
+							end
+						
+							Clockwork.chatBox:Add(v, nil, "event", "The ground quakes as the sound of a Goreic Warfighter horn pierces the sky.");
+							--netstream.Start(v, "FadeAmbientMusic");
+							--netstream.Start(v, "EmitSound", {name = "warhorns/warhorn_gore.mp3", pitch = 100, level = 75});
+							netstream.Start(v, "GoreWarhorn");
+						end
+					end
+				end
+			else
+				Schema:EasyText(player, "peru", "This command cannot be used in this area!");
 			end
 		else
-			Schema:EasyText(player, "peru", "This command cannot be used in this area!");
+			Schema:EasyText(player, "firebrick", "You cannot blow the gore warhorn again for another "..math.ceil(player.blowWarhornCooldown - curTime).." seconds!");
 		end
 	end;
 COMMAND:Register();

@@ -469,7 +469,14 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-	
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 25 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+		
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You begrudgingly consume raw meat.");
 			player:HandleSanity(-5);

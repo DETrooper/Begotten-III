@@ -75,6 +75,7 @@ function PANEL:Rebuild()
 				self.panelList:AddItem(form);
 			form:SetName(v.category);
 			form:SetPadding(4);
+			form.Header:SetEnabled(false);
 			
 			for k2, v2 in pairs(v.settings) do
 				local panel;

@@ -2331,6 +2331,7 @@ function PANEL:Init()
 		self.nameForm = vgui.Create("DForm", self);
 		self.nameForm:SetPadding(8);
 		self.nameForm:SetName("");
+		self.nameForm.Header:SetEnabled(false);
 		
 		self.nameFormTitle = vgui.Create("DLabel", self.nameForm);
 		self.nameFormTitle:SetText("Name");
@@ -2390,6 +2391,7 @@ function PANEL:Init()
 		self.appearanceForm = vgui.Create("DForm", self);
 		self.appearanceForm:SetPadding(8);
 		self.appearanceForm:SetName("");
+		self.appearanceForm.Header:SetEnabled(false);
 		
 		self.appearanceFormTitle = vgui.Create("DLabel", self.appearanceForm);
 		self.appearanceFormTitle:SetText("Appearance");
@@ -2582,6 +2584,7 @@ function PANEL:Init()
 		self.traitsForm = vgui.Create("DForm");
 		self.traitsForm:SetName("");
 		self.traitsForm:SetPadding(4);
+		self.traitsForm.Header:SetEnabled(false);
 		
 		self.traitsFormTitle = vgui.Create("DLabel", self.traitsForm);
 		self.traitsFormTitle:SetText("Traits");
@@ -2920,6 +2923,7 @@ function PANEL:Init()
 		self.faithForm = vgui.Create("DForm", self);
 		self.faithForm:SetPadding(4);
 		self.faithForm:SetName("");
+		self.faithForm.Header:SetEnabled(false);
 		
 		self.faithFormTitle = vgui.Create("DLabel", self.faithForm);
 		self.faithFormTitle:SetText("Faith");
@@ -3742,9 +3746,11 @@ function PANEL:Init()
 	self.informationForm = vgui.Create("DForm", self);
 	self.informationForm:SetPadding(8);
 	self.informationForm:SetName("");
+	self.informationForm.Header:SetEnabled(false);
 	
 	self.subfactionForm = vgui.Create("DForm", self);
 	self.subfactionForm:SetPadding(8);
+	self.subfactionForm.Header:SetEnabled(false);
 	
 	if self.curFaction == "Goreic Warrior" then
 		self.subfactionForm:SetName("Clans");
@@ -3776,9 +3782,9 @@ function PANEL:Init()
 	self.subfactionAttributesList:SetSize(450, 111);
 	self.subfactionAttributesList:SetPaintBackground(false);
 	self.subfactionAttributesList:SetSpacing(2);
-	self.subfactionAttributesList:EnableVerticalScrollbar(false);
-	self.subfactionAttributesList:EnableHorizontal(true);
-	self.subfactionAttributesList:HideScrollbar();
+	self.subfactionAttributesList:EnableVerticalScrollbar(true);
+	--self.subfactionAttributesList:EnableHorizontal(true);
+	--self.subfactionAttributesList:HideScrollbar();
 	self.informationForm:AddItem(self.subfactionAttributesList);
 	
 	if (self.subfactionList) and (self.curFaction) then
@@ -3863,33 +3869,32 @@ function PANEL:Init()
 					end
 					
 					if factionTable.subfactions[i].rivalry then
-						local subfactionRivalryText = vgui.Create("DTextEntry", self.subfactionAttributesList);
-						subfactionRivalryText:SetSize(450, 16);
-						subfactionRivalryText:SetDisabled(true);
-						subfactionRivalryText:SetDrawBackground(false);
-						--subfactionRivalryText:SetMultiline(true);
-						self.subfactionAttributesList:AddItem(subfactionRivalryText);
-						
+						local subfactionRivalryText = vgui.Create("DLabel", self.subfactionAttributesList);
 						local subfactionRivalry = factionTable.subfactions[i].rivalry;
 						
+						subfactionRivalryText:SetSize(450, 16);
+						subfactionRivalryText:SetAutoStretchVertical(true);
 						subfactionRivalryText:SetTextColor(Color(180, 0, 0));
 						subfactionRivalryText:SetText("Rivalry with "..subfactionRivalry);
 						subfactionRivalryText:SetFont("Decay_FormText");
+						subfactionRivalryText:SetWrap(true);
+						
+						self.subfactionAttributesList:AddItem(subfactionRivalryText);
 					end					
 					
 					if factionTable.subfactions[i].attributes then
 						for j = 1, #factionTable.subfactions[i].attributes do
-							local subfactionAttributeText = vgui.Create("DTextEntry", self.subfactionAttributesList);
-							subfactionAttributeText:SetSize(450, 16);
-							subfactionAttributeText:SetDisabled(true);
-							subfactionAttributeText:SetDrawBackground(false);
-							self.subfactionAttributesList:AddItem(subfactionAttributeText);
-							
+							local subfactionAttributeText = vgui.Create("DLabel", self.subfactionAttributesList);
 							local subfactionAttribute = factionTable.subfactions[i].attributes[j];
 							
+							subfactionAttributeText:SetSize(450, 16);
+							subfactionAttributeText:SetAutoStretchVertical(true);
 							subfactionAttributeText:SetTextColor(subfactionAttribute[1]);
 							subfactionAttributeText:SetText(subfactionAttribute[2]);
 							subfactionAttributeText:SetFont("Decay_FormText");
+							subfactionAttributeText:SetWrap(true);
+							
+							self.subfactionAttributesList:AddItem(subfactionAttributeText);
 						end
 					end
 					

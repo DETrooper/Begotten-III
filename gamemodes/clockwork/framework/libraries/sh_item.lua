@@ -1400,6 +1400,11 @@ else
 		local percentage = (weight / maximumWeight);
 		local name = itemTable:GetName();
 		
+		-- Weight proxy doesn't seem to be working.
+		if itemTable.GetItemWeight then
+			weight = itemTable:GetItemWeight() or itemTable("weight");
+		end
+		
 		if maximumWeight == 0 then
 			percentage = 1;
 		end
