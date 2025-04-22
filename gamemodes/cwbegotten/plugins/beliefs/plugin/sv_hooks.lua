@@ -50,7 +50,7 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 		end
 	
 		if (!plyTab.residualXPCheck or plyTab.residualXPCheck < curTime) then
-			plyTab.residualXPCheck = curTime + 60;
+			local residualCooldown = 60
 			
 			local lastZone = player:GetCharacterData("LastZone");
 			local playerFaction = player:GetFaction();
@@ -59,11 +59,11 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				local residualXP = self.xpValues["residual"] or 1;
 				
 				if playerFaction == "Goreic Warrior" and (lastZone == "wasteland" or lastZone == "tower" or lastZone == "caves" or lastZone == "scrapper") then
-					residualXP = residualXP * 2;
+					residualCooldown = residualCooldown * 0.5
 				end
 				
 				if (cwDayNight and cwDayNight.currentCycle == "night" and player:HasBelief("primevalism") and lastZone == "wasteland") or player:HasBelief("old_son") or (lastZone != "tower" and (playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy")) then
-					residualXP = residualXP * 2;
+					residualCooldown = residualCooldown * 0.5
 				end
 				
 				local factionTable = Clockwork.faction:FindByID(playerFaction);
@@ -76,19 +76,21 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 						
 						for i, v in ipairs(residualXPZones) do
 							if playerPos:WithinAABox(v.pos1, v.pos2) then
-								local modifier = v.modifier or 2;
+								local modifier = v.modifier or 0.5;
 								
 								if cwDayNight and v.nightModifier and cwDayNight.currentCycle == "night" then
-									modifier = v.nightModifier or 4;
+									modifier = v.nightModifier or 0.25;
 								end
 								
-								residualXP = residualXP * modifier;
+								residualCooldown = residualCooldown * modifier
 							
 								break;
 							end
 						end
 					end
 				end
+
+				plyTab.residualXPCheck = curTime + residualCooldown
 
 				player:HandleXP(residualXP);
 			end
@@ -239,7 +241,7 @@ function cwBeliefs:BeliefTaken(player, uniqueID, category)
 			
 			for k, v in pairs(beliefTree.beliefs) do
 				for k2, v2 in pairs(v) do
-					if !beliefs[k2] then
+					if !v2.disabled and !beliefs[k2] then
 						category_finished = false;
 						
 						break;
