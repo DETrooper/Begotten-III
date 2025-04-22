@@ -88,7 +88,6 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			["warrior"] = {
 				name = "Warrior",
 				description = "Maximum stamina is now increased by an additional 10 points.",
-				lockedBeliefs = {"loremaster"},
 				requirements = {"fighter"},
 				row = 2,
 			},
@@ -102,6 +101,7 @@ local PROWESS = cwBeliefs.beliefTrees:New("prowess")
 			["wrestle_subdue"] = {
 				name = "Wrestle and Subdue",
 				description = "Unlocks the ability to pick up foes who have been knocked over in combat, even while they are getting up.",
+				lockedBeliefs = {"loremaster"},
 				lockedSubfactions = {"Auxiliary", "Servus", "Low Ministry"},
 				quote = "\"Lose your footing and fall? I will smother you into the dirt.\"",
 				requirements = {"fighter", "warrior", "master_at_arms"},
