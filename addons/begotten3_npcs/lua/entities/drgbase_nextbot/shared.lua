@@ -568,6 +568,17 @@ if SERVER then
 		if not self:HasPatrol() then return end
 		local patrol = self:GetPatrol()
 		local pos = patrol:FetchPos(self)
+		if not self._PatrolStartTime then
+			self._PatrolStartTime = CurTime()
+		end
+		local elapsed = CurTime() - self._PatrolStartTime
+		if elapsed > 10 then
+			self:RemovePatrol(patrol)
+			self._PatrolStartTime = nil
+			self:OnIdle()
+			return
+		end
+		
 		local res = self:OnPatrolling(pos, patrol)
 		if not isbool(res) then
 			local follow = self:FollowPath(pos)
@@ -576,6 +587,7 @@ if SERVER then
 		end
 		if isbool(res) then
 			self:RemovePatrol(patrol)
+			self._PatrolStartTime = nil
 			if res then
 				patrol:OnReached(self, pos)
 				self:OnReachedPatrol(pos, patrol)
