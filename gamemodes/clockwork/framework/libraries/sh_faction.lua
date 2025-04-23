@@ -222,11 +222,10 @@ function Clockwork.faction:GetPlayers(faction)
 	local players = {}
 
 	for _, v in _player.Iterator() do
-		if (v:HasInitialized()) then
-			if (v:GetFaction() == faction) then
-				players[#players + 1] = v
-			end
-		end
+		if(!v:HasInitialized() or v:GetFaction() != faction or Clockwork.player:IsAdmin(v)) then continue end
+		
+		players[#players + 1] = v
+
 	end
 
 	return players
