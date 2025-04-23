@@ -33,19 +33,20 @@ end
 
 -- Fix for SQLite duplicating ' character.
 function sql.SQLStr(str_in, bNoQuotes)
-	local str = tostring(str_in)
+    local str = tostring(str_in)
+	
+    local null_chr = string.find(str, "\0")
+	
+    if (null_chr) then
+        str = string.utf8sub(str, 1, null_chr - 1)
+    end
 
-	local null_chr = string.find(str, "\0")
-
-	if (null_chr) then
-		str = string.utf8sub(str, 1, null_chr - 1)
-	end
-
-	if (bNoQuotes) then
-		return str
-	end
-
-	return "'"..str.."'"
+    str = string.gsub(str, "'", "''")
+    
+    if (bNoQuotes) then
+        return str
+    end
+    return "'"..str.."'"
 end
 
 oldFileioWrite = oldFileioWrite or fileio.Write
