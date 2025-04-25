@@ -1179,7 +1179,7 @@ if map == "rp_begotten3" then
 				max = Vector(-2532, 12022, 2048),
 			},
 			{
-				min = Vector(-831, 11993, -883),
+				min = Vector(-831, 12023, -883),
 				max = Vector(6, 11736, -1073),
 			},
 		};
