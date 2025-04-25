@@ -248,7 +248,7 @@ function Schema:InTower(entity)
 	end
 
 	if map == "rp_begotten3" then
-		return entity:GetPos():WithinAABox(Vector(2400, 15147, -2778), Vector(-2532, 12022, 2048)) or entity:GetPos():WithinAABox(Vector(-839, 11737, -1130), Vector(865, 12022, -897));
+		return entity:GetPos():WithinAABox(Vector(2400, 15147, -2778), Vector(-2532, 12022, 2048)) or entity:GetPos():WithinAABox(Vector(-831, 12023, -883), Vector(6, 11736, -1073));
 	elseif map == "rp_begotten_redux" then
 		return entity:GetPos():WithinAABox(Vector(-8896, -10801, 69), Vector(-13525, -3070, 914));
 	elseif map == "rp_scraptown" then
