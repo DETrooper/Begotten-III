@@ -1179,8 +1179,8 @@ if map == "rp_begotten3" then
 				max = Vector(-2532, 12022, 2048),
 			},
 			{
-				min = Vector(-839, 11737, -1130),
-				max = Vector(865, 12022, -897),
+				min = Vector(-831, 11993, -883),
+				max = Vector(6, 11736, -1073),
 			},
 		};
 	TOWER:Register()
