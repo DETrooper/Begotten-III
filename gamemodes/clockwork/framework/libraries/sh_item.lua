@@ -1399,16 +1399,11 @@ else
 		local freezing = itemTable:GetData("freezing");
 		local percentage = (weight / maximumWeight);
 		local name = itemTable:GetName();
-		
-		--[[
-			TEMP: This breaks some items so I'm waiting for DET to get on and fix it.
 
 		-- Weight proxy doesn't seem to be working.
 		if itemTable.GetItemWeight then
 			weight = itemTable:GetItemWeight() or itemTable("weight");
 		end
-
-		]]
 		
 		if maximumWeight == 0 then
 			percentage = 1;
