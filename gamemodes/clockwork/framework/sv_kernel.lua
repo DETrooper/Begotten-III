@@ -1746,6 +1746,12 @@ function playerMeta:GetMaxHealth(health)
 			maxHealth = maxHealth + 25;
 		end
 	end
+	
+	if factionName == "Goreic Warrior" then
+		if self:HasBelief("sorcerer") or self:HasBelief("survivalist") then
+			maxHealth = maxHealth + 25;
+		end
+	end
 
 	if self:GetCharmEquipped("ring_vitality") then
 		maxHealth = maxHealth + 25;

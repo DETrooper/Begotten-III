@@ -36,6 +36,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(98.45, 0, 279.45);
 	ITEM.attachmentOffsetVector = Vector(-0.34, -21.89, -21.22);
 	
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 9000, bNoSupercrate = true};
+	
 	ITEM.attributes = {"grounded"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 ITEM:Register();

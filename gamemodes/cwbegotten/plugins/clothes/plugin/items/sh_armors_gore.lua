@@ -328,7 +328,7 @@ ITEM.effectiveLimbs = {
 ITEM.bluntScale = 0.60; -- reduces blunt damage by 40%
 ITEM.slashScale = 0.90; -- reduces slash damage by 10%
 ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
-ITEM.stabilityScale = 0.80; -- reduces stability damage by 25%
+ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
 ITEM.insulation = 55;
 
 ITEM.components = {breakdownType = "breakdown", items = {"human_bone", "human_bone", "human_bone", "human_bone", "human_bone", "human_bone", "cloth", "cloth"}};

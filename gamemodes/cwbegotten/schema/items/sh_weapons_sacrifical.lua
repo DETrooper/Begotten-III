@@ -133,7 +133,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1500, supercrateOnly = true};
 
-	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}}; -- use "breakdown" for other type
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"ice"};
 	ITEM.requiredbeliefs = {"murder_artform"};
 ITEM:Register();
@@ -156,7 +156,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1500, supercrateOnly = true};
 
-	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}}; -- use "breakdown" for other type
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"fire"};
 	ITEM.requiredbeliefs = {"murder_artform"};
 ITEM:Register();

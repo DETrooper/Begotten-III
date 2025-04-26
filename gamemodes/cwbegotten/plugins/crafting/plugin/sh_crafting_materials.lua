@@ -414,6 +414,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.weaponClass = "begotten_javelin_throwing_stone";
 	ITEM.isJavelin = true;
 	ITEM.canUseShields = true;
+	
+	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 200, bNoSupercrate = true};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
