@@ -5159,7 +5159,7 @@ RECIPE:Register()
 		RECIPE.requirements = {
 			["shagalaxian_steel_ingot"] = {amount = 3},
 			["wood"] = {amount = 3},
-			["ice_sigil_stone"] = {amount = 3},
+			["ice_sigil_stone"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_sacrificial_frozenfatherlandaxe"] = {amount = 1},
