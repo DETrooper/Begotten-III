@@ -2426,6 +2426,14 @@ function Schema:SacrificePlayer(player, sacrificer, method, bShared)
 				sacrificer:HandleNeed("corruption", -50);
 				
 				Clockwork.chatBox:Add(sacrificer, nil, "itnofake", "As you sacrifice "..playerName.." and fulfill the blood contract fully, you feel your pockets suddenly become much heavier.");
+				
+				for _, v in _player.Iterator() do
+					if v:HasInitialized() then
+						if v == player or v:GetFaith() == "Faith of the Dark" then
+							Clockwork.chatBox:Add(v, nil, "darkwhispernoprefix", "Death has been delivered to a marked one. "..playerName.." has been sacrificed and his soul now belongs to the Dark Lord.");
+						end
+					end
+				end
 			end
 			
 			if cwBeliefs then
