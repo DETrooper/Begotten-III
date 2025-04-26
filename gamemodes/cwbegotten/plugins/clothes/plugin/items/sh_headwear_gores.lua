@@ -10,6 +10,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.headSuffix = "_gore";
 	ITEM.description = "A blackened steel helmet used by many Gores of Clan Shagalax. It provides exemplary protection."
 	ITEM.requireFaction = {"Goreic Warrior"};
+	ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Crast", "Clan Harald", "Clan Reaver"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/goreshagalaxhelm";
 	
