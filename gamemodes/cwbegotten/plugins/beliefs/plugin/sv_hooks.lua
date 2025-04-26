@@ -2299,7 +2299,7 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 			if cwMelee then
 				local maxStability = attacker:GetMaxStability();
 				
-				cwMelee:HandleStabilty(attacker, (maxStability * refundPerLevel) * playerLevel);
+				cwMelee:HandleStability(attacker, (maxStability * refundPerLevel) * playerLevel);
 			end
 			
 			attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
