@@ -228,6 +228,11 @@ local ITEM = Clockwork.item:New(nil, true)
 
 	-- Called when a player has unequipped the item.
 	function ITEM:OnPlayerUnequipped(player, extraData)
+		if self.permanent then
+			Schema:EasyText(player, "peru", "This helmet is grafted into your skin and fused with your flesh, and cannot be unequipped!");
+			return false;
+		end
+	
 		if Clockwork.equipment:UnequipItem(player, self) then
 			if extraData == "drop" then
 				local trace = player:GetEyeTraceNoCursor()
@@ -278,7 +283,12 @@ local ITEM = Clockwork.item:New(nil, true)
 	
 	-- Called when a player has unequipped the item.
 	function ITEM:OnTakeFromPlayer(player)
-		if (player:GetClothesEquipped() == self) then
+		if (player:GetHelmetEquipped() == self) then
+			if player:Alive() and self.permanent then
+				Schema:EasyText(player, "peru", "This helmet is grafted into this character's skin and fused with their flesh, and cannot be unequipped!");
+				return false;
+			end
+		
 			if self.concealsFace == true then
 				player:SetNetVar("faceConcealed", false);
 			end
@@ -289,9 +299,11 @@ local ITEM = Clockwork.item:New(nil, true)
 	
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position)
-		--[[if (player:GetHelmetEquipped() == self) then
-			Schema:EasyText(player, "peru", "You cannot drop an item you're currently wearing.")
-			return false
-		end]]--
+		if (player:GetHelmetEquipped() == self) then
+			if self.permanent then
+				Schema:EasyText(player, "peru", "This helmet is grafted into your skin and fused with your flesh, and cannot be unequipped!");
+				return false;
+			end
+		end
 	end
 ITEM:Register();

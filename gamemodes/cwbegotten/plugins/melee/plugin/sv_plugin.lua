@@ -43,6 +43,7 @@ function cwMelee:HandleStability(player, amount, cooldown)
 
 	player.stabilityCooldown = CurTime() + cooldown;]]--
 	player:SetCharacterData("stability", math.Clamp(player:GetCharacterData("stability", player:GetMaxStability()) + amount, 0, player:GetMaxStability()));
+	player:SetNWInt(player:GetCharacterData("stability"));
 end;
 
 --function playerMeta:TakePoise(amount)
@@ -94,7 +95,7 @@ end
 function playerMeta:TakeStability(amount, cooldown, bNoMe)
 	--printp("Taking stability - Initial Amount: "..amount);
 	
-	if (Clockwork.player:HasFlags(self, "E") or !self:Alive() or self:IsRagdolled()) then
+	if (Clockwork.player:HasFlags(self, "E") or !self:Alive() or self:IsRagdolled() or self:GetNWBool("bliz_frozen")) then
 		return;
 	end
 
@@ -214,7 +215,7 @@ function playerMeta:AddFreeze(amount, attacker)
 		self:SetLocalVar("freeze", math.Clamp(math.Round(freeze + amount), 0, 100));
 		
 		if self:GetNetVar("freeze") >= 100 then
-			cwMelee:DoFreezeEffect(self, attacker, 20);
+			cwMelee:DoFreezeEffect(self, attacker, 15);
 		end
 		
 		hook.Run("RunModifyPlayerSpeed", self, self.cwInfoTable, true);

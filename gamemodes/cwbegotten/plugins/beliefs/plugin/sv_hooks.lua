@@ -2296,7 +2296,7 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 			attacker:SetHealth(math.min(maxHealth, attacker:Health() + ((maxHealth * refundPerLevel) * playerLevel)));
 			attacker:SetCharacterData("Stamina", math.min(maxStamina, attacker:GetCharacterData("Stamina", 90) + ((maxStamina * refundPerLevel) * playerLevel)));
 			--attacker:SetNWInt("meleeStamina", math.min(maxPoise, attacker:GetNWInt("meleeStamina", 90) + ((maxPoise * refundPerLevel) * playerLevel)));
-			attacker:SetNWInt("stability", math.min(maxStability, attacker:GetNWInt("stability", 100) + ((maxStability * refundPerLevel) * playerLevel)));
+			attacker:HandleStabilty((maxStability * refundPerLevel) * playerLevel);
 			
 			attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
 			

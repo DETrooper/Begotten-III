@@ -2753,6 +2753,12 @@ function PANEL:Init()
 				local traitButtons = self.traitItemsList.traitButtons;
 			
 				if (table.HasValue(self.selectedTraits, traitTable)) then
+					local factionTable = Clockwork.faction:FindByID(Clockwork.Client.SelectedFaction);
+					
+					if factionTable.mandatorytraits and table.HasValue(factionTable.mandatorytraits, traitTable.uniqueID) then
+						return false;
+					end
+				
 					table.RemoveByValue(self.selectedTraits, traitTable);
 					table.RemoveByValue(self.info.traits, traitTable.uniqueID);
 
@@ -2907,6 +2913,54 @@ function PANEL:Init()
 			self.traitItemsList:AddItem(traitButton);
 			table.insert(self.traitItemsList.traitButtons, traitButton);
 		end;
+		
+		if factionTable.mandatorytraits then
+			for i, v in ipairs(factionTable.mandatorytraits) do
+				local traitTable = Clockwork.trait:FindByID(v);
+				
+				if traitTable and !table.HasValue(self.selectedTraits, v) then
+					table.insert(self.selectedTraits, traitTable);
+					table.insert(self.info.traits, traitTable.uniqueID);
+					
+					if traitTable.disablesSkins then
+						if IsValid(Clockwork.Client.CharSelectionModel.HeadModel) then
+							local skinCount = Clockwork.Client.CharSelectionModel.HeadModel:SkinCount() - 1;
+							
+							Clockwork.Client.CharSelectionModel:SetSkin(skinCount);
+							Clockwork.Client.CharSelectionModel.HeadModel:SetSkin(skinCount);
+							self.info.skin = skinCount;
+						else
+							local skinCount = Clockwork.Client.CharSelectionModel:SkinCount() - 1;
+						
+							Clockwork.Client.CharSelectionModel:SetSkin(skinCount);
+							self.info.skin = skinCount;
+						end
+					end
+					
+					for i2, v2 in ipairs(self.traitItemsList.traitButtons) do
+						if v2.uniqueID == traitTable.uniqueID then
+							if v2.disableTable then
+								for i3, v3 in ipairs(self.traitItemsList.traitButtons) do
+									if IsValid(v3) then
+										if table.HasValue(v2.disableTable, v3.uniqueID) then
+											--printp("Disabling: "..v3.uniqueID);
+											v3:SetColor(Color(74, 26, 0), true);
+											v3:SetDisabled(true);
+										end;
+									end
+								end;
+							end;
+							
+							v2:SetColor(Color(74, 26, 0), true);
+							
+							self.chosenTraitItemsList:AddItem(v2);
+							
+							break;
+						end
+					end
+				end
+			end
+		end
 	end
 	
 	if (self.bFaiths) then
@@ -3140,6 +3194,18 @@ function PANEL:OnNext()
 		if points < 0 then
 			Clockwork.character:SetFault("You do not have enough points for the traits you have selected!");
 			return false;
+		end
+		
+		-- Failsafe, should not be removable by the client.
+		local factionTable = Clockwork.faction:FindByID(Clockwork.Client.SelectedFaction);
+		
+		if factionTable.mandatorytraits then
+			for i, v in ipairs(factionTable.mandatorytraits) do
+				if !table.HasValue(self.info.traits, v) then
+					Clockwork.character:SetFault("You do not have a mandatory trait required for your faction!");
+					return false;
+				end
+			end
 		end
 	end
 

@@ -468,7 +468,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 			end
 		end
 		
-		if (stability >= max_stability or (plyTab.stabilityCooldown and plyTab.stabilityCooldown > curTime)) then
+		if (stability >= max_stability or player:IsRagdolled() or (plyTab.stabilityCooldown and plyTab.stabilityCooldown > curTime)) then
 			plyTab.nextStability = curTime + 1;
 			return;
 		end;
@@ -558,6 +558,11 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 	if !falloverTime then
 		falloverTime = 5;
 	end
+	
+	if player:GetCharacterData("stability", 100) > 0 then
+		player:SetCharacterData("stability", 0);
+		player:SetNWInt("stability", 0);
+	end
 
 	Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, falloverTime);
 	player.stabilityCooldown = curTime + (falloverTime - 5);
@@ -603,8 +608,6 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 		phrase = string.gsub(phrase, "#HIS", gender);
 		Clockwork.chatBox:AddInTargetRadius(player, "me", string.gsub(phrase, "^.", string.lower), player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 	end
-	
-	player:SetCharacterData("stability", 80);
 	
 	if IsValid(player.possessor) then
 		pitch = 50;
@@ -686,6 +689,17 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 		end)
 	end
 end;
+
+-- Called when a player has been unragdolled.
+function cwMelee:PlayerUnragdolled(player, state, ragdoll)
+	if player:Alive() then
+		if player:GetCharacterData("stability", 100) <= 0 then
+			player:SetCharacterData("stability", 80);
+			player:SetNWInt("stability", 80);
+			player.nextStability = CurTime() + 3;
+		end
+	end
+end
 
 -- Called when a player attempts to switch to a character.
 function cwMelee:PlayerCanSwitchCharacter(player, character)
@@ -791,6 +805,15 @@ function cwMelee:PlayerCanFallover(player)
 	end
 end
 
+-- Called when a player attempts to use an item.
+function cwMelee:PlayerCanUseItem(player, itemTable, noMessage)
+	if player:GetNWBool("bliz_frozen") == true then
+		Schema:EasyText(player, "firebrick", "You cannot use items while you are frozen!");
+	
+		return false;
+	end
+end;
+
 -- Called when an entity has taken damage (runs after belief calculations but before FuckMyLife).
 function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 	if damageInfo and (entity:IsPlayer() or entity.isTrainingDummy) then
@@ -809,6 +832,8 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 				entity.freezeEnt:Remove();
 				entity.freezeEnt = nil;
 			end
+		elseif entity:GetNWBool("bliz_frozen") then
+			damageInfo:ScaleDamage(0.3);
 		end
 		
 		if IsValid(attacker) then
@@ -1050,7 +1075,8 @@ function cwMelee:PostPlayerEnteredDuel(player)
 end
 
 function cwMelee:PlayerExitedDuel(player)
-	player:SetNWInt("stability", player:GetMaxStability());
+	player:SetCharacterData("stability", player:GetMaxStability());
+	player:SetNWInt("stability", player:GetCharacterData("stability", 100));
 
 	for i, v in ipairs(player:GetWeaponsEquipped()) do
 		if v.category == "Throwables" then
