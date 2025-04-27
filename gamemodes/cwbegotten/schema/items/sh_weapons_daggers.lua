@@ -56,7 +56,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.huntingValue = 3;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 750, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 900, bNoSupercrate = true};
 	ITEM.repairCostModifier = 0.8;
 ITEM:Register();
 

@@ -286,6 +286,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "jester/Vocaroo_04_Jan_2024_14_07_47_EST_1oLT9syHRyTq.ogg";
 	
 	ITEM.attributes = {"conditionless", "not_unequippable", "whimsy"};
+	ITEM.permanent = true;
 
 	ITEM.conditionScale = 0
 
@@ -305,12 +306,6 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.insulation = 60;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"leather"}};
-	
-	-- Called when a player has unequipped the item.
-	function ITEM:OnPlayerUnequipped(player, extraData)
-		Schema:EasyText(player, "peru", "This hat cannot be taken off... What the fuck?!");
-		return false;
-	end
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
@@ -323,7 +318,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 8
 	ITEM.headSuffix = "_hill";
 	ITEM.description = "A beat-up depiction of a chicken. Something about this feels quite off."
-	ITEM.useSound = "npc/headcrab/headbite.wav";	
+	ITEM.useSound = "npc/headcrab/headbite.wav";
+	ITEM.permanent = true;
 
 	ITEM.conditionScale = 1.1 -- item degrades 1.5x faster with damage related condition loss
 
@@ -345,12 +341,6 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.attributes = {"not_unequippable", "whimsy"};
 
 	ITEM.components = {breakdownType = "breakdown", items = {"leather"}};
-	
-	-- Called when a player has unequipped the item.
-	function ITEM:OnPlayerUnequipped(player, extraData)
-		Schema:EasyText(player, "peru", "Try as you might, you simply can't rip this off your head!");
-		return false;
-	end
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")

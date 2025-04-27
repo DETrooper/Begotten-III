@@ -2291,12 +2291,16 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 			local maxHealth = attacker:GetMaxHealth();
 			local maxStamina = attacker:GetMaxStamina();
 			--local maxPoise = attacker:GetMaxPoise();
-			local maxStability = attacker:GetMaxStability();
 			
 			attacker:SetHealth(math.min(maxHealth, attacker:Health() + ((maxHealth * refundPerLevel) * playerLevel)));
 			attacker:SetCharacterData("Stamina", math.min(maxStamina, attacker:GetCharacterData("Stamina", 90) + ((maxStamina * refundPerLevel) * playerLevel)));
 			--attacker:SetNWInt("meleeStamina", math.min(maxPoise, attacker:GetNWInt("meleeStamina", 90) + ((maxPoise * refundPerLevel) * playerLevel)));
-			attacker:SetNWInt("stability", math.min(maxStability, attacker:GetNWInt("stability", 100) + ((maxStability * refundPerLevel) * playerLevel)));
+			
+			if cwMelee then
+				local maxStability = attacker:GetMaxStability();
+				
+				cwMelee:HandleStability(attacker, (maxStability * refundPerLevel) * playerLevel);
+			end
 			
 			attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
 			

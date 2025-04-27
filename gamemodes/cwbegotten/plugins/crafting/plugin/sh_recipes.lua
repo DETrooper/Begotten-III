@@ -1750,7 +1750,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_irondagger"] = {amount = 1},
@@ -5042,7 +5042,7 @@ RECIPE:Register()
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.requirements = {
 			["begotten_2h_unholysigilsword"] = {amount = 1},
-			["fire_sigil_stone"] = {amount = 1},
+			["fire_sigil_stone"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_sacrificial_unholysigilsword_fire"] = {amount = 1},
@@ -5052,7 +5052,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "imbueing"
-		RECIPE.experience = 35;
+		RECIPE.experience = 50;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -5071,7 +5071,7 @@ RECIPE:Register()
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.requirements = {
 			["begotten_2h_unholysigilsword"] = {amount = 1},
-			["ice_sigil_stone"] = {amount = 1},
+			["ice_sigil_stone"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_sacrificial_unholysigilsword_ice"] = {amount = 1},
@@ -5081,7 +5081,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "imbueing"
-		RECIPE.experience = 35;
+		RECIPE.experience = 50;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -5169,7 +5169,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 175;
+		RECIPE.experience = 200;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -5219,7 +5219,7 @@ RECIPE:Register()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["maximilian_steel_ingot"] = {amount = 3},
-			["ice_sigil_stone"] = {amount = 1},
+			["ice_sigil_stone"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_sacrificial_enchantedlongsword_ice"] = {amount = 1},
@@ -5280,7 +5280,7 @@ RECIPE:Register()
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
 			["ice_sigil_stone"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -5310,7 +5310,7 @@ RECIPE:Register()
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
 			["fire_sigil_stone"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -6963,7 +6963,7 @@ RECIPE:Register()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requiredSubfactions = {"Clan Shagalax"};
 		RECIPE.requirements = {
-			["shagalaxian_steel_ingot"] = {amount = 2},
+			["shagalaxian_steel_ingot"] = {amount = 1},
 			["steel_ingot"] = {amount = 3},
 		};
 		RECIPE.result = {
@@ -8660,8 +8660,7 @@ RECIPE:Register()
 		RECIPE.name = "Skintape Mask";
 		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
 		RECIPE.requirements = {
-			["skingauze"] = {amount = 2},
-			["skintape"] = {amount = 2},
+			["skintape"] = {amount = 4},
 			["cloth"] = {amount = 2},
 		};
 		RECIPE.result = {

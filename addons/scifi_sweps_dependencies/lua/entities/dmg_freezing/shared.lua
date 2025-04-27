@@ -200,6 +200,10 @@ function ENT:OnRemove()
 		parent:SetSchedule( SCHED_WAKE_ANGRY )
 	elseif ( parent:IsPlayer() ) then
 		parent:RemoveFlags( FL_FROZEN )
+		
+		if cwMelee and parent:Alive() then
+			parent:SetLocalVar("freeze", 50);
+		end
 	end
 
 	parent:EmitSound( "scifi.bliz.breakfree" )

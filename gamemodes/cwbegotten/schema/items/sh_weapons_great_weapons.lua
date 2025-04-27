@@ -239,7 +239,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.fireplaceFuel = 240;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood", "wood"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 700, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2500, bNoSupercrate = true};
 	ITEM.requiredbeliefs = {"strength"};
 ITEM:Register();
 

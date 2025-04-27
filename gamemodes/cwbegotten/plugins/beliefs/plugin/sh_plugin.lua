@@ -1713,9 +1713,15 @@ COMMAND.arguments = 0;
 function COMMAND:OnRun(player, arguments)
 	if player:HasBelief("sol_orthodoxy") then
 		if player:GetNetVar("tied") == 0 and !player:IsRagdolled() then
+			if player:IsFrozen() or player:GetNWBool("bliz_frozen") then
+				Schema:EasyText(player, "firebrick", "You cannot do this right now!");
+			
+				return false;
+			end
+
 			player:CommitSuicide()
 		else
-			Schema:EasyText(player, "firebrick", "Why the fuck would commit suicide right now? Fuck you.");
+			Schema:EasyText(player, "firebrick", "Why the fuck would you commit suicide right now? Fuck you.");
 		end;
 	else
 		Schema:EasyText(player, "firebrick", "You lack the willpower to do this!");

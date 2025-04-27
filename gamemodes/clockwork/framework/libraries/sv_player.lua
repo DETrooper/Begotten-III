@@ -198,6 +198,16 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 					end
 				end
 				
+				if traitTable.eventlocked then
+					return self:SetCreateFault(player, "This trait is locked for this event!");
+				elseif traitTable.excludedfactions and data.faction and table.HasValue(traitTable.excludedfactions, data.faction) then
+					return self:SetCreateFault(player, "This trait is locked for your selected faction!");
+				elseif traitTable.excludedsubfactions and data.subfaction and table.HasValue(traitTable.excludedsubfactions, data.subfaction) then
+					return self:SetCreateFault(player, "This trait is locked for your selected subfaction!");
+				elseif traitTable.requiredfactions and data.faction and !table.HasValue(traitTable.requiredfactions, data.faction) then
+					return self:SetCreateFault(player, "This trait is locked for your selected faction!");
+				end
+				
 				table.insert(info.data["Traits"], traitTable.uniqueID);
 				pointsSpent = pointsSpent + traitTable.points;
 			end;
@@ -221,6 +231,19 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 	elseif (hasTraits) then
 		return self:SetCreateFault(player, "You did not choose any of the available traits!");
 	end;
+
+	-- Failsafe, should not be removable by the client.
+	if factionTable.mandatorytraits then
+		if type(data.traits) == "table" and !table.IsEmpty(data.traits) then
+			for i, v in ipairs(factionTable.mandatorytraits) do
+				if !table.HasValue(data.traits, v) then
+					return self:SetCreateFault(player, "You do not have a mandatory trait required for your faction!");
+				end
+			end
+		else
+			return self:SetCreateFault(player, "You do not have a mandatory trait required for your faction!");
+		end
+	end
 
 	--[[if (attributes and type(data.attributes) == "table") then
 		local maximumPoints = config.Get("default_attribute_points"):Get()

@@ -18,12 +18,12 @@ local ITEM = item.New(nil, true);
 	
 	-- A function to get the item's weight.
 	function ITEM:GetItemWeight()
-		return (self.weight / self.ammoMagazineSize) * self:GetData("Rounds") or 1;
+		return (self.weight / (self.ammoMagazineSize or 1)) * self:GetData("Rounds") or 1;
 	end
 
 	-- A function to get the item's space.
 	function ITEM:GetItemSpace()
-		return (self.space / self.ammoMagazineSize) * self:GetData("Rounds") or 1;
+		return (self.space / (self.ammoMagazineSize or 1)) * self:GetData("Rounds") or 1;
 	end
 	
 	-- Called whent he item entity's menu options are needed.

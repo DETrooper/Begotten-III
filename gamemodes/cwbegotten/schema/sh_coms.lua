@@ -1517,12 +1517,12 @@ local COMMAND = Clockwork.command:New("BlowWarhorn");
 			
 			local lastZone = player:GetCharacterData("LastZone");
 			
-			if lastZone == "wasteland" or lastZone == "tower" then
+			if lastZone == "wasteland" or lastZone == "tower" or lastZone == "hotspring" then
 				for _, v in _player.Iterator() do
 					if IsValid(v) and v:HasInitialized() then
 						local vLastZone = v:GetCharacterData("LastZone");
 						
-						if vLastZone == "wasteland" or vLastZone == "tower" then
+						if vLastZone == "wasteland" or vLastZone == "tower" or vLastZone == "hotspring" then
 							if v:GetFaction() == "Goreic Warrior" then
 								if cwStamina then
 									v:HandleStamina(25);
@@ -1532,8 +1532,6 @@ local COMMAND = Clockwork.command:New("BlowWarhorn");
 							end
 							
 							Clockwork.chatBox:Add(v, nil, "event", "The ground quakes as the terrifying sound of a Goreic Warfighter horn pierces the sky.");
-							--netstream.Start(v, "FadeAmbientMusic");
-							--netstream.Start(v, "EmitSound", {name = "warhorns/warhorn_gore.mp3", pitch = 100, level = 75});
 							netstream.Start(v, "GoreWarhorn");
 						end
 					end
@@ -1553,8 +1551,25 @@ local COMMAND = Clockwork.command:New("BlowWarhorn");
 							end
 						
 							Clockwork.chatBox:Add(v, nil, "event", "The ground quakes as the sound of a Goreic Warfighter horn pierces the sky.");
-							--netstream.Start(v, "FadeAmbientMusic");
-							--netstream.Start(v, "EmitSound", {name = "warhorns/warhorn_gore.mp3", pitch = 100, level = 75});
+							netstream.Start(v, "GoreWarhorn");
+						end
+					end
+				end
+			elseif lastZone == "hell" or LastZone == "manor" then
+				for _, v in _player.Iterator() do
+					if IsValid(v) and v:HasInitialized() then
+						local vLastZone = v:GetCharacterData("LastZone");
+						
+						if vLastZone == "hell" or vLastZone == "manor" then
+							if v:GetFaction() == "Goreic Warrior" then
+								if cwStamina then
+									v:HandleStamina(25);
+								end
+								
+								v.lastWarCry = nil;
+							end
+						
+							Clockwork.chatBox:Add(v, nil, "event", "The cacophony of tormented screams and suffering in Hell is temporarily broken by the overpowering sound of a Goreic Warfighter horn.");
 							netstream.Start(v, "GoreWarhorn");
 						end
 					end

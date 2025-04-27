@@ -18,7 +18,7 @@ end
 local RITUAL = cwRituals.rituals:New("purifying_stone_rite");
 	RITUAL.name = "(T2) Purifying Stone Rite";
 	RITUAL.description = "Imbueing something with not only purity, but the ability to spread its purified nature to its surroundings is an act of faith practiced by few. Performing this ritual summons a Purifying Stone item. Removes 10 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "flagellant", "acolyte", "soothsayer", "heretic"}; -- Tier II Shared Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shieldwall", "shedskin", "flagellant", "acolyte", "soothsayer", "heretic"}; -- Tier II Shared Ritual
 	
 	RITUAL.requirements = {"light_catalyst", "up_catalyst", "trinity_catalyst"};
 	RITUAL.result = {
@@ -44,7 +44,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("yellow_banner_of_quelling");
 	RITUAL.name = "(T2) Yellow Banner of Quelling";
 	RITUAL.description = "The children flee when they spot the invisible banner. Let the Satanic filth cower when they realize they are now chained to these mortal lands that they have blighted for so long. Performing this ritual prevents helljaunting in a large radius and cloaking in a smaller radius around you for 30 minutes. Be warned that the Children of Satan will be made aware of your presence! Incurs 5 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "flagellant", "acolyte"}; -- Tier II Light/Family Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shieldwall", "shedskin", "flagellant", "acolyte"}; -- Tier II Light/Family Ritual
 	
 	RITUAL.requirements = {"purifying_stone", "xolotl_catalyst", "down_catalyst"};
 
@@ -76,7 +76,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("xolotl_catalyst");
 	RITUAL.name = "(T2) Xolotl Catalyst Rite";
 	RITUAL.description = "Energy harnessed into stone. It could be used for something greater. Performing this ritual summons a Xolotl Catalyst item. Incurs 5 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "flagellant", "acolyte", "soothsayer", "heretic"}; -- Tier II Shared Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shieldwall", "shedskin", "flagellant", "acolyte", "soothsayer", "heretic"}; -- Tier II Shared Ritual
 	
 	RITUAL.requirements = {"down_catalyst", "up_catalyst", "ice_catalyst"};
 	RITUAL.result = {
@@ -405,7 +405,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("bloodhowl");
 	RITUAL.name = "(T2) Bloodhowl";
 	RITUAL.description = "The thrill of battle empowers you! Performing this ritual will make your war cries restore 50 points of stamina and drain 150 points of blood for 40 minutes. Incurs 10 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "shieldwall"}; -- Tier II Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shieldwall", "shedskin"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"down_catalyst", "familial_catalyst", "pantheistic_catalyst"};
 	RITUAL.corruptionCost = 10;
@@ -631,7 +631,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("cloak_of_always_burning");
 	RITUAL.name = "(T2) Cloak of Always Burning";
 	RITUAL.description = "With an offering of catalysts, runestones and wicker branches you will be infused with a resistance to the natural and unnatural forces of life. Performing this ritual will grant you 100% resistance to fire and ice damage for 40 minutes. Incurs 10 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "shieldwall"}; -- Tier II Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shieldwall", "shedskin"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"belphegor_catalyst", "ice_catalyst", "familial_catalyst"};
 	RITUAL.corruptionCost = 10;
@@ -1737,7 +1737,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("sprouting");
 	RITUAL.name = "(T2) Sprouting";
 	RITUAL.description = "There is something to be learned from leaves, dirt, and bone. Performing this ritual will restore 200 health and 100% of blood, as well as healing all injuries. Removes 5 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "shieldwall"}; -- Tier II Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shieldwall", "shedskin"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"pantheistic_catalyst", "pantheistic_catalyst", "pantheistic_catalyst"};
 	RITUAL.corruptionCost = -5;
@@ -2717,7 +2717,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("triumph_of_the_bark");
 	RITUAL.name = "(T2) Triumph of Bark";
 	RITUAL.description = "The Mother may be the creator of affliction, but she may cure those seen as strong. Performing this ritual will cure you of all diseases. Incurs 20 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin", "shieldwall"}; -- Tier II Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shieldwall", "shedskin"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"up_catalyst", "pantheistic_catalyst", "pantheistic_catalyst"};
 	RITUAL.corruptionCost = 20;

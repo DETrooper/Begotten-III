@@ -50,6 +50,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.attributes = {"conditionless", "not_unequippable", "deathknell", "fear"};
 	ITEM.requiredbeliefs = {"repentant"};
 	ITEM.kinisgerOverride = true;
+	ITEM.permanent = true;
 
 	ITEM.conditionScale = 0
 	ITEM.repairCostModifier = 0.5;
@@ -70,12 +71,6 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.insulation = 35;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
-	
-	-- Called when a player has unequipped the item.
-	function ITEM:OnPlayerUnequipped(player, extraData)
-		Schema:EasyText(player, "peru", "This helmet is grafted into your skin and fused with your flesh, and cannot be unequipped!");
-		return false;
-	end
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
@@ -93,6 +88,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.attributes = {"conditionless", "not_unequippable", "bloodtoll", "fear"};
 	ITEM.requiredbeliefs = {"repentant"};
 	ITEM.kinisgerOverride = true;
+	ITEM.permanent = true;
 
 	ITEM.conditionScale = 0
 
@@ -112,12 +108,6 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.insulation = 30;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
-	
-	-- Called when a player has unequipped the item.
-	function ITEM:OnPlayerUnequipped(player, extraData)
-		Schema:EasyText(player, "peru", "This helmet is grafted into your skin and fused with your flesh, and cannot be unequipped!");
-		return false;
-	end
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("bodygroup_base")
