@@ -145,8 +145,19 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 									player:TakeDamage(1, player, player);
 								end
 							end
-						
-							Clockwork.hint:Send(player, "You are bleeding...", 5, Color(175, 100, 100));
+
+							if bloodLevel <= self.maxBloodLevel - 250 and bloodLevel > self.maxBloodLevel - 750 then
+								Clockwork.hint:Send(player, "You are suffering minor blood loss...", 5, Color(175, 100, 100));
+							elseif bloodLevel <= self.maxBloodLevel - 750 and bloodLevel > self.maxBloodLevel - 1500 then
+								Clockwork.hint:Send(player, "You are suffering blood loss...", 5, Color(175, 100, 100));
+							elseif bloodLevel <= self.maxBloodLevel - 1500 and bloodLevel > self.lethalBloodLoss then
+								Clockwork.hint:Send(player, "You are suffering severe blood loss...", 5, Color(175, 100, 100));
+							elseif bloodLevel <= self.lethalBloodLoss then
+								Clockwork.hint:Send(player, "You are suffering critical blood loss...", 5, Color(175, 100, 100));
+							else
+								Clockwork.hint:Send(player, "You are bleeding...", 5, Color(175, 100, 100));
+							end
+
 							player:ModifyBloodLevel(-bloodLoss);
 						end
 					else
