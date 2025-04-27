@@ -3,7 +3,8 @@
 --]]
 
 local moonMat = Material("engine/lightsprite");
-local moonSubMat = Material("begotten/effects/moonsubliminal1.png");
+local moonSubMat = Material("begotten/effects/bloodmoon.png");
+local moonSubTextMat = Material("begotten/effects/moonsubliminal1.png");
 local shadowScreams = {
 	"misc/sight_01.wav",
 	"misc/sight_02.wav",
@@ -67,7 +68,7 @@ function cwDayNight:Think()
 					if curTime >= self.moonHallucinationTimer then
 						if (!cwBeliefs or !cwBeliefs:HasBelief("lunar_repudiation")) and util.TraceLine(util.GetPlayerTrace(Clockwork.Client, Clockwork.Client:GetUp())).HitSky then
 							self.moonHallucination = true;
-							moonSubMat = Material("begotten/effects/moonsubliminal"..tostring(math.random(1, 6))..".png");
+							moonSubTextMat = Material("begotten/effects/moonsubliminal"..tostring(math.random(1, 6))..".png");
 							
 							timer.Simple(0.5, function()
 								self.moonHallucinationTimer = curTime + math.random(120, 300);
@@ -472,10 +473,10 @@ function cwDayNight:RenderScreenspaceEffects()
 	
 	if self.moonHallucination then
 		DrawMaterialOverlay("begotten/effects/filmgrain_moon", 1);
-		surface.SetMaterial(moonMat);
+		surface.SetMaterial(moonSubMat);
 		surface.SetDrawColor(Color(255, 255, 255, 150));
 		surface.DrawTexturedRect((ScrW() / 2) - 179 + math.random(-20, 20), (ScrH() / 2) - 179 + math.random(-20, 20), 357, 357);
-		surface.SetMaterial(moonSubMat);
+		surface.SetMaterial(moonSubTextMat);
 		surface.SetDrawColor(Color(255, 255, 255, 250));
 		surface.DrawTexturedRect((ScrW() / 2) - 200 + math.random(-20, 20), (ScrH() / 2) + 300 + math.random(-20, 20), 400, 100);
 	end;

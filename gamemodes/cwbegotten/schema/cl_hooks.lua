@@ -1616,6 +1616,7 @@ end
 function Schema:ScoreboardShow()
 	if (Clockwork.Client:HasInitialized() and !Clockwork.Client:Alive()) then
 		Clockwork.character:SetPanelOpen(true);
+		netstream.Start("RefreshCharacterMenu");
 	end;
 end;
 
