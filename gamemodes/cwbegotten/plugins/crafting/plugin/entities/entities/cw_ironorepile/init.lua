@@ -72,6 +72,19 @@ function ENT:OnTakeDamage(damageInfo)
 				player:HandleNeed("thirst", 0.75);
 				player:HandleNeed("sleep", 0.25);
 			end
+
+			if cwBeliefs and player.HandleXP then
+				local playerFaction = player:GetFaction();
+				local faith = (10 / (self.cycleStrikesRequired / damageDealt))
+				
+				if playerFaction == "Gatekeeper" or playerFaction == "Goreic Warrior" then
+					player:HandleXP(faith * 3);
+				elseif playerFaction == "Hillkeeper" then
+					player:HandleXP(faith * 2);
+				else
+					player:HandleXP(faith);
+				end
+			end
 			
 			if self.strikesRequired <= 0 then
 				local entPos = self:GetPos();
@@ -124,21 +137,6 @@ function ENT:OnTakeDamage(damageInfo)
 				self.oreLeft = self.oreLeft - 1;
 				self.cycleStrikesRequired = math.random(5, 10)
 				self.strikesRequired = self.cycleStrikesRequired
-			end
-
-			if cwBeliefs and player.HandleXP then
-				local playerFaction = player:GetFaction();
-				local faith = (10 / self.cycleStrikesRequired)
-
-				print("faith: ", faith)
-				
-				if playerFaction == "Gatekeeper" or playerFaction == "Goreic Warrior" then
-					player:HandleXP(faith * 3);
-				elseif playerFaction == "Hillkeeper" then
-					player:HandleXP(faith * 2);
-				else
-					player:HandleXP(faith);
-				end
 			end
 			
 			if !activeWeapon.isPickaxe then

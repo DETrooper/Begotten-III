@@ -72,6 +72,17 @@ function ENT:OnTakeDamage(damageInfo)
 				player:HandleNeed("thirst", 0.75);
 				player:HandleNeed("sleep", 0.25);
 			end
+
+			if cwBeliefs and player.HandleXP then
+				local playerFaction = player:GetFaction();
+				local faith = (5 / (self.cycleStrikesRequired / damageDealt))
+				
+				if playerFaction == "Gatekeeper" then
+					player:HandleXP(faith * 3);
+				else
+					player:HandleXP(faith);
+				end
+			end
 			
 			if self.strikesRequired <= 0 then
 				local entPos = self:GetPos();
@@ -94,17 +105,6 @@ function ENT:OnTakeDamage(damageInfo)
 				self.woodLeft = self.woodLeft - 1;
 				self.cycleStrikesRequired = math.random(5, 10)
 				self.strikesRequired = self.cycleStrikesRequired
-			end
-
-			if cwBeliefs and player.HandleXP then
-				local playerFaction = player:GetFaction();
-				local faith = (5 / self.cycleStrikesRequired)
-				
-				if playerFaction == "Gatekeeper" then
-					player:HandleXP(faith * 3);
-				else
-					player:HandleXP(faith);
-				end
 			end
 			
 			if !activeWeapon.isHatchet then
