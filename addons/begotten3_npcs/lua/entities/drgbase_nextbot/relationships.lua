@@ -300,7 +300,7 @@ if SERVER then
 		if ent.IsDrGNextbot and (ent:IsDown() or ent:IsDead()) then return true end
 		if Clockwork then -- bgt change
 			if ent:IsPlayer() then
-				if !ent:HasInitialized() or (ent.cwObserverMode and ent:GetCharacterData("IsObserverTarget") ~= true) then
+				if !ent:HasInitialized() or (ent.cwObserverMode and ent:GetCharacterData("IsObserverTarget") ~= true) or ent.cloaked then
 					return true;
 				end
 			end
