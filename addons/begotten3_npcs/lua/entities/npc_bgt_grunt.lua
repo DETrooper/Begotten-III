@@ -211,7 +211,7 @@ if SERVER then
 							local itemInstance = item.CreateInstance(randomItem.uniqueID);
 							
 							if itemInstance then
-								local entity = Clockwork.entity:CreateItem(nil, itemInstance, ragdoll:GetPos() + Vector(0, 0, 16));
+								local entity = Clockwork.entity:CreateItem(nil, itemInstance, ragdoll:GetPos() + Vector(0, 0, 32));
 								
 								entity.lifeTime = CurTime() + config.GetVal("loot_item_lifetime");
 								
