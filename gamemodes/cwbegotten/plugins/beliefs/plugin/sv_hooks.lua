@@ -1364,7 +1364,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			end
 		
 			if entity:GetCharmEquipped("ring_protection_gold") then
-				newDamage = newDamage - (originalDamage * 0.15);
+				newDamage = newDamage - (originalDamage * 0.18);
 			elseif entity:GetCharmEquipped("ring_protection_silver") then
 				newDamage = newDamage - (originalDamage * 0.10);
 			elseif entity:GetCharmEquipped("ring_protection_bronze") then

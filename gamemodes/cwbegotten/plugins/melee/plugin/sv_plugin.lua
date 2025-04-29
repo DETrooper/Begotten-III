@@ -117,6 +117,12 @@ function playerMeta:TakeStability(amount, cooldown, bNoMe)
 				amount = math.floor(amount * 0.75);
 				--printp("Earthing Effigy Reduction: "..amount);
 			end
+
+			if(self:GetCharmEquipped("ring_protection_gold")) then amount = math.floor(amount * 0.85)
+			elseif(self:GetCharmEquipped("ring_protection_silver")) then amount = math.floor(amount * 0.90)
+			elseif(self:GetCharmEquipped("ring_protection_bronze")) then amount = math.floor(amount * 0.95)
+			end
+
 		end
 		
 		if cwBeliefs and self:HasBelief("fortitude_finisher") then

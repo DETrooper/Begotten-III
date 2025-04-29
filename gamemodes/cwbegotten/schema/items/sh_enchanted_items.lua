@@ -17,7 +17,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_protection_bronze";
 	ITEM.description = "A ring with a mysterious aura, apparently made of bronze. Putting it on your finger makes you feel safer.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Reduces all damage taken by 5%.";
+	ITEM.charmEffects = "- Reduces all damage taken by 5%.\nReduces stability damage taken by 5%.";
 	ITEM.mutuallyExclusive = {"ring_protection_gold", "ring_protection_silver"};
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 600, onGround = false, bNoSupercrate = true};
@@ -181,7 +181,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_protection_gold";
 	ITEM.description = "A ring with a mysterious aura, apparently made of gold. Putting it on your finger makes you feel safer.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Reduces all damage taken by 15%.\n- Supersedes the bronze and silver versions of this ring.";
+	ITEM.charmEffects = "- Reduces all damage taken by 18%.\nReduces stability damage taken by 15%.\n- Supersedes the bronze and silver versions of this ring.";
 	ITEM.mutuallyExclusive = {"ring_protection_bronze", "ring_protection_silver"};
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 800, supercrateOnly = true};
@@ -243,7 +243,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_protection_silver";
 	ITEM.description = "A ring with a mysterious aura, apparently made of silver. Putting it on your finger makes you feel safer.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Reduces all damage taken by 10%.\n- Supersedes the bronze version of this ring.";
+	ITEM.charmEffects = "- Reduces all damage taken by 10%.\nReduces stability damage taken by 10%.\n- Supersedes the bronze version of this ring.";
 	ITEM.mutuallyExclusive = {"ring_protection_bronze", "ring_protection_gold"};
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, onGround = false}
