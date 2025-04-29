@@ -271,6 +271,12 @@ function Schema:SetTraitSharedVars(player)
 	elseif player:GetNetVar("marked") then
 		player:SetNetVar("marked", false);
 	end
+
+	if player:HasTrait("blind") then
+		player:SetNetVar("blind", true)
+	elseif player:GetNetVar("blind") then
+		player:SetNetVar("blind", false)
+	end
 	
 	if player:HasTrait("possessed") then
 		player:SetNetVar("possessed", true);

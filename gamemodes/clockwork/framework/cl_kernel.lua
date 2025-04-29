@@ -950,6 +950,13 @@ do
 						color = Color(255, 0, 0, 255);
 					});
 				end
+
+				if player:GetNetVar("blind") then
+					table.insert(text, {
+						text = "*BLIND*", 
+						color = Color(255, 0, 0, 255);
+					});
+				end
 				
 				--if player:HasTrait("possessed") then
 				if player:GetNetVar("possessed") then
