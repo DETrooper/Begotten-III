@@ -25,6 +25,7 @@ ENT.SightRange = 1024
 ENT.XPValue = 85;
 -- Relationships --
 ENT.Factions = {FACTION_ANTLIONS}
+ENT.canSeeCloakers = true
 -- Movements/animations --
 ENT.UseWalkframes = true
 ENT.RunAnimation = ACT_RUN
