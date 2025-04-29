@@ -624,6 +624,8 @@ function cwRituals:EntityRemoved(entity)
 end
 
 function cwRituals:FuckMyLife(entity, damageInfo)
+	local curTime = CurTime()
+
 	if !entity.opponent then
 		if !entity:IsPlayer() then
 			if entity:GetClass() == "prop_ragdoll" and Clockwork.entity:GetPlayer(entity) then
@@ -640,8 +642,15 @@ function cwRituals:FuckMyLife(entity, damageInfo)
 				--if damageInfo:GetDamage() >= (entity:Health() + 10) then
 				if entity:Health() - damageInfo:GetDamage() <= 10 then
 					damageInfo:SetDamage(math.max(entity:Health() - 10, 0));
-										
+					
 					Clockwork.chatBox:Add(attacker, nil, "itnofake", "Your blow seemingly does not do fatal damage to "..entity:Name().."!");
+
+					if(!entity.nextScornificationSound or entity.nextScornificationSound < curTime) then
+						entity.nextScornificationSound = curTime + 3
+
+						entity:EmitSound("misc/attack_0"..math.random(1, 2)..".ogg", 90, math.random(95, 110))
+
+					end
 					
 					return true;
 				end
