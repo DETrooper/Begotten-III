@@ -550,6 +550,16 @@ local COMMAND = Clockwork.command:New("SetCustomRank")
 					
 						return false;
 					end
+					
+					if factionTable.RanksToSubfaction and !factionTable.promoteAcrossSubfactions then
+						local subfaction = target:GetNetVar("kinisgerOverrideSubfaction") or target:GetSubfaction();
+						
+						if Schema.RanksToSubfaction[faction][ranks[faction][rank]] and Schema.RanksToSubfaction[faction][ranks[faction][rank]] ~= subfaction then
+							Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().." to this rank as it is not valid for their subfaction!");
+						
+							return false;
+						end
+					end
 				
 					if rank then
 						target:SetCharacterData("rank", rank);
@@ -761,6 +771,16 @@ local COMMAND = Clockwork.command:New("Promote")
 						return false;
 					end
 					
+					if factionTable.RanksToSubfaction and !factionTable.promoteAcrossSubfactions then
+						local subfaction = target:GetNetVar("kinisgerOverrideSubfaction") or target:GetSubfaction();
+						
+						if Schema.RanksToSubfaction[faction][ranks[faction][rank]] and Schema.RanksToSubfaction[faction][ranks[faction][rank]] ~= subfaction then
+							Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().." to this rank as it is not valid for their subfaction!");
+						
+							return false;
+						end
+					end
+					
 					target:SetCharacterData("rank", rank);
 					hook.Run("PlayerChangedRanks", target);
 					
@@ -949,6 +969,16 @@ local COMMAND = Clockwork.command:New("Demote")
 					return false;
 				end
 				
+				if factionTable.RanksToSubfaction and !factionTable.promoteAcrossSubfactions then
+					local subfaction = target:GetNetVar("kinisgerOverrideSubfaction") or target:GetSubfaction();
+					
+					if Schema.RanksToSubfaction[faction][ranks[faction][rank]] and Schema.RanksToSubfaction[faction][ranks[faction][rank]] ~= subfaction then
+						Schema:EasyText(player, "grey", "You cannot change the rank of "..target:Name().." to this rank as it is not valid for their subfaction!");
+					
+						return false;
+					end
+				end
+				
 				target:SetCharacterData("rank", rank);
 				hook.Run("PlayerChangedRanks", target);
 				
@@ -1034,7 +1064,7 @@ local COMMAND = Clockwork.command:New("Demote")
 				Schema:EasyText(player, "grey", "You do not have permissions to change the rank of "..target:Name().."!");
 			end
 		else
-			Schema:EasyText(player, "grey", target.." is not a valid character!");
+			Schema:EasyText(player, "grey", arguments[1].." is not a valid character!");
 		end;
 	end
 COMMAND:Register()

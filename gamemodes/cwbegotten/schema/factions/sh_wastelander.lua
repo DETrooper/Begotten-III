@@ -109,6 +109,7 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 	FACTION.alliedfactions = {"Hillkeeper", "Holy Hierarchy"};
 	FACTION.masterfactions = {"Holy Hierarchy"};
 	FACTION.enlist = true;
+	FACTION.promoteAcrossSubfactions = true;
 	FACTION.singleGender = GENDER_MALE;
 	FACTION.characterLimit = 1; -- # of characters of this faction a player can have.
 	FACTION.ratio = 0.3; -- 0.3 slots per player (9 at 30 players).
@@ -151,6 +152,36 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 			Clockwork.player:SetWhitelisted(player, "Gatekeeper", true);
 		end;
 	end;
+	
+	if SERVER then
+		function FACTION:CanPromote(player, target, faction, subfaction)
+			if !player:IsAdmin() then
+				local playerFaction = player:GetNetVar("kinisgerOverrideFaction") or player:GetFaction();
+				
+				if playerFaction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						return false;
+					end
+				end
+			end
+		end
+		
+		function FACTION:CanDemote(player, target, faction, subfaction)
+			if !player:IsAdmin() then
+				local playerFaction = player:GetNetVar("kinisgerOverrideFaction") or player:GetFaction();
+				
+				if playerFaction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						return false;
+					end
+				end
+			end
+		end
+	end
 	
 	if !Schema.Ranks then
 		Schema.Ranks = {};
@@ -268,6 +299,7 @@ local FACTION = Clockwork.faction:New("Holy Hierarchy");
 	FACTION.availablefaiths = {"Faith of the Light"};
 	FACTION.alliedfactions = {"Gatekeeper", "Hillkeeper"};
 	FACTION.enlist = true;
+	FACTION.promoteAcrossSubfactions = true;
 	FACTION.ratio = 0.1; -- 0.1 slots per player (3 at 30 players).
 	--FACTION.imposters = true;
 	FACTION.names = "glazic";
@@ -710,6 +742,36 @@ local FACTION = Clockwork.faction:New("Pope Adyssa's Gatekeepers");
 		end;
 	end;
 	
+	if SERVER then
+		function FACTION:CanPromote(player, target, faction, subfaction)
+			if !player:IsAdmin() then
+				local playerFaction = player:GetNetVar("kinisgerOverrideFaction") or player:GetFaction();
+				
+				if playerFaction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						return false;
+					end
+				end
+			end
+		end
+		
+		function FACTION:CanDemote(player, target, faction, subfaction)
+			if !player:IsAdmin() then
+				local playerFaction = player:GetNetVar("kinisgerOverrideFaction") or player:GetFaction();
+				
+				if playerFaction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						return false;
+					end
+				end
+			end
+		end
+	end
+	
 	-- Called when a player's name should be assigned for the faction.
 	function FACTION:GetNameCharCreation(name, rank, rankOverride)
 		if !rank then
@@ -936,6 +998,36 @@ local FACTION = Clockwork.faction:New("Hillkeeper");
 			Clockwork.player:SetWhitelisted(player, "Hillkeeper", true);
 		end;
 	end;
+	
+	if SERVER then
+		function FACTION:CanPromote(player, target, faction, subfaction)
+			if !player:IsAdmin() then
+				local playerFaction = player:GetNetVar("kinisgerOverrideFaction") or player:GetFaction();
+				
+				if playerFaction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						return false;
+					end
+				end
+			end
+		end
+		
+		function FACTION:CanDemote(player, target, faction, subfaction)
+			if !player:IsAdmin() then
+				local playerFaction = player:GetNetVar("kinisgerOverrideFaction") or player:GetFaction();
+				
+				if playerFaction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						return false;
+					end
+				end
+			end
+		end
+	end
 	
 	if !Schema.Ranks then
 		Schema.Ranks = {};

@@ -1903,6 +1903,13 @@ function cwBeliefs:PlayerExitedDuel(player)
 	player.lastWarCry = nil;
 end
 
+function cwBeliefs:PreMakePlayerEnterObserverMode(player)
+	if player.cloaked then
+		player.cloaked = false; -- So there's no message.
+		player:Uncloak();
+	end
+end
+
 function cwBeliefs:PrePlayerCharacterCreated(player, character)
 	local data = character.data or {};
 	local inventory = character.inventory;

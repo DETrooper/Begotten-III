@@ -3502,6 +3502,24 @@ function Schema:ActionStopped(player, action)
 	end
 end;
 
+function Schema:PlayerCanRaiseWeapon(player, activeWeapon)
+	if player.Lockpicking then
+		return false;
+	end
+end
+
+-- Called when a player starts lockpicking a container.
+function Schema:LockpickingStarted(player, container)
+	local activeWeapon = player:GetActiveWeapon();
+	
+	if (activeWeapon:IsValid()) then
+		if player:IsWeaponRaised(activeWeapon) then
+			-- Holster raised weapon when lockpicking.
+			player:SetWeaponRaised(false);
+		end
+	end
+end
+
 -- Called to modify a player's wages info.
 function Schema:PlayerModifyWagesInfo(player, info) 
 	if player:GetSubfaction() == "Clan Reaver" then

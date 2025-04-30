@@ -749,11 +749,13 @@ end
 
 function GM:TopLevelPlayerBindPress(player, bind, bPress)
 	if (player:GetRagdollState() == RAGDOLL_FALLENOVER and string.find(bind, "+jump")) then
-		if (Clockwork.player:GetAction(player) == "unragdoll") then
-			Clockwork.kernel:RunCommand("CharCancelGetUp");
-		else
-			Clockwork.kernel:RunCommand("CharGetUp");
-		end;
+		if player:Alive() then
+			if (Clockwork.player:GetAction(player) == "unragdoll") then
+				Clockwork.kernel:RunCommand("CharCancelGetUp");
+			else
+				Clockwork.kernel:RunCommand("CharGetUp");
+			end;
+		end
 	end;
 end;
 

@@ -32,10 +32,10 @@ end;
 -- Called when the post progress bar info is needed.
 function cwContainerHiding:GetProgressBarInfoAction(action, percentage)
 	if (action == "hide") then
-		return {text = "You are hiding in the closet.", percentage = percentage, flash = percentage > 75};
+		return {text = "You are hiding in the closet. Click to cancel.", percentage = percentage, flash = percentage > 75};
 	end;
 	
 	if (action == "unhide") then
-		return {text = "You are coming out of the closet.", percentage = percentage, flash = percentage > 75};
+		return {text = "You are coming out of the closet. Click to cancel.", percentage = percentage, flash = percentage > 75};
 	end;
 end;

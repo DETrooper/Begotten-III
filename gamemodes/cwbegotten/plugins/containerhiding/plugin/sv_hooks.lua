@@ -20,6 +20,17 @@ function cwContainerHiding:ClockworkInitialized()
 	end;
 end;
 
+-- Called when a player presses a key.
+function cwContainerHiding:KeyPress(player, key)
+	if (key == IN_ATTACK) then
+		local action = Clockwork.player:GetAction(player);
+		
+		if (action == "hide" or action == "unhide") then
+			Clockwork.player:SetAction(player, nil);
+		end
+	end;
+end
+
 -- Called when an entity's menu option should be handled.
 function cwContainerHiding:EntityHandleMenuOption(player, entity, option, arguments)
 	local class = entity:GetClass();
