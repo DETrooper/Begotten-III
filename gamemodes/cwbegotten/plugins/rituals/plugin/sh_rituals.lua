@@ -1433,7 +1433,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("aura_of_powderheel");
 	RITUAL.name = "(T3) Aura of Powderheel";
-	RITUAL.description = "Call upon the power of the Great Tree in times of battle against its enemies to protect you from their non-traditional weaponry. Performing this ritual generates a spherical forcefield for 10 minutes, which reduces bullet damage to everyone around you within talking distance by 25%. Incurs 25 corruption.";
+	RITUAL.description = "Call upon the power of the Great Tree in times of battle against its enemies to protect you from their non-traditional weaponry. Performing this ritual generates a spherical forcefield for 15 minutes, which reduces bullet damage to everyone around you within talking distance by 25%. Incurs 25 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
 	RITUAL.requirements = {"pantheistic_catalyst", "xolotl_catalyst", "trinity_catalyst"};
@@ -1444,7 +1444,7 @@ RITUAL = cwRituals.rituals:New("aura_of_powderheel");
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("powderheelActive", true);
 
-		timer.Create("PowderheelTimer_"..player:EntIndex(), 600, 1, function()
+		timer.Create("PowderheelTimer_"..player:EntIndex(), 900, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("powderheelActive") then
 					player:SetNetVar("powderheelActive", false);
