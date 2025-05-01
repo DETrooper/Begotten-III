@@ -1146,6 +1146,9 @@ function Schema:DrawTargetSanityLevel(target, alpha, x, y)
 
 	if(target:GetSharedVar("isThrall")) or !playerHasBelief then return; end
 	
+	local sanityText
+	local textColor
+
 	if targetSanity > 90 then
 		sanityText = "This one is perfectly sane."
 		textColor = Color(255, 0, 0, 255);
