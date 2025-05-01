@@ -1436,7 +1436,7 @@ RITUAL = cwRituals.rituals:New("aura_of_powderheel");
 	RITUAL.description = "Call upon the power of the Great Tree in times of battle against its enemies to protect you from their non-traditional weaponry. Performing this ritual generates a spherical forcefield for 10 minutes, which reduces bullet damage to everyone around you within talking distance by 25%. Incurs 25 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
-	RITUAL.requirements = {"pantheistic_catalyst", "xolotl_catalyst", "xolotl_catalyst"};
+	RITUAL.requirements = {"pantheistic_catalyst", "xolotl_catalyst", "trinity_catalyst"};
 	RITUAL.corruptionCost = 25; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
 	RITUAL.experience = 75; -- XP gained from performing the ritual.

@@ -398,7 +398,7 @@ local function Guarding(ent, dmginfo)
 				end
 			end;
 			
-			if not canblock and wep.realHoldType == "wos-begotten_dual" then
+			if not canblock and wep.realHoldType == "wos-begotten_dual" or (wep.hasSwordplay and !wep.isArmingSword) then
 				if (dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) or (isJavelin)) and cwBeliefs and ent.HasBelief and ent:HasBelief("impossibly_skilled") then
 					local enemyWeapon = attacker:GetActiveWeapon();
 					
