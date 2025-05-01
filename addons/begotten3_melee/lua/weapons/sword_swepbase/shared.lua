@@ -1105,6 +1105,8 @@ function SWEP:PrimaryAttack()
 		
 		local attackCost = takeAmmo;
 
+		if(self.isPickaxe and self.Owner:GetCharmEquipped("toilers_stone")) then attackCost = attackCost * 0.7 end
+
 		if cwMedicalSystem then
 			local injuries;
 			
