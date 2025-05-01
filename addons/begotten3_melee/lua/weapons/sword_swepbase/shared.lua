@@ -1415,11 +1415,11 @@ end
 						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
 					
 						if damagetype == DMG_CLUB then
-							damage = math.Round(damage * Lerp(scalar, 0.75, 1));
+							damage = math.max(math.Round(damage * Lerp(scalar, 0.75, 1)), 0.01);
 						elseif damagetype == DMG_SLASH then
-							damage = math.Round(damage * Lerp(scalar, 0.4, 1));
+							damage = math.max(math.Round(damage * Lerp(scalar, 0.4, 1)), 0.01);
 						else
-							damage = math.Round(damage * Lerp(scalar, 0.5, 1));
+							damage = math.max(math.Round(damage * Lerp(scalar, 0.5, 1)), 0.01);
 						end
 					end
 				end
@@ -1586,11 +1586,11 @@ end
 						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
 					
 						if damagetype == DMG_CLUB then
-							damage = math.Round(damage * Lerp(scalar, 0.75, 1));
+							damage = math.max(math.Round(damage * Lerp(scalar, 0.75, 1)), 0.01);
 						elseif damagetype == DMG_SLASH then
-							damage = math.Round(damage * Lerp(scalar, 0.4, 1));
+							damage = math.max(math.Round(damage * Lerp(scalar, 0.4, 1)), 0.01);
 						else
-							damage = math.Round(damage * Lerp(scalar, 0.5, 1));
+							damage = math.max(math.Round(damage * Lerp(scalar, 0.5, 1)), 0.01);
 						end
 					end
 				end
@@ -1779,11 +1779,11 @@ end
 						local scalar = Lerp(condition / 90, 0, 1); -- Make it so damage does not start deterioriating until below 90% condition.
 					
 						if damagetype == DMG_CLUB then
-							damage = math.Round(damage * Lerp(scalar, 0.75, 1));
+							damage = math.max(math.Round(damage * Lerp(scalar, 0.75, 1)), 0.01);
 						elseif damagetype == DMG_SLASH then
-							damage = math.Round(damage * Lerp(scalar, 0.4, 1));
+							damage = math.max(math.Round(damage * Lerp(scalar, 0.4, 1)), 0.01);
 						else
-							damage = math.Round(damage * Lerp(scalar, 0.5, 1));
+							damage = math.max(math.Round(damage * Lerp(scalar, 0.5, 1)), 0.01);
 						end
 					end
 				end
