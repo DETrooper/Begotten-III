@@ -243,6 +243,9 @@ function Clockwork.inventory:RemoveInstance(inventory, itemTable)
 
 	if (inventory[itemTable.uniqueID]) then
 		inventory[itemTable.uniqueID][itemTable.itemID] = nil
+
+		if(table.Count(inventory[itemTable.uniqueID]) <= 0) then inventory[itemTable.uniqueID] = nil end
+
 		return item.FindInstance(itemTable.itemID)
 	end
 end
