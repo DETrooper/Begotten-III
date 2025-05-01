@@ -227,6 +227,9 @@ function cwStorage:OpenContainer(player, entity, weight, bForce)
 	
 	hook.Run("PreOpenedContainer", player, entity);
 
+	inventory = entity.cwInventory
+	cash = entity.cwCash
+
 	if (entity.cwMessage) then
 		netstream.Start(player, "StorageMessage", {
 			entity = entity, message = entity.cwMessage
