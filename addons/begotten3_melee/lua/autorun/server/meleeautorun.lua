@@ -581,7 +581,7 @@ local function Guarding(ent, dmginfo)
 								if (!cwBeliefs or not ent:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
 									local offhand = wep:GetNW2String("activeOffhand");
 									
-									if offhand:len() > 0 and ent:HasBelief("impossibly_skilled") then
+									if offhand:len() > 0 or (wep.hasSwordplay and !wep.isArmingSword) and ent:HasBelief("impossibly_skilled") then
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
 											conditionDamage = conditionDamage * 0.1;
 										end
