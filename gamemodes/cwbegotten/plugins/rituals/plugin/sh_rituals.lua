@@ -1464,7 +1464,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("druids_staff");
 	RITUAL.name = "(T3) Druid's Staff";
-	RITUAL.description = "Imbue your staff with the enduring strength of the mightiest oak. Increases damage of your Quarterstaff by 25 points, increases its armor piercing by 100%, and removes its stability damage for 30 minutes. Incurs 20 corruption.";
+	RITUAL.description = "Imbue your staff with the enduring strength of the mightiest oak. Increases damage of your Quarterstaff by 25 points, increases its armor piercing by 100%, and removes its stability damage for 15 minutes. Incurs 20 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
 	RITUAL.requirements = {"pantheistic_catalyst", "familial_catalyst", "trinity_catalyst"};
@@ -1475,7 +1475,7 @@ RITUAL = cwRituals.rituals:New("druids_staff");
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("druidStaffActive", true);
 
-		timer.Create("DruidStaffTImer_"..player:EntIndex(), 1800, 1, function()
+		timer.Create("DruidStaffTImer_"..player:EntIndex(), 900, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("druidStaffActive") then
 					player:SetNetVar("druidStaffActive", false);
