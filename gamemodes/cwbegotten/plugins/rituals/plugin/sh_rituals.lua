@@ -3,6 +3,16 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
+local function UpdateActiveRituals(player, ritualName, endTime)
+    local activeRituals = player:GetNetVar("activeRituals", {})
+    if endTime then
+        activeRituals[ritualName] = endTime
+    else
+        activeRituals[ritualName] = nil
+    end
+    player:SetNetVar("activeRituals", activeRituals)
+end
+
 local function IsAreaClear(position, radius, player)
 	for k, v in pairs (ents.FindInSphere(position, radius)) do
 		if v:IsPlayer() or v:IsNPC() or v:IsNextBot() then
@@ -53,17 +63,25 @@ RITUAL = cwRituals.rituals:New("yellow_banner_of_quelling");
 	RITUAL.experience = 75; -- XP gained from performing the ritual.
 
 	function RITUAL:OnPerformed(player)
-		player:SetNetVar("yellowBanner", true);
-
+		print("OnPerformed called for Yellow Banner of Quelling") -- Отладка: начало функции
+		player:SetNetVar("yellowBanner", true)
+		local endTime = os.time() + 1800
+		UpdateActiveRituals(player, "Yellow Banner of Quelling", endTime)
 		timer.Create("YellowBannerTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("yellowBanner", false) then
-					player:SetNetVar("yellowBanner", false);
-
-					Clockwork.hint:Send(player, "The 'Yellow Banner of Quelling' ritual has worn off...", 10, Color(175, 100, 100), true, true);
+					player:SetNetVar("yellowBanner", false)
+					UpdateActiveRituals(player, "Yellow Banner of Quelling", nil)
+					Clockwork.hint:Send(player, "The 'Yellow Banner of Quelling' ritual has worn off...", 10, Color(175, 100, 100), true, true)
 				end
 			end
-		end);
+		end)
+	end
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+	end;
+	function RITUAL:EndRitual(player)
 	end;
 	function RITUAL:OnFail(player)
 	end;
