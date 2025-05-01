@@ -57,9 +57,13 @@ function ENT:OnTakeDamage(damageInfo)
 			end
 			
 			local damageDealt = 1;
+			local hasToilersStone = player:GetCharmEquipped("toilers_stone")
 			
 			if activeWeapon and activeWeapon.isPickaxe then
 				damageDealt = 4;
+
+				if(hasToilersStone) then damageDealt = damageDealt * 1.75 end
+
 			end
 			
 			if activeWeapon and activeWeapon:GetOffhand() then
@@ -90,15 +94,15 @@ function ENT:OnTakeDamage(damageInfo)
 				local entPos = self:GetPos();
 				local itemName = "iron_ore";
 				
-				if math.random(1, 3) == 1 then
+				if math.random(1, (hasToilersStone and 4 or 3)) == 1 then
 					itemName = "stone";
 				end
 				
-				if math.random(1, 150) == 1 or self.nextDropOverride == "gold" then
+				if math.random(1, (hasToilersStone and 130 or 150)) == 1 or self.nextDropOverride == "gold" then
 					itemName = "gold_ore";
 					
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "As you strike the rocks, you notice a faint glimmer. Are your eyes decieving you? Gold!.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
-				elseif math.random(1, 666) == 1 or self.nextDropOverride == "blooddiamond" then
+				elseif math.random(1, (hasToilersStone and 640 or 666)) == 1 or self.nextDropOverride == "blooddiamond" then
 					itemName = "uncut_blood_diamond";
 					
 					Clockwork.chatBox:AddInTargetRadius(player, "it", "As you strike the rocks, a beautiful blood-red gem is unearthed from the pile. Whispers fill the caverns around you as the precious stone glimmers.", player:GetPos(), config.Get("talk_radius"):Get() * 2);

@@ -17,7 +17,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_protection_bronze";
 	ITEM.description = "A ring with a mysterious aura, apparently made of bronze. Putting it on your finger makes you feel safer.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Reduces all damage taken by 5%.\nReduces stability damage taken by 5%.";
+	ITEM.charmEffects = "- Reduces all damage taken by 5%.\n- Reduces stability damage taken by 5%.";
 	ITEM.mutuallyExclusive = {"ring_protection_gold", "ring_protection_silver"};
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 600, onGround = false, bNoSupercrate = true};
@@ -181,7 +181,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_protection_gold";
 	ITEM.description = "A ring with a mysterious aura, apparently made of gold. Putting it on your finger makes you feel safer.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Reduces all damage taken by 18%.\nReduces stability damage taken by 15%.\n- Supersedes the bronze and silver versions of this ring.";
+	ITEM.charmEffects = "- Reduces all damage taken by 18%.\n- Reduces stability damage taken by 15%.\n- Supersedes the bronze and silver versions of this ring.";
 	ITEM.mutuallyExclusive = {"ring_protection_bronze", "ring_protection_silver"};
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 800, supercrateOnly = true};
@@ -243,7 +243,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.uniqueID = "ring_protection_silver";
 	ITEM.description = "A ring with a mysterious aura, apparently made of silver. Putting it on your finger makes you feel safer.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
-	ITEM.charmEffects = "- Reduces all damage taken by 10%.\nReduces stability damage taken by 10%.\n- Supersedes the bronze version of this ring.";
+	ITEM.charmEffects = "- Reduces all damage taken by 10%.\n- Reduces stability damage taken by 10%.\n- Supersedes the bronze version of this ring.";
 	ITEM.mutuallyExclusive = {"ring_protection_bronze", "ring_protection_gold"};
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000, onGround = false}
@@ -400,6 +400,18 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 800};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base")
+	ITEM.name = "Toiler's Stone"
+	ITEM.model = "models/props_mining/rock_caves01a.mdl"
+	ITEM.weight = 1
+	ITEM.uniqueID = "toilers_stone"
+	ITEM.description = "A stone once typically tied to glazic prisoners doomed to toil in the mines for the rest of their natural lives. Now, it serves as a lucky charm to prospective pitmen in search of riches."
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png"
+	ITEM.charmEffects = "- Decreases the stamina cost of the Pickaxe by 30%.\n- Increases damage dealt to ore piles by 75%.\n- Slightly increases the chance of excavating rare materials from ore piles."
+
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000}
+ITEM:Register()
 
 local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Holy Sigils";
