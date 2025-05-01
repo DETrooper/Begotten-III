@@ -1242,6 +1242,13 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					if attacker.decapitationBuff then
 						newDamage = newDamage + (newDamage * 0.2);
 					end
+					
+					if attacker:GetNetVar("druidStaffActive") then
+						if attacker:GetActiveWeapon():GetClass() == "begotten_2h_quarterstaff" then
+							newDamage = newDamage + 25;
+						end
+					end
+					
 				elseif attackerWeapon.Base == "begotten_firearm_base" or (attackerWeapon.isMeleeFirearm and !attacker:GetNetVar("ThrustStance")) then -- Firearm
 					if !attackerWeapon.notPowder and attacker:HasBelief("blessed_powder") then
 						newDamage = newDamage + (originalDamage * 0.25);

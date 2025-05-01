@@ -193,6 +193,12 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 							armorPiercing = armorPiercing + 10;
 						end
 						
+						if attacker:GetNetVar("druidStaffActive") then
+							if inflictor:GetClass() == "begotten_2h_quarterstaff" then
+								armorPiercing = 100;
+							end
+						end
+						
 						if IsValid(inflictor) then
 							if !inflictor.isJavelin then
 								if inflictor.isDagger and player.IsRagdolled and player:IsRagdolled() then
@@ -323,6 +329,12 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 								
 								if attacker.daringTroutActive then
 									armorPiercing = armorPiercing + 8;
+								end
+								
+								if attacker:GetNetVar("druidStaffActive") then
+									if inflictor:GetClass() == "begotten_2h_quarterstaff" then
+										armorPiercing = 100;
+									end
 								end
 								
 								--print("AP Value: "..tostring(armorPiercing));

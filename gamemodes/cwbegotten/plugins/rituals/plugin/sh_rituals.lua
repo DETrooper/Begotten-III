@@ -1462,6 +1462,37 @@ RITUAL = cwRituals.rituals:New("aura_of_powderheel");
 	end;
 RITUAL:Register()
 
+RITUAL = cwRituals.rituals:New("druids_staff");
+	RITUAL.name = "(T3) Druid's Staff";
+	RITUAL.description = "Imbue your staff with the enduring strength of the mightiest oak. Increases damage of your Quarterstaff by 25 points, increases its armor piercing by 100%, and removes its stability damage for 30 minutes. Incurs 20 corruption.";
+	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
+	
+	RITUAL.requirements = {"pantheistic_catalyst", "familial_catalyst", "trinity_catalyst"};
+	RITUAL.corruptionCost = 20; -- Corruption incurred from performing rituals.
+	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
+	RITUAL.experience = 50; -- XP gained from performing the ritual.
+
+	function RITUAL:OnPerformed(player)
+		player:SetNetVar("druidStaffActive", true);
+
+		timer.Create("DruidStaffTImer_"..player:EntIndex(), 1800, 1, function()
+			if IsValid(player) then
+				if player:GetNetVar("druidStaffActive") then
+					player:SetNetVar("druidStaffActive", false);
+
+					Clockwork.hint:Send(player, "The 'Druid's Staff' ritual has worn off...", 10, Color(175, 100, 100), true, true);
+				end
+			end
+		end);
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+	end;
+	function RITUAL:EndRitual(player)
+	end;
+RITUAL:Register()
+
 if game.GetMap() == "rp_district21" then
 	RITUAL = cwRituals.rituals:New("eye_of_the_storm");
 		RITUAL.name = "(Unique) Eye of the Storm";

@@ -563,6 +563,12 @@ function GetStabilityModifier(owner)
 		stabilityModifier = stabilityModifier * 1.15;
 	end
 	
+	if owner:GetNetVar("druidStaffActive") then
+		if owner:GetActiveWeapon():GetClass() == "begotten_2h_quarterstaff" then
+			stabilityModifier = 0;
+		end
+	end
+	
 	return stabilityModifier
 end
 
