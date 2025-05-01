@@ -444,6 +444,11 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 					offhandWeapon = activeWeapon:GetOffhand();
 					weaponItemTable = item.GetByWeapon(activeWeapon);
 				end
+
+				local huntingDaggerStrength
+				local mutilationValue
+				local conditionLoss
+				local mutilationTime
 				
 				if weaponItemTable then
 					local huntingValue = weaponItemTable.huntingValue
@@ -755,11 +760,17 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 			if table.HasValue(animalModels, entity:GetModel()) then
 				local activeWeapon = player:GetActiveWeapon();
 				local offhandWeapon;
+				local weaponItemTable
 				
 				if activeWeapon:IsValid() then
 					offhandWeapon = activeWeapon:GetOffhand();
 					weaponItemTable = item.GetByWeapon(activeWeapon);
 				end
+
+				local huntingDaggerStrength
+				local skinningValue
+				local skinningConditionLoss
+				local skinningTime
 				
 				if weaponItemTable then
 					local huntingValue = weaponItemTable.huntingValue
@@ -782,9 +793,10 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 				end
 				 
 				if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger and weaponItemTable then
-					if (!entity.skinned or entity.skinned < 1) then					
+					if (!entity.skinned or entity.skinned < 1) then
 						local model = entity:GetModel();
 						local uniqueID = "hide"
+						local requiredDaggerStrength
 						
 						if model == "models/animals/deer1.mdl" then
 							requiredDaggerStrength = 2
