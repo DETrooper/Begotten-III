@@ -373,11 +373,11 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("blessing_of_coin");
 	RITUAL.name = "(T1) Blessing of Coin";
-	RITUAL.description = "Is it truly a favor from the Glaze, or a statistical illusion? It surely won't stop you from offering alms for a bountiful harvest. Performing this ritual increases the amount of coin found in containers for 40 minutes. Incurs 10 corruption.";
+	RITUAL.description = "Is it truly a favor from the Glaze, or a statistical illusion? It surely won't stop you from offering alms for a bountiful harvest. Performing this ritual increases the amount of coin found in containers for 40 minutes. Incurs 5 corruption.";
 	RITUAL.onerequiredbelief = {"repentant", "disciple"}; -- Tier I Faith of the Light Ritual
 	
 	RITUAL.requirements = {"trinity_catalyst", "up_catalyst", "light_catalyst"};
-	RITUAL.corruptionCost = 10;
+	RITUAL.corruptionCost = 5;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 25;
 
