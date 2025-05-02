@@ -53,7 +53,7 @@ function playerMeta:HandleSanity(amount)
 				amount = amount * 0.75;
 			end
 			
-			if self:GetCharmEquipped("warding_talisman") or self:GetCharmEquipped("holy_sigils") or self:GetCharmEquipped("abandoned_doll") then
+			if self:GetCharmEquipped("warding_talisman") or self:GetCharmEquipped("holy_sigils") or self:GetCharmEquipped("codex_solis") or self:GetCharmEquipped("abandoned_doll") then
 				amount = amount * 0.5;
 			end
 		end

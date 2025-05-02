@@ -137,6 +137,14 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 							
 								break;
 							end
+						elseif v:GetCharmEquipped("holy_sigils") or v:GetCharmEquipped("codex_solis") then
+							if (v:GetPos():Distance(playerPos) <= (config.Get("talk_radius"):Get() * 0.75)) then
+								Schema:EasyText(player, "peru", "There is one with a holy relic, dispelling your dark magic! Vanquish them or distance yourself!");
+								Schema:EasyText(v, "peru", "You feel your equipped charm pulsate with energy as the dark magic of "..player:Name().." is foiled and they are uncloaked for all to see!");
+								player:Uncloak();
+							
+								break;
+							end
 						end
 					end
 				end
@@ -1111,7 +1119,9 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					end
 				end
 				
-				if attackerWeapon.Base == "sword_swepbase" or attackerWeapon.isJavelin then
+				local isMelee = (attackerWeapon.Base == "sword_swepbase" or (attackerWeapon.Base == "begotten_firearm_base" and attackerWeapon.isMeleeFirearm and attacker:GetNetVar("ThrustStance")));
+				
+				if isMelee or attackerWeapon.isJavelin then
 					if damageInfo:IsDamageType(16) then
 						if entity:IsPlayer() and entity:Alive() and attacker:HasBelief("survivalist") then
 							if originalDamage > 0 then
@@ -1123,7 +1133,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 					end
 				end
 			
-				if attackerWeapon.Base == "sword_swepbase" then -- Melee
+				if isMelee then
 					if attacker:GetCharmEquipped() then
 						if attackerWeapon:GetClass() == "begotten_fists" then
 							if IsValid(damageInfo:GetInflictor()) and damageInfo:GetInflictor().isJavelin then
@@ -1249,6 +1259,11 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						end
 					end
 					
+					if attacker:GetCharmEquipped("holy_sigils") or attacker:GetCharmEquipped("codex_solis") then
+						if entity:GetFaith() ~= attacker:GetFaith() then
+							newDamage = newDamage + (originalDamage * 0.15);
+						end
+					end
 				elseif attackerWeapon.Base == "begotten_firearm_base" or (attackerWeapon.isMeleeFirearm and !attacker:GetNetVar("ThrustStance")) then -- Firearm
 					if !attackerWeapon.notPowder and attacker:HasBelief("blessed_powder") then
 						newDamage = newDamage + (originalDamage * 0.25);
@@ -1294,12 +1309,6 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						newDamage = newDamage - (originalDamage * 0.1);
 					else
 						newDamage = newDamage + (originalDamage * 0.2);
-					end
-				end
-				
-				if attacker:GetCharmEquipped("holy_sigils") then
-					if entity:GetFaith() ~= attacker:GetFaith() then
-						newDamage = newDamage + (originalDamage * 0.15);
 					end
 				end
 				

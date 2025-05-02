@@ -726,7 +726,7 @@ function SWEP:SecondaryAttack()
 							deflectionWindow = deflectionWindow + 0.1;
 						end
 						
-						if ply:GetCharmEquipped("holy_sigils") then
+						if ply:GetCharmEquipped("holy_sigils") or ply:GetCharmEquipped("codex_solis") then
 							deflectionWindow = deflectionWindow + 0.1;
 						end
 					end
@@ -809,7 +809,7 @@ function SWEP:SecondaryAttack()
 			parryWindow = parryWindow + 0.1;
 		end
 		
-		if ply:GetCharmEquipped("holy_sigils") then
+		if ply:GetCharmEquipped("holy_sigils") or ply:GetCharmEquipped("codex_solis") then
 			parryWindow = parryWindow + 0.1;
 		end
 		

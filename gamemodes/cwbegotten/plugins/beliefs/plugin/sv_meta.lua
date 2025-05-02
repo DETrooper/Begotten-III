@@ -70,7 +70,7 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 					newAmount = newAmount + (amount * 0.25);
 				end
 				
-				if self:GetCharmEquipped("holy_sigils") then
+				if self:GetCharmEquipped("holy_sigils") or self:GetCharmEquipped("codex_solis") then
 					newAmount = newAmount + (amount * 0.15);
 				end
 			end
