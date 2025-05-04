@@ -226,6 +226,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2500, supercrateOnly = true};
 
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.onerequiredbelief = {"father", "mother", "old_son", "young_son", "sister"};
@@ -247,6 +248,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0.99, 339.12, 88.51);
 	ITEM.attachmentOffsetVector = Vector(7.78, 2.83, -24.04);
 	
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength", "the_light"};
 	ITEM.requireFaith = {"Faith of the Light"};
@@ -269,6 +271,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2500, supercrateOnly = true};
 
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"murder_artform", "strength"};
 ITEM:Register();
@@ -290,6 +293,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2000, supercrateOnly = true};
 
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "ice_catalyst", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"ice"};
 	ITEM.requiredbeliefs = {"strength"};

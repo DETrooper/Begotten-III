@@ -719,6 +719,28 @@ AttackTables.ThrowingStoneAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
+AttackTables.HillThrowingAxeAttackTable = {
+	["primarydamage"] = 50,
+	["mimimumdistancedamage"] = 50,
+	["maximumdistancedamage"] = 145,
+	["dmgtype"] = DMG_SLASH,
+	["canaltattack"] = true,
+	["altattackpoisedamagemodifier"] = 0.5,
+	["altattackstabilitydamagemodifier"] = 0,
+	["altmeleearc"] = 35,
+	["altmeleerange"] = 625,
+	["alttakeammo"] = 3,
+	["armorpiercing"] = 37,
+	["poisedamage"] = 40,
+	["stabilitydamage"] = 40,
+	["minimumdistancestabilitydamage"] = 20,
+	["maximumdistancestabilitydamage"] = 80,
+	["takeammo"] = 8,
+	["delay"] = 0.9,
+	["striketime"] = 0.4,
+	["punchstrength"] = Angle(0,1,0),
+};
+
 AttackTables.IronBoltAttackTable = {
 	["mimimumdistancedamage"] = 50,
 	["maximumdistancedamage"] = 120,
@@ -1119,6 +1141,26 @@ AttackTables.ElegantEpeeAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
+AttackTables.HillGlazicusAttackTable = {
+	["primarydamage"] = 35,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.7,
+	["altattackpoisedamagemodifier"] = 0.1,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 22,
+	["altarmorpiercing"] = 33,
+	["poisedamage"] = 12,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 3,
+	["delay"] = 0.72,
+	["striketime"] = 0.3,
+	["meleearc"] = 35,
+	["meleerange"] = 750,
+	["punchstrength"] = Angle(0,1,0),
+};
+
 -- Short polearms
 
 AttackTables.BillhookAttackTable = {
@@ -1280,6 +1322,26 @@ AttackTables.GlazicBannerAttackTable = {
 	["striketime"] = 0.55,
 	["meleearc"] = 60,
 	["meleerange"] = 1680,
+	["punchstrength"] = Angle(1,3,1),
+};
+
+AttackTables.HillBannerAttackTable = {
+	["primarydamage"] = 15,
+	["dmgtype"] = 128,
+	["attacktype"] = "polearm_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 1.5,
+	["altattackpoisedamagemodifier"] = 0.3,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 41,
+	["altarmorpiercing"] = 30,
+	["poisedamage"] = 15,
+	["stabilitydamage"] = 25,
+	["takeammo"] = 7,
+	["delay"] = 1.7,
+	["striketime"] = 0.55,
+	["meleearc"] = 60,
+	["meleerange"] = 1200,
 	["punchstrength"] = Angle(1,3,1),
 };
 
@@ -1622,6 +1684,26 @@ AttackTables.BladedBoardAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
+AttackTables.HillSteelArmingSwordAttackTable = {
+	["primarydamage"] = 50,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.75,
+	["altattackpoisedamagemodifier"] = 0.1,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 21,
+	["altarmorpiercing"] = 35,
+	["poisedamage"] = 15,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 3,
+	["delay"] = 0.82,
+	["striketime"] = 0.35,
+	["meleearc"] = 35,
+	["meleerange"] = 865,
+	["punchstrength"] = Angle(0,1,0),
+};
+
 -- Longswords
 
 AttackTables.LongswordAttackTable = {
@@ -1865,6 +1947,86 @@ AttackTables.UnholySigilSword_Ice_AttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
+AttackTables.HillLongswordAttackTable = {
+	["primarydamage"] = 75,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.8,
+	["altattackpoisedamagemodifier"] = 0.25,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 18,
+	["altarmorpiercing"] = 33,
+	["poisedamage"] = 20,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 5,
+	["delay"] = 1.15,
+	["striketime"] = 0.6,
+	["meleearc"] = 45,
+	["meleerange"] = 1050,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.DemonKnightSwordAttackTable = {
+	["primarydamage"] = 90,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.75,
+	["altattackpoisedamagemodifier"] = 0.1,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = 35,
+	["poisedamage"] = 35,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 6,
+	["delay"] = 1.4,
+	["striketime"] = 0.6,
+	["meleearc"] = 55,
+	["meleerange"] = 1140,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.DemonKnightSwordAttackTableFire = {
+	["primarydamage"] = 85,
+	["dmgtype"] = 4,
+	["attacktype"] = "fire_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.75,
+	["altattackpoisedamagemodifier"] = 0.1,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = 35,
+	["poisedamage"] = 35,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 6,
+	["delay"] = 1.4,
+	["striketime"] = 0.6,
+	["meleearc"] = 55,
+	["meleerange"] = 1140,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.DemonKnightSwordAttackTableIce = {
+	["primarydamage"] = 90,
+	["dmgtype"] = 4,
+	["attacktype"] = "ice_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.75,
+	["altattackpoisedamagemodifier"] = 0.1,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 25,
+	["altarmorpiercing"] = 35,
+	["poisedamage"] = 35,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 6,
+	["delay"] = 1.4,
+	["striketime"] = 0.6,
+	["meleearc"] = 55,
+	["meleerange"] = 1140,
+	["punchstrength"] = Angle(0,1,0),
+};
+
 -- Axes
 
 AttackTables.BattleAxeAttackTable = {
@@ -1939,6 +2101,25 @@ AttackTables.SteelGoreBattleAxeAttackTable = {
 	["delay"] = 1,
 	["striketime"] = 0.4,
 	["meleearc"] = 35,
+	["meleerange"] = 625,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.HillBattleAxeAttackTable = {
+	["primarydamage"] = 50,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = false,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 30,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 22,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 4,
+	["delay"] = 1.05,
+	["striketime"] = 0.4,
+	["meleearc"] = 45,
 	["meleerange"] = 625,
 	["punchstrength"] = Angle(0,1,0),
 };
@@ -2561,6 +2742,25 @@ AttackTables.Ancestraldagger_Kinisger_AttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
+AttackTables.HillGoreHuntingDaggerAttackTable = {
+	["primarydamage"] = 12,
+	["dmgtype"] = 16,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = false,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 18,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 0,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 2,
+	["delay"] = 0.62,
+	["striketime"] = 0.2,
+	["meleearc"] = 15,
+	["meleerange"] = 475,
+	["punchstrength"] = Angle(0,1,0),
+};
+
 -- Short Spears
 
 AttackTables.IronShortSpearAttackTable = {
@@ -2930,6 +3130,44 @@ AttackTables.FrozenFatherlandAxeAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
+AttackTables.HillHeavyBattleAxeAttackTable = {
+	["primarydamage"] = 85,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = false,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 36,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 35,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 7,
+	["delay"] = 1.4,
+	["striketime"] = 0.65,
+	["meleearc"] = 45,
+	["meleerange"] = 885,
+	["punchstrength"] = Angle(0,1,0),
+};
+
+AttackTables.GunAxeAttackTable = {
+	["primarydamage"] = 85,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 33,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 40,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 7,
+	["delay"] = 1.4,
+	["striketime"] = 0.65,
+	["meleearc"] = 45,
+	["meleerange"] = 825,
+	["punchstrength"] = Angle(0,1,0),
+};
+
 -- Mauls
 
 AttackTables.ClubAttackTable = {
@@ -3221,6 +3459,25 @@ AttackTables.DreadaxeAttackTable = {
 	["punchstrength"] = Angle(0,7,0),
 };
 
+AttackTables.OrdainedGorefellerAttackTable = {
+	["primarydamage"] = 100,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = false,
+	["altattackdamagemodifier"] = nil,
+	["altattackpoisedamagemodifier"] = nil,
+	["armorpiercing"] = 45,
+	["altarmorpiercing"] = nil,
+	["poisedamage"] = 45,
+	["stabilitydamage"] = 40,
+	["takeammo"] = 15,
+	["delay"] = 2.4,
+	["striketime"] = 0.95,
+	["meleearc"] = 55,
+	["meleerange"] = 1100,
+	["punchstrength"] = Angle(0,7,0),
+};
+
 -- Special
 
 AttackTables.QuarterstaffAttackTable = {
@@ -3362,265 +3619,6 @@ AttackTables.MaximusWrathAttackTable = {
 	["meleerange"] = 900,
 	["punchstrength"] = Angle(0,1,0),
 	["isadminweapon"] = true,
-};
-
--- Hill shit (weapons)
-
-AttackTables.HillGlazicusAttackTable = {
-	["primarydamage"] = 35,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = true,
-	["altattackdamagemodifier"] = 0.7,
-	["altattackpoisedamagemodifier"] = 0.1,
-	["altmeleearc"] = 15,
-	["armorpiercing"] = 22,
-	["altarmorpiercing"] = 33,
-	["poisedamage"] = 12,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 3,
-	["delay"] = 0.72,
-	["striketime"] = 0.3,
-	["meleearc"] = 35,
-	["meleerange"] = 750,
-	["punchstrength"] = Angle(0,1,0),
-};
-
-AttackTables.HillSteelArmingSwordAttackTable = {
-	["primarydamage"] = 50,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = true,
-	["altattackdamagemodifier"] = 0.75,
-	["altattackpoisedamagemodifier"] = 0.1,
-	["altmeleearc"] = 15,
-	["armorpiercing"] = 21,
-	["altarmorpiercing"] = 35,
-	["poisedamage"] = 15,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 3,
-	["delay"] = 0.82,
-	["striketime"] = 0.35,
-	["meleearc"] = 35,
-	["meleerange"] = 865,
-	["punchstrength"] = Angle(0,1,0),
-};
-
-AttackTables.HillBattleAxeAttackTable = {
-	["primarydamage"] = 50,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = false,
-	["altattackdamagemodifier"] = nil,
-	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 30,
-	["altarmorpiercing"] = nil,
-	["poisedamage"] = 22,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 4,
-	["delay"] = 1.05,
-	["striketime"] = 0.4,
-	["meleearc"] = 45,
-	["meleerange"] = 625,
-	["punchstrength"] = Angle(0,1,0),
-};
-
-AttackTables.HillLongswordAttackTable = {
-	["primarydamage"] = 75,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = true,
-	["altattackdamagemodifier"] = 0.8,
-	["altattackpoisedamagemodifier"] = 0.25,
-	["altmeleearc"] = 15,
-	["armorpiercing"] = 18,
-	["altarmorpiercing"] = 33,
-	["poisedamage"] = 20,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 5,
-	["delay"] = 1.15,
-	["striketime"] = 0.6,
-	["meleearc"] = 45,
-	["meleerange"] = 1050,
-	["punchstrength"] = Angle(0,1,0),
-};
-
-AttackTables.HillHeavyBattleAxeAttackTable = {
-	["primarydamage"] = 85,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = false,
-	["altattackdamagemodifier"] = nil,
-	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 33,
-	["altarmorpiercing"] = nil,
-	["poisedamage"] = 35,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 7,
-	["delay"] = 1.4,
-	["striketime"] = 0.65,
-	["meleearc"] = 45,
-	["meleerange"] = 885,
-	["punchstrength"] = Angle(0,1,0),
-};
-
-AttackTables.HillGoreHuntingDaggerAttackTable = {
-	["primarydamage"] = 12,
-	["dmgtype"] = 16,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = false,
-	["altattackdamagemodifier"] = nil,
-	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 18,
-	["altarmorpiercing"] = nil,
-	["poisedamage"] = 0,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 2,
-	["delay"] = 0.62,
-	["striketime"] = 0.2,
-	["meleearc"] = 15,
-	["meleerange"] = 475,
-	["punchstrength"] = Angle(0,1,0),
-};
-
-AttackTables.HillThrowingAxeAttackTable = {
-	["primarydamage"] = 50,
-	["mimimumdistancedamage"] = 50,
-	["maximumdistancedamage"] = 145,
-	["dmgtype"] = DMG_SLASH,
-	["canaltattack"] = true,
-	["altattackpoisedamagemodifier"] = 0.5,
-	["altattackstabilitydamagemodifier"] = 0,
-	["altmeleearc"] = 35,
-	["altmeleerange"] = 625,
-	["alttakeammo"] = 3,
-	["armorpiercing"] = 37,
-	["poisedamage"] = 40,
-	["stabilitydamage"] = 40,
-	["minimumdistancestabilitydamage"] = 20,
-	["maximumdistancestabilitydamage"] = 80,
-	["takeammo"] = 8,
-	["delay"] = 0.9,
-	["striketime"] = 0.4,
-	["punchstrength"] = Angle(0,1,0),
-};
-
-AttackTables.HillBannerAttackTable = {
-	["primarydamage"] = 15,
-	["dmgtype"] = 128,
-	["attacktype"] = "polearm_swing",
-	["canaltattack"] = true,
-	["altattackdamagemodifier"] = 1.5,
-	["altattackpoisedamagemodifier"] = 0.3,
-	["altmeleearc"] = 15,
-	["armorpiercing"] = 41,
-	["altarmorpiercing"] = 30,
-	["poisedamage"] = 15,
-	["stabilitydamage"] = 25,
-	["takeammo"] = 7,
-	["delay"] = 1.7,
-	["striketime"] = 0.55,
-	["meleearc"] = 60,
-	["meleerange"] = 1200,
-	["punchstrength"] = Angle(1,3,1),
-};
-
-AttackTables.OrdainedGorefellerAttackTable = {
-	["primarydamage"] = 100,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = false,
-	["altattackdamagemodifier"] = nil,
-	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 45,
-	["altarmorpiercing"] = nil,
-	["poisedamage"] = 45,
-	["stabilitydamage"] = 40,
-	["takeammo"] = 15,
-	["delay"] = 2.4,
-	["striketime"] = 0.95,
-	["meleearc"] = 55,
-	["meleerange"] = 1100,
-	["punchstrength"] = Angle(0,7,0),
-};
-
-AttackTables.GunAxeAttackTable = {
-	["primarydamage"] = 85,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = true,
-	["altattackdamagemodifier"] = nil,
-	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 33,
-	["altarmorpiercing"] = nil,
-	["poisedamage"] = 40,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 7,
-	["delay"] = 1.4,
-	["striketime"] = 0.65,
-	["meleearc"] = 45,
-	["meleerange"] = 825,
-	["punchstrength"] = Angle(0,1,0),
-};
-
-AttackTables.DemonKnightSwordAttackTable = {
-	["primarydamage"] = 90,
-	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = true,
-	["altattackdamagemodifier"] = 0.75,
-	["altattackpoisedamagemodifier"] = 0.1,
-	["altmeleearc"] = 15,
-	["armorpiercing"] = 25,
-	["altarmorpiercing"] = 35,
-	["poisedamage"] = 35,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 6,
-	["delay"] = 1.4,
-	["striketime"] = 0.6,
-	["meleearc"] = 55,
-	["meleerange"] = 1140,
-	["punchstrength"] = Angle(0,1,0),
-};
-
-AttackTables.DemonKnightSwordAttackTableFire = {
-	["primarydamage"] = 85,
-	["dmgtype"] = 4,
-	["attacktype"] = "fire_swing",
-	["canaltattack"] = true,
-	["altattackdamagemodifier"] = 0.75,
-	["altattackpoisedamagemodifier"] = 0.1,
-	["altmeleearc"] = 15,
-	["armorpiercing"] = 25,
-	["altarmorpiercing"] = 35,
-	["poisedamage"] = 35,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 6,
-	["delay"] = 1.4,
-	["striketime"] = 0.6,
-	["meleearc"] = 55,
-	["meleerange"] = 1140,
-	["punchstrength"] = Angle(0,1,0),
-};
-
-AttackTables.DemonKnightSwordAttackTableIce = {
-	["primarydamage"] = 90,
-	["dmgtype"] = 4,
-	["attacktype"] = "ice_swing",
-	["canaltattack"] = true,
-	["altattackdamagemodifier"] = 0.75,
-	["altattackpoisedamagemodifier"] = 0.1,
-	["altmeleearc"] = 15,
-	["armorpiercing"] = 25,
-	["altarmorpiercing"] = 35,
-	["poisedamage"] = 35,
-	["stabilitydamage"] = 0,
-	["takeammo"] = 6,
-	["delay"] = 1.4,
-	["striketime"] = 0.6,
-	["meleearc"] = 55,
-	["meleerange"] = 1140,
-	["punchstrength"] = Angle(0,1,0),
 };
 
 AddTable("DefaultAttackTable", AttackTables.DefaultAttackTable) 

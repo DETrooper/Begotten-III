@@ -3913,6 +3913,7 @@ RECIPE:Register()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 3},
+			["leather"] = {amount = 2},
 			["wood"] = {amount = 4},
 		};
 		RECIPE.result = {
@@ -3923,7 +3924,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 55;
+		RECIPE.experience = 65;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -3971,7 +3972,8 @@ RECIPE:Register()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 5},
-			["wood"] = {amount = 4},
+			["leather"] = {amount = 1},
+			["wood"] = {amount = 3},
 		};
 		RECIPE.result = {
 			["begotten_polearm_polehammer"] = {amount = 1},
