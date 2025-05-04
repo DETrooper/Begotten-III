@@ -398,7 +398,7 @@ local function Guarding(ent, dmginfo)
 				end
 			end;
 			
-			if not canblock and wep.realHoldType == "wos-begotten_dual" or (wep.hasSwordplay and !wep.isArmingSword) then
+			if not canblock and wep.realHoldType == "wos-begotten_dual" or (ent:GetSubfaction() == "Philimaxio" and wep.hasSwordplay and !wep.isArmingSword) then
 				if (dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) or (isJavelin)) and cwBeliefs and ent.HasBelief and ent:HasBelief("impossibly_skilled") then
 					local enemyWeapon = attacker:GetActiveWeapon();
 					
@@ -555,7 +555,9 @@ local function Guarding(ent, dmginfo)
 									
 									if inflictorItemTable and inflictorItemTable.attributes then
 										if table.HasValue(inflictorItemTable.attributes, "shieldbreaker") then
-											shieldConditionDamage = shieldConditionDamage * 5;
+											shieldConditionDamage = shieldConditionDamage * 6;
+										elseif table.HasValue(inflictorItemTable.attributes, "splinter") then
+											shieldConditionDamage = shieldConditionDamage * 3.5;
 										end
 									end
 								end
@@ -581,9 +583,13 @@ local function Guarding(ent, dmginfo)
 								if (!cwBeliefs or not ent:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
 									local offhand = wep:GetNW2String("activeOffhand");
 									
-									if offhand:len() > 0 or (wep.hasSwordplay and !wep.isArmingSword) and ent:HasBelief("impossibly_skilled") then
+									if offhand:len() > 0 or (ent:GetSubfaction() == "Philimaxio" and wep.hasSwordplay and !wep.isArmingSword) then
 										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
-											conditionDamage = conditionDamage * 0.1;
+											if offhand:len() > 0 then
+												conditionDamage = conditionDamage * 0.1;
+											else
+												conditionDamage = conditionDamage * 0.25;
+											end
 										end
 									end
 								

@@ -68,6 +68,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(22.87, 283.43, 339.12);
 	ITEM.attachmentOffsetVector = Vector(-2.12, 1.41, -17.68);
 	
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 ITEM:Register();
@@ -127,6 +128,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(90, 0, 281.37);
 	ITEM.attachmentOffsetVector = Vector(-5.66, 2.83, -30.41);
 	
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.requireFaith = {"Faith of the Family"};
@@ -147,6 +149,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(90, 2.84, 21.79);
 	ITEM.attachmentOffsetVector = Vector(-2.83, 2.12, -12.73);
 	
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 ITEM:Register();
@@ -165,6 +168,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(0, 283.26, 0);
 	ITEM.attachmentOffsetVector = Vector(-4.95, 2.83, -26.87);
 	
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 ITEM:Register();
@@ -336,6 +340,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(0.71, 2.83, -6.36);
 	ITEM.attachmentOffsetAngles = Angle(90, 2.84, 201.79);
 	
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.requireFaith = {"Faith of the Light"};

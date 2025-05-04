@@ -382,7 +382,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					
 					-- If full suit of armor, give minor debuff for head armor.
 					if hitGroup == HITGROUP_HEAD and armorItem.baseItem == "clothes_base" then
-						protection = math.max(0, protection - 10);
+						protection = math.max(0, protection - 6);
 					end
 					
 					if !isTrainingDummy then	

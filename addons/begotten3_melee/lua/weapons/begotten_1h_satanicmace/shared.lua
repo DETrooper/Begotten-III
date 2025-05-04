@@ -84,6 +84,28 @@ function SWEP:HandlePrimaryAttack()
 
 end
 
+function SWEP:HandleThrustAttack()
+
+	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+	local attacktable = GetTable(self.AttackTable)
+
+	--Attack animation
+	if self:GetNW2String("activeShield"):len() > 0 then
+		self:TriggerAnim(self.Owner, "a_sword_shield_attack_stab_slow_01");
+	else
+		self:TriggerAnim(self.Owner, "a_sword_attack_stab_slow_01");
+	end
+
+	-- Viewmodel attack animation!
+	local vm = self.Owner:GetViewModel()
+	vm:SendViewModelMatchingSequence( vm:LookupSequence( "thrust1" ) )
+	self.Owner:GetViewModel():SetPlaybackRate(0.35)
+	
+	self.Weapon:EmitSound(attacksoundtable["altsound"][math.random(1, #attacksoundtable["altsound"])])
+	self.Owner:ViewPunch(attacktable["punchstrength"])
+
+end
+
 function SWEP:OnDeploy()
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
 	self.Owner:ViewPunch(Angle(0,1,0))

@@ -1935,7 +1935,11 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 					
 					if table.HasValue(itemTable.attributes, "shieldbreaker") then
-						frame:AddText("Shieldbreaker: Deals extra condition damage to shields.", Color(110, 30, 30), nil, 0.9);
+						frame:AddText("Shieldbreaker: Deals 6x more condition damage to shields.", Color(110, 30, 30), nil, 0.9);
+					end
+					
+					if table.HasValue(itemTable.attributes, "splinter") then
+						frame:AddText("Splinter: Deals 3.5x more condition damage to shields.", Color(110, 30, 30), nil, 0.9);
 					end
 					
 					if table.HasValue(itemTable.attributes, "bell") then

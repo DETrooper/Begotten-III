@@ -69,7 +69,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 		[HITGROUP_HEAD] = true,
 	}
 
-	ITEM.protection = 50
+	ITEM.protection = 47
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
@@ -106,7 +106,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 		[HITGROUP_HEAD] = true,
 	}
 
-	ITEM.protection = 75
+	ITEM.protection = 72
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
@@ -114,7 +114,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
-	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
 	ITEM.insulation = 50;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
@@ -144,7 +144,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 		[HITGROUP_HEAD] = true,
 	}
 
-	ITEM.protection = 70
+	ITEM.protection = 67
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
@@ -152,7 +152,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.65; -- reduces slash damage by 35%
 	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
-	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
 	ITEM.insulation = 50;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks"}};

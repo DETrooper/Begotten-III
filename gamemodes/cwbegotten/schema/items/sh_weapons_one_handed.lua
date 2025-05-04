@@ -82,6 +82,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
 ITEM:Register();
 
@@ -104,6 +105,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}};
 	ITEM.requireFaith = {"Faith of the Family"};
 	ITEM.kinisgerOverride = true;
@@ -397,6 +399,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
 ITEM:Register();
 
@@ -692,6 +695,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
 ITEM:Register();
 
@@ -1050,6 +1054,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
+	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
 	ITEM.attributes = {"versatile"};
 ITEM:Register();

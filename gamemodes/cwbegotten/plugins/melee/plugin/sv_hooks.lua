@@ -329,7 +329,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 								
 				if (string.find(class, "begotten_spear_")) then
 					local maxPoleRange = (attacktable["meleerange"]) * 0.1
-					local maxIneffectiveRange = maxPoleRange * 0.62
+					local maxIneffectiveRange = maxPoleRange * 0.65
 
 					if (distance > maxIneffectiveRange) or attacker:GetNetVar("Riposting") then
 						entity:EmitSound(armorSound)
@@ -342,7 +342,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 					end;
 				elseif (string.find(class, "begotten_polearm_")) or (string.find(class, "begotten_scythe_")) then
 					local maxPoleRange = (attacktable["meleerange"]) * 0.1
-					local maxIneffectiveRange = maxPoleRange * 0.62
+					local maxIneffectiveRange = maxPoleRange * 0.65
 
 					if (distance <= maxIneffectiveRange) then -- Polearm
 						if attacker:GetNetVar("Riposting") then
@@ -856,7 +856,7 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 							local distance = attacker:GetPos():Distance(entity:GetPos())
 							local attacktable = GetTable(attackerWeapon.AttackTable)
 							local maxPoleRange = (attacktable["meleerange"]) * 0.1
-							local maxIneffectiveRange = maxPoleRange * 0.62
+							local maxIneffectiveRange = maxPoleRange * 0.65
 
 							if distance >= maxIneffectiveRange or (didthrust and attackerWeapon.CanSwipeAttack) then
 								entity:SetNetVar("runningDisabled", true);
