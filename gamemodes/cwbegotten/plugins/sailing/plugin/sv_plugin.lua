@@ -794,18 +794,18 @@ function cwSailing:MoveLongship(longshipEnt, location)
 						longshipEnt.destination = nil;
 					elseif location == "calm" or location == "rough" or location == "styx" then
 						--timer.Create("TravelTimer_"..tostring(longshipEnt:EntIndex()), 30, 1, function() -- for testing
-						local duration = math.random(180, 240);
+						local duration = math.random(90, 120);
 						
 						if longshipEnt.longshipType == "ironclad" then
-							duration = math.random(60, 90);
+							duration = math.random(20, 30);
 						else
 							if IsValid(longshipEnt.owner) and longshipEnt.owner:GetSubfaction() == "Clan Harald" then
-								duration = math.random(90, 150);
+								duration = math.random(45, 60);
 							end
 						end
 						
 						if longshipEnt.destination == "hell" then
-							duration = math.random(280, 320);
+							duration = math.random(200, 240);
 
 							for _, v in _player.Iterator() do
 								if v:GetFaction() == "Children of Satan" and v:Alive() then

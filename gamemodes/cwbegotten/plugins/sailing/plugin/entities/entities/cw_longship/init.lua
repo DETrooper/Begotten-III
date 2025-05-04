@@ -249,7 +249,7 @@ function ENT:Think()
 		elseif self.location == "rough" then
 			if self.health then
 				if self.health > 0 --[[and self.health < 250]] then
-					self:SetHP(self.health - math.random(1, 5));
+					self:SetHP(self.health - math.random(2, 10));
 					
 					if self.health and self.health > 0 then
 						local sound_chance = math.random(1, 10);
