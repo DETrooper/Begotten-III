@@ -583,14 +583,12 @@ local function Guarding(ent, dmginfo)
 								if (!cwBeliefs or not ent:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
 									local offhand = wep:GetNW2String("activeOffhand");
 									
-									if offhand:len() > 0 or (ent:GetSubfaction() == "Philimaxio" and wep.hasSwordplay and !wep.isArmingSword) then
-										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
-											if offhand:len() > 0 then
-												conditionDamage = conditionDamage * 0.1;
-											else
-												conditionDamage = conditionDamage * 0.25;
-											end
-										end
+									local hasOffhand = offhand:len() > 0
+									local hasLongSword = wep.hasSwordplay and not wep.isArmingSword
+									local isBullet = dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT)
+									
+									if (hasOffhand or hasLongSword) and isBullet then
+										conditionDamage = conditionDamage * (hasOffhand and 0.1 or 0.25)
 									end
 								
 									if cwBeliefs and ent:HasBelief("scour_the_rust") then
