@@ -37,7 +37,7 @@ SWEP.DrawEffect = "steam_train"
 SWEP.AmbientEffect = "striderbuster_smoke"
 SWEP.IgniteTime = nil
 SWEP.FreezeTime = 10
-SWEP.FreezeDamage = 65;
+SWEP.FreezeDamage = 48;
 SWEP.MultiHit = 2;
 
 --Sounds
@@ -47,7 +47,7 @@ SWEP.SoundMaterial = "Metal" -- Metal, Wooden, MetalPierce, Punch, Default
 
 SWEP.WindUpSound = "draw/skyrim_axe_draw1.mp3" --For 2h weapons only, plays before primarysound
 
-SWEP.CorruptionGain = 3; -- For sacrificial weapons, gives corruption for each swing
+SWEP.CorruptionGain = 3.5; -- For sacrificial weapons, gives corruption for each swing
 
 /*---------------------------------------------------------
 	PrimaryAttack

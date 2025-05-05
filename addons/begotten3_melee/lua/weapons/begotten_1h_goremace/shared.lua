@@ -32,6 +32,8 @@ SWEP.AttackSoundTable = "MediumMetalBluntAttackSoundTable"
 SWEP.BlockSoundTable = "WoodenBlockSoundTable"
 SWEP.SoundMaterial = "Wooden" -- Metal, Wooden, MetalPierce, Punch, Default
 
+SWEP.hasPuncture = true
+
 /*---------------------------------------------------------
 	PrimaryAttack
 ---------------------------------------------------------*/

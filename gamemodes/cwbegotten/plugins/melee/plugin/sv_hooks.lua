@@ -474,7 +474,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 		end;
 
 		local armorClass = player:GetArmorClass();
-		local stabilityDelay = 3;
+		local stabilityDelay = 2;
 		local falloverTime = 5;
 		
 		--printp(armorClass);
@@ -483,7 +483,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 			stabilityDelay = 6;
 			falloverTime = 6;
 		elseif (armorClass == "Heavy") then
-			stabilityDelay = 8;
+			stabilityDelay = 7;
 			falloverTime = 7;
 		end;
 		
@@ -877,7 +877,8 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 			cwMelee:HandleStability(entity, math.Round(damageInfo:GetDamage() * 1.25), 5);
 		else
 			if damage >= 5 and entity:IsPlayer() then
-				if entity:IsRunning() then
+				local targetVelocity = entity:GetVelocity();
+				if math.abs(targetVelocity.x) > 200 or math.abs(targetVelocity.y) > 200 then
 					damageInfo:ScaleDamage(1.3);
 					entity:TakeStability(damage * 0.75);
 				elseif entity:Crouching() then

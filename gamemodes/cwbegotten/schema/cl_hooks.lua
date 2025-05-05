@@ -1858,6 +1858,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					frame:AddText("Swordplay: After deflecting or parrying an opponent, your next attack within 0.5s will have a faster striketime. This trait only works if you have 'Blademaster' unlocked.", Color(110, 30, 30), nil, 0.9);
 				end
 				
+				if weaponTable.hasPuncture then
+					frame:AddText("Puncture: Doubles condition damage against armor.", Color(110, 30, 30), nil, 0.9);
+				end
+				
 				if weaponTable.MultiHit then
 					frame:AddText("Multi-Hit: Can hit up to "..tostring(weaponTable.MultiHit).." targets in a single swing.", Color(110, 30, 30), nil, 0.9);
 				end
@@ -3352,9 +3356,9 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				local percentage = 0;
 			
 				if armorClass == "Heavy" then
-					percentage = 0.4;
-				elseif armorClass == "Medium" then
 					percentage = 0.3;
+				elseif armorClass == "Medium" then
+					percentage = 0.2;
 				elseif armorClass == "Light" then
 					percentage = 0.15;
 				end

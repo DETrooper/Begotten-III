@@ -1558,7 +1558,7 @@ end
 						-- counter damage
 						local targetVelocity = hit:GetVelocity();
 						
-						if math.abs(targetVelocity.x) > 225 or math.abs(targetVelocity.y) > 225 then
+						if math.abs(targetVelocity.x) > 200 or math.abs(targetVelocity.y) > 200 then
 							local entEyeAngles = hit:EyeAngles();
 						
 							if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then

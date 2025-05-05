@@ -467,13 +467,18 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 					if not player.opponent then
 						--print("Armor condition value: "..tostring(condition));
 						local conditionLoss = math.Clamp(damageInfo:GetDamage() * 0.1, 0, 5);
+						local activeWeapon = attacker:GetActiveWeapon();
 						
 						if !isTrainingDummy then
 							if player:HasBelief("ingenuity_finisher") and !armorItem.unrepairable then
 								conditionLoss = 0;
-							else							
-								if player:GetSubfaction() == "Philimaxio" then
-									conditionLoss = conditionLoss / 2;
+							else	
+								if damageType == DMG_CLUB then
+									conditionLoss = conditionLoss * 2.5
+								end
+								
+								if activeWeapon.hasPuncture == true then
+									conditionLoss = conditionLoss * 2
 								end
 								
 								if player:HasBelief("scour_the_rust") then
