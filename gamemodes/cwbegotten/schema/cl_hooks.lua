@@ -1859,7 +1859,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if weaponTable.hasPuncture then
-					frame:AddText("Puncture: Doubles condition damage against armor.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Puncture: Doubles condition damage against armor. This trait only works if you have 'Might' unlocked.", Color(110, 30, 30), nil, 0.9);
 				end
 				
 				if weaponTable.MultiHit then

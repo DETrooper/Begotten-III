@@ -481,7 +481,7 @@ function cwMelee:PlayerThink(player, curTime, infoTable, alive, initialized, ply
 
 		if (armorClass == "Medium") then
 			stabilityDelay = 6;
-			falloverTime = 6;
+			falloverTime = 5;
 		elseif (armorClass == "Heavy") then
 			stabilityDelay = 7;
 			falloverTime = 7;
