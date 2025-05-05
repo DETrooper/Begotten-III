@@ -103,7 +103,7 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized, p
 				return;
 			end;
 			
-			if (!player:IsOnGround()) then
+			if (!player:IsOnGround() and infoTable.waterLevel < 2) then
 				if (!player:IsRagdolled()) then
 					return;
 				end
@@ -112,7 +112,7 @@ function cwStamina:PlayerThink(player, curTime, infoTable, alive, initialized, p
 			local regeneration = 0;
 			
 			if (!Clockwork.player:HasFlags(player, "E")) then
-				if (infoTable.isRunning) then
+				if (infoTable.isRunning) or (infoTable.waterLevel >= 2 and !plyTab.drownedKingActive) then
 					local drainTab = {decrease = -2};
 
 					if (hook.Run("PlayerShouldStaminaDrain", player) != false) then

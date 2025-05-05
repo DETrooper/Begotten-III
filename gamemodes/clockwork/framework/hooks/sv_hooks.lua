@@ -179,7 +179,7 @@ function GM:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 		end
 	end]]--
 	
-	local waterLevel = player:WaterLevel();
+	local waterLevel = infoTable.waterLevel;
 	
 	if (waterLevel >= 3) then
 		plyTab.submerged = true
@@ -1768,6 +1768,7 @@ do
 					infoTable.isRunning = player:IsRunning()
 					infoTable.isJumping = player:IsJumping()
 					infoTable.runSpeed = plyTab.cwRunSpeed
+					infoTable.waterLevel = player:WaterLevel();
 
 					hook.Run("PlayerThink", player, curTime, infoTable, alive, initialized, plyTab)
 

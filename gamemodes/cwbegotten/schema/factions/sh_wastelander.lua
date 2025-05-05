@@ -122,16 +122,17 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 	};
 	FACTION.residualXPZones = { -- Zones that boost residual XP gain for this faction.
 		["rp_begotten3"] = {
-			{pos1 = Vector(1390, 10153, -938), pos2 = Vector(-2370, 11254, -1690), modifier = 2, nightModifier = 4}, -- Gate
-			{pos1 = Vector(9422, 11862, -1210), pos2 = Vector(10055, 10389, -770), modifier = 3, nightModifier = 5}, -- Gorewatch
-			{pos1 = Vector(3458, 12655, -814), pos2 = Vector(3335, 12769, -685), modifier = 2, nightModifier = 4}, -- Watchtower
-			{pos1 = Vector(2742, 10244, -1194), pos2 = Vector(2913, 10071, -1074), modifier = 2, nightModifier = 4}, -- Watchtower
-			{pos1 = Vector(-1963, 10678, -1055), pos2 = Vector(-2144, 10886, -1194), modifier = 2, nightModifier = 4}, -- Watchtower
-			{pos1 = Vector(-3468, 12985, -375), pos2 = Vector(-3591, 13103, -241), modifier = 2, nightModifier = 4}, -- Watchtower
+			{pos1 = Vector(1390, 10153, -938), pos2 = Vector(-2370, 11254, -1690), modifier = 0.5, nightModifier = 0.25}, -- Gate
+			{pos1 = Vector(10061, 10379, -1211), pos2 = Vector(9385, 11870, -670), modifier = 0.33, nightModifier = 0.2}, -- Gorewatch
+			{pos1 = Vector(3458, 12655, -814), pos2 = Vector(3335, 12769, -685), modifier = 0.5, nightModifier = 0.25}, -- Watchtower
+			{pos1 = Vector(2742, 10244, -1194), pos2 = Vector(2913, 10071, -1074), modifier = 0.5, nightModifier = 0.25}, -- Watchtower
+			{pos1 = Vector(-1963, 10678, -1055), pos2 = Vector(-2144, 10886, -1194), modifier = 0.5, nightModifier = 0.25}, -- Watchtower
+			{pos1 = Vector(-3468, 12985, -375), pos2 = Vector(-3591, 13103, -241), modifier = 0.5, nightModifier = 0.25}, -- Watchtower
 		},
 		["rp_district21"] = {
-			{pos1 = Vector(-4765, 9246, 838), pos2 = Vector(-8075, 10488, 489), modifier = 2, nightModifier = 4},
-			{pos1 = Vector(-10637, 13043, 465), pos2 = Vector(-4664, 9210, 879), modifier = 2, nightModifier = 4},
+			{pos1 = Vector(-4765, 9246, 838), pos2 = Vector(-8075, 10488, 489), modifier = 0.5, nightModifier = 0.25}, -- Hill
+			{pos1 = Vector(-10637, 13043, 465), pos2 = Vector(-4664, 9210, 879), modifier = 0.5, nightModifier = 0.25}, -- Hill
+			{pos1 = Vector(-9328, -8640, -146), pos2 = Vector(-8771, -8105, 686), modifier = 0.33, nightModifier = 0.2}, -- Gorewatch
 		},
 	};
 	
@@ -967,17 +968,17 @@ local FACTION = Clockwork.faction:New("Hillkeeper");
 	}
 	FACTION.residualXPZones = { -- Zones that boost residual XP gain for this faction.
 		["rp_begotten3"] = {
-			{pos1 = Vector(1390, 10153, -938), pos2 = Vector(-2370, 11254, -1690), modifier = 2, nightModifier = 4}, -- Gate
-			{pos1 = Vector(9422, 11862, -1210), pos2 = Vector(10055, 10389, -770), modifier = 3, nightModifier = 5}, -- Gorewatch
-			{pos1 = Vector(3458, 12655, -814), pos2 = Vector(3335, 12769, -685), modifier = 2, nightModifier = 4}, -- Watchtower
-			{pos1 = Vector(2742, 10244, -1194), pos2 = Vector(2913, 10071, -1074), modifier = 2, nightModifier = 4}, -- Watchtower
-			{pos1 = Vector(-1963, 10678, -1055), pos2 = Vector(-2144, 10886, -1194), modifier = 2, nightModifier = 4}, -- Watchtower
-			{pos1 = Vector(-3468, 12985, -375), pos2 = Vector(-3591, 13103, -241), modifier = 2, nightModifier = 4}, -- Watchtower
+			{pos1 = Vector(1390, 10153, -938), pos2 = Vector(-2370, 11254, -1690), modifier = 0.5, nightModifier = 0.25}, -- Gate
+			{pos1 = Vector(10061, 10379, -1211), pos2 = Vector(9385, 11870, -670), modifier = 0.33, nightModifier = 0.2}, -- Gorewatch
+			{pos1 = Vector(3458, 12655, -814), pos2 = Vector(3335, 12769, -685), modifier = 0.5, nightModifier = 0.25}, -- Watchtower
+			{pos1 = Vector(2742, 10244, -1194), pos2 = Vector(2913, 10071, -1074), modifier = 0.5, nightModifier = 0.25}, -- Watchtower
+			{pos1 = Vector(-1963, 10678, -1055), pos2 = Vector(-2144, 10886, -1194), modifier = 0.5, nightModifier = 0.25}, -- Watchtower
+			{pos1 = Vector(-3468, 12985, -375), pos2 = Vector(-3591, 13103, -241), modifier = 0.5, nightModifier = 0.25}, -- Watchtower
 		},
 		["rp_district21"] = {
-			{pos1 = Vector(-4765, 9246, 838), pos2 = Vector(-8075, 10488, 489), modifier = 2, nightModifier = 4}, -- Hill
-			{pos1 = Vector(-10637, 13043, 465), pos2 = Vector(-4664, 9210, 879), modifier = 2, nightModifier = 4}, -- Hill
-			{pos1 = Vector(-9328, -8640, -146), pos2 = Vector(-8771, -8105, 686), modifier = 3, nightModifier = 5}, -- Gorewatch
+			{pos1 = Vector(-4765, 9246, 838), pos2 = Vector(-8075, 10488, 489), modifier = 0.5, nightModifier = 0.25}, -- Hill
+			{pos1 = Vector(-10637, 13043, 465), pos2 = Vector(-4664, 9210, 879), modifier = 0.5, nightModifier = 0.25}, -- Hill
+			{pos1 = Vector(-9328, -8640, -146), pos2 = Vector(-8771, -8105, 686), modifier = 0.33, nightModifier = 0.2}, -- Gorewatch
 		},
 	};
 	

@@ -135,7 +135,7 @@ function cwWarmth:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 		end
 
 		local lastZone = player:GetCharacterData("LastZone", "wasteland");
-		local waterLevel = player:WaterLevel();
+		local waterLevel = infoTable.waterLevel;
 		
 		if waterLevel > 0 then
 			if(cwBeliefs and player:HasBelief("the_black_sea")) then // do nothing

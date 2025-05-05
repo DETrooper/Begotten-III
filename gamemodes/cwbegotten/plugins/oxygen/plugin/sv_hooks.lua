@@ -28,7 +28,7 @@ function cwOxygen:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 		end
 		
 		local oxygen = player:GetCharacterData("oxygen", 100)
-		local waterLevel = player:WaterLevel()
+		local waterLevel = infoTable.waterLevel;
 		local decayTime = 3
 		local change = 0
 		

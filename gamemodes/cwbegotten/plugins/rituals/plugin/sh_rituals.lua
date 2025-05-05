@@ -661,7 +661,7 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("cries_of_the_drowned_king");
 	RITUAL.name = "(T1) Cries of the Drowned King";
-	RITUAL.description = "After a long time at sea, you may hear the gurglings and wails of a drowned legend. Make an offering to the Gods and you may heed his wisdom. Performing this ritual will make you unable to lose oxygen while underwater for 1 hour, and during this time you will be able to drink from bodies of water without consequence.";
+	RITUAL.description = "After a long time at sea, you may hear the gurglings and wails of a drowned legend. Make an offering to the Gods and you may heed his wisdom. Performing this ritual will make you unable to lose oxygen while underwater or stamina while swimming for 1 hour. During this time you will be able to drink from bodies of water without consequence.";
 	RITUAL.onerequiredbelief = {"honor_the_gods", "one_with_the_druids", "the_black_sea", "witch_druid", "taste_of_iron"}; -- Tier I Faith of the Family Ritual
 	
 	RITUAL.requirements = {"down_catalyst", "down_catalyst", "down_catalyst"};

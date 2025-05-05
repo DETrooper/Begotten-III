@@ -1782,7 +1782,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 		local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 		local bOnGround = player:IsOnGround();
 		local moveType = player:GetMoveType();
-		local waterLevel = player:WaterLevel();
+		local waterLevel = infoTable.waterLevel;
 		
 		if (moveType == MOVETYPE_NOCLIP) then
 			if (plyTab.bOnGround) then
