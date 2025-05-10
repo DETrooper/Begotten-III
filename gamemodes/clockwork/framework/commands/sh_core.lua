@@ -877,9 +877,15 @@ local COMMAND = Clockwork.command:New("CharFallOver");
 		local curTime = CurTime();
 		
 		if (!player.cwNextFallTime or curTime >= player.cwNextFallTime) then
-			player.cwNextFallTime = curTime + 5;
+			player.cwNextFallTime = curTime + 1;
 			
-			if (!player:InVehicle() and !Clockwork.player:IsNoClipping(player) and hook.Run("PlayerCanFallover", player) ~= false) then
+			if (!player:IsRagdolled() and !player:InVehicle() and !Clockwork.player:IsNoClipping(player) and hook.Run("PlayerCanFallover", player) ~= false) then
+				if player:GetVelocity():Length() > 350 then
+					Clockwork.player:Notify(player, "You are moving too fast to fall over!");
+					
+					return false;
+				end
+			
 				--[[
 				local seconds = tonumber(arguments[1]);
 				
@@ -890,9 +896,7 @@ local COMMAND = Clockwork.command:New("CharFallOver");
 				end;
 				--]]
 				
-				if (!player:IsRagdolled()) then
-					Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER);
-				end;
+				Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER);
 			else
 				Clockwork.player:Notify(player, "You cannot do this action at the moment!");
 			end;

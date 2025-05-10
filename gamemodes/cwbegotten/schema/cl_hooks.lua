@@ -3440,6 +3440,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						frame:AddText("Sundering Shot: Travelling at supersonic speeds, Old World Grapeshot ignores armor and shields entirely.", Color(110, 30, 30), nil, 0.9);
 					elseif table.HasValue(itemTable.attributes, "variable_damage") then
 						frame:AddText("Variable Damage: Damage will be increased or decreased depending on the distance of the target. Targets further away will receive more damage.", Color(110, 30, 30), nil, 0.9);
+					elseif table.HasValue(itemTable.attributes, "suppressed") then
+						frame:AddText("Suppressed: While using Pop-a-Shot, this firearm will be quieter than most and cannot be heard at long ranges.", Color(110, 30, 30), nil, 0.9);
 					end
 				end
 

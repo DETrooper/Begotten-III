@@ -210,6 +210,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	
 	ITEM.ammoCapacity = 1;
 	ITEM.ammoTypes = {"Pop-a-Shot", "Grapeshot"};
+	ITEM.attributes = {"suppressed"};
 	ITEM.firearmType = "Handgun";
 	ITEM.reloadTime = 10; -- Seconds
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};

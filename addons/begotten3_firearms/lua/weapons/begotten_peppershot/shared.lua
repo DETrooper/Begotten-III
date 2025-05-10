@@ -104,7 +104,8 @@ SWEP.AmmoTypes = {
 	end,
 	["Pop-a-Shot"] = function(SWEP)
 		SWEP.Primary.Sound = Sound("weapons_pipegun/p228-1.wav");
-		SWEP.Primary.FarSound = Sound("weapons_pipegun/p228-1_distant.mp3");
+		--SWEP.Primary.FarSound = Sound("weapons_pipegun/p228-1_distant.mp3");
+		SWEP.Primary.FarSound = nil;
 		SWEP.Primary.SoundLevel = 400;
 		SWEP.Primary.NumShots = 1;
 		SWEP.Primary.Damage = 37;
@@ -160,7 +161,7 @@ function SWEP:PrimaryAttack()
 				self.Weapon:TakeAmmoBegotten(1); -- This should really only ever be 1 unless for some reason we have burst-fire guns or some shit, especially since we have different ammo types.
 				--self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 				
-				if SERVER then
+				if SERVER and self.Primary.FarSound then
 					local playerTab = {};
 					local farPlayers = {};
 
