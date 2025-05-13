@@ -772,6 +772,14 @@ function cwRituals:PlayerDeath(player)
 			
 			player:SetNetVar("blessingOfCoin", false);
 		end
+
+		if player:GetNetVar("druidStaffActive") == true then
+			player:SetNetVar("druidStaffActive", false)
+			
+			if timer.Exists("DruidStaffTImer_"..entIndex) then
+				timer.Remove("DruidStaffTImer_"..entIndex);
+			end
+		end
 		
 		if player.bloodHowlActive then
 			player.bloodHowlActive = nil;
