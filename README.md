@@ -14,8 +14,6 @@ Begotten III is licenced under [Creative Commons Attribution-NonCommercial 4.0 I
 
 <b>[Begotten III Addon Collection](https://steamcommunity.com/workshop/filedetails/?id=2443075973)</b>
 
-<b>[District 21 Addon Collection](https://steamcommunity.com/sharedfiles/filedetails/?id=3380244456)</b>
-
 ## Credits
 
 [Clockwork](https://github.com/CloudSixteen/Clockwork) was developed by Cloud Sixteen, but the Begotten III framework also uses code from Alex Grist, Mr. Meow, and zigbomb.

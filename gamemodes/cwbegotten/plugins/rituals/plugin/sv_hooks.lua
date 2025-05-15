@@ -434,6 +434,14 @@ function cwRituals:PlayerCharacterLoaded(player)
 		player:SetNetVar("auraMotherActive", false);
 	end
 	
+	if player:GetNetVar("druidStaffActive") == true then
+		player:SetNetVar("druidStaffActive", false)
+		
+		if timer.Exists("DruidStaffTImer_"..entIndex) then
+			timer.Remove("DruidStaffTImer_"..entIndex);
+		end
+	end
+	
 	if player:GetNetVar("blessingOfCoin") == true then
 		player:SetNetVar("blessingOfCoin", false)
 		
@@ -763,6 +771,14 @@ function cwRituals:PlayerDeath(player)
 			timer.Remove("BlessingOfCoinTimer_"..entIndex);
 			
 			player:SetNetVar("blessingOfCoin", false);
+		end
+
+		if player:GetNetVar("druidStaffActive") == true then
+			player:SetNetVar("druidStaffActive", false)
+			
+			if timer.Exists("DruidStaffTImer_"..entIndex) then
+				timer.Remove("DruidStaffTImer_"..entIndex);
+			end
 		end
 		
 		if player.bloodHowlActive then

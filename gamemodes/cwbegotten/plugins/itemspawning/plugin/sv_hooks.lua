@@ -398,16 +398,19 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 			end
 			
 			if player:GetNetVar("blessingOfCoin", false) then
-				local amount = math.random(1, 4) == 1 and math.random(100, 200) or math.random(25, 100)
-			
-				if container.cwCash then
-					container.cwCash = container.cwCash + amount;
-				else
-					container.cwCash = amount;
-				end
+				if math.random(1, 2) == 1 then
+					local amount;
+
+					amount = math.random(25, 150);
 				
-				Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had "..tostring(amount).." coin added to their loot container from the 'Blessing of Coin' ritual!");
-			
+					if container.cwCash then
+						container.cwCash = container.cwCash + amount;
+					else
+						container.cwCash = amount;
+					end
+					
+					Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had "..tostring(amount).." coin added to their loot container from the 'Blessing of Coin' ritual!");
+				end
 			end
 		end
 		
