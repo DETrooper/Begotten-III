@@ -144,7 +144,7 @@ if SERVER then
 				self.StaminaDamage = 35
 				self.Damage = 25
 				self:EmitSound("begotten/npc/grunt/attack_launch03.mp3", 100, 120)
-				self:PlaySequenceAndMove("fastattack", 0.5, self.PossessionFaceForward)
+				self:PlaySequenceAndMove("fastattack", 0.5, self.FaceEnemy)
 			else
 				self.StaminaDamage = 60
 				self.Damage = 50

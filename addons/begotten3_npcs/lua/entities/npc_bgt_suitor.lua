@@ -147,7 +147,7 @@ if SERVER then
 			if math.random(1,3) == 1 then
 				self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)
 			else
-				self:PlaySequenceAndMove("fastattack", 0.75, self.PossessionFaceForward)
+				self:PlaySequenceAndMove("fastattack", 0.75, self.FaceEnemy)
 			end
 		end
 	end

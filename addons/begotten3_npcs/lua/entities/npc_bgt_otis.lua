@@ -146,7 +146,7 @@ if SERVER then
 	function ENT:OnMeleeAttack(enemy)
 		if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
 			self:EmitSound(table.Random(attackSounds), 100, self.pitch)
-			self:PlaySequenceAndMove("fastattack", 0.75, self.PossessionFaceForward)
+			self:PlaySequenceAndMove("fastattack", 0.75, self.FaceEnemy)
 		end
 	end
 	function ENT:OnReachedPatrol()
