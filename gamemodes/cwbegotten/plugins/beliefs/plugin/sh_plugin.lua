@@ -1228,11 +1228,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 										end
 									end
 								
-									if v:HasBelief("saintly_composure") then
-										v:Disorient(2);
-									else
-										v:Disorient(5.5);
-									end
+									v:Disorient(5.5);
 								end
 							elseif faith == "Faith of the Family" then
 								if faction == "Hillkeeper" then
@@ -1272,11 +1268,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 											v:Disorient(1);
 										end
 									else
-										if v:HasBelief("saintly_composure") then
-											v:Disorient(1);
-										else
-											v:Disorient(2.5);
-										end
+										v:Disorient(2.5);
 									end
 								end
 							--[[elseif faith == "Faith of the Light" then

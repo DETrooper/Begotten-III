@@ -18,7 +18,13 @@ function cwMelee:AddParryEffect(duration)
 end;
 
 function cwMelee:Disorient(blurAmount)
-	util.ScreenShake(Clockwork.Client:GetPos(), 15, 2, 3, 10)
+	if cwBeliefs and Clockwork.Client:HasBelief("saintly_composure") then
+		blurAmount = (blurAmount or 1.5) * 0.4;
+		util.ScreenShake(Clockwork.Client:GetPos(), 6, 0.8, 1.2, 10)
+	else
+		util.ScreenShake(Clockwork.Client:GetPos(), 15, 2, 3, 10)
+	end
+
 	self.blurAmount = blurAmount or 1.5;
 end;
 
