@@ -3358,11 +3358,11 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				local percentage = 0;
 			
 				if armorClass == "Heavy" then
-					percentage = 0.3;
+					percentage = 0.4;
 				elseif armorClass == "Medium" then
-					percentage = 0.2;
+					percentage = 0.3;
 				elseif armorClass == "Light" then
-					percentage = 0.15;
+					percentage = 0.25;
 				end
 				
 				percentage = percentage * 100;
