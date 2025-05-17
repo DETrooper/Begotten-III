@@ -81,6 +81,12 @@ function cwMelee:KeyPress(player, key)
 										if IsValid(player.possessor) then
 											player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to swiping stance.")
 										end
+									elseif (activeWeapon.ChoppingAltAttack == true) then
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to chopping stance.")
+										
+										if IsValid(player.possessor) then
+											player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to chopping stance.")
+										end
 									elseif canThrust then
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
 										

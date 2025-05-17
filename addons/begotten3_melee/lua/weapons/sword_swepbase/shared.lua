@@ -284,7 +284,7 @@ function SWEP:Hitscan()
 			util.Effect("BloodImpact", effect, true, true);
 			
 			--if not Clockwork.entity:GetPlayer(tr.Entity) or not Clockwork.entity:GetPlayer(tr.Entity):Alive() then
-				if self.Owner:GetNetVar("ThrustStance") != true then
+				if self.Owner:GetNetVar("ThrustStance") != true or self.ChoppingAltAttack then
 					tr.Entity:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 				else
 					tr.Entity:EmitSound(attacksoundtable["althitbody"][math.random(1, #attacksoundtable["althitbody"])])
@@ -624,6 +624,10 @@ function SWEP:PrimaryAttack()
 		delay = delay * 0.9;
 	end
 	
+	if self:GetNW2Bool("swordplayActive") == true then
+		delay = delay * 0.8;
+	end
+	
 	if owner:GetNetVar("ThrustStance") == true then
 		stance = "thrust_swing";
 	else
@@ -785,6 +789,8 @@ function SWEP:PrimaryAttack()
 							
 							if !bParry and (stance == "thrust_swing" or thrustOverride) then
 								meleeArc = attacktable["altmeleearc"] or attacktable["meleearc"] or 25;
+								
+								hitsAllowed = 0
 							
 								if attacktable.canaltattack then
 									if attacktable.altmeleerange then
@@ -1360,6 +1366,8 @@ end
 							end
 						end
 					end
+				elseif weapon.ChoppingAltAttack == true then
+					damagetype = 4
 				end
 				-- Polearm alt attack spear shaft hit system
 				if (IsValid(self)) then

@@ -155,7 +155,7 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.bluntScale = 0.55; -- reduces blunt damage by 45%
-ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
+ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 ITEM.insulation = 25;
 
 ITEM.components = {breakdownType = "breakdown", items = {"hide", "hide", "bearskin", "cloth"}};
@@ -324,7 +324,7 @@ ITEM.effectiveLimbs = {
 ITEM.bluntScale = 0.60; -- reduces blunt damage by 40%
 ITEM.slashScale = 0.90; -- reduces slash damage by 10%
 ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
-ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
+ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 ITEM.insulation = 55;
 
 ITEM.components = {breakdownType = "breakdown", items = {"human_bone", "human_bone", "human_bone", "human_bone", "human_bone", "human_bone", "cloth", "cloth"}};
@@ -628,7 +628,7 @@ ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
-ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
+ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
 ITEM.insulation = 60;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "leather", "leather", "leather", "cloth"}};
@@ -744,7 +744,7 @@ ITEM.damageTypeScales = {
 ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 ITEM.bulletScale = 0.80; -- reduces bullet damage by 20%
 ITEM.insulation = 70;
 

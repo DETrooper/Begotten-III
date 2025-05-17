@@ -230,7 +230,7 @@ ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
-ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
+ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 ITEM.insulation = 40;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "cloth", "cloth"}};
@@ -437,7 +437,7 @@ ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
-ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
+ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 ITEM.insulation = 60;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "human_bone", "human_bone", "human_bone", "human_bone", "human_bone"}};
@@ -510,7 +510,7 @@ ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
-ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
+ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 ITEM.insulation = 50;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "human_bone", "human_bone", "human_bone", "human_bone", "human_bone"}};
@@ -699,7 +699,7 @@ ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
 ITEM.pierceScale = 0.65; -- reduces pierce damage by 35%
 ITEM.slashScale = 0.55; -- reduces slash damage by 45%
 ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
-ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
+ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
 ITEM.insulation = 65;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "gold_ingot", "cloth", "cloth"}};

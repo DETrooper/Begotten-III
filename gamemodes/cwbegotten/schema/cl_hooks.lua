@@ -1815,6 +1815,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				if weaponStats["attack"].canaltattack then
 					if weaponTable.CanSwipeAttack then
 						frame:AddText("Alternate Attack: Swipe", Color(110, 30, 30), nil, 0.9);
+					elseif weaponTable.ChoppingAltAttack then
+						frame:AddText("Alternate Attack: Chop", Color(110, 30, 30), nil, 0.9);
 					else
 						frame:AddText("Alternate Attack: Thrust", Color(110, 30, 30), nil, 0.9);
 					end
@@ -1896,7 +1898,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 
 					if table.HasValue(itemTable.attributes, "aoebuff") then
-						frame:AddText("Area of Effect Buff: +15% Attack Damage, -25% Received Damage, 1.5x Stamina Regen Rate, +2 Residual Sanity Gain, Immunity to Warcry Sanity & Disorientation Debuffs", Color(110, 30, 30), nil, 0.9);
+						frame:AddText("Area of Effect Buff: +15% Attack Damage, -25% Received Damage, 1.25x Stamina Regen Rate, +2 Residual Sanity Gain, Immunity to Warcry Sanity & Disorientation Debuffs", Color(110, 30, 30), nil, 0.9);
 					end
 				
 					if table.HasValue(itemTable.attributes, "concealable") then
@@ -2142,7 +2144,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						frame:AddBar(12, {{text = tostring(weaponStats["attack"].alttakeammo).." Stamina", percentage = percentage * 100, color = Color(110, 30, 30), font = "DermaDefault", textless = false, noDisplay = true}}, "Alternate Attack Cost", Color(110, 30, 30), toolTip, true);
 					end
 					
-					if weaponStats["attack"].altarmorpiercing then
+					if weaponStats["attack"].altarmorpiercing and weaponStats["attack"].altarmorpiercing != weaponStats["attack"].armorpiercing then
 						local armorpiercing = weaponStats["attack"].altarmorpiercing;
 						local damagetype;
 						local originalAP = armorpiercing;

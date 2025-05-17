@@ -490,7 +490,7 @@ ITEM.damageTypeScales = {
 ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
 ITEM.pierceScale = 0.65; -- reduces pierce damage by 35%
 ITEM.slashScale = 0.55; -- reduces slash damage by 45%
-ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
+ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 ITEM.bulletScale = 0.3; -- reduces bullet damage by 70%
 ITEM.insulation = 65; -- Adds 48% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
 
@@ -884,7 +884,7 @@ ITEM.effectiveLimbs = {
 }
 
 ITEM.bluntScale = 0.55; -- reduces blunt damage by 45%
-ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
+ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 ITEM.insulation = 45; -- Adds 28% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
 
 ITEM.components = {breakdownType = "breakdown", items = {"humanmeat", "humanmeat", "humanmeat", "humanmeat", "humanmeat", "humanmeat", "humanmeat"}};

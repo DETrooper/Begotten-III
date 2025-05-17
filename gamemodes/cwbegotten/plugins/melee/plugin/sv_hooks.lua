@@ -123,12 +123,13 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 			local althitbody = "physics/body/body_medium_break4.wav";
 			local didthrust = false;
 			local playlowdamage = false;
+			local attackerWeapon = attacker:GetActiveWeapon();
 
 			if inflictor and IsValid(inflictor) then
 				if (inflictor.AttackSoundTable) then
 					local attackSoundTable = GetSoundTable(inflictor.AttackSoundTable)
 					
-					if attacker:GetNetVar("ThrustStance") == true then
+					if attacker:GetNetVar("ThrustStance") == true and !attackerWeapon.ChoppingAltAttack then
 						didthrust = true;
 					end;
 					

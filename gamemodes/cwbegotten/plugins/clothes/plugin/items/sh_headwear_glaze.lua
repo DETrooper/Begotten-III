@@ -29,7 +29,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 	ITEM.bulletScale = 0.85; -- reduces bullet damage by 15%
-	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 30;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
@@ -48,7 +48,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 	
 	ITEM.attributes = {"conditionless", "not_unequippable", "deathknell", "fear"};
-	ITEM.requiredbeliefs = {"repentant"};
+	ITEM.requiredbeliefs = {"repentant", "hauberk"};
 	ITEM.kinisgerOverride = true;
 	ITEM.permanent = true;
 
@@ -67,7 +67,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
-	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
 	ITEM.insulation = 35;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
@@ -86,7 +86,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 	
 	ITEM.attributes = {"conditionless", "not_unequippable", "bloodtoll", "fear"};
-	ITEM.requiredbeliefs = {"repentant"};
+	ITEM.requiredbeliefs = {"repentant", "hauberk"};
 	ITEM.kinisgerOverride = true;
 	ITEM.permanent = true;
 
@@ -104,7 +104,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
-	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
 	ITEM.insulation = 30;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
@@ -138,7 +138,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 35;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}};
@@ -156,6 +156,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.excludeFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/crudeplatehelmet";
+	ITEM.requiredbeliefs = {"hauberk"};
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -172,7 +173,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
-	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
 	ITEM.insulation = 40;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
@@ -207,7 +208,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 	ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
 	ITEM.slashScale = 0.90; -- reduces slash damage by 10%
-	ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 	ITEM.insulation = 40;
 		
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth"}};
@@ -241,7 +242,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 	ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
 	ITEM.slashScale = 0.90; -- reduces slash damage by 10%
-	ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 	ITEM.insulation = 60;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth"}};
@@ -269,7 +270,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.type = "leather";
 
 	ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
-	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
+	ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 	ITEM.insulation = 40;
 		
 	ITEM.attributes = {"fear"};
@@ -439,7 +440,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 	ITEM.insulation = 45;
 	
@@ -474,7 +475,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 	ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
 	ITEM.slashScale = 0.90; -- reduces slash damage by 10%
-	ITEM.stabilityScale = 0.85; -- reduces stability damage by 15%
+	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
 	ITEM.insulation = 35;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"leather"}};
@@ -508,7 +509,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 30;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
@@ -543,7 +544,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 40;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}};
@@ -578,7 +579,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
-	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 45;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "leather"}};
@@ -615,7 +616,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
-	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 30;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks"}};
@@ -638,6 +639,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/gatekeeperhelmet";
 	ITEM.faction = "Gatekeeper";
+	ITEM.requiredbeliefs = {"hauberk"};
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -654,7 +656,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
-	ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
+	ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 	ITEM.insulation = 35;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "cloth"}};
@@ -673,6 +675,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaction = {"Holy Hierarchy"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/knighthelmet";
+	ITEM.requiredbeliefs = {"hauberk"};
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -689,7 +692,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
-	ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
+	ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 	ITEM.insulation = 35;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
@@ -707,6 +710,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaction = {"Holy Hierarchy"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/knighthelmet";
+	ITEM.requiredbeliefs = {"hauberk"};
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -723,7 +727,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%
-	ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
+	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
 	ITEM.insulation = 35;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
@@ -740,6 +744,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/machinistplatehelmet";
+	ITEM.requiredbeliefs = {"hauberk"};
 
 	ITEM.conditionScale = 1 -- item degrades 1x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -756,7 +761,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.75; -- reduces pierce damage by 25%
 	ITEM.slashScale = 0.65; -- reduces slash damage by 35%
 	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
-	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 35;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"scrap", "scrap", "scrap", "scrap", "scrap"}};
@@ -773,6 +778,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/smogpriesthelmet";
+	ITEM.requiredbeliefs = {"hauberk"};
 
 	ITEM.conditionScale = 0.85 -- item degrades 1x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -789,7 +795,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 	ITEM.bulletScale = 0.65; -- reduces bullet damage by 35%
-	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 50;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "leather", "cloth", "scrap", "scrap", "scrap"}};

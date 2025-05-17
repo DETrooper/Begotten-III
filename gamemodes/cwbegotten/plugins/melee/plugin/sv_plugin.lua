@@ -139,11 +139,11 @@ function playerMeta:TakeStability(amount, cooldown, bNoMe)
 				amount = math.floor(amount * armorTable.stabilityScale);
 			elseif armorClass then
 				if armorClass == "Heavy" then
-					amount = math.floor(amount * 0.7);
+					amount = math.floor(amount * 0.6);
 				elseif armorClass == "Medium" then
-					amount = math.floor(amount * 0.8);
+					amount = math.floor(amount * 0.7);
 				elseif armorClass == "Light" then
-					amount = math.floor(amount * 0.85);
+					amount = math.floor(amount * 0.75);
 				end
 			end
 		end

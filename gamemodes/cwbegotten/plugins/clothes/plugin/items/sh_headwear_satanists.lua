@@ -76,7 +76,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 	ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
 	ITEM.slashScale = 0.70; -- reduces slash damage by 30%
-	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 40;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "scrap", "scrap"}};
@@ -98,6 +98,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/hellplatehelmet";
 	ITEM.faction = "Children of Satan";
+	ITEM.requiredbeliefs = {"hauberk"};
 
 	ITEM.conditionScale = 1.5 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -114,7 +115,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
-	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
+	ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 	ITEM.insulation = 50;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
@@ -152,7 +153,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.65; -- reduces slash damage by 35%
 	ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
-	ITEM.stabilityScale = 0.75; -- reduces stability damage by 25%
+	ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
 	ITEM.insulation = 50;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks"}};

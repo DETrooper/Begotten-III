@@ -1317,6 +1317,61 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("handheld_radio");
+		RECIPE.name = "Handheld Radio";
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requirements = {
+			["tech"] = {amount = 2},
+			["scrap"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["handheld_radio"] = {amount = 1},
+		};
+		RECIPE.category = "Other"
+		RECIPE.finishSound = "physics/plastic/plastic_box_impact_bullet2.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 15;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("lantern");
+		RECIPE.name = "Lantern";
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requirements = {
+			["wrought_iron_ingot"] = {amount = 3},
+			["scrap"] = {amount = 1},
+			["wood"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["lantern"] = {amount = 1},
+		};
+		RECIPE.category = "Other"
+		RECIPE.finishSound = "physics/plastic/plastic_box_impact_bullet2.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 30;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("breakdown_kit");
 		RECIPE.name = "Breakdown Kit";
@@ -5101,7 +5156,8 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFaiths = {"Faith of the Light"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 8},
+			["iron_ingot"] = {amount = 4},
+			["steel_ingot"] = {amount = 4},
 			["judgemental_sigil_stone"] = {amount = 1},
 		};
 		RECIPE.result = {

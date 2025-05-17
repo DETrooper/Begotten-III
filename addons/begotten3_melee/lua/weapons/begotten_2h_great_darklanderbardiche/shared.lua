@@ -32,6 +32,7 @@ SWEP.AltPlaybackRate = nil
 SWEP.AltIdleDelay = nil
 SWEP.PrimarySwingAnim = "a_heavy_great_attack_slash_01"
 SWEP.MultiHit = 2;
+SWEP.ChoppingAltAttack = true;
 
 --Sounds
 SWEP.AttackSoundTable = "HeavyMetalAttackSoundTable"
@@ -105,6 +106,35 @@ function SWEP:HandlePrimaryAttack()
 			vm:SendViewModelMatchingSequence( vm:LookupSequence( "atk_r" ) )
 			self.Owner:GetViewModel():SetPlaybackRate(self.PrimaryPlaybackRate)
 			self:IdleAnimationDelay( self.PrimaryIdleDelay, self.PrimaryIdleDelay )
+		end
+	end
+end
+
+function SWEP:HandleThrustAttack()
+	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+	local attacktable = GetTable(self.AttackTable)
+
+	-- Viewmodel attack animation!
+	self.Weapon:EmitSound(self.WindUpSound)
+	timer.Simple( attacktable["striketime"] - 0.05, function() if self:IsValid() and self.isAttacking then
+	self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
+	end end)
+	
+	local vm = self.Owner:GetViewModel()
+	vm:SendViewModelMatchingSequence( vm:LookupSequence( "atk_f" ) )
+	self.Owner:GetViewModel():SetPlaybackRate(1)
+	self:IdleAnimationDelay( 1, 1 )
+	
+	--Attack animation
+	self:TriggerAnim(self.Owner, self.CriticalAnim);
+	
+	self.Owner:ViewPunch(Angle(8,2,2))
+	
+	if self.Owner.HandleNeed and not self.Owner.opponent and !self.Owner:GetCharmEquipped("warding_talisman") then
+		if !self.Owner:GetCharmEquipped("crucifix") then
+			self.Owner:HandleNeed("corruption", self.CorruptionGain);
+		else
+			self.Owner:HandleNeed("corruption", self.CorruptionGain * 0.5);
 		end
 	end
 end

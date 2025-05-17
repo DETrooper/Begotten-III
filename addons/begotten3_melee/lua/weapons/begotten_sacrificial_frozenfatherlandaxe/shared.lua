@@ -37,8 +37,9 @@ SWEP.DrawEffect = "steam_train"
 SWEP.AmbientEffect = "striderbuster_smoke"
 SWEP.IgniteTime = nil
 SWEP.FreezeTime = 10
-SWEP.FreezeDamage = 48;
+SWEP.FreezeDamage = 50;
 SWEP.MultiHit = 2;
+SWEP.ChoppingAltAttack = true;
 
 --Sounds
 SWEP.AttackSoundTable = "HeavyMetalAttackSoundTable"
@@ -47,7 +48,7 @@ SWEP.SoundMaterial = "Metal" -- Metal, Wooden, MetalPierce, Punch, Default
 
 SWEP.WindUpSound = "draw/skyrim_axe_draw1.mp3" --For 2h weapons only, plays before primarysound
 
-SWEP.CorruptionGain = 3.5; -- For sacrificial weapons, gives corruption for each swing
+SWEP.CorruptionGain = 5; -- For sacrificial weapons, gives corruption for each swing
 
 /*---------------------------------------------------------
 	PrimaryAttack
@@ -116,6 +117,35 @@ function SWEP:HandlePrimaryAttack()
 			self:IdleAnimationDelay( self.PrimaryIdleDelay, self.PrimaryIdleDelay )
 		end
 	end
+	
+	if self.Owner.HandleNeed and not self.Owner.opponent and !self.Owner:GetCharmEquipped("warding_talisman") then
+		if !self.Owner:GetCharmEquipped("crucifix") then
+			self.Owner:HandleNeed("corruption", self.CorruptionGain);
+		else
+			self.Owner:HandleNeed("corruption", self.CorruptionGain * 0.5);
+		end
+	end
+end
+
+function SWEP:HandleThrustAttack()
+	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+	local attacktable = GetTable(self.AttackTable)
+
+	-- Viewmodel attack animation!
+	self.Weapon:EmitSound(self.WindUpSound)
+	timer.Simple( attacktable["striketime"] - 0.05, function() if self:IsValid() and self.isAttacking then
+	self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
+	end end)
+	
+	local vm = self.Owner:GetViewModel()
+	vm:SendViewModelMatchingSequence( vm:LookupSequence( "atk_f" ) )
+	self.Owner:GetViewModel():SetPlaybackRate(1)
+	self:IdleAnimationDelay( 1, 1 )
+	
+	--Attack animation
+	self:TriggerAnim(self.Owner, self.CriticalAnim);
+	
+	self.Owner:ViewPunch(Angle(8,2,2))
 	
 	if self.Owner.HandleNeed and not self.Owner.opponent and !self.Owner:GetCharmEquipped("warding_talisman") then
 		if !self.Owner:GetCharmEquipped("crucifix") then
