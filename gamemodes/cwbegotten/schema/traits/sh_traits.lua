@@ -187,7 +187,7 @@ local MINER = Clockwork.trait:New()
 	MINER.points = 7
 	MINER.disables = {"escapee", "weak"}
 	MINER.requiredfactions = {"Wanderer"}
-	MINER.eventlocked = false;
+	MINER.excludedmaps = {"rp_district21"}
 Clockwork.trait:Register(MINER)
 
 local NIMBLE = Clockwork.trait:New()
