@@ -80,14 +80,15 @@ ENT.PossessionBinds = {
   [IN_ATTACK] = {{
     coroutine = true,
     onkeydown = function(self)
-			  local att = math.random(2)	
-  if att == 1 then
+			  local att = math.random(3)	
+  if att == 1 or att == 2 then
    self:Attack1()	
    self:PlaySequenceAndMove("attack1", 1, self.PossessionFaceForward)
-end
+  end
   if att == 2 then
-   self:Attack1()	
-   self:PlaySequenceAndMove("attack2", 1, self.PossessionFaceForward)
+   self:EmitSound("bear/idle1.wav", 90, 80)
+   self:Attack2()	
+   self:PlaySequenceAndMove("attack2", 0.5, self.PossessionFaceForward)
 end
 end
   }}
@@ -164,12 +165,9 @@ end
   function ENT:OnMeleeAttack(enemy)
        if !self.nextMeleeAttack or self.nextMeleeAttack < CurTime() then
 		   local att = math.random(3)	
-		   if att == 1 then
+		   if att == 1 or att == 2 then
 			   self:Attack1()	
 			   self:PlaySequenceAndMove("attack1", 1, self.FaceEnemy)
-		   elseif att == 2 then
-			   self:Attack1()	
-			   self:PlaySequenceAndMove("attack2", 1, self.FaceEnemy)
 		   else
 			   self:EmitSound("bear/idle1.wav", 90, 80)
 			   self:Attack2()	
