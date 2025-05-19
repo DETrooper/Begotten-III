@@ -43,7 +43,7 @@ local ITEM = Clockwork.item:New();
 		return false;
 	end;
 	
-	ITEM.itemSpawnerInfo = {category = "Industrial Junk", rarity = 80, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Industrial Junk", rarity = 550, bNoSupercrate = true};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;

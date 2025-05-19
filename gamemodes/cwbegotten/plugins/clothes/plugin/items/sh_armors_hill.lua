@@ -487,12 +487,12 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.25, -- increases fall damage by 25%
 }
 
-ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
 ITEM.pierceScale = 0.65; -- reduces pierce damage by 35%
 ITEM.slashScale = 0.55; -- reduces slash damage by 45%
 ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
-ITEM.bulletScale = 0.3; -- reduces bullet damage by 70%
-ITEM.insulation = 65; -- Adds 48% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+ITEM.bulletScale = 0.35; -- reduces bullet damage by 65%
+ITEM.insulation = 65; -- Adds 48% insulation. Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%. 
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "steel_chunks", "leather", "leather", "leather", "cloth"}, xp = 30};
 

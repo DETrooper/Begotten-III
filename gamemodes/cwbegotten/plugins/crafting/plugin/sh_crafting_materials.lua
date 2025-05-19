@@ -111,7 +111,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.weight = 0.1;
 	ITEM.uniqueID = "iron_chunks";
 	ITEM.description = "Melted down chunks of metal. It should be reclaimed into an ingot.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/crude_iron_ingot.png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/wrought_iron_ingot.png";
 	ITEM.stackable = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"wrought_iron_ingot"}};
@@ -128,7 +128,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.weight = 0.1;
 	ITEM.uniqueID = "steel_chunks";
 	ITEM.description = "Melted down chunks of metal. It should be reclaimed into an ingot.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/steel_ingot.png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/crude_iron_ingot.png";
 	ITEM.stackable = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_ingot"}};
@@ -145,7 +145,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.weight = 0.1;
 	ITEM.uniqueID = "fine_steel_chunks";
 	ITEM.description = "Melted down chunks of metal. It should be reclaimed into an ingot.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/fine_steel_ingot.png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/steel_ingot.png";
 	ITEM.stackable = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_ingot"}};
@@ -162,7 +162,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.weight = 0.3;
 	ITEM.uniqueID = "iron_ingot";
 	ITEM.description = "A low-quality ingot of iron that can be further smithed into a weapon or into a set of armor.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/crude_iron_ingot.png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/wrought_iron_ingot.png";
 	ITEM.stackable = true;
 	
 	-- Called when a player drops the item.
@@ -177,7 +177,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.weight = 0.3;
 	ITEM.uniqueID = "steel_ingot";
 	ITEM.description = "An ingot of steel that can be further smithed into a weapon or into a set of armor.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/crude_iron_ingot.png";
 	ITEM.stackable = true;
 
 	-- Called when a player drops the item.
@@ -192,7 +192,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.weight = 0.3;
 	ITEM.uniqueID = "fine_steel_ingot";
 	ITEM.description = "An ingot of refined, stronger steel that can be further smithed into a weapon or into a set of armor.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/steel_ingot.png";
 	ITEM.stackable = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Crafting Materials", rarity = 650, supercrateOnly = true};

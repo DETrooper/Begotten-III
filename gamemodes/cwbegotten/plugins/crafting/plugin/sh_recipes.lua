@@ -162,6 +162,7 @@ function cwRecipes:ClockworkInitialized()
 		end;
 	RECIPE:Register()
 
+--[[
 	RECIPE = cwRecipes.recipes:New("wrought_iron_ingot");
 		RECIPE.name = "(4x) Wrought Iron Ingot";
 		RECIPE.requiresSmithy = true;
@@ -189,24 +190,25 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+--]]
 
 	RECIPE = cwRecipes.recipes:New("iron_ingot");
-		RECIPE.name = "Iron Ingot";
+		RECIPE.name = "(2x) Iron Ingot";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"smith"};
 		RECIPE.requirements = {
-			["wrought_iron_ingot"] = {amount = 2},
-			["charcoal"] = {amount = 1},
+			["iron_ore"] = {amount = 1},
+			["charcoal"] = {amount = 3},
 		};
 		RECIPE.result = {
-			["iron_ingot"] = {amount = 1},
+			["iron_ingot"] = {amount = 2},
 		};
 		RECIPE.category = "Other"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 4
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 5;
+		RECIPE.experience = 8;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -1295,8 +1297,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Engraving Tool";
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requirements = {
-			["wrought_iron_ingot"] = {amount = 1},
-			["stone"] = {amount = 1},
+			["iron_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["engraving_tool"] = {amount = 1},
@@ -1349,7 +1350,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Lantern";
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requirements = {
-			["wrought_iron_ingot"] = {amount = 3},
+			["iron_ingot"] = {amount = 2},
 			["scrap"] = {amount = 1},
 			["wood"] = {amount = 1},
 		};
@@ -3063,7 +3064,7 @@ RECIPE:Register()
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["wrought_iron_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 1},
 			["wood"] = {amount = 2},
 			["stone"] = {amount = 1},
 		};
@@ -3734,7 +3735,7 @@ RECIPE:Register()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requiredFaiths = {"Faith of the Dark"};
 		RECIPE.requirements = {
-			["wrought_iron_ingot"] = {amount = 1},
+			["iron_ingot"] = {amount = 1},
 			["wood"] = {amount = 2},
 			["belphegor_catalyst"] = {amount = 1},
 		};
@@ -4252,15 +4253,15 @@ RECIPE:Register()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("harpoon");
-		RECIPE.name = "Harpoon";
+		RECIPE.name = "(2x) Harpoon";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"ingenious"};
 		RECIPE.requirements = {
-			["wrought_iron_ingot"] = {amount = 1},
-			["wood"] = {amount = 2},
+			["iron_ingot"] = {amount = 1},
+			["wood"] = {amount = 4},
 		};
 		RECIPE.result = {
-			["begotten_spear_harpoon"] = {amount = 1},
+			["begotten_spear_harpoon"] = {amount = 2},
 		};
 		RECIPE.category = "Weapons"
 		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
@@ -8148,7 +8149,7 @@ RECIPE:Register()
 		RECIPE.requiredFaiths = {"Faith of the Light"};
 		RECIPE.requirements = {
 			["exile_knight_armor"] = {amount = 1},
-			["light_catalyst"] = {amount = 3},
+			["purifying_stone"] = {amount = 3},
 		};
 		RECIPE.result = {
 			["knight_plate"] = {amount = 1},
@@ -8158,7 +8159,7 @@ RECIPE:Register()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "imbueing"
-		RECIPE.experience = 60;
+		RECIPE.experience = 65;
 		
 		function RECIPE:OnCraft(player)
 		end;

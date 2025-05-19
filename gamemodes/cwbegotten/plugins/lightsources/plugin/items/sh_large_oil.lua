@@ -8,7 +8,7 @@
 local ITEM = Clockwork.item:New();
 	ITEM.name = "Large Bottle of Oil";
 	ITEM.model = "models/weapons/w_oil.mdl";
-	ITEM.weight = 0.2;
+	ITEM.weight = 0.25;
 	ITEM.useText = "Refill";
 	ITEM.category = "Fuel"
 	ITEM.description = "A large bottle of oil.";
@@ -43,7 +43,7 @@ local ITEM = Clockwork.item:New();
 		return false;
 	end;
 	
-	ITEM.itemSpawnerInfo = {category = "Industrial Junk", rarity = 200, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Industrial Junk", rarity = 925, bNoSupercrate = true};
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;

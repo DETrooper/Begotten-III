@@ -758,7 +758,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"wrought_iron_ingot", "wood", "wood"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood", "wood"}};
 	ITEM.requireFaith = {"Faith of the Dark"};
 ITEM:Register();
 

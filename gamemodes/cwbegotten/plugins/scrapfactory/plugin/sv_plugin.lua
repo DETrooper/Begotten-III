@@ -246,7 +246,7 @@ function cwScrapFactory:CheckProcessingCycle()
 			local greatResources = {"fine_steel_ingot", "steel_ingot"};
 			local goodResources = {"steel_ingot"};
 			local decentResources = {"iron_ingot"};
-			local shitResources = {"wrought_iron_ingot"};
+			local shitResources = {"iron_chunks"};
 			
 			if darkPresent then
 				table.insert(bestResources, "hellforged_steel_ingot");

@@ -188,7 +188,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 	ITEM.requireRank = {"Master-At-Arms"};
-	ITEM.requireFaction = {"Hillkeeper"};
+	ITEM.requireFaction = {"Hillkeeper"}; 
 	ITEM.requiredbeliefs = {"hauberk"};
 	
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
@@ -201,7 +201,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
-	ITEM.bluntScale = 0.70; -- reduces blunt damage by 30%
+	ITEM.bluntScale = 0.75; -- reduces blunt damage by 25%
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 	ITEM.bulletScale = 0.50; -- reduces bullet damage by 50%

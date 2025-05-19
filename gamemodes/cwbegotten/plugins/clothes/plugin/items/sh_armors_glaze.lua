@@ -1326,8 +1326,8 @@ ITEM.conditionScale = 0.75
 ITEM.concealsFace = true;
 ITEM.hasHelmet = true;
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 80;
-ITEM.weight = 8;
+ITEM.protection = 85;
+ITEM.weight = 9;
 ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "An old set of armor, once belonging to a disgraced Knight of Sol. Although covered in tattered cloth that has hardly withstood the harsh conditions of the wasteland, the armor itself is in substantially better condition, with faded gold markings still visible.";
@@ -1353,13 +1353,14 @@ ITEM.damageTypeScales = {
 	[DMG_FALL] = -0.15, -- increases fall damage by 15%
 }
 
-ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
-ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
+ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
+ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 ITEM.insulation = 50;
 
-ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "leather", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks", "leather", "cloth"}};
 ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1000, supercrateOnly = true};
 
 -- Called when a replacement is needed for a player.
@@ -2130,7 +2131,7 @@ ITEM.iconoverride = "materials/begotten/ui/itemicons/masteratarms_gatekeeper_pla
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
-ITEM.protection = 80
+ITEM.protection = 75
 ITEM.type = "chainmail";
 ITEM.weight = 7;
 ITEM.weightclass = "Medium";
@@ -2151,10 +2152,10 @@ ITEM.effectiveLimbs = {
 	[HITGROUP_GEAR] = true
 }
 
-ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
-ITEM.pierceScale = 0.65; -- reduces pierce damage by 35%
-ITEM.slashScale = 0.55; -- reduces slash damage by 45%
-ITEM.bulletScale = 0.3; -- reduces bullet damage by 70%
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+ITEM.bulletScale = 0.45; -- reduces bullet damage by 55%
 ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
 ITEM.insulation = 45;
 
