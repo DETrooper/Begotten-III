@@ -736,17 +736,22 @@ local function Guarding(ent, dmginfo)
 							end
 						end
 					end
-					
-					-- Poise system
-					
-					--[[(For NPC Poise Damage WIP)
-					if attacker:IsValid() and (attacker:IsNPC() or attacker:IsNextBot()) and ent:IsValid() and ent:Alive() then
-							--print (attacker:GetClass())
-					end
-					--]]
-						
+											
 					if bIsPlayer and !ent:GetNetVar("Deflect") and ent:Alive() and attacker:IsValid() then
 						local poiseDamageModifier = 1;
+						local weaponClass = enemywep:GetClass();
+						
+						if string.find(weaponClass, "begotten_spear_") or string.find(weaponClass, "begotten_polearm_") or string.find(weaponClass, "begotten_scythe_") then
+							local attacktable = GetTable(enemywep.AttackTable);
+							local distance = (attacker:GetPos():Distance(ent:GetPos()))
+							
+							local maxPoleRange = (attacktable["meleerange"]) * 0.1
+							local maxIneffectiveRange = maxPoleRange * 0.65
+						
+							if distance <= maxIneffectiveRange and ent:IsValid() then
+								poiseDamageModifier = 0.05
+							end
+						end
 						
 						if attacker.HasBelief then
 							if attacker:HasBelief("fanaticism") then

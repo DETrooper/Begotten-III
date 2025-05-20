@@ -1210,13 +1210,46 @@ end
 		if swingType == "parry_swing" then
 			if (IsValid(hit) and owner:IsValid() and !owner:IsRagdolled() and owner:Alive()) then
 				local d = DamageInfo()
+				local riposteDamageModifier = 3
 				
 				if cwBeliefs and owner.HasBelief and owner:HasBelief("repulsive_riposte") then
-					d:SetDamage(damage * shield_reduction * 3.5 * hit_reduction);
-				else
-					d:SetDamage(damage * shield_reduction * 3 * hit_reduction);
+					riposteDamageModifier = 3.5
 				end
 				
+				if string.find(weaponClass, "begotten_spear_") or string.find(weaponClass, "begotten_polearm_") or string.find(weaponClass, "begotten_scythe_") then
+					local maxPoleRange = (attacktable["meleerange"]) * 0.1
+					local maxIneffectiveRange = maxPoleRange * 0.65
+				
+					if distance <= maxIneffectiveRange and hit:IsValid() then
+						damage = (attacktable["primarydamage"]) * 0.01
+						damagetype = 128
+						
+						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
+							--print "Spear Shaft Hit"
+							damage = math.max(1, (attacktable["primarydamage"]) * 0.01)
+							damagetype = 128
+							
+							-- KNOCKBACK
+							local knockback = owner:GetAngles():Forward() * 100 * riposteDamageModifier;
+							knockback.z = 0
+
+							timer.Simple(0.1, function()
+								if IsValid(hit) then
+									hit:SetVelocity(knockback);
+								end
+							end);
+							
+							if hit:IsPlayer() then
+								hit:TakeStability(10 * riposteDamageModifier * GetStabilityModifier(self.Owner))
+							end
+							
+							d:SetDamage(damage)
+						end
+					end
+				end
+				
+				d:SetDamage(damage * shield_reduction * riposteDamageModifier * hit_reduction);
+								
 				d:SetAttacker( owner )
 				d:SetDamageType( damagetype )
 				d:SetDamagePosition(src)

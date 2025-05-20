@@ -3289,9 +3289,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		elseif damageInfo:IsDamageType(DMG_BULLET) or damageInfo:IsDamageType(DMG_BUCKSHOT) then
 			local subfaction = entity:GetSubfaction();
 		
-			if subfaction == "Knights of Sol" then
-				damageInfo:ScaleDamage(0.3);
-			elseif subfaction == "Philimaxio" then
+			if subfaction == "Knights of Sol" or subfaction == "Philimaxio" then
 				damageInfo:ScaleDamage(0.5);
 			end
 		end;

@@ -2329,7 +2329,7 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 	if IsValid(attacker) and attacker:IsPlayer() and not player.opponent and not attacker.opponent then
 		if attacker:HasBelief("brutality_finisher") then
 			local playerLevel = player:GetCharacterData("level", 1);
-			local refundPerLevel = 0.03;
+			local refundPerLevel = 0.025;
 			local maxHealth = attacker:GetMaxHealth();
 			local maxStamina = attacker:GetMaxStamina();
 			--local maxPoise = attacker:GetMaxPoise();

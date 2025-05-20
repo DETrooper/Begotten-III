@@ -199,7 +199,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 			if (damage > 15) then
 				effectName = "bloodsplat";
 				
-				if didthrust and attacker:GetNetVar("Riposting") != true then
+				if didthrust then
 					armorSound = althitbody;
 				else
 					armorSound = hitbody;
@@ -249,7 +249,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 							if (damage > 15) then
 								effectName = "bloodsplat";
 								
-								if didthrust and attacker:GetNetVar("Riposting") != true then
+								if didthrust then
 									armorSound = althitbody;
 								else
 									armorSound = hitbody;
@@ -269,7 +269,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 								playlowdamage = false;
 							end;
 							
-							if didthrust and attacker:GetNetVar("Riposting") != true then
+							if didthrust then
 								armorSound = althitbody
 							end
 						end
@@ -295,7 +295,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 						if (damage > 15) then
 							effectName = "bloodsplat";
 							
-							if didthrust and attacker:GetNetVar("Riposting") != true then
+							if didthrust then
 								armorSound = althitbody;
 							else
 								armorSound = hitbody;
@@ -332,7 +332,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 					local maxPoleRange = (attacktable["meleerange"]) * 0.1
 					local maxIneffectiveRange = maxPoleRange * 0.65
 
-					if (distance > maxIneffectiveRange) or attacker:GetNetVar("Riposting") then
+					if (distance > maxIneffectiveRange) then
 						entity:EmitSound(armorSound)
 						
 						if playlowdamage then
@@ -346,17 +346,13 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 					local maxIneffectiveRange = maxPoleRange * 0.65
 
 					if (distance <= maxIneffectiveRange) then -- Polearm
-						if attacker:GetNetVar("Riposting") then
-							entity:EmitSound(armorSound);
-						elseif didthrust and inflictor.CanSwipeAttack then
+						if didthrust and inflictor.CanSwipeAttack then
 							entity:EmitSound(althitbody);
 						else
 							entity:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2, 6)..".wav", 80);
 						end
 					else
-						if attacker:GetNetVar("Riposting") then
-							entity:EmitSound(hitbody);
-						elseif didthrust and inflictor.CanSwipeAttack then
+						if didthrust and inflictor.CanSwipeAttack then
 							entity:EmitSound(althitbody);
 						else
 							entity:EmitSound(armorSound)
@@ -860,13 +856,15 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 							local maxIneffectiveRange = maxPoleRange * 0.65
 
 							if distance >= maxIneffectiveRange or (didthrust and attackerWeapon.CanSwipeAttack) then
-								entity:SetNetVar("runningDisabled", true);
-								
-								timer.Create("GroundedSprintTimer_"..tostring(entity:EntIndex()), 3, 1, function()
-									if IsValid(entity) then
-										entity:SetNetVar("runningDisabled", nil);
-									end 
-								end);
+								if !attacker:IsRunning() then
+									entity:SetNetVar("runningDisabled", true);
+									
+									timer.Create("GroundedSprintTimer_"..tostring(entity:EntIndex()), 3, 1, function()
+										if IsValid(entity) then
+											entity:SetNetVar("runningDisabled", nil);
+										end 
+									end);
+								end
 							end
 						end
 					end
