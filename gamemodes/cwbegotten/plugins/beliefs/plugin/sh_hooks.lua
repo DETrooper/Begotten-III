@@ -10,6 +10,8 @@ function cwBeliefs:PlayerAdjustMaxWeight(player, weight)
 	
 	if subfaction == "Auxiliary" or subfaction == "Inquisition" or subfaction == "Rekh-khet-sa" or subfaction == "Clan Shagalax" or subfaction == "Servus" then
 		new_weight = new_weight + 5;
+	elseif subfaction == "Clan Grock" then
+		new_weight = new_weight + 10;
 	end
 	
 	if player:HasBelief("might") then
