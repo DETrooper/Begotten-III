@@ -8121,6 +8121,7 @@ RECIPE:Register()
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["knight_plate"] = {amount = 1},
+			["knight_helmet"] = {amount = 1},
 			["down_catalyst"] = {amount = 3},
 		};
 		RECIPE.result = {
@@ -8153,6 +8154,7 @@ RECIPE:Register()
 		};
 		RECIPE.result = {
 			["knight_plate"] = {amount = 1},
+			["knight_helmet"] = {amount = 1},
 		};
 		RECIPE.category = "Armor"
 		RECIPE.finishSound = "possession/spiritsting.wav";
