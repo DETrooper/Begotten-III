@@ -749,7 +749,9 @@ local function Guarding(ent, dmginfo)
 							local maxIneffectiveRange = maxPoleRange * 0.65
 						
 							if distance <= maxIneffectiveRange and ent:IsValid() then
-								poiseDamageModifier = 0.05
+								if not (attacker:GetNetVar("ThrustStance") == true and enemywep.CanSwipeAttack == true and attacker:GetNetVar("Riposting") != true) then
+									poiseDamageModifier = 0.05
+								end
 							end
 						end
 						

@@ -199,7 +199,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 			if (damage > 15) then
 				effectName = "bloodsplat";
 				
-				if didthrust then
+				if didthrust and attacker:GetNetVar("Riposting") != true then
 					armorSound = althitbody;
 				else
 					armorSound = hitbody;
@@ -249,7 +249,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 							if (damage > 15) then
 								effectName = "bloodsplat";
 								
-								if didthrust then
+								if didthrust and attacker:GetNetVar("Riposting") != true then
 									armorSound = althitbody;
 								else
 									armorSound = hitbody;
@@ -269,7 +269,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 								playlowdamage = false;
 							end;
 							
-							if didthrust then
+							if didthrust and attacker:GetNetVar("Riposting") != true then
 								armorSound = althitbody
 							end
 						end
@@ -295,7 +295,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 						if (damage > 15) then
 							effectName = "bloodsplat";
 							
-							if didthrust then
+							if didthrust and attacker:GetNetVar("Riposting") != true then
 								armorSound = althitbody;
 							else
 								armorSound = hitbody;
@@ -332,7 +332,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 					local maxPoleRange = (attacktable["meleerange"]) * 0.1
 					local maxIneffectiveRange = maxPoleRange * 0.65
 
-					if (distance > maxIneffectiveRange) then
+					if (distance > maxIneffectiveRange) or attacker:GetNetVar("Riposting") then
 						entity:EmitSound(armorSound)
 						
 						if playlowdamage then
@@ -346,13 +346,15 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 					local maxIneffectiveRange = maxPoleRange * 0.65
 
 					if (distance <= maxIneffectiveRange) then -- Polearm
-						if didthrust and inflictor.CanSwipeAttack then
+						if didthrust and inflictor.CanSwipeAttack and not attacker:GetNetVar("Riposting") then
 							entity:EmitSound(althitbody);
 						else
 							entity:EmitSound( "physics/body/body_medium_impact_hard"..math.random(2, 6)..".wav", 80);
 						end
 					else
-						if didthrust and inflictor.CanSwipeAttack then
+						if attacker:GetNetVar("Riposting") then
+							entity:EmitSound(hitbody);
+						elseif didthrust and inflictor.CanSwipeAttack then
 							entity:EmitSound(althitbody);
 						else
 							entity:EmitSound(armorSound)
