@@ -3199,7 +3199,7 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 				return false;
 			end
 			
-			if player:GetNetVar("Parried") == true then
+			if player:GetNetVar("Parried", false) then
 				Schema:EasyText(player, "peru", "You are too discombobulated to helljaunt right now!");
 				
 				return false;
