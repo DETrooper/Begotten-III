@@ -90,7 +90,7 @@ function Parry(parrier, dmginfo)
 					if IsValid(parryTarget) then
 						parryTarget:SetLocalVar("Parried", true)
 
-						timer.Create(tostring(index).."_ParriedTimer", delay, 1, function()
+						timer.Create(tostring(parryTarget:EntIndex()).."_ParriedTimer", delay, 1, function()
 							if IsValid(parryTarget) then
 								parryTarget:SetLocalVar("Parried", false);
 								
