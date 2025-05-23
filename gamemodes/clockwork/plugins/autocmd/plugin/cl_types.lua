@@ -38,7 +38,8 @@ PLUGIN:RegisterArgumentType("Rank", function(argument, args)
 
 
     if target then
-        ranks = Schema.Ranks[target:GetFaction()] or {}
+        local targetFaction = target:GetNetVar("kinisgerOverride", target:GetFaction());
+        ranks = Schema.Ranks[targetFaction] or {}
     end
 
     
