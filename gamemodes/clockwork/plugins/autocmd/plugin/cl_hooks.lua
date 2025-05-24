@@ -3,6 +3,7 @@ local PLUGIN = PLUGIN
 local font = Clockwork.option:GetFont("chat_box_syntax");
 local color = Color(128, 0, 0)
 local highlight_color = Color(255, 83, 0)
+local suggestion_limit = 12
 
 function PLUGIN:HUDPaintForeground()
     local bIsTypingCommand = Clockwork.chatBox:IsTypingCommand()
@@ -11,32 +12,32 @@ function PLUGIN:HUDPaintForeground()
     local cmd, args = self:ParseCommand(Clockwork.chatBox.textEntry:GetValue())
 
     if not cmd then return end
-    
+
     if #args < 1 then return end
-    
-    local x, y = Clockwork.chatBox:GetPosition(2, -295)
-    
+
+    local x, y = Clockwork.chatBox:GetPosition(2, -335)
+
     Clockwork.kernel:OverrideMainFont(font)
-    
+
     local _, matches = self:HandleAutoComplete(cmd, args)
     if not matches or #matches == 0 then return end
 
     local count = 0
 
     for i, suggestion in ipairs(matches) do
-        if count >= 12 then
+        if count >= suggestion_limit then
             break
         end
-        
+
         local _, th = Clockwork.kernel:GetCachedTextSize(font, suggestion)
-        
+
         local colnew = (i == self.autoCompleteIndex) and highlight_color or color
-        
+
         Clockwork.kernel:DrawSimpleText(suggestion, x, y, colnew)
-        y = y + th - 2
+        y = y + th
         count = count + 1
     end
-    
+
     Clockwork.kernel:OverrideMainFont(false)
 end
 
@@ -45,7 +46,7 @@ PLUGIN.autoCompleteIndex   = 1
 
 function PLUGIN:OnChatTab(text)
     local cmd, args = self:ParseCommand(text)
-    if not cmd then 
+    if not cmd then
         return text
     end
 
@@ -65,7 +66,7 @@ function PLUGIN:OnChatTab(text)
 
         if self.autoCompleteIndex < 1 then
             self.autoCompleteIndex = #self.autoCompleteMatches
-        elseif self.autoCompleteIndex > #self.autoCompleteMatches then
+        elseif self.autoCompleteIndex > suggestion_limit then
             self.autoCompleteIndex = 1
         end
     else
