@@ -2755,13 +2755,7 @@ function GM:EntityHandleMenuOption(player, entity, option, arguments)
 	if (class == "cw_item") then
 		local itemTable = entity.cwItemTable;
 		
-		if (itemTable) then
-			if hook.Run("PlayerCanUseItem", player, itemTable) == false then
-				return;
-			end;
-		else
-			return;
-		end
+		if !itemTable then return end;
 		
 		if (arguments == "cwItemTake" or arguments == "cwItemUse") then
 			--[[if (Clockwork.entity:BelongsToAnotherCharacter(player, entity)) then
