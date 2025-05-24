@@ -64,9 +64,7 @@ function PLUGIN:OnChatTab(text)
             self.autoCompleteIndex = self.autoCompleteIndex + 1
         end
 
-        if self.autoCompleteIndex < 1 then
-            self.autoCompleteIndex = #self.autoCompleteMatches
-        elseif self.autoCompleteIndex > suggestion_limit then
+        if self.autoCompleteIndex < 1 or self.autoCompleteIndex > math.min(#self.autoCompleteMatches, suggestion_limit) then
             self.autoCompleteIndex = 1
         end
     else
