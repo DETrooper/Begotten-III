@@ -970,6 +970,19 @@ function COMMAND:OnRun(player, arguments)
 			Schema:EasyText(player, color, "You make a prayer: \""..message.."\"")
 			
 			Clockwork.chatBox:AddInTargetRadius(player, "me", "mumbles a short prayer to the gods.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+			
+			local nextPrayerBonus = player:GetCharacterData("nextPrayerBonus", 0);
+			
+			if player:GetCharacterData("charPlayTime", 0) >= nextPrayerBonus then
+				-- 15 minutes between prayer bonuses.
+				player:SetCharacterData("nextPrayerBonus", player:GetCharacterData("charPlayTime", 0) + 900);
+				
+				player:HandleXP(10);
+				
+				if cwCharacterNeeds then
+					player:HandleNeed("corruption", -3);
+				end
+			end
 		else
 			Schema:EasyText(player, "chocolate", "You must select a subfaith in the 'Beliefs' menu before you can pray!");
 		end
