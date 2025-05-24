@@ -164,7 +164,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1250, supercrateOnly = true};
 	
 	ITEM.requiredbeliefs = {"strength"};
-	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -201,7 +201,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(5.66, 3, 16.51);
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
-	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1000, supercrateOnly = true};
 ITEM:Register();
 
@@ -239,7 +239,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attributes = {"shieldbreaker"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1000, supercrateOnly = true};
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
@@ -257,7 +257,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(360, 281.37, 84.32);
 	ITEM.attachmentOffsetVector = Vector(5.66, 3.4, 14.14);	
 	
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");

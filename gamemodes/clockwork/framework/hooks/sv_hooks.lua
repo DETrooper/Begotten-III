@@ -2752,16 +2752,24 @@ end
 function GM:EntityHandleMenuOption(player, entity, option, arguments)
 	local class = entity:GetClass()
 
-	if (class == "cw_item" and (arguments == "cwItemTake" or arguments == "cwItemUse")) then
-		--[[if (Clockwork.entity:BelongsToAnotherCharacter(player, entity)) then
-			Schema:EasyText(player, "peru", "You cannot pick up items you've dropped on another character!")
-			return
-		end]]--
-
-		local itemTable = entity.cwItemTable
-		local bQuickUse = (arguments == "cwItemUse")
-
+	if (class == "cw_item") then
+		local itemTable = entity.cwItemTable;
+		
 		if (itemTable) then
+			if hook.Run("PlayerCanUseItem", player, itemTable) == false then
+				return;
+			end;
+		else
+			return;
+		end
+		
+		if (arguments == "cwItemTake" or arguments == "cwItemUse") then
+			--[[if (Clockwork.entity:BelongsToAnotherCharacter(player, entity)) then
+				Schema:EasyText(player, "peru", "You cannot pick up items you've dropped on another character!")
+				return
+			end]]--
+
+			local bQuickUse = (arguments == "cwItemUse")
 			local bDidPickupItem = true
 			local bCanPickup = (!itemTable.CanPickup or itemTable:CanPickup(player, bQuickUse, entity))
 
@@ -2772,12 +2780,15 @@ function GM:EntityHandleMenuOption(player, entity, option, arguments)
 					itemTable = player:GiveItem(itemTable, true)
 
 					if itemTable then
-						if (Clockwork.player:InventoryAction(player, itemTable, "use")) == false then
+						--[[if (Clockwork.player:InventoryAction(player, itemTable, "use")) == false then
 							player:TakeItem(itemTable, true)
 							bDidPickupItem = false
 						else
 							player:FakePickup(entity)
-						end
+						end]]--
+						
+						Clockwork.player:InventoryAction(player, itemTable, "use");
+						player:FakePickup(entity);
 					else
 						printp("itemTable not found sv_hooks");
 						bDidPickupItem = false
@@ -2817,11 +2828,7 @@ function GM:EntityHandleMenuOption(player, entity, option, arguments)
 
 				player:SetItemEntity(nil)
 			end
-		end
-	elseif (class == "cw_item" and arguments == "cwItemRepair") then
-		local itemTable = entity.cwItemTable
-		
-		if itemTable then
+		elseif (arguments == "cwItemRepair") then
 			local itemCondition = itemTable:GetCondition();
 
 			if itemCondition < 100 then
@@ -2860,111 +2867,104 @@ function GM:EntityHandleMenuOption(player, entity, option, arguments)
 				Schema:EasyText(player, "peru", "This item is already in perfect condition and cannot be repaired.");
 				return false;
 			end
-		end
-	elseif (class == "cw_item" and arguments == "cwItemExamine") then
-		local itemTable = entity.cwItemTable
-		local itemCondition = itemTable:GetCondition();
-		local itemEngraving = itemTable:GetData("engraving");
-		local examineText = itemTable.description
-		local conditionTextCategories = {"Armor", "Crossbows", "Firearms", "Helms", "Melee", "Shields", "Throwables"};
+		elseif (arguments == "cwItemExamine") then
+			local itemCondition = itemTable:GetCondition();
+			local itemEngraving = itemTable:GetData("engraving");
+			local examineText = itemTable.description
+			local conditionTextCategories = {"Armor", "Crossbows", "Firearms", "Helms", "Melee", "Shields", "Throwables"};
 
-		if (itemTable.GetEntityExamineText) then
-			examineText = itemTable:GetEntityExamineText(entity)
-		end
-
-		if itemEngraving and itemEngraving ~= "" then
-			local itemKills = itemTable:GetData("kills");
-			
-			if itemKills and itemKills > 0 then
-				examineText = examineText.." It has \'"..itemEngraving.."\' engraved into it, alongside a tally mark of "..tostring(itemKills).." kills.";
-			else
-				examineText = examineText.." It has \'"..itemEngraving.."\' engraved into it.";
+			if (itemTable.GetEntityExamineText) then
+				examineText = itemTable:GetEntityExamineText(entity)
 			end
-		end
 
-		if table.HasValue(conditionTextCategories, itemTable.category) then
-			if itemCondition >= 90 then
-				examineText = examineText.." It appears to be in immaculate condition.";
-			elseif itemCondition < 90 and itemCondition >= 60 then
-				examineText = examineText.." It appears to be in a somewhat battered condition.";
-			elseif itemCondition < 60 and itemCondition >= 30 then
-				examineText = examineText.." It appears to be in very poor condition.";
-			elseif itemCondition < 30 and itemCondition > 0 then
-				examineText = examineText.." It appears to be on the verge of breaking.";
-			elseif itemCondition <= 0 then
-				if itemTable:IsBroken() then
-					examineText = examineText.." It is completely destroyed and only worth its weight in scrap now.";
+			if itemEngraving and itemEngraving ~= "" then
+				local itemKills = itemTable:GetData("kills");
+				
+				if itemKills and itemKills > 0 then
+					examineText = examineText.." It has \'"..itemEngraving.."\' engraved into it, alongside a tally mark of "..tostring(itemKills).." kills.";
 				else
-					examineText = examineText.." It is broken yet still usable to some degree.";
+					examineText = examineText.." It has \'"..itemEngraving.."\' engraved into it.";
 				end
 			end
-		elseif itemTable.category == "Shot" and itemTable.ammoMagazineSize then
-			local rounds = itemTable:GetAmmoMagazine();
-			
-			examineText = examineText.." The magazine has "..tostring(rounds).." "..itemTable.ammoName.." rounds loaded.";
-		end
-		local co = itemTable.examineColor or "skyblue"
-		Schema:EasyText(player, co, examineText)
-	elseif (class == "cw_item" and arguments == "cwItemAmmo") then
-		local itemTable = entity.cwItemTable
 
-		if (item.IsWeapon(itemTable)) then
-			local ammo = itemTable:GetData("Ammo");
-			
-			if ammo and #ammo > 0 then
-				if #ammo == 1 then
-					if itemTable.usesMagazine and string.find(ammo[1], "Magazine") then
+			if table.HasValue(conditionTextCategories, itemTable.category) then
+				if itemCondition >= 90 then
+					examineText = examineText.." It appears to be in immaculate condition.";
+				elseif itemCondition < 90 and itemCondition >= 60 then
+					examineText = examineText.." It appears to be in a somewhat battered condition.";
+				elseif itemCondition < 60 and itemCondition >= 30 then
+					examineText = examineText.." It appears to be in very poor condition.";
+				elseif itemCondition < 30 and itemCondition > 0 then
+					examineText = examineText.." It appears to be on the verge of breaking.";
+				elseif itemCondition <= 0 then
+					if itemTable:IsBroken() then
+						examineText = examineText.." It is completely destroyed and only worth its weight in scrap now.";
+					else
+						examineText = examineText.." It is broken yet still usable to some degree.";
+					end
+				end
+			elseif itemTable.category == "Shot" and itemTable.ammoMagazineSize then
+				local rounds = itemTable:GetAmmoMagazine();
+				
+				examineText = examineText.." The magazine has "..tostring(rounds).." "..itemTable.ammoName.." rounds loaded.";
+			end
+
+			Schema:EasyText(player, itemTable.examineColor or "skyblue", examineText)
+		elseif (arguments == "cwItemAmmo") then
+			if (item.IsWeapon(itemTable)) then
+				local ammo = itemTable:GetData("Ammo");
+				
+				if ammo and #ammo > 0 then
+					if #ammo == 1 then
+						if itemTable.usesMagazine and string.find(ammo[1], "Magazine") then
+							local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
+							local magazineItem = item.CreateInstance(ammoItemID, nil, nil, true);
+							
+							if magazineItem and magazineItem.SetAmmoMagazine then
+								magazineItem:SetAmmoMagazine(1);
+								
+								player:GiveItem(magazineItem);
+							end
+						else
+							local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
+							
+							player:GiveItem(item.CreateInstance(ammoItemID, nil, nil, true));
+						end
+					elseif itemTable.usesMagazine then
 						local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
 						local magazineItem = item.CreateInstance(ammoItemID, nil, nil, true);
 						
 						if magazineItem and magazineItem.SetAmmoMagazine then
-							magazineItem:SetAmmoMagazine(1);
+							magazineItem:SetAmmoMagazine(#ammo);
 							
 							player:GiveItem(magazineItem);
 						end
 					else
-						local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
-						
-						player:GiveItem(item.CreateInstance(ammoItemID, nil, nil, true));
-					end
-				elseif itemTable.usesMagazine then
-					local ammoItemID = string.gsub(string.lower(ammo[1]), " ", "_");
-					local magazineItem = item.CreateInstance(ammoItemID, nil, nil, true);
-					
-					if magazineItem and magazineItem.SetAmmoMagazine then
-						magazineItem:SetAmmoMagazine(#ammo);
-						
-						player:GiveItem(magazineItem);
-					end
-				else
-					for i = 1, #ammo do
-						local round = ammo[i];
-						
-						if round then
-							local roundItemID = string.gsub(string.lower(round), " ", "_");
-							local roundItemInstance = item.CreateInstance(roundItemID, nil, nil, true);
+						for i = 1, #ammo do
+							local round = ammo[i];
 							
-							player:GiveItem(roundItemInstance);
+							if round then
+								local roundItemID = string.gsub(string.lower(round), " ", "_");
+								local roundItemInstance = item.CreateInstance(roundItemID, nil, nil, true);
+								
+								player:GiveItem(roundItemInstance);
+							end
 						end
 					end
+					
+					itemTable:SetData("Ammo", {});
 				end
-				
-				itemTable:SetData("Ammo", {});
 			end
-		end
-	elseif (class == "cw_item" and arguments == "cwItemMagazineAmmo") then
-		local itemTable = entity.cwItemTable
-
-		if (itemTable.category == "Shot" and itemTable.ammoMagazineSize) then
-			if itemTable.TakeFromMagazine then
-				itemTable:TakeFromMagazine(player);
+		elseif (arguments == "cwItemMagazineAmmo") then
+			if (itemTable.category == "Shot" and itemTable.ammoMagazineSize) then
+				if itemTable.TakeFromMagazine then
+					itemTable:TakeFromMagazine(player);
+				end
 			end
-		end
-	elseif (class == "cw_item") then
-		local itemTable = entity.cwItemTable
-
-		if (itemTable and itemTable.EntityHandleMenuOption) then
-			itemTable:EntityHandleMenuOption(player, entity, option, arguments)
+		else
+			if (itemTable and itemTable.EntityHandleMenuOption) then
+				itemTable:EntityHandleMenuOption(player, entity, option, arguments)
+			end
 		end
 	--[[elseif (entity:GetClass() == "cw_belongings" and arguments == "cwBelongingsOpen") then
 		player:EmitSound("physics/body/body_medium_impact_soft"..math.random(1, 7)..".wav")

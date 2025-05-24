@@ -173,6 +173,8 @@ function SWEP:FireJavelin()
 						
 						if slotItem and slotItem:IsTheSameAs(itemTable) then
 							slot = v2;
+							
+							break;
 						end
 					end
 					

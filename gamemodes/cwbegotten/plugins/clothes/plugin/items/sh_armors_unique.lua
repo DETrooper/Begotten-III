@@ -13,7 +13,7 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "Lord Vasso's personal set of hell-forged armor, its style reminiscent of a time before the Empire of Light.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Children of Satan"};
+ITEM.requiredFactions = {"Children of Satan"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -76,7 +76,7 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "Heavy armor made from hellforged black iron. Decorated with skulls and hides from man and demon alike, the Red Wolves of Clan Reaver make sure their presence is known.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior"};
+ITEM.requiredFactions = {"Goreic Warrior"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -138,8 +138,8 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "Plate armor forged from supreme Shagalaxian Steel. It is meant for a King of the Bark Throne.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.requireRank = {"King"};
+ITEM.requiredFactions = {"Goreic Warrior"};
+ITEM.requiredRanks = {"King"};
 ITEM.requiredbeliefs = {"hauberk"};
 
 ITEM.effectiveLimbs = {
@@ -201,8 +201,8 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "chainmail";
 ITEM.description = "Shagalaxian chainmail, boiled leather and a bloody wolf's pelt. A brutish set of armor that gets the job done well.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.requireRank = {"King"};
+ITEM.requiredFactions = {"Goreic Warrior"};
+ITEM.requiredRanks = {"King"};
 ITEM.requiredbeliefs = {"hauberk"};
 
 ITEM.effectiveLimbs = {
@@ -263,7 +263,7 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "Armor of the Emperor of the Eastern Nigerii Empire. It is obviously fitted for a portly figure.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Children of Satan"};
+ITEM.requiredFactions = {"Children of Satan"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -326,8 +326,8 @@ ITEM.weight = 3.5;
 ITEM.weightclass = "Light";
 ITEM.description = "An original set of Blade Druid Robes somehow well kept over centuries. It is permanently attached to a Dread Minotaur Helm and is highly protected by the Maternal Aura. It appears that bullet projectiles are completely ineffective against this armor, as the aura protects from such cowardly means.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver"};
+ITEM.requiredFactions = {"Goreic Warrior"};
+ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver"};
 ITEM.overlay = "begotten/zomboverlay/new/goreminotaur";
 
 ITEM.effectiveLimbs = {

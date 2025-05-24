@@ -160,9 +160,9 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1750, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
-	ITEM.requireFaith = {"Faith of the Dark"};
-	ITEM.requireSubfaction = {"Rekh-khet-sa"};
-	ITEM.requireFaction = {"Children of Satan"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
+	ITEM.requiredSubfactions = {"Rekh-khet-sa"};
+	ITEM.requiredFactions = {"Children of Satan"};
 	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
 
@@ -185,9 +185,9 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1750, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
-	ITEM.requireFaith = {"Faith of the Dark"};
-	ITEM.requireSubfaction = {"Varazdat"};
-	ITEM.requireFaction = {"Children of Satan"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
+	ITEM.requiredSubfactions = {"Varazdat"};
+	ITEM.requiredFactions = {"Children of Satan"};
 	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
 
@@ -210,9 +210,9 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1750, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
-	ITEM.requireFaith = {"Faith of the Dark"};
-	ITEM.requireSubfaction = {"Philimaxio"};
-	ITEM.requireFaction = {"Children of Satan"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
+	ITEM.requiredSubfactions = {"Philimaxio"};
+	ITEM.requiredFactions = {"Children of Satan"};
 	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
 
@@ -232,9 +232,9 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.attributes = {"concealable"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
-	ITEM.requireFaith = {"Faith of the Dark"};
-	ITEM.requireSubfaction = {"Kinisger"};
-	ITEM.requireFaction = {"Children of Satan"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
+	ITEM.requiredSubfactions = {"Kinisger"};
+	ITEM.requiredFactions = {"Children of Satan"};
 	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
 

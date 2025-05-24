@@ -13,10 +13,6 @@ ITEM.useText = "Equip";
 ITEM.useSound = false;
 ITEM.category = "Weapons";
 ITEM.useInVehicle = false;
-ITEM.excludeFactions = {};
-ITEM.requireFaction = {};
-ITEM.requireFaith = {};
-ITEM.requireSubfaction = {};
 ITEM.breakable = true;
 ITEM.breakMessage = " shatters into pieces!";
 ITEM.repairItem = "weapon_repair_kit";
@@ -24,7 +20,7 @@ ITEM.customFunctions = {"Engrave"};
 ITEM.slots = {"Primary", "Secondary", "Tertiary"};
 ITEM.equipmentSaveString = "weapons";
 
-local defaultWeapons = {
+--[[local defaultWeapons = {
 	["weapon_357"] = {"357", nil, true},
 	["weapon_ar2"] = {"ar2", "ar2altfire", 30},
 	["weapon_rpg"] = {"rpg_round", nil, 3},
@@ -34,7 +30,7 @@ local defaultWeapons = {
 	["weapon_pistol"] = {"pistol", nil, true},
 	["weapon_shotgun"] = {"buckshot", nil, true},
 	["weapon_crossbow"] = {"xbowbolt", nil, 4}
-};
+};]]--
 
 ITEM:AddData("ClipOne", 0, true);
 ITEM:AddData("ClipTwo", 0, true);
@@ -365,50 +361,103 @@ end;
 
 -- Called when a player uses the item.
 function ITEM:OnUse(player, itemEntity, interactItemTable)
+	if (self:HasPlayerEquipped(player)) then
+		if !player.spawning then
+			Schema:EasyText(player, "peru", "You cannot equip an item you're already using.")
+		end
+		
+		return false
+	end
+
 	local faction = player:GetFaction();
 	local subfaction = player:GetSubfaction();
 	local kinisgerOverride = player:GetNetVar("kinisgerOverride");
 	local kinisgerOverrideSubfaction = player:GetNetVar("kinisgerOverrideSubfaction");
 	
-	if (table.HasValue(self.excludeFactions, kinisgerOverride or faction)) then
-		Schema:EasyText(player, "peru", "You are not the correct faction for this item!")
-		return false
+	if self.excludedFactions and #self.excludedFactions > 0 then
+		if (table.HasValue(self.excludedFactions, kinisgerOverride or faction)) then
+			if !self.includedSubfactions or #self.includedSubfactions < 1 or !table.HasValue(self.includedSubfactions, kinisgerOverrideSubfaction or subfaction) then
+				if !player.spawning then
+					Schema:EasyText(player, "chocolate", "You are not the correct faction to equip this weapon!")
+				end
+				
+				return false
+			end
+		end
 	end
 	
-	if self.requireFaith and #self.requireFaith > 0 and not (table.HasValue(self.requireFaith, player:GetFaith())) then
-		if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+	if self.excludedSubfactions and #self.excludedSubfactions > 0 then
+		if (table.HasValue(self.excludedSubfactions, kinisgerOverrideSubfaction or subfaction)) then
 			if !player.spawning then
-				Schema:EasyText(player, "chocolate", "You are not of the correct faith to equip this!")
+				Schema:EasyText(player, "chocolate", "You are not the correct subfaction to equip this weapon!")
 			end
 			
 			return false
 		end
 	end
 	
-	if self.requiredSubfaiths and #self.requiredSubfaiths > 0 and not (table.HasValue(self.requiredSubfaiths, player:GetSubfaith())) then
-		if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+	if self.requiredFaiths and #self.requiredFaiths > 0 then
+		if (!table.HasValue(self.requiredFaiths, player:GetFaith())) then
+			if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+				if !player.spawning then
+					Schema:EasyText(player, "chocolate", "You are not the correct faith to equip this weapon!")
+				end
+				
+				return false
+			end
+		end
+	end
+	
+	if self.requiredSubfaiths and #self.requiredSubfaiths > 0 then
+		if (!table.HasValue(self.requiredSubfaiths, player:GetSubfaith())) then
+			if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+				if !player.spawning then
+					Schema:EasyText(player, "chocolate", "You are not the correct subfaith to equip this weapon!")
+				end
+				
+				return false
+			end
+		end
+	end
+	
+	if self.requiredFactions and #self.requiredFactions > 0 then
+		if (!table.HasValue(self.requiredFactions, faction) and (!kinisgerOverride or !table.HasValue(self.requiredFactions, kinisgerOverride))) then
 			if !player.spawning then
-				Schema:EasyText(player, "chocolate", "You are not of the correct subfaith to equip this!")
+				Schema:EasyText(player, "chocolate", "You are not the correct faction to equip this weapon!")
 			end
 			
 			return false
 		end
 	end
 	
-	if #self.requireFaction > 0 then
-		if (!table.HasValue(self.requireFaction, faction) and (!kinisgerOverride or !table.HasValue(self.requireFaction, kinisgerOverride))) then
-			Schema:EasyText(player, "peru", "You are not the correct faction for this item!")
+	if self.requiredSubfactions and #self.requiredSubfactions > 0 then
+		if (!table.HasValue(self.requiredSubfactions, subfaction) and (!kinisgerOverrideSubfaction or !table.HasValue(self.requiredSubfactions, kinisgerOverrideSubfaction))) then
+			if !player.spawning then
+				Schema:EasyText(player, "peru", "You are not the correct subfaction to equip this weapon!")
+			end
+			
 			return false
 		end
 	end
 	
-	if #self.requireSubfaction > 0 then
-		if (!table.HasValue(self.requireSubfaction, subfaction) and (!kinisgerOverrideSubfaction or !table.HasValue(self.requireSubfaction, kinisgerOverrideSubfaction))) then
-			Schema:EasyText(player, "peru", "You are not the correct subfaction for this item!")
-			return false
+	if self.requiredRanks and #self.requiredRanks > 0 then
+		local rank = player:GetCharacterData("rank", 1);
+		
+		if Schema.Ranks[faction] then
+			local rankString = Schema.Ranks[faction][rank];
+			
+			if rankString then
+				if (!table.HasValue(self.requiredRanks, rankString)) then
+					if !player.spawning then
+						Schema:EasyText(player, "peru", "You are not the correct rank to equip this weapon!")
+					
+						return false;
+					end
+				end
+			end
 		end
 	end
-	
+
 	local weaponClass = self("weaponClass");
 	
 	if (!player:HasWeapon(weaponClass)) or interactItemTable then
@@ -558,7 +607,7 @@ function ITEM:OnSetup()
 	
 	self:Override("weaponClass", string.lower(self("weaponClass")));
 	
-	timer.Simple(2, function()
+	--[[timer.Simple(2, function()
 		local weaponClass = self("weaponClass");
 		local weaponTable = weapons.GetStored(weaponClass);
 		
@@ -617,7 +666,7 @@ function ITEM:OnSetup()
 				self:Override("secondaryDefaultAmmo", defaultWeapons[weaponClass][4]);
 			end;
 		end;
-	end);
+	end);]]--
 end;
 
 -- Called when a player holsters the item.

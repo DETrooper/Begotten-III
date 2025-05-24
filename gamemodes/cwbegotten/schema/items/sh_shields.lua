@@ -52,7 +52,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood", "wood", "wood"}};
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -71,7 +71,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
-	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -85,7 +85,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 0, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 0, 0);
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.bulletConditionScale = 0.4;
 	ITEM.conditionScale = 0.75;
 	ITEM.fireplaceFuel = 300;
@@ -110,8 +110,8 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attributes = {"unbreakable"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
 	ITEM.requiredbeliefs = {"defender"};
-	ITEM.requireFaction = {"Goreic Warrior"};
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFactions = {"Goreic Warrior"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 850, supercrateOnly = true};
 ITEM:Register();
 
@@ -262,7 +262,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
 	ITEM.requiredbeliefs = {"defender"};
-	ITEM.requireFaith = {"Faith of the Light"};
+	ITEM.requiredFaiths = {"Faith of the Light"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -283,7 +283,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
-	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -297,7 +297,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 180, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 2, 0);
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.bulletConditionScale = 0.25;
 	ITEM.conditionScale = 0.4;
 	
@@ -358,7 +358,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.conditionScale = 0.45;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "iron_chunks", "iron_chunks"}};
-	ITEM.requireFaction = {"Goreic Warrior"};
+	ITEM.requiredFactions = {"Goreic Warrior"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -398,8 +398,8 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
 	ITEM.attributes = {"unbreakable"};
 	ITEM.requiredbeliefs = {"defender"};
-	ITEM.requireFaction = {"Goreic Warrior"};
-	ITEM.requireSubfaction = {"Clan Reaver"};
+	ITEM.requiredFactions = {"Goreic Warrior"};
+	ITEM.requiredSubfactions = {"Clan Reaver"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -413,7 +413,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 0, 0);
 	ITEM.attachmentOffsetVector = Vector(0, -2.3, 0);
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.conditionScale = 0.7;
 	ITEM.bulletConditionScale = 0.4;
 	ITEM.fireplaceFuel = 300;
@@ -432,7 +432,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 180, 180);
 	ITEM.attachmentOffsetVector = Vector(0, -2, 0);
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.bulletConditionScale = 0.3;
 	ITEM.conditionScale = 0.45;
 	

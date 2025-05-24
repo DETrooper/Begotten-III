@@ -168,7 +168,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.attributes = {"aoebuff"};
 	ITEM.components = {breakdownType = "meltdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth", "iron_chunks", "iron_chunks"}};
-	ITEM.requireFaith = {"Faith of the Light"};
+	ITEM.requiredFaiths = {"Faith of the Light"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -189,5 +189,5 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.attributes = {"aoebuff"};
 	ITEM.components = {breakdownType = "meltdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth", "iron_chunks", "iron_chunks"}};
-	ITEM.requireFaith = {"Faith of the Light"};
+	ITEM.requiredFaiths = {"Faith of the Light"};
 ITEM:Register();

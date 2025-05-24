@@ -1487,7 +1487,7 @@ function COMMAND:OnRun(player, arguments)
 					
 					if player:HasBelief("wriggle_fucking_eel") then
 						player:StopAllBleeding();
-						player:HandleNeed("corruption", -3);
+						player:HandleNeed("corruption", -2);
 						player:HandleNeed("sleep", -5);
 					end
 					

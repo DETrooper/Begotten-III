@@ -89,8 +89,9 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"stone", "stone", "stone", "wood", "wood"}};
 	ITEM.requiredbeliefs = {"strength"};
-	ITEM.requireFaith = {"Faith of the Family"};
-	ITEM.excludeSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
+	ITEM.includedSubfactions = {"Clan Grock"};
 ITEM:Register(); 
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -109,8 +110,9 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"stone", "stone", "stone", "stone", "wood", "wood"}};
 	ITEM.requiredbeliefs = {"strength"};
-	ITEM.requireFaith = {"Faith of the Family"};
-	ITEM.excludeSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
+	ITEM.includedSubfactions = {"Clan Grock"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
@@ -131,7 +133,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
@@ -265,7 +267,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
-	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -343,6 +345,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
-	ITEM.requireFaith = {"Faith of the Light"};
+	ITEM.requiredFaiths = {"Faith of the Light"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();

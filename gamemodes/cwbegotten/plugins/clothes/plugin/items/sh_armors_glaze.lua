@@ -45,7 +45,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "Rusty iron chainmail worn underneath a decaying leather jerkin. It bears no colors or insignias, making it a true Wanderer's choice of armor.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -105,7 +105,7 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "A crudely constructed set of armor that nevertheless provides outstanding protection. It is comprised of steel plates that cover almost the entire body.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.requiredbeliefs = {"hauberk"};
 
 ITEM.effectiveLimbs = {
@@ -167,7 +167,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A set of iron plate armor commonly used by the Holy Order of the Gatekeepers.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Gatekeeper";
 
 ITEM.effectiveLimbs = {
@@ -227,7 +227,7 @@ ITEM.weight = 6;
 ITEM.weightclass = "Medium";
 ITEM.description = "An improved set of armor based on that used by the Holy Order of the Gatekeepers, reinforced with fine steel and additional plates.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Gatekeeper";
 
 ITEM.effectiveLimbs = {
@@ -287,7 +287,7 @@ ITEM.weight = 6;
 ITEM.weightclass = "Medium";
 ITEM.description = "A highly expensive gold-plated set of armor based on that used by the Holy Order of the Gatekeepers, reinforced with fine steel and additional plates.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Gatekeeper";
 
 ITEM.effectiveLimbs = {
@@ -347,8 +347,8 @@ ITEM.weight = 7;
 ITEM.weightclass = "Medium";
 ITEM.description = "The golden and ornate armor of a Vexillifer, reinforced with fine steel and topped with a lion pelt and stoic iron mask.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaith = {"Faith of the Light"};
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.requiredFaiths = {"Faith of the Light"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Gatekeeper";
 
 ITEM.attributes = {"fear", "banner_blessing"};
@@ -411,7 +411,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "A studded leather gambeson with cloth sleeves dyed black, to distinguish Auxiliaries from the standard combat troops of the Gatekeepers.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Gatekeeper";
 
 ITEM.effectiveLimbs = {
@@ -467,7 +467,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "A studded leather gambeson with cloth sleeves dyed bright red. Minimalist protection for commoner guardsmen.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Gatekeeper";
 
 ITEM.effectiveLimbs = {
@@ -523,7 +523,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "A studded leather gambeson with cloth sleeves dyed brown, to help Praeventors blend in better in the Wasteland.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Gatekeeper";
 
 ITEM.effectiveLimbs = {
@@ -579,7 +579,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "Leather robes worn by the Gatekeepers of Pope Adyssa.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Pope Adyssa's Gatekeepers";
 
 ITEM.effectiveLimbs = {
@@ -635,7 +635,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "Leather robes worn by the Gatekeepers of Pope Adyssa.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Pope Adyssa's Gatekeepers";
 
 ITEM.effectiveLimbs = {
@@ -691,7 +691,7 @@ ITEM.weight = 3;
 ITEM.weightclass = "Light";
 ITEM.description = "A padded coat made of leather and heavy cloth that provides decent protection.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -867,7 +867,7 @@ ITEM.weight = 3.5;
 ITEM.weightclass = "Light";
 ITEM.description = "The weathered uniform of a soldier that served in the Empire of Light's field armies, perhaps even in Lord Maximus' famous campaigns. It is protected by a cuirass and knee plates, but has no arm protection.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -923,7 +923,7 @@ ITEM.weight = 2.5;
 ITEM.weightclass = "Light";
 ITEM.description = "A light leather brigandine that provides adequate protection for its low weight.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -978,7 +978,7 @@ ITEM.weight = 4.5;
 ITEM.weightclass = "Medium";
 ITEM.description = "An iron-plated leather brigandine that provides adequate protection for its low weight.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -1037,7 +1037,7 @@ ITEM.weight = 1.5;
 ITEM.weightclass = "Light";
 ITEM.description = "These robes are styled off the attire of Darklander merchants, renowned for their trade in exotic goods. They provide a reasonable amount of protection despite their lightness.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -1091,7 +1091,7 @@ ITEM.weight = 1.5;
 ITEM.weightclass = "Light";
 ITEM.description = "Robes worn by the scribes of the Holy Hierarchy, denoting their status.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -1145,7 +1145,7 @@ ITEM.weight = 1.5;
 ITEM.weightclass = "Light";
 ITEM.description = "Fine black robes with a beaked mask stuffed with odd-smelling herbs. It grafts its owner with a silhouette synonymous with death; the Plague has come for us all.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/new/goreminotaur";
 
 ITEM.requiredbeliefs = {"plague_doctor"};
@@ -1209,7 +1209,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A series of pieced-together scrap plates that form a crude yet effective set of armor.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
+ITEM.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -1269,7 +1269,7 @@ ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.description = "A series of pieced-together scrap plates that form a crude yet effective set of armor.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
+ITEM.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -1332,7 +1332,7 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "An old set of armor, once belonging to a disgraced Knight of Sol. Although covered in tattered cloth that has hardly withstood the harsh conditions of the wasteland, the armor itself is in substantially better condition, with faded gold markings still visible.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/new/knighthelmet";
 
 ITEM.requiredbeliefs = {"hauberk"};
@@ -1402,7 +1402,7 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "A set of Gothic steel plate armor, used by the Knights of Sol. It has been blessed with catalytic energy and thus cannot be worn by the unworthy.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Holy Hierarchy"};
+ITEM.requiredFactions = {"Holy Hierarchy"};
 ITEM.faction = "Holy Hierarchy";
 ITEM.genderless = true;
 
@@ -1467,7 +1467,7 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "Elite blackened steel adorned with the colors of a noble household. It has been blessed with catalytic energy and thus cannot be worn by the unworthy.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Holy Hierarchy"};
+ITEM.requiredFactions = {"Holy Hierarchy"};
 --ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 ITEM.faction = "Holy Hierarchy";
 ITEM.genderless = true;
@@ -1532,7 +1532,7 @@ ITEM.weightclass = "Medium";
 ITEM.type = "leather";
 ITEM.description = "A sturdy brown leather cloak with padding and satchels over a battle-scarred iron breastplate. It is a well-made suit of armor that both boasts its insignias and design while not limiting the wearer's movement and flexibility.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Holy Hierarchy";
 ITEM.bodygroupCharms = {["holy_sigils"] = {1, 1}};
 
@@ -1593,7 +1593,7 @@ ITEM.weightclass = "Medium";
 ITEM.type = "leather";
 ITEM.description = "A sturdy black leather cloak with padding and satchels over a battle-scarred steel breastplate. It is a well-made suit of armor that both boasts its insignias and design while not limiting the wearer's movement and flexibility.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Holy Hierarchy";
 ITEM.bodygroupCharms = {["holy_sigils"] = {1, 1}};
 
@@ -1654,7 +1654,7 @@ ITEM.weightclass = "Medium";
 ITEM.type = "leather";
 ITEM.description = "A sturdy white leather cloak with padding and satchels over a finely crafted steel breastplate. It is a well-made suit of armor that both boasts its insignias and design while not limiting the wearer's movement and flexibility. This particular set of Inquisition armor is very well crafted and revered.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Holy Hierarchy";
 ITEM.bodygroupCharms = {["holy_sigils"] = {1, 1}};
 
@@ -1718,7 +1718,7 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "Further augmented by increased steel thickness, this plate is armored to the standard of a Knight's armor set.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/new/gatekeeperhelmet";
 ITEM.faction = "Gatekeeper";
 
@@ -1789,7 +1789,7 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "A sturdy set of steel plate armor, scarred by constant battle and war.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.overlay = "begotten/zomboverlay/new/gatekeeperhelmet";
 ITEM.faction = "Gatekeeper";
 
@@ -1859,7 +1859,7 @@ ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.description = "The armor of a wasteland tyrant. It is fitted with crude steel plates and held together by scrap. This style of armor is often used by Scrapper Warlords who are paranoid of Voltist assassins.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
+ITEM.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 
 ITEM.requiredbeliefs = {"hauberk"};
@@ -2137,8 +2137,8 @@ ITEM.weight = 7;
 ITEM.weightclass = "Medium";
 ITEM.description = "A unique set of Gatekeeper plate made of the finest materials, designed specifically to protect the Master-at-Arms.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Gatekeeper"};
-ITEM.requireRank = {"Master-At-Arms"};
+ITEM.requiredFactions = {"Gatekeeper"};
+ITEM.requiredRanks = {"Master-At-Arms"};
 ITEM.faction = "Gatekeeper";
 
 ITEM.effectiveLimbs = {
@@ -2195,7 +2195,7 @@ ITEM.weightclass = "Light";
 ITEM.type = "leather";
 ITEM.description = "Created from the bones of countless victims, this armor signifies the depraved mentality of its wearer. The armor rattles as it moves, giving it a particularly terrifying presence. This armor is uniquely suited against blunt attacks.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -2259,7 +2259,7 @@ ITEM.weight = 4.5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A breastplate worn over Gambeson bearing the colors of the Holy Order of the Gatekeepers. A cheap but highly practical piece of armor.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Gatekeeper";
 
 ITEM.effectiveLimbs = {
@@ -2319,7 +2319,7 @@ ITEM.weight = 4.5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A breastplate worn over a Gambeson with white sleeves and a red cross painted on the front, the colors of the Medici of the Holy Order of Gatekeepers. A cheap but highly practical piece of armor which allows for easy identification in the battlefield.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Gatekeeper";
 ITEM.attributes = {"practitioner"};
 
@@ -2382,8 +2382,8 @@ ITEM.type = "plate";
 ITEM.description = "Plate armor covered in holy cloth and blessed sigils. A helmet forged in Maximillian steel with gold engravings. It was meant for a powerful figure of Glazic faith.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.overlay = "begotten/zomboverlay/new/grandknight";
-ITEM.requireFaction = {"Holy Hierarchy"};
-ITEM.requireRank = {"Grand Knight"};
+ITEM.requiredFactions = {"Holy Hierarchy"};
+ITEM.requiredRanks = {"Grand Knight"};
 ITEM.requiredbeliefs = {"hauberk"};
 ITEM.genderless = true;
 

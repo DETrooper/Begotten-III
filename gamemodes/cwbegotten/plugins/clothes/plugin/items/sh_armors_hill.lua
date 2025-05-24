@@ -12,7 +12,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "Banded mail over a woven aketon, with a blue tunic underneath showing allegiance to the Hill. Commonly used by the Watch.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Hillkeeper";
 
 ITEM.effectiveLimbs = {
@@ -72,7 +72,7 @@ ITEM.weight = 6;
 ITEM.weightclass = "Medium";
 ITEM.description = "A finely wrought set of brigandine tinted blue to show allegiance to the Hill. Often used by Emissaries and veteran Watchmen who have served more than one rotation.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Hillkeeper";
 
 ITEM.effectiveLimbs = {
@@ -132,7 +132,7 @@ ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.description = "Cold steel over banded mail and fine aketon. Majestic armor worn by the elite of the Hill, veterans who found that all they knew how to do was fight.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Hillkeeper";
 
 ITEM.requiredbeliefs = {"hauberk"};
@@ -194,7 +194,7 @@ ITEM.weight = 7;
 ITEM.weightclass = "Medium";
 ITEM.description = "A set with a wolf's head draped over a conic and chainmasked helm, showing only the eyes. Worn by men of the Hill who swore an oath of eternal loyalty, who would sooner die than let the banners stop flying.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Hillkeeper";
 ITEM.helmetIconOverride = "materials/begotten_apocalypse/ui/itemicons/hill_signifier.png"
 
@@ -258,7 +258,7 @@ ITEM.weight = 2.5;
 ITEM.weightclass = "Light";
 ITEM.description = "A thickly padded linen aketon with leather laid over the top. Warm and comfortable, just barely protective enough to count as more than a winter coat.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Hillkeeper";
 
 ITEM.effectiveLimbs = {
@@ -309,7 +309,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "A parka made of gathered hide, wrapped together and tied with string and crude stitching. Insulative and warm, even comfy.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -358,7 +358,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "A parka made of the great skin of a bear, with a hide jerkin underneath. It is held together with fine stitching. Very comfy, very warm, and protective.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -407,7 +407,7 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "An exceptionally heavy harness of steel plates over top of chain. A sign of strength among the men of the North.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Hillkeeper";
 
 ITEM.requiredbeliefs = {"hauberk"};
@@ -466,8 +466,8 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "chainmail";
 ITEM.description = "A set of overlapping steel plates and scales sat atop a heavy chain hauberk and a long gambeson, wreathed in ornate sigils and emblems."
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Hillkeeper"};
-ITEM.requireRank = {"Master-At-Arms"};
+ITEM.requiredFactions = {"Hillkeeper"};
+ITEM.requiredRanks = {"Master-At-Arms"};
 ITEM.faction = "Hillkeeper";
 
 ITEM.requiredbeliefs = {"hauberk"};
@@ -530,7 +530,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "Thick rough wrappings dyed blue, a sign of simple piety for the lesser clergy of the Ministry.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.requireFaction = {"Holy Hierarchy"};
+ITEM.requiredFactions = {"Holy Hierarchy"};
 ITEM.faction = "Holy Hierarchy";
 ITEM.bodygroupCharms = {["codex_solis"] = {1, 1}};
 
@@ -581,7 +581,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "A simple craft of leather jerkin laid over cloth garments, to better protect against the wild and to blend among the snow with fellow sinners.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Hillkeeper";
 
 ITEM.effectiveLimbs = {
@@ -631,7 +631,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A finely-wrought fluted steel plate inspired by the words of Maximus, fitted over the garments of the Lower Ministry. Mounting tensions in the Hill have sired a schism amongst its clergy; those of the cloth that'd remain bound to safety and tradition, fearing for their souls -  and those who'd dare to take up arms against ghouls and apostates, in service to newer mysteries.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Holy Hierarchy"};
+ITEM.requiredFactions = {"Holy Hierarchy"};
 ITEM.faction = "Holy Hierarchy";
 ITEM.bodygroupCharms = {["codex_solis"] = {1, 1}};
 
@@ -692,7 +692,7 @@ ITEM.weight = 4.5;
 ITEM.weightclass = "Medium";
 ITEM.description = "Brigandine plates fitted over an aketon. Cost-effective armament commonly used by the Watch.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Hillkeeper";
 
 ITEM.effectiveLimbs = {
@@ -747,7 +747,7 @@ ITEM.weight = 6;
 ITEM.weightclass = "Medium";
 ITEM.description = "Brigandine over mail fitted with Aketon. In the far North, layers of protection are what keep your blood warm and unspilled.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Hillkeeper";
 
 ITEM.effectiveLimbs = {
@@ -870,7 +870,7 @@ ITEM.weight = 3;
 ITEM.weightclass = "Light";
 ITEM.description = "A disgusting coat composed of layers upon layers of rotting flesh. It has a wretched stench. Savages from the Far North are known to wear this to keep themselves warm from the brutal weather.";
 ITEM.useSound = "vj_gib/gibbing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -915,7 +915,7 @@ ITEM.weight = 3;
 ITEM.weightclass = "Light";
 ITEM.description = "A heavy vest of animal furs and scavenged cloth. It provides decent protection against the elements.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -965,7 +965,7 @@ ITEM.weight = 1.5;
 ITEM.weightclass = "Light";
 ITEM.description = "A cheaply made, yet highly practical dress of ragged salvaged cloth likely taken from dead men. It protects against the elements just enough to get by.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -1015,7 +1015,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "Heavy furs overlapping studded leather. This provides good insulation and excellent protection against ravenous beasts.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludeFactions = {"Goreic Warrior"};
+ITEM.excludedFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,

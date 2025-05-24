@@ -12,8 +12,8 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "Although traditionally regarded as weak, those born of the Mother do not find combat wanting, and as such are compelled to adorn their spiritual robes with armor. This set of armor has an enchantment to ward off the damage of firearms.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver"};
+ITEM.requiredFactions = {"Goreic Warrior"};
+ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -73,8 +73,8 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "Layers of hide and etched cloth resembling mystic robes. Tailored in the image of the ancient Blade Druid order that were the founders of Gore society and religion. Only those born under the image of The Mother are said to be fit to wear such robes.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.excludeSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver"};
+ITEM.requiredFactions = {"Goreic Warrior"};
+ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -116,7 +116,7 @@ ITEM.category = "Armor"
 ITEM.weight = 1;
 ITEM.description = "A fur cloak traditionally worn by Goreic seafaring raiders. It has no protective value.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.requireFaction = {"Goreic Warrior"};
+ITEM.requiredFactions = {"Goreic Warrior"};
 
 ITEM.insulation = 25;
 
@@ -147,8 +147,8 @@ ITEM.weightclass = "Light";
 ITEM.description = "A bear pelt commonly worn by Gore Berserkers, the most fearsome and fearless warriors of the Gores.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.attributes = {"lifeleech", "rage"};
-ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.excludeSubfactions = {"Clan Grock", "Clan Crast", "Clan Shagalax", "Clan Harald", "Clan Reaver"};
+ITEM.requiredFactions = {"Goreic Warrior"};
+ITEM.excludedSubfactions = {"Clan Grock", "Clan Crast", "Clan Shagalax", "Clan Harald", "Clan Reaver"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_HEAD] = true,
@@ -181,8 +181,8 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A crude set of chainmail over leather and fur garb, it provides adequate protection from enemy weapons and the elements.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
-ITEM.excludeSubfactions = {"Clan Grock"};
+ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
+ITEM.excludedSubfactions = {"Clan Grock"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -241,8 +241,8 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "chainmail";
 ITEM.description = "The armor of a Goreic Housecarl: a combination of chainmail and shagalaxian scale armor, with ornate leather decorations.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.excludeSubfactions = {"Clan Grock"};
+ITEM.requiredFactions = {"Goreic Warrior"};
+ITEM.excludedSubfactions = {"Clan Grock"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -305,8 +305,8 @@ ITEM.type = "leather";
 ITEM.description = "A linked set of human and animal bones forming protective plates. A minotaur's head forming a terrifying war helm. The armor rattles as it moves, giving it a particularly terrifying presence. This armor is uniquely suited against blunt attacks.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.attributes = {"fear"};
-ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.excludeSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast"};
+ITEM.requiredFactions = {"Goreic Warrior"};
+ITEM.excludedSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast"};
 ITEM.overlay = "begotten/zomboverlay/new/goreminotaur";
 
 ITEM.effectiveLimbs = {
@@ -378,7 +378,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "Leather armor commonly worn by warriors of Clan Gore. It provides a reasonable degree of protection while not compromising mobility.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.requireFaction = {"Goreic Warrior"};
+ITEM.requiredFactions = {"Goreic Warrior"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -419,8 +419,8 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A sleeveless chainmail set over leather garb, stylized in Clan Haralder's fashion. The patchwork leather smells of the sea.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
-ITEM.excludeSubfactions = {"Clan Grock"};
+ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
+ITEM.excludedSubfactions = {"Clan Grock"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -479,8 +479,8 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "plate";
 ITEM.description = "Heavy armor made from hellforged black iron. Decorated with skulls and hides from man and demon alike, the Red Wolves of Clan Reaver make sure their presence is known.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.excludeSubfactions = {"Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Grock"};
+ITEM.requiredFactions = {"Goreic Warrior"};
+ITEM.excludedSubfactions = {"Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Grock"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -542,8 +542,8 @@ ITEM.weight = 6.5;
 ITEM.weightclass = "Medium";
 ITEM.description = "Steel plates arranged in a fishscale pattern upon a gambeson coat. It provides fine protection while not being too much of a hindrance to mobility.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
-ITEM.excludeSubfactions = {"Clan Grock"};
+ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
+ITEM.excludedSubfactions = {"Clan Grock"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -603,9 +603,9 @@ ITEM.weightclass = "Heavy";
 ITEM.type = "chainmail";
 ITEM.description = "Shagalaxian steel scale armor decorated with brass Familial sigils. It is armor that boasts the approval of both the Gods and the King.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.excludeSubfactions = {"Clan Grock"};
-ITEM.requireRank = {"King's Chosen"};
+ITEM.requiredFactions = {"Goreic Warrior"};
+ITEM.excludedSubfactions = {"Clan Grock"};
+ITEM.requiredRanks = {"King's Chosen"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -667,8 +667,8 @@ ITEM.weightclass = "Medium";
 ITEM.type = "plate";
 ITEM.description = "A harness of lamellar and cold forged black iron. It is covered in sigils and runes of Clan Reaver, and even foreign symbols from far northern wastelands. Used widely in Goreic warbands for its strong protective metal plating.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
-ITEM.excludeSubfactions = {"Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Grock"};
+ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
+ITEM.excludedSubfactions = {"Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Grock"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -723,8 +723,8 @@ ITEM.weightclass = "Medium";
 ITEM.type = "plate";
 ITEM.description = "A set of blackened lamellar used by the torturers, executioners, and commanders of the far-away Marauders. This armor was made to boast Goreic mastery over darkness; to wield its power without being made its subject.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.excludeSubfactions = {"Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Grock"};
+ITEM.requiredFactions = {"Goreic Warrior"};
+ITEM.excludedSubfactions = {"Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Grock"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,

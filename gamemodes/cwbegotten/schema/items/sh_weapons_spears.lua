@@ -101,7 +101,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 950, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
-	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
