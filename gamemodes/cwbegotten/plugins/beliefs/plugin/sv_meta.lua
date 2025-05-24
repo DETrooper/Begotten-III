@@ -83,7 +83,7 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 					newAmount = math.Round(newAmount / ((corruption * 0.01) * 2));
 				end]]--
 				
-				if corruption > 1 then
+				if corruption > 0 then
 					newAmount = math.Round(Lerp(corruption * 0.01, newAmount, 0));
 				end
 			end
