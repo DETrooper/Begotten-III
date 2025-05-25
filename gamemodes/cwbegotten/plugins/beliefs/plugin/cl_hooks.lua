@@ -312,7 +312,7 @@ netstream.Hook("UpgradedWarcry", function(data)
 		
 		cwBeliefs.raven = true;
 		
-		timer.Simple(10, function()
+		timer.Simple(15, function()
 			cwBeliefs.raven = false;
 			
 			for _, v in _player.Iterator() do
@@ -342,7 +342,7 @@ netstream.Hook("UpgradedWarcry", function(data)
 			
 			cwBeliefs.iconoclast = true;
 			
-			timer.Simple(10, function()
+			timer.Simple(15, function()
 				cwBeliefs.iconoclast = false;
 				
 				for _, v in _player.Iterator() do

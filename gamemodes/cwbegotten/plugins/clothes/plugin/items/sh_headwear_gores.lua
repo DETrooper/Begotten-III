@@ -509,8 +509,6 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "leather"}};
 ITEM:Register();
 
--- NEW SHIT
-
 local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.name = "Crast Shaman Helm"
 	ITEM.model = "models/begotten/misc/gore_cla_germ_helm.mdl"
@@ -580,8 +578,6 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"bearskin", "hide", "hide"}};
 ITEM:Register();
-
--- REPLACEMENTS (?)
 
 local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.name = "Haralder Sealord Ridge Helm"
