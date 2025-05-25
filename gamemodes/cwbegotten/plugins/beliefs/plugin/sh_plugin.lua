@@ -1171,7 +1171,6 @@ local COMMAND = Clockwork.command:New("Warcry");
 					timer.Create("RavenTimer_"..player:EntIndex(), 15, 1, function()
 						if IsValid(player) then
 							player.ravenBuff = false;
-							Clockwork.hint:Send(v, "'Watchful is the Raven' has worn off...", 10, Color(175, 100, 100), true, true);
 						end
 					end);
 				end
@@ -1195,6 +1194,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 								timer.Create("RavenTimer_"..v:EntIndex(), 15, 1, function()
 									if IsValid(v) then
 										v.ravenBuff = false;
+										Clockwork.hint:Send(v, "'Watchful is the Raven' has worn off...", 10, Color(175, 100, 100), true, true);
 									end
 								end);
 							end
