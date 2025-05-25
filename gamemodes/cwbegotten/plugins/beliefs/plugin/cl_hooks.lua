@@ -298,33 +298,8 @@ end);
 
 netstream.Hook("UpgradedWarcry", function(data)
 	local cwBeliefs = cwBeliefs;
-	local clothesItem = Clockwork.Client:GetClothesEquipped()
 	
 	cwBeliefs.upgradedWarcryActive = true;
-		
-	if table.HasValue(clothesItem.attributes, "iconoclast") then
-		if data then
-			for i, v in ipairs(data) do
-				if IsValid(v) then
-					v.warcryTarget = true;
-				end
-			end
-		end
-		
-		cwBeliefs.iconoclast = true;
-		
-		timer.Simple(10, function()
-			cwBeliefs.iconoclast = false;
-			
-			for _, v in _player.Iterator() do
-				if v.warcryTarget then
-					v.warcryTarget = nil;
-				end
-			end
-		end);
-	
-		return;
-	end
 	
 	if cwBeliefs:HasBelief("watchful_raven") then
 		if data then
@@ -352,6 +327,34 @@ netstream.Hook("UpgradedWarcry", function(data)
 	
 	local faction = Clockwork.Client:GetFaction();
 	local faith = Clockwork.Client:GetNetVar("faith");
+	
+	if faction == "Goreic Warrior" then
+		local subfaction = Clockwork.Client:GetSubfaction()
+					
+		if subfaction == "Clan Grock" then
+			if data then 
+				for i, v in ipairs(data) do
+					if IsValid(v) then
+						v.warcryTarget = true;
+					end
+				end
+			end
+			
+			cwBeliefs.iconoclast = true;
+			
+			timer.Simple(10, function()
+				cwBeliefs.iconoclast = false;
+				
+				for _, v in _player.Iterator() do
+					if v.warcryTarget then
+						v.warcryTarget = nil;
+					end
+				end
+			end);
+		
+			return;
+		end
+	end
 	
 	for _, v in _player.Iterator() do
 		if v ~= Clockwork.Client and (v:HasInitialized()) then

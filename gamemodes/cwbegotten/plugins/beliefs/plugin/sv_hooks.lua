@@ -964,11 +964,11 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 		end
 		
 		if entity.ravenBuff and !entity.iconoclastBuff then
-			damageInfo:ScaleDamage(0.9);
+			newDamage = newDamage * 0.9
 		end
 		
 		if entity.iconoclastBuff then
-			damageInfo:ScaleDamage(0.75);
+			newDamage = newDamage * 0.75
 		end
 		
 		local attacker = damageInfo:GetAttacker();
