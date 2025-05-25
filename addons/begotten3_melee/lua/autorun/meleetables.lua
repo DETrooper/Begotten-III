@@ -6495,7 +6495,7 @@ BlockTables.shield1 = { -- Scrap Shield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 25,
 	["blockeffectpos"] = (Vector(0, -10, 55)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_twindragon",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -6618,7 +6618,7 @@ BlockTables.shield3 = { -- Car Door Shield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 25,
 	["blockeffectpos"] = (Vector(-5, -15, 55)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_cardoor",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -6745,7 +6745,7 @@ BlockTables.shield5 = { -- Wooden Shield
 	["blockeffect"] = "GlassImpact",
 	["blockeffectforward"] = 25,
 	["blockeffectpos"] = (Vector(0, -10, 50)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_pursuer",
 	["blocksoundtable"] = "WoodenShieldSoundTable",
@@ -6808,7 +6808,7 @@ BlockTables.shield6 = { -- Iron Shield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 35,
 	["blockeffectpos"] = (Vector(0, -10, 45)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_pursuer",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -6871,7 +6871,7 @@ BlockTables.shield7 = { -- Knight's Shield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 35,
 	["blockeffectpos"] = (Vector(-5, -10, 45)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_pursuer",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -6934,7 +6934,7 @@ BlockTables.shield8 = { -- Spiked Shield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 35,
 	["blockeffectpos"] = (Vector(-5, -10, 45)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_pursuer",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -6998,7 +6998,7 @@ BlockTables.shield9 = { -- Sol Sentinel Shield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 35,
 	["blockeffectpos"] = (Vector(0, -10, 55)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_pursuer",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -7056,7 +7056,7 @@ BlockTables.shield10 = { -- Gore Guardian Shield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 30,
 	["blockeffectpos"] = (Vector(0, -10, 55)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_drakekeeper",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -7111,7 +7111,7 @@ BlockTables.shield11 = { -- Gatekeeper Shield
 	["blockeffect"] = "GlassImpact",
 	["blockeffectforward"] = 25,
 	["blockeffectpos"] = (Vector(0, -10, 50)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_twindragon",
 	["blocksoundtable"] = "WoodenShieldSoundTable",
@@ -7165,7 +7165,7 @@ BlockTables.shield12 = { -- Warfighter Shield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 30,
 	["blockeffectpos"] = (Vector(0, -10, 50)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_pursuer",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -7225,7 +7225,7 @@ BlockTables.shield13 = { -- Dreadshield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 25,
 	["blockeffectpos"] = (Vector(0, -10, 50)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_drakekeeper",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -7279,7 +7279,7 @@ BlockTables.shield14 = { -- Clan Shield
 	["blockeffect"] = "GlassImpact",
 	["blockeffectforward"] = 25,
 	["blockeffectpos"] = (Vector(0, -10, 50)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_pursuer",
 	["blocksoundtable"] = "WoodenShieldSoundTable",
@@ -7342,7 +7342,7 @@ BlockTables.shield15 = { -- Voltshield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 25,
 	["blockeffectpos"] = (Vector(0, -10, 55)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_twindragon",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -7403,7 +7403,7 @@ BlockTables.shield16 = { -- Steel Tower Shield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 25,
 	["blockeffectpos"] = (Vector(0, -10, 50)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_drakekeeper",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -7457,7 +7457,7 @@ BlockTables.shield17 = { -- Leather Shield
 	["blockeffect"] = "GlassImpact",
 	["blockeffectforward"] = 25,
 	["blockeffectpos"] = (Vector(0, -10, 50)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_pursuer",
 	["blocksoundtable"] = "WoodenShieldSoundTable",
@@ -7520,7 +7520,7 @@ BlockTables.shield18 = { -- Steel Gatekeeper Shield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 25,
 	["blockeffectpos"] = (Vector(0, -10, 50)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_drakekeeper",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -7580,7 +7580,7 @@ BlockTables.shield19 = { -- Rusted Kite Shield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 35,
 	["blockeffectpos"] = (Vector(-5, -10, 45)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_pursuer",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -7643,7 +7643,7 @@ BlockTables.shield20 = { -- Old Soldier Shield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 35,
 	["blockeffectpos"] = (Vector(-5, -10, 45)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_pursuer",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -7706,7 +7706,7 @@ BlockTables.shieldunique1 = { -- Red Wolf Skinshield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 35,
 	["blockeffectpos"] = (Vector(0, -10, 50)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_pursuer",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -7754,7 +7754,7 @@ BlockTables.shieldunique2 = { -- Sol Shield (Unique)
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 35,
 	["blockeffectpos"] = (Vector(0, -10, 50)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["partialbulletblock"] = false,
 	["poiseresistance"] = 35,
@@ -7766,8 +7766,6 @@ BlockTables.shieldunique2 = { -- Sol Shield (Unique)
 	["candeflect"] = true,
 };
 
--- Hill shit (shields)
-
 BlockTables.shieldhill = { -- Hillkeeper Kite Shield
 	["name"] = "Hillkeeper Shield",
 	["guardblockamount"] = 5,
@@ -7776,7 +7774,7 @@ BlockTables.shieldhill = { -- Hillkeeper Kite Shield
 	["blockeffect"] = "GlassImpact",
 	["blockeffectforward"] = 25,
 	["blockeffectpos"] = (Vector(0, -10, 50)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_twindragon",
 	["blocksoundtable"] = "WoodenShieldSoundTable",
@@ -7793,12 +7791,16 @@ BlockTables.shieldhill = { -- Hillkeeper Kite Shield
 		["models/v_begottenknife.mdl"] = {pos = Vector(10.8, -8.643, 4.159), ang = Vector(0, 0, -2)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.68, -6.835, 0.479), ang = Vector(2.111, -26.031, -4.222)},
 		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(1.309, -12.061, -4.24), ang = Vector(-18.996, -60.503, 13.366)},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {pos = Vector(1.309, -12.061, -4.24), ang = Vector(-18.996, -60.503, 13.366)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_begottenknife.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
 		},
 		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {
 			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 		},
 	},
@@ -7815,6 +7817,9 @@ BlockTables.shieldhill = { -- Hillkeeper Kite Shield
 		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
 			["hillshield"] = { type = "Model", model = "models/begotten_apocalypse/items/hill_kite_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-0.519, 5.199, -2.597), angle = Angle(108.7, -33.896, -80.65), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {
+			["hillshield"] = { type = "Model", model = "models/begotten_apocalypse/items/hill_kite_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-0.519, 5.199, -2.597), angle = Angle(108.7, -33.896, -80.65), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
 	},
 	["WElements"] = {
 		["hillshield"] = { type = "Model", model = "models/begotten_apocalypse/items/hill_kite_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(3, 3, 0), angle = Angle(5.843, 146.104, 87.662), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
@@ -7829,7 +7834,7 @@ BlockTables.shieldhillsteel = { -- Steel Hillkeeper Shield
 	["blockeffect"] = "MetalSpark",
 	["blockeffectforward"] = 25,
 	["blockeffectpos"] = (Vector(0, -10, 50)),
-	["blockcone"] = 220,
+	["blockcone"] = 200,
 	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
 	["blockanim"] = "a_sword_shield_block_drakekeeper",
 	["blocksoundtable"] = "MetalShieldSoundTable",
@@ -7846,6 +7851,7 @@ BlockTables.shieldhillsteel = { -- Steel Hillkeeper Shield
 		["models/v_begottenknife.mdl"] = {pos = Vector(6, -8.04, 2.68), ang = Vector(0, -9.146, -6.332)},
 		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(3.559, -6.031, 1.279), ang = Vector(0, -27.438, -5.628)},
 		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(5.28, -6.433, 1.279), ang = Vector(0, -35.88, 3.517)},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {pos = Vector(5.28, -6.433, 1.279), ang = Vector(0, -35.88, 3.517)},
 	},
 	["ViewModelBoneMods"] = {
 		["models/v_begottenknife.mdl"] = {
@@ -7865,9 +7871,288 @@ BlockTables.shieldhillsteel = { -- Steel Hillkeeper Shield
 		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
 			["hillsteelshield"] = { type = "Model", model = "models/props/begotten/melee/defender_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-0.519, -3.636, 17.142), angle = Angle(71.299, 132.078, -90), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 		},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {
+			["hillsteelshield"] = { type = "Model", model = "models/props/begotten/melee/defender_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-0.519, -3.636, 17.142), angle = Angle(71.299, 132.078, -90), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
 	},
 	["WElements"] = {
 		["hillsteelshield"] = { type = "Model", model = "models/props/begotten/melee/defender_shield.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, 1.557, 0.518), angle = Angle(180.844, -33.896, 90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	},
+};
+
+BlockTables.shieldhathood1 = { -- Shagalax Tower Shield
+	["name"] = "Shagalax Tower Shield",
+	["guardblockamount"] = 3,
+	["damagereduction"] = 0.8,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 50)),
+	["blockcone"] = 200,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
+	["blockanim"] = "a_sword_shield_block_drakekeeper",
+	["blocksoundtable"] = "MetalShieldSoundTable",
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 55,
+	["raisespeed"] = 1.7,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 40,
+	["canparry"] = true,
+	["candeflect"] = false,
+	["ironsights"] = {
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(5, -9.849, -3.481), ang = Vector(4.221, -16.885, 4.221)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(9.64, -12.664, 1.6), ang = Vector(0, -15.478, 2.111)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(6.48, -9.447, 1.759), ang = Vector(2.813, -46.432, -4.926)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(3.72, -12.865, 2.48), ang = Vector(2.813, -46.432, -6.332)},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {pos = Vector(3.72, -12.865, 2.48), ang = Vector(2.813, -46.432, -6.332)},
+	},
+	["ViewModelBoneMods"] = {
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, -13.148, 0), angle = Angle(0, 0, 0) }
+		},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(0, -13.148, 0), angle = Angle(0, 0, 0) }
+		},
+		["models/v_begottenknife.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+	},
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["shieldhathood1"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_shagalax.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-3.636, 12.243, -3.753), angle = Angle(35, 73.636, 134.416), size = Vector(0.899, 0.899, 0.899), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/v_begottenknife.mdl"] = {
+			["shieldhathood1"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_shagalax.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-4.676, -4.676, -1.558), angle = Angle(180, 49, 19.87), size = Vector(0.898, 0.898, 0.898), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["shieldhathood1"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_shagalax.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(8.831, -7.792, -8.832), angle = Angle(24.545, -31.56, -87.664), size = Vector(0.898, 0.898, 0.898), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shieldhathood1"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_shagalax.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(0.518, -5.715, -4.676), angle = Angle(-99.351, 129.74, 78.311), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {
+			["shieldhathood1"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_shagalax.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(0.518, -5.715, -4.676), angle = Angle(-99.351, 129.74, 78.311), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+	},
+	["WElements"] = {
+		["hathood1"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_shagalax.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -3.636, -4.676), angle = Angle(-8.183, -36.235, -94.676), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	},
+};
+
+BlockTables.shieldhathood2 = { -- Clan Reaver Shield
+	["name"] = "Clan Reaver Shield",
+	["guardblockamount"] = 5,
+	["damagereduction"] = 0.8,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 35,
+	["blockeffectpos"] = (Vector(0, -10, 45)),
+	["blockcone"] = 200,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
+	["blockanim"] = "a_sword_shield_block_pursuer",
+	["blocksoundtable"] = "WoodenShieldSoundTable",
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 30,
+	["raisespeed"] = 1.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 35,
+	["canparry"] = true,
+	["candeflect"] = true,
+	["ironsights"] = {
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(5, -9.849, -3.481), ang = Vector(4.221, -16.885, 4.221)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(2, -4.222, -3.04), ang = Vector(0, -15, 4.925)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(9.96, -5.428, -2.8), ang = Vector(5.627, -20.403, 5.627)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(5.44, -6.031, -1.481), ang = Vector(-9.146, -40.102, 1.406)},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {pos = Vector(5.44, -6.031, -1.481), ang = Vector(-9.146, -40.102, 1.406)},
+	},
+	["ViewModelBoneMods"] = {
+		["models/v_begottenknife.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+	},
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["shieldhathood2"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_thyrm.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-3.636, 10.243, -3.753), angle = Angle(35, 73.636, 134.416), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/v_begottenknife.mdl"] = {
+			["shieldhathood2"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_thyrm.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-1.558, -0.519, 4.675), angle = Angle(3.506, 43.247, 162.468), size = Vector(0.898, 0.898, 0.898), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["shieldhathood2"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_thyrm.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(5.714, -7.792, -1.558), angle = Angle(24.545, -31.559, -87.663), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shieldhathood2"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_thyrm.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -7.792, 11.947), angle = Angle(75.973, 160.13, 68.96), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {
+			["shieldhathood2"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_thyrm.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -7.792, 11.947), angle = Angle(75.973, 160.13, 68.96), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+	},
+	["WElements"] = {
+		["shieldhathood2"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_thyrm.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(4.675, 1.557, 1.557), angle = Angle(-3.507, -35, -90), size = Vector(1.049, 1.049, 1.049), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	},
+};
+
+BlockTables.shieldhathood3 = { -- Clan Crast Shield
+	["name"] = "Clan Crast Shield",
+	["guardblockamount"] = 5,
+	["damagereduction"] = 0.8,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 35,
+	["blockeffectpos"] = (Vector(0, -10, 45)),
+	["blockcone"] = 200,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
+	["blockanim"] = "a_sword_shield_block_pursuer",
+	["blocksoundtable"] = "WoodenShieldSoundTable",
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 30,
+	["raisespeed"] = 1.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 35,
+	["canparry"] = true,
+	["candeflect"] = true,
+	["ironsights"] = {
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(5, -9.849, -3.481), ang = Vector(4.221, -16.885, 4.221)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(8.199, -4.222, -3.04), ang = Vector(0, -19.698, 4.925)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(9.96, -5.428, -2.8), ang = Vector(5.627, -20.403, 5.627)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(5.44, -6.031, -1.481), ang = Vector(-9.146, -40.102, 1.406)},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {pos = Vector(5.44, -6.031, -1.481), ang = Vector(-9.146, -40.102, 1.406)},
+	},
+	["ViewModelBoneMods"] = {
+		["models/v_begottenknife.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+	},
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["shieldhathood3"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_crast.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-3.636, 10.243, -3.753), angle = Angle(35, 73.636, 134.416), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/v_begottenknife.mdl"] = {
+			["shieldhathood3"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_crast.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-1.558, 2, -3), angle = Angle(3.506, 43.247, 162.468), size = Vector(0.898, 0.898, 0.898), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["shieldhathood3"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_crast.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(5.714, -7.792, -1.558), angle = Angle(24.545, -31.559, -87.663), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shieldhathood3"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_crast.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -8.8955, 8.97), angle = Angle(75.973, 160.13, 68.96), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {
+			["shieldhathood3"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_crast.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -8.8955, 8.97), angle = Angle(75.973, 160.13, 68.96), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+	},
+	["WElements"] = {
+		["shieldhathood3"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_crast.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(1.557, 2.596, 0.518), angle = Angle(-8.183, -31.559, -90), size = Vector(1.049, 1.049, 1.049), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	},
+};
+
+BlockTables.shieldhathood4 = { -- Clan Harald Shield
+	["name"] = "Clan Harald Shield",
+	["guardblockamount"] = 5,
+	["damagereduction"] = 0.8,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 35,
+	["blockeffectpos"] = (Vector(0, -10, 45)),
+	["blockcone"] = 200,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
+	["blockanim"] = "a_sword_shield_block_pursuer",
+	["blocksoundtable"] = "WoodenShieldSoundTable",
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 30,
+	["raisespeed"] = 1.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 35,
+	["canparry"] = true,
+	["candeflect"] = true,
+	["ironsights"] = {
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(5, -9.849, -3.481), ang = Vector(4.221, -16.885, 4.221)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(1.679, -11.056, 1.25), ang = Vector(4.925, -25.327, -4.222)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(4.239, -7.84, 1.159), ang = Vector(9.145, -21.107, -4.222)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(5.44, -6.031, -1.481), ang = Vector(-9.146, -40.102, 1.406)},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {pos = Vector(5.44, -6.031, -1.481), ang = Vector(-9.146, -40.102, 1.406)},
+	},
+	["ViewModelBoneMods"] = {
+		["models/v_begottenknife.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+	},
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["shieldhathood4"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_haraldr.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-3.636, 7.243, -5.753), angle = Angle(35, 73.636, 134.416), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/v_begottenknife.mdl"] = {
+			["shieldhathood4"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_haraldr.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-1.558, -0.519, 4.675), angle = Angle(3.506, 43.247, 162.468), size = Vector(0.898, 0.898, 0.898), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["shieldhathood4"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_haraldr.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(5.714, -3.636, -0.519), angle = Angle(17.531, -31.56, -87.664), size = Vector(1.1, 1.1, 1.1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shieldhathood4"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_haraldr.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -7.792, 11.947), angle = Angle(75.973, 160.13, 68.96), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {
+			["shieldhathood4"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_haraldr.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -7.792, 11.947), angle = Angle(75.973, 160.13, 68.96), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+	},
+	["WElements"] = {
+		["shieldhathood4"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_haraldr.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(4.675, 1.557, 1.557), angle = Angle(-3.507, -35, -90), size = Vector(1.049, 1.049, 1.049), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	},
+};
+
+BlockTables.shieldhathood5 = { -- Clan Gore Shield
+	["name"] = "Clan Gore Shield",
+	["guardblockamount"] = 5,
+	["damagereduction"] = 0.8,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 35,
+	["blockeffectpos"] = (Vector(0, -10, 45)),
+	["blockcone"] = 200,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE, DMG_BULLET, DMG_BUCKSHOT},
+	["blockanim"] = "a_sword_shield_block_pursuer",
+	["blocksoundtable"] = "WoodenShieldSoundTable",
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 30,
+	["raisespeed"] = 1.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 35,
+	["canparry"] = true,
+	["candeflect"] = true,
+	["ironsights"] = {
+		["models/v_onehandedbegotten.mdl"] = {pos = Vector(5, -9.849, -3.481), ang = Vector(4.221, -16.885, 4.221)},
+		["models/v_begottenknife.mdl"] = {pos = Vector(8.199, -4.222, -3.04), ang = Vector(0, -19.698, 4.925)},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {pos = Vector(9.96, -5.428, -2.8), ang = Vector(5.627, -20.403, 5.627)},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {pos = Vector(5.44, -6.031, -1.481), ang = Vector(-9.146, -40.102, 1.406)},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {pos = Vector(5.44, -6.031, -1.481), ang = Vector(-9.146, -40.102, 1.406)},
+	},
+	["ViewModelBoneMods"] = {
+		["models/v_begottenknife.mdl"] = {
+			["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(6.852, -9.815, -3.149), angle = Angle(0, 0, 0) }
+		},
+	},
+	["VElements"] = {
+		["models/v_onehandedbegotten.mdl"] = {
+			["shieldhathood5"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_ursa.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-3.636, 11.947, -6.753), angle = Angle(35, 73.636, 134.416), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/v_begottenknife.mdl"] = {
+			["shieldhathood5"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_ursa.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(-1.558, -0.519, 4.675), angle = Angle(3.506, 43.247, 162.468), size = Vector(0.898, 0.898, 0.898), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/cstrike/c_knife_t.mdl"] = {
+			["shieldhathood5"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_ursa.mdl", bone = "ValveBiped.Bip01_L_Forearm", rel = "", pos = Vector(5.714, -7.792, -1.558), angle = Angle(24.545, -31.559, -87.663), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_flail.mdl"] = {
+			["shieldhathood5"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_ursa.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -7.792, 11.947), angle = Angle(75.973, 160.13, 68.96), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+		["models/weapons/ageofchivalry/c_begotten_solflail.mdl"] = {
+			["shieldhathood5"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_ursa.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.596, -7.792, 11.947), angle = Angle(75.973, 160.13, 68.96), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+		},
+	},
+	["WElements"] = {
+		["shieldhathood5"] = { type = "Model", model = "models/begotten_prelude/items/goreshield_ursa.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(1.557, 2.596, 0.518), angle = Angle(-8.183, -31.559, -90), size = Vector(1.049, 1.049, 1.049), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 	},
 };
 
@@ -7895,6 +8180,11 @@ AddTable("shieldunique1", BlockTables.shieldunique1)
 AddTable("shieldunique2", BlockTables.shieldunique2)
 AddTable("shieldhill", BlockTables.shieldhill)
 AddTable("shieldhillsteel", BlockTables.shieldhillsteel)
+AddTable("shieldhathood1", BlockTables.shieldhathood1)
+AddTable("shieldhathood2", BlockTables.shieldhathood2)
+AddTable("shieldhathood3", BlockTables.shieldhathood3)
+AddTable("shieldhathood4", BlockTables.shieldhathood4)
+AddTable("shieldhathood5", BlockTables.shieldhathood5)
 
 -- Dummy tables for use with tooltips that have the min/max values.
 local meleemax = {};

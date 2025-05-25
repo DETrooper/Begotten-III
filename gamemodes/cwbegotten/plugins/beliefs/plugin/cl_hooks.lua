@@ -126,6 +126,7 @@ local bearTrapDist = (256 * 256);
 local warcryColor = Color(180, 0, 0, 255);
 local troutColor = Color(120, 120, 120, 255);
 local ravenColor = Color(0, 180, 0);
+local iconoclastColor = Color(150, 150, 150);
 
 -- This can be optimized more.
 function cwBeliefs:AddEntityOutlines(outlines)
@@ -183,25 +184,22 @@ function cwBeliefs:AddEntityOutlines(outlines)
 	end
 	
 	if self.upgradedWarcryActive then
-		--[[if self.trout then
-			for _, v in _player.Iterator() do
-				if v.warcryTarget and v:Alive() and v:GetColor().a > 0 then
-					self:DrawPlayerOutline(v, outlines, troutColor);
-				end;
-			end;
-		else]]if self.raven then
+	
+		if self.raven then
 			for _, v in _player.Iterator() do
 				if v.warcryTarget and v:Alive() and v:GetColor().a > 0 then
 					self:DrawPlayerOutline(v, outlines, ravenColor);
 				end;
 			end;
-		--[[else
+		end;
+		
+		if self.iconoclast then
 			for _, v in _player.Iterator() do
 				if v.warcryTarget and v:Alive() and v:GetColor().a > 0 then
-					self:DrawPlayerOutline(v, outlines, warcryColor);
-				end
-			end;]]--
-		end
+					self:DrawPlayerOutline(v, outlines, iconoclastColor);
+				end;
+			end;
+		end; 
 	end
 	
 	if cwSenses and self:HasBelief("the_black_sea") then
@@ -300,8 +298,33 @@ end);
 
 netstream.Hook("UpgradedWarcry", function(data)
 	local cwBeliefs = cwBeliefs;
+	local clothesItem = Clockwork.Client:GetClothesEquipped()
 	
 	cwBeliefs.upgradedWarcryActive = true;
+		
+	if table.HasValue(clothesItem.attributes, "iconoclast") then
+		if data then
+			for i, v in ipairs(data) do
+				if IsValid(v) then
+					v.warcryTarget = true;
+				end
+			end
+		end
+		
+		cwBeliefs.iconoclast = true;
+		
+		timer.Simple(10, function()
+			cwBeliefs.iconoclast = false;
+			
+			for _, v in _player.Iterator() do
+				if v.warcryTarget then
+					v.warcryTarget = nil;
+				end
+			end
+		end);
+	
+		return;
+	end
 	
 	if cwBeliefs:HasBelief("watchful_raven") then
 		if data then

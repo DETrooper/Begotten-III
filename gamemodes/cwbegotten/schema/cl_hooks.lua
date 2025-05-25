@@ -3159,7 +3159,6 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 
 			if(table.HasValue(itemTable.attributes, "banner_blessing")) then
 				frame:AddText("Blessing of the Banner (Shieldless): While a support banner is equipped, it does not need to be held to receive its effects.", Color(110, 30, 30), nil, 0.9)
-
 			end
 			
 			if table.HasValue(itemTable.attributes, "mothers_blessing") then
@@ -3176,6 +3175,18 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 
 			if table.HasValue(itemTable.attributes, "rage") then
 				frame:AddText("Rage (Shieldless): Movement speed is increased by 7%. Warcries return +15 stamina.", Color(110, 30, 30), nil, 0.9);
+			end
+			
+			if table.HasValue(itemTable.attributes, "godless") then
+				frame:AddText("Godless (Shieldless): Increases melee, stamina, and stability damage by 25% while at or below 40% sanity. Increases stability damage of throwing stones by 25%.", Color(110, 30, 30), nil, 0.9);
+			end
+			
+			if table.HasValue(itemTable.attributes, "iconoclast") then
+				frame:AddText("Iconoclast (Shieldless): Your warcry bless all members of Clan Grock in talking distance with +25 stamina, 25% damage resistance and +15% movement speed for 15 seconds. Targets affected by this buff are highlighted in grey, and you will lose 5 points of sanity per warcry.", Color(110, 30, 30), nil, 0.9);
+			end
+			
+			if table.HasValue(itemTable.attributes, "lesserlifeleech") then
+				frame:AddText("Lesser Lifeleech (Shieldless): 70% of damage in Light Armor, 50% in Medium Armor, 30% in Heavy Armor is returned as health.", Color(110, 30, 30), nil, 0.9);
 			end
 			
 			if table.HasValue(itemTable.attributes, "seafarer") then

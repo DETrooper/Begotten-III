@@ -779,21 +779,31 @@ local function Guarding(ent, dmginfo)
 							end
 						end
 						
-						if attacker.GetCharmEquipped then
-							if attacker:GetCharmEquipped("ring_pummeler") then
-								poiseDamageModifier = poiseDamageModifier + 0.15;
-							end
+						if attacker:IsPlayer() then
+							local clothesItem = attacker:GetClothesEquipped();
 							
-							if attacker:GetCharmEquipped("ring_pugilist") and enemywep:GetClass() == "begotten_fists" then
-								if !isJavelin then
-									poiseDamageModifier = poiseDamageModifier * 4;
+							if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "godless") then							
+								if attacker:Sanity() <= 40 and enemywep:GetNW2String("activeShield"):len() <= 0 then
+									poiseDamageModifier = poiseDamageModifier + 0.25;
 								end
 							end
-						end
-						
-						if IsValid(enemywep) and enemywep:GetNW2String("activeOffhand"):len() > 0 then
-							if !isJavelin then
-								poiseDamageModifier = poiseDamageModifier * 0.5;
+							
+							if attacker.GetCharmEquipped then
+								if attacker:GetCharmEquipped("ring_pummeler") then
+									poiseDamageModifier = poiseDamageModifier + 0.15;
+								end
+								
+								if attacker:GetCharmEquipped("ring_pugilist") and enemywep:GetClass() == "begotten_fists" then
+									if !isJavelin then
+										poiseDamageModifier = poiseDamageModifier * 4;
+									end
+								end
+							end
+							
+							if IsValid(enemywep) and enemywep:GetNW2String("activeOffhand"):len() > 0 then
+								if !isJavelin then
+									poiseDamageModifier = poiseDamageModifier * 0.5;
+								end
 							end
 						end
 					

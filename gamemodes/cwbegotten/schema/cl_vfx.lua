@@ -125,7 +125,7 @@ function Schema:ShouldPlayerModifyBlur(entity)
 		local clientFaction = Clockwork.Client:GetNetVar("kinisgerOverride") or Clockwork.Client:GetFaction();
 		
 		if faction == "Goreic Warrior" and clientFaction ~= "Goreic Warrior" then
-			if entity:GetModel() == "models/begotten/goreicwarfighters/gorechieftan.mdl" then
+			if entity:GetModel() == "models/begotten/goreicwarfighters/gorechieftan.mdl" or entity:GetModel() == "models/begotten/goreicwarfighters/grokcrast.mdl" then
 				return true;
 			else
 				local helmet = entity:GetHelmetEquipped();

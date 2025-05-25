@@ -544,6 +544,7 @@ end
 
 function GetStabilityModifier(owner)
 	local stabilityModifier = 1
+	local clothesItem = owner:GetClothesEquipped();
 	
 	if cwBeliefs and owner.HasBelief then
 		if owner:HasBelief("fanaticism") then
@@ -560,6 +561,14 @@ function GetStabilityModifier(owner)
 			stabilityModifier = stabilityModifier * 1.10;
 		end
 	end
+	
+	if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "godless") then
+		local wep = owner:GetActiveWeapon();
+		
+		if owner:Sanity() <= 40 and wep:GetNW2String("activeShield"):len() <= 0 then
+			stabilityModifier = stabilityModifier * 1.25;
+		end
+	end	
 	
 	if owner.GetCharmEquipped and owner:GetCharmEquipped("ring_pummeler") then
 		stabilityModifier = stabilityModifier * 1.15;

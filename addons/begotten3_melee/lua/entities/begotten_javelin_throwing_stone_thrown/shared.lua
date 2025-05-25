@@ -281,6 +281,16 @@ if SERVER then
 						end
 					end
 				end
+				
+				local clothesItem = self.Owner:GetClothesEquipped();
+					
+				if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "godless") then
+					local wep = self.Owner:GetActiveWeapon();
+					
+					if self.Owner:Sanity() <= 40 and wep:GetNW2String("activeShield"):len() <= 0 then
+						stabilitydamage = stabilitydamage * 1.25
+					end
+				end
 					
 				if Ent:IsPlayer() then
 					if self.Owner.GetSubfaction and self.Owner:GetSubfaction() == "Clan Grock" then -- Grock Rock Supremacy

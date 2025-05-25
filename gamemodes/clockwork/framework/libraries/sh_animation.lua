@@ -1189,6 +1189,78 @@ function Clockwork.animation:AddGatekeeperMediciHalfplateArms(model)
 	});
 end;
 
+function Clockwork.animation:AddQuebecoisChainmail(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_chaingore3.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddEastmanArmor(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_braveset.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddHaraldrEast(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_chaingore4.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddShagalaxScale(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_scalegore.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddReaverChain(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_chaingore2.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddKingGore(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_gorehousecarlarms.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddFrenziedChain(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_battaniansash.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddGrockTribal(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/groktribal.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddGrockCrast(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/grokcrast.mdl",
+		skin = 0
+	});
+end;
+
 -- A function to check for stored hands info by model.
 function Clockwork.animation:CheckHands(model, animTable)
 	local info = animTable.hands or {
@@ -1234,6 +1306,7 @@ Clockwork.animation:AddGatekeeperMediumArms("models/begotten/gatekeepers/gatekee
 Clockwork.animation:AddGatekeeperFineArms("models/begotten/gatekeepers/gatekeeperfine");
 
 Clockwork.animation:AddLamellarArms("models/begotten/goreicwarfighters/gorelamellar");
+Clockwork.animation:AddLamellarArms("models/begotten/goreicwarfighters/fishscale"); -- Replace later
 
 Clockwork.animation:AddGatekeeperOrnateArms("models/begotten/gatekeepers/gatekeeperornate");
 Clockwork.animation:AddGatekeeperOrnateArms("begotten/gatekeepers/vexi.mdl");
@@ -1354,8 +1427,6 @@ Clockwork.animation:AddHellplateHellBaronArms("models/begotten/satanists/ornateh
 
 Clockwork.animation:AddGatekeeperMediciHalfplateArms("models/begotten/gatekeepers/medicushalfplate");
 
--- Hill arms
-
 Clockwork.animation:AddBearhideWandererArms("models/begotten/wanderers/bearhidewanderer")
 Clockwork.animation:AddClericArms("models/begotten/wanderers/cleric")
 Clockwork.animation:AddClericArms("models/begotten/wanderers/clericarmored")
@@ -1375,10 +1446,22 @@ Clockwork.animation:AddNorthWandererArms("models/begotten/wanderers/furvest")
 
 Clockwork.animation:AddFootpadArms("models/begotten/wanderers/footpad")
 
-Clockwork.animation:AddMonkRobeArms("models/begotten/wanderers/anglo"); -- Temp for now, replace later?
+Clockwork.animation:AddMonkRobeArms("models/begotten/wanderers/anglo"); -- Replace later
 
 Clockwork.animation:AddFlayedFuckArms("models/begotten/wanderers/flayedfuck");
 
 Clockwork.animation:AddEnvelopeDressArms("models/begotten/wanderers/envelopedress");
 
 Clockwork.animation:AddArmoredFursArms("models/begotten/wanderers/armoredfurs");
+
+Clockwork.animation:AddQuebecoisChainmail("models/begotten/prelude_gores/chaingore3_male.mdl");
+Clockwork.animation:AddEastmanArmor("models/begotten/prelude_gores/braveset_male.mdl");
+Clockwork.animation:AddHaraldrEast("models/begotten/prelude_gores/chaingore4_male.mdl");
+Clockwork.animation:AddShagalaxScale("models/begotten/prelude_gores/scalegore_male.mdl");
+Clockwork.animation:AddReaverChain("models/begotten/prelude_gores/chaingore2_male.mdl");
+Clockwork.animation:AddFrenziedChain("models/begotten/prelude_gores/battaniansash_male.mdl");
+Clockwork.animation:AddKingGore("models/begotten/body/seafarer_armor_male.mdl");
+
+Clockwork.animation:AddGrockTribal("models/begotten/goreicwarfighters/groktribal.mdl");
+
+Clockwork.animation:AddGrockCrast("models/begotten/goreicwarfighters/grokcrast.mdl");

@@ -963,8 +963,12 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			end
 		end
 		
-		if entity.ravenBuff then
+		if entity.ravenBuff and !entity.iconoclastBuff then
 			damageInfo:ScaleDamage(0.9);
+		end
+		
+		if entity.iconoclastBuff then
+			damageInfo:ScaleDamage(0.75);
 		end
 		
 		local attacker = damageInfo:GetAttacker();
@@ -1168,6 +1172,16 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 									end);
 								end
 							end
+						end
+					end
+					
+					local clothesItem = attacker:GetClothesEquipped();
+					
+					if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "godless") then
+						local enemywep = attacker:GetActiveWeapon();
+						
+						if attacker:Sanity() <= 40 and enemywep:GetNW2String("activeShield"):len() <= 0 then
+							newDamage = newDamage + (originalDamage * 0.25);
 						end
 					end
 					
@@ -1553,23 +1567,12 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 			end
 		end]]--
 		
-		if entity:IsPlayer() and not entTab.cwWakingUp then
-			local clothesItem = entity:GetClothesEquipped();
-			if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
-				local hatred = math.min(entity:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 1.5))), 100);
-				
-				if !entTab.opponent then
-					entity:SetCharacterData("Hatred", hatred);
-				end
-				
-				entity:SetLocalVar("Hatred", hatred);
-			end
-			
-			if IsValid(attacker) and attacker:IsPlayer() then
+		if IsValid(attacker) and attacker:IsPlayer() then
 				local enemywep = attacker:GetActiveWeapon();
 			
+				local helmetItem = attacker:GetHelmetEquipped();
 				-- If a beserker or a member of House Varazdat, gain HP back via lifeleech.
-				if attacker:GetSubfaction() == "Varazdat" then
+				if attacker:GetSubfaction() == "Varazdat" or (helmetItem and helmetItem.attributes and table.HasValue(helmetItem.attributes, "lesserlifeleech") and IsValid(enemywep) and enemywep:GetNW2String("activeShield"):len() <= 0) then
 					if IsValid(enemywep) and enemywep.IsABegottenMelee then
 						local clothesItem = attacker:GetClothesEquipped();
 						local modifier = 1.45;
@@ -1626,7 +1629,6 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 					end
 				end
 			end
-		end
 		
 		local action = Clockwork.player:GetAction(entity);
 		
@@ -2526,14 +2528,9 @@ function cwBeliefs:ModifyPlayerSpeed(player, infoTable)
 		
 	end
 	
-	if player.warcrySlowSpeed then
-		if player.warcrySlowSpeed > curTime then
-			infoTable.runSpeed = infoTable.runSpeed * 0.85;
-			infoTable.walkSpeed = infoTable.walkSpeed * 0.85;
-		else
-			player.warcrySlowSpeed = nil;
-		end
-	elseif player.fearsomeSpeed then
+	if player.fearsomeSpeed then
 		infoTable.runSpeed = infoTable.runSpeed * 1.1;
+	elseif player.iconoclastBuff then
+		infoTable.runSpeed = infoTable.runSpeed * 1.15;
 	end
 end

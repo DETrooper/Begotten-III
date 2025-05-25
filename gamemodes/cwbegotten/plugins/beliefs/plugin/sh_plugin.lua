@@ -1191,13 +1191,36 @@ local COMMAND = Clockwork.command:New("Warcry");
 								
 								table.insert(affected_players, v);
 								
-								timer.Create("RavenTimer_"..v:EntIndex(), 10, 1, function()
+								timer.Create("RavenTimer_"..v:EntIndex(), 15, 1, function()
 									if IsValid(v) then
 										v.ravenBuff = false;
 									end
 								end);
 							end
 						end
+						
+						if subfaction == "Clan Grock" then
+							local clothesItem = player:GetClothesEquipped()
+					
+							if table.HasValue(clothesItem.attributes, "iconoclast") and !player:GetShieldEquipped() then
+								local targetSubfaction = v:GetNetVar("kinisgerOverrideSubfaction") or v:GetSubfaction();
+								
+								if targetSubfaction == "Clan Grock" then
+									v:HandleStamina(25);
+									v.iconoclastBuff = true;
+									hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true);
+								
+									table.insert(affected_players, v);
+									timer.Create("IconoclastTimer_"..v:EntIndex(), 15, 1, function()
+										if IsValid(v) then
+											v.iconoclastBuff = false;
+											hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true);
+											Clockwork.hint:Send(v, "'Iconoclast' has worn off...", 10, Color(175, 100, 100), true, true);
+										end
+									end);
+								end
+							end
+						end 
 						
 						-- Make fearsome wolf damage buff apply to everyone irrespective of faith or faction.
 						if player_has_fearsome_wolf then
@@ -1327,9 +1350,20 @@ local COMMAND = Clockwork.command:New("Warcry");
 					player:EmitSound("lmcries/lm_cry" .. math.random(1,19) .. ".mp3", 100, math.random(90, 105));
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a withering scream!", playerPos, radius);
 				elseif subfaction == "Clan Grock" then
-					player:HandleStamina(25);
-					player:EmitSound("warcries/grock_warcry"..math.random(1, 11)..".ogg", 100, math.random(60, 75));
-					Clockwork.chatBox:AddInTargetRadius(player, "me", "barbarically shouts out!", playerPos, radius);
+					local clothesItem = player:GetClothesEquipped()
+					
+					if table.HasValue(clothesItem.attributes, "iconoclast") and !player:GetShieldEquipped() and cwStamina then
+						player:HandleSanity(-5);
+						local warcrySounds = {"kronos/sawcrazy/random2.wav", "kronos/sawcrazy/random1.wav", "kronos/sawrunner/sawrunner_attack2.wav", "kronos/sawrunner/sawrunner_alert30.wav", "kronos/boss/mace_scream.wav"}
+						local selectedSound = warcrySounds[math.random(#warcrySounds)]
+						player:EmitSound(selectedSound, 100, math.random(60, 75));
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "screams and groans in a mockery of prayer!", playerPos, radius);
+						netstream.Start(player, "UpgradedWarcry", affected_players);
+					else
+						player:HandleStamina(25);
+						player:EmitSound("warcries/grock_warcry"..math.random(1, 11)..".ogg", 100, math.random(60, 75));
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "barbarically shouts out!", playerPos, radius);
+					end
 				-- Kinisgers can FotF warcry if not disguised as a reaver.
 				elseif faith == "Faith of the Family" then
 					local warcryText = "lets out a feral warcry!"
@@ -1411,7 +1445,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				if player_has_daring_trout then
 					player.daringTroutActive = true;
 					
-					timer.Create("DaringTroutTimer_"..player:EntIndex(), 20.5, 1, function()
+					timer.Create("DaringTroutTimer_"..player:EntIndex(), 25.5, 1, function()
 						if IsValid(player) then
 							if player.daringTroutActive then
 								player.daringTroutActive = nil;

@@ -124,7 +124,7 @@ ITEM.walkSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "Goreic Kingplate";
+ITEM.name = "Kalkaslash Kingplate";
 ITEM.model = "models/begotten/headgroup_props/housecarlarmor.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/lord_vasso_armor.png"
 ITEM.category = "Armor"
