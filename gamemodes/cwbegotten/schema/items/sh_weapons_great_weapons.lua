@@ -92,6 +92,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.includedSubfactions = {"Clan Grock"};
+	ITEM.kinisgerOverride = true;
 ITEM:Register(); 
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -326,8 +327,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requiredbeliefs = {"strength"};
 ITEM:Register();
 
--- Hill shit
-
 local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Hill Long Axe";
 	ITEM.model = "models/begotten_apocalypse/items/2HAxe2.mdl";
@@ -346,5 +345,27 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.requiredFaiths = {"Faith of the Light"};
+	ITEM.kinisgerOverride = true;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Grockling Stone Sword";
+	ITEM.model = "models/begotten/weapons/grocklingsword.mdl";
+	ITEM.weight = 5;
+	ITEM.uniqueID = "begotten_2h_great_grocklingsword";
+	ITEM.category = "Melee";
+	ITEM.description = "A hefty sword carved from mineral dense rocks. Those who follow the Old Ways used these blades long before Clan Shagalax discovered the malleable iron within these rocks.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/grocklingsword.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(172.04, 74.59, 261.55);
+	ITEM.attachmentOffsetVector = Vector(8.49, 1.9, 26.87);
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"stone", "stone", "stone", "stone", "stone", "stone"}};
+	ITEM.requiredbeliefs = {"strength"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
+	ITEM.includedSubfactions = {"Clan Grock"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();

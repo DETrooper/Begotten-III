@@ -498,8 +498,6 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	end
 ITEM:Register();
 
--- Hill shit (charms)
-
 local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Codex Solis";
 	ITEM.model = "models/props_clutter/book_mg03.mdl";
@@ -583,4 +581,16 @@ local ITEM = Clockwork.item:New("enchanted_base");
 			end
 		end
 	end
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Powderboy's Bandolier";
+	ITEM.model = "models/begotten_prelude/items/ncr_bandolier.mdl";
+	ITEM.weight = 1;
+	ITEM.uniqueID = "bandolier";
+	ITEM.description = "A leather belt covered with pockets. A series of tally marks are crudely carved into the leather by its previous owner.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/ncr_bandolier.png";
+	ITEM.charmEffects = "- Reduces the reload time of firearms and crossbows by 15%.";
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1100};
 ITEM:Register();

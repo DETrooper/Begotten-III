@@ -915,22 +915,6 @@ function Clockwork.animation:AddBrigandineLightArms(model)
 	});
 end;
 
-function Clockwork.animation:AddLeatherArms(model)
-	self:AddHandsModel(model, {
-		body = 0000000,
-		model = "models/begotten/arms/c_leatherarms.mdl",
-		skin = 0
-	});
-end;
-
-function Clockwork.animation:AddPlagueDocArms(model)
-	self:AddHandsModel(model, {
-		body = 0000000,
-		model = "models/begotten/arms/c_plaguedocarms.mdl",
-		skin = 0
-	});
-end;
-
 function Clockwork.animation:AddCrudePlateArms(model)
 	self:AddHandsModel(model, {
 		body = 0000000,
@@ -1261,6 +1245,46 @@ function Clockwork.animation:AddGrockCrast(model)
 	});
 end;
 
+function Clockwork.animation:AddWasteLordArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_coatofplate.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddNewDoctorArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begottenprelude/goose/plaguearms.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddWandererGambesonArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_wanderergambeson.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddFaithlingChainmailArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_chaingore4.mdl",
+		skin = 0
+	});
+end;
+
+function Clockwork.animation:AddWandererTabardArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begottenprelude/arms/wanderertabard.mdl",
+		skin = 0
+	});
+end;
+
 -- A function to check for stored hands info by model.
 function Clockwork.animation:CheckHands(model, animTable)
 	local info = animTable.hands or {
@@ -1395,8 +1419,6 @@ Clockwork.animation:AddBrigandineLightArms("models/begotten/wanderers/brigandine
 Clockwork.animation:AddBrigandineLightArms("models/begotten/gatekeepers/renegadeacolyte.mdl");
 Clockwork.animation:AddBrigandineLightArms("models/begotten/gatekeepers/renegadedisciple.mdl");
 
-Clockwork.animation:AddLeatherArms("models/begotten/wanderers/leather");
-
 Clockwork.animation:AddCrudePlateArms("models/begotten/wanderers/crudeplate");
 
 Clockwork.animation:AddWandererMailArms("models/begotten/wanderers/wanderermail");
@@ -1409,8 +1431,6 @@ Clockwork.animation:AddTwistedFuckArms("models/begotten/wanderers/wandererbone")
 Clockwork.animation:AddWandererOppressorArms("models/begotten/wanderers/wandereroppressor.mdl");
 
 Clockwork.animation:AddOldSoldierArms("models/begotten/wanderers/oldsoldier");
-
-Clockwork.animation:AddPlagueDocArms("models/begotten/wanderers/plaguedoc.mdl");
 
 Clockwork.animation:AddShingarArms("models/begotten/goreicwarfighters/shingar.mdl");
 
@@ -1465,3 +1485,9 @@ Clockwork.animation:AddKingGore("models/begotten/body/seafarer_armor_male.mdl");
 Clockwork.animation:AddGrockTribal("models/begotten/goreicwarfighters/groktribal.mdl");
 
 Clockwork.animation:AddGrockCrast("models/begotten/goreicwarfighters/grokcrast.mdl");
+
+Clockwork.animation:AddWasteLordArms("models/begotten/prelude_wanderers/templar");
+Clockwork.animation:AddNewDoctorArms("models/begottenprelude/goose/plague.mdl");
+Clockwork.animation:AddWandererGambesonArms("models/begotten/prelude_wanderers/wanderergambeson");
+Clockwork.animation:AddFaithlingChainmailArms("models/begotten/prelude_wanderers/romanmail");
+Clockwork.animation:AddWandererTabardArms("models/begotten/prelude_wanderers/wanderertabard");

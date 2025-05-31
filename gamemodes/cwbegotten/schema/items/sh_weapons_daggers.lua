@@ -238,8 +238,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
 
--- Hill shit
-
 local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Hill Dagger";
 	ITEM.model = "models/begotten_apocalypse/items/GuardDagger.mdl";

@@ -781,7 +781,7 @@ ITEM.weightclass = "Medium";
 ITEM.description = "An impressively smithed hauberk of scalemail, blackened using ancient shagalax forging methods. Layered with a special type of leather padding, this armor can help to dampen the blows from firearm.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
-ITEM.requiredbeliefs = {"young_son"};
+ITEM.requiredSubfactions = {"Clan Shagalax"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -954,7 +954,8 @@ ITEM.weightclass = "Medium";
 ITEM.description = "Sturdy chainmail that has been blessed by the Father, granting its user increased speed and vigor in battle. This style of armor is worn by aspiring warriors seeking to be remembered long after their death.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
-ITEM.requiredbeliefs = {"father"};
+ITEM.requiredSubfactions = {"Clan Gore"};
+ITEM.kinisgerOverride = true;
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -995,7 +996,8 @@ ITEM.weightclass = "Medium";
 ITEM.description = "Steel plates arranged in a fishscale pattern upon a gambeson coat. It provides fine protection while not being too much of a hindrance to mobility. This armor is affected by the curse of Clan Harald, and thus no others may wear it.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
-ITEM.requiredbeliefs = {"old_son"};
+ITEM.requiredSubfactions = {"Clan Harald"};
+ITEM.kinisgerOverride = true;
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -1099,7 +1101,8 @@ ITEM.weightclass = "Medium";
 ITEM.description = "A sleeveless chainmail set over leather garb, stylized in Clan Haralder's fashion. The patchwork leather smells of the sea, and its design is clearly from the Eastern Isles, and comes with a sash.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
-ITEM.requiredbeliefs = {"old_son"};
+ITEM.requiredSubfactions = {"Clan Harald"};
+ITEM.kinisgerOverride = true;
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,

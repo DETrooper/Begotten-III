@@ -80,6 +80,10 @@ local ITEM = item.New(nil, true);
 			if player.holyPowderkegActive then
 				consumeTime = math.Round(consumeTime * 0.33);
 			end
+			
+			if player:GetCharmEquipped("bandolier") then
+				consumeTime = math.Round(consumeTime * 0.85);
+			end
 
 			consumeTime = math.max(consumeTime, 0.1)
 			

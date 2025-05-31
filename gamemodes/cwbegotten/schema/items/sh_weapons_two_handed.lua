@@ -278,8 +278,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requiredbeliefs = {"wriggle_fucking_eel"};
 ITEM:Register();
 
--- Hill shit
-
 local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Hill Yeoman Longsword";
 	ITEM.model = "models/begotten_apocalypse/items/IronClaymore.mdl";

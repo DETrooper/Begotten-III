@@ -5,7 +5,7 @@
 	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
 --]]
 
-local head_suffixes = {"_glaze", "_gore", "_satanist", "_wanderer", "_hill", "_preludegore"};
+local head_suffixes = {"_glaze", "_gore", "_satanist", "_wanderer", "_hill", "_preludegore", "_kinggore"};
 
 local ITEM = Clockwork.item:New(nil, true)
 	ITEM.name = "Bodygroup Base"

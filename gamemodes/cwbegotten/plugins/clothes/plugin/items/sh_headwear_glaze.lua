@@ -640,6 +640,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.overlay = "begotten/zomboverlay/new/gatekeeperhelmet";
 	ITEM.faction = "Gatekeeper";
 	ITEM.requiredbeliefs = {"hauberk"};
+	ITEM.kinisgerOverride = true;
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -799,4 +800,40 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.insulation = 50;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "leather", "cloth", "scrap", "scrap", "scrap"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Wastelord Helm"
+	ITEM.uniqueID = "wastelord_helm"
+	ITEM.model = "models/begottenprelude/goose/greathelmprop.mdl"
+	ITEM.iconoverride = "begotten/ui/itemicons/greathelmprop.png"
+	ITEM.weight = 1.5
+	ITEM.category = "Helms"
+	ITEM.headReplacement = "models/begotten/heads/greathelm_head.mdl";
+	ITEM.description = "An exquisitely smithed helmet, its design dating back further than the oldest records of the Glaze. Worn exclusively by powerful wanderers, this helmet is unable to be worn by factions. Fear he, who hath become Lord of the Wastes."
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/new/knighthelmet";
+	ITEM.requiredbeliefs = {"hauberk"};
+	ITEM.requiredFactions = {"Wanderer"};
+	ITEM.attributes = {"wastelord", "fear"};
+
+	ITEM.conditionScale = 0.65
+	ITEM.repairCostModifier = 0.5;
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 72
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
+	ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
+	ITEM.insulation = 40;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks"}};
 ITEM:Register();

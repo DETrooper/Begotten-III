@@ -399,7 +399,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attributes = {"unbreakable"};
 	ITEM.requiredbeliefs = {"defender"};
 	ITEM.requiredFactions = {"Goreic Warrior"};
-	ITEM.requiredSubfactionss = {"Clan Reaver"};
+	ITEM.requiredSubfactions = {"Clan Reaver"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");

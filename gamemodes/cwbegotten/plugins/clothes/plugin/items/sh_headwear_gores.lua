@@ -376,6 +376,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/gorekingschosenhelmet";
 	ITEM.excludedSubfactions = {"Clan Grock"};
+	ITEM.requiredRanks = {"King's Chosen"};
 	ITEM.requiredbeliefs = {"hauberk"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
@@ -521,7 +522,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.headSuffix = "_preludegore";
 	ITEM.description = "A light iron helmet adorned with feathers and incense. These types of helmets are typically worn by Clan Crast shamans who prefer a protective alternate to their skull helmets. Healers use the quills of their feathers to suture wounds, increasing the effectiveness of their medicine."
 	ITEM.requiredFactions = {"Goreic Warrior"};
-	ITEM.requiredbeliefs = {"watchful_raven"};
+	ITEM.requiredSubfactions = {"Clan Crast"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.attributes = {"practitioner"};
 	
@@ -594,7 +595,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requireFaith = {"Faith of the Family"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/goreridgehelm";
-	ITEM.requiredbeliefs = {"hauberk", "old_son"};
+	ITEM.requiredbeliefs = {"hauberk"};
+	ITEM.requiredSubfactions = {"Clan Harald"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -668,7 +670,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requiredFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/gorekingschosenhelmet";
-	ITEM.excludedSubfactions = {"Clan Grock"};
+	ITEM.requiredSubfactions = {"Clan Harald"};
+	ITEM.requiredRanks = {"King's Chosen"};
 	ITEM.requiredbeliefs = {"hauberk"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
@@ -760,4 +763,44 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.insulation = 50; -- Adds 10% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Gore King Helm"
+	ITEM.model = "models/begotten/headgroups_props/goreking_helm.mdl"
+	ITEM.iconoverride = "begotten/ui/itemicons/goreking_helm.png"
+	ITEM.uniqueID = "gore_king_helm"
+	ITEM.weight = 2.5
+	ITEM.category = "Helms"
+	ITEM.bodyGroup = 1
+	ITEM.bodyGroupVal = 1
+	ITEM.headSuffix = "_kinggore";
+	ITEM.description = "The finest Shagalaxian steel, forged and reforged in the blood of sacrificed slaves a hundred times over before it was deemed strong enough. Adorned in gold that has been ransacked from a foreign land, the Gore King's Helm strikes fear into the hearts of all who behold it, for its wearer is surely a brutal foe."
+	ITEM.requiredFactions = {"Goreic Warrior"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/new/goreridgehelm";
+	ITEM.requiredRanks = {"King"};
+	ITEM.excludedSubfactions = {"Clan Grock"};
+	ITEM.requiredbeliefs = {"hauberk"};
+	ITEM.attributes = {"fear"};
+	
+	ITEM.conditionScale = 1
+	ITEM.repairCostModifier = 0.5;
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 85
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+	ITEM.pierceScale = 0.65; -- reduces pierce damage by 35%
+	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+	ITEM.bulletScale = 0.30; -- reduces bullet damage by 70%
+	ITEM.stabilityScale = 0.50; -- reduces stability damage by 50%
+	ITEM.insulation = 50;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"gold_ingot", "fine_steel_chunks", "fine_steel_chunks", "leather"}};
 ITEM:Register();

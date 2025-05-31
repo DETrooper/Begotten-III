@@ -8470,34 +8470,6 @@ function cwRecipes:ClockworkInitialized()
 		end;
 	RECIPE:Register()
 
-	RECIPE = cwRecipes.recipes:New("padded_coat");
-		RECIPE.name = "Padded Coat";
-		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
-		RECIPE.requirements = {
-			["cloth"] = {amount = 4},
-			["leather"] = {amount = 5},
-		};
-		RECIPE.result = {
-			["padded_coat"] = {amount = 1},
-		};
-		RECIPE.category = "Armor"
-		RECIPE.finishSound = "begotten/items/first_aid.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 55;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-
 	RECIPE = cwRecipes.recipes:New("twisted_fuck_armor");
 		RECIPE.name = "Twisted Fuck Armor";
 		RECIPE.requiredBeliefs = {"primeval"};
@@ -10429,6 +10401,313 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
 		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("wastelord_armor_dark");
+		RECIPE.name = "Wastelord Hauberk";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Wanderer"};
+		RECIPE.requiredFaiths = {"Faith of the Dark"};
+		RECIPE.requirements = {
+			["hellforged_steel_ingot"] = {amount = 2},
+			["fine_steel_ingot"] = {amount = 2},
+			["leather"] = {amount = 1},
+			["cloth"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["wastelord_armor"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 15
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 175;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("wastelord_armor_family");
+		RECIPE.name = "Wastelord Hauberk";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Wanderer"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
+		RECIPE.requirements = {
+			["shagalaxian_steel_ingot"] = {amount = 2},
+			["fine_steel_ingot"] = {amount = 2},
+			["leather"] = {amount = 1},
+			["cloth"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["wastelord_armor"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 15
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 175;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("wastelord_armor_light");
+		RECIPE.name = "Wastelord Hauberk";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Wanderer"};
+		RECIPE.requiredFaiths = {"Faith of the Light"};
+		RECIPE.requirements = {
+			["maximilian_steel_ingot"] = {amount = 2},
+			["fine_steel_ingot"] = {amount = 2},
+			["leather"] = {amount = 1},
+			["cloth"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["wastelord_armor"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 15
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 175;
+
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("wastelord_helm_dark");
+		RECIPE.name = "Wastelord Helm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Wanderer"};
+		RECIPE.requiredFaiths = {"Faith of the Dark"};
+		RECIPE.requirements = {
+			["hellforged_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 4},
+			["ice_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["wastelord_helm"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 125;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("wastelord_helm_family");
+		RECIPE.name = "Wastelord Helm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Wanderer"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
+		RECIPE.requirements = {
+			["shagalaxian_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 4},
+			["ice_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["wastelord_helm"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 125;
+
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("wastelord_helm_light");
+		RECIPE.name = "Wastelord Helm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Wanderer"};
+		RECIPE.requiredFaiths = {"Faith of the Light"};
+		RECIPE.requirements = {
+			["maximilian_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 4},
+			["ice_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["wastelord_helm"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 125;
+
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("padded_coat");
+		RECIPE.name = "Padded Gambeson";
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["cloth"] = {amount = 4},
+			["leather"] = {amount = 5},
+		};
+		RECIPE.result = {
+			["padded_coat"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 55;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+
+	RECIPE = cwRecipes.recipes:New("faithling_chainmail");
+		RECIPE.name = "Faithling Chainmail";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
+		RECIPE.requirements = {
+			["leather"] = {amount = 2},
+			["iron_ingot"] = {amount = 3},
+			["familial_catalyst"] = {amount = 1},
+
+		};
+		RECIPE.result = {
+			["faithling_mail"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 95;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+		
+	RECIPE = cwRecipes.recipes:New("grocklingstonesword");
+		RECIPE.name = "Grockling Stone Sword";
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["stone"] = {amount = 7},
+			["iron_ore"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["begotten_2h_great_grocklingsword"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "physics/concrete/boulder_impact_hard1.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "carving"
+		RECIPE.experience = 50;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("gore_king_helm");
+		RECIPE.name = "Gore King Helm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["gore_kings_chosen_helmet"] = {amount = 1},
+			["shagalaxian_steel_ingot"] = {amount = 2},
+			["gold_ingot"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["gore_king_helm"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 150;
 		
 		function RECIPE:OnCraft(player)
 		end;

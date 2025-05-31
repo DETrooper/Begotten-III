@@ -254,6 +254,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
 	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -274,6 +275,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood"}}; -- use "breakdown" for other type
 	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -979,6 +981,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "wood"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"flail"};
 	ITEM.requiredbeliefs = {"repentant"};
+	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -997,8 +1000,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-8.49, -12.02, -19.09);
 	ITEM.canUseShields = true;
 ITEM:Register();
-
--- Hill shit
 
 local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Hill Shortsword";

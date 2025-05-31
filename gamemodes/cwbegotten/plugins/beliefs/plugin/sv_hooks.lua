@@ -1031,10 +1031,10 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 											entity.poisonTicks = nil;
 										end
 										
-										-- Add a 0.5 second delay to taking more damage.
+										-- Add a 2 second delay to taking more damage.
 										entTab.distortedRingFired = true;
 										
-										timer.Create("DistortedRingTimer_"..entity:EntIndex(), 0.5, 1, function()
+										timer.Create("DistortedRingTimer_"..entity:EntIndex(), 2, 1, function()
 											if IsValid(entity) then
 												entity.distortedRingFired = nil;
 											end
@@ -1059,7 +1059,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 												entTab.distortedRingFiredDuel = true;
 											end
 											
-											timer.Create("DistortedRingTimer_"..entity:EntIndex(), 0.5, 1, function()
+											timer.Create("DistortedRingTimer_"..entity:EntIndex(), 2, 1, function()
 												if IsValid(entity) then
 													entity.distortedRingFired = nil;
 												end
@@ -1536,16 +1536,16 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 			table.insert(entity.deceitfulLastDamages, {damageTime = CurTime(), damage = damage});
 		end
 		
-		if not entTab.opponent and damage >= 10 then
+		if not entTab.opponent and damageInfo:IsDamageType(DMG_BURN) then
 			if cwCharacterNeeds then
 				if entity:HasBelief("prison_of_flesh") then
 					if entity:HasTrait("possessed") then
 						local corruption = entity:GetNeed("corruption");
-						local reduction = math.max(-(damage / 2), -(math.max(corruption, 50) - 50));
+						local reduction = math.max(-damage, -(math.max(corruption, 50) - 50));
 
 						entity:HandleNeed("corruption", reduction);
 					else
-						entity:HandleNeed("corruption", -(damage / 2));
+						entity:HandleNeed("corruption", -damage);
 					end
 				end
 			end
@@ -1553,17 +1553,16 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	end
 	
 	if damage > 0 then
-		if IsValid(attacker) and attacker:IsPlayer() and not attacker.cwWakingUp then
-			local clothesItem = attacker:GetClothesEquipped();
-			
+		if entity:IsPlayer() and not entTab.cwWakingUp then
+			local clothesItem = entity:GetClothesEquipped();
 			if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
-				local hatred = math.min(attacker:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 1.5))), 100);
+				local hatred = math.min(entity:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 1.5))), 100);
 				
-				if !attacker.opponent then
-					attacker:SetCharacterData("Hatred", hatred);
+				if !entTab.opponent then
+					entity:SetCharacterData("Hatred", hatred);
 				end
 				
-				attacker:SetLocalVar("Hatred", hatred);
+				entity:SetLocalVar("Hatred", hatred);
 			end
 		end
 		
@@ -1675,10 +1674,10 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 						entTab.poisonTicks = nil;
 					end
 					
-					-- Add a 0.5 second delay to taking more damage.
+					-- Add a 2 second delay to taking more damage.
 					entTab.distortedRingFired = true;
 					
-					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 0.5, 1, function()
+					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 2, 1, function()
 						if IsValid(entity) then
 							entity.distortedRingFired = nil;
 						end
@@ -1706,7 +1705,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 						entTab.distortedRingFiredDuel = true;
 					end
 					
-					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 0.5, 1, function()
+					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 2, 1, function()
 						if IsValid(entity) then
 							entity.distortedRingFired = nil;
 						end

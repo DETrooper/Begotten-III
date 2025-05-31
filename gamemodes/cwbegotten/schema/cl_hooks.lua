@@ -3189,6 +3189,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				frame:AddText("Lesser Lifeleech (Shieldless): 70% of damage in Light Armor, 50% in Medium Armor, 30% in Heavy Armor is returned as health.", Color(110, 30, 30), nil, 0.9);
 			end
 			
+			if table.HasValue(itemTable.attributes, "wastelord") then
+				frame:AddText("Lord of the Wastes: This armor is befitting only those without emblem, and cannot be worn by factions.", Color(110, 30, 30), nil, 0.9);
+			end
+			
 			if table.HasValue(itemTable.attributes, "seafarer") then
 				frame:AddText("Seafarer: Movement speed is increased by 3%, and throwables have 10% increased damage.", Color(110, 30, 30), nil, 0.9);
 			end

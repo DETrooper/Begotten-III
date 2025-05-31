@@ -441,3 +441,26 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, supercrateOnly = true, supercrateItems = {["shagalax_bullet_box_magazine"] = {min = 1, max = 2}}};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("firearm_base");
+	ITEM.name = "Pepperbox";
+	ITEM.model = "models/weapons/w_pepperbox.mdl";
+	ITEM.weight = 1;
+	ITEM.uniqueID = "begotten_pepperbox";
+	ITEM.description = "A four-barreled peppershot once used by the crooks, brigands and highwaymen of the past. Now it serves as a status symbol amongst the peasantry of the wastes.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/pepperbox.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(90, 0, 90);
+	ITEM.attachmentOffsetVector = Vector(-4.5, 0, -3.8);
+	
+	ITEM.ammoCapacity = 4;
+	ITEM.ammoTypes = {"Pop-a-Shot"};
+	ITEM.firearmType = "Repeater";
+	ITEM.isRevolver = true;
+	ITEM.reloadTime = 8; -- Seconds (for one round)
+	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
+
+	ITEM.excludeSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 4000, bNoSupercrate = true};	
+ITEM:Register();

@@ -33,9 +33,9 @@ ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
 
 local ITEM = Clockwork.item:New("clothes_base");
 ITEM.name = "Wanderer Mail";
-ITEM.group = "wanderers/wanderermail";
-ITEM.model = "models/begotten/headgroups_props/wanderermail.mdl"
-ITEM.iconoverride = "materials/begotten/ui/itemicons/wanderer_mail.png"
+ITEM.group = "prelude_wanderers/wanderertabard";
+ITEM.model = "models/begottenprelude/items/wanderertabard.mdl"
+ITEM.iconoverride = "begotten/ui/itemicons/wanderertabard.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
@@ -87,6 +87,130 @@ ITEM.runSound = {
 ITEM.walkSound = {
 	"armormovement/body-hauberk-b4.wav.mp3",
 	"armormovement/body-hauberk-b5.wav.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Faithling Chainmail";
+ITEM.uniqueID = "faithling_mail"
+ITEM.group = "prelude_wanderers/romanmail";
+ITEM.model = "models/begotten_apocalypse/items/hilltop_chainmail.mdl"
+ITEM.iconoverride = "begotten/ui/itemicons/romanmail_male.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 0.75
+ITEM.hitParticle = "MetalSpark";
+ITEM.protection = 55
+ITEM.type = "chainmail";
+ITEM.weight = 4.5;
+ITEM.weightclass = "Medium";
+ITEM.description = "Shoddily forged chainmail of pagan design. This type of armor is seen commonly on the edges of county districts, where raiders roam freely and sack villages.";
+ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+ITEM.excludedFactions = {"Goreic Warrior"};
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.10, -- increases fall damage by 10%
+}
+
+ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
+ITEM.pierceScale = 0.85; -- reduces pierce damage by 15%
+ITEM.slashScale = 0.70; -- reduces slash damage by 30%
+ITEM.bulletScale = 0.85; -- reduces bullet damage by 15%
+ITEM.insulation = 35; -- Armor only accounts for 80% of total insulation, helmets cover the rest of the 20%.
+
+ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks", "leather"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-hauberk-1.wav.mp3",
+	"armormovement/body-hauberk-2.wav.mp3",
+	"armormovement/body-hauberk-3.wav.mp3",
+	"armormovement/body-hauberk-4.wav.mp3",
+	"armormovement/body-hauberk-5.wav.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/body-hauberk-b4.wav.mp3",
+	"armormovement/body-hauberk-b5.wav.mp3",
+};
+
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("clothes_base");
+ITEM.name = "Wastelord Hauberk";
+ITEM.uniqueID = "wastelord_armor"
+ITEM.group = "prelude_wanderers/templar";
+ITEM.model = "models/begottenprelude/goose/templarprop.mdl"
+ITEM.iconoverride = "begotten/ui/itemicons/templarprop.png"
+ITEM.category = "Armor"
+ITEM.conditionScale = 0.65
+ITEM.hitParticle = "MetalSpark";
+ITEM.protection = 82;
+ITEM.weight = 8;
+ITEM.weightclass = "Heavy";
+ITEM.type = "plate";
+ITEM.description = "An impeccably crafted set of steel plate armor, with an undecorated tabard atop it. Worn almost exclusively by sellswords and powerful unnamed wastelanders, this armor holds a strange power preventing factions from wearing it.";
+ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
+ITEM.requiredbeliefs = {"hauberk"};
+ITEM.requiredFactions = {"Wanderer"};
+ITEM.attributes = {"wastelord"};
+
+ITEM.effectiveLimbs = {
+	[HITGROUP_GENERIC] = true,
+	[HITGROUP_CHEST] = true,
+	[HITGROUP_STOMACH] = true,
+	[HITGROUP_LEFTARM] = true,
+	[HITGROUP_RIGHTARM] = true,
+	[HITGROUP_LEFTLEG] = true,
+	[HITGROUP_RIGHTLEG] = true,
+	[HITGROUP_GEAR] = true
+}
+
+ITEM.damageTypeScales = {
+	[DMG_FALL] = -0.15, -- increases fall damage by 15%
+}
+
+ITEM.bluntScale = 0.85; -- reduces blunt damage by 15%
+ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
+ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
+ITEM.insulation = 40;
+
+ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks", "iron_chunks", "iron_chunks", "leather", "cloth", "cloth"}};
+
+-- Called when a replacement is needed for a player.
+function ITEM:GetReplacement(player)
+
+end;
+
+ITEM.runSound = {
+	"armormovement/body-armor-1.WAV.mp3",
+	"armormovement/body-armor-2.WAV.mp3",
+	"armormovement/body-armor-3.WAV.mp3",
+	"armormovement/body-armor-4.WAV.mp3",
+	"armormovement/body-armor-5.WAV.mp3",
+	"armormovement/body-armor-6.WAV.mp3",
+};
+
+ITEM.walkSound = {
+	"armormovement/body-armor-b4.WAV.mp3",
+	"armormovement/body-armor-b5.WAV.mp3",
 };
 
 ITEM:Register();
@@ -352,6 +476,7 @@ ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM.faction = "Gatekeeper";
 
 ITEM.attributes = {"fear", "banner_blessing"};
+ITEM.kinisgerOverride = true;
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_HEAD] = true,
@@ -678,10 +803,11 @@ ITEM.runSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "Padded Coat";
-ITEM.group = "wanderers/leather";
-ITEM.model = "models/begotten/headgroup_props/paddedcoat.mdl"
-ITEM.iconoverride = "materials/begotten/ui/itemicons/padded_coat.png"
+ITEM.name = "Padded Gambeson";
+ITEM.uniqueID = "padded_coat"
+ITEM.group = "prelude_wanderers/wanderergambeson";
+ITEM.model = "models/begottenprelude/items/wanderergambeson.mdl"
+ITEM.iconoverride = "begotten/ui/itemicons/wanderergambeson.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 1.1
 ITEM.hitParticle = "GlassImpact";
@@ -689,7 +815,7 @@ ITEM.protection = 37
 ITEM.type = "leather";
 ITEM.weight = 3;
 ITEM.weightclass = "Light";
-ITEM.description = "A padded coat made of leather and heavy cloth that provides decent protection.";
+ITEM.description = "A padded gambeson made of leather and heavy cloth that provides decent protection.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.excludedFactions = {"Goreic Warrior"};
 
@@ -1133,8 +1259,8 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
 ITEM.name = "Plague Doctor Robes";
-ITEM.model = "models/begotten/headgroup_props/plaguedocclothes.mdl"
-ITEM.iconoverride = "materials/begotten/ui/itemicons/plague_doctor_outfit.png"
+ITEM.model = "models/begottenprelude/goose/plagueitem.mdl"
+ITEM.iconoverride = "begotten/ui/itemicons/plague.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 1.1
 ITEM.hitParticle = "GlassImpact";
@@ -1173,7 +1299,7 @@ ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "clot
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
 	--if (player:GetGender() == GENDER_FEMALE) then
-		return "models/begotten/wanderers/plaguedoc.mdl";
+		return "models/begottenprelude/goose/plague.mdl";
 	--else
 		--return "models/begotten/wanderers/plaguedoc.mdl";
 	--end;
@@ -1193,7 +1319,6 @@ ITEM.runSound = {
 };]]--
 
 ITEM:Register();
-
 
 local ITEM = Clockwork.item:New("clothes_base");
 ITEM.name = "Scrapper Grunt Plate";

@@ -2027,6 +2027,26 @@ AttackTables.DemonKnightSwordAttackTableIce = {
 	["punchstrength"] = Angle(0,1,0),
 };
 
+AttackTables.GrocklingSwordAttackTable = {
+	["primarydamage"] = 67,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.6,
+	["altattackpoisedamagemodifier"] = 0.1,
+	["altmeleearc"] = 15,
+	["armorpiercing"] = 17,
+	["altarmorpiercing"] = 25,
+	["poisedamage"] = 45,
+	["stabilitydamage"] = 25,
+	["takeammo"] = 6,
+	["delay"] = 1.35,
+	["striketime"] = 0.6,
+	["meleearc"] = 50,
+	["meleerange"] = 1035,
+	["punchstrength"] = Angle(0,1,0),
+};
+
 -- Axes
 
 AttackTables.BattleAxeAttackTable = {
@@ -3794,6 +3814,7 @@ AddTable("GunAxeAttackTable", AttackTables.GunAxeAttackTable)
 AddTable("DemonKnightSwordAttackTable", AttackTables.DemonKnightSwordAttackTable)
 AddTable("DemonKnightSwordAttackTableFire", AttackTables.DemonKnightSwordAttackTableFire)
 AddTable("DemonKnightSwordAttackTableIce", AttackTables.DemonKnightSwordAttackTableIce)
+AddTable("GrocklingSwordAttackTable", AttackTables.GrocklingSwordAttackTable) 
 
 -- Block Stat Tables
 
@@ -6343,6 +6364,24 @@ BlockTables.DemonKnightSwordBlockTable = {
 	["candeflect"] = true,
 };
 
+BlockTables.GrocklingSwordBlockTable = {
+	["guardblockamount"] = 10,
+	["specialeffect"] = false,
+	["blockeffect"] = "MetalSpark",
+	["blockeffectforward"] = 25,
+	["blockeffectpos"] = (Vector(0, -10, 65)),
+	["blockcone"] = 180,
+	["blockdamagetypes"] = {DMG_SLASH, DMG_CLUB, DMG_VEHICLE},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 30,
+	["raisespeed"] = 1.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 20,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+
 AddTable("DefaultBlockTable", BlockTables.DefaultBlockTable) 
 AddTable("AdminTwistedMacheteBlockTable", BlockTables.AdminTwistedMacheteBlockTable)
 AddTable("FistBlockTable", BlockTables.FistBlockTable) 
@@ -6484,6 +6523,7 @@ AddTable("HillGoreHuntingDaggerBlockTable", BlockTables.HillGoreHuntingDaggerBlo
 AddTable("OrdainedGorefellerBlockTable", BlockTables.OrdainedGorefellerBlockTable)
 AddTable("GunAxeBlockTable", BlockTables.GunAxeBlockTable) 
 AddTable("DemonKnightSwordBlockTable", BlockTables.DemonKnightSwordBlockTable)
+AddTable("GrocklingSwordBlockTable", BlockTables.GrocklingSwordBlockTable)
 
 -- Shield Stat Tables
 
