@@ -1203,7 +1203,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 						if subfaction == "Clan Grock" then
 							local clothesItem = player:GetClothesEquipped()
 					
-							if table.HasValue(clothesItem.attributes, "iconoclast") and !player:GetShieldEquipped() then
+							if clothesItem and table.HasValue(clothesItem.attributes, "iconoclast") and !player:GetShieldEquipped() then
 								local targetSubfaction = v:GetNetVar("kinisgerOverrideSubfaction") or v:GetSubfaction();
 								
 								if targetSubfaction == "Clan Grock" then
@@ -1353,7 +1353,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				elseif subfaction == "Clan Grock" then
 					local clothesItem = player:GetClothesEquipped()
 					
-					if table.HasValue(clothesItem.attributes, "iconoclast") and !player:GetShieldEquipped() and cwStamina then
+					if clothesItem and table.HasValue(clothesItem.attributes, "iconoclast") and !player:GetShieldEquipped() and cwStamina then
 						player:HandleSanity(-5);
 						local warcrySounds = {"kronos/sawcrazy/random2.wav", "kronos/sawcrazy/random1.wav", "kronos/sawrunner/sawrunner_attack2.wav", "kronos/sawrunner/sawrunner_alert30.wav", "kronos/boss/mace_scream.wav"}
 						local selectedSound = warcrySounds[math.random(#warcrySounds)]

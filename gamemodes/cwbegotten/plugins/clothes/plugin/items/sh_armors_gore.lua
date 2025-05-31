@@ -780,7 +780,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "An impressively smithed hauberk of scalemail, blackened using ancient shagalax forging methods. Layered with a special type of leather padding, this armor can help to dampen the blows from firearm.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
+ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
 ITEM.requiredbeliefs = {"young_son"};
 
 ITEM.effectiveLimbs = {
@@ -836,7 +836,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "Goreic chainmail smithed in the style of the Eastern Reavers. Extra padding has been sewn under the chainmail to resist blunt attacks.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
+ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
 ITEM.onerequiredbelief = {"sister", "satanism", "primevalism"};
 
 ITEM.effectiveLimbs = {
@@ -893,8 +893,8 @@ ITEM.weight = 6;
 ITEM.weightclass = "Medium";
 ITEM.description = "A brutish set of armor crafted by the finest minds Clan Shagalax could muster, and blessed thrice by Clan Crast. Utilizing techniques befitting ancient war tanks, this surprisingly nimble armor is capable of withstanding plenty of torment. It is almost perpetually covered in blood, a sign of its effectiveness in combat.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior"};
-ITEM.requireRank = {"King"};
+ITEM.requiredFactions = {"Goreic Warrior"};
+ITEM.requiredRanks = {"King"};
 ITEM.faction = "Goreic Warrior";
 ITEM.excludedSubfactions = {"Clan Grock"};
 
@@ -953,7 +953,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "Sturdy chainmail that has been blessed by the Father, granting its user increased speed and vigor in battle. This style of armor is worn by aspiring warriors seeking to be remembered long after their death.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
+ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
 ITEM.requiredbeliefs = {"father"};
 
 ITEM.effectiveLimbs = {
@@ -994,7 +994,7 @@ ITEM.weight = 7.5;
 ITEM.weightclass = "Medium";
 ITEM.description = "Steel plates arranged in a fishscale pattern upon a gambeson coat. It provides fine protection while not being too much of a hindrance to mobility. This armor is affected by the curse of Clan Harald, and thus no others may wear it.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
+ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
 ITEM.requiredbeliefs = {"old_son"};
 
 ITEM.effectiveLimbs = {
@@ -1056,7 +1056,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "Brightly dyed leather armor from the Eastern Isles of the Gorelands. It provides a reasonable degree of protection while not compromising mobility.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
+ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -1098,7 +1098,7 @@ ITEM.weight = 4;
 ITEM.weightclass = "Medium";
 ITEM.description = "A sleeveless chainmail set over leather garb, stylized in Clan Haralder's fashion. The patchwork leather smells of the sea, and its design is clearly from the Eastern Isles, and comes with a sash.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
+ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
 ITEM.requiredbeliefs = {"old_son"};
 
 ITEM.effectiveLimbs = {
@@ -1159,7 +1159,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A crude set of chainmail over leather and fur garb, it provides adequate protection from enemy weapons and the elements. This particular style originates from the frozen lands of Vancouver.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requireFaction = {"Goreic Warrior", "Wanderer"};
+ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
 ITEM.excludedSubfactions = {"Clan Grock"};
 
 ITEM.effectiveLimbs = {

@@ -5724,6 +5724,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Iron Shield";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 5},
 			["wood"] = {amount = 2},
@@ -9492,9 +9493,9 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 2},
-			["steel_ingot"] = {amount = 5},
-			["iron_ingot"] = {amount = 1},
+			["hellforged_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 6},
+			["belphegor_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["hellspike_armor"] = {amount = 1},
@@ -9504,7 +9505,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 200;
+		RECIPE.experience = 150;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -10202,7 +10203,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 1},
 			["iron_ingot"] = {amount = 2},
 			["belphegor_catalyst"] = {amount = 1},
 			["shield14"] = {amount = 1},
@@ -10233,7 +10234,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 1},
 			["iron_ingot"] = {amount = 2},
 			["pantheistic_catalyst"] = {amount = 1},
 			["shield14"] = {amount = 1},
@@ -10264,7 +10265,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 1},
 			["iron_ingot"] = {amount = 2},
 			["elysian_catalyst"] = {amount = 1},
 			["shield14"] = {amount = 1},
@@ -10295,7 +10296,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 1},
 			["iron_ingot"] = {amount = 2},
 			["familial_catalyst"] = {amount = 1},
 			["shield14"] = {amount = 1},

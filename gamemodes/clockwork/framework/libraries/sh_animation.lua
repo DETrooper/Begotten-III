@@ -1306,7 +1306,7 @@ Clockwork.animation:AddGatekeeperMediumArms("models/begotten/gatekeepers/gatekee
 Clockwork.animation:AddGatekeeperFineArms("models/begotten/gatekeepers/gatekeeperfine");
 
 Clockwork.animation:AddLamellarArms("models/begotten/goreicwarfighters/gorelamellar");
-Clockwork.animation:AddLamellarArms("models/begotten/goreicwarfighters/fishscale"); -- Replace later
+Clockwork.animation:AddLamellarArms("models/begotten/prelude_gores/fishscale"); -- Replace later
 
 Clockwork.animation:AddGatekeeperOrnateArms("models/begotten/gatekeepers/gatekeeperornate");
 Clockwork.animation:AddGatekeeperOrnateArms("begotten/gatekeepers/vexi.mdl");

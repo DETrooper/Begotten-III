@@ -399,7 +399,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attributes = {"unbreakable"};
 	ITEM.requiredbeliefs = {"defender"};
 	ITEM.requiredFactions = {"Goreic Warrior"};
-	ITEM.requiredSubfactions = {"Clan Reaver"};
+	ITEM.requiredSubfactionss = {"Clan Reaver"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -453,7 +453,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentOffsetVector = Vector(8, 5.73, -8);
 	ITEM.bulletConditionScale = 0.25;
 	ITEM.conditionScale = 0.45;
-	ITEM.requireSubfaction = {"Clan Shagalax"};
+	ITEM.requiredSubfactions = {"Clan Shagalax"};
 
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1000, supercrateOnly = true};
 	
@@ -476,7 +476,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "wood", "wood", "wood"}};
-	ITEM.requireSubfaction = {"Clan Reaver"};
+	ITEM.requiredSubfactions = {"Clan Reaver"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -495,7 +495,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "wood", "wood", "wood"}};
-	ITEM.requireSubfaction = {"Clan Gore"};
+	ITEM.requiredSubfactions = {"Clan Gore"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -514,7 +514,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "wood", "wood", "wood"}};
-	ITEM.requireSubfaction = {"Clan Crast"};
+	ITEM.requiredSubfactions = {"Clan Crast"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -533,5 +533,5 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "wood", "wood", "wood"}};
-	ITEM.requireSubfaction = {"Clan Harald"};
+	ITEM.requiredSubfactions = {"Clan Harald"};
 ITEM:Register();
