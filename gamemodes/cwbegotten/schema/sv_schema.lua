@@ -309,6 +309,34 @@ elseif map == "rp_district21" then
 			{pos = Vector(9705.625, -2304.818359375, -229.85108947754), ang = Angle(0, 0, 0)},
 		},
 	};
+elseif map == "bg_district34" then
+	Schema.hellPortalTeleports = {
+		["arch"] = {
+			{pos = Vector(-8305, -7440, 24), ang = Angle(0, 0, 0)},
+			{pos = Vector(-8314, -7173, 120), ang = Angle(0, 0, 0)},
+			{pos = Vector(-8315, -6917, 139), ang = Angle(0, 0, 0)},
+			{pos = Vector(-8086, -6944, 156), ang = Angle(0, 0, 0)},
+			{pos = Vector(-8065, -7127, 121), ang = Angle(0, 0, 0)},
+			{pos = Vector(-8041, -7422, 63), ang = Angle(0, 0, 0)},
+			{pos = Vector(-8601, -7091, 120), ang = Angle(0, 0, 0)},
+		},
+		["hell"] = {
+			{pos = Vector(2004, -8992, -4840), ang = Angle(0, 180, 0)},
+			{pos = Vector(2003, -9087, -4840), ang = Angle(0, 180, 0)},
+			{pos = Vector(2004, -8894, -4840), ang = Angle(0, 180, 0)},
+			{pos = Vector(1924, -8896, -4840), ang = Angle(0, 180, 0)},
+			{pos = Vector(1926, -8986, -4840), ang = Angle(0, 180, 0)},
+			{pos = Vector(1908, -9092, -4840), ang = Angle(0, 180, 0)},
+		},
+		["pillars"] = {
+			{pos = Vector(-2874, 9881, 409), ang = Angle(0, 90, 0)},
+			{pos = Vector(-3259, 9253, 304), ang = Angle(0, 90, 0)},
+			{pos = Vector(-2242, 10282, 375), ang = Angle(0, 90, 0)},
+			{pos = Vector(-3527, 8568, 280), ang = Angle(0, 90, 0)},
+			{pos = Vector(-4088, 8810, 436), ang = Angle(0, 90, 0)},
+			{pos = Vector(-2040, 10756, 380), ang = Angle(0, 90, 0)},
+		},
+	};
 end
 
 Schema.doors = {
@@ -337,6 +365,29 @@ Schema.doors = {
 			"armorydoor",
 			"cubbyblastdoor",
 			"inquisitor_barracks_blastdoor",
+		},
+	},
+	["bg_district34"] = {
+		["forge"] = {
+			"forgedoor1",
+		},
+		["gorewatch"] = {
+			"gorewatch",
+		},
+		["tower"] = {
+			"churchgate1",
+			"churchgate2",
+			"frontblastdoor",
+			"frontblastdoor2",
+			"forgedoor1",
+			"alchemy_lab_blastdoorwindw2",
+			"sidedoorblastdoor2",
+			"executiondoor",
+			"medicdoor",
+		},
+		["knights"] = {
+			"pope_reception_shutter",
+			"Bunker",
 		},
 	},
 	["rp_district21"] = {
@@ -1378,6 +1429,86 @@ function Schema:SpawnBegottenEntities()
 			alarmSpeaker:SetModel("models/props_wasteland/speakercluster01a.mdl");
 			alarmSpeaker:SetPos(Vector(-9253, -8357, 576));
 			alarmSpeaker:SetAngles(Angle(0, 180, 0));
+			alarmSpeaker:Spawn();
+			
+			alarmEnt.speaker = alarmSpeaker;
+			cwSailing.gorewatchAlarm = alarmEnt;
+		end
+		
+		for i = 1, #archiveEnts do
+			local archiveEnt = ents.Create("cw_archives");
+			
+			archiveEnt:SetPos(archiveEnts[i].pos);
+			archiveEnt:SetAngles(archiveEnts[i].ang);
+			archiveEnt:Spawn();
+		end
+	elseif map == "bg_district34" then
+		local bountyBoardEnt = ents.Create("cw_bounty_board");
+		local coinslotBase = ents.Create("prop_dynamic");
+		local coinslotEnt = ents.Create("cw_coinslot");
+		local gramophoneEnt = ents.Create("cw_gramophone");
+		local hellPortalEnt = ents.Create("cw_hellportal");
+		local sacrificialAltarEnt = ents.Create("cw_sacrifical_altar");
+		local warhornBase = ents.Create("prop_dynamic");
+		local warhornEnt = ents.Create("cw_gorevillagehorn");
+		local archiveEnts = {
+			{pos = Vector(1487, -9486, 1303), ang = Angle(0, 270, 90)},
+			{pos = Vector(1487, -9637, 1303), ang = Angle(0, 270, 90)},
+			{pos = Vector(1428, -9390, 1303), ang = Angle(0, 0, 90)},
+		};
+		
+		bountyBoardEnt:SetPos(Vector(3545, -8554, 941));
+		bountyBoardEnt:SetAngles(Angle(0, 270, 0));
+		bountyBoardEnt:Spawn();
+		coinslotBase:SetModel("models/props/de_inferno/confessional.mdl")
+		coinslotBase:SetPos(Vector(1841.98, -8143, 940));
+		coinslotBase:SetAngles(Angle(0, 0, 0));
+		coinslotBase:SetMoveType(MOVETYPE_VPHYSICS);
+		coinslotBase:PhysicsInit(SOLID_VPHYSICS);
+		coinslotBase:SetSolid(SOLID_VPHYSICS);
+		coinslotBase:Spawn();
+		
+		local physObject = coinslotBase:GetPhysicsObject();
+		
+		if IsValid(physObject) then
+			coinslotBase:GetPhysicsObject():Wake();
+			coinslotBase:GetPhysicsObject():EnableMotion(false);
+		end
+		
+		coinslotEnt:SetPos(Vector(1844, -8136, 992));
+		coinslotEnt:SetAngles(Angle(0, 180, 0));
+		coinslotEnt:Spawn();
+		gramophoneEnt:SetPos(Vector(1793, -8049, -3251));
+		gramophoneEnt:SetAngles(Angle(0, 180, 0));
+		gramophoneEnt:Spawn();
+		hellPortalEnt:SetPos(Vector(2060, -9004, -4777));
+		hellPortalEnt:SetAngles(Angle(90, 180, 0));
+		hellPortalEnt:Spawn();
+		sacrificialAltarEnt:SetPos(Vector(1068, -8771, -3458));
+		sacrificialAltarEnt:SetAngles(Angle(0, 0, 0));
+		sacrificialAltarEnt:Spawn();
+		self.sacrificialAltarEnt = sacrificialAltarEnt;
+		warhornBase:SetModel("models/props_junk/harpoon002a.mdl");
+		warhornBase:SetPos(Vector(-5108, -8861, 10527));
+		warhornBase:SetAngles(Angle(90, 0, 0));
+		warhornBase:SetMoveType(MOVETYPE_VPHYSICS);
+		warhornBase:PhysicsInit(SOLID_VPHYSICS);
+		warhornBase:SetSolid(SOLID_VPHYSICS);
+		warhornBase:Spawn();
+		warhornEnt:SetPos(Vector(-5108.2, -8862.02, 10580.4));
+		warhornEnt:SetAngles(Angle(43.79, 164.57, 26.77));
+		warhornEnt:Spawn();
+		
+		if cwSailing then
+			local alarmEnt = ents.Create("cw_gorewatchalarm");
+			local alarmSpeaker = ents.Create("prop_dynamic");
+			
+			alarmEnt:SetPos(Vector(9460, 8130, 1134));
+			alarmEnt:SetAngles(Angle(0, -135, 0));
+			alarmEnt:Spawn();
+			alarmSpeaker:SetModel("models/props_wasteland/speakercluster01a.mdl");
+			alarmSpeaker:SetPos(Vector(9025, 8248, 1107));
+			alarmSpeaker:SetAngles(Angle(0, 0, 0));
 			alarmSpeaker:Spawn();
 			
 			alarmEnt.speaker = alarmSpeaker;
@@ -3279,6 +3410,14 @@ elseif map == "rp_district21" then
 		{pos = Vector(-5020.15625, 12028.875, 252.21875), angles = Angle(0, 180, 0)},
 		{pos = Vector(-9659.5, 11132.21875, 535), angles = Angle(0, 180, 0)},
 		{pos = Vector(-7191, 10255.03125, 433.75), angles = Angle(0, 45, 0)},
+	},
+elseif map == "bg_district34" then
+	Schema.PopeSpeakers = {
+		[1] = {pos = Vector(1847, -9168, 1083), angles = Angle(0, 90, 0)},
+		[2] = {pos = Vector(4003, -9194, 1114), angles = Angle(0, 180, 0)},
+		[3] = {pos = Vector(-132, -8968, 1157), angles = Angle(0, 90, 0)},
+		[4] = {pos = Vector(1759, -8119, 1554), angles = Angle(0, 270, 0)},
+		[5] = {pos = Vector(119, -9449, 2135), angles = Angle(0, 90, 0)},
 	};
 end
 
