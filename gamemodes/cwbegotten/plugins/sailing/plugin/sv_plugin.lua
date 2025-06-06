@@ -10,10 +10,12 @@ if map == "rp_begotten3" then
 	cwSailing.gorewatchBounds = {Vector(9422, 11862, -1210), Vector(10055, 10389, -770)};
 elseif map == "rp_district21" then
 	cwSailing.gorewatchBounds = {Vector(-9328, -8640, -146), Vector(-8771, -8105, 686)};
+elseif map == "bg_district34" then
+	cwSailing.gorewatchBounds = {Vector(8817, 8018, 959), Vector(9477, 8582, 1242)};
 end
 
 if !cwSailing.shipDestinations then
-	if map == "rp_begotten3" or map == "rp_district21" then
+	if map == "rp_begotten3" or map == "rp_district21" or map == "bg_district34" then
 		cwSailing.shipDestinations = {
 			["docks"] = {name = "the Gore Forest"},
 			["hell"] = {name = "Hell"},
@@ -197,6 +199,78 @@ if !cwSailing.shipLocations then
 				},
 				["ironclad"] = {
 					{occupied = false, pos = Vector(-11858, -13461, -1081), angles = Angle(0, -90, 0)},
+				},
+			},
+		};
+	elseif game.GetMap() == "bg_district34" then
+		cwSailing.shipLocations = {
+			["docks"] = {
+				["longship"] = {
+					{occupied = false, pos = Vector(8707, -8157, 10293), angles = Angle(0, 90, 0), bodygroup = 1}, -- Boats spawn 3 units above Z
+					{occupied = false, pos = Vector(8707, -8518, 10293), angles = Angle(0, 90, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(8707, -8823, 10293), angles = Angle(0, 90, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(8707, -9164, 10293), angles = Angle(0, 90, 0), bodygroup = 1},
+				},
+				["ironclad"] = {
+					{occupied = false, pos = Vector(8800, -9250, 10317), angles = Angle(0, 180, 0)},
+				},
+			},
+			["calm"] = {
+				["longship"] = {
+					{occupied = false, pos = Vector(178, 8009, -8106)},
+					{occupied = false, pos = Vector(178, 7391, -8130)},
+					{occupied = false, pos = Vector(-685, 7679, -8131)},
+					{occupied = false, pos = Vector(1197, 7690, -8098)},
+				},
+				["ironclad"] = {
+					{occupied = false, pos = Vector(1405, 6958, -8078), angles = Angle(0, 0, 0)},
+				},
+			},
+			["hell"] = {
+				["longship"] = {
+					{occupied = false, pos = Vector(-2358, -8825, -5218), angles = Angle(0, 0, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-1654, -9277, -5214), angles = Angle(0, 80, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-1401, -8230, -5201), angles = Angle(0, 90, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-751, -9294, -5214), angles = Angle(0, 95, 0), bodygroup = 1},
+				},
+				["ironclad"] = {
+					{occupied = false, pos = Vector(-1654, -9360, -5183), angles = Angle(0, 180, 0)},
+				},
+			},
+			["rough"] = {
+				["longship"] = {
+					{occupied = false, pos = Vector(10522, 8522, -8116)},
+					{occupied = false, pos = Vector(10522, 7909, -8115)},
+					{occupied = false, pos = Vector(9658, 8197, -8123)},
+					{occupied = false, pos = Vector(11482, 8208, -8122)},
+					{occupied = false, pos = Vector(11503, 8624, -8093)},
+				},
+				["ironclad"] = {
+					{occupied = false, pos = Vector(10910, 7182, -8163), angles = Angle(0, 180, 0)},
+				},
+			},
+			["styx"] = {
+				["longship"] = {
+					{occupied = false, pos = Vector(-9779, 8472, -8074), angles = Angle(0, 0, 0)},
+					{occupied = false, pos = Vector(-9779, 7853, -8115), angles = Angle(0, 0, 0)},
+					{occupied = false, pos = Vector(-10642, 8141, -8115), angles = Angle(0, 0, 0)},
+					{occupied = false, pos = Vector(-8760, 8152, -8083), angles = Angle(0, 0, 0)},
+					{occupied = false, pos = Vector(-8799, 8568, -8093), angles = Angle(0, 0, 0)},
+				},
+				["ironclad"] = {
+					{occupied = false, pos = Vector(-9394, 7126, -8138), angles = Angle(0, 90, 0)},
+				},
+			},
+			["wasteland"] = {
+				["longship"] = {
+					{occupied = false, pos = Vector(11143, 8194, 178), angles = Angle(0, 270, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(10982, 6665, 172), angles = Angle(0, 300, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(10057, 10705, 169), angles = Angle(0, 260, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(10883, 9482, 169), angles = Angle(0, 30, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(10469, 2947, 169), angles = Angle(0, 60, 0), bodygroup = 1},
+				},
+				["ironclad"] = {
+					{occupied = false, pos = Vector(11431, 8654, 198), angles = Angle(0, 0, 0)},
 				},
 			},
 		};

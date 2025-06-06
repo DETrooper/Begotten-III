@@ -53,6 +53,47 @@ elseif game.GetMap() == "rp_district21" then
 			["S7"] = {name = "Shack S7", floor = 0, price = 500},
 		},
 	};
+elseif game.GetMap() == "bg_district34" then
+	cwShacks.shackData = {
+		["outside"] = {
+			["S1"] = {name = "Shack S1", floor = 0, price = 250},
+			["S2"] = {name = "Shack S2", floor = 0, price = 250},
+			["S3"] = {name = "Shack S3", floor = 0, price = 250},
+			["S4"] = {name = "Shack S4", floor = 0, price = 250},
+			["S5"] = {name = "Shack S5", floor = 0, price = 250},
+		},
+		["market"] = {
+			["M1"] = {name = "Shack M1", floor = 0, price = 350},
+			["M2"] = {name = "Shack M2", floor = 0, price = 350},
+		},
+		["floor 1"] = {
+			["R3"] = {name = "Room 3", floor = 1, price = 450},
+			["R4"] = {name = "Room 4", floor = 1, price = 450},
+			["R5"] = {name = "Room 5", floor = 1, price = 700},
+			["R6"] = {name = "Room 6", floor = 1, price = 700},
+			["R7"] = {name = "Room 7", floor = 1, price = 700},
+			["R8"] = {name = "Room 8", floor = 1, price = 700},
+			["R9"] = {name = "Room 9", floor = 1, price = 450},
+			["R10"] = {name = "Room 10", floor = 1, price = 450},
+		},
+		["floor 2"] = {
+			["R11"] = {name = "Room 11", floor = 2, price = 450},
+			["R12"] = {name = "Room 12", floor = 2, price = 450},
+			["R15"] = {name = "Room 15", floor = 2, price = 700},
+			["R16"] = {name = "Room 16", floor = 2, price = 700},
+			["R18"] = {name = "Room 18", floor = 2, price = 700},
+			["R19"] = {name = "Room 19", floor = 2, price = 450},
+			["R20"] = {name = "Room 20", floor = 2, price = 450},
+		},
+		["floor 3"] = {
+			["R21"] = {name = "Room 21", floor = 3, price = 450},
+			["R22"] = {name = "Room 22", floor = 3, price = 450},
+		},
+		["floor 3 penthouses"] = {
+			["R23"] = {name = "Room 23", floor = 3, price = 1000},
+			["R24"] = {name = "Room 24", floor = 3, price = 1000},
+		},
+	};
 else
 	cwShacks.shackData = {};
 end

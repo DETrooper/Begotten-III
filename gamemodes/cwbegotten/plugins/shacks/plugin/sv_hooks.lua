@@ -8,7 +8,7 @@ local playerMeta = FindMetaTable("Player");
 cwShacks.expireTime = 1209600; -- 2 weeks in seconds.
 
 local charactersTable = config.Get("mysql_characters_table"):Get()
-local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_district21";
+local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_district21" or game.GetMap() == "bg_district34";
 
 -- Called when Clockwork has loaded all of the entities.
 function cwShacks:ClockworkInitPostEntity()
@@ -521,6 +521,35 @@ function cwShacks:LoadShackData()
 				["S5"] = {pos1 = Vector(-5664.181641, 11436.757812, 103.662910), pos2 = Vector(-5857.274414, 11632.967773, 235.618912), doorPos = Vector(-5730.53125, 11437.78125, 158), cost = 700, bedTier = 1, stashSize = 60},
 				["S6"] = {pos1 = Vector(-7105.212402, 11978.488281, 172.342987), pos2 = Vector(-6761.789551, 12146.420898, 339.055939), doorPos = Vector(-6992.78125, 11980.59375, 226.875), cost = 700, bedTier = 1, stashSize = 60},
 				["S7"] = {pos1 = Vector(-6510.362305, 10420.34668, 175.721542), pos2 = Vector(-6379.923828, 10163.504883, 278.656677), doorPos = Vector(-6510, 10193.09375, 229.125), cost = 500, bedTier = 1, stashSize = 40},
+			};
+		elseif game.GetMap() == "bg_district34" then
+			self.shacks = {
+				["S1"] = {pos1 = Vector(2403, -11614, 858), pos2 = Vector(2275, -11337, 990), doorPos = Vector(2403, -11445, 916), cost = 250, bedTier = 1, stashSize = 40},
+				["S2"] = {pos1 = Vector(-2418, -11291, 858), pos2 = Vector(2158, -11159, 990), doorPos = Vector(2190, -11160, 912), cost = 250, bedTier = 1, stashSize = 40},
+				["S3"] = {pos1 = Vector(1867, -11373, 858), pos2 = Vector(2142, -11505, 990), doorPos = Vector(2020, -11375, 912), cost = 250, bedTier = 1, stashSize = 40},
+				["S4"] = {pos1 = Vector(1749, -11329, 858), pos2 = Vector(1490, -11463, 990), doorPos = Vector(1565, -11332, 917), cost = 250, bedTier = 1, stashSize = 40},
+				["S5"] = {pos1 = Vector(1308, -11494, 858), pos2 = Vector(1440, -11754, 990), doorPos = Vector(1439, -11526, 883), cost = 700, bedTier = 1, stashSize = 60},
+				["M1"]
+				["M2"]
+				["R3"]
+				["R4"]
+				["R5"]
+				["R6"]
+				["R7"]
+				["R8"]
+				["R9"]
+				["R10"]
+				["R11"]
+				["R12"]
+				["R15"]
+				["R16"]
+				["R18"]
+				["R19"]
+				["R20"]
+				["R21"]
+				["R22"]
+				["R23"]
+				["R24"]
 			};
 		end
 
