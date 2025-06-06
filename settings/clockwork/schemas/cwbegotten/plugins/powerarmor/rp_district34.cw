@@ -1,1 +1,0 @@
-{['angles;a0,-63.999618530273,0;'currentCharge;57;'class;'cw_powerarmor_magistrate;'position;v-2211.4077148438,5793.2944335938,951.55926513672;}}

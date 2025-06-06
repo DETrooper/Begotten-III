@@ -1,1 +1,0 @@
-Clockwork.config:Add("enable_crosshair", true);

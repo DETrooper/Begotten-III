@@ -1,3 +1,0 @@
---[[
-	Begotten III: Jesus Wept
---]]
