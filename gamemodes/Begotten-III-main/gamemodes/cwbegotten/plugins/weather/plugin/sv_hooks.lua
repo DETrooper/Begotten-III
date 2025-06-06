@@ -1,0 +1,275 @@
+--[[
+	Begotten III: Jesus Wept
+--]]
+
+local weatherEffectCheckDelay = 5;
+
+function cwWeather:ClockworkInitialized()
+	self:SetWeather("normal");
+end
+
+function cwWeather:SetWeather(weather, bSkipTransition, customDuration)
+	local curTime = CurTime();
+	
+	if (!table.HasValue(table.GetKeys(self.weatherTypes), weather)) then self.nextWeatherTime = curTime + 5; return; end
+	
+	local minDuration = self.weatherTypes[weather].minDuration or 300;
+	local maxDuration = math.max(self.weatherTypes[weather].maxDuration or 1800, minDuration);
+	
+	if customDuration then
+		self.nextWeatherTime = curTime + customDuration;
+	else
+		self.nextWeatherTime = curTime + math.random(minDuration, maxDuration);
+	end
+	
+	local oldWeather = self.weather or "normal";
+	local weatherTable = self.weatherTypes[weather];
+	local leadupTime = weatherTable.leadupTime;
+	
+	if bSkipTransition then leadupTime = nil end;
+	
+	if leadupTime then
+		self.nextWeatherTime = self.nextWeatherTime + leadupTime;
+	end
+
+	timer.Create("WeatherChangeTimer", leadupTime or 0, 1, function()
+		self.weather = weather;
+		
+		hook.Run("WeatherChanged", weather, oldWeather);
+		
+		netstream.Start(PlayerCache or _player.GetAll(), "SetWeather", weather);
+	end)
+	
+	if !bSkipTransition and weatherTable.leadupCallback then
+		weatherTable.leadupCallback(oldWeather);
+	end
+end
+
+function cwWeather:Think()
+	local curTime = CurTime();
+	
+	if (self.nextWeatherTime and curTime <= self.nextWeatherTime) then return; end
+	
+	local currentWeatherTable = self.weatherTypes[self.weather];
+	
+	if currentWeatherTable and currentWeatherTable.default then
+		for k, v in RandomPairs(self.weatherTypes) do
+			if !v.default and v.rarity and math.random(1, v.rarity) == 1 then self:SetWeather(k) return; end
+		end
+	end
+	
+	self:SetWeather("normal");
+end
+
+-- Called at an interval while the player is connected to the server.
+function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
+	if !initialized then return end;
+
+	if !plyTab.nextWeatherEffectCheck then
+		plyTab.nextWeatherEffectCheck = curTime + weatherEffectCheckDelay;
+		
+		return;
+	end
+	
+	if plyTab.nextWeatherEffectCheck <= curTime then
+		plyTab.nextWeatherEffectCheck = curTime + weatherEffectCheckDelay;
+		
+		if !alive or plyTab.cwObserverMode or plyTab.cwWakingUp or plyTab.opponent then return end;
+		
+		local lastZone = player:GetCharacterData("LastZone") or "wasteland";
+		local zoneTable = zones:FindByID(lastZone);
+		
+		if !zoneTable or !zoneTable.hasWeather or !self:IsOutside(player:EyePos()) then return end;
+
+		if lastZone == "wasteland" or lastZone == "tower" then
+			local weather = self.weather;
+			
+			if weather == "acidrain" or weather == "bloodstorm" or weather == "thunderstorm" then
+				if player:IsOnFire() then
+					player:Extinguish();
+				end
+				
+				if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
+					Schema:DoTesla(player, true);
+				end
+				
+				local activeWeapon = player:GetActiveWeapon();
+				
+				if activeWeapon:IsValid() and (activeWeapon.Base == "begotten_firearm_base" or activeWeapon.isMeleeFirearm) and !activeWeapon.notPowder then
+					if math.random(1, 10) == 10 then
+						local itemTable = item.GetByWeapon(activeWeapon);
+						
+						if itemTable then
+							local ammo = itemTable:GetData("Ammo");
+							
+							if ammo and #ammo > 0 and !itemTable.usesMagazine then
+								itemTable:SetData("Ammo", {});
+								
+								Clockwork.player:Notify(player, "Your weapon fills with water and your powder charge is ruined!");
+							end
+						end
+					end
+				end
+			end
+		
+			if weather == "thunderstorm" and cwMedicalSystem and !player:HasDisease("common_cold") then
+				local chance = 400;
+				
+				if player:HasTrait("marked") then
+					chance = 200;
+				elseif player:HasBelief("sanitary") then
+					chance = 1000;
+				end
+				
+				if math.random(1, chance) == 1 then
+					player:GiveDisease("common_cold");
+					
+					Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has been infected with the common cold from being outside in a thunderstorm!");
+				end
+			elseif weather == "acidrain" then
+				local armorItem = player:GetClothesEquipped();
+				local helmetItem = player:GetHelmetEquipped();
+				local shouldBurn = false;
+				
+				if player.spawnTime then
+					if CurTime() < player.spawnTime + 30 then
+						return;
+					end
+				end
+				
+				if !shouldBurn and (!armorItem or (armorItem:GetCondition() or 0) <= 0) then
+					shouldBurn = true;
+				end
+				
+				if !shouldBurn then
+					if !armorItem or !armorItem.hasHelmet then
+						if !helmetItem or (helmetItem:GetCondition() or 0) <= 0 then
+							shouldBurn = true;
+						end
+					end
+				end
+				
+				if !cwBeliefs or !player:HasBelief("ingenuity_finisher") or v.unrepairable then
+					local hasScourRust = cwBeliefs and player:HasBelief("scour_the_rust");
+				
+					for k, v in pairs(player.equipmentSlots) do
+						if k == "Backpacks" or k == "Charm1" or k == "Charm2" then continue end;
+						
+						if v and v:IsInstance() then
+							if !v.attributes or !table.HasValue(v.attributes, "conditionless") then
+								if hasScourRust then
+									v:TakeCondition(math.random(1, 2));
+								else
+									v:TakeCondition(math.random(1, 3));
+								end
+							end
+						end
+					end
+				end
+					
+				if shouldBurn then
+					local d = DamageInfo()
+					d:SetDamage(math.random(1, 3));
+					d:SetDamageType(DMG_BURN);
+					d:SetDamagePosition(player:GetPos() + Vector(0, 0, 48));
+					
+					player:TakeDamageInfo(d);
+					player:EmitSound("player/pl_burnpain"..math.random(1, 3)..".wav");
+					
+					Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken "..tostring(d:GetDamage()).." damage from acid rain, leaving them at "..player:Health().." health.");
+				end
+			end;
+		end
+	end
+end
+
+function cwWeather:PlayerCharacterInitialized(player)
+	netstream.Start(player, "SetWeather", self.weather);
+end
+
+function cwWeather:ItemEntityThink(entity, itemTable)
+	if self.weather == "acidrain" then
+		local entPos = entity:GetPos() + Vector(0, 0, 4);
+		
+		if self:IsOutside(entPos) then
+			for k, v in pairs(zones.stored) do
+				local boundsTable = v.bounds;
+				
+				if boundsTable then
+					if table.IsSequential(boundsTable) then
+						for i, v2 in ipairs(boundsTable) do
+							if entPos:WithinAABox(v2.min, v2.max) then
+								if !v.hasWeather then return end;
+							end
+						end
+					else
+						if entPos:WithinAABox(boundsTable.min, boundsTable.max) then
+							if !v.hasWeather then return end;
+						end
+					end
+				end
+			end
+			
+			entity:TakeDamage(math.random(1, 3));
+		end
+	end
+end
+
+function cwWeather:PlayerCanBeIgnited(player)
+	local lastZone = player:GetCharacterData("LastZone");
+	local zoneTable = zones:FindByID(lastZone);
+	
+	if zoneTable and zoneTable.hasWeather then
+		local weather = self.weather;
+		
+		if weather == "acidrain" or weather == "bloodstorm" or weather == "thunderstorm" then
+			return false;
+		end
+	end
+end
+
+function cwWeather:ModifyStaminaDrain(player, drainTab)
+	if self.weather == "ash" then
+		local lastZone = player:GetCharacterData("LastZone");
+		local zoneTable = zones:FindByID(lastZone);
+		
+		if zoneTable and zoneTable.hasWeather then
+			if self:IsOutside(player:EyePos()) then
+				drainTab.decrease = drainTab.decrease * 2;
+			end
+		end
+	end
+end
+
+function cwWeather:PlayerRadioJammed(player, frequency, lastZone)
+	local lastZone = player:GetCharacterData("LastZone");
+	local zoneTable = zones:FindByID(lastZone);
+	
+	if zoneTable and zoneTable.hasWeather then
+		if self.weather == "thunderstorm" or self.weather == "blizzard"  then
+			return true;
+		end
+	end
+end
+
+function cwWeather:WeatherChanged(weather, oldWeather)
+	if weather == "bloodstorm" or oldWeather == "bloodstorm" then
+		for i, index in ipairs(Schema.spawnedNPCs["thrall"]) do
+			local entity = ents.GetByIndex(index);
+			
+			if IsValid(entity) and (entity:IsNPC() or entity:IsNextBot()) then
+				entity:Remove();
+			end
+		end
+		
+		Schema.spawnedNPCs["thrall"] = {};
+	elseif weather == "snow" or weather == "blizzard" then
+		for _, v in ipairs(_player.GetAll()) do
+			if (v.cloaked and !v:GetNetVar("kinisgerCloak")) then v:Uncloak(); end
+
+			if !v:HasBelief("thirst_blood_moon") and !v:HasBelief("embrace_the_darkness") then return; end
+
+			Clockwork.chatBox:Add(v, nil, "event", "You feel the Blood Moon's dark power fade away, obscured by the changing weather.");
+		end
+	end
+end

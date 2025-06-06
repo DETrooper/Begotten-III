@@ -1,0 +1,1 @@
+PLUGIN:SetGlobalAlias("cwSearchBox");

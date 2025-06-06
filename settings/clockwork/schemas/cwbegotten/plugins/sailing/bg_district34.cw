@@ -1,0 +1,1 @@
+{['ownerID;7;'skin;0;'position;3;'cwCash;0;'location;'wasteland;'itemID;345;'cwInventory;{}'health;500;}}
