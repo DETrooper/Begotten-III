@@ -20,6 +20,9 @@ elseif map == "rp_scraptown" then
 elseif map == "rp_district21" then
 	archPos = Vector(5292, -14361, -406); -- church
 	pillarPos = Vector(11376, -2410, -192);
+elseif map == "bg_district34" then
+	archPos = Vector(-8528, -7092, 120);
+	pillarPos = Vector(-2467, 9699, 294);
 end
 
 if (map == "rp_begotten3") then
@@ -3187,7 +3190,7 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 				return false;
 			end
 		
-			if Schema.hellJauntDisabled or (map ~= "rp_begotten3" and map ~= "rp_begotten_redux" and map ~= "rp_district21") then
+			if Schema.hellJauntDisabled or (map ~= "rp_begotten3" and map ~= "rp_begotten_redux" and map ~= "rp_district21" and map ~= "bg_district34") then
 				Schema:EasyText(player, "peru", "Your connection with Hell appears to be severed and you cannot helljaunt!");
 				
 				return false;
@@ -4149,6 +4152,11 @@ local COMMAND = Clockwork.command:New("HellPortalGaze");
 			{
 				Vector(6606.255859, -10780.157227, -1437.645752), -- box start
 				Vector(11185.331055, -14702.863281, 472.348114) -- box end
+			},
+			["bg_district34"] =
+			{
+				Vector(-9435, -8547, -143),
+				Vector(-6585, -5808, 63)
 			}
 		},
 		["Pillars"] = 
@@ -4162,6 +4170,11 @@ local COMMAND = Clockwork.command:New("HellPortalGaze");
 			{
 				Vector(9687.704102, -7364.185547, -398.682037), -- box start
 				Vector(15093.301758, 1914.199951, 1704.999023) -- box end
+			},
+			["bg_district34"] =
+			{
+				Vector(-2284, 8016, 191), -- box start
+				Vector(-3441, 11668, 191) -- box end
 			}
 		},
 		["Church"] = 

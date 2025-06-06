@@ -2072,6 +2072,209 @@ elseif map == "rp_district21" then
 			DrawBloom(0.05, 0.8, 1, 1, 0.1, 0.5, 5, 1, 1);
 		end;
 	SEA3:Register()
+
+elseif map == "bg_district34" then
+	local WASTELAND = zones:New("wasteland", "suprawasteland")
+		WASTELAND.default = true;
+		WASTELAND.hasNight = true;
+		WASTELAND.hasWeather = true;
+		WASTELAND.mapScene = true;
+		WASTELAND.name = "Wasteland";
+		WASTELAND.map = "bg_district34";
+		WASTELAND.fogColors = {r = 96, g = 47, b = 0};
+		WASTELAND.fogColorsNight = {r = 32, g = 12, b = 4};
+		WASTELAND.fogStart = 256;
+		WASTELAND.fogStartNight = 256;
+		WASTELAND.fogEnd = 1536;
+		WASTELAND.fogEndNight = 1024;
+		WASTELAND.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
+		WASTELAND.colorModifyNight = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 0.9, ["$pp_colour_colour"] = 0.75};
+	WASTELAND:Register()
+
+	local SCRAPPER = zones:New("scrapper")
+		SCRAPPER.name = "Scrapper";
+		SCRAPPER.map = "bg_district34";
+		SCRAPPER.fogColors = {r = 0, g = 0, b = 0};
+		SCRAPPER.fogStart = 0;
+		SCRAPPER.fogEnd = 2048;
+		SCRAPPER.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1.5, ["$pp_colour_colour"] = 1.5, ["$pp_colour_mulr"] = 1.5};
+		SCRAPPER.bounds = {
+			min = Vector(-5017, 6830, -677),
+			max = Vector(-9480, 5470, -2559),
+		};
+	SCRAPPER:Register()
+
+		local TOWER = zones:New("tower", "suprawasteland")
+		TOWER.name = "Villa of Light";
+		TOWER.map = "bg_district34";
+		TOWER.hasNight = true;
+		TOWER.fogColors = {r = 96, g = 47, b = 0};
+		TOWER.fogColorsNight = {r = 18, g = 6, b = 1};
+		TOWER.fogStart = 1536;
+		TOWER.fogEnd = 3200;
+		TOWER.colorModify = {["$pp_colour_brightness"] = -0.02, ["$pp_colour_contrast"] = 1.22, ["$pp_colour_colour"] = 1};
+		TOWER.colorModifyNight = {["$pp_colour_brightness"] = -0.045, ["$pp_colour_contrast"] = 1.05, ["$pp_colour_colour"] = 0.95};
+		TOWER.hasWeather = true;
+		TOWER.bounds = {
+			{
+				min = Vector(-720, -9726, 914),
+				max = Vector(1565, -7600, 2460),
+			},
+			{
+				min = Vector(1575, -9180, 914),
+				max = Vector(2018, -7600, 2460),
+			},
+			{
+				min = Vector(2018, -9179, 539),
+				max = Vector(4371, -7600, 2460),
+			},
+			
+		};
+	TOWER:Register()
+
+local CAVES = zones:New("caves")
+		CAVES.name = "Mines";
+		CAVES.map = "bg_district34";
+		CAVES.fogColors = {r = 0, g = 0, b = 0};
+		CAVES.fogStart = 0;
+		CAVES.fogEnd = 768;
+		CAVES.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
+		CAVES.bounds = {
+			min = Vector(-4301, 444, -216),
+			max = Vector(7016, 7680, -904),
+		};
+	CAVES:Register()
+
+	local HELL = zones:New("hell", "suprahell")
+		HELL.name = "Hell";
+		HELL.map = "bg_district34";
+		HELL.fogColors = {r = 80, g = 10, b = 10};
+		HELL.fogStart = 0;
+		HELL.fogEnd = 1024;
+		HELL.colorModify = {["$pp_colour_brightness"] = -0.2, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
+		HELL.bounds = {
+			min = Vector(-9444, -14956, -12878),
+			max = Vector(12199, -3098, -1476),
+		};
+		
+		-- Called every frame.
+		function HELL:RenderCallback()
+			DrawBloom(0.05, 0.8, 1, 1, 0.1, 0.5, 5, 1, 1);
+		end;
+	HELL:Register()
+
+	local MANOR = zones:New("manor", "suprahell")
+		MANOR.name = "Office";
+		MANOR.map = "bg_district34";
+		MANOR.fogColors = {r = 80, g = 10, b = 10};
+		MANOR.fogStart = 1024;
+		MANOR.fogEnd = 3072;
+		MANOR.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
+		MANOR.bounds = {
+			min = Vector(852, -7859, -4881),
+			max = Vector(2321, -9681, -2835),
+		};
+
+		-- Called every frame.
+		function MANOR:RenderCallback()
+			DrawBloom(0.05, 0.2, 1, 1, 0.1, 0.5, 3.5, 1, 1);
+		end;
+	MANOR:Register()
+
+local GORE = zones:New("gore", "supragore")
+		GORE.name = "Gore Forest";
+		GORE.map = "bg_district34";
+		GORE.fogColors = {r = 104.55, g = 112.2, b = 71.4};
+		GORE.fogStart = 0;
+		GORE.fogEnd = 2448
+		GORE.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.4};
+		GORE.bounds = {
+			min = Vector(-14233, -12473, 9822),
+			max = Vector(11208, 2686, 13011),
+		};
+		GORE.colorInterval = 64
+		GORE.distanceInterval = 2448
+		GORE.intervalMult = true;
+		
+		-- Called every frame.
+		function GORE:RenderCallback()
+			DrawBloom(0.1, 1.4, 5, 5, 0.1, 0.5, 0.8, 0.8, 1);
+		end;
+	GORE:Register()
+
+	local GORE_TREE = zones:New("gore_tree", "supragore")
+		GORE_TREE.name = "Gore Tree";
+		GORE_TREE.map = "bg_district34";
+		GORE_TREE.fogColors = {r = 104.55, g = 112.2, b = 71.4};
+		GORE_TREE.fogStart = 3200;
+		GORE_TREE.fogEnd = 6000;
+		GORE_TREE.colorModify = {["$pp_colour_brightness"] = 0, ["$pp_colour_contrast"] = 1.2, ["$pp_colour_colour"] = 0.1};
+		GORE_TREE.bounds = {
+			min = Vector(-13602, -12473, 9822),
+			max = Vector(-9226, -15964, 13011),
+		};
+		GORE_TREE.colorInterval = 1024
+		GORE_TREE.distanceInterval = 2048
+		GORE_TREE.intervalMult = true;
+		function GORE_TREE:RenderCallback() end;
+	GORE_TREE:Register()
+
+	local SEA1 = zones:New("sea_rough")
+		SEA1.weatherOverride = "rain";
+		SEA1.name = "Sea (Rough)";
+		SEA1.map = "bg_district34";
+		SEA1.fogColors = {r = 0, g = 30, b = 90};
+		SEA1.fogStart = 0;
+		SEA1.fogEnd = 1024;
+		SEA1.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.15};
+		SEA1.bounds = {
+			min = Vector(15552, 2899, -8442),
+			max = Vector(5306, 13120, -5209),
+		};
+
+		-- Called every frame.
+		function SEA1:RenderCallback()
+			DrawBloom(0.1, 1.4, 5, 5, 0.1, 0.5, 1, 0.8, 0.8);
+		end;
+	SEA1:Register()
+
+	local SEA2 = zones:New("sea_calm")
+		SEA2.name = "Sea (Calm)";
+		SEA2.map = "bg_district34";
+		SEA2.fogColors = {r = 66, g = 66, b = 66};
+		SEA2.fogStart = 0;
+		SEA2.fogEnd = 1024;
+		SEA2.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.15};
+		SEA2.bounds = {
+			min = Vector(5302, 2899, -8442),
+			max = Vector(-4944, 13120, -5209),
+		};
+		
+		-- Called every frame.
+		function SEA2:RenderCallback()
+			DrawBloom(0.1, 1.4, 5, 5, 0.1, 0.5, 0.8, 0.8, 1);
+		end;
+	SEA2:Register()
+
+	local SEA3 = zones:New("sea_styx")
+		SEA3.weatherOverride = "ash";
+		SEA3.name = "River Styx";
+		SEA3.map = "bg_district34";
+		SEA3.fogColors = {r = 80, g = 10, b = 10};
+		SEA3.fogStart = 0;
+		SEA3.fogEnd = 1024;
+		SEA3.colorModify = {["$pp_colour_brightness"] = -0.2, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
+		SEA3.bounds = {
+			min = Vector(-4949, 2899, -8442),
+			max = Vector(-15194, 13120, -5209),
+		};
+		
+		-- Called every frame.
+		function SEA3:RenderCallback()
+			DrawBloom(0.05, 0.8, 1, 1, 0.1, 0.5, 5, 1, 1);
+		end;
+	SEA3:Register()
+
 else
 	local WASTELAND = zones:New("wasteland", "suprawasteland")
 		WASTELAND.default = true;

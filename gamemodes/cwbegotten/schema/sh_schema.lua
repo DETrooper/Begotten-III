@@ -182,6 +182,8 @@ function Schema:InTower(entity)
 		return entity:GetPos():WithinAABox(Vector(-8896, -10801, 69), Vector(-13525, -3070, 914));
 	elseif map == "rp_scraptown" then
 		return entity:GetPos():WithinAABox(Vector(-2446, -7, -262), Vector(-8792, -8935, 2110));
+	elseif map == "bg_district34" then
+		return entity:GetPos():WithinAABox(Vector(-720, -9726, 914), Vector(1565, -7600, 2460)) or entity:GetPos():WithinAABox(Vector(1575, -9180, 914), Vector(2018, -7600, 2460)) or entity:GetPos():WithinAABox(Vector(2018, -9179, 539), Vector(4371, -7600, 2460));
 	elseif map == "rp_district21" then
 		return entity:GetPos():WithinAABox(Vector(-7600, 9407, 476), Vector(-4861, 13313, -2100)) or entity:GetPos():WithinAABox(Vector(-10622, 12500, 476), Vector(-7600, 10368, -2100));
 	end
