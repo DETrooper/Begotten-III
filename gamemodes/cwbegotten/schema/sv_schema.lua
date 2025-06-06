@@ -3410,7 +3410,7 @@ elseif map == "rp_district21" then
 		{pos = Vector(-5020.15625, 12028.875, 252.21875), angles = Angle(0, 180, 0)},
 		{pos = Vector(-9659.5, 11132.21875, 535), angles = Angle(0, 180, 0)},
 		{pos = Vector(-7191, 10255.03125, 433.75), angles = Angle(0, 45, 0)},
-	},
+	};
 elseif map == "bg_district34" then
 	Schema.PopeSpeakers = {
 		[1] = {pos = Vector(1847, -9168, 1083), angles = Angle(0, 90, 0)},
