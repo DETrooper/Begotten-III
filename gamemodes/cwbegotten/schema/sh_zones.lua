@@ -2190,7 +2190,7 @@ local GORE = zones:New("gore", "supragore")
 		GORE.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.4};
 		GORE.bounds = {
 			min = Vector(-14233, -12473, 9822),
-			max = Vector(11208, 2686, 13011),
+			max = Vector(14861, 2686, 13011),
 		};
 		GORE.colorInterval = 64
 		GORE.distanceInterval = 2448
