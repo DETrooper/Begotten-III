@@ -59,11 +59,35 @@ local function CreateMenu(state)
 						end
 					end
 				end
+
+				if cwShacks.shackData["outside"] then
+					local marketMenu = subMenu:AddSubMenu("Outside Shacks");
+					
+					for k, v in SortedPairsByMemberValue(cwShacks.shackData["outside"], "name") do
+						if not cwShacks.shacks[k].owner then
+							marketMenu:AddOption("("..tostring(v.price)..") "..v.name, function() Clockwork.kernel:RunCommand("CoinslotPurchase", k) end);
+						else
+							marketMenu:AddOption("(SOLD) "..v.name, function() end);
+						end
+					end
+				end
 				
 				if cwShacks.shackData["floor1"] then
 					local groundFloorMenu = subMenu:AddSubMenu("Ground Floor");
 					
 					for k, v in SortedPairsByMemberValue(cwShacks.shackData["floor1"], "name") do
+						if not cwShacks.shacks[k].owner then
+							groundFloorMenu:AddOption("("..tostring(v.price)..") "..v.name, function() Clockwork.kernel:RunCommand("CoinslotPurchase", k) end);
+						else
+							groundFloorMenu:AddOption("(SOLD) "..v.name, function() end);
+						end
+					end
+				end
+
+				if cwShacks.shackData["floor1v"] then
+					local groundFloorMenu = subMenu:AddSubMenu("First Floor");
+					
+					for k, v in SortedPairsByMemberValue(cwShacks.shackData["floor1v"], "name") do
 						if not cwShacks.shacks[k].owner then
 							groundFloorMenu:AddOption("("..tostring(v.price)..") "..v.name, function() Clockwork.kernel:RunCommand("CoinslotPurchase", k) end);
 						else

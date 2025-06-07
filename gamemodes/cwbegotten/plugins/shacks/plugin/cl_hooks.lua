@@ -66,7 +66,7 @@ elseif game.GetMap() == "bg_district34" then
 			["M1"] = {name = "Shack M1", floor = 0, price = 350},
 			["M2"] = {name = "Shack M2", floor = 0, price = 350},
 		},
-		["floor 1"] = {
+		["floor1v"] = {
 			["R3"] = {name = "Room 3", floor = 1, price = 450},
 			["R4"] = {name = "Room 4", floor = 1, price = 450},
 			["R5"] = {name = "Room 5", floor = 1, price = 700},
@@ -76,7 +76,7 @@ elseif game.GetMap() == "bg_district34" then
 			["R9"] = {name = "Room 9", floor = 1, price = 450},
 			["R10"] = {name = "Room 10", floor = 1, price = 450},
 		},
-		["floor 2"] = {
+		["floor2"] = {
 			["R11"] = {name = "Room 11", floor = 2, price = 450},
 			["R12"] = {name = "Room 12", floor = 2, price = 450},
 			["R15"] = {name = "Room 15", floor = 2, price = 700},
@@ -85,11 +85,11 @@ elseif game.GetMap() == "bg_district34" then
 			["R19"] = {name = "Room 19", floor = 2, price = 450},
 			["R20"] = {name = "Room 20", floor = 2, price = 450},
 		},
-		["floor 3"] = {
+		["floor3"] = {
 			["R21"] = {name = "Room 21", floor = 3, price = 450},
 			["R22"] = {name = "Room 22", floor = 3, price = 450},
 		},
-		["floor 3 penthouses"] = {
+		["floor3penthouses"] = {
 			["R23"] = {name = "Room 23", floor = 3, price = 1000},
 			["R24"] = {name = "Room 24", floor = 3, price = 1000},
 		},
