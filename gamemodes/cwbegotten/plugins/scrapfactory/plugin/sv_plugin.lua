@@ -128,6 +128,41 @@ elseif map == "rp_district21" then
 		Vector(11628, 14087, -1008),
 	};
 	cwScrapFactory.screenShakeVector = Vector(10502, 14075, -986);
+elseif map == "bg_district34" then
+	SCRAP_FACTORY_VALVES = {
+		{spawnPosition = Vector(-8327, 5817, -1605), spawnAngles = Angle(0, 180, -45), steamAngles = Angle(45, 180, 0)},
+		{spawnPosition = Vector(-7209, 6248, -1605), spawnAngles = Angle(0, 110, -45), steamAngles = Angle(60.513, 77.036, 153.501)},
+		{spawnPosition = Vector(-7295, 5814, -1480), spawnAngles = Angle(0, 0, 45), steamAngles = Angle(45, 90, 0)},
+		{spawnPosition = Vector(-7784, 6420, -1480), spawnAngles = Angle(0, 135, 45), steamAngles = Angle(45, -90, 0)},
+		{spawnPosition = Vector(-5910, 6409, -1480), spawnAngles = Angle(90, 90, 0), steamAngles = Angle(0, 90, 0)},
+		{spawnPosition = Vector(-6894, 6255, -1479), spawnAngles = Angle(45, 90, 0), steamAngles = Angle(45, -90, 0)},
+		{spawnPosition = Vector(-8823, 6196, -1605), spawnAngles = Angle(0, 180, 45), steamAngles = Angle(45, -90, 0)},
+		{spawnPosition = Vector(-7774, 6439, -1602), spawnAngles = Angle(0, 180, 45), steamAngles = Angle(45, -90, 0)},
+		{spawnPosition = Vector(-5672, 5840, -1556), spawnAngles = Angle(90, -90, 180), steamAngles = Angle(0, 90, 0)},
+		{spawnPosition = Vector(-8576, 6412, -1479), spawnAngles = Angle(45, 180, 0), steamAngles = Angle(45, -180, 0)},
+		{spawnPosition = Vector(-5951, 6360, -1602), spawnAngles = Angle(45, 0, 0), steamAngles = Angle(45, 180, 0)},
+		{spawnPosition = Vector(-8696, 6110, -1482), spawnAngles = Angle(45, -90, 0), steamAngles = Angle(45, 90, 0)},
+		{spawnPosition = Vector(-8130, 6361, -1604), spawnAngles = Angle(0, 180, 45), steamAngles = Angle(45, -90, 0)},
+	};
+	
+	cwScrapFactory.coalBoxBounds = {["upper"] = Vector(-9099, 6079, -1272), ["lower"] = Vector(-9043, 6143, -1312)};
+	cwScrapFactory.coalBoxOrigin = Vector(-9063, 6112, -1303);
+	cwScrapFactory.lowerLevelBounds = {["upper"] = Vector(-5397, 5582, -1391), ["lower"] = Vector(-9468, 6647, -1683)};
+	cwScrapFactory.machineSoundVector = Vector(-9034, 6098, -1308);
+	cwScrapFactory.orePilePos = Vector(-4907, 6366, 1522);
+	cwScrapFactory.orePileAngles = Angle(5.07855, 70.6299, 14.1327);
+	cwScrapFactory.rewardPositions = {
+		Vector(-9083, 6137, -1279),
+		Vector(-9083, 6117, -1279),
+		Vector(-9083, 6097, -1279),
+		Vector(-9055, 6090, -1279),
+		Vector(-9055, 7010, -1279),
+		Vector(-9055, 7030, -1279),
+		Vector(-9070, 6100, -1279),
+		Vector(-9070, 6120, -1279),
+		Vector(-9070, 6140, -1279),
+	};
+	cwScrapFactory.screenShakeVector = Vector(-7424, 6143, -1484);
 end
 
 function cwScrapFactory:StartProcessing()

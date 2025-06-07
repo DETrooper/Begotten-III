@@ -2117,16 +2117,16 @@ elseif map == "bg_district34" then
 		TOWER.hasWeather = true;
 		TOWER.bounds = {
 			{
-				min = Vector(-720, -9726, 914),
-				max = Vector(1565, -7600, 2460),
+				min = Vector(1579, -9720, 904),
+				max = Vector(-720, -7680, 2480),
 			},
 			{
-				min = Vector(1575, -9180, 914),
-				max = Vector(2018, -7600, 2460),
+				min = Vector(1579, -9182, 904),
+				max = Vector(2013, -8105, 2480),
 			},
 			{
-				min = Vector(2018, -9179, 539),
-				max = Vector(4371, -7600, 2460),
+				min = Vector(2013, -7680, 540),
+				max = Vector(4395, -9720, 2480),
 			},
 			
 		};

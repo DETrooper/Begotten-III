@@ -44,6 +44,18 @@ elseif (game.GetMap() == "rp_district21") then
 		["hillkeeper"] = {pos1 = Vector(-5004.78418, 12229.732422, 274.09668), pos2 = Vector(-5603.254883, 11817.118164, 131.071106)},
 		["satanists"] = {pos1 = Vector(-971.700928, -9710.587891, -6210.654297), pos2 = Vector(-379.956238, -9465.206055, -6339.781738)}, -- manor
 	};
+elseif (game.GetMap() == "bg_district34") then
+	cwCharacterNeeds.bedZones = {
+		["gatekeeper"] = {pos1 = Vector(4024, -9072, 939), pos2 = Vector(4395, -8536, 1188)},
+		["gatekeeper2"] = {pos1 = Vector(3928, -9370, 939), pos2 = Vector(3424, -9496, 1188)}, -- Officer quarters
+		["gores"] = {pos1 = Vector(-5184, -8304, 10494), pos2 = Vector(-5643, -8694, 10620)},
+		["gorehut"] = {pos1 = Vector(4008, -8264, 11056), pos2 = Vector(3681, -7941, 11262)},
+		["hierarchy"] = {pos1 = Vector(-168, -9720, 2212), pos2 = Vector(-290, -9578, 2481)},
+		["knights"] = {pos1 = Vector(-256, -8219, 1996), pos2 = Vector(222, -8072, 2197)},
+		["ministers"] = {pos1 = Vector(-712, -9720, 1212), pos2 = Vector(2191.804932, 13323.184570, 1408)},
+		["ministers2"] = {pos1 = Vector(1579, -9512, 1212), pos2 = Vector(2105, -9360, 1408)}, -- Inquisitor Barracks
+		["satanists"] = {pos1 = Vector(1576, -8591, -3296), pos2 = Vector(1816, -8291, -3104)}, -- Office break room
+	};
 else
 	cwCharacterNeeds.bedZones = {};
 end

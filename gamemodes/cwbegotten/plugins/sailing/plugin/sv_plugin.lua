@@ -212,7 +212,7 @@ if !cwSailing.shipLocations then
 					{occupied = false, pos = Vector(8707, -9164, 10293), angles = Angle(0, 90, 0), bodygroup = 1},
 				},
 				["ironclad"] = {
-					{occupied = false, pos = Vector(8800, -9250, 10317), angles = Angle(0, 180, 0)},
+					{occupied = false, pos = Vector(8800, -9260, 10317), angles = Angle(0, 180, 0)},
 				},
 			},
 			["calm"] = {
