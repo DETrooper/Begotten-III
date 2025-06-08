@@ -51,9 +51,9 @@ elseif (map == "bg_district34") then
 	cwRecipes.smithyLocations = {
 		Vector(1629, -8038, -3456),
 		Vector(3935, -8171, 581),
-		Vector(2275, 2150, 9819),
+		Vector(2270, 2148, 981), -- Village
 		Vector(-1613, 3152, -131),
-		Vector(-9827, 12755, 273),
+		Vector(-9798, 14130, 273), -- Scraptown
 		Vector(-4249, -10501, 10538),
 	}
 	
