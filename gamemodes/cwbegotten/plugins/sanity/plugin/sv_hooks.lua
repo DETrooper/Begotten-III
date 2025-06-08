@@ -30,7 +30,7 @@ local sanitySubSafezones = {
 		["wasteland"] = {
 			{pos1 = Vector(-398, 1856, -152), pos2 = Vector(-1758, 3284, -2)}, -- VoltSewer
 			{pos1 = Vector(-938, 2086, -726), pos2 = Vector(-1339, 2458, -566)}, -- Volt Principal's Office
-			{pos1 = Vector(-8253, 11731, 181), pos2 = Vector(-10960, 14848, 436)}, -- Scrap Village
+			{pos1 = Vector(-8231, 13144, 181), pos2 = Vector(-10960, 15869, 436)}, -- Scrap Town
 		},
 	},
 };
