@@ -1761,7 +1761,7 @@ function Schema:CheapleCaughtPlayer(player)
 		
 		player:DeathCauseOverride("Had their curse catch up with them.");
 		
-		if game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_district21" then
+		if game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_district21" or game.GetMap() == "bg_district34" then
 			player:SetCharacterData("permakilled", true); -- In case the player tries to d/c to avoid their fate.
 			player:SensesOff();
 			Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);

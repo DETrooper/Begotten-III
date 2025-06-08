@@ -4,7 +4,7 @@
 --]]
 
 local map = game.GetMap();
-local bMap = map == "rp_begotten3" or map == "rp_district21";
+local bMap = map == "rp_begotten3" or map == "rp_district21" or map == "bg_district34";
 
 function Schema:ClockworkInitialized()
 	if !self.bountyData then

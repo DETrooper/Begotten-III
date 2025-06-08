@@ -92,6 +92,26 @@ elseif (map == "rp_district21") then
 		["voltbunker"] = Vector(-12934, -3154, -512),
 		["gorewatch"] = Vector(-8927, -8286, -68),
 	}
+elseif (map == "bg_district34") then
+	Schema.MapLocations = {
+		["city"] = Vector(-3828, -1435, 902),
+		["duel_city"] = Vector(-3313, -4895, 4460),
+		["duel_hell"] = Vector(-6019, -8919, -9275),
+		["duel_gore"] = Vector(-12401, -8051, 10475),
+		["duel_silenthill"] = Vector(9551, 530, -7045),
+		["duel_rooftop"] = Vector(-7489, -4711, 5688),
+		["gore"] = Vector(-5301, -9071, 10656),
+		["goredocks"] = Vector(-7977, -8704, 10430),
+		["gorewatch"] = Vector(9158, 8292, 1076),
+		["hell"] = Vector(446, -8768, -4814),
+		["scrapfactory"] = Vector(-5197, 6138, 1637),
+		["scraptown"] = Vector(-8657, 12084, 336),
+		["sea_calm"] = Vector(2137, 4396, -7819),
+		["sea_rough"] = Vector(9253, 4624, -7809),
+		["sea_styx"] = Vector(-7792, 4785, -7948),
+		["voltist"] = Vector(-707, 2012, -96),
+		["tower"] = Vector(3713, -10447, 1084),
+	}
 else
 	Schema.MapLocations = {};
 end
