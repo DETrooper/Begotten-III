@@ -230,7 +230,7 @@ elseif map == "bg_district34" then
 				spawnPosition1 = Vector(-7487, -5007, 5636),
 				spawnAngles1 = Angle(0, 90, 0),
 				spawnPosition2 = Vector(-7487, -4239, 5636),
-				spawnAngles2 = Angle(0, 90, 0),
+				spawnAngles2 = Angle(0, 270, 0),
 				timeLimit = 300,
 			},
 			["hell"] = {
