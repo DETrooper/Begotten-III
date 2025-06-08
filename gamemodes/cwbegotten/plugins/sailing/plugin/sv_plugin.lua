@@ -258,7 +258,7 @@ if !cwSailing.shipLocations then
 					{occupied = false, pos = Vector(-8799, 8568, -8093), angles = Angle(0, 0, 0)},
 				},
 				["ironclad"] = {
-					{occupied = false, pos = Vector(-9394, 7126, -8138), angles = Angle(0, 90, 0)},
+					{occupied = false, pos = Vector(-9394, 7126, -8100), angles = Angle(0, 90, 0)},
 				},
 			},
 			["wasteland"] = {

@@ -291,8 +291,8 @@ elseif map == "bg_district34" then
 				["spawnAngles"] = Angle(0, 0, 0),
 			},
 			["tower"] = {
-				["spawnPosition"] = Vector(4064, -8702, 1594),
-				["spawnAngles"] = Angle(0, 90, 0),
+				["spawnPosition"] = Vector(3769, -8704, 1207),
+				["spawnAngles"] = Angle(0, 270, 0),
 			},
 		};
 	end

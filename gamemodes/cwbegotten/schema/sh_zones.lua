@@ -2140,8 +2140,14 @@ local CAVES = zones:New("caves")
 		CAVES.fogEnd = 768;
 		CAVES.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
 		CAVES.bounds = {
+			{
 			min = Vector(-4301, 444, -216),
 			max = Vector(7016, 7680, -904),
+			},
+			{
+			min = Vector(6887, 6243, 303),
+			max = Vector(1907, 5098, -216),
+			},
 		};
 	CAVES:Register()
 
@@ -2171,8 +2177,14 @@ local CAVES = zones:New("caves")
 		MANOR.fogEnd = 3072;
 		MANOR.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
 		MANOR.bounds = {
+			{
 			min = Vector(852, -7859, -4881),
 			max = Vector(2321, -9681, -2835),
+			},
+			{
+			min = Vector(-6541, -8594, -9349),
+			max = Vector(-5460, -9222, -9157),
+			},
 		};
 
 		-- Called every frame.
