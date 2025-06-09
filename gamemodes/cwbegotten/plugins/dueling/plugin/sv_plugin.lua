@@ -260,6 +260,15 @@ elseif map == "bg_district34" then
 				spawnAngles2 = Angle(0, 90, 0),
 				timeLimit = 300,
 			},
+			["introzone"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(9549, 1003, -7076),
+				spawnAngles1 = Angle(0, 180, 0),
+				spawnPosition2 = Vector(9549, 49, -7076),
+				spawnAngles2 = Angle(0, 0, 0),
+				timeLimit = 300,
+			},
 			["city"] = {
 				duelingPlayer1 = nil,
 				duelingPlayer2 = nil,
