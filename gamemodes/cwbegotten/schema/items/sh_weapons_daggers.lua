@@ -40,6 +40,29 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Clan Reaver Dagger";
+	ITEM.model = "models/props_sr_weapons/ebony_dagger.mdl";
+	ITEM.weight = 0.5;
+	ITEM.uniqueID = "begotten_dagger_clanreaverdagger";
+	ITEM.category = "Melee";
+	ITEM.description = "A ceremonial dagger of Clan Reaver designed for the torture and ritual killings of slaves in the Hall of Tears. The special runes of the River Clan open bloody wounds on the hands of those who were not born under the hateful glare of the Sister.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/Ebony_dagger.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(1.11, 180, 1.11);
+	ITEM.attachmentOffsetVector = Vector(-3.433, 0.71, -3);
+	ITEM.canUseOffhand = true;
+	ITEM.huntingValue = 3;
+	
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1730, supercrateOnly = true};
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks"}};
+	ITEM.repairCostModifier = 0.3;
+	ITEM.requiredSubfactions = {"Clan Reaver"};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Iron Dagger";
 	ITEM.model = "models/demonssouls/weapons/dagger.mdl";
 	ITEM.weight = 0.5;

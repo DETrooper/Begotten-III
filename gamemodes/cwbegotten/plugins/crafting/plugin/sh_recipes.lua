@@ -1799,6 +1799,36 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("clan_reaver_dagger");
+		RECIPE.name = "Clan Reaver Dagger";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 1},
+			["belphegor_catalyst"] = {amount = 1},
+			["down_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_dagger_clanreaverdagger"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 45;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("iron_dagger");
 		RECIPE.name = "Iron Dagger";
