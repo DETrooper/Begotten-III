@@ -63,6 +63,7 @@ elseif game.GetMap() == "bg_district34" then
 			["S5"] = {name = "Shack S5", floor = 0, price = 75},
 			["S8"] = {name = "Shack S6", floor = 0, price = 75},
 			["S9"] = {name = "Shack S7", floor = 0, price = 75},
+			["M0"] = {name = "Small Manor", floor = 0, price = 1200},
 		},
 		["market"] = {
 			["M1"] = {name = "Shack M1", floor = 0, price = 225},

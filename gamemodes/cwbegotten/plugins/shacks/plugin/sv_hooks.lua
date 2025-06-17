@@ -533,6 +533,7 @@ function cwShacks:LoadShackData()
 				["S7"] = {pos1 = Vector(2976, -8428, 1408), pos2 = Vector(3252, -8298, 1580), doorPos = Vector(3083, -8299, 1466), cost = 225, bedTier = 1, stashSize = 10},
 				["S8"] = {pos1 = Vector(867, -10699, 858), pos2 = Vector(735, -10959, 1012), doorPos = Vector(866, -10731, 938), cost = 75, bedTier = 1, stashSize = 10},
 				["S9"] = {pos1 = Vector(2440, -10566, 858), pos2 = Vector(2166, -10434, 1023), doorPos = Vector(2287, -10564, 973), cost = 75, bedTier = 1, stashSize = 10},
+				["M0"] = {pos1 = Vector(3240, -11016, 972), pos2 = Vector(3660, -10504, 1270), doorPos = Vector(3244, -10783, 1026), cost = 1200, bedTier = 2, stashSize = 75},
 				["M1"] = {pos1 = Vector(2259, -8089, 940), pos2 = Vector(2127, -7831, 1068), doorPos = Vector(2258, -7862, 998), cost = 225, bedTier = 1, stashSize = 50},
 				["M2"] = {pos1 = Vector(2527, -7829, 940), pos2 = Vector(2250, -7702, 1068), doorPos = Vector(2420, -7829, 998), cost = 225, bedTier = 1, stashSize = 50},
 				["M3"] = {pos1 = Vector(903, -8109, 940), pos2 = Vector(1180, -8237, 1068), doorPos = Vector(1073, -8237, 998), cost = 225, bedTier = 1, stashSize = 50},

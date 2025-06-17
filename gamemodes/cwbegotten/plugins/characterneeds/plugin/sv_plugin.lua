@@ -50,7 +50,7 @@ elseif (game.GetMap() == "bg_district34") then
 		["gatekeeper2"] = {pos1 = Vector(3928, -9370, 939), pos2 = Vector(3424, -9496, 1188)}, -- Officer quarters
 		["gores"] = {pos1 = Vector(-5184, -8304, 10494), pos2 = Vector(-5643, -8694, 10620)},
 		["gorehut"] = {pos1 = Vector(4008, -8264, 11056), pos2 = Vector(3681, -7941, 11262)},
-		["gorewatch"] = {pos1 = Vector(9002, 8205, 1087), pos2 = Vector(8944, 8328, 1229)},
+		["gorewatch"] = {pos1 = Vector(9002, 8205, 1087), pos2 = Vector(8816, 8328, 1229)},
 		["hierarchy"] = {pos1 = Vector(-168, -9720, 2212), pos2 = Vector(-290, -9578, 2481)},
 		["knights"] = {pos1 = Vector(-256, -8219, 1996), pos2 = Vector(222, -8072, 2197)},
 		["ministers"] = {pos1 = Vector(-712, -9720, 1212), pos2 = Vector(2191.804932, 13323.184570, 1408)},

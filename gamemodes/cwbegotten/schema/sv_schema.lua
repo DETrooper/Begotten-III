@@ -384,6 +384,10 @@ Schema.doors = {
 			"sidedoorblastdoor2",
 			"executiondoor",
 			"medicdoor",
+			"inq_door1",
+			"inq_door2",
+			"inq_panel_1",
+			"inq_panel_2",
 		},
 		["knights"] = {
 			"pope_reception_shutter",

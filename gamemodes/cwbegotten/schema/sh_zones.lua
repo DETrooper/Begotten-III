@@ -2081,8 +2081,8 @@ elseif map == "bg_district34" then
 		WASTELAND.mapScene = true;
 		WASTELAND.name = "Wasteland";
 		WASTELAND.map = "bg_district34";
-		WASTELAND.fogColors = {r = 96, g = 47, b = 0};
-		WASTELAND.fogColorsNight = {r = 32, g = 12, b = 4};
+		WWASTELAND.fogColors = {r = 61.2, g = 48.45, b = 40.8};
+		WASTELAND.fogColorsNight = {r = 45.9, g = 35.955, b = 31.11};
 		WASTELAND.fogStart = 256;
 		WASTELAND.fogStartNight = 256;
 		WASTELAND.fogEnd = 1536;
