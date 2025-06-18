@@ -149,7 +149,7 @@ elseif map == "bg_district34" then
 	cwScrapFactory.coalBoxOrigin = Vector(-9063, 6112, -1303);
 	cwScrapFactory.lowerLevelBounds = {["upper"] = Vector(-5397, 5582, -1391), ["lower"] = Vector(-9468, 6647, -1683)};
 	cwScrapFactory.machineSoundVector = Vector(-9034, 6098, -1308);
-	cwScrapFactory.orePilePos = Vector(-4907, 6366, 1522);
+	cwScrapFactory.orePilePos = Vector(-1719, 3826, 792);
 	cwScrapFactory.orePileAngles = Angle(5.07855, 70.6299, 14.1327);
 	cwScrapFactory.rewardPositions = {
 		Vector(-9083, 6137, -1279),
