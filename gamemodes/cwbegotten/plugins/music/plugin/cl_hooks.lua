@@ -1,6 +1,6 @@
 -- Dynamic Music by Cash Wednesday and DETrooper
 
-local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_redux" or game.GetMap() == "rp_scraptown" or game.GetMap() == "rp_district21" or game.GetMap == "bg_district34";
+local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_redux" or game.GetMap() == "rp_scraptown" or game.GetMap() == "rp_district21" or game.GetMap() == "bg_district34";
 
 Clockwork.ConVars.AMBIENTMUSIC = Clockwork.kernel:CreateClientConVar("cwAmbientMusic", 1, true, true)
 Clockwork.ConVars.AMBIENTMUSICVOLUME = Clockwork.kernel:CreateClientConVar("cwAmbientMusicVolume", 100, true, true)
