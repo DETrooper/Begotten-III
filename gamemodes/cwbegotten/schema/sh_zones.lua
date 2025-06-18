@@ -2081,8 +2081,8 @@ elseif map == "bg_district34" then
 		WASTELAND.mapScene = true;
 		WASTELAND.name = "Wasteland";
 		WASTELAND.map = "bg_district34";
-		WWASTELAND.fogColors = {r = 61.2, g = 48.45, b = 40.8};
-		WASTELAND.fogColorsNight = {r = 45.9, g = 35.955, b = 31.11};
+		WASTELAND.fogColors = {r = 61, g = 48, b = 41};
+		WASTELAND.fogColorsNight = {r = 45, g = 36, b = 31};
 		WASTELAND.fogStart = 256;
 		WASTELAND.fogStartNight = 256;
 		WASTELAND.fogEnd = 1536;
@@ -2108,8 +2108,8 @@ elseif map == "bg_district34" then
 		TOWER.name = "Villa of Light";
 		TOWER.map = "bg_district34";
 		TOWER.hasNight = true;
-		TOWER.fogColors = {r = 96, g = 47, b = 0};
-		TOWER.fogColorsNight = {r = 18, g = 6, b = 1};
+		TOWER.fogColors = {r = 61, g = 48, b = 41};
+		TOWER.fogColorsNight = {r = 46, g = 36, b = 31};
 		TOWER.fogStart = 1536;
 		TOWER.fogEnd = 3200;
 		TOWER.colorModify = {["$pp_colour_brightness"] = -0.02, ["$pp_colour_contrast"] = 1.22, ["$pp_colour_colour"] = 1};
