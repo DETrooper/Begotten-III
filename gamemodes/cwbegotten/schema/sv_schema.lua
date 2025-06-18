@@ -374,6 +374,10 @@ Schema.doors = {
 		["gorewatch"] = {
 			"gorewatch",
 		},
+		["ministry"] = {
+			"inq_door1",
+			"inq_door2",
+		},
 		["tower"] = {
 			"churchgate1",
 			"churchgate2",
@@ -384,10 +388,9 @@ Schema.doors = {
 			"sidedoorblastdoor2",
 			"executiondoor",
 			"medicdoor",
-			"inq_door1",
-			"inq_door2",
 			"inq_panel_1",
 			"inq_panel_2",
+			"balcony_door_1",
 		},
 		["knights"] = {
 			"pope_reception_shutter",
