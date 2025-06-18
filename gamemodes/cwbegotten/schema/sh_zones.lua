@@ -2125,6 +2125,10 @@ elseif map == "bg_district34" then
 				max = Vector(2013, -8105, 2480),
 			},
 			{
+				min = Vector(1579, -9182, 1188),
+				max = Vector(2013, -9520, 2480),
+			},
+			{
 				min = Vector(2013, -7680, 540),
 				max = Vector(4395, -9720, 2480),
 			},
