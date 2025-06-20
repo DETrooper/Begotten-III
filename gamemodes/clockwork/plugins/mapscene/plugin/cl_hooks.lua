@@ -737,11 +737,11 @@ elseif map == "rp_district21" then
 elseif map == "bg_district34" then
 	camTable = {
 		["Wanderer"] = {
-			camVector = Vector(-8710, -4623, 1290),
-			camAngles = Angle(0, 145.065, 0),
-			closeCamVector = Vector(-8727, -4611, 1290),
-			charVector = Vector(-8769, -4582, 1230),
-			charAngles = Angle(0, 325, 0),
+			camVector = Vector(11621, 404, 1221),
+			camAngles = Angle(0, -180, 0),
+			closeCamVector = Vector(11584, 404, 1221),
+			charVector = Vector(11547, 405, 1154),
+			charAngles = Angle(0, 0, 0),
 			charModel = {clothes = "models/begotten/wanderers/wanderer_male.mdl", head = "models/begotten/heads/male_04_wanderer.mdl"},
 			charBodygroup = {1, 2},
 			zone = "wasteland"

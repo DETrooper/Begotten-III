@@ -391,6 +391,8 @@ Schema.doors = {
 			"inq_panel_1",
 			"inq_panel_2",
 			"balcony_door_1",
+			"yard_blastdoor_1",
+			"yard_blastdoor_2",
 		},
 		["knights"] = {
 			"pope_reception_shutter",
