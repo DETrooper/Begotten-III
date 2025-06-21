@@ -311,14 +311,14 @@ elseif map == "rp_district21" then
 	};
 elseif map == "bg_district34" then
 	Schema.hellPortalTeleports = {
-		["arch"] = {
-			{pos = Vector(-8305, -7440, 24), ang = Angle(0, 0, 0)},
-			{pos = Vector(-8314, -7173, 120), ang = Angle(0, 0, 0)},
-			{pos = Vector(-8315, -6917, 139), ang = Angle(0, 0, 0)},
-			{pos = Vector(-8086, -6944, 156), ang = Angle(0, 0, 0)},
-			{pos = Vector(-8065, -7127, 121), ang = Angle(0, 0, 0)},
-			{pos = Vector(-8041, -7422, 63), ang = Angle(0, 0, 0)},
-			{pos = Vector(-8601, -7091, 120), ang = Angle(0, 0, 0)},
+		["cave"] = {
+			{pos = Vector(-10103, 3283, 149), ang = Angle(0, 0, 0)},
+			{pos = Vector(-10052, 3149, 148), ang = Angle(0, 0, 0)},
+			{pos = Vector(-10092, 3017, 148), ang = Angle(0, 0, 0)},
+			{pos = Vector(-10143, 2876, 150), ang = Angle(0, 0, 0)},
+			{pos = Vector(-10232, 2722, 161), ang = Angle(0, 0, 0)},
+			{pos = Vector(-10468, 3411, 171), ang = Angle(0, 0, 0)},
+			{pos = Vector(-10509, 2694, 169), ang = Angle(0, 0, 0)},
 		},
 		["hell"] = {
 			{pos = Vector(2004, -8992, -4840), ang = Angle(0, 180, 0)},
@@ -2896,6 +2896,52 @@ if map == "rp_district21" then
 						local chosenspot = math.random(1, #Schema.hellPortalTeleports["church"]);
 						local destination = Schema.hellPortalTeleports["church"][chosenspot].pos;
 						local angles = Schema.hellPortalTeleports["church"][chosenspot].ang;
+						
+						ParticleEffect("teleport_fx", origin, Angle(0,0,0), player);
+						sound.Play("misc/summon.wav", origin, 100, 100);
+						ParticleEffect("teleport_fx", destination, Angle(0,0,0));
+						sound.Play("misc/summon.wav", destination, 100, 100);
+						player.teleporting = true;
+						
+						timer.Create("summonplayer_"..tostring(player:EntIndex()), 0.75, 1, function()
+							if IsValid(player) then
+								player.teleporting = false;
+								
+								if player:Alive() then
+									Clockwork.player:SetSafePosition(player, destination);
+									player:SetEyeAngles(angles);
+									util.Decal("PentagramBurn", destination, destination + Vector(0, 0, -256));
+									util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));
+									
+									--player:SetCharacterData("nextTeleport", 1200);
+								end
+							end
+						end);
+					else
+						Schema:EasyText(player, "peru", "You cannot use the Hellportal for another "..nextTeleport.." seconds!");
+					end
+				end
+			end;
+		end;
+	end);
+end
+
+if map == "bg_district34" then
+	concommand.Add("cw_HellPortalCave", function(player, cmd, args)
+		if not player.teleporting then
+			local trace = player:GetEyeTrace();
+	
+			if (trace.Entity) then
+				local entity = trace.Entity;
+	
+				if (entity:GetClass() == "cw_hellportal") then
+					local nextTeleport = player:GetCharacterData("nextTeleport", 0);
+					
+					if nextTeleport <= 0 then
+						local origin = player:GetPos();
+						local chosenspot = math.random(1, #Schema.hellPortalTeleports["cave"]);
+						local destination = Schema.hellPortalTeleports["cave"][chosenspot].pos;
+						local angles = Schema.hellPortalTeleports["cave"][chosenspot].ang;
 						
 						ParticleEffect("teleport_fx", origin, Angle(0,0,0), player);
 						sound.Play("misc/summon.wav", origin, 100, 100);

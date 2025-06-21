@@ -21,7 +21,7 @@ elseif map == "rp_district21" then
 	archPos = Vector(5292, -14361, -406); -- church
 	pillarPos = Vector(11376, -2410, -192);
 elseif map == "bg_district34" then
-	archPos = Vector(-8528, -7092, 120);
+	archPos = Vector(-10673, 3072, 173); -- cave
 	pillarPos = Vector(-2467, 9699, 294);
 end
 
@@ -4172,11 +4172,6 @@ local COMMAND = Clockwork.command:New("HellPortalGaze");
 			{
 				Vector(6606.255859, -10780.157227, -1437.645752), -- box start
 				Vector(11185.331055, -14702.863281, 472.348114) -- box end
-			},
-			["bg_district34"] =
-			{
-				Vector(-9435, -8547, -143),
-				Vector(-6585, -5808, 63)
 			}
 		},
 		["Pillars"] = 
@@ -4204,7 +4199,15 @@ local COMMAND = Clockwork.command:New("HellPortalGaze");
 				Vector(8241.556641, -11463.334961, -704.866455), -- box start
 				Vector(1634.260498, -15241.533203, 1665.453247) -- box end
 			}
-		}
+		},
+		["Cave"] = 
+		{
+		["bg_district34"] =
+			{
+				Vector(-8077, -2127, -25),
+				Vector(-10961, -4258, 608)
+			}
+		},
 	}
 
 	function COMMAND:OnRun(player, arguments)
