@@ -393,6 +393,7 @@ Schema.doors = {
 			"balcony_door_1",
 			"yard_blastdoor_1",
 			"yard_blastdoor_2",
+			"cagedoor",
 		},
 		["knights"] = {
 			"pope_reception_shutter",

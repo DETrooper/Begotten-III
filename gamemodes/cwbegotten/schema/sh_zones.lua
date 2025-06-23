@@ -2165,6 +2165,10 @@ local CAVES = zones:New("caves")
 			min = Vector(6887, 6243, 303),
 			max = Vector(1907, 5098, -216),
 			},
+			{
+			min = Vector(4180, 5914, 182),	
+			max = Vector(4706, 6615, -460),
+			},
 		};
 	CAVES:Register()
 
