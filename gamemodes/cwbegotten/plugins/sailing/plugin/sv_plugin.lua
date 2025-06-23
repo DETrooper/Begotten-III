@@ -229,9 +229,9 @@ if !cwSailing.shipLocations then
 			["hell"] = {
 				["longship"] = {
 					{occupied = false, pos = Vector(-2358, -8825, -5218), angles = Angle(0, 0, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(-1654, -9277, -5214), angles = Angle(0, 80, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-1654, -9277, -5214), angles = Angle(0, 90, 0), bodygroup = 1},
 					{occupied = false, pos = Vector(-1401, -8230, -5201), angles = Angle(0, 90, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(-751, -9294, -5214), angles = Angle(0, 95, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(-751, -9294, -5214), angles = Angle(0, 90, 0), bodygroup = 1},
 				},
 				["ironclad"] = {
 					{occupied = false, pos = Vector(-1654, -9360, -5183), angles = Angle(0, 180, 0)},
@@ -264,10 +264,10 @@ if !cwSailing.shipLocations then
 			["wasteland"] = {
 				["longship"] = {
 					{occupied = false, pos = Vector(11143, 8194, 178), angles = Angle(0, 270, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(10982, 6665, 172), angles = Angle(0, 300, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(10057, 10705, 169), angles = Angle(0, 260, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(10883, 9482, 169), angles = Angle(0, 30, 0), bodygroup = 1},
-					{occupied = false, pos = Vector(10469, 2947, 169), angles = Angle(0, 60, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(10982, 6665, 172), angles = Angle(0, 0, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(10057, 10705, 169), angles = Angle(0, 270, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(10883, 9482, 169), angles = Angle(0, 0, 0), bodygroup = 1},
+					{occupied = false, pos = Vector(10469, 2947, 169), angles = Angle(0, 90, 0), bodygroup = 1},
 				},
 				["ironclad"] = {
 					{occupied = false, pos = Vector(11431, 8654, 198), angles = Angle(0, 0, 0)},

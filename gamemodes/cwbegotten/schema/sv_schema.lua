@@ -13,6 +13,12 @@ if map == "rp_district21" then
 		["thrallnight"] = 8,
 	};
 	
+if map == "bg_district34" then
+	Schema.maxNPCs = {
+		["animal"] = 7,
+		["thrall"] = 10,
+	}
+
 	if !Schema.spawnedNPCs then
 		Schema.spawnedNPCs = {
 			["animal"] = {},
