@@ -12,8 +12,15 @@ if map == "rp_district21" then
 		["thrall"] = 4,
 		["thrallnight"] = 8,
 	};
-	
-if map == "bg_district34" then
+
+	if !Schema.spawnedNPCs then
+		Schema.spawnedNPCs = {
+			["animal"] = {},
+			["animalwasteland"] = {},
+			["thrall"] = {},
+		};
+	end
+elseif map == "bg_district34" then
 	Schema.maxNPCs = {
 		["animal"] = 7,
 		["thrall"] = 10,
@@ -24,7 +31,7 @@ if map == "bg_district34" then
 			["animal"] = {},
 			["animalwasteland"] = {},
 			["thrall"] = {},
-		};
+		}
 	end
 else
 	Schema.maxNPCs = {
@@ -318,13 +325,13 @@ elseif map == "rp_district21" then
 elseif map == "bg_district34" then
 	Schema.hellPortalTeleports = {
 		["cave"] = {
-			{pos = Vector(-10103, 3283, 149), ang = Angle(0, 0, 0)},
-			{pos = Vector(-10052, 3149, 148), ang = Angle(0, 0, 0)},
-			{pos = Vector(-10092, 3017, 148), ang = Angle(0, 0, 0)},
-			{pos = Vector(-10143, 2876, 150), ang = Angle(0, 0, 0)},
-			{pos = Vector(-10232, 2722, 161), ang = Angle(0, 0, 0)},
-			{pos = Vector(-10468, 3411, 171), ang = Angle(0, 0, 0)},
-			{pos = Vector(-10509, 2694, 169), ang = Angle(0, 0, 0)},
+			{pos = Vector(-11280, 3220, 175), ang = Angle(0, 0, 0)},
+			{pos = Vector(-11279, 3088, 175), ang = Angle(0, 0, 0)},
+			{pos = Vector(-11273, 2934, 175), ang = Angle(0, 0, 0)},
+			{pos = Vector(-11185, 3220, 175), ang = Angle(0, 0, 0)},
+			{pos = Vector(-11185, 3088, 175), ang = Angle(0, 0, 0)},
+			{pos = Vector(-11185, 2934, 175), ang = Angle(0, 0, 0)},
+			{pos = Vector(-11063, 3072, 175), ang = Angle(0, 0, 0)},
 		},
 		["hell"] = {
 			{pos = Vector(2004, -8992, -4840), ang = Angle(0, 180, 0)},
