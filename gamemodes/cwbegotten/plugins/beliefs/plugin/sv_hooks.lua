@@ -983,7 +983,9 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			if attackerWeapon then
 				if damageInfo:GetInflictor().isJavelin then
 					if damageInfo:GetInflictor():GetClass() == "begotten_javelin_throwing_axe_thrown" or damageInfo:GetInflictor():GetClass() == "begotten_javelin_axehill_thrown" then
-						if attacker:HasBelief("daring_trout") or attacker:HasBelief("fearsome_wolf") then
+						if attacker:HasBelief("daring_trout") then
+							newDamage = newDamage * 1.25;
+						elseif attacker:HasBelief("fearsome_wolf") then
 							newDamage = newDamage * 1.15;
 						end
 					end
