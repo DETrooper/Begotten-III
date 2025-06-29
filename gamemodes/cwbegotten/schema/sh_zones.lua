@@ -2087,7 +2087,7 @@ elseif map == "bg_district34" then
 		WASTELAND.fogStartNight = 256;
 		WASTELAND.fogEnd = 1536;
 		WASTELAND.fogEndNight = 1024;
-		WASTELAND.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
+		WASTELAND.colorModify = {["$pp_colour_brightness"] = -0.01, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.95};
 		WASTELAND.colorModifyNight = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 0.9, ["$pp_colour_colour"] = 0.75};
 	WASTELAND:Register()
 
