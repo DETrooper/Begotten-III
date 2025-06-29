@@ -373,6 +373,19 @@ function COMMAND:OnRun(player, arguments)
 				return;
 			end
 		end
+		if cwCharacterNeeds.bedZones["satanists2"] then
+			if playerPos:WithinAABox(cwCharacterNeeds.bedZones["satanists2"].pos1, cwCharacterNeeds.bedZones["satanists2"].pos2) then
+				player.sleepData = {health = 30, hunger = 5, thirst = 10, rest = -80, sanity = 40};
+				--player:HandleSanity(50);
+				--player:HandleNeed("hunger", 5);
+				--player:HandleNeed("thirst", 10);
+				--player:HandleNeed("sleep", -100);
+				
+				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
+				Schema:EasyText(player, "olivedrab", "You climb into an uncomfortable bed and try to get some rest.");
+				return;
+			end
+		end
 		--elseif faction == "Smog City Pirate" then
 			if cwCharacterNeeds.bedZones["scrapper1"] then
 				if playerPos:WithinAABox(cwCharacterNeeds.bedZones["scrapper1"].pos1, cwCharacterNeeds.bedZones["scrapper1"].pos2) then

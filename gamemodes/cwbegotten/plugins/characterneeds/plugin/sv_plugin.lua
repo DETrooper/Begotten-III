@@ -57,6 +57,7 @@ elseif (game.GetMap() == "bg_district34") then
 		["ministers"] = {pos1 = Vector(-712, -9720, 1212), pos2 = Vector(2191.804932, 13323.184570, 1408)},
 		["ministers2"] = {pos1 = Vector(1579, -9512, 1212), pos2 = Vector(2105, -9360, 1408)}, -- Inquisitor Barracks
 		["satanists"] = {pos1 = Vector(1576, -8591, -3296), pos2 = Vector(1816, -8291, -3104)}, -- Office break room
+		["satanists2"] = {pos1 = Vector(1560, -8358, -3488), pos2 = Vector(1229, -8504, -3312)}, -- Forge break room
 	}
 else
 	cwCharacterNeeds.bedZones = {};
