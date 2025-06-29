@@ -846,6 +846,17 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 				if IsValid(attackerWeapon) then
 					local weaponItemTable = item.GetByWeapon(attackerWeapon);
 					
+					if attackerWeapon.isJavelin and attacker:HasBelief("daring_trout") then
+						if attacker:GetNetVar("ThrustStance") != true then
+							entity:SetNetVar("runningDisabled", true);
+							timer.Create("GroundedSprintTimer_"..tostring(entity:EntIndex()), 8, 1, function()
+								if IsValid(entity) then
+									entity:SetNetVar("runningDisabled", nil);
+								end
+							end);
+						end
+					end
+					
 					if weaponItemTable and weaponItemTable.attributes and table.HasValue(weaponItemTable.attributes, "grounded") then
 						if attacker:IsRunning() then
 							damageInfo:ScaleDamage(0.4);

@@ -321,6 +321,10 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 									armorPiercing = armorPiercing + (armorPiercing * 0.15);
 								end
 								
+								if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("daring_trout") then
+									armorPiercing = armorPiercing + (armorPiercing * 0.10);
+								end
+								
 								if attacker:HasBelief("billman") then
 									if (inflictor.Category and (string.find(inflictor.Category, "Polearm") or string.find(inflictor.Category, "Spear") or string.find(inflictor.Category, "Rapier") or string.find(inflictor.Category, "Scythe"))) or inflictor.isJavelin then
 										armorPiercing = armorPiercing + (armorPiercing * 0.15);
