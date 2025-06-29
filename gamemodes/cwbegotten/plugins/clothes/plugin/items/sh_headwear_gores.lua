@@ -804,3 +804,41 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"gold_ingot", "fine_steel_chunks", "fine_steel_chunks", "leather"}};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Haralder Ridge Helm"
+	ITEM.model = "models/begotten/misc/gore_sturg_helm.mdl"
+	ITEM.iconoverride = "begotten/ui/itemicons/haralder_ridge_helm.png"
+	ITEM.bodyGroup = 1
+	ITEM.bodyGroupVal = 7
+	ITEM.headSuffix = "_preludegore";
+	ITEM.weight = 2
+	ITEM.uniqueID = "haralder_ridge_helm"
+	ITEM.category = "Helms"
+	ITEM.description = "A finely crafted ridge helm cushioned by boiled leather that smells of the sea. It bears the curse of Clan Harald."
+	ITEM.requiredFactions = {"Goreic Warrior"};
+	ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Crast", "Clan Reaver", "Clan Shagalax"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/new/goreridgehelm";
+	ITEM.requiredbeliefs = {"hauberk"};
+	
+	ITEM.conditionScale = 0.8 -- item degrades 1.5x faster with damage related condition loss
+	ITEM.repairCostModifier = 0.5;
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 62
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
+	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
+	ITEM.insulation = 60;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "leather"}};
+ITEM:Register();

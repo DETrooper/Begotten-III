@@ -1808,7 +1808,6 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 1},
 			["belphegor_catalyst"] = {amount = 1},
-			["down_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_clanreaverdagger"] = {amount = 1},
@@ -1818,7 +1817,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 45;
+		RECIPE.experience = 40;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -7465,8 +7464,8 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["gore_champion_ridge_helm"] = {amount = 1},
-			["steel_ingot"] = {amount = 1},
+			["haralder_ridge_helm"] = {amount = 1},
+			["steel_ingot"] = {amount = 2},
 			["pantheistic_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -10738,6 +10737,36 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 150;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+		RECIPE = cwRecipes.recipes:New("haralder_ridge_helm");
+		RECIPE.name = "Haralder Ridge Helm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["fine_steel_ingot"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
+			["leather"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["haralder_ridge_helm"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 60;
 		
 		function RECIPE:OnCraft(player)
 		end;
