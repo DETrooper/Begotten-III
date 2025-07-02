@@ -74,7 +74,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
-	ITEM.name = "Grockling Sacred Stone Maul";
+	ITEM.name = "Gotnarh Sacred Stone Maul"; --changed name from grockling to gotnarh
 	ITEM.model = "models/begotten/weapons/2h_mace3.mdl";
 	ITEM.weight = 7;
 	ITEM.uniqueID = "begotten_2h_great_grocklingsacredstonemaul";
@@ -96,12 +96,12 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register(); 
 
 local ITEM = Clockwork.item:New("weapon_base");
-	ITEM.name = "Grockling Stone Maul";
+	ITEM.name = "Gotnarh Stone Maul"; --changed name from grockling to gotnarh
 	ITEM.model = "models/begotten/weapons/2h_mace2.mdl";
 	ITEM.weight = 6.5;
 	ITEM.uniqueID = "begotten_2h_great_grocklingstonemaul";
 	ITEM.category = "Melee";
-	ITEM.description = "A stacked set of Goreic runestones hammered onto an engraved wooden club. A weapon typically used by the godless Grocklings, for its excellence at equalizing armored foes.";
+	ITEM.description = "A stacked set of Goreic runestones hammered onto an engraved wooden club. A weapon typically used by the godless Gotnarhlings, for its excellence at equalizing armored foes."; -- Changed Grocklings to Gotnarhlings
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/grockling_stone_maul.png"
 	ITEM.meleeWeapon = true;
 	ITEM.isAttachment = true;
@@ -113,7 +113,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.excludedFactions = {"Goreic Warrior"};
-	ITEM.includedSubfactions = {"Clan Grock"};
+	ITEM.includedSubfactions = {"Clan Grock", "Clan Gotnarh"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
@@ -349,7 +349,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
-	ITEM.name = "Grockling Stone Sword";
+	ITEM.name = "Grockling Stone Sword"; -- changed name from Grockling to Gotnarh
 	ITEM.model = "models/begotten/weapons/grocklingsword.mdl";
 	ITEM.weight = 5;
 	ITEM.uniqueID = "begotten_2h_great_grocklingsword";
@@ -366,6 +366,6 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.excludedFactions = {"Goreic Warrior"};
-	ITEM.includedSubfactions = {"Clan Grock"};
+	ITEM.includedSubfactions = {"Clan Grock", "Clan Gotnarh"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
