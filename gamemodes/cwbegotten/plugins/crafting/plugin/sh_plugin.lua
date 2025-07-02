@@ -53,7 +53,7 @@ elseif (map == "bg_district34") then
 		Vector(3935, -8171, 581),
 		Vector(2270, 2148, 981), -- Village
 		Vector(-1613, 3152, -131),
-		Vector(-9798, 14130, 273), -- Scraptown
+		Vector(-8804, 15291, 293), -- Scraptown
 		Vector(-4249, -10501, 10538),
 	}
 	
