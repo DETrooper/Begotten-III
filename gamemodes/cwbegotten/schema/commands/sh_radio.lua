@@ -20,7 +20,7 @@ COMMAND.isChatCommand = true;
 function COMMAND:OnRun(player, arguments)
 	local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 	
-	if subfaction == "Clan Grock" or "Clan Gotnarh" then
+	if subfaction == "Clan Grock" or subfaction == "Clan Gotnarh" then
 		Schema:EasyText(player, "peru", "You cannot use radios as you shun technology!");
 		
 		return;
