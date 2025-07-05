@@ -1027,7 +1027,7 @@ function Schema:PlayerAdjustCharacterScreenInfo(player, character, info)
 
 	info.necropolisData = character.data["necropolisData"];
 	
-	if character.subfaction == "Clan Grock" then
+	if character.subfaction == "Clan Grock" or character.subfaction == "Clan Gotnarh" then
 		info.subfaith = "The Old Ways";
 	end
 end;
@@ -2999,7 +2999,7 @@ function Schema:PlayerCharacterLoaded(player)
 	local faction = player:GetCharacterData("kinisgerOverride") or player:GetFaction();
 	local subfaction = player:GetCharacterData("kinisgerOverrideSubfaction") or player:GetSubfaction();
 	
-	if subfaction == "Clan Grock" then
+	if subfaction == "Clan Grock" or subfaction == "Clan Gotnarh" then
 		player:SetModelScale(1.12, FrameTime());
 		player:SetViewOffset(Vector(0, 0, 72))
 		player:SetViewOffsetDucked(Vector(0, 0, 32))
