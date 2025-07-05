@@ -35,7 +35,7 @@ local DARK = cwBeliefs.beliefTrees:New("dark")
 		[4] = (DARK.size.h - 4) * 0.9,
 	};
 	
-	DARK.lockedSubfactions = {"Clan Grock"};
+	DARK.lockedSubfactions = {"Clan Grock", "Clan Gotnarh"};
 	DARK.requiredFaiths = {"Faith of the Dark"};
 	
 	-- First index is column.
