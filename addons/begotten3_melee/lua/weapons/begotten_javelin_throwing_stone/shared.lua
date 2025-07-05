@@ -120,7 +120,7 @@ function SWEP:FireJavelin()
 		
 		local phys = javelin:GetPhysicsObject()
 		
-		if owner.GetSubfaction and owner:GetSubfaction() == "Clan Grock" then
+		if owner.GetSubfaction and owner:GetSubfaction() == "Clan Grock" or owner:GetSubfaction() == "Clan Gotnarh" then
 			if owner.GetCharmEquipped and owner:GetCharmEquipped("hurlers_talisman") then
 				phys:SetVelocity(owner:GetAimVector() * 2000);
 			else
