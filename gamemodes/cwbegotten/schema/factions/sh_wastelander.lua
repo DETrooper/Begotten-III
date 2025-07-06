@@ -442,15 +442,119 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 	FACTION.imposters = true;
 	FACTION.names = "goreic";
 	FACTION.subfactions = {
-		{name = "Clan Gore", subtitle = "Followers of the Father - Warriors and Hunters", description = "Clan Gore is currently known as the Crown Clan, a title given to the most powerful of all the Clans. Following the Father, Clan Gore was born by bloodshed and conquest. The previous Crown Clan and followers of the Father, Clan Ghorst, had a war chief who made the mistake of fathering a bastard child and leaving it to the wolves to be devoured. The boy was instead raised by these wolves and took on the name Reaper King Kalkaslash. With an army of skinwalkers and werewolves, Kalkaslash butchered his way into his father's long hall, and shred him into a bloody mess with his claws. From then on he seized his throne, and forced the other Clans to kneel with his newly gained army of warrior men. For the next hundred years to follow, Clan Gore would capture women by the thousands and breed new warriors, for they would birth thousands more ruthless killers to continue the process. The Father is harsh and unforgiving, but with his strength empires will fall.", rivalry = "Clan Grock", attributes = {{Color(0, 225, 0), "(+) Starts with +40 maximum health"}, {Color(0, 225, 0), "(+) Skilled Hunters: Deal 50% more damage to animals"}, {Color(0, 225, 0), "(+) Start at Sacrament Level 8"}}}, 
-		{name = "Clan Harald", subtitle = "Followers of the Old Son - Sailors and Explorers", description = "Clan Harald is the second oldest Clan belonging to the Goreic peoples, the oldest being Clan Grock. The salt of the sea runs through the blood of these men, and their home is whatever lies beyond. For the past several hundred years Clan Harald has had no true chieftain, ever since it was cursed by the trickster god of The Sister. Any man who calls themselves the Chieftain of the sea, and therefore head of Clan Harald, shall die by drowning. While there is never a head of Clan Harald, there always exists a council of the most experienced (and stubborn) sailors who oversee business. In these current dark times, the Haralders seek to end their curse and become the new Crown Clan, as they feel they were always meant to be. The Haralder sailors will always be at odds with the followers of The Sister, horrible tricksters who create storms that turn their longships into the burning sea. Unknown to all the other Clans, the followers of the Old Son see their deity as a massive beast who lives in the deepest darkest depths of the ocean, and soon they will wake it and watch their entire world submerge underneath the waters, while they thrive above with their mighty sails.", rivalry = "Clan Reaver", attributes = {{Color(0, 225, 0), "(+) Starts with +35 maximum health"}, {Color(0, 225, 0), "(+) Access to greater Longships"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 6"}}}, 
-		{name = "Clan Reaver", startingRank = 7, subtitle = "Followers of the Sister - Slavers and Merchants", description = "The most wealthy of all Clans, the Reavers are the upholders of Goreic society and economy, but are often looked down on by the others. Seen as weak and as tricksters, they are never trusted by the other Clans, and for good reason. The Goreic people are cursed to live in infertile lands, and for that reason they must survive by the raiding of weaker peoples. Yet the Reavers follow The Sister, and they see it as their right to cause misery to others, even when they have no practical reason for it. Their seat is that of the Hall of Tears, a terrifying place somewhere hidden in the woods, where people are suspended on the brink of death for as long as they provide amusement. Instead of meeting their enemies on an open field like their brutish brothers, the Reavers will cast curses upon their foes or even puppeteer entire factions to do their bidding. Some in the South presume that the followers of the Sister may actually be doing the work of the Dark Prince, though the Reavers might even suggest that both gods are one and the same.", rivalry = "Clan Harald", attributes = {{Color(0, 225, 0), "(+) Starts with +25 maximum health"}, {Color(0, 225, 0), "(+) Gain a passive salary of Coins every hour"}, {Color(0, 225, 0), "(+) Gain double the coin from selling slaves"}, {Color(0, 225, 0), "(+) Can choose the Faith of the Dark as a faith"}, {Color(0, 225, 0), "(+) The 'Sorcerer' and 'Survivalist' beliefs from Faith of the Dark grant +25 maximum health"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 6"}}}, 
-		{name = "Clan Shagalax", subtitle = "Followers of the Young Son - Builders and Blacksmiths", description = "It is said that a Shagalaxian is born with steel skin and molten iron flowing in their blood. Without their metal, the bloodthirsty Gores would be throwing sticks and stones instead of their mighty steel. There was a time long ago when the Shagalaxians were considered the mightiest of all Clans and all tribes united under their banner; when their steam belching tanks threw flames across valleys, turning armies and forests into ash. Pathetic arrows plinked off many plates of steel as their legions of tanks rolled over fields of terrified tribes and towns of the Glaze alike. It was only when the weaklings of Clan Crast foresaw Clan Shagalax's dealings with a mechanical Titan-God that their title of Crown Clan was in need of defiance. So it was that when the Undergod entered this world, the Shagalaxians took advantage and began their invasion of the ever-hated Empire of Light with the combined might of the Gore tribes. However, the Shagalaxians soon learned that the Undergod had no allies, and in their greatest moment of weakness their remnants were conquered by the followers of The Father at the behest of Clan Crast. It was then deemed that only The Father and by proxy Clan Gore may lord over the other Clans. Those Shagalaxians cut off from their brethren during the Undergod's invasion now comprise many of the scrapper warbands that plague the wasteland, but a small number of those still connected to the Great Tree yet remain among the great clans. Many Shagalaxians claim they are loyal to The Young Son, a deity of charity and ingenuity, though in secret it is said that there are those who follow a mechanical titan and wait patiently for the time when their legions of tanks are rebuilt so that they may turn this world into ash once more.", rivalry = "Clan Crast", attributes = {{Color(0, 225, 0), "(+) Starts with +30 maximum health"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8, with points placed in \'Ingenuity\'"}, {Color(0, 225, 0), "(+) Can craft and use firearms and crossbows"}, {Color(0, 225, 0), "(+) Has +5kg extra weight capacity"}}}, 
-		{name = "Clan Crast", startingRank = 3, subtitle = "Followers of the Mother - Shamans and Mystics", description = "While all followers of The Family respect The Mother's role and contribution to the rough but fair cycle of nature and death, those actually born under her are looked down upon as weak and pathetic. In those days the followers of The Mother would be thrown off high cliffs to splatter on the rocks below, as they would never grow to be great warriors like the followers of The Father would. Then it was decided by a more benevolent King of the Bark Throne that one in every tenth child born under the sign of The Mother would be permitted to live. As always these lucky children grew up to be queer and disfigured little things, but they did have gifts that made them useful. Some became bards, entertainers: a juggling dwarf or a two-headed giant. Others had The Vision, a way to see into the dark void of fate itself. With a new generation of mystic beings, a new Clan was formed, the first ever to follow The Mother. To this day Clan Crast thrives without bloodshed, as their great blinded seers look into the darkness to warn the others of their perils ahead. When a seer foresaw the killing of the Great Tree at the hands of the Holy Hierarchy's fire-breathing dragons, and no one believed him, the Gores learned to never mistrust the warnings of their Crasters again. The current line of Clan Crast are most in touch with the Blade Druids of old, and seek to use their ancient weapons forged by the Earth itself. A great ritual awaits Clan Crast, to restore their Great Tree, and the other Clans stand by to see this through.", rivalry = "Clan Shagalax", attributes = {{Color(0, 225, 0), "(+) Starts with +25 maximum health"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 12"}, {Color(0, 225, 0), "(+) Can unlock the ability to Ravenspeak"}, {Color(0, 225, 0), "(+) Can craft and use crossbows"}, {Color(225, 0, 0), "(-) Start with -4 Trait Points"}}}, 
-		{name = "Clan Grock", subtitle = "Followers of the Old Ways - Nomads", description = "The first Gore tribe to come settle near the Great Tree. The oldest Clan of all Gores, and those who refused to follow the gods of The Family. While many followers of the Old Ways acknowledge the existence of The Family, they choose to instead go their own way and entrust in themselves to see their own path in life. All Gores believe they are fated to die and whatever they do cannot change that, and so those of the Old Ways agree that they will continue to struggle to survive until that day comes. The average Grock is much taller and stronger than their brothers, with a thick coat of black hair covering their unwashed bodies, giving them a bestial look. Clan Grock will never hold any power as their beliefs encourage a nomadic lifestyle, one free of society, laws and the reliance of other men. The only time they will ever be called in by the others is if their Great Tree is under attack, and then and only then will they charge forth to defend their home lands. Clan Grock is considered a joke to the other Clans, men who would rather lay with beasts than a good woman. The worst of them are Clan Gore, the arrogant Kings of Old who hosted 'Great Hunts' to slaughter as many Grocks as possible for glory and bragging rights. Still, when their great gods fail them, those of the Old Ways will always endure.", rivalry = "Clan Gore", attributes = {{Color(0, 225, 0), "(+) Starts with +175 maximum health"}, {Color(0, 225, 0), "(+) Savage: Warcries instantly restore 25 stamina"}, {Color(0, 225, 0), "(+) Primitive: Throwing stones deal 50% more stability damage. Unlocks the ability to equip heavy runestone weapons"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(0, 225, 0), "(+) Has +10kg extra weight capacity"}, {Color(225, 0, 0), "(-) Cannot wear Medium or Heavy armor"}, {Color(225, 0, 0), "(-) The Subfaith Tree is locked and cannot be progressed"}}}
-		{name = "Clan Gotnarh", subtitle = "Followers of the Old Ways - Towering Savages", description = "PENDING", rivalry = "Old Clan Ghorst", attributes = {{Color(0, 225, 0), "(+) Starts with +275 maximum health"}, {Color(0, 225, 0), "(+) Savage: Warcries instantly restore 25 stamina"}, {Color(0, 225, 0), "(+) Primitive: Throwing stones deal 50% more stability damage. Unlocks the ability to equip heavy runestone weapons"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 10"}, {Color(0, 225, 0), "(+) Has +10kg extra weight capacity"}, {Color(0, 225, 0), "(+) Gatherers: Able to Harvest unique, and default resource nodes by hand."}, {Color(225, 0, 0), "(-) Cannot wear Medium or Heavy armor"}, {Color(225, 0, 0), "(-) The Subfaith tree is locked, and cannot be progressed"}, {Color(225, 0, 0), "(-) Towering: The Litheness tree is locked, and cannot be progressed"}, {Color(225, 0, 0), "(-) Movement speed decreased by 20%"}, {Color(225, 0, 0), "(-) Insatiable: Starts with the Gluttony trait enabled"}}}
-		{name = "Clan Ghorst", subtitle = "Followers of the Father, the Old Son, and the Mother - Defamed Guardians, and Irregulars", description = "PENDING", rivalry = "Old Clan Gotnarh", attributes = {{Color(0, 225, 0), "(+) Starts with +30 maximum health"}, {Color(0, 225, 0), ”(+) Conquerors: Access to Greater Longships"}, {Color(0, 225, 0), "(+) Arbalests: Allows use of Crossbows."}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(0, 225, 0), "(+) Trappers: 25% Animal damage."}, {Color(225, 0, 0), "(-) Bygone Favor: The Fortune tree is locked, and cannot be progressed"}}}
-	};
+		{
+			name = "Clan Gore",
+			subtitle = "Followers of the Father - Warriors and Hunters",
+			description = [[Clan Gore is currently known as the Crown Clan, a title given to the most powerful of all the Clans. Following the Father, Clan Gore was born by bloodshed and conquest. The previous Crown Clan and followers of the Father, Clan Ghorst, had a war chief who made the mistake of fathering a bastard child and leaving it to the wolves to be devoured. The boy was instead raised by these wolves and took on the name Reaper King Kalkaslash. With an army of skinwalkers and werewolves, Kalkaslash butchered his way into his father's long hall and shredded him into a bloody mess with his claws. From then on he seized his throne and forced the other Clans to kneel with his newly gained army of warrior men. For the next hundred years, Clan Gore would capture women by the thousands and breed new warriors to continue the cycle. The Father is harsh and unforgiving, but with his strength, empires will fall.]],
+			rivalry = "Clan Grock",
+			attributes = {
+				{Color(0, 225, 0), "(+) Starts with +40 maximum health"},
+				{Color(0, 225, 0), "(+) Skilled Hunters: Deal 50% more damage to animals"},
+				{Color(0, 225, 0), "(+) Start at Sacrament Level 8"}
+			}
+		},
+		{
+			name = "Clan Harald",
+			subtitle = "Followers of the Old Son - Sailors and Explorers",
+			description = [[Clan Harald is the second oldest Clan belonging to the Goreic peoples, the oldest being Clan Grock. The salt of the sea runs through the blood of these men, and their home is whatever lies beyond. For the past several hundred years, Clan Harald has had no true chieftain, ever since it was cursed by the trickster god of The Sister. Any man who calls himself the Chieftain of the sea, and therefore head of Clan Harald, shall die by drowning. Instead, a council of the most experienced (and stubborn) sailors oversees their business. In these current dark times, the Haralders seek to end their curse and become the new Crown Clan. Unknown to the other Clans, the followers of the Old Son see their deity as a massive beast who lives in the deepest, darkest depths of the ocean. They plan to awaken it and watch their world submerge, while they thrive above with mighty sails.]],
+			rivalry = "Clan Reaver",
+			attributes = {
+				{Color(0, 225, 0), "(+) Starts with +35 maximum health"},
+				{Color(0, 225, 0), "(+) Access to greater Longships"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 6"}
+			}
+		},
+		{
+			name = "Clan Reaver",
+			startingRank = 7,
+			subtitle = "Followers of the Sister - Slavers and Merchants",
+			description = [[The most wealthy of all Clans, the Reavers uphold Goreic society and economy but are looked down upon by the others. Seen as weak and as tricksters, they are never trusted, and for good reason. The Goreic people are cursed to live in infertile lands, and thus survive through raiding. The Reavers follow The Sister and take joy in causing misery, even without reason. Their seat is the Hall of Tears — a terrifying place where people are suspended on the brink of death for amusement. They do not fight honorably but use curses and manipulation. Some believe the Sister and the Dark Prince may be the same deity.]],
+			rivalry = "Clan Harald",
+			attributes = {
+				{Color(0, 225, 0), "(+) Starts with +25 maximum health"},
+				{Color(0, 225, 0), "(+) Passive salary of Coins every hour"},
+				{Color(0, 225, 0), "(+) Double Coin from selling slaves"},
+				{Color(0, 225, 0), "(+) Can choose the Faith of the Dark"},
+				{Color(0, 225, 0), "(+) Sorcerer and Survivalist beliefs from Faith of the Dark grant +25 max health"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 6"}
+			}
+		},
+		{
+			name = "Clan Shagalax",
+			subtitle = "Followers of the Young Son - Builders and Blacksmiths",
+			description = [[A Shagalaxian is said to be born with steel skin and molten iron in their veins. Once the mightiest of Clans, their steam-belching tanks burned forests and conquered armies. Their downfall came after allying with a mechanical Titan-God during the Undergod’s invasion, only to be betrayed and destroyed. Some remain loyal to the Young Son, a deity of charity and ingenuity — but others still dream of the day their tanks return to turn the world to ash.]],
+			rivalry = "Clan Crast",
+			attributes = {
+				{Color(0, 225, 0), "(+) Starts with +30 maximum health"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 8 with points in 'Ingenuity'"},
+				{Color(0, 225, 0), "(+) Can craft and use firearms and crossbows"},
+				{Color(0, 225, 0), "(+) +5kg extra weight capacity"}
+			}
+		},
+		{
+			name = "Clan Crast",
+			startingRank = 3,
+			subtitle = "Followers of the Mother - Shamans and Mystics",
+			description = [[Once reviled as weak, followers of the Mother were allowed to live only by royal decree. Some became mystics with the Vision — a power to see into fate. Clan Crast now warns others of impending doom, having accurately predicted the fall of the Great Tree. They commune with the Earth and wield ancient weapons in hopes of restoring what was lost.]],
+			rivalry = "Clan Shagalax",
+			attributes = {
+				{Color(0, 225, 0), "(+) Starts with +25 maximum health"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 12"},
+				{Color(0, 225, 0), "(+) Can unlock Ravenspeak"},
+				{Color(0, 225, 0), "(+) Can craft and use crossbows"},
+				{Color(225, 0, 0), "(-) Start with -4 Trait Points"}
+			}
+		},
+		{
+			name = "Clan Grock",
+			subtitle = "Followers of the Old Ways - Nomads",
+			description = [[The oldest Gore tribe, Grocks follow no gods and trust only in their survival. Bestial and wild, they are mocked by other Clans, especially Clan Gore. Still, when their Great Tree is threatened, even the most cynical Gore will call upon the Grocks for defense. They do not rely on armor or structured society but endure regardless.]],
+			rivalry = "Clan Gore",
+			attributes = {
+				{Color(0, 225, 0), "(+) Starts with +175 maximum health"},
+				{Color(0, 225, 0), "(+) Warcries instantly restore 25 stamina"},
+				{Color(0, 225, 0), "(+) Throwing stones deal 50% more stability damage; unlocks heavy runestone weapons"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 8"},
+				{Color(0, 225, 0), "(+) +10kg extra weight capacity"},
+				{Color(225, 0, 0), "(-) Cannot wear Medium or Heavy armor"},
+				{Color(225, 0, 0), "(-) Subfaith Tree is locked and cannot be progressed"}
+			}
+		},
+		{
+			name = "Clan Gotnarh",
+			subtitle = "Followers of the Old Ways - Towering Savages",
+			description = "PENDING",
+			rivalry = "Old Clan Ghorst",
+			attributes = {
+				{Color(0, 225, 0), "(+) Starts with +275 maximum health"},
+				{Color(0, 225, 0), "(+) Warcries instantly restore 25 stamina"},
+				{Color(0, 225, 0), "(+) Throwing stones deal 50% more stability damage; unlocks heavy runestone weapons"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 10"},
+				{Color(0, 225, 0), "(+) +10kg extra weight capacity"},
+				{Color(0, 225, 0), "(+) Able to harvest unique and default resource nodes by hand"},
+				{Color(225, 0, 0), "(-) Cannot wear Medium or Heavy armor"},
+				{Color(225, 0, 0), "(-) Subfaith Tree is locked"},
+				{Color(225, 0, 0), "(-) Litheness Tree is locked"},
+				{Color(225, 0, 0), "(-) Movement speed decreased by 20%"},
+				{Color(225, 0, 0), "(-) Starts with the Gluttony trait enabled"}
+			}
+		},
+		{
+			name = "Clan Ghorst",
+			subtitle = "Followers of the Father, the Old Son, and the Mother - Defamed Guardians and Irregulars",
+			description = "PENDING",
+			rivalry = "Old Clan Gotnarh",
+			attributes = {
+				{Color(0, 225, 0), "(+) Starts with +30 maximum health"},
+				{Color(0, 225, 0), "(+) Conquerors: Access to Greater Longships"},
+				{Color(0, 225, 0), "(+) Arbalests: Allows use of Crossbows"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 8"},
+				{Color(0, 225, 0), "(+) Trappers: 25% Animal damage"},
+				{Color(225, 0, 0), "(-) Bygone Favor: The Fortune tree is locked, and cannot be progressed"}
+			}
+		}
+	}
+
 	FACTION.models = {
 		male = {
 			clothes = "models/begotten/goreicwarfighters/goretribal_male.mdl",
