@@ -327,7 +327,7 @@ ITEM.weightclass = "Light";
 ITEM.description = "An original set of Blade Druid Robes somehow well kept over centuries. It is permanently attached to a Dread Minotaur Helm and is highly protected by the Maternal Aura. It appears that bullet projectiles are completely ineffective against this armor, as the aura protects from such cowardly means.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.requiredFactions = {"Goreic Warrior"};
-ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver", "Clan Gotnarh"};
+ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver", "Clan Gotnarh", "Clan Ghorst"};
 ITEM.overlay = "begotten/zomboverlay/new/goreminotaur";
 
 ITEM.effectiveLimbs = {
