@@ -3297,7 +3297,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		if string.find(entity:GetClass(), "npc_drg_animals_") then
 			local attacker = damageInfo:GetAttacker();
 			
-			if attacker:IsPlayer() 
+			if attacker:IsPlayer() then
 				if attacker:GetSubfaction() == "Clan Gore" then
 					damageInfo:ScaleDamage(1.5);
 				elseif attacker:GetSubfaction() == "Clan Ghorst" then
