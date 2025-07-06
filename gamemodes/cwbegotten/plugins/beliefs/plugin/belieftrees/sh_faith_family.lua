@@ -30,7 +30,7 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 		[4] = (FAMILY.size.h - 4) * 0.9,
 	};
 	
-	FAMILY.lockedSubfactions = {"Clan Grock"};
+	FAMILY.lockedSubfactions = {"Clan Grock", "Clan Ghorst"};
 	FAMILY.requiredFaiths = {"Faith of the Family"};
 	
 	-- First index is column.
@@ -148,7 +148,7 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 				subfaith = "Faith of the Young Son",
 				description = "Selects the 'Faith of the Young Son' as your subfaith. Unlocks the ability to pray. Unlocks the ability to warcry. Increased faith gain from crafting.",
 				quote = "The Young Son is the deity of innovation, the source of all metal and fire, and the defiler of natural law. Those who follow the Young Son are seen as stoic, stubborn men who keep to themselves. They are also known to have molten iron in their blood, which tempers their steel as they forge mighty weapons. The Father, in his constant disapproval of his youngest offspring, places the Young Son on a path towards familial turmoil in an effort to prove the strength of his ingenuity. He beckons his human followers - whom he has shown much appreciation for in spite of the other deities - to aid him on his path to kill the Father and complete the prophecy of ruination and rebirth.",
-				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald"},
+				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald", "Clan Ghorst"},
 				row = 1,
 			},
 			["taste_of_iron"] = {
@@ -156,7 +156,7 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 				subfaith = "Faith of the Young Son",
 				description = "All crafted items will be in perfect condition, regardless of the condition of component parts. Unlocks Tier I Familial Rituals. Increases burn damage resistance by 50%. Also negates all damage from environmental fires.",
 				quote = "\"You cannot burn that which is boiling.\"",
-				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald"},
+				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald", "Clan Ghorst"},
 				requirements = {"young_son"},
 				row = 2,
 			},
@@ -165,7 +165,7 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 				subfaith = "Faith of the Young Son",
 				description = "Increases maximum HP by 25 points. Removes weapon damage penalty from using shields entirely. Increases stamina resistance of all shields by 10 points. Unlocks Tier II Familial Rituals.",
 				quote = "\"The Shagalaxians believe that the only thing that separates man from beast is the metal in their hands. When a man tosses aside their iron, they are little more than game to be hunted.\"",
-				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald"},
+				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald", "Clan Ghorst"},
 				requirements = {"young_son", "taste_of_iron"},
 				row = 3,
 			},
@@ -175,7 +175,7 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 				description = "Unlocks the ability to smelt Shagalaxian steel (if Master Blacksmith is unlocked). Increases maximum stability by 25 points. Decreases chance of injury by 20%. Decreases fatigue gain by 50%.",
 				quote = "\"I will not rest until the sky is darkened in grey fog: when our engines are built, when our steel titans groan, when all is crushed under our rolling wheels. A new god! Tempered in hellfire and quenched in blood! Shag-a-lax! Shag-a-lax!\"",
 				iconOverride = "begotten/ui/belieficons/bestial.png",
-				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald"},
+				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Reaver", "Clan Harald", "Clan Ghorst"},
 				requirements = {"young_son", "taste_of_iron", "shieldwall"},
 				row = 4,
 			},
@@ -186,7 +186,7 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 				subfaith = "Faith of the Sister",
 				description = "Selects the 'Faith of the Sister' as your subfaith. Unlocks the ability to pray. Unlocks the ability to warcry. Gain increased faith gain from damaging, killing, and selling into slavery characters who have a lower faith level than you.",
 				quote = "The Sister is the daughter of ambition, the trickster goddess of cunning and schemes. Her followers are hateful and malcontent, always seeking to usurp power wherever possible. Clan Reaver, the chosen Clan of the Sister, is said to have an impenetrable fortress deep in the Goreic Kingdoms where men are tortured and flayed to empower their goddess. The other Clans see Her followers as an ill omen, their coming being the final ruination of the world and the destruction of the Family as a whole. Many suspect that the Sister is not actually a member of the Family but a twisted proxy idol of the Dark Prince. It is unlikely that their assumptions are incorrect.",
-				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Shagalax", "Clan Harald"},
+				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Shagalax", "Clan Harald", "Clan Ghorst"},
 				row = 1,
 			},
 			["witch_druid"] = {
@@ -194,7 +194,7 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 				subfaith = "Faith of the Sister",
 				description = "Unlocks the ability to dual-wield one-handed weapons. Unlocks the ability to equip claws. Unlocks Tier I Faith of the Family and Faith of the Dark rituals.",
 				quote = "\"Beware the wicker man.\"",
-				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Shagalax", "Clan Harald"},
+				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Shagalax", "Clan Harald", "Clan Ghorst"},
 				requirements = {"sister"},
 				row = 2,
 			},
@@ -203,7 +203,7 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 				subfaith = "Faith of the Sister",
 				description = "Increases maximum health by 25 points. Increases protection value of all armor by 15%. Unlocks Tier II Faith of the Family and Faith of the Dark rituals, as well as unique Sister rituals.",
 				quote = "\"Under their black iron plates they are cushioned with the hides of flayed men. If we are to kill these brutes, you must thrust deep!\"",
-				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Shagalax", "Clan Harald"},
+				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Shagalax", "Clan Harald", "Clan Ghorst"},
 				requirements = {"sister", "witch_druid"},
 				row = 3,
 			},
@@ -212,7 +212,7 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 				subfaith = "Faith of the Sister",
 				description = "Upgrades the 'Warcry' ability: restores 70% of all HP lost within the last 2 seconds. If someone deals 10 or more points of damage to you in a single blow, they will be highlighted in red and receive 25% more damage from you for 40 seconds. Also unlocks the ability to smelt Hellforged Steel (only if 'Master Blacksmith' is also unlocked).",
 				quote = "\"You will scream, and then you will have no tongue. You will gurgle and then choke. From a tree you will be hung, and your flesh will be made into a cloak.\"",
-				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Shagalax", "Clan Harald"},
+				lockedSubfactions = {"Clan Gore", "Clan Crast", "Clan Shagalax", "Clan Harald", "Clan Ghorst"},
 				requirements = {"sister", "witch_druid", "shedskin"},
 				row = 4,
 			},
