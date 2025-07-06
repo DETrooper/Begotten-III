@@ -1979,7 +1979,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 			level = level + 5;
 		end
 	elseif faction == "Goreic Warrior" then
-		if subfaction == "Clan Gore" or subfaction == "Clan Shagalax" then
+		if subfaction == "Clan Gore" or subfaction == "Clan Shagalax" or subfaction == "Clan Ghorst" then
 			level = level + 7;
 			
 			if subfaction == "Clan Shagalax" then
