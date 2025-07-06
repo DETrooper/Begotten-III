@@ -2999,8 +2999,12 @@ function Schema:PlayerCharacterLoaded(player)
 	local faction = player:GetCharacterData("kinisgerOverride") or player:GetFaction();
 	local subfaction = player:GetCharacterData("kinisgerOverrideSubfaction") or player:GetSubfaction();
 	
-	if subfaction == "Clan Grock" or subfaction == "Clan Gotnarh" then
+	if subfaction == "Clan Grock" then
 		player:SetModelScale(1.12, FrameTime());
+		player:SetViewOffset(Vector(0, 0, 72))
+		player:SetViewOffsetDucked(Vector(0, 0, 32))
+	elseif subfaction == "Clan Gotnarh" then
+		player:SetModelScale(1.25, FrameTime());
 		player:SetViewOffset(Vector(0, 0, 72))
 		player:SetViewOffsetDucked(Vector(0, 0, 32))
 	else
