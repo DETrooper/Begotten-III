@@ -1748,7 +1748,7 @@ function playerMeta:GetMaxHealth(health)
 	end
 	
 	if factionName == "Goreic Warrior" then
-		if self:HasBelief("sorcerer") or self:HasBelief("survivalist") then
+		if self:HasBelief("survivalist") then
 			maxHealth = maxHealth + 25;
 		end
 	end

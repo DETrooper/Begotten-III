@@ -33,12 +33,12 @@ function cwOxygen:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 		local change = 0
 		
 		if (waterLevel >= 3) then
-			if cwBeliefs and player.HasBelief and player:HasBelief("the_black_sea") then
-				decayTime = 0.5
-				change = -1
-			elseif plyTab.drownedKingActive then
+			if plyTab.drownedKingActive then
 				decayTime = 0.5
 				change = 0;
+			elseif cwBeliefs and player.HasBelief and player:HasBelief("the_black_sea") then
+				decayTime = 0.5
+				change = -1
 			else
 				decayTime = 0.3
 				change = -2
