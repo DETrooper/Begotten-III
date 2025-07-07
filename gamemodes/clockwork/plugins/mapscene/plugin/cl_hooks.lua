@@ -96,15 +96,7 @@ if map == "rp_begotten3" then
 			camVector = Vector(-7390, -10185, -6996),
 			camAngles = Angle(0, -90, 0),
 		},
-		-- ["Clan Gore"] = {
-		-- 	bannerAngles = Angle(0, 0, 0),
-		-- 	bannerVector = Vector(-4640.78125, -11843.53125, 11978.96875),
-		-- 	bannerModel = "models/begotten/misc/banner_b.mdl",
-		-- 	bannerSkin = 0,
-		-- 	camVector = Vector(-4720, -11900, 12044.962891),
-		-- 	camAngles = Angle(-0.87, 1.681, 0),
-		-- },
-		["Clan Ghorst"] = {
+		["Clan Gore"] = {
 			bannerAngles = Angle(0, 0, 0),
 			bannerVector = Vector(-4640.78125, -11843.53125, 11978.96875),
 			bannerModel = "models/begotten/misc/banner_b.mdl",
@@ -144,19 +136,27 @@ if map == "rp_begotten3" then
 			camVector = Vector(-4720, -11900, 12044.962891),
 			camAngles = Angle(-0.87, 1.681, 0),
 		},
-		-- ["Clan Grock"] = {
-		-- 	bannerAngles = Angle(0, 0, 0),
-		-- 	bannerVector = Vector(-4640.78125, -11843.53125, 11978.96875),
-		-- 	bannerModel = "models/begotten/misc/banner_b.mdl",
-		-- 	bannerSkin = 5,
-		-- 	camVector = Vector(-4720, -11900, 12044.962891),
-		-- 	camAngles = Angle(-0.87, 1.681, 0),
-		-- },
-		["Clan Gotnarh"] = {
+		["Clan Grock"] = {
 			bannerAngles = Angle(0, 0, 0),
 			bannerVector = Vector(-4640.78125, -11843.53125, 11978.96875),
 			bannerModel = "models/begotten/misc/banner_b.mdl",
 			bannerSkin = 5,
+			camVector = Vector(-4720, -11900, 12044.962891),
+			camAngles = Angle(-0.87, 1.681, 0),
+		},
+		["Clan Gotnarh"] = {
+			bannerAngles = Angle(0, 0, 0),
+			bannerVector = Vector(-4640.78125, -11843.53125, 11978.96875),
+			bannerModel = "models/begotten/misc/banner_b.mdl",
+			bannerSkin = 6,
+			camVector = Vector(-4720, -11900, 12044.962891),
+			camAngles = Angle(-0.87, 1.681, 0),
+		},
+		["Clan Ghorst"] = {
+			bannerAngles = Angle(0, 0, 0),
+			bannerVector = Vector(-4640.78125, -11843.53125, 11978.96875),
+			bannerModel = "models/begotten/misc/banner_b.mdl",
+			bannerSkin = 6,
 			camVector = Vector(-4720, -11900, 12044.962891),
 			camAngles = Angle(-0.87, 1.681, 0),
 		},
