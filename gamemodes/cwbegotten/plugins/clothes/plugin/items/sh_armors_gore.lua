@@ -1209,7 +1209,7 @@ ITEM.walkSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "Gotnarh Godless Garb"; -- changed name from Grockling to Gotnarh
+ITEM.name = "Grockling Godless Garb";
 ITEM.model = "models/begotten/headgroup_props/groktribalarmor.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/groktribalarmor.png"
 ITEM.category = "Armor"
@@ -1270,7 +1270,7 @@ ITEM.walkSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "Grockling Iconoclast Garb"; --changed name grockling to gotnarh
+ITEM.name = "Grockling Iconoclast Garb";
 ITEM.model = "models/begotten/headgroup_props/grokcrastarmor.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/grokcrastarmor.png"
 ITEM.category = "Armor"
@@ -1282,7 +1282,7 @@ ITEM.protection = 30;
 ITEM.weight = 1.25;
 ITEM.weightclass = "Light";
 ITEM.type = "leather";
-ITEM.description = "The Grockling Iconoclasts are fanatics of a different breed. They stand to mock those of Clan Crast in particular by wearing ancient and forbidden effigies. A Gotnarh Iconoclast is a truly terrifying sight, for they herald the coming of many more Gotnarhs who follow their leader into oblivion.";
+ITEM.description = "The Grockling Iconoclasts are fanatics of a different breed. They stand to mock those of Clan Crast in particular by wearing ancient and forbidden effigies. A Grockling Iconoclast is a truly terrifying sight, for they herald the coming of many more Grocklings who follow their leader into oblivion.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.attributes = {"godless", "iconoclast", "fear"};
 ITEM.requiredFactions = {"Goreic Warrior"};
