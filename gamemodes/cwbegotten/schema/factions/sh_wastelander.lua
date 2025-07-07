@@ -526,7 +526,7 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 			description = "PENDING",
 			rivalry = "Old Clan Ghorst",
 			attributes = {
-				{Color(0, 225, 0), "(+) Starts with +275 maximum health"},
+				{Color(0, 225, 0), "(+) Starts with +250 maximum health"},
 				{Color(0, 225, 0), "(+) Warcries instantly restore 25 stamina"},
 				{Color(0, 225, 0), "(+) Throwing stones deal 50% more stability damage; unlocks heavy runestone weapons"},
 				{Color(0, 225, 0), "(+) Starts at Sacrament Level 10"},
