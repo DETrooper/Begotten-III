@@ -290,7 +290,7 @@ ITEM.walkSound = {
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
-ITEM.name = "Grockling Rattleshirt Armor"; -- changed name from grockling to Gotnarh
+ITEM.name = "Grockling Rattleshirt Armor";
 ITEM.model = "models/begotten/headgroup_props/rattleshirtarmor.mdl"
 ITEM.iconoverride = "materials/begotten/ui/itemicons/grockling_rattleshirt_armor.png"
 ITEM.category = "Armor"
