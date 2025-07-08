@@ -1477,6 +1477,7 @@ Clockwork.animation:AddArmoredFursArms("models/begotten/wanderers/armoredfurs");
 Clockwork.animation:AddQuebecoisChainmail("models/begotten/prelude_gores/chaingore3_male.mdl");
 Clockwork.animation:AddEastmanArmor("models/begotten/prelude_gores/braveset_male.mdl");
 Clockwork.animation:AddHaraldrEast("models/begotten/prelude_gores/chaingore4_male.mdl");
+Clockwork.animation:AddHaraldrEast("models/begotten/prelude_gores/haraldnew");
 Clockwork.animation:AddShagalaxScale("models/begotten/prelude_gores/scalegore_male.mdl");
 Clockwork.animation:AddReaverChain("models/begotten/prelude_gores/chaingore2_male.mdl");
 Clockwork.animation:AddFrenziedChain("models/begotten/prelude_gores/battaniansash_male.mdl");

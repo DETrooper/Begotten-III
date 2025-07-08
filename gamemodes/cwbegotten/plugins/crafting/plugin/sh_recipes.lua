@@ -2493,8 +2493,8 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredSubfaiths = {"Voltism"};
 		RECIPE.requirements = {
 			["begotten_2h_great_sledge"] = {amount = 1},
-			["scrap"] = {amount = 1},
-			["tech"] = {amount = 3},
+			["tech"] = {amount = 1},
+			["scrap"] = {amount = 3},
 		};
 		RECIPE.result = {
 			["begotten_2h_great_voltsledge"] = {amount = 1},
@@ -2504,7 +2504,35 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 40;
+		RECIPE.experience = 55;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("volthammer_upgrade_voltsledge");
+		RECIPE.name = "(Upgrade) Volthammer";
+		RECIPE.requiredBeliefs = {"artisan", "jacobs_ladder"};
+		RECIPE.requiredSubfaiths = {"Voltism"};
+		RECIPE.requirements = {
+			["begotten_2h_great_voltsledge"] = {amount = 1},
+			["tech"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["begotten_2h_great_volthammer"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "beams/beamstart5.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 10;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -2521,9 +2549,9 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"craftsman", "jacobs_ladder"};
 		RECIPE.requiredSubfaiths = {"Voltism"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 1},
+			["iron_ingot"] = {amount = 1},
 			["scrap"] = {amount = 2},
-			["tech"] = {amount = 3},
+			["tech"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_1h_voltsword"] = {amount = 1},
@@ -2547,9 +2575,10 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("voltprod");
 		RECIPE.name = "Voltprod";
-		RECIPE.requiredBeliefs = {"craftsman", "jacobs_ladder"};
+		RECIPE.requiredBeliefs = {"mechanic", "jacobs_ladder"};
 		RECIPE.requiredSubfaiths = {"Voltism"};
 		RECIPE.requirements = {
+			["steel_ingot"] = {amount = 1},
 			["scrap"] = {amount = 4},
 			["tech"] = {amount = 4},
 		};
@@ -4481,6 +4510,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["begotten_spear_ironspear"] = {amount = 1},
 			["tech"] = {amount = 3},
+			["scrap"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_spear_voltspear"] = {amount = 1},
@@ -10767,6 +10797,64 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
 		RECIPE.experience = 60;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("reaver_slaver_helmet");
+		RECIPE.name = "Reaver Slaver Helmet";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 4},
+		};
+		RECIPE.result = {
+			["reaver_slaver_helmet"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 50;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("marauder_helm_upgrade_slaver_helm");
+		RECIPE.name = "(Upgrade) Reaver Marauder Helmet";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["reaver_slaver_helmet"] = {amount = 1},
+			["steel_ingot"] = {amount = 2},
+			["leather"] = {amount = 2},
+		};
+		RECIPE.result = {
+			["reaver_marauder_helm"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 50;
 		
 		function RECIPE:OnCraft(player)
 		end;

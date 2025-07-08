@@ -846,7 +846,7 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 				if IsValid(attackerWeapon) then
 					local weaponItemTable = item.GetByWeapon(attackerWeapon);
 					
-					if attackerWeapon.isJavelin and attacker:HasBelief("daring_trout") then
+					if damageInfo:GetInflictor().isJavelin and attacker:HasBelief("daring_trout") then
 						if attacker:GetNetVar("ThrustStance") != true then
 							entity:SetNetVar("runningDisabled", true);
 							timer.Create("GroundedSprintTimer_"..tostring(entity:EntIndex()), 8, 1, function()
