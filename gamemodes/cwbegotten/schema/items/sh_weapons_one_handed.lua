@@ -211,7 +211,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.canUseShields = true;
 	
-	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "scrap", "scrap", "tech"}};
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "scrap", "scrap", "tech"}};
 	ITEM.requiredbeliefs = {"wriggle_fucking_eel"};
 ITEM:Register();
 

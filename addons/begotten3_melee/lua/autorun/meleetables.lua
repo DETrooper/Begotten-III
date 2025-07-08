@@ -2393,7 +2393,7 @@ AttackTables.PipeAttackTable = {
 	["delay"] = 0.7,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 535,
+	["meleerange"] = 500,
 	["punchstrength"] = Angle(0,1,0),
 };
 
@@ -2409,10 +2409,10 @@ AttackTables.PipeMaceAttackTable = {
 	["poisedamage"] = 12,
 	["stabilitydamage"] = 27,
 	["takeammo"] = 2,
-	["delay"] = 0.7,
+	["delay"] = 0.75,
 	["striketime"] = 0.3,
 	["meleearc"] = 35,
-	["meleerange"] = 535,
+	["meleerange"] = 500,
 	["punchstrength"] = Angle(0,1,0),
 };
 
