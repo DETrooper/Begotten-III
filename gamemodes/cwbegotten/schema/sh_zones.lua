@@ -2136,19 +2136,6 @@ elseif map == "bg_district34" then
 		};
 	TOWER:Register()
 
-local DUEL = zones:New("duel")
-		DUEL.name = "Duel Zone";
-		DUEL.map = "bg_district34";
-		DUEL.colorModify = {["$pp_colour_brightness"] = -0.025, ["$pp_colour_contrast"] = 1.1, ["$pp_colour_colour"] = 1.1};
-		DUEL.fogStart = 4096;
-		DUEL.fogEnd = 4096;
-		DUEL.distanceInterval = 1000
-		DUEL.bounds = {
-			min = Vector(-9843, -3074, 4144),
-			max = Vector(-5574, -6257, 6941),
-		};
-	DUEL:Register()
-
 local CAVES = zones:New("caves")
 		CAVES.name = "Mines";
 		CAVES.map = "bg_district34";
