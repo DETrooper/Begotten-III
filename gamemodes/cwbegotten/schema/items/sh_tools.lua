@@ -68,8 +68,8 @@ if (SERVER) then
 			-- Gorewatch
 			{pos = Vector(8905, 7395, 884), ang = Angle(70, 90, 0), boundsA = Vector(9054, 7296, 884), boundsB = Vector(8749, 7551, 990)},
 			{pos = Vector(8916, 9217, 927), ang = Angle(70, 270, 0), boundsA = Vector(8768, 9226, 1081), boundsB = Vector(9268, 8844, 949)},
-			-- Scraptowna
-			{pos = Vector(-8544, 11106, 200), ang = Angle(70, 90, 0), boundsA = Vector(-8316, 10963, 341), boundsB = Vector(-8911, 11481, 212)},
+			-- Scraptown
+			{pos = Vector(-8612, 12501, 200), ang = Angle(70, 90, 0), boundsA = Vector(-8859, 12640, 341), boundsB = Vector(-8359, 12191, 200)},
 		}
 	end
 end
