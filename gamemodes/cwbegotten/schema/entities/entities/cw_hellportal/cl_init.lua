@@ -37,9 +37,9 @@ local function CreateMenu(state)
 		subMenu2:AddOption("...into the Abandoned Church", function() Clockwork.kernel:RunCommand("HellPortalGaze", "Church") end);
 	elseif game.GetMap() == "bg_district34" then
 		subMenu:AddOption("...to the Pillars of Creation", function() Clockwork.Client:ConCommand("cw_HellPortalPillars") end);
-		subMenu:AddOption("...to the City Cave.", function() Clockwork.Client:ConCommand("cw_HellPortalCave") end);
+		subMenu:AddOption("...to the Unearthed Crypt.", function() Clockwork.Client:ConCommand("cw_HellPortalCave") end);
 		subMenu2:AddOption("...into the Pillars of Creation", function() Clockwork.kernel:RunCommand("HellPortalGaze", "Pillars") end);
-		subMenu2:AddOption("...into the City Cave", function() Clockwork.kernel:RunCommand("HellPortalGaze", "Cave") end);
+		subMenu2:AddOption("...into the Unearthed Crypt", function() Clockwork.kernel:RunCommand("HellPortalGaze", "Cave") end);
 	else
 		subMenu:AddOption("...to the Arch of Perdition", function() Clockwork.Client:ConCommand("cw_HellPortalArch") end);
 		subMenu:AddOption("...to the Pillars of Creation", function() Clockwork.Client:ConCommand("cw_HellPortalPillars") end);
