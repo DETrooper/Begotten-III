@@ -2204,7 +2204,7 @@ local CAVES = zones:New("caves")
 local GORE = zones:New("gore", "supragore")
 		GORE.name = "Gore Forest";
 		GORE.map = "bg_district34";
-		GORE.fogColors = {r = 104.55, g = 112.2, b = 71.4};
+		GORE.fogColors = {r = 112.2, g = 145.4, b = 148};
 		GORE.fogStart = 0;
 		GORE.fogEnd = 2448
 		GORE.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 0.4};
@@ -2225,7 +2225,7 @@ local GORE = zones:New("gore", "supragore")
 	local GORE_TREE = zones:New("gore_tree", "supragore")
 		GORE_TREE.name = "Gore Tree";
 		GORE_TREE.map = "bg_district34";
-		GORE_TREE.fogColors = {r = 104.55, g = 112.2, b = 71.4};
+		GORE_TREE.fogColors = {r = 112.2, g = 145.4, b = 148};
 		GORE_TREE.fogStart = 3200;
 		GORE_TREE.fogEnd = 6000;
 		GORE_TREE.colorModify = {["$pp_colour_brightness"] = 0, ["$pp_colour_contrast"] = 1.2, ["$pp_colour_colour"] = 0.1};
