@@ -122,7 +122,7 @@ local GUNSLINGER = Clockwork.trait:New()
 	--GUNSLINGER.points = 7
 	GUNSLINGER.points = 3
 	GUNSLINGER.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
-	GUNSLINGER.excludedsubfactions = {"Clan Crast", "Clan Grock", "Clan Harald", "Clan Reaver", "Clan Gore", "Clan Gotnarh"};
+	GUNSLINGER.excludedsubfactions = {"Clan Crast", "Clan Grock", "Clan Harald", "Clan Reaver", "Clan Gore", "Clan Gotnarh", "Clan Ghorst"};
 Clockwork.trait:Register(GUNSLINGER)
 
 local IMBECILE = Clockwork.trait:New()
