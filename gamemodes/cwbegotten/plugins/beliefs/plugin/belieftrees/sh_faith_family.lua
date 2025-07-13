@@ -30,7 +30,7 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 		[4] = (FAMILY.size.h - 4) * 0.9,
 	};
 	
-	FAMILY.lockedSubfactions = {"Clan Grock", "Clan Ghorst"};
+	FAMILY.lockedSubfactions = {"Clan Grock", "Clan Gotnarh"};
 	FAMILY.requiredFaiths = {"Faith of the Family"};
 	
 	-- First index is column.
@@ -77,14 +77,14 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 				subfaith = "Faith of the Mother",
 				description = "Selects the 'Faith of the Mother' as your subfaith. Unlocks the ability to pray. Unlocks the ability to warcry. Unlocks the ability to equip Blessed weaponry. Increased faith gain from performing rituals and healing other characters.",
 				quote = "The Mother is the Matriarch, the architect of nature and the cycle of life and death. From her womb came all life, and under her watch they will all one day die. The followers of the Mother are outcasts of Gore society, deformed and stunted men, and sickly slave women. Their goal is to heal the corpse world that they inhabit, and give death to the blighted ones who gnaw at its roots.",
-				lockedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax"},
+				lockedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax", "Clan Ghorst"},
 				row = 1,
 			},
 			["one_with_the_druids"] = {
 				name = "One With the Druids",
 				subfaith = "Faith of the Mother",
 				description = "Unlocks Tier I and Tier II Familial Rituals. Increases the effectiveness of healing items used on yourself and others by 50%.",
-				lockedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax"},
+				lockedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax", "Clan Ghorst"},
 				requirements = {"mother"},
 				row = 2,
 			},
@@ -93,7 +93,7 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 				subfaith = "Faith of the Mother",
 				description = "You will now passively regenerate health over time, irrespective of your wounds. This is separate from normal health regeneration and much faster. Increases your maximum HP by 25 points.",
 				quote = "\"The caretakers of the Great Tree are in turn blessed with unnatural abilities. Wounds mend with their touch, dead soil sprout life with each step. All will be repaid in full when their lives end and their bodies are consumed by the Earth once more.\"",
-				lockedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax"},
+				lockedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax", "Clan Ghorst"},
 				requirements = {"mother", "one_with_the_druids"},
 				row = 3,
 			},
@@ -101,7 +101,7 @@ local FAMILY = cwBeliefs.beliefTrees:New("family")
 				name = "Watchful is the Raven",
 				subfaith = "Faith of the Mother",
 				description = "Upgrades the 'Warcry' ability: Highlights all nearby friendlies (characters who recognise you) in green for 15 seconds and increases your own and their sanity and stamina by 5 points, as well as providing 10% damage resistance. Unlocks Tier III Familial Rituals and unique Mother rituals. Unlocks the ability to Ravenspeak if you are a Clan Crast Goreic Warrior. Reduces the chance of receiving injuries by 50%.",
-				lockedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax"},
+				lockedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Shagalax", "Clan Ghorst"},
 				requirements = {"mother", "one_with_the_druids", "gift_great_tree"},
 				row = 4,
 			},
