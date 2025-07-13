@@ -134,6 +134,13 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 			{pos1 = Vector(-10637, 13043, 465), pos2 = Vector(-4664, 9210, 879), modifier = 0.5, nightModifier = 0.25}, -- Hill
 			{pos1 = Vector(-9328, -8640, -146), pos2 = Vector(-8771, -8105, 686), modifier = 0.33, nightModifier = 0.2}, -- Gorewatch
 		},
+		["bg_district34"] = {
+			{pos1 = Vector(8808, 8584, 871), pos2 = Vector(9520, 7992, 1306), modifier = 0.33, nightModifier = 0.2}, -- Gorewatch
+			{pos1 = Vector(4403, -7851, 614), pos2 = Vector(6594, -8081, 1063), modifier = 0.5, nightModifier = 0.25}, -- Gate
+			{pos1 = Vector(6734, -8081, 614), pos2 = Vector(6444, -11962, 1373), modifier = 0.5, nightModifier = 0.25}, -- Wall	
+			{pos1 = Vector(-613, -9808, 738), pos2 = Vector(-856, -11849, 1258), modifier = 0.5, nightModifier = 0.25}, -- Wall
+			{pos1 = Vector(4214, -10694, 1312), pos2 = Vector(4584, -10317, 1478), modifier = 0.5, nightModifier = 0.25}, -- Courtyard Tower
+		},
 	};
 	
 	-- Called when a player is transferred to the faction.
@@ -524,7 +531,7 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 			name = "Clan Gotnarh",
 			subtitle = "Followers of the Old Ways - Towering Savages",
 			description = "PENDING",
-			rivalry = "Old Clan Ghorst",
+			rivalry = "Clan Ghorst",
 			attributes = {
 				{Color(0, 225, 0), "(+) Starts with +250 maximum health"},
 				{Color(0, 225, 0), "(+) Warcries instantly restore 25 stamina"},
@@ -541,15 +548,15 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 		},
 		{
 			name = "Clan Ghorst",
-			subtitle = "Followers of the Father, the Old Son, and the Mother - Defamed Guardians and Irregulars",
+			subtitle = "Followers of the Father, and Old Son - Champions of a Lost Cause",
 			description = "PENDING",
-			rivalry = "Old Clan Gotnarh",
+			rivalry = "Clan Gore, Clan Shagalax, Clan Gotnarh, Clan Grock",
 			attributes = {
-				{Color(0, 225, 0), "(+) Starts with +30 maximum health"},
+				{Color(0, 225, 0), "(+) Starts with +35 maximum health"},
 				{Color(0, 225, 0), "(+) Conquerors: Access to Greater Longships"},
 				{Color(0, 225, 0), "(+) Arbalests: Allows use of Crossbows"},
-				{Color(0, 225, 0), "(+) Starts at Sacrament Level 8"},
-				{Color(0, 225, 0), "(+) Trappers: 25% Animal damage"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 7"},
+				{Color(0, 225, 0), "(+) Trappers: Deal 50% more damage to animals"},
 				{Color(225, 0, 0), "(-) Bygone Favor: The Fortune tree is locked, and cannot be progressed"}
 			}
 		}
