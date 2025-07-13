@@ -306,7 +306,7 @@ ITEM.description = "A linked set of human and animal bones forming protective pl
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.attributes = {"fear"};
 ITEM.requiredFactions = {"Goreic Warrior"};
-ITEM.excludedSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Gotnarh", "Clan Ghorst"};
+ITEM.excludedSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Ghorst"};
 ITEM.overlay = "begotten/zomboverlay/new/goreminotaur";
 
 ITEM.effectiveLimbs = {
