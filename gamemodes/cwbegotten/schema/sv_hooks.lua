@@ -3005,7 +3005,7 @@ function Schema:PlayerCharacterLoaded(player)
 		player:SetViewOffsetDucked(Vector(0, 0, 32))
 	elseif subfaction == "Clan Gotnarh" then
 		player:SetModelScale(1.35, FrameTime());
-		player:SetViewOffset(Vector(0, 0, 72))
+		player:SetViewOffset(Vector(0, 0, 90))
 		player:SetViewOffsetDucked(Vector(0, 0, 32))
 	else
 		player:SetModelScale(1, FrameTime());
