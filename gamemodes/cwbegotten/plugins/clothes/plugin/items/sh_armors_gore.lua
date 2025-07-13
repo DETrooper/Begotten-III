@@ -13,7 +13,7 @@ ITEM.weightclass = "Medium";
 ITEM.description = "Although traditionally regarded as weak, those born of the Mother do not find combat wanting, and as such are compelled to adorn their spiritual robes with armor. This set of armor has an enchantment to ward off the damage of firearms.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requiredFactions = {"Goreic Warrior"};
-ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver", "Clan Gotnarh"};
+ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver", "Clan Gotnarh", "Clan Ghorst"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -74,7 +74,7 @@ ITEM.weightclass = "Light";
 ITEM.description = "Layers of hide and etched cloth resembling mystic robes. Tailored in the image of the ancient Blade Druid order that were the founders of Gore society and religion. Only those born under the image of The Mother are said to be fit to wear such robes.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.requiredFactions = {"Goreic Warrior"};
-ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver", "Clan Gotnarh"};
+ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver", "Clan Gotnarh", "Clan Ghorst"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -306,7 +306,7 @@ ITEM.description = "A linked set of human and animal bones forming protective pl
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.attributes = {"fear"};
 ITEM.requiredFactions = {"Goreic Warrior"};
-ITEM.excludedSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Gotnarh"};
+ITEM.excludedSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Gotnarh", "Clan Ghorst"};
 ITEM.overlay = "begotten/zomboverlay/new/goreminotaur";
 
 ITEM.effectiveLimbs = {
@@ -480,7 +480,7 @@ ITEM.type = "plate";
 ITEM.description = "Heavy armor made from hellforged black iron. Decorated with skulls and hides from man and demon alike, the Red Wolves of Clan Reaver make sure their presence is known.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requiredFactions = {"Goreic Warrior"};
-ITEM.excludedSubfactions = {"Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Grock", "Clan Gotnarh"};
+ITEM.excludedSubfactions = {"Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -668,7 +668,7 @@ ITEM.type = "plate";
 ITEM.description = "A harness of lamellar and cold forged black iron. It is covered in sigils and runes of Clan Reaver, and even foreign symbols from far northern wastelands. Used widely in Goreic warbands for its strong protective metal plating.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
-ITEM.excludedSubfactions = {"Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Grock", "Clan Gotnarh"};
+ITEM.excludedSubfactions = {"Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -724,7 +724,7 @@ ITEM.type = "plate";
 ITEM.description = "A set of blackened lamellar used by the torturers, executioners, and commanders of the far-away Marauders. This armor was made to boast Goreic mastery over darkness; to wield its power without being made its subject.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requiredFactions = {"Goreic Warrior"};
-ITEM.excludedSubfactions = {"Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Grock", "Clan Gotnarh"};
+ITEM.excludedSubfactions = {"Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -1225,7 +1225,7 @@ ITEM.description = "Some followers of the Old Ways use belief as they would use 
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.attributes = {"godless"};
 ITEM.requiredFactions = {"Goreic Warrior"};
-ITEM.excludedSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast"};
+ITEM.excludedSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Ghorst"};
 ITEM.overlay = "begotten/zomboverlay/new/goreminotaur";
 
 ITEM.effectiveLimbs = {
@@ -1286,7 +1286,7 @@ ITEM.description = "The Grockling Iconoclasts are fanatics of a different breed.
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.attributes = {"godless", "iconoclast", "fear"};
 ITEM.requiredFactions = {"Goreic Warrior"};
-ITEM.excludedSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast"};
+ITEM.excludedSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast", "Clan Ghorst"};
 ITEM.overlay = "begotten/zomboverlay/new/goreminotaur";
 
 ITEM.effectiveLimbs = {
