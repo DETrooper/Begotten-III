@@ -146,8 +146,10 @@ function cwPickupObjects:KeyPress(player, key)
 										end
 									
 										if ragdollPlayer.stabilityStunned and !player:HasBelief("wrestle_subdue") then
-											Schema:EasyText(player, "chocolate", "You cannot pick up this person while they are knocked over from low stability unless you have the 'Wrestle and Subdue' belief!");
-											return;
+											if ragdollPlayer:GetNetVar("tied") == 0 then
+												Schema:EasyText(player, "chocolate", "You cannot pick up this person while they are knocked over from low stability unless they are tied up or you have the 'Wrestle and Subdue' belief!");
+												return;
+											end
 										end
 									end
 									
