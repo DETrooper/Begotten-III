@@ -1681,7 +1681,7 @@ function COMMAND:OnRun(player, arguments)
 						end
 						
 						if cwStamina then
-							if activeWeapon:GetClass() == "begotten_1h_ironflail" then -- Flails give more stamina when flagellating!
+							if activeWeapon:GetClass() == "begotten_1h_ironflail" or activeWeapon:GetClass() == "begotten_1h_solflail" then -- Flails give more stamina when flagellating!
 								player:HandleStamina(d:GetDamage() * 4); -- Fix this later (does not account for damage buffs)
 							else
 								player:HandleStamina(d:GetDamage() * 2); -- Fix this later (does not account for damage buffs)
