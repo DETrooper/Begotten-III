@@ -58,8 +58,6 @@ if (SERVER) then
 		}
 	elseif map == "bg_district34" then
 		Schema.siegeLadderPositions = {
-			-- Villa Cliff
-			{pos = Vector(8415, -11217, 536), ang = Angle(60, 270, 0), boundsA = Vector(8749, -11553, 504), boundsB = Vector(8058, -10873, 677)},
 			-- Villa left wall
 			{pos = Vector(7125, -11471, 525), ang = Angle(52, 180, 0), boundsA = Vector(6815, -11707, 677), boundsB = Vector(7450, -11227, 500)},
 			{pos = Vector(6303, -7255, 593), ang = Angle(60, 270, 0), boundsA = Vector(6659, -7588, 600), boundsB = Vector(5781, -6652, 732)},
