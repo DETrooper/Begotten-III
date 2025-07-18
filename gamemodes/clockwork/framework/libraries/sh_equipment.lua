@@ -969,14 +969,31 @@ else
 		
 		local plyTab = player:GetTable();
 		
-		if plyTab.equipmentSlotModels and plyTab.equipmentSlots[slot] then
-			for k, v in pairs(plyTab.equipmentSlotModels) do
-				if k == plyTab.equipmentSlots[slot].itemID then
-					v:Remove();
+		if plyTab.equipmentSlotModels then
+			if plyTab.equipmentSlots[slot] then
+				for k, v in pairs(plyTab.equipmentSlotModels) do
+					if k == plyTab.equipmentSlots[slot].itemID then
+						v:Remove();
+						
+						plyTab.equipmentSlotModels[k] = nil;
+						
+						break;
+					end
+				end
+			end
+			
+			-- Ghetto fix for backpack shield offsets not updating.
+			local offsetItem = itemTable or plyTab.equipmentSlots[slot];
+			
+			if offsetItem and (offsetItem.category == "Shields" or offsetItem.attachmentShieldOffset) then
+				for k, v in pairs(plyTab.equipmentSlotModels) do
+					local vItem = item.FindInstance(k);
 					
-					plyTab.equipmentSlotModels[k] = nil;
+					if vItem and (vItem.category == "Shields" or vItem.attachmentShieldOffset) then
+						v:Remove();
 					
-					break;
+						plyTab.equipmentSlotModels[k] = nil;
+					end
 				end
 			end
 		end

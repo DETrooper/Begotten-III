@@ -1525,6 +1525,16 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 		if entity:IsPlayer() and !entTab.opponent and entity:GetSubfaith() == "Sol Orthodoxy" then
 			if !cwRituals or (cwRituals and !entTab.scornificationismActive) then
 				entity:HandleXP(damage / 2);
+				
+				if cwStamina then
+					local activeWeapon = entity:GetActiveWeapon();
+					
+					if activeWeapon:IsValid() and (activeWeapon:GetClass() == "begotten_1h_ironflail" or activeWeapon:GetClass() == "begotten_1h_solflail") then -- Flails give more stamina when flagellating!
+						entity:HandleStamina(damage * 4);
+					else
+						entity:HandleStamina(damage * 2);
+					end
+				end
 			end
 		end
 	end
