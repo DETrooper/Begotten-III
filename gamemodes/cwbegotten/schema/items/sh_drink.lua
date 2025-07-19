@@ -927,6 +927,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {thirst = 50};
 	ITEM.uniqueID = "dirty_water_bucket";
 	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/bucket.png"
+	ITEM.infectchance = 60;
 	ITEM.cauldronQuality = -3;
 	
 	function ITEM:OnSetup()
