@@ -7,17 +7,18 @@ Clockwork.setting:AddCheckBox("Screen effects", "Enable the crosshair when weapo
 end);
 
 function cwCrosshair:HUDPaint()
-    local width, height = ScrW(), ScrH();
-
     if(!Clockwork.ConVars.CROSSHAIR:GetBool()) then return; end
     if(!Clockwork.player:IsAdmin(Clockwork.Client) and !Clockwork.config:Get("enable_crosshair"):Get()) then return; end
     if(!Clockwork.Client:IsWeaponRaised()) then return; end
     if(Clockwork.character.isOpen) then return; end
+	
+	local activeWeapon = Clockwork.Client:GetActiveWeapon();
+	
+	if activeWeapon:IsValid() and activeWeapon.DrawCrosshair ~= false then
+		surface.SetDrawColor(255,255,255);
 
-    surface.SetDrawColor(255,255,255);
+		local pos = Clockwork.Client:GetEyeTrace().HitPos:ToScreen();
 
-    local pos = Clockwork.Client:GetEyeTrace().HitPos:ToScreen();
-
-    surface.DrawRect(pos.x-2,pos.y-2,4,4);
-
+		surface.DrawRect(pos.x-2,pos.y-2,4,4);
+	end
 end

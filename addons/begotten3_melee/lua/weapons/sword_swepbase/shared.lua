@@ -11,7 +11,7 @@ SWEP.Author = ""
 SWEP.Spawnable = false 
 SWEP.AutoSwitchFrom = false
 SWEP.Weight = 5
-SWEP.DrawCrosshair = false
+SWEP.DrawCrosshair = true
 
 SWEP.MeleeRangeAdditive = 0.1 --Extra time the attack entities exist
 
