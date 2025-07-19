@@ -1292,7 +1292,9 @@ local voltistSounds = {"npc/scanner/combat_scan4.wav", "npc/scanner/combat_scan5
 local voltistYellSounds = {"npc/scanner/scanner_siren2.wav", "npc/scanner/scanner_pain2.wav", "npc/stalker/go_alert2.wav"};
 
 function Schema:PlayerSayICEmitSound(player)
-	if player:GetSubfaith() == "Voltism" then
+	if player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
+		player:EmitSound("piggysqueals/talk/wretch_tunnels_amb_idle_0"..math.random(1, 5)..".ogg", 90, math.random(95, 110))
+	elseif player:GetSubfaith() == "Voltism" then
 		if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
 			if !Clockwork.player:HasFlags(player, "T") then
 				player:EmitSound(voltistSounds[math.random(1, #voltistSounds)], 90, 150);
@@ -1302,7 +1304,9 @@ function Schema:PlayerSayICEmitSound(player)
 end
 
 function Schema:PlayerYellEmitSound(player)
-	if player:GetSubfaith() == "Voltism" then
+	if player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
+		player:EmitSound("piggysqueals/yell/wretch_tunnels_amb_alert_0"..math.random(1, 3)..".ogg", 90, math.random(95, 110))
+	elseif player:GetSubfaith() == "Voltism" then
 		if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
 			if !Clockwork.player:HasFlags(player, "T") then
 				player:EmitSound(voltistYellSounds[math.random(1, #voltistYellSounds)], 90, 150);

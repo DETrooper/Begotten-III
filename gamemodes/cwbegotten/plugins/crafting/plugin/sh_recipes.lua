@@ -9285,6 +9285,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["hellforged_steel_ingot"] = {amount = 4},
 			["fine_steel_ingot"] = {amount = 2},
+			["pentagram_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["darklander_immortal_armor"] = {amount = 1},
