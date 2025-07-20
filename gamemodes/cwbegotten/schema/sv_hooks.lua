@@ -3567,6 +3567,9 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 		end
 	elseif subfaction == "Watchman" then
 		infoTable.runSpeed = infoTable.runSpeed * 0.95
+
+	elseif subfaction == "Clan Gotnarh" then
+		infoTable.runSpeed = infoTable.runSpeed * 0.90
 	end
 	
 	local shieldItem = player:GetShieldEquipped();
