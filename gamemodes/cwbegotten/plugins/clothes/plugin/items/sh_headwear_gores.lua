@@ -569,12 +569,12 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 		[HITGROUP_HEAD] = true,
 	}
 
-	ITEM.protection = 28
+	ITEM.protection = 30
 	ITEM.hitParticle = "GlassImpact";
 	ITEM.type = "cloth";
 
 	ITEM.bluntScale = 0.60; -- reduces blunt damage by 40%
-	ITEM.stabilityScale = 0.80; -- reduces stability damage by 20%
+	ITEM.stabilityScale = 0.70; -- reduces stability damage by 30%
 	ITEM.insulation = 40; -- Adds 8% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"bearskin", "hide", "hide"}};

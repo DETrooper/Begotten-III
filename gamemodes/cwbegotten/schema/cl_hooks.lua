@@ -3154,7 +3154,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			end
 
 			if table.HasValue(itemTable.attributes, "lifeleech") then
-				frame:AddText("Lifeleech (Shieldless): 70% of damage dealt is returned as health", Color(110, 30, 30), nil, 0.9);
+				frame:AddText("Lifeleech (Shieldless): 100% of damage dealt is returned as health", Color(110, 30, 30), nil, 0.9);
 			end
 
 			if(table.HasValue(itemTable.attributes, "banner_blessing")) then

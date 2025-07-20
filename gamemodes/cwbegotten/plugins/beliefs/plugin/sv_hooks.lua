@@ -1526,7 +1526,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 			if !cwRituals or (cwRituals and !entTab.scornificationismActive) then
 				entity:HandleXP(damage / 2);
 				
-				if cwStamina and entity.flagelllating then
+				if cwStamina and entity.flagellating then
 					local activeWeapon = entity:GetActiveWeapon();
 					
 					if activeWeapon:IsValid() and (activeWeapon:GetClass() == "begotten_1h_ironflail" or activeWeapon:GetClass() == "begotten_1h_solflail") then -- Flails give more stamina when flagellating!
@@ -1611,7 +1611,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 						local clothesItem = attacker:GetClothesEquipped();
 						
 						if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "lifeleech") then
-							attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (damageInfo:GetDamage() / 1.45)), 0, attacker:GetMaxHealth()));
+							attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + damageInfo:GetDamage()), 0, attacker:GetMaxHealth()));
 							
 							attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
 							

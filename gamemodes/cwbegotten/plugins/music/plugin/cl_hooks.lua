@@ -225,18 +225,32 @@ end
 function cwMusic:PlayerChangedZones(newZone, previousZone)
 	if newZone == previousZone then return end;
 
-	if newZone == "gore_tree" or newZone == "gore" or newZone == "gore_hallway" then
-		if previousZone != "gore_tree" and previousZone != "gore" and previousZone != "gore_hallway" then
-			self:FadeOutAmbientMusic(4, 1);
-		end
-	elseif game.GetMap() == "rp_scraptown" then
-		if (newZone == "tower" and previousZone == "wasteland") or (previousZone == "tower" and newZone == "wasteland") then
-			-- do nothing
+	if self.AmbientMusic and self.AmbientMusic:IsPlaying() then
+		if newZone == "gore_tree" or newZone == "gore" or newZone == "gore_hallway" then
+			if previousZone != "gore_tree" and previousZone != "gore" and previousZone != "gore_hallway" then
+				self:FadeOutAmbientMusic(4, 1);
+			end
+		elseif game.GetMap() == "rp_scraptown" then
+			if (newZone == "tower" and previousZone == "wasteland") or (previousZone == "tower" and newZone == "wasteland") then
+				-- do nothing
+			else
+				self:FadeOutAmbientMusic(4, 1);
+			end
 		else
 			self:FadeOutAmbientMusic(4, 1);
 		end
-	else
-		self:FadeOutAmbientMusic(4, 1);
+	end
+end
+
+function cwMusic:CharacterPanelClosed()
+	if (!map) then
+		return;
+	end;
+	
+	if Clockwork.Client:HasInitialized() and Clockwork.Client:Alive() then
+		if !Clockwork.kernel:IsChoosingCharacter() then
+			self.AmbientMusicChangeCooldown = CurTime() + 5;
+		end
 	end
 end
 
@@ -247,52 +261,50 @@ function cwMusic:Tick()
 	
 	local curTime = CurTime()
 
-	if (!cwMusic.AmbientMusicChangeCooldown or cwMusic.AmbientMusicChangeCooldown < curTime) then
-		cwMusic.AmbientMusicChangeCooldown = curTime + 5;
+	if (!self.AmbientMusicChangeCooldown or self.AmbientMusicChangeCooldown < curTime) then
+		self.AmbientMusicChangeCooldown = curTime + 5;
 
 		if (Clockwork.Client.HasInitialized == nil) then
 			return;
 		end
 		
 		if Clockwork.Client:HasInitialized() and Clockwork.Client:Alive() then
-			if (!Clockwork.menu:GetOpen()) and (!Clockwork.kernel:IsChoosingCharacter()) then
+			if !Clockwork.kernel:IsChoosingCharacter() then
 				if hook.Run("CanPlayAmbientMusic") ~= false then
 					self:StartAmbientMusic();
-				else
-					if (!cwMusic.MusicEndTime or cwMusic.MusicEndTime < curTime) then
-						self:StopAmbientMusic()
-					end
 				end
 			end
 		end
 	end
 		
-	if (!cwMusic.MusicCheck or cwMusic.MusicCheck < curTime) then
-		cwMusic.MusicCheck = curTime + 1;
+	if (!self.MusicCheck or self.MusicCheck < curTime) then
+		self.MusicCheck = curTime + 1;
 
-		if (Clockwork.kernel:IsChoosingCharacter()) then
-			self:FadeOutAmbientMusic(0.5, 1);
-			self:FadeOutBattleMusic(0.5, 1);
-		elseif (!Clockwork.Client:Alive()) then
-			self:FadeOutAmbientMusic(4, 1);
-			self:FadeOutBattleMusic(4, 1);
+		if (self.AmbientMusic and self.AmbientMusic:IsPlaying()) or (self.BattleMusic and self.BattleMusic:IsPlaying()) then
+			if (Clockwork.kernel:IsChoosingCharacter()) then
+				self:FadeOutAmbientMusic(0.5, 1);
+				self:FadeOutBattleMusic(0.5, 1);
+			elseif (!Clockwork.Client:Alive()) then
+				self:FadeOutAmbientMusic(4, 1);
+				self:FadeOutBattleMusic(4, 1);
+			end
 		end
 	end
 
-	if (cwMusic.NextBattleMusic) then
-		if (cwMusic.NextBattleMusic < curTime) then
-			if (cwMusic.BattleMusic and cwMusic.BattleMusic:IsPlaying()) then
-				if (!cwMusic.BattleMusicFadingOut) then
-					cwMusic.BattleMusicFadingOut = true
-					cwMusic.BattleMusic:FadeOut(8)
-					cwMusic.NextBattleMusic = nil
-					cwMusic.MaxBattleLength = nil
-					cwMusic.MusicStartTime = nil
-					cwMusic.BattleMusicChangeCooldown = curTime + 16
+	if (self.NextBattleMusic) then
+		if (self.NextBattleMusic < curTime) then
+			if (self.BattleMusic and self.BattleMusic:IsPlaying()) then
+				if (!self.BattleMusicFadingOut) then
+					self.BattleMusicFadingOut = true
+					self.BattleMusic:FadeOut(8)
+					self.NextBattleMusic = nil
+					self.MaxBattleLength = nil
+					self.MusicStartTime = nil
+					self.BattleMusicChangeCooldown = curTime + 16
 
 					timer.Simple(8, function()
-						cwMusic.BattleMusic = nil
-						cwMusic.BattleMusicFadingOut = nil
+						self.BattleMusic = nil
+						self.BattleMusicFadingOut = nil
 					end)
 				end
 			end
@@ -316,46 +328,46 @@ function cwMusic:StartAmbientMusic(bForce, trackOverride)
 			self:StopBattleMusic();
 		end
 	else
-		if (!cwMusic.NextAmbientCall or curTime > cwMusic.NextAmbientCall) then
-			cwMusic.NextAmbientCall = curTime + 0.5
+		if (!self.NextAmbientCall or curTime > self.NextAmbientCall) then
+			self.NextAmbientCall = curTime + 0.5
 		else
 			return
 		end
 	end
 		
-	if (!cwMusic.AmbientMusic) then
+	if (!self.AmbientMusic) then
 		local trackType = self:GetAmbientMusicCategory() or "wasteland";
 		local musicTable = trackOverride or self:GetRandomAmbientMusic(trackType);
 		local trackName = musicTable.track;
 		local trackLength = musicTable.length or SoundDuration(trackName);
 		
-		cwMusic.MusicStartTime = curTime
-		cwMusic.MusicEndTime = curTime + trackLength
-		cwMusic.MaxAmbientLength = trackLength
-		cwMusic.AmbientMusic = CreateSound(Clockwork.Client, trackName)
+		self.MusicStartTime = curTime
+		self.MusicEndTime = curTime + trackLength
+		self.MaxAmbientLength = trackLength
+		self.AmbientMusic = CreateSound(Clockwork.Client, trackName)
 		
-		if (!cwMusic.RecentAmbientTracks) then
-			cwMusic.RecentAmbientTracks = {}
+		if (!self.RecentAmbientTracks) then
+			self.RecentAmbientTracks = {}
 		end
 		
-		table.insert(cwMusic.RecentAmbientTracks, trackName);
+		table.insert(self.RecentAmbientTracks, trackName);
 		
-		if #cwMusic.RecentAmbientTracks > 4 then
-			for i = 2, #cwMusic.RecentAmbientTracks do
-				cwMusic.RecentAmbientTracks[i - 1] = cwMusic.RecentAmbientTracks[i];
+		if #self.RecentAmbientTracks > 4 then
+			for i = 2, #self.RecentAmbientTracks do
+				self.RecentAmbientTracks[i - 1] = self.RecentAmbientTracks[i];
 				
-				if i == #cwMusic.RecentAmbientTracks then
-					cwMusic.RecentAmbientTracks[i] = nil;
+				if i == #self.RecentAmbientTracks then
+					self.RecentAmbientTracks[i] = nil;
 				end
 			end
 		end
 		
 		if musicTable.volume then
-			cwMusic.TrackVolume = musicTable.volume;
-			cwMusic.AmbientMusic:PlayEx(math.max((Clockwork.ConVars.AMBIENTMUSICVOLUME:GetInt() or 100) * musicTable.volume, 0) / 100, 100);
+			self.TrackVolume = musicTable.volume;
+			self.AmbientMusic:PlayEx(math.max((Clockwork.ConVars.AMBIENTMUSICVOLUME:GetInt() or 100) * musicTable.volume, 0) / 100, 100);
 		else
-			cwMusic.TrackVolume = 1;
-			cwMusic.AmbientMusic:PlayEx((Clockwork.ConVars.AMBIENTMUSICVOLUME:GetInt() or 100) / 100, 100);
+			self.TrackVolume = 1;
+			self.AmbientMusic:PlayEx((Clockwork.ConVars.AMBIENTMUSICVOLUME:GetInt() or 100) / 100, 100);
 		end
 	end
 end
@@ -389,14 +401,14 @@ end
 
 function cwMusic:GetRandomAmbientMusic(musicType)
 	if (self.AmbientMusicTable[musicType]) then
-		if cwMusic.RecentAmbientTracks then
+		if self.RecentAmbientTracks then
 			local valid_music_table = {};
 			
 			for i = 1, #self.AmbientMusicTable[musicType] do
 				local musicTable = self.AmbientMusicTable[musicType][i];
 				local trackName = musicTable.track;
 				
-				if not table.HasValue(cwMusic.RecentAmbientTracks, trackName) then
+				if not table.HasValue(self.RecentAmbientTracks, trackName) then
 					table.insert(valid_music_table, trackName);
 				end
 			end
@@ -441,14 +453,14 @@ function cwMusic:CanPlayAmbientMusic()
 		end
 	--end
 	
-	if (cwMusic.BattleMusic) then
-		if (cwMusic.BattleMusic:IsPlaying()) then
+	if (self.BattleMusic) then
+		if (self.BattleMusic:IsPlaying()) then
 			return false
 		end
 	end
 	
-	if (cwMusic.AmbientMusic) then
-		if (cwMusic.AmbientMusic:IsPlaying()) then -- Music is currently playing, or so it says.
+	if (self.AmbientMusic) then
+		if (self.AmbientMusic:IsPlaying()) then -- Music is currently playing, or so it says.
 			return false
 		end
 	end
@@ -468,8 +480,8 @@ function cwMusic:FadeOutAmbientMusic(seconds, delay)
 		delay = 0;
 	end
 	
-	if (!cwMusic.AmbientMusicFadingOut) then
-		cwMusic.AmbientMusicFadingOut = true
+	if (!self.AmbientMusicFadingOut) then
+		self.AmbientMusicFadingOut = true
 	
 		timer.Create("AmbientFadeOutTimer", delay, 1, function()
 			if cwMusic.AmbientMusic then
@@ -479,12 +491,7 @@ function cwMusic:FadeOutAmbientMusic(seconds, delay)
 			cwMusic.MaxAmbientLength = nil
 			cwMusic.MusicStartTime = nil
 			cwMusic.MusicEndTime = nil;
-			
-			--[[if Clockwork.Client:GetZone() == "manor" then
-				cwMusic.AmbientMusicChangeCooldown = curTime + math.random(10, 30);
-			else]]--
-				cwMusic.AmbientMusicChangeCooldown = curTime + math.random(30, 180); -- 30 second to 3 minute delay before the next ambient track.
-			--end
+			cwMusic.AmbientMusicChangeCooldown = curTime + math.random(30, 180); -- 30 second to 3 minute delay before the next ambient track.
 			
 			timer.Simple(seconds, function()
 				cwMusic.AmbientMusic = nil
@@ -498,37 +505,37 @@ end
 function cwMusic:StopAmbientMusic()
 	local curTime = CurTime()
 
-	if cwMusic.AmbientMusic then
-		cwMusic.AmbientMusic:Stop();
+	if self.AmbientMusic then
+		self.AmbientMusic:Stop();
 	end
 	
-	cwMusic.MaxAmbientLength = nil
-	cwMusic.MusicStartTime = nil
-	cwMusic.MusicEndTime = nil;
-	cwMusic.AmbientMusicChangeCooldown = curTime + math.random(30, 180); -- 30 second to 3 minute delay before the next ambient track.
-	cwMusic.AmbientMusic = nil
-	cwMusic.AmbientMusicFadingOut = nil
-	cwMusic.TrackVolume = nil
+	self.MaxAmbientLength = nil
+	self.MusicStartTime = nil
+	self.MusicEndTime = nil;
+	self.AmbientMusicChangeCooldown = curTime + math.random(30, 180); -- 30 second to 3 minute delay before the next ambient track.
+	self.AmbientMusic = nil
+	self.AmbientMusicFadingOut = nil
+	self.TrackVolume = nil
 end
 
 function cwMusic:AddBattleMusicTime(timeToAdd)
-	if (!cwMusic.NextBattleMusic) then
+	if (!self.NextBattleMusic) then
 		return
 	end
 	
 	local curTime = CurTime()
 	
-	if (cwMusic.NextBattleMusic < curTime) then
-		cwMusic.NextBattleMusic = nil
+	if (self.NextBattleMusic < curTime) then
+		self.NextBattleMusic = nil
 		
 		return
 	end
 	
-	local timeLeft = (cwMusic.NextBattleMusic - curTime)
-	cwMusic.NextBattleMusic = cwMusic.NextBattleMusic - timeLeft + math.Clamp(timeToAdd, 0, 60)
+	local timeLeft = (self.NextBattleMusic - curTime)
+	self.NextBattleMusic = self.NextBattleMusic - timeLeft + math.Clamp(timeToAdd, 0, 60)
 	
 	-- Uncomment this and comment the above if you want the time added to be stackable.
-	--cwMusic.NextBattleMusic = cwMusic.NextBattleMusic + math.Clamp(timeToAdd, 0, 60)
+	--self.NextBattleMusic = self.NextBattleMusic + math.Clamp(timeToAdd, 0, 60)
 end
 
 function cwMusic:StartBattleMusic(limit, bForce, trackOverride)
@@ -547,15 +554,15 @@ function cwMusic:StartBattleMusic(limit, bForce, trackOverride)
 			self:StopBattleMusic();
 		end
 	else
-		if (!cwMusic.NextBattleCall or curTime > cwMusic.NextBattleCall) then
-			cwMusic.NextBattleCall = curTime + 0.5
+		if (!self.NextBattleCall or curTime > self.NextBattleCall) then
+			self.NextBattleCall = curTime + 0.5
 		else
 			return
 		end
 	end
 	
-	if (cwMusic.NextBattleMusic) then
-		if (cwMusic.NextBattleMusic > curTime) then
+	if (self.NextBattleMusic) then
+		if (self.NextBattleMusic > curTime) then
 			self:AddBattleMusicTime(20)
 			return
 		end
@@ -566,39 +573,39 @@ function cwMusic:StartBattleMusic(limit, bForce, trackOverride)
 		local trackLength = musicTable.length or SoundDuration(trackName);
 		
 		if limit == false then
-			cwMusic.NextBattleMusic = curTime + trackLength
+			self.NextBattleMusic = curTime + trackLength
 		else
-			cwMusic.NextBattleMusic = curTime + 30
+			self.NextBattleMusic = curTime + 30
 		end
 		
-		cwMusic.MusicStartTime = curTime
-		cwMusic.MaxBattleLength = trackLength
-		cwMusic.BattleMusic = CreateSound(Clockwork.Client, trackName)
+		self.MusicStartTime = curTime
+		self.MaxBattleLength = trackLength
+		self.BattleMusic = CreateSound(Clockwork.Client, trackName)
 		
 		self:FadeOutAmbientMusic(2, 1);
 		
-		if (!cwMusic.RecentBattleTracks) then
-			cwMusic.RecentBattleTracks = {}
+		if (!self.RecentBattleTracks) then
+			self.RecentBattleTracks = {}
 		end
 		
-		table.insert(cwMusic.RecentBattleTracks, trackName);
+		table.insert(self.RecentBattleTracks, trackName);
 		
-		if #cwMusic.RecentBattleTracks > 4 then
-			for i = 2, #cwMusic.RecentBattleTracks do
-				cwMusic.RecentBattleTracks[i - 1] = cwMusic.RecentBattleTracks[i];
+		if #self.RecentBattleTracks > 4 then
+			for i = 2, #self.RecentBattleTracks do
+				self.RecentBattleTracks[i - 1] = self.RecentBattleTracks[i];
 				
-				if i == #cwMusic.RecentBattleTracks then
-					cwMusic.RecentBattleTracks[i] = nil;
+				if i == #self.RecentBattleTracks then
+					self.RecentBattleTracks[i] = nil;
 				end
 			end
 		end
 		
 		if musicTable.volume then
-			cwMusic.TrackVolume = musicTable.volume;
-			cwMusic.BattleMusic:PlayEx(math.max((Clockwork.ConVars.BATTLEMUSICVOLUME:GetInt() or 100) * musicTable.volume, 0) / 100, 100);
+			self.TrackVolume = musicTable.volume;
+			self.BattleMusic:PlayEx(math.max((Clockwork.ConVars.BATTLEMUSICVOLUME:GetInt() or 100) * musicTable.volume, 0) / 100, 100);
 		else
-			cwMusic.TrackVolume = 1;
-			cwMusic.BattleMusic:PlayEx((Clockwork.ConVars.BATTLEMUSICVOLUME:GetInt() or 100) / 100, 100);
+			self.TrackVolume = 1;
+			self.BattleMusic:PlayEx((Clockwork.ConVars.BATTLEMUSICVOLUME:GetInt() or 100) / 100, 100);
 		end
 	end
 end
@@ -620,14 +627,14 @@ end
 
 function cwMusic:GetRandomBattleMusic(musicType)
 	if (self.BattleMusicTable[musicType]) then
-		if cwMusic.RecentBattleTracks then
+		if self.RecentBattleTracks then
 			local valid_music_table = {};
 			
 			for i = 1, #self.BattleMusicTable[musicType] do
 				local musicTable = self.BattleMusicTable[musicType][i];
 				local trackName = musicTable.track;
 				
-				if not table.HasValue(cwMusic.RecentBattleTracks, trackName) then
+				if not table.HasValue(self.RecentBattleTracks, trackName) then
 					table.insert(valid_music_table, trackName);
 				end
 			end
@@ -680,8 +687,8 @@ function cwMusic:CanPlayBattleMusic()
 		end
 	end
 	
-	if (cwMusic.BattleMusicChangeCooldown) then
-		if (cwMusic.BattleMusicChangeCooldown > CurTime()) then
+	if (self.BattleMusicChangeCooldown) then
+		if (self.BattleMusicChangeCooldown > CurTime()) then
 			return false
 		end
 	end
@@ -694,8 +701,8 @@ function cwMusic:FadeOutBattleMusic(seconds, delay)
 		delay = 0;
 	end
 	
-	if (!cwMusic.BattleMusicFadingOut) then
-		cwMusic.BattleMusicFadingOut = true
+	if (!self.BattleMusicFadingOut) then
+		self.BattleMusicFadingOut = true
 	
 		timer.Create("BattleFadeOutTimer", delay, 1, function()
 			if cwMusic.BattleMusic then
@@ -720,17 +727,17 @@ end
 function cwMusic:StopBattleMusic()
 	local curTime = CurTime()
 
-	if cwMusic.BattleMusic then
-		cwMusic.BattleMusic:Stop()
+	if self.BattleMusic then
+		self.BattleMusic:Stop()
 	end
 	
-	cwMusic.NextBattleMusic = nil
-	cwMusic.MaxBattleLength = nil
-	cwMusic.MusicStartTime = nil
-	cwMusic.BattleMusicChangeCooldown = curTime + 6
-	cwMusic.BattleMusic = nil
-	cwMusic.BattleMusicFadingOut = nil
-	cwMusic.TrackVolume = nil
+	self.NextBattleMusic = nil
+	self.MaxBattleLength = nil
+	self.MusicStartTime = nil
+	self.BattleMusicChangeCooldown = curTime + 6
+	self.BattleMusic = nil
+	self.BattleMusicFadingOut = nil
+	self.TrackVolume = nil
 end
 
 netstream.Hook("EnableDynamicMusic", function(data)
