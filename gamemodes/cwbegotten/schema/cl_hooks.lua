@@ -3181,9 +3181,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				frame:AddText("Godless (Shieldless): Increases melee, stamina, and stability damage by 25% while at or below 40% sanity. Increases stability damage of throwing stones by 25%.", Color(110, 30, 30), nil, 0.9);
 			end
 			
-			if table.HasValue(itemTable.attributes, "iconoclast") then
-				-- edited Grock to Gotnarh
-				frame:AddText("Iconoclast (Shieldless): Your warcry bless all members of Clan Gotnarh in talking distance with +25 stamina, 25% damage resistance and +15% movement speed for 15 seconds. Targets affected by this buff are highlighted in grey, and you will lose 5 points of sanity per warcry.", Color(110, 30, 30), nil, 0.9);
+			if table.HasValue(itemTable.attributes, "iconoclast") the
+				frame:AddText("Iconoclast (Shieldless): Your warcry blesses all followers of The Old Ways in talking distance with +25 stamina, 25% damage resistance and +15% movement speed for 15 seconds. Targets affected by this buff are highlighted in grey, and you will lose 5 points of sanity per warcry.", Color(110, 30, 30), nil, 0.9);
 			end
 			
 			if table.HasValue(itemTable.attributes, "lesserlifeleech") then
