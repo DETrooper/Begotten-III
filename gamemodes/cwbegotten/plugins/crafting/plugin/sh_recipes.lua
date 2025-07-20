@@ -1690,10 +1690,10 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("savage_claws");
 		RECIPE.name = "Savage Claws";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFaiths = {"Faith of the Family"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_claws_savageclaws"] = {amount = 1},
@@ -1703,7 +1703,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 50;
+		RECIPE.experience = 30;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -1718,10 +1718,10 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("steel_claws");
 		RECIPE.name = "Steel Claws";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredFaiths = {"Faith of the Family"};
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_claws_steelclaws"] = {amount = 1},
@@ -1731,7 +1731,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 75;
+		RECIPE.experience = 55;
 		
 		function RECIPE:OnCraft(player)
 		end;

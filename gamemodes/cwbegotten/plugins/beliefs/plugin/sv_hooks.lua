@@ -1611,7 +1611,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 						local clothesItem = attacker:GetClothesEquipped();
 						
 						if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "lifeleech") then
-							attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (damageInfo:GetDamage() / 1.45)), 0, attacker:GetMaxHealth()));
+							attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + damageInfo:GetDamage()), 0, attacker:GetMaxHealth()));
 							
 							attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
 							
