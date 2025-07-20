@@ -1991,10 +1991,8 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 			level = level + 11;
 		elseif subfaction == "Clan Reaver" or subfaction == "Clan Harald" then
 			level = level + 5;
-		elseif subfaction == "Clan Grock" then
+		elseif subfaction == "Clan Grock" or subfaction == "Clan Grock" then
 			level = level + 7;
-		elseif subfaction == "Clan Gotnarh" then
-			level = level + 9;
 		end
 	elseif faction == "Pope Adyssa's Gatekeepers" then
 		level = level + 15;
