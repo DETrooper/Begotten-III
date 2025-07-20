@@ -525,6 +525,7 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 			subtitle = "Followers of the Old Ways - Towering Savages",
 			description = "PENDING",
 			rivalry = "Clan Ghorst",
+			mandatorytraits = {"gluttony"},
 			attributes = {
 				{Color(0, 225, 0), "(+) Starts with +225 maximum health"},
 				{Color(0, 225, 0), "(+) Warcries instantly restore 25 stamina"},
