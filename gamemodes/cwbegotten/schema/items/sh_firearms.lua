@@ -122,7 +122,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 8; -- Seconds (for one round)
 	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/crossbow/bow-pre1.wav.mp3", "weapons/crossbow/bowgun-stance.wav.mp3"};
 	
-	ITEM.includedSubfactions = {"Clan Crast", "Clan Shagalax"};
+	ITEM.includedSubfactions = {"Clan Crast", "Clan Shagalax", "Clan Gotnarh"};
 	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "wood"}};
 ITEM:Register();
 
