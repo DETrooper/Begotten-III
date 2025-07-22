@@ -1818,7 +1818,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 			end;
 			
 			if (plyTab.bWasInAir) then
-				if (waterLevel >= 1 and waterLevel < 3) then
+				if (waterLevel >= 1) then
 					hook.Run("HitGroundWater", player, plyTab.bWasInAir);
 				end;
 				
@@ -1826,7 +1826,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 			end;
 		else
 			if (plyTab.bWasInAir) then
-				if (waterLevel >= 1 and waterLevel < 3) then
+				if (waterLevel >= 1) then
 					hook.Run("HitGroundWater", player, plyTab.bWasInAir);
 					
 					plyTab.bWasInAir = nil;
@@ -1996,9 +1996,9 @@ end;
 -- Called when a player hits water.
 function Schema:HitGroundWater(player, airZ)
 	local position = player:GetPos();
-	local difference = math.abs(position.z - airZ);
+	local difference = airZ - position.z
 	
-	if (difference > 512) then
+	if (difference > 192) then
 		local world = GetWorldEntity();
 		local damageInfo = DamageInfo();
 			damageInfo:SetDamageType(DMG_FALL);
