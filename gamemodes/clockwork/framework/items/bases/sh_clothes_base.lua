@@ -454,7 +454,7 @@ local ITEM = item.New(nil, true);
 						if self.uniqueID == "darklander_immortal_armor" then	
 							player:EmitSound("piggysqueals/transformation/"..math.random(1, 2)..".mp3");
 							player:Disorient(8)
-							timer.Create( "Squeal", 5.5, 1, function() netstream.Start(player, "Stunned", 3); end )
+							timer.Create( "Squeal", 5.5, 1, function() if(!IsValid(player)) then return; end netstream.Start(player, "Stunned", 3); end )
 							Clockwork.chatBox:AddInTargetRadius(player, "me", "writhes in agony as the sounds of bones snapping and flesh reshaping violently emanate from within their armor! Their cries of pain gradually transform into pig-like grunts, before they squeal out like a fresh little piggy ready for the slaughter!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
 						end
 						
