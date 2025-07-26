@@ -10866,4 +10866,4 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
-
+end
