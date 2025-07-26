@@ -442,10 +442,12 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 	FACTION.imposters = true;
 	FACTION.names = "goreic";
 	FACTION.subfactions = {
+
 		{
 			name = "Clan Gore",
 			subtitle = "Followers of the Father - Warriors and Hunters",
-			description = [[Clan Gore is currently known as the Crown Clan, a title given to the most powerful of all the Clans. Following the Father, Clan Gore was born by bloodshed and conquest. The previous Crown Clan and followers of the Father, Clan Ghorst, had a war chief who made the mistake of fathering a bastard child and leaving it to the wolves to be devoured. The boy was instead raised by these wolves and took on the name Reaper King Kalkaslash. With an army of skinwalkers and werewolves, Kalkaslash butchered his way into his father's long hall and shredded him into a bloody mess with his claws. From then on he seized his throne and forced the other Clans to kneel with his newly gained army of warrior men. For the next hundred years, Clan Gore would capture women by the thousands and breed new warriors to continue the cycle. The Father is harsh and unforgiving, but with his strength, empires will fall.]],
+			description = [[Clan Gore is currently known as the Crown Clan, a title given to the most powerful of all the Clans. Following the Father, Clan Gore was born by bloodshed and conquest. The previous Crown Clan and followers of the Father, Clan 
+    , had a war chief who made the mistake of fathering a bastard child and leaving it to the wolves to be devoured. The boy was instead raised by these wolves and took on the name Reaper King Kalkaslash. With an army of skinwalkers and werewolves, Kalkaslash butchered his way into his father's long hall and shredded him into a bloody mess with his claws. From then on he seized his throne and forced the other Clans to kneel with his newly gained army of warrior men. For the next hundred years, Clan Gore would capture women by the thousands and breed new warriors to continue the cycle. The Father is harsh and unforgiving, but with his strength, empires will fall.]],
 			rivalry = "Clan Grock",
 			attributes = {
 				{Color(0, 225, 0), "(+) Starts with +40 maximum health"},

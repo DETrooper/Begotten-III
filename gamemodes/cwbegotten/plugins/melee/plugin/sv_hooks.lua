@@ -620,7 +620,9 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 		if player:GetSubfaith() == "Voltism" and cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
 			player:EmitSound(voltistSounds["pain"][math.random(1, #voltistSounds["pain"])], 90, 150);
 		else
-			if (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers") then
+			if player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
+				player:EmitSound("piggysqueals/death/"..math.random(1, 3)..".ogg", 90, pitch)
+			elseif (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers") then
 				if (gender == "his") then
 					player:EmitSound("voice/man2/man2_stun0"..math.random(1, 4)..".wav", 90, pitch)
 				else
@@ -846,7 +848,7 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 				if IsValid(attackerWeapon) then
 					local weaponItemTable = item.GetByWeapon(attackerWeapon);
 					
-					if attackerWeapon.isJavelin and attacker:HasBelief("daring_trout") then
+					if damageInfo:GetInflictor().isJavelin and attacker:HasBelief("daring_trout") then
 						if attacker:GetNetVar("ThrustStance") != true then
 							entity:SetNetVar("runningDisabled", true);
 							timer.Create("GroundedSprintTimer_"..tostring(entity:EntIndex()), 8, 1, function()
@@ -941,6 +943,9 @@ function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 			if player:GetCharacterData("isThrall") then
 				player:EmitSound("apocalypse/screams/far"..math.random(1,6)..".wav", 90, pitch);
 				player.nextPainSound = CurTime()+0.5;
+			elseif player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
+				player:EmitSound("piggysqueals/pain/"..math.random(1, 5)..".ogg", 90, pitch)
+				player.nextPainSound = CurTime()+1;
 			elseif faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
 				if gender == "Male" then
 					player:EmitSound("voice/man2/man2_pain0"..math.random(1, 6)..".wav", 90, pitch)
@@ -1023,6 +1028,8 @@ function GM:PlayerPlayDeathSound(player, gender)
 		if player:GetCharacterData("isThrall") then
 			player:EmitSound("apocalypse/screams/far"..math.random(1,6)..".wav", 90, pitch);
 			player.nextPainSound = CurTime()+0.5;
+		elseif player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
+			player:EmitSound("piggysqueals/death/"..math.random(4, 6)..".ogg", 90, pitch)
 		elseif faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
 			if gender == "Male" then
 				player:EmitSound("voice/man2/man2_death0"..math.random(1, 9)..".wav", 90, pitch)

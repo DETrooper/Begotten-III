@@ -1426,7 +1426,7 @@ function Schema:Tick()
 	end
 	
 	RunConsoleCommand("r_3dsky", "1");
-	RunConsoleCommand("r_pixelfog", "1");
+	--RunConsoleCommand("r_pixelfog", "1");
 	RunConsoleCommand("mat_monitorgamma_tv_enabled", "0");
 
 	-- Something is fucked with our SWEPs that is causing clientside models to build up and tank FPS.
@@ -3154,7 +3154,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			end
 
 			if table.HasValue(itemTable.attributes, "lifeleech") then
-				frame:AddText("Lifeleech (Shieldless): 70% of damage dealt is returned as health", Color(110, 30, 30), nil, 0.9);
+				frame:AddText("Lifeleech (Shieldless): 100% of damage dealt is returned as health", Color(110, 30, 30), nil, 0.9);
 			end
 
 			if(table.HasValue(itemTable.attributes, "banner_blessing")) then

@@ -123,7 +123,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-1.41, 2, -16.27);
 	ITEM.bodygroup1 = 3;
 	
-	ITEM.components = {breakdownType = "breakdown", items = {"begotten_2h_great_sledge", "scrap", "tech", "tech"}};
+	ITEM.components = {breakdownType = "breakdown", items = {"scrap", "tech", "wood"}};
 	ITEM.requiredbeliefs = {"wriggle_fucking_eel"};
 ITEM:Register();
 
