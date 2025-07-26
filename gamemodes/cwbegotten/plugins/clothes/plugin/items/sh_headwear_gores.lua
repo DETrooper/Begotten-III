@@ -596,7 +596,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/goreridgehelm";
 	ITEM.requiredbeliefs = {"hauberk"};
-	ITEM.requiredSubfactions = {"Clan Harald"};
+	ITEM.requiredSubfactions = {"Clan Harald", "Clan Ghorst"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -670,7 +670,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.requiredFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/gorekingschosenhelmet";
-	ITEM.requiredSubfactions = {"Clan Harald"};
+	ITEM.requiredSubfactions = {"Clan Harald", "Clan Ghorst"};
 	ITEM.requiredRanks = {"King's Chosen"};
 	ITEM.requiredbeliefs = {"hauberk"};
 	
@@ -817,7 +817,8 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.category = "Helms"
 	ITEM.description = "A finely crafted ridge helm cushioned by boiled leather that smells of the sea. It bears the curse of Clan Harald."
 	ITEM.requiredFactions = {"Goreic Warrior"};
-	ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Crast", "Clan Reaver", "Clan Shagalax", "Clan Ghorst"};
+	ITEM.requiredSubfactions = {"Clan Harald", "Clan Ghorst"};
+	-- ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Crast", "Clan Reaver", "Clan Shagalax", "Clan Ghorst"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/goreridgehelm";
 	ITEM.requiredbeliefs = {"hauberk"};
