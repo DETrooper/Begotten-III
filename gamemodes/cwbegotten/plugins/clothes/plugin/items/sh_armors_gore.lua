@@ -74,7 +74,7 @@ ITEM.weightclass = "Light";
 ITEM.description = "Layers of hide and etched cloth resembling mystic robes. Tailored in the image of the ancient Blade Druid order that were the founders of Gore society and religion. Only those born under the image of The Mother are said to be fit to wear such robes.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.requiredFactions = {"Goreic Warrior"};
-ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan Harald", "Clan Reaver", "Clan Gotnarh", "Clan Ghorst"};
+ITEM.excludedSubfactions = {"Clan Grock", "Clan Gore", "Clan Shagalax", "Clan ", "Clan Reaver", "Clan Gotnarh", "Clan Ghorst"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -148,7 +148,7 @@ ITEM.description = "A bear pelt commonly worn by Gore Berserkers, the most fears
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.attributes = {"lifeleech", "rage"};
 ITEM.requiredFactions = {"Goreic Warrior"};
-ITEM.excludedSubfactions = {"Clan Grock", "Clan Crast", "Clan Shagalax", "Clan Harald", "Clan Reaver", "Clan Gotnarh"};
+ITEM.excludedSubfactions = {"Clan Grock", "Clan Crast", "Clan Shagalax", "Clan ", "Clan Reaver", "Clan Gotnarh"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_HEAD] = true,
@@ -954,7 +954,7 @@ ITEM.weightclass = "Medium";
 ITEM.description = "Sturdy chainmail that has been blessed by the Father, granting its user increased speed and vigor in battle. This style of armor is worn by aspiring warriors seeking to be remembered long after their death.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requiredFactions = {"Goreic Warrior", "Wanderer"};
-ITEM.requiredSubfactions = {"Clan Gore"};
+ITEM.requiredSubfactions = {"Clan Gore", "Clan Ghorst"};
 ITEM.kinisgerOverride = true;
 
 ITEM.effectiveLimbs = {
