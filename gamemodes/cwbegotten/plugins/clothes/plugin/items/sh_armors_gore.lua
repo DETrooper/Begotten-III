@@ -148,7 +148,8 @@ ITEM.description = "A bear pelt commonly worn by Gore Berserkers, the most fears
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 ITEM.attributes = {"lifeleech", "rage"};
 ITEM.requiredFactions = {"Goreic Warrior"};
-ITEM.excludedSubfactions = {"Clan Grock", "Clan Crast", "Clan Shagalax", "Clan ", "Clan Reaver", "Clan Gotnarh"};
+ITEM.requiredSubfactions = {"Clan Gore", "Clan Ghorst"};
+-- ITEM.excludedSubfactions = {"Clan Grock", "Clan Crast", "Clan Shagalax", "Clan ", "Clan Reaver", "Clan Gotnarh"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_HEAD] = true,
