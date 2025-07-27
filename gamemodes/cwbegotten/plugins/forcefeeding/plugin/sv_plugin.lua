@@ -38,8 +38,14 @@ function cwForceFeeding:ForceFeedPlayer(player, target, itemTable)
 			player:Uncloak();
 		end
 		
-		Clockwork.chatBox:AddInTargetRadius(player, "me", "begins force feeding a "..itemTable.name.." to the person before them.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
-		
+		if !player.cwObserverMode then
+			for k, v in pairs(ents.FindInSphere(player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
+				if v:IsPlayer() then
+					Clockwork.chatBox:Add(v, player, "me", "begins force feeding a "..itemTable.name.." to "..Clockwork.player:FormatRecognisedText(v, "%s", target)..".");
+				end
+			end
+		end
+
 		Clockwork.player:EntityConditionTimer(player, target, nil, consumeTime, 192, function()
 			if target:Alive() and player:Alive() and !player:IsRagdolled() and Clockwork.player:GetAction(player) == "force_feeding" then
 				return true;
