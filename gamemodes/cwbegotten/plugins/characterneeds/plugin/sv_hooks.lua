@@ -169,8 +169,36 @@ function cwCharacterNeeds:PlayerUseItem(player, itemTable, itemEntity)
 			if (k == "hunger" or k == "thirst") and subfaction == "Varazdat" then
 				if itemTable.uniqueID == "humanmeat" or itemTable.uniqueID == "cooked_human_meat" or itemTable.uniqueID == "canned_fresh_meat" or itemTable.uniqueID == "varazdat_bloodwine" or itemTable.uniqueID == "varazdat_masterclass_bloodwine" or itemTable.uniqueID == "blood_bottle" then
 					player:HandleNeed(k, -v);
+				else
+					timer.Simple(math.random(3, 8), function(player)
+						if IsValid(player) and player:Alive() then
+							player:Vomit(true);
+						end
+					end);
 				end
 			elseif subfaction ~= "Varazdat" then
+				if k == "hunger" and player:GetNeed("hunger") <= 5 then
+					if v >= 15 then
+						if math.random(math.min(math.Round(v / 4), 5), 5) == 5 then
+							timer.Simple(math.random(3, 8), function()
+								if IsValid(player) and player:Alive() then
+									player:Vomit();
+								end
+							end);
+						end
+					end
+				elseif k == "thirst" and player:GetNeed("thirst") <= 5 then
+					if v >= 15 then
+						if math.random(math.min(math.Round(v / 4), 5), 5) == 5 then
+							timer.Simple(math.random(3, 8), function()
+								if IsValid(player) and player:Alive() then
+									player:Vomit();
+								end
+							end);
+						end
+					end
+				end
+			
 				player:HandleNeed(k, -v);
 			end
 		end

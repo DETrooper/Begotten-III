@@ -2461,6 +2461,10 @@ end
 
 -- Called when a player attempts to use an item.
 function cwBeliefs:PlayerCanUseItem(player, itemTable, noMessage)
+	if Clockwork.player:HasFlags(player, "S") then
+		return;
+	end
+
 	if itemTable.requiredbeliefs then
 		for i = 1, #itemTable.requiredbeliefs do
 			local belief = itemTable.requiredbeliefs[i];

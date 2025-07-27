@@ -1337,6 +1337,14 @@ function Schema:KeyPress(player, key)
 								return;
 							end
 						end
+						
+						if player:GetMoveType() == MOVETYPE_WALK then
+							for k, v in pairs(ents.FindInSphere(player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
+								if v:IsPlayer() then
+									Clockwork.chatBox:Add(v, player, "me", "starts untying "..Clockwork.player:FormatRecognisedText(v, "%s", target)..".");
+								end
+							end
+						end
 					
 						Clockwork.player:SetAction(player, "untie", untieTime);
 						
@@ -1939,8 +1947,10 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 						plyTab.nextCorpseFieldCheck = curTime + 3;
 					end
 				end
+				
+				local drunk = player:GetNetVar("IsDrunk");
 			
-				if (player:HasTrait("clumsy")) then
+				if (player:HasTrait("clumsy") or (drunk and drunk >= 3)) then
 					if (player:IsRunning()) then
 						if (!plyTab.lastClumsyFallen or plyTab.lastClumsyFallen < curTime) then
 							if (math.random(1, 20) == 20) then
