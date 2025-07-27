@@ -12,7 +12,6 @@ local ITEM = item.New(nil, true);
 	ITEM.useText = "Wear"
 	ITEM.category = "Clothing"
 	ITEM.description = "A suitcase full of clothes."
-	--ITEM.equippable = false; -- this blocks equipping the item as a melee weapon.
 	ITEM.repairItem = "armor_repair_kit";
 	ITEM.slots = {"Armor"};
 	ITEM.equipmentSaveString = "clothes";
@@ -292,9 +291,55 @@ local ITEM = item.New(nil, true);
 			return false;
 		end
 	
-		if self.excludedFactions and #self.excludedFactions > 0 then
-			if (table.HasValue(self.excludedFactions, kinisgerOverride or faction)) then
-				if !self.includedSubfactions or #self.includedSubfactions < 1 or !table.HasValue(self.includedSubfactions, kinisgerOverrideSubfaction or subfaction) then
+		if !Clockwork.player:HasFlags(player, "S") then
+			if self.excludedFactions and #self.excludedFactions > 0 then
+				if (table.HasValue(self.excludedFactions, kinisgerOverride or faction)) then
+					if !self.includedSubfactions or #self.includedSubfactions < 1 or !table.HasValue(self.includedSubfactions, kinisgerOverrideSubfaction or subfaction) then
+						if !player.spawning then
+							Schema:EasyText(player, "chocolate", "You are not the correct faction to equip this armor!")
+						end
+						
+						return false
+					end
+				end
+			end
+			
+			if self.excludedSubfactions and #self.excludedSubfactions > 0 then
+				if (table.HasValue(self.excludedSubfactions, kinisgerOverrideSubfaction or subfaction)) then
+					if !player.spawning then
+						Schema:EasyText(player, "chocolate", "You are not the correct subfaction to equip this armor!")
+					end
+					
+					return false
+				end
+			end
+			
+			if self.requiredFaiths and #self.requiredFaiths > 0 then
+				if (!table.HasValue(self.requiredFaiths, player:GetFaith())) then
+					if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+						if !player.spawning then
+							Schema:EasyText(player, "chocolate", "You are not the correct faith to equip this armor!")
+						end
+						
+						return false
+					end
+				end
+			end
+			
+			if self.requiredSubfaiths and #self.requiredSubfaiths > 0 then
+				if (!table.HasValue(self.requiredSubfaiths, player:GetSubfaith())) then
+					if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+						if !player.spawning then
+							Schema:EasyText(player, "chocolate", "You are not the correct subfaith to equip this armor!")
+						end
+						
+						return false
+					end
+				end
+			end
+			
+			if self.requiredFactions and #self.requiredFactions > 0 then
+				if (!table.HasValue(self.requiredFactions, faction) and (!kinisgerOverride or !table.HasValue(self.requiredFactions, kinisgerOverride))) then
 					if !player.spawning then
 						Schema:EasyText(player, "chocolate", "You are not the correct faction to equip this armor!")
 					end
@@ -302,74 +347,30 @@ local ITEM = item.New(nil, true);
 					return false
 				end
 			end
-		end
-		
-		if self.excludedSubfactions and #self.excludedSubfactions > 0 then
-			if (table.HasValue(self.excludedSubfactions, kinisgerOverrideSubfaction or subfaction)) then
-				if !player.spawning then
-					Schema:EasyText(player, "chocolate", "You are not the correct subfaction to equip this armor!")
-				end
-				
-				return false
-			end
-		end
-		
-		if self.requiredFaiths and #self.requiredFaiths > 0 then
-			if (!table.HasValue(self.requiredFaiths, player:GetFaith())) then
-				if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
-					if !player.spawning then
-						Schema:EasyText(player, "chocolate", "You are not the correct faith to equip this armor!")
-					end
-					
-					return false
-				end
-			end
-		end
-		
-		if self.requiredSubfaiths and #self.requiredSubfaiths > 0 then
-			if (!table.HasValue(self.requiredSubfaiths, player:GetSubfaith())) then
-				if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
-					if !player.spawning then
-						Schema:EasyText(player, "chocolate", "You are not the correct subfaith to equip this armor!")
-					end
-					
-					return false
-				end
-			end
-		end
-		
-		if self.requiredFactions and #self.requiredFactions > 0 then
-			if (!table.HasValue(self.requiredFactions, faction) and (!kinisgerOverride or !table.HasValue(self.requiredFactions, kinisgerOverride))) then
-				if !player.spawning then
-					Schema:EasyText(player, "chocolate", "You are not the correct faction to equip this armor!")
-				end
-				
-				return false
-			end
-		end
-		
-		if self.requiredSubfactions and #self.requiredSubfactions > 0 then
-			if (!table.HasValue(self.requiredSubfactions, subfaction) and (!kinisgerOverrideSubfaction or !table.HasValue(self.requiredSubfactions, kinisgerOverrideSubfaction))) then
-				if !player.spawning then
-					Schema:EasyText(player, "peru", "You are not the correct subfaction to equip this armor!")
-				end
-				
-				return false
-			end
-		end
-		
-		if self.requiredRanks and #self.requiredRanks > 0 then
-			local rank = player:GetCharacterData("rank", 1);
 			
-			if Schema.Ranks[faction] then
-				local rankString = Schema.Ranks[faction][rank];
+			if self.requiredSubfactions and #self.requiredSubfactions > 0 then
+				if (!table.HasValue(self.requiredSubfactions, subfaction) and (!kinisgerOverrideSubfaction or !table.HasValue(self.requiredSubfactions, kinisgerOverrideSubfaction))) then
+					if !player.spawning then
+						Schema:EasyText(player, "peru", "You are not the correct subfaction to equip this armor!")
+					end
+					
+					return false
+				end
+			end
+			
+			if self.requiredRanks and #self.requiredRanks > 0 then
+				local rank = player:GetCharacterData("rank", 1);
 				
-				if rankString then
-					if (!table.HasValue(self.requiredRanks, rankString)) then
-						if !player.spawning then
-							Schema:EasyText(player, "peru", "You are not the correct rank to wear this!")
-						
-							return false;
+				if Schema.Ranks[faction] then
+					local rankString = Schema.Ranks[faction][rank];
+					
+					if rankString then
+						if (!table.HasValue(self.requiredRanks, rankString)) then
+							if !player.spawning then
+								Schema:EasyText(player, "peru", "You are not the correct rank to wear this!")
+							
+								return false;
+							end
 						end
 					end
 				end
@@ -384,7 +385,7 @@ local ITEM = item.New(nil, true);
 				return false
 			end
 		end
-
+		
 		if (player:Alive() and !player:IsRagdolled()) then
 			local clothesItem = player:GetClothesEquipped();
 			

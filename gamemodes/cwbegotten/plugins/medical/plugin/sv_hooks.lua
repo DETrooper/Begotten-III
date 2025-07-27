@@ -400,82 +400,9 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 						local random_symptom = valid_symptoms[math.random(1, #valid_symptoms)];
 						
 						if random_symptom == "Vomiting" and not plyTab.iFrames then
-							local playerPos = player:GetPos();
-							local boneIndex = player:LookupBone("ValveBiped.Bip01_Head1");
-							local headPos, boneAng = player:GetBonePosition(boneIndex);
-							local strings = {"suddenly throws up on the ground, hurling vomit everywhere!", "vomits onto the ground!", "gags and then vomits all over the ground!"};
-							
-							if cwCharacterNeeds and player.HandleNeed then
-								player:HandleNeed("hunger", 5);
-								player:HandleNeed("thirst", 5);
-							end
-							
-							player:Freeze(true);
-							player:EmitSound("misc/splat.ogg", 60, math.random(80, 95));
-							--ParticleEffect("vomit_barnacle", headPos + (player:GetForward() * 8) - Vector(0, 0, 1), Angle(90, 0, 0), player);
-							--ParticleEffect("vomit_barnacle_b", headPos + (player:GetForward() * 8) - Vector(0, 0, 1), Angle(90, 0, 0), player);
-							ParticleEffect("blood_advisor_shrapnel_spray_2", headPos + (player:GetForward() * 8) - Vector(0, 0, 1), player:EyeAngles(), player);
-							util.Decal("BeerSplash", playerPos - Vector(0, 0, 2), playerPos + Vector(0, 0, 2));
-							
-							timer.Simple(3, function()
-								if IsValid(player) then
-									player:Freeze(false);
-									
-									if player:Alive() then
-										local curse_strings = {"Fuck...", "Cocksucker...", "Shit...", "Fuck's sake...", "Gah..."};
-										
-										Clockwork.chatBox:Add(player, nil, "itnofake", curse_strings[math.random(1, #curse_strings)]);
-									end
-								end
-							end);
-							
-							if #contagious_diseases > 0 then
-								for k, v in pairs (ents.FindInSphere(player:GetPos(), 128)) do
-									if (v:IsPlayer() and not v.cwObserverMode) then
-										player:InfectOtherPlayer(v, contagious_diseases, 80);
-									end;
-								end;
-							end;
-							
-							Clockwork.chatBox:AddInTargetRadius(player, "me", strings[math.random(1, #strings)], player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+							player:Vomit();
 						elseif random_symptom == "Vomiting Blood" and not plyTab.iFrames then
-							local playerPos = player:GetPos();
-							local boneIndex = player:LookupBone("ValveBiped.Bip01_Head1");
-							local headPos, boneAng = player:GetBonePosition(boneIndex);
-							local strings = {"suddenly throws blood up on the ground!", "vomits blood onto the ground!", "gags and then vomits blood all over the ground!"};
-							
-							if cwCharacterNeeds and player.HandleNeed then
-								player:HandleNeed("hunger", 5);
-								player:HandleNeed("thirst", 5);
-							end
-							
-							player:ModifyBloodLevel(-25);
-							player:Freeze(true);
-							player:EmitSound("misc/splat.ogg", 60, math.random(80, 95));
-							ParticleEffect("blood_advisor_puncture_withdraw", headPos + (player:GetForward() * 8) - Vector(0, 0, 1), Angle(180, 0, 0), player);
-							util.Decal("BloodLarge", playerPos - Vector(0, 0, 2), playerPos + Vector(0, 0, 2));
-							
-							timer.Simple(3, function()
-								if IsValid(player) then
-									player:Freeze(false);
-									
-									if player:Alive() then
-										local curse_strings = {"Fuck...", "Cocksucker...", "Shit...", "Fuck's sake...", "Gah..."};
-										
-										Clockwork.chatBox:Add(player, nil, "itnofake", curse_strings[math.random(1, #curse_strings)]);
-									end
-								end
-							end);
-							
-							if #contagious_diseases > 0 then
-								for k, v in pairs (ents.FindInSphere(player:GetPos(), 128)) do
-									if (v:IsPlayer() and not v.cwObserverMode) then
-										player:InfectOtherPlayer(v, contagious_diseases, 80);
-									end;
-								end;
-							end;
-							
-							Clockwork.chatBox:AddInTargetRadius(player, "me", strings[math.random(1, #strings)], player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);	
+							player:Vomit(true);
 						elseif random_symptom == "Coughing" then
 							local strings = {"coughs!", "hacks and wheezes!", "begins coughing loudly!"};
 							
@@ -537,7 +464,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 							messupChance = (messupChance or 0) + 40;
 						end
 						
-						if plyTab.playerPerformingSurgery:HasTrait("clumsy") then
+						if plyTab.playerPerformingSurgery:HasTrait("clumsy") or plyTab.playerPerformingSurgery:GetNetVar("IsDrunk") then
 							messupChance = (messupChance or 0) + 40;
 						end
 						
@@ -545,9 +472,9 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 							messupChance = math.min(messupChance, 90); -- There's always a 10% chance minimum to succeed.
 						
 							if math.random(1, 20) == 1 and player:GetRagdollState() ~= RAGDOLL_KNOCKEDOUT then
-								if !player:HasTrait("leper") then
+								if !player:HasTrait("leper") and !player:GetNetVar("IsDrunk") then
 									if cwSanity then
-										player:HandleSanity(-2);
+										player:HandleSanity(math.random(-5, -10));
 									end
 									
 									Clockwork.chatBox:AddInTargetRadius(player, "me", "screams in pain!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);

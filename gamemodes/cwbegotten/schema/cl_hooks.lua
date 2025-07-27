@@ -687,6 +687,10 @@ function Schema:GetProgressBarInfoAction(action, percentage)
 		return {text = "You are filling a bucket. Click to cancel.", percentage = percentage, flash = percentage < 10};
 	elseif (action == "filling_bottle") then
 		return {text = "You are filling a bottle. Click to cancel.", percentage = percentage, flash = percentage < 10};
+	elseif (action == "tie") then
+		return {text = "You are tying someone up.", percentage = percentage, flash = percentage < 10};
+	elseif (action == "untie") then
+		return {text = "You are untying someone.", percentage = percentage, flash = percentage < 10};
 	end;
 end;
 
@@ -1307,6 +1311,14 @@ function Schema:ModifyStatusEffects(tab)
 
 	if Clockwork.Client:HasTrait("crosseyed") then
 		table.insert(tab, {text = "(-) Cross Eyed", color = Color(200, 40, 40)});
+	end
+	
+	if Clockwork.Client:GetNetVar("IsDrunk") then
+		if Clockwork.Client:GetNetVar("IsDrunk") < 3 then
+			table.insert(tab, {text = "(-) Slightly Drunk", color = Color(200, 40, 40)});
+		else
+			table.insert(tab, {text = "(-) Drunk", color = Color(200, 40, 40)});
+		end
 	end
 	
 	if Clockwork.Client:HasTrait("followed") then

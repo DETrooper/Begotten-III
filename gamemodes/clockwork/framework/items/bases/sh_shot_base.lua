@@ -12,7 +12,6 @@ local ITEM = item.New(nil, true);
 	ITEM.category = "Shot"
 	ITEM.roundsText = "Bullets"
 	ITEM:AddData("Rounds", 1, true) -- default to 1 round
-	ITEM.equippable = false; -- this blocks equipping the item as a melee weapon.
 	ITEM.ammoMagazineSize = nil;
 	ITEM.requiredReloadBelief = nil;
 	

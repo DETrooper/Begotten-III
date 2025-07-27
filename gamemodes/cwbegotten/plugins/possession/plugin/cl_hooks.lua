@@ -67,6 +67,11 @@ function cwPossession:GetScreenTextInfo()
 				alpha = 255 - blackFadeAlpha,
 				title = "YOUR VESSEL HAS BEEN TIED UP"
 			};
+		elseif (Clockwork.Client.victim:GetNetVar("beingForceFed")) then
+			return {
+				alpha = 255 - blackFadeAlpha,
+				title = "YOUR VESSEL IS BEING FORCE FED"
+			};
 		end;
 	end
 end
