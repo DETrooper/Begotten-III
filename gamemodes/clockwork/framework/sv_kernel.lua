@@ -1474,11 +1474,11 @@ function playerMeta:Ignite(length, radius)
 	
 	local curTime = CurTime();
 	
-	if !self.igniteTime or self.igniteTime <= curTime then
-		self.igniteTime = curTime + length;
-	else
-		self.igniteTime = self.igniteTime + length;
-	end
+    if (self:IsRagdolled()) then
+        self:GetRagdollEntity():Ignite(length, radius);
+    else
+        self:ClockworkIgnite(length, radius)
+    end
 	
 	length = self.igniteTime - curTime;
 
