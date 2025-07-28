@@ -473,7 +473,7 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		if (player.isChloroforming) then
+		if Clockwork.player:GetAction(player) == "chloroform" then
 			Schema:EasyText(player, "peru", "You are already tying a character!");
 			
 			return false;
@@ -507,13 +507,9 @@ local ITEM = Clockwork.item:New();
 							end;
 						end, function(success)
 							if (success) then
-								player.isChloroforming = nil;
-								
 								Clockwork.player:SetRagdollState(target, RAGDOLL_KNOCKEDOUT, 240);
 								
 								player:TakeItem(self, true);
-							else
-								player.isChloroforming = nil;
 							end;
 							
 							Clockwork.player:SetAction(player, "chloroform", false);
@@ -529,8 +525,6 @@ local ITEM = Clockwork.item:New();
 					end;
 					
 					Clockwork.player:SetMenuOpen(player, false);
-					
-					player.isChloroforming = true;
 					
 					return false;
 				else
