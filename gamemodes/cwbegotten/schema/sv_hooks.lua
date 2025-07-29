@@ -1292,7 +1292,9 @@ local voltistSounds = {"npc/scanner/combat_scan4.wav", "npc/scanner/combat_scan5
 local voltistYellSounds = {"npc/scanner/scanner_siren2.wav", "npc/scanner/scanner_pain2.wav", "npc/stalker/go_alert2.wav"};
 
 function Schema:PlayerSayICEmitSound(player)
-	if player:GetSubfaith() == "Voltism" then
+	if player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
+		player:EmitSound("piggysqueals/talk/wretch_tunnels_amb_idle_0"..math.random(1, 5)..".ogg", 90, math.random(95, 110))
+	elseif player:GetSubfaith() == "Voltism" then
 		if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
 			if !Clockwork.player:HasFlags(player, "T") then
 				player:EmitSound(voltistSounds[math.random(1, #voltistSounds)], 90, 150);
@@ -1302,7 +1304,9 @@ function Schema:PlayerSayICEmitSound(player)
 end
 
 function Schema:PlayerYellEmitSound(player)
-	if player:GetSubfaith() == "Voltism" then
+	if player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
+		player:EmitSound("piggysqueals/yell/wretch_tunnels_amb_alert_0"..math.random(1, 3)..".ogg", 90, math.random(95, 110))
+	elseif player:GetSubfaith() == "Voltism" then
 		if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
 			if !Clockwork.player:HasFlags(player, "T") then
 				player:EmitSound(voltistYellSounds[math.random(1, #voltistYellSounds)], 90, 150);
@@ -1331,6 +1335,14 @@ function Schema:KeyPress(player, key)
 						for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
 							if (v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler") or (v:GetClass() == "cw_bounty_board" and target:IsWanted()) then
 								return;
+							end
+						end
+						
+						if player:GetMoveType() == MOVETYPE_WALK then
+							for k, v in pairs(ents.FindInSphere(player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
+								if v:IsPlayer() then
+									Clockwork.chatBox:Add(v, player, "me", "starts untying "..Clockwork.player:FormatRecognisedText(v, "%s", target)..".");
+								end
 							end
 						end
 					
@@ -1818,7 +1830,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 			end;
 			
 			if (plyTab.bWasInAir) then
-				if (waterLevel >= 1 and waterLevel < 3) then
+				if (waterLevel >= 1) then
 					hook.Run("HitGroundWater", player, plyTab.bWasInAir);
 				end;
 				
@@ -1826,7 +1838,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 			end;
 		else
 			if (plyTab.bWasInAir) then
-				if (waterLevel >= 1 and waterLevel < 3) then
+				if (waterLevel >= 1) then
 					hook.Run("HitGroundWater", player, plyTab.bWasInAir);
 					
 					plyTab.bWasInAir = nil;
@@ -1935,8 +1947,10 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 						plyTab.nextCorpseFieldCheck = curTime + 3;
 					end
 				end
+				
+				local drunk = player:GetNetVar("IsDrunk");
 			
-				if (player:HasTrait("clumsy")) then
+				if (player:HasTrait("clumsy") or (drunk and drunk >= 3)) then
 					if (player:IsRunning()) then
 						if (!plyTab.lastClumsyFallen or plyTab.lastClumsyFallen < curTime) then
 							if (math.random(1, 20) == 20) then
@@ -1996,9 +2010,9 @@ end;
 -- Called when a player hits water.
 function Schema:HitGroundWater(player, airZ)
 	local position = player:GetPos();
-	local difference = math.abs(position.z - airZ);
+	local difference = airZ - position.z
 	
-	if (difference > 512) then
+	if (difference > 192) then
 		local world = GetWorldEntity();
 		local damageInfo = DamageInfo();
 			damageInfo:SetDamageType(DMG_FALL);

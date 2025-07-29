@@ -40,7 +40,9 @@ function Schema:GetMotionBlurValues(x, y, forward, spin)
 	local blurValue = 0;
 	
 	if (Clockwork.ConVars.SHOWBLUR:GetInt() != 1) then
-		return;
+		if Clockwork.Client:IsAdmin() then
+			return
+		end
 	end;
 	
 	-- Make sure they aren't in char creation.

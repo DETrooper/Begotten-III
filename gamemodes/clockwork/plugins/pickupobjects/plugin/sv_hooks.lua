@@ -348,6 +348,11 @@ function cwPickupObjects:CanHandsPickupEntity(player, entity, trace)
 		return false;
 	end
 	
+	if player.teleporting then
+		Schema:EasyText(player, "grey", "You cannot interact with entities while in the process of teleporting!");
+		return false;
+	end
+	
 	if (IsValid(entity:GetPhysicsObject()) and entity:GetSolid() == SOLID_VPHYSICS) then
 		if (entity:GetClass() == "prop_ragdoll" or entity:GetPhysicsObject():GetMass() <= 100) then
 			if (entity:GetPhysicsObject():IsMoveable() and !IsValid(entity.cwHoldingGrab)) then

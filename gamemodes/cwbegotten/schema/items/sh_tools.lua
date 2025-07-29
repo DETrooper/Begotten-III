@@ -493,6 +493,7 @@ local ITEM = Clockwork.item:New();
 										end
 									end
 								end
+								
 								Clockwork.player:SetAction(player, "tie", tieTime);
 								
 								Clockwork.player:EntityConditionTimer(player, target, trace.Entity, tieTime, 192, function()

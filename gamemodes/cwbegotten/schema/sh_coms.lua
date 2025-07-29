@@ -1888,7 +1888,9 @@ local COMMAND = Clockwork.command:New("Proclaim");
 				if player.victim and IsValid(player.victim) then
 					Clockwork.chatBox:AddInRadius(player.victim, "proclaim", text, player.victim:GetPos(), config.Get("talk_radius"):Get() * 4);
 					
-					if player.victim:GetSubfaith() == "Voltism" then
+					if player.victim:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
+						player.victim:EmitSound("piggysqueals/yell/wretch_tunnels_amb_alert_0"..math.random(1, 3)..".ogg", 90, math.random(95, 110))
+					elseif player.victim:GetSubfaith() == "Voltism" then
 						if cwBeliefs and (player.victim:HasBelief("the_storm") or player.victim:HasBelief("the_paradox_riddle_equation")) then
 							if !Clockwork.player:HasFlags(player.victim, "T") then
 								player.victim:EmitSound(voltistSounds[math.random(1, #voltistSounds)], 90, 150);
@@ -1904,7 +1906,9 @@ local COMMAND = Clockwork.command:New("Proclaim");
 				else
 					Clockwork.chatBox:AddInRadius(player, "proclaim", text, player:GetPos(), config.Get("talk_radius"):Get() * 4);
 					
-					if player:GetSubfaith() == "Voltism" then
+					if player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
+						player:EmitSound("piggysqueals/yell/wretch_tunnels_amb_alert_0"..math.random(1, 3)..".ogg", 90, math.random(95, 110))
+					elseif player:GetSubfaith() == "Voltism" then
 						if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
 							if !Clockwork.player:HasFlags(player, "T") then
 								player:EmitSound(voltistSounds[math.random(1, #voltistSounds)], 90, 150);
