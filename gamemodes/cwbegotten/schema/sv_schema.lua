@@ -412,6 +412,15 @@ Schema.doors = {
 			"pope_reception_shutter",
 			"Bunker",
 		},
+		["hell"] = {
+			"hellexecution_1",
+			"hellexecution_2",
+			"hellexecution_3",
+			"hellexecution_4",
+			"hellexecution_5",
+			"hellexecution_6",
+			"hellexecution_7",
+		},
 	},
 	["rp_district21"] = {
 		["forge"] = {
