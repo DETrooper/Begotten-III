@@ -54,6 +54,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.stackable = true;
 	ITEM.cauldronLiquidity = 1;
 	ITEM.cauldronQuality = 1;
+	ITEM.expireTime = 120;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 600, bNoSupercrate = true};
 	ITEM.needs = {hunger = 5, thirst = 35};
@@ -61,6 +62,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		Schema:EasyText(player, "olivedrab", "This drink has no taste, but it makes you feel very good.");
+		Clockwork.player:SetDrunk(player, self.expireTime)
 		player:HandleSanity(5);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
@@ -76,6 +78,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.stackable = true;
 	ITEM.cauldronLiquidity = 1;
 	ITEM.cauldronQuality = 1;
+	ITEM.expireTime = 120;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 600, bNoSupercrate = true};
 	ITEM.needs = {hunger = 10, thirst = 20};
@@ -83,6 +86,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		Schema:EasyText(player, "olivedrab", "This drink tastes like shit, but it still makes you feel good! How weird!");
+		Clockwork.player:SetDrunk(player, self.expireTime)
 		player:HandleSanity(10);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
@@ -99,6 +103,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.cauldronLiquidity = 1;
 	ITEM.cauldronQuality = -1;
 	ITEM.cauldronPoison = true;
+	ITEM.expireTime = 30;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 675, bNoSupercrate = true};
 	ITEM.needs = {thirst = 50};
@@ -114,6 +119,8 @@ local ITEM = Clockwork.item:New("alcohol_base");
 			Schema:EasyText(player, "maroon", "In some suicidal rage, you decide to chug the corpsebrew. You stop halfway, as you feel your insides melt and your throat ignite.");
 			player:ScriptedDeath("Chugged some Corpsebrew and became a corpse.");
 		end
+		
+		Clockwork.player:SetDrunk(player, self.expireTime)
 	end;
 ITEM:Register();
 
@@ -179,6 +186,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.stackable = true;
 	ITEM.cauldronLiquidity = 1;
 	ITEM.cauldronQuality = 1;
+	ITEM.expireTime = 240;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1150};
 	ITEM.needs = {hunger = 5, thirst = 50};
@@ -186,6 +194,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
 		Schema:EasyText(player, "lawngreen", "This drink tastes good! You feel really good too!");
+		Clockwork.player:SetDrunk(player, self.expireTime)
 		player:HandleSanity(20);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
@@ -927,6 +936,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.needs = {thirst = 50};
 	ITEM.uniqueID = "dirty_water_bucket";
 	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/bucket.png"
+	ITEM.infectchance = 60;
 	ITEM.cauldronQuality = -3;
 	
 	function ITEM:OnSetup()

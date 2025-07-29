@@ -1471,16 +1471,28 @@ end
 -- A function to ignite a player.
 function playerMeta:Ignite(length, radius)
 	if hook.Run("PlayerCanBeIgnited", self) == false then return false end;
-
-	if (self:IsRagdolled()) then
-		self:GetRagdollEntity():Ignite(length, radius);
+	
+	local curTime = CurTime();
+	
+	if !self.igniteTime or self.igniteTime <= curTime then
+		self.igniteTime = curTime + length;
+	else
+		self.igniteTime = self.igniteTime + length;
 	end
 	
-	self:ClockworkIgnite(length, radius)
+	length = self.igniteTime - curTime;
+
+    if (self:IsRagdolled()) then
+        self:GetRagdollEntity():Ignite(length, radius);
+    else
+        self:ClockworkIgnite(length, radius)
+    end
 end
 
 -- A function to extinguish a player.
 function playerMeta:Extinguish()
+	self.igniteTime = nil;
+
 	if (self:IsRagdolled()) then
 		return self:GetRagdollEntity():Extinguish()
 	else

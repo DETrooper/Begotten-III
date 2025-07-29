@@ -623,92 +623,10 @@ function COMMAND:OnRun(player, arguments)
 	local target = Clockwork.player:FindByID(arguments[1])
 	
 	if (target) then
-		local contagious_diseases = {};
-		
-		for i, disease in ipairs(target:GetCharacterData("diseases", {})) do
-			local diseaseID = disease.uniqueID;
-			local diseaseTable = cwMedicalSystem:FindDiseaseByID(diseaseID);
-			
-			if diseaseTable and diseaseTable.contagious then
-				table.insert(contagious_diseases, diseaseID);
-			end
-		end
-		
-		local targetPos = target:GetPos();
-		local boneIndex = target:LookupBone("ValveBiped.Bip01_Head1");
-		local headPos, boneAng = target:GetBonePosition(boneIndex);
-		
-		if !arguments[2] then
-			local strings = {"suddenly throws up on the ground, hurling vomit everywhere!", "vomits onto the ground!", "gags and then vomits all over the ground!"};
-			
-			if cwCharacterNeeds and target.HandleNeed then
-				target:HandleNeed("hunger", 5);
-				target:HandleNeed("thirst", 5);
-			end
-			
-			target:Freeze(true);
-			target:EmitSound("misc/splat.ogg", 60, math.random(80, 95));
-			--ParticleEffect("vomit_barnacle", headPos + (target:GetForward() * 8) - Vector(0, 0, 1), Angle(90, 0, 0), target);
-			--ParticleEffect("vomit_barnacle_b", headPos + (target:GetForward() * 8) - Vector(0, 0, 1), Angle(90, 0, 0), target);
-			ParticleEffect("blood_advisor_shrapnel_spray_2", headPos + (target:GetForward() * 8) - Vector(0, 0, 1), target:EyeAngles(), target);
-			util.Decal("BeerSplash", targetPos - Vector(0, 0, 2), targetPos + Vector(0, 0, 2));
-			
-			timer.Simple(3, function()
-				if IsValid(target) then
-					target:Freeze(false);
-					
-					if target:Alive() then
-						local curse_strings = {"Fuck...", "Cocksucker...", "Shit...", "Fuck's sake...", "Gah..."};
-						
-						Clockwork.chatBox:Add(target, nil, "itnofake", curse_strings[math.random(1, #curse_strings)]);
-					end
-				end
-			end);
-			
-			if #contagious_diseases > 0 then
-				for k, v in pairs (ents.FindInSphere(target:GetPos(), 128)) do
-					if (v:IsPlayer() and not v.cwObserverMode) then
-						target:InfectOtherPlayer(v, contagious_diseases, 80);
-					end;
-				end;
-			end;
-			
-			Clockwork.chatBox:AddInTargetRadius(target, "me", strings[math.random(1, #strings)], target:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+		if arguments[2] then
+			target:Vomit(true);
 		else
-			local strings = {"suddenly throws blood up on the ground!", "vomits blood onto the ground!", "gags and then vomits blood all over the ground!"};
-			
-			if cwCharacterNeeds and target.HandleNeed then
-				target:HandleNeed("hunger", 5);
-				target:HandleNeed("thirst", 5);
-			end
-			
-			target:ModifyBloodLevel(-25);
-			target:Freeze(true);
-			target:EmitSound("misc/splat.ogg", 60, math.random(80, 95));
-			ParticleEffect("blood_advisor_puncture_withdraw", headPos + (target:GetForward() * 8) - Vector(0, 0, 1), Angle(180, 0, 0), target);
-			util.Decal("BloodLarge", targetPos - Vector(0, 0, 2), targetPos + Vector(0, 0, 2));
-			
-			timer.Simple(3, function()
-				if IsValid(target) then
-					target:Freeze(false);
-					
-					if target:Alive() then
-						local curse_strings = {"Fuck...", "Cocksucker...", "Shit...", "Fuck's sake...", "Gah..."};
-						
-						Clockwork.chatBox:Add(target, nil, "itnofake", curse_strings[math.random(1, #curse_strings)]);
-					end
-				end
-			end);
-			
-			if #contagious_diseases > 0 then
-				for k, v in pairs (ents.FindInSphere(target:GetPos(), 128)) do
-					if (v:IsPlayer() and not v.cwObserverMode) then
-						target:InfectOtherPlayer(v, contagious_diseases, 80);
-					end;
-				end;
-			end;
-			
-			Clockwork.chatBox:AddInTargetRadius(target, "me", strings[math.random(1, #strings)], target:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+			target:Vomit();
 		end
 		
 		if (player != target) then

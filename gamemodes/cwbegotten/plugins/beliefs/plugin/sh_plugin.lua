@@ -1630,10 +1630,6 @@ function COMMAND:OnRun(player, arguments)
 									player:TakeDamage(damage);
 									Clockwork.chatBox:AddInTargetRadius(player, "me", "flagellates "..selfless.." with an unlit lantern!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 									player.nextFlagellate = curTime + 1;
-									
-									if cwStamina then
-										player:HandleStamina(damage * 2); -- Fix this later (does not account for damage buffs)
-									end
 									return true;
 								else
 									Schema:EasyText(player, "firebrick", "You cannot flagellate yourself to death!");
@@ -1678,14 +1674,6 @@ function COMMAND:OnRun(player, arguments)
 						
 						if attacksoundtable then
 							player:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])]);
-						end
-						
-						if cwStamina then
-							if activeWeapon:GetClass() == "begotten_1h_ironflail" or activeWeapon:GetClass() == "begotten_1h_solflail" then -- Flails give more stamina when flagellating!
-								player:HandleStamina(d:GetDamage() * 4); -- Fix this later (does not account for damage buffs)
-							else
-								player:HandleStamina(d:GetDamage() * 2); -- Fix this later (does not account for damage buffs)
-							end
 						end
 						
 						if cwSanity then
