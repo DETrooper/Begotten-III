@@ -1979,6 +1979,10 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 			level = level + 16;
 			data["beliefs"]["primevalism"] = true;
 			character.subfaith = "Primevalism";
+		elseif subfaction == "Crypt Walkers" then
+			level = level + 14
+			data["beliefs"]["primevalism"] = true;
+			character.subfaith = "Primevalism";
 		end
 	elseif faction == "Gatekeeper" then
 		if subfaction == "Auxiliary" then
