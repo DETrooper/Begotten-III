@@ -101,7 +101,7 @@ function playerMeta:HandleNeed(need, amount)
 			end
 		
 			if need == "hunger" then
-				if cwBeliefs and self:HasBelief("yellow_and_black") and amount > 0 then
+				if self:GetSubfaction() == "Crypt Walkers" or cwBeliefs and self:HasBelief("yellow_and_black") and amount > 0 then
 					return;
 				end
 				
@@ -134,7 +134,7 @@ function playerMeta:HandleNeed(need, amount)
 					Clockwork.chatBox:Add(self, nil, "itnofake", "I feel hungry.");
 				end;
 			elseif need == "thirst" then
-				if cwBeliefs and self:HasBelief("yellow_and_black") and amount > 0 then
+				if self:GetSubfaction() == "Crypt Walkers" or (cwBeliefs and self:HasBelief("yellow_and_black") and amount > 0) then
 					return;
 				end
 			
