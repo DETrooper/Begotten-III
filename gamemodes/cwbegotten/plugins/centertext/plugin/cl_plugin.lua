@@ -53,6 +53,7 @@ netstream.Hook("cwPrintTextCenter", function(data)
 	local class = data[4] or "center";
 	
 	cwCenterText:PrintTextCenter(text, delay, color, class);
+	Clockwork.kernel:PrintColoredText(color, "[CENTERTEXT] "..text);
 end);
 
 surface.CreateFont("AHintHeader", {
