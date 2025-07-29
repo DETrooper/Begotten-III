@@ -1482,11 +1482,11 @@ function playerMeta:Ignite(length, radius)
 	
 	length = self.igniteTime - curTime;
 
-	if (self:IsRagdolled()) then
-		self:GetRagdollEntity():Ignite(length, radius);
-	end
-	
-	self:ClockworkIgnite(length, radius)
+    if (self:IsRagdolled()) then
+        self:GetRagdollEntity():Ignite(length, radius);
+    else
+        self:ClockworkIgnite(length, radius)
+    end
 end
 
 -- A function to extinguish a player.

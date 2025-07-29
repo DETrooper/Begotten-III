@@ -481,12 +481,14 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 									conditionLoss = conditionLoss * 2.5
 								end
 								
-								if activeWeapon.hasPuncture == true and attacker:HasBelief("might") then
-									conditionLoss = conditionLoss * 2
-								end
-								
-								if player:HasBelief("scour_the_rust") then
-									conditionLoss = conditionLoss / 1.55;
+								if attacker.HasBelief then
+									if activeWeapon.hasPuncture == true and attacker:HasBelief("might") then
+										conditionLoss = conditionLoss * 2
+									end
+									
+									if player:HasBelief("scour_the_rust") then
+										conditionLoss = conditionLoss / 1.55;
+									end
 								end
 							end
 						end

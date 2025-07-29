@@ -170,7 +170,7 @@ function cwCharacterNeeds:PlayerUseItem(player, itemTable, itemEntity)
 				if itemTable.uniqueID == "humanmeat" or itemTable.uniqueID == "cooked_human_meat" or itemTable.uniqueID == "canned_fresh_meat" or itemTable.uniqueID == "varazdat_bloodwine" or itemTable.uniqueID == "varazdat_masterclass_bloodwine" or itemTable.uniqueID == "blood_bottle" then
 					player:HandleNeed(k, -v);
 				else
-					timer.Simple(math.random(3, 8), function(player)
+					timer.Simple(math.random(3, 8), function()
 						if IsValid(player) and player:Alive() then
 							player:Vomit(true);
 						end
