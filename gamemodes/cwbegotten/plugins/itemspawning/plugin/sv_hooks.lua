@@ -484,6 +484,8 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 							Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
 							
 							Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..itemInstance.name.." added to their loot container from the 'Fortune' belief tree finisher bonus");
+							
+							Clockwork.chatBox:Add(player, nil, "it", "You feel very fortunate indeed!");
 						end
 					end
 				end
@@ -554,6 +556,8 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 					Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
 					
 					Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..itemInstance.name.." added to their loot container from a belief, trait, or charm!");
+					
+					Clockwork.chatBox:Add(player, nil, "it", "You feel lucky.");
 				end
 			end
 		end
