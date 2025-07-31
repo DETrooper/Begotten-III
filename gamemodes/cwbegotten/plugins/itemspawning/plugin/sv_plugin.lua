@@ -449,9 +449,11 @@ function cwItemSpawner:SetupContainers()
 						local itemIncrease = (container.cwLockTier or 0) * 2
 						
 						for i = 1, math.random(3 + itemIncrease, 6 + itemIncrease) do
-							local randomItem = self:SelectItem(k, false, true);
+							if i > 1 and math.random() < 0.666 then -- 1/3 chance to not spawn an item after the first item
+								local randomItem = self:SelectItem(k, false, true);
 								
-								if itemInstance then
+								if randomItem then
+									local itemInstance = item.CreateInstance(randomItem);
 									
 									if itemInstance then
 										local category = itemInstance.category;
