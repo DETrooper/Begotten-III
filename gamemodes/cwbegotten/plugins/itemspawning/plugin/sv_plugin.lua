@@ -35,8 +35,8 @@ function cwItemSpawner:SelectItem(location, bIsSupercrate, bIsContainer)
 	local itemPool = {};
 	local uniqueID = nil;
 	
-	while #itemPool == 0 do
-		local itemTable = spawnable[math.random(1, #spawnable)]
+	for i = 1, #spawnable do
+		local itemTable = spawnable[i];
 		
 		if itemTable.itemSpawnerInfo and !itemTable.isBaseItem then
 			local rarity = itemTable.itemSpawnerInfo.rarity;
@@ -81,8 +81,12 @@ function cwItemSpawner:SelectItem(location, bIsSupercrate, bIsContainer)
 			end;
 		end
 	end;
-
-	uniqueID = itemPool[math.random(1, #itemPool)].uniqueID;
+	
+	if (#itemPool > 0) then
+		uniqueID = itemPool[math.random(1, #itemPool)].uniqueID;
+	else
+		--uniqueID = spawnable[math.random(1, #spawnable)].uniqueID;
+	end;
 
 	return uniqueID;
 end;
@@ -435,7 +439,7 @@ function cwItemSpawner:SetupContainers()
 						
 						local itemIncrease = (container.cwLockTier or 0) * 2
 						
-						for i = 1, math.random(1 + itemIncrease, 4 + itemIncrease) do
+						for i = 1, math.random(3 + itemIncrease, 6 + itemIncrease) do
 							local randomItem = self:SelectItem(k, false, true);
 							
 							if randomItem then
