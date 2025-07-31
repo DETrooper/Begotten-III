@@ -65,7 +65,7 @@ function cwItemSpawner:SelectItem(location, bIsSupercrate, bIsContainer)
 						continue;
 					end
 					
-					rarity = math.Round(rarity * 0.25);
+					--rarity = math.Round(rarity * 0.25);
 				end
 			end
 			
