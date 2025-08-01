@@ -2489,7 +2489,7 @@ function Schema:PlayerCanUseDoor(player, door)
 				
 				return false;
 			end
-		elseif doorName == "castle_bigdoor1" or doorName == "castle_bigdoor2" or doorName == "gate_door" or doors["hell"] then
+		elseif doorName == "castle_bigdoor1" or doorName == "castle_bigdoor2" or doorName == "gate_door" or (doors["hell"] and table.HasValue(doors["hell"], doorName)) then
 			return false;
 		end
 	end
