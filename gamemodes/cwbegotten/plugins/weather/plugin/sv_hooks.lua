@@ -149,21 +149,22 @@ function cwWeather:PlayerThink(player, curTime, infoTable, alive, initialized, p
 					end
 				end
 				
-				if !cwBeliefs or !player:HasBelief("ingenuity_finisher") or v.unrepairable then
-					local hasScourRust = cwBeliefs and player:HasBelief("scour_the_rust");
-				
-					for k, v in pairs(player.equipmentSlots) do
-						if k == "Backpacks" or k == "Charm1" or k == "Charm2" then continue end;
-						
-						if v and v:IsInstance() then
-							if !v.attributes or !table.HasValue(v.attributes, "conditionless") then
-								if hasScourRust then
-									v:TakeCondition(math.random(1, 2));
-								else
-									v:TakeCondition(math.random(1, 3));
-								end
+				local hasIngenuityFinisher = cwBeliefs and player:HasBelief("ingenuity_finisher");
+				local hasScourRust = cwBeliefs and player:HasBelief("scour_the_rust");
+			
+				for k, v in pairs(player.equipmentSlots) do
+					if k == "Backpacks" or k == "Charm1" or k == "Charm2" then continue end;
+					
+					if v and v:IsInstance() then
+						if !v.unrepairable then
+							if hasIngenuityFinisher then
+								v:TakeCondition(math.random(1));
+							elseif hasScourRust then
+								v:TakeCondition(math.random(1, 2));
 							end
 						end
+						
+						v:TakeCondition(math.random(1, 3));
 					end
 				end
 					

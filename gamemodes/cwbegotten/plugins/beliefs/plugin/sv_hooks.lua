@@ -512,10 +512,8 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 												player:HandleXP(self.xpValues["mutilate"]);
 												player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 												Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-																							
-												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(conditionLoss, true);
-												end
+
+												weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
 											else
 												Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 											end
@@ -547,10 +545,8 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 											player:HandleXP(self.xpValues["mutilate"]);
 											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-																						
-											if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-												weaponItemTable:TakeCondition(conditionLoss, true);
-											end
+
+											weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
 										else
 											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 										end
@@ -580,10 +576,8 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 												player:HandleXP(self.xpValues["mutilate"]);
 												player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 												Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-																								
-												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(conditionLoss, true);
-												end
+
+												weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
 											else
 												Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 											end
@@ -615,10 +609,8 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 											player:HandleXP(self.xpValues["mutilate"]);
 											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-																						
-											if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-												weaponItemTable:TakeCondition(conditionLoss, true);
-											end
+
+											weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
 										else
 											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 										end
@@ -649,9 +641,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 												player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 												Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
 																							
-												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(conditionLoss, true);
-												end
+												weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
 											else
 												Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 											end
@@ -684,9 +674,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
 																						
-											if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-												weaponItemTable:TakeCondition(conditionLoss, true);
-											end
+											weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
 										else
 											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 										end
@@ -863,9 +851,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 												Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
 												entity:SetMaterial("models/flesh");
 												
-												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(skinningConditionLoss, true);
-												end
+												weaponItemTable:TakeConditionByPlayer(player, skinningConditionLoss, true);
 											end
 										else
 											Clockwork.player:Notify(player, "This corpse has already been skinned!");
@@ -2461,6 +2447,20 @@ function cwBeliefs:ModifyStaminaDrain(player, drainTab)
 	if player:HasBelief("outlasting") then
 		drainTab.decrease = drainTab.decrease * 0.75;
 	end
+end
+
+function cwBeliefs:ModifyPlayerItemConditionLoss(player, amountTab)
+	local modifier = 1;
+
+	if player:HasBelief("scour_the_rust") then
+		modifier = math.max(0, modifier - 0.35);
+	end
+	
+	if player:HasBelief("ingenuity_finisher") then
+		modifier = math.max(0, modifier - 0.45);
+	end
+	
+	amountTab.amount = amountTab.amount * modifier;
 end
 
 -- Called when a player attempts to use an item.
