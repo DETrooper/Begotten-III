@@ -15,6 +15,9 @@ ITEM.category = "Weapons";
 ITEM.useInVehicle = false;
 ITEM.breakable = true;
 ITEM.breakMessage = " shatters into pieces!";
+ITEM.conditionLossEvents = {
+	{threshold = 25, message = " starts to crack and fissure!", sound = "physics/metal/metal_box_strain1.wav"},
+};
 ITEM.repairItem = "weapon_repair_kit";
 ITEM.customFunctions = {"Engrave"};
 ITEM.slots = {"Primary", "Secondary", "Tertiary"};
@@ -509,6 +512,28 @@ function ITEM:OnUse(player, itemEntity, interactItemTable)
 		return false;
 	end;
 end;
+
+function ITEM:OnConditionLoss(oldCondition, newCondition)
+	for i, v in ipairs(self.conditionLossEvents) do
+		if oldCondition > v.threshold and newCondition <= v.threshold then
+			for _, player in _player.Iterator() do
+				if (IsValid(player) and player:HasInitialized()) then
+					for i2, weaponItem in ipairs(player:GetWeaponsEquipped()) do
+						if weaponItem and weaponItem:IsTheSameAs(self) then
+							Clockwork.chatBox:AddInTargetRadius(player, "me", "'s "..self.name..v.message, player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+							
+							if v.sound then
+								player:EmitSound(v.sound);
+							end
+							
+							return;
+						end
+					end
+				end;
+			end;
+		end
+	end
+end
 
 -- Called when a player repairs the item.
 function ITEM:OnRepair(player, itemEntity)

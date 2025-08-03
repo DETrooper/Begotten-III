@@ -165,15 +165,9 @@ if SERVER then
 							if IsValid(entity) then
 								self.collided = true;
 								
-								if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
-									local conditionLoss = self.ConditionLoss or 34;
-									
-									if self.Owner:HasBelief("scour_the_rust") then
-										conditionLoss = conditionLoss * 0.65;
-									end
-									
-									self.itemTable:TakeCondition(conditionLoss);
-								end
+								local conditionLoss = self.ConditionLoss or 34;
+
+								self.itemTable:TakeConditionByPlayer(self.Owner, conditionLoss);
 								
 								entity:Spawn();
 								entity:SetAngles(self:GetAngles());
@@ -274,13 +268,9 @@ if SERVER then
 							local shieldItem = Ent:GetShieldEquipped();
 
 							if (shieldItem) and !Ent.opponent then
-								if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
-									local conditionLoss = self.ConditionLoss or 34;
-									
-									if self.Owner:HasBelief("scour_the_rust") then
-										conditionLoss = conditionLoss * 0.65;
-									end
-								self.itemTable:TakeCondition(conditionLoss);
+								local conditionLoss = self.ConditionLoss or 34;
+
+								self.itemTable:TakeConditionByPlayer(self.Owner, conditionLoss);
 							end
 						end
 					end
@@ -336,15 +326,9 @@ if SERVER then
 							if IsValid(entity) then
 								self.collided = true;
 								
-								if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
-									local conditionLoss = self.ConditionLoss or 34;
-									
-									if self.Owner:HasBelief("scour_the_rust") then
-										conditionLoss = conditionLoss * 0.65;
-									end
-									
-									self.itemTable:TakeCondition(conditionLoss);
-								end
+								local conditionLoss = self.ConditionLoss or 34;
+
+								self.itemTable:TakeConditionByPlayer(self.Owner, conditionLoss);
 								
 								entity:Spawn();
 								entity:SetAngles(self:GetAngles());
@@ -468,15 +452,9 @@ if SERVER then
 							if IsValid(entity) then
 								self.collided = true;
 
-								if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
-									local conditionLoss = self.ConditionLoss or 34;
-									
-									if self.Owner:HasBelief("scour_the_rust") then
-										conditionLoss = conditionLoss * 0.65;
-									end
-									
-									self.itemTable:TakeCondition(conditionLoss);
-								end
+								local conditionLoss = self.ConditionLoss or 34;
+
+								self.itemTable:TakeConditionByPlayer(self.Owner, conditionLoss);
 								
 								entity:Spawn();
 								entity:SetAngles(self:GetAngles());
@@ -506,7 +484,6 @@ if SERVER then
 				
 				return;
 			end
-		end
 
 			self:SetOwner(nil);
 		end
