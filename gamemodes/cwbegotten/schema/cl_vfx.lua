@@ -458,6 +458,18 @@ function Schema:CalcViewAdjustTable(view)
 		view.origin = Clockwork.Client.WakeupOrigin;
 		view.angles = Clockwork.Client.WakeupAngles;
 		view.fov = Clockwork.Client.WakeupFOV;
+	else
+		local activeWeapon = Clockwork.Client:GetActiveWeapon();
+		
+		if (IsValid(activeWeapon)) then
+			local func = activeWeapon.CalcView;
+			
+			if (func) then
+				local origin, angles, fov = func(activeWeapon, Clockwork.Client, Vector(view.origin), Angle(view.angles), view.fov);
+				
+				view.origin, view.angles, view.fov = origin or view.origin, angles or view.angles, fov or view.fov;
+			end
+		end
 	end
 end;
 

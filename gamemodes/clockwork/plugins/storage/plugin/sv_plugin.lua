@@ -620,6 +620,12 @@ function cwStorage:HandleContainerLock(player, data)
 			local password = entity.cwPassword;
 			local itemID = data.keyID;
 			local uniqueID = data.uniqueID;
+			
+			if !itemID then
+				Schema:EasyText(player, "peru", "This key does not fit the lock of this container!");
+				
+				return;
+			end
 
 			if (tostring(password) == tostring(itemID)) then
 				cwStorage:OpenContainer(player, entity, containerWeight);
