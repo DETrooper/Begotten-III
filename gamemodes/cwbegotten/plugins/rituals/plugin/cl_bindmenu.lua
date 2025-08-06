@@ -282,7 +282,7 @@ hook.Add("HUDPaint", "RadialShitballs", function()
         local timeLeft = math.max(0, endTime - os.time())
         local minutes = math.floor(timeLeft / 60)
         local seconds = math.floor(timeLeft % 60)
-        local timeText = string.format("%s: %d minutes %d seconds", ritualName, minutes, seconds)
+        local timeText = string.format("%s: %d:%.2d", ritualName, minutes, seconds)
         
         -- y step
         local yPos = baseY + (index * yStep)
