@@ -101,7 +101,7 @@ function playerMeta:HandleNeed(need, amount)
 			end
 		
 			if need == "hunger" then
-				if self:GetSubfaction() == "Crypt Walkers" or cwBeliefs and self:HasBelief("yellow_and_black") and amount > 0 then
+				if self:GetSubfaction() == "Crypt Walkers" or cwBeliefs and self:HasBelief("yellow_and_black") or self:GetSubfaction() == "Crypt Walkers" and amount > 0 then
 					return;
 				end
 				
