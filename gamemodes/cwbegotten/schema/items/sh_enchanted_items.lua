@@ -196,7 +196,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Has a 5% chance to set enemies on fire when hit with a melee weapon.\n- Stacks with fire sacrifical weapons for additional ignition time.";
 	
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, supercrateOnly = true, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, supercrateOnly = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");

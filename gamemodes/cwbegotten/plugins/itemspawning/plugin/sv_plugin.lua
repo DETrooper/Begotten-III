@@ -15,7 +15,7 @@ config.Add("loot_spawner_enabled", true); -- Whether or not the loot spawner is 
 
 cwItemSpawner.MaxSuperCrates = 1;
 cwItemSpawner.SuperCrateCooldown = {min = 5400, max = 10800}; -- 1.5-3 Hours.
-cwItemSpawner.SuperCrateNumItems = {min = 15, max = 25};
+cwItemSpawner.SuperCrateNumItems = {min = 14, max = 18};
 cwItemSpawner.ItemsSpawned = cwItemSpawner.ItemsSpawned or {};
 cwItemSpawner.ContainerLocations = cwItemSpawner.ContainerLocations or {};
 cwItemSpawner.SpawnLocations = cwItemSpawner.SpawnLocations or {};
@@ -108,7 +108,7 @@ function cwItemSpawner:GetSpawnableItems()
 		return spawnable_items_cache;
 	end
 
-	for k, v in ipairs(Clockwork.item:GetAll()) do
+	for k, v in pairs(Clockwork.item:GetAll()) do
 		if v.itemSpawnerInfo then
 			spawnable_items_cache[#spawnable_items_cache + 1] = v;
 		end;

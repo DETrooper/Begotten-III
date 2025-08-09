@@ -15,7 +15,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.huntingValue = 3; -- Affects speed of skinning and mutilating corpses as well as the condition of the hides and meat, 1 = terrible, 3 = great
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 600, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 666, supercrateOnly = true};
 	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
 
@@ -55,7 +55,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.huntingValue = 3;
 	
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1730, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2220, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks"}};
 	ITEM.repairCostModifier = 0.3;
@@ -143,7 +143,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.huntingValue = 2;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 250, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 550, supercrateOnly = true};
 	ITEM.repairCostModifier = 0.8;
 ITEM:Register();
 
@@ -181,7 +181,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.huntingValue = 3;
 
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1750, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2500, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
 	ITEM.requiredFaiths = {"Faith of the Dark"};
@@ -206,7 +206,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.huntingValue = 3;
 
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1750, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2500, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
 	ITEM.requiredFaiths = {"Faith of the Dark"};
@@ -231,7 +231,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.huntingValue = 3;
 
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1750, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2500, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
 	ITEM.requiredFaiths = {"Faith of the Dark"};
@@ -252,7 +252,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseOffhand = true;
 	ITEM.huntingValue = 3;
 
-	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2500, supercrateOnly = true};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 3000, supercrateOnly = true};
 	
 	ITEM.attributes = {"concealable"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
