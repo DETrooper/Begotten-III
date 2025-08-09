@@ -857,6 +857,25 @@ function item.Register(itemTable)
 	
 	itemTable.index = index;
 	
+	if (itemTable.baseItem) then
+		local BASE_CLASS = item.FindByID(itemTable.baseItem)
+		itemTable.__tostring = BASE_CLASS.__tostring
+		itemTable.__call = BASE_CLASS.__call
+		itemTable.__index = function(self, key)
+			return rawget(self, key) or BASE_CLASS.__index(itemTable, key)
+		end
+
+		itemTable = setmetatable(itemTable, BASE_CLASS);
+	else
+		itemTable.__tostring = CLASS_TABLE.__tostring
+		itemTable.__call = CLASS_TABLE.__call
+		itemTable.__index = function(self, key)
+			return rawget(self, key) or rawget(itemTable, key) or CLASS_TABLE[key]
+		end
+
+		itemTable = setmetatable(itemTable, CLASS_TABLE);
+	end
+	
 	item.stored[itemTable.uniqueID] = itemTable;
 	item.buffer[itemTable.index] = itemTable;
 	
@@ -981,16 +1000,8 @@ function item.CreateInstance(uniqueID, itemID, data, bNoGenerate)
 		end;
 		
 		--print("Item ID: "..itemID);
-		
-		--[[if (!item.instances[itemID]) then
-			item.instances[itemID] = table.Copy(itemTable);
-				item.instances[itemID].itemID = itemID;
-			setmetatable(item.instances[itemID], CLASS_TABLE);
-		end;]]--
 	
-		item.instances[itemID] = table.Copy(itemTable);
-			item.instances[itemID].itemID = itemID;
-		setmetatable(item.instances[itemID], CLASS_TABLE);
+		item.instances[itemID] = setmetatable({itemID = itemID}, itemTable)
 		
 		if (data) then
 			ItemDataMerge(item.instances[itemID].data, data);

@@ -326,7 +326,7 @@ if SERVER then
 					if cwRituals and cwItemSpawner and !hook.Run("GetShouldntThrallDropCatalyst", ragdoll) then
 						for i = 1, 10 do
 							local randomItem;
-							local spawnable = cwItemSpawner:GetSpawnableItems(true);
+							local spawnable = cwItemSpawner:GetSpawnableItems();
 							local lootPool = {};
 							
 							for _, itemTable in ipairs(spawnable) do

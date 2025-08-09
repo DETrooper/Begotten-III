@@ -450,7 +450,7 @@ if SERVER then
 					
 					if cwRituals and cwItemSpawner then
 						local randomItem;
-						local spawnable = cwItemSpawner:GetSpawnableItems(true);
+						local spawnable = cwItemSpawner:GetSpawnableItems();
 						local lootPool = {};
 						
 						for _, itemTable in ipairs(spawnable) do
