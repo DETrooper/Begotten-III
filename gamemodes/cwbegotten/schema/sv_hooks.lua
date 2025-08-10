@@ -1108,6 +1108,49 @@ end;
 
 -- Called when a player presses F3.
 function Schema:ShowSpare1(player)
+	local target = player:GetEyeTraceNoCursor().Entity;
+	local entity = target;
+
+	if (IsValid(target) and target:GetShootPos():Distance(player:GetShootPos()) <= 32) then
+		target = Clockwork.entity:GetPlayer(target);
+		
+		if (target and player:GetNetVar("tied") == 0) then
+			local untieTime = 6;
+		
+			if player.HasBelief and player:HasBelief("dexterity") then
+				untieTime = 4;
+			end
+		
+			if (target:GetNetVar("tied") != 0) then
+				if player:GetMoveType() == MOVETYPE_WALK then
+					for k, v in pairs(ents.FindInSphere(player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
+						if v:IsPlayer() and v:Alive() then
+							Clockwork.chatBox:Add(v, player, "me", "starts untying "..Clockwork.player:FormatRecognisedText(v, "%s", target)..".");
+						end
+					end
+				end
+			
+				Clockwork.player:SetAction(player, "untie", untieTime);
+				
+				Clockwork.player:EntityConditionTimer(player, target, entity, untieTime, 192, function()
+					return player:Alive() and !player:IsRagdolled() and !player:HasGodMode() and player:GetNetVar("tied") == 0;
+				end, function(success)
+					if (success) then
+						self:TiePlayer(target, false);
+						
+						player:GiveItem(item.CreateInstance("bindings"));
+						
+						--player:ProgressAttribute(ATB_DEXTERITY, 15, true);
+					end;
+					
+					Clockwork.player:SetAction(player, "untie", false);
+				end);
+				
+				return;
+			end;
+		end;
+	end;
+	
 	local itemTable = player:FindItemByID("bindings");
 	
 	if (!itemTable) then
@@ -1317,55 +1360,7 @@ end
 
 -- Called when a player presses a key.
 function Schema:KeyPress(player, key)
-	if (key == IN_USE) then
-		local untieTime = 6;
-		local target = player:GetEyeTraceNoCursor().Entity;
-		local entity = target;
-		
-		if player.HasBelief and player:HasBelief("dexterity") then
-			untieTime = 4;
-		end
-		
-		if (IsValid(target)) then
-			target = Clockwork.entity:GetPlayer(target);
-			
-			if (target and player:GetNetVar("tied") == 0) then
-				if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
-					if (target:GetNetVar("tied") != 0) then
-						for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
-							if (v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler") or (v:GetClass() == "cw_bounty_board" and target:IsWanted()) then
-								return;
-							end
-						end
-						
-						if player:GetMoveType() == MOVETYPE_WALK then
-							for k, v in pairs(ents.FindInSphere(player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
-								if v:IsPlayer() then
-									Clockwork.chatBox:Add(v, player, "me", "starts untying "..Clockwork.player:FormatRecognisedText(v, "%s", target)..".");
-								end
-							end
-						end
-					
-						Clockwork.player:SetAction(player, "untie", untieTime);
-						
-						Clockwork.player:EntityConditionTimer(player, target, entity, untieTime, 192, function()
-							return player:Alive() and !player:IsRagdolled() and !player:HasGodMode() and player:GetNetVar("tied") == 0;
-						end, function(success)
-							if (success) then
-								self:TiePlayer(target, false);
-								
-								player:GiveItem(item.CreateInstance("bindings"));
-								
-								--player:ProgressAttribute(ATB_DEXTERITY, 15, true);
-							end;
-							
-							Clockwork.player:SetAction(player, "untie", false);
-						end);
-					end;
-				end;
-			end;
-		end;
-	elseif (key == IN_ATTACK) then
+	if (key == IN_ATTACK) then
 		local action = Clockwork.player:GetAction(player);
 		
 		if (action == "reloading") or (action == "mutilating") or (action == "skinning") or (action == "building") then
