@@ -161,11 +161,7 @@ function Clockwork.chatBox:IsTypingCommand()
 	local currentText = Clockwork.chatBox:GetCurrentText();
 	local prefix = config.Get("command_prefix"):Get();
 
-	if (string.find(currentText, prefix) == 1) then
-		return true;
-	end;
-
-	return false;
+	return currentText[1] == prefix;
 end;
 
 -- A function to get the spacing between messages.

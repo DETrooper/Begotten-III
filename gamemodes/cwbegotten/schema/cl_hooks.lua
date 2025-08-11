@@ -841,7 +841,7 @@ function Schema:DrawTargetPlayerStatus(target, alpha, x, y)
 				
 				if (target:GetShootPos():Distance(Clockwork.Client:GetShootPos()) <= 192) then
 					if (Clockwork.Client:GetNetVar("tied") == 0) then
-						mainStatus = "Press :+use: to untie "..thirdPerson..".";
+						mainStatus = "Press :+gm_showspare1: to untie "..thirdPerson..".";
 						
 						untieText = true;
 					end;

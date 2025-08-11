@@ -3326,48 +3326,7 @@ end
 function GM:PlayerDeathCodeUsed(player, commandTable, arguments) end
 
 -- Called when a player has created a character.
-function GM:PlayerCharacterCreated(player, character)
-	-- Horrible fucking fix because F2 wasn't working for brand new characters.
-	-- For some reason the character key wasn't being given.
-
-	timer.Simple(5, function()
-		if IsValid(player) and !player:IsBot() and character then
-			local charactersTable = config.Get("mysql_characters_table"):Get();
-			local schemaFolder = Clockwork.kernel:GetSchemaFolder()
-			local key_found = false;
-			
-			local queryObj = Clockwork.database:Select(charactersTable)
-				queryObj:Callback(function(result)
-					if result then
-						for k, v in pairs(result) do
-							if v._Key then
-								if not character.data["Key"] then
-									character.data["Key"] = v._Key;
-									
-									key_found = true;
-								end
-								
-								if player:GetCharacterData("Key") and player:GetCharacterData("Key") ~= player:GetNetVar("Key") then 
-									player:SetNetVar("Key", player:GetCharacterData("Key"));
-								end
-								
-								break;
-							end
-						end
-					end
-					
-					if not key_found then
-						-- Try again!!!!
-						self:PlayerCharacterCreated(player, character);
-					end
-				end);
-				
-				queryObj:Where("_Schema", schemaFolder)
-				queryObj:Where("_Name", character.name)
-			queryObj:Execute()
-		end
-	end);
-end
+function GM:PlayerCharacterCreated(player, character) end
 
 -- Called when a player's character has unloaded.
 function GM:PlayerCharacterUnloaded(player)

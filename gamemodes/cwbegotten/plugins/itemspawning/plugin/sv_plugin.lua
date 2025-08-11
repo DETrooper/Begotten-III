@@ -15,7 +15,7 @@ config.Add("loot_spawner_enabled", true); -- Whether or not the loot spawner is 
 
 cwItemSpawner.MaxSuperCrates = 1;
 cwItemSpawner.SuperCrateCooldown = {min = 5400, max = 10800}; -- 1.5-3 Hours.
-cwItemSpawner.SuperCrateNumItems = {min = 15, max = 25};
+cwItemSpawner.SuperCrateNumItems = {min = 14, max = 18};
 cwItemSpawner.ItemsSpawned = cwItemSpawner.ItemsSpawned or {};
 cwItemSpawner.ContainerLocations = cwItemSpawner.ContainerLocations or {};
 cwItemSpawner.SpawnLocations = cwItemSpawner.SpawnLocations or {};
@@ -31,7 +31,7 @@ cwItemSpawner.LocationsToCategories = {
 
 -- A function to select a random item to spawn.
 function cwItemSpawner:SelectItem(location, bIsSupercrate, bIsContainer)
-	local spawnable = self:GetSpawnableItems(true);
+	local spawnable = self:GetSpawnableItems();
 	local itemPool = {};
 	local uniqueID = nil;
 	local fullWeight = 0;
@@ -100,21 +100,21 @@ function cwItemSpawner:SelectItem(location, bIsSupercrate, bIsContainer)
 	return nil;
 end;
 
+local spawnable_items_cache = {};
+
 -- A function to get all spawnable items in the game.
-function cwItemSpawner:GetSpawnableItems(sequential)
-	local items = {};
-	
-	for k, v in pairs (Clockwork.item:GetAll()) do
+function cwItemSpawner:GetSpawnableItems()
+	if #spawnable_items_cache > 0 then
+		return spawnable_items_cache;
+	end
+
+	for k, v in pairs(Clockwork.item:GetAll()) do
 		if v.itemSpawnerInfo then
-			if (!sequential) then
-				items[k] = v;
-			else
-				items[#items + 1] = v;
-			end;
+			spawnable_items_cache[#spawnable_items_cache + 1] = v;
 		end;
 	end;
 	
-	return items;
+	return spawnable_items_cache;
 end;
 
 -- A function to get whether a position is clear of players and other items.

@@ -50,7 +50,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.unrepairable = true;
 	
 	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2500, supercrateOnly = true, supercrateItems = {["old_world_magazine"] = {min = 2, max = 3}, ["old_world_shot"] = {min = 7, max = 14}}};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 3000, supercrateOnly = true, supercrateItems = {["old_world_magazine"] = {min = 2, max = 3}, ["old_world_shot"] = {min = 7, max = 14}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -74,7 +74,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.unrepairable = true;
 	
 	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, supercrateOnly = true, supercrateItems = {["grapeshot"] = {min = 15, max = 30}}};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2500, supercrateOnly = true, supercrateItems = {["grapeshot"] = {min = 15, max = 30}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -241,7 +241,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.unrepairable = true;
 	
 	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1500, supercrateOnly = true, supercrateItems = {["longshot"] = {min = 10, max = 20}, ["grapeshot"] = {min = 5, max = 10}}};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, supercrateOnly = true, supercrateItems = {["longshot"] = {min = 10, max = 20}, ["grapeshot"] = {min = 5, max = 10}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -293,7 +293,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.unrepairable = true;
 	
 	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5000, supercrateOnly = true, supercrateItems = {["old_world_longshot"] = {min = 10, max = 20}}};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5500, supercrateOnly = true, supercrateItems = {["old_world_longshot"] = {min = 10, max = 20}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -317,7 +317,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.unrepairable = true;
 	
 	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5000, supercrateOnly = true, supercrateItems = {["old_world_grapeshot"] = {min = 10, max = 20}}};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5500, supercrateOnly = true, supercrateItems = {["old_world_grapeshot"] = {min = 10, max = 20}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -342,7 +342,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.unrepairable = true;
 	
 	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5000, supercrateOnly = true, supercrateItems = {["old_world_large_magazine"] = {min = 2, max = 3}, ["old_world_shot"] = {min = 20, max = 30}}};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5500, supercrateOnly = true, supercrateItems = {["old_world_large_magazine"] = {min = 2, max = 3}, ["old_world_shot"] = {min = 20, max = 30}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -439,7 +439,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.usesMagazine = true;
 	
 	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
-	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, supercrateOnly = true, supercrateItems = {["shagalax_bullet_box_magazine"] = {min = 1, max = 2}}};
+	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2500, supercrateOnly = true, supercrateItems = {["shagalax_bullet_box_magazine"] = {min = 1, max = 2}}};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
