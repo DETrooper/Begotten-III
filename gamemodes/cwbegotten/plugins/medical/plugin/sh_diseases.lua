@@ -74,13 +74,13 @@ end;
 local DISEASE = {};
 	DISEASE.uniqueID = "common_cold";
 	DISEASE.name = "Common Cold";
-	DISEASE.deathChance = 15; -- Chance of death when final stage is reached. Otherwise they will recover.
+	DISEASE.deathChance = 33; -- Chance of death when final stage is reached. Otherwise they will recover.
 	DISEASE.contagious = true;
 	DISEASE.inPerishables = true;
 	DISEASE.fromWater = true;
 	DISEASE.stages = {
 		[1] = {progressionTime = 1800, symptoms = nil,},
-		[2] = {progressionTime = 3600, symptoms = {"Fatigue", "Headaches"}},
+		[2] = {progressionTime = 3600, symptoms = {"Headaches", "Coughing"}},
 		[3] = {progressionTime = 3600, symptoms = {"Fatigue", "Headaches", "Coughing"}},
 		[4] = {progressionTime = 3600, symptoms = {"Fatigue", "Headaches", "Coughing", "Paleness"}},
 	};
@@ -89,7 +89,7 @@ cwMedicalSystem:RegisterDisease(DISEASE.uniqueID, DISEASE);
 local DISEASE = {};
 	DISEASE.uniqueID = "flu";
 	DISEASE.name = "Flu";
-	DISEASE.deathChance = 33; -- Chance of death when final stage is reached. Otherwise they will recover.
+	DISEASE.deathChance = 67; -- Chance of death when final stage is reached. Otherwise they will recover.
 	DISEASE.rarity = 50; -- Chance from 1 to 100 of the disease being considered an option, usually further modified by other chances.
 	DISEASE.contagious = true;
 	DISEASE.inPerishables = true;
@@ -105,14 +105,14 @@ cwMedicalSystem:RegisterDisease(DISEASE.uniqueID, DISEASE);
 local DISEASE = {};
 	DISEASE.uniqueID = "begotten_plague";
 	DISEASE.name = "Begotten Plague";
-	DISEASE.deathChance = 75; -- Chance of death when final stage is reached. Otherwise they will recover.
+	DISEASE.deathChance = 95; -- Chance of death when final stage is reached. Otherwise they will recover.
 --	DISEASE.rarity = 1; -- Chance from 1 to 100 of the disease being considered an option, usually further modified by other chances.
 	DISEASE.contagious = true;
 --	DISEASE.inPerishables = true;
 --	DISEASE.fromWater = true;
 	DISEASE.stages = {
 		[1] = {progressionTime = 900, symptoms = nil,},
-		[2] = {progressionTime = 3600, symptoms = {"Fatigue", "Headaches", "Coughing", "Vomiting"}},
+		[2] = {progressionTime = 3600, symptoms = {"Headaches", "Coughing", "Vomiting"}},
 		[3] = {progressionTime = 3600, symptoms = {"Fatigue", "Headaches", "Nausea", "Coughing", "Vomiting Blood", "Pustules"}},
 		[4] = {progressionTime = 3600, symptoms = {"Fatigue", "Headaches", "Nausea", "Coughing", "Vomiting Blood", "Pustules", "Rage"}},
 	};

@@ -675,7 +675,7 @@ ITEM:Register();
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		else
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Plague Pop™. It tastes pretty good, but you can't help but notice a sore throat as you finish the bottle.");
-			player:GiveDisease("begotten_plague");
+			player:GiveDisease("begotten_plague", 1, true);
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		end
 	end;
