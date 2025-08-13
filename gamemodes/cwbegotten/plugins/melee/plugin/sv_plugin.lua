@@ -307,6 +307,14 @@ function playerMeta:GetMaxStability()
 		end
 	end
 	
+	if cwMedicalSystem then
+		local symptoms = self:GetNetVar("symptoms", {});
+		
+		if table.HasValue(symptoms, "Fatigue") then
+			max_stability = max_stability - 20;
+		end
+	end
+	
 	return max_stability;
 end;
 

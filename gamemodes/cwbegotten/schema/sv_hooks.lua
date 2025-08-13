@@ -1933,8 +1933,9 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 						if ((player:GetPos():WithinAABox(Vector(-4550, 5649, -509), Vector(-4722, 3972, -333))) or (player:GetPos():WithinAABox(Vector(-4621, 4045, -527), Vector(-3337, 3675, -450)))) and player:GetClothesEquipped() ~= "Plague Doctor Robes" and not player.cwObserverMode then
 							if math.random(1, 10) == 1 then
 								if !player:HasDisease("common_cold") then
-									player:GiveDisease("common_cold");
-									Clockwork.player:NotifyAdmins("operator", ""..player:Name().." has contracted the common cold from the corpse field!");
+									if player:GiveDisease("common_cold") then
+										Clockwork.player:NotifyAdmins("operator", ""..player:Name().." has contracted the common cold from the corpse field!");
+									end
 								end
 							end
 						end

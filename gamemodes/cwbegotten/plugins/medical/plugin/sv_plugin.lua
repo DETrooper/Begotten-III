@@ -911,8 +911,6 @@ function cwMedicalSystem:PlayerUseUnknownItemFunction(player, itemTable, itemFun
 					else
 						Schema:EasyText(player, "firebrick", "This character is too far away!");
 					end;
-				else
-					printp("Fucked!");
 				end;
 			end
 		else
@@ -1372,7 +1370,7 @@ function playerMeta:InfectOtherPlayer(otherPlayer, diseases, chance)
 end
 
 -- Function to give a disease.
-function playerMeta:GiveDisease(uniqueID, stage)
+function playerMeta:GiveDisease(uniqueID, stage, bBypassImmunity)
 	if cwBeliefs and self:HasBelief("the_paradox_riddle_equation") then
 		return false;
 	end
@@ -1393,6 +1391,12 @@ function playerMeta:GiveDisease(uniqueID, stage)
 		end
 		
 		if !has_disease then
+			local immunitiesTable = self:GetCharacterData("diseaseImmunities");
+			
+			if !bBypassImmunity and immunitiesTable and immunitiesTable[uniqueID] and immunitiesTable[uniqueID] >= self:CharPlayTime() then
+				return false;
+			end
+		
 			local diseaseData = {};
 			local diseaseSharedVar = self:GetNetVar("diseases", {});
 			
@@ -1421,7 +1425,7 @@ function playerMeta:GiveDisease(uniqueID, stage)
 	return false;
 end
 
-function playerMeta:TakeDisease(uniqueID)
+function playerMeta:TakeDisease(uniqueID, bMakeImmune)
 	local diseaseTable = cwMedicalSystem:FindDiseaseByID(uniqueID);
 	
 	if diseaseTable then
@@ -1443,6 +1447,14 @@ function playerMeta:TakeDisease(uniqueID)
 						table.remove(diseaseSharedVar, j);
 						break;
 					end
+				end
+				
+				if bMakeImmune then
+					local immunitiesTable = self:GetCharacterData("diseaseImmunities", {});
+				
+					immunitiesTable[uniqueID] = self:CharPlayTime() + 7200;
+					
+					self:SetCharacterData("diseaseImmunities", immunitiesTable);
 				end
 				
 				self:SetCharacterData("diseases", diseases);

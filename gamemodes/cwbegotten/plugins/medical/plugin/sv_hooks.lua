@@ -330,7 +330,13 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 												-- Has the character gone through all stages of the disease?
 												if disease.stage > #stages then
 													if diseaseTable.deathChance then
-														if math.random(1, 100) <= diseaseTable.deathChance then
+														local deathChance = diseaseTable.deathChance;
+														
+														if cwBeliefs and player:HasBelief("favored") then
+															deathChance = math.Round(deathChance / 2);
+														end
+														
+														if math.random(1, 100) <= deathChance then
 															plyTab.dyingOfDisease = true;
 															
 															-- Todo: make a reverse wakeup sequence where you collapse and die.
@@ -354,6 +360,12 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 													
 													if !plyTab.dyingOfDisease then
 														Clockwork.chatBox:Add(player, nil, "itnofake", "You start to feel better, as though your disease has finally passed.");
+														
+														local immunitiesTable = player:GetCharacterData("diseaseImmunities", {});
+													
+														immunitiesTable[diseaseID] = player:CharPlayTime() + 7200;
+														
+														player:SetCharacterData("diseaseImmunities", immunitiesTable);
 														
 														if diseaseTable.OnTake then
 															diseaseTable.OnTake(player);
@@ -422,24 +434,26 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 							
 							Clockwork.chatBox:AddInTargetRadius(player, "me", strings[math.random(1, #strings)], player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);	
 						elseif random_symptom == "Fatigue" then
-							Clockwork.chatBox:Add(player, nil, "itnofake", "I don't feel so good...");
-							
-							if cwCharacterNeeds and player.HandleNeed then
-								player:HandleNeed("sleep", 3);
-							end
-							
-							timer.Simple(math.random(2, 5), function()
-								if IsValid(player) and player:Alive() and not player:IsRagdolled() and not plyTab.iFrames and not plyTab.opponent then
-									local gender = "his"
-
-									if (player:GetGender() == GENDER_FEMALE) then
-										gender = "her"
-									end
-									
-									Clockwork.chatBox:AddInTargetRadius(player, "me", "goes weak at "..gender.." knees with exhaustion, collapsing onto the ground.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-									Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, 10);
+							if math.random(1, 3) == 1 then
+								Clockwork.chatBox:Add(player, nil, "itnofake", "I don't feel so good...");
+								
+								if cwCharacterNeeds and player.HandleNeed then
+									player:HandleNeed("sleep", 3);
 								end
-							end);
+								
+								timer.Simple(math.random(2, 5), function()
+									if IsValid(player) and player:Alive() and not player:IsRagdolled() and not plyTab.iFrames and not plyTab.opponent then
+										local gender = "his"
+
+										if (player:GetGender() == GENDER_FEMALE) then
+											gender = "her"
+										end
+										
+										Clockwork.chatBox:AddInTargetRadius(player, "me", "goes weak at "..gender.." knees with exhaustion, collapsing onto the ground.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+										Clockwork.player:SetRagdollState(player, RAGDOLL_FALLENOVER, 10);
+									end
+								end);
+							end
 						end
 					end
 				end
