@@ -3,6 +3,8 @@ local COMMAND = Clockwork.command:New("ExplodePlayer");
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.access = "s";
 	COMMAND.alias = {"EP", "ExplodeCharacter", "PlyExplode", "CharExplode", "PlyGib", "CharGib"};
+	COMMAND.arguments = 1;
+	COMMAND.types = {"Player"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

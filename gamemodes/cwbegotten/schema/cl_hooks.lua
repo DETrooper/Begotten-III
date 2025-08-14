@@ -25,7 +25,7 @@ end
 Schema.requiredMounts = {
 	--["episodic"] = "Half-Life 2: Episode 1",
 	--["ep2"] = "Half-Life 2: Episode 2",
-	["cstrike"] = "Counter-Strike: Source",
+	--["cstrike"] = "Counter-Strike: Source",
 };
 
 Schema.cheapleMessages = {"I've gotta get away from that fucking thing!", "It's getting closer!", "What does that thing want from me!?", "Why can't anyone else see it!?", "Shit, it's getting closer!", "Gotta keep moving... gotta keep moving..."};

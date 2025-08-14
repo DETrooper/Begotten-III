@@ -75,6 +75,7 @@ local COMMAND = Clockwork.command:New("PlaySound");
 	COMMAND.access = "o";
 	COMMAND.arguments = 2;
 	COMMAND.optionalArguments = 3;
+	COMMAND.types = {"Player"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
