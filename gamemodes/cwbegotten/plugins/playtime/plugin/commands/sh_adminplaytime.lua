@@ -5,6 +5,7 @@ COMMAND.tip = "See someone's playtime.";
 COMMAND.text = "<string Name>";
 COMMAND.arguments = 1
 COMMAND.access = "o";
+COMMAND.types = {"Player"}
 
 function COMMAND:OnRun(player, arguments)
 	local target = Clockwork.player:FindByID(arguments[1])

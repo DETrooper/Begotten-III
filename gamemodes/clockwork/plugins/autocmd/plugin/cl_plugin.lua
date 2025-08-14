@@ -27,7 +27,7 @@ PLUGIN.argtypes = PLUGIN.argtypes or {}
 --COMMAND:Register();
 ---```
 ---@param id string
----@param callback fun(current_arg: string, args: string[])
+---@param callback fun(current_arg: string, args: string[]): string[]
 function Clockwork.command:RegisterType(id, callback)
     PLUGIN:RegisterArgumentType(id, callback)
 end

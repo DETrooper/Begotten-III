@@ -12,6 +12,8 @@ COMMAND.tip = "Punish a misbehaving player by entering their name or looking at 
 COMMAND.text = "[string Name]";
 COMMAND.access = "s";
 COMMAND.alias = {"CharSmite", "Smite"};
+COMMAND.optionalArguments = 1
+COMMAND.types = {"Player"}
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -144,6 +146,7 @@ COMMAND.tip = "Spawn an object above the head of the fucklet of your choice. Wil
 COMMAND.text = "<string Name> <string Model> [num CleanupTimeInSeconds] [bool Burning] [Loot ItemIDs or Random or Cash/Coins]";
 COMMAND.access = "s";
 COMMAND.arguments = 2;
+COMMAND.types = {"Player"}
 COMMAND.alias = {"PlySkyDrop", "CharSkyDrop"};
 
 -- Called when the command has been run.
