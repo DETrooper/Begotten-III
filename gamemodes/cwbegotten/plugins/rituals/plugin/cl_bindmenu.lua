@@ -5,6 +5,8 @@ local canPerformColor = Color(34, 180, 15);
 local hasItemColor = Color(255, 255, 255, 245);
 local noItemColor = Color(192, 192, 192, 50);
 
+
+
 surface.CreateFont( "ritual_radial_small", {
 	font = "Immortal",
 	extended = false,
@@ -267,6 +269,27 @@ hook.Add("HUDPaint", "RadialShitballs", function()
     draw.SimpleTextOutlined("Left Mouse - Select", "ritual_radial_small", scrW * 0.95, scrH * 0.9, ColorAlpha(textColor, alpha), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER, 2, ColorAlpha(color_black, Lerp(alphaFrac, 255, 0)));
     draw.SimpleTextOutlined("Right Mouse (Hold) - Remove", "ritual_radial_small", scrW * 0.95, scrH * 0.9 + 25, ColorAlpha(textColor, alpha), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER, 2, ColorAlpha(color_black, Lerp(alphaFrac, 255, 0)));
     draw.SimpleTextOutlined("Middle Mouse (Hold) - View Total Requirements", "ritual_radial_small", scrW * 0.95, scrH * 0.9 + 50, ColorAlpha(textColor, alpha), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER, 2, ColorAlpha(color_black, Lerp(alphaFrac, 255, 0)));
+
+
+    local player = LocalPlayer()
+    local activeRituals = player:GetNetVar("activeRituals", {})
+
+    local baseY = scrH * 0.03
+    local yStep = scrH * 0.02
+    local index = 0
+
+    for ritualName, endTime in pairs(activeRituals) do
+        local timeLeft = math.max(0, endTime - os.time())
+        local minutes = math.floor(timeLeft / 60)
+        local seconds = math.floor(timeLeft % 60)
+        local timeText = string.format("%s: %d:%.2d", ritualName, minutes, seconds)
+        
+        -- y step
+        local yPos = baseY + (index * yStep)
+        draw.SimpleTextOutlined(timeText, "ritual_radial_small", scrW * 0.95, yPos, ColorAlpha(textColor, alpha), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER, 2, ColorAlpha(color_black, Lerp(alphaFrac, 255, 0)))
+        
+        index = index + 1
+    end
 
     local cooldown = math.Round(Clockwork.Client:GetNWInt("cwNextRitual") - CurTime(), 1);
 
