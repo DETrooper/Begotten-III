@@ -3,15 +3,52 @@ local PLUGIN = PLUGIN
 
 PLUGIN.argtypes = PLUGIN.argtypes or {}
 
+---Registers a command type
+---```
+---Clockwork.command:RegisterType("example", function(argument)
+---    local matches = {"oh", "hi"}
+---
+---    return matches
+---end)
+---
+-----later
+---
+---local COMMAND = Clockwork.command:New("examplecmd");
+--	COMMAND.tip = ":0";
+--	COMMAND.text = "hi";
+--	COMMAND.access = "o";
+--	COMMAND.arguments = 1;
+--	COMMAND.types = {"example"}
+--	COMMAND.alias = {"aliasexample", "examplealias"};
+--
+--	function COMMAND:OnRun(player, arguments)
+--		print(arguments[1])
+--	end;
+--COMMAND:Register();
+---```
+---@param id string
+---@param callback fun(current_arg: string, args: string[]): string[]
 function Clockwork.command:RegisterType(id, callback)
     PLUGIN:RegisterArgumentType(id, callback)
+end
+
+---@param id string
+function Clockwork.command:RemoveType(id)
+    PLUGIN:RemoveArgumentType(id)
+end
+
+function PLUGIN:RemoveArgumentType(id)
+    self.argtypes[id] = nil
 end
 
 function PLUGIN:RegisterArgumentType(id, callback)
     self.argtypes[id] = callback
 end
 
-
+---@param cmd_type string
+---@param argument string
+---@param args string[]
+---@return string[]
 function PLUGIN:ParseArgumentType(cmd_type, argument, args)
     local parser = self.argtypes[cmd_type]
 
@@ -36,8 +73,7 @@ function PLUGIN:ParseCommand(str)
         local char = args_str:sub(i, i)
 
         if char == "\"" then
-            if in_quotes then //for string literals
-                current_arg = current_arg .. char
+            if in_quotes then -- for string literals
                 table.insert(args, current_arg)
                 current_arg = ""
                 in_quotes = false
@@ -47,7 +83,6 @@ function PLUGIN:ParseCommand(str)
                     current_arg = ""
                 end
                 in_quotes = true
-                current_arg = current_arg .. char
             end
         elseif char == " " and !in_quotes then
             if current_arg ~= "" then
@@ -60,13 +95,11 @@ function PLUGIN:ParseCommand(str)
     end
 
 
-    if current_arg ~= "" then
-        table.insert(args, current_arg .. "*") // EOF
+    if current_arg ~= "" or in_quotes then
+        table.insert(args, current_arg .. "*") -- EOF
     end
 
     return cmd, args
-
-    //return cmd, string.Split(args_str, " ")
 end
 
 
@@ -79,17 +112,13 @@ function PLUGIN:HandleAutoComplete(cmd, args)
         local argument = args[i] or ""
         local argument_type = cmdtbl.types and cmdtbl.types[i]
         if argument ~= "" and argument:sub(-1) == "*" then
-            argument = string.gsub(argument, "%*$", "") // remove our EOF
-            argument = string.gsub(argument, "\"", "", 2) // long strings ie [' /cmd "spaced string '] ->  [ '/cmd "spaced string autocompleted" ']
-            
+            argument = string.gsub(argument, "%*$", "") -- remove our EOF
+
             local matches = self:ParseArgumentType(argument_type, argument, args)
             if #matches == 0 then
                 return
-            elseif #matches == 1 then
-                args[i] = "\"" .. matches[1] .. "\""
-                return "/" .. cmd .. " " .. table.concat(args, " ") .. " ", matches
             else
-                return nil, matches
+                return matches
             end
         end
     end

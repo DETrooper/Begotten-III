@@ -27,10 +27,9 @@ PLUGIN:RegisterArgumentType("Weather", function(argument)
 end)
 
 PLUGIN:RegisterArgumentType("Rank", function(argument, args)
-
     if !args or !args[1] then return {} end
 
-    local plystr = string.gsub(args[1], "\"", "")
+    local plystr = args[1]
 
     local target = Clockwork.player:FindByID(plystr)
 

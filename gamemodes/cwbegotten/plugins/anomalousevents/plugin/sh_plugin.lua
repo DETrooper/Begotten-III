@@ -47,6 +47,7 @@ local COMMAND = Clockwork.command:New("tvhallucination");
 	COMMAND.access = "s";
 	COMMAND.arguments = 1
 	COMMAND.optionalArguments = 1;
+	COMMAND.types = {"Player"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
