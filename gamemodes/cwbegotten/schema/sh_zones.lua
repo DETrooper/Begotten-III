@@ -2187,7 +2187,7 @@ local CAVES = zones:New("caves")
 		MANOR.bounds = {
 			{
 			min = Vector(852, -7859, -4881),
-			max = Vector(2321, -9681, -2835),
+			max = Vector(2321, -9681, -2300),
 			},
 			{
 			min = Vector(-6541, -8594, -9349),
