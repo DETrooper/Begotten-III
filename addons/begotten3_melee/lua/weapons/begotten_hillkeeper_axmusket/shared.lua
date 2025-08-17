@@ -358,19 +358,12 @@ function SWEP:TakeAmmoBegotten(amount)
 			if itemTable.TakeCondition then
 				local conditionLoss = math.max((((1000 - self.Primary.RPM) / 1000) * amount), 0.5);
 				
-				if !itemTable.unrepairable then
-					if IsValid(self.Owner) and self.Owner:IsPlayer() then
-						if self.Owner.HasBelief then
-							if self.Owner:HasBelief("ingenuity_finisher") then
-								return;
-							elseif self.Owner:HasBelief("scour_the_rust") then
-								conditionLoss = conditionLoss / 1.55;
-							end
-						end
-					end
+				-- Unrepairable items are unaffected by condition loss modifiers.
+				if !itemTable.unrepairable and IsValid(self.Owner) and self.Owner:IsPlayer() then
+					itemTable:TakeConditionByPlayer(self.Owner, conditionLoss);
+				else
+					itemTable:TakeCondition(conditionLoss);
 				end
-				
-				itemTable:TakeCondition(conditionLoss);
 			end
 		end
 	end
