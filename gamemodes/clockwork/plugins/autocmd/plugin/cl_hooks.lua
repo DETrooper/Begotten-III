@@ -19,7 +19,7 @@ function PLUGIN:HUDPaintForeground()
 
     Clockwork.kernel:OverrideMainFont(font)
 
-    local _, matches = self:HandleAutoComplete(cmd, args)
+    local matches = self:HandleAutoComplete(cmd, args)
     if not matches or #matches == 0 then return end
 
     local count = 0
@@ -44,13 +44,21 @@ end
 PLUGIN.autoCompleteMatches = {}
 PLUGIN.autoCompleteIndex   = 1
 
+local function wrap(tbl)
+    local out = {}
+    for i, v in ipairs(tbl) do
+        out[i] = '"' .. v .. '"'
+    end
+    return out
+end
+
 function PLUGIN:OnChatTab(text)
     local cmd, args = self:ParseCommand(text)
     if not cmd then
         return text
     end
 
-    local newText, matches = self:HandleAutoComplete(cmd, args)
+    local matches = self:HandleAutoComplete(cmd, args)
 
     if matches and #matches > 1 then
         self.autoCompleteMatches = matches
@@ -71,14 +79,12 @@ function PLUGIN:OnChatTab(text)
         self.autoCompleteIndex = 1
     end
 
-    if not isShiftDown and #self.autoCompleteMatches > 1 then
+    if not isShiftDown and #self.autoCompleteMatches > 0 then
         local selected_match = self.autoCompleteMatches[self.autoCompleteIndex]
         if selected_match then
-            args[#args] = "\"" .. selected_match .. "\""
-            text = "/" .. cmd .. " " .. table.concat(args, " ") .. " "
+            args[#args] = selected_match
+            text = "/" .. cmd .. " " .. table.concat(wrap(args), " ") .. " "
         end
-    elseif newText then
-        text = newText
     end
 
     return text

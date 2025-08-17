@@ -25,7 +25,7 @@ end
 Schema.requiredMounts = {
 	--["episodic"] = "Half-Life 2: Episode 1",
 	--["ep2"] = "Half-Life 2: Episode 2",
-	["cstrike"] = "Counter-Strike: Source",
+	--["cstrike"] = "Counter-Strike: Source",
 };
 
 Schema.cheapleMessages = {"I've gotta get away from that fucking thing!", "It's getting closer!", "What does that thing want from me!?", "Why can't anyone else see it!?", "Shit, it's getting closer!", "Gotta keep moving... gotta keep moving..."};
@@ -841,7 +841,7 @@ function Schema:DrawTargetPlayerStatus(target, alpha, x, y)
 				
 				if (target:GetShootPos():Distance(Clockwork.Client:GetShootPos()) <= 192) then
 					if (Clockwork.Client:GetNetVar("tied") == 0) then
-						mainStatus = "Press :+use: to untie "..thirdPerson..".";
+						mainStatus = "Press :+gm_showspare1: to untie "..thirdPerson..".";
 						
 						untieText = true;
 					end;

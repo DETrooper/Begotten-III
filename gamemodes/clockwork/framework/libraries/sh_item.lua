@@ -981,12 +981,6 @@ function item.CreateInstance(uniqueID, itemID, data, bNoGenerate)
 		end;
 		
 		--print("Item ID: "..itemID);
-		
-		--[[if (!item.instances[itemID]) then
-			item.instances[itemID] = table.Copy(itemTable);
-				item.instances[itemID].itemID = itemID;
-			setmetatable(item.instances[itemID], CLASS_TABLE);
-		end;]]--
 	
 		item.instances[itemID] = table.Copy(itemTable);
 			item.instances[itemID].itemID = itemID;

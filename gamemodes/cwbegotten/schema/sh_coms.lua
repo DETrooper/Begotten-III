@@ -1359,11 +1359,28 @@ local zoneEventClasses = {
 	["caves"] = {"caves"},
 };
 
+if Clockwork.command.RegisterType then
+	local zones = table.Merge(zones:GetAll(), zones.supraZones)
+
+	Clockwork.command:RegisterType("Zones", function (current_arg, _args)
+		local matches = {}
+
+		for zone, v in pairs(zones) do
+			if string.find(string.lower(zone), string.lower(current_arg)) then
+				table.insert(matches, zone)
+			end
+		end
+
+		return matches
+	end)
+end
+
 local COMMAND = Clockwork.command:New("EventZone");
 	COMMAND.tip = "Send an event to characters in a specific suprazone (suprawasteland will play for both wasteland and tower for example, or suprahell and supragore) or zone (i.e. wasteland, tower, caves, hell, gore).";
 	COMMAND.text = "<string Zone> <string Text>";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.access = "o";
+	COMMAND.types = {"Zones"}
 	COMMAND.arguments = 2;
 
 	-- Called when the command has been run.
@@ -1423,6 +1440,7 @@ local COMMAND = Clockwork.command:New("PlaySoundZone");
 	COMMAND.tip = "Play a sound to all players in a specific suprazone (suprawasteland will play for both wasteland and tower for example, or suprahell and supragore) or zone (i.e. wasteland, tower, caves, hell, gore).";
 	COMMAND.text = "<string Zone> <string SoundName> [int Level] [int Pitch]";
 	COMMAND.access = "o";
+	COMMAND.types = {"Zones"}
 	COMMAND.arguments = 2;
 	COMMAND.optionalArguments = 2;
 
@@ -1496,6 +1514,7 @@ local COMMAND = Clockwork.command:New("StopSoundZone");
 	COMMAND.tip = "Stop all sounds for all players in a specified zone.";
 	COMMAND.access = "s";
 	COMMAND.arguments = 1;
+	COMMAND.types = {"Zones"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

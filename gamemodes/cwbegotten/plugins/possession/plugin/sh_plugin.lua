@@ -198,6 +198,7 @@ local COMMAND = Clockwork.command:New("DemonHeal");
 	COMMAND.text = "<string Name>";
 	COMMAND.access = "s";
 	COMMAND.optionalArguments = 1;
+	COMMAND.types = {"Player"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -295,6 +296,7 @@ COMMAND.tip = "Send a message to a player as a demon.";
 COMMAND.text = "<string Name> <string Message>";
 COMMAND.access = "s";
 COMMAND.arguments = 2;
+COMMAND.types = {"Player"}
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -324,6 +326,7 @@ COMMAND.tip = "Send a message to a player as a demon pretending to be something 
 COMMAND.text = "<string Name> <string Message>";
 COMMAND.access = "s";
 COMMAND.arguments = 2;
+COMMAND.types = {"Player"}
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -353,6 +356,7 @@ COMMAND.tip = "Whisper a message into a player's ear.";
 COMMAND.text = "<string Name> <string Message>";
 COMMAND.access = "s";
 COMMAND.arguments = 2;
+COMMAND.types = {"Player"}
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -379,6 +383,7 @@ COMMAND.tip = "Make a player think another player is saying something.";
 COMMAND.text = "<string Target Name> <string Speaker Name> <string Message>";
 COMMAND.access = "s";
 COMMAND.arguments = 3;
+COMMAND.types = {"Player"}
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -409,6 +414,7 @@ COMMAND.tip = "Make a player think another player is whispering something.";
 COMMAND.text = "<string Target Name> <string Speaker Name> <string Message>";
 COMMAND.access = "s";
 COMMAND.arguments = 3;
+COMMAND.types = {"Player"}
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -440,6 +446,7 @@ COMMAND.tip = "Make a player think another player is whispering something.";
 COMMAND.text = "<string Target Name> <string Speaker Name> <string Message>";
 COMMAND.access = "s";
 COMMAND.arguments = 3;
+COMMAND.types = {"Player"}
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
@@ -471,6 +478,7 @@ COMMAND.text = "<string Name>";
 COMMAND.access = "s";
 COMMAND.arguments = 1;
 COMMAND.alias = {"PlyForceSuicide", "CharForceSuicide"};
+COMMAND.types = {"Player"}
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)

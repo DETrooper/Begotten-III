@@ -215,7 +215,7 @@ function Clockwork.bans:Add(identifier, duration, reason, Callback, bSaveless)
 						insertObj:Insert("_Duration", stored[identifier].duration)
 						insertObj:Insert("_Reason", stored[identifier].reason)
 						insertObj:Insert("_Schema", schemaFolder)
-					insertObj:Push()
+					insertObj:Execute()
 				end
 
 				if (Callback) then

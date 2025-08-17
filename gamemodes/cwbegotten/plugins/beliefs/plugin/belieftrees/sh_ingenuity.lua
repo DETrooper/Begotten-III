@@ -101,7 +101,6 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 			["smith"] = {
 				name = "Smith",
 				description = "Unlocks the ability to smelt Iron via crafting. Also unlocks the ability to melt down metal items at forges.",
-				iconOverride = "begotten/ui/belieficons/blacksmith.png",
 				requirements = {"ingenious"},
 				row = 2,
 			},
@@ -114,7 +113,6 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 			["master_blacksmith"] = {
 				name = "Master Blacksmith",
 				description = "Unlocks the ability to smelt Fine Steel via crafting.",
-				iconOverride = "begotten/ui/belieficons/blacksmith.png",
 				requirements = {"ingenious", "smith", "blacksmith"},
 				row = 4,
 			},
@@ -123,7 +121,7 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 			["fortify_the_plate"] = {
 				name = "Fortify the Plate",
 				description = "Increases the protection value of all armor by 5 points.",
-				iconOverride = "begotten/ui/belieficons/hauberk.png",
+				iconOverride = "begotten/ui/belieficons/fortify_plate.png",
 				requirements = {"ingenious"},
 				row = 2,
 			},

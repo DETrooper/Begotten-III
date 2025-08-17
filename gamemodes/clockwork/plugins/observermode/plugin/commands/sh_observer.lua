@@ -40,6 +40,7 @@ local COMMAND = Clockwork.command:New("MakeSpectate");
 	COMMAND.access = "s";
 	COMMAND.arguments = 1;
 	COMMAND.alias = {"PlyMakeSpectate", "MakeObserver", "MakeNoclip"};
+	COMMAND.types = {"Player"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

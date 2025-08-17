@@ -46,7 +46,7 @@ function cwForceFeeding:ForceFeedPlayer(player, target, itemTable)
 			end
 		end
 
-		Clockwork.player:EntityConditionTimer(player, target, nil, consumeTime, 192, function()
+		Clockwork.player:EntityConditionTimer(player, target:GetRagdollEntity() or target, nil, consumeTime, 192, function()
 			if target:Alive() and player:Alive() and !player:IsRagdolled() and Clockwork.player:GetAction(player) == "force_feeding" then
 				return true;
 			end;

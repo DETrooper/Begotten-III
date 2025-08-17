@@ -749,6 +749,7 @@ local COMMAND = Clockwork.command:New("CharGiveItem");
 	COMMAND.arguments = 2;
 	COMMAND.optionalArguments = 1;
 	COMMAND.alias = {"GiveItem", "PlyGiveItem"};
+	COMMAND.types = {"Player", "SpawnItem"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
