@@ -3,6 +3,16 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
+local function UpdateActiveRituals(player, ritualName, endTime)
+    local activeRituals = player:GetNetVar("activeRituals", {})
+    if endTime then
+        activeRituals[ritualName] = endTime
+    else
+        activeRituals[ritualName] = nil
+    end
+    player:SetNetVar("activeRituals", activeRituals)
+end
+
 local function IsAreaClear(position, radius, player)
 	for k, v in pairs (ents.FindInSphere(position, radius)) do
 		if v:IsPlayer() or v:IsNPC() or v:IsNextBot() then
@@ -53,17 +63,24 @@ RITUAL = cwRituals.rituals:New("yellow_banner_of_quelling");
 	RITUAL.experience = 75; -- XP gained from performing the ritual.
 
 	function RITUAL:OnPerformed(player)
-		player:SetNetVar("yellowBanner", true);
-
+		player:SetNetVar("yellowBanner", true)
+		local endTime = os.time() + 1800
+		UpdateActiveRituals(player, "Yellow Banner of Quelling", endTime)
 		timer.Create("YellowBannerTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("yellowBanner", false) then
-					player:SetNetVar("yellowBanner", false);
-
-					Clockwork.hint:Send(player, "The 'Yellow Banner of Quelling' ritual has worn off...", 10, Color(175, 100, 100), true, true);
+					player:SetNetVar("yellowBanner", false)
+					UpdateActiveRituals(player, "Yellow Banner of Quelling", nil)
+					Clockwork.hint:Send(player, "The 'Yellow Banner of Quelling' ritual has worn off...", 10, Color(175, 100, 100), true, true)
 				end
 			end
-		end);
+		end)
+	end
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+	end;
+	function RITUAL:EndRitual(player)
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -340,7 +357,9 @@ RITUAL = cwRituals.rituals:New("aura_of_the_mother");
 		player:SetNetVar("auraMotherActive", true);
 		
 		local auraMotherTick = 0;
-	
+		
+		local endtime = os.time() + 120
+		UpdateActiveRituals(player, "Aura of the Mother", endtime);
 		timer.Create("auraMotherTimer_"..player:EntIndex(), 5, 120, function() 
 			auraMotherTick = auraMotherTick + 1;
 			
@@ -359,6 +378,7 @@ RITUAL = cwRituals.rituals:New("aura_of_the_mother");
 				
 				if auraMotherTick == 120 then
 					player:SetNetVar("auraMotherActive", false);
+					UpdateActiveRituals(player, "Aura of the Mother", nil);
 				end
 			end
 		end);
@@ -383,12 +403,13 @@ RITUAL = cwRituals.rituals:New("blessing_of_coin");
 
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("blessingOfCoin", true);
-
+		local endtime = os.time() + 2400
+		UpdateActiveRituals(player, "Blessing of Coin", endtime);
 		timer.Create("BlessingOfCoinTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("blessingOfCoin", false) then
 					player:SetNetVar("blessingOfCoin", false);
-
+					UpdateActiveRituals(player, "Blessing of Coin", nil);
 					Clockwork.hint:Send(player, "The 'Blessing of Coin' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -414,12 +435,13 @@ RITUAL = cwRituals.rituals:New("bloodhowl");
 
 	function RITUAL:OnPerformed(player)
 		player.bloodHowlActive = true;
-
+		local endtime = os.time() + 2400
+		UpdateActiveRituals(player, "Bloodhowl", endtime);
 		timer.Create("BloodhowlTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player.bloodHowlActive then
 					player.bloodHowlActive = nil;
-
+					UpdateActiveRituals(player, "Bloodhowl", nil);
 					Clockwork.hint:Send(player, "The 'Bloodhowl' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -446,12 +468,13 @@ RITUAL = cwRituals.rituals:New("bloodwings");
 
 	function RITUAL:OnPerformed(player)
 		player.bloodWingsActive = true;
-
+		local endtime = os.time() + 1800
+		UpdateActiveRituals(player, "Bloodwings", endtime);
 		timer.Create("BloodwingsTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player.bloodWingsActive then
 					player.bloodWingsActive = nil;
-
+					UpdateActiveRituals(player, "Bloodwings", nil);
 					Clockwork.hint:Send(player, "The 'Bloodwings' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -640,12 +663,13 @@ RITUAL = cwRituals.rituals:New("cloak_of_always_burning");
 
 	function RITUAL:OnPerformed(player)
 		player.cloakBurningActive = true;
-
+		local endtime = os.time() + 2400
+		UpdateActiveRituals(player, "Cloak of Always Burning", endtime);
 		timer.Create("CloakBurnTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player.cloakBurningActive then
 					player.cloakBurningActive = nil;
-
+					UpdateActiveRituals(player, "Cloak of Always Burning", nil);
 					Clockwork.hint:Send(player, "The 'Cloak of Always Burning' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -671,12 +695,13 @@ RITUAL = cwRituals.rituals:New("cries_of_the_drowned_king");
 
 	function RITUAL:OnPerformed(player)
 		player.drownedKingActive = true;
-
+		local endtime = os.time() + 3600
+		UpdateActiveRituals(player, "Cries of the Drowned King", endtime);
 		timer.Create("DrownedKingTimer_"..player:EntIndex(), 3600, 1, function()
 			if IsValid(player) then
 				if player.drownedKingActive then
 					player.drownedKingActive = nil;
-
+					UpdateActiveRituals(player, "Cries of the Drowned King", nil);
 					Clockwork.hint:Send(player, "The 'Cries of the Drowned King' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -708,12 +733,13 @@ RITUAL = cwRituals.rituals:New("demon_hunter");
 		
 		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." just activated the 'Demon Hunter' ritual! Make sure there are enough thrall NPCs ("..player.thrallsToKill..") for him to kill!");
 		if(math.random(1,10) == 1) then Schema:EasyText(GetAdmin(), "tomato", "The die have been cast...by random chance, an admin thrall has been requested to participate in this ritual!"); end
-
+		local endtime = os.time() + 1500
+		UpdateActiveRituals(player, "Demon Hunter", endtime);
 		timer.Create("DemonHunterTimer_"..player:EntIndex(), 1500, 1, function()
 			if IsValid(player) then
 				if player.demonHunterActive then
 					player.demonHunterActive = nil;
-
+					UpdateActiveRituals(player, "Demon Hunter", nil);
 					Clockwork.hint:Send(player, "The 'Demon Hunter' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -766,7 +792,8 @@ RITUAL = cwRituals.rituals:New("empowered_blood");
 		player.maxHealthBoost = 50;
 		player:SetMaxHealth(player:GetMaxHealth());
 		player:SetHealth(player:Health() + 50);
-		
+		local endtime = os.time() + 1200
+		UpdateActiveRituals(player, "Empowered Blood", endtime);
 		timer.Create("EmpoweredBloodTimer_"..player:EntIndex(), 1200, 1, function()
 			if IsValid(player) then
 				player.maxHealthBoost = nil;
@@ -778,7 +805,7 @@ RITUAL = cwRituals.rituals:New("empowered_blood");
 				if player:Health() > maxHealth then
 					player:SetHealth(maxHealth);
 				end
-				
+				UpdateActiveRituals(player, "Empowered Blood", nil);
 				Clockwork.hint:Send(player, "The 'Empowered Blood' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 			end
 		end);
@@ -826,12 +853,13 @@ RITUAL = cwRituals.rituals:New("hail_prince_thieves");
 
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("princeOfThieves", true);
-
+		local endtime = os.time() + 1800
+		UpdateActiveRituals(player, "Hail Be to the Prince of Thieves", endtime);
 		timer.Create("PrinceOfThievesTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("princeOfThieves", false) then
 					player:SetNetVar("princeOfThieves", false);
-
+					UpdateActiveRituals(player, "Hail Be to the Prince of Thieves", nil);
 					Clockwork.hint:Send(player, "The 'Hail Be to the Prince of Thieves' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -909,12 +937,13 @@ RITUAL = cwRituals.rituals:New("holy_powderkeg");
 	
 	function RITUAL:OnPerformed(player)
 		player.holyPowderkegActive = true;
-
+		local endtime = os.time() + 1800
+		UpdateActiveRituals(player, "Holy Powderkeg", endtime);
 		timer.Create("HolyPowderTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player.holyPowderkegActive then
 					player.holyPowderkegActive = nil;
-
+					UpdateActiveRituals(player, "Holy Powderkeg", nil);
 					Clockwork.hint:Send(player, "The 'Holy Powderkeg' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -939,7 +968,8 @@ RITUAL = cwRituals.rituals:New("cloak_of_the_black_hat");
 	
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("kinisgerCloak", true);
-		
+		local endtime = os.time() + 1800
+		UpdateActiveRituals(player, "Cloak of the Black Hat", endtime);
 		timer.Create("KinisgerCloakTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("kinisgerCloak", false) then
@@ -948,7 +978,7 @@ RITUAL = cwRituals.rituals:New("cloak_of_the_black_hat");
 					if player.cloaked then
 						player:Uncloak();
 					end
-					
+					UpdateActiveRituals(player, "Cloak of the Black Hat", nil);
 					Clockwork.hint:Send(player, "The 'Cloak of the Black Hat' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1020,12 +1050,13 @@ RITUAL = cwRituals.rituals:New("ritual_of_shadow");
 
 	function RITUAL:OnPerformed(player)
 		player.ritualOfShadow = true;
-
+		local endtime = os.time() + 2400
+		UpdateActiveRituals(player, "Ritual of Shadow", endtime);
 		timer.Create("RitualOfShadowTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player.ritualOfShadow then
 					player.ritualOfShadow = nil;
-
+					UpdateActiveRituals(player, "Ritual of Shadow", nil);
 					Clockwork.hint:Send(player, "The 'Ritual of Shadow' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1212,12 +1243,13 @@ RITUAL = cwRituals.rituals:New("noble_stature");
 
 	function RITUAL:OnPerformed(player)
 		player.nobleStatureActive = true;
-
+		local endtime = os.time() + 900
+		UpdateActiveRituals(player, "Noble Stature", endtime);
 		timer.Create("NobleStatureTimer_"..player:EntIndex(), 900, 1, function()
 			if IsValid(player) then
 				if player.nobleStatureActive then
 					player.nobleStatureActive = nil;
-
+					UpdateActiveRituals(player, "Noble Stature", nil);
 					Clockwork.hint:Send(player, "The 'Noble Stature' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1263,12 +1295,13 @@ RITUAL = cwRituals.rituals:New("perseverance");
 	
 	function RITUAL:OnPerformed(player)
 		player.perseveranceActive = true;
-
+		local endtime = os.time() + 1800
+		UpdateActiveRituals(player, "Perseverance", endtime);
 		timer.Create("PerseveranceTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player.perseveranceActive then
 					player.perseveranceActive = nil;
-
+					UpdateActiveRituals(player, "Perseverance", nil);
 					Clockwork.hint:Send(player, "The 'Perseverance' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1443,12 +1476,13 @@ RITUAL = cwRituals.rituals:New("aura_of_powderheel");
 
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("powderheelActive", true);
-
+		local endtime = os.time() + 1800
+		UpdateActiveRituals(player, "Aura of Powderheel", endtime);
 		timer.Create("PowderheelTimer_"..player:EntIndex(), 900, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("powderheelActive") then
 					player:SetNetVar("powderheelActive", false);
-
+					UpdateActiveRituals(player, "Aura of Powderheel", nil);
 					Clockwork.hint:Send(player, "The 'Aura of Powderheel' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1474,12 +1508,13 @@ RITUAL = cwRituals.rituals:New("druids_staff");
 
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("druidStaffActive", true);
-
+		local endtime = os.time() + 900
+		UpdateActiveRituals(player, "Druid's Staff", endtime);
 		timer.Create("DruidStaffTImer_"..player:EntIndex(), 900, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("druidStaffActive") then
 					player:SetNetVar("druidStaffActive", false);
-
+					UpdateActiveRituals(player, "Druid's Staff", nil);
 					Clockwork.hint:Send(player, "The 'Druid's Staff' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1746,12 +1781,13 @@ RITUAL = cwRituals.rituals:New("scornificationism");
 
 	function RITUAL:OnPerformed(player)
 		player.scornificationismActive = true;
-
+		local endtime = os.time() + 120
+		UpdateActiveRituals(player, "Scornificationism", endtime);
 		timer.Create("ScornificationismTimer_"..player:EntIndex(), 120, 1, function()
 			if IsValid(player) then
 				if player.scornificationismActive then
 					player.scornificationismActive = nil;
-
+					UpdateActiveRituals(player,"Scornificationism", nil);
 					Clockwork.hint:Send(player, "The 'Scornificationism' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1804,13 +1840,14 @@ RITUAL = cwRituals.rituals:New("soulscorch");
 	function RITUAL:OnPerformed(player)
 		player.soulscorchActive = true;
 		player:SetNetVar("soulscorchActive", true);
-
+		local endtime = os.time() + 300
+		UpdateActiveRituals(player, "Soulscorch", endtime);
 		timer.Create("SoulScorchTimer_"..player:EntIndex(), 300, 1, function()
 			if IsValid(player) then
 				if player.soulscorchActive then
 					player.soulscorchActive = nil;
 					player:SetNetVar("soulscorchActive", false);
-
+					UpdateActiveRituals(player, "Soulscorch", nil);
 					Clockwork.hint:Send(player, "The 'Soulscorch' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1847,12 +1884,13 @@ RITUAL = cwRituals.rituals:New("steel_will");
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("steelWill", true);
 		player:HandleSanity(100);
-
+		local endtime = os.time() + 2400
+		UpdateActiveRituals(player, "Steel Will", endtime);
 		timer.Create("SteelWillTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("steelWill", false) then
 					player:SetNetVar("steelWill", false);
-
+					UpdateActiveRituals(player, "Steel Will", nil);
 					Clockwork.hint:Send(player, "The 'Steel Will' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -2789,12 +2827,13 @@ RITUAL = cwRituals.rituals:New("upstaged");
 	
 	function RITUAL:OnPerformed(player)
 		player.upstagedActive = true;
-
+		local endtime = os.time() + 2400
+		UpdateActiveRituals(player, "Upstaged", endtime);
 		timer.Create("UpstagedTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player.upstagedActive then
 					player.upstagedActive = nil;
-
+					UpdateActiveRituals(player, "Upstaged", nil);
 					Clockwork.hint:Send(player, "The 'Upstaged' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
