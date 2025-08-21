@@ -530,10 +530,12 @@ function SWEP:ShootBulletInformation()
 	end
 	
 	if Clockwork and IsValid(self.Owner) then
-		local stamina = self.Owner:GetNWInt("Stamina", 100);
-		local max_stamina = self.Owner:GetNetVar("Max_Stamina", 100);
-		
-		CurrentCone = CurrentCone * Lerp(stamina / max_stamina, 3, 1);
+		if cwStamina then
+			local stamina = self.Owner:GetNWInt("Stamina", 100);
+			local max_stamina = self.Owner:GetNetVar("Max_Stamina", 100);
+			
+			CurrentCone = CurrentCone * Lerp(stamina / max_stamina, 3, 1);
+		end
 		
 		local itemTable = item.GetByWeapon(self);
 		
