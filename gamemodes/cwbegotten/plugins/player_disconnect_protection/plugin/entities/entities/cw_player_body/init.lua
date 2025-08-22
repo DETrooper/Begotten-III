@@ -168,7 +168,7 @@ function ENT:SetPlayer(client)
 		physicsObject:EnableMotion(false)
 	end
 
-	if (faction == "Hillkeeper" or faction == "Holy Hierarchy") then -- TODO: change to Russian
+	if (faction == "Hillkeeper" or faction == "Holy Hierarchy") then
 		for _, v in ipairs(ents.FindByClass("npc_drg_animals_wolf")) do
 			v:AddEntityRelationship(self, D_LI, 99)
 		end
@@ -182,7 +182,7 @@ function ENT:SetPlayer(client)
 		local bIsMale = client:GetGender() == "Male"
 		local subfaction = (client:GetNetVar("kinisgerOverrideSubfaction") or client:GetSubfaction())
 
-		if (client:GetSubfaith() == "Voltism" and cwBeliefs and (client:HasBelief("the_storm") or client:HasBelief("the_paradox_riddle_equation"))) then -- TODO: change to Russian
+		if (client:GetSubfaith() == "Voltism" and cwBeliefs and (client:HasBelief("the_storm") or client:HasBelief("the_paradox_riddle_equation"))) then
 			self.painSounds {
 				"npc/headcrab/die2.wav",
 				"npc/headcrab_poison/ph_warning1.wav",
@@ -207,7 +207,7 @@ function ENT:SetPlayer(client)
 
 			self.soundsPitch = 150
 			return
-		elseif (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or (faction == "Holy Hierarchy" and !bIsMale) or (faction == "The Third Inquisition" and !bIsMale)) then -- TODO: change to Russian
+		elseif (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or (faction == "Holy Hierarchy" and !bIsMale) or (faction == "The Third Inquisition" and !bIsMale)) then
 			if (bIsMale) then
 				self.painSounds = {
 					"voice/man2/man2_pain01.wav",
@@ -249,7 +249,7 @@ function ENT:SetPlayer(client)
 					"voice/female1/female1_death09.wav"
 				}
 			end
-		elseif ((faction == "Holy Hierarchy" or faction == "The Third Inquisition") and bIsMale) then -- TODO: change to Russian
+		elseif ((faction == "Holy Hierarchy" or faction == "The Third Inquisition") and bIsMale) then
 			if (subfaction == "Low Ministry") then
 				self.painSounds = {
 					"lmpainsounds/lm_pain1.wav",
@@ -308,7 +308,7 @@ function ENT:SetPlayer(client)
 				"voice/female2/female2_death08.wav",
 				"voice/female2/female2_death09.wav"
 			}
-		elseif (faction == "Goreic Warrior" or faction == "Smog City Pirates") then -- TODO: change to Russian
+		elseif (faction == "Goreic Warrior" or faction == "Smog City Pirates") then
 			self.painSounds = {
 				"voice/man1/man1_pain01.wav",
 				"voice/man1/man1_pain02.wav",
@@ -546,7 +546,6 @@ function ENT:OnTakeDamage(damageInfo)
 			end;
 		end
 
-		-- TODO: translate to Russian (accroding to Maskgotten translation conventions)
 		Clockwork.chatBox:Add(listeneres, "Sleeping body disintegrates before you after death!")
 
 		self:Remove()
@@ -566,7 +565,7 @@ function ENT:OnTakeDamage(damageInfo)
 	ragdoll:Spawn()
 
 	ragdoll:SetNWEntity("Player", game.GetWorld())
-	ragdoll:SetNWString("clothes", self:GetClothes()) -- TODO: Change to SetNW2String
+	ragdoll:SetNW2String("clothes", self:GetClothes())
 	if ((self.characterBounty or 0) > 0) then
 		ragdoll:SetNWInt("bountyKey", self.characterKey)
 	end
