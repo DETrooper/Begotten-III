@@ -96,11 +96,11 @@ function ENT:OnTakeDamage(damageInfo)
 				else
 					local faction = v:GetNetVar("kinisgerOverride")
 
-					if faction == "Hillkeeper" or faction == "Holy Hierarchy" then -- TODO: change to Russian
+					if faction == "Hillkeeper" or faction == "Holy Hierarchy" then
 						bMakeAlly = true
 					end
 				end
-			elseif (class == "cw_player_body" and (v.faction == "Hillkeeper" or v.faction == "Holy Hierarchy")) then -- TODO: change to Russian
+			elseif (class == "cw_player_body" and (v.faction == "Hillkeeper" or v.faction == "Holy Hierarchy")) then
 				bMakeAlly = true
 			end
 
