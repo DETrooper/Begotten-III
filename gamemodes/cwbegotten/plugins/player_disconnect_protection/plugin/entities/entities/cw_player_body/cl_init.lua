@@ -7,7 +7,7 @@ function ENT:OnNVarChanged(netVar, _, newValue)
 	end
 
 
-	-- it seems something (or someone) broke `NetworkVar` func, so it is being changed multiplie times on single call (may be caused by NW2 system usagem, or may by even obsolete by the time of PR)
+	-- it seems something (or someone) broke `NetworkVar` func, so it is being changed multiplie times on single call (may be caused by NW2 system usagem, or may even be obsolete by the time 08/22/2025)
 	if (newValue != "") then
 		if (IsValid(self.clothes)) then
 			self.clothes:Remove()
