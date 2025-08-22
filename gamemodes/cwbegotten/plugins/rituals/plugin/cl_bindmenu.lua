@@ -279,7 +279,7 @@ hook.Add("HUDPaint", "RadialShitballs", function()
     local index = 0
 
     for ritualName, endTime in pairs(activeRituals) do
-        local timeLeft = math.max(0, endTime - os.time())
+        local timeLeft = math.max(0, endTime - CurTime())
         local minutes = math.floor(timeLeft / 60)
         local seconds = math.floor(timeLeft % 60)
         local timeText = string.format("%s: %d:%.2d", ritualName, minutes, seconds)
