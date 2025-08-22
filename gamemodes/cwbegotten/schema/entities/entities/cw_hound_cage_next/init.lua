@@ -86,15 +86,26 @@ function ENT:OnTakeDamage(damageInfo)
 		self:SetBodygroup( 2, 1 )
 
 		entity:SetSkin(self:GetSkin())
-		for _, v in _player.Iterator() do
-			if (v:GetFaction() == playerFaith) or (v:GetFaction() == buddiestable[playerFaith]) or (self.houndattackall==false and v:GetFaction() == "Wanderer") then
-				entity:AddEntityRelationship(v, D_LI, 99);
-			else					
-				local faction = v:GetNetVar("kinisgerOverride")
-				
-				if faction == "Hillkeeper" or faction == "Holy Hierarchy" then
-					entity:AddEntityRelationship(v, D_LI, 99);
+		for _, v in ents.Iterator() do
+			local class = v:GetClass()
+			local bMakeAlly = false
+
+			if (class == "player") then
+				if (v:GetFaction() == playerFaith) or (v:GetFaction() == buddiestable[playerFaith]) or (self.houndattackall==false and v:GetFaction() == "Wanderer") then
+					bMakeAlly = true
+				else
+					local faction = v:GetNetVar("kinisgerOverride")
+
+					if faction == "Hillkeeper" or faction == "Holy Hierarchy" then -- TODO: change to Russian
+						bMakeAlly = true
+					end
 				end
+			elseif (class == "cw_player_body" and (v.faction == "Hillkeeper" or v.faction == "Holy Hierarchy")) then -- TODO: change to Russian
+				bMakeAlly = true
+			end
+
+			if (bMakeAlly) then
+				entity:AddEntityRelationship(v, D_LI, 99)
 			end
 		end
 		self:StopLoopingSound(self.isplayingsound)

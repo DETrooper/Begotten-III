@@ -3129,12 +3129,14 @@ function Clockwork.player:LoadCharacter(player, characterID, tMergeCreate, Callb
 
 		if (character) then
 			if (player.cwCharacter) then
-				hook.Run("PrePlayerCharacterUnloaded", player)
+				local bIsReload = characterID == player.cwCharacter.characterID
+
+				hook.Run("PrePlayerCharacterUnloaded", player, bIsReload)
 			
 				self:SaveCharacter(player)
 				self:UpdateCharacter(player)
 
-				hook.Run("PlayerCharacterUnloaded", player)
+				hook.Run("PlayerCharacterUnloaded", player, bIsReload)
 			end
 
 			player.cwCharacter = character
