@@ -7,7 +7,7 @@ function ENT:OnNVarChanged(netVar, _, newValue)
 	end
 
 
-	-- it seems someone (or somewho) broke `NetworkVar` func, so it is being changed multiplie times on single call (may be caused by NW2 system usage)
+	-- it seems something (or someone) broke `NetworkVar` func, so it is being changed multiplie times on single call (may be caused by NW2 system usagem, or may by even obsolete by the time of PR)
 	if (newValue != "") then
 		if (IsValid(self.clothes)) then
 			self.clothes:Remove()
@@ -37,6 +37,6 @@ end
 function ENT:HUDPaintTargetID(x, y, alpha)
 	local colorTargetID = Clockwork.option:GetColor("target_id")
 
-	y = Clockwork.kernel:DrawInfo("Тело", x, y, colorTargetID, alpha)
-	y = Clockwork.kernel:DrawInfo("Дышит, но пребывает во сне.", x, y, color_white, alpha)
+	y = Clockwork.kernel:DrawInfo("Body", x, y, colorTargetID, alpha)
+	y = Clockwork.kernel:DrawInfo("Breathes, but sleeps.", x, y, color_white, alpha)
 end
