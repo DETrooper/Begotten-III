@@ -517,22 +517,24 @@ end
    Desc: This func add the damage, the recoil, the number of shots and the cone on the bullet.
 -----------------------------------------------------*/
 function SWEP:ShootBulletInformation()
-	local CurrentDamage
-	local CurrentRecoil
+	local CurrentDamage = self.Primary.Damage;
+	local CurrentRecoil = self.Primary.Recoil
 	local CurrentCone
 	local basedamage
    
 	if (self:GetIronsights() == true) and self.Owner:KeyDown(IN_ATTACK2) then
 		CurrentCone = self.Primary.IronAccuracy
+		CurrentRecoil = CurrentRecoil / 6;
 	else
 		CurrentCone = self.Primary.Spread
 	end
 	
 	if Clockwork and IsValid(self.Owner) then
-		local stamina = self.Owner:GetNWInt("Stamina", 100);
-		
-		if stamina < 50 then
-			CurrentCone = CurrentCone + (CurrentCone - (CurrentCone * (0.01 * (stamina * 2))));
+		if cwStamina then
+			local stamina = self.Owner:GetNWInt("Stamina", 100);
+			local max_stamina = self.Owner:GetNetVar("Max_Stamina", 100);
+			
+			CurrentCone = CurrentCone * Lerp(stamina / max_stamina, 3, 1);
 		end
 		
 		local itemTable = item.GetByWeapon(self);
@@ -545,25 +547,8 @@ function SWEP:ShootBulletInformation()
 			end
 		end
 	end
-	
-	--local damagedice = math.Rand(.85,1.3)
-   
-	--basedamage = self.Primary.Damage
-	--CurrentDamage = basedamage * damagedice
-	CurrentDamage = self.Primary.Damage;
-	CurrentRecoil = self.Primary.Recoil
-   
-	if (self:GetIronsights() == true) and self.Owner:KeyDown(IN_ATTACK2) then
-		self:ShootBullet(CurrentDamage, CurrentRecoil / 6, self.Primary.NumShots, CurrentCone)
-	else
-		if IsValid(self) then
-			if IsValid(self.Weapon) then
-				if IsValid(self.Owner) then
-					self:ShootBullet(CurrentDamage, CurrentRecoil, self.Primary.NumShots, CurrentCone)
-				end
-			end
-		end	
-	end
+
+	self:ShootBullet(CurrentDamage, CurrentRecoil, self.Primary.NumShots, CurrentCone)
 end
  
 /*---------------------------------------------------------

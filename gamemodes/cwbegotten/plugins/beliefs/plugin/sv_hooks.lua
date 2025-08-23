@@ -1019,10 +1019,10 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 											entity.poisonTicks = nil;
 										end
 										
-										-- Add a 2 second delay to taking more damage.
+										-- Add a 1 second delay to taking more damage.
 										entTab.distortedRingFired = true;
 										
-										timer.Create("DistortedRingTimer_"..entity:EntIndex(), 2, 1, function()
+										timer.Create("DistortedRingTimer_"..entity:EntIndex(), 1, 1, function()
 											if IsValid(entity) then
 												entity.distortedRingFired = nil;
 											end
@@ -1047,7 +1047,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 												entTab.distortedRingFiredDuel = true;
 											end
 											
-											timer.Create("DistortedRingTimer_"..entity:EntIndex(), 2, 1, function()
+											timer.Create("DistortedRingTimer_"..entity:EntIndex(), 1, 1, function()
 												if IsValid(entity) then
 													entity.distortedRingFired = nil;
 												end
@@ -1672,10 +1672,10 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 						entTab.poisonTicks = nil;
 					end
 					
-					-- Add a 2 second delay to taking more damage.
+					-- Add a 1 second delay to taking more damage.
 					entTab.distortedRingFired = true;
 					
-					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 2, 1, function()
+					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 1, 1, function()
 						if IsValid(entity) then
 							entity.distortedRingFired = nil;
 						end
@@ -1703,7 +1703,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 						entTab.distortedRingFiredDuel = true;
 					end
 					
-					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 2, 1, function()
+					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 1, 1, function()
 						if IsValid(entity) then
 							entity.distortedRingFired = nil;
 						end

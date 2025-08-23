@@ -1745,6 +1745,10 @@ function COMMAND:OnRun(player, arguments)
 				Schema:EasyText(player, "firebrick", "You cannot do this right now!");
 			
 				return false;
+			elseif player.soulscorchActive then
+				Schema:EasyText(player, "firebrick", "You cannot commit suicide while 'Soulscorch' is active!");
+			
+				return false;
 			end
 
 			player:CommitSuicide()
