@@ -498,8 +498,10 @@ function cwMedicalSystem:ModifyStatusEffects(tab)
 			
 			for i = 1, #v do
 				local injury = self.cwInjuryTable[v[i]];
-				
-				table.insert(tab, {text = "(-) "..string.gsub(hitGroupString, "^.", string.upper)..": "..injury.name, color = Color(200, 40, 40)});
+
+				if injury then
+					table.insert(tab, {text = "(-) "..string.gsub(hitGroupString, "^.", string.upper)..": "..injury.name, color = Color(200, 40, 40)});
+				end
 			end
 		end
 	end
