@@ -1650,7 +1650,12 @@ function playerMeta:Vomit(bVomitBlood)
 			end);
 		end
 		
-		self:Freeze(true);
+		if self:IsFrozen() then
+			self.shouldUnfreeze = false;
+		else
+			self:Freeze(true);
+		end
+
 		self:EmitSound("misc/splat.ogg", 60, math.random(80, 95));
 		--ParticleEffect("vomit_barnacle", headPos + (self:GetForward() * 8) - Vector(0, 0, 1), Angle(90, 0, 0), self);
 		--ParticleEffect("vomit_barnacle_b", headPos + (self:GetForward() * 8) - Vector(0, 0, 1), Angle(90, 0, 0), self);
@@ -1659,7 +1664,11 @@ function playerMeta:Vomit(bVomitBlood)
 		
 		timer.Simple(3, function()
 			if IsValid(self) then
-				self:Freeze(false);
+				if self.shouldUnfreeze ~= false then
+					self:Freeze(false);
+				else
+					self.shouldUnfreeze = nil;
+				end
 				
 				if self:Alive() then
 					local curse_strings = {"Fuck...", "Cocksucker...", "Shit...", "Fuck's sake...", "Gah..."};
