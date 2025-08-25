@@ -546,7 +546,7 @@ function ENT:OnTakeDamage(damageInfo)
 			end;
 		end
 
-		Clockwork.chatBox:Add(listeneres, "Sleeping body disintegrates before you after death!")
+		Clockwork.chatBox:Add(listeners, "The body disintegrates before your very eyes!")
 
 		self:Remove()
 
