@@ -38,5 +38,5 @@ function ENT:HUDPaintTargetID(x, y, alpha)
 	local colorTargetID = Clockwork.option:GetColor("target_id")
 
 	y = Clockwork.kernel:DrawInfo("Body", x, y, colorTargetID, alpha)
-	y = Clockwork.kernel:DrawInfo("Breathes, but sleeps.", x, y, color_white, alpha)
+	y = Clockwork.kernel:DrawInfo("They appear to be fast asleep.", x, y, color_white, alpha)
 end
