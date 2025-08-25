@@ -33,27 +33,23 @@ local function GetItemFromData(player, data, index)
 	end
 end
 
-function Clockwork.equipment:GetItemEquipped(player, itemTable, category)
-	local equipmentSlots = player.equipmentSlots;
-
+function Clockwork.equipment:RawGetItemEquipped(equipmentSlots, itemTable, category)
 	if !equipmentSlots then
 		return false;
 	end
 
-	if !itemTable then
-		if category then
-			for k, v in pairs(equipmentSlots) do
-				if istable(category) then
-					if table.HasValue(category, v.category) or (v.meleeWeapon and table.HasValue(category, "Weapons")) then
-						return v;
-					end
-				elseif v.category == category or (v.meleeWeapon and category == "Weapons") then
+	if !itemTable and category then
+		for k, v in pairs(equipmentSlots) do
+			if istable(category) then
+				if table.HasValue(category, v.category) or (v.meleeWeapon and table.HasValue(category, "Weapons")) then
 					return v;
 				end
+			elseif v.category == category or (v.meleeWeapon and category == "Weapons") then
+				return v;
 			end
 		end
 	end
-	
+
 	if isstring(itemTable) then
 		for k, v in pairs(equipmentSlots) do
 			if v.uniqueID == itemTable then
@@ -61,11 +57,11 @@ function Clockwork.equipment:GetItemEquipped(player, itemTable, category)
 			end
 		end
 	end
-	
+
 	if !itemTable then
 		return false;
 	end
-	
+
 	if !itemTable.slots then return false end;
 
 	for k, v in pairs(equipmentSlots) do
@@ -73,6 +69,10 @@ function Clockwork.equipment:GetItemEquipped(player, itemTable, category)
 			return v;
 		end
 	end
+end
+
+function Clockwork.equipment:GetItemEquipped(player, itemTable, category)
+	return Clockwork.equipment:RawGetItemEquipped(player.equipmentSlots, itemTable, category);
 end
 
 if SERVER then

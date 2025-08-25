@@ -524,7 +524,7 @@ function ENT:OnTakeDamage(damageInfo)
 	SaveCharacter(character, steamID, inventory)
 
 	-- replicating https://github.com/DETrooper/Begotten-III/blob/main/upload/gamemodes/cwbegotten/schema/sv_schema.lua#L1467
-	if (Clockwork.equipment:GetItemEquipped2(self.equipmentSlots, "satchel_denial", "Charms")) then
+	if (Clockwork.equipment:RawGetItemEquipped(self.equipmentSlots, "satchel_denial", "Charms")) then
 		local pos = self:GetPos()
 		local dist = ((config.Get("talk_radius"):Get() * 2) / 2)
 		local distSqr = (dist * dist)
