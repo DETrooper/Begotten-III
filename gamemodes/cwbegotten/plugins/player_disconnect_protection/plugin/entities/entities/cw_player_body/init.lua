@@ -517,7 +517,7 @@ function ENT:OnTakeDamage(damageInfo)
 		end
 	end
 
-	Clockwork.player:SetCharacterData(character, "deathcause", "Убит во сне.")
+	Clockwork.player:SetCharacterData(character, "deathcause", "Died under mysterious circumstances.")
 	Clockwork.player:SetCharacterData(character, "permakilled", true)
 	Clockwork.player:SetCharacterData(character, "Cash", 0)
 	Clockwork.player:SetCharacterData(character, "Equipment", {})
