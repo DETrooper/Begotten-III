@@ -528,7 +528,7 @@ function ENT:OnTakeDamage(damageInfo)
 		local pos = self:GetPos()
 		local dist = ((config.Get("talk_radius"):Get() * 2) / 2)
 		local distSqr = (dist * dist)
-		local listeneres = {}
+		local listeners = {}
 
 		for _, v in _player.Iterator() do
 			if (v:HasInitialized()) then
