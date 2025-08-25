@@ -29,20 +29,12 @@ function cwPlayerDisconnectProtection:player_disconnect(data)
 	CreatePlayerBody(client, curTime)
 end
 
--- unfortunately, there is no option to prevent player from loading character
-function cwPlayerDisconnectProtection:PrePlayerCharacterUnloaded(client, bIsReload)
-	if (bIsReload or client.cwIsDisconnecting) then
+function cwPlayerDisconnectProtection:PlayerCanUseCharacter(client, character)
+	if (client:GetClockworkUserGroup() != "user" or (client.cwWithoutBodyDiscAfter or 0) < CurTime()) then
 		return
 	end
 
-	local curTime = CurTime()
-
-	if (!client.opponent and client:GetClockworkUserGroup() == "user"
-		and (client.cwWithoutBodyDiscAfter or 0) > curTime) then -- no >= because it is pointless (player body will iterally be removed on the next tick)
-		CreatePlayerBody(client, curTime)
-	end
-
-	client.cwWithoutBodyDiscAfter = nil
+	return "You cannot switch to this character as you have taken damage recently!"
 end
 
 function cwPlayerDisconnectProtection:PostPlayerCharacterLoaded(client)
