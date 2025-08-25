@@ -535,7 +535,7 @@ function ENT:OnTakeDamage(damageInfo)
 				local realTrace = Clockwork.player:GetRealTrace(v)
 
 				if ((realTrace.HitPos:DistToSqr(pos) <= distSqr) or pos:DistToSqr(v:GetPos()) <= distSqr) then
-					isteners[#listeners + 1] = v
+					listeners[#listeners + 1] = v
 				end
 			elseif (v:GetNetVar("tracktarget")) then
 				trk = v:GetNetVar("tracktarget")
