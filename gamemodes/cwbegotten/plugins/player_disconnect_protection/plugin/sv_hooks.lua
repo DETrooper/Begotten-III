@@ -1,6 +1,8 @@
 
-cwPlayerDisconnectProtection.playerBodyExistenceAfterDisc = 1200 -- (in seconds)
-cwPlayerDisconnectProtection.playerBodyExistenceAddAfterHit = 10 -- (in seconds)
+
+Clockwork.ConVars.PLY_BODY_EXIST_AFT_DISC = Clockwork.kernel:CreateConVar("cwPlayerBodyExistenceAfterDisconnect", 1200) -- in seconds
+Clockwork.ConVars.PLY_BODY_EXIST_ADD_ON_HIT = Clockwork.kernel:CreateConVar("cwPlayerBoddyExistenceAddOnHit", 10) -- in seconds
+
 cwPlayerDisconnectProtection.playerBodies = cwPlayerDisconnectProtection.playerBodies or {}
 
 local function CreatePlayerBody(client, curTime)
@@ -65,5 +67,5 @@ function cwPlayerDisconnectProtection:PostEntityTakeDamage(entity, damageInfo)
 		return
 	end
 
-	entity.cwWithoutBodyDiscAfter = CurTime() + self.playerBodyExistenceAfterDisc
+	entity.cwWithoutBodyDiscAfter = CurTime() + Clockwork.ConVars.PLY_BODY_EXIST_ADD_ON_HIT:GetInt()
 end

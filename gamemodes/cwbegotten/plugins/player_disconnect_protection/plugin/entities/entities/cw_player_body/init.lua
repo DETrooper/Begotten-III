@@ -383,7 +383,7 @@ function ENT:OnTakeDamage(damageInfo)
 	local steamID = self.playerSteamID
 	local damage = math.ceil(damageInfo:GetDamage())
 	self.health = self.health - damage
-	self.removeAfter = self.removeAfter + cwPlayerDisconnectProtection.playerBodyExistenceAddAfterHit
+	self.removeAfter = self.removeAfter + Clockwork.ConVars.PLY_BODY_EXIST_ADD_ON_HIT:GetInt()
 
 	local attacker = damageInfo:GetAttacker()
 	local inflictor = damageInfo:GetInflictor()
