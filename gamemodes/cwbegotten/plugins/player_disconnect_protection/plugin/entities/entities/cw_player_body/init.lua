@@ -52,7 +52,7 @@ local function DropToGroundAndRotateBySurface(entity, bIsCheck)
 			angles.pitch, angles.roll = 0, 0
 
 			local character = entity.character
-			Clockwork.player:SetCharacterData(character, "SpawnPoint", {
+			Clockwork.player:SetOfflineCharacterData(character, "SpawnPoint", {
 				map = game.GetMap(),
 				x = pos.x,
 				y = pos.y,
@@ -441,7 +441,7 @@ function ENT:OnTakeDamage(damageInfo)
 			end
 		end
 
-		Clockwork.player:SetCharacterData(character, "Health", self.health)
+		Clockwork.player:SetOfflineCharacterData(character, "Health", self.health)
 		SaveCharacter(character, steamID, false)
 
 		return
@@ -517,10 +517,10 @@ function ENT:OnTakeDamage(damageInfo)
 		end
 	end
 
-	Clockwork.player:SetCharacterData(character, "deathcause", "Died under mysterious circumstances.")
-	Clockwork.player:SetCharacterData(character, "permakilled", true)
-	Clockwork.player:SetCharacterData(character, "Cash", 0)
-	Clockwork.player:SetCharacterData(character, "Equipment", {})
+	Clockwork.player:SetOfflineCharacterData(character, "deathcause", "Died under mysterious circumstances.")
+	Clockwork.player:SetOfflineCharacterData(character, "permakilled", true)
+	Clockwork.player:SetOfflineCharacterData(character, "Cash", 0)
+	Clockwork.player:SetOfflineCharacterData(character, "Equipment", {})
 	SaveCharacter(character, steamID, inventory)
 
 	-- replicating https://github.com/DETrooper/Begotten-III/blob/main/upload/gamemodes/cwbegotten/schema/sv_schema.lua#L1467

@@ -44,6 +44,22 @@ function Clockwork.player:RestoreCharacterData(player, data)
 	end
 end
 
+function Clockwork.player:SetOfflineCharacterData(character, key, value)
+	local oldValue = character.data[key]
+	character.data[key] = value
+
+	if (!netvars.AreEqual(value, oldValue)) then
+		local characterData = self.characterData
+
+		if (characterData[key] and characterData[key].callbackOffline) then
+			value = characterData[key].callbackOffline(character, value)
+		end
+
+		--plugin.Call("PlayerCharacterDataChanged", self, key, oldValue, value)
+		hook.Run("OfflinePlayerCharacterDataChanged", character, key, oldValue, value)
+	end
+end
+
 function Clockwork.player:UpdateCharacterData(player, key, value)
 	local characterData = self.characterData
 
