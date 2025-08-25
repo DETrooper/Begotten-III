@@ -14,6 +14,12 @@ local function SaveCharacter(character, steamID, inventory)
 		if (inventory) then queryObj:Update("_Inventory", util.TableToJSON(inventory)) end
 		queryObj:Update("_Data", util.TableToJSON(character.data))
 	queryObj:Execute()
+
+	local ply = player.GetBySteamID(steamID)
+
+	if ply then
+		ply.cwCharacterList[character.characterID] = character
+	end
 end
 
 local function DropToGroundAndRotateBySurface(entity, bIsCheck)
