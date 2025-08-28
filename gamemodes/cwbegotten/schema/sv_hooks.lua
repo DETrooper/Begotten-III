@@ -3498,14 +3498,19 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		end
 		
 		if attacker.banners then
-			for k, v in pairs(attacker.banners) do
-				if v == "glazic" then
-					local faction = attacker:GetFaction();
-					
-					if faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" then
-						damageInfo:ScaleDamage(1.15);
+			local attackerWeapon = attacker:GetActiveWeapon();
+			if IsValid(attackerWeapon) then
+				for k, v in pairs(attacker.banners) do
+					if v == "glazic" then
+						local faction = attacker:GetFaction();
+						
+						if faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" then
+							if attackerWeapon.Base ~= "begotten_firearm_base" or (attackerWeapon.isMeleeFirearm and player:GetNetVar("ThrustStance")) or attackerWeapon.notPowder then
+								damageInfo:ScaleDamage(1.15);
 
-						break;
+								break;
+							end
+						end
 					end
 				end
 			end

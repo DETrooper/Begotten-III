@@ -1268,14 +1268,9 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						end
 					end
 					
-					if attacker:GetCharmEquipped("holy_sigils") or attacker:GetCharmEquipped("codex_solis") then
-						if entity:GetFaith() ~= attacker:GetFaith() then
-							newDamage = newDamage + (originalDamage * 0.15);
-						end
-					end
 				elseif attackerWeapon.Base == "begotten_firearm_base" or (attackerWeapon.isMeleeFirearm and !attacker:GetNetVar("ThrustStance")) then -- Firearm
 					if !attackerWeapon.notPowder and attacker:HasBelief("blessed_powder") then
-						newDamage = newDamage + (originalDamage * 0.25);
+						newDamage = newDamage + (originalDamage * 0.30);
 					end
 					
 					if entity:IsPlayer() and (attackerWeapon.isElectric or (attackerWeapon.isVoltistWeapon and attacker:HasBelief("the_storm"))) then
@@ -1313,11 +1308,19 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			end
 			
 			if entity:IsPlayer() then
-				if attacker:HasBelief("manifesto") then
-					if entity:GetFaith() == attacker:GetFaith() then
-						newDamage = newDamage - (originalDamage * 0.1);
-					else
-						newDamage = newDamage + (originalDamage * 0.2);
+				if attackerWeapon then
+					if attacker:HasBelief("manifesto") then
+						if entity:GetFaith() == attacker:GetFaith() then
+							newDamage = newDamage - (originalDamage * 0.1);
+						elseif attackerWeapon.Base ~= "begotten_firearm_base" or (attackerWeapon.isMeleeFirearm and player:GetNetVar("ThrustStance")) or attackerWeapon.notPowder then
+							newDamage = newDamage + (originalDamage * 0.2);
+						end
+					end
+				end
+
+				if attacker:GetCharmEquipped("holy_sigils") or attacker:GetCharmEquipped("codex_solis") then
+					if entity:GetFaith() ~= attacker:GetFaith() then
+						newDamage = newDamage + (originalDamage * 0.15);
 					end
 				end
 				
