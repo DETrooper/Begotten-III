@@ -36,26 +36,43 @@ local function DropToGroundAndRotateBySurface(entity, bIsCheck)
 	})
 
 	if (!trace.Hit) then
-		trace = util.TraceLine({
-			start = pos,
-			endpos = pos + Vector(0, 0, -1024),
-			filter = entity,
-			mask = MASK_PLAYERSOLID
-		})
-
-		if (!trace.Hit) then
-			return
-		end
-
-		entity:SetPos(trace.HitPos)
-		DropToGroundAndRotateBySurface(entity)
+		entity:DropToFloor() -- fallback
 	elseif (!bIsCheck) then
 		local angles = entity:GetAngles()
-		local surfaceAngle = trace.HitNormal:Angle()
-		entity:SetAngles(Angle(surfaceAngle.pitch - 270, angles.yaw, 0))
+		local surfaceNormal = trace.HitNormal
+		
+		if (surfaceNormal.z > 0.1) then
+			local yaw = angles.yaw
+
+			local flatForward = Vector(math.cos(math.rad(yaw)), math.sin(math.rad(yaw)), 0)
+
+			local projectedForward = flatForward - surfaceNormal * flatForward:Dot(surfaceNormal)
+			
+			if (projectedForward:LengthSqr() < 0.01) then
+				local worldUp = Vector(0, 0, 1)
+				projectedForward = worldUp:Cross(surfaceNormal)
+				if (projectedForward:LengthSqr() < 0.01) then
+					projectedForward = Vector(1, 0, 0)
+				end
+			end
+			
+			projectedForward:Normalize()
+
+			local newRight = surfaceNormal:Cross(projectedForward)
+			newRight:Normalize()
+			
+			local newForward = newRight:Cross(surfaceNormal)
+			newForward:Normalize()
+			
+			local pitch = math.deg(-math.asin(newForward.z))
+			local yawResult = math.deg(math.atan2(newForward.y, newForward.x))
+			local roll = math.deg(math.asin(newRight.z))
+			
+			entity:SetAngles(Angle(pitch, yawResult, roll))
+		end
 
 		if (!entity.bPlayerSetLastTick) then
-			angles.pitch, angles.roll = 0, 0
+			local spawnAngles = Angle(0, angles.yaw, 0)
 
 			local character = entity.character
 			Clockwork.player:SetOfflineCharacterData(character, "SpawnPoint", {
@@ -63,7 +80,7 @@ local function DropToGroundAndRotateBySurface(entity, bIsCheck)
 				x = pos.x,
 				y = pos.y,
 				z = pos.z,
-				angles = angles,
+				angles = spawnAngles,
 			})
 		end
 	end
