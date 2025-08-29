@@ -36,8 +36,21 @@ local function DropToGroundAndRotateBySurface(entity, bIsCheck)
 	})
 
 	if (!trace.Hit) then
-		entity:DropToFloor() -- fallback
-	elseif (!bIsCheck) then
+		trace = util.TraceLine({
+			start = pos,
+			endpos = pos + Vector(0, 0, -1024),
+			filter = entity,
+			mask = MASK_PLAYERSOLID
+		})
+
+		if (!trace.Hit) then
+			entity:DropToFloor() -- fallback
+		else
+			entity:SetPos(trace.HitPos)
+		end
+	end
+
+	if (!bIsCheck) then
 		local angles = entity:GetAngles()
 		local surfaceNormal = trace.HitNormal
 		
