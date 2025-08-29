@@ -88,8 +88,8 @@ function ENT:Initialize()
 	self.characterBounty = nil -- for visualization
 	self.health = nil -- for visualization
 	self.equipmentSlots = nil -- for visualization
-	self.inventory = nil -- for visualization
-	self.inventory2 = nil -- for visualization
+	self.characterInventory = nil -- for visualization
+	self.ragdollInventory = nil -- for visualization
 	self.cash = nil -- for visualization
 	self.faction = nil -- for visualization
 	self.soundsPitch = nil -- for visualization
@@ -167,8 +167,8 @@ function ENT:SetPlayer(client)
 	self.characterBounty = client:GetCharacterData("bounty")
 	self.health = client:Health()
 	self.equipmentSlots = table.Copy(client.equipmentSlots)
-	self.inventory = client:GetInventory()
-	self.inventory2 = table.Copy(self.inventory)
+	self.characterInventory = client:GetInventory()
+	self.ragdollInventory = table.Copy(self.characterInventory)
 	self.cash = client:GetCash()
 	self.faction = faction
 
@@ -493,20 +493,20 @@ function ENT:OnTakeDamage(damageInfo)
 	end
 
 
-	local inventory = self.inventory
-	local inventory2 = self.inventory2
+	local characterInventory = self.characterInventory
+	local ragdollInventory = self.ragdollInventory
 
 	-- replicating https://github.com/DETrooper/Begotten-III/blob/main/upload/gamemodes/cwbegotten/schema/sv_schema.lua#L1482
-	for k, v in pairs(inventory2) do
+	for k, v in pairs(ragdollInventory) do
 		local itemTable = Clockwork.item:FindByID(k);
 
 		if (itemTable and itemTable.allowStorage == false) then
-			inventory2[k] = nil
+			ragdollInventory[k] = nil
 		end
 	end
 
 	-- replicating https://github.com/DETrooper/Begotten-III/blob/main/upload/gamemodes/clockwork/framework/sv_kernel.lua#L2171
-	for k, v in pairs(inventory) do
+	for k, v in pairs(characterInventory) do
 		for k2, v2 in pairs(v) do
 			if (!v2 or !v2:IsInstance()) then
 				debug.Trace()
@@ -523,7 +523,7 @@ function ENT:OnTakeDamage(damageInfo)
 
 			hook.Run("DisconnectedPlayerItemTaken", self, v2)
 
-			Clockwork.inventory:RemoveInstance(inventory, v2)
+			Clockwork.inventory:RemoveInstance(characterInventory, v2)
 		end
 	end
 
@@ -531,7 +531,7 @@ function ENT:OnTakeDamage(damageInfo)
 	Clockwork.player:SetOfflineCharacterData(character, "permakilled", true)
 	Clockwork.player:SetOfflineCharacterData(character, "Cash", 0)
 	Clockwork.player:SetOfflineCharacterData(character, "Equipment", {})
-	SaveCharacter(character, steamID, inventory)
+	SaveCharacter(character, steamID, characterInventory)
 
 	-- replicating https://github.com/DETrooper/Begotten-III/blob/main/upload/gamemodes/cwbegotten/schema/sv_schema.lua#L1467
 	if (Clockwork.equipment:RawGetItemEquipped(self.equipmentSlots, "satchel_denial", "Charms")) then
@@ -548,9 +548,9 @@ function ENT:OnTakeDamage(damageInfo)
 					listeners[#listeners + 1] = v
 				end
 			elseif (v:GetNetVar("tracktarget")) then
-				trk = v:GetNetVar("tracktarget")
+				local trackedTarget = v:GetNetVar("tracktarget")
 
-				if trk == speaker:SteamID() then
+				if trackedTarget == speaker:SteamID() then
 					listeners[#listeners + 1] = v
 				end
 			end;
@@ -581,7 +581,7 @@ function ENT:OnTakeDamage(damageInfo)
 	end
 
 	ragdoll.cwIsBelongings = true
-	ragdoll.cwInventory = inventory2
+	ragdoll.cwInventory = ragdollInventory
 	ragdoll.cwCash = self.cash
 
 	ragdoll:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
