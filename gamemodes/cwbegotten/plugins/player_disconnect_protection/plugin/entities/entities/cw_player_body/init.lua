@@ -70,19 +70,6 @@ local function DropToGroundAndRotateBySurface(entity, bIsCheck)
 			
 			entity:SetAngles(Angle(pitch, yawResult, roll))
 		end
-
-		if (!entity.bPlayerSetLastTick) then
-			local spawnAngles = Angle(0, angles.yaw, 0)
-
-			local character = entity.character
-			Clockwork.player:SetOfflineCharacterData(character, "SpawnPoint", {
-				map = game.GetMap(),
-				x = pos.x,
-				y = pos.y,
-				z = pos.z,
-				angles = spawnAngles,
-			})
-		end
 	end
 end
 
