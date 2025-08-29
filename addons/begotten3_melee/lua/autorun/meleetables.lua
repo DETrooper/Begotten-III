@@ -347,6 +347,18 @@ AttackSoundTables.HeavyStoneAttackSoundTable = {
 	["drawsound"] = {"draw/skyrim_bow_draw.mp3"},
 };
 
+AttackSoundTables.LeatherWhipAttackSoundTable = {
+	["primarysound"] = {"weapons/Small_01.wav", "weapons/Small_02.wav", "weapons/Small_03.wav", "weapons/Small_04.wav", "weapons/Small_05.wav", "weapons/Small_06.wav"},
+	["altsound"] = {"vo/k_lab/kl_fiddlesticks.wav"},
+	["hitbody"] = {"begotten/weapons/whip/discipline_device_impact_01.wav", "begotten/weapons/whip/discipline_device_impact_02.wav"},
+	["althitbody"] = {"vo/k_lab/kl_fiddlesticks.wav"},
+	["hitworld"] = {"begotten/weapons/whip/discipline_device_hit_world.wav"},
+	["criticalswing"] = {"begotten/weapons/whip/discipline_device_woosh_01.wav"},
+	["parryswing"] = {"weapons/Medium_01.wav", "weapons/Medium_02.wav", "weapons/Medium_03.wav", "weapons/Medium_04.wav", "weapons/Medium_05.wav"},
+	["drawsound"] = {"draw/skyrim_bow_draw.mp3"},
+};
+AddSoundTable("LeatherWhipAttackSoundTable", AttackSoundTables.LeatherWhipAttackSoundTable)
+
 AddSoundTable("DefaultAttackSoundTable", AttackSoundTables.DefaultAttackSoundTable)
 AddSoundTable("HeavyWoodenAttackSoundTable", AttackSoundTables.HeavyWoodenAttackSoundTable)
 AddSoundTable("MediumWoodenAttackSoundTable", AttackSoundTables.MediumWoodenAttackSoundTable)
@@ -3717,6 +3729,61 @@ AttackTables.MaximusWrathAttackTable = {
 	["isadminweapon"] = true,
 };
 
+-- BALLISTA
+AttackTables.BallistaIronBoltAttackTable = {
+	["mimimumdistancedamage"] = 120,
+	["maximumdistancedamage"] = 150,
+	["dmgtype"] = DMG_VEHICLE,
+	["armorpiercing"] = 48,
+	["poisedamage"] = 35,
+	["stabilitydamage"] = 40,
+	["minimumdistancestabilitydamage"] = 20,
+	["maximumdistancestabilitydamage"] = 80,
+	["takeammo"] = 0,
+	["punchstrength"] = Angle(0,2,0),
+	["staminadamage"] = 50,
+	["minimumdistancestaminadamage"] = 10,
+	["maximumdistancestaminadamage"] = 15,
+	["blockstaminadamagemultiplier"] = 15,
+	["conditiondamage"] = 30,
+};
+AddTable("BallistaIronBoltAttackTable", AttackTables.BallistaIronBoltAttackTable);
+
+AttackTables.BallistaIronBoltIncendiaryAttackTable = {
+	["mimimumdistancedamage"] = 50,
+	["maximumdistancedamage"] = 100,
+	["dmgtype"] = DMG_VEHICLE,
+	["armorpiercing"] = 20,
+	["poisedamage"] = 15,
+	["stabilitydamage"] = 20,
+	["minimumdistancestabilitydamage"] = 10,
+	["maximumdistancestabilitydamage"] = 40,
+	["takeammo"] = 0,
+	["punchstrength"] = Angle(0,2,0),
+	["staminadamage"] = 50,
+	["minimumdistancestaminadamage"] = 10,
+	["maximumdistancestaminadamage"] = 15,
+	["blockstaminadamagemultiplier"] = 15,
+	["conditiondamage"] = 30,
+};
+AddTable("BallistaIronBoltIncendiaryAttackTable", AttackTables.BallistaIronBoltIncendiaryAttackTable);
+
+AttackTables.SatanicWhipAttackTable = {
+	["primarydamage"] = 4,
+	["dmgtype"] = 4,
+	["attacktype"] = "reg_swing",
+	["armorpiercing"] = 18,
+	["poisedamage"] = 10,
+	["stabilitydamage"] = 0,
+	["takeammo"] = 8,
+	["delay"] = 1.2,
+	["striketime"] = 0.3,
+	["meleearc"] = 60,
+	["meleerange"] = 1700,
+	["punchstrength"] = Angle(0,1,0),
+};
+AddTable("SatanicWhipAttackTable", AttackTables.SatanicWhipAttackTable);
+
 AddTable("DefaultAttackTable", AttackTables.DefaultAttackTable) 
 AddTable("FistAttackTable", AttackTables.FistAttackTable) 
 AddTable("IronJavelinAttackTable", AttackTables.IronJavelinAttackTable)
@@ -6458,6 +6525,25 @@ BlockTables.GrocklingSwordBlockTable = {
 	["canparry"] = true,
 	["candeflect"] = true,
 };
+
+BlockTables.SatanicWhipBlockTable = {
+	["guardblockamount"] = 30,
+	["specialeffect"] = false,
+	["blockeffect"] = "GlassImpact",
+	["blockeffectforward"] = 15,
+	["blockeffectpos"] = (Vector(0, 0, 65)),
+	["blockcone"] = 80,
+	["blockdamagetypes"] = {},
+	["partialbulletblock"] = false,
+	["poiseresistance"] = 12,
+	["raisespeed"] = 0.75,
+	["instantraise"] = false,
+	["parrydifficulty"] = 0.2,
+	["parrytakestamina"] = 15,
+	["canparry"] = true,
+	["candeflect"] = true,
+};
+AddTable("SatanicWhipBlockTable", BlockTables.SatanicWhipBlockTable);
 
 AddTable("DefaultBlockTable", BlockTables.DefaultBlockTable) 
 AddTable("AdminTwistedMacheteBlockTable", BlockTables.AdminTwistedMacheteBlockTable)

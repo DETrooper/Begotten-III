@@ -1903,6 +1903,18 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.attributes then
+					if table.HasValue(itemTable.attributes, "barbed") then
+						frame:AddText("Barbed: Deals poison damage and extra blood damage to victims who are not Faith of the Dark.", Color(110, 30, 30), nil, 0.9);
+					end
+
+					if table.HasValue(itemTable.attributes, "mark_of_perdition") then
+						frame:AddText("Mark of Perdition: Causes existential terror to victims who are not Faith of the Dark.", Color(110, 30, 30), nil, 0.9);
+					end
+
+					if table.HasValue(itemTable.attributes, "disciplined") then
+						frame:AddText("Disciplined: Grants a 15% speed boost to yourself and victims who are Faith of the Dark.", Color(110, 30, 30), nil, 0.9);
+					end
+
 					if table.HasValue(itemTable.attributes, "last_stand") then
 						frame:AddText("Unholy Blessing: Upon reaching 60% of your maximum health, this weapon will become imbued with either fire or ice, and will deal elemental damage.", Color(110, 30, 30), nil, 0.9);
 					end
