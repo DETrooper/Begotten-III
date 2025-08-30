@@ -32,7 +32,7 @@ local function DropToGroundAndRotateBySurface(entity, bIsCheck)
 		start = pos,
 		endpos = pos + mins,
 		filter = entity,
-		mask = MASK_PLAYERSOLID
+		mask = MASK_SOLID_BRUSHONLY
 	})
 
 	if (!trace.Hit) then
@@ -40,7 +40,7 @@ local function DropToGroundAndRotateBySurface(entity, bIsCheck)
 			start = pos,
 			endpos = pos + Vector(0, 0, -1024),
 			filter = entity,
-			mask = MASK_PLAYERSOLID
+			mask = MASK_SOLID_BRUSHONLY
 		})
 
 		if (!trace.Hit) then
@@ -80,8 +80,9 @@ local function DropToGroundAndRotateBySurface(entity, bIsCheck)
 			local pitch = math.deg(-math.asin(newForward.z))
 			local yawResult = math.deg(math.atan2(newForward.y, newForward.x))
 			local roll = math.deg(math.asin(newRight.z))
-			
-			entity:SetAngles(Angle(pitch, yawResult, roll))
+			local newAngle = Angle(pitch, yawResult, roll)
+
+			entity:SetAngles(newAngle)
 		end
 	end
 end
