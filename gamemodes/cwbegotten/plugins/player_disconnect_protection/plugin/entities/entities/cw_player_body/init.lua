@@ -207,7 +207,7 @@ function ENT:SetPlayer(client)
 		local subfaction = (client:GetNetVar("kinisgerOverrideSubfaction") or client:GetSubfaction())
 
 		if (client:GetSubfaith() == "Voltism" and cwBeliefs and (client:HasBelief("the_storm") or client:HasBelief("the_paradox_riddle_equation"))) then
-			self.painSounds {
+			self.painSounds = {
 				"npc/headcrab/die2.wav",
 				"npc/headcrab_poison/ph_warning1.wav",
 				"npc/headcrab_poison/ph_scream2.wav",
