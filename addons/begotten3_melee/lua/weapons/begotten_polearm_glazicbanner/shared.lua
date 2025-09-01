@@ -27,8 +27,6 @@ SWEP.PrimarySwingAnim = "a_heavy_2h_attack_slash_01"
 SWEP.IronSightsPos = Vector(3.64, -8.04, -6.56)
 SWEP.IronSightsAng = Vector(10, 0.703, 50)
 
-SWEP.LoweredAngles = Angle(-20, 0, 0)
-
 --Sounds
 SWEP.AttackSoundTable = "MetalBluntPolearmAttackSoundTable"
 SWEP.BlockSoundTable = "WoodenBlockSoundTable"
@@ -149,16 +147,16 @@ end
 SWEP.ViewModelBoneMods = {
 	["v_weapon.Knife_Handle"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
 	["ValveBiped.Bip01_R_Forearm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(14.444, 0, 0) },
-	["ValveBiped.Bip01_Spine4"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, -12.789), angle = Angle(0, 0, 0) },
+	["ValveBiped.Bip01_Spine4"] = { scale = Vector(1, 1, 1), pos = Vector(0.555, 0.185, -10.926), angle = Angle(0, -1.111, 1.11) },
 	["ValveBiped.Bip01_R_Clavicle"] = { scale = Vector(1, 1, 1), pos = Vector(-0.556, 0, 2.407), angle = Angle(0, 0, 0) },
 	["ValveBiped.Bip01_L_Clavicle"] = { scale = Vector(1, 1, 1), pos = Vector(-2.3, 0, 0), angle = Angle(0, 0, 0) },
 	["ValveBiped.Bip01_R_Hand"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0.925), angle = Angle(-56.667, 0, 0) }
 }
 
 SWEP.VElements = {
-	["v_glazicbanner"] = { type = "Model", model = "models/begotten/misc/gatekeeper_banner.mdl", bone = "v_weapon.Knife_Handle", rel = "", pos = Vector(3.9, 0.2, -17.143), angle = Angle(1.169, -61.949, 10.519), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
+	["w_glazicbanner"] = { type = "Model", model = "models/begoyten/glazicbanner/glazicbanner.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.5, 0.518), angle = Angle(101.688, 73.636, -3.507), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_glazicbanner"] = { type = "Model", model = "models/begotten/misc/gatekeeper_banner.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(6.3, 1.5, -57.662), angle = Angle(180, -122.727, -2.5), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+	["w_glazicbanner"] = { type = "Model", model = "models/begoyten/glazicbanner/glazicbanner.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.2, 0), angle = Angle(90, 0, 140), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
