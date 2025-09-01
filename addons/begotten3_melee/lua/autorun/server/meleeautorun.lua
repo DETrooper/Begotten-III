@@ -724,7 +724,7 @@ local function Guarding(ent, dmginfo)
 							if attacker:HasBelief("fearsome_wolf") then
 								if attacker.warCryVictims then
 									if table.HasValue(attacker.warCryVictims, ent) then
-										poiseDamageModifier = poiseDamageModifier + 0.15;
+										poiseDamageModifier = poiseDamageModifier + 0.2;
 									end
 								end
 							end

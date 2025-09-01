@@ -129,7 +129,7 @@ function cwMelee:DoMeleeHitEffects(entity, attacker, inflictor, position, origin
 				if (inflictor.AttackSoundTable) then
 					local attackSoundTable = GetSoundTable(inflictor.AttackSoundTable)
 					
-					if attacker:GetNetVar("ThrustStance") == true and !attackerWeapon.ChoppingAltAttack then
+					if attacker:GetNetVar("ThrustStance") == true and !attackerWeapon.ChoppingAltAttack and !attackerWeapon.PummelingAltAttack then
 						didthrust = true;
 					end;
 					

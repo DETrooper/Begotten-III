@@ -1412,7 +1412,11 @@ local COMMAND = Clockwork.command:New("Warcry");
 							
 							for i, v in ipairs(player.deceitfulLastDamages) do
 								if v.damageTime >= (curTime - 2) then
-									healthToRestore = healthToRestore + (v.damage / 1.43);
+									if player.abyssalHowlActive then
+										healthToRestore = healthToRestore + (v.damage);
+									else
+										healthToRestore = healthToRestore + (v.damage / 1.43);
+									end
 								end
 							end
 							
@@ -1446,7 +1450,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				if player_has_daring_trout then
 					player.daringTroutActive = true;
 					
-					timer.Create("DaringTroutTimer_"..player:EntIndex(), 25.5, 1, function()
+					timer.Create("DaringTroutTimer_"..player:EntIndex(), 20.5, 1, function()
 						if IsValid(player) then
 							if player.daringTroutActive then
 								player.daringTroutActive = nil;

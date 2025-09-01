@@ -1518,7 +1518,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 				if cwStamina and entity.flagellating then
 					local activeWeapon = entity:GetActiveWeapon();
 					
-					if activeWeapon:IsValid() and (activeWeapon:GetClass() == "begotten_1h_ironflail" or activeWeapon:GetClass() == "begotten_1h_solflail") then -- Flails give more stamina when flagellating!
+					if activeWeapon:IsValid() and (activeWeapon:GetClass() == "begotten_1h_ironflail" or activeWeapon:GetClass() == "begotten_1h_solflail" or activeWeapon:GetClass() == "begotten_2h_great_eveningstar") then -- Punisher attribute
 						entity:HandleStamina(damage * 4);
 					else
 						entity:HandleStamina(damage * 2);

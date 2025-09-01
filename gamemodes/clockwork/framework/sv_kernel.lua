@@ -1703,7 +1703,7 @@ function playerMeta:GetMaxHealth(health)
 		elseif subfaction == "Inquisition" or subfaction == "Philimaxio" then
 			maxHealth = maxHealth + 50;
 		elseif subfaction == "Clan Gore" then
-			maxHealth = maxHealth + 40;
+			maxHealth = maxHealth + 45;
 		elseif subfaction == "Clan Harald" then
 			maxHealth = maxHealth + 35;
 		elseif subfaction == "Clan Shagalax" or subfaction == "Machinists" or subfaction == "Watchman" or subfaction == "Low Ministry" then

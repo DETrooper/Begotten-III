@@ -1829,6 +1829,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						frame:AddText("Alternate Attack: Swipe", Color(110, 30, 30), nil, 0.9);
 					elseif weaponTable.ChoppingAltAttack then
 						frame:AddText("Alternate Attack: Chop", Color(110, 30, 30), nil, 0.9);
+					elseif weaponTable.PummelingAltAttack then
+						frame:AddText("Alternate Attack: Pummel", Color(110, 30, 30), nil, 0.9);
 					else
 						frame:AddText("Alternate Attack: Thrust", Color(110, 30, 30), nil, 0.9);
 					end
@@ -1939,9 +1941,12 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 
 					if table.HasValue(itemTable.attributes, "flail") then
 						frame:AddText("Cannot Be Dual Wielded", Color(110, 30, 30), nil, 0.9);
-						frame:AddText("Punisher: Doubles the stamina gained from flagellation.", Color(110, 30, 30), nil, 0.9);
 						frame:AddText("Trust in God: With each strike, there is a 10% chance you will deal an overhead attack that deals +70% raw, stability and stamina damage. The 'Favored' belief raises this chance to 20%.", Color(110, 30, 30), nil, 0.9);
 						frame:AddText("Foolhardy: With each miss, there is a 25% chance that you will strike yourself for half damage. The 'Favored' belief lowers this chance to 10%.", Color(110, 30, 30), nil, 0.9);
+					end
+					
+					if table.HasValue(itemTable.attributes, "punisher") then
+						frame:AddText("Punisher: Doubles the stamina gained from flagellation.", Color(110, 30, 30), nil, 0.9);
 					end
 
 					if table.HasValue(itemTable.attributes, "versatile") then

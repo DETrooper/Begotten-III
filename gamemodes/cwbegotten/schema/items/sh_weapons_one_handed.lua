@@ -956,7 +956,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.canUseShields = true;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "wood"}}; -- use "breakdown" for other type
-	ITEM.attributes = {"flail"};
+	ITEM.attributes = {"flail", "punisher"};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 5000, bNoSupercrate = true};
 ITEM:Register();
 
@@ -979,7 +979,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "wood"}}; -- use "breakdown" for other type
-	ITEM.attributes = {"flail"};
+	ITEM.attributes = {"flail", "punisher"};
 	ITEM.requiredbeliefs = {"repentant"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
