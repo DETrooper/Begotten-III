@@ -24,13 +24,11 @@ end
 
 local function DropToGroundAndRotateBySurface(entity, bIsCheck)
 	local pos = entity:GetPos()
-	local mins, _ = entity:GetCollisionBounds()
-	mins.x, mins.y = 0, 0
-	mins.z = mins.z * 2
+	local mins, maxs = entity:GetCollisionBounds()
 
-	local trace = util.TraceHull({
+	local trace = util.TraceLine({
 		start = pos,
-		endpos = pos + mins,
+		endpos = pos + Vector(0, 0, mins.z - maxs.z),
 		filter = entity,
 		mask = MASK_SOLID_BRUSHONLY
 	})
