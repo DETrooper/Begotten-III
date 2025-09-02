@@ -30,7 +30,7 @@ local function DropToGroundAndRotateBySurface(entity, bIsCheck)
 		start = pos,
 		endpos = pos + Vector(0, 0, mins.z - maxs.z),
 		filter = entity,
-		mask = MASK_SOLID_BRUSHONLY
+		mask = MASK_PLAYERSOLID_BRUSHONLY
 	})
 
 	if (!trace.Hit) then
@@ -38,7 +38,7 @@ local function DropToGroundAndRotateBySurface(entity, bIsCheck)
 			start = pos,
 			endpos = pos + Vector(0, 0, -1024),
 			filter = entity,
-			mask = MASK_SOLID_BRUSHONLY
+			mask = MASK_PLAYERSOLID_BRUSHONLY
 		})
 
 		if (!trace.Hit) then
