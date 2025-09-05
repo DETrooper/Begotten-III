@@ -512,7 +512,7 @@ ITEM.damageTypeScales = {
 ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
-ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
+ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
 ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
 ITEM.insulation = 50;
 

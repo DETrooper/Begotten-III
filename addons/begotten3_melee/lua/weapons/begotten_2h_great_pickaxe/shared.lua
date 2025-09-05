@@ -31,6 +31,7 @@ SWEP.PrimaryIdleDelay = 0.9
 SWEP.AltPlaybackRate = nil
 SWEP.AltIdleDelay = nil
 SWEP.PrimarySwingAnim = "a_heavy_great_attack_slash_02"
+SWEP.PummelingAltAttack = true;
 
 --Sounds
 SWEP.AttackSoundTable = "MetalBluntPolearmAttackSoundTable"
@@ -38,7 +39,7 @@ SWEP.BlockSoundTable = "WoodenBlockSoundTable"
 SWEP.SoundMaterial = "Metal" -- Metal, Wooden, MetalPierce, Punch, Default
 
 SWEP.WindUpSound = "draw/skyrim_axe_draw1.mp3" --For 2h weapons only, plays before primarysound
-
+SWEP.hasPuncture = true
 SWEP.isPickaxe = true;
 
 /*---------------------------------------------------------
@@ -115,6 +116,27 @@ function SWEP:HandlePrimaryAttack()
 			self:IdleAnimationDelay( self.PrimaryIdleDelay, self.PrimaryIdleDelay )
 		end
 	end
+end
+
+function SWEP:HandleThrustAttack()
+	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+	local attacktable = GetTable(self.AttackTable)
+
+	-- Viewmodel attack animation!
+	self.Weapon:EmitSound(self.WindUpSound)
+	timer.Simple( attacktable["striketime"] - 0.05, function() if self:IsValid() and self.isAttacking then
+	self.Weapon:EmitSound(attacksoundtable["primarysound"][math.random(1, #attacksoundtable["primarysound"])])
+	end end)
+	
+	local vm = self.Owner:GetViewModel()
+	vm:SendViewModelMatchingSequence( vm:LookupSequence( "atk_f" ) )
+	self.Owner:GetViewModel():SetPlaybackRate(1)
+	self:IdleAnimationDelay( 1, 1 )
+	
+	--Attack animation
+	self:TriggerAnim(self.Owner, self.CriticalAnim);
+	
+	self.Owner:ViewPunch(Angle(8,2,2))
 end
 
 function SWEP:OnDeploy()

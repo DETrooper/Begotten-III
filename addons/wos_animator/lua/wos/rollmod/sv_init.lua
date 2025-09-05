@@ -177,7 +177,7 @@ function meta:StartRolling(a)
 	
 	local roll_sound = hook.Run("GetRollSound", self);
 	local time = hook.Run("GetRollTime", self) or 0.9;
-	local weaponRaised = self:IsWeaponRaised();
+	local weaponRaised, activeWeapon = self:IsWeaponRaised();
 	
 	if (Clockwork and Clockwork.player and Clockwork.player.HasFlags and Clockwork.player:HasFlags(self, "4")) then
 		time = 0.9
@@ -271,7 +271,9 @@ function meta:StartRolling(a)
 	
 	wOS.RollMod:ResetAnimation(self);
 	
-	local activeWeapon = self:GetActiveWeapon();
+	if !activeWeapon then
+		activeWeapon = self:GetActiveWeapon();
+	end;
 	
 	if activeWeapon:IsValid() and activeWeapon.IsABegottenMelee then
 		activeWeapon.isAttacking = false;
@@ -361,7 +363,7 @@ function meta:StartRolling(a)
 		
 		local curTime = CurTime();
 
-		if weaponRaised then
+		if weaponRaised and self:GetActiveWeapon() == activeWeapon then
 			self:SetWeaponRaised(true);
 			
 			if IsValid(self:GetActiveWeapon()) then

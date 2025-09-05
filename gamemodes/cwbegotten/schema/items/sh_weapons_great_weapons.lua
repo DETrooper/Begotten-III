@@ -325,6 +325,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
 
+	ITEM.attributes = {"punisher"};
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "steel_chunks", "wood", "leather"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 ITEM:Register();

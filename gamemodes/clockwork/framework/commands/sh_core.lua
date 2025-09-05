@@ -878,6 +878,12 @@ local COMMAND = Clockwork.command:New("CharFallOver");
 		
 		if (!player.cwNextFallTime or curTime >= player.cwNextFallTime) then
 			player.cwNextFallTime = curTime + 1;
+
+			if player:IsFrozen() then
+				Clockwork.player:Notify(player, "You cannot do this action right now!");
+
+				return false;
+			end
 			
 			if (!player:IsRagdolled() and !player:InVehicle() and !Clockwork.player:IsNoClipping(player) and hook.Run("PlayerCanFallover", player) ~= false) then
 				if player:GetVelocity():Length() > 350 then

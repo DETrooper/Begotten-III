@@ -3410,39 +3410,6 @@ function cwRecipes:ClockworkInitialized()
 		end;
 	RECIPE:Register()
 
-	RECIPE = cwRecipes.recipes:New("ordained_gorefeller");
-		RECIPE.name = "Ordained Gorefeller";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Hillkeeper"};
-		RECIPE.requiredBeliefsNiceNames = {"Artisan"};
-		RECIPE.requiredFaiths = {"Faith of the Light"};
-		RECIPE.requirements = {
-			["maximilian_steel_ingot"] = {amount = 3},
-			["fine_steel_ingot"] = {amount = 1},
-			["iron_ingot"] = {amount = 2},
-			["glazic_sigil_stone"] = {amount = 1},
-		};
-		RECIPE.result = {
-			["begotten_2h_great_ordainedgorefeller"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons";
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav";
-		RECIPE.craftTime = 8;
-		RECIPE.craftVerb = "smithing";
-		RECIPE.experience = 125;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-
 	RECIPE = cwRecipes.recipes:New("morning_star");
 		RECIPE.name = "Morning Star";
 		RECIPE.requiresSmithy = true;
@@ -4170,8 +4137,9 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 2},
-			["cloth"] = {amount = 6},
+			["steel_ingot"] = {amount = 2},
+			["glazic_sigil_stone"] = {amount = 1},
+			["leather"] = {amount = 5},
 			["holy_spirit"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -4182,7 +4150,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 50;
+		RECIPE.experience = 125;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -7426,6 +7394,35 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("haralder_ridge_helm_upgrade_goreleather");
+		RECIPE.name = "(Upgrade) Haralder Ridge Helm";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["gore_leather_helm"] = {amount = 1},
+			["steel_ingot"] = {amount = 3},
+		};
+		RECIPE.result = {
+			["haralder_ridge_helm"] = {amount = 1},
+		};
+		RECIPE.category = "Armor"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 30;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("gore_ridge_helm");
 		RECIPE.name = "Gore Ridge Helm";
@@ -7506,7 +7503,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 15;
+		RECIPE.experience = 40;
 		
 		function RECIPE:OnCraft(player)
 		end;

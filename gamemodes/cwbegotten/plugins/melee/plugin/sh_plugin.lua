@@ -87,6 +87,12 @@ function cwMelee:KeyPress(player, key)
 										if IsValid(player.possessor) then
 											player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to chopping stance.")
 										end
+									elseif (activeWeapon.PummelingAltAttack == true) then
+										player:PrintMessage(HUD_PRINTTALK, "*** Switched to pummeling stance.")
+										
+										if IsValid(player.possessor) then
+											player.possessor:PrintMessage(HUD_PRINTTALK, "*** Switched to pummeling stance.")
+										end
 									elseif canThrust then
 										player:PrintMessage(HUD_PRINTTALK, "*** Switched to thrusting stance.")
 										

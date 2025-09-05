@@ -284,7 +284,7 @@ function SWEP:Hitscan()
 			util.Effect("BloodImpact", effect, true, true);
 			
 			--if not Clockwork.entity:GetPlayer(tr.Entity) or not Clockwork.entity:GetPlayer(tr.Entity):Alive() then
-				if self.Owner:GetNetVar("ThrustStance") != true or self.ChoppingAltAttack then
+				if self.Owner:GetNetVar("ThrustStance") != true or (self.ChoppingAltAttack or self.PummelingAltAttack) then
 					tr.Entity:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 				else
 					tr.Entity:EmitSound(attacksoundtable["althitbody"][math.random(1, #attacksoundtable["althitbody"])])
@@ -1410,6 +1410,8 @@ end
 					end
 				elseif weapon.ChoppingAltAttack == true then
 					damagetype = 4
+				elseif weapon.PummelingAltAttack == true then
+					damagetype = 128
 				end
 				-- Polearm alt attack spear shaft hit system
 				if (IsValid(self)) then
