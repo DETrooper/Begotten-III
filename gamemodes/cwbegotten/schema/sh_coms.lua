@@ -1360,12 +1360,17 @@ local zoneEventClasses = {
 };
 
 if Clockwork.command.RegisterType then
-	local zones = table.Merge(zones:GetAll(), zones.supraZones)
+	local zone_tbl = {}
+
+	hook.Add("ClockworkSchemaLoaded", "ZoneCMDType", function ()
+		zone_tbl = table.Merge(zones:GetAll(), zones.supraZones)
+		hook.Remove("ClockworkSchemaLoaded", "ZoneCMDType")
+	end)
 
 	Clockwork.command:RegisterType("Zones", function (current_arg, _args)
 		local matches = {}
 
-		for zone, v in pairs(zones) do
+		for zone, v in pairs(zone_tbl) do
 			if string.find(string.lower(zone), string.lower(current_arg)) then
 				table.insert(matches, zone)
 			end

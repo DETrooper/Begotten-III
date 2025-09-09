@@ -1111,7 +1111,7 @@ function Schema:ShowSpare1(player)
 	local target = player:GetEyeTraceNoCursor().Entity;
 	local entity = target;
 
-	if (IsValid(target) and target:GetShootPos():Distance(player:GetShootPos()) <= 32) then
+	if (IsValid(target) and target:GetShootPos():Distance(player:GetShootPos()) <= 46) then
 		target = Clockwork.entity:GetPlayer(target);
 		
 		if (target and player:GetNetVar("tied") == 0) then
