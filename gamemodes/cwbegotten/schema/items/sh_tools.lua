@@ -458,7 +458,7 @@ local ITEM = Clockwork.item:New();
 			
 			if (target) then
 				if (!target:HasGodMode() and !target.cwObserverMode and !target.possessor) then
-					if (target:GetShootPos():Distance( player:GetShootPos()) <= 32) then
+					if (target:GetShootPos():Distance( player:GetShootPos()) <= 46) then
 						if (target:GetNetVar("tied") == 0) then
 							if (target:GetAimVector():DotProduct( player:GetAimVector() ) > 0 or (target:IsRagdolled() and !trace.Entity.cwIsBelongings)) then
 								local faction = player:GetFaction();
