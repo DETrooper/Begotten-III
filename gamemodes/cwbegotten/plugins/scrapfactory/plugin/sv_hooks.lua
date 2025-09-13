@@ -2,7 +2,7 @@
 	Begotten III: Jesus Wept
 --]]
 
-local map = (game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_scraptown" or game.GetMap() == "rp_district21");
+local map = (game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_scraptown" or game.GetMap() == "rp_district21" or game.GetMap() == "bg_district34");
 
 -- Called when Clockwork has loaded all of the entities.
 function cwScrapFactory:ClockworkInitPostEntity()

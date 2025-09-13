@@ -232,16 +232,37 @@ function Clockwork.player:CreateCharacterFromData(player, data)
 		return self:SetCreateFault(player, "You did not choose any of the available traits!");
 	end;
 
-	-- Failsafe, should not be removable by the client.
+
+	local mandatoryTraits = {}
+	
 	if factionTable.mandatorytraits then
+		for _, trait in ipairs(factionTable.mandatorytraits) do
+			table.insert(mandatoryTraits, trait)
+		end
+	end
+	
+	if factionTable.subfactions and data.subfaction then
+		for _, subfaction in ipairs(factionTable.subfactions) do
+			if subfaction.name == data.subfaction and istable(subfaction.mandatorytraits) then
+				for _, trait in ipairs(subfaction.mandatorytraits) do
+					if not table.HasValue(mandatoryTraits, trait) then
+						table.insert(mandatoryTraits, trait)
+					end
+				end
+				break
+			end
+		end
+	end
+	
+	if !table.IsEmpty(mandatoryTraits) then
 		if type(data.traits) == "table" and !table.IsEmpty(data.traits) then
-			for i, v in ipairs(factionTable.mandatorytraits) do
-				if !table.HasValue(data.traits, v) then
-					return self:SetCreateFault(player, "You do not have a mandatory trait required for your faction!");
+			for _, requiredTrait in ipairs(mandatoryTraits) do
+				if not table.HasValue(data.traits, requiredTrait) then
+					return self:SetCreateFault(player, "You do not have a mandatory trait required for your faction or subfaction!")
 				end
 			end
 		else
-			return self:SetCreateFault(player, "You do not have a mandatory trait required for your faction!");
+			return self:SetCreateFault(player, "You do not have a mandatory trait required for your faction or subfaction!")
 		end
 	end
 

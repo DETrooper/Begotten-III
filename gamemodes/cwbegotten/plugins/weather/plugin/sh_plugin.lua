@@ -11,6 +11,7 @@ PLUGIN:SetGlobalAlias("cwWeather");
 cwWeather.enabledMaps = {
     ["rp_begotten3"] = true,
     ["rp_district21"] = true,
+	["bg_district34"] = true,
 }
 
 cwWeather.systemEnabled = cwWeather.enabledMaps[game.GetMap()];

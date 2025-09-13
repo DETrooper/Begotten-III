@@ -221,6 +221,90 @@ elseif map == "rp_district21" then
 			},
 		};
 	end
+elseif map == "bg_district34" then
+	if !cwDueling.arenas then
+		cwDueling.arenas = {
+			["rooftops"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(-7487, -5007, 5636),
+				spawnAngles1 = Angle(0, 90, 0),
+				spawnPosition2 = Vector(-7487, -4239, 5636),
+				spawnAngles2 = Angle(0, 270, 0),
+				timeLimit = 300,
+			},
+			["hell"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(-5648, -8927, -9307),
+				spawnAngles1 = Angle(0, 180, 0),
+				spawnPosition2 = Vector(-6454, -8883, -9307),
+				spawnAngles2 = Angle(0, 0, 0),
+				timeLimit = 300,
+			},
+			["gore"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(-13281, -8641, 10435),
+				spawnAngles1 = Angle(0, 35, 0),
+				spawnPosition2 = Vector(-11745, -7634, 10435),
+				spawnAngles2 = Angle(0, 215, 0),
+				timeLimit = 300,
+			},
+			["silenthill"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(9549, 1003, -7076),
+				spawnAngles1 = Angle(0, 270, 0),
+				spawnPosition2 = Vector(9549, 49, -7076),
+				spawnAngles2 = Angle(0, 90, 0),
+				timeLimit = 300,
+			},
+			["introzone"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(9549, 1003, -7076),
+				spawnAngles1 = Angle(0, 180, 0),
+				spawnPosition2 = Vector(9549, 49, -7076),
+				spawnAngles2 = Angle(0, 0, 0),
+				timeLimit = 300,
+			},
+			["city"] = {
+				duelingPlayer1 = nil,
+				duelingPlayer2 = nil,
+				spawnPosition1 = Vector(-3458, -4023, 4395),
+				spawnAngles1 = Angle(0, 270, 0),
+				spawnPosition2 = Vector(-3458, -5827, 4399),
+				spawnAngles2 = Angle(0, 90, 0),
+				timeLimit = 300,
+			},
+		};
+	end
+
+	if !cwDueling.statues then
+		cwDueling.statues = {
+			["village"] = {
+				["spawnPosition"] = Vector(1616, 1077, 934),
+				["spawnAngles"] = Angle(0, 160, 0),
+			},
+			["cave"] = {
+				["spawnPosition"] = Vector(-1671, 2113, -210),
+				["spawnAngles"] = Angle(-20, 0, 0),
+			},
+			["gore"] = {
+				["spawnPosition"] = Vector(-6212, -10649, 10657),
+				["spawnAngles"] = Angle(0, 330, 0),
+			},
+			["hell"] = {
+				["spawnPosition"] = Vector(1741, -9643, -3295),
+				["spawnAngles"] = Angle(0, 0, 0),
+			},
+			["tower"] = {
+				["spawnPosition"] = Vector(325, -8241, 1601),
+				["spawnAngles"] = Angle(0, 270, 0),
+			},
+		};
+	end
 end
 	
 if !cwDueling.playersInMatchmaking then

@@ -20,6 +20,9 @@ elseif map == "rp_scraptown" then
 elseif map == "rp_district21" then
 	archPos = Vector(5292, -14361, -406); -- church
 	pillarPos = Vector(11376, -2410, -192);
+elseif map == "bg_district34" then
+	archPos = Vector(-11264, 3094, 264); -- cave
+	pillarPos = Vector(-2467, 9699, 294);
 end
 
 if (map == "rp_begotten3") then
@@ -88,6 +91,26 @@ elseif (map == "rp_district21") then
 		["ship"] = Vector(-10612, 4328, -1702),
 		["voltbunker"] = Vector(-12934, -3154, -512),
 		["gorewatch"] = Vector(-8927, -8286, -68),
+	}
+elseif (map == "bg_district34") then
+	Schema.MapLocations = {
+		["city"] = Vector(-3828, -1435, 902),
+		["duel_city"] = Vector(-3313, -4895, 4460),
+		["duel_hell"] = Vector(-6019, -8919, -9275),
+		["duel_gore"] = Vector(-12401, -8051, 10475),
+		["duel_silenthill"] = Vector(9551, 530, -7045),
+		["duel_rooftop"] = Vector(-7489, -4711, 5688),
+		["gore"] = Vector(-5301, -9071, 10656),
+		["goredocks"] = Vector(-7977, -8704, 10430),
+		["gorewatch"] = Vector(9158, 8292, 1076),
+		["hell"] = Vector(446, -8768, -4814),
+		["scrapfactory"] = Vector(-5197, 6138, 1637),
+		["scraptown"] = Vector(-8657, 12084, 336),
+		["sea_calm"] = Vector(2137, 4396, -7819),
+		["sea_rough"] = Vector(9253, 4624, -7809),
+		["sea_styx"] = Vector(-7792, 4785, -7948),
+		["voltist"] = Vector(-707, 2012, -96),
+		["tower"] = Vector(3713, -10447, 1084),
 	}
 else
 	Schema.MapLocations = {};
@@ -3215,7 +3238,7 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 				return false;
 			end
 		
-			if Schema.hellJauntDisabled or (map ~= "rp_begotten3" and map ~= "rp_begotten_redux" and map ~= "rp_district21") then
+			if Schema.hellJauntDisabled or (map ~= "rp_begotten3" and map ~= "rp_begotten_redux" and map ~= "rp_district21" and map ~= "bg_district34") then
 				Schema:EasyText(player, "peru", "Your connection with Hell appears to be severed and you cannot helljaunt!");
 				
 				return false;
@@ -4190,6 +4213,11 @@ local COMMAND = Clockwork.command:New("HellPortalGaze");
 			{
 				Vector(9687.704102, -7364.185547, -398.682037), -- box start
 				Vector(15093.301758, 1914.199951, 1704.999023) -- box end
+			},
+			["bg_district34"] =
+			{
+				Vector(-2284, 8016, 191), -- box start
+				Vector(-3441, 11668, 191) -- box end
 			}
 		},
 		["Church"] = 
@@ -4199,7 +4227,15 @@ local COMMAND = Clockwork.command:New("HellPortalGaze");
 				Vector(8241.556641, -11463.334961, -704.866455), -- box start
 				Vector(1634.260498, -15241.533203, 1665.453247) -- box end
 			}
-		}
+		},
+		["Cave"] = 
+		{
+		["bg_district34"] =
+			{
+				Vector(-8077, 2127, -25),
+				Vector(-11469, 3781, 395)
+			}
+		},
 	}
 
 	function COMMAND:OnRun(player, arguments)
