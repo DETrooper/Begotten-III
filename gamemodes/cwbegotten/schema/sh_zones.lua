@@ -2146,7 +2146,7 @@ local CAVES = zones:New("caves")
 		CAVES.bounds = {
 			{
 			min = Vector(-4301, 444, -216),
-			max = Vector(7016, 7680, -904),
+			max = Vector(7016, 7680, -1340),
 			},
 			{
 			min = Vector(6887, 6243, 303),
