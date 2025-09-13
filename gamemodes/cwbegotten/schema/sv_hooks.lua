@@ -3024,11 +3024,11 @@ function Schema:PlayerCharacterLoaded(player)
 			levelCap = cwBeliefs.sacramentLevelCap;
 		end
 		
-		local scale = math.min(player:GetCharacterData("level", 1), levelCap) * 0.01;
+		local scale = math.min(player:GetCharacterData("level", 1), levelCap);
 	
-		player:SetModelScale(1 + scale, FrameTime());
-		player:SetViewOffset(Vector(0, 0, 72))
-		player:SetViewOffsetDucked(Vector(0, 0, 32))
+		player:SetModelScale(1 + (scale * 0.01), FrameTime());
+		player:SetViewOffset(Vector(0, 0, 64 + scale));
+		player:SetViewOffsetDucked(Vector(0, 0, 28 + (scale / 2)));
 	else
 		player:SetModelScale(1, FrameTime());
 		player:SetViewOffset(Vector(0, 0, 64));
