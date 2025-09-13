@@ -81,12 +81,12 @@ Clockwork.kernel:IncludePrefixed("cl_schema.lua");
 Clockwork.kernel:IncludePrefixed("cl_theme.lua");
 Clockwork.kernel:IncludePrefixed("cl_hooks.lua");
 Clockwork.kernel:IncludePrefixed("cl_vfx.lua");
-Clockwork.kernel:IncludePrefixed("sh_coms.lua");
 Clockwork.kernel:IncludePrefixed("sh_faiths.lua");
 Clockwork.kernel:IncludePrefixed("sh_zones.lua");
 Clockwork.kernel:IncludePrefixed("sv_schema.lua");
 Clockwork.kernel:IncludePrefixed("sv_hooks.lua");
 Clockwork.kernel:IncludePrefixed("sv_notes.lua");
+Clockwork.kernel:IncludePrefixed("sh_coms.lua");
 
 Clockwork.option:SetKey("default_date", {month = 666, year = 666, day = 666});
 Clockwork.option:SetKey("default_time", {minute = 0, hour = 0, day = 1});

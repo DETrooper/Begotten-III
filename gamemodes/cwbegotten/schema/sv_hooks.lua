@@ -1239,6 +1239,7 @@ function Schema:PlayerFootstep(player, position, foot, soundString, volume, reci
 				player:EmitSound(clothesItem.runSound, 65, math.random(95, 100), 0.5)
 			end
 			return true
+
 		end
 
 		if not running and clothesItem.walkSound then
