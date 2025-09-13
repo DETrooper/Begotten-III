@@ -12,13 +12,26 @@ if map == "rp_district21" then
 		["thrall"] = 4,
 		["thrallnight"] = 8,
 	};
-	
+
 	if !Schema.spawnedNPCs then
 		Schema.spawnedNPCs = {
 			["animal"] = {},
 			["animalwasteland"] = {},
 			["thrall"] = {},
 		};
+	end
+elseif map == "bg_district34" then
+	Schema.maxNPCs = {
+		["animal"] = 7,
+		["thrall"] = 8,
+	}
+
+	if !Schema.spawnedNPCs then
+		Schema.spawnedNPCs = {
+			["animal"] = {},
+			["animalwasteland"] = {},
+			["thrall"] = {},
+		}
 	end
 else
 	Schema.maxNPCs = {
@@ -309,6 +322,34 @@ elseif map == "rp_district21" then
 			{pos = Vector(9705.625, -2304.818359375, -229.85108947754), ang = Angle(0, 0, 0)},
 		},
 	};
+elseif map == "bg_district34" then
+	Schema.hellPortalTeleports = {
+		["cave"] = {
+			{pos = Vector(-11280, 3220, 175), ang = Angle(0, 0, 0)},
+			{pos = Vector(-11279, 3088, 175), ang = Angle(0, 0, 0)},
+			{pos = Vector(-11273, 2934, 175), ang = Angle(0, 0, 0)},
+			{pos = Vector(-11185, 3220, 175), ang = Angle(0, 0, 0)},
+			{pos = Vector(-11185, 3088, 175), ang = Angle(0, 0, 0)},
+			{pos = Vector(-11185, 2934, 175), ang = Angle(0, 0, 0)},
+			{pos = Vector(-11063, 3072, 175), ang = Angle(0, 0, 0)},
+		},
+		["hell"] = {
+			{pos = Vector(989, -8633, -4840), ang = Angle(0, 0, 0)},
+			{pos = Vector(990, -8766, -4840), ang = Angle(0, 0, 0)},
+			{pos = Vector(990, -8877, -4840), ang = Angle(0, 0, 0)},
+			{pos = Vector(1124, -8881, -4840), ang = Angle(0, 0, 0)},
+			{pos = Vector(1124, -8766, -4840), ang = Angle(0, 0, 0)},
+			{pos = Vector(1124, -8633, -4840), ang = Angle(0, 0, 0)},
+		},
+		["pillars"] = {
+			{pos = Vector(-2874, 9881, 409), ang = Angle(0, 90, 0)},
+			{pos = Vector(-3259, 9253, 304), ang = Angle(0, 90, 0)},
+			{pos = Vector(-2242, 10282, 375), ang = Angle(0, 90, 0)},
+			{pos = Vector(-3527, 8568, 280), ang = Angle(0, 90, 0)},
+			{pos = Vector(-4088, 8810, 436), ang = Angle(0, 90, 0)},
+			{pos = Vector(-2040, 10756, 380), ang = Angle(0, 90, 0)},
+		},
+	};
 end
 
 Schema.doors = {
@@ -337,6 +378,48 @@ Schema.doors = {
 			"armorydoor",
 			"cubbyblastdoor",
 			"inquisitor_barracks_blastdoor",
+		},
+	},
+	["bg_district34"] = {
+		["forge"] = {
+			"forgedoor1",
+		},
+		["gorewatch"] = {
+			"gorewatch",
+		},
+		["ministry"] = {
+			"inq_door1",
+			"inq_door2",
+		},
+		["tower"] = {
+			"churchgate1",
+			"churchgate2",
+			"frontblastdoor",
+			"frontblastdoor2",
+			"forgedoor1",
+			"alchemy_lab_blastdoorwindw2",
+			"sidedoorblastdoor2",
+			"executiondoor",
+			"medicdoor",
+			"inq_panel_1",
+			"inq_panel_2",
+			"balcony_door_1",
+			"yard_blastdoor_1",
+			"yard_blastdoor_2",
+			"cagedoor",
+		},
+		["knights"] = {
+			"pope_reception_shutter",
+			"Bunker",
+		},
+		["hell"] = {
+			"hellexecution_1",
+			"hellexecution_2",
+			"hellexecution_3",
+			"hellexecution_4",
+			"hellexecution_5",
+			"hellexecution_6",
+			"hellexecution_7",
 		},
 	},
 	["rp_district21"] = {
@@ -1391,6 +1474,86 @@ function Schema:SpawnBegottenEntities()
 			archiveEnt:SetAngles(archiveEnts[i].ang);
 			archiveEnt:Spawn();
 		end
+	elseif map == "bg_district34" then
+		local bountyBoardEnt = ents.Create("cw_bounty_board");
+		local coinslotBase = ents.Create("prop_dynamic");
+		local coinslotEnt = ents.Create("cw_coinslot");
+		local gramophoneEnt = ents.Create("cw_gramophone");
+		local hellPortalEnt = ents.Create("cw_hellportal");
+		local sacrificialAltarEnt = ents.Create("cw_sacrifical_altar");
+		local warhornBase = ents.Create("prop_dynamic");
+		local warhornEnt = ents.Create("cw_gorevillagehorn");
+		local archiveEnts = {
+			{pos = Vector(1487, -9486, 1303), ang = Angle(0, 270, 90)},
+			{pos = Vector(1487, -9637, 1303), ang = Angle(0, 270, 90)},
+			{pos = Vector(1428, -9390, 1303), ang = Angle(0, 0, 90)},
+		};
+		
+		bountyBoardEnt:SetPos(Vector(3545, -8554, 941));
+		bountyBoardEnt:SetAngles(Angle(0, 270, 0));
+		bountyBoardEnt:Spawn();
+		coinslotBase:SetModel("models/props/de_inferno/confessional.mdl")
+		coinslotBase:SetPos(Vector(1841.98, -8143, 940));
+		coinslotBase:SetAngles(Angle(0, 0, 0));
+		coinslotBase:SetMoveType(MOVETYPE_VPHYSICS);
+		coinslotBase:PhysicsInit(SOLID_VPHYSICS);
+		coinslotBase:SetSolid(SOLID_VPHYSICS);
+		coinslotBase:Spawn();
+		
+		local physObject = coinslotBase:GetPhysicsObject();
+		
+		if IsValid(physObject) then
+			coinslotBase:GetPhysicsObject():Wake();
+			coinslotBase:GetPhysicsObject():EnableMotion(false);
+		end
+		
+		coinslotEnt:SetPos(Vector(1844, -8136, 992));
+		coinslotEnt:SetAngles(Angle(0, 180, 0));
+		coinslotEnt:Spawn();
+		gramophoneEnt:SetPos(Vector(1793, -8049, -3251));
+		gramophoneEnt:SetAngles(Angle(0, 180, 0));
+		gramophoneEnt:Spawn();
+		hellPortalEnt:SetPos(Vector(2060, -9004, -4777));
+		hellPortalEnt:SetAngles(Angle(90, 180, 0));
+		hellPortalEnt:Spawn();
+		sacrificialAltarEnt:SetPos(Vector(1068, -8771, -3458));
+		sacrificialAltarEnt:SetAngles(Angle(0, 0, 0));
+		sacrificialAltarEnt:Spawn();
+		self.sacrificialAltarEnt = sacrificialAltarEnt;
+		warhornBase:SetModel("models/props_junk/harpoon002a.mdl");
+		warhornBase:SetPos(Vector(-5108, -8861, 10527));
+		warhornBase:SetAngles(Angle(90, 0, 0));
+		warhornBase:SetMoveType(MOVETYPE_VPHYSICS);
+		warhornBase:PhysicsInit(SOLID_VPHYSICS);
+		warhornBase:SetSolid(SOLID_VPHYSICS);
+		warhornBase:Spawn();
+		warhornEnt:SetPos(Vector(-5108.2, -8862.02, 10580.4));
+		warhornEnt:SetAngles(Angle(43.79, 164.57, 26.77));
+		warhornEnt:Spawn();
+		
+		if cwSailing then
+			local alarmEnt = ents.Create("cw_gorewatchalarm");
+			local alarmSpeaker = ents.Create("prop_dynamic");
+			
+			alarmEnt:SetPos(Vector(9460, 8130, 1134));
+			alarmEnt:SetAngles(Angle(0, -135, 0));
+			alarmEnt:Spawn();
+			alarmSpeaker:SetModel("models/props_wasteland/speakercluster01a.mdl");
+			alarmSpeaker:SetPos(Vector(9025, 8248, 1107));
+			alarmSpeaker:SetAngles(Angle(0, 0, 0));
+			alarmSpeaker:Spawn();
+			
+			alarmEnt.speaker = alarmSpeaker;
+			cwSailing.gorewatchAlarm = alarmEnt;
+		end
+		
+		for i = 1, #archiveEnts do
+			local archiveEnt = ents.Create("cw_archives");
+			
+			archiveEnt:SetPos(archiveEnts[i].pos);
+			archiveEnt:SetAngles(archiveEnts[i].ang);
+			archiveEnt:Spawn();
+		end
 	end
 end;
 
@@ -1630,7 +1793,7 @@ function Schema:CheapleCaughtPlayer(player)
 		
 		player:DeathCauseOverride("Had their curse catch up with them.");
 		
-		if game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_district21" then
+		if game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_district21" or game.GetMap() == "bg_district34" then
 			player:SetCharacterData("permakilled", true); -- In case the player tries to d/c to avoid their fate.
 			player:SensesOff();
 			Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);
@@ -2786,6 +2949,52 @@ if map == "rp_district21" then
 	end);
 end
 
+if map == "bg_district34" then
+	concommand.Add("cw_HellPortalCave", function(player, cmd, args)
+		if not player.teleporting then
+			local trace = player:GetEyeTrace();
+	
+			if (trace.Entity) then
+				local entity = trace.Entity;
+	
+				if (entity:GetClass() == "cw_hellportal") then
+					local nextTeleport = player:GetCharacterData("nextTeleport", 0);
+					
+					if nextTeleport <= 0 then
+						local origin = player:GetPos();
+						local chosenspot = math.random(1, #Schema.hellPortalTeleports["cave"]);
+						local destination = Schema.hellPortalTeleports["cave"][chosenspot].pos;
+						local angles = Schema.hellPortalTeleports["cave"][chosenspot].ang;
+						
+						ParticleEffect("teleport_fx", origin, Angle(0,0,0), player);
+						sound.Play("misc/summon.wav", origin, 100, 100);
+						ParticleEffect("teleport_fx", destination, Angle(0,0,0));
+						sound.Play("misc/summon.wav", destination, 100, 100);
+						player.teleporting = true;
+						
+						timer.Create("summonplayer_"..tostring(player:EntIndex()), 0.75, 1, function()
+							if IsValid(player) then
+								player.teleporting = false;
+								
+								if player:Alive() then
+									Clockwork.player:SetSafePosition(player, destination);
+									player:SetEyeAngles(angles);
+									util.Decal("PentagramBurn", destination, destination + Vector(0, 0, -256));
+									util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));
+									
+									--player:SetCharacterData("nextTeleport", 1200);
+								end
+							end
+						end);
+					else
+						Schema:EasyText(player, "peru", "You cannot use the Hellportal for another "..nextTeleport.." seconds!");
+					end
+				end
+			end;
+		end;
+	end);
+end
+
 concommand.Add("cw_HellPortalArch", function(player, cmd, args)
 	if not player.teleporting then
 		local trace = player:GetEyeTrace();
@@ -3279,6 +3488,14 @@ elseif map == "rp_district21" then
 		{pos = Vector(-5020.15625, 12028.875, 252.21875), angles = Angle(0, 180, 0)},
 		{pos = Vector(-9659.5, 11132.21875, 535), angles = Angle(0, 180, 0)},
 		{pos = Vector(-7191, 10255.03125, 433.75), angles = Angle(0, 45, 0)},
+	};
+elseif map == "bg_district34" then
+	Schema.PopeSpeakers = {
+		[1] = {pos = Vector(1847, -9168, 1083), angles = Angle(0, 90, 0)},
+		[2] = {pos = Vector(4003, -9194, 1114), angles = Angle(0, 180, 0)},
+		[3] = {pos = Vector(-132, -8968, 1157), angles = Angle(0, 90, 0)},
+		[4] = {pos = Vector(1759, -8119, 1554), angles = Angle(0, 270, 0)},
+		[5] = {pos = Vector(119, -9449, 2135), angles = Angle(0, 90, 0)},
 	};
 end
 

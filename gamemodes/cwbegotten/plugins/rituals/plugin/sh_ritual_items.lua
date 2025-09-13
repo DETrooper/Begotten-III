@@ -4,37 +4,51 @@
 --]]
 
 local ITEM = Clockwork.item:New();
-	ITEM.name = "Purifying Stone";
-	ITEM.model = "models/srp/items/art_flash.mdl";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/purifying_stone.png";
-	ITEM.weight = 0.1;
-	ITEM.category = "Catalysts";
-	ITEM.description = "A highly luminescent stone that has various purifying properties.";
-	ITEM.stackable = true;
-	
-	ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 600, supercrateOnly = true};
+ITEM.name = "Purifying Stone";
+ITEM.model = "models/srp/items/art_flash.mdl";
+ITEM.iconoverride = "materials/begotten/ui/itemicons/purifying_stone.png";
+ITEM.weight = 0.1;
+ITEM.category = "Catalysts";
+ITEM.description = "A highly luminescent stone that has various purifying properties.";
+ITEM.stackable = true;
 
-	-- Called when a player drops the item.
-	function ITEM:OnUse(player, position)
-		if (player:Alive() and !player:IsRagdolled()) then
-			netstream.Start(player, "Stunned", 7);
-			netstream.Start(player, "PlaySound", "begotten/ui/sanity_gain.mp3");
-			
-			if cwSanity then
-				player:HandleSanity(20);
-			end
-			
-			player:HandleNeed("corruption", -30);
-			Clockwork.chatBox:Add(player, nil, "itnofake", "You crush the purifying stone in your hand and can immediately feel the corruption leaving your body.");
-		else
-			Schema:EasyText(player, "firebrick", "You cannot do this action at this moment.")
+ITEM.itemSpawnerInfo = {category = "Rituals", rarity = 600, supercrateOnly = true};
+
+-- Called when a player uses the item.
+function ITEM:OnUse(player, position)
+	if (player:Alive() and !player:IsRagdolled()) then
+		netstream.Start(player, "Stunned", 7);
+		netstream.Start(player, "PlaySound", "begotten/ui/sanity_gain.mp3");
+		
+		if cwSanity then
+			player:HandleNeed("sanity", -20); -- instead of HandleSanity, now consistent
 		end
-	end;
-	
-	-- Called when a player drops the item.
-	function ITEM:OnDrop(player, position) end;
-	
+		
+		player:HandleNeed("corruption", -30);
+
+		-- If Crypt Walker, restore sleep by reducing need
+		if player:GetSubfaction() == "Crypt Walkers" then
+			player:HandleNeed("sleep", -50);
+			Clockwork.chatBox:Add(player, nil, "itnofake", "The purifying stone floods you with unnatural energy, staving off your exhaustion.");
+		else
+			Clockwork.chatBox:Add(player, nil, "itnofake", "You crush the purifying stone in your hand and can immediately feel the corruption leaving your body.");
+		end
+	else
+		Schema:EasyText(player, "firebrick", "You cannot do this action at this moment.")
+	end
+end;
+
+-- Called when a player drops the item.
+function ITEM:OnDrop(player, position) end;
+
 ITEM:Register();
+
+
+-- Called when a player drops the item.
+function ITEM:OnDrop(player, position) end;
+
+ITEM:Register();
+
 
 local ITEM = Clockwork.item:New();
 	ITEM.name = "Up Catalyst";

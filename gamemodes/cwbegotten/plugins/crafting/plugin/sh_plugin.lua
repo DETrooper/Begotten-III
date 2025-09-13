@@ -47,6 +47,16 @@ elseif (map == "rp_district21") then
 		Vector(-704, -7617, 11902),
 		Vector(-228, -9635, -6436),
 	};
+elseif (map == "bg_district34") then
+	cwRecipes.smithyLocations = {
+		Vector(1629, -8038, -3456),
+		Vector(3935, -8171, 581),
+		Vector(2270, 2148, 981), -- Village
+		Vector(-1613, 3152, -131),
+		Vector(-8804, 15291, 293), -- Scraptown
+		Vector(-4249, -10501, 10538),
+		Vector(-9038, 6112, -1312), -- Scrapfactory
+	}
 	
 	Clockwork.kernel:IncludePrefixed("sh_recipes_rp_district21.lua");
 else

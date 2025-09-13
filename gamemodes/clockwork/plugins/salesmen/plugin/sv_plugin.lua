@@ -127,6 +127,8 @@ netstream.Hook("Salesmenu", function(player, data)
 									Clockwork.player:GiveCash(player, -tax, "Tower of Light Tax")
 								elseif game.GetMap() == "rp_district21" then
 									Clockwork.player:GiveCash(player, -tax, "Hill of Light Tax")
+								elseif game.GetMap() == "bg_district34" then
+									Clockwork.player:GiveCash(player, -tax, "Villa of Light Tax")
 								else
 									Clockwork.player:GiveCash(player, -tax, "Tax")
 								end

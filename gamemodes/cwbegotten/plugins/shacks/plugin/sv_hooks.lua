@@ -8,7 +8,7 @@ local playerMeta = FindMetaTable("Player");
 cwShacks.expireTime = 1209600; -- 2 weeks in seconds.
 
 local charactersTable = config.Get("mysql_characters_table"):Get()
-local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_district21";
+local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_district21" or game.GetMap() == "bg_district34";
 
 -- Called when Clockwork has loaded all of the entities.
 function cwShacks:ClockworkInitPostEntity()
@@ -521,6 +521,40 @@ function cwShacks:LoadShackData()
 				["S5"] = {pos1 = Vector(-5664.181641, 11436.757812, 103.662910), pos2 = Vector(-5857.274414, 11632.967773, 235.618912), doorPos = Vector(-5730.53125, 11437.78125, 158), cost = 700, bedTier = 1, stashSize = 60},
 				["S6"] = {pos1 = Vector(-7105.212402, 11978.488281, 172.342987), pos2 = Vector(-6761.789551, 12146.420898, 339.055939), doorPos = Vector(-6992.78125, 11980.59375, 226.875), cost = 700, bedTier = 1, stashSize = 60},
 				["S7"] = {pos1 = Vector(-6510.362305, 10420.34668, 175.721542), pos2 = Vector(-6379.923828, 10163.504883, 278.656677), doorPos = Vector(-6510, 10193.09375, 229.125), cost = 500, bedTier = 1, stashSize = 40},
+			};
+		elseif game.GetMap() == "bg_district34" then
+			self.shacks = {
+				["S1"] = {pos1 = Vector(2403, -11614, 858), pos2 = Vector(2275, -11337, 990), doorPos = Vector(2403, -11445, 916), cost = 75, bedTier = 1, stashSize = 10},
+				["S2"] = {pos1 = Vector(-2418, -11291, 858), pos2 = Vector(2158, -11159, 990), doorPos = Vector(2190, -11160, 912), cost = 75, bedTier = 1, stashSize = 10},
+				["S3"] = {pos1 = Vector(1867, -11373, 858), pos2 = Vector(2142, -11505, 990), doorPos = Vector(2020, -11375, 912), cost = 75, bedTier = 1, stashSize = 10},
+				["S4"] = {pos1 = Vector(1749, -11329, 858), pos2 = Vector(1490, -11463, 990), doorPos = Vector(1565, -11332, 917), cost = 75, bedTier = 1, stashSize = 10},
+				["S5"] = {pos1 = Vector(1308, -11494, 858), pos2 = Vector(1440, -11754, 990), doorPos = Vector(1439, -11526, 883), cost = 75, bedTier = 1, stashSize = 10},
+				["S6"] = {pos1 = Vector(3015, -9125, 1212), pos2 = Vector(3291, -8995, 1384), doorPos = Vector(3184, -9124, 1266), cost = 225, bedTier = 1, stashSize = 10},
+				["S7"] = {pos1 = Vector(2976, -8428, 1408), pos2 = Vector(3252, -8298, 1580), doorPos = Vector(3083, -8299, 1466), cost = 225, bedTier = 1, stashSize = 10},
+				["S8"] = {pos1 = Vector(867, -10699, 858), pos2 = Vector(735, -10959, 1012), doorPos = Vector(866, -10731, 938), cost = 75, bedTier = 1, stashSize = 10},
+				["S9"] = {pos1 = Vector(2440, -10566, 858), pos2 = Vector(2166, -10434, 1023), doorPos = Vector(2287, -10564, 973), cost = 75, bedTier = 1, stashSize = 10},
+				["M0"] = {pos1 = Vector(3240, -11016, 972), pos2 = Vector(3660, -10504, 1270), doorPos = Vector(3244, -10783, 1026), cost = 1200, bedTier = 2, stashSize = 75},
+				["M1"] = {pos1 = Vector(2259, -8089, 940), pos2 = Vector(2127, -7831, 1068), doorPos = Vector(2258, -7862, 998), cost = 225, bedTier = 1, stashSize = 50},
+				["M2"] = {pos1 = Vector(2527, -7829, 940), pos2 = Vector(2250, -7702, 1068), doorPos = Vector(2420, -7829, 998), cost = 225, bedTier = 1, stashSize = 50},
+				["M3"] = {pos1 = Vector(903, -8109, 940), pos2 = Vector(1180, -8237, 1068), doorPos = Vector(1073, -8237, 998), cost = 225, bedTier = 1, stashSize = 50},
+				["R3"] = {pos1 = Vector(2595, -8097, 1212), pos2 = Vector(2347, -7690, 1384), doorPos = Vector(2532, -8101, 1266), cost = 500, bedTier = 2, stashSize = 65},
+				["R4"] = {pos1 = Vector(2603, -8097, 1212), pos2 = Vector(2852, -7688, 1384), doorPos = Vector(2668, -8101, 1266), cost = 500, bedTier = 2, stashSize = 65},
+				["R5"] = {pos1 = Vector(3891, -8191, 1212), pos2 = Vector(3394, -7688, 1384), doorPos = Vector(3713, -8195, 1266), cost = 1000, bedTier = 2, stashSize = 85},
+				["R6"] = {pos1 = Vector(3899, -8191, 1212), pos2 = Vector(4395, -7688, 1384), doorPos = Vector(4077, -8195, 1266), cost = 1000, bedTier = 2, stashSize = 85},
+				["R7"] = {pos1 = Vector(3898, -9217, 1212), pos2 = Vector(4395, -9720, 1384), doorPos = Vector(4076, -9213, 1266), cost = 1000, bedTier = 2, stashSize = 85},
+				["R8"] = {pos1 = Vector(3890, -9217, 1212), pos2 = Vector(3394, -9720, 1384), doorPos = Vector(3712, -9213, 1266), cost = 1000, bedTier = 2, stashSize = 85},
+				["R9"] = {pos1 = Vector(2741, -9311, 1212), pos2 = Vector(2495, -9720, 1384), doorPos = Vector(2558, -9307, 1266), cost = 500, bedTier = 2, stashSize = 65},
+				["R11"] = {pos1 = Vector(1079, -8097, 1408), pos2 = Vector(831, -7688, 1580), doorPos = Vector(1016, -8101, 1462), cost = 500, bedTier = 2, stashSize = 65},
+				["R12"] = {pos1 = Vector(1087, -8097, 1408), pos2 = Vector(1336, -7688, 1580), doorPos = Vector(1152, -8101, 1462), cost = 500, bedTier = 2, stashSize = 65},
+				["R15"] = {pos1 = Vector(3891, -8191, 1408), pos2 = Vector(3394, -7688, 1580), doorPos = Vector(3713, -8195, 1462), cost = 1000, bedTier = 2, stashSize = 85},
+				["R16"] = {pos1 = Vector(3899, -8191, 1408), pos2 = Vector(4395, -7688, 1580), doorPos = Vector(4077, -8195, 1462), cost = 1000, bedTier = 2, stashSize = 85},
+				["R18"] = {pos1 = Vector(3890, -9217, 1408), pos2 = Vector(3394, -9720, 1580), doorPos = Vector(3712, -9213, 1462), cost = 1000, bedTier = 2, stashSize = 85},
+				["R19"] = {pos1 = Vector(2741, -9311, 1408), pos2 = Vector(2495, -9720, 1580), doorPos = Vector(2558, -9307, 1462), cost = 500, bedTier = 2, stashSize = 65},
+				["R20"] = {pos1 = Vector(2487, -9311, 1408), pos2 = Vector(2238, -9720, 1580), doorPos = Vector(2422, -9307, 1462), cost = 500, bedTier = 2, stashSize = 65},
+				["R21"] = {pos1 = Vector(2347, -8097, 1604), pos2 = Vector(2595, -7688, 1800), doorPos = Vector(2532, -8101, 1658), cost = 500, bedTier = 2, stashSize = 65},
+				["R22"] = {pos1 = Vector(2603, -8097, 1604), pos2 = Vector(2852, -7688, 1800), doorPos = Vector(2668, -8101, 1658), cost = 500, bedTier = 2, stashSize = 65},
+				["R23"] = {pos1 = Vector(3394, -8191, 1604), pos2 = Vector(4395, -7688, 1880), doorPos = Vector(3847, -8195, 1658), cost = 5000, bedTier = 2, stashSize = 100},
+				["R24"] = {pos1 = Vector(4395, -9217, 1604), pos2 = Vector(3394, -9720, 1800), doorPos = Vector(3941, -9213, 1658), cost = 5000, bedTier = 2, stashSize = 100},
 			};
 		end
 

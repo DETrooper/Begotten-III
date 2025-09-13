@@ -71,12 +71,14 @@ local LITHENESS = cwBeliefs.beliefTrees:New("litheness")
 				description = "All progress bar actions including raising weapons, reloading, and standing up now complete 33% faster. Unlocks the abiility to run safely with a full bucket of liquid.",
 				requirements = {"nimble", "evasion"},
 				row = 3,
+				lockedSubfactions = {"Clan Gotnarh"},
 			},
 			["swift"] = {
 				name = "Swift",
 				description = "Sprinting is now 10% faster.",
 				requirements = {"nimble", "evasion", "dexterity"},
 				row = 4,
+				lockedSubfactions = {"Clan Gotnarh"},
 			},
 		},
 	};

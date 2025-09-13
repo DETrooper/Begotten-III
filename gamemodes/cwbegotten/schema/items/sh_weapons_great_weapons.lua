@@ -91,7 +91,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.excludedFactions = {"Goreic Warrior"};
-	ITEM.includedSubfactions = {"Clan Grock"};
+	ITEM.includedSubfactions = {"Clan Grock", "Clan Gotnarh"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register(); 
 
@@ -113,7 +113,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.excludedFactions = {"Goreic Warrior"};
-	ITEM.includedSubfactions = {"Clan Grock"};
+	ITEM.includedSubfactions = {"Clan Grock", "Clan Gotnarh"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
@@ -368,9 +368,10 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.excludedFactions = {"Goreic Warrior"};
-	ITEM.includedSubfactions = {"Clan Grock"};
+	ITEM.includedSubfactions = {"Clan Grock", "Clan Gotnarh"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
+
 
 local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Sacred Runestone Slab";
