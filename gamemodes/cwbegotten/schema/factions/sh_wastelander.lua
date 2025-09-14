@@ -92,8 +92,191 @@ local FACTION = Clockwork.faction:New("Wanderer");
 	end;
 FACTION_WANDERER = FACTION:Register();
 
+local FACTION = Clockwork.faction:New("Militant Orders of the Villa");
+
+	if game.GetMap() == "bg_district34" then
+		FACTION.disabled = false;
+	else
+		FACTION.disabled = true;
+		FACTION.hidden = true;
+	end
+	
+	FACTION.whitelist = true;
+	FACTION.useFullName = false;
+	FACTION.material = "begotten/faction/faction_logo_gatekeepers"; -- Logo
+	FACTION.color = Color(80, 100, 120);
+	FACTION.description = "The Gatekeepers are the front line of defence against the countless unholy horrors that threaten the Glaze. \nTheir ranks swell with conscripted power-hungry commoners and fanatical flagellants. \nThey must serve the Holy Hierarchy diligently and without question, no matter how outrageous their demands may be. \nIll-trained and poorly equipped, these soldiers are expected to lay their lives down to protect the Light. \nAnd so they shall.";
+	FACTION.availablefaiths = {"Faith of the Light"};
+	FACTION.alliedfactions = {"Hillkeeper", "Holy Hierarchy", "Gatekeeper"};
+	FACTION.masterfactions = {"Holy Hierarchy"};
+	FACTION.enlist = true;
+	FACTION.promoteAcrossSubfactions = true;
+	FACTION.singleGender = GENDER_MALE;
+	FACTION.characterLimit = 1; -- # of characters of this faction a player can have.
+	FACTION.ratio = 0.3; -- 0.3 slots per player (9 at 30 players).
+	--FACTION.imposters = true; -- Kinisgers should get enlisted through /enlist on Wanderer disguises.
+	FACTION.names = "glazic";
+	FACTION.subfactions = {
+		{name = "Villakeepers", subtitle = "Militans - Soldiers tasked with protecting the Villa", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Constant Drilling: Starts with +15 maximum stamina"}, {Color(0, 225, 0), "(+) Nourishing Rations: Starts with +25 maximum health"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 6"}, {Color(0, 225, 0), "(+) Strength in Numbers: +100% faith gain from dealing damage"}, {Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}}},
+        {name = "Order of the Writ", startingRank = 12, whitelist = true, subtitle = "The Writ - Scouts and Manhunters", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Excursionists: -25% stamina drain and +5% sprint speed"}, {Color(0, 225, 0), "(+) Masters of Disguise: Recognising does not reveal your rank"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(225, 0, 0), "(-) The 'Sol Orthodoxy' and 'Voltism' subfaiths are locked"}}},
+		{name = "The Guild", subtitle = "Artisans - Physicians and Manufacturers", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Men of Knowledge: +25% increased faith gain"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 12"}, {Color(0, 225, 0), "(+) Drilled & Nourished: Starts with +20 health and +10 stamina"}, {Color(0, 225, 0), "(+) Has +5kg extra weight capacity"}, {Color(225, 0, 0), "(-) Tier IV of the Prowess belief tree is locked"}, {Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}}},
+	};
+	FACTION.residualXPZones = { -- Zones that boost residual XP gain for this faction.
+		["bg_district34"] = {
+			{pos1 = Vector(8808, 8584, 871), pos2 = Vector(9520, 7992, 1306), modifier = 0.33, nightModifier = 0.2}, -- Gorewatch
+			{pos1 = Vector(4403, -7851, 614), pos2 = Vector(6594, -8081, 1063), modifier = 0.5, nightModifier = 0.25}, -- Gate
+			{pos1 = Vector(6734, -8081, 614), pos2 = Vector(6444, -11962, 1373), modifier = 0.5, nightModifier = 0.25}, -- Wall	
+			{pos1 = Vector(-613, -9808, 738), pos2 = Vector(-856, -11849, 1258), modifier = 0.5, nightModifier = 0.25}, -- Wall
+			{pos1 = Vector(4214, -10694, 1312), pos2 = Vector(4584, -10317, 1478), modifier = 0.5, nightModifier = 0.25}, -- Courtyard Tower
+		},
+	};
+	
+	-- Called when a player is transferred to the faction.
+	function FACTION:OnTransferred(player, faction, name)
+		if (faction.name != "Wanderer" and faction.name != "Holy Hierarchy") then
+			if player:GetSubfaction() ~= "Kinisger" then
+				return false;
+			end
+		end;
+		
+		-- It is the IC responsibility of Gatekeepers to bloodtest recruits.
+		--[[if player:GetFaith() ~= "Faith of the Light" or player:GetSubfaith() == "Voltism" then
+			return false;
+		end]]--
+		
+		if (!Clockwork.player:IsWhitelisted(player, "Militant Orders of the Villa")) then
+			Clockwork.player:SetWhitelisted(player, "Militant Orders of the Villa", true);
+		end;
+	end;
+	
+	if SERVER then
+		function FACTION:CanPromote(player, target, faction, subfaction)
+			if !player:IsAdmin() then
+				local playerFaction = player:GetNetVar("kinisgerOverrideFaction") or player:GetFaction();
+				
+				if playerFaction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						return false;
+					end
+				end
+			end
+		end
+		
+		function FACTION:CanDemote(player, target, faction, subfaction)
+			if !player:IsAdmin() then
+				local playerFaction = player:GetNetVar("kinisgerOverrideFaction") or player:GetFaction();
+				
+				if playerFaction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						return false;
+					end
+				end
+			end
+		end
+	end
+	
+	if !Schema.Ranks then
+		Schema.Ranks = {};
+	end
+	
+	if !Schema.RankTiers then
+		Schema.RankTiers = {};
+	end
+	
+	if !Schema.RanksToBuffs then
+		Schema.RanksToBuffs = {};
+	end
+	
+	if !Schema.RanksRestrictedWages then
+		Schema.RanksRestrictedWages = {};
+	end
+	
+	if !Schema.RanksToSubfaction then
+		Schema.RanksToSubfaction = {};
+	end
+	
+	if !Schema.RanksToCoin then
+		Schema.RanksToCoin = {};
+	end
+	
+	Schema.Ranks["Militant Orders of the Villa"] = {
+		[1] = "Levy",
+		[2] = "Brother",
+		[3] = "Laborer",
+        [4] = "Surveyor",
+		[5] = "Mechanic",
+		[6] = "Physician",
+		[7] = "General Practicioner",
+		[8] = "Proselyte",
+		[9] = "Forgewright",
+		[10] = "Prefect",
+		[11] = "Reliquarian",
+        [12] = "Waymaster",
+		[13] = "Legate",
+        [14] = "Manhunter",
+        [15] = "Chronologist",
+        [16] = "Writmarshal",
+		[17] = "Guildmaster",
+	};
+	
+	Schema.RankTiers["Militant Orders of the Villa"] = {
+		[1] = {"Levy"},
+		[2] = {"Brother", "Laborer"},
+		[3] = {"Proselyte", "Physician", "Mechanic", "Surveyor"},
+		[4] = {"Prefect", "Reliquarian", "General Practicioner", "Forgewright", "Waymaster"},
+		[5] = {"Legate", "Guildmaster", "Manhunter", "Chronologist"},
+        [6] = {"Writmarshal"}
+	};
+	
+	Schema.RanksToBuffs["Militant Orders of the Villa"] = {
+		["Legate"] = {health = 50, stamina = 50},
+        ["Writmarshal"] = {health = 50, stamina = 50},
+	};
+	
+	-- Do not grant wages to these ranks if they are inside the safezone.
+	Schema.RanksRestrictedWages["Militant Orders of the Villa"] = {1, 2, 4, 8, 12};
+	
+	Schema.RanksToSubfaction["Militant Orders of the Villa"] = {
+		["Laborer"] = "The Guild",
+		["Mechanic"] = "The Guild",
+        ["Forgewright"] = "The Guild",
+        ["Guildmaster"] = "The Guild",
+		["Physician"] = "The Guild",
+		["General Practicioner"] = "The Guild",
+		["Surveyor"] = "Order of the Writ",
+		["Waymaster"] = "Order of the Writ",
+        ["Manhunter"] = "Order of the Writ",
+        ["Chronologist"] = "Order of the Writ",
+        ["Writmarshal"] = "Order of the Writ",
+	};
+	
+	Schema.RanksToCoin["Militant Orders of the Villa"] = {
+		[1] = 25,
+		[2] = 35,
+		[3] = 35,
+		[4] = 50,
+		[5] = 35,
+		[6] = 50,
+		[7] = 50,
+		[8] = 50,
+		[9] = 50,
+		[10] = 100,
+		[11] = 100, 
+		[12] = 50,
+		[13] = 200,
+		[14] = 50,
+        [15] = 50,
+        [16] = 200,
+        [17] = 200,
+	};
+FACTION_VILLAKEEPER = FACTION:Register();
+
 local FACTION = Clockwork.faction:New("Gatekeeper");
-	if game.GetMap() == "rp_district21" then
+	if game.GetMap() == "rp_district21" or game.GetMap() == "bg_district34" then
 		FACTION.disabled = true;
 		FACTION.hidden = true;
 	else
