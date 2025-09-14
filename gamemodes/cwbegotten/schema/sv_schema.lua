@@ -406,7 +406,7 @@ Schema.doors = {
 			"inq_door1",
 			"inq_door2",
 		},
-		["knights"] = {
+		["nobles"] = {
 			"pope_reception_shutter",
 			"Bunker",
 		},

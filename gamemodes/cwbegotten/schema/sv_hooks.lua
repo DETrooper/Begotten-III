@@ -2321,7 +2321,7 @@ function Schema:PlayerDoesRecognisePlayer(player, target, status, isAccurate, re
 
 	if targetFaction == "Holy Hierarchy" then
 		return true;
-	elseif targetFaction == "Gatekeeper" or targetFaction == "Pope Adyssa's Gatekeepers" or targetFaction == "Hillkeeper" then
+	elseif targetFaction == "Gatekeeper" or targetFaction == "Pope Adyssa's Gatekeepers" or targetFaction == "Hillkeeper" or targetFaction == "Militant Orders of the Villa" then
 		if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy" then
 			return true;
 		end
@@ -2419,7 +2419,7 @@ function Schema:PlayerCanUseDoor(player, door)
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
 			
-			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Militant Orders of the Villa" and faction ~= "Pope Adyssa's Gatekeepers" then
+			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Militant Orders of the Villa" and faction ~= "Aristocracy Of Light" and faction ~= "Pope Adyssa's Gatekeepers" then
 				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 					player.nextDoorNotify = curTime + 1;
 				
@@ -2458,12 +2458,27 @@ function Schema:PlayerCanUseDoor(player, door)
 				
 				return false;
 			end
+
+		elseif doors["nobles"] and table.HasValue(doors["nobles"], doorName) then
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+			local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+			local curTime = CurTime();
+
+			if faction ~= "Aristocracy Of Light" or (subfaction ~= "The Ministry" and subfaction ~= "Noble Houses") then
+				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
+					player.nextDoorNotify = curTime + 1;
+				
+					Schema:EasyText(player, "firebrick", "You aren't the correct faction to open this blastdoor!");
+				end
+				
+				return false;
+			end
 		elseif doors["ministry"] and table.HasValue(doors["ministry"], doorName) then
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 			local curTime = CurTime();
 			
-			if faction ~= "Holy Hierarchy" or (subfaction ~= "Ministry" and subfaction ~= "Low Ministry") then
+			if faction ~= "Holy Hierarchy" or (subfaction ~= "Ministry" and subfaction ~= "Low Ministry") or faction ~= "Aristocracy Of Light" then
 				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 					player.nextDoorNotify = curTime + 1;
 				
@@ -2476,7 +2491,7 @@ function Schema:PlayerCanUseDoor(player, door)
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
 			
-			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Militant Orders of the Villa" and faction ~= "Pope Adyssa's Gatekeepers" then
+			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Militant Orders of the Villa" and faction ~= "Aristocracy Of Light" and faction ~= "Pope Adyssa's Gatekeepers" then
 				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 					player.nextDoorNotify = curTime + 1;
 				

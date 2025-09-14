@@ -776,6 +776,15 @@ elseif map == "bg_district34" then
 			charBodygroup = {1, 4},
 			zone = "tower"
 		},
+		["Aristocracy Of Light"] = {
+			camVector = Vector(-130, -9176, 1277),
+			camAngles = Angle(0, 90, 0),
+			closeCamVector = Vector(-130, -9136, 1277),
+			charVector = Vector(-131, -9102, 1212),
+			charAngles = Angle(0, 270, 0),
+			charModel = {clothes = "models/begotten/gatekeepers/minister_male.mdl", head = "models/begotten/heads/male_11_wanderer.mdl"},
+			zone = "tower"
+		},
 		["Holy Hierarchy"] = {
 			camVector = Vector(-130, -9176, 1277),
 			camAngles = Angle(0, 90, 0),
@@ -914,6 +923,11 @@ elseif map == "bg_district34" then
 			charModel = {clothes = "models/begotten/wanderers/brigandine_male.mdl", head = "models/begotten/heads/male_04_wanderer.mdl"},
 			charBodygroup = {1, 2},
 			camVector = Vector(4212, -8638, 1005),
+			camAngles = Angle(0, 90, 0),
+		},
+		["Noble Houses"] = {
+			charModel = {clothes = "models/begotten/gatekeepers/knight_set.mdl", head = "models/begotten/heads/male_09_glaze.mdl"},
+			camVector = Vector(-130, -9146, 1277),
 			camAngles = Angle(0, 90, 0),
 		},
 		["Ministry"] = {
