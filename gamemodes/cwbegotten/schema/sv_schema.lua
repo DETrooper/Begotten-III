@@ -362,7 +362,6 @@ Schema.doors = {
 		["gorewatch"] = {
 			"gatekeeperdoor",
 			"gatekeeperdoor2",
-		},
 		["tower"] = {
 			"churchgate1",
 			"churchgate2",
