@@ -2419,7 +2419,7 @@ function Schema:PlayerCanUseDoor(player, door)
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
 			
-			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Pope Adyssa's Gatekeepers" then
+			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Militant Orders of the Villa" and faction ~= "Pope Adyssa's Gatekeepers" then
 				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 					player.nextDoorNotify = curTime + 1;
 				
@@ -2429,11 +2429,11 @@ function Schema:PlayerCanUseDoor(player, door)
 				return false;
 			end
 			
-			if faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" then
+			if faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Militant Orders of the Villa" or faction == "Pope Adyssa's Gatekeepers" then
 				local rank = Schema.Ranks[faction][player:GetCharacterData("rank") or 1];
 				
 				if self:GetRankTier(faction, rank) < 3 then
-					if not (doors["forge"] and table.HasValue(doors["forge"], doorName) and rank == "Artificer") then
+					if not (doors["forge"] and table.HasValue(doors["forge"], doorName) and rank == "Artificer" or rank == "Laborer") then
 						if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 							player.nextDoorNotify = curTime + 1;
 						
@@ -2476,7 +2476,7 @@ function Schema:PlayerCanUseDoor(player, door)
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
 			
-			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Pope Adyssa's Gatekeepers" then
+			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Militant Orders of the Villa" and faction ~= "Pope Adyssa's Gatekeepers" then
 				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 					player.nextDoorNotify = curTime + 1;
 				

@@ -766,6 +766,16 @@ elseif map == "bg_district34" then
 			charBodygroup = {1, 4},
 			zone = "tower"
 		},
+		["Militant Orders of the Villa"] = {
+			camVector = Vector(4212, -8668, 1005),
+			camAngles = Angle(0, 90, 0),
+			closeCamVector = Vector(4212, -8698, 1005),
+			charVector = Vector(4212, -8594, 940),
+			charAngles = Angle(0, 270, 0),
+			charModel = {clothes = "models/begotten/gatekeepers/gatekeepermedium_male.mdl", head = "models/begotten/heads/male_02_glaze.mdl"},
+			charBodygroup = {1, 4},
+			zone = "tower"
+		},
 		["Holy Hierarchy"] = {
 			camVector = Vector(-130, -9176, 1277),
 			camAngles = Angle(0, 90, 0),
@@ -884,6 +894,23 @@ elseif map == "bg_district34" then
 			camAngles = Angle(0, 90, 0),
 		},
 		["Praeventor"] = {
+			charModel = {clothes = "models/begotten/wanderers/brigandine_male.mdl", head = "models/begotten/heads/male_04_wanderer.mdl"},
+			charBodygroup = {1, 2},
+			camVector = Vector(4212, -8638, 1005),
+			camAngles = Angle(0, 90, 0),
+		},
+		["Villakeepers"] = {
+			charModel = {clothes = "models/begotten/gatekeepers/gatekeepermedium_male.mdl", head = "models/begotten/heads/male_02_glaze.mdl"},
+			charBodygroup = {1, 4},
+			camVector = Vector(4212, -8638, 1005),
+			camAngles = Angle(0, 90, 0),
+		},
+		["Order of the Writ"] = {
+			charModel = {clothes = "models/begotten/gatekeepers/gatekeeperlight_black_male.mdl", head = "models/begotten/heads/male_04_glaze.mdl"},
+			camVector = Vector(4212, -8638, 1005),
+			camAngles = Angle(0, 90, 0),
+		},
+		["The Guild"] = {
 			charModel = {clothes = "models/begotten/wanderers/brigandine_male.mdl", head = "models/begotten/heads/male_04_wanderer.mdl"},
 			charBodygroup = {1, 2},
 			camVector = Vector(4212, -8638, 1005),
