@@ -121,7 +121,7 @@ local GUNSLINGER = Clockwork.trait:New()
 	GUNSLINGER.disables = {"pilgrim"}
 	--GUNSLINGER.points = 7
 	GUNSLINGER.points = 3
-	GUNSLINGER.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
+	GUNSLINGER.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers", "Militant Orders of the Villa"}
 	GUNSLINGER.excludedsubfactions = {"Clan Crast", "Clan Grock", "Clan Harald", "Clan Reaver", "Clan Gore"};
 Clockwork.trait:Register(GUNSLINGER)
 
@@ -150,7 +150,7 @@ local LEPER = Clockwork.trait:New()
 	LEPER.points = -5
 	LEPER.disables = {"pilgrim"}
 	LEPER.disablesSkins = true;
-	LEPER.excludedfactions = {"Gatekeeper", "Hillkeeper", "Goreic Warrior", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"};
+	LEPER.excludedfactions = {"Gatekeeper", "Hillkeeper", "Goreic Warrior", "Holy Hierarchy", "Pope Adyssa's Gatekeepers", "Militant Orders of the Villa"};
 Clockwork.trait:Register(LEPER)
 
 local LITERATE = Clockwork.trait:New()
@@ -279,7 +279,7 @@ local SURVIVALIST = Clockwork.trait:New()
 	SURVIVALIST.points = 10
 	SURVIVALIST.eventlocked = false;
 	SURVIVALIST.disables = {"escapee"}
-	SURVIVALIST.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
+	SURVIVALIST.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers", "Militant Orders of the Villa", "Aristocracy Of Light"}
 	SURVIVALIST.excludedsubfactions = {"Clan Crast", "Clan Grock"};
 Clockwork.trait:Register(SURVIVALIST)
 
@@ -290,7 +290,7 @@ local VETERAN = Clockwork.trait:New()
 	VETERAN.points = 16
 	VETERAN.eventlocked = false;
 	VETERAN.disables = {"duelist", "escapee", "weak"}
-	VETERAN.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
+	VETERAN.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers", "Militant Orders of the Villa", "Aristocracy Of Light"}
 	VETERAN.excludedsubfactions = {"Clan Crast", "Clan Grock"};
 Clockwork.trait:Register(VETERAN)
 

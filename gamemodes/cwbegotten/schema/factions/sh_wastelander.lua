@@ -118,7 +118,7 @@ local FACTION = Clockwork.faction:New("Militant Orders of the Villa");
 	FACTION.names = "glazic";
 	FACTION.subfactions = {
 		{name = "Villakeepers", subtitle = "Militans - Soldiers tasked with protecting the Villa", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Constant Drilling: Starts with +15 maximum stamina"}, {Color(0, 225, 0), "(+) Nourishing Rations: Starts with +25 maximum health"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 6"}, {Color(0, 225, 0), "(+) Strength in Numbers: +100% faith gain from dealing damage"}, {Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}}},
-        {name = "Prole of the Writ", startingRank = 12, whitelist = true, subtitle = "The Writ - Scouts and Manhunters", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Excursionists: -25% stamina drain and +5% sprint speed"}, {Color(0, 225, 0), "(+) Masters of Disguise: Recognising does not reveal your rank"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(225, 0, 0), "(-) The 'Sol Orthodoxy' and 'Voltism' subfaiths are locked"}}},
+        {name = "Order of the Writ", startingRank = 12, whitelist = true, subtitle = "The Writ - Scouts and Manhunters", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Excursionists: -25% stamina drain and +5% sprint speed"}, {Color(0, 225, 0), "(+) Masters of Disguise: Recognising does not reveal your rank"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(225, 0, 0), "(-) The 'Sol Orthodoxy' and 'Voltism' subfaiths are locked"}}},
 		{name = "The Guild", subtitle = "Artisans - Physicians and Manufacturers", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Men of Knowledge: +25% increased faith gain"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 12"}, {Color(0, 225, 0), "(+) Drilled & Nourished: Starts with +20 health and +10 stamina"}, {Color(0, 225, 0), "(+) Has +5kg extra weight capacity"}, {Color(225, 0, 0), "(-) Tier IV of the Prowess belief tree is locked"}, {Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}}},
 	};
 	FACTION.residualXPZones = { -- Zones that boost residual XP gain for this faction.
@@ -217,10 +217,7 @@ local FACTION = Clockwork.faction:New("Militant Orders of the Villa");
 		[11] = "Reliquarian",
         [12] = "Waymaster",
 		[13] = "Legate",
-        [14] = "Manhunter",
-        [15] = "Chronologist",
-        [16] = "Writmarshal",
-		[17] = "Guildmaster",
+		[14] = "Guildmaster",
 	};
 	
 	Schema.RankTiers["Militant Orders of the Villa"] = {
@@ -317,7 +314,7 @@ local FACTION = Clockwork.faction:New("Aristocracy Of Light");
 	--FACTION.imposters = true;
 	FACTION.names = "glazic";
 	FACTION.subfactions = {
-		{name = "Ministry", startingRank = 3, whitelist = true, subtitle = "The Ministry - The Privileged Few Overseers of Glazic Supremacy", description = "The Holy Hierarchy is perhaps the only surviving institution of the old world and is the only known church of the Light remaining. Many view the Holy Hierarchy as the direct continuation of the Empire of Light, including the Holy Hierarchy themselves, who push this narrative to solidify their grasp on their subjects. Any who doubt its legitimacy are executed on the spot. Lording over most of the 'civilized' peasantry that wander the wasteland, the Holy Hierarchy strictly enforces its religious codes, which are ever-changing at the whim of the Pope. At the very top of the Hierarchy lies the Pope, supreme in power. He lives in a penthouse at the top of the hotel in absolute luxury in comparison to the shanties that the rabble share. Below him lies the cardinals, who serve as the Pope's council. Lower still are the Bishops, many of whom are now in open rebellion against the new Pope, with some even claiming his title as their own. Lastly, there are the priests, who are barely above commoner status and equal in rank to those in the Knights of Sol or Inquisition. A priest's duties often involve searching ancient texts held within the grand archives for any advantage that could be offered to the Hierarchy over their rivals, or for clues to decipher the ramblings of the machine that so many wanderers speak of.", models = ministerModels},
+		{name = "The Ministry", startingRank = 3, whitelist = true, subtitle = "The Ministry - The Privileged Few Overseers of Glazic Supremacy", description = "The Holy Hierarchy is perhaps the only surviving institution of the old world and is the only known church of the Light remaining. Many view the Holy Hierarchy as the direct continuation of the Empire of Light, including the Holy Hierarchy themselves, who push this narrative to solidify their grasp on their subjects. Any who doubt its legitimacy are executed on the spot. Lording over most of the 'civilized' peasantry that wander the wasteland, the Holy Hierarchy strictly enforces its religious codes, which are ever-changing at the whim of the Pope. At the very top of the Hierarchy lies the Pope, supreme in power. He lives in a penthouse at the top of the hotel in absolute luxury in comparison to the shanties that the rabble share. Below him lies the cardinals, who serve as the Pope's council. Lower still are the Bishops, many of whom are now in open rebellion against the new Pope, with some even claiming his title as their own. Lastly, there are the priests, who are barely above commoner status and equal in rank to those in the Knights of Sol or Inquisition. A priest's duties often involve searching ancient texts held within the grand archives for any advantage that could be offered to the Hierarchy over their rivals, or for clues to decipher the ramblings of the machine that so many wanderers speak of.", models = ministerModels},
 		{name = "The Inquisition", startingRank = 2, whitelist = true, subtitle = "The Second Inquisition - Hunters, Judges, and Executioners", description = "The Holy Order of the Glaze's Inquisitors is an ancient institution, founded by Lord Maximus during his campaigns against the Black Hats and born of a need to destroy infilitrators and weed out heresy. Although disbanded after their task was completed, it would not be long before the Inquisition was re-instated, as enemies of the Glaze only grew in both numbers and ferocity. The coming of the Undergod and subsequent displacement of the Dark Lord from Hell only strengthened the need for the Inquisition, as unknown powers were now openly unleashed upon mankind. The Inquisition is the most important line of defense for the Holy Hierarchy, as they root out the hidden enemies of the Glaze and uphold religious doctrine. Inquisitors strictly abide by their 'Book of Law', which details their methodology and the rules by which all followers of the Glaze must adhere to. The inquisition also holds the unique ability to hold any member of Glazic society accountable to the 'Book of Law', including members of the Holy Hierarchy. Accusations of heresy are not taken lightly however, and being proved wrong after accusing someone in power may have disastrous consequences for the accuser.", attributes = {{Color(0, 225, 0), "(+) Pious: +50% increased faith gain"}, {Color(0, 225, 0), "(+) Starts with +50 maximum health"}, {Color(0, 225, 0), "(+) Has +5kg extra weight capacity"}}}, 
 		{name = "Noble Houses", startingRank = 1, whitelist = true, subtitle = "The Houses of Caelvora and Herrera, forever locked in Rivalry", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Bullet damage is reduced by 50%"}, {Color(0, 225, 0), "(+) Bulwark: +25 stamina and +25 stability"}, {Color(0, 225, 0), "(+) Starts with +75 maximum health"}, {Color(225, 0, 0), "(-) Burdened: Run speed is decreased by 10%"}, {Color(225, 0, 0), "(-) Honor Bound: Cannot equip firearms."}}, models = ministerModels},
 	};
@@ -403,21 +400,21 @@ local FACTION = Clockwork.faction:New("Aristocracy Of Light");
 		[2] = "Apprentice",
 		[3] = "Vicar",
 		[4] = "Ser Knight",
-		[5] = "Inquisitor",
+		[5] = "Manhunter",
 		[6] = "Minister",
 		[7] = "Chamberlain",
-		[8] = "Ordinator",
+		[8] = "Chronologist",
 		[9] = "Magistrate",
         [10] = "Count",
-		[11] = "Grand Inquisitor",
+		[11] = "Writmarshal",
 		[12] = "Regent",
 	};
 	
 	Schema.RankTiers["Aristocracy Of Light"] = {
 		[1] = {"Esquire", "Apprentice", "Vicar"},
-		[2] = {"Ser Knight", "Inquisitor", "Minister"},
-		[3] = {"Chamberlain", "Ordinator", "Magistrate"},
-		[4] = {"Grand Inquisitor", "Regent", "Count"},
+		[2] = {"Ser Knight", "Manhunter", "Minister"},
+		[3] = {"Chamberlain", "Chronologist", "Magistrate"},
+		[4] = {"Writmarshal", "Regent", "Count"},
 	};
 	
 	Schema.RanksToSubfaction["Aristocracy Of Light"] = {
@@ -425,10 +422,9 @@ local FACTION = Clockwork.faction:New("Aristocracy Of Light");
 		["Ser Knight"] = "Noble Houses",
 		["Grand Knight"] = "Noble Houses",
         ["Count"] = "Noble Houses",
-		["Apprentice"] = "Inquisition",
-		["Inquisitor"] = "Inquisition",
-		["Ordinator"] = "Inquisition",
-		["Grand Inquisitor"] = "Inquisition",
+		["Manhunter"] = "Order of the Writ",
+        ["Chronologist"] = "Order of the Writ",
+        ["Writmarshal"] = "Order of the Writ",
 	};
 FACTION_ARISTOCRACY = FACTION:Register();
 
