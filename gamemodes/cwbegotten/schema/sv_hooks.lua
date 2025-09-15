@@ -470,8 +470,10 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 						
 						if playerSubfaction == "Order of the Writ" then
 							playerName = "an unknown Inquisitor";
-						elseif playerSubfaction == "Noble Houses" then
-							playerName =  "an unknown member of a Villa House";
+						elseif playerSubfaction == "House Herrera" then
+							playerName =  "an unknown member of House Herrera";
+						elseif playerSubfaction == "House Caelvora" then
+							playerName =  "an unknown member of House Caelvora";
 						else
 							playerName =  "an unknown Glazic nobleman";
 						end
@@ -707,8 +709,10 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 								
 								if playerSubfaction == "Order of the Writ" then
 									playerName = "an unknown Inquisitor";
-								elseif playerSubfaction == "Noble Houses" then
-									playerName =  "an unknown member of a Villa House";
+								elseif playerSubfaction == "House Herrera" then
+									playerName =  "an unknown member of a House Herrera";
+								elseif playerSubfaction == "House Caelvora" then
+									playerName =  "an unknown member of a House Caelvora";
 								else
 									playerName =  "an unknown Glazic nobleman";
 								end
@@ -2488,7 +2492,7 @@ function Schema:PlayerCanUseDoor(player, door)
 			local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 			local curTime = CurTime();
 
-			if faction ~= "Aristocracy Of Light" or (subfaction ~= "The Ministry" and subfaction ~= "Noble Houses") then
+			if faction ~= "Aristocracy Of Light" or (subfaction ~= "Ministry" and subfaction ~= "House Caelvora" and subfaction ~= "House Herrera") then
 				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 					player.nextDoorNotify = curTime + 1;
 				

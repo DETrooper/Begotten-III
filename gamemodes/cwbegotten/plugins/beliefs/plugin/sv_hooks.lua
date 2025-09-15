@@ -2015,6 +2015,8 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 		level = level + 15;
 	elseif faction == "Holy Hierarchy" then
 		level = level + 10;
+	elseif faction == "Aristocracy Of Light" then
+		level = level + 10;
 
 		if subfaction == "Low Ministry" then
 			data["beliefs"]["literate"] = true;

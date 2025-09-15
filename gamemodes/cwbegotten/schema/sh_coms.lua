@@ -1906,7 +1906,7 @@ local COMMAND = Clockwork.command:New("Proclaim");
 		end;
 		
 		if hook.Run("PlayerCanSayIC", player, text) then 
-			if (Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
+			if (Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or faction == "Aristocracy Of Light" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
 				Clockwork.chatBox:SetMultiplier(1.35);
 				
 				if player.victim and IsValid(player.victim) then
@@ -2219,7 +2219,7 @@ local COMMAND = Clockwork.command:New("ProclaimMe");
 		end;
 	
 		if hook.Run("PlayerCanSayIC", player, text) then 
-			if Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3 or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
+			if Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3 or faction == "Holy Hierarchy" or faction == "Aristocracy Of Light" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
 				Clockwork.chatBox:SetMultiplier(1.35);
 				
 				if player.victim and IsValid(player.victim) then
@@ -2987,7 +2987,7 @@ local COMMAND = Clockwork.command:New("CoinslotTax");
 	function COMMAND:OnRun(player, arguments)
 		local faction = player:GetFaction();
 		
-		if (faction == "Holy Hierarchy" and player:GetSubfaction() == "Minister") or (faction == "Aristocracy Of Light" and player:GetSubfaction() == "The Ministry") or player:IsAdmin() then
+		if (faction == "Holy Hierarchy" and player:GetSubfaction() == "Minister") or (faction == "Aristocracy Of Light" and player:GetSubfaction() == "Ministry") or player:IsAdmin() then
 			local trace = player:GetEyeTrace();
 
 			if (trace.Entity) then

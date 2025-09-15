@@ -2894,7 +2894,7 @@ concommand.Add("cw_CoinslotTreasury", function(player, cmd, args)
 		if (entity:GetClass() == "cw_coinslot") then
 			local faction = player:GetFaction();
 			
-			if (faction == "Holy Hierarchy" and player:GetSubfaction() == "Minister") or player:IsAdmin() then
+			if (faction == "Holy Hierarchy" and player:GetSubfaction() == "Minister") or (faction == "Aristocracy Of Light" and player:GetSubfaction() == "Ministry") or player:IsAdmin() then
 				Schema:EasyText(player, "lightslateblue", "The treasury currently sits at "..Schema.towerTreasury.." coin.");
 			end
 		end

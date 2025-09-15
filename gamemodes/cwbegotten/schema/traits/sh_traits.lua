@@ -54,7 +54,7 @@ local CRIMINAL = Clockwork.trait:New()
 	CRIMINAL.description = "Your character is a common criminal, skilled in the art of lockpicking. This trait automatically unlocks the first 3 beliefs on the left side of the 'Litheness' tree: 'Nimble', 'Sly Fidget', and 'Safecracker', and also grants two starting lockpicks."
 	CRIMINAL.points = 4
 	CRIMINAL.disables = {"pilgrim"};
-	CRIMINAL.excludedfactions = {"Holy Hierarchy"};
+	CRIMINAL.excludedfactions = {"Holy Hierarchy", "Aristocracy Of Light"};
 Clockwork.trait:Register(CRIMINAL)
 
 local CROSSEYED = Clockwork.trait:New()
@@ -121,7 +121,7 @@ local GUNSLINGER = Clockwork.trait:New()
 	GUNSLINGER.disables = {"pilgrim"}
 	--GUNSLINGER.points = 7
 	GUNSLINGER.points = 3
-	GUNSLINGER.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers", "Militant Orders of the Villa"}
+	GUNSLINGER.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers", "Militant Orders of the Villa", "Aristocracy Of Light"}
 	GUNSLINGER.excludedsubfactions = {"Clan Crast", "Clan Grock", "Clan Harald", "Clan Reaver", "Clan Gore"};
 Clockwork.trait:Register(GUNSLINGER)
 
@@ -150,7 +150,7 @@ local LEPER = Clockwork.trait:New()
 	LEPER.points = -5
 	LEPER.disables = {"pilgrim"}
 	LEPER.disablesSkins = true;
-	LEPER.excludedfactions = {"Gatekeeper", "Hillkeeper", "Goreic Warrior", "Holy Hierarchy", "Pope Adyssa's Gatekeepers", "Militant Orders of the Villa"};
+	LEPER.excludedfactions = {"Gatekeeper", "Hillkeeper", "Goreic Warrior", "Holy Hierarchy", "Pope Adyssa's Gatekeepers", "Militant Orders of the Villa", "Aristocracy Of Light"};
 Clockwork.trait:Register(LEPER)
 
 local LITERATE = Clockwork.trait:New()

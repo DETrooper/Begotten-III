@@ -37,7 +37,7 @@ function ENT:Use(activator, caller)
 		
 		local faction = caller:GetFaction();
 		
-		if faction == "Holy Hierarchy" --[[or faction == "Gatekeeper"]] or caller:IsAdmin() then
+		if faction == "Holy Hierarchy" or faction == "Aristocracy Of Light"--[[or faction == "Gatekeeper"]] or caller:IsAdmin() then
 			local position = self:GetPos()
 			
 			for k, v in pairs (ents.FindInSphere(position + self:OBBMaxs(), 48)) do

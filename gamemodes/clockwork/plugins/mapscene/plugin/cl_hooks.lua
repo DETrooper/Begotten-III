@@ -925,8 +925,19 @@ elseif map == "bg_district34" then
 			camVector = Vector(4212, -8638, 1005),
 			camAngles = Angle(0, 90, 0),
 		},
-		["Noble Houses"] = {
+		["House Caelvora"] = {
 			charModel = {clothes = "models/begotten/gatekeepers/knight_set.mdl", head = "models/begotten/heads/male_09_glaze.mdl"},
+			camVector = Vector(-130, -9146, 1277),
+			camAngles = Angle(0, 90, 0),
+		},
+		["House Herrera"] = {
+			charModel = {clothes = "models/begotten/gatekeepers/knight_set.mdl", head = "models/begotten/heads/male_09_glaze.mdl"},
+			camVector = Vector(-130, -9146, 1277),
+			camAngles = Angle(0, 90, 0),
+		},
+		["Order of the Writ"] = {
+			charModel = {clothes = "models/begotten/gatekeepers/inquisitor_male.mdl", head = "models/begotten/heads/male_07_glaze.mdl"},
+			charBodygroup = {1, 1},
 			camVector = Vector(-130, -9146, 1277),
 			camAngles = Angle(0, 90, 0),
 		},
