@@ -247,11 +247,8 @@ local FACTION = Clockwork.faction:New("Militant Orders of the Villa");
         ["Guildmaster"] = "The Guild",
 		["Physician"] = "The Guild",
 		["General Practicioner"] = "The Guild",
-		["Surveyor"] = "Order of the Writ",
-		["Waymaster"] = "Order of the Writ",
-        ["Manhunter"] = "Order of the Writ",
-        ["Chronologist"] = "Order of the Writ",
-        ["Writmarshal"] = "Order of the Writ",
+		["Surveyor"] = "Prole of the Writ",
+		["Waymaster"] = "Prole of the Writ",
 	};
 	
 	Schema.RanksToCoin["Militant Orders of the Villa"] = {
@@ -428,10 +425,9 @@ local FACTION = Clockwork.faction:New("Aristocracy Of Light");
 		["Ser Knight"] = "Noble Houses",
 		["Grand Knight"] = "Noble Houses",
         ["Count"] = "Noble Houses",
-		["Apprentice"] = "The Inquisition",
-		["Inquisitor"] = "The Inquisition",
-		["Ordinator"] = "The Inquisition",
-		["Grand Inquisitor"] = "The Inquisition",
+		["Manhunter"] = "Order of the Writ",
+        ["Chronologist"] = "Order of the Writ",
+        ["Writmarshal"] = "Order of the Writ",
 	};
 FACTION_ARISTOCRACY = FACTION:Register();
 

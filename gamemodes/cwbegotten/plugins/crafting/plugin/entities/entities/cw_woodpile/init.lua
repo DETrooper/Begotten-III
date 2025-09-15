@@ -79,6 +79,8 @@ function ENT:OnTakeDamage(damageInfo)
 				
 				if playerFaction == "Gatekeeper" then
 					player:HandleXP(faith * 3);
+				elseif playerFaction == "Militant Orders of the Villa" then
+					player:HandleXP(faith * 3);
 				else
 					player:HandleXP(faith);
 				end

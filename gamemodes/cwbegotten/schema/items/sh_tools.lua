@@ -476,7 +476,7 @@ local ITEM = Clockwork.item:New();
 							if (target:GetAimVector():DotProduct( player:GetAimVector() ) > 0 or (target:IsRagdolled() and !trace.Entity.cwIsBelongings)) then
 								local faction = player:GetFaction();
 								
-								if target:InTower() and Schema.towerSafeZoneEnabled and (faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" and faction ~= "Hillkeeper") then
+								if target:InTower() and Schema.towerSafeZoneEnabled and (faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" and faction ~= "Hillkeeper" and faction ~= "Militant Orders of the Villa" and faction ~= "Aristocracy Of Light") then
 									if game.GetMap() == "rp_begotten3" then
 										Schema:EasyText(player, "peru", "You cannot tie characters in the Tower of Light if you are not of the Holy Hierarchy!");
 									else
@@ -877,13 +877,13 @@ local ITEM = Clockwork.item:New();
 				local playerPos = player:GetPos();
 				local radius = Clockwork.config:Get("talk_radius"):Get() * 4;
 			
-				if faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Holy Hierarchy" then
+				if faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Holy Hierarchy" or faction ~= "Militant Orders of the Villa" or faction ~= "Aristocracy Of Light" then
 					if (name == "Sound Attack") then
 						for k, v in pairs(ents.FindInSphere(playerPos, radius)) do
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
-								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
+								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" or vFaction ~= "Militant Orders of the Villa" or vFaction ~= "Aristocracy Of Light" then
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling an attack!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
@@ -897,7 +897,7 @@ local ITEM = Clockwork.item:New();
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
-								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
+								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" or vFaction ~= "Militant Orders of the Villa" or vFaction ~= "Aristocracy Of Light" then
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
@@ -911,7 +911,7 @@ local ITEM = Clockwork.item:New();
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
-								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
+								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" or vFaction ~= "Militant Orders of the Villa" or vFaction ~= "Aristocracy Of Light" then
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally in a marching formation!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
@@ -925,7 +925,7 @@ local ITEM = Clockwork.item:New();
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
-								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
+								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" or vFaction ~= "Militant Orders of the Villa" or vFaction ~= "Aristocracy Of Light" then
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a rally in a shieldwall formation!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");
@@ -939,7 +939,7 @@ local ITEM = Clockwork.item:New();
 							if v:IsPlayer() then
 								local vFaction = v:GetFaction();
 								
-								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
+								if vFaction == "Gatekeeper" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" or vFaction ~= "Militant Orders of the Villa" or vFaction ~= "Aristocracy Of Light" then
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, signalling a retreat!");
 								else
 									Clockwork.chatBox:Add(v, nil, "localevent", player:Name().." blows their warhorn, but its signal is unknown to you!");

@@ -103,7 +103,7 @@ local FOLLOWED = Clockwork.trait:New()
 	FOLLOWED.description = "Long ago, your character made the blunder of ransacking an ancient tomb. Through their ignorance, they missed that it had been prophesied that those who would defile the tomb would be cursed to be hunted for all eternity..."
 	FOLLOWED.disables = {"pilgrim", "shrewd"}
 	FOLLOWED.points = -7
-	FOLLOWED.excludedfactions = {"Gatekeeper", "Hillkeeper", "Pope Adyssa's Gatekeepers"};
+	FOLLOWED.excludedfactions = {"Gatekeeper", "Hillkeeper", "Pope Adyssa's Gatekeepers", "Militant Orders of the Villa"};
 Clockwork.trait:Register(FOLLOWED)
 
 local GLUTTONY = Clockwork.trait:New()

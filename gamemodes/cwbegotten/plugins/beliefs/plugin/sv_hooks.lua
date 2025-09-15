@@ -55,14 +55,14 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 			local lastZone = player:GetCharacterData("LastZone");
 			local playerFaction = player:GetFaction();
 			
-			if not plyTab.opponent and (table.HasValue(self.residualXPZones, lastZone) or (lastZone == "tower" and ((playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy") or residualXPInSafezone == true))) then
+			if not plyTab.opponent and (table.HasValue(self.residualXPZones, lastZone) or (lastZone == "tower" and ((playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy" or playerFaction == "Aristocracy Of Light" or playerFaction == "Militant Orders of the Villa") or residualXPInSafezone == true))) then
 				local residualXP = self.xpValues["residual"] or 1;
 				
 				if playerFaction == "Goreic Warrior" and (lastZone == "wasteland" or lastZone == "tower" or lastZone == "caves" or lastZone == "scrapper") then
 					residualCooldown = residualCooldown * 0.5
 				end
 				
-				if (cwDayNight and cwDayNight.currentCycle == "night" and player:HasBelief("primevalism") and lastZone == "wasteland") or player:HasBelief("old_son") or (lastZone != "tower" and (playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy")) then
+				if (cwDayNight and cwDayNight.currentCycle == "night" and player:HasBelief("primevalism") and lastZone == "wasteland") or player:HasBelief("old_son") or (lastZone != "tower" and (playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy" or playerFaction == "Aristocracy Of Light" or playerFaction == "Militant Orders of the Villa")) then
 					residualCooldown = residualCooldown * 0.5
 				end
 				
@@ -1508,7 +1508,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 								end
 							end
 							
-							if (attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary") or (attacker:GetFaction() == "Hillkeeper" and subfaction == "Watchman") then
+							if (attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary") or (attacker:GetFaction() == "Hillkeeper" and subfaction == "Watchman") or (attacker:GetFaction() == "Militant Orders of the Villa" and subfaction == "Villakeepers") then
 								damageXP = damageXP * 2;
 							end
 						
@@ -1983,6 +1983,14 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 		if subfaction == "Auxiliary" then
 			level = level + 11;
 		elseif subfaction == "Praeventor" then
+			level = level + 7;
+		else
+			level = level + 5;
+		end
+	elseif faction == "Militant Orders of the Villa" then
+		if subfaction == "The Guild" then
+			level = level + 11;
+		elseif subfaction == "Prole of the Writ" then
 			level = level + 7;
 		else
 			level = level + 5;

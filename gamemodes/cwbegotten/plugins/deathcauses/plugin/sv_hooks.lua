@@ -150,6 +150,8 @@ function cwDeathCauses:PlayerDeath(player, inflictor, attacker, damageInfo)
 						attackerName = "an unknown Child of Satan";
 					elseif attackerFaction == "Gatekeeper" or attackerFaction == "Pope Adyssa's Gatekeepers" then
 						attackerName = "an unknown Gatekeeper";
+					elseif attackerFaction == "Militant Orders of the Villa" then
+						attackerName = "an unknown Villakeeper";
 					elseif attackerFaction == "Holy Hierarchy" then
 						local attackerSubfaction = attacker:GetSubfaction();
 						
@@ -157,6 +159,16 @@ function cwDeathCauses:PlayerDeath(player, inflictor, attacker, damageInfo)
 							attackerName = "an unknown Inquisitor";
 						elseif attackerSubfaction == "Knights of Sol" then
 							attackerName =  "an unknown Knight of Sol";
+						else
+							attackerName =  "an unknown Glazic nobleman";
+						end
+					elseif attackerFaction == "Aristocracy Of Light" then
+						local attackerSubfaction = attacker:GetSubfaction();
+						
+						if attackerSubfaction == "The Inquisition" then
+							attackerName = "an unknown Inquisitor";
+						elseif attackerSubfaction == "Noble Houses" then
+							attackerName =  "an unknown House Soldier";
 						else
 							attackerName =  "an unknown Glazic nobleman";
 						end

@@ -156,6 +156,16 @@ function Schema:ShouldPlayerModifyBlur(entity)
 					return table.HasValue(helmet.attributes, "fear");
 				end
 			end
+		elseif faction == "Militant Orders of the Villa" and clientFaction ~= "Militant Orders of the Villa" and clientFaction ~= "Aristocracy Of Light" then
+			if entity:GetModel() == "models/begotten/gatekeepers/vexi.mdl" then
+				return true;
+			else
+				local helmet = entity:GetHelmetEquipped();
+				
+				if helmet and helmet.attributes then
+					return table.HasValue(helmet.attributes, "fear");
+				end
+			end
 		elseif faction == "Hillkeeper" and (clientFaction == "Goreic Warrior" or clientFaction == "Children of Satan") then
 			if entity:GetModel() == "models/bmoc/hill/hill_signifier.mdl" then
 				return true;

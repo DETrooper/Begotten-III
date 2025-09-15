@@ -1242,7 +1242,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 								elseif v.banners then
 									for k2, v2 in pairs(v.banners) do
 										if v2 == "glazic" then
-											if vFaction == "Gatekeeper" or vFaction == "Pope Adyssa's Gatekeepers" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
+											if vFaction == "Gatekeeper" or vFaction == "Pope Adyssa's Gatekeepers" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" or vFaction == "Aristocracy Of Light" or vFaction == "Militant Orders of the Villa" then
 												immune = true;
 											
 												break;
@@ -1277,7 +1277,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 								elseif v.banners then
 									for k2, v2 in pairs(v.banners) do
 										if v2 == "glazic" then
-											if vFaction == "Gatekeeper" or vFaction == "Pope Adyssa's Gatekeepers" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" then
+											if vFaction == "Gatekeeper" or vFaction == "Pope Adyssa's Gatekeepers" or vFaction == "Hillkeeper" or vFaction == "Holy Hierarchy" or vFaction == "Aristocracy Of Light" or vFaction == "Militant Orders of the Villa" then
 												immune = true;
 											
 												break;
