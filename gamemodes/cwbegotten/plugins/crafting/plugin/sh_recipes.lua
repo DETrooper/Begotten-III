@@ -10863,4 +10863,33 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("volt_bolt");
+		RECIPE.name = "Volt Bolt";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"craftsman", "wire_therapy"};
+		RECIPE.requiredSubfaiths = {"Voltism"};
+		RECIPE.requirements = {
+			["scrap_bolt"] = {amount = 3},
+			["tech"]  = {amount = 1},
+		};
+		RECIPE.result = {
+			["volt_bolt"] = {amount = 3},
+		};
+		RECIPE.category = "Munitions"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 20;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 end
