@@ -232,9 +232,6 @@ concommand.Add("cw_EnterPowerArmor", function(player, cmd, args)
 			if (faction == "Holy Hierarchy" and player:GetSubfaction() ~= "Inquisition") then
 				player:EnterPowerArmor(entity);
 			end
-		elseif (faction == "Aristocracy Of Light" and player:GetSubfaction() ~= "Order Of The Writ") then
-				player:EnterPowerArmor(entity);
-			end
 		elseif (class == "cw_powerarmor_magistrate" or class == "cw_powerarmor_scrapperking") then
 			player:EnterPowerArmor(entity);
 		elseif (class == "cw_powerarmor_voltist") then

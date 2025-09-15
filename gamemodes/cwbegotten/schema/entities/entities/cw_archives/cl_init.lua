@@ -39,22 +39,7 @@ local function CreateMenu(state)
 	end
 	
 	if Schema.archivesBookList and !table.IsEmpty(Schema.archivesBookList) then
-		if Clockwork.Client:GetFaction() == "Holy Hierarchy" then
-			subMenu = menu:AddSubMenu("Take from Archives...");
-			
-			for k, v in pairs (Schema.archivesBookList) do
-				if v and v > 0 then
-					local itemTable = item.FindByID(k);
-					
-					if itemTable and itemTable.category == "Scripture" then
-						subMenu:AddOption("("..tostring(v)..") "..itemTable.name, function()
-							Clockwork.kernel:RunCommand("ArchivesTake", k);
-						end);
-					end
-				end
-			end
-		end
-		elseif Clockwork.Client:GetFaction() == "Aristocracy Of Light" then
+		if Clockwork.Client:GetFaction() == "Holy Hierarchy" or Clockwork.Client:GetFaction() == "Aristocracy Of Light" then
 			subMenu = menu:AddSubMenu("Take from Archives...");
 			
 			for k, v in pairs (Schema.archivesBookList) do
