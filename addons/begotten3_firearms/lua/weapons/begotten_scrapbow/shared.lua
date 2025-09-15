@@ -118,6 +118,22 @@ SWEP.AmmoTypes = {
 		
 		return true;
 	end,
+	
+	["Volt Bolt"] =  function(SWEP)
+		SWEP.Primary.MinimumDistanceDamage = 50;
+		SWEP.Primary.MaximumDistanceDamage = 105;
+		SWEP.Primary.StabilityDamage = 75;
+		SWEP.Primary.Sound = Sound("weapons/crossbow/bowgun-shot.wav.mp3");
+		SWEP.Primary.Round = "begotten_volt_bolt";
+		SWEP.AttackTable = "VoltBoltAttackTable";
+		SWEP.BoltModel = "models/begotten/items/rebar.mdl";
+		SWEP.ConditionLoss = 50;
+		SWEP.BodyGroup = 1;
+		
+		SWEP.isVoltistWeapon = true;
+		
+		return true;
+	end
 };
 
 function SWEP:PrimaryAttack()
@@ -147,6 +163,7 @@ function SWEP:PrimaryAttack()
 					bolt:Spawn()
 					bolt.AttackTable = GetTable(self.AttackTable);
 					bolt.Owner = self.Owner
+					bolt.isVoltistWeapon = self.isVoltistWeapon
 					bolt:Activate()
 					
 					local aimVector = self.Owner:GetAimVector() * 1350;
