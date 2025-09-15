@@ -1,7 +1,7 @@
 SWEP.Base = "sword_swepbase"
 -- WEAPON TYPE: Two Handed
 
-SWEP.PrintName = "Salvagers Longsword"
+SWEP.PrintName = "Salvager's Longsword"
 SWEP.Category = "(Begotten) Two Handed"
  
 SWEP.AdminSpawnable = true

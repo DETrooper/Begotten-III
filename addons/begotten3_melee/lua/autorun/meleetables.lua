@@ -2129,15 +2129,15 @@ AttackTables.SacredRunestoneSlabAttackTable = {
 };
 
 AttackTables.SalvagersLongswordAttackTable = {
-    ["primarydamage"] = 55,
+    ["primarydamage"] = 65,
     ["dmgtype"] = 4,
     ["attacktype"] = "reg_swing",
     ["canaltattack"] = true,
     ["altattackdamagemodifier"] = 0.75,
     ["altattackpoisedamagemodifier"] = 0.1,
     ["altmeleearc"] = 15,
-    ["armorpiercing"] = 14,
-    ["altarmorpiercing"] = 26,
+    ["armorpiercing"] = 16,
+    ["altarmorpiercing"] = 28,
     ["poisedamage"] = 20,
     ["stabilitydamage"] = 0,
     ["takeammo"] = 5,
