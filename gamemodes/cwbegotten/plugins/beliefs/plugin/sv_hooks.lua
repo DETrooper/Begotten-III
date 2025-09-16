@@ -421,11 +421,12 @@ function cwBeliefs:PlayerLevelUp(player, level, points)
 	if player:GetSubfaction() == "Clan Grock" then
 		player:SetMaxHealth(player:GetMaxHealth());
 		
-		local scale = math.min(player:GetCharacterData("level", 1), self.sacramentLevelCap);
+		--local scale = math.min(player:GetCharacterData("level", 1), self.sacramentLevelCap);
+		local scale = math.min(player:GetCharacterData("level", 1), 40);
 	
-		player:SetModelScale(1 + (scale * 0.01), FrameTime());
-		player:SetViewOffset(Vector(0, 0, 64 + scale));
-		player:SetViewOffsetDucked(Vector(0, 0, 28 + (scale / 2)));
+		player:SetModelScale(1 + (scale * 0.005), FrameTime());
+		player:SetViewOffset(Vector(0, 0, 64 + scale / 4));
+		player:SetViewOffsetDucked(Vector(0, 0, 28 + (scale / 8)));
 	end
 end
 
