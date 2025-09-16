@@ -218,6 +218,7 @@ local FACTION = Clockwork.faction:New("Militant Orders of the Villa");
         [12] = "Waymaster",
 		[13] = "Legate",
 		[14] = "Guildmaster",
+		[15] = "Esquire",
 	};
 	
 	Schema.RankTiers["Militant Orders of the Villa"] = {
@@ -397,22 +398,21 @@ local FACTION = Clockwork.faction:New("Aristocracy Of Light");
 	end
 	
 	Schema.Ranks["Aristocracy Of Light"] = {
-		[1] = "Esquire",
-		[2] = "Apprentice",
-		[3] = "Vicar",
-		[4] = "Ser Knight",
-		[5] = "Manhunter",
-		[6] = "Minister",
-		[7] = "Chamberlain",
-		[8] = "Chronologist",
-		[9] = "Magistrate",
-        [10] = "Count",
-		[11] = "Writmarshal",
-		[12] = "Regent",
+		[1] = "Apprentice",
+		[2] = "Vicar",
+		[3] = "Ser Knight",
+		[4] = "Manhunter",
+		[5] = "Minister",
+		[6] = "Chamberlain",
+		[7] = "Chronologist",
+		[8] = "Magistrate",
+        [9] = "Count",
+		[10] = "Writmarshal",
+		[11] = "Regent",
 	};
 	
 	Schema.RankTiers["Aristocracy Of Light"] = {
-		[1] = {"Esquire", "Apprentice", "Vicar"},
+		[1] = { "Apprentice", "Vicar"},
 		[2] = {"Ser Knight", "Manhunter", "Minister"},
 		[3] = {"Chamberlain", "Chronologist", "Magistrate"},
 		[4] = {"Writmarshal", "Regent", "Count"},
