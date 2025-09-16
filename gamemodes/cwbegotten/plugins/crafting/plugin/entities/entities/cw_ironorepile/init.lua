@@ -44,7 +44,7 @@ function ENT:OnTakeDamage(damageInfo)
 	if IsValid(player) and player:IsPlayer() then
 		local activeWeapon = player:GetActiveWeapon();
 		
-		if (damageInfo:IsDamageType(128) and damageInfo:GetDamage() >= 15) or activeWeapon.isPickaxe then
+		if (damageInfo:IsDamageType(128) and damageInfo:GetDamage() >= 15) or activeWeapon.isPickaxe or (player:GetSubfaction() == "Clan Gotnarh" and IsValid(player:GetActiveWeapon()) and player:GetActiveWeapon():GetClass() == "begotten_fists") then
 			self:EmitSound(self.BreakSounds[math.random(1, #self.BreakSounds)]);
 			
 			if !self.oreLeft then

@@ -122,7 +122,7 @@ local GUNSLINGER = Clockwork.trait:New()
 	--GUNSLINGER.points = 7
 	GUNSLINGER.points = 3
 	GUNSLINGER.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
-	GUNSLINGER.excludedsubfactions = {"Clan Crast", "Clan Grock", "Clan Harald", "Clan Reaver", "Clan Gore"};
+	GUNSLINGER.excludedsubfactions = {"Clan Crast", "Clan Grock", "Clan Harald", "Clan Reaver", "Clan Gore", "Clan Gotnarh", "Clan Ghorst"};
 Clockwork.trait:Register(GUNSLINGER)
 
 local IMBECILE = Clockwork.trait:New()
@@ -228,7 +228,7 @@ local PIOUS = Clockwork.trait:New()
 	PIOUS.name = "Pious"
 	PIOUS.description = "Your character is pious and a firm believer in their faith. This trait grants a single free sacrament with an epiphany for use in the belief tree."
 	PIOUS.points = 1
-	PIOUS.excludedsubfactions = {"Clan Grock"};
+	PIOUS.excludedsubfactions = {"Clan Grock", "Clan Gotnarh"};
 Clockwork.trait:Register(PIOUS)
 
 local PLACEBO = Clockwork.trait:New()
@@ -280,7 +280,7 @@ local SURVIVALIST = Clockwork.trait:New()
 	SURVIVALIST.eventlocked = false;
 	SURVIVALIST.disables = {"escapee"}
 	SURVIVALIST.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
-	SURVIVALIST.excludedsubfactions = {"Clan Crast", "Clan Grock"};
+	SURVIVALIST.excludedsubfactions = {"Clan Crast", "Clan Grock", "Clan Gotnarh"};
 Clockwork.trait:Register(SURVIVALIST)
 
 local VETERAN = Clockwork.trait:New()
@@ -291,7 +291,7 @@ local VETERAN = Clockwork.trait:New()
 	VETERAN.eventlocked = false;
 	VETERAN.disables = {"duelist", "escapee", "weak"}
 	VETERAN.excludedfactions = {"Children of Satan", "Gatekeeper", "Hillkeeper", "Holy Hierarchy", "Pope Adyssa's Gatekeepers"}
-	VETERAN.excludedsubfactions = {"Clan Crast", "Clan Grock"};
+	VETERAN.excludedsubfactions = {"Clan Crast", "Clan Grock", "Clan Gotnarh"};
 Clockwork.trait:Register(VETERAN)
 
 local VIGOROUS = Clockwork.trait:New()
@@ -332,5 +332,5 @@ local ZEALOUS = Clockwork.trait:New()
 	ZEALOUS.description = "Through the sheer power of their faith, your character is able to resist unholy temptations, and withstand events that may otherwise shatter their sanity. This trait automatically unlocks the first 2 beliefs in the second column of the 'Fortitude' tree: 'Prudence' and 'Saintly Composure'. This trait also grants three sacraments with their respective epiphanies for use in the beliefs menu."
 	ZEALOUS.points = 7
 	ZEALOUS.disables = {"possessed"}
-	ZEALOUS.excludedsubfactions = {"Clan Grock"}
+	ZEALOUS.excludedsubfactions = {"Clan Grock", "Clan Gotnarh"}
 Clockwork.trait:Register(ZEALOUS)
