@@ -342,12 +342,12 @@ elseif map == "bg_district34" then
 			{pos = Vector(1124, -8633, -4840), ang = Angle(0, 0, 0)},
 		},
 		["pillars"] = {
-			{pos = Vector(-2874, 9881, 409), ang = Angle(0, 90, 0)},
-			{pos = Vector(-3259, 9253, 304), ang = Angle(0, 90, 0)},
-			{pos = Vector(-2242, 10282, 375), ang = Angle(0, 90, 0)},
-			{pos = Vector(-3527, 8568, 280), ang = Angle(0, 90, 0)},
-			{pos = Vector(-4088, 8810, 436), ang = Angle(0, 90, 0)},
-			{pos = Vector(-2040, 10756, 380), ang = Angle(0, 90, 0)},
+			{pos = Vector(-350, 7611, 902), ang = Angle(0, 270, 0)},
+			{pos = Vector(-527, 7586, 892), ang = Angle(0, 270, 0)},
+			{pos = Vector(-1110, 7599, 902), ang = Angle(0, 270, 0)},
+			{pos = Vector(275, 7552, 904), ang = Angle(0, 270, 0)},
+			{pos = Vector(674, 7366, 872), ang = Angle(0, 270, 0)},
+			{pos = Vector(214, 7193, 1021), ang = Angle(0, 270, 0)},
 		},
 	};
 end
