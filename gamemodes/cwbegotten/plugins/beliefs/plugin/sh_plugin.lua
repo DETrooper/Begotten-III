@@ -968,6 +968,12 @@ function COMMAND:OnRun(player, arguments)
 			
 			Schema:EasyText(admins, ringcolor, "[PRAYER ", color, faith_str, markedcolor, markedstr, ringcolor, "] ", plycol, player:Name(), "ivory", ": "..message)
 			Schema:EasyText(player, color, "You make a prayer: \""..message.."\"")
+			local curTime = CurTime();
+			if (!player.lastPray or curTime()-player.lastPray<=1200) then
+				player:HandleXP(cwBeliefs.xpValues["pray"]);
+				player.lastPray = CurTime();
+			else
+				Schema:EasyText(player, "chocolate", "You must wait another"..-math.ceil(curTime()-player.lastPray).." seconds before praying again!");
 			
 			Clockwork.chatBox:AddInTargetRadius(player, "me", "mumbles a short prayer to the gods.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 			

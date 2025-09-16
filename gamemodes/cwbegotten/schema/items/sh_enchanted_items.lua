@@ -1,4 +1,16 @@
 local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Energy drink can";
+	ITEM.model = "models/severance/items/garbage_sodacan01a.mdl";
+	ITEM.weight = 0.25;
+	ITEM.uniqueID = "energy_drink";
+	ITEM.description = "The can feels suspiciously light — completely empty. Yet, the moment you crack it open, a strange energy pulses through your veins. Whether it's the leftover vapor, the memory of caffeine, or sheer placebo... your legs suddenly move faster. ";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
+	ITEM.charmEffects = "- Grants +5% movement speed.";
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 600};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Abandoned Doll";
 	ITEM.model = "models/props_c17/doll01.mdl";
 	ITEM.weight = 1;
