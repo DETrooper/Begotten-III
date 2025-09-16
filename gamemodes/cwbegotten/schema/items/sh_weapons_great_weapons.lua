@@ -417,7 +417,7 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Executioner's Axe";
-	ITEM.model = "models/witcher2soldiers/tw2_bigaxe.mdl";
+	ITEM.model = "models/demonssouls/weapons/great_axe.mdl";
 	ITEM.weight = 5;
 	ITEM.uniqueID = "begotten_2h_great_executionersaxe";
 	ITEM.category = "Melee";
