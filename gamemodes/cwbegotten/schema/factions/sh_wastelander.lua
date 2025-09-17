@@ -412,7 +412,7 @@ local FACTION = Clockwork.faction:New("Aristocracy Of Light");
 	};
 	
 	Schema.RankTiers["Aristocracy Of Light"] = {
-		[1] = { "Apprentice", "Vicar"},
+		[1] = {"Vicar"},
 		[2] = {"Ser Knight", "Manhunter", "Minister"},
 		[3] = {"Chamberlain", "Chronologist", "Magistrate"},
 		[4] = {"Writmarshal", "Regent", "Count"},
@@ -420,7 +420,6 @@ local FACTION = Clockwork.faction:New("Aristocracy Of Light");
 	
 	Schema.RanksToSubfaction["Aristocracy Of Light"] = {
 		["Vicar"] = "Ministry",
-		["Apprentice"] = "Ministry",
 		["Minister"] = "Ministry",
 		["Magistrate"] = "Ministry",
         ["Regent"] = "Ministry",
