@@ -974,7 +974,7 @@ function COMMAND:OnRun(player, arguments)
 				player.lastPray = CurTime();
 			else
 				Schema:EasyText(player, "chocolate", "You must wait another"..-math.ceil(curTime()-player.lastPray).." seconds before praying again!");
-			
+			end
 			Clockwork.chatBox:AddInTargetRadius(player, "me", "mumbles a short prayer to the gods.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 			
 			local nextPrayerBonus = player:GetCharacterData("nextPrayerBonus", 0);
