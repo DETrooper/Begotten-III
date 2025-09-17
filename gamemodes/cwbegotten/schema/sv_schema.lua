@@ -362,6 +362,7 @@ Schema.doors = {
 		["gorewatch"] = {
 			"gatekeeperdoor",
 			"gatekeeperdoor2",
+		},
 		["tower"] = {
 			"churchgate1",
 			"churchgate2",
@@ -386,7 +387,6 @@ Schema.doors = {
 		["gorewatch"] = {
 			"gorewatch",
 		},
-
 		["tower"] = {
 			"churchgate1",
 			"churchgate2",
@@ -454,7 +454,6 @@ Clockwork.config:Add("enable_charlimit", true, true);
 Clockwork.config:Add("enable_famine", false);
 Clockwork.config:Add("discord_url", "https://discord.com/invite/zJnWjcW", true);
 Clockwork.config:Add("coinslot_wages_interval", 1800)
-
 Clockwork.config:Get("enable_gravgun_punt"):Set(false);
 Clockwork.config:Get("disable_sprays"):Set(true);
 Clockwork.config:Get("stamina_drain_scale"):Set(0.15);
