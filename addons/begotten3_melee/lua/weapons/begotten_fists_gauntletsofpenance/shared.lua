@@ -30,9 +30,9 @@ SWEP.IronSightsAng = Vector(20, 0, 0)
 SWEP.LoweredAngles = Angle(-50, 0, 0)
 
 --Sounds
-SWEP.AttackSoundTable = "LeatherFistedAttackSoundTable"
+SWEP.AttackSoundTable = "MetalSpikeFistedAttackSoundTable"
 SWEP.BlockSoundTable = "FistBlockSoundTable"
-SWEP.SoundMaterial = "Punch" -- Metal, Wooden, MetalPierce, Punch, Default
+SWEP.SoundMaterial = "MetalPierce"-- Metal, Wooden, MetalPierce, Punch, Default
 
 /*---------------------------------------------------------
 	PrimaryAttack

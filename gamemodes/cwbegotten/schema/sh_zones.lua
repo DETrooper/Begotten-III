@@ -2088,7 +2088,8 @@ elseif map == "bg_district34" then
 		WASTELAND.fogEnd = 1536;
 		WASTELAND.fogEndNight = 1024;
 		WASTELAND.colorModify = {["$pp_colour_brightness"] = -0.03, ["$pp_colour_contrast"] = 1.15, ["$pp_colour_colour"] = 0.85};
-		WASTELAND.colorModifyNight = {["$pp_colour_brightness"] = -0.1, ["$pp_colour_contrast"] = 0.9, ["$pp_colour_colour"] = 0.75};
+		WASTELAND.colorModifyNight = {["$pp_colour_brightness"] = -0.15, ["$pp_colour_contrast"] = 0.85, ["$pp_colour_colour"] = 0.75};
+
 	WASTELAND:Register()
 
 	local SCRAPPER = zones:New("scrapper")
@@ -2146,7 +2147,8 @@ local CAVES = zones:New("caves")
 		CAVES.bounds = {
 			{
 			min = Vector(-4301, 444, -216),
-			max = Vector(7016, 7680, -904),
+			max = Vector(7016, 7680, -1340),
+
 			},
 			{
 			min = Vector(6887, 6243, 303),

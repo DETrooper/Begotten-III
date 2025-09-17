@@ -10865,9 +10865,8 @@ end
 
   RECIPE = cwRecipes.recipes:New("ravenstone_shard");
 		RECIPE.name = "Ravenstone Shard";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requiredBeliefs = {"ingenious"};
+		RECIPE.requiredSubfactions = {"Clan Gotnarh"};
 		RECIPE.requirements = {
 			["stone"] = {amount = 1},
 			["bone"] = {amount = 1},
@@ -10894,9 +10893,8 @@ end
 	
 	RECIPE = cwRecipes.recipes:New("ravenstoneblade");
 		RECIPE.name = "Ravenstone Blade";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requiredBeliefs = {"ingenious"};
+		RECIPE.requiredSubfactions = {"Clan Gotnarh"};
 		RECIPE.requirements = {
 			["stone"] = {amount = 2},
 			["bone"] = {amount = 1},
@@ -10924,9 +10922,8 @@ end
 	
 	RECIPE = cwRecipes.recipes:New("sacredrunestoneslab");
 		RECIPE.name = "Sacred Runestone Slab";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Goreic Warrior"};
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredSubfactions = {"Clan Gotnarh"};
 		RECIPE.requirements = {
 			["iron_ore"] = {amount = 6},
 			["familial_catalyst"] = {amount = 1},
@@ -10955,7 +10952,7 @@ end
 
     RECIPE = cwRecipes.recipes:New("boneclub");
 		RECIPE.name = "Bone Club";
-		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiredBeliefs = {"primeval"};
 		RECIPE.requirements = {
 			["bone_mace"] = {amount = 1},
 			["human_bone"] = {amount = 6},
@@ -10982,15 +10979,13 @@ end
 	RECIPE:Register()
 
     RECIPE = cwRecipes.recipes:New("salvagers_longsword");
-		RECIPE.name = "Salvagers Longsword";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.name = "Salvager's Longsword";
+		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requiredFactions = {"Wanderer"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.excludedFactions = {"Goreic Warrior", "Children of Satan", "Gatekeeper", "Holy Hierarchy"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 3},
-			["fine_steel_ingot"] = {amount = 1},
-			["wood"] = {amount = 2},
+			["scrap"] = {amount = 6},
+			["cloth"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_2h_salvagerslongsword"] = {amount = 1},
@@ -11016,7 +11011,7 @@ end
 		RECIPE.name = "Flamberge";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper"};
+		RECIPE.requiredFactions = {"Villakeepers", "Children of Satan", "Wanderer"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 4},
@@ -11045,11 +11040,13 @@ end
 	
 	RECIPE = cwRecipes.recipes:New("gauntlets");
 		RECIPE.name = "Gauntlets of Penance";
-		RECIPE.requiredBeliefs = {"craftsman"};
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Wanderer", "Villakeepers"};
 		RECIPE.requiredFaiths = {"Faith of the Light"};
 		RECIPE.requirements = {
-			["leather"] = {amount = 2},
-			["wood"] = {amount = 2},
+			["leather"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_fists_gauntletsofpenance"] = {amount = 1},
@@ -11076,10 +11073,10 @@ end
 		RECIPE.name = "Nobleman's Sword";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper"};
+		RECIPE.requiredFactions = {"Villakeepers"};
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 3},
-			["steel_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 3},
 		};
 		RECIPE.result = {
 			["begotten_2h_noblemansword"] = {amount = 1},
@@ -11104,13 +11101,12 @@ end
 	RECIPE = cwRecipes.recipes:New("haralder_war_axe");
 		RECIPE.name = "Executioner's Axe";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper"};
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFactions = {"Villakeepers"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};	
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 1},
-			["leather"] = {amount = 1},
-			["wood"] = {amount = 3},
+			["steel_ingot"] = {amount = 2},
+			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_2h_great_executionersaxe"] = {amount = 1},
@@ -11136,12 +11132,12 @@ end
 		RECIPE.name = "Villa Spadone";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper"};
+		RECIPE.requiredFactions = {"Villakeepers"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 4},
-			["fine_steel_ingot"] = {amount = 1},
-			["wood"] = {amount = 2},
+			["steel_ingot"] = {amount = 3},
+			["fine_steel_ingot"] = {amount = 2},
+			["leather"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_2h_great_villaspadone"] = {amount = 1},
@@ -11166,9 +11162,12 @@ end
 	RECIPE = cwRecipes.recipes:New("greaserblockhammer");
 		RECIPE.name = "Greaser Blockhammer";
 		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFactions = {"Wanderer"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["tech"] = {amount = 3},
+			["tech"] = {amount = 1},
+			["scrap"] = {amount = 6},
+			["fine_steel_ingot"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_2h_great_greaserblockhammer"] = {amount = 1},
@@ -11193,12 +11192,47 @@ end
     RECIPE = cwRecipes.recipes:New("bastardsword");
 		RECIPE.name = "Bastard Sword";
 		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredBeliefs = {"Artisan"};
+		RECIPE.requiredFactions = {"Villakeepers", "Children of Satan", "Wanderer"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["iron_ingot"] = {amount = 2},
+			["steel_ingot"] = {amount = 2},
+			["fine_steel_ingot"] = {amount = 1},
+			["wood"] = {amount = 1},
+			["cloth"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_2h_bastardsword"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 45;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+		
+	RECIPE:Register()
+	
+	    RECIPE = cwRecipes.recipes:New("bastardsword");
+		RECIPE.name = "(Upgrade) Bastard Sword";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"Artisan"};
 		RECIPE.requiredFactions = {"Gatekeeper"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 4},
-			["cloth"] = {amount = 1},
+			["iron_ingot"] = {amount = 2},
+			["fine_steel_ingot"] = {amount = 1},
+			["begotten_2h_longsword"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_2h_bastardsword"] = {amount = 1},
@@ -11222,8 +11256,8 @@ end
 	
 	RECIPE = cwRecipes.recipes:New("stone_throwing_spear");
 		RECIPE.name = "Stone Throwing Spear";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.requiresSmithy = false;
+		RECIPE.requiredBeliefs = {"ingenious"};
 		RECIPE.requirements = {
 			["stone"] = {amount = 1},
 			["wood"] = {amount = 2},
@@ -11256,7 +11290,7 @@ end
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
-			["pentagram_catalyst"] = {amount = 1},
+			["tortured_spirit"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_masqueradesocietydagger"] = {amount = 1},
