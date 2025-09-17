@@ -1906,7 +1906,7 @@ local COMMAND = Clockwork.command:New("Proclaim");
 		end;
 		
 		if hook.Run("PlayerCanSayIC", player, text) then 
-			if (Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
+			if (Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3) or faction == "Holy Hierarchy" or faction == "Aristocracy Of Light" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
 				Clockwork.chatBox:SetMultiplier(1.35);
 				
 				if player.victim and IsValid(player.victim) then
@@ -2219,7 +2219,7 @@ local COMMAND = Clockwork.command:New("ProclaimMe");
 		end;
 	
 		if hook.Run("PlayerCanSayIC", player, text) then 
-			if Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3 or faction == "Holy Hierarchy" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
+			if Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) >= 3 or faction == "Holy Hierarchy" or faction == "Aristocracy Of Light" or player:IsAdmin() or Clockwork.player:HasFlags(player, "P") then
 				Clockwork.chatBox:SetMultiplier(1.35);
 				
 				if player.victim and IsValid(player.victim) then
@@ -2987,7 +2987,7 @@ local COMMAND = Clockwork.command:New("CoinslotTax");
 	function COMMAND:OnRun(player, arguments)
 		local faction = player:GetFaction();
 		
-		if (faction == "Holy Hierarchy" and player:GetSubfaction() == "Minister") or player:IsAdmin() then
+		if (faction == "Holy Hierarchy" and player:GetSubfaction() == "Minister") or (faction == "Aristocracy Of Light" and player:GetSubfaction() == "Ministry") or player:IsAdmin() then
 			local trace = player:GetEyeTrace();
 
 			if (trace.Entity) then
@@ -3063,7 +3063,7 @@ local COMMAND = Clockwork.command:New("CoinslotDonate");
 						Schema:ModifyTowerTreasury(cash);
 						
 						if cwBeliefs then
-							if player:GetFaction() == "Gatekeeper" then
+							if player:GetFaction() == "Gatekeeper" or player:GetFaction() == "Militant Orders of the Villa" then
 								if player:HasBelief("hard_glazed") then
 									if cash >= 2 then
 										player:HandleXP(cash / 2);
@@ -3673,8 +3673,8 @@ local COMMAND = Clockwork.command:New("AddBounty");
 	function COMMAND:OnRun(player, arguments)
 		local faction = player:GetFaction();
 		
-		if faction == "Holy Hierarchy" or faction == "Gatekeeper" or player:IsAdmin() then
-			if not player:IsAdmin() and faction == "Gatekeeper" and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) < 3 then
+		if faction == "Holy Hierarchy" or faction == "Gatekeeper" or faction == "Militant Orders of the Villa" or faction == "Aristocracy Of Light" or player:IsAdmin() then
+			if not player:IsAdmin() and (faction == "Gatekeeper" or faction == "Militant Orders of the Villa") and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) < 3 then
 				Schema:EasyText(player, "darkgrey", "You are not important enough to do this!");
 			
 				return;
@@ -3732,8 +3732,8 @@ local COMMAND = Clockwork.command:New("RemoveBounty");
 	function COMMAND:OnRun(player, arguments)
 		local faction = player:GetFaction();
 		
-		if faction == "Holy Hierarchy" or faction == "Gatekeeper" or player:IsAdmin() then
-			if not player:IsAdmin() and faction == "Gatekeeper" and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) < 3 then
+		if faction == "Holy Hierarchy" or faction == "Gatekeeper" or faction == "Militant Orders of the Villa" or faction == "Aristocracy Of Light" or player:IsAdmin() then
+			if not player:IsAdmin() and (faction == "Gatekeeper" or faction == "Militant Orders of the Villa") and Schema:GetRankTier(faction, player:GetCharacterData("rank", 1)) < 3 then
 				Schema:EasyText(player, "darkgrey", "You are not important enough to do this!");
 			
 				return;

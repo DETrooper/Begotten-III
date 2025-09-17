@@ -825,7 +825,7 @@ function cwSailing:MoveLongship(longshipEnt, location)
 							for _, v in _player.Iterator() do
 								local faction = v:GetNetVar("kinisgerOverride") or v:GetFaction();
 								
-								if (faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper") and !v.cwObserverMode and v:GetPos():WithinAABox(cwSailing.gorewatchBounds[1], cwSailing.gorewatchBounds[2]) then
+								if (faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper" or faction == "Militant Orders of the Villa" or faction == "Aristocracy Of Light") and !v.cwObserverMode and v:GetPos():WithinAABox(cwSailing.gorewatchBounds[1], cwSailing.gorewatchBounds[2]) then
 									timer.Simple(math.random(5, 10), function()
 										local alarm = self.gorewatchAlarm;
 										

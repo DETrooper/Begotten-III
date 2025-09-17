@@ -49,7 +49,7 @@ function ENT:Use(activator, caller)
 	if IsValid(caller) and caller:IsPlayer() then
 		local faction = caller:GetFaction();
 		
-		if faction == "Holy Hierarchy" then
+		if faction == "Holy Hierarchy" or faction == "Aristocracy Of Light" then
 			Clockwork.datastream:Start(caller, "OpenGramophoneMenu", state);
 		end;
 	end;

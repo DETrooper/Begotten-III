@@ -35,6 +35,12 @@ local function CreateMenu(state)
 				menu:AddOption("Collect Gatekeeper Kit", function() Clockwork.Client:ConCommand("cw_CoinslotGear") end);
 			end
 		end
+
+		if state == "Militant Orders of the Villa" then
+			if !Clockwork.Client:GetNetVar("collectedGear") then
+				menu:AddOption("Collect Gatekeeper Kit", function() Clockwork.Client:ConCommand("cw_CoinslotGear") end);
+			end
+		end
 		
 		menu:AddOption("Donate", function() 
 			Derma_StringRequest("Coinslot", "How much coin would you offer to the Coinslot?", nil, function(text)
@@ -176,6 +182,13 @@ local function CreateMenu(state)
 	end
 	
 	if state == "Gatekeeper" then
+		local subMenu = menu:AddSubMenu("Salary");
+		
+		subMenu:AddOption("Check", function() Clockwork.Client:ConCommand("cw_CoinslotSalaryCheck") end);
+		subMenu:AddOption("Collect", function() Clockwork.Client:ConCommand("cw_CoinslotSalary") end);
+	end
+
+	if state == "Militant Orders of the Villa" then
 		local subMenu = menu:AddSubMenu("Salary");
 		
 		subMenu:AddOption("Check", function() Clockwork.Client:ConCommand("cw_CoinslotSalaryCheck") end);

@@ -622,7 +622,7 @@ function cwMelee:PlayerStabilityFallover(player, falloverTime, bNoBoogie, bNoTex
 		else
 			if player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
 				player:EmitSound("piggysqueals/death/"..math.random(1, 3)..".ogg", 90, pitch)
-			elseif (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers") then
+			elseif (faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Militant Orders of the Villa") then
 				if (gender == "his") then
 					player:EmitSound("voice/man2/man2_stun0"..math.random(1, 4)..".wav", 90, pitch)
 				else
@@ -946,7 +946,7 @@ function cwMelee:PlayerPlayPainSound(player, gender, damageInfo, hitGroup)
 			elseif player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
 				player:EmitSound("piggysqueals/pain/"..math.random(1, 5)..".ogg", 90, pitch)
 				player.nextPainSound = CurTime()+1;
-			elseif faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
+			elseif faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Militant Orders of the Villa" then
 				if gender == "Male" then
 					player:EmitSound("voice/man2/man2_pain0"..math.random(1, 6)..".wav", 90, pitch)
 					player.nextPainSound = CurTime()+0.5
@@ -1030,7 +1030,7 @@ function GM:PlayerPlayDeathSound(player, gender)
 			player.nextPainSound = CurTime()+0.5;
 		elseif player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
 			player:EmitSound("piggysqueals/death/"..math.random(4, 6)..".ogg", 90, pitch)
-		elseif faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" then
+		elseif faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Militant Orders of the Villa" then
 			if gender == "Male" then
 				player:EmitSound("voice/man2/man2_death0"..math.random(1, 9)..".wav", 90, pitch)
 			else

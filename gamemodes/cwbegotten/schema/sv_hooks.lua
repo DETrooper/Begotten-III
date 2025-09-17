@@ -453,6 +453,8 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 						playerName = "an unknown Child of Satan";
 					elseif playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" then
 						playerName = "an unknown Gatekeeper";
+					elseif playerFaction == "Militant Orders of the Villa" then
+						playerName = "an unknown Villakeeper";
 					elseif playerFaction == "Holy Hierarchy" then
 						local playerSubfaction = player:GetSubfaction();
 						
@@ -460,6 +462,18 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 							playerName = "an unknown Inquisitor";
 						elseif playerSubfaction == "Knights of Sol" then
 							playerName =  "an unknown Knight of Sol";
+						else
+							playerName =  "an unknown Glazic nobleman";
+						end
+					elseif playerFaction == "Aristocracy Of Light" then
+						local playerSubfaction = player:GetSubfaction();
+						
+						if playerSubfaction == "Order of the Writ" then
+							playerName = "an unknown Inquisitor";
+						elseif playerSubfaction == "House Herrera" then
+							playerName =  "an unknown member of House Herrera";
+						elseif playerSubfaction == "House Caelvora" then
+							playerName =  "an unknown member of House Caelvora";
 						else
 							playerName =  "an unknown Glazic nobleman";
 						end
@@ -678,6 +692,8 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 								playerName = "an unknown Child of Satan";
 							elseif playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" then
 								playerName = "an unknown Gatekeeper";
+							elseif playerFaction == "Militant Orders of the Villa" then
+								playerName = "an unknown Villakeeper";
 							elseif playerFaction == "Holy Hierarchy" then
 								local playerSubfaction = player:GetSubfaction();
 								
@@ -685,6 +701,18 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 									playerName = "an unknown Inquisitor";
 								elseif playerSubfaction == "Knights of Sol" then
 									playerName =  "an unknown Knight of Sol";
+								else
+									playerName =  "an unknown Glazic nobleman";
+								end
+							elseif playerFaction == "Aristocracy Of Light" then
+								local playerSubfaction = player:GetSubfaction();
+								
+								if playerSubfaction == "Order of the Writ" then
+									playerName = "an unknown Inquisitor";
+								elseif playerSubfaction == "House Herrera" then
+									playerName =  "an unknown member of a House Herrera";
+								elseif playerSubfaction == "House Caelvora" then
+									playerName =  "an unknown member of a House Caelvora";
 								else
 									playerName =  "an unknown Glazic nobleman";
 								end
@@ -2320,10 +2348,10 @@ function Schema:PlayerDoesRecognisePlayer(player, target, status, isAccurate, re
 	local playerFaction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 	local targetFaction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
 
-	if targetFaction == "Holy Hierarchy" then
+	if targetFaction == "Holy Hierarchy" or targetFaction == "Aristocracy Of Light" then
 		return true;
-	elseif targetFaction == "Gatekeeper" or targetFaction == "Pope Adyssa's Gatekeepers" or targetFaction == "Hillkeeper" then
-		if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy" then
+	elseif targetFaction == "Gatekeeper" or targetFaction == "Pope Adyssa's Gatekeepers" or targetFaction == "Hillkeeper" or targetFaction == "Militant Orders of the Villa" then
+		if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Militant Orders of the Villa" or playerFaction == "Aristocracy Of Light" or playerFaction == "Holy Hierarchy" then
 			return true;
 		end
 	elseif targetFaction == "Goreic Warrior" and playerFaction == "Goreic Warrior" then
@@ -2420,7 +2448,7 @@ function Schema:PlayerCanUseDoor(player, door)
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
 			
-			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Pope Adyssa's Gatekeepers" then
+			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Militant Orders of the Villa" and faction ~= "Aristocracy Of Light" and faction ~= "Pope Adyssa's Gatekeepers" then
 				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 					player.nextDoorNotify = curTime + 1;
 				
@@ -2430,11 +2458,11 @@ function Schema:PlayerCanUseDoor(player, door)
 				return false;
 			end
 			
-			if faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" then
+			if faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Militant Orders of the Villa" or faction == "Pope Adyssa's Gatekeepers" then
 				local rank = Schema.Ranks[faction][player:GetCharacterData("rank") or 1];
 				
 				if self:GetRankTier(faction, rank) < 3 then
-					if not (doors["forge"] and table.HasValue(doors["forge"], doorName) and rank == "Artificer") then
+					if not (doors["forge"] and table.HasValue(doors["forge"], doorName) and rank == "Artificer" or rank == "Laborer") then
 						if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 							player.nextDoorNotify = curTime + 1;
 						
@@ -2459,12 +2487,27 @@ function Schema:PlayerCanUseDoor(player, door)
 				
 				return false;
 			end
+
+		elseif doors["nobles"] and table.HasValue(doors["nobles"], doorName) then
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+			local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+			local curTime = CurTime();
+
+			if faction ~= "Aristocracy Of Light" or (subfaction ~= "Ministry" and subfaction ~= "House Caelvora" and subfaction ~= "House Herrera") then
+				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
+					player.nextDoorNotify = curTime + 1;
+				
+					Schema:EasyText(player, "firebrick", "You aren't the correct faction to open this blastdoor!");
+				end
+				
+				return false;
+			end
 		elseif doors["ministry"] and table.HasValue(doors["ministry"], doorName) then
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 			local curTime = CurTime();
 			
-			if faction ~= "Holy Hierarchy" or (subfaction ~= "Ministry" and subfaction ~= "Low Ministry") then
+			if faction ~= "Holy Hierarchy" or (subfaction ~= "Ministry" and subfaction ~= "Low Ministry") or faction ~= "Aristocracy Of Light" then
 				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 					player.nextDoorNotify = curTime + 1;
 				
@@ -2477,7 +2520,7 @@ function Schema:PlayerCanUseDoor(player, door)
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
 			
-			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Pope Adyssa's Gatekeepers" then
+			if faction ~= "Holy Hierarchy" and faction ~= "Gatekeeper" and faction ~= "Hillkeeper" and faction ~= "Militant Orders of the Villa" and faction ~= "Aristocracy Of Light" and faction ~= "Pope Adyssa's Gatekeepers" then
 				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
 					player.nextDoorNotify = curTime + 1;
 				
@@ -3083,7 +3126,7 @@ function Schema:PlayerCharacterLoaded(player)
 		end
 	end;
 	
-	if faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" then
+	if faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Militant Orders of the Villa" then
 		player:SetLocalVar("collectedGear", player:GetCharacterData("collectedGear"));
 	
 		-- Code to grandfather in pre-rank update Gatekeeper characters to the new rank system during the original Begotten III, no longer required.
@@ -3461,7 +3504,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 				if IsValid(damageInfo:GetAttacker()) and damageInfo:GetAttacker():IsPlayer() then
 					local faction = damageInfo:GetAttacker():GetFaction();
 				
-					if faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" and faction ~= "Hillkeeper" and faction ~= "Pope Adyssa's Gatekeepers" and !damageInfo:GetAttacker():IsAdmin() then
+					if faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" and faction ~= "Hillkeeper" and faction ~= "Pope Adyssa's Gatekeepers" and faction == "Aristocracy Of Light" and faction == "Militant Orders of the Villa" and !damageInfo:GetAttacker():IsAdmin() then
 						damageInfo:SetDamage(0);
 						return true;
 					end
@@ -3506,7 +3549,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 				if v == "glazic" then
 					local faction = entity:GetFaction();
 					
-					if faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" then
+					if faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Aristocracy Of Light" or faction == "Militant Orders of the Villa" then
 						damageInfo:ScaleDamage(0.75);
 
 						break;
@@ -3522,7 +3565,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 					if v == "glazic" then
 						local faction = attacker:GetFaction();
 						
-						if faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" then
+						if faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Aristocracy Of Light" or faction == "Militant Orders of the Villa" then
 							if attackerWeapon.Base ~= "begotten_firearm_base" or (attackerWeapon.isMeleeFirearm and player:GetNetVar("ThrustStance")) or attackerWeapon.notPowder then
 								damageInfo:ScaleDamage(1.15);
 

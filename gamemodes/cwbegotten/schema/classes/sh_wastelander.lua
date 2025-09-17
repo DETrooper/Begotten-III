@@ -23,6 +23,25 @@ local CLASS = Clockwork.class:New("Gatekeeper");
 	CLASS.coinslotWages = 25;
 CLASS_GATEKEEPER = CLASS:Register();
 
+local CLASS = Clockwork.class:New("Militant Orders of the Villa");
+	CLASS.color = Color(100, 100, 100, 255);
+	CLASS.factions = {FACTION_VILLAKEEPER};
+	CLASS.isDefault = true;
+	CLASS.description = "A survivor of the apocalypse.";
+	CLASS.defaultPhysDesc = "Wearing dirty clothes and a small satchel";
+	CLASS.coinslotWages = 25;
+CLASS_VILLAKEEPER = CLASS:Register();
+
+local CLASS = Clockwork.class:New("Aristocracy Of Light");
+	CLASS.color = Color(100, 100, 100, 255);
+	CLASS.factions = {FACTION_ARISTOCRACY};
+	CLASS.isDefault = true;
+	CLASS.description = "A survivor of the apocalypse.";
+	CLASS.defaultPhysDesc = "Wearing dirty clothes and a small satchel";
+	CLASS.coinslotWages = 25;
+CLASS_ARISTOCRACY = CLASS:Register();
+
+
 local CLASS = Clockwork.class:New("Pope Adyssa's Gatekeepers");
 	CLASS.color = Color(0, 0, 0, 255);
 	CLASS.factions = {FACTION_GATEKEEPER_ADYSSA};

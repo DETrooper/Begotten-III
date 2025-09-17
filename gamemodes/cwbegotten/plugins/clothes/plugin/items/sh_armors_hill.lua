@@ -530,7 +530,7 @@ ITEM.weight = 2;
 ITEM.weightclass = "Light";
 ITEM.description = "Thick rough wrappings dyed blue, a sign of simple piety for the lesser clergy of the Ministry.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.requiredFactions = {"Holy Hierarchy"};
+ITEM.requiredFactions = {"Holy Hierarchy", "Aristocracy Of Light"};
 ITEM.faction = "Holy Hierarchy";
 ITEM.bodygroupCharms = {["codex_solis"] = {1, 1}};
 
@@ -631,7 +631,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A finely-wrought fluted steel plate inspired by the words of Maximus, fitted over the garments of the Lower Ministry. Mounting tensions in the Hill have sired a schism amongst its clergy; those of the cloth that'd remain bound to safety and tradition, fearing for their souls -  and those who'd dare to take up arms against ghouls and apostates, in service to newer mysteries.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.requiredFactions = {"Holy Hierarchy"};
+ITEM.requiredFactions = {"Holy Hierarchy", "Aristocracy Of Light"};
 ITEM.faction = "Holy Hierarchy";
 ITEM.bodygroupCharms = {["codex_solis"] = {1, 1}};
 

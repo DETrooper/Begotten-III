@@ -23,7 +23,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 10; -- Seconds
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "scrap", "scrap", "wood", "wood"}};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2250, supercrateItems = {["grapeshot"] = {min = 7, max = 15}}};
 ITEM:Register();
@@ -49,7 +49,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.usesMagazine = true;
 	ITEM.unrepairable = true;
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 3000, supercrateOnly = true, supercrateItems = {["old_world_magazine"] = {min = 2, max = 3}, ["old_world_shot"] = {min = 7, max = 14}}};
 ITEM:Register();
 
@@ -73,7 +73,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/bulkcannon/insertshell.wav", "weapons/bulkcannon/lock.wav"};
 	ITEM.unrepairable = true;
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2500, supercrateOnly = true, supercrateItems = {["grapeshot"] = {min = 15, max = 30}}};
 ITEM:Register();
 
@@ -145,7 +145,7 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 10; -- Seconds
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.components = {breakdownType = "meltdown", items = {"wood", "fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks"}};
 	ITEM.requiredFaiths = {"Faith of the Light"};
 ITEM:Register();
@@ -170,7 +170,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.isRevolver = true;
 	ITEM.reloadTime = 10; -- Seconds (for one round)
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("firearm_base");
@@ -191,7 +191,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 10; -- Seconds
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 900, supercrateItems = {["longshot"] = {min = 10, max = 15}, ["grapeshot"] = {min = 3, max = 5}}};
 ITEM:Register();
@@ -215,7 +215,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 10; -- Seconds
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.components = {breakdownType = "meltdown", items = {"scrap", "scrap", "scrap"}};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 600, bNoSupercrate = true};
 ITEM:Register();
@@ -240,7 +240,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	ITEM.unrepairable = true;
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2000, supercrateOnly = true, supercrateItems = {["longshot"] = {min = 10, max = 20}, ["grapeshot"] = {min = 5, max = 10}}};
 ITEM:Register();
 
@@ -265,7 +265,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/m1911/handling/m1911_boltback.wav", "weapons/m1911/handling/m1911_magout.wav", "weapons/m1911/handling/m1911_magin.wav", "weapons/m1911/handling/m1911_maghit.wav", "weapons/m1911/handling/m1911_boltrelease.wav"};
 	ITEM.usesMagazine = true;
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 1200, supercrateItems = {["scavenger_gun_large_magazine"] = {min = 2, max = 5}, ["scrapshot"] = {min = 15, max = 30}}};
 ITEM:Register();
 
@@ -292,7 +292,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"weapons/request day of defeat/m1903 springfield boltback 1.wav", "weapons/request day of defeat/m1903 springfield clipin.wav", "weapons/request day of defeat/m1903 springfield boltforward 2.wav"};
 	ITEM.unrepairable = true;
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5500, supercrateOnly = true, supercrateItems = {["old_world_longshot"] = {min = 10, max = 20}}};
 ITEM:Register();
 
@@ -316,7 +316,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"weapons/nikm1987trench/shotgun_shell_00.wav"};
 	ITEM.unrepairable = true;
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5500, supercrateOnly = true, supercrateItems = {["old_world_grapeshot"] = {min = 10, max = 20}}};
 ITEM:Register();
 
@@ -341,7 +341,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.usesMagazine = true;
 	ITEM.unrepairable = true;
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 5500, supercrateOnly = true, supercrateItems = {["old_world_large_magazine"] = {min = 2, max = 3}, ["old_world_shot"] = {min = 20, max = 30}}};
 ITEM:Register();
 
@@ -366,7 +366,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 10; -- Seconds
 	ITEM.reloadSounds = {"weapons/bulkcannon/draw.wav", "weapons/request day of defeat/m1903 springfield draw.wav", "weapons/request day of defeat/m1903 springfield boltback 1.wav", "weapons/m1911/handling/m1911_boltback.wav", "weapons/CB4/cb4-1_trigger.wav", "railgun/railgun_empty_sparks.mp3", "railgun/railgun_1s_recharge.mp3"};
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.components = {breakdownType = "meltdown", items = {"tech", "tech", "scrap", "scrap", "scrap", "scrap", "wood"}};
 	ITEM.requiredbeliefs = {"wriggle_fucking_eel"};
 ITEM:Register();
@@ -390,7 +390,7 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"oneuse_deploy.ogg"};
 	ITEM.requiredFaiths = {"Faith of the Dark"};
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.components = {breakdownType = "meltdown", items = {"wood", "steel_chunks", "steel_chunks", "steel_chunks"}};
 ITEM:Register();
 
@@ -413,7 +413,7 @@ ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"oneuse_deploy.ogg", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 	ITEM.requiredFaiths = {"Faith of the Dark"};
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.components = {breakdownType = "meltdown", items = {"wood", "fine_steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks"}};
 ITEM:Register();
 
@@ -438,7 +438,7 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadSounds = {"begotten/scraplmg/cloth.wav", "begotten/scraplmg/wfoly_plr_lm_pkilo_drop.wav", "begotten/scraplmg/wpfoly_m249_reload_open_v1.wav", "begotten/scraplmg/wpfoly_m249_reload_clipout_v1.wav", "begotten/scraplmg/wpn_h1_saw_ins_look_01.wav", "begotten/scraplmg/wpfoly_m249_reload_clipin_v1.wav", "begotten/scraplmg/wpfoly_m249_reload_close_v2.wav", "begotten/scraplmg/wpfoly_m249_reload_chamber_v1.wav"};
 	ITEM.usesMagazine = true;
 	
-	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 2500, supercrateOnly = true, supercrateItems = {["shagalax_bullet_box_magazine"] = {min = 1, max = 2}}};
 ITEM:Register();
 
@@ -461,6 +461,6 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 8; -- Seconds (for one round)
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 
-	ITEM.excludeSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludeSubfactions = {"Philimaxio", "Knights of Sol", "House Herrera"};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 4000, bNoSupercrate = true};	
 ITEM:Register();

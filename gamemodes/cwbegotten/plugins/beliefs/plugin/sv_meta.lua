@@ -38,9 +38,9 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 				newAmount = newAmount + (amount * 0.75);
 			end
 			
-			if subfaction == "Auxiliary" or subfaction == "Rekh-khet-sa" or subfaction == "Servus" then
+			if subfaction == "Auxiliary" or subfaction == "Rekh-khet-sa" or subfaction == "Servus" or subfaction == "The Guild" then
 				newAmount = newAmount + (amount * 0.25);
-			elseif subfaction == "Inquisition" then
+			elseif subfaction == "Inquisition" or subfaction == "House Herrera" or subfaction == "House Caelvora" or subfaction == "Order Of The Writ" then
 				newAmount = newAmount + (amount * 0.5);
 			elseif subfaction == "Low Ministry" then
 				newAmount = newAmount + (amount * 0.15);

@@ -2829,7 +2829,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Glazicus";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Hillkeeper"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Hillkeeper", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 2},
 			["wood"] = {amount = 1},
@@ -2858,7 +2858,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE.name = "Ornate Glazicus";
 	RECIPE.requiresSmithy = true;
 	RECIPE.requiredBeliefs = {"artisan"};
-	RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Hillkeeper"};
+	RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Hillkeeper", "Aristocracy Of Light", "Militant Orders of the Villa"};
 	RECIPE.requirements = {
 		["fine_steel_ingot"] = {amount = 2},
 		["gold_ingot"] = {amount = 1},
@@ -3385,7 +3385,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Spatha";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Hillkeeper"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Hillkeeper", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 4},
 			["wood"] = {amount = 1},
@@ -4135,7 +4135,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Glazic Banner";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 2},
 			["glazic_sigil_stone"] = {amount = 1},
@@ -4733,7 +4733,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFaiths = {"Faith of the Light"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 3},
 			["steel_ingot"] = {amount = 1},
@@ -5664,7 +5664,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Gatekeeper Shield";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 1},
 			["wood"] = {amount = 5},
@@ -5693,7 +5693,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Steel Gatekeeper Shield";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["shield11"] = {amount = 1},
 			["steel_ingot"] = {amount = 8},
@@ -5722,7 +5722,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Sol Sentinel Shield";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["maximilian_steel_ingot"] = {amount = 2},
 			["iron_ingot"] = {amount = 7},
@@ -7728,7 +7728,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "(Upgrade) Gatekeeper Halfplate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["gatekeeper_gambeson"] = {amount = 1},
 			["iron_ingot"] = {amount = 3},
@@ -7757,7 +7757,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "(Upgrade) Gatekeeper Halfplate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["auxiliary_gambeson"] = {amount = 1},
 			["iron_ingot"] = {amount = 3},
@@ -7786,7 +7786,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "(Upgrade) Gatekeeper Halfplate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["praeventor_gambeson"] = {amount = 1},
 			["iron_ingot"] = {amount = 3},
@@ -7815,7 +7815,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Gatekeeper Halfplate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 4},
 			["leather"] = {amount = 2},
@@ -7844,7 +7844,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Gatekeeper Medici Halfplate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["gatekeeper_halfplate"] = {amount = 1},
 			["cloth"] = {amount = 3},
@@ -7873,7 +7873,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "(Upgrade) Gatekeeper Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["gatekeeper_halfplate"] = {amount = 1},
 			["iron_ingot"] = {amount = 3},
@@ -7902,7 +7902,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Gatekeeper Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 7},
 			["leather"] = {amount = 2},
@@ -7931,7 +7931,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Fine Gatekeeper Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
 			["steel_ingot"] = {amount = 4},
@@ -7961,7 +7961,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "(Upgrade) Fine Gatekeeper Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["gatekeeper_plate"] = {amount = 1},
 			["fine_steel_ingot"] = {amount = 1},
@@ -7991,7 +7991,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Ornate Gatekeeper Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["gold_ingot"] = {amount = 1},
 			["fine_steel_ingot"] = {amount = 1},
@@ -8021,7 +8021,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Master-at-Arms Gatekeeper Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["ornate_gatekeeper_plate"] = {amount = 1},
 			["maximilian_steel_ingot"] = {amount = 3},
@@ -8052,7 +8052,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Vexillifer Gatekeeper Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["hide"] = {amount = 5},
 			["fine_steel_ingot"] = {amount = 2},
@@ -8082,7 +8082,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Knight Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["holy_spirit"] = {amount = 1},
 			["steel_ingot"] = {amount = 5},
@@ -8114,7 +8114,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Knight Justicar Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["knight_plate"] = {amount = 1},
 			["knight_helmet"] = {amount = 1},
@@ -8148,7 +8148,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Grand Knight Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["knight_justicar_plate"] = {amount = 1},
 			["knight_justicar_helmet"] = {amount = 1},
@@ -8180,7 +8180,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Heavy Gatekeeper Reinforced Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
 			["steel_ingot"] = {amount = 2},
@@ -8210,7 +8210,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "(Upgrade) Heavy Gatekeeper Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["gatekeeper_plate"] = {amount = 1},
 			["steel_ingot"] = {amount = 4},
@@ -8239,7 +8239,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Heavy Gatekeeper Plate";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 7},
 			["leather"] = {amount = 2},
@@ -8267,7 +8267,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("auxiliary_gambeson");
 		RECIPE.name = "Auxiliary Gambeson";
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["cloth"] = {amount = 3},
 			["leather"] = {amount = 3},
@@ -8296,7 +8296,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("gatekeeper_gambeson");
 		RECIPE.name = "Gatekeeper Gambeson";
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["cloth"] = {amount = 3},
 			["leather"] = {amount = 3},
@@ -8325,7 +8325,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("praeventor_gambeson");
 		RECIPE.name = "Praeventor Gambeson";
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["cloth"] = {amount = 3},
 			["leather"] = {amount = 3},
@@ -8756,7 +8756,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Gatekeeper Helmet";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 2},
 		};
@@ -9157,7 +9157,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Fine Gatekeeper Helmet";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
 			["steel_ingot"] = {amount = 1},
@@ -9186,7 +9186,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "(Upgrade) Fine Gatekeeper Helmet";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["gatekeeper_helmet"] = {amount = 1},
 			["fine_steel_ingot"] = {amount = 1},
@@ -9215,7 +9215,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Ornate Gatekeeper Helmet";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 1},
 			["maximilian_steel_ingot"] = {amount = 1},
@@ -9246,7 +9246,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "(Upgrade) Ornate Gatekeeper Helmet";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy"};
+		RECIPE.requiredFactions = {"Gatekeeper", "Holy Hierarchy", "Aristocracy Of Light", "Militant Orders of the Villa"};
 		RECIPE.requirements = {
 			["fine_gatekeeper_helmet"] = {amount = 1},
 			["fine_steel_ingot"] = {amount = 1},

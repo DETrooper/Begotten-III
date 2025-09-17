@@ -46,10 +46,16 @@ function ENT:Use(activator, caller)
 					-- Inquisition/Knights can get salary from Coinslot the same as Gatekeepers.
 					state = "Gatekeeper";
 				end
-			elseif faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Hillkeeper" then
+			elseif faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Hillkeeper" or faction == "Militant Orders of the Villa" then
 				state = "Gatekeeper";
 			end
-			
+			elseif faction == "Aristocracy Of Light" then
+				if subfaction == "Ministry" then
+					state = "Hierarchy";
+				else
+					-- Inquisition/Knights can get salary from Coinslot the same as Gatekeepers.
+					state = "Gatekeeper";
+				end
 			netstream.Start(caller, "OpenCoinslotMenu", state);
 		end;
 	end;

@@ -31,7 +31,7 @@ local COMMAND = Clockwork.command:New("CoinslotPurchase");
 			local entity = trace.Entity;
 
 			if (entity:GetClass() == "cw_coinslot") then
-				if player:GetFaction() == "Holy Hierarchy" then
+				if player:GetFaction() == "Holy Hierarchy" or player:GetFaction() == "Aristocracy Of Light" then
 					Schema:EasyText(player, "peru", "The Holy Hierarchy cannot purchase property!");
 					return false;
 				end
@@ -114,7 +114,7 @@ local COMMAND = Clockwork.command:New("CoinslotAddCoowner");
 								local faction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
 								local targetShack = target:GetOwnedShack();
 								
-								if faction == "Holy Hierarchy" or faction == "Goreic Warrior" then
+								if faction == "Holy Hierarchy" or faction == "Goreic Warrior" or faction == "Aristocracy Of Light" then
 									Schema:EasyText(player, "peru", "You do not have enough coin to add a co-owner!");
 								
 									return;
