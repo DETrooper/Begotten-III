@@ -19,7 +19,7 @@ function ITEM:OnUse(player, itemEntity)
 	player:GiveItem(Clockwork.item:CreateInstance("purified_water"), true);
 	--player:GiveItem(Clockwork.item:CreateInstance("purified_water"), true);
 	
-	if subfaction == "Auxiliary" then
+	if subfaction == "Auxiliary" or subfaction == "The Guild" then
 		--player:GiveItem(Clockwork.item:CreateInstance("antibiotic_paste"), true);
 		player:GiveItem(Clockwork.item:CreateInstance("begotten_1h_pipemace"), true);
 		player:GiveItem(Clockwork.item:CreateInstance("crafted_bandage"), true);
@@ -29,7 +29,7 @@ function ITEM:OnUse(player, itemEntity)
 		--player:GiveItem(Clockwork.item:CreateInstance("handheld_radio"), true);
 		--player:GiveItem(Clockwork.item:CreateInstance("laudanum"), true);
 		--player:GiveItem(Clockwork.item:CreateInstance("splint"), true);
-	elseif subfaction == "Praeventor" then
+	elseif subfaction == "Praeventor" or subfaction == "Order Of The Writ" then
 		player:GiveItem(Clockwork.item:CreateInstance("backpack_small"), true);
 		player:GiveItem(Clockwork.item:CreateInstance("begotten_spear_scrapspear"), true);
 		player:GiveItem(Clockwork.item:CreateInstance("handheld_radio"), true);

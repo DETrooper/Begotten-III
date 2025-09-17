@@ -3628,7 +3628,7 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 		if player:Health() > player:GetMaxHealth() * 0.95 then
 			infoTable.runSpeed = infoTable.runSpeed * 1.1;
 		end
-	elseif subfaction == "Praeventor" or subfaction == "Outrider" then
+	elseif subfaction == "Praeventor" or subfaction == "Outrider" or subfaction == "Prole Of The Writ" then
 		if player:GetSubfaith() ~= "Sol Orthodoxy" then
 			infoTable.runSpeed = infoTable.runSpeed * 1.05;
 		end
