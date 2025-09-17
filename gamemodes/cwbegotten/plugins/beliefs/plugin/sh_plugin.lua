@@ -968,7 +968,13 @@ function COMMAND:OnRun(player, arguments)
 			
 			Schema:EasyText(admins, ringcolor, "[PRAYER ", color, faith_str, markedcolor, markedstr, ringcolor, "] ", plycol, player:Name(), "ivory", ": "..message)
 			Schema:EasyText(player, color, "You make a prayer: \""..message.."\"")
-			
+			local curTime = CurTime();
+			if (!player.lastPray or curTime()-player.lastPray<=1200) then
+				player:HandleXP(cwBeliefs.xpValues["pray"]);
+				player.lastPray = CurTime();
+			else
+				Schema:EasyText(player, "chocolate", "You must wait another"..-math.ceil(curTime()-player.lastPray).." seconds before praying again!");
+			end
 			Clockwork.chatBox:AddInTargetRadius(player, "me", "mumbles a short prayer to the gods.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
 			
 			local nextPrayerBonus = player:GetCharacterData("nextPrayerBonus", 0);
@@ -1154,7 +1160,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 			end
 		end
 		
-		if player_has_belief or subfaction == "Clan Grock" then
+		if player_has_belief or subfaction == "Clan Grock" or subfaction == "Clan Gotnarh" then
 			local curTime = CurTime();
 			
 			if (!player.lastWarCry) or player.lastWarCry < curTime then
@@ -1200,13 +1206,13 @@ local COMMAND = Clockwork.command:New("Warcry");
 							end
 						end
 						
-						if subfaction == "Clan Grock" then
+						if subfaction == "Clan Grock" or subfaction == "Clan Gotnarh" then
 							local clothesItem = player:GetClothesEquipped()
 					
 							if clothesItem and table.HasValue(clothesItem.attributes, "iconoclast") and !player:GetShieldEquipped() then
 								local targetSubfaction = v:GetNetVar("kinisgerOverrideSubfaction") or v:GetSubfaction();
 								
-								if targetSubfaction == "Clan Grock" then
+								if targetSubfaction == "Clan Grock" or targetSubfaction == "Clan Gotnarh" then
 									v:HandleStamina(25);
 									v.iconoclastBuff = true;
 									hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true);
@@ -1300,7 +1306,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 										end
 									end
 								
-									if subfaction == "Clan Grock" then
+									if subfaction == "Clan Grock" or subfaction == "Clan Gotnarh" then
 										if !v:HasBelief("saintly_composure") then
 											v:Disorient(1);
 										end
@@ -1350,7 +1356,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				elseif (subfaction == "Low Ministry") then
 					player:EmitSound("lmcries/lm_cry" .. math.random(1,19) .. ".mp3", 100, math.random(90, 105));
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a withering scream!", playerPos, radius);
-				elseif subfaction == "Clan Grock" then
+				elseif subfaction == "Clan Grock" or subfaction == "Clan Gotnarh" then
 					local clothesItem = player:GetClothesEquipped()
 					
 					if clothesItem and table.HasValue(clothesItem.attributes, "iconoclast") and !player:GetShieldEquipped() and cwStamina then

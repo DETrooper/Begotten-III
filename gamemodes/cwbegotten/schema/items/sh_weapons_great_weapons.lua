@@ -91,7 +91,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.excludedFactions = {"Goreic Warrior"};
-	ITEM.includedSubfactions = {"Clan Grock"};
+	ITEM.includedSubfactions = {"Clan Grock", "Clan Gotnarh"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register(); 
 
@@ -113,7 +113,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.excludedFactions = {"Goreic Warrior"};
-	ITEM.includedSubfactions = {"Clan Grock"};
+	ITEM.includedSubfactions = {"Clan Grock", "Clan Gotnarh"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
@@ -324,8 +324,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-1.41, 2.9, -2.83);
 	
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
-
-	ITEM.attributes = {"punisher"};
+	ITEM.attributes = {"punisher"};					
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "steel_chunks", "wood", "leather"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 ITEM:Register();
@@ -369,6 +368,148 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.excludedFactions = {"Goreic Warrior"};
-	ITEM.includedSubfactions = {"Clan Grock"};
+	ITEM.includedSubfactions = {"Clan Grock", "Clan Gotnarh"};
 	ITEM.kinisgerOverride = true;
+ITEM:Register();
+
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Sacred Runestone Slab";
+	ITEM.model = "models/demonssouls/weapons/dragon_bone_smasher.mdl";
+	ITEM.weight = 5;
+	ITEM.uniqueID = "begotten_2h_sacredrunestoneslab";
+	ITEM.category = "Melee";
+	ITEM.description = "Carved from great Familial runestones plundered from old ruins, this sharpened slab of rock. Now fashioned into a giant stone sword it devastates anything in its wake. Only the mightiest are capable of carrying its hefty weight, let alone swing it.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/grocklingsword.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 180, -40.333);
+	ITEM.attachmentOffsetVector = Vector(10.369, 2.469, 20.457);
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"ore", "ore"}};
+	ITEM.requiredbeliefs = {"strength"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
+	ITEM.includedSubfactions = {"Old Clan Gotnarh"};
+	ITEM.kinisgerOverride = true;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Flamberge";
+	ITEM.model = "models/demonssouls/weapons/flamberge.mdl";
+	ITEM.weight = 3;
+	ITEM.uniqueID = "begotten_2h_great_flamberge";
+	ITEM.category = "Melee";
+	ITEM.description = "A greatsword of Glazic steel. It's hilt is engraved with the emblem of a renowned Noble House within the Villa of Light.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/claymore.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90.5, 180, 347.07);
+	ITEM.attachmentOffsetVector = Vector(5.66, 2.9, 17.68);
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1300, supercrateOnly = true};
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"strength"};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Executioner's Axe";
+	ITEM.model = "models/demonssouls/weapons/great_axe.mdl";
+	ITEM.weight = 5;
+	ITEM.uniqueID = "begotten_2h_great_executionersaxe";
+	ITEM.category = "Melee";
+	ITEM.description = "The dreaded tool of the headtaker. These have claimed the lives of many unlawful filth, and captured brigands of the wastes who have fallen into the merciless hands of Glazic Officers.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/haralder_war_axe.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 0, 281.37);
+	ITEM.attachmentOffsetVector = Vector(-5.66, 2.83, -30.41);
+	
+	ITEM.attributes = {"splinter"};
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"strength"};
+	ITEM.kinisgerOverride = true;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Flamberge";
+	ITEM.model = "models/demonssouls/weapons/flamberge.mdl";
+	ITEM.weight = 3;
+	ITEM.uniqueID = "begotten_2h_great_flamberge";
+	ITEM.category = "Melee";
+	ITEM.description = "A steel greatsword. Its hilt is engraved with Glazic markings of a long dead noble household.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/claymore.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90.5, 180, 347.07);
+	ITEM.attachmentOffsetVector = Vector(5.66, 2.9, 17.68);
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1300, supercrateOnly = true};
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"strength"};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Executioner's Axe";
+	ITEM.model = "models/witcher2soldiers/tw2_bigaxe.mdl";
+	ITEM.weight = 5;
+	ITEM.uniqueID = "begotten_2h_great_executionersaxe";
+	ITEM.category = "Melee";
+	ITEM.description = "An ornate war axe made from Shagalaxian steel. This axe is often used by the sea raiders of Clan Harald. An old curse prevents weaklings from firmly grasping its handle.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/haralder_war_axe.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 0, 281.37);
+	ITEM.attachmentOffsetVector = Vector(-5.66, 2.83, -30.41);
+	
+	ITEM.attributes = {"splinter"};
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"strength"};
+	ITEM.kinisgerOverride = true;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Villa Spadone";
+	ITEM.model = "models/demonssouls/weapons/great_sword.mdl";
+	ITEM.weight = 3;
+	ITEM.uniqueID = "begotten_2h_great_villaspadone";
+	ITEM.category = "Melee";
+	ITEM.description = "This large greatsword of Glazic steel was designed in the early age of Glazic Supremacy. The Chronologists decree, that these were wielded by only the most prestigious Glazic Legions that fought the famed Military Campaign of the Great Sands.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/claymore.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90.5, 180, 347.07);
+	ITEM.attachmentOffsetVector = Vector(5.66, 2.9, 17.68);
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1300, supercrateOnly = true};
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"strength"};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Greaser Blockhammer";
+	ITEM.model = "models/newvegasprops/supersledge.mdl";
+	ITEM.weight = 3;
+	ITEM.uniqueID = "begotten_2h_great_greaserblockhammer";
+	ITEM.category = "Melee";
+	ITEM.description = "A colossal hammer whose head was once the beating heart of a formidable machine. Either taken from an long derelict wreck, or released from the recently fallen chariot of a Scrap King. But this decayed apparatus may yet stir if its wielder is devoted to the Machine God.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/volthammer.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(0, 291.38, 267.51);
+	ITEM.attachmentOffsetVector = Vector(-4.24, 4.24, -9.19);
+	ITEM.bodygroup1 = 4;
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "scrap", "scrap", "scrap", "tech", "tech"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"strength"};
 ITEM:Register();

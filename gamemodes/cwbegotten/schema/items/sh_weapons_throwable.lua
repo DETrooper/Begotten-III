@@ -115,3 +115,24 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "wood"}}; -- use "breakdown" for other type
 	ITEM.repairCostModifier = 0.25;
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Stone Throwing Spear";
+	ITEM.model = "models/demonssouls/weapons/cut javelin.mdl";
+	ITEM.weight = 2.3;
+	ITEM.uniqueID = "begotten_javelin_stonethrowingspear";
+	ITEM.category = "Throwables";
+	ITEM.description = "An simple, and efficient killing tool of the wasteland. Well known for its large scale use by the Darkhide territories of the Far East.";
+	ITEM.iconoverride = "begotten/ui/itemicons/iron_javelin.png"
+	ITEM.isAttachment = true;
+	ITEM.isJavelin = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(273.48, 178.01, 191.93);
+	ITEM.attachmentOffsetVector = Vector(-6.36, 2.1, -16.27);
+	ITEM.canUseShields = true;
+	ITEM.fireplaceFuel = 120;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"stone", "wood"}}; -- use "breakdown" for other type
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 2000, bNoSupercrate = true};
+	ITEM.repairCostModifier = 0.25;
+ITEM:Register();

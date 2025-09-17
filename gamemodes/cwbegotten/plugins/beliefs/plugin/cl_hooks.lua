@@ -331,7 +331,7 @@ netstream.Hook("UpgradedWarcry", function(data)
 	if faction == "Goreic Warrior" then
 		local subfaction = Clockwork.Client:GetSubfaction()
 					
-		if subfaction == "Clan Grock" then
+		if subfaction == "Clan Grock" or subfaction == "Clan Gotnarh" then
 			if data then 
 				for i, v in ipairs(data) do
 					if IsValid(v) then

@@ -295,3 +295,77 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Bone Club";
+	ITEM.model = "models/weapons/bonehammer.mdl";
+	ITEM.weight = 2;
+	ITEM.uniqueID = "begotten_2h_boneclub";
+	ITEM.category = "Melee";
+	ITEM.description = "A primitive club made using a large bone once belonging to either Man, or Beast. Only a learned man would know the difference.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/club.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(0, 14.92, 0);
+	ITEM.attachmentOffsetVector = Vector(-2.83, 4.95, -10.61);
+	ITEM.fireplaceFuel = 180;
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "bone", "bone", "bone"}};
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 300, bNoSupercrate = true};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Salvager's Longsword";
+	ITEM.model = "models/newvegasprops/bumpsword.mdl";
+	ITEM.skin = 2;
+	ITEM.weight = 2.5;
+	ITEM.uniqueID = "begotten_2h_salvagerslongsword";
+	ITEM.category = "Melee";
+	ITEM.description = "Created from the salvaged debris of an scrap boss's destroyed war machine. This amalgam of metal is bent, and sharpened to resemble a sword.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/exile_knight_sword.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(172.04, 74.59, 261.55);
+	ITEM.attachmentOffsetVector = Vector(8.49, 1.9, 26.87);
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "steel_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Nobleman's Sword";
+	ITEM.model = "models/demonssouls/weapons/penetrating_sword.mdl";
+	ITEM.weight = 2.5;
+	ITEM.uniqueID = "begotten_2h_noblemansword";
+	ITEM.category = "Melee";
+	ITEM.description = "A symbol of stature among men of noble Glazic elite, a sword made of the finest quality steel that the forges can muster. The most ruthless District aristocrats, and the most pathetic servile ministers have wielded these swords since the beginning of Glazic supremacy.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/inquisitor_sword.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(92.49, 183.98, 10.94);
+	ITEM.attachmentOffsetVector = Vector(-0.71, 2.69, 3.54);
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Bastard Sword";
+	ITEM.model = "models/demonssouls/weapons/bastard_sword.mdl";
+	ITEM.skin = 2;
+	ITEM.weight = 2.5;
+	ITEM.uniqueID = "begotten_2h_bastardsword";
+	ITEM.category = "Melee";
+	ITEM.description = "A sharpened steel sword forged to be used by more experienced ranks of Glazic armies. Typically wielded with both hands, it is designed so that the most formidable swordsman can choose to wield it one-handed";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/longsword.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(280, 180, 10.94);
+	ITEM.attachmentOffsetVector = Vector(2.83, 3.4, 16.51);	
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 7000, bNoSupercrate = true};
+ITEM:Register();

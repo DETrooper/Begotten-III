@@ -342,12 +342,12 @@ elseif map == "bg_district34" then
 			{pos = Vector(1124, -8633, -4840), ang = Angle(0, 0, 0)},
 		},
 		["pillars"] = {
-			{pos = Vector(-2874, 9881, 409), ang = Angle(0, 90, 0)},
-			{pos = Vector(-3259, 9253, 304), ang = Angle(0, 90, 0)},
-			{pos = Vector(-2242, 10282, 375), ang = Angle(0, 90, 0)},
-			{pos = Vector(-3527, 8568, 280), ang = Angle(0, 90, 0)},
-			{pos = Vector(-4088, 8810, 436), ang = Angle(0, 90, 0)},
-			{pos = Vector(-2040, 10756, 380), ang = Angle(0, 90, 0)},
+			{pos = Vector(-350, 7611, 902), ang = Angle(0, 270, 0)},
+			{pos = Vector(-527, 7586, 892), ang = Angle(0, 270, 0)},
+			{pos = Vector(-1110, 7599, 902), ang = Angle(0, 270, 0)},
+			{pos = Vector(275, 7552, 904), ang = Angle(0, 270, 0)},
+			{pos = Vector(674, 7366, 872), ang = Angle(0, 270, 0)},
+			{pos = Vector(214, 7193, 1021), ang = Angle(0, 270, 0)},
 		},
 	};
 end
@@ -387,6 +387,7 @@ Schema.doors = {
 		["gorewatch"] = {
 			"gorewatch",
 		},
+
 		["tower"] = {
 			"churchgate1",
 			"churchgate2",
@@ -1476,7 +1477,7 @@ function Schema:SpawnBegottenEntities()
 		local bountyBoardEnt = ents.Create("cw_bounty_board");
 		local coinslotBase = ents.Create("prop_dynamic");
 		local coinslotEnt = ents.Create("cw_coinslot");
-		local gramophoneEnt = ents.Create("cw_gramophone");
+		local vinylEnt = ents.Create("cw_vinyl_player");
 		local hellPortalEnt = ents.Create("cw_hellportal");
 		local sacrificialAltarEnt = ents.Create("cw_sacrifical_altar");
 		local warhornBase = ents.Create("prop_dynamic");
@@ -1508,12 +1509,12 @@ function Schema:SpawnBegottenEntities()
 		coinslotEnt:SetPos(Vector(1844, -8136, 992));
 		coinslotEnt:SetAngles(Angle(0, 180, 0));
 		coinslotEnt:Spawn();
-		gramophoneEnt:SetPos(Vector(1793, -8049, -3251));
-		gramophoneEnt:SetAngles(Angle(0, 180, 0));
-		gramophoneEnt:Spawn();
 		hellPortalEnt:SetPos(Vector(2060, -9004, -4777));
 		hellPortalEnt:SetAngles(Angle(90, 180, 0));
 		hellPortalEnt:Spawn();
+		vinylEnt:SetPos(Vector(1195, -8198, -3067));
+		vinylEnt:SetAngles(Angle(0, 180, 0));
+		vinylEnt:Spawn();
 		sacrificialAltarEnt:SetPos(Vector(1068, -8771, -3458));
 		sacrificialAltarEnt:SetAngles(Angle(0, 0, 0));
 		sacrificialAltarEnt:Spawn();

@@ -160,7 +160,7 @@ function PANEL:Paint()
 		self.localLevelCap = self.localLevelCap + 5;
 	end
 	
-	if self.player:GetNetVar("subfaction") == "Rekh-khet-sa" then
+	if self.player:GetNetVar("subfaction") == "Rekh-khet-sa" or self.player:GetNetVar("subfaction") == "Crypt Walkers" then
 		self.localLevelCap = self.localLevelCap + 666;
 	end
 

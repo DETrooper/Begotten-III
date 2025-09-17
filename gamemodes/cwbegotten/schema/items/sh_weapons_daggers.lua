@@ -281,3 +281,52 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
 	ITEM.repairCostModifier = 0.3;
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Ravenstone Shard";
+	ITEM.model = "models/weapons/cultistdagger.mdl";
+	ITEM.weight = 0.5;
+	ITEM.uniqueID = "begotten_dagger_ravenstoneshard";
+	ITEM.category = "Melee";
+	ITEM.description = "An hand carved serrated dagger of black rock that glistens in the light. The brittle shard holds devastating sharpness, and in the right hands may best even the mightiest steel.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/Ebony_dagger.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
+	ITEM.attachmentOffsetAngles =  Angle(-98.889, -43.333, -100);
+	ITEM.attachmentOffsetVector = Vector(-3.54, 1.41, -2.12);
+	ITEM.canUseOffhand = true;
+	ITEM.huntingValue = 3;
+	
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1730, supercrateOnly = true};
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"human_bone"}};
+	ITEM.repairCostModifier = 0.3;
+	ITEM.requiredSubfactions = {"Old Clan Gotnarh"};
+	ITEM.requiredFactions = {"Goreic Warrior"};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Masquerade Society Ancestral Dagger";
+	ITEM.model = "models/morrowind/daedric/dagger/w_daedricdagger.mdl";
+	ITEM.weight = 0.5;
+	ITEM.uniqueID = "begotten_dagger_masqueradesocietydagger";
+	ITEM.category = "Melee";
+	ITEM.description = "A tainted dagger formed with the corrupt energy of an Enthralled spirit. Certainly it belong only to the most elusive of Dark servants. A twisted magic prevents anyone not of the correct bloodline from wielding this dagger.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/varazdat_dagger.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(252.95, 2.98, 0.95);
+	ITEM.attachmentOffsetVector = Vector(-3.54, 2, 1.41);
+	ITEM.canUseOffhand = true;
+	ITEM.huntingValue = 3;
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1750, supercrateOnly = true};
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks"}};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
+	ITEM.requiredSubfactions = {"Varazdat"};
+	ITEM.requiredFactions = {"Children of Satan"};
+	ITEM.repairCostModifier = 0.3;
+ITEM:Register();

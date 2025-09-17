@@ -4216,8 +4216,8 @@ local COMMAND = Clockwork.command:New("HellPortalGaze");
 			},
 			["bg_district34"] =
 			{
-				Vector(-2284, 8016, 191), -- box start
-				Vector(-3441, 11668, 191) -- box end
+				Vector(-2237, 8290, 626), -- box start
+				Vector(1789, 4698, 1443) -- box end
 			}
 		},
 		["Church"] = 

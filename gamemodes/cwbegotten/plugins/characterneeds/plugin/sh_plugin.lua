@@ -211,6 +211,9 @@ function COMMAND:OnRun(player, arguments)
 		Schema:EasyText(player, "peru", "Your mortal coil no longer requires sleep!");
 	
 		return false;
+	elseif player:GetSubfaction() == "Crypt Walkers" then
+		Schema:EasyText(player, "peru", "Your mortal self does not sleep...");
+		return false;
 	end
 
 	if (player:GetNeed("sleep") >= 40) then

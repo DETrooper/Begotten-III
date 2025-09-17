@@ -17,6 +17,7 @@ cwBeliefs.xpValues = {
 	["mutilate"] = 2, -- 2 xp per mutiliation of a corpse. Also includes other stuff like eating hearts or harvesting bones.
 	["residual"] = 1, -- 1 xp per minute survived in non-safezones.
 	["read"] = 50, -- 50 xp for every unique scripture read. Halved if a member of a faction.
+	["pray"] = 50, -- 50 xp for every pray, the command is limited to a cooldown of 20 minutes.
 };
 
 cwBeliefs.beliefNotifications = {
@@ -65,7 +66,7 @@ function cwBeliefs:LevelUp(player)
 			levelCap = levelCap + 5;
 		end
 		
-		if subfaction == "Rekh-khet-sa" then
+		if subfaction == "Rekh-khet-sa" or subfaction == "Crypt Walkers" then
 			levelCap = levelCap + 666;
 		end
 		

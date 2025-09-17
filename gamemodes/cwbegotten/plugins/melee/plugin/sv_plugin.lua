@@ -291,7 +291,7 @@ function playerMeta:GetMaxStability()
 		max_stability = tonumber(max_stability + boost);
 	end]]--
 	
-	if subfaction == "Knights of Sol" or subfaction == "House Herrera" or subfaction == "House Caelvora" then
+	if subfaction == "Knights of Sol" or subfaction == "House Herrera" or subfaction == "House Caelvora" or subfaction == "Crypt Walkers" then
 		max_stability = max_stability + 25;
 	elseif subfaction == "Philimaxio" then
 		max_stability = max_stability + 15;
