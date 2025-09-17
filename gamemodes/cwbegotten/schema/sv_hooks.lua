@@ -3063,15 +3063,15 @@ function Schema:PlayerCharacterLoaded(player)
 	if subfaction == "Clan Grock" then
 		local levelCap = 40;
 		
-		if cwBeliefs then
+		--[[if cwBeliefs then
 			levelCap = cwBeliefs.sacramentLevelCap;
-		end
+		end]]--
 		
 		local scale = math.min(player:GetCharacterData("level", 1), levelCap);
 	
-		player:SetModelScale(1 + (scale * 0.01), FrameTime());
-		player:SetViewOffset(Vector(0, 0, 64 + scale));
-		player:SetViewOffsetDucked(Vector(0, 0, 28 + (scale / 2)));
+		player:SetModelScale(1 + (scale * 0.005), FrameTime());
+		player:SetViewOffset(Vector(0, 0, 64 + scale / 4));
+		player:SetViewOffsetDucked(Vector(0, 0, 28 + (scale / 8)));
 	else
 		player:SetModelScale(1, FrameTime());
 		player:SetViewOffset(Vector(0, 0, 64));
