@@ -56,15 +56,8 @@ elseif (map == "bg_district34") then
 		Vector(-8804, 15291, 293), -- Scraptown
 		Vector(-4249, -10501, 10538),
 		Vector(-9038, 6112, -1312), -- Scrapfactory
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 		Vector(3349, -10540, 435), -- Shanty Town Manor
-=======
 		Vector(3346, -10539, 1155), -- Shack Forge
->>>>>>> Stashed changes
-=======
-		Vector(3346, -10539, 1155), -- Shack Forge
->>>>>>> Stashed changes
 	}
 	
 	Clockwork.kernel:IncludePrefixed("sh_recipes_rp_district21.lua");
