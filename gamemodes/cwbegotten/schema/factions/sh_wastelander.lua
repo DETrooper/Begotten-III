@@ -420,6 +420,7 @@ local FACTION = Clockwork.faction:New("Aristocracy Of Light");
 	
 	Schema.RanksToSubfaction["Aristocracy Of Light"] = {
 		["Vicar"] = "The Ministry",
+		["Apprentice"] = "The Ministry",
 		["Minister"] = "The Ministry",
 		["Magistrate"] = "The Ministry",
         ["Regent"] = "The Ministry",
