@@ -1477,7 +1477,7 @@ function Schema:SpawnBegottenEntities()
 		local bountyBoardEnt = ents.Create("cw_bounty_board");
 		local coinslotBase = ents.Create("prop_dynamic");
 		local coinslotEnt = ents.Create("cw_coinslot");
-		local gramophoneEnt = ents.Create("cw_gramophone");
+		local vinylEnt = ents.Create("cw_vinyl_player");
 		local hellPortalEnt = ents.Create("cw_hellportal");
 		local sacrificialAltarEnt = ents.Create("cw_sacrifical_altar");
 		local warhornBase = ents.Create("prop_dynamic");
@@ -1509,12 +1509,12 @@ function Schema:SpawnBegottenEntities()
 		coinslotEnt:SetPos(Vector(1844, -8136, 992));
 		coinslotEnt:SetAngles(Angle(0, 180, 0));
 		coinslotEnt:Spawn();
-		gramophoneEnt:SetPos(Vector(1793, -8049, -3251));
-		gramophoneEnt:SetAngles(Angle(0, 180, 0));
-		gramophoneEnt:Spawn();
 		hellPortalEnt:SetPos(Vector(2060, -9004, -4777));
 		hellPortalEnt:SetAngles(Angle(90, 180, 0));
 		hellPortalEnt:Spawn();
+		vinylEnt:SetPos(Vector(1195, -8198, -3067));
+		vinylEnt:SetAngles(Angle(0, 180, 0));
+		vinylEnt:Spawn();
 		sacrificialAltarEnt:SetPos(Vector(1068, -8771, -3458));
 		sacrificialAltarEnt:SetAngles(Angle(0, 0, 0));
 		sacrificialAltarEnt:Spawn();
