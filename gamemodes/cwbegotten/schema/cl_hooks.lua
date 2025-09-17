@@ -1010,7 +1010,7 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 				else
 					subfactionText = "A Soldier of House Caelvora.";
 				end
-			elseif playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" or playerFaction == "Hillkeeper" or playerFaction ~= "Militant Orders of the Villa" or playerFaction ~= "Aristocracy Of Light" then
+			elseif playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" or playerFaction == "Hillkeeper" or playerFaction == "Militant Orders of the Villa" or playerFaction == "Aristocracy Of Light" then
 				if targetSubfaction == "Auxiliary" then
 					if playerSubfaction == targetSubfaction then
 						subfactionText = "A fellow auxiliary of the Holy Order of the Gatekeepers.";

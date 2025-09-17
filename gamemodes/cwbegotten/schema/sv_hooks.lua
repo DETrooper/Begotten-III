@@ -3504,7 +3504,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 				if IsValid(damageInfo:GetAttacker()) and damageInfo:GetAttacker():IsPlayer() then
 					local faction = damageInfo:GetAttacker():GetFaction();
 				
-					if faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" and faction ~= "Hillkeeper" and faction ~= "Pope Adyssa's Gatekeepers" and faction == "Aristocracy Of Light" and faction == "Militant Orders of the Villa" and !damageInfo:GetAttacker():IsAdmin() then
+					if faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" and faction ~= "Hillkeeper" and faction ~= "Pope Adyssa's Gatekeepers" and faction ~= "Aristocracy Of Light" and faction ~= "Militant Orders of the Villa" and !damageInfo:GetAttacker():IsAdmin() then
 						damageInfo:SetDamage(0);
 						return true;
 					end

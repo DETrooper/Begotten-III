@@ -157,23 +157,15 @@ function cwDeathCauses:PlayerDeath(player, inflictor, attacker, damageInfo)
 						
 						if attackerSubfaction == "Inquisition" then
 							attackerName = "an unknown Inquisitor";
-						elseif attackerSubfaction == "Order Of The Writ" then
-							attackerName = "an unknown member of The Order Of The Writ";
 						elseif attackerSubfaction == "Knights of Sol" then
 							attackerName =  "an unknown Knight of Sol";
-						elseif attackerSubfaction == "House Herrera" then
-							attackerName =  "an unknown Soldier of House Herrera";
-						elseif attackerSubfaction == "House Caelvora" then
-							attackerName =  "an unknown Soldier of House Caelvora";
 						else
 							attackerName =  "an unknown Glazic nobleman";
 						end
 					elseif attackerFaction == "Aristocracy Of Light" then
 						local attackerSubfaction = attacker:GetSubfaction();
 						
-						if attackerSubfaction == "The Inquisition" then
-							attackerName = "an unknown Inquisitor";
-						elseif attackerSubfaction == "Order Of The Writ" then
+						if attackerSubfaction == "Order Of The Writ" then
 							attackerName = "an unknown member of The Order Of The Writ";
 						elseif attackerSubfaction == "House Herrera" then
 							attackerName =  "an unknown Soldier of House Herrera";
