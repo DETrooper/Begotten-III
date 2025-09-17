@@ -87,7 +87,7 @@ function ITEM:OnUse(player, itemEntity)
 		--player:GiveItem(Clockwork.item:CreateInstance("handheld_radio"), true);
 		--player:GiveItem(Clockwork.item:CreateInstance("laudanum"), true);
 		--player:GiveItem(Clockwork.item:CreateInstance("splint"), true);
-	elseif subfaction == "Prole of the Writ" then
+	elseif subfaction == "Prole of The Writ" then
 		player:GiveItem(Clockwork.item:CreateInstance("backpack_small"), true);
 		player:GiveItem(Clockwork.item:CreateInstance("begotten_spear_scrapspear"), true);
 		player:GiveItem(Clockwork.item:CreateInstance("handheld_radio"), true);

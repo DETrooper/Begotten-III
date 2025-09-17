@@ -1995,7 +1995,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 	elseif faction == "Militant Orders of the Villa" then
 		if subfaction == "The Guild" then
 			level = level + 11;
-		elseif subfaction == "Prole of the Writ" then
+		elseif subfaction == "Prole of The Writ" then
 			level = level + 7;
 		else
 			level = level + 7;
