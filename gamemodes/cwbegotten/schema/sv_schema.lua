@@ -405,7 +405,6 @@ Schema.doors = {
 			"cagedoor",
 			"inq_door1",
 			"inq_door2",
-
 		},
 		["knights"] = {
 			"pope_reception_shutter",

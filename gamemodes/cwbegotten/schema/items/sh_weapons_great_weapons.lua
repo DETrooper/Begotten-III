@@ -436,6 +436,46 @@ local ITEM = Clockwork.item:New("weapon_base");
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Flamberge";
+	ITEM.model = "models/demonssouls/weapons/flamberge.mdl";
+	ITEM.weight = 3;
+	ITEM.uniqueID = "begotten_2h_great_flamberge";
+	ITEM.category = "Melee";
+	ITEM.description = "A steel greatsword. Its hilt is engraved with Glazic markings of a long dead noble household.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/claymore.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90.5, 180, 347.07);
+	ITEM.attachmentOffsetVector = Vector(5.66, 2.9, 17.68);
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1300, supercrateOnly = true};
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "wood"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"strength"};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Executioner's Axe";
+	ITEM.model = "models/witcher2soldiers/tw2_bigaxe.mdl";
+	ITEM.weight = 5;
+	ITEM.uniqueID = "begotten_2h_great_executionersaxe";
+	ITEM.category = "Melee";
+	ITEM.description = "An ornate war axe made from Shagalaxian steel. This axe is often used by the sea raiders of Clan Harald. An old curse prevents weaklings from firmly grasping its handle.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/haralder_war_axe.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 0, 281.37);
+	ITEM.attachmentOffsetVector = Vector(-5.66, 2.83, -30.41);
+	
+	ITEM.attributes = {"splinter"};
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"strength"};
+	ITEM.kinisgerOverride = true;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Villa Spadone";
 	ITEM.model = "models/demonssouls/weapons/great_sword.mdl";
 	ITEM.weight = 3;
