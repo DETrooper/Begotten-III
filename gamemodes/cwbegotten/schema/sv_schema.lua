@@ -411,6 +411,14 @@ Schema.doors = {
 			"pope_reception_shutter",
 			"Bunker",
 		},
+		["caelvora"] = {
+			"house_caelvora_1",
+			"house_caelvora_2",
+		},
+		["herrera"] = {
+			"house_herrera_1",
+			"house_herrera_2",
+		},
 		["hell"] = {
 			"hellexecution_1",
 			"hellexecution_2",
