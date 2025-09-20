@@ -119,7 +119,7 @@ local FACTION = Clockwork.faction:New("Militant Orders of the Villa");
 	FACTION.subfactions = {
 		{name = "Villakeepers", subtitle = "Militans - Soldiers tasked with protecting the Villa", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Constant Drilling: Starts with +15 maximum stamina"}, {Color(0, 225, 0), "(+) Nourishing Rations: Starts with +25 maximum health"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(0, 225, 0), "(+) Strength in Numbers: +100% faith gain from dealing damage"}, {Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}}},
         {name = "Prole of The Writ", startingRank = 12, whitelist = true, subtitle = "The Writ - Scouts and Manhunters", description = "The Proles of the Writ are among the bravest and most foolhardy members of the Villa's militia. Promised citizenship after merely six months of service in the Wristmaster's Order, they are tasked with the arduous task of venturing out into the wastes to prosecute those who would flee the Writmarshal's justice. They are the envoys of the Villa to those inbred communities of wander-churls, the seekers of lost knowledge, and the long arm of the Villa's law.", attributes = {{Color(0, 225, 0), "(+) Excursionists: -25% stamina drain and +5% sprint speed"}, {Color(0, 225, 0), "(+) Masters of Disguise: Recognising does not reveal your rank"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(225, 0, 0), "(-) The 'Sol Orthodoxy' and 'Voltism' subfaiths are locked"}}},
-		{name = "The Guild", subtitle = "Artisans - Physicians and Manufacturers", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Men of Knowledge: +25% increased faith gain"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 12"}, {Color(0, 225, 0), "(+) Drilled & Nourished: Starts with +20 health and +10 stamina"}, {Color(0, 225, 0), "(+) Has +5kg extra weight capacity"}, {Color(225, 0, 0), "(-) Tier IV of the Prowess belief tree is locked"}, {Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}}},
+		{name = "The Guild", startingRank = 3, subtitle = "Artisans - Physicians and Manufacturers", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Men of Knowledge: +25% increased faith gain"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 12"}, {Color(0, 225, 0), "(+) Drilled & Nourished: Starts with +20 health and +10 stamina"}, {Color(0, 225, 0), "(+) Has +5kg extra weight capacity"}, {Color(225, 0, 0), "(-) Tier IV of the Prowess belief tree is locked"}, {Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}}},
 	};
 	FACTION.residualXPZones = { -- Zones that boost residual XP gain for this faction.
 		["bg_district34"] = {
@@ -245,8 +245,8 @@ local FACTION = Clockwork.faction:New("Militant Orders of the Villa");
         ["Guildmaster"] = "The Guild",
 		["Physician"] = "The Guild",
 		["General Practicioner"] = "The Guild",
-		["Surveyor"] = "Prole of the Writ",
-		["Waymaster"] = "Prole of the Writ",
+		["Surveyor"] = "Prole of The Writ",
+		["Waymaster"] = "Prole of The Writ",
 	};
 	
 	Schema.RanksToCoin["Militant Orders of the Villa"] = {
@@ -315,10 +315,10 @@ local FACTION = Clockwork.faction:New("Aristocracy Of Light");
 	--FACTION.imposters = true;
 	FACTION.names = "glazic";
 	FACTION.subfactions = {
-		{name = "The Ministry", startingRank = 1, whitelist = true, subtitle = "The Ministry - The Privileged Few Overseers of Glazic Supremacy", description = "The Holy Hierarchy is perhaps the only surviving institution of the old world and is the only known church of the Light remaining. Many view the Holy Hierarchy as the direct continuation of the Empire of Light, including the Holy Hierarchy themselves, who push this narrative to solidify their grasp on their subjects. Any who doubt its legitimacy are executed on the spot. Lording over most of the 'civilized' peasantry that wander the wasteland, the Holy Hierarchy strictly enforces its religious codes, which are ever-changing at the whim of the Pope. At the very top of the Hierarchy lies the Pope, supreme in power. He lives in a penthouse at the top of the hotel in absolute luxury in comparison to the shanties that the rabble share. Below him lies the cardinals, who serve as the Pope's council. Lower still are the Bishops, many of whom are now in open rebellion against the new Pope, with some even claiming his title as their own. Lastly, there are the priests, who are barely above commoner status and equal in rank to those in the Knights of Sol or Inquisition. A priest's duties often involve searching ancient texts held within the grand archives for any advantage that could be offered to the Hierarchy over their rivals, or for clues to decipher the ramblings of the machine that so many wanderers speak of.", models = ministerModels},
+		{name = "Ministry", startingRank = 1, whitelist = true, subtitle = "The Ministry - The Privileged Few Overseers of Glazic Supremacy", description = "The Holy Hierarchy is perhaps the only surviving institution of the old world and is the only known church of the Light remaining. Many view the Holy Hierarchy as the direct continuation of the Empire of Light, including the Holy Hierarchy themselves, who push this narrative to solidify their grasp on their subjects. Any who doubt its legitimacy are executed on the spot. Lording over most of the 'civilized' peasantry that wander the wasteland, the Holy Hierarchy strictly enforces its religious codes, which are ever-changing at the whim of the Pope. At the very top of the Hierarchy lies the Pope, supreme in power. He lives in a penthouse at the top of the hotel in absolute luxury in comparison to the shanties that the rabble share. Below him lies the cardinals, who serve as the Pope's council. Lower still are the Bishops, many of whom are now in open rebellion against the new Pope, with some even claiming his title as their own. Lastly, there are the priests, who are barely above commoner status and equal in rank to those in the Knights of Sol or Inquisition. A priest's duties often involve searching ancient texts held within the grand archives for any advantage that could be offered to the Hierarchy over their rivals, or for clues to decipher the ramblings of the machine that so many wanderers speak of.", models = ministerModels},
 		{name = "Order of the Writ", startingRank = 1, whitelist = true, subtitle = "Enforcers of the Writ - Hunters, Judges, and Executioners", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Pious: +50% increased faith gain"}, {Color(0, 225, 0), "(+) Starts with +25 maximum health"}, {Color(0, 225, 0), "(+) Starts with +25 maximum stamina"}, {Color(0, 225, 0), "(+) Has +5kg extra weight capacity"}}}, 
-		{name = "House Caelvora", startingRank = 1, whitelist = true, subtitle = "The House of Caelvora - Descendants of the Villa", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Bulwark: +25 stamina, +25 Health, and +25 stability"}, {Color(0, 225, 0), "(+) +15% Stamina damage damage resistance when a shield isn't equipped"}, {Color(0, 225, 0), "(+) +5% Movement speed when a Shield is not equipped"}, {Color(0, 255, 0), "(+) +50% Faith Gain"}, {Color(0, 255, 0), "(+) +4kg Carry weight"}, {Color(255, 0, 0), "(-) The Voltism and Sol Orthodoxy subfaiths are locked"}}, models = ministerModels},
-		{name = "House Herrera", startingRank = 1, whitelist = true, subtitle = "The House of Herrera - Saviours of The Villa", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Starts with +40 maximum health"}, {Color(0, 225, 0), "(+) Bulwark: +25 stamina and +25 stability"}, {Color(0, 225, 0), "(+) +50% faith gain"}, {Color(0, 255, 0), "(+) +10% Armor protection"}, {Color(0, 255, 0), "(+) +8kg Carry weight"}, {Color(225, 0, 0), "(-) Honor Bound: Cannot equip firearms."}}, models = ministerModels},
+		{name = "House Caelvora", startingRank = 1, whitelist = true, subtitle = "The House of Caelvora - Descendants of the Villa", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Bulwark: +25 stamina, +25 Health, and +25 stability"}, {Color(0, 225, 0), "(+) +15% Stamina damage damage resistance when a shield isn't equipped"}, {Color(0, 225, 0), "(+) +5% Movement speed when a Shield is not equipped"}, {Color(0, 255, 0), "(+) +50% Faith Gain"}, {Color(0, 255, 0), "(+) +4kg Carry weight"}, {Color(255, 0, 0), "(-) The Voltism subfaith are locked"}}, models = ministerModels},
+		{name = "House Herrera", startingRank = 1, whitelist = true, subtitle = "The House of Herrera - Saviours of The Villa", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Starts with +40 maximum health"}, {Color(0, 225, 0), "(+) Bulwark: +25 stamina and +25 stability"}, {Color(0, 225, 0), "(+) +50% faith gain"}, {Color(0, 255, 0), "(+) +10% Armor protection"}, {Color(0, 255, 0), "(+) +8kg Carry weight"}, {Color(225, 0, 0), "(-) Honor Bound: Cannot equip firearms."}, {Color(255, 0, 0), "(-) The Voltism subfaith are locked"}}, models = ministerModels},
 	};
 	FACTION.singleGender = GENDER_MALE;
 	
@@ -412,17 +412,17 @@ local FACTION = Clockwork.faction:New("Aristocracy Of Light");
 	};
 	
 	Schema.RankTiers["Aristocracy Of Light"] = {
-		[1] = { "Apprentice", "Vicar"},
+		[1] = {"Vicar"},
 		[2] = {"Ser Knight", "Manhunter", "Minister"},
 		[3] = {"Chamberlain", "Chronologist", "Magistrate"},
 		[4] = {"Writmarshal", "Regent", "Count"},
 	};
 	
 	Schema.RanksToSubfaction["Aristocracy Of Light"] = {
-		["Vicar"] = "The Ministry",
-		["Minister"] = "The Ministry",
-		["Magistrate"] = "The Ministry",
-        ["Regent"] = "The Ministry",
+		["Vicar"] = "Ministry",
+		["Minister"] = "Ministry",
+		["Magistrate"] = "Ministry",
+        ["Regent"] = "Ministry",
 		["Manhunter"] = "Order of the Writ",
         ["Chronologist"] = "Order of the Writ",
         ["Writmarshal"] = "Order of the Writ",

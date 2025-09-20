@@ -81,7 +81,7 @@ end;
 function cwStamina:ModifyStaminaDrain(player, drainTab)
 	local subfaction = player:GetSubfaction();
 	
-	if subfaction == "Praeventor" or subfaction == "Outrider" then
+	if subfaction == "Praeventor" or subfaction == "Outrider" or subfaction == "Prole of The Writ" then
 		drainTab.decrease = drainTab.decrease * 0.75;
 	end
 end

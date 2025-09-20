@@ -2516,6 +2516,34 @@ function Schema:PlayerCanUseDoor(player, door)
 				
 				return false;
 			end
+		elseif doors["herrera"] and table.HasValue(doors["herrera"], doorName) then
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+			local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+			local curTime = CurTime();
+			
+			if faction ~= "Aristocracy Of Light" or (subfaction ~= "House Herrera") then
+				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
+					player.nextDoorNotify = curTime + 1;
+				
+					Schema:EasyText(player, "firebrick", "You aren't the correct faction to open this blastdoor!");
+				end
+				
+				return false;
+			end
+		elseif doors["caelvora"] and table.HasValue(doors["caelvora"], doorName) then
+			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
+			local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+			local curTime = CurTime();
+			
+			if faction ~= "Aristocracy Of Light" or (subfaction ~= "House Caelvora") then
+				if !player.nextDoorNotify or player.nextDoorNotify < curTime then
+					player.nextDoorNotify = curTime + 1;
+				
+					Schema:EasyText(player, "firebrick", "You aren't the correct faction to open this blastdoor!");
+				end
+				
+				return false;
+			end
 		elseif doors["gorewatch"] and table.HasValue(doors["gorewatch"], doorName) then
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			local curTime = CurTime();
@@ -3504,7 +3532,7 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 				if IsValid(damageInfo:GetAttacker()) and damageInfo:GetAttacker():IsPlayer() then
 					local faction = damageInfo:GetAttacker():GetFaction();
 				
-					if faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" and faction ~= "Hillkeeper" and faction ~= "Pope Adyssa's Gatekeepers" and faction == "Aristocracy Of Light" and faction == "Militant Orders of the Villa" and !damageInfo:GetAttacker():IsAdmin() then
+					if faction ~= "Gatekeeper" and faction ~= "Holy Hierarchy" and faction ~= "Hillkeeper" and faction ~= "Pope Adyssa's Gatekeepers" and faction ~= "Aristocracy Of Light" and faction ~= "Militant Orders of the Villa" and !damageInfo:GetAttacker():IsAdmin() then
 						damageInfo:SetDamage(0);
 						return true;
 					end
@@ -3628,7 +3656,7 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 		if player:Health() > player:GetMaxHealth() * 0.95 then
 			infoTable.runSpeed = infoTable.runSpeed * 1.1;
 		end
-	elseif subfaction == "Praeventor" or subfaction == "Outrider" then
+	elseif subfaction == "Praeventor" or subfaction == "Outrider" or subfaction == "Prole of The Writ" then
 		if player:GetSubfaith() ~= "Sol Orthodoxy" then
 			infoTable.runSpeed = infoTable.runSpeed * 1.05;
 		end

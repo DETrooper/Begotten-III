@@ -705,7 +705,7 @@ function Schema:GetTargetPlayerName(player)
 	
 	local subfaction = player:GetSubfaction();
 
-	if subfaction == "Praeventor" or subfaction == "Outrider" or subfaction == "Prole of the Writ" then
+	if subfaction == "Praeventor" or subfaction == "Outrider" or subfaction == "Prole of The Writ" then
 		local clientFaction = Clockwork.Client:GetFaction();
 		
 		if clientFaction ~= "Gatekeeper" and clientFaction ~= "Hillkeeper" and clientFaction ~= "Militant Orders of the Villa" and clientFaction ~= "Aristocracy Of Light" and clientFaction ~= "Holy Hierarchy" then
@@ -741,7 +741,7 @@ function Schema:OverrideTeamColor(player, bRecognized)
 				end
 			end
 		elseif playerFaction == "Militant Orders of the Villa" and clientFaction ~= "Militant Orders of the Villa" and clientFaction ~= "Aristocracy Of Light" then
-			if player:GetSubfaction() == "Prole Of The Writ" then
+			if player:GetSubfaction() == "Prole of The Writ" then
 				if (!clothesItem or !clothesItem.faction or (clothesItem.faction and clothesItem.faction ~= playerFaction)) and (!helmetItem or !helmetItem.faction or (helmetItem.faction and helmetItem.faction ~= playerFaction)) then
 					teamColor = Color(200, 200, 200, 255);
 				end
@@ -1010,7 +1010,7 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 				else
 					subfactionText = "A Soldier of House Caelvora.";
 				end
-			elseif playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" or playerFaction == "Hillkeeper" or playerFaction ~= "Militant Orders of the Villa" or playerFaction ~= "Aristocracy Of Light" then
+			elseif playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" or playerFaction == "Hillkeeper" or playerFaction == "Militant Orders of the Villa" or playerFaction == "Aristocracy Of Light" then
 				if targetSubfaction == "Auxiliary" then
 					if playerSubfaction == targetSubfaction then
 						subfactionText = "A fellow auxiliary of the Holy Order of the Gatekeepers.";
@@ -1039,7 +1039,7 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 					else
 						subfactionText = "A legionary of the Holy Order of the Villakeepers.";
 					end
-				elseif targetSubfaction == "Prole of the Writ" then
+				elseif targetSubfaction == "Prole of The Writ" then
 					if playerSubfaction == targetSubfaction then
 						subfactionText = "A fellow Prole of the Order of the Writ.";
 						textColor = Color(0, 255, 0, 255);
