@@ -1716,7 +1716,7 @@ function playerMeta:GetMaxHealth(health)
 			maxHealth = maxHealth + 30;
 		elseif subfaction == "Clan Reaver" or subfaction == "Clan Crast" or subfaction == "Legionary" or subfaction == "Limitanei" or subfaction == "Varazdat" then
 			maxHealth = maxHealth + 25;
-		elseif subfaction == "Servus" or subfaction == "House Caelvora" or subfaction == "Order Of The Writ" then
+		elseif subfaction == "Servus" or subfaction == "House Caelvora" or subfaction == "Order Of The Writ" or subfaction == "Villakeepers" then
 			maxHealth = maxHealth + 25
 		elseif subfaction == "Auxiliary" or subfaction == "The Guild" then
 			maxHealth = maxHealth + 20	
