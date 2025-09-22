@@ -118,7 +118,7 @@ local FACTION = Clockwork.faction:New("Militant Orders of the Villa");
 	FACTION.names = "glazic";
 	FACTION.subfactions = {
 		{name = "Villakeepers", subtitle = "Militans - Soldiers tasked with protecting the Villa", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Constant Drilling: Starts with +15 maximum stamina"}, {Color(0, 225, 0), "(+) Nourishing Rations: Starts with +25 maximum health"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(0, 225, 0), "(+) Strength in Numbers: +100% faith gain from dealing damage"}, {Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}}},
-        {name = "Prole of The Writ", startingRank = 12, whitelist = true, subtitle = "The Writ - Scouts and Manhunters", description = "The Proles of the Writ are among the bravest and most foolhardy members of the Villa's militia. Promised citizenship after merely six months of service in the Wristmaster's Order, they are tasked with the arduous task of venturing out into the wastes to prosecute those who would flee the Writmarshal's justice. They are the envoys of the Villa to those inbred communities of wander-churls, the seekers of lost knowledge, and the long arm of the Villa's law.", attributes = {{Color(0, 225, 0), "(+) Excursionists: -25% stamina drain and +5% sprint speed"}, {Color(0, 225, 0), "(+) Masters of Disguise: Recognising does not reveal your rank"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(225, 0, 0), "(-) The 'Sol Orthodoxy' and 'Voltism' subfaiths are locked"}}},
+        {name = "Prole of The Writ", startingRank = 4, whitelist = true, subtitle = "The Writ - Scouts and Manhunters", description = "The Proles of the Writ are among the bravest and most foolhardy members of the Villa's militia. Promised citizenship after merely six months of service in the Wristmaster's Order, they are tasked with the arduous task of venturing out into the wastes to prosecute those who would flee the Writmarshal's justice. They are the envoys of the Villa to those inbred communities of wander-churls, the seekers of lost knowledge, and the long arm of the Villa's law.", attributes = {{Color(0, 225, 0), "(+) Excursionists: -25% stamina drain and +5% sprint speed"}, {Color(0, 225, 0), "(+) Masters of Disguise: Recognising does not reveal your rank"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(225, 0, 0), "(-) The 'Sol Orthodoxy' and 'Voltism' subfaiths are locked"}}},
 		{name = "The Guild", startingRank = 3, subtitle = "Artisans - Physicians and Manufacturers", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Men of Knowledge: +25% increased faith gain"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 12"}, {Color(0, 225, 0), "(+) Drilled & Nourished: Starts with +20 health and +10 stamina"}, {Color(0, 225, 0), "(+) Has +5kg extra weight capacity"}, {Color(225, 0, 0), "(-) Tier IV of the Prowess belief tree is locked"}, {Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}}},
 	};
 	FACTION.residualXPZones = { -- Zones that boost residual XP gain for this faction.
@@ -154,7 +154,7 @@ local FACTION = Clockwork.faction:New("Militant Orders of the Villa");
 			if !player:IsAdmin() then
 				local playerFaction = player:GetNetVar("kinisgerOverrideFaction") or player:GetFaction();
 				
-				if playerFaction == "Holy Hierarchy" then
+				if playerFaction == "Aristocracy Of Light" then
 					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 					
 					if playerSubfaction ~= "Ministry" then
@@ -168,7 +168,7 @@ local FACTION = Clockwork.faction:New("Militant Orders of the Villa");
 			if !player:IsAdmin() then
 				local playerFaction = player:GetNetVar("kinisgerOverrideFaction") or player:GetFaction();
 				
-				if playerFaction == "Holy Hierarchy" then
+				if playerFaction == "Aristocracy Of Light" then
 					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
 					
 					if playerSubfaction ~= "Ministry" then
@@ -223,9 +223,9 @@ local FACTION = Clockwork.faction:New("Militant Orders of the Villa");
 	
 	Schema.RankTiers["Militant Orders of the Villa"] = {
 		[1] = {"Levy"},
-		[2] = {"Brother", "Laborer"},
-		[3] = {"Proselyte", "Physician", "Mechanic", "Surveyor"},
-		[4] = {"Prefect", "Reliquarian", "General Practicioner", "Forgewright", "Waymaster"},
+		[2] = {"Brother", "Laborer", "Surveyor"},
+		[3] = {"Proselyte", "Physician", "Mechanic", "Waymaster"},
+		[4] = {"Prefect", "Reliquarian", "General Practicioner", "Forgewright"},
 		[5] = {"Legate", "Guildmaster", "Manhunter", "Chronologist"},
         [6] = {"Writmarshal"}
 	};
