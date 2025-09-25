@@ -406,6 +406,7 @@ Schema.doors = {
 			"inq_door1",
 			"inq_door2",
 			"gk_officer_door",
+			"gorewatch_panic",
 		},
 		["knights"] = {
 			"pope_reception_shutter",
