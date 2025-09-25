@@ -58,7 +58,7 @@ if SERVER then
 		if ent:IsNextBot() then return true end
 		if ent:IsPlayer() then return true end
 		if ent:IsNPC() then return true end
-		if Clockwork and ent:GetClass() == "prop_ragdoll" and Clockwork.entity:IsPlayerRagdoll(ent) then return true end -- bgt change
+		if Clockwork and ((ent:GetClass() == "prop_ragdoll" and Clockwork.entity:IsPlayerRagdoll(ent)) or ent:GetClass() == "cw_player_body") then return true end -- bgt change
 		return false
 	end
 
