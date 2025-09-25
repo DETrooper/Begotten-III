@@ -1657,6 +1657,8 @@ local COMMAND = Clockwork.command:New("BlowWarhorn");
 		
 		if (!player.blowWarhornCooldown or curTime > player.blowWarhornCooldown) then
 			player.blowWarhornCooldown = curTime + 600;
+		if player:IsAdmin() then player.blowWarhornCooldown = curTime + 15;
+		end
 		
 			-- Prevent the bell sound and warhorn sound from playing over eachother.
 			if cwDayNight and cwDayNight.currentCycle == "day" then
