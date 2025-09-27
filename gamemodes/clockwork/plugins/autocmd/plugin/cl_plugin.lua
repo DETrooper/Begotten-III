@@ -2,7 +2,7 @@ local PLUGIN = PLUGIN
 
 
 PLUGIN.argtypes = PLUGIN.argtypes or {}
-
+PLUGIN.render_ctx = {}
 ---Registers a command type
 ---```
 ---Clockwork.command:RegisterType("example", function(argument)
@@ -28,8 +28,9 @@ PLUGIN.argtypes = PLUGIN.argtypes or {}
 ---```
 ---@param id string
 ---@param callback fun(current_arg: string, args: string[]): string[]
-function Clockwork.command:RegisterType(id, callback)
-    PLUGIN:RegisterArgumentType(id, callback)
+---@param render_callback fun(current_arg: string, args: string[])? If provided, creates a 3D render context to be ran with the specified arguments see "Radius" for a example
+function Clockwork.command:RegisterType(id, callback, render_callback)
+    PLUGIN:RegisterArgumentType(id, callback, render_callback)
 end
 
 ---@param id string
@@ -39,10 +40,14 @@ end
 
 function PLUGIN:RemoveArgumentType(id)
     self.argtypes[id] = nil
+    self.render_ctx[id] = nil
 end
 
-function PLUGIN:RegisterArgumentType(id, callback)
+function PLUGIN:RegisterArgumentType(id, callback, render_callback)
     self.argtypes[id] = callback
+    if isfunction(render_callback) then
+        self.render_ctx[id] = {render = render_callback}
+    end
 end
 
 ---@param cmd_type string
@@ -51,8 +56,15 @@ end
 ---@return string[]
 function PLUGIN:ParseArgumentType(cmd_type, argument, args)
     local parser = self.argtypes[cmd_type]
+    local ctx = self.render_ctx[cmd_type]
+    
+    if ctx then
+        cam.Start3D()
+        ctx.render(argument, args)
+        cam.End3D()
+    end
 
-    if parser then
+    if isfunction(parser) then
         return parser(argument, args)
     end
 
