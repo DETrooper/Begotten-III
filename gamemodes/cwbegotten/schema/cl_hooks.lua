@@ -988,7 +988,6 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 					textColor = Color(0, 255, 0, 255);
 				else
 					subfactionText = "A member of the Order Of The Writ.";
-					textColor = Color(0, 255, 0, 255);
 				end
 			elseif targetSubfaction == "Knights of Sol" then
 				if playerSubfaction == targetSubfaction then
