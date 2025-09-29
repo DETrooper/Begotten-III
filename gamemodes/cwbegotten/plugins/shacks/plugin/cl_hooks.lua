@@ -53,52 +53,6 @@ elseif game.GetMap() == "rp_district21" then
 			["S7"] = {name = "Shack S7", floor = 0, price = 500},
 		},
 	};
-elseif game.GetMap() == "bg_district34" then
-	cwShacks.shackData = {
-		["outside"] = {
-			["S1"] = {name = "Shack S1", floor = 0, price = 75},
-			["S2"] = {name = "Shack S2", floor = 0, price = 75},
-			["S3"] = {name = "Shack S3", floor = 0, price = 75},
-			["S4"] = {name = "Shack S4", floor = 0, price = 75},
-			["S5"] = {name = "Shack S5", floor = 0, price = 75},
-			["S8"] = {name = "Shack S6", floor = 0, price = 75},
-			["S9"] = {name = "Shack S7", floor = 0, price = 75},
-			["M0"] = {name = "Small Manor", floor = 0, price = 1200},
-		},
-		["market"] = {
-			["M1"] = {name = "Shack M1", floor = 0, price = 225},
-			["M2"] = {name = "Shack M2", floor = 0, price = 225},
-			["M3"] = {name = "Shack M3", floor = 0, price = 225},
-		},
-		["floor1v"] = {
-			["R3"] = {name = "Room 3", floor = 1, price = 500},
-			["R4"] = {name = "Room 4", floor = 1, price = 500},
-			["R5"] = {name = "Room 5", floor = 1, price = 1000},
-			["R6"] = {name = "Room 6", floor = 1, price = 1000},
-			["R7"] = {name = "Room 7", floor = 1, price = 1000},
-			["R8"] = {name = "Room 8", floor = 1, price = 1000},
-			["S6"] = {name = "Shack", floor = 1, price = 225},
-			["R9"] = {name = "Room 9", floor = 1, price = 500},
-s		},
-		["floor2"] = {
-			["R11"] = {name = "Room 11", floor = 2, price = 500},
-			["R12"] = {name = "Room 12", floor = 2, price = 500},
-			["S7"] = {name = "Shack", floor = 2, price = 225},
-			["R15"] = {name = "Room 15", floor = 2, price = 1000},
-			["R16"] = {name = "Room 16", floor = 2, price = 1000},
-			["R18"] = {name = "Room 18", floor = 2, price = 1000},
-			["R19"] = {name = "Room 19", floor = 2, price = 500},
-			["R20"] = {name = "Room 20", floor = 2, price = 500},
-		},
-		["floor3"] = {
-			["R21"] = {name = "Room 21", floor = 3, price = 500},
-			["R22"] = {name = "Room 22", floor = 3, price = 500},
-		},
-		["floor3penthouses"] = {
-			["R23"] = {name = "Room 23", floor = 3, price = 5000},
-			["R24"] = {name = "Room 24", floor = 3, price = 5000},
-		},
-	};
 else
 	cwShacks.shackData = {};
 end

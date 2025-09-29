@@ -12,7 +12,7 @@ function cwDayNight:PlayerCharacterInitialized(player)
 	netstream.Start(player, "SetNightWeight", self.nightWeight);
 end;
 
-local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_redux" or game.GetMap() == "rp_scraptown" or game.GetMap() == "rp_district21" or game.GetMap() == "bg_district34";
+local map = game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_begotten_redux" or game.GetMap() == "rp_scraptown" or game.GetMap() == "rp_district21";
 
 if !cwDayNight.nightWeight then
 	cwDayNight.nightWeight = 0;
