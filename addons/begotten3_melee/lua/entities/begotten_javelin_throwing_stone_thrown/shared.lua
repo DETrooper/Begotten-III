@@ -283,6 +283,7 @@ if SERVER then
 				end
 					
 				if Ent:IsPlayer() then
+					if self.Owner.GetSubfaction and self.Owner:GetSubfaction() == "Clan Grock" then -- Grock Rock Supremacy
 					if self.Owner.GetSubfaction and self.Owner:GetSubfaction() == "Clan Grock" or if self.Owner:GetSubfaction() == "Clan Gotnarh" then -- Grock Rock Supremacy
 						Ent:TakeStability(stabilitydamage * 1.5);
 					else

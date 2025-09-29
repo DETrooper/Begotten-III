@@ -1154,7 +1154,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 			end
 		end
 		
-		if player_has_belief or subfaction == "Clan Grock" or subfaction == "Clan Gotnarh" then
+		if player_has_belief or subfaction == "Clan Grock" then
 			local curTime = CurTime();
 			
 			if (!player.lastWarCry) or player.lastWarCry < curTime then
@@ -1200,13 +1200,13 @@ local COMMAND = Clockwork.command:New("Warcry");
 							end
 						end
 						
-						if subfaction == "Clan Grock" or subfaction == "Clan Gotnarh" then
+						if subfaction == "Clan Grock" then
 							local clothesItem = player:GetClothesEquipped()
 					
 							if clothesItem and table.HasValue(clothesItem.attributes, "iconoclast") and !player:GetShieldEquipped() then
 								local targetSubfaction = v:GetNetVar("kinisgerOverrideSubfaction") or v:GetSubfaction();
 								
-								if targetSubfaction == "Clan Grock" or targetSubfaction == "Clan Gotnarh" then
+								if targetSubfaction == "Clan Grock" then
 									v:HandleStamina(25);
 									v.iconoclastBuff = true;
 									hook.Run("RunModifyPlayerSpeed", v, v.cwInfoTable, true);
@@ -1300,7 +1300,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 										end
 									end
 								
-									if subfaction == "Clan Grock" or subfaction == "Clan Gotnarh" then
+									if subfaction == "Clan Grock" then
 										if !v:HasBelief("saintly_composure") then
 											v:Disorient(1);
 										end
@@ -1350,7 +1350,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				elseif (subfaction == "Low Ministry") then
 					player:EmitSound("lmcries/lm_cry" .. math.random(1,19) .. ".mp3", 100, math.random(90, 105));
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a withering scream!", playerPos, radius);
-				elseif subfaction == "Clan Grock" or subfaction == "Clan Gotnarh" then
+				elseif subfaction == "Clan Grock" then
 					local clothesItem = player:GetClothesEquipped()
 					
 					if clothesItem and table.HasValue(clothesItem.attributes, "iconoclast") and !player:GetShieldEquipped() and cwStamina then

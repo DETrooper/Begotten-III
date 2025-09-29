@@ -495,7 +495,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "wood", "wood", "wood"}};
-	ITEM.requiredSubfactions = {"Clan Gore", "Clan Ghorst"};
+	ITEM.requiredSubfactions = {"Clan Gore"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -533,5 +533,5 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "wood", "wood", "wood"}};
-	ITEM.requiredSubfactions = {"Clan Harald", "Clan Ghorst"};
+	ITEM.requiredSubfactions = {"Clan Harald"};
 ITEM:Register();

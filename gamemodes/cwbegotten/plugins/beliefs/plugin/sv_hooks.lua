@@ -1498,7 +1498,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 								end
 							end
 							
-							if (attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary") or (attacker:GetFaction() == "Hillkeeper" and subfaction == "Watchman") or (attacker:GetFaction() == "Children Of Satan" and subfaction == "Crypt Walkers") then
+							if (attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary") or (attacker:GetFaction() == "Hillkeeper" and subfaction == "Watchman") then
 								damageXP = damageXP * 2;
 							end
 						
@@ -1968,10 +1968,6 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 			level = level + 16;
 			data["beliefs"]["primevalism"] = true;
 			character.subfaith = "Primevalism";
-		elseif subfaction == "Crypt Walkers" then
-			level = level + 14
-			data["beliefs"]["primevalism"] = true;
-			character.subfaith = "Primevalism";
 		end
 	elseif faction == "Gatekeeper" then
 		if subfaction == "Auxiliary" then
@@ -1982,7 +1978,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 			level = level + 5;
 		end
 	elseif faction == "Goreic Warrior" then
-		if subfaction == "Clan Gore" or subfaction == "Clan Shagalax" or subfaction == "Clan Ghorst" then
+		if subfaction == "Clan Gore" or subfaction == "Clan Shagalax" then
 			level = level + 7;
 			
 			if subfaction == "Clan Shagalax" then
@@ -1994,7 +1990,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 			level = level + 11;
 		elseif subfaction == "Clan Reaver" or subfaction == "Clan Harald" then
 			level = level + 5;
-		elseif subfaction == "Clan Grock" or subfaction == "Clan Grock" then
+		elseif subfaction == "Clan Grock" then
 			level = level + 7;
 		end
 	elseif faction == "Pope Adyssa's Gatekeepers" then

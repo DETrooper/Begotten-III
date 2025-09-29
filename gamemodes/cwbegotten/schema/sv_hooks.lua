@@ -1027,7 +1027,7 @@ function Schema:PlayerAdjustCharacterScreenInfo(player, character, info)
 
 	info.necropolisData = character.data["necropolisData"];
 	
-	if character.subfaction == "Clan Grock" or character.subfaction == "Clan Gotnarh" then
+	if character.subfaction == "Clan Grock" then
 		info.subfaith = "The Old Ways";
 	end
 end;
@@ -1169,93 +1169,93 @@ end;
 
 -- Called when a player's footstep sound should be played.
 function Schema:PlayerFootstep(player, position, foot, soundString, volume, recipientFilter)
-	local running = player:IsRunning()
-	local isGotnarh = player:GetSubfaction() == "Clan Gotnarh"
-
-	-- Special footsteps: PowerArmor or Gotnarh
-	if (cwPowerArmor and player.wearingPowerArmor) or isGotnarh then
-		local runSounds
-		local walkSounds
-
-		if isGotnarh then
-			runSounds = {
-				"trolls/gotnarh_foot_01.wav",
-				"trolls/gotnarh_foot_02.wav",
-				"trolls/gotnarh_foot_03.wav",
-				"trolls/gotnarh_foot_04.wav"
-			}
-			walkSounds = runSounds
-		else
-			runSounds = {
-				"npc/dog/dog_footstep1.wav",
-				"npc/dog/dog_footstep2.wav",
-				"npc/dog/dog_footstep3.wav",
-				"npc/dog/dog_footstep4.wav"
-			}
-			walkSounds = {
-				"npc/dog/dog_footstep_walk01.wav",
-				"npc/dog/dog_footstep_walk02.wav",
-				"npc/dog/dog_footstep_walk03.wav",
-				"npc/dog/dog_footstep_walk04.wav",
-				"npc/dog/dog_footstep_walk05.wav",
-				"npc/dog/dog_footstep_walk06.wav",
-				"npc/dog/dog_footstep_walk07.wav",
-				"npc/dog/dog_footstep_walk08.wav",
-				"npc/dog/dog_footstep_walk09.wav",
-				"npc/dog/dog_footstep_walk10.wav"
-			}
-		end
-
-		if running then
-			player:EmitSound(runSounds[math.random(#runSounds)])
-			util.ScreenShake(player:GetPos(), 2, 1, 0.5, 750)
-		else
-			player:EmitSound(walkSounds[math.random(#walkSounds)])
-			util.ScreenShake(player:GetPos(), 1, 1, 0.5, 750)
-		end
-
-		return true
-	end
-
-	-- If not waking up, block footsteps
-	if not player.cwWakingUp then
-		return true
-	end
-
-	-- Silent cases
-	if (player:Crouching() and player:HasBelief("nimble")) 
-	or player:GetCharmEquipped("urn_silence") 
-	or player.cloaked then
-		return true
-	end
-
-	-- Clothes item sounds
-	local clothesItem = player:GetClothesEquipped()
-	if clothesItem then
-		if running and clothesItem.runSound then
-			if type(clothesItem.runSound) == "table" then
-				player:EmitSound(clothesItem.runSound[math.random(#clothesItem.runSound)], 65, math.random(95, 100), 0.5)
+	-- Moving all of this shit to the client, but the code needs to remain for the wakeup sequence as footsteps can only be forced serverside.
+	if !player.cwWakingUp then
+		if cwPowerArmor and player.wearingPowerArmor then
+			if player:IsRunning() then
+				util.ScreenShake(player:GetPos(), 2, 1, 0.5, 750)
 			else
-				player:EmitSound(clothesItem.runSound, 65, math.random(95, 100), 0.5)
+				util.ScreenShake(player:GetPos(), 1, 1, 0.5, 750)
 			end
-			return true
+			
+			return true;
+		elseif player:GetSubfaction() == "Clan Grock" then
+			if player:GetCharacterData("level", 1) >= 30 then
+				if player:IsRunning() then
+					util.ScreenShake(player:GetPos(), 1, 1, 0.5, 500)
+				else
+					util.ScreenShake(player:GetPos(), 0.5, 1, 0.5, 500)
+				end
+			end
 		end
-
-		if not running and clothesItem.walkSound then
-			if type(clothesItem.walkSound) == "table" then
-				player:EmitSound(clothesItem.walkSound[math.random(#clothesItem.walkSound)], 65, math.random(95, 100), 0.5)
+	else
+		local running = false;
+	
+		if (player:IsRunning()) then
+			running = true;
+		end;
+	
+		if cwPowerArmor and player.wearingPowerArmor then
+			if running then
+				local runSounds = {
+					"npc/dog/dog_footstep1.wav",
+					"npc/dog/dog_footstep2.wav",
+					"npc/dog/dog_footstep3.wav",
+					"npc/dog/dog_footstep4.wav",
+				}; 
+				
+				player:EmitSound(runSounds[math.random(1, #runSounds)]);
+				util.ScreenShake(player:GetPos(), 2, 1, 0.5, 750)
 			else
-				player:EmitSound(clothesItem.walkSound, 65, math.random(95, 100), 0.5)
+				local walkSounds = {
+					"npc/dog/dog_footstep_walk01.wav",
+					"npc/dog/dog_footstep_walk02.wav",
+					"npc/dog/dog_footstep_walk03.wav",
+					"npc/dog/dog_footstep_walk04.wav",
+					"npc/dog/dog_footstep_walk05.wav",
+					"npc/dog/dog_footstep_walk06.wav",
+					"npc/dog/dog_footstep_walk07.wav",
+					"npc/dog/dog_footstep_walk08.wav",
+					"npc/dog/dog_footstep_walk09.wav",
+					"npc/dog/dog_footstep_walk10.wav"
+				};
+				
+				player:EmitSound(walkSounds[math.random(1, #walkSounds)]);
+				util.ScreenShake(player:GetPos(), 1, 1, 0.5, 750)
 			end
-			return true
+			
+			return true;
 		end
+		
+		if (player:Crouching() and player:HasBelief("nimble")) or player:GetCharmEquipped("urn_silence") or player.cloaked then
+			return true;
+		end;
+		
+		local clothesItem = player:GetClothesEquipped();
+		
+		if (clothesItem) then
+			if (running) then
+				if (clothesItem.runSound) then
+					if (type(clothesItem.runSound) == "table") then
+						player:EmitSound(clothesItem.runSound[math.random(1, #clothesItem.runSound)], 65, math.random(95, 100), 0.5);
+					else
+						player:EmitSound(clothesItem.runSound, 65, math.random(95, 100), 0.50);
+					end;
+				end;
+			elseif (clothesItem.walkSound) then
+				if (type(clothesItem.walkSound) == "table") then
+					player:EmitSound(clothesItem.walkSound[math.random(1, #clothesItem.walkSound)], 65, math.random(95, 100), 0.5);
+				else
+					player:EmitSound(clothesItem.walkSound, 65, math.random(95, 100), 0.5);
+				end;
+			end;
+		end;
+		
+		player:EmitSound(soundString);
+		
+		return true;
 	end
-
-	-- Default sound
-	player:EmitSound(soundString)
-	return true
-end
-
+end;
 
 -- Called when a player spawns an object.
 function Schema:PlayerSpawnObject(player)
@@ -3018,13 +3018,17 @@ function Schema:PlayerCharacterLoaded(player)
 	local subfaction = player:GetCharacterData("kinisgerOverrideSubfaction") or player:GetSubfaction();
 	
 	if subfaction == "Clan Grock" then
-		player:SetModelScale(1.12, FrameTime());
-		player:SetViewOffset(Vector(0, 0, 72))
-		player:SetViewOffsetDucked(Vector(0, 0, 32))
-	elseif subfaction == "Clan Gotnarh" then
-		player:SetModelScale(1.35, FrameTime());
-		player:SetViewOffset(Vector(0, 0, 90))
-		player:SetViewOffsetDucked(Vector(0, 0, 32))
+		local levelCap = 40;
+		
+		if cwBeliefs then
+			levelCap = cwBeliefs.sacramentLevelCap;
+		end
+		
+		local scale = math.min(player:GetCharacterData("level", 1), levelCap);
+	
+		player:SetModelScale(1 + (scale * 0.01), FrameTime());
+		player:SetViewOffset(Vector(0, 0, 64 + scale));
+		player:SetViewOffsetDucked(Vector(0, 0, 28 + (scale / 2)));
 	else
 		player:SetModelScale(1, FrameTime());
 		player:SetViewOffset(Vector(0, 0, 64));
@@ -3319,14 +3323,9 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		if string.find(entity:GetClass(), "npc_drg_animals_") then
 			local attacker = damageInfo:GetAttacker();
 			
-			if attacker:IsPlayer() then
-				if attacker:GetSubfaction() == "Clan Gore" then
-					damageInfo:ScaleDamage(1.5);
-				elseif attacker:GetSubfaction() == "Clan Ghorst" then
-					damageInfo:ScaleDamage(1.25);
-				end
+			if attacker:IsPlayer() and attacker:GetSubfaction() == "Clan Gore" then
+				damageInfo:ScaleDamage(1.5);
 			end
-			
 		end
 	end
 	
@@ -3590,9 +3589,6 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 		end
 	elseif subfaction == "Watchman" then
 		infoTable.runSpeed = infoTable.runSpeed * 0.95
-
-	elseif subfaction == "Clan Gotnarh" then
-		infoTable.runSpeed = infoTable.runSpeed * 0.90
 	end
 	
 	local shieldItem = player:GetShieldEquipped();

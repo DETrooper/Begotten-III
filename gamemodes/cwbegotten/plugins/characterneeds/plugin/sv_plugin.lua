@@ -117,7 +117,7 @@ function playerMeta:HandleNeed(need, amount)
 			end
 		
 			if need == "hunger" then
-				if self:GetSubfaction() == "Crypt Walkers" or cwBeliefs and self:HasBelief("yellow_and_black") or self:GetSubfaction() == "Crypt Walkers" and amount > 0 then
+				if cwBeliefs and self:HasBelief("yellow_and_black") and amount > 0 then
 					return;
 				end
 				
@@ -150,7 +150,7 @@ function playerMeta:HandleNeed(need, amount)
 					Clockwork.chatBox:Add(self, nil, "itnofake", "I feel hungry.");
 				end;
 			elseif need == "thirst" then
-				if self:GetSubfaction() == "Crypt Walkers" or (cwBeliefs and self:HasBelief("yellow_and_black") and amount > 0) then
+				if cwBeliefs and self:HasBelief("yellow_and_black") and amount > 0 then
 					return;
 				end
 			
@@ -183,70 +183,48 @@ function playerMeta:HandleNeed(need, amount)
 					Clockwork.chatBox:Add(self, nil, "itnofake", "This thirst is getting to me. I must find clean water soon.");
 				end;
 			elseif need == "sleep" then
-				-- Crypt Walkers fatigue handling
-				if self:GetSubfaction() == "Crypt Walkers" then
-					newAmount = math.Clamp(newAmount, 0, 100)
-					self:SetCharacterData("sleep", newAmount)
-			
-					if newAmount > 50 then
-						local fatigueFactor = (newAmount - 50) / 50  -- 0 at 50%, 1 at 100%
-						local maxHealth = self:GetMaxHealth()
-						local newMaxHealth = math.floor(maxHealth * (1 - 0.25 * fatigueFactor)) -- up to 25% reduction
-						self:SetMaxHealth(newMaxHealth)
-
-						if newAmount >= 75 and currentAmount < 75 then
-							Clockwork.chatBox:Add(self, nil, "itnofake", "I feel exhausted.")
-						elseif newAmount >= 90 and currentAmount < 90 then
-							Clockwork.chatBox:Add(self, nil, "itnofake", "I am extremely fatigued.")
-						end
-					end
-			
-					if newAmount >= 100 then
-						self:DeathCauseOverride("Collapsed from exhaustion.")
-						self:Kill()
-					end
-			
-				else
-
-					if amount > 0 and self:GetRagdollState() == RAGDOLL_KNOCKEDOUT then return end
-			
-					if newAmount >= 100 then
-						if cwBeliefs and self:HasBelief("yellow_and_black") then
-							self:DeathCauseOverride("Ran out of battery.")
-							self:Kill()
-							return
-						end
-			
-						if player.OverEncumbered then
-							self.sleepData = {health = 1, hunger = 1, thirst = 2, rest = -2}
-							Clockwork.player:SetRagdollState(self, RAGDOLL_KNOCKEDOUT, 15)
-							Schema:EasyText(self, "olive", "You finally collapse from exhaustion, but as you are overencumbered you do not rest well.")
-						else
-							self.sleepData = {health = 10, hunger = 15, thirst = 30, rest = -30}
-							Clockwork.player:SetRagdollState(self, RAGDOLL_KNOCKEDOUT, 300)
-							Schema:EasyText(self, "olive", "You finally collapse from exhaustion.")
-						end
-					elseif newAmount >= 90 and currentAmount < 90 then
-						if cwBeliefs and self:HasBelief("yellow_and_black") then
-							Clockwork.chatBox:Add(self, nil, "itnofake", "My systems are starting to shut down, I NEED TECH!")
-						else
-							Clockwork.chatBox:Add(self, nil, "itnofake", "I'm gonna pass out soon if I can't find somewhere to go to bed...")
-						end
-					elseif newAmount >= 75 and currentAmount < 75 then
-						if cwBeliefs and self:HasBelief("yellow_and_black") then
-							Clockwork.chatBox:Add(self, nil, "itnofake", "My battery is getting very low, I must find tech and soon!")
-						else
-							Clockwork.chatBox:Add(self, nil, "itnofake", "I'm feeling very tired...")
-						end
-					elseif newAmount >= 50 and currentAmount < 50 then
-						if cwBeliefs and self:HasBelief("yellow_and_black") then
-							Clockwork.chatBox:Add(self, nil, "itnofake", "My battery is at 50%, I must be mindful of it.")
-						else
-							Clockwork.chatBox:Add(self, nil, "itnofake", "I'm starting to get a bit drowsy.")
-						end
+				if amount > 0 then
+					if self:GetRagdollState() == RAGDOLL_KNOCKEDOUT then
+						return;
 					end
 				end
+			
+				if newAmount >= 100 then
+					if cwBeliefs and self:HasBelief("yellow_and_black") then
+						self:DeathCauseOverride("Ran out of battery.");
+						self:Kill();
+						
+						return;
+					end
 
+					if player.OverEncumbered then
+						self.sleepData = {health = 1, hunger = 1, thirst = 2, rest = -2};
+						Clockwork.player:SetRagdollState(self, RAGDOLL_KNOCKEDOUT, 15);
+						Schema:EasyText(self, "olive", "You finally collapse from exhaustion, but as you are overencumbered you do not rest well.");
+					else
+						self.sleepData = {health = 10, hunger = 15, thirst = 30, rest = -30};
+						Clockwork.player:SetRagdollState(self, RAGDOLL_KNOCKEDOUT, 300)
+						Schema:EasyText(self, "olive", "You finally collapse from exhaustion.");
+					end
+				elseif newAmount >= 90 and currentAmount < 90 then
+					if cwBeliefs and self:HasBelief("yellow_and_black") then
+						Clockwork.chatBox:Add(self, nil, "itnofake", "My systems are starting to shut down, I NEED TECH!");
+					else
+						Clockwork.chatBox:Add(self, nil, "itnofake", "I'm gonna pass out soon if I can't find somewhere to go to bed...");
+					end
+				elseif newAmount >= 75 and currentAmount < 75 then
+					if cwBeliefs and self:HasBelief("yellow_and_black") then
+						Clockwork.chatBox:Add(self, nil, "itnofake", "My battery is getting very low, I must find tech and soon!");
+					else
+						Clockwork.chatBox:Add(self, nil, "itnofake", "I'm feeling very tired...");
+					end
+				elseif newAmount >= 50 and currentAmount < 50 then
+					if cwBeliefs and self:HasBelief("yellow_and_black") then
+						Clockwork.chatBox:Add(self, nil, "itnofake", "My battery is at 50%, I must be mindful of it.");
+					else
+						Clockwork.chatBox:Add(self, nil, "itnofake", "I'm starting to get a bit drowsy.");
+					end
+				end;
 			elseif need == "corruption" then
 				if amount > 0 then
 					if self:GetSubfaction() == "Rekh-khet-sa" then

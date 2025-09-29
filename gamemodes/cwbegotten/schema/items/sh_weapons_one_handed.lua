@@ -1059,29 +1059,3 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
 	ITEM.attributes = {"versatile"};
 ITEM:Register();
-
-local ITEM = Clockwork.item:New("weapon_base");
-	ITEM.name = "Ravenstone Blade";
-	ITEM.model = "models/weapons/cultistblade.mdl";
-	ITEM.weight = 1;
-	ITEM.uniqueID = "begotten_1h_ravenstoneblade";
-	ITEM.category = "Melee";
-	ITEM.description = "This carved blade of black reflective stone, is secured to a handle made of various strung together bones. The brute methods used to fashion these blades, eludes the civil, and enlightened alike.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/familial_sword.png"
-	ITEM.meleeWeapon = true;
-	ITEM.isAttachment = true;
-	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
-	ITEM.attachmentOffsetAngles = Angle(97, 252.95, 70);
-	ITEM.attachmentOffsetVector = Vector(3.54, 3.54, 0);
-	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
-	ITEM.attachmentOffsetAngles = Angle(97, 252.95, 70);
-	ITEM.attachmentOffsetVector = Vector(-3.54, 3.54, 0);
-	ITEM.canUseOffhand = true;
-	ITEM.canUseShields = true;
-	
-	ITEM.components = {breakdownType = "breakdown", items = {"human_bone", "stone"}}; -- use "breakdown" for other type
-	ITEM.requiredFaiths = {"Faith of the Family"};
-	ITEM.requiredSubfactions = {"Old Clan Gotnarh"};
-	ITEM.requiredFactions = {"Goreic Warrior"};
-	ITEM.kinisgerOverride = true;
-ITEM:Register();

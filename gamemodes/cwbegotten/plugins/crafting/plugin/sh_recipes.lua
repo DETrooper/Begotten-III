@@ -1917,7 +1917,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("quickshank");
 		RECIPE.name = "Quickshank";
 		RECIPE.requiredBeliefs = {"ingenious"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap"] = {amount = 1},
 			["wood"] = {amount = 1},
@@ -2053,7 +2053,7 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
-	
+
 	RECIPE = cwRecipes.recipes:New("steel_longsword");
 		RECIPE.name = "Steel Longsword";
 		RECIPE.requiresSmithy = true;
@@ -2204,7 +2204,6 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Grockling Stone Maul";
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
-		
 		RECIPE.requirements = {
 			["stone"] = {amount = 6},
 			["wood"] = {amount = 3},
@@ -2516,6 +2515,7 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
 	RECIPE = cwRecipes.recipes:New("volthammer_upgrade_voltsledge");
 		RECIPE.name = "(Upgrade) Volthammer";
 		RECIPE.requiredBeliefs = {"artisan", "jacobs_ladder"};
@@ -2578,7 +2578,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"mechanic", "jacobs_ladder"};
 		RECIPE.requiredSubfaiths = {"Voltism"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 1},				  
+			["steel_ingot"] = {amount = 1},
 			["scrap"] = {amount = 4},
 			["tech"] = {amount = 4},
 		};
@@ -3532,7 +3532,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("pipe_mace");
 		RECIPE.name = "Pipe Mace";
 		RECIPE.requiredBeliefs = {"ingenious"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["begotten_1h_pipe"] = {amount = 1},
 			["scrap"] = {amount = 1},
@@ -3612,7 +3612,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("scrap_axe");
 		RECIPE.name = "Scrap Axe";
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["begotten_1h_tireiron"] = {amount = 1},
 			["scrap"] = {amount = 2},
@@ -4394,7 +4394,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("scrap_spear");
 		RECIPE.name = "Scrap Spear";
 		RECIPE.requiredBeliefs = {"ingenious"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap"] = {amount = 2},
 			["wood"] = {amount = 2},
@@ -5809,7 +5809,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("scrap_shield");
 		RECIPE.name = "Scrap Shield";
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap"] = {amount = 5},
 		};
@@ -6039,7 +6039,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Blunderbuss";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 2},
 			["scrap"] = {amount = 3},
@@ -6069,7 +6069,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Wooden Crossbow";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock"};
 		RECIPE.requirements = {
 			["bindings"] = {amount = 1},
 			["iron_ingot"] = {amount = 2},
@@ -6098,7 +6098,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("scrap_crossbow");
 		RECIPE.name = "Scrap Crossbow";
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["bindings"] = {amount = 1},
 			["scrap"] = {amount = 5},
@@ -6128,7 +6128,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Musket";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 1},
 			["iron_ingot"] = {amount = 2},
@@ -6157,7 +6157,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Peppershot";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap"] = {amount = 3},
 			["iron_ingot"] = {amount = 1},
@@ -6186,7 +6186,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Scavenger Gun";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
 			["steel_ingot"] = {amount = 1},
@@ -6275,7 +6275,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Scavenger Gun Magazine";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1},
 			["scrap"] = {amount = 1},
@@ -6304,7 +6304,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Scavenger Gun Large Magazine";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1},
 			["scavenger_gun_magazine"] = {amount = 1},
@@ -6362,7 +6362,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Gunpowder";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["fertilizer"] = {amount = 1},
 			["charcoal"] = {amount = 1},
@@ -6932,7 +6932,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Grockling Rattleshirt Armor";
 		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
-		RECIPE.requiredSubfactions = {"Clan Grock", "Clan Gotnarh"};
+		RECIPE.requiredSubfactions = {"Clan Grock"};
 		RECIPE.requirements = {
 			["human_bone"] = {amount = 7},
 			["cloth"] = {amount = 2},
@@ -7394,6 +7394,7 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
 	RECIPE = cwRecipes.recipes:New("haralder_ridge_helm_upgrade_goreleather");
 		RECIPE.name = "(Upgrade) Haralder Ridge Helm";
 		RECIPE.requiresSmithy = true;
@@ -7421,8 +7422,8 @@ function cwRecipes:ClockworkInitialized()
 		end;
 		function RECIPE:EndCraft(player)
 		end;
-	RECIPE:Register()																	   
-						  
+	RECIPE:Register()
+
 	RECIPE = cwRecipes.recipes:New("gore_ridge_helm");
 		RECIPE.name = "Gore Ridge Helm";
 		RECIPE.requiresSmithy = true;
@@ -8670,7 +8671,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("scrapper_grunt_plate");
 		RECIPE.name = "Scrapper Grunt Plate";
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap"] = {amount = 5},
 			["cloth"] = {amount = 1},
@@ -8698,7 +8699,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("scrapper_machinist_plate");
 		RECIPE.name = "Scrapper Machinist Plate";
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrapper_grunt_plate"] = {amount = 1},
 			["scrap"] = {amount = 6},
@@ -8726,7 +8727,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("wanderer_oppressor_armor");
 		RECIPE.name = "Wanderer Oppressor Armor";
 		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrapper_grunt_plate"] = {amount = 1},
 			["leather"] = {amount = 4},
@@ -8955,7 +8956,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("scrap_helmet");
 		RECIPE.name = "Scrap Helmet";
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap"] = {amount = 4},
 		};
@@ -8982,7 +8983,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("scrapper_machinist_plate_helmet");
 		RECIPE.name = "Scrapper Machinist Plate Helmet";
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap_helmet"] = {amount = 1},
 			["scrap"] = {amount = 6},
@@ -9011,7 +9012,7 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE = cwRecipes.recipes:New("scrapper_smog_priest_helmet");
 		RECIPE.name = "Scrapper Smog Priest Helmet";
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap_helmet"] = {amount = 1},
 			["steel_ingot"] = {amount = 1},
@@ -9281,7 +9282,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["hellforged_steel_ingot"] = {amount = 4},
 			["fine_steel_ingot"] = {amount = 2},
-			["pentagram_catalyst"] = {amount = 1},							 
+			["pentagram_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["darklander_immortal_armor"] = {amount = 1},
@@ -9698,7 +9699,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "(10x) Pop-a-Shot";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1},
 			["gunpowder"] = {amount = 1},
@@ -9727,7 +9728,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "(4x) Longshot";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1},
 			["gunpowder"] = {amount = 1},
@@ -9756,7 +9757,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "(2x) Grapeshot";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1},
 			["gunpowder"] = {amount = 2},
@@ -9785,7 +9786,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "(15x) Scrapshot";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap"] = {amount = 1},
 			["gunpowder"] = {amount = 1},
@@ -9842,7 +9843,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "(4x) Iron Bolt";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 1},
 			["wood"] = {amount = 3},
@@ -9871,7 +9872,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Iron Bolt (Incendiary)";
 		RECIPE.requiresSmithy = false;
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock"};
 		RECIPE.requirements = {
 			["iron_bolt"] = {amount = 1},
 			["small_oil"] = {amount = 1},
@@ -9900,7 +9901,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Scrap Bolt";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
-		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Gotnarh", "Clan Ghorst"};
+		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock"};
 		RECIPE.requirements = {
 			["scrap"] = {amount = 1},
 		};
@@ -10413,7 +10414,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Grockling Godless Garb";
 		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
-		RECIPE.requiredSubfactions = {"Clan Grock", "Clan Gotnarh"};
+		RECIPE.requiredSubfactions = {"Clan Grock"};
 		RECIPE.requirements = {
 			["human_bone"] = {amount = 6},
 			["cloth"] = {amount = 1},
@@ -10442,7 +10443,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.name = "Grockling Iconoclast Garb";
 		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
-		RECIPE.requiredSubfactions = {"Clan Grock", "Clan Gotnarh"};
+		RECIPE.requiredSubfactions = {"Clan Grock"};
 		RECIPE.requirements = {
 			["grockling_godless_garb"] = {amount = 1},
 			["quill"] = {amount = 6},
@@ -10774,6 +10775,7 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
 		RECIPE = cwRecipes.recipes:New("haralder_ridge_helm");
 		RECIPE.name = "Haralder Ridge Helm";
 		RECIPE.requiresSmithy = true;
@@ -10862,453 +10864,3 @@ function cwRecipes:ClockworkInitialized()
 		end;
 	RECIPE:Register()
 end
-
-  RECIPE = cwRecipes.recipes:New("ravenstone_shard");
-		RECIPE.name = "Ravenstone Shard";
-		RECIPE.requiredBeliefs = {"ingenious"};
-		RECIPE.requiredSubfactions = {"Clan Gotnarh"};
-		RECIPE.requirements = {
-			["stone"] = {amount = 1},
-			["bone"] = {amount = 1},
-		};
-		RECIPE.result = {
-			["begotten_dagger_ravenstoneshard"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 45;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-	
-	RECIPE = cwRecipes.recipes:New("ravenstoneblade");
-		RECIPE.name = "Ravenstone Blade";
-		RECIPE.requiredBeliefs = {"ingenious"};
-		RECIPE.requiredSubfactions = {"Clan Gotnarh"};
-		RECIPE.requirements = {
-			["stone"] = {amount = 2},
-			["bone"] = {amount = 1},
-			["cloth"] = {amount = 1},
-		};
-		RECIPE.result = {
-			["begotten_1h_ravenstoneblade"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 55;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-	
-	RECIPE = cwRecipes.recipes:New("sacredrunestoneslab");
-		RECIPE.name = "Sacred Runestone Slab";
-		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredSubfactions = {"Clan Gotnarh"};
-		RECIPE.requirements = {
-			["iron_ore"] = {amount = 6},
-			["familial_catalyst"] = {amount = 1},
-			["pantheistic_catalyst"] = {amount = 1},
-			["down_catalyst"] = {amount = 1},
-		};
-		RECIPE.result = {
-			["begotten_2h_sacredrunestoneslab"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 75;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-
-    RECIPE = cwRecipes.recipes:New("boneclub");
-		RECIPE.name = "Bone Club";
-		RECIPE.requiredBeliefs = {"primeval"};
-		RECIPE.requirements = {
-			["bone_mace"] = {amount = 1},
-			["human_bone"] = {amount = 6},
-			["cloth"] = {amount = 1},
-		};
-		RECIPE.result = {
-			["begotten_2h_boneclub"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "generic_ui/refine_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 45;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-
-    RECIPE = cwRecipes.recipes:New("salvagers_longsword");
-		RECIPE.name = "Salvager's Longsword";
-		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Wanderer"};
-		RECIPE.excludedFactions = {"Goreic Warrior", "Children of Satan", "Gatekeeper", "Holy Hierarchy"};
-		RECIPE.requirements = {
-			["scrap"] = {amount = 6},
-			["cloth"] = {amount = 1},
-		};
-		RECIPE.result = {
-			["begotten_2h_salvagerslongsword"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 75;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-	
-	RECIPE = cwRecipes.recipes:New("flamberge");
-		RECIPE.name = "Flamberge";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Villakeepers", "Children of Satan", "Wanderer"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
-		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 4},
-			["fine_steel_ingot"] = {amount = 1},
-			["wood"] = {amount = 2},
-		};
-		RECIPE.result = {
-			["begotten_2h_great_flamberge"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 75;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-	
-	RECIPE = cwRecipes.recipes:New("gauntlets");
-		RECIPE.name = "Gauntlets of Penance";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Wanderer", "Villakeepers"};
-		RECIPE.requiredFaiths = {"Faith of the Light"};
-		RECIPE.requirements = {
-			["leather"] = {amount = 1},
-			["fine_steel_ingot"] = {amount = 2},
-		};
-		RECIPE.result = {
-			["begotten_fists_gauntletsofpenance"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "physics/wood/wood_strain3.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 25;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-	
-	
-	RECIPE = cwRecipes.recipes:New("noblemans_sword");
-		RECIPE.name = "Nobleman's Sword";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Villakeepers"};
-		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 2},
-			["steel_ingot"] = {amount = 3},
-		};
-		RECIPE.result = {
-			["begotten_2h_noblemansword"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 60;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-	
-	RECIPE = cwRecipes.recipes:New("haralder_war_axe");
-		RECIPE.name = "Executioner's Axe";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"mechanic"};
-		RECIPE.requiredFactions = {"Villakeepers"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};	
-		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 2},
-			["wood"] = {amount = 2},
-		};
-		RECIPE.result = {
-			["begotten_2h_great_executionersaxe"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 85;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-
-	RECIPE = cwRecipes.recipes:New("villa_spadone");
-		RECIPE.name = "Villa Spadone";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Villakeepers"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
-		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 3},
-			["fine_steel_ingot"] = {amount = 2},
-			["leather"] = {amount = 1},
-		};
-		RECIPE.result = {
-			["begotten_2h_great_villaspadone"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 75;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-	
-	RECIPE = cwRecipes.recipes:New("greaserblockhammer");
-		RECIPE.name = "Greaser Blockhammer";
-		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFactions = {"Wanderer"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
-		RECIPE.requirements = {
-			["tech"] = {amount = 1},
-			["scrap"] = {amount = 6},
-			["fine_steel_ingot"] = {amount = 2},
-		};
-		RECIPE.result = {
-			["begotten_2h_great_greaserblockhammer"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "beams/beamstart5.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "assembling"
-		RECIPE.experience = 55;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-	
-    RECIPE = cwRecipes.recipes:New("bastardsword");
-		RECIPE.name = "Bastard Sword";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"Artisan"};
-		RECIPE.requiredFactions = {"Villakeepers", "Children of Satan", "Wanderer"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
-		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 2},
-			["steel_ingot"] = {amount = 2},
-			["fine_steel_ingot"] = {amount = 1},
-			["wood"] = {amount = 1},
-			["cloth"] = {amount = 1},
-		};
-		RECIPE.result = {
-			["begotten_2h_bastardsword"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 45;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-		
-	RECIPE:Register()
-	
-	    RECIPE = cwRecipes.recipes:New("bastardsword");
-		RECIPE.name = "(Upgrade) Bastard Sword";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"Artisan"};
-		RECIPE.requiredFactions = {"Gatekeeper"};
-		RECIPE.excludedFactions = {"Goreic Warrior"};
-		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 2},
-			["fine_steel_ingot"] = {amount = 1},
-			["begotten_2h_longsword"] = {amount = 1},
-		};
-		RECIPE.result = {
-			["begotten_2h_bastardsword"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 45;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-	
-	RECIPE = cwRecipes.recipes:New("stone_throwing_spear");
-		RECIPE.name = "Stone Throwing Spear";
-		RECIPE.requiresSmithy = false;
-		RECIPE.requiredBeliefs = {"ingenious"};
-		RECIPE.requirements = {
-			["stone"] = {amount = 1},
-			["wood"] = {amount = 2},
-		};
-		RECIPE.result = {
-			["begotten_javelin_stonethrowingspear"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 20;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-
-    RECIPE = cwRecipes.recipes:New("masquerade_society_dagger");
-		RECIPE.name = "Masquerade Society Ancestral Dagger";
-		RECIPE.requiresSmithy = true;
-		RECIPE.requiredBeliefs = {"artisan"};
-		RECIPE.requiredFaiths = {"Faith of the Dark"};
-		RECIPE.requiredFactions = {"Children of Satan"};
-		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 1},
-			["tortured_spirit"] = {amount = 1},
-		};
-		RECIPE.result = {
-			["begotten_dagger_masqueradesocietydagger"] = {amount = 1},
-		};
-		RECIPE.category = "Weapons"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
-		RECIPE.failSound = "buttons/button2.wav"
-		RECIPE.craftTime = 8
-		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 60;
-		
-		function RECIPE:OnCraft(player)
-		end;
-		function RECIPE:OnFail(player)
-		end;
-		function RECIPE:StartCraft(player)
-		end;
-		function RECIPE:EndCraft(player)
-		end;
-	RECIPE:Register()
-
