@@ -2408,6 +2408,7 @@ local COMMAND = Clockwork.command:New("RemoveItemsRadius");
 	COMMAND.access = "s";
 	COMMAND.alias = {"ClearItemsRadius", "RemoveItemsInRadius"};
 	COMMAND.arguments = 1;
+	COMMAND.types = {"Radius"}
 	
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

@@ -250,6 +250,7 @@ local COMMAND = Clockwork.command:New("StartSoundRadius");
 	COMMAND.access = "s";
 	COMMAND.optionalArguments = 3;
 	COMMAND.text = "[int Radius] <string Sound> [int Volume] [int Pitch] [int DSP] [bool StopDynamicMusic]";
+	COMMAND.types = {"Radius"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -319,6 +320,7 @@ local COMMAND = Clockwork.command:New("FadeSoundRadius");
 	COMMAND.arguments = 2;
 	COMMAND.access = "s";
 	COMMAND.text = "[int Radius] [int Duration]";
+	COMMAND.types = {"Radius"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -385,6 +387,7 @@ local COMMAND = Clockwork.command:New("ChangeVolumeRadius");
 	COMMAND.arguments = 3;
 	COMMAND.access = "s";
 	COMMAND.text = "[int Radius] [int NewVolume] [int Duration]";
+	COMMAND.types = {"Radius"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -452,6 +455,7 @@ local COMMAND = Clockwork.command:New("ChangePitchRadius");
 	COMMAND.arguments = 3;
 	COMMAND.access = "s";
 	COMMAND.text = "[int Radius] [int NewPitch] [int Duration]";
+	COMMAND.types = {"Radius"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
