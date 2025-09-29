@@ -450,6 +450,7 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 	FACTION.names = "goreic";
 	FACTION.subfactions = {
 
+
 		-- {
 		-- 	name = "Clan Gore",
 		-- 	subtitle = "Followers of the Father - Warriors and Hunters",
@@ -564,7 +565,6 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 			}
 		}
 	}
-
 
 	FACTION.models = {
 		male = {

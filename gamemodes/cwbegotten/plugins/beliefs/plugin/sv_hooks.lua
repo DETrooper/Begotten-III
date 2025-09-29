@@ -413,20 +413,10 @@ function cwBeliefs:DayNightCycleChanged(cycle)
 	end
 end
 
+
 -- Called just after a player levels up.
 function cwBeliefs:PlayerLevelUp(player, level, points)
 	Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." just leveled up to sacrament level "..tostring(level or player:GetCharacterData("level")).."! They still have "..tostring(points).." epiphanies to spend.");
-	
-	-- Grock HP/Size scales with level.
-	if player:GetSubfaction() == "Clan Grock" then
-		player:SetMaxHealth(player:GetMaxHealth());
-		
-		local scale = math.min(player:GetCharacterData("level", 1), self.sacramentLevelCap);
-	
-		player:SetModelScale(1 + (scale * 0.01), FrameTime());
-		player:SetViewOffset(Vector(0, 0, 64 + scale));
-		player:SetViewOffsetDucked(Vector(0, 0, 28 + (scale / 2)));
-	end
 end
 
 -- Called when a player attempts to switch to a character.
