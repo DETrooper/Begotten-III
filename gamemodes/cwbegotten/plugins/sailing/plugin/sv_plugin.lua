@@ -273,6 +273,14 @@ if !cwSailing.shipLocations then
 					{occupied = false, pos = Vector(11431, 8654, 198), angles = Angle(0, 0, 0)},
 				},
 			},
+			["wastelandlava"] = {
+				["longship"] = {
+					{occupied = false, pos = Vector(-2982, 8593, 191), angles = Angle(0, 90, 0), bodygroup = 1},
+				},
+				["ironclad"] = {
+					{occupied = false, pos = Vector(-11391, -14609, -1747), angles = Angle(0, -90, 0)},
+				},
+			},
 		};
 	end
 end
@@ -1586,7 +1594,7 @@ concommand.Add("cw_MoveShipWasteland", function(player, cmd, args)
 end);
 
 concommand.Add("cw_MoveShipLava", function(player, cmd, args)
-	if game.GetMap() ~= "rp_begotten3" then return end;
+	if game.GetMap() ~= "rp_begotten3" or game.GetMap() ~= "bg_district34" then return end;
 	
 	local trace = player:GetEyeTrace();
 
