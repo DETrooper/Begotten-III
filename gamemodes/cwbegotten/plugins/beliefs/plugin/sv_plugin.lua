@@ -65,7 +65,7 @@ function cwBeliefs:LevelUp(player)
 			levelCap = levelCap + 5;
 		end
 		
-		if subfaction == "Rekh-khet-sa" or subfaction == "Crypt Walkers" then
+		if subfaction == "Rekh-khet-sa" then
 			levelCap = levelCap + 666;
 		end
 		

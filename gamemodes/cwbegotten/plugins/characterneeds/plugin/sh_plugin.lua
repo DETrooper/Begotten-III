@@ -211,9 +211,6 @@ function COMMAND:OnRun(player, arguments)
 		Schema:EasyText(player, "peru", "Your mortal coil no longer requires sleep!");
 	
 		return false;
-	elseif player:GetSubfaction() == "Crypt Walkers" then
-		Schema:EasyText(player, "peru", "Your mortal self does not sleep...");
-		return false;
 	end
 
 	if (player:GetNeed("sleep") >= 40) then
@@ -268,21 +265,6 @@ function COMMAND:OnRun(player, arguments)
 				Schema:EasyText(player, "olivedrab", "You climb into a cot and get some rest.");
 				return;
 			end
-
-				if cwCharacterNeeds.bedZones["gatekeeper2"] then
-					if playerPos:WithinAABox(cwCharacterNeeds.bedZones["gatekeeper2"].pos1, cwCharacterNeeds.bedZones["gatekeeper2"].pos2) then
-						player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
-						--player:HandleSanity(50);
-						--player:HandleNeed("hunger", 5);
-						--player:HandleNeed("thirst", 10);
-						--player:HandleNeed("sleep", -100);
-						
-						Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
-						Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
-						return;
-					end
-				end
-
 			--elseif faction == "Holy Hierarchy" then
 				if cwCharacterNeeds.bedZones["ministers"] then
 					if playerPos:WithinAABox(cwCharacterNeeds.bedZones["ministers"].pos1, cwCharacterNeeds.bedZones["ministers"].pos2) then
@@ -323,19 +305,6 @@ function COMMAND:OnRun(player, arguments)
 					Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
 					return;
 				end
-
-				if cwCharacterNeeds.bedZones["knights"] and playerPos:WithinAABox(cwCharacterNeeds.bedZones["knights"].pos1, cwCharacterNeeds.bedZones["knights"].pos2) then
-					player.sleepData = {health = 50, hunger = 5, thirst = 10, rest = -100, sanity = 50};
-					--player:HandleSanity(50);
-					--player:HandleNeed("hunger", 5);
-					--player:HandleNeed("thirst", 10);
-					--player:HandleNeed("sleep", -100);
-					
-					Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
-					Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
-					return;
-				end
-
 			--end
 		--elseif faction == "Goreic Warrior" and cwCharacterNeeds.bedZones["gores"] then
 		if cwCharacterNeeds.bedZones["gores"] then
@@ -373,19 +342,6 @@ function COMMAND:OnRun(player, arguments)
 				
 				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
 				Schema:EasyText(player, "olivedrab", "You climb into a bed and get some rest.");
-				return;
-			end
-		end
-		if cwCharacterNeeds.bedZones["satanists2"] then
-			if playerPos:WithinAABox(cwCharacterNeeds.bedZones["satanists2"].pos1, cwCharacterNeeds.bedZones["satanists2"].pos2) then
-				player.sleepData = {health = 30, hunger = 5, thirst = 10, rest = -80, sanity = 40};
-				--player:HandleSanity(50);
-				--player:HandleNeed("hunger", 5);
-				--player:HandleNeed("thirst", 10);
-				--player:HandleNeed("sleep", -100);
-				
-				Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, 100);
-				Schema:EasyText(player, "olivedrab", "You climb into an uncomfortable bed and try to get some rest.");
 				return;
 			end
 		end

@@ -12,26 +12,13 @@ if map == "rp_district21" then
 		["thrall"] = 4,
 		["thrallnight"] = 8,
 	};
-
+	
 	if !Schema.spawnedNPCs then
 		Schema.spawnedNPCs = {
 			["animal"] = {},
 			["animalwasteland"] = {},
 			["thrall"] = {},
 		};
-	end
-elseif map == "bg_district34" then
-	Schema.maxNPCs = {
-		["animal"] = 7,
-		["thrall"] = 8,
-	}
-
-	if !Schema.spawnedNPCs then
-		Schema.spawnedNPCs = {
-			["animal"] = {},
-			["animalwasteland"] = {},
-			["thrall"] = {},
-		}
 	end
 else
 	Schema.maxNPCs = {
@@ -362,6 +349,7 @@ Schema.doors = {
 		["gorewatch"] = {
 			"gatekeeperdoor",
 			"gatekeeperdoor2",
+		},
 		},
 		["tower"] = {
 			"churchgate1",
@@ -1792,7 +1780,7 @@ function Schema:CheapleCaughtPlayer(player)
 		
 		player:DeathCauseOverride("Had their curse catch up with them.");
 		
-		if game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_district21" or game.GetMap() == "bg_district34" then
+		if game.GetMap() == "rp_begotten3" or game.GetMap() == "rp_district21" then
 			player:SetCharacterData("permakilled", true); -- In case the player tries to d/c to avoid their fate.
 			player:SensesOff();
 			Clockwork.player:SetRagdollState(player, RAGDOLL_NONE);
@@ -2948,52 +2936,6 @@ if map == "rp_district21" then
 	end);
 end
 
-if map == "bg_district34" then
-	concommand.Add("cw_HellPortalCave", function(player, cmd, args)
-		if not player.teleporting then
-			local trace = player:GetEyeTrace();
-	
-			if (trace.Entity) then
-				local entity = trace.Entity;
-	
-				if (entity:GetClass() == "cw_hellportal") then
-					local nextTeleport = player:GetCharacterData("nextTeleport", 0);
-					
-					if nextTeleport <= 0 then
-						local origin = player:GetPos();
-						local chosenspot = math.random(1, #Schema.hellPortalTeleports["cave"]);
-						local destination = Schema.hellPortalTeleports["cave"][chosenspot].pos;
-						local angles = Schema.hellPortalTeleports["cave"][chosenspot].ang;
-						
-						ParticleEffect("teleport_fx", origin, Angle(0,0,0), player);
-						sound.Play("misc/summon.wav", origin, 100, 100);
-						ParticleEffect("teleport_fx", destination, Angle(0,0,0));
-						sound.Play("misc/summon.wav", destination, 100, 100);
-						player.teleporting = true;
-						
-						timer.Create("summonplayer_"..tostring(player:EntIndex()), 0.75, 1, function()
-							if IsValid(player) then
-								player.teleporting = false;
-								
-								if player:Alive() then
-									Clockwork.player:SetSafePosition(player, destination);
-									player:SetEyeAngles(angles);
-									util.Decal("PentagramBurn", destination, destination + Vector(0, 0, -256));
-									util.Decal("PentagramBurn", origin, origin + Vector(0, 0, -256));
-									
-									--player:SetCharacterData("nextTeleport", 1200);
-								end
-							end
-						end);
-					else
-						Schema:EasyText(player, "peru", "You cannot use the Hellportal for another "..nextTeleport.." seconds!");
-					end
-				end
-			end;
-		end;
-	end);
-end
-
 concommand.Add("cw_HellPortalArch", function(player, cmd, args)
 	if not player.teleporting then
 		local trace = player:GetEyeTrace();
@@ -3487,14 +3429,6 @@ elseif map == "rp_district21" then
 		{pos = Vector(-5020.15625, 12028.875, 252.21875), angles = Angle(0, 180, 0)},
 		{pos = Vector(-9659.5, 11132.21875, 535), angles = Angle(0, 180, 0)},
 		{pos = Vector(-7191, 10255.03125, 433.75), angles = Angle(0, 45, 0)},
-	};
-elseif map == "bg_district34" then
-	Schema.PopeSpeakers = {
-		[1] = {pos = Vector(1847, -9168, 1083), angles = Angle(0, 90, 0)},
-		[2] = {pos = Vector(4003, -9194, 1114), angles = Angle(0, 180, 0)},
-		[3] = {pos = Vector(-132, -8968, 1157), angles = Angle(0, 90, 0)},
-		[4] = {pos = Vector(1759, -8119, 1554), angles = Angle(0, 270, 0)},
-		[5] = {pos = Vector(119, -9449, 2135), angles = Angle(0, 90, 0)},
 	};
 end
 

@@ -1697,11 +1697,13 @@ function playerMeta:GetMaxHealth(health)
 	
 	if subfaction then
 		if subfaction == "Clan Grock" then
-			maxHealth = maxHealth + 175;
-		elseif  subfaction == "Clan Gotnarh" then
-			maxHealth = maxHealth + 225;
-		elseif subfaction == "Clan Ghorst" then
-			maxHealth = maxHealth + 40;
+			maxHealth = maxHealth + 100
+			
+			if cwBeliefs then
+				local hpToAdd = math.min(player:GetCharacterData("level", 1), cwBeliefs.sacramentLevelCap) * 2;
+				
+				maxHealth = maxHealth + hpToAdd;
+			end
 		elseif subfaction == "Knights of Sol" then
 			maxHealth = maxHealth + 75;
 		elseif subfaction == "Inquisition" or subfaction == "Philimaxio" then

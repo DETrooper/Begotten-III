@@ -413,20 +413,10 @@ function cwBeliefs:DayNightCycleChanged(cycle)
 	end
 end
 
+
 -- Called just after a player levels up.
 function cwBeliefs:PlayerLevelUp(player, level, points)
 	Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." just leveled up to sacrament level "..tostring(level or player:GetCharacterData("level")).."! They still have "..tostring(points).." epiphanies to spend.");
-	
-	-- Grock HP/Size scales with level.
-	if player:GetSubfaction() == "Clan Grock" then
-		player:SetMaxHealth(player:GetMaxHealth());
-		
-		local scale = math.min(player:GetCharacterData("level", 1), self.sacramentLevelCap);
-	
-		player:SetModelScale(1 + (scale * 0.01), FrameTime());
-		player:SetViewOffset(Vector(0, 0, 64 + scale));
-		player:SetViewOffsetDucked(Vector(0, 0, 28 + (scale / 2)));
-	end
 end
 
 -- Called when a player attempts to switch to a character.
@@ -1508,7 +1498,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 								end
 							end
 							
-							if (attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary") or (attacker:GetFaction() == "Hillkeeper" and subfaction == "Watchman") or (attacker:GetFaction() == "Children Of Satan" and subfaction == "Crypt Walkers") then
+							if (attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary") or (attacker:GetFaction() == "Hillkeeper" and subfaction == "Watchman") then
 								damageXP = damageXP * 2;
 							end
 						
@@ -1978,10 +1968,6 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 			level = level + 16;
 			data["beliefs"]["primevalism"] = true;
 			character.subfaith = "Primevalism";
-		elseif subfaction == "Crypt Walkers" then
-			level = level + 14
-			data["beliefs"]["primevalism"] = true;
-			character.subfaith = "Primevalism";
 		end
 	elseif faction == "Gatekeeper" then
 		if subfaction == "Auxiliary" then
@@ -1992,7 +1978,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 			level = level + 5;
 		end
 	elseif faction == "Goreic Warrior" then
-		if subfaction == "Clan Gore" or subfaction == "Clan Shagalax" or subfaction == "Clan Ghorst" then
+		if subfaction == "Clan Gore" or subfaction == "Clan Shagalax" then
 			level = level + 7;
 			
 			if subfaction == "Clan Shagalax" then
@@ -2004,7 +1990,7 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 			level = level + 11;
 		elseif subfaction == "Clan Reaver" or subfaction == "Clan Harald" then
 			level = level + 5;
-		elseif subfaction == "Clan Grock" or subfaction == "Clan Grock" then
+		elseif subfaction == "Clan Grock" then
 			level = level + 7;
 		end
 	elseif faction == "Pope Adyssa's Gatekeepers" then

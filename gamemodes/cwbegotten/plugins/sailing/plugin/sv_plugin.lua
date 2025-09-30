@@ -10,12 +10,10 @@ if map == "rp_begotten3" then
 	cwSailing.gorewatchBounds = {Vector(9422, 11862, -1210), Vector(10055, 10389, -770)};
 elseif map == "rp_district21" then
 	cwSailing.gorewatchBounds = {Vector(-9328, -8640, -146), Vector(-8771, -8105, 686)};
-elseif map == "bg_district34" then
-	cwSailing.gorewatchBounds = {Vector(8817, 8018, 959), Vector(9477, 8582, 1242)};
 end
 
 if !cwSailing.shipDestinations then
-	if map == "rp_begotten3" or map == "rp_district21" or map == "bg_district34" then
+	if map == "rp_begotten3" or map == "rp_district21" then
 		cwSailing.shipDestinations = {
 			["docks"] = {name = "the Gore Forest"},
 			["hell"] = {name = "Hell"},
