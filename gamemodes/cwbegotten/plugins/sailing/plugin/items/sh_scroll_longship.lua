@@ -18,7 +18,7 @@ local ITEM = Clockwork.item:New();
 	ITEM:AddData("health", -1, true);
 	
 	function ITEM:OnUseCustom(player, itemEntity, itemFunction)
-		if (game.GetMap() != "rp_begotten3" and game.GetMap() != "rp_district21" and game.GetMap() != "bg_district34") then
+		if (game.GetMap() != "rp_begotten3" and game.GetMap() != "rp_district21") then
 			return false;
 		end;
 	
@@ -145,7 +145,7 @@ local ITEM = Clockwork.item:New();
 	ITEM:AddData("ammo", 0);
 	
 	function ITEM:OnUseCustom(player, itemEntity, itemFunction)
-		if (game.GetMap() != "rp_begotten3" and game.GetMap() != "rp_district21" and game.GetMap() != "bg_district34") then
+		if (game.GetMap() != "rp_begotten3" and game.GetMap() != "rp_district21") then
 			return false;
 		end;
 	
@@ -249,7 +249,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.useText = "Upgrade Ironclad";
 	
 	function ITEM:OnUse(player, itemEntity, itemFunction)
-		if (game.GetMap() != "rp_begotten3" and game.GetMap() != "rp_district21" and game.GetMap() != "bg_district34") then
+		if (game.GetMap() != "rp_begotten3" and game.GetMap() != "rp_district21") then
 			return;
 		end;
 		

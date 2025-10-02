@@ -1334,7 +1334,7 @@ ITEM.weight = 5;
 ITEM.weightclass = "Medium";
 ITEM.description = "A series of pieced-together scrap plates that form a crude yet effective set of armor.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+ITEM.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 
 ITEM.effectiveLimbs = {
 	[HITGROUP_GENERIC] = true,
@@ -1394,7 +1394,7 @@ ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.description = "A series of pieced-together scrap plates that form a crude yet effective set of armor.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+ITEM.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
@@ -1984,7 +1984,7 @@ ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.description = "The armor of a wasteland tyrant. It is fitted with crude steel plates and held together by scrap. This style of armor is often used by Scrapper Warlords who are paranoid of Voltist assassins.";
 ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
-ITEM.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock", "Clan Gotnarh", "Clan Ghorst"};
+ITEM.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 
 ITEM.requiredbeliefs = {"hauberk"};

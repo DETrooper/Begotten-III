@@ -144,22 +144,6 @@ if map == "rp_begotten3" then
 			camVector = Vector(-4720, -11900, 12044.962891),
 			camAngles = Angle(-0.87, 1.681, 0),
 		},
-		["Clan Gotnarh"] = {
-			bannerAngles = Angle(0, 0, 0),
-			bannerVector = Vector(-4640.78125, -11843.53125, 11978.96875),
-			bannerModel = "models/begotten/misc/banner_b.mdl",
-			bannerSkin = 6,
-			camVector = Vector(-4720, -11900, 12044.962891),
-			camAngles = Angle(-0.87, 1.681, 0),
-		},
-		["Clan Ghorst"] = {
-			bannerAngles = Angle(0, 0, 0),
-			bannerVector = Vector(-4640.78125, -11843.53125, 11978.96875),
-			bannerModel = "models/begotten/misc/banner_b.mdl",
-			bannerSkin = 6,
-			camVector = Vector(-4720, -11900, 12044.962891),
-			camAngles = Angle(-0.87, 1.681, 0),
-		},
 		["Legionary"] = {
 			charModel = {clothes = "models/begotten/gatekeepers/gatekeepermedium_male.mdl", head = "models/begotten/heads/male_02_glaze.mdl"},
 			charBodygroup = {1, 4},
@@ -330,14 +314,6 @@ elseif map == "rp_begotten_redux" then
 			camVector = Vector(-4720, -11900, 12044.962891),
 			camAngles = Angle(-0.87, 1.681, 0),
 		},
-		["Clan Gotnarh"] = {
-			bannerAngles = Angle(0, 0, 0),
-			bannerVector = Vector(-4640.78125, -11843.53125, 11978.96875),
-			bannerModel = "models/begotten/misc/banner_b.mdl",
-			bannerSkin = 6,
-			camVector = Vector(-4720, -11900, 12044.962891),
-			camAngles = Angle(-0.87, 1.681, 0),
-		},
 		["Ministry"] = {
 			charModel = "models/begotten/gatekeepers/minister/male_11.mdl",
 			camVector = Vector(-1771.079224, -4537.384277, 1021.419922),
@@ -501,14 +477,6 @@ elseif map == "rp_scraptown" then
 			bannerVector = Vector(-4640.78125, -11843.53125, 11978.96875),
 			bannerModel = "models/begotten/misc/banner_b.mdl",
 			bannerSkin = 5,
-			camVector = Vector(-4720, -11900, 12044.962891),
-			camAngles = Angle(-0.87, 1.681, 0),
-		},
-		["Clan Gotnarh"] = {
-			bannerAngles = Angle(0, 0, 0),
-			bannerVector = Vector(-4640.78125, -11843.53125, 11978.96875),
-			bannerModel = "models/begotten/misc/banner_b.mdl",
-			bannerSkin = 6,
 			camVector = Vector(-4720, -11900, 12044.962891),
 			camAngles = Angle(-0.87, 1.681, 0),
 		},
@@ -692,14 +660,6 @@ elseif map == "rp_district21" then
 			camVector = Vector(-4720, -11900, 12044.962891),
 			camAngles = Angle(-0.87, 1.681, 0),
 		},
-		["Clan Gotnarh"] = {
-			bannerAngles = Angle(0, 0, 0),
-			bannerVector = Vector(-4640.78125, -11843.53125, 11978.96875),
-			bannerModel = "models/begotten/misc/banner_b.mdl",
-			bannerSkin = 6,
-			camVector = Vector(-4720, -11900, 12044.962891),
-			camAngles = Angle(-0.87, 1.681, 0),
-		},
 		["Legionary"] = {
 			charModel = {clothes = "models/begotten/gatekeepers/gatekeepermedium_male.mdl", head = "models/begotten/heads/male_02_glaze.mdl"},
 			charBodygroup = {1, 4},
@@ -774,6 +734,7 @@ elseif map == "rp_district21" then
 			charBodygroup = {1, 2},
 		},
 	};
+
 elseif map == "bg_district34" then
 	camTable = {
 		["Wanderer"] = {
@@ -998,6 +959,7 @@ elseif map == "bg_district34" then
 			camAngles = Angle(0, 90, 0),
 		},
 	}
+
 end
 
 local function RefreshCharacterModel(modelEnt, faction, subfaction, bClearBodyGroups)

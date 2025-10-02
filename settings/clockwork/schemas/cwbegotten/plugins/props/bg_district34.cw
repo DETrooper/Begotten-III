@@ -1,1 +1,0 @@
-{['moveable;f'angles;a2.9377115424722e-06,87.065711975098,0.1245075315237;'color;['r;255;'b;255;'a;255;'g;255;}'model;'models/props_c17/display_cooler01a.mdl;'renderMode;0;'material;';'class;'prop_physics;'position;v75.182945251465,1390.1691894531,117.61994171143;'renderFX;0;}}

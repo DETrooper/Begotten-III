@@ -29,7 +29,6 @@ local FORTUNE = cwBeliefs.beliefTrees:New("fortune")
 	
 	FORTUNE.hasFinisher = true;
 	FORTUNE.lockedTraits = {"marked"};
-	FORTUNE.lockedSubfactions = {"Clan Ghorst", "Crypt Walkers"};
 	
 	-- First index is column.
 	FORTUNE.beliefs = {

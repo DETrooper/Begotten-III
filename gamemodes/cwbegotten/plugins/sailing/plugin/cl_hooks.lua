@@ -24,7 +24,7 @@ end
 function cwSailing:PlayerAdjustItemMenu(itemTable, menuPanel, itemFunctions)
 	if (itemTable.uniqueID == "scroll_longship" or itemTable.uniqueID == "scroll_ironclad") then
 		if Clockwork.Client:GetFaction() == "Goreic Warrior" and Clockwork.Client:GetZone() == "gore" then
-			if (game.GetMap() != "rp_begotten3" and game.GetMap() != "rp_district21" and game.GetMap() != "bg_district34") then
+			if (game.GetMap() != "rp_begotten3" and game.GetMap() != "rp_district21") then
 				return;
 			end;
 			

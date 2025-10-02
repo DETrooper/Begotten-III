@@ -46,22 +46,3 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 350, bNoSupercrate = true};
 ITEM:Register();
-
-local ITEM = Clockwork.item:New("weapon_base");
-	ITEM.name = "Gauntlets of Penance";
-	ITEM.model = "models/demonssouls/weapons/hands_of_god.mdl";
-	ITEM.weight = 0.5;
-	ITEM.uniqueID = "begotten_fists_gauntletsofpenance";
-	ITEM.category = "Melee";
-	ITEM.description = "An blessed pair of Gauntlets forged with holy Glazic steel, and bronze. Among the Orthodoxy it is typically used by those who have been dismembered, and is often surgically grafted onto the stubs of their arms.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/caestus.png"
-	ITEM.meleeWeapon = true;
-	ITEM.isAttachment = true;
-	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
-	ITEM.attachmentOffsetAngles = Angle(309.28, 148.18, 265.52);
-	ITEM.attachmentOffsetVector = Vector(-0.71, 3.54, 0);
-	ITEM.fireplaceFuel = 60;
-	
-	ITEM.requiredbeliefs = {"repentant"};
-	ITEM.components = {breakdownType = "breakdown", items = {"leather", "wood"}};
-ITEM:Register();

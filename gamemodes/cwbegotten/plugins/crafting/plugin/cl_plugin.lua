@@ -163,7 +163,7 @@ function cwRecipes:PlayerCanCraft(uniqueID)
 					if !cwBeliefs:HasBelief(requiredBeliefs[i]) then
 						-- this is messy but fuck it
 						if requiredBeliefs[i] == "sorcerer" and uniqueID == "hellforged_steel_ingot" then
-							if subfaction == "Rekh-khet-sa" or subfaction == "Crypt Walkers" then
+							if subfaction == "Rekh-khet-sa" then
 								continue;
 							end
 						end
