@@ -1609,7 +1609,7 @@ function playerMeta:NetworkDiseases()
 	end
 end
 
-function playerMeta:Vomit(bVomitBlood)
+function playerMeta:Vomit(bVomitBlood, bFromFood)
 	local contagious_diseases = {};
 	
 	for i, disease in ipairs(self:GetCharacterData("diseases", {})) do
@@ -1629,14 +1629,24 @@ function playerMeta:Vomit(bVomitBlood)
 		local strings = {"suddenly throws up on the ground, hurling vomit everywhere!", "vomits onto the ground!", "gags and then vomits all over the ground!"};
 		
 		if cwCharacterNeeds and self.HandleNeed then
-			self:HandleNeed("hunger", 5);
-			self:HandleNeed("thirst", 5);
+			if bFromFood then
+				self:HandleNeed("hunger", 25);
+				self:HandleNeed("thirst", 25);
+			else
+				self:HandleNeed("hunger", 5);
+				self:HandleNeed("thirst", 5);
+			end
 		end
 		
 		local health = self:Health();
+		local healthToTake = 5;
 		
-		if health > 5 then
-			self:SetHealth(math.max(1, health - 5));
+		if bFromFood then
+			healthToTake = 15;
+		end
+		
+		if health > healthToTake then
+			self:SetHealth(math.max(1, health - healthToTake));
 			
 			Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, self:Name().." has taken "..health - self:Health().." damage from vomiting, leaving them at "..self:Health().." health!");
 		else

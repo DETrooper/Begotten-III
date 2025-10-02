@@ -172,7 +172,7 @@ function cwCharacterNeeds:PlayerUseItem(player, itemTable, itemEntity)
 				else
 					timer.Simple(math.random(3, 8), function()
 						if IsValid(player) and player:Alive() then
-							player:Vomit(true);
+							player:Vomit(true, true);
 						end
 					end);
 				end
@@ -182,7 +182,7 @@ function cwCharacterNeeds:PlayerUseItem(player, itemTable, itemEntity)
 						if math.random(math.min(math.Round(v / 4), 5), 5) == 5 then
 							timer.Simple(math.random(3, 8), function()
 								if IsValid(player) and player:Alive() then
-									player:Vomit();
+									player:Vomit(false, true);
 								end
 							end);
 						end
@@ -192,7 +192,7 @@ function cwCharacterNeeds:PlayerUseItem(player, itemTable, itemEntity)
 						if math.random(math.min(math.Round(v / 4), 5), 5) == 5 then
 							timer.Simple(math.random(3, 8), function()
 								if IsValid(player) and player:Alive() then
-									player:Vomit();
+									player:Vomit(false, true);
 								end
 							end);
 						end
