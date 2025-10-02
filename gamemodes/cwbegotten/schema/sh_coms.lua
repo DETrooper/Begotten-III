@@ -1856,9 +1856,13 @@ local COMMAND = Clockwork.command:New("CallCongregation");
 				end
 			end
 		end
-		
-		netstream.Start(close_players, "EmitSound", {name = "cosmicrupture/bellsclose.wav", pitch = 90, level = 60});
-		netstream.Start(far_players, "EmitSound", {name = "cosmicrupture/bellsdistant.wav", pitch = 100, level = 75});
+		if game.GetMap() == "bg_district34" then
+			netstream.Start(close_players, "EmitSound", {name = "district34/congregationclose.wav", pitch = 100, level = 60});
+			netstream.Start(far_players, "EmitSound", {name = "district34/congregationfar.wav", pitch = 100, level = 75});
+		else
+			netstream.Start(close_players, "EmitSound", {name = "cosmicrupture/bellsclose.wav", pitch = 90, level = 60});
+			netstream.Start(far_players, "EmitSound", {name = "cosmicrupture/bellsdistant.wav", pitch = 100, level = 75});
+		end
 	end;
 COMMAND:Register();
 
