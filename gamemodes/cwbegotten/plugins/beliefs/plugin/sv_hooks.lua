@@ -2366,6 +2366,10 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 			end);
 		end
 		
+		if attacker:HasBelief("fearsome_wolf") then
+			attacker.lastWarCry = nil;
+		end
+		
 		if player:CharPlayTime() > config.GetVal("min_xp_charplaytime") or player:IsAdmin() then
 			local attackerFaction = attacker:GetFaction();
 			local attackerFactionTable = Clockwork.faction:FindByID(attackerFaction);

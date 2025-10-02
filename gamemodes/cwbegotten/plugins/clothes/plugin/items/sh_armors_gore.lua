@@ -298,7 +298,7 @@ ITEM.concealsFace = true;
 ITEM.conditionScale = 0.9
 ITEM.hasHelmet = true;
 ITEM.hitParticle = "GlassImpact";
-ITEM.protection = 35;
+ITEM.protection = 38;
 ITEM.weight = 3;
 ITEM.weightclass = "Light";
 ITEM.type = "leather";
@@ -321,7 +321,7 @@ ITEM.effectiveLimbs = {
 	[HITGROUP_GEAR] = true
 }
 
-ITEM.bluntScale = 0.60; -- reduces blunt damage by 40%
+ITEM.bluntScale = 0.55; -- reduces blunt damage by 45%
 ITEM.slashScale = 0.90; -- reduces slash damage by 10%
 ITEM.pierceScale = 0.95; -- reduces pierce damage by 5%
 ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%

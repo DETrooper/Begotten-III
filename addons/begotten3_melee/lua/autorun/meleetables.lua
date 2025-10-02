@@ -2862,13 +2862,13 @@ AttackTables.ScrapSpearAttackTable = {
 -- Spears
 
 AttackTables.IronSpearAttackTable = {
-	["primarydamage"] = 40,
+	["primarydamage"] = 45,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 33,
+	["armorpiercing"] = 35,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 5,
 	["stabilitydamage"] = 0,
@@ -2900,13 +2900,13 @@ AttackTables.TrainingSpearAttackTable = {
 };
 
 AttackTables.PitchforkAttackTable = {
-	["primarydamage"] = 30,
+	["primarydamage"] = 33,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 20,
+	["armorpiercing"] = 24,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 8,
 	["stabilitydamage"] = 0,
@@ -2919,13 +2919,13 @@ AttackTables.PitchforkAttackTable = {
 };
 
 AttackTables.VoltspearAttackTable = {
-	["primarydamage"] = 45,
+	["primarydamage"] = 47,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 37,
+	["armorpiercing"] = 40,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 8,
 	["stabilitydamage"] = 10,
@@ -2938,13 +2938,13 @@ AttackTables.VoltspearAttackTable = {
 };
 
 AttackTables.SatanicSpearAttackTable = {
-	["primarydamage"] = 50,
+	["primarydamage"] = 55,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 37,
+	["armorpiercing"] = 40,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 15,
 	["stabilitydamage"] = 0,
@@ -2957,13 +2957,13 @@ AttackTables.SatanicSpearAttackTable = {
 };
 
 AttackTables.WingedSpearAttackTable = {
-	["primarydamage"] = 45,
+	["primarydamage"] = 50,
 	["dmgtype"] = 16,
 	["attacktype"] = "reg_swing",
 	["canaltattack"] = false,
 	["altattackdamagemodifier"] = nil,
 	["altattackpoisedamagemodifier"] = nil,
-	["armorpiercing"] = 37,
+	["armorpiercing"] = 40,
 	["altarmorpiercing"] = nil,
 	["poisedamage"] = 10,
 	["stabilitydamage"] = 0,

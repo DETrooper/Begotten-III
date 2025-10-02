@@ -580,6 +580,10 @@ function GetStabilityModifier(owner)
 		end
 	end
 	
+	if owner.fearsomeSpeed then
+		stabilityModifier = stabilityModifier * 1.15;
+	end
+	
 	return stabilityModifier
 end
 
@@ -634,6 +638,10 @@ function SWEP:PrimaryAttack()
 	end
 	
 	if self:GetNW2Bool("swordplayActive") == true then
+		delay = delay * 0.8;
+	end
+	
+	if owner.fearsomeSpeed then
 		delay = delay * 0.8;
 	end
 	
@@ -1235,7 +1243,7 @@ end
 						
 						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 							--print "Spear Shaft Hit"
-							damage = math.max(1, (attacktable["primarydamage"]) * 0.01)
+							damage = math.max(1, (attacktable["primarydamage"]) * 0.05)
 							damagetype = 128
 							
 							-- KNOCKBACK
@@ -1249,7 +1257,7 @@ end
 							end);
 							
 							if hit:IsPlayer() then
-								hit:TakeStability(10 * riposteDamageModifier * GetStabilityModifier(self.Owner))
+								hit:TakeStability(15 * riposteDamageModifier * GetStabilityModifier(self.Owner))
 							end
 							
 							d:SetDamage(damage)
@@ -1426,7 +1434,7 @@ end
 						
 						if distance <= maxIneffectiveRange and hit:IsValid() then
 							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
-								damage = math.max(1, (attacktable["primarydamage"]) * 0.01)
+								damage = math.max(1, (attacktable["primarydamage"]) * 0.05)
 								damagetype = 128
 								
 								-- KNOCKBACK
@@ -1441,7 +1449,7 @@ end
 								end);
 								
 								if hit:IsPlayer() then
-									hit:TakeStability(10 * GetStabilityModifier(self.Owner))
+									hit:TakeStability(15 * GetStabilityModifier(self.Owner))
 								end
 							end
 						elseif distance > maxIneffectiveRange and hit:IsValid() then
@@ -1751,7 +1759,7 @@ end
 							
 							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 								--print "Spear Shaft Hit"
-								damage = math.max(1, (attacktable["primarydamage"]) * 0.01)
+								damage = math.max(1, (attacktable["primarydamage"]) * 0.05)
 								damagetype = 128
 								
 								-- KNOCKBACK
@@ -1765,7 +1773,7 @@ end
 								end);
 								
 								if hit:IsPlayer() then
-									hit:TakeStability(10 * GetStabilityModifier(self.Owner))
+									hit:TakeStability(15 * GetStabilityModifier(self.Owner))
 								end
 							end
 					

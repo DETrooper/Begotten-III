@@ -5,10 +5,10 @@
 cwMedicalSystem.bleedDamageThresholds = {
 	[DMG_BULLET] = 5, -- bullets
 	[DMG_BUCKSHOT] = 5, -- buckshot
-	[DMG_CLUB] = 20, -- blunt
+	[DMG_CLUB] = 30, -- blunt
 	[DMG_FALL] = 50, -- fall
 	[DMG_SLASH] = 10, -- slash
-	[DMG_VEHICLE] = 5, -- stab
+	[DMG_VEHICLE] = 10, -- stab
 };
 
 -- Called when a player's character has loaded.

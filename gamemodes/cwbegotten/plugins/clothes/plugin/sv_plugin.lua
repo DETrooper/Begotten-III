@@ -190,7 +190,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						end
 						
 						if attacker.daringTroutActive then
-							armorPiercing = armorPiercing + 10;
+							armorPiercing = armorPiercing + 8;
 						end
 						
 						if attacker:GetNetVar("druidStaffActive") then
