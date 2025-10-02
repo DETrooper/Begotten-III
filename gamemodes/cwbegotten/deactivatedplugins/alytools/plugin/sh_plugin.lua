@@ -648,6 +648,7 @@ local COMMAND = Clockwork.command:New("RemoveTeleporter")
 	COMMAND.access = "s"
 	COMMAND.optionalArguments = 1;
 	COMMAND.text = "[int Radius]"
+	COMMAND.types = {"Radius"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
