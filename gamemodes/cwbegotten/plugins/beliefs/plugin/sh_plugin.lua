@@ -1467,7 +1467,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				
 					hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
 				
-					timer.Simple(20.5, function()
+					timer.Create("FearsomeWolfTimer_"..player:EntIndex(), 20.5, 1, function()
 						if IsValid(player) then
 							player.fearsomeSpeed = nil;
 							player.warCryVictims = nil;
