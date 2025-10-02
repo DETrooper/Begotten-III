@@ -223,7 +223,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.headSuffix = "_hill";
 	ITEM.description = "A linen coif with a wide-brimmed hat, dyed white. It protects the head from snow endemic to the North."
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";	
-	ITEM.requiredFactions = {"Holy Hierarchy"};
+	ITEM.requiredFactions = {"Holy Hierarchy", "Aristocracy Of Light"};
 	
 	ITEM.conditionScale = 1.1 -- item degrades 1.5x faster with damage related condition loss
 	
@@ -253,7 +253,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.category = "Helms"
 	ITEM.headReplacement = "models/begotten/heads/clerichelmet.mdl";
 	ITEM.description = "A scowling depiction of Saint Ragnar, an imposing face meant to strike fear into the heathen. It's grimace bear the sight of death and jubilation at the cleansing of the Hill's Forests; and, to the unfaithful, a scathing reminder of the complex majesty of the Gore-Glazic face. It is newly wrought to serve the new mysteries expounded by the Castigators in their fight against the dark."
-	ITEM.requiredFactions = {"Holy Hierarchy"};
+	ITEM.requiredFactions = {"Holy Hierarchy", "Aristocracy Of Light"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
 	ITEM.uniqueID = "ministryhelmet"

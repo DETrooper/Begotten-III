@@ -32,6 +32,33 @@ if game.GetMap() == "rp_district21" then
 			fadeMusic = true
 		},
 	};
+elseif game.GetMap() == "bg_district34" then
+	cwDayNight.cycles = {
+		["day"] = {
+			length = 5400, -- 1.5 hours in seconds.
+			nextCycle = "daytonight", 
+			fadeMusic = false -- Fade music on transitioning to this phase?
+		},
+		["daytonight"] = {
+			length = 300, -- 5 minutes in seconds.
+			nextCycle = "night",
+			eventText = "Ancient, weary bells begin to ring from the Villa, signalling the arrival of night-time and the terrors that come with it.",
+			sound = {farSound = "district34/ratsfar.wav", closeSound = "district34/ratsclose.wav"},
+			fadeMusic = true
+		},
+		["night"] = {
+			length = 1800, -- 30 minutes in seconds.
+			nextCycle = "nighttoday",
+			eventText = "The Blood Moon has risen to claim those who still wander the wasteland.",
+			fadeMusic = true
+		},
+		["nighttoday"] = {
+			length = 300, -- 5 minutes in seconds.
+			nextCycle = "day",
+			eventText = "The Blood Moon finally subsides and the sky begins to lighten. You have survived another night.",
+			fadeMusic = true
+		},
+	};
 else
 	cwDayNight.cycles = {
 		["day"] = {

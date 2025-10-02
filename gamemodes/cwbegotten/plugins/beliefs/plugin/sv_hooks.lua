@@ -55,14 +55,14 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 			local lastZone = player:GetCharacterData("LastZone");
 			local playerFaction = player:GetFaction();
 			
-			if not plyTab.opponent and (table.HasValue(self.residualXPZones, lastZone) or (lastZone == "tower" and ((playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy") or residualXPInSafezone == true))) then
+			if not plyTab.opponent and (table.HasValue(self.residualXPZones, lastZone) or (lastZone == "tower" and ((playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy" or playerFaction == "Aristocracy Of Light" or playerFaction == "Militant Orders of the Villa") or residualXPInSafezone == true))) then
 				local residualXP = self.xpValues["residual"] or 1;
 				
 				if playerFaction == "Goreic Warrior" and (lastZone == "wasteland" or lastZone == "tower" or lastZone == "caves" or lastZone == "scrapper") then
 					residualCooldown = residualCooldown * 0.5
 				end
 				
-				if (cwDayNight and cwDayNight.currentCycle == "night" and player:HasBelief("primevalism") and lastZone == "wasteland") or player:HasBelief("old_son") or (lastZone != "tower" and (playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy")) then
+				if (cwDayNight and cwDayNight.currentCycle == "night" and player:HasBelief("primevalism") and lastZone == "wasteland") or player:HasBelief("old_son") or (lastZone != "tower" and (playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy" or playerFaction == "Aristocracy Of Light" or playerFaction == "Militant Orders of the Villa")) then
 					residualCooldown = residualCooldown * 0.5
 				end
 				
@@ -417,6 +417,18 @@ end
 -- Called just after a player levels up.
 function cwBeliefs:PlayerLevelUp(player, level, points)
 	Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." just leveled up to sacrament level "..tostring(level or player:GetCharacterData("level")).."! They still have "..tostring(points).." epiphanies to spend.");
+	
+	-- Grock HP/Size scales with level.
+	if player:GetSubfaction() == "Clan Grock" then
+		player:SetMaxHealth(player:GetMaxHealth());
+		
+		--local scale = math.min(player:GetCharacterData("level", 1), self.sacramentLevelCap);
+		local scale = math.min(player:GetCharacterData("level", 1), 40);
+	
+		player:SetModelScale(1 + (scale * 0.005), FrameTime());
+		player:SetViewOffset(Vector(0, 0, 64 + scale / 4));
+		player:SetViewOffsetDucked(Vector(0, 0, 28 + (scale / 8)));
+	end
 end
 
 -- Called when a player attempts to switch to a character.
@@ -1498,7 +1510,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 								end
 							end
 							
-							if (attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary") or (attacker:GetFaction() == "Hillkeeper" and subfaction == "Watchman") then
+							if (attacker:GetFaction() == "Gatekeeper" and subfaction == "Legionary") or (attacker:GetFaction() == "Hillkeeper" and subfaction == "Watchman") or (attacker:GetFaction() == "Militant Orders of the Villa" and subfaction == "Villakeepers")  or (attacker:GetFaction() == "Children Of Satan" and subfaction == "Crypt Walkers") then
 								damageXP = damageXP * 2;
 							end
 						
@@ -1977,6 +1989,14 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 		else
 			level = level + 5;
 		end
+	elseif faction == "Militant Orders of the Villa" then
+		if subfaction == "The Guild" then
+			level = level + 11;
+		elseif subfaction == "Prole of The Writ" then
+			level = level + 7;
+		else
+			level = level + 7;
+		end
 	elseif faction == "Goreic Warrior" then
 		if subfaction == "Clan Gore" or subfaction == "Clan Shagalax" then
 			level = level + 7;
@@ -1996,6 +2016,8 @@ function cwBeliefs:PrePlayerCharacterCreated(player, character)
 	elseif faction == "Pope Adyssa's Gatekeepers" then
 		level = level + 15;
 	elseif faction == "Holy Hierarchy" then
+		level = level + 10;
+	elseif faction == "Aristocracy Of Light" then
 		level = level + 10;
 
 		if subfaction == "Low Ministry" then

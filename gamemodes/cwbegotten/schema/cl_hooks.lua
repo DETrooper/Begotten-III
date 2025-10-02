@@ -705,10 +705,10 @@ function Schema:GetTargetPlayerName(player)
 	
 	local subfaction = player:GetSubfaction();
 
-	if subfaction == "Praeventor" or subfaction == "Outrider" then
+	if subfaction == "Praeventor" or subfaction == "Outrider" or subfaction == "Prole of The Writ" then
 		local clientFaction = Clockwork.Client:GetFaction();
 		
-		if clientFaction ~= "Gatekeeper" and clientFaction ~= "Hillkeeper" and clientFaction ~= "Holy Hierarchy" then
+		if clientFaction ~= "Gatekeeper" and clientFaction ~= "Hillkeeper" and clientFaction ~= "Militant Orders of the Villa" and clientFaction ~= "Aristocracy Of Light" and clientFaction ~= "Holy Hierarchy" then
 			return player:Name(true);
 		end
 	end
@@ -740,6 +740,12 @@ function Schema:OverrideTeamColor(player, bRecognized)
 					teamColor = Color(200, 200, 200, 255);
 				end
 			end
+		elseif playerFaction == "Militant Orders of the Villa" and clientFaction ~= "Militant Orders of the Villa" and clientFaction ~= "Aristocracy Of Light" then
+			if player:GetSubfaction() == "Prole of The Writ" then
+				if (!clothesItem or !clothesItem.faction or (clothesItem.faction and clothesItem.faction ~= playerFaction)) and (!helmetItem or !helmetItem.faction or (helmetItem.faction and helmetItem.faction ~= playerFaction)) then
+					teamColor = Color(200, 200, 200, 255);
+				end
+			end
 		elseif playerFaction == "Children of Satan" and clientFaction ~= "Children of Satan" then
 			if (!clothesItem or !clothesItem.faction or (clothesItem.faction and clothesItem.faction ~= playerFaction)) and (!helmetItem or !helmetItem.faction or (helmetItem.faction and helmetItem.faction ~= playerFaction)) then
 				local kinisgerOverride = player:GetNetVar("kinisgerOverride");
@@ -759,6 +765,10 @@ function Schema:OverrideTeamColor(player, bRecognized)
 		end
 	else
 		if playerFaction == "Gatekeeper" and clientFaction ~= "Gatekeeper" and clientFaction ~= "Holy Hierarchy" then
+			if (!clothesItem or !clothesItem.faction or (clothesItem.faction and clothesItem.faction ~= playerFaction)) and (!helmetItem or !helmetItem.faction or (helmetItem.faction and helmetItem.faction ~= playerFaction)) then
+				teamColor = Color(200, 200, 200, 255);
+			end
+		elseif playerFaction == "Militant Orders of the Villa" and clientFaction ~= "Militant Orders of the Villa" and clientFaction ~= "Aristocracy Of Light" then
 			if (!clothesItem or !clothesItem.faction or (clothesItem.faction and clothesItem.faction ~= playerFaction)) and (!helmetItem or !helmetItem.faction or (helmetItem.faction and helmetItem.faction ~= playerFaction)) then
 				teamColor = Color(200, 200, 200, 255);
 			end
@@ -972,6 +982,13 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 				else
 					subfactionText = "An inquisitor of the Holy Hierarchy.";
 				end
+			elseif targetSubfaction == "Order Of The Writ" then
+				if playerSubfaction == targetSubfaction then
+					subfactionText = "A fellow hunter of the Order Of The Writ.";
+					textColor = Color(0, 255, 0, 255);
+				else
+					subfactionText = "A member of the Order Of The Writ.";
+				end
 			elseif targetSubfaction == "Knights of Sol" then
 				if playerSubfaction == targetSubfaction then
 					subfactionText = "A fellow knight of the Holy Hierarchy.";
@@ -979,7 +996,21 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 				else
 					subfactionText = "A knight of the Holy Hierarchy.";
 				end
-			elseif playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" or playerFaction == "Hillkeeper" then
+			elseif targetSubfaction == "House Herrera" then
+				if playerSubfaction == targetSubfaction then
+					subfactionText = "A fellow Soldier of House Herrera.";
+					textColor = Color(0, 255, 0, 255);
+				else
+					subfactionText = "A Soldier of House Herrera.";
+				end
+			elseif targetSubfaction == "House Caelvora" then
+				if playerSubfaction == targetSubfaction then
+					subfactionText = "A fellow Soldier of House Caelvora.";
+					textColor = Color(0, 255, 0, 255);
+				else
+					subfactionText = "A Soldier of House Caelvora.";
+				end
+			elseif playerFaction == "Gatekeeper" or playerFaction == "Holy Hierarchy" or playerFaction == "Hillkeeper" or playerFaction == "Militant Orders of the Villa" or playerFaction == "Aristocracy Of Light" then
 				if targetSubfaction == "Auxiliary" then
 					if playerSubfaction == targetSubfaction then
 						subfactionText = "A fellow auxiliary of the Holy Order of the Gatekeepers.";
@@ -1000,6 +1031,27 @@ function Schema:DrawTargetPlayerSubfaction(target, alpha, x, y)
 						textColor = Color(0, 255, 0, 255);
 					else
 						subfactionText = "A praeventor of the Holy Order of the Gatekeepers.";
+					end
+				elseif targetSubfaction == "Villakeepers" then
+					if playerSubfaction == targetSubfaction then
+						subfactionText = "A fellow legionary of the Holy Order of the Villakeepers.";
+						textColor = Color(0, 255, 0, 255);
+					else
+						subfactionText = "A legionary of the Holy Order of the Villakeepers.";
+					end
+				elseif targetSubfaction == "Prole of The Writ" then
+					if playerSubfaction == targetSubfaction then
+						subfactionText = "A fellow Prole of the Order of the Writ.";
+						textColor = Color(0, 255, 0, 255);
+					else
+						subfactionText = "A Prole belonging to the Holy Order of the Writ.";
+					end
+				elseif targetSubfaction == "The Guild" then
+					if playerSubfaction == targetSubfaction then
+						subfactionText = "A fellow soldier of The Guild.";
+						textColor = Color(0, 255, 0, 255);
+					else
+						subfactionText = "A Villakeeper belonging to The Guild.";
 					end
 				elseif targetSubfaction == "Watchman" then
 					if playerSubfaction == targetSubfaction then
@@ -1406,10 +1458,10 @@ function Schema:PlayerDoesRecognisePlayer(target, status, isAccurate, realValue)
 	local playerFaction = Clockwork.Client:GetNetVar("kinisgerOverride") or Clockwork.Client:GetFaction();
 	local targetFaction = target:GetNetVar("kinisgerOverride") or target:GetFaction();
 
-	if targetFaction == "Holy Hierarchy" then
+	if targetFaction == "Holy Hierarchy" or targetFaction == "Aristocracy Of Light" then
 		return true;
-	elseif targetFaction == "Gatekeeper" or targetFaction == "Pope Adyssa's Gatekeepers" or targetFaction == "Hillkeeper" then
-		if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or playerFaction == "Holy Hierarchy" then
+	elseif targetFaction == "Gatekeeper" or targetFaction == "Pope Adyssa's Gatekeepers" or targetFaction == "Hillkeeper" or targetFaction == "Militant Orders of the Villa" then
+		if playerFaction == "Gatekeeper" or playerFaction == "Pope Adyssa's Gatekeepers" or playerFaction == "Hillkeeper" or targetFaction == "Militant Orders of the Villa" or playerFaction == "Holy Hierarchy" or playerFaction == "Aristocracy Of Light" then
 			return true;
 		end
 	elseif targetFaction == "Goreic Warrior" and playerFaction == "Goreic Warrior" then

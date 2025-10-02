@@ -45,7 +45,7 @@ function ENT:HUDPaintTargetID(x, y, alpha)
 	else
 		local faction = Clockwork.Client:GetNetVar("kinisgerOverride") or Clockwork.Client:GetFaction();
 		
-		if (Clockwork.Client:IsAdmin() and LocalPlayer():GetMoveType() == MOVETYPE_NOCLIP) or faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy" or faction == "Hillkeeper" then
+		if (Clockwork.Client:IsAdmin() and LocalPlayer():GetMoveType() == MOVETYPE_NOCLIP) or faction == "Gatekeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy" or faction == "Hillkeeper" or faction == "Militant Orders of the Villa" or faction == "Aristocracy Of Light" then
 			y = Clockwork.kernel:DrawInfo(frequency, x, y, colorWhite, alpha);
 		end
 	end;

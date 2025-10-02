@@ -92,8 +92,345 @@ local FACTION = Clockwork.faction:New("Wanderer");
 	end;
 FACTION_WANDERER = FACTION:Register();
 
+local FACTION = Clockwork.faction:New("Militant Orders of the Villa");
+
+	if game.GetMap() == "bg_district34" then
+		FACTION.disabled = false;
+	else
+		FACTION.disabled = true;
+		FACTION.hidden = true;
+	end
+	
+	FACTION.whitelist = true;
+	FACTION.useFullName = false;
+	FACTION.material = "begotten/faction/faction_logo_gatekeepers"; -- Logo
+	FACTION.color = Color(80, 100, 120);
+	FACTION.description = "The Gatekeepers are the front line of defence against the countless unholy horrors that threaten the Glaze. \nTheir ranks swell with conscripted power-hungry commoners and fanatical flagellants. \nThey must serve the Holy Hierarchy diligently and without question, no matter how outrageous their demands may be. \nIll-trained and poorly equipped, these soldiers are expected to lay their lives down to protect the Light. \nAnd so they shall.";
+	FACTION.availablefaiths = {"Faith of the Light"};
+	FACTION.alliedfactions = {"Hillkeeper", "Holy Hierarchy", "Gatekeeper", "Aristocracy Of Light"};
+	FACTION.masterfactions = {"Aristocracy Of Light"};
+	FACTION.enlist = true;
+	FACTION.promoteAcrossSubfactions = true;
+	FACTION.singleGender = GENDER_MALE;
+	FACTION.characterLimit = 1; -- # of characters of this faction a player can have.
+	FACTION.ratio = 0.3; -- 0.3 slots per player (9 at 30 players).
+	--FACTION.imposters = true; -- Kinisgers should get enlisted through /enlist on Wanderer disguises.
+	FACTION.names = "glazic";
+	FACTION.subfactions = {
+		{name = "Villakeepers", subtitle = "Militans - Soldiers tasked with protecting the Villa", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Constant Drilling: Starts with +15 maximum stamina"}, {Color(0, 225, 0), "(+) Nourishing Rations: Starts with +25 maximum health"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(0, 225, 0), "(+) Strength in Numbers: +100% faith gain from dealing damage"}, {Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}}},
+        {name = "Prole of The Writ", startingRank = 12, whitelist = true, subtitle = "The Writ - Scouts and Manhunters", description = "The Proles of the Writ are among the bravest and most foolhardy members of the Villa's militia. Promised citizenship after merely six months of service in the Wristmaster's Order, they are tasked with the arduous task of venturing out into the wastes to prosecute those who would flee the Writmarshal's justice. They are the envoys of the Villa to those inbred communities of wander-churls, the seekers of lost knowledge, and the long arm of the Villa's law.", attributes = {{Color(0, 225, 0), "(+) Excursionists: -25% stamina drain and +5% sprint speed"}, {Color(0, 225, 0), "(+) Masters of Disguise: Recognising does not reveal your rank"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(225, 0, 0), "(-) The 'Sol Orthodoxy' and 'Voltism' subfaiths are locked"}}},
+		{name = "The Guild", startingRank = 3, subtitle = "Artisans - Physicians and Manufacturers", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Men of Knowledge: +25% increased faith gain"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 12"}, {Color(0, 225, 0), "(+) Drilled & Nourished: Starts with +20 health and +10 stamina"}, {Color(0, 225, 0), "(+) Has +5kg extra weight capacity"}, {Color(225, 0, 0), "(-) Tier IV of the Prowess belief tree is locked"}, {Color(225, 0, 0), "(-) The 'Voltism' subfaith is locked"}}},
+	};
+	FACTION.residualXPZones = { -- Zones that boost residual XP gain for this faction.
+		["bg_district34"] = {
+			{pos1 = Vector(8808, 8584, 871), pos2 = Vector(9520, 7992, 1306), modifier = 0.33, nightModifier = 0.2}, -- Gorewatch
+			{pos1 = Vector(4403, -7851, 614), pos2 = Vector(6594, -8081, 1063), modifier = 0.5, nightModifier = 0.25}, -- Gate
+			{pos1 = Vector(6734, -8081, 614), pos2 = Vector(6444, -11962, 1373), modifier = 0.5, nightModifier = 0.25}, -- Wall	
+			{pos1 = Vector(-613, -9808, 738), pos2 = Vector(-856, -11849, 1258), modifier = 0.5, nightModifier = 0.25}, -- Wall
+			{pos1 = Vector(4214, -10694, 1312), pos2 = Vector(4584, -10317, 1478), modifier = 0.5, nightModifier = 0.25}, -- Courtyard Tower
+		},
+	};
+	
+	-- Called when a player is transferred to the faction.
+	function FACTION:OnTransferred(player, faction, name)
+		if (faction.name != "Wanderer" and faction.name != "Holy Hierarchy") then
+			if player:GetSubfaction() ~= "Kinisger" then
+				return false;
+			end
+		end;
+		
+		-- It is the IC responsibility of Gatekeepers to bloodtest recruits.
+		--[[if player:GetFaith() ~= "Faith of the Light" or player:GetSubfaith() == "Voltism" then
+			return false;
+		end]]--
+		
+		if (!Clockwork.player:IsWhitelisted(player, "Militant Orders of the Villa")) then
+			Clockwork.player:SetWhitelisted(player, "Militant Orders of the Villa", true);
+		end;
+	end;
+	
+	if SERVER then
+		function FACTION:CanPromote(player, target, faction, subfaction)
+			if !player:IsAdmin() then
+				local playerFaction = player:GetNetVar("kinisgerOverrideFaction") or player:GetFaction();
+				
+				if playerFaction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						return false;
+					end
+				end
+			end
+		end
+		
+		function FACTION:CanDemote(player, target, faction, subfaction)
+			if !player:IsAdmin() then
+				local playerFaction = player:GetNetVar("kinisgerOverrideFaction") or player:GetFaction();
+				
+				if playerFaction == "Holy Hierarchy" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						return false;
+					end
+				end
+			end
+		end
+	end
+	
+	if !Schema.Ranks then
+		Schema.Ranks = {};
+	end
+	
+	if !Schema.RankTiers then
+		Schema.RankTiers = {};
+	end
+	
+	if !Schema.RanksToBuffs then
+		Schema.RanksToBuffs = {};
+	end
+	
+	if !Schema.RanksRestrictedWages then
+		Schema.RanksRestrictedWages = {};
+	end
+	
+	if !Schema.RanksToSubfaction then
+		Schema.RanksToSubfaction = {};
+	end
+	
+	if !Schema.RanksToCoin then
+		Schema.RanksToCoin = {};
+	end
+	
+	Schema.Ranks["Militant Orders of the Villa"] = {
+		[1] = "Levy",
+		[2] = "Brother",
+		[3] = "Laborer",
+        [4] = "Surveyor",
+		[5] = "Mechanic",
+		[6] = "Physician",
+		[7] = "General Practicioner",
+		[8] = "Proselyte",
+		[9] = "Forgewright",
+		[10] = "Prefect",
+		[11] = "Reliquarian",
+        [12] = "Waymaster",
+		[13] = "Legate",
+		[14] = "Guildmaster",
+		[15] = "Esquire",
+	};
+	
+	Schema.RankTiers["Militant Orders of the Villa"] = {
+		[1] = {"Levy"},
+		[2] = {"Brother", "Laborer", "Surveyor"},
+		[3] = {"Esquire", "Proselyte", "Physician", "Mechanic", "Waymaster"},
+		[4] = {"Prefect", "Reliquarian", "General Practicioner", "Forgewright"},
+		[5] = {"Legate", "Guildmaster"}
+	};
+	
+	Schema.RanksToBuffs["Militant Orders of the Villa"] = {
+		["Legate"] = {health = 50, stamina = 50},
+        ["Writmarshal"] = {health = 50, stamina = 50},
+	};
+	
+	-- Do not grant wages to these ranks if they are inside the safezone.
+	Schema.RanksRestrictedWages["Militant Orders of the Villa"] = {1, 2, 4, 8, 12};
+	
+	Schema.RanksToSubfaction["Militant Orders of the Villa"] = {
+		["Laborer"] = "The Guild",
+		["Mechanic"] = "The Guild",
+        ["Forgewright"] = "The Guild",
+        ["Guildmaster"] = "The Guild",
+		["Physician"] = "The Guild",
+		["General Practicioner"] = "The Guild",
+		["Waymaster"] = "Prole of The Writ",
+		["Surveyor"] = "Prole of The Writ"
+		
+	};
+	
+	Schema.RanksToCoin["Militant Orders of the Villa"] = {
+		[1] = 25,
+		[2] = 35,
+		[3] = 35,
+		[4] = 50,
+		[5] = 35,
+		[6] = 50,
+		[7] = 50,
+		[8] = 50,
+		[9] = 50,
+		[10] = 100,
+		[11] = 100, 
+		[12] = 50,
+		[13] = 200,
+		[14] = 50,
+        [15] = 50,
+        [16] = 200,
+        [17] = 200,
+	};
+FACTION_VILLAKEEPER = FACTION:Register();
+
+local FACTION = Clockwork.faction:New("Aristocracy Of Light");
+
+    if game.GetMap() == "bg_district34" then
+		FACTION.disabled = false;
+	else
+		FACTION.disabled = true;
+		FACTION.hidden = true;
+	end
+
+	local ministerModels = {
+		male = {
+			clothes = "models/begotten/gatekeepers/minister_male.mdl",
+			heads = {
+				"male_01",
+				"male_02",
+				"male_03",
+				"male_04",
+				"male_05",
+				"male_06",
+				"male_07",
+				"male_08",
+				"male_09",
+				"male_11",
+				"male_12",
+				"male_13",
+				"male_16",
+				"male_22",
+				"male_56"
+			},
+		},
+	};
+
+	FACTION.disabled = false; -- For events.
+	FACTION.whitelist = true;
+	FACTION.useFullName = false;
+	FACTION.material = "begotten/faction/faction_logo_hierarchy";
+	FACTION.color = Color(225, 175, 0);
+	FACTION.description = "The Holy Hierarchy upholds the ancient superiority of the enlightened few. \nAmongst the dark sea of bastard blood and uncivilized rabble, they are the adjudicators and administrators to enforce Holy Light. \nStill, many are corrupt, seeking self indulgence rather than directing rights. \nAfter all, from their high seats, there are none above them to look down in judgement."
+	FACTION.availablefaiths = {"Faith of the Light"};
+	FACTION.alliedfactions = {"Gatekeeper", "Hillkeeper", "Militant Orders of the Villa",};
+	FACTION.enlist = true;
+	FACTION.ratio = 0.1; -- 0.1 slots per player (3 at 30 players).
+	--FACTION.imposters = true;
+	FACTION.names = "glazic";
+	FACTION.subfactions = {
+		{name = "Ministry", startingRank = 1, whitelist = true, subtitle = "The Ministry - The Privileged Few Overseers of Glazic Supremacy", description = "The Holy Hierarchy is perhaps the only surviving institution of the old world and is the only known church of the Light remaining. Many view the Holy Hierarchy as the direct continuation of the Empire of Light, including the Holy Hierarchy themselves, who push this narrative to solidify their grasp on their subjects. Any who doubt its legitimacy are executed on the spot. Lording over most of the 'civilized' peasantry that wander the wasteland, the Holy Hierarchy strictly enforces its religious codes, which are ever-changing at the whim of the Pope. At the very top of the Hierarchy lies the Pope, supreme in power. He lives in a penthouse at the top of the hotel in absolute luxury in comparison to the shanties that the rabble share. Below him lies the cardinals, who serve as the Pope's council. Lower still are the Bishops, many of whom are now in open rebellion against the new Pope, with some even claiming his title as their own. Lastly, there are the priests, who are barely above commoner status and equal in rank to those in the Knights of Sol or Inquisition. A priest's duties often involve searching ancient texts held within the grand archives for any advantage that could be offered to the Hierarchy over their rivals, or for clues to decipher the ramblings of the machine that so many wanderers speak of.", models = ministerModels},
+		{name = "Order of the Writ", startingRank = 1, whitelist = true, subtitle = "Enforcers of the Writ - Hunters, Judges, and Executioners", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Pious: +50% increased faith gain"}, {Color(0, 225, 0), "(+) Starts with +25 maximum health"}, {Color(0, 225, 0), "(+) Starts with +25 maximum stamina"}, {Color(0, 225, 0), "(+) Has +5kg extra weight capacity"}}}, 
+		{name = "House Caelvora", startingRank = 1, whitelist = true, subtitle = "The House of Caelvora - Descendants of the Villa", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Bulwark: +25 stamina, +25 Health, and +25 stability"}, {Color(0, 225, 0), "(+) +15% Stamina damage damage resistance when a shield isn't equipped"}, {Color(0, 225, 0), "(+) +5% Movement speed when a Shield is not equipped"}, {Color(0, 255, 0), "(+) +50% Faith Gain"}, {Color(0, 255, 0), "(+) +4kg Carry weight"}, {Color(255, 0, 0), "(-) The Voltism subfaith are locked"}}, models = ministerModels},
+		{name = "House Herrera", startingRank = 1, whitelist = true, subtitle = "The House of Herrera - Saviours of The Villa", description = "PLACEHOLDER", attributes = {{Color(0, 225, 0), "(+) Starts with +40 maximum health"}, {Color(0, 225, 0), "(+) Bulwark: +25 stamina and +25 stability"}, {Color(0, 225, 0), "(+) +50% faith gain"}, {Color(0, 255, 0), "(+) +10% Armor protection"}, {Color(0, 255, 0), "(+) +8kg Carry weight"}, {Color(225, 0, 0), "(-) Honor Bound: Cannot equip firearms."}, {Color(255, 0, 0), "(-) The Voltism subfaith are locked"}}, models = ministerModels},
+	};
+	FACTION.singleGender = GENDER_MALE;
+	
+	-- Called when a player is transferred to the faction.
+	function FACTION:OnTransferred(player, faction, name)
+		--if (faction.name != "Wanderer" and faction.name != "Gatekeeper") then
+			--return false;
+		--end;
+		
+		--[[if player:GetFaith() ~= "Faith of the Light" or player:GetSubfaith() == "Voltism" then
+			return false;
+		end]]--
+		
+		--[[if (!Clockwork.player:IsWhitelisted(player, "Holy Hierarchy")) then
+			Clockwork.player:SetWhitelisted(player, "Holy Hierarchy", true);
+		end;]]--
+	end;
+	
+	if SERVER then
+		function FACTION:CanEnlist(player, target, faction, subfaction)
+			if !player:IsAdmin() then
+				if faction == "Aristocracy Of Light" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						if subfaction and subfaction.name ~= playerSubfaction then
+							return false;
+						end
+					end
+				end
+			end
+		end
+		
+		function FACTION:CanPromote(player, target, faction, subfaction)
+			if !player:IsAdmin() then
+				if faction == "Aristocracy Of Light" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						if subfaction and subfaction.name ~= playerSubfaction then
+							return false;
+						end
+					end
+				end
+			end
+		end
+		
+		function FACTION:CanDemote(player, target, faction, subfaction)
+			if !player:IsAdmin() then
+				if faction == "Aristocracy Of Light" then
+					local playerSubfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction();
+					
+					if playerSubfaction ~= "Ministry" then
+						if subfaction and subfaction.name ~= playerSubfaction then
+							return false;
+						end
+					end
+				end
+			end
+		end
+	end
+	
+	if !Schema.Ranks then
+		Schema.Ranks = {};
+	end
+	
+	if !Schema.RankTiers then
+		Schema.RankTiers = {};
+	end
+	
+	if !Schema.RanksToBuffs then
+		Schema.RanksToBuffs = {};
+	end
+
+	if !Schema.RanksToSubfaction then
+		Schema.RanksToSubfaction = {};
+	end
+	
+	Schema.Ranks["Aristocracy Of Light"] = {
+		[1] = "Ser Knight",
+		[2] = "Manhunter",
+		[3] = "Chronologist",
+        [4] = "Chamberlain",
+		[5] = "Bailiff",
+		[6] = "Count Caelvora",
+		[7] = "Count Herrera",
+		[8] = "Writmarshal Glazelight",
+		[9] = "Senator"
+	};
+	
+	Schema.RankTiers["Aristocracy Of Light"] = {
+		[1] = {"Ser Knight", "Manhunter", "Chronologist"},
+		[2] = {"Chamberlain", "Bailiff"},
+		[3] = {"Count Caelvora", "Count Herrera", "Writmarshal Glazelight"},
+		[4] = {"Senator"}
+	};
+	
+	Schema.RanksToSubfaction["Aristocracy Of Light"] = {
+		["Ser Knight"] = {"House Caelvora", "House Herrera"},
+		["Manhunter"] = "Order of the Writ",
+		["Chronologist"] = "Order of the Writ",
+		["Chamberlain"] = {"House Caelvora", "House Herrera"},
+		["Bailiff"] = "Order of the Writ",
+		["Count Caelvora"] = {"House Caelvora"},
+		["Count Herrera"] = {"House Herrera"},
+		["Writmarshal Glazelight"] = "Order of the Writ",
+		["Senator"] = "Ministry"
+	};
+FACTION_ARISTOCRACY = FACTION:Register();
+
 local FACTION = Clockwork.faction:New("Gatekeeper");
-	if game.GetMap() == "rp_district21" then
+	if game.GetMap() == "rp_district21" or game.GetMap() == "bg_district34" then
 		FACTION.disabled = true;
 		FACTION.hidden = true;
 	else
@@ -268,6 +605,14 @@ local FACTION = Clockwork.faction:New("Gatekeeper");
 FACTION_GATEKEEPER = FACTION:Register();
 
 local FACTION = Clockwork.faction:New("Holy Hierarchy");
+
+	if game.GetMap() == "bg_district34" then
+		FACTION.disabled = true;
+		FACTION.hidden = true;
+	else
+		FACTION.disabled = false;
+	end
+
 	local ministerModels = {
 		male = {
 			clothes = "models/begotten/gatekeepers/minister_male.mdl",
@@ -442,13 +787,122 @@ local FACTION = Clockwork.faction:New("Goreic Warrior");
 	FACTION.imposters = true;
 	FACTION.names = "goreic";
 	FACTION.subfactions = {
-		{name = "Clan Gore", subtitle = "Followers of the Father - Warriors and Hunters", description = "Clan Gore is currently known as the Crown Clan, a title given to the most powerful of all the Clans. Following the Father, Clan Gore was born by bloodshed and conquest. The previous Crown Clan and followers of the Father, Clan Ghorst, had a war chief who made the mistake of fathering a bastard child and leaving it to the wolves to be devoured. The boy was instead raised by these wolves and took on the name Reaper King Kalkaslash. With an army of skinwalkers and werewolves, Kalkaslash butchered his way into his father's long hall, and shred him into a bloody mess with his claws. From then on he seized his throne, and forced the other Clans to kneel with his newly gained army of warrior men. For the next hundred years to follow, Clan Gore would capture women by the thousands and breed new warriors, for they would birth thousands more ruthless killers to continue the process. The Father is harsh and unforgiving, but with his strength empires will fall.", rivalry = "Clan Grock", attributes = {{Color(0, 225, 0), "(+) Starts with +45 maximum health"}, {Color(0, 225, 0), "(+) Skilled Hunters: Deal 50% more damage to animals"}, {Color(0, 225, 0), "(+) Start at Sacrament Level 8"}}}, 
-		{name = "Clan Harald", subtitle = "Followers of the Old Son - Sailors and Explorers", description = "Clan Harald is the second oldest Clan belonging to the Goreic peoples, the oldest being Clan Grock. The salt of the sea runs through the blood of these men, and their home is whatever lies beyond. For the past several hundred years Clan Harald has had no true chieftain, ever since it was cursed by the trickster god of The Sister. Any man who calls themselves the Chieftain of the sea, and therefore head of Clan Harald, shall die by drowning. While there is never a head of Clan Harald, there always exists a council of the most experienced (and stubborn) sailors who oversee business. In these current dark times, the Haralders seek to end their curse and become the new Crown Clan, as they feel they were always meant to be. The Haralder sailors will always be at odds with the followers of The Sister, horrible tricksters who create storms that turn their longships into the burning sea. Unknown to all the other Clans, the followers of the Old Son see their deity as a massive beast who lives in the deepest darkest depths of the ocean, and soon they will wake it and watch their entire world submerge underneath the waters, while they thrive above with their mighty sails.", rivalry = "Clan Reaver", attributes = {{Color(0, 225, 0), "(+) Starts with +35 maximum health"}, {Color(0, 225, 0), "(+) Access to greater Longships"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 6"}}}, 
-		{name = "Clan Reaver", startingRank = 7, subtitle = "Followers of the Sister - Slavers and Merchants", description = "The most wealthy of all Clans, the Reavers are the upholders of Goreic society and economy, but are often looked down on by the others. Seen as weak and as tricksters, they are never trusted by the other Clans, and for good reason. The Goreic people are cursed to live in infertile lands, and for that reason they must survive by the raiding of weaker peoples. Yet the Reavers follow The Sister, and they see it as their right to cause misery to others, even when they have no practical reason for it. Their seat is that of the Hall of Tears, a terrifying place somewhere hidden in the woods, where people are suspended on the brink of death for as long as they provide amusement. Instead of meeting their enemies on an open field like their brutish brothers, the Reavers will cast curses upon their foes or even puppeteer entire factions to do their bidding. Some in the South presume that the followers of the Sister may actually be doing the work of the Dark Prince, though the Reavers might even suggest that both gods are one and the same.", rivalry = "Clan Harald", attributes = {{Color(0, 225, 0), "(+) Starts with +25 maximum health"}, {Color(0, 225, 0), "(+) Gain a passive salary of Coins every hour"}, {Color(0, 225, 0), "(+) Gain double the coin from selling slaves"}, {Color(0, 225, 0), "(+) Can choose the Faith of the Dark as a faith"}, {Color(0, 225, 0), "(+) The 'Survivalist' belief from Faith of the Dark grants +25 maximum health"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 6"}}}, 
-		{name = "Clan Shagalax", subtitle = "Followers of the Young Son - Builders and Blacksmiths", description = "It is said that a Shagalaxian is born with steel skin and molten iron flowing in their blood. Without their metal, the bloodthirsty Gores would be throwing sticks and stones instead of their mighty steel. There was a time long ago when the Shagalaxians were considered the mightiest of all Clans and all tribes united under their banner; when their steam belching tanks threw flames across valleys, turning armies and forests into ash. Pathetic arrows plinked off many plates of steel as their legions of tanks rolled over fields of terrified tribes and towns of the Glaze alike. It was only when the weaklings of Clan Crast foresaw Clan Shagalax's dealings with a mechanical Titan-God that their title of Crown Clan was in need of defiance. So it was that when the Undergod entered this world, the Shagalaxians took advantage and began their invasion of the ever-hated Empire of Light with the combined might of the Gore tribes. However, the Shagalaxians soon learned that the Undergod had no allies, and in their greatest moment of weakness their remnants were conquered by the followers of The Father at the behest of Clan Crast. It was then deemed that only The Father and by proxy Clan Gore may lord over the other Clans. Those Shagalaxians cut off from their brethren during the Undergod's invasion now comprise many of the scrapper warbands that plague the wasteland, but a small number of those still connected to the Great Tree yet remain among the great clans. Many Shagalaxians claim they are loyal to The Young Son, a deity of charity and ingenuity, though in secret it is said that there are those who follow a mechanical titan and wait patiently for the time when their legions of tanks are rebuilt so that they may turn this world into ash once more.", rivalry = "Clan Crast", attributes = {{Color(0, 225, 0), "(+) Starts with +30 maximum health"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8, with points placed in \'Ingenuity\'"}, {Color(0, 225, 0), "(+) Can craft and use firearms and crossbows"}, {Color(0, 225, 0), "(+) Has +5kg extra weight capacity"}}}, 
-		{name = "Clan Crast", startingRank = 3, subtitle = "Followers of the Mother - Shamans and Mystics", description = "While all followers of The Family respect The Mother's role and contribution to the rough but fair cycle of nature and death, those actually born under her are looked down upon as weak and pathetic. In those days the followers of The Mother would be thrown off high cliffs to splatter on the rocks below, as they would never grow to be great warriors like the followers of The Father would. Then it was decided by a more benevolent King of the Bark Throne that one in every tenth child born under the sign of The Mother would be permitted to live. As always these lucky children grew up to be queer and disfigured little things, but they did have gifts that made them useful. Some became bards, entertainers: a juggling dwarf or a two-headed giant. Others had The Vision, a way to see into the dark void of fate itself. With a new generation of mystic beings, a new Clan was formed, the first ever to follow The Mother. To this day Clan Crast thrives without bloodshed, as their great blinded seers look into the darkness to warn the others of their perils ahead. When a seer foresaw the killing of the Great Tree at the hands of the Holy Hierarchy's fire-breathing dragons, and no one believed him, the Gores learned to never mistrust the warnings of their Crasters again. The current line of Clan Crast are most in touch with the Blade Druids of old, and seek to use their ancient weapons forged by the Earth itself. A great ritual awaits Clan Crast, to restore their Great Tree, and the other Clans stand by to see this through.", rivalry = "Clan Shagalax", attributes = {{Color(0, 225, 0), "(+) Starts with +25 maximum health"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 12"}, {Color(0, 225, 0), "(+) Can unlock the ability to Ravenspeak"}, {Color(0, 225, 0), "(+) Can craft and use crossbows"}, {Color(225, 0, 0), "(-) Start with -4 Trait Points"}}}, 
-		{name = "Clan Grock", subtitle = "Followers of the Old Ways - Nomads", description = "The first Gore tribe to come settle near the Great Tree. The oldest Clan of all Gores, and those who refused to follow the gods of The Family. While many followers of the Old Ways acknowledge the existence of The Family, they choose to instead go their own way and entrust in themselves to see their own path in life. All Gores believe they are fated to die and whatever they do cannot change that, and so those of the Old Ways agree that they will continue to struggle to survive until that day comes. The average Grock is much taller and stronger than their brothers, with a thick coat of black hair covering their unwashed bodies, giving them a bestial look. Clan Grock will never hold any power as their beliefs encourage a nomadic lifestyle, one free of society, laws and the reliance of other men. The only time they will ever be called in by the others is if their Great Tree is under attack, and then and only then will they charge forth to defend their home lands. Clan Grock is considered a joke to the other Clans, men who would rather lay with beasts than a good woman. The worst of them are Clan Gore, the arrogant Kings of Old who hosted 'Great Hunts' to slaughter as many Grocks as possible for glory and bragging rights. Still, when their great gods fail them, those of the Old Ways will always endure.", rivalry = "Clan Gore", attributes = {{Color(0, 225, 0), "(+) Starts with +100 maximum health"}, {Color(0, 225, 0), "(+) Savage: Warcries instantly restore 25 stamina"}, {Color(0, 225, 0), "(+) Primitive: Throwing stones deal 50% more stability damage. Unlocks the ability to equip heavy runestone weapons"}, {Color(0, 225, 0), "(+) Burly: Grow 0.5% larger in size and gain +2 HP with each Sacrament Level"}, {Color(0, 225, 0), "(+) Starts at Sacrament Level 8"}, {Color(0, 225, 0), "(+) Has +10kg extra weight capacity"}, {Color(225, 0, 0), "(-) Cannot wear Medium or Heavy armor"}, {Color(225, 0, 0), "(-) The Subfaith Tree is locked and cannot be progressed"}}}
-	};
+
+		-- {
+		-- 	name = "Clan Gore",
+		-- 	subtitle = "Followers of the Father - Warriors and Hunters",
+		-- 	description = [[Clan Gore is currently known as the Crown Clan, a title given to the most powerful of all the Clans. Following the Father, Clan Gore was born by bloodshed and conquest. The previous Crown Clan and followers of the Father, Clan 
+  --   , had a war chief who made the mistake of fathering a bastard child and leaving it to the wolves to be devoured. The boy was instead raised by these wolves and took on the name Reaper King Kalkaslash. With an army of skinwalkers and werewolves, Kalkaslash butchered his way into his father's long hall and shredded him into a bloody mess with his claws. From then on he seized his throne and forced the other Clans to kneel with his newly gained army of warrior men. For the next hundred years, Clan Gore would capture women by the thousands and breed new warriors to continue the cycle. The Father is harsh and unforgiving, but with his strength, empires will fall.]],
+		-- 	rivalry = "Clan Grock",
+		-- 	attributes = {
+		-- 		{Color(0, 225, 0), "(+) Starts with +40 maximum health"},
+		-- 		{Color(0, 225, 0), "(+) Skilled Hunters: Deal 50% more damage to animals"},
+		-- 		{Color(0, 225, 0), "(+) Start at Sacrament Level 8"}
+		-- 	}
+		-- },
+		-- {
+		-- 	name = "Clan Harald",
+		-- 	subtitle = "Followers of the Old Son - Sailors and Explorers",
+		-- 	description = [[Clan Harald is the second oldest Clan belonging to the Goreic peoples, the oldest being Clan Grock. The salt of the sea runs through the blood of these men, and their home is whatever lies beyond. For the past several hundred years, Clan Harald has had no true chieftain, ever since it was cursed by the trickster god of The Sister. Any man who calls himself the Chieftain of the sea, and therefore head of Clan Harald, shall die by drowning. Instead, a council of the most experienced (and stubborn) sailors oversees their business. In these current dark times, the Haralders seek to end their curse and become the new Crown Clan. Unknown to the other Clans, the followers of the Old Son see their deity as a massive beast who lives in the deepest, darkest depths of the ocean. They plan to awaken it and watch their world submerge, while they thrive above with mighty sails.]],
+		-- 	rivalry = "Clan Reaver",
+		-- 	attributes = {
+		-- 		{Color(0, 225, 0), "(+) Starts with +35 maximum health"},
+		-- 		{Color(0, 225, 0), "(+) Access to greater Longships"},
+		-- 		{Color(0, 225, 0), "(+) Starts at Sacrament Level 6"}
+		-- 	}
+		-- },
+		{
+			name = "Clan Reaver",
+			startingRank = 7,
+			subtitle = "Followers of the Sister - Slavers and Merchants",
+			description = [[The most wealthy of all Clans, the Reavers uphold Goreic society and economy but are looked down upon by the others. Seen as weak and as tricksters, they are never trusted, and for good reason. The Goreic people are cursed to live in infertile lands, and thus survive through raiding. The Reavers follow The Sister and take joy in causing misery, even without reason. Their seat is the Hall of Tears — a terrifying place where people are suspended on the brink of death for amusement. They do not fight honorably but use curses and manipulation. Some believe the Sister and the Dark Prince may be the same deity.]],
+			rivalry = "Clan Harald",
+			attributes = {
+				{Color(0, 225, 0), "(+) Starts with +25 maximum health"},
+				{Color(0, 225, 0), "(+) Passive salary of Coins every hour"},
+				{Color(0, 225, 0), "(+) Double Coin from selling slaves"},
+				{Color(0, 225, 0), "(+) Can choose the Faith of the Dark"},
+				{Color(0, 225, 0), "(+) Sorcerer and Survivalist beliefs from Faith of the Dark grant +25 max health"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 6"}
+			}
+		},
+		{
+			name = "Clan Shagalax",
+			subtitle = "Followers of the Young Son - Builders and Blacksmiths",
+			description = [[A Shagalaxian is said to be born with steel skin and molten iron in their veins. Once the mightiest of Clans, their steam-belching tanks burned forests and conquered armies. Their downfall came after allying with a mechanical Titan-God during the Undergod’s invasion, only to be betrayed and destroyed. Some remain loyal to the Young Son, a deity of charity and ingenuity — but others still dream of the day their tanks return to turn the world to ash.]],
+			rivalry = "Clan Crast",
+			attributes = {
+				{Color(0, 225, 0), "(+) Starts with +30 maximum health"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 8 with points in 'Ingenuity'"},
+				{Color(0, 225, 0), "(+) Can craft and use firearms and crossbows"},
+				{Color(0, 225, 0), "(+) +5kg extra weight capacity"}
+			}
+		},
+		{
+			name = "Clan Crast",
+			startingRank = 3,
+			subtitle = "Followers of the Mother - Shamans and Mystics",
+			description = [[Once reviled as weak, followers of the Mother were allowed to live only by royal decree. Some became mystics with the Vision — a power to see into fate. Clan Crast now warns others of impending doom, having accurately predicted the fall of the Great Tree. They commune with the Earth and wield ancient weapons in hopes of restoring what was lost.]],
+			rivalry = "Clan Shagalax",
+			attributes = {
+				{Color(0, 225, 0), "(+) Starts with +25 maximum health"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 12"},
+				{Color(0, 225, 0), "(+) Can unlock Ravenspeak"},
+				{Color(0, 225, 0), "(+) Can craft and use crossbows"},
+				{Color(225, 0, 0), "(-) Start with -4 Trait Points"}
+			}
+		},
+		-- {
+		-- 	name = "Clan Grock",
+		-- 	subtitle = "Followers of the Old Ways - Nomads",
+		-- 	description = [[The oldest Gore tribe, Grocks follow no gods and trust only in their survival. Bestial and wild, they are mocked by other Clans, especially Clan Gore. Still, when their Great Tree is threatened, even the most cynical Gore will call upon the Grocks for defense. They do not rely on armor or structured society but endure regardless.]],
+		-- 	rivalry = "Clan Gore",
+		-- 	attributes = {
+		-- 		{Color(0, 225, 0), "(+) Starts with +175 maximum health"},
+		-- 		{Color(0, 225, 0), "(+) Warcries instantly restore 25 stamina"},
+		-- 		{Color(0, 225, 0), "(+) Throwing stones deal 50% more stability damage; unlocks heavy runestone weapons"},
+		-- 		{Color(0, 225, 0), "(+) Starts at Sacrament Level 8"},
+		-- 		{Color(0, 225, 0), "(+) +10kg extra weight capacity"},
+		-- 		{Color(225, 0, 0), "(-) Cannot wear Medium or Heavy armor"},
+		-- 		{Color(225, 0, 0), "(-) Subfaith Tree is locked and cannot be progressed"}
+		-- 	}
+		-- },
+		{
+			name = "Clan Gotnarh",
+			subtitle = "Followers of the Old Ways - Towering Savages",
+			description = "PENDING",
+			rivalry = "Clan Ghorst",
+			mandatorytraits = {"gluttony"},
+			attributes = {
+				{Color(0, 225, 0), "(+) Starts with +225 maximum health"},
+				{Color(0, 225, 0), "(+) Warcries instantly restore 25 stamina"},
+				{Color(0, 225, 0), "(+) Throwing stones deal 50% more stability damage; unlocks heavy runestone weapons"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 10"},
+				{Color(0, 225, 0), "(+) +10kg extra weight capacity"},
+				{Color(0, 225, 0), "(+) Gatherers: Capable of harvesting resources by hand"},
+				{Color(225, 0, 0), "(-) Cannot wear Medium or Heavy armor"},
+				{Color(225, 0, 0), "(-) The subfaith tree is locked and cannot be progressed"},
+				{Color(225, 0, 0), "(-) Towering: The dexterity belief is locked and cannot be progressed"},
+				{Color(225, 0, 0), "(-) Overall movement speed decreased by 10%"},
+				{Color(225, 0, 0), "(-) Insatiable: Starts with the Gluttony trait enabled"}
+			}
+		},
+		{
+			name = "Clan Ghorst",
+			subtitle = "Followers of the Father, and Old Son - Champions of a Lost Cause",
+			description = "PENDING",
+			rivalry = "Clan Gore, Clan Shagalax, Clan Gotnarh, Clan Grock",
+			attributes = {
+				{Color(0, 225, 0), "(+) Starts with +40 maximum health"},
+				{Color(0, 225, 0), "(+) Conquerors: Access to Greater Longships"},
+				{Color(0, 225, 0), "(+) Arbalests: Allows use of Crossbows"},
+				{Color(0, 225, 0), "(+) Starts at Sacrament Level 7"},
+				{Color(0, 225, 0), "(+) Trappers: Deal 50% more damage to animals"},
+				{Color(225, 0, 0), "(-) Bygone Favor: The Fortune tree is locked, and cannot be progressed"}
+			}
+		}
+	}
+
 	FACTION.models = {
 		male = {
 			clothes = "models/begotten/goreicwarfighters/goretribal_male.mdl",

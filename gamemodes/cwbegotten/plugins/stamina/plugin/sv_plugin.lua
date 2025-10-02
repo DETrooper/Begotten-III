@@ -28,11 +28,11 @@ function cwStamina:GetMaxStaminaPlugin(player)
 		
 		if subfaction == "Servus" then
 			max_stamina = max_stamina + 5;
-		elseif subfaction == "Watchman" or subfaction == "Auxiliary" then
+		elseif subfaction == "Watchman" or subfaction == "Auxiliary" or subfaction == "The Guild" then
 			max_stamina = max_stamina + 10;
-		elseif subfaction == "Legionary" or player:GetFaction() == "Pope Adyssa's Gatekeepers" or subfaction == "Varazdat" or subfaction == "Philimaxio" then
+		elseif subfaction == "Legionary" or subfaction == "Villakeepers" or player:GetFaction() == "Pope Adyssa's Gatekeepers" or subfaction == "Varazdat" or subfaction == "Philimaxio" then
 			max_stamina = max_stamina + 15;
-		elseif subfaction == "Knights of Sol" then
+		elseif subfaction == "Knights of Sol" or subfaction == "House Caelvora" or subfaction == "House Herrera" or subfaction == "Order Of The Writ" then
 			max_stamina = max_stamina + 25;
 		end
 		
@@ -81,7 +81,7 @@ end;
 function cwStamina:ModifyStaminaDrain(player, drainTab)
 	local subfaction = player:GetSubfaction();
 	
-	if subfaction == "Praeventor" or subfaction == "Outrider" then
+	if subfaction == "Praeventor" or subfaction == "Outrider" or subfaction == "Prole of The Writ" then
 		drainTab.decrease = drainTab.decrease * 0.75;
 	end
 end

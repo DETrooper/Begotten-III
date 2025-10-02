@@ -39,13 +39,13 @@ function ENT:Use(activator, caller)
 			local subfaction = caller:GetSubfaction();
 			local state = "Wanderer";
 			
-			if faction == "Holy Hierarchy" then
+			if faction == "Holy Hierarchy" or faction == "Aristocracy Of Light"  then
 				--if subfaction == "Minister" then
 					state = "Hierarchy";
 				--else
 					--state = "Gatekeeper";
 				--end
-			elseif faction == "Gatekeeper" or faction == "Hillkeeper" then
+			elseif faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Militant Orders of the Villa" then
 				--state = "Gatekeeper";
 				state = "Hierarchy";
 			end

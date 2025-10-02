@@ -396,9 +396,17 @@ Schema.doors = {
 			"gk_officer_door",
 			"gorewatch_panic",
 		},
-		["knights"] = {
+		["nobles"] = {
 			"pope_reception_shutter",
 			"Bunker",
+		},
+		["caelvora"] = {
+			"house_caelvora_1",
+			"house_caelvora_2",
+		},
+		["herrera"] = {
+			"house_herrera_1",
+			"house_herrera_2",
 		},
 		["hell"] = {
 			"hellexecution_1",
@@ -1950,7 +1958,7 @@ function playerMeta:AddBounty(bounty, reason, poster)
 	if IsValid(poster) and poster:IsPlayer() then
 		local faction = self:GetNetVar("kinisgerOverride") or self:GetFaction()
 		
-		if (faction  == "Gatekeeper" or faction == "Hillkeeper" or faction  == "Holy Hierarchy") and !poster:IsAdmin() then
+		if (faction  == "Gatekeeper" or faction == "Hillkeeper" or faction  == "Holy Hierarchy" or faction == "Aristocracy Of Light" or faction == "Militant Orders of the Villa") and !poster:IsAdmin() then
 			Schema:EasyText(poster, "cornflowerblue", "You cannot place a bounty on "..self:Name().."!");
 			
 			return;
@@ -2077,7 +2085,7 @@ function Schema:AddBounty(key, bounty, reason, poster)
 					end
 					
 					if IsValid(poster) and poster:IsPlayer() and faction then
-						if (faction  == "Gatekeeper" or faction == "Hillkeeper" or faction  == "Holy Hierarchy") and !poster:IsAdmin() then
+						if (faction  == "Gatekeeper" or faction == "Hillkeeper" or faction  == "Holy Hierarchy" or faction == "Aristocracy Of Light" or faction == "Militant Orders of the Villa") and !poster:IsAdmin() then
 							Schema:EasyText(poster, "cornflowerblue", "You cannot place a bounty on "..v._Name.."!");
 							
 							return;
@@ -2711,7 +2719,7 @@ concommand.Add("cw_CoinslotSalaryCheck", function(player, cmd, args)
 		if (entity:GetClass() == "cw_coinslot") then
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			
-			if (faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
+			if (faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy" or faction == "Aristocracy Of Light" or faction == "Militant Orders of the Villa") then
 				local collectableWages = player:GetCharacterData("collectableWages", 0);
 				local coin = player.cwInfoTable.coinslotWages * collectableWages;
 				local ranksRestrictedWages = Schema.RanksRestrictedWages;
@@ -2738,7 +2746,7 @@ concommand.Add("cw_CoinslotSalary", function(player, cmd, args)
 		if (entity:GetClass() == "cw_coinslot") then
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			
-			if (faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
+			if (faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy" or faction == "Aristocracy Of Light" or faction == "Militant Orders of the Villa") then
 				local collectableWages = player:GetCharacterData("collectableWages", 0);
 				local coin = player.cwInfoTable.coinslotWages * collectableWages
 				
@@ -2792,7 +2800,7 @@ concommand.Add("cw_CoinslotRation", function(player, cmd, args)
 						return;
 					end
 				
-					if (faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy") then
+					if (faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Holy Hierarchy" or faction == "Aristocracy Of Light" or faction == "Militant Orders of the Villa") then
 						player:GiveItem(item.CreateInstance("gatekeeper_ration"), true);
 						player:GiveItem(item.CreateInstance("purified_water"), true);
 						Schema:EasyText(player, "olivedrab", "The machine dispenses a Gatekeeper ration and a bottle of purified water.");
@@ -2828,7 +2836,7 @@ concommand.Add("cw_CoinslotGear", function(player, cmd, args)
 		if (entity:GetClass() == "cw_coinslot") then
 			local faction = player:GetNetVar("kinisgerOverride") or player:GetFaction();
 			
-			if (faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers") then
+			if (faction == "Gatekeeper" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" or faction == "Militant Orders of the Villa") then
 				local collectedGear = player:GetCharacterData("collectedGear", false);
 				
 				if !collectedGear then
@@ -2883,7 +2891,7 @@ concommand.Add("cw_CoinslotTreasury", function(player, cmd, args)
 		if (entity:GetClass() == "cw_coinslot") then
 			local faction = player:GetFaction();
 			
-			if (faction == "Holy Hierarchy" and player:GetSubfaction() == "Minister") or player:IsAdmin() then
+			if (faction == "Holy Hierarchy" and player:GetSubfaction() == "Minister") or (faction == "Aristocracy Of Light" and player:GetSubfaction() == "Ministry") or player:IsAdmin() then
 				Schema:EasyText(player, "lightslateblue", "The treasury currently sits at "..Schema.towerTreasury.." coin.");
 			end
 		end
