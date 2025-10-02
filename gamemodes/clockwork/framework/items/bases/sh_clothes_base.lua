@@ -424,26 +424,32 @@ local ITEM = item.New(nil, true);
 					
 					Clockwork.player:SetAction(player, "putting_on_armor", actionTime, 1, function()
 						if IsValid(player) and self then
-							if !itemEntity or itemEntity and IsValid(itemEntity) then
+							--[[if !itemEntity or itemEntity and IsValid(itemEntity) then
 								if !self:HasPlayerEquipped(player) then
 									self:OnUse(player, itemEntity, true);
 								end
 							else
 								Schema:EasyText(player, "peru", "The item you are attempting to put on is no longer valid!");
+							end]]--
+							
+							if player:HasItemInstance(self) then
+								if !self:HasPlayerEquipped(player) then
+									self:OnUse(player, itemEntity, true);
+								end
 							end
 						end
 					end);
 					
 					return false;
 				else
-					if itemEntity then
+					if IsValid(itemEntity) then
 						player:SetItemEntity(itemEntity)
 						player:GiveItem(self, true)
 						
 						itemEntity:Remove();
 						player:SetItemEntity(nil);
 					--elseif !player:HasItemByID(self.itemID) then
-					elseif !Clockwork.inventory:HasItemInstance(player:GetInventory(), self) then
+					elseif !player:HasItemInstance(self) then
 						Schema:EasyText(player, "peru", "The item you are attempting to put on is no longer valid!");
 						
 						return false;
