@@ -2188,8 +2188,12 @@ local CAVES = zones:New("caves")
 		MANOR.colorModify = {["$pp_colour_brightness"] = -0.05, ["$pp_colour_contrast"] = 1, ["$pp_colour_colour"] = 1}
 		MANOR.bounds = {
 			{
-			min = Vector(852, -7859, -4881),
+			min = Vector(852, -7859, -4664),
 			max = Vector(2321, -9681, -2300),
+			},
+			{
+			min = Vector(1226, -8029, -4840),
+			max = Vector(2056, -9503, -4664),
 			},
 			{
 			min = Vector(-6541, -8594, -9349),
