@@ -15,12 +15,6 @@ if map == "rp_district21" then
 		["wood"] = 20,
 		["gorewood"] = 6,
 	};
-elseif map == "bg_district34" then
-	cwRecipes.maxPiles = {
-		["ore"] = 16,
-		["wood"] = 12,
-		["gorewood"] = 6,
-	}
 else
 	cwRecipes.maxPiles = {
 		["ore"] = 8,

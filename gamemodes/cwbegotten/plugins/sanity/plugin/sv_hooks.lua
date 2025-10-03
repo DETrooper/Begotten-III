@@ -26,13 +26,6 @@ local sanitySubSafezones = {
 			{pos1 = Vector(-13051, -2702, -576), pos2 = Vector(-14379, -3897, -889)}, -- Voltbunker
 		},
 	},
-	["bg_district34"] = {
-		["wasteland"] = {
-			{pos1 = Vector(-398, 1856, -152), pos2 = Vector(-1758, 3284, -2)}, -- VoltSewer
-			{pos1 = Vector(-938, 2086, -726), pos2 = Vector(-1339, 2458, -566)}, -- Volt Principal's Office
-			{pos1 = Vector(-8231, 13144, 181), pos2 = Vector(-10960, 15869, 436)}, -- Scrap Town
-		},
-	},
 };
 
 local hellZones = {
@@ -57,7 +50,7 @@ function cwSanity:PlayerThink(player, curTime, infoTable, alive, initialized, pl
 		local nearFire = false;
 		local sanityDecay = -1;
 	
-		if (map != "rp_begotten3" and map != "rp_district21" and map != "bg_district34") then
+		if (map != "rp_begotten3" and map != "rp_district21") then
 			if (map == "rp_begotten_redux") or (map == "rp_scraptown") then
 				if player:InTower() then
 					plyTab.nextSanityDecay = curTime + sanity_interval;

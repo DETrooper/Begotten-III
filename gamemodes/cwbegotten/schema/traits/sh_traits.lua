@@ -228,7 +228,7 @@ local PIOUS = Clockwork.trait:New()
 	PIOUS.name = "Pious"
 	PIOUS.description = "Your character is pious and a firm believer in their faith. This trait grants a single free sacrament with an epiphany for use in the belief tree."
 	PIOUS.points = 1
-	PIOUS.excludedsubfactions = {"Clan Grock", "Clan Gotnarh"};
+	PIOUS.excludedsubfactions = {"Clan Grock"};
 Clockwork.trait:Register(PIOUS)
 
 local PLACEBO = Clockwork.trait:New()
@@ -332,5 +332,5 @@ local ZEALOUS = Clockwork.trait:New()
 	ZEALOUS.description = "Through the sheer power of their faith, your character is able to resist unholy temptations, and withstand events that may otherwise shatter their sanity. This trait automatically unlocks the first 2 beliefs in the second column of the 'Fortitude' tree: 'Prudence' and 'Saintly Composure'. This trait also grants three sacraments with their respective epiphanies for use in the beliefs menu."
 	ZEALOUS.points = 7
 	ZEALOUS.disables = {"possessed"}
-	ZEALOUS.excludedsubfactions = {"Clan Grock", "Clan Gotnarh"}
+	ZEALOUS.excludedsubfactions = {"Clan Grock"}
 Clockwork.trait:Register(ZEALOUS)

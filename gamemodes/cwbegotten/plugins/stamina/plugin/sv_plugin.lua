@@ -26,7 +26,7 @@ function cwStamina:GetMaxStaminaPlugin(player)
 			return 1000;
 		end
 		
-		if subfaction == "Servus" or subfaction == "Crypt Walkers" then
+		if subfaction == "Servus" then
 			max_stamina = max_stamina + 5;
 		elseif subfaction == "Watchman" or subfaction == "Auxiliary" or subfaction == "The Guild" then
 			max_stamina = max_stamina + 10;
