@@ -1979,7 +1979,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if string.find(weaponClass, "begotten_spear") or string.find(weaponClass, "begotten_polearm") or string.find(weaponClass, "begotten_scythe") then
-					frame:AddText("Has Counter Damage: +40% Damage Bonus against running enemies when attacked from the front.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Has Counter Damage: +70% Damage Bonus against running enemies when attacked from the front.", Color(110, 30, 30), nil, 0.9);
 				elseif weaponTable.isDagger then
 					frame:AddText("Has Backstab: Deal double damage and 100% AP damage to enemies' backs.", Color(110, 30, 30), nil, 0.9);
 					frame:AddText("Has Coup de Grace: Deal double damage and 100% AP damage to knocked over enemies. Each hit will slightly increase the time it takes for knocked over enemies to get up.", Color(110, 30, 30), nil, 0.9);

@@ -1622,7 +1622,7 @@ end
 							local entEyeAngles = hit:EyeAngles();
 						
 							if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-								damage = damage + (damage * 0.5);
+								damage = damage + (damage * 0.7);
 							end
 						end
 						
@@ -1789,7 +1789,7 @@ end
 									local entEyeAngles = hit:EyeAngles();
 								
 									if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-										damage = damage + (damage * 0.5);
+										damage = damage + (damage * 0.7);
 									end
 								end
 								

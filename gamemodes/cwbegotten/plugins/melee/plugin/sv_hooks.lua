@@ -893,7 +893,6 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 			if damage >= 5 and entity:IsPlayer() then
 				local targetVelocity = entity:GetVelocity();
 				if math.abs(targetVelocity.x) > 200 or math.abs(targetVelocity.y) > 200 then
-					damageInfo:ScaleDamage(1.3);
 					entity:TakeStability(damage * 0.75);
 				elseif entity:Crouching() then
 					damageInfo:ScaleDamage(1.2);
