@@ -1699,7 +1699,7 @@ function playerMeta:GetMaxHealth(health)
 			maxHealth = maxHealth + 100
 			
 			if cwBeliefs then
-				local hpToAdd = math.min(player:GetCharacterData("level", 1), cwBeliefs.sacramentLevelCap) * 2;
+				local hpToAdd = math.min(self:GetCharacterData("level", 1), cwBeliefs.sacramentLevelCap) * 2;
 				
 				maxHealth = maxHealth + hpToAdd;
 			end
@@ -1718,7 +1718,7 @@ function playerMeta:GetMaxHealth(health)
 		elseif subfaction == "Servus" then
 			maxHealth = maxHealth + 25
 		elseif subfaction == "Auxiliary" then
-			maxHealth = maxHealth + 20	
+			maxHealth = maxHealth + 20
 		end
 	end
 	
