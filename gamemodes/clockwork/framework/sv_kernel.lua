@@ -1684,11 +1684,10 @@ function playerMeta:GetMaxHealth(health)
 
 	if FACTION then
 		maxHealth = FACTION.maxHealth or 100;
-		maxArmor = FACTION.maxArmor or 100;
 	end
 	
 	if boost > 0 then
-		maxhealth = maxHealth + boost
+		maxHealth = maxHealth + boost
 	end	
 	
 	if factionName == "The Third Inquisition" then
