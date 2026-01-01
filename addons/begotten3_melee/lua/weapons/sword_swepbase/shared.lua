@@ -1215,7 +1215,7 @@ end
 		local damagetype = (attacktable["dmgtype"])
 		local stabilitydamage = (attacktable["stabilitydamage"]);
 
-		if self.Owner:GetNetVar("ThrustStance") and attacktable["altattackstabilitydamagemodifier"] then
+		if self.Owner:GetNetVar("ThrustStance") and attacktable["altattackstabilitydamagemodifier"] and swingType != "parry_swing" then
 			stabilitydamage = stabilitydamage * attacktable["altattackstabilitydamagemodifier"];
 		end
 		
@@ -1418,8 +1418,22 @@ end
 					end
 				elseif weapon.ChoppingAltAttack == true then
 					damagetype = 4
+					if hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then							
+							if hit:IsPlayer() then
+								hit:TakeStability(stabilitydamage * GetStabilityModifier(self.Owner));
+							end
+						end
+					end
 				elseif weapon.PummelingAltAttack == true then
 					damagetype = 128
+					if hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then							
+							if hit:IsPlayer() then
+								hit:TakeStability(stabilitydamage * GetStabilityModifier(self.Owner));
+							end
+						end
+					end
 				end
 				-- Polearm alt attack spear shaft hit system
 				if (IsValid(self)) then
