@@ -204,7 +204,7 @@ function SWEP:Holster()
 				self:ResetBonePositions(vm)
 			end
 		else
-			self.Owner:SetFOV(0, 0.5);
+			self.Owner:SetFOV(0, self:GetIronsightTime() / 2);
 		end
 	end
 	
@@ -821,7 +821,7 @@ function SWEP:IronSight()
 		self.IronSightsPos = self.RunSightsPos                                  -- Hold it down
 		self.IronSightsAng = self.RunSightsAng                                  -- Hold it down
 		self:SetIronsights(true, self.Owner)                                    -- Set the ironsight true
-		self.Owner:SetFOV(0, 0.5);
+		self.Owner:SetFOV(0, self:GetIronsightTime() / 2);
 		self.DrawCrosshair = false
 		
 		if CLIENT then return end
@@ -833,7 +833,7 @@ function SWEP:IronSight()
  
 	if self.Owner:KeyReleased(IN_SPEED) then
 		self:SetIronsights(false, self.Owner)                        -- Set the ironsight true
-		self.Owner:SetFOV(0, 0.5);
+		self.Owner:SetFOV(0, self:GetIronsightTime() / 2);
 		self.DrawCrosshair = self.OrigCrossHair
 		
 		if CLIENT then return end
@@ -845,7 +845,7 @@ function SWEP:IronSight()
 
 	if !self.Owner:KeyDown(IN_SPEED) then
 		if self.Owner:KeyPressed(IN_ATTACK2) --[[and not (self.Weapon:GetNWBool("Reloading"))]] then
-			self.Owner:SetFOV(self.Secondary.IronFOV, 0.5);
+			self.Owner:SetFOV(self.Secondary.IronFOV, self:GetIronsightTime() / 2);
 			self.IronSightsPos = self.SightsPos                                     -- Bring it up
 			self.IronSightsAng = self.SightsAng                                     -- Bring it up
 			self:SetIronsights(true, self.Owner)
@@ -862,7 +862,7 @@ function SWEP:IronSight()
 	end
 
 	if self.Owner:KeyReleased(IN_ATTACK2) and !self.Owner:KeyDown(IN_SPEED) then
-		self.Owner:SetFOV(0, 0.5);
+		self.Owner:SetFOV(0, self:GetIronsightTime() / 2);
 		self.DrawCrosshair = self.OrigCrossHair
 		self:SetIronsights(false, self.Owner)
 		
@@ -954,53 +954,38 @@ end
 /*---------------------------------------------------------
 GetViewModelPosition
 -----------------------------------------------------*/
-local IRONSIGHT_TIME = 0.3
--- //Time to enter in the ironsight mod
+
+local multiplier = 0;
  
 function SWEP:GetViewModelPosition(pos, ang)
- 
-		if (not self.IronSightsPos) then return pos, ang end
- 
-		local bIron = self.Weapon:GetNWBool("M9K_Ironsights")
- 
-		if (bIron != self.bLastIron) then
-				self.bLastIron = bIron
-				self.fIronTime = CurTime()
- 
-		end
- 
-		local fIronTime = self.fIronTime or 0
- 
-		if (not bIron and fIronTime < CurTime() - IRONSIGHT_TIME) then
-				return pos, ang
-		end
- 
-		local Mul = 1.0
- 
-		if (fIronTime > CurTime() - IRONSIGHT_TIME) then
-				Mul = math.Clamp((CurTime() - fIronTime) / IRONSIGHT_TIME, 0, 1)
- 
-				if not bIron then Mul = 1 - Mul end
-		end
- 
-		local Offset    = self.IronSightsPos
- 
-		if (self.IronSightsAng) then
-				ang = ang * 1
-				ang:RotateAroundAxis(ang:Right(),               self.IronSightsAng.x * Mul)
-				ang:RotateAroundAxis(ang:Up(),          self.IronSightsAng.y * Mul)
-				ang:RotateAroundAxis(ang:Forward(),     self.IronSightsAng.z * Mul)
-		end
- 
-		local Right     = ang:Right()
-		local Up                = ang:Up()
-		local Forward   = ang:Forward()
- 
-		pos = pos + Offset.x * Right * Mul
-		pos = pos + Offset.y * Forward * Mul
-		pos = pos + Offset.z * Up * Mul
- 
-		return pos, ang
+	if (not self.IronSightsPos) then return pos, ang end
+
+	local bIron = self.Weapon:GetNWBool("M9K_Ironsights")
+
+	if bIron then
+		multiplier = math.Clamp(multiplier + (FrameTime() / (self:GetIronsightTime())), 0, 1)
+	else
+		if multiplier == 0 then return pos, ang end;
+
+		multiplier = math.Clamp(multiplier - (FrameTime() / (self:GetIronsightTime())), 0, 1)
+	end
+	
+	local viewMultiplier = math.ease.OutQuad(multiplier);
+
+	local Offset = self.IronSightsPos
+
+	if (self.IronSightsAng) then
+		ang = ang * 1
+		ang:RotateAroundAxis(ang:Right(), self.IronSightsAng.x * viewMultiplier)
+		ang:RotateAroundAxis(ang:Up(), self.IronSightsAng.y * viewMultiplier)
+		ang:RotateAroundAxis(ang:Forward(), self.IronSightsAng.z * viewMultiplier)
+	end
+
+	pos = pos + Offset.x * ang:Right() * viewMultiplier;
+	pos = pos + Offset.y * ang:Forward() * viewMultiplier;
+	pos = pos + Offset.z * ang:Up() * viewMultiplier;
+
+	return pos, ang
 end
  
 /*---------------------------------------------------------
@@ -1012,6 +997,16 @@ end
  
 function SWEP:GetIronsights()
 	return self.Weapon:GetNWBool("M9K_Ironsights")
+end
+
+function SWEP:GetIronsightTime()
+	local ironsightTime = self.IronSightTime or 1.5;
+	
+	if cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("dexterity") then
+		ironsightTime = ironsightTime / 2;
+	end
+	
+	return ironsightTime;
 end
  
 if CLIENT then

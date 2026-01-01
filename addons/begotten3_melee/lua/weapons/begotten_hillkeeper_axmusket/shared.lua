@@ -1109,7 +1109,7 @@ function SWEP:IronSight()
 	end
 	
 	if self.Owner:GetNetVar("ThrustStance") then
-		self.Owner:SetFOV(0, 0.5);
+		self.Owner:SetFOV(0, self:GetIronsightTime() / 2);
 		self.realIronSightsPos = self.SightsPosAlternate;
 		self.realIronSightsAng = self.SightsAngAlternate;
 	
@@ -1126,7 +1126,7 @@ function SWEP:IronSight()
 		self.realIronSightsPos = self.RunSightsPos                                  -- Hold it down
 		self.realIronSightsAng = self.RunSightsAng                                  -- Hold it down
 		self:SetIronsights(true, self.Owner)                                    -- Set the ironsight true
-		self.Owner:SetFOV(0, 0.5);
+		self.Owner:SetFOV(0, self:GetIronsightTime() / 2);
 		self.DrawCrosshair = false
 		
 		if CLIENT then return end
@@ -1138,7 +1138,7 @@ function SWEP:IronSight()
  
 	if self.Owner:KeyReleased(IN_SPEED) then
 		self:SetIronsights(false, self.Owner)                        -- Set the ironsight true
-		self.Owner:SetFOV(0, 0.5);
+		self.Owner:SetFOV(0, self:GetIronsightTime() / 2);
 		self.DrawCrosshair = self.OrigCrossHair
 		
 		if CLIENT then return end
@@ -1150,7 +1150,7 @@ function SWEP:IronSight()
 
 	if !self.Owner:KeyDown(IN_SPEED) then
 		if self.Owner:KeyPressed(IN_ATTACK2) --[[and not (self.Weapon:GetNWBool("Reloading"))]] then
-			self.Owner:SetFOV(self.Secondary.IronFOV, 0.5);
+			self.Owner:SetFOV(self.Secondary.IronFOV, self:GetIronsightTime() / 2);
 			self.realIronSightsPos = self.SightsPos                                     -- Bring it up
 			self.realIronSightsAng = self.SightsAng                                     -- Bring it up
 			self:SetIronsights(true, self.Owner)
@@ -1167,7 +1167,7 @@ function SWEP:IronSight()
 	end
 
 	if self.Owner:KeyReleased(IN_ATTACK2) and !self.Owner:KeyDown(IN_SPEED) then
-		self.Owner:SetFOV(0, 0.5);
+		self.Owner:SetFOV(0, self:GetIronsightTime() / 2);
 		self.DrawCrosshair = self.OrigCrossHair
 		self:SetIronsights(false, self.Owner)
 		
@@ -1257,7 +1257,7 @@ function SWEP:OnHolster()
 				self:ResetBonePositions(vm)
 			end
 		else
-			self.Owner:SetFOV(0, 0.5);
+			self.Owner:SetFOV(0, self:GetIronsightTime() / 2);
 		end
 	end
 end
@@ -1301,6 +1301,16 @@ end
  
 function SWEP:GetIronsights()
 	return self.Weapon:GetNWBool("M9K_Ironsights")
+end
+
+function SWEP:GetIronsightTime()
+	local ironsightTime = self.IronSightTime or 1.5;
+	
+	if cwBeliefs and self.Owner.HasBelief and self.Owner:HasBelief("dexterity") then
+		ironsightTime = ironsightTime / 2;
+	end
+	
+	return ironsightTime;
 end
 
 local TracerName = "Tracer"
@@ -1417,8 +1427,7 @@ function SWEP:IdleAnimationDelay( seconds, index )
 	end )
 end
 
-local IRONSIGHT_TIME = 0.3
--- //Time to enter in the ironsight mod
+local multiplier = 0;
 
 	local Mul = 0
 	local MulB = 0
@@ -1571,42 +1580,32 @@ function SWEP:GetViewModelPosition(pos, ang)
 			ply:SetEyeAngles( ply:EyeAngles()+( (angles*Mul) * self.SightBreathMul ) )	
 		end
 	else
-		if (bIron != self.bLastIron) then
-				self.bLastIron = bIron
-				self.fIronTime = CurTime()
+		if (not self.IronSightsPos) then return pos, ang end
 
+		local bIron = self.Weapon:GetNWBool("M9K_Ironsights")
+
+		if bIron then
+			multiplier = math.Clamp(multiplier + (FrameTime() / (self:GetIronsightTime())), 0, 1)
+		else
+			if multiplier == 0 then return pos, ang end;
+
+			multiplier = math.Clamp(multiplier - (FrameTime() / (self:GetIronsightTime())), 0, 1)
 		end
+		
+		local viewMultiplier = math.ease.OutQuad(multiplier);
 
-		local fIronTime = self.fIronTime or 0
-
-		if (not bIron and fIronTime < CurTime() - IRONSIGHT_TIME) then
-				return pos, ang
-		end
-
-		local Mul = 1.0
-
-		if (fIronTime > CurTime() - IRONSIGHT_TIME) then
-				Mul = math.Clamp((CurTime() - fIronTime) / IRONSIGHT_TIME, 0, 1)
-
-				if not bIron then Mul = 1 - Mul end
-		end
-
-		local Offset    = self.realIronSightsPos
+		local Offset = self.realIronSightsPos
 
 		if (self.realIronSightsAng) then
-				ang = ang * 1
-				ang:RotateAroundAxis(ang:Right(),               self.realIronSightsAng.x * Mul)
-				ang:RotateAroundAxis(ang:Up(),          self.realIronSightsAng.y * Mul)
-				ang:RotateAroundAxis(ang:Forward(),     self.realIronSightsAng.z * Mul)
+			ang = ang * 1
+			ang:RotateAroundAxis(ang:Right(), self.realIronSightsAng.x * viewMultiplier)
+			ang:RotateAroundAxis(ang:Up(), self.realIronSightsAng.y * viewMultiplier)
+			ang:RotateAroundAxis(ang:Forward(), self.realIronSightsAng.z * viewMultiplier)
 		end
 
-		local Right     = ang:Right()
-		local Up                = ang:Up()
-		local Forward   = ang:Forward()
-
-		pos = pos + Offset.x * Right * Mul
-		pos = pos + Offset.y * Forward * Mul
-		pos = pos + Offset.z * Up * Mul
+		pos = pos + Offset.x * ang:Right() * viewMultiplier;
+		pos = pos + Offset.y * ang:Forward() * viewMultiplier;
+		pos = pos + Offset.z * ang:Up() * viewMultiplier;
 	end
 	
 	return pos, ang
