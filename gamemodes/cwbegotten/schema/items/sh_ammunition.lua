@@ -239,3 +239,18 @@ local ITEM = Clockwork.item:New("shot_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "scrap", "scrap", "scrap"}};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("shot_base");
+	ITEM.name = "Volt Bolt";
+	ITEM.model = "models/begotten/items/rebar.mdl";
+	ITEM.weight = 0.25;
+	ITEM.stackable = true;
+	ITEM.description = "An electrified scrap bolt used by Voltist Assassins to silently dispatch their targets.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/volt_bolt.png"
+	
+	ITEM.ammoType = "Volt Bolt";
+	ITEM.ammoName = "Volt Bolt";
+	ITEM.requiredReloadBelief = {"strength", "wriggle_fucking_eel"};
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"scrap", "scrap"}};
+ITEM:Register();

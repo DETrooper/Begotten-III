@@ -780,6 +780,20 @@ AttackTables.ScrapBoltAttackTable = {
 	["punchstrength"] = Angle(0,2,0),
 };
 
+AttackTables.VoltBoltAttackTable = {
+	["mimimumdistancedamage"] = 50,
+	["maximumdistancedamage"] = 105,
+	["dmgtype"] = DMG_VEHICLE,
+	["armorpiercing"] = 45,
+	["poisedamage"] = 35,
+	["stabilitydamage"] = 40,
+	["minimumdistancestabilitydamage"] = 20,
+	["maximumdistancestabilitydamage"] = 75,
+	["takeammo"] = 0,
+	["punchstrength"] = Angle(0,2,0),
+};
+
+
 -- Fisted
 
 AttackTables.FistAttackTable = {
@@ -3874,6 +3888,7 @@ AddTable("DemonKnightSwordAttackTable", AttackTables.DemonKnightSwordAttackTable
 AddTable("DemonKnightSwordAttackTableFire", AttackTables.DemonKnightSwordAttackTableFire)
 AddTable("DemonKnightSwordAttackTableIce", AttackTables.DemonKnightSwordAttackTableIce)
 AddTable("GrocklingSwordAttackTable", AttackTables.GrocklingSwordAttackTable) 
+AddTable("VoltBoltAttackTable", AttackTables.VoltBoltAttackTable) 
 
 -- Block Stat Tables
 
