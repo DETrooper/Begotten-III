@@ -81,7 +81,9 @@ ENT.AttackFunctions = {
 		else
 			self.MeleeAttackRange = 120;
 			self:EmitSound("begotten/npc/grunt/attack_launch0"..math.random(1, 3)..".mp3", 100, self.pitch)
-			self:PlayActivityAndMove(ACT_MELEE_ATTACK1, 1, self.FaceEnemy)
+			local attackAnimations = { "AttackD", "AttackE", "AttackF" }
+			local chosenAttack = attackAnimations[math.random(#attackAnimations)]
+			self:PlaySequenceAndMove(chosenAttack, 1, self.FaceEnemy)
 		end
 
 	end,
@@ -448,7 +450,7 @@ if SERVER then
 					
 					if cwRituals and cwItemSpawner then
 						local randomItem;
-						local spawnable = cwItemSpawner:GetSpawnableItems(true);
+						local spawnable = cwItemSpawner:GetSpawnableItems();
 						local lootPool = {};
 						
 						for _, itemTable in ipairs(spawnable) do

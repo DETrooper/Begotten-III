@@ -65,7 +65,7 @@ end
 emitter:Finish()
 end
 //end
-printp("AfAs")
+
 function EFFECT:Think()
 	
 	return false

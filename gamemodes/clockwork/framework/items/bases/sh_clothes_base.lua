@@ -12,13 +12,6 @@ local ITEM = item.New(nil, true);
 	ITEM.useText = "Wear"
 	ITEM.category = "Clothing"
 	ITEM.description = "A suitcase full of clothes."
-	--ITEM.equippable = false; -- this blocks equipping the item as a melee weapon.
-	ITEM.excludeFactions = {};
-	ITEM.requireFaction = {};
-	ITEM.requireSubfaction = {};
-	ITEM.requireRank = {};
-	ITEM.requireFaith = {};
-	ITEM.excludeSubfactions = {};
 	ITEM.repairItem = "armor_repair_kit";
 	ITEM.slots = {"Armor"};
 	ITEM.equipmentSaveString = "clothes";
@@ -269,6 +262,14 @@ local ITEM = item.New(nil, true);
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity, bSkipProgressBar)
+		if (self:HasPlayerEquipped(player)) then
+			if !player.spawning then
+				Schema:EasyText(player, "peru", "You cannot equip an item you're already using.")
+			end
+			
+			return false
+		end
+	
 		local action = Clockwork.player:GetAction(player);
 		local faction = player:GetFaction();
 		local subfaction = player:GetSubfaction();
@@ -290,58 +291,90 @@ local ITEM = item.New(nil, true);
 			return false;
 		end
 	
-		if (table.HasValue(self.excludeFactions, kinisgerOverride or faction)) then
-			Schema:EasyText(player, "peru", "You are not the correct faction to wear this!")
-			return false
-		end
-		
-		if (table.HasValue(self.excludeSubfactions, kinisgerOverrideSubfaction or subfaction)) then
-			Schema:EasyText(player, "peru", "Your subfaction cannot wear this!")
-			return false
-		end
-		
-		if #self.requireFaith > 0 then
-			if (!table.HasValue(self.requireFaith, player:GetFaith())) then
-				Schema:EasyText(player, "chocolate", "You are not the correct faith for this item!")
-				return false
-			end
-		end
-		
-		if #self.requireFaction > 0 then
-			if (!table.HasValue(self.requireFaction, faction) and (!kinisgerOverride or !table.HasValue(self.requireFaction, kinisgerOverride))) then
-				Schema:EasyText(player, "peru", "You are not the correct faction to wear this!")
-				
-				return false
-			end
-		end
-		
-		if #self.requireSubfaction > 0 then
-			if (!table.HasValue(self.requireSubfaction, subfaction) and (!kinisgerOverrideSubfaction or !table.HasValue(self.requireSubfaction, kinisgerOverrideSubfaction))) then
-				Schema:EasyText(player, "peru", "You are not the correct subfaction to wear this!")
-				
-				return false
-			end
-		end
-		
-		if #self.requireRank > 0 then
-			local rank = player:GetCharacterData("rank", 1);
-			
-			if Schema.Ranks[faction] then
-				local rankString = Schema.Ranks[faction][rank];
-				
-				if rankString then
-					if (!table.HasValue(self.requireRank, rankString)) then
-						Schema:EasyText(player, "peru", "You are not the correct rank to wear this!")
+		if !Clockwork.player:HasFlags(player, "S") then
+			if self.excludedFactions and #self.excludedFactions > 0 then
+				if (table.HasValue(self.excludedFactions, kinisgerOverride or faction)) then
+					if !self.includedSubfactions or #self.includedSubfactions < 1 or !table.HasValue(self.includedSubfactions, kinisgerOverrideSubfaction or subfaction) then
+						if !player.spawning then
+							Schema:EasyText(player, "chocolate", "You are not the correct faction to equip this armor!")
+						end
 						
-						return false;
+						return false
 					end
 				end
 			end
-		end
-	
-		if (self.whitelist and !table.HasValue(self.whitelist, player:GetFaction())) then
-			Schema:EasyText(player, "peru", "Your faction cannot wear this.")
-			return false
+			
+			if self.excludedSubfactions and #self.excludedSubfactions > 0 then
+				if (table.HasValue(self.excludedSubfactions, kinisgerOverrideSubfaction or subfaction)) then
+					if !player.spawning then
+						Schema:EasyText(player, "chocolate", "You are not the correct subfaction to equip this armor!")
+					end
+					
+					return false
+				end
+			end
+			
+			if self.requiredFaiths and #self.requiredFaiths > 0 then
+				if (!table.HasValue(self.requiredFaiths, player:GetFaith())) then
+					if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+						if !player.spawning then
+							Schema:EasyText(player, "chocolate", "You are not the correct faith to equip this armor!")
+						end
+						
+						return false
+					end
+				end
+			end
+			
+			if self.requiredSubfaiths and #self.requiredSubfaiths > 0 then
+				if (!table.HasValue(self.requiredSubfaiths, player:GetSubfaith())) then
+					if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+						if !player.spawning then
+							Schema:EasyText(player, "chocolate", "You are not the correct subfaith to equip this armor!")
+						end
+						
+						return false
+					end
+				end
+			end
+			
+			if self.requiredFactions and #self.requiredFactions > 0 then
+				if (!table.HasValue(self.requiredFactions, faction) and (!kinisgerOverride or !table.HasValue(self.requiredFactions, kinisgerOverride))) then
+					if !player.spawning then
+						Schema:EasyText(player, "chocolate", "You are not the correct faction to equip this armor!")
+					end
+					
+					return false
+				end
+			end
+			
+			if self.requiredSubfactions and #self.requiredSubfactions > 0 then
+				if (!table.HasValue(self.requiredSubfactions, subfaction) and (!kinisgerOverrideSubfaction or !table.HasValue(self.requiredSubfactions, kinisgerOverrideSubfaction))) then
+					if !player.spawning then
+						Schema:EasyText(player, "peru", "You are not the correct subfaction to equip this armor!")
+					end
+					
+					return false
+				end
+			end
+			
+			if self.requiredRanks and #self.requiredRanks > 0 then
+				local rank = player:GetCharacterData("rank", 1);
+				
+				if Schema.Ranks[faction] then
+					local rankString = Schema.Ranks[faction][rank];
+					
+					if rankString then
+						if (!table.HasValue(self.requiredRanks, rankString)) then
+							if !player.spawning then
+								Schema:EasyText(player, "peru", "You are not the correct rank to wear this!")
+							
+								return false;
+							end
+						end
+					end
+				end
+			end
 		end
 		
 		if self.hasHelmet then
@@ -352,7 +385,7 @@ local ITEM = item.New(nil, true);
 				return false
 			end
 		end
-
+		
 		if (player:Alive() and !player:IsRagdolled()) then
 			local clothesItem = player:GetClothesEquipped();
 			
@@ -391,26 +424,32 @@ local ITEM = item.New(nil, true);
 					
 					Clockwork.player:SetAction(player, "putting_on_armor", actionTime, 1, function()
 						if IsValid(player) and self then
-							if !itemEntity or itemEntity and IsValid(itemEntity) then
+							--[[if !itemEntity or itemEntity and IsValid(itemEntity) then
 								if !self:HasPlayerEquipped(player) then
 									self:OnUse(player, itemEntity, true);
 								end
 							else
 								Schema:EasyText(player, "peru", "The item you are attempting to put on is no longer valid!");
+							end]]--
+							
+							if player:HasItemInstance(self) then
+								if !self:HasPlayerEquipped(player) then
+									self:OnUse(player, itemEntity, true);
+								end
 							end
 						end
 					end);
 					
 					return false;
 				else
-					if itemEntity then
+					if IsValid(itemEntity) then
 						player:SetItemEntity(itemEntity)
 						player:GiveItem(self, true)
 						
 						itemEntity:Remove();
 						player:SetItemEntity(nil);
 					--elseif !player:HasItemByID(self.itemID) then
-					elseif !Clockwork.inventory:HasItemInstance(player:GetInventory(), self) then
+					elseif !player:HasItemInstance(self) then
 						Schema:EasyText(player, "peru", "The item you are attempting to put on is no longer valid!");
 						
 						return false;
@@ -418,6 +457,13 @@ local ITEM = item.New(nil, true);
 				
 					if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 						local useSound = self("useSound");
+						
+						if self.uniqueID == "darklander_immortal_armor" then	
+							player:EmitSound("piggysqueals/transformation/"..math.random(1, 2)..".mp3");
+							player:Disorient(8)
+							timer.Create( "Squeal", 5.5, 1, function() if(!IsValid(player)) then return; end netstream.Start(player, "Stunned", 3); end )
+							Clockwork.chatBox:AddInTargetRadius(player, "me", "writhes in agony as the sounds of bones snapping and flesh reshaping violently emanate from within their armor! Their cries of pain gradually transform into pig-like grunts, before they squeal out like a fresh little piggy ready for the slaughter!", player:GetPos(), config.Get("talk_radius"):Get() * 2);
+						end
 						
 						if (useSound) then
 							if (type(useSound) == "table") then

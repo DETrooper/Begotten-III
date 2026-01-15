@@ -11,9 +11,9 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 	INGENUITY.textures = {"ingenuity", "ingenuityarrows"};
 	INGENUITY.tooltip = {
 		{"Ingenuity", INGENUITY.color, "Civ5ToolTip4"},
-		{"Ingenuity is a measure of your character's craftiness, primarily affecting your character's effectiveness at Crafting. Upgrading this belief set will progressively unlock more crafting options. More Crafting options may become available if this belief set is paired with aptitude.", Color(225, 200, 200)},
+		{"Ingenuity is a measure of your character's craftiness, primarily affecting your character's effectiveness at Crafting. Upgrading this belief set will progressively unlock more crafting options. More Crafting options may become available if this belief set is paired with aptitude. As your sacrament level increases, your crafted equipment will have increased condition.", Color(225, 200, 200)},
 		{"\n\"Bobby all proud 'an cool with that 'ol apparatus back in the truck that laid him out with sweet social status, far from junior status. It be the saddest machine but nice with molasses in the power gauge, as well as the mathematics and administrative tactics.\"", Color(128, 90, 90, 240)},
-		{"\nBelief Tree Completion Bonus: Armor and weapon condition will no longer decay. Increases the protection value of all armor by 5 points.", Color(50, 255, 50)}
+		{"\nBelief Tree Completion Bonus: Reduces armor and weapon condition decay by a further 45%. Increases the protection value of all armor by 5 points.", Color(50, 255, 50)}
 	};
 	INGENUITY.columnPositions = {
 		[1] = (INGENUITY.size.w - 4) * 0.1,
@@ -101,7 +101,6 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 			["smith"] = {
 				name = "Smith",
 				description = "Unlocks the ability to smelt Iron via crafting. Also unlocks the ability to melt down metal items at forges.",
-				iconOverride = "begotten/ui/belieficons/blacksmith.png",
 				requirements = {"ingenious"},
 				row = 2,
 			},
@@ -114,7 +113,6 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 			["master_blacksmith"] = {
 				name = "Master Blacksmith",
 				description = "Unlocks the ability to smelt Fine Steel via crafting.",
-				iconOverride = "begotten/ui/belieficons/blacksmith.png",
 				requirements = {"ingenious", "smith", "blacksmith"},
 				row = 4,
 			},
@@ -123,7 +121,7 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 			["fortify_the_plate"] = {
 				name = "Fortify the Plate",
 				description = "Increases the protection value of all armor by 5 points.",
-				iconOverride = "begotten/ui/belieficons/hauberk.png",
+				iconOverride = "begotten/ui/belieficons/fortify_plate.png",
 				requirements = {"ingenious"},
 				row = 2,
 			},

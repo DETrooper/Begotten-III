@@ -1,0 +1,3 @@
+Note: This is an older version of PAC3 dating from roughly 2021 that had been customized to fit the needs of Begotten, with changes including forcibly enabling it for all players irrespective of distance, the removal of 2D texts that would display such as being in the editor, and various optimizations.
+
+However, this addon is still very expensive on the server and client so it is highly recommended not to use it unless necessary for events, and as such has been moved into this folder so that it is not loaded by default.

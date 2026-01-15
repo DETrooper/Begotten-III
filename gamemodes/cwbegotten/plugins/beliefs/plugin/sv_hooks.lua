@@ -413,10 +413,21 @@ function cwBeliefs:DayNightCycleChanged(cycle)
 	end
 end
 
-
 -- Called just after a player levels up.
 function cwBeliefs:PlayerLevelUp(player, level, points)
 	Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." just leveled up to sacrament level "..tostring(level or player:GetCharacterData("level")).."! They still have "..tostring(points).." epiphanies to spend.");
+	
+	-- Grock HP/Size scales with level.
+	if player:GetSubfaction() == "Clan Grock" then
+		player:SetMaxHealth(player:GetMaxHealth());
+		
+		--local scale = math.min(player:GetCharacterData("level", 1), self.sacramentLevelCap);
+		local scale = math.min(player:GetCharacterData("level", 1), 40);
+	
+		player:SetModelScale(1 + (scale * 0.005), FrameTime());
+		player:SetViewOffset(Vector(0, 0, 64 + scale / 4));
+		player:SetViewOffsetDucked(Vector(0, 0, 28 + (scale / 8)));
+	end
 end
 
 -- Called when a player attempts to switch to a character.
@@ -512,10 +523,8 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 												player:HandleXP(self.xpValues["mutilate"]);
 												player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 												Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-																							
-												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(conditionLoss, true);
-												end
+
+												weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
 											else
 												Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 											end
@@ -547,10 +556,8 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 											player:HandleXP(self.xpValues["mutilate"]);
 											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-																						
-											if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-												weaponItemTable:TakeCondition(conditionLoss, true);
-											end
+
+											weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
 										else
 											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 										end
@@ -580,10 +587,8 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 												player:HandleXP(self.xpValues["mutilate"]);
 												player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 												Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-																								
-												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(conditionLoss, true);
-												end
+
+												weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
 											else
 												Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 											end
@@ -615,10 +620,8 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 											player:HandleXP(self.xpValues["mutilate"]);
 											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-																						
-											if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-												weaponItemTable:TakeCondition(conditionLoss, true);
-											end
+
+											weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
 										else
 											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 										end
@@ -649,9 +652,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 												player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 												Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
 																							
-												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(conditionLoss, true);
-												end
+												weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
 											else
 												Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 											end
@@ -684,9 +685,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
 											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
 																						
-											if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-												weaponItemTable:TakeCondition(conditionLoss, true);
-											end
+											weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
 										else
 											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
 										end
@@ -863,9 +862,7 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 												Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
 												entity:SetMaterial("models/flesh");
 												
-												if cwBeliefs and not player:HasBelief("ingenuity_finisher") then
-													weaponItemTable:TakeCondition(skinningConditionLoss, true);
-												end
+												weaponItemTable:TakeConditionByPlayer(player, skinningConditionLoss, true);
 											end
 										else
 											Clockwork.player:Notify(player, "This corpse has already been skinned!");
@@ -963,8 +960,12 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			end
 		end
 		
-		if entity.ravenBuff then
-			damageInfo:ScaleDamage(0.9);
+		if entity.ravenBuff and !entity.iconoclastBuff then
+			newDamage = newDamage * 0.9
+		end
+		
+		if entity.iconoclastBuff then
+			newDamage = newDamage * 0.75
 		end
 		
 		local attacker = damageInfo:GetAttacker();
@@ -979,7 +980,9 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			if attackerWeapon then
 				if damageInfo:GetInflictor().isJavelin then
 					if damageInfo:GetInflictor():GetClass() == "begotten_javelin_throwing_axe_thrown" or damageInfo:GetInflictor():GetClass() == "begotten_javelin_axehill_thrown" then
-						if attacker:HasBelief("daring_trout") or attacker:HasBelief("fearsome_wolf") then
+						if attacker:HasBelief("daring_trout") then
+							newDamage = newDamage * 1.25;
+						elseif attacker:HasBelief("fearsome_wolf") then
 							newDamage = newDamage * 1.15;
 						end
 					end
@@ -1027,10 +1030,10 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 											entity.poisonTicks = nil;
 										end
 										
-										-- Add a 0.5 second delay to taking more damage.
+										-- Add a 1 second delay to taking more damage.
 										entTab.distortedRingFired = true;
 										
-										timer.Create("DistortedRingTimer_"..entity:EntIndex(), 0.5, 1, function()
+										timer.Create("DistortedRingTimer_"..entity:EntIndex(), 1, 1, function()
 											if IsValid(entity) then
 												entity.distortedRingFired = nil;
 											end
@@ -1055,7 +1058,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 												entTab.distortedRingFiredDuel = true;
 											end
 											
-											timer.Create("DistortedRingTimer_"..entity:EntIndex(), 0.5, 1, function()
+											timer.Create("DistortedRingTimer_"..entity:EntIndex(), 1, 1, function()
 												if IsValid(entity) then
 													entity.distortedRingFired = nil;
 												end
@@ -1171,6 +1174,16 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						end
 					end
 					
+					local clothesItem = attacker:GetClothesEquipped();
+					
+					if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "godless") then
+						local enemywep = attacker:GetActiveWeapon();
+						
+						if attacker:Sanity() <= 40 and enemywep:GetNW2String("activeShield"):len() <= 0 then
+							newDamage = newDamage + (originalDamage * 0.25);
+						end
+					end
+					
 					if attacker:HasBelief("bestial") then
 						if attacker:Sanity() <= 40 then
 							newDamage = newDamage + (originalDamage * 0.1);
@@ -1266,14 +1279,9 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 						end
 					end
 					
-					if attacker:GetCharmEquipped("holy_sigils") or attacker:GetCharmEquipped("codex_solis") then
-						if entity:GetFaith() ~= attacker:GetFaith() then
-							newDamage = newDamage + (originalDamage * 0.15);
-						end
-					end
 				elseif attackerWeapon.Base == "begotten_firearm_base" or (attackerWeapon.isMeleeFirearm and !attacker:GetNetVar("ThrustStance")) then -- Firearm
 					if !attackerWeapon.notPowder and attacker:HasBelief("blessed_powder") then
-						newDamage = newDamage + (originalDamage * 0.25);
+						newDamage = newDamage + (originalDamage * 0.30);
 					end
 					
 					if entity:IsPlayer() and (attackerWeapon.isElectric or (attackerWeapon.isVoltistWeapon and attacker:HasBelief("the_storm"))) then
@@ -1311,11 +1319,19 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 			end
 			
 			if entity:IsPlayer() then
-				if attacker:HasBelief("manifesto") then
-					if entity:GetFaith() == attacker:GetFaith() then
-						newDamage = newDamage - (originalDamage * 0.1);
-					else
-						newDamage = newDamage + (originalDamage * 0.2);
+				if attackerWeapon then
+					if attacker:HasBelief("manifesto") then
+						if entity:GetFaith() == attacker:GetFaith() then
+							newDamage = newDamage - (originalDamage * 0.1);
+						elseif attackerWeapon.Base ~= "begotten_firearm_base" or (attackerWeapon.isMeleeFirearm and player:GetNetVar("ThrustStance")) or attackerWeapon.notPowder then
+							newDamage = newDamage + (originalDamage * 0.2);
+						end
+					end
+				end
+
+				if attacker:GetCharmEquipped("holy_sigils") or attacker:GetCharmEquipped("codex_solis") then
+					if entity:GetFaith() ~= attacker:GetFaith() then
+						newDamage = newDamage + (originalDamage * 0.15);
 					end
 				end
 				
@@ -1509,6 +1525,16 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 		if entity:IsPlayer() and !entTab.opponent and entity:GetSubfaith() == "Sol Orthodoxy" then
 			if !cwRituals or (cwRituals and !entTab.scornificationismActive) then
 				entity:HandleXP(damage / 2);
+				
+				if cwStamina and entity.flagellating then
+					local activeWeapon = entity:GetActiveWeapon();
+					
+					if activeWeapon:IsValid() and (activeWeapon:GetClass() == "begotten_1h_ironflail" or activeWeapon:GetClass() == "begotten_1h_solflail" or activeWeapon:GetClass() == "begotten_2h_great_eveningstar") then -- Punisher attribute
+						entity:HandleStamina(damage * 4);
+					else
+						entity:HandleStamina(damage * 2);
+					end
+				end
 			end
 		end
 	end
@@ -1522,16 +1548,16 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 			table.insert(entity.deceitfulLastDamages, {damageTime = CurTime(), damage = damage});
 		end
 		
-		if not entTab.opponent and damage >= 10 then
+		if not entTab.opponent and damageInfo:IsDamageType(DMG_BURN) then
 			if cwCharacterNeeds then
 				if entity:HasBelief("prison_of_flesh") then
 					if entity:HasTrait("possessed") then
 						local corruption = entity:GetNeed("corruption");
-						local reduction = math.max(-(damage / 2), -(math.max(corruption, 50) - 50));
+						local reduction = math.max(-damage, -(math.max(corruption, 50) - 50));
 
 						entity:HandleNeed("corruption", reduction);
 					else
-						entity:HandleNeed("corruption", -(damage / 2));
+						entity:HandleNeed("corruption", -damage);
 					end
 				end
 			end
@@ -1539,20 +1565,6 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	end
 	
 	if damage > 0 then
-		--[[if IsValid(attacker) and attacker:IsPlayer() and not attacker.cwWakingUp then
-			local clothesItem = attacker:GetClothesEquipped();
-			
-			if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
-				local hatred = math.min(attacker:GetNetVar("Hatred", 0) + (math.min(entity:Health(), math.Round(damage / 1.5))), 100);
-				
-				if !attacker.opponent then
-					attacker:SetCharacterData("Hatred", hatred);
-				end
-				
-				attacker:SetLocalVar("Hatred", hatred);
-			end
-		end]]--
-		
 		if entity:IsPlayer() and not entTab.cwWakingUp then
 			local clothesItem = entity:GetClothesEquipped();
 			if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "solblessed") then
@@ -1564,12 +1576,14 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 				
 				entity:SetLocalVar("Hatred", hatred);
 			end
-			
-			if IsValid(attacker) and attacker:IsPlayer() then
+		end
+		
+		if IsValid(attacker) and attacker:IsPlayer() then
 				local enemywep = attacker:GetActiveWeapon();
 			
+				local helmetItem = attacker:GetHelmetEquipped();
 				-- If a beserker or a member of House Varazdat, gain HP back via lifeleech.
-				if attacker:GetSubfaction() == "Varazdat" then
+				if attacker:GetSubfaction() == "Varazdat" or (helmetItem and helmetItem.attributes and table.HasValue(helmetItem.attributes, "lesserlifeleech") and IsValid(enemywep) and enemywep:GetNW2String("activeShield"):len() <= 0) then
 					if IsValid(enemywep) and enemywep.IsABegottenMelee then
 						local clothesItem = attacker:GetClothesEquipped();
 						local modifier = 1.45;
@@ -1597,7 +1611,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 						local clothesItem = attacker:GetClothesEquipped();
 						
 						if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "lifeleech") then
-							attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + (damageInfo:GetDamage() / 1.45)), 0, attacker:GetMaxHealth()));
+							attacker:SetHealth(math.Clamp(math.ceil(attacker:Health() + damageInfo:GetDamage()), 0, attacker:GetMaxHealth()));
 							
 							attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
 							
@@ -1626,7 +1640,6 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 					end
 				end
 			end
-		end
 		
 		local action = Clockwork.player:GetAction(entity);
 		
@@ -1673,10 +1686,10 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 						entTab.poisonTicks = nil;
 					end
 					
-					-- Add a 0.5 second delay to taking more damage.
+					-- Add a 1 second delay to taking more damage.
 					entTab.distortedRingFired = true;
 					
-					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 0.5, 1, function()
+					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 1, 1, function()
 						if IsValid(entity) then
 							entity.distortedRingFired = nil;
 						end
@@ -1704,7 +1717,7 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 						entTab.distortedRingFiredDuel = true;
 					end
 					
-					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 0.5, 1, function()
+					timer.Create("DistortedRingTimer_"..entity:EntIndex(), 1, 1, function()
 						if IsValid(entity) then
 							entity.distortedRingFired = nil;
 						end
@@ -2353,6 +2366,10 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 			end);
 		end
 		
+		if attacker:HasBelief("fearsome_wolf") then
+			attacker.lastWarCry = nil;
+		end
+		
 		if player:CharPlayTime() > config.GetVal("min_xp_charplaytime") or player:IsAdmin() then
 			local attackerFaction = attacker:GetFaction();
 			local attackerFactionTable = Clockwork.faction:FindByID(attackerFaction);
@@ -2446,8 +2463,26 @@ function cwBeliefs:ModifyStaminaDrain(player, drainTab)
 	end
 end
 
+function cwBeliefs:ModifyPlayerItemConditionLoss(player, amountTab)
+	local modifier = 1;
+
+	if player:HasBelief("scour_the_rust") then
+		modifier = math.max(0, modifier - 0.35);
+	end
+	
+	if player:HasBelief("ingenuity_finisher") then
+		modifier = math.max(0, modifier - 0.45);
+	end
+	
+	amountTab.amount = amountTab.amount * modifier;
+end
+
 -- Called when a player attempts to use an item.
 function cwBeliefs:PlayerCanUseItem(player, itemTable, noMessage)
+	if Clockwork.player:HasFlags(player, "S") then
+		return;
+	end
+
 	if itemTable.requiredbeliefs then
 		for i = 1, #itemTable.requiredbeliefs do
 			local belief = itemTable.requiredbeliefs[i];
@@ -2526,14 +2561,9 @@ function cwBeliefs:ModifyPlayerSpeed(player, infoTable)
 		
 	end
 	
-	if player.warcrySlowSpeed then
-		if player.warcrySlowSpeed > curTime then
-			infoTable.runSpeed = infoTable.runSpeed * 0.85;
-			infoTable.walkSpeed = infoTable.walkSpeed * 0.85;
-		else
-			player.warcrySlowSpeed = nil;
-		end
-	elseif player.fearsomeSpeed then
+	if player.fearsomeSpeed then
 		infoTable.runSpeed = infoTable.runSpeed * 1.1;
+	elseif player.iconoclastBuff then
+		infoTable.runSpeed = infoTable.runSpeed * 1.15;
 	end
 end

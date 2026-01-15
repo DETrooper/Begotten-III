@@ -458,8 +458,8 @@ local ITEM = Clockwork.item:New();
 			
 			if (target) then
 				if (!target:HasGodMode() and !target.cwObserverMode and !target.possessor) then
-					if (target:GetNetVar("tied") == 0) then
-						if (target:GetShootPos():Distance( player:GetShootPos() ) <= 192) then
+					if (target:GetShootPos():Distance( player:GetShootPos()) <= 46) then
+						if (target:GetNetVar("tied") == 0) then
 							if (target:GetAimVector():DotProduct( player:GetAimVector() ) > 0 or (target:IsRagdolled() and !trace.Entity.cwIsBelongings)) then
 								local faction = player:GetFaction();
 								
@@ -480,6 +480,7 @@ local ITEM = Clockwork.item:New();
 										end
 									end
 								end
+								
 								Clockwork.player:SetAction(player, "tie", tieTime);
 								
 								Clockwork.player:EntityConditionTimer(player, target, trace.Entity, tieTime, 192, function()
@@ -512,12 +513,12 @@ local ITEM = Clockwork.item:New();
 							
 							return false;
 						else
-							Schema:EasyText(player, "firebrick", "This character is too far away!");
+							Schema:EasyText(player, "peru", "This character is already tied!");
 							
 							return false;
 						end;
 					else
-						Schema:EasyText(player, "peru", "This character is already tied!");
+						Schema:EasyText(player, "firebrick", "This character is too far away!");
 						
 						return false;
 					end;

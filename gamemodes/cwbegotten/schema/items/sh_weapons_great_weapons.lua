@@ -89,8 +89,10 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"stone", "stone", "stone", "wood", "wood"}};
 	ITEM.requiredbeliefs = {"strength"};
-	ITEM.requireFaith = {"Faith of the Family"};
-	ITEM.excludeSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
+	ITEM.includedSubfactions = {"Clan Grock"};
+	ITEM.kinisgerOverride = true;
 ITEM:Register(); 
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -109,8 +111,9 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"stone", "stone", "stone", "stone", "wood", "wood"}};
 	ITEM.requiredbeliefs = {"strength"};
-	ITEM.requireFaith = {"Faith of the Family"};
-	ITEM.excludeSubfactions = {"Clan Reaver", "Clan Harald", "Clan Gore", "Clan Shagalax", "Clan Crast"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
+	ITEM.includedSubfactions = {"Clan Grock"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
@@ -131,7 +134,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "wood", "wood"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
@@ -265,7 +268,7 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
-	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -320,11 +323,12 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetAngles = Angle(345.08, 265.52, 0);
 	ITEM.attachmentOffsetVector = Vector(-1.41, 2.9, -2.83);
 	
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
+
+	ITEM.attributes = {"punisher"};
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "steel_chunks", "wood", "leather"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 ITEM:Register();
-
--- Hill shit
 
 local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Hill Long Axe";
@@ -343,6 +347,28 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
-	ITEM.requireFaith = {"Faith of the Light"};
+	ITEM.requiredFaiths = {"Faith of the Light"};
+	ITEM.kinisgerOverride = true;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Grockling Stone Sword";
+	ITEM.model = "models/begotten/weapons/grocklingsword.mdl";
+	ITEM.weight = 5;
+	ITEM.uniqueID = "begotten_2h_great_grocklingsword";
+	ITEM.category = "Melee";
+	ITEM.description = "A hefty sword carved from mineral dense rocks. Those who follow the Old Ways used these blades long before Clan Shagalax discovered the malleable iron within these rocks.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/grocklingsword.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(172.04, 74.59, 261.55);
+	ITEM.attachmentOffsetVector = Vector(8.49, 1.9, 26.87);
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"stone", "stone", "stone", "stone", "stone", "stone"}};
+	ITEM.requiredbeliefs = {"strength"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
+	ITEM.includedSubfactions = {"Clan Grock"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();

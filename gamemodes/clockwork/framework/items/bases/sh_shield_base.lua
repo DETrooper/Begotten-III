@@ -6,12 +6,11 @@ ITEM.useText = "Equip";
 ITEM.useSound = false;
 ITEM.category = "Shields";
 ITEM.useInVehicle = false;
-ITEM.excludeFactions = {};
-ITEM.requireFaction = {};
-ITEM.requireSubfaction = {};
-ITEM.requireFaith = {};
 ITEM.breakable = true;
 ITEM.breakMessage = " shatters into pieces!";
+ITEM.conditionLossEvents = {
+	{threshold = 25, message = " begins to buckle!", sound = "physics/metal/metal_box_strain1.wav"},
+};
 ITEM.repairItem = "weapon_repair_kit";
 ITEM.customFunctions = {"Engrave"};
 ITEM.slots = {"Primary", "Secondary", "Tertiary"};
@@ -39,7 +38,7 @@ if (SERVER) then
 	function ITEM:OnCustomFunction(player, name)
 		if (name == "Engrave") then
 			if self:GetData("engraving") != "" then
-				Schema:EasyText(player, "peru", "This weapon has already been engraved!");
+				Schema:EasyText(player, "peru", "This shield has already been engraved!");
 			elseif cwBeliefs and !player:HasBelief("literacy") then
 				Schema:EasyText(player, "chocolate", "You are not literate!");
 			else
@@ -54,7 +53,7 @@ if (SERVER) then
 				end
 	
 				if engravingItemTable then
-					Clockwork.dermaRequest:RequestString(player, "Engrave Weapon", "What would you like to etch on this item?", "", function(result)
+					Clockwork.dermaRequest:RequestString(player, "Engrave Shield", "What would you like to etch on this item?", "", function(result)
 						self:Engrave(player, result, engravingItemTable);
 					end);
 				else
@@ -190,42 +189,104 @@ end
 
 -- Called when a player uses the item.
 function ITEM:OnUse(player, itemEntity)
-	local faction = player:GetFaction();
-	local subfaction = player:GetSubfaction();
-	local kinisgerOverride = player:GetNetVar("kinisgerOverride");
-	local kinisgerOverrideSubfaction = player:GetNetVar("kinisgerOverrideSubfaction");
-	local suitable_melee;
-
-	if (table.HasValue(self.excludeFactions, kinisgerOverride or faction)) then
-		Schema:EasyText(player, "chocolate", "You are not the correct faction for this item!")
+	if (self:HasPlayerEquipped(player)) then
+		if !player.spawning then
+			Schema:EasyText(player, "peru", "You cannot equip an item you're already using.")
+		end
+		
 		return false
 	end
-	
-	if #self.requireFaith > 0 then
-		if (!table.HasValue(self.requireFaith, player:GetFaith())) then
-			Schema:EasyText(player, "chocolate", "You are not the correct faith for this item!")
-			return false
+
+	if !Clockwork.player:HasFlags(player, "S") then
+		local faction = player:GetFaction();
+		local subfaction = player:GetSubfaction();
+		local kinisgerOverride = player:GetNetVar("kinisgerOverride");
+		local kinisgerOverrideSubfaction = player:GetNetVar("kinisgerOverrideSubfaction");
+		local suitable_melee;
+		
+		if self.excludedFactions and #self.excludedFactions > 0 then
+			if (table.HasValue(self.excludedFactions, kinisgerOverride or faction)) then
+				if !self.includedSubfactions or #self.includedSubfactions < 1 or !table.HasValue(self.includedSubfactions, kinisgerOverrideSubfaction or subfaction) then
+					if !player.spawning then
+						Schema:EasyText(player, "chocolate", "You are not the correct faction to equip this shield!")
+					end
+					
+					return false
+				end
+			end
 		end
-	end
-	
-	if #self.requireFaction > 0 then
-		if (!table.HasValue(self.requireFaction, faction) and (!kinisgerOverride or !table.HasValue(self.requireFaction, kinisgerOverride))) then
-			Schema:EasyText(player, "chocolate", "You are not the correct faction for this item!")
-			return false
+		
+		if self.excludedSubfactions and #self.excludedSubfactions > 0 then
+			if (table.HasValue(self.excludedSubfactions, kinisgerOverrideSubfaction or subfaction)) then
+				if !player.spawning then
+					Schema:EasyText(player, "chocolate", "You are not the correct subfaction to equip this shield!")
+				end
+				
+				return false
+			end
 		end
-	end
-	
-	if #self.requireSubfaction > 0 then
-		if (!table.HasValue(self.requireSubfaction, subfaction) and (!kinisgerOverrideSubfaction or !table.HasValue(self.requireSubfaction, kinisgerOverrideSubfaction))) then
-			Schema:EasyText(player, "peru", "You are not the correct subfaction to wear this!")
+		
+		if self.requiredFaiths and #self.requiredFaiths > 0 then
+			if (!table.HasValue(self.requiredFaiths, player:GetFaith())) then
+				if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+					if !player.spawning then
+						Schema:EasyText(player, "chocolate", "You are not the correct faith to equip this shield!")
+					end
+					
+					return false
+				end
+			end
+		end
+		
+		if self.requiredSubfaiths and #self.requiredSubfaiths > 0 then
+			if (!table.HasValue(self.requiredSubfaiths, player:GetSubfaith())) then
+				if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+					if !player.spawning then
+						Schema:EasyText(player, "chocolate", "You are not the correct subfaith to equip this shield!")
+					end
+					
+					return false
+				end
+			end
+		end
+		
+		if self.requiredFactions and #self.requiredFactions > 0 then
+			if (!table.HasValue(self.requiredFactions, faction) and (!kinisgerOverride or !table.HasValue(self.requiredFactions, kinisgerOverride))) then
+				if !player.spawning then
+					Schema:EasyText(player, "chocolate", "You are not the correct faction to equip this shield!")
+				end
+				
+				return false
+			end
+		end
+		
+		if self.requiredSubfactions and #self.requiredSubfactions > 0 then
+			if (!table.HasValue(self.requiredSubfactions, subfaction) and (!kinisgerOverrideSubfaction or !table.HasValue(self.requiredSubfactions, kinisgerOverrideSubfaction))) then
+				if !player.spawning then
+					Schema:EasyText(player, "peru", "You are not the correct subfaction to equip this shield!")
+				end
+				
+				return false
+			end
+		end
+		
+		if self.requiredRanks and #self.requiredRanks > 0 then
+			local rank = player:GetCharacterData("rank", 1);
 			
-			return false
+			if Schema.Ranks[faction] then
+				local rankString = Schema.Ranks[faction][rank];
+				
+				if rankString then
+					if (!table.HasValue(self.requiredRanks, rankString)) then
+						if !player.spawning then
+							Schema:EasyText(player, "peru", "You are not the correct rank to equip this shield!")
+						
+							return false;
+						end
+					end
+				end
+			end
 		end
-	end
-	
-	if (self:HasPlayerEquipped(player)) then
-		Schema:EasyText(player, "peru", "You already have a shield equipped!")
-		return false;
 	end
 	
 	if (self.OnEquip) then
@@ -236,6 +297,28 @@ function ITEM:OnUse(player, itemEntity)
 
 	return false;
 end;
+
+function ITEM:OnConditionLoss(oldCondition, newCondition)
+	for i, v in ipairs(self.conditionLossEvents) do
+		if oldCondition > v.threshold and newCondition <= v.threshold then
+			for _, player in _player.Iterator() do
+				if (IsValid(player) and player:HasInitialized()) then
+					local shieldItem = player:GetShieldEquipped();
+					
+					if shieldItem and shieldItem:IsTheSameAs(self) then
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "'s "..self.name..v.message, player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+						
+						if v.sound then
+							player:EmitSound(v.sound);
+						end
+						
+						return;
+					end
+				end;
+			end;
+		end
+	end
+end
 
 -- Called when a player repairs the item.
 function ITEM:OnRepair(player, itemEntity)

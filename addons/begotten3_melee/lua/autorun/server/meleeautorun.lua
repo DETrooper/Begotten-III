@@ -90,7 +90,7 @@ function Parry(parrier, dmginfo)
 					if IsValid(parryTarget) then
 						parryTarget:SetLocalVar("Parried", true)
 
-						timer.Create(tostring(index).."_ParriedTimer", delay, 1, function()
+						timer.Create(tostring(parryTarget:EntIndex()).."_ParriedTimer", delay, 1, function()
 							if IsValid(parryTarget) then
 								parryTarget:SetLocalVar("Parried", false);
 								
@@ -202,38 +202,29 @@ local function Guarding(ent, dmginfo)
 						local weaponItemTable = item.GetByWeapon(enemywep);
 						
 						if weaponItemTable then
-							if (!cwBeliefs or !attacker:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
-								local conditionLoss;
+							local conditionLoss = dmginfo:GetDamage() / 100;
 
-								
-								if cwBeliefs and attacker:HasBelief("scour_the_rust") then
-									conditionLoss = dmginfo:GetDamage() / 155;
-								else
-									conditionLoss = dmginfo:GetDamage() / 100;
-								end
-								
-								if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
-									conditionLoss = conditionLoss * 40;
-								end
+							if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
+								conditionLoss = conditionLoss * 40;
+							end
 
-								-- For NPCs
-								conditionLoss = conditionLoss * (ent.weaponConditionScale or 0.5)
-								
-								weaponItemTable:TakeCondition(math.min(conditionLoss, 100));
+							-- For NPCs
+							conditionLoss = conditionLoss * (ent.weaponConditionScale or 0.5)
+							
+							weaponItemTable:TakeConditionByPlayer(attacker, math.min(conditionLoss, 100));
 
-								local enemyoffhand = enemywep:GetNW2String("activeOffhand");
-								
-								if enemyoffhand:len() > 0 then
-									for k, v in pairs(attacker.equipmentSlots) do
-										if v:IsTheSameAs(weaponItemTable) then
-											local offhandItemTable = attacker.equipmentSlots[k.."Offhand"];
-											
-											if offhandItemTable then
-												offhandItemTable:TakeCondition(math.min(conditionLoss, 100));
-											end
+							local enemyoffhand = enemywep:GetNW2String("activeOffhand");
+							
+							if enemyoffhand:len() > 0 then
+								for k, v in pairs(attacker.equipmentSlots) do
+									if v:IsTheSameAs(weaponItemTable) then
+										local offhandItemTable = attacker.equipmentSlots[k.."Offhand"];
 										
-											break;
+										if offhandItemTable then
+											offhandItemTable:TakeConditionByPlayer(attacker, math.min(conditionLoss, 100));
 										end
+									
+										break;
 									end
 								end
 							end
@@ -313,20 +304,12 @@ local function Guarding(ent, dmginfo)
 			local blocksoundtable = GetSoundTable(soundtable)
 			local blockthreshold = (blocktable["blockcone"] or 135) / 2;
 			
-			if blocktable["partialbulletblock"] == true and (dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT)) and (IsValid(attacker) and (math.abs(math.AngleDifference(ent:EyeAngles().y, (attacker:GetPos() - ent:GetPos()):Angle().y)) <= blockthreshold)) then
+			if blocktable["partialbulletblock"] == true and (dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) or isJavelin) and (IsValid(attacker) and (math.abs(math.AngleDifference(ent:EyeAngles().y, (attacker:GetPos() - ent:GetPos()):Angle().y)) <= blockthreshold)) then
 				local enemyWeapon = attacker:GetActiveWeapon();
 				
 				if !IsValid(enemyWeapon) or !enemyWeapon.IgnoresBulletResistance then
 					--ent:TakePoise(blocktable["guardblockamount"] * 0.5, 0, max_poise)
-
-					if dmginfo:IsDamageType(DMG_BULLET) then
-						--ent:TakePoise(math.Round(dmginfo:GetDamage() * 0.5));
-						ent:TakeStamina(math.Round(dmginfo:GetDamage() * 0.5));
-					elseif dmginfo:IsDamageType(DMG_BUCKSHOT) then
-						--ent:TakePoise(math.Round(dmginfo:GetDamage() * 1.5));
-						ent:TakeStamina(math.Round(dmginfo:GetDamage() * 0.5));
-					end
-					
+					ent:TakeStamina(math.Round(dmginfo:GetDamage() * 0.5));	
 					ent:EmitSound(blocksoundtable["blockmissile"][math.random(1, #blocksoundtable["blockmissile"])])
 					
 					dmginfo:ScaleDamage(0.35)
@@ -387,6 +370,11 @@ local function Guarding(ent, dmginfo)
 							local enemyWeapon = attacker:GetActiveWeapon();
 							
 							if !IsValid(enemyWeapon) or !enemyWeapon.IgnoresBulletResistance then
+								canblock = true;
+								break;
+							end
+						elseif isJavelin then
+							if wep:GetNW2String("activeShield"):len() > 0 then
 								canblock = true;
 								break;
 							end
@@ -501,34 +489,26 @@ local function Guarding(ent, dmginfo)
 									local weaponItemTable = item.GetByWeapon(enemywep);
 									
 									if weaponItemTable then
-										if (!cwBeliefs or !attacker:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
-											local conditionLoss;
-											
-											if cwBeliefs and attacker:HasBelief("scour_the_rust") then
-												conditionLoss = dmginfo:GetDamage() / 155;
-											else
-												conditionLoss = dmginfo:GetDamage() / 100;
-											end
-											
-											if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
-												conditionLoss = conditionLoss * 40;
-											end
-											
-											weaponItemTable:TakeCondition(math.min(conditionLoss, 100));
+										local conditionLoss = dmginfo:GetDamage() / 100;
+										
+										if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
+											conditionLoss = conditionLoss * 40;
+										end
+										
+										weaponItemTable:TakeConditionByPlayer(attacker, math.min(conditionLoss, 100));
 
-											local enemyoffhand = enemywep:GetNW2String("activeOffhand");
-											
-											if enemyoffhand:len() > 0 then
-												for k, v in pairs(attacker.equipmentSlots) do
-													if v:IsTheSameAs(weaponItemTable) then
-														local offhandItemTable = attacker.equipmentSlots[k.."Offhand"];
-														
-														if offhandItemTable then
-															offhandItemTable:TakeCondition(math.min(conditionLoss, 100));
-														end
+										local enemyoffhand = enemywep:GetNW2String("activeOffhand");
+										
+										if enemyoffhand:len() > 0 then
+											for k, v in pairs(attacker.equipmentSlots) do
+												if v:IsTheSameAs(weaponItemTable) then
+													local offhandItemTable = attacker.equipmentSlots[k.."Offhand"];
 													
-														break;
+													if offhandItemTable then
+														offhandItemTable:TakeConditionByPlayer(attacker, math.min(conditionLoss, 100));
 													end
+												
+													break;
 												end
 											end
 										end
@@ -562,72 +542,43 @@ local function Guarding(ent, dmginfo)
 									end
 								end
 								
-								if (!cwBeliefs or not ent:HasBelief("ingenuity_finisher")) or shieldItemTable.unrepairable then
-									if cwBeliefs and ent:HasBelief("scour_the_rust") then
-										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
-											shieldItemTable:TakeCondition(math.max((shieldConditionDamage * (shieldItemTable.bulletConditionScale or 0.5)) / 1.55, 1));
-										else
-											shieldItemTable:TakeCondition(math.max(shieldConditionDamage / 15, 1));
-										end
-									else
-										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
-											shieldItemTable:TakeCondition(math.max((shieldConditionDamage * (shieldItemTable.bulletConditionScale or 0.5)), 1));
-										else
-											shieldItemTable:TakeCondition(math.max(shieldConditionDamage / 10, 1));
-										end
-									end
+								if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
+									shieldItemTable:TakeConditionByPlayer(ent, math.max((shieldConditionDamage * (shieldItemTable.bulletConditionScale or 0.5)), 1));
+								else
+									shieldItemTable:TakeConditionByPlayer(ent, math.max(shieldConditionDamage / 10, 1));
 								end
 							end
 							
 							if weaponItemTable and not shieldEquipped then
-								if (!cwBeliefs or not ent:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
-									local offhand = wep:GetNW2String("activeOffhand");
-									
-									local hasOffhand = offhand:len() > 0
-									local hasLongSword = wep.hasSwordplay and not wep.isArmingSword
-									local isBullet = dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT)
-									
-									if (hasOffhand or hasLongSword) and isBullet then
-										conditionDamage = conditionDamage * (hasOffhand and 0.1 or 0.25)
-									end
+								local offhand = wep:GetNW2String("activeOffhand");
+								local hasOffhand = offhand:len() > 0
+								local hasLongSword = wep.hasSwordplay and not wep.isArmingSword
+								local isBullet = dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT)
 								
-									if cwBeliefs and ent:HasBelief("scour_the_rust") then
-										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
-											weaponItemTable:TakeCondition(math.max((conditionDamage * (weaponItemTable.bulletConditionScale or 0.5)) / 1.55, 1));
-										else
-											weaponItemTable:TakeCondition(math.max(conditionDamage / 15, 1));
-										end
-									else
-										if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
-											weaponItemTable:TakeCondition(math.max((conditionDamage * (weaponItemTable.bulletConditionScale or 0.5)), 1));
-										else
-											weaponItemTable:TakeCondition(math.max(conditionDamage / 10, 1));
-										end
-									end
-									
-									if offhand:len() > 0 then
-										for k, v in pairs(ent.equipmentSlots) do
-											if v:IsTheSameAs(weaponItemTable) then
-												local offhandItemTable = ent.equipmentSlots[k.."Offhand"];
-												
-												if offhandItemTable then
-													if cwBeliefs and ent:HasBelief("scour_the_rust") then
-														if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
-															offhandItemTable:TakeCondition(math.max((conditionDamage * (offhandItemTable.bulletConditionScale or 0.5)) / 1.55, 1));
-														else
-															offhandItemTable:TakeCondition(math.max(conditionDamage / 15, 1));
-														end
-													else
-														if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
-															offhandItemTable:TakeCondition(math.max((conditionDamage * (offhandItemTable.bulletConditionScale or 0.5)), 1));
-														else
-															offhandItemTable:TakeCondition(math.max(conditionDamage / 10, 1));
-														end
-													end
-												end
+								if (hasOffhand or hasLongSword) and isBullet then
+									conditionDamage = conditionDamage * (hasOffhand and 0.1 or 0.25)
+								end
+							
+								if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
+									weaponItemTable:TakeConditionByPlayer(ent, math.max((conditionDamage * (weaponItemTable.bulletConditionScale or 0.5)), 1));
+								else
+									weaponItemTable:TakeConditionByPlayer(ent, math.max(conditionDamage / 10, 1));
+								end
+								
+								if offhand:len() > 0 then
+									for k, v in pairs(ent.equipmentSlots) do
+										if v:IsTheSameAs(weaponItemTable) then
+											local offhandItemTable = ent.equipmentSlots[k.."Offhand"];
 											
-												break;
+											if offhandItemTable then
+												if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
+													offhandItemTable:TakeConditionByPlayer(ent, math.max((conditionDamage * (offhandItemTable.bulletConditionScale or 0.5)), 1));
+												else
+													offhandItemTable:TakeConditionByPlayer(ent, math.max(conditionDamage / 10, 1));
+												end
 											end
+										
+											break;
 										end
 									end
 								end
@@ -773,27 +724,37 @@ local function Guarding(ent, dmginfo)
 							if attacker:HasBelief("fearsome_wolf") then
 								if attacker.warCryVictims then
 									if table.HasValue(attacker.warCryVictims, ent) then
-										poiseDamageModifier = poiseDamageModifier + 0.15;
+										poiseDamageModifier = poiseDamageModifier + 0.2;
 									end
 								end
 							end
 						end
 						
-						if attacker.GetCharmEquipped then
-							if attacker:GetCharmEquipped("ring_pummeler") then
-								poiseDamageModifier = poiseDamageModifier + 0.15;
-							end
+						if attacker:IsPlayer() then
+							local clothesItem = attacker:GetClothesEquipped();
 							
-							if attacker:GetCharmEquipped("ring_pugilist") and enemywep:GetClass() == "begotten_fists" then
-								if !isJavelin then
-									poiseDamageModifier = poiseDamageModifier * 4;
+							if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "godless") then							
+								if attacker:Sanity() <= 40 and enemywep:GetNW2String("activeShield"):len() <= 0 then
+									poiseDamageModifier = poiseDamageModifier + 0.25;
 								end
 							end
-						end
-						
-						if IsValid(enemywep) and enemywep:GetNW2String("activeOffhand"):len() > 0 then
-							if !isJavelin then
-								poiseDamageModifier = poiseDamageModifier * 0.5;
+							
+							if attacker.GetCharmEquipped then
+								if attacker:GetCharmEquipped("ring_pummeler") then
+									poiseDamageModifier = poiseDamageModifier + 0.15;
+								end
+								
+								if attacker:GetCharmEquipped("ring_pugilist") and enemywep:GetClass() == "begotten_fists" then
+									if !isJavelin then
+										poiseDamageModifier = poiseDamageModifier * 4;
+									end
+								end
+							end
+							
+							if IsValid(enemywep) and enemywep:GetNW2String("activeOffhand"):len() > 0 then
+								if !isJavelin then
+									poiseDamageModifier = poiseDamageModifier * 0.5;
+								end
 							end
 						end
 					
@@ -1155,34 +1116,26 @@ local function Guarding(ent, dmginfo)
 									local weaponItemTable = item.GetByWeapon(enemywep);
 									
 									if weaponItemTable then
-										if (!cwBeliefs or not attacker:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
-											local conditionLoss;
-											
-											if cwBeliefs and attacker:HasBelief("scour_the_rust") then
-												conditionLoss = dmginfo:GetDamage() / 155;
-											else
-												conditionLoss = dmginfo:GetDamage() / 100;
-											end
-											
-											if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
-												conditionLoss = conditionLoss * 40;
-											end
-											
-											weaponItemTable:TakeCondition(math.min(conditionLoss, 100));
+										local conditionLoss = dmginfo:GetDamage() / 100;
+										
+										if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
+											conditionLoss = conditionLoss * 40;
+										end
+										
+										weaponItemTable:TakeConditionByPlayer(attacker, math.min(conditionLoss, 100));
 
-											local enemyoffhand = enemywep:GetNW2String("activeOffhand");
-											
-											if enemyoffhand:len() > 0 then
-												for k, v in pairs(attacker.equipmentSlots) do
-													if v:IsTheSameAs(weaponItemTable) then
-														local offhandItemTable = attacker.equipmentSlots[k.."Offhand"];
-														
-														if offhandItemTable then
-															offhandItemTable:TakeCondition(math.min(conditionLoss, 100));
-														end
+										local enemyoffhand = enemywep:GetNW2String("activeOffhand");
+										
+										if enemyoffhand:len() > 0 then
+											for k, v in pairs(attacker.equipmentSlots) do
+												if v:IsTheSameAs(weaponItemTable) then
+													local offhandItemTable = attacker.equipmentSlots[k.."Offhand"];
 													
-														break;
+													if offhandItemTable then
+														offhandItemTable:TakeConditionByPlayer(attacker, math.min(conditionLoss, 100));
 													end
+												
+													break;
 												end
 											end
 										end
@@ -1367,34 +1320,26 @@ local function Guarding(ent, dmginfo)
 								local weaponItemTable = item.GetByWeapon(enemywep);
 								
 								if weaponItemTable then
-									if (!cwBeliefs or not attacker:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
-										local conditionLoss;
-										
-										if cwBeliefs and attacker:HasBelief("scour_the_rust") then
-											conditionLoss = dmginfo:GetDamage() / 155;
-										else
-											conditionLoss = dmginfo:GetDamage() / 100;
-										end
-										
-										if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
-											conditionLoss = conditionLoss * 40;
-										end
-										
-										weaponItemTable:TakeCondition(math.min(conditionLoss, 100));
+									local conditionLoss = dmginfo:GetDamage() / 100;
 
-										local enemyoffhand = enemywep:GetNW2String("activeOffhand");
-										
-										if enemyoffhand:len() > 0 then
-											for k, v in pairs(attacker.equipmentSlots) do
-												if v:IsTheSameAs(weaponItemTable) then
-													local offhandItemTable = attacker.equipmentSlots[k.."Offhand"];
-													
-													if offhandItemTable then
-														offhandItemTable:TakeCondition(math.min(conditionLoss, 100));
-													end
+									if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
+										conditionLoss = conditionLoss * 40;
+									end
+									
+									weaponItemTable:TakeConditionByPlayer(attacker, math.min(conditionLoss, 100));
+
+									local enemyoffhand = enemywep:GetNW2String("activeOffhand");
+									
+									if enemyoffhand:len() > 0 then
+										for k, v in pairs(attacker.equipmentSlots) do
+											if v:IsTheSameAs(weaponItemTable) then
+												local offhandItemTable = attacker.equipmentSlots[k.."Offhand"];
 												
-													break;
+												if offhandItemTable then
+													offhandItemTable:TakeConditionByPlayer(attacker, math.min(conditionLoss, 100));
 												end
+											
+												break;
 											end
 										end
 									end
@@ -1429,34 +1374,26 @@ local function Guarding(ent, dmginfo)
 						local weaponItemTable = item.GetByWeapon(enemywep);
 						
 						if weaponItemTable then
-							if (cwBeliefs and not attacker:HasBelief("ingenuity_finisher")) or weaponItemTable.unrepairable then
-								local conditionLoss;
-								
-								if cwBeliefs and attacker:HasBelief("scour_the_rust") then
-									conditionLoss = dmginfo:GetDamage() / 155;
-								else
-									conditionLoss = dmginfo:GetDamage() / 100;
-								end
-								
-								if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
-									conditionLoss = conditionLoss * 40;
-								end
-								
-								weaponItemTable:TakeCondition(math.min(conditionLoss, 100));
+							local conditionLoss = dmginfo:GetDamage() / 100;
 
-								local enemyoffhand = enemywep:GetNW2String("activeOffhand");
-								
-								if enemyoffhand:len() > 0 then
-									for k, v in pairs(attacker.equipmentSlots) do
-										if v:IsTheSameAs(weaponItemTable) then
-											local offhandItemTable = attacker.equipmentSlots[k.."Offhand"];
-											
-											if offhandItemTable then
-												offhandItemTable:TakeCondition(math.min(conditionLoss, 100));
-											end
+							if enemywep.isJavelin and attacker:GetNetVar("ThrustStance") then
+								conditionLoss = conditionLoss * 40;
+							end
+							
+							weaponItemTable:TakeConditionByPlayer(attacker, math.min(conditionLoss, 100));
+
+							local enemyoffhand = enemywep:GetNW2String("activeOffhand");
+							
+							if enemyoffhand:len() > 0 then
+								for k, v in pairs(attacker.equipmentSlots) do
+									if v:IsTheSameAs(weaponItemTable) then
+										local offhandItemTable = attacker.equipmentSlots[k.."Offhand"];
 										
-											break;
+										if offhandItemTable then
+											offhandItemTable:TakeConditionByPlayer(attacker, math.min(conditionLoss, 100));
 										end
+									
+										break;
 									end
 								end
 							end

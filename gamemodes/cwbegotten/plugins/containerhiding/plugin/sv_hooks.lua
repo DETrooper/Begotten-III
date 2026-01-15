@@ -40,48 +40,20 @@ function cwContainerHiding:EntityHandleMenuOption(player, entity, option, argume
 		
 		if (table.HasValue(self.containerProps["white"], string.lower(model)) or table.HasValue(self.containerProps["black"], string.lower(model))) then
 			if (arguments == "cw_entityHide") and (entity:GetNWBool("unlocked", true) == true) then
-				if (game.GetMap() != "rp_begotten3") then
-					return;
-				end;
-	
-				local badPositon = Vector(10865.556640625, 94.998146057129, 298.03125);
-				local oldPosition = player:GetPos();
-				local caller = player;
-				
-				--[[if (oldPosition:Distance(badPositon) < 196) then
-					if (caller.InSideTortureHouse) then
-						if (entity:GetPos():Distance(badPositon) < 196) then
-							if (caller.CanEscapeTheCabin) then
-								if (!player:HasItemByID("key_shack")) then
-									player:GiveItem(Clockwork.item:CreateInstance("key_shack"), true);
-									netstream.Start(player, "cwPrintExamineText", {"A-a-..A K-key came o-out... T-The door!"});
-									netstream.Start(player, "Stunned", 1);
-									
-									return;
-								end;
-							else
-								netstream.Start(player, "cwPrintExamineText", {"Strange.. The cabinet is locked.... I think I hear breathing from inside.."});
-
-								return;
-							end;
-						end;
-					end;
-				end;]]--
-				
 				local curTime = CurTime();
 				local physObj = entity:GetPhysicsObject();
 				
 				if (IsValid(physObj)) then
 					if (physObj:IsMotionEnabled()) then
-						--netstream.Start(player, "cwCustomHint", {string.Split(player:Name(), " ")[1].." Thinks...", "This thing looks too wobbly. I bet I'd fall over if I got in.."});
+						Schema:EasyText(player, "firebrick", "You cannot get into a container that is free-moving!");
 						
 						return;
 					end;
 				end;
 				
 				if (entity:IsOnFire()) then
-					--netstream.Start(player, "cwCustomHint", {string.Split(player:Name(), " ")[1].." Thinks...", "Why would I get in this thing while it's up in flames!"});
-					
+					Schema:EasyText(player, "firebrick", "You cannot get into a container that is on fire!");
+
 					return;
 				end;
 				

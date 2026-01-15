@@ -69,7 +69,8 @@ local COMMAND = Clockwork.command:New("RemovePileSpawn")
 	COMMAND.tip = "Remove a pile spawn location at your cursor."
 	COMMAND.access = "s"
 	COMMAND.optionalArguments = 1;
-	COMMAND.text = "[int Distance]"
+	COMMAND.text = "[int Radius]"
+	COMMAND.types = {"Radius"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

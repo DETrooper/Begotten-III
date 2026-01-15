@@ -3,6 +3,16 @@
 	written by: cash wednesday, DETrooper, gabs and alyousha35.
 --]]
 
+local function UpdateActiveRituals(player, ritualName, endTime)
+    local activeRituals = player:GetNetVar("activeRituals", {})
+    if endTime then
+        activeRituals[ritualName] = endTime
+    else
+        activeRituals[ritualName] = nil
+    end
+    player:SetNetVar("activeRituals", activeRituals)
+end
+
 local function IsAreaClear(position, radius, player)
 	for k, v in pairs (ents.FindInSphere(position, radius)) do
 		if v:IsPlayer() or v:IsNPC() or v:IsNextBot() then
@@ -53,17 +63,24 @@ RITUAL = cwRituals.rituals:New("yellow_banner_of_quelling");
 	RITUAL.experience = 75; -- XP gained from performing the ritual.
 
 	function RITUAL:OnPerformed(player)
-		player:SetNetVar("yellowBanner", true);
-
+		player:SetNetVar("yellowBanner", true)
+		local endTime = CurTime() + 1800
+		UpdateActiveRituals(player, "Yellow Banner of Quelling", endTime)
 		timer.Create("YellowBannerTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("yellowBanner", false) then
-					player:SetNetVar("yellowBanner", false);
-
-					Clockwork.hint:Send(player, "The 'Yellow Banner of Quelling' ritual has worn off...", 10, Color(175, 100, 100), true, true);
+					player:SetNetVar("yellowBanner", false)
+					UpdateActiveRituals(player, "Yellow Banner of Quelling", nil)
+					Clockwork.hint:Send(player, "The 'Yellow Banner of Quelling' ritual has worn off...", 10, Color(175, 100, 100), true, true)
 				end
 			end
-		end);
+		end)
+	end
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+	end;
+	function RITUAL:EndRitual(player)
 	end;
 	function RITUAL:OnFail(player)
 	end;
@@ -340,7 +357,9 @@ RITUAL = cwRituals.rituals:New("aura_of_the_mother");
 		player:SetNetVar("auraMotherActive", true);
 		
 		local auraMotherTick = 0;
-	
+		
+		local endtime = CurTime() + 600
+		UpdateActiveRituals(player, "Aura of the Mother", endtime);
 		timer.Create("auraMotherTimer_"..player:EntIndex(), 5, 120, function() 
 			auraMotherTick = auraMotherTick + 1;
 			
@@ -350,8 +369,8 @@ RITUAL = cwRituals.rituals:New("aura_of_the_mother");
 				for k, v in pairs (ents.FindInSphere(player:GetPos(), config.Get("talk_radius"):Get())) do
 					if (v:IsPlayer() and v:GetFaith() == "Faith of the Family") then
 						if !v.nextAuraMotherHeal or v.nextAuraMotherHeal <= curTime then
-							v:SetHealth(math.min(v:Health() + 6, v:GetMaxHealth()));
-							v:ModifyBloodLevel(25);
+							v:SetHealth(math.min(v:Health() + 4, v:GetMaxHealth()));
+							v:ModifyBloodLevel(15);
 							v.nextAuraMotherHeal = curTime + 4.9;
 						end
 					end
@@ -359,6 +378,7 @@ RITUAL = cwRituals.rituals:New("aura_of_the_mother");
 				
 				if auraMotherTick == 120 then
 					player:SetNetVar("auraMotherActive", false);
+					UpdateActiveRituals(player, "Aura of the Mother", nil);
 				end
 			end
 		end);
@@ -383,12 +403,13 @@ RITUAL = cwRituals.rituals:New("blessing_of_coin");
 
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("blessingOfCoin", true);
-
+		local endtime = CurTime() + 2400
+		UpdateActiveRituals(player, "Blessing of Coin", endtime);
 		timer.Create("BlessingOfCoinTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("blessingOfCoin", false) then
 					player:SetNetVar("blessingOfCoin", false);
-
+					UpdateActiveRituals(player, "Blessing of Coin", nil);
 					Clockwork.hint:Send(player, "The 'Blessing of Coin' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -405,7 +426,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("bloodhowl");
 	RITUAL.name = "(T2) Bloodhowl";
 	RITUAL.description = "The thrill of battle empowers you! Performing this ritual will make your war cries restore 50 points of stamina and drain 150 points of blood for 40 minutes. Incurs 10 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shieldwall", "shedskin"}; -- Tier II Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"down_catalyst", "familial_catalyst", "pantheistic_catalyst"};
 	RITUAL.corruptionCost = 10;
@@ -414,12 +435,13 @@ RITUAL = cwRituals.rituals:New("bloodhowl");
 
 	function RITUAL:OnPerformed(player)
 		player.bloodHowlActive = true;
-
+		local endtime = CurTime() + 2400
+		UpdateActiveRituals(player, "Bloodhowl", endtime);
 		timer.Create("BloodhowlTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player.bloodHowlActive then
 					player.bloodHowlActive = nil;
-
+					UpdateActiveRituals(player, "Bloodhowl", nil);
 					Clockwork.hint:Send(player, "The 'Bloodhowl' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -446,12 +468,13 @@ RITUAL = cwRituals.rituals:New("bloodwings");
 
 	function RITUAL:OnPerformed(player)
 		player.bloodWingsActive = true;
-
+		local endtime = CurTime() + 1800
+		UpdateActiveRituals(player, "Bloodwings", endtime);
 		timer.Create("BloodwingsTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player.bloodWingsActive then
 					player.bloodWingsActive = nil;
-
+					UpdateActiveRituals(player, "Bloodwings", nil);
 					Clockwork.hint:Send(player, "The 'Bloodwings' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -631,7 +654,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("cloak_of_always_burning");
 	RITUAL.name = "(T2) Cloak of Always Burning";
 	RITUAL.description = "With an offering of catalysts, runestones and wicker branches you will be infused with a resistance to the natural and unnatural forces of life. Performing this ritual will grant you 100% resistance to fire and ice damage for 40 minutes. Incurs 10 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shieldwall", "shedskin"}; -- Tier II Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"belphegor_catalyst", "ice_catalyst", "familial_catalyst"};
 	RITUAL.corruptionCost = 10;
@@ -640,12 +663,13 @@ RITUAL = cwRituals.rituals:New("cloak_of_always_burning");
 
 	function RITUAL:OnPerformed(player)
 		player.cloakBurningActive = true;
-
+		local endtime = CurTime() + 2400
+		UpdateActiveRituals(player, "Cloak of Always Burning", endtime);
 		timer.Create("CloakBurnTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player.cloakBurningActive then
 					player.cloakBurningActive = nil;
-
+					UpdateActiveRituals(player, "Cloak of Always Burning", nil);
 					Clockwork.hint:Send(player, "The 'Cloak of Always Burning' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -671,12 +695,13 @@ RITUAL = cwRituals.rituals:New("cries_of_the_drowned_king");
 
 	function RITUAL:OnPerformed(player)
 		player.drownedKingActive = true;
-
+		local endtime = CurTime() + 3600
+		UpdateActiveRituals(player, "Cries of the Drowned King", endtime);
 		timer.Create("DrownedKingTimer_"..player:EntIndex(), 3600, 1, function()
 			if IsValid(player) then
 				if player.drownedKingActive then
 					player.drownedKingActive = nil;
-
+					UpdateActiveRituals(player, "Cries of the Drowned King", nil);
 					Clockwork.hint:Send(player, "The 'Cries of the Drowned King' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -708,12 +733,13 @@ RITUAL = cwRituals.rituals:New("demon_hunter");
 		
 		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." just activated the 'Demon Hunter' ritual! Make sure there are enough thrall NPCs ("..player.thrallsToKill..") for him to kill!");
 		if(math.random(1,10) == 1) then Schema:EasyText(GetAdmin(), "tomato", "The die have been cast...by random chance, an admin thrall has been requested to participate in this ritual!"); end
-
+		local endtime = CurTime() + 1500
+		UpdateActiveRituals(player, "Demon Hunter", endtime);
 		timer.Create("DemonHunterTimer_"..player:EntIndex(), 1500, 1, function()
 			if IsValid(player) then
 				if player.demonHunterActive then
 					player.demonHunterActive = nil;
-
+					UpdateActiveRituals(player, "Demon Hunter", nil);
 					Clockwork.hint:Send(player, "The 'Demon Hunter' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -766,7 +792,8 @@ RITUAL = cwRituals.rituals:New("empowered_blood");
 		player.maxHealthBoost = 50;
 		player:SetMaxHealth(player:GetMaxHealth());
 		player:SetHealth(player:Health() + 50);
-		
+		local endtime = CurTime() + 1200
+		UpdateActiveRituals(player, "Empowered Blood", endtime);
 		timer.Create("EmpoweredBloodTimer_"..player:EntIndex(), 1200, 1, function()
 			if IsValid(player) then
 				player.maxHealthBoost = nil;
@@ -778,7 +805,7 @@ RITUAL = cwRituals.rituals:New("empowered_blood");
 				if player:Health() > maxHealth then
 					player:SetHealth(maxHealth);
 				end
-				
+				UpdateActiveRituals(player, "Empowered Blood", nil);
 				Clockwork.hint:Send(player, "The 'Empowered Blood' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 			end
 		end);
@@ -826,12 +853,13 @@ RITUAL = cwRituals.rituals:New("hail_prince_thieves");
 
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("princeOfThieves", true);
-
+		local endtime = CurTime() + 1800
+		UpdateActiveRituals(player, "Hail Be to the Prince of Thieves", endtime);
 		timer.Create("PrinceOfThievesTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("princeOfThieves", false) then
 					player:SetNetVar("princeOfThieves", false);
-
+					UpdateActiveRituals(player, "Hail Be to the Prince of Thieves", nil);
 					Clockwork.hint:Send(player, "The 'Hail Be to the Prince of Thieves' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -909,12 +937,13 @@ RITUAL = cwRituals.rituals:New("holy_powderkeg");
 	
 	function RITUAL:OnPerformed(player)
 		player.holyPowderkegActive = true;
-
+		local endtime = CurTime() + 1800
+		UpdateActiveRituals(player, "Holy Powderkeg", endtime);
 		timer.Create("HolyPowderTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player.holyPowderkegActive then
 					player.holyPowderkegActive = nil;
-
+					UpdateActiveRituals(player, "Holy Powderkeg", nil);
 					Clockwork.hint:Send(player, "The 'Holy Powderkeg' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -939,7 +968,8 @@ RITUAL = cwRituals.rituals:New("cloak_of_the_black_hat");
 	
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("kinisgerCloak", true);
-		
+		local endtime = CurTime() + 1800
+		UpdateActiveRituals(player, "Cloak of the Black Hat", endtime);
 		timer.Create("KinisgerCloakTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("kinisgerCloak", false) then
@@ -948,7 +978,7 @@ RITUAL = cwRituals.rituals:New("cloak_of_the_black_hat");
 					if player.cloaked then
 						player:Uncloak();
 					end
-					
+					UpdateActiveRituals(player, "Cloak of the Black Hat", nil);
 					Clockwork.hint:Send(player, "The 'Cloak of the Black Hat' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1020,12 +1050,13 @@ RITUAL = cwRituals.rituals:New("ritual_of_shadow");
 
 	function RITUAL:OnPerformed(player)
 		player.ritualOfShadow = true;
-
+		local endtime = CurTime() + 2400
+		UpdateActiveRituals(player, "Ritual of Shadow", endtime);
 		timer.Create("RitualOfShadowTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player.ritualOfShadow then
 					player.ritualOfShadow = nil;
-
+					UpdateActiveRituals(player, "Ritual of Shadow", nil);
 					Clockwork.hint:Send(player, "The 'Ritual of Shadow' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1212,12 +1243,13 @@ RITUAL = cwRituals.rituals:New("noble_stature");
 
 	function RITUAL:OnPerformed(player)
 		player.nobleStatureActive = true;
-
+		local endtime = CurTime() + 900
+		UpdateActiveRituals(player, "Noble Stature", endtime);
 		timer.Create("NobleStatureTimer_"..player:EntIndex(), 900, 1, function()
 			if IsValid(player) then
 				if player.nobleStatureActive then
 					player.nobleStatureActive = nil;
-
+					UpdateActiveRituals(player, "Noble Stature", nil);
 					Clockwork.hint:Send(player, "The 'Noble Stature' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1263,12 +1295,13 @@ RITUAL = cwRituals.rituals:New("perseverance");
 	
 	function RITUAL:OnPerformed(player)
 		player.perseveranceActive = true;
-
+		local endtime = CurTime() + 1800
+		UpdateActiveRituals(player, "Perseverance", endtime);
 		timer.Create("PerseveranceTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player.perseveranceActive then
 					player.perseveranceActive = nil;
-
+					UpdateActiveRituals(player, "Perseverance", nil);
 					Clockwork.hint:Send(player, "The 'Perseverance' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1433,22 +1466,23 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("aura_of_powderheel");
 	RITUAL.name = "(T3) Aura of Powderheel";
-	RITUAL.description = "Call upon the power of the Great Tree in times of battle against its enemies to protect you from their non-traditional weaponry. Performing this ritual generates a spherical forcefield for 15 minutes, which reduces bullet damage to everyone around you within talking distance by 25%. Incurs 25 corruption.";
+	RITUAL.description = "Call upon the power of the Great Tree in times of battle against its enemies to protect you from their non-traditional weaponry. Performing this ritual generates a spherical forcefield for 30 minutes, which reduces bullet damage to everyone around you within talking distance by 25%. Incurs 30 corruption.";
 	RITUAL.onerequiredbelief = {"watchful_raven"}; -- Tier III Faith of the Family Ritual
 	
 	RITUAL.requirements = {"pantheistic_catalyst", "xolotl_catalyst", "trinity_catalyst"};
-	RITUAL.corruptionCost = 25; -- Corruption incurred from performing rituals.
+	RITUAL.corruptionCost = 30; -- Corruption incurred from performing rituals.
 	RITUAL.ritualTime = 10; -- Time it takes for the ritual action bar to complete.
 	RITUAL.experience = 75; -- XP gained from performing the ritual.
 
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("powderheelActive", true);
-
-		timer.Create("PowderheelTimer_"..player:EntIndex(), 900, 1, function()
+		local endtime = CurTime() + 1800
+		UpdateActiveRituals(player, "Aura of Powderheel", endtime);
+		timer.Create("PowderheelTimer_"..player:EntIndex(), 1800, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("powderheelActive") then
 					player:SetNetVar("powderheelActive", false);
-
+					UpdateActiveRituals(player, "Aura of Powderheel", nil);
 					Clockwork.hint:Send(player, "The 'Aura of Powderheel' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1474,12 +1508,13 @@ RITUAL = cwRituals.rituals:New("druids_staff");
 
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("druidStaffActive", true);
-
+		local endtime = CurTime() + 900
+		UpdateActiveRituals(player, "Druid's Staff", endtime);
 		timer.Create("DruidStaffTImer_"..player:EntIndex(), 900, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("druidStaffActive") then
 					player:SetNetVar("druidStaffActive", false);
-
+					UpdateActiveRituals(player, "Druid's Staff", nil);
 					Clockwork.hint:Send(player, "The 'Druid's Staff' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1595,26 +1630,47 @@ end
 
 RITUAL = cwRituals.rituals:New("glazic_rite_of_clear_skies");
 	RITUAL.name = "(Unique) Glazic Rite of Clear Skies";
-	RITUAL.description = "With broken pieces of God, the Glazic Astronomers League proudly state No to the savage shamans who covet power over the skies. Performing this ritual will clear the weather to normal. Incurs 50 corruption.";
+	RITUAL.description = "With broken pieces of God, the Glazic Astronomers League proudly state No to the savage shamans who covet power over the skies. Performing this ritual will clear the weather to normal after a delay of 1 minute. Incurs 50 corruption.";
 	RITUAL.onerequiredbelief = {"emissary"}; -- Hard-Glazed Unique Ritual
 	
-	RITUAL.requirements = {"purifying_stone", "up_catalyst", "trinity_catalyst"};
+	RITUAL.requirements = {"purifying_stone", "up_catalyst", "purifying_stone"};
 	RITUAL.corruptionCost = 50;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 150;
 	
 	function RITUAL:OnPerformed(player)
 		Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Glazic Rite of Clear Skies' ritual!");
-
-		if cwWeather then
-			cwWeather:SetWeather("normal", 0, 900);
-			
-			return true;
+		
+		local lastZone = player:GetCharacterData("LastZone");
+		
+		if lastZone == "wasteland" or lastZone == "hotspring" then
+			for _, v in _player.Iterator() do
+				if IsValid(v) and v:HasInitialized() then
+					local vLastZone = v:GetCharacterData("LastZone");
+						
+					Clockwork.chatBox:Add(v, nil, "event", "Praise be! A Glazic Astronomer has manipulated the heavens, and soon the skies will be clear!");
+				end
+			end
 		end
+
+		timer.Simple(60, function()
+			if cwWeather then
+				cwWeather:SetWeather("normal", 0, 900);
+				
+				return true;
+			end
+		end);
 	end;
 	function RITUAL:OnFail(player)
 	end;
 	function RITUAL:StartRitual(player)
+		local lastZone = player:GetCharacterData("LastZone");
+		
+		if lastZone ~= "wasteland" and lastZone ~= "hotspring" then
+			Schema:EasyText(player, "peru", "You must be in the wasteland to perform this ritual!")
+			return false
+		end
+
 		if cwWeather then
 			if !cwWeather.weatherTypes["normal"] then
 				Schema:EasyText(player, "peru", "This climate is unsuited for this!");
@@ -1746,12 +1802,13 @@ RITUAL = cwRituals.rituals:New("scornificationism");
 
 	function RITUAL:OnPerformed(player)
 		player.scornificationismActive = true;
-
+		local endtime = CurTime() + 120
+		UpdateActiveRituals(player, "Scornificationism", endtime);
 		timer.Create("ScornificationismTimer_"..player:EntIndex(), 120, 1, function()
 			if IsValid(player) then
 				if player.scornificationismActive then
 					player.scornificationismActive = nil;
-
+					UpdateActiveRituals(player,"Scornificationism", nil);
 					Clockwork.hint:Send(player, "The 'Scornificationism' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1767,11 +1824,11 @@ RITUAL:Register()
 
 RITUAL = cwRituals.rituals:New("sprouting");
 	RITUAL.name = "(T2) Sprouting";
-	RITUAL.description = "There is something to be learned from leaves, dirt, and bone. Performing this ritual will restore 200 health and 100% of blood, as well as healing all injuries. Removes 5 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shieldwall", "shedskin"}; -- Tier II Faith of the Family Ritual
+	RITUAL.description = "There is something to be learned from leaves, dirt, and bone. Performing this ritual will restore 200 health and 100% of blood, as well as healing all injuries. Incurs 5 corruption.";
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"pantheistic_catalyst", "pantheistic_catalyst", "pantheistic_catalyst"};
-	RITUAL.corruptionCost = -5;
+	RITUAL.corruptionCost = 5;
 	RITUAL.ritualTime = 10;
 	RITUAL.experience = 25;
 	
@@ -1804,13 +1861,14 @@ RITUAL = cwRituals.rituals:New("soulscorch");
 	function RITUAL:OnPerformed(player)
 		player.soulscorchActive = true;
 		player:SetNetVar("soulscorchActive", true);
-
+		local endtime = CurTime() + 300
+		UpdateActiveRituals(player, "Soulscorch", endtime);
 		timer.Create("SoulScorchTimer_"..player:EntIndex(), 300, 1, function()
 			if IsValid(player) then
 				if player.soulscorchActive then
 					player.soulscorchActive = nil;
 					player:SetNetVar("soulscorchActive", false);
-
+					UpdateActiveRituals(player, "Soulscorch", nil);
 					Clockwork.hint:Send(player, "The 'Soulscorch' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -1847,12 +1905,13 @@ RITUAL = cwRituals.rituals:New("steel_will");
 	function RITUAL:OnPerformed(player)
 		player:SetNetVar("steelWill", true);
 		player:HandleSanity(100);
-
+		local endtime = CurTime() + 2400
+		UpdateActiveRituals(player, "Steel Will", endtime);
 		timer.Create("SteelWillTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player:GetNetVar("steelWill", false) then
 					player:SetNetVar("steelWill", false);
-
+					UpdateActiveRituals(player, "Steel Will", nil);
 					Clockwork.hint:Send(player, "The 'Steel Will' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end
@@ -2141,6 +2200,38 @@ RITUAL = cwRituals.rituals:New("summon_soldier");
 			
 			return false;
 		end;
+	end;
+RITUAL:Register()
+
+RITUAL = cwRituals.rituals:New("abyssalhowl");
+	RITUAL.name = "(Unique) Abyssal Howl";
+	RITUAL.description = "Whisper words in an ancient tongue never uttered by man and something from the deep may take interest. Performing this ritual will increase the effectiveness of your Upgraded Warcry, allowing you to heal 100% of all damage taken within 2 seconds for 20 minutes. Incurs 30 corruption.";
+	RITUAL.onerequiredbelief = {"shedskin"}; -- Unique Sister ritual
+	
+	RITUAL.requirements = {"down_catalyst", "belphegor_catalyst", "pantheistic_catalyst"};
+	RITUAL.corruptionCost = 30;
+	RITUAL.ritualTime = 10;
+	RITUAL.experience = 50;
+
+	function RITUAL:OnPerformed(player)
+		player.abyssalHowlActive = true;
+		local endtime = CurTime() + 1200
+		UpdateActiveRituals(player, "Abyssalhowl", endtime);
+		timer.Create("AbyssalhowlTimer_"..player:EntIndex(), 1200, 1, function()
+			if IsValid(player) then
+				if player.abyssalHowlActive then
+					player.abyssalHowlActive = nil;
+					UpdateActiveRituals(player, "Abyssalhowl", nil);
+					Clockwork.hint:Send(player, "The 'Abyssal Howl' ritual has worn off...", 10, Color(175, 100, 100), true, true);
+				end
+			end
+		end);
+	end;
+	function RITUAL:OnFail(player)
+	end;
+	function RITUAL:StartRitual(player)
+	end;
+	function RITUAL:EndRitual(player)
 	end;
 RITUAL:Register()
 
@@ -2748,7 +2839,7 @@ RITUAL:Register()
 RITUAL = cwRituals.rituals:New("triumph_of_the_bark");
 	RITUAL.name = "(T2) Triumph of Bark";
 	RITUAL.description = "The Mother may be the creator of affliction, but she may cure those seen as strong. Performing this ritual will cure you of all diseases. Incurs 20 corruption.";
-	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shieldwall", "shedskin"}; -- Tier II Faith of the Family Ritual
+	RITUAL.onerequiredbelief = {"man_become_beast", "one_with_the_druids", "daring_trout", "shedskin"}; -- Tier II Faith of the Family Ritual
 	
 	RITUAL.requirements = {"up_catalyst", "pantheistic_catalyst", "pantheistic_catalyst"};
 	RITUAL.corruptionCost = 20;
@@ -2789,12 +2880,13 @@ RITUAL = cwRituals.rituals:New("upstaged");
 	
 	function RITUAL:OnPerformed(player)
 		player.upstagedActive = true;
-
+		local endtime = CurTime() + 2400
+		UpdateActiveRituals(player, "Upstaged", endtime);
 		timer.Create("UpstagedTimer_"..player:EntIndex(), 2400, 1, function()
 			if IsValid(player) then
 				if player.upstagedActive then
 					player.upstagedActive = nil;
-
+					UpdateActiveRituals(player, "Upstaged", nil);
 					Clockwork.hint:Send(player, "The 'Upstaged' ritual has worn off...", 10, Color(175, 100, 100), true, true);
 				end
 			end

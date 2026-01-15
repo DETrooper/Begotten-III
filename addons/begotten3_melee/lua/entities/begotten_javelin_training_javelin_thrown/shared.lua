@@ -165,15 +165,9 @@ if SERVER then
 							if IsValid(entity) then
 								self.collided = true;
 								
-								if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
-									local conditionLoss = self.ConditionLoss or 34;
-									
-									if self.Owner:HasBelief("scour_the_rust") then
-										conditionLoss = conditionLoss * 0.65;
-									end
-									
-									self.itemTable:TakeCondition(conditionLoss);
-								end
+								local conditionLoss = self.ConditionLoss or 34;
+
+								self.itemTable:TakeConditionByPlayer(self.Owner, conditionLoss);
 								
 								entity:Spawn();
 								entity:SetAngles(self:GetAngles());
@@ -274,13 +268,9 @@ if SERVER then
 							local shieldItem = Ent:GetShieldEquipped();
 
 							if (shieldItem) and !Ent.opponent then
-								if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
-									local conditionLoss = self.ConditionLoss or 34;
-									
-									if self.Owner:HasBelief("scour_the_rust") then
-										conditionLoss = conditionLoss * 0.65;
-									end
-								self.itemTable:TakeCondition(conditionLoss);
+								local conditionLoss = self.ConditionLoss or 34;
+
+								self.itemTable:TakeConditionByPlayer(self.Owner, conditionLoss);
 							end
 						end
 					end
@@ -335,17 +325,11 @@ if SERVER then
 							 
 							if IsValid(entity) then
 								self.collided = true;
-								
-								if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
-									local conditionLoss = self.ConditionLoss or 34;
+
+								local conditionLoss = self.ConditionLoss or 34;
+
+								self.itemTable:TakeConditionByPlayer(self.Owner, conditionLoss);
 									
-									if self.Owner:HasBelief("scour_the_rust") then
-										conditionLoss = conditionLoss * 0.65;
-									end
-									
-									self.itemTable:TakeCondition(conditionLoss);
-								end
-								
 								entity:Spawn();
 								entity:SetAngles(self:GetAngles());
 								self:StopSound("weapons/throw_swing_03.wav");
@@ -374,140 +358,133 @@ if SERVER then
 				end);
 				
 				return;
-				elseif Ent:IsPlayer() and (Ent:GetNetVar("Deflect") or Ent:GetNetVar("Parry")) then
-					self:Disable();
+			elseif Ent:IsPlayer() and (Ent:GetNetVar("Deflect") or Ent:GetNetVar("Parry")) then
+				self:Disable();
+				
+				timer.Simple(FrameTime(), function()
+					if !IsValid(self) then return end;
+					if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
+					if !IsValid(Ent) or !Ent:Alive() then return end;
 					
-					timer.Simple(FrameTime(), function()
-						if !IsValid(self) then return end;
-						if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
-						if !IsValid(Ent) or !Ent:Alive() then return end;
-						
-						local javelin = ents.Create(self:GetClass())
-						if !javelin:IsValid() then return false end
-						
-						self.collided = true;
-						
-						javelin:SetModel(self:GetModel());
-						javelin:SetPos(self:GetPos())
-						javelin:SetOwner(Ent)
-						
-						javelin.AttackTable = self.AttackTable;
-						javelin.itemTable = self.itemTable;
-						javelin.SticksInShields =  self.SticksInShields;
-						javelin.ConditionLoss = self.ConditionLoss;
-						javelin.itemTable = self.itemTable;
-						javelin.deflected = true;
+					local javelin = ents.Create(self:GetClass())
+					if !javelin:IsValid() then return false end
+					
+					self.collided = true;
+					
+					javelin:SetModel(self:GetModel());
+					javelin:SetPos(self:GetPos())
+					javelin:SetOwner(Ent)
+					
+					javelin.AttackTable = self.AttackTable;
+					javelin.itemTable = self.itemTable;
+					javelin.SticksInShields =  self.SticksInShields;
+					javelin.ConditionLoss = self.ConditionLoss;
+					javelin.itemTable = self.itemTable;
+					javelin.deflected = true;
+					
+					if Ent:GetNetVar("Parry") then
+						javelin.parried = true;
+					end
+					
+					-- for parry/deflect
+					local d = DamageInfo()
+					d:SetDamage(0 )
+					d:SetAttacker(self.Owner)
+					d:SetDamageType( damagetype )
+					d:SetDamagePosition(trace.HitPos)
+					d:SetInflictor(javelin);
+
+					Ent:TakeDamageInfo(d)
+					
+					self:Remove();
+					
+					javelin:Spawn()
+					javelin.Owner = Ent
+					javelin:Activate()
+					
+					local phys = javelin:GetPhysicsObject()
+					
+					if Ent.HasBelief and Ent:HasBelief("impossibly_skilled") then
+						javelin:SetAngles(Ent:GetAimVector():Angle())
+						phys:SetVelocity(Ent:GetAimVector() * 1250);
 						
 						if Ent:GetNetVar("Parry") then
-							javelin.parried = true;
+							Ent:EmitSound("meleesounds/DS2Parry.mp3");
 						end
 						
-						-- for parry/deflect
-						local d = DamageInfo()
-						d:SetDamage(0 )
-						d:SetAttacker(self.Owner)
-						d:SetDamageType( damagetype )
-						d:SetDamagePosition(trace.HitPos)
-						d:SetInflictor(javelin);
-
-						Ent:TakeDamageInfo(d)
-						
-						self:Remove();
-						
-						javelin:Spawn()
-						javelin.Owner = Ent
-						javelin:Activate()
-						
-						local phys = javelin:GetPhysicsObject()
-						
-						if Ent.HasBelief and Ent:HasBelief("impossibly_skilled") then
-							javelin:SetAngles(Ent:GetAimVector():Angle())
-							phys:SetVelocity(Ent:GetAimVector() * 1250);
-							
-							if Ent:GetNetVar("Parry") then
-								Ent:EmitSound("meleesounds/DS2Parry.mp3");
-							end
-							
-							Clockwork.chatBox:AddInTargetRadius(Ent, "me", "suddenly catches the projectile mid-flight with their weapon and redirects it, showing impossible skill and grace as it is deflected in the direction of its hurler!", Ent:GetPos(), config.Get("talk_radius"):Get() * 4);
-						else
-							phys:SetVelocity(Ent:GetAimVector() * 50);
-						end
-						
-						if IsValid(enemywep) then
-							local blocksoundtable = GetSoundTable(enemywep.realBlockSoundTable);
-							
-							if blocksoundtable and blocksoundtable["deflectmetal"] then
-								Ent:EmitSound(blocksoundtable["deflectmetal"][math.random(1, #blocksoundtable["deflectmetal"])], 90);
-							end
-						end
+						Clockwork.chatBox:AddInTargetRadius(Ent, "me", "suddenly catches the projectile mid-flight with their weapon and redirects it, showing impossible skill and grace as it is deflected in the direction of its hurler!", Ent:GetPos(), config.Get("talk_radius"):Get() * 4);
+					else
+						phys:SetVelocity(Ent:GetAimVector() * 50);
+					end
 					
-						if !Ent:GetNetVar("Parry") then
-							javelin:StopSound("weapons/throw_swing_03.wav");
-							javelin:EmitSound(javelin.Hit[math.random(1, #javelin.Hit)])
+					if IsValid(enemywep) then
+						local blocksoundtable = GetSoundTable(enemywep.realBlockSoundTable);
+						
+						if blocksoundtable and blocksoundtable["deflectmetal"] then
+							Ent:EmitSound(blocksoundtable["deflectmetal"][math.random(1, #blocksoundtable["deflectmetal"])], 90);
 						end
-					end);
+					end
 				
-					return;
-				elseif Ent.iFrames then
-					local phys = self:GetPhysicsObject()
+					if !Ent:GetNetVar("Parry") then
+						javelin:StopSound("weapons/throw_swing_03.wav");
+						javelin:EmitSound(javelin.Hit[math.random(1, #javelin.Hit)])
+					end
+				end);
+			
+				return;
+			elseif Ent.iFrames then
+				local phys = self:GetPhysicsObject()
+				
+				self:SetCollisionGroup(COLLISION_GROUP_WORLD);
+				phys:SetVelocity(data.OurOldVelocity);
+				Ent:EmitSound("meleesounds/comboattack3.wav.mp3", 75, math.random( 90, 110 ));
+				
+				return;
+			else
+				self:Disable();
+				
+				timer.Simple(FrameTime(), function()
+					if !IsValid(self) then return end;
+					if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
 					
-					self:SetCollisionGroup(COLLISION_GROUP_WORLD);
-					phys:SetVelocity(data.OurOldVelocity);
-					Ent:EmitSound("meleesounds/comboattack3.wav.mp3", 75, math.random( 90, 110 ));
-					
-					return;
-				else
-					self:Disable();
-					
-					timer.Simple(FrameTime(), function()
-						if !IsValid(self) then return end;
-						if !IsValid(self.Owner) or !self.Owner:Alive() then return end;
-						
-						if Clockwork and !self.Owner.opponent then
-							if self.itemTable then
-								local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
-								 
-								if IsValid(entity) then
-									self.collided = true;
+					if Clockwork and !self.Owner.opponent then
+						if self.itemTable then
+							local entity = Clockwork.entity:CreateItem(self.Owner, self.itemTable, self:GetPos());
+							 
+							if IsValid(entity) then
+								self.collided = true;
 
-									if !cwBeliefs or !self.Owner:HasBelief("ingenuity_finisher") then
-										local conditionLoss = self.ConditionLoss or 34;
+								local conditionLoss = self.ConditionLoss or 34;
+
+								self.itemTable:TakeConditionByPlayer(self.Owner, conditionLoss);
+								
+								entity:Spawn();
+								entity:SetAngles(self:GetAngles());
+								self:StopSound("weapons/throw_swing_03.wav");
+								entity:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
+								Clockwork.entity:Decay(entity, 300);
+								entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
+								
+								local phys = entity:GetPhysicsObject();
+								
+								if (phys:IsValid()) then
+									phys:Wake();
+									phys:SetMass(2);
+									
+									--[[if should_stick then
+										local bone = Ent:GetHitBoxBone(Ent:LastHitGroup(), 0);
 										
-										if self.Owner:HasBelief("scour_the_rust") then
-											conditionLoss = conditionLoss * 0.65;
-										end
-										
-										self.itemTable:TakeCondition(conditionLoss);
-									end
-									
-									entity:Spawn();
-									entity:SetAngles(self:GetAngles());
-									self:StopSound("weapons/throw_swing_03.wav");
-									entity:EmitSound("meleesounds/c2920_weapon_land.wav.mp3", 90)
-									Clockwork.entity:Decay(entity, 300);
-									entity.lifeTime = CurTime() + 300; -- so the item save plugin doesn't save it
-									
-									local phys = entity:GetPhysicsObject();
-									
-									if (phys:IsValid()) then
-										phys:Wake();
-										phys:SetMass(2);
-										
-										--[[if should_stick then
-											local bone = Ent:GetHitBoxBone(Ent:LastHitGroup(), 0);
-											
-											entity:FollowBone(Ent, bone);
-										end]]--
-									end
-									
-									self:Remove();
+										entity:FollowBone(Ent, bone);
+									end]]--
 								end
+								
+								self:Remove();
 							end
 						end
-					end);
-					
-					return;
-				end
+					end
+				end);
+				
+				return;
 			end
 
 			self:SetOwner(nil);

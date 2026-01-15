@@ -190,7 +190,7 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						end
 						
 						if attacker.daringTroutActive then
-							armorPiercing = armorPiercing + 10;
+							armorPiercing = armorPiercing + 8;
 						end
 						
 						if attacker:GetNetVar("druidStaffActive") then
@@ -319,6 +319,10 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 								
 								if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("the_light") then
 									armorPiercing = armorPiercing + (armorPiercing * 0.15);
+								end
+								
+								if (inflictor.Base == "sword_swepbase" or inflictor.isJavelin) and attacker:HasBelief("daring_trout") then
+									armorPiercing = armorPiercing + (armorPiercing * 0.10);
 								end
 								
 								if attacker:HasBelief("billman") then
@@ -470,25 +474,19 @@ function PLUGIN:EntityTakeDamageArmor(player, damageInfo)
 						local activeWeapon = attacker:GetActiveWeapon();
 						
 						if !isTrainingDummy then
-							if player:HasBelief("ingenuity_finisher") and !armorItem.unrepairable then
-								conditionLoss = 0;
-							else	
-								if damageType == DMG_CLUB then
-									conditionLoss = conditionLoss * 2.5
-								end
-								
+							if damageType == DMG_CLUB then
+								conditionLoss = conditionLoss * 2.5
+							end
+							
+							if attacker.HasBelief then
 								if activeWeapon.hasPuncture == true and attacker:HasBelief("might") then
 									conditionLoss = conditionLoss * 2
-								end
-								
-								if player:HasBelief("scour_the_rust") then
-									conditionLoss = conditionLoss / 1.55;
 								end
 							end
 						end
 						
 						if not player.ignoreConditionLoss then
-							armorItem:TakeCondition(conditionLoss);
+							armorItem:TakeConditionByPlayer(player, conditionLoss);
 							--print("Armor condition loss: "..tostring(conditionLoss));
 							--print("New armor condition value: "..tostring(condition));
 						end

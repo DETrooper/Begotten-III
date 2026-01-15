@@ -52,7 +52,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.fireplaceFuel = 180;
 	
 	ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "wood", "wood", "wood"}};
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -71,7 +71,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
-	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -85,7 +85,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 0, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 0, 0);
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.bulletConditionScale = 0.4;
 	ITEM.conditionScale = 0.75;
 	ITEM.fireplaceFuel = 300;
@@ -110,8 +110,8 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attributes = {"unbreakable"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
 	ITEM.requiredbeliefs = {"defender"};
-	ITEM.requireFaction = {"Goreic Warrior"};
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFactions = {"Goreic Warrior"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 850, supercrateOnly = true};
 ITEM:Register();
 
@@ -262,7 +262,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
 	ITEM.requiredbeliefs = {"defender"};
-	ITEM.requireFaith = {"Faith of the Light"};
+	ITEM.requiredFaiths = {"Faith of the Light"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -283,7 +283,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
-	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -297,7 +297,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 180, 0);
 	ITEM.attachmentOffsetVector = Vector(0, 2, 0);
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.bulletConditionScale = 0.25;
 	ITEM.conditionScale = 0.4;
 	
@@ -358,7 +358,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.conditionScale = 0.45;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "iron_chunks", "iron_chunks"}};
-	ITEM.requireFaction = {"Goreic Warrior"};
+	ITEM.requiredFactions = {"Goreic Warrior"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -398,8 +398,8 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
 	ITEM.attributes = {"unbreakable"};
 	ITEM.requiredbeliefs = {"defender"};
-	ITEM.requireFaction = {"Goreic Warrior"};
-	ITEM.requireSubfaction = {"Clan Reaver"};
+	ITEM.requiredFactions = {"Goreic Warrior"};
+	ITEM.requiredSubfactions = {"Clan Reaver"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");
@@ -413,7 +413,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 0, 0);
 	ITEM.attachmentOffsetVector = Vector(0, -2.3, 0);
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.conditionScale = 0.7;
 	ITEM.bulletConditionScale = 0.4;
 	ITEM.fireplaceFuel = 300;
@@ -432,10 +432,106 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
 	ITEM.attachmentOffsetAngles = Angle(90, 180, 180);
 	ITEM.attachmentOffsetVector = Vector(0, -2, 0);
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.bulletConditionScale = 0.3;
 	ITEM.conditionScale = 0.45;
 	
 	ITEM.requiredbeliefs = {"defender"};
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "steel_chunks", "steel_chunks", "steel_chunks"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("shield_base");
+	ITEM.name = "Shagalax Tower Shield";
+	ITEM.model = "models/begotten_prelude/items/goreshield_shagalax.mdl";
+	ITEM.weight = 7;
+	ITEM.uniqueID = "shieldhathood1";
+	ITEM.description = "A tall shield forged by the experts of Clan Shagalax. It has been methodically lined with plates of shagalaxian steel, weaved together with leather. Although quite heavy, it remains a popular choice amongst their clan.";
+	ITEM.iconoverride = "begotten/ui/itemicons/goreshield_shagalax.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 0, 0);
+	ITEM.attachmentOffsetVector = Vector(8, 5.73, -8);
+	ITEM.bulletConditionScale = 0.25;
+	ITEM.conditionScale = 0.45;
+	ITEM.requiredSubfactions = {"Clan Shagalax"};
+
+	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 1000, supercrateOnly = true};
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "leather", "leather"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("shield_base");
+	ITEM.name = "Clan Reaver Shield";
+	ITEM.model = "models/begotten_prelude/items/goreshield_thyrm.mdl";
+	ITEM.weight = 4.5;
+	ITEM.uniqueID = "shieldhathood2";
+	ITEM.description = "A sturdy shield darkened by the Sister's magic. This design has existed for centuries, dating back to early Thyrmian Sorcerers. It is decorated and protected by goreic sigils.";
+	ITEM.iconoverride = "begotten/ui/itemicons/goreshield_thyrm.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 355.03, 0);
+	ITEM.attachmentOffsetVector = Vector(-1.01, 2.83, 0.34);
+	ITEM.bulletConditionScale = 0.5;
+	ITEM.conditionScale = 0.7;
+	ITEM.fireplaceFuel = 180;
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "wood", "wood", "wood"}};
+	ITEM.requiredSubfactions = {"Clan Reaver"};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("shield_base");
+	ITEM.name = "Clan Gore Shield";
+	ITEM.model = "models/begotten_prelude/items/goreshield_ursa.mdl";
+	ITEM.weight = 4.5;
+	ITEM.uniqueID = "shieldhathood5";
+	ITEM.description = "A sturdy shield darkened by the Father's magic. This design depicts the Great Bear, a mythological creature of Clan Gore's predecessor, Clan Ursa. It is decorated and protected by goreic sigils.";
+	ITEM.iconoverride = "begotten/ui/itemicons/goreshield_ursa.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(90, 351.05, 180.04);
+	ITEM.attachmentOffsetVector = Vector(0, 0.71, -3.54);
+	ITEM.bulletConditionScale = 0.5;
+	ITEM.conditionScale = 0.7;
+	ITEM.fireplaceFuel = 180;
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "wood", "wood", "wood"}};
+	ITEM.requiredSubfactions = {"Clan Gore"};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("shield_base");
+	ITEM.name = "Clan Crast Shield";
+	ITEM.model = "models/begotten_prelude/items/goreshield_crast.mdl";
+	ITEM.weight = 3.5;
+	ITEM.uniqueID = "shieldhathood3";
+	ITEM.description = "A sturdy shield blessed with the Mother's protection. It is exceptionally light, to help the typically weak shamans who wield these shields. It is decorated and protected by goreic sigils.";
+	ITEM.iconoverride = "begotten/ui/itemicons/goreshield_crast.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(92.49, 0, 180);
+	ITEM.attachmentOffsetVector = Vector(0, -1.41, -5.66);
+	ITEM.bulletConditionScale = 0.5;
+	ITEM.conditionScale = 0.7;
+	ITEM.fireplaceFuel = 180;
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "wood", "wood", "wood"}};
+	ITEM.requiredSubfactions = {"Clan Crast"};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("shield_base");
+	ITEM.name = "Clan Harald Shield";
+	ITEM.model = "models/begotten_prelude/items/goreshield_haraldr.mdl";
+	ITEM.weight = 4.5;
+	ITEM.uniqueID = "shieldhathood4";
+	ITEM.description = "A sturdy shield blessed with the Old Son's protection. It smells of salt and the ocean, often tied to the sides of longships. It is decorated and protected by goreic sigils.";
+	ITEM.iconoverride = "begotten/ui/itemicons/goreshield_haraldr.png"
+	ITEM.isAttachment = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
+	ITEM.attachmentOffsetAngles = Angle(82.54, 0, 0);
+	ITEM.attachmentOffsetVector = Vector(-0.71, 3.54, -3.54);
+	ITEM.bulletConditionScale = 0.5;
+	ITEM.conditionScale = 0.7;
+	ITEM.fireplaceFuel = 180;
+	
+	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "wood", "wood", "wood"}};
+	ITEM.requiredSubfactions = {"Clan Harald"};
 ITEM:Register();

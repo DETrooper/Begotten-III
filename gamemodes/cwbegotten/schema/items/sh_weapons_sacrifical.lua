@@ -40,8 +40,9 @@ local ITEM = Clockwork.item:New("weapon_base");
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks"}}; -- use "breakdown" for other type
 	ITEM.attributes = {"fire"};
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.requiredbeliefs = {"mother"};
+	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -230,7 +231,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.onerequiredbelief = {"father", "mother", "old_son", "young_son", "sister"};
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -251,7 +253,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength", "the_light"};
-	ITEM.requireFaith = {"Faith of the Light"};
+	ITEM.requiredFaiths = {"Faith of the Light"};
+	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
@@ -298,7 +301,8 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attributes = {"ice"};
 	ITEM.requiredbeliefs = {"strength"};
 	ITEM.onerequiredbelief = {"father", "mother", "old_son", "young_son", "sister"};
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
+	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");

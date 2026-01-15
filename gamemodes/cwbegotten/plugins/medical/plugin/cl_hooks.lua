@@ -49,6 +49,8 @@ function cwMedicalSystem:HUDPaint()
 end;
 
 function cwMedicalSystem:GetEntityMenuOptions(entity, options)
+	if Clockwork.Client:IsWeaponRaised() then return end;
+
 	if (entity:GetClass() == "prop_ragdoll") then
 		local player = Clockwork.entity:GetPlayer(entity);
 
@@ -58,37 +60,27 @@ function cwMedicalSystem:GetEntityMenuOptions(entity, options)
 	end
 	
 	if entity:IsPlayer() and entity:Alive() then
-		if !Clockwork.Client:IsWeaponRaised() then
-			local inventoryList = Clockwork.inventory:GetAsItemsList(Clockwork.inventory:GetClient());
-			
-			for k, itemTable in pairs (inventoryList) do
-				if options["Heal"] and options["Heal"][itemTable.name] then continue end;
-			
-				if itemTable.baseItem == "medical_base" and itemTable.applicable then
-					if !options["Heal"] then
-						options["Heal"] = {}
+		local inventoryList = Clockwork.inventory:GetAsItemsList(Clockwork.inventory:GetClient());
+		
+		for k, itemTable in pairs (inventoryList) do
+			if options["Heal"] and options["Heal"][itemTable.name] then continue end;
+		
+			if itemTable.baseItem == "medical_base" and itemTable.applicable then
+				if !options["Heal"] then
+					options["Heal"] = {}
+				end;
+				
+				local optionsTable = {};
+				
+				if itemTable.limbs == "all" then
+					optionsTable[string.gsub("Give", "^.", string.upper)] = function()
+						Clockwork.inventory:InventoryAction("give_all", itemTable.uniqueID, itemTable.itemID);
 					end;
+				else
+					local methods = itemTable.limbs;
 					
-					local optionsTable = {};
-					
-					if itemTable.limbs == "all" then
-						optionsTable[string.gsub("Give", "^.", string.upper)] = function()
-							Clockwork.inventory:InventoryAction("give_all", itemTable.uniqueID, itemTable.itemID);
-						end;
-					else
-						local methods = itemTable.limbs;
-						
-						if itemTable.isSurgeryItem then
-							if entity:IsRagdolled() then
-								for i = 1, #methods do
-									local hitGroupString = hitgroupToString[methods[i]];
-									
-									optionsTable[string.gsub(hitGroupString, "^.", string.upper)] = function()
-										Clockwork.inventory:InventoryAction(string.gsub("give_"..hitGroupString, " ", "_"), itemTable.uniqueID, itemTable.itemID);
-									end;
-								end;
-							end
-						else
+					if itemTable.isSurgeryItem then
+						if entity:IsRagdolled() then
 							for i = 1, #methods do
 								local hitGroupString = hitgroupToString[methods[i]];
 								
@@ -96,11 +88,19 @@ function cwMedicalSystem:GetEntityMenuOptions(entity, options)
 									Clockwork.inventory:InventoryAction(string.gsub("give_"..hitGroupString, " ", "_"), itemTable.uniqueID, itemTable.itemID);
 								end;
 							end;
+						end
+					else
+						for i = 1, #methods do
+							local hitGroupString = hitgroupToString[methods[i]];
+							
+							optionsTable[string.gsub(hitGroupString, "^.", string.upper)] = function()
+								Clockwork.inventory:InventoryAction(string.gsub("give_"..hitGroupString, " ", "_"), itemTable.uniqueID, itemTable.itemID);
+							end;
 						end;
 					end;
-					
-					options["Heal"][itemTable.name] = optionsTable;
-				end
+				end;
+				
+				options["Heal"][itemTable.name] = optionsTable;
 			end
 		end
 	end;
@@ -498,8 +498,10 @@ function cwMedicalSystem:ModifyStatusEffects(tab)
 			
 			for i = 1, #v do
 				local injury = self.cwInjuryTable[v[i]];
-				
-				table.insert(tab, {text = "(-) "..string.gsub(hitGroupString, "^.", string.upper)..": "..injury.name, color = Color(200, 40, 40)});
+
+				if injury then
+					table.insert(tab, {text = "(-) "..string.gsub(hitGroupString, "^.", string.upper)..": "..injury.name, color = Color(200, 40, 40)});
+				end
 			end
 		end
 	end

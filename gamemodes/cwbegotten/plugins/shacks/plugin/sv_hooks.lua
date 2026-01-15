@@ -321,7 +321,7 @@ end
 function cwShacks:GetPropertyInfo(player, shack)
 	local faction = player:GetFaction();
 
-	if faction == "Holy Hierachy" or player:IsAdmin() then	
+	if faction == "Holy Hierarchy" or player:IsAdmin() then	
 		if !shack or not istable(shack) then
 			local playerPos = player:GetPos();
 			local trace = player:GetEyeTrace();

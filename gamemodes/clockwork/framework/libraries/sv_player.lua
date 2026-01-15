@@ -3445,8 +3445,8 @@ function Clockwork.player:SaveCharacter(player, bCreate, character, Callback)
 
 				if (k == "recognisedNames") then
 					queryObj:Insert(tableKey, util.TableToJSON(character.recognisedNames))
-				elseif (k == "attributes") then
-					queryObj:Insert(tableKey, util.TableToJSON(character.attributes))
+				--[[elseif (k == "attributes") then
+					queryObj:Insert(tableKey, util.TableToJSON(character.attributes))]]--
 				elseif (k == "traits") then
 					queryObj:Insert(tableKey, util.TableToJSON(character.traits))
 				elseif (k == "inventory") then
@@ -3460,19 +3460,32 @@ function Clockwork.player:SaveCharacter(player, bCreate, character, Callback)
 				end
 			end
 
-			if (system.IsWindows()) then
-				queryObj:Callback(function(result, status, lastID)
-					if (Callback) then
-						Callback(tonumber(lastID))
-					end
-				end)
-			elseif (system.IsLinux()) then
-				queryObj:Callback(function(result, status, lastID)
-					if (Callback) then
-						Callback(tonumber(lastID))
-					end
-				end)
-			end
+			queryObj:Callback(function(result)
+				if (Callback) then
+					local oldCallback = Callback;
+					local selectObj = Clockwork.database:Select(charactersTable)
+					
+						selectObj:Callback(function(result)
+							if result then
+								for k, v in pairs(result) do
+									if v._Key then
+										if not character.data["Key"] then
+											character.data["Key"] = v._Key;
+										end
+										
+										oldCallback(v._Key);
+										
+										break;
+									end
+								end
+							end
+						end)
+							
+						selectObj:Where("_Schema", Clockwork.kernel:GetSchemaFolder())
+						selectObj:Where("_Name", character.name)
+					selectObj:Execute();
+				end
+			end)
 		queryObj:Execute()
 	elseif (player:HasInitialized()) then
 		local currentCharacter = player.cwCharacter

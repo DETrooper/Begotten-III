@@ -1336,11 +1336,33 @@ local zoneEventClasses = {
 	["caves"] = {"caves"},
 };
 
+if Clockwork.command.RegisterType then
+	local zone_tbl = {}
+
+	hook.Add("ClockworkSchemaLoaded", "ZoneCMDType", function ()
+		zone_tbl = table.Merge(zones:GetAll(), zones.supraZones)
+		hook.Remove("ClockworkSchemaLoaded", "ZoneCMDType")
+	end)
+
+	Clockwork.command:RegisterType("Zones", function (current_arg, _args)
+		local matches = {}
+
+		for zone, v in pairs(zone_tbl) do
+			if string.find(string.lower(zone), string.lower(current_arg)) then
+				table.insert(matches, zone)
+			end
+		end
+
+		return matches
+	end)
+end
+
 local COMMAND = Clockwork.command:New("EventZone");
 	COMMAND.tip = "Send an event to characters in a specific suprazone (suprawasteland will play for both wasteland and tower for example, or suprahell and supragore) or zone (i.e. wasteland, tower, caves, hell, gore).";
 	COMMAND.text = "<string Zone> <string Text>";
 	COMMAND.flags = CMD_DEFAULT;
 	COMMAND.access = "o";
+	COMMAND.types = {"Zones"}
 	COMMAND.arguments = 2;
 
 	-- Called when the command has been run.
@@ -1400,6 +1422,7 @@ local COMMAND = Clockwork.command:New("PlaySoundZone");
 	COMMAND.tip = "Play a sound to all players in a specific suprazone (suprawasteland will play for both wasteland and tower for example, or suprahell and supragore) or zone (i.e. wasteland, tower, caves, hell, gore).";
 	COMMAND.text = "<string Zone> <string SoundName> [int Level] [int Pitch]";
 	COMMAND.access = "o";
+	COMMAND.types = {"Zones"}
 	COMMAND.arguments = 2;
 	COMMAND.optionalArguments = 2;
 
@@ -1473,6 +1496,7 @@ local COMMAND = Clockwork.command:New("StopSoundZone");
 	COMMAND.tip = "Stop all sounds for all players in a specified zone.";
 	COMMAND.access = "s";
 	COMMAND.arguments = 1;
+	COMMAND.types = {"Zones"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -1865,7 +1889,9 @@ local COMMAND = Clockwork.command:New("Proclaim");
 				if player.victim and IsValid(player.victim) then
 					Clockwork.chatBox:AddInRadius(player.victim, "proclaim", text, player.victim:GetPos(), config.Get("talk_radius"):Get() * 4);
 					
-					if player.victim:GetSubfaith() == "Voltism" then
+					if player.victim:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
+						player.victim:EmitSound("piggysqueals/yell/wretch_tunnels_amb_alert_0"..math.random(1, 3)..".ogg", 90, math.random(95, 110))
+					elseif player.victim:GetSubfaith() == "Voltism" then
 						if cwBeliefs and (player.victim:HasBelief("the_storm") or player.victim:HasBelief("the_paradox_riddle_equation")) then
 							if !Clockwork.player:HasFlags(player.victim, "T") then
 								player.victim:EmitSound(voltistSounds[math.random(1, #voltistSounds)], 90, 150);
@@ -1881,7 +1907,9 @@ local COMMAND = Clockwork.command:New("Proclaim");
 				else
 					Clockwork.chatBox:AddInRadius(player, "proclaim", text, player:GetPos(), config.Get("talk_radius"):Get() * 4);
 					
-					if player:GetSubfaith() == "Voltism" then
+					if player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
+						player:EmitSound("piggysqueals/yell/wretch_tunnels_amb_alert_0"..math.random(1, 3)..".ogg", 90, math.random(95, 110))
+					elseif player:GetSubfaith() == "Voltism" then
 						if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
 							if !Clockwork.player:HasFlags(player, "T") then
 								player:EmitSound(voltistSounds[math.random(1, #voltistSounds)], 90, 150);
@@ -2380,6 +2408,7 @@ local COMMAND = Clockwork.command:New("RemoveItemsRadius");
 	COMMAND.access = "s";
 	COMMAND.alias = {"ClearItemsRadius", "RemoveItemsInRadius"};
 	COMMAND.arguments = 1;
+	COMMAND.types = {"Radius"}
 	
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
@@ -2689,7 +2718,8 @@ local COMMAND = Clockwork.command:New("RemoveNPCSpawn")
 	COMMAND.tip = "Remove an npc spawn location at your cursor."
 	COMMAND.access = "s"
 	COMMAND.optionalArguments = 1;
-	COMMAND.text = "[int Distance]"
+	COMMAND.text = "[int Radius]"
+	COMMAND.types = {"Radius"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)

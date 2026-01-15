@@ -211,8 +211,18 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 				end
 			end
 			
-			if itemTable.useSound and !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
-				player:EmitSound(itemTable.useSound);
+			if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
+				local useSound = itemTable.useSound;
+				
+				if (useSound) then
+					if (type(useSound) == "table") then
+						player:EmitSound(useSound[math.random(1, #useSound)]);
+					else
+						player:EmitSound(useSound);
+					end;
+				elseif (useSound != false) then
+					player:EmitSound("begotten/items/first_aid.wav");
+				end;
 			end
 
 			if (itemTable("healAmount") and itemTable("healDelay") and itemTable("healRepetition")) then
@@ -427,11 +437,19 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 					end
 				end
 				
-				if itemTable.useSound and !target:IsNoClipping() and (!target.GetCharmEquipped or !target:GetCharmEquipped("urn_silence")) then
-					target:EmitSound(itemTable.useSound);
+				if !target:IsNoClipping() and (!target.GetCharmEquipped or !target:GetCharmEquipped("urn_silence")) then
+					local useSound = itemTable.useSound;
+					
+					if (useSound) then
+						if (type(useSound) == "table") then
+							target:EmitSound(useSound[math.random(1, #useSound)]);
+						else
+							target:EmitSound(useSound);
+						end;
+					elseif (useSound != false) then
+						target:EmitSound("begotten/items/first_aid.wav");
+					end;
 				end
-				
-				player:TakeItem(itemTable, true);
 				
 				if itemTable.canSave then
 					if (actionTarget == "die") then
@@ -667,8 +685,18 @@ function cwMedicalSystem:PerformSurgeryOnPlayer(player, target, itemTable, hitGr
 				end
 				
 				if target:IsRagdolled() then		
-					--[[if itemTable.useSound and !target:IsNoClipping() and (!target.GetCharmEquipped or !target:GetCharmEquipped("urn_silence")) then
-						target:EmitSound(itemTable.useSound);
+					--[[if !target:IsNoClipping() and (!target.GetCharmEquipped or !target:GetCharmEquipped("urn_silence")) then
+						local useSound = itemTable.useSound;
+						
+						if (useSound) then
+							if (type(useSound) == "table") then
+								target:EmitSound(useSound[math.random(1, #useSound)]);
+							else
+								target:EmitSound(useSound);
+							end;
+						elseif (useSound != false) then
+							target:EmitSound("begotten/items/first_aid.wav");
+						end;
 					end]]--
 					
 					if target.surgeryStage >= #injury_surgery_table.surgeryInfo then
@@ -883,8 +911,6 @@ function cwMedicalSystem:PlayerUseUnknownItemFunction(player, itemTable, itemFun
 					else
 						Schema:EasyText(player, "firebrick", "This character is too far away!");
 					end;
-				else
-					printp("Fucked!");
 				end;
 			end
 		else
@@ -1344,7 +1370,7 @@ function playerMeta:InfectOtherPlayer(otherPlayer, diseases, chance)
 end
 
 -- Function to give a disease.
-function playerMeta:GiveDisease(uniqueID, stage)
+function playerMeta:GiveDisease(uniqueID, stage, bBypassImmunity)
 	if cwBeliefs and self:HasBelief("the_paradox_riddle_equation") then
 		return false;
 	end
@@ -1365,6 +1391,12 @@ function playerMeta:GiveDisease(uniqueID, stage)
 		end
 		
 		if !has_disease then
+			local immunitiesTable = self:GetCharacterData("diseaseImmunities");
+			
+			if !bBypassImmunity and immunitiesTable and immunitiesTable[uniqueID] and immunitiesTable[uniqueID] >= self:CharPlayTime() then
+				return false;
+			end
+		
 			local diseaseData = {};
 			local diseaseSharedVar = self:GetNetVar("diseases", {});
 			
@@ -1393,7 +1425,7 @@ function playerMeta:GiveDisease(uniqueID, stage)
 	return false;
 end
 
-function playerMeta:TakeDisease(uniqueID)
+function playerMeta:TakeDisease(uniqueID, bMakeImmune)
 	local diseaseTable = cwMedicalSystem:FindDiseaseByID(uniqueID);
 	
 	if diseaseTable then
@@ -1415,6 +1447,14 @@ function playerMeta:TakeDisease(uniqueID)
 						table.remove(diseaseSharedVar, j);
 						break;
 					end
+				end
+				
+				if bMakeImmune then
+					local immunitiesTable = self:GetCharacterData("diseaseImmunities", {});
+				
+					immunitiesTable[uniqueID] = self:CharPlayTime() + 7200;
+					
+					self:SetCharacterData("diseaseImmunities", immunitiesTable);
 				end
 				
 				self:SetCharacterData("diseases", diseases);
@@ -1569,16 +1609,131 @@ function playerMeta:NetworkDiseases()
 	end
 end
 
--- COMMENT THIS OUT WHEN NOT TESTING, THIS RESETS INJURIES
-for _, v in _player.Iterator() do
-	if (!v:IsBot()) then
-		--v:Freeze(false)
-	else
-		v:Freeze(true)
-	end;
+function playerMeta:Vomit(bVomitBlood, bFromFood)
+	local contagious_diseases = {};
 	
-	--cwMedicalSystem:SetupPlayer(v)
-end;
+	for i, disease in ipairs(self:GetCharacterData("diseases", {})) do
+		local diseaseID = disease.uniqueID;
+		local diseaseTable = cwMedicalSystem:FindDiseaseByID(diseaseID);
+		
+		if diseaseTable and diseaseTable.contagious then
+			table.insert(contagious_diseases, diseaseID);
+		end
+	end
+	
+	local selfPos = self:GetPos();
+	local boneIndex = self:LookupBone("ValveBiped.Bip01_Head1");
+	local headPos, boneAng = self:GetBonePosition(boneIndex);
+	
+	if !bVomitBlood then
+		local strings = {"suddenly throws up on the ground, hurling vomit everywhere!", "vomits onto the ground!", "gags and then vomits all over the ground!"};
+		
+		if cwCharacterNeeds and self.HandleNeed then
+			if bFromFood then
+				self:HandleNeed("hunger", 25);
+				self:HandleNeed("thirst", 25);
+			else
+				self:HandleNeed("hunger", 5);
+				self:HandleNeed("thirst", 5);
+			end
+		end
+		
+		local health = self:Health();
+		local healthToTake = 5;
+		
+		if bFromFood then
+			healthToTake = 15;
+		end
+		
+		if health > healthToTake then
+			self:SetHealth(math.max(1, health - healthToTake));
+			
+			Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, self:Name().." has taken "..health - self:Health().." damage from vomiting, leaving them at "..self:Health().." health!");
+		else
+			timer.Simple(2, function()
+				if IsValid(self) then
+					self:DeathCauseOverride("Drowned in their own vomit.");
+					self:Kill();
+					
+					Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, self:Name().." has died from vomiting!");
+				end
+			end);
+		end
+		
+		if self:IsFrozen() then
+			self.shouldUnfreeze = false;
+		else
+			self:Freeze(true);
+		end
+
+		self:EmitSound("misc/splat.ogg", 60, math.random(80, 95));
+		--ParticleEffect("vomit_barnacle", headPos + (self:GetForward() * 8) - Vector(0, 0, 1), Angle(90, 0, 0), self);
+		--ParticleEffect("vomit_barnacle_b", headPos + (self:GetForward() * 8) - Vector(0, 0, 1), Angle(90, 0, 0), self);
+		ParticleEffect("blood_advisor_shrapnel_spray_2", headPos + (self:GetForward() * 8) - Vector(0, 0, 1), self:EyeAngles(), self);
+		util.Decal("BeerSplash", selfPos - Vector(0, 0, 2), selfPos + Vector(0, 0, 2));
+		
+		timer.Simple(3, function()
+			if IsValid(self) then
+				if self.shouldUnfreeze ~= false then
+					self:Freeze(false);
+				else
+					self.shouldUnfreeze = nil;
+				end
+				
+				if self:Alive() then
+					local curse_strings = {"Fuck...", "Cocksucker...", "Shit...", "Fuck's sake...", "Gah..."};
+					
+					Clockwork.chatBox:Add(self, nil, "itnofake", curse_strings[math.random(1, #curse_strings)]);
+				end
+			end
+		end);
+		
+		if #contagious_diseases > 0 then
+			for k, v in pairs (ents.FindInSphere(self:GetPos(), 128)) do
+				if (v:IsPlayer() and not v.cwObserverMode) then
+					self:InfectOtherPlayer(v, contagious_diseases, 80);
+				end;
+			end;
+		end;
+		
+		Clockwork.chatBox:AddInTargetRadius(self, "me", strings[math.random(1, #strings)], self:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+	else
+		local strings = {"suddenly throws blood up on the ground!", "vomits blood onto the ground!", "gags and then vomits blood all over the ground!"};
+		
+		if cwCharacterNeeds and self.HandleNeed then
+			self:HandleNeed("hunger", 5);
+			self:HandleNeed("thirst", 5);
+		end
+		
+		self:ModifyBloodLevel(-25);
+		self:Freeze(true);
+		self:EmitSound("misc/splat.ogg", 60, math.random(80, 95));
+		ParticleEffect("blood_advisor_puncture_withdraw", headPos + (self:GetForward() * 8) - Vector(0, 0, 1), Angle(180, 0, 0), self);
+		util.Decal("BloodLarge", selfPos - Vector(0, 0, 2), selfPos + Vector(0, 0, 2));
+		
+		timer.Simple(3, function()
+			if IsValid(self) then
+				self:Freeze(false);
+				
+				if self:Alive() then
+					local curse_strings = {"Fuck...", "Cocksucker...", "Shit...", "Fuck's sake...", "Gah..."};
+					
+					Clockwork.chatBox:Add(self, nil, "itnofake", curse_strings[math.random(1, #curse_strings)]);
+				end
+			end
+		end);
+		
+		if #contagious_diseases > 0 then
+			for k, v in pairs (ents.FindInSphere(self:GetPos(), 128)) do
+				if (v:IsPlayer() and not v.cwObserverMode) then
+					self:InfectOtherPlayer(v, contagious_diseases, 80);
+				end;
+			end;
+		end;
+		
+		Clockwork.chatBox:AddInTargetRadius(self, "me", strings[math.random(1, #strings)], self:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+	end
+end
 
 -- A function to flatten a player's injury table and encode it for networking.
 function cwMedicalSystem:FlattenInjuries(player)

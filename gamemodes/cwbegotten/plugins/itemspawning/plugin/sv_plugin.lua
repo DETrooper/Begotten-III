@@ -15,7 +15,7 @@ config.Add("loot_spawner_enabled", true); -- Whether or not the loot spawner is 
 
 cwItemSpawner.MaxSuperCrates = 1;
 cwItemSpawner.SuperCrateCooldown = {min = 5400, max = 10800}; -- 1.5-3 Hours.
-cwItemSpawner.SuperCrateNumItems = {min = 15, max = 25};
+cwItemSpawner.SuperCrateNumItems = {min = 14, max = 18};
 cwItemSpawner.ItemsSpawned = cwItemSpawner.ItemsSpawned or {};
 cwItemSpawner.ContainerLocations = cwItemSpawner.ContainerLocations or {};
 cwItemSpawner.SpawnLocations = cwItemSpawner.SpawnLocations or {};
@@ -31,13 +31,12 @@ cwItemSpawner.LocationsToCategories = {
 
 -- A function to select a random item to spawn.
 function cwItemSpawner:SelectItem(location, bIsSupercrate, bIsContainer)
-	local spawnable = self:GetSpawnableItems(true);
+	local spawnable = self:GetSpawnableItems();
 	local itemPool = {};
 	local uniqueID = nil;
+	local fullWeight = 0;
 	
-	for i = 1, #spawnable do
-		local itemTable = spawnable[i];
-		
+	for _, itemTable in ipairs(spawnable) do
 		if itemTable.itemSpawnerInfo and !itemTable.isBaseItem then
 			local rarity = itemTable.itemSpawnerInfo.rarity;
 			
@@ -66,7 +65,7 @@ function cwItemSpawner:SelectItem(location, bIsSupercrate, bIsContainer)
 						continue;
 					end
 					
-					rarity = math.Round(rarity * 0.25);
+					--rarity = math.Round(rarity * 0.25);
 				end
 			end
 			
@@ -76,36 +75,46 @@ function cwItemSpawner:SelectItem(location, bIsSupercrate, bIsContainer)
 				end
 			end
 			
-			if math.random(1, rarity) == 1 then
-				table.insert(itemPool, itemTable);
-			end;
+			local weight = 1 / math.max(rarity, 1)
+			fullWeight = fullWeight + weight
+			
+			table.insert(itemPool, itemTable)
+
 		end
 	end;
 	
-	if (#itemPool > 0) then
-		uniqueID = itemPool[math.random(1, #itemPool)].uniqueID;
-	else
-		--uniqueID = spawnable[math.random(1, #spawnable)].uniqueID;
-	end;
+	if fullWeight == 0 or #itemPool == 0 then
+		return nil
+	end
 
-	return uniqueID;
+	local rand = math.random() * fullWeight
+	local spinthewheel = 0
+
+	for _, item in ipairs(itemPool) do
+		spinthewheel = spinthewheel + (1 / math.max(item.itemSpawnerInfo.rarity, 1))
+		if rand <= spinthewheel then
+			return item.uniqueID
+		end
+	end
+
+	return nil;
 end;
 
+local spawnable_items_cache = {};
+
 -- A function to get all spawnable items in the game.
-function cwItemSpawner:GetSpawnableItems(sequential)
-	local items = {};
-	
-	for k, v in pairs (Clockwork.item:GetAll()) do
+function cwItemSpawner:GetSpawnableItems()
+	if #spawnable_items_cache > 0 then
+		return spawnable_items_cache;
+	end
+
+	for k, v in pairs(Clockwork.item:GetAll()) do
 		if v.itemSpawnerInfo then
-			if (!sequential) then
-				items[k] = v;
-			else
-				items[#items + 1] = v;
-			end;
+			spawnable_items_cache[#spawnable_items_cache + 1] = v;
 		end;
 	end;
 	
-	return items;
+	return spawnable_items_cache;
 end;
 
 -- A function to get whether a position is clear of players and other items.
@@ -440,28 +449,30 @@ function cwItemSpawner:SetupContainers()
 						local itemIncrease = (container.cwLockTier or 0) * 2
 						
 						for i = 1, math.random(3 + itemIncrease, 6 + itemIncrease) do
-							local randomItem = self:SelectItem(k, false, true);
-							
-							if randomItem then
-								local itemInstance = item.CreateInstance(randomItem);
+							if i > 1 and math.random() < 0.666 then -- 1/3 chance to not spawn an item after the first item
+								local randomItem = self:SelectItem(k, false, true);
 								
-								if itemInstance then
-									local category = itemInstance.category;
+								if randomItem then
+									local itemInstance = item.CreateInstance(randomItem);
 									
-									if category == "Helms" or category == "Armor" or category == "Melee" or category == "Crafting Materials" then
-										-- 75% chance for these items to spawn with less than 100% condition.
-										if math.random(1, 4) ~= 1 then
-											itemInstance:SetCondition(math.random(15, 99), true);
+									if itemInstance then
+										local category = itemInstance.category;
+										
+										if category == "Helms" or category == "Armor" or category == "Melee" or category == "Crafting Materials" then
+											-- 75% chance for these items to spawn with less than 100% condition.
+											if math.random(1, 4) ~= 1 then
+												itemInstance:SetCondition(math.random(15, 99), true);
+											end
+										elseif itemInstance.category == "Shot" and itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
+											itemInstance:SetAmmoMagazine(math.random(1, itemInstance.ammoMagazineSize));
 										end
-									elseif itemInstance.category == "Shot" and itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
-										itemInstance:SetAmmoMagazine(math.random(1, itemInstance.ammoMagazineSize));
-									end
-									
-									if itemInstance:GetData("freezing") then
-										itemInstance:SetData("freezing", 100);
-									end
-									
-									Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
+										
+										if itemInstance:GetData("freezing") then
+											itemInstance:SetData("freezing", 100);
+										end
+										
+										Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
+									end;
 								end
 							end
 						end

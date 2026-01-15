@@ -79,8 +79,12 @@ function playerMeta:HandleXP(amount, bIgnoreModifiers)
 			if cwCharacterNeeds then
 				local corruption = self:GetNeed("corruption");
 				
-				if corruption > 50 then
+				--[[if corruption > 50 then
 					newAmount = math.Round(newAmount / ((corruption * 0.01) * 2));
+				end]]--
+				
+				if corruption > 0 then
+					newAmount = math.Round(Lerp(corruption * 0.01, newAmount, 0));
 				end
 			end
 		end

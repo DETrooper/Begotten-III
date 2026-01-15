@@ -554,18 +554,35 @@ if (SERVER) then
 			amount = amount * scale;
 		end;
 		
+		-- This is a bit redundant so should be fixed later.
+		if self.attributes and table.HasValue(self.attributes, "conditionless") then
+			return;
+		end
+		
 		local condition = self:GetCondition();
+		local newCondition = math.Clamp(condition + -math.abs(amount), 0, 100);
 		
-		self:SetData("condition", math.Clamp(condition + -math.abs(amount), 0, 100));
-		
-		condition = self:GetData("condition");
-		
-		if (condition <= 0 and self.breakable) then
+		self:SetData("condition", newCondition);
+
+		if (newCondition <= 0 and self.breakable) then
 			self:Break()
+		elseif self.OnConditionLoss then
+			self:OnConditionLoss(condition, newCondition)
 		end;
 		
 		self:UpdateValue()
 	end;
+	
+	-- A function to take from an item's condition, accounting for player modifiers.
+	function CLASS_TABLE:TakeConditionByPlayer(player, amount, force)
+		local info = {};
+		
+		info.amount = amount;
+	
+		hook.Run("ModifyPlayerItemConditionLoss", player, info);
+	
+		self:TakeCondition(info.amount or amount, force);
+	end
 	
 	-- A function to add to an item's condition.
 	function CLASS_TABLE:GiveCondition(amount, force)
@@ -964,12 +981,6 @@ function item.CreateInstance(uniqueID, itemID, data, bNoGenerate)
 		end;
 		
 		--print("Item ID: "..itemID);
-		
-		--[[if (!item.instances[itemID]) then
-			item.instances[itemID] = table.Copy(itemTable);
-				item.instances[itemID].itemID = itemID;
-			setmetatable(item.instances[itemID], CLASS_TABLE);
-		end;]]--
 	
 		item.instances[itemID] = table.Copy(itemTable);
 			item.instances[itemID].itemID = itemID;

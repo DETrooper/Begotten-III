@@ -187,12 +187,13 @@ local COMMAND = Clockwork.command:New("StopSoundRadius");
 	COMMAND.optionalArguments = 1;
 	COMMAND.access = "s";
 	COMMAND.text = "[int Radius]";
+	COMMAND.types = {"Radius"}
 
 	-- Called when the command has been run.
 	function COMMAND:OnRun(player, arguments)
 		local players = {};
 		
-		for k, v in pairs (ents.FindInSphere(player:GetPos(), arguments[1] or 512)) do
+		for k, v in pairs (ents.FindInSphere(player:GetEyeTrace().HitPos, arguments[1] or 512)) do
 			if (v:IsPlayer()) then
 				players[#players + 1] = v;
 			end;

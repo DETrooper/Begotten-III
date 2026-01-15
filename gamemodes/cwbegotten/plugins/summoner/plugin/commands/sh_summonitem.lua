@@ -4,6 +4,7 @@ local COMMAND = Clockwork.command:New("SummonItem");
 COMMAND.tip = "Spawn an item where you are looking.";
 COMMAND.text = "<string Item>";
 COMMAND.access = "s";
+COMMAND.types = {"SpawnItem"}
 COMMAND.arguments = 1;
 
 -- Called when the command has been run.

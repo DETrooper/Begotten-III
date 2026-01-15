@@ -14,7 +14,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	
 	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 1200, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth"}};
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("backpack_base");
@@ -33,7 +33,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	
 	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 2500, bNoSupercrate = true};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth"}};
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("backpack_base");
@@ -52,7 +52,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	
 	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 3500};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth"}};
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("backpack_base");
@@ -71,7 +71,7 @@ local ITEM = Clockwork.item:New("backpack_base");
 	
 	ITEM.itemSpawnerInfo = {category = "Armor", rarity = 7500};
 	ITEM.components = {breakdownType = "breakdown", items = {"cloth", "cloth", "cloth", "cloth", "cloth", "leather", "leather"}};
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("backpack_base");

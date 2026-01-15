@@ -12,7 +12,7 @@ if (CLIENT) then
 	SWEP.SlotPos = 5;
 	SWEP.DrawAmmo = false;
 	SWEP.PrintName = "Senses";
-	SWEP.DrawCrosshair = true;
+	SWEP.DrawCrosshair = false;
 end
 
 SWEP.Instructions = "Primary Fire: Toggle";

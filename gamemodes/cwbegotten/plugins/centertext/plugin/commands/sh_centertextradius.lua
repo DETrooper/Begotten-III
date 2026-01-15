@@ -10,6 +10,7 @@ COMMAND.tip = "Show targets in a radius a center text.";
 COMMAND.text = "[int Radius] <string Text>";
 COMMAND.access = "a";
 COMMAND.arguments = 2;
+COMMAND.types = {"Radius"}
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)

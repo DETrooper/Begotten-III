@@ -54,6 +54,14 @@ function cwStamina:GetMaxStaminaPlugin(player)
 			end
 		end
 		
+		if cwMedicalSystem then
+			local symptoms = player:GetNetVar("symptoms", {});
+			
+			if table.HasValue(symptoms, "Fatigue") then
+				max_stamina = max_stamina - 20;
+			end
+		end
+		
 		if Schema.RanksToBuffs[faction] then
 			local rankName = Schema.Ranks[faction][player:GetCharacterData("rank", 1)];
 			

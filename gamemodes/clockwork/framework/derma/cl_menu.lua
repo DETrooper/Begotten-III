@@ -84,7 +84,11 @@ function PANEL:Rebuild(change)
 					local parent = panel:GetParent();
 
 					if parent and parent.itemData and parent.itemTable then
-						Clockwork.inventory:InventoryAction("drop", parent.itemTable.uniqueID, parent.itemTable.itemID);
+						if Clockwork.Client:GetItemEquipped(parent.itemTable) then
+							netstream.Start("UnequipItem", {parent.itemTable("uniqueID"), parent.itemTable("itemID"), "drop"});
+						else
+							Clockwork.inventory:InventoryAction("drop", parent.itemTable.uniqueID, parent.itemTable.itemID);
+						end
 					end
 				end
 			end

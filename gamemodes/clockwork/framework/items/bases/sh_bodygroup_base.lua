@@ -5,7 +5,7 @@
 	Other credits: kurozael, Alex Grist, Mr. Meow, zigbomb
 --]]
 
-local head_suffixes = {"_glaze", "_gore", "_satanist", "_wanderer", "_hill"};
+local head_suffixes = {"_glaze", "_gore", "_satanist", "_wanderer", "_hill", "_preludegore", "_kinggore"};
 
 local ITEM = Clockwork.item:New(nil, true)
 	ITEM.name = "Bodygroup Base"
@@ -15,12 +15,6 @@ local ITEM = Clockwork.item:New(nil, true)
 	ITEM.useText = "Wear"
 	ITEM.category = "Clothing"
 	ITEM.description = "Default Bodygroup Clothing Item."
-	ITEM.excludeFactions = {};
-	ITEM.requireFaction = {};
-	ITEM.requireRank = {};
-	ITEM.requireFaith = {};
-	ITEM.requireSubfaction = {};
-	ITEM.excludeSubfactions = {};
 	ITEM.bodyGroup = -1
 	ITEM.bodyGroupVal = -1
 	ITEM.repairItem = "armor_repair_kit";
@@ -124,66 +118,113 @@ local ITEM = Clockwork.item:New(nil, true)
 	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
+		if (self:HasPlayerEquipped(player)) then
+			if !player.spawning then
+				Schema:EasyText(player, "peru", "You cannot equip an item you're already using.")
+			end
+			
+			return false
+		end
+		
 		local clothesItem = player:GetClothesEquipped();
 		local helmetItem = player:GetHelmetEquipped();
-		local faction = player:GetFaction();
-		local subfaction = player:GetSubfaction();
-		local kinisgerOverride = player:GetNetVar("kinisgerOverride");
-		local kinisgerOverrideSubfaction = player:GetNetVar("kinisgerOverrideSubfaction");
 		
-		if cwPowerArmor and player:IsWearingPowerArmor() then
-			Schema:EasyText(player, "peru", "You cannot wear this while in power armor!");
-			return false;
-		end
-		
-		if self:IsBroken() then
-			Schema:EasyText(player, "peru", "This helmet is broken and cannot be used!");
-			return false;
-		end
-		
-		if (table.HasValue(self.excludeFactions, kinisgerOverride or faction)) then
-			Schema:EasyText(player, "peru", "You are not the correct faction to wear this!")
-			return false
-		end
-		
-		if (table.HasValue(self.excludeSubfactions, kinisgerOverrideSubfaction or subfaction)) then
-			Schema:EasyText(player, "peru", "Your subfaction cannot wear this!")
-			return false
-		end
-		
-		if #self.requireFaith > 0 then
-			if (!table.HasValue(self.requireFaith, player:GetFaith())) then
-				Schema:EasyText(player, "chocolate", "You are not the correct faith for this item!")
-				return false
-			end
-		end
-		
-		if #self.requireFaction > 0 then
-			if (!table.HasValue(self.requireFaction, faction) and (!kinisgerOverride or !table.HasValue(self.requireFaction, kinisgerOverride))) then
-				Schema:EasyText(player, "peru", "You are not the correct faction to wear this!")
-				return false
-			end
-		end
-		
-		if #self.requireSubfaction > 0 then
-			if (!table.HasValue(self.requireSubfaction, subfaction) and (!kinisgerOverrideSubfaction or !table.HasValue(self.requireSubfaction, kinisgerOverrideSubfaction))) then
-				Schema:EasyText(player, "peru", "You are not the correct subfaction to wear this!")
-				
-				return false
-			end
-		end
-		
-		if #self.requireRank > 0 then
-			local rank = player:GetCharacterData("rank", 1);
+		if !Clockwork.player:HasFlags(player, "S") then
+			local faction = player:GetFaction();
+			local subfaction = player:GetSubfaction();
+			local kinisgerOverride = player:GetNetVar("kinisgerOverride");
+			local kinisgerOverrideSubfaction = player:GetNetVar("kinisgerOverrideSubfaction");
 			
-			if Schema.Ranks[faction] then
-				local rankString = Schema.Ranks[faction][rank];
-				
-				if rankString then
-					if (!table.HasValue(self.requireRank, rankString)) then
-						Schema:EasyText(player, "peru", "You are not the correct rank to wear this!")
+			if cwPowerArmor and player:IsWearingPowerArmor() then
+				Schema:EasyText(player, "peru", "You cannot wear this while in power armor!");
+				return false;
+			end
+			
+			if self:IsBroken() then
+				Schema:EasyText(player, "peru", "This helmet is broken and cannot be used!");
+				return false;
+			end
+			
+			if self.excludedFactions and #self.excludedFactions > 0 then
+				if (table.HasValue(self.excludedFactions, kinisgerOverride or faction)) then
+					if !self.includedSubfactions or #self.includedSubfactions < 1 or !table.HasValue(self.includedSubfactions, kinisgerOverrideSubfaction or subfaction) then
+						if !player.spawning then
+							Schema:EasyText(player, "chocolate", "You are not the correct faction to equip this helmet!")
+						end
 						
-						return false;
+						return false
+					end
+				end
+			end
+			
+			if self.excludedSubfactions and #self.excludedSubfactions > 0 then
+				if (table.HasValue(self.excludedSubfactions, kinisgerOverrideSubfaction or subfaction)) then
+					if !player.spawning then
+						Schema:EasyText(player, "chocolate", "You are not the correct subfaction to equip this helmet!")
+					end
+					
+					return false
+				end
+			end
+			
+			if self.requiredFaiths and #self.requiredFaiths > 0 then
+				if (!table.HasValue(self.requiredFaiths, player:GetFaith())) then
+					if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+						if !player.spawning then
+							Schema:EasyText(player, "chocolate", "You are not the correct faith to equip this helmet!")
+						end
+						
+						return false
+					end
+				end
+			end
+			
+			if self.requiredSubfaiths and #self.requiredSubfaiths > 0 then
+				if (!table.HasValue(self.requiredSubfaiths, player:GetSubfaith())) then
+					if !self.kinisgerOverride or self.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
+						if !player.spawning then
+							Schema:EasyText(player, "chocolate", "You are not the correct subfaith to equip this helmet!")
+						end
+						
+						return false
+					end
+				end
+			end
+			
+			if self.requiredFactions and #self.requiredFactions > 0 then
+				if (!table.HasValue(self.requiredFactions, faction) and (!kinisgerOverride or !table.HasValue(self.requiredFactions, kinisgerOverride))) then
+					if !player.spawning then
+						Schema:EasyText(player, "chocolate", "You are not the correct faction to equip this helmet!")
+					end
+					
+					return false
+				end
+			end
+			
+			if self.requiredSubfactions and #self.requiredSubfactions > 0 then
+				if (!table.HasValue(self.requiredSubfactions, subfaction) and (!kinisgerOverrideSubfaction or !table.HasValue(self.requiredSubfactions, kinisgerOverrideSubfaction))) then
+					if !player.spawning then
+						Schema:EasyText(player, "peru", "You are not the correct subfaction to equip this helmet!")
+					end
+					
+					return false
+				end
+			end
+			
+			if self.requiredRanks and #self.requiredRanks > 0 then
+				local rank = player:GetCharacterData("rank", 1);
+				
+				if Schema.Ranks[faction] then
+					local rankString = Schema.Ranks[faction][rank];
+					
+					if rankString then
+						if (!table.HasValue(self.requiredRanks, rankString)) then
+							if !player.spawning then
+								Schema:EasyText(player, "peru", "You are not the correct rank to wear this!")
+							
+								return false;
+							end
+						end
 					end
 				end
 			end

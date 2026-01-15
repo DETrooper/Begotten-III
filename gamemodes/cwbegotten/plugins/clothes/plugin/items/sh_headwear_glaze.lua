@@ -9,7 +9,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 4
 	ITEM.headSuffix = "_glaze";
 	ITEM.description = "An iron helmet mass-produced in an ancient era, now commonly used by the Holy Order of the Gatekeepers."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/gatekeeperhelmet";
 	ITEM.faction = "Gatekeeper";
@@ -121,7 +121,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 8
 	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "A rusty iron helmet that was famous in its time as the symbol of Lord Maximus' conquests, and perhaps even in times before that. Its sloping surfaces provide excellent protection by deflecting blows."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
@@ -153,7 +153,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.category = "Helms"
 	ITEM.headReplacement = "models/begotten/heads/crudeplate_helmet.mdl";
 	ITEM.description = "A crudely constructed steel helmet, its design obviously inspired by older Empire of Light designs."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/crudeplatehelmet";
 	ITEM.requiredbeliefs = {"hauberk"};
@@ -191,7 +191,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 1
 	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "A ragged hood commonly worn by those who inhabit the Wasteland to protect themselves from the elements."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 300, bNoSupercrate = true};	
 	ITEM.conditionScale = 2 -- item degrades 2x faster with damage related condition loss
@@ -225,7 +225,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 2
 	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "A ragged hood and bandana commonly worn by those who inhabit the Wasteland to protect themselves from the elements."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 800, bNoSupercrate = true};
 	ITEM.conditionScale = 2 -- item degrades 2x faster with damage related condition loss
@@ -288,7 +288,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 1
 	ITEM.headSuffix = "_glaze";
 	ITEM.description = "A tall leather watchtower hat embroidered with the markings of the Second Inquisition."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	ITEM.itemSpawnerInfo = {category = "Helms", rarity = 350, bNoSupercrate = true};
 	
@@ -308,7 +308,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 2
 	ITEM.headSuffix = "_glaze";
 	ITEM.description = "A slouch hat used by some members of the Holy Order of the Glaze's Inquisitors."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	
 	ITEM.insulation = 20;
@@ -327,7 +327,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 6
 	ITEM.headSuffix = "_glaze";
 	ITEM.description = "A slouch hat used by some members of the Holy Order of the Glaze's Inquisitors."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	
 	ITEM.insulation = 20;
@@ -346,7 +346,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 8
 	ITEM.headSuffix = "_glaze";
 	ITEM.description = "A slouch hat used by some members of the Holy Order of the Glaze's Inquisitors."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	
 	ITEM.insulation = 20;
@@ -365,7 +365,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 3
 	ITEM.headSuffix = "_glaze";
 	ITEM.description = "An ornate watchtower hat used by distinguished members of the Holy Order of the Glaze's Inquisitors."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	
 	ITEM.insulation = 20;
@@ -384,7 +384,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 7
 	ITEM.headSuffix = "_glaze";
 	ITEM.description = "An ornate watchtower hat used by distinguished members of the Holy Order of the Glaze's Inquisitors."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	
 	ITEM.insulation = 20;
@@ -403,7 +403,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 9
 	ITEM.headSuffix = "_glaze";
 	ITEM.description = "An ornate watchtower hat used by distinguished members of the Holy Order of the Glaze's Inquisitors."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	
 	ITEM.insulation = 20;
@@ -422,7 +422,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 6
 	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "A makeshift helmet made of various scrap found from the Wasteland."
-	ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
+	ITEM.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/scraphelmet";
 	
@@ -458,7 +458,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 3
 	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "A leather hood used in past times as a coif by Knights of Sol, but now more commonly used by Wanderers."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "npc/combine_soldier/zipline_clothing2.wav";
 	
 	ITEM.conditionScale = 1.1 -- item degrades 1.5x faster with damage related condition loss
@@ -492,7 +492,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 4
 	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "A chainmail coif that provides some protection to the sides of the face."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 
 	ITEM.conditionScale = 1 -- item degrades 1x faster with damage related condition loss
@@ -527,7 +527,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 5
 	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "An iron helmet atop a mail coif. It provides good protection except for the face."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 
 	ITEM.conditionScale = 0.75 -- item degrades 0.5x faster with damage related condition loss
@@ -561,7 +561,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 7
 	ITEM.headSuffix = "_wanderer";
 	ITEM.description = "A reinforced steel helmet with a nose guard, noted for its ease of production relative to its effectiveness."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 
 	ITEM.conditionScale = 0.75 -- item degrades 0.5x faster with damage related condition loss
@@ -596,7 +596,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 5
 	ITEM.headSuffix = "_glaze";
 	ITEM.description = "A more robust variant of the Gatekeeper Helmet made with fine steel."
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/gatekeeperhelmet";
 	ITEM.faction = "Gatekeeper";
@@ -634,12 +634,13 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroupVal = 10
 	ITEM.headSuffix = "_glaze";
 	ITEM.description = "An expertly crafted maximilian steel helmet. It is adorned with a glorious plume which denotes rank and status among the Gatekeeper Legion. Catalysts prevent anyone who opposes the Light to wear this."
-	ITEM.requireFaith = {"Faith of the Light"};
-	ITEM.excludeFactions = {"Goreic Warrior"};
+	ITEM.requiredFaiths = {"Faith of the Light"};
+	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/gatekeeperhelmet";
 	ITEM.faction = "Gatekeeper";
 	ITEM.requiredbeliefs = {"hauberk"};
+	ITEM.kinisgerOverride = true;
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 	ITEM.repairCostModifier = 0.5;
@@ -672,7 +673,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.category = "Helms"
 	ITEM.headReplacement = "models/begotten/heads/knight_helmet.mdl";
 	ITEM.description = "A Gothic helmet for use with the rest of a Knight's armor."
-	ITEM.requireFaction = {"Holy Hierarchy"};
+	ITEM.requiredFactions = {"Holy Hierarchy"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/knighthelmet";
 	ITEM.requiredbeliefs = {"hauberk"};
@@ -707,7 +708,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.category = "Helms"
 	ITEM.headReplacement = "models/begotten/heads/knight_justicar_helmet.mdl";
 	ITEM.description = "Elite blackened steel adorned with the colors of a noble household."
-	ITEM.requireFaction = {"Holy Hierarchy"};
+	ITEM.requiredFactions = {"Holy Hierarchy"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/knighthelmet";
 	ITEM.requiredbeliefs = {"hauberk"};
@@ -741,7 +742,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.category = "Helms"
 	ITEM.headReplacement = "models/begotten/heads/scraphead.mdl";
 	ITEM.description = "A burdensome scrap metal contraption to be fitted uncomfortably around one's skull. It has been painted with sigils supposedly meant to instill the wearer with power."
-	ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
+	ITEM.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/machinistplatehelmet";
 	ITEM.requiredbeliefs = {"hauberk"};
@@ -775,7 +776,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.category = "Helms"
 	ITEM.headReplacement = "models/begotten/heads/scrapface.mdl";
 	ITEM.description = "A bolted rusty steel plate helm and gasmask cowled under a leather hood. An exhaust pipe feeds the holy fumes of diesel into the wearer's lungs."
-	ITEM.excludeSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
+	ITEM.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Crast", "Clan Grock"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/smogpriesthelmet";
 	ITEM.requiredbeliefs = {"hauberk"};
@@ -799,4 +800,40 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.insulation = 50;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "leather", "cloth", "scrap", "scrap", "scrap"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Wastelord Helm"
+	ITEM.uniqueID = "wastelord_helm"
+	ITEM.model = "models/begottenprelude/goose/greathelmprop.mdl"
+	ITEM.iconoverride = "begotten/ui/itemicons/greathelmprop.png"
+	ITEM.weight = 1.5
+	ITEM.category = "Helms"
+	ITEM.headReplacement = "models/begotten/heads/greathelm_head.mdl";
+	ITEM.description = "An exquisitely smithed helmet, its design dating back further than the oldest records of the Glaze. Worn exclusively by powerful wanderers, this helmet is unable to be worn by factions. Fear he, who hath become Lord of the Wastes."
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/new/knighthelmet";
+	ITEM.requiredbeliefs = {"hauberk"};
+	ITEM.requiredFactions = {"Wanderer"};
+	ITEM.attributes = {"wastelord", "fear"};
+
+	ITEM.conditionScale = 0.65
+	ITEM.repairCostModifier = 0.5;
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 72
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.80; -- reduces blunt damage by 20%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
+	ITEM.stabilityScale = 0.65; -- reduces stability damage by 35%
+	ITEM.insulation = 40;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "steel_chunks"}};
 ITEM:Register();

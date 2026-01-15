@@ -12,7 +12,6 @@ local ITEM = item.New(nil, true);
 	ITEM.category = "Shot"
 	ITEM.roundsText = "Bullets"
 	ITEM:AddData("Rounds", 1, true) -- default to 1 round
-	ITEM.equippable = false; -- this blocks equipping the item as a melee weapon.
 	ITEM.ammoMagazineSize = nil;
 	ITEM.requiredReloadBelief = nil;
 	
@@ -79,6 +78,10 @@ local ITEM = item.New(nil, true);
 			
 			if player.holyPowderkegActive then
 				consumeTime = math.Round(consumeTime * 0.33);
+			end
+			
+			if player:GetCharmEquipped("bandolier") then
+				consumeTime = math.Round(consumeTime * 0.85);
 			end
 
 			consumeTime = math.max(consumeTime, 0.1)

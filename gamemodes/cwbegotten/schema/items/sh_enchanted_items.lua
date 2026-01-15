@@ -80,7 +80,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Reduces sanity loss by 25%.\n- Reduces stability loss by 25%.";
 	
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
@@ -93,7 +93,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Reduces blood loss when bleeding by 50%.\n- Triples the rate of blood regeneration.";
 	
-	--ITEM.requireFaith = {"Faith of the Dark"};
+	--ITEM.requiredFaiths = {"Faith of the Dark"};
 	--ITEM.kinisgerOverride = true;
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1000};
 ITEM:Register();
@@ -107,7 +107,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases damage against Begotten thralls by 50%.";
 	
-	--ITEM.requireFaith = {"Faith of the Dark"};
+	--ITEM.requiredFaiths = {"Faith of the Dark"};
 	--ITEM.kinisgerOverride = true;
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false};
 ITEM:Register();
@@ -121,7 +121,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Reduces all limb damage by 50%.";
 	
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.kinisgerOverride = true;
 ITEM:Register();
 
@@ -196,7 +196,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Has a 5% chance to set enemies on fire when hit with a melee weapon.\n- Stacks with fire sacrifical weapons for additional ignition time.";
 	
-	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, supercrateOnly = true, bNoSupercrate = true};
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 700, supercrateOnly = true};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("enchanted_base");
@@ -257,7 +257,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.description = "The skull of a stag, likely kept by a Gore as a trophy or as a good luck charm.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases all faith gain by 25% if you are of the Faith of the Family.";
-	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.requiredFaiths = {"Faith of the Family"};
 	ITEM.kinisgerOverride = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false}
@@ -271,7 +271,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.description = "The skull of a slain demon, its evil still abounds.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases all faith gain by 25% if you are of the Faith of the Dark.";
-	ITEM.requireFaith = {"Faith of the Dark"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
 	ITEM.kinisgerOverride = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false}
@@ -285,7 +285,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.description = "A ritually engraved skull belonging to one of many ancient saints of the Holy Hierarchy. A good omen for those of the Faith of the Light indeed.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/"..ITEM.uniqueID..".png";
 	ITEM.charmEffects = "- Increases all faith gain by 25% if you are of the Faith of the Light.";
-	ITEM.requireFaith = {"Faith of the Light"};
+	ITEM.requiredFaiths = {"Faith of the Light"};
 	ITEM.kinisgerOverride = true;
 	
 	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1250, onGround = false}
@@ -419,7 +419,7 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.weight = 0.2;
 	ITEM.uniqueID = "holy_sigils";
 	ITEM.description = "A decorated iron buckle with two scraps of scroll cloth torn from the Holy Book of Law, sealed and stamped by the Holy Hierarchy. Wearing these sigils of holy judgement grants supreme authority and righteous conviction to the Inquisitor who deserves it.";
-	ITEM.charmEffects = "- Requires Inquisitor Armor to be worn.\n- Increases faith gain by 15%.\n- Decreases sanity loss by 50%.\n- Decreases corruption gain by 50%.\n- Increases melee damage against all non-Hard-Glazed characters by 15%.\n- Moderately increases parry and deflection windows for all melee weapons.\n- Uncloaks any cloaked characters within 75% of talking range.";
+	ITEM.charmEffects = "- Requires Inquisitor Armor to be worn.\n- Increases faith gain by 15%.\n- Decreases sanity loss by 50%.\n- Decreases corruption gain by 50%.\n- Increases damage against all non-Hard-Glazed characters by 15%.\n- Moderately increases parry and deflection windows for all melee weapons.\n- Uncloaks any cloaked characters within 75% of talking range.";
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/holy_sigils.png";
 	ITEM.kinisgerOverride = true;
 	ITEM.requiredSubfaiths = {"Hard-Glazed"};
@@ -498,15 +498,13 @@ local ITEM = Clockwork.item:New("enchanted_base");
 	end
 ITEM:Register();
 
--- Hill shit (charms)
-
 local ITEM = Clockwork.item:New("enchanted_base");
 	ITEM.name = "Codex Solis";
 	ITEM.model = "models/props_clutter/book_mg03.mdl";
 	ITEM.weight = 0.2;
 	ITEM.uniqueID = "codex_solis";
 	ITEM.description = "A gilded leather-bound book with a clasp made of steel. Contained within is an assortment of long forgotten Hard-Glaze canon with the accompanied footnotes and the crazed ramblings of hundreds of ministers prior. Worn visibly on the hip with zeal, one would not wield the righteous authority to preach or chastise the common man without it.";
-	ITEM.charmEffects = "- Requires Low Ministry Vestments to be worn.\n- Increases faith gain by 15%.\n- Decreases sanity loss by 50%.\n- Decreases corruption gain by 50%.\n- Increases melee damage against all non-Hard-Glazed characters by 15%.\n- Moderately increases parry and deflection windows for all melee weapons.\n- Uncloaks any cloaked characters within 75% of talking range.\n The Glaze Sees All...";
+	ITEM.charmEffects = "- Requires Low Ministry Vestments to be worn.\n- Increases faith gain by 15%.\n- Decreases sanity loss by 50%.\n- Decreases corruption gain by 50%.\n- Increases damage against all non-Hard-Glazed characters by 15%.\n- Moderately increases parry and deflection windows for all melee weapons.\n- Uncloaks any cloaked characters within 75% of talking range.\n The Glaze Sees All...";
 	ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/book_mg03.png";
 	ITEM.kinisgerOverride = true;
 	ITEM.requiredSubfaiths = {"Hard-Glazed"};
@@ -583,4 +581,16 @@ local ITEM = Clockwork.item:New("enchanted_base");
 			end
 		end
 	end
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("enchanted_base");
+	ITEM.name = "Powderboy's Bandolier";
+	ITEM.model = "models/begotten_prelude/items/ncr_bandolier.mdl";
+	ITEM.weight = 1;
+	ITEM.uniqueID = "bandolier";
+	ITEM.description = "A leather belt covered with pockets. A series of tally marks are crudely carved into the leather by its previous owner.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/ncr_bandolier.png";
+	ITEM.charmEffects = "- Reduces the reload time of firearms and crossbows by 15%.";
+	
+	ITEM.itemSpawnerInfo = {category = "Charms", rarity = 1100};
 ITEM:Register();

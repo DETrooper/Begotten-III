@@ -458,6 +458,14 @@ function cwRituals:PlayerCharacterLoaded(player)
 		end
 	end
 	
+	if player.bloodHowlActive then
+		player.bloodHowlActive = nil;
+		
+		if timer.Exists("AbyssalhowlTimer_"..entIndex) then
+			timer.Remove("AbyssalhowlTimer_"..entIndex);
+		end
+	end
+	
 	if player.bloodWingsActive then
 		player.bloodWingsActive = nil;
 		

@@ -169,7 +169,7 @@ end;
 
 function cwObserverMode:PlayerUse(player, entity)
 	if player:GetMoveType() == MOVETYPE_NOCLIP and !player:IsAdmin() then
-		Schema:EasyText(player, "darkgrey", "["..self.name.."] You cannot use doors while in spectator mode!");
+		Schema:EasyText(player, "darkgrey", "["..self.name.."] You cannot use entities while in spectator mode!");
 		
 		return false;
 	end;

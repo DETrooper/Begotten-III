@@ -196,28 +196,30 @@ function cwItemSpawner:Think()
 							local itemIncrease = (container.cwLockTier or 0) * 2
 							
 							for i = 1, math.random(3 + itemIncrease, 6 + itemIncrease) do
-								local randomItem = self:SelectItem(containerCategory, false, true);
-								
-								if randomItem then
-									local itemInstance = item.CreateInstance(randomItem);
+								if i > 1 and math.random() < 0.666 then -- 1/3 chance to not spawn an item after the first item
+									local randomItem = self:SelectItem(containerCategory, false, true);
 									
-									if itemInstance then
-										local category = itemInstance.category;
+									if randomItem then
+										local itemInstance = item.CreateInstance(randomItem);
 										
-										if category == "Helms" or category == "Armor" or category == "Melee" or category == "Crafting Materials" then
-											-- 86% chance for these items to spawn with less than 100% condition.
-											if math.random(1, 6) ~= 1 then
-												itemInstance:SetCondition(math.random(15, 99), true);
-											end
-										elseif itemInstance.category == "Shot" and itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
-											itemInstance:SetAmmoMagazine(math.random(1, itemInstance.ammoMagazineSize));
-										end
+										if itemInstance then
+											local category = itemInstance.category;
 											
-										if itemInstance:GetData("freezing") then
-											itemInstance:SetData("freezing", 100);
+											if category == "Helms" or category == "Armor" or category == "Melee" or category == "Crafting Materials" then
+												-- 86% chance for these items to spawn with less than 100% condition.
+												if math.random(1, 6) ~= 1 then
+													itemInstance:SetCondition(math.random(15, 99), true);
+												end
+											elseif itemInstance.category == "Shot" and itemInstance.ammoMagazineSize and itemInstance.SetAmmoMagazine then
+												itemInstance:SetAmmoMagazine(math.random(1, itemInstance.ammoMagazineSize));
+											end
+												
+											if itemInstance:GetData("freezing") then
+												itemInstance:SetData("freezing", 100);
+											end
+											
+											Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
 										end
-										
-										Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
 									end
 								end
 							end
@@ -484,6 +486,8 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 							Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
 							
 							Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..itemInstance.name.." added to their loot container from the 'Fortune' belief tree finisher bonus");
+							
+							Clockwork.chatBox:Add(player, nil, "it", "You feel very fortunate indeed!");
 						end
 					end
 				end
@@ -554,6 +558,8 @@ function cwItemSpawner:PreOpenedContainer(player, container)
 					Clockwork.inventory:AddInstance(container.cwInventory, itemInstance, 1);
 					
 					Clockwork.kernel:PrintLog(LOGTYPE_MINOR, player:Name().." had a "..itemInstance.name.." added to their loot container from a belief, trait, or charm!");
+					
+					Clockwork.chatBox:Add(player, nil, "it", "You feel lucky.");
 				end
 			end
 		end

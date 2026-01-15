@@ -116,8 +116,8 @@ local ITEM = Clockwork.item:New("medical_base");
 			Schema:EasyText(player, "olivedrab","You swallow what few pills remain in the bottle, hoping it will cure your ailments.");
 			
 			if player:HasDisease("common_cold") or player:HasDisease("flu") then
-				player:TakeDisease("common_cold");
-				player:TakeDisease("flu");
+				player:TakeDisease("common_cold", true);
+				player:TakeDisease("flu", true);
 			end
 			
 			Clockwork.player:SetMenuOpen(player, false);
@@ -152,7 +152,7 @@ local ITEM = Clockwork.item:New("medical_base");
 			Schema:EasyText(player, "olivedrab","You slurp the disgusting drink, hoping that it will remove what plagues you. After a short time, you feel your mind clear and your skin lighten.");
 			
 			if player:HasDisease("begotten_plague") then
-				player:TakeDisease("begotten_plague");
+				player:TakeDisease("begotten_plague", true);
 			end
 			
 			Clockwork.player:SetMenuOpen(player, false);
@@ -473,7 +473,7 @@ local ITEM = Clockwork.item:New();
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		if (player.isChloroforming) then
+		if Clockwork.player:GetAction(player) == "chloroform" then
 			Schema:EasyText(player, "peru", "You are already tying a character!");
 			
 			return false;
@@ -507,13 +507,9 @@ local ITEM = Clockwork.item:New();
 							end;
 						end, function(success)
 							if (success) then
-								player.isChloroforming = nil;
-								
 								Clockwork.player:SetRagdollState(target, RAGDOLL_KNOCKEDOUT, 240);
 								
 								player:TakeItem(self, true);
-							else
-								player.isChloroforming = nil;
 							end;
 							
 							Clockwork.player:SetAction(player, "chloroform", false);
@@ -529,8 +525,6 @@ local ITEM = Clockwork.item:New();
 					end;
 					
 					Clockwork.player:SetMenuOpen(player, false);
-					
-					player.isChloroforming = true;
 					
 					return false;
 				else

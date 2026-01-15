@@ -27,10 +27,9 @@ PLUGIN:RegisterArgumentType("Weather", function(argument)
 end)
 
 PLUGIN:RegisterArgumentType("Rank", function(argument, args)
-
     if !args or !args[1] then return {} end
 
-    local plystr = string.gsub(args[1], "\"", "")
+    local plystr = args[1]
 
     local target = Clockwork.player:FindByID(plystr)
 
@@ -38,10 +37,10 @@ PLUGIN:RegisterArgumentType("Rank", function(argument, args)
 
 
     if target then
-        ranks = Schema.Ranks[target:GetFaction()] or {}
+        local targetFaction = target:GetNetVar("kinisgerOverride", target:GetFaction());
+        ranks = Schema.Ranks[targetFaction] or {}
     end
 
-    
     local matches = {}
 
     for k, v in pairs(ranks) do
@@ -54,6 +53,32 @@ PLUGIN:RegisterArgumentType("Rank", function(argument, args)
 
 end)
 
+Clockwork.command:RegisterType("Radius", function(argument, args)
+    return {}
+end, function(current_arg, args)
+    render.SetColorMaterial()
+    local pos = LocalPlayer():GetEyeTrace().HitPos
+    local radius = tonumber(current_arg)
+
+    if radius then
+        render.DrawSphere(pos, radius, 15, 15, Color(0, 175, 175, 20))
+
+        render.DrawWireframeSphere(pos, radius, 15, 15, Color(255, 255, 255, 100))
+
+        for _, player in pairs(ents.FindInSphere(pos, radius)) do
+            if IsValid(player) and player:IsPlayer() and player:Alive() then
+                local headBone = player:LookupBone("ValveBiped.Bip01_Head1")
+
+                if headBone then
+                    local headPos = player:GetBonePosition(headBone)
+                    if headPos then
+                        render.DrawWireframeSphere(headPos, 8, 6, 6, Color(0, 255, 0))
+                    end
+                end
+            end
+        end
+    end
+end)
 
 local seek = {
     ["ply"] = "Player",

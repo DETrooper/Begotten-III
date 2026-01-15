@@ -18,10 +18,6 @@ function cwContainerHiding:GetEntityMenuOptions(entity, options)
 					options["Open"] = nil;
 					options["Unhide"] = "cw_entityUnHide";
 				else
-					if (game.GetMap() != "rp_begotten3") then
-						return;
-					end;
-					
 					options["Hide"] = "cw_entityHide";
 				end;
 			end

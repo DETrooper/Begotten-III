@@ -329,6 +329,7 @@ COMMAND.text = "<string Name> <string Message>";
 --COMMAND.flags = CMD_DEFAULT;
 COMMAND.access = "s";
 COMMAND.arguments = 2;
+COMMAND.types = {"Player"}
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)

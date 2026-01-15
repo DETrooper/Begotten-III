@@ -40,7 +40,9 @@ function Schema:GetMotionBlurValues(x, y, forward, spin)
 	local blurValue = 0;
 	
 	if (Clockwork.ConVars.SHOWBLUR:GetInt() != 1) then
-		return;
+		if Clockwork.Client:IsAdmin() then
+			return
+		end
 	end;
 	
 	-- Make sure they aren't in char creation.
@@ -125,7 +127,7 @@ function Schema:ShouldPlayerModifyBlur(entity)
 		local clientFaction = Clockwork.Client:GetNetVar("kinisgerOverride") or Clockwork.Client:GetFaction();
 		
 		if faction == "Goreic Warrior" and clientFaction ~= "Goreic Warrior" then
-			if entity:GetModel() == "models/begotten/goreicwarfighters/gorechieftan.mdl" then
+			if entity:GetModel() == "models/begotten/goreicwarfighters/gorechieftan.mdl" or entity:GetModel() == "models/begotten/goreicwarfighters/grokcrast.mdl" then
 				return true;
 			else
 				local helmet = entity:GetHelmetEquipped();
@@ -456,6 +458,18 @@ function Schema:CalcViewAdjustTable(view)
 		view.origin = Clockwork.Client.WakeupOrigin;
 		view.angles = Clockwork.Client.WakeupAngles;
 		view.fov = Clockwork.Client.WakeupFOV;
+	else
+		local activeWeapon = Clockwork.Client:GetActiveWeapon();
+		
+		if (IsValid(activeWeapon)) then
+			local func = activeWeapon.CalcView;
+			
+			if (func) then
+				local origin, angles, fov = func(activeWeapon, Clockwork.Client, Vector(view.origin), Angle(view.angles), view.fov);
+				
+				view.origin, view.angles, view.fov = origin or view.origin, angles or view.angles, fov or view.fov;
+			end
+		end
 	end
 end;
 
@@ -481,10 +495,19 @@ function Schema:PlayerAdjustHeadbobInfo(info)
 	local scale = math.max(scaleAdd, 1);
 	
 	if IsValid(weapon) and weapon:GetNWBool("M9K_Ironsights") then
-		info.yaw = 0.1;
-		info.roll = 0.1;
-		info.speed = 0.5;
-		info.pitch = 0.1;
+		local additive = 0;
+	
+		if cwStamina then
+			local stamina = Clockwork.Client:GetNWInt("Stamina", 100);
+			local max_stamina = Clockwork.Client:GetNetVar("Max_Stamina", 100);
+		
+			additive = Lerp(stamina / max_stamina, 0.8, 0)
+		end
+		
+		info.yaw = 0.1 + additive;
+		info.roll = 0.1 + additive;
+		info.speed = 0.5 + additive;
+		info.pitch = 0.1 + additive;
 	end
 	
 	if (tonumber(scale)) then

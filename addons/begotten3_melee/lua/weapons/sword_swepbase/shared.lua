@@ -11,7 +11,7 @@ SWEP.Author = ""
 SWEP.Spawnable = false 
 SWEP.AutoSwitchFrom = false
 SWEP.Weight = 5
-SWEP.DrawCrosshair = false
+SWEP.DrawCrosshair = true
 
 SWEP.MeleeRangeAdditive = 0.1 --Extra time the attack entities exist
 
@@ -284,7 +284,7 @@ function SWEP:Hitscan()
 			util.Effect("BloodImpact", effect, true, true);
 			
 			--if not Clockwork.entity:GetPlayer(tr.Entity) or not Clockwork.entity:GetPlayer(tr.Entity):Alive() then
-				if self.Owner:GetNetVar("ThrustStance") != true or self.ChoppingAltAttack then
+				if self.Owner:GetNetVar("ThrustStance") != true or (self.ChoppingAltAttack or self.PummelingAltAttack) then
 					tr.Entity:EmitSound(attacksoundtable["hitbody"][math.random(1, #attacksoundtable["hitbody"])])
 				else
 					tr.Entity:EmitSound(attacksoundtable["althitbody"][math.random(1, #attacksoundtable["althitbody"])])
@@ -544,6 +544,7 @@ end
 
 function GetStabilityModifier(owner)
 	local stabilityModifier = 1
+	local clothesItem = owner:GetClothesEquipped();
 	
 	if cwBeliefs and owner.HasBelief then
 		if owner:HasBelief("fanaticism") then
@@ -561,6 +562,14 @@ function GetStabilityModifier(owner)
 		end
 	end
 	
+	if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "godless") then
+		local wep = owner:GetActiveWeapon();
+		
+		if owner:Sanity() <= 40 and wep:GetNW2String("activeShield"):len() <= 0 then
+			stabilityModifier = stabilityModifier * 1.25;
+		end
+	end	
+	
 	if owner.GetCharmEquipped and owner:GetCharmEquipped("ring_pummeler") then
 		stabilityModifier = stabilityModifier * 1.15;
 	end
@@ -569,6 +578,10 @@ function GetStabilityModifier(owner)
 		if owner:GetActiveWeapon():GetClass() == "begotten_2h_quarterstaff" then
 			stabilityModifier = 0;
 		end
+	end
+	
+	if owner.fearsomeSpeed then
+		stabilityModifier = stabilityModifier * 1.15;
 	end
 	
 	return stabilityModifier
@@ -625,6 +638,10 @@ function SWEP:PrimaryAttack()
 	end
 	
 	if self:GetNW2Bool("swordplayActive") == true then
+		delay = delay * 0.8;
+	end
+	
+	if owner.fearsomeSpeed then
 		delay = delay * 0.8;
 	end
 	
@@ -1198,7 +1215,7 @@ end
 		local damagetype = (attacktable["dmgtype"])
 		local stabilitydamage = (attacktable["stabilitydamage"]);
 
-		if self.Owner:GetNetVar("ThrustStance") and attacktable["altattackstabilitydamagemodifier"] then
+		if self.Owner:GetNetVar("ThrustStance") and attacktable["altattackstabilitydamagemodifier"] and swingType != "parry_swing" then
 			stabilitydamage = stabilitydamage * attacktable["altattackstabilitydamagemodifier"];
 		end
 		
@@ -1226,7 +1243,7 @@ end
 						
 						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 							--print "Spear Shaft Hit"
-							damage = math.max(1, (attacktable["primarydamage"]) * 0.01)
+							damage = math.max(1, (attacktable["primarydamage"]) * 0.05)
 							damagetype = 128
 							
 							-- KNOCKBACK
@@ -1240,7 +1257,7 @@ end
 							end);
 							
 							if hit:IsPlayer() then
-								hit:TakeStability(10 * riposteDamageModifier * GetStabilityModifier(self.Owner))
+								hit:TakeStability(15 * riposteDamageModifier * GetStabilityModifier(self.Owner))
 							end
 							
 							d:SetDamage(damage)
@@ -1401,6 +1418,22 @@ end
 					end
 				elseif weapon.ChoppingAltAttack == true then
 					damagetype = 4
+					if hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then							
+							if hit:IsPlayer() then
+								hit:TakeStability(stabilitydamage * GetStabilityModifier(self.Owner));
+							end
+						end
+					end
+				elseif weapon.PummelingAltAttack == true then
+					damagetype = 128
+					if hit:IsValid() then
+						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then							
+							if hit:IsPlayer() then
+								hit:TakeStability(stabilitydamage * GetStabilityModifier(self.Owner));
+							end
+						end
+					end
 				end
 				-- Polearm alt attack spear shaft hit system
 				if (IsValid(self)) then
@@ -1415,7 +1448,7 @@ end
 						
 						if distance <= maxIneffectiveRange and hit:IsValid() then
 							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
-								damage = math.max(1, (attacktable["primarydamage"]) * 0.01)
+								damage = math.max(1, (attacktable["primarydamage"]) * 0.05)
 								damagetype = 128
 								
 								-- KNOCKBACK
@@ -1430,7 +1463,7 @@ end
 								end);
 								
 								if hit:IsPlayer() then
-									hit:TakeStability(10 * GetStabilityModifier(self.Owner))
+									hit:TakeStability(15 * GetStabilityModifier(self.Owner))
 								end
 							end
 						elseif distance > maxIneffectiveRange and hit:IsValid() then
@@ -1603,7 +1636,7 @@ end
 							local entEyeAngles = hit:EyeAngles();
 						
 							if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-								damage = damage + (damage * 0.5);
+								damage = damage + (damage * 0.7);
 							end
 						end
 						
@@ -1740,7 +1773,7 @@ end
 							
 							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 								--print "Spear Shaft Hit"
-								damage = math.max(1, (attacktable["primarydamage"]) * 0.01)
+								damage = math.max(1, (attacktable["primarydamage"]) * 0.05)
 								damagetype = 128
 								
 								-- KNOCKBACK
@@ -1754,7 +1787,7 @@ end
 								end);
 								
 								if hit:IsPlayer() then
-									hit:TakeStability(10 * GetStabilityModifier(self.Owner))
+									hit:TakeStability(15 * GetStabilityModifier(self.Owner))
 								end
 							end
 					
@@ -1770,7 +1803,7 @@ end
 									local entEyeAngles = hit:EyeAngles();
 								
 									if math.abs(math.AngleDifference(entEyeAngles.y, (owner:GetPos() - hit:GetPos()):Angle().y)) <= 90 then
-										damage = damage + (damage * 0.5);
+										damage = damage + (damage * 0.7);
 									end
 								end
 								

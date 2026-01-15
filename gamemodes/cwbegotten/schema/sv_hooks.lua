@@ -539,11 +539,11 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 								killXP = killXP * math.Clamp(player:GetCharacterData("level", 1), 1, 40);
 								
 								if player:HasBelief("father") then
-									if player:GetCharacterData("level", 1) < entity:GetCharacterData("level", 1) then
+									if player:GetCharacterData("level", 1) < entityPlayer:GetCharacterData("level", 1) then
 										killXP = killXP * 2;
 									end
 								elseif player:HasBelief("sister") then
-									if player:GetCharacterData("level", 1) > entity:GetCharacterData("level", 1) then
+									if player:GetCharacterData("level", 1) > entityPlayer:GetCharacterData("level", 1) then
 										killXP = killXP * 2;
 									end
 								end
@@ -1108,6 +1108,49 @@ end;
 
 -- Called when a player presses F3.
 function Schema:ShowSpare1(player)
+	local target = player:GetEyeTraceNoCursor().Entity;
+	local entity = target;
+
+	if (IsValid(target) and target:GetShootPos():Distance(player:GetShootPos()) <= 46) then
+		target = Clockwork.entity:GetPlayer(target);
+		
+		if (target and player:GetNetVar("tied") == 0) then
+			local untieTime = 6;
+		
+			if player.HasBelief and player:HasBelief("dexterity") then
+				untieTime = 4;
+			end
+		
+			if (target:GetNetVar("tied") != 0) then
+				if player:GetMoveType() == MOVETYPE_WALK then
+					for k, v in pairs(ents.FindInSphere(player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
+						if v:IsPlayer() and v:Alive() then
+							Clockwork.chatBox:Add(v, player, "me", "starts untying "..Clockwork.player:FormatRecognisedText(v, "%s", target)..".");
+						end
+					end
+				end
+			
+				Clockwork.player:SetAction(player, "untie", untieTime);
+				
+				Clockwork.player:EntityConditionTimer(player, target, entity, untieTime, 192, function()
+					return player:Alive() and !player:IsRagdolled() and !player:HasGodMode() and player:GetNetVar("tied") == 0;
+				end, function(success)
+					if (success) then
+						self:TiePlayer(target, false);
+						
+						player:GiveItem(item.CreateInstance("bindings"));
+						
+						--player:ProgressAttribute(ATB_DEXTERITY, 15, true);
+					end;
+					
+					Clockwork.player:SetAction(player, "untie", false);
+				end);
+				
+				return;
+			end;
+		end;
+	end;
+	
 	local itemTable = player:FindItemByID("bindings");
 	
 	if (!itemTable) then
@@ -1136,6 +1179,14 @@ function Schema:PlayerFootstep(player, position, foot, soundString, volume, reci
 			end
 			
 			return true;
+		elseif player:GetSubfaction() == "Clan Grock" then
+			if player:GetCharacterData("level", 1) >= 30 then
+				if player:IsRunning() then
+					util.ScreenShake(player:GetPos(), 1, 1, 0.5, 500)
+				else
+					util.ScreenShake(player:GetPos(), 0.5, 1, 0.5, 500)
+				end
+			end
 		end
 	else
 		local running = false;
@@ -1292,7 +1343,9 @@ local voltistSounds = {"npc/scanner/combat_scan4.wav", "npc/scanner/combat_scan5
 local voltistYellSounds = {"npc/scanner/scanner_siren2.wav", "npc/scanner/scanner_pain2.wav", "npc/stalker/go_alert2.wav"};
 
 function Schema:PlayerSayICEmitSound(player)
-	if player:GetSubfaith() == "Voltism" then
+	if player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
+		player:EmitSound("piggysqueals/talk/wretch_tunnels_amb_idle_0"..math.random(1, 5)..".ogg", 90, math.random(95, 110))
+	elseif player:GetSubfaith() == "Voltism" then
 		if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
 			if !Clockwork.player:HasFlags(player, "T") then
 				player:EmitSound(voltistSounds[math.random(1, #voltistSounds)], 90, 150);
@@ -1302,7 +1355,9 @@ function Schema:PlayerSayICEmitSound(player)
 end
 
 function Schema:PlayerYellEmitSound(player)
-	if player:GetSubfaith() == "Voltism" then
+	if player:GetModel() == "models/begotten/satanists/darklanderimmortal.mdl" then
+		player:EmitSound("piggysqueals/yell/wretch_tunnels_amb_alert_0"..math.random(1, 3)..".ogg", 90, math.random(95, 110))
+	elseif player:GetSubfaith() == "Voltism" then
 		if cwBeliefs and (player:HasBelief("the_storm") or player:HasBelief("the_paradox_riddle_equation")) then
 			if !Clockwork.player:HasFlags(player, "T") then
 				player:EmitSound(voltistYellSounds[math.random(1, #voltistYellSounds)], 90, 150);
@@ -1313,47 +1368,7 @@ end
 
 -- Called when a player presses a key.
 function Schema:KeyPress(player, key)
-	if (key == IN_USE) then
-		local untieTime = 6;
-		local target = player:GetEyeTraceNoCursor().Entity;
-		local entity = target;
-		
-		if player.HasBelief and player:HasBelief("dexterity") then
-			untieTime = 4;
-		end
-		
-		if (IsValid(target)) then
-			target = Clockwork.entity:GetPlayer(target);
-			
-			if (target and player:GetNetVar("tied") == 0) then
-				if (target:GetShootPos():Distance(player:GetShootPos()) <= 192) then
-					if (target:GetNetVar("tied") != 0) then
-						for k, v in pairs(ents.FindInSphere(player:GetPos(), 512)) do
-							if (v:GetClass() == "cw_salesman" and v:GetNetworkedString("Name") == "Reaver Despoiler") or (v:GetClass() == "cw_bounty_board" and target:IsWanted()) then
-								return;
-							end
-						end
-					
-						Clockwork.player:SetAction(player, "untie", untieTime);
-						
-						Clockwork.player:EntityConditionTimer(player, target, entity, untieTime, 192, function()
-							return player:Alive() and !player:IsRagdolled() and !player:HasGodMode() and player:GetNetVar("tied") == 0;
-						end, function(success)
-							if (success) then
-								self:TiePlayer(target, false);
-								
-								player:GiveItem(item.CreateInstance("bindings"));
-								
-								--player:ProgressAttribute(ATB_DEXTERITY, 15, true);
-							end;
-							
-							Clockwork.player:SetAction(player, "untie", false);
-						end);
-					end;
-				end;
-			end;
-		end;
-	elseif (key == IN_ATTACK) then
+	if (key == IN_ATTACK) then
 		local action = Clockwork.player:GetAction(player);
 		
 		if (action == "reloading") or (action == "mutilating") or (action == "skinning") or (action == "building") then
@@ -1818,7 +1833,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 			end;
 			
 			if (plyTab.bWasInAir) then
-				if (waterLevel >= 1 and waterLevel < 3) then
+				if (waterLevel >= 1) then
 					hook.Run("HitGroundWater", player, plyTab.bWasInAir);
 				end;
 				
@@ -1826,7 +1841,7 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 			end;
 		else
 			if (plyTab.bWasInAir) then
-				if (waterLevel >= 1 and waterLevel < 3) then
+				if (waterLevel >= 1) then
 					hook.Run("HitGroundWater", player, plyTab.bWasInAir);
 					
 					plyTab.bWasInAir = nil;
@@ -1926,8 +1941,9 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 						if ((player:GetPos():WithinAABox(Vector(-4550, 5649, -509), Vector(-4722, 3972, -333))) or (player:GetPos():WithinAABox(Vector(-4621, 4045, -527), Vector(-3337, 3675, -450)))) and player:GetClothesEquipped() ~= "Plague Doctor Robes" and not player.cwObserverMode then
 							if math.random(1, 10) == 1 then
 								if !player:HasDisease("common_cold") then
-									player:GiveDisease("common_cold");
-									Clockwork.player:NotifyAdmins("operator", ""..player:Name().." has contracted the common cold from the corpse field!");
+									if player:GiveDisease("common_cold") then
+										Clockwork.player:NotifyAdmins("operator", ""..player:Name().." has contracted the common cold from the corpse field!");
+									end
 								end
 							end
 						end
@@ -1935,8 +1951,10 @@ function Schema:PlayerThink(player, curTime, infoTable, alive, initialized, plyT
 						plyTab.nextCorpseFieldCheck = curTime + 3;
 					end
 				end
+				
+				local drunk = player:GetNetVar("IsDrunk");
 			
-				if (player:HasTrait("clumsy")) then
+				if (player:HasTrait("clumsy") or (drunk and drunk >= 3)) then
 					if (player:IsRunning()) then
 						if (!plyTab.lastClumsyFallen or plyTab.lastClumsyFallen < curTime) then
 							if (math.random(1, 20) == 20) then
@@ -1996,9 +2014,9 @@ end;
 -- Called when a player hits water.
 function Schema:HitGroundWater(player, airZ)
 	local position = player:GetPos();
-	local difference = math.abs(position.z - airZ);
+	local difference = airZ - position.z
 	
-	if (difference > 512) then
+	if (difference > 192) then
 		local world = GetWorldEntity();
 		local damageInfo = DamageInfo();
 			damageInfo:SetDamageType(DMG_FALL);
@@ -3000,9 +3018,17 @@ function Schema:PlayerCharacterLoaded(player)
 	local subfaction = player:GetCharacterData("kinisgerOverrideSubfaction") or player:GetSubfaction();
 	
 	if subfaction == "Clan Grock" then
-		player:SetModelScale(1.12, FrameTime());
-		player:SetViewOffset(Vector(0, 0, 72))
-		player:SetViewOffsetDucked(Vector(0, 0, 32))
+		local levelCap = 40;
+		
+		--[[if cwBeliefs then
+			levelCap = cwBeliefs.sacramentLevelCap;
+		end]]--
+		
+		local scale = math.min(player:GetCharacterData("level", 1), levelCap);
+	
+		player:SetModelScale(1 + (scale * 0.005), FrameTime());
+		player:SetViewOffset(Vector(0, 0, 64 + scale / 4));
+		player:SetViewOffsetDucked(Vector(0, 0, 28 + (scale / 8)));
 	else
 		player:SetModelScale(1, FrameTime());
 		player:SetViewOffset(Vector(0, 0, 64));
@@ -3488,14 +3514,19 @@ function Schema:EntityTakeDamageNew(entity, damageInfo)
 		end
 		
 		if attacker.banners then
-			for k, v in pairs(attacker.banners) do
-				if v == "glazic" then
-					local faction = attacker:GetFaction();
-					
-					if faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" then
-						damageInfo:ScaleDamage(1.15);
+			local attackerWeapon = attacker:GetActiveWeapon();
+			if IsValid(attackerWeapon) then
+				for k, v in pairs(attacker.banners) do
+					if v == "glazic" then
+						local faction = attacker:GetFaction();
+						
+						if faction == "Gatekeeper" or faction == "Holy Hierarchy" or faction == "Hillkeeper" or faction == "Pope Adyssa's Gatekeepers" then
+							if attackerWeapon.Base ~= "begotten_firearm_base" or (attackerWeapon.isMeleeFirearm and player:GetNetVar("ThrustStance")) or attackerWeapon.notPowder then
+								damageInfo:ScaleDamage(1.15);
 
-						break;
+								break;
+							end
+						end
 					end
 				end
 			end
