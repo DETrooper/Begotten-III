@@ -137,7 +137,7 @@ function Clockwork.chatBox:SetMultiplier(multiplier)
 	self.multiplier = multiplier;
 end;
 
-function Schema:AddActionInRadius(pos, radius, text)
+function Clockwork.chatBox:AddActionInRadius(pos, radius, text)
     local listeners = {};
     for _, v in _player.Iterator() do
 		if(!v:HasInitialized()) then continue; end
