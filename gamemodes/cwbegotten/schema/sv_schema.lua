@@ -2246,6 +2246,49 @@ function playerMeta:ScriptedDeath(deathcause)
 	Schema:ScriptedDeath(self, deathcause);
 end
 
+function playerMeta:GetClothesModel()
+	if string.find(self:GetModel(), "models/begotten/heads") then
+		local clothes = self:GetClothesEquipped();
+		local clothesModel;
+		
+		if clothes and clothes.group then
+			if clothes.genderless then
+				clothesModel = "models/begotten/"..clothes.group..".mdl";
+			else
+				clothesModel = "models/begotten/"..clothes.group.."_"..string.lower(self:GetGender())..".mdl"
+			end
+		else
+			local faction = (self:GetCharacterData("kinisgerOverride") or self:GetFaction());
+			
+			if faction then
+				local factionTable = Clockwork.faction:FindByID(faction);
+				
+				if factionTable then
+					local subfaction = (self:GetCharacterData("kinisgerOverrideSubfaction") or self:GetSubfaction());
+					
+					if subfaction and factionTable.subfactions then
+						for k, v in pairs(factionTable.subfactions) do
+							if k == subfaction and v.models then
+								clothesModel = v.models[string.lower(self:GetGender())].clothes;
+							
+								break;
+							end
+						end
+					end
+					
+					if !clothesModel then
+						clothesModel = factionTable.models[string.lower(self:GetGender())].clothes;
+					end
+				end
+			end
+		end
+		
+		return clothesModel
+	end
+
+	return nil
+end
+
 -- A function to get whether an entity is inside the tower of light.
 function entityMeta:InTower(bIgnoreAdmins)
 	return Schema:InTower(self, bIgnoreAdmins);

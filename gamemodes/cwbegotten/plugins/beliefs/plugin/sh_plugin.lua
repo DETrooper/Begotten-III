@@ -1102,7 +1102,13 @@ local COMMAND = Clockwork.command:New("Warcry");
 		local player_has_watchful_raven = player:HasBelief("watchful_raven");
 		local sanity_debuff;
 		local warcry_beliefs;
+		local primevalistWarcry = false
 		local affected_players = {};
+
+		if (player:HasBelief("survivalist") and (cwDayNight.currentCycle == "night" or cwWeather.weather == "bloodstorm" or player:GetCharacterData("LastZone") == "caves")) then
+			player_has_belief = true
+			primevalistWarcry = true
+		end
 		
 		if player:GetNetVar("kinisgerOverride") then
 			if player:GetNetVar("kinisgerOverride") == "Goreic Warrior" then
@@ -1336,7 +1342,12 @@ local COMMAND = Clockwork.command:New("Warcry");
 					end
 				end
 
-				if (faction == "Hillkeeper") then
+				if (primevalistWarcry) then
+					player:EmitSound(cwPrimevalismSense:GetWarcrySound(), 100, math.random(95, 105))
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out an ear-piercing scream!", playerPos, radius)
+
+					cwPrimevalismSense:StartEcholocation(player)
+				elseif (faction == "Hillkeeper") then
 					if (faith == "Faith of the Family" and player.bloodHowlActive) then
 						if cwStamina then
 							player:HandleStamina(50);
@@ -1482,6 +1493,8 @@ local COMMAND = Clockwork.command:New("Warcry");
 			else
 				Schema:EasyText(player, "firebrick", "You cannot war cry again for "..tostring(math.ceil(player.lastWarCry - curTime)).." more seconds!");
 			end
+		elseif (player:HasBelief("survivalist")) then
+			Schema:EasyText(player, "firebrick", "You must be in the Wasteland at night, or during a bloodstorm, or inside the mines to do this!")
 		else
 			Schema:EasyText(player, "firebrick", "You are not of the correct subfaith to do this!");
 		end

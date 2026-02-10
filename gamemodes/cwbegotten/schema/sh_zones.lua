@@ -968,7 +968,7 @@ if CLIENT then
 	local mins = -maxs
 	
 	function zones:PostDraw2DSkyBox()
-		if self.currentFogColors then
+		if self.currentFogColors and !hook.Run("ShouldntDrawFogPlane") then
 			render.OverrideDepthEnable(true, false)
 		
 			cam.Start3D(Vector(0, 0, 0), Angle(0, 0, 0))
