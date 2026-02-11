@@ -600,3 +600,22 @@ properties.Add("smite", {
 		end
 	end,
 });
+
+function util.IntersectToleratedRayWithLine(rayPos, dir, lineStart, lineEnd, tolerance)
+	tolerance = (tolerance or 5)
+
+	local delta = (lineEnd - lineStart)
+
+	local length = delta:Length()
+	if (length <= 0) then return nil end
+
+	delta:Normalize()
+
+	local lineMiddle = ((lineStart + lineEnd) / 2)
+	local ang = delta:Angle()
+
+	local mins = Vector(((-length) / 2), -tolerance, -tolerance)
+	local maxs = Vector((length / 2), tolerance, tolerance)
+
+	return util.IntersectRayWithOBB(rayPos, dir, lineMiddle, ang, mins, maxs)
+end

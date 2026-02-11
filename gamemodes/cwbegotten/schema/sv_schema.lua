@@ -2289,6 +2289,40 @@ function playerMeta:GetClothesModel()
 	return nil
 end
 
+function entityMeta:GetSoundsOverTimeIdentifier(identifier)
+	return string.format("SoundsOverTime_%d_%s", self:EntIndex(), identifier)
+end
+
+function entityMeta:PlaySoundsOverTime(identifier, sounds, time, level, pitch, volume, channel, flags, dsp, filter)
+	local timerName = self:GetSoundsOverTimeIdentifier(identifier)
+	local index = 1
+
+	timer.Create(timerName, (time / #sounds), #sounds, function()
+		self:EmitSound(sounds[index], level, pitch, volume, channel, flags, dsp, filter)
+
+		index = index + 1
+	end)
+
+	return timerName
+end
+
+function entityMeta:GetSoundsForTimeIdentifier(identifier)
+	return string.format("SoundsForTime_%d_%s", self:EntIndex(), identifier)
+end
+
+function entityMeta:PlaySoundsForTime(identifier, sounds, delay, time, level, pitch, volume, channel, flags, dsp, filter)
+	local timerName = self:GetSoundsForTimeIdentifier(identifier)
+	local index = 1
+
+	timer.Create(timerName, delay, (time / delay), function()
+		self:EmitSound(sounds[index], level, pitch, volume, channel, flags, dsp, filter)
+
+		index = (index == #sounds and 1 or index + 1)
+	end)
+
+	return timerName
+end
+
 -- A function to get whether an entity is inside the tower of light.
 function entityMeta:InTower(bIgnoreAdmins)
 	return Schema:InTower(self, bIgnoreAdmins);

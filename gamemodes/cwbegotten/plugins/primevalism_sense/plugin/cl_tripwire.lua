@@ -1,0 +1,93 @@
+cwPrimevalismSense.tripwireInfo = cwPrimevalismSense.tripwireInfo or {
+    start = vector_origin,
+    rope = NULL,
+    ent1 = NULL,
+    ent2 = NULL,
+    overridePos = nil,
+}
+
+function cwPrimevalismSense:CleanupTripwire()
+    if (IsValid(cwPrimevalismSense.tripwireInfo.ent1)) then
+        cwPrimevalismSense.tripwireInfo.ent1:Remove()
+    end
+
+    if (IsValid(cwPrimevalismSense.tripwireInfo.ent2)) then
+        cwPrimevalismSense.tripwireInfo.ent2:Remove()
+    end
+
+    if (IsValid(cwPrimevalismSense.tripwireInfo.rope)) then
+        cwPrimevalismSense.tripwireInfo.rope:Remove()
+    end
+
+    cwPrimevalismSense.tripwireInfo = {}
+end
+
+function cwPrimevalismSense:UpdateRope()
+    local ent = cwPrimevalismSense.tripwireInfo.ent2
+    if (!IsValid(ent)) then return end
+
+    local data = {}
+    data.start = Clockwork.Client:EyePos()
+    data.endpos = (data.start + Clockwork.Client:GetAimVector() * 96)
+    data.filter = Clockwork.Client
+
+    local tr = util.TraceLine(data)
+
+    ent:SetPos(tr.HitPos)
+
+    cwPrimevalismSense.tripwireInfo.rope:SetColor((self:ValidateRope(Clockwork.Client, cwPrimevalismSense.tripwireInfo.ent1:GetPos(), cwPrimevalismSense.tripwireInfo.ent2:GetPos()) and validColor or invalidColor))
+end
+
+function cwPrimevalismSense:PollRope(player, move)
+    local ent = cwPrimevalismSense.tripwireInfo.ent2
+    if (!IsValid(ent)) then return end
+
+    if (move:KeyPressed(IN_RELOAD)) then
+        net.Start("cwFinishTripwire")
+            net.WriteVector(vector_origin)
+        net.SendToServer()
+    elseif (move:KeyPressed(IN_USE)) then
+        net.Start("cwFinishTripwire")
+            net.WriteVector(ent:GetPos())
+        net.SendToServer()
+    end
+end
+
+function cwPrimevalismSense:DrawRopeHUD()
+    local ent = tripwireInfo.ent2
+    if (!IsValid(ent)) then return end
+
+    draw.SimpleTextOutlined("E - Confirm", "Subtitle_Talk", ScrW() / 2, ScrH() / 1.2, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, color_black)
+    draw.SimpleTextOutlined("R - Cancel", "Subtitle_Talk", ScrW() / 2, ScrH() / 1.16, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, color_black)
+end
+
+net.Receive("cwStartTripwire", function()
+    local world = game.GetWorld()
+    local pos = net.ReadVector()
+
+    cwPrimevalismSense:CleanupTripwire()
+
+    local ent1 = ClientsideModel("models/hunter/blocks/cube025x025x025.mdl")
+    ent1:SetNoDraw(true)
+    ent1:SetPos(pos)
+
+    local ent2 = ClientsideModel("models/hunter/blocks/cube025x025x025.mdl")
+    ent2:SetNoDraw(true)
+    ent2:SetPos(pos)
+
+    local rope = ents.CreateClientRope(ent1, 0, ent2, 0, {
+        ["material"] = "vgui/white",
+        ["width"] = 1,
+        ["slack"] = 30,
+    })
+
+    cwPrimevalismSense.tripwireInfo.ent1 = ent1
+    cwPrimevalismSense.tripwireInfo.ent2 = ent2
+    cwPrimevalismSense.tripwireInfo.rope = rope
+
+    cwPrimevalismSense:UpdateRope()
+end)
+
+net.Receive("cwFinishTripwire", function()
+    CleanupTripwire()
+end)

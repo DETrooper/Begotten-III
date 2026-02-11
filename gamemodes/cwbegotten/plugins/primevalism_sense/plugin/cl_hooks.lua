@@ -186,3 +186,23 @@ end
 function cwPrimevalismSense:PlayerDrawWeaponSelect()
     if ((CurTime() - self.echolocationInfo.startTime) <= echolocationTime) then return false end
 end
+
+function cwPrimevalismSense:Think()
+    self:UpdateRope()
+end
+
+function cwPrimevalismSense:SetupMove(player, move, cmd)
+    if (!IsFirstTimePredicted()) then return end
+
+    self:PollRope(player, move)
+end
+
+function cwPrimevalismSense:HUDPaint()
+    self:DrawRopeHUD()
+end
+
+function cwPrimevalismSense:GetProgressBarInfoAction(action, percentage)
+	if (action == "tripwiring") then
+		return {text = "You are laying down tripwire. Click to cancel.", percentage = percentage, flash = percentage < 0}
+	end
+end

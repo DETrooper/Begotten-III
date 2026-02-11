@@ -60,3 +60,30 @@ end
 function cwPrimevalismSense:PlayerCanRaiseWeapon(player, weapon)
     if (weapon:GetClass:GetClass() == "cw_lantern" and player.lanternDeactivationTime > CurTime()) then return false end
 end
+
+function cwPrimevalismSense:Think()
+    self:TripwireThink()
+end
+
+function cwPrimevalismSense:KeyPress(player, key)
+	if ((key == IN_ATTACK and Clockwork.player:GetAction(player) == "tripwiring") or key == IN_RELOAD and player.tripWiring) then
+		self:CancelTripwire(player)
+	end
+
+    if (key == IN_USE) then
+        self:CheckPlayerDisarm(player)
+    end
+end
+
+function cwPrimevalismSense:PlayerRagdolled(player, state, ragdoll)
+	if (Clockwork.player:GetAction(player) == "tripwiring" or and player.tripWiring) then
+		self:CancelTripwire(player)
+	end
+end
+
+function cwPrimevalismSense:ModifyPlayerSpeed(player, infoTable, action)
+	if (action == "tripwiring") then
+		infoTable.runSpeed = infoTable.walkSpeed * 0.1
+		infoTable.walkSpeed = infoTable.walkSpeed * 0.1
+	end
+end
