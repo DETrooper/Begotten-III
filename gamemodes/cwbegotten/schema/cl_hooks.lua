@@ -4157,6 +4157,20 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		end
 		
 		return true;
+	elseif category == "Food" or category == "Drinks" or category == "Alcohol" then
+		
+		frame:AddText(name.." - "..category, Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
+		frame:AddText(itemTable("description"), Color(180, 170, 170), "nov_IntroTextSmallDETrooper", 0.8);
+		
+		if itemTable.needs.hunger then frame:AddText("Hunger: "..itemTable.needs.hunger, Color(110, 30, 30), "nov_IntroTextSmallDETrooper", 0.8); end
+		if itemTable.needs.thirst then frame:AddText("Thirst: "..itemTable.needs.thirst, Color(110, 30, 30), "nov_IntroTextSmallDETrooper", 0.8); end
+		if itemTable.needs.sleep then frame:AddText("Sleep: "..itemTable.needs.sleep, Color(110, 30, 30), "nov_IntroTextSmallDETrooper", 0.8); end
+		
+		if (bShowWeight) then
+			frame:AddBar(20, {{text = weight.."kg", percentage = percentage * 100, color = Color(96, 96, 128), font = "DermaDefault", leftTextAlign = false, noDisplay = true}}, "Weight", Color(170, 170, 180));
+		end;
+		
+		return true;
 	else
 		if itemTable.GetCustomName then
 			name = itemTable:GetCustomName();
