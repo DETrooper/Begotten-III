@@ -164,9 +164,10 @@ local COMMAND = Clockwork.command:New("CharGiveInjury");
 			
 			if cwMedicalSystem.cwInjuryTable[injury] then
 				local limb;
+				local formattedLimb = string.gsub(string.lower(arguments[3]), "_", " ");
 			
 				for k, v in pairs(cwMedicalSystem.cwHitGroupToString) do
-					if v == arguments[3] then
+					if v == formattedLimb then
 						limb = v;
 						break;
 					end
@@ -223,9 +224,10 @@ local COMMAND = Clockwork.command:New("CharTakeInjury");
 			
 			if cwMedicalSystem.cwInjuryTable[injury] then
 				local limb;
+				local formattedLimb = string.gsub(string.lower(arguments[3]), "_", " ");
 			
 				for k, v in pairs(cwMedicalSystem.cwHitGroupToString) do
-					if v == arguments[3] then
+					if v == formattedLimb then
 						limb = v;
 						break;
 					end
