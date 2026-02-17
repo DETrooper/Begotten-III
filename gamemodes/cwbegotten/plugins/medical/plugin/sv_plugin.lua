@@ -103,11 +103,11 @@ function cwMedicalSystem:StringToHitGroup(str)
 end;
 
 -- A function to give infections based off of an item's infection chance
-function GetInfectionChance(itemTable, target, limbGroup, healer)
+function cwMedicalSystem:RollInfectionChance(itemTable, target, limbGroup, healer)
 	local infectionChance = itemTable.infectionChance;
 	
-	if healer == nil then
-		healer = target
+	if !healer then
+		healer = target;
 	end
 	
 	if infectionChance then
@@ -156,7 +156,7 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 			if (itemTable("stopsBleeding") and player.bleeding) then
 				if itemTable.limbs and istable(itemTable.limbs) and #itemTable.limbs > 0 and hitGroup then
 					if player:GetCharacterData("BleedingLimbs", {})[self:HitgroupToString(hitGroup)] and table.HasValue(itemTable.limbs, hitGroup) then
-						GetInfectionChance(itemTable, player, self.cwHitGroupToString[hitGroup])
+						self:RollInfectionChance(itemTable, player, self.cwHitGroupToString[hitGroup])
 						player:MakeLimbStopBleeding(hitGroup);
 						Clockwork.hint:Send(player, "Your "..self.cwHitGroupToString[hitGroup].." stops bleeding...", 5, Color(100, 175, 100), true, true);
 					end
@@ -183,7 +183,7 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 						
 						for k, v in pairs(injuries) do							
 							if v[injury] then
-								GetInfectionChance(itemTable, player, k)								
+								self:RollInfectionChance(itemTable, player, k)								
 								player:RemoveInjury(k, injury);
 							end
 						end
@@ -195,7 +195,7 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 						
 						for k, v in pairs(injuries) do
 							if k == hitGroup and v[injury] then
-								GetInfectionChance(itemTable, player, k)
+								self:RollInfectionChance(itemTable, player, k)
 								
 								player:RemoveInjury(k, injury);								
 								break;
@@ -380,7 +380,7 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 							
 							for k, v in pairs(injuries) do							
 								if v[injury] then
-									GetInfectionChance(itemTable, target, k, player)								
+									self:RollInfectionChance(itemTable, target, k, player)								
 									target:RemoveInjury(k, injury);
 								end
 							end
@@ -392,7 +392,7 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 							
 							for k, v in pairs(injuries) do
 								if k == hitGroup and v[injury] then
-									GetInfectionChance(itemTable, target, k, player)
+									self:RollInfectionChance(itemTable, target, k, player)
 									
 									target:RemoveInjury(k, injury);								
 									break;
