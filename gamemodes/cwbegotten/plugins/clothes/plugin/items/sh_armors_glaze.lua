@@ -1357,7 +1357,7 @@ ITEM.slashScale = 0.70; -- reduces slash damage by 30%
 ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 ITEM.insulation = 35;
 
-ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "scrap", "scrap", "cloth"}};
+ITEM.components = {breakdownType = "breakdown", items = {"scrap", "scrap", "scrap", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
