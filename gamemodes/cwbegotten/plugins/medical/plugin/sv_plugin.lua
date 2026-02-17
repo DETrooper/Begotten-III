@@ -226,16 +226,20 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 				local healRepetition = itemTable("healRepetition");
 				local timesHealed = 0;
 				
-				if cwBeliefs and player:HasBelief("medicine_man") then
-					healAmount = healAmount * 1.7;
-				end
-				
-				if cwBeliefs and player:HasBelief("one_with_the_druids") then
-					healAmount = healAmount * 1.5;
-				end
-				
-				if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "practitioner") then
-					healAmount = healAmount * 1.25;
+				if player:HasDisease("sepsis") then
+					healAmount = 0;
+				else
+					if cwBeliefs and player:HasBelief("medicine_man") then
+						healAmount = healAmount * 1.7;
+					end
+					
+					if cwBeliefs and player:HasBelief("one_with_the_druids") then
+						healAmount = healAmount * 1.5;
+					end
+					
+					if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "practitioner") then
+						healAmount = healAmount * 1.25;
+					end
 				end
 
 				timer.Create(playerIndex.."_heal_"..itemTable.itemID, healDelay, healRepetition, function()
@@ -371,7 +375,6 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 				if itemTable.curesInjuries then
 					local curesInjuries = table.Copy(itemTable.curesInjuries)
 					if(clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "miracle_doctor") and itemTable.stopsBleeding and !table.HasValue(curesInjuries, "gash")) then table.insert(curesInjuries, "gash") end
-
 					
 					if hitGroup == "all" then
 						for i = 1, #curesInjuries do
@@ -438,16 +441,20 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 					local healRepetition = itemTable("healRepetition");
 					local timesHealed = 0;
 					
-					if cwBeliefs and player:HasBelief("medicine_man") then
-						healAmount = healAmount * 3;
-					end
-					
-					if cwBeliefs and player:HasBelief("one_with_the_druids") then
-						healAmount = healAmount * 1.5;
-					end
+					if target:HasDisease("sepsis") then
+						healAmount = 0;
+					else
+						if cwBeliefs and player:HasBelief("medicine_man") then
+							healAmount = healAmount * 3;
+						end
+						
+						if cwBeliefs and player:HasBelief("one_with_the_druids") then
+							healAmount = healAmount * 1.5;
+						end
 
-					if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "practitioner") then
-						healAmount = healAmount * 1.25;
+						if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "practitioner") then
+							healAmount = healAmount * 1.25;
+						end
 					end
 					
 					timer.Create(targetIndex.."_heal_"..itemTable.itemID, healDelay, healRepetition, function()

@@ -59,16 +59,71 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 			player:SetCharacterData("BloodLevel", self.maxBloodLevel);
 		elseif (!plyTab.opponent and !plyTab.cwObserverMode) then
 			if (!plyTab.nextBleedPoint or curTime >= plyTab.nextBleedPoint) then
+				local injuries = self:GetInjuries(player);
+				
+				for k, v in pairs(injuries) do
+					if v["infection"] then
+						if !player:HasDisease("sepsis") then
+							if math.random(1, 200) == 1 then
+								player:GiveDisease("sepsis");
+								
+								break;
+							end
+						end
+					elseif v["minor_infection"] then
+						if math.random(1, 80) == 1 then
+							player:RemoveInjury(k, "minor_infection");
+							player:AddInjury(k, "infection");
+						
+							Clockwork.hint:Send(player, "The infection of your "..self.cwHitGroupToString[k].." has worsened.", 10, Color(175, 100, 100), true, true)
+						
+							break;
+						end
+					end
+				end
+			
 				if !cwRituals or (cwRituals and !plyTab.scornificationismActive) then
 					local bleedingLimbs = player:GetCharacterData("BleedingLimbs", {});
 					local bloodLevel = player:GetCharacterData("BloodLevel", self.maxBloodLevel);
+					local health = player:Health();
 					local injuries = self:GetInjuries(player);
+					
+					if player:HasDisease("sepsis") then
+						if health > 1 then
+							player:SetHealth(health - 1);
+							
+							health = player:Health();
+							
+							Clockwork.kernel:PrintLog(LOGTYPE_MAJOR, player:Name().." has taken 1 damage from sepsis, leaving them at "..health.." health!");
+						end
+							
+						local action =  Clockwork.player:GetAction(player);
+						
+						if health < 10 and action != "die" and action != "die_bleedout" then
+							local dieTime = 60;
+							
+							if cwBeliefs and player:HasBelief("believers_perseverance") then
+								dieTime = 240;
+							end
+							
+							Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT);
+							
+							Clockwork.player:SetAction(player, "die", dieTime, 1, function()
+								if (IsValid(player) and player:Alive()) then
+									if player:HasDisease("sepsis") then
+										player:DeathCauseOverride("Died of sepsis.");
+										player:Kill();
+										Clockwork.kernel:PrintLog(LOGTYPE_CRITICAL, player:Name().." has died of sepsis!");
+									end
+								end;
+							end);
+						end
+					end
 					
 					if plyTab.bleeding then
 						local bloodLoss = 0;
 						local bloodLossPerLimb = self.bloodLossPerLimb;
-						local health = player:Health();
-						
+
 						if player:HasDisease("leprosy") then
 							bloodLossPerLimb = bloodLossPerLimb * 1.5;
 						end
@@ -119,7 +174,7 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 											dieTime = 240;
 										end
 										
-										Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT, dieTime + 1, nil);
+										Clockwork.player:SetRagdollState(player, RAGDOLL_KNOCKEDOUT);
 										
 										Clockwork.player:SetAction(player, "die", dieTime, 1, function()
 											if (IsValid(player) and player:Alive()) then
@@ -161,36 +216,22 @@ function cwMedicalSystem:PlayerThink(player, curTime, infoTable, alive, initiali
 							player:ModifyBloodLevel(-bloodLoss);
 						end
 					else
-						local health = player:Health();
+						if health < player:GetMaxHealth() then
+							if math.random(1, 3) == 1 then
+								if hook.Run("PlayerShouldHealthRegenerate", player) ~= false then
+									player:SetHealth(health + 1);
+								end
+							end
+						end
 						
-						if !cwCharacterNeeds or (player:GetNeed("hunger") <= 50 and player:GetNeed("thirst") <= 50) then
-							if health < player:GetMaxHealth() then
-								local injuries = self:GetInjuries(player);
-								local hasInjury = false;
-
-								for k, v in pairs(injuries) do
-									if istable(v) and not table.IsEmpty(v) then
-										hasInjury = true;
-										break;
-									end
-								end
-								
-								if not hasInjury then
-									if math.random(1, 3) == 1 then
-										player:SetHealth(health + 1);
-									end
-								end
+						if bloodLevel < self.maxBloodLevel then
+							local bloodRegen = self.bloodPassiveRegen;
+							
+							if player.GetCharmEquipped and player:GetCharmEquipped("embalmed_heart") then
+								bloodRegen = bloodRegen * 3;
 							end
 							
-							if bloodLevel < self.maxBloodLevel then
-								local bloodRegen = self.bloodPassiveRegen;
-								
-								if player.GetCharmEquipped and player:GetCharmEquipped("embalmed_heart") then
-									bloodRegen = bloodRegen * 3;
-								end
-								
-								player:ModifyBloodLevel(bloodRegen);
-							end
+							player:ModifyBloodLevel(bloodRegen);
 						end
 						
 						-- HealDamage function checks if the limb can be healed (must have no injuries).
@@ -957,7 +998,7 @@ function cwMedicalSystem:PlayerCanHealLimb(player, hitGroup)
 	local injuries = self:GetInjuries(player);
 	
 	if (injuries[hitGroup]) then
-		if #injuries[hitGroup] > 0 then
+		if table.Count(injuries[hitGroup]) > 0 then
 			return false;
 		end
 	end
@@ -1131,5 +1172,19 @@ function cwMedicalSystem:ModifyPlayerSpeed(player, infoTable, action)
 			infoTable.runSpeed = math.max(1, infoTable.walkSpeed);
 			infoTable.jumpPower = 0;
 		end
+	end
+end
+
+function cwMedicalSystem:PlayerShouldHealthRegenerate(player)
+	local injuries = self:GetInjuries(player);
+	
+	for k, v in pairs(injuries) do
+		if istable(v) and not table.IsEmpty(v) then
+			return false;
+		end
+	end
+	
+	if player:HasDisease("sepsis") then
+		return false;
 	end
 end

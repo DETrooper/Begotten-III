@@ -19,6 +19,14 @@ cwLimbs.limbStates = {
 		["severely_damaged"] = {name = "Severely Damaged", effects = "Increased Injury Chance"},
 		["mangled"] = {name = "Mangled", effects = "Guaranteed Injury"},
 	},
+	["stomach"] = {
+		["fine"] = {name = "Fine", effects = "None"},
+		["slightly_damaged"] = {name = "Slightly Damaged", effects = "Increased Injury Chance"},
+		["damaged"] = {name = "Damaged", effects = "Slightly Increased Hunger & Thirst\nIncreased Injury Chance"},
+		["heavily_damaged"] = {name = "Heavily Damaged", effects = "Increased Hunger & Thirst\nIncreased Injury Chance"},
+		["severely_damaged"] = {name = "Severely Damaged", effects = "Greatly Increased Hunger & Thirst\nIncreased Injury Chance"},
+		["mangled"] = {name = "Mangled", effects = "Severely Increased Hunger & Thirst\nGuaranteed Injury"},
+	},
 	["arms"] = {
 		["fine"] = {name = "Fine", effects = "None"},
 		["slightly_damaged"] = {name = "Slightly Damaged", effects = "Increased Injury Chance"},

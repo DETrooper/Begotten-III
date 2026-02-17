@@ -213,7 +213,8 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 			
 			if player:GetFaith() == "Faith of the Family" then
 				if player:HasBelief("gift_great_tree") then
-					if hook.Run("PlayerShouldHealthRegenerate", player) then
+					--if hook.Run("PlayerShouldHealthRegenerate", player) then
+					if !cwMedicalSystem or !player:HasDisease("sepsis") then
 						local maxHealth = player:GetMaxHealth()
 						local health = player:Health()
 						local clothesItem = player:GetClothesEquipped();
