@@ -115,9 +115,16 @@ local ITEM = Clockwork.item:New("medical_base");
 		if player:Alive() and !player:IsRagdolled() then
 			Schema:EasyText(player, "olivedrab","You swallow what few pills remain in the bottle, hoping it will cure your ailments.");
 			
-			if player:HasDisease("common_cold") or player:HasDisease("flu") then
+			if player:HasDisease("common_cold") then
 				player:TakeDisease("common_cold", true);
+			end
+			
+			if player:HasDisease("flu") then
 				player:TakeDisease("flu", true);
+			end
+			
+			if player:HasDisease("sepsis") then
+				player:TakeDisease("sepsis", true);
 			end
 			
 			Clockwork.player:SetMenuOpen(player, false);
