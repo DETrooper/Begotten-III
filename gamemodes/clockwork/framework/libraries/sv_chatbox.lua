@@ -136,3 +136,16 @@ end;
 function Clockwork.chatBox:SetMultiplier(multiplier)
 	self.multiplier = multiplier;
 end;
+
+function Clockwork.chatBox:AddActionInRadius(pos, radius, text)
+    local listeners = {};
+    for _, v in _player.Iterator() do
+		if(!v:HasInitialized()) then continue; end
+		if(pos:DistToSqr(v:GetPos()) > (radius * radius)) then continue; end
+
+		listeners[#listeners + 1] = v
+
+	end
+
+    Clockwork.chatBox:Add(listeners, nil, "itnofake", text);
+end

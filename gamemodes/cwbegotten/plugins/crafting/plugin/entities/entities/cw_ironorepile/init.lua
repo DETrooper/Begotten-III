@@ -139,7 +139,7 @@ function ENT:OnTakeDamage(damageInfo)
 				end
 				
 				self.oreLeft = self.oreLeft - 1;
-				self.cycleStrikesRequired = math.random(5, 10)
+				self.cycleStrikesRequired = math.random(20, 40)
 				self.strikesRequired = self.cycleStrikesRequired
 			end
 			

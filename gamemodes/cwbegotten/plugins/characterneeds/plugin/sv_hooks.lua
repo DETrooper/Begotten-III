@@ -67,7 +67,7 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 		end
 	
 		if (!plyTab.nextHunger or curTime >= plyTab.nextHunger) then
-			local next_hunger = 200;
+			local next_hunger = 180;
 			
 			if player:HasTrait("gluttony") then
 				next_hunger = next_hunger * 0.35;
@@ -80,7 +80,22 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 			plyTab.nextHunger = curTime + next_hunger;
 			
 			if (playerNeeds["hunger"] > -1) then
-				player:HandleNeed("hunger", 1);
+				local health = Clockwork.limb:GetHealth(player, HITGROUP_STOMACH, false);
+				local hunger = 1;
+					
+				if health then
+					if health <= 75 and health > 50 then
+						hunger = 5;
+					elseif health <= 50 and health > 25 then
+						hunger = 9;
+					elseif health <= 25 and health > 10 then
+						hunger = 15;
+					elseif health <= 10 then
+						hunger = 30;
+					end
+				end
+				
+				player:HandleNeed("hunger", hunger);
 			end;
 		end;
 		
@@ -98,12 +113,27 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 			plyTab.nextThirst = curTime + next_thirst;
 		
 			if (playerNeeds["thirst"] > -1) then
-				player:HandleNeed("thirst", 1);
+				local health = Clockwork.limb:GetHealth(player, HITGROUP_STOMACH, false);
+				local thirst = 1;
+					
+				if health then
+					if health <= 75 and health > 50 then
+						thirst = 4;
+					elseif health <= 50 and health > 25 then
+						thirst = 8;
+					elseif health <= 25 and health > 10 then
+						thirst = 12;
+					elseif health <= 10 then
+						thirst = 18;
+					end
+				end
+				
+				player:HandleNeed("thirst", thirst);
 			end
 		end;
 		
 		if (!plyTab.nextSleep or curTime >= plyTab.nextSleep) then
-			local next_sleep = 400;
+			local next_sleep = 350;
 			
 			if cwBeliefs and player:HasBelief("yellow_and_black") then
 				if player:HasTrait("gluttony") then
@@ -153,6 +183,12 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 		plyTab.nextNeedCheck = curTime + math.random(1, 10);
 	end;
 end;
+
+function cwCharacterNeeds:PlayerShouldHealthRegenerate(player)
+	if player:GetNeed("hunger") >= 50 and player:GetNeed("thirst") >= 50 then
+		return false;
+	end
+end
 
 function cwCharacterNeeds:PlayerShouldStaminaRegenerate(player)
 	if player:GetNeed("thirst") >= 75 or player:GetNeed("sleep") >= 75 then

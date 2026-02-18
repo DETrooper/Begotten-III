@@ -213,7 +213,8 @@ function cwBeliefs:PlayerThink(player, curTime, infoTable, alive, initialized, p
 			
 			if player:GetFaith() == "Faith of the Family" then
 				if player:HasBelief("gift_great_tree") then
-					if hook.Run("PlayerShouldHealthRegenerate", player) then
+					--if hook.Run("PlayerShouldHealthRegenerate", player) then
+					if !cwMedicalSystem or !player:HasDisease("sepsis") then
 						local maxHealth = player:GetMaxHealth()
 						local health = player:Health()
 						local clothesItem = player:GetClothesEquipped();
@@ -2342,20 +2343,14 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 	if IsValid(attacker) and attacker:IsPlayer() and not player.opponent and not attacker.opponent then
 		if attacker:HasBelief("brutality_finisher") then
 			local playerLevel = player:GetCharacterData("level", 1);
-			local refundPerLevel = 0.025;
+			local refundPerLevel = 0.02;
 			local maxHealth = attacker:GetMaxHealth();
 			local maxStamina = attacker:GetMaxStamina();
-			--local maxPoise = attacker:GetMaxPoise();
+			local currentHealth = attacker:Health();
+			local currentStamina = attacker:GetCharacterData("Stamina")
 			
-			attacker:SetHealth(math.min(maxHealth, attacker:Health() + ((maxHealth * refundPerLevel) * playerLevel)));
-			attacker:SetCharacterData("Stamina", math.min(maxStamina, attacker:GetCharacterData("Stamina", 90) + ((maxStamina * refundPerLevel) * playerLevel)));
-			--attacker:SetNWInt("meleeStamina", math.min(maxPoise, attacker:GetNWInt("meleeStamina", 90) + ((maxPoise * refundPerLevel) * playerLevel)));
-			
-			if cwMelee then
-				local maxStability = attacker:GetMaxStability();
-				
-				cwMelee:HandleStability(attacker, (maxStability * refundPerLevel) * playerLevel);
-			end
+			attacker:SetHealth(math.min(maxHealth, currentHealth + (((maxHealth - currentHealth) * refundPerLevel) * playerLevel)));
+			attacker:SetCharacterData("Stamina", math.min(maxStamina, currentStamina + ((((maxStamina - currentStamina) * refundPerLevel) * playerLevel))));
 			
 			attacker:ScreenFade(SCREENFADE.OUT, Color(100, 20, 20, 80), 0.2, 0.1);
 			

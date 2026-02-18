@@ -47,7 +47,32 @@ function ENT:OnTakeDamage(damageInfo)
 		if (damageInfo:IsDamageType(128) and damageInfo:GetDamage() >= 15) or activeWeapon.isPickaxe then
 			self:EmitSound(self.BreakSounds[math.random(1, #self.BreakSounds)]);
 			
-			if math.random(1, 20) == 20 then
+			if !self.strikesRequired then
+				self.cycleStrikesRequired = math.random(20, 40)
+				self.strikesRequired = self.cycleStrikesRequired
+			end
+			
+			local damageDealt = 1;
+			local hasToilersStone = player:GetCharmEquipped("toilers_stone")
+			
+			if activeWeapon and activeWeapon.isPickaxe then
+				damageDealt = 4;
+
+				if(hasToilersStone) then damageDealt = damageDealt * 1.75 end
+			end
+			
+			if activeWeapon and activeWeapon:GetOffhand() then
+				damageDealt = damageDealt / 2;
+			end
+			
+			self.strikesRequired = self.strikesRequired - damageDealt;
+			
+			if cwCharacterNeeds and player.HandleNeed then
+				player:HandleNeed("thirst", 0.75);
+				player:HandleNeed("sleep", 0.25);
+			end
+			
+			if self.strikesRequired <= 0 then
 				local entPos = self:GetPos();
 				local oreEnt = ents.Create("cw_scrapfactoryore");
 					
@@ -56,6 +81,9 @@ function ENT:OnTakeDamage(damageInfo)
 				oreEnt:EmitSound("physics/concrete/concrete_break2.wav");
 				
 				--Clockwork.entity:Decay(oreEnt, 1800);
+				
+				self.cycleStrikesRequired = math.random(20, 40)
+				self.strikesRequired = self.cycleStrikesRequired
 			end
 			
 			if !activeWeapon.isPickaxe then
