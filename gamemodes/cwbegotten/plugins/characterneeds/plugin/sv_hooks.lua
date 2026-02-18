@@ -67,7 +67,7 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 		end
 	
 		if (!plyTab.nextHunger or curTime >= plyTab.nextHunger) then
-			local next_hunger = 200;
+			local next_hunger = 180;
 			
 			if player:HasTrait("gluttony") then
 				next_hunger = next_hunger * 0.35;
@@ -85,13 +85,13 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 					
 				if health then
 					if health <= 75 and health > 50 then
-						hunger = 2;
+						hunger = 5;
 					elseif health <= 50 and health > 25 then
-						hunger = 3;
+						hunger = 9;
 					elseif health <= 25 and health > 10 then
-						hunger = 4;
+						hunger = 15;
 					elseif health <= 10 then
-						hunger = 6;
+						hunger = 30;
 					end
 				end
 				
@@ -118,13 +118,13 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 					
 				if health then
 					if health <= 75 and health > 50 then
-						thirst = 2;
-					elseif health <= 50 and health > 25 then
-						thirst = 3;
-					elseif health <= 25 and health > 10 then
 						thirst = 4;
+					elseif health <= 50 and health > 25 then
+						thirst = 8;
+					elseif health <= 25 and health > 10 then
+						thirst = 12;
 					elseif health <= 10 then
-						thirst = 6;
+						thirst = 18;
 					end
 				end
 				
@@ -133,7 +133,7 @@ function cwCharacterNeeds:PlayerThink(player, curTime, infoTable, alive, initial
 		end;
 		
 		if (!plyTab.nextSleep or curTime >= plyTab.nextSleep) then
-			local next_sleep = 400;
+			local next_sleep = 350;
 			
 			if cwBeliefs and player:HasBelief("yellow_and_black") then
 				if player:HasTrait("gluttony") then

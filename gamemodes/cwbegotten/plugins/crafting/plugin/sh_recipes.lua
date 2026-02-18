@@ -1043,6 +1043,33 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("crafted_bandage_cleaned");
+		RECIPE.name = "(4x) Crafted Bandage";
+		RECIPE.requiredBeliefs = {"ingenious"};
+		RECIPE.requirements = {
+			["bandage"] = {amount = 4},
+			["old_beer"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["crafted_bandage"] = {amount = 4},
+		};
+		RECIPE.category = "Medical"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 6;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("splint");
 		RECIPE.name = "Makeshift Splint";
