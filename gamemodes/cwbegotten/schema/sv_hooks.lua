@@ -3604,7 +3604,7 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 	if (Clockwork.player:HasFlags(player, "E")) then
 		infoTable.runSpeed = infoTable.walkSpeed * 3;
 		infoTable.jumpPower = infoTable.jumpPower * 3;
-	elseif action == "reloading" or action == "building" or action == "skinning" or action == "mutilating" or action == "putting_on_armor" or action == "taking_off_armor" then
+	elseif action == "reloading" or action == "building" or action == "skinning" or action == "mutilating" or action == "putting_on_armor" or action == "taking_off_armor" or player.teleporting == true then
 		infoTable.runSpeed = infoTable.walkSpeed * 0.1;
 		infoTable.walkSpeed = infoTable.walkSpeed * 0.1;
 	end

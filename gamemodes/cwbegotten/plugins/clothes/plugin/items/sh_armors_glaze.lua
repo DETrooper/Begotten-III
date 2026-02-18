@@ -556,7 +556,7 @@ ITEM.slashScale = 0.90; -- reduces slash damage by 10%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 ITEM.insulation = 30;
 
-ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -612,7 +612,7 @@ ITEM.slashScale = 0.90; -- reduces slash damage by 10%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 ITEM.insulation = 30;
 
-ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)
@@ -668,7 +668,7 @@ ITEM.slashScale = 0.90; -- reduces slash damage by 10%
 ITEM.bulletScale = 0.90; -- reduces bullet damage by 10%
 ITEM.insulation = 30;
 
-ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "leather", "cloth", "cloth"}};
+ITEM.components = {breakdownType = "breakdown", items = {"iron_chunks", "leather", "cloth", "cloth"}};
 
 -- Called when a replacement is needed for a player.
 function ITEM:GetReplacement(player)

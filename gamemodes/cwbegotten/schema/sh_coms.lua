@@ -3298,14 +3298,22 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 						local chosenspot = math.random(1, #Schema.hellPortalTeleports["hell"]);
 						local destination = Schema.hellPortalTeleports["hell"][chosenspot].pos;
 						local angles = Schema.hellPortalTeleports["hell"][chosenspot].ang;
+						local jauntParticle = "teleport_fx_slow";
+						local jauntTime = 1.75;
 						
-						ParticleEffect("teleport_fx", origin, Angle(0,0,0), player);
+						if player:GetSubfaction() and player:GetSubfaction() == "Kinisger" then
+							jauntParticle = "teleport_fx";
+							jauntTime = 0.75;
+						end
+						
+						ParticleEffect(jauntParticle, origin, Angle(0,0,0), player);
 						sound.Play("misc/summon.wav", origin, 100, 100);
-						ParticleEffect("teleport_fx", destination, Angle(0,0,0));
+						ParticleEffect(jauntParticle, destination, Angle(0,0,0));
 						sound.Play("misc/summon.wav", destination, 100, 100);
 						player.teleporting = true;
+						hook.Run("RunModifyPlayerSpeed", player, player.cwInfoTable, true);
 						
-						timer.Create("summonplayer_"..tostring(player:EntIndex()), 0.75, 1, function()
+						timer.Create("summonplayer_"..tostring(player:EntIndex()), jauntTime, 1, function()
 							if IsValid(player) then
 								player.teleporting = false;
 								
@@ -3367,14 +3375,9 @@ local COMMAND = Clockwork.command:New("HellJaunt");
 						
 						Schema:EasyText(player, "red", "You begin to helljaunt away!");
 						
-						timer.Simple(1, function()
+						timer.Simple(jauntTime, function()
 							if IsValid(player) and player:Alive() then
-								--if player:GetSubfaction() == "Philimaxio" then
-									-- Philimaxio get their corruption doubled, but to double 50 would be lethal so I'm exempting helljaunt corruption.
-									--player:HandleNeed("corruption", 25);
-								--else
 									player:HandleNeed("corruption", 50);
-								--end
 							end
 						end);
 					else
