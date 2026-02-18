@@ -638,7 +638,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.iconoverride = "materials/begotten/ui/itemicons/gatekeeper_ration.png"
 	ITEM.stackable = true;
 
-	ITEM.needs = {hunger = 15, thirst = 15};
+	ITEM.needs = {hunger = 25, thirst = 15};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
