@@ -1211,7 +1211,7 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 							return false;
 						end
 						
-						if cwWeather and cwWeather.weather == "rainstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
+						if cwWeather and cwWeather.weather == "thunderstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
 							Schema:EasyText(player, "peru", "You cannot start a fire while it is raining outside!");
 							
 							return false;
@@ -1247,7 +1247,7 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 													return false;
 												end
 												
-												if cwWeather and cwWeather.weather == "rainstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
+												if cwWeather and cwWeather.weather == "thunderstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
 													Schema:EasyText(player, "peru", "You cannot start a fire while it is raining outside!");
 													
 													return false;
@@ -1282,9 +1282,16 @@ concommand.Add("cw_BurnShip", function(player, cmd, args)
 													
 													local owner = entity.owner;
 													
-													if IsValid(owner) and owner:GetSubfaction() == "Clan Harald" and owner:Alive() and owner:HasBelief("daring_trout") then
-														Schema:EasyText(owner, "icon16/anchor.png", "red", "A raven lands on your shoulder with smoldering wings! Your longship has been set alight and must be extinguished soon!");
-														owner.nextShipDamageNotif = CurTime() + 60;
+													if (IsValid(owner) and owner:Alive()) then
+														local subfaction = owner:GetSubfaction()
+														local bHasBelief = owner:HasBelief("daring_trout")
+
+														if (subfaction == "Clan Harald" and bHasBelief) then
+															Schema:EasyText(owner, "icon16/anchor.png", "red", "A raven lands on your shoulder with smoldering wings! Your longship has been set alight and must be extinguished soon!")
+															owner:SendLua([[Clockwork.Client:EmitSound("npc/crow/die" .. math.random(1, 2) .. ".wav", 70, 100)]])
+
+															owner.nextLongshipNotify = CurTime() + 60
+														end
 													end
 													
 													Clockwork.chatBox:AddInTargetRadius(player, "me", "ignites the longship before them with their lantern!", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
@@ -1613,6 +1620,7 @@ concommand.Add("cw_DockLongship", function(player, cmd, args)
 			if entity.location == "docks" then
 				if !IsValid(entity.owner) or entity.owner:GetCharacterKey() ~= entity.ownerID or !entity.owner:Alive() or entity.owner:GetNetVar("tied") ~= 0 then
 					entity.owner = player;
+					entity.ownerID = player:GetCharacterKey();
 				end
 				
 				if entity.owner == player then
@@ -1836,7 +1844,6 @@ concommand.Add("cw_SteamEngineRepair", function(player, cmd, args)
 						Clockwork.player:SetAction(player, "repair_steam_engine", 30, 1, function() 
 							if entity:IsValid() and entity:GetNWBool("broken") then
 								local itemList = Clockwork.inventory:GetItemsAsList(player:GetInventory());
-								local scrapRequired = 3;
 								local scrapItems = {};
 								
 								for k, v in pairs(itemList) do
@@ -1862,7 +1869,7 @@ concommand.Add("cw_SteamEngineRepair", function(player, cmd, args)
 									return;
 								end
 								
-								Schema:EasyText(player, "chocolate", "You do not have enough scrap to repair the steam engine with! You require "..tostring(scrapRequired).." scrap!");
+								Schema:EasyText(player, "chocolate", "You do not have enough scrap to repair the steam engine with! You require " .. tostring(scrapRequired) .. " scrap!");
 							end
 						end);
 						
@@ -1871,7 +1878,7 @@ concommand.Add("cw_SteamEngineRepair", function(player, cmd, args)
 				end
 			end
 			
-			Schema:EasyText(player, "chocolate", "You do not have enough scrap to repair the steam engine with! You require 6 scrap!");
+			Schema:EasyText(player, "chocolate", "You do not have enough scrap to repair the steam engine with! You require " .. tostring(scrapRequired) .. " scrap!");
 		end
 	end;
 end);

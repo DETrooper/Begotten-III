@@ -14,63 +14,6 @@ function cwSailing:PostSaveData()
 	self:SaveLongships();
 end
 
-function cwSailing:EntityTakeDamageNew(entity, damageInfo)
-	local class = entity:GetClass();
-	
-	if (class == "cw_longship") then
-		local attacker = damageInfo:GetAttacker();
-		local curTime = CurTime();
-		local damageType = damageInfo:GetDamageType();
-		local damageAmount = damageInfo:GetDamage();
-		local owner = entity.owner;
-		
-		if entity.health <= 700 and IsValid(owner) and owner:GetSubfaction() == "Clan Harald" and owner:Alive() and owner:HasBelief("daring_trout") and (!owner.nextShipDamageNotif or curTime > owner.nextShipDamageNotif) then
-			owner.nextShipDamageNotif = curTime + 60;
-			Schema:EasyText(owner, "icon16/anchor.png", "red", "A raven lands on your shoulder, clutching a torn piece of your longship's sail in its beak! Your longship is being damaged and may soon be destroyed if you do not act!");
-		end
-		
-		if damageAmount >= 20 then
-			if damageType == 4 then -- SLASH
-				local damageDealt = math.ceil(damageAmount / 20);
-				
-				if entity.health then
-					entity:SetHP(entity.health - damageDealt);
-				else
-					entity.health = 500 - damageDealt;
-				end
-				
-				if IsValid(attacker) and attacker:IsPlayer() then
-					if attacker:GetFaction() ~= "Goreic Warrior" then
-						local damagePercentage = math.min(damageDealt / 500, 1);
-							
-						attacker:HandleXP(math.Round(longshipXP * damagePercentage)); 
-					end
-				end
-				
-				entity:EmitSound("physics/wood/wood_strain"..tostring(math.random(2, 4))..".wav");
-			elseif damageType == 128 then -- BLUNT
-				local damageDealt = math.ceil(damageAmount / 12);
-				
-				if entity.health then
-					entity:SetHP(entity.health - damageDealt);
-				else
-					entity.health = 500 - damageDealt;
-				end
-				
-				if IsValid(attacker) and attacker:IsPlayer() then
-					if attacker:GetFaction() ~= "Goreic Warrior" then
-						local damagePercentage = math.min(damageDealt / 500, 1);
-							
-						attacker:HandleXP(math.Round(longshipXP * damagePercentage)); 
-					end
-				end
-				
-				entity:EmitSound("physics/wood/wood_strain"..tostring(math.random(2, 4))..".wav");
-			end
-		end
-	end
-end
-
 function cwSailing:CanPlayerMoveLongship(longshipEnt, caller)
 	local owner = longshipEnt.owner;
 	

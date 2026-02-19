@@ -333,43 +333,47 @@ function ENT:Think()
 end
 
 function ENT:Use(activator, caller)
-	if IsValid(caller) and caller:IsPlayer() then
-		local tr = util.TraceHull({
+	if (IsValid(caller) and caller:IsPlayer()) then
+		local trace = util.TraceHull({
 			start = caller:EyePos(),
 			endpos = caller:GetPos() - Vector(0, 0, 100),
 			maxs = caller:OBBMaxs(),
 			mins = caller:OBBMins(),
-			filter = function( ent ) return ( ent == self ) end,
+			filter = function(entity)
+				return (entity == self)
+			end,
 			collisiongroup = COLLISION_GROUP_NONE,
-		});
-		
-		if !IsValid(tr.Entity) or tr.Entity ~= self then	
-			netstream.Start(caller, "OpenLongshipMenu");
-			return;
+		})
+
+		if (!IsValid(trace.Entity) or trace.Entity != self) then	
+			netstream.Start(caller, "OpenLongshipMenu")
+
+			return
 		end
-		
-		local data = {};
-		
-		data.entity = self;
-		data.location = self.location;
-		
-		if (caller:GetCharacterKey() == self.ownerID) or !IsValid(self.owner) or self.owner:GetCharacterKey() ~= self.ownerID or !self.owner:Alive() or self.owner:GetNetVar("tied") ~= 0 then
-			data.isOwner = true;
-		end
-		
-		if caller:GetFaction() == "Goreic Warrior" or caller:GetNetVar("kinisgerOverride") == "Goreic Warrior" or (caller:IsAdmin() and caller.cwObserverMode) then
-			data.cargoholdopenable = true;
-			data.destination = self.destination;
-			data.sailable = true;
-		
-			if (IsValid(self.owner) and caller ~= self.owner) or self.destination then
-				data.sailable = false;
-			end
+
+		local faction = caller:GetFaction()
+		local kinisgerOverride = caller:GetNetVar("kinisgerOverride")
+
+		local bOwner = caller:GetCharacterKey() == self.ownerID
+		local bOwnerless = (!IsValid(self.owner) or !self.owner:Alive()
+			or self.owner:GetNetVar("tied") != 0
+			or self.owner:GetCharacterKey() != self.ownerID)
+			and kinisgerOverride != "Goreic Warrior"
+
+		local data = {}
+		data.entity = self
+		data.location = self.location
+		data.isOwner = bOwner or bOwnerless
+
+		if (faction == "Goreic Warrior" or kinisgerOverride == "Goreic Warrior" or (caller:IsAdmin() and caller.cwObserverMode)) then
+			data.cargoholdopenable = true
+			data.destination = self.destination
+			data.sailable = (self:GetNWBool("freeSailing") or bOwner or bOwnerless) and !self.destination
 		end
 		
 		netstream.Start(caller, "OpenLongshipMenu", data)
-	end;
-end;
+	end
+end
 
 function ENT:OnRemove()
 	if (self.cwInventory and !table.IsEmpty(self.cwInventory) or self.cwCash and self.cwCash > 0) then

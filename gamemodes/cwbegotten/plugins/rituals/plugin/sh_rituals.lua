@@ -1715,7 +1715,7 @@ RITUAL = cwRituals.rituals:New("Sister's Blessing");
 	function RITUAL:StartRitual(player)
 		local target = player:GetEyeTraceNoCursor().Entity;
 
-		if target:GetClass() != "cw_longship" then 
+		if target:GetClass() != "cw_longship" and target:GetClass() != "cw_longship_ironclad" then
 			Schema:EasyText(player, "firebrick", "You must look at a longship!");
 			return false;
 		end
@@ -1737,7 +1737,7 @@ RITUAL = cwRituals.rituals:New("Sister's Blessing");
 	function RITUAL:EndRitual(player)
 		local target = player:GetEyeTraceNoCursor().Entity;
 
-		if target:GetClass() != "cw_longship" then 
+		if target:GetClass() != "cw_longship" and target:GetClass() != "cw_longship_ironclad" then
 			Schema:EasyText(player, "firebrick", "You must look at a longship!");
 			return false;
 		end

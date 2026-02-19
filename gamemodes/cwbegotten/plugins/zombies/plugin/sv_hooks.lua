@@ -212,7 +212,7 @@ function cwZombies:OnNPCKilled(npc, attacker, inflictor, attackers)
 					end
 				end
 				
-				if (table.HasValue(self.zombieNPCS, npc:GetClass())) then
+				if (table.HasValue(self.zombieNPCS, npc:GetClass()) and !npc.noCatalysts) then
 					for i = 1, #attackers do
 						local iAttacker = attackers[i];
 					

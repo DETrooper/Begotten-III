@@ -42,7 +42,7 @@ function ENT:Think()
 			local ironclad = self.ironclad;
 			
 			if IsValid(ironclad) then
-				if ironclad.location and (ironclad.location == "calm" or ironclad.locaiton == "rough" or ironclad.location == "styx") and ironclad.destination then
+				if ironclad.location and (ironclad.location == "calm" or ironclad.location == "rough" or ironclad.location == "styx") and ironclad.destination then
 					self.fuel = math.max(0, self.fuel - 1);
 				else
 					self.fuel = math.max(0, self.fuel - 0.25);
@@ -142,6 +142,8 @@ function ENT:TurnOff()
 	
 	if IsValid(ironclad) then
 		if timer.Exists("SailTimer_"..tostring(ironclad:EntIndex())) then
+			ironclad.destination = nil;
+
 			timer.Remove("SailTimer_"..tostring(ironclad:EntIndex()));
 		end
 		
@@ -168,6 +170,8 @@ function ENT:OnTakeDamage(damageInfo)
 				
 				if IsValid(ironclad) then
 					if timer.Exists("SailTimer_"..tostring(ironclad:EntIndex())) then
+						ironclad.destination = nil;
+						
 						timer.Remove("SailTimer_"..tostring(ironclad:EntIndex()));
 					end
 					

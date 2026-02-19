@@ -3900,8 +3900,8 @@ end
 function GM:EntityTakeDamage(entity, damageInfo)
 	local class = entity:GetClass();
 	
-	if (class == "prop_dynamic" or class == "cw_duelstatue" or class == "cw_hellportal") or entity.cwInventory then
-		return true;
+	if (class == "prop_dynamic" or class == "cw_duelstatue" or class == "cw_hellportal") or (entity.cwInventory and !entity.longshipType) then
+		return true
 	end
 	
 	local damage = damageInfo:GetDamage();

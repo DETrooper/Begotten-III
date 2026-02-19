@@ -102,7 +102,7 @@ local ITEM = Clockwork.item:New();
 		local customName = self:GetData("customName");
 		
 		if customName and customName ~= "" then
-			return "Scroll of '"..customName.."'";
+			return "Scroll of \""..customName.."\"";
 		else
 			return self.name;
 		end
@@ -181,6 +181,12 @@ local ITEM = Clockwork.item:New();
 				if self:GetData("customName") and self:GetData("customName") ~= "" then
 					longshipEnt:SetNWString("name", self:GetData("customName"));
 				end
+
+				if (longshipEnt.longshipType != "longship") then
+					if (self:GetData("enchantment") == true) then
+						longshipEnt.enchantment = true
+					end
+				end
 			else
 				return false;
 			end
@@ -211,7 +217,7 @@ local ITEM = Clockwork.item:New();
 		local customName = self:GetData("customName");
 		
 		if customName and customName ~= "" then
-			return "Scroll of '"..customName.."'";
+			return "Scroll of \""..customName.."\"";
 		else
 			return self.name;
 		end

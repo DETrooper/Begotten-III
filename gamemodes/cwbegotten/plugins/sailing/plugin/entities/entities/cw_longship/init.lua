@@ -232,7 +232,7 @@ function ENT:Think()
 		self.damageCooldown = curTime + 1;
 	
 		if self:GetNWBool("Ignited") then
-			if cwWeather and cwWeather.weather == "rainstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
+			if cwWeather and cwWeather.weather == "thunderstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
 				self:SetNWBool("Ignited", false);
 				self:StopParticles();
 				
@@ -374,69 +374,73 @@ function ENT:SetHP(newhp)
 end
 
 function ENT:Use(activator, caller)
-	if IsValid(caller) and caller:IsPlayer() then
-		local tr = util.TraceHull({
+	if (IsValid(caller) and caller:IsPlayer()) then
+		local trace = util.TraceHull({
 			start = caller:EyePos(),
 			endpos = caller:GetPos() - Vector(0, 0, 100),
 			maxs = caller:OBBMaxs(),
 			mins = caller:OBBMins(),
-			filter = function( ent ) return ( ent == self ) end,
+			filter = function(entity)
+				return (entity == self)
+			end,
 			collisiongroup = COLLISION_GROUP_NONE,
-		});
-		
-		if !IsValid(tr.Entity) or tr.Entity ~= self then	
-			netstream.Start(caller, "OpenLongshipMenu");
-			return;
+		})
+
+		if (!IsValid(trace.Entity) or trace.Entity != self) then	
+			netstream.Start(caller, "OpenLongshipMenu")
+
+			return
 		end
-		
-		if self.health then
-			if (self:GetSkin() == 1 and self.health < 1000) or self.health < 500 then
-				if !self:GetNWBool("Ignited") then
-					self.repairable = true;
+
+		if (self.health) then
+			if ((self:GetSkin() == 1 and self.health < 1000) or self.health < 500) then
+				if (!self:GetNWBool("Ignited")) then
+					self.repairable = true
 				else
-					self.repairable = false;
+					self.repairable = false
 				end
 			else
-				self.repairable = false;
+				self.repairable = false
 			end
 		end
-		
-		local data = {};
-		
-		data.entity = self;
-		data.location = self.location;
-		
-		if (caller:GetCharacterKey() == self.ownerID) or !IsValid(self.owner) or self.owner:GetCharacterKey() ~= self.ownerID or !self.owner:Alive() or self.owner:GetNetVar("tied") ~= 0 then
-			data.isOwner = true;
-		end
-		
-		if caller:GetFaction() == "Goreic Warrior" or caller:GetNetVar("kinisgerOverride") == "Goreic Warrior" or (caller:IsAdmin() and caller.cwObserverMode) then
-			data.cargoholdopenable = true;
-			data.destination = self.destination;
-			data.sailable = true;
-		
-			if (IsValid(self.owner) and caller ~= self.owner) or self.destination then
-				data.sailable = false;
-			end
-			
-			if self:GetNWBool("Ignited") then
-				data.cargoholdopenable = false;
-				data.ignited = true;
+
+		local faction = caller:GetFaction()
+		local kinisgerOverride = caller:GetNetVar("kinisgerOverride")
+
+		local bOwner = caller:GetCharacterKey() == self.ownerID
+		local bOwnerless = (!IsValid(self.owner) or !self.owner:Alive()
+			or self.owner:GetNetVar("tied") != 0
+			or self.owner:GetCharacterKey() != self.ownerID)
+			and kinisgerOverride != "Goreic Warrior"
+
+		local data = {}
+		data.entity = self
+		data.location = self.location
+		data.isOwner = bOwner or bOwnerless
+
+		if (faction == "Goreic Warrior" or kinisgerOverride == "Goreic Warrior" or (caller:IsAdmin() and caller.cwObserverMode)) then
+			data.cargoholdopenable = true
+			data.destination = self.destination
+			data.sailable = (self:GetNWBool("freeSailing") or bOwner or bOwnerless) and !self.destination
+
+			if (self:GetNWBool("Ignited")) then
+				data.cargoholdopenable = false
+				data.ignited = true
 			else
-				data.repairable = self.repairable;
-			end;
+				data.repairable = self.repairable
+			end
 		end
-		
-		if !self:GetNWBool("Ignited") then
-			if caller:GetFaction() ~= "Goreic Warrior" then
-				if !self.enchantment then
-					local activeWeapon = caller:GetActiveWeapon();
-					
-					if activeWeapon:IsValid() and activeWeapon:GetClass() == "cw_lantern" then
-						local oil = caller:GetNetVar("oil", 0);
-					
-						if oil >= 1 then
-							data.ignitable = true;
+
+		if (!self:GetNWBool("Ignited")) then
+			if (faction != "Goreic Warrior") then
+				if (!self.enchantment) then
+					local weapon = caller:GetActiveWeapon()
+
+					if (IsValid(weapon) and weapon:GetClass() == "cw_lantern") then
+						local oil = caller:GetNetVar("oil", 0)
+
+						if (oil >= 1) then
+							data.ignitable = true
 						end
 					end
 				end
@@ -444,8 +448,8 @@ function ENT:Use(activator, caller)
 		end
 		
 		netstream.Start(caller, "OpenLongshipMenu", data)
-	end;
-end;
+	end
+end
 
 function ENT:OnRemove()
 	if (self.cwInventory and !table.IsEmpty(self.cwInventory) or self.cwCash and self.cwCash > 0) then
@@ -455,7 +459,7 @@ function ENT:OnRemove()
 		belongingsEnt:SetPos(self:GetPos() + Vector(0, 0, 128));
 		belongingsEnt:Spawn();
 		
-		timer.Create("BelongingsTimer_"..belongingsEnt:EntIndex(), 1200, 1, function()
+		timer.Create("BelongingsTimer_" .. belongingsEnt:EntIndex(), 1200, 1, function()
 			if IsValid(self) then
 				self:Remove();
 			end
@@ -496,3 +500,63 @@ function ENT:OnRemove()
 
 	cwSailing:RemoveLongship(self);
 end;
+
+function ENT:OnTakeDamage(damageInfo)
+	local curTime = CurTime()
+	local attacker = damageInfo:GetAttacker()
+
+	if (IsValid(attacker) and attacker:IsPlayer()) then
+		local damage = damageInfo:GetDamage()
+
+		if (IsValid(self.owner) and self.owner:Alive()) then
+			local subfaction = self.owner:GetSubfaction()
+			local bHasBelief = self.owner.HasBelief and self.owner:HasBelief("daring_trout")
+
+			if (subfaction == "Clan Harald" and bHasBelief) then
+				if (self.health <= 700) then
+					if (!self.owner.nextLongshipNotify or self.owner.nextLongshipNotify <= curTime) then
+						Schema:EasyText(self.owner, "icon16/anchor.png", "red", "A raven lands on your shoulder, clutching a torn piece of your longship's sail in its beak! Your longship is being damaged and may soon be destroyed if you do not act!")
+						self.owner:SendLua([[Clockwork.Client:EmitSound("npc/crow/die" .. math.random(1, 2) .. ".wav", 70, 100)]])
+
+						self.owner.nextLongshipNotify = curTime + 60
+					end
+				end
+			end
+		end
+
+		if (damage >= 20) then
+			local damageDealt = 0
+
+			if (damageInfo:IsDamageType(DMG_SLASH)) then
+				damageDealt = math.ceil(damage / 20)
+			elseif (damageInfo:IsDamageType(DMG_CLUB)) then
+				damageDealt = math.ceil(damage / 12)
+			end
+
+			if (damageDealt > 0) then
+				self.health = self.health or 500
+				self:SetHP(self.health - damageDealt)
+
+				if (cwBeliefs and attacker.HandleXP) then
+					local faction = attacker:GetFaction()
+
+					if (faction != "Goreic Warrior") then
+						local damagePercentage = math.min(damageDealt / 500, 1)
+						local faith = math.Round(300 * damagePercentage)
+
+						attacker:HandleXP(faith)
+					end
+				end
+
+				local activeWeapon = attacker:GetActiveWeapon()
+				local weaponItemTable = item.GetByWeapon(activeWeapon)
+
+				if (weaponItemTable) then
+					weaponItemTable:TakeConditionByPlayer(attacker, 0.5)
+				end
+				
+				self:EmitSound("physics/wood/wood_strain" .. math.random(2, 4) .. ".wav")
+			end
+		end
+	end
+end
