@@ -720,6 +720,10 @@ local function Guarding(ent, dmginfo)
 							if attacker:HasBelief("unrelenting") then
 								poiseDamageModifier = poiseDamageModifier + 0.25;
 							end
+							
+							if attacker:HasBelief("prowess_finisher") then
+								poiseDamageModifier = poiseDamageModifier + 0.15;
+							end
 
 							if attacker:HasBelief("fearsome_wolf") then
 								if attacker.warCryVictims then
@@ -779,7 +783,7 @@ local function Guarding(ent, dmginfo)
 								end
 							
 								if ent:HasBelief("fortitude_finisher") then
-									newEnemyPoise = newEnemyPoise * 0.75;
+									newEnemyPoise = newEnemyPoise * 0.85;
 								end 
 								
 								if ent:HasBelief("shieldwall") then

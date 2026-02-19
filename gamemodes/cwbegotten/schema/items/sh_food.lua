@@ -327,7 +327,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "cooked_wolf_meat"
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 6, thirst = 5};
+	ITEM.needs = {hunger = 8, thirst = 4};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -418,7 +418,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "cooked_leopard_meat"
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 20, thirst = 5};
+	ITEM.needs = {hunger = 25, thirst = 5};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -1284,7 +1284,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "masterclass_yummy_meal"
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 55, thirst = 55};
+	ITEM.needs = {hunger = 70, thirst = 55};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -1738,6 +1738,53 @@ local ITEM = Clockwork.item:New();
 		
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
+
+	-- Called when a player drops the item.
+	function ITEM:OnDrop(player, position) end;
+ITEM:Register();
+
+local ITEM = Clockwork.item:New();
+	ITEM.name = "Manlunch";
+	ITEM.model = "models/items/provisions/food_ratio/food_ratio02.mdl";
+	ITEM.weight = 0.45;
+	ITEM.useText = "Unwrap & Eat";
+	ITEM.useSound = "npc/barnacle/barnacle_crunch3.wav";
+	ITEM.category = "Food";
+	ITEM.description = "Well-cooked meat from an unknown source that has been wrapped in a greasy cloth.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/manlunch.png"
+	ITEM.stackable = true;
+	ITEM.uniqueID = "manlunch"
+	ITEM.infectchance = 5;
+	
+	ITEM.needs = {hunger = 40, thirst = 15};
+	
+	function ITEM:OnSetup()
+		if cwWarmth and cwWarmth.systemEnabled then
+			ITEM:AddData("freezing", 0, true);
+		end
+	end
+
+	-- Called when a player uses the item.
+	function ITEM:OnUse(player, itemEntity)
+		local freezing = self:GetData("freezing");
+		
+		if freezing and freezing > 25 then
+			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
+		
+			return false;
+		end
+	
+		if player:HasBelief("savage") then
+			Schema:EasyText(player, "olivedrab", "You enjoy the savory taste of your fellow man.");
+			player:HandleSanity(2);
+			player:SetHealth(math.Clamp(player:Health() + 6, 0, player:GetMaxHealth()));
+		else
+			Schema:EasyText(player, "olivedrab", "Whom did I just eat? And why did I enjoy the taste so?");
+			player:HandleSanity(-2);
+		end
+		
+		player:HandleXP(cwBeliefs.xpValues["food"]);
+	end
 
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;

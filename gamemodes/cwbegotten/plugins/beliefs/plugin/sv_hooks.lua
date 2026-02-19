@@ -664,35 +664,39 @@ function cwBeliefs:EntityHandleMenuOption(player, entity, option, arguments)
 								end
 							end);
 						elseif entity:GetNWEntity("Player"):IsPlayer() or entity:GetNWEntity("Player") == game.GetWorld() then
-							Clockwork.chatBox:AddInTargetRadius(player, "me", "begins cutting the flesh of the body before them, harvesting its meat.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
-						
-							Clockwork.player:SetAction(player, "mutilating", mutilationTime, 5, function()
-								if IsValid(player) and IsValid(entity) then
-									local activeWeapon = player:GetActiveWeapon();
-									local offhandWeapon;
-									
-									if activeWeapon:IsValid() then
-										offhandWeapon = activeWeapon:GetOffhand();
-									end
-									
-									if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger and weaponItemTable then
-										if (!entity.mutilated or entity.mutilated < 3) then
-											entity.mutilated = (entity.mutilated or 0) + mutilationValue;
-											
-											local instance = Clockwork.item:CreateInstance("humanmeat");
+							if entity.hasMeat and entity.hasMeat == true then
+								Clockwork.chatBox:AddInTargetRadius(player, "me", "begins cutting the flesh of the body before them, harvesting its meat.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2);
+							
+								Clockwork.player:SetAction(player, "mutilating", mutilationTime, 5, function()
+									if IsValid(player) and IsValid(entity) then
+										local activeWeapon = player:GetActiveWeapon();
+										local offhandWeapon;
+										
+										if activeWeapon:IsValid() then
+											offhandWeapon = activeWeapon:GetOffhand();
+										end
+										
+										if activeWeapon:IsValid() and activeWeapon.isDagger or offhandWeapon and offhandWeapon.isDagger and weaponItemTable then
+											if (!entity.mutilated or entity.mutilated < 3) then
+												entity.mutilated = (entity.mutilated or 0) + mutilationValue;
+												
+												local instance = Clockwork.item:CreateInstance("humanmeat");
 
-											player:GiveItem(instance, true);
-											player:HandleXP(self.xpValues["mutilate"]);
-											player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
-											Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
-																						
-											weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
-										else
-											Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
+												player:GiveItem(instance, true);
+												player:HandleXP(self.xpValues["mutilate"]);
+												player:EmitSound("npc/barnacle/barnacle_crunch"..math.random(2, 3)..".wav");
+												Clockwork.kernel:CreateBloodEffects(entity:NearestPoint(trace.HitPos), 1, entity);
+																							
+												weaponItemTable:TakeConditionByPlayer(player, conditionLoss, true);
+											else
+												Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
+											end
 										end
 									end
-								end
-							end);
+								end);
+							else
+								Clockwork.player:Notify(player, "This corpse is far too frail and sickly to mutilate!");
+							end;
 						end
 					else
 						Clockwork.player:Notify(player, "This corpse has no meat left to mutilate!");
@@ -2415,6 +2419,14 @@ function cwBeliefs:PlayerDeath(player, inflictor, attacker, damageInfo)
 		if timer.Exists("DecapitationBuffTimer_"..entIndex) then
 			timer.Remove("DecapitationBuffTimer_"..entIndex);
 		end
+	end
+	
+	local ragdoll = player:GetRagdollEntity();
+	
+	if player:CharPlayTime() > config.GetVal("min_xp_charplaytime") or player:IsAdmin() then
+		ragdoll.hasMeat = true;
+	else
+		ragdoll.hasMeat = false;
 	end
 end
 
