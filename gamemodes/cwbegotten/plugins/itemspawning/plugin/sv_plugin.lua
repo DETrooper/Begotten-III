@@ -300,9 +300,9 @@ function cwItemSpawner:AddSupercrateSpawn(supercrateEntity, player)
 end
 
 function cwItemSpawner:RemoveSupercrateSpawn(position, distance, player)
-	for category, v in pairs(self.SupercrateLocations) do
+	for k, v in ipairs(self.SupercrateLocations) do
 		if (v.pos:Distance(position) < distance) then
-			table.remove(self.SupercrateLocations, i);
+			table.remove(self.SupercrateLocations, k)
 			
 			if (player and player:IsPlayer()) then
 				Schema:EasyText(player, "cornflowerblue", "["..self.name.."] You removed a supercrate spawn at your cursor position.");

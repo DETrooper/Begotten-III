@@ -40,6 +40,7 @@ ENT.AvoidEnemyRange = 0
 
 -- Relationships --
 ENT.Factions = {"FACTION_SPIRIT_GORE"}
+ENT.canSeeCloakers = true
 
 -- Movements/animations --
 ENT.IdleAnimation = "idle"

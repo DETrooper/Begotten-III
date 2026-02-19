@@ -1234,7 +1234,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 							end
 						end
 							
-						if (faction == "Wanderer" or vFaction == "Wanderer") and v:GetFaith() ~= faith then
+						if faith ~= v:GetFaith() and (faction ~= "Wanderer" or vFaction ~= "Wanderer") then
 							-- Kinisgers can twisted warcry if disguised as a Reaver.
 							if faith == "Faith of the Dark" then
 								if faction == vFaction then
@@ -1252,7 +1252,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 								end
 							
 								if !immune then
-									if Schema.towerSafeZoneEnabled or !v:InTower() then
+									if !v:InTower() or !Schema.towerSafeZoneEnabled then
 										-- Cooldown for getting sanity debuff.
 										if !v.lastWarCried or v.lastWarCried < curTime - 60 then
 											v.lastWarCried = curTime;
@@ -1287,7 +1287,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 								end
 								
 								if !immune then
-									if Schema.towerSafeZoneEnabled or !v:InTower() then
+									if !v:InTower() or !Schema.towerSafeZoneEnabled then
 										-- Cooldown for getting sanity debuff.
 										if !v.lastWarCried or v.lastWarCried < curTime - 60 then
 											v.lastWarCried = curTime;
@@ -1314,7 +1314,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 								end
 
 								if !immune then
-									if Schema.towerSafeZoneEnabled or !v:InTower() then
+									if !v:InTower() or !Schema.towerSafeZoneEnabled then
 										if !v.lastWarCried or v.lastWarCried < curTime - 5 then
 											v.lastWarCried = curTime;
 											if !v:HasBelief("saintly_composure") then

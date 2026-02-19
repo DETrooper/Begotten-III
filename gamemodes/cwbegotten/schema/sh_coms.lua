@@ -551,7 +551,7 @@ local COMMAND = Clockwork.command:New("SetCustomRank")
 						return false;
 					end
 					
-					if factionTable.RanksToSubfaction and !factionTable.promoteAcrossSubfactions then
+					if Schema.RanksToSubfaction and !factionTable.promoteAcrossSubfactions then
 						local subfaction = target:GetNetVar("kinisgerOverrideSubfaction") or target:GetSubfaction();
 						
 						if Schema.RanksToSubfaction[faction][ranks[faction][rank]] and Schema.RanksToSubfaction[faction][ranks[faction][rank]] ~= subfaction then
@@ -771,7 +771,7 @@ local COMMAND = Clockwork.command:New("Promote")
 						return false;
 					end
 					
-					if factionTable.RanksToSubfaction and !factionTable.promoteAcrossSubfactions then
+					if Schema.RanksToSubfaction and !factionTable.promoteAcrossSubfactions then
 						local subfaction = target:GetNetVar("kinisgerOverrideSubfaction") or target:GetSubfaction();
 						
 						if Schema.RanksToSubfaction[faction][ranks[faction][rank]] and Schema.RanksToSubfaction[faction][ranks[faction][rank]] ~= subfaction then
@@ -969,7 +969,7 @@ local COMMAND = Clockwork.command:New("Demote")
 					return false;
 				end
 				
-				if factionTable.RanksToSubfaction and !factionTable.promoteAcrossSubfactions then
+				if Schema.RanksToSubfaction and !factionTable.promoteAcrossSubfactions then
 					local subfaction = target:GetNetVar("kinisgerOverrideSubfaction") or target:GetSubfaction();
 					
 					if Schema.RanksToSubfaction[faction][ranks[faction][rank]] and Schema.RanksToSubfaction[faction][ranks[faction][rank]] ~= subfaction then
@@ -1706,6 +1706,11 @@ local COMMAND = Clockwork.command:New("BlowWarhorn");
 			Schema:EasyText(player, "firebrick", "You cannot blow the gore warhorn again for another "..math.ceil(player.blowWarhornCooldown - curTime).." seconds!");
 		end
 	end;
+
+	if (CLIENT) then
+		Clockwork.ConVars.Binds.BLOWWARHORN = Clockwork.kernel:CreateClientConVar("cwBlowWarhornBind", 0, true, true)
+		Clockwork.setting:AddKeyBinding("Key Bindings", "BlowWarhorn: ", "cwBlowWarhornBind", "cwsay /blowwarhorn true");
+	end
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("GoreicHornSummonAll");

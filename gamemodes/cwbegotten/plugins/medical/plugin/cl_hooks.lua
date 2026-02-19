@@ -238,7 +238,7 @@ function cwMedicalSystem:RenderScreenspaceEffects()
 			DrawColorModify(modify);
 			
 			if (!morphinePatch) then
-				morphinePatch = CreateSound(Clockwork.Client, "begotten/ambient/special/morphine_dream_loop.wav");
+				morphinePatch = CreateSound(Clockwork.Client, "begotten/ui/morphine_dream_loop.wav");
 				
 				if (!morphinePatch:IsPlaying()) then
 					morphinePatch:PlayEx(0, 100);

@@ -887,7 +887,7 @@ end;
 
 function cwBeliefs:LockpickFinished(player, entity)
 	if IsValid(player) and IsValid(entity) then
-		if entity.cwLockTier and !entity.cwPassword then
+		if !entity.cwFactionLock and entity.cwLockTier and !entity.cwPassword then
 			if cwItemSpawner and cwItemSpawner.SuperCrate and entity == cwItemSpawner.SuperCrate.supercrate then
 				player:HandleXP(150);
 			elseif entity.cwLockTier == 1 then
@@ -1256,7 +1256,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 							Schema:DoTesla(entity, false);
 						end
 						
-						if cwWeather and cwWeather.weather == "rainstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
+						if cwWeather and cwWeather.weather == "thunderstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
 							local lastZone = entity:GetCharacterData("LastZone");
 							local zoneTable = zones:FindByID(lastZone);
 							
@@ -1303,7 +1303,7 @@ function cwBeliefs:EntityTakeDamageNew(entity, damageInfo)
 							Schema:DoTesla(entity, false);
 						end
 						
-						if cwWeather and cwWeather.weather == "rainstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
+						if cwWeather and cwWeather.weather == "thunderstorm" or cwWeather.weather == "bloodstorm" or cwWeather.weather == "acidrain" then
 							local lastZone = entity:GetCharacterData("LastZone");
 							local zoneTable = zones:FindByID(lastZone);
 							
@@ -1438,12 +1438,12 @@ function cwBeliefs:FuckMyLife(entity, damageInfo)
 	
 	if (attacker:IsPlayer()) then
 		if entity:IsPlayer() and not entTab.cwWakingUp then
-			if damage > 0 then
-				if attacker:IsOnFire() and attacker:HasBelief("extinctionist") then
-					local inflictor = damageInfo:GetInflictor();
+			if (!attacker:GetNetVar("Parried") and !attacker:GetNetVar("Deflected")) then
+				if (attacker:IsOnFire() and attacker:HasBelief("extinctionist")) then
+					local inflictor = damageInfo:GetInflictor()
 					
-					if IsValid(inflictor) and inflictor.IsABegottenMelee then
-						entity:Ignite(4);
+					if (IsValid(inflictor) and inflictor.IsABegottenMelee) then
+						entity:Ignite(4)
 					end
 				end
 			end

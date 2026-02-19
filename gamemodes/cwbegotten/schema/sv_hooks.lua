@@ -1108,12 +1108,10 @@ end;
 
 -- Called when a player presses F3.
 function Schema:ShowSpare1(player)
-	local target = player:GetEyeTraceNoCursor().Entity;
-	local entity = target;
+	local trace = player:GetEyeTraceNoCursor();
+	local target = Clockwork.entity:GetPlayer(trace.Entity);
 
-	if (IsValid(target) and target:GetShootPos():Distance(player:GetShootPos()) <= 46) then
-		target = Clockwork.entity:GetPlayer(target);
-		
+	if (IsValid(target) and target:GetShootPos():Distance(player:GetShootPos()) <= 60) then
 		if (target and player:GetNetVar("tied") == 0) then
 			local untieTime = 6;
 		
@@ -1132,7 +1130,7 @@ function Schema:ShowSpare1(player)
 			
 				Clockwork.player:SetAction(player, "untie", untieTime);
 				
-				Clockwork.player:EntityConditionTimer(player, target, entity, untieTime, 192, function()
+				Clockwork.player:EntityConditionTimer(player, target, trace.Entity, untieTime, 192, function()
 					return player:Alive() and !player:IsRagdolled() and !player:HasGodMode() and player:GetNetVar("tied") == 0;
 				end, function(success)
 					if (success) then

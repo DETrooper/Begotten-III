@@ -7250,7 +7250,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 4},
-			["wood"] = {amount = 2},
+			["human_bone"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["gore_horned_helm"] = {amount = 1},
@@ -9955,7 +9955,6 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("scrap_bolt");
 		RECIPE.name = "Scrap Bolt";
-		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.excludedSubfactions = {"Clan Gore", "Clan Harald", "Clan Reaver", "Clan Grock"};
 		RECIPE.requirements = {
@@ -9965,7 +9964,7 @@ function cwRecipes:ClockworkInitialized()
 			["scrap_bolt"] = {amount = 1},
 		};
 		RECIPE.category = "Munitions"
-		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.finishSound = "generic_ui/refine_success_02.wav";
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"

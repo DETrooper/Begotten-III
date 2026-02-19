@@ -463,6 +463,11 @@ local COMMAND = Clockwork.command:New("CharDiagnose");
 			Schema:EasyText(player, "firebrick", "You must look at a character!");
 		end;
 	end;
+	
+	if (CLIENT) then
+		Clockwork.ConVars.Binds.CHARDIAGNOSE = Clockwork.kernel:CreateClientConVar("cwCharDiagnoseBind", 0, true, true)
+		Clockwork.setting:AddKeyBinding("Key Bindings", "CharDiagnose: ", "cwCharDiagnoseBind", "cwsay /chardiagnose true")
+	end
 COMMAND:Register();
 
 local COMMAND = Clockwork.command:New("CharGiveDisease");

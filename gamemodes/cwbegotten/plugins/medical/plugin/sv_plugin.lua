@@ -1107,7 +1107,7 @@ function cwMedicalSystem:RemoveInjury(player, limb, uniqueID)
 		end;
 	else
 		if (injuries[limb]) then
-			injuries[limb] = nil;
+			injuries[limb] = {}
 		end
 	end
 	

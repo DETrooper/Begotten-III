@@ -2205,7 +2205,7 @@ function utf8.gensub(str, sub_len)
 end
 
 function utf8.setchar(s, k, v)
-	return utf8.sub(s, 0, k - 1) .. v .. utf8.sub(s, k + 1)
+	return utf8.sub(s, 1, k - 1) .. v .. utf8.sub(s, k + 1)
 end
 
 function utf8.getchar(s, k)

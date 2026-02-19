@@ -1208,26 +1208,26 @@ netstream.Hook("DoRitual", function(player, data)
 end)
 
 netstream.Hook("RegrowthMenu", function(player, data)
-	if player.selectingRegrowthLimb then
-		if data and isnumber(data) then
-			local hitGroup = data;
-			
-			Clockwork.limb:HealDamage(player, hitGroup, 100);
-			player:RemoveInjury(data);
-			player:SetHealth(math.min(player:Health() + 150, player:GetMaxHealth()));
-			player:ModifyBloodLevel(1500);
-			
-			if player:GetCharacterData("BleedingLimbs", {})[data] then
-				player:MakeLimbStopBleeding(data);
-				Clockwork.hint:Send(player, "Your "..cwMedicalSystem.cwHitGroupToString[data].." stops bleeding...", 5, Color(100, 175, 100), true, true);
+	if (player.selectingRegrowthLimb) then
+		if (data and isnumber(data)) then
+			local limb = data
+
+			Clockwork.limb:HealDamage(player, limb, 100)
+
+			player:RemoveInjury(limb)
+			player:SetHealth(math.min(player:Health() + 150, player:GetMaxHealth()))
+			player:ModifyBloodLevel(math.Round(cwMedicalSystem.maxBloodLevel * 0.6))
+
+			if (player:IsLimbBleeding(limb)) then
+				player:MakeLimbStopBleeding(limb)
+
+				Clockwork.hint:Send(player, "Your " .. cwMedicalSystem.cwHitGroupToString[limb] .. " stops bleeding...", 5, Color(100, 175, 100), true, true)
 			end
-			
-			player:HandleNeed("corruption", 5);
-			
-			Clockwork.chatBox:Add(player, nil, "itnofake", "You feel your wounds heal as branches and leaves extend and retract into your flesh.");
+
+			Clockwork.chatBox:Add(player, nil, "itnofake", "You feel your wounds heal as branches and leaves extend and retract into your flesh.")
 		end
-		
-		player.selectingRegrowthLimb = false;
+
+		player.selectingRegrowthLimb = false
 	end
 end)
 
