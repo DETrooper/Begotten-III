@@ -119,13 +119,14 @@ function PANEL:Rebuild()
 		self.weaponButton:SetSize(256, 70);
 		self.weaponButton:SetTextColor(Color(160, 0, 0));
 		self.weaponButton:SetFont("nov_IntroTextSmallfaaaaa");
+		self.weaponButton.category = "Weapons";
 		
 		local width, height = self.weaponButton:GetWide(), self.weaponButton:GetTall()
 		local buttonMaterial = Material("begotten/ui/butt24.png")
 		
 		-- Called when the button is painted.
 		function self.weaponButton.DoClick()
-			surface.PlaySound("begotten/ui/buttonclick.wav")
+			surface.PlaySound("begotten/ui/buttonrollover.wav")
 			
 			if self.recipeListOpen ~= "Weapons" then
 				self:BuildRecipeList("Weapons", faction, faith, subfaction, subfaith, (cwRecipes.recipeSearch and cwRecipes.recipeSearch or ""));
@@ -144,13 +145,14 @@ function PANEL:Rebuild()
 		self.munitionButton:SetSize(256, 70);
 		self.munitionButton:SetTextColor(Color(160, 0, 0));
 		self.munitionButton:SetFont("nov_IntroTextSmallfaaaaa");
+		self.munitionButton.category = "Munitions";
 		
 		local width, height = self.munitionButton:GetWide(), self.munitionButton:GetTall()
 		local buttonMaterial = Material("begotten/ui/butt24.png")
 		
 		-- Called when the button is painted.
 		function self.munitionButton.DoClick()
-			surface.PlaySound("begotten/ui/buttonclick.wav")
+			surface.PlaySound("begotten/ui/buttonrollover.wav")
 			
 			if self.recipeListOpen ~= "Munitions" then
 				self:BuildRecipeList("Munitions", faction, faith, subfaction, subfaith, (cwRecipes.recipeSearch and cwRecipes.recipeSearch or ""));
@@ -169,13 +171,14 @@ function PANEL:Rebuild()
 		self.armorButton:SetSize(256, 70);
 		self.armorButton:SetTextColor(Color(160, 0, 0));
 		self.armorButton:SetFont("nov_IntroTextSmallfaaaaa");
+		self.armorButton.category = "Armor";
 		
 		local width, height = self.armorButton:GetWide(), self.armorButton:GetTall()
 		local buttonMaterial = Material("begotten/ui/butt24.png")
 		
 		-- Called when the button is painted.
 		function self.armorButton.DoClick()
-			surface.PlaySound("begotten/ui/buttonclick.wav")
+			surface.PlaySound("begotten/ui/buttonrollover.wav")
 			
 			if self.recipeListOpen ~= "Armor" then
 				self:BuildRecipeList("Armor", faction, faith, subfaction, subfaith, (cwRecipes.recipeSearch and cwRecipes.recipeSearch or ""));
@@ -194,13 +197,14 @@ function PANEL:Rebuild()
 		self.cookingButton:SetSize(256, 70);
 		self.cookingButton:SetTextColor(Color(160, 0, 0));
 		self.cookingButton:SetFont("nov_IntroTextSmallfaaaaa");
+		self.cookingButton.category = "Cooking";
 		
 		local width, height = self.cookingButton:GetWide(), self.cookingButton:GetTall()
 		local buttonMaterial = Material("begotten/ui/butt24.png")
 		
 		-- Called when the button is painted.
 		function self.cookingButton.DoClick()
-			surface.PlaySound("begotten/ui/buttonclick.wav")
+			surface.PlaySound("begotten/ui/buttonrollover.wav")
 			
 			if self.recipeListOpen ~= "Cooking" then
 				self:BuildRecipeList("Cooking", faction, faith, subfaction, subfaith, (cwRecipes.recipeSearch and cwRecipes.recipeSearch or ""));
@@ -219,13 +223,14 @@ function PANEL:Rebuild()
 		self.medicalButton:SetSize(256, 70);
 		self.medicalButton:SetTextColor(Color(160, 0, 0));
 		self.medicalButton:SetFont("nov_IntroTextSmallfaaaaa");
+		self.medicalButton.category = "Medical";
 		
 		local width, height = self.medicalButton:GetWide(), self.medicalButton:GetTall()
 		local buttonMaterial = Material("begotten/ui/butt24.png")
 		
 		-- Called when the button is painted.
 		function self.medicalButton.DoClick()
-			surface.PlaySound("begotten/ui/buttonclick.wav")
+			surface.PlaySound("begotten/ui/buttonrollover.wav")
 			
 			if self.recipeListOpen ~= "Medical" then
 				self:BuildRecipeList("Medical", faction, faith, subfaction, subfaith, (cwRecipes.recipeSearch and cwRecipes.recipeSearch or ""));
@@ -244,13 +249,14 @@ function PANEL:Rebuild()
 		self.otherButton:SetSize(256, 70);
 		self.otherButton:SetTextColor(Color(160, 0, 0));
 		self.otherButton:SetFont("nov_IntroTextSmallfaaaaa");
+		self.otherButton.category = "Other";
 		
 		local width, height = self.otherButton:GetWide(), self.otherButton:GetTall()
 		local buttonMaterial = Material("begotten/ui/butt24.png")
 		
 		-- Called when the button is painted.
 		function self.otherButton.DoClick()
-			surface.PlaySound("begotten/ui/buttonclick.wav")
+			surface.PlaySound("begotten/ui/buttonrollover.wav")
 			
 			if self.recipeListOpen ~= "Other" then
 				self:BuildRecipeList("Other", faction, faith, subfaction, subfaith, (cwRecipes.recipeSearch and cwRecipes.recipeSearch or ""));
@@ -409,6 +415,14 @@ function PANEL:BuildRecipeList(category, faction, faith, subfaction, subfaith, s
 		end
 		
 		self.recipeListOpen = category;
+		
+		for k, v in pairs(self.categoryList:GetItems()) do
+			if v.category == category then
+				v:SetTextColor(Color(160, 150, 150));
+			else
+				v:SetTextColor(Color(160, 0, 0));
+			end
+		end
 	end
 end
 
@@ -840,7 +854,7 @@ function PANEL:Init()
 	
 	-- Called when the button is painted.
 	function self.amtButtonP.DoClick()
-		surface.PlaySound("begotten/ui/buttonclick.wav");
+		surface.PlaySound("begotten/ui/buttonrollover.wav");
 
 		if(!this:GetParent().selectedRecipe) then return; end
 
@@ -881,7 +895,7 @@ function PANEL:Init()
 	
 	-- Called when the button is painted.
 	function self.amtButtonM.DoClick()
-		surface.PlaySound("begotten/ui/buttonclick.wav");
+		surface.PlaySound("begotten/ui/buttonrollover.wav");
 
 		if(!this:GetParent().selectedRecipe) then return; end
 
