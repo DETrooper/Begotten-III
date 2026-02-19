@@ -473,6 +473,7 @@ ITEM.description = "The golden and ornate armor of a Vexillifer, reinforced with
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requiredFaiths = {"Faith of the Light"};
 ITEM.excludedFactions = {"Goreic Warrior"};
+ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 ITEM.faction = "Gatekeeper";
 
 ITEM.attributes = {"fear", "banner_blessing"};

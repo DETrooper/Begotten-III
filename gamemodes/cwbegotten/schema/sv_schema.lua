@@ -2635,6 +2635,13 @@ concommand.Add("cw_CoinslotRation", function(player, cmd, args)
 				local unixTime = os.time();
 				
 				if (unixTime >= player:GetCharacterData("nextration", 0)) then
+					if (game.GetMap() == "rp_district21") then
+						Schema:EasyText(player, "peru", "You pull the ration lever but it's been empty for a long time. In these parts, people survive by hunting and looting.")
+						entity:EmitSound("buttons/lever3.wav")
+
+						return
+					end
+
 					if (Schema.towerTreasury and Schema.towerTreasury <= 250) or config.GetVal("enable_famine") then
 						Schema:EasyText(player, "olive", "You pull the ration lever but one is not dispensed, yet you feel as though it has been long enough. How odd.");
 						entity:EmitSound(coinslotSounds[math.random(#coinslotSounds)]);

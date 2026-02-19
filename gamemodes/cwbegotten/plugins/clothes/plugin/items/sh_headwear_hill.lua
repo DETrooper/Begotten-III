@@ -11,7 +11,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "An iron helmet over an iron coif that evokes a barbaric visage, often worn by yeomen of the Watch."
 	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/goreridgehelm";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 
@@ -79,7 +79,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "An opened face iron helmet allowing for greater visibility. Commonly seen used by veterans of the Watch."
 	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/gorekingschosenhelmet";
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
 
@@ -115,7 +115,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "An ornate helm with a serpent adornment sat atop, and a full-faced iron chain coif protecting the whole of the neck."
 	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 	ITEM.requiredbeliefs = {"hauberk"};
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
@@ -151,7 +151,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A thick helmet with a split chain coif, padded and made of steel."
 	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/goreguardianhelm";
 	ITEM.requiredbeliefs = {"hauberk"};
 
 	ITEM.conditionScale = 0.75 -- item degrades 1.5x faster with damage related condition loss
@@ -186,7 +186,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.headSuffix = "_hill";
 	ITEM.description = "A high ridged helm covered in runic emblems and sigils of the Gore-Glazic, with a split-coif design. A sign of the ultimate position a man of the Watch could attain."
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/goreguardianhelm";
 	ITEM.requiredRanks = {"Master-At-Arms"};
 	ITEM.requiredFactions = {"Hillkeeper"}; 
 	ITEM.requiredbeliefs = {"hauberk"};
@@ -255,7 +255,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A scowling depiction of Saint Ragnar, an imposing face meant to strike fear into the heathen. It's grimace bear the sight of death and jubilation at the cleansing of the Hill's Forests; and, to the unfaithful, a scathing reminder of the complex majesty of the Gore-Glazic face. It is newly wrought to serve the new mysteries expounded by the Castigators in their fight against the dark."
 	ITEM.requiredFactions = {"Holy Hierarchy"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/knighthelmet";
 	ITEM.uniqueID = "ministryhelmet"
 	ITEM.requiredbeliefs = {"hauberk"};
 
@@ -357,7 +357,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.headReplacement = "models/begotten/heads/sutton_hoo.mdl";
 	ITEM.description = "A fine steel helm with elegant inlays. It boasts wealth, yet the wearer is a hateful soul. This infamous attire is associated with the Great Northern Orthodoxy, a band of fanatics who have pillaged and extorted pilgrims in the North in the name of atonement and repaying their debts to Sol. It appears to be protected by a judgemental aura that brings great unease to sinners."
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/skullhelm";
+	ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 	
 	ITEM.attributes = {"fear"};
 	ITEM.requiredbeliefs = {"repentant"};
@@ -394,7 +394,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "An iron and leather helm used by men of the Hill."
 	ITEM.excludedFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/gatekeep1";
+	ITEM.overlay = "begotten/zomboverlay/new/goreridgehelm";
 	
 	ITEM.conditionScale = 1.1 -- item degrades 1.5x faster with damage related condition loss
 	

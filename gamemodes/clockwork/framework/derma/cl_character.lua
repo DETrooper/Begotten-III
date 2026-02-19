@@ -2351,21 +2351,36 @@ function PANEL:Init()
 			self.forenameRandomButton:SetSize(24, 24);
 			self.forenameRandomButton:SetImage("begotten/ui/bgtbtnrandom.png");
 			self.forenameRandomButton:SetPos(82, 30);
-			
-			local factionNames = factionTable.names;
-			local randomNames = subfactionTable and (subfactionTable.namesOverride and subfactionTable.namesOverride or factionNames) or factionNames;
-			
+
+			local factionNames = factionTable.names
+
 			-- Called when an option is selected.
 			self.forenameRandomButton.DoClick = function()
-				if RANDOM_FORENAMES and factionNames then
-					local random_forename = "";
-					
-					random_forename = table.Random(RANDOM_FORENAMES[randomNames][string.lower(Clockwork.Client.CurrentGender)]);
-					
-					self.forenameTextEntry:SetValue(random_forename);
+				if (RANDOM_FORENAMES and factionNames) then
+					local forenames = factionNames
+					local selectedSubfaction = Clockwork.Client.SelectedSubfaction
+
+					if (selectedSubfaction and factionTable.subfactions) then
+						for i = 1, #factionTable.subfactions do
+							local subfaction = factionTable.subfactions[i]
+
+							if (subfaction.name == selectedSubfaction) then
+								if (subfaction.namesOverride) then
+									forenames = subfaction.namesOverride
+								end
+
+								break
+							end
+						end
+					end
+
+					local currentGender = string.lower(Clockwork.Client.CurrentGender)
+					local forename = table.Random(RANDOM_FORENAMES[forenames][currentGender])
+
+					self.forenameTextEntry:SetValue(forename)
 				end
-			end;
-			
+			end
+
 			self.surnameTextEntry = self.nameForm:TextEntry("Surname");
 			self.surnameTextEntry:SetAllowNonAsciiCharacters(true);
 			self.surnameRandomButton = vgui.Create("DImageButton", self.nameForm);
@@ -2376,16 +2391,31 @@ function PANEL:Init()
 			
 			-- Called when an option is selected.
 			self.surnameRandomButton.DoClick = function()
-				if RANDOM_SURNAMES and Clockwork.faction.stored[self.info.faction].names then
-					local random_surname = "";
+				if (RANDOM_SURNAMES and factionNames) then
+					local surnames = factionNames
+					local selectedSubfaction = Clockwork.Client.SelectedSubfaction
 
-					random_surname = table.Random(RANDOM_SURNAMES[randomNames]);
-					
-					self.surnameTextEntry:SetValue(random_surname);
+					if (selectedSubfaction and factionTable.subfactions) then
+						for i = 1, #factionTable.subfactions do
+							local subfaction = factionTable.subfactions[i]
+
+							if (subfaction.name == selectedSubfaction) then
+								if (subfaction.namesOverride) then
+									surnames = subfaction.namesOverride
+								end
+
+								break
+							end
+						end
+					end
+
+					local surname = table.Random(RANDOM_SURNAMES[surnames])
+
+					self.surnameTextEntry:SetValue(surname)
 				end
-			end;
-		end;
-	end;
+			end
+		end
+	end
 	
 	if (self.bSelectModel or self.bPhysDesc) then
 		self.appearanceForm = vgui.Create("DForm", self);

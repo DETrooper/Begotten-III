@@ -184,6 +184,7 @@ local ITEM = Clockwork.item:New("clothes_base");
 ITEM.name = "Hillkeeper Signifer Plate"; -- Vexillifer Gatekeeper Plate equivalent
 ITEM.model = "models/begotten_apocalypse/items/hilltop_coat_item.mdl"
 ITEM.iconoverride = "materials/begotten_apocalypse/ui/itemicons/hilltop_coat_item.png"
+ITEM.helmetIconOverride = "materials/begotten_apocalypse/ui/itemicons/hill_signifier.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
@@ -194,9 +195,9 @@ ITEM.weight = 7;
 ITEM.weightclass = "Medium";
 ITEM.description = "A set with a wolf's head draped over a conic and chainmasked helm, showing only the eyes. Worn by men of the Hill who swore an oath of eternal loyalty, who would sooner die than let the banners stop flying.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
-ITEM.excludedFactions = {"Goreic Warrior"};
+ITEM.requiredFactions = {"Hillkeeper"};
+ITEM.overlay = "begotten/zomboverlay/new/genericmask";
 ITEM.faction = "Hillkeeper";
-ITEM.helmetIconOverride = "materials/begotten_apocalypse/ui/itemicons/hill_signifier.png"
 
 ITEM.attributes = {"fear", "banner_blessing"};
 

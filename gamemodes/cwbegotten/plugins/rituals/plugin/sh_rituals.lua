@@ -1666,10 +1666,11 @@ RITUAL = cwRituals.rituals:New("glazic_rite_of_clear_skies");
 	function RITUAL:StartRitual(player)
 		local lastZone = player:GetCharacterData("LastZone");
 		
-		if lastZone ~= "wasteland" and lastZone ~= "hotspring" then
-			Schema:EasyText(player, "peru", "You must be in the wasteland to perform this ritual!")
-			return false
-		end
+		if (!util.TraceLine(util.GetPlayerTrace(player, player:GetUp())).HitSky) then
+            Schema:EasyText(player, "peru", "You must be standing under the open sky to perform this ritual!")
+
+            return false
+        end
 
 		if cwWeather then
 			if !cwWeather.weatherTypes["normal"] then

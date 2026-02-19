@@ -1453,6 +1453,7 @@ Clockwork.animation:AddClericArms("models/begotten/wanderers/clericarmored")
 Clockwork.animation:AddHidewandererArms("models/begotten/wanderers/hidewanderer")
 
 Clockwork.animation:AddCoatOfPlateArms("models/begotten/hillkeepers/coat_of_plate")
+Clockwork.animation:AddCoatOfPlateArms("models/bmoc/hill/hill_signifier.mdl")
 Clockwork.animation:AddFineCoatArms("models/begotten/hillkeepers/fine_coat")
 Clockwork.animation:AddHeavyLamellarArms("models/begotten/hillkeepers/heavy_lamellar")
 Clockwork.animation:AddHillAcolyteArms("models/begotten/hillkeepers/acolyte")

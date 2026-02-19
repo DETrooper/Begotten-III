@@ -632,7 +632,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.description = "A spiked steel helmet typically worn by the defenders of the Great Tree. It provides exemplary protection."
 	ITEM.requiredFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
-	ITEM.overlay = "begotten/zomboverlay/new/goreguardianhelm";
+	ITEM.overlay = "begotten/zomboverlay/new/gorekingschosenhelmet";
 	ITEM.requiredbeliefs = {"hauberk"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
