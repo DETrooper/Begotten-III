@@ -1235,7 +1235,7 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("skintape");
 		RECIPE.name = "Skintape";
-		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
 		RECIPE.requirements = {
 			["humanmeat"] = {amount = 2},
 		};
@@ -1261,7 +1261,7 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("skingauze");
 		RECIPE.name = "Skingauze";
-		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
 		RECIPE.requirements = {
 			["humanmeat"] = {amount = 3},
 			["human_bone"] = {amount = 1},
@@ -8694,7 +8694,7 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("twisted_fuck_armor");
 		RECIPE.name = "Twisted Fuck Armor";
-		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["human_bone"] = {amount = 6},
