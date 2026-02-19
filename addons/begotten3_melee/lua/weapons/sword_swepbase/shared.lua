@@ -1233,21 +1233,26 @@ end
 					riposteDamageModifier = 3.5
 				end
 				
-				if string.find(weaponClass, "begotten_spear_") or string.find(weaponClass, "begotten_polearm_") or string.find(weaponClass, "begotten_scythe_") then
+				if string.find(weaponClass, "begotten_polearm_") or string.find(weaponClass, "begotten_scythe_") then
 					local maxPoleRange = (attacktable["meleerange"]) * 0.1
 					local maxIneffectiveRange = maxPoleRange * 0.65
 				
 					if distance <= maxIneffectiveRange and hit:IsValid() then
-						damage = (attacktable["primarydamage"]) * 0.01
+						damage = (attacktable["primarydamage"]) * 0.15
 						damagetype = 128
 						
 						if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 							--print "Spear Shaft Hit"
-							damage = math.max(1, (attacktable["primarydamage"]) * 0.05)
+							damage = math.max(1, (attacktable["primarydamage"]) * 0.1)
 							damagetype = 128
 							
+							local knockbackNpcBonus = 1;
+							if (hit:IsNPC() or hit:IsNextBot()) then
+								knockbackNpcBonus = 2
+							end
+							
 							-- KNOCKBACK
-							local knockback = owner:GetAngles():Forward() * 100 * riposteDamageModifier;
+							local knockback = owner:GetAngles():Forward() * 300 * riposteDamageModifier * knockbackNpcBonus;
 							knockback.z = 0
 
 							timer.Simple(0.1, function()
@@ -1257,7 +1262,7 @@ end
 							end);
 							
 							if hit:IsPlayer() then
-								hit:TakeStability(15 * riposteDamageModifier * GetStabilityModifier(self.Owner))
+								hit:TakeStability(30 * riposteDamageModifier * GetStabilityModifier(self.Owner))
 							end
 							
 							d:SetDamage(damage)
@@ -1448,11 +1453,11 @@ end
 						
 						if distance <= maxIneffectiveRange and hit:IsValid() then
 							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
-								damage = math.max(1, (attacktable["primarydamage"]) * 0.05)
+								damage = math.max(1, (attacktable["primarydamage"]) * 0.15)
 								damagetype = 128
 								
 								-- KNOCKBACK
-								local knockback = owner:GetAngles():Forward() * 150;
+								local knockback = owner:GetAngles():Forward() * 250;
 								knockback.z = 0
 								
 								-- timers are shit but whatever
@@ -1609,12 +1614,12 @@ end
 				-- Polearm Damage System				
 				if distance <= maxIneffectiveRange then
 					if (hit:IsNPC() or hit:IsNextBot()) or hit:IsPlayer() then
-						damage = (attacktable["primarydamage"]) * 0.01
+						damage = (attacktable["primarydamage"]) * 0.15
 						damagetype = 128
 						if hit:IsValid() and hit:IsPlayer() and !hit:GetNetVar("Guardening") == true and hit:GetNetVar("Parry") != true and !hit.iFrames then
 							hit:TakeStability(10 * GetStabilityModifier(self.Owner))
 							-- KNOCKBACK
-							local knockback = owner:GetAngles():Forward() * 150;
+							local knockback = owner:GetAngles():Forward() * 300;
 							knockback.z = 0
 							
 							timer.Simple(0.1, function()
@@ -1773,11 +1778,11 @@ end
 							
 							if (hit:IsNPC() or hit:IsNextBot()) or (hit:IsPlayer() and !hit:GetNetVar("Guardening") and !hit:GetNetVar("Parry") and !hit:GetNetVar("Deflect")) and !hit.iFrames then
 								--print "Spear Shaft Hit"
-								damage = math.max(1, (attacktable["primarydamage"]) * 0.05)
+								damage = math.max(1, (attacktable["primarydamage"]) * 0.1)
 								damagetype = 128
 								
 								-- KNOCKBACK
-								local knockback = owner:GetAngles():Forward() * 100;
+								local knockback = owner:GetAngles():Forward() * 250;
 								knockback.z = 0
 
 								timer.Simple(0.1, function()

@@ -109,6 +109,32 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("leatherhumanmeat");
+		RECIPE.name = "Leather";
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requirements = {
+			["humanmeat"] = {amount = 5},
+		};
+		RECIPE.result = {
+			["leather"] = {amount = 1},
+		};
+		RECIPE.category = "Other"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 4
+		RECIPE.craftVerb = "stitching"
+		RECIPE.experience = 10;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("leatherhide");
 		RECIPE.name = "(2x) Leather";
@@ -732,6 +758,34 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("manlunch");
+		RECIPE.name = "Manlunch";
+		RECIPE.requiresHeatSource = true;
+		RECIPE.requiredBeliefs = {"cookist"};
+		RECIPE.requirements = {
+			["humanmeat"] = {amount = 3},
+			["cloth"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["manlunch"] = {amount = 1},
+		};
+		RECIPE.category = "Cooking"
+		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "cooking"
+		RECIPE.experience = 28;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("cooked_yummy_meat");
 		RECIPE.name = "Cooked Yummy Meat";
@@ -845,9 +899,65 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("wanderers_delight_beansandbread");
+		RECIPE.name = "(2x) Wanderer's Delight";
+		RECIPE.requiresHeatSource = true;
+		RECIPE.requiredBeliefs = {"culinarian"};
+		RECIPE.requirements = {
+			["moldy_bread"] = {amount = 2},
+			["can_of_beans"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["wanderers_delight"] = {amount = 2},
+		};
+		RECIPE.category = "Cooking"
+		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "cooking"
+		RECIPE.experience = 35;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("wanderers_delight_cannedmealandbread");
+		RECIPE.name = "(2x) Wanderer's Delight";
+		RECIPE.requiresHeatSource = true;
+		RECIPE.requiredBeliefs = {"culinarian"};
+		RECIPE.requirements = {
+			["canned_meal"] = {amount = 2},
+			["moldy_bread"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["wanderers_delight"] = {amount = 2},
+		};
+		RECIPE.category = "Cooking"
+		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "cooking"
+		RECIPE.experience = 35;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("meatmeal");
-		RECIPE.name = "(3x) Meatmeal";
+		RECIPE.name = "(4x) Meatmeal";
 		RECIPE.requiresHeatSource = true;
 		RECIPE.requiredBeliefs = {"culinarian"};
 		RECIPE.requirements = {
@@ -855,7 +965,7 @@ function cwRecipes:ClockworkInitialized()
 			["spice"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["meatmeal"] = {amount = 3},
+			["meatmeal"] = {amount = 4},
 		};
 		RECIPE.category = "Cooking"
 		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
@@ -1125,7 +1235,7 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("skintape");
 		RECIPE.name = "Skintape";
-		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
 		RECIPE.requirements = {
 			["humanmeat"] = {amount = 2},
 		};
@@ -1151,7 +1261,7 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("skingauze");
 		RECIPE.name = "Skingauze";
-		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
 		RECIPE.requirements = {
 			["humanmeat"] = {amount = 3},
 			["human_bone"] = {amount = 1},
@@ -8584,7 +8694,7 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("twisted_fuck_armor");
 		RECIPE.name = "Twisted Fuck Armor";
-		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["human_bone"] = {amount = 6},
