@@ -1799,16 +1799,14 @@ end
 function GM:Think() end
 
 -- Called when a player's health should regenerate.
-function GM:PlayerShouldHealthRegenerate(player)
-	return true
-end
+function GM:PlayerShouldHealthRegenerate(player) end
 
 -- Called to get the entity that a player is holding.
 function GM:PlayerGetHoldingEntity(player) end
 
 -- A function to regenerate a player's health.
 function GM:PlayerHealthRegenerate(player, health, maxHealth)
-	local curTime = CurTime()
+	--[[local curTime = CurTime()
 	
 	if (player:Alive() and (!player.cwNextHealthRegen or curTime >= player.cwNextHealthRegen)) then
 		local maxHealth = player:GetMaxHealth()
@@ -1827,7 +1825,7 @@ function GM:PlayerHealthRegenerate(player, health, maxHealth)
 
 			player.cwNextHealthRegen = curTime + 10
 		end
-	end
+	end]]--
 end
 
 -- Called when a player picks an item up.

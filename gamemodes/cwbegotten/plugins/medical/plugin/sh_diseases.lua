@@ -134,3 +134,11 @@ local DISEASE = {};
 		[1] = {symptoms = {"Deformities"}},
 	};
 cwMedicalSystem:RegisterDisease(DISEASE.uniqueID, DISEASE);
+
+local DISEASE = {};
+	DISEASE.uniqueID = "sepsis";
+	DISEASE.name = "Sepsis";
+	DISEASE.stages = {
+		[1] = {symptoms = {"Sepsis"}},
+	};
+cwMedicalSystem:RegisterDisease(DISEASE.uniqueID, DISEASE);

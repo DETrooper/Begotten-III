@@ -262,7 +262,7 @@ local ITEM = Clockwork.item:New("shield_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "fine_steel_chunks"}};
 	ITEM.itemSpawnerInfo = {category = "Melee", rarity = 800, supercrateOnly = true};
 	ITEM.requiredbeliefs = {"defender"};
-	ITEM.requiredFaiths = {"Faith of the Light"};
+	ITEM.requiredSubfaiths = {"Sol Orthodoxy", "Hard-Glazed"};
 ITEM:Register();
 
 local ITEM = Clockwork.item:New("shield_base");

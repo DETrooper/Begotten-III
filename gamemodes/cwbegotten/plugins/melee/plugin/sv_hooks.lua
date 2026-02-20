@@ -870,7 +870,7 @@ function cwMelee:EntityTakeDamageAfter(entity, damageInfo)
 							local maxPoleRange = (attacktable["meleerange"]) * 0.1
 							local maxIneffectiveRange = maxPoleRange * 0.65
 
-							if distance >= maxIneffectiveRange or (didthrust and attackerWeapon.CanSwipeAttack) then
+							if distance >= maxIneffectiveRange or (didthrust and attackerWeapon.CanSwipeAttack) or attacker:GetNetVar("Riposting") then
 								if !attacker:IsRunning() then
 									entity:SetNetVar("runningDisabled", true);
 									

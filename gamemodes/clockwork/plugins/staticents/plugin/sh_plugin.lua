@@ -57,6 +57,12 @@ function COMMAND:OnRun(player, arguments)
 					return;
 				end;
 			end;
+			
+			if target.cwPassword then
+				Schema:EasyText(player, "grey", "["..self.name.."] You cannot static passworded containers! Note that passworded containers are already persistent.");
+
+				return;
+			end
 				
 			table.insert(cwStaticEnts.staticEnts, target);
 			cwStaticEnts:SaveStaticEnts();

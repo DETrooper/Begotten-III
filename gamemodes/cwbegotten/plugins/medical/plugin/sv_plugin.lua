@@ -102,6 +102,29 @@ function cwMedicalSystem:StringToHitGroup(str)
 	end;
 end;
 
+-- A function to give infections based off of an item's infection chance
+function cwMedicalSystem:RollInfectionChance(itemTable, target, limbGroup, healer)
+	local infectionChance = itemTable.infectionChance;
+	
+	if !healer then
+		healer = target;
+	end
+	
+	if infectionChance then
+		if cwBeliefs and healer:HasBelief("sanitary") then
+			infectionChance = infectionChance / 2;
+		end
+				
+		if math.random(1, 100) <= infectionChance then
+			if itemTable.infectionChance > math.random(50, 100) then
+				target:AddInjury(limbGroup, "infection");
+			else
+				target:AddInjury(limbGroup, "minor_infection");
+			end
+		end
+	end
+end;
+
 -- Called when a player uses a medical item.
 function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 	if (!IsValid(player) or !itemTable or !player:HasItemInstance(itemTable) or !player:Alive()) then
@@ -133,6 +156,7 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 			if (itemTable("stopsBleeding") and player.bleeding) then
 				if itemTable.limbs and istable(itemTable.limbs) and #itemTable.limbs > 0 and hitGroup then
 					if player:GetCharacterData("BleedingLimbs", {})[self:HitgroupToString(hitGroup)] and table.HasValue(itemTable.limbs, hitGroup) then
+						self:RollInfectionChance(itemTable, player, self.cwHitGroupToString[hitGroup])
 						player:MakeLimbStopBleeding(hitGroup);
 						Clockwork.hint:Send(player, "Your "..self.cwHitGroupToString[hitGroup].." stops bleeding...", 5, Color(100, 175, 100), true, true);
 					end
@@ -159,23 +183,8 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 						
 						for k, v in pairs(injuries) do							
 							if v[injury] then
-								local infectionChance = itemTable.infectionChance;
-								
+								self:RollInfectionChance(itemTable, player, k)								
 								player:RemoveInjury(k, injury);
-								
-								if infectionChance then
-									if cwBeliefs and player:HasBelief("sanitary") then
-										infectionChance = infectionChance / 2;
-									end
-									
-									if math.random(1, 100) <= infectionChance then
-										if itemTable.infectionChance > 40 then
-											player:AddInjury(k, "infection");
-										else
-											player:AddInjury(k, "minor_infection");
-										end
-									end
-								end
 							end
 						end
 					end
@@ -186,24 +195,9 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 						
 						for k, v in pairs(injuries) do
 							if k == hitGroup and v[injury] then
-								local infectionChance = itemTable.infectionChance;
+								self:RollInfectionChance(itemTable, player, k)
 								
-								player:RemoveInjury(k, injury);
-								
-								if infectionChance then
-									if cwBeliefs and player:HasBelief("sanitary") then
-										infectionChance = infectionChance / 2;
-									end
-									
-									if math.random(1, 100) <= infectionChance then
-										if itemTable.infectionChance > 40 then
-											player:AddInjury(k, "infection");
-										else
-											player:AddInjury(k, "minor_infection");
-										end
-									end
-								end
-								
+								player:RemoveInjury(k, injury);								
 								break;
 							end
 						end
@@ -232,16 +226,20 @@ function cwMedicalSystem:PlayerUseMedical(player, itemTable, hitGroup)
 				local healRepetition = itemTable("healRepetition");
 				local timesHealed = 0;
 				
-				if cwBeliefs and player:HasBelief("medicine_man") then
-					healAmount = healAmount * 1.7;
-				end
-				
-				if cwBeliefs and player:HasBelief("one_with_the_druids") then
-					healAmount = healAmount * 1.5;
-				end
-				
-				if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "practitioner") then
-					healAmount = healAmount * 1.25;
+				if player:HasDisease("sepsis") then
+					healAmount = 0;
+				else
+					if cwBeliefs and player:HasBelief("medicine_man") then
+						healAmount = healAmount * 1.7;
+					end
+					
+					if cwBeliefs and player:HasBelief("one_with_the_druids") then
+						healAmount = healAmount * 1.5;
+					end
+					
+					if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "practitioner") then
+						healAmount = healAmount * 1.25;
+					end
 				end
 
 				timer.Create(playerIndex.."_heal_"..itemTable.itemID, healDelay, healRepetition, function()
@@ -377,31 +375,16 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 				if itemTable.curesInjuries then
 					local curesInjuries = table.Copy(itemTable.curesInjuries)
 					if(clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "miracle_doctor") and itemTable.stopsBleeding and !table.HasValue(curesInjuries, "gash")) then table.insert(curesInjuries, "gash") end
-
+					
 					if hitGroup == "all" then
 						for i = 1, #curesInjuries do
 							local injury = curesInjuries[i];
 							local injuries = self:GetInjuries(target);
-
+							
 							for k, v in pairs(injuries) do							
 								if v[injury] then
-									local infectionChance = itemTable.infectionChance;
-
+									self:RollInfectionChance(itemTable, target, k, player)								
 									target:RemoveInjury(k, injury);
-
-									if infectionChance then
-										if cwBeliefs and (player:HasBelief("sanitary") or target:HasBelief("sanitary")) then
-											infectionChance = infectionChance / 2;
-										end
-
-										if math.random(1, 100) <= infectionChance then
-											if itemTable.infectionChance > 40 then
-												target:AddInjury(k, "infection");
-											else
-												target:AddInjury(k, "minor_infection");
-											end
-										end
-									end
 								end
 							end
 						end
@@ -412,24 +395,9 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 							
 							for k, v in pairs(injuries) do
 								if k == hitGroup and v[injury] then
-									local infectionChance = itemTable.infectionChance;
+									self:RollInfectionChance(itemTable, target, k, player)
 									
-									target:RemoveInjury(k, injury);
-									
-									if infectionChance then
-										if cwBeliefs and (player:HasBelief("sanitary") or target:HasBelief("sanitary")) then
-											infectionChance = infectionChance / 2;
-										end
-										
-										if math.random(1, 100) <= infectionChance then
-											if itemTable.infectionChance > 40 then
-												target:AddInjury(k, "infection");
-											else
-												target:AddInjury(k, "minor_infection");
-											end
-										end
-									end
-									
+									target:RemoveInjury(k, injury);								
 									break;
 								end
 							end
@@ -473,16 +441,20 @@ function cwMedicalSystem:HealPlayer(player, target, itemTable, hitGroup)
 					local healRepetition = itemTable("healRepetition");
 					local timesHealed = 0;
 					
-					if cwBeliefs and player:HasBelief("medicine_man") then
-						healAmount = healAmount * 3;
-					end
-					
-					if cwBeliefs and player:HasBelief("one_with_the_druids") then
-						healAmount = healAmount * 1.5;
-					end
+					if target:HasDisease("sepsis") then
+						healAmount = 0;
+					else
+						if cwBeliefs and player:HasBelief("medicine_man") then
+							healAmount = healAmount * 3;
+						end
+						
+						if cwBeliefs and player:HasBelief("one_with_the_druids") then
+							healAmount = healAmount * 1.5;
+						end
 
-					if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "practitioner") then
-						healAmount = healAmount * 1.25;
+						if clothesItem and clothesItem.attributes and table.HasValue(clothesItem.attributes, "practitioner") then
+							healAmount = healAmount * 1.25;
+						end
 					end
 					
 					timer.Create(targetIndex.."_heal_"..itemTable.itemID, healDelay, healRepetition, function()

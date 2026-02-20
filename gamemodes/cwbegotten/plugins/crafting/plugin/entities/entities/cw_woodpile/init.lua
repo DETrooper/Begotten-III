@@ -103,7 +103,7 @@ function ENT:OnTakeDamage(damageInfo)
 				end
 				
 				self.woodLeft = self.woodLeft - 1;
-				self.cycleStrikesRequired = math.random(5, 10)
+				self.cycleStrikesRequired = math.random(10, 20)
 				self.strikesRequired = self.cycleStrikesRequired
 			end
 			

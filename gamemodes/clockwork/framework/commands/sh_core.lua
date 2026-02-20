@@ -616,6 +616,12 @@ COMMAND.important = true;
 
 -- Called when the command has been run.
 function COMMAND:OnRun(player, arguments)
+	if player:GetNetVar("tied") != 0 or player:IsRagdolled() then
+		Schema:EasyText(player, "firebrick", "You cannot do this right now!");
+	
+		return false;
+	end;
+
 	local target = player:GetEyeTraceNoCursor().Entity;
 	
 	if arguments[1] and tonumber(arguments[1]) then
@@ -641,8 +647,16 @@ function COMMAND:OnRun(player, arguments)
 						Clockwork.player:GiveCash(player, -cash);
 						Clockwork.player:GiveCash(target, cash);
 						
-						Clockwork.player:Notify(player, "You have given "..Clockwork.kernel:FormatCash(cash, nil, true).." to "..targetName..".");
-						Clockwork.player:Notify(target, "You were given "..Clockwork.kernel:FormatCash(cash, nil, true).." by "..playerName..".");
+						local cashStr = Clockwork.kernel:FormatCash(cash, nil, true);
+						
+						Clockwork.player:Notify(player, "You have given "..cashStr.." to "..targetName..".");
+						Clockwork.player:Notify(target, "You were given "..cashStr.." by "..playerName..".");
+						
+						for k, v in pairs(ents.FindInSphere(player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)) do
+							if v:IsPlayer() then
+								Clockwork.chatBox:Add(v, player, "me", "hands "..cashStr.." to "..Clockwork.player:FormatRecognisedText(v, "%s", target)..".");
+							end
+						end
 					else
 						local amount = cash - player:GetCash();
 						Clockwork.player:Notify(player, "You need another "..Clockwork.kernel:FormatCash(amount, nil, true).."!");
