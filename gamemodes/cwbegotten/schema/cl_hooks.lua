@@ -45,10 +45,10 @@ function Schema:Initialize()
 		end;
 	end;
 	
-	if render.GetHDREnabled() == false and game.GetMap() == "rp_begotten3" then
+	--if render.GetHDREnabled() == false and game.GetMap() == "rp_begotten3" then
 		--RunConsoleCommand("mat_hdr_enabled", "1");
-		RunConsoleCommand("retry");
-	end
+		--RunConsoleCommand("retry");
+	--end
 	
 	--RunConsoleCommand("fps_max", "300");
 	RunConsoleCommand("hud_draw_fixed_reticle", "0");
