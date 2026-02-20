@@ -46,13 +46,13 @@ function Schema:Initialize()
 	end;
 	
 	if render.GetHDREnabled() == false and game.GetMap() == "rp_begotten3" then
-		RunConsoleCommand("mat_hdr_enabled", "1");
+		--RunConsoleCommand("mat_hdr_enabled", "1");
 		RunConsoleCommand("retry");
 	end
 	
 	--RunConsoleCommand("fps_max", "300");
 	RunConsoleCommand("hud_draw_fixed_reticle", "0");
-	RunConsoleCommand("mat_hdr_level", "2");
+	--RunConsoleCommand("mat_hdr_level", "2");
 	RunConsoleCommand("mat_motion_blur_enabled", "1");
 end
 
