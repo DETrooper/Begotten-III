@@ -130,7 +130,7 @@ local IMBECILE = Clockwork.trait:New()
 	IMBECILE.name = "Imbecile"
 	IMBECILE.description = "Your character is retarded and unable to form complete sentences. Blessed is the mind too small for doubt."
 	IMBECILE.points = -3
-	IMBECILE.disables = {"literate", "scribe"}
+	IMBECILE.disables = {"literate", "scribe", "lobotomite"}
 	IMBECILE.excludedfactions = {"Children of Satan"}
 Clockwork.trait:Register(IMBECILE)
 
@@ -334,3 +334,11 @@ local ZEALOUS = Clockwork.trait:New()
 	ZEALOUS.disables = {"possessed"}
 	ZEALOUS.excludedsubfactions = {"Clan Grock"}
 Clockwork.trait:Register(ZEALOUS)
+
+local LOBOTOMITE = Clockwork.trait:New();
+	LOBOTOMITE.uniqueID = "lobotomite";
+	LOBOTOMITE.name = "Lobotomite";
+	LOBOTOMITE.description = "Whether surgically induced, by birth defect, or sheer misfortune, your character has found themselves with a severed prefrontal cortex. You are immune to the effects of imbecility, but you often find yourself in episodes of seizure, insanity, and general incompetence.";
+	LOBOTOMITE.points = -4;
+	LOBOTOMITE.disables = {"imbecile"};
+Clockwork.trait:Register(LOBOTOMITE);

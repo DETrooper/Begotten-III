@@ -611,8 +611,8 @@ ITEM:Register();
 	function ITEM:OnDrop(player, position) end;
 ITEM:Register();
 
- local ITEM = Clockwork.item:New();
-	ITEM.name = "Papa Pete's® Silly Pop™";
+local ITEM = Clockwork.item:New();
+    ITEM.name = "Papa Pete's® Silly Pop™";
 	ITEM.uniqueID = "papa_petes_silly_pop";
 	ITEM.model = "models/props_junk/GlassBottle01a.mdl";
 	ITEM.weight = 0.25;
@@ -637,7 +637,7 @@ ITEM:Register();
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		else
 			Schema:EasyText(player, "olive", "You slurp of some of Papa Pete's® Silly Pop™. It tastes good, but you're now tongue twisted from brain damage!");
-			player:GiveTrait("imbecile");
+			if(!player:HasTrait("lobotomite")) then player:GiveTrait("imbecile"); end
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		end
 	end;
@@ -645,7 +645,6 @@ ITEM:Register();
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 ITEM:Register();
---]]
 
  local ITEM = Clockwork.item:New();
 	ITEM.name = "Papa Pete's® Plague Pop™";
