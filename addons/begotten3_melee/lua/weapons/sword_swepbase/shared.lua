@@ -276,7 +276,7 @@ function SWEP:Hitscan()
 		
 		self.Owner:FireBullets(bullet, 2);
 		
-		if string.find(tr.Entity:GetClass(), "prop_ragdoll") then
+		if tr.Entity:GetClass() == "cw_player_body" or string.find(tr.Entity:GetClass(), "prop_ragdoll") then
 			local data = self.Owner:GetEyeTrace();
 			local effect = EffectData();
 				effect:SetOrigin(data.HitPos);
