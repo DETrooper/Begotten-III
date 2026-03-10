@@ -914,6 +914,7 @@ end
 -- Called when a player attempts to bypass the faction limit.
 function GM:PlayerCanBypassFactionLimit(player, character)
 	if player:IsAdmin() then return true end;
+	if (Clockwork.player:HasFlags(player, "=")) then return true end
 
 	return false 
 end

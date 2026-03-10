@@ -31,6 +31,7 @@ Clockwork.flag:Add("M", "No Pain Sounds", "No pain or death sounds from your cha
 Clockwork.flag:Add("S", "Ignore Item Requirements", "Ignore all requirements (i.e. beliefs, factions) to equip an item.")
 Clockwork.flag:Add("l", "Unholy Blessing Always Active", "Unholy Blessing is always active on weapons that have the attribute.")
 Clockwork.flag:Add("-", "Drop Prevention", "Do not drop items on death. Keep items when perma-killed.")
+Clockwork.flag:Add("=", "Bypass Faction Limit", "Ability to bypass faction ratios as a non-admin.")
 
 local map = game.GetMap();
 
