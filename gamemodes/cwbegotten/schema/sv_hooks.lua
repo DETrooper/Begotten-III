@@ -2809,6 +2809,9 @@ end
 
 -- Called when a player dies.
 function Schema:PlayerDeath(player, inflictor, attacker, damageInfo)
+	player.lastDealtDamage = 0
+	player.lastReceivedDamage = 0
+	
 	if IsValid(attacker) and attacker:IsPlayer() and attacker:Alive() and not attacker.opponent then
 		local weapon = attacker:GetActiveWeapon();
 		
@@ -3104,6 +3107,9 @@ function Schema:PlayerCharacterLoaded(player)
 	end
 	
 	player.bWasInAir = nil;
+
+	player.lastDealtDamage = 0
+	player.lastReceivedDamage = 0
 end;
 
 -- Called when a player throws a punch.
