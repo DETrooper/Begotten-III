@@ -951,6 +951,10 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 		hook.Run("PreCalculatePlayerDamage", player, lastHitGroup, damageInfo);
 		hook.Run("CalculatePlayerDamage", player, lastHitGroup, damageInfo);
 		hook.Run("PostCalculatePlayerDamage", player, lastHitGroup, damageInfo);
+
+		if (damageInfo:GetDamage() > 0) then
+			player.lastHitTime = CurTime()
+		end
 	end
 end
 
