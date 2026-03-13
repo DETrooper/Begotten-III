@@ -4255,3 +4255,26 @@ local COMMAND = Clockwork.command:New("HellPortalGaze");
 	end;
 
 COMMAND:Register();
+
+local COMMAND = Clockwork.command:New("CharSetScale")
+	COMMAND.tip = "Set a character's model scale. Overrides built in scale modifiers."
+	COMMAND.arguments = 2
+	COMMAND.text = "<player Target> <float Scale>"
+	COMMAND.access = "s"
+
+	function COMMAND:OnRun(player, arguments)
+		local target = Clockwork.player:FindByID(arguments[1])
+
+		if (!IsValid(target)) then Schema:EasyText(player, "peru", string.format("No player by the name of '%s' was found!", arguments[1])) return end
+
+		local scale = tonumber(arguments[2])
+		local viewScale = (scale * 36)
+
+		target:SetCharacterData("customScale", scale)
+
+		target:SetModelScale(scale, FrameTime())
+		target:SetViewOffset(Vector(0, 0, 64 + (viewScale / 4)))
+		target:SetViewOffsetDucked(Vector(0, 0, 28 + (viewScale / 8)))
+	end
+
+COMMAND:Register()

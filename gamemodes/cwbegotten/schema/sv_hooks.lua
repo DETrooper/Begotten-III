@@ -3037,6 +3037,16 @@ function Schema:PlayerCharacterLoaded(player)
 		player:SetViewOffset(Vector(0, 0, 64));
 		player:SetViewOffsetDucked(Vector(0, 0, 28));
 	end
+
+	local scale = player:GetCharacterData("customScale", 0)
+
+	if (scale > 0) then
+		local viewScale = (scale * 36)
+
+		player:SetModelScale(scale, FrameTime())
+		player:SetViewOffset(Vector(0, 0, 64 + (viewScale / 4)))
+		player:SetViewOffsetDucked(Vector(0, 0, 28 + (viewScale / 8)))
+	end
 	
 	player:OverrideName(nil)
 	
