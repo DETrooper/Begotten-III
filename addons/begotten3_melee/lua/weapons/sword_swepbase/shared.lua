@@ -1248,7 +1248,15 @@ end
 							
 							local knockbackNpcBonus = 1;
 							if (hit:IsNPC() or hit:IsNextBot()) then
-								knockbackNpcBonus = 2
+								knockbackNpcBonus = 1.5
+								
+								if hit.Jump then 
+									hit:Jump(40);
+								end
+								
+								if hit.ResetSequence then
+									hit:ResetSequence(ACT_WALK);
+								end
 							end
 							
 							-- KNOCKBACK

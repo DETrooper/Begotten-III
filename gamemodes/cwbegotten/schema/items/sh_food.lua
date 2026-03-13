@@ -146,7 +146,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1100};
-	ITEM.needs = {hunger = 20, thirst = 8};
+	ITEM.needs = {hunger = 20, thirst = 8, health = 5};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -165,7 +165,7 @@ local ITEM = Clockwork.item:New();
 		end
 	
 		player:HandleSanity(5);
-		player:SetHealth(math.Clamp(player:Health() + 5, 0, player:GetMaxHealth()));
+		player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
@@ -236,7 +236,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "cooked_bear_meat"
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 25, thirst = 5};
+	ITEM.needs = {hunger = 25, thirst = 5, health = 7};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -255,7 +255,7 @@ local ITEM = Clockwork.item:New();
 		end
 	
 		player:HandleSanity(5);
-		player:SetHealth(math.Clamp(player:Health() + 7, 0, player:GetMaxHealth()));
+		player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
@@ -327,7 +327,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "cooked_wolf_meat"
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 8, thirst = 4};
+	ITEM.needs = {hunger = 8, thirst = 4, health = 2};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -346,7 +346,7 @@ local ITEM = Clockwork.item:New();
 		end
 	
 		player:HandleSanity(5);
-		player:SetHealth(math.Clamp(player:Health() + 2, 0, player:GetMaxHealth()));
+		player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
@@ -418,7 +418,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "cooked_leopard_meat"
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 25, thirst = 5};
+	ITEM.needs = {hunger = 25, thirst = 5, health = 5};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -436,7 +436,7 @@ local ITEM = Clockwork.item:New();
 		end
 	
 		player:HandleSanity(5);
-		player:SetHealth(math.Clamp(player:Health() + 5, 0, player:GetMaxHealth()));
+		player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
@@ -508,7 +508,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "cooked_deer_meat"
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 25, thirst = 5};
+	ITEM.needs = {hunger = 25, thirst = 5, health = 5};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -527,7 +527,7 @@ local ITEM = Clockwork.item:New();
 		end
 	
 		player:HandleSanity(5);
-		player:SetHealth(math.Clamp(player:Health() + 5, 0, player:GetMaxHealth()));
+		player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
@@ -549,7 +549,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "cooked_goat_meat"
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 20, thirst = 5};
+	ITEM.needs = {hunger = 20, thirst = 5, health = 5};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -568,7 +568,7 @@ local ITEM = Clockwork.item:New();
 		end
 	
 		player:HandleSanity(5);
-		player:SetHealth(math.Clamp(player:Health() + 5, 0, player:GetMaxHealth()));
+		player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end;
 
@@ -779,7 +779,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "unfuckedmeat"
 	ITEM.cauldronQuality = 0;
 	
-	ITEM.needs = {hunger = 25, thirst = 15};
+	ITEM.needs = {hunger = 25, thirst = 15, health = 8};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -799,7 +799,7 @@ local ITEM = Clockwork.item:New();
 	
 		Schema:EasyText(player, "olivedrab", "The meat is flavorful. You feel proud of such an honest meal.");
 		player:HandleSanity(10);
-		player:SetHealth(math.Clamp(player:Health() + 8, 0, player:GetMaxHealth()));
+		player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end
 
@@ -824,7 +824,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "meatmeal"
 	
-	ITEM.needs = {hunger = 45, thirst = 35};
+	ITEM.needs = {hunger = 45, thirst = 35, health = 25};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -844,7 +844,7 @@ local ITEM = Clockwork.item:New();
 	
 		Schema:EasyText(player, "olivedrab", "An honest meal!");
 		player:HandleSanity(30);
-		player:SetHealth(math.Clamp(player:Health() + 25, 0, player:GetMaxHealth()));
+		player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 			
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 	end
@@ -873,7 +873,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.infectchance = 5;
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 12};
+	ITEM.needs = {hunger = 12, thirst = 3, health = 3};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -894,7 +894,7 @@ local ITEM = Clockwork.item:New();
 		if player:HasBelief("savage") then
 			Schema:EasyText(player, "olivedrab", "You enjoy the savory taste of your fellow man.");
 			player:HandleSanity(2);
-			player:SetHealth(math.Clamp(player:Health() + 3, 0, player:GetMaxHealth()));
+			player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 		else
 			Schema:EasyText(player, "olivedrab", "This meat is prepared almost well enough to forget where it came from.");
 			player:HandleSanity(-2);
@@ -967,7 +967,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 0;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1500, bNoSupercrate = true};
-	ITEM.needs = {hunger = 8};
+	ITEM.needs = {hunger = 8, health = 15};
 	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -984,7 +984,7 @@ local ITEM = Clockwork.item:New();
 		else
 			Schema:EasyText(player, "lawngreen", "Mmmm! That was one tasty treat! I could go for another Kitty Candy!");
 			player:HandleSanity(50);
-			player:SetHealth(math.Clamp(player:Health() + 15, 0, player:GetMaxHealth()));
+			player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 			player:HandleXP(cwBeliefs.xpValues["food"]);
 		end;
 	end;
@@ -1243,7 +1243,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "cooked_yummy_meat"
 	
-	ITEM.needs = {hunger = 25, thirst = 10};
+	ITEM.needs = {hunger = 25, thirst = 10, health = 5};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -1263,7 +1263,7 @@ local ITEM = Clockwork.item:New();
 	
 		Schema:EasyText(player, "olive", "The meat did not taste good.");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
-		player:SetHealth(math.Clamp(player:Health() + 3, 0, player:GetMaxHealth()));
+		player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 	end
 
 	-- Called when a player drops the item.
@@ -1284,7 +1284,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "masterclass_yummy_meal"
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 70, thirst = 55};
+	ITEM.needs = {hunger = 70, thirst = 55, health = 10};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -1304,7 +1304,7 @@ local ITEM = Clockwork.item:New();
 	
 		Schema:EasyText(player, "lawngreen", "You consume the meal. It was an excellent cuisine!");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
-		player:SetHealth(math.Clamp(player:Health() + 10, 0, player:GetMaxHealth()));
+		player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 		player:HandleSanity(30);
 	end
 
@@ -1326,7 +1326,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "kings_meal"
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 100, thirst = 100};
+	ITEM.needs = {hunger = 100, thirst = 100, stamina = 50, health = 35};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -1342,13 +1342,13 @@ local ITEM = Clockwork.item:New();
 			Schema:EasyText(player, "lightslateblue", "This food is frozen solid and needs to be thawed before it can be consumed!");
 		
 			return false;
-		end
+		end 
 	
 		Schema:EasyText(player, "lawngreen", "You consume the meal. It was excellent!");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 		player:HandleSanity(50);
-		player:SetHealth(math.Clamp(player:Health() + 35, 0, player:GetMaxHealth()));
-		player:HandleStamina(50);
+		player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
+		player:HandleStamina(self.needs.stamina);
 	end
 
 	-- Called when a player drops the item.
@@ -1368,7 +1368,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 	ITEM.uniqueID = "wanderers_delight"
 	
-	ITEM.needs = {hunger = 60, thirst = 40};
+	ITEM.needs = {hunger = 60, thirst = 40, health = 25};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -1389,7 +1389,7 @@ local ITEM = Clockwork.item:New();
 		Schema:EasyText(player, "lawngreen", "You consume the meal. It tasted decent!");
 		player:HandleXP(cwBeliefs.xpValues["food"]);
 		player:HandleSanity(35);
-		player:SetHealth(math.Clamp(player:Health() + 25, 0, player:GetMaxHealth()));
+		player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 	end
 
 	-- Called when a player drops the item.
@@ -1756,7 +1756,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.uniqueID = "manlunch"
 	ITEM.infectchance = 5;
 	
-	ITEM.needs = {hunger = 40, thirst = 15};
+	ITEM.needs = {hunger = 40, thirst = 15, health = 6};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -1777,7 +1777,7 @@ local ITEM = Clockwork.item:New();
 		if player:HasBelief("savage") then
 			Schema:EasyText(player, "olivedrab", "You enjoy the savory taste of your fellow man.");
 			player:HandleSanity(2);
-			player:SetHealth(math.Clamp(player:Health() + 6, 0, player:GetMaxHealth()));
+			player:SetHealth(math.Clamp(player:Health() + self.needs.health, 0, player:GetMaxHealth()));
 		else
 			Schema:EasyText(player, "olivedrab", "Whom did I just eat? And why did I enjoy the taste so?");
 			player:HandleSanity(-2);

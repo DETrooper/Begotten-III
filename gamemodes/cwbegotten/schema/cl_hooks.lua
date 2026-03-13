@@ -4165,6 +4165,8 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 		if itemTable.needs.hunger then frame:AddText("Hunger: "..itemTable.needs.hunger, Color(110, 30, 30), "nov_IntroTextSmallDETrooper", 0.8); end
 		if itemTable.needs.thirst then frame:AddText("Thirst: "..itemTable.needs.thirst, Color(110, 30, 30), "nov_IntroTextSmallDETrooper", 0.8); end
 		if itemTable.needs.sleep then frame:AddText("Sleep: "..itemTable.needs.sleep, Color(110, 30, 30), "nov_IntroTextSmallDETrooper", 0.8); end
+		if itemTable.needs.stamina then frame:AddText("Stamina: "..itemTable.needs.stamina, Color(110, 30, 30), "nov_IntroTextSmallDETrooper", 0.8); end
+		if itemTable.needs.health then frame:AddText("Health: "..itemTable.needs.health, Color(110, 30, 30), "nov_IntroTextSmallDETrooper", 0.8); end
 		
 		if (bShowWeight) then
 			frame:AddBar(20, {{text = weight.."kg", percentage = percentage * 100, color = Color(96, 96, 128), font = "DermaDefault", leftTextAlign = false, noDisplay = true}}, "Weight", Color(170, 170, 180));

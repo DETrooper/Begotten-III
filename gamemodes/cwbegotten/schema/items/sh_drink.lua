@@ -462,11 +462,11 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = -1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1150, bNoSupercrate = true};
-	ITEM.needs = {thirst = 30, sleep = 5};
+	ITEM.needs = {thirst = 30, sleep = 5, stamina = 30};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		player:HandleStamina(50);
+		player:HandleStamina(self.needs.stamina);
 
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You slurp of some of Papa Pete's® Ice Cold Crazy Pop™. You feel refreshed, though your sanity is savagely torn apart.");
@@ -496,11 +496,11 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2000};
-	ITEM.needs = {thirst = 35, sleep = 15};
+	ITEM.needs = {thirst = 35, sleep = 15, stamina = 80};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		player:HandleStamina(80);
+		player:HandleStamina(self.needs.stamina);
 		Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Cream Pop™. It is very creamy and delicious. You feel mentally and physically reinvigorated, and you feel a renewed sense of energy!");
 		player:HandleSanity(15);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -588,11 +588,11 @@ ITEM:Register();
 	ITEM.cauldronQuality = -1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1300, bNoSupercrate = true};
-	ITEM.needs = {thirst = 40, sleep = 5};
+	ITEM.needs = {thirst = 40, sleep = 5, stamina = 100};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		player:HandleStamina(100);
+		player:HandleStamina(self.needs.stamina);
 
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Pipin' Hot Pop™! It has a spicy aftertaste. After you're done drinking, some coins spill out the bottle!");
@@ -625,11 +625,11 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = -1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1750, bNoSupercrate = true};
-	ITEM.needs = {thirst = 60, sleep = 5};
+	ITEM.needs = {thirst = 60, sleep = 5, stamina = 100};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		player:HandleStamina(100);
+		player:HandleStamina(self.needs.stamina);
 
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Silly Pop™. It tastes alright, and it makes you burst into a fit of laughter afterwards! Your sanity is greatly restored!");
@@ -661,11 +661,11 @@ ITEM:Register();
 	ITEM.cauldronPlague = true;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2500};
-	ITEM.needs = {thirst = 60, sleep = 5};
+	ITEM.needs = {thirst = 60, sleep = 5, stamina = 100};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		player:HandleStamina(100);
+		player:HandleStamina(self.needs.stamina);
 
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Plague Pop™. It didn't taste very good, but you feel your pockets grow heavier with coins! The Gods have blessed you!");
