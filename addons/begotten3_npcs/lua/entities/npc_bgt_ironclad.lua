@@ -478,7 +478,7 @@ if SERVER then
 					
 					if cwRecipes and cwItemSpawner then
 						for i = 1, math.random(3, 4) do
-							local itemInstance = item.CreateInstance("iron_chunks");
+							local itemInstance = item.CreateInstance("steel_ingot");
 							
 							if itemInstance then
 								itemInstance:SetCondition(math.random(50, 100));
