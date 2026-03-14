@@ -69,8 +69,8 @@ function ENT:OnTakeDamage(damageInfo)
 			self.strikesRequired = self.strikesRequired - damageDealt;
 			
 			if cwCharacterNeeds and player.HandleNeed then
-				player:HandleNeed("thirst", 0.75);
-				player:HandleNeed("sleep", 0.25);
+				player:HandleNeed("thirst", 0.35);
+				player:HandleNeed("sleep", 0.30);
 			end
 
 			if cwBeliefs and player.HandleXP then

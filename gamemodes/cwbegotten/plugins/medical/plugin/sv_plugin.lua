@@ -1602,11 +1602,11 @@ function playerMeta:Vomit(bVomitBlood, bFromFood)
 		
 		if cwCharacterNeeds and self.HandleNeed then
 			if bFromFood then
-				self:HandleNeed("hunger", 25);
-				self:HandleNeed("thirst", 25);
+				self:HandleNeed("hunger", math.random(20, 40));
+				self:HandleNeed("thirst", math.random(20, 40));
 			else
-				self:HandleNeed("hunger", 5);
-				self:HandleNeed("thirst", 5);
+				self:HandleNeed("hunger", math.random(5, 15));
+				self:HandleNeed("thirst", math.random(5, 15));
 			end
 		end
 		

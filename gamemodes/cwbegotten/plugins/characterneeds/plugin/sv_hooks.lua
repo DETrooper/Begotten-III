@@ -203,7 +203,7 @@ function cwCharacterNeeds:PlayerUseItem(player, itemTable, itemEntity)
 	
 		for k, v in pairs(itemTable.needs) do
 			if (k == "hunger" or k == "thirst") and subfaction == "Varazdat" then
-				if itemTable.uniqueID == "humanmeat" or itemTable.uniqueID == "cooked_human_meat" or itemTable.uniqueID == "canned_fresh_meat" or itemTable.uniqueID == "varazdat_bloodwine" or itemTable.uniqueID == "varazdat_masterclass_bloodwine" or itemTable.uniqueID == "blood_bottle" or itemTable.uniqueID == "manlunch" then
+				if itemTable.uniqueID == "humanmeat" or itemTable.uniqueID == "cooked_human_meat" or itemTable.uniqueID == "canned_fresh_meat" or itemTable.uniqueID == "varazdat_bloodwine" or itemTable.uniqueID == "varazdat_masterclass_bloodwine" or itemTable.uniqueID == "blood_bottle" or itemTable.uniqueID == "manlunch" or itemTable.uniqueID == "kittycandy" or itemTable.uniqueID == "canned_yummy_beans" or itemTable.uniqueID == "canned_yummy_meat" or itemTable.uniqueID == "yum_chug" then
 					player:HandleNeed(k, -v);
 				else
 					timer.Simple(math.random(3, 8), function()
