@@ -271,6 +271,7 @@ hook.Add("PreCalculatePlayerDamage", "cwSatanicWhipTakeDamagePoison", function(e
 		if(weapon.WhipSpeedBoost) then
 			damageInfo:ScaleDamage(0.25);
 			entity:SetNWFloat("WhipSpeedBoost", curTime + 5);
+			hook.Run("RunModifyPlayerSpeed", entity, entity.cwInfoTable, true);
 
 		end
 		
