@@ -2518,6 +2518,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 3},
+			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_2h_great_heavybattleaxe"] = {amount = 1},
@@ -2527,7 +2528,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 30;
+		RECIPE.experience = 35;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -2856,7 +2857,9 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 1},
+			["wood"] = {amount = 1},
+			["leather"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_1h_battleaxe"] = {amount = 1},

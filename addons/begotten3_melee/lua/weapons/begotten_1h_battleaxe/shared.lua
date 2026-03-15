@@ -84,6 +84,28 @@ function SWEP:HandlePrimaryAttack()
 
 end
 
+function SWEP:HandleThrustAttack()
+
+	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
+	local attacktable = GetTable(self.AttackTable)
+
+	--Attack animation
+	if self:GetNW2String("activeShield"):len() > 0 then
+		self:TriggerAnim(self.Owner, "a_sword_shield_attack_stab_slow_01");
+	else
+		self:TriggerAnim(self.Owner, "a_sword_attack_stab_slow_01");
+	end
+
+	-- Viewmodel attack animation!
+	local vm = self.Owner:GetViewModel()
+	vm:SendViewModelMatchingSequence( vm:LookupSequence( "thrust1" ) )
+	self.Owner:GetViewModel():SetPlaybackRate(0.35)
+	
+	self.Weapon:EmitSound(attacksoundtable["altsound"][math.random(1, #attacksoundtable["altsound"])])
+	self.Owner:ViewPunch(attacktable["punchstrength"])
+
+end
+
 function SWEP:OnDeploy()
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
 	self.Owner:ViewPunch(Angle(0,1,0))
@@ -104,19 +126,19 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["v_battleaxe"] = { type = "Model", model = "models/demonssouls/weapons/battle axe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.7, 0.518), angle = Angle(-80.65, -5.844, 78.311), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+	["v_battleaxe"] = { type = "Model", model = "models/weapons/ironaxe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.299, 1.7, 0.1), angle = Angle(-78.889, -27.778, 143.332), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["w_battleaxe"] = { type = "Model", model = "models/demonssouls/weapons/battle axe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.299, 1.557, -0.519), angle = Angle(-82.987, 64.286, 3.506), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+	["w_battleaxe"] = { type = "Model", model = "models/weapons/ironaxe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "",  pos = Vector(2.799, 1.1, 0), angle = Angle(-85, 58.888, -94.445), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.VElementsDual = {
-	["v_left"] = { type = "Model", model = "models/demonssouls/weapons/battle axe.mdl", bone = "Dummy16", rel = "", pos = Vector(0, -8.886, -0.1), angle = Angle(0, 90, 0), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
-	["v_right"] = { type = "Model", model = "models/demonssouls/weapons/battle axe.mdl", bone = "Dummy01", rel = "", pos = Vector(0.5, -9.886, 0.5), angle = Angle(0, 90, 10), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+	["v_left"] = { type = "Model", model = "models/weapons/ironaxe.mdl", bone = "Dummy16", rel = "",  pos = Vector(0, -8.4, 0.3), angle = Angle(-12.223, 87.777, -58.889), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} },
+	["v_right"] = { type = "Model", model = "models/weapons/ironaxe.mdl", bone = "Dummy01", rel = "", pos = Vector(0.699, -11.5, 0.6), angle = Angle(0, 87.777, -87.778), size = Vector(0.899, 0.899, 0.899), material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElementsDual = {
-	["w_left"] = { type = "Model", model = "models/demonssouls/weapons/battle axe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(2.595, 1.157, 0.977), angle = Angle(110, 120, -176.495), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
-	["w_right"] = { type = "Model", model = "models/demonssouls/weapons/battle axe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.299, 1.557, -0.519), angle = Angle(-62.987, 64.286, 3.506), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
+	["w_left"] = { type = "Model", model = "models/weapons/ironaxe.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "",  pos = Vector(2.799, 1, -0.494), angle = Angle(70, -83.334, 96.666), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} },
+	["w_right"] = { type = "Model", model = "models/weapons/ironaxe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.7, 1.399, -0.494), angle = Angle(-105.556, -105.556, 72.222), size = Vector(1, 1, 1), material = "", skin = 0, bodygroup = {} }
 }

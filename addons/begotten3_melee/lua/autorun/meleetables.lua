@@ -2064,12 +2064,12 @@ AttackTables.GrocklingSwordAttackTable = {
 AttackTables.BattleAxeAttackTable = {
 	["primarydamage"] = 50,
 	["dmgtype"] = 4,
-	["attacktype"] = "reg_swing",
-	["canaltattack"] = false,
-	["altattackdamagemodifier"] = nil,
-	["altattackpoisedamagemodifier"] = nil,
+	["attacktype"] = "reg_swing", 
+	["canaltattack"] = true,
+	["altattackdamagemodifier"] = 0.7,
+	["altattackpoisedamagemodifier"] = 0.1,
 	["armorpiercing"] = 24,
-	["altarmorpiercing"] = nil,
+	["altarmorpiercing"] = 33,
 	["poisedamage"] = 25,
 	["stabilitydamage"] = 0,
 	["takeammo"] = 6,
@@ -3728,45 +3728,6 @@ AttackTables.MaximusWrathAttackTable = {
 	["punchstrength"] = Angle(0,1,0),
 	["isadminweapon"] = true,
 };
-
--- BALLISTA
-AttackTables.BallistaIronBoltAttackTable = {
-	["mimimumdistancedamage"] = 120,
-	["maximumdistancedamage"] = 150,
-	["dmgtype"] = DMG_VEHICLE,
-	["armorpiercing"] = 48,
-	["poisedamage"] = 35,
-	["stabilitydamage"] = 40,
-	["minimumdistancestabilitydamage"] = 20,
-	["maximumdistancestabilitydamage"] = 80,
-	["takeammo"] = 0,
-	["punchstrength"] = Angle(0,2,0),
-	["staminadamage"] = 50,
-	["minimumdistancestaminadamage"] = 10,
-	["maximumdistancestaminadamage"] = 15,
-	["blockstaminadamagemultiplier"] = 15,
-	["conditiondamage"] = 30,
-};
-AddTable("BallistaIronBoltAttackTable", AttackTables.BallistaIronBoltAttackTable);
-
-AttackTables.BallistaIronBoltIncendiaryAttackTable = {
-	["mimimumdistancedamage"] = 50,
-	["maximumdistancedamage"] = 100,
-	["dmgtype"] = DMG_VEHICLE,
-	["armorpiercing"] = 20,
-	["poisedamage"] = 15,
-	["stabilitydamage"] = 20,
-	["minimumdistancestabilitydamage"] = 10,
-	["maximumdistancestabilitydamage"] = 40,
-	["takeammo"] = 0,
-	["punchstrength"] = Angle(0,2,0),
-	["staminadamage"] = 50,
-	["minimumdistancestaminadamage"] = 10,
-	["maximumdistancestaminadamage"] = 15,
-	["blockstaminadamagemultiplier"] = 15,
-	["conditiondamage"] = 30,
-};
-AddTable("BallistaIronBoltIncendiaryAttackTable", AttackTables.BallistaIronBoltIncendiaryAttackTable);
 
 AttackTables.SatanicWhipAttackTable = {
 	["primarydamage"] = 4,
