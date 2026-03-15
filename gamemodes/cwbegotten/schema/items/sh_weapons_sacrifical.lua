@@ -341,8 +341,9 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.attachmentOffsetVector = Vector(-6.14, -7.78, -2.83);	
 	ITEM.canUseShields = true;
 
-	ITEM.attributes = {"barbed", "mark_of_perdition", "disciplined"};
+	ITEM.attributes = {"barbed", "mark_of_perdition", "disciplined", "blood_of_kings"};
 	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "bindings", "leather", "leather", "leather"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"murder_artform"};
 	ITEM.requiredFaiths = {"Faith of the Dark"};
+	ITEM.allowedSubfactions = {"Varazdat"};
 ITEM:Register();

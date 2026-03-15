@@ -1915,6 +1915,10 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 						frame:AddText("Disciplined: Grants a 15% speed boost to yourself and victims who are Faith of the Dark.", Color(110, 30, 30), nil, 0.9);
 					end
 
+					if table.HasValue(itemTable.attributes, "blood_of_kings") then
+						frame:AddText("Blood of Kings: Equippable by the Varazdat subfaction without the required beliefs.", Color(110, 30, 30), nil, 0.9);
+					end
+
 					if table.HasValue(itemTable.attributes, "last_stand") then
 						frame:AddText("Unholy Blessing: Upon reaching 60% of your maximum health, this weapon will become imbued with either fire or ice, and will deal elemental damage.", Color(110, 30, 30), nil, 0.9);
 					end

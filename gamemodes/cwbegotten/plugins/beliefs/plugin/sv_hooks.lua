@@ -2500,11 +2500,13 @@ function cwBeliefs:PlayerCanUseItem(player, itemTable, noMessage)
 		return;
 	end
 
+	local subfaction = player:GetNetVar("kinisgerOverrideSubfaction") or player:GetSubfaction()
+
 	if itemTable.requiredbeliefs then
 		for i = 1, #itemTable.requiredbeliefs do
 			local belief = itemTable.requiredbeliefs[i];
 			
-			if !player:HasBelief(belief) then
+			if !player:HasBelief(belief) and (!itemTable.allowedSubfactions or !table.HasValue(itemTable.allowedSubfactions, subfaction)) then
 				if !itemTable.kinisgerOverride or itemTable.kinisgerOverride and !player:GetCharacterData("apostle_of_many_faces") then
 					Clockwork.player:Notify(player, "You cannot equip this item as you lack the belief required to do so!");
 					return false;
