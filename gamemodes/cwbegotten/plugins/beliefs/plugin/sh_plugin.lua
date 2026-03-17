@@ -1234,7 +1234,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 							end
 						end
 							
-						if (faction == "Wanderer" or vFaction == "Wanderer") and v:GetFaith() ~= faith then
+						if (faction == "Wanderer" or faction ~= vFaction) and v:GetFaith() ~= faith then
 							-- Kinisgers can twisted warcry if disguised as a Reaver.
 							if faith == "Faith of the Dark" then
 								if faction == vFaction then
