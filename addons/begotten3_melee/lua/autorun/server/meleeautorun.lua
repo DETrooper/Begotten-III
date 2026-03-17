@@ -989,7 +989,6 @@ local function Guarding(ent, dmginfo)
 					-- Poise system
 			
 					if bIsPlayer and !ent:GetNetVar("Deflect") then
-						--local melsta = ent:GetNWInt("meleeStamina", 90);
 						local melsta = ent:GetNWInt("Stamina", 100);
 						local blockamount = (blocktable["guardblockamount"]);
 						
@@ -997,6 +996,10 @@ local function Guarding(ent, dmginfo)
 							if !isJavelin then
 								blockamount = blockamount * 0.5;
 							end
+						end
+		
+						if IsValid(enemywep) and enemywep.isDagger then
+							blockamount = 1
 						end
 						
 						if cwMedicalSystem then
@@ -1015,16 +1018,12 @@ local function Guarding(ent, dmginfo)
 						
 						local melsa = melsta - blockamount;
 						local chance = math.random(1, 2);
-						--local chance = 1; -- for testing
 						
 						if cwBeliefs and ent.HasBelief and ent:HasBelief("encore") then
 							chance = math.random(1, 4);
 						end
 						
-						--ent:SetNWInt("meleeStamina", math.Clamp(melsa, 0, max_poise))
-
 						if !dmginfo:IsDamageType(DMG_BULLET) and !dmginfo:IsDamageType(DMG_BUCKSHOT) then
-							--ent:TakePoise(blockamount);
 							ent:TakeStamina(blockamount);
 						end
 						

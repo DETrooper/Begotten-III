@@ -1910,12 +1910,13 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("elegant_dagger");
-		RECIPE.name = "Elegant Dagger";
+		RECIPE.name = "(2x) Elegant Dagger";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 2},
+			["gold_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_elegantdagger"] = {amount = 1},
@@ -1925,7 +1926,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 60;
+		RECIPE.experience = 120;
 		
 		function RECIPE:OnCraft(player)
 		end;

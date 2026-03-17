@@ -68,19 +68,19 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Iron Battle Axe";
-	ITEM.model = "models/demonssouls/weapons/battle axe.mdl";
+    ITEM.model = "models/weapons/ironaxe.mdl";
 	ITEM.weight = 1.5;
 	ITEM.uniqueID = "begotten_1h_battleaxe";
 	ITEM.category = "Melee";
 	ITEM.description = "A bulky black iron double-sided axe. A crude weapon for crude men.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/battle_axe.png"
+	ITEM.iconoverride = "begotten/ui/itemicons/ironaxe.png"
 	ITEM.meleeWeapon = true;
-	ITEM.isAttachment = true;
-	ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
-	ITEM.attachmentOffsetAngles = Angle(20.88, 0, 180);
-	ITEM.attachmentOffsetVector = Vector(3.54, 1.41, 26.87);
-	ITEM.canUseOffhand = true;
-	ITEM.canUseShields = true;
+    ITEM.isAttachment = true;
+    ITEM.attachmentBone = "ValveBiped.Bip01_L_Thigh";
+    ITEM.attachmentOffsetAngles = Angle(276.17, 0, 180);
+    ITEM.attachmentOffsetVector = Vector(3.54, 1.41, 26.87);
+    ITEM.canUseOffhand = true;
+    ITEM.canUseShields = true;
 	
 	ITEM.attributes = {"splinter"};
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks"}};

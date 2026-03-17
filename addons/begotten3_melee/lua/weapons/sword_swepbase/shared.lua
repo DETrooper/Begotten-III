@@ -628,7 +628,7 @@ function SWEP:PrimaryAttack()
 		
 		if offhandWeapon then
 			offhandAttackTable = GetTable(offhandWeapon.AttackTable);
-			delay = math.max(attacktable["delay"], offhandAttackTable["delay"]) * 0.95;
+			delay = math.max(attacktable["delay"], offhandAttackTable["delay"]) * 1.1;
 			strikeTime = math.max(strikeTime, offhandAttackTable["striketime"], 0.3); -- Dual weapon striketime shall not be lower than 0.3 seconds.
 		end
 	end
@@ -644,7 +644,7 @@ function SWEP:PrimaryAttack()
 	if owner.fearsomeSpeed then
 		delay = delay * 0.8;
 	end
-	
+		
 	if owner:GetNetVar("ThrustStance") == true then
 		stance = "thrust_swing";
 	else
@@ -1220,8 +1220,8 @@ end
 		end
 		
 		if self:GetNW2String("activeOffhand"):len() > 0 then -- Dual Weapon damage reduction
-			damage = damage * 0.7;
-			stabilitydamage = stabilitydamage * 0.7;
+			damage = damage * 0.65;
+			stabilitydamage = stabilitydamage * 0.65;
 		end
 
 		if swingType == "parry_swing" then

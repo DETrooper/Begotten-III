@@ -1958,7 +1958,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					if table.HasValue(itemTable.attributes, "flail") then
 						frame:AddText("Cannot Be Dual Wielded", Color(110, 30, 30), nil, 0.9);
 						frame:AddText("Trust in God: With each strike, there is a 10% chance you will deal an overhead attack that deals +70% raw, stability and stamina damage. The 'Favored' belief raises this chance to 20%.", Color(110, 30, 30), nil, 0.9);
-						frame:AddText("Foolhardy: With each miss, there is a 25% chance that you will strike yourself for half damage. The 'Favored' belief lowers this chance to 10%.", Color(110, 30, 30), nil, 0.9);
+						frame:AddText("Foolhardy: With each miss, there is a 25% chance that you will strike yourself for half damage. The 'Favored' belief lowers this chance to 10%.", Color(100, 9, 0), nil, 0.9);
 					end
 					
 					if table.HasValue(itemTable.attributes, "punisher") then
@@ -1995,10 +1995,11 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if string.find(weaponClass, "begotten_spear") or string.find(weaponClass, "begotten_polearm") or string.find(weaponClass, "begotten_scythe") then
-					frame:AddText("Has Counter Damage: +70% Damage Bonus against running enemies when attacked from the front.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Counter Damage: +70% Damage Bonus against running enemies when attacked from the front.", Color(110, 30, 30), nil, 0.9);
 				elseif weaponTable.isDagger then
-					frame:AddText("Has Backstab: Deal double damage and 100% AP damage to enemies' backs.", Color(110, 30, 30), nil, 0.9);
-					frame:AddText("Has Coup de Grace: Deal double damage and 100% AP damage to knocked over enemies. Each hit will slightly increase the time it takes for knocked over enemies to get up.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Backstab: Deal double damage and 100% AP damage to enemies' backs.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Coup de Grace: Deal double damage and 100% AP damage to knocked over enemies. Each hit will slightly increase the time it takes for knocked over enemies to get up.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Can only deal 1 stamina damage, no matter the enemies' minimum block cost.", Color(100, 9, 0), nil, 0.9);
 				end
 				
 				if itemTable.requiredFactions and not table.IsEmpty(itemTable.requiredFactions) and itemTable.requiredFactions[1] ~= "Wanderer" then
@@ -3244,7 +3245,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			end
 
 			if table.HasValue(itemTable.attributes, "bloodtoll") then
-				frame:AddText("Blood Toll: Taking any damage to the head will always result in a bleed injury.", Color(110, 30, 30), nil, 0.9);
+				frame:AddText("Blood Toll: Taking any damage to the head will always result in a bleed injury.", Color(100, 9, 0), nil, 0.9);
 			end
 
 			if table.HasValue(itemTable.attributes, "spiked") then
