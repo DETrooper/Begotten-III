@@ -1910,13 +1910,12 @@ function cwRecipes:ClockworkInitialized()
 	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("elegant_dagger");
-		RECIPE.name = "(2x) Elegant Dagger";
+		RECIPE.name = "Elegant Dagger";
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["fine_steel_ingot"] = {amount = 2},
-			["gold_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_elegantdagger"] = {amount = 1},
@@ -1926,7 +1925,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 120;
+		RECIPE.experience = 50;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -1973,7 +1972,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
 			["belphegor_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -1984,7 +1983,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 40;
+		RECIPE.experience = 60;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -5630,6 +5629,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
+			["belphegor_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_houserekhkhetsaancestraldagger"] = {amount = 1},
@@ -5659,6 +5659,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
+			["belphegor_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_housevarazdatancestraldagger"] = {amount = 1},
@@ -5688,6 +5689,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
+			["belphegor_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_housephilimaxioancestraldagger"] = {amount = 1},
