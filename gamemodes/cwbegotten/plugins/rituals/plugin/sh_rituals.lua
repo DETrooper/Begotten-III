@@ -1531,7 +1531,7 @@ RITUAL:Register()
 if game.GetMap() == "rp_district21" then
 	RITUAL = cwRituals.rituals:New("eye_of_the_storm");
 		RITUAL.name = "(Unique) Eye of the Storm";
-		RITUAL.description = "The Haraldrs claim that each strike of thunder comes from the Old Son's War Axe as He chops down sky-beasts that bleed rain upon the lands. The Crasters claim the storm clouds are from The Mother, who weeps to bring forth new life. Performing this ritual will summon a longer-lasting blizzard within mere moments of it being performed. Incurs 50 corruption.";
+		RITUAL.description = "The Haraldrs claim that each strike of thunder comes from the Old Son's War Axe as He chops down sky-beasts that bleed rain upon the lands. The Crasters claim the storm clouds are from The Mother, who weeps to bring forth new life. Performing this ritual will summon a blizzard 60 seconds after it is performed. Incurs 50 corruption.";
 		RITUAL.onerequiredbelief = {"daring_trout", "watchful_raven"}; -- Unique Mother/Old Son Ritual
 		
 		RITUAL.requirements = {"purifying_stone", "up_catalyst", "elysian_catalyst"};
@@ -1543,7 +1543,7 @@ if game.GetMap() == "rp_district21" then
 			Schema:EasyText(Schema:GetAdmins(), "tomato", player:Name().." has performed the 'Eye of the Storm' ritual!");
 
 			if cwWeather then
-				cwWeather:SetWeather("blizzard", 0, 900);
+				cwWeather:SetWeather("blizzard");
 				
 				return true;
 			end

@@ -1863,7 +1863,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.isSacrifical then
-					frame:AddText("Causes Corruption To Wielder", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Causes Corruption To Wielder", Color(100, 9, 0), nil, 0.9);
 				end
 				
 				if itemTable.isPolearm then
@@ -1883,7 +1883,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.hasMinimumRange then
-					frame:AddText("Minimum Effective Range: Targets under 60% of your max range will receive ineffective non-lethal damage.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Minimum Effective Range: Targets under 60% of your max range will receive ineffective non-lethal damage.", Color(100, 9, 0), nil, 0.9);
 				end
 				
 				if itemTable.hasIncreasedDeflectionWindow then
@@ -1924,7 +1924,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					end
 
 					if table.HasValue(itemTable.attributes, "cursed") then
-						frame:AddText("Cursed: Causes corruption to wielder on swing if you are not Faith of the Dark.", Color(110, 30, 30), nil, 0.9);
+						frame:AddText("Cursed: Causes corruption to wielder on swing if you are not Faith of the Dark.", Color(100, 9, 0), nil, 0.9);
 					end
 
 					if table.HasValue(itemTable.attributes, "aoebuff") then
