@@ -7,6 +7,7 @@ cwPrimevalismSense.tripwires = cwPrimevalismSense.tripwires or {}
 
 net.Receive("cwFinishTripwire", function(_, player)
     if (!player.tripWiring) then return end
+    if (Clockwork.player:GetAction(player)) then return end
 
     local endPos = net.ReadVector()
 
@@ -30,14 +31,14 @@ net.Receive("cwFinishTripwire", function(_, player)
 
     player:EmitSound("begotten/layingtripwire.mp3", 60, math.random(95, 105))
 
-    Clockwork.player:SetAction(player, "tripwiring", 10, 6.57, function()
+    Clockwork.player:SetAction(player, "tripwiring", 6.57, 10, function()
         if (!player.tripwirePos) then return end
 
         player:StopSound("begotten/layingtripwire.mp3")
 
         local world = game.GetWorld()
-        local rope = constraint.CreateKeyframeRope(endPos, 0.5, "cable/xbeam", NULL, world, world:LocalToWorld(player.tripwirePos), 0, world, world:LocalToWorld(endPos), 0, {
-            ["Length"] = ((player.tripwirePos - endPos):Length() + 100),
+        local rope = constraint.CreateKeyframeRope(endPos, 0.5, "models/flesh", NULL, world, world:LocalToWorld(player.tripwirePos), 0, world, world:LocalToWorld(endPos), 0, {
+            ["Length"] = ((player.tripwirePos - endPos):Length() + 25),
         })
 
         table.insert(cwPrimevalismSense.tripwires, {
@@ -69,8 +70,6 @@ function cwPrimevalismSense:CheckTripwireCollision(info)
 
     local tr = util.TraceLine(data)
     if (!tr.Hit or !IsValid(tr.Entity) or !tr.Entity:IsPlayer()) then return end
-
-    print(tr.Entity)
 end
 
 function cwPrimevalismSense:TripwireThink()
@@ -95,18 +94,35 @@ function cwPrimevalismSense:FindTripwiresAlongRay(rayPos, rayDir)
     return found
 end
 
-local maxReach = 96 * 96
+function cwPrimevalismSense:DisarmTripwire(player, index)
+    if (Clockwork.player:GetAction(player) or !player:HasBelief("ingenious")) then return end
+
+    Clockwork.chatBox:AddInTargetRadius(player, "me", "begins cutting a tripwire.", player:GetPos(), Clockwork.config:Get("talk_radius"):Get() * 2)
+
+    player:EmitSound("begotten/layingtripwire.mp3", 60, 50)
+
+    Clockwork.player:SetAction(player, "cuttingTripwire", 12, 10, function()
+        player:StopSound("begotten/layingtripwire.mp3", 60, 50)
+
+        cwPrimevalismSense:RemoveTripwire(index)
+    end)
+end
+
+local maxReach = 72
+local maxReachSqr = (maxReach * maxReach)
 
 function cwPrimevalismSense:CheckPlayerDisarm(player)
+    if (Clockwork.player:GetAction(player)) then return end
+
     local eyePos = player:EyePos()
     
-    local ropes = self:FindTripwiresAlongRay(eyePos, player:GetAimVector())
+    local ropes = self:FindTripwiresAlongRay(eyePos, player:GetAimVector() * maxReach)
+
     if (#ropes == 0) then return end
 
     local best
     local bestDist = math.huge
 
-    // Find closest rope
     for i, v in ipairs(ropes) do
         local dist = v.hitPos:DistToSqr(eyePos)
 
@@ -116,10 +132,8 @@ function cwPrimevalismSense:CheckPlayerDisarm(player)
         end
     end
 
-    // Check if too far
-    if (bestDist > maxReach) then return end
+    if (bestDist > maxReachSqr) then return end
 
-    // Check for LOS
     local data = {}
     data.start = eyePos
     data.endpos = ropes[best].hitPos
@@ -127,5 +141,18 @@ function cwPrimevalismSense:CheckPlayerDisarm(player)
 
     if (util.TraceLine(data).Hit) then return end
 
-    // TODO: Implement disarming
+    // bobo
+    timer.Simple(0.1, function()
+        if (!IsValid(player) or !self.tripwires[best] or player.tripWiring) then return end
+    
+        self:DisarmTripwire(player, best)
+    end)
+end
+
+function cwPrimevalismSense:RemoveTripwire(index)
+    local wire = self.tripwires[index]
+
+    wire.rope:Remove()
+
+    table.remove(self.tripwires, index)
 end

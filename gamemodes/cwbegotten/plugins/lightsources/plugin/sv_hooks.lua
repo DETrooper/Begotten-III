@@ -8,7 +8,7 @@ function cwLantern:PlayerThink(player, curTime, infoTable, alive, initialized, p
 	
 	if !activeWeapon:IsValid() then return end;
 
-	if (player.lanternDeactivationTime > curTime) then
+	if (player.lanternDeactivationTime and player.lanternDeactivationTime > curTime) then
 		if (player:GetNetVar("lanternOnHip")) then
 			player:GetNetVar("lanternOnHip", false)
 		end

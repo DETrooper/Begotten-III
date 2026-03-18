@@ -20,8 +20,8 @@ function cwPrimevalismSense:ValidateRope(player, startPos, endPos)
 
     if (!util.TraceLine(data).Hit) then return false end
 
-    if (!ValidateYSpace(startPos, (CLIENT and self.tripwireInfo.ent1 or NULL))) then return false end
-    if (!ValidateYSpace(endPos, (CLIENT and self.tripwireInfo.ent2 or NULL))) then return false end
+    if (!self:ValidateYSpace(startPos, (CLIENT and self.tripwireInfo.ent1 or NULL))) then return false end
+    if (!self:ValidateYSpace(endPos, (CLIENT and self.tripwireInfo.ent2 or NULL))) then return false end
 
     if (startPos:DistToSqr(endPos) > maxDistance) then return false end
 

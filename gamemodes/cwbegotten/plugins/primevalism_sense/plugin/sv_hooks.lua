@@ -58,7 +58,7 @@ function cwPrimevalismSense:StartEcholocation(player)
 end
 
 function cwPrimevalismSense:PlayerCanRaiseWeapon(player, weapon)
-    if (weapon:GetClass:GetClass() == "cw_lantern" and player.lanternDeactivationTime > CurTime()) then return false end
+    if (weapon:GetClass() == "cw_lantern" and player.lanternDeactivationTime > CurTime()) then return false end
 end
 
 function cwPrimevalismSense:Think()
@@ -66,9 +66,17 @@ function cwPrimevalismSense:Think()
 end
 
 function cwPrimevalismSense:KeyPress(player, key)
-	if ((key == IN_ATTACK and Clockwork.player:GetAction(player) == "tripwiring") or key == IN_RELOAD and player.tripWiring) then
+    local action = Clockwork.player:GetAction(player)
+
+	if ((key == IN_ATTACK and action == "tripwiring") or (key == IN_RELOAD and player.tripWiring)) then
 		self:CancelTripwire(player)
 	end
+
+    if (key == IN_ATTACK and action == "cuttingTripwire") then
+        Clockwork.player:SetAction(player, false)
+
+        player:StopSound("begotten/layingtripwire.mp3")
+    end
 
     if (key == IN_USE) then
         self:CheckPlayerDisarm(player)
@@ -76,13 +84,13 @@ function cwPrimevalismSense:KeyPress(player, key)
 end
 
 function cwPrimevalismSense:PlayerRagdolled(player, state, ragdoll)
-	if (Clockwork.player:GetAction(player) == "tripwiring" or and player.tripWiring) then
+	if (Clockwork.player:GetAction(player) == "tripwiring" or player.tripWiring) then
 		self:CancelTripwire(player)
 	end
 end
 
 function cwPrimevalismSense:ModifyPlayerSpeed(player, infoTable, action)
-	if (action == "tripwiring") then
+	if (action == "tripwiring" or action == "cuttingTripwire") then
 		infoTable.runSpeed = infoTable.walkSpeed * 0.1
 		infoTable.walkSpeed = infoTable.walkSpeed * 0.1
 	end

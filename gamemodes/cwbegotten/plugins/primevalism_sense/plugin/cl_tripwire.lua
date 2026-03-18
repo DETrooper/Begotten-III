@@ -22,6 +22,9 @@ function cwPrimevalismSense:CleanupTripwire()
     cwPrimevalismSense.tripwireInfo = {}
 end
 
+local validColor = Color(255, 255, 0)
+local invalidColor = Color(100, 100, 100)
+
 function cwPrimevalismSense:UpdateRope()
     local ent = cwPrimevalismSense.tripwireInfo.ent2
     if (!IsValid(ent)) then return end
@@ -89,5 +92,5 @@ net.Receive("cwStartTripwire", function()
 end)
 
 net.Receive("cwFinishTripwire", function()
-    CleanupTripwire()
+    cwPrimevalismSense:CleanupTripwire()
 end)

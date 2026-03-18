@@ -1,6 +1,10 @@
 PLUGIN:SetGlobalAlias("cwPrimevalismSense")
 
+Clockwork.kernel:IncludePrefixed("sh_tripwire.lua")
+
+Clockwork.kernel:IncludePrefixed("cl_tripwire.lua")
 Clockwork.kernel:IncludePrefixed("cl_hooks.lua")
+Clockwork.kernel:IncludePrefixed("sv_tripwire.lua")
 Clockwork.kernel:IncludePrefixed("sv_hooks.lua")
 
 function cwPrimevalismSense:GetWarcrySound()

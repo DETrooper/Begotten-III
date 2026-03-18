@@ -75,7 +75,7 @@ local INGENUITY = cwBeliefs.beliefTrees:New("ingenuity")
 		[3] = {
 			["ingenious"] = {
 				name = "Ingenious",
-				description = "Unlocks the 'Crafting' mechanic and the ability to interact with traps. Unlocks the ability to utilize equipped lanterns as a light source on your hip.",
+				description = "Unlocks the 'Crafting' mechanic and the ability to interact with traps. Unlocks the ability to utilize equipped lanterns as a light source on your hip. Unlocks the ability to disarm tripwire.",
 				row = 1,
 			},
 			["craftsman"] = {

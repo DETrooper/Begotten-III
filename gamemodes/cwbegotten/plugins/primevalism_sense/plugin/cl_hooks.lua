@@ -102,22 +102,6 @@ end
 function cwPrimevalismSense:DoScreenspaceEffects()
     local curTime = CurTime()
 
-    if ((curTime - self.echolocationInfo.startTime) > echolocationTime) then
-        if (self.echolocationInfo.startTime != 0) then
-            hook.Run("OnEcholocationEnd")
-
-            self.echolocationInfo.startTime = 0
-        end
-
-        return
-    end
-
-    if (!self.echolocationInfo.hasPreppedEnd and (curTime - self.echolocationInfo.startTime) > echolocationPrepEndTime) then
-        hook.Run("PrepEcholocationEnd")
-
-        self.echolocationInfo.hasPreppedEnd = true
-    end
-
     DrawColorModify(colorModify)
 
     surface.SetDrawColor(255, 255, 255)
@@ -147,7 +131,23 @@ function cwPrimevalismSense:ShouldntDrawFogPlane()
 end
 
 function cwPrimevalismSense:PreDrawViewModels()
-    if ((CurTime() - self.echolocationInfo.startTime) <= echolocationTime) then return end
+    local curTime = CurTime()
+
+    if ((curTime - self.echolocationInfo.startTime) > echolocationTime) then
+        if (self.echolocationInfo.startTime != 0) then
+            hook.Run("OnEcholocationEnd")
+
+            self.echolocationInfo.startTime = 0
+        end
+
+        return
+    end
+
+    if (!self.echolocationInfo.hasPreppedEnd and (curTime - self.echolocationInfo.startTime) > echolocationPrepEndTime) then
+        hook.Run("PrepEcholocationEnd")
+
+        self.echolocationInfo.hasPreppedEnd = true
+    end
 
     cam.Start2D()
         self:DoScreenspaceEffects()
@@ -204,5 +204,9 @@ end
 function cwPrimevalismSense:GetProgressBarInfoAction(action, percentage)
 	if (action == "tripwiring") then
 		return {text = "You are laying down tripwire. Click to cancel.", percentage = percentage, flash = percentage < 0}
+	end
+
+	if (action == "cuttingTripwire") then
+		return {text = "You are cutting a tripwire. Click to cancel.", percentage = percentage, flash = percentage < 0}
 	end
 end
