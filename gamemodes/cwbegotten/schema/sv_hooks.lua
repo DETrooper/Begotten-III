@@ -3041,7 +3041,7 @@ function Schema:PlayerCharacterLoaded(player)
 	local scale = player:GetCharacterData("customScale", 0)
 
 	if (scale > 0) then
-		local viewScale = (scale * 36)
+		local viewScale = ((scale * 36) - 1)
 
 		player:SetModelScale(scale, FrameTime())
 		player:SetViewOffset(Vector(0, 0, 64 + (viewScale / 4)))

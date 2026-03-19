@@ -4268,7 +4268,7 @@ local COMMAND = Clockwork.command:New("CharSetScale")
 		if (!IsValid(target)) then Schema:EasyText(player, "peru", string.format("No player by the name of '%s' was found!", arguments[1])) return end
 
 		local scale = tonumber(arguments[2])
-		local viewScale = (scale * 36)
+		local viewScale = ((scale * 36) - 1)
 
 		target:SetCharacterData("customScale", scale)
 
