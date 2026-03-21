@@ -18,18 +18,27 @@ function cwEncumberment:PlayerThink(player, curTime, infoTable, alive, initializ
 			
 			local bOverEncumbered = false;
 			local holdingEnt = plyTab.cwHoldingEnt;
+			local weight = infoTable.inventoryWeight;
 			
-			if holdingEnt and IsValid(holdingEnt) and holdingEnt:GetClass() == "prop_ragdoll" then
-				local ragdollPlayer = Clockwork.entity:GetPlayer(holdingEnt);
-				
-				if ragdollPlayer and ragdollPlayer.OverEncumbered then
-					if ragdollPlayer.OverEncumbered then
-						bOverEncumbered = true;
+			if holdingEnt and IsValid(holdingEnt) then
+				if holdingEnt:GetClass() == "prop_ragdoll" then
+					local ragdollPlayer = Clockwork.entity:GetPlayer(holdingEnt);
+					
+					if ragdollPlayer and ragdollPlayer.OverEncumbered then
+						if ragdollPlayer.OverEncumbered then
+							bOverEncumbered = true;
+						end
+					end
+				elseif holdingEnt:GetClass() == "cw_item" then
+					local itemTable = holdingEnt:GetItemTable();
+					
+					if itemTable and itemTable.weight then
+						weight = weight + itemTable.weight;
 					end
 				end
 			end
 			
-			if (infoTable.inventoryWeight > infoTable.maxWeight) then
+			if (weight > infoTable.maxWeight) then
 				bOverEncumbered = true;
 			end
 			
