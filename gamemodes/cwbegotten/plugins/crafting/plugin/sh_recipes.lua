@@ -109,6 +109,32 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("leatherhumanmeat");
+		RECIPE.name = "Leather";
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requirements = {
+			["humanmeat"] = {amount = 5},
+		};
+		RECIPE.result = {
+			["leather"] = {amount = 1},
+		};
+		RECIPE.category = "Other"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 4
+		RECIPE.craftVerb = "stitching"
+		RECIPE.experience = 10;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("leatherhide");
 		RECIPE.name = "(2x) Leather";
@@ -732,6 +758,34 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("manlunch");
+		RECIPE.name = "Manlunch";
+		RECIPE.requiresHeatSource = true;
+		RECIPE.requiredBeliefs = {"cookist"};
+		RECIPE.requirements = {
+			["humanmeat"] = {amount = 3},
+			["cloth"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["manlunch"] = {amount = 1},
+		};
+		RECIPE.category = "Cooking"
+		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "cooking"
+		RECIPE.experience = 28;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("cooked_yummy_meat");
 		RECIPE.name = "Cooked Yummy Meat";
@@ -845,9 +899,65 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("wanderers_delight_beansandbread");
+		RECIPE.name = "(2x) Wanderer's Delight";
+		RECIPE.requiresHeatSource = true;
+		RECIPE.requiredBeliefs = {"culinarian"};
+		RECIPE.requirements = {
+			["moldy_bread"] = {amount = 2},
+			["can_of_beans"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["wanderers_delight"] = {amount = 2},
+		};
+		RECIPE.category = "Cooking"
+		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "cooking"
+		RECIPE.experience = 35;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("wanderers_delight_cannedmealandbread");
+		RECIPE.name = "(2x) Wanderer's Delight";
+		RECIPE.requiresHeatSource = true;
+		RECIPE.requiredBeliefs = {"culinarian"};
+		RECIPE.requirements = {
+			["canned_meal"] = {amount = 2},
+			["moldy_bread"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["wanderers_delight"] = {amount = 2},
+		};
+		RECIPE.category = "Cooking"
+		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "cooking"
+		RECIPE.experience = 35;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("meatmeal");
-		RECIPE.name = "(3x) Meatmeal";
+		RECIPE.name = "(4x) Meatmeal";
 		RECIPE.requiresHeatSource = true;
 		RECIPE.requiredBeliefs = {"culinarian"};
 		RECIPE.requirements = {
@@ -855,7 +965,7 @@ function cwRecipes:ClockworkInitialized()
 			["spice"] = {amount = 1},
 		};
 		RECIPE.result = {
-			["meatmeal"] = {amount = 3},
+			["meatmeal"] = {amount = 4},
 		};
 		RECIPE.category = "Cooking"
 		RECIPE.finishSound = "ambient/fire/mtov_flame2.wav";
@@ -1043,6 +1153,33 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("crafted_bandage_cleaned");
+		RECIPE.name = "(4x) Crafted Bandage";
+		RECIPE.requiredBeliefs = {"ingenious"};
+		RECIPE.requirements = {
+			["bandage"] = {amount = 4},
+			["old_beer"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["crafted_bandage"] = {amount = 4},
+		};
+		RECIPE.category = "Medical"
+		RECIPE.finishSound = "begotten/items/first_aid.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "assembling"
+		RECIPE.experience = 6;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("splint");
 		RECIPE.name = "Makeshift Splint";
@@ -1098,7 +1235,7 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("skintape");
 		RECIPE.name = "Skintape";
-		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
 		RECIPE.requirements = {
 			["humanmeat"] = {amount = 2},
 		};
@@ -1124,7 +1261,7 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("skingauze");
 		RECIPE.name = "Skingauze";
-		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
 		RECIPE.requirements = {
 			["humanmeat"] = {amount = 3},
 			["human_bone"] = {amount = 1},
@@ -1742,6 +1879,35 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("steel_claws_upgrade_savage");
+		RECIPE.name = "(Upgrade) Steel Claws";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"mechanic"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
+		RECIPE.requirements = {
+			["begotten_claws_savageclaws"] = {amount = 1},
+			["steel_ingot"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_claws_steelclaws"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 20;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 
 	RECIPE = cwRecipes.recipes:New("elegant_dagger");
 		RECIPE.name = "Elegant Dagger";
@@ -1759,7 +1925,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 60;
+		RECIPE.experience = 50;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -1806,7 +1972,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"artisan"};
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
-			["steel_ingot"] = {amount = 1},
+			["fine_steel_ingot"] = {amount = 1},
 			["belphegor_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -1817,7 +1983,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 40;
+		RECIPE.experience = 60;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -2352,6 +2518,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredBeliefs = {"mechanic"};
 		RECIPE.requirements = {
 			["iron_ingot"] = {amount = 3},
+			["wood"] = {amount = 2},
 		};
 		RECIPE.result = {
 			["begotten_2h_great_heavybattleaxe"] = {amount = 1},
@@ -2361,7 +2528,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 30;
+		RECIPE.experience = 35;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -2690,7 +2857,9 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiresSmithy = true;
 		RECIPE.requiredBeliefs = {"craftsman"};
 		RECIPE.requirements = {
-			["iron_ingot"] = {amount = 2},
+			["iron_ingot"] = {amount = 1},
+			["wood"] = {amount = 1},
+			["leather"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_1h_battleaxe"] = {amount = 1},
@@ -5028,6 +5197,39 @@ function cwRecipes:ClockworkInitialized()
 		-- SACRIFICIAL WEAPONS
 		--
 		--
+
+	RECIPE = cwRecipes.recipes:New("satanic_whip");
+		RECIPE.name = "Satanic Whip";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFaiths = {"Faith of the Dark"};
+		RECIPE.excludedFactions = {"Goreic Warrior"};
+		RECIPE.requirements = {
+			["hellforged_steel_ingot"] = {amount = 3},
+			["leather"] = {amount = 3},
+			["bindings"] = {amount = 1},
+			["unholy_sigil_stone"] = {amount = 1},
+			["xolotl_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["begotten_1h_whip"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 80;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
 		
 	RECIPE = cwRecipes.recipes:New("hellfire_sword");
 		RECIPE.name = "Hellfire Sword";
@@ -5427,6 +5629,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
+			["belphegor_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_houserekhkhetsaancestraldagger"] = {amount = 1},
@@ -5456,6 +5659,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
+			["belphegor_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_housevarazdatancestraldagger"] = {amount = 1},
@@ -5485,6 +5689,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Children of Satan"};
 		RECIPE.requirements = {
 			["fine_steel_ingot"] = {amount = 1},
+			["belphegor_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["begotten_dagger_housephilimaxioancestraldagger"] = {amount = 1},
@@ -8528,7 +8733,7 @@ function cwRecipes:ClockworkInitialized()
 
 	RECIPE = cwRecipes.recipes:New("twisted_fuck_armor");
 		RECIPE.name = "Twisted Fuck Armor";
-		RECIPE.requiredBeliefs = {"primeval"};
+		RECIPE.requiredBeliefs = {"ingenious", "primeval"};
 		RECIPE.excludedFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["human_bone"] = {amount = 6},

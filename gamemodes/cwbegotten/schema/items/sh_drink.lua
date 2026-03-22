@@ -13,7 +13,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = -1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 300, bNoSupercrate = true};
-	ITEM.needs = {hunger = 10, thirst = 15};
+	ITEM.needs = {hunger = 4, thirst = 12};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -57,7 +57,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.expireTime = 120;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 600, bNoSupercrate = true};
-	ITEM.needs = {hunger = 5, thirst = 35};
+	ITEM.needs = {thirst = 8};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -81,7 +81,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.expireTime = 120;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 600, bNoSupercrate = true};
-	ITEM.needs = {hunger = 10, thirst = 20};
+	ITEM.needs = {thirst = 10};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -106,7 +106,7 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.expireTime = 30;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 675, bNoSupercrate = true};
-	ITEM.needs = {thirst = 50};
+	ITEM.needs = {thirst = 35};
 	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -139,7 +139,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = -2;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 675, bNoSupercrate = true};
-	ITEM.needs = {thirst = 25};
+	ITEM.needs = {thirst = 15};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -188,8 +188,8 @@ local ITEM = Clockwork.item:New("alcohol_base");
 	ITEM.cauldronQuality = 1;
 	ITEM.expireTime = 240;
 
-	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1150};
-	ITEM.needs = {hunger = 5, thirst = 50};
+	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1250};
+	ITEM.needs = {hunger = 3, thirst = 35};
 	
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -217,7 +217,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.dysentery = 5;
 	
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 600, bNoSupercrate = true};
-	ITEM.needs = {hunger = 10, thirst = 30, sleep = 5};
+	ITEM.needs = {thirst = 12, sleep = 8};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -235,7 +235,7 @@ local ITEM = Clockwork.item:New();
 			return false;
 		end
 	
-		Schema:EasyText(player, "lawngreen", "When you pop open the can, it still has a fizz. It tastes very sweet compared to anything else you've had before.");
+		Schema:EasyText(player, "lawngreen", "When you pop open the can, it still has a fizz. It tastes very sweet compared to anything else you've had before. You also feel more energized.");
 		player:HandleSanity(2);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
 	end;
@@ -256,7 +256,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
-	ITEM.needs = {thirst = 65};
+	ITEM.needs = {thirst = 30};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -306,7 +306,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1000};
-	ITEM.needs = {thirst = 45, sleep = 5};
+	ITEM.needs = {thirst = 30, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -332,7 +332,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.stackable = true;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 700, bNoSupercrate = true};
-	ITEM.needs = {thirst = 50, sleep = 5};
+	ITEM.needs = {thirst = 35, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -368,7 +368,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 0;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1150, bNoSupercrate = true};
-	ITEM.needs = {thirst = 50, sleep = 5};
+	ITEM.needs = {thirst = 30, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -397,7 +397,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 0;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1150, bNoSupercrate = true};
-	ITEM.needs = {thirst = 50, sleep = 5};
+	ITEM.needs = {thirst = 30, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -462,11 +462,11 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = -1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1150, bNoSupercrate = true};
-	ITEM.needs = {thirst = 50, sleep = 5};
+	ITEM.needs = {thirst = 30, sleep = 5, stamina = 30};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		player:HandleStamina(50);
+		player:HandleStamina(self.needs.stamina);
 
 		if !player:HasBelief("savage_animal") then
 			Schema:EasyText(player, "olive", "You slurp of some of Papa Pete's® Ice Cold Crazy Pop™. You feel refreshed, though your sanity is savagely torn apart.");
@@ -496,11 +496,11 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2000};
-	ITEM.needs = {thirst = 60, sleep = 15};
+	ITEM.needs = {thirst = 35, sleep = 15, stamina = 80};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		player:HandleStamina(80);
+		player:HandleStamina(self.needs.stamina);
 		Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Cream Pop™. It is very creamy and delicious. You feel mentally and physically reinvigorated, and you feel a renewed sense of energy!");
 		player:HandleSanity(15);
 		player:HandleXP(cwBeliefs.xpValues["drink"]);
@@ -525,7 +525,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = 0;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1500};
-	ITEM.needs = {hunger = 50, thirst = 20};
+	ITEM.needs = {hunger = 25, thirst = 20};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -553,7 +553,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronQuality = -1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1300, bNoSupercrate = true};
-	ITEM.needs = {thirst = 55, sleep = 5};
+	ITEM.needs = {thirst = 30, sleep = 5};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -588,11 +588,11 @@ ITEM:Register();
 	ITEM.cauldronQuality = -1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1300, bNoSupercrate = true};
-	ITEM.needs = {thirst = 55, sleep = 5};
+	ITEM.needs = {thirst = 40, sleep = 5, stamina = 100};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		player:HandleStamina(100);
+		player:HandleStamina(self.needs.stamina);
 
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Pipin' Hot Pop™! It has a spicy aftertaste. After you're done drinking, some coins spill out the bottle!");
@@ -611,8 +611,8 @@ ITEM:Register();
 	function ITEM:OnDrop(player, position) end;
 ITEM:Register();
 
- local ITEM = Clockwork.item:New();
-	ITEM.name = "Papa Pete's® Silly Pop™";
+local ITEM = Clockwork.item:New();
+    ITEM.name = "Papa Pete's® Silly Pop™";
 	ITEM.uniqueID = "papa_petes_silly_pop";
 	ITEM.model = "models/props_junk/GlassBottle01a.mdl";
 	ITEM.weight = 0.25;
@@ -625,11 +625,11 @@ ITEM:Register();
 	ITEM.cauldronQuality = -1;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 1750, bNoSupercrate = true};
-	ITEM.needs = {thirst = 60, sleep = 5};
+	ITEM.needs = {thirst = 60, sleep = 5, stamina = 100};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		player:HandleStamina(100);
+		player:HandleStamina(self.needs.stamina);
 
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Silly Pop™. It tastes alright, and it makes you burst into a fit of laughter afterwards! Your sanity is greatly restored!");
@@ -637,7 +637,7 @@ ITEM:Register();
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		else
 			Schema:EasyText(player, "olive", "You slurp of some of Papa Pete's® Silly Pop™. It tastes good, but you're now tongue twisted from brain damage!");
-			player:GiveTrait("imbecile");
+			if(!player:HasTrait("lobotomite")) then player:GiveTrait("imbecile"); end
 			player:HandleXP(cwBeliefs.xpValues["drink"]);
 		end
 	end;
@@ -645,7 +645,6 @@ ITEM:Register();
 	-- Called when a player drops the item.
 	function ITEM:OnDrop(player, position) end;
 ITEM:Register();
---]]
 
  local ITEM = Clockwork.item:New();
 	ITEM.name = "Papa Pete's® Plague Pop™";
@@ -662,11 +661,11 @@ ITEM:Register();
 	ITEM.cauldronPlague = true;
 
 	ITEM.itemSpawnerInfo = {category = "Food", rarity = 2500};
-	ITEM.needs = {thirst = 60, sleep = 5};
+	ITEM.needs = {thirst = 60, sleep = 5, stamina = 100};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
-		player:HandleStamina(100);
+		player:HandleStamina(self.needs.stamina);
 
 		if player:HasBelief("favored") then
 			Schema:EasyText(player, "lawngreen", "You slurp of some of Papa Pete's® Plague Pop™. It didn't taste very good, but you feel your pockets grow heavier with coins! The Gods have blessed you!");
@@ -771,7 +770,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronLiquidity = 1;
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 35, thirst = 70};
+	ITEM.needs = {hunger = 30, thirst = 50};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -797,7 +796,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronLiquidity = 1;
 	ITEM.cauldronQuality = 1;
 	
-	ITEM.needs = {hunger = 40, thirst = 75};
+	ITEM.needs = {hunger = 40, thirst = 65};
 
 	-- Called when a player uses the item.
 	function ITEM:OnUse(player, itemEntity)
@@ -836,7 +835,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.cauldronLiquidity = 1;
 	ITEM.cauldronQuality = -1;
 	
-	ITEM.needs = {thirst = 100};
+	ITEM.needs = {thirst = 50};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then
@@ -883,7 +882,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.useSound = "ambient/levels/canals/toxic_slime_gurgle4.wav";
 	ITEM.description = "A bucket filled with purified water.";
 	ITEM.stackable = false;
-	ITEM.needs = {thirst = 80};
+	ITEM.needs = {thirst = 70};
 	ITEM.uniqueID = "purified_water_bucket";
 	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/bucket.png"
 	
@@ -933,7 +932,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.useSound = "ambient/levels/canals/toxic_slime_gurgle4.wav";
 	ITEM.description = "A bucket filled with dirty water.";
 	ITEM.stackable = false;
-	ITEM.needs = {thirst = 50};
+	ITEM.needs = {thirst = 30};
 	ITEM.uniqueID = "dirty_water_bucket";
 	ITEM.iconoverride = "begotten_apocalypse/ui/itemicons/bucket.png"
 	ITEM.infectchance = 60;
@@ -989,7 +988,7 @@ local ITEM = Clockwork.item:New();
 	ITEM.infectchance = 30;
 	ITEM.cauldronQuality = -4;
 	
-	ITEM.needs = {thirst = 30};
+	ITEM.needs = {thirst = 25};
 	
 	function ITEM:OnSetup()
 		if cwWarmth and cwWarmth.systemEnabled then

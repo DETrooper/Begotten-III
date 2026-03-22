@@ -69,8 +69,8 @@ function ENT:OnTakeDamage(damageInfo)
 			self.strikesRequired = self.strikesRequired - damageDealt;
 			
 			if cwCharacterNeeds and player.HandleNeed then
-				player:HandleNeed("thirst", 0.75);
-				player:HandleNeed("sleep", 0.25);
+				player:HandleNeed("thirst", 0.35);
+				player:HandleNeed("sleep", 0.30);
 			end
 
 			if cwBeliefs and player.HandleXP then
@@ -103,7 +103,7 @@ function ENT:OnTakeDamage(damageInfo)
 				end
 				
 				self.woodLeft = self.woodLeft - 1;
-				self.cycleStrikesRequired = math.random(5, 10)
+				self.cycleStrikesRequired = math.random(10, 20)
 				self.strikesRequired = self.cycleStrikesRequired
 			end
 			

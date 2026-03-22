@@ -199,7 +199,7 @@ else
 		[HITGROUP_RIGHTLEG] = "legs",
 		[HITGROUP_LEFTARM] = "arms",
 		[HITGROUP_LEFTLEG] = "legs",
-		[HITGROUP_STOMACH] = "torso",
+		[HITGROUP_STOMACH] = "stomach",
 		[HITGROUP_CHEST] = "torso",
 		[HITGROUP_HEAD] = "head"
 	}

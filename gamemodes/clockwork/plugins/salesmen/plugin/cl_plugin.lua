@@ -55,7 +55,7 @@ netstream.Hook("SalesmanAdd", function(data)
 
 		gui.EnableScreenClicker(true)
 
-		Clockwork.salesman.showChatBubble = true
+		Clockwork.salesman.showChatBubble = false
 		Clockwork.salesman.buyInShipments = true
 		Clockwork.salesman.priceScale = 1
 		Clockwork.salesman.physDesc = ""
@@ -103,7 +103,7 @@ netstream.Hook("SalesmanEdit", function(data)
 	end
 
 	Derma_StringRequest("Name", "Do you want to change this salesman's name?", data.name, function(text)
-		Clockwork.salesman.showChatBubble = data.showChatBubble
+		Clockwork.salesman.showChatBubble = false
 		Clockwork.salesman.buyInShipments = data.buyInShipments
 		Clockwork.salesman.priceScale = data.priceScale
 		Clockwork.salesman.factions = data.factions or {}

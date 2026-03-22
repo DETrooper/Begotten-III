@@ -41,11 +41,7 @@ function GM:OnContextMenuClose()
 end
 
 function GM:SpawnMenuOpen()
-	if (Clockwork.player:IsAdmin(Clockwork.Client)) then
-		return true;
-	else
-		return false;
-	end
+	return Clockwork.player:HasFlags(Clockwork.Client, "m") or false;
 end
 
 --[[

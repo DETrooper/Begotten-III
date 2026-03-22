@@ -324,3 +324,26 @@ local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "wood"}}; -- use "breakdown" for other type
 	ITEM.requiredbeliefs = {"strength"};
 ITEM:Register();
+
+local ITEM = Clockwork.item:New("weapon_base");
+	ITEM.name = "Satanic Whip";
+	ITEM.model = "models/begotten/weapons/whip.mdl";
+	ITEM.weight = 1.5;
+	ITEM.uniqueID = "begotten_1h_whip";
+	ITEM.category = "Melee";
+	ITEM.description = "A leather barbed whip typically used by Varazdat Kings to torment their slaves.";
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/satanic_whip.png"
+	ITEM.meleeWeapon = true;
+	ITEM.isAttachment = true;
+	ITEM.isSacrifical = true;
+	ITEM.attachmentBone = "ValveBiped.Bip01_R_Thigh";
+	ITEM.attachmentOffsetAngles = Angle(74.59, 360, 0);
+	ITEM.attachmentOffsetVector = Vector(-6.14, -7.78, -2.83);	
+	ITEM.canUseShields = true;
+
+	ITEM.attributes = {"barbed", "mark_of_perdition", "disciplined", "blood_of_kings"};
+	ITEM.components = {breakdownType = "breakdown", items = {"steel_chunks", "bindings", "leather", "leather", "leather"}}; -- use "breakdown" for other type
+	ITEM.requiredbeliefs = {"murder_artform"};
+	ITEM.requiredFaiths = {"Faith of the Dark"};
+	ITEM.allowedSubfactions = {"Varazdat"};
+ITEM:Register();

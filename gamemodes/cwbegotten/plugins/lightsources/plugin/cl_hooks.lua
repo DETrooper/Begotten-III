@@ -135,3 +135,15 @@ function cwLantern:GetBars(bars)
 		end;
 	end;
 end;
+
+function cwLantern:SubModifyItemMarkupTooltip(category, maximumWeight, weight, condition, percentage, name, itemTable, x, y, width, height, frame, bShowWeight)
+	if category == "Lights" then
+		local oil = itemTable:GetData("oil", 0);
+		local percentage = math.min(oil / 100, 100);
+		local oilColor = oil / 100;
+		local color = Color(255 * oilColor, 200 * oilColor, 50 * oilColor);
+		local oilText = self:GetOilText(oil);
+		
+		frame:AddBar(20, {{text = oilText, percentage = percentage * 100, color = color, font = "DermaDefault", leftTextAlign = false, noDisplay = true}}, "Fuel Remaining: ", Color(170, 170, 180));
+	end
+end

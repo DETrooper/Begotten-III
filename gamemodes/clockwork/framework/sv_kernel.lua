@@ -886,6 +886,10 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 	if hook.Run("EntityTakeDamageAfter", entity, damageInfo) == true then
 		return true;
 	end
+
+	if (damageInfo:GetDamage() > 0 and IsValid(attacker) and attacker:IsPlayer()) then
+		attacker.lastDealtDamage = CurTime()
+	end
 	
 	if (player and (entity:IsPlayer() or isPlayerRagdoll)) then
 		if (!isPlayerRagdoll) then
@@ -951,6 +955,10 @@ function Clockwork.kernel:DoEntityTakeDamageHook(entity, damageInfo)
 		hook.Run("PreCalculatePlayerDamage", player, lastHitGroup, damageInfo);
 		hook.Run("CalculatePlayerDamage", player, lastHitGroup, damageInfo);
 		hook.Run("PostCalculatePlayerDamage", player, lastHitGroup, damageInfo);
+
+		if (damageInfo:GetDamage() > 0) then
+			player.lastReceivedDamage = CurTime()
+		end
 	end
 end
 

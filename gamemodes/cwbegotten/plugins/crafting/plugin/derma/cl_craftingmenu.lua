@@ -119,13 +119,14 @@ function PANEL:Rebuild()
 		self.weaponButton:SetSize(256, 70);
 		self.weaponButton:SetTextColor(Color(160, 0, 0));
 		self.weaponButton:SetFont("nov_IntroTextSmallfaaaaa");
+		self.weaponButton.category = "Weapons";
 		
 		local width, height = self.weaponButton:GetWide(), self.weaponButton:GetTall()
 		local buttonMaterial = Material("begotten/ui/butt24.png")
 		
 		-- Called when the button is painted.
 		function self.weaponButton.DoClick()
-			surface.PlaySound("begotten/ui/buttonclick.wav")
+			surface.PlaySound("begotten/ui/buttonrollover.wav")
 			
 			if self.recipeListOpen ~= "Weapons" then
 				self:BuildRecipeList("Weapons", faction, faith, subfaction, subfaith, (cwRecipes.recipeSearch and cwRecipes.recipeSearch or ""));
@@ -144,13 +145,14 @@ function PANEL:Rebuild()
 		self.munitionButton:SetSize(256, 70);
 		self.munitionButton:SetTextColor(Color(160, 0, 0));
 		self.munitionButton:SetFont("nov_IntroTextSmallfaaaaa");
+		self.munitionButton.category = "Munitions";
 		
 		local width, height = self.munitionButton:GetWide(), self.munitionButton:GetTall()
 		local buttonMaterial = Material("begotten/ui/butt24.png")
 		
 		-- Called when the button is painted.
 		function self.munitionButton.DoClick()
-			surface.PlaySound("begotten/ui/buttonclick.wav")
+			surface.PlaySound("begotten/ui/buttonrollover.wav")
 			
 			if self.recipeListOpen ~= "Munitions" then
 				self:BuildRecipeList("Munitions", faction, faith, subfaction, subfaith, (cwRecipes.recipeSearch and cwRecipes.recipeSearch or ""));
@@ -169,13 +171,14 @@ function PANEL:Rebuild()
 		self.armorButton:SetSize(256, 70);
 		self.armorButton:SetTextColor(Color(160, 0, 0));
 		self.armorButton:SetFont("nov_IntroTextSmallfaaaaa");
+		self.armorButton.category = "Armor";
 		
 		local width, height = self.armorButton:GetWide(), self.armorButton:GetTall()
 		local buttonMaterial = Material("begotten/ui/butt24.png")
 		
 		-- Called when the button is painted.
 		function self.armorButton.DoClick()
-			surface.PlaySound("begotten/ui/buttonclick.wav")
+			surface.PlaySound("begotten/ui/buttonrollover.wav")
 			
 			if self.recipeListOpen ~= "Armor" then
 				self:BuildRecipeList("Armor", faction, faith, subfaction, subfaith, (cwRecipes.recipeSearch and cwRecipes.recipeSearch or ""));
@@ -194,13 +197,14 @@ function PANEL:Rebuild()
 		self.cookingButton:SetSize(256, 70);
 		self.cookingButton:SetTextColor(Color(160, 0, 0));
 		self.cookingButton:SetFont("nov_IntroTextSmallfaaaaa");
+		self.cookingButton.category = "Cooking";
 		
 		local width, height = self.cookingButton:GetWide(), self.cookingButton:GetTall()
 		local buttonMaterial = Material("begotten/ui/butt24.png")
 		
 		-- Called when the button is painted.
 		function self.cookingButton.DoClick()
-			surface.PlaySound("begotten/ui/buttonclick.wav")
+			surface.PlaySound("begotten/ui/buttonrollover.wav")
 			
 			if self.recipeListOpen ~= "Cooking" then
 				self:BuildRecipeList("Cooking", faction, faith, subfaction, subfaith, (cwRecipes.recipeSearch and cwRecipes.recipeSearch or ""));
@@ -219,13 +223,14 @@ function PANEL:Rebuild()
 		self.medicalButton:SetSize(256, 70);
 		self.medicalButton:SetTextColor(Color(160, 0, 0));
 		self.medicalButton:SetFont("nov_IntroTextSmallfaaaaa");
+		self.medicalButton.category = "Medical";
 		
 		local width, height = self.medicalButton:GetWide(), self.medicalButton:GetTall()
 		local buttonMaterial = Material("begotten/ui/butt24.png")
 		
 		-- Called when the button is painted.
 		function self.medicalButton.DoClick()
-			surface.PlaySound("begotten/ui/buttonclick.wav")
+			surface.PlaySound("begotten/ui/buttonrollover.wav")
 			
 			if self.recipeListOpen ~= "Medical" then
 				self:BuildRecipeList("Medical", faction, faith, subfaction, subfaith, (cwRecipes.recipeSearch and cwRecipes.recipeSearch or ""));
@@ -244,13 +249,14 @@ function PANEL:Rebuild()
 		self.otherButton:SetSize(256, 70);
 		self.otherButton:SetTextColor(Color(160, 0, 0));
 		self.otherButton:SetFont("nov_IntroTextSmallfaaaaa");
+		self.otherButton.category = "Other";
 		
 		local width, height = self.otherButton:GetWide(), self.otherButton:GetTall()
 		local buttonMaterial = Material("begotten/ui/butt24.png")
 		
 		-- Called when the button is painted.
 		function self.otherButton.DoClick()
-			surface.PlaySound("begotten/ui/buttonclick.wav")
+			surface.PlaySound("begotten/ui/buttonrollover.wav")
 			
 			if self.recipeListOpen ~= "Other" then
 				self:BuildRecipeList("Other", faction, faith, subfaction, subfaith, (cwRecipes.recipeSearch and cwRecipes.recipeSearch or ""));
@@ -409,6 +415,14 @@ function PANEL:BuildRecipeList(category, faction, faith, subfaction, subfaith, s
 		end
 		
 		self.recipeListOpen = category;
+		
+		for k, v in pairs(self.categoryList:GetItems()) do
+			if v.category == category then
+				v:SetTextColor(Color(160, 150, 150));
+			else
+				v:SetTextColor(Color(160, 0, 0));
+			end
+		end
 	end
 end
 
@@ -482,42 +496,15 @@ function PANEL:Rebuild()
 	self.nameLabel:SetTextColor(Color(200, 20, 20));
 	self.nameLabel:SetFont("nov_IntroTextSmallDETrooper");
 	self.nameLabel:SizeToContents();
-	self.nameLabel:SetPos(100, 12);
-	
-	self.tierLabel = vgui.Create("DLabel", self);
-	
-	if requiredBeliefs then
-		local requiredBeliefNames = {};
-		
-		for i, v in ipairs(requiredBeliefs) do
-			table.insert(requiredBeliefNames, cwBeliefs:GetBeliefName(v));
-		end
-		
-		if cwBeliefs:HasBelief(requiredBeliefs) then
-			self.tierLabel:SetTextColor(Color(25, 150, 25));
-		else
-			self.tierLabel:SetTextColor(Color(200, 25, 25));
-		end
-		
-		if #requiredBeliefNames == 1 then
-			self.tierLabel:SetText("Requires Belief: '"..requiredBeliefNames[1].."'");
-		else
-			self.tierLabel:SetText("Requires Beliefs: '"..table.concat(requiredBeliefNames, "', '").."'");
-		end
-	end
-	
-	--self.tierLabel:SetTextColor(Color(160, 145, 145));
-	self.tierLabel:SetFont("Decay_FormText");
-	self.tierLabel:SetPos(100, 36);
-	self.tierLabel:SetSize(260, 18);
+	self.nameLabel:SetPos(100, 6);
 	
 	if recipeData.requiresHeatSource then
 		self.heatSourceLabel = vgui.Create("DLabel", self);
 		self.heatSourceLabel:SetText("Requires Heat Source");
 		--self.heatSourceLabel:SetTextColor(Color(160, 145, 145));
 		self.heatSourceLabel:SetFont("Decay_FormText");
-		self.heatSourceLabel:SetPos(100, 60);
-		self.heatSourceLabel:SetSize(180, 18);
+		self.heatSourceLabel:SetPos(100, 52);
+		self.heatSourceLabel:SizeToContents();
 		
 		if Clockwork.Client.cwCraftingMenu.fire_found then
 			self.heatSourceLabel:SetTextColor(Color(25, 150, 25));
@@ -529,14 +516,116 @@ function PANEL:Rebuild()
 		self.smithyLabel:SetText("Requires Smithy");
 		--self.smithyLabel:SetTextColor(Color(160, 145, 145));
 		self.smithyLabel:SetFont("Decay_FormText");
-		self.smithyLabel:SetPos(100, 60);
-		self.smithyLabel:SetSize(180, 18);
+		self.smithyLabel:SetPos(100, 52);
+		self.smithyLabel:SizeToContents();
 		
 		if Clockwork.Client.cwCraftingMenu.smithy_found then
 			self.smithyLabel:SetTextColor(Color(25, 150, 25));
 		else
 			self.smithyLabel:SetTextColor(Color(200, 25, 25));
 		end
+	end
+	
+	if cwBeliefs and requiredBeliefs then
+		local beliefIcons = {};
+		
+		self.tierLabel = vgui.Create("DLabel", self);
+		self.tierLabel:SetFont("Decay_FormText");
+		self.tierLabel:SetText("Required Beliefs:");
+		self.tierLabel:SetPos(100, 30);
+		self.tierLabel:SizeToContents();
+	
+		for i, v in ipairs(requiredBeliefs) do
+			local beliefTable = cwBeliefs:FindBeliefByID(v);
+			
+			if beliefTable then
+				local tooltip = function(frame)
+					frame:AddText(beliefTable.name, cwBeliefs:FindBeliefTreeByBelief(beliefTable.uniqueID).color, "Civ5ToolTip4");
+					
+					if beliefTable.quote then
+						frame:AddText(beliefTable.description.."\n", Color(225, 200, 200));
+						frame:AddText(beliefTable.quote, Color(128, 90, 90, 240));
+					else
+						frame:AddText(beliefTable.description, Color(225, 200, 200));
+					end
+				end
+				
+				if beliefTable.iconOverride then
+					table.insert(beliefIcons, {icon = beliefTable.iconOverride, tooltip = tooltip, button = function() cwBeliefs:OpenTree(nil, nil, nil, nil, nil, nil, beliefTable.uniqueID) end});
+				else
+					table.insert(beliefIcons, {icon = "begotten/ui/belieficons/"..v..".png", tooltip = tooltip, button = function() cwBeliefs:OpenTree(nil, nil, nil, nil, nil, nil, beliefTable.uniqueID) end});
+				end
+			end
+		end
+
+		if cwBeliefs:HasBelief(requiredBeliefs) then
+			self.tierLabel:SetTextColor(Color(25, 150, 25));
+		else
+			self.tierLabel:SetTextColor(Color(200, 25, 25));
+		end
+
+		local width = self.tierLabel:GetX() + self.tierLabel:GetWide() + 6;
+		
+		if self.heatSourceLabel then
+			local newWide = self.heatSourceLabel:GetX() + self.heatSourceLabel:GetWide() + 6;
+			
+			if newWide > width then
+				width = newWide;
+			end
+		end
+		
+		if self.smithyLabel then
+			local newWide = self.smithyLabel:GetX() + self.smithyLabel:GetWide() + 6;
+			
+			if newWide > width then
+				width = newWide;
+			end
+		end
+		
+		local iconBox = vgui.Create("DPanelList", self);
+		iconBox:SetSize(176, 40);
+		iconBox:SetPos(width, self.tierLabel:GetY() + 2);
+		iconBox:SetPadding(0);
+		iconBox:SetSpacing(4);
+		iconBox:EnableHorizontal(true);
+		
+		-- Called when the panel is painted.
+		function iconBox:Paint(width, height)
+
+		end;
+		
+		for i, v in ipairs(beliefIcons) do
+			local icon;
+			
+			if v.button and isfunction(v.button) then
+				icon = vgui.Create("DImageButton", self);
+				
+				icon.DoClick = v.button
+				icon.DoRightClick = icon.DoClick;
+			else
+				icon = vgui.Create("DImage", self);
+			end
+			
+			icon:SetSize(40, 40);
+			icon:SetImage(v.icon);
+			
+			if v.tooltip and isfunction(v.tooltip) then
+				Clockwork.kernel:CreateDermaToolTip(icon);
+
+				icon:SetToolTipCallback(v.tooltip);
+			end
+			
+			iconBox:AddItem(icon);
+		end;
+	end
+	
+	if recipeData.experience then
+		self.xpLabel = vgui.Create("DLabel", self);
+		self.xpLabel:SetText("Reward: "..tostring(recipeData.experience).." Faith");
+		self.xpLabel:SetTextColor(Color(25, 150, 25));
+		self.xpLabel:SetFont("Decay_FormText");
+		self.xpLabel:SizeToContents();
+		self.xpLabel:SetPos(100, 74);
 	end
 	
 	-- Unique requirements for an items should probably not exceed 7.
@@ -754,6 +843,7 @@ function PANEL:Init()
 
 	self.amtButtonP = self:Add("DButton");
 	self.amtButtonP:SetText("+");
+	self.amtButtonP:SetTextInset(1, -5);
 	self.amtButtonP:SetSize(32, 32);
 	self.amtButtonP:SetPos(502, 356);
 	self.amtButtonP:SetTextColor(Color(160, 0, 0));
@@ -764,7 +854,7 @@ function PANEL:Init()
 	
 	-- Called when the button is painted.
 	function self.amtButtonP.DoClick()
-		surface.PlaySound("begotten/ui/buttonclick.wav");
+		surface.PlaySound("begotten/ui/buttonrollover.wav");
 
 		if(!this:GetParent().selectedRecipe) then return; end
 
@@ -794,6 +884,7 @@ function PANEL:Init()
 
 	self.amtButtonM = self:Add("DButton");
 	self.amtButtonM:SetText("-");
+	self.amtButtonM:SetTextInset(1, -5);
 	self.amtButtonM:SetSize(32, 32);
 	self.amtButtonM:SetPos(502, 394);
 	self.amtButtonM:SetTextColor(Color(160, 0, 0));
@@ -804,7 +895,7 @@ function PANEL:Init()
 	
 	-- Called when the button is painted.
 	function self.amtButtonM.DoClick()
-		surface.PlaySound("begotten/ui/buttonclick.wav");
+		surface.PlaySound("begotten/ui/buttonrollover.wav");
 
 		if(!this:GetParent().selectedRecipe) then return; end
 

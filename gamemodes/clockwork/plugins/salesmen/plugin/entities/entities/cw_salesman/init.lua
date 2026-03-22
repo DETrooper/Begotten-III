@@ -22,9 +22,9 @@ function ENT:SetupSalesman(name, physDesc, animation, bShowChatBubble)
 	self:SetNetworkedString("PhysDesc", physDesc)
 	self:SetupAnimation(animation)
 
-	if (bShowChatBubble) then
+	--[[if (bShowChatBubble) then
 		self:MakeChatBubble()
-	end
+	end]]
 end
 
 -- A function to talk to a player.

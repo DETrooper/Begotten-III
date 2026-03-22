@@ -45,14 +45,14 @@ function Schema:Initialize()
 		end;
 	end;
 	
-	if render.GetHDREnabled() == false and game.GetMap() == "rp_begotten3" then
-		RunConsoleCommand("mat_hdr_enabled", "1");
-		RunConsoleCommand("retry");
-	end
+	--if render.GetHDREnabled() == false and game.GetMap() == "rp_begotten3" then
+		--RunConsoleCommand("mat_hdr_enabled", "1");
+		--RunConsoleCommand("retry");
+	--end
 	
 	--RunConsoleCommand("fps_max", "300");
 	RunConsoleCommand("hud_draw_fixed_reticle", "0");
-	RunConsoleCommand("mat_hdr_level", "2");
+	--RunConsoleCommand("mat_hdr_level", "2");
 	RunConsoleCommand("mat_motion_blur_enabled", "1");
 end
 
@@ -1863,7 +1863,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.isSacrifical then
-					frame:AddText("Causes Corruption To Wielder", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Causes Corruption To Wielder", Color(100, 9, 0), nil, 0.9);
 				end
 				
 				if itemTable.isPolearm then
@@ -1883,7 +1883,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.hasMinimumRange then
-					frame:AddText("Minimum Effective Range: Targets under 60% of your max range will receive ineffective non-lethal damage.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Minimum Effective Range: Targets under 60% of your max range will receive ineffective non-lethal damage.", Color(100, 9, 0), nil, 0.9);
 				end
 				
 				if itemTable.hasIncreasedDeflectionWindow then
@@ -1903,12 +1903,28 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.attributes then
+					if table.HasValue(itemTable.attributes, "barbed") then
+						frame:AddText("Barbed: Deals poison damage and extra blood damage to victims who are not Faith of the Dark.", Color(110, 30, 30), nil, 0.9);
+					end
+
+					if table.HasValue(itemTable.attributes, "mark_of_perdition") then
+						frame:AddText("Mark of Perdition: Causes existential terror to victims who are not Faith of the Dark.", Color(110, 30, 30), nil, 0.9);
+					end
+
+					if table.HasValue(itemTable.attributes, "disciplined") then
+						frame:AddText("Disciplined: Grants a 15% speed boost to yourself and victims who are Faith of the Dark.", Color(110, 30, 30), nil, 0.9);
+					end
+
+					if table.HasValue(itemTable.attributes, "blood_of_kings") then
+						frame:AddText("Blood of Kings: Equippable by the Varazdat subfaction without the required beliefs.", Color(110, 30, 30), nil, 0.9);
+					end
+
 					if table.HasValue(itemTable.attributes, "last_stand") then
 						frame:AddText("Unholy Blessing: Upon reaching 60% of your maximum health, this weapon will become imbued with either fire or ice, and will deal elemental damage.", Color(110, 30, 30), nil, 0.9);
 					end
 
 					if table.HasValue(itemTable.attributes, "cursed") then
-						frame:AddText("Cursed: Causes corruption to wielder on swing if you are not Faith of the Dark.", Color(110, 30, 30), nil, 0.9);
+						frame:AddText("Cursed: Causes corruption to wielder on swing if you are not Faith of the Dark.", Color(100, 9, 0), nil, 0.9);
 					end
 
 					if table.HasValue(itemTable.attributes, "aoebuff") then
@@ -1942,7 +1958,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 					if table.HasValue(itemTable.attributes, "flail") then
 						frame:AddText("Cannot Be Dual Wielded", Color(110, 30, 30), nil, 0.9);
 						frame:AddText("Trust in God: With each strike, there is a 10% chance you will deal an overhead attack that deals +70% raw, stability and stamina damage. The 'Favored' belief raises this chance to 20%.", Color(110, 30, 30), nil, 0.9);
-						frame:AddText("Foolhardy: With each miss, there is a 25% chance that you will strike yourself for half damage. The 'Favored' belief lowers this chance to 10%.", Color(110, 30, 30), nil, 0.9);
+						frame:AddText("Foolhardy: With each miss, there is a 25% chance that you will strike yourself for half damage. The 'Favored' belief lowers this chance to 10%.", Color(100, 9, 0), nil, 0.9);
 					end
 					
 					if table.HasValue(itemTable.attributes, "punisher") then
@@ -1979,10 +1995,11 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if string.find(weaponClass, "begotten_spear") or string.find(weaponClass, "begotten_polearm") or string.find(weaponClass, "begotten_scythe") then
-					frame:AddText("Has Counter Damage: +70% Damage Bonus against running enemies when attacked from the front.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Counter Damage: +70% Damage Bonus against running enemies when attacked from the front.", Color(110, 30, 30), nil, 0.9);
 				elseif weaponTable.isDagger then
-					frame:AddText("Has Backstab: Deal double damage and 100% AP damage to enemies' backs.", Color(110, 30, 30), nil, 0.9);
-					frame:AddText("Has Coup de Grace: Deal double damage and 100% AP damage to knocked over enemies. Each hit will slightly increase the time it takes for knocked over enemies to get up.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Backstab: Deal double damage and 100% AP damage to enemies' backs.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Coup de Grace: Deal double damage and 100% AP damage to knocked over enemies. Each hit will slightly increase the time it takes for knocked over enemies to get up.", Color(110, 30, 30), nil, 0.9);
+					frame:AddText("Can only deal 1 stamina damage, no matter the enemies' minimum block cost.", Color(100, 9, 0), nil, 0.9);
 				end
 				
 				if itemTable.requiredFactions and not table.IsEmpty(itemTable.requiredFactions) and itemTable.requiredFactions[1] ~= "Wanderer" then
@@ -3228,7 +3245,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 			end
 
 			if table.HasValue(itemTable.attributes, "bloodtoll") then
-				frame:AddText("Blood Toll: Taking any damage to the head will always result in a bleed injury.", Color(110, 30, 30), nil, 0.9);
+				frame:AddText("Blood Toll: Taking any damage to the head will always result in a bleed injury.", Color(100, 9, 0), nil, 0.9);
 			end
 
 			if table.HasValue(itemTable.attributes, "spiked") then
@@ -4155,6 +4172,22 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				frame:AddText("Already copied!", Color(225, 225, 225), "nov_IntroTextSmallDETrooper", 1);
 			end
 		end
+		
+		return true;
+	elseif category == "Food" or category == "Drinks" or category == "Alcohol" then
+		
+		frame:AddText(name.." - "..category, Color(180, 20, 20), "nov_IntroTextSmallDETrooper", 1.15);
+		frame:AddText(itemTable("description"), Color(180, 170, 170), "nov_IntroTextSmallDETrooper", 0.8);
+		
+		if itemTable.needs.hunger then frame:AddText("Hunger: "..itemTable.needs.hunger, Color(110, 30, 30), "nov_IntroTextSmallDETrooper", 0.8); end
+		if itemTable.needs.thirst then frame:AddText("Thirst: "..itemTable.needs.thirst, Color(110, 30, 30), "nov_IntroTextSmallDETrooper", 0.8); end
+		if itemTable.needs.sleep then frame:AddText("Sleep: "..itemTable.needs.sleep, Color(110, 30, 30), "nov_IntroTextSmallDETrooper", 0.8); end
+		if itemTable.needs.stamina then frame:AddText("Stamina: "..itemTable.needs.stamina, Color(110, 30, 30), "nov_IntroTextSmallDETrooper", 0.8); end
+		if itemTable.needs.health then frame:AddText("Health: "..itemTable.needs.health, Color(110, 30, 30), "nov_IntroTextSmallDETrooper", 0.8); end
+		
+		if (bShowWeight) then
+			frame:AddBar(20, {{text = weight.."kg", percentage = percentage * 100, color = Color(96, 96, 128), font = "DermaDefault", leftTextAlign = false, noDisplay = true}}, "Weight", Color(170, 170, 180));
+		end;
 		
 		return true;
 	else

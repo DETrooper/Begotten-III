@@ -66,19 +66,19 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("weapon_base");
 	ITEM.name = "Halberd";
-	ITEM.model = "models/demonssouls/weapons/halberd.mdl";
+	ITEM.model = "models/weapons/halberd.mdl";
 	ITEM.weight = 6;
 	ITEM.uniqueID = "begotten_polearm_halberd";
 	ITEM.category = "Melee";
 	ITEM.description = "A long metal polearm. It has a steel chopping edge and a sharp metal spike for penetrating plate. A weapon typically found in the ranks of the lowly Gatekeepers, as it is capable of giving even a common fool a fighting chance against great horrors.";
-	ITEM.iconoverride = "materials/begotten/ui/itemicons/halberd.png"
+	ITEM.iconoverride = "materials/begotten/ui/itemicons/newhalberd.png"
 	ITEM.meleeWeapon = true;
 	ITEM.isAttachment = true;
 	ITEM.isPolearm = true;
 	ITEM.hasMinimumRange = true;
 	ITEM.attachmentBone = "ValveBiped.Bip01_Spine2";
-	ITEM.attachmentOffsetAngles = Angle(88.51, 0, 8.95);
-	ITEM.attachmentOffsetVector = Vector(0, 3, -17.68);
+	ITEM.attachmentOffsetVector = Vector(-4.16, 2.77, -25.42);
+	ITEM.attachmentOffsetAngles = Angle(0, 11.05, 0);
 	
 	ITEM.attributes = {"grounded"};
 	ITEM.components = {breakdownType = "meltdown", items = {"steel_chunks", "wood", "wood", "wood", "wood"}}; -- use "breakdown" for other type

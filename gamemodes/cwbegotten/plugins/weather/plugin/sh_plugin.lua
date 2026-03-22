@@ -46,7 +46,25 @@ if cwWeather.systemEnabled then
 				fogEndNight = 512,
 				maxDuration = 600,
 				precipitation = "sw_snow",
-				rarity = 5
+				rarity = 5,
+				leadupCallback = function()
+					local playersInWeatherZones = {};
+					
+					for _, v in _player.Iterator() do
+						if v:Alive() and v:HasInitialized() then
+							local lastZone = v:GetCharacterData("LastZone") or "wasteland";
+							local zoneTable = zones:FindByID(lastZone);
+							
+							if zoneTable.hasWeather then
+								table.insert(playersInWeatherZones, v);
+							end
+						end
+					end
+					
+					netstream.Start(playersInWeatherZones, "EmitSound", {name = "ambient/wind/windgust_strong.wav", pitch = 90, level = 80});
+					Clockwork.chatBox:Add(playersInWeatherZones, nil, "event", "It is getting colder and the winds are howling. Seek shelter, for a blizzard is imminent!");
+				end,
+				leadupTime = 60,
 			},
 			["fog"] = {
 				fogStart = 128,

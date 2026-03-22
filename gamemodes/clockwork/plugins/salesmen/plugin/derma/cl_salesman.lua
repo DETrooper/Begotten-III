@@ -18,7 +18,7 @@ function PANEL:Init()
 		self:Close() self:Remove()
 
 		netstream.Start("SalesmanAdd", {
-			showChatBubble = Clockwork.salesman.showChatBubble,
+			showChatBubble = false,
 			buyInShipments = Clockwork.salesman.buyInShipments,
 			priceScale = Clockwork.salesman.priceScale,
 			factions = Clockwork.salesman.factions,
@@ -92,7 +92,6 @@ function PANEL:Init()
 
 	self.settingsPanel:AddItem(self.settingsForm)
 
-	self.showChatBubble = self.settingsForm:CheckBox("Show chat bubble.");
 	self.buyInShipments = self.settingsForm:CheckBox("Buy items in shipments.");
 	self.priceScale = self.settingsForm:TextEntry("What amount to scale prices by.");
 	self.flagsEntry = self.settingsForm:TextEntry("Required flags for access (separate by -).");
@@ -108,7 +107,6 @@ function PANEL:Init()
 	self.stock:SetToolTip("The default stock of each item (-1 for infinite stock).");
 	self.cash:SetToolTip("Starting cash of the salesman (-1 for infinite cash).");
 
-	self.showChatBubble:SetValue(Clockwork.salesman.showChatBubble == true)
 	self.buyInShipments:SetValue(Clockwork.salesman.buyInShipments == true)
 	self.priceScale:SetValue(Clockwork.salesman.priceScale)
 	self.flagsEntry:SetValue(Clockwork.salesman.flags or "")
@@ -374,7 +372,7 @@ function PANEL:Think()
 		bHideName = (self.startHideName:GetChecked() == true),
 		sound = self.startSound:GetValue()
 	}
-	Clockwork.salesman.showChatBubble = (self.showChatBubble:GetChecked() == true)
+	Clockwork.salesman.showChatBubble = false
 	Clockwork.salesman.buyInShipments = (self.buyInShipments:GetChecked() == true)
 	Clockwork.salesman.physDesc = self.physDesc:GetValue()
 	Clockwork.salesman.buyRate = self.buyRate:GetValue()

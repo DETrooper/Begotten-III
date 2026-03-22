@@ -73,7 +73,8 @@ function cwStamina:GetMaxStaminaPlugin(player)
 		if cwPossession and IsValid(player.possessor) then
 			max_stamina = max_stamina * 2;
 		end
-
+		
+		player:SetNetVar("Max_Stamina", max_stamina);
 		return max_stamina;
 	end
 end;

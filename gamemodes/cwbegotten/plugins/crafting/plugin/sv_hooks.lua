@@ -309,6 +309,7 @@ function cwRecipes:Craft(player, uniqueID, itemIDs, craftAmount)
 					if (recipeTable.craftTime) then
 						local craftVerb = recipeTable.craftVerb or "";
 						local craftName = recipeTable.name..(craftAmount > 1 and " ("..craftAmount.."x)" or "");
+						local craftTime = recipeTable.craftTime;
 						
 						if (craftVerb != "") then
 							player:SetLocalVar("cwProgressBarVerb", craftVerb);
@@ -321,7 +322,11 @@ function cwRecipes:Craft(player, uniqueID, itemIDs, craftAmount)
 							recipeTable:StartCraft(player);
 						end;
 						
-						Clockwork.player:SetAction(player, "crafting", recipeTable.craftTime, 5, function()
+						if cwBeliefs and player:HasBelief("dexterity") then
+							craftTime = craftTime * 0.66;
+						end
+						
+						Clockwork.player:SetAction(player, "crafting", craftTime, 5, function()
 							if (IsValid(player)) then
 								recipeTable:Craft(player, itemIDs, false, craftAmount);
 								

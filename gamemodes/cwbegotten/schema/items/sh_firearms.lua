@@ -461,6 +461,6 @@ local ITEM = Clockwork.item:New("firearm_base");
 	ITEM.reloadTime = 8; -- Seconds (for one round)
 	ITEM.reloadSounds = {"musket/reload_musket01.wav", "musket/reload_musket02.wav", "musket/reload_musket03.wav", "musket/reload_musket04.wav", "musket/reload_musket05.wav", "musket/reload_musket06.wav", "musket/reload_musket07.wav", "musket/reload_musket08.wav", "musket/reload_musket_cock.wav"};
 
-	ITEM.excludeSubfactions = {"Philimaxio", "Knights of Sol"};
+	ITEM.excludedSubfactions = {"Philimaxio", "Knights of Sol"};
 	ITEM.itemSpawnerInfo = {category = "Firearms", rarity = 4000, bNoSupercrate = true};	
 ITEM:Register();

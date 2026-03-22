@@ -753,9 +753,9 @@ function Schema:RenderScreenspaceEffects()
 		return;
 	end
 	
-	if (GetConVar("mat_hdr_level"):GetInt() != 2) then
+	--[[if (GetConVar("mat_hdr_level"):GetInt() != 2) then
 		RunConsoleCommand("mat_hdr_level", "2");
-	end
+	end]]
 
 	local curTime = CurTime();
 	local choosingCharacter = Clockwork.kernel:IsChoosingCharacter();

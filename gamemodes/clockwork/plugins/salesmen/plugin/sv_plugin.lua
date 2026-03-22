@@ -213,6 +213,7 @@ netstream.Hook("SalesmanAdd", function(player, data)
 			local salesman = player.cwSalesmanEditing;
 			
 			salesman:SetNWString("head", data.head);
+			salesman:SetModel(data.model)
 			
 			if (data.stock != -1) then
 				for k, v in pairs(data.sells) do
@@ -234,7 +235,7 @@ netstream.Hook("SalesmanAdd", function(player, data)
 			salesman.cwFlags = data.flags
 			salesman.cwBeliefs = data.beliefs
 
-			salesman:SetupSalesman(data.name, data.physDesc, player.cwSalesmanAnim, data.showChatBubble)
+			salesman:SetupSalesman(data.name, data.physDesc, player.cwSalesmanAnim, false)
 		else
 			local salesman = ents.Create("cw_salesman")
 			local angles = player:GetAngles()
@@ -272,7 +273,7 @@ netstream.Hook("SalesmanAdd", function(player, data)
 			salesman.cwFlags = data.flags
 			salesman.cwBeliefs = data.beliefs
 
-			salesman:SetupSalesman(data.name, data.physDesc, player.cwSalesmanAnim, data.showChatBubble)
+			salesman:SetupSalesman(data.name, data.physDesc, player.cwSalesmanAnim, false)
 
 			Clockwork.entity:MakeSafe(salesman, true, true)
 			cwSalesmen.salesmen[#cwSalesmen.salesmen + 1] = salesman;
@@ -320,7 +321,7 @@ function cwSalesmen:LoadSalesmen()
 		salesman.cwFlags = v.flags
 		salesman.cwBeliefs = v.beliefs
 
-		salesman:SetupSalesman(v.name, v.physDesc, v.animation, v.showChatBubble)
+		salesman:SetupSalesman(v.name, v.physDesc, v.animation, false)
 
 		Clockwork.entity:MakeSafe(salesman, true, true)
 		self.salesmen[k] = salesman
@@ -348,7 +349,7 @@ function cwSalesmen:GetTableFromEntity(entity)
 		animation = entity.cwAnimation,
 		priceScale = entity.cwPriceScale,
 		buyInShipments = entity.cwBuyInShipments,
-		showChatBubble = IsValid(entity:GetChatBubble()),
+		showChatBubble = false,
 		flags = entity.cwFlags,
 		beliefs = entity.cwBeliefs
 	}

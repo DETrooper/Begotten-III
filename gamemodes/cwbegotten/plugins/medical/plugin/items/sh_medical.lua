@@ -115,9 +115,16 @@ local ITEM = Clockwork.item:New("medical_base");
 		if player:Alive() and !player:IsRagdolled() then
 			Schema:EasyText(player, "olivedrab","You swallow what few pills remain in the bottle, hoping it will cure your ailments.");
 			
-			if player:HasDisease("common_cold") or player:HasDisease("flu") then
+			if player:HasDisease("common_cold") then
 				player:TakeDisease("common_cold", true);
+			end
+			
+			if player:HasDisease("flu") then
 				player:TakeDisease("flu", true);
+			end
+			
+			if player:HasDisease("sepsis") then
+				player:TakeDisease("sepsis", true);
 			end
 			
 			Clockwork.player:SetMenuOpen(player, false);
@@ -204,7 +211,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.healDelay = 2;
 	ITEM.healRepetition = 5;
 	ITEM.stopsBleeding = true;
-	ITEM.infectionChance = 30;
+	ITEM.infectionChance = 15;
 	ITEM.useXP = 15;
 	ITEM.useTime = 10;
 
@@ -293,7 +300,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.healDelay = 2;
 	ITEM.healRepetition = 5;
 	ITEM.stopsBleeding = true;
-	ITEM.infectionChance = 15;
+	ITEM.infectionChance = 8;
 	ITEM.useXP = 8;
 
 	ITEM.limbs = {HITGROUP_CHEST, HITGROUP_HEAD, HITGROUP_STOMACH, HITGROUP_LEFTARM, HITGROUP_RIGHTARM, HITGROUP_LEFTLEG, HITGROUP_RIGHTLEG};

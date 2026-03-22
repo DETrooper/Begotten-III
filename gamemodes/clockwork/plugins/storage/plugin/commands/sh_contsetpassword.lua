@@ -18,6 +18,16 @@ function COMMAND:OnRun(player, arguments)
 			local model = string.lower(trace.Entity:GetModel())
 
 			if (cwStorage.containerList[model]) then
+				if cwStaticEnts then
+					for k, v in pairs(cwStaticEnts.staticEnts) do
+						if (trace.Entity == v) then
+							Schema:EasyText(player, "grey", "["..self.name.."] You cannot set passwords on static prop containers! Note that passworded containers are already persistent.");
+
+							return;
+						end;
+					end;
+				end
+			
 				if (!trace.Entity.cwInventory) then
 					cwStorage.storage[trace.Entity] = trace.Entity
 					trace.Entity.cwInventory = {}

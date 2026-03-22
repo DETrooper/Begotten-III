@@ -2809,6 +2809,9 @@ end
 
 -- Called when a player dies.
 function Schema:PlayerDeath(player, inflictor, attacker, damageInfo)
+	player.lastDealtDamage = 0
+	player.lastReceivedDamage = 0
+	
 	if IsValid(attacker) and attacker:IsPlayer() and attacker:Alive() and not attacker.opponent then
 		local weapon = attacker:GetActiveWeapon();
 		
@@ -3034,6 +3037,16 @@ function Schema:PlayerCharacterLoaded(player)
 		player:SetViewOffset(Vector(0, 0, 64));
 		player:SetViewOffsetDucked(Vector(0, 0, 28));
 	end
+
+	local scale = player:GetCharacterData("customScale", 0)
+
+	if (scale > 0) then
+		local viewScale = ((scale * 36) - 1)
+
+		player:SetModelScale(scale, FrameTime())
+		player:SetViewOffset(Vector(0, 0, 64 + (viewScale / 4)))
+		player:SetViewOffsetDucked(Vector(0, 0, 28 + (viewScale / 8)))
+	end
 	
 	player:OverrideName(nil)
 	
@@ -3104,6 +3117,9 @@ function Schema:PlayerCharacterLoaded(player)
 	end
 	
 	player.bWasInAir = nil;
+
+	player.lastDealtDamage = 0
+	player.lastReceivedDamage = 0
 end;
 
 -- Called when a player throws a punch.
@@ -3604,7 +3620,7 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 	if (Clockwork.player:HasFlags(player, "E")) then
 		infoTable.runSpeed = infoTable.walkSpeed * 3;
 		infoTable.jumpPower = infoTable.jumpPower * 3;
-	elseif action == "reloading" or action == "building" or action == "skinning" or action == "mutilating" or action == "putting_on_armor" or action == "taking_off_armor" then
+	elseif action == "reloading" or action == "building" or action == "skinning" or action == "mutilating" or action == "putting_on_armor" or action == "taking_off_armor" or player.teleporting == true then
 		infoTable.runSpeed = infoTable.walkSpeed * 0.1;
 		infoTable.walkSpeed = infoTable.walkSpeed * 0.1;
 	end
