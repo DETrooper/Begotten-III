@@ -619,7 +619,7 @@ function SWEP:PrimaryAttack()
 		if self.isArmingSword then
 			strikeTime = 0.3;
 		else
-			strikeTime = strikeTime * 0.7;
+			strikeTime = strikeTime * 0.6;
 		end
 	end
 	
@@ -1235,7 +1235,7 @@ end
 				
 				if string.find(weaponClass, "begotten_polearm_") or string.find(weaponClass, "begotten_scythe_") then
 					local maxPoleRange = (attacktable["meleerange"]) * 0.1
-					local maxIneffectiveRange = maxPoleRange * 0.65
+					local maxIneffectiveRange = maxPoleRange * 0.55
 				
 					if distance <= maxIneffectiveRange and hit:IsValid() then
 						damage = (attacktable["primarydamage"]) * 0.15
@@ -1452,7 +1452,7 @@ end
 				if (IsValid(self)) then
 					if string.find(weaponClass, "begotten_polearm_") and weapon.CanSwipeAttack != true then		
 						local maxPoleRange = (attacktable["meleerange"]) * 0.1
-						local maxIneffectiveRange = maxPoleRange * 0.65
+						local maxIneffectiveRange = maxPoleRange * 0.55
 						local clampedDistance = math.min(math.max(distance, 0), maxPoleRange)
 						local ratio = clampedDistance / maxPoleRange
 						local minDamage = (attacktable["primarydamage"] * 0.7)
@@ -1596,7 +1596,7 @@ end
 			end
 		elseif swingType == "polearm_swing" then
 			local maxPoleRange = (attacktable["meleerange"]) * 0.1
-			local maxIneffectiveRange = maxPoleRange * 0.65
+			local maxIneffectiveRange = maxPoleRange * 0.55
 			local clampedDistance = math.min(math.max(distance, 0), maxPoleRange)
 			local ratio = clampedDistance / maxPoleRange
 			local minDamage = (attacktable["primarydamage"] * 0.7)
@@ -1778,7 +1778,7 @@ end
 				if (IsValid(self)) then
 					if string.find(weaponClass, "begotten_spear_") then
 						local maxPoleRange = (attacktable["meleerange"]) * 0.1
-						local maxIneffectiveRange = maxPoleRange * 0.65
+						local maxIneffectiveRange = maxPoleRange * 0.55
 					
 						if distance <= maxIneffectiveRange and hit:IsValid() then
 							damage = (attacktable["primarydamage"]) * 0.01

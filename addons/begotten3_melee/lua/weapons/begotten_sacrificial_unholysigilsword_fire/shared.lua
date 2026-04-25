@@ -61,12 +61,17 @@ function SWEP:CriticalAnimation()
 
 	local attacksoundtable = GetSoundTable(self.AttackSoundTable)
 	local attacktable = GetTable(self.AttackTable)
+	local rate = self.CriticalPlaybackRate
+	
+	if self:GetNW2Bool("swordplayActive") == true then
+		rate = 1;
+	end
 
 	self.Weapon:EmitSound(self.WindUpSound)
 
 	-- Viewmodel attack animation!
 	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-	self.Owner:GetViewModel():SetPlaybackRate(self.CriticalPlaybackRate)
+	self.Owner:GetViewModel():SetPlaybackRate(rate)
 	self:IdleAnimationDelay( 1, 1 )
 	
 	if (SERVER) then
@@ -76,8 +81,7 @@ function SWEP:CriticalAnimation()
 	self.Owner:ViewPunch(Angle(1,4,1))
 	end
 	
-end
-				
+end			
 function SWEP:ParryAnimation()
 	self:SendWeaponAnim(ACT_VM_UNDEPLOY); self.Owner:GetViewModel():SetPlaybackRate(1.3)
 	self.Owner:ViewPunch(Angle(-30,0,0))

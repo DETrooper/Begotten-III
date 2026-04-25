@@ -1883,7 +1883,7 @@ function Schema:ModifyItemMarkupTooltip(category, maximumWeight, weight, conditi
 				end
 				
 				if itemTable.hasMinimumRange then
-					frame:AddText("Minimum Effective Range: Targets under 60% of your max range will receive ineffective non-lethal damage.", Color(100, 9, 0), nil, 0.9);
+					frame:AddText("Minimum Effective Range: Targets under 50% of your max range will receive ineffective non-lethal damage.", Color(100, 9, 0), nil, 0.9);
 				end
 				
 				if itemTable.hasIncreasedDeflectionWindow then

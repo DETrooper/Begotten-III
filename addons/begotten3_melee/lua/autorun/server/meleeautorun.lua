@@ -697,7 +697,7 @@ local function Guarding(ent, dmginfo)
 							local distance = (attacker:GetPos():Distance(ent:GetPos()))
 							
 							local maxPoleRange = (attacktable["meleerange"]) * 0.1
-							local maxIneffectiveRange = maxPoleRange * 0.65
+							local maxIneffectiveRange = maxPoleRange * 0.55
 						
 							if distance <= maxIneffectiveRange and ent:IsValid() then
 								if not (attacker:GetNetVar("ThrustStance") == true and enemywep.CanSwipeAttack == true and attacker:GetNetVar("Riposting") != true) then
