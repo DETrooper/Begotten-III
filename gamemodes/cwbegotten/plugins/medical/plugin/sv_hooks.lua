@@ -5,7 +5,7 @@
 cwMedicalSystem.bleedDamageThresholds = {
 	[DMG_BULLET] = 5, -- bullets
 	[DMG_BUCKSHOT] = 5, -- buckshot
-	[DMG_CLUB] = 30, -- blunt
+	[DMG_CLUB] = 26, -- blunt
 	[DMG_FALL] = 50, -- fall
 	[DMG_SLASH] = 10, -- slash
 	[DMG_VEHICLE] = 10, -- stab

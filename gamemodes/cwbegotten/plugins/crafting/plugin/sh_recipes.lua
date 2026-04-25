@@ -6045,7 +6045,9 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFaiths = {"Faith of the Family"};
 		RECIPE.requirements = {
 			["shagalaxian_steel_ingot"] = {amount = 1},
-			["iron_ingot"] = {amount = 4},
+			["iron_ingot"] = {amount = 5},
+			["familial_catalyst"] = {amount = 1},
+			["pantheistic_catalyst"] = {amount = 1},
 		};
 		RECIPE.result = {
 			["shield12"] = {amount = 1},
@@ -6055,7 +6057,131 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.failSound = "buttons/button2.wav"
 		RECIPE.craftTime = 8
 		RECIPE.craftVerb = "smithing"
-		RECIPE.experience = 50;
+		RECIPE.experience = 80;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("warfighter_shield_upgrade_clangoreshield");
+		RECIPE.name = "(Upgrade) Warfighter Shield";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
+		RECIPE.requirements = {
+			["shagalaxian_steel_ingot"] = {amount = 1},
+			["shieldhathood5"] = {amount = 1},
+			["familial_catalyst"] = {amount = 1},
+			["pantheistic_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["shield12"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 25;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("warfighter_shield_upgrade_clanreavershield");
+		RECIPE.name = "(Upgrade) Warfighter Shield";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
+		RECIPE.requirements = {
+			["shagalaxian_steel_ingot"] = {amount = 1},
+			["shieldhathood2"] = {amount = 1},
+			["familial_catalyst"] = {amount = 1},
+			["pantheistic_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["shield12"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 25;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("warfighter_shield_upgrade_clancrastshield");
+		RECIPE.name = "(Upgrade) Warfighter Shield";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
+		RECIPE.requirements = {
+			["shagalaxian_steel_ingot"] = {amount = 1},
+			["shieldhathood3"] = {amount = 1},
+			["familial_catalyst"] = {amount = 1},
+			["pantheistic_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["shield12"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 25;
+		
+		function RECIPE:OnCraft(player)
+		end;
+		function RECIPE:OnFail(player)
+		end;
+		function RECIPE:StartCraft(player)
+		end;
+		function RECIPE:EndCraft(player)
+		end;
+	RECIPE:Register()
+	
+	RECIPE = cwRecipes.recipes:New("warfighter_shield_upgrade_clanharaldshield");
+		RECIPE.name = "(Upgrade) Warfighter Shield";
+		RECIPE.requiresSmithy = true;
+		RECIPE.requiredBeliefs = {"artisan"};
+		RECIPE.requiredFaiths = {"Faith of the Family"};
+		RECIPE.requirements = {
+			["shagalaxian_steel_ingot"] = {amount = 1},
+			["shieldhathood4"] = {amount = 1},
+			["familial_catalyst"] = {amount = 1},
+			["pantheistic_catalyst"] = {amount = 1},
+		};
+		RECIPE.result = {
+			["shield12"] = {amount = 1},
+		};
+		RECIPE.category = "Weapons"
+		RECIPE.finishSound = "generic_ui/smelt_success_02.wav";
+		RECIPE.failSound = "buttons/button2.wav"
+		RECIPE.craftTime = 8
+		RECIPE.craftVerb = "smithing"
+		RECIPE.experience = 25;
 		
 		function RECIPE:OnCraft(player)
 		end;
@@ -7667,7 +7793,6 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["gore_ridge_helm"] = {amount = 1},
 			["steel_ingot"] = {amount = 2},
-			["familial_catalyst"] = {amount = 1},
 			["leather"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -10439,7 +10564,6 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 1},
 			["iron_ingot"] = {amount = 2},
-			["belphegor_catalyst"] = {amount = 1},
 			["shield14"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -10470,7 +10594,6 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 1},
 			["iron_ingot"] = {amount = 2},
-			["pantheistic_catalyst"] = {amount = 1},
 			["shield14"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -10501,7 +10624,6 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 1},
 			["iron_ingot"] = {amount = 2},
-			["elysian_catalyst"] = {amount = 1},
 			["shield14"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -10532,7 +10654,6 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requirements = {
 			["steel_ingot"] = {amount = 1},
 			["iron_ingot"] = {amount = 2},
-			["familial_catalyst"] = {amount = 1},
 			["shield14"] = {amount = 1},
 		};
 		RECIPE.result = {
@@ -10554,7 +10675,7 @@ function cwRecipes:ClockworkInitialized()
 		function RECIPE:EndCraft(player)
 		end;
 	RECIPE:Register()
-
+	
 	RECIPE = cwRecipes.recipes:New("shagalax_tower_shield");
 		RECIPE.name = "Shagalax Tower Shield";
 		RECIPE.requiresSmithy = true;
@@ -11076,6 +11197,7 @@ function cwRecipes:ClockworkInitialized()
 		RECIPE.requiredFactions = {"Goreic Warrior"};
 		RECIPE.requirements = {
 			["gore_champion_ridge_helm"] = {amount = 1},
+			["familial_catalyst"] = {amount = 1},
 			["fine_steel_ingot"] = {amount = 1},
 			["steel_ingot"] = {amount = 1},
 			["leather"] = {amount = 1},
