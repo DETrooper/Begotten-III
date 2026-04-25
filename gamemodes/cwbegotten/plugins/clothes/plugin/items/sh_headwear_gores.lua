@@ -334,11 +334,11 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.bodyGroup = 1
 	ITEM.bodyGroupVal = 7
 	ITEM.headSuffix = "_gore";
-	ITEM.description = "A steel ridge helm that has been proven in combat. Only a worthy Gore may wear it."
+	ITEM.description = "A steel ridge helm that has been proven in combat. Only a Gore who is truly loyal to the Family may wear it."
 	ITEM.requiredFactions = {"Goreic Warrior"};
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/goreridgehelm";
-	ITEM.excludedSubfactions = {"Clan Grock"};
+	ITEM.excludedSubfactions = {"Clan Grock", "Clan Reaver"};
 	ITEM.requiredbeliefs = {"hauberk"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
@@ -348,16 +348,16 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 		[HITGROUP_HEAD] = true,
 	}
 
-	ITEM.protection = 67
+	ITEM.protection = 62
 	ITEM.hitParticle = "MetalSpark";
 	ITEM.type = "plate";
 
 	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
-	ITEM.bulletScale = 0.60; -- reduces bullet damage by 40%
+	ITEM.bulletScale = 0.70; -- reduces bullet damage by 30%
 	ITEM.stabilityScale = 0.60; -- reduces stability damage by 40%
-	ITEM.insulation = 40;
+	ITEM.insulation = 60;
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "leather"}};
 ITEM:Register();
@@ -376,7 +376,7 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.useSound = "armor/plate_damage_02.wav";
 	ITEM.overlay = "begotten/zomboverlay/new/gorekingschosenhelmet";
 	ITEM.excludedSubfactions = {"Clan Grock"};
-	ITEM.requiredRanks = {"King's Chosen"};
+	ITEM.requiredRanks = {"King's Chosen", "King"};
 	ITEM.requiredbeliefs = {"hauberk"};
 	
 	ITEM.conditionScale = 1.2 -- item degrades 1.5x faster with damage related condition loss
@@ -878,4 +878,43 @@ local ITEM = Clockwork.item:New("bodygroup_base")
 	ITEM.insulation = 50; -- Adds 10% insulation. Helmets account for 20% of total insulation. Body armor covers the other 80%.
 	
 	ITEM.components = {breakdownType = "meltdown", items = {"iron_chunks", "iron_chunks", "iron_chunks", "iron_chunks"}};
+ITEM:Register();
+
+local ITEM = Clockwork.item:New("bodygroup_base")
+	ITEM.name = "Gore Housecarl Helm"
+	ITEM.model = "models/begotten/items/housecarl_helmet_prop.mdl"
+	ITEM.iconoverride = "begotten/ui/itemicons/housecarl_helmet.png"
+	ITEM.weight = 3
+	ITEM.uniqueID = "gore_housecarl_helm"
+	ITEM.category = "Helms"
+	ITEM.bodyGroup = 1
+	ITEM.bodyGroupVal = 13
+	ITEM.headSuffix = "_gore";
+	ITEM.description = "Steel plates and mail cushioned with leather, with an imposing nasal guard forming the cold gaze of the Father. Only a Gore who is truly loyal to the Family may wear it."
+	ITEM.requiredFactions = {"Goreic Warrior"};
+	ITEM.requireFaith = {"Faith of the Family"};
+	ITEM.useSound = "armor/plate_damage_02.wav";
+	ITEM.overlay = "begotten/zomboverlay/new/goreridgehelm";
+	ITEM.requiredbeliefs = {"hauberk"};
+	ITEM.excludedSubfactions = {"Clan Grock", "Clan Reaver"};
+	
+	ITEM.conditionScale = 0.8
+	ITEM.repairCostModifier = 0.5;
+
+	ITEM.effectiveLimbs = {
+		[HITGROUP_HEAD] = true,
+	}
+
+	ITEM.protection = 67
+	ITEM.hitParticle = "MetalSpark";
+	ITEM.type = "plate";
+
+	ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
+	ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
+	ITEM.slashScale = 0.60; -- reduces slash damage by 40%
+	ITEM.bulletScale = 0.60; -- reduces bullet damage by 35%
+	ITEM.stabilityScale = 0.55; -- reduces stability damage by 45%
+	ITEM.insulation = 70;
+	
+	ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "fine_steel_chunks", "leather"}};
 ITEM:Register();

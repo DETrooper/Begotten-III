@@ -1285,6 +1285,14 @@ function Clockwork.animation:AddWandererTabardArms(model)
 	});
 end;
 
+function Clockwork.animation:AddNewGoreHouseCarlArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_gore_housecarl_arms.mdl",
+		skin = 0
+	});
+end;
+
 -- A function to check for stored hands info by model.
 function Clockwork.animation:CheckHands(model, animTable)
 	local info = animTable.hands or {
@@ -1371,6 +1379,7 @@ Clockwork.animation:AddGoreChainMail1Arms("models/begotten/goreicwarfighters/har
 Clockwork.animation:AddGoreChainMail2Arms("models/begotten/goreicwarfighters/gorechainmail");
 
 Clockwork.animation:AddGoreHouseCarlArms("models/begotten/goreicwarfighters/gorehousecarl");
+Clockwork.animation:AddNewGoreHouseCarlArms("models/begotten/bannerlord_housecarl_new/bannerlord_gore_housecarl");
 
 Clockwork.animation:AddGoreBladeDruidArms("models/begotten/goreicwarfighters/armoredbladedruid");
 Clockwork.animation:AddGoreBladeDruidArms("models/begotten/goreicwarfighters/bladedruid");

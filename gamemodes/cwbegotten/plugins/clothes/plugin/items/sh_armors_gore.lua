@@ -229,9 +229,9 @@ ITEM:Register();
 
 local ITEM = Clockwork.item:New("clothes_base");
 ITEM.name = "Gore Housecarl Armor";
-ITEM.group = "goreicwarfighters/gorehousecarl";
-ITEM.model = "models/begotten/headgroup_props/housecarlarmor.mdl"
-ITEM.iconoverride = "materials/begotten/ui/itemicons/gore_housecarl_armor.png"
+ITEM.group = "bannerlord_housecarl_new/bannerlord_gore_housecarl";
+ITEM.model = "models/begotten/items/bannerlord_housecarl_prop.mdl"
+ITEM.iconoverride = "begotten/ui/itemicons/gore_housecarl_new.png"
 ITEM.category = "Armor"
 ITEM.conditionScale = 0.75
 ITEM.hitParticle = "MetalSpark";
@@ -239,7 +239,7 @@ ITEM.protection = 75;
 ITEM.weight = 8;
 ITEM.weightclass = "Heavy";
 ITEM.type = "chainmail";
-ITEM.description = "The armor of a Goreic Housecarl: a combination of chainmail and shagalaxian scale armor, with ornate leather decorations.";
+ITEM.description = "The armor of a Goreic Housecarl: a combination of chainmail and shagalaxian lamellar with a fur coat.";
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requiredFactions = {"Goreic Warrior"};
 ITEM.excludedSubfactions = {"Clan Grock"};
@@ -265,7 +265,7 @@ ITEM.bluntScale = 0.90; -- reduces blunt damage by 10%
 ITEM.pierceScale = 0.70; -- reduces pierce damage by 30%
 ITEM.slashScale = 0.60; -- reduces slash damage by 40%
 ITEM.bulletScale = 0.75; -- reduces bullet damage by 25%
-ITEM.insulation = 60;
+ITEM.insulation = 65;
 
 ITEM.components = {breakdownType = "meltdown", items = {"fine_steel_chunks", "steel_chunks", "steel_chunks", "leather", "leather", "leather", "cloth"}};
 
@@ -605,7 +605,7 @@ ITEM.description = "Shagalaxian steel scale armor decorated with brass Familial 
 ITEM.useSound = "armormovement/body-armor-b4.WAV.mp3";
 ITEM.requiredFactions = {"Goreic Warrior"};
 ITEM.excludedSubfactions = {"Clan Grock"};
-ITEM.requiredRanks = {"King's Chosen"};
+ITEM.requiredRanks = {"King's Chosen", "King"};
 
 ITEM.requiredbeliefs = {"hauberk"};
 
