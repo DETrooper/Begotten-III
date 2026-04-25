@@ -1216,7 +1216,7 @@ end;
 function Clockwork.animation:AddKingGore(model)
 	self:AddHandsModel(model, {
 		body = 0000000,
-		model = "models/begotten/arms/c_gorehousecarlarms.mdl",
+		model = "models/begotten/goreicwarfighters/shingar.mdl",
 		skin = 0
 	});
 end;
@@ -1293,6 +1293,14 @@ function Clockwork.animation:AddNewGoreHouseCarlArms(model)
 	});
 end;
 
+function Clockwork.animation:AddHaralderLamellarArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/prelude_gores/fishscale_arms.mdl",
+		skin = 0
+	});
+end;
+
 -- A function to check for stored hands info by model.
 function Clockwork.animation:CheckHands(model, animTable)
 	local info = animTable.hands or {
@@ -1338,7 +1346,7 @@ Clockwork.animation:AddGatekeeperMediumArms("models/begotten/gatekeepers/gatekee
 Clockwork.animation:AddGatekeeperFineArms("models/begotten/gatekeepers/gatekeeperfine");
 
 Clockwork.animation:AddLamellarArms("models/begotten/goreicwarfighters/gorelamellar");
-Clockwork.animation:AddLamellarArms("models/begotten/prelude_gores/fishscale"); -- Replace later
+Clockwork.animation:AddHaralderLamellarArms("models/begotten/prelude_gores/fishscale"); 
 
 Clockwork.animation:AddGatekeeperOrnateArms("models/begotten/gatekeepers/gatekeeperornate");
 Clockwork.animation:AddGatekeeperOrnateArms("begotten/gatekeepers/vexi.mdl");
