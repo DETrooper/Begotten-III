@@ -1216,7 +1216,7 @@ end;
 function Clockwork.animation:AddKingGore(model)
 	self:AddHandsModel(model, {
 		body = 0000000,
-		model = "models/begotten/goreicwarfighters/shingar.mdl",
+		model = "models/begotten/arms/c_arms_shingar.mdl",
 		skin = 0
 	});
 end;
