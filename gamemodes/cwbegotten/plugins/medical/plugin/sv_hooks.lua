@@ -5,7 +5,7 @@
 cwMedicalSystem.bleedDamageThresholds = {
 	[DMG_BULLET] = 5, -- bullets
 	[DMG_BUCKSHOT] = 5, -- buckshot
-	[DMG_CLUB] = 26, -- blunt
+	[DMG_CLUB] = 27, -- blunt
 	[DMG_FALL] = 50, -- fall
 	[DMG_SLASH] = 10, -- slash
 	[DMG_VEHICLE] = 10, -- stab
@@ -995,14 +995,18 @@ end;
 
 -- Called to check if a player's limb can heal.
 function cwMedicalSystem:PlayerCanHealLimb(player, hitGroup)
-	local injuries = self:GetInjuries(player);
-	
-	if (injuries[hitGroup]) then
-		if table.Count(injuries[hitGroup]) > 0 then
-			return false;
+	local injuries = self:GetInjuries(player)
+
+	if injuries[hitGroup] then
+		for injury, v in pairs(injuries[hitGroup]) do
+			if injury ~= "minor_infection" then
+				return false
+			end
 		end
 	end
-end;
+	
+	return true
+end
 
 -- Called after a player has been healed.
 function cwMedicalSystem:PlayerHealed(player, itemTable) end;

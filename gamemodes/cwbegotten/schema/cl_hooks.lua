@@ -51,7 +51,7 @@ function Schema:Initialize()
 	--end
 	
 	--RunConsoleCommand("fps_max", "300");
-	RunConsoleCommand("hud_draw_fixed_reticle", "0");
+	--RunConsoleCommand("hud_draw_fixed_reticle", "0");
 	--RunConsoleCommand("mat_hdr_level", "2");
 	RunConsoleCommand("mat_motion_blur_enabled", "1");
 end
@@ -1433,7 +1433,7 @@ function Schema:Tick()
 		self.nextFPSCheck = curTime + 0.05;
 		
 		--RunConsoleCommand("fps_max", "300");
-		RunConsoleCommand("hud_draw_fixed_reticle", "0");
+		--RunConsoleCommand("hud_draw_fixed_reticle", "0");
 		RunConsoleCommand("mat_motion_blur_enabled", "1");
 	end
 	
