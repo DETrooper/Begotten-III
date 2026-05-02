@@ -211,7 +211,7 @@ local ITEM = Clockwork.item:New("medical_base");
 	ITEM.healDelay = 2;
 	ITEM.healRepetition = 5;
 	ITEM.stopsBleeding = true;
-	ITEM.infectionChance = 15;
+	ITEM.infectionChance = 8;
 	ITEM.useXP = 15;
 	ITEM.useTime = 10;
 
