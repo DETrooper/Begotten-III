@@ -123,21 +123,4 @@ else
 		else return MATERIALS[name] end
 	end
 
-	-- propspawn.lua effect fix --
-	-- rubat fix your shit --
-
-	local effects_Register = effects.Register
-	function effects.Register(tbl, name)
-		if name == "propspawn" then
-			local RenderParent = tbl.RenderParent
-			function tbl:RenderParent()
-				if not IsValid(self) then return end
-				if not IsValid(self.SpawnEffect) then self.RenderOverride = nil return end
-				return RenderParent(self)
-			end
-		end
-
-		return effects_Register(tbl, name)
-	end
-
 end
