@@ -69,6 +69,61 @@ do
 
 	local vectorAngle = FindMetaTable("Vector").Angle
 	local normalizeAngle = math.NormalizeAngle
+	local abs = math.abs
+	local tickInterval = engine.TickInterval
+	local sprintRampUpTime = 0.35 -- Probably should be actual config settings, but these values feel fine.
+	local sprintRampDownTime = 0.2
+
+	function GM:HandleSprintingSpeedRamp(player, moveData, userCmd)
+		if (!IsValid(player) or !userCmd) then
+			return
+		end
+
+		if (!player:Alive() or player:IsRagdolled() or player:InVehicle()
+		or player:GetMoveType() != MOVETYPE_WALK or player:WaterLevel() > 1) then
+			return
+		end
+
+		local walkSpeed = player:GetWalkSpeed()
+		local runSpeed = player:GetRunSpeed()
+
+		if (!walkSpeed or !runSpeed or runSpeed <= walkSpeed) then
+			return
+		end
+
+		if (moveData:KeyDown(IN_DUCK)) then
+			return
+		end
+
+		local hasMoveInput = abs(userCmd:GetForwardMove()) > 0.1
+			or abs(userCmd:GetSideMove()) > 0.1
+
+		if (!hasMoveInput or !player:OnGround()) then
+			return
+		end
+
+		local wantsSprint = moveData:KeyDown(IN_SPEED)
+		local speedDelta = runSpeed - walkSpeed
+		local currentSpeed = moveData:GetVelocity():Length2D()
+		local referenceSpeed = math.Clamp(currentSpeed, walkSpeed, runSpeed)
+		local rampTime = wantsSprint and sprintRampUpTime or sprintRampDownTime
+		local targetSpeed = wantsSprint and runSpeed or walkSpeed
+		local rampRate = speedDelta / rampTime
+		local rampedSpeed = math.Approach(referenceSpeed, targetSpeed, rampRate * tickInterval())
+
+		if (wantsSprint and currentSpeed < walkSpeed) then
+			rampedSpeed = math.max(rampedSpeed, walkSpeed)
+		end
+
+		moveData:SetMaxClientSpeed(rampedSpeed)
+		moveData:SetMaxSpeed(rampedSpeed)
+	end
+
+	if (CLIENT) then
+		function GM:SetupMove(player, moveData, userCmd)
+			self:HandleSprintingSpeedRamp(player, moveData, userCmd)
+		end
+	end
 	
 	-- Called when the player's jumping animation should be handled.
 	function GM:HandlePlayerJumping(player, velocity, plyTable, moveType, waterLevel)

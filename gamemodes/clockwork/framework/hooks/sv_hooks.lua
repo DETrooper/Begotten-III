@@ -816,64 +816,10 @@ function GM:PlayerUse(player, entity)
 	end
 end
 
+-- This is better for prediction.
 -- Called when a player's move data is set up.
-function GM:SetupMove(player, moveData)
-	local plyTable = player:GetTable();
-	
-	if (plyTable.disableMovement) then
-		moveData:SetVelocity(Vector(0, 0, 0));
-		return;
-	end;
-	
-	local isRunning = player:IsRunning();
-
-	if isRunning and !plyTable.accelerationFinished then
-		local curTime = CurTime();
-		local run_speed = player:GetTargetRunSpeed();
-		local walk_speed = player:GetWalkSpeed();
-		local final_speed = run_speed;
-		
-		if !plyTable.startAcceleration then
-			plyTable.startAcceleration = curTime;
-		end
-		
-		final_speed = Lerp(curTime - plyTable.startAcceleration, walk_speed, run_speed);
-		
-		moveData:SetMaxClientSpeed(final_speed);
-		
-		if run_speed <= final_speed then
-			plyTable.accelerationFinished = true;
-			plyTable.startAcceleration = nil;
-		end
-		
-		plyTable.decelerationFinished = false;
-		plyTable.startDeceleration = nil;
-	elseif !isRunning then
-		if plyTable.decelerationFinished == false then
-			local curTime = CurTime();
-			local run_speed = player:GetTargetRunSpeed();
-			local walk_speed = player:GetWalkSpeed();
-			local final_speed = walk_speed;
-			
-			if !plyTable.startDeceleration then
-				plyTable.startDeceleration = curTime;
-			end
-			
-			final_speed = Lerp(curTime - plyTable.startDeceleration, run_speed, walk_speed);
-			
-			moveData:SetMaxClientSpeed(final_speed);
-			
-			if run_speed >= final_speed then
-				plyTable.decelerationFinished = true;
-				plyTable.startDeceleration = nil;
-			end
-			
-			plyTable.accelerationFinished = false;
-			plyTable.startAcceleration = nil;
-		else
-			moveData:SetMaxClientSpeed(player:GetWalkSpeed());
-		end
-	end
+function GM:SetupMove(player, moveData, userCmd)
+	self:HandleSprintingSpeedRamp(player, moveData, userCmd)
 end
 
 -- Called when a player attempts to save a recognised name.
