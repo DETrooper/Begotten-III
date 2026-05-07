@@ -1371,7 +1371,7 @@ function Schema:KeyPress(player, key)
 	if (key == IN_ATTACK) then
 		local action = Clockwork.player:GetAction(player);
 		
-		if (action == "reloading") or (action == "mutilating") or (action == "skinning") or (action == "building") then
+		if (action == "beartrapping") or (action == "reloading") or (action == "mutilating") or (action == "skinning") or (action == "building") then
 			Clockwork.player:SetAction(player, nil);
 		elseif (action == "bloodTest") then
 			Clockwork.chatBox:AddInTargetRadius(player, "me", "stops the blood test.", player:GetPos(), config.Get("talk_radius"):Get() * 2);
@@ -3620,9 +3620,15 @@ function Schema:ModifyPlayerSpeed(player, infoTable, action)
 	if (Clockwork.player:HasFlags(player, "E")) then
 		infoTable.runSpeed = infoTable.walkSpeed * 3;
 		infoTable.jumpPower = infoTable.jumpPower * 3;
-	elseif action == "reloading" or action == "building" or action == "skinning" or action == "mutilating" or action == "putting_on_armor" or action == "taking_off_armor" or player.teleporting == true then
+	elseif action == "beartrapping" or action == "reloading" or action == "building" or action == "skinning" or action == "mutilating" or action == "putting_on_armor" or action == "taking_off_armor" or player.teleporting == true then
 		infoTable.runSpeed = infoTable.walkSpeed * 0.1;
 		infoTable.walkSpeed = infoTable.walkSpeed * 0.1;
+	end
+end
+
+function Schema:PlayerRagdolled(player, state, ragdoll)
+	if (Clockwork.player:GetAction(player) == "beartrapping") then
+		Clockwork.player:SetAction(player, nil);
 	end
 end
 

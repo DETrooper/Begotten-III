@@ -71,7 +71,7 @@ local BRUTALITY = cwBeliefs.beliefTrees:New("brutality")
 			},
 			["bestial"] = {
 				name = "Bestial",
-				description = "While at or below 40% sanity, deal 10% more damage with all melee weapons.",
+				description = "While at or below 40% sanity, deal 10% more damage with all melee weapons. Allows the use of Tripwire if you have the 'Mechanic' belief.",
 				requirements = {"savage", "heart_eater"},
 				row = 3,
 			},

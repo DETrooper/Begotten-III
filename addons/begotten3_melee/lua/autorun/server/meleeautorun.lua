@@ -1506,3 +1506,23 @@ end);
 end
 
 hook.Add("StartCommand", "StartCommandMeleeAutorun", StartCommandMeleeAutorun)]]--
+
+hook.Remove("StartCommand", "StartCommandMeleeAutorun", StartCommandMeleeAutorun)
+hook.Remove("StartCommand", "BotForceAttacking")
+
+___bgForceAttacking = ___bgForceAttacking or false
+
+hook.Add("PlayerThink", "BotForceAttacking", function(player, curTime)
+	if (!___bgForceAttacking or !player:IsBot()) then return end
+
+	local wep = player:GetActiveWeapon()
+	if (!IsValid(wep) or !wep:CanPrimaryAttack() or (wep:GetNextPrimaryFire() > curTime)) then return end
+
+	wep:PrimaryAttack()
+	player:SetStamina(10000)
+end)
+
+concommand.Add("botattack", function(player)
+	if (!player:IsAdmin()) then return end
+	___bgForceAttacking = (!___bgForceAttacking)
+end)

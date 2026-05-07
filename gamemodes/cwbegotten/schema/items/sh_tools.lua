@@ -77,15 +77,37 @@ local ITEM = Clockwork.item:New();
 			return false;
 		end
 
-		local trapEnt = ents.Create("cw_bear_trap");
-		
-		if IsValid(trapEnt) then
-			trapEnt:SetAngles(player:GetAngles());
-			trapEnt:SetPos(player:GetPos());
-			trapEnt.condition = self:GetCondition() or 100;
-			trapEnt.owner = player;
-			trapEnt:Spawn();
+		local useTime = 6
+
+		if (player:HasBelief("dexterity")) then
+			useTime = math.Round(useTime * 0.66)
 		end
+
+		if (player:HasBelief("soothsayer")) then
+			useTime = math.Round(useTime * 0.8)
+		end
+
+		Clockwork.player:SetAction(player, "beartrapping", useTime, 1, function()
+			if (!self or !Clockwork.storage:HasItem(player, self)) then return end
+
+			local trapEnt = ents.Create("cw_bear_trap");
+		
+			if IsValid(trapEnt) then
+				trapEnt:SetAngles(player:GetAngles());
+				trapEnt:SetPos(player:GetPos());
+				trapEnt.condition = self:GetCondition() or 100;
+				trapEnt.owner = player;
+				trapEnt:Spawn();
+
+				if (player.ensnaredActive) then
+					trapEnt:SetNWBool("primeval", true)
+				end
+
+				player:TakeItem(self, true)
+			end
+		end)
+
+		return false
 	end
 	
 	-- Called when a player drops the item.

@@ -13,7 +13,7 @@ function cwLantern:PlayerThink(player, curTime, infoTable, alive, initialized, p
 			player:GetNetVar("lanternOnHip", false)
 		end
 
-		if (activeWeapon:GetClass() == "cw_lantern") then
+		if (activeWeapon:GetClass() == "cw_lantern" and player:IsWeaponRaised(activeWeapon)) then
 			player:SetWeaponRaised(false)
 		end
 	end
@@ -127,11 +127,11 @@ end;
 function cwLantern:PrePlayerLowerWeapon(player, oldWeapon, newWeapon)
 	if (!IsValid(oldWeapon) or !IsValid(player)) then return; end
 
-	if (oldWeapon:GetClass() == "cw_lantern" and player:IsWeaponRaised() and player:HasBelief("ingenious") and player.lanternDeactivationTime > CurTime()) then
+	if (oldWeapon:GetClass() == "cw_lantern" and player:IsWeaponRaised() and player:HasBelief("ingenious") and (player.lanternDeactivationTime and player.lanternDeactivationTime <= CurTime())) then
 		if !player:GetNetVar("lanternOnHip") then
 			player:SetNetVar("lanternOnHip", true);
 		end
-	elseif (newWeapon == "cw_lantern") then
+	elseif (newWeapon == "cw_lantern" or (player.lanternDeactivationTime and player.lanternDeactivationTime > CurTime())) then
 		if player:GetNetVar("lanternOnHip") then
 			player:SetNetVar("lanternOnHip", false);
 		end

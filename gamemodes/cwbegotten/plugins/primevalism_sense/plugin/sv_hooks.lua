@@ -2,8 +2,11 @@ util.AddNetworkString("cwEcholocate")
 util.AddNetworkString("cwEcholocatePing")
 
 cwPrimevalismSense.lanternDeactivationTime = 10
+cwPrimevalismSense.lanternDeactivationCooldown = 0
 
 function cwPrimevalismSense:Echolocate(ent, player, zone)
+    local curTime = CurTime()
+
     ent.echolocation = {
         pos = ent:GetPos(),
         ang = ent:GetAngles(),
@@ -19,10 +22,13 @@ function cwPrimevalismSense:Echolocate(ent, player, zone)
         end
 
         if (zone == "caves") then
-            ent:ReadSound(self:GetWarcrySound(), 100, math.random(95, 105))
+            ent:ReadSound(self:GetWarcrySound(player, ent), 100, math.random(95, 105))
         end
 
-        ent.lanternDeactivationTime = (CurTime() + self.lanternDeactivationTime)
+        if (!ent.nextLanternDeactivation or ent.nextLanternDeactivation < curTime) then
+            ent.nextLanternDeactivation = (curTime + self.lanternDeactivationCooldown)
+            ent.lanternDeactivationTime = (curTime + self.lanternDeactivationTime)
+        end
     end
 
     net.Start("cwEcholocate")
@@ -58,7 +64,7 @@ function cwPrimevalismSense:StartEcholocation(player)
 end
 
 function cwPrimevalismSense:PlayerCanRaiseWeapon(player, weapon)
-    if (weapon:GetClass() == "cw_lantern" and player.lanternDeactivationTime > CurTime()) then return false end
+    if (weapon:GetClass() == "cw_lantern" and player.lanternDeactivationTime and player.lanternDeactivationTime > CurTime()) then return false end
 end
 
 function cwPrimevalismSense:Think()
@@ -94,4 +100,9 @@ function cwPrimevalismSense:ModifyPlayerSpeed(player, infoTable, action)
 		infoTable.runSpeed = infoTable.walkSpeed * 0.1
 		infoTable.walkSpeed = infoTable.walkSpeed * 0.1
 	end
+
+    if (player.tripwireSlowdown and player.tripwireSlowdown > CurTime()) then
+        infoTable.runSpeed = infoTable.walkSpeed * 0.65
+        infoTable.walkSpeed = infoTable.walkSpeed * 0.65
+    end
 end

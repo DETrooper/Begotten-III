@@ -154,6 +154,13 @@ function ENT:Touch(entity)
 		end
 		
 		entity:TakeDamageInfo(damageInfo);
+
+		if (self:GetNWBool("primeval")) then
+			entity.poisonTicks = math.random(5, 6);
+			entity.poisoner = self.owner;
+			entity.poisoninflictor = self;
+		end
+
 		self:SetSafe();
 	end
 end;

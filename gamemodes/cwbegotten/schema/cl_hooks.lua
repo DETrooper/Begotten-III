@@ -691,6 +691,8 @@ function Schema:GetProgressBarInfoAction(action, percentage)
 		return {text = "You are tying someone up.", percentage = percentage, flash = percentage < 10};
 	elseif (action == "untie") then
 		return {text = "You are untying someone.", percentage = percentage, flash = percentage < 10};
+	elseif (action == "beartrapping") then
+		return {text = "You are setting a trap. Click to cancel.", percentage = percentage, flash = percentage < 10};
 	end;
 end;
 

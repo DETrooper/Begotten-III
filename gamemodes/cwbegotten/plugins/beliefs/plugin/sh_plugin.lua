@@ -1343,7 +1343,7 @@ local COMMAND = Clockwork.command:New("Warcry");
 				end
 
 				if (primevalistWarcry) then
-					player:EmitSound(cwPrimevalismSense:GetWarcrySound(), 100, math.random(95, 105))
+					player:EmitSound(cwPrimevalismSense:GetWarcrySound(player, NULL), 100, math.random(95, 105))
 					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out an ear-piercing scream!", playerPos, radius)
 
 					cwPrimevalismSense:StartEcholocation(player)

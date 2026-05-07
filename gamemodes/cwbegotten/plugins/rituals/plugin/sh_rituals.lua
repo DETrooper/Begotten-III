@@ -3061,3 +3061,35 @@ RITUAL = cwRituals.rituals:New("ascension_house_kinisger");
 	function RITUAL:EndRitual(player)
 	end;
 RITUAL:Register()
+
+RITUAL = cwRituals.rituals:New("Ensnared")
+	RITUAL.name = "(Unique) Ensnared"
+	RITUAL.description = "The weak, primitive tribals of old knew they could not emerge victorious in honorable battle, and so they sought methods of slaughtering their foes before a battle would have the chance to begin. For 30 minutes, enchant your Bear Traps, causing them to be nearly invisble, and deal poison damage to their victims. Incurs 20 corruption."
+	RITUAL.onerequiredbelief = {"thirst_blood_moon"}
+
+	RITUAL.requirements = {"down_catalyst", "belphegor_catalyst", "elysian_catalyst"}
+	RITUAL.corruptionCost = 20
+	RITUAL.ritualTime = 10
+	RITUAL.experience = 50
+
+	function RITUAL:OnPerformed(player)
+		player.ensnaredActive = true
+		local endTime = CurTime() + 1800
+		UpdateActiveRituals(player, "Ensnared", endTime)
+		timer.Create("EnsnaredTimer_"..player:EntIndex(), 1800, 1, function()
+			if IsValid(player) then
+				if player.ensnaredActive then
+					player.ensnaredActive = nil
+					UpdateActiveRituals(player, "Ensnared", nil)
+					Clockwork.hint:Send(player, "The 'Ensnared' ritual has worn off...", 10, Color(175, 100, 100), true, true)
+				end
+			end
+		end)
+	end
+	function RITUAL:OnFail(player)
+	end
+	function RITUAL:StartRitual(player)
+	end
+	function RITUAL:EndRitual(player)
+	end
+RITUAL:Register()
