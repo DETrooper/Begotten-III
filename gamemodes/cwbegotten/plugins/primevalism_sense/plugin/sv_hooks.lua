@@ -47,7 +47,7 @@ function cwPrimevalismSense:DoEcholocation(player, pos, zone, condition)
     end
 end
 
-local sonarRadius = (8192 * 8192)
+local sonarRadius = (2048 * 2048)
 
 function cwPrimevalismSense:StartEcholocation(player)
     local playerZone = player:GetCharacterData("LastZone")
