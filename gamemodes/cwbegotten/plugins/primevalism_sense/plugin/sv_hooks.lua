@@ -21,9 +21,7 @@ function cwPrimevalismSense:Echolocate(ent, player, zone)
             table.insert(ent.echolocation.models, clothesModel)
         end
 
-        if (zone == "caves") then
-            ent:ReadSound(self:GetWarcrySound(player, ent), 100, math.random(95, 105))
-        end
+        ent:ReadSound(self:GetWarcrySound(player, ent), 100, math.random(95, 105))
 
         local activeWeapon = ent:GetActiveWeapon()
 
