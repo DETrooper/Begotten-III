@@ -25,7 +25,9 @@ function cwPrimevalismSense:Echolocate(ent, player, zone)
             ent:ReadSound(self:GetWarcrySound(player, ent), 100, math.random(95, 105))
         end
 
-        if (!ent.nextLanternDeactivation or ent.nextLanternDeactivation < curTime) then
+        local activeWeapon = ent:GetActiveWeapon()
+
+        if ((!ent.nextLanternDeactivation or ent.nextLanternDeactivation < curTime) and (!IsValid(activeWeapon) or activeWeapon:GetClass() != "cw_lantern")) then
             ent.nextLanternDeactivation = (curTime + self.lanternDeactivationCooldown)
             ent.lanternDeactivationTime = (curTime + self.lanternDeactivationTime)
         end
