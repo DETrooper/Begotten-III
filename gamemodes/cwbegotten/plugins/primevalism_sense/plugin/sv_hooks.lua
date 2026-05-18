@@ -23,20 +23,31 @@ function cwPrimevalismSense:AddToEcholocationList(echolocationList, ent, player,
 
         ent:ReadSound(self:GetWarcrySound(player, ent), 100, math.random(95, 105))
 
+--[[ Disabled due to balance concerns
         local activeWeapon = ent:GetActiveWeapon()
 
         if ((!ent.nextLanternDeactivation or ent.nextLanternDeactivation < curTime) and (!IsValid(activeWeapon) or activeWeapon:GetClass() != "cw_lantern")) then
             ent.nextLanternDeactivation = (curTime + self.lanternDeactivationCooldown)
             ent.lanternDeactivationTime = (curTime + self.lanternDeactivationTime)
         end
+]]
     end
 
     table.insert(echolocationList, ent.echolocation)
 end
 
-function cwPrimevalismSense:DoEcholocation(player, pos, zone, condition)
+local dot180Degrees = 0
+
+local function IsEntityWithinDot(player, ent, dot)
+    local normal = (ent:GetPos() - player:GetPos()):GetNormalized()
+
+    return (player:GetForward():Dot(normal) > dot)
+end
+
+function cwPrimevalismSense:DoEcholocation(echolocationList, player, pos, zone, condition)
     for _, v in _player.Iterator() do
         if (!v:HasInitialized() or !v:Alive() or v.cwObserverMode or v == player) then continue end
+        if (v:GetVelocity():LengthSqr() > 0 or !IsEntityWithinDot(player, v, dot180Degrees)) then continue end
         if (!condition(player, v, pos, zone)) then continue end
 
         self:AddToEcholocationList(echolocationList, v, player, v:GetCharacterData("LastZone"))
@@ -50,8 +61,8 @@ function cwPrimevalismSense:StartEcholocation(player)
     
     local echolocationList = {}
 
-    self:DoEcholocation(player, player:GetPos(), playerZone, (playerZone == "caves" and function(player, target, pos, zone)
-        return (target:GetCharacterData("LastZone") == zone)
+    self:DoEcholocation(echolocationList, player, player:GetPos(), playerZone, (playerZone == "caves" and function(player, target, pos, zone)
+        return (target:GetCharacterData("LastZone") == zone and target:GetPos():DistToSqr(pos) <= sonarMineRadius)
     end or function(player, target, pos, zone)
         return (target:GetPos():DistToSqr(pos) <= sonarRadius)
     end))
