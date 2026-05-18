@@ -34,15 +34,7 @@ function cwPrimevalismSense:AddToEcholocationList(echolocationList, ent, player,
     table.insert(echolocationList, ent.echolocation)
 end
 
-local dot180Degrees = 0
-
-local function IsEntityWithinDot(player, ent, dot)
-    local normal = (ent:GetPos() - player:GetPos()):GetNormalized()
-
-    return (player:GetForward():Dot(normal) > dot)
-end
-
-function cwPrimevalismSense:DoEcholocation(echolocationList, player, pos, zone, condition)
+function cwPrimevalismSense:DoEcholocation(player, pos, zone, condition)
     for _, v in _player.Iterator() do
         if (!v:HasInitialized() or !v:Alive() or v.cwObserverMode or v == player) then continue end
         if (!condition(player, v, pos, zone)) then continue end
@@ -56,10 +48,8 @@ local sonarRadius = (2048 * 2048)
 function cwPrimevalismSense:StartEcholocation(player)
     local playerZone = player:GetCharacterData("LastZone")
 
-    local echolocationList = {}
-
-    self:DoEcholocation(echolocationList, player, player:GetPos(), playerZone, (playerZone == "caves" and function(player, target, pos, zone)
-        return (target:GetCharacterData("LastZone") == zone and target:GetPos():DistToSqr(pos) <= sonarMineRadius)
+    self:DoEcholocation(player, player:GetPos(), playerZone, (playerZone == "caves" and function(player, target, pos, zone)
+        return (target:GetCharacterData("LastZone") == zone)
     end or function(player, target, pos, zone)
         return (target:GetPos():DistToSqr(pos) <= sonarRadius)
     end))
