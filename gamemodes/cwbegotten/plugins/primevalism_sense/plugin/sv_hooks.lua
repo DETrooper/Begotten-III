@@ -4,7 +4,7 @@ util.AddNetworkString("cwEcholocatePing")
 cwPrimevalismSense.lanternDeactivationTime = 10
 cwPrimevalismSense.lanternDeactivationCooldown = 0
 
-function cwPrimevalismSense:Echolocate(ent, player, zone)
+function cwPrimevalismSense:AddToEcholocationList(echolocationList, ent, player, zone)
     local curTime = CurTime()
 
     ent.echolocation = {
@@ -31,17 +31,23 @@ function cwPrimevalismSense:Echolocate(ent, player, zone)
         end
     end
 
-    net.Start("cwEcholocate")
-        net.WriteTable(ent.echolocation)
-    net.Send(player)
+    table.insert(echolocationList, ent.echolocation)
 end
 
-function cwPrimevalismSense:DoEcholocation(player, pos, zone, condition)
+local dot180Degrees = 0
+
+local function IsEntityWithinDot(player, ent, dot)
+    local normal = (ent:GetPos() - player:GetPos()):GetNormalized()
+
+    return (player:GetForward():Dot(normal) > dot)
+end
+
+function cwPrimevalismSense:DoEcholocation(echolocationList, player, pos, zone, condition)
     for _, v in _player.Iterator() do
         if (!v:HasInitialized() or !v:Alive() or v.cwObserverMode or v == player) then continue end
         if (!condition(player, v, pos, zone)) then continue end
 
-        self:Echolocate(v, player, v:GetCharacterData("LastZone"))
+        self:AddToEcholocationList(echolocationList, v, player, v:GetCharacterData("LastZone"))
     end
 end
 
@@ -50,13 +56,16 @@ local sonarRadius = (2048 * 2048)
 function cwPrimevalismSense:StartEcholocation(player)
     local playerZone = player:GetCharacterData("LastZone")
 
-    self:DoEcholocation(player, player:GetPos(), playerZone, (playerZone == "caves" and function(player, target, pos, zone)
-        return (target:GetCharacterData("LastZone") == zone)
+    local echolocationList = {}
+
+    self:DoEcholocation(echolocationList, player, player:GetPos(), playerZone, (playerZone == "caves" and function(player, target, pos, zone)
+        return (target:GetCharacterData("LastZone") == zone and target:GetPos():DistToSqr(pos) <= sonarMineRadius)
     end or function(player, target, pos, zone)
         return (target:GetPos():DistToSqr(pos) <= sonarRadius)
     end))
 
     net.Start("cwEcholocatePing")
+        net.WriteTable(echolocationList)
     net.Send(player)
 
     player:SelectWeapon("begotten_fists")

@@ -7,9 +7,10 @@ cwPrimevalismSense.echolocationInfo = (cwPrimevalismSense.echolocationInfo or {
 local echolocationTime = 10
 local echolocationEndTime = 0.7
 local echolocationPrepEndTime = (echolocationTime - echolocationEndTime)
-
 local echoOverlay = Material("effects/tp_eyefx/tpeye")
 echoOverlay:SetVector("$color", Vector(0.1, 0, 0))
+
+local echolocator = Material("begotten/primeval_echolocator.png")
 
 local echoMat = CreateMaterial("cwEcholocation", "UnlitGeneric", {
     ["$basetexture"] = "color/white",
@@ -31,9 +32,7 @@ local colorModify = {
 	["$pp_colour_mulb"] = 0
 }
 
-net.Receive("cwEcholocate", function()
-    local info = net.ReadTable()
-
+local function Echolocate(info)
     local ent = ClientsideModel(info.models[1])
     ent:SetPos(info.pos)
     ent:SetAngles(info.ang)
@@ -68,9 +67,11 @@ net.Receive("cwEcholocate", function()
     end
 
     table.insert(cwPrimevalismSense.echolocations, echolocation)
-end)
+end
 
 net.Receive("cwEcholocatePing", function()
+    local echolocationList = net.ReadTable()
+
     cwPrimevalismSense.echolocationInfo.startTime = CurTime()
     cwPrimevalismSense.echolocationInfo.hasPreppedEnd = false
 
@@ -79,6 +80,10 @@ net.Receive("cwEcholocatePing", function()
     cwPrimevalismSense.echolocationInfo.sound:ChangeVolume(0.3, 1)
 
     Clockwork.Client:ScreenFade(SCREENFADE.IN, color_black, echolocationEndTime, 0)
+
+    for _, v in ipairs(echolocationList) do
+        Echolocate(v)
+    end
 end)
 
 function cwPrimevalismSense:OnEcholocationEnd()
@@ -110,6 +115,8 @@ function cwPrimevalismSense:DoScreenspaceEffects()
 
     local scrW, scrH = ScrW(), ScrH()
 
+    surface.SetMaterial(echolocator)
+
     for i, v in ipairs(self.echolocations) do
         local timeSince = (curTime - self.echolocationInfo.startTime)
 
@@ -117,8 +124,14 @@ function cwPrimevalismSense:DoScreenspaceEffects()
 
         surface.SetDrawColor(ColorAlpha(echoColor, Lerp(timeSince/0.1, 0, TimedCos(0.5, 50, 100, 0))))
 
-        for i = 1, 3 do
-            surface.DrawOutlinedCircle(math.Clamp(pos.x, 0, scrW), math.Clamp(pos.y, 0, scrH), Lerp(math.max(timeSince - i * 0.1, 0)/echolocationTime, 0, 700), 2)
+        local x = math.Clamp(pos.x, 0, scrW)
+        local y = math.Clamp(pos.y, 0, scrH)
+
+        for ii = 1, 3 do
+            local radius = Lerp(math.max(timeSince - ii * 0.3, 0) / echolocationTime, 0, 700)
+            local halfRadius = (radius / 2)
+
+            surface.DrawTexturedRect(x - halfRadius, y - halfRadius, radius, radius)
         end
     end
 
