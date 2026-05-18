@@ -47,6 +47,8 @@ local sonarRadius = (2048 * 2048)
 
 function cwPrimevalismSense:StartEcholocation(player)
     local playerZone = player:GetCharacterData("LastZone")
+    
+    local echolocationList = {}
 
     self:DoEcholocation(player, player:GetPos(), playerZone, (playerZone == "caves" and function(player, target, pos, zone)
         return (target:GetCharacterData("LastZone") == zone)
