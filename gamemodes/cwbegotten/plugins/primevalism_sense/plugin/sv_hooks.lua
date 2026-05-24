@@ -47,7 +47,7 @@ end
 function cwPrimevalismSense:DoEcholocation(echolocationList, player, pos, zone, condition)
     for _, v in _player.Iterator() do
         if (!v:HasInitialized() or !v:Alive() or v.cwObserverMode or v == player) then continue end
-        if (v:GetVelocity():LengthSqr() > 0 or !IsEntityWithinDot(player, v, dot180Degrees)) then continue end
+        if (v:GetVelocity():LengthSqr() < 0.1 or !IsEntityWithinDot(player, v, dot180Degrees)) then continue end
         if (!condition(player, v, pos, zone)) then continue end
 
         self:AddToEcholocationList(echolocationList, v, player, v:GetCharacterData("LastZone"))
