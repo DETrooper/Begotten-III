@@ -70,6 +70,9 @@ local function Echolocate(info)
 end
 
 net.Receive("cwEcholocatePing", function()
+    // This sometimes fails on first load, so just do it here too
+    echoOverlay:SetVector("$color", Vector(0.1, 0, 0))
+
     local echolocationList = net.ReadTable()
 
     cwPrimevalismSense.echolocationInfo.startTime = CurTime()
