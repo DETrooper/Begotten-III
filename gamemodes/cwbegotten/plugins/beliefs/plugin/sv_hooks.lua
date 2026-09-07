@@ -2586,3 +2586,9 @@ function cwBeliefs:ModifyPlayerSpeed(player, infoTable)
 		infoTable.runSpeed = infoTable.runSpeed * 1.15;
 	end
 end
+
+function cwBeliefs:ChatBoxMessageAdded(info)
+	if IsValid(info.speaker) and info.data.warcrySound then
+		netstream.Start(info.listeners, "WarcrySound", info.speaker, info.data.warcrySound, info.data.warcryPitch);
+	end
+end
