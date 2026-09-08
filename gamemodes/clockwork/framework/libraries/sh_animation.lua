@@ -883,6 +883,14 @@ function Clockwork.animation:AddScrapperArms(model)
 	});
 end;
 
+function Clockwork.animation:AddScrapperGruntArms(model)
+	self:AddHandsModel(model, {
+		body = 0000000,
+		model = "models/begotten/arms/c_scrappergrunt_hands.mdl",
+		skin = 0
+	});
+end;
+
 function Clockwork.animation:AddScribeArms(model)
 	self:AddHandsModel(model, {
 		body = 0000000,
@@ -1423,8 +1431,9 @@ Clockwork.animation:AddKnightArms("models/begotten/goreicwarfighters/goreking.md
 Clockwork.animation:AddExileKnightArms("models/begotten/wanderers/exileknight.mdl");
 
 Clockwork.animation:AddScrapperArms("models/begotten/wanderers/scrapper");
-Clockwork.animation:AddScrapperArms("models/begotten/wanderers/scrappergrunt");
 Clockwork.animation:AddScrapperArms("models/begotten/wanderers/scrapperking.mdl");
+
+Clockwork.animation:AddScrapperGruntArms("models/begotten/wanderers/scrappergrunt");
 
 Clockwork.animation:AddScribeArms("models/begotten/wanderers/scribe");
 
