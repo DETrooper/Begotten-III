@@ -70,7 +70,7 @@ ENT.Attacks = {
 
 };
 
-local printTarget = Clockwork.player:FindByID("Manoros");
+--local printTarget = Clockwork.player:FindByID("Manoros");
 
 ENT.AttackFunctions = {
 	[ENT.Attacks.Standard] = function(self)
