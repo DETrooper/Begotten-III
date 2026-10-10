@@ -288,7 +288,7 @@ function cwItemSpawner:AddSupercrateSpawn(supercrateEntity, player)
 		return;
 	end
 
-	table.insert(self.SupercrateLocations, {pos = supercrateEntity:GetPos(), angles = supercrateEntity:GetAngles()});
+	table.insert(self.SupercrateLocations, {model = supercrateEntity:GetModel(),pos = supercrateEntity:GetPos(), angles = supercrateEntity:GetAngles()});
 	
 	netstream.Heavy(Schema:GetAdmins(), "SupercrateSpawnESPInfo", {self.SupercrateLocations});
 	
