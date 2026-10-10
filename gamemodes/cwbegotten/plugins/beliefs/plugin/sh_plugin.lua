@@ -1344,12 +1344,16 @@ local COMMAND = Clockwork.command:New("Warcry");
 						end
 					end
 
-					player:EmitSound((Clockwork.player:HasFlags(player, "~") and "warcries/warcry"..math.random(1, 16)..".mp3" or "glazecries/hillcry_"..math.random(1, 20)..".wav"), 100, math.random(90, 105));
-
-					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a booming shout!", playerPos, radius);
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a booming shout!", playerPos, radius, {
+						warcrySound = (Clockwork.player:HasFlags(player, "~") and "warcries/warcry"..math.random(1, 16)..".mp3" or "glazecries/hillcry_"..math.random(1, 20)..".wav"),
+						warcryPitch = math.random(90, 105)
+					});
 				elseif (subfaction == "Low Ministry") then
 					player:EmitSound("lmcries/lm_cry" .. math.random(1,19) .. ".mp3", 100, math.random(90, 105));
-					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a withering scream!", playerPos, radius);
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a withering scream!", playerPos, radius, {
+						warcrySound = (Clockwork.player:HasFlags(player, "~") and "warcries/warcry"..math.random(1, 16)..".mp3" or "glazecries/hillcry_"..math.random(1, 20)..".wav"),
+						warcryPitch = math.random(90, 105)
+					});
 				elseif subfaction == "Clan Grock" then
 					local clothesItem = player:GetClothesEquipped()
 					
@@ -1357,13 +1361,17 @@ local COMMAND = Clockwork.command:New("Warcry");
 						player:HandleSanity(-5);
 						local warcrySounds = {"kronos/sawcrazy/random2.wav", "kronos/sawcrazy/random1.wav", "kronos/sawrunner/sawrunner_attack2.wav", "kronos/sawrunner/sawrunner_alert30.wav", "kronos/boss/mace_scream.wav"}
 						local selectedSound = warcrySounds[math.random(#warcrySounds)]
-						player:EmitSound(selectedSound, 100, math.random(60, 75));
-						Clockwork.chatBox:AddInTargetRadius(player, "me", "screams and groans in a mockery of prayer!", playerPos, radius);
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "screams and groans in a mockery of prayer!", playerPos, radius, {
+							warcrySound = selectedSound,
+							warcryPitch = math.random(60, 75)
+						});
 						netstream.Start(player, "UpgradedWarcry", affected_players);
 					else
 						player:HandleStamina(25);
-						player:EmitSound("warcries/grock_warcry"..math.random(1, 11)..".ogg", 100, math.random(60, 75));
-						Clockwork.chatBox:AddInTargetRadius(player, "me", "barbarically shouts out!", playerPos, radius);
+						Clockwork.chatBox:AddInTargetRadius(player, "me", "barbarically shouts out!", playerPos, radius, {
+							warcrySound = "warcries/grock_warcry"..math.random(1, 11)..".ogg",
+							warcryPitch = math.random(60, 75)
+						});
 					end
 				-- Kinisgers can FotF warcry if not disguised as a reaver.
 				elseif faith == "Faith of the Family" then
@@ -1438,13 +1446,17 @@ local COMMAND = Clockwork.command:New("Warcry");
 						netstream.Start(player, "UpgradedWarcry", affected_players);
 					end
 					
-					player:EmitSound(warcrySound, 100, warcryPitch);
-					Clockwork.chatBox:AddInTargetRadius(player, "me", warcryText, playerPos, radius);
+					Clockwork.chatBox:AddInTargetRadius(player, "me", warcryText, playerPos, radius, {
+						warcrySound = warcrySound,
+						warcryPitch = warcryPitch
+					});
 				else
 					player:HandleSanity(-5);
-					player:EmitSound("warcries/twistedwarcry"..math.random(1, 5)..".mp3", 100, math.random(90, 105));
 					
-					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a twisted warcry, screaming with the voices of their past victims!", playerPos, radius);
+					Clockwork.chatBox:AddInTargetRadius(player, "me", "lets out a twisted warcry, screaming with the voices of their past victims!", playerPos, radius, {
+						warcrySound = "warcries/twistedwarcry"..math.random(1, 5)..".mp3",
+						warcryPitch = math.random(90, 105)
+					});
 				end
 				
 				if player_has_daring_trout then
