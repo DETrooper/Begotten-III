@@ -292,10 +292,10 @@ function PANEL:Rebuild()
 		self.recipeList:EnableVerticalScrollbar();
 		--self.recipeList:HideScrollbar();
 	else
-		self.recipeList:Clear();
+		self.recipeList:Clear(true);
 	end
 	
-	if (!self.vbar) then
+	if (!IsValid(self.categoryList.vbar)) then
 		self.categoryList.vbar = vgui.Create("DImage", self);
 		self.categoryList.vbar:SetPos(776, 78);
 		self.categoryList.vbar:SetSize(3, 750);
@@ -359,7 +359,7 @@ end
 
 function PANEL:BuildRecipeList(category, faction, faith, subfaction, subfaith, searchTerm)
 	if IsValid(self.recipeList) then
-		self.recipeList:Clear();
+		self.recipeList:Clear(true);
 	
 		local recipes = cwRecipes:GetAll();
 		
@@ -1017,7 +1017,7 @@ end;
 
 -- A function to rebuild the panel.
 function PANEL:Rebuild()
-	self.inventoryList:Clear();
+	self.inventoryList:Clear(true);
 	
 	if not self.slottedIconList then
 		self.slottedIconList = {};

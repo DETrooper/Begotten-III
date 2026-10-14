@@ -302,7 +302,7 @@ function Clockwork.character:RefreshPanelList()
 	local panel = self:GetPanelList();
 
 	if (panel) then
-		panel.panelList:Clear();
+		panel.panelList:Clear(true);
 		
 		for k, v in pairs(self:GetAll()) do
 			local faction = Clockwork.plugin:Call("GetPlayerCharacterScreenFaction", v);

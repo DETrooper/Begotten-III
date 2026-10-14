@@ -352,7 +352,7 @@ function PANEL:Rebuild()
 		self.ritualList:EnableVerticalScrollbar();
 		self.ritualList:HideScrollbar();
 	else
-		self.ritualList:Clear();
+		self.ritualList:Clear(true);
 	end
 	
 	if table.IsEmpty(availableRituals) then
@@ -961,7 +961,7 @@ end;
 
 function PANEL:RebuildModelList(faction)
 	if IsValid(self.modelItemsList) then
-		self.modelItemsList:Clear();
+		self.modelItemsList:Clear(true);
 	else
 		return;
 	end

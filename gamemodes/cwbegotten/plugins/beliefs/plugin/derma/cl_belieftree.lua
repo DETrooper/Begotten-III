@@ -766,7 +766,7 @@ function PANEL:Rebuild(player, level, experience, beliefs, points, faith, highli
 end
 
 function PANEL:RebuildBeliefTrees()
-	self.panelList:Clear();
+	self.panelList:Clear(true);
 
 	local faith = self.player:GetNetVar("faith");
 
