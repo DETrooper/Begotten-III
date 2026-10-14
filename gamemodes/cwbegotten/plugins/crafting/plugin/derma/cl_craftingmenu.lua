@@ -1019,13 +1019,13 @@ end;
 function PANEL:Rebuild()
 	self.inventoryList:Clear(true);
 	
-	if not self.slottedIconList then
-		self.slottedIconList = {};
+	if self.slottedIconList then
+		for k, v in pairs(self.slottedIconList) do
+			v:Remove();
+		end
 	end
-
-	for k, v in pairs(self.slottedIconList) do
-		v:Remove();
-	end
+	
+	self.slottedIconList = {};
 	
 	for k, v in pairs(self.craftingSlotLocations) do
 		v.occupier = nil;
