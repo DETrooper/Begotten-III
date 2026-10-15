@@ -256,7 +256,7 @@ function GM:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 		printp(infoTable.runSpeed)
 	end;]]--
 	
-	if !plyTab.nextInvThink or plyTab.nextInvThink > curTime then
+	if !plyTab.nextInvThink or plyTab.nextInvThink <= curTime then
 		infoTable.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
 		infoTable.maxWeight = player:GetMaxWeight()
 		
@@ -3901,7 +3901,7 @@ end
 function GM:EntityTakeDamage(entity, damageInfo)
 	local class = entity:GetClass();
 	
-	if (class == "prop_dynamic" or class == "cw_duelstatue" or class == "cw_hellportal") or (class == "prop_physics" and entity.cwInventory) then
+	if (class == "prop_dynamic" or class == "cw_duelstatue" or class == "cw_hellportal") or entity.cwInventory then
 		return true;
 	end
 	
