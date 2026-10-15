@@ -3901,7 +3901,7 @@ end
 function GM:EntityTakeDamage(entity, damageInfo)
 	local class = entity:GetClass();
 	
-	if (class == "prop_dynamic" or class == "cw_duelstatue" or class == "cw_hellportal") or entity.cwInventory then
+	if (class == "prop_dynamic" or class == "cw_duelstatue" or class == "cw_hellportal") or (class == "prop_physics" and entity.cwInventory) then
 		return true;
 	end
 	
