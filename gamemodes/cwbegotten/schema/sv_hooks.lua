@@ -488,12 +488,12 @@ function Schema:EntityHandleMenuOption(player, entity, option, arguments)
 		end
 	elseif (class == "prop_ragdoll") then
 		if (arguments == "cw_corpseLoot") then
-			if (!entity.cwInventory) then entity.cwInventory = {}; end;
-			if (!entity.cwCash) then entity.cwCash = 0; end;
-			
 			local entityPlayer = Clockwork.entity:GetPlayer(entity);
 			
 			if (!entityPlayer or (entityPlayer and (!entityPlayer:Alive() or entityPlayer:GetMoveType() ~= MOVETYPE_OBSERVER))) then
+				if (!entity.cwInventory) then entity.cwInventory = {}; end;
+				if (!entity.cwCash) then entity.cwCash = 0; end;
+
 				if !player:IsNoClipping() and (!player.GetCharmEquipped or !player:GetCharmEquipped("urn_silence")) then
 					player:EmitSound("physics/body/body_medium_impact_soft"..math.random(1, 7)..".wav");
 				end
