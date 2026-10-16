@@ -256,7 +256,7 @@ function GM:PlayerThink(player, curTime, infoTable, alive, initialized, plyTab)
 		printp(infoTable.runSpeed)
 	end;]]--
 	
-	if !plyTab.nextInvThink or plyTab.nextInvThink > curTime then
+	if !plyTab.nextInvThink or plyTab.nextInvThink <= curTime then
 		infoTable.inventoryWeight = Clockwork.inventory:CalculateWeight(player:GetInventory());
 		infoTable.maxWeight = player:GetMaxWeight()
 		
