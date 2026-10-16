@@ -346,6 +346,7 @@ local COMMAND = Clockwork.command:New("Enlist")
 										local targetAngles = target:EyeAngles();
 										local targetPos = target:GetPos();
 										
+										target.cwKeepRituals = true;
 										Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
 										
 										target:SetPos(targetPos);
@@ -460,6 +461,7 @@ local COMMAND = Clockwork.command:New("Initiate")
 									local targetAngles = target:EyeAngles();
 									local targetPos = target:GetPos();
 									
+									target.cwKeepRituals = true;
 									Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
 									
 									target:SetPos(targetPos);
@@ -628,6 +630,7 @@ local COMMAND = Clockwork.command:New("SetCustomRank")
 							local targetAngles = target:EyeAngles();
 							local targetPos = target:GetPos();
 							
+							target.cwKeepRituals = true;
 							Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
 							
 							target:SetPos(targetPos);
@@ -827,6 +830,7 @@ local COMMAND = Clockwork.command:New("Promote")
 							local targetAngles = target:EyeAngles();
 							local targetPos = target:GetPos();
 							
+							target.cwKeepRituals = true;
 							Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
 							
 							target:SetPos(targetPos);
@@ -1025,6 +1029,7 @@ local COMMAND = Clockwork.command:New("Demote")
 						local targetAngles = target:EyeAngles();
 						local targetPos = target:GetPos();
 						
+						target.cwKeepRituals = true;
 						Clockwork.player:LoadCharacter(target, Clockwork.player:GetCharacterID(target));
 						
 						target:SetPos(targetPos);
