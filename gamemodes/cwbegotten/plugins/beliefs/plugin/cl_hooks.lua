@@ -404,3 +404,7 @@ netstream.Hook("UpgradedWarcry", function(data)
 		end);
 	--end
 end);
+
+netstream.Hook("WarcrySound", function(speaker, warcrySound, warcryPitch)
+	speaker:EmitSound(warcrySound, 100, warcryPitch)
+end)
